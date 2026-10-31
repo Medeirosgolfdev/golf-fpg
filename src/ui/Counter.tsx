@@ -36,7 +36,7 @@ export default function Counter({
     + (className ? " " + className : "");
   return (
     <div className={cls} title={title}>
-      {icon && <span style={{ marginRight: 4 }}>{icon}</span>}
+      {icon && <span className="u-mr-4px">{icon}</span>}
       {children}
     </div>
   );

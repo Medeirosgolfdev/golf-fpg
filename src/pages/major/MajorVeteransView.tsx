@@ -162,16 +162,16 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
       />
 
       {/* Toolbar de filtros */}
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", margin: "8px 0 10px" }}>
+      <div className="u-d-flex u-gap-8px u-fwr-wrap u-ai-center u-m-8px-0-10px">
         <input
-          className="input" placeholder="🔍 Nome ou país…" value={q}
-          onChange={(e) => setQ(e.target.value)} style={{ minWidth: 180 }}
+          className="input u-minw-180px" placeholder="🔍 Nome ou país…" value={q}
+          onChange={(e) => setQ(e.target.value)}
         />
         <select className="input" value={circuito} onChange={(e) => setCircuito(e.target.value)} title="Filtrar por circuito">
           <option value="">Todos os circuitos</option>
           {circuitos.map((s) => <option key={s} value={s}>{srcLabel(s)}</option>)}
         </select>
-        <label className="fs-12" style={{ display: "flex", alignItems: "center", gap: 4 }}>
+        <label className="fs-12 u-d-flex u-ai-center u-gap-4px">
           mín. torneios
           <select className="input" value={minT} onChange={(e) => setMinT(Number(e.target.value))}>
             {[2, 3, 4, 5, 6, 7, 8].map((n) => <option key={n} value={n}>{n}</option>)}
@@ -185,18 +185,18 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
           type="button" className={`tourn-tab tourn-tab-sm${hideUsa ? " active" : ""}`}
           onClick={() => setHideUsa((v) => !v)} title="Esconder jogadores dos EUA (destaca europeus)"
         >🚫🇺🇸 Esconder EUA</button>
-        <span className="muted fs-12" style={{ marginLeft: "auto" }}>{filtered.length} jogadores</span>
+        <span className="muted fs-12 u-ml-auto">{filtered.length} jogadores</span>
       </div>
 
       {sorted.length === 0 ? (
         <EmptyState message="Nenhum jogador corresponde aos filtros." />
       ) : (
         <>
-          <div style={{ overflowX: "auto" }}>
-            <table className="player-list-table" style={{ width: "100%" }}>
+          <div className="u-ox-auto">
+            <table className="player-list-table u-w-100pc">
               <thead>
                 <tr>
-                  <th style={{ width: 34, textAlign: "right" }}>#</th>
+                  <th className="u-w-34px u-ta-right">#</th>
                   <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
                   <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>País</SortableHdr>
                   <SortableHdr k="tournaments" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }} title="Nº de torneios internacionais">Torneios</SortableHdr>
@@ -217,24 +217,24 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
                         onClick={() => toggleRow(p.name)}
                         title="Clique para ver os torneios"
                       >
-                        <td style={{ textAlign: "right", color: "var(--text-muted)" }}>{i + 1}</td>
-                        <td style={{ fontWeight: 600 }}>
-                          <span style={{ marginRight: 4, color: "var(--text-muted)" }}>{open ? "▾" : "▸"}</span>
+                        <td className="u-ta-right u-c-text-muted">{i + 1}</td>
+                        <td className="u-fw-600">
+                          <span className="u-mr-4px u-c-text-muted">{open ? "▾" : "▸"}</span>
                           {displayName(p.name)}
                         </td>
-                        <td style={{ whiteSpace: "nowrap" }}>
+                        <td className="u-ws-nowrap">
                           {p.country ? <>{gf(p.country)} <span className="fs-12">{p.country}</span></> : <span className="muted">—</span>}
                         </td>
-                        <td style={{ textAlign: "right", fontWeight: 700 }}>{p.tournaments}</td>
-                        <td style={{ textAlign: "right" }}>{p.years}</td>
-                        <td style={{ textAlign: "right" }}>{p.seriesCount}</td>
+                        <td className="u-ta-right u-fw-700">{p.tournaments}</td>
+                        <td className="u-ta-right">{p.years}</td>
+                        <td className="u-ta-right">{p.seriesCount}</td>
                         <td>{p.series.map(chip)}</td>
                       </tr>
                       {open && (
                         <tr className="row-expanded">
                           <td />
-                          <td colSpan={6} style={{ padding: "4px 8px 10px" }}>
-                            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                          <td colSpan={6} className="u-p-4px-8px-10px">
+                            <div className="u-d-flex u-fwr-wrap u-gap-6px">
                               {p.detail.map((id) => {
                                 const { source, year } = splitEntry(id);
                                 return (
@@ -263,7 +263,7 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
             </table>
           </div>
           {limit < sorted.length && (
-            <div style={{ textAlign: "center", margin: "10px 0" }}>
+            <div className="u-ta-center u-m-10px-0">
               <button type="button" className="tourn-tab tourn-tab-sm" onClick={() => setLimit((l) => l + PAGE)}>
                 Mostrar mais ({sorted.length - limit} restantes)
               </button>

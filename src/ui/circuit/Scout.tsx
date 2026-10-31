@@ -283,16 +283,16 @@ export default function Scout({
 
   return (
     <div>
-      <div className="fs-13" style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap", margin: "2px 0 10px", color: "var(--text-2)" }}>
-        <span><b style={{ color: "var(--text)" }}>{rivais.length}</b> {manuelNoField ? "adversários" : "jogadores"}</span>
-        {paises > 1 && <><span className="muted">·</span><span><b style={{ color: "var(--text)" }}>{paises}</b> países</span></>}
-        <span className="muted">·</span><span title="Elite ou Forte"><b style={{ color: "var(--text)" }}>{altos}</b> de nível alto</span>
-        <span className="muted">·</span><span><b style={{ color: "var(--text)" }}>{comManuel}</b> já jogaram com o Manuel</span>
-        {edsTodas.length > 0 && <><span className="muted">·</span><span><b style={{ color: "var(--text)" }}>{repetem}</b> já jogaram esta prova ({edsTodas.length} edi{edsTodas.length === 1 ? "ção anterior" : "ções anteriores"})</span></>}
+      <div className="fs-13 u-d-flex u-ai-baseline u-gap-6px u-fwr-wrap u-m-2px-0-10px u-c-text-2">
+        <span><b className="u-c-text">{rivais.length}</b> {manuelNoField ? "adversários" : "jogadores"}</span>
+        {paises > 1 && <><span className="muted">·</span><span><b className="u-c-text">{paises}</b> países</span></>}
+        <span className="muted">·</span><span title="Elite ou Forte"><b className="u-c-text">{altos}</b> de nível alto</span>
+        <span className="muted">·</span><span><b className="u-c-text">{comManuel}</b> já jogaram com o Manuel</span>
+        {edsTodas.length > 0 && <><span className="muted">·</span><span><b className="u-c-text">{repetem}</b> já jogaram esta prova ({edsTodas.length} edi{edsTodas.length === 1 ? "ção anterior" : "ções anteriores"})</span></>}
         {resumoExtra}
       </div>
-      <div style={{ overflowX: "auto", paddingBottom: 6 }}>
-        <table className="sc-lb sc-lb-airy" style={{ fontVariantNumeric: "tabular-nums", width: "max-content" }}>
+      <div className="u-ox-auto u-pb-6px">
+        <table className="sc-lb sc-lb-airy u-fvn-tabular-nums u-w-max-content">
           <thead>
             <tr>
               {colsAntes.length > 0 && <th colSpan={colsAntes.length} />}
@@ -318,7 +318,7 @@ export default function Scout({
               {eds.map((e) => (
                 <SortableHdr key={e.id} k={e.id} {...hp} title={[e.label, e.division, e.course].filter(Boolean).join(" · ")}>
                   {e.year}
-                  {sameYear(e) && e.label ? <div className="fs-10 muted" style={{ fontWeight: 500 }}>{e.label}</div> : null}
+                  {sameYear(e) && e.label ? <div className="fs-10 muted u-fw-500">{e.label}</div> : null}
                 </SortableHdr>
               ))}
               {tem.vsm && hdr("vsm", "Ele à frente", "Em quantas das provas em comum ficou à frente do Manuel", true)}
@@ -406,15 +406,15 @@ export default function Scout({
                   </tr>
                   {isOpen && (
                     <tr>
-                      <td colSpan={nCols} style={{ textAlign: "left", background: "var(--bg-hover)", padding: "6px 10px 12px 28px" }}>
-                        {detExtra && <div style={{ marginBottom: 8 }}>{detExtra}</div>}
+                      <td colSpan={nCols} className="u-ta-left u-bg-bg-hover u-p-6px-10px-12px-28px">
+                        {detExtra && <div className="u-mb-8px">{detExtra}</div>}
                         {nM ? (
-                          <table className="sc-lb" style={{ width: "max-content", marginBottom: 6 }}>
-                            <thead><tr><th style={{ textAlign: "left" }}>Prova em comum com o Manuel</th><th>Data</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel">Pancadas</th></tr></thead>
+                          <table className="sc-lb u-w-max-content u-mb-6px">
+                            <thead><tr><th className="u-ta-left">Prova em comum com o Manuel</th><th>Data</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel">Pancadas</th></tr></thead>
                             <tbody>
                               {l.sc!.m!.map((x, i) => (
                                 <tr key={i}>
-                                  <td style={{ textAlign: "left" }}>{x[1]}</td>
+                                  <td className="u-ta-left">{x[1]}</td>
                                   <td>{x[0] ? shortDateSlash(x[0]) : "–"}</td>
                                   <td>{x[2] != null ? `${x[2]}º` : "–"}</td>
                                   <td>{x[3] != null ? `${x[3]}º` : "–"}</td>
@@ -423,7 +423,7 @@ export default function Scout({
                               ))}
                             </tbody>
                           </table>
-                        ) : <div className="muted fs-12" style={{ marginBottom: 6 }}>Ainda não jogou nenhuma prova com o Manuel.</div>}
+                        ) : <div className="muted fs-12 u-mb-6px">Ainda não jogou nenhuma prova com o Manuel.</div>}
                         {l.proximas.length > 0 && (
                           <div className="fs-12">
                             <span className="muted">Próximos: </span>

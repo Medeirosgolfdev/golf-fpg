@@ -31,14 +31,14 @@ const toNum = numSafe;
 
 function Scorecard({ r }: { r: PPRound }) {
   const sc = r.scorecard;
-  if (!sc) return <div className="muted fs-12" style={{ padding: "6px 10px" }}>Sem scorecard buraco-a-buraco para esta volta.</div>;
+  if (!sc) return <div className="muted fs-12 u-p-6px-10px">Sem scorecard buraco-a-buraco para esta volta.</div>;
 
   const nh = sc.nholes ?? 18;
   const arr = (v: (number | null)[]) => Array.from({ length: nh }, (_, i) => toNum(v[i]));
 
   return (
-    <div style={{ padding: "8px 10px 12px" }}>
-      <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6, flexWrap: "wrap" }}>
+    <div className="u-p-8px-10px-12px">
+      <div className="u-d-flex u-gap-8px u-ai-center u-mb-6px u-fwr-wrap">
         {sc.teeName && <TeePill name={sc.teeName} />}
         {sc.course && <span className="muted fs-12">{sc.course}</span>}
         {sc.courseRating != null && <span className="muted fs-11">CR {sc.courseRating}</span>}
@@ -75,7 +75,7 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
 
   if (!hist || !hist.rounds.length) {
     return (
-      <div style={{ padding: 20 }}>
+      <div className="u-p-20px">
         <p className="muted">Sem histórico Pitch &amp; Putt descarregado para este jogador.</p>
         <p className="fs-13">
           Gerado por <code>scrape-pp-whs-node.js</code>. Entretanto:{" "}
@@ -106,13 +106,13 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
   const toggle = (k: string) => setOpen(p => { const n = new Set(p); n.has(k) ? n.delete(k) : n.add(k); return n; });
 
   return (
-    <div className="pa-content" style={{ padding: 12 }}>
-      <div className="jog-pills" style={{ marginBottom: 10, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-        <h3 style={{ margin: 0, display: "flex", alignItems: "center", gap: 8 }}>
+    <div className="pa-content u-p-12px">
+      <div className="jog-pills u-mb-10px u-d-flex u-gap-8px u-ai-center u-fwr-wrap">
+        <h3 className="u-m-0 u-d-flex u-ai-center u-gap-8px">
           🏑 Pitch &amp; Putt — {name || hist.name || `#${fed}`}
         </h3>
         {hist.index != null && (
-          <span className="p" style={{ background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}>
+          <span className="p u-bg-badge-pp u-c-fff u-bd-1px-solid-badge-pp">
             Index P&amp;P {hist.index}
           </span>
         )}

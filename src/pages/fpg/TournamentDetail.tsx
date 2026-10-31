@@ -389,7 +389,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
           campo + pills por cima deste TournamentDetail). */}
       {!hideHeader && (
       <div className="detail-header">
-        <div className="flex-wrap gap-8" style={{ display: "flex", alignItems: "center" }}>
+        <div className="flex-wrap gap-8 u-d-flex u-ai-center">
           {/* Título clicável: link canónico `/FPG/torneio/{ccode}-{tcode}`.
               Preserva right-click "abrir em nova aba", Ctrl/Cmd+click, middle-click,
               preview de URL. O próprio h2 continua visualmente inalterado. */}
@@ -401,37 +401,28 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
                 title="Link canónico do torneio (abrir em nova aba para partilhar)"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: "inherit", textDecoration: "none" }}>
-                <h2 className="detail-title" style={{ margin: 0 }}>{tournament.name}</h2>
+                className="u-c-inherit u-td-none">
+                <h2 className="detail-title u-m-0">{tournament.name}</h2>
               </a>
             ) : (
-              <h2 className="detail-title" style={{ margin: 0 }}>{tournament.name}</h2>
+              <h2 className="detail-title u-m-0">{tournament.name}</h2>
             );
           })()}
-          <div className="gap-4" style={{ display: "flex", alignItems: "center" }}>
+          <div className="gap-4 u-d-flex u-ai-center">
             {tournament.ccode && (
-              <span title="tclub" className="fs-10 fw-600 mono" style={{
-                background: "var(--bg-hover)", color: "var(--text-muted)",
-                border: "1px solid var(--border)",
-                borderRadius: "var(--radius-sm)", padding: "1px 6px", letterSpacing: "0.02em",
-                userSelect: "all", cursor: "text",
-              }}>
+              <span title="tclub" className="fs-10 fw-600 mono u-bg-bg-hover u-c-text-muted u-bd-1px-solid-border u-br-radius-sm u-p-1px-6px u-ls-0_02em u-user-select-all u-cur-text">
                 {tournament.ccode}
               </span>
             )}
             {tournament.tcode && !featured?.semLinksFpg && (
-              <span title="tcode" className="fs-10 fw-700 mono" style={{
-                background: "var(--accent)", color: "#fff",
-                borderRadius: "var(--radius-sm)", padding: "1px 6px", letterSpacing: "0.02em",
-                userSelect: "all", cursor: "text",
-              }}>
+              <span title="tcode" className="fs-10 fw-700 mono u-bg-accent u-c-fff u-br-radius-sm u-p-1px-6px u-ls-0_02em u-user-select-all u-cur-text">
                 {tournament.tcode}
               </span>
             )}
           </div>
           {/* Links oficiais À DIREITA do título, como nas outras secções
               (CircuitShell: «Leaderboard oficial ↗») — 14/10/2026. */}
-          <div className="gap-4" style={{ display: "flex", alignItems: "center", flexWrap: "wrap", marginLeft: "auto" }}>
+          <div className="gap-4 u-d-flex u-ai-center u-fwr-wrap u-ml-auto">
             {/* Botões INSCRIÇÕES + DRAW + SCORING — todos mesmo tamanho/estilo.
                 Uniformizados para consistência em todas as páginas de torneio. */}
             {tournament._isSynthetic
@@ -510,16 +501,16 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
           {/* Pills individuais — reutilizam os componentes globais (consistência com a sidebar).
               Ordem: stats básicos (jog, ronda, 9H, par) → características do torneio (escalão,
               NACIONAL, JUNIOR, SSerra, Clube, Manuel). */}
-          <span className="gap-4 ml-8" style={{ display: "inline-flex", alignItems: "center", flexWrap: "wrap" }}>
+          <span className="gap-4 ml-8 u-d-inline-flex u-ai-center u-fwr-wrap">
             {tournament.playerCount != null && (
-              <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+              <span className="p p-sm u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border">
                 {tournament.playerCount} jog
               </span>
             )}
             {nRounds > 1 && <RoundPill nR={nRounds} />}
             {nholes <= 9 && <NineHPill />}
             {parTotal > 0 && (
-              <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+              <span className="p p-sm u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border">
                 Par {parTotal}
               </span>
             )}
@@ -547,13 +538,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
           (ex: "alguns jogadores jogaram simultaneamente no Absoluto").
           Estilo de ALERTA (amber/warning) para chamar à atenção. */}
       {(tournament as any)._note && (
-        <div className="fs-12 fw-600" style={{
-          padding: "10px 14px", margin: "8px 12px",
-          background: "var(--bg-warn-subtle, #fef3c7)",
-          border: "1px solid var(--color-warn, #f59e0b)",
-          borderRadius: "var(--radius)",
-          color: "var(--text-1, #1f2937)", lineHeight: 1.45,
-        }}>
+        <div className="fs-12 fw-600 u-p-10px-14px u-m-8px-12px u-bg-var-bg-warn-subtle-fef3c7 u-bd-qeurg u-br-radius u-c-var-text-1-1f2937 u-lh-1_45">
           ⚠️ {(tournament as any)._note}
         </div>
       )}
@@ -589,10 +574,10 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
           return <>
             {/* Barra de estado da verificação live (só torneios FEATURED futuros) */}
             {liveEnabled && (
-              <div className="fs-12" style={{ padding: "8px 12px 0", display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+              <div className="fs-12 u-p-8px-12px-0 u-d-flex u-gap-10px u-ai-center u-fwr-wrap">
                 {live.status === "loading" && <span className="muted">⏳ a verificar inscrições na FPG…</span>}
                 {liveActive && (
-                  <span className="fw-600" style={{ color: "var(--color-good)" }}>
+                  <span className="fw-600 u-c-color-good">
                     🟢 live FPG
                     {live.fetchedAt ? ` · ${new Date(live.fetchedAt).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}` : ""}
                     {` · ${live.players.length} inscritos`}
@@ -602,7 +587,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
                   (admissionsDiff.novos.length > 0 || admissionsDiff.saidos.length > 0) ? (
                     <span className="fw-600">
                       {admissionsDiff.novos.length > 0 && (
-                        <span style={{ color: "var(--color-good)" }}>
+                        <span className="u-c-color-good">
                           +{admissionsDiff.novos.length} novos: {admissionsDiff.novos.map(p => p.nome).join(", ")}
                         </span>
                       )}
@@ -619,7 +604,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
                 {live.status === "error" && (
                   <span className="muted" title={live.error}>
                     💾 live indisponível — a mostrar o último scrape
-                    {live.error ? <span style={{ opacity: 0.75 }}> ({live.error})</span> : null}
+                    {live.error ? <span className="u-op-0_75"> ({live.error})</span> : null}
                   </span>
                 )}
               </div>

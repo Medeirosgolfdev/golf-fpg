@@ -209,8 +209,8 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
     const fakePlayer = { ...selected, _source: "both" as const, _federadoRaw: fedSrc } as MergedPlayer & { fed: string };
     return (
       <div className="pa-page">
-        <div style={{ padding: "8px 12px", display: "flex", gap: 8, alignItems: "center", borderBottom: "1px solid var(--border)", flexShrink: 0 }}>
-          <button className="p p-outline" style={{ cursor: "pointer" }}
+        <div className="u-p-8px-12px u-d-flex u-gap-8px u-ai-center u-bb-1px-solid-border u-fsh-0">
+          <button className="p p-outline u-cur-pointer"
             onClick={() => setFederadoView(false)}
             title="Voltar à vista completa com análise">
             ← Vista completa
@@ -218,7 +218,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
           <span className="muted fs-12">Vista de federado (cadastro FPG + rondas WHS live, sem análise nossa)</span>
         </div>
         {/* pa-content dá scroll vertical (.pa-page tem overflow:hidden) */}
-        <div className="pa-content" style={{ padding: 0 }}>
+        <div className="pa-content u-p-0">
           <FederadoOnlyDetail player={fakePlayer} />
         </div>
       </div>
@@ -230,13 +230,13 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
   if (ppView) {
     return (
       <div className="pa-page">
-        <div style={{ padding: "8px 12px", display: "flex", gap: 8, alignItems: "center", borderBottom: "1px solid var(--border)", flexShrink: 0 }}>
-          <button className="p p-outline" style={{ cursor: "pointer" }} onClick={() => setPpView(false)} title="Voltar à vista completa">
+        <div className="u-p-8px-12px u-d-flex u-gap-8px u-ai-center u-bb-1px-solid-border u-fsh-0">
+          <button className="p p-outline u-cur-pointer" onClick={() => setPpView(false)} title="Voltar à vista completa">
             ← Vista completa
           </button>
           <span className="muted fs-12">Histórico Pitch &amp; Putt (cartões P&amp;P, par-3 × 18)</span>
         </div>
-        <div className="pa-content" style={{ padding: 0 }}>
+        <div className="pa-content u-p-0">
           <PPHistoryView fed={selected.fed} name={selected.name} />
         </div>
       </div>
@@ -301,8 +301,8 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   (2026-08-15, a utilizadora quer a cor de volta). */}
               {aces.length > 0 && (
                 <span
-                  className="p"
-                  style={{ background: "var(--score-eagle)", color: "#fff", border: "1px solid var(--score-eagle)" }}
+                  className="p u-bg-score-eagle u-c-fff u-bd-1px-solid-score-eagle"
+
                   title={aces
                     .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
                     .join("\n")}

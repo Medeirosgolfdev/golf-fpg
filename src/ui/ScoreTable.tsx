@@ -250,7 +250,7 @@ export function MultiTeeSDTable({
 
   if (cols.length === 0)
     return (
-      <p className="muted" style={{ fontSize: "var(--fs-12)" }}>
+      <p className="muted u-fs-fs-12">
         Sem tees com ratings disponíveis.
       </p>
     );
@@ -264,7 +264,7 @@ export function MultiTeeSDTable({
   };
 
   return (
-    <div className="sim-scroll-x scroll-x" style={{ maxHeight: 480 }}>
+    <div className="sim-scroll-x scroll-x u-maxh-480px">
       <table className="dtable sim-multi-tee">
         <thead>
           {/* Row 1: tee color headers */}
@@ -309,8 +309,8 @@ export function MultiTeeSDTable({
               >
                 {c.teeName}
                 <span
-                  className="op-7 fs-10 fw-400"
-                  style={{ marginLeft: 5 }}
+                  className="op-7 fs-10 fw-400 u-ml-5px"
+
                 >
                   {c.dist != null && <>{fmt(c.dist)}m · </>}CR {fmtCR(c.cr)} ·
                   SR {c.slope} · Par {c.par}

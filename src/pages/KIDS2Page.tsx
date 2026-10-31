@@ -158,12 +158,12 @@ function KIDS2PageContent() {
       <Kids2SubNav leading={<SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />}>
         <DataSourcesChip sources={data.sources} />
         <ToolbarSep />
-        <span className="toolbar-meta shrink-0" style={{ fontSize: "var(--fs-10)", color: "var(--color-good-dark)", fontWeight: 700 }}>
+        <span className="toolbar-meta shrink-0 u-fs-fs-10 u-c-color-good-dark u-fw-700">
           {data.juniors.length} juniors · {data.tournaments.length} torneios · ✓
         </span>
         <ToolbarSep />
         {/* Pills de fonte */}
-        <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", flexShrink: 0 }}>
+        <span className="u-fs-fs-10 u-fw-700 u-c-text-3 u-ls-0_4px u-tt-uppercase u-fsh-0">
           Fonte
         </span>
         {SOURCE_PILLS.map((p) => {
@@ -201,8 +201,8 @@ function KIDS2PageContent() {
         {hasActiveFilter && (
           <button
             onClick={clearFilters}
-            className="tourn-tab tourn-tab-sm"
-            style={{ flexShrink: 0, background: "var(--bg-danger)", color: "var(--color-danger-dark)", borderColor: "var(--color-danger)" }}
+            className="tourn-tab tourn-tab-sm u-fsh-0 u-bg-bg-danger u-c-color-danger-dark u-border-color-color-danger"
+
             title="Limpar filtros"
           >
             ✕

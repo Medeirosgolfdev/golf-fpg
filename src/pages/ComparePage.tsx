@@ -181,7 +181,7 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
   }, [rows, sortKey, sortDir]);
 
   return (
-    <div style={{ overflowX: "auto" }}>
+    <div className="u-ox-auto">
       <table className="dtable">
         <thead>
           <tr>
@@ -213,14 +213,14 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
                 }}
                 title={onPick ? "Click para comparar buracos com este campo" : undefined}
               >
-                <td style={{ fontWeight: 700 }}>{course.master.name}</td>
+                <td className="u-fw-700">{course.master.name}</td>
                 <td className="muted">{tee.teeName}</td>
-                <td className="r" style={{ fontFamily: "var(--font-mono)" }}>{tee.distances?.total ?? "–"}</td>
-                <td className="r" style={{ fontFamily: "var(--font-mono)" }}>{teePar || "–"}</td>
-                <td className="r" style={{ fontFamily: "var(--font-mono)" }}>
+                <td className="r u-ff-font-mono">{tee.distances?.total ?? "–"}</td>
+                <td className="r u-ff-font-mono">{teePar || "–"}</td>
+                <td className="r u-ff-font-mono">
                   {tee.ratings?.holes18?.slopeRating ? tee.ratings.holes18.slopeRating.toFixed(0) : "–"}
                 </td>
-                <td className="r" style={{ fontFamily: "var(--font-mono)" }}>
+                <td className="r u-ff-font-mono">
                   {tee.ratings?.holes18?.courseRating ? tee.ratings.holes18.courseRating.toFixed(1) : "–"}
                 </td>
                 <td className="r">
@@ -260,7 +260,7 @@ function Delta({ a, b, decimals = 0, unit = "" }: {
   const d = b - a;
   const abs = Math.abs(d);
   const fmt = decimals > 0 ? abs.toFixed(decimals) : String(Math.round(abs));
-  if (d === 0) return <span className="muted" style={{ fontFamily: "var(--font-mono)" }}>=</span>;
+  if (d === 0) return <span className="muted u-ff-font-mono">=</span>;
   const color = d > 0 ? "var(--color-info)" : "var(--color-warn-dark)";
   const sign = d > 0 ? "+" : "−";
   return (
@@ -313,7 +313,7 @@ function TwoTeeSDTable({
   const divIdx = colsA.length; // índice onde começa o grupo B
 
   if (!allCols.length) {
-    return <p className="muted" style={{ fontSize: "var(--fs-12)" }}>Tees sem ratings para calcular.</p>;
+    return <p className="muted u-fs-fs-12">Tees sem ratings para calcular.</p>;
   }
 
   const phcps = allCols.map(c => Math.round(calcPlayingHcp(hi, c.sl, c.cr, c.par)));
@@ -336,8 +336,8 @@ function TwoTeeSDTable({
   const sticky1: React.CSSProperties = { position: "sticky", top: ROW1_H, zIndex: "var(--z-panel-hdr)" as React.CSSProperties["zIndex"], background: "var(--bg)" };
 
   return (
-    <div className="sim-scroll-x scroll-x" style={{ maxHeight: 520 }}>
-      <table className="dtable sim-multi-tee" style={{ fontSize: "var(--fs-12)", tableLayout: "auto", width: "auto" }}>
+    <div className="sim-scroll-x scroll-x u-maxh-520px">
+      <table className="dtable sim-multi-tee u-fs-fs-12 u-table-layout-auto u-w-auto">
         <thead>
           {/* Fila 1: nome do campo */}
           <tr>
@@ -397,7 +397,7 @@ function TwoTeeSDTable({
                 }}>
                   {c.tee.teeName}{!c.isChosen && " ≈"}
                 </span>
-                <div style={{ fontWeight: 500, color: "var(--text-3)", fontSize: "var(--fs-9)", marginTop: 1 }}>
+                <div className="u-fw-500 u-c-text-3 u-fs-fs-9 u-mt-1px">
                   CR {c.cr.toFixed(1)} · SR {c.sl}
                 </div>
               </th>
@@ -440,7 +440,7 @@ function TwoTeeSDTable({
           })}
         </tbody>
       </table>
-      <div className="muted" style={{ fontSize: "var(--fs-11)", marginTop: 6 }}>
+      <div className="muted u-fs-fs-11 u-mt-6pxx">
         ≈ = tee com CR/Slope mais próximo do tee do outro campo · Linha realçada = playing handicap (HI {hi.toFixed(1)})
       </div>
     </div>
@@ -488,9 +488,9 @@ function CourseSideBySide({
   };
 
   return (
-    <div className="card" style={{ borderLeft: "4px solid var(--accent)" }}>
+    <div className="card u-bl-4px-solid-accent">
       {/* Header */}
-      <div className="h-md" style={{ marginBottom: 14 }}>
+      <div className="h-md u-mb-14px">
         🆚 Comparação directa
       </div>
 
@@ -509,7 +509,7 @@ function CourseSideBySide({
           <div className="haDiagCard">
             <div className="haDiagIcon" style={{ background: bg }}>{icon}</div>
             <div>
-              <div className="haDiagVal">{val}{unit && <span style={{ fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text-3)", marginLeft: 4 }}>{unit}</span>}</div>
+              <div className="haDiagVal">{val}{unit && <span className="u-fs-fs-13 u-fw-600 u-c-text-3 u-ml-4px">{unit}</span>}</div>
               <div className="haDiagLbl">{lbl}</div>
             </div>
           </div>
@@ -522,7 +522,7 @@ function CourseSideBySide({
               <div className="haDiagIcon" style={{ background: iconBg }}>{icon}</div>
               <div>
                 <div className="haDiagVal" style={{ color: col }}>
-                  {val}{val !== "–" && unit ? <span style={{ fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text-3)", marginLeft: 4 }}>{unit}</span> : null}
+                  {val}{val !== "–" && unit ? <span className="u-fs-fs-13 u-fw-600 u-c-text-3 u-ml-4px">{unit}</span> : null}
                 </div>
                 <div className="haDiagLbl">{label}</div>
               </div>
@@ -530,13 +530,13 @@ function CourseSideBySide({
           );
         };
         const CourseHeader = ({ course, tee }: { course: typeof courseA; tee: typeof teeA }) => (
-          <div style={{ fontWeight: 700, fontSize: "var(--fs-13)", marginBottom: 8, display: "flex", alignItems: "center", gap: 8, minHeight: 28 }}>
+          <div className="u-fw-700 u-fs-fs-13 u-mb-8px u-d-flex u-ai-center u-gap-8px u-minh-28px">
             ⛳ {course.master.name}
             <TeePill name={tee.teeName} hex={teeHex(tee)} />
           </div>
         );
         const renderKpis = (dist: number | null, par: number | null, cr: number | null, slope: number | null) => (
-          <div className="haDiag" style={{ gridTemplateColumns: "repeat(2, max-content)" }}>
+          <div className="haDiag u-grid-template-columns-1rohv">
             <KpiCard icon="📏" bg="var(--bg-info-strong)" val={dist ?? "–"} unit={dist != null ? "m" : undefined} lbl="Distância total" />
             <KpiCard icon="⛳" bg="var(--accent-light)" val={par || "–"} lbl="Par total · 18H" />
             <KpiCard icon="📐" bg="var(--bg-warn)" val={slope ?? "–"} lbl="Slope" />
@@ -550,7 +550,7 @@ function CourseSideBySide({
           { label: "CR", a: crA, b: crB, dec: 1, icon: "🎯", iconBg: "var(--color-good-alpha)" },
         ] as const;
         return (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 0.6fr 1fr", gap: 24, marginBottom: 18, alignItems: "start" }}>
+          <div className="u-d-grid u-grid-template-columns-1l51h u-gap-24px u-mb-18px u-ai-start">
             {/* Campo A */}
             <div>
               <CourseHeader course={courseA} tee={teeA} />
@@ -558,10 +558,10 @@ function CourseSideBySide({
             </div>
             {/* Deltas */}
             <div>
-              <div style={{ minHeight: 28, marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.06em" }}>comparação</span>
+              <div className="u-minh-28px u-mb-8px u-d-flex u-ai-center u-jc-center">
+                <span className="u-fs-fs-10 u-fw-700 u-c-text-3 u-tt-uppercase u-ls-0_06em">comparação</span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+              <div className="u-d-grid u-grid-template-columns-1fr-1fr u-gap-6px">
                 {deltas.map((d, i) => (
                   <DeltaCard key={i} label={d.label} a={d.a} b={d.b} dec={(d as any).dec} unit={(d as any).unit} icon={d.icon} iconBg={d.iconBg} />
                 ))}
@@ -580,7 +580,7 @@ function CourseSideBySide({
       {(() => {
         const hasHoles = (t: Tee) => (t.holes ?? []).some(h => (h.distance ?? 0) > 0);
         if (!hasHoles(teeA) && !hasHoles(teeB)) return (
-          <p className="muted" style={{ fontSize: "var(--fs-12)" }}>
+          <p className="muted u-fs-fs-12">
             Dados de buracos não disponíveis para este tee.
           </p>
         );
@@ -665,7 +665,7 @@ function CourseSideBySide({
               const parAccent = `hsl(${ph.h}deg, ${ph.s}%, 38%)`;
               const pairs = matchHoles(holesA, holesB);
               return (
-                <div key={par} style={{ marginBottom: 12 }}>
+                <div key={par} className="u-mb-12px">
                   <div style={{
                     fontSize: "var(--fs-11)", fontWeight: 700, color: parAccent,
                     textTransform: "uppercase", letterSpacing: "0.06em",
@@ -680,36 +680,33 @@ function CourseSideBySide({
                       const delta = a && b ? (a.distance ?? 0) - (b.distance ?? 0) : null;
                       return (
                         <>
-                          <div key={`a${i}`} style={{ display: "flex", justifyContent: "flex-end", paddingRight: 8 }}>
+                          <div key={`a${i}`} className="u-d-flex u-jc-flex-end u-pr-8px">
                             {a && psA ? (
-                              <span style={{ display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
-                                <span style={{ fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-2)", fontFamily: "var(--font-mono)" }}>B{a.hole}</span>
+                              <span className="u-d-flex u-ai-center u-gap-5px u-ws-nowrap">
+                                <span className="u-fs-fs-11 u-fw-600 u-c-text-2 u-ff-font-mono">B{a.hole}</span>
                                 <span style={{ ...psA, borderRadius: "var(--radius)", padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{a.distance}m</span>
                               </span>
                             ) : (
-                              <span className="muted" style={{ fontSize: "var(--fs-12)", padding: "3px 10px" }}>–</span>
+                              <span className="muted u-fs-fs-12 u-p-3px-10px">–</span>
                             )}
                           </div>
                           {sameCourse && (
-                            <div key={`d${i}`} style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "0 6px" }}>
+                            <div key={`d${i}`} className="u-d-flex u-ai-center u-jc-center u-p-0-6px">
                               {delta !== null ? (
-                                <span style={{
-                                  fontSize: "var(--fs-10)", fontWeight: 700, fontFamily: "var(--font-mono)",
-                                  color: "var(--text-2)",
-                                }}>
+                                <span className="u-fs-fs-10 u-fw-700 u-ff-font-mono u-c-text-2">
                                   {delta > 0 ? `+${delta}` : delta}m
                                 </span>
-                              ) : <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>–</span>}
+                              ) : <span className="u-fs-fs-10 u-c-text-3">–</span>}
                             </div>
                           )}
-                          <div key={`b${i}`} style={{ display: "flex", justifyContent: "flex-start", paddingLeft: 8 }}>
+                          <div key={`b${i}`} className="u-d-flex u-jc-flex-start u-pl-8px">
                             {b && psB ? (
-                              <span style={{ display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
+                              <span className="u-d-flex u-ai-center u-gap-5px u-ws-nowrap">
                                 <span style={{ ...psB, borderRadius: "var(--radius)", padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{b.distance}m</span>
-                                <span style={{ fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-2)", fontFamily: "var(--font-mono)" }}>B{b.hole}</span>
+                                <span className="u-fs-fs-11 u-fw-600 u-c-text-2 u-ff-font-mono">B{b.hole}</span>
                               </span>
                             ) : (
-                              <span className="muted" style={{ fontSize: "var(--fs-12)", padding: "3px 10px" }}>–</span>
+                              <span className="muted u-fs-fs-12 u-p-3px-10px">–</span>
                             )}
                           </div>
                         </>
@@ -725,21 +722,17 @@ function CourseSideBySide({
 
       {/* ── Buraco a buraco (colapsável) ── */}
       {holeRows.length >= 9 && (
-        <div style={{ marginTop: 14 }}>
+        <div className="u-mt-14px">
           <button
             type="button"
             onClick={() => setShowHoles(v => !v)}
-            style={{
-              background: "var(--bg-muted)", border: "1px solid var(--border)",
-              borderRadius: "var(--radius)", padding: "4px 12px", fontSize: "var(--fs-12)",
-              fontWeight: 600, cursor: "pointer", color: "var(--text-2)",
-            }}
+            className="u-bg-bg-muted u-bd-1px-solid-border u-br-radius u-p-4px-12px u-fs-fs-12 u-fw-600 u-cur-pointer u-c-text-2"
           >
             {showHoles ? "▲ Esconder buraco a buraco" : "▼ Ver buraco a buraco"}
           </button>
           {showHoles && (
-            <div style={{ overflowX: "auto", marginTop: 10 }}>
-              <table className="dtable" style={{ minWidth: 480 }}>
+            <div className="u-ox-auto u-mt-10px">
+              <table className="dtable u-minw-480px">
                 <thead>
                   <tr>
                     <th>B#</th>
@@ -776,7 +769,7 @@ function CourseSideBySide({
                         background: (parA !== null && parB !== null && parA !== parB) ? "var(--bg-warn)" : undefined,
                         fontFamily: "var(--font-mono)",
                       }}>
-                        <td style={{ fontWeight: 700 }}>B{holeNum}</td>
+                        <td className="u-fw-700">B{holeNum}</td>
                         <td className="r" style={{ color: parA === 3 ? PAR_COLOR[3] : parA === 4 ? PAR_COLOR[4] : parA === 5 ? PAR_COLOR[5] : undefined, fontWeight: 700 }}>{parA ?? "–"}</td>
                         <td className="r">{dA != null && dA > 0 ? dA : "–"}</td>
                         <td className="r" style={{ color: parB === 3 ? PAR_COLOR[3] : parB === 4 ? PAR_COLOR[4] : parB === 5 ? PAR_COLOR[5] : undefined, fontWeight: 700 }}>{parB ?? "–"}</td>
@@ -961,27 +954,23 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
 
           {/* Score→SD — card com controlos integrados */}
           <div className="card">
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
-              <span style={{ fontWeight: 700, fontSize: "var(--fs-13)" }}>📊 Score → SD</span>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: 4 }}>
-                <label style={{ fontSize: "var(--fs-12)", fontWeight: 600, color: "var(--text-2)" }}>HI</label>
+            <div className="u-d-flex u-ai-center u-gap-10px u-mb-14px u-fwr-wrap">
+              <span className="u-fw-700 u-fs-fs-13">📊 Score → SD</span>
+              <div className="u-d-flex u-ai-center u-gap-8px u-ml-4px">
+                <label className="u-fs-fs-12 u-fw-600 u-c-text-2">HI</label>
                 <input
                   type="number" value={hiInput}
                   onChange={e => setHiInput(e.target.value)}
                   placeholder="ex: 9.5" step="0.1" min="-4" max="54"
-                  style={{
-                    width: 70, padding: "3px 7px", fontSize: "var(--fs-12)",
-                    borderRadius: "var(--radius-sm)", border: "1px solid var(--border)",
-                    background: "var(--bg)", color: "var(--text)",
-                  }}
+                  className="u-w-70px u-p-3px-7px u-fs-fs-12 u-br-radius-sm u-bd-1px-solid-border u-bg-bg u-c-text"
                 />
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <label style={{ fontSize: "var(--fs-12)", fontWeight: 600, color: "var(--text-2)" }}>PCC</label>
+              <div className="u-d-flex u-ai-center u-gap-8px">
+                <label className="u-fs-fs-12 u-fw-600 u-c-text-2">PCC</label>
                 <select
-                  className="select" value={pcc}
+                  className="select u-minw-60px" value={pcc}
                   onChange={e => setPcc(Number(e.target.value))}
-                  style={{ minWidth: 60 }}
+
                 >
                   {[-3, -2, -1, 0, 1, 2, 3].map(v => (
                     <option key={v} value={v}>{v > 0 ? `+${v}` : v}</option>
@@ -989,7 +978,7 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
                 </select>
               </div>
               {!hiValid && (
-                <span className="muted" style={{ fontSize: "var(--fs-11)" }}>Insere o HI para ver a tabela</span>
+                <span className="muted u-fs-fs-11">Insere o HI para ver a tabela</span>
               )}
             </div>
             {hiValid && hi !== null && selectedCourseB && selectedTeeB && (
@@ -1009,13 +998,13 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
 
           {/* Tabela de similitude */}
           <div className="card">
-            <div className="h-md" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            <div className="h-md u-d-flex u-ai-center u-gap-8px u-fwr-wrap">
               🎯 Campos Similares
-              <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-12)" }}>
+              <span className="muted u-fw-500 u-fs-fs-12">
                 · {similarities.length} resultado{similarities.length === 1 ? "" : "s"} ≥ 40%
               </span>
             </div>
-            <div className="muted" style={{ fontSize: "var(--fs-12)", marginTop: -6, marginBottom: 12 }}>
+            <div className="muted u-fs-fs-12 u-mt-6px u-mb-12px">
               Pesos: 25% distância · 15% par · 60% min(slope, CR) · Clica no cabeçalho para ordenar · Clica numa linha para definir Campo B
             </div>
             {similarities.length === 0 ? (

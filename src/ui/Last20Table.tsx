@@ -119,7 +119,7 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
     <div className={bare ? undefined : "card"}>
       {!bare && <div className="h-xs fs-18 mb-8">📋 Últimas 20 rondas</div>}
       <div className="muted mb-8 fs-11">
-        <b>WHS#</b> = posição na janela WHS (só rondas com SD contam) · ★ = top-8 SDs · <b>*</b> = Stableford normalizado 9B→18B · <span style={{ opacity: 0.45 }}>Esbatido</span> = fora da janela · Clica nos cabeçalhos para ordenar
+        <b>WHS#</b> = posição na janela WHS (só rondas com SD contam) · ★ = top-8 SDs · <b>*</b> = Stableford normalizado 9B→18B · <span className="u-op-0_45">Esbatido</span> = fora da janela · Clica nos cabeçalhos para ordenar
       </div>
       <div className="scroll-x">
         <table className="dtable">

@@ -34,15 +34,12 @@ export default function ManuelResultPills({ tournament, label }: { tournament: T
   });
   if (!pills.length) return null;
   return (
-    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 6 }}>
+    <div className="u-d-flex u-gap-6px u-fwr-wrap u-mt-6pxx">
       {pills.map((x) => (
-        <span key={x.round} className="p p-sm fw-700" style={{
-          background: "var(--bg-success-strong)", color: "var(--color-good-dark)",
-          borderColor: "var(--color-good)", display: "inline-flex", alignItems: "center", gap: 4,
-        }}>
+        <span key={x.round} className="p p-sm fw-700 u-bg-bg-success-strong u-c-color-good-dark u-border-color-color-good u-d-inline-flex u-ai-center u-gap-4px">
           <span>★</span>
           <span>{label ? `${label} · ` : ""}R{x.round} · {x.gross}{x.toPar != null ? ` (${fmtToPar(x.toPar)})` : ""}</span>
-          {x.diff != null && <span className="fw-400" style={{ opacity: 0.8 }}>· {x.diff === 0 ? "líder" : `+${x.diff} do líder`}</span>}
+          {x.diff != null && <span className="fw-400 u-op-0_8">· {x.diff === 0 ? "líder" : `+${x.diff} do líder`}</span>}
         </span>
       ))}
     </div>

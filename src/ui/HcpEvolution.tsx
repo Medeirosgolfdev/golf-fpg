@@ -119,7 +119,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
   if (players.length === 0) return null;
   if (rows.length === 0) {
     return (
-      <div className="card" style={{ padding: "12px 14px" }}>
+      <div className="card u-p-12px-14px">
         <div className="h-xs fs-14 mb-8">📈 Evolução de HCP</div>
         <div className="muted fs-12">
           Sem histórico de HCP para estes jogadores nesta janela. Os dados vêm de{" "}
@@ -163,19 +163,19 @@ export default function HcpEvolution({ players, history, showChart = true }: {
   const focusSet = new Set(focused);
 
   return (
-    <div className="card" style={{ padding: "12px 14px" }}>
-      <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 8 }}>
+    <div className="card u-p-12px-14px">
+      <div className="u-d-flex u-ai-center u-fwr-wrap u-gap-12px u-mb-8px">
         <div className="h-xs fs-14">📈 Evolução de HCP <span className="muted fs-11">({rows.length} jogadores com histórico)</span></div>
-        <label className="fs-12" style={{ marginLeft: "auto" }}>
+        <label className="fs-12 u-ml-auto">
           Período:{" "}
-          <select value={period} onChange={e => setPeriod(Number(e.target.value))} style={{ padding: "4px 8px" }}>
+          <select value={period} onChange={e => setPeriod(Number(e.target.value))} className="u-p-4px-8px">
             {PERIODS.map(p => <option key={p.v} value={p.v}>{p.label}</option>)}
           </select>
         </label>
       </div>
 
       {showChart && <div className="scroll-x">
-        <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block", minWidth: 520 }}
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" className="u-d-block u-minw-520px"
           role="img" aria-label="Evolução do HCP ao longo do tempo">
           {/* Grelha + rótulos Y (HCP melhor no topo) */}
           {yTicks.map((h, i) => {
@@ -222,8 +222,8 @@ export default function HcpEvolution({ players, history, showChart = true }: {
       </div>}
 
       {/* Chips de selecção — clicar destaca/remove */}
-      {showChart && <div className="flex flex-wrap gap-2" style={{ marginTop: 8 }}>
-        <span className="muted fs-10" style={{ alignSelf: "center", fontWeight: 700 }}>Destacar:</span>
+      {showChart && <div className="flex flex-wrap gap-2 u-mt-8px">
+        <span className="muted fs-10 u-align-self-center u-fw-700">Destacar:</span>
         {sortedRows.map(r => {
           const isOn = focusSet.has(r.p.fed);
           const color = isOn ? colorFor(r.p.fed) : undefined;
@@ -247,11 +247,11 @@ export default function HcpEvolution({ players, history, showChart = true }: {
       </div>}
 
       {/* Tabela de métricas de evolução — ordenável */}
-      <div className="scroll-x" style={{ marginTop: 12 }}>
-        <table className="dtable fs-12" style={{ width: "100%" }}>
+      <div className="scroll-x u-mt-12px">
+        <table className="dtable fs-12 u-w-100pc">
           <thead>
             <tr>
-              <th className="r" style={{ width: 26 }}>#</th>
+              <th className="r u-w-26px">#</th>
               <SortableHdr k="nome" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
               <th>Sx</th>
               <SortableHdr k="pontos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Nº de rondas com índice na janela">Rondas</SortableHdr>
@@ -269,7 +269,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                 <tr key={r.p.fed} onClick={showChart ? () => toggleFocus(r.p.fed) : undefined}
                   style={showChart ? { cursor: "pointer" } : undefined}
                   className={on ? "cross-current" : ""}>
-                  <td className="r" style={{ color: "var(--text-3)" }}>{i + 1}</td>
+                  <td className="r u-c-text-3">{i + 1}</td>
                   <td style={{ fontWeight: on ? 700 : 500, whiteSpace: "nowrap" }}>
                     {on && <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "var(--radius-xs)", background: colorFor(r.p.fed), marginRight: 6 }} />}
                     {r.p.name}

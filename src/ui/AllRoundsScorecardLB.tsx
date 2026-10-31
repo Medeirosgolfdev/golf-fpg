@@ -167,7 +167,7 @@ export function AllRoundsScorecardLB({
             gross: rd.gross, toPar: rd.toPar, scores: rd.scores,
             holePars: rd.holePars.length ? rd.holePars : par,
             rowBg: bg, stickyBg: bg, borderTop: bTop,
-            nameContent: first ? nameOf(row) : <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>,
+            nameContent: first ? nameOf(row) : <span className="muted fs-10 u-pl-8px">↳</span>,
             prefixCells: prefixCells(row, `R${ri + 1}`, first, bTop),
             postScorecardCells: postCells(rd, row.hcp, bTop),
           }];
@@ -211,7 +211,7 @@ export function AllRoundsScorecardLB({
       showScorecard={showSC}
       onToggleScorecard={() => setShowSC((v) => !v)}
       metaLine={
-        <span className="muted fs-11" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+        <span className="muted fs-11 u-d-inline-flex u-ai-center u-gap-8px">
           <span>
             {groupMode ? gDisplayed.length : displayed.length} {groupMode ? "jogadores" : "scorecards"} · {playedRounds}R{parTot > 0 ? ` · Par ${parTot}` : ""}
           </span>

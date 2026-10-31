@@ -61,8 +61,7 @@ export function KidsLink({ nome }: { nome: string }) {
       href={to}
       onClick={e => { e.preventDefault(); window.open(to, "_blank"); }}
       title="Ver em Kids"
-      style={{ fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-13)",
-        cursor: "pointer", textDecoration: "none", flexShrink: 0, marginLeft: 4 }}>
+      className="u-fw-800 u-c-color-good-dark u-fs-fs-13 u-cur-pointer u-td-none u-fsh-0 u-ml-4px">
       ↗
     </a>
   );
@@ -90,7 +89,7 @@ export function TournExternalLinks({ t, urlUskids }: { t: number; urlUskids?: st
   // Mesmo botão dos links oficiais das outras secções (.tourn-ext-link), à
   // direita do título (14/10/2026).
   return (
-    <div style={{ display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
+    <div className="u-d-flex u-gap-4px u-fwr-wrap u-ai-center">
       {uskidsLinks(t, urlUskids).map(l => (
         <a key={l.url + l.label} href={l.url} target="_blank" rel="noopener noreferrer"
           className="tourn-ext-link">
@@ -148,25 +147,22 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
       <div className="detail-header">
         <div className="detail-header-top">
           <h2 className="detail-title">
-            {t.emoji && <span style={{ marginRight: 6 }}>{t.emoji}</span>}
+            {t.emoji && <span className="u-mr-6px">{t.emoji}</span>}
             {t.name}
           </h2>
-          <div style={{ display:"flex", gap:6, alignItems:"center", flexWrap:"wrap" }}>
+          <div className="u-d-flex u-gap-6px u-ai-center u-fwr-wrap">
             {REGIONAL_CHAMPIONSHIPS[t.t] && (
-              <span className="p p-sm" style={{
-                background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
-                fontWeight:800, letterSpacing:"0.04em",
-              }}>⭐ REGIONAL INVITATION</span>
+              <span className="p p-sm u-bg-bg-pink u-c-color-purple u-border-color-border-purple u-fw-800 u-ls-0_04em">⭐ REGIONAL INVITATION</span>
             )}
             {/* Sempre visível nos torneios por disputar (22/10/2026, pedido dela;
                 antes só a 14 dias ou menos). 999 = data inválida. */}
             {dias >= 0 && dias < 999 && (
-              <span className="p p-sm" style={{ background:"var(--chart-5)", color:"#fff", borderColor:"var(--chart-5)" }}>
+              <span className="p p-sm u-bg-chart-5 u-c-fff u-border-color-chart-5">
                 {dias === 0 ? "começa hoje" : `daqui a ${dias}d`}
               </span>
             )}
             {dias < 0 && !isTerminado(t.date_fim, t.date_inicio) && (
-              <span className="p p-sm" style={{ background:"var(--color-good)", color:"#fff", borderColor:"var(--color-good)" }}>
+              <span className="p p-sm u-bg-color-good u-c-fff u-border-color-color-good">
                 ▶ em curso
               </span>
             )}
@@ -182,13 +178,13 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           {t.campo && <span className="muted">📍 {t.campo}</span>}
           {(t.rondas ?? 0) > 1 && <RoundPill nR={t.rondas!} />}
           {t.fee_18 && <span className="chip">💵 {t.fee_18}</span>}
-          <span className="muted fs-11" style={{ userSelect:"all", cursor:"text", opacity:.6 }}>t={t.t}</span>
+          <span className="muted fs-11 u-user-select-all u-cur-text u-op-0_6">t={t.t}</span>
         </div>
 
         {/* KPIs de inscrição */}
         {!bloqueado && (
-          <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:8 }}>
-            <span className="chip fw-700 fs-13" style={{ background:"var(--color-good-dark)", color:"#fff", padding:"3px 12px" }}>
+          <div className="u-d-flex u-gap-8px u-fwr-wrap u-mt-8px">
+            <span className="chip fw-700 fs-13 u-bg-color-good-dark u-c-fff u-p-3px-12px">
               {t.total_inscritos}/{t.total_maximo} inscritos
             </span>
             {b12 && (() => {
@@ -200,7 +196,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   border:`1px solid ${bd.bg}`, padding:"3px 12px",
                 }}>
                   ★ {b12.nome}: {b12.inscritos}/{b12.maximo}
-                  <span style={{ marginLeft:5, opacity:.8 }}>({bd.label})</span>
+                  <span className="u-ml-5px u-op-0_8">({bd.label})</span>
                 </span>
               ) : null;
             })()}
@@ -209,7 +205,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
 
         {/* Flight IDs por escalão — acesso rápido ao número de cada flight (para scraping/pesquisa) */}
         {!bloqueado && t.escaloes.some(e => e.flight_id) && (
-          <div style={{ display:"flex", gap:5, flexWrap:"wrap", marginTop:8, alignItems:"center" }}>
+          <div className="u-d-flex u-gap-5px u-fwr-wrap u-mt-8px u-ai-center">
             <span className="muted fs-11">Flights:</span>
             {t.escaloes.filter(e => e.flight_id).map(e => (
               <span key={e.flight_id} className="p p-sm p-muted" title={`${e.nome} — flight ${e.flight_id}`}>
@@ -221,13 +217,13 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
 
         {/* Alertas */}
         {t.sem_flights && (
-          <div className="notice" style={{ marginTop:10 }}>⏳ Flights ainda não publicados</div>
+          <div className="notice u-mt-10px">⏳ Flights ainda não publicados</div>
         )}
         {t.erro && semDados && (
-          <div className="notice-error" style={{ marginTop:10 }}>⚠️ Sem lista de inscritos: {erroLegivel(t.erro)}.</div>
+          <div className="notice-error u-mt-10px">⚠️ Sem lista de inscritos: {erroLegivel(t.erro)}.</div>
         )}
         {t.erro && !semDados && (
-          <div className="notice" style={{ marginTop:10 }}>
+          <div className="notice u-mt-10px">
             ⚠️ Não foi possível actualizar hoje — {erroLegivel(t.erro)}.
             {" "}Estes são os inscritos de <strong>{dataDados}</strong>, a última actualização conseguida.
           </div>
@@ -238,7 +234,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
       {bloqueado ? null : (
         <>
           {/* ── Grid de escalões ── */}
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(230px,1fr))", gap:10, marginBottom:20 }}>
+          <div className="u-d-grid u-grid-template-columns-73fso u-gap-10px u-mb-20px">
             {sortEscaloes(t.escaloes).map(e => {
               const bd  = badgeVagas(e.vagas, e.maximo);
               const dst = ESCALOES_DESTAQUE_USKIDS.has(e.nome);
@@ -252,14 +248,14 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   boxShadow: man ? "0 0 0 2px var(--accent-alpha-10)" : undefined,
                 }}>
                   {/* Cabeçalho do card */}
-                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
+                  <div className="u-d-flex u-jc-space-between u-ai-flex-start u-mb-8px">
                     <div>
                       <div className="fs-13 fw-700" style={{ color: man ? "var(--accent)" : dst ? "var(--text)" : "var(--text-2)" }}>
-                        {man && <span style={{ marginRight:4 }}>★</span>}{e.nome}
+                        {man && <span className="u-mr-4px">★</span>}{e.nome}
                       </div>
-                      <div className="fs-11 c-text-3" style={{ marginTop:1 }}>{e.holes} buracos</div>
+                      <div className="fs-11 c-text-3 u-mt-1px">{e.holes} buracos</div>
                     </div>
-                    <div style={{ textAlign:"right" }}>
+                    <div className="u-ta-right">
                       <div className="fw-800" style={{ fontSize: "var(--fs-15)", color: man ? "var(--accent)" : "var(--text)" }}>
                         {e.inscritos}<span className="fs-11 fw-400 c-text-3">/{e.maximo}</span>
                       </div>
@@ -269,7 +265,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                         </span>
                       )}
                       {novos7d > 0 && (
-                        <span className="fs-10 fw-700" style={{ background:"var(--score-eagle)", color:"#fff", padding:"1px 5px", borderRadius:5, marginLeft:3 }}
+                        <span className="fs-10 fw-700 u-bg-score-eagle u-c-fff u-p-1px-5px u-br-5px u-ml-3px"
                           title={`${novos7d} inscrito${novos7d > 1 ? "s" : ""} nos últimos 7 dias`}>
                           +{novos7d}
                         </span>
@@ -284,7 +280,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   )}
                   {/* Lista de jogadores */}
                   {e.jogadores && e.jogadores.length > 0 && (
-                    <div style={{ borderTop:"1px solid var(--border-light)", paddingTop:6, display:"flex", flexDirection:"column", gap:2 }}>
+                    <div className="u-bt-1px-solid-border-light u-pt-6px u-d-flex u-fd-column u-gap-2px">
                       {e.jogadores.map((j, i) => {
                         const isM = isManuel(j.nome);
                         const arEntry = !isM ? rivalDe(j.nome) : undefined;
@@ -309,7 +305,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                             background: isM ? "var(--accent)" : "transparent",
                             color: isM ? "#fff" : j.pais === "PT" ? "var(--accent)" : "var(--text)",
                           }}>
-                            <span style={{ display:"flex", alignItems:"center", gap:2 }}>
+                            <span className="u-d-flex u-ai-center u-gap-2px">
                               {isM ? "★ " : ""}{displayName(j.nome)}
                               {showDaysPill && !isM && (() => {
                                 const d = daysSinceReg!;
@@ -330,7 +326,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               })()}
                               {!isM && <KidsLink nome={j.nome} />}
                             </span>
-                            <span style={{ display:"flex", alignItems:"center", gap:5 }}>
+                            <span className="u-d-flex u-ai-center u-gap-5px">
                               {/* Resultados anos anteriores */}
                               {prevResults.map(({ y, res }) => {
                                 const p = res!.p;
@@ -340,16 +336,12 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                                   <span key={y} title={`${y}: #${p}${res!.tp != null ? ` (${res!.tp > 0 ? "+" : ""}${res!.tp})` : ""}`}
                                     className="fs-10 fw-700" style={{ color: col, opacity:.85 }}>
                                     {medal ?? `#${p}`}
-                                    <span className="fs-10 fw-400" style={{ opacity:.7 }}>'{String(y).slice(2)}</span>
+                                    <span className="fs-10 fw-400 u-op-0_7">'{String(y).slice(2)}</span>
                                   </span>
                                 );
                               })}
                               {nTorn > 0 && (
-                                <span className="fs-10 fw-700 c-text-2" style={{
-                                  background:"var(--bg-muted)", border:"1px solid var(--border)",
-                                  borderRadius:"var(--radius-sm)", padding:"0 4px", lineHeight:"16px",
-                                  display:"inline-block",
-                                }}>
+                                <span className="fs-10 fw-700 c-text-2 u-bg-bg-muted u-bd-1px-solid-border u-br-radius-sm u-p-0-4px u-lh-16px u-d-inline-block">
                                   {nTorn}T
                                 </span>
                               )}
@@ -362,8 +354,8 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   )}
                   {/* Jogadores removidos (desinscritos) — janela de 60 dias, mais recentes primeiro */}
                   {e.removed && e.removed.length > 0 && (
-                    <div style={{ borderTop:"1px dashed var(--border-light)", paddingTop:4, marginTop:4 }}>
-                      <div className="fs-10 fw-600 c-text-3" style={{ marginBottom:2 }}>
+                    <div className="u-bt-1px-dashed-border-light u-pt-4px u-mt-4px">
+                      <div className="fs-10 fw-600 c-text-3 u-mb-2px">
                         Desinscritos ({e.removed.length}):
                       </div>
                       {[...e.removed]
@@ -372,16 +364,13 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                           const d = r.removedAt ? Math.floor((Date.now() - new Date(r.removedAt).getTime()) / 86400_000) : null;
                           const label = d == null ? null : d <= 0 ? "hoje" : `há ${d}d`;
                           return (
-                            <div key={i} className="fs-11" style={{
-                              display:"flex", alignItems:"center", gap:2,
-                              color:"var(--text-3)", opacity:.75, padding:"0 0 1px",
-                            }}>
-                              <span style={{ color:"var(--color-bad)", fontSize: "var(--fs-9)", marginRight:1 }}>✕</span>
-                              <span style={{ textDecoration:"line-through" }}>{displayName(r.nome)}</span>
-                              {r.pais && <span style={{ marginLeft:2 }}>{flag(r.pais)}</span>}
+                            <div key={i} className="fs-11 u-d-flex u-ai-center u-gap-2px u-c-text-3 u-op-0_75 u-p-0-0-1px">
+                              <span className="u-c-color-bad u-fs-fs-9 u-mr-1px">✕</span>
+                              <span className="u-td-line-through">{displayName(r.nome)}</span>
+                              {r.pais && <span className="u-ml-2px">{flag(r.pais)}</span>}
                               <KidsLink nome={r.nome} />
                               {label && (
-                                <span className="fs-10 fw-600 c-text-3" style={{ marginLeft:"auto", opacity:.8 }}
+                                <span className="fs-10 fw-600 c-text-3 u-ml-auto u-op-0_8"
                                   title={r.removedAt ? `Desinscrito em ${r.removedAt.slice(0,10)}` : undefined}>
                                   {label}
                                 </span>
@@ -392,7 +381,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                     </div>
                   )}
                   {!e.jogadores && e.paises && e.paises.length > 0 && (
-                    <div className="fs-12 c-text-3" style={{ marginTop:4, lineHeight:1.6 }}>
+                    <div className="fs-12 c-text-3 u-mt-4px u-lh-1_6">
                       {e.paises.slice(0, 8).map(p => `${flag(p.pais)} ${p.n}`).join("  ")}
                     </div>
                   )}
@@ -403,14 +392,14 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
 
           {/* ── Portugueses inscritos ── */}
           {ptTotal.length > 0 && (
-            <div className="card" style={{ background:"var(--accent-light)", border:"1.5px solid var(--accent)", marginBottom:12 }}>
-              <div className="h-sm" style={{ color:"var(--accent)", marginBottom:10 }}>🇵🇹 Portugueses inscritos</div>
+            <div className="card u-bg-accent-light u-bd-1_5px-solid-accent u-mb-12px">
+              <div className="h-sm u-c-accent u-mb-10px">🇵🇹 Portugueses inscritos</div>
               {t.escaloes.filter(e => e.jogadores?.some(j => j.pais === "PT")).map(e => (
-                <div key={e.age_group} style={{ marginBottom:8 }}>
-                  <div className="h-xs" style={{ color:"var(--accent-text)", marginBottom:4 }}>{e.nome}</div>
+                <div key={e.age_group} className="u-mb-8px">
+                  <div className="h-xs u-c-accent-text u-mb-4px">{e.nome}</div>
                   {e.jogadores!.filter(j => j.pais === "PT").map((j, i) => (
-                    <div key={i} className="fs-13" style={{ display:"flex", justifyContent:"space-between", padding:"3px 8px", borderRadius:"var(--radius-sm)", background:"rgba(255,255,255,.5)", marginBottom:2 }}>
-                      <span className="fw-600" style={{ display:"flex", alignItems:"center", gap:2 }}>
+                    <div key={i} className="fs-13 u-d-flex u-jc-space-between u-p-3px-8px u-br-radius-sm u-bg-rgba-255-255-255-_5 u-mb-2px">
+                      <span className="fw-600 u-d-flex u-ai-center u-gap-2px">
                         {displayName(j.nome)}<KidsLink nome={j.nome} />
                       </span>
                       <span className="c-text-3 fs-12">{j.cidade}</span>
@@ -421,7 +410,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             </div>
           )}
 
-          <div className="muted fs-11" style={{ textAlign:"right" }}>Última actualização: {dataDados}</div>
+          <div className="muted fs-11 u-ta-right">Última actualização: {dataDados}</div>
         </>
       )}
     </div>

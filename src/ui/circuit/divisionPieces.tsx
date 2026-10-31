@@ -28,7 +28,7 @@ export function roundDrawNode(rd: CircuitRoundDraw): React.ReactNode {
 /** Aviso por cima da tabela de totais. */
 function noticeNode(n: TotalsNotice): React.ReactNode {
   return n.kind === "aviso"
-    ? <div className="notice" style={{ marginBottom: 8 }} title={n.title}>{n.text}</div>
+    ? <div className="notice u-mb-8px" title={n.title}>{n.text}</div>
     : <span className="muted fs-10" title={n.title}>{n.text}</span>;
 }
 

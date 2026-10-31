@@ -180,19 +180,16 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
   const manuelTot = (manuelPerRound != null && field.nRoundsTypical != null) ? manuelPerRound * field.nRoundsTypical : null;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div className="u-d-flex u-fd-column u-gap-14px">
       {resolved.note && (
-        <div className="muted fs-11" style={{
-          padding: "6px 10px", background: "var(--bg-muted)",
-          border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: "var(--radius)",
-        }}>
+        <div className="muted fs-11 u-p-6px-10px u-bg-bg-muted u-bd-qpvg4 u-br-radius">
           ⚠ {resolved.note}
         </div>
       )}
 
-      <div className="card" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <div className="card u-d-flex u-fd-column u-gap-12px">
       {/* Campo + tee resolvido */}
-      <div style={{ fontSize: "var(--fs-15)", color: "var(--text-1)", fontWeight: 700 }}>
+      <div className="u-fs-fs-15 u-c-text-1 u-fw-700">
         <strong>{resolved.course.master.name}</strong>
         {" · "}
         <span>{resolved.tee.teeName}</span>
@@ -200,56 +197,53 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
       </div>
 
       {resolved.ratingApprox && (
-        <div className="muted fs-11" style={{
-          padding: "6px 10px", background: "var(--bg-muted)",
-          border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: "var(--radius)",
-        }}>
+        <div className="muted fs-11 u-p-6px-10px u-bg-bg-muted u-bd-qpvg4 u-br-radius">
           ⚠ CR/Slope estimados por interpolação entre os tees com rating oficial — este tee de torneio não tem rating publicado.
         </div>
       )}
 
       {/* Inputs */}
-      <div style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "flex-end" }}>
-        <label style={{ display: "flex", flexDirection: "column", gap: 3, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+      <div className="u-d-flex u-gap-14px u-fwr-wrap u-ai-flex-end">
+        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
           Handicap Index
-          <input className="select fs-13" style={{ width: 84 }} type="text" inputMode="decimal"
+          <input className="select fs-13 u-w-84px" type="text" inputMode="decimal"
             value={hiTouched ? hiInput : (hi != null ? hi.toFixed(1) : "")}
             onChange={e => { setHiTouched(true); setHiInput(e.target.value); }}
             placeholder="9.4" />
         </label>
-        <label style={{ display: "flex", flexDirection: "column", gap: 3, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
           Course Rating
-          <input className="select fs-13" style={{ width: 84 }} type="text" inputMode="decimal"
+          <input className="select fs-13 u-w-84px" type="text" inputMode="decimal"
             value={mCR} onChange={e => setMCR(e.target.value)}
             placeholder={resCR != null ? fmtCR(resCR) : "—"} />
         </label>
-        <label style={{ display: "flex", flexDirection: "column", gap: 3, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
           Slope
-          <input className="select fs-13" style={{ width: 84 }} type="text" inputMode="numeric"
+          <input className="select fs-13 u-w-84px" type="text" inputMode="numeric"
             value={mSlope} onChange={e => setMSlope(e.target.value)}
             placeholder={resSlope != null ? String(resSlope) : "—"} />
         </label>
-        <label style={{ display: "flex", flexDirection: "column", gap: 3, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
           Par
-          <input className="select fs-13" style={{ width: 70 }} type="text" inputMode="numeric"
+          <input className="select fs-13 u-w-70px" type="text" inputMode="numeric"
             value={mPar} onChange={e => setMPar(e.target.value)}
             placeholder={resPar != null ? String(resPar) : "—"} />
         </label>
-        <label style={{ display: "flex", flexDirection: "column", gap: 3, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
           Allowance
-          <select className="select fs-13" style={{ width: 84 }} value={allowance}
+          <select className="select fs-13 u-w-84px" value={allowance}
             onChange={e => setAllowance(parseInt(e.target.value, 10))}>
             {ALLOWANCES.map(a => <option key={a} value={a}>{a}%</option>)}
           </select>
         </label>
-        <label style={{ display: "flex", flexDirection: "column", gap: 3, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
           Drive (m)
-          <input className="select fs-13" style={{ width: 70 }} type="text" inputMode="numeric"
+          <input className="select fs-13 u-w-70px" type="text" inputMode="numeric"
             value={driveM} onChange={e => { const v = parseInt(e.target.value, 10); if (!isNaN(v)) setDriveM(v); }} />
         </label>
-        <label style={{ display: "flex", flexDirection: "column", gap: 3, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
           2ª pancada (m)
-          <input className="select fs-13" style={{ width: 70 }} type="text" inputMode="numeric"
+          <input className="select fs-13 u-w-70px" type="text" inputMode="numeric"
             value={secondM} onChange={e => { const v = parseInt(e.target.value, 10); if (!isNaN(v)) setSecondM(v); }} />
         </label>
       </div>
@@ -266,21 +260,21 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
       {calc && (
         <>
           {/* Strip de KPIs */}
-          <div className="kpis" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(150px, 190px))", justifyContent: "start" }}>
+          <div className="kpis u-grid-template-columns-7squv u-jc-start">
             <KpiCard label="A sua média" value={predMedia ?? "–"} sub={predMedia != null ? `${fmtToPar(predMedia - (par as number))} · forma 6m` : undefined} />
             <KpiCard label="Ao handicap" value={predGross} color="var(--accent)" sub={`${fmtToPar(predGross! - (par as number))} · HCP ${Math.round(calc.courseHcp)}`} />
             <KpiCard label="O que já consegue" value={jaGross ?? "–"} sub={jaGross != null ? `${fmtToPar(jaGross - (par as number))} · melhor volta 6m` : "sem dados"} />
             <KpiCard label="O melhor que pode" value={podeGross ?? "–"} color="var(--color-good)" sub={podeGross != null ? `${fmtToPar(podeGross - (par as number))} · teto histórico` : "sem dados"} />
           </div>
 
-          <p className="muted fs-12" style={{ margin: 0 }}>
+          <p className="muted fs-12 u-m-0">
             Para competir, o alvo não é a média — é jogar <strong>ao handicap</strong> (+{Math.round(calc.courseHcp)} ≈ <strong>{predGross}</strong>) ou abaixo.
             A volta <strong>média</strong> (forma 6m) ronda {predMedia}; o melhor que <strong>já fez</strong> neste período dá {jaGross ?? "–"} e o seu <strong>teto</strong> histórico {podeGross ?? "–"}.
             A régua abaixo traduz cada gross no Score Differential que geraria.
           </p>
 
           {/* Régua gross → SD → vs Par (ordenável) */}
-          <table className="dtable" style={{ maxWidth: 420 }}>
+          <table className="dtable u-maxw-420px">
             <thead>
               <tr>
                 <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>
@@ -309,7 +303,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
             </tbody>
           </table>
 
-          <p className="muted fs-11" style={{ margin: 0 }}>
+          <p className="muted fs-11 u-m-0">
             Cenários: "média" = volta típica (forma 6m) · "ao handicap" = jogar ao índice (+HCP) · "já consegue" = melhor volta dos últimos 6 meses · "pode" = melhor differential de sempre (teto). Score Differential = (113 / Slope) × (Gross − CR). O índice é a média das 8 melhores de 20 voltas
             (o potencial num bom dia), por isso joga-se "ao índice" ou melhor só ~1 em cada 4 a 5 voltas (cerca de 20–25% das vezes).
           </p>
@@ -320,30 +314,30 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
       {/* ── Plano de jogo (buraco a buraco) ── */}
       {gamePlan.length > 0 && (
         <details className="card" open>
-          <summary className="fs-13 fw-600" style={{ cursor: "pointer", userSelect: "none" }}>
+          <summary className="fs-13 fw-600 u-cur-pointer u-user-select-none">
             🎯 Plano de jogo — buraco a buraco
             {expPerRound != null && par != null && (
               <span className="muted fw-400 fs-11">{"  ·  total esperado ≈ "}{Math.round(expPerRound)} ({fmtToPar(Math.round(expPerRound) - (par as number))})</span>
             )}
           </summary>
 
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", margin: "8px 0" }}>
+          <div className="u-d-flex u-gap-12px u-fwr-wrap u-ai-center u-m-8px-0">
             <span className="muted fs-11">Drive {driveM} m · 2ª {secondM} m (editável no topo)</span>
-            <span className="muted fs-11" style={{ display: "inline-flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+            <span className="muted fs-11 u-d-inline-flex u-gap-10px u-ai-center u-fwr-wrap">
               <span><Dot c="var(--color-good)" /> atacar</span>
               <span><Dot c="var(--text-3)" /> neutro</span>
               <span><Dot c="var(--color-danger)" /> defender</span>
-              <span><span style={{ display: "inline-block", minWidth: 18, padding: "0 6px", borderRadius: 999, background: "var(--accent)", color: "#fff", fontWeight: 800, fontSize: "var(--fs-10)", textAlign: "center" }}>SI</span> = recebe pancada</span>
+              <span><span className="u-d-inline-block u-minw-18px u-p-0-6px u-br-999px u-bg-accent u-c-fff u-fw-800 u-fs-fs-10 u-ta-center">SI</span> = recebe pancada</span>
             </span>
           </div>
 
-          <table className="dtable" style={{ width: "auto", minWidth: 480 }}>
+          <table className="dtable u-w-auto u-minw-480px">
             <thead>
               <tr>
                 <SortableHdr k="hole" sortKey={pK} sortDir={pD} onSort={pT} className="r">#</SortableHdr>
                 <SortableHdr k="par" sortKey={pK} sortDir={pD} onSort={pT} className="r">Par</SortableHdr>
                 <SortableHdr k="dist" sortKey={pK} sortDir={pD} onSort={pT} className="r">m</SortableHdr>
-                <th style={{ textAlign: "center" }}>SI</th>
+                <th className="u-ta-center">SI</th>
                 <SortableHdr k="exp" sortKey={pK} sortDir={pD} onSort={pT} className="r" title="Volta média (forma 6 meses)">Média</SortableHdr>
                 <th className="r" title="O melhor que JÁ consegue (melhor volta dos últimos 6 meses)">Já</th>
                 <th className="r" title="O melhor que PODE fazer (teto histórico)">Pode</th>
@@ -363,7 +357,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                     <td className="r">{h.hole}</td>
                     <td className="r">{h.par ?? "–"}</td>
                     <td className="r">{h.dist ?? "–"}</td>
-                    <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
+                    <td className="u-ta-center u-ws-nowrap">
                       <span
                         title={h.getsStroke ? "Recebe pancada de handicap neste buraco" : `Stroke index ${h.si ?? "-"}`}
                         style={{
@@ -380,14 +374,14 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                     <td className="r" style={{ color: vsParColor(h.expJa, h.par) }}>{h.expJa != null ? h.expJa.toFixed(1) : "–"}</td>
                     <td className="r" style={{ color: vsParColor(h.expPode, h.par) }}>{h.expPode != null ? h.expPode.toFixed(1) : "–"}</td>
                     <td style={{ color: c, fontWeight: 700, whiteSpace: "nowrap" }} title={h.fieldVsPar != null ? `Field (edição anterior): ${h.fieldVsPar > 0 ? "+" : ""}${h.fieldVsPar.toFixed(1)} vs par` : "Sem dados do field — alcance/heurística"}><Dot c={c} /> {tagL}</td>
-                    <td className="muted" style={{ whiteSpace: "nowrap" }}>{h.note}</td>
+                    <td className="muted u-ws-nowrap">{h.note}</td>
                     {topField && topField.roundKeys.map((rk, ri) => {
                       const cell = topField.holes[h.hole - 1]?.[ri];
                       const hp = topField.par[h.hole - 1];
                       return (
-                        <td key={rk} style={{ textAlign: "center", whiteSpace: "nowrap", padding: "2px 6px" }}>
+                        <td key={rk} className="u-ta-center u-ws-nowrap u-p-2px-6px">
                           {cell && cell.scores.length ? (
-                            <span style={{ display: "inline-flex", gap: 1, justifyContent: "center" }}>
+                            <span className="u-d-inline-flex u-gap-1px u-jc-center">
                               {cell.scores.map((sc, j) => (
                                 <span key={j} className={"sc-score " + scClass(sc, hp)} title={topField.players[j]} style={{ minWidth: 14, fontSize: "var(--fs-10)" }}>{sc}</span>
                               ))}
@@ -401,22 +395,22 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
               })}
             </tbody>
             <tfoot>
-              <tr style={{ fontWeight: 800, background: "var(--bg-header)", borderTop: "2px solid var(--border)" }}>
+              <tr className="u-fw-800 u-bg-bg-header u-bt-2px-solid-border">
                 <td className="r">Σ</td>
                 <td className="r">{gamePlan.reduce((a, h) => a + (h.par ?? 0), 0)}</td>
                 <td className="r">{gamePlan.reduce((a, h) => a + (h.dist ?? 0), 0)}</td>
                 <td />
                 <td className="r">{expPerRound != null ? expPerRound.toFixed(1) : "–"}</td>
-                <td className="r" style={{ color: "var(--accent)" }}>{jaGross ?? "–"}</td>
-                <td className="r" style={{ color: "var(--color-good)" }}>{podeGross ?? "–"}</td>
+                <td className="r u-c-accent">{jaGross ?? "–"}</td>
+                <td className="r u-c-color-good">{podeGross ?? "–"}</td>
                 <td colSpan={2 + (topField?.roundKeys.length ?? 0)} className="muted">
                   {expPerRound != null && par != null ? `\u2248 ${Math.round(expPerRound)} pancadas (${fmtToPar(Math.round(expPerRound) - (par as number))})` : ""}
                 </td>
               </tr>
             </tfoot>
           </table>
-          {!playerData && <p className="muted fs-11" style={{ margin: "6px 0 0" }}>A carregar o histórico do Manuel para o "esperado"…</p>}
-          <p className="muted fs-11" style={{ margin: "6px 0 0" }}>
+          {!playerData && <p className="muted fs-11 u-m-6px-0-0">A carregar o histórico do Manuel para o "esperado"…</p>}
+          <p className="muted fs-11 u-m-6px-0-0">
             "Média/Já/Pode" = pancadas esperadas por buraco em 3 cenários (média da forma 6m · melhor volta recente · teto histórico); cada coluna soma ao total respectivo, e os buracos fáceis passam a birdie no cenário "Pode" (verde = abaixo do par). Base: média do Manuel em buracos do mesmo par e distância ({profile.recent ? "últimos 6 meses" : "todas as voltas"}). "Plano" = dificuldade do buraco para o field na edição anterior (atacar = mais fáceis, defender = mais difíceis). "T5 R#" = scores dos 5 melhores classificados da edição anterior nessa ronda, por ordem de classificação (cor = convenção dos scorecards: birdie/par/bogey). Mostra que os bons fazem birdies onde a média fica acima do par; nome do jogador no hover.
           </p>
         </details>
@@ -425,19 +419,19 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
       {/* ── Alcance / GIR pós-drive (componente partilhado com a Vantagem de Tee) ── */}
       {reach.length > 0 && (
         <details className="card" open>
-          <summary className="fs-13 fw-600" style={{ cursor: "pointer", userSelect: "none" }}>
+          <summary className="fs-13 fw-600 u-cur-pointer u-user-select-none">
             📏 Alcance — greens em regulação (pós-drive)
             <span className="muted fw-400 fs-11">
               {"  ·  "}{notReach.length === 0 ? "todos os greens em regulação" : `${notReach.length} buraco${notReach.length === 1 ? "" : "s"} fora de alcance`}
             </span>
           </summary>
-          <div className="muted fs-11" style={{ margin: "6px 0" }}>
+          <div className="muted fs-11 u-m-6px-0">
             Linhas "após drive" = metros que faltam para o green depois da pancada do tee (par 3 = a própria pancada do green).
             "após 2ª pancada" = o que sobra depois da 2ª pancada grande, só nos par 4/5. ✗ = green fora de alcance em regulação.
             Drive/2ª pancada configurados no plano de jogo acima.
           </div>
           {notReach.length > 0 && (
-            <p className="fs-12" style={{ margin: "0 0 8px", color: "var(--color-warn-dark)" }}>
+            <p className="fs-12 u-m-0-0-8px u-c-color-warn-dark">
               ⚠ Fora de alcance em regulação:{" "}
               {notReach.map(r => `buraco ${r.hole} (par ${r.par}, ${r.dist}m)`).join("; ")}.
             </p>
@@ -449,13 +443,13 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
       {/* ── Estimativa de score do torneio (field) ── */}
       {field.editions.length > 0 && (
         <details className="card" open>
-          <summary className="fs-13 fw-600" style={{ cursor: "pointer", userSelect: "none" }}>
+          <summary className="fs-13 fw-600 u-cur-pointer u-user-select-none">
             🏆 Estimativa de score — {field.editions.length} edi{field.editions.length === 1 ? "ção" : "ções"} anterior{field.editions.length === 1 ? "" : "es"}
             {field.formatLabel && (
               <span className="muted fw-400 fs-11">{"  ·  estimativa sobre "}{field.nCounted} fiáve{field.nCounted === 1 ? "l" : "is"} ({field.formatLabel}{field.minField ? `, field ≥ ${field.minField}` : ""})</span>
             )}
           </summary>
-          <div className="kpis" style={{ margin: "8px 0 12px", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 190px))", justifyContent: "start" }}>
+          <div className="kpis u-m-8px-0-12px u-grid-template-columns-7squv u-jc-start">
             {field.avgWinner != null && <KpiCard label="Ganhar ≈" value={field.avgWinner} sub={field.parPerRound && field.nRoundsTypical ? fmtToPar(field.avgWinner - field.parPerRound * field.nRoundsTypical) : undefined} />}
             {field.avgTop10 != null && <KpiCard label="Top-10 ≈" value={field.avgTop10} sub={field.parPerRound && field.nRoundsTypical ? fmtToPar(field.avgTop10 - field.parPerRound * field.nRoundsTypical) : undefined} />}
             {field.avgMedian != null && <KpiCard label="Mediana ≈" value={field.avgMedian} />}
@@ -464,7 +458,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
             )}
           </div>
           {manuelTot != null && field.nRoundsTypical != null && field.avgWinner != null && (
-            <p className="muted fs-12" style={{ margin: 0 }}>
+            <p className="muted fs-12 u-m-0">
               {(() => {
                 const tot = manuelTot;
                 const dWin = tot - field.avgWinner;
@@ -478,7 +472,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
               })()}
             </p>
           )}
-          <table className="dtable" style={{ width: "auto", minWidth: 420, marginTop: 8 }}>
+          <table className="dtable u-w-auto u-minw-420px u-mt-8px">
             <thead><tr>
               <th>Ano</th>
               <th className="r">Rondas</th>
@@ -499,21 +493,21 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                   <td>{e.year}</td>
                   <td className="r">
                     {e.nRounds}
-                    {e.exclReason === "format" && <span style={{ color: "var(--color-danger)" }} title={`Formato diferente (${e.nRounds}×${e.holesPerRound}) — não conta`}> ⚠</span>}
+                    {e.exclReason === "format" && <span className="u-c-color-danger" title={`Formato diferente (${e.nRounds}×${e.holesPerRound}) — não conta`}> ⚠</span>}
                   </td>
                   <td className="r">{e.winner}</td>
                   <td className="r">{e.top10 ?? "–"}</td>
                   <td className="r">{e.median}</td>
                   <td className="r">
                     {e.field}
-                    {e.exclReason === "field" && <span style={{ color: "var(--color-danger)" }} title={`Field pequeno — não conta`}> ⚠</span>}
+                    {e.exclReason === "field" && <span className="u-c-color-danger" title={`Field pequeno — não conta`}> ⚠</span>}
                   </td>
                 </tr>
                 );
               })}
             </tbody>
           </table>
-          <p className="muted fs-11" style={{ margin: "6px 0 0" }}>
+          <p className="muted fs-11 u-m-6px-0-0">
             Scores totais das edições passadas deste torneio+escalão (member-history USKids).{" "}
             {field.formatLabel && (
               <>A estimativa usa só as {field.nCounted} edi{field.nCounted === 1 ? "ção" : "ções"} fiáve{field.nCounted === 1 ? "l" : "is"} — mesmo formato ({field.formatLabel}, nº de voltas × buracos)

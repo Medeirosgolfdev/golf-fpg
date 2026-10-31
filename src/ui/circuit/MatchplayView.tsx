@@ -118,18 +118,18 @@ function GameHolesStrip({ g, flipped }: { g: MatchplayGame; flipped: boolean }) 
   return (
     // Sem header próprio: os nomes e o badge do resultado estão na linha do jogo
     // logo acima — repeti-los aqui era ruído (visto no ETC Boys 2026).
-    <div style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)", margin: "2px 0 6px" }}>
-      <div style={{ overflowX: "auto" }}>
+    <div className="u-bd-1px-solid-border u-br-radius u-ov-hidden u-bs-0-1px-3px-rgba-0-0-0-_06 u-m-2px-0-6pxx">
+      <div className="u-ox-auto">
         {/* Grelha estilo scorecard da casa: banda verde nos buracos, banda PAR
             subtil, estados por baixo. 100% de largura — sem coluna filler morta. */}
-        <table style={{ borderCollapse: "collapse", width: "100%", fontSize: "var(--fs-11)" }}>
+        <table className="u-border-collapse-collapse u-w-100pc u-fs-fs-11">
           <thead>
-            <tr style={{ background: "var(--accent-light)" }}>
+            <tr className="u-bg-accent-light">
               <th style={cLbl}>Buraco</th>
               {holes.map((h, i) => <th key={i} style={{ ...cSc, ...sep(i), color: "var(--accent-text)", fontWeight: 700 }}>{h.hole}</th>)}
             </tr>
             {holes.some(h => h.par != null) && (
-              <tr style={{ background: "var(--sc-par-bg)" }}>
+              <tr className="u-bg-sc-par-bg">
                 <th style={{ ...cLbl, fontWeight: 400 }}>Par</th>
                 {holes.map((h, i) => <td key={i} style={{ ...cSc, ...sep(i), color: "var(--text-2)" }}>{h.par ?? ""}</td>)}
               </tr>
@@ -151,7 +151,7 @@ function GameHolesStrip({ g, flipped }: { g: MatchplayGame; flipped: boolean }) 
                     {showChip ? (
                       <span className={`mp-hole-chip ${kind}`} style={i === lastPlayed ? { fontWeight: 800, boxShadow: "inset 0 0 0 1px currentColor" } : undefined}>{label}</span>
                     ) : label ? (
-                      <span style={{ color: "var(--text-4)" }}>·</span>
+                      <span className="u-c-text-4">·</span>
                     ) : ""}
                   </td>
                 );
@@ -204,15 +204,15 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
   };
 
   return (
-    <div style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
-      <table className="player-list-table" style={{ fontSize: "var(--fs-12)", width: "100%" }}>
+    <div className="u-bd-1px-solid-border u-br-radius u-ov-hidden u-bs-0-1px-3px-rgba-0-0-0-_06">
+      <table className="player-list-table u-fs-fs-12 u-w-100pc">
         <thead>
           <tr>
             <SortableHdr k="order" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
             <SortableHdr k="format" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Formato</SortableHdr>
-            <th style={{ textAlign: "right", width: "32%" }}>{multi ? "" : <>{sideFlag(home?.iso ?? null, home?.country ?? null)} {home?.name ?? "Casa"}</>}</th>
+            <th className="u-ta-right u-w-32pc">{multi ? "" : <>{sideFlag(home?.iso ?? null, home?.country ?? null)} {home?.name ?? "Casa"}</>}</th>
             <SortableHdr k="result" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Resultado</SortableHdr>
-            <th style={{ width: "32%" }}>{multi ? "" : <>{sideFlag(away?.iso ?? null, away?.country ?? null)} {away?.name ?? "Fora"}</>}</th>
+            <th className="u-w-32pc">{multi ? "" : <>{sideFlag(away?.iso ?? null, away?.country ?? null)} {away?.name ?? "Fora"}</>}</th>
             <th className="tight" />
           </tr>
         </thead>
@@ -231,7 +231,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
                   onClick={() => expandable && toggleGame(id)}
                   title={expandable ? "Clicar para ver o buraco-a-buraco" : undefined}
                 >
-                  <td className="num" style={{ color: "var(--text-muted)" }}>{g.order ?? g.matchNo ?? i + 1}</td>
+                  <td className="num u-c-text-muted">{g.order ?? g.matchNo ?? i + 1}</td>
                   {/* isFinal do GolfBox = jogo TERMINADO (true em todos após o evento) — não rotular */}
                   <td className="tight"><span className="p p-sm p-muted">{fmtFormat(g.format)}</span></td>
                   {/* Sem 🏆/✗/½ aqui: o badge com seta + bold/esbatido já dizem quem venceu;
@@ -239,23 +239,23 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
                   <td style={{ textAlign: "right", whiteSpace: "normal", fontWeight: left?.won ? 700 : 400, color: settled && !left?.won ? "var(--text-3)" : undefined }}>
                     {names(left, "left")}
                   </td>
-                  <td style={{ textAlign: "center", whiteSpace: "nowrap", padding: "4px 14px" }}>
+                  <td className="u-ta-center u-ws-nowrap u-p-4px-14px">
                     {g.result ? (
                       <span className={`mp-res${left?.won ? " mp-arr-l" : right?.won ? " mp-arr-r" : ""}`}>{g.result}</span>
                     ) : (
-                      <span style={{ color: "var(--text-muted)" }}>—</span>
+                      <span className="u-c-text-muted">—</span>
                     )}
                   </td>
                   <td style={{ whiteSpace: "normal", fontWeight: right?.won ? 700 : 400, color: settled && !right?.won ? "var(--text-3)" : undefined }}>
                     {names(right, "right")}
                   </td>
-                  <td className="tight" style={{ color: "var(--text-muted)", whiteSpace: "nowrap" }}>
+                  <td className="tight u-c-text-muted u-ws-nowrap">
                     {expandable ? `${g.playedHoles ?? ""}${g.playedHoles ? "b " : ""}${isOpen ? "▴" : "▾"}` : ""}
                   </td>
                 </tr>
                 {isOpen && (
                   <tr className="row-expanded">
-                    <td colSpan={6} style={{ background: "var(--bg-card)", padding: "4px 8px 6px" }}>
+                    <td colSpan={6} className="u-bg-bg-card u-p-4px-8px-6px">
                       <GameHolesStrip g={g} flipped={flipped} />
                     </td>
                   </tr>
@@ -307,13 +307,13 @@ function RoundTable({ round }: { round: MatchplayRound }) {
   // `.mp-slot` (App.css) anula o margin próprio do <KidsLink>/<ResultMark> — o
   // espaçamento vem todo do slot + gap, igual dos dois lados do badge.
   const teamCell = (s: MatchplayTeamMatch["home"], won: boolean, settled: boolean, align: "right" | "left") => {
-    const link = <span className="mp-slot" style={{ width: 18 }}>{s?.name ? <KidsLink nome={s.name} /> : null}</span>;
+    const link = <span className="mp-slot u-w-18px">{s?.name ? <KidsLink nome={s.name} /> : null}</span>;
     // O 🏆 é bem mais largo que o ✗. Em vez de os encostar a um dos lados (o que
     // alinha um bordo e desalinha o outro), dá-se A MESMA largura à marca e
     // centra-se o glifo lá dentro: ambos os bordos ficam em coluna e a folga
     // para a seta é igual em todas as linhas.
     const mark = (
-      <span className="mp-slot" style={{ width: 18 }}>
+      <span className="mp-slot u-w-18px">
         {settled ? <ResultMark kind={won ? "win" : "loss"} gap={0} style={{ width: 18, textAlign: "center" }} /> : null}
       </span>
     );
@@ -323,7 +323,7 @@ function RoundTable({ round }: { round: MatchplayRound }) {
       // nome e desequilibrava a folga face à seta do lado Fora.
       <span style={{ fontWeight: won ? 700 : 400, color: !settled || won ? undefined : "var(--text-3)" }}>
         {fl ? `${fl} ` : ""}{s?.name ?? "?"}
-        {s?.seed ? <span style={{ fontWeight: 400, color: "var(--text-muted)" }}> ({s.seed})</span> : null}
+        {s?.seed ? <span className="u-fw-400 u-c-text-muted"> ({s.seed})</span> : null}
       </span>
     );
     return (
@@ -340,8 +340,8 @@ function RoundTable({ round }: { round: MatchplayRound }) {
   const nCols = 5 + (hasLabel ? 1 : 0) + (hasTime ? 1 : 0);   // # Casa Resultado Fora Jogos (+ Disputa, Hora)
 
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table className="player-list-table" style={{ fontSize: "var(--fs-12)", width: "100%" }}>
+    <div className="u-ox-auto">
+      <table className="player-list-table u-fs-fs-12 u-w-100pc">
         <thead>
           <tr>
             <SortableHdr k="no" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
@@ -367,9 +367,9 @@ function RoundTable({ round }: { round: MatchplayRound }) {
                   onClick={() => m.games.length && toggle(id)}
                   title={m.games.length ? "Clicar para ver os jogos (foursomes/singles)" : undefined}
                 >
-                  <td className="num" style={{ color: "var(--text-muted)" }}>{m.matchNo ?? i + 1}</td>
-                  <td style={{ textAlign: "right" }}>{teamCell(m.home, m.winner === "home", settled, "right")}</td>
-                  <td style={{ textAlign: "center", whiteSpace: "nowrap", padding: "4px 10px" }}>
+                  <td className="num u-c-text-muted">{m.matchNo ?? i + 1}</td>
+                  <td className="u-ta-right">{teamCell(m.home, m.winner === "home", settled, "right")}</td>
+                  <td className="u-ta-center u-ws-nowrap u-p-4px-10px">
                     {m.result || settled ? (
                       <span className={`mp-res${m.winner === "home" ? " mp-arr-l" : m.winner === "away" ? " mp-arr-r" : ""}`}>
                         {m.result || "✓"}
@@ -377,19 +377,19 @@ function RoundTable({ round }: { round: MatchplayRound }) {
                     ) : m.isStarted ? (
                       <span className="mp-res mp-res-open">em curso</span>
                     ) : (
-                      <span style={{ color: "var(--text-muted)" }}>—</span>
+                      <span className="u-c-text-muted">—</span>
                     )}
                   </td>
                   <td>{teamCell(m.away, m.winner === "away", settled, "left")}</td>
-                  {hasLabel && <td className="tight" style={{ color: "var(--text-muted)", whiteSpace: "nowrap" }}>{m.label ?? "—"}</td>}
-                  {hasTime && <td className="tight" style={{ color: "var(--text-muted)" }}>{m.startTime ?? "—"}</td>}
-                  <td className="tight" style={{ color: "var(--text-muted)" }}>
+                  {hasLabel && <td className="tight u-c-text-muted u-ws-nowrap">{m.label ?? "—"}</td>}
+                  {hasTime && <td className="tight u-c-text-muted">{m.startTime ?? "—"}</td>}
+                  <td className="tight u-c-text-muted">
                     {m.games.length ? `${m.games.length} ${isExpanded ? "▴" : "▾"}` : "—"}
                   </td>
                 </tr>
                 {isExpanded && (
                   <tr className="row-expanded">
-                    <td colSpan={nCols} style={{ background: "var(--bg-card)", padding: "8px 12px 12px" }}>
+                    <td colSpan={nCols} className="u-bg-bg-card u-p-8px-12px-12px">
                       <GamesTable games={m.games} home={m.home} away={m.away} />
                     </td>
                   </tr>
@@ -442,8 +442,8 @@ function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
   }, [round.matches, sortKey, sortDir]);
 
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table className="player-list-table" style={{ fontSize: "var(--fs-12)", width: "100%" }}>
+    <div className="u-ox-auto">
+      <table className="player-list-table u-fs-fs-12 u-w-100pc">
         <thead>
           <tr>
             <SortableHdr k="no" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
@@ -472,7 +472,7 @@ function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
                     if (!s) return <td key={c.key} className="c-muted">—</td>;
                     const cls = !m.isSettled ? "" : s.isLead ? "fw-700" : "c-muted";
                     return (
-                      <td key={c.key} style={{ whiteSpace: "normal" }}>
+                      <td key={c.key} className="u-ws-normal">
                         <span className="mp-nway-cell">
                           <span className={cls}>
                             <SideNames players={(s.playerRefs ?? []).map(r => r.name)} refs={s.playerRefs} />
@@ -490,7 +490,7 @@ function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
                 </tr>
                 {isOpen && (
                   <tr className="row-expanded">
-                    <td colSpan={cols.length + 3} style={{ background: "var(--bg-card)", padding: "8px 12px 12px" }}>
+                    <td colSpan={cols.length + 3} className="u-bg-bg-card u-p-8px-12px-12px">
                       <GamesTable games={m.games} home={null} away={null} multi />
                     </td>
                   </tr>
@@ -512,9 +512,9 @@ function StandingsTable({ rows }: { rows: { pos: number; name: string }[] }) {
     return [...rows].sort((a, b) => (sortKey === "pos" ? a.pos - b.pos : a.name.localeCompare(b.name, "pt")) * dir);
   }, [rows, sortKey, sortDir]);
   return (
-    <div style={{ marginBottom: 20 }}>
-      <div className="fw-700" style={{ marginBottom: 4 }}>Classificação final</div>
-      <table className="player-list-table" style={{ fontSize: "var(--fs-12)", width: "auto", minWidth: 260 }}>
+    <div className="u-mb-20px">
+      <div className="fw-700 u-mb-4px">Classificação final</div>
+      <table className="player-list-table u-fs-fs-12 u-w-auto u-minw-260px">
         <thead>
           <tr>
             <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
@@ -541,19 +541,19 @@ function FlightSection({ fl, showTitle, roundFilter }: { fl: MatchplayFlight; sh
   );
   if (!rounds.length) return null;
   return (
-    <div style={{ marginBottom: 20 }}>
+    <div className="u-mb-20px">
       {showTitle && (
-        <div className="fw-700" style={{ marginBottom: 4 }}>
+        <div className="fw-700 u-mb-4px">
           {fl.name}
-          {fl.format && <span className="p p-sm p-muted" style={{ marginLeft: 6 }}>{fl.format}</span>}
-          {!fl.isCompleted && <span className="p p-sm" style={{ marginLeft: 6 }}>em curso</span>}
+          {fl.format && <span className="p p-sm p-muted u-ml-6px">{fl.format}</span>}
+          {!fl.isCompleted && <span className="p p-sm u-ml-6px">em curso</span>}
         </div>
       )}
       {rounds.map(r => (
-        <div key={r.number} style={{ marginBottom: 12 }}>
-          <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, color: "var(--text-2)", margin: "12px 0 6px", textTransform: "uppercase", letterSpacing: "0.4px" }}>
+        <div key={r.number} className="u-mb-12px">
+          <div className="u-fs-fs-12 u-fw-700 u-c-text-2 u-m-12px-0-6px u-tt-uppercase u-ls-0_4px">
             {r.name || `Ronda ${r.number}`}
-            {r.date && <span style={{ fontWeight: 400, color: "var(--text-muted)" }}> · {fmtRoundDate(r.date)}</span>}
+            {r.date && <span className="u-fw-400 u-c-text-muted"> · {fmtRoundDate(r.date)}</span>}
           </div>
           {!r.matches.length ? <div className="muted">Sem confrontos.</div>
             : r.matches.some(m => m.sides) ? <MultiWayRoundTable round={r} />
@@ -586,7 +586,7 @@ export default function MatchplayView({ data, roundPicker = false }: {
   return (
     // Largura contida: um confronto são 2 nomes + um badge — esticar isto pela
     // página toda afastava os nomes do resultado e perdia-se a leitura.
-    <div style={{ maxWidth: 880 }}>
+    <div className="u-maxw-880px">
       {showPicker && (
         <div className="mp-round-picker">
           <div className="segmented-toggle" role="tablist" aria-label="Ronda">
@@ -612,13 +612,13 @@ export default function MatchplayView({ data, roundPicker = false }: {
       {/* Chave com o nome: no mitarjeta os flights partilham o id do torneio. */}
       {data.flights.map(fl => <FlightSection key={`${fl.competitionId}-${fl.name}`} fl={fl} roundFilter={roundFilter} showTitle={multiFlight || !!(fl.format && fl.format !== "KnockOut")} />)}
       {/* Só faz sentido com confrontos de equipas (quadros individuais não têm jogos). */}
-      {anyGames && <div style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
+      {anyGames && <div className="u-fs-fs-11 u-c-text-muted">
         {nway
           ? <>Clica num confronto para ver os duelos de cada par de lados, e num duelo com cartão para o buraco-a-buraco</>
           : <>Clica num confronto para ver os jogos (foursomes e singles), e num jogo para o buraco-a-buraco</>}
         {" "}· estado corrido na perspectiva {nway ? "do jogador" : "da equipa"} da coluna ESQUERDA
-        (<span style={{ color: "var(--accent)", fontWeight: 700 }}>UP</span> à frente,{" "}
-        <span style={{ color: "var(--medal-bronze)", fontWeight: 700 }}>DN</span> atrás).
+        (<span className="u-c-accent u-fw-700">UP</span> à frente,{" "}
+        <span className="u-c-medal-bronze u-fw-700">DN</span> atrás).
       </div>}
     </div>
   );

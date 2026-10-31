@@ -119,7 +119,7 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
   const isActive = !!(filter.name || filter.escs.length || filter.tees.length || filter.club || filter.sex || selYears.length);
   const hasOpts = clubs.length > 1 || escs.length > 1 || tees.length > 1 || sexes.length === 2 || years.length > 1;
   if (total < 8 && !isActive) return null;
-  const sep = <span className="fs-11" style={{ color: "var(--border)" }}>|</span>;
+  const sep = <span className="fs-11 u-c-border">|</span>;
 
   return (
     <div className="filter-bar">
@@ -127,7 +127,7 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
         <span className="search-icon-abs">🔍</span>
         <input type="text" placeholder="Nome ou clube…" value={filter.name}
           onChange={(e) => onChange({ ...filter, name: e.target.value })}
-          className="input-search" style={{ width: 140 }} />
+          className="input-search u-w-140px" />
       </div>
       {hasOpts && sep}
       {escs.length > 1 && escs.map((e) => (
@@ -139,7 +139,7 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
         return (
           <FilterChip key={t} active={filter.tees.includes(t)} color={hex}
             onClick={() => onChange({ ...filter, tees: toggleArr(filter.tees, t) })}>
-            <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <span className="u-d-flex u-ai-center u-gap-4px">
               <span className="tee-dot-sq" style={{ background: hex }} />{t}
             </span>
           </FilterChip>
@@ -169,7 +169,7 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
       )}
       {isActive && (
         <>
-          <span className="fs-10 c-muted" style={{ marginLeft: 2 }}>{shown} de {total}</span>
+          <span className="fs-10 c-muted u-ml-2px">{shown} de {total}</span>
           <button onClick={() => onChange(EMPTY_FILTER)} className="filter-clear-btn fs-10 c-muted">✕ limpar</button>
         </>
       )}

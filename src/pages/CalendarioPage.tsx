@@ -307,7 +307,7 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
             }} title={livreMini ? `Livre — ${freeDayReason(d.date)}` : sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : undefined}>
               {d.date.getDate()}
               {has && d.inMonth && !isToday && (
-                <span className="cal-dot-indicator" style={{ width: 3, height: 3, background: "var(--accent)" }} />
+                <span className="cal-dot-indicator u-w-3px u-h-3px u-bg-accent" />
               )}
             </div>
           );
@@ -328,9 +328,8 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
     return () => document.removeEventListener("mousedown", h);
   }, [onClose]);
   return (
-    <div className="cal-overlay" style={{ backdropFilter: "blur(3px)" }}>
-      <div ref={ref} style={{ background: "var(--bg-card)", borderRadius: "var(--radius-xl)",
-        boxShadow: "var(--shadow-lg)", width: 380, overflow: "hidden", animation: "calPopIn 0.2s ease" }}>
+    <div className="cal-overlay u-backdrop-filter-blur-3px">
+      <div ref={ref} className="u-bg-bg-card u-br-radius-xl u-bs-shadow-lg u-w-380px u-ov-hidden u-animation-calpopin-0_2s-ease">
         <div style={{ background: hl ? hl.bg : color,
           padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
  <span className="uppercase fw-600 fs-12" style={{ color: hl ? hl.text : "#fff", letterSpacing: "0.04em" }}>
@@ -349,9 +348,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
             {event.campo && <InfoRow icon="⛳" label={event.campo} />}
           </div>
           {event.note && (
-            <div className="fs-12 fw-600" style={{ marginTop: 12, padding: "8px 10px",
-              borderRadius: "var(--radius)", background: "var(--bg-warn)",
-              border: "1px solid var(--color-warn)", color: "var(--color-warn-dark)" }}>
+            <div className="fs-12 fw-600 u-mt-12px u-p-8px-10px u-br-radius u-bg-bg-warn u-bd-1px-solid-color-warn u-c-color-warn-dark">
               {event.note}
             </div>
           )}
@@ -399,8 +396,7 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
         const isCur = month === miDe(today);
         return (
         <div key={month} ref={isCur ? todayMonthRef : undefined}>
-          <div className="uppercase fs-13 fw-700" style={{ color: "var(--accent)",
-            letterSpacing: "0.04em", marginBottom: 8, paddingBottom: 4, borderBottom: "2px solid var(--accent-light)" }}>
+          <div className="uppercase fs-13 fw-700 u-c-accent u-ls-0_04em u-mb-8px u-pb-4px u-bb-2px-solid-accent-light">
             {monthLabel(miMes(month))} {miAno(month)}
           </div>
           <div className="d-flex flex-col gap-4">
@@ -427,9 +423,9 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
                   </div>
                   <div style={{ width: 4, alignSelf: "stretch", borderRadius: "var(--radius-xs)",
                     background: hl ? hl.bg : c, flexShrink: 0 }} />
-                  <div className="flex-1" style={{ minWidth: 0 }}>
-                    <div className="text-ellipsis fs-13 fw-600" style={{ color: "var(--text)" }}>
-                      {hl ? `${hl.icon} ` : ""}{omNivel(e) ? <span className="p p-sm" style={{ marginRight: 4, fontWeight: 800, fontSize: "var(--fs-9)" }} title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`}>{omNivel(e)}</span> : null}{e.title}
+                  <div className="flex-1 u-minw-0">
+                    <div className="text-ellipsis fs-13 fw-600 u-c-text">
+                      {hl ? `${hl.icon} ` : ""}{omNivel(e) ? <span className="p p-sm u-mr-4px u-fw-800 u-fs-fs-9" title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`}>{omNivel(e)}</span> : null}{e.title}
                     </div>
                     <div className="fs-11 c-text-3 mt-4" >
                       {e.modalidade}{e.modalidade && " · "}{e.campo}
@@ -628,15 +624,15 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                   <span className="cal-toggle-label">{GROUP_LABELS[g]}</span>
                   <span className="fs-10 c-text-3 mono">{groupCount}</span>
                 </button>
-                <div className="d-flex flex-col gap-1" style={{ paddingLeft: 8, marginTop: 2 }}>
+                <div className="d-flex flex-col gap-1 u-pl-8px u-mt-2px">
                   {cals.map(cal => {
                     const calEvts = allEvents.filter(e => e.calId === cal.id).sort((a, b) => a.date.getTime() - b.date.getTime());
                     const isExpanded = expandedCal === cal.id;
                     return (
                       <div key={cal.id}>
-                        <div className="flex-center" style={{ gap: 0 }}>
+                        <div className="flex-center u-gap-0">
                           {/* Checkbox */}
-                          <button onClick={() => toggleCal(cal.id)} className="shrink-0" style={{ width: 28, height: 26, border: "none", cursor: "pointer", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>
+                          <button onClick={() => toggleCal(cal.id)} className="shrink-0 u-w-28px u-h-26px u-bd-none u-cur-pointer u-bg-transparent u-d-flex u-ai-center u-jc-center u-p-0">
                             <span style={{
                               width: 12, height: 12, borderRadius: "var(--radius-xs)", transition: "all 0.15s",
                               background: enabledCals.has(cal.id) ? cal.color : "transparent",
@@ -656,8 +652,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                               color: enabledCals.has(cal.id) ? "var(--text)" : "var(--text-3)",
                               flex: 1, fontWeight: isExpanded ? 600 : enabledCals.has(cal.id) ? 500 : 400,
                             }}>{cal.name}</span>
-                            <span className="fs-10" style={{ fontFamily: "var(--font-mono)",
-                              color: "var(--text-3)", flexShrink: 0 }}>{calEvts.length}</span>
+                            <span className="fs-10 u-ff-font-mono u-c-text-3 u-fsh-0">{calEvts.length}</span>
                             <span className="fs-10" style={{ color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
                               transform: isExpanded ? "rotate(180deg)" : "none" }}>▼</span>
                           </button>
@@ -683,7 +678,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                                   onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
                                   onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
                                   <span className="fs-10 fw-600 shrink-0" style={{ fontFamily: "var(--font-mono)", color: cal.color, minWidth: 30 }}>{dd}</span>
-                                  <span className="text-ellipsis fs-10 ta-left" style={{ color: "var(--text-2)", flex: 1 }}>{ev.title}</span>
+                                  <span className="text-ellipsis fs-10 ta-left u-c-text-2 u-fl-1">{ev.title}</span>
                                 </button>
                               );
                             })}
@@ -701,28 +696,22 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
 
       {/* ── Main ── */}
  <div className="flex-1 d-flex flex-col overflow-hidden">
-        <div style={{ borderBottom: "1px solid var(--border-light)", flexShrink: 0 }}>
-          <div className="gap-8 flex-wrap" style={{ display: "flex", alignItems: "center", padding: "8px 12px" }}>
+        <div className="u-bb-1px-solid-border-light u-fsh-0">
+          <div className="gap-8 flex-wrap u-d-flex u-ai-center u-p-8px-12px">
             <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
               {sidebarOpen ? "◀" : "▶"}
             </button>
-            <h2 className="cal-month-title fs-14"  style={{ margin: 0, whiteSpace: "nowrap" }}>Calendário {miAno(currentMonth)}</h2>
-            <button onClick={goToday} className="p p-filter shrink-0" title="Ir para hoje" style={{ opacity: 1 }}>Hoje</button>
-            <div ref={searchRef} style={{ position: "relative", flex: "1 1 120px", minWidth: 100, maxWidth: 220 }}>
+            <h2 className="cal-month-title fs-14 u-m-0 u-ws-nowrap">Calendário {miAno(currentMonth)}</h2>
+            <button onClick={goToday} className="p p-filter shrink-0 u-op-1" title="Ir para hoje">Hoje</button>
+            <div ref={searchRef} className="u-pos-relative u-fl-1-1-120px u-minw-100px u-maxw-220px">
               <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
                 onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
                 placeholder="Pesquisar…"
-                style={{ width: "100%", padding: "5px 8px 5px 26px", border: "1px solid var(--border)",
-                  borderRadius: "var(--radius)", fontSize: "var(--fs-11)", fontFamily: "inherit",
-                  background: "var(--bg-card)", color: "var(--text)", outline: "none" }}
+                className="u-w-100pc u-p-5px-8px-5px-26px u-bd-1px-solid-border u-br-radius u-fs-fs-11 u-ff-inherit u-bg-bg-card u-c-text u-outline-none"
                 onKeyDown={e => { if (e.key === "Escape") { setSearchOpen(false); setSearchQ(""); } }} />
-              <span style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)",
-                fontSize: "var(--fs-12)", color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+              <span className="u-pos-absolute u-left-8px u-top-50pc u-transform-translatey-50pc u-fs-fs-12 u-c-text-muted u-pointer-events-none">🔍</span>
               {searchOpen && searchResults.length > 0 && (
-                <div style={{ position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
-                  background: "var(--bg-card)", border: "1px solid var(--border-light)",
-                  borderRadius: "var(--radius-lg)", boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-                  maxHeight: 320, overflowY: "auto", zIndex: "var(--z-sidebar)" }}>
+                <div className="u-pos-absolute u-top-100pc u-left-0 u-right-0 u-mt-4px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius-lg u-bs-0-8px-24px-rgba-0-0-0-0_12 u-maxh-320px u-oy-auto u-z-z-sidebar">
                   {searchResults.map(ev => {
                     const cal = CAL_MAP.get(ev.calId);
                     const d = ev.date;
@@ -738,10 +727,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                 </div>
               )}
               {searchOpen && searchQ.length >= 2 && searchResults.length === 0 && (
-                <div style={{ position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
-                  background: "var(--bg-card)", border: "1px solid var(--border-light)",
-                  borderRadius: "var(--radius-lg)", padding: "12px 16px",
-                  color: "var(--text-3)" }} className="fs-11 ta-c">
+                <div className="fs-11 ta-c u-pos-absolute u-top-100pc u-left-0 u-right-0 u-mt-4px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius-lg u-p-12px-16px u-c-text-3">
                   Nenhum evento encontrado
                 </div>
               )}
@@ -750,14 +736,14 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
             <TabRow className="ml-auto shrink-0" active={viewMode} onChange={setViewMode}
               tabs={[{ key: "month" as ViewMode, label: "Mês" }, { key: "list" as ViewMode, label: "Lista" }]} />
           </div>
-          <div className="gap-8" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 12px 8px" }}>
+          <div className="gap-8 u-d-flex u-ai-center u-jc-space-between u-p-4px-12px-8px">
             <button onClick={() => setCurrentMonth(m => Math.max(0, m-1))} title="Mês anterior" disabled={currentMonth <= 0}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth <= 0 ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: "var(--fs-18)", color: currentMonth <= 0 ? "var(--border)" : "var(--text-2)",
                 flexShrink: 0 }}>‹</button>
-            <span className="fw-700 ta-c" style={{ fontSize: "var(--fs-15)", color: "var(--text)", flex: 1 }}>
+            <span className="fw-700 ta-c u-fs-fs-15 u-c-text u-fl-1">
               {monthLabel(miMes(currentMonth))} {miAno(currentMonth)}
             </span>
             <span className="fs-11 c-text-3 mono shrink-0" >{visibleEvents.length} provas</span>
@@ -776,11 +762,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
           )}
           {viewMode === "month" ? (
             <div className="cal-content">
-              <div className="cal-week-header" style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
-                borderBottom: "1px solid var(--border-light)", marginBottom: 4 }}>
+              <div className="cal-week-header u-d-grid u-grid-template-columns-6cy1v u-bb-1px-solid-border-light u-mb-4px">
                 {DAYS_PT.map((d, i) => (
-                  <div key={i} className="uppercase ta-c fs-11 fw-600 cal-dow" style={{ padding: "8px 0",
-                    color: "var(--text-3)", letterSpacing: "0.04em" }}>{d}</div>
+                  <div key={i} className="uppercase ta-c fs-11 fw-600 cal-dow u-p-8px-0 u-c-text-3 u-ls-0_04em">{d}</div>
                 ))}
               </div>
               <div className="cal-month-grid" style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(7,1fr)", gridTemplateRows: `repeat(${gridRows},1fr)` }}>
@@ -822,7 +806,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
  <div className="fs-10 fw-800" style={{ color: hl.text, opacity: 0.5 }}>
                           <span className="fs-10">{MONTHS_SHORT[d.date.getMonth()]}</span> {d.date.getDate()}
                         </div>
-                        <div className="fs-14" style={{ lineHeight: 1 }}>{hl.icon}</div>
+                        <div className="fs-14 u-lh-1">{hl.icon}</div>
                         {isFirst ? (
                           <div className="fs-10 fw-900 ta-c mt-1" style={{ color: hl.text, lineHeight: 1.1, letterSpacing: "0.02em" }}>
                             {titleLines.map((l, j) => <div key={j}>{l}</div>)}
@@ -893,12 +877,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                           {showTitle ? (
                             <>
                               {omNivel(e) ? (
-                                <span title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`} style={{
-                                  display: "inline-block", minWidth: 10, marginRight: 3,
-                                  padding: "0 3px", borderRadius: "var(--radius-xs)", fontSize: "var(--fs-8)", fontWeight: 800,
-                                  background: "rgba(255,255,255,0.85)", color: "var(--text)",
-                                  lineHeight: 1.6, verticalAlign: "middle",
-                                }}>{omNivel(e)}</span>
+                                <span title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`} className="u-d-inline-block u-minw-10px u-mr-3px u-p-0-3px u-br-radius-xs u-fs-fs-8 u-fw-800 u-bg-rgba-255-255-255-0_85 u-c-text u-lh-1_6 u-va-middle">{omNivel(e)}</span>
                               ) : null}
                               {e.title}
                             </>
@@ -911,8 +890,8 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                           onClick={ev => { ev.stopPropagation(); setDayPopup(d.date); }}
                           onKeyDown={ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); ev.stopPropagation(); setDayPopup(d.date); } }}
                           title="Ver todos os eventos deste dia"
-                          className="fs-10 c-text-3 ta-c fw-600"
-                          style={{ cursor: "pointer", borderRadius: "var(--radius-xs)", padding: "0 2px" }}
+                          className="fs-10 c-text-3 ta-c fw-600 u-cur-pointer u-br-radius-xs u-p-0-2px"
+
                           onMouseEnter={ev => (ev.currentTarget.style.background = "var(--bg-hover)")}
                           onMouseLeave={ev => (ev.currentTarget.style.background = "transparent")}>
                           +{dayEvts.length - cellCap} mais
@@ -953,31 +932,23 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
   }, [onClose]);
   const title = `${DAY_NAMES[date.getDay()]}, ${date.toLocaleDateString("pt-PT", { day: "numeric", month: "long" })} ${date.getFullYear()}`;
   return (
-    <div className="cal-overlay" style={{ backdropFilter: "blur(3px)" }}>
-      <div ref={ref} style={{ background: "var(--bg-card)", borderRadius: "var(--radius-xl)",
-        boxShadow: "var(--shadow-lg)", width: 380, maxHeight: "80vh", overflow: "hidden",
-        display: "flex", flexDirection: "column", animation: "calPopIn 0.2s ease" }}>
-        <div style={{ background: "var(--accent)", padding: "14px 18px", display: "flex",
-          justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
-          <span className="fw-600 fs-13" style={{ color: "#fff" }}>{title}</span>
-          <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ background: "rgba(255,255,255,0.2)",
-            border: "none", color: "#fff", width: 26, height: 26, borderRadius: "50%", cursor: "pointer",
-            fontSize: "var(--fs-14)", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+    <div className="cal-overlay u-backdrop-filter-blur-3px">
+      <div ref={ref} className="u-bg-bg-card u-br-radius-xl u-bs-shadow-lg u-w-380px u-maxh-80vh u-ov-hidden u-d-flex u-fd-column u-animation-calpopin-0_2s-ease">
+        <div className="u-bg-accent u-p-14px-18px u-d-flex u-jc-space-between u-ai-center u-fsh-0">
+          <span className="fw-600 fs-13 u-c-fff">{title}</span>
+          <button onClick={onClose} title="Fechar" aria-label="Fechar" className="u-bg-rgba-255-255-255-0_2 u-bd-none u-c-fff u-w-26px u-h-26px u-br-50pc u-cur-pointer u-fs-fs-14 u-d-flex u-ai-center u-jc-center">✕</button>
         </div>
-        <div className="cal-sidebar d-flex flex-col gap-4" style={{ overflowY: "auto" }}>
+        <div className="cal-sidebar d-flex flex-col gap-4 u-oy-auto">
           {events.map(e => (
-            <button key={e.id} onClick={() => onSelect(e)} style={{
-              display: "flex", alignItems: "center", gap: 10, padding: "8px 10px", width: "100%",
-              border: "none", cursor: "pointer", fontFamily: "inherit", textAlign: "left",
-              background: "transparent", borderRadius: "var(--radius)", transition: "background 0.15s" }}
+            <button key={e.id} onClick={() => onSelect(e)} className="u-d-flex u-ai-center u-gap-10px u-p-8px-10px u-w-100pc u-bd-none u-cur-pointer u-ff-inherit u-ta-left u-bg-transparent u-br-radius u-transition-background-0_15s"
               onMouseEnter={ev => (ev.currentTarget.style.background = "var(--bg-hover)")}
               onMouseLeave={ev => (ev.currentTarget.style.background = "transparent")}>
               <span style={{ width: 4, alignSelf: "stretch", borderRadius: "var(--radius-xs)",
                 background: calColor(e), flexShrink: 0 }} />
-              <span className="flex-1" style={{ minWidth: 0 }}>
-                <span className="text-ellipsis fs-13 fw-600" style={{ color: "var(--text)", display: "block" }}>{e.title}</span>
+              <span className="flex-1 u-minw-0">
+                <span className="text-ellipsis fs-13 fw-600 u-c-text u-d-block">{e.title}</span>
                 {(e.modalidade || e.campo) && (
-                  <span className="fs-11 c-text-3" style={{ display: "block" }}>
+                  <span className="fs-11 c-text-3 u-d-block">
                     {e.modalidade}{e.modalidade && e.campo && " · "}{e.campo}
                   </span>
                 )}

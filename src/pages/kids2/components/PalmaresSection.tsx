@@ -65,23 +65,19 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
   const hiddenCount = allWins.length - visible.length;
 
   return (
-    <section style={{ marginBottom: 4 }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px", gap: 8 }}>
-        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>
+    <section className="u-mb-4px">
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px u-gap-8px">
+        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">
           🏆 Palmarès
         </h3>
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+        <span className="u-fs-fs-11 u-c-text-3">
           {showAll
             ? `${allWins.length} vitórias`
             : `${visible.length} de ${allWins.length} vitórias · recentes + ★★★+`}
         </span>
       </div>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-        gap: 10,
-      }}>
+      <div className="u-d-grid u-grid-template-columns-u0vn1 u-gap-10px">
         {visible.map((w) => (
           <WinCard key={w.tid + "_" + w.flight.flightKey} win={w} />
         ))}
@@ -90,13 +86,7 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
       {hiddenCount > 0 && (
         <button
           onClick={() => setShowAll(true)}
-          style={{
-            marginTop: 10, padding: "6px 14px",
-            background: "var(--bg-muted)", border: "1px solid var(--border-light)",
-            borderRadius: "var(--radius)", fontSize: "var(--fs-12)", fontWeight: 600,
-            color: "var(--text-2)", cursor: "pointer",
-            width: "100%",
-          }}
+          className="u-mt-10px u-p-6px-14px u-bg-bg-muted u-bd-1px-solid-border-light u-br-radius u-fs-fs-12 u-fw-600 u-c-text-2 u-cur-pointer u-w-100pc"
         >
           Ver as restantes {hiddenCount} {hiddenCount === 1 ? "vitória" : "vitórias"} (inclui ★)
         </button>
@@ -104,13 +94,7 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
       {showAll && allWins.length > DEFAULT_LIMIT && (
         <button
           onClick={() => setShowAll(false)}
-          style={{
-            marginTop: 10, padding: "6px 14px",
-            background: "var(--bg)", border: "1px solid var(--border-light)",
-            borderRadius: "var(--radius)", fontSize: "var(--fs-11)", fontWeight: 600,
-            color: "var(--text-3)", cursor: "pointer",
-            width: "100%",
-          }}
+          className="u-mt-10px u-p-6px-14px u-bg-bg u-bd-1px-solid-border-light u-br-radius u-fs-fs-11 u-fw-600 u-c-text-3 u-cur-pointer u-w-100pc"
         >
           Recolher (mostrar só destaques)
         </button>
@@ -128,34 +112,22 @@ function WinCard({ win }: { win: WinCard }) {
   const url = t.links?.[0]?.url;
 
   return (
-    <div style={{
-      // Discreto: fundo de card normal, sem gradient amarelo agressivo.
-      // O destaque dourado fica apenas no troféu + estrelas.
-      background: "var(--bg-card)",
-      border: "1px solid var(--border-light)",
-      borderLeft: "3px solid var(--medal-gold-strong)",
-      borderRadius: "var(--radius)",
-      padding: "10px 12px",
-      display: "flex", flexDirection: "column", gap: 6,
-      minHeight: 90,
-    }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 6 }}>
-        <span style={{ fontSize: "var(--fs-16)", lineHeight: 1 }}>🏆</span>
-        <span title={`${win.stars}/5 estrelas de prestígio`} style={{
-          fontSize: "var(--fs-10)", letterSpacing: 0.3, color: "var(--medal-gold-strong)", flexShrink: 0, fontWeight: 600,
-        }}>
+    <div className="u-bg-bg-card u-bd-1px-solid-border-light u-bl-3px-solid-medal-gold-strong u-br-radius u-p-10px-12px u-d-flex u-fd-column u-gap-6px u-minh-90px">
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-gap-6px">
+        <span className="u-fs-fs-16 u-lh-1">🏆</span>
+        <span title={`${win.stars}/5 estrelas de prestígio`} className="u-fs-fs-10 u-ls-0_3px u-c-medal-gold-strong u-fsh-0 u-fw-600">
           {formatStars(win.stars)}
         </span>
       </div>
-      <div style={{ flex: 1 }}>
-        <div style={{ fontSize: "var(--fs-13)", fontWeight: 700, color: "var(--text)", lineHeight: 1.25 }}>
+      <div className="u-fl-1">
+        <div className="u-fs-fs-13 u-fw-700 u-c-text u-lh-1_25">
           {t.name || t.shortName || win.tid}
         </div>
-        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 3 }}>
+        <div className="u-fs-fs-10 u-c-text-3 u-mt-3px">
           {monthLabel ? `${monthLabel} ${year}` : year} · {win.flight.label}
         </div>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "var(--fs-11)", flexWrap: "wrap" }}>
+      <div className="u-d-flex u-ai-center u-gap-6px u-fs-fs-11 u-fwr-wrap">
         {win.toPar != null && (
           <span style={{
             fontWeight: 700,
@@ -165,19 +137,12 @@ function WinCard({ win }: { win: WinCard }) {
           </span>
         )}
         {win.manuelToPar != null && (
-          <span title="±par do Manuel neste torneio" style={{
-            fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-            background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)",
-            border: "1px solid var(--color-good-dark)",
-          }}>
+          <span title="±par do Manuel neste torneio" className="u-fs-fs-9 u-p-1px-5px u-br-3px u-fw-700 u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-bd-1px-solid-color-good-dark">
             M: {win.manuelToPar === 0 ? "E" : win.manuelToPar > 0 ? `+${win.manuelToPar}` : String(win.manuelToPar)}
           </span>
         )}
         {url && (
-          <a href={url} target="_blank" rel="noreferrer" style={{
-            marginLeft: "auto", color: "var(--text-3)", textDecoration: "none",
-            fontSize: "var(--fs-12)", fontWeight: 600,
-          }} title="Abrir resultados">↗</a>
+          <a href={url} target="_blank" rel="noreferrer" className="u-ml-auto u-c-text-3 u-td-none u-fs-fs-12 u-fw-600" title="Abrir resultados">↗</a>
         )}
       </div>
     </div>

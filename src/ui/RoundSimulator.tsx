@@ -1110,33 +1110,19 @@ export function RoundSimulator({
     <div>
       {/* ── Toolbar: guardar / carregar / PDF / limpar ── */}
       <div
-        className="gap-8"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          marginBottom: 14,
-          flexWrap: "wrap",
-        }}
+        className="gap-8 u-d-flex u-ai-center u-mb-14px u-fwr-wrap"
+
       >
         <span className="muted fs-11">
           Simula rondas sequencialmente — SD directo, Campo+Tee+Gross ou CR/Slope manual+Gross · 18 · F9 · B9 suportados
           {playerSex && ` · tees filtrados por ${playerSex === "M" ? "Masculino" : "Feminino"}`}.
         </span>
         <div
-          style={{
-            marginLeft: "auto",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-          }}
+          className="u-ml-auto u-d-flex u-ai-center u-gap-6px"
         >
           {savedTs && (
             <span
-              style={{
-                fontSize: "var(--fs-10)",
-                color: "var(--color-good)",
-                fontWeight: 600,
-              }}
+              className="u-fs-fs-10 u-c-color-good u-fw-600"
             >
               ✓ guardado
             </span>
@@ -1144,16 +1130,7 @@ export function RoundSimulator({
           {storageKey && (
             <button
               onClick={saveNow}
-              style={{
-                fontSize: "var(--fs-11)",
-                padding: "3px 10px",
-                borderRadius: "var(--radius)",
-                border: "1px solid var(--line)",
-                background: "transparent",
-                cursor: "pointer",
-                color: "var(--text-2)",
-                fontWeight: 600,
-              }}
+              className="u-fs-fs-11 u-p-3px-10px u-br-radius u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-c-text-2 u-fw-600"
             >
               💾 Guardar
             </button>
@@ -1161,15 +1138,7 @@ export function RoundSimulator({
           {storageKey && hasSaved && (
             <button
               onClick={loadSaved}
-              style={{
-                fontSize: "var(--fs-11)",
-                padding: "3px 10px",
-                borderRadius: "var(--radius)",
-                border: "1px solid var(--line)",
-                background: "transparent",
-                cursor: "pointer",
-                color: "var(--text-2)",
-              }}
+              className="u-fs-fs-11 u-p-3px-10px u-br-radius u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-c-text-2"
             >
               📂 Repor
             </button>
@@ -1177,31 +1146,14 @@ export function RoundSimulator({
           {validResults.length > 0 && (
             <button
               onClick={exportPDF}
-              style={{
-                fontSize: "var(--fs-11)",
-                padding: "3px 10px",
-                borderRadius: "var(--radius)",
-                border: "1px solid var(--line)",
-                background: "transparent",
-                cursor: "pointer",
-                color: "var(--chart-2)",
-                fontWeight: 600,
-              }}
+              className="u-fs-fs-11 u-p-3px-10px u-br-radius u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-c-chart-2 u-fw-600"
             >
               📄 PDF
             </button>
           )}
           <button
             onClick={clearAll}
-            style={{
-              fontSize: "var(--fs-11)",
-              padding: "3px 10px",
-              borderRadius: "var(--radius)",
-              border: "1px solid var(--line)",
-              background: "transparent",
-              cursor: "pointer",
-              color: "var(--text-3)",
-            }}
+            className="u-fs-fs-11 u-p-3px-10px u-br-radius u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-c-text-3"
           >
             ✕ Limpar
           </button>
@@ -1210,8 +1162,8 @@ export function RoundSimulator({
 
       {/* ── Cards das rondas ── */}
       <div
-        className="gap-8 mb-16"
-        style={{ display: "flex", flexDirection: "column" }}
+        className="gap-8 mb-16 u-d-flex u-fd-column"
+
       >
         {rounds.map((round, idx) => {
           const is9 = is9hMode(round.holesMode);
@@ -1260,8 +1212,8 @@ export function RoundSimulator({
             >
               {/* Cabeçalho */}
               <div
-                className="gap-8 mb-10"
-                style={{ display: "flex", alignItems: "center" }}
+                className="gap-8 mb-10 u-d-flex u-ai-center"
+
               >
                 {/* Número */}
                 <span
@@ -1332,12 +1284,7 @@ export function RoundSimulator({
                 {/* Resultado inline */}
                 {result?.valid && (
                   <div
-                    style={{
-                      marginLeft: "auto",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
-                    }}
+                    className="u-ml-auto u-d-flex u-ai-center u-gap-6px"
                   >
                     {result.exceptionalAdj !== 0 && (
                       <span
@@ -1361,11 +1308,7 @@ export function RoundSimulator({
                     )}
                     {result.entersTop && (
                       <span
-                        style={{
-                          fontSize: "var(--fs-10)",
-                          fontWeight: 700,
-                          color: "var(--color-good)",
-                        }}
+                        className="u-fs-fs-10 u-fw-700 u-c-color-good"
                       >
                         ★ top-
                         {finalTopRanks.get(round.id)
@@ -1373,7 +1316,7 @@ export function RoundSimulator({
                           : ""}
                       </span>
                     )}
-                    <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+                    <span className="u-fs-fs-11 u-c-text-3">
                       HCP
                     </span>
                     <span
@@ -1432,18 +1375,13 @@ export function RoundSimulator({
 
               {/* Inputs */}
               <div
-                style={{
-                  display: "flex",
-                  gap: 10,
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                }}
+                className="u-d-flex u-gap-10px u-fwr-wrap u-ai-center"
               >
                 {round.mode === "sd" ? (
                   <>
                     <label
-                      className="fs-13 fw-600"
-                      style={{ display: "flex", alignItems: "center", gap: 6 }}
+                      className="fs-13 fw-600 u-d-flex u-ai-center u-gap-6px"
+
                     >
                       {is9 ? "SD 9h:" : "SD:"}
                       <input
@@ -1456,18 +1394,7 @@ export function RoundSimulator({
                             sdInput: e.target.value,
                           })
                         }
-                        style={{
-                          width: 90,
-                          padding: "4px 8px",
-                          borderRadius: "var(--radius)",
-                          border: "1px solid var(--line)",
-                          background: "var(--bg-card)",
-                          color: "var(--text-1)",
-                          fontFamily: "inherit",
-                          fontSize: "var(--fs-14)",
-                          fontWeight: 700,
-                          fontVariantNumeric: "tabular-nums",
-                        }}
+                        className="u-w-90px u-p-4px-8px u-br-radius u-bd-1px-solid-line u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
                       />
                     </label>
                     {is9 && (() => {
@@ -1492,8 +1419,8 @@ export function RoundSimulator({
                     {(["cr", "slope", "par"] as const).map((f) => (
                       <label
                         key={f}
-                        className="fs-13 fw-600"
-                        style={{ display: "flex", alignItems: "center", gap: 6 }}
+                        className="fs-13 fw-600 u-d-flex u-ai-center u-gap-6px"
+
                       >
                         {f === "cr" ? "CR:" : f === "slope" ? "Slope:" : "Par:"}
                         <input
@@ -1525,8 +1452,8 @@ export function RoundSimulator({
                       </label>
                     ))}
                     <label
-                      className="fs-13 fw-600"
-                      style={{ display: "flex", alignItems: "center", gap: 6 }}
+                      className="fs-13 fw-600 u-d-flex u-ai-center u-gap-6px"
+
                     >
                       {is9 ? "Gross (9h):" : "Gross:"}
                       <input
@@ -1537,18 +1464,7 @@ export function RoundSimulator({
                         onChange={(e) =>
                           updateRound(round.id, { grossInput: e.target.value })
                         }
-                        style={{
-                          width: 80,
-                          padding: "4px 8px",
-                          borderRadius: "var(--radius)",
-                          border: "1px solid var(--line)",
-                          background: "var(--bg-card)",
-                          color: "var(--text-1)",
-                          fontFamily: "inherit",
-                          fontSize: "var(--fs-14)",
-                          fontWeight: 700,
-                          fontVariantNumeric: "tabular-nums",
-                        }}
+                        className="u-w-80px u-p-4px-8px u-br-radius u-bd-1px-solid-line u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
                       />
                     </label>
                     {computedSdRaw != null && !is9 && (
@@ -1559,7 +1475,7 @@ export function RoundSimulator({
                       </span>
                     )}
                     {computedSdRaw != null && is9 && exp9Preview != null && computedSd18 != null && (
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                      <span className="u-d-inline-flex u-ai-center u-gap-6px u-fwr-wrap">
                         <span
                           className={`p p-${sdClassByHcp(computedSd18, hiRef)} fs-12 fw-700`}
                           title="SD de 9 buracos antes da conversão para 18H"
@@ -1586,14 +1502,14 @@ export function RoundSimulator({
                 ) : (
                   <>
                     <select
-                      className="select"
+                      className="select u-minw-180px u-maxw-320px"
                       value={round.courseKey}
                       onChange={(e) =>
                         updateRound(round.id, {
                           courseKey: e.target.value,
                         })
                       }
-                      style={{ minWidth: 180, maxWidth: 320 }}
+
                     >
                       {allRatedCourses.map((c) => (
                         <option key={c.courseKey} value={c.courseKey}>
@@ -1652,12 +1568,8 @@ export function RoundSimulator({
                       })}
                     </select>
                     <label
-                      className="fs-13 fw-600"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 6,
-                      }}
+                      className="fs-13 fw-600 u-d-flex u-ai-center u-gap-6px"
+
                     >
                       {is9 ? "Gross (9h):" : "Gross:"}
                       <input
@@ -1670,18 +1582,7 @@ export function RoundSimulator({
                             grossInput: e.target.value,
                           })
                         }
-                        style={{
-                          width: 80,
-                          padding: "4px 8px",
-                          borderRadius: "var(--radius)",
-                          border: "1px solid var(--line)",
-                          background: "var(--bg-card)",
-                          color: "var(--text-1)",
-                          fontFamily: "inherit",
-                          fontSize: "var(--fs-14)",
-                          fontWeight: 700,
-                          fontVariantNumeric: "tabular-nums",
-                        }}
+                        className="u-w-80px u-p-4px-8px u-br-radius u-bd-1px-solid-line u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
                       />
                     </label>
                     {computedSdRaw != null && !is9 && (
@@ -1695,7 +1596,7 @@ export function RoundSimulator({
                       </span>
                     )}
                     {computedSdRaw != null && is9 && exp9Preview != null && computedSd18 != null && (
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                      <span className="u-d-inline-flex u-ai-center u-gap-6px u-fwr-wrap">
                         <span
                           className={`p p-${sdClassByHcp(
                             computedSd18,
@@ -1729,8 +1630,8 @@ export function RoundSimulator({
                     )}
                     {is9 && !has9Hsupport && round.courseKey && (
                       <span
-                        className="fs-11"
-                        style={{ color: "var(--color-warn, #e07b00)" }}
+                        className="fs-11 u-c-var-color-warn-e07b00"
+
                         title="Este campo não tem ratings oficiais de 9 buracos registados"
                       >
                         ⚠ Este campo não tem CR/Slope 9H. Escolhe outro campo ou modo 18.
@@ -1738,8 +1639,8 @@ export function RoundSimulator({
                     )}
                     {is9 && has9Hsupport && validTees.length === 0 && (
                       <span
-                        className="fs-11"
-                        style={{ color: "var(--color-warn, #e07b00)" }}
+                        className="fs-11 u-c-var-color-warn-e07b00"
+
                       >
                         ⚠ Sem tees com CR/Slope para {holesLabel(round.holesMode)} neste campo.
                       </span>
@@ -1752,16 +1653,7 @@ export function RoundSimulator({
               {result?.valid && is9hMode(result.holesMode) &&
                 result.sd9 != null && result.exp9 != null && (
                 <div
-                  style={{
-                    marginTop: 8,
-                    padding: "6px 10px",
-                    borderRadius: "var(--radius)",
-                    fontSize: "var(--fs-11)",
-                    lineHeight: 1.55,
-                    background: "var(--bg-detail)",
-                    border: "1px dashed var(--border)",
-                    color: "var(--text-2)",
-                  }}
+                  className="u-mt-8px u-p-6px-10px u-br-radius u-fs-fs-11 u-lh-1_55 u-bg-bg-detail u-bd-1px-dashed-border u-c-text-2"
                 >
                   🎯 <b>{holesLabel(result.holesMode)}</b>: SD9{" "}
                   <b>{result.sd9.toFixed(1)}</b>
@@ -1806,21 +1698,7 @@ export function RoundSimulator({
         {/* Adicionar ronda */}
         <button
           onClick={addRound}
-          style={{
-            border: "1px dashed var(--line)",
-            borderRadius: "var(--radius-xl)",
-            background: "transparent",
-            cursor: "pointer",
-            padding: "9px 16px",
-            color: "var(--text-2)",
-            fontSize: "var(--fs-13)",
-            fontWeight: 600,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 6,
-            transition: "background .12s, border-color .12s, color .12s",
-          }}
+          className="u-bd-1px-dashed-line u-br-radius-xl u-bg-transparent u-cur-pointer u-p-9px-16px u-c-text-2 u-fs-fs-13 u-fw-600 u-d-flex u-ai-center u-jc-center u-gap-6px u-transition-1bp75"
           onMouseEnter={(e) => {
             e.currentTarget.style.background = "var(--bg-hover)";
             e.currentTarget.style.borderColor = "var(--chart-2)";
@@ -1846,49 +1724,24 @@ export function RoundSimulator({
           </span>
         </div>
         <div
-          style={{
-            display: "flex",
-            alignItems: "stretch",
-            gap: 0,
-            marginBottom: 16,
-            borderRadius: "var(--radius-lg)",
-            overflow: "hidden",
-            border: "1px solid var(--border)",
-            width: "fit-content",
-            maxWidth: "100%",
-          }}
+          className="u-d-flex u-ai-stretch u-gap-0 u-mb-16px u-br-radius-lg u-ov-hidden u-bd-1px-solid-border u-w-fit-content u-maxw-100pc"
         >
           {/* HCP actual */}
           <div
-            style={{
-              padding: "12px 16px",
-              background: "var(--bg-detail)",
-              textAlign: "center",
-              minWidth: 80,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
+            className="u-p-12px-16px u-bg-bg-detail u-ta-center u-minw-80px u-d-flex u-fd-column u-jc-center"
           >
             <div
-              style={{
-                fontSize: "var(--fs-10)",
-                color: "var(--text-3)",
-                fontWeight: 600,
-                textTransform: "uppercase",
-                letterSpacing: ".05em",
-                marginBottom: 2,
-              }}
+              className="u-fs-fs-10 u-c-text-3 u-fw-600 u-tt-uppercase u-ls-_05em u-mb-2px"
             >
               Actual
             </div>
             <div
-              className="fw-900"
-              style={{ fontSize: "var(--fs-22)", lineHeight: 1 }}
+              className="fw-900 u-fs-fs-22 u-lh-1"
+
             >
               {currentHI.toFixed(1)}
             </div>
-            <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 2 }}>
+            <div className="u-fs-fs-10 u-c-text-3 u-mt-2px">
               {qtyCalcCur} mel./{initialPool.length}
             </div>
           </div>
@@ -1897,13 +1750,7 @@ export function RoundSimulator({
             <React.Fragment key={r.roundId}>
               {/* Seta */}
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "0 4px",
-                  background: "var(--bg-detail)",
-                  color: "var(--text-3)",
-                }}
+                className="u-d-flex u-ai-center u-p-0-4px u-bg-bg-detail u-c-text-3"
               >
                 →
               </div>
@@ -1926,14 +1773,7 @@ export function RoundSimulator({
                 }}
               >
                 <div
-                  style={{
-                    fontSize: "var(--fs-10)",
-                    color: "var(--text-3)",
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                    letterSpacing: ".05em",
-                    marginBottom: 2,
-                  }}
+                  className="u-fs-fs-10 u-c-text-3 u-fw-600 u-tt-uppercase u-ls-_05em u-mb-2px"
                 >
                   Ronda {i + 1}
                   {is9hMode(r.holesMode)
@@ -1981,14 +1821,7 @@ export function RoundSimulator({
           {validResults.length > 1 && (
             <>
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "0 4px",
-                  background: "var(--bg-detail)",
-                  color: "var(--text-3)",
-                  fontWeight: 700,
-                }}
+                className="u-d-flex u-ai-center u-p-0-4px u-bg-bg-detail u-c-text-3 u-fw-700"
               >
                 ═
               </div>
@@ -2005,14 +1838,7 @@ export function RoundSimulator({
                 }}
               >
                 <div
-                  style={{
-                    fontSize: "var(--fs-10)",
-                    color: "var(--text-3)",
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                    letterSpacing: ".05em",
-                    marginBottom: 2,
-                  }}
+                  className="u-fs-fs-10 u-c-text-3 u-fw-600 u-tt-uppercase u-ls-_05em u-mb-2px"
                 >
                   Final
                 </div>
@@ -2074,7 +1900,7 @@ export function RoundSimulator({
             const hidden = grossTable.rows.length - impactRows.length;
             return (
           <>
-          <div className="muted fs-11 mb-6" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <div className="muted fs-11 mb-6 u-d-flex u-ai-center u-gap-8px u-fwr-wrap">
             {grossTable.is9 && (
               <span>
                 {holesLabel(grossTable.holesMode)} · exp9(HI) ={" "}
@@ -2084,11 +1910,7 @@ export function RoundSimulator({
             {(impactFull || hidden > 0) && (
               <button
                 onClick={() => setImpactFull((v) => !v)}
-                style={{
-                  marginLeft: "auto", border: "1px solid var(--line)", background: "transparent",
-                  cursor: "pointer", borderRadius: "var(--radius)", padding: "2px 9px", fontSize: "var(--fs-11)",
-                  color: "var(--text-2)", fontWeight: 600,
-                }}
+                className="u-ml-auto u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-br-radius u-p-2px-9px u-fs-fs-11 u-c-text-2 u-fw-600"
               >
                 {impactFull ? "▾ Intervalo focado" : `▸ Ver intervalo completo (+${hidden})`}
               </button>
@@ -2128,12 +1950,7 @@ export function RoundSimulator({
                         {row.gross}
                         {row.isEntered && (
                           <span
-                            style={{
-                              marginLeft: 4,
-                              fontSize: "var(--fs-10)",
-                              color: "var(--chart-2)",
-                              fontWeight: 700,
-                            }}
+                            className="u-ml-4px u-fs-fs-10 u-c-chart-2 u-fw-700"
                           >
                             ◀
                           </span>
@@ -2149,15 +1966,10 @@ export function RoundSimulator({
                         </td>
                       )}
                       <td className="r">
-                        <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 4 }}>
+                        <span className="u-d-inline-flex u-ai-center u-jc-flex-end u-gap-4px">
                           {row.exceptionalAdj !== 0 && (
                             <span
-                              style={{
-                                fontSize: "var(--fs-9)",
-                                color: "var(--color-warn, #e07b00)",
-                                fontWeight: 700,
-                                whiteSpace: "nowrap",
-                              }}
+                              className="u-fs-fs-9 u-c-var-color-warn-e07b00 u-fw-700 u-ws-nowrap"
                             >
                               ⚡{row.exceptionalAdj}
                             </span>
@@ -2184,11 +1996,11 @@ export function RoundSimulator({
                             )}
                           </span>
                         ) : row.delta < -0.05 ? (
-                          <span style={{ color: "var(--color-good)" }}>
+                          <span className="u-c-color-good">
                             ↓ melhora
                           </span>
                         ) : row.delta > 0.05 ? (
-                          <span style={{ color: "var(--color-danger)" }}>
+                          <span className="u-c-color-danger">
                             ↑ agrava
                           </span>
                         ) : (
@@ -2256,22 +2068,15 @@ export function RoundSimulator({
                     }}
                   >
                     <td
-                      className="r"
-                      style={{
-                        fontSize: "var(--fs-11)",
-                        fontWeight: 700,
-                        color: "var(--text-2)",
-                      }}
+                      className="r u-fs-fs-11 u-fw-700 u-c-text-2"
+
                     >
                       {i + 1}
                     </td>
                     <td>
                       {entry.isSimulated ? (
                         <span
-                          style={{
-                            color: "var(--color-good)",
-                            fontWeight: 700,
-                          }}
+                          className="u-c-color-good u-fw-700"
                         >
                           Nova {res ? res.roundIdx + 1 : ""}
                         </span>
@@ -2287,15 +2092,7 @@ export function RoundSimulator({
                           {res?.courseName ?? "—"}
                           {res && is9hMode(res.holesMode) && (
                             <span
-                              style={{
-                                marginLeft: 6,
-                                background: "#fde68a",
-                                color: "var(--color-warn-dark)",
-                                borderRadius: "var(--radius-sm)",
-                                padding: "1px 5px",
-                                fontSize: "var(--fs-10)",
-                                fontWeight: 700,
-                              }}
+                              className="u-ml-6px u-bg-fde68a u-c-color-warn-dark u-br-radius-sm u-p-1px-5px u-fs-fs-10 u-fw-700"
                             >
                               {res.holesMode === "front9" ? "F9" : "B9"}
                             </span>
@@ -2334,12 +2131,7 @@ export function RoundSimulator({
                     <td className="r">
                       {hasAdj ? (
                         <span
-                          style={{
-                            display: "inline-flex",
-                            flexDirection: "column",
-                            alignItems: "flex-end",
-                            gap: 1,
-                          }}
+                          className="u-d-inline-flex u-fd-column u-ai-flex-end u-gap-1px"
                         >
                           <span
                             className={`p p-${sdClassByHcp(
@@ -2350,11 +2142,7 @@ export function RoundSimulator({
                             {adjSd.toFixed(1)}
                           </span>
                           <span
-                            style={{
-                              fontSize: "var(--fs-9)",
-                              color: "var(--text-3)",
-                              textDecoration: "line-through",
-                            }}
+                            className="u-fs-fs-9 u-c-text-3 u-td-line-through"
                           >
                             {entry.sd.toFixed(1)}
                           </span>
@@ -2370,13 +2158,13 @@ export function RoundSimulator({
                         const moved = !entry.isSimulated && or != null && or !== nr;
                         if (isTop) {
                           return (
-                            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 3, whiteSpace: "nowrap" }}>
+                            <span className="u-d-inline-flex u-ai-center u-jc-flex-end u-gap-3px u-ws-nowrap">
                               {entered && (
-                                <span style={{ color: "var(--color-good)", fontWeight: 800 }} title="Entrou no top">↑</span>
+                                <span className="u-c-color-good u-fw-800" title="Entrou no top">↑</span>
                               )}
                               {moved && (
                                 <>
-                                  <span className="muted" style={{ fontSize: "var(--fs-10)", textDecoration: "line-through" }}>#{or}</span>
+                                  <span className="muted u-fs-fs-10 u-td-line-through">#{or}</span>
                                   <span
                                     className="fs-10"
                                     style={{ color: nr! > or! ? "var(--color-danger)" : "var(--color-good)" }}
@@ -2392,9 +2180,9 @@ export function RoundSimulator({
                         }
                         if (exited) {
                           return (
-                            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 3, whiteSpace: "nowrap" }}>
-                              {or != null && <span className="muted" style={{ fontSize: "var(--fs-10)", textDecoration: "line-through" }}>#{or}</span>}
-                              <span style={{ color: "var(--color-danger)", fontWeight: 800 }}>✕</span>
+                            <span className="u-d-inline-flex u-ai-center u-jc-flex-end u-gap-3px u-ws-nowrap">
+                              {or != null && <span className="muted u-fs-fs-10 u-td-line-through">#{or}</span>}
+                              <span className="u-c-color-danger u-fw-800">✕</span>
                             </span>
                           );
                         }
@@ -2409,14 +2197,7 @@ export function RoundSimulator({
                   <tr>
                     <td
                       colSpan={9}
-                      style={{
-                        padding: "4px 8px",
-                        background: "var(--bg-header)",
-                        fontSize: "var(--fs-10)",
-                        color: "var(--text-3)",
-                        fontWeight: 700,
-                        letterSpacing: ".05em",
-                      }}
+                      className="u-p-4px-8px u-bg-bg-header u-fs-fs-10 u-c-text-3 u-fw-700 u-ls-_05em"
                     >
                       DESLOCADAS — saíram da janela
                     </td>
@@ -2429,15 +2210,11 @@ export function RoundSimulator({
                     return (
                       <tr
                         key={entry.eid + "_out_" + i}
-                        style={{ opacity: 0.38 }}
+                        className="u-op-0_38"
                       >
                         <td
-                          className="r"
-                          style={{
-                            fontSize: "var(--fs-11)",
-                            color: "var(--color-danger)",
-                            fontWeight: 700,
-                          }}
+                          className="r u-fs-fs-11 u-c-color-danger u-fw-700"
+
                         >
                           out
                         </td>
@@ -2492,9 +2269,7 @@ export function RoundSimulator({
                         <td className="r">
                           {wasTop ? (
                             <span
-                              style={{
-                                color: "var(--color-danger)",
-                              }}
+                              className="u-c-color-danger"
                             >
                               ★ saiu
                             </span>

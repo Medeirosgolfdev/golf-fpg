@@ -62,7 +62,7 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
             }}
           >
             <span className="tee-dot" style={{ background: g.colorHex }} title={g.label} />
-            <span style={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+            <span className="u-fw-700 u-ws-nowrap">
               {dist != null && dist > 0 ? `${fmt(dist)} m` : "– m"}
             </span>
             {gs.map((s: SexKey) => {
@@ -97,8 +97,8 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
               return (
                 <span
                   key={s}
-                  className="fs-12"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 5, whiteSpace: "nowrap", color: "var(--text-2)" }}
+                  className="fs-12 u-d-inline-flex u-ai-center u-gap-5px u-ws-nowrap u-c-text-2"
+
                 >
                   {rating}
                 </span>

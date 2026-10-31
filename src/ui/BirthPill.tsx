@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 
 export default function BirthPill({ children }: { children: ReactNode }) {
   return (
-    <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}>
+    <span className="p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent">
       {children}
     </span>
   );

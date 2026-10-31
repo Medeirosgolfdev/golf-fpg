@@ -89,7 +89,7 @@ function TabelaLista({ lista }: { lista: Lista }) {
     const cols: AdmissionsExtraCol[] = [
       // País por extenso, como a tabela antiga (a bandeira está no nome).
       { key: "pais", label: "País", sort: a => a.country ?? null,
-        cell: a => <span style={{ whiteSpace: "nowrap" }}>{a.country || "—"}</span> },
+        cell: a => <span className="u-ws-nowrap">{a.country || "—"}</span> },
       { key: "atual", label: "HCP actual", title: "Handicap mais recente na ficha (FPG, RFEG ou FFG)",
         sort: a => I(a)?.hcpAtual?.valor ?? null,
         cell: a => { const h = I(a)?.hcpAtual;
@@ -116,9 +116,9 @@ function TabelaLista({ lista }: { lista: Lista }) {
   const nRepet = lista.players.filter(p => p.anterior).length;
 
   return (
-    <section style={{ marginBottom: 24 }}>
-      <h2 style={{ margin: "0 0 4px", fontSize: "var(--fs-16)", fontWeight: 600, color: "var(--text)" }}>{lista.torneio ?? lista.label}</h2>
-      <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginBottom: 10, lineHeight: 1.5 }}>
+    <section className="u-mb-24px">
+      <h2 className="u-m-0-0-4px u-fs-fs-16 u-fw-600 u-c-text">{lista.torneio ?? lista.label}</h2>
+      <div className="u-fs-fs-12 u-c-text-3 u-mb-10px u-lh-1_5">
         {lista.label} · {nEntry} na lista{lista.wildcardsFpg ? ` (+ ${lista.wildcardsFpg} wild cards da FPG por nomear)` : ""}{nRep ? ` · ${nRep} nome(s) repetido(s) no PDF` : ""} · {nWait} em lista de espera
         {lista.nascidosDesde ? ` · nascidos em ${lista.nascidosDesde} ou depois` : ""} · {nFicha} com ficha no kids2
         {ant ? ` · ${nRepet} já jogaram em ${ant.label} (venceu ${ant.vencedor.name}, ${ant.vencedor.gross})` : ""}
@@ -154,17 +154,17 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
   const porOrdem = sortKey === "rank" && sortDir === "asc";
   const ant = lista.edicaoAnterior ?? null;
   return (
-    <section style={{ marginBottom: 24 }}>
-      <h2 style={{ margin: "0 0 4px", fontSize: "var(--fs-16)", fontWeight: 600, color: "var(--text)" }}>
+    <section className="u-mb-24px">
+      <h2 className="u-m-0-0-4px u-fs-fs-16 u-fw-600 u-c-text">
         🇵🇹 {lista.sexo === "F" ? "Portuguesas" : "Portugueses"} que podem ser wild card
       </h2>
-      <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginBottom: 10, lineHeight: 1.5 }}>
+      <div className="u-fs-fs-12 u-c-text-3 u-mb-10px u-lh-1_5">
         A FPG nomeia {n} «at its own discretion», sem critério escrito. Aqui: federados de nacionalidade portuguesa,
         {lista.sexo === "F" ? " raparigas" : " rapazes"}, nascidos em {lista.nascidosDesde} ou depois, por handicap de hoje
         (os {cands.length} primeiros). A linha marca os {n} primeiros.
       </div>
-      <div style={{ overflowX: "auto" }}>
-        <table className="player-list-table" style={{ fontVariantNumeric: "tabular-nums" }}>
+      <div className="u-ox-auto">
+        <table className="player-list-table u-fvn-tabular-nums">
           <thead>
             <tr>
               <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Ordem por handicap">#</SortableHdr>
@@ -186,14 +186,14 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
               return (
                 <tr key={c.fed} className={eu ? "row-manuel" : undefined}
                   style={linha ? { borderBottom: "3px solid var(--accent)" } : undefined}>
-                  <td style={{ textAlign: "center", fontWeight: 700 }}>{c.rank}</td>
+                  <td className="u-ta-center u-fw-700">{c.rank}</td>
                   <td style={{ textAlign: "left", fontWeight: eu ? 700 : undefined }}>
                     {c.juniorId ? <Link to={`/kids2/${c.juniorId}`}>{c.name}</Link> : c.name}
                   </td>
-                  <td style={{ textAlign: "center" }}>{c.dob ? c.dob.slice(0, 4) : "—"}</td>
-                  <td style={{ textAlign: "left" }} className="fs-12">{c.club ?? "—"}</td>
-                  <td style={{ textAlign: "center", fontWeight: 700 }}>{fmtHcp(c.hcp)}</td>
-                  <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
+                  <td className="u-ta-center">{c.dob ? c.dob.slice(0, 4) : "—"}</td>
+                  <td className="fs-12 u-ta-left">{c.club ?? "—"}</td>
+                  <td className="u-ta-center u-fw-700">{fmtHcp(c.hcp)}</td>
+                  <td className="u-ta-center u-ws-nowrap">
                     {c.inscrito
                       ? <span className={`p p-sm ${c.inscrito.lista === "waiting" ? "p-muted" : "p-tourn"}`} title={`Inscrito com ${fmtHcp(c.inscrito.hcp)}`}>
                           {c.inscrito.lista === "waiting" ? "Espera" : "Lista"} {c.inscrito.pos}
@@ -201,8 +201,8 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
                       : <span className="fs-11 p-muted">não inscrito</span>}
                   </td>
                   {ant && <>
-                    <td style={{ textAlign: "center", whiteSpace: "nowrap" }}><CelAnterior a={c.anterior} ano={ant.label} /></td>
-                    <td style={{ textAlign: "center" }}>{c.anterior?.gross ?? "—"}</td>
+                    <td className="u-ta-center u-ws-nowrap"><CelAnterior a={c.anterior} ano={ant.label} /></td>
+                    <td className="u-ta-center">{c.anterior?.gross ?? "—"}</td>
                   </>}
                 </tr>
               );
@@ -250,13 +250,13 @@ export default function ListasPage() {
   return (
     <>
       <Kids2SubNav />
-      <div style={{ padding: "16px 20px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 12 }}>
-          <h1 style={{ margin: 0, fontSize: "var(--fs-18)", fontWeight: 600, color: "var(--text)" }}>📝 Listas de inscritos</h1>
+      <div className="u-p-16px-20px">
+        <div className="u-d-flex u-ai-center u-gap-12px u-fwr-wrap u-mb-12px">
+          <h1 className="u-m-0 u-fs-fs-18 u-fw-600 u-c-text">📝 Listas de inscritos</h1>
           {grupos.length > 1 && (
-            <select className="select" value={grupoAtual?.torneio ?? ""} aria-label="Torneio"
+            <select className="select u-maxw-520px" value={grupoAtual?.torneio ?? ""} aria-label="Torneio"
               onChange={(e) => setSel(grupos.find(g => g.torneio === e.target.value)?.listas[0]?.id ?? null)}
-              style={{ maxWidth: 520 }}>
+>
               {grupos.map(g => <option key={g.torneio} value={g.torneio}>{g.torneio}</option>)}
             </select>
           )}

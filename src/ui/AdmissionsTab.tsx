@@ -349,7 +349,7 @@ export default function AdmissionsTab({
           : isDesist ? "color-mix(in srgb, var(--text-muted) 10%, transparent)"
           : isReserva ? "color-mix(in srgb, var(--text-muted) 6%, transparent)" : undefined,
         nameContent: isDesist
-          ? <span style={{ textDecoration: "line-through", opacity: 0.6 }}>{nameWithTags}</span>
+          ? <span className="u-td-line-through u-op-0_6">{nameWithTags}</span>
           : nameWithTags,
         prefixCells: (
           <>
@@ -377,11 +377,11 @@ export default function AdmissionsTab({
               // 2) teeName explícito (ex.: NextCaddy = distância "5498 m") → texto;
               // 3) fallback: tee genérico do escalão global → quadradinho.
               p._ruleTee ? <TeeDot teeName={p._ruleTee} />
-                : p.teeName ? <span className="fs-11" style={{ whiteSpace: "nowrap" }}>{p.teeName}</span>
+                : p.teeName ? <span className="fs-11 u-ws-nowrap">{p.teeName}</span>
                 : <TeeDot teeName={teeName} />
             }</td>}
             {hasPts && (
-              <td title={p.ptsInfo || ""} style={{ textAlign: "center", whiteSpace: "nowrap" }}>
+              <td title={p.ptsInfo || ""} className="u-ta-center u-ws-nowrap">
                 {/* Uma linha só (como o scorecard): «674 · 1º Madeira». */}
                 {p.pts != null ? (
                   <>
@@ -391,24 +391,24 @@ export default function AdmissionsTab({
                 ) : <span className="muted">–</span>}
               </td>
             )}
-            {extraCols.map(c => <td key={c.key} style={{ textAlign: "center" }}>{c.cell(p)}</td>)}
+            {extraCols.map(c => <td key={c.key} className="u-ta-center">{c.cell(p)}</td>)}
           </>
         ),
         postScorecardCells: hidePostCols ? undefined : (
           <>
-            {!hide.vac && <td className="lb-hcp" style={{ fontWeight: 600 }}>{fmtHcp(p.vac)}</td>}
-            {!hide.registo && <td className="fs-11 muted" style={{ whiteSpace: "nowrap" }}>
+            {!hide.vac && <td className="lb-hcp u-fw-600">{fmtHcp(p.vac)}</td>}
+            {!hide.registo && <td className="fs-11 muted u-ws-nowrap">
               {fmtRegisto(p.dataInscricao)}
-              {novo && <span className="p p-sm fs-10 fw-700" style={{ background: "var(--score-eagle)", color: "#fff", marginLeft: 4, padding: "1px 5px", borderRadius: 8 }}
+              {novo && <span className="p p-sm fs-10 fw-700 u-bg-score-eagle u-c-fff u-ml-4px u-p-1px-5px u-br-8px"
                 title={`Inscrito nas últimas ${recentHours} h`}>NOVO</span>}
             </td>}
-            <td style={{ textAlign: "center" }}>
+            <td className="u-ta-center">
               {isDesist
                 ? <span
                     title={desinscritoEm ? `Desinscreveu-se em ${desinscritoEm}` : "Desinscreveu-se"}
-                    style={{ background: "color-mix(in srgb, var(--danger, #dc2626) 12%, transparent)", color: "var(--danger, #dc2626)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: "var(--radius-lg)", border: "1px solid color-mix(in srgb, var(--danger, #dc2626) 32%, transparent)", whiteSpace: "nowrap" }}>desistiu</span>
+                    className="u-bg-b3bq4 u-c-var-danger-dc2626 u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-qj328 u-ws-nowrap">desistiu</span>
                 : isReserva
-                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-light)" }}>{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</span>
+                ? <span className="u-bg-bg-muted u-c-text-muted u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-1px-solid-border-light">{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</span>
                 : <span className="muted fs-10">✓</span>}
             </td>
           </>
@@ -418,12 +418,12 @@ export default function AdmissionsTab({
   }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols, hasPts, convocados, extraCols, hide, recentHours, reservaLabel, posContent]);
 
   if (admissions.error) {
-    return <div className="detail-toolbar" style={{ padding: 16 }}>
+    return <div className="detail-toolbar u-p-16px">
       <span className="muted">Não foi possível carregar inscrições: {admissions.error}</span>
     </div>;
   }
   if (players.length === 0) {
-    return <div className="detail-toolbar" style={{ padding: 16 }}>
+    return <div className="detail-toolbar u-p-16px">
       <span className="muted">Ainda não há inscritos registados.</span>
     </div>;
   }
@@ -474,22 +474,22 @@ export default function AdmissionsTab({
         {infoExtra}
         {fpgUrl && (
           <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
-            className="fs-11" style={{ color: "var(--chart-2)", marginLeft: "auto" }}>
+            className="fs-11 u-c-chart-2 u-ml-auto">
             scoring.fpg.pt ↗
           </a>
         )}
       </div>
       {/* Inscrições e desistências recentes (era o aviso do painel dos Nacionais). */}
       {(recentes.length > 0 || removidos.length > 0) && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 12px", background: "var(--bg-muted)", borderRadius: "var(--radius)", margin: "4px 0 6px", fontSize: "var(--fs-12)" }}>
+        <div className="u-d-flex u-fwr-wrap u-gap-8px u-p-6px-12px u-bg-bg-muted u-br-radius u-m-4px-0-6px u-fs-fs-12">
           {recentes.length > 0 && (
-            <span style={{ color: "var(--color-good)" }}>
+            <span className="u-c-color-good">
               <span className="fw-700">+{recentes.length} inscrito{recentes.length > 1 ? "s" : ""} ({recentHours}h):</span>{" "}
               {recentes.map(p => formatPlayerName(p.nome || "")).join(", ")}
             </span>
           )}
           {removidos.length > 0 && (
-            <span style={{ color: "var(--color-bad)" }}>
+            <span className="u-c-color-bad">
               <span className="fw-700">-{removidos.length} desistência{removidos.length > 1 ? "s" : ""}:</span>{" "}
               {removidos.join(", ")}
             </span>

@@ -98,19 +98,15 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
   const historicalIds = uskidsSrc?.historicalMemberIds || [];
 
   return (
-    <section style={{ marginBottom: 4 }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px", gap: 8 }}>
-        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>
+    <section className="u-mb-4px">
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px u-gap-8px">
+        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">
           📊 Histórico USKids
         </h3>
-        <div style={{ display: "flex", gap: 6, alignItems: "center", fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+        <div className="u-d-flex u-gap-6px u-ai-center u-fs-fs-11 u-c-text-3">
           <span>{rows.length} {rows.length === 1 ? "torneio" : "torneios"}</span>
           {memberId && (
-            <span style={{
-              fontFamily: "var(--font-mono)", fontSize: "var(--fs-10)",
-              padding: "1px 5px", borderRadius: 3,
-              background: "var(--bg-muted)", border: "1px solid var(--border-light)",
-            }} title="USKids memberId actual">
+            <span className="u-ff-font-mono u-fs-fs-10 u-p-1px-5px u-br-3px u-bg-bg-muted u-bd-1px-solid-border-light" title="USKids memberId actual">
               #{memberId}
             </span>
           )}
@@ -118,12 +114,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
             const id = typeof h === "string" ? h : h.memberId;
             const note = typeof h === "string" ? null : h.note;
             return (
-              <span key={i} title={note || "Legacy USKids memberId"} style={{
-                fontFamily: "var(--font-mono)", fontSize: "var(--fs-10)",
-                padding: "1px 5px", borderRadius: 3,
-                background: "var(--bg)", border: "1px dashed var(--border)",
-                color: "var(--text-3)",
-              }}>
+              <span key={i} title={note || "Legacy USKids memberId"} className="u-ff-font-mono u-fs-fs-10 u-p-1px-5px u-br-3px u-bg-bg u-bd-1px-dashed-border u-c-text-3">
                 legacy #{id}
               </span>
             );
@@ -131,7 +122,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
         </div>
       </div>
 
-      <div style={{ overflowX: "auto" }}>
+      <div className="u-ox-auto">
         <table className="dtable-sm">
           <thead>
             <tr>
@@ -141,8 +132,8 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
               <SortableHdr k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 50, textAlign: "center" }}>Pos</SortableHdr>
               <SortableHdr k="total"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 60, textAlign: "right" }}>Total</SortableHdr>
               <SortableHdr k="toPar"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 50, textAlign: "right" }}>±par</SortableHdr>
-              <th style={{ width: 100, textAlign: "right" }}>Rondas</th>
-              <th style={{ width: 50, textAlign: "right" }}>↗</th>
+              <th className="u-w-100px u-ta-right">Rondas</th>
+              <th className="u-w-50px u-ta-right">↗</th>
             </tr>
           </thead>
           <tbody>
@@ -150,23 +141,23 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
               const links = categorizeTournamentLinks(r.tournament);
               return (
               <tr key={r.tid}>
-                <td style={{ color: "var(--text-3)" }}>{fmtDate(r.date)}</td>
-                <td style={{ fontWeight: 600 }}>{r.name}</td>
-                <td style={{ color: "var(--text-3)" }}>{r.flight}</td>
+                <td className="u-c-text-3">{fmtDate(r.date)}</td>
+                <td className="u-fw-600">{r.name}</td>
+                <td className="u-c-text-3">{r.flight}</td>
                 <td style={{ textAlign: "center", fontWeight: 700,
                   color: r.pos != null && r.pos <= 3 ? "var(--medal-gold-strong)" : "var(--text-2)" }}>
                   {r.pos != null ? `#${r.pos}` : "—"}
                 </td>
-                <td style={{ textAlign: "right" }}>{r.total != null ? r.total : "—"}</td>
+                <td className="u-ta-right">{r.total != null ? r.total : "—"}</td>
                 <td style={{ textAlign: "right", fontWeight: r.toPar != null && r.toPar !== 0 ? 700 : 400,
                   color: r.toPar == null ? "var(--text-3)"
                     : tpColor(r.toPar) ?? "var(--text-2)" }}>
                   {fmtToPar(r.toPar)}
                 </td>
-                <td style={{ textAlign: "right", color: "var(--text-3)" }}>
+                <td className="u-ta-right u-c-text-3">
                   {r.rounds.length > 0 ? r.rounds.map((g) => g ?? "—").join(" · ") : "—"}
                 </td>
-                <td style={{ textAlign: "right" }}>
+                <td className="u-ta-right">
                   {links.length > 0 ? (
                     <a href={links[0].url} target="_blank" rel="noreferrer"
                       title={`Abrir em ${links[0].label}`}
@@ -175,7 +166,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
                         textDecoration: "none", fontWeight: 700, fontSize: "var(--fs-12)",
                       }}
                     >↗</a>
-                  ) : <span style={{ color: "var(--text-3)" }}>—</span>}
+                  ) : <span className="u-c-text-3">—</span>}
                 </td>
               </tr>
               );

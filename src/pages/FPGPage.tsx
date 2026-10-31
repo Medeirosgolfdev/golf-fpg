@@ -704,7 +704,7 @@ function Content() {
               fallback e apareciam numa segunda linha. */}
           {(navMode === "ranking-pja" || navMode === "classificacoes" || navMode === "ranking-sub12") && <>
             {!loading && <ToolbarSep />}
-            <div id="pja-toolbar-slot" style={{ display: "contents" }} />
+            <div id="pja-toolbar-slot" className="u-d-contents" />
           </>}
   </>);
 
@@ -719,17 +719,17 @@ function Content() {
       {/* Uma só barra (13/10/2026): nas vistas do shell (Torneios) os controlos
           da página entram na barra do CircuitShell (CircuitToolbarSlotCtx). */}
       {!shellTorneios && (
-      <div style={{ borderBottom: "1px solid var(--border-light)" }}>
+      <div className="u-bb-1px-solid-border-light">
         <Toolbar>
           {fpgLead}
-          <div className="flex-1" style={{ minWidth: 8 }} />
+          <div className="flex-1 u-minw-8px" />
           {fpgTrail}
         </Toolbar>
       </div>
       )}
 
       {error && (
-        <div className="fw-600 fs-13 c-danger" style={{ padding: "16px 20px" }}>
+        <div className="fw-600 fs-13 c-danger u-p-16px-20px">
           ⚠️ {error}
         </div>
       )}
@@ -754,7 +754,7 @@ function Content() {
       {/* Ranking Sub-12 (e abaixo) — média dos 8 melhores SD oficiais de cada
           miúdo. Ver scripts/build-sub12-ranking.js. */}
       {navMode === "ranking-sub12" && (
-        <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
+        <div className="flex-1 u-oy-auto u-ox-hidden u-minh-0">
           <PJARankingView
             pjaList={sub12Tournaments}
             playersDB={playersDB}
@@ -773,7 +773,7 @@ function Content() {
           (ver scripts/build-classificacoes.js). Reusa a vista do ranking PJA
           com as regras específicas do circuito PJA desligadas. */}
       {navMode === "classificacoes" && (
-        <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
+        <div className="flex-1 u-oy-auto u-ox-hidden u-minh-0">
           <PJARankingView
             pjaList={classifTournaments}
             playersDB={playersDB}
@@ -787,7 +787,7 @@ function Content() {
 
       {/* Ranking PJA */}
       {navMode === "ranking-pja" && (
-        <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
+        <div className="flex-1 u-oy-auto u-ox-hidden u-minh-0">
           <PJARankingView pjaList={pjaRankingList} playersDB={playersDB} loading={loading} pjaMembersByYear={pjaMembers} pjaPdfSnapshotByYear={pjaPdfSnapshot} externalFilterName={searchQuery} />
         </div>
       )}

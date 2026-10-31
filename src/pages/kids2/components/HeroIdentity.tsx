@@ -152,40 +152,14 @@ export default function HeroIdentity({ data, junior }: Props) {
   const totalRounds = useMemo(() => countTotalRounds(junior, data.tournamentById), [junior, data.tournamentById]);
 
   return (
-    <div style={{
-      background: "var(--bg)",
-      border: "1px solid var(--border)",
-      borderRadius: "var(--radius-lg)",
-      padding: "18px 20px",
-    }}>
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 18 }}>
-        <div style={{
-          width: 72, height: 72, borderRadius: "50%",
-          background: "var(--bg-muted)", border: "1px solid var(--border)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 38, flexShrink: 0,
-        }}>{flagEmoji}</div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-            <h2 style={{
-              margin: 0,
-              fontSize: 30,
-              fontWeight: 700,
-              color: "var(--text)",
-              lineHeight: 1.15,
-              letterSpacing: -0.5,
-            }}>{junior.canonicalName}</h2>
+    <div className="u-bg-bg u-bd-1px-solid-border u-br-radius-lg u-p-18px-20px">
+      <div className="u-d-flex u-ai-flex-start u-gap-18px">
+        <div className="u-w-72px u-h-72px u-br-50pc u-bg-bg-muted u-bd-1px-solid-border u-d-flex u-ai-center u-jc-center u-fs-38px u-fsh-0">{flagEmoji}</div>
+        <div className="u-fl-1 u-minw-0">
+          <div className="u-d-flex u-ai-center u-gap-12px u-fwr-wrap">
+            <h2 className="u-m-0 u-fs-30px u-fw-700 u-c-text u-lh-1_15 u-ls-0_5pxx">{junior.canonicalName}</h2>
             {isManuel && (
-              <span style={{
-                background: "var(--bg-success-subtle)",
-                color: "var(--color-good-dark)",
-                fontSize: "var(--fs-11)",
-                padding: "3px 9px",
-                borderRadius: "var(--radius-pill)",
-                fontWeight: 700,
-                letterSpacing: 0.4,
-                textTransform: "uppercase",
-              }}>
+              <span className="u-bg-bg-success-subtle u-c-color-good-dark u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-700 u-ls-0_4px u-tt-uppercase">
                 ★ Tu (referência)
               </span>
             )}
@@ -208,38 +182,27 @@ export default function HeroIdentity({ data, junior }: Props) {
             })()}
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8, fontSize: "var(--fs-13)", color: "var(--text-2)", flexWrap: "wrap" }}>
+          <div className="u-d-flex u-ai-center u-gap-8px u-mt-8px u-fs-fs-13 u-c-text-2 u-fwr-wrap">
             <span>📍 {country || "—"}</span>
             {junior.nationality && junior.country && junior.nationality !== junior.country && (
               <>
-                <span style={{ opacity: 0.4 }}>·</span>
-                <span title="Nacionalidade distinta do país onde reside/joga" style={{
-                  fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)",
-                  background: "var(--bg-muted)", color: "var(--text-2)", fontWeight: 600,
-                  border: "1px solid var(--border-light)",
-                }}>
+                <span className="u-op-0_4">·</span>
+                <span title="Nacionalidade distinta do país onde reside/joga" className="u-fs-fs-11 u-p-2px-8px u-br-radius-pill u-bg-bg-muted u-c-text-2 u-fw-600 u-bd-1px-solid-border-light">
                   {flagOf(junior.nationality)} {junior.nationality}
                 </span>
               </>
             )}
-            {junior.region && <><span style={{ opacity: 0.4 }}>·</span><span>{junior.region}</span></>}
+            {junior.region && <><span className="u-op-0_4">·</span><span>{junior.region}</span></>}
             {dobInfo.state !== "unknown" && (
               <>
-                <span style={{ opacity: 0.4 }}>·</span>
+                <span className="u-op-0_4">·</span>
                 <DobPill info={dobInfo} isManuel={isManuel} />
               </>
             )}
             {ageDiff && (
               <>
-                <span style={{ opacity: 0.4 }}>·</span>
-                <span style={{
-                  fontSize: "var(--fs-11)",
-                  padding: "2px 8px",
-                  borderRadius: "var(--radius-pill)",
-                  background: "var(--bg-muted)",
-                  color: "var(--text-2)",
-                  fontWeight: 600,
-                }}>
+                <span className="u-op-0_4">·</span>
+                <span className="u-fs-fs-11 u-p-2px-8px u-br-radius-pill u-bg-bg-muted u-c-text-2 u-fw-600">
                   {ageDiff}
                 </span>
               </>
@@ -247,19 +210,11 @@ export default function HeroIdentity({ data, junior }: Props) {
           </div>
 
           {mainClub && (
-            <div style={{ marginTop: 10, display: "inline-flex", alignItems: "center", gap: 6 }}>
-              <span style={{
-                fontSize: "var(--fs-13)",
-                padding: "5px 11px",
-                borderRadius: "var(--radius)",
-                background: "var(--bg-muted)",
-                color: "var(--text)",
-                fontWeight: 600,
-                border: "1px solid var(--border-light)",
-              }}>
+            <div className="u-mt-10px u-d-inline-flex u-ai-center u-gap-6px">
+              <span className="u-fs-fs-13 u-p-5px-11px u-br-radius u-bg-bg-muted u-c-text u-fw-600 u-bd-1px-solid-border-light">
                 🏌️ {mainClub}
                 {mainClubSource && (
-                  <span style={{ marginLeft: 6, fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 500 }}>
+                  <span className="u-ml-6px u-fs-fs-10 u-c-text-3 u-fw-500">
                     · {mainClubSource}
                   </span>
                 )}
@@ -268,28 +223,21 @@ export default function HeroIdentity({ data, junior }: Props) {
           )}
 
           {variants.length > 0 && (
-            <div style={{
-              marginTop: 10,
-              padding: "6px 10px",
-              background: "var(--bg-muted)",
-              borderRadius: "var(--radius)",
-              fontSize: "var(--fs-12)",
-              color: "var(--text-2)",
-            }}>
-              <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 6 }}>
+            <div className="u-mt-10px u-p-6px-10px u-bg-bg-muted u-br-radius u-fs-fs-12 u-c-text-2">
+              <span className="u-fs-fs-10 u-fw-700 u-c-text-3 u-ls-0_4px u-tt-uppercase u-mr-6px">
                 Também conhecido como
               </span>
               {variants.map((v, i) => (
                 <React.Fragment key={i}>
-                  {i > 0 && <span style={{ opacity: 0.4, margin: "0 6px" }}>·</span>}
-                  <span style={{ fontStyle: "italic", color: "var(--text)" }}>{v}</span>
+                  {i > 0 && <span className="u-op-0_4 u-m-0-6px">·</span>}
+                  <span className="u-fst-italic u-c-text">{v}</span>
                 </React.Fragment>
               ))}
             </div>
           )}
 
           {(ajga || wagr || eowagr) && (
-            <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div className="u-mt-10px u-d-flex u-gap-8px u-fwr-wrap">
               {ajga && <RankPill label="AJGA" value={ajga} />}
               {wagr && <RankPill label="WAGR" value={wagr} />}
               {eowagr && <RankPill label="EOWAGR" value={eowagr} />}
@@ -297,29 +245,21 @@ export default function HeroIdentity({ data, junior }: Props) {
           )}
 
           {wins.length > 0 && (
-            <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 5, alignItems: "center" }}>
-              <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 4 }}>
+            <div className="u-mt-10px u-d-flex u-fwr-wrap u-gap-5px u-ai-center">
+              <span className="u-fs-fs-10 u-fw-700 u-c-text-3 u-ls-0_4px u-tt-uppercase u-mr-4px">
                 🏆 Palmarès
               </span>
               {topWins.map((w, i) => (
-                <span key={i} title={`${w.fmtDate} · ${w.flightLabel}${w.parts ? " · " + w.parts : ""}`} style={{
-                  // Discreto: sem fundo, só border subtil + estrela dourada pequena.
-                  fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)",
-                  background: "var(--bg)",
-                  border: "1px solid var(--border-light)",
-                  color: "var(--text-2)", fontWeight: 500,
-                  display: "inline-flex", alignItems: "center", gap: 4,
-                  whiteSpace: "nowrap",
-                }}>
-                  <span style={{ color: "var(--medal-gold-strong)", letterSpacing: 0.2, fontSize: "var(--fs-10)" }}>
+                <span key={i} title={`${w.fmtDate} · ${w.flightLabel}${w.parts ? " · " + w.parts : ""}`} className="u-fs-fs-11 u-p-2px-8px u-br-radius-pill u-bg-bg u-bd-1px-solid-border-light u-c-text-2 u-fw-500 u-d-inline-flex u-ai-center u-gap-4px u-ws-nowrap">
+                  <span className="u-c-medal-gold-strong u-ls-0_2px u-fs-fs-10">
                     {"★".repeat(w.stars)}
                   </span>
                   <span>{w.shortName}</span>
-                  <span style={{ opacity: 0.55, fontSize: "var(--fs-10)" }}>· {w.year}</span>
+                  <span className="u-op-0_55 u-fs-fs-10">· {w.year}</span>
                 </span>
               ))}
               {hiddenWinsCount > 0 && (
-                <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 500 }}>
+                <span className="u-fs-fs-10 u-c-text-3 u-fw-500">
                   +{hiddenWinsCount} {hiddenWinsCount === 1 ? "vitória" : "vitórias"}
                 </span>
               )}
@@ -402,7 +342,7 @@ export default function HeroIdentity({ data, junior }: Props) {
       </div>
 
       {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || rankingsRfeg.length > 0 || hcpLista || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
-        <div style={{ display: "flex", gap: 6, marginTop: 14, flexWrap: "wrap" }}>
+        <div className="u-d-flex u-gap-6px u-mt-14px u-fwr-wrap">
           {escIntl && <EscPill label={escIntl} accent strong />}
           {escUskids && <EscPill label={`${escUskids} · USKids`} />}
           {escRfeg && <EscPill label={`${escRfeg} · RFEG`} />}
@@ -410,15 +350,9 @@ export default function HeroIdentity({ data, junior }: Props) {
           {hcps.map((h, i) => (
             <span key={i} title={h.oficial
               ? `Handicap oficial da Federação Espanhola${h.date ? ` — actualizado a ${shortDateSlash(h.date, true)}` : ""}`
-              : `Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} style={{
-              background: "var(--bg-muted)",
-              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
-              fontWeight: 600, color: "var(--text-2)",
-              border: "1px solid var(--border-light)",
-              display: "inline-flex", alignItems: "center", gap: 4,
-            }}>
-              {SOURCE_FLAGS[h.source] && <span style={{ fontSize: "var(--fs-12)", lineHeight: 1 }}>{SOURCE_FLAGS[h.source]}</span>}
-              🎯 HCP {h.value?.toFixed(1)} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {h.source}{h.oficial && h.date ? ` · ${shortDateSlash(h.date, true)}` : ""}</span>
+              : `Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+              {SOURCE_FLAGS[h.source] && <span className="u-fs-fs-12 u-lh-1">{SOURCE_FLAGS[h.source]}</span>}
+              🎯 HCP {h.value?.toFixed(1)} <span className="u-c-text-3 u-ml-3px">· {h.source}{h.oficial && h.date ? ` · ${shortDateSlash(h.date, true)}` : ""}</span>
               {i === hcps.length - 1 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
                 <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
               )}
@@ -427,48 +361,25 @@ export default function HeroIdentity({ data, junior }: Props) {
           {rankingsRfeg.map((r) => (
             <span key={`${r.t}-${r.ano}`}
                   title={`${r.t}${r.f ? ` — ranking de ${shortDateSlash(r.f, true)}` : ""}${r.pts != null ? ` · ${r.pts} pontos` : ""}${r.via === "nome" ? " · ligado por nome e ano de nascimento" : ""}`}
-                  style={{
-                    background: "var(--bg-muted)",
-                    fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
-                    fontWeight: 600, color: "var(--text-2)",
-                    border: "1px solid var(--border-light)",
-                    display: "inline-flex", alignItems: "center", gap: 4,
-                  }}>
-              <span style={{ fontSize: "var(--fs-12)", lineHeight: 1 }}>{SOURCE_FLAGS.RFEG}</span>
-              {r.pos}º de {r.n} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· Ranking {r.curto}</span>
+                  className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+              <span className="u-fs-fs-12 u-lh-1">{SOURCE_FLAGS.RFEG}</span>
+              {r.pos}º de {r.n} <span className="u-c-text-3 u-ml-3px">· Ranking {r.curto}</span>
             </span>
           ))}
           {hcpLista && (
-            <span title={`Handicap na ${hcpLista.label ?? "lista de inscritos"} · ${hcpLista.date}`} style={{
-              background: "var(--bg-muted)",
-              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
-              fontWeight: 600, color: "var(--text-2)",
-              border: "1px solid var(--border-light)",
-              display: "inline-flex", alignItems: "center", gap: 4,
-            }}>
+            <span title={`Handicap na ${hcpLista.label ?? "lista de inscritos"} · ${hcpLista.date}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
               🎯 HCP {hcpLista.hcpExact < 0 ? `+${(-hcpLista.hcpExact).toFixed(1)}` : hcpLista.hcpExact.toFixed(1)}
-              <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {mesLista} · Entry List</span>
+              <span className="u-c-text-3 u-ml-3px">· {mesLista} · Entry List</span>
             </span>
           )}
           {hcps.length === 0 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
-            <span style={{
-              background: "var(--bg-muted)",
-              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
-              fontWeight: 600, color: "var(--text-2)",
-              border: "1px solid var(--border-light)",
-              display: "inline-flex", alignItems: "center", gap: 4,
-            }}>
-              🎯 HCP {junior.hcpHistory[0].hcpExact.toFixed(1)} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {junior.hcpHistory[0].source}</span>
+            <span className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+              🎯 HCP {junior.hcpHistory[0].hcpExact.toFixed(1)} <span className="u-c-text-3 u-ml-3px">· {junior.hcpHistory[0].source}</span>
               <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
             </span>
           )}
           {totalRounds > 0 && (
-            <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" style={{
-              background: "var(--bg-muted)",
-              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
-              fontWeight: 600, color: "var(--text-2)",
-              border: "1px solid var(--border-light)",
-            }}>
+            <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light">
               ⛳ {totalRounds} {totalRounds === 1 ? "ronda" : "rondas"}
             </span>
           )}
@@ -532,16 +443,16 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
       }}>
         <span>{value || "sem registo"}</span>
         {isClickable && (
-          <span style={{ fontSize: "var(--fs-10)", color: "var(--color-info-dark, var(--color-navy))", fontWeight: 600 }} title="Abrir ficha do jogador">↗</span>
+          <span className="u-fs-fs-10 u-c-var-color-info-dark-color-navy u-fw-600" title="Abrir ficha do jogador">↗</span>
         )}
       </div>
       {subtitle && (
-        <div style={{ fontSize: "var(--fs-11)", color: "var(--text-2)", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <div className="u-fs-fs-11 u-c-text-2 u-mt-2px u-ov-hidden u-tov-ellipsis u-ws-nowrap">
           {subtitle}
         </div>
       )}
       {historical && historical.length > 0 && historicalLabel && (
-        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 4, fontStyle: "italic" }}>
+        <div className="u-fs-fs-10 u-c-text-3 u-mt-4px u-fst-italic">
           {historical.map((h, i) => (
             <div key={i}>{historicalLabel(h)}</div>
           ))}
@@ -580,23 +491,11 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
   // accent + strong = pill "primary" (escalão unificado Sub-N) — fundo escuro destacado
   if (accent && strong) {
     return (
-      <span style={{
-        background: "var(--color-info-dark, var(--color-navy))",
-        color: "var(--bg)",
-        fontSize: "var(--fs-12)", padding: "3px 11px", borderRadius: "var(--radius-pill)",
-        fontWeight: 700,
-        letterSpacing: 0.3,
-      }}>{label}</span>
+      <span className="u-bg-13a26 u-c-bg u-fs-fs-12 u-p-3px-11px u-br-radius-pill u-fw-700 u-ls-0_3px">{label}</span>
     );
   }
   return (
-    <span style={{
-      background: "var(--bg-info-subtle, var(--bg-info))",
-      color: "var(--color-info-dark, var(--color-navy))",
-      fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
-      fontWeight: 600,
-      border: "1px solid var(--color-info-dark, var(--color-navy))",
-    }}>{label}</span>
+    <span className="u-bg-var-bg-info-subtle-bg-info u-c-var-color-info-dark-color-navy u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-bd-152rb">{label}</span>
   );
 }
 
@@ -646,10 +545,10 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
       fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5,
     }}>
       🎂 {info.dobLabel}
-      <span style={{ opacity: 0.7 }}>·</span>
-      <span style={{ fontWeight: 700 }}>{info.ageLabel}</span>
+      <span className="u-op-0_7">·</span>
+      <span className="u-fw-700">{info.ageLabel}</span>
       {info.nextBdayDays != null && info.nextBdayDays <= 30 && info.nextAge != null && (
-        <span style={{ marginLeft: 4, fontSize: "var(--fs-10)", opacity: 0.85 }}>
+        <span className="u-ml-4px u-fs-fs-10 u-op-0_85">
           🎉 {info.nextAge} em {info.nextBdayDays}d
         </span>
       )}
@@ -659,13 +558,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
 
 function RankPill({ label, value }: { label: string; value: number | string }) {
   return (
-    <span style={{
-      background: "var(--bg-warn-subtle, var(--bg-warn))",
-      color: "var(--color-warn-dark, var(--color-warn-dark))",
-      fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius)",
-      fontWeight: 700,
-      border: "1px solid var(--color-warn-dark, var(--color-warn-dark))",
-    }}>
+    <span className="u-bg-var-bg-warn-subtle-bg-warn u-c-1b214 u-fs-fs-11 u-p-3px-9px u-br-radius u-fw-700 u-bd-nmb3o">
       🏆 {label} #{value}
     </span>
   );

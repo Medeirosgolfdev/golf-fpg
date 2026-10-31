@@ -55,22 +55,17 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
   ];
 
   return (
-    <section style={{ marginBottom: 4 }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px" }}>
-        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Distribuição de scoring</h3>
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+    <section className="u-mb-4px">
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px">
+        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Distribuição de scoring</h3>
+        <span className="u-fs-fs-11 u-c-text-3">
           {total} {total === 1 ? "buraco jogado" : "buracos jogados"} · {stats.subParPct}% sub-par
         </span>
       </div>
 
       {/* Barra stacked. Separadores subtis entre segmentos para distinguir o
           segmento Par (transparente, mostra fundo claro do contentor). */}
-      <div style={{
-        display: "flex", height: 26,
-        borderRadius: "var(--radius)", overflow: "hidden",
-        border: "1px solid var(--border-light)",
-        background: "var(--bg)",
-      }}>
+      <div className="u-d-flex u-h-26px u-br-radius u-ov-hidden u-bd-1px-solid-border-light u-bg-bg">
         {buckets.map((b, i) => {
           const pct = total > 0 ? (b.count / total) * 100 : 0;
           if (pct === 0) return null;
@@ -96,16 +91,13 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
       </div>
 
       {/* Legenda */}
-      <div style={{
-        display: "flex", flexWrap: "wrap", gap: 10, marginTop: 6,
-        fontSize: "var(--fs-10)", color: "var(--text-3)",
-      }}>
+      <div className="u-d-flex u-fwr-wrap u-gap-10px u-mt-6pxx u-fs-fs-10 u-c-text-3">
         {buckets.map((b) => {
           // Para o Par (fundo transparente) damos uma borda no quadradinho da legenda
           // para que continue legível contra o fundo da página.
           const isTransparent = b.bg === "transparent";
           return (
-            <span key={b.label} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+            <span key={b.label} className="u-d-inline-flex u-ai-center u-gap-4px">
               <span style={{
                 width: 9, height: 9,
                 borderRadius: b.label === "Bogey" || b.label === "Duplo+" ? 0 : 2,
@@ -113,16 +105,14 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
                 border: isTransparent ? "1px solid var(--border)" : undefined,
                 display: "inline-block",
               }} />
-              <strong style={{ color: "var(--text-2)" }}>{b.label}</strong> {b.count}
+              <strong className="u-c-text-2">{b.label}</strong> {b.count}
             </span>
           );
         })}
       </div>
 
       {/* Breakdown por par-tipo */}
-      <div style={{
-        display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 10,
-      }}>
+      <div className="u-d-grid u-grid-template-columns-1md9r u-gap-10px u-mt-10px">
         {stats.byPar.map((pb) => (
           <ParCard key={pb.parValue} pb={pb} />
         ))}
@@ -141,17 +131,13 @@ function ParCard({ pb }: { pb: ParBreakdown }) {
     diff <= 0.4 ? "var(--color-warn-dark)" :
     "var(--color-danger-dark)";
   return (
-    <div style={{
-      background: "var(--bg-muted)",
-      borderRadius: "var(--radius)",
-      padding: "8px 10px",
-    }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
-        <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)" }}>Par {pb.parValue}</span>
-        <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>{pb.holesPlayed}</span>
+    <div className="u-bg-bg-muted u-br-radius u-p-8px-10px">
+      <div className="u-d-flex u-ai-baseline u-jc-space-between">
+        <span className="u-fs-fs-11 u-fw-700 u-c-text-2">Par {pb.parValue}</span>
+        <span className="u-fs-fs-10 u-c-text-3">{pb.holesPlayed}</span>
       </div>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginTop: 3 }}>
-        <span style={{ fontSize: "var(--fs-18)", fontWeight: 700, color: "var(--text)" }}>
+      <div className="u-d-flex u-ai-baseline u-gap-6px u-mt-3px">
+        <span className="u-fs-fs-18 u-fw-700 u-c-text">
           {pb.avgStrokes != null ? pb.avgStrokes.toFixed(2) : "—"}
         </span>
         <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: diffColor }}>
@@ -160,12 +146,12 @@ function ParCard({ pb }: { pb: ParBreakdown }) {
       </div>
       {/* Mini breakdown E/B/P/b/d dentro deste par — cores espelham regra do scorecard
           (App.css linhas 1004-1024). Par é neutro (transparente — sem cor própria). */}
-      <div style={{ display: "flex", gap: 4, marginTop: 5, fontSize: "var(--fs-9)", color: "var(--text-3)" }}>
-        {pb.eagles > 0 && <span title="Eagles+"><strong style={{ color: "var(--score-eagle)" }}>{pb.eagles}</strong>E</span>}
-        {pb.birdies > 0 && <span title="Birdies"><strong style={{ color: "var(--score-birdie)" }}>{pb.birdies}</strong>B</span>}
-        {pb.pars > 0 && <span title="Pars"><strong style={{ color: "var(--text-2)" }}>{pb.pars}</strong>P</span>}
-        {pb.bogeys > 0 && <span title="Bogeys"><strong style={{ color: "var(--score-bogey-fg)" }}>{pb.bogeys}</strong>b</span>}
-        {pb.doublesPlus > 0 && <span title="Duplos+"><strong style={{ color: "var(--score-double)" }}>{pb.doublesPlus}</strong>d</span>}
+      <div className="u-d-flex u-gap-4px u-mt-5px u-fs-fs-9 u-c-text-3">
+        {pb.eagles > 0 && <span title="Eagles+"><strong className="u-c-score-eagle">{pb.eagles}</strong>E</span>}
+        {pb.birdies > 0 && <span title="Birdies"><strong className="u-c-score-birdie">{pb.birdies}</strong>B</span>}
+        {pb.pars > 0 && <span title="Pars"><strong className="u-c-text-2">{pb.pars}</strong>P</span>}
+        {pb.bogeys > 0 && <span title="Bogeys"><strong className="u-c-score-bogey-fg">{pb.bogeys}</strong>b</span>}
+        {pb.doublesPlus > 0 && <span title="Duplos+"><strong className="u-c-score-double">{pb.doublesPlus}</strong>d</span>}
       </div>
     </div>
   );

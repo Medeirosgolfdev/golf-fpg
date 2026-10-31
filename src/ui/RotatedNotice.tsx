@@ -27,16 +27,7 @@ export default function RotatedNotice({ rotated, inline }: Props) {
     return (
       <span
         title={`Buracos renumerados: a sequência jogada foi rodada +${offsetHoles} para alinhar com o layout actual do campo`}
-        style={{
-          fontSize: "var(--fs-10)",
-          color: "var(--text-2)",
-          marginLeft: 6,
-          padding: "1px 5px",
-          border: "1px dashed var(--border-light)",
-          borderRadius: "var(--radius-sm)",
-          fontStyle: "italic",
-          whiteSpace: "nowrap",
-        }}
+        className="u-fs-fs-10 u-c-text-2 u-ml-6px u-p-1px-5px u-bd-1px-dashed-border-light u-br-radius-sm u-fst-italic u-ws-nowrap"
       >
         ↻ rotação +{offsetHoles}
       </span>
@@ -45,17 +36,7 @@ export default function RotatedNotice({ rotated, inline }: Props) {
 
   return (
     <div
-      style={{
-        fontSize: "var(--fs-11)",
-        color: "var(--text-2)",
-        marginTop: 6,
-        padding: "6px 10px",
-        background: "transparent",
-        borderLeft: "3px solid var(--color-notice)",
-        borderRadius: "var(--radius-sm)",
-        fontStyle: "italic",
-        lineHeight: 1.5,
-      }}
+      className="u-fs-fs-11 u-c-text-2 u-mt-6pxx u-p-6px-10px u-bg-transparent u-bl-3px-solid-color-notice u-br-radius-sm u-fst-italic u-lh-1_5"
     >
       ⓘ <b>Buracos renumerados.</b> Esta ronda foi jogada na configuração
       anterior do campo. Para alinhar com a numeração actual, a sequência foi

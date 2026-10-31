@@ -30,7 +30,7 @@ export default function SortableHdr<K extends string = string>({
       onClick={() => onSort(k)}
     >
       {children}
-      {active && <span className="fs-10" style={{ marginLeft: 2 }}>{arrow}</span>}
+      {active && <span className="fs-10 u-ml-2px">{arrow}</span>}
     </th>
   );
 }

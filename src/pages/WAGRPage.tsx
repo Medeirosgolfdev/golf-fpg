@@ -93,7 +93,7 @@ interface WagrPlayerEvent {
 /* ── Helpers ───────────────────────────────────────────────────── */
 /** Variação de ranking na semana: positivo = subiu. */
 function ChangeCell({ v }: { v: number | null }) {
-  if (v == null || v === 0) return <span style={{ color: "var(--text-muted)" }}>–</span>;
+  if (v == null || v === 0) return <span className="u-c-text-muted">–</span>;
   const up = v > 0;
   return (
     <span style={{ color: up ? "var(--score-birdie, #16a34a)" : "var(--score-bogey, #dc2626)" }}>
@@ -177,7 +177,7 @@ function WAGRDetail({ ranking, id }: { ranking: WagrRanking; id: string }) {
     { key: "event", label: "Evento", sort: (e) => norm(e.name || ""), firstDir: "asc", cell: (e) => <>
       <a href={wagrEventUrl(e.eventId)} target="_blank" rel="noopener noreferrer">{e.name || `Evento ${e.eventId}`}</a>
       {" "}
-      <button className="btn-link" style={{ fontSize: "var(--fs-11)" }} onClick={() => navigate(`/wagr/evt/${e.eventId}`)}
+      <button className="btn-link u-fs-fs-11" onClick={() => navigate(`/wagr/evt/${e.eventId}`)}
         title="Abrir o leaderboard deste evento no site">↗ leaderboard</button>
     </> },
     { key: "country", label: "Local", className: "tight", sort: (e) => norm(e.country || ""), firstDir: "asc", cell: (e) => <span title={e.country || ""}>{flagOrEmpty(e.country)}</span> },
@@ -192,10 +192,10 @@ function WAGRDetail({ ranking, id }: { ranking: WagrRanking; id: string }) {
   return (
     <RankingDetail backTo="/wagr/info/jogadores"
       header={<>
-        <h2 style={{ margin: 0 }}>{flagOrEmpty(player.country)} {player.name}</h2>
+        <h2 className="u-m-0">{flagOrEmpty(player.country)} {player.name}</h2>
         <SexBadge sex={player.sex} />
         {player.profileLink && (
-          <a href={wagrPlayerUrl(player.profileLink)} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--fs-12)" }}>perfil WAGR ↗</a>
+          <a href={wagrPlayerUrl(player.profileLink)} target="_blank" rel="noopener noreferrer" className="u-fs-fs-12">perfil WAGR ↗</a>
         )}
       </>}
       stats={[

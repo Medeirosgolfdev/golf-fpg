@@ -132,7 +132,7 @@ function NextTournamentsContent() {
 
   return (
     <Kids2NextCtx.Provider value={ctx}>
-      <div className="tourn-layout" style={{ height: "calc(100vh - 52px)" }}>
+      <div className="tourn-layout u-h-calc-100vh-52px">
         <CircuitToolbarSlotCtx.Provider value={{ lead, trail, hideTitle: true }}>
           <CircuitShell
             entries={entries}

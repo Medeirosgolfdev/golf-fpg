@@ -388,7 +388,7 @@ const CIRCUIT_PILL: Record<string, { emoji: string; label: string; title: string
 function CircuitBadge({ circuitos }: { circuitos: Set<"FPG" | "USKids" | "Intl"> }) {
   const order: Array<"FPG" | "USKids" | "Intl"> = ["FPG", "USKids", "Intl"];
   return (
-    <span style={{ display: "inline-flex", gap: 4, justifyContent: "center", flexWrap: "nowrap", whiteSpace: "nowrap" }}>
+    <span className="u-d-inline-flex u-gap-4px u-jc-center u-fwr-nowrap u-ws-nowrap">
       {order.filter(c => circuitos.has(c)).map(c => {
         const p = CIRCUIT_PILL[c];
         return (
@@ -435,13 +435,7 @@ function TorneiosList({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div style={{
-      border: "1px solid var(--border-light)",
-      borderRadius: "var(--radius-lg)",
-      background: "var(--bg-card)",
-      overflow: "hidden",
-      boxShadow: "var(--shadow-sm)",
-    }}>
+    <div className="u-bd-1px-solid-border-light u-br-radius-lg u-bg-bg-card u-ov-hidden u-bs-shadow-sm">
       <button
         type="button"
         onClick={() => setOpen(o => !o)}
@@ -461,7 +455,7 @@ function TorneiosList({
           color: "var(--text)",
         }}
       >
-        <span style={{ color: "var(--text-3)", fontSize: "var(--fs-11)" }}>
+        <span className="u-c-text-3 u-fs-fs-11">
           {open ? "▾" : "▸"}
         </span>
         <span
@@ -474,34 +468,27 @@ function TorneiosList({
             flexShrink: 0,
           }}
         />
-        <span style={{ textTransform: "uppercase", letterSpacing: "0.03em" }}>{titulo}</span>
-        <span className="chip ml-auto" style={{ fontWeight: 700 }}>
+        <span className="u-tt-uppercase u-ls-0_03em">{titulo}</span>
+        <span className="chip ml-auto u-fw-700">
           {items.length}
         </span>
       </button>
       {open && (
-        <div style={{ maxHeight: 380, overflowY: "auto" }}>
+        <div className="u-maxh-380px u-oy-auto">
           {items.length === 0 ? (
             <div className="muted p-10-12">
               {emptyText}
             </div>
           ) : (
-            <ul style={{ margin: 0, padding: "4px 0", listStyle: "none" }}>
+            <ul className="u-m-0 u-p-4px-0 u-list-style-none">
               {items.map((t) => (
                 <li
                   key={t.torneioId}
-                  style={{
-                    padding: "5px 12px",
-                    display: "flex",
-                    alignItems: "baseline",
-                    gap: 8,
-                    fontSize: 12.5,
-                    borderBottom: "1px solid var(--border-light)",
-                  }}
+                  className="u-p-5px-12px u-d-flex u-ai-baseline u-gap-8px u-fs-12_5px u-bb-1px-solid-border-light"
                 >
                   <span
-                    className="muted"
-                    style={{ width: 78, flexShrink: 0, fontVariantNumeric: "tabular-nums" }}
+                    className="muted u-w-78px u-fsh-0 u-fvn-tabular-nums"
+
                   >
                     {fmtDateShort(t.data)}
                   </span>
@@ -514,8 +501,8 @@ function TorneiosList({
                   </Link>
                   {t.rondas > 1 && (
                     <span
-                      className="muted"
-                      style={{ flexShrink: 0, fontVariantNumeric: "tabular-nums" }}
+                      className="muted u-fsh-0 u-fvn-tabular-nums"
+
                     >
                       {t.rondas}r
                     </span>
@@ -548,88 +535,81 @@ function teeInfo(d: TournDay): string | null {
 // 1 cartão por torneio; dentro, o grupo do Manuel em cada dia/ronda.
 function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div className="u-d-flex u-fd-column u-gap-16px">
       {torneios.map((t) => {
         const isFpg = t.circuito === "FPG" && t.torneioId.includes("-");
         const rangeData = t.dataMin && t.dataMax && t.dataMin !== t.dataMax
           ? `${fmtDateShort(t.dataMin)} – ${fmtDateShort(t.dataMax)}`
           : fmtDateShort(t.dataMax || t.dataMin);
         return (
-          <div key={t.torneioId} className="card" style={{ margin: 0, padding: 14 }}>
+          <div key={t.torneioId} className="card u-m-0 u-p-14px">
             {/* Cabeçalho do torneio */}
-            <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
+            <div className="u-d-flex u-ai-baseline u-gap-8px u-fwr-wrap u-mb-4px">
               <CircuitBadge circuitos={new Set([t.circuito])} />
-              <h3 style={{ margin: 0, fontSize: "var(--fs-16)", fontWeight: 700 }}>
+              <h3 className="u-m-0 u-fs-fs-16 u-fw-700">
                 {isFpg ? (
                   <Link to={linkTorneioFPG(t.torneioId, t.nome)} className="courseLink">{t.nome}</Link>
                 ) : t.nome}
               </h3>
             </div>
-            <div className="muted" style={{ fontSize: "var(--fs-12)", marginBottom: 10, fontVariantNumeric: "tabular-nums" }}>
+            <div className="muted u-fs-fs-12 u-mb-10px u-fvn-tabular-nums">
               {rangeData}
               {t.campo && <span> · {t.campo}</span>}
               <span> · {t.dias.length} {t.dias.length === 1 ? "dia" : "dias"}</span>
             </div>
 
             {/* Um bloco por dia/ronda com o grupo do Manuel */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+            <div className="u-d-flex u-fwr-wrap u-gap-12px">
               {t.dias.map((d, di) => {
                 const info = teeInfo(d);
                 return (
                   <div
                     key={di}
-                    style={{
-                      flex: "1 1 260px",
-                      minWidth: 0,
-                      background: "var(--bg-card)",
-                      border: "1px solid var(--border-light)",
-                      borderRadius: "var(--radius)",
-                      padding: "8px 10px",
-                    }}
+                    className="u-fl-1-1-260px u-minw-0 u-bg-bg-card u-bd-1px-solid-border-light u-br-radius u-p-8px-10px"
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
+                    <div className="u-d-flex u-ai-center u-gap-8px u-mb-8px u-fwr-wrap">
                       <RondaPill n={d.ronda} />
-                      <span className="muted" style={{ fontSize: "var(--fs-11)", fontVariantNumeric: "tabular-nums" }}>
+                      <span className="muted u-fs-fs-11 u-fvn-tabular-nums">
                         {fmtDateShort(d.data)}
                       </span>
                       {info && (
-                        <span className="muted" style={{ fontSize: "var(--fs-11)" }}>{info}</span>
+                        <span className="muted u-fs-fs-11">{info}</span>
                       )}
                     </div>
                     {/* Grupo: Manuel primeiro (destacado), depois os companheiros */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <span style={{ flex: 1, minWidth: 0, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    <div className="u-d-flex u-fd-column u-gap-4px">
+                      <div className="u-d-flex u-ai-center u-gap-8px">
+                        <span className="u-fl-1 u-minw-0 u-fw-700 u-ov-hidden u-tov-ellipsis u-ws-nowrap">
                           Manuel Medeiros
                         </span>
-                        <span style={{ fontWeight: 700, fontVariantNumeric: "tabular-nums", flexShrink: 0 }}>
+                        <span className="u-fw-700 u-fvn-tabular-nums u-fsh-0">
                           {fmtScore(d.manuelScore)}
                         </span>
                       </div>
                       {d.grupo.map((g, gi) => {
                         const dot = h2hDot(d.manuelScore, g.score);
                         return (
-                          <div key={gi} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                            <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          <div key={gi} className="u-d-flex u-ai-center u-gap-8px">
+                            <span className="u-fl-1 u-minw-0 u-ov-hidden u-tov-ellipsis u-ws-nowrap">
                               <GroupMemberLink nome={g.nome} fed={g.fed} />
                               {g.escalao && (
-                                <span className="muted" style={{ fontSize: "var(--fs-11)", marginLeft: 6 }}>{g.escalao}</span>
+                                <span className="muted u-fs-fs-11 u-ml-6px">{g.escalao}</span>
                               )}
                               {!g.fed && g.pais && FLAG[g.pais] && (
-                                <span style={{ marginLeft: 4 }}>{FLAG[g.pais]}</span>
+                                <span className="u-ml-4px">{FLAG[g.pais]}</span>
                               )}
                             </span>
                             {dot && (
                               <span title={dot.title} style={{ width: 8, height: 8, borderRadius: "50%", background: dot.color, flexShrink: 0 }} />
                             )}
-                            <span className="muted" style={{ fontVariantNumeric: "tabular-nums", flexShrink: 0 }}>
+                            <span className="muted u-fvn-tabular-nums u-fsh-0">
                               {fmtScore(g.score)}
                             </span>
                           </div>
                         );
                       })}
                       {d.grupo.length === 0 && (
-                        <span className="muted" style={{ fontSize: "var(--fs-11)" }}>
+                        <span className="muted u-fs-fs-11">
                           {q.trim() ? "Sem companheiros neste dia para a pesquisa." : "Sem companheiros registados neste dia."}
                         </span>
                       )}
@@ -1074,23 +1054,23 @@ export default function DrawsPage() {
 
         {/* Pesquisa — por torneio, campo, jogador ou clube */}
         {data && linhas.length > 0 && (
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+          <div className="u-d-flex u-ai-center u-gap-8px u-mb-12px u-fwr-wrap">
             <input
-              className="input"
+              className="input u-maxw-340px u-fl-1-1-240px"
               value={q}
               onChange={e => setQ(e.target.value)}
               placeholder="Pesquisar por torneio, campo, jogador ou clube…"
               aria-label="Pesquisar companheiros por torneio, campo, jogador ou clube"
-              style={{ maxWidth: 340, flex: "1 1 240px" }}
+
             />
             {q.trim() && (
               <>
-                <span className="muted fs-12" style={{ fontVariantNumeric: "tabular-nums" }}>
+                <span className="muted fs-12 u-fvn-tabular-nums">
                   {viewMode === "companheiro"
                     ? `${linhasOrdenadas.length} ${linhasOrdenadas.length === 1 ? "companheiro" : "companheiros"}`
                     : `${torneiosView.length} ${torneiosView.length === 1 ? "torneio" : "torneios"}`}
                 </span>
-                <button type="button" className="btn-link muted" style={{ fontSize: "var(--fs-11)" }} onClick={() => setQ("")}>
+                <button type="button" className="btn-link muted u-fs-fs-11" onClick={() => setQ("")}>
                   limpar
                 </button>
               </>
@@ -1122,13 +1102,13 @@ export default function DrawsPage() {
             flexWrap: "wrap",
           }}>
           <div
-            className="card"
-            style={{ margin: 0, padding: 0, overflowX: "auto", flex: "0 1 auto", minWidth: 0 }}
+            className="card u-m-0 u-p-0 u-ox-auto u-fl-0-1-auto u-minw-0"
+
           >
-            <table className="dtable" style={{ minWidth: 720 }}>
+            <table className="dtable u-minw-720px">
               <thead>
                 <tr>
-                  <th style={{ width: 28 }}></th>
+                  <th className="u-w-28px"></th>
                   <SortableHdr k="nome" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>
                     Companheiro
                   </SortableHdr>
@@ -1144,7 +1124,7 @@ export default function DrawsPage() {
                   <SortableHdr k="ultima" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>
                     Último encontro
                   </SortableHdr>
-                  <th style={{ width: 140, minWidth: 140, textAlign: "center" }}>Circ.</th>
+                  <th className="u-w-140px u-minw-140px u-ta-center">Circ.</th>
                 </tr>
               </thead>
               <tbody>
@@ -1161,7 +1141,7 @@ export default function DrawsPage() {
                         style={{ cursor: "pointer", background: open ? "var(--bg-detail)" : undefined }}
                         onClick={() => toggleExpand(row.key)}
                       >
-                        <td style={{ textAlign: "center", color: "var(--text-3)" }}>
+                        <td className="u-ta-center u-c-text-3">
                           {open ? "▾" : "▸"}
                         </td>
                         <td>
@@ -1170,30 +1150,30 @@ export default function DrawsPage() {
                         <td>
                           {row.escalao ? <EscPill esc={row.escalao} /> : <span className="muted">—</span>}
                         </td>
-                        <td style={{ color: "var(--text-2)" }}>
+                        <td className="u-c-text-2">
                           {tab === "FPG"
                             ? (row.clube || "—")
                             : (row.pais ? `${FLAG[row.pais] || ""} ${row.pais}` : "—")}
                         </td>
-                        <td className="r" style={{ fontWeight: 800, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
-                          {medal ? <span style={{ marginRight: 3 }}>{medal}</span> : null}{row.vezes}
+                        <td className="r u-fw-800 u-fvn-tabular-nums u-ws-nowrap">
+                          {medal ? <span className="u-mr-3px">{medal}</span> : null}{row.vezes}
                         </td>
                         <td>{fmtDateShort(row.ultimaData)}</td>
-                        <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
+                        <td className="u-ta-center u-ws-nowrap">
                           <CircuitBadge circuitos={row.circuitos} />
                         </td>
                       </tr>
                       {open && (
                         <tr>
-                          <td colSpan={7} style={{ background: "var(--bg-detail)", padding: "10px 14px 14px" }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
-                              <span className="h-xs" style={{ margin: 0 }}>
+                          <td colSpan={7} className="u-bg-bg-detail u-p-10px-14px-14px">
+                            <div className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-mb-8px">
+                              <span className="h-xs u-m-0">
                                 Frente a frente — Manuel vs {row.nome.split(" ")[0]} ({row.rondas.length} {row.rondas.length === 1 ? "ronda" : "rondas"})
                               </span>
-                              <span className="legend-row" style={{ margin: 0, marginLeft: "auto" }}>
-                                <span className="legend-item"><span className="legend-dot" style={{ background: "var(--color-good)", borderRadius: "50%" }} /> Manuel melhor</span>
-                                <span className="legend-item"><span className="legend-dot" style={{ background: "var(--text-muted)", borderRadius: "50%" }} /> empate</span>
-                                <span className="legend-item"><span className="legend-dot" style={{ background: "var(--color-danger)", borderRadius: "50%" }} /> companheiro melhor</span>
+                              <span className="legend-row u-m-0 u-ml-auto">
+                                <span className="legend-item"><span className="legend-dot u-bg-color-good u-br-50pc" /> Manuel melhor</span>
+                                <span className="legend-item"><span className="legend-dot u-bg-text-muted u-br-50pc" /> empate</span>
+                                <span className="legend-item"><span className="legend-dot u-bg-color-danger u-br-50pc" /> companheiro melhor</span>
                               </span>
                             </div>
                             {(() => {
@@ -1202,27 +1182,27 @@ export default function DrawsPage() {
                               const seg = (n: number, color: string, label: string) =>
                                 n > 0 ? <span title={`${n} ${label}`} style={{ flex: n, background: color }} /> : null;
                               return (
-                                <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
-                                  <span style={{ display: "flex", height: 8, width: 160, borderRadius: "var(--radius-sm)", overflow: "hidden", background: "var(--bg-hover)" }}>
+                                <div className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-mb-10px">
+                                  <span className="u-d-flex u-h-8px u-w-160px u-br-radius-sm u-ov-hidden u-bg-bg-hover">
                                     {seg(rec.w, "var(--color-good)", "vitórias do Manuel")}
                                     {seg(rec.d, "var(--text-muted)", "empates")}
                                     {seg(rec.l, "var(--color-danger)", "vitórias do companheiro")}
                                   </span>
-                                  <span style={{ fontSize: "var(--fs-12)", fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>
-                                    <span style={{ color: "var(--color-good)" }}>{rec.w}V</span>
-                                    <span className="muted" style={{ fontWeight: 400 }}> · </span>
-                                    <span style={{ color: "var(--text-2)" }}>{rec.d}E</span>
-                                    <span className="muted" style={{ fontWeight: 400 }}> · </span>
-                                    <span style={{ color: "var(--color-danger)" }}>{rec.l}D</span>
+                                  <span className="u-fs-fs-12 u-fw-700 u-fvn-tabular-nums">
+                                    <span className="u-c-color-good">{rec.w}V</span>
+                                    <span className="muted u-fw-400"> · </span>
+                                    <span className="u-c-text-2">{rec.d}E</span>
+                                    <span className="muted u-fw-400"> · </span>
+                                    <span className="u-c-color-danger">{rec.l}D</span>
                                   </span>
-                                  <span className="muted" style={{ fontSize: "var(--fs-11)" }}>
+                                  <span className="muted u-fs-fs-11">
                                     {rec.w > rec.l ? "Manuel leva vantagem" : rec.l > rec.w ? `${row.nome.split(" ")[0]} leva vantagem` : "equilibrado"}
                                     {" "}({rec.played} {rec.played === 1 ? "ronda comparável" : "rondas comparáveis"})
                                   </span>
                                 </div>
                               );
                             })()}
-                            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                            <div className="u-d-flex u-fd-column u-gap-6px">
                               {row.rondas.map((r, i) => {
                                 const dot = h2hDot(r.manuelScore, r.companheiroScore);
                                 // Só o score do Manuel leva cor (verde ganhou / vermelho
@@ -1234,42 +1214,33 @@ export default function DrawsPage() {
                                 return (
                                   <div
                                     key={i}
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      gap: 10,
-                                      flexWrap: "wrap",
-                                      padding: "7px 10px",
-                                      background: "var(--bg-card)",
-                                      border: "1px solid var(--border-light)",
-                                      borderRadius: "var(--radius)",
-                                    }}
+                                    className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-p-7px-10px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius"
                                   >
-                                    <span className="muted" style={{ width: 74, flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
+                                    <span className="muted u-w-74px u-fsh-0 u-fvn-tabular-nums">
                                       {fmtDateShort(r.data)}
                                     </span>
-                                    <span style={{ flexShrink: 0 }}>
+                                    <span className="u-fsh-0">
                                       <RondaPill n={r.ronda} />
                                     </span>
-                                    <span style={{ flex: "1 1 160px", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                    <span className="u-fl-1-1-160px u-minw-0 u-ov-hidden u-tov-ellipsis u-ws-nowrap">
                                       {r.circuito === "FPG" && r.torneioId.includes("-") ? (
                                         <Link to={linkTorneioFPG(r.torneioId, r.torneioNome)} className="courseLink">{r.torneioNome}</Link>
                                       ) : (
                                         r.torneioNome
                                       )}
                                       {r.campo && (
-                                        <span className="muted" style={{ fontSize: "var(--fs-11)", marginLeft: 6 }}>· {r.campo}</span>
+                                        <span className="muted u-fs-fs-11 u-ml-6px">· {r.campo}</span>
                                       )}
                                     </span>
-                                    <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
+                                    <span className="u-d-inline-flex u-ai-center u-gap-8px u-fsh-0 u-fvn-tabular-nums">
                                       {dot && (
                                         <span title={dot.title} style={{ width: 8, height: 8, borderRadius: "50%", background: dot.color, flexShrink: 0 }} />
                                       )}
                                       <span style={{ color: manuelCor, fontWeight: 700, minWidth: 60, textAlign: "right" }}>
                                         {fmtScore(r.manuelScore)}
                                       </span>
-                                      <span className="muted" style={{ fontSize: "var(--fs-11)" }}>vs</span>
-                                      <span style={{ color: "var(--text)", fontWeight: 700, minWidth: 60 }}>
+                                      <span className="muted u-fs-fs-11">vs</span>
+                                      <span className="u-c-text u-fw-700 u-minw-60px">
                                         {fmtScore(r.companheiroScore)}
                                       </span>
                                     </span>
@@ -1285,17 +1256,17 @@ export default function DrawsPage() {
                 })}
               </tbody>
               <tfoot>
-                <tr style={{ borderTop: "2px solid var(--border)", fontWeight: 700, background: "var(--bg-header)" }}>
+                <tr className="u-bt-2px-solid-border u-fw-700 u-bg-bg-header">
                   <td></td>
                   <td>TOTAL</td>
                   <td></td>
-                  <td className="muted" style={{ fontWeight: 400 }}>
+                  <td className="muted u-fw-400">
                     {linhasOrdenadas.length} {linhasOrdenadas.length === 1 ? "jogador" : "jogadores"} únicos
                   </td>
                   <td className="r">
                     {linhasOrdenadas.reduce((s, r) => s + r.vezes, 0)}
                   </td>
-                  <td colSpan={2} className="muted" style={{ fontWeight: 400 }}>
+                  <td colSpan={2} className="muted u-fw-400">
                     {(() => {
                       const nrondas = rondasFiltradas.length;
                       return `${nrondas} ${nrondas === 1 ? "ronda" : "rondas"} com draw`;
@@ -1308,15 +1279,8 @@ export default function DrawsPage() {
 
           {/* Painel lateral — listas de torneios FPG (Com/Sem/Excluídos) */}
           {tab === "FPG" && (
-            <aside style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
-              flex: "1 1 280px",
-              minWidth: 280,
-              maxWidth: 380,
-            }}>
-              <div className="muted" style={{ lineHeight: 1.4 }}>
+            <aside className="u-d-flex u-fd-column u-gap-12px u-fl-1-1-280px u-minw-280px u-maxw-380px">
+              <div className="muted u-lh-1_4">
                 Detalhe dos torneios FPG do Manuel — clica num para abrir a página do torneio.
               </div>
               <TorneiosList
@@ -1343,7 +1307,7 @@ export default function DrawsPage() {
                 />
               )}
               {listasFpgTorneios.skip.length === 0 && listasFpgTorneios.skipCcodes.length > 0 && (
-                <div className="notice notice-info" style={{ margin: 0, borderStyle: "dashed" }}>
+                <div className="notice notice-info u-m-0 u-border-style-dashed">
                   ⓘ {listasFpgTorneios.skipCcodes.length === 1 ? "Ccode" : "Ccodes"}{" "}
                   <code>{listasFpgTorneios.skipCcodes.join(", ")}</code>{" "}
                   são silenciosamente excluídos do scrape (Drive Challenge Madeira — a FPG reatribuiu o ccode a Açores). Re-correr <code>scripts/pairings-build.js</code> para listar.
@@ -1371,17 +1335,17 @@ export default function DrawsPage() {
           const lista = [...uskTorneios.values()].sort((a, b) => (b.data || "").localeCompare(a.data || ""));
           if (lista.length === 0 && intlLinks.length === 0) return null;
           return (
-            <details className="details-block" style={{ marginTop: 16 }}>
+            <details className="details-block u-mt-16px">
               <summary>Fontes & tee times internacionais (USKids · Bluegolf · GolfGenius)</summary>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              <div className="u-d-flex u-fd-column u-gap-14px">
                 {lista.length > 0 && (
                   <div>
-                    <div className="h-xs" style={{ marginBottom: 6 }}>
+                    <div className="h-xs u-mb-6px">
                       🇺🇸 Torneios USKids do Manuel (pairings via signupanytime)
                     </div>
-                    <ul style={{ margin: 0, paddingLeft: 18 }}>
+                    <ul className="u-m-0 u-pl-18px">
                       {lista.map((tn, i) => (
-                        <li key={i} style={{ marginBottom: 2 }}>
+                        <li key={i} className="u-mb-2px">
                           <a href={`https://www.signupanytime.com/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${tn.t}`} target="_blank" rel="noopener" className="courseLink">
                             {tn.nome}
                           </a>
@@ -1395,12 +1359,12 @@ export default function DrawsPage() {
                 )}
                 {intlLinks.length > 0 && (
                   <div>
-                    <div className="h-xs" style={{ marginBottom: 6 }}>
+                    <div className="h-xs u-mb-6px">
                       🔗 Tee times noutros sites externos (Bluegolf / GolfGenius)
                     </div>
-                    <ul style={{ margin: 0, paddingLeft: 18 }}>
+                    <ul className="u-m-0 u-pl-18px">
                       {intlLinks.map((lnk, i) => (
-                        <li key={i} style={{ marginBottom: 2 }}>
+                        <li key={i} className="u-mb-2px">
                           <a href={lnk.url} target="_blank" rel="noopener" className="courseLink">
                             {lnk.nome}
                           </a>

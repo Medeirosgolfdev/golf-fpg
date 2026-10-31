@@ -135,14 +135,14 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
   }, []);
 
   return (
-    <div style={{ marginBottom: 18 }}>
-      <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 10 }} ref={ref}>
-        <div style={{ position: "relative", flex: 1 }}>
-          <input className="input" value={q} onChange={e => { setQ(e.target.value); setOpen(true); }} onFocus={() => q.trim() && setOpen(true)}
+    <div className="u-mb-18px">
+      <div className="u-d-flex u-gap-8px u-ai-center u-mb-10px" ref={ref}>
+        <div className="u-pos-relative u-fl-1">
+          <input className="input u-w-100pc u-fs-fs-14 u-p-10px-14px" value={q} onChange={e => { setQ(e.target.value); setOpen(true); }} onFocus={() => q.trim() && setOpen(true)}
             placeholder="Pesquisar jogador…" disabled={slots.length >= 4}
-            style={{ width: "100%", fontSize: "var(--fs-14)", padding: "10px 14px" }} />
+ />
           {open && results.length > 0 && (
-            <div style={{ position: "absolute", top: "100%", left: 0, right: 0, zIndex: "var(--z-dropdown)", background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", boxShadow: "var(--shadow-lg)", maxHeight: 280, overflowY: "auto" }}>
+            <div className="u-pos-absolute u-top-100pc u-left-0 u-right-0 u-z-z-dropdown u-bg-bg-card u-bd-1px-solid-border u-br-radius u-bs-shadow-lg u-maxh-280px u-oy-auto">
               {results.map(p => (
                 <button key={p.fed} className="course-item" onClick={() => { onAdd(p.fed); setQ(""); setOpen(false); }}>
                   <div className="course-item-name">{p.name}</div>
@@ -152,10 +152,10 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
             </div>
           )}
         </div>
-        <span className="chip" style={{ fontSize: "var(--fs-13)", padding: "6px 12px" }}>{slots.length}/4</span>
+        <span className="chip u-fs-fs-13 u-p-6px-12px">{slots.length}/4</span>
       </div>
       {slots.length > 0 && (
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div className="u-d-flex u-gap-8px u-fwr-wrap">
           {slots.map((s, i) => (
             <span key={s.fed} className="jog-pill" style={{
               borderColor: COLORS[i], background: COLORS_LIGHT[i],
@@ -163,9 +163,9 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
             }}>
               <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS[i], flexShrink: 0 }} />
               <b>{shortName(s.player.name)}</b>
-              <span className="muted" style={{ fontSize: "var(--fs-11)" }}>HCP {hcpDisplay(s.player.hcp)}</span>
-              {s.loading && <span style={{ fontSize: "var(--fs-11)" }}>⏳</span>}
-              <button onClick={() => onRemove(s.fed)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-3)", padding: "0 2px", fontSize: "var(--fs-15)", lineHeight: 1 }} title="Remover">✕</button>
+              <span className="muted u-fs-fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
+              {s.loading && <span className="u-fs-fs-11">⏳</span>}
+              <button onClick={() => onRemove(s.fed)} className="u-bg-none u-bd-none u-cur-pointer u-c-text-3 u-p-0-2px u-fs-fs-15 u-lh-1" title="Remover">✕</button>
             </span>
           ))}
         </div>
@@ -209,9 +209,9 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
   };
 
   return (
-    <div className="courseAnalysis" style={{ padding: 16 }}>
+    <div className="courseAnalysis u-p-16px">
       <div className="caTitle">Perfil Comparativo</div>
-      <svg viewBox="0 0 300 290" style={{ width: "100%", maxWidth: 420, display: "block", margin: "0 auto" }}>
+      <svg viewBox="0 0 300 290" className="u-w-100pc u-maxw-420px u-d-block u-m-0-auto">
         {[0.25, 0.5, 0.75, 1].map(frac => (
           <polygon key={frac}
             points={Array.from({ length: N }, (_, i) => { const p = pointOnAxis(i, frac); return `${p.x},${p.y}`; }).join(" ")}
@@ -299,9 +299,9 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
   }
 
   return (
-    <div className="courseAnalysis" style={{ padding: 0, overflow: "hidden" }}>
-      <div className="caTitle" style={{ padding: "14px 16px 0" }}>Comparação Detalhada</div>
-      <div style={{ marginTop: 8 }}>
+    <div className="courseAnalysis u-p-0 u-ov-hidden">
+      <div className="caTitle u-p-14px-16px-0">Comparação Detalhada</div>
+      <div className="u-mt-8px">
         <table className="dtable">
           <thead>
             <tr>
@@ -316,8 +316,8 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
           <tbody>
             {sortedRows.map(r => (
               <tr key={r.label}>
-                <td style={{ fontWeight: 600, fontSize: "var(--fs-12)" }}>
-                  <span style={{ marginRight: 6 }}>{r.emoji}</span>{r.label}
+                <td className="u-fw-600 u-fs-fs-12">
+                  <span className="u-mr-6px">{r.emoji}</span>{r.label}
                 </td>
                 {loaded.map((x, ci) => {
                   const v = r.values[ci];
@@ -358,9 +358,9 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
   ];
 
   return (
-    <div className="courseAnalysis" style={{ padding: 16 }}>
+    <div className="courseAnalysis u-p-16px">
       <div className="caTitle">Distribuição de Scores</div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+      <div className="u-d-flex u-fd-column u-gap-12px u-mt-8px">
         {cats.filter(c => c.key !== "total").map(cat => {
           const vals = loaded.map(x => {
             const d = x.agg!.scoreDist;
@@ -369,28 +369,28 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
           const maxVal = Math.max(...vals, 1);
           return (
             <div key={cat.key}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <span style={{ fontSize: "var(--fs-12)", width: 75, fontWeight: 600, color: "var(--text-2)" }}>
+              <div className="u-d-flex u-ai-center u-gap-8px u-mb-4px">
+                <span className="u-fs-fs-12 u-w-75px u-fw-600 u-c-text-2">
                   {cat.emoji} {cat.label}
                 </span>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+              <div className="u-d-flex u-fd-column u-gap-3px">
                 {loaded.map(x => {
                   const d = x.agg!.scoreDist;
                   const v = d.total > 0 ? ((d[cat.key] as number) / d.total * 100) : 0;
                   const barW = Math.max(2, (v / maxVal) * 100);
                   return (
-                    <div key={x.i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <div key={x.i} className="u-d-flex u-ai-center u-gap-8px">
                       <span style={{ fontSize: "var(--fs-11)", width: 60, textAlign: "right", color: COLORS[x.i], fontWeight: 600, flexShrink: 0 }}>
                         {firstName(x.s.player.name)}
                       </span>
-                      <div style={{ flex: 1, background: "var(--bg-subtle)", borderRadius: "var(--radius-sm)", height: 18, overflow: "hidden" }}>
+                      <div className="u-fl-1 u-bg-bg-subtle u-br-radius-sm u-h-18px u-ov-hidden">
                         <div style={{
                           width: `${barW}%`, height: "100%", background: COLORS[x.i],
                           borderRadius: "var(--radius-sm)", opacity: 0.75,
                         }} />
                       </div>
-                      <span style={{ fontSize: "var(--fs-11)", fontFamily: "var(--font-mono)", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
+                      <span className="u-fs-fs-11 u-ff-font-mono u-fw-700 u-w-46px u-ta-right u-c-text-2">
                         {v.toFixed(1)}%
                       </span>
                     </div>
@@ -465,14 +465,14 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
 
   return (
     <div className="courseAnalysis">
-      <div className="caTitle" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+      <div className="caTitle u-d-flex u-ai-center u-gap-10px u-fwr-wrap">
         Buraco a Buraco
         <select className="select" value={sel} onChange={e => setSel(Number(e.target.value))}>
           {combos.map((c, i) => <option key={i} value={i}>{c.label} ({c.nRounds.filter(n => n > 0).join("/")} rondas)</option>)}
         </select>
       </div>
 
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 230, marginTop: 8 }}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="u-w-100pc u-maxh-230px u-mt-8px">
         <line x1={PAD.left} x2={W - PAD.right} y1={yPos(0)} y2={yPos(0)} stroke="var(--color-good)" strokeWidth={1} strokeDasharray="4,3" opacity={0.5} />
         {[-0.5, 0.5, 1.0].filter(v => v >= minV && v <= maxV).map(v => (
           <g key={v}><line x1={PAD.left} x2={W - PAD.right} y1={yPos(v)} y2={yPos(v)} stroke="var(--border)" strokeWidth={0.5} />
@@ -496,7 +496,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
         })}
       </svg>
 
-      <div className="caKpis" style={{ marginTop: 6 }}>
+      <div className="caKpis u-mt-6pxx">
         {loaded.map((s, i) => {
           const st = combo.stats[i];
           return (
@@ -508,7 +508,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
         })}
       </div>
 
-      <div style={{ marginTop: 8 }}>
+      <div className="u-mt-8px">
         <table className="dtable">
           <thead><tr>
             <SortableHdr k="h" sortKey={hKey} sortDir={hDir} onSort={toggleHole} className="r">H</SortableHdr>
@@ -526,7 +526,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
               const bestAvg = Math.min(...avgs.filter((v): v is number => v != null));
               return (<tr key={hi}>
                 <td className="r"><b>{hi + 1}</b></td>
-                <td className="r" style={{ color: "var(--text-3)" }}>{par}</td>
+                <td className="r u-c-text-3">{par}</td>
                 {entries.map((e, i) => {
                   const diff = e?.avg != null && e?.par != null ? e.avg - e.par : null;
                   const sl = e?.strokesLost ?? null;
@@ -608,7 +608,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
       <div className="caTitle">Head-to-Head ({totalMatches} torneios comuns)</div>
 
       {/* Win progress bar */}
-      <div style={{ display: "flex", height: 32, borderRadius: 8, overflow: "hidden", marginBottom: 12, border: "1px solid var(--border-light)" }}>
+      <div className="u-d-flex u-h-32px u-br-8px u-ov-hidden u-mb-12px u-bd-1px-solid-border-light">
         {loaded.map((s, i) => {
           const w = totalMatches > 0 ? (wins[i] / totalMatches * 100) : 0;
           if (w === 0) return null;
@@ -647,7 +647,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
         )}
       </div>
 
-      <div style={{ maxHeight: 340, overflowY: "auto" }}>
+      <div className="u-maxh-340px u-oy-auto">
         <table className="dtable">
           <thead><tr>
             <SortableHdr k="date" sortKey={mKey} sortDir={mDir} onSort={toggleMatch}>Data</SortableHdr>
@@ -661,14 +661,14 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
             {sortedMatches.slice(0, 30).map((m, mi) => {
               const bestGross = Math.min(...m.results.map(r => r.gross));
               return (<tr key={mi} className="roundRow">
-                <td style={{ color: "var(--text-3)", whiteSpace: "nowrap" }}>{m.date}</td>
+                <td className="u-c-text-3 u-ws-nowrap">{m.date}</td>
                 <td>{m.event}</td>
                 {loaded.map((_, i) => {
                   const r = m.results.find(r => r.idx === i);
                   if (!r) return <td key={i} className="r">–</td>;
                   return <td key={i} className="r" style={{ color: r.gross === bestGross ? COLORS[i] : undefined, fontWeight: r.gross === bestGross ? 800 : 400 }}>{r.gross}</td>;
                 })}
-                <td className="r" style={{ color: "var(--text-3)" }}>
+                <td className="r u-c-text-3">
                   {loaded.length === 2 ? (() => {
                     const r0 = m.results.find(r => r.idx === 0), r1 = m.results.find(r => r.idx === 1);
                     if (!r0 || !r1) return "–"; const diff = r0.gross - r1.gross;
@@ -703,17 +703,17 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
 
   return (
     <div className="courseAnalysis">
-      <div className="caTitle" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div className="caTitle u-d-flex u-ai-center u-gap-10px">
         Evolução HCP
         <select className="select" value={period} onChange={e => setPeriod(Number(e.target.value))}>
           <option value={0}>Total</option><option value={36}>3 anos</option><option value={24}>2 anos</option><option value={12}>1 ano</option><option value={6}>6 meses</option>
         </select>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 280, background: "var(--bg-subtle)", borderRadius: 8, border: "1px solid var(--border-light)" }}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="u-w-100pc u-maxh-280px u-bg-bg-subtle u-br-8px u-bd-1px-solid-border-light">
         {Array.from({ length: 5 }, (_, i) => { const val = minH - padH + (rangeH + 2 * padH) * (i / 4); return (<g key={i}><line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="var(--border)" strokeWidth={0.5} /><text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{val.toFixed(1)}</text></g>); })}
         {series.map((s, si) => { if (s.pts.length < 2) return null; const d = s.pts.map(pt => `${xPos(pt.d).toFixed(1)},${yPos(pt.h).toFixed(1)}`).join(" L "); return (<g key={si}><path d={`M ${d}`} fill="none" stroke={s.color} strokeWidth={2} opacity={0.8} strokeLinejoin="round" />{s.pts.map((pt, j) => (<circle key={j} cx={xPos(pt.d)} cy={yPos(pt.h)} r={2.5} fill={s.color} opacity={0.5}><title>{s.name}: HCP {pt.h} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title></circle>))}</g>); })}
       </svg>
-      <div className="caKpis" style={{ marginTop: 8 }}>
+      <div className="caKpis u-mt-8px">
         {series.map((s, i) => {
           const last = s.pts.length > 0 ? s.pts[s.pts.length - 1].h : null;
           const first = s.pts.length > 0 ? s.pts[0].h : null;
@@ -756,22 +756,19 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
   const allAgg = useMemo(() => slots.map(s => s.data ? aggregateStats(s.data) : null), [slots]);
 
   return (
-    <div className="course-detail" style={{ maxWidth: 1060, margin: "0 auto" }}>
+    <div className="course-detail u-maxw-1060px u-m-0-auto">
       <PlayerSearch players={players} slots={slots} onAdd={addPlayer} onRemove={removePlayer} />
 
       {slots.length === 0 && (
-        <div className="holeAnalysis" style={{ textAlign: "center", padding: "40px 20px" }}>
-          <div style={{ fontSize: 40, marginBottom: 12 }}>⚔️</div>
-          <div className="haTitle" style={{ textAlign: "center", fontSize: "var(--fs-16)", marginBottom: 6 }}>Comparar Jogadores</div>
-          <div className="muted" style={{ fontSize: "var(--fs-13)", lineHeight: 1.6 }}>
+        <div className="holeAnalysis u-ta-center u-p-40px-20px">
+          <div className="u-fs-40px u-mb-12px">⚔️</div>
+          <div className="haTitle u-ta-center u-fs-fs-16 u-mb-6px">Comparar Jogadores</div>
+          <div className="muted u-fs-fs-13 u-lh-1_6">
             Pesquisa e adiciona até 4 jogadores para comparar lado a lado.
           </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginTop: 16 }}>
+          <div className="u-d-flex u-fwr-wrap u-gap-8px u-jc-center u-mt-16px">
             {["Perfil radar", "Tabela detalhada", "Distribuição de scores", "Buraco a buraco", "Head-to-head", "Evolução HCP"].map(label => (
-              <span key={label} style={{
-                padding: "4px 12px", borderRadius: "var(--radius-xl)", background: "var(--bg-subtle)",
-                fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-2)",
-              }}>{label}</span>
+              <span key={label} className="u-p-4px-12px u-br-radius-xl u-bg-bg-subtle u-fs-fs-11 u-fw-600 u-c-text-2">{label}</span>
             ))}
           </div>
         </div>
@@ -791,8 +788,8 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
       </>)}
 
       {slots.length === 1 && !anyLoading && (
-        <div className="holeAnalysis" style={{ textAlign: "center", padding: 24 }}>
-          <div style={{ fontSize: "var(--fs-24)", marginBottom: 8 }}>👆</div>
+        <div className="holeAnalysis u-ta-center u-p-24px">
+          <div className="u-fs-fs-24 u-mb-8px">👆</div>
           <div className="muted">Adiciona mais jogadores para ver a comparação</div>
         </div>
       )}

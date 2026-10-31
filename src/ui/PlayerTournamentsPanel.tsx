@@ -85,18 +85,18 @@ export default function PlayerTournamentsPanel({
   }, [items]);
 
   if (!items.length) {
-    return <div className="muted fs-11" style={{ padding: "8px 4px" }}>{emptyMessage}</div>;
+    return <div className="muted fs-11 u-p-8px-4px">{emptyMessage}</div>;
   }
 
   return (
-    <div style={{ padding: "6px 0 10px" }}>
-      <div className="muted fs-11" style={{ marginBottom: 6 }}>
+    <div className="u-p-6px-0-10px">
+      <div className="muted fs-11 u-mb-6px">
         <b>{resumo.n}</b> {resumo.n === 1 ? "torneio" : "torneios"} em {resumo.anos} {resumo.anos === 1 ? "época" : "épocas"}
         {resumo.best != null && <> · melhor classificação <b>{resumo.best}º</b></>}
         {resumo.semResultado > 0 && <> · {resumo.semResultado} sem resultado publicado</>}
-        <span style={{ marginLeft: 8, fontStyle: "italic" }}>clica no torneio para ver a leaderboard completa</span>
+        <span className="u-ml-8px u-fst-italic">clica no torneio para ver a leaderboard completa</span>
       </div>
-      <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-11)" }}>
+      <table className="player-list-table u-w-100pc u-fs-fs-11">
         <thead>
           <tr>
             <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Data</SortableHdr>
@@ -110,8 +110,8 @@ export default function PlayerTournamentsPanel({
         <tbody>
           {sorted.map((i) => (
             <tr key={i.key} className="player-list-row">
-              <td style={{ whiteSpace: "nowrap" }}>{br(i.date)}</td>
-              <td style={{ fontWeight: 600 }}>
+              <td className="u-ws-nowrap">{br(i.date)}</td>
+              <td className="u-fw-600">
                 {i.url ? (
                   <a
                     href={i.url}
@@ -124,11 +124,11 @@ export default function PlayerTournamentsPanel({
                 ) : (
                   <span title="Esta prova não tem página no site">{i.name}</span>
                 )}
-                {i.badge && <span className="muted fs-10" style={{ marginLeft: 6, fontWeight: 400 }}>{i.badge}</span>}
-                {i.course && <span className="muted fs-10" style={{ marginLeft: 6, fontWeight: 400 }}>📍 {i.course}</span>}
+                {i.badge && <span className="muted fs-10 u-ml-6px u-fw-400">{i.badge}</span>}
+                {i.course && <span className="muted fs-10 u-ml-6px u-fw-400">📍 {i.course}</span>}
               </td>
               <td className="muted fs-10">{i.sub || MUTED}</td>
-              <td className="num" style={{ whiteSpace: "nowrap" }}>
+              <td className="num u-ws-nowrap">
                 {i.pos != null ? (
                   <>
                     <b>{i.pos}º</b>
@@ -143,10 +143,10 @@ export default function PlayerTournamentsPanel({
                   </span>
                 )}
               </td>
-              <td className="muted" style={{ whiteSpace: "nowrap" }}>
+              <td className="muted u-ws-nowrap">
                 {i.rounds.length ? i.rounds.join(" · ") : MUTED}
               </td>
-              <td className="num" style={{ fontWeight: 600 }}>{i.total ?? MUTED}</td>
+              <td className="num u-fw-600">{i.total ?? MUTED}</td>
             </tr>
           ))}
         </tbody>

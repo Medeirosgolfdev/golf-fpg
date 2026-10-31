@@ -52,7 +52,7 @@ function TournRoundRow({ r, idx: _idx, data }: {
       {scOpen && holes && (
         <tr>
           <td colSpan={8} className="bg-page p-0">
-            <div className="scroll-x" style={{ margin: "6px 8px", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden" }}>
+            <div className="scroll-x u-m-6px-8px u-bd-1px-solid-border u-br-radius-xl u-bg-bg-card u-p-10px u-ov-hidden">
               <ScorecardTable
                 holes={holes}
                 courseName={r.course}
@@ -501,10 +501,10 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
   return (
     <div className="card">
       <div className="scroll-x">
-        <table className="dtable-lg dtable-dense" style={{ tableLayout: "fixed" }}>
+        <table className="dtable-lg dtable-dense u-table-layout-fixed">
           <colgroup>
-            <col style={{ width: "108px" }} /><col style={{ width: "64px" }} />
-            <col /><col /><col style={{ width: "72px" }} />
+            <col className="u-w-108px" /><col className="u-w-64px" />
+            <col /><col /><col className="u-w-72px" />
           </colgroup>
           <thead>
             <tr>
@@ -527,7 +527,7 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
               return (
                 <React.Fragment key={idx}>
                   <tr>
-                    <td style={{ color: "var(--text-2)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+                    <td className="u-c-text-2 u-fvn-tabular-nums u-ws-nowrap">
                       <span className="fs-11">{fmtDateRange(start, end)}</span>
                     </td>
                     <td className="r"><CountPill count={it.rounds.length} tee={repTee} /></td>

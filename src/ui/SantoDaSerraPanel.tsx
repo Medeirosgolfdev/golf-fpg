@@ -174,18 +174,14 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
   const totalPodium = athletes.reduce((s, a) => s + a.podiums, 0);
 
   return (
-    <section style={{ margin: "16px 12px 28px", border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
-      <header style={{
-        padding: "10px 14px", background: "var(--bg-muted)",
-        borderBottom: "1px solid var(--border)",
-        display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
-      }}>
-        <h3 className="fs-15 fw-800" style={{ margin: 0 }}>
+    <section className="u-m-16px-12px-28px u-bd-1px-solid-border u-br-8px u-ov-hidden">
+      <header className="u-p-10px-14px u-bg-bg-muted u-bb-1px-solid-border u-d-flex u-ai-center u-gap-12px u-fwr-wrap">
+        <h3 className="fs-15 fw-800 u-m-0">
           🏌️ Santo da Serra · Top-5 em Nacionais
         </h3>
         <span className="muted fs-12">{athletes.length} atletas · {totalEntries} top-5 · {totalChamp} 🥇 · {totalPodium} pódios</span>
       </header>
-      <div style={{ overflowX: "auto" }}>
+      <div className="u-ox-auto">
         <table className="dtable">
           <thead>
             <tr>
@@ -210,14 +206,14 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                     style={{ cursor: "pointer", background: isOpen ? "var(--bg-info-subtle, rgba(59,130,246,0.04))" : undefined }}
                     onClick={() => toggle(key)}
                     title={isOpen ? "Fechar detalhes" : "Ver todos os top-5"}>
-                    <td style={{ verticalAlign: "middle" }}>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                        <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", opacity: 0.6, width: 10 }}>{isOpen ? "▼" : "▶"}</span>
+                    <td className="u-va-middle">
+                      <span className="u-d-inline-flex u-ai-center u-gap-6px">
+                        <span className="u-ff-font-mono u-fs-fs-11 u-op-0_6 u-w-10px">{isOpen ? "▼" : "▶"}</span>
                         {a.fed ? (
                           <a href={`/jogadores/${a.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="fw-700"
-                            style={{ color: "inherit", textDecoration: "none", borderBottom: "1px dotted currentColor" }}
+                            className="fw-700 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
+
                             title={`${a.name} — ver perfil federado (nova janela)`}>
                             {a.name}
                           </a>
@@ -226,28 +222,28 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                         )}
                       </span>
                     </td>
-                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
+                    <td className="u-ff-font-mono u-fs-fs-12 u-c-text-3">
                       {a.fed || "—"}
                     </td>
-                    <td style={{ fontSize: "var(--fs-12)", color: "var(--text-2)" }}
+                    <td className="u-fs-fs-12 u-c-text-2"
                         title={a.dob || ""}>
                       {a.dob ? a.dob.slice(0, 4) : "—"}
                     </td>
-                    <td className="r" style={{ fontWeight: 700 }}>{a.totalTop5}</td>
+                    <td className="r u-fw-700">{a.totalTop5}</td>
                     <td className="r" style={{ color: a.championships > 0 ? "var(--accent)" : "var(--text-3)" }}>
                       {a.championships > 0 ? a.championships : "—"}
                     </td>
                     <td className="r">{a.podiums}</td>
                     <td className="r"><PosBadge pos={a.best} />
                     </td>
-                    <td style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+                    <td className="u-fs-fs-11 u-c-text-3">
                       {years.length === 1 ? years[0] : `${years[0]}–${years[years.length - 1]}`} ({years.length})
                     </td>
                   </tr>
                   {isOpen && (
                     <tr key={key + "-details"}>
-                      <td colSpan={8} style={{ padding: "0 12px 14px 36px", background: "var(--bg-info-subtle, rgba(59,130,246,0.02))" }}>
-                        <table className="dtable-sm" style={{ marginTop: 4 }}>
+                      <td colSpan={8} className="u-p-0-12px-14px-36px u-bg-jqabh">
+                        <table className="dtable-sm u-mt-4px">
                           <thead>
                             <tr>
                               <th>Data</th>
@@ -261,13 +257,13 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                           <tbody>
                             {a.entries.map((e, i) => (
                               <tr key={i}>
-                                <td style={{ whiteSpace: "nowrap" }}>{e.date}</td>
+                                <td className="u-ws-nowrap">{e.date}</td>
                                 <td><PosBadge pos={e.pos} /></td>
                                 <td>{e.escalao}{e.isClubes ? " · Clubes" : ""}</td>
-                                <td className="r" style={{ fontWeight: 600 }}>{e.gross ?? "\u2014"}</td>
+                                <td className="r u-fw-600">{e.gross ?? "\u2014"}</td>
                                 <td className="r">{e.toPar != null ? fmtToPar(e.toPar) : "\u2014"}</td>
                                 <td ><a href={fpgScoringUrl(e.ccode, e.tcode)} target="_blank" rel="noopener noreferrer"
-                                    style={{ color: "var(--accent)", textDecoration: "none" }}
+                                    className="u-c-accent u-td-none"
                                     title="Ver torneio na FPG (nova janela)">
                                     {e.tournamentName} ↗
                                   </a>

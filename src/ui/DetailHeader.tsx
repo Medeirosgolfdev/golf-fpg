@@ -39,7 +39,7 @@ export default function DetailHeader({
       {hasTop && (
         <div className="detail-header-top">
           {title && <h2 className="detail-title">{title}</h2>}
-          {actions && <div className="flex-wrap" style={{ display: "flex", gap: 6, alignItems: "center" }}>{actions}</div>}
+          {actions && <div className="flex-wrap u-d-flex u-gap-6px u-ai-center">{actions}</div>}
         </div>
       )}
       {sub != null && (

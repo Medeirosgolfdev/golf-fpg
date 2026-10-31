@@ -436,7 +436,7 @@ export default function JogadoresListPage() {
   /* ── Render ──────────────────────────────────────────────── */
   if (loadError) {
     return (
-      <div style={{ padding: 24 }}>
+      <div className="u-p-24px">
         <h2>Lista de Jogadores</h2>
         <EmptyState size="md" message={`Erro ao carregar federados: ${loadError}`} />
       </div>
@@ -448,22 +448,22 @@ export default function JogadoresListPage() {
   }
 
   return (
-    <div style={{ padding: "8px 12px 24px" }}>
+    <div className="u-p-8px-12px-24px">
       <Toolbar>
         <ToolbarTitle>👥 Lista de Jogadores</ToolbarTitle>
         <ToolbarMeta>
           {sorted.length.toLocaleString("pt-PT")} de {rows.length.toLocaleString("pt-PT")}
         </ToolbarMeta>
         <ToolbarSep />
-        <button onClick={resetFilters} className="btn-pill" style={{ fontSize: "var(--fs-12)" }}>
+        <button onClick={resetFilters} className="btn-pill u-fs-fs-12">
           Limpar filtros
         </button>
-        <span style={{ marginLeft: "auto", fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
+        <span className="u-ml-auto u-fs-fs-11 u-c-text-muted">
           <a
             href={FPG_LIST_URL}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--chart-2)", textDecoration: "none" }}
+            className="u-c-chart-2 u-td-none"
             title="Abrir tabela oficial da Federação Portuguesa de Golfe"
           >
             🔗 Tabela FPG
@@ -507,15 +507,15 @@ export default function JogadoresListPage() {
         </FilterField>
 
         <FilterField label="ANO NASCIMENTO (DE / A)">
-          <div style={{ display: "flex", gap: 4 }}>
+          <div className="u-d-flex u-gap-4px">
             <input
               type="number"
               value={anoMin}
               onChange={e => setAnoMin(e.target.value)}
               placeholder="2010"
               min="1900" max="2030"
-              className="filter-input"
-              style={{ flex: 1 }}
+              className="filter-input u-fl-1"
+
             />
             <input
               type="number"
@@ -523,16 +523,16 @@ export default function JogadoresListPage() {
               onChange={e => setAnoMax(e.target.value)}
               placeholder="2015"
               min="1900" max="2030"
-              className="filter-input"
-              style={{ flex: 1 }}
+              className="filter-input u-fl-1"
+
             />
           </div>
         </FilterField>
 
         <FilterField label="HCP (DO / AO)">
-          <div style={{ display: "flex", gap: 4 }}>
-            <input type="number" step="0.1" value={hcpMin} onChange={e => setHcpMin(e.target.value)} placeholder="-8" className="filter-input" style={{ flex: 1 }} />
-            <input type="number" step="0.1" value={hcpMax} onChange={e => setHcpMax(e.target.value)} placeholder="54" className="filter-input" style={{ flex: 1 }} />
+          <div className="u-d-flex u-gap-4px">
+            <input type="number" step="0.1" value={hcpMin} onChange={e => setHcpMin(e.target.value)} placeholder="-8" className="filter-input u-fl-1" />
+            <input type="number" step="0.1" value={hcpMax} onChange={e => setHcpMax(e.target.value)} placeholder="54" className="filter-input u-fl-1" />
           </div>
         </FilterField>
 
@@ -571,7 +571,7 @@ export default function JogadoresListPage() {
       </div>
 
       {/* ── Filtros avançados ────────────────────────────────── */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "4px 8px 12px", fontSize: "var(--fs-12)" }}>
+      <div className="u-d-flex u-fwr-wrap u-gap-8px u-p-4px-8px-12px u-fs-fs-12">
         <ToggleChip checked={activosAnoOnly} onChange={setActivosAnoOnly} label="🗓 Só com rondas este ano" />
         <ToggleChip checked={jovensOnly} onChange={setJovensOnly} label="🧒 Só Jovens (Sub-X)" />
         <ToggleChip checked={comSDOnly} onChange={setComSDOnly} label="📊 Só com SD calculado" />
@@ -587,8 +587,8 @@ export default function JogadoresListPage() {
         <EmptyState size="md" message="Nenhum jogador corresponde aos filtros actuais" />
       ) : (
         <>
-          <div style={{ overflowX: "auto" }}>
-            <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-12)" }}>
+          <div className="u-ox-auto">
+            <table className="player-list-table u-w-100pc u-fs-fs-12">
               <thead>
                 <tr>
                   <SortableHdr k="nfed" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Nº Fed</SortableHdr>
@@ -627,7 +627,7 @@ export default function JogadoresListPage() {
                     className={cls}
                   >
                     <td>{r.fed}</td>
-                    <td style={{ fontWeight: 500 }}>
+                    <td className="u-fw-500">
                       <a
                         href={`/jogadores/${r.fed}`}
                         target="_blank"
@@ -638,29 +638,29 @@ export default function JogadoresListPage() {
                       >
                         {r.name}
                       </a>
-                      {r.hasAnalysis && <span title="Análise local disponível" style={{ marginLeft: 4, opacity: 0.6 }}>★</span>}
-                      {r.ppOnly && <span title="Só federado de Pitch & Putt (sem registo no golfe)" style={{ marginLeft: 4, opacity: 0.7 }}>🏑</span>}
+                      {r.hasAnalysis && <span title="Análise local disponível" className="u-ml-4px u-op-0_6">★</span>}
+                      {r.ppOnly && <span title="Só federado de Pitch & Putt (sem registo no golfe)" className="u-ml-4px u-op-0_7">🏑</span>}
                       {r.hasDiffs && (
                         <span
                           title={r.diffsText}
-                          style={{ marginLeft: 4, cursor: "help" }}
+                          className="u-ml-4px u-cur-help"
                         >⚠</span>
                       )}
                     </td>
-                    <td title={r.countryName} style={{ fontSize: "var(--fs-14)" }}>
+                    <td title={r.countryName} className="u-fs-fs-14">
                       {r.countryName && r.countryName !== "Portugal" ? gf(r.countryName) : ""}
                     </td>
                     <td title={r.clubLong}>{r.clubShort}{r.clubCode ? ` (${r.clubCode})` : ""}</td>
                     <td>{r.dob ? shortDate(r.dob) : "—"}</td>
-                    <td style={{ textAlign: "right" }}>{r.age != null ? r.age : "—"}</td>
-                    <td style={{ textAlign: "right", fontWeight: 600 }}>{r.hcp != null ? hcpDisplay(r.hcp) : "—"}</td>
-                    <td style={{ textAlign: "right" }}>
+                    <td className="u-ta-right">{r.age != null ? r.age : "—"}</td>
+                    <td className="u-ta-right u-fw-600">{r.hcp != null ? hcpDisplay(r.hcp) : "—"}</td>
+                    <td className="u-ta-right">
                       {r.ppReal ? (
-                        <span className="p p-sm" title={`Handicap Pitch & Putt: ${r.ppHcp}${r.ppRoundsYear ? ` · ${r.ppRoundsYear} cartões este ano` : ""}`}
-                          style={{ background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}>
+                        <span className="p p-sm u-bg-var-badge-pp-0e7490 u-c-fff u-bd-1px-solid-var-badge-pp-0e7490" title={`Handicap Pitch & Putt: ${r.ppHcp}${r.ppRoundsYear ? ` · ${r.ppRoundsYear} cartões este ano` : ""}`}
+>
                           🏑 {hcpDisplay(r.ppHcp!)}
                         </span>
-                      ) : <span style={{ color: "var(--text-muted)" }}>—</span>}
+                      ) : <span className="u-c-text-muted">—</span>}
                     </td>
                     <td><SexBadge sex={r.sex as "M" | "F"} /></td>
                     <td><EscPill esc={r.escalao} /></td>
@@ -681,10 +681,10 @@ export default function JogadoresListPage() {
 
           {/* Paginação */}
           {totalPages > 1 && (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, padding: "12px 0", fontSize: "var(--fs-12)" }}>
+            <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
               <button onClick={() => setPage(1)} disabled={page === 1} className="btn-pill">«</button>
               <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="btn-pill">‹</button>
-              <span style={{ minWidth: 80, textAlign: "center" }}>
+              <span className="u-minw-80px u-ta-center">
                 Página <b>{page}</b> de {totalPages}
               </span>
               <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="btn-pill">›</button>
@@ -695,9 +695,9 @@ export default function JogadoresListPage() {
       )}
 
       {/* Footer com link FPG */}
-      <div style={{ marginTop: 16, fontSize: "var(--fs-11)", color: "var(--text-muted)", textAlign: "center" }}>
+      <div className="u-mt-16px u-fs-fs-11 u-c-text-muted u-ta-center">
         Fonte: <code>federados.json</code> (~{rows.length.toLocaleString("pt-PT")} federados) ·{" "}
-        <a href={FPG_LIST_URL} target="_blank" rel="noopener noreferrer" style={{ color: "var(--chart-2)" }}>
+        <a href={FPG_LIST_URL} target="_blank" rel="noopener noreferrer" className="u-c-chart-2">
           Tabela oficial FPG (handicaps.asp) ↗
         </a>
       </div>

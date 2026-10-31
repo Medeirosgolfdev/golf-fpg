@@ -189,8 +189,8 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
   if (valid.length === 0) {
     return (
       <section>
-        <h3 style={{ margin: "8px 0 10px", fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Análise</h3>
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "12px 16px", background: "var(--bg-muted)", borderRadius: "var(--radius)" }}>
+        <h3 className="u-m-8px-0-10px u-fs-fs-14 u-fw-700 u-c-text">Análise</h3>
+        <div className="u-fs-fs-12 u-c-text-3 u-p-12px-16px u-bg-bg-muted u-br-radius">
           — sem scorecards hole-by-hole disponíveis para análise —
         </div>
       </section>
@@ -199,9 +199,9 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
 
   return (
     <section>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px" }}>
-        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Análise</h3>
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px">
+        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Análise</h3>
+        <span className="u-fs-fs-11 u-c-text-3">
           {valid.length} {valid.length === 1 ? "torneio" : "torneios"} com scorecard
           {fieldCards.length > 0 && <> · field {fieldCards.length}</>}
         </span>
@@ -209,20 +209,14 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
 
       {/* Selector de torneio/escalão como dropdown (em vez de N pills) */}
       {flightOpts.length > 1 && (
-        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 10 }}>
-          <label style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", fontWeight: 600 }}>
+        <div className="u-d-flex u-gap-8px u-ai-center u-mb-10px">
+          <label className="u-fs-fs-11 u-c-text-3 u-fw-600">
             Torneio / escalão
           </label>
           <select
             value={selectedFlight}
             onChange={(e) => setSelectedFlight(e.target.value)}
-            style={{
-              flex: 1, maxWidth: 460, padding: "5px 8px",
-              fontSize: "var(--fs-12)", fontWeight: 500,
-              border: "1px solid var(--border)", borderRadius: "var(--radius)",
-              background: "var(--bg)", color: "var(--text)",
-              cursor: "pointer",
-            }}
+            className="u-fl-1 u-maxw-460px u-p-5px-8px u-fs-fs-12 u-fw-500 u-bd-1px-solid-border u-br-radius u-bg-bg u-c-text u-cur-pointer"
           >
             <option value="ALL">Todos os {valid.length} torneios</option>
             {flightOpts.map((o) => (
@@ -279,10 +273,10 @@ function ScoringPane({ player, field }: { player: ScoringDist; field: ScoringDis
   ];
   return (
     <div>
-      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
+      <div className="u-fs-fs-11 u-c-text-3 u-mb-10px">
         Distribuição de scoring · {player.total} buracos do jogador · field {field.total} buracos
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, justifyItems: "center" }}>
+      <div className="u-d-grid u-grid-template-columns-t0day u-gap-12px u-justify-items-center">
         {rows.map((r) => (
           <ComparisonDonut
             key={r.key}
@@ -317,10 +311,10 @@ function RoundsPane({ cards }: { cards: DerivedCard[] }) {
       });
     });
   }
-  if (entries.length === 0) return <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", padding: 10 }}>— sem rondas —</div>;
+  if (entries.length === 0) return <div className="u-fs-fs-11 u-c-text-3 u-p-10px">— sem rondas —</div>;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+    <div className="u-d-flex u-fd-column u-gap-8px">
       {entries.map((e, i) => (
         <RoundBar key={i} entry={e} />
       ))}
@@ -339,20 +333,20 @@ function RoundBar({ entry }: { entry: { tornLabel: string; round: number; gross:
   ].filter((s) => s.pct > 0);
   const tpCol = entry.toPar == null ? "var(--text-3)" : tpColor(entry.toPar) ?? "var(--text-2)";
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "minmax(140px, 1.5fr) 90px 1fr 90px", alignItems: "center", gap: 10, fontSize: "var(--fs-12)" }}>
-      <div style={{ fontWeight: 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-        {entry.tornLabel} <span style={{ color: "var(--text-3)", fontWeight: 400 }}>· R{entry.round}</span>
+    <div className="u-d-grid u-grid-template-columns-17av9 u-ai-center u-gap-10px u-fs-fs-12">
+      <div className="u-fw-600 u-c-text u-ov-hidden u-tov-ellipsis u-ws-nowrap">
+        {entry.tornLabel} <span className="u-c-text-3 u-fw-400">· R{entry.round}</span>
       </div>
       <div style={{ textAlign: "center", fontWeight: 700, color: tpCol, fontVariantNumeric: "tabular-nums" }}>
         {entry.gross != null ? `${entry.gross}` : "—"}
-        {entry.toPar != null && <span style={{ fontSize: "var(--fs-10)", marginLeft: 4 }}>({fmtToPar(entry.toPar)})</span>}
+        {entry.toPar != null && <span className="u-fs-fs-10 u-ml-4px">({fmtToPar(entry.toPar)})</span>}
       </div>
-      <div style={{ display: "flex", height: 14, borderRadius: 3, overflow: "hidden", gap: 1, background: "var(--bg-muted)" }}>
+      <div className="u-d-flex u-h-14px u-br-3px u-ov-hidden u-gap-1px u-bg-bg-muted">
         {segs.map((s) => (
           <div key={s.k} style={{ flex: s.pct, background: s.color }} title={`${s.k}: ${s.pct.toFixed(0)}%`} />
         ))}
       </div>
-      <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", textAlign: "right" }}>
+      <div className="u-fs-fs-10 u-c-text-3 u-ta-right">
         {entry.dist.birdies}🐦 · {entry.dist.bogeys + entry.dist.dbPlus}↑
       </div>
     </div>
@@ -370,18 +364,18 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
   const item = (label: string, toPar: number | null, dist: ScoringDist, fieldToPar: number | null) => {
     const pp = distPct(dist);
     return (
-      <div style={{ padding: "14px 16px", border: "1px solid var(--border-light)", borderRadius: "var(--radius)", background: "var(--bg)" }}>
-        <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: 0.6, fontWeight: 700, marginBottom: 4, textTransform: "uppercase" }}>{label}</div>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 10 }}>
+      <div className="u-p-14px-16px u-bd-1px-solid-border-light u-br-radius u-bg-bg">
+        <div className="u-fs-fs-11 u-c-text-3 u-ls-0_6px u-fw-700 u-mb-4px u-tt-uppercase">{label}</div>
+        <div className="u-d-flex u-ai-baseline u-gap-8px u-mb-10px">
           <span style={{ fontSize: "var(--fs-28)", fontWeight: 800, color: toPar == null ? "var(--text-3)" : tpColor(toPar) ?? "var(--text)", fontVariantNumeric: "tabular-nums" }}>
             {toPar != null ? (toPar >= 0 ? `+${toPar.toFixed(1)}` : toPar.toFixed(1)) : "—"}
           </span>
-          <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+          <span className="u-fs-fs-11 u-c-text-3">
             ±par média
             {fieldToPar != null && <span> · field {fieldToPar >= 0 ? "+" : ""}{fieldToPar.toFixed(1)}</span>}
           </span>
         </div>
-        <div style={{ display: "flex", height: 10, borderRadius: 3, overflow: "hidden", gap: 1, background: "var(--bg-muted)" }}>
+        <div className="u-d-flex u-h-10px u-br-3px u-ov-hidden u-gap-1px u-bg-bg-muted">
           {(["eagles", "birdies", "pars", "bogeys", "dbPlus"] as const).map((k) => (
             <div key={k} style={{
               flex: (pp as Record<string, number>)[k],
@@ -389,7 +383,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
             }} title={`${k}: ${(pp as Record<string, number>)[k].toFixed(0)}%`} />
           ))}
         </div>
-        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 5 }}>
+        <div className="u-fs-fs-10 u-c-text-3 u-mt-5px">
           {dist.birdies}🐦 · {dist.pars} pars · {dist.bogeys}↑ · {dist.dbPlus}↑↑
         </div>
       </div>
@@ -398,10 +392,10 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
 
   return (
     <div>
-      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
+      <div className="u-fs-fs-11 u-c-text-3 u-mb-10px">
         Consistência entre nove da frente (1–9) e nove do fundo (10–18).
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+      <div className="u-d-grid u-grid-template-columns-1fr-1fr u-gap-12px">
         {item("FRONT 9 (1-9)", pAgg.frontToParAvg, pAgg.front, fAgg.frontToParAvg)}
         {item("BACK 9 (10-18)", pAgg.backToParAvg, pAgg.back, fAgg.backToParAvg)}
       </div>
@@ -453,7 +447,7 @@ function HolesPane({ player, field }: {
   }));
   const allVals = rows.flatMap((r) => [r.avg, r.fieldAvg]).filter((v): v is number => v != null);
   if (allVals.length === 0) {
-    return <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", padding: 10 }}>— sem dados —</div>;
+    return <div className="u-fs-fs-11 u-c-text-3 u-p-10px">— sem dados —</div>;
   }
   const maxAvg = Math.max(...allVals);
   const minAvg = Math.min(...allVals);
@@ -461,31 +455,31 @@ function HolesPane({ player, field }: {
 
   return (
     <div>
-      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
+      <div className="u-fs-fs-11 u-c-text-3 u-mb-10px">
         Média de strokes por buraco — jogador (cor) vs field (cinzento).
       </div>
       <div className="scroll-x">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(18, minmax(20px, 1fr))", gap: 2, alignItems: "end", height: 160, minWidth: 360 }}>
+        <div className="u-d-grid u-grid-template-columns-1ncbo u-gap-2px u-ai-end u-h-160px u-minw-360px">
           {rows.map((r) => {
             const pHeight = r.avg != null ? ((r.avg - minAvg) / range) * 100 : 0;
             const fHeight = r.fieldAvg != null ? ((r.fieldAvg - minAvg) / range) * 100 : 0;
             return (
-              <div key={r.hole} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, height: "100%" }}>
-                <div style={{ flex: 1, display: "flex", alignItems: "flex-end", gap: 1, width: "100%", justifyContent: "center" }}>
+              <div key={r.hole} className="u-d-flex u-fd-column u-ai-center u-gap-2px u-h-100pc">
+                <div className="u-fl-1 u-d-flex u-ai-flex-end u-gap-1px u-w-100pc u-jc-center">
                   <div title={`Jogador ${r.hole}: ${r.avg?.toFixed(2) ?? "—"}`}
                     style={{ width: "40%", height: `${pHeight}%`, minHeight: r.avg != null ? 2 : 0, background: "var(--accent)", borderRadius: "2px 2px 0 0" }} />
                   <div title={`Field ${r.hole}: ${r.fieldAvg?.toFixed(2) ?? "—"}`}
                     style={{ width: "40%", height: `${fHeight}%`, minHeight: r.fieldAvg != null ? 2 : 0, background: "var(--text-3)", borderRadius: "2px 2px 0 0" }} />
                 </div>
-                <div style={{ fontSize: "var(--fs-9)", color: "var(--text-3)" }}>{r.hole}</div>
+                <div className="u-fs-fs-9 u-c-text-3">{r.hole}</div>
               </div>
             );
           })}
         </div>
       </div>
-      <div style={{ display: "flex", gap: 14, fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 8, justifyContent: "center" }}>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--accent)", borderRadius: "var(--radius-xs)", marginRight: 4 }} />jogador</span>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--text-3)", borderRadius: "var(--radius-xs)", marginRight: 4 }} />field (escalão)</span>
+      <div className="u-d-flex u-gap-14px u-fs-fs-10 u-c-text-3 u-mt-8px u-jc-center">
+        <span><span className="u-d-inline-block u-w-10px u-h-10px u-bg-accent u-br-radius-xs u-mr-4px" />jogador</span>
+        <span><span className="u-d-inline-block u-w-10px u-h-10px u-bg-text-3 u-br-radius-xs u-mr-4px" />field (escalão)</span>
       </div>
     </div>
   );

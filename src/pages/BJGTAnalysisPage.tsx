@@ -1068,7 +1068,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 <span className="fs-11 fw-800" style={{ minWidth: 22, color: typeof p.p === "number" && p.p <= 3 ? "var(--color-warn-dark)" : "var(--text-3)" }}>{typeof p.p === "number" ? `${p.p}.` : ""}</span>
                 {flag(p.co)} {firstName(p.n)}
               </div>
-              <div className="course-item-meta" style={{fontVariantNumeric:"tabular-nums"}}>
+              <div className="course-item-meta u-fvn-tabular-nums">
                 {p.t} ({fmtToPar(p.tp)})
               </div>
             </div>

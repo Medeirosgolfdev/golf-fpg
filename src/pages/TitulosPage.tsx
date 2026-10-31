@@ -217,7 +217,7 @@ export default function TitulosPage() {
   if (!historico) return <LoadingState message="A carregar Titulos..." />;
 
   return (
-    <div className="page-full" style={{ maxWidth: "none" }}>
+    <div className="page-full u-maxw-none">
       <Toolbar>
         <ToolbarTitle>🏆 Titulos - Campeonatos de Jovens</ToolbarTitle>
         <ToolbarMeta>

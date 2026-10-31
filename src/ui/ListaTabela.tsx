@@ -85,7 +85,7 @@ export default function ListaTabela<T>({
                 <React.Fragment key={k}>
                   {sep && (
                     <tr>
-                      <td colSpan={columns.length} style={{ padding: 0, background: "transparent", borderBottom: "2px solid var(--border)" }}>{sep}</td>
+                      <td colSpan={columns.length} className="u-p-0 u-bg-transparent u-bb-2px-solid-border">{sep}</td>
                     </tr>
                   )}
                   <tr

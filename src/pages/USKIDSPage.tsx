@@ -649,7 +649,7 @@ export default function USKidsFieldPage() {
   }, [chaveVisiveis, selectedT, tab, resultsData, filterManuel]);
 
   if (erro) return (
-    <div style={{ padding: 32 }}>
+    <div className="u-p-32px">
       <div className="notice-error">
         <div className="fw-700 c-danger mb-4">Erro ao carregar dados USKids</div>
         <div className="muted fs-11 mono">{erro}</div>
@@ -696,9 +696,7 @@ export default function USKidsFieldPage() {
           }}>{reg}</span>
         )}
         {isInvit && (
-          <span className="p p-sm p-tourn" style={{
-            background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
-          }}>INVIT</span>
+          <span className="p p-sm p-tourn u-bg-bg-pink u-c-color-purple u-border-color-border-purple">INVIT</span>
         )}
         {t.tipo != null && t.tipo !== 8 && (
           <span className="p p-sm p-muted" title="Categoria USKids">{labelCategoria(t.tipo)}</span>
@@ -748,22 +746,22 @@ export default function USKidsFieldPage() {
       <>
         {t.maximo != null && t.maximo > 0 && (
           <div className="mb-4">
-            <div className="fs-11 c-text-2" style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+            <div className="fs-11 c-text-2 u-d-flex u-jc-space-between u-mb-3px">
               <span className="fw-600">{t.escalaoManuel}</span>
               <span>
                 {t.inscritos}/{t.maximo}
                 {(t.vagas ?? 0) > 0
-                  ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
-                  : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
+                  ? <span className="u-c-color-success u-ml-4px">{t.vagas} vagas</span>
+                  : <span className="u-c-color-danger u-ml-4px">cheio</span>}
               </span>
             </div>
-            <div style={{ height:4, borderRadius:"var(--radius-xs)", background:"var(--border)", overflow:"hidden" }}>
+            <div className="u-h-4px u-br-radius-xs u-bg-border u-ov-hidden">
               <div style={{ height:"100%", borderRadius:"var(--radius-xs)", width:`${pct}%`, background:"var(--accent)" }} />
             </div>
           </div>
         )}
         {(t.totalMaximo ?? 0) > 0 && (
-          <div className="fs-11 c-text-3" style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+          <div className="fs-11 c-text-3 u-d-flex u-jc-space-between u-mb-3px">
             <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
             {t.fee && <span>${t.fee.toFixed(0)}</span>}
           </div>
@@ -817,7 +815,7 @@ export default function USKidsFieldPage() {
               style={on
                 ? { flexShrink:0, background:"var(--bg-info)", borderColor:"var(--border-info)", color:"var(--color-info)" }
                 : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-3)", borderColor:"var(--border)", textDecoration:"line-through" }}>
-              {c.label} <span className="fs-10" style={{ opacity:.7 }}>{c.n}</span>
+              {c.label} <span className="fs-10 u-op-0_7">{c.n}</span>
             </button>
           );
         })}
@@ -836,7 +834,7 @@ export default function USKidsFieldPage() {
   </>);
   const trail = (
     <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
-      className="fs-11 fw-600" style={{ flexShrink:0, color:"var(--accent)", border:"1px solid var(--accent)", borderRadius:5, padding:"3px 8px", textDecoration:"none", whiteSpace:"nowrap", display:"inline-flex", alignItems:"center", gap:3 }}>
+      className="fs-11 fw-600 u-fsh-0 u-c-accent u-bd-1px-solid-accent u-br-5px u-p-3px-8px u-td-none u-ws-nowrap u-d-inline-flex u-ai-center u-gap-3px">
       Histórico ↗
     </a>
   );
@@ -845,7 +843,7 @@ export default function USKidsFieldPage() {
     <ArMapCtx.Provider value={arMapCtxValue}>
     <KidsLinkCtx.Provider value={kidsMap}>
     <DataSourcesProvider tournaments={[]}>
-    <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
+    <div className="tourn-layout u-h-calc-100vh-52px">
 
       {/* Torneios e Resultados: o CircuitShell, como as outras páginas de
           circuito (20/10/2026). Os controlos da página entram na barra dele. */}

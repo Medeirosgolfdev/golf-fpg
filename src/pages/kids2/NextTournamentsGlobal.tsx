@@ -76,28 +76,24 @@ function Content() {
   return (
     <>
       <Kids2SubNav />
-      <div style={{ padding: "16px 20px" }}>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
-        <h1 style={{ margin: 0, fontSize: "var(--fs-18)", fontWeight: 600, color: "var(--text)" }}>📋 Inscrições — próximos torneios</h1>
-        <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{rows.length} inscrições</span>
+      <div className="u-p-16px-20px">
+      <div className="u-d-flex u-ai-baseline u-gap-10px u-mb-12px u-fwr-wrap">
+        <h1 className="u-m-0 u-fs-fs-18 u-fw-600 u-c-text">📋 Inscrições — próximos torneios</h1>
+        <span className="u-fs-fs-12 u-c-text-3">{rows.length} inscrições</span>
       </div>
 
       {!data || !map ? (
         <LoadingState message="A carregar inscrições…" />
       ) : (
         <>
-          <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap", alignItems: "center" }}>
+          <div className="u-d-flex u-gap-8px u-mb-12px u-fwr-wrap u-ai-center">
             {/* Circuito: o interruptor segmentado do resto do site (14/10/2026). */}
             <TabRow active={circuit} onChange={setCircuit}
               tabs={(["all", "uskids", "fpg"] as const).map(c => ({ key: c, label: c === "all" ? "Todos" : c === "uskids" ? "🇺🇸 USKids" : "🇵🇹 FPG" }))} />
             <input
               type="text" value={q} onChange={e => setQ(e.target.value)}
               placeholder="🔍 Jogador ou torneio…"
-              style={{
-                marginLeft: "auto", padding: "5px 10px", fontSize: "var(--fs-13)",
-                border: "1px solid var(--border-light)", borderRadius: "var(--radius)",
-                background: "var(--bg-card)", color: "var(--text)", minWidth: 200,
-              }} />
+              className="u-ml-auto u-p-5px-10px u-fs-fs-13 u-bd-1px-solid-border-light u-br-radius u-bg-bg-card u-c-text u-minw-200px" />
           </div>
 
           {rows.length === 0 ? (
@@ -121,28 +117,24 @@ function Content() {
                       <a
                         href={"/kids2/" + encodeURIComponent(row.junior.id)}
                         target="_blank" rel="noopener noreferrer"
-                        style={{ fontWeight: 600, color: "var(--color-info)", textDecoration: "none" }}
+                        className="u-fw-600 u-c-color-info u-td-none"
                         title="Abrir ficha do jogador (nova aba)">
                         {row.junior.canonicalName}
                       </a>
                     </td>
-                    <td style={{ whiteSpace: "nowrap" }}>{CIRCUIT_LABEL[row.reg.circuit]}</td>
+                    <td className="u-ws-nowrap">{CIRCUIT_LABEL[row.reg.circuit]}</td>
                     <td>
-                      <a href={row.reg.link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text)", textDecoration: "none" }} title={row.reg.campo || row.reg.name}>
+                      <a href={row.reg.link} target="_blank" rel="noopener noreferrer" className="u-c-text u-td-none" title={row.reg.campo || row.reg.name}>
                         {row.reg.name}
                       </a>
                       {row.reg.status === "reserva" && (
-                        <span style={{
-                          marginLeft: 6, fontSize: "var(--fs-9)", fontWeight: 700, padding: "1px 5px", borderRadius: 3,
-                          background: "var(--bg-warn-orange, #fff7ed)", color: "var(--color-orange-deep, #c2410c)",
-                          border: "1px solid var(--color-amber, #f59e0b)",
-                        }}>RESERVA</span>
+                        <span className="u-ml-6px u-fs-fs-9 u-fw-700 u-p-1px-5px u-br-3px u-bg-var-bg-warn-orange-fff7ed u-c-var-color-orange-deep-c2410c u-bd-ltbl9">RESERVA</span>
                       )}
                     </td>
-                    <td style={{ whiteSpace: "nowrap", color: "var(--text-2)" }}>{fmtDayMonthYear(row.reg.date)}</td>
-                    <td style={{ whiteSpace: "nowrap", color: "var(--text-3)" }}>{row.reg.escalao || "—"}</td>
+                    <td className="u-ws-nowrap u-c-text-2">{fmtDayMonthYear(row.reg.date)}</td>
+                    <td className="u-ws-nowrap u-c-text-3">{row.reg.escalao || "—"}</td>
                     <td>
-                      <a href={row.reg.link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-3)", textDecoration: "none", fontWeight: 600 }} title="Abrir torneio (nova aba)">↗</a>
+                      <a href={row.reg.link} target="_blank" rel="noopener noreferrer" className="u-c-text-3 u-td-none u-fw-600" title="Abrir torneio (nova aba)">↗</a>
                     </td>
                   </tr>
                 ))}

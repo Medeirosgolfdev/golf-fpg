@@ -591,8 +591,8 @@ export default function DrawTab({
               highlight={manuel}
             />
             {p.otherDivision && (
-              <span className="p p-sm ml-4" title={`Joga noutro escalão (${p.otherDivision}) — está aqui por ser do mesmo grupo`}
-                style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-3)", borderColor: "transparent" }}>{p.otherDivision}</span>
+              <span className="p p-sm ml-4 u-bg-var-bg-muted-e5e7eb u-c-text-3 u-border-color-transparent" title={`Joga noutro escalão (${p.otherDivision}) — está aqui por ser do mesmo grupo`}
+>{p.otherDivision}</span>
             )}
             {/* Seta ↗ kids2 via KidsLinkCtx (CircuitShell — MAJOR/England/…).
                 Sem duplicação com a seta do próprio TournPName (kidsHash):
@@ -633,7 +633,7 @@ export default function DrawTab({
             {!hc.hcp && (
               <td className="lb-hcp" style={bStyle}
                 title={p.hcpCurrent ? "HCP actual (federado) — snapshot do evento indisponível" : p.hcpEstimated ? `Estimativa — ${p.estNote || "sem fonte com o HCP"}` : undefined}>
-                {p.hcpCurrent ? <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>*</span> : null}{p.hcp != null ? (p.hcpEstimated ? <span className="est-value">{fmtHcp(p.hcp)}</span> : fmtHcp(p.hcp)) : "–"}
+                {p.hcpCurrent ? <span className="u-c-color-danger u-fw-700">*</span> : null}{p.hcp != null ? (p.hcpEstimated ? <span className="est-value">{fmtHcp(p.hcp)}</span> : fmtHcp(p.hcp)) : "–"}
               </td>
             )}
             {!hc.tee && <td className="lb-tee" style={bStyle}><TeeDot teeName={p.tee || teeName} /></td>}
@@ -656,22 +656,22 @@ export default function DrawTab({
   }, [visibleSorted, playersDB, teeName, effDate, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc, showHole]);
 
   if (draw.error) {
-    return <div className="detail-toolbar" style={{ padding: 16 }}>
+    return <div className="detail-toolbar u-p-16px">
       <span className="muted">Erro a carregar draw: {draw.error}</span>
       {fpgUrl && (
         <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
-          className="ml-auto fs-11" style={{ color: "var(--chart-2)" }}>
+          className="ml-auto fs-11 u-c-chart-2">
           scoring.fpg.pt ↗
         </a>
       )}
     </div>;
   }
   if ((draw.groups || []).length === 0) {
-    return <div className="detail-toolbar" style={{ padding: 16 }}>
+    return <div className="detail-toolbar u-p-16px">
       <span className="muted">{draw.note || "Draw ainda não publicado."}{roundNum ? ` (Ronda ${roundNum})` : ""}</span>
       {fpgUrl && (
         <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
-          className="ml-auto fs-11" style={{ color: "var(--chart-2)" }}>
+          className="ml-auto fs-11 u-c-chart-2">
           scoring.fpg.pt ↗
         </a>
       )}
@@ -710,19 +710,19 @@ export default function DrawTab({
   const filterBar = (
     <>
       {/* Linha de resumo no formato do scorecard: «N jog · N grupos · data». */}
-      <div className="lb-info-line flex-wrap" style={{ display: "flex", gap: 4, alignItems: "baseline" }}>
+      <div className="lb-info-line flex-wrap u-d-flex u-gap-4px u-ai-baseline">
         <span>{visibleOwn !== total ? `${visibleOwn}/${total}` : total} jog{nOther ? ` (+${nOther} de outro escalão)` : ""} · {(draw.groups || []).length} grupos{roundNum ? ` · R${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
         {draw.date && <span>· {draw.date.split("-").reverse().join("/")}</span>}
         {fpgUrl && (
           <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
-            className="ml-auto fs-11" style={{ color: "var(--chart-2)", marginLeft: "auto" }}>
+            className="ml-auto fs-11 u-c-chart-2 u-ml-auto">
             scoring.fpg.pt ↗
           </a>
         )}
       </div>
       <RowsFilterBar rows={filterRowsAll} filter={pFilter} onChange={setPFilter} total={total} playersDB={playersDB} />
       {showOm && (
-        <div className="detail-toolbar" style={{ gap: 6, flexWrap: "wrap" }}>
+        <div className="detail-toolbar u-gap-6px u-fwr-wrap">
           <span className="muted fs-11">Ordem de Mérito:</span>
           {([{ k: null, l: "Todas" }, { k: "junior", l: "Júnior" }, { k: "homens", l: "Homens" }, { k: "senhoras", l: "Senhoras" }, { k: "seniores", l: "Seniores" }, { k: "superSeniores", l: "Super Sen." }, { k: "none", l: "Sem OM" }] as { k: string | null; l: string }[]).map(o => {
             const active = omFilter === o.k;
@@ -742,13 +742,7 @@ export default function DrawTab({
         </div>
       )}
       {isEstimated && (
-        <div className="fs-12 fw-600" style={{
-          padding: "8px 14px", margin: "6px 12px",
-          background: "var(--bg-warn-subtle, #fef3c7)",
-          border: "1px solid var(--color-warn, #f59e0b)",
-          borderRadius: "var(--radius)",
-          color: "var(--text-1, #1f2937)", lineHeight: 1.4,
-        }}>
+        <div className="fs-12 fw-600 u-p-8px-14px u-m-6px-12px u-bg-var-bg-warn-subtle-fef3c7 u-bd-qeurg u-br-radius u-c-var-text-1-1f2937 u-lh-1_4">
           ⚠️ {draw.note}
         </div>
       )}

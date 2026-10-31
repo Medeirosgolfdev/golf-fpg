@@ -91,8 +91,8 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
   const manuel = isManuel({ name: p.name, fed: p.fed ?? undefined });
   const elevated = p.pos != null && p.pos > expectedPos;
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 0, minWidth: 0 }}>
-      <div className="fs-12" style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+    <div className="u-d-flex u-fd-column u-gap-0 u-minw-0">
+      <div className="fs-12 u-d-flex u-ai-center u-gap-4px u-fwr-wrap">
         <YearInEscBadge year={p.yearInEscalao} escalao={columnEsc} />
         {p.fed ? (
           <a
@@ -100,24 +100,24 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
             target="_blank"
             rel="noopener noreferrer"
             title={`${p.name} — ver perfil federado (abre em nova janela)`}
-            className="fw-700"
-            style={{ textDecoration: "none", color: "inherit", borderBottom: "1px dotted currentColor" }}
+            className="fw-700 u-td-none u-c-inherit u-bb-1px-dotted-currentcolor"
+
           >
             {abreviarNome(p.name || "—", 22)}
           </a>
         ) : (
           <span className="fw-700" title={p.name}>{abreviarNome(p.name || "—", 22)}</span>
         )}
-        {manuel && highlightManuel && <span title="Manuel" style={{ fontSize: "var(--fs-10)" }}>★</span>}
+        {manuel && highlightManuel && <span title="Manuel" className="u-fs-fs-10">★</span>}
         {elevated && (
           <span title={`Foi ${p.pos}º na classificação geral. O pódio do escalão+sexo é específico — quem ficou à frente pode ter sido de outra categoria (outro sexo, outro escalão num torneio combinado) ou um jogador estrangeiro.`}
-            className="fs-10 muted fw-600"
-            style={{ padding: "0 4px", borderRadius: "var(--radius-sm)", background: "var(--bg-muted)" }}>
+            className="fs-10 muted fw-600 u-p-0-4px u-br-radius-sm u-bg-bg-muted"
+>
             {p.pos}º
           </span>
         )}
       </div>
-      <div className="fs-10 muted" style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+      <div className="fs-10 muted u-d-flex u-ai-center u-gap-4px u-fwr-wrap">
         {p.fed && <span>{p.fed}</span>}
         {p.age != null && <span>· {p.age}a</span>}
         {p.gross != null && <span>· {p.gross}{toPar ? ` (${toPar})` : ""}</span>}
@@ -141,7 +141,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
         ...yearBorder,
       }}>
         {isChampion && (
-          <span className="fs-11 muted" style={{ fontStyle: "italic", display: "block", textAlign: "center" }}>
+          <span className="fs-11 muted u-fst-italic u-d-block u-ta-center">
             Sem jogadores
           </span>
         )}
@@ -172,42 +172,30 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
           : "1px solid var(--border-light)",
       minWidth: 200, maxWidth: 280,
     }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="u-d-flex u-ai-center u-gap-8px">
+        <div className="u-fl-1 u-minw-0">
           <PodiumLine p={p} columnEsc={ch.escalao} expectedPos={expectedPos} />
         </div>
         {/* Link FPG (externo) + scoreboard interno + badge estrangeiro — só na
             linha do campeão (tudo associado ao torneio, não aos jogadores). */}
         {isChampion && (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, flexShrink: 0 }}>
+          <div className="u-d-flex u-fd-column u-ai-center u-gap-2px u-fsh-0">
             {isProvisional && (
               <span title={`Resultado provisório: ${ch.roundsPlayed} de ${ch.roundsExpected} rondas jogadas.`}
-                className="fs-10 fw-700" style={{
-                  padding: "1px 4px", borderRadius: 3,
-                  background: "var(--accent)", color: "#fff",
-                  whiteSpace: "nowrap", letterSpacing: 0.3,
-                }}>
+                className="fs-10 fw-700 u-p-1px-4px u-br-3px u-bg-accent u-c-fff u-ws-nowrap u-ls-0_3px">
                 R{ch.roundsPlayed}/{ch.roundsExpected}
               </span>
             )}
             {!isProvisional && ch.roundsTotal && ch.roundsTotal >= 2 && (
               <span title={`${ch.roundsTotal} rondas — gross é o total.`}
-                className="fs-10 fw-700" style={{
-                  padding: "1px 4px", borderRadius: 3,
-                  background: "var(--bg-muted)", color: "var(--text-2)",
-                  whiteSpace: "nowrap", letterSpacing: 0.3,
-                }}>
+                className="fs-10 fw-700 u-p-1px-4px u-br-3px u-bg-bg-muted u-c-text-2 u-ws-nowrap u-ls-0_3px">
                 {ch.roundsTotal}R
               </span>
             )}
             {scoringUrl && (
               <a href={scoringUrl} target="_blank" rel="noopener noreferrer"
                 title="Ver resultados oficiais na FPG ↗"
-                style={{
-                  fontSize: "var(--fs-11)", textDecoration: "none",
-                  color: "var(--accent)", fontWeight: 700,
-                  whiteSpace: "nowrap",
-                }}>
+                className="u-fs-fs-11 u-td-none u-c-accent u-fw-700 u-ws-nowrap">
                 ↗ FPG
               </a>
             )}
@@ -226,11 +214,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
             )}
             {hasForeignWinner && (
               <span title={`Vencedor absoluto do leaderboard foi ${ch.defactoWinnerName} (${ch.defactoWinnerCountry}); regra FPG atribui título ao melhor PT.`}
-                className="fs-10" style={{
-                  padding: "1px 4px", borderRadius: 3,
-                  background: "var(--bg-muted)", color: "var(--text-2)",
-                  border: "1px dashed var(--border)", whiteSpace: "nowrap",
-                }}>
+                className="fs-10 u-p-1px-4px u-br-3px u-bg-bg-muted u-c-text-2 u-bd-1px-dashed-border u-ws-nowrap">
                 🌍 {ch.defactoWinnerCountry}
               </span>
             )}
@@ -245,13 +229,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
  *  o escalão e os anos, para NÃO repetir em cada célula. */
 function PodiumLabelCell({ label, isChampion }: { label: string; isChampion: boolean }) {
   return (
-    <td style={{
-      padding: "4px 8px", verticalAlign: "middle",
-      // sticky ao lado da coluna Escalão (que é width 90px @ left:0)
-      position: "sticky", left: 90, background: "var(--bg-card)",
-      borderRight: "1px solid var(--border-light)",
-      zIndex: "var(--z-base)",
-    }}>
+    <td className="u-p-4px-8px u-va-middle u-pos-sticky u-left-90px u-bg-bg-card u-brd-1px-solid-border-light u-z-z-base">
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "flex-start",
         fontSize: "var(--fs-10)", lineHeight: 1.2, fontWeight: 700,
@@ -259,7 +237,7 @@ function PodiumLabelCell({ label, isChampion }: { label: string; isChampion: boo
         textTransform: "uppercase", letterSpacing: 0.3, whiteSpace: "nowrap",
       }}>
         <span>{isChampion ? "🏆 CAMP." : "VICE C."}</span>
-        <span style={{ opacity: 0.7 }}>{label}</span>
+        <span className="u-op-0_7">{label}</span>
       </div>
     </td>
   );
@@ -306,8 +284,8 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
 
   if (champions.length === 0) {
     return (
-      <section style={{ margin: "16px 12px" }}>
-        <h3 className="fs-14 fw-700" style={{ marginBottom: 8 }}>{title}</h3>
+      <section className="u-m-16px-12px">
+        <h3 className="fs-14 fw-700 u-mb-8px">{title}</h3>
         <p className="muted fs-12">Sem dados disponíveis.</p>
       </section>
     );
@@ -358,27 +336,14 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
     return (
       <div
         key={keyPrefix}
-        style={{
-          marginBottom: 28,
-          padding: "10px 12px 16px",
-          background: "var(--bg-card)",
-          border: "1px solid var(--border-light)",
-          borderRadius: 8,
-        }}
+        className="u-mb-28px u-p-10px-12px-16px u-bg-bg-card u-bd-1px-solid-border-light u-br-8px"
       >
         <h4
-          className="fs-13 fw-800"
-          style={{
-            margin: "0 0 10px",
-            paddingBottom: 8,
-            borderBottom: "1px solid var(--border-light)",
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-          }}
+          className="fs-13 fw-800 u-m-0-0-10px u-pb-8px u-bb-1px-solid-border-light u-d-flex u-ai-center u-gap-10px"
+
         >
           <span>{groupLabel}</span>
-          <span className="muted fs-11" style={{ fontWeight: 400 }}>
+          <span className="muted fs-11 u-fw-400">
             · {groupChamps.length} campeões · {groupYears.length}{" "}
             {groupYears.length === 1 ? "ano" : "anos"}
           </span>
@@ -395,18 +360,13 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
               ].sort((a, b) => a - b);
               if (escChamps.length === 0) return null;
               return (
-                <div key={esc} style={{ marginBottom: 18 }}>
+                <div key={esc} className="u-mb-18px">
                   <h5
-                    className="fs-12 fw-700"
-                    style={{
-                      marginBottom: 6,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                    }}
+                    className="fs-12 fw-700 u-mb-6px u-d-flex u-ai-center u-gap-8px"
+
                   >
                     <EscPill esc={esc} />
-                    <span className="muted fs-11" style={{ fontWeight: 400 }}>
+                    <span className="muted fs-11 u-fw-400">
                       · {escChamps.length} campeões · {escYears.length}{" "}
                       {escYears.length === 1 ? "ano" : "anos"}
                     </span>
@@ -464,8 +424,8 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
   };
 
   return (
-    <section style={{ margin: "16px 12px" }}>
-      <h3 className="fs-14 fw-700" style={{ marginBottom: 8 }}>
+    <section className="u-m-16px-12px">
+      <h3 className="fs-14 fw-700 u-mb-8px">
         {title}
       </h3>
       {ESC_GROUPS.map((g) => renderGroup(g.label, g.set, g.key))}
@@ -581,24 +541,24 @@ function RegionChampionsBlock({
           }}
           title={open ? "Colapsar" : "Expandir"}
         >
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", opacity: 0.7 }}>
+          <span className="u-ff-font-mono u-fs-fs-11 u-op-0_7">
             {open ? "▼" : "▶"}
           </span>
           <span>📍 {region}</span>
-          <span className="fs-11 muted" style={{ fontWeight: 400 }}>
+          <span className="fs-11 muted u-fw-400">
             · {filledCount} {filledCount === 1 ? "campeão" : "campeões"}
             {yearCols.length > 0 ? ` · ${yearCols.length} ${yearCols.length === 1 ? "ano" : "anos"}` : ""}
           </span>
         </button>
       )}
       {!open && ovr.note && (
-        <p className="fs-11 muted" style={{ margin: "4px 0 0 28px", fontStyle: "italic" }}>
+        <p className="fs-11 muted u-m-4px-0-0-28px u-fst-italic">
           * {ovr.note}
         </p>
       )}
       {open && <>
-      <div style={{ overflowX: "auto", paddingBottom: 14 }}>
-        <table style={{ borderCollapse: "collapse", fontSize: "var(--fs-12)", minWidth: "100%" }}>
+      <div className="u-ox-auto u-pb-14px">
+        <table className="u-border-collapse-collapse u-fs-fs-12 u-minw-100pc">
           <thead>
             <tr>
               <SortableHdr k="esc" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort as any}
@@ -610,7 +570,7 @@ function RegionChampionsBlock({
                 Tipo
               </SortableHdr>
               {yearCols.map(y => (
-                <th key={y} style={{ padding: "6px 10px", borderBottom: "2px solid var(--border)", borderLeft: "1px solid var(--border-light)", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-13)", minWidth: 220 }}>
+                <th key={y} className="u-p-6px-10px u-bb-2px-solid-border u-bl-1px-solid-border-light u-ta-center u-fw-700 u-fs-fs-13 u-minw-220px">
                   {y}
                 </th>
               ))}
@@ -625,11 +585,8 @@ function RegionChampionsBlock({
                 <React.Fragment key={escKey}>
                   {/* Linha 1: CAMPEÃO. Escalão+sexo na 1ª coluna com rowSpan=2 */}
                   <tr style={{ borderTop: newEscGroup ? "2px solid var(--border)" : "1px solid var(--border-light)" }}>
-                    <td rowSpan={2} style={{
-                      padding: "6px 8px", position: "sticky", left: 0, background: "var(--bg-card)",
-                      verticalAlign: "middle", width: 90, minWidth: 90, zIndex: "var(--z-raised)",
-                    }}>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
+                    <td rowSpan={2} className="u-p-6px-8px u-pos-sticky u-left-0 u-bg-bg-card u-va-middle u-w-90px u-minw-90px u-z-z-raised">
+                      <span className="u-d-inline-flex u-ai-center u-gap-5px">
                         <EscPill esc={esc} />
                         {sex === "M" && <SexBadge sex="M" />}
                         {sex === "F" && <SexBadge sex="F" />}
@@ -641,7 +598,7 @@ function RegionChampionsBlock({
                     ))}
                   </tr>
                   {/* Linha 2: VICE-CAMPEÃO */}
-                  <tr style={{ borderBottom: "1px solid var(--border-light)" }}>
+                  <tr className="u-bb-1px-solid-border-light">
                     <PodiumLabelCell label={typeLabel} isChampion={false} />
                     {yearCols.map(y => (
                       <PodiumCell key={y} ch={km.get(`${esc}|${sex}|${y}`) ?? null} isChampion={false} />
@@ -656,7 +613,7 @@ function RegionChampionsBlock({
       {/* Nota textual da região (ex: anos sem edição) — só quando a tabela
           está aberta. Se estiver fechada, mostra-se no header colapsado. */}
       {ovr.note && (
-        <p className="fs-11 muted" style={{ margin: "4px 0 0", fontStyle: "italic" }}>
+        <p className="fs-11 muted u-m-4px-0-0 u-fst-italic">
           * {ovr.note}
         </p>
       )}
@@ -680,23 +637,23 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
   if (top.length === 0) return null;
 
   return (
-    <section style={{ margin: "16px 12px" }}>
-      <h3 className="fs-14 fw-700" style={{ marginBottom: 8 }}>
+    <section className="u-m-16px-12px">
+      <h3 className="fs-14 fw-700 u-mb-8px">
         📊 Jogadores mais frequentes <span className="fs-11 muted">(entre Regional + Nacional, últimos {years.length} anos)</span>
       </h3>
-      <div style={{ overflowX: "auto" }}>
-        <table style={{ borderCollapse: "collapse", fontSize: "var(--fs-12)", minWidth: "100%" }}>
+      <div className="u-ox-auto">
+        <table className="u-border-collapse-collapse u-fs-fs-12 u-minw-100pc">
           <thead>
-            <tr style={{ borderBottom: "2px solid var(--border)" }}>
-              <th style={{ padding: "6px 8px", textAlign: "right" }}>#</th>
-              <th style={{ padding: "6px 8px", textAlign: "left" }}>Jogador</th>
-              <th style={{ padding: "6px 8px", textAlign: "left" }}>Fed</th>
-              <th style={{ padding: "6px 8px", textAlign: "right" }}>Total</th>
-              <th style={{ padding: "6px 8px", textAlign: "right" }}>Nacional</th>
-              <th style={{ padding: "6px 8px", textAlign: "right" }}>Regional</th>
-              <th style={{ padding: "6px 8px", textAlign: "right" }}>Títulos</th>
-              <th style={{ padding: "6px 8px", textAlign: "left" }}>Escalões</th>
-              <th style={{ padding: "6px 8px", textAlign: "left" }}>Anos</th>
+            <tr className="u-bb-2px-solid-border">
+              <th className="u-p-6px-8px u-ta-right">#</th>
+              <th className="u-p-6px-8px u-ta-left">Jogador</th>
+              <th className="u-p-6px-8px u-ta-left">Fed</th>
+              <th className="u-p-6px-8px u-ta-right">Total</th>
+              <th className="u-p-6px-8px u-ta-right">Nacional</th>
+              <th className="u-p-6px-8px u-ta-right">Regional</th>
+              <th className="u-p-6px-8px u-ta-right">Títulos</th>
+              <th className="u-p-6px-8px u-ta-left">Escalões</th>
+              <th className="u-p-6px-8px u-ta-left">Anos</th>
             </tr>
           </thead>
           <tbody>
@@ -707,40 +664,40 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
                   borderBottom: "1px solid var(--border-light)",
                   background: manuel ? "var(--bg-success-subtle)" : undefined,
                 }}>
-                  <td style={{ padding: "5px 8px", textAlign: "right" }} className="fw-600">{i + 1}</td>
-                  <td style={{ padding: "5px 8px" }}>
+                  <td className="fw-600 u-p-5px-8px u-ta-right">{i + 1}</td>
+                  <td className="u-p-5px-8px">
                     {p.fed ? (
                       <a href={`/jogadores/${p.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
-                        className="fw-600"
-                        style={{ color: "inherit", textDecoration: "none", borderBottom: "1px dotted currentColor" }}
+                        className="fw-600 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
+
                         title={`${p.displayName || p.name} — perfil federado (nova janela)`}>
                         {p.displayName || p.name}
                       </a>
                     ) : (
                       <span className="fw-600">{p.displayName || p.name}</span>
                     )}
-                    {manuel && <span style={{ marginLeft: 4, fontSize: "var(--fs-10)" }}>★</span>}
+                    {manuel && <span className="u-ml-4px u-fs-fs-10">★</span>}
                   </td>
-                  <td style={{ padding: "5px 8px" }} className="fs-11 muted">{p.fed || "—"}</td>
-                  <td style={{ padding: "5px 8px", textAlign: "right" }} className="fw-700">{p.appearances}</td>
-                  <td style={{ padding: "5px 8px", textAlign: "right" }}>{p.nacionalAppearances || "—"}</td>
-                  <td style={{ padding: "5px 8px", textAlign: "right" }}>{p.regionalAppearances || "—"}</td>
-                  <td style={{ padding: "5px 8px", textAlign: "right" }} className="fw-700">
+                  <td className="fs-11 muted u-p-5px-8px">{p.fed || "—"}</td>
+                  <td className="fw-700 u-p-5px-8px u-ta-right">{p.appearances}</td>
+                  <td className="u-p-5px-8px u-ta-right">{p.nacionalAppearances || "—"}</td>
+                  <td className="u-p-5px-8px u-ta-right">{p.regionalAppearances || "—"}</td>
+                  <td className="fw-700 u-p-5px-8px u-ta-right">
                     {p.titles.length > 0 ? (
                       <span title={p.titles.map(t => `${t.year} ${t.type} ${t.escalao} ${t.sex}`).join("\n")}
-                        style={{ color: "var(--color-good-dark)" }}>
+                        className="u-c-color-good-dark">
                         🏆 {p.titles.length}
                       </span>
                     ) : "—"}
                   </td>
-                  <td style={{ padding: "5px 8px" }} className="fs-11">
-                    <span style={{ display: "inline-flex", gap: 3, flexWrap: "wrap" }}>
+                  <td className="fs-11 u-p-5px-8px">
+                    <span className="u-d-inline-flex u-gap-3px u-fwr-wrap">
                       {[...p.escaloes].sort((a, b) => ESC_ORDER.indexOf(a) - ESC_ORDER.indexOf(b)).map(e =>
                         <EscPill key={e} esc={e} />
                       )}
                     </span>
                   </td>
-                  <td style={{ padding: "5px 8px" }} className="fs-11 muted">
+                  <td className="fs-11 muted u-p-5px-8px">
                     {[...p.years].sort().join(", ")}
                   </td>
                 </tr>
@@ -750,12 +707,8 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
         </table>
       </div>
       {limit < filteredByMode.length && (
-        <button className="fs-11" onClick={() => setLimit(limit + 20)}
-          style={{
-            marginTop: 8, padding: "4px 10px", borderRadius: "var(--radius-sm)",
-            border: "1px solid var(--border)", background: "var(--bg-muted)",
-            cursor: "pointer",
-          }}>
+        <button className="fs-11 u-mt-8px u-p-4px-10px u-br-radius-sm u-bd-1px-solid-border u-bg-bg-muted u-cur-pointer" onClick={() => setLimit(limit + 20)}
+>
           Mostrar mais ({filteredByMode.length - limit} restantes)
         </button>
       )}
@@ -801,13 +754,12 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
     .filter((y) => mode === "all" || playerYearsInMode.has(y));
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 4, padding: "8px 12px",
-      borderBottom: "1px solid var(--border-light)" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <div className="u-d-flex u-fd-column u-gap-4px u-p-8px-12px u-bb-1px-solid-border-light">
+      <div className="u-d-flex u-ai-center u-gap-8px">
         {player.fed ? (
           <a href={`/jogadores/${player.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
-            className="fw-700 fs-13"
-            style={{ color: "inherit", textDecoration: "none", borderBottom: "1px dotted currentColor" }}
+            className="fw-700 fs-13 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
+
             title={`${player.displayName || player.name} — perfil federado (nova janela)`}>
             {player.displayName || player.name}
           </a>
@@ -823,7 +775,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
           · {filteredTitles.length} títulos
         </span>
       </div>
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+      <div className="u-d-flex u-gap-6px u-fwr-wrap">
         {sortedYears.map(y => {
           const esc = escalaoInYear(player.dob, y);
           const yrIn = yearInEscalao(player.dob, y);
@@ -857,11 +809,11 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
                 t.ccode && t.tcode ? (
                   <a key={i} href={fpgScoringUrl(t.ccode, t.tcode.split("+")[0])} target="_blank" rel="noopener noreferrer"
                     title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region}) — abrir torneio na FPG ↗`}
-                    style={{ fontSize: "var(--fs-11)", textDecoration: "none" }}>
+                    className="u-fs-fs-11 u-td-none">
                     🏆
                   </a>
                 ) : (
-                  <span key={i} title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region})`} style={{ fontSize: "var(--fs-11)" }}>
+                  <span key={i} title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region})`} className="u-fs-fs-11">
                     🏆
                   </span>
                 )
@@ -874,15 +826,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
                   target="_blank"
                   rel="noopener noreferrer"
                   title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName} — abrir torneio na FPG ↗`}
-                  style={{
-                    fontSize: "var(--fs-10)",
-                    fontWeight: 700,
-                    color: "var(--text-3)",
-                    textDecoration: "none",
-                    background: "var(--bg-muted)",
-                    padding: "1px 4px",
-                    borderRadius: 3,
-                  }}
+                  className="u-fs-fs-10 u-fw-700 u-c-text-3 u-td-none u-bg-bg-muted u-p-1px-4px u-br-3px"
                 >
                   {bestApp.pos}/{bestApp.total}
                 </a>
@@ -890,14 +834,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               {titles.length === 0 && bestApp && (!bestApp.ccode || !bestApp.tcode) && (
                 <span
                   title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName}`}
-                  style={{
-                    fontSize: "var(--fs-10)",
-                    fontWeight: 700,
-                    color: "var(--text-3)",
-                    background: "var(--bg-muted)",
-                    padding: "1px 4px",
-                    borderRadius: 3,
-                  }}
+                  className="u-fs-fs-10 u-fw-700 u-c-text-3 u-bg-bg-muted u-p-1px-4px u-br-3px"
                 >
                   {bestApp.pos}/{bestApp.total}
                 </span>
@@ -924,25 +861,18 @@ function PlayerTimelines({ players, years, mode = "all" }: { players: PlayerStat
   if (withDob.length === 0) return null;
 
   return (
-    <section style={{ margin: "16px 12px" }}>
-      <h3 className="fs-14 fw-700" style={{ marginBottom: 8 }}>
+    <section className="u-m-16px-12px">
+      <h3 className="fs-14 fw-700 u-mb-8px">
         📈 Evolução de jogadores (top {withDob.length})
       </h3>
-      <div style={{
-        border: "1px solid var(--border)", borderRadius: "var(--radius)",
-        background: "var(--bg-card)",
-      }}>
+      <div className="u-bd-1px-solid-border u-br-radius u-bg-bg-card">
         {withDob.map((p, i) => (
           <PlayerTimeline key={(p.fed || p.name) + "_" + i} player={p} years={years} mode={mode} />
         ))}
       </div>
       {limit < filteredByMode.filter(p => p.dob).length && (
-        <button className="fs-11" onClick={() => setLimit(limit + 8)}
-          style={{
-            marginTop: 8, padding: "4px 10px", borderRadius: "var(--radius-sm)",
-            border: "1px solid var(--border)", background: "var(--bg-muted)",
-            cursor: "pointer",
-          }}>
+        <button className="fs-11 u-mt-8px u-p-4px-10px u-br-radius-sm u-bd-1px-solid-border u-bg-bg-muted u-cur-pointer" onClick={() => setLimit(limit + 8)}
+>
           Mostrar mais
         </button>
       )}
@@ -1013,10 +943,10 @@ export function JovensAnaliseView({
   const showRegional = mode === "all" || mode === "regional";
 
   return (
-    <div style={{ padding: "8px 0 32px", overflowY: "auto" }}>
+    <div className="u-p-8px-0-32px u-oy-auto">
       {!hideHeader && (
-        <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--border-light)" }}>
-          <h2 className="fs-18 fw-800" style={{ marginBottom: 4 }}>
+        <div className="u-p-12px-16px u-bb-1px-solid-border-light">
+          <h2 className="fs-18 fw-800 u-mb-4px">
             📊 Análise — Campeonatos Jovens
           </h2>
           <p className="fs-12 muted">

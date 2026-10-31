@@ -148,15 +148,15 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
 
   return (
     <div className="mb-16">
-      <div className="ecPillBlock ecActive overflow-hidden br-lg" style={{ display: "inline-flex", flexDirection: "column", maxWidth: "100%" }}>
+      <div className="ecPillBlock ecActive overflow-hidden br-lg u-d-inline-flex u-fd-column u-maxw-100pc">
         {/* width 0 + min-width 100%: o cabeçalho não alarga o cartão — dobra
             dentro da largura da tabela. */}
-        <div className="fw-600 fs-12 ecPillHeader" style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center", width: 0, minWidth: "100%", boxSizing: "border-box" }}>
+        <div className="fw-600 fs-12 ecPillHeader u-d-flex u-fwr-wrap u-gap-6px u-ai-center u-w-0 u-minw-100pc u-box-sizing-border-box">
           <span className="muted">Eclético</span>
           <span className="fw-700">{ecTotal || "–"}</span>
           {ecTotal > 0 && <span className="fw-700" style={{ color: tpColorOf(ecTotal - ecTotalPar) }}>{fmtToPar(ecTotal - ecTotalPar)}</span>}
-          <button type="button" className="fs-12" onClick={() => setAberto(v => !v)}
-            style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--accent)" }}>
+          <button type="button" className="fs-12 u-bg-none u-bd-none u-p-0 u-cur-pointer u-c-accent" onClick={() => setAberto(v => !v)}
+>
             {aberto ? "▾" : "▸"} {teeRounds.length} volta{teeRounds.length === 1 ? "" : "s"}
           </button>
           <TeeDots tees={dots} active={primary.teeKey}

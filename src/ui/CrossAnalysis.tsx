@@ -142,7 +142,7 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
         <table className="dtable cross-table">
           <thead>
             <tr>
-              <th className="r" style={{ width: 28 }}>#</th>
+              <th className="r u-w-28px">#</th>
               <SortableHdr k="jogador" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
               <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
               <SortableHdr k="ult_sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Últ.SD</SortableHdr>

@@ -65,19 +65,10 @@ export default function HcpSparkline({ points, width = 80, height = 20, playerNa
           setShowModal(true);
         }}
         title={`HCP: ${first.hcpExact.toFixed(1)} (${first.date}) → ${last.hcpExact.toFixed(1)} (${last.date}) · ${sorted.length} snapshots · click para ver tudo`}
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          background: "transparent",
-          border: "none",
-          padding: 0,
-          marginLeft: 4,
-          cursor: "pointer",
-          verticalAlign: "middle",
-        }}
+        className="u-d-inline-flex u-ai-center u-bg-transparent u-bd-none u-p-0 u-ml-4px u-cur-pointer u-va-middle"
         aria-label={`Série de HCP (${sorted.length} snapshots)`}
       >
-        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={{ display: "block" }}>
+        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="u-d-block">
           <path d={path} fill="none" stroke={trendColor} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
           {/* Último ponto destacado */}
           <circle cx={points2d[points2d.length - 1].x} cy={points2d[points2d.length - 1].y} r={2} fill={trendColor} />
@@ -121,50 +112,25 @@ function HcpHistoryModal({
   return (
     <div
       onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.5)",
-        zIndex: "var(--z-overlay)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 20,
-      }}
+      className="u-pos-fixed u-inset-0 u-bg-rgba-0-0-0-0_5 u-z-z-overlay u-d-flex u-ai-center u-jc-center u-p-20px"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        style={{
-          background: "var(--bg-card)",
-          borderRadius: 8,
-          maxWidth: 600,
-          width: "100%",
-          maxHeight: "85vh",
-          overflow: "auto",
-          padding: 20,
-          boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
-        }}
+        className="u-bg-bg-card u-br-8px u-maxw-600px u-w-100pc u-maxh-85vh u-ov-auto u-p-20px u-bs-0-20px-50px-rgba-0-0-0-0_3"
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-          <h3 style={{ margin: 0, fontSize: "var(--fs-16)", fontWeight: 700 }}>
+        <div className="u-d-flex u-jc-space-between u-ai-center u-mb-14px">
+          <h3 className="u-m-0 u-fs-fs-16 u-fw-700">
             📈 Histórico de HCP{playerName ? ` — ${playerName}` : ""}
           </h3>
           <button
             onClick={onClose}
-            style={{
-              background: "transparent",
-              border: "1px solid var(--border-light, #e5e7eb)",
-              borderRadius: "var(--radius-sm)",
-              padding: "4px 10px",
-              cursor: "pointer",
-              fontSize: "var(--fs-13)",
-            }}
+            className="u-bg-transparent u-bd-eig1p u-br-radius-sm u-p-4px-10px u-cur-pointer u-fs-fs-13"
           >
             Fechar
           </button>
         </div>
 
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3, #6b7280)", marginBottom: 10 }}>
+        <div className="u-fs-fs-12 u-c-var-text-3-6b7280 u-mb-10px">
           {desc.length} snapshots · {desc[desc.length - 1]?.date} → {desc[0]?.date}
         </div>
 
@@ -181,11 +147,11 @@ function HcpHistoryModal({
             {rows.map((p, i) => (
               <tr key={i}>
                 <td>{p.date}</td>
-                <td className="r" style={{ fontWeight: 600 }}>
+                <td className="r u-fw-600">
                   {p.hcpExact.toFixed(1)}
                 </td>
-                <td style={{ color: "var(--text-2)" }}>{p.source}</td>
-                <td style={{ color: "var(--text-2)" }}>
+                <td className="u-c-text-2">{p.source}</td>
+                <td className="u-c-text-2">
                   {p.label || (p.tcode ? `tcode ${p.tcode}` : "—")}
                 </td>
               </tr>

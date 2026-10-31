@@ -74,7 +74,7 @@ export interface TournSidebarItemProps {
   href?: string;
 }
 
-const Sep = () => <div style={{ height: "0.5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />;
+const Sep = () => <div className="u-h-0_5px u-bg-1h5y7 u-m-4px-0" />;
 
 export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills, footer, href }: TournSidebarItemProps) {
   const nR       = t.rounds || 1;
@@ -134,18 +134,18 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
   return (
     <Wrapper {...commonProps} {...wrapperProps}>
       {/* Linha 1: nome */}
-      <div className="gap-4" style={{ display: "flex", alignItems: "flex-start", marginBottom: 3 }}>
+      <div className="gap-4 u-d-flex u-ai-flex-start u-mb-3px">
         <span className="course-item-name" style={{ flex: 1, fontSize: "var(--fs-12)", fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>
           {t.name}
         </span>
         {nAces > 0 && (
-          <span title={`${nAces} hole-in-one neste torneio`} style={{ flexShrink: 0, fontSize: "var(--fs-12)" }}>🕳️</span>
+          <span title={`${nAces} hole-in-one neste torneio`} className="u-fsh-0 u-fs-fs-12">🕳️</span>
         )}
       </div>
 
       {/* Linha 2: campo */}
       {t.campo && (
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 500, marginBottom: 3 }}>
+        <div className="u-fs-fs-12 u-c-text-2 u-fw-500 u-mb-3px">
           📍 {t.campo}
         </div>
       )}
@@ -153,11 +153,11 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
       <Sep />
 
       {/* Linha 3: pills */}
-      <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", margin: "3px 0" }}>
+      <div className="gap-4 flex-wrap u-d-flex u-ai-center u-m-3px-0">
 
         {/* tcode(s) + link individual */}
         {tcodes.map(tc => (
-          <span key={tc} className="gap-2" style={{ display: "inline-flex", alignItems: "center" }}>
+          <span key={tc} className="gap-2 u-d-inline-flex u-ai-center">
             <TcodePill tc={tc} />
             <LinkBtn ccode={t.ccode} tcode={tc} active={isActive} />
           </span>
@@ -182,12 +182,12 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
       {footer}
 
       {/* Linha 4: data + nº jog + origem do ficheiro */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)", flexShrink: 0 }}>{shortDate(t.date)}</span>
-        <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+      <div className="u-d-flex u-jc-space-between u-ai-center u-gap-6px">
+        <span className="u-fs-fs-11 u-c-text-muted u-fsh-0">{shortDate(t.date)}</span>
+        <div className="u-d-flex u-ai-center u-gap-4px u-fsh-0">
           {t._sourceFile && <FileBadge path={t._sourceFile} />}
           {(t.playerCount ?? 0) > 0 && (
-            <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{t.playerCount} jog</span>
+            <span className="u-fs-fs-11 u-c-text-muted">{t.playerCount} jog</span>
           )}
         </div>
       </div>

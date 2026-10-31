@@ -173,8 +173,8 @@ export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, t
 
   return (
     <>
-      <div style={{ overflowX: "auto" }}>
-        <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-12)" }}>
+      <div className="u-ox-auto">
+        <table className="player-list-table u-w-100pc u-fs-fs-12">
           <thead>
             <tr>
               {cols.map((c) => c.sort
@@ -243,15 +243,15 @@ export function RankingList<P extends RankedPlayer>({ players, title, meta, cols
   const sel = { padding: "5px", fontSize: "var(--fs-13)" } as const;
   return (
     <KidsLinkCtx.Provider value={kidsMap}>
-      <div style={{ padding: "8px 12px 24px" }}>
+      <div className="u-p-8px-12px-24px">
         <Toolbar>
           <ToolbarTitle>{title}</ToolbarTitle>
           {meta}
         </Toolbar>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", margin: "8px 0 12px" }}>
+        <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-8px-0-12px">
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Pesquisar nome…"
-            style={{ padding: "5px 9px", minWidth: 180, fontSize: "var(--fs-13)" }} />
+            className="u-p-5px-9px u-minw-180px u-fs-fs-13" />
           <select value={country} onChange={(e) => setCountry(e.target.value)} style={sel}>
             <option value="">Todos os países</option>
             {countries.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -265,11 +265,11 @@ export function RankingList<P extends RankedPlayer>({ players, title, meta, cols
           <select value={sex} onChange={(e) => setSex(e.target.value as "" | "M" | "F")} style={sel}>
             {sexOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
-          <label style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "var(--fs-13)", cursor: "pointer" }}>
+          <label className="u-d-flex u-ai-center u-gap-4px u-fs-fs-13 u-cur-pointer">
             <input type="checkbox" checked={ptOnly} onChange={(e) => setPtOnly(e.target.checked)} />
             {gf("Portugal")} só Portugal
           </label>
-          <span style={{ marginLeft: "auto", fontSize: "var(--fs-12)", color: "var(--text-muted)" }}>
+          <span className="u-ml-auto u-fs-fs-12 u-c-text-muted">
             {filtered.length.toLocaleString("pt")} jogadores
           </span>
         </div>
@@ -303,16 +303,16 @@ export function RankingMeta({ totalMen, totalWomen, extra, site, siteLabel, site
 /** Coluna Nome: o nome e a seta para a ficha /kids2 (sem disparar o clique da linha). */
 export function nameCell(name: string) {
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+    <span className="u-d-inline-flex u-ai-center u-gap-4px">
       {name}
-      <span onClick={(e) => e.stopPropagation()} style={{ display: "inline-flex" }}><KidsLink nome={name} /></span>
+      <span onClick={(e) => e.stopPropagation()} className="u-d-inline-flex"><KidsLink nome={name} /></span>
     </span>
   );
 }
 
 /** Coluna País: bandeira + nome do país. */
 export function countryCell(country: string | null) {
-  return <span title={country || ""}>{flagOrEmpty(country)} <span style={{ color: "var(--text-muted)", fontSize: "var(--fs-11)" }}>{country}</span></span>;
+  return <span title={country || ""}>{flagOrEmpty(country)} <span className="u-c-text-muted u-fs-fs-11">{country}</span></span>;
 }
 
 /* ── Detalhe de um jogador ──────────────────────────────────────── */
@@ -344,16 +344,16 @@ export function RankingDetail({ backTo, notFound, header, stats, eventsTitle, ev
   children?: React.ReactNode;
 }) {
   const navigate = useNavigate();
-  const back = <button className="btn-link" onClick={() => navigate(backTo)} style={{ marginBottom: 8 }}>← Voltar ao ranking</button>;
-  if (notFound) return <div style={{ padding: "8px 12px 24px" }}>{back}<EmptyState icon="🔍" message={notFound} /></div>;
+  const back = <button className="btn-link u-mb-8px" onClick={() => navigate(backTo)}>← Voltar ao ranking</button>;
+  if (notFound) return <div className="u-p-8px-12px-24px">{back}<EmptyState icon="🔍" message={notFound} /></div>;
   return (
-    <div style={{ padding: "8px 12px 24px" }}>
+    <div className="u-p-8px-12px-24px">
       {back}
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10, marginBottom: 4 }}>{header}</div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 16, margin: "8px 0 16px", fontSize: "var(--fs-13)" }}>
+      <div className="u-d-flex u-fwr-wrap u-ai-baseline u-gap-10px u-mb-4px">{header}</div>
+      <div className="u-d-flex u-fwr-wrap u-gap-16px u-m-8px-0-16px u-fs-fs-13">
         {stats?.map((s) => <Stat key={s.label} {...s} />)}
       </div>
-      <h3 style={{ margin: "0 0 6px" }}>{eventsTitle} {events ? `(${events.length})` : ""}</h3>
+      <h3 className="u-m-0-0-6px">{eventsTitle} {events ? `(${events.length})` : ""}</h3>
       {events == null ? <LoadingState message="A carregar histórico…" />
         : events.length === 0 ? <EmptyState icon="📭" message={emptyMessage || "Sem eventos registados."} />
         : children}
@@ -363,16 +363,16 @@ export function RankingDetail({ backTo, notFound, header, stats, eventsTitle, ev
 
 function Stat({ label, value, title }: { label: string; value: React.ReactNode; title?: string }) {
   return (
-    <div title={title} style={{ display: "flex", flexDirection: "column" }}>
-      <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{label}</span>
-      <span style={{ fontWeight: 600 }}>{value}</span>
+    <div title={title} className="u-d-flex u-fd-column">
+      <span className="u-fs-fs-11 u-c-text-muted">{label}</span>
+      <span className="u-fw-600">{value}</span>
     </div>
   );
 }
 
 function Pagination({ page, totalPages, onPage }: { page: number; totalPages: number; onPage: (p: number) => void }) {
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, padding: "12px 0", fontSize: "var(--fs-12)" }}>
+    <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
       <button className="btn-link" disabled={page === 0} onClick={() => onPage(0)}>«</button>
       <button className="btn-link" disabled={page === 0} onClick={() => onPage(page - 1)}>‹</button>
       <span>Página {page + 1} de {totalPages}</span>

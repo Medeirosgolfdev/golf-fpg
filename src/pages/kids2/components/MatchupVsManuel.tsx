@@ -120,25 +120,20 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
   });
 
   return (
-    <div style={{
-      background: "var(--bg)",
-      border: "1px solid var(--border)",
-      borderRadius: "var(--radius-lg)",
-      padding: "12px 16px",
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-        <span style={{ fontSize: "var(--fs-18)" }}>⚔️</span>
-        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>
+    <div className="u-bg-bg u-bd-1px-solid-border u-br-radius-lg u-p-12px-16px">
+      <div className="u-d-flex u-ai-center u-gap-8px u-mb-12px">
+        <span className="u-fs-fs-18">⚔️</span>
+        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">
           Confronto com Manuel
         </h3>
         {avgPosJ != null && avgPosM != null && (
-          <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginLeft: "auto" }}>
+          <span className="u-fs-fs-11 u-c-text-3 u-ml-auto">
             Avg: {firstName} {avgPosJ}º · Manuel {avgPosM}º
           </span>
         )}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 12 }}>
+      <div className="u-d-grid u-grid-template-columns-1bho3 u-gap-12px u-mb-12px">
         <Stat value={String(rows.length)} label="encontros" />
         <Stat value={draws > 0 ? `${wins}–${losses}–${draws}` : `${wins}–${losses}`} label={draws > 0 ? "V / D / E" : "vitórias / derrotas"} />
         <Stat value={avgDiff != null ? fmtDiff(avgDiff) : "—"} label="dif. média (±par)" />
@@ -168,15 +163,15 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
               <td>
                 {r.t.name || r.t.id}
                 {r.t.links?.[0]?.url && (
-                  <a href={r.t.links[0].url} target="_blank" rel="noreferrer" style={{ marginLeft: 4, color: "var(--color-info)" }}>↗</a>
+                  <a href={r.t.links[0].url} target="_blank" rel="noreferrer" className="u-ml-4px u-c-color-info">↗</a>
                 )}
               </td>
-              <td style={{ color: "var(--text-3)" }}>{r.flight.label}</td>
-              <td style={{ textAlign: "right" }}>
+              <td className="u-c-text-3">{r.flight.label}</td>
+              <td className="u-ta-right">
                 <RoundsCell result={r.rJ} />
                 <ToParTag tp={r.rJ.toPar} />
               </td>
-              <td style={{ textAlign: "center" }}><PosTrophy pos={r.rJ.pos} /></td>
+              <td className="u-ta-center"><PosTrophy pos={r.rJ.pos} /></td>
               <td style={{ ...tdManuel, textAlign: "right" }}>
                 <RoundsCell result={r.rM} />
                 <ToParTag tp={r.rM.toPar} />
@@ -209,9 +204,9 @@ const tdManuel: React.CSSProperties = { background: "color-mix(in srgb, var(--bg
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div style={{ textAlign: "center" }}>
-      <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, lineHeight: 1, color: "var(--text)" }}>{value}</div>
-      <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 3, fontWeight: 500 }}>{label}</div>
+    <div className="u-ta-center">
+      <div className="u-fs-fs-24 u-fw-700 u-lh-1 u-c-text">{value}</div>
+      <div className="u-fs-fs-10 u-c-text-3 u-mt-3px u-fw-500">{label}</div>
     </div>
   );
 }
@@ -236,14 +231,14 @@ function RoundsCell({ result }: { result: Result }) {
   const total = result.totalGross != null && grosses.length > 1 ? result.totalGross : null;
   return (
     <>
-      <span style={{ color: "var(--text)" }}>{grosses.join("·")}</span>
-      {total != null && <span style={{ color: "var(--text-3)", marginLeft: 4 }}>({total})</span>}
+      <span className="u-c-text">{grosses.join("·")}</span>
+      {total != null && <span className="u-c-text-3 u-ml-4px">({total})</span>}
     </>
   );
 }
 
 function PosTrophy({ pos }: { pos: number | null | undefined }) {
-  if (typeof pos !== "number") return <span style={{ color: "var(--text-3)" }}>—</span>;
+  if (typeof pos !== "number") return <span className="u-c-text-3">—</span>;
   if (pos <= 3) {
     const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
     const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";

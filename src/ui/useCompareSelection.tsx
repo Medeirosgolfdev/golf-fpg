@@ -52,12 +52,12 @@ export function useCompareSelection<K extends string | number>(): CompareSelecti
       // a checkbox não pode disparar o click da linha.
       onClick={(e) => e.stopPropagation()}
       title="Seleccionar para comparar"
-      style={{ marginRight: 6, verticalAlign: "middle", cursor: "pointer" }}
+      className="u-mr-6px u-va-middle u-cur-pointer"
     />
   );
 
   const bar: React.ReactNode = selected.size > 0 ? (
-    <div className="lb-info-line" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+    <div className="lb-info-line u-d-flex u-ai-center u-gap-8px u-fwr-wrap">
       <span
         className={"tab-under" + (compareOn ? " active" : "")}
         onClick={() => setCompareOn(v => !v)}
@@ -66,7 +66,7 @@ export function useCompareSelection<K extends string | number>(): CompareSelecti
       >
         ⚖️ Comparar seleccionados ({selected.size})
       </span>
-      <span onClick={clear} className="muted" style={{ cursor: "pointer" }} title="Limpar selecção">
+      <span onClick={clear} className="muted u-cur-pointer" title="Limpar selecção">
         ✕ limpar
       </span>
       {!compareOn && (

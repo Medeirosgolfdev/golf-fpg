@@ -84,21 +84,21 @@ function ManuelEvo({ evo }: { evo: EvoEntry[] }) {
   const m = evo.find((e) => e.n.includes("Manuel"));
   if (!m) return null;
   return (
-    <div className="card" style={{ background: "var(--bg-success-subtle)", border: "1px solid var(--good)" }}>
+    <div className="card u-bg-bg-success-subtle u-bd-1px-solid-good">
       <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC</div>
-      <div className="d-flex" style={{ gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-        <div className="ta-c" style={{ flex: "1 1 100px" }}>
+      <div className="d-flex u-gap-16px u-fwr-wrap u-ai-center">
+        <div className="ta-c u-fl-1-1-100px">
           <div className="muted fs-10">2025</div>
           <div className="fw-900 fs-24">{m.y25}</div>
           <div className="muted fs-10">{m.from}</div>
         </div>
-        <div className="fs-24" style={{ color: "var(--good-dark)" }}>→</div>
-        <div className="ta-c" style={{ flex: "1 1 100px" }}>
+        <div className="fs-24 u-c-good-dark">→</div>
+        <div className="ta-c u-fl-1-1-100px">
           <div className="muted fs-10">2026</div>
           <div className="fw-900 fs-24" style={{ color: m.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{m.y26}</div>
           <div className="muted fs-10">{m.to}</div>
         </div>
-        <div className="ta-c" style={{ flex: "1 1 80px" }}>
+        <div className="ta-c u-fl-1-1-80px">
           <div className="muted fs-10">Δ</div>
           <div className="fw-900 fs-24" style={{ color: m.delta < 0 ? "var(--good-dark)" : SC.danger }}>
             {m.delta > 0 ? "+" : ""}{m.delta}

@@ -246,25 +246,18 @@ function FilePopover({
   };
   return (
     <div style={style} onClick={(e) => e.stopPropagation()}>
-      <div style={{
-        padding: "4px 10px 6px",
-        borderBottom: "1px solid var(--border-light)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 6,
-      }}>
+      <div className="u-p-4px-10px-6px u-bb-1px-solid-border-light u-d-flex u-ai-center u-jc-space-between u-gap-6px">
         <div>
-          <div className="fw-700 fs-11" style={{ fontFamily: "var(--font-mono)" }}>
+          <div className="fw-700 fs-11 u-ff-font-mono">
             {formatSourceLabel(path)}
           </div>
-          <div className="c-muted fs-10" style={{ wordBreak: "break-all" }}>{path}</div>
+          <div className="c-muted fs-10 u-word-break-break-all">{path}</div>
           <div className="c-muted fs-10">{tournaments.length} torneio{tournaments.length !== 1 ? "s" : ""}</div>
         </div>
         <button
           onClick={onClose}
-          className="btn fs-10"
-          style={{ padding: "2px 8px", flexShrink: 0 }}
+          className="btn fs-10 u-p-2px-8px u-fsh-0"
+
           title="Fechar (Esc)"
         >✕</button>
       </div>
@@ -277,12 +270,12 @@ function FilePopover({
             alignItems: "baseline",
             borderBottom: i < sorted.length - 1 ? "1px solid var(--border-light)" : undefined,
           }}>
-            <span className="c-muted fs-10" style={{ width: 78, flexShrink: 0, fontFamily: "var(--font-mono)" }}>
+            <span className="c-muted fs-10 u-w-78px u-fsh-0 u-ff-font-mono">
               {t.date || ""}
             </span>
-            <span className="fs-11" style={{ flex: 1, wordBreak: "break-word" }}>{t.name}</span>
+            <span className="fs-11 u-fl-1 u-word-break-break-word">{t.name}</span>
             {t.tcode && (
-              <span className="c-muted fs-10" style={{ flexShrink: 0, fontFamily: "var(--font-mono)" }}>
+              <span className="c-muted fs-10 u-fsh-0 u-ff-font-mono">
                 {t.tcode}
               </span>
             )}
@@ -349,7 +342,7 @@ export function DataSourcesChip({
   const totalCount = sources.reduce((s, x) => s + (x.count || 0), 0);
 
   return (
-    <div style={{ position: "relative", flexShrink: 0 }}>
+    <div className="u-pos-relative u-fsh-0">
       <button
         ref={btnRef}
         onClick={() => setOpen(o => !o)}
@@ -368,9 +361,9 @@ export function DataSourcesChip({
         title={`${loaded} carregado(s)${loading ? `, ${loading} em curso` : ""}${errors ? `, ${errors} erro(s)` : ""} · ${totalCount} torneios`}
       >
         📂 {sources.length} {label}
-        {errors > 0 && <span style={{ color: "var(--color-warn-dark)", fontWeight: 700 }}>⚠ {errors}</span>}
+        {errors > 0 && <span className="u-c-color-warn-dark u-fw-700">⚠ {errors}</span>}
         {loading > 0 && <span className="c-muted">…</span>}
-        <span className="c-muted" style={{ fontSize: "var(--fs-9)" }}>{open ? "▲" : "▼"}</span>
+        <span className="c-muted u-fs-fs-9">{open ? "▲" : "▼"}</span>
       </button>
       {open && anchorRect && (
         <DataSourcesPanel
@@ -435,10 +428,7 @@ function DataSourcesPanel({
 
   return (
     <div style={style} onClick={(e) => e.stopPropagation()}>
-      <div style={{
-        padding: "6px 10px 8px",
-        borderBottom: "1px solid var(--border-light)",
-      }}>
+      <div className="u-p-6px-10px-8px u-bb-1px-solid-border-light">
         <div className="h-sm">📂 Ficheiros de dados lidos pela página</div>
         <div className="c-muted fs-10 mt-2">
           {sources.length} ficheiro{sources.length !== 1 ? "s" : ""} · {totalCount} registo{totalCount !== 1 ? "s" : ""} total
@@ -447,11 +437,7 @@ function DataSourcesPanel({
       {groupKeys.map((gk) => (
         <React.Fragment key={gk}>
           {gk && (
-            <div className="c-muted fs-10 fw-700" style={{
-              padding: "6px 10px 2px",
-              textTransform: "uppercase",
-              letterSpacing: 0.4,
-            }}>
+            <div className="c-muted fs-10 fw-700 u-p-6px-10px-2px u-tt-uppercase u-ls-0_4px">
               {gk}
             </div>
           )}
@@ -484,7 +470,7 @@ function SourceRow({ source }: { source: DataSource }) {
       <span style={{ color: statusColor, fontSize: "var(--fs-13)", flexShrink: 0, lineHeight: 1.4 }} title={source.status}>
         {statusIcon}
       </span>
-      <span style={{ flex: 1, minWidth: 0 }}>
+      <span className="u-fl-1 u-minw-0">
         <div style={{
           fontSize: "var(--fs-11)",
           fontFamily: "var(--font-mono)",
@@ -494,7 +480,7 @@ function SourceRow({ source }: { source: DataSource }) {
         }}>
           {source.path}
         </div>
-        <div className="c-muted" style={{ fontSize: "var(--fs-10)", marginTop: 1, display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div className="c-muted u-fs-fs-10 u-mt-1px u-d-flex u-gap-8px u-fwr-wrap">
           {source.count != null && (
             <span>{source.count} {source.count === 1 ? "registo" : "registos"}</span>
           )}
@@ -503,18 +489,7 @@ function SourceRow({ source }: { source: DataSource }) {
         </div>
         {/* Erro em bloco próprio, bem visível, a ocupar linha inteira */}
         {source.error && (
-          <div style={{
-            marginTop: 3,
-            padding: "3px 6px",
-            fontSize: "var(--fs-10)",
-            fontFamily: "var(--font-mono)",
-            color: "var(--color-warn-dark)",
-            background: "var(--bg-card)",
-            border: "1px solid var(--color-warn)",
-            borderRadius: 3,
-            wordBreak: "break-word",
-            whiteSpace: "pre-wrap",
-          }}>
+          <div className="u-mt-3px u-p-3px-6px u-fs-fs-10 u-ff-font-mono u-c-color-warn-dark u-bg-bg-card u-bd-1px-solid-color-warn u-br-3px u-word-break-break-word u-ws-pre-wrap">
             {source.error}
           </div>
         )}

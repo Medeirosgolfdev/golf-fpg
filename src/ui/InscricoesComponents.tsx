@@ -173,7 +173,7 @@ function CountryFlag({ fed, fedCountries, country }: { fed: string | null; fedCo
   const cc = country || (fed ? fedCountries.get(fed) : null);
   if (!cc) return null;
   const emoji = FLAG[cc] ?? "🏳️";
-  return <span title={cc} style={{ marginRight: 4, fontSize: "0.95em" }}>{emoji}</span>;
+  return <span title={cc} className="u-mr-4px u-fs-0_95em">{emoji}</span>;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -245,9 +245,9 @@ function PainelResumo({ torneios, nossosByFed }: {
   const selData = clubeSel ? clubeMap.get(clubeSel) : null;
 
   return (
-    <div className="lb-info-line flex-wrap" style={{ padding: "6px 0 2px", display: "block" }}>
+    <div className="lb-info-line flex-wrap u-p-6px-0-2px u-d-block">
       {/* Linha 1: total + escalões + anos + o botão dos clubes */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+      <div className="u-d-flex u-ai-center u-gap-6px u-fwr-wrap">
         <span className="fw-700 fs-13 shrink-0">{totalGeral} inscritos</span>
         <span className="muted fs-11" >·</span>
         {escaloes.flatMap((e, ei) => {
@@ -257,13 +257,13 @@ function PainelResumo({ torneios, nossosByFed }: {
           if (g.M > 0) items.push(
             <span key={`${e}M`} className="shrink-0 inline-flex items-center-gap3">
               <span className="muted fs-10" >{e.replace("Sub-", "S")}</span>
-              <span className="sex-badge sex-M ta-c"  style={{ minWidth: 20 }}>{g.M}</span>
+              <span className="sex-badge sex-M ta-c u-minw-20px">{g.M}</span>
             </span>
           );
           if (g.F > 0) items.push(
             <span key={`${e}F`} className="shrink-0 inline-flex items-center-gap3">
               {g.M === 0 && <span className="muted fs-10" >{e.replace("Sub-", "S")}</span>}
-              <span className="sex-badge sex-F ta-c"  style={{ minWidth: 20 }}>{g.F}</span>
+              <span className="sex-badge sex-F ta-c u-minw-20px">{g.F}</span>
             </span>
           );
           if (ei < escaloes.length - 1) items.push(
@@ -274,11 +274,11 @@ function PainelResumo({ torneios, nossosByFed }: {
         {anoBase > 0 && (
           <>
             <span className="muted fs-11" >·</span>
-            <span className="fs-11 shrink-0" style={{ display: "inline-flex", gap: 5, alignItems: "center" }}>
+            <span className="fs-11 shrink-0 u-d-inline-flex u-gap-5px u-ai-center">
               <span className="muted">1º ano</span>
-              <span className="fw-700" style={{ color: "var(--color-good)" }}>{anoTotals["1A"]}</span>
+              <span className="fw-700 u-c-color-good">{anoTotals["1A"]}</span>
               <span className="muted">2º ano</span>
-              <span className="fw-700" style={{ color: "var(--color-bad)" }}>{anoTotals["2A"]}</span>
+              <span className="fw-700 u-c-color-bad">{anoTotals["2A"]}</span>
             </span>
           </>
         )}
@@ -295,7 +295,7 @@ function PainelResumo({ torneios, nossosByFed }: {
 
       {/* Linha 2: clubes (só aberta a pedido) */}
       {clubesAbertos && clubes.length > 0 && (
-        <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", marginTop: 6 }}>
+        <div className="gap-4 flex-wrap u-d-flex u-ai-center u-mt-6pxx">
           {clubes.map(([c, d]) => (
             <button key={c}
               onClick={() => setClubesSel(prev => prev === c ? null : c)}
@@ -314,18 +314,13 @@ function PainelResumo({ torneios, nossosByFed }: {
 
       {/* Jogadores do clube seleccionado */}
       {clubesAbertos && selData && clubeSel && (
-        <div style={{ marginTop: 6, padding: "8px 10px", background: "var(--bg)",
-          border: "1px solid var(--border)", borderRadius: "var(--radius)" }}>
-          <div className="fs-11 fw-700" style={{ marginBottom: 5, color: "var(--text-1)" }}>
+        <div className="u-mt-6pxx u-p-8px-10px u-bg-bg u-bd-1px-solid-border u-br-radius">
+          <div className="fs-11 fw-700 u-mb-5px u-c-text-1">
             {clubeSel} — {selData.n} inscrito{selData.n !== 1 ? "s" : ""}
           </div>
-          <div className="gap-4 flex-wrap" style={{ display: "flex" }}>
+          <div className="gap-4 flex-wrap u-d-flex">
             {selData.jogadores.map((jj, i) => (
-              <span key={i} className="fs-11" style={{
-                display: "inline-flex", alignItems: "center", gap: 4,
-                padding: "2px 8px", borderRadius: "var(--radius-lg)",
-                background: "var(--bg-card)", border: "1px solid var(--border)",
-              }}>
+              <span key={i} className="fs-11 u-d-inline-flex u-ai-center u-gap-4px u-p-2px-8px u-br-radius-lg u-bg-bg-card u-bd-1px-solid-border">
                 <SexBadge sex={jj.sex} size="sm" />
                 <span className={`p p-sm p-${escCls(jj.escalao)} fs-10`}>{escShort(jj.escalao)}</span>
                 <CountryFlag fed={jj.fed} fedCountries={fedCountries} />
@@ -378,13 +373,13 @@ function TorneioCard({ t, active, onClick }: {
     >
       {escShort(t.escalao)}
       <SexBadge sex={t.sex} size="sm" />
-      {t._status === "loading" && <span style={{ opacity: 0.7 }}> ⟳</span>}
-      {t._status === "error"   && <span className="fw-700" style={{ color: "var(--color-bad)" }}> !</span>}
+      {t._status === "loading" && <span className="u-op-0_7"> ⟳</span>}
+      {t._status === "error"   && <span className="fw-700 u-c-color-bad"> !</span>}
       {t._status === "ok" && t.totalInscritos > 0 && (
-        <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>({t.totalInscritos} jog)</span>
+        <span className="fs-10 u-ml-3px u-op-0_8">({t.totalInscritos} jog)</span>
       )}
-      {temManuel && <span style={{ color: "var(--color-good)" }}> ★</span>}
-      {recentes > 0 && <span className="new-round-dot" style={{ marginLeft: 3 }} title={`${recentes} nas últimas 48h`} />}
+      {temManuel && <span className="u-c-color-good"> ★</span>}
+      {recentes > 0 && <span className="new-round-dot u-ml-3px" title={`${recentes} nas últimas 48h`} />}
     </button>
   );
 }
@@ -432,7 +427,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
       { key: "bd", label: "Na BD", title: "Na nossa base de dados: sexo e 1.º/2.º ano no escalão (o escalão, o nascimento e o clube estão nas suas colunas)",
         sort: p => (p.fed && nossosByFed.get(p.fed)?.escalao) || null,
         cell: p => { const b = p.fed ? nossosByFed.get(p.fed) : undefined;
-          return b ? <span className="gap-4" style={{ display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" }}>
+          return b ? <span className="gap-4 u-d-inline-flex u-ai-center u-ws-nowrap">
               <SexBadge sex={b.sex} size="sm" />
               {b.dob && <AnoEscalaoPill dob={b.dob} escalao={t.escalao} />}
             </span>
@@ -449,7 +444,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
     <>
       <span className="muted fs-12">· {nossosCount} da BD</span>
       {t.diff && (t.diff.added.length > 0 || t.diff.removed.length > 0) && (
-        <span className="fs-10 fw-700" style={{ background: "var(--color-warn)", color: "#fff", padding: "2px 7px", borderRadius: "var(--radius-lg)" }}
+        <span className="fs-10 fw-700 u-bg-color-warn u-c-fff u-p-2px-7px u-br-radius-lg"
           title={[t.diff.added.length ? `+${t.diff.added.join(", ")}` : "", t.diff.removed.length ? `-${t.diff.removed.join(", ")}` : ""].filter(Boolean).join(" · ")}>
           {t.diff.added.length > 0 && `+${t.diff.added.length} novo${t.diff.added.length > 1 ? "s" : ""}`}
           {t.diff.added.length > 0 && t.diff.removed.length > 0 && " · "}
@@ -470,7 +465,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
           {t.fromCache ? "💾 cache" : "🟢 live FPG"} · {fmtTime(t.lastFetched)}
         </span>
       )}
-      {t.fetchError && <span className="fs-10 fw-700" style={{ color: "#fff", background: "var(--color-warn)", padding: "2px 7px", borderRadius: "var(--radius-lg)" }} title={t.fetchError}>⚠️ API falhou — só cache</span>}
+      {t.fetchError && <span className="fs-10 fw-700 u-c-fff u-bg-color-warn u-p-2px-7px u-br-radius-lg" title={t.fetchError}>⚠️ API falhou — só cache</span>}
     </>
   );
 
@@ -566,25 +561,25 @@ export function InscricoesPanel() {
   return (
     <div>
       {/* Escalões — as pílulas das outras páginas, por cima do título */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", padding: "8px 12px 6px" }}>
+      <div className="u-d-flex u-ai-center u-gap-6px u-fwr-wrap u-p-8px-12px-6px">
         {torneios.map(t => (
           <TorneioCard key={t.tcode} t={t} active={activeTcode === t.tcode} onClick={() => setActiveTcode(t.tcode)} />
         ))}
-        <div style={{ flex: 1, minWidth: 8 }} />
+        <div className="u-fl-1 u-minw-8px" />
         {totalNossosInscritos > 0 && <span className="chip shrink-0" title="Inscritos que estão na nossa base de dados">{totalNossosInscritos} na BD</span>}
         {/* Actualizar só faz sentido até ao fim do campeonato. */}
         {todayIso() <= CN_JOVENS_EDICAO.fim && (
-          <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
-            style={{ flexShrink: 0 }}
+          <button className="tourn-tab tourn-tab-sm u-fsh-0" onClick={refreshAll}
+
             title="Actualizar inscrições da FPG">↺ Actualizar</button>
         )}
       </div>
-      <div style={{ padding: "0 12px" }}>
+      <div className="u-p-0-12px">
         {/* Cabeçalho como o do detalhe de torneio: título e links oficiais à direita */}
         <div className="detail-header">
           <div className="detail-header-top">
             <h2 className="detail-title">Campeonato Nacional de Jovens — {escShort(torneioActivo.escalao).replace(/^S/, "Sub ")} {torneioActivo.sex === "F" ? "Feminino" : "Masculino"}</h2>
-            <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
+            <div className="u-d-flex u-gap-4px u-fwr-wrap u-ai-center">
               <a href={`https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=${torneioActivo.tcode}`}
                  target="_blank" rel="noopener noreferrer" className="tourn-ext-link">📋 Inscrições ↗</a>
               <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"

@@ -644,9 +644,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
               key={t}
               type="button"
               title={TOGGLE_DEF[t].title}
-              className={`tourn-tab tourn-tab-sm${toggles.has(t) ? " active" : ""}`}
+              className={`tourn-tab tourn-tab-sm${toggles.has(t) ? " active" : ""} u-fsh-0`}
               onClick={() => toggle(t)}
-              style={{ flexShrink: 0 }}
+
             >
               {TOGGLE_DEF[t].label}
             </button>
@@ -654,8 +654,8 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
 
           {flt.search && (
             <input
-              className="input"
-              style={{ width: 160, fontSize: "var(--fs-12)", padding: "3px 8px", marginLeft: 8 }}
+              className="input u-w-160px u-fs-fs-12 u-p-3px-8px u-ml-8px"
+
               placeholder="🔍 Pesquisar…"
               value={search}
               onChange={e => setSearch(e.target.value)}
@@ -696,26 +696,26 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
             </>
           )}
           {flt.escalao && (
-            <select className="input" value={fEsc} onChange={e => setFEsc(e.target.value)} style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}>
+            <select className="input u-fs-fs-12 u-p-3px-6px" value={fEsc} onChange={e => setFEsc(e.target.value)}>
               <option value="all">🏆 Escalão</option>
               {escaloes.map(es => <option key={es} value={es}>{es}</option>)}
             </select>
           )}
           {flt.sex && (
-            <select className="input" value={fSex} onChange={e => setFSex(e.target.value)} style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}>
+            <select className="input u-fs-fs-12 u-p-3px-6px" value={fSex} onChange={e => setFSex(e.target.value)}>
               <option value="all">M+F</option>
               <option value="M">Masculino</option>
               <option value="F">Feminino</option>
             </select>
           )}
           {flt.source && sources.length > 1 && (
-            <select className="input" value={fSource} onChange={e => setFSource(e.target.value)} style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}>
+            <select className="input u-fs-fs-12 u-p-3px-6px" value={fSource} onChange={e => setFSource(e.target.value)}>
               <option value="all">Fonte</option>
               {sources.map(s => <option key={s} value={s}>{config.sourceLabels?.[s] ?? s}</option>)}
             </select>
           )}
           {flt.liga && ligas.length > 1 && (
-            <select className="input" value={fLiga} onChange={e => setFLiga(e.target.value)} style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}>
+            <select className="input u-fs-fs-12 u-p-3px-6px" value={fLiga} onChange={e => setFLiga(e.target.value)}>
               <option value="all">🇫🇷 Liga</option>
               {ligas.map(l => <option key={l} value={l}>{config.ligaLabels?.[l] ?? l}</option>)}
             </select>
@@ -740,10 +740,10 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
           )}
           {(!!config.specialItems?.length || !!ranking?.inInfoMenu) && (
             <select
-              className="input"
+              className="input u-fs-fs-12 u-p-3px-6px"
               value={infoView ?? ""}
               onChange={e => setInfo(e.target.value || null)}
-              style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}
+
               title="Páginas informativas"
             >
               <option value="">ⓘ Info</option>
@@ -786,7 +786,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     botões pill `.tourn-tab tourn-tab-sm`, "(N jog)", alinhados à
                     esquerda com o título e sem linha divisória. */}
                 {curDivisions.length > 1 && (
-                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 6 }}>
+                  <div className="u-d-flex u-gap-6px u-fwr-wrap u-mb-6px">
                     {curDivisions.map(d => {
                       const active = d.key === curDiv.key;
                       // Sem resultados, os inscritos (torneios por disputar — /uskids;
@@ -803,9 +803,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                         >
                           {d.tabLabel || d.escalao}
                           {nP > 0 && (
-                            <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>({nP} jog)</span>
+                            <span className="fs-10 u-ml-3px u-op-0_8">({nP} jog)</span>
                           )}
-                          {d.hasManuel && <span style={{ color: "var(--color-good)" }}> ★</span>}
+                          {d.hasManuel && <span className="u-c-color-good"> ★</span>}
                           {nAces > 0 && (
                             <span title={`${nAces} hole-in-one neste escalão`}> 🕳️</span>
                           )}
@@ -843,22 +843,22 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                       {cur.federation && <span className="muted ml-8">🏛️ {cur.federation}</span>}
                       <LigaPills entry={cur} config={config} max={3}
                         style={{ marginLeft: 8, background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }} />
-                      <span className="gap-4 ml-8" style={{ display: "inline-flex", alignItems: "center", flexWrap: "wrap" }}>
+                      <span className="gap-4 ml-8 u-d-inline-flex u-ai-center u-fwr-wrap">
                         {headerStats.nPlayers > 0 && (
-                          <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+                          <span className="p p-sm u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border">
                             {headerStats.nPlayers} jog
                           </span>
                         )}
                         {headerStats.nRounds > 1 && <RoundPill nR={headerStats.nRounds} />}
                         {headerStats.parTotal > 0 && (
-                          <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+                          <span className="p p-sm u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border">
                             Par {headerStats.parTotal}
                           </span>
                         )}
                         {headerStats.aces.length > 0 && (
                           <span
-                            className="p p-sm"
-                            style={{ background: "var(--score-eagle, #f59e0b)", color: "#fff", border: "1px solid var(--score-eagle, #f59e0b)" }}
+                            className="p p-sm u-bg-var-score-eagle-f59e0b u-c-fff u-bd-1bl4k"
+
                             title={headerStats.aces
                               .map(a => `${a.name || "?"} — buraco ${a.hole} (par ${a.par})${a.round ? ` · R${a.round}` : ""}`)
                               .join("\n")}
@@ -870,7 +870,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                         {curDiv.sex && <SexBadge sex={curDiv.sex === "Mixed" ? "M" : curDiv.sex} />}
                         {curDiv.sex === "Mixed" && <SexBadge sex="F" />}
                         {(cur.hcpLimit?.men != null || cur.hcpLimit?.women != null) && (
-                          <span className="muted" style={{ marginLeft: 4 }}>
+                          <span className="muted u-ml-4px">
                             {cur.hcpLimit?.men != null && `Hcp M ≤ ${cur.hcpLimit.men} `}
                             {cur.hcpLimit?.women != null && `Hcp F ≤ ${cur.hcpLimit.women}`}
                           </span>
@@ -926,7 +926,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                   <>
                     {/* Sem rondas: barra de secção (Resultados custom / Inscritos / Draw) */}
                     {abasSecao.length > 1 && (
-                      <div className="tab-bar" style={{ marginBottom: 8 }}>
+                      <div className="tab-bar u-mb-8px">
                         {abasSecao.map(t => (
                           <button
                             key={t.key}
@@ -1097,15 +1097,15 @@ function CircuitSidebarItem({ e, config, active, onSelect }: { e: CircuitEntry; 
 
       {/* Linha 2: campo */}
       {e.course && (
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 500, marginTop: 3 }}>
+        <div className="u-fs-fs-12 u-c-text-2 u-fw-500 u-mt-3px">
           📍 {e.course.length > 50 ? e.course.slice(0, 50) + "…" : e.course}
         </div>
       )}
 
-      <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
+      <div className="u-h-_5px u-bg-1h5y7 u-m-4px-0" />
 
       {/* Linha 3: pills */}
-      <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", margin: "3px 0" }}>
+      <div className="u-d-flex u-gap-4px u-fwr-wrap u-ai-center u-m-3px-0">
         {e.tcode && <span className="p p-sm p-muted">{e.tcode}</span>}
         {/* Escalão/sexo só fazem sentido quando há UM escalão; com vários
             mostrar apenas "N esc." (senão parece que só tem o 1º). */}
@@ -1117,18 +1117,18 @@ function CircuitSidebarItem({ e, config, active, onSelect }: { e: CircuitEntry; 
         <LigaPills entry={e} config={config} max={2} />
       </div>
 
-      <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
+      <div className="u-h-_5px u-bg-1h5y7 u-m-4px-0" />
 
       {/* Linha 4: data · fonte (ficheiro) · nº jog */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)", flexShrink: 0 }}>
+      <div className="u-d-flex u-jc-space-between u-ai-center u-gap-6px">
+        <span className="u-fs-fs-11 u-c-text-muted u-fsh-0">
           {dateStr ? `📅 ${dateStr}` : "—"}
         </span>
-        <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+        <div className="u-d-flex u-ai-center u-gap-4px u-fsh-0">
           {srcLabel && (
             <span className="chip" title={`Fonte: ${srcLabel}`} style={{ fontSize: "var(--fs-9)", padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
           )}
-          {nP > 0 && <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{nP} jog</span>}
+          {nP > 0 && <span className="u-fs-fs-11 u-c-text-muted">{nP} jog</span>}
         </div>
       </div>
     </div>

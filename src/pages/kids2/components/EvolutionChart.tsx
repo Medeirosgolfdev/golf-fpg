@@ -193,9 +193,9 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
 
   if (visiblePoints.length < 2) {
     return (
-      <section style={{ marginBottom: 14 }}>
-        <h3 style={{ margin: "8px 0 10px", fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Evolução</h3>
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "10px 12px", background: "var(--bg-muted)", borderRadius: "var(--radius)" }}>
+      <section className="u-mb-14px">
+        <h3 className="u-m-8px-0-10px u-fs-fs-14 u-fw-700 u-c-text">Evolução</h3>
+        <div className="u-fs-fs-12 u-c-text-3 u-p-10px-12px u-bg-bg-muted u-br-radius">
           Insuficiência de dados para representar evolução ({visiblePoints.length} {visiblePoints.length === 1 ? "ponto" : "pontos"}{hidden9HCount > 0 ? ` · ${hidden9HCount} de 9H escondidos` : ""}).
         </div>
       </section>
@@ -216,10 +216,10 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
   const hasManuelLine = !isManuelView && visiblePoints.some((p) => p[manuelYKey] != null);
 
   return (
-    <section style={{ marginBottom: 14 }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px" }}>
-        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Evolução</h3>
-        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+    <section className="u-mb-14px">
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px">
+        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Evolução</h3>
+        <div className="u-d-flex u-gap-4px u-ai-center">
           <button
             onClick={() => setYMode("toPar")}
             style={btnStyle(yMode === "toPar")}
@@ -234,7 +234,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
             onClick={() => setYMode("pos")}
             style={btnStyle(yMode === "pos")}
           >Posição</button>
-          <span style={{ width: 1, height: 18, background: "var(--border)", margin: "0 2px" }} />
+          <span className="u-w-1px u-h-18px u-bg-border u-m-0-2px" />
           <button
             onClick={() => setInclude9H((v) => !v)}
             style={btnStyle(include9H)}
@@ -247,12 +247,12 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
         </div>
       </div>
 
-      <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 6px 6px", minWidth: 0 }}>
+      <div className="u-bg-bg u-bd-1px-solid-border u-br-8px u-p-10px-6px-6px u-minw-0">
         {/* Evita o erro "width(-1) height(-1)" do Recharts: o ResponsiveContainer
             recebe height numérica fixa (não "100%") + minWidth/minHeight para que
             tenha sempre dimensões válidas mesmo antes do pai ter layout calculado
             (ex: tab escondida, sidebar fechada, mount inicial). */}
-        <div style={{ width: "100%", height: 240, minWidth: 0 }}>
+        <div className="u-w-100pc u-h-240px u-minw-0">
           <ResponsiveContainer width="100%" height={240} minWidth={1} minHeight={1}>
             <ComposedChart data={visiblePoints} margin={{ top: 6, right: 12, left: 0, bottom: 16 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
@@ -333,20 +333,20 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
         </div>
 
         {/* Legenda */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 8px", fontSize: "var(--fs-10)", color: "var(--text-3)" }}>
+        <div className="u-d-flex u-fwr-wrap u-gap-8px u-p-6px-8px u-fs-fs-10 u-c-text-3">
           {sources.map((src) => (
-            <span key={src} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+            <span key={src} className="u-d-inline-flex u-ai-center u-gap-4px">
               <span style={{ width: 9, height: 9, borderRadius: "50%", background: SOURCE_COLORS[src] || "var(--text-3)", display: "inline-block" }} />
               {SOURCE_LABELS[src] || src}
             </span>
           ))}
           {hasManuelLine && (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }} title="Linha tracejada verde = Manuel no mesmo torneio">
-              <span style={{ display: "inline-block", width: 18, height: 2, borderTop: "2px dashed var(--color-good-dark)" }} /> Manuel
+            <span className="u-d-inline-flex u-ai-center u-gap-4px" title="Linha tracejada verde = Manuel no mesmo torneio">
+              <span className="u-d-inline-block u-w-18px u-h-2px u-bt-2px-dashed-color-good-dark" /> Manuel
             </span>
           )}
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4, marginLeft: "auto" }}>
-            <span style={{ width: 9, height: 9, borderRadius: "50%", background: "var(--medal-gold-bg)", border: "1px solid var(--medal-gold-fg)", display: "inline-block" }} /> Top-3 destacado
+          <span className="u-d-inline-flex u-ai-center u-gap-4px u-ml-auto">
+            <span className="u-w-9px u-h-9px u-br-50pc u-bg-medal-gold-bg u-bd-1px-solid-medal-gold-fg u-d-inline-block" /> Top-3 destacado
           </span>
         </div>
       </div>
@@ -376,18 +376,18 @@ function CustomTooltip({ active, payload, yMode }: any) {
   };
   const metricLabel = yMode === "toPar" ? "±par" : yMode === "toParNorm" ? "±par/18H" : "Posição";
   return (
-    <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "6px 10px", fontSize: "var(--fs-11)", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}>
-      <div style={{ fontWeight: 700, color: "var(--text)" }}>{p.tName}</div>
-      <div style={{ color: "var(--text-3)", fontSize: "var(--fs-10)" }}>
+    <div className="u-bg-bg u-bd-1px-solid-border u-br-radius u-p-6px-10px u-fs-fs-11 u-bs-0-2px-6px-rgba-0-0-0-0_1">
+      <div className="u-fw-700 u-c-text">{p.tName}</div>
+      <div className="u-c-text-3 u-fs-fs-10">
         {p.flight} · {fmtDate(p.date)}{p.nholes === 9 ? " · 9H" : ""}
       </div>
-      <div style={{ color: "var(--text-2)", marginTop: 3, display: "flex", flexDirection: "column", gap: 2 }}>
+      <div className="u-c-text-2 u-mt-3px u-d-flex u-fd-column u-gap-2px">
         <span>
           {metricLabel}: <strong>{yLabel(rivalVal)}</strong>
-          {p.trophy && <span style={{ marginLeft: 6 }}>🏆</span>}
+          {p.trophy && <span className="u-ml-6px">🏆</span>}
         </span>
         {manuelVal != null && (
-          <span style={{ color: "var(--color-good-dark)" }}>
+          <span className="u-c-color-good-dark">
             Manuel: <strong>{yLabel(manuelVal)}</strong>
           </span>
         )}

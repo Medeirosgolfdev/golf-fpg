@@ -86,9 +86,9 @@ function UskidsEscalaoDetail({ escalao: e, torneio: t, drawsData, extras, moreTa
 
   return (
     <div>
-      {actualizado && <div className="muted fs-11" style={{ margin: "-2px 0 6px" }}>Resultados actualizados {actualizado}</div>}
+      {actualizado && <div className="muted fs-11 u-m-2px-0-6px">Resultados actualizados {actualizado}</div>}
       {notas.map(j => (
-        <div key={j.nome + j._nota} className="notice" style={{ margin: "2px 0 6px", padding: "5px 10px" }}>
+        <div key={j.nome + j._nota} className="notice u-m-2px-0-6pxx u-p-5px-10px">
           ⚠️ <strong>{displayName(j.nome)}</strong> — {j._nota}
         </div>
       ))}

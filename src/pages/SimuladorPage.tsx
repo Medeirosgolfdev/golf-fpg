@@ -86,25 +86,25 @@ function ManualInputs({
         <div className="field">
           <label>Slope</label>
           <input
-            className="input"
+            className="input u-w-64px"
             type="text"
             inputMode="numeric"
             placeholder="ex: 128"
             value={value.slope}
             onChange={(e) => onChange({ ...value, slope: e.target.value })}
-            style={{ width: 64 }}
+
           />
         </div>
         <div className="field">
           <label>Par</label>
           <input
-            className="input"
+            className="input u-w-52px"
             type="text"
             inputMode="numeric"
             placeholder={label.includes("9") ? "36" : "72"}
             value={value.par}
             onChange={(e) => onChange({ ...value, par: e.target.value })}
-            style={{ width: 52 }}
+
           />
         </div>
       </div>

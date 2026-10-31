@@ -105,7 +105,7 @@ export default function TotalsResumo({ players, parPerRound, notice, extra, tour
   return (
     <div>
       {notice}
-      <div className="fs-13 fw-600" style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", margin: "4px 0 10px", color: "var(--text-2)" }}>
+      <div className="fs-13 fw-600 u-d-flex u-ai-center u-gap-6px u-fwr-wrap u-m-4px-0-10px u-c-text-2">
         <span>{hasGross ? `${complete.length} classif.` : `${rows.length} jogadores`}</span>
         {hasGross && rows.length > complete.length && <span>· {rows.length - complete.length} inc.</span>}
         {nRounds > 1 && <>· <RoundPill nR={nRounds} /></>}

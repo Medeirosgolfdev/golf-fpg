@@ -55,9 +55,9 @@ export default function ComparisonDonut({
   const dashInner = fp != null ? (fp / 100) * circumInner : 0;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+    <div className="u-d-flex u-fd-column u-ai-center u-gap-4px">
       {!minimal && label && (
-        <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.08em" }}>
+        <div className="u-fs-fs-11 u-fw-700 u-c-text-3 u-ls-0_08em">
           {label}
         </div>
       )}
@@ -80,7 +80,7 @@ export default function ComparisonDonut({
               strokeDasharray={`${dashInner} ${circumInner - dashInner}`}
               strokeDashoffset={circumInner * 0.25}
               transform={`rotate(-90 ${cx} ${cy})`}
-              style={{ transition: "stroke-dasharray 400ms ease-out" }}
+              className="u-transition-lvivr"
             />
           </>
         )}
@@ -91,7 +91,7 @@ export default function ComparisonDonut({
           strokeDasharray={`${dashOuter} ${circumOuter - dashOuter}`}
           strokeDashoffset={circumOuter * 0.25}
           transform={`rotate(-90 ${cx} ${cy})`}
-          style={{ transition: "stroke-dasharray 400ms ease-out" }}
+          className="u-transition-lvivr"
         />
         {/* Centro */}
         <text x={cx} y={cy} textAnchor="middle" dominantBaseline="central"
@@ -107,7 +107,7 @@ export default function ComparisonDonut({
         )}
       </svg>
       {!minimal && caption && (
-        <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>{caption}</div>
+        <div className="u-fs-fs-11 u-c-text-3">{caption}</div>
       )}
     </div>
   );

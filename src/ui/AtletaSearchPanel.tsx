@@ -270,17 +270,11 @@ export default function AtletaSearchPanel({
   };
 
   return (
-    <section style={{ margin: "16px 12px 28px" }}>
+    <section className="u-m-16px-12px-28px">
       <div
-        style={{
-          padding: "12px 16px",
-          background: "var(--bg-muted)",
-          border: "1px solid var(--border)",
-          borderRadius: 8,
-          marginBottom: 12,
-        }}
+        className="u-p-12px-16px u-bg-bg-muted u-bd-1px-solid-border u-br-8px u-mb-12px"
       >
-        <h3 className="fs-15 fw-800" style={{ margin: "0 0 8px" }}>
+        <h3 className="fs-15 fw-800 u-m-0-0-8px">
           🔍 Procurar atleta
         </h3>
         <input
@@ -288,19 +282,10 @@ export default function AtletaSearchPanel({
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Escreve o nome ou nº de federado..."
-          style={{
-            width: "100%",
-            maxWidth: 480,
-            padding: "8px 12px",
-            border: "1px solid var(--border)",
-            borderRadius: "var(--radius)",
-            fontSize: "var(--fs-14)",
-            background: "var(--bg-card)",
-            color: "var(--text-1)",
-          }}
+          className="u-w-100pc u-maxw-480px u-p-8px-12px u-bd-1px-solid-border u-br-radius u-fs-fs-14 u-bg-bg-card u-c-text-1"
           autoFocus
         />
-        <div className="muted fs-11" style={{ marginTop: 6 }}>
+        <div className="muted fs-11 u-mt-6pxx">
           {q.length === 0
             ? `${all.length} atletas com presença em Nacionais (Sub-10 a Sub-18, 2005-2026)`
             : matches.length === 0 && q.length >= 2
@@ -312,12 +297,7 @@ export default function AtletaSearchPanel({
       {/* Lista de matches (sugestões) */}
       {matches.length > 0 && !selected && (
         <div
-          style={{
-            border: "1px solid var(--border)",
-            borderRadius: 8,
-            overflow: "hidden",
-            marginBottom: 12,
-          }}
+          className="u-bd-1px-solid-border u-br-8px u-ov-hidden u-mb-12px"
         >
           <table className="dtable">
             <thead>
@@ -338,14 +318,14 @@ export default function AtletaSearchPanel({
                   <tr
                     key={k}
                     onClick={() => handleSelect(a)}
-                    style={{ cursor: "pointer" }}
+                    className="u-cur-pointer"
                     title="Clica para ver detalhe"
                   >
-                    <td style={{ fontWeight: 700 }}>{a.name}</td>
-                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
+                    <td className="u-fw-700">{a.name}</td>
+                    <td className="u-ff-font-mono u-fs-fs-12 u-c-text-3">
                       {a.fed || "—"}
                     </td>
-                    <td style={{ fontSize: "var(--fs-12)", color: "var(--text-2)" }}>
+                    <td className="u-fs-fs-12 u-c-text-2">
                       {a.club || "—"}
                     </td>
                     <td className="r">{a.results.length}</td>
@@ -365,35 +345,19 @@ export default function AtletaSearchPanel({
       {/* Detalhe do atleta seleccionado */}
       {selected && (
         <div
-          style={{
-            border: "1px solid var(--border)",
-            borderRadius: 8,
-            overflow: "hidden",
-          }}
+          className="u-bd-1px-solid-border u-br-8px u-ov-hidden"
         >
           <header
-            style={{
-              padding: "12px 16px",
-              background: "var(--bg-muted)",
-              borderBottom: "1px solid var(--border)",
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              flexWrap: "wrap",
-            }}
+            className="u-p-12px-16px u-bg-bg-muted u-bb-1px-solid-border u-d-flex u-ai-center u-gap-12px u-fwr-wrap"
           >
-            <div style={{ flex: 1, minWidth: 200 }}>
-              <h3 className="fs-15 fw-800" style={{ margin: 0 }}>
+            <div className="u-fl-1 u-minw-200px">
+              <h3 className="fs-15 fw-800 u-m-0">
                 {selected.fed ? (
                   <a
                     href={`/jogadores/${selected.fed}?view=federado`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{
-                      color: "inherit",
-                      textDecoration: "none",
-                      borderBottom: "1px dotted currentColor",
-                    }}
+                    className="u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
                     title="Ver perfil federado (nova janela)"
                   >
                     {selected.name}
@@ -402,7 +366,7 @@ export default function AtletaSearchPanel({
                   selected.name
                 )}
               </h3>
-              <div className="muted fs-11" style={{ marginTop: 2 }}>
+              <div className="muted fs-11 u-mt-2px">
                 {selected.fed ? `Fed ${selected.fed}` : "Sem fed code"}
                 {selected.dob ? ` · Nasc. ${selected.dob.slice(0, 4)}` : ""}
                 {selected.sex ? ` · ${selected.sex}` : ""}
@@ -411,15 +375,7 @@ export default function AtletaSearchPanel({
             </div>
             <button
               onClick={() => setSelectedKey(null)}
-              style={{
-                padding: "5px 10px",
-                fontSize: "var(--fs-12)",
-                background: "var(--bg-card)",
-                border: "1px solid var(--border)",
-                borderRadius: "var(--radius-sm)",
-                cursor: "pointer",
-                color: "var(--text-1)",
-              }}
+              className="u-p-5px-10px u-fs-fs-12 u-bg-bg-card u-bd-1px-solid-border u-br-radius-sm u-cur-pointer u-c-text-1"
               title="Voltar à pesquisa"
             >
               ✕ Fechar
@@ -428,13 +384,7 @@ export default function AtletaSearchPanel({
 
           {/* KPIs */}
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))",
-              gap: 1,
-              background: "var(--border-light)",
-              borderBottom: "1px solid var(--border)",
-            }}
+            className="u-d-grid u-grid-template-columns-1652c u-gap-1px u-bg-border-light u-bb-1px-solid-border"
           >
             <Kpi label="Particip." value={String(selected.results.length)} />
             <Kpi label="🥇 Ouro" value={selected.golds || "—"} accent={selected.golds > 0} />
@@ -450,7 +400,7 @@ export default function AtletaSearchPanel({
           </div>
 
           {/* Tabela cronológica */}
-          <div style={{ overflowX: "auto", paddingBottom: 14 }}>
+          <div className="u-ox-auto u-pb-14px">
             <table className="dtable">
               <thead>
                 <tr>
@@ -467,18 +417,18 @@ export default function AtletaSearchPanel({
               <tbody>
                 {sortedResults.map((r, i) => (
                   <tr key={i}>
-                    <td style={{ whiteSpace: "nowrap" }}>{r.date}</td>
+                    <td className="u-ws-nowrap">{r.date}</td>
                     <td>{r.escalao ? <EscPill esc={r.escalao} /> : "—"}</td>
                     <td><PosBadge pos={r.pos} /></td>
-                    <td style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                    <td className="u-fs-fs-11 u-c-text-3">
+                      <span className="u-d-inline-flex u-ai-center u-gap-4px">
                         <span>{r.isClubes ? "Clubes" : "Jovens"}</span>
                         {r.rounds > 1 && <RoundPill nR={r.rounds} />}
                       </span>
                     </td>
-                    <td className="r" style={{ fontWeight: 600 }}>{r.gross ?? "—"}</td>
+                    <td className="r u-fw-600">{r.gross ?? "—"}</td>
                     <td className="r">{r.toPar != null ? fmtToPar(r.toPar) : "—"}</td>
-                    <td className="r" style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}
+                    <td className="r u-fs-fs-11 u-c-text-3"
                       title={`Total de ${r.totalPlayers} inscritos`}>
                       {r.totalPlayers > 0 ? `${r.pos}/${r.totalPlayers}` : "—"}
                     </td>
@@ -487,7 +437,7 @@ export default function AtletaSearchPanel({
                         href={fpgScoringUrl(r.ccode, r.tcode)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ color: "var(--accent)", textDecoration: "none" }}
+                        className="u-c-accent u-td-none"
                         title="Ver torneio na FPG (nova janela)"
                       >
                         {r.tournamentName} ↗
@@ -515,15 +465,11 @@ function Kpi({
 }) {
   return (
     <div
-      style={{
-        background: "var(--bg-card)",
-        padding: "10px 12px",
-        textAlign: "center",
-      }}
+      className="u-bg-bg-card u-p-10px-12px u-ta-center"
     >
       <div
-        className="fs-11 muted"
-        style={{ textTransform: "uppercase", letterSpacing: 0.3 }}
+        className="fs-11 muted u-tt-uppercase u-ls-0_3px"
+
       >
         {label}
       </div>

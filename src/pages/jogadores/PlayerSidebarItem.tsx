@@ -28,7 +28,7 @@ export type PlayerSidebarPlayer = {
 
 /** Sep — pequena linha separadora entre blocos do cartão */
 const PlayerSidebarSep = () => (
-  <div style={{ height: "0.5px", background: "var(--border-light)", margin: "4px 0" }} />
+  <div className="u-h-0_5px u-bg-border-light u-m-4px-0" />
 );
 
 /** Pill HCP com 3 níveis de destaque relativamente ao escalão:
@@ -51,8 +51,8 @@ export function HcpPill({ hcp, escHcps }: { hcp: number | null; escHcps?: EscHcp
   if (hcp >= HCP_UNESTABLISHED_THRESHOLD) {
     return (
       <span
-        className="p p-sm"
-        style={{ background: "transparent", color: "var(--text-3)", borderColor: "transparent" }}
+        className="p p-sm u-bg-transparent u-c-text-3 u-border-color-transparent"
+
         title={`HCP ${hcpDisplay(hcp)} — HI ainda não estabelecido (jogador em formação, excluído das stats do escalão)`}
       >
         HCP {hcpDisplay(hcp)}
@@ -97,8 +97,8 @@ export function TagPill({ tag }: { tag: string }) {
   if (t === "inscrito-nacional") {
     return (
       <span
-        className="p p-sm"
-        style={{ background: "var(--color-good-dark)", color: "#fff", borderColor: "transparent" }}
+        className="p p-sm u-bg-color-good-dark u-c-fff u-border-color-transparent"
+
         title="Inscrito no Campeonato Nacional 2026"
       >
         🏆 CN26
@@ -108,8 +108,8 @@ export function TagPill({ tag }: { tag: string }) {
   if (t === "no-scrape") {
     return (
       <span
-        className="p p-sm"
-        style={{ background: "var(--bg-muted)", color: "var(--text-3)", borderColor: "var(--border)" }}
+        className="p p-sm u-bg-bg-muted u-c-text-3 u-border-color-border"
+
         title="Scraper salta este jogador (dados congelados)"
       >
         ⏸ sem scrape
@@ -119,8 +119,8 @@ export function TagPill({ tag }: { tag: string }) {
   if (t === "hidden") {
     return (
       <span
-        className="p p-sm"
-        style={{ background: "var(--bg-muted)", color: "var(--text-3)", borderColor: "var(--border)" }}
+        className="p p-sm u-bg-bg-muted u-c-text-3 u-border-color-border"
+
         title="Escondido da sidebar"
       >
         👁 oculto
@@ -211,27 +211,27 @@ function PlayerSidebarItemInner({
       }}
     >
       {/* Linha 1: rank (se rankingMode) + flag + nome + sexo + indicadores */}
-      <div className="course-item-name flex-center" style={{ marginBottom: 3 }}>
+      <div className="course-item-name flex-center u-mb-3px">
         {rankingMode && rank != null && (
           <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}>
             {rank}
           </span>
         )}
-        <span className="flex-1" style={{ minWidth: 0 }}>
+        <span className="flex-1 u-minw-0">
           {showFlag && <span className="mr-4" title={pm._federadoRaw?.country}>{gf(countryPrefix!)}</span>}
           <span style={{ fontWeight: isActive ? 700 : 600 }}>{p.name}</span>
           <SexBadge sex={p.sex} size="sm" className="ml-4" />
           {isNewRound && <span className="new-round-dot ml-4" title="Ronda recente (< 7 dias)" />}
           {isFedsOnly && <span className="ml-4 c-muted fs-10" title="Só cadastro FPG — sem análise de scorecards">ø</span>}
-          {isOrphan && <span className="ml-4 fs-10" title="Não encontrado na FPG activa (quotas por regularizar?)" style={{ color: "var(--color-warn-vivid)" }}>⚠</span>}
-          {hcpChanged && <span className="ml-4 fs-10" title={`FPG actual: HCP ${pm._fpgDiffs?.hcpChanged?.fpg}`} style={{ color: "var(--color-warn-vivid)" }}>⚡</span>}
+          {isOrphan && <span className="ml-4 fs-10 u-c-color-warn-vivid" title="Não encontrado na FPG activa (quotas por regularizar?)">⚠</span>}
+          {hcpChanged && <span className="ml-4 fs-10 u-c-color-warn-vivid" title={`FPG actual: HCP ${pm._fpgDiffs?.hcpChanged?.fpg}`}>⚡</span>}
         </span>
       </div>
 
       <PlayerSidebarSep />
 
       {/* Linha 2: pills — escalão · clube · HCP · tags */}
-      <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", margin: "3px 0" }}>
+      <div className="gap-4 flex-wrap u-d-flex u-ai-center u-m-3px-0">
         {displayEscalao && <EscPill esc={displayEscalao} />}
         {clubText && (
           // Nota: NÃO usamos ClubePill aqui porque o seu helper `shortClubFromField`
@@ -242,8 +242,8 @@ function PlayerSidebarItemInner({
         )}
         <HcpPill hcp={displayHcp} escHcps={escHcps} />
         {ppHcp != null && (
-          <span className="p p-sm" title={`Handicap Pitch & Putt: ${ppHcp}`}
-            style={{ background: "var(--badge-pp)", color: "#fff", border: "1px solid var(--badge-pp)" }}>
+          <span className="p p-sm u-bg-badge-pp u-c-fff u-bd-1px-solid-badge-pp" title={`Handicap Pitch & Putt: ${ppHcp}`}
+>
             🏑 {ppHcp}
           </span>
         )}
@@ -253,17 +253,17 @@ function PlayerSidebarItemInner({
       <PlayerSidebarSep />
 
       {/* Linha 3: fed# + rondas (total · este ano) + rank HCP (se rankingMode) */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)", display: "inline-flex", alignItems: "center", gap: 8 }}>
+      <div className="u-d-flex u-jc-space-between u-ai-center u-gap-6px u-fwr-wrap">
+        <span className="u-fs-fs-11 u-c-text-muted u-d-inline-flex u-ai-center u-gap-8px">
           <span>#{p.fed}</span>
           {/* Rondas neste ano civil — mesma fonte (data.json) que o detalhe header.
               Usado para ordenação por defeito. */}
           {(roundsCurrentYear != null && roundsCurrentYear > 0) && (
-            <span title={`${roundsCurrentYear} rondas em ${new Date().getFullYear()}`} style={{ color: "var(--color-good-dark)", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
+            <span title={`${roundsCurrentYear} rondas em ${new Date().getFullYear()}`} className="u-c-color-good-dark u-fw-600">🗓 {roundsCurrentYear}</span>
           )}
           {/* Total — também do data.json. */}
           {(roundsTotal != null && roundsTotal > 0) && (
-            <span title={`${roundsTotal} voltas no total`} style={{ opacity: 0.7 }}>📊 {roundsTotal}</span>
+            <span title={`${roundsTotal} voltas no total`} className="u-op-0_7">📊 {roundsTotal}</span>
           )}
         </span>
         {rankingMode && displayHcp != null && (

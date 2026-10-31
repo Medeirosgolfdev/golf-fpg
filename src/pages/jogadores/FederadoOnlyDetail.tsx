@@ -153,14 +153,14 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
   return (
     <div className="p-16">
       {/* Header com foto grande ao lado */}
-      <div style={{ display: "flex", gap: 16, alignItems: "flex-start", marginBottom: 12 }}>
+      <div className="u-d-flex u-gap-16px u-ai-flex-start u-mb-12px">
         {f.photo && (
           <img src={`https://hcp-portugal.datagolf.pt/photos/${f.photo}`}
             alt={f.name}
-            style={{ width: 200, maxHeight: 260, borderRadius: "var(--radius)", objectFit: "cover", flexShrink: 0 }}
+            className="u-w-200px u-maxh-260px u-br-radius u-object-fit-cover u-fsh-0"
             onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
         )}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div className="u-fl-1 u-minw-0">
           <DetailHeader
             title={
               <>
@@ -179,7 +179,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
           >
             {/* Linha de identidade partilhada com o PlayerDetail — os 2 mundos
                 do detalhe abrem com os mesmos pills. */}
-            <div style={{ marginTop: 6 }}>
+            <div className="u-mt-6pxx">
               <IdentityPills
                 fed={f.federation_code}
                 sex={f.gender}
@@ -226,9 +226,9 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
               <>
                 {value}
                 <span
-                  className="p p-sm"
+                  className="p p-sm u-bg-color-warn u-c-fff u-border-color-transparent"
                   title={`Divergência: HCP Exacto=${hcpExact}, HCP Index=${hcpIndex}. Normalmente são iguais — investigar.`}
-                  style={{ background: "var(--color-warn)", color: "#fff", borderColor: "transparent" }}
+
                 >⚠ ≠ exacto</span>
               </>
             );
@@ -237,10 +237,10 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
         };
 
         return (
-          <div className="card" style={{ marginTop: 12 }}>
-            <div className="h-md fs-14 mb-8" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div className="card u-mt-12px">
+            <div className="h-md fs-14 mb-8 u-d-flex u-ai-center u-gap-8px">
               <span>Cadastro FPG</span>
-              <span className="muted fs-10" style={{ fontWeight: 400 }}>
+              <span className="muted fs-10 u-fw-400">
                 {visibleCount} campos visíveis{technicalCount > 0 ? ` · ${technicalCount} técnicos ocultos` : ""}
               </span>
             </div>
@@ -250,16 +250,12 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
               const keys = sec.fields.filter(k => fKeys.has(k));
               if (keys.length === 0) return null;
               return (
-                <div key={sec.title} style={{ marginBottom: 14 }}>
+                <div key={sec.title} className="u-mb-14px">
                   <div
-                    className="muted"
-                    style={{
-                      fontSize: "var(--fs-11)", fontWeight: 700, letterSpacing: "0.05em",
-                      textTransform: "uppercase", marginBottom: 6,
-                      borderBottom: "1px solid var(--border)", paddingBottom: 3,
-                    }}
+                    className="muted u-fs-fs-11 u-fw-700 u-ls-0_05em u-tt-uppercase u-mb-6px u-bb-1px-solid-border u-pb-3px"
+
                   >{sec.title}</div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "7px 30px" }}>
+                  <div className="u-d-flex u-fwr-wrap u-gap-7px-30px">
                     {keys.map(renderKV)}
                   </div>
                 </div>
@@ -268,16 +264,12 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
 
             {/* Campos extra não mapeados (caso futuro em que o JSON ganhe campos novos) */}
             {extraFields.length > 0 && (
-              <div style={{ marginBottom: 14 }}>
+              <div className="u-mb-14px">
                 <div
-                  className="muted"
-                  style={{
-                    fontSize: "var(--fs-11)", fontWeight: 700, letterSpacing: "0.05em",
-                    textTransform: "uppercase", marginBottom: 6,
-                    borderBottom: "1px solid var(--border)", paddingBottom: 3,
-                  }}
+                  className="muted u-fs-fs-11 u-fw-700 u-ls-0_05em u-tt-uppercase u-mb-6px u-bb-1px-solid-border u-pb-3px"
+
                 >Outros</div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "7px 30px" }}>
+                <div className="u-d-flex u-fwr-wrap u-gap-7px-30px">
                   {extraFields.map(renderKV)}
                 </div>
               </div>
@@ -285,18 +277,15 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
 
             {/* Campos técnicos — colapsados por defeito */}
             {technicalCount > 0 && (
-              <details style={{ marginTop: 8, borderTop: "1px solid var(--border)", paddingTop: 8 }}>
+              <details className="u-mt-8px u-bt-1px-solid-border u-pt-8px">
                 <summary
-                  className="muted"
-                  style={{
-                    cursor: "pointer", fontSize: "var(--fs-11)", fontWeight: 600,
-                    letterSpacing: "0.03em", userSelect: "none",
-                  }}
+                  className="muted u-cur-pointer u-fs-fs-11 u-fw-600 u-ls-0_03em u-user-select-none"
+
                   title="IDs internos, tokens e campos redundantes — úteis para debug."
                 >
-                  ⚙ Campos técnicos ({technicalCount}) <span style={{ opacity: 0.6, fontWeight: 400 }}>— IDs, tokens e redundâncias</span>
+                  ⚙ Campos técnicos ({technicalCount}) <span className="u-op-0_6 u-fw-400">— IDs, tokens e redundâncias</span>
                 </summary>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "7px 30px", marginTop: 8 }}>
+                <div className="u-d-flex u-fwr-wrap u-gap-7px-30px u-mt-8px">
                   {FEDERADO_TECHNICAL_FIELDS.filter(k => fKeys.has(k)).map(renderKV)}
                 </div>
               </details>
@@ -331,9 +320,9 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
           <UiKpiCard label={label} value={value} sub={sub} />
         );
         return (
-          <div className="card" style={{ marginTop: 12 }}>
+          <div className="card u-mt-12px">
             <div className="h-md fs-14 mb-8">Actividade</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 8 }}>
+            <div className="u-d-grid u-grid-template-columns-10220 u-gap-8px">
               {kpi(`Rondas ${currentYear}`, thisYearRounds.length, prevYearRounds.length > 0 ? `vs ${prevYearRounds.length} em ${prevYear}` : undefined)}
               {kpi(`Rondas ${prevYear}`, prevYearRounds.length)}
               {kpi("Últimos 90 dias", last90Days.length)}
@@ -347,24 +336,24 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
       })()}
 
       {/* Rondas em tempo real via /api/datagolf */}
-      <div className="card" style={{ marginTop: 12 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+      <div className="card u-mt-12px">
+        <div className="u-d-flex u-ai-center u-jc-space-between u-mb-8px">
           <div className="h-md fs-14">Rondas WHS
             {liveRounds && <span className="muted fs-10 ml-8">({liveRounds.length} rondas · via scoring.datagolf.pt)</span>}
           </div>
           {loadingLive && <span className="muted fs-10">⏳ A carregar…</span>}
           {liveError && (
-            <div className="fs-10" style={{ color: "var(--color-warn-vivid)", textAlign: "right", maxWidth: "70%" }}>
-              <div style={{ fontWeight: 600 }}>⚠ Não foi possível carregar rondas em tempo real</div>
-              <details style={{ marginTop: 4, opacity: 0.85 }}>
-                <summary style={{ cursor: "pointer" }}>Ver detalhes do erro</summary>
-                <pre style={{ whiteSpace: "pre-wrap", fontSize: "var(--fs-10)", marginTop: 4, textAlign: "left" }}>{liveError}</pre>
+            <div className="fs-10 u-c-color-warn-vivid u-ta-right u-maxw-70pc">
+              <div className="u-fw-600">⚠ Não foi possível carregar rondas em tempo real</div>
+              <details className="u-mt-4px u-op-0_85">
+                <summary className="u-cur-pointer">Ver detalhes do erro</summary>
+                <pre className="u-ws-pre-wrap u-fs-fs-10 u-mt-4px u-ta-left">{liveError}</pre>
               </details>
             </div>
           )}
         </div>
         {liveError && !loadingLive && !liveRounds && (
-          <div className="muted fs-11" style={{ padding: "8px 0" }}>
+          <div className="muted fs-11 u-p-8px-0">
             Dados de cadastro acima. As rondas WHS podem ser consultadas diretamente no site da FPG.
           </div>
         )}
@@ -378,20 +367,20 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
       {scorecardModal && (
         <div
           onClick={() => setScorecardModal(null)}
-          style={{ position: "fixed", inset: 0, background: "var(--overlay-black-50)", zIndex: "var(--z-overlay)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          className="u-pos-fixed u-inset-0 u-bg-overlay-black-50 u-z-z-overlay u-d-flex u-ai-center u-jc-center u-p-20px"
         >
           <div
             onClick={e => e.stopPropagation()}
-            style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", padding: 20, maxWidth: 900, width: "100%", maxHeight: "90vh", overflowY: "auto", boxShadow: "0 10px 40px var(--overlay-black-30)" }}
+            className="u-bg-bg-card u-br-radius-lg u-p-20px u-maxw-900px u-w-100pc u-maxh-90vh u-oy-auto u-bs-0-10px-40px-overlay-black-30"
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
+            <div className="u-d-flex u-jc-space-between u-ai-flex-start u-mb-12px">
               <div>
                 <div className="h-md fs-14 fw-700">{scorecardModal.round.tournament_description || "Scorecard"}</div>
                 <div className="muted fs-11">{scorecardModal.round.course_description} · {(scorecardModal.round.score_dateStr || "").slice(0, 10)}</div>
               </div>
               <button
                 onClick={() => setScorecardModal(null)}
-                style={{ border: "none", background: "transparent", fontSize: "var(--fs-20)", cursor: "pointer", padding: 4 }}
+                className="u-bd-none u-bg-transparent u-fs-fs-20 u-cur-pointer u-p-4px"
                 title="Fechar"
               >✕</button>
             </div>
@@ -406,7 +395,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
 
             {scorecardModal.loading && <div className="muted p-16 ta-c">⏳ A carregar scorecard…</div>}
             {scorecardModal.error && (
-              <div className="p-16" style={{ color: "var(--color-warn-vivid)" }}>
+              <div className="p-16 u-c-color-warn-vivid">
                 ⚠ Erro a carregar: <code>{scorecardModal.error}</code>
               </div>
             )}
@@ -418,7 +407,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
               const sis   = (h: number) => { const v = sc[`stroke_index_${h}`]; return v != null ? Number(v) : 0; };
               return (
                 <>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 8, marginBottom: 16, fontSize: "var(--fs-12)" }}>
+                  <div className="u-d-grid u-grid-template-columns-t0day u-gap-8px u-mb-16px u-fs-fs-12">
                     <div><span className="muted">Par total:</span> <b>{sc.par_total ?? "—"}</b></div>
                     <div><span className="muted">Gross:</span> <b>{sc.gross_total ?? "—"}</b></div>
                     <div><span className="muted">Stableford:</span> <b>{(sc as Record<string, number | undefined>).stableford ?? (sc as Record<string, number | undefined>).calculated_stablnet_total ?? "—"}</b></div>
@@ -446,7 +435,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
         </div>
       )}
 
-      <div className="muted fs-10 p-8 ta-c" style={{ marginTop: 8 }}>
+      <div className="muted fs-10 p-8 ta-c u-mt-8px">
         Para análise completa (scorecards hole-by-hole + estatísticas), este jogador pode ser
         adicionado ao pipeline (<code>node scripts/fpg-scrape-node.js {f.federation_code}</code>).
       </div>

@@ -78,16 +78,11 @@ export default function CircuitFilterPills({ data, junior, active, onChange }: P
   if (circuits.length < 2) return null; // não vale a pena com 1 circuito só
 
   return (
-    <div style={{
-      padding: "10px 12px",
-      background: "var(--bg-muted)",
-      borderRadius: "var(--radius)",
-      marginBottom: 10,
-    }}>
-      <div style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>
+    <div className="u-p-10px-12px u-bg-bg-muted u-br-radius u-mb-10px">
+      <div className="u-fs-fs-10 u-fw-700 u-c-text-3 u-tt-uppercase u-ls-0_5px u-mb-6px">
         Filtrar por circuito
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+      <div className="u-d-flex u-fwr-wrap u-gap-5px">
         <button onClick={() => onChange("all")} style={pillStyle(active === "all")}>
           Todos · {total}
         </button>

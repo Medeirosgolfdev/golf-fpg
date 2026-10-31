@@ -114,7 +114,7 @@ export function OmCatBadge({ hit }: { hit: OmHit }) {
   // Sócio elegível ainda sem pontos: só o escalão, estilo tracejado (pontua ao jogar).
   if (hit.eligible) {
     return (
-      <span className="p p-sm" style={{ background: "transparent", color: "var(--text-2)", border: "1px dashed var(--text-3)" }}
+      <span className="p p-sm u-bg-transparent u-c-text-2 u-bd-1px-dashed-text-3"
         title={`Ordem de Mérito · ${hit.label} — sócio CGSS elegível, ainda sem pontos (pontua ao jogar)`}>
         {CAT_SHORT[hit.catKey] || hit.label}
       </span>
@@ -192,7 +192,7 @@ export function OmTermosPill({ tournament }: { tournament: Tournament }) {
     return <ModalidadePill nome={`📜 Juniores: ${t.termo}`} title={`Termos da Competição: «${t.texto}»`} />;
   }
   return (
-    <span className="p p-sm" style={{ background: "transparent", color: "var(--text-2)", border: "1px dashed var(--text-3)" }}
+    <span className="p p-sm u-bg-transparent u-c-text-2 u-bd-1px-dashed-text-3"
       title={t ? `Termos da Competição: ${t.texto} Conta a classificação da prova.` : "Ainda não lemos os Termos desta prova."}>
       📜 {t ? "Juniores: Termos não dizem nada" : "Termos por ler"}
     </span>
@@ -360,8 +360,8 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
   ];
 
   return (
-    <div className="om-rank-tab" style={{ padding: "4px 2px" }}>
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginBottom: 10 }}>
+    <div className="om-rank-tab u-p-4px-2px">
+      <div className="u-d-flex u-fwr-wrap u-ai-center u-gap-8px u-mb-10px">
         <strong>Ordem de Mérito CGSS {data?.season ?? 2026}</strong>
         <span className="p p-sm p-muted">by NOS Madeira</span>
         {level
@@ -376,21 +376,21 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
       </div>
 
       {/* Links das 5 categorias */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
+      <div className="u-d-flex u-fwr-wrap u-gap-6px u-mb-12px">
         {linkRow.map(l =>
           l.internal ? (
-            <span key={l.label} className="p p-sm" title="Ranking júnior (calculado por nós — a FPG não o publica). Ver tabela abaixo."
-              style={{ background: "var(--accent-light)", color: "var(--accent)", fontWeight: 700 }}>
+            <span key={l.label} className="p p-sm u-bg-accent-light u-c-accent u-fw-700" title="Ranking júnior (calculado por nós — a FPG não o publica). Ver tabela abaixo."
+>
               🏅 {l.label} ↓
             </span>
           ) : l.href ? (
             <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer"
-              className="p p-sm p-muted" style={{ textDecoration: "none" }}
+              className="p p-sm p-muted u-td-none"
               title={`Ranking oficial ${l.label} (scoring.datagolf.pt)`}>
               {l.label} ↗
             </a>
           ) : (
-            <span key={l.label} className="p p-sm p-muted" style={{ opacity: 0.5 }}>{l.label}</span>
+            <span key={l.label} className="p p-sm p-muted u-op-0_5">{l.label}</span>
           )
         )}
       </div>
@@ -406,14 +406,14 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
             const ladder = pointsLadder(data, level);
             if (!ladder.length) return null;
             return (
-              <div style={{ marginBottom: 12, padding: "8px 10px", background: "var(--accent-light)", borderRadius: 8 }}>
-                <div className="fs-12" style={{ marginBottom: 6 }}>
+              <div className="u-mb-12px u-p-8px-10px u-bg-accent-light u-br-8px">
+                <div className="fs-12 u-mb-6px">
                   🎯 <strong>Pontos em jogo nesta prova</strong> — {LEVEL_LABEL[level]} (por posição em cada categoria):
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                <div className="u-d-flex u-fwr-wrap u-gap-6px">
                   {ladder.map(l => (
-                    <span key={l.pos} className="p p-sm" style={{ background: "var(--bg-card)", borderColor: "var(--accent)" }}>
-                      {l.pos} <strong style={{ color: "var(--accent)" }}>{l.pts}</strong>
+                    <span key={l.pos} className="p p-sm u-bg-bg-card u-border-color-accent">
+                      {l.pos} <strong className="u-c-accent">{l.pts}</strong>
                     </span>
                   ))}
                 </div>
@@ -421,7 +421,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
             );
           })()}
 
-          <div className="fs-12 p-muted" style={{ marginBottom: 6 }}>
+          <div className="fs-12 p-muted u-mb-6px">
             <strong>Categoria Júnior</strong> (0-18) — {asOf
               ? <>classificação <strong>logo após esta prova</strong> ({asOf.split("-").reverse().join("/")}) · {rows.length} pontuadores</>
               : <>classificação <strong>atual</strong> · {rows.length} já pontuaram{data.eligibleCount ? ` de ${data.eligibleCount} elegíveis (Sub-18 e abaixo)` : ""}</>}
@@ -432,8 +432,8 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
           {/* Matriz: uma coluna por torneio já disputado (data crescente); a
               célula é a posição do jogador nesse torneio (+ pontos). A coluna
               desta prova (se já pontuou) fica realçada. */}
-          <div style={{ overflowX: "auto" }}>
-            <table className="player-list-table om-rank-table" style={{ fontVariantNumeric: "tabular-nums" }}>
+          <div className="u-ox-auto">
+            <table className="player-list-table om-rank-table u-fvn-tabular-nums">
               <thead>
                 <tr>
                   <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>#</SortableHdr>
@@ -448,8 +448,8 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                         style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? HERE_HDR : {}) }}>
                         {/* nome · data · pills (modalidade da prova / nível / modalidade dos juniores) */}
                         <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
-                          {isHere && <span className="fs-11" style={{ color: "var(--accent)", fontWeight: 800 }}>▼ esta prova</span>}
-                          <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(ev.name)}</span>
+                          {isHere && <span className="fs-11 u-c-accent u-fw-800">▼ esta prova</span>}
+                          <span className="u-ws-nowrap u-ov-hidden u-tov-ellipsis u-maxw-100pc">{shortEv(ev.name)}</span>
                           <span className="fs-11 p-muted">{shortDateSlash(ev.date ?? undefined)}</span>
                           {/* Pill ANTES do nível = modalidade da prova (os Termos não falam de
                               juniores); DEPOIS do nível = o que os Termos dizem para os juniores. */}
@@ -466,10 +466,10 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                     <th key={c.name} title={`${c.name} — ${shortDateSlash(c.date ?? undefined)} — por jogar`}
                       style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-card)" }}>
                       <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
-                        <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(c.name)}</span>
+                        <span className="u-ws-nowrap u-ov-hidden u-tov-ellipsis u-maxw-100pc">{shortEv(c.name)}</span>
                         <span className="fs-11 p-muted">{shortDateSlash(c.date ?? undefined)}</span>
                         <LevelPill level={c.level} />
-                        <span className="fs-11 p-muted" style={{ fontStyle: "italic" }}>por jogar</span>
+                        <span className="fs-11 p-muted u-fst-italic">por jogar</span>
                       </span>
                     </th>
                   ))}
@@ -480,13 +480,13 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                   const isMan = p.fed === MANUEL_FED;
                   return (
                     <tr key={p.fed} className={isMan ? "row-manuel" : undefined}>
-                      <td style={{ textAlign: "center", fontWeight: 700 }}>{p.rank}</td>
+                      <td className="u-ta-center u-fw-700">{p.rank}</td>
                       <td style={{ textAlign: "left", fontWeight: isMan ? 700 : undefined }}>
                         {p.name}{!p.canWin && <span className="p-muted" title="Não-CGSS: aparece no ranking mas não pode ganhar a OM (regulamento)."> *</span>}
                         <div className="p-muted fs-11">{p.club}</div>
                       </td>
-                      <td style={{ textAlign: "center", fontWeight: 700 }}>{p.total}</td>
-                      <td style={{ textAlign: "center" }}>{p.played}</td>
+                      <td className="u-ta-center u-fw-700">{p.total}</td>
+                      <td className="u-ta-center">{p.played}</td>
                       {eventCols.map(ev => {
                         const e = p.events.find(x => String(x.tcode) === String(ev.tcode));
                         const isHere = !!thisEvent && String(ev.tcode) === String(thisEvent.tcode);
@@ -495,7 +495,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                             style={{ textAlign: "center", whiteSpace: "nowrap", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? HERE_CELL : {}) }}
                             title={e ? `${ev.name}: ${e.pos}º · ${ev.juniorScoring ? `${ev.juniorScoring}: ${e.score ?? ""} · ` : ""}gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
                             {e
-                              ? <><b>{e.pos}º</b> <span className="fs-11" style={{ color: "var(--accent)", fontWeight: 700 }}>{e.pts}</span></>
+                              ? <><b>{e.pos}º</b> <span className="fs-11 u-c-accent u-fw-700">{e.pts}</span></>
                               : <span className="p-muted">—</span>}
                           </td>
                         );
@@ -505,7 +505,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                         return (
                           <td key={c.name} className="fs-11" title={falta ? `Não joga: ${falta}` : undefined}
                             style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-card)" }}>
-                            {falta && <span className="p-muted" style={{ fontStyle: "italic" }}>não joga</span>}
+                            {falta && <span className="p-muted u-fst-italic">não joga</span>}
                           </td>
                         );
                       })}
@@ -515,7 +515,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
               </tbody>
             </table>
           </div>
-          <div className="fs-11 p-muted" style={{ marginTop: 6, lineHeight: 1.5 }}>
+          <div className="fs-11 p-muted u-mt-6pxx u-lh-1_5">
             <strong>Regra 7.1</strong> — no fim da época não contam 3 torneios. As provas a que o jogador faltou contam a zero
             e são as primeiras a sair; como todos os juniores já faltaram a 3 ou mais, os pontos não mudam.
           </div>
@@ -523,8 +523,8 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
           {/* Provas nomeadas no regulamento ainda por jogar até ao fecho (o
               Carnaval conta mas não é nomeado; os juniores de 9 buracos não contam). */}
           {missing.length > 0 && (
-            <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8 }}>
-              <div className="fs-12" style={{ marginBottom: 6 }}>
+            <div className="u-mt-12px u-p-10px-12px u-bg-bg-card u-bd-1px-solid-border u-br-8px">
+              <div className="fs-12 u-mb-6px">
                 📅 <strong>Provas que faltam até ao fecho</strong> — {missing.length}
                 {" "}({jaContam} das provas nomeadas no regulamento já contam):
               </div>
@@ -539,8 +539,8 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                 const topo = ladder.slice(0, 3).map(l => `${l.pos} ${l.pts}`).join(" · ");
                 const todos = ladder.map(l => `${l.pos} ${l.pts}`).join(" · ");
                 return (
-                  <div key={lv} style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 6, marginBottom: 4 }}>
-                    <span className="fs-11 p-muted" style={{ minWidth: 78 }} title={todos ? `Uma prova de ${LEVEL_LABEL[lv]} paga: ${todos}` : undefined}>{LEVEL_LABEL[lv]}:</span>
+                  <div key={lv} className="u-d-flex u-fwr-wrap u-ai-baseline u-gap-6px u-mb-4px">
+                    <span className="fs-11 p-muted u-minw-78px" title={todos ? `Uma prova de ${LEVEL_LABEL[lv]} paga: ${todos}` : undefined}>{LEVEL_LABEL[lv]}:</span>
                     {items.map(m => {
                       const isThis = !!tournament && m.rx.test(tournament.name || "");
                       return (
@@ -554,9 +554,9 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                       );
                     })}
                     {topo ? (
-                      <span className="fs-11 p-muted" title={`escada completa: ${todos}`}
-                        style={{ marginLeft: "auto", whiteSpace: "nowrap" }}>
-                        vale <strong style={{ color: "var(--accent)" }}>{topo}</strong>
+                      <span className="fs-11 p-muted u-ml-auto u-ws-nowrap" title={`escada completa: ${todos}`}
+>
+                        vale <strong className="u-c-accent">{topo}</strong>
                         {ladder.length > 3 ? " …" : ""}
                       </span>
                     ) : null}
@@ -564,7 +564,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                 );
               })}
               {(naoRealizadas.length > 0 || foraCalendario.length > 0) && (
-                <div className="fs-11 p-muted" style={{ marginTop: 6 }}>
+                <div className="fs-11 p-muted u-mt-6pxx">
                   Não contam em 2026:{" "}
                   {[
                     ...naoRealizadas.map(m => `${m.name} (${shortDateSlash(m.date ?? undefined)} — não se realizou, regra 7)`),
@@ -572,7 +572,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                   ].join(" · ")}.
                 </div>
               )}
-              <div className="fs-11 p-muted" style={{ marginTop: 6 }}>
+              <div className="fs-11 p-muted u-mt-6pxx">
                 Além destas, os torneios juniores exclusivos (9 buracos) não contam. A época fecha a 14 Nov 2026 (regra 8).
               </div>
             </div>
@@ -603,13 +603,13 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
             const byFed = new Map(proj.map(x => [x.fed, x]));
             const semHipotese = proj.filter(x => !x.aindaChega).length;
             return (
-              <div style={{ marginTop: 10, padding: "10px 12px", background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8 }}>
-                <div className="fs-12" style={{ marginBottom: 6 }}>
-                  🧮 <strong>Ainda por distribuir</strong> — <strong style={{ color: "var(--accent)" }}>{jogo.total} pontos</strong> a quem ganhar todas as {missing.length} provas que faltam
+              <div className="u-mt-10px u-p-10px-12px u-bg-bg-card u-bd-1px-solid-border u-br-8px">
+                <div className="fs-12 u-mb-6px">
+                  🧮 <strong>Ainda por distribuir</strong> — <strong className="u-c-accent">{jogo.total} pontos</strong> a quem ganhar todas as {missing.length} provas que faltam
                   {" "}({jogo.porNivel.map(n => `${n.provas}× ${LEVEL_LABEL[n.level].replace(" (Major)", "")} a ${n.porProva}`).join(" · ")}).
                 </div>
-                <div style={{ overflowX: "auto" }}>
-                  <table className="player-list-table" style={{ fontVariantNumeric: "tabular-nums" }}>
+                <div className="u-ox-auto">
+                  <table className="player-list-table u-fvn-tabular-nums">
                     <thead>
                       <tr>
                         <th>#</th><th>Jogador</th>
@@ -642,7 +642,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                     </tbody>
                   </table>
                 </div>
-                <div className="fs-11 p-muted" style={{ marginTop: 6, lineHeight: 1.5 }}>
+                <div className="fs-11 p-muted u-mt-6pxx u-lh-1_5">
                   Contas sobre o ranking de HOJE: «Para o 1º» é a diferença para o líder actual, e «Vitórias» conta as
                   provas mais valiosas primeiro — se o líder também pontuar, a conta sobe.
                   {semHipotese > 0 ? ` ${semHipotese} jogador(es) já não chega(m) nem ganhando tudo.` : ""}
@@ -651,7 +651,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
               </div>
             );
           })()}
-          <p className="fs-11 p-muted" style={{ marginTop: 8, lineHeight: 1.5 }}>
+          <p className="fs-11 p-muted u-mt-8px u-lh-1_5">
             <span title="Regra 1 do regulamento">* só sócios com homeclub CGSS podem ganhar a OM.</span>{" "}
             Posição em cada prova = os juniores (até 18 anos) classificados como mandam os <strong>Termos da Competição</strong>{" "}
             dessa prova (tabela acima). Quando os Termos não dizem nada sobre juniores, conta a classificação da prova. O
@@ -697,10 +697,10 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
       ? <span className="p p-sm p-muted" title="Os Termos não dizem nada sobre juniores">classificação da prova</span>
       : <span className="p p-sm p-muted" title="Ainda não lemos os Termos desta prova">Termos por ler</span>;
   return (
-    <div style={{ marginTop: 14 }}>
-      <div className="fs-13" style={{ marginBottom: 6 }}><strong>Como se pontuam os juniores em cada prova</strong></div>
-      <div style={{ overflowX: "auto" }}>
-        <table className="player-list-table" style={{ fontVariantNumeric: "tabular-nums" }}>
+    <div className="u-mt-14px">
+      <div className="fs-13 u-mb-6px"><strong>Como se pontuam os juniores em cada prova</strong></div>
+      <div className="u-ox-auto">
+        <table className="player-list-table u-fvn-tabular-nums">
           <thead>
             <tr>
               <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
@@ -708,34 +708,34 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
               <SortableHdr k="level" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nível</SortableHdr>
               <SortableHdr k="scoring" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}
                 title="A classificação principal da prova">Modalidade da prova</SortableHdr>
-              <th style={{ textAlign: "left" }}>O que os Termos dizem dos juniores</th>
+              <th className="u-ta-left">O que os Termos dizem dos juniores</th>
               <SortableHdr k="junior" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}
                 title="Como a OM júnior classificou os juniores nesta prova">Juniores contados em</SortableHdr>
-              <th style={{ textAlign: "left" }} title="Se o clube publicou na FPG a classificação «OM JUNIORES» desta prova, e em que modalidade">O clube publicou</th>
-              <th style={{ textAlign: "left" }}>Desempate (Termos)</th>
+              <th className="u-ta-left" title="Se o clube publicou na FPG a classificação «OM JUNIORES» desta prova, e em que modalidade">O clube publicou</th>
+              <th className="u-ta-left">Desempate (Termos)</th>
             </tr>
           </thead>
           <tbody>
             {rows.map(e => (
               <tr key={e.tcode}>
-                <td style={{ whiteSpace: "nowrap" }}>{shortDateSlash(e.date ?? undefined)}</td>
-                <td style={{ whiteSpace: "nowrap" }}>{shortEv(e.name)}</td>
-                <td style={{ textAlign: "center" }}><LevelPill level={e.level} curto /></td>
+                <td className="u-ws-nowrap">{shortDateSlash(e.date ?? undefined)}</td>
+                <td className="u-ws-nowrap">{shortEv(e.name)}</td>
+                <td className="u-ta-center"><LevelPill level={e.level} curto /></td>
                 <td>{e.scoring ? <ModalidadePill nome={e.scoring} /> : "—"}</td>
-                <td className="fs-12" style={{ minWidth: 220 }}>{e.termos?.texto ?? "Termos ainda não lidos."}</td>
-                <td style={{ whiteSpace: "nowrap" }}>{e.juniorScoring ? <ModalidadePill nome={e.juniorScoring} /> : "—"} {pill(e)}</td>
-                <td style={{ whiteSpace: "nowrap" }}>
+                <td className="fs-12 u-minw-220px">{e.termos?.texto ?? "Termos ainda não lidos."}</td>
+                <td className="u-ws-nowrap">{e.juniorScoring ? <ModalidadePill nome={e.juniorScoring} /> : "—"} {pill(e)}</td>
+                <td className="u-ws-nowrap">
                   {e.oficialJr
                     ? (e.oficialJr.scoring ? <ModalidadePill nome={e.oficialJr.scoring} title={`Classificação «${e.oficialJr.nome}» na FPG`} /> : e.oficialJr.nome)
                     : <span className="p-muted fs-12">não publicou</span>}
                 </td>
-                <td className="fs-12" style={{ minWidth: 180 }}>{e.termos?.desempate ?? "—"}</td>
+                <td className="fs-12 u-minw-180px">{e.termos?.desempate ?? "—"}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <div className="fs-11 p-muted" style={{ marginTop: 6, lineHeight: 1.5 }}>
+      <div className="fs-11 p-muted u-mt-6pxx u-lh-1_5">
         No cabeçalho da classificação: pill <strong>antes</strong> do nível = modalidade da prova (os Termos não falam de
         juniores); pill <strong>depois</strong> do nível = o que os Termos dizem para os juniores.{" "}
         <ModalidadePill nome="Stroke Play" /> pancadas, sem handicap · <ModalidadePill nome="Medal Net" /> pancadas, com handicap ·{" "}

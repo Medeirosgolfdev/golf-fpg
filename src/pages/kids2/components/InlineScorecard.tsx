@@ -106,53 +106,37 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
   };
 
   return (
-    <div style={{
-      background: "var(--bg-card)",
-      border: "1px solid var(--border)",
-      borderRadius: 8,
-      padding: "12px 16px",
-      marginTop: 6,
-    }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
+    <div className="u-bg-bg-card u-bd-1px-solid-border u-br-8px u-p-12px-16px u-mt-6pxx">
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-mb-10px u-gap-12px">
         <div>
-          <div style={{ fontSize: "var(--fs-13)", fontWeight: 700, color: "var(--text)" }}>{playerName}</div>
-          <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginTop: 2 }}>
+          <div className="u-fs-fs-13 u-fw-700 u-c-text">{playerName}</div>
+          <div className="u-fs-fs-11 u-c-text-3 u-mt-2px">
             {tournament.name || tournament.shortName} · {flight.label}
             {roundRows.length > 1 ? ` · ${roundRows.length} rondas` : ` · Ronda ${focusedRound}`}
-            {tournament.course && <> · <span style={{ fontStyle: "italic" }}>{tournament.course}</span></>}
+            {tournament.course && <> · <span className="u-fst-italic">{tournament.course}</span></>}
           </div>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            style={{
-              fontSize: "var(--fs-14)", fontWeight: 700,
-              padding: "2px 9px",
-              borderRadius: 5,
-              border: "1px solid var(--border)",
-              background: "var(--bg-muted)",
-              color: "var(--text-2)",
-              cursor: "pointer",
-              flexShrink: 0,
-              lineHeight: 1.2,
-            }}
+            className="u-fs-fs-14 u-fw-700 u-p-2px-9px u-br-5px u-bd-1px-solid-border u-bg-bg-muted u-c-text-2 u-cur-pointer u-fsh-0 u-lh-1_2"
           >✕</button>
         )}
       </div>
 
       {totalGross > 0 && totalPar > 0 && totalToPar !== null && (
-        <div style={{ display: "flex", gap: 14, alignItems: "baseline", marginBottom: 10, padding: "6px 10px", background: "var(--bg)", borderRadius: 5, border: "1px solid var(--border-light)" }}>
+        <div className="u-d-flex u-gap-14px u-ai-baseline u-mb-10px u-p-6px-10px u-bg-bg u-br-5px u-bd-1px-solid-border-light">
           <div>
-            <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", letterSpacing: 0.3, textTransform: "uppercase" }}>Total</span>
-            <span style={{ fontSize: "var(--fs-20)", fontWeight: 800, marginLeft: 6, color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>{totalGross}</span>
+            <span className="u-fs-fs-10 u-c-text-3 u-ls-0_3px u-tt-uppercase">Total</span>
+            <span className="u-fs-fs-20 u-fw-800 u-ml-6px u-c-text u-fvn-tabular-nums">{totalGross}</span>
           </div>
           <div>
-            <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", letterSpacing: 0.3, textTransform: "uppercase" }}>±par</span>
-            <span className={`sc-topar ${toParClass(totalToPar)}`} style={{ fontSize: "var(--fs-14)", fontWeight: 700, marginLeft: 6, display: "inline" }}>
+            <span className="u-fs-fs-10 u-c-text-3 u-ls-0_3px u-tt-uppercase">±par</span>
+            <span className={`sc-topar ${toParClass(totalToPar)} u-fs-fs-14 u-fw-700 u-ml-6px u-d-inline`}>
               {fmtSign(totalToPar)}
             </span>
           </div>
-          <div style={{ marginLeft: "auto", fontSize: "var(--fs-10)", color: "var(--text-3)" }}>
+          <div className="u-ml-auto u-fs-fs-10 u-c-text-3">
             Par {totalPar}{totalM > 0 && ` · ${totalM}m`}{is9 && " · 9 buracos"}
           </div>
         </div>
@@ -212,7 +196,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
                     const p = parEff[i];
                     return (
                       <td key={i}>
-                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : <span style={{ color: "var(--text-3)" }}>—</span>}
+                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : <span className="u-c-text-3">—</span>}
                       </td>
                     );
                   })}
@@ -221,7 +205,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
                     const p = parEff[i + 9];
                     return (
                       <td key={`b${i}`}>
-                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : <span style={{ color: "var(--text-3)" }}>—</span>}
+                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : <span className="u-c-text-3">—</span>}
                       </td>
                     );
                   })}
@@ -235,14 +219,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
       </div>
 
       {merged.fallbackSource && (
-        <div style={{
-          marginTop: 8,
-          padding: "5px 8px",
-          fontSize: "var(--fs-10)",
-          color: "var(--text-3)",
-          fontStyle: "italic",
-          borderTop: "1px dashed var(--border-light)",
-        }}>
+        <div className="u-mt-8px u-p-5px-8px u-fs-fs-10 u-c-text-3 u-fst-italic u-bt-1px-dashed-border-light">
           Fonte: {merged.fallbackSource}
         </div>
       )}

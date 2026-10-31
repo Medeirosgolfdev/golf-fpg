@@ -144,13 +144,13 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
     if (!r || (!r.editions.length && !r.form && !r.forecast)) return null;
     const f = r.form;
     return (
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 18, fontSize: "var(--fs-12)" }}>
+      <div className="u-d-flex u-fwr-wrap u-gap-18px u-fs-fs-12">
         {r.editions.length > 0 && (
           <div>
             <div className="fw-700">Nesta prova</div>
             {r.editions.map((e) => (
-              <div key={e.id} style={{ color: "var(--text-muted)" }}>
-                <b style={{ color: "var(--text)" }}>{e.year}</b>
+              <div key={e.id} className="u-c-text-muted">
+                <b className="u-c-text">{e.year}</b>
                 {e.pos ? ` · ${e.pos}º` : ""}
                 {e.total != null ? ` · ${e.total}` : ""}
                 {e.toPar != null ? <span style={{ color: tpColorDark(e.toPar) }}> {fmtToPar(e.toPar)}</span> : null}
@@ -166,10 +166,10 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
         {f ? (
           <div>
             <div className="fw-700">Forma WHS</div>
-            <div style={{ color: "var(--text-muted)" }}>
-              Differential: últimas 5 <b style={{ color: "var(--text)" }}>{n1(f.avgSD5)}</b>
-              {" "}· 8 melhores de 20 <b style={{ color: "var(--text)" }}>{n1(f.avgSD8)}</b>
-              {" "}· média de 20 <b style={{ color: "var(--text)" }}>{n1(f.avgSD20)}</b>
+            <div className="u-c-text-muted">
+              Differential: últimas 5 <b className="u-c-text">{n1(f.avgSD5)}</b>
+              {" "}· 8 melhores de 20 <b className="u-c-text">{n1(f.avgSD8)}</b>
+              {" "}· média de 20 <b className="u-c-text">{n1(f.avgSD20)}</b>
               {f.lastSD != null ? <> · última volta {n1(f.lastSD)}</> : null}
               <div>
                 {f.roundsLast3m} voltas em 3 meses · {f.roundsLast12m} em 12
@@ -182,7 +182,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
         {r.forecast ? (
           <div>
             <div className="fw-700">Previsão</div>
-            <div style={{ color: "var(--text-muted)" }}>
+            <div className="u-c-text-muted">
               {r.forecast.perRound} por volta · {r.forecast.total} no torneio
               {r.forecast.toPar != null ? <span style={{ color: tpColorDark(r.forecast.toPar) }}> ({fmtToPar(r.forecast.toPar)})</span> : null}
               <div>entre {r.forecast.low} e {r.forecast.high} · base: {r.forecast.basis}</div>
@@ -211,27 +211,27 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
       semHcp
       ordemInicial={extras.temPrev ? { key: "prev", dir: "asc" } : undefined}
       resumoExtra={<>
-        {favorito?.forecast ? <span className="muted" style={{ marginLeft: 8 }}>· Melhor previsão: <b style={{ color: "var(--text)" }}>{favorito.name}</b> ({favorito.forecast.total})</span> : null}
-        {emAlta ? <span className="muted"> · Em alta: <b style={{ color: "var(--text)" }}>{emAlta.name}</b> ({n1(emAlta.form!.avgSD5)} nas últimas 5, contra {n1(emAlta.form!.avgSD20)} de média)</span> : null}
+        {favorito?.forecast ? <span className="muted u-ml-8px">· Melhor previsão: <b className="u-c-text">{favorito.name}</b> ({favorito.forecast.total})</span> : null}
+        {emAlta ? <span className="muted"> · Em alta: <b className="u-c-text">{emAlta.name}</b> ({n1(emAlta.form!.avgSD5)} nas últimas 5, contra {n1(emAlta.form!.avgSD20)} de média)</span> : null}
       </>}
       rodape={
-        <details style={{ marginTop: 8, fontSize: "var(--fs-12)", color: "var(--text-muted)" }}>
-          <summary style={{ cursor: "pointer" }}>Como são feitas a «Forma WHS», o «vs Campo» e a «Previsão»</summary>
-          <p style={{ margin: "6px 0" }}>
+        <details className="u-mt-8px u-fs-fs-12 u-c-text-muted">
+          <summary className="u-cur-pointer">Como são feitas a «Forma WHS», o «vs Campo» e a «Previsão»</summary>
+          <p className="u-m-6px-0">
             Tudo em <b>score differential</b> — <code>(113/Slope) × (gross − CR − PCC)</code> — que
             é o que permite comparar voltas em campos e tees diferentes. Menos é melhor.
           </p>
-          <p style={{ margin: "6px 0" }}>
+          <p className="u-m-6px-0">
             <b>Forma WHS</b>: o differential médio das <b>últimas 5 voltas</b> contra o das últimas 20.
             Não se usa o índice para isto: o índice é a média das 8 melhores de 20, move-se devagar e
             não diz como alguém está a jogar esta semana.
           </p>
-          <p style={{ margin: "6px 0" }}>
+          <p className="u-m-6px-0">
             <b>vs Campo</b>: onde ficou face à <b>mediana do field</b> nessa edição. Negativo = jogou
             melhor que o campo do meio. A régua são os adversários daquele dia, por isso já
             absorve o vento e o estado do campo. É informação — <b>não entra na previsão</b>.
           </p>
-          <p style={{ margin: "6px 0" }}>
+          <p className="u-m-6px-0">
             <b>Previsão</b>: o meio entre o bom dia (as 8 melhores de 20) e o dia qualquer (a média
             de 20), convertido em gross com o CR e o Slope do tee que ele vai jogar hoje, lidos da
             ficha do campo. Quem nunca jogou esta prova também tem previsão, pela forma (ou pelo

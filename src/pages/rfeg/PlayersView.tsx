@@ -177,16 +177,16 @@ const MUTED = <span className="muted">—</span>;
 function dataCells(v: CellView, has: { club: boolean; dob: boolean; sex: boolean; cat: boolean; tot: boolean; hcpDate: boolean }) {
   return (
     <>
-      <td style={{ fontWeight: 600 }}>{v.name || "—"}</td>
+      <td className="u-fw-600">{v.name || "—"}</td>
       {has.club && <td title={v.club}>{v.club || MUTED}</td>}
-      {has.dob && <td style={{ whiteSpace: "nowrap" }}>{v.dob || MUTED}</td>}
-      {has.dob && <td style={{ textAlign: "right" }}>{v.age != null ? v.age : MUTED}</td>}
-      <td style={{ textAlign: "right", fontWeight: 600 }}>{v.hcp != null ? v.hcp.toFixed(1) : MUTED}</td>
+      {has.dob && <td className="u-ws-nowrap">{v.dob || MUTED}</td>}
+      {has.dob && <td className="u-ta-right">{v.age != null ? v.age : MUTED}</td>}
+      <td className="u-ta-right u-fw-600">{v.hcp != null ? v.hcp.toFixed(1) : MUTED}</td>
       {has.sex && <td>{v.sex === "M" || v.sex === "F" ? <SexBadge sex={v.sex} /> : MUTED}</td>}
       {has.cat && <td>{v.cat ? (v.young ? <EscPill esc={v.cat} /> : <span className="muted fs-11">{v.cat}</span>) : MUTED}</td>}
       {has.tot && <td style={{ textAlign: "right", color: v.tot ? undefined : "var(--text-muted)" }}>{v.tot || "—"}</td>}
       {has.tot && <td style={{ textAlign: "right", color: v.ano ? "var(--color-good-dark, #166534)" : "var(--text-muted)", fontWeight: v.ano ? 600 : undefined }}>{v.ano || "—"}</td>}
-      {has.hcpDate && <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>{v.hcpDate ? isoToBr(v.hcpDate) : MUTED}</td>}
+      {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{v.hcpDate ? isoToBr(v.hcpDate) : MUTED}</td>}
     </>
   );
 }
@@ -352,21 +352,21 @@ export function RFEGPlayersView() {
       />
 
       {/* ── Filtros ─────────────────────────────────────────── */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", margin: "12px 0" }}>
+      <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-12px-0">
         <input
           type="text"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="🔍 Nome, licença ou clube…"
-          className="filter-input"
-          style={{ minWidth: 240, flex: "1 1 240px", maxWidth: 360 }}
+          className="filter-input u-minw-240px u-fl-1-1-240px u-maxw-360px"
+
         />
-        <select value={sex} onChange={(e) => setSex(e.target.value as "" | "M" | "F")} className="filter-input" style={{ width: 130 }}>
+        <select value={sex} onChange={(e) => setSex(e.target.value as "" | "M" | "F")} className="filter-input u-w-130px">
           <option value="">Todos os sexos</option>
           <option value="M">Masculino</option>
           <option value="F">Feminino</option>
         </select>
-        <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input" style={{ width: 150 }}>
+        <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input u-w-150px">
           <option value="ALL">Todas as categorias</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
@@ -378,7 +378,7 @@ export function RFEGPlayersView() {
         >
           🧒 Só Jovens
         </button>
-        <span className="muted fs-12" style={{ marginLeft: "auto" }}>
+        <span className="muted fs-12 u-ml-auto">
           {filtered.length.toLocaleString("pt")} de {all.length.toLocaleString("pt")}
         </span>
       </div>
@@ -388,8 +388,8 @@ export function RFEGPlayersView() {
         <EmptyState size="md" message="Nenhum jogador corresponde aos filtros." />
       ) : (
         <>
-          <div style={{ overflowX: "auto" }}>
-            <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-12)" }}>
+          <div className="u-ox-auto">
+            <table className="player-list-table u-w-100pc u-fs-fs-12">
               <thead>
                 <tr>
                   <SortableHdr k="licencia" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Licencia</SortableHdr>
@@ -431,8 +431,8 @@ export function RFEGPlayersView() {
                     style={{ cursor: "pointer", background: isOpen ? "var(--bg-detail)" : undefined }}
                     title="Ver os torneios e resultados deste jogador"
                   >
-                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
-                      <span aria-hidden style={{ marginRight: 5, color: "var(--accent)" }}>{isOpen ? "▾" : "▸"}</span>
+                    <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap">
+                      <span aria-hidden className="u-mr-5px u-c-accent">{isOpen ? "▾" : "▸"}</span>
                       {r.licencia}
                       {nLic > 1 && (
                         <button
@@ -454,11 +454,11 @@ export function RFEGPlayersView() {
                   </tr>
                   {isOpen && (
                     <tr className="player-list-row-detail">
-                      <td colSpan={colCount} style={{ background: "var(--bg-detail)", padding: "0 12px 4px" }}>
+                      <td colSpan={colCount} className="u-bg-bg-detail u-p-0-12px-4px">
                         {tourns
                           ? <PlayerTournaments file={tourns} licencias={subLics.map((s) => s.lic)} />
                           : tournsState === "error"
-                            ? <div className="muted fs-11" style={{ padding: "8px 4px" }}>
+                            ? <div className="muted fs-11 u-p-8px-4px">
                                 Não foi possível carregar <code>spain-player-tournaments.json</code> — corre <code>node scripts/build-spain-player-tournaments.js</code>.
                               </div>
                             : <LoadingState message="A carregar torneios…" />}
@@ -468,19 +468,19 @@ export function RFEGPlayersView() {
                   {isOpen && r.aliases && (
                     <>
                       <tr className="player-list-row-detail">
-                        <td colSpan={colCount} style={{ background: "var(--bg-detail)", padding: "6px 12px 3px" }}>
-                          <span className="muted fs-11" style={{ fontWeight: 600 }}>Histórico de licenças — mudança de clube / região</span>
-                          <span className="muted fs-10" style={{ fontStyle: "italic", marginLeft: 8 }}>
+                        <td colSpan={colCount} className="u-bg-bg-detail u-p-6px-12px-3px">
+                          <span className="muted fs-11 u-fw-600">Histórico de licenças — mudança de clube / região</span>
+                          <span className="muted fs-10 u-fst-italic u-ml-8px">
                             as linhas abaixo são as que existiriam na tabela sem o agrupamento · período = 1ª → última inscrição (a RFEG não publica a data de emissão)
                           </span>
                         </td>
                       </tr>
                       {subLics.map((s) => (
-                        <tr key={s.lic} className="player-list-row" style={{ background: "var(--bg-detail)" }}>
-                          <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", color: "var(--text-muted)", whiteSpace: "nowrap", paddingLeft: 16 }}>
-                            <span aria-hidden style={{ marginRight: 5 }}>{s.cur ? "🟢" : "⚪"}</span>{s.lic}
-                            {s.cur && <span style={{ marginLeft: 6, color: "var(--accent)", fontWeight: 700, fontSize: "var(--fs-10)" }}>ACTUAL</span>}
-                            <div className="muted" style={{ fontSize: "var(--fs-10)", marginTop: 1, paddingLeft: 18 }} title="Período em que esta licença apareceu em competição (1ª → última inscrição)">
+                        <tr key={s.lic} className="player-list-row u-bg-bg-detail">
+                          <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap u-pl-16px">
+                            <span aria-hidden className="u-mr-5px">{s.cur ? "🟢" : "⚪"}</span>{s.lic}
+                            {s.cur && <span className="u-ml-6px u-c-accent u-fw-700 u-fs-fs-10">ACTUAL</span>}
+                            <div className="muted u-fs-fs-10 u-mt-1px u-pl-18px" title="Período em que esta licença apareceu em competição (1ª → última inscrição)">
                               {activePeriod(s.first, s.last)}
                             </div>
                           </td>
@@ -498,10 +498,10 @@ export function RFEGPlayersView() {
 
           {/* Paginação */}
           {totalPages > 1 && (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, padding: "12px 0", fontSize: "var(--fs-12)" }}>
+            <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
               <button onClick={() => setPage(1)} disabled={page === 1} className="btn-pill">«</button>
               <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-pill">‹</button>
-              <span style={{ minWidth: 90, textAlign: "center" }}>Página <b>{page}</b> de {totalPages}</span>
+              <span className="u-minw-90px u-ta-center">Página <b>{page}</b> de {totalPages}</span>
               <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="btn-pill">›</button>
               <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="btn-pill">»</button>
             </div>
@@ -509,7 +509,7 @@ export function RFEGPlayersView() {
         </>
       )}
 
-      <div className="muted fs-11" style={{ marginTop: 16, textAlign: "center" }}>
+      <div className="muted fs-11 u-mt-16px u-ta-center">
         Fonte: <code>spain-players.json</code> + contagem de torneios de <code>rfegolf-rivals</code>/<code>fcg-rivals</code>.
         DOB · sexo · clube só existem para jogadores vistos nos torneios juvenis scrapados.
       </div>

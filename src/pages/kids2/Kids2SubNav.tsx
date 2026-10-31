@@ -41,7 +41,7 @@ export function Kids2Nav() {
       <Link to="/kids2" className="toolbar-title" style={{ textDecoration: "none" }}>🌍 Kids 2</Link>
       <ToolbarSep />
       {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
-      <div className="segmented-toggle" role="tablist" aria-label="Vista" style={{ flexShrink: 0 }}>
+      <div className="segmented-toggle u-fsh-0" role="tablist" aria-label="Vista">
         {TABS.map((t) => {
           const active = t.match(pathname);
           return (

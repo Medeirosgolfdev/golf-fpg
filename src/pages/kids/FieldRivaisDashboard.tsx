@@ -1909,32 +1909,32 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
 
   return (
     <div>
-      <div style={{ marginBottom: 10, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-        <span style={{ fontSize: "var(--fs-13)", fontWeight: 700, color: "var(--text)" }}>
+      <div className="u-mb-10px u-d-flex u-ai-baseline u-gap-8px u-fwr-wrap">
+        <span className="u-fs-fs-13 u-fw-700 u-c-text">
           Pancadas {data.maxPos === 1 ? "do jogador" : "todos os finishers"}
         </span>
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+        <span className="u-fs-fs-11 u-c-text-3">
           {data.baseName} {String.fromCharCode(0xb7)} {data.ageGroup} {String.fromCharCode(0xb7)} {data.editions.length} edi{data.editions.length === 1 ? "ção" : "ções"}
         </span>
       </div>
       {compareSel.bar}
-      <div style={{ overflowX: "auto" }}>
-      <table className="bc-collapse" style={{ fontSize: "var(--fs-11)", fontVariantNumeric: "tabular-nums", width: "max-content" }}>
+      <div className="u-ox-auto">
+      <table className="bc-collapse u-fs-fs-11 u-fvn-tabular-nums u-w-max-content">
         <thead>
-          <tr style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderBottom: "1px solid var(--border)" }}>
+          <tr className="u-bg-bg-muted u-c-text-2 u-bb-1px-solid-border">
             <th rowSpan={2} onClick={() => onSort("rank")}
-                style={{ padding: "6px 8px", textAlign: "center", fontWeight: 700, position: "sticky", left: 0, background: "var(--bg-muted)", zIndex: "var(--z-raised)", cursor: "pointer", userSelect: "none", width: 50, minWidth: 50 }}>
+                className="u-p-6px-8px u-ta-center u-fw-700 u-pos-sticky u-left-0 u-bg-bg-muted u-z-z-raised u-cur-pointer u-user-select-none u-w-50px u-minw-50px">
               Pos{arrow("rank")}
             </th>
             {data.editions.map((e, ei) => (
               <th key={e.tcode} colSpan={e.nRounds + 2 + (e.parPerRound ? 1 : 0)}
                   style={{ padding: "10px 10px 8px", textAlign: "center", fontWeight: 700, borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)" }}>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
+                <div className="u-d-flex u-fd-column u-ai-center u-gap-3px">
                   {/* Linha 1: ANO + METROS (destaque) + link ↗ + field-size */}
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 8, color: "var(--text)" }}>
-                    <span style={{ fontSize: "var(--fs-16)", fontWeight: 700 }}>{e.year}</span>
+                  <div className="u-d-flex u-ai-baseline u-gap-8px u-c-text">
+                    <span className="u-fs-fs-16 u-fw-700">{e.year}</span>
                     {e.meters && (
-                      <span style={{ fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text-2)" }}>
+                      <span className="u-fs-fs-13 u-fw-600 u-c-text-2">
                         {String.fromCharCode(0xb7)} {e.meters}m
                       </span>
                     )}
@@ -1943,15 +1943,15 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                          target="_blank" rel="noreferrer"
                          onClick={(ev) => ev.stopPropagation()}
                          title="Abrir resultados oficiais USKids/signupanytime"
-                         style={{ fontSize: "var(--fs-11)", color: "var(--color-info)", textDecoration: "none", fontWeight: 700 }}>
+                         className="u-fs-fs-11 u-c-color-info u-td-none u-fw-700">
                         ↗
                       </a>
                     )}
-                    <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 500 }}>(n={e.fieldSize})</span>
+                    <span className="u-fs-fs-10 u-c-text-3 u-fw-500">(n={e.fieldSize})</span>
                   </div>
                   {/* Linha 2: NOME DO CAMPO */}
                   {e.course && (
-                    <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 500, lineHeight: 1.2, fontStyle: "italic" }}>
+                    <div className="u-fs-fs-12 u-c-text-2 u-fw-500 u-lh-1_2 u-fst-italic">
                       {e.course}
                     </div>
                   )}
@@ -1959,7 +1959,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
               </th>
             ))}
           </tr>
-          <tr style={{ background: "var(--bg-muted)", color: "var(--text-3)", borderBottom: "1px solid var(--border)" }}>
+          <tr className="u-bg-bg-muted u-c-text-3 u-bb-1px-solid-border">
             {data.editions.flatMap((e, ei) => {
               const cells = [];
               // Nome
@@ -1973,7 +1973,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
               const totalKey = `${e.year}_T`;
               cells.push(
               <th key={totalKey} onClick={() => onSort(totalKey)}
-                  style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-10)", background: "var(--bg-card, var(--bg))", color: "var(--text-2)", cursor: "pointer", userSelect: "none", width: 44, minWidth: 44 }}>
+                  className="u-p-3px-6px u-ta-center u-fw-700 u-fs-fs-10 u-bg-var-bg-card-bg u-c-text-2 u-cur-pointer u-user-select-none u-w-44px u-minw-44px">
                   T{arrow(totalKey)}
                 </th>
               );
@@ -1983,7 +1983,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                 cells.push(
                   <th key={tpKey} onClick={() => onSort(tpKey)}
                       title={`Par por ronda: ${e.parPerRound} (total: ${e.parPerRound * e.nRounds})`}
-                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", color: "var(--text-3)", cursor: "pointer", userSelect: "none", width: 44, minWidth: 44 }}>
+                      className="u-p-3px-6px u-ta-center u-fw-600 u-fs-fs-10 u-c-text-3 u-cur-pointer u-user-select-none u-w-44px u-minw-44px">
                     ±par{arrow(tpKey)}
                   </th>
                 );
@@ -1993,7 +1993,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                 const key = `${e.year}_R${i + 1}`;
                 cells.push(
                   <th key={key} onClick={() => onSort(key)}
-                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", cursor: "pointer", userSelect: "none", width: 38, minWidth: 38 }}>
+                      className="u-p-3px-6px u-ta-center u-fw-600 u-fs-fs-10 u-cur-pointer u-user-select-none u-w-38px u-minw-38px">
                     R{i + 1}{arrow(key)}
                   </th>
                 );
@@ -2021,7 +2021,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                     : (
                       <span title={firstEntry?.wouldBePos ? `Sem classificação oficial. Por total seria #${firstEntry.wouldBePos}.` : "Sem classificação oficial"}>
                         — {firstEntry?.wouldBePos != null && (
-                          <span style={{ fontSize: "var(--fs-9)", fontWeight: 500, color: "var(--text-3)" }}>
+                          <span className="u-fs-fs-9 u-fw-500 u-c-text-3">
                             ({firstEntry.wouldBePos})
                           </span>
                         )}
@@ -2034,7 +2034,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                   cells.push(
                     <td key={e.tcode + "_name"} style={{ padding: "4px 6px", borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}>
                       {entry ? (
-                        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                        <span className="u-d-inline-flex u-ai-center u-gap-4px">
                           <a href={kidsUrl({ name: entry.name })}
                              target="_blank" rel="noreferrer"
                              style={{ color: entry.officialPlace == null ? "var(--text-2)" : "var(--text)", textDecoration: "none", cursor: "pointer", opacity: entry.officialPlace == null ? 0.7 : 1 }}
@@ -2043,13 +2043,13 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                           </a>
                           {entry.officialPlace == null && (
                             <span title="Sem classificação oficial (IE / DSQ / WD)"
-                                  style={{ fontSize: "var(--fs-8)", padding: "0 4px", borderRadius: 3, background: "var(--bg-danger-subtle, #fecaca)", color: "var(--color-danger-dark, #991b1b)", fontWeight: 700, letterSpacing: 0.3 }}>
+                                  className="u-fs-fs-8 u-p-0-4px u-br-3px u-bg-var-bg-danger-subtle-fecaca u-c-var-color-danger-dark-991b1b u-fw-700 u-ls-0_3px">
                               IE
                             </span>
                           )}
                         </span>
                       ) : (
-                        <span style={{ color: "var(--text-3)" }}>—</span>
+                        <span className="u-c-text-3">—</span>
                       )}
                     </td>
                   );

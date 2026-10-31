@@ -46,11 +46,7 @@ export default function MetricsGrid({ data, junior, filterTids }: Props) {
   }
 
   return (
-    <div style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
-      gap: 10,
-    }}>
+    <div className="u-d-grid u-grid-template-columns-10220 u-gap-10px">
       <Card label="Torneios" value={String(total)} subtitle={`${data.tournaments.length} totais no canónico`} />
       <Card label="🏆 Vitórias" value={String(wins)} subtitle={total ? `${winsPct}% taxa` : undefined} />
       <Card label="Top-3" value={String(top3)} subtitle={total ? `${top3Pct}% taxa` : undefined} />
@@ -88,14 +84,10 @@ function Card({ label, value, subtitle, accent }: {
     accent === "warn" ? "var(--color-warn-dark)" :
     "var(--text)";
   return (
-    <div style={{
-      background: "var(--bg-muted)",
-      borderRadius: "var(--radius)",
-      padding: "10px 12px",
-    }}>
-      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-2)", fontWeight: 600 }}>{label}</div>
+    <div className="u-bg-bg-muted u-br-radius u-p-10px-12px">
+      <div className="u-fs-fs-11 u-c-text-2 u-fw-600">{label}</div>
       <div style={{ fontSize: "var(--fs-22)", fontWeight: 700, marginTop: 3, color: valueColor }}>{value}</div>
-      {subtitle && <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 2 }}>{subtitle}</div>}
+      {subtitle && <div className="u-fs-fs-10 u-c-text-3 u-mt-2px">{subtitle}</div>}
     </div>
   );
 }

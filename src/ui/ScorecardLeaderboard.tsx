@@ -223,8 +223,8 @@ export function ScorecardLeaderboard({
   return (
     <div>
       {(metaLine != null || onToggleScorecard) && (
-        <div className="lb-info-line flex-wrap"
-          style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="lb-info-line flex-wrap u-d-flex u-ai-center u-gap-10px"
+>
           {metaLine}
           {onToggleScorecard && (
             <button onClick={onToggleScorecard} className="btn ml-auto" >
@@ -253,7 +253,7 @@ export function ScorecardLeaderboard({
                 <tr key={tm.teeName} className="lb-si-row">
                   <td className="sticky-col-0" />
                   <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                    <span className="u-d-inline-flex u-ai-center u-gap-4px">
                       <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "var(--radius-xs)", background: hex, border: bdr, flexShrink: 0 }} />
                       <span>m</span>
                     </span>

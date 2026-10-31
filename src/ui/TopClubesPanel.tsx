@@ -219,36 +219,23 @@ export default function TopClubesPanel({
 
   return (
     <section
-      style={{
-        margin: "16px 12px 28px",
-        border: "1px solid var(--border)",
-        borderRadius: 8,
-        overflow: "hidden",
-      }}
+      className="u-m-16px-12px-28px u-bd-1px-solid-border u-br-8px u-ov-hidden"
     >
       <header
-        style={{
-          padding: "10px 14px",
-          background: "var(--bg-muted)",
-          borderBottom: "1px solid var(--border)",
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          flexWrap: "wrap",
-        }}
+        className="u-p-10px-14px u-bg-bg-muted u-bb-1px-solid-border u-d-flex u-ai-center u-gap-12px u-fwr-wrap"
       >
-        <h3 className="fs-15 fw-800" style={{ margin: 0 }}>
+        <h3 className="fs-15 fw-800 u-m-0">
           🏛️ Top {MAX_CLUBS} Clubes · Títulos Nacional de Jovens
         </h3>
         <span className="muted fs-12">
           {top.length} clubes · {totalTitles} títulos · {totalAthletes} atletas distintos
         </span>
       </header>
-      <div style={{ overflowX: "auto", paddingBottom: 14 }}>
+      <div className="u-ox-auto u-pb-14px">
         <table className="dtable">
           <thead>
             <tr>
-              <th style={{ width: 32 }}>#</th>
+              <th className="u-w-32px">#</th>
               <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>
                 Clube
               </SortableHdr>
@@ -299,19 +286,14 @@ export default function TopClubesPanel({
                     title={isOpen ? "Fechar detalhes" : "Ver atletas e títulos"}
                   >
                     <td
-                      style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", color: "var(--text-3)" }}
+                      className="u-ff-font-mono u-fs-fs-11 u-c-text-3"
                     >
                       {idx + 1}
                     </td>
                     <td>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                      <span className="u-d-inline-flex u-ai-center u-gap-6px">
                         <span
-                          style={{
-                            fontFamily: "var(--font-mono)",
-                            fontSize: "var(--fs-11)",
-                            opacity: 0.6,
-                            width: 10,
-                          }}
+                          className="u-ff-font-mono u-fs-fs-11 u-op-0_6 u-w-10px"
                         >
                           {isOpen ? "▼" : "▶"}
                         </span>
@@ -319,7 +301,7 @@ export default function TopClubesPanel({
                       </span>
                     </td>
                     <td
-                      className="r" style={{ fontWeight: 800, color: "var(--accent)" }}
+                      className="r u-fw-800 u-c-accent"
                     >
                       {c.titles.length}
                     </td>
@@ -334,7 +316,7 @@ export default function TopClubesPanel({
                     >
                       {c.escaloes.size}
                     </td>
-                    <td style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+                    <td className="u-fs-fs-11 u-c-text-3">
                       {ys.length === 1 ? ys[0] : `${ys[0]}–${ys[ys.length - 1]}`} ({ys.length})
                     </td>
                   </tr>
@@ -342,37 +324,21 @@ export default function TopClubesPanel({
                     <tr key={c.key + "-details"}>
                       <td
                         colSpan={6}
-                        style={{
-                          padding: "10px 12px 14px 36px",
-                          background: "var(--bg-info-subtle, rgba(59,130,246,0.02))",
-                        }}
+                        className="u-p-10px-12px-14px-36px u-bg-jqabh"
                       >
                         {/* Atletas (resumo) */}
-                        <div style={{ marginBottom: 10 }}>
+                        <div className="u-mb-10px">
                           <div
-                            className="fs-11 fw-700 muted"
-                            style={{
-                              textTransform: "uppercase",
-                              letterSpacing: 0.3,
-                              marginBottom: 4,
-                            }}
+                            className="fs-11 fw-700 muted u-tt-uppercase u-ls-0_3px u-mb-4px"
+
                           >
                             Atletas com títulos por este clube
                           </div>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                          <div className="u-d-flex u-fwr-wrap u-gap-6px">
                             {c.athletes.map((a) => (
                               <span
                                 key={(a.fed || "name:" + a.name) + "-tag"}
-                                style={{
-                                  display: "inline-flex",
-                                  alignItems: "center",
-                                  gap: 6,
-                                  padding: "3px 8px",
-                                  borderRadius: "var(--radius-xl)",
-                                  background: "var(--bg-card)",
-                                  border: "1px solid var(--border-light)",
-                                  fontSize: "var(--fs-12)",
-                                }}
+                                className="u-d-inline-flex u-ai-center u-gap-6px u-p-3px-8px u-br-radius-xl u-bg-bg-card u-bd-1px-solid-border-light u-fs-fs-12"
                               >
                                 {a.fed ? (
                                   <a
@@ -380,12 +346,8 @@ export default function TopClubesPanel({
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={(ev) => ev.stopPropagation()}
-                                    className="fw-700"
-                                    style={{
-                                      color: "inherit",
-                                      textDecoration: "none",
-                                      borderBottom: "1px dotted currentColor",
-                                    }}
+                                    className="fw-700 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
+
                                     title={`${a.name} — ver perfil federado (nova janela)`}
                                   >
                                     {a.name}
@@ -394,11 +356,7 @@ export default function TopClubesPanel({
                                   <span className="fw-700">{a.name}</span>
                                 )}
                                 <span
-                                  style={{
-                                    fontSize: "var(--fs-11)",
-                                    fontWeight: 700,
-                                    color: "var(--accent)",
-                                  }}
+                                  className="u-fs-fs-11 u-fw-700 u-c-accent"
                                 >
                                   ×{a.count}
                                 </span>
@@ -407,7 +365,7 @@ export default function TopClubesPanel({
                           </div>
                         </div>
                         {/* Títulos detalhados */}
-                        <table className="dtable-sm" style={{ marginTop: 4 }}>
+                        <table className="dtable-sm u-mt-4px">
                           <thead>
                             <tr>
                               <th>Data</th>
@@ -422,7 +380,7 @@ export default function TopClubesPanel({
                           <tbody>
                             {c.titles.map((t, i) => (
                               <tr key={i}>
-                                <td style={{ whiteSpace: "nowrap" }}>{t.date}</td>
+                                <td className="u-ws-nowrap">{t.date}</td>
                                 <td>{t.escalao}</td>
                                 <td>{t.sex}</td>
                                 <td>
@@ -431,11 +389,7 @@ export default function TopClubesPanel({
                                       href={`/jogadores/${t.athleteFed}?view=federado`}
                                       target="_blank"
                                       rel="noopener noreferrer"
-                                      style={{
-                                        color: "inherit",
-                                        textDecoration: "none",
-                                        borderBottom: "1px dotted currentColor",
-                                      }}
+                                      className="u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
                                       title="Ver perfil federado (nova janela)"
                                     >
                                       {t.athleteName}
@@ -444,17 +398,14 @@ export default function TopClubesPanel({
                                     t.athleteName
                                   )}
                                 </td>
-                                <td className="r" style={{ fontWeight: 600 }}>{t.gross ?? "—"}</td>
+                                <td className="r u-fw-600">{t.gross ?? "—"}</td>
                                 <td className="r">{t.toPar != null ? fmtToPar(t.toPar) : "—"}</td>
                                 <td>
                                   <a
                                     href={fpgScoringUrl(t.ccode, t.tcode)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    style={{
-                                      color: "var(--accent)",
-                                      textDecoration: "none",
-                                    }}
+                                    className="u-c-accent u-td-none"
                                     title="Ver torneio na FPG (nova janela)"
                                   >
                                     {t.tournamentName} ↗

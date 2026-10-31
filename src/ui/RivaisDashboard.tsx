@@ -241,8 +241,8 @@ export default function RivaisDashboard({
           placeholder="Pesquisar..."
           value={q}
           onChange={e => setQ(e.target.value)}
-          className="input"
-          style={{ maxWidth: 140 }}
+          className="input u-maxw-140px"
+
         />
         <select
           value={fTour}
@@ -366,8 +366,8 @@ export default function RivaisDashboard({
                   }
                 });
                 return (
-                  <tr style={{ background: "var(--bg)" }}>
-                    <th colSpan={2} style={{ borderBottom: "1px solid var(--border)" }} />
+                  <tr className="u-bg-bg">
+                    <th colSpan={2} className="u-bb-1px-solid-border" />
                     {groups.map((g, gi) => (
                       <th
                         key={gi}
@@ -454,8 +454,8 @@ export default function RivaisDashboard({
                 })}
                 {!fieldMode && (
                   <th
-                    className="rivais-th pointer ta-c"
-                    style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }}
+                    className="rivais-th pointer ta-c u-bl-3px-solid-text-muted u-minw-56px"
+
                     onClick={() => doSort("zrank")}
                   >
                     Rank{sortArrow("zrank", sort, dir)}
@@ -513,21 +513,21 @@ export default function RivaisDashboard({
                 return (
                   <tr
                     key={p.n}
-                    className={`${isM ? "rivais-row-ref" : ""}${isSel ? " rivais-row-sel" : ""}`}
-                    style={{ height: 34 }}
+                    className={`${isM ? "rivais-row-ref" : ""}${isSel ? " rivais-row-sel" : ""} u-h-34px`}
+
                   >
                     {/* Player name — clickable */}
-                    <td className="rivais-player-name" style={{ verticalAlign: "middle" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <td className="rivais-player-name u-va-middle">
+                      <div className="u-d-flex u-ai-center u-gap-6px">
                         <span className="rivais-flag" title={p.co}>
                           {flag}
                         </span>
-                        <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
+                        <div className="u-d-flex u-fd-column u-lh-1_15">
                           {/* Clicar no NOME selecciona/desselecciona a linha —
                               numa tabela com 24 colunas é a única forma de não
                               perder o jogador a meio do scroll. A ficha do
                               jogador abre no ↗ ao lado. */}
-                          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          <span className="u-d-flex u-ai-center u-gap-4px">
                             <button
                               className={`btn-link fs-12${isM ? " fw-700" : " fw-600"}`}
                               style={{
@@ -542,8 +542,8 @@ export default function RivaisDashboard({
                             </button>
                             {onSelectPlayer && (
                               <button
-                                className="btn-link fs-10"
-                                style={{ padding: 0, color: "var(--text-3)" }}
+                                className="btn-link fs-10 u-p-0 u-c-text-3"
+
                                 title={`Abrir ficha de ${p.n}`}
                                 onClick={() => onSelectPlayer(p.n)}
                               >
@@ -571,7 +571,7 @@ export default function RivaisDashboard({
                               }
                             }
                             return (
-                              <span className="fs-10 c-text-3" style={{ marginTop: 1 }}>
+                              <span className="fs-10 c-text-3 u-mt-1px">
                                 {label}
                               </span>
                             );
@@ -693,11 +693,8 @@ export default function RivaisDashboard({
                     {/* Rank — só em modo clássico */}
                     {!fieldMode && (
                       <td
-                        className="ta-c"
-                        style={{
-                          borderLeft: "3px solid var(--border-light)",
-                          padding: "4px 6px",
-                        }}
+                        className="ta-c u-bl-3px-solid-border-light u-p-4px-6px"
+
                       >
                         {rankMap[p.n] != null ? (
                           <div

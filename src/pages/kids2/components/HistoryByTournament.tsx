@@ -110,14 +110,14 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
 
   return (
     <section>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px" }}>
-        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Histórico por torneio</h3>
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px">
+        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Histórico por torneio</h3>
+        <span className="u-fs-fs-11 u-c-text-3">
           {multiSeries.length} {multiSeries.length === 1 ? "série recorrente" : "séries recorrentes"} · {totalWins} vitórias totais
         </span>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+      <div className="u-d-flex u-fd-column u-gap-5px">
         {displayedSeries.map((s) => (
           <SeriesRow key={s.seriesId} label={s.label} editions={s.editions} data={data} />
         ))}
@@ -126,29 +126,18 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
       {hiddenSeriesCount > 0 && (
         <button
           onClick={() => setShowAllSeries(true)}
-          style={{
-            marginTop: 8,
-            width: "100%",
-            padding: "6px 10px",
-            fontSize: "var(--fs-12)",
-            background: "var(--bg-muted)",
-            border: "1px solid var(--border-light)",
-            borderRadius: "var(--radius)",
-            color: "var(--text-2)",
-            cursor: "pointer",
-            fontWeight: 600,
-          }}
+          className="u-mt-8px u-w-100pc u-p-6px-10px u-fs-fs-12 u-bg-bg-muted u-bd-1px-solid-border-light u-br-radius u-c-text-2 u-cur-pointer u-fw-600"
         >
           Ver mais {hiddenSeriesCount} {hiddenSeriesCount === 1 ? "série" : "séries"} →
         </button>
       )}
 
       {oneOffs.length > 0 && (
-        <div style={{ marginTop: 12, padding: "8px 12px", background: "var(--bg-muted)", border: "1px solid var(--border-light)", borderRadius: "var(--radius)" }}>
-          <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", fontWeight: 700, marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.4 }}>
+        <div className="u-mt-12px u-p-8px-12px u-bg-bg-muted u-bd-1px-solid-border-light u-br-radius">
+          <div className="u-fs-fs-11 u-c-text-3 u-fw-700 u-mb-6px u-tt-uppercase u-ls-0_4px">
             Edições únicas · {oneOffs.length}
           </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+          <div className="u-d-flex u-fwr-wrap u-gap-4px">
             {(showAllOneOffs ? oneOffs : oneOffs.slice(0, 16))
               .slice()
               .sort((a, b) => (b.tournament.date || "").localeCompare(a.tournament.date || ""))
@@ -158,16 +147,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
             {!showAllOneOffs && oneOffs.length > 16 && (
               <button
                 onClick={() => setShowAllOneOffs(true)}
-                style={{
-                  fontSize: "var(--fs-11)",
-                  padding: "3px 9px",
-                  border: "1px solid var(--border-light)",
-                  borderRadius: "var(--radius-pill)",
-                  background: "var(--bg)",
-                  color: "var(--text-2)",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                }}
+                className="u-fs-fs-11 u-p-3px-9px u-bd-1px-solid-border-light u-br-radius-pill u-bg-bg u-c-text-2 u-cur-pointer u-fw-600"
               >
                 +{oneOffs.length - 16} →
               </button>
@@ -228,12 +208,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
   }, [editions, sortKey, sortDir]);
 
   return (
-    <div style={{
-      background: "var(--bg)",
-      border: "1px solid var(--border)",
-      borderRadius: "var(--radius)",
-      overflow: "hidden",
-    }}>
+    <div className="u-bg-bg u-bd-1px-solid-border u-br-radius u-ov-hidden">
       <div
         onClick={() => setExpanded(!expanded)}
         style={{
@@ -246,36 +221,34 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
           borderBottom: expanded ? "1px solid var(--border-light)" : "none",
         }}
       >
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", flexShrink: 0, width: 12 }}>
+        <span className="u-fs-fs-11 u-c-text-3 u-fsh-0 u-w-12px">
           {expanded ? "▼" : "▶"}
         </span>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6, overflow: "hidden", flexWrap: "wrap" }}>
-            <div style={{ fontSize: "var(--fs-13)", fontWeight: 700, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <div className="u-fl-1 u-minw-0">
+          <div className="u-d-flex u-ai-center u-gap-6px u-ov-hidden u-fwr-wrap">
+            <div className="u-fs-fs-13 u-fw-700 u-c-text u-ov-hidden u-tov-ellipsis u-ws-nowrap">
               {label}
             </div>
             <span
               title={`Prestígio: ${tournWeight.stars}/5 · rondas ${tournWeight.parts.rounds.toFixed(2)} · field ${tournWeight.parts.field.toFixed(2)}${tournWeight.parts.nations != null ? ` · nações ${tournWeight.parts.nations.toFixed(2)}` : " · (sem nationsCount)"}`}
-              style={{
-                fontSize: "var(--fs-11)", letterSpacing: 0.5, color: "var(--medal-gold-strong)", flexShrink: 0,
-              }}
+              className="u-fs-fs-11 u-ls-0_5px u-c-medal-gold-strong u-fsh-0"
             >
               {formatStars(tournWeight.stars)}
             </span>
             <SeriesScoringPill tournament={last.tournament} />
             <SeriesNineHolesPill tournament={last.tournament} flight={last.flight} />
           </div>
-          <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 1 }}>
+          <div className="u-fs-fs-10 u-c-text-3 u-mt-1px">
             {editions.length} {editions.length === 1 ? "edição" : "edições"}
-            {wins > 0 && <> · <span style={{ color: "var(--color-warn-dark, var(--color-warn-dark))", fontWeight: 700 }}>🏆 {wins}</span></>}
+            {wins > 0 && <> · <span className="u-c-1b214 u-fw-700">🏆 {wins}</span></>}
             {podiums > wins && <> · {podiums} pódios</>}
             {fmtYearRange(editions)}
           </div>
         </div>
         <Sparkline editions={editions} />
-        <div style={{ flexShrink: 0, minWidth: 50, textAlign: "right" }}>
+        <div className="u-fsh-0 u-minw-50px u-ta-right">
           <PosBadge pos={lastPos} />
-          <div style={{ fontSize: "var(--fs-9)", color: "var(--text-3)", marginTop: 1 }}>{fmtYear(last?.tournament.date)}</div>
+          <div className="u-fs-fs-9 u-c-text-3 u-mt-1px">{fmtYear(last?.tournament.date)}</div>
         </div>
         {trend && (
           <span style={{
@@ -289,7 +262,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
       </div>
 
       {expanded && (
-        <div style={{ padding: "8px 12px" }}>
+        <div className="u-p-8px-12px">
           <table className="dtable-sm">
             <thead>
               <tr>
@@ -299,8 +272,8 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                 <SortableHdr k="topPct" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }} title="Posição como percentil do field">Top%</SortableHdr>
                 <SortableHdr k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>Rondas</SortableHdr>
                 <SortableHdr k="toPar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>±par</SortableHdr>
-                {manuel && manuel.id !== editions[0]?.result.juniorId && <th style={{ textAlign: "center", width: 60 }} title="Posição do Manuel quando também jogou">M</th>}
-                <th style={{ textAlign: "right" }}>↗</th>
+                {manuel && manuel.id !== editions[0]?.result.juniorId && <th className="u-ta-center u-w-60px" title="Posição do Manuel quando também jogou">M</th>}
+                <th className="u-ta-right">↗</th>
               </tr>
             </thead>
             <tbody>
@@ -321,7 +294,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                   : null;
                 const links = categorizeTournamentLinks(ed.tournament);
                 return (
-                  <tr key={i} style={{ borderTop: "1px solid var(--border-light)" }}>
+                  <tr key={i} className="u-bt-1px-solid-border-light">
                     <td style={tdC}>{fmtYear(ed.tournament.date)}</td>
                     <td style={{ ...tdC, color: "var(--text-3)" }}>{ed.flight.label}</td>
                     <td style={{ ...tdC, textAlign: "center" }}><PosBadge pos={ed.result.pos} /></td>
@@ -330,7 +303,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                     </td>
                     <td style={{ ...tdC, textAlign: "right" }}>
                       {grosses.length ? grosses.join("·") : total ?? "—"}
-                      {total != null && grosses.length > 1 && <span style={{ color: "var(--text-3)", marginLeft: 4 }}>({total})</span>}
+                      {total != null && grosses.length > 1 && <span className="u-c-text-3 u-ml-4px">({total})</span>}
                     </td>
                     <td style={{ ...tdC, textAlign: "right", color: tpColor(toPar) ?? "var(--text-3)", fontWeight: toPar != null && toPar !== 0 ? 700 : 400 }}>
                       {fmtToPar(toPar)}
@@ -338,17 +311,12 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                     {manuel && manuel.id !== ed.result.juniorId && (
                       <td style={{ ...tdC, textAlign: "center" }}>
                         {manuelPos != null ? (
-                          <span title={`Manuel ficou em #${manuelPos} neste torneio`} style={{
-                            fontSize: "var(--fs-10)", padding: "1px 5px", borderRadius: 3,
-                            background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)",
-                            fontWeight: 700, border: "1px solid var(--color-good-dark)",
-                            whiteSpace: "nowrap",
-                          }}>★M #{manuelPos}</span>
-                        ) : <span style={{ color: "var(--text-3)" }}>—</span>}
+                          <span title={`Manuel ficou em #${manuelPos} neste torneio`} className="u-fs-fs-10 u-p-1px-5px u-br-3px u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-bd-1px-solid-color-good-dark u-ws-nowrap">★M #{manuelPos}</span>
+                        ) : <span className="u-c-text-3">—</span>}
                       </td>
                     )}
                     <td style={{ ...tdC, textAlign: "right" }}>
-                      <span style={{ display: "inline-flex", gap: 3, flexWrap: "nowrap" }}>
+                      <span className="u-d-inline-flex u-gap-3px u-fwr-nowrap">
                         {links.map((l) => (
                           <a key={l.key + l.url} href={l.url} target="_blank" rel="noreferrer"
                             title={`Abrir em ${l.label}`}
@@ -379,7 +347,7 @@ function Sparkline({ editions }: { editions: Edition[] }) {
   const positions = editions.map((e) => (typeof e.result.pos === "number" ? e.result.pos : null));
   const validPositions = positions.filter((p): p is number => p !== null);
   if (validPositions.length === 0) {
-    return <div style={{ width: 120, fontSize: "var(--fs-10)", color: "var(--text-3)", textAlign: "center" }}>—</div>;
+    return <div className="u-w-120px u-fs-fs-10 u-c-text-3 u-ta-center">—</div>;
   }
   const maxPos = Math.max(...validPositions, 10);
   const w = 140;
@@ -408,7 +376,7 @@ function Sparkline({ editions }: { editions: Edition[] }) {
   }
 
   return (
-    <svg width={w} height={h} style={{ flexShrink: 0 }}>
+    <svg width={w} height={h} className="u-fsh-0">
       <line x1={padX} y1={h - padY} x2={w - padX} y2={h - padY} stroke="var(--border-light)" strokeWidth={1} />
       {path && <path d={path} stroke="var(--text-3)" strokeWidth={1.5} fill="none" opacity={0.6} />}
       {pts.map((pt, i) => {
@@ -439,8 +407,8 @@ function OneOffPill({ ed }: { ed: Edition }) {
       alignItems: "center",
       gap: 5,
     }} title={`${ed.tournament.name || ""} · ${ed.flight.label}`}>
-      <span style={{ color: "var(--text-3)", fontSize: "var(--fs-10)" }}>{fmtYear(ed.tournament.date)}</span>
-      <span style={{ fontWeight: 600 }}>{shorten(ed.tournament.name || "")}</span>
+      <span className="u-c-text-3 u-fs-fs-10">{fmtYear(ed.tournament.date)}</span>
+      <span className="u-fw-600">{shorten(ed.tournament.name || "")}</span>
       <PosBadge pos={pos} small />
     </span>
   );
@@ -504,11 +472,7 @@ function SeriesNineHolesPill({ tournament, flight }: { tournament: Tournament; f
     (Array.isArray(flight.par) && flight.par.filter((p) => p > 0).length === 9);
   if (!is9) return null;
   return (
-    <span title="Torneio de 9 buracos" style={{
-      fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-      background: "var(--bg-muted)", color: "var(--text-2)",
-      border: "1px solid var(--border-light)", lineHeight: 1.4, flexShrink: 0,
-    }}>
+    <span title="Torneio de 9 buracos" className="u-fs-fs-9 u-p-1px-5px u-br-3px u-fw-700 u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border-light u-lh-1_4 u-fsh-0">
       9H
     </span>
   );

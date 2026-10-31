@@ -83,7 +83,7 @@ export default function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, e
         return (
           <span title={r.id ? `score #${r.id}` : undefined}>
             <TeeDate date={ddmm} tee={tee} />
-            {isMissing && <span style={{ marginLeft: 4, color: "var(--color-warn-vivid)", fontSize: "var(--fs-10)" }} title="Não temos esta ronda em local">●</span>}
+            {isMissing && <span className="u-ml-4px u-c-color-warn-vivid u-fs-fs-10" title="Não temos esta ronda em local">●</span>}
           </span>
         );
       },
@@ -138,9 +138,9 @@ export default function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, e
   ];
 
   return (
-    <div style={{ maxHeight: 600, overflowY: "auto" }}>
+    <div className="u-maxh-600px u-oy-auto">
       {localIds && localIds.size > 0 && missingCount > 0 && (
-        <div className="p p-sm" style={{ marginBottom: 8, display: "inline-block" }}>
+        <div className="p p-sm u-mb-8px u-d-inline-block">
           {missingCount} ronda{missingCount !== 1 ? "s" : ""} na FPG que não temos em local
         </div>
       )}

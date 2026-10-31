@@ -44,10 +44,7 @@ export function KidsLink({ nome, fed }: { nome: string; /** Federado FPG da linh
       href={to}
       onClick={e => { e.preventDefault(); window.open(to, "_blank"); }}
       title="Ver em Kids"
-      style={{
-        fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-13)",
-        cursor: "pointer", textDecoration: "none", flexShrink: 0, marginLeft: 4,
-      }}>
+      className="u-fw-800 u-c-color-good-dark u-fs-fs-13 u-cur-pointer u-td-none u-fsh-0 u-ml-4px">
       ↗
     </a>
   );

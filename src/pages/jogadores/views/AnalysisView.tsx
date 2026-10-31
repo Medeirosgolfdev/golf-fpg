@@ -113,7 +113,7 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
              cálculo em cima, para a ligação índice ← 8 melhores ser óbvia) ── */}
       <CollapseCard title="Janela WHS — as 20 rondas do handicap" icon="📋" defaultOpen={true}>
         {data.HCP_INFO?.current != null && (
-          <div className="fs-12 mb-8" style={{ color: "var(--text-2)" }}>
+          <div className="fs-12 mb-8 u-c-text-2">
             O índice <b>{Number(data.HCP_INFO.current).toFixed(1)}</b> é a média dos{" "}
             <b>{data.HCP_INFO.qtyCalc || 8} melhores</b> Score Differentials (marcados com ★)
             das últimas <b>{data.HCP_INFO.qtyScores ?? 20}</b> rondas com SD — cada ronda nova
@@ -133,7 +133,7 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
 
       {/* ── 3+. Indicadores derivados — recolhidos ── */}
       <CollapseCard title="Indicadores de forma" icon="📊" defaultOpen={false}>
-        <div className="flex-wrap" style={{ display: "flex", gap: 10 }}>
+        <div className="flex-wrap u-d-flex u-gap-10px">
           <KPICard title="SD Médio · Últ. 5" val={sdLast5?.toFixed(1) ?? null}
             delta={sdLast5 != null && sdLast20 != null ? sdLast5 - sdLast20 : null}
             deltaLabel="vs últ. 20"
@@ -167,7 +167,7 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
 
       {/* ── Histogram + Trajectory + Records ── */}
       <CollapseCard title="Distribuição · Trajectória · Recordes" icon="📈" defaultOpen={false}>
-        <div className="an-grid3" style={{ marginBottom: 0 }}>
+        <div className="an-grid3 u-mb-0">
           <HistogramCard rounds={filterByPeriod(histPeriod)} period={histPeriod} setPeriod={setHistPeriod} />
           <TrajectoryCard rounds={filterByPeriod(trajPeriod)} period={trajPeriod} setPeriod={setTrajPeriod} />
           <RecordsCard rounds={filterByPeriod(recPeriod)} period={recPeriod} setPeriod={setRecPeriod} />
@@ -196,7 +196,7 @@ function KPICard({ title, val, sub, delta, deltaLabel, tip, accent }: {
   return (
     <UiKpiCard
       label={title}
-      value={val ?? <span style={{ color: "var(--text-3)" }}>–</span>}
+      value={val ?? <span className="u-c-text-3">–</span>}
       sub={sub}
       delta={delta}
       deltaLabel={deltaLabel}
@@ -209,7 +209,7 @@ function KPICard({ title, val, sub, delta, deltaLabel, tip, accent }: {
 /* ─── Period selector (3m/6m/1a/…/total) ─── */
 function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   return (
-    <select className="br c-text-2 fs-11" style={{ padding: "2px 6px", border: "1px solid var(--border)", background: "var(--bg-card)" }}
+    <select className="br c-text-2 fs-11 u-p-2px-6px u-bd-1px-solid-border u-bg-bg-card"
       value={value} onChange={e => onChange(Number(e.target.value))}>
       <option value={3}>3 meses</option>
       <option value={6}>6 meses</option>
@@ -403,7 +403,7 @@ export function WHSDetail({ hcp, bare }: { hcp: HcpInfo; bare?: boolean }) {
             : undefined} />
         <UiKpiCard label={`Média ${hcp.qtyCalc || 8} melhores`} value={hcp.scoreAvg?.toFixed(1) ?? "–"} />
       </div>
- <div className="fs-11 c-text-3 d-flex" style={{ gap: 14, borderTop: "1px solid var(--bg)", paddingTop: 8 }}>
+ <div className="fs-11 c-text-3 d-flex u-gap-14px u-bt-1px-solid-bg u-pt-8px">
         {hcp.softCap != null && <span>Soft cap: <b>{hcp.softCap.toFixed(1)}</b></span>}
         {hcp.hardCap != null && <span>Hard cap: <b>{hcp.hardCap.toFixed(1)}</b></span>}
         {hcp.qtyScores != null && hcp.qtyCalc != null && (

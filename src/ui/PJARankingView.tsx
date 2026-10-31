@@ -42,7 +42,7 @@ const RankingNotas = ({ year }: { year: string | number }) => {
   const notas = notasPJA(year);
   if (!notas.length) return null;
   return (
-    <div className="print-hide" style={{ display: "grid", gap: 6, margin: "10px 0 14px" }}>
+    <div className="print-hide u-d-grid u-gap-6px u-m-10px-0-14px">
       {notas.map((n, i) => (
         <div
           key={i}
@@ -54,10 +54,10 @@ const RankingNotas = ({ year }: { year: string | number }) => {
             borderRadius: 8, padding: "9px 12px",
           }}
         >
-          <span style={{ fontSize: "var(--fs-14)", lineHeight: 1.25 }}>{n.tipo === "info" ? "📅" : "⚠️"}</span>
+          <span className="u-fs-fs-14 u-lh-1_25">{n.tipo === "info" ? "📅" : "⚠️"}</span>
           <span>
-            <b style={{ display: "block", fontSize: 12.5, marginBottom: 2 }}>{n.titulo}</b>
-            <span className="muted" style={{ fontSize: 11.5 }}>{n.texto}</span>
+            <b className="u-d-block u-fs-12_5px u-mb-2px">{n.titulo}</b>
+            <span className="muted u-fs-11_5px">{n.texto}</span>
           </span>
         </div>
       ))}
@@ -121,7 +121,7 @@ function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: Play
         const c = cutInfo(r, metric);
         return (
           <span className="fw-800 c-warn-dark" title={c.cortadas > 0 ? `${fmtPts(r.total)} pts das voltas que contam · ${fmtPts(c.totalTodas)} pts somando as ${r.voltas}` : undefined}>
-            {fmtPts(r.total)}{c.cortadas > 0 && <span className="muted fs-10" style={{ fontWeight: 500 }}>/{fmtPts(c.totalTodas)}</span>}
+            {fmtPts(r.total)}{c.cortadas > 0 && <span className="muted fs-10 u-fw-500">/{fmtPts(c.totalTodas)}</span>}
           </span>
         );
       } },
@@ -367,7 +367,7 @@ export function PJARankingView({
   });
 
   if (loading && pjaList.length === 0) return <LoadingState size="sm" />;
-  if (!year) return <div className="muted fs-11" style={{ padding: 24 }}>{emptyLabel}</div>;
+  if (!year) return <div className="muted fs-11 u-p-24px">{emptyLabel}</div>;
 
   const totalLabel = metric === "sd" ? "SD méd" : "Total";
   const rowClassName = (row: RankRow) => [
@@ -377,7 +377,7 @@ export function PJARankingView({
   // Nota: `allRows` só é usado para filtros/availEscs; o ranking usa rowsInscritos.
 
   const toolbarInner = <>
-    <div style={{ display: "flex", gap: 4 }}>
+    <div className="u-d-flex u-gap-4px">
       {years.map(yr => (
         <button key={yr}
           className={"tourn-tab tourn-tab-sm" + (yr === year ? " active" : " tourn-tab-muted")}
@@ -391,15 +391,15 @@ export function PJARankingView({
         e passa o valor via `externalFilterName`. Fallback inline quando o
         componente é usado standalone (sem externalFilterName). */}
     {externalFilterName === undefined && (
-      <div className="shrink-0" style={{ position: "relative" }}>
-        <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: "var(--fs-11)", color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+      <div className="shrink-0 u-pos-relative">
+        <span className="u-pos-absolute u-left-7px u-top-50pc u-transform-translatey-50pc u-fs-fs-11 u-c-text-muted u-pointer-events-none">🔍</span>
         <input type="text" placeholder="Nome ou clube…" value={internalFilterName}
           onChange={e => setFilterName(e.target.value)}
-          className="input-search" style={{ width: 140 }} />
+          className="input-search u-w-140px" />
       </div>
     )}
     {availSexes.length > 1 && <>
-      <span style={{ color: "var(--border)" }}>|</span>
+      <span className="u-c-border">|</span>
       {availSexes.map(sx => (
         <FilterChip key={sx} active={filterSex === sx}
                     onClick={() => setFilterSex(filterSex === sx ? "" : sx)}
@@ -410,7 +410,7 @@ export function PJARankingView({
       ))}
     </>}
     {availRegioes.length > 1 && <>
-      <span style={{ color: "var(--border)" }}>|</span>
+      <span className="u-c-border">|</span>
       {availRegioes.map(g => (
         <FilterChip key={g} active={filterRegiao.includes(g)}
           onClick={() => setFilterRegiao(prev => prev.includes(g) ? prev.filter(x => x !== g) : [...prev, g])}>
@@ -419,22 +419,22 @@ export function PJARankingView({
       ))}
     </>}
     {hcpFilterMax != null && <>
-      <span style={{ color: "var(--border)" }}>|</span>
+      <span className="u-c-border">|</span>
       <FilterChip active={filterHcp} onClick={() => setFilterHcp(v => !v)} color="var(--color-good)">
         HCP &lt; {hcpFilterMax}
       </FilterChip>
     </>}
-    {availEscs.length > 1 && <span style={{ color: "var(--border)" }}>|</span>}
+    {availEscs.length > 1 && <span className="u-c-border">|</span>}
     {availEscs.map(e => {
       const k = e.toLowerCase().replace(/[\s-]/g, "");
       const s = ESC_STYLE[k];
       return <FilterChip key={e} active={filterEsc.includes(e)} onClick={() => toggleEsc(e)} color={s?.bg}>{e}</FilterChip>;
     })}
     {(filterEsc.length > 0 || filterSex || filterRegiao.length > 0 || filterHcp || filterName) && <>
-      <span className="muted fs-10" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>{sortedRows.length} de {allRows.length}</span>
+      <span className="muted fs-10 u-ws-nowrap u-fsh-0">{sortedRows.length} de {allRows.length}</span>
       <FilterChip active={false} onClick={() => { setFilterEsc([]); setFilterSex(""); setFilterRegiao([]); setFilterHcp(false); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
     </>}
-    <span className="muted fs-10 ml-auto" title={metric === "sd" ? `SD oficial da FPG de cada volta (o do WHS de cada miúdo) · média das ${BEST_SD_N} melhores, mínimo ${MIN_SD_ROUNDS} voltas · MENOR é melhor` : !specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam · todos os torneios pesam o mesmo (sem multiplicadores)" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
+    <span className="muted fs-10 ml-auto u-ws-nowrap u-cur-help" title={metric === "sd" ? `SD oficial da FPG de cada volta (o do WHS de cada miúdo) · média das ${BEST_SD_N} melhores, mínimo ${MIN_SD_ROUNDS} voltas · MENOR é melhor` : !specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam · todos os torneios pesam o mesmo (sem multiplicadores)" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"}>
       ℹ Regras
     </span>
     <span className="chip" title={`${allRows.length} ${specialRules ? "jogadores PJA" : "juniores"} · ${visibleTournCols.length} torneios`}>
@@ -475,7 +475,7 @@ export function PJARankingView({
                   <>
                     <div style={{ ...lineStyle, color: "var(--text-1)" }}>
                       {circuito}
-                      {tc.mult !== 1.0 && <span className="badge-gf" style={{ marginLeft: 3 }}>★{tc.mult}</span>}
+                      {tc.mult !== 1.0 && <span className="badge-gf u-ml-3px">★{tc.mult}</span>}
                     </div>
                     <div style={{ ...lineStyle, color: "var(--text-2)" }}>
                       {local || "\u00A0"}
@@ -487,7 +487,7 @@ export function PJARankingView({
                         <RoundPill nR={tc.totalRondas ?? tc.rounds.length} />
                         {tc.totalRondas && tc.totalRondas > tc.rounds.length && (
                           <span title={`Só ${tc.rounds.length} rondas contam para o ranking PJA (regulamento §2.5 — últimos 2 dias)`}
-                                style={{ marginLeft: 3, fontSize: "var(--fs-9)", fontWeight: 700, color: "var(--color-warn-dark)" }}>
+                                className="u-ml-3px u-fs-fs-9 u-fw-700 u-c-color-warn-dark">
                             {tc.rounds.length}/{tc.totalRondas} contam
                           </span>
                         )}
@@ -496,15 +496,15 @@ export function PJARankingView({
                   </>
                 );
                 return (
-                  <th key={tc.tournKey} colSpan={tc.colSpan} className="cs-grp" style={{ padding: 0, verticalAlign: "top" }} title={tc.name + (tc.campo ? " — " + tc.campo : "") + (href ? " · clicar para abrir" : "")}>
+                  <th key={tc.tournKey} colSpan={tc.colSpan} className="cs-grp u-p-0 u-va-top" title={tc.name + (tc.campo ? " — " + tc.campo : "") + (href ? " · clicar para abrir" : "")}>
                     {href ? (
                       <a href={href} target="_blank" rel="noopener noreferrer"
-                         style={{ display: "block", padding: "4px 3px", textDecoration: "none", color: "inherit" }}
-                         className="tourn-header-link">
+
+                         className="tourn-header-link u-d-block u-p-4px-3px u-td-none u-c-inherit">
                         {content}
                       </a>
                     ) : (
-                      <div style={{ padding: "4px 3px" }}>{content}</div>
+                      <div className="u-p-4px-3px">{content}</div>
                     )}
                   </th>
                 );
@@ -515,7 +515,7 @@ export function PJARankingView({
                     <React.Fragment key={r.roundKey}>
                       <CSortTh k={"toPar_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-topar cs-grp">
                         {r.label
-                          ? <span style={{ fontSize: "var(--fs-10)", fontWeight: 800, color: "var(--color-good-dark)" }}
+                          ? <span className="u-fs-fs-10 u-fw-800 u-c-color-good-dark"
                                   title={tc.agregado
                                     ? "Volta — nesta coluna as voltas podem vir de provas diferentes (passa o rato numa célula para ver qual)"
                                     : `Ronda ${r.label.slice(1)}`}>{r.label}</span>
@@ -635,17 +635,17 @@ export function PJARankingView({
                   <td className="cs-s-games cs-grp"
                       title={cortadas > 0 ? `${contadas} das ${row.voltas} voltas contam para o total` : undefined}>
                     {cortadas > 0
-                      ? <>{contadas}<span className="muted" style={{ fontSize: "var(--fs-9)" }}>/{row.voltas}</span></>
+                      ? <>{contadas}<span className="muted u-fs-fs-9">/{row.voltas}</span></>
                       : row.voltas}
                   </td>
-                  <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}
+                  <td className="cs-s-pts cs-col u-fw-800 u-c-color-warn-dark u-fvn-tabular-nums"
                       title={cortadas > 0 ? `${fmtPts(row.total)} pts das voltas que contam · ${fmtPts(totalTodas)} pts somando as ${row.voltas}` : undefined}>
                     {metric === "sd"
                       ? (isNaN(row.total) ? "–" : row.total.toFixed(1))
                       : cortadas > 0
                         // Na MESMA linha (não empilhado): empilhar punha esta
                         // linha da tabela a quase o dobro da altura das outras.
-                        ? <>{fmtPts(row.total)}<span className="muted" style={{ fontSize: "var(--fs-9)", fontWeight: 500 }}>/{fmtPts(totalTodas)}</span></>
+                        ? <>{fmtPts(row.total)}<span className="muted u-fs-fs-9 u-fw-500">/{fmtPts(totalTodas)}</span></>
                         : fmtPts(row.total)}
                   </td>
                 </tr>
@@ -684,12 +684,12 @@ export function PJARankingView({
   };
 
   return (
-    <div style={{ paddingTop: 12 }}>
+    <div className="u-pt-12px">
       {/* Filtros: via portal para a toolbar da FPGPage se disponível, senão
           inline como toolbar própria (fallback para usos standalone). */}
       {toolbarSlot
         ? createPortal(toolbarInner, toolbarSlot)
-        : <div className="toolbar" style={{ flexWrap: "wrap", gap: 6 }}>{toolbarInner}</div>
+        : <div className="toolbar u-fwr-wrap u-gap-6px">{toolbarInner}</div>
       }
 
       <CircuitRankingView ranking={ranking} ctx={RANK_CTX} />
@@ -698,9 +698,9 @@ export function PJARankingView({
           circuito no ano corrente. Pontuam em eventos PJA na mesma, mas não
           entram no ranking oficial. */}
       {naoInscritos.length > 0 && (
-        <div className="print-hide" style={{ marginTop: 24, padding: "0 16px 24px", opacity: 0.85 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0" }}>
-            <span className="fw-800 fs-12" style={{ color: "var(--text-2)" }}>
+        <div className="print-hide u-mt-24px u-p-0-16px-24px u-op-0_85">
+          <div className="u-d-flex u-ai-center u-gap-10px u-p-10px-0">
+            <span className="fw-800 fs-12 u-c-text-2">
               Não inscritos no circuito {year}
             </span>
             <span className="muted fs-10">

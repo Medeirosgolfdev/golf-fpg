@@ -65,7 +65,7 @@ export function RoundsTimeline({ rounds }: { rounds: RoundData[] }) {
     <div className="mt-10">
       <div className="h-sm">Evolução dos gross <span className="muted fs-11">({pts.length} rondas de 18 buracos · linha tracejada = par)</span></div>
       <div className="scroll-x">
-        <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block" }} role="img" aria-label="Evolução do gross ao longo do tempo">
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" className="u-d-block" role="img" aria-label="Evolução do gross ao longo do tempo">
           {/* Eixo Y: linhas de grelha */}
           {yTicks.map(t => (
             <g key={t}>

@@ -21,10 +21,10 @@ export default function CollapseCard({ title, icon, defaultOpen = false, childre
         onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpen(v => !v)}
         style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", userSelect: "none", marginBottom: open ? 12 : 0 }}
       >
-        {icon && <span style={{ fontSize: "var(--fs-16)" }}>{icon}</span>}
-        <span className="h-xs flex-1"  style={{ margin: 0 }}>{title}</span>
+        {icon && <span className="u-fs-fs-16">{icon}</span>}
+        <span className="h-xs flex-1 u-m-0">{title}</span>
         {badge}
-        <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginLeft: 4 }}>{open ? "▲" : "▼"}</span>
+        <span className="u-fs-fs-12 u-c-text-3 u-ml-4px">{open ? "▲" : "▼"}</span>
       </div>
       {open && children}
     </div>

@@ -159,7 +159,7 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
 
   // ── Nome — texto, não pill (demasiado longo) ─────────────────
   if (key === "name") {
-    return <span className="fw-700" style={{ fontSize: "var(--fs-13)" }}>{String(v)}</span>;
+    return <span className="fw-700 u-fs-fs-13">{String(v)}</span>;
   }
 
   // ── Género ───────────────────────────────────────────────────
@@ -189,7 +189,7 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
   if (key === "hcp_exact" || key === "hcp_index") {
     const n = Number(v);
     const txt = isFinite(n) ? (Number.isInteger(n) ? n.toString() : n.toFixed(1)) : String(v);
-    return <span className="fw-700" style={{ fontSize: "var(--fs-13)" }}>{txt}</span>;
+    return <span className="fw-700 u-fs-fs-13">{txt}</span>;
   }
 
   // ── Status de HCP (Válido / Provisório / …) ─────────────────
@@ -233,7 +233,7 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
     const flag = gf(String(v));
     return (
       <span className="p p-sm p-muted">
-        {flag && <span style={{ marginRight: 4 }}>{flag}</span>}
+        {flag && <span className="u-mr-4px">{flag}</span>}
         {String(v)}
       </span>
     );
@@ -245,7 +245,7 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
     const flag = gf(txt);
     return (
       <span className="p p-sm p-muted">
-        {flag && <span style={{ marginRight: 4 }}>{flag}</span>}
+        {flag && <span className="u-mr-4px">{flag}</span>}
         {txt}
       </span>
     );
@@ -307,7 +307,7 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
 export function KV({ label, value, description }: { label: string; value: React.ReactNode; description?: string }) {
   const hasDesc = !!description;
   return (
-    <div style={{ flex: "0 0 auto", minWidth: 104, maxWidth: 240 }}>
+    <div className="u-fl-0-0-auto u-minw-104px u-maxw-240px">
       <div
         className="muted fs-10"
         style={{
@@ -322,9 +322,9 @@ export function KV({ label, value, description }: { label: string; value: React.
         }}
         title={description ? `${label} — ${description}` : label}
       >
-        {label}{hasDesc && <span aria-hidden style={{ marginLeft: 3, opacity: 0.5 }}>ⓘ</span>}
+        {label}{hasDesc && <span aria-hidden className="u-ml-3px u-op-0_5">ⓘ</span>}
       </div>
-      <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 4, lineHeight: 1.25 }}>
+      <div className="u-d-flex u-ai-center u-fwr-wrap u-gap-4px u-lh-1_25">
         {value}
       </div>
     </div>

@@ -63,7 +63,7 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
       <table className="sc-lb">
         <thead>
           <tr>
-            <th className="lb-name" style={{ textAlign: "left" }}>Buraco</th>
+            <th className="lb-name u-ta-left">Buraco</th>
             {holes.slice(0, 9).map(h => <th key={h.hole} className="lb-hole">{h.hole}</th>)}
             <th className="lb-halftot">Out</th>
             {holes.slice(9).map(h => <th key={h.hole} className="lb-hole">{h.hole}</th>)}
@@ -97,7 +97,7 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
             <td className="lb-halftot fw-600">{totMeters || "–"}</td>
           </tr>
           <tr>
-            <td className="lb-name fw-600" style={{ color: "var(--color-good)" }}>% Birdie+</td>
+            <td className="lb-name fw-600 u-c-color-good">% Birdie+</td>
             {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBirdiePlus >= 20 ? "var(--color-good)" : h.pctBirdiePlus >= 10 ? "#65a30d" : "var(--text-muted)", fontWeight: h.pctBirdiePlus >= 20 ? 700 : 400 }}>{fmtPct(h.pctBirdiePlus)}</td>)}
             <td className="lb-halftot">—</td>
             {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBirdiePlus >= 20 ? "var(--color-good)" : h.pctBirdiePlus >= 10 ? "#65a30d" : "var(--text-muted)", fontWeight: h.pctBirdiePlus >= 20 ? 700 : 400 }}>{fmtPct(h.pctBirdiePlus)}</td>)}
@@ -113,7 +113,7 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
             <td className="lb-halftot">—</td>
           </tr>
           <tr>
-            <td className="lb-name" style={{ color: "var(--color-danger)" }}>% Bogey</td>
+            <td className="lb-name u-c-color-danger">% Bogey</td>
             {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBogey >= 50 ? "var(--color-danger)" : h.pctBogey >= 35 ? "#ea580c" : "var(--text)", fontWeight: h.pctBogey >= 50 ? 700 : 400 }}>{fmtPct(h.pctBogey)}</td>)}
             <td className="lb-halftot">—</td>
             {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBogey >= 50 ? "var(--color-danger)" : h.pctBogey >= 35 ? "#ea580c" : "var(--text)", fontWeight: h.pctBogey >= 50 ? 700 : 400 }}>{fmtPct(h.pctBogey)}</td>)}
@@ -136,13 +136,13 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
             <td className="lb-halftot muted fw-600">{holes.slice(9).reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
             <td className="lb-halftot fw-700">{holes.reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
           </tr>
-          <tr style={{ background: "rgba(220, 252, 231, .65)" }}>
-            <td className="lb-name fw-700" style={{ color: "var(--color-good-dark)" }}>⭐ Manuel</td>
-            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole fw-600" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(h.manuelAvg, 2)}</td>)}
-            <td className="lb-halftot fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(holes.slice(0, 9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
-            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole fw-600" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(h.manuelAvg, 2)}</td>)}
-            <td className="lb-halftot fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(holes.slice(9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
-            <td className="lb-halftot fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(holes.reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
+          <tr className="u-bg-rgba-220-252-231-_65">
+            <td className="lb-name fw-700 u-c-color-good-dark">⭐ Manuel</td>
+            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole fw-600 u-c-color-good-dark">{fmtAvg(h.manuelAvg, 2)}</td>)}
+            <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(holes.slice(0, 9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
+            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole fw-600 u-c-color-good-dark">{fmtAvg(h.manuelAvg, 2)}</td>)}
+            <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(holes.slice(9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
+            <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(holes.reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
           </tr>
           <tr>
             <td className="lb-name fw-700">Tipo</td>
@@ -173,13 +173,13 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
   if (dist.n === 0) {
     if (hideIfEmpty) return null;
     return (
-      <div style={{ flex: 1, textAlign: "center" }}>
+      <div className="u-fl-1 u-ta-center">
         <svg width={SIZE} height={SIZE}>
           <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="#e5e7eb" strokeWidth={STROKE} />
           <text x={SIZE / 2} y={SIZE / 2 + 4} fontSize="11" fill="var(--text-muted)" textAnchor="middle">–</text>
         </svg>
-        <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, marginTop: 2 }}>{label}</div>
-        <div style={{ fontSize: "var(--fs-9)", color: "var(--text-muted)" }}>0 rondas</div>
+        <div className="u-fs-fs-11 u-fw-700 u-mt-2px">{label}</div>
+        <div className="u-fs-fs-9 u-c-text-muted">0 rondas</div>
       </div>
     );
   }
@@ -192,8 +192,8 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
   ];
   let acc = 0;
   return (
-    <div style={{ flex: 1, textAlign: "center", minWidth: 90 }}>
-      <svg width={SIZE} height={SIZE} style={{ display: "block", margin: "0 auto" }}>
+    <div className="u-fl-1 u-ta-center u-minw-90px">
+      <svg width={SIZE} height={SIZE} className="u-d-block u-m-0-auto">
         {/* base ring */}
         <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="var(--bg-muted)" strokeWidth={STROKE} />
         {/* segments */}
@@ -218,30 +218,30 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
         </text>
         <text x={SIZE / 2} y={SIZE / 2 + 11} fontSize="8" textAnchor="middle" fill="var(--text-muted)">par-or-better</text>
       </svg>
-      <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, marginTop: 4 }}>{label}</div>
-      <div style={{ fontSize: "var(--fs-9)", color: "var(--text-muted)" }}>{sublabel}</div>
+      <div className="u-fs-fs-11 u-fw-700 u-mt-4px">{label}</div>
+      <div className="u-fs-fs-9 u-c-text-muted">{sublabel}</div>
     </div>
   );
 }
 
 function HoleDial({ d }: { d: HoleDial }) {
   return (
-    <div style={{ padding: 10, border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg-card)" }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
-        <span style={{ fontSize: "var(--fs-16)", fontWeight: 800 }}>B{d.hole}</span>
-        <span className="muted" style={{ fontSize: "var(--fs-11)" }}>par <b>{d.par}</b></span>
+    <div className="u-p-10px u-bd-1px-solid-border u-br-8px u-bg-bg-card">
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-mb-6px">
+        <span className="u-fs-fs-16 u-fw-800">B{d.hole}</span>
+        <span className="muted u-fs-fs-11">par <b>{d.par}</b></span>
       </div>
-      <div style={{ display: "flex", gap: 6, justifyContent: "space-between" }}>
+      <div className="u-d-flex u-gap-6px u-jc-space-between">
         <MiniDonut dist={d.manuelDist} label="⭐ Manuel" sublabel={`${d.manuelN} rds${d.manuelBest != null ? ` · best ${d.manuelBest} · worst ${d.manuelWorst}` : ""}`} />
         <MiniDonut dist={d.sub12Dist}  label="Sub-12"     sublabel={`${d.sub12N} rds${d.sub12Best != null ? ` · best ${d.sub12Best}` : ""}`} />
         <MiniDonut dist={d.fieldDist}  label="Field"      sublabel={`${d.fieldN} rds${d.fieldBest != null ? ` · best ${d.fieldBest}` : ""}`} />
       </div>
       {/* Mini-legenda das cores */}
-      <div style={{ display: "flex", justifyContent: "space-around", marginTop: 8, fontSize: "var(--fs-9)" }}>
-        <span style={{ color: "var(--color-good)", fontWeight: 700 }}>● Birdie+</span>
-        <span style={{ color: "#525252", fontWeight: 700 }}>● Par</span>
-        <span style={{ color: "#1d4ed8", fontWeight: 700 }}>● Bogey</span>
-        <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>● Duplo+</span>
+      <div className="u-d-flex u-jc-space-around u-mt-8px u-fs-fs-9">
+        <span className="u-c-color-good u-fw-700">● Birdie+</span>
+        <span className="u-c-525252 u-fw-700">● Par</span>
+        <span className="u-c-1d4ed8 u-fw-700">● Bogey</span>
+        <span className="u-c-color-danger u-fw-700">● Duplo+</span>
       </div>
     </div>
   );
@@ -261,15 +261,15 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
     }}>
       <button
         onClick={() => setOpen(o => !o)}
-        className="fs-13"
-        style={{ width: "100%", padding: "8px 12px", border: "none", background: "transparent", cursor: "pointer", display: "flex", alignItems: "center", gap: 12, textAlign: "left" }}
+        className="fs-13 u-w-100pc u-p-8px-12px u-bd-none u-bg-transparent u-cur-pointer u-d-flex u-ai-center u-gap-12px u-ta-left"
+
       >
         <span className="muted">{open ? "▼" : "▶"}</span>
-        <span className="fw-700" style={{ flex: 1 }}>
+        <span className="fw-700 u-fl-1">
           {card.fedCode ? <PlayerLink fed={card.fedCode} name={card.name} /> : card.name}
           {isManuel && " ⭐"}
         </span>
-        <span className="muted fs-12" style={{ minWidth: 100 }}>{card.club || "–"}</span>
+        <span className="muted fs-12 u-minw-100px">{card.club || "–"}</span>
         <span className="fs-12">HCP <b>{fmtHcp(card.hcpExact)}</b></span>
         <span className="fs-12">{card.nRounds} rds</span>
         <span className="fs-13 fw-700">Avg {fmtAvg(card.avgGross, 0)}</span>
@@ -277,15 +277,15 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
         <span className="fs-13 fw-700" style={{ color: card.avgToPar != null && card.avgToPar < 0 ? "var(--color-good)" : card.avgToPar != null && card.avgToPar > 0 ? "var(--color-danger)" : "var(--text)" }}>
           {fmtDelta(card.avgToPar)}
         </span>
-        {card.category === "top21" && <span className="muted fs-11" style={{ minWidth: 50 }}>Pos {card.currentPos ?? "–"}</span>}
-        {card.category === "sub12_inscrito" && <span className="fs-11 fw-600" style={{ background: "rgba(59, 130, 246, .15)", padding: "3px 8px", borderRadius: "var(--radius)", color: "var(--color-info)" }}>Sub-12 inscrito</span>}
+        {card.category === "top21" && <span className="muted fs-11 u-minw-50px">Pos {card.currentPos ?? "–"}</span>}
+        {card.category === "sub12_inscrito" && <span className="fs-11 fw-600 u-bg-rgba-59-130-246-_15 u-p-3px-8px u-br-radius u-c-color-info">Sub-12 inscrito</span>}
       </button>
       {open && card.rounds.length > 0 && (
-        <div className="bjgt-chart-scroll" style={{ padding: "0 12px 10px" }}>
+        <div className="bjgt-chart-scroll u-p-0-12px-10px">
           <table className="sc-lb sc-lb-with-sc">
             <thead>
               <tr>
-                <th className="lb-name" style={{ textAlign: "left", minWidth: 240 }}>Data / Torneio</th>
+                <th className="lb-name u-ta-left u-minw-240px">Data / Torneio</th>
                 <th className="lb-topar">±</th>
                 <th className="lb-gross">Tot</th>
                 {parRef.slice(0, 9).map((_, i) => <th key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 1}</th>)}
@@ -314,7 +314,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
                 const rParB9 = rPars.slice(9, 18).reduce((a, p, i) => a + (r.scores[9 + i] ? p : 0), 0);
                 return (
                   <tr key={idx}>
-                    <td className="lb-name muted fs-11" style={{ whiteSpace: "nowrap" }}>{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
+                    <td className="lb-name muted fs-11 u-ws-nowrap">{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
                     <td className="lb-topar fw-700" style={{ color: r.toPar != null && r.toPar < 0 ? "var(--color-good)" : r.toPar != null && r.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>{r.toPar != null ? fmtToPar(r.toPar) : "–"}</td>
                     <td className="lb-gross fw-700">{r.gross ?? "–"}</td>
                     {r.scores.slice(0, 9).map((sc, i) => (
@@ -475,7 +475,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
   }, [pkg, sub12FedSet]);
 
   if (loading) return <LoadingState message="A carregar análise…" />;
-  if (error) return <div className="fs-13" style={{ padding: 24, color: "var(--color-danger)" }}>Erro: {error}</div>;
+  if (error) return <div className="fs-13 u-p-24px u-c-color-danger">Erro: {error}</div>;
   if (!pkg) return <EmptyState size="sm" message="Sem dados" />;
 
   const top21Cards = pkg.playerCards.filter(c => c.category === "top21");
@@ -484,27 +484,27 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
   const parB9Ref = pkg.parReference.slice(9, 18).reduce((a, b) => a + b, 0);
 
   return (
-    <div className="aroeira2-analise fs-13" style={{ display: "flex", flexDirection: "column", gap: 28, paddingBottom: 40 }}>
+    <div className="aroeira2-analise fs-13 u-d-flex u-fd-column u-gap-28px u-pb-40px">
 
       {/* Header */}
       <section>
-        <div className="muted fs-12" style={{ marginBottom: 4 }}>
+        <div className="muted fs-12 u-mb-4px">
           PGA Aroeira No.2 · par 72 · {pkg.holeStats.totalMeters || 4805}m · {pkg.holeStats.totalRounds} rondas analisadas
         </div>
-        <h2 style={{ margin: "0 0 8px" }}>Análise Aroeira II — radar para o Nacional Sub-12 (1-3 Mai 2026)</h2>
+        <h2 className="u-m-0-0-8px">Análise Aroeira II — radar para o Nacional Sub-12 (1-3 Mai 2026)</h2>
         <div className="muted fs-13">{top21Cards.length} jogadores PJA Aroeira Masters 2026 · {sub12CardsCom.length} inscritos Sub-12 Nacional com histórico no campo</div>
       </section>
 
       {/* KPIs */}
       <section>
         <h3>Visão de relance</h3>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+        <div className="u-d-flex u-fwr-wrap u-gap-12px">
           {kpis.map((k, i) => <KpiCard key={i} {...k} />)}
         </div>
       </section>
 
       {/* Legenda */}
-      <section style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+      <section className="u-d-flex u-fwr-wrap u-gap-10px">
         {(Object.keys(LABEL_INFO) as Array<keyof typeof LABEL_INFO>).map(k => (
           <span key={k} className="fs-12 fw-600" style={{ background: LABEL_INFO[k].bg, padding: "5px 12px", borderRadius: "var(--radius)", border: `1px solid ${LABEL_INFO[k].border}` }}>
             {LABEL_INFO[k].emoji} {LABEL_INFO[k].text}
@@ -515,7 +515,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 1. Mapa do campo */}
       <section>
         <h3>1. Mapa do campo</h3>
-        <div className="muted fs-12" style={{ marginBottom: 8 }}>
+        <div className="muted fs-12 u-mb-8px">
           Agregado das rondas com o routing actual (Nov 2025+). Rondas anteriores com tee de início diferente foram excluídas para garantir que cada buraco corresponde fisicamente ao que vai ser jogado no Nacional Sub-12.
         </div>
         <HoleMapTable holes={pkg.holeStats.perHole} />
@@ -524,10 +524,10 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 1b. Dials por buraco */}
       <section>
         <h3>1b. 18 dials — média field, Sub-12, melhor e pior do Manuel</h3>
-        <div className="muted fs-12" style={{ marginBottom: 10 }}>
-          Para cada buraco, melhor (Best) e pior (Worst) score já registado em rondas com routing actual. <strong style={{ color: "var(--color-good-dark)" }}>⭐ Manuel</strong> (suas rondas), <strong style={{ color: "var(--color-info)" }}>Sub-12</strong> (Manuel + outros Sub-12 com histórico) e <strong>Field</strong> (todos no campo). Cores oficiais nas células: vermelho = birdie/eagle, azul = bogey/duplo.
+        <div className="muted fs-12 u-mb-10px">
+          Para cada buraco, melhor (Best) e pior (Worst) score já registado em rondas com routing actual. <strong className="u-c-color-good-dark">⭐ Manuel</strong> (suas rondas), <strong className="u-c-color-info">Sub-12</strong> (Manuel + outros Sub-12 com histórico) e <strong>Field</strong> (todos no campo). Cores oficiais nas células: vermelho = birdie/eagle, azul = bogey/duplo.
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 10 }}>
+        <div className="u-d-grid u-grid-template-columns-d873z u-gap-10px">
           {holeDials.map(d => <HoleDial key={d.hole} d={d} />)}
         </div>
       </section>
@@ -535,9 +535,9 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 2. Top dificuldade */}
       <section>
         <h3>2. Buracos chave — Top 5 difíceis vs Top 5 fáceis</h3>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-          <div style={{ border: "2px solid var(--color-danger)", borderRadius: 8, padding: 12, background: "rgba(220, 38, 38, .04)" }}>
-            <h4 style={{ margin: "0 0 8px", color: "var(--color-danger-dark)" }}>🔴 Mais difíceis (vão preparados)</h4>
+        <div className="u-d-grid u-grid-template-columns-1fr-1fr u-gap-16px">
+          <div className="u-bd-2px-solid-color-danger u-br-8px u-p-12px u-bg-rgba-220-38-38-_04">
+            <h4 className="u-m-0-0-8px u-c-color-danger-dark">🔴 Mais difíceis (vão preparados)</h4>
             <table className="sc-lb">
               <thead>
                 <tr><th className="lb-name">B</th><th className="lb-hole">Par</th><th className="lb-hole">Avg</th><th className="lb-hole">Δ</th><th className="lb-hole">%Bog+</th><th className="lb-hole">⭐ M</th></tr>
@@ -548,16 +548,16 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                     <td className="lb-name fw-700">B{h.hole}</td>
                     <td className="lb-hole">{h.par}</td>
                     <td className="lb-hole">{h.avgScore.toFixed(2)}</td>
-                    <td className="lb-hole fw-700" style={{ color: "var(--color-danger)" }}>+{(h.avgScore - h.par).toFixed(2)}</td>
+                    <td className="lb-hole fw-700 u-c-color-danger">+{(h.avgScore - h.par).toFixed(2)}</td>
                     <td className="lb-hole">{fmtPct(h.pctBogey + h.pctDoublePlus)}</td>
-                    <td className="lb-hole fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(h.manuelAvg, 1)}</td>
+                    <td className="lb-hole fw-700 u-c-color-good-dark">{fmtAvg(h.manuelAvg, 1)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div style={{ border: "2px solid var(--color-good)", borderRadius: 8, padding: 12, background: "rgba(22, 163, 74, .04)" }}>
-            <h4 style={{ margin: "0 0 8px", color: "#15803d" }}>🟢 Mais fáceis (capitalizar)</h4>
+          <div className="u-bd-2px-solid-color-good u-br-8px u-p-12px u-bg-rgba-22-163-74-_04">
+            <h4 className="u-m-0-0-8px u-c-15803d">🟢 Mais fáceis (capitalizar)</h4>
             <table className="sc-lb">
               <thead>
                 <tr><th className="lb-name">B</th><th className="lb-hole">Par</th><th className="lb-hole">Avg</th><th className="lb-hole">Δ</th><th className="lb-hole">%Bird+</th><th className="lb-hole">⭐ M</th></tr>
@@ -570,7 +570,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                     <td className="lb-hole">{h.avgScore.toFixed(2)}</td>
                     <td className="lb-hole fw-700" style={{ color: h.avgScore - h.par <= 0 ? "var(--color-good)" : "var(--text)" }}>{fmtDelta(h.avgScore - h.par, 2)}</td>
                     <td className="lb-hole">{fmtPct(h.pctBirdiePlus)}</td>
-                    <td className="lb-hole fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(h.manuelAvg, 1)}</td>
+                    <td className="lb-hole fw-700 u-c-color-good-dark">{fmtAvg(h.manuelAvg, 1)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -604,10 +604,10 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                   <td className="lb-hole">{pg.count}</td>
                   <td className="lb-hole">{pg.fieldAvg.toFixed(2)}</td>
                   <td className="lb-hole fw-700" style={{ color: pg.fieldDelta < 0 ? "var(--color-good)" : "var(--color-danger)" }}>{fmtDelta(pg.fieldDelta, 2)}</td>
-                  <td className="lb-hole" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(pg.manuelAvg, 2)}</td>
+                  <td className="lb-hole u-c-color-good-dark">{fmtAvg(pg.manuelAvg, 2)}</td>
                   <td className="lb-hole fw-700" style={{ color: pg.manuelDelta != null && pg.manuelDelta < 0 ? "var(--color-good)" : pg.manuelDelta != null && pg.manuelDelta > 0 ? "var(--color-danger)" : "var(--text)" }}>{fmtDelta(pg.manuelDelta, 2)}</td>
-                  <td className="lb-hole" style={{ color: "var(--color-good)" }}>{fmtPct(pg.pctBirdiePlus)}</td>
-                  <td className="lb-hole" style={{ color: "var(--color-danger)" }}>{fmtPct(pg.pctBogey)}</td>
+                  <td className="lb-hole u-c-color-good">{fmtPct(pg.pctBirdiePlus)}</td>
+                  <td className="lb-hole u-c-color-danger">{fmtPct(pg.pctBogey)}</td>
                   <td className="lb-hole fw-700">{fmtPct(pg.pctDoublePlus)}</td>
                 </tr>
               ))}
@@ -620,17 +620,17 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {theoretical && (
         <section>
           <h3>4. Manuel — ronda teórica vs realidade</h3>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 16 }}>
+          <div className="u-d-grid u-grid-template-columns-68672 u-gap-12px u-mb-16px">
             <KpiCard label="Ronda teórica" value={String(theoretical.theoretical)} hint={`Soma do best score do Manuel em cada buraco (par 72, ${fmtToPar(theoretical.theoretical - 72)})`} tone="good" />
             <KpiCard label="Melhor ronda real" value={String(theoretical.bestReal)} hint={`Melhor ronda jogada (par 72, ${fmtToPar(theoretical.bestReal - 72)})`} tone="warn" />
             <KpiCard label="Potencial em cima da mesa" value={"-" + theoretical.diff} hint="Pancadas que o Manuel já fez em rondas separadas mas ainda não juntou na mesma ronda" tone="warn" />
           </div>
-          <h4 style={{ margin: "0 0 8px" }}>Best/Worst do Manuel por buraco (ronda eclética)</h4>
+          <h4 className="u-m-0-0-8px">Best/Worst do Manuel por buraco (ronda eclética)</h4>
           <div className="bjgt-chart-scroll">
             <table className="sc-lb">
               <thead>
                 <tr>
-                  <th className="lb-name" style={{ textAlign: "left" }}>Métrica</th>
+                  <th className="lb-name u-ta-left">Métrica</th>
                   {manuelStats.map(s => <th key={s.hole} className="lb-hole">B{s.hole}</th>)}
                   <th className="lb-halftot">Tot</th>
                 </tr>
@@ -642,14 +642,14 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
               </thead>
               <tbody>
                 <tr>
-                  <td className="lb-name fw-600" style={{ color: "var(--color-good)" }}>Best (eclética)</td>
+                  <td className="lb-name fw-600 u-c-color-good">Best (eclética)</td>
                   {manuelStats.map(s => <td key={s.hole} className="lb-hole"><span className={"sc-score " + scClass(s.best, s.par)}>{s.best || "–"}</span></td>)}
-                  <td className="lb-halftot fw-700" style={{ color: "var(--color-good-dark)" }}>{manuelStats.filter(s => s.best > 0).reduce((a, s) => a + s.best, 0) || "–"}</td>
+                  <td className="lb-halftot fw-700 u-c-color-good-dark">{manuelStats.filter(s => s.best > 0).reduce((a, s) => a + s.best, 0) || "–"}</td>
                 </tr>
                 <tr>
-                  <td className="lb-name fw-600" style={{ color: "var(--color-danger)" }}>Worst (anti-eclética)</td>
+                  <td className="lb-name fw-600 u-c-color-danger">Worst (anti-eclética)</td>
                   {manuelStats.map(s => <td key={s.hole} className="lb-hole"><span className={"sc-score " + scClass(s.worst, s.par)}>{s.worst || "–"}</span></td>)}
-                  <td className="lb-halftot fw-700" style={{ color: "var(--color-danger)" }}>{manuelStats.filter(s => s.worst > 0).reduce((a, s) => a + s.worst, 0) || "–"}</td>
+                  <td className="lb-halftot fw-700 u-c-color-danger">{manuelStats.filter(s => s.worst > 0).reduce((a, s) => a + s.worst, 0) || "–"}</td>
                 </tr>
                 <tr>
                   <td className="lb-name fw-600">Pior – Melhor</td>
@@ -663,7 +663,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
               </tbody>
             </table>
           </div>
-          <div className="muted fs-11" style={{ marginTop: 6 }}>
+          <div className="muted fs-11 u-mt-6pxx">
             <b>Best (eclética)</b>: melhor score que o Manuel já fez em cada buraco — soma do total dá a ronda teórica. <b>Worst (anti-eclética)</b>: pior score. <b>Pior – Melhor</b>: amplitude — 0 verde escuro (sempre o mesmo), 1-2 razoável, ≥3 grande oscilação (alvo de treino).
           </div>
         </section>
@@ -672,7 +672,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 5. Plano táctico */}
       <section>
         <h3>5. Plano táctico buraco-a-buraco</h3>
-        <ol style={{ margin: 0, paddingLeft: 0, listStyle: "none", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 8 }}>
+        <ol className="u-m-0 u-pl-0 u-list-style-none u-d-grid u-grid-template-columns-d873z u-gap-8px">
           {holeRecs.map(r => (
             <li key={r.hole} className="fs-13" style={{ padding: 10, borderRadius: "var(--radius)", border: `1.5px solid ${TONE_COLOR[r.type]}`, background: "var(--bg-card)" }}>
               <strong style={{ color: TONE_COLOR[r.type] }}>B{r.hole}</strong> — {r.text}
@@ -720,7 +720,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 7. Top 21 scorecards */}
       <section>
         <h3>7. Top 21 PJA — scorecards detalhados</h3>
-        <div className="muted fs-12" style={{ marginBottom: 8 }}>Clica para expandir todas as rondas hole-by-hole. Manuel auto-aberto.</div>
+        <div className="muted fs-12 u-mb-8px">Clica para expandir todas as rondas hole-by-hole. Manuel auto-aberto.</div>
         {top21Cards.map((c, i) => <PlayerCardBlock key={i} card={c} parRef={pkg.parReference} />)}
       </section>
 
@@ -735,7 +735,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 8b. Tabela Sub-12 dedicada */}
       <section>
         <h3>9. Sub-12 — performance no Aroeira II</h3>
-        <div className="muted fs-12" style={{ marginBottom: 8 }}>
+        <div className="muted fs-12 u-mb-8px">
           Cruzamento dos jogadores que estão inscritos no Campeonato Nacional de Jovens Sub-12 H 2026 (1-3 Maio, tcode 10941) com o histórico no campo. Inclui Manuel mesmo que não esteja na lista de inscritos.
         </div>
         <table className="sc-lb">
@@ -779,7 +779,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
             })}
           </tbody>
         </table>
-        <div className="muted fs-11" style={{ marginTop: 6 }}>
+        <div className="muted fs-11 u-mt-6pxx">
           Estados: 🏆 jogou + inscrito = jogou o PJA Aroeira Masters 2026 e está inscrito no Nacional · 🏆 só jogou = jogou o PJA mas não está inscrito (ex: Manuel tem fed que pode não estar na lista) · 📋 inscrito + histórico = inscrito Sub-12 com rondas anteriores · 🆕 estreante = inscrito Sub-12 sem rondas no Aroeira II.
         </div>
       </section>
@@ -787,14 +787,14 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 9. Cronologia + evolução */}
       <section>
         <h3>10. Scorecards Sub-12 cronológicos — todos juntos</h3>
-        <div className="muted fs-12" style={{ marginBottom: 8 }}>{cronoRounds.length} rondas, ordenadas por data ascendente. Cada linha é uma ronda.</div>
+        <div className="muted fs-12 u-mb-8px">{cronoRounds.length} rondas, ordenadas por data ascendente. Cada linha é uma ronda.</div>
         <div className="bjgt-chart-scroll">
           <table className="sc-lb sc-lb-with-sc">
             <thead>
               <tr>
                 <th className="lb-pos">#</th>
-                <th className="lb-name" style={{ textAlign: "left", minWidth: 180 }}>Data / Torneio</th>
-                <th className="lb-name" style={{ textAlign: "left", minWidth: 160 }}>Jogador</th>
+                <th className="lb-name u-ta-left u-minw-180px">Data / Torneio</th>
+                <th className="lb-name u-ta-left u-minw-160px">Jogador</th>
                 <th className="lb-hcp">HCP</th>
                 <th className="lb-topar">±</th>
                 <th className="lb-gross">Tot</th>
@@ -826,7 +826,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                 return (
                   <tr key={idx} style={{ background: isManuel ? "rgba(220, 252, 231, .65)" : undefined }}>
                     <td className="lb-pos muted fs-11">{idx + 1}</td>
-                    <td className="lb-name muted fs-11" style={{ whiteSpace: "nowrap" }}>{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
+                    <td className="lb-name muted fs-11 u-ws-nowrap">{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
                     <td className="lb-name fw-600">{r.fedCode ? <PlayerLink fed={r.fedCode} name={r.playerName} /> : r.playerName}{isManuel && " ⭐"}</td>
                     <td className="lb-hcp fs-11">{fmtHcp(r.hcpExact)}</td>
                     <td className="lb-topar fw-700" style={{ color: r.toPar != null && r.toPar < 0 ? "var(--color-good)" : r.toPar != null && r.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>{r.toPar != null ? fmtToPar(r.toPar) : "–"}</td>
@@ -854,7 +854,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 11. Análise de evolução */}
       <section>
         <h3>11. Evolução por jogador</h3>
-        <div className="muted fs-12" style={{ marginBottom: 8 }}>
+        <div className="muted fs-12 u-mb-8px">
           Slope = pancadas por ronda (negativo = a melhorar). Δ first→last = última ronda menos primeira. Δ trend = média da 2ª metade menos média da 1ª. Ordenado por melhor evolução.
         </div>
         <table className="sc-lb">

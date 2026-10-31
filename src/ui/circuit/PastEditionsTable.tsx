@@ -107,46 +107,45 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
   return (
     <div>
       {title && (
-        <div className="fs-12 muted" style={{ margin: "2px 0 10px" }}>
+        <div className="fs-12 muted u-m-2px-0-10px">
           {title} · {cols.length} edi{cols.length === 1 ? "ção" : "ções"}
         </div>
       )}
-      <div style={{ overflowX: "auto" }}>
+      <div className="u-ox-auto">
         {/* Mesmo aspecto do scorecard (.sc-lb): cabeçalho, letra, espaçamento e
             linhas finas — pedido da Mariana (13/10/2026: «tudo homogéneo»). */}
-        <table className="sc-lb sc-lb-dense" style={{ fontVariantNumeric: "tabular-nums", width: "max-content" }}>
+        <table className="sc-lb sc-lb-dense u-fvn-tabular-nums u-w-max-content">
           <thead>
             <tr>
               <th rowSpan={2} onClick={() => onSort("pos")}
-                  style={{ padding: "6px 8px", fontSize: "var(--fs-11)", position: "sticky", left: 0, zIndex: "var(--z-raised)", cursor: "pointer", userSelect: "none", width: 50, minWidth: 50 }}>
+                  className="u-p-6px-8px u-fs-fs-11 u-pos-sticky u-left-0 u-z-z-raised u-cur-pointer u-user-select-none u-w-50px u-minw-50px">
                 Pos{arrow("pos")}
               </th>
               {cols.map((e, ei) => (
                 <th key={e.id} colSpan={2 + (e.parPerRound ? 1 : 0) + e.nRounds}
                     style={{ padding: "10px 10px 8px", fontSize: "var(--fs-11)", borderLeft: bl(ei) }}>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 8, color: "var(--text)" }}>
-                      <span style={{ fontSize: "var(--fs-16)", fontWeight: 700 }}>{e.year}</span>
+                  <div className="u-d-flex u-fd-column u-ai-center u-gap-3px">
+                    <div className="u-d-flex u-ai-baseline u-gap-8px u-c-text">
+                      <span className="u-fs-fs-16 u-fw-700">{e.year}</span>
                       {e.url && (
                         <a href={e.url} target="_blank" rel="noreferrer" title="Leaderboard oficial"
-                           style={{ fontSize: "var(--fs-11)", color: "var(--color-info)", textDecoration: "none", fontWeight: 700 }}>↗</a>
+                           className="u-fs-fs-11 u-c-color-info u-td-none u-fw-700">↗</a>
                       )}
-                      <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 500 }}>(n={e.players.length})</span>
+                      <span className="u-fs-fs-10 u-c-text-3 u-fw-500">(n={e.players.length})</span>
                     </div>
                     {/* Rótulo da edição (ex: "3º DT Norte") — só quando há várias
                         edições no mesmo ano, para as distinguir. */}
                     {e.label && cols.some((o) => o !== e && o.year === e.year) && (
-                      <div className="fs-11" style={{ color: "var(--text-2)", fontWeight: 700 }}>{e.label}</div>
+                      <div className="fs-11 u-c-text-2 u-fw-700">{e.label}</div>
                     )}
                     {/* Escalão só quando o nome mudou entre edições (ex: Under 15 → Under 14 Girls) */}
                     {cols.some((o) => o.division !== e.division) && (
-                      <div className="fs-10" style={{ color: "var(--text-3)", fontWeight: 600 }}>{e.division}</div>
+                      <div className="fs-10 u-c-text-3 u-fw-600">{e.division}</div>
                     )}
                     {e.course && (
                       // Nome do campo nunca alarga a coluna (USKids World: 11 campos numa
                       // string) — corta com reticências, o nome todo no tooltip.
-                      <div title={e.course} style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", fontWeight: 500, lineHeight: 1.2, fontStyle: "italic",
-                        maxWidth: 280, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{e.course}</div>
+                      <div title={e.course} className="u-fs-fs-12 u-c-text-3 u-fw-500 u-lh-1_2 u-fst-italic u-maxw-280px u-ov-hidden u-tov-ellipsis u-ws-nowrap">{e.course}</div>
                     )}
                   </div>
                 </th>
@@ -157,19 +156,19 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                 const cells = [
                   <th key={`${e.id}_n`} style={{ textAlign: "left", borderLeft: bl(ei), width: 150, minWidth: 150 }}>Jogador</th>,
                   <th key={`${e.id}_T`} onClick={() => onSort(`${e.id}_T`)}
-                      style={{ cursor: "pointer", userSelect: "none", width: 46, minWidth: 46 }}>
+                      className="u-cur-pointer u-user-select-none u-w-46px u-minw-46px">
                     Tot{arrow(`${e.id}_T`)}
                   </th>,
                 ];
                 if (e.parPerRound) cells.push(
                   <th key={`${e.id}_TP`} onClick={() => onSort(`${e.id}_TP`)}
-                      style={{ cursor: "pointer", userSelect: "none", width: 42, minWidth: 42 }}>
+                      className="u-cur-pointer u-user-select-none u-w-42px u-minw-42px">
                     ±{arrow(`${e.id}_TP`)}
                   </th>,
                 );
                 for (let r = 1; r <= e.nRounds; r++) cells.push(
                   <th key={`${e.id}_R${r}`} onClick={() => onSort(`${e.id}_R${r}`)}
-                      style={{ cursor: "pointer", userSelect: "none", width: 38, minWidth: 38 }}>
+                      className="u-cur-pointer u-user-select-none u-w-38px u-minw-38px">
                     R{r}{arrow(`${e.id}_R${r}`)}
                   </th>,
                 );
@@ -183,7 +182,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
               const medal = ri === 0 ? "🥇" : ri === 1 ? "🥈" : ri === 2 ? "🥉" : null;
               return (
                 <tr key={ri}>
-                  <td className="lb-pos" style={{ position: "sticky", left: 0, background: "var(--bg-card)", zIndex: "var(--z-base)", whiteSpace: "nowrap" }}>
+                  <td className="lb-pos u-pos-sticky u-left-0 u-bg-bg-card u-z-z-base u-ws-nowrap">
                     {medal ?? ri + 1}
                   </td>
                   {cols.flatMap((e, ei) => {

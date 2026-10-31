@@ -303,8 +303,8 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
     <div>
       {/* Toolbar topo: top-N + Agrupado/Independente */}
       <div
-        className="muted fs-11 mb-8 p-0-4px gap-8 flex-wrap"
-        style={{ display: "flex", alignItems: "center" }}
+        className="muted fs-11 mb-8 p-0-4px gap-8 flex-wrap u-d-flex u-ai-center"
+
       >
         <span>
           {groupMode ? totalPlayers : totalScorecards} {groupMode ? "jogadores" : "scorecards"} ·
@@ -312,14 +312,10 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         </span>
 
         {/* Top-N selector */}
-        <span style={{ display: "flex", alignItems: "center", gap: 4, marginLeft: 8 }}>
+        <span className="u-d-flex u-ai-center u-gap-4px u-ml-8px">
           <span className="c-muted fs-10">Top:</span>
           <span
-            style={{
-              display: "flex", gap: 2,
-              border: "1px solid var(--border)",
-              borderRadius: 8, overflow: "hidden",
-            }}
+            className="u-d-flex u-gap-2px u-bd-1px-solid-border u-br-8px u-ov-hidden"
           >
             {([5, 10, 20, 0] as const).map(n => (
               <button
@@ -343,11 +339,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
 
         {/* Toggle Agrupado/Independente — copia visual exacto de AllRoundsScorecardLB */}
         <span
-          style={{
-            display: "flex", gap: 2, marginLeft: 4,
-            border: "1px solid var(--border)",
-            borderRadius: 8, overflow: "hidden",
-          }}
+          className="u-d-flex u-gap-2px u-ml-4px u-bd-1px-solid-border u-br-8px u-ov-hidden"
         >
           {([true, false] as const).map(g => (
             <button
@@ -661,12 +653,12 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
               {isFirstRd ? (
                 <a href={kidsUrl({ name: player.name })}
                    target="_blank" rel="noreferrer"
-                   style={{ color: "var(--text)", textDecoration: "none" }}
+                   className="u-c-text u-td-none"
                    title={`Abrir ${player.name} em Kids2`}>
                   {player.name}
                 </a>
               ) : (
-                <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>
+                <span className="muted fs-10 u-pl-8px">↳</span>
               )}
             </td>
             <td className="lb-club"
@@ -704,7 +696,7 @@ function IndependentRow({ f, pos, hpr, is9 }: {
   return (
     <tr style={{ background: bg, borderTop: bTop }}>
       <td className="lb-pos sticky-col-0" style={{ background: bg }}>{pos}</td>
-      <td className="lb-tee fs-10 fw-600" style={{ color: "var(--text-2)" }}
+      <td className="lb-tee fs-10 fw-600 u-c-text-2"
           title={`${ed.year}${ed.course ? " · " + ed.course : ""}${ed.meters ? " · " + ed.meters + "m" : ""}${ed.parPerRound ? " · Par " + ed.parPerRound : ""}`}>
         {ed.year}
       </td>
@@ -712,7 +704,7 @@ function IndependentRow({ f, pos, hpr, is9 }: {
           style={{ background: bg, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
         <a href={kidsUrl({ name: f.pl.name })}
            target="_blank" rel="noreferrer"
-           style={{ color: "var(--text)", textDecoration: "none" }}>
+           className="u-c-text u-td-none">
           {f.pl.name}
         </a>
       </td>
@@ -897,15 +889,15 @@ function EcleticTable({ editions, limit, hpr, is9 }: {
   const trailing = 2; // colunas Melhor + Δ
 
   return (
-    <details style={{ marginTop: 22 }}>
+    <details className="u-mt-22px">
       <summary
-        className="fs-13 fw-600"
-        style={{ color: "var(--text)", cursor: "pointer", userSelect: "none", marginBottom: 4 }}
+        className="fs-13 fw-600 u-c-text u-cur-pointer u-user-select-none u-mb-4px"
+
       >
         Linha ecléctica{" "}
         <span className="c-muted fw-400 fs-11">({rows.length} jogador{rows.length === 1 ? "" : "es"})</span>
       </summary>
-      <div className="muted fs-11 mb-8" style={{ maxWidth: 720, lineHeight: 1.45, marginTop: 6 }}>
+      <div className="muted fs-11 mb-8 u-maxw-720px u-lh-1_45 u-mt-6pxx">
         O <b>melhor resultado de cada jogador em cada buraco</b>, somado nas voltas
         da edição — o teto de cada um se juntasse os seus melhores buracos.{" "}
         <b>Δ</b> = quanto o ecléctico bate a melhor volta real (quanto maior, mais
@@ -1007,7 +999,7 @@ function EcleticRow({ row, pos, hpr, is9 }: {
   return (
     <tr style={{ background: bg, borderTop: "1px solid var(--border-light)" }}>
       <td className="lb-pos sticky-col-0" style={{ background: bg }}>{pos}</td>
-      <td className="lb-tee fs-10 fw-600" style={{ color: "var(--text-2)" }}
+      <td className="lb-tee fs-10 fw-600 u-c-text-2"
           title={`${ed.year}${ed.course ? " · " + ed.course : ""}${ed.parPerRound ? " · Par " + ed.parPerRound : ""}`}>
         {ed.year}
       </td>
@@ -1015,12 +1007,12 @@ function EcleticRow({ row, pos, hpr, is9 }: {
           style={{ background: bg, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
         <a href={kidsUrl({ name: pl.name })}
            target="_blank" rel="noreferrer"
-           style={{ color: "var(--text)", textDecoration: "none" }}>
+           className="u-c-text u-td-none">
           {pl.name}
         </a>
       </td>
       <td className="lb-club">{fmtCountry(pl.country)}</td>
-      <td className="lb-tee fw-600 fs-10" style={{ color: "var(--accent)" }} title={`Ecléctico de ${pl.rounds.length} voltas`}>Ecl</td>
+      <td className="lb-tee fw-600 fs-10 u-c-accent" title={`Ecléctico de ${pl.rounds.length} voltas`}>Ecl</td>
       <td className="lb-topar"
           style={{ color: ecl.toPar < 0 ? "var(--color-good)" : ecl.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>
         {ed.parPerRound > 0 ? fmtToPar(ecl.toPar) : "—"}
@@ -1046,7 +1038,7 @@ function EcleticRow({ row, pos, hpr, is9 }: {
           </td>
         </>
       )}
-      <td className="lb-gross" style={{ color: "var(--text-muted)" }} title="Melhor volta real">{ecl.bestRound}</td>
+      <td className="lb-gross u-c-text-muted" title="Melhor volta real">{ecl.bestRound}</td>
       <td className="lb-topar" style={{ color: ecl.delta > 0 ? "var(--color-good)" : "var(--text-muted)" }}
           title="Pancadas deixadas na mesa (melhor volta − ecléctico)">
         {ecl.delta > 0 ? "−" + ecl.delta : "0"}

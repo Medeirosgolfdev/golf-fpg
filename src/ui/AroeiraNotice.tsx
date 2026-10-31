@@ -64,14 +64,7 @@ export default function AroeiraNotice({ courseName, rotatedCount, totalRounds, c
     return (
       <span
         title={lines.join("\n")}
-        style={{
-          display: "inline-block",
-          fontSize: "var(--fs-13)",
-          color: "var(--text-2)",
-          marginLeft: 6,
-          cursor: "help",
-          lineHeight: 1,
-        }}
+        className="u-d-inline-block u-fs-fs-13 u-c-text-2 u-ml-6px u-cur-help u-lh-1"
         aria-label={`${title} — campo unificado${showRotation ? `; ${rotatedCount} ronda${rotatedCount! > 1 ? "s" : ""} rotacionada${rotatedCount! > 1 ? "s" : ""}` : ""}`}
       >
         ⓘ
@@ -81,21 +74,21 @@ export default function AroeiraNotice({ courseName, rotatedCount, totalRounds, c
 
   return (
     <div className="notice notice-info">
-      <div style={{ fontWeight: 700, marginBottom: 4, color: "var(--text-1)" }}>
+      <div className="u-fw-700 u-mb-4px u-c-text-1">
         ⓘ {title} — bucket unificado
       </div>
-      <div style={{ color: "var(--text-2)" }}>
+      <div className="u-c-text-2">
         Este campo agrupa rondas que a FPG publicou ao longo dos anos com vários nomes alternativos:{" "}
         {aliases.map((a, i) => (
           <React.Fragment key={a}>
             {i > 0 && ", "}
-            <code style={{ background: "var(--bg-code, rgba(0,0,0,0.06))", padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-11)" }}>{a}</code>
+            <code className="u-bg-var-bg-code-rgba-0-0-0-0_06 u-p-1px-5px u-br-3px u-fs-fs-11">{a}</code>
           </React.Fragment>
         ))}
         {". "}A unificação é feita por par[] verificado em todas as rondas — zero rondas perdidas.
       </div>
       {showRotation && (
-        <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid var(--border-light)", color: "var(--text-2)" }}>
+        <div className="u-mt-8px u-pt-8px u-bt-1px-solid-border-light u-c-text-2">
           <b>Renumeração de buracos.</b>{" "}
           {rotatedCount}
           {totalRounds ? ` de ${totalRounds}` : ""} ronda{rotatedCount! > 1 ? "s" : ""}{" "}

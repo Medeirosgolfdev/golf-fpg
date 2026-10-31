@@ -53,11 +53,7 @@ export function LinkBtns({ links }: { links?: Record<string, string> }) {
           target="_blank"
           rel="noopener noreferrer"
           title={label.replace(/_/g, " ")}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 3,
-            fontSize: "var(--fs-10)", marginLeft: 4, color: "var(--chart-2)", textDecoration: "none",
-            verticalAlign: "middle",
-          }}
+          className="u-d-inline-flex u-ai-center u-gap-3px u-fs-fs-10 u-ml-4px u-c-chart-2 u-td-none u-va-middle"
           onClick={(e) => e.stopPropagation()}
         >
           🔗
@@ -160,8 +156,8 @@ export function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course
       target="_blank"
       rel="noopener noreferrer"
       title={fedTitle}
-      className="muted"
-      style={{ textDecoration: "none" }}
+      className="muted u-td-none"
+
       onClick={e => e.stopPropagation()}
     >{name || ""}</a>
   ) : (
@@ -170,7 +166,7 @@ export function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course
   // Ícone 🔗 quando NÃO há _links curado mas temos algum fallback (tcode ou fed).
   const showFallbackIcon = !classifUrl && fedUrl;
   return (
-    <span style={{ display: "inline-flex", flexWrap: "wrap", alignItems: "center", gap: 6 }}>
+    <span className="u-d-inline-flex u-fwr-wrap u-ai-center u-gap-6px">
       {nameNode}
       <OriginPill origin={origin} />
       <PillBadge pill={pill} />
@@ -181,11 +177,7 @@ export function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course
           target="_blank"
           rel="noopener noreferrer"
           title={fedTitle}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 3,
-            fontSize: "var(--fs-10)", color: "var(--text-muted)", textDecoration: "none",
-            verticalAlign: "middle", opacity: 0.6,
-          }}
+          className="u-d-inline-flex u-ai-center u-gap-3px u-fs-fs-10 u-c-text-muted u-td-none u-va-middle u-op-0_6"
           onClick={e => e.stopPropagation()}
         >🔗</a>
       )}

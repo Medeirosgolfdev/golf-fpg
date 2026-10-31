@@ -162,31 +162,31 @@ export function FFGMeriteView() {
         }
       />
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", margin: "12px 0" }}>
+      <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-12px-0">
         {(["M", "F"] as const).map((s) => (
           <button key={s} onClick={() => { setSex(s); setCat("ALL"); }} className={"btn-pill" + (sex === s ? " active" : "")}>
             {s === "M" ? "Garçons" : "Filles"}
           </button>
         ))}
-        <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input" style={{ width: 170 }}>
+        <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input u-w-170px">
           <option value="ALL">Todos os escalões</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
         <input type="text" value={q} onChange={(e) => setQ(e.target.value)} placeholder="🔍 Nome ou clube…"
-          className="filter-input" style={{ minWidth: 220, flex: "1 1 220px", maxWidth: 320 }} />
+          className="filter-input u-minw-220px u-fl-1-1-220px u-maxw-320px" />
         <button onClick={() => setSoClass((v) => !v)} className={"btn-pill" + (soClass ? " active" : "")}
           title="O Mérite só classifica quem tem provas suficientes; os outros aparecem sem lugar">
           Só classificados
         </button>
-        <span className="muted fs-12" style={{ marginLeft: "auto" }}>{sorted.length.toLocaleString("pt")} jogadores</span>
+        <span className="muted fs-12 u-ml-auto">{sorted.length.toLocaleString("pt")} jogadores</span>
       </div>
 
       {sorted.length === 0 ? (
         <EmptyState size="md" message="Nenhum jogador corresponde aos filtros." />
       ) : (
         <>
-          <div style={{ overflowX: "auto", paddingBottom: 8 }}>
-            <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-12)" }}>
+          <div className="u-ox-auto u-pb-8px">
+            <table className="player-list-table u-w-100pc u-fs-fs-12">
               <thead>
                 <tr>
                   {hdr("rank", "Lugar", "num")}
@@ -213,46 +213,46 @@ export function FFGMeriteView() {
                   return (
                     <Fragment key={id}>
                       <tr onClick={() => toggleOpen(id)} style={{ cursor: "pointer", background: destaque ? "var(--bg-success-subtle)" : undefined }}>
-                        <td style={{ textAlign: "right", whiteSpace: "nowrap", fontWeight: 600 }}>
+                        <td className="u-ta-right u-ws-nowrap u-fw-600">
                           {r.rank != null ? `${r.rank}.º` : MUTED}<Evolucao rank={r.rank} prev={r.rankPrev} />
                         </td>
-                        <td style={{ fontWeight: 600, whiteSpace: "nowrap" }}>
-                          <span className="muted fs-11" style={{ marginRight: 4 }}>{isOpen ? "▾" : "▸"}</span>
-                          {r.pt && <span title="Português" style={{ marginRight: 4 }}>🇵🇹</span>}
+                        <td className="u-fw-600 u-ws-nowrap">
+                          <span className="muted fs-11 u-mr-4px">{isOpen ? "▾" : "▸"}</span>
+                          {r.pt && <span title="Português" className="u-mr-4px">🇵🇹</span>}
                           {r.name}
-                          {/PRO/i.test(r.statut ?? "") && <span className="muted fs-11" style={{ marginLeft: 4 }} title="Passou a profissional este ano (fica até ao fecho do Mérite)">PRO</span>}
+                          {/PRO/i.test(r.statut ?? "") && <span className="muted fs-11 u-ml-4px" title="Passou a profissional este ano (fica até ao fecho do Mérite)">PRO</span>}
                         </td>
-                        <td style={{ whiteSpace: "nowrap" }}>
-                          {r.cat ? <span className="fs-11" style={{ marginRight: 4 }}>{r.cat}</span> : MUTED}
+                        <td className="u-ws-nowrap">
+                          {r.cat ? <span className="fs-11 u-mr-4px">{r.cat}</span> : MUTED}
                           {r.sub && <EscPill esc={r.sub} />}
                         </td>
-                        <td style={{ textAlign: "right" }}>{r.by ?? MUTED}</td>
+                        <td className="u-ta-right">{r.by ?? MUTED}</td>
                         <td>{r.golf || MUTED}</td>
-                        <td style={{ textAlign: "right" }}>{r.idx != null ? r.idx.toFixed(1) : MUTED}</td>
-                        <td style={{ textAlign: "right" }}>{fmtSigned(r.moy)}</td>
-                        <td style={{ textAlign: "right" }}>{fmtSigned(r.moy6)}</td>
-                        <td style={{ textAlign: "right" }}>{r.nbt || MUTED}</td>
-                        <td style={{ textAlign: "right" }}>{r.div ?? MUTED}</td>
-                        <td style={{ textAlign: "right", fontWeight: 600 }}>{r.total != null && r.total > 0 ? r.total.toFixed(2) : MUTED}</td>
-                        <td style={{ textAlign: "right" }}>{r.rankAnn ? `${r.rankAnn}.º` : MUTED}</td>
+                        <td className="u-ta-right">{r.idx != null ? r.idx.toFixed(1) : MUTED}</td>
+                        <td className="u-ta-right">{fmtSigned(r.moy)}</td>
+                        <td className="u-ta-right">{fmtSigned(r.moy6)}</td>
+                        <td className="u-ta-right">{r.nbt || MUTED}</td>
+                        <td className="u-ta-right">{r.div ?? MUTED}</td>
+                        <td className="u-ta-right u-fw-600">{r.total != null && r.total > 0 ? r.total.toFixed(2) : MUTED}</td>
+                        <td className="u-ta-right">{r.rankAnn ? `${r.rankAnn}.º` : MUTED}</td>
                       </tr>
                       {isOpen && (
                         <tr className="player-list-row-detail">
-                          <td colSpan={COLS} style={{ background: "var(--bg-detail)", padding: "4px 12px 8px" }}>
+                          <td colSpan={COLS} className="u-bg-bg-detail u-p-4px-12px-8px">
                             {prov?.length ? (
-                              <table style={{ width: "100%", fontSize: "var(--fs-11)" }}>
+                              <table className="u-w-100pc u-fs-fs-11">
                                 <thead>
                                   <tr><th>Data</th><th>Prova</th><th>Lugar</th><th className="num">Voltas</th><th className="num">Pontos</th><th className="num">Média vs SSS</th></tr>
                                 </thead>
                                 <tbody>
                                   {prov.map(([trnId, date, nome, lugar, t, pts, moy], i) => (
                                     <tr key={i}>
-                                      <td style={{ whiteSpace: "nowrap" }}>{isoToBr(date)}</td>
+                                      <td className="u-ws-nowrap">{isoToBr(date)}</td>
                                       <td>{trnId ? <Link to={`/ffg/t/${encodeURIComponent(`ffgres:${trnId}`)}`}>{nome}</Link> : nome}</td>
-                                      <td style={{ whiteSpace: "nowrap" }}>{lugar || MUTED}</td>
-                                      <td style={{ textAlign: "right" }}>{t.length ? t.join(" · ") : MUTED}</td>
-                                      <td style={{ textAlign: "right" }}>{pts != null ? pts.toFixed(2) : MUTED}</td>
-                                      <td style={{ textAlign: "right" }}>{fmtSigned(moy)}</td>
+                                      <td className="u-ws-nowrap">{lugar || MUTED}</td>
+                                      <td className="u-ta-right">{t.length ? t.join(" · ") : MUTED}</td>
+                                      <td className="u-ta-right">{pts != null ? pts.toFixed(2) : MUTED}</td>
+                                      <td className="u-ta-right">{fmtSigned(moy)}</td>
                                     </tr>
                                   ))}
                                 </tbody>
@@ -269,10 +269,10 @@ export function FFGMeriteView() {
           </div>
 
           {totalPages > 1 && (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, padding: "12px 0", fontSize: "var(--fs-12)" }}>
+            <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
               <button onClick={() => setPage(1)} disabled={page === 1} className="btn-pill">«</button>
               <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-pill">‹</button>
-              <span style={{ minWidth: 90, textAlign: "center" }}>Página <b>{page}</b> de {totalPages}</span>
+              <span className="u-minw-90px u-ta-center">Página <b>{page}</b> de {totalPages}</span>
               <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="btn-pill">›</button>
               <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="btn-pill">»</button>
             </div>
@@ -280,7 +280,7 @@ export function FFGMeriteView() {
         </>
       )}
 
-      <div className="muted fs-11" style={{ marginTop: 16, textAlign: "center" }}>
+      <div className="muted fs-11 u-mt-16px u-ta-center">
         Fonte: <a href={`https://pages.ffgolf.org/merite/jeunes/${sex === "M" ? "messieurs" : "dames"}`} target="_blank" rel="noreferrer">Mérite National Jeunes — FFG</a>
         {" "}(<code>ffgolf-merite-ranking.json</code>, actualizado todos os meses).
       </div>

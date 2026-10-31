@@ -320,11 +320,11 @@ export default function ByCourseView({ data, search, sort }: {
   return (
     <div className="card">
       <div className="scroll-x">
-        <table className="dtable-lg dtable-roomy dtable-dense" style={{ tableLayout: "fixed" }}>
+        <table className="dtable-lg dtable-roomy dtable-dense u-table-layout-fixed">
           <colgroup>
-            <col style={{ width: "72px" }} /><col /><col style={{ width: "72px" }} />
-            <col style={{ width: "44px" }} /><col style={{ width: "46px" }} /><col style={{ width: "92px" }} />
-            <col style={{ width: "60px" }} /><col style={{ width: "64px" }} /><col style={{ width: "44px" }} /><col style={{ width: "54px" }} />
+            <col className="u-w-72px" /><col /><col className="u-w-72px" />
+            <col className="u-w-44px" /><col className="u-w-46px" /><col className="u-w-92px" />
+            <col className="u-w-60px" /><col className="u-w-64px" /><col className="u-w-44px" /><col className="u-w-54px" />
           </colgroup>
           <thead>
             <tr>

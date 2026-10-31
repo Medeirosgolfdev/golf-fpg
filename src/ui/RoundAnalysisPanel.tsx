@@ -15,7 +15,7 @@ const TONE_ICON: Record<Insight["tone"], string> = { good: "▲", bad: "▼", ne
 
 function Line({ i }: { i: Insight }) {
   return (
-    <li className="fs-13" style={{ display: "flex", gap: 8, alignItems: "baseline", lineHeight: 1.45 }}>
+    <li className="fs-13 u-d-flex u-gap-8px u-ai-baseline u-lh-1_45">
       <span style={{ color: TONE_COLOR[i.tone], fontSize: "var(--fs-10)", flexShrink: 0, width: 10 }}>{TONE_ICON[i.tone]}</span>
       <span>{i.text}</span>
     </li>
@@ -33,11 +33,11 @@ export default function RoundAnalysisPanel({ options, defaultKey, only }: { opti
   return (
     <details className="mt-12" open>
       <summary className="sim-section-toggle">{only ? `🧠 Análise R${only} vs R${only - 1}` : "🧠 Análise das voltas"}</summary>
-      <div className="mt-8" style={{ maxWidth: 760 }}>
+      <div className="mt-8 u-maxw-760px">
         {options.length > 1 && (
-          <label className="fs-12 mb-8" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <label className="fs-12 mb-8 u-d-flex u-ai-center u-gap-8px">
             Jogador
-            <select className="input" style={{ minWidth: 280 }} value={cur.key} onChange={(e) => setSel(e.target.value)}>
+            <select className="input u-minw-280px" value={cur.key} onChange={(e) => setSel(e.target.value)}>
               {options.map((o) => <option key={o.key} value={o.key}>{o.label.replace(/^Torneio · /, "")}</option>)}
             </select>
           </label>
@@ -45,14 +45,14 @@ export default function RoundAnalysisPanel({ options, defaultKey, only }: { opti
         {an.rounds.filter((b) => !only || b.round === only).reverse().map((b) => (
           <div key={b.round} className="mb-8">
             {!only && <div className="fw-700 fs-13 mb-4">R{b.round} vs R{b.prev}</div>}
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+            <ul className="u-list-style-none u-p-0 u-m-0 u-d-flex u-fd-column u-gap-3px">
               {b.insights.map((x, k) => <Line key={k} i={x} />)}
             </ul>
           </div>
         ))}
         {!only && <>
           <div className="fw-700 fs-13 mb-4">No torneio</div>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+          <ul className="u-list-style-none u-p-0 u-m-0 u-d-flex u-fd-column u-gap-3px">
             {an.tournament.map((x, k) => <Line key={k} i={x} />)}
           </ul>
         </>}

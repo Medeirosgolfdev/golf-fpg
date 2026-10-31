@@ -131,10 +131,10 @@ export default function TournamentWeather({
 
   return (
     <div
-      className="tourn-weather gap-4"
-      style={{ display: "flex", alignItems: "center", flexWrap: "wrap", marginTop: 6, rowGap: 4 }}
+      className="tourn-weather gap-4 u-d-flex u-ai-center u-fwr-wrap u-mt-6pxx u-row-gap-4px"
+
     >
-      <span className="c-muted fs-11" style={{ fontWeight: 600 }}>
+      <span className="c-muted fs-11 u-fw-600">
         Tempo{approx ? "*" : ""}:
       </span>
       {days.map(({ date, wx: d }) => {
@@ -142,12 +142,8 @@ export default function TournamentWeather({
         return (
           <span
             key={date}
-            className="p p-sm"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 4,
-              background: "var(--bg-muted)", color: "var(--text-2)",
-              border: "1px solid var(--border)", whiteSpace: "nowrap",
-            }}
+            className="p p-sm u-d-inline-flex u-ai-center u-gap-4px u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border u-ws-nowrap"
+
             title={
               `${dowLabel(date)} ${date} — ${w.label}\n` +
               `Temp: ${Math.round(d.tmin)}–${Math.round(d.tmax)} °C\n` +
@@ -156,14 +152,14 @@ export default function TournamentWeather({
             }
           >
             <span className="c-muted fs-10">{dowLabel(date)}</span>
-            <span style={{ fontSize: "var(--fs-13)" }}>{w.icon}</span>
+            <span className="u-fs-fs-13">{w.icon}</span>
             <span>{Math.round(d.tmax)}°</span>
             <span className="c-muted fs-10">💨{Math.round(d.wind)}</span>
             {d.prcp >= 0.2 && <span className="c-muted fs-10">🌧{d.prcp.toFixed(d.prcp < 1 ? 1 : 0)}</span>}
           </span>
         );
       })}
-      <span className="fs-10 c-muted" style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+      <span className="fs-10 c-muted u-d-inline-flex u-gap-6px u-ai-center">
         <ExtLink href={omLink} className="tourn-ext-link" title="Open-Meteo (fonte dos dados)">Open-Meteo ↗</ExtLink>
         <ExtLink href={mbLink} className="tourn-ext-link" title="Meteoblue">Meteoblue ↗</ExtLink>
         <ExtLink href={windyLink} className="tourn-ext-link" title="Windy">Windy ↗</ExtLink>

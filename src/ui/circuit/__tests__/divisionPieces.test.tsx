@@ -33,7 +33,7 @@ describe("divisionResultsNode — só totais como dados", () => {
       extra: [{ header: "PTS", title: "Pontos", field: "points", decimals: 2 }],
     } };
     const aMao = <TotalsResumo parPerRound={null} tournamentDate="2026-05-01" players={players}
-      notice={<div className="notice" style={{ marginBottom: 8 }} title="t">⚠ aviso</div>}
+      notice={<div className="notice u-mb-8px" title="t">⚠ aviso</div>}
       extra={[{ header: "PTS", title: "Pontos", value: (p) => (typeof p.points === "number" ? p.points.toFixed(2) : "–") }]} />;
     expect(html(divisionResultsNode(d))).toBe(html(aMao));
     expect(html(divisionResultsNode(d))).toContain("12.35");

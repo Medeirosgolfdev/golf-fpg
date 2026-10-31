@@ -178,15 +178,10 @@ export default function Sidebar({
   }, [data, manuel, q, countryFilter, activeSources, onlyVsManuel, onlyWins]);
 
   return (
-    <div className="kids2-sidebar" style={{
-      display: "flex",
-      flexDirection: "column",
-      minHeight: 0,
-      height: "100%",
-    }}>
-      <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border-light)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 8 }}>
-          <span style={{ marginLeft: "auto" }}>
+    <div className="kids2-sidebar u-d-flex u-fd-column u-minh-0 u-h-100pc">
+      <div className="u-p-10px-12px u-bb-1px-solid-border-light">
+        <div className="u-d-flex u-ai-center u-gap-8px u-fs-fs-11 u-c-text-3 u-mb-8px">
+          <span className="u-ml-auto">
             {totalFiltered === totalShown
               ? `${totalFiltered} de ${data.juniors.length}`
               : `${totalShown} de ${totalFiltered}`}
@@ -197,19 +192,11 @@ export default function Sidebar({
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Pesquisar rival..."
-          style={{
-            width: "100%",
-            padding: "6px 10px",
-            border: "1px solid var(--border)",
-            borderRadius: "var(--radius)",
-            fontSize: "var(--fs-13)",
-            background: "var(--bg)",
-            color: "var(--text)",
-          }}
+          className="u-w-100pc u-p-6px-10px u-bd-1px-solid-border u-br-radius u-fs-fs-13 u-bg-bg u-c-text"
         />
       </div>
 
-      <div style={{ flex: 1, overflowY: "auto" }}>
+      <div className="u-fl-1 u-oy-auto">
         {directos.length > 0 && (
           <>
             <SectionHeader color="var(--color-good-dark)" icon="⚔️">
@@ -230,11 +217,11 @@ export default function Sidebar({
                 onClick={() => toggleCountry(country)}
                 icon={flagE || "🌐"}
               >
-                <span style={{ flex: 1 }}>{country || "Sem país"}</span>
-                <span style={{ fontSize: "var(--fs-10)", opacity: 0.7, fontWeight: 600, marginRight: 4 }}>
+                <span className="u-fl-1">{country || "Sem país"}</span>
+                <span className="u-fs-fs-10 u-op-0_7 u-fw-600 u-mr-4px">
                   {juniors.length}{totalInCountry > juniors.length ? `/${totalInCountry}` : ""}
                 </span>
-                <span style={{ fontSize: "var(--fs-9)", opacity: 0.5 }}>{collapsed ? "▶" : "▼"}</span>
+                <span className="u-fs-fs-9 u-op-0_5">{collapsed ? "▶" : "▼"}</span>
               </SectionHeader>
               {!collapsed && juniors.map((j) => (
                 <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} sharedCount={sharedCountByJunior.get(j.id) || 0} />
@@ -243,7 +230,7 @@ export default function Sidebar({
           );
         })}
         {directos.length === 0 && byCountry.length === 0 && (
-          <div style={{ padding: "20px 12px", textAlign: "center", color: "var(--text-3)", fontSize: "var(--fs-12)" }}>
+          <div className="u-p-20px-12px u-ta-center u-c-text-3 u-fs-fs-12">
             Sem rivais com estes filtros
           </div>
         )}
@@ -280,7 +267,7 @@ function SectionHeader({ children, color, icon, onClick }: {
         letterSpacing: 0.4,
       }}
     >
-      {icon && <span style={{ fontSize: "var(--fs-13)", lineHeight: 1 }}>{icon}</span>}
+      {icon && <span className="u-fs-fs-13 u-lh-1">{icon}</span>}
       {children}
     </div>
   );
@@ -318,18 +305,18 @@ function RivalRow({ junior, manuel, selected, onSelect, sharedCount }: {
         fontSize: "var(--fs-12)",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-        <span style={{ fontSize: "var(--fs-13)", flexShrink: 0 }}>{flagEmoji}</span>
+      <div className="u-d-flex u-ai-center u-gap-6px">
+        <span className="u-fs-fs-13 u-fsh-0">{flagEmoji}</span>
         <span style={{ flex: 1, fontWeight: selected ? 700 : 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {junior.canonicalName}
-          {isManuel && <span style={{ marginLeft: 4, fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: "var(--radius-sm)", background: "var(--bg-success-subtle)", color: "var(--color-good-dark)", fontWeight: 700 }}>REF</span>}
+          {isManuel && <span className="u-ml-4px u-fs-fs-9 u-p-1px-5px u-br-radius-sm u-bg-bg-success-subtle u-c-color-good-dark u-fw-700">REF</span>}
         </span>
-        <span style={{ flexShrink: 0, fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-3)" }}>{tournCount}</span>
+        <span className="u-fsh-0 u-fs-fs-11 u-fw-600 u-c-text-3">{tournCount}</span>
       </div>
-      <div style={{ paddingLeft: 19, display: "flex", alignItems: "center", gap: 6, fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 2 }}>
-        {club && <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>🏌️ {club}</span>}
+      <div className="u-pl-19px u-d-flex u-ai-center u-gap-6px u-fs-fs-10 u-c-text-3 u-mt-2px">
+        {club && <span className="u-ov-hidden u-tov-ellipsis u-ws-nowrap">🏌️ {club}</span>}
         {shared > 0 && (
-          <span style={{ marginLeft: "auto", padding: "0 5px", borderRadius: "var(--radius-sm)", background: "var(--bg-warn-subtle, var(--bg-warn))", color: "var(--color-warn-dark, var(--color-warn-dark))", fontWeight: 700 }}>
+          <span className="u-ml-auto u-p-0-5px u-br-radius-sm u-bg-var-bg-warn-subtle-bg-warn u-c-1b214 u-fw-700">
             {shared}× M
           </span>
         )}

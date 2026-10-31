@@ -260,7 +260,7 @@ function FedTable({ rows, columns }: { rows: RFEGFederation[]; columns: FedColum
     : rows;
 
   return (
-    <div style={{ overflowX: "auto" }}>
+    <div className="u-ox-auto">
       <table className="dtable">
         <thead>
           <tr>
@@ -331,7 +331,7 @@ export function RFEGFederationsView() {
         }
       />
 
-      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, var(--color-rfeg-yellow))", borderRadius: "var(--radius)", fontSize: "var(--fs-12)" }}>
+      <div className="u-mt-12px u-p-10px-12px u-bg-var-bg-muted-fff7e6 u-bd-1epci u-br-radius u-fs-fs-12">
         <strong>⚠ Estrutura federativa do golfe espanhol.</strong> A nível nacional
         existe a <strong>RFEG</strong> (Madrid, sede do golfe federado). Sob a sua tutela
         coexistem <strong>19 federações territoriais</strong> que organizam circuitos
@@ -340,33 +340,33 @@ export function RFEGFederationsView() {
         joga em Madrid com a mesma licença.
       </div>
 
-      <div style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
-        <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
-          <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--color-good)" }}>{ncFeds.length}</div>
+      <div className="u-mt-16px u-d-grid u-grid-template-columns-1bho3 u-gap-12px">
+        <div className="u-p-12px u-bg-var-bg-muted-f5f5f5 u-br-radius u-bd-1px-solid-border">
+          <div className="u-fs-fs-24 u-fw-700 u-c-color-good">{ncFeds.length}</div>
           <div className="fs-11 muted">via NextCaddy (scrapadas)</div>
-          <div className="fs-10" style={{ marginTop: 4 }}>{totalScraped} torneios indexados</div>
+          <div className="fs-10 u-mt-4px">{totalScraped} torneios indexados</div>
         </div>
-        <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
-          <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--color-good)" }}>{gdFeds.length}</div>
+        <div className="u-p-12px u-bg-var-bg-muted-f5f5f5 u-br-radius u-bd-1px-solid-border">
+          <div className="u-fs-fs-24 u-fw-700 u-c-color-good">{gdFeds.length}</div>
           <div className="fs-11 muted">via GolfDirecto (scrapada)</div>
-          <div className="fs-10" style={{ marginTop: 4 }}>{totalGdScraped} games descobertos</div>
+          <div className="fs-10 u-mt-4px">{totalGdScraped} games descobertos</div>
         </div>
-        <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
-          <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--text-2)" }}>{ownFeds.length}</div>
+        <div className="u-p-12px u-bg-var-bg-muted-f5f5f5 u-br-radius u-bd-1px-solid-border">
+          <div className="u-fs-fs-24 u-fw-700 u-c-text-2">{ownFeds.length}</div>
           <div className="fs-11 muted">com site próprio</div>
-          <div className="fs-10" style={{ marginTop: 4 }}>sem dados scrapados</div>
+          <div className="fs-10 u-mt-4px">sem dados scrapados</div>
         </div>
-        <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
-          <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--text-3)" }}>{emptyFeds.length}</div>
+        <div className="u-p-12px u-bg-var-bg-muted-f5f5f5 u-br-radius u-bd-1px-solid-border">
+          <div className="u-fs-fs-24 u-fw-700 u-c-text-3">{emptyFeds.length}</div>
           <div className="fs-11 muted">delegações</div>
-          <div className="fs-10" style={{ marginTop: 4 }}>Ceuta + Melilla</div>
+          <div className="fs-10 u-mt-4px">Ceuta + Melilla</div>
         </div>
       </div>
-      <div className="fs-11 muted" style={{ marginTop: 8 }}>
+      <div className="fs-11 muted u-mt-8px">
         <strong>{trackedTotal}</strong> federações com plataforma rastreada (NextCaddy + GolfDirecto).
       </div>
 
-      <h3 style={{ marginTop: 24, marginBottom: 8 }}>✅ Federações com NextCaddy (rastreadas)</h3>
+      <h3 className="u-mt-24px u-mb-8px">✅ Federações com NextCaddy (rastreadas)</h3>
       <FedTable
         rows={ncFeds}
         columns={[
@@ -409,8 +409,8 @@ export function RFEGFederationsView() {
         ]}
       />
 
-      <h3 style={{ marginTop: 24, marginBottom: 8 }}>🟢 Federações com GolfDirecto (rastreadas)</h3>
-      <p className="fs-11 muted" style={{ marginBottom: 8 }}>
+      <h3 className="u-mt-24px u-mb-8px">🟢 Federações com GolfDirecto (rastreadas)</h3>
+      <p className="fs-11 muted u-mb-8px">
         Plataforma <code>golfdirecto.com</code> — SPA com API JSON pública (sem auth). Discovery via{" "}
         <code>catgolf.com</code> que linka aos game IDs em <code>/micro/game/&#123;id&#125;</code>.
         Plataforma legacy (2018-2023): <ExtLink href="https://open.imaster.golf/" className="tourn-ext-link">open.imaster.golf</ExtLink>{" "}
@@ -426,7 +426,7 @@ export function RFEGFederationsView() {
               <>
                 <strong>{f.name}</strong>
                 {f.notes && (
-                  <div className="fs-10 muted" style={{ marginTop: 2 }}>{f.notes}</div>
+                  <div className="fs-10 muted u-mt-2px">{f.notes}</div>
                 )}
               </>
             ),
@@ -463,8 +463,8 @@ export function RFEGFederationsView() {
         ]}
       />
 
-      <h3 style={{ marginTop: 24, marginBottom: 8 }}>🔵 Federações com sistema próprio (não rastreadas)</h3>
-      <p className="fs-11 muted" style={{ marginBottom: 8 }}>
+      <h3 className="u-mt-24px u-mb-8px">🔵 Federações com sistema próprio (não rastreadas)</h3>
+      <p className="fs-11 muted u-mb-8px">
         Estas federações organizam os seus circuitos em sistemas internos (não NextCaddy
         nem GolfDirecto). Para apanhar dados delas seria preciso scraper específico por
         federação. Os jogadores destas federações <em>aparecem</em> nos torneios scrapados
@@ -500,7 +500,7 @@ export function RFEGFederationsView() {
         ]}
       />
 
-      <h3 style={{ marginTop: 24, marginBottom: 8 }}>⚪ Delegações de cidades autónomas</h3>
+      <h3 className="u-mt-24px u-mb-8px">⚪ Delegações de cidades autónomas</h3>
       <FedTable
         rows={emptyFeds}
         columns={[
@@ -533,9 +533,9 @@ export function RFEGFederationsView() {
         ]}
       />
 
-      <div style={{ marginTop: 24 }}>
-        <h3 style={{ marginBottom: 8 }}>🌐 Plataformas onde aparecem os resultados</h3>
-        <ul style={{ fontSize: "var(--fs-12)", marginTop: 8 }}>
+      <div className="u-mt-24px">
+        <h3 className="u-mb-8px">🌐 Plataformas onde aparecem os resultados</h3>
+        <ul className="u-fs-fs-12 u-mt-8px">
           <li>
             <strong>RFEG nacional</strong> — campeonatos nacionais (juvenis, masc., fem.,
             profissionais). Dados vêm de <code>rfegolf.es</code> (microsite com inscrições + DOB)
@@ -561,9 +561,9 @@ export function RFEGFederationsView() {
         </ul>
       </div>
 
-      <div className="muted fs-11" style={{ marginTop: 24 }}>
+      <div className="muted fs-11 u-mt-24px">
         <strong>Notas:</strong>
-        <ul style={{ marginTop: 4 }}>
+        <ul className="u-mt-4px">
           <li>
             Os prefixos de licença são heurísticos a partir das amostras vistas — alguns
             podem variar (e.g. País Vasco emite licenças com formatos não-standard).

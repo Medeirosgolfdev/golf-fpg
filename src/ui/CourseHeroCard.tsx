@@ -103,13 +103,7 @@ function InfoIcon({ title }: { title: string }) {
   return (
     <span
       title={title}
-      style={{
-        display: "inline-flex", alignItems: "center", justifyContent: "center",
-        width: 14, height: 14, borderRadius: "50%",
-        background: "var(--bg-muted)", color: "var(--text-2)",
-        fontSize: "var(--fs-9)", fontWeight: 800, marginLeft: 4, cursor: "help",
-        fontFamily: "system-ui, sans-serif",
-      }}
+      className="u-d-inline-flex u-ai-center u-jc-center u-w-14px u-h-14px u-br-50pc u-bg-bg-muted u-c-text-2 u-fs-fs-9 u-fw-800 u-ml-4px u-cur-help u-ff-system-ui-sans-serif"
     >ⓘ</span>
   );
 }
@@ -134,11 +128,11 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
 
   return (
     <div className="card">
-      <div className="h-md" style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-        <span style={{ fontSize: "var(--fs-18)" }}>⛳ {course.master.name}</span>
-        <span className="muted" style={{ fontSize: "var(--fs-13)", fontWeight: 500 }}>· {tee.teeName}</span>
+      <div className="h-md u-d-flex u-ai-baseline u-gap-8px u-fwr-wrap">
+        <span className="u-fs-fs-18">⛳ {course.master.name}</span>
+        <span className="muted u-fs-fs-13 u-fw-500">· {tee.teeName}</span>
         {course.master.country && (
-          <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)" }}>
+          <span className="p p-sm u-bg-bg-muted u-c-text-2">
             {course.master.country}
           </span>
         )}
@@ -146,37 +140,37 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
 
       <div className="haDiag">
         <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: "var(--bg-info-strong)" }}>📏</div>
+          <div className="haDiagIcon u-bg-bg-info-strong">📏</div>
           <div>
             <div className="haDiagVal">
               {distance ?? "–"}
-              <span style={{ fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text-3)", marginLeft: 4 }}>m</span>
+              <span className="u-fs-fs-13 u-fw-600 u-c-text-3 u-ml-4px">m</span>
             </div>
             <div className="haDiagLbl">Distância total</div>
           </div>
         </div>
         <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: "var(--accent-light)" }}>⛳</div>
+          <div className="haDiagIcon u-bg-accent-light">⛳</div>
           <div>
             <div className="haDiagVal">{parTotal || "–"}</div>
             <div className="haDiagLbl">Par total · {totalParHoles} buracos</div>
           </div>
         </div>
         <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: "var(--bg-warn)" }}>📐</div>
+          <div className="haDiagIcon u-bg-bg-warn">📐</div>
           <div>
             <div className="haDiagVal">{slope != null ? slope.toFixed(0) : "–"}</div>
-            <div className="haDiagLbl" style={{ display: "flex", alignItems: "center" }}>
+            <div className="haDiagLbl u-d-flex u-ai-center">
               Slope rating
               <InfoIcon title={SLOPE_INFO} />
             </div>
           </div>
         </div>
         <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: "var(--bg-success-strong)" }}>🎯</div>
+          <div className="haDiagIcon u-bg-bg-success-strong">🎯</div>
           <div>
             <div className="haDiagVal">{cr != null ? cr.toFixed(1) : "–"}</div>
-            <div className="haDiagLbl" style={{ display: "flex", alignItems: "center" }}>
+            <div className="haDiagLbl u-d-flex u-ai-center">
               Course rating
               <InfoIcon title={CR_INFO} />
             </div>
@@ -186,9 +180,9 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
 
       {totalParHoles > 0 && (
         <>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 18, marginBottom: 10, flexWrap: "wrap" }}>
-            <div className="h-xs" style={{ marginBottom: 0 }}>Vista do campo</div>
-            <div style={{ display: "inline-flex", gap: 2, padding: 2, background: "var(--bg-muted)", borderRadius: 8 }}>
+          <div className="u-d-flex u-ai-center u-gap-8px u-mt-18px u-mb-10px u-fwr-wrap">
+            <div className="h-xs u-mb-0">Vista do campo</div>
+            <div className="u-d-inline-flex u-gap-2px u-p-2px u-bg-bg-muted u-br-8px">
               {(["par", "buraco"] as const).map(m => (
                 <button
                   key={m}
@@ -206,7 +200,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                 </button>
               ))}
             </div>
-            <span className="muted" style={{ fontSize: "var(--fs-11)", fontWeight: 500 }}>
+            <span className="muted u-fs-fs-11 u-fw-500">
               {viewMode === "par"
                 ? "Distância dentro de cada par (claro → escuro)"
                 : "Sequência B1→B18 (cor = par; lightness = comprimento relativo)"}
@@ -232,26 +226,26 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   <div key={p.par} className="haParCard" style={{ borderLeft: "3px solid " + accentColor, padding: "12px 16px" }}>
                     <div style={{ color: accentColor, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: "var(--fs-16)", fontWeight: 800, marginBottom: 4 }}>
                       <span>Par {p.par}</span>
-                      <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-13)" }}>
+                      <span className="muted u-fw-500 u-fs-fs-13">
                         {p.count} buraco{p.count === 1 ? "" : "s"} · {pct}%
                       </span>
                     </div>
                     {p.avgDistance != null && (
-                      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
-                        Média <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{Math.round(p.avgDistance)}m</span>
-                        {p.totalDistance > 0 && <> · Total <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{p.totalDistance}m</span></>}
+                      <div className="u-fs-fs-11 u-c-text-3 u-mb-10px">
+                        Média <span className="u-fw-700 u-c-text-2">{Math.round(p.avgDistance)}m</span>
+                        {p.totalDistance > 0 && <> · Total <span className="u-fw-700 u-c-text-2">{p.totalDistance}m</span></>}
                       </div>
                     )}
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                    <div className="u-d-flex u-fwr-wrap u-gap-10px">
                       {p.holes.map(h => {
                         const col = holeColor(p.par, tFor(h.distance ?? 0));
                         return (
                           <span
                             key={h.hole}
-                            style={{ display: "inline-flex", alignItems: "baseline", gap: 4, fontFamily: "var(--font-mono)" }}
+                            className="u-d-inline-flex u-ai-baseline u-gap-4px u-ff-font-mono"
                             title={`Buraco ${h.hole} · ${h.distance ?? "—"}m`}
                           >
-                            <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-3)" }}>B{h.hole}</span>
+                            <span className="u-fs-fs-11 u-fw-700 u-c-text-3">B{h.hole}</span>
                             <span
                               className="p"
                               style={{
@@ -295,11 +289,11 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                         fontFamily: "var(--font-mono)",
                       }}
                     >
-                      <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, opacity: 0.85 }}>B{h.hole}</span>
-                      <span style={{ fontSize: "var(--fs-15)", fontWeight: 800, lineHeight: 1.1, marginTop: 2 }}>
-                        {h.distance != null && h.distance > 0 ? <>{h.distance}<span style={{ fontSize: "var(--fs-10)", fontWeight: 600, opacity: 0.85, marginLeft: 1 }}>m</span></> : "—"}
+                      <span className="u-fs-fs-10 u-fw-700 u-op-0_85">B{h.hole}</span>
+                      <span className="u-fs-fs-15 u-fw-800 u-lh-1_1 u-mt-2px">
+                        {h.distance != null && h.distance > 0 ? <>{h.distance}<span className="u-fs-fs-10 u-fw-600 u-op-0_85 u-ml-1px">m</span></> : "—"}
                       </span>
-                      <span style={{ fontSize: "var(--fs-9)", fontWeight: 600, opacity: 0.75, marginTop: 1 }}>
+                      <span className="u-fs-fs-9 u-fw-600 u-op-0_75 u-mt-1px">
                         par {h.par ?? "?"}
                       </span>
                     </div>
@@ -311,25 +305,25 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   arr.reduce((s, h) => s + (h.par ?? 0), 0);
 
                 return (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                  <div className="u-d-flex u-fd-column u-gap-14px">
                     {front9.length > 0 && (
                       <div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
-                          <span className="h-xs" style={{ marginBottom: 0 }}>Front 9</span>
+                        <div className="u-d-flex u-jc-space-between u-ai-baseline u-mb-6px u-fs-fs-11 u-c-text-3">
+                          <span className="h-xs u-mb-0">Front 9</span>
                           <span>Par {sumPar(front9)} · {sumDist(front9)}m</span>
                         </div>
-                        <div style={{ display: "flex", gap: 4 }}>
+                        <div className="u-d-flex u-gap-4px">
                           {front9.map(renderHole)}
                         </div>
                       </div>
                     )}
                     {back9.length > 0 && (
                       <div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
-                          <span className="h-xs" style={{ marginBottom: 0 }}>Back 9</span>
+                        <div className="u-d-flex u-jc-space-between u-ai-baseline u-mb-6px u-fs-fs-11 u-c-text-3">
+                          <span className="h-xs u-mb-0">Back 9</span>
                           <span>Par {sumPar(back9)} · {sumDist(back9)}m</span>
                         </div>
-                        <div style={{ display: "flex", gap: 4 }}>
+                        <div className="u-d-flex u-gap-4px">
                           {back9.map(renderHole)}
                         </div>
                       </div>
@@ -337,11 +331,11 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   </div>
                 );
               })()}
-              <div style={{ display: "flex", gap: 16, marginTop: 12, flexWrap: "wrap", fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+              <div className="u-d-flex u-gap-16px u-mt-12px u-fwr-wrap u-fs-fs-11 u-c-text-3">
                 {([3, 4, 5] as const).map(p => {
                   const sample = holeColor(p, 0.6);
                   return (
-                    <span key={p} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                    <span key={p} className="u-d-inline-flex u-ai-center u-gap-6px">
                       <span style={{
                         width: 16, height: 16, borderRadius: "var(--radius-sm)",
                         background: sample.bg,

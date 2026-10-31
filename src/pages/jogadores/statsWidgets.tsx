@@ -68,8 +68,8 @@ export function MFColumn({ m, f, barHeight, width = "85%", minWidth, shadow }: {
 export function MFLegend({ long, gap = 10 }: { long?: boolean; gap?: number }) {
   return (
     <div style={{ display: "flex", gap, fontSize: "var(--fs-10)" }}>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="M" /> {long ? "Masculino" : "M"}</span>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="F" /> {long ? "Feminino" : "F"}</span>
+      <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="M" /> {long ? "Masculino" : "M"}</span>
+      <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="F" /> {long ? "Feminino" : "F"}</span>
     </div>
   );
 }

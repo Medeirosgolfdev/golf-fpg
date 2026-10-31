@@ -12,11 +12,11 @@ import { OmRankingTab } from "./fpg/fpgOmRanking";
 
 export default function OmCgssPage() {
   return (
-    <div className="page-full" style={{ maxWidth: "none" }}>
+    <div className="page-full u-maxw-none">
       <Toolbar>
         <ToolbarTitle>🏅 Ordem de Mérito Júnior — CG Santo da Serra</ToolbarTitle>
       </Toolbar>
-      <div style={{ padding: "8px 12px" }}>
+      <div className="u-p-8px-12px">
         <OmRankingTab tournament={null} level={null} />
       </div>
     </div>

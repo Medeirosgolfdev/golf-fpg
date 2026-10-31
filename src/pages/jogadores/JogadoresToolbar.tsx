@@ -151,44 +151,28 @@ export default function JogadoresToolbar({
           )}
         </div>
         {viewMode === "todos" && federadosError && (
-          <div className="muted fs-10 fw-600" style={{ color: "var(--color-warn-vivid)" }}>
+          <div className="muted fs-10 fw-600 u-c-color-warn-vivid">
             ⚠ Erro a carregar federados.json: {federadosError}
           </div>
         )}
         <ToolbarSep />
         {/* Pesquisa — padrão unificado da FPGPage (type=search + 🔎 + ×) */}
-        <div style={{ flexShrink: 0, position: "relative", display: "inline-flex", alignItems: "center" }}>
-          <span aria-hidden="true" style={{
-            position: "absolute", left: 8, fontSize: "var(--fs-11)", color: "var(--text-muted)", pointerEvents: "none",
-          }}>🔎</span>
+        <div className="u-fsh-0 u-pos-relative u-d-inline-flex u-ai-center">
+          <span aria-hidden="true" className="u-pos-absolute u-left-8px u-fs-fs-11 u-c-text-muted u-pointer-events-none">🔎</span>
           <input
             type="search"
             value={filters.q}
             onChange={e => update({ q: e.target.value })}
             placeholder="nome, clube, nº fed…"
             aria-label="Pesquisar jogadores"
-            style={{
-              fontSize: "var(--fs-12)",
-              padding: "4px 22px 4px 24px",
-              width: 180,
-              border: "1px solid var(--border)",
-              borderRadius: 5,
-              background: "var(--bg-card)",
-              color: "var(--text)",
-              outline: "none",
-            }}
+            className="u-fs-fs-12 u-p-4px-22px-4px-24px u-w-180px u-bd-1px-solid-border u-br-5px u-bg-bg-card u-c-text u-outline-none"
           />
           {filters.q && (
             <button
               type="button"
               aria-label="Limpar pesquisa"
               onClick={() => update({ q: "" })}
-              style={{
-                position: "absolute", right: 2,
-                background: "none", border: "none", cursor: "pointer",
-                color: "var(--text-muted)", fontSize: "var(--fs-14)", padding: "0 4px",
-                lineHeight: 1,
-              }}
+              className="u-pos-absolute u-right-2px u-bg-none u-bd-none u-cur-pointer u-c-text-muted u-fs-fs-14 u-p-0-4px u-lh-1"
             >×</button>
           )}
         </div>
@@ -266,10 +250,10 @@ export default function JogadoresToolbar({
         {/* Limpar filtros + badge */}
         {activeFiltersCount > 0 && (
           <button
-            className="p"
+            className="p u-bg-color-warn-vivid u-c-fff u-gap-4px"
             onClick={clearAllFilters}
             title="Limpar todos os filtros activos (mantém ordenação e preferências)"
-            style={{ background: "var(--color-warn-vivid)", color: "#fff", gap: 4 }}
+
           >
             ✕ Limpar <span className="p-filter-count">{activeFiltersCount}</span>
           </button>
@@ -279,7 +263,7 @@ export default function JogadoresToolbar({
             do contador para o elemento na borda direita (scroll) ser o chip
             compacto e não um select meio-cortado. */}
         <select
-          className="input"
+          className="input u-fs-fs-12 u-p-3px-6px u-fsh-0"
           value=""
           onChange={e => {
             const v = e.target.value;
@@ -288,7 +272,7 @@ export default function JogadoresToolbar({
             else navigate(v);
             e.currentTarget.value = "";
           }}
-          style={{ fontSize: "var(--fs-12)", padding: "3px 6px", flexShrink: 0 }}
+
           title="Páginas relacionadas"
           aria-label="Páginas relacionadas"
         >
@@ -306,7 +290,7 @@ export default function JogadoresToolbar({
 
       {/* ── Painel secundário (linha 2) — filtros raros + preferências ── */}
       {panelOpen && (
-        <div style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-card)", padding: "8px 12px" }}>
+        <div className="u-bb-1px-solid-border u-bg-bg-card u-p-8px-12px">
           <div className="filter-grid">
             <FilterField label="SEXO">
               <select className="filter-input" value={filters.sexFilter} onChange={e => update({ sexFilter: e.target.value as SexFilter })}>
@@ -337,17 +321,17 @@ export default function JogadoresToolbar({
               </select>
             </FilterField>
             <FilterField label="HCP (DO / AO)">
-              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+              <div className="u-d-flex u-gap-4px u-ai-center">
                 <input
-                  className="filter-input" type="number" step="0.1" min="-10" max="54"
+                  className="filter-input u-w-68px" type="number" step="0.1" min="-10" max="54"
                   value={filters.hcpMin} onChange={e => update({ hcpMin: e.target.value })}
-                  placeholder="mín" aria-label="HCP mínimo" style={{ width: 68 }}
+                  placeholder="mín" aria-label="HCP mínimo"
                 />
                 <span className="muted fs-10">–</span>
                 <input
-                  className="filter-input" type="number" step="0.1" min="-10" max="54"
+                  className="filter-input u-w-68px" type="number" step="0.1" min="-10" max="54"
                   value={filters.hcpMax} onChange={e => update({ hcpMax: e.target.value })}
-                  placeholder="máx" aria-label="HCP máximo" style={{ width: 68 }}
+                  placeholder="máx" aria-label="HCP máximo"
                 />
               </div>
             </FilterField>
@@ -361,7 +345,7 @@ export default function JogadoresToolbar({
               </FilterField>
             )}
             <FilterField label="ORDENAR">
-              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+              <div className="u-d-flex u-gap-4px u-ai-center">
                 <select
                   className="filter-input"
                   value={filters.sortKey}
@@ -379,11 +363,11 @@ export default function JogadoresToolbar({
                   <option value="aces">🕳️ Hole-in-one</option>
                 </select>
                 <button
-                  className="tourn-tab tourn-tab-sm"
+                  className="tourn-tab tourn-tab-sm u-ws-nowrap u-fsh-0"
                   onClick={toggleSortDir}
                   title={filters.sortDir === "asc" ? "Ordem crescente (clica para inverter)" : "Ordem decrescente (clica para inverter)"}
                   aria-label={filters.sortDir === "asc" ? "Ordem crescente" : "Ordem decrescente"}
-                  style={{ whiteSpace: "nowrap", flexShrink: 0 }}
+
                 >
                   {filters.sortDir === "asc" ? "↑ asc" : "↓ desc"}
                 </button>
@@ -391,7 +375,7 @@ export default function JogadoresToolbar({
             </FilterField>
           </div>
           {/* Preferências + toggles raros — mesmos ToggleChip da landing */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8, alignItems: "center" }}>
+          <div className="u-d-flex u-fwr-wrap u-gap-6px u-mt-8px u-ai-center">
             <ToggleChip
               checked={filters.includeSeniors}
               onChange={v => update({ includeSeniors: v })}

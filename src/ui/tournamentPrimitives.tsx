@@ -59,7 +59,7 @@ export function TeeDot({ teeName }: { teeName?: string }) {
   const hex = getTeeHex(teeName);
   const border = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
   return (
-    <span title={teeName} style={{ display: "inline-flex", alignItems: "center", gap: 4, whiteSpace: "nowrap", cursor: "default" }}>
+    <span title={teeName} className="u-d-inline-flex u-ai-center u-gap-4px u-ws-nowrap u-cur-default">
       <span
         className="shrink-0"
         style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: hex, border, verticalAlign: "middle" }}
@@ -227,10 +227,10 @@ export function TournPName({
   const inner = (
     <>
       {flagEmoji && (
-        <span aria-label={country} title={country} style={{ marginRight: 4, fontSize: "1em", lineHeight: 1 }}>{flagEmoji}</span>
+        <span aria-label={country} title={country} className="u-mr-4px u-fs-1em u-lh-1">{flagEmoji}</span>
       )}
       {truncName}
-      {star && <span className="fs-10 print-hide-star" style={{ marginLeft: 3 }}>⭐</span>}
+      {star && <span className="fs-10 print-hide-star u-ml-3px">⭐</span>}
       {sex &&
  <SexBadge sex={sex} size="sm" className="ml-4" />}
     </>
@@ -240,9 +240,9 @@ export function TournPName({
       href={`/jogadores/${fedKey}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="tourn-pname tourn-pname-link"
+      className="tourn-pname tourn-pname-link u-c-inherit u-td-none"
       title={titleMsg}
-      style={{ color: "inherit", textDecoration: "none" }}
+
     >{inner}</a>
   ) : (
     <span className="tourn-pname" title={titleMsg}>{inner}</span>
@@ -256,7 +256,7 @@ export function TournPName({
           target="_blank"
           rel="noopener noreferrer"
           title="Ver em Kids"
-          style={{ marginLeft: 4, fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-11)", textDecoration: "none" }}>
+          className="u-ml-4px u-fw-800 u-c-color-good-dark u-fs-fs-11 u-td-none">
           ↗
         </a>
       )}

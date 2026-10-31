@@ -214,7 +214,7 @@ function TournamentGrid({
       groups={allTournaments.map((t) => ({
         key: t.key,
         headerTh: (
-          <th key={t.key} colSpan={7} className="cs-grp" style={{ lineHeight: 1.3 }}>
+          <th key={t.key} colSpan={7} className="cs-grp u-lh-1_3">
             <div className="fw-800 fs-13">{t.short}</div>
             <div className="c-muted fs-10-fw5">
               {shortDate(t.date)}
@@ -365,7 +365,7 @@ function TournamentGrid({
             className={"pointer" + (isManuel(p) ? " row-manuel" : "")}
             onClick={() => onPlayerClick(p.fed)}
           >
-            <td className="cs-pos sticky-col-0" style={{ whiteSpace: "nowrap" }}>
+            <td className="cs-pos sticky-col-0 u-ws-nowrap">
               {compareSel.checkbox(p.fed)}
               {gridPos.get(p.fed)}
             </td>
@@ -397,7 +397,7 @@ function TournamentGrid({
                   <td className="cs-t-topar cs-col" style={{ color: tpColor2(res.toPar) }}>
                     {fmtToPar(res.toPar)}
                   </td>
-                  <td className="cs-t-sd cs-col" style={{ borderLeft: "1px solid var(--border-light)" }}>
+                  <td className="cs-t-sd cs-col u-bl-1px-solid-border-light">
                     {res.sd != null ? (
                       <span className={"p p-sm p-" + sdClassByHcp(res.sd, p.hcp)}>
                         {res.sd.toFixed(1)}

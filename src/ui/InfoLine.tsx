@@ -59,9 +59,9 @@ export function TeeDistances({ list }: { list: { tee: string; meters: number }[]
   if (!list.length) return null;
   if (list.length === 1) return <InfoItem v={list[0].meters.toLocaleString("pt")} l="m" title={list[0].tee} />;
   return (
-    <span className="info-it" style={{ gap: 8 }}>
+    <span className="info-it u-gap-8px">
       {list.map(({ tee, meters }) => (
-        <span key={tee} title={tee} className="info-it" style={{ gap: 3 }}>
+        <span key={tee} title={tee} className="info-it u-gap-3px">
           <TeeSwatch tee={tee} /><b className="info-v">{meters.toLocaleString("pt")}</b><span className="info-l">m</span>
         </span>
       ))}

@@ -549,16 +549,16 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
     <div>
       {/* Manuel KPIs */}
       {manuelKpis && (
-        <div style={{ display:"flex", gap:6, flexWrap:"nowrap", overflowX:"auto", marginBottom:12, alignItems:"stretch", scrollbarWidth:"none" }}>
+        <div className="u-d-flex u-gap-6px u-fwr-nowrap u-ox-auto u-mb-12px u-ai-stretch u-scrollbar-width-none">
           <KpiCard
             label="MANUEL — TOTAL"
             labelStyle={{ color:"var(--color-info-alt)", fontSize: "var(--fs-9)", marginBottom:3 }}
             value={
-              <div style={{ display:"flex", gap:8, alignItems:"baseline" }}>
-                <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>T</span></span>
-                <span><span className="fw-800 fs-14">{manuelKpis.rondas}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>R</span></span>
-                {manuelKpis.avg && <span><span className="fw-700 fs-13">{manuelKpis.avg}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>avg</span></span>}
-                {manuelKpis.best && <span><span className="fw-700 fs-13" style={{ color:"var(--color-good-dark)" }}>{manuelKpis.best}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>min</span></span>}
+              <div className="u-d-flex u-gap-8px u-ai-baseline">
+                <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span className="u-fs-fs-9 u-c-text-3 u-ml-2px">T</span></span>
+                <span><span className="fw-800 fs-14">{manuelKpis.rondas}</span><span className="u-fs-fs-9 u-c-text-3 u-ml-2px">R</span></span>
+                {manuelKpis.avg && <span><span className="fw-700 fs-13">{manuelKpis.avg}</span><span className="u-fs-fs-9 u-c-text-3 u-ml-2px">avg</span></span>}
+                {manuelKpis.best && <span><span className="fw-700 fs-13 u-c-color-good-dark">{manuelKpis.best}</span><span className="u-fs-fs-9 u-c-text-3 u-ml-2px">min</span></span>}
               </div>
             }
             style={{ flex:"0 0 auto", padding:"6px 10px", background:"var(--bg-info-subtle,var(--bg-info))", borderLeft:"3px solid var(--accent)", minWidth:0 }}
@@ -569,16 +569,16 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
               <KpiCard key={t.id} label={t.short} value="–" size="sm" style={{ opacity:.4, padding:"6px 8px", flex:"1 1 60px", minWidth:60 }} />
             );
             return (
-              <KpiCard key={t.id} label={t.short} value={tgFmtSign(res.tp)} sub={<>#{res.p as number}{res.rd?.length > 0 && <span style={{ marginLeft:3, opacity:.7 }}>{res.rd.join("-")}</span>}</>} color={tgTpColorDark(res.tp)} size="sm" style={{ padding:"6px 8px", flex:"1 1 60px", minWidth:60 }} />
+              <KpiCard key={t.id} label={t.short} value={tgFmtSign(res.tp)} sub={<>#{res.p as number}{res.rd?.length > 0 && <span className="u-ml-3px u-op-0_7">{res.rd.join("-")}</span>}</>} color={tgTpColorDark(res.tp)} size="sm" style={{ padding:"6px 8px", flex:"1 1 60px", minWidth:60 }} />
             );
           })}
         </div>
       )}
 
       {/* Filtros */}
-      <div style={{ marginBottom:8 }}>
-        <div className="detail-toolbar" style={{ flexWrap:"wrap" }}>
-          <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input" style={{ maxWidth:140 }} />
+      <div className="u-mb-8px">
+        <div className="detail-toolbar u-fwr-wrap">
+          <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input u-maxw-140px" />
           <select value={fTour} onChange={e => setFTour(e.target.value)} className="select">
             <option value="all">Todos Torneios</option>
             {allTournCols.map(({ tid, info }) => <option key={tid} value={tid}>{info.short} {info.date}</option>)}
@@ -588,22 +588,22 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
             {allCountries.map(c => <option key={c} value={c}>{flag(c)} {c}</option>)}
           </select>
           <button
-            className={`p p-filter p-sm${showFilters ? " active" : ""}`}
+            className={`p p-filter p-sm${showFilters ? " active" : ""} u-pos-relative`}
             onClick={() => setShowFilters(s => !s)}
-            style={{ position:"relative" }}>
+>
             Filtros {showFilters ? "▲" : "▼"}
             {activeCount > 0 && (
-              <span style={{ position:"absolute", top:-4, right:-4, background:"var(--accent)", color:"#fff", borderRadius:"50%", width:16, height:16, fontSize: "var(--fs-10)", fontWeight:700, display:"flex", alignItems:"center", justifyContent:"center" }}>
+              <span className="u-pos-absolute u-top-4px u-right-4px u-bg-accent u-c-fff u-br-50pc u-w-16px u-h-16px u-fs-fs-10 u-fw-700 u-d-flex u-ai-center u-jc-center">
                 {activeCount}
               </span>
             )}
           </button>
-          {activeCount > 0 && <button className="p p-filter p-sm" onClick={resetAll} style={{ color:"var(--color-danger)" }}>✕ Limpar</button>}
-          <div className="chip" style={{ marginLeft:"auto" }}>{list.length} jogadores</div>
+          {activeCount > 0 && <button className="p p-filter p-sm u-c-color-danger" onClick={resetAll}>✕ Limpar</button>}
+          <div className="chip u-ml-auto">{list.length} jogadores</div>
         </div>
         {showFilters && (
-          <div style={{ display:"flex", gap:8, flexWrap:"wrap", padding:"8px 0 4px", borderTop:"1px solid var(--border-light)", marginTop:6 }}>
-            <label className="filter-checkbox" style={{ fontSize: "var(--fs-11)" }}>
+          <div className="u-d-flex u-gap-8px u-fwr-wrap u-p-8px-0-4px u-bt-1px-solid-border-light u-mt-6pxx">
+            <label className="filter-checkbox u-fs-fs-11">
               <input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} /> Só com dados
             </label>
           </div>
@@ -611,7 +611,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
       </div>
 
       {/* Legenda tiers */}
-      <div className="legend-row" style={{ marginBottom:8 }}>
+      <div className="legend-row u-mb-8px">
         {(Object.keys(TG_TIER) as Array<keyof typeof TG_TIER>).map(k => (
           <span key={k} className="legend-item">
             <span className="legend-dot" style={{ background: TG_TIER[k].bg }} />
@@ -637,7 +637,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                         color: isFuture ? "var(--color-info)" : undefined }}>
                       {url ? <a href={url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</a> : info.short}
                       {!isFuture && <div className="fs-10 fw-500 op-6 mt-1">{stars} {info.date}</div>}
-                      {isFuture && <div className="fs-10 fw-500 mt-1" style={{ color:"var(--color-info)" }}>inscrito</div>}
+                      {isFuture && <div className="fs-10 fw-500 mt-1 u-c-color-info">inscrito</div>}
                     </SortableHdr>
                   );
                 })}
@@ -671,7 +671,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                           <td key={tid} className="ta-c"
                             style={{ background: inscrito ? "var(--bg-info-strong,var(--bg-info))" : undefined }}>
                             {inscrito
-                              ? <span style={{ fontSize: "var(--fs-14)" }}>⛳</span>
+                              ? <span className="u-fs-fs-14">⛳</span>
                               : <span className="fs-10 c-border">—</span>}
                           </td>
                         );
@@ -706,7 +706,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                         </td>
                       );
                     })}
-                    <td className="ta-c" style={{ borderLeft:"3px solid var(--border-light)", padding:"4px 6px" }}>
+                    <td className="ta-c u-bl-3px-solid-border-light u-p-4px-6px">
                       {rankMap[p.n] != null ? (
                         <div>
                           <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>

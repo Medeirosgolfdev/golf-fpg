@@ -86,7 +86,7 @@ function DeltaHcp({ d }: { d: number | null }) {
 function FormBadge({ ps }: { ps: PlayerStats | undefined }) {
   if (!ps || !ps.formAlert || !(ps.roundsLast3m > 0)) return null;
   return (
-    <span title={ps.formAlert === "hot" ? "Em boa forma (rondas recentes)" : "Em má forma (rondas recentes)"} style={{ marginLeft: 4 }}>
+    <span title={ps.formAlert === "hot" ? "Em boa forma (rondas recentes)" : "Em má forma (rondas recentes)"} className="u-ml-4px">
       {ps.formAlert === "hot" ? "🔥" : "🧊"}
     </span>
   );
@@ -94,9 +94,9 @@ function FormBadge({ ps }: { ps: PlayerStats | undefined }) {
 
 function Kpi({ label, value, sub, title }: { label: string; value: React.ReactNode; sub?: string; title?: string }) {
   return (
-    <div className="card" title={title} style={{ margin: 0, padding: "8px 10px", textAlign: "center", minWidth: 86 }}>
+    <div className="card u-m-0 u-p-8px-10px u-ta-center u-minw-86px" title={title}>
       <div className="muted fs-10">{label}</div>
-      <div className="fw-900" style={{ fontSize: "var(--fs-18)", lineHeight: 1.1 }}>{value}</div>
+      <div className="fw-900 u-fs-fs-18 u-lh-1_1">{value}</div>
       {sub && <div className="muted fs-10">{sub}</div>}
     </div>
   );
@@ -305,8 +305,8 @@ export default function JogadoresPorAnoPage() {
   const KpiRow = ({ rows }: { rows: Row[] }) => {
     const m = metricsOf(rows);
     return (
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, marginLeft: "auto", flexWrap: "wrap" }}>
-        <Kpi label="Sexo" value={<span style={{ display: "inline-flex", gap: 4, fontSize: "var(--fs-14)", alignItems: "center" }}><SexBadge sex="M" />{m.nM} <SexBadge sex="F" />{m.nF}</span>} />
+      <span className="u-d-inline-flex u-ai-center u-gap-6px u-ml-auto u-fwr-wrap">
+        <Kpi label="Sexo" value={<span className="u-d-inline-flex u-gap-4px u-fs-fs-14 u-ai-center"><SexBadge sex="M" />{m.nM} <SexBadge sex="F" />{m.nF}</span>} />
         <Kpi label="HCP médio" value={m.avgHcp == null ? "—" : m.avgHcp.toFixed(1)} />
         <Kpi label="Melhor HCP" value={m.bestHcp == null ? "—" : m.bestHcp.toFixed(1)} />
         <Kpi label="Rondas 12m" value={m.avgR12 == null ? "—" : m.avgR12.toFixed(1)} sub="média" />
@@ -320,11 +320,11 @@ export default function JogadoresPorAnoPage() {
   const PlayerTable = ({ rows, showYear }: { rows: Row[]; showYear?: boolean }) => {
     const sorted = [...rows].sort(cmp);
     return (
-      <div style={{ overflowX: "auto", padding: "0 4px 12px" }}>
-        <table className="sc-table-ec sc-grid" style={{ width: "100%" }}>
+      <div className="u-ox-auto u-p-0-4px-12px">
+        <table className="sc-table-ec sc-grid u-w-100pc">
           <thead>
             <tr>
-              <th style={{ textAlign: "right" }}>#</th>
+              <th className="u-ta-right">#</th>
               {showYear && <SortableHdr k="ano" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Ano de nascimento">Ano</SortableHdr>}
               <SortableHdr k="nome" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="row-label">Jogador</SortableHdr>
               <SortableHdr k="sexo" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sx</SortableHdr>
@@ -346,24 +346,24 @@ export default function JogadoresPorAnoPage() {
               const hasAnalysis = p._source === "both" || p._source === "players" || (!p._source);
               return (
                 <tr key={p.fed}>
-                  <td style={{ textAlign: "right", color: "var(--text-3)" }}>{i + 1}</td>
-                  {showYear && <td style={{ fontWeight: 700 }}>{birthYear(p.dob)}</td>}
-                  <td className="row-label" style={{ whiteSpace: "nowrap" }}>
+                  <td className="u-ta-right u-c-text-3">{i + 1}</td>
+                  {showYear && <td className="u-fw-700">{birthYear(p.dob)}</td>}
+                  <td className="row-label u-ws-nowrap">
                     {hasAnalysis
                       ? <Link to={`/jogadores/${p.fed}`} style={{ color: "var(--accent)", fontWeight: 700 }}>{p.name}</Link>
-                      : <span style={{ fontWeight: 600 }}>{p.name}</span>}
+                      : <span className="u-fw-600">{p.name}</span>}
                     <FormBadge ps={ps} />
                   </td>
                   <td><SexBadge sex={p.sex} /></td>
-                  <td style={{ textAlign: "left", maxWidth: 150, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{clubName(p.club) || <span className="muted">—</span>}</td>
+                  <td className="u-ta-left u-maxw-150px u-ov-hidden u-tov-ellipsis u-ws-nowrap">{clubName(p.club) || <span className="muted">—</span>}</td>
                   <td><EscPill esc={p.escalao} /></td>
-                  <td style={{ fontWeight: 700 }}>{p.hcp == null ? <span className="muted">—</span> : p.hcp.toFixed(1)}</td>
+                  <td className="u-fw-700">{p.hcp == null ? <span className="muted">—</span> : p.hcp.toFixed(1)}</td>
                   <td><DeltaHcp d={ps?.hcpDelta3m ?? null} /></td>
                   <td>{ps?.bestGross ?? <span className="muted">—</span>}</td>
                   <td>{ps?.avgSD5 == null ? <span className="muted">—</span> : ps.avgSD5.toFixed(1)}</td>
                   <td>{ps?.lastSD == null ? <span className="muted">—</span> : ps.lastSD.toFixed(1)}</td>
-                  <td style={{ fontWeight: 600 }}>{ps?.roundsLast3m ?? <span className="muted">—</span>}</td>
-                  <td style={{ fontWeight: 600 }}>{ps?.roundsLast12m ?? <span className="muted">—</span>}</td>
+                  <td className="u-fw-600">{ps?.roundsLast3m ?? <span className="muted">—</span>}</td>
+                  <td className="u-fw-600">{ps?.roundsLast12m ?? <span className="muted">—</span>}</td>
                   <td>{ps?.aces ? `🕳️${ps.aces > 1 ? "×" + ps.aces : ""}` : <span className="muted">—</span>}</td>
                 </tr>
               );
@@ -376,7 +376,7 @@ export default function JogadoresPorAnoPage() {
 
   /* ─────────────────────────────────────────────────────────── */
   return (
-    <div className="jogadores-page" style={{ padding: "8px 12px 40px" }}>
+    <div className="jogadores-page u-p-8px-12px-40px">
       <Toolbar>
         <span className="toolbar-title">📅 Jogadores por ano de nascimento</span>
 
@@ -406,8 +406,8 @@ export default function JogadoresPorAnoPage() {
         </div>
 
         <input
-          className="select" placeholder="Procurar nome / clube / nº…"
-          value={q} onChange={e => setQ(e.target.value)} style={{ minWidth: 180 }}
+          className="select u-minw-180px" placeholder="Procurar nome / clube / nº…"
+          value={q} onChange={e => setQ(e.target.value)}
         />
 
         <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as "ALL" | "M" | "F")}>
@@ -422,21 +422,21 @@ export default function JogadoresPorAnoPage() {
         </select>
 
         <input
-          className="select" type="number" inputMode="decimal" placeholder="HCP máx"
-          value={hcpMax} onChange={e => setHcpMax(e.target.value)} style={{ width: 92 }}
+          className="select u-w-92px" type="number" inputMode="decimal" placeholder="HCP máx"
+          value={hcpMax} onChange={e => setHcpMax(e.target.value)}
           title="Mostrar só jogadores com HCP igual ou inferior a este valor"
         />
 
-        <label className="muted fs-10" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+        <label className="muted fs-10 u-d-inline-flex u-ai-center u-gap-4px">
           <input type="checkbox" checked={activeOnly} onChange={e => setActiveOnly(e.target.checked)} />
           Só activos (12m)
         </label>
-        <label className="muted fs-10" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+        <label className="muted fs-10 u-d-inline-flex u-ai-center u-gap-4px">
           <input type="checkbox" checked={withStatsOnly} onChange={e => setWithStatsOnly(e.target.checked)} />
           Só com estatísticas
         </label>
 
-        <label className="muted fs-10" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}
+        <label className="muted fs-10 u-d-inline-flex u-ai-center u-gap-4px"
           title="Junta todos os anos seleccionados numa só tabela, em vez de uma tabela por ano">
           <input type="checkbox" checked={combine} onChange={e => setCombine(e.target.checked)} />
           Tabela única
@@ -448,8 +448,8 @@ export default function JogadoresPorAnoPage() {
         </button>
 
         {activeFiltersCount > 0 && (
-          <button className="p" onClick={clearFilters}
-            style={{ background: "var(--color-warn-vivid)", color: "#fff", gap: 4 }}>
+          <button className="p u-bg-color-warn-vivid u-c-fff u-gap-4px" onClick={clearFilters}
+>
             ✕ Limpar <span className="p-filter-count">{activeFiltersCount}</span>
           </button>
         )}
@@ -458,15 +458,15 @@ export default function JogadoresPorAnoPage() {
       </Toolbar>
 
       {viewMode === "todos" && fedsError && (
-        <div className="muted fs-10 fw-600" style={{ color: "var(--color-warn-vivid)" }}>
+        <div className="muted fs-10 fw-600 u-c-color-warn-vivid">
           ⚠ Erro a carregar federados.json: {fedsError}
         </div>
       )}
 
       {/* Filtro por ANO de nascimento — anos recentes individuais, antigos em escalões de 5 anos */}
       {yearsPresent.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, margin: "8px 0", alignItems: "center" }}>
-          <span className="muted fs-10" style={{ fontWeight: 700 }}>Ano:</span>
+        <div className="u-d-flex u-fwr-wrap u-gap-6px u-m-8px-0 u-ai-center">
+          <span className="muted fs-10 u-fw-700">Ano:</span>
           {recentYears.map(y => (
             <button
               key={y}
@@ -497,8 +497,8 @@ export default function JogadoresPorAnoPage() {
 
       {/* Filtro rápido por escalão */}
       {escaloesPresent.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, margin: "8px 0", alignItems: "center" }}>
-          <span className="muted fs-10" style={{ fontWeight: 700 }}>Escalão:</span>
+        <div className="u-d-flex u-fwr-wrap u-gap-6px u-m-8px-0 u-ai-center">
+          <span className="muted fs-10 u-fw-700">Escalão:</span>
           {escaloesPresent.map(e => (
             <button
               key={e}
@@ -514,23 +514,23 @@ export default function JogadoresPorAnoPage() {
 
       {/* Métricas de evolução de HCP da selecção filtrada (tabela, sem gráfico) */}
       {evoPlayers.length > 0 && (
-        <div style={{ margin: "12px 0" }}>
+        <div className="u-m-12px-0">
           <HcpEvolution players={evoPlayers} history={hcpHistory} showChart={false} />
         </div>
       )}
 
       {/* Sem resultados */}
       {cohorts.length === 0 && (
-        <div className="muted" style={{ padding: 24, textAlign: "center" }}>
+        <div className="muted u-p-24px u-ta-center">
           Nenhum jogador corresponde aos filtros (ou sem data de nascimento registada).
         </div>
       )}
 
       {/* MODO TABELA ÚNICA — todos os anos filtrados juntos */}
       {effectiveCombine && cohorts.length > 0 && (
-        <div className="card" style={{ margin: "12px 0", padding: 0 }}>
-          <div style={{ padding: "10px 12px", display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-            <span className="fw-900" style={{ fontSize: "var(--fs-16)" }}>
+        <div className="card u-m-12px-0 u-p-0">
+          <div className="u-p-10px-12px u-d-flex u-ai-center u-fwr-wrap u-gap-12px">
+            <span className="fw-900 u-fs-fs-16">
               {(() => {
                 const ys = cohorts.map(c => c.year).sort((a, b) => a - b);
                 return ys.length === 1 ? `${ys[0]}` : `${ys[0]}–${ys[ys.length - 1]} (${ys.length} anos)`;
@@ -545,9 +545,9 @@ export default function JogadoresPorAnoPage() {
 
       {/* MODO COORTES — uma tabela por ano */}
       {!effectiveCombine && cohorts.map(({ year, rows }) => (
-        <details key={year} open className="card" style={{ margin: "12px 0", padding: 0 }}>
-          <summary style={{ cursor: "pointer", listStyle: "none", padding: "10px 12px", display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-            <span className="fw-900" style={{ fontSize: "var(--fs-18)" }}>{year}</span>
+        <details key={year} open className="card u-m-12px-0 u-p-0">
+          <summary className="u-cur-pointer u-list-style-none u-p-10px-12px u-d-flex u-ai-center u-fwr-wrap u-gap-12px">
+            <span className="fw-900 u-fs-fs-18">{year}</span>
             <span className="muted fs-10">≈ {CURRENT_YEAR - year} anos</span>
             <Counter>{rows.length} jog.</Counter>
             <KpiRow rows={rows} />

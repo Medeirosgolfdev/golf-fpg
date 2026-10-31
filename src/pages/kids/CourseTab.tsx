@@ -355,12 +355,12 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
   }
   if (!result) {
     return (
-      <div className="muted p-16" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <div className="muted p-16 u-d-flex u-fd-column u-gap-6px">
         <span>Sem informação detalhada de campo para este torneio/escalão.</span>
-        <span style={{ fontSize: "var(--fs-11)" }}>
+        <span className="u-fs-fs-11">
           Esta vista lê os dados do member-history-slim. Se o torneio é novo
           e ainda não foi scrapado, a info aparecerá depois do próximo run de
-          <code style={{ margin: "0 4px", padding: "1px 4px", background: "var(--bg-muted)", borderRadius: 3 }}>fetch-uskids-results</code>.
+          <code className="u-m-0-4px u-p-1px-4px u-bg-bg-muted u-br-3px">fetch-uskids-results</code>.
         </span>
       </div>
     );
@@ -369,12 +369,7 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
   return (
     <div>
       {result.note && (
-        <div className="muted fs-11 mb-8" style={{
-          padding: "6px 10px",
-          background: "var(--bg-muted)",
-          border: "1px solid var(--color-warn-alpha, var(--border))",
-          borderRadius: "var(--radius)",
-        }}>
+        <div className="muted fs-11 mb-8 u-p-6px-10px u-bg-bg-muted u-bd-qpvg4 u-br-radius">
           {"⚠"} {result.note}
         </div>
       )}

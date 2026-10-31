@@ -283,25 +283,25 @@ export function FFGPlayersView() {
       />
 
       {/* ── Filtros ─────────────────────────────────────────── */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", margin: "12px 0" }}>
+      <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-12px-0">
         <input
           type="text"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="🔍 Nome, licença ou clube…"
-          className="filter-input"
-          style={{ minWidth: 240, flex: "1 1 240px", maxWidth: 360 }}
+          className="filter-input u-minw-240px u-fl-1-1-240px u-maxw-360px"
+
         />
-        <select value={sex} onChange={(e) => setSex(e.target.value as "" | "M" | "F")} className="filter-input" style={{ width: 130 }}>
+        <select value={sex} onChange={(e) => setSex(e.target.value as "" | "M" | "F")} className="filter-input u-w-130px">
           <option value="">Todos os sexos</option>
           <option value="M">Masculino</option>
           <option value="F">Feminino</option>
         </select>
-        <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input" style={{ width: 170 }}>
+        <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input u-w-170px">
           <option value="ALL">Todas as categorias</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
-        <select value={region} onChange={(e) => setRegion(e.target.value)} className="filter-input" style={{ width: 190 }}>
+        <select value={region} onChange={(e) => setRegion(e.target.value)} className="filter-input u-w-190px">
           <option value="ALL">Todas as ligues</option>
           {regionOptions.map((r) => <option key={r} value={r}>{r}</option>)}
         </select>
@@ -313,7 +313,7 @@ export function FFGPlayersView() {
         >
           🧒 Só Jovens
         </button>
-        <span className="muted fs-12" style={{ marginLeft: "auto" }}>
+        <span className="muted fs-12 u-ml-auto">
           {filtered.length.toLocaleString("pt")} de {all.length.toLocaleString("pt")}
         </span>
       </div>
@@ -323,8 +323,8 @@ export function FFGPlayersView() {
         <EmptyState size="md" message="Nenhum jogador corresponde aos filtros." />
       ) : (
         <>
-          <div style={{ overflowX: "auto" }}>
-            <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-12)" }}>
+          <div className="u-ox-auto">
+            <table className="player-list-table u-w-100pc u-fs-fs-12">
               <thead>
                 <tr>
                   <SortableHdr k="license" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Licence</SortableHdr>
@@ -353,21 +353,21 @@ export function FFGPlayersView() {
                       style={{ cursor: "pointer", background: isOpen ? "var(--bg-detail)" : undefined }}
                       title="Ver os torneios e resultados deste jogador"
                     >
-                      <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
-                        <span aria-hidden style={{ marginRight: 5, color: "var(--accent)" }}>{isOpen ? "▾" : "▸"}</span>
+                      <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap">
+                        <span aria-hidden className="u-mr-5px u-c-accent">{isOpen ? "▾" : "▸"}</span>
                         {r.license}
                       </td>
-                      <td style={{ fontWeight: 600 }} title={r.lastSerie ? `Série mais recente: ${r.lastSerie}` : undefined}>
+                      <td className="u-fw-600" title={r.lastSerie ? `Série mais recente: ${r.lastSerie}` : undefined}>
                         {r._name || "—"}
                         {r.country && r.country !== "FRA" && (
-                          <span className="muted fs-10" style={{ marginLeft: 6, fontWeight: 400 }}>{r.country}</span>
+                          <span className="muted fs-10 u-ml-6px u-fw-400">{r.country}</span>
                         )}
                         {r._kid && (
                           <a
                             href={kidsUrl({ id: r._kid })}
                             onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(kidsUrl({ id: r._kid }), "_blank"); }}
                             title="Ver ficha em Kids"
-                            style={{ fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-13)", cursor: "pointer", textDecoration: "none", marginLeft: 4 }}
+                            className="u-fw-800 u-c-color-good-dark u-fs-fs-13 u-cur-pointer u-td-none u-ml-4px"
                           >
                             ↗
                           </a>
@@ -375,7 +375,7 @@ export function FFGPlayersView() {
                       </td>
                       {has.club && <td title={r._club}>{r._club || MUTED}</td>}
                       {has.region && <td className="fs-11" title={r._region}>{r._region || MUTED}</td>}
-                      <td style={{ textAlign: "right", fontWeight: 600 }}>{r.hcp != null ? r.hcp.toFixed(1) : MUTED}</td>
+                      <td className="u-ta-right u-fw-600">{r.hcp != null ? r.hcp.toFixed(1) : MUTED}</td>
                       {has.sex && <td>{r.sex === "M" || r.sex === "F" ? <SexBadge sex={r.sex} /> : MUTED}</td>}
                       {has.cat && (
                         <td title={[r.catSrc === "merite" ? `Mérite Jeunes: ${r.merite?.cat ?? ""} (nascido em ${r.birthYear})` : r.catYear ? `Época ${r.catYear} (inferido das provas)` : null, r.lastSerie ? `Série mais recente: ${r.lastSerie}` : null].filter(Boolean).join(" · ") || undefined}>
@@ -383,7 +383,7 @@ export function FFGPlayersView() {
                             r._young ? (
                               <>
                                 {/* Mesma ordem dos separadores: nome FR, depois o Sub (22/10/2026). */}
-                                {catParts.fr && <span className="fs-11" style={{ marginRight: 4 }}>{catParts.fr}</span>}
+                                {catParts.fr && <span className="fs-11 u-mr-4px">{catParts.fr}</span>}
                                 <EscPill esc={catParts.sub} />
                               </>
                             ) : (
@@ -392,24 +392,24 @@ export function FFGPlayersView() {
                           ) : MUTED}
                         </td>
                       )}
-                      {has.birth && <td style={{ textAlign: "right" }}>{r.birthYear ?? MUTED}</td>}
+                      {has.birth && <td className="u-ta-right">{r.birthYear ?? MUTED}</td>}
                       {has.merite && (
-                        <td style={{ textAlign: "right" }}
+                        <td className="u-ta-right"
                           title={r.merite ? [`Mérite Jeunes ${r.merite.month.slice(4)}/${r.merite.month.slice(0, 4)}`, r.merite.rankAnn ? `${r.merite.rankAnn}.º do ano de nascimento` : null, `${r.merite.nbt} provas`, r.merite.moy != null ? `média ${r.merite.moy > 0 ? "+" : ""}${r.merite.moy.toFixed(2)} vs SSS` : null, r.merite.idx != null ? `index ${r.merite.idx.toFixed(1)}` : null].filter(Boolean).join(" · ") : undefined}>
                           {r.merite?.rank != null ? `${r.merite.rank}.º` : MUTED}
                         </td>
                       )}
                       {has.tot && <td style={{ textAlign: "right", color: r._tot ? undefined : "var(--text-muted)" }}>{r._tot || "—"}</td>}
                       {has.tot && <td style={{ textAlign: "right", color: r._ano ? "var(--color-good-dark, #166534)" : "var(--text-muted)", fontWeight: r._ano ? 600 : undefined }}>{r._ano || "—"}</td>}
-                      {has.hcpDate && <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>{r.hcpDate ? isoToBr(r.hcpDate) : MUTED}</td>}
+                      {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{r.hcpDate ? isoToBr(r.hcpDate) : MUTED}</td>}
                     </tr>
                     {isOpen && (
                       <tr className="player-list-row-detail">
-                        <td colSpan={colCount} style={{ background: "var(--bg-detail)", padding: "0 12px 4px" }}>
+                        <td colSpan={colCount} className="u-bg-bg-detail u-p-0-12px-4px">
                           {tourns
                             ? <PlayerTournaments file={tourns} license={r.license} />
                             : tournsState === "error"
-                              ? <div className="muted fs-11" style={{ padding: "8px 4px" }}>
+                              ? <div className="muted fs-11 u-p-8px-4px">
                                   Não foi possível carregar <code>ffgolf-player-tournaments.json</code> — corre <code>node scripts/build-france-players.js</code>.
                                 </div>
                               : <LoadingState message="A carregar torneios…" />}
@@ -425,10 +425,10 @@ export function FFGPlayersView() {
 
           {/* Paginação */}
           {totalPages > 1 && (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, padding: "12px 0", fontSize: "var(--fs-12)" }}>
+            <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
               <button onClick={() => setPage(1)} disabled={page === 1} className="btn-pill">«</button>
               <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-pill">‹</button>
-              <span style={{ minWidth: 90, textAlign: "center" }}>Página <b>{page}</b> de {totalPages}</span>
+              <span className="u-minw-90px u-ta-center">Página <b>{page}</b> de {totalPages}</span>
               <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="btn-pill">›</button>
               <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="btn-pill">»</button>
             </div>
@@ -436,7 +436,7 @@ export function FFGPlayersView() {
         </>
       )}
 
-      <div className="muted fs-11" style={{ marginTop: 16, textAlign: "center" }}>
+      <div className="muted fs-11 u-mt-16px u-ta-center">
         Fonte: <code>france-players.json</code> (portal resultats FFGolf — GP Jeunes + Compétitions Fédérales juvenis).
         Os torneios GolfGenius (Champ. de France, Internationaux) também contam — ligados por nome ao roster de licenças,
         com dedup dos que o portal já publica. A FFG não expõe DOB; a categoria é o escalão mais novo da última época jogada (série + nome da prova).

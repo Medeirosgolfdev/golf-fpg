@@ -590,7 +590,7 @@ export function ScorecardLB({
         const ccFonte = (p as { _country?: string | null })._country;
         const cc = (ccFonte && noLink ? ccFonte : null) || (clubesSaoPaises ? semBandeira(p.club) || null : null);
         const withFlag = cc ? (
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+          <span className="u-d-inline-flex u-ai-center u-gap-4px">
             <span aria-label={cc} title={cc}>{flagOf(cc)}</span>
             {baseInner}
           </span>
@@ -598,7 +598,7 @@ export function ScorecardLB({
         // Pill de sexo após o nome (só renderiza se _sex foi injectado pelo
         // adapter da página — RFEG/intl). Usa SexBadge (NUNCA texto/símbolo Unicode).
         const decorated = sex === "M" || sex === "F" ? (
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+          <span className="u-d-inline-flex u-ai-center u-gap-4px">
             {withFlag}
             <SexBadge sex={sex} />
           </span>
@@ -620,23 +620,17 @@ export function ScorecardLB({
         // que jogou no Absoluto). _absolutoNote dá o tooltip completo.
         if (!(p as any)._fromAbsoluto) return base;
         return (
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+          <span className="u-d-inline-flex u-ai-center u-gap-4px u-fwr-wrap">
             {base}
             <span title={(p as any)._absolutoNote || "Jogou em torneio simultâneo"}
-              style={{
-                fontSize: "var(--fs-9)", lineHeight: 1.4, padding: "1px 6px",
-                borderRadius: 8, background: "var(--bg-warn-subtle, #fef3c7)",
-                color: "var(--color-warn-dark, var(--color-warn-dark))",
-                border: "1px solid var(--color-warn, #f59e0b)",
-                cursor: "help", fontWeight: 700, whiteSpace: "nowrap",
-              }}>⚠ Abs</span>
+              className="u-fs-fs-9 u-lh-1_4 u-p-1px-6px u-br-8px u-bg-var-bg-warn-subtle-fef3c7 u-c-1b214 u-bd-qeurg u-cur-help u-fw-700 u-ws-nowrap">⚠ Abs</span>
           </span>
         );
       })(),
       prefixCells: (
         <>
           {!hideEsc && (
-            <td className="lb-esc" style={{ width: 70, minWidth: 70, whiteSpace: "nowrap" }}>
+            <td className="lb-esc u-w-70px u-minw-70px u-ws-nowrap">
               {(() => {
                 if (esc) return <EscPill esc={esc} />;
                 // Sem escalão — tentar idade via DOB (playersDB[fed].dob,
@@ -669,8 +663,8 @@ export function ScorecardLB({
                 const age = ageAtDate(dob, tournament.date);
                 if (age != null && age >= 0 && age < 100) {
                   return (
-                    <span className="p p-sm" title={dob ? `${dob} (${age} anos no torneio)` : ""}
-                      style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>
+                    <span className="p p-sm u-bg-var-bg-muted-e5e7eb u-c-text-2 u-border-color-transparent" title={dob ? `${dob} (${age} anos no torneio)` : ""}
+>
                       {age}a
                     </span>
                   );
@@ -683,14 +677,14 @@ export function ScorecardLB({
             // Coluna NASC. — ano de nascimento ESTIMADO a partir do class year
             // (US: gradua-se ~aos 18 → nascido ≈ classYear − 18; Manuel 2014 → 2032).
             // Sortable. Guarda-se o class year cru em _classYear; aqui mostra-se o nascimento.
-            <td className="lb-age" style={{ width: 52, minWidth: 52, textAlign: "center" }}>
+            <td className="lb-age u-w-52px u-minw-52px u-ta-center">
               {(() => {
                 const cy = (p as any)._classYear as (number | null | undefined);
                 if (cy == null) return <span className="muted">–</span>;
                 const birth = cy - 18;
                 return (
-                  <span className="p p-sm" title={`Class of ${cy} · ≈ nascido ${birth}`}
-                    style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>~{birth}</span>
+                  <span className="p p-sm u-bg-var-bg-muted-e5e7eb u-c-text-2 u-border-color-transparent" title={`Class of ${cy} · ≈ nascido ${birth}`}
+>~{birth}</span>
                 );
               })()}
             </td>
@@ -698,7 +692,7 @@ export function ScorecardLB({
           {showAge_ && (
             // Coluna IDADE (separada de ESC, sortable por número). Tooltip com a
             // DOB completa quando a fonte a traz (ex: GolfBox via GetPlayers).
-            <td className="lb-age" style={{ width: 44, minWidth: 44, textAlign: "center" }} title={birthOf(p).tip}>
+            <td className="lb-age u-w-44px u-minw-44px u-ta-center" title={birthOf(p).tip}>
               {(() => {
                 const age = (p as any)._age as (number | null | undefined);
                 // Sem idade lida: a estimativa (a vermelho), como no Draw.
@@ -726,7 +720,7 @@ export function ScorecardLB({
               const code = normCountry(club).toUpperCase();
               return (
                 <td className="lb-club" title={code}>
-                  <span style={{ fontSize: "1.1em" }}>{flagEmoji}</span>
+                  <span className="u-fs-1_1em">{flagEmoji}</span>
                 </td>
               );
             }
@@ -744,7 +738,7 @@ export function ScorecardLB({
           )}
           {/* Valor na modalidade escolhida, ao lado do ± e do Tot (que ficam em pancadas). */}
           {modoAtivo !== "stroke" && (
-            <td className="lb-modo" style={{ textAlign: "center", fontWeight: 700, color: "var(--accent)" }}
+            <td className="lb-modo u-ta-center u-fw-700 u-c-accent"
               title={vModo == null ? (p.hcpPlay == null ? "Sem HCP de jogo" : "Sem cartão buraco a buraco") : `HCP de jogo ${p.hcpPlay}`}>
               {vModo ?? <span className="muted">–</span>}
             </td>
@@ -816,7 +810,7 @@ export function ScorecardLB({
                 title={tournament._sdEstimate ? `Estimados — ${tournament._sdEstimate}` : undefined} />
             )}
             {teeCrSlopes.length > 1 && teeCrSlopes.map(([tn, { cr, slope }]) => (
-              <span key={tn} className="info-it" title={tn} style={{ gap: 3 }}>
+              <span key={tn} className="info-it u-gap-3px" title={tn}>
                 <TeeSwatch tee={tn} /><b className="info-v">{cr}</b><span className="info-l">/</span><b className="info-v">{slope}</b>
               </span>
             ))}

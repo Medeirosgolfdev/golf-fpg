@@ -222,7 +222,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
           {/* PAR e SI — acima da linha de cabeçalho, para o cabeçalho ficar
               colado aos tees (sem interrupção). */}
           <tr className="sc-meta-row sc-par-row">
-            <td className="sc-sticky sc-meta-label" colSpan={labelSpan} style={{ textAlign: "right", paddingRight: 12 }}>PAR</td>
+            <td className="sc-sticky sc-meta-label u-ta-right u-pr-12px" colSpan={labelSpan}>PAR</td>
             {Array.from({ length: 9 }, (_, i) => (
               <td key={i + 1} className="ta-c" style={i === 0 ? { borderLeft: sepL } : undefined}>{refByHole.get(i + 1)?.par ?? "–"}</td>
             ))}
@@ -235,7 +235,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
             {showDelta && <td className="ta-c sc-tot-val" style={{ borderLeft: sepL }} />}
           </tr>
           <tr className="sc-meta-row sc-hcp-row">
-            <td className="sc-sticky sc-meta-label" colSpan={labelSpan} style={{ textAlign: "right", paddingRight: 12 }}>SI</td>
+            <td className="sc-sticky sc-meta-label u-ta-right u-pr-12px" colSpan={labelSpan}>SI</td>
             {Array.from({ length: 9 }, (_, i) => (
               <td key={i + 1} className="ta-c" style={i === 0 ? { borderLeft: sepL } : undefined}>{refByHole.get(i + 1)?.si ?? "–"}</td>
             ))}
@@ -273,7 +273,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
           <tr>
             {sexes.flatMap((s) => [
               <th key={`h-${s}-cr`} className="sc-h" style={{ borderLeft: sepL, padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>CR</th>,
-              <th key={`h-${s}-sl`} className="sc-h" style={{ padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>Slope</th>,
+              <th key={`h-${s}-sl`} className="sc-h u-p-2px-6px u-fw-400 u-c-text-3">Slope</th>,
               <th key={`h-${s}-sd`} className="sc-h" style={{ ...sdParHead, borderLeft: sepThin }} title={SD_PAR_TITLE}>SD par</th>,
             ])}
           </tr>
@@ -296,7 +296,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                 <td className="sc-sticky sc-tee-cell" style={isSel ? { background: "var(--accent-light)" } : undefined}>
                   <TeeBadge label={g.label} colorHex={g.colorHex} />
                   {showTeePar && teeParOf(g) != null && (
-                    <span className="muted" style={{ fontSize: "var(--fs-10)", marginLeft: 6, whiteSpace: "nowrap" }}>par {teeParOf(g)}</span>
+                    <span className="muted u-fs-fs-10 u-ml-6px u-ws-nowrap">par {teeParOf(g)}</span>
                   )}
                 </td>
                 {sexes.flatMap((s) => {
@@ -342,7 +342,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
       </table>
     </div>
       {showTeePar && (
-        <p className="muted" style={{ fontSize: "var(--fs-12)", margin: "8px 0 0", lineHeight: 1.5 }}>
+        <p className="muted u-fs-fs-12 u-m-8px-0-0 u-lh-1_5">
           <strong>Nota — tees com o mesmo CR/Slope e «SD par» diferente.</strong> Neste campo os tees
           não têm todos o mesmo par (está ao lado do nome de cada tee). O CR e o Slope são do tee físico
           — as marcas e as distâncias —, mas o par pode mudar: as provas de escalão (USKids, por
@@ -380,7 +380,7 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
 
   return (
     <details className="m-14-0" open>
-      <summary className="h-xs" style={{ margin: "0 0 8px", cursor: "pointer" }}>Ratings por 9 buracos</summary>
+      <summary className="h-xs u-m-0-0-8px u-cur-pointer">Ratings por 9 buracos</summary>
       <div className="sc-wrap">
         <table className="sc-table sc-grid">
           <thead>
@@ -403,7 +403,7 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
             <tr>
               {nines.flatMap((n) => n.sexes.flatMap((s, i) => [
                 <th key={`${n.id}-${s}-cr`} className="sc-h" style={{ borderLeft: i === 0 ? sepL : sepThin, padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>CR</th>,
-                <th key={`${n.id}-${s}-sl`} className="sc-h" style={{ padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>Slope</th>,
+                <th key={`${n.id}-${s}-sl`} className="sc-h u-p-2px-6px u-fw-400 u-c-text-3">Slope</th>,
                 <th key={`${n.id}-${s}-sd`} className="sc-h" style={{ ...sdParHead, borderLeft: sepThin }} title={SD_PAR_TITLE}>SD par</th>,
               ]))}
             </tr>
@@ -625,7 +625,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
           </>
         ) : <span className="muted">–</span>}
       </td>
-      <td className="cp-num cp-muted" style={{ whiteSpace: "nowrap" }}>{fmtDMYfull(b.last) || "–"}</td>
+      <td className="cp-num cp-muted u-ws-nowrap">{fmtDMYfull(b.last) || "–"}</td>
     </>
   );
 
@@ -849,7 +849,7 @@ function roundValue(r: CoursePlayerRound, kind: VoltaKind): { val: number; tp: n
 /** Segmented toggle compacto (sexo / tipo de volta). */
 function Seg<T extends string>({ value, onChange, opts }: { value: T; onChange: (v: T) => void; opts: { v: T; label: ReactNode }[] }) {
   return (
-    <div style={{ display: "inline-flex", border: "1px solid var(--border)", borderRadius: "var(--radius-pill, 999px)", overflow: "hidden" }}>
+    <div className="u-d-inline-flex u-bd-1px-solid-border u-br-var-radius-pill-999px u-ov-hidden">
       {opts.map((o, i) => {
         const on = value === o.v;
         return (
@@ -949,13 +949,13 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
   const dotStyle = teeDot;
 
   const score = (val: number, tp: number | null) => (
-    <span style={{ textAlign: "right", fontWeight: 600, fontSize: "var(--fs-13, 13px)", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
+    <span className="u-ta-right u-fw-600 u-fs-var-fs-13-13px u-ws-nowrap u-fvn-tabular-nums">
       {val}
       {tp != null && <span style={{ color: tpTextColor(tp), fontWeight: 700 }}> {fmtToPar(tp)}</span>}
     </span>
   );
   const when = (date: string | null, sd: number | null) => (
-    <span className="muted" style={{ fontSize: "var(--fs-10)", whiteSpace: "nowrap", textAlign: "right" }}>
+    <span className="muted u-fs-fs-10 u-ws-nowrap u-ta-right">
       {fmtDMYfull(date)}{sd != null ? ` · SD ${sd.toFixed(1)}` : ""}
     </span>
   );
@@ -967,13 +967,13 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
   };
   /** Marcador de posição para o 2º/3º (o 1º leva o pill do escalão). */
   const rankBadge = (i: number) => (
-    <span aria-hidden style={{ justifySelf: "center", alignSelf: "center", width: 15, height: 15, borderRadius: "50%", background: "var(--bg-hover, rgba(0,0,0,0.06))", color: "var(--text-muted)", fontSize: "var(--fs-9)", fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{i + 1}</span>
+    <span aria-hidden className="u-justify-self-center u-align-self-center u-w-15px u-h-15px u-br-50pc u-bg-var-bg-hover-rgba-0-0-0-0_06 u-c-text-muted u-fs-fs-9 u-fw-700 u-d-inline-flex u-ai-center u-jc-center">{i + 1}</span>
   );
 
   return (
-    <div style={{ margin: "4px 0 14px" }}>
+    <div className="u-m-4px-0-14px">
       {/* Toolbar: sexo · tipo de volta · fonte */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
+      <div className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-mb-10px">
         {/* Com Sexo escolhido na barra, o toggle sairia do filtro → só aparece em "Sexo: todos". */}
         {sexFilter === "ALL" && (
           <Seg value={sex} onChange={setSex} opts={[
@@ -984,7 +984,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
         <Seg value={volta} onChange={setVolta} opts={[
           { v: "18", label: "18 buracos" }, { v: "f9", label: "Front 9" }, { v: "b9", label: "Back 9" },
         ]} />
-        <span className="muted" style={{ marginLeft: "auto", fontSize: "var(--fs-11)", cursor: "help" }}
+        <span className="muted u-ml-auto u-fs-fs-11 u-cur-help"
           title={"Fonte: melhores voltas WHS (scorecards) de todos os jogadores que seguimos — course-players.json, regenerado semanalmente (workflow update-data.yml). Escalão calculado à DATA da volta pela coorte FPG (ano de nascimento, dos federados)."}>
           ⓘ dados: voltas dos nossos{lastDate ? ` · última ${fmtDMYfull(lastDate)}` : ""}
         </span>
@@ -992,20 +992,20 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
 
       {/* Cartão do Manuel — recorde por tee */}
       {manuel.length > 0 && (
-        <div style={{ borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--accent)", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", marginBottom: 12 }}>
+        <div className="u-br-radius-xl u-ov-hidden u-bd-1px-solid-accent u-bs-0-1px-3px-rgba-0-0-0-0_06 u-mb-12px">
           <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: tint("var(--accent)", 12), borderBottom: "1px solid var(--border-light, var(--border))", fontWeight: 800 }}>
-            <span style={{ fontSize: "var(--fs-15, 15px)" }}>🧒 Manuel</span>
-            <span className="muted" style={{ fontWeight: 400, fontSize: "var(--fs-11)" }}>recorde por tee · {voltaLabel}</span>
+            <span className="u-fs-var-fs-15-15px">🧒 Manuel</span>
+            <span className="muted u-fw-400 u-fs-fs-11">recorde por tee · {voltaLabel}</span>
           </div>
-          <div style={{ padding: "6px 12px 9px", display: "grid", gridTemplateColumns: "minmax(120px,auto) auto auto minmax(0,1fr)", gap: "4px 12px", alignItems: "center", background: "var(--bg-card)" }}>
+          <div className="u-p-6px-12px-9px u-d-grid u-grid-template-columns-cjqrw u-gap-4px-12px u-ai-center u-bg-bg-card">
             {manuel.map((mr) => {
               const hex = mr.label === NO_TEE_LABEL ? "var(--border)" : (teeInfo.get(mr.label)?.hex ?? teeGroupHex(mr.label));
               return (
                 <Fragment key={mr.label}>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontWeight: 600, minWidth: 0 }}>
+                  <span className="u-d-inline-flex u-ai-center u-gap-7px u-fw-600 u-minw-0">
                     <span aria-hidden style={dotStyle(hex, 11)} />
-                    <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{mr.label}</span>
-                    {distFor(mr.label) ? <span className="muted" style={{ fontWeight: 400, fontSize: "var(--fs-10)" }}>{distFor(mr.label)}m</span> : null}
+                    <span className="u-ov-hidden u-tov-ellipsis u-ws-nowrap">{mr.label}</span>
+                    {distFor(mr.label) ? <span className="muted u-fw-400 u-fs-fs-10">{distFor(mr.label)}m</span> : null}
                   </span>
                   {score(mr.val, mr.tp)}
                   <span>{mr.esc ? <EscPill esc={mr.esc} /> : <span className="muted">–</span>}</span>
@@ -1019,11 +1019,11 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
 
       {/* Cartões por tee (ordenados por distância/dificuldade) */}
       {tees.length === 0 ? (
-        <div className="muted" style={{ fontSize: "var(--fs-12)" }}>
+        <div className="muted u-fs-fs-12">
           Sem voltas de {voltaLabel.toLowerCase()} de {sex === "M" ? "rapazes" : "raparigas"} neste campo.
         </div>
       ) : (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
+        <div className="u-d-flex u-fwr-wrap u-gap-12px u-ai-flex-start">
           {tees.map((c) => {
             const hex = c.label === NO_TEE_LABEL ? "var(--border)" : (teeInfo.get(c.label)?.hex ?? teeGroupHex(c.label));
             const stripe = teeBorder(hex) ? "var(--border)" : hex; // tees claros → risca neutra visível
@@ -1034,35 +1034,35 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
               <div key={c.label} style={{ flex: "1 1 300px", minWidth: 282, maxWidth: 460, borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)", display: "flex", flexDirection: "column" }}>
                 {/* Header do tee (banda tingida) */}
                 <div style={{ padding: "7px 12px", background: tint(hex, 13), borderBottom: "1px solid var(--border-light, var(--border))" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div className="u-d-flex u-ai-center u-gap-8px">
                     <span aria-hidden style={dotStyle(hex, 14)} />
-                    <span style={{ fontWeight: 800, fontSize: "var(--fs-15, 15px)" }}>{c.label}</span>
-                    <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-11)", marginLeft: "auto", whiteSpace: "nowrap" }}>{c.players.size} jog · {c.nRounds} voltas</span>
+                    <span className="u-fw-800 u-fs-var-fs-15-15px">{c.label}</span>
+                    <span className="muted u-fw-500 u-fs-fs-11 u-ml-auto u-ws-nowrap">{c.players.size} jog · {c.nRounds} voltas</span>
                   </div>
-                  <div className="muted" style={{ fontSize: "var(--fs-11)", marginTop: 2, paddingLeft: 22 }}>
-                    {dist ? <b style={{ fontWeight: 700 }}>{dist} m</b> : null}{dist && rt ? " · " : ""}{rt ? `CR ${fmtCR(rt.cr)} · Slope ${rt.sl}` : ""}{!dist && !rt ? "—" : ""}
+                  <div className="muted u-fs-fs-11 u-mt-2px u-pl-22px">
+                    {dist ? <b className="u-fw-700">{dist} m</b> : null}{dist && rt ? " · " : ""}{rt ? `CR ${fmtCR(rt.cr)} · Slope ${rt.sl}` : ""}{!dist && !rt ? "—" : ""}
                   </div>
                 </div>
                 {/* Corpo: escalões — UMA grelha só (nomes alinhados verticalmente
                     entre todos os escalões). Escalão = pill na 1ª linha; 2º/3º com
                     nº; data+SD por baixo do nome (2ª linha, pequena). */}
-                <div style={{ padding: "4px 12px 9px" }}>
+                <div className="u-p-4px-12px-9px">
                   {escs.length === 0 ? (
-                    <div className="muted" style={{ fontSize: "var(--fs-11)", padding: "6px 0" }}>sem escalão conhecido</div>
+                    <div className="muted u-fs-fs-11 u-p-6px-0">sem escalão conhecido</div>
                   ) : (
-                    <div style={{ display: "grid", gridTemplateColumns: "auto auto minmax(0,1fr)", columnGap: 9, rowGap: 0, alignItems: "center" }}>
+                    <div className="u-d-grid u-grid-template-columns-1jeby u-column-gap-9px u-row-gap-0 u-ai-center">
                       {escs.map((e, ei) => {
                         const top3 = [...c.esc.get(e)!.values()].sort((a, b) => (a.val - b.val) || ((a.tp ?? 0) - (b.tp ?? 0))).slice(0, 3);
                         return (
                           <Fragment key={e}>
-                            {ei > 0 && <div style={{ gridColumn: "1 / -1", borderTop: "1px solid var(--border-light, var(--border))", margin: "4px 0" }} />}
+                            {ei > 0 && <div className="u-grid-column-1-1 u-bt-gwkbz u-m-4px-0" />}
                             {top3.map((b, i) => (
                               <Fragment key={b.fed + i}>
-                                {i === 0 ? <span style={{ justifySelf: "start", alignSelf: "center" }}><EscPill esc={e} /></span> : rankBadge(i)}
+                                {i === 0 ? <span className="u-justify-self-start u-align-self-center"><EscPill esc={e} /></span> : rankBadge(i)}
                                 {score(b.val, b.tp)}
-                                <span style={{ minWidth: 0, display: "block", padding: "3px 0" }}>
+                                <span className="u-minw-0 u-d-block u-p-3px-0">
                                   {nameEl(b.fed, b.name)}
-                                  <span className="muted" style={{ display: "block", fontSize: "var(--fs-10)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                  <span className="muted u-d-block u-fs-fs-10 u-ws-nowrap u-ov-hidden u-tov-ellipsis">
                                     {fmtDMYfull(b.date)}{b.sd != null ? ` · SD ${b.sd.toFixed(1)}` : ""}
                                   </span>
                                 </span>
@@ -1118,8 +1118,8 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
   if (groups.length === 0) return null;
   return (
     <div className="course-tee-breakdown">
-      <h4 className="course-players-title" style={{ marginBottom: 8 }}>Como jogaram os nossos — por tee</h4>
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <h4 className="course-players-title u-mb-8px">Como jogaram os nossos — por tee</h4>
+      <div className="u-d-flex u-fd-column u-gap-12px">
         {groups.map((g) => {
           const hex = g.label === NO_TEE_LABEL ? "var(--border)" : (teeInfo.get(g.label)?.hex ?? teeGroupHex(g.label));
           const stripe = teeBorder(hex) ? "var(--border)" : hex; // tees claros → risca neutra
@@ -1130,21 +1130,21 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
             <div key={g.label} style={{ borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
               {/* Header do tee (banda tingida) — mesmo look dos KPIs */}
               <div style={{ padding: "7px 12px", background: teeTint(hex, 13), borderBottom: "1px solid var(--border-light, var(--border))" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div className="u-d-flex u-ai-center u-gap-8px">
                   <span aria-hidden style={teeDot(hex, 14)} />
-                  <span style={{ fontWeight: 800, fontSize: "var(--fs-15, 15px)" }}>{g.label}</span>
-                  <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-11)", marginLeft: "auto", whiteSpace: "nowrap" }}>{g.entries.length} jog.</span>
+                  <span className="u-fw-800 u-fs-var-fs-15-15px">{g.label}</span>
+                  <span className="muted u-fw-500 u-fs-fs-11 u-ml-auto u-ws-nowrap">{g.entries.length} jog.</span>
                 </div>
                 {(dist || rM || rF) && (
-                  <div className="muted" style={{ fontSize: "var(--fs-11)", marginTop: 2, paddingLeft: 22, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                    {dist ? <b style={{ fontWeight: 700 }}>{dist} m</b> : null}
-                    {rM && <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="M" /> CR {fmtCR(rM.cr)} · Slope {rM.sl}</span>}
-                    {rF && <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="F" /> CR {fmtCR(rF.cr)} · Slope {rF.sl}</span>}
+                  <div className="muted u-fs-fs-11 u-mt-2px u-pl-22px u-d-flex u-ai-center u-gap-8px u-fwr-wrap">
+                    {dist ? <b className="u-fw-700">{dist} m</b> : null}
+                    {rM && <span className="u-d-inline-flex u-ai-center u-gap-4px"><SexBadge sex="M" /> CR {fmtCR(rM.cr)} · Slope {rM.sl}</span>}
+                    {rF && <span className="u-d-inline-flex u-ai-center u-gap-4px"><SexBadge sex="F" /> CR {fmtCR(rF.cr)} · Slope {rF.sl}</span>}
                   </div>
                 )}
               </div>
               {/* Tabela (sortável) sem o wrapper de secção */}
-              <div style={{ padding: "6px 10px 8px" }}>
+              <div className="u-p-6px-10px-8px">
                 <PlayersTable entries={g.entries} onSelectPlayer={onSelectPlayer} bare />
               </div>
             </div>

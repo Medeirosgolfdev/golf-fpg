@@ -447,20 +447,20 @@ export default function JogadoresPage() {
               }
             }
             return (
-              <div style={{ borderBottom: "1px solid var(--border)", background: "var(--bg-subtle)", padding: "6px 8px" }}>
-                <div className="muted fs-10" style={{ marginBottom: 4 }}>
+              <div className="u-bb-1px-solid-border u-bg-bg-subtle u-p-6px-8px">
+                <div className="muted fs-10 u-mb-4px">
                   🧒 {filtered.length.toLocaleString("pt-PT")} jogadores jovens
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(90px, 1fr))", gap: 4 }}>
+                <div className="u-d-grid u-grid-template-columns-cdqv2 u-gap-4px">
                   {jovensOrdem.map(esc => {
                     const s = stats[esc];
                     if (!s || s.total === 0) return null;
                     return (
-                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg-card)", borderRadius: "var(--radius-sm)", fontSize: "var(--fs-11)" }}>
+                      <div key={esc} className="u-p-4px-6px u-bg-bg-card u-br-radius-sm u-fs-fs-11">
                         <div className="fw-700">{esc}</div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                        <div className="u-d-flex u-ai-center u-gap-4px">
                           <b>{s.total}</b>
-                          <span className="muted fs-10" style={{ display: "inline-flex", alignItems: "center", gap: 2 }}>
+                          <span className="muted fs-10 u-d-inline-flex u-ai-center u-gap-2px">
                             ({s.m}<SexBadge sex="M" size="sm" /> {s.f}<SexBadge sex="F" size="sm" />)
                           </span>
                         </div>

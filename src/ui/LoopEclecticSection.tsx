@@ -41,10 +41,10 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
   const parTot = pars.reduce((a, b) => a + b, 0);
   const hx = getTeeHex(t.teeName), fg = textOnColor(hx);
   return (
-    <div className="ecPillBlock ecActive overflow-hidden br-lg" style={{ display: "inline-flex", flexDirection: "column", maxWidth: "100%" }}>
+    <div className="ecPillBlock ecActive overflow-hidden br-lg u-d-inline-flex u-fd-column u-maxw-100pc">
       {/* width 0 + min-width 100%: o cabeçalho não alarga o cartão — dobra
           dentro da largura da tabela. */}
-      <div className="fw-600 fs-12 ecPillHeader" style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center", width: 0, minWidth: "100%", boxSizing: "border-box" }}>
+      <div className="fw-600 fs-12 ecPillHeader u-d-flex u-fwr-wrap u-gap-6px u-ai-center u-w-0 u-minw-100pc u-box-sizing-border-box">
         {grupo !== l.nome && <span className="muted">{grupo} ·</span>}
         <span className="fw-700">{l.nome}</span>
         <span className="muted">· Eclético</span>
@@ -121,8 +121,8 @@ export function LoopEclecticSection({ data }: { data: PlayerPageData }) {
   if (!grupos.length) return null;
   return (
     <div className="mb-16">
-      <div className="fs-12 fw-700" style={{ marginBottom: 6 }}>Ecléticos de 9 buracos</div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
+      <div className="fs-12 fw-700 u-mb-6px">Ecléticos de 9 buracos</div>
+      <div className="u-d-flex u-fwr-wrap u-gap-12px u-ai-flex-start">
         {grupos.flatMap(g => g.linhas.filter(l => l.tees.length).map(l => (
           <CartaoNove key={`${g.grupo}|${l.nome}`} grupo={g.grupo} l={l} />
         )))}

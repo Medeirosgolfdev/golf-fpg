@@ -37,7 +37,7 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
 }) {
   const data = useMemo(() => tees.map(t => ({
     tee: t.tee,
-    label: t.label ?? <span style={{ fontWeight: 700 }}>{t.tee.teeName}</span>,
+    label: t.label ?? <span className="u-fw-700">{t.tee.teeName}</span>,
     reach: buildReach(t.tee, driveM, secondM),
     hex: getTeeHex(t.tee.teeName, t.tee.scorecardMeta?.teeColor),
   })), [tees, driveM, secondM]);
@@ -68,7 +68,7 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
   };
 
   return (
-    <div style={{ overflowX: "auto", paddingBottom: 14 }}>
+    <div className="u-ox-auto u-pb-14px">
       <table className="dtable">
         <thead>
           <tr>
@@ -96,7 +96,7 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
           {/* Metros por tee */}
           {data.map((d, i) => (
             <tr key={"m" + i} style={{ background: d.hex + "1f" }}>
-              <td style={lblStyle}>{d.label} <span style={{ fontWeight: 600 }}>(m)</span></td>
+              <td style={lblStyle}>{d.label} <span className="u-fw-600">(m)</span></td>
               {holes.map(h => <td key={h} className="r" style={{ fontFamily: MONO }}>{distAt(i, h) ?? "–"}</td>)}
               <td className="r" style={{ fontFamily: MONO, fontWeight: 800 }}>{totals[i] || "–"}</td>
             </tr>
@@ -104,7 +104,7 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
 
           {/* Delta (so com 2 tees) */}
           {two && (
-            <tr style={{ borderTop: "2px solid var(--border)" }}>
+            <tr className="u-bt-2px-solid-border">
               <td style={lblStyle}>Δ (m)</td>
               {holes.map(h => {
                 const a = distAt(0, h), b = distAt(1, h);
@@ -125,17 +125,17 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
           {data.map((d, i) => (
             <React.Fragment key={"blk" + i}>
               <tr style={{ background: d.hex + "1f", borderTop: "2px solid var(--border)" }}>
-                <td style={lblStyle}>{d.label} <span style={{ fontWeight: 600 }}>· após drive faltam (m)</span></td>
+                <td style={lblStyle}>{d.label} <span className="u-fw-600">· após drive faltam (m)</span></td>
                 {holes.map(h => <td key={h} className="r">{appCell(byHole[i].get(h)?.afterDrive ?? null)}</td>)}
                 <td />
               </tr>
               <tr style={{ background: d.hex + "1f" }}>
-                <td style={lblStyle}>{d.label} <span style={{ fontWeight: 600 }}>· após 2ª pancada faltam (m)</span></td>
+                <td style={lblStyle}>{d.label} <span className="u-fw-600">· após 2ª pancada faltam (m)</span></td>
                 {holes.map(h => <td key={h} className="r">{appCell(byHole[i].get(h)?.after2 ?? null)}</td>)}
                 <td />
               </tr>
               {two && i === 0 && (
-                <tr aria-hidden="true"><td colSpan={holes.length + 2} style={{ height: 12, padding: 0, border: "none", background: "transparent" }} /></tr>
+                <tr aria-hidden="true"><td colSpan={holes.length + 2} className="u-h-12px u-p-0 u-bd-none u-bg-transparent" /></tr>
               )}
             </React.Fragment>
           ))}

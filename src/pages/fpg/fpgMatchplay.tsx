@@ -47,12 +47,12 @@ export function fpgMatchplayTabs(
     label: "Match Play",
     content: (
       <div>
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", marginBottom: 8 }}>
+        <div className="u-fs-fs-12 u-c-text-2 u-mb-8px">
           {mp.tournament && <span className="fw-700">{mp.tournament}</span>}
           {mp.champion
             ? <> · 🏆 <span className="fw-700">{mp.champion}</span></>
-            : <span className="p p-sm" style={{ marginLeft: 6 }}>em curso</span>}
-          <span style={{ color: "var(--text-muted)" }}>
+            : <span className="p p-sm u-ml-6px">em curso</span>}
+          <span className="u-c-text-muted">
             {" "}· {fl.rounds.length} eliminatórias · os cartões são só os da qualificação ·{" "}
             <a href={fl.source} target="_blank" rel="noreferrer">quadro na FPG ↗</a>
           </span>

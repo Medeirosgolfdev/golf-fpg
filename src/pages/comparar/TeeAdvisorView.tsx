@@ -94,8 +94,8 @@ function ClubDistanceTable({ driveM }: { driveM: number }) {
   }, [rows, sortKey, sortDir]);
 
   return (
-    <div style={{ overflowX: "auto", paddingBottom: 6 }}>
-      <table className="dtable" style={{ minWidth: 320 }}>
+    <div className="u-ox-auto u-pb-6px">
+      <table className="dtable u-minw-320px">
         <thead>
           <tr>
             <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Taco</SortableHdr>
@@ -106,7 +106,7 @@ function ClubDistanceTable({ driveM }: { driveM: number }) {
         <tbody>
           {sorted.map(c => (
             <tr key={c.abbr} style={c.abbr === "D" ? { fontWeight: 800 } : undefined}>
-              <td>{c.club} <span className="muted" style={{ fontSize: "var(--fs-11)" }}>({c.abbr})</span></td>
+              <td>{c.club} <span className="muted u-fs-fs-11">({c.abbr})</span></td>
               <td className="r" style={{ fontFamily: MONO }}>{c.pct}%</td>
               <td className="r" style={{ fontFamily: MONO, fontWeight: 700 }}>{c.dist}</td>
             </tr>
@@ -478,7 +478,7 @@ function TeePill({ tee }: { tee: Tee }) {
  *  para encaixar no fluxo das frases sem quebrar a linha. */
 function TeeNameSpan({ tee }: { tee: Tee }) {
   return (
-    <span style={{ fontSize: "0.92em", whiteSpace: "nowrap" }}>
+    <span className="u-fs-0_92em u-ws-nowrap">
       <SharedTeePill name={tee.teeName} hex={getTeeHex(tee.teeName, tee.scorecardMeta?.teeColor)} />
     </span>
   );
@@ -529,7 +529,7 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
   }, [rows, sortKey, sortDir]);
 
   return (
-    <div style={{ overflowX: "auto", paddingBottom: 14 }}>
+    <div className="u-ox-auto u-pb-14px">
       <table className="dtable">
         <thead>
           <tr>
@@ -783,9 +783,9 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
         <NumInput value={secondM} step={5} title="Alcance médio da 2ª pancada (madeira/híbrido)" onChange={setSecondM} />
       </Toolbar>
 
-      <div className="card" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-        <span style={{ fontSize: "var(--fs-22)" }}>📏</span>
-        <span style={{ fontWeight: 800, fontSize: "var(--fs-15)" }}>Distância habitual</span>
+      <div className="card u-d-flex u-ai-center u-gap-10px u-fwr-wrap">
+        <span className="u-fs-fs-22">📏</span>
+        <span className="u-fw-800 u-fs-fs-15">Distância habitual</span>
         <input
           className="input" type="number" step={50}
           value={habEff != null ? Math.round(habEff) : ""}
@@ -793,17 +793,17 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
           title="Distância de referência a que o jogador está habituado — edita para simular outro cenário"
           style={{ width: 110, padding: "6px 10px", fontFamily: MONO, fontSize: "var(--fs-17)", fontWeight: 700 }}
         />
-        <span style={{ fontWeight: 700, fontSize: "var(--fs-15)" }}>m</span>
+        <span className="u-fw-700 u-fs-fs-15">m</span>
         {habOverride != null ? (
           <button
             type="button"
             onClick={() => setHabOverride(null)}
-            style={{ padding: "4px 10px", fontSize: "var(--fs-12)", fontWeight: 600, background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: "var(--radius)", cursor: "pointer", color: "var(--text-2)" }}
+            className="u-p-4px-10px u-fs-fs-12 u-fw-600 u-bg-bg-muted u-bd-1px-solid-border u-br-radius u-cur-pointer u-c-text-2"
           >
             ↺ Repor automático{hab.value != null ? ` (${hab.value.toFixed(0)} m)` : ""}
           </button>
         ) : (
-          <span className="muted" style={{ fontSize: "var(--fs-13)" }}>
+          <span className="muted u-fs-fs-13">
             {hab.value != null ? `percentil 70 das últimas ${hab.n} voltas 18B do Manuel — a distância que já joga em competição` : "sem histórico — introduz um valor"}
           </span>
         )}
@@ -815,15 +815,15 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
         <>
           <div className="card">
             <div className="h-md">🟡 Tees de {course?.master.name}</div>
-            <div className="muted" style={{ fontSize: "var(--fs-12)", marginTop: -6, marginBottom: 10 }}>
+            <div className="muted u-fs-fs-12 u-mt-6px u-mb-10px">
               Perdão = pancadas recebidas WHS (HI×Slope/113 + CR − Par) · Gross alvo = gross que joga ao handicap (SD = HI) · Clica no cabeçalho para ordenar
             </div>
             <TeeTable rows={metrics} habitual={habEff} />
           </div>
 
           {teeA && teeB && (
-            <div className="card" style={{ borderLeft: "4px solid var(--accent)" }}>
-              <div className="h-md" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <div className="card u-bl-4px-solid-accent">
+              <div className="h-md u-d-flex u-ai-center u-gap-10px u-fwr-wrap">
                 🆚 Confronto de tees
                 <select className="select" value={teeA.tee.teeId} onChange={e => setTeeAId(e.target.value)} style={{ border: `2px solid ${getTeeHex(teeA.tee.teeName, teeA.tee.scorecardMeta?.teeColor)}` }}>
                   {metrics.map(m => <option key={m.tee.teeId} value={m.tee.teeId}>{m.tee.teeName}{m.dist != null ? ` (${m.dist} m)` : ""}</option>)}
@@ -834,7 +834,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 </select>
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 12 }}>
+              <div className="u-d-flex u-fd-column u-gap-10px u-mt-12px">
                 {conclusions.map((c, i) => (
                   <div key={i} style={{
                     display: "flex", gap: 10, alignItems: "flex-start",
@@ -843,13 +843,13 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                     border: c.tone === "warn" ? "1px solid var(--color-warn)" : "1px solid var(--border-light)",
                     opacity: c.available ? 1 : 0.6,
                   }}>
-                    <span style={{ fontSize: "var(--fs-18)", lineHeight: 1.2 }}>{c.icon}</span>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 700, fontSize: "var(--fs-13)" }}>{c.title}</div>
-                      <div style={{ fontSize: "var(--fs-13)", lineHeight: 1.5, marginTop: 2 }}>{c.text}</div>
+                    <span className="u-fs-fs-18 u-lh-1_2">{c.icon}</span>
+                    <div className="u-fl-1">
+                      <div className="u-fw-700 u-fs-fs-13">{c.title}</div>
+                      <div className="u-fs-fs-13 u-lh-1_5 u-mt-2px">{c.text}</div>
                     </div>
                     {c.available && c.pts !== 0 && (
-                      <span style={{ flexShrink: 0 }} title={`Contribuição para o veredicto: ${c.pts > 0 ? "+" : ""}${c.pts.toFixed(1)}`}>
+                      <span className="u-fsh-0" title={`Contribuição para o veredicto: ${c.pts > 0 ? "+" : ""}${c.pts.toFixed(1)}`}>
                         <TeePill tee={(c.pts > 0 ? teeA : teeB).tee} />
                       </span>
                     )}
@@ -857,30 +857,26 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 ))}
               </div>
 
-              <div style={{ marginTop: 16 }}>
-                <div style={{ fontWeight: 700, fontSize: "var(--fs-13)", marginBottom: 4 }}>
+              <div className="u-mt-16px">
+                <div className="u-fw-700 u-fs-fs-13 u-mb-4px">
                   📋 Diferença buraco a buraco — {teeA.tee.teeName} vs {teeB.tee.teeName}
                 </div>
-                <div className="muted" style={{ fontSize: "var(--fs-12)", marginBottom: 8 }}>
+                <div className="muted u-fs-fs-12 u-mb-8px">
                   Linhas "após drive" = metros que faltam para o green depois da pancada do tee (0 = green alcançado; no par 3 a própria pancada do tee é a do green). Linhas "após 2ª pancada" = o que sobra depois da 2ª pancada grande (madeira/híbrido), só nos par 4/5 — num par 5 é o approach que entra no green. · ✗ = green fora de alcance em regulação
                 </div>
                 <HoleDiffTable tees={[{ tee: teeA.tee, label: <TeePill tee={teeA.tee} /> }, { tee: teeB.tee, label: <TeePill tee={teeB.tee} /> }]} driveM={driveM} secondM={secondM} />
               </div>
 
               {recommendation && (
-                <div style={{
-                  marginTop: 14, padding: "14px 16px", borderRadius: "var(--radius)",
-                  background: "var(--accent-light)", border: "1px solid var(--accent)",
-                  display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap",
-                }}>
-                  <span style={{ fontSize: "var(--fs-24)" }}>{
+                <div className="u-mt-14px u-p-14px-16px u-br-radius u-bg-accent-light u-bd-1px-solid-accent u-d-flex u-gap-12px u-ai-center u-fwr-wrap">
+                  <span className="u-fs-fs-24">{
                     recommendation.mode === "go" ? "🚀"
                     : recommendation.mode === "suit" ? "🎯"
                     : recommendation.mode === "caution" ? "🤔"
                     : "🛡️"
                   }</span>
-                  <div style={{ flex: 1, minWidth: 220 }}>
-                    <div style={{ fontWeight: 800, fontSize: "var(--fs-14)", lineHeight: 1.5 }}>
+                  <div className="u-fl-1 u-minw-220px">
+                    <div className="u-fw-800 u-fs-fs-14 u-lh-1_5">
                       {recommendation.mode === "go"
                         ? <>Avança para as <TeeNameSpan tee={recommendation.longer.tee} /> — já jogas esta distância em competição</>
                         : recommendation.mode === "suit"
@@ -891,7 +887,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                               ? <>Primeiro, domina as <TeeNameSpan tee={recommendation.shorter.tee} /> neste campo</>
                               : <>Por agora, fica nas <TeeNameSpan tee={recommendation.shorter.tee} /> — o salto ainda é grande</>}
                     </div>
-                    <div style={{ fontSize: "var(--fs-13)", marginTop: 4, lineHeight: 1.6 }}>
+                    <div className="u-fs-fs-13 u-mt-4px u-lh-1_6">
                       {recommendation.mode === "suit" ? (
                         <>
                           Ainda não bateste as <TeeNameSpan tee={recommendation.shorter.tee} /> deste campo{recommendation.sForm != null && <> (resultado típico {fmtToPar(Math.round(recommendation.sForm))} vs par {recommendation.shortRecentN === recommendation.shorter.hist.n ? "" : "nas últimas "}{recommendation.shortRecentN} volta{recommendation.shortRecentN === 1 ? "" : "s"}, quando o handicap aqui aponta para ~{fmtToPar(recommendation.shorterPh ?? 0)})</>} — mas isso pode não ser falta de jogo. Um campo curto demais <b>tira-te o driver da mão</b>, deixa-te distâncias <i>tweener</i> (nem wedge cheio, nem ferro confortável) e não premia o teu comprimento. As <TeeNameSpan tee={recommendation.longer.tee} /> ({recommendation.longer.dist} m) estão dentro da distância que já jogas a sério{recommendation.habitual != null ? <> ({Math.round(recommendation.habitual)} m)</> : null} e devolvem-te o driver, pancadas cheias e <b>variedade de tacos</b> no approach — podem encaixar melhor no teu jogo.{perfLine}{recommendation.perdao != null && recommendation.perdao > 0 && <> Ainda recebes +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} de perdão{recommendation.alerts > 0 ? <> (saldo {recommendation.saldo! > 0 ? "+" : ""}{recommendation.saldo})</> : null}.</>} Vale a pena experimentá-las e comparar os resultados.{recommendation.neverPlayedHere && <> Como é a tua estreia no campo, ganha-lhe a medida nas primeiras voltas.</>}
@@ -947,7 +943,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
             </div>
           )}
 
-          <div className="muted" style={{ fontSize: "var(--fs-11)", lineHeight: 1.6, marginTop: 4 }}>
+          <div className="muted u-fs-fs-11 u-lh-1_6 u-mt-4px">
             Metodologia: o <b>saldo</b> compara as pancadas de perdão que o tee mais longo dá
             (fórmula WHS de playing handicap — mais Course Rating = mais pancadas recebidas) com o
             número de perigos que cria (buracos fora de alcance em regulação). Saldo positivo = a
@@ -972,32 +968,29 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
             real é maior do que o drive configurado.
           </div>
 
-          <details className="card" style={{ marginTop: 8 }}>
-            <summary style={{ cursor: "pointer", fontWeight: 700, fontSize: "var(--fs-13)" }}>
+          <details className="card u-mt-8px">
+            <summary className="u-cur-pointer u-fw-700 u-fs-fs-13">
               📐 Porquê 24–28× a distância de drive?
             </summary>
-            <div style={{ fontSize: "var(--fs-13)", lineHeight: 1.7, marginTop: 10 }}>
-              <p style={{ margin: "0 0 8px" }}>
+            <div className="u-fs-fs-13 u-lh-1_7 u-mt-10px">
+              <p className="u-m-0-0-8px">
                 <b>1 — O drive é o factor de escala do saco inteiro.</b> As medições Trackman
                 recolhidas pela US Kids Golf Foundation e pela ASGCA mostram que as distâncias dos
                 outros tacos são percentagens notavelmente constantes do drive, do profissional de
                 tour ao júnior: o ferro 7 anda nos ~65–70% do drive, o wedge nos ~40–50%. Conhecendo
                 o drive de um jogador, conhece-se o alcance do jogo todo.
               </p>
-              <div style={{
-                margin: "0 0 12px", padding: "10px 12px", borderRadius: "var(--radius)",
-                background: "var(--bg-muted)", border: "1px solid var(--border-light)",
-              }}>
-                <div style={{ fontWeight: 700, fontSize: 12.5, marginBottom: 2 }}>
+              <div className="u-m-0-0-12px u-p-10px-12px u-br-radius u-bg-bg-muted u-bd-1px-solid-border-light">
+                <div className="u-fw-700 u-fs-12_5px u-mb-2px">
                   Distâncias estimadas do saco — drive de {driveM} m
                 </div>
-                <div className="muted" style={{ fontSize: 11.5, marginBottom: 8 }}>
+                <div className="muted u-fs-11_5px u-mb-8px">
                   Cada taco como percentagem constante do drive. Atualiza automaticamente
                   quando mudas o <b>Drive (m)</b> no topo da página.
                 </div>
                 <ClubDistanceTable driveM={driveM} />
               </div>
-              <p style={{ margin: "0 0 8px" }}>
+              <p className="u-m-0-0-8px">
                 <b>2 — O multiplicador é a "conta de tacos" de uma volta.</b> Num par 72 medido em
                 unidades de drive (D): 10 par 4 ≈ drive + ferro médio ≈ 1,65 D cada; 4 par 5 ≈ drive
                 + madeira + approach ≈ 2,3 D cada; 4 par 3 ≈ 0,6 D cada. Somando, uma volta "à
@@ -1005,7 +998,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 mistura de pancadas que um campo de tour pede a um profissional: fairway com o
                 drive, approaches com ferros médios, variedade de tacos.
               </p>
-              <p style={{ margin: "0 0 8px" }}>
+              <p className="u-m-0-0-8px">
                 <b>3 — Confere com a realidade.</b> Um profissional de tour com drive de ~260 m joga
                 campos de ~6.600 m (ratio ≈ 25×); um scratch amador com 220 m joga ~5.700 m (≈ 26×).
                 Abaixo da janela, todos os approaches viram wedges — não se treinam ferros médios
@@ -1013,12 +1006,12 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 regulação, força o swing para ganhar metros que não tem e joga na defensiva — é aí
                 que a USGA documenta perda de confiança e de desenvolvimento.
               </p>
-              <p style={{ margin: 0 }} className="muted">
+              <p className="muted u-m-0">
                 Nota: as tabelas Longleaf implicam ~22–26× (o ratio cresce ligeiramente com o
                 drive); o Tee It Forward da USGA/PGA usa ~28×. A janela 24–28× usada nesta página é
                 a síntese das duas referências.
               </p>
-              <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 4, fontSize: "var(--fs-12)" }}>
+              <div className="u-mt-10px u-d-flex u-fd-column u-gap-4px u-fs-fs-12">
                 <a href="http://www.longleafteesystem.com/" target="_blank" rel="noopener noreferrer">↗ Longleaf Tee System (US Kids Golf Foundation + ASGCA)</a>
                 <a href="https://tournaments.uskidsgolf.com/play-and-learn/forward-tees/forward-tee-yardages" target="_blank" rel="noopener noreferrer">↗ U.S. Kids Golf — Forward Tee Yardages</a>
                 <a href="https://www.usga.org/content/usga/home-page/course-care/green-section-record/61/issue-06/forward-tees-for-the-future.html" target="_blank" rel="noopener noreferrer">↗ USGA — Forward Tees for the Future</a>
@@ -1028,26 +1021,26 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
             </div>
           </details>
 
-          <details className="card" style={{ marginTop: 8 }}>
-            <summary style={{ cursor: "pointer", fontWeight: 700, fontSize: "var(--fs-13)" }}>
+          <details className="card u-mt-8px">
+            <summary className="u-cur-pointer u-fw-700 u-fs-fs-13">
               📊 Porquê contamos voltas ao nível do índice — e não a média?
             </summary>
-            <div style={{ fontSize: "var(--fs-13)", lineHeight: 1.7, marginTop: 10 }}>
-              <p style={{ margin: "0 0 8px" }}>
+            <div className="u-fs-fs-13 u-lh-1_7 u-mt-10px">
+              <p className="u-m-0-0-8px">
                 <b>1 — O índice de handicap é potencial, não média.</b> No World Handicap System, o
                 índice é a <b>média das 8 melhores</b> de entre as últimas 20 voltas (cada uma
                 ajustada à dificuldade do campo). Mede o que o jogador é capaz de fazer <i>num bom
                 dia</i> — de propósito, não o que faz em média. Um jogador "irregular" carrega um
                 índice mais baixo do que o seu score médio sugeriria.
               </p>
-              <p style={{ margin: "0 0 8px" }}>
+              <p className="u-m-0-0-8px">
                 <b>2 — Por isso só se joga ao índice ~1 em cada 5 voltas.</b> O WHS assume que um
                 jogador iguala ou bate o seu índice cerca de <b>20% das vezes</b>. As outras 4 em 5
                 voltas ficam acima — é o esperado, não um sinal de mau jogo. Consequência: a
                 <b> média</b> de score differential de um jogador anda sempre vários pontos
                 <i> acima</i> do índice (um índice ~10 tem médias na casa dos 14–15).
               </p>
-              <p style={{ margin: "0 0 8px" }}>
+              <p className="u-m-0-0-8px">
                 <b>3 — Logo, comparamos as voltas certas.</b> Para saber se ele aguenta um
                 comprimento, citar a "média de differential" seria enganador — pareceria mau quando
                 é perfeitamente normal. Em vez disso contamos as voltas jogadas <b>ao nível do índice
@@ -1055,11 +1048,11 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 do período. Se essas voltas de qualidade aparecem tanto — ou mais — nos campos
                 longos, é prova de que o comprimento não lhe tira nível.
               </p>
-              <p style={{ margin: 0 }} className="muted">
+              <p className="muted u-m-0">
                 Nota: tudo isto é medido nos <b>últimos 12 meses</b>, porque um júnior cresce
                 depressa e o que fazia há mais de um ano já não representa o jogo de hoje.
               </p>
-              <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 4, fontSize: "var(--fs-12)" }}>
+              <div className="u-mt-10px u-d-flex u-fd-column u-gap-4px u-fs-fs-12">
                 <a href="https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/handicap-index-calculation.html" target="_blank" rel="noopener noreferrer">↗ USGA — The Handicap Index Calculation (8 melhores de 20)</a>
                 <a href="https://www.randa.org/en/roh/the-rules-of-handicapping/rule-5" target="_blank" rel="noopener noreferrer">↗ R&A — Rules of Handicapping, Rule 5</a>
                 <a href="https://www.nationalclubgolfer.com/whs/odds-of-beating-your-handicap/" target="_blank" rel="noopener noreferrer">↗ National Club Golfer — odds de bater o teu handicap (~1 em 5)</a>

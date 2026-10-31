@@ -164,10 +164,10 @@ function EGRDetail({ ranking, id }: { ranking: EgrRanking; id: string }) {
   return (
     <RankingDetail backTo="/egr/info/jogadores"
       header={<>
-        <h2 style={{ margin: 0 }}>{flagOrEmpty(player.country)} {player.name}</h2>
+        <h2 className="u-m-0">{flagOrEmpty(player.country)} {player.name}</h2>
         {player.sex && <SexBadge sex={player.sex} />}
         {player.ageGroup && <span className="p p-sm">{player.ageGroup}</span>}
-        <a href={`${EGR_SITE}/players/${id}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--fs-12)" }}>perfil EGR ↗</a>
+        <a href={`${EGR_SITE}/players/${id}`} target="_blank" rel="noopener noreferrer" className="u-fs-fs-12">perfil EGR ↗</a>
       </>}
       stats={[
         { label: "País", value: player.country || "—" },

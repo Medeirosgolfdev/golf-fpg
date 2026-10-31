@@ -1,304 +1,224 @@
 {
-  "gerado": "2026-10-30",
+  "gerado": "2026-10-31",
   "totais": {
-    "estilosInline": 2812,
-    "coresHex": 308,
+    "estilosInline": 727,
+    "coresHex": 236,
     "tabelasSemClasse": 11,
-    "letraNumero": 13,
-    "cantosNumero": 73
+    "cantosNumero": 21,
+    "letraNumero": 5
   },
   "ficheiros": {
     "pages/BJGTAnalysisPage.tsx": {
-      "estilosInline": 3
+      "estilosInline": 2
     },
     "pages/CalendarioPage.tsx": {
-      "estilosInline": 69,
-      "coresHex": 16
+      "estilosInline": 30,
+      "coresHex": 14
     },
     "pages/CamposPage.tsx": {
-      "estilosInline": 73,
+      "estilosInline": 27,
       "coresHex": 1,
       "tabelasSemClasse": 1
     },
     "pages/comparar/TeeAdvisorView.tsx": {
-      "estilosInline": 65,
-      "letraNumero": 2
+      "estilosInline": 17
     },
     "pages/CompararPage.tsx": {
-      "estilosInline": 68,
+      "estilosInline": 22,
       "coresHex": 3,
-      "letraNumero": 1,
-      "cantosNumero": 3
+      "cantosNumero": 1
     },
     "pages/ComparePage.tsx": {
-      "estilosInline": 74,
+      "estilosInline": 22,
       "coresHex": 2
     },
     "pages/DrawsPage.tsx": {
-      "estilosInline": 93,
-      "letraNumero": 1
+      "estilosInline": 11
     },
     "pages/drive/driveRanking.tsx": {
       "estilosInline": 1,
       "letraNumero": 2
     },
     "pages/EGRPage.tsx": {
-      "estilosInline": 3,
+      "estilosInline": 1,
       "coresHex": 4
     },
     "pages/ffg/MeriteView.tsx": {
-      "estilosInline": 33,
+      "estilosInline": 2,
       "tabelasSemClasse": 1
     },
     "pages/ffg/PlayersView.tsx": {
-      "estilosInline": 26,
+      "estilosInline": 3,
       "coresHex": 2
     },
     "pages/FFGPage.tsx": {
       "coresHex": 1
     },
-    "pages/fpg/fpgMatchplay.tsx": {
-      "estilosInline": 3
-    },
     "pages/fpg/fpgOmRanking.tsx": {
-      "estilosInline": 69,
-      "coresHex": 12,
-      "cantosNumero": 3
+      "estilosInline": 13,
+      "coresHex": 12
     },
     "pages/fpg/FpgScout.tsx": {
-      "estilosInline": 19
+      "estilosInline": 2
     },
     "pages/fpg/TournamentDetail.tsx": {
-      "estilosInline": 18,
-      "coresHex": 5
+      "estilosInline": 2,
+      "coresHex": 1
     },
     "pages/FPGPage.tsx": {
-      "estilosInline": 8
+      "estilosInline": 1
     },
     "pages/GlobalJuniorPage.tsx": {
       "coresHex": 1
     },
-    "pages/jogadores/eventInfo.tsx": {
-      "estilosInline": 4
-    },
     "pages/jogadores/federadoFields.tsx": {
-      "estilosInline": 9,
+      "estilosInline": 2,
       "coresHex": 3
     },
-    "pages/jogadores/FederadoOnlyDetail.tsx": {
-      "estilosInline": 35,
-      "coresHex": 1
-    },
-    "pages/jogadores/FederadoRoundsTable.tsx": {
-      "estilosInline": 3
-    },
     "pages/jogadores/FederadosStatsPanel.tsx": {
-      "estilosInline": 67
+      "estilosInline": 14
     },
     "pages/jogadores/FilteredStatsCard.tsx": {
-      "estilosInline": 30
+      "estilosInline": 4
     },
     "pages/jogadores/IdentityPills.tsx": {
       "coresHex": 1
     },
     "pages/jogadores/JogadoresToolbar.tsx": {
-      "estilosInline": 14,
-      "coresHex": 2,
-      "cantosNumero": 1
-    },
-    "pages/jogadores/PlayerDetail.tsx": {
-      "estilosInline": 7,
       "coresHex": 1
     },
     "pages/jogadores/PlayerKpiStrip.tsx": {
       "estilosInline": 1
     },
     "pages/jogadores/PlayerSidebarItem.tsx": {
-      "estilosInline": 17,
-      "coresHex": 3
-    },
-    "pages/jogadores/PPHistoryView.tsx": {
-      "estilosInline": 9,
+      "estilosInline": 2,
       "coresHex": 1
     },
+    "pages/jogadores/PPHistoryView.tsx": {
+      "estilosInline": 1
+    },
     "pages/jogadores/statsWidgets.tsx": {
-      "estilosInline": 10
+      "estilosInline": 8
     },
     "pages/jogadores/views/AnalysisView.tsx": {
-      "estilosInline": 10
+      "estilosInline": 4
     },
     "pages/jogadores/views/ByCourseView.tsx": {
-      "estilosInline": 11
-    },
-    "pages/jogadores/views/CoursePerformanceSection.tsx": {
       "estilosInline": 1
     },
     "pages/JogadoresListPage.tsx": {
-      "estilosInline": 31,
-      "coresHex": 4
-    },
-    "pages/JogadoresPage.tsx": {
-      "estilosInline": 6
+      "estilosInline": 3,
+      "coresHex": 1
     },
     "pages/JogadoresPorAnoPage.tsx": {
-      "estilosInline": 38,
-      "coresHex": 5
-    },
-    "pages/kids/CourseTab.tsx": {
-      "estilosInline": 4,
-      "cantosNumero": 1
+      "estilosInline": 2,
+      "coresHex": 4
     },
     "pages/kids/FieldRivaisDashboard.tsx": {
-      "estilosInline": 31,
-      "coresHex": 2,
-      "cantosNumero": 1,
+      "estilosInline": 9,
       "tabelasSemClasse": 1
     },
     "pages/kids/HistoricScorecardsTab.tsx": {
-      "estilosInline": 43,
-      "coresHex": 2,
-      "cantosNumero": 2
-    },
-    "pages/kids/PrevisaoTab.tsx": {
-      "estilosInline": 56,
-      "coresHex": 2,
-      "cantosNumero": 2
-    },
-    "pages/kids2/components/AnaliseSection.tsx": {
-      "estilosInline": 41,
-      "cantosNumero": 2
-    },
-    "pages/kids2/components/CircuitFilterPills.tsx": {
-      "estilosInline": 3
-    },
-    "pages/kids2/components/EvolutionChart.tsx": {
-      "estilosInline": 23,
-      "letraNumero": 3,
-      "cantosNumero": 1
-    },
-    "pages/kids2/components/HcpSparkline.tsx": {
-      "estilosInline": 11,
-      "coresHex": 3,
-      "cantosNumero": 1
-    },
-    "pages/kids2/components/HeroIdentity.tsx": {
-      "estilosInline": 55,
-      "coresHex": 2,
-      "letraNumero": 2,
-      "cantosNumero": 1
-    },
-    "pages/kids2/components/HistoryByTournament.tsx": {
-      "estilosInline": 51,
-      "coresHex": 3,
-      "cantosNumero": 4
-    },
-    "pages/kids2/components/InlineScorecard.tsx": {
-      "estilosInline": 15,
-      "cantosNumero": 3
-    },
-    "pages/kids2/components/MatchupVsManuel.tsx": {
-      "estilosInline": 29,
+      "estilosInline": 28,
       "coresHex": 2
     },
-    "pages/kids2/components/MemberHistTable.tsx": {
-      "estilosInline": 23,
-      "cantosNumero": 2
-    },
-    "pages/kids2/components/MetricsGrid.tsx": {
-      "estilosInline": 5
-    },
-    "pages/kids2/components/NextTournamentsSection.tsx": {
-      "estilosInline": 12,
-      "coresHex": 3,
-      "cantosNumero": 1
-    },
-    "pages/kids2/components/PalmaresSection.tsx": {
-      "estilosInline": 18,
+    "pages/kids/PrevisaoTab.tsx": {
+      "estilosInline": 7,
       "coresHex": 1,
       "cantosNumero": 1
     },
-    "pages/kids2/components/ResultsTimeline.tsx": {
-      "estilosInline": 54,
-      "coresHex": 8,
-      "cantosNumero": 9
-    },
-    "pages/kids2/components/ScoringDistribution.tsx": {
-      "estilosInline": 24,
-      "coresHex": 6
-    },
-    "pages/kids2/Kids2SubNav.tsx": {
-      "estilosInline": 3
-    },
-    "pages/kids2/ListasPage.tsx": {
-      "estilosInline": 23
-    },
-    "pages/kids2/NextTournaments.tsx": {
-      "estilosInline": 1
-    },
-    "pages/kids2/NextTournamentsGlobal.tsx": {
-      "estilosInline": 13,
-      "coresHex": 3,
-      "cantosNumero": 1
-    },
-    "pages/kids2/PlayerProfile.tsx": {
-      "estilosInline": 1
-    },
-    "pages/kids2/RankingPage.tsx": {
-      "estilosInline": 26,
-      "coresHex": 4,
-      "cantosNumero": 1
-    },
-    "pages/kids2/Sidebar.tsx": {
-      "estilosInline": 21
-    },
-    "pages/KIDS2Page.tsx": {
+    "pages/kids2/components/AnaliseSection.tsx": {
       "estilosInline": 6
     },
-    "pages/major/MajorVeteransView.tsx": {
-      "estilosInline": 23,
+    "pages/kids2/components/EvolutionChart.tsx": {
+      "estilosInline": 1,
+      "letraNumero": 3
+    },
+    "pages/kids2/components/HcpSparkline.tsx": {
+      "coresHex": 1
+    },
+    "pages/kids2/components/HeroIdentity.tsx": {
+      "estilosInline": 6,
       "coresHex": 2,
       "cantosNumero": 1
     },
-    "pages/OmCgssPage.tsx": {
+    "pages/kids2/components/HistoryByTournament.tsx": {
+      "estilosInline": 19,
+      "coresHex": 2,
+      "cantosNumero": 2
+    },
+    "pages/kids2/components/MatchupVsManuel.tsx": {
+      "estilosInline": 13,
+      "coresHex": 2
+    },
+    "pages/kids2/components/MemberHistTable.tsx": {
+      "estilosInline": 7
+    },
+    "pages/kids2/components/MetricsGrid.tsx": {
+      "estilosInline": 1
+    },
+    "pages/kids2/components/PalmaresSection.tsx": {
+      "estilosInline": 1
+    },
+    "pages/kids2/components/ResultsTimeline.tsx": {
+      "estilosInline": 14,
+      "coresHex": 3,
+      "cantosNumero": 3
+    },
+    "pages/kids2/components/ScoringDistribution.tsx": {
+      "estilosInline": 3,
+      "coresHex": 6
+    },
+    "pages/kids2/Kids2SubNav.tsx": {
       "estilosInline": 2
     },
-    "pages/RecentTournamentsPage.tsx": {
-      "estilosInline": 8
+    "pages/kids2/ListasPage.tsx": {
+      "estilosInline": 3
+    },
+    "pages/kids2/RankingPage.tsx": {
+      "estilosInline": 5,
+      "coresHex": 3,
+      "cantosNumero": 1
+    },
+    "pages/kids2/Sidebar.tsx": {
+      "estilosInline": 3
+    },
+    "pages/KIDS2Page.tsx": {
+      "estilosInline": 3
+    },
+    "pages/major/MajorVeteransView.tsx": {
+      "estilosInline": 6,
+      "coresHex": 2,
+      "cantosNumero": 1
     },
     "pages/rfeg/FederationsView.tsx": {
-      "estilosInline": 32,
-      "coresHex": 15
+      "estilosInline": 4,
+      "coresHex": 10
     },
     "pages/rfeg/PlayersView.tsx": {
-      "estilosInline": 31,
+      "estilosInline": 4,
       "coresHex": 3,
       "cantosNumero": 1
     },
     "pages/SimuladorPage.tsx": {
-      "estilosInline": 9
+      "estilosInline": 7
     },
     "pages/TitulosPage.tsx": {
-      "estilosInline": 2
-    },
-    "pages/uskids/uskidsCircuit.tsx": {
-      "estilosInline": 2
+      "estilosInline": 1
     },
     "pages/USKIDSPage.tsx": {
-      "estilosInline": 16,
-      "coresHex": 2,
-      "cantosNumero": 1
+      "estilosInline": 6,
+      "coresHex": 2
     },
     "pages/WAGRPage.tsx": {
-      "estilosInline": 5,
+      "estilosInline": 1,
       "coresHex": 5
     },
     "ui/AdmissionsTab.tsx": {
-      "estilosInline": 18,
-      "coresHex": 4,
-      "cantosNumero": 1
+      "estilosInline": 2
     },
     "ui/AllRoundsScorecardLB.tsx": {
-      "estilosInline": 13,
+      "estilosInline": 11,
       "coresHex": 1
     },
     "ui/AnoEscalaoPill.tsx": {
@@ -307,84 +227,60 @@
       "cantosNumero": 1
     },
     "ui/Aroeira2AnaliseView.tsx": {
-      "estilosInline": 113,
-      "coresHex": 18,
-      "cantosNumero": 4
-    },
-    "ui/AroeiraNotice.tsx": {
-      "estilosInline": 5,
+      "estilosInline": 39,
+      "coresHex": 15,
       "cantosNumero": 1
     },
     "ui/AtletaSearchPanel.tsx": {
-      "estilosInline": 29,
-      "cantosNumero": 3
-    },
-    "ui/BirthPill.tsx": {
-      "estilosInline": 1
+      "estilosInline": 2
     },
     "ui/ByTournamentView.tsx": {
-      "estilosInline": 12
+      "estilosInline": 6
     },
     "ui/circuit/CircuitShell.tsx": {
-      "estilosInline": 29,
-      "coresHex": 7,
+      "estilosInline": 5,
+      "coresHex": 4,
       "cantosNumero": 1
     },
-    "ui/circuit/divisionPieces.tsx": {
-      "estilosInline": 1
-    },
     "ui/circuit/MatchplayView.tsx": {
-      "estilosInline": 63,
+      "estilosInline": 17,
       "tabelasSemClasse": 1
     },
     "ui/circuit/PastEditionsTable.tsx": {
-      "estilosInline": 22
+      "estilosInline": 6
     },
     "ui/circuit/Scout.tsx": {
-      "estilosInline": 23
+      "estilosInline": 8
     },
     "ui/circuit/TeamStrokeStandings.tsx": {
-      "estilosInline": 76,
+      "estilosInline": 36,
       "coresHex": 10,
       "cantosNumero": 1,
       "tabelasSemClasse": 1
     },
-    "ui/circuit/TotalsResumo.tsx": {
-      "estilosInline": 1
-    },
     "ui/CollapseCard.tsx": {
-      "estilosInline": 4
-    },
-    "ui/ComparisonDonut.tsx": {
-      "estilosInline": 5
+      "estilosInline": 1
     },
     "ui/ContestLeaderboard.tsx": {
-      "estilosInline": 11
-    },
-    "ui/Counter.tsx": {
-      "estilosInline": 1
+      "estilosInline": 5
     },
     "ui/CourseHeroCard.tsx": {
-      "estilosInline": 42,
+      "estilosInline": 6,
       "coresHex": 1,
-      "cantosNumero": 2
-    },
-    "ui/CrossAnalysis.tsx": {
-      "estilosInline": 2
-    },
-    "ui/DataSources.tsx": {
-      "estilosInline": 22,
       "cantosNumero": 1
     },
-    "ui/DetailHeader.tsx": {
+    "ui/CrossAnalysis.tsx": {
       "estilosInline": 1
     },
+    "ui/DataSources.tsx": {
+      "estilosInline": 7
+    },
     "ui/DrawTab.tsx": {
-      "estilosInline": 17,
-      "coresHex": 5
+      "estilosInline": 7,
+      "coresHex": 1
     },
     "ui/EclecticSection.tsx": {
-      "estilosInline": 6
+      "estilosInline": 3
     },
     "ui/evo.tsx": {
       "estilosInline": 1
@@ -410,132 +306,114 @@
       "cantosNumero": 1
     },
     "ui/HcpEvolution.tsx": {
-      "estilosInline": 17,
+      "estilosInline": 5,
       "coresHex": 8
     },
     "ui/HoleDiffTable.tsx": {
-      "estilosInline": 19
+      "estilosInline": 12
     },
     "ui/HoleStatsSection.tsx": {
       "estilosInline": 14
     },
     "ui/InfoLine.tsx": {
-      "estilosInline": 3
+      "estilosInline": 1
     },
     "ui/InscricoesComponents.tsx": {
-      "estilosInline": 29,
-      "coresHex": 3
+      "estilosInline": 3,
+      "coresHex": 1
     },
     "ui/JovensAnaliseView.tsx": {
-      "estilosInline": 91,
-      "coresHex": 2,
-      "cantosNumero": 7,
+      "estilosInline": 12,
+      "coresHex": 1,
+      "cantosNumero": 1,
       "tabelasSemClasse": 2
-    },
-    "ui/KidsLink.tsx": {
-      "estilosInline": 1
     },
     "ui/KpiCard.tsx": {
       "estilosInline": 1
     },
     "ui/Last20Table.tsx": {
-      "estilosInline": 3
+      "estilosInline": 2
     },
     "ui/LinksBar.tsx": {
-      "estilosInline": 4
-    },
-    "ui/ListaTabela.tsx": {
       "estilosInline": 1
     },
     "ui/LoopEclecticSection.tsx": {
-      "estilosInline": 9
-    },
-    "ui/ManuelResultPills.tsx": {
-      "estilosInline": 3
+      "estilosInline": 5
     },
     "ui/MultiRoundLeaderboard.tsx": {
-      "estilosInline": 9,
-      "coresHex": 3
+      "estilosInline": 5,
+      "coresHex": 1
     },
     "ui/PillBadge.tsx": {
       "estilosInline": 3,
       "coresHex": 19
     },
     "ui/PJARankingView.tsx": {
-      "estilosInline": 43,
-      "letraNumero": 2,
+      "estilosInline": 13,
       "cantosNumero": 1
     },
     "ui/PlayerFilterBar.tsx": {
-      "estilosInline": 6,
+      "estilosInline": 2,
       "coresHex": 2
     },
     "ui/PlayerLink.tsx": {
       "estilosInline": 1
-    },
-    "ui/PlayerTournamentsPanel.tsx": {
-      "estilosInline": 12
     },
     "ui/PosBadge.tsx": {
       "estilosInline": 1,
       "coresHex": 5
     },
     "ui/ranking/RankingPage.tsx": {
-      "estilosInline": 21
+      "estilosInline": 1
     },
     "ui/ResultMark.tsx": {
       "estilosInline": 2,
       "coresHex": 1
     },
     "ui/RivaisDashboard.tsx": {
-      "estilosInline": 25,
+      "estilosInline": 13,
       "tabelasSemClasse": 1
     },
-    "ui/RotatedNotice.tsx": {
-      "estilosInline": 2
-    },
     "ui/RoundAnalysisPanel.tsx": {
-      "estilosInline": 7
+      "estilosInline": 1
     },
     "ui/RoundSimulator.tsx": {
-      "estilosInline": 77,
-      "coresHex": 62,
+      "estilosInline": 19,
+      "coresHex": 58,
       "tabelasSemClasse": 1
     },
     "ui/SantoDaSerraPanel.tsx": {
-      "estilosInline": 23,
-      "cantosNumero": 1
+      "estilosInline": 6
     },
     "ui/ScorecardLB.tsx": {
-      "estilosInline": 16,
-      "coresHex": 5,
-      "cantosNumero": 1
+      "estilosInline": 4,
+      "coresHex": 1
     },
     "ui/ScorecardLeaderboard.tsx": {
-      "estilosInline": 11,
+      "estilosInline": 9,
       "coresHex": 1
     },
     "ui/ScorecardTable.tsx": {
-      "estilosInline": 8,
+      "estilosInline": 5,
       "coresHex": 1
     },
     "ui/ScoreTable.tsx": {
-      "estilosInline": 11
+      "estilosInline": 8
     },
     "ui/ShareRoundPanel.tsx": {
       "estilosInline": 1
     },
     "ui/SortableHdr.tsx": {
-      "estilosInline": 2
+      "estilosInline": 1
     },
     "ui/TabCampoDetalhe.tsx": {
-      "estilosInline": 51,
-      "coresHex": 6,
-      "cantosNumero": 2
+      "estilosInline": 10,
+      "coresHex": 2,
+      "cantosNumero": 1
     },
     "ui/TabelaGlobal.tsx": {
-      "estilosInline": 34,
-      "coresHex": 3,
+      "estilosInline": 13,
+      "coresHex": 2,
       "tabelasSemClasse": 1
     },
     "ui/tableCells.tsx": {
@@ -545,37 +423,33 @@
       "estilosInline": 1
     },
     "ui/TeeBars.tsx": {
-      "estilosInline": 5
+      "estilosInline": 3
     },
     "ui/TeeDate.tsx": {
       "estilosInline": 1
     },
     "ui/TeeDots.tsx": {
-      "estilosInline": 2,
+      "estilosInline": 1,
       "coresHex": 1
     },
     "ui/TeePill.tsx": {
       "estilosInline": 1
     },
     "ui/TopClubesPanel.tsx": {
-      "estilosInline": 26,
-      "cantosNumero": 1
+      "estilosInline": 4
     },
     "ui/TournamentGrid.tsx": {
-      "estilosInline": 5
+      "estilosInline": 2
     },
     "ui/tournamentPrimitives.tsx": {
-      "estilosInline": 7,
+      "estilosInline": 2,
       "cantosNumero": 1
     },
-    "ui/TournamentWeather.tsx": {
-      "estilosInline": 5
-    },
     "ui/TournSidebarItem.tsx": {
-      "estilosInline": 12
+      "estilosInline": 2
     },
     "ui/useCompareSelection.tsx": {
-      "estilosInline": 4
+      "estilosInline": 1
     }
   }
 }

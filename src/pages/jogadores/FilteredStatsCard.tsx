@@ -71,9 +71,9 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
 
   return (
     <div className="p-16">
-      <div style={{ marginBottom: 14 }}>
-        <h2 className="detail-title" style={{ margin: 0 }}>📊 Estatísticas da selecção actual</h2>
-        <div className="muted fs-10" style={{ marginTop: 4 }}>
+      <div className="u-mb-14px">
+        <h2 className="detail-title u-m-0">📊 Estatísticas da selecção actual</h2>
+        <div className="muted fs-10 u-mt-4px">
           {filtered.length.toLocaleString("pt-PT")} jogadores
           {activeFiltersCount > 0 && <> · {activeFiltersCount} filtro{activeFiltersCount > 1 ? "s" : ""} activo{activeFiltersCount > 1 ? "s" : ""}</>}
           {" · "}<span className="c-muted">clica num jogador na sidebar para ver o detalhe</span>
@@ -94,21 +94,21 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
 
       {/* Top 10 por HCP */}
       {topBest.length > 0 && (
-        <div className="card" style={{ padding: 12, marginBottom: 16 }}>
+        <div className="card u-p-12px u-mb-16px">
           <div className="fw-700 fs-14 mb-8">🏆 Top 10 por HCP (melhores primeiro)</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 4 }}>
+          <div className="u-d-grid u-grid-template-columns-120gf u-gap-4px">
             {topBest.map((p, i) => {
               const cp = p._federadoRaw?.country_prefix;
               return (
                 <button
                   key={p.fed}
-                  className="course-item"
+                  className="course-item u-p-4px-8px u-d-flex u-ai-center u-gap-8px u-cur-pointer u-ta-left"
                   onClick={() => onPickPlayer(p.fed)}
-                  style={{ padding: "4px 8px", display: "flex", alignItems: "center", gap: 8, cursor: "pointer", textAlign: "left" }}
+
                 >
-                  <span className="fw-700 muted" style={{ width: 22, fontSize: "var(--fs-11)" }}>{i + 1}</span>
+                  <span className="fw-700 muted u-w-22px u-fs-fs-11">{i + 1}</span>
                   {p.sex === "M" || p.sex === "F" ? <SexBadge sex={p.sex} /> : null}
-                  <span style={{ flex: 1, fontSize: "var(--fs-12)" }}>
+                  <span className="u-fl-1 u-fs-fs-12">
                     {cp && cp !== "PT" && !cp.startsWith("@") && <span className="mr-4">{gf(cp)}</span>}
                     <span className="fw-600">{p.name}</span>
                     {(() => {
@@ -127,15 +127,15 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
       )}
 
       {/* 3 colunas: Escalões, Clubes, Regiões */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14, marginBottom: 16 }}>
+      <div className="u-d-grid u-grid-template-columns-120gf u-gap-14px u-mb-16px">
         {sortedEsc.length > 1 && (
-          <div className="card" style={{ padding: 12 }}>
+          <div className="card u-p-12px">
             <div className="fw-700 fs-14 mb-8">Por escalão</div>
             {sortedEsc.map(([k, v]) => {
               const total = v.m + v.f;
               return (
-                <div key={k} style={{ marginBottom: 5 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)" }}>
+                <div key={k} className="u-mb-5px">
+                  <div className="u-d-flex u-jc-space-between u-fs-fs-12">
                     <span className="fw-500">{k}</span>
                     <span className="fw-700">{total}</span>
                   </div>
@@ -147,15 +147,15 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
         )}
 
         {topClubs.length > 1 && (
-          <div className="card" style={{ padding: 12 }}>
+          <div className="card u-p-12px">
             <div className="fw-700 fs-14 mb-8">Top 12 clubes</div>
             {topClubs.map(([code, c]) => (
-              <div key={code} style={{ marginBottom: 4 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)" }}>
+              <div key={code} className="u-mb-4px">
+                <div className="u-d-flex u-jc-space-between u-fs-fs-12">
                   <span className="fw-500">{c.name} <span className="muted fs-10">({code})</span></span>
                   <span className="fw-700">{c.count}</span>
                 </div>
-                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: "var(--radius-xs)", overflow: "hidden" }}>
+                <div className="u-h-4px u-bg-bg-subtle u-br-radius-xs u-ov-hidden">
                   <div style={{ width: barPct(c.count, maxClub), height: "100%", background: "var(--color-good)" }} />
                 </div>
               </div>
@@ -164,15 +164,15 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
         )}
 
         {topRegions.length > 1 && (
-          <div className="card" style={{ padding: 12 }}>
+          <div className="card u-p-12px">
             <div className="fw-700 fs-14 mb-8">Por região</div>
             {topRegions.map(([r, n]) => (
-              <div key={r} style={{ marginBottom: 4 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)" }}>
+              <div key={r} className="u-mb-4px">
+                <div className="u-d-flex u-jc-space-between u-fs-fs-12">
                   <span className="fw-500">{r}</span>
                   <span className="fw-700">{n}</span>
                 </div>
-                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: "var(--radius-xs)", overflow: "hidden" }}>
+                <div className="u-h-4px u-bg-bg-subtle u-br-radius-xs u-ov-hidden">
                   <div style={{ width: barPct(n, maxRegion), height: "100%", background: "var(--chart-2)" }} />
                 </div>
               </div>
@@ -183,8 +183,8 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
 
       {/* Distribuição de HCP */}
       {withHcp > 0 && (
-        <div className="card" style={{ padding: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+        <div className="card u-p-12px">
+          <div className="u-d-flex u-jc-space-between u-ai-center u-mb-8px">
             <div className="fw-700 fs-14">Distribuição de HCP · <span className="muted fs-10">{withHcp} jogadores</span></div>
             <MFLegend />
           </div>
@@ -195,11 +195,11 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
               const label = bin === "plus" ? "Scratch" : bin;
               const barHeight = (total / maxHcpBin) * 140;
               return (
-                <div key={bin} style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100%", justifyContent: "flex-end" }}>
-                  <div className="fw-700 fs-11" style={{ marginBottom: 2 }}>{total}</div>
-                  <div className="muted fs-10" style={{ marginBottom: 4 }}>{total > 0 ? ((total / withHcp) * 100).toFixed(0) + "%" : ""}</div>
+                <div key={bin} className="u-d-flex u-fd-column u-ai-center u-h-100pc u-jc-flex-end">
+                  <div className="fw-700 fs-11 u-mb-2px">{total}</div>
+                  <div className="muted fs-10 u-mb-4px">{total > 0 ? ((total / withHcp) * 100).toFixed(0) + "%" : ""}</div>
                   <MFColumn m={m} f={f} barHeight={barHeight} width="80%" minWidth={14} />
-                  <div className="fw-600 fs-10" style={{ marginTop: 4 }}>{label}</div>
+                  <div className="fw-600 fs-10 u-mt-4px">{label}</div>
                 </div>
               );
             })}

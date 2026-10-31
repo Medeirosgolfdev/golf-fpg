@@ -54,11 +54,11 @@ export function LinksBar({ links, escalao }: { links?: Record<string, string>; e
   const groups = buildLinkGroups(links, escalao);
   if (!groups.length) return null;
   return (
-    <div className="flex-wrap mt-8" style={{ display: "flex", gap: 6, alignItems: "center" }}>
+    <div className="flex-wrap mt-8 u-d-flex u-gap-6px u-ai-center">
       {groups.map((g, gi) => (
         <React.Fragment key={g.label}>
-          {gi > 0 && <span className="fs-12" style={{ color: "var(--border)" }}>·</span>}
-          <span className="label-caps c-muted" style={{ marginRight: 2 }}>{g.label}</span>
+          {gi > 0 && <span className="fs-12 u-c-border">·</span>}
+          <span className="label-caps c-muted u-mr-2px">{g.label}</span>
           {g.items.map(item => (
             <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer"
               className="tourn-ext-link"

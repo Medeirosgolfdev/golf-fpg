@@ -57,18 +57,18 @@ function RecentDetail({ t, escLookup, playersDB, extras }: {
   const extraTabs = [...(fpgOmRankingTabs(t) ?? []), ...(extras?.repeatersTab ? [extras.repeatersTab] : [])];
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", padding: "2px 0 4px" }}>
-        <span style={{ fontSize: "var(--fs-12)", color: "var(--text-muted)" }}>
+      <div className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-p-2px-0-4px">
+        <span className="u-fs-fs-12 u-c-text-muted">
           {t.nOurs} dos nossos · {t.scraped ? "leaderboard completa scrapeada" : "só os nossos (por scrapear)"}
         </span>
         {t.scraped && t.ccode && (
           <a href={`/FPG/torneio/${t.ccode}-${t.tcode}`} target="_blank" rel="noopener noreferrer"
-             className="btn-pill" style={{ fontSize: "var(--fs-12)" }}>
+             className="btn-pill u-fs-fs-12">
             ↗ Leaderboard completa no site
           </a>
         )}
       </div>
-      <div style={{ padding: "0 0 4px", fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
+      <div className="u-p-0-0-4px u-fs-fs-11 u-c-text-muted">
         ⓘ Classificação e scorecards reconstruídos das voltas WHS dos jogadores que seguimos —
         a posição é <b>entre os nossos</b>, não a oficial do torneio.
       </div>
@@ -113,24 +113,24 @@ export default function RecentTournamentsPage() {
   }, [all, minOurs]);
   const selectedId = key && all.some((e) => e.id === key) ? key : undefined;
 
-  if (err) return <div style={{ padding: 24 }}><EmptyState size="md" message={`Erro ao carregar: ${err}`} /></div>;
+  if (err) return <div className="u-p-24px"><EmptyState size="md" message={`Erro ao carregar: ${err}`} /></div>;
   if (!doc) return <LoadingState size="md" message="A carregar torneios recentes…" />;
 
   const lead = (<>
     <ToolbarTitle>🏌️ Torneios recentes</ToolbarTitle>
-    <input type="number" min="1" className="input" value={minOurs} onChange={(e) => setMinOurs(e.target.value)}
+    <input type="number" min="1" className="input u-w-110px u-fs-fs-12 u-p-3px-8px" value={minOurs} onChange={(e) => setMinOurs(e.target.value)}
       placeholder="mín. nossos" title="Só torneios com pelo menos N dos nossos"
-      style={{ width: 110, fontSize: "var(--fs-12)", padding: "3px 8px" }} />
+ />
   </>);
   const trail = (
-    <span className="fs-11" style={{ color: "var(--text-muted)", whiteSpace: "nowrap" }}
+    <span className="fs-11 u-c-text-muted u-ws-nowrap"
       title={`${doc.counts.unscraped.toLocaleString("pt-PT")} por scrapear`}>
       Reconstruído de {doc.counts.playersScanned} jogadores · desde {doc.since}
     </span>
   );
 
   return (
-    <div className="tourn-layout" style={{ height: "calc(100vh - 52px)" }}>
+    <div className="tourn-layout u-h-calc-100vh-52px">
       <CircuitToolbarSlotCtx.Provider value={{ lead, trail, hideTitle: true }}>
         <CircuitShell
           entries={entries}

@@ -487,7 +487,7 @@ export function MultiRoundLeaderboard({
                           : showPos ? (mdl || dp) : ""}
                   </td>
                   <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
-                    {clubesSaoPaises && row.club && !row.countryFlag && <span title={semBandeira(row.club)} style={{ marginRight: 4 }}>{flagOf(semBandeira(row.club))}</span>}
+                    {clubesSaoPaises && row.club && !row.countryFlag && <span title={semBandeira(row.club)} className="u-mr-4px">{flagOf(semBandeira(row.club))}</span>}
                     {renderName
                       ? renderName(row)
                       : playersDB
@@ -509,8 +509,8 @@ export function MultiRoundLeaderboard({
                         const m = t.getMonth() - d.getMonth();
                         if (m < 0 || (m === 0 && t.getDate() < d.getDate())) age--;
                         if (age >= 0 && age < 100) {
-                          return <span className="p p-sm" title={`${dob} (${age} anos)`}
-                            style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>;
+                          return <span className="p p-sm u-bg-var-bg-muted-e5e7eb u-c-text-2 u-border-color-transparent" title={`${dob} (${age} anos)`}
+>{age}a</span>;
                         }
                       }
                     }
@@ -534,7 +534,7 @@ export function MultiRoundLeaderboard({
                     // com as tabs R1/R2/R3. Só recalcular por dob se o adapter não a deu.
                     const age = row.age != null ? row.age : ageReal;
                     const pill = (v: React.ReactNode) => (
-                      <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{v}</span>
+                      <span className="p p-sm u-bg-var-bg-muted-e5e7eb u-c-text-2 u-border-color-transparent">{v}</span>
                     );
                     return <>
                       {showBirthYear && (
@@ -560,7 +560,7 @@ export function MultiRoundLeaderboard({
                     const fl = isCC ? flagOf(club) : null;
                     if (isCC && fl && fl !== "🏳️") {
                       const code = normCountry(club).toUpperCase();
-                      return <td className="lb-club" title={code}><span style={{ fontSize: "1.1em" }}>{fl}</span></td>;
+                      return <td className="lb-club" title={code}><span className="u-fs-1_1em">{fl}</span></td>;
                     }
                     return <td className="lb-club">{club || "–"}</td>;
                   })()}

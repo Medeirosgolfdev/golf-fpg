@@ -11,7 +11,7 @@ export default function TeeDots({ tees, active, onSelect }: {
   tees: TeeDot[]; active: string | undefined; onSelect: (key: string) => void;
 }) {
   return (
-    <span style={{ marginLeft: "auto", display: "inline-flex", gap: 5, alignItems: "center" }}>
+    <span className="u-ml-auto u-d-inline-flex u-gap-5px u-ai-center">
       {tees.map(x => {
         const sel = x.key === active;
         return (

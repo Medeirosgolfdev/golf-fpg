@@ -141,16 +141,16 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
 
   return (
     <section>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px", gap: 12 }}>
-        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Resultados</h3>
-        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px u-gap-12px">
+        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Resultados</h3>
+        <span className="u-fs-fs-11 u-c-text-3">
           {rows.length}{activeSources.size > 0 ? ` de ${allRows.length}` : ""} {rows.length === 1 ? "resultado" : "resultados"}
         </span>
       </div>
 
       {sourcesAvailable.length > 1 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 10, padding: "8px 10px", background: "var(--bg-muted)", borderRadius: "var(--radius)", alignItems: "center" }}>
-          <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 2 }}>
+        <div className="u-d-flex u-fwr-wrap u-gap-5px u-mb-10px u-p-8px-10px u-bg-bg-muted u-br-radius u-ai-center">
+          <span className="u-fs-fs-10 u-fw-700 u-c-text-3 u-ls-0_4px u-tt-uppercase u-mr-2px">
             Fonte
           </span>
           {sourcesAvailable.map(([src, count]) => {
@@ -171,23 +171,14 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
                 }}
                 title={`Filtrar: ${SOURCE_LABELS[src] || src}`}
               >
-                {SOURCE_LABELS[src] || src} <span style={{ opacity: 0.7, marginLeft: 3 }}>{count}</span>
+                {SOURCE_LABELS[src] || src} <span className="u-op-0_7 u-ml-3px">{count}</span>
               </button>
             );
           })}
           {activeSources.size > 0 && (
             <button
               onClick={() => setActiveSources(new Set())}
-              style={{
-                fontSize: "var(--fs-11)",
-                padding: "2px 9px",
-                borderRadius: "var(--radius-pill)",
-                border: "1px solid var(--color-danger-dark)",
-                background: "var(--bg)",
-                color: "var(--color-danger-dark)",
-                cursor: "pointer",
-                fontWeight: 600,
-              }}
+              className="u-fs-fs-11 u-p-2px-9px u-br-radius-pill u-bd-1px-solid-color-danger-dark u-bg-bg u-c-color-danger-dark u-cur-pointer u-fw-600"
               title="Limpar filtros de fonte"
             >
               ✕ limpar
@@ -202,22 +193,13 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
         const manuelEncounters = yearRows.filter((r) => r.vsManuelDiff != null).length;
         const expanded = isYearExpanded(y);
         return (
-          <div key={y} style={{ marginBottom: 10 }}>
+          <div key={y} className="u-mb-10px">
             <div
               onClick={() => toggleYear(y)}
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "space-between",
-                padding: "6px 8px",
-                background: "var(--bg-muted)",
-                borderRadius: "var(--radius-sm)",
-                cursor: "pointer",
-                marginBottom: 4,
-              }}
+              className="u-d-flex u-ai-baseline u-jc-space-between u-p-6px-8px u-bg-bg-muted u-br-radius-sm u-cur-pointer u-mb-4px"
             >
-              <span style={{ fontSize: "var(--fs-13)", fontWeight: 700 }}>{expanded ? "▼" : "▶"} {y}</span>
-              <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
+              <span className="u-fs-fs-13 u-fw-700">{expanded ? "▼" : "▶"} {y}</span>
+              <span className="u-fs-fs-11 u-c-text-3">
                 {yearRows.length} torneios · {wins} vitórias{manuelEncounters > 0 ? ` · ${manuelEncounters}× vs Manuel` : ""}
               </span>
             </div>
@@ -255,21 +237,21 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
           </div>
         );
       })}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 10, padding: "8px 10px", fontSize: "var(--fs-10)", color: "var(--text-3)", background: "var(--bg-muted)", borderRadius: "var(--radius)" }}>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ background: "var(--medal-gold-bg)", color: "var(--medal-gold-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #1</span> ouro
+      <div className="u-d-flex u-fwr-wrap u-gap-10px u-mt-10px u-p-8px-10px u-fs-fs-10 u-c-text-3 u-bg-bg-muted u-br-radius">
+        <span className="u-d-inline-flex u-ai-center u-gap-4px">
+          <span className="u-bg-medal-gold-bg u-c-medal-gold-fg u-fw-700 u-p-1px-5px u-br-3px u-fs-fs-10">🏆 #1</span> ouro
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ background: "var(--medal-silver-bg)", color: "var(--medal-silver-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #2</span> prata
+        <span className="u-d-inline-flex u-ai-center u-gap-4px">
+          <span className="u-bg-medal-silver-bg u-c-medal-silver-fg u-fw-700 u-p-1px-5px u-br-3px u-fs-fs-10">🏆 #2</span> prata
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ background: "var(--medal-bronze-bg)", color: "var(--medal-bronze-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #3</span> bronze
+        <span className="u-d-inline-flex u-ai-center u-gap-4px">
+          <span className="u-bg-medal-bronze-bg u-c-medal-bronze-fg u-fw-700 u-p-1px-5px u-br-3px u-fs-fs-10">🏆 #3</span> bronze
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ background: "var(--bg-success-subtle, #ecfdf5)", border: "1px solid var(--border-success, #97c459)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: "var(--fs-10)" }}>±N</span>
+        <span className="u-d-inline-flex u-ai-center u-gap-4px">
+          <span className="u-bg-var-bg-success-subtle-ecfdf5 u-bd-ci9jy u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-3px u-fs-fs-10">±N</span>
           diff vs Manuel
         </span>
-        <span style={{ marginLeft: "auto" }}>
+        <span className="u-ml-auto">
           Clique nos scores sublinhados para ver scorecard hole-by-hole · Cabeçalhos clicáveis para ordenar
         </span>
       </div>
@@ -335,7 +317,7 @@ function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
               <ResultRow r={r} onOpenRound={onOpenRound} isExpanded={isExpanded} />
               {isExpanded && (
                 <tr>
-                  <td colSpan={8} style={{ padding: "0 4px 8px 4px" }}>
+                  <td colSpan={8} className="u-p-0-4px-8px-4px">
                     {expandedScorecardNode(r)}
                   </td>
                 </tr>
@@ -367,13 +349,13 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
   const roundsWithStrokes = new Set(rounds.filter((rd) => rd.strokes && rd.strokes.some((s) => s > 0)).map((rd) => rd.round));
   return (
     <tr style={{ background: bg }}>
-      <td style={{ color: "var(--text-3)" }}>{fmtDate(r.date)}</td>
+      <td className="u-c-text-3">{fmtDate(r.date)}</td>
       <td>
-        <span style={{ fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, background: "var(--bg)", border: "1px solid var(--border-light)" }}>
+        <span className="u-fs-fs-9 u-p-1px-5px u-br-3px u-bg-bg u-bd-1px-solid-border-light">
           {SOURCE_LABELS[r.tournament.sourceId] || r.tournament.sourceId}
         </span>
       </td>
-      <td style={{ textAlign: "center" }}>
+      <td className="u-ta-center">
         <PosBadgeSmall pos={r.result.pos} status={r.result.status} />
         {r.topPct != null && (
           <div style={{
@@ -386,7 +368,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
         )}
       </td>
       <td>
-        <div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap" }}>
+        <div className="u-d-flex u-ai-center u-gap-5px u-fwr-wrap">
           <span>{r.tournament.name || r.tournament.shortName || r.tid}</span>
           {(() => {
             const nR = (r.result.rounds || []).filter((rd) => typeof rd.gross === "number").length;
@@ -435,7 +417,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           const fs = r.flight.fieldSize;
           if (typeof fs === "number" && fs > 0) {
             return (
-              <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 1 }}>
+              <div className="u-fs-fs-10 u-c-text-3 u-mt-1px">
                 field {fs} {fs === 1 ? "jogador" : "jogadores"}
               </div>
             );
@@ -443,23 +425,19 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           return null;
         })()}
       </td>
-      <td style={{ color: "var(--text-3)" }}>{r.flight.label}</td>
-      <td style={{ textAlign: "right" }}>
+      <td className="u-c-text-3">{r.flight.label}</td>
+      <td className="u-ta-right">
         {rounds.length > 0 ? (
           rounds.map((rd, i) => {
             const g = rd.gross;
             const clickable = roundsWithStrokes.has(rd.round);
             return (
               <React.Fragment key={i}>
-                {i > 0 && <span style={{ color: "var(--text-3)" }}>·</span>}
+                {i > 0 && <span className="u-c-text-3">·</span>}
                 {clickable && typeof g === "number" ? (
                   <button
                     onClick={() => onOpenRound(r, rd.round)}
-                    style={{
-                      background: "none", border: "none", padding: "0 2px", fontSize: "var(--fs-11)",
-                      color: "var(--color-info-dark, #1e3a8a)", cursor: "pointer",
-                      textDecoration: "underline", fontWeight: 600, fontVariantNumeric: "tabular-nums",
-                    }}
+                    className="u-bg-none u-bd-none u-p-0-2px u-fs-fs-11 u-c-var-color-info-dark-1e3a8a u-cur-pointer u-td-underline u-fw-600 u-fvn-tabular-nums"
                     title="Ver scorecard buraco-a-buraco"
                   >{g}</button>
                 ) : (
@@ -473,15 +451,15 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
       <td style={{ textAlign: "right", color: tpColor(toPar) ?? "var(--text-3)", fontWeight: toPar != null && toPar < 0 ? 700 : 400 }}>
         {fmtToPar(toPar)}
       </td>
-      <td style={{ textAlign: "right" }}>
+      <td className="u-ta-right">
         {r.vsManuelDiff != null && (
-          <span style={{ background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: "var(--fs-10)", border: "1px solid var(--border-success, #97c459)" }}
+          <span className="u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-3px u-fs-fs-10 u-bd-ci9jy"
             title={r.manuelPos != null ? `Manuel ficou em #${r.manuelPos}` : "Manuel também jogou"}>
             {r.vsManuelDiff === 0 ? "0" : r.vsManuelDiff > 0 ? `+${r.vsManuelDiff}` : String(r.vsManuelDiff)}
           </span>
         )}
         {r.manuelPos != null && (
-          <div style={{ fontSize: "var(--fs-9)", color: "var(--color-good-dark)", marginTop: 1, fontWeight: 600 }}>
+          <div className="u-fs-fs-9 u-c-color-good-dark u-mt-1px u-fw-600">
             ★M #{r.manuelPos}
           </div>
         )}
@@ -496,9 +474,9 @@ function PosBadgeSmall({ pos, status }: { pos: number | null | undefined; status
     // Sem posição mas classificado como não-finalista → mostrar o motivo
     // (CUT/WD/DQ/DNS) em vez de "—", para a participação não desaparecer.
     if (status && status !== "OK") {
-      return <span style={{ color: "var(--text-3)", fontWeight: 700, fontSize: "var(--fs-9)" }} title="Não classificado">{status}</span>;
+      return <span className="u-c-text-3 u-fw-700 u-fs-fs-9" title="Não classificado">{status}</span>;
     }
-    return <span style={{ color: "var(--text-3)" }}>—</span>;
+    return <span className="u-c-text-3">—</span>;
   }
   if (pos <= 3) {
     const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
@@ -511,13 +489,13 @@ function PosBadgeSmall({ pos, status }: { pos: number | null | undefined; status
   const dnf = status && status !== "OK";
   if (dnf) {
     return (
-      <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", lineHeight: 1.1 }} title={DNF_LABEL[status] || status}>
-        <span style={{ color: "var(--text-3)" }}>#{pos}</span>
-        <span style={{ fontSize: "var(--fs-9)", fontWeight: 700, color: "var(--color-danger)", textTransform: "lowercase" }}>{status === "CUT" ? "cut" : status.toLowerCase()}</span>
+      <span className="u-d-inline-flex u-fd-column u-ai-center u-lh-1_1" title={DNF_LABEL[status] || status}>
+        <span className="u-c-text-3">#{pos}</span>
+        <span className="u-fs-fs-9 u-fw-700 u-c-color-danger u-tt-lowercase">{status === "CUT" ? "cut" : status.toLowerCase()}</span>
       </span>
     );
   }
-  return <span style={{ color: "var(--text-3)" }}>#{pos}</span>;
+  return <span className="u-c-text-3">#{pos}</span>;
 }
 
 const DNF_LABEL: Record<string, string> = {

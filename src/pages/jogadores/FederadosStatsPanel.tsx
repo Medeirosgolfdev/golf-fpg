@@ -124,20 +124,20 @@ function ClubsTable({ stats, onDrillDown, maxClub }: {
   }, [sortKey, sortDir, stats.allClubs]);
 
   return (
-    <div className="card" style={{ padding: 12 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+    <div className="card u-p-12px">
+      <div className="u-d-flex u-jc-space-between u-ai-center u-mb-8px">
         <div className="fw-700 fs-14">
           Todos os clubes · <span className="muted fs-10">{stats.allClubs.length} clubes · clica na linha para detalhe · clica no cabeçalho para ordenar</span>
         </div>
         <MFLegend long gap={12} />
       </div>
-      <div style={{ maxHeight: 520, overflowY: "auto", paddingRight: 4 }}>
+      <div className="u-maxh-520px u-oy-auto u-pr-4px">
         <table className="dt-compact">
           <thead>
             <tr className="sticky-head">
               <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} style={{ width: 30 }}>#</SortableHdr>
               <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)}>Clube</SortableHdr>
-              <th style={{ width: "40%" }}>Distribuição</th>
+              <th className="u-w-40pc">Distribuição</th>
               <SortableHdr k="m" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="ta-c" style={{ width: 50 }}><SexBadge sex="M" /></SortableHdr>
               <SortableHdr k="f" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="ta-c" style={{ width: 50 }}><SexBadge sex="F" /></SortableHdr>
               <SortableHdr k="count" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="r" style={{ width: 60 }}>Total</SortableHdr>
@@ -198,8 +198,8 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
 
   return (
     <div className="p-16">
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-        <h2 className="detail-title" style={{ margin: 0 }}>📊 Estatísticas FPG</h2>
+      <div className="u-d-flex u-ai-center u-jc-space-between u-mb-12px">
+        <h2 className="detail-title u-m-0">📊 Estatísticas FPG</h2>
         <button className="p" onClick={onClose} title="Fechar estatísticas">✕ Fechar</button>
       </div>
 
@@ -226,8 +226,8 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
       )}
 
       {/* Distribuição de HCP — histograma vertical stacked M/F */}
-      <div className="card" style={{ padding: 12, marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+      <div className="card u-p-12px u-mb-16px">
+        <div className="u-d-flex u-ai-center u-jc-space-between u-mb-8px">
           <div className="fw-700 fs-14">Distribuição de HCP · <span className="muted fs-10">{stats.withHcp.toLocaleString("pt-PT")} jogadores com HCP válido</span></div>
           <MFLegend long gap={12} />
         </div>
@@ -245,15 +245,15 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
                 style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100%", justifyContent: "flex-end", background: isActive ? "var(--bg-hover)" : "transparent", border: isActive ? "1px solid var(--accent)" : "1px solid transparent", borderRadius: "var(--radius-sm)", padding: 2, cursor: "pointer", minWidth: 0 }}
                 title={`Clica para ver top 15 (HCP ${label})`}
               >
-                <div className="fw-700 fs-12" style={{ marginBottom: 4 }}>
+                <div className="fw-700 fs-12 u-mb-4px">
                   {total.toLocaleString("pt-PT")}
                 </div>
-                <div className="muted fs-10" style={{ marginBottom: 4 }}>{((total / stats.withHcp) * 100).toFixed(1)}%</div>
+                <div className="muted fs-10 u-mb-4px">{((total / stats.withHcp) * 100).toFixed(1)}%</div>
                 <MFColumn m={m} f={f} barHeight={barHeight} width="85%" minWidth={20} shadow />
-                <div className="fw-600 fs-11" style={{ marginTop: 6, textAlign: "center" }}>{label}</div>
-                <div className="fs-10" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1, marginTop: 2 }}>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="M" /><span className="fw-600">{m.toLocaleString("pt-PT")}</span></span>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="F" /><span className="fw-600">{f.toLocaleString("pt-PT")}</span></span>
+                <div className="fw-600 fs-11 u-mt-6pxx u-ta-center">{label}</div>
+                <div className="fs-10 u-d-flex u-fd-column u-ai-center u-gap-1px u-mt-2px">
+                  <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="M" /><span className="fw-600">{m.toLocaleString("pt-PT")}</span></span>
+                  <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="F" /><span className="fw-600">{f.toLocaleString("pt-PT")}</span></span>
                 </div>
               </button>
             );
@@ -272,19 +272,19 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
       )}
 
       {/* 2 colunas: Top scratch + Novos federados por ano */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16, marginBottom: 16 }}>
+      <div className="u-d-grid u-grid-template-columns-p9a8d u-gap-16px u-mb-16px">
         {/* Top 15 melhores HCPs */}
-        <div className="card" style={{ padding: 12 }}>
+        <div className="card u-p-12px">
           <div className="fw-700 fs-14 mb-8">🏆 Top 15 melhores HCPs</div>
           {stats.topBestHcp.map((p, i) => (
             <button
               key={p.federation_code}
-              className="course-item"
+              className="course-item u-w-100pc u-p-4px-6px u-mb-2px u-d-flex u-ai-center u-gap-8px u-cur-pointer"
               onClick={() => onPickPlayer(p.federation_code)}
-              style={{ width: "100%", padding: "4px 6px", marginBottom: 2, display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
+
             >
-              <span className="fw-700" style={{ width: 22, textAlign: "center", fontSize: "var(--fs-11)" }}>{i + 1}</span>
-              <span className="fw-600" style={{ flex: 1, textAlign: "left", fontSize: "var(--fs-12)" }}>
+              <span className="fw-700 u-w-22px u-ta-center u-fs-fs-11">{i + 1}</span>
+              <span className="fw-600 u-fl-1 u-ta-left u-fs-fs-12">
                 {p.country_prefix && p.country_prefix !== "PT" && !p.country_prefix.startsWith("@") && <span className="mr-4">{gf(p.country_prefix)}</span>}
                 {p.name}
                 <span className="muted fs-10 ml-4">({p.acronym})</span>
@@ -297,17 +297,17 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
         </div>
 
         {/* Novos federados por ano — stacked M/F */}
-        <div className="card" style={{ padding: 12 }}>
+        <div className="card u-p-12px">
           <div className="fw-700 fs-14 mb-8">Novos federados por ano · <span className="muted fs-10">stacked M/F</span></div>
           <div style={{ display: "grid", gridTemplateColumns: `repeat(${stats.admissionYears.length}, 1fr)`, gap: 2, alignItems: "end", height: 140 }}>
             {stats.admissionYears.map(([y, v]) => {
               const total = v.m + v.f;
               const barHeight = (total / Math.max(1, maxAdm)) * 110;
               return (
-                <div key={y} style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100%", justifyContent: "flex-end" }}>
+                <div key={y} className="u-d-flex u-fd-column u-ai-center u-h-100pc u-jc-flex-end">
                   <div className="fs-10 fw-600" title={`${v.m} M + ${v.f} F`}>{total}</div>
                   <MFColumn m={v.m} f={v.f} barHeight={barHeight} width="90%" />
-                  <div className="fs-10 muted" style={{ marginTop: 3 }}>{y.slice(2)}</div>
+                  <div className="fs-10 muted u-mt-3px">{y.slice(2)}</div>
                 </div>
               );
             })}
@@ -316,9 +316,9 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
       </div>
 
       {/* 2 colunas: Escalões e Países */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16, marginBottom: 16 }}>
+      <div className="u-d-grid u-grid-template-columns-120gf u-gap-16px u-mb-16px">
         {/* Por escalão (clicável) — stacked M/F */}
-        <div className="card" style={{ padding: 12 }}>
+        <div className="card u-p-12px">
           <div className="fw-700 fs-14 mb-8">Por escalão · <span className="muted fs-10">clica para detalhe</span></div>
           {sortedAges.map(([k, v]) => {
             const total = v.m + v.f;
@@ -326,12 +326,12 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
               <button
                 key={k}
                 onClick={() => onDrillDown({ type: "age", key: k })}
-                style={{ width: "100%", padding: "4px 0", marginBottom: 4, background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
+                className="u-w-100pc u-p-4px-0 u-mb-4px u-bg-none u-bd-none u-cur-pointer u-ta-left"
               >
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", fontWeight: 500 }}>
+                <div className="u-d-flex u-jc-space-between u-fs-fs-12 u-fw-500">
                   <span>{k}</span>
                   <span>
-                    <span className="fs-10" style={{ display: "inline-flex", alignItems: "center", gap: 4, marginRight: 6 }}>
+                    <span className="fs-10 u-d-inline-flex u-ai-center u-gap-4px u-mr-6px">
                       <SexBadge sex="M" />{v.m} <SexBadge sex="F" />{v.f} ·
                     </span>
                     <span className="fw-700">{total.toLocaleString("pt-PT")}</span>
@@ -344,24 +344,24 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
         </div>
 
         {/* Por país — M/F split */}
-        <div className="card" style={{ padding: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+        <div className="card u-p-12px">
+          <div className="u-d-flex u-jc-space-between u-ai-center u-mb-8px">
             <div className="fw-700 fs-14">Top 25 países</div>
             <MFLegend />
           </div>
           {stats.topCountries.map(c => (
-            <div key={c.cp} style={{ marginBottom: 6 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", alignItems: "center", gap: 6 }}>
-                <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <div key={c.cp} className="u-mb-6px">
+              <div className="u-d-flex u-jc-space-between u-fs-fs-12 u-ai-center u-gap-6px">
+                <span className="u-fl-1 u-minw-0 u-ov-hidden u-tov-ellipsis u-ws-nowrap">
                   {c.cp && !c.cp.startsWith("@") ? gf(c.cp) : "🏴"} <span className="fw-600">{c.name}</span> <span className="muted fs-10">({c.cp})</span>
                 </span>
-                <span className="muted fs-10" style={{ display: "inline-flex", gap: 6, whiteSpace: "nowrap" }}>
+                <span className="muted fs-10 u-d-inline-flex u-gap-6px u-ws-nowrap">
                   <span style={{ color: COL_M, fontWeight: 600 }}>{c.m}</span>·
                   <span style={{ color: COL_F, fontWeight: 600 }}>{c.f}</span>
                 </span>
-                <span className="fw-700" style={{ minWidth: 40, textAlign: "right" }}>{c.count.toLocaleString("pt-PT")}</span>
+                <span className="fw-700 u-minw-40px u-ta-right">{c.count.toLocaleString("pt-PT")}</span>
               </div>
-              <div style={{ marginTop: 2 }}>
+              <div className="u-mt-2px">
                 <MFBar m={c.m} f={c.f} widthPct={barPct(c.count, maxCountry)} height={6} />
               </div>
             </div>
@@ -397,34 +397,30 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
   const female = inBin.filter(f => f.gender === "F").length;
 
   return (
-    <div className="card" style={{
-      padding: 14, marginBottom: 16,
-      border: "2px solid var(--accent)",
-      background: "var(--bg-subtle)",
-    }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+    <div className="card u-p-14px u-mb-16px u-bd-2px-solid-accent u-bg-bg-subtle">
+      <div className="u-d-flex u-ai-center u-jc-space-between u-mb-10px">
         <div>
           <div className="fw-900 fs-14">🎯 {binRange.label}</div>
-          <div className="muted fs-10" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 4 }}>
+          <div className="muted fs-10 u-d-inline-flex u-ai-center u-gap-8px u-mt-4px">
             {inBin.length.toLocaleString("pt-PT")} jogadores ·
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="M" />{male}</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="F" />{female}</span>
+            <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="M" />{male}</span>
+            <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="F" />{female}</span>
           </div>
         </div>
         <button className="p p-sm" onClick={onClose} title="Fechar">✕</button>
       </div>
       <div className="fw-800 fs-12 mb-4">Top 15 (ordenados por HCP)</div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 4 }}>
+      <div className="u-d-grid u-grid-template-columns-120gf u-gap-4px">
         {top.map((p, i) => (
           <button
             key={p.federation_code}
-            className="course-item"
+            className="course-item u-p-4px-8px u-d-flex u-ai-center u-gap-8px u-cur-pointer u-ta-left"
             onClick={() => onPickPlayer(p.federation_code)}
-            style={{ padding: "4px 8px", display: "flex", alignItems: "center", gap: 8, cursor: "pointer", textAlign: "left" }}
+
           >
-            <span className="fw-700 muted" style={{ width: 22, fontSize: "var(--fs-11)" }}>{i + 1}</span>
+            <span className="fw-700 muted u-w-22px u-fs-fs-11">{i + 1}</span>
             <SexBadge sex={p.gender as "M" | "F"} />
-            <span style={{ flex: 1, fontSize: "var(--fs-12)" }}>
+            <span className="u-fl-1 u-fs-fs-12">
               {p.country_prefix && p.country_prefix !== "PT" && !p.country_prefix.startsWith("@") && <span className="mr-4">{gf(p.country_prefix)}</span>}
               <span className="fw-600">{p.name}</span>
               <span className="muted fs-10 ml-4">({p.acronym})</span>
@@ -480,12 +476,8 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
   const sortedAges = Object.entries(byAge).sort((a, b) => b[1] - a[1]);
 
   return (
-    <div className="card" style={{
-      padding: 14, marginBottom: 16,
-      border: "2px solid var(--accent)",
-      background: "var(--bg-subtle)",
-    }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+    <div className="card u-p-14px u-mb-16px u-bd-2px-solid-accent u-bg-bg-subtle">
+      <div className="u-d-flex u-ai-center u-jc-space-between u-mb-10px">
         <div className="fw-900 fs-14">
           {drillDown.type === "club" ? "🏌️ Clube" : "🎯 Escalão"}: {title}
         </div>
@@ -502,19 +494,19 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
         {pros > 0 && <KpiCard label="Pros" value={pros} />}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
+      <div className="u-d-grid u-grid-template-columns-1e70q u-gap-12px">
         {/* Top HCPs */}
         <div>
           <div className="fw-700 fs-14 mb-4">🏆 Top 10 HCPs</div>
           {best.map((p, i) => (
             <button
               key={p.federation_code}
-              className="course-item"
+              className="course-item u-w-100pc u-p-3px-6px u-mb-2px u-d-flex u-ai-center u-gap-6px u-cur-pointer"
               onClick={() => onPickPlayer(p.federation_code)}
-              style={{ width: "100%", padding: "3px 6px", marginBottom: 2, display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}
+
             >
-              <span className="fw-700" style={{ width: 18, fontSize: "var(--fs-11)" }}>{i + 1}</span>
-              <span style={{ flex: 1, textAlign: "left", fontSize: "var(--fs-12)" }}>{p.name}</span>
+              <span className="fw-700 u-w-18px u-fs-fs-11">{i + 1}</span>
+              <span className="u-fl-1 u-ta-left u-fs-fs-12">{p.name}</span>
               <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
                 {(p.hcp_exact as number).toFixed(1)}
               </span>
@@ -527,7 +519,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
           <div>
             <div className="fw-700 fs-14 mb-4">Por escalão</div>
             {sortedAges.map(([k, v]) => (
-              <div key={k} style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", marginBottom: 2 }}>
+              <div key={k} className="u-d-flex u-jc-space-between u-fs-fs-12 u-mb-2px">
                 <span>{k}</span><span className="fw-700">{v}</span>
               </div>
             ))}
@@ -539,7 +531,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
           <div>
             <div className="fw-700 fs-14 mb-4">Top clubes</div>
             {topClubsDrill.map(([code, c]) => (
-              <div key={code} style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", marginBottom: 2 }}>
+              <div key={code} className="u-d-flex u-jc-space-between u-fs-fs-12 u-mb-2px">
                 <span>{c.name}</span><span className="fw-700">{c.count}</span>
               </div>
             ))}
@@ -551,7 +543,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
           <div>
             <div className="fw-700 fs-14 mb-4">Por país</div>
             {topCountriesDrill.map(([cp, n]) => (
-              <div key={cp} style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", marginBottom: 2 }}>
+              <div key={cp} className="u-d-flex u-jc-space-between u-fs-fs-12 u-mb-2px">
                 <span>{cp && !cp.startsWith("@") ? gf(cp) : "🏴"} {cp}</span><span className="fw-700">{n}</span>
               </div>
             ))}

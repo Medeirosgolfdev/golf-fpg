@@ -114,7 +114,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
               {h === frontEnd - 1 && !is9 && (() => {
                 const dOut = sumArr(ecArr, 0, frontEnd) - sumArr(gross, 0, frontEnd);
                 return (
-                  <td className="col-out fw-600" style={{ color: "var(--text-3)" }}>
+                  <td className="col-out fw-600 u-c-text-3">
                     {dOut === 0 ? "=" : (dOut > 0 ? "+" : "") + dOut}
                   </td>
                 );
@@ -125,7 +125,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
         {(() => {
           const dIn = (is9 ? sumEc : sumArr(ecArr, 9, holeCount)) - (is9 ? sumGross : sumArr(gross, 9, holeCount));
           return (
-            <td className={`col-${is9 ? "total" : "in"} fw-600`} style={{ color: "var(--text-3)" }}>
+            <td className={`col-${is9 ? "total" : "in"} fw-600 u-c-text-3`}>
               {dIn === 0 ? "=" : (dIn > 0 ? "+" : "") + dIn}
             </td>
           );
@@ -133,7 +133,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
         {!is9 && (() => {
           const totalDiff = sumEc - sumGross;
           return (
-            <td className="col-total" style={{ color: "var(--text-3)" }}>
+            <td className="col-total u-c-text-3">
               {fmtSign(totalDiff)}
             </td>
           );
