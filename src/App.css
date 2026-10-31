@@ -45,6 +45,10 @@ html, body, #root {
    (o -lg tem cabeçalho fixo). Arrumado a 30/10/2026 — antes eram quatro cópias
    das mesmas regras, que o modelo único já tapava. */
 :is(.dtable, .dtable-sm, .dtable-lg, .dt-compact) { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+/* Grelhas e matrizes (colunas = torneios, anos ou buracos; cada célula com a sua cor):
+   matrizes de rivais, pódios por ano, pancadas por edição, grelha de match play.
+   O modelo das listas não se aplica — só a base comum (31/10/2026). */
+.mx-table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
 :is(.dtable, .dtable-sm, .dtable-lg, .dt-compact) th { text-align: left; white-space: nowrap; }
 :is(.dtable, .dtable-sm, .dtable-lg) td { vertical-align: middle; }
 :is(.dtable, .dtable-sm, .dtable-lg, .dt-compact) :is(th.r, td.r) { text-align: right; }
@@ -3344,26 +3348,11 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
   color: var(--text-muted);
   margin: 0 0 10px 0;
 }
-/* ——— Tabela resumo de jogadores do campo ——— */
-.cp-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--fs-13);
-}
-.cp-table thead th {
-  text-align: left;
-  font-size: var(--fs-11);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-3);
-  background: var(--bg-header);
-  padding: 6px 10px;
-  border-bottom: 2px solid var(--border);
-  white-space: nowrap;
-}
-.cp-table th.cp-num,
-.cp-table td.cp-num {
+/* ——— Tabela resumo de jogadores do campo ———
+   É uma .dtable (letra, cabeçalho e linhas do «MODELO ÚNICO DAS TABELAS», 31/10/2026);
+   aqui só o que é dela: colunas numéricas, par 18b/9b ligado e a linha das voltas.
+   Regras com .dtable à frente para ganharem ao modelo (que fica no fim do ficheiro). */
+.dtable :is(th, td).cp-num {
   text-align: right;
   white-space: nowrap;
 }
@@ -3379,21 +3368,14 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
   box-shadow: none;
   background: transparent;
 }
-.cp-table.cp-table-bare thead th {
+.dtable.cp-table-bare thead th {
   background: transparent;
   color: var(--text-muted);
-  border-bottom: 1px solid var(--border);
 }
-.cp-th-exp { width: 26px; padding: 0; }
-.cp-row {
-  cursor: pointer;
-  border-bottom: 1px solid var(--border-light);
-}
+.dtable .cp-th-exp { width: 26px; padding: 0; }
+.cp-row { cursor: pointer; }
 .cp-row:hover { background: var(--bg-hover); }
-.cp-row td {
-  padding: 7px 10px;
-  vertical-align: baseline;
-}
+.cp-row td { vertical-align: baseline; }
 .cp-row-manuel {
   background: var(--bg-subtle, rgba(0,0,0,0.04));
 }
@@ -3426,12 +3408,9 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
   vertical-align: middle;
 }
 /* Segunda linha de estatística (9 buracos) — sem borda própria, ligada à de cima */
-.cp-row-paired { border-bottom: none; }
-.cp-row-sub {
-  cursor: pointer;
-  border-bottom: 1px solid var(--border-light);
-}
-.cp-row-sub td { padding: 0 10px 7px; vertical-align: baseline; }
+.dtable .cp-row-paired > td:not([rowspan]) { border-bottom: none; }
+.cp-row-sub { cursor: pointer; }
+.dtable .cp-row-sub > td { padding-top: 0; vertical-align: baseline; }
 .cp-row-paired:hover, .cp-row-sub:hover { background: var(--bg-subtle, rgba(0,0,0,0.025)); }
 .cp-row-sub.cp-row-manuel { background: var(--bg-subtle, rgba(0,0,0,0.04)); }
 .cp-round-9 { font-size: var(--fs-10); font-weight: 600; color: var(--text-muted); }
@@ -3439,7 +3418,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 .cp-tp { font-weight: 600; font-size: var(--fs-12); }
 .cp-muted { color: var(--text-muted); font-size: var(--fs-12); }
 /* Linha de detalhe — voltas, calmo e sem cor de fundo */
-.cp-detail-row td { padding: 2px 10px 12px; }
+.dtable .cp-detail-row > td { padding: 2px 6px 12px; }
 .cp-rounds {
   display: flex;
   flex-wrap: wrap;

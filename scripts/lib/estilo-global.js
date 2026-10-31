@@ -23,7 +23,7 @@ const EXCLUIR = [/[\\/]ui[\\/]overlay[\\/]/, /OverlayExport\.tsx$/, /[\\/]__test
  *  (cartões de buracos e tabelas de torneio). Uma <table> tem de usar uma delas. */
 const TABELAS_GLOBAIS = [
   "dtable", "dtable-sm", "dtable-lg", "dt-compact", "player-list-table", "cs-table",
-  "sc-lb", "sc-table", "sc-table-modern", "sc-table-ec", "scorecard-table",
+  "sc-lb", "sc-table", "sc-table-modern", "sc-table-ec", "scorecard-table", "mx-table",
 ];
 
 const MEDIDAS = {
@@ -38,7 +38,10 @@ const MEDIDAS = {
   /** <table> sem uma das classes globais. */
   tabelasSemClasse: (t) => {
     let n = 0;
-    const codigo = t.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+    // Fora: comentários e documentos HTML exportados (`<!DOCTYPE…</html>`, ex. o
+    // relatório do simulador) — levam o seu próprio CSS, o App.css não chega lá.
+    const codigo = t.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "")
+      .replace(/`<!DOCTYPE[\s\S]*?<\/html>`/gi, "");
     for (const m of codigo.matchAll(/<table\b([^>]*)>/g)) {
       const cls = (m[1].match(/className=\{?[`"']([^`"']*)/) || [])[1] || "";
       const nomes = cls.split(/[^a-zA-Z0-9_-]+/);

@@ -326,7 +326,7 @@ export default function RivaisDashboard({
           fluir com o background da pagina. */}
       <div className={noScroll ? "" : "card"}>
         <div className={noScroll ? "" : "scroll-x"}>
-          <table className="bc-collapse">
+          <table className="mx-table">
             <thead>
               {/* Header de grupo (só em fieldMode) — agrupa colunas por circuito.
                   Usa seriesBoundaries para encontrar o início de cada grupo e

@@ -122,7 +122,7 @@ function GameHolesStrip({ g, flipped }: { g: MatchplayGame; flipped: boolean }) 
       <div className="u-ox-auto">
         {/* Grelha estilo scorecard da casa: banda verde nos buracos, banda PAR
             subtil, estados por baixo. 100% de largura — sem coluna filler morta. */}
-        <table className="u-border-collapse-collapse u-w-100pc u-fs-fs-11">
+        <table className="mx-table u-w-100pc u-fs-fs-11">
           <thead>
             <tr className="u-bg-accent-light">
               <th style={cLbl}>Buraco</th>

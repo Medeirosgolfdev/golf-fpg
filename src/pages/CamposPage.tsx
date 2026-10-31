@@ -633,7 +633,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
     <div className={bare ? "" : "course-players-section"}>
       {!bare && <h4 className="course-players-title">{title}</h4>}
       <div className={bare ? "sc-wrap sc-wrap-bare" : "sc-wrap"}>
-        <table className={bare ? "cp-table cp-table-bare" : "cp-table"}>
+        <table className={"dtable" + (bare ? " cp-table-bare" : "")}>
           <thead>
             <tr>
               <th className="cp-th-exp" />

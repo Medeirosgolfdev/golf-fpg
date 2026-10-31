@@ -558,7 +558,7 @@ function RegionChampionsBlock({
       )}
       {open && <>
       <div className="u-ox-auto u-pb-14px">
-        <table className="u-border-collapse-collapse u-fs-fs-12 u-minw-100pc">
+        <table className="mx-table u-fs-fs-12 u-minw-100pc">
           <thead>
             <tr>
               <SortableHdr k="esc" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort as any}
@@ -642,30 +642,27 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
         📊 Jogadores mais frequentes <span className="fs-11 muted">(entre Regional + Nacional, últimos {years.length} anos)</span>
       </h3>
       <div className="u-ox-auto">
-        <table className="u-border-collapse-collapse u-fs-fs-12 u-minw-100pc">
+        <table className="dtable">
           <thead>
-            <tr className="u-bb-2px-solid-border">
-              <th className="u-p-6px-8px u-ta-right">#</th>
-              <th className="u-p-6px-8px u-ta-left">Jogador</th>
-              <th className="u-p-6px-8px u-ta-left">Fed</th>
-              <th className="u-p-6px-8px u-ta-right">Total</th>
-              <th className="u-p-6px-8px u-ta-right">Nacional</th>
-              <th className="u-p-6px-8px u-ta-right">Regional</th>
-              <th className="u-p-6px-8px u-ta-right">Títulos</th>
-              <th className="u-p-6px-8px u-ta-left">Escalões</th>
-              <th className="u-p-6px-8px u-ta-left">Anos</th>
+            <tr>
+              <th className="r">#</th>
+              <th>Jogador</th>
+              <th>Fed</th>
+              <th className="r">Total</th>
+              <th className="r">Nacional</th>
+              <th className="r">Regional</th>
+              <th className="r">Títulos</th>
+              <th>Escalões</th>
+              <th>Anos</th>
             </tr>
           </thead>
           <tbody>
             {top.map((p, i) => {
               const manuel = isManuel({ name: p.name, fed: p.fed ?? undefined });
               return (
-                <tr key={(p.fed || p.name) + "_" + i} style={{
-                  borderBottom: "1px solid var(--border-light)",
-                  background: manuel ? "var(--bg-success-subtle)" : undefined,
-                }}>
-                  <td className="fw-600 u-p-4px-8px u-ta-right">{i + 1}</td>
-                  <td className="u-p-4px-8px">
+                <tr key={(p.fed || p.name) + "_" + i} className={manuel ? "row-manuel" : undefined}>
+                  <td className="fw-600 r">{i + 1}</td>
+                  <td>
                     {p.fed ? (
                       <a href={`/jogadores/${p.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
                         className="fw-600 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
@@ -678,11 +675,11 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
                     )}
                     {manuel && <span className="u-ml-4px u-fs-fs-10">★</span>}
                   </td>
-                  <td className="fs-11 muted u-p-4px-8px">{p.fed || "—"}</td>
-                  <td className="fw-700 u-p-4px-8px u-ta-right">{p.appearances}</td>
-                  <td className="u-p-4px-8px u-ta-right">{p.nacionalAppearances || "—"}</td>
-                  <td className="u-p-4px-8px u-ta-right">{p.regionalAppearances || "—"}</td>
-                  <td className="fw-700 u-p-4px-8px u-ta-right">
+                  <td className="fs-11 muted">{p.fed || "—"}</td>
+                  <td className="fw-700 r">{p.appearances}</td>
+                  <td className="r">{p.nacionalAppearances || "—"}</td>
+                  <td className="r">{p.regionalAppearances || "—"}</td>
+                  <td className="fw-700 r">
                     {p.titles.length > 0 ? (
                       <span title={p.titles.map(t => `${t.year} ${t.type} ${t.escalao} ${t.sex}`).join("\n")}
                         className="u-c-color-good-dark">
@@ -690,14 +687,14 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
                       </span>
                     ) : "—"}
                   </td>
-                  <td className="fs-11 u-p-4px-8px">
+                  <td className="fs-11">
                     <span className="u-d-inline-flex u-gap-3px u-fwr-wrap">
                       {[...p.escaloes].sort((a, b) => ESC_ORDER.indexOf(a) - ESC_ORDER.indexOf(b)).map(e =>
                         <EscPill key={e} esc={e} />
                       )}
                     </span>
                   </td>
-                  <td className="fs-11 muted u-p-4px-8px">
+                  <td className="fs-11 muted">
                     {[...p.years].sort().join(", ")}
                   </td>
                 </tr>

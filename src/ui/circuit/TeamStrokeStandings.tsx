@@ -23,9 +23,10 @@ type View = "cartoes" | "lista" | "jogadores";
 /** Volta escolhida (uma categoria): grupo = ordem das letras + 🐦○■ de todas as voltas. */
 type RoundSel = "grupo" | "total" | number;
 
-const tdC: React.CSSProperties = { padding: "5px 6px", fontSize: "var(--fs-12)", textAlign: "center", borderBottom: "1px solid var(--border)", verticalAlign: "middle" };
-const tdL: React.CSSProperties = { ...tdC, textAlign: "left" };
-const thC: React.CSSProperties = { ...tdC, fontWeight: 700, fontSize: "var(--fs-11)", color: "var(--text-muted)", background: "var(--bg-muted)", textTransform: "uppercase", letterSpacing: "0.04em" };
+// Letra, cabeçalho, linhas e separadores vêm da .dtable (modelo único das tabelas).
+const tdC: React.CSSProperties = { textAlign: "center" };
+const tdL: React.CSSProperties = { textAlign: "left" };
+const thC = tdC;
 
 const tpTxt = (tp: number | null | undefined) => (tp == null ? "" : tp === 0 ? "PAR" : tp > 0 ? `+${tp}` : String(tp));
 const isEu = (p: TsPlayer) => (p.fed ? p.fed === MANUEL_FED : isManuelByName(p.name));
@@ -110,7 +111,7 @@ function PlayersTable({ cat, model, color, cols, bpbMode, showTotal }: {
   const footBpb = bpbMode != null ? sumBpb(cat.players.map(bpbOf)) : null;
   const withFooter = model.rankBy !== "toPar";
   return (
-    <table className="w-full u-border-collapse-collapse">
+    <table className="dtable">
       <thead>
         <tr>
           {hdr("nome", "Jogador", { textAlign: "left", paddingLeft: 10 })}

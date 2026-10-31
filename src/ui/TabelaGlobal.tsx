@@ -623,7 +623,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
       {/* Tabela */}
       <div className="card">
         <div className="scroll-x">
-          <table className="bc-collapse">
+          <table className="mx-table">
             <thead>
               <tr className="rivais-group-header">
                 <SortableHdr k="name" sortKey={sort} sortDir={dir} onSort={toggleSort} className="rivais-th-name">Jogador</SortableHdr>

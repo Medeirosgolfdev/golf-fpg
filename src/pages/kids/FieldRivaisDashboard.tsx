@@ -1919,7 +1919,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       </div>
       {compareSel.bar}
       <div className="u-ox-auto">
-      <table className="bc-collapse u-fs-fs-11 u-fvn-tabular-nums u-w-max-content">
+      <table className="mx-table u-fs-fs-11 u-w-max-content">
         <thead>
           <tr className="u-bg-bg-muted u-c-text-2 u-bb-1px-solid-border">
             <th rowSpan={2} onClick={() => onSort("rank")}
