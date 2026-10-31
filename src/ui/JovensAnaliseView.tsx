@@ -704,7 +704,7 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
         </table>
       </div>
       {limit < filteredByMode.length && (
-        <button className="fs-11 u-mt-8px u-p-4px-10px u-br-radius-sm u-bd-1px-solid-border u-bg-bg-muted u-cur-pointer" onClick={() => setLimit(limit + 20)}
+        <button className="btn u-mt-8px" onClick={() => setLimit(limit + 20)}
 >
           Mostrar mais ({filteredByMode.length - limit} restantes)
         </button>
@@ -868,7 +868,7 @@ function PlayerTimelines({ players, years, mode = "all" }: { players: PlayerStat
         ))}
       </div>
       {limit < filteredByMode.filter(p => p.dob).length && (
-        <button className="fs-11 u-mt-8px u-p-4px-10px u-br-radius-sm u-bd-1px-solid-border u-bg-bg-muted u-cur-pointer" onClick={() => setLimit(limit + 8)}
+        <button className="btn u-mt-8px" onClick={() => setLimit(limit + 8)}
 >
           Mostrar mais
         </button>

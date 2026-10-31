@@ -726,7 +726,7 @@ function CourseSideBySide({
           <button
             type="button"
             onClick={() => setShowHoles(v => !v)}
-            className="u-bg-bg-muted u-bd-1px-solid-border u-br-radius u-p-4px-12px u-fs-fs-12 u-fw-600 u-cur-pointer u-c-text-2"
+            className="btn"
           >
             {showHoles ? "▲ Esconder buraco a buraco" : "▼ Ver buraco a buraco"}
           </button>

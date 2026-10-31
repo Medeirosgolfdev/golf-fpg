@@ -737,22 +737,12 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               tabs={[{ key: "month" as ViewMode, label: "Mês" }, { key: "list" as ViewMode, label: "Lista" }]} />
           </div>
           <div className="gap-8 u-d-flex u-ai-center u-jc-space-between u-p-4px-12px-8px">
-            <button onClick={() => setCurrentMonth(m => Math.max(0, m-1))} title="Mês anterior" disabled={currentMonth <= 0}
-              style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
-                background: "var(--bg-card)", cursor: currentMonth <= 0 ? "default" : "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "var(--fs-18)", color: currentMonth <= 0 ? "var(--border)" : "var(--text-2)",
-                flexShrink: 0 }}>‹</button>
+            <button className="btn-round" onClick={() => setCurrentMonth(m => Math.max(0, m-1))} title="Mês anterior" disabled={currentMonth <= 0}>‹</button>
             <span className="fw-700 ta-c u-fs-fs-15 u-c-text u-fl-1">
               {monthLabel(miMes(currentMonth))} {miAno(currentMonth)}
             </span>
             <span className="fs-11 c-text-3 mono shrink-0" >{visibleEvents.length} provas</span>
-            <button onClick={() => setCurrentMonth(m => Math.min(MI_MAX, m+1))} title="Mês seguinte" disabled={currentMonth >= MI_MAX}
-              style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
-                background: "var(--bg-card)", cursor: currentMonth >= MI_MAX ? "default" : "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "var(--fs-18)", color: currentMonth >= MI_MAX ? "var(--border)" : "var(--text-2)",
-                flexShrink: 0 }}>›</button>
+            <button className="btn-round" onClick={() => setCurrentMonth(m => Math.min(MI_MAX, m+1))} title="Mês seguinte" disabled={currentMonth >= MI_MAX}>›</button>
           </div>
         </div>
 
@@ -967,11 +957,6 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
 
 function SmBtn({ l, onClick, dis }: { l: string; onClick: () => void; dis?: boolean }) {
   return (
-    <button onClick={onClick} disabled={dis} style={{
-      background: "none", border: "none", cursor: dis ? "default" : "pointer",
-      fontSize: "var(--fs-16)", color: dis ? "var(--border)" : "var(--text-3)",
-      width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center",
-      justifyContent: "center", padding: 0,
-    }}>{l}</button>
+    <button className="btn-round btn-round-sm" onClick={onClick} disabled={dis}>{l}</button>
   );
 }
