@@ -315,7 +315,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         <span className="u-d-flex u-ai-center u-gap-4px u-ml-8px">
           <span className="c-muted fs-10">Top:</span>
           <span
-            className="u-d-flex u-gap-2px u-bd-1px-solid-border u-br-8px u-ov-hidden"
+            className="u-d-flex u-gap-2px u-bd-1px-solid-border u-br-radius-lg u-ov-hidden"
           >
             {([5, 10, 20, 0] as const).map(n => (
               <button
@@ -339,7 +339,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
 
         {/* Toggle Agrupado/Independente — copia visual exacto de AllRoundsScorecardLB */}
         <span
-          className="u-d-flex u-gap-2px u-ml-4px u-bd-1px-solid-border u-br-8px u-ov-hidden"
+          className="u-d-flex u-gap-2px u-ml-4px u-bd-1px-solid-border u-br-radius-lg u-ov-hidden"
         >
           {([true, false] as const).map(g => (
             <button

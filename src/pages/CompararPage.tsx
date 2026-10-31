@@ -608,7 +608,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
       <div className="caTitle">Head-to-Head ({totalMatches} torneios comuns)</div>
 
       {/* Win progress bar */}
-      <div className="u-d-flex u-h-32px u-br-8px u-ov-hidden u-mb-12px u-bd-1px-solid-border-light">
+      <div className="u-d-flex u-h-32px u-br-radius-lg u-ov-hidden u-mb-12px u-bd-1px-solid-border-light">
         {loaded.map((s, i) => {
           const w = totalMatches > 0 ? (wins[i] / totalMatches * 100) : 0;
           if (w === 0) return null;
@@ -709,7 +709,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
           <option value={0}>Total</option><option value={36}>3 anos</option><option value={24}>2 anos</option><option value={12}>1 ano</option><option value={6}>6 meses</option>
         </select>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} className="u-w-100pc u-maxh-280px u-bg-bg-subtle u-br-8px u-bd-1px-solid-border-light">
+      <svg viewBox={`0 0 ${W} ${H}`} className="u-w-100pc u-maxh-280px u-bg-bg-subtle u-br-radius-lg u-bd-1px-solid-border-light">
         {Array.from({ length: 5 }, (_, i) => { const val = minH - padH + (rangeH + 2 * padH) * (i / 4); return (<g key={i}><line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="var(--border)" strokeWidth={0.5} /><text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{val.toFixed(1)}</text></g>); })}
         {series.map((s, si) => { if (s.pts.length < 2) return null; const d = s.pts.map(pt => `${xPos(pt.d).toFixed(1)},${yPos(pt.h).toFixed(1)}`).join(" L "); return (<g key={si}><path d={`M ${d}`} fill="none" stroke={s.color} strokeWidth={2} opacity={0.8} strokeLinejoin="round" />{s.pts.map((pt, j) => (<circle key={j} cx={xPos(pt.d)} cy={yPos(pt.h)} r={2.5} fill={s.color} opacity={0.5}><title>{s.name}: HCP {pt.h} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title></circle>))}</g>); })}
       </svg>

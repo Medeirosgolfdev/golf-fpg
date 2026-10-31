@@ -182,7 +182,7 @@ function NameCell({ row }: { row: CohortRow }) {
         </Link>
         <TierBadge tier={entry.tier} />
         {wins > 0 && (
-          <span className="u-fs-fs-11 u-c-b45309 u-fw-600">{wins}× 🏆</span>
+          <span className="u-fs-fs-11 u-c-medal-gold-strong u-fw-600">{wins}× 🏆</span>
         )}
         {top3 > wins && (
           <span className="u-fs-fs-11 u-c-text-3">Top3: {top3}</span>

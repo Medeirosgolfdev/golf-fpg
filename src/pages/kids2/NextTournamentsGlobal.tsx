@@ -128,7 +128,7 @@ function Content() {
                         {row.reg.name}
                       </a>
                       {row.reg.status === "reserva" && (
-                        <span className="u-ml-6px u-fs-fs-9 u-fw-700 u-p-1px-5px u-br-3px u-bg-var-bg-warn-orange-fff7ed u-c-var-color-orange-deep-c2410c u-bd-ltbl9">RESERVA</span>
+                        <span className="u-ml-6px u-fs-fs-9 u-fw-700 u-p-1px-5px u-br-radius-sm u-bg-var-bg-warn-orange-fff7ed u-c-var-color-orange-deep-c2410c u-bd-ltbl9">RESERVA</span>
                       )}
                     </td>
                     <td className="u-ws-nowrap u-c-text-2">{fmtDayMonthYear(row.reg.date)}</td>

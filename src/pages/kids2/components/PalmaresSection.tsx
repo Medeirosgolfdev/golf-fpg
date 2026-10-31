@@ -137,7 +137,7 @@ function WinCard({ win }: { win: WinCard }) {
           </span>
         )}
         {win.manuelToPar != null && (
-          <span title="±par do Manuel neste torneio" className="u-fs-fs-9 u-p-1px-5px u-br-3px u-fw-700 u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-bd-1px-solid-color-good-dark">
+          <span title="±par do Manuel neste torneio" className="u-fs-fs-9 u-p-1px-5px u-br-radius-sm u-fw-700 u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-bd-1px-solid-color-good-dark">
             M: {win.manuelToPar === 0 ? "E" : win.manuelToPar > 0 ? `+${win.manuelToPar}` : String(win.manuelToPar)}
           </span>
         )}

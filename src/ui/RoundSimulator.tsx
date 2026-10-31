@@ -2092,7 +2092,7 @@ export function RoundSimulator({
                           {res?.courseName ?? "—"}
                           {res && is9hMode(res.holesMode) && (
                             <span
-                              className="u-ml-6px u-bg-fde68a u-c-color-warn-dark u-br-radius-sm u-p-1px-5px u-fs-fs-10 u-fw-700"
+                              className="u-ml-6px u-bg-medal-gold-bg u-c-color-warn-dark u-br-radius-sm u-p-1px-5px u-fs-fs-10 u-fw-700"
                             >
                               {res.holesMode === "front9" ? "F9" : "B9"}
                             </span>

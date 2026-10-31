@@ -406,7 +406,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
             const ladder = pointsLadder(data, level);
             if (!ladder.length) return null;
             return (
-              <div className="u-mb-12px u-p-8px-10px u-bg-accent-light u-br-8px">
+              <div className="u-mb-12px u-p-8px-10px u-bg-accent-light u-br-radius-lg">
                 <div className="fs-12 u-mb-6px">
                   🎯 <strong>Pontos em jogo nesta prova</strong> — {LEVEL_LABEL[level]} (por posição em cada categoria):
                 </div>
@@ -523,7 +523,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
           {/* Provas nomeadas no regulamento ainda por jogar até ao fecho (o
               Carnaval conta mas não é nomeado; os juniores de 9 buracos não contam). */}
           {missing.length > 0 && (
-            <div className="u-mt-12px u-p-10px-12px u-bg-bg-card u-bd-1px-solid-border u-br-8px">
+            <div className="u-mt-12px u-p-10px-12px u-bg-bg-card u-bd-1px-solid-border u-br-radius-lg">
               <div className="fs-12 u-mb-6px">
                 📅 <strong>Provas que faltam até ao fecho</strong> — {missing.length}
                 {" "}({jaContam} das provas nomeadas no regulamento já contam):
@@ -603,7 +603,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
             const byFed = new Map(proj.map(x => [x.fed, x]));
             const semHipotese = proj.filter(x => !x.aindaChega).length;
             return (
-              <div className="u-mt-10px u-p-10px-12px u-bg-bg-card u-bd-1px-solid-border u-br-8px">
+              <div className="u-mt-10px u-p-10px-12px u-bg-bg-card u-bd-1px-solid-border u-br-radius-lg">
                 <div className="fs-12 u-mb-6px">
                   🧮 <strong>Ainda por distribuir</strong> — <strong className="u-c-accent">{jogo.total} pontos</strong> a quem ganhar todas as {missing.length} provas que faltam
                   {" "}({jogo.porNivel.map(n => `${n.provas}× ${LEVEL_LABEL[n.level].replace(" (Major)", "")} a ${n.porProva}`).join(" · ")}).

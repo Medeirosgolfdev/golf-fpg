@@ -226,7 +226,7 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
 
 function HoleDial({ d }: { d: HoleDial }) {
   return (
-    <div className="u-p-10px u-bd-1px-solid-border u-br-8px u-bg-bg-card">
+    <div className="u-p-10px u-bd-1px-solid-border u-br-radius-lg u-bg-bg-card">
       <div className="u-d-flex u-ai-baseline u-jc-space-between u-mb-6px">
         <span className="u-fs-fs-16 u-fw-800">B{d.hole}</span>
         <span className="muted u-fs-fs-11">par <b>{d.par}</b></span>
@@ -240,7 +240,7 @@ function HoleDial({ d }: { d: HoleDial }) {
       <div className="u-d-flex u-jc-space-around u-mt-8px u-fs-fs-9">
         <span className="u-c-color-good u-fw-700">● Birdie+</span>
         <span className="u-c-525252 u-fw-700">● Par</span>
-        <span className="u-c-1d4ed8 u-fw-700">● Bogey</span>
+        <span className="u-c-score-quad u-fw-700">● Bogey</span>
         <span className="u-c-color-danger u-fw-700">● Duplo+</span>
       </div>
     </div>
@@ -536,7 +536,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       <section>
         <h3>2. Buracos chave — Top 5 difíceis vs Top 5 fáceis</h3>
         <div className="u-d-grid u-grid-template-columns-1fr-1fr u-gap-16px">
-          <div className="u-bd-2px-solid-color-danger u-br-8px u-p-12px u-bg-rgba-220-38-38-_04">
+          <div className="u-bd-2px-solid-color-danger u-br-radius-lg u-p-12px u-bg-rgba-220-38-38-_04">
             <h4 className="u-m-0-0-8px u-c-color-danger-dark">🔴 Mais difíceis (vão preparados)</h4>
             <table className="sc-lb">
               <thead>
@@ -556,8 +556,8 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
               </tbody>
             </table>
           </div>
-          <div className="u-bd-2px-solid-color-good u-br-8px u-p-12px u-bg-rgba-22-163-74-_04">
-            <h4 className="u-m-0-0-8px u-c-15803d">🟢 Mais fáceis (capitalizar)</h4>
+          <div className="u-bd-2px-solid-color-good u-br-radius-lg u-p-12px u-bg-rgba-22-163-74-_04">
+            <h4 className="u-m-0-0-8px u-c-color-good-dark">🟢 Mais fáceis (capitalizar)</h4>
             <table className="sc-lb">
               <thead>
                 <tr><th className="lb-name">B</th><th className="lb-hole">Par</th><th className="lb-hole">Avg</th><th className="lb-hole">Δ</th><th className="lb-hole">%Bird+</th><th className="lb-hole">⭐ M</th></tr>

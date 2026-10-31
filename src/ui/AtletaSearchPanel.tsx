@@ -272,7 +272,7 @@ export default function AtletaSearchPanel({
   return (
     <section className="u-m-16px-12px-28px">
       <div
-        className="u-p-12px-16px u-bg-bg-muted u-bd-1px-solid-border u-br-8px u-mb-12px"
+        className="u-p-12px-16px u-bg-bg-muted u-bd-1px-solid-border u-br-radius-lg u-mb-12px"
       >
         <h3 className="fs-15 fw-800 u-m-0-0-8px">
           🔍 Procurar atleta
@@ -297,7 +297,7 @@ export default function AtletaSearchPanel({
       {/* Lista de matches (sugestões) */}
       {matches.length > 0 && !selected && (
         <div
-          className="u-bd-1px-solid-border u-br-8px u-ov-hidden u-mb-12px"
+          className="u-bd-1px-solid-border u-br-radius-lg u-ov-hidden u-mb-12px"
         >
           <table className="dtable">
             <thead>
@@ -345,7 +345,7 @@ export default function AtletaSearchPanel({
       {/* Detalhe do atleta seleccionado */}
       {selected && (
         <div
-          className="u-bd-1px-solid-border u-br-8px u-ov-hidden"
+          className="u-bd-1px-solid-border u-br-radius-lg u-ov-hidden"
         >
           <header
             className="u-p-12px-16px u-bg-bg-muted u-bb-1px-solid-border u-d-flex u-ai-center u-gap-12px u-fwr-wrap"

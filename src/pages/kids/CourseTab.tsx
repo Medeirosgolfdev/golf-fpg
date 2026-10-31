@@ -360,7 +360,7 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
         <span className="u-fs-fs-11">
           Esta vista lê os dados do member-history-slim. Se o torneio é novo
           e ainda não foi scrapado, a info aparecerá depois do próximo run de
-          <code className="u-m-0-4px u-p-1px-4px u-bg-bg-muted u-br-3px">fetch-uskids-results</code>.
+          <code className="u-m-0-4px u-p-1px-4px u-bg-bg-muted u-br-radius-sm">fetch-uskids-results</code>.
         </span>
       </div>
     );

@@ -56,8 +56,8 @@ const RankingNotas = ({ year }: { year: string | number }) => {
         >
           <span className="u-fs-fs-14 u-lh-1_25">{n.tipo === "info" ? "📅" : "⚠️"}</span>
           <span>
-            <b className="u-d-block u-fs-12_5px u-mb-2px">{n.titulo}</b>
-            <span className="muted u-fs-11_5px">{n.texto}</span>
+            <b className="u-d-block u-fs-fs-13 u-mb-2px">{n.titulo}</b>
+            <span className="muted u-fs-fs-12">{n.texto}</span>
           </span>
         </div>
       ))}

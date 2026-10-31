@@ -239,16 +239,16 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
       })}
       <div className="u-d-flex u-fwr-wrap u-gap-10px u-mt-10px u-p-8px-10px u-fs-fs-10 u-c-text-3 u-bg-bg-muted u-br-radius">
         <span className="u-d-inline-flex u-ai-center u-gap-4px">
-          <span className="u-bg-medal-gold-bg u-c-medal-gold-fg u-fw-700 u-p-1px-5px u-br-3px u-fs-fs-10">🏆 #1</span> ouro
+          <span className="u-bg-medal-gold-bg u-c-medal-gold-fg u-fw-700 u-p-1px-5px u-br-radius-sm u-fs-fs-10">🏆 #1</span> ouro
         </span>
         <span className="u-d-inline-flex u-ai-center u-gap-4px">
-          <span className="u-bg-medal-silver-bg u-c-medal-silver-fg u-fw-700 u-p-1px-5px u-br-3px u-fs-fs-10">🏆 #2</span> prata
+          <span className="u-bg-medal-silver-bg u-c-medal-silver-fg u-fw-700 u-p-1px-5px u-br-radius-sm u-fs-fs-10">🏆 #2</span> prata
         </span>
         <span className="u-d-inline-flex u-ai-center u-gap-4px">
-          <span className="u-bg-medal-bronze-bg u-c-medal-bronze-fg u-fw-700 u-p-1px-5px u-br-3px u-fs-fs-10">🏆 #3</span> bronze
+          <span className="u-bg-medal-bronze-bg u-c-medal-bronze-fg u-fw-700 u-p-1px-5px u-br-radius-sm u-fs-fs-10">🏆 #3</span> bronze
         </span>
         <span className="u-d-inline-flex u-ai-center u-gap-4px">
-          <span className="u-bg-var-bg-success-subtle-ecfdf5 u-bd-ci9jy u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-3px u-fs-fs-10">±N</span>
+          <span className="u-bg-var-bg-success-subtle-ecfdf5 u-bd-ci9jy u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10">±N</span>
           diff vs Manuel
         </span>
         <span className="u-ml-auto">
@@ -351,7 +351,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
     <tr style={{ background: bg }}>
       <td className="u-c-text-3">{fmtDate(r.date)}</td>
       <td>
-        <span className="u-fs-fs-9 u-p-1px-5px u-br-3px u-bg-bg u-bd-1px-solid-border-light">
+        <span className="u-fs-fs-9 u-p-1px-5px u-br-radius-sm u-bg-bg u-bd-1px-solid-border-light">
           {SOURCE_LABELS[r.tournament.sourceId] || r.tournament.sourceId}
         </span>
       </td>
@@ -453,7 +453,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
       </td>
       <td className="u-ta-right">
         {r.vsManuelDiff != null && (
-          <span className="u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-3px u-fs-fs-10 u-bd-ci9jy"
+          <span className="u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10 u-bd-ci9jy"
             title={r.manuelPos != null ? `Manuel ficou em #${r.manuelPos}` : "Manuel também jogou"}>
             {r.vsManuelDiff === 0 ? "0" : r.vsManuelDiff > 0 ? `+${r.vsManuelDiff}` : String(r.vsManuelDiff)}
           </span>

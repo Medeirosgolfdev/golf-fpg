@@ -981,10 +981,10 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 o drive de um jogador, conhece-se o alcance do jogo todo.
               </p>
               <div className="u-m-0-0-12px u-p-10px-12px u-br-radius u-bg-bg-muted u-bd-1px-solid-border-light">
-                <div className="u-fw-700 u-fs-12_5px u-mb-2px">
+                <div className="u-fw-700 u-fs-fs-13 u-mb-2px">
                   Distâncias estimadas do saco — drive de {driveM} m
                 </div>
-                <div className="muted u-fs-11_5px u-mb-8px">
+                <div className="muted u-fs-fs-12 u-mb-8px">
                   Cada taco como percentagem constante do drive. Atualiza automaticamente
                   quando mudas o <b>Drive (m)</b> no topo da página.
                 </div>

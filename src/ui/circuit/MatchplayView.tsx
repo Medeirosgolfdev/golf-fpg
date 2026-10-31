@@ -118,7 +118,7 @@ function GameHolesStrip({ g, flipped }: { g: MatchplayGame; flipped: boolean }) 
   return (
     // Sem header próprio: os nomes e o badge do resultado estão na linha do jogo
     // logo acima — repeti-los aqui era ruído (visto no ETC Boys 2026).
-    <div className="u-bd-1px-solid-border u-br-radius u-ov-hidden u-bs-0-1px-3px-rgba-0-0-0-_06 u-m-2px-0-6pxx">
+    <div className="u-bd-1px-solid-border u-br-radius u-ov-hidden u-bs-shadow-sm u-m-2px-0-6pxx">
       <div className="u-ox-auto">
         {/* Grelha estilo scorecard da casa: banda verde nos buracos, banda PAR
             subtil, estados por baixo. 100% de largura — sem coluna filler morta. */}
@@ -204,7 +204,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
   };
 
   return (
-    <div className="u-bd-1px-solid-border u-br-radius u-ov-hidden u-bs-0-1px-3px-rgba-0-0-0-_06">
+    <div className="u-bd-1px-solid-border u-br-radius u-ov-hidden u-bs-shadow-sm">
       <table className="player-list-table u-fs-fs-12 u-w-100pc">
         <thead>
           <tr>
@@ -618,7 +618,7 @@ export default function MatchplayView({ data, roundPicker = false }: {
           : <>Clica num confronto para ver os jogos (foursomes e singles), e num jogo para o buraco-a-buraco</>}
         {" "}· estado corrido na perspectiva {nway ? "do jogador" : "da equipa"} da coluna ESQUERDA
         (<span className="u-c-accent u-fw-700">UP</span> à frente,{" "}
-        <span className="u-c-medal-bronze u-fw-700">DN</span> atrás).
+        <span className="u-c-medal-gold-strong u-fw-700">DN</span> atrás).
       </div>}
     </div>
   );

@@ -489,7 +489,7 @@ function SourceRow({ source }: { source: DataSource }) {
         </div>
         {/* Erro em bloco próprio, bem visível, a ocupar linha inteira */}
         {source.error && (
-          <div className="u-mt-3px u-p-3px-6px u-fs-fs-10 u-ff-font-mono u-c-color-warn-dark u-bg-bg-card u-bd-1px-solid-color-warn u-br-3px u-word-break-break-word u-ws-pre-wrap">
+          <div className="u-mt-3px u-p-3px-6px u-fs-fs-10 u-ff-font-mono u-c-color-warn-dark u-bg-bg-card u-bd-1px-solid-color-warn u-br-radius-sm u-word-break-break-word u-ws-pre-wrap">
             {source.error}
           </div>
         )}

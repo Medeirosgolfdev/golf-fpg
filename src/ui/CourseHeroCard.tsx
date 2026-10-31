@@ -182,7 +182,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
         <>
           <div className="u-d-flex u-ai-center u-gap-8px u-mt-18px u-mb-10px u-fwr-wrap">
             <div className="h-xs u-mb-0">Vista do campo</div>
-            <div className="u-d-inline-flex u-gap-2px u-p-2px u-bg-bg-muted u-br-8px">
+            <div className="u-d-inline-flex u-gap-2px u-p-2px u-bg-bg-muted u-br-radius-lg">
               {(["par", "buraco"] as const).map(m => (
                 <button
                   key={m}

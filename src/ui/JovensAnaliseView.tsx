@@ -182,13 +182,13 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
           <div className="u-d-flex u-fd-column u-ai-center u-gap-2px u-fsh-0">
             {isProvisional && (
               <span title={`Resultado provisório: ${ch.roundsPlayed} de ${ch.roundsExpected} rondas jogadas.`}
-                className="fs-10 fw-700 u-p-1px-4px u-br-3px u-bg-accent u-c-fff u-ws-nowrap u-ls-0_3px">
+                className="fs-10 fw-700 u-p-1px-4px u-br-radius-sm u-bg-accent u-c-fff u-ws-nowrap u-ls-0_3px">
                 R{ch.roundsPlayed}/{ch.roundsExpected}
               </span>
             )}
             {!isProvisional && ch.roundsTotal && ch.roundsTotal >= 2 && (
               <span title={`${ch.roundsTotal} rondas — gross é o total.`}
-                className="fs-10 fw-700 u-p-1px-4px u-br-3px u-bg-bg-muted u-c-text-2 u-ws-nowrap u-ls-0_3px">
+                className="fs-10 fw-700 u-p-1px-4px u-br-radius-sm u-bg-bg-muted u-c-text-2 u-ws-nowrap u-ls-0_3px">
                 {ch.roundsTotal}R
               </span>
             )}
@@ -214,7 +214,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
             )}
             {hasForeignWinner && (
               <span title={`Vencedor absoluto do leaderboard foi ${ch.defactoWinnerName} (${ch.defactoWinnerCountry}); regra FPG atribui título ao melhor PT.`}
-                className="fs-10 u-p-1px-4px u-br-3px u-bg-bg-muted u-c-text-2 u-bd-1px-dashed-border u-ws-nowrap">
+                className="fs-10 u-p-1px-4px u-br-radius-sm u-bg-bg-muted u-c-text-2 u-bd-1px-dashed-border u-ws-nowrap">
                 🌍 {ch.defactoWinnerCountry}
               </span>
             )}
@@ -336,7 +336,7 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
     return (
       <div
         key={keyPrefix}
-        className="u-mb-28px u-p-10px-12px-16px u-bg-bg-card u-bd-1px-solid-border-light u-br-8px"
+        className="u-mb-28px u-p-10px-12px-16px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius-lg"
       >
         <h4
           className="fs-13 fw-800 u-m-0-0-10px u-pb-8px u-bb-1px-solid-border-light u-d-flex u-ai-center u-gap-10px"
@@ -826,7 +826,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
                   target="_blank"
                   rel="noopener noreferrer"
                   title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName} — abrir torneio na FPG ↗`}
-                  className="u-fs-fs-10 u-fw-700 u-c-text-3 u-td-none u-bg-bg-muted u-p-1px-4px u-br-3px"
+                  className="u-fs-fs-10 u-fw-700 u-c-text-3 u-td-none u-bg-bg-muted u-p-1px-4px u-br-radius-sm"
                 >
                   {bestApp.pos}/{bestApp.total}
                 </a>
@@ -834,7 +834,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               {titles.length === 0 && bestApp && (!bestApp.ccode || !bestApp.tcode) && (
                 <span
                   title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName}`}
-                  className="u-fs-fs-10 u-fw-700 u-c-text-3 u-bg-bg-muted u-p-1px-4px u-br-3px"
+                  className="u-fs-fs-10 u-fw-700 u-c-text-3 u-bg-bg-muted u-p-1px-4px u-br-radius-sm"
                 >
                   {bestApp.pos}/{bestApp.total}
                 </span>

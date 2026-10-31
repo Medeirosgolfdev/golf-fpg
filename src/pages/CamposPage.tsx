@@ -992,7 +992,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
 
       {/* Cartão do Manuel — recorde por tee */}
       {manuel.length > 0 && (
-        <div className="u-br-radius-xl u-ov-hidden u-bd-1px-solid-accent u-bs-0-1px-3px-rgba-0-0-0-0_06 u-mb-12px">
+        <div className="u-br-radius-xl u-ov-hidden u-bd-1px-solid-accent u-bs-shadow-sm u-mb-12px">
           <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: tint("var(--accent)", 12), borderBottom: "1px solid var(--border-light, var(--border))", fontWeight: 800 }}>
             <span className="u-fs-var-fs-15-15px">🧒 Manuel</span>
             <span className="muted u-fw-400 u-fs-fs-11">recorde por tee · {voltaLabel}</span>

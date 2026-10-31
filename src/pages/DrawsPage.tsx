@@ -484,7 +484,7 @@ function TorneiosList({
               {items.map((t) => (
                 <li
                   key={t.torneioId}
-                  className="u-p-5px-12px u-d-flex u-ai-baseline u-gap-8px u-fs-12_5px u-bb-1px-solid-border-light"
+                  className="u-p-5px-12px u-d-flex u-ai-baseline u-gap-8px u-fs-fs-13 u-bb-1px-solid-border-light"
                 >
                   <span
                     className="muted u-w-78px u-fsh-0 u-fvn-tabular-nums"

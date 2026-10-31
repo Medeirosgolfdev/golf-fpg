@@ -4733,7 +4733,6 @@ table td.lb-col-divider {
 .u-bg-color-good-dark { background: var(--color-good-dark) !important; }
 .u-bg-color-warn { background: var(--color-warn) !important; }
 .u-bg-color-warn-vivid { background: var(--color-warn-vivid) !important; }
-.u-bg-fde68a { background: #fde68a !important; }
 .u-bg-jqabh { background: var(--bg-info-subtle, rgba(59,130,246,0.02)) !important; }
 .u-bg-medal-bronze-bg { background: var(--medal-bronze-bg) !important; }
 .u-bg-medal-gold-bg { background: var(--medal-gold-bg) !important; }
@@ -4785,10 +4784,7 @@ table td.lb-col-divider {
 .u-border-color-transparent { border-color: transparent !important; }
 .u-border-style-dashed { border-style: dashed !important; }
 .u-box-sizing-border-box { box-sizing: border-box !important; }
-.u-br-3px { border-radius: 3px !important; }
 .u-br-50pc { border-radius: 50% !important; }
-.u-br-5px { border-radius: 5px !important; }
-.u-br-8px { border-radius: 8px !important; }
 .u-br-999px { border-radius: 999px !important; }
 .u-br-radius { border-radius: var(--radius) !important; }
 .u-br-radius-lg { border-radius: var(--radius-lg) !important; }
@@ -4799,11 +4795,8 @@ table td.lb-col-divider {
 .u-br-var-radius-pill-999px { border-radius: var(--radius-pill, 999px) !important; }
 .u-brd-1px-solid-border-light { border-right: 1px solid var(--border-light) !important; }
 .u-bs-0-10px-40px-overlay-black-30 { box-shadow: 0 10px 40px var(--overlay-black-30) !important; }
-.u-bs-0-1px-3px-rgba-0-0-0-_06 { box-shadow: 0 1px 3px rgba(0,0,0,.06) !important; }
-.u-bs-0-1px-3px-rgba-0-0-0-0_06 { box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important; }
 .u-bs-0-20px-50px-rgba-0-0-0-0_3 { box-shadow: 0 20px 50px rgba(0,0,0,0.3) !important; }
-.u-bs-0-2px-6px-rgba-0-0-0-0_1 { box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important; }
-.u-bs-0-8px-24px-rgba-0-0-0-0_12 { box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important; }
+.u-bs-shadow { box-shadow: var(--shadow) !important; }
 .u-bs-shadow-lg { box-shadow: var(--shadow-lg) !important; }
 .u-bs-shadow-sm { box-shadow: var(--shadow-sm) !important; }
 .u-bt-1px-dashed-border-light { border-top: 1px dashed var(--border-light) !important; }
@@ -4813,13 +4806,10 @@ table td.lb-col-divider {
 .u-bt-2px-dashed-color-good-dark { border-top: 2px dashed var(--color-good-dark) !important; }
 .u-bt-2px-solid-border { border-top: 2px solid var(--border) !important; }
 .u-bt-gwkbz { border-top: 1px solid var(--border-light, var(--border)) !important; }
-.u-c-15803d { color: #15803d !important; }
 .u-c-1b214 { color: var(--color-warn-dark, var(--color-warn-dark)) !important; }
-.u-c-1d4ed8 { color: #1d4ed8 !important; }
 .u-c-525252 { color: #525252 !important; }
 .u-c-accent { color: var(--accent) !important; }
 .u-c-accent-text { color: var(--accent-text) !important; }
-.u-c-b45309 { color: #b45309 !important; }
 .u-c-bg { color: var(--bg) !important; }
 .u-c-border { color: var(--border) !important; }
 .u-c-chart-2 { color: var(--chart-2) !important; }
@@ -4845,6 +4835,7 @@ table td.lb-col-divider {
 .u-c-score-bogey-fg { color: var(--score-bogey-fg) !important; }
 .u-c-score-double { color: var(--score-double) !important; }
 .u-c-score-eagle { color: var(--score-eagle) !important; }
+.u-c-score-quad { color: var(--score-quad) !important; }
 .u-c-text { color: var(--text) !important; }
 .u-c-text-1 { color: var(--text-1) !important; }
 .u-c-text-2 { color: var(--text-2) !important; }
@@ -4890,8 +4881,6 @@ table td.lb-col-divider {
 .u-fs-0_92em { font-size: 0.92em !important; }
 .u-fs-0_95em { font-size: 0.95em !important; }
 .u-fs-1_1em { font-size: 1.1em !important; }
-.u-fs-11_5px { font-size: 11.5px !important; }
-.u-fs-12_5px { font-size: 12.5px !important; }
 .u-fs-1em { font-size: 1em !important; }
 .u-fs-30px { font-size: 30px !important; }
 .u-fs-38px { font-size: 38px !important; }
@@ -5119,7 +5108,6 @@ table td.lb-col-divider {
 .u-minw-104px { min-width: 104px !important; }
 .u-minw-10px { min-width: 10px !important; }
 .u-minw-140px { min-width: 140px !important; }
-.u-minw-14px { min-width: 14px !important; }
 .u-minw-160px { min-width: 160px !important; }
 .u-minw-180px { min-width: 180px !important; }
 .u-minw-18px { min-width: 18px !important; }

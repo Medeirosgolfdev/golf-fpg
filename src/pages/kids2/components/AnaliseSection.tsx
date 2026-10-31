@@ -341,7 +341,7 @@ function RoundBar({ entry }: { entry: { tornLabel: string; round: number; gross:
         {entry.gross != null ? `${entry.gross}` : "—"}
         {entry.toPar != null && <span className="u-fs-fs-10 u-ml-4px">({fmtToPar(entry.toPar)})</span>}
       </div>
-      <div className="u-d-flex u-h-14px u-br-3px u-ov-hidden u-gap-1px u-bg-bg-muted">
+      <div className="u-d-flex u-h-14px u-br-radius-sm u-ov-hidden u-gap-1px u-bg-bg-muted">
         {segs.map((s) => (
           <div key={s.k} style={{ flex: s.pct, background: s.color }} title={`${s.k}: ${s.pct.toFixed(0)}%`} />
         ))}
@@ -375,7 +375,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
             {fieldToPar != null && <span> · field {fieldToPar >= 0 ? "+" : ""}{fieldToPar.toFixed(1)}</span>}
           </span>
         </div>
-        <div className="u-d-flex u-h-10px u-br-3px u-ov-hidden u-gap-1px u-bg-bg-muted">
+        <div className="u-d-flex u-h-10px u-br-radius-sm u-ov-hidden u-gap-1px u-bg-bg-muted">
           {(["eagles", "birdies", "pars", "bogeys", "dbPlus"] as const).map((k) => (
             <div key={k} style={{
               flex: (pp as Record<string, number>)[k],

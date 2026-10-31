@@ -116,7 +116,7 @@ function HcpHistoryModal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="u-bg-bg-card u-br-8px u-maxw-600px u-w-100pc u-maxh-85vh u-ov-auto u-p-20px u-bs-0-20px-50px-rgba-0-0-0-0_3"
+        className="u-bg-bg-card u-br-radius-lg u-maxw-600px u-w-100pc u-maxh-85vh u-ov-auto u-p-20px u-bs-0-20px-50px-rgba-0-0-0-0_3"
       >
         <div className="u-d-flex u-jc-space-between u-ai-center u-mb-14px">
           <h3 className="u-m-0 u-fs-fs-16 u-fw-700">

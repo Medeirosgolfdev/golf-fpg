@@ -711,7 +711,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                 onKeyDown={e => { if (e.key === "Escape") { setSearchOpen(false); setSearchQ(""); } }} />
               <span className="u-pos-absolute u-left-8px u-top-50pc u-transform-translatey-50pc u-fs-fs-12 u-c-text-muted u-pointer-events-none">🔍</span>
               {searchOpen && searchResults.length > 0 && (
-                <div className="u-pos-absolute u-top-100pc u-left-0 u-right-0 u-mt-4px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius-lg u-bs-0-8px-24px-rgba-0-0-0-0_12 u-maxh-320px u-oy-auto u-z-z-sidebar">
+                <div className="u-pos-absolute u-top-100pc u-left-0 u-right-0 u-mt-4px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius-lg u-bs-shadow-lg u-maxh-320px u-oy-auto u-z-z-sidebar">
                   {searchResults.map(ev => {
                     const cal = CAL_MAP.get(ev.calId);
                     const d = ev.date;

@@ -2043,7 +2043,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                           </a>
                           {entry.officialPlace == null && (
                             <span title="Sem classificação oficial (IE / DSQ / WD)"
-                                  className="u-fs-fs-8 u-p-0-4px u-br-3px u-bg-var-bg-danger-subtle-fecaca u-c-var-color-danger-dark-991b1b u-fw-700 u-ls-0_3px">
+                                  className="u-fs-fs-8 u-p-0-4px u-br-radius-sm u-bg-var-bg-danger-subtle-fecaca u-c-var-color-danger-dark-991b1b u-fw-700 u-ls-0_3px">
                               IE
                             </span>
                           )}

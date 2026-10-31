@@ -265,7 +265,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                         </span>
                       )}
                       {novos7d > 0 && (
-                        <span className="fs-10 fw-700 u-bg-score-eagle u-c-fff u-p-1px-5px u-br-5px u-ml-3px"
+                        <span className="fs-10 fw-700 u-bg-score-eagle u-c-fff u-p-1px-5px u-br-radius u-ml-3px"
                           title={`${novos7d} inscrito${novos7d > 1 ? "s" : ""} nos últimos 7 dias`}>
                           +{novos7d}
                         </span>

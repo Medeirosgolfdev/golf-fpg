@@ -247,7 +247,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
         </div>
       </div>
 
-      <div className="u-bg-bg u-bd-1px-solid-border u-br-8px u-p-10px-6px-6px u-minw-0">
+      <div className="u-bg-bg u-bd-1px-solid-border u-br-radius-lg u-p-10px-6px-6px u-minw-0">
         {/* Evita o erro "width(-1) height(-1)" do Recharts: o ResponsiveContainer
             recebe height numérica fixa (não "100%") + minWidth/minHeight para que
             tenha sempre dimensões válidas mesmo antes do pai ter layout calculado
@@ -376,7 +376,7 @@ function CustomTooltip({ active, payload, yMode }: any) {
   };
   const metricLabel = yMode === "toPar" ? "±par" : yMode === "toParNorm" ? "±par/18H" : "Posição";
   return (
-    <div className="u-bg-bg u-bd-1px-solid-border u-br-radius u-p-6px-10px u-fs-fs-11 u-bs-0-2px-6px-rgba-0-0-0-0_1">
+    <div className="u-bg-bg u-bd-1px-solid-border u-br-radius u-p-6px-10px u-fs-fs-11 u-bs-shadow">
       <div className="u-fw-700 u-c-text">{p.tName}</div>
       <div className="u-c-text-3 u-fs-fs-10">
         {p.flight} · {fmtDate(p.date)}{p.nholes === 9 ? " · 9H" : ""}

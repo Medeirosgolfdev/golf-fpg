@@ -834,7 +834,7 @@ export default function USKidsFieldPage() {
   </>);
   const trail = (
     <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
-      className="fs-11 fw-600 u-fsh-0 u-c-accent u-bd-1px-solid-accent u-br-5px u-p-3px-8px u-td-none u-ws-nowrap u-d-inline-flex u-ai-center u-gap-3px">
+      className="fs-11 fw-600 u-fsh-0 u-c-accent u-bd-1px-solid-accent u-br-radius u-p-3px-8px u-td-none u-ws-nowrap u-d-inline-flex u-ai-center u-gap-3px">
       Histórico ↗
     </a>
   );

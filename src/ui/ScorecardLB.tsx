@@ -623,7 +623,7 @@ export function ScorecardLB({
           <span className="u-d-inline-flex u-ai-center u-gap-4px u-fwr-wrap">
             {base}
             <span title={(p as any)._absolutoNote || "Jogou em torneio simultâneo"}
-              className="u-fs-fs-9 u-lh-1_4 u-p-1px-6px u-br-8px u-bg-var-bg-warn-subtle-fef3c7 u-c-1b214 u-bd-qeurg u-cur-help u-fw-700 u-ws-nowrap">⚠ Abs</span>
+              className="u-fs-fs-9 u-lh-1_4 u-p-1px-6px u-br-radius-lg u-bg-var-bg-warn-subtle-fef3c7 u-c-1b214 u-bd-qeurg u-cur-help u-fw-700 u-ws-nowrap">⚠ Abs</span>
           </span>
         );
       })(),

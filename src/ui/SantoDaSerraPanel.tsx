@@ -174,7 +174,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
   const totalPodium = athletes.reduce((s, a) => s + a.podiums, 0);
 
   return (
-    <section className="u-m-16px-12px-28px u-bd-1px-solid-border u-br-8px u-ov-hidden">
+    <section className="u-m-16px-12px-28px u-bd-1px-solid-border u-br-radius-lg u-ov-hidden">
       <header className="u-p-10px-14px u-bg-bg-muted u-bb-1px-solid-border u-d-flex u-ai-center u-gap-12px u-fwr-wrap">
         <h3 className="fs-15 fw-800 u-m-0">
           🏌️ Santo da Serra · Top-5 em Nacionais

@@ -106,7 +106,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
   };
 
   return (
-    <div className="u-bg-bg-card u-bd-1px-solid-border u-br-8px u-p-12px-16px u-mt-6pxx">
+    <div className="u-bg-bg-card u-bd-1px-solid-border u-br-radius-lg u-p-12px-16px u-mt-6pxx">
       <div className="u-d-flex u-ai-baseline u-jc-space-between u-mb-10px u-gap-12px">
         <div>
           <div className="u-fs-fs-13 u-fw-700 u-c-text">{playerName}</div>
@@ -119,13 +119,13 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
         {onClose && (
           <button
             onClick={onClose}
-            className="u-fs-fs-14 u-fw-700 u-p-2px-9px u-br-5px u-bd-1px-solid-border u-bg-bg-muted u-c-text-2 u-cur-pointer u-fsh-0 u-lh-1_2"
+            className="u-fs-fs-14 u-fw-700 u-p-2px-9px u-br-radius u-bd-1px-solid-border u-bg-bg-muted u-c-text-2 u-cur-pointer u-fsh-0 u-lh-1_2"
           >✕</button>
         )}
       </div>
 
       {totalGross > 0 && totalPar > 0 && totalToPar !== null && (
-        <div className="u-d-flex u-gap-14px u-ai-baseline u-mb-10px u-p-6px-10px u-bg-bg u-br-5px u-bd-1px-solid-border-light">
+        <div className="u-d-flex u-gap-14px u-ai-baseline u-mb-10px u-p-6px-10px u-bg-bg u-br-radius u-bd-1px-solid-border-light">
           <div>
             <span className="u-fs-fs-10 u-c-text-3 u-ls-0_3px u-tt-uppercase">Total</span>
             <span className="u-fs-fs-20 u-fw-800 u-ml-6px u-c-text u-fvn-tabular-nums">{totalGross}</span>

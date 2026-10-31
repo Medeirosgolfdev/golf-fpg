@@ -165,7 +165,7 @@ export default function JogadoresToolbar({
             onChange={e => update({ q: e.target.value })}
             placeholder="nome, clube, nº fed…"
             aria-label="Pesquisar jogadores"
-            className="u-fs-fs-12 u-p-4px-22px-4px-24px u-w-180px u-bd-1px-solid-border u-br-5px u-bg-bg-card u-c-text u-outline-none"
+            className="u-fs-fs-12 u-p-4px-22px-4px-24px u-w-180px u-bd-1px-solid-border u-br-radius u-bg-bg-card u-c-text u-outline-none"
           />
           {filters.q && (
             <button
