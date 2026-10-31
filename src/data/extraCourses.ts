@@ -1647,6 +1647,7 @@ function valeTee(teeId: string, teeName: string, par: number[], dist: number[], 
 
 const BKC26_LINKS = [
   { label: "US Kids British Kids Championship 2026", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/518958/british-kids-championship-2026" },
+  { label: "US Kids British Kids Championship 2026 - Yardages", url: "https://tournaments.uskidsgolf.com/sites/default/files/yardages_-_bkc_2026.pdf" },
 ];
 
 const valeWalesNational: Course = {
