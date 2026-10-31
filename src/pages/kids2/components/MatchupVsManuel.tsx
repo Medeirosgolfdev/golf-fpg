@@ -13,6 +13,7 @@ import type { CanonicalData, Junior, Flight, Result, Tournament } from "../data"
 import { getSharedTournamentIds } from "../data";
 import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
+import KpiCard from "../../../ui/KpiCard";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { MONTHS_PT, fmtToPar } from "../../../utils/format";
 
@@ -133,7 +134,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
         )}
       </div>
 
-      <div className="u-d-grid u-grid-template-columns-1bho3 u-gap-12px u-mb-12px">
+      <div className="kpi-row u-m-0-0-12px">
         <Stat value={String(rows.length)} label="encontros" />
         <Stat value={draws > 0 ? `${wins}–${losses}–${draws}` : `${wins}–${losses}`} label={draws > 0 ? "V / D / E" : "vitórias / derrotas"} />
         <Stat value={avgDiff != null ? fmtDiff(avgDiff) : "—"} label="dif. média (±par)" />
@@ -202,13 +203,9 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
 const thManuel: React.CSSProperties = { background: "color-mix(in srgb, var(--bg-manuel-sticky) 35%, transparent)" };
 const tdManuel: React.CSSProperties = { background: "color-mix(in srgb, var(--bg-success-subtle) 35%, transparent)" };
 
+/** Adaptador fino → definição única KpiCard. */
 function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="u-ta-center">
-      <div className="u-fs-fs-24 u-fw-700 u-lh-1 u-c-text">{value}</div>
-      <div className="u-fs-fs-10 u-c-text-3 u-mt-3px u-fw-500">{label}</div>
-    </div>
-  );
+  return <KpiCard label={label} value={value} align="center" />;
 }
 
 function ToParTag({ tp }: { tp: number | null | undefined }) {

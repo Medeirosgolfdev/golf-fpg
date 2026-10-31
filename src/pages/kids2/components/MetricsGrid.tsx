@@ -9,6 +9,7 @@
 import type { CanonicalData, Junior } from "../data";
 import { countWins, countTop3, computeRoundStats } from "../data";
 import { fmtToPar, MONTHS_PT } from "../../../utils/format";
+import KpiCard from "../../../ui/KpiCard";
 
 interface Props {
   data: CanonicalData;
@@ -46,7 +47,7 @@ export default function MetricsGrid({ data, junior, filterTids }: Props) {
   }
 
   return (
-    <div className="u-d-grid u-grid-template-columns-10220 u-gap-10px">
+    <div className="kpi-row u-m-0">
       <Card label="Torneios" value={String(total)} subtitle={`${data.tournaments.length} totais no canónico`} />
       <Card label="🏆 Vitórias" value={String(wins)} subtitle={total ? `${winsPct}% taxa` : undefined} />
       <Card label="Top-3" value={String(top3)} subtitle={total ? `${top3Pct}% taxa` : undefined} />
@@ -73,23 +74,15 @@ export default function MetricsGrid({ data, junior, filterTids }: Props) {
   );
 }
 
+/** Adaptador fino → definição única KpiCard (destaque a dourado quando é bom). */
 function Card({ label, value, subtitle, accent }: {
   label: string;
   value: string;
   subtitle?: string;
   accent?: "good" | "warn";
 }) {
-  const valueColor =
-    accent === "good" ? "var(--medal-gold-strong)" :
-    accent === "warn" ? "var(--color-warn-dark)" :
-    "var(--text)";
-  return (
-    <div className="u-bg-bg-muted u-br-radius u-p-10px-12px">
-      <div className="u-fs-fs-11 u-c-text-2 u-fw-600">{label}</div>
-      <div style={{ fontSize: "var(--fs-22)", fontWeight: 700, marginTop: 3, color: valueColor }}>{value}</div>
-      {subtitle && <div className="u-fs-fs-10 u-c-text-3 u-mt-2px">{subtitle}</div>}
-    </div>
-  );
+  const color = accent === "good" ? "var(--medal-gold-strong)" : accent === "warn" ? "var(--color-warn-dark)" : undefined;
+  return <KpiCard label={label} value={value} sub={subtitle} color={color} />;
 }
 
 /** Abrevia o nome do torneio de forma inteligente, mantendo o escalão.

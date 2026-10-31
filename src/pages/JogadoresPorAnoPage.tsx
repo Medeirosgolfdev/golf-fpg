@@ -33,6 +33,7 @@ import HcpEvolution from "../ui/HcpEvolution";
 import { Toolbar } from "../ui/Toolbar";
 import Counter from "../ui/Counter";
 import SexBadge from "../ui/SexBadge";
+import KpiCard from "../ui/KpiCard";
 import { EscPill } from "../ui/PillBadge";
 import type { PlayerClub } from "../data/types";
 
@@ -92,14 +93,9 @@ function FormBadge({ ps }: { ps: PlayerStats | undefined }) {
   );
 }
 
+/** Adaptador fino → definição única KpiCard (compacto, centrado). */
 function Kpi({ label, value, sub, title }: { label: string; value: React.ReactNode; sub?: string; title?: string }) {
-  return (
-    <div className="card u-m-0 u-p-8px-10px u-ta-center u-minw-86px" title={title}>
-      <div className="muted fs-10">{label}</div>
-      <div className="fw-900 u-fs-fs-18 u-lh-1_1">{value}</div>
-      {sub && <div className="muted fs-10">{sub}</div>}
-    </div>
-  );
+  return <KpiCard label={label} value={value} sub={sub} title={title} size="sm" align="center" className="u-minw-86px u-p-8px-10px" />;
 }
 
 /* ─────────────────────────────────────────────────────────────── */

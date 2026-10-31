@@ -21,6 +21,7 @@ import { RoundPill, EscPill } from "./PillBadge";
 import { useSort } from "../hooks/useSort";
 import PosBadge from "./PosBadge";
 import SortableHdr from "./SortableHdr";
+import KpiCard from "./KpiCard";
 
 interface PlayerEntry {
   pos: number | string | null;
@@ -383,9 +384,7 @@ export default function AtletaSearchPanel({
           </header>
 
           {/* KPIs */}
-          <div
-            className="u-d-grid u-grid-template-columns-1652c u-gap-1px u-bg-border-light u-bb-1px-solid-border"
-          >
+          <div className="kpi-row u-m-0 u-p-10px-12px u-bb-1px-solid-border">
             <Kpi label="Particip." value={String(selected.results.length)} />
             <Kpi label="🥇 Ouro" value={selected.golds || "—"} accent={selected.golds > 0} />
             <Kpi label="🥈 Prata" value={selected.silvers || "—"} />
@@ -463,22 +462,6 @@ function Kpi({
   value: string | number;
   accent?: boolean;
 }) {
-  return (
-    <div
-      className="u-bg-bg-card u-p-10px-12px u-ta-center"
-    >
-      <div
-        className="fs-11 muted u-tt-uppercase u-ls-0_3px"
-
-      >
-        {label}
-      </div>
-      <div
-        className="fs-18 fw-800"
-        style={{ color: accent ? "var(--accent)" : "var(--text-1)" }}
-      >
-        {value}
-      </div>
-    </div>
-  );
+  // Adaptador fino → definição única KpiCard.
+  return <KpiCard label={label} value={value} align="center" color={accent ? "var(--accent)" : undefined} />;
 }
