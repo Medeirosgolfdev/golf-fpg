@@ -169,7 +169,9 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   parecidas e alimentadas por módulos globais»): `scripts/estilo-global.test.js`
   falha se um `.tsx` ganhar `style={{}}`, cores hex, letra/cantos em número ou
   uma `<table>` sem classe global (baseline por ficheiro; ficheiro novo = zero).
-  Usar as peças/classes globais; depois de arrumar,
+  Usar as peças/classes globais (valores fixos soltos → utilitários `.u-*` no
+  fim do `App.css`, com os valores dos tokens; `style={{}}` só para o que vem
+  dos dados — cor do score, largura de barras, cor do tee); depois de arrumar,
   `node scripts/estilo-global-baseline.js` aperta a trava (`--force` só para
   casos legítimos, ex. eixos dos gráficos).
 - **Cores só via `src/tokens.css`**; `colors.ts` espelha-os para JS. Excepções de
