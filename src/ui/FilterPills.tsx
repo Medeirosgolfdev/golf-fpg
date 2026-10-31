@@ -84,9 +84,10 @@ export function FilterPills<K extends string>(props: FilterPillsProps<K>) {
                 props.onToggle(key);
               }
             }}
+            // Desligada = cinzento da regra global .tourn-tab-sm:not(.active).
             style={isActive
               ? { flexShrink: 0, ...(activeBg ? { background: activeBg } : {}) }
-              : { flexShrink: 0, background: "var(--bg-muted)", color: disabled ? "var(--text-3)" : "var(--text-2)", borderColor: "var(--border)", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1 }}
+              : { flexShrink: 0, ...(disabled ? { color: "var(--text-3)", cursor: "not-allowed", opacity: 0.5 } : {}) }}
           >
             {label}
             {count != null && (

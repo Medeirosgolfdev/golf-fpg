@@ -31,8 +31,9 @@ export function ToggleChip({ checked, onChange, label, title }: {
       aria-pressed={checked}
       title={title}
       style={{
-        background: checked ? "var(--accent)" : "var(--bg-card)",
-        color: checked ? "#fff" : "var(--text)",
+        // Desligado = cinzento, como todas as pills de filtro (Mariana, 31/10/2026).
+        background: checked ? "var(--accent)" : "var(--bg-muted)",
+        color: checked ? "#fff" : "var(--text-2)",
         borderColor: checked ? "var(--accent)" : "var(--border)",
         fontSize: "var(--fs-12)",
       }}

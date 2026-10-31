@@ -3587,6 +3587,14 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
  padding: 4px 10px;
  font-size: var(--fs-12);
 }
+/* Pill pequena desligada = cinzenta em TODAS as páginas (Mariana, 31/10/2026:
+   «Cinzenta»). Antes metade das páginas mostrava-as brancas. O hover
+   (.tourn-tab:hover:not(.active)) continua a ganhar por ser mais específico. */
+.tourn-tab-sm:not(.active) {
+ background: var(--bg-muted);
+ color: var(--text-2);
+ border-color: var(--border);
+}
 /* Inactive/muted state — used for "★ Manuel" filter off, etc. */
 .tourn-tab-muted {
  background: var(--bg-muted);

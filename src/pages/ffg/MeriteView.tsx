@@ -15,6 +15,7 @@ import DetailHeader from "../../ui/DetailHeader";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import SortableHdr from "../../ui/SortableHdr";
+import TabRow from "../../ui/TabRow";
 import { EscPill } from "../../ui/PillBadge";
 import { useSort } from "../../hooks/useSort";
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
@@ -163,18 +164,16 @@ export function FFGMeriteView() {
       />
 
       <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-12px-0">
-        {(["M", "F"] as const).map((s) => (
-          <button key={s} onClick={() => { setSex(s); setCat("ALL"); }} className={"btn-pill" + (sex === s ? " active" : "")}>
-            {s === "M" ? "Garçons" : "Filles"}
-          </button>
-        ))}
+        <TabRow active={sex} onChange={(s) => { setSex(s); setCat("ALL"); }} tabs={[
+          { key: "M" as const, label: "Garçons" }, { key: "F" as const, label: "Filles" },
+        ]} />
         <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input u-w-170px">
           <option value="ALL">Todos os escalões</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
         <input type="text" value={q} onChange={(e) => setQ(e.target.value)} placeholder="🔍 Nome ou clube…"
           className="filter-input u-minw-220px u-fl-1-1-220px u-maxw-320px" />
-        <button onClick={() => setSoClass((v) => !v)} className={"btn-pill" + (soClass ? " active" : "")}
+        <button type="button" onClick={() => setSoClass((v) => !v)} className={"tourn-tab tourn-tab-sm" + (soClass ? " active" : "")} aria-pressed={soClass}
           title="O Mérite só classifica quem tem provas suficientes; os outros aparecem sem lugar">
           Só classificados
         </button>
