@@ -464,7 +464,7 @@ export default function FieldPlayerDetail({
         <div className="mb-16">
           <div className="tourn-meta fw-700 mb-6">Historial de Torneios</div>
           <div className="tourn-scroll">
-            <table className="bc-collapse">
+            <table className="dtable">
               <thead>
                 <tr>
                   <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>

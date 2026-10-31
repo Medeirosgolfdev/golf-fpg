@@ -240,7 +240,7 @@ export function FFGMeriteView() {
                         <tr className="player-list-row-detail">
                           <td colSpan={COLS} className="u-bg-bg-detail u-p-4px-12px-8px">
                             {prov?.length ? (
-                              <table className="u-w-100pc u-fs-fs-11">
+                              <table className="player-list-table u-w-100pc u-fs-fs-11">
                                 <thead>
                                   <tr><th>Data</th><th>Prova</th><th>Lugar</th><th className="num">Voltas</th><th className="num">Pontos</th><th className="num">Média vs SSS</th></tr>
                                 </thead>
