@@ -309,14 +309,14 @@ function RivalRow({ junior, manuel, selected, onSelect, sharedCount }: {
         <span className="u-fs-fs-13 u-fsh-0">{flagEmoji}</span>
         <span style={{ flex: 1, fontWeight: selected ? 700 : 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {junior.canonicalName}
-          {isManuel && <span className="u-ml-4px u-fs-fs-9 u-p-1px-5px u-br-radius-sm u-bg-bg-success-subtle u-c-color-good-dark u-fw-700">REF</span>}
+          {isManuel && <span className="u-ml-4px u-fs-fs-9 u-p-1px-4px u-br-radius-sm u-bg-bg-success-subtle u-c-color-good-dark u-fw-700">REF</span>}
         </span>
         <span className="u-fsh-0 u-fs-fs-11 u-fw-600 u-c-text-3">{tournCount}</span>
       </div>
       <div className="u-pl-19px u-d-flex u-ai-center u-gap-6px u-fs-fs-10 u-c-text-3 u-mt-2px">
         {club && <span className="u-ov-hidden u-tov-ellipsis u-ws-nowrap">🏌️ {club}</span>}
         {shared > 0 && (
-          <span className="u-ml-auto u-p-0-5px u-br-radius-sm u-bg-var-bg-warn-subtle-bg-warn u-c-1b214 u-fw-700">
+          <span className="u-ml-auto u-p-0-4px u-br-radius-sm u-bg-var-bg-warn-subtle-bg-warn u-c-1b214 u-fw-700">
             {shared}× M
           </span>
         )}

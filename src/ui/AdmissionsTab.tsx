@@ -399,7 +399,7 @@ export default function AdmissionsTab({
             {!hide.vac && <td className="lb-hcp u-fw-600">{fmtHcp(p.vac)}</td>}
             {!hide.registo && <td className="fs-11 muted u-ws-nowrap">
               {fmtRegisto(p.dataInscricao)}
-              {novo && <span className="p p-sm fs-10 fw-700 u-bg-score-eagle u-c-fff u-ml-4px u-p-1px-5px u-br-radius-lg"
+              {novo && <span className="p p-sm fs-10 fw-700 u-bg-score-eagle u-c-fff u-ml-4px u-p-1px-4px u-br-radius-lg"
                 title={`Inscrito nas últimas ${recentHours} h`}>NOVO</span>}
             </td>}
             <td className="u-ta-center">

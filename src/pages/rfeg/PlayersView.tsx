@@ -432,7 +432,7 @@ export function RFEGPlayersView() {
                     title="Ver os torneios e resultados deste jogador"
                   >
                     <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap">
-                      <span aria-hidden className="u-mr-5px u-c-accent">{isOpen ? "▾" : "▸"}</span>
+                      <span aria-hidden className="u-mr-4px u-c-accent">{isOpen ? "▾" : "▸"}</span>
                       {r.licencia}
                       {nLic > 1 && (
                         <button
@@ -478,7 +478,7 @@ export function RFEGPlayersView() {
                       {subLics.map((s) => (
                         <tr key={s.lic} className="player-list-row u-bg-bg-detail">
                           <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap u-pl-16px">
-                            <span aria-hidden className="u-mr-5px">{s.cur ? "🟢" : "⚪"}</span>{s.lic}
+                            <span aria-hidden className="u-mr-4px">{s.cur ? "🟢" : "⚪"}</span>{s.lic}
                             {s.cur && <span className="u-ml-6px u-c-accent u-fw-700 u-fs-fs-10">ACTUAL</span>}
                             <div className="muted u-fs-fs-10 u-mt-1px u-pl-18px" title="Período em que esta licença apareceu em competição (1ª → última inscrição)">
                               {activePeriod(s.first, s.last)}

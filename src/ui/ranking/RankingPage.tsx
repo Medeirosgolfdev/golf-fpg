@@ -251,7 +251,7 @@ export function RankingList<P extends RankedPlayer>({ players, title, meta, cols
 
         <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-8px-0-12px">
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Pesquisar nome…"
-            className="u-p-5px-9px u-minw-180px u-fs-fs-13" />
+            className="u-p-4px-8px u-minw-180px u-fs-fs-13" />
           <select value={country} onChange={(e) => setCountry(e.target.value)} style={sel}>
             <option value="">Todos os países</option>
             {countries.map((c) => <option key={c} value={c}>{c}</option>)}

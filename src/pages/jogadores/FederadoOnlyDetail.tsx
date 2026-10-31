@@ -255,7 +255,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
                     className="muted u-fs-fs-11 u-fw-700 u-ls-0_05em u-tt-uppercase u-mb-6px u-bb-1px-solid-border u-pb-3px"
 
                   >{sec.title}</div>
-                  <div className="u-d-flex u-fwr-wrap u-gap-7px-30px">
+                  <div className="u-d-flex u-fwr-wrap u-gap-8px-32px">
                     {keys.map(renderKV)}
                   </div>
                 </div>
@@ -269,7 +269,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
                   className="muted u-fs-fs-11 u-fw-700 u-ls-0_05em u-tt-uppercase u-mb-6px u-bb-1px-solid-border u-pb-3px"
 
                 >Outros</div>
-                <div className="u-d-flex u-fwr-wrap u-gap-7px-30px">
+                <div className="u-d-flex u-fwr-wrap u-gap-8px-32px">
                   {extraFields.map(renderKV)}
                 </div>
               </div>
@@ -285,7 +285,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
                 >
                   ⚙ Campos técnicos ({technicalCount}) <span className="u-op-0_6 u-fw-400">— IDs, tokens e redundâncias</span>
                 </summary>
-                <div className="u-d-flex u-fwr-wrap u-gap-7px-30px u-mt-8px">
+                <div className="u-d-flex u-fwr-wrap u-gap-8px-32px u-mt-8px">
                   {FEDERADO_TECHNICAL_FIELDS.filter(k => fKeys.has(k)).map(renderKV)}
                 </div>
               </details>

@@ -354,7 +354,7 @@ export function FFGPlayersView() {
                       title="Ver os torneios e resultados deste jogador"
                     >
                       <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap">
-                        <span aria-hidden className="u-mr-5px u-c-accent">{isOpen ? "▾" : "▸"}</span>
+                        <span aria-hidden className="u-mr-4px u-c-accent">{isOpen ? "▾" : "▸"}</span>
                         {r.license}
                       </td>
                       <td className="u-fw-600" title={r.lastSerie ? `Série mais recente: ${r.lastSerie}` : undefined}>

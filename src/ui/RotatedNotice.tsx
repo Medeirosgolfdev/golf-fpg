@@ -27,7 +27,7 @@ export default function RotatedNotice({ rotated, inline }: Props) {
     return (
       <span
         title={`Buracos renumerados: a sequência jogada foi rodada +${offsetHoles} para alinhar com o layout actual do campo`}
-        className="u-fs-fs-10 u-c-text-2 u-ml-6px u-p-1px-5px u-bd-1px-dashed-border-light u-br-radius-sm u-fst-italic u-ws-nowrap"
+        className="u-fs-fs-10 u-c-text-2 u-ml-6px u-p-1px-4px u-bd-1px-dashed-border-light u-br-radius-sm u-fst-italic u-ws-nowrap"
       >
         ↻ rotação +{offsetHoles}
       </span>

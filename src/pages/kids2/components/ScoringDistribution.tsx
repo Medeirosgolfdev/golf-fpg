@@ -146,7 +146,7 @@ function ParCard({ pb }: { pb: ParBreakdown }) {
       </div>
       {/* Mini breakdown E/B/P/b/d dentro deste par — cores espelham regra do scorecard
           (App.css linhas 1004-1024). Par é neutro (transparente — sem cor própria). */}
-      <div className="u-d-flex u-gap-4px u-mt-5px u-fs-fs-9 u-c-text-3">
+      <div className="u-d-flex u-gap-4px u-mt-4px u-fs-fs-9 u-c-text-3">
         {pb.eagles > 0 && <span title="Eagles+"><strong className="u-c-score-eagle">{pb.eagles}</strong>E</span>}
         {pb.birdies > 0 && <span title="Birdies"><strong className="u-c-score-birdie">{pb.birdies}</strong>B</span>}
         {pb.pars > 0 && <span title="Pars"><strong className="u-c-text-2">{pb.pars}</strong>P</span>}

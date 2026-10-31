@@ -177,7 +177,7 @@ function NameCell({ row }: { row: CohortRow }) {
         >
           {junior.canonicalName || junior.id}
           {isManuel && (
-            <span className="u-ml-5px u-fs-fs-10 u-fw-600 u-c-color-good-dark">← tu</span>
+            <span className="u-ml-4px u-fs-fs-10 u-fw-600 u-c-color-good-dark">← tu</span>
           )}
         </Link>
         <TierBadge tier={entry.tier} />
@@ -317,7 +317,7 @@ export default function RankingPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="🔍 Nome do jogador…"
-            className="u-ml-auto u-p-5px-10px u-fs-fs-13 u-bd-1px-solid-border-light u-br-radius u-bg-bg-card u-c-text u-minw-200px"
+            className="u-ml-auto u-p-4px-10px u-fs-fs-13 u-bd-1px-solid-border-light u-br-radius u-bg-bg-card u-c-text u-minw-200px"
           />
         </div>
 

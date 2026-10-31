@@ -134,7 +134,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
             {sortedEsc.map(([k, v]) => {
               const total = v.m + v.f;
               return (
-                <div key={k} className="u-mb-5px">
+                <div key={k} className="u-mb-4px">
                   <div className="u-d-flex u-jc-space-between u-fs-fs-12">
                     <span className="fw-500">{k}</span>
                     <span className="fw-700">{total}</span>

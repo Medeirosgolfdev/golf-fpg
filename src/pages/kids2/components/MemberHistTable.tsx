@@ -106,7 +106,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
         <div className="u-d-flex u-gap-6px u-ai-center u-fs-fs-11 u-c-text-3">
           <span>{rows.length} {rows.length === 1 ? "torneio" : "torneios"}</span>
           {memberId && (
-            <span className="u-ff-font-mono u-fs-fs-10 u-p-1px-5px u-br-radius-sm u-bg-bg-muted u-bd-1px-solid-border-light" title="USKids memberId actual">
+            <span className="u-ff-font-mono u-fs-fs-10 u-p-1px-4px u-br-radius-sm u-bg-bg-muted u-bd-1px-solid-border-light" title="USKids memberId actual">
               #{memberId}
             </span>
           )}
@@ -114,7 +114,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
             const id = typeof h === "string" ? h : h.memberId;
             const note = typeof h === "string" ? null : h.note;
             return (
-              <span key={i} title={note || "Legacy USKids memberId"} className="u-ff-font-mono u-fs-fs-10 u-p-1px-5px u-br-radius-sm u-bg-bg u-bd-1px-dashed-border u-c-text-3">
+              <span key={i} title={note || "Legacy USKids memberId"} className="u-ff-font-mono u-fs-fs-10 u-p-1px-4px u-br-radius-sm u-bg-bg u-bd-1px-dashed-border u-c-text-3">
                 legacy #{id}
               </span>
             );

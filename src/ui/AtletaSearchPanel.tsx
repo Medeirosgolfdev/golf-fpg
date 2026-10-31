@@ -270,7 +270,7 @@ export default function AtletaSearchPanel({
   };
 
   return (
-    <section className="u-m-16px-12px-28px">
+    <section className="u-m-16px-12px-24px">
       <div
         className="u-p-12px-16px u-bg-bg-muted u-bd-1px-solid-border u-br-radius-lg u-mb-12px"
       >
@@ -375,7 +375,7 @@ export default function AtletaSearchPanel({
             </div>
             <button
               onClick={() => setSelectedKey(null)}
-              className="u-p-5px-10px u-fs-fs-12 u-bg-bg-card u-bd-1px-solid-border u-br-radius-sm u-cur-pointer u-c-text-1"
+              className="u-p-4px-10px u-fs-fs-12 u-bg-bg-card u-bd-1px-solid-border u-br-radius-sm u-cur-pointer u-c-text-1"
               title="Voltar à pesquisa"
             >
               ✕ Fechar

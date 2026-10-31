@@ -1698,7 +1698,7 @@ export function RoundSimulator({
         {/* Adicionar ronda */}
         <button
           onClick={addRound}
-          className="u-bd-1px-dashed-line u-br-radius-xl u-bg-transparent u-cur-pointer u-p-9px-16px u-c-text-2 u-fs-fs-13 u-fw-600 u-d-flex u-ai-center u-jc-center u-gap-6px u-transition-1bp75"
+          className="u-bd-1px-dashed-line u-br-radius-xl u-bg-transparent u-cur-pointer u-p-8px-16px u-c-text-2 u-fs-fs-13 u-fw-600 u-d-flex u-ai-center u-jc-center u-gap-6px u-transition-1bp75"
           onMouseEnter={(e) => {
             e.currentTarget.style.background = "var(--bg-hover)";
             e.currentTarget.style.borderColor = "var(--chart-2)";
@@ -1910,7 +1910,7 @@ export function RoundSimulator({
             {(impactFull || hidden > 0) && (
               <button
                 onClick={() => setImpactFull((v) => !v)}
-                className="u-ml-auto u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-br-radius u-p-2px-9px u-fs-fs-11 u-c-text-2 u-fw-600"
+                className="u-ml-auto u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-br-radius u-p-2px-8px u-fs-fs-11 u-c-text-2 u-fw-600"
               >
                 {impactFull ? "▾ Intervalo focado" : `▸ Ver intervalo completo (+${hidden})`}
               </button>
@@ -2092,7 +2092,7 @@ export function RoundSimulator({
                           {res?.courseName ?? "—"}
                           {res && is9hMode(res.holesMode) && (
                             <span
-                              className="u-ml-6px u-bg-medal-gold-bg u-c-color-warn-dark u-br-radius-sm u-p-1px-5px u-fs-fs-10 u-fw-700"
+                              className="u-ml-6px u-bg-medal-gold-bg u-c-color-warn-dark u-br-radius-sm u-p-1px-4px u-fs-fs-10 u-fw-700"
                             >
                               {res.holesMode === "front9" ? "F9" : "B9"}
                             </span>

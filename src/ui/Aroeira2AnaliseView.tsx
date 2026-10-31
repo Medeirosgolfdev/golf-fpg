@@ -484,7 +484,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
   const parB9Ref = pkg.parReference.slice(9, 18).reduce((a, b) => a + b, 0);
 
   return (
-    <div className="aroeira2-analise fs-13 u-d-flex u-fd-column u-gap-28px u-pb-40px">
+    <div className="aroeira2-analise fs-13 u-d-flex u-fd-column u-gap-24px u-pb-40px">
 
       {/* Header */}
       <section>

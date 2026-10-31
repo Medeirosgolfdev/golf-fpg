@@ -889,7 +889,7 @@ function EcleticTable({ editions, limit, hpr, is9 }: {
   const trailing = 2; // colunas Melhor + Δ
 
   return (
-    <details className="u-mt-22px">
+    <details className="u-mt-24px">
       <summary
         className="fs-13 fw-600 u-c-text u-cur-pointer u-user-select-none u-mb-4px"
 

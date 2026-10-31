@@ -119,7 +119,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
         {onClose && (
           <button
             onClick={onClose}
-            className="u-fs-fs-14 u-fw-700 u-p-2px-9px u-br-radius u-bd-1px-solid-border u-bg-bg-muted u-c-text-2 u-cur-pointer u-fsh-0 u-lh-1_2"
+            className="u-fs-fs-14 u-fw-700 u-p-2px-8px u-br-radius u-bd-1px-solid-border u-bg-bg-muted u-c-text-2 u-cur-pointer u-fsh-0 u-lh-1_2"
           >✕</button>
         )}
       </div>
@@ -219,7 +219,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
       </div>
 
       {merged.fallbackSource && (
-        <div className="u-mt-8px u-p-5px-8px u-fs-fs-10 u-c-text-3 u-fst-italic u-bt-1px-dashed-border-light">
+        <div className="u-mt-8px u-p-4px-8px u-fs-fs-10 u-c-text-3 u-fst-italic u-bt-1px-dashed-border-light">
           Fonte: {merged.fallbackSource}
         </div>
       )}

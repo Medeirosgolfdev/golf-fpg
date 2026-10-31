@@ -159,7 +159,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           <div className="u-d-flex u-ai-center u-gap-12px u-fwr-wrap">
             <h2 className="u-m-0 u-fs-30px u-fw-700 u-c-text u-lh-1_15 u-ls-0_5pxx">{junior.canonicalName}</h2>
             {isManuel && (
-              <span className="u-bg-bg-success-subtle u-c-color-good-dark u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-700 u-ls-0_4px u-tt-uppercase">
+              <span className="u-bg-bg-success-subtle u-c-color-good-dark u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-700 u-ls-0_4px u-tt-uppercase">
                 ★ Tu (referência)
               </span>
             )}
@@ -211,7 +211,7 @@ export default function HeroIdentity({ data, junior }: Props) {
 
           {mainClub && (
             <div className="u-mt-10px u-d-inline-flex u-ai-center u-gap-6px">
-              <span className="u-fs-fs-13 u-p-5px-11px u-br-radius u-bg-bg-muted u-c-text u-fw-600 u-bd-1px-solid-border-light">
+              <span className="u-fs-fs-13 u-p-4px-12px u-br-radius u-bg-bg-muted u-c-text u-fw-600 u-bd-1px-solid-border-light">
                 🏌️ {mainClub}
                 {mainClubSource && (
                   <span className="u-ml-6px u-fs-fs-10 u-c-text-3 u-fw-500">
@@ -245,7 +245,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           )}
 
           {wins.length > 0 && (
-            <div className="u-mt-10px u-d-flex u-fwr-wrap u-gap-5px u-ai-center">
+            <div className="u-mt-10px u-d-flex u-fwr-wrap u-gap-4px u-ai-center">
               <span className="u-fs-fs-10 u-fw-700 u-c-text-3 u-ls-0_4px u-tt-uppercase u-mr-4px">
                 🏆 Palmarès
               </span>
@@ -350,7 +350,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           {hcps.map((h, i) => (
             <span key={i} title={h.oficial
               ? `Handicap oficial da Federação Espanhola${h.date ? ` — actualizado a ${shortDateSlash(h.date, true)}` : ""}`
-              : `Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+              : `Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
               {SOURCE_FLAGS[h.source] && <span className="u-fs-fs-12 u-lh-1">{SOURCE_FLAGS[h.source]}</span>}
               🎯 HCP {h.value?.toFixed(1)} <span className="u-c-text-3 u-ml-3px">· {h.source}{h.oficial && h.date ? ` · ${shortDateSlash(h.date, true)}` : ""}</span>
               {i === hcps.length - 1 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
@@ -361,25 +361,25 @@ export default function HeroIdentity({ data, junior }: Props) {
           {rankingsRfeg.map((r) => (
             <span key={`${r.t}-${r.ano}`}
                   title={`${r.t}${r.f ? ` — ranking de ${shortDateSlash(r.f, true)}` : ""}${r.pts != null ? ` · ${r.pts} pontos` : ""}${r.via === "nome" ? " · ligado por nome e ano de nascimento" : ""}`}
-                  className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+                  className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
               <span className="u-fs-fs-12 u-lh-1">{SOURCE_FLAGS.RFEG}</span>
               {r.pos}º de {r.n} <span className="u-c-text-3 u-ml-3px">· Ranking {r.curto}</span>
             </span>
           ))}
           {hcpLista && (
-            <span title={`Handicap na ${hcpLista.label ?? "lista de inscritos"} · ${hcpLista.date}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+            <span title={`Handicap na ${hcpLista.label ?? "lista de inscritos"} · ${hcpLista.date}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
               🎯 HCP {hcpLista.hcpExact < 0 ? `+${(-hcpLista.hcpExact).toFixed(1)}` : hcpLista.hcpExact.toFixed(1)}
               <span className="u-c-text-3 u-ml-3px">· {mesLista} · Entry List</span>
             </span>
           )}
           {hcps.length === 0 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
-            <span className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+            <span className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
               🎯 HCP {junior.hcpHistory[0].hcpExact.toFixed(1)} <span className="u-c-text-3 u-ml-3px">· {junior.hcpHistory[0].source}</span>
               <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
             </span>
           )}
           {totalRounds > 0 && (
-            <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" className="u-bg-bg-muted u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light">
+            <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light">
               ⛳ {totalRounds} {totalRounds === 1 ? "ronda" : "rondas"}
             </span>
           )}
@@ -491,11 +491,11 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
   // accent + strong = pill "primary" (escalão unificado Sub-N) — fundo escuro destacado
   if (accent && strong) {
     return (
-      <span className="u-bg-13a26 u-c-bg u-fs-fs-12 u-p-3px-11px u-br-radius-pill u-fw-700 u-ls-0_3px">{label}</span>
+      <span className="u-bg-13a26 u-c-bg u-fs-fs-12 u-p-3px-12px u-br-radius-pill u-fw-700 u-ls-0_3px">{label}</span>
     );
   }
   return (
-    <span className="u-bg-var-bg-info-subtle-bg-info u-c-var-color-info-dark-color-navy u-fs-fs-11 u-p-3px-9px u-br-radius-pill u-fw-600 u-bd-152rb">{label}</span>
+    <span className="u-bg-var-bg-info-subtle-bg-info u-c-var-color-info-dark-color-navy u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-bd-152rb">{label}</span>
   );
 }
 
@@ -558,7 +558,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
 
 function RankPill({ label, value }: { label: string; value: number | string }) {
   return (
-    <span className="u-bg-var-bg-warn-subtle-bg-warn u-c-1b214 u-fs-fs-11 u-p-3px-9px u-br-radius u-fw-700 u-bd-nmb3o">
+    <span className="u-bg-var-bg-warn-subtle-bg-warn u-c-1b214 u-fs-fs-11 u-p-3px-8px u-br-radius u-fw-700 u-bd-nmb3o">
       🏆 {label} #{value}
     </span>
   );

@@ -93,7 +93,7 @@ function Content() {
             <input
               type="text" value={q} onChange={e => setQ(e.target.value)}
               placeholder="🔍 Jogador ou torneio…"
-              className="u-ml-auto u-p-5px-10px u-fs-fs-13 u-bd-1px-solid-border-light u-br-radius u-bg-bg-card u-c-text u-minw-200px" />
+              className="u-ml-auto u-p-4px-10px u-fs-fs-13 u-bd-1px-solid-border-light u-br-radius u-bg-bg-card u-c-text u-minw-200px" />
           </div>
 
           {rows.length === 0 ? (
@@ -128,7 +128,7 @@ function Content() {
                         {row.reg.name}
                       </a>
                       {row.reg.status === "reserva" && (
-                        <span className="u-ml-6px u-fs-fs-9 u-fw-700 u-p-1px-5px u-br-radius-sm u-bg-var-bg-warn-orange-fff7ed u-c-var-color-orange-deep-c2410c u-bd-ltbl9">RESERVA</span>
+                        <span className="u-ml-6px u-fs-fs-9 u-fw-700 u-p-1px-4px u-br-radius-sm u-bg-var-bg-warn-orange-fff7ed u-c-var-color-orange-deep-c2410c u-bd-ltbl9">RESERVA</span>
                       )}
                     </td>
                     <td className="u-ws-nowrap u-c-text-2">{fmtDayMonthYear(row.reg.date)}</td>

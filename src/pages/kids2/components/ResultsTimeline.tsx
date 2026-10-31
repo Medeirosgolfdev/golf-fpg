@@ -149,7 +149,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
       </div>
 
       {sourcesAvailable.length > 1 && (
-        <div className="u-d-flex u-fwr-wrap u-gap-5px u-mb-10px u-p-8px-10px u-bg-bg-muted u-br-radius u-ai-center">
+        <div className="u-d-flex u-fwr-wrap u-gap-4px u-mb-10px u-p-8px-10px u-bg-bg-muted u-br-radius u-ai-center">
           <span className="u-fs-fs-10 u-fw-700 u-c-text-3 u-ls-0_4px u-tt-uppercase u-mr-2px">
             Fonte
           </span>
@@ -178,7 +178,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
           {activeSources.size > 0 && (
             <button
               onClick={() => setActiveSources(new Set())}
-              className="u-fs-fs-11 u-p-2px-9px u-br-radius-pill u-bd-1px-solid-color-danger-dark u-bg-bg u-c-color-danger-dark u-cur-pointer u-fw-600"
+              className="u-fs-fs-11 u-p-2px-8px u-br-radius-pill u-bd-1px-solid-color-danger-dark u-bg-bg u-c-color-danger-dark u-cur-pointer u-fw-600"
               title="Limpar filtros de fonte"
             >
               ✕ limpar
@@ -239,13 +239,13 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
       })}
       <div className="u-d-flex u-fwr-wrap u-gap-10px u-mt-10px u-p-8px-10px u-fs-fs-10 u-c-text-3 u-bg-bg-muted u-br-radius">
         <span className="u-d-inline-flex u-ai-center u-gap-4px">
-          <span className="u-bg-medal-gold-bg u-c-medal-gold-fg u-fw-700 u-p-1px-5px u-br-radius-sm u-fs-fs-10">🏆 #1</span> ouro
+          <span className="u-bg-medal-gold-bg u-c-medal-gold-fg u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10">🏆 #1</span> ouro
         </span>
         <span className="u-d-inline-flex u-ai-center u-gap-4px">
-          <span className="u-bg-medal-silver-bg u-c-medal-silver-fg u-fw-700 u-p-1px-5px u-br-radius-sm u-fs-fs-10">🏆 #2</span> prata
+          <span className="u-bg-medal-silver-bg u-c-medal-silver-fg u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10">🏆 #2</span> prata
         </span>
         <span className="u-d-inline-flex u-ai-center u-gap-4px">
-          <span className="u-bg-medal-bronze-bg u-c-medal-bronze-fg u-fw-700 u-p-1px-5px u-br-radius-sm u-fs-fs-10">🏆 #3</span> bronze
+          <span className="u-bg-medal-bronze-bg u-c-medal-bronze-fg u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10">🏆 #3</span> bronze
         </span>
         <span className="u-d-inline-flex u-ai-center u-gap-4px">
           <span className="u-bg-var-bg-success-subtle-ecfdf5 u-bd-ci9jy u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10">±N</span>
@@ -351,7 +351,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
     <tr style={{ background: bg }}>
       <td className="u-c-text-3">{fmtDate(r.date)}</td>
       <td>
-        <span className="u-fs-fs-9 u-p-1px-5px u-br-radius-sm u-bg-bg u-bd-1px-solid-border-light">
+        <span className="u-fs-fs-9 u-p-1px-4px u-br-radius-sm u-bg-bg u-bd-1px-solid-border-light">
           {SOURCE_LABELS[r.tournament.sourceId] || r.tournament.sourceId}
         </span>
       </td>
@@ -368,7 +368,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
         )}
       </td>
       <td>
-        <div className="u-d-flex u-ai-center u-gap-5px u-fwr-wrap">
+        <div className="u-d-flex u-ai-center u-gap-4px u-fwr-wrap">
           <span>{r.tournament.name || r.tournament.shortName || r.tid}</span>
           {(() => {
             const nR = (r.result.rounds || []).filter((rd) => typeof rd.gross === "number").length;

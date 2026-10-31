@@ -196,7 +196,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   border:`1px solid ${bd.bg}`, padding:"3px 12px",
                 }}>
                   ★ {b12.nome}: {b12.inscritos}/{b12.maximo}
-                  <span className="u-ml-5px u-op-0_8">({bd.label})</span>
+                  <span className="u-ml-4px u-op-0_8">({bd.label})</span>
                 </span>
               ) : null;
             })()}
@@ -205,7 +205,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
 
         {/* Flight IDs por escalão — acesso rápido ao número de cada flight (para scraping/pesquisa) */}
         {!bloqueado && t.escaloes.some(e => e.flight_id) && (
-          <div className="u-d-flex u-gap-5px u-fwr-wrap u-mt-8px u-ai-center">
+          <div className="u-d-flex u-gap-4px u-fwr-wrap u-mt-8px u-ai-center">
             <span className="muted fs-11">Flights:</span>
             {t.escaloes.filter(e => e.flight_id).map(e => (
               <span key={e.flight_id} className="p p-sm p-muted" title={`${e.nome} — flight ${e.flight_id}`}>
@@ -265,7 +265,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                         </span>
                       )}
                       {novos7d > 0 && (
-                        <span className="fs-10 fw-700 u-bg-score-eagle u-c-fff u-p-1px-5px u-br-radius u-ml-3px"
+                        <span className="fs-10 fw-700 u-bg-score-eagle u-c-fff u-p-1px-4px u-br-radius u-ml-3px"
                           title={`${novos7d} inscrito${novos7d > 1 ? "s" : ""} nos últimos 7 dias`}>
                           +{novos7d}
                         </span>
@@ -326,7 +326,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               })()}
                               {!isM && <KidsLink nome={j.nome} />}
                             </span>
-                            <span className="u-d-flex u-ai-center u-gap-5px">
+                            <span className="u-d-flex u-ai-center u-gap-4px">
                               {/* Resultados anos anteriores */}
                               {prevResults.map(({ y, res }) => {
                                 const p = res!.p;

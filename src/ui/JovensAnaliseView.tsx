@@ -336,7 +336,7 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
     return (
       <div
         key={keyPrefix}
-        className="u-mb-28px u-p-10px-12px-16px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius-lg"
+        className="u-mb-24px u-p-10px-12px-16px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius-lg"
       >
         <h4
           className="fs-13 fw-800 u-m-0-0-10px u-pb-8px u-bb-1px-solid-border-light u-d-flex u-ai-center u-gap-10px"
@@ -586,7 +586,7 @@ function RegionChampionsBlock({
                   {/* Linha 1: CAMPEÃO. Escalão+sexo na 1ª coluna com rowSpan=2 */}
                   <tr style={{ borderTop: newEscGroup ? "2px solid var(--border)" : "1px solid var(--border-light)" }}>
                     <td rowSpan={2} className="u-p-6px-8px u-pos-sticky u-left-0 u-bg-bg-card u-va-middle u-w-90px u-minw-90px u-z-z-raised">
-                      <span className="u-d-inline-flex u-ai-center u-gap-5px">
+                      <span className="u-d-inline-flex u-ai-center u-gap-4px">
                         <EscPill esc={esc} />
                         {sex === "M" && <SexBadge sex="M" />}
                         {sex === "F" && <SexBadge sex="F" />}
@@ -664,8 +664,8 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
                   borderBottom: "1px solid var(--border-light)",
                   background: manuel ? "var(--bg-success-subtle)" : undefined,
                 }}>
-                  <td className="fw-600 u-p-5px-8px u-ta-right">{i + 1}</td>
-                  <td className="u-p-5px-8px">
+                  <td className="fw-600 u-p-4px-8px u-ta-right">{i + 1}</td>
+                  <td className="u-p-4px-8px">
                     {p.fed ? (
                       <a href={`/jogadores/${p.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
                         className="fw-600 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
@@ -678,11 +678,11 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
                     )}
                     {manuel && <span className="u-ml-4px u-fs-fs-10">★</span>}
                   </td>
-                  <td className="fs-11 muted u-p-5px-8px">{p.fed || "—"}</td>
-                  <td className="fw-700 u-p-5px-8px u-ta-right">{p.appearances}</td>
-                  <td className="u-p-5px-8px u-ta-right">{p.nacionalAppearances || "—"}</td>
-                  <td className="u-p-5px-8px u-ta-right">{p.regionalAppearances || "—"}</td>
-                  <td className="fw-700 u-p-5px-8px u-ta-right">
+                  <td className="fs-11 muted u-p-4px-8px">{p.fed || "—"}</td>
+                  <td className="fw-700 u-p-4px-8px u-ta-right">{p.appearances}</td>
+                  <td className="u-p-4px-8px u-ta-right">{p.nacionalAppearances || "—"}</td>
+                  <td className="u-p-4px-8px u-ta-right">{p.regionalAppearances || "—"}</td>
+                  <td className="fw-700 u-p-4px-8px u-ta-right">
                     {p.titles.length > 0 ? (
                       <span title={p.titles.map(t => `${t.year} ${t.type} ${t.escalao} ${t.sex}`).join("\n")}
                         className="u-c-color-good-dark">
@@ -690,14 +690,14 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
                       </span>
                     ) : "—"}
                   </td>
-                  <td className="fs-11 u-p-5px-8px">
+                  <td className="fs-11 u-p-4px-8px">
                     <span className="u-d-inline-flex u-gap-3px u-fwr-wrap">
                       {[...p.escaloes].sort((a, b) => ESC_ORDER.indexOf(a) - ESC_ORDER.indexOf(b)).map(e =>
                         <EscPill key={e} esc={e} />
                       )}
                     </span>
                   </td>
-                  <td className="fs-11 muted u-p-5px-8px">
+                  <td className="fs-11 muted u-p-4px-8px">
                     {[...p.years].sort().join(", ")}
                   </td>
                 </tr>

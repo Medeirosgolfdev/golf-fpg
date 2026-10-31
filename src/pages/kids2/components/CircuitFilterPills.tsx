@@ -82,7 +82,7 @@ export default function CircuitFilterPills({ data, junior, active, onChange }: P
       <div className="u-fs-fs-10 u-fw-700 u-c-text-3 u-tt-uppercase u-ls-0_5px u-mb-6px">
         Filtrar por circuito
       </div>
-      <div className="u-d-flex u-fwr-wrap u-gap-5px">
+      <div className="u-d-flex u-fwr-wrap u-gap-4px">
         <button onClick={() => onChange("all")} style={pillStyle(active === "all")}>
           Todos · {total}
         </button>

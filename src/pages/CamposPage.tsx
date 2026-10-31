@@ -997,12 +997,12 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
             <span className="u-fs-var-fs-15-15px">🧒 Manuel</span>
             <span className="muted u-fw-400 u-fs-fs-11">recorde por tee · {voltaLabel}</span>
           </div>
-          <div className="u-p-6px-12px-9px u-d-grid u-grid-template-columns-cjqrw u-gap-4px-12px u-ai-center u-bg-bg-card">
+          <div className="u-p-6px-12px-8px u-d-grid u-grid-template-columns-cjqrw u-gap-4px-12px u-ai-center u-bg-bg-card">
             {manuel.map((mr) => {
               const hex = mr.label === NO_TEE_LABEL ? "var(--border)" : (teeInfo.get(mr.label)?.hex ?? teeGroupHex(mr.label));
               return (
                 <Fragment key={mr.label}>
-                  <span className="u-d-inline-flex u-ai-center u-gap-7px u-fw-600 u-minw-0">
+                  <span className="u-d-inline-flex u-ai-center u-gap-8px u-fw-600 u-minw-0">
                     <span aria-hidden style={dotStyle(hex, 11)} />
                     <span className="u-ov-hidden u-tov-ellipsis u-ws-nowrap">{mr.label}</span>
                     {distFor(mr.label) ? <span className="muted u-fw-400 u-fs-fs-10">{distFor(mr.label)}m</span> : null}
@@ -1046,11 +1046,11 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
                 {/* Corpo: escalões — UMA grelha só (nomes alinhados verticalmente
                     entre todos os escalões). Escalão = pill na 1ª linha; 2º/3º com
                     nº; data+SD por baixo do nome (2ª linha, pequena). */}
-                <div className="u-p-4px-12px-9px">
+                <div className="u-p-4px-12px-8px">
                   {escs.length === 0 ? (
                     <div className="muted u-fs-fs-11 u-p-6px-0">sem escalão conhecido</div>
                   ) : (
-                    <div className="u-d-grid u-grid-template-columns-1jeby u-column-gap-9px u-row-gap-0 u-ai-center">
+                    <div className="u-d-grid u-grid-template-columns-1jeby u-column-gap-8px u-row-gap-0 u-ai-center">
                       {escs.map((e, ei) => {
                         const top3 = [...c.esc.get(e)!.values()].sort((a, b) => (a.val - b.val) || ((a.tp ?? 0) - (b.tp ?? 0))).slice(0, 3);
                         return (

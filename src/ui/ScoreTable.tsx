@@ -309,7 +309,7 @@ export function MultiTeeSDTable({
               >
                 {c.teeName}
                 <span
-                  className="op-7 fs-10 fw-400 u-ml-5px"
+                  className="op-7 fs-10 fw-400 u-ml-4px"
 
                 >
                   {c.dist != null && <>{fmt(c.dist)}m · </>}CR {fmtCR(c.cr)} ·

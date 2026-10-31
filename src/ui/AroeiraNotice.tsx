@@ -82,7 +82,7 @@ export default function AroeiraNotice({ courseName, rotatedCount, totalRounds, c
         {aliases.map((a, i) => (
           <React.Fragment key={a}>
             {i > 0 && ", "}
-            <code className="u-bg-var-bg-code-rgba-0-0-0-0_06 u-p-1px-5px u-br-radius-sm u-fs-fs-11">{a}</code>
+            <code className="u-bg-var-bg-code-rgba-0-0-0-0_06 u-p-1px-4px u-br-radius-sm u-fs-fs-11">{a}</code>
           </React.Fragment>
         ))}
         {". "}A unificação é feita por par[] verificado em todas as rondas — zero rondas perdidas.

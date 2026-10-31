@@ -97,7 +97,7 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
               return (
                 <span
                   key={s}
-                  className="fs-12 u-d-inline-flex u-ai-center u-gap-5px u-ws-nowrap u-c-text-2"
+                  className="fs-12 u-d-inline-flex u-ai-center u-gap-4px u-ws-nowrap u-c-text-2"
 
                 >
                   {rating}

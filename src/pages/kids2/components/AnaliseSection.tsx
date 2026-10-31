@@ -216,7 +216,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
           <select
             value={selectedFlight}
             onChange={(e) => setSelectedFlight(e.target.value)}
-            className="u-fl-1 u-maxw-460px u-p-5px-8px u-fs-fs-12 u-fw-500 u-bd-1px-solid-border u-br-radius u-bg-bg u-c-text u-cur-pointer"
+            className="u-fl-1 u-maxw-460px u-p-4px-8px u-fs-fs-12 u-fw-500 u-bd-1px-solid-border u-br-radius u-bg-bg u-c-text u-cur-pointer"
           >
             <option value="ALL">Todos os {valid.length} torneios</option>
             {flightOpts.map((o) => (
@@ -383,7 +383,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
             }} title={`${k}: ${(pp as Record<string, number>)[k].toFixed(0)}%`} />
           ))}
         </div>
-        <div className="u-fs-fs-10 u-c-text-3 u-mt-5px">
+        <div className="u-fs-fs-10 u-c-text-3 u-mt-4px">
           {dist.birdies}🐦 · {dist.pars} pars · {dist.bogeys}↑ · {dist.dbPlus}↑↑
         </div>
       </div>

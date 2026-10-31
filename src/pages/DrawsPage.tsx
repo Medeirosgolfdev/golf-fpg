@@ -484,7 +484,7 @@ function TorneiosList({
               {items.map((t) => (
                 <li
                   key={t.torneioId}
-                  className="u-p-5px-12px u-d-flex u-ai-baseline u-gap-8px u-fs-fs-13 u-bb-1px-solid-border-light"
+                  className="u-p-4px-12px u-d-flex u-ai-baseline u-gap-8px u-fs-fs-13 u-bb-1px-solid-border-light"
                 >
                   <span
                     className="muted u-w-78px u-fsh-0 u-fvn-tabular-nums"
@@ -1214,7 +1214,7 @@ export default function DrawsPage() {
                                 return (
                                   <div
                                     key={i}
-                                    className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-p-7px-10px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius"
+                                    className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-p-8px-10px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius"
                                   >
                                     <span className="muted u-w-74px u-fsh-0 u-fvn-tabular-nums">
                                       {fmtDateShort(r.data)}

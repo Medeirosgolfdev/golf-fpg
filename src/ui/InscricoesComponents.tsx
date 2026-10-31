@@ -274,7 +274,7 @@ function PainelResumo({ torneios, nossosByFed }: {
         {anoBase > 0 && (
           <>
             <span className="muted fs-11" >·</span>
-            <span className="fs-11 shrink-0 u-d-inline-flex u-gap-5px u-ai-center">
+            <span className="fs-11 shrink-0 u-d-inline-flex u-gap-4px u-ai-center">
               <span className="muted">1º ano</span>
               <span className="fw-700 u-c-color-good">{anoTotals["1A"]}</span>
               <span className="muted">2º ano</span>
@@ -315,7 +315,7 @@ function PainelResumo({ torneios, nossosByFed }: {
       {/* Jogadores do clube seleccionado */}
       {clubesAbertos && selData && clubeSel && (
         <div className="u-mt-6pxx u-p-8px-10px u-bg-bg u-bd-1px-solid-border u-br-radius">
-          <div className="fs-11 fw-700 u-mb-5px u-c-text-1">
+          <div className="fs-11 fw-700 u-mb-4px u-c-text-1">
             {clubeSel} — {selData.n} inscrito{selData.n !== 1 ? "s" : ""}
           </div>
           <div className="gap-4 flex-wrap u-d-flex">
@@ -444,7 +444,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
     <>
       <span className="muted fs-12">· {nossosCount} da BD</span>
       {t.diff && (t.diff.added.length > 0 || t.diff.removed.length > 0) && (
-        <span className="fs-10 fw-700 u-bg-color-warn u-c-fff u-p-2px-7px u-br-radius-lg"
+        <span className="fs-10 fw-700 u-bg-color-warn u-c-fff u-p-2px-8px u-br-radius-lg"
           title={[t.diff.added.length ? `+${t.diff.added.join(", ")}` : "", t.diff.removed.length ? `-${t.diff.removed.join(", ")}` : ""].filter(Boolean).join(" · ")}>
           {t.diff.added.length > 0 && `+${t.diff.added.length} novo${t.diff.added.length > 1 ? "s" : ""}`}
           {t.diff.added.length > 0 && t.diff.removed.length > 0 && " · "}
@@ -465,7 +465,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
           {t.fromCache ? "💾 cache" : "🟢 live FPG"} · {fmtTime(t.lastFetched)}
         </span>
       )}
-      {t.fetchError && <span className="fs-10 fw-700 u-c-fff u-bg-color-warn u-p-2px-7px u-br-radius-lg" title={t.fetchError}>⚠️ API falhou — só cache</span>}
+      {t.fetchError && <span className="fs-10 fw-700 u-c-fff u-bg-color-warn u-p-2px-8px u-br-radius-lg" title={t.fetchError}>⚠️ API falhou — só cache</span>}
     </>
   );
 

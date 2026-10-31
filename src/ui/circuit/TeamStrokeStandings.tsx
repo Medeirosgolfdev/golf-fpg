@@ -258,7 +258,7 @@ function TeamCard({ team, model, sel }: { team: TsTeam; model: TsModel; sel: Rou
             </div>
           )}
           {team.suplente && (
-            <div className="u-fl-1 u-p-5px-10px u-d-flex u-ai-center u-gap-5px u-c-text-2">
+            <div className="u-fl-1 u-p-4px-10px u-d-flex u-ai-center u-gap-4px u-c-text-2">
               <span className="fs-13">🔄</span>
               <span>
                 <span className="u-fs-fs-9 u-fw-700 u-tt-uppercase u-ls-0_05em u-c-text-muted u-d-block u-lh-1">Suplente</span>

@@ -682,7 +682,7 @@ function CourseSideBySide({
                         <>
                           <div key={`a${i}`} className="u-d-flex u-jc-flex-end u-pr-8px">
                             {a && psA ? (
-                              <span className="u-d-flex u-ai-center u-gap-5px u-ws-nowrap">
+                              <span className="u-d-flex u-ai-center u-gap-4px u-ws-nowrap">
                                 <span className="u-fs-fs-11 u-fw-600 u-c-text-2 u-ff-font-mono">B{a.hole}</span>
                                 <span style={{ ...psA, borderRadius: "var(--radius)", padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{a.distance}m</span>
                               </span>
@@ -701,7 +701,7 @@ function CourseSideBySide({
                           )}
                           <div key={`b${i}`} className="u-d-flex u-jc-flex-start u-pl-8px">
                             {b && psB ? (
-                              <span className="u-d-flex u-ai-center u-gap-5px u-ws-nowrap">
+                              <span className="u-d-flex u-ai-center u-gap-4px u-ws-nowrap">
                                 <span style={{ ...psB, borderRadius: "var(--radius)", padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{b.distance}m</span>
                                 <span className="u-fs-fs-11 u-fw-600 u-c-text-2 u-ff-font-mono">B{b.hole}</span>
                               </span>
@@ -962,7 +962,7 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
                   type="number" value={hiInput}
                   onChange={e => setHiInput(e.target.value)}
                   placeholder="ex: 9.5" step="0.1" min="-4" max="54"
-                  className="u-w-70px u-p-3px-7px u-fs-fs-12 u-br-radius-sm u-bd-1px-solid-border u-bg-bg u-c-text"
+                  className="u-w-70px u-p-3px-8px u-fs-fs-12 u-br-radius-sm u-bd-1px-solid-border u-bg-bg u-c-text"
                 />
               </div>
               <div className="u-d-flex u-ai-center u-gap-8px">

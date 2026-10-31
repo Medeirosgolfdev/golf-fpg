@@ -219,7 +219,7 @@ export default function TopClubesPanel({
 
   return (
     <section
-      className="u-m-16px-12px-28px u-bd-1px-solid-border u-br-radius-lg u-ov-hidden"
+      className="u-m-16px-12px-24px u-bd-1px-solid-border u-br-radius-lg u-ov-hidden"
     >
       <header
         className="u-p-10px-14px u-bg-bg-muted u-bb-1px-solid-border u-d-flex u-ai-center u-gap-12px u-fwr-wrap"

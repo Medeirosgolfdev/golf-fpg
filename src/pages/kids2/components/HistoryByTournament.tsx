@@ -117,7 +117,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
         </span>
       </div>
 
-      <div className="u-d-flex u-fd-column u-gap-5px">
+      <div className="u-d-flex u-fd-column u-gap-4px">
         {displayedSeries.map((s) => (
           <SeriesRow key={s.seriesId} label={s.label} editions={s.editions} data={data} />
         ))}
@@ -147,7 +147,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
             {!showAllOneOffs && oneOffs.length > 16 && (
               <button
                 onClick={() => setShowAllOneOffs(true)}
-                className="u-fs-fs-11 u-p-3px-9px u-bd-1px-solid-border-light u-br-radius-pill u-bg-bg u-c-text-2 u-cur-pointer u-fw-600"
+                className="u-fs-fs-11 u-p-3px-8px u-bd-1px-solid-border-light u-br-radius-pill u-bg-bg u-c-text-2 u-cur-pointer u-fw-600"
               >
                 +{oneOffs.length - 16} →
               </button>
@@ -311,7 +311,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                     {manuel && manuel.id !== ed.result.juniorId && (
                       <td style={{ ...tdC, textAlign: "center" }}>
                         {manuelPos != null ? (
-                          <span title={`Manuel ficou em #${manuelPos} neste torneio`} className="u-fs-fs-10 u-p-1px-5px u-br-radius-sm u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-bd-1px-solid-color-good-dark u-ws-nowrap">★M #{manuelPos}</span>
+                          <span title={`Manuel ficou em #${manuelPos} neste torneio`} className="u-fs-fs-10 u-p-1px-4px u-br-radius-sm u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-bd-1px-solid-color-good-dark u-ws-nowrap">★M #{manuelPos}</span>
                         ) : <span className="u-c-text-3">—</span>}
                       </td>
                     )}
@@ -472,7 +472,7 @@ function SeriesNineHolesPill({ tournament, flight }: { tournament: Tournament; f
     (Array.isArray(flight.par) && flight.par.filter((p) => p > 0).length === 9);
   if (!is9) return null;
   return (
-    <span title="Torneio de 9 buracos" className="u-fs-fs-9 u-p-1px-5px u-br-radius-sm u-fw-700 u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border-light u-lh-1_4 u-fsh-0">
+    <span title="Torneio de 9 buracos" className="u-fs-fs-9 u-p-1px-4px u-br-radius-sm u-fw-700 u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border-light u-lh-1_4 u-fsh-0">
       9H
     </span>
   );
