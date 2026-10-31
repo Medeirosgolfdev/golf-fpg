@@ -264,7 +264,7 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
           </div>
           {limit < sorted.length && (
             <div className="u-ta-center u-m-10px-0">
-              <button type="button" className="tourn-tab tourn-tab-sm" onClick={() => setLimit((l) => l + PAGE)}>
+              <button type="button" className="btn" onClick={() => setLimit((l) => l + PAGE)}>
                 Mostrar mais ({sorted.length - limit} restantes)
               </button>
             </div>

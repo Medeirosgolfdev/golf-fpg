@@ -124,7 +124,7 @@ function HcpHistoryModal({
           </h3>
           <button
             onClick={onClose}
-            className="u-bg-transparent u-bd-eig1p u-br-radius-sm u-p-4px-10px u-cur-pointer u-fs-fs-13"
+            className="btn"
           >
             Fechar
           </button>

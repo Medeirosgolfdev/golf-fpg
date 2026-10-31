@@ -285,7 +285,7 @@ function PainelResumo({ torneios, nossosByFed }: {
         {clubes.length > 0 && (
           <>
             <span className="muted fs-11">·</span>
-            <button type="button" className="tourn-tab tourn-tab-sm" onClick={() => setClubesAbertos(v => !v)}
+            <button type="button" className="btn" onClick={() => setClubesAbertos(v => !v)}
               aria-expanded={clubesAbertos} title="Inscritos por clube">
               Clubes ({clubes.length}) {clubesAbertos ? "▾" : "▸"}
             </button>
@@ -569,7 +569,7 @@ export function InscricoesPanel() {
         {totalNossosInscritos > 0 && <span className="chip shrink-0" title="Inscritos que estão na nossa base de dados">{totalNossosInscritos} na BD</span>}
         {/* Actualizar só faz sentido até ao fim do campeonato. */}
         {todayIso() <= CN_JOVENS_EDICAO.fim && (
-          <button className="tourn-tab tourn-tab-sm u-fsh-0" onClick={refreshAll}
+          <button type="button" className="btn u-fsh-0" onClick={refreshAll}
 
             title="Actualizar inscrições da FPG">↺ Actualizar</button>
         )}

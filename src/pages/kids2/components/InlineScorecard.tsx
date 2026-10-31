@@ -119,7 +119,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
         {onClose && (
           <button
             onClick={onClose}
-            className="u-fs-fs-14 u-fw-700 u-p-2px-8px u-br-radius u-bd-1px-solid-border u-bg-bg-muted u-c-text-2 u-cur-pointer u-fsh-0 u-lh-1_2"
+            className="btn u-fsh-0" title="Fechar" aria-label="Fechar"
           >✕</button>
         )}
       </div>

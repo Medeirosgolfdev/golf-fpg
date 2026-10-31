@@ -155,7 +155,7 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
           <span className="muted">Eclético</span>
           <span className="fw-700">{ecTotal || "–"}</span>
           {ecTotal > 0 && <span className="fw-700" style={{ color: tpColorOf(ecTotal - ecTotalPar) }}>{fmtToPar(ecTotal - ecTotalPar)}</span>}
-          <button type="button" className="fs-12 u-bg-none u-bd-none u-p-0 u-cur-pointer u-c-accent" onClick={() => setAberto(v => !v)}
+          <button type="button" className="btn-link fs-12 u-c-accent" onClick={() => setAberto(v => !v)}
 >
             {aberto ? "▾" : "▸"} {teeRounds.length} volta{teeRounds.length === 1 ? "" : "s"}
           </button>
