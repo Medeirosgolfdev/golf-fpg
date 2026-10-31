@@ -319,6 +319,11 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
     e dos rivais. Entre dois PDFs regionais só no **mesmo dia** (`registar`): as
     jornadas dos Juegos Deportivos de Navarra e os Puntuables da FGCLM em dias
     seguidos têm os mesmos jogadores e não são a mesma prova.
+    Nos rivais (`build-rfegolf-rivals`) só conta como gémea uma prova que entra
+    no Kids 2 (`gemeo(…, aceitar)`): uma NextCaddy sem par fica de fora e não
+    pode levar o PDF com ela (4.ª jornada JJDD Navarra 2026 × nc72447). E
+    «Sub 21/25» no nome da prova não exclui os blocos regionais com `categoria`
+    juvenil (I Puntuable CLM 2026, Campeonato de Navarra Sub-21 2025).
   - A Cantábria publica as provas sem classificação (0 jogadores).
 - **Navarra (FNG), Castela-La Mancha (FGCLM), Rioja (FRG)** → `scrape-fed-pdfs.js`
   (`public/data/{fng,fgclm,frg}/{chave}.json`; só relê quando a lista de PDFs muda).
