@@ -185,7 +185,7 @@ const pull = JSON.parse(fs.readFileSync(PULL, "utf8"));
 // Depois de re-chaveados deixam de aparecer nos ficheiros — não os reciclar,
 // senão o mesmo placeholder passa a nomear dois torneios no histórico do git.
 // SUBIR ESTE PISO sempre que um placeholder for promovido a tcode real.
-let maxPh = 90077; // 90077 = D2 Autonomia criado por engano e desfeito (04/10)
+let maxPh = 90078; // 90078 = Taça Presidente CGSS 2026, promovida a 11084 (31/10)
 for (const t of [...cgss.tournaments, ...pull.tournaments])
   if (/^9\d{4}$/.test(String(t.tcode))) maxPh = Math.max(maxPh, parseInt(t.tcode, 10));
 const TCODE = String(maxPh + 1);
