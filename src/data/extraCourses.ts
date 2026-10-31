@@ -1751,6 +1751,17 @@ const GM26_LINKS = [
 const WC26_LINKS = [
   { label: "US Kids World Championship 2026 - Course Rating & Slope", url: "https://tournaments.uskidsgolf.com/sites/default/files/new_worlds_sr.png" },
 ];
+const WCT26_LINK = { label: "US Kids World Teen Championship 2026 - Course Rating & Slope", url: "https://tournaments.uskidsgolf.com/sites/default/files/teen_slope_and_rating_26.png" };
+
+// Mundial Teen 2026 (mesmos campos; imagem teen_slope_and_rating_26.png). Rapazes com jardas
+// dos resultados USKids; raparigas dos cartões no Signupanytime (31/10/2026).
+const wct26B1518 = { par: [4,5,4,4,3,5,4,3,4,4,5,4,3,4,3,4,5,4], yd: [360,560,377,442,148,565,368,160,418,412,573,370,165,404,166,396,502,415] }; // Pinehurst No. 8, Tee 7, 6801 jd
+const wct26B14 = { par: [4,5,3,4,4,5,3,4,4,5,4,4,3,4,5,3,4,4], yd: [381,529,136,381,393,494,152,373,403,505,370,344,163,340,502,149,389,399] }; // Pinehurst No. 6, Tee 6, 6403 jd
+const wct26B13 = { par: [4,4,3,3,5,3,4,5,4,4,3,4,4,5,4,5,4,4], yd: [385,363,135,141,509,138,338,529,308,350,150,363,340,522,352,506,329,344] }; // Longleaf, Tee 6, 6102 jd
+const wct26G1518 = { par: [4,5,4,4,3,4,4,4,4,4,4,3,5,3,4,5,4,4], yd: [375,450,327,351,128,368,327,338,353,362,324,140,511,121,370,497,329,343] }; // Pinehurst No. 5, 6014 jd
+const pnPar = [5,4,3,4,3,5,4,4,4, 5,4,4,3,4,5,3,4,4]; // par USKids 72
+const wct26G14 = [470,372,122,335,115,460,348,320,350, 450,313,348,128,342,485,135,330,302]; // Pine Needles, 5725 jd
+const wct26G13 = [460,369,107,328,112,452,313,285,340, 435,311,308,123,330,459,119,326,298]; // Pine Needles, 5475 jd
 
 const golfValleyMunchen: Course = {
   courseKey: "away-golf-valley-munchen",
@@ -1773,19 +1784,23 @@ const golfValleyMunchen: Course = {
   },
 };
 
-function wc26Course(key: string, name: string, tees: Tee[]): Course {
-  return { courseKey: `away-${key}`, master: { courseId: `away-${key}`, name, country: "EUA", links: { fpg: null, scorecards: null, extra: WC26_LINKS }, tees } };
+function wc26Course(key: string, name: string, tees: Tee[], teen = false): Course {
+  const extra = teen ? [...WC26_LINKS, WCT26_LINK] : WC26_LINKS;
+  return { courseKey: `away-${key}`, master: { courseId: `away-${key}`, name, country: "EUA", links: { fpg: null, scorecards: null, extra }, tees } };
 }
 
 const pinehurstNo8 = wc26Course("pinehurst-no-8", "Pinehurst No. 8", [
+  ukYdTee("ph8-uk-b1518", "M", "USKids Boys 15-18", wct26B1518.par, wct26B1518.yd, 1, 72.7, 136), // Tee 7 (Mundial Teen)
   ukYdTee("ph8-uk-b12", "M", "USKids Boys 12", wc26B12.par, wc26B12.yd, 1, 68, 119, "#ffffff"), // Tee 5
-]);
+], true);
 const pinehurstNo5 = wc26Course("pinehurst-no-5", "Pinehurst No. 5", [
+  ukYdTee("ph5-uk-g1518", "F", "USKids Girls 15-18", wct26G1518.par, wct26G1518.yd, 1, 75, 134), // Mundial Teen
   ukYdTee("ph5-uk-g12", "F", "USKids Girls 12", wc26G12.par, wc26G12.yd, 1, 70.6, 121, "#ef4444"), // Tee 4
-]);
+], true);
 const pinehurstNo6 = wc26Course("pinehurst-no-6", "Pinehurst No. 6", [
+  ukYdTee("ph6-uk-b14", "M", "USKids Boys 14", wct26B14.par, wct26B14.yd, 1, 71.8, 134, "#111827"), // Tee 6 (Mundial Teen)
   ukYdTee("ph6-uk-g11", "F", "USKids Girls 11", wc26G11.par, wc26G11.yd, 1, 69.2, 123, "#ef4444"), // Tee 4
-]);
+], true);
 const pinehurstNo1 = wc26Course("pinehurst-no-1", "Pinehurst No. 1", [
   ukYdTee("ph1-uk-b9", "M", "USKids Boys 9", wc26B9.par, wc26B9.yd, 1, 62.4, 100, "#f97316"), // Tee 3
 ]);
@@ -1799,11 +1814,69 @@ const quailRidge = wc26Course("quail-ridge", "Quail Ridge", [
   ukYdTee("qr-uk-g10", "F", "USKids Girls 10", wc26G10.par, wc26G10.yd, 1, 65, 113, "#f97316"), // Tee 3
 ]);
 const longleafGolf = wc26Course("longleaf-golf-family-club", "Longleaf Golf & Family Club", [
+  ukYdTee("ll-uk-b13", "M", "USKids Boys 13", wct26B13.par, wct26B13.yd, 1, 70, 132, "#111827"), // Tee 6 (Mundial Teen)
   ukYdTee("ll-uk-g9", "F", "USKids Girls 9", wc26G9.par, wc26G9.yd, 1, 30.5, 107, "#fbbf24"), // Tee 2, 1–9
   ukYdTee("ll-uk-g8", "F", "USKids Girls 8", wc26G8.par, wc26G8.yd, 10, 29.8, 102, "#1e3a8a"), // Tee 1, 10–18
   ukYdTee("ll-uk-g7", "F", "USKids Girls 7 & Under", wc26G7.par, wc26G7.yd, 1, 29.2, 97, null), // Tee RS, 1–9
   ukYdTee("ll-uk-b6", "M", "USKids Boys 6 & Under", wc26B6.par, wc26B6.yd, 10, 27.8, 85, null), // Tee RS, 10–18
-]);
+], true);
+const pineNeedles = wc26Course("pine-needles-lodge-golf-club", "Pine Needles Lodge & Golf Club", [
+  ukYdTee("pn-uk-g14", "F", "USKids Girls 14", pnPar, wct26G14, 1, 73.9, 136), // Mundial Teen
+  ukYdTee("pn-uk-g13", "F", "USKids Girls 13", pnPar, wct26G13, 1, 72.1, 132), // Mundial Teen
+], true);
+
+/* ─────────────────────────────────────────────────────────────────────────
+   US Kids European Championship 2026 — os dois Musselburgh (Escócia).
+   Jardas e par por tee dos resultados USKids (× 0,9144); CR/Slope de
+   course_rating_and_slope_-_euc_2026.pdf (= 2023 e 2025; Musselburgh Boys
+   15-18 era 70,2/127 em 2022). Girls 10/11 e Boys 9 sem rating publicado.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const EUC26_LINKS = [
+  { label: "US Kids European Championship 2026 - Course Rating & Slope", url: "https://tournaments.uskidsgolf.com/sites/default/files/course_rating_and_slope_-_euc_2026.pdf" },
+];
+const rmParLong  = [4,4,4,4,4,3,4,4,5, 4,4,4,5,3,5,3,4,4];
+const rmParShort = [4,4,4,4,4,3,4,4,5, 5,4,4,4,3,4,3,4,5];
+const rmB13  = [315,290,350,360,320,156,370,420,465, 352,360,342,440,127,430,155,340,380]; // 5972 jd — Tee 6
+const rmG1518 = [293,269,306,335,309,128,350,410,460, 346,331,300,423,118,419,141,300,369]; // 5607 jd — Tee 5
+const rmG11  = [293,269,301,243,260,128,237,225,322, 356,241,223,230,75,261,117,298,334]; // 4413 jd — Tee 3
+const rmG10  = [237,205,229,240,235,90,234,219,305, 284,238,220,223,75,241,115,229,333];  // 3952 jd — Tee 2
+const muParLong  = [4,4,3,5,4,3,5,4,4, 4,3,5,4,4,4,3,4,5];
+const muParShort = [5,4,3,5,4,3,5,4,4, 4,3,4,4,5,4,3,4,4];
+const muB1518 = [377,445,147,528,403,150,479,400,408, 445,180,488,378,419,406,165,409,474]; // 6701 jd — Tee 7
+const muG1314 = [370,285,112,385,265,122,407,257,275, 317,168,280,250,383,338,113,283,333]; // 4943 jd — Tee 4
+const muB9    = [365,270,108,370,250,115,400,220,265, 240,110,240,245,375,281,111,235,251]; // 4451 jd — Tee 2
+
+const royalMusselburgh: Course = {
+  courseKey: "away-royal-musselburgh-golf-club",
+  master: {
+    courseId: "away-royal-musselburgh-golf-club",
+    name: "Royal Musselburgh Golf Club",
+    country: "Escócia",
+    links: { fpg: null, scorecards: null, extra: EUC26_LINKS },
+    tees: [
+      ukYdTee("rm-uk-b13", "M", "USKids Boys 13", rmParLong, rmB13, 1, 68.8, 123, "#111827"), // Tee 6
+      ukYdTee("rm-uk-g1518", "F", "USKids Girls 15-18", rmParLong, rmG1518, 1, 72.8, 128, "#ffffff"), // Tee 5
+      ukYdTee("rm-uk-g11", "F", "USKids Girls 11", rmParShort, rmG11, 1, null, null, "#f97316"), // Tee 3
+      ukYdTee("rm-uk-g10", "F", "USKids Girls 10", rmParShort, rmG10, 1, null, null, "#fbbf24"), // Tee 2
+    ],
+  },
+};
+
+const musselburgh: Course = {
+  courseKey: "away-the-musselburgh-golf-club",
+  master: {
+    courseId: "away-the-musselburgh-golf-club",
+    name: "The Musselburgh Golf Club (Monktonhall)", // a localidade separa-o do Royal Musselburgh na auditoria
+    country: "Escócia",
+    links: { fpg: null, scorecards: null, extra: EUC26_LINKS },
+    tees: [
+      ukYdTee("mu-uk-b1518", "M", "USKids Boys 15-18", muParLong, muB1518, 1, 72.4, 131), // Tee 7
+      ukYdTee("mu-uk-g1314", "F", "USKids Girls 13-14", muParShort, muG1314, 1, 69.5, 119, "#ef4444"), // Tee 4
+      ukYdTee("mu-uk-b9", "M", "USKids Boys 9", muParShort, muB9, 1, null, null, "#fbbf24"), // Tee 2
+    ],
+  },
+};
 const midPines = wc26Course("mid-pines", "Mid Pines", [
   ukYdTee("mp-uk-b8", "M", "USKids Boys 8", wc26B8.par, wc26B8.yd, 10, 30.6, 113, "#fbbf24"), // Tee 2, 10–18
   ukYdTee("mp-uk-b7", "M", "USKids Boys 7", wc26B7.par, wc26B7.yd, 1, 28.7, 106, "#1e3a8a"), // Tee 1, 1–9
@@ -2565,8 +2638,8 @@ const terreDeiConsoli: Course = {
       ],
     },
     // Os 12 escalões do PDF 2026 (= 2025). Raparigas pelos cartões do Signupanytime:
-    // jogaram os tees dos rapazes (G13-14 = B11/10, G11-12 = B9, G9-10 = B8), as G8 um
-    // tee próprio; Girls 15-18 sem jogadoras em 2026 — sem distâncias.
+    // jogaram os tees dos rapazes (G15-18 = B12, G13-14 = B11/10, G11-12 = B9, G9-10 = B8 —
+    // confirmado no PDF de metros), as G8 um tee próprio.
     tees: [
       tdcTee("tdc-uk-boys1318", "M", "USKids Boys 13-18", 70.9, 124, tdcB1318),
       tdcTee("tdc-uk-boys12", "M", "USKids Boys 12", 67.1, 115, tdcB12),
@@ -2652,6 +2725,9 @@ export function getExtraCourses(): Course[] {
     quailRidge,
     longleafGolf,
     midPines,
+    pineNeedles,
+    royalMusselburgh,
+    musselburgh,
     elPratRosa,
     elPratAmarillo,
     elPratVerde,
