@@ -110,7 +110,18 @@ mitarjeta com lic+dob+club+holeScores). Dedup de gémeos via
 lgsIds em `lgsSuppressed` são removidos (versão mitarjeta, mais rica, ganha).
 ⚠ **No `update-spain.yml`, `build-lgs-twins.js` corre ANTES de
 `build-rfegolf-rivals.js`** — inverter a ordem faria o rivals usar twins do run
-anterior.
+anterior. O `build-lgs-twins` casa pelo nome+ano e, para os que sobram, pelo
+plantel (≥ 0,85, ≤ 7 dias — a RFEG dá nomes diferentes ao mesmo evento em cada
+plataforma); depende das datas do LGS certas (`enrich-lgs-dates.js` relê as que
+ficaram fora do `dateRange`).
+
+**Uma linha por jogador e prova** (31/10/2026): o NextCaddy e o golfdirecto
+publicam a mesma volta em várias classificações (Scratch + Hándicap, escalão +
+geral Juvenil/Sub-18/Sub-25). `scripts/lib/uma-categoria.js` deixa cada jogador
+numa só: scratch antes de hándicap, escalão mais específico, posições da fonte
+(no `build-rfegolf-rivals` e no `build-fcg-rivals`). O id NextCaddy é
+`nc{tour}_{escalão}_{m|f}_{sc|hcp}` — sem o sexo, «Scratch Alevín Masculino» e
+«… Femenino» colidiam e a última apagava a outra.
 
 O adapter `rfeg` resolve resultados **sem licença** (todo o LGS + blocos
 nativos do microsite) por lookup de nome normalizado contra `spain.byName`
