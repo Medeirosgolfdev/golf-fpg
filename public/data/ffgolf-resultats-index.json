@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T23:51:27.142Z",
+  "generatedAt": "2026-10-31T01:02:27.018Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
   "total": 1278,
   "tournaments": [
@@ -18,7 +18,7 @@
       "totalPlayers": 112,
       "course": "Parcours Rouge",
       "sex": "M",
-      "roundsPlayed": 1,
+      "roundsPlayed": 2,
       "divisions": [
         {
           "serieId": "11",
@@ -31,7 +31,10 @@
       "ggPage": null,
       "ffgolfSlug": null,
       "ffgolfSection": null,
-      "rms9": null,
+      "rms9": {
+        "tenant": "9410",
+        "id": 2479971
+      },
       "ligues": [
         "00"
       ]
