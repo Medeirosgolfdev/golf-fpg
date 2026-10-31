@@ -207,7 +207,10 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   `AdmissionsTab`; draws → `DrawTab` (fontes de fora convertem para `FpgDraw`;
   no CircuitShell vão em `admissions`/`roundDraws` da divisão); barra de filtros
   de jogadores → `PlayerFilterBar.tsx`; linha «Rótulo: Todos · a · b» →
-  `FilterPillRow`; escolha única → `TabRow`; KPIs → `KpiCard` numa `.kpi-row`;
+  `FilterPillRow`; escolha única → `TabRow`; filtro liga/desliga → pill
+  `.tourn-tab tourn-tab-sm` (+ `active`; desligada é SEMPRE cinzenta, regra
+  global — decisão dela, 31/10/2026); botão de acção → `.btn` (`.btn-link`,
+  `.btn-round` para ‹ ›), nunca uma pill de filtro; KPIs → `KpiCard` numa `.kpi-row`;
   cartão de buracos → `ScorecardTable` ou a grelha `.sc-table-modern`/`.sc-table-ec`
   + `.sc-grid`; tabela simples → `.dtable` (o aspecto vive no «MODELO ÚNICO DAS
   TABELAS», fim do `App.css`); só totais → `TotalsResumo`; lista +
