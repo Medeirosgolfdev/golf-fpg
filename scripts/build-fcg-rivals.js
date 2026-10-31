@@ -31,6 +31,7 @@
 
 const fs = require("fs");
 const { writeJsonGuarded } = require("./lib/shrink-guard");
+const { umaCategoriaPorProva } = require("./lib/uma-categoria");
 const path = require("path");
 
 const REPO = path.resolve(__dirname, "..");
@@ -243,6 +244,9 @@ function build() {
     }
   }
 
+  // Um jogador numa só categoria por jogo (Scratch/Hándicap, escalão/Sub-18 geral).
+  const repetidos = umaCategoriaPorProva(torneios, (tid) => (/^fcg([0-9a-f]{24})_/.exec(tid) || [])[1] ?? null);
+
   const out = {
     generatedAt: new Date().toISOString(),
     source: "scripts/build-fcg-rivals.js",
@@ -258,7 +262,7 @@ function build() {
   writeJsonGuarded(OUT_FILE, out, { spaces: 0, failOnRefuse: true });
   const kb = (fs.statSync(OUT_FILE).size / 1024).toFixed(1);
   console.log("[build] wrote", path.relative(REPO, OUT_FILE), "—", kb, "KB");
-  console.log("[build] stats: games=" + totalGames, "categories=" + totalCategories, "entries=" + totalEntries, "uniqueLicenses=" + uniqueLicenses.size, "dobMatched=" + dobMatched + " (" + out.dobMatchedPct + "%)");
+  console.log("[build] stats: games=" + totalGames, "categories=" + totalCategories, "entries=" + totalEntries, "uniqueLicenses=" + uniqueLicenses.size, "dobMatched=" + dobMatched + " (" + out.dobMatchedPct + "%)", "repetidos=" + repetidos);
 }
 
 if (require.main === module) {

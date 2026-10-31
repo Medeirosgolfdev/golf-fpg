@@ -32,6 +32,30 @@ function norm(s) {
     .replace(/\b[ivxlc]{2,}\b/g, " ").replace(/\s+/g, " ").trim();
 }
 
+// A RFEG baptiza o mesmo evento de forma diferente em cada plataforma
+// («Internacional de España Sub-18 Masculino 2026» = LGS «Spanish International
+// U-18 Mens Championship 2026»): sem casar pelo nome, casa pelo PLANTEL — as
+// regras da /rfeg (src/data/rfeg/entries.ts): datas a ≤ 7 dias, ≥ 5 jogadores,
+// sobreposição ≥ 0,85 do plantel mais pequeno (o RFEG pode trazer só quem passou o cut).
+const normJog = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[^a-z ]+/g, " ").split(/\s+/).filter(Boolean).sort().join(" ");
+const PLANTEL_MIN = 0.85, PLANTEL_DIAS = 7 * 86400000;
+const lgsPorPlantel = [];
+const dmaMs = (s) => { const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(String(s || "")); return m ? Date.parse(`${m[3]}-${m[2]}-${m[1]}`) : NaN; };
+function gemeoPorPlantel(d, usados) {
+  const dia = dmaMs(d.meta && d.meta.dateStart);
+  const nomes = new Set((d.results || []).flatMap((b) => b.players || []).map((p) => normJog(p.name)).filter(Boolean));
+  if (!Number.isFinite(dia) || nomes.size < 5) return null;
+  let melhor = null;
+  for (const l of lgsPorPlantel) {
+    if (usados.has(String(l.id)) || Math.abs(l.dia - dia) > PLANTEL_DIAS) continue;
+    let comum = 0;
+    for (const n of nomes) if (l.nomes.has(n)) comum++;
+    const s = comum / Math.min(nomes.size, l.nomes.size);
+    if (comum >= 5 && s >= PLANTEL_MIN && (!melhor || s > melhor.s)) melhor = { ...l, s };
+  }
+  return melhor;
+}
+
 // 1) Índice LGS por nome+ano. Guarda também se tem hbh (preferir os que têm).
 const lgsByKey = {};
 for (const f of fs.readdirSync(LGS_DIR).filter((x) => /^\d+\.json$/.test(x))) {
@@ -44,6 +68,9 @@ for (const f of fs.readdirSync(LGS_DIR).filter((x) => /^\d+\.json$/.test(x))) {
   const key = nm + "|" + yr;
   // preferir entrada com hbh; senão a primeira
   if (!lgsByKey[key] || (hbh && !lgsByKey[key].hbh)) lgsByKey[key] = { id: d.id, hbh, played };
+  const dia = Date.parse((d.meta && d.meta.dateIso) || "");
+  const nomes = new Set((d.rounds || []).flatMap((r) => r.players || []).map((p) => normJog(p.name)).filter(Boolean));
+  if (Number.isFinite(dia) && nomes.size >= 5) lgsPorPlantel.push({ id: d.id, hbh, played, dia, nomes });
 }
 
 // nº de rondas com scores reais num rfegolf-resultats com mitarjeta injectado.
@@ -65,15 +92,26 @@ const twins = {};
 // (live scoring à frente do scrape LGS — ex: R3 do CEE juvenil ainda só no
 // mitarjeta). Mapeia lgsId → compId rfegolf preferido.
 const lgsSuppressed = {};
-let n = 0;
-for (const f of fs.readdirSync(RFEG_DIR).filter((x) => /^\d+\.json$/.test(x))) {
-  let d; try { d = rj(path.join(RFEG_DIR, f)); } catch (e) { continue; }
-  if (!d || !d.ok) continue;
-  const compId = d.compId || parseInt(f, 10);
+let n = 0, porPlantel = 0;
+const rfegFiles = fs.readdirSync(RFEG_DIR).filter((x) => /^\d+\.json$/.test(x))
+  .map((f) => { try { return { f, d: rj(path.join(RFEG_DIR, f)) }; } catch (e) { return null; } })
+  .filter((x) => x && x.d && x.d.ok);
+// Primeiro os gémeos pelo nome; o plantel só para os que sobram e com LGS por usar.
+const usados = new Set();
+const pendentes = [];
+for (const { f, d } of rfegFiles) {
   const yr = d.meta && d.meta.dateStart ? parseInt(String(d.meta.dateStart).slice(-4), 10) : null;
-  if (!yr) continue;
-  const key = norm(d.meta && d.meta.name) + "|" + yr;
-  const lgs = lgsByKey[key];
+  const lgs = yr ? lgsByKey[norm(d.meta && d.meta.name) + "|" + yr] : null;
+  if (lgs && lgs.id != null) usados.add(String(lgs.id));
+  pendentes.push({ f, d, lgs });
+}
+for (const p of pendentes) {
+  if (p.lgs && p.lgs.id != null) continue;
+  const l = gemeoPorPlantel(p.d, usados);
+  if (l) { p.lgs = l; usados.add(String(l.id)); porPlantel++; }
+}
+for (const { f, d, lgs } of pendentes) {
+  const compId = d.compId || parseInt(f, 10);
   if (lgs && lgs.id != null) {
     const rfegPlayed = rfegMitaPlayedRounds(d);
     // Preferir o rfegolf+mitarjeta (fonte canónica live dos CEE juvenis) quando
@@ -90,4 +128,4 @@ for (const f of fs.readdirSync(RFEG_DIR).filter((x) => /^\d+\.json$/.test(x))) {
 
 const out = { generatedAt: new Date().toISOString(), source: "scripts/build-lgs-twins.js", count: n, twins, lgsSuppressed };
 writeJsonGuarded(OUT, out, { spaces: 0, failOnRefuse: true });
-console.log(`build-lgs-twins: ${n} gémeos RFEGolf<->LGS -> ${path.relative(REPO, OUT)}`);
+console.log(`build-lgs-twins: ${n} gémeos RFEGolf<->LGS (${porPlantel} pelo plantel) -> ${path.relative(REPO, OUT)}`);

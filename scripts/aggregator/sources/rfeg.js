@@ -241,10 +241,13 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
     seriesId = "rfeg-gran-premio"; seriesLabel = "Gran Premio";
   }
   // Federações com PDFs (scrape-fed-pdfs.js): uma série por federação.
-  const fedPdf = /^(fng|fgclm|frg)/.exec(String(tid));
+  const fedPdf = /^(fgcv|fvg|fng|fgclm|frg)/.exec(String(tid));
   if (fedPdf) {
     seriesId = `rfeg-${fedPdf[1]}`;
-    seriesLabel = { fng: "Federación Navarra", fgclm: "Federación de Castilla-La Mancha", frg: "Federación Riojana" }[fedPdf[1]];
+    seriesLabel = {
+      fgcv: "Federación Comunitat Valenciana", fvg: "Federación Vasca de Golf", fng: "Federación Navarra",
+      fgclm: "Federación de Castilla-La Mancha", frg: "Federación Riojana",
+    }[fedPdf[1]];
   }
   // Links: derivar do prefix do tid (lgs = LiveGolfScoring, nc = NextCaddy)
   const links = buildRfegLinks(String(tid), t);

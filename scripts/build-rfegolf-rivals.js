@@ -19,6 +19,7 @@
 const fs = require("fs");
 const { writeJsonGuarded } = require("./lib/shrink-guard");
 const { gemeo, registar, licencasRegional } = require("./lib/golfdirecto-twins");
+const { umaCategoriaPorProva, HCP_RE } = require("./lib/uma-categoria");
 const path = require("path");
 
 const LGS_DIR = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
@@ -170,22 +171,6 @@ function ncCatToAgeGroup(cat) {
   return null;
 }
 
-/** Especificidade de um escalão. Maior = mais específico.
- *  Usado para deduplicar quando o mesmo jogador aparece em múltiplas categorias
- *  do mesmo NC tour (típico: classificado em Alevín ESPECÍFICO + Juvenil PARENT). */
-function ageSpecificity(ag) {
-  if (!ag) return 0;
-  // Mais específicos primeiro
-  if (/Benjam[íi]n/i.test(ag)) return 100;
-  if (/Alev[íi]n/i.test(ag)) return 90;
-  if (/Infantil/i.test(ag)) return 80;
-  if (/Cadete/i.test(ag)) return 70;
-  if (/^Sub-?\d+$/i.test(ag)) return 60;     // Sub-N (numeric)
-  if (/Junior/i.test(ag)) return 50;
-  if (/Juvenil/i.test(ag)) return 10;        // Juvenil é parent de tudo, fica último
-  return 30;
-}
-
 let ncKept = 0, ncSkipped = 0, ncEntriesAdded = 0;
 const ncNoKids = new Set();   // ids `nc{tourId}` que entram — os gémeos dos PDFs regionais só contam estes
 const ncFiles = fs.existsSync(NC_DIR)
@@ -268,9 +253,13 @@ for (const f of ncFiles) {
       // Tids ficam separados quando ambos existem no mesmo tour+ageGroup,
       // permitindo mostrar os dois na UI (gross + net).
       const isScratch = /\bScratch\b/i.test(catName);
-      const isHandicap = /\bHandicap\b|\bHcp\b/i.test(catName) || /\bHcp\s+J\b/i.test(catName);
+      const isHandicap = HCP_RE.test(catName);
       const typeSuffix = isHandicap ? "_hcp" : (isScratch ? "_sc" : "");
-      const tid = `nc${tourId}_${ageKey}${typeSuffix}`;
+      // Com o sexo no id: «Scratch Alevín Masculino» e «… Femenino» tinham o
+      // mesmo e a última apagava a outra (316 provas; Playa Serena 2026: ficava
+      // o #32 do hándicap do Dmitrii em vez do #1 da scratch).
+      const sexSuffix = /femenin/i.test(catName) ? "_f" : (/masculin/i.test(catName) ? "_m" : "");
+      const tid = `nc${tourId}_${ageKey}${sexSuffix}${typeSuffix}`;
       const nRounds = Math.max(1, ...players.flatMap(p =>
         (p.roundScores || []).map(r => r.round || 0)
       ));
@@ -325,6 +314,11 @@ for (const f of ncFiles) {
     ncSkipped++;
   }
 }
+
+// Um jogador numa só categoria por prova NextCaddy (Scratch/Hándicap, escalão/geral).
+const ncRepetidos = umaCategoriaPorProva(out.torneios,
+  (tid) => (/^nc(\d+)_/.exec(tid) || [])[1] ?? null,
+  (tid, t) => tid.endsWith("_hcp") || t.scoringType === "HANDICAP" || HCP_RE.test(t.categoryName || ""));
 
 // ─── 3) Microsite RFEG (rfegolf-resultats, incl. blocos mitarjeta) ───
 // Blocos de `results` com players — Campeonatos de España e afins. Os blocos
@@ -457,7 +451,7 @@ for (const lgsId of Object.keys(twinsData.lgsSuppressed || {})) {
 }
 
 out.total = Object.keys(out.torneios).length;
-out.dedupedPlayers = 0;
+out.dedupedPlayers = ncRepetidos;
 writeJsonGuarded(OUT, out, { spaces: 0, failOnRefuse: true });
 const size = (fs.statSync(OUT).size / 1024 / 1024).toFixed(2);
-console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) + " (-" + lgsSuppressedRemoved + " suppressed), NC " + ncKept + " files (" + ncEntriesAdded + " cats), RFEG " + rfKept + " files (" + rfTwinned + " twins skipped) -> " + out.total + " torneios -> " + OUT + " (" + size + " MB)");
+console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) + " (-" + lgsSuppressedRemoved + " suppressed), NC " + ncKept + " files (" + ncEntriesAdded + " cats), RFEG " + rfKept + " files (" + rfTwinned + " twins skipped), " + ncRepetidos + " linhas repetidas fora -> " + out.total + " torneios -> " + OUT + " (" + size + " MB)");
