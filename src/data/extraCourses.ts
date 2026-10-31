@@ -133,7 +133,8 @@ const marcoSimoneTees: Tee[] = [
 // Boys 15-18 73,6/132 · Girls 11-12 67,1/120 · Girls 13-14 70/127 · Girls 15-18 73,2/133;
 // Girls 10 63,4/113 só no de 2025. Os de Boys 9-11 já vinham do
 // ReportTabellaEgaWHS_us_kids.pdf (Gialli/Verdi). As raparigas jogam os tees dos rapazes
-// (PDF de metros): Girls 15-18 = Boys 12, 13-14 = Boys 11/10, 11-12 = Boys 9.
+// (PDF de metros): Girls 15-18 = Boys 12, 13-14 = Boys 11/10, 11-12 = Boys 9 — o mesmo
+// nome nos dois tees (um tee físico); as raparigas vêm depois para o nome dar o dos rapazes.
 const marcoSimoneUSKidsTees: Tee[] = [
   {
     teeId: "ms-uk-boys1518",
@@ -157,9 +158,42 @@ const marcoSimoneUSKidsTees: Tee[] = [
     distances: msDist(msDistUKBoys1314),
   },
   {
+    teeId: "ms-uk-boys12",
+    sex: "M",
+    teeName: "USKids Girls 15-18 / Boys 12",
+    scorecardMeta: { teeColor: "#f97316" }, // laranja (arancio)
+    ratings: {
+      holes18: { par: 72, courseRating: 68.1, slopeRating: 120 },
+    },
+    holes: msHoles(msDistUKBoys12),
+    distances: msDist(msDistUKBoys12),
+  },
+  {
+    teeId: "ms-uk-boys11",
+    sex: "M",
+    teeName: "USKids Girls 13-14 / Boys 11/10",
+    scorecardMeta: { teeColor: "#fbbf24" }, // amarelo (gialli)
+    ratings: {
+      holes18: { par: 72, courseRating: 65.5, slopeRating: 114 },
+    },
+    holes: msHoles(msDistUKBoys11),
+    distances: msDist(msDistUKBoys11),
+  },
+  {
+    teeId: "ms-uk-boys9",
+    sex: "M",
+    teeName: "USKids Girls 11-12 / Boys 9",
+    scorecardMeta: { teeColor: "#22c55e" }, // verde (verdi)
+    ratings: {
+      holes18: { par: 72, courseRating: 63.1, slopeRating: 108 },
+    },
+    holes: msHoles(msDistUKBoys9),
+    distances: msDist(msDistUKBoys9),
+  },
+  {
     teeId: "ms-uk-girls1518",
     sex: "F",
-    teeName: "USKids Girls 15-18",
+    teeName: "USKids Girls 15-18 / Boys 12",
     scorecardMeta: { teeColor: "#f97316" }, // = Boys 12
     ratings: {
       holes18: { par: 72, courseRating: 73.2, slopeRating: 133 },
@@ -170,7 +204,7 @@ const marcoSimoneUSKidsTees: Tee[] = [
   {
     teeId: "ms-uk-girls1314",
     sex: "F",
-    teeName: "USKids Girls 13-14",
+    teeName: "USKids Girls 13-14 / Boys 11/10",
     scorecardMeta: { teeColor: "#fbbf24" }, // = Boys 11/10
     ratings: {
       holes18: { par: 72, courseRating: 70.0, slopeRating: 127 },
@@ -181,7 +215,7 @@ const marcoSimoneUSKidsTees: Tee[] = [
   {
     teeId: "ms-uk-girls1112",
     sex: "F",
-    teeName: "USKids Girls 11-12",
+    teeName: "USKids Girls 11-12 / Boys 9",
     scorecardMeta: { teeColor: "#22c55e" }, // = Boys 9
     ratings: {
       holes18: { par: 72, courseRating: 67.1, slopeRating: 120 },
@@ -198,39 +232,6 @@ const marcoSimoneUSKidsTees: Tee[] = [
     },
     holes: msHoles(msDistUKGirls10),
     distances: msDist(msDistUKGirls10),
-  },
-  {
-    teeId: "ms-uk-boys12",
-    sex: "M",
-    teeName: "USKids Boys 12",
-    scorecardMeta: { teeColor: "#f97316" }, // laranja (arancio)
-    ratings: {
-      holes18: { par: 72, courseRating: 68.1, slopeRating: 120 },
-    },
-    holes: msHoles(msDistUKBoys12),
-    distances: msDist(msDistUKBoys12),
-  },
-  {
-    teeId: "ms-uk-boys11",
-    sex: "M",
-    teeName: "USKids Boys 11/10",
-    scorecardMeta: { teeColor: "#fbbf24" }, // amarelo (gialli)
-    ratings: {
-      holes18: { par: 72, courseRating: 65.5, slopeRating: 114 },
-    },
-    holes: msHoles(msDistUKBoys11),
-    distances: msDist(msDistUKBoys11),
-  },
-  {
-    teeId: "ms-uk-boys9",
-    sex: "M",
-    teeName: "USKids Boys 9",
-    scorecardMeta: { teeColor: "#22c55e" }, // verde (verdi)
-    ratings: {
-      holes18: { par: 72, courseRating: 63.1, slopeRating: 108 },
-    },
-    holes: msHoles(msDistUKBoys9),
-    distances: msDist(msDistUKBoys9),
   },
 ];
 

@@ -15,7 +15,7 @@
  */
 export const MANUEL_AWAY_TEE: Record<string, string> = {
   // Marco Simone US Kids Invitational 2026 — tinha 11 anos → Boys 11.
-  "marco simone golf country club": "USKids Boys 11/10",
+  "marco simone golf country club": "USKids Girls 13-14 / Boys 11/10",
   // Glen Golf Club, European Championship 2026 — Boys 12 (marcas Red).
   "glen golf club": "USKids Boys 12",
   // Villa Padierna Flamingos, WJGC 2025/2026 — tee Vermelhas.
