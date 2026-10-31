@@ -26,6 +26,10 @@ const msDistArancio = [274,349,302,103,227,231,132,338,382, 307,219,356,91,310,2
 const msDistUKBoys12 = [274,349,302,113,266,258,152,375,382, 307,247,381,103,310,292,255,151,442]; // 4959m
 const msDistUKBoys11 = [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404]; // 4430m (= Boys 10)
 const msDistUKBoys9  = [240,262,238,103,200,201,127,298,308, 234,219,291,91,236,225,190,133,354]; // 3949m
+// Mesmo PDF (2025 e 2026 iguais): Boys 15-18 (Tee 7) e 13-14 (Tee 6); Girls 10 com tee próprio.
+const msDistUKBoys1518 = [362,388,371,156,330,323,169,460,496, 359,281,467,131,402,375,302,166,517]; // 6055m
+const msDistUKBoys1314 = [336,365,342,156,302,295,152,421,450, 347,265,421,123,360,339,277,151,478]; // 5580m
+const msDistUKGirls10  = [206,224,204,98,171,172,76,255,264, 200,190,249,91,203,193,163,80,303];       // 3343m
 
 function msHoles(dist: number[]): Hole[] {
   return dist.map((d, i) => ({
@@ -125,9 +129,76 @@ const marcoSimoneTees: Tee[] = [
 /* Marco Simone — tees USKids (distâncias oficiais do torneio) */
 // CR/Slope: PDFs USKids «Marco Simone 2025/2026 – Course Rating and Slope»
 // (marco_simone_2025/2026_-_course_rating_and_slope.pdf, iguais nos dois anos):
-// Boys 9 63,1/108 · Boys 10 e 11 65,5/114 · Boys 12 68,1/120. Os de Boys 9-11
-// já vinham do ReportTabellaEgaWHS_us_kids.pdf (Gialli/Verdi).
+// Boys 9 63,1/108 · Boys 10 e 11 65,5/114 · Boys 12 68,1/120 · Boys 13-14 71,2/127 ·
+// Boys 15-18 73,6/132 · Girls 11-12 67,1/120 · Girls 13-14 70/127 · Girls 15-18 73,2/133;
+// Girls 10 63,4/113 só no de 2025. Os de Boys 9-11 já vinham do
+// ReportTabellaEgaWHS_us_kids.pdf (Gialli/Verdi). As raparigas jogam os tees dos rapazes
+// (PDF de metros): Girls 15-18 = Boys 12, 13-14 = Boys 11/10, 11-12 = Boys 9.
 const marcoSimoneUSKidsTees: Tee[] = [
+  {
+    teeId: "ms-uk-boys1518",
+    sex: "M",
+    teeName: "USKids Boys 15-18",
+    ratings: {
+      holes18: { par: 72, courseRating: 73.6, slopeRating: 132 },
+    },
+    holes: msHoles(msDistUKBoys1518),
+    distances: msDist(msDistUKBoys1518),
+  },
+  {
+    teeId: "ms-uk-boys1314",
+    sex: "M",
+    teeName: "USKids Boys 13-14",
+    scorecardMeta: { teeColor: "#111827" }, // Longleaf Tee 6
+    ratings: {
+      holes18: { par: 72, courseRating: 71.2, slopeRating: 127 },
+    },
+    holes: msHoles(msDistUKBoys1314),
+    distances: msDist(msDistUKBoys1314),
+  },
+  {
+    teeId: "ms-uk-girls1518",
+    sex: "F",
+    teeName: "USKids Girls 15-18",
+    scorecardMeta: { teeColor: "#f97316" }, // = Boys 12
+    ratings: {
+      holes18: { par: 72, courseRating: 73.2, slopeRating: 133 },
+    },
+    holes: msHoles(msDistUKBoys12),
+    distances: msDist(msDistUKBoys12),
+  },
+  {
+    teeId: "ms-uk-girls1314",
+    sex: "F",
+    teeName: "USKids Girls 13-14",
+    scorecardMeta: { teeColor: "#fbbf24" }, // = Boys 11/10
+    ratings: {
+      holes18: { par: 72, courseRating: 70.0, slopeRating: 127 },
+    },
+    holes: msHoles(msDistUKBoys11),
+    distances: msDist(msDistUKBoys11),
+  },
+  {
+    teeId: "ms-uk-girls1112",
+    sex: "F",
+    teeName: "USKids Girls 11-12",
+    scorecardMeta: { teeColor: "#22c55e" }, // = Boys 9
+    ratings: {
+      holes18: { par: 72, courseRating: 67.1, slopeRating: 120 },
+    },
+    holes: msHoles(msDistUKBoys9),
+    distances: msDist(msDistUKBoys9),
+  },
+  {
+    teeId: "ms-uk-girls10",
+    sex: "F",
+    teeName: "USKids Girls 10",
+    ratings: {
+      holes18: { par: 72, courseRating: 63.4, slopeRating: 113 },
+    },
+    holes: msHoles(msDistUKGirls10),
+    distances: msDist(msDistUKGirls10),
+  },
   {
     teeId: "ms-uk-boys12",
     sex: "M",
@@ -835,8 +906,9 @@ const montRG       = [255,122,330,230,265,284,290,115,325, 263,350,287,120,250,1
 const montGW       = [220,300,240,100,210,90,210,300,230, 300,110,225,230,210,230,95,215,290];   // 3805m (Boys 9, Girls 10)
 // Venice Open 2026 (resultados USKids, jardas × 0,9144): os Boys 10 jogaram o tee dos Boys 11 e
 // os Boys 9 também o White/Red — CR/Slope do PDF 2026 (B10 64,8/111, B9 61,0/103). O Red/Green
-// e o Green/White acima são do Venice Open 2024 (ratings do PDF de 2024). Raparigas 2026
-// (G12/G11 69,8/115, G10 65,1/105) ficam de fora: o PDF não diz em que percurso jogaram.
+// e o Green/White acima são do Venice Open 2024 (ratings do PDF de 2024). Raparigas 2026: os
+// resultados USKids põem-nas também no White/Red — G11/G12 no Tee 4 (= Boys 11, 5044 jd) e G10
+// no Tee 3 (= Boys 9, 4206 jd); CR/Slope do PDF 2026 (G12/G11 69,8/115, G10 65,1/105).
 const montWRBoys9_2026 = [300,110,225,230,210,230,95,215,290, 210,115,294,204,235,252,258,85,289]; // 3847m
 
 // 3 percursos de 18 = 3 campos distintos (combinações dos nines White/Red/Green)
@@ -885,6 +957,24 @@ const montecchiaWhiteRed: Course = {
         sex: "M",
         teeName: "USKids Boys 9",
         ratings: { holes18: { par: 72, courseRating: 61.0, slopeRating: 103 } },
+        holes: vHoles(montWRPar, montWRBoys9_2026, montWRSI),
+        distances: vDist(montWRBoys9_2026),
+      },
+      {
+        teeId: "mont-wr-uk-girls1112-2026",
+        sex: "F",
+        teeName: "USKids Girls 12 / 11",
+        scorecardMeta: { teeColor: "#ef4444" }, // Tee 4 = Boys 11
+        ratings: { holes18: { par: 72, courseRating: 69.8, slopeRating: 115 } },
+        holes: vHoles(montWRPar, montWRBoys11, montWRSI),
+        distances: vDist(montWRBoys11),
+      },
+      {
+        teeId: "mont-wr-uk-girls10-2026",
+        sex: "F",
+        teeName: "USKids Girls 10",
+        scorecardMeta: { teeColor: "#f97316" }, // Tee 3 = Boys 9
+        ratings: { holes18: { par: 72, courseRating: 65.1, slopeRating: 105 } },
         holes: vHoles(montWRPar, montWRBoys9_2026, montWRSI),
         distances: vDist(montWRBoys9_2026),
       },
@@ -1595,23 +1685,25 @@ const valeLake: Course = {
 /* ─────────────────────────────────────────────────────────────────────────
    US Kids German Masters 2026 (Golf Valley München, 3–4/10/2026) e
    US Kids World Championship 2026 (Pinehurst, EUA, 30/07–1/08/2026).
-   Par e jardas por buraco dos resultados USKids (jardas × 0,9144).
+   Golf Valley: METROS do PDF oficial german_masters_2026_-_meters.pdf (Course
+   B+C; o Signupanytime mostra-os como «YARDS» — não converter), com as
+   raparigas nos tees dos rapazes como o PDF indica. Mundial: par e jardas por
+   buraco dos resultados USKids (jardas × 0,9144).
    CR/Slope oficiais: german_masters_2026_-_course_rating_and_slope.pdf (só
-   Boys 12, 13-14, 15-18 e Girls 15-18; as Girls 15-18 não estão nos
-   resultados → sem metros) e a imagem new_worlds_sr.png do Player Info Hub
+   Boys 12, 13-14, 15-18 e Girls 15-18) e a imagem new_worlds_sr.png do Player Info Hub
    do Mundial (um escalão por campo; 9 buracos = rating de 9).
    Cores = Longleaf Tee System (o Tee 7 e o RS ficam sem cor).
    ───────────────────────────────────────────────────────────────────────── */
 
 const gvmPar = [5,4,4,3,4,5,3,4,4,4,5,3,4,5,4,3,4,4]; // par USKids 72
-const gvmB1518 = [480,380,334,162,360,485,152,362,345,317,489,142,352,505,371,128,335,372]; // 6071 jd = 5549 m
-const gvmB1314 = [425,367,311,155,360,423,152,362,335,265,461,130,314,472,346,110,324,362]; // 5674 jd = 5189 m
-const gvmB12 = [382,316,288,140,315,412,132,320,295,254,439,119,284,410,320,102,282,319]; // 5129 jd = 4691 m
-const gvmB1011 = [340,270,245,129,265,366,116,270,252,218,385,116,237,341,255,84,261,309]; // 4459 jd = 4078 m
-const gvmB9 = [297,236,215,120,232,320,110,236,221,191,337,108,208,299,223,84,228,270]; // 3935 jd = 3600 m
-const gvmB8 = [255,203,184,103,199,275,94,203,189]; // 1705 jd = 1559 m, buracos 1–9
-const gvmB7 = [212,169,153,86,166,229,79,169,158]; // 1421 jd = 1300 m, buracos 1–9
-const gvmB6 = [170,135,123,69,133,183,63,135,126]; // 1137 jd = 1038 m, buracos 1–9
+const gvmB1518 = [480,380,334,162,360,485,152,362,345,317,489,142,352,505,371,128,335,372]; // 6071 m
+const gvmB1314 = [425,367,311,155,360,423,152,362,335,265,461,130,314,472,346,110,324,362]; // 5674 m
+const gvmB12 = [382,316,288,140,315,412,132,320,295,254,439,119,284,410,320,102,282,319]; // 5129 m
+const gvmB1011 = [340,270,245,129,265,366,116,270,252,218,385,116,237,341,255,84,261,309]; // 4459 m
+const gvmB9 = [297,236,215,120,232,320,110,236,221,191,337,108,208,299,223,84,228,270]; // 3935 m
+const gvmB8 = [255,203,184,103,199,275,94,203,189]; // 1705 m, buracos 1–9
+const gvmB7 = [212,169,153,86,166,229,79,169,158]; // 1421 m, buracos 1–9
+const gvmB6 = [170,135,123,69,133,183,63,135,126]; // 1137 m, buracos 1–9
 
 const wc26B12 = { par: [4,5,4,4,3,5,4,3,4,4,5,4,3,4,3,4,5,4], yd: [321,490,301,342,117,450,346,152,336,356,510,353,134,348,127,330,489,303] }; // Pinehurst No. 8, 5805 jd = 5308 m, buracos 1–18
 const wc26B11 = { par: [5,3,4,5,3,4,4,4,4,4,5,4,3,4,3,5,4,4], yd: [437,121,334,470,110,304,372,319,257,285,448,348,119,295,143,428,292,345] }; // Talamore Golf Club, 5427 jd = 4964 m, buracos 1–18
@@ -1630,8 +1722,14 @@ function ukYdTee(
   teeId: string, sex: "M" | "F", teeName: string, par: number[], yd: number[] | null,
   start: 1 | 10, cr: number | null, slope: number | null, teeColor?: string | null,
 ): Tee {
-  const n = yd?.length ?? par.length;
-  const dist = yd ? yd.map((y) => Math.round(y * 0.9144)) : null;
+  return ukMTee(teeId, sex, teeName, par, yd ? yd.map((y) => Math.round(y * 0.9144)) : null, start, cr, slope, teeColor);
+}
+
+function ukMTee(
+  teeId: string, sex: "M" | "F", teeName: string, par: number[], dist: number[] | null,
+  start: 1 | 10, cr: number | null, slope: number | null, teeColor?: string | null,
+): Tee {
+  const n = dist?.length ?? par.length;
   const total = dist ? dist.reduce((a, b) => a + b, 0) : null;
   const r = { par: par.slice(0, n).reduce((a, b) => a + b, 0), courseRating: cr, slopeRating: slope };
   return {
@@ -1661,15 +1759,15 @@ const golfValleyMunchen: Course = {
     country: "Alemanha",
     links: { fpg: null, scorecards: null, extra: GM26_LINKS },
     tees: [
-      ukYdTee("gvm-uk-b1518", "M", "USKids Boys 15-18", gvmPar, gvmB1518, 1, 73.5, 131), // Tee 7
-      ukYdTee("gvm-uk-g1518", "F", "USKids Girls 15-18", gvmPar, null, 1, 74.6, 129),
-      ukYdTee("gvm-uk-b1314", "M", "USKids Boys 13-14", gvmPar, gvmB1314, 1, 71.7, 129, "#111827"), // Tee 6
-      ukYdTee("gvm-uk-b12", "M", "USKids Boys 12", gvmPar, gvmB12, 1, 68.8, 122, "#ffffff"), // Tee 5
-      ukYdTee("gvm-uk-b1011", "M", "USKids Boys 11 / 10", gvmPar, gvmB1011, 1, null, null, "#ef4444"), // Tee 4
-      ukYdTee("gvm-uk-b9", "M", "USKids Boys 9", gvmPar, gvmB9, 1, null, null, "#f97316"), // Tee 3
-      ukYdTee("gvm-uk-b8", "M", "USKids Boys 8", gvmPar, gvmB8, 1, null, null, "#fbbf24"), // Tee 2
-      ukYdTee("gvm-uk-b7", "M", "USKids Boys 7", gvmPar, gvmB7, 1, null, null, "#1e3a8a"), // Tee 1
-      ukYdTee("gvm-uk-b6", "M", "USKids Boys 6 & Under", gvmPar, gvmB6, 1, null, null, null), // Tee RS
+      ukMTee("gvm-uk-b1518", "M", "USKids Boys 15-18", gvmPar, gvmB1518, 1, 73.5, 131), // Tee 7
+      ukMTee("gvm-uk-g1518", "F", "USKids Girls 15-18", gvmPar, gvmB12, 1, 74.6, 129, "#ffffff"), // Tee 5
+      ukMTee("gvm-uk-b1314", "M", "USKids Boys 13-14", gvmPar, gvmB1314, 1, 71.7, 129, "#111827"), // Tee 6
+      ukMTee("gvm-uk-b12", "M", "USKids Boys 12", gvmPar, gvmB12, 1, 68.8, 122, "#ffffff"), // Tee 5
+      ukMTee("gvm-uk-b1011", "M", "USKids Boys 11 / 10 / Girls 13-14", gvmPar, gvmB1011, 1, null, null, "#ef4444"), // Tee 4
+      ukMTee("gvm-uk-b9", "M", "USKids Boys 9 / Girls 11-12", gvmPar, gvmB9, 1, null, null, "#f97316"), // Tee 3
+      ukMTee("gvm-uk-b8", "M", "USKids Boys 8 / Girls 9-10", gvmPar, gvmB8, 1, null, null, "#fbbf24"), // Tee 2
+      ukMTee("gvm-uk-b7", "M", "USKids Boys 7", gvmPar, gvmB7, 1, null, null, "#1e3a8a"), // Tee 1
+      ukMTee("gvm-uk-b6", "M", "USKids Boys 6 & Under / Girls 8 & Under", gvmPar, gvmB6, 1, null, null, null), // Tee RS
     ],
   },
 };
@@ -2417,18 +2515,19 @@ function craigielaw(courseKey: string, name: string): Course {
    CR/Slope dos PDFs USKids «Rome Classic 2025/2026 – Course Rating and S.R.»
    (iguais nos dois anos; 12 escalões desde 30/10/2026): Boys 11 64,4/107 (o Manuel,
    2025); os de 9 buracos (Boys 8 29,5/95, Boys 7, Girls 9-10 e 8) no 10–18. Metros e
-   par dos rapazes dos resultados USKids. Sem SI: a GolfPass tem o cartão estragado (par 3 de
+   par do PDF oficial rome_classic_2026_-_meters.pdf (o Signupanytime mostra os
+   mesmos números como «YARDS»), que põe as raparigas nos tees dos rapazes
+   (Girls 15-18 = Boys 12, 13-14 = Boys 11, 11-12 = Boys 9, 9-10 = Boys 8). Sem SI: a GolfPass tem o cartão estragado (par 3 de
    603 jd), não serve. «Terre Del Consoli» (gralha) junta-se pelo alias.
    ───────────────────────────────────────────────────────────────────────── */
 
 const tdcParB11 = [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4];
-const tdcB11 = [193,390,119,266,254,282,270,350,94, 262,350,229,110,283,224,134,350,260]; // 4420 m (= Boys 10)
-// Resultados USKids do Rome Classic 2026 (jardas × 0,9144; iguais em 2025).
-const tdcB1318 = [297,488,150,339,337,334,366,460,123, 325,441,270,143,352,320,158,432,394]; // 5729 m
-const tdcB12   = [255,442,125,298,293,315,326,379,106, 262,390,239,110,283,301,134,379,333]; // 4970 m
+const tdcB11 = [193,390,119,266,254,282,270,350,94, 263,350,229,110,284,224,134,350,260]; // 4422 m (= Boys 10)
+const tdcB1318 = [297,489,150,339,338,334,366,460,123, 325,441,270,143,352,320,158,432,394]; // 5731 m
+const tdcB12   = [255,442,125,298,293,315,327,380,106, 263,390,239,110,284,301,134,380,333]; // 4975 m
 const tdcB9    = [193,350,119,200,254,247,236,330,90, 200,330,229,91,249,224,114,330,260];   // 4046 m
 const tdcB8    = [180,300,170,91,200,191,70,300,223]; // 1725 m, buracos 10–18
-const tdcB7    = [150,240,142,67,160,160,59,240,160]; // 1378 m, buracos 10–18
+const tdcB7    = [150,240,142,67,160,160,58,240,160]; // 1377 m, buracos 10–18
 const tdcG8    = [115,185,109,67,123,133,58,185,123]; // 1098 m, buracos 10–18 (cartões do Signupanytime, 30/10/2026)
 
 function tdcTee(id: string, sex: "M" | "F", teeName: string, cr: number, slope: number, dist: number[] | null, teeColor?: string): Tee {
@@ -2475,7 +2574,7 @@ const terreDeiConsoli: Course = {
       tdcTee("tdc-uk-boys9", "M", "USKids Boys 9", 62.5, 105, tdcB9),
       tdcTee("tdc-uk-boys8", "M", "USKids Boys 8", 29.5, 95, tdcB8, "#fbbf24"), // Longleaf Tee 2
       tdcTee("tdc-uk-boys7", "M", "USKids Boys 7 & Under", 27.8, 87, tdcB7),
-      tdcTee("tdc-uk-girls1518", "F", "USKids Girls 15-18", 72.2, 121, null),
+      tdcTee("tdc-uk-girls1518", "F", "USKids Girls 15-18", 72.2, 121, tdcB12),
       tdcTee("tdc-uk-girls1314", "F", "USKids Girls 13-14", 68.9, 114, tdcB11),
       tdcTee("tdc-uk-girls1112", "F", "USKids Girls 11-12", 66.6, 109, tdcB9),
       tdcTee("tdc-uk-girls910", "F", "USKids Girls 9-10", 31.2, 96, tdcB8),
