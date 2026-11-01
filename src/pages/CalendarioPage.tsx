@@ -335,10 +335,8 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
  <span className="uppercase fw-600 fs-12" style={{ color: hl ? hl.text : "#fff", letterSpacing: "0.04em" }}>
             {calName}
           </span>
-          <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ background: hl ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)", border: "none",
-            color: hl ? hl.text : "#fff",
-            width: 26, height: 26, borderRadius: "50%", cursor: "pointer", fontSize: "var(--fs-14)",
-            display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+          <button onClick={onClose} title="Fechar" aria-label="Fechar"
+            className={"btn-round btn-round-close" + (hl ? " on-light" : "")} style={hl ? { color: hl.text } : undefined}>✕</button>
         </div>
         <div className="cal-sidebar">
           <div className="h-lg">{event.title}</div>
@@ -926,7 +924,7 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
       <div ref={ref} className="u-bg-bg-card u-br-radius-xl u-bs-shadow-lg u-w-380px u-maxh-80vh u-ov-hidden u-d-flex u-fd-column u-animation-calpopin-0_2s-ease">
         <div className="u-bg-accent u-p-14px-18px u-d-flex u-jc-space-between u-ai-center u-fsh-0">
           <span className="fw-600 fs-13 u-c-fff">{title}</span>
-          <button onClick={onClose} title="Fechar" aria-label="Fechar" className="u-bg-rgba-255-255-255-0_2 u-bd-none u-c-fff u-w-26px u-h-26px u-br-50pc u-cur-pointer u-fs-fs-14 u-d-flex u-ai-center u-jc-center">✕</button>
+          <button onClick={onClose} title="Fechar" aria-label="Fechar" className="btn-round btn-round-close">✕</button>
         </div>
         <div className="cal-sidebar d-flex flex-col gap-4 u-oy-auto">
           {events.map(e => (

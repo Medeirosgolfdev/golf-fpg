@@ -980,6 +980,14 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .btn-round:disabled { color: var(--border); cursor: default; }
 .btn-round.btn-round-sm { width: 24px; height: 24px; border: none; background: none; font-size: var(--fs-16); color: var(--text-3); }
 .btn-round.btn-round-sm:disabled { color: var(--border); }
+/* ✕ dos popups com cabeçalho de cor (Calendário). .on-light: cabeçalho claro — a cor do ✕ vem do evento. */
+.btn-round.btn-round-close { width: 26px; height: 26px; border: none; background: rgba(255,255,255,0.2); color: #fff; font-size: var(--fs-14); }
+.btn-round.btn-round-close.on-light { background: rgba(0,0,0,0.15); }
+/* Botão tracejado «＋ Acrescentar…» (simulador). */
+.btn-add { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 16px;
+  border: 1px dashed var(--line); border-radius: var(--radius-xl); background: transparent; cursor: pointer;
+  color: var(--text-2); font: inherit; font-size: var(--fs-13); font-weight: 600; transition: background .12s, border-color .12s, color .12s; }
+.btn-add:hover { background: var(--bg-hover); border-color: var(--chart-2); color: var(--chart-2); }
 
 .an-wrap { padding: 12px 0; }
 .an-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
@@ -4662,7 +4670,6 @@ table td.lb-col-divider {
 .u-bd-1epci { border: 1px solid var(--border, var(--color-rfeg-yellow)) !important; }
 .u-bd-1px-dashed-border { border: 1px dashed var(--border) !important; }
 .u-bd-1px-dashed-border-light { border: 1px dashed var(--border-light) !important; }
-.u-bd-1px-dashed-line { border: 1px dashed var(--line) !important; }
 .u-bd-1px-dashed-text-3 { border: 1px dashed var(--text-3) !important; }
 .u-bd-1px-solid-accent { border: 1px solid var(--accent) !important; }
 .u-bd-1px-solid-badge-pp { border: 1px solid var(--badge-pp) !important; }
@@ -4726,7 +4733,6 @@ table td.lb-col-divider {
 .u-bg-rgba-220-38-38-_04 { background: rgba(220, 38, 38, .04) !important; }
 .u-bg-rgba-255-255-255-_5 { background: rgba(255,255,255,.5) !important; }
 .u-bg-rgba-255-255-255-0_18 { background: rgba(255,255,255,0.18) !important; }
-.u-bg-rgba-255-255-255-0_2 { background: rgba(255,255,255,0.2) !important; }
 .u-bg-rgba-255-255-255-0_85 { background: rgba(255,255,255,0.85) !important; }
 .u-bg-rgba-59-130-246-_15 { background: rgba(59, 130, 246, .15) !important; }
 .u-bg-sc-par-bg { background: var(--sc-par-bg) !important; }
@@ -5289,7 +5295,6 @@ table td.lb-col-divider {
 .u-top-50pc { top: 50% !important; }
 .u-tov-ellipsis { text-overflow: ellipsis !important; }
 .u-transform-translatey-50pc { transform: translateY(-50%) !important; }
-.u-transition-1bp75 { transition: background .12s, border-color .12s, color .12s !important; }
 .u-transition-background-0_15s { transition: background 0.15s !important; }
 .u-transition-lvivr { transition: stroke-dasharray 400ms ease-out !important; }
 .u-tt-lowercase { text-transform: lowercase !important; }

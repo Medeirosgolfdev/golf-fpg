@@ -1678,20 +1678,7 @@ export function RoundSimulator({
         })}
 
         {/* Adicionar ronda */}
-        <button
-          onClick={addRound}
-          className="u-bd-1px-dashed-line u-br-radius-xl u-bg-transparent u-cur-pointer u-p-8px-16px u-c-text-2 u-fs-fs-13 u-fw-600 u-d-flex u-ai-center u-jc-center u-gap-6px u-transition-1bp75"
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = "var(--bg-hover)";
-            e.currentTarget.style.borderColor = "var(--chart-2)";
-            e.currentTarget.style.color = "var(--chart-2)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.borderColor = "var(--line)";
-            e.currentTarget.style.color = "var(--text-2)";
-          }}
-        >
+        <button type="button" onClick={addRound} className="btn-add">
           ＋ Adicionar ronda
         </button>
       </div>
