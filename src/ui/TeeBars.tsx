@@ -14,6 +14,11 @@ import SexBadge from "./SexBadge";
 import { fmt, fmtCR } from "../utils/format";
 import { physicalTeeGroups, type SexKey } from "../utils/teeGroups";
 
+/** Nome do tee para a barra (escalão nos tees USKids): sem o prefixo «USKids». */
+function teeLabel(t: Tee | undefined): string {
+  return (t?.teeName ?? "").replace(/^USKids\s+/i, "").trim();
+}
+
 /** Distância de um nove: a publicada, ou a soma dos 9 buracos quando todos têm distância. */
 function nineDistance(t: Tee, nine: "front9" | "back9"): number | null {
   const d = t.distances?.[nine];
@@ -48,6 +53,9 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
         const ratings = nine === "front9" ? g.f9 : nine === "back9" ? g.b9 : g.h18;
         const gs = (["M", "F", "U"] as const).filter((s) => ratings[s] || g.teeBySex[s]);
         const groupActive = groupSelectable && selectedGroupKey === g.key;
+        // Nome do tee/escalão: uma vez para a barra quando é o mesmo nos dois sexos, senão ao lado de cada sexo.
+        const names = gs.map((s) => teeLabel(g.teeBySex[s]));
+        const sameName = names.every((n) => n === names[0]);
         return (
           <span
             key={g.key}
@@ -65,12 +73,15 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
             <span className="u-fw-700 u-ws-nowrap">
               {dist != null && dist > 0 ? `${fmt(dist)} m` : "– m"}
             </span>
+            {sameName && names[0] && <span className="fs-12 u-fw-600 u-c-text-1">{names[0]}</span>}
             {gs.map((s: SexKey) => {
               const r = ratings[s];
               const tee = g.teeBySex[s];
+              const name = sameName ? "" : teeLabel(tee);
               const rating = (
                 <>
                   {(s === "M" || s === "F") && <SexBadge sex={s} />}
+                  {name && <span className="u-fw-600 u-c-text-1">{name}</span>}
                   {r ? <>CR {fmtCR(r.cr)} · Slope {r.sl}</> : <span className="muted">sem rating</span>}
                 </>
               );
