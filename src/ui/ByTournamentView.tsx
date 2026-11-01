@@ -103,12 +103,11 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
   // O ±par dos totais em linha (ao lado do gross), não empilhado por baixo.
-  const inlineTp: React.CSSProperties = { display: "inline", marginLeft: 4 };
 
   const toParSpan = (g: number, p: number) => {
     const tp = g - p;
     const cls = toParClass(tp);
-    return <span className={`sc-topar ${cls}`} style={inlineTp}>{fmtSign(tp)}</span>;
+    return <span className={`sc-topar ${cls} u-d-inline u-ml-4px`}>{fmtSign(tp)}</span>;
   };
 
   const totalG = sumArr(gross, 0, hc);
@@ -145,7 +144,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
       {!is9 && (
         <td className="col-total">
           {totalG}
-          {tp != null && <span className={`sc-topar ${toParClass(tp)}`} style={inlineTp}>{fmtToPar(tp, "")}</span>}
+          {tp != null && <span className={`sc-topar ${toParClass(tp)} u-d-inline u-ml-4px`}>{fmtToPar(tp, "")}</span>}
         </td>
       )}
     </tr>

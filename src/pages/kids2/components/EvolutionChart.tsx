@@ -9,11 +9,12 @@
  * pinta o ponto a dourado/prata/bronze.
  */
 
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ResponsiveContainer, Line, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceLine, Scatter, ComposedChart,
 } from "recharts";
 import type { CanonicalData, Junior } from "../data";
+import TabRow from "../../../ui/TabRow";
 import { fmtDate } from "../../../utils/format";
 
 interface Props {
@@ -220,24 +221,16 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
       <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px">
         <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Evolução</h3>
         <div className="u-d-flex u-gap-4px u-ai-center">
+          <TabRow<typeof yMode> className="seg-sm" active={yMode} onChange={setYMode} tabs={[
+            { key: "toPar", label: "±par/ronda", title: "±par médio por ronda do torneio" },
+            { key: "toParNorm", label: "±par/18H", title: "±par/ronda normalizado para equivalente 18 buracos — útil para misturar 9H e 18H" },
+            { key: "pos", label: "Posição" },
+          ]} />
           <button
-            onClick={() => setYMode("toPar")}
-            style={btnStyle(yMode === "toPar")}
-            title="±par médio por ronda do torneio"
-          >±par/ronda</button>
-          <button
-            onClick={() => setYMode("toParNorm")}
-            style={btnStyle(yMode === "toParNorm")}
-            title="±par/ronda normalizado para equivalente 18 buracos — útil para misturar 9H e 18H"
-          >±par/18H</button>
-          <button
-            onClick={() => setYMode("pos")}
-            style={btnStyle(yMode === "pos")}
-          >Posição</button>
-          <span className="u-w-1px u-h-18px u-bg-border u-m-0-2px" />
-          <button
+            type="button"
             onClick={() => setInclude9H((v) => !v)}
-            style={btnStyle(include9H)}
+            aria-pressed={include9H}
+            className={"tourn-tab tourn-tab-sm" + (include9H ? " active" : "")}
             title={include9H
               ? "A mostrar torneios de 9 e 18 buracos juntos"
               : `Mostrar também ${hidden9HCount} torneio(s) de 9 buracos`}
@@ -396,12 +389,3 @@ function CustomTooltip({ active, payload, yMode }: any) {
   );
 }
 
-function btnStyle(active: boolean): React.CSSProperties {
-  return {
-    fontSize: "var(--fs-11)", fontWeight: 600,
-    border: "1px solid " + (active ? "var(--color-info-dark)" : "var(--border-light)"),
-    background: active ? "var(--color-info-dark)" : "var(--bg)",
-    color: active ? "var(--bg)" : "var(--text-2)",
-    cursor: "pointer",
-  };
-}

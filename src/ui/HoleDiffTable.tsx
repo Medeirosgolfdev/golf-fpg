@@ -61,17 +61,13 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
   const totals = data.map((_, i) => holes.reduce((s, h) => s + (distAt(i, h) ?? 0), 0));
   const parTotal = data.length ? data[0].reach.reduce((s, r) => s + (r.par ?? 0), 0) : 0;
 
-  const lblStyle: React.CSSProperties = {
-    position: "sticky", left: 0, background: "var(--bg-card)", zIndex: "var(--z-base)",
-    fontWeight: 700, fontSize: "var(--fs-12)", whiteSpace: "nowrap",
-  };
 
   return (
     <div className="u-ox-auto u-pb-14px">
       <table className="dtable">
         <thead>
           <tr>
-            <th style={lblStyle}>Buraco</th>
+            <th className="hdt-lbl">Buraco</th>
             {holes.map(h => <th key={h} className="r mono">{h}</th>)}
             <th className="r mono">Σ</th>
           </tr>
@@ -79,7 +75,7 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
         <tbody>
           {/* Par */}
           <tr>
-            <td style={lblStyle}>Par</td>
+            <td className="hdt-lbl">Par</td>
             {holes.map(h => {
               const ps = byHole.map(m => m.get(h)?.par ?? null);
               const distinct = [...new Set(ps.filter(p => p != null))];
@@ -95,7 +91,7 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
           {/* Metros por tee */}
           {data.map((d, i) => (
             <tr key={"m" + i} style={{ background: d.hex + "1f" }}>
-              <td style={lblStyle}>{d.label} <span className="u-fw-600">(m)</span></td>
+              <td className="hdt-lbl">{d.label} <span className="u-fw-600">(m)</span></td>
               {holes.map(h => <td key={h} className="r mono">{distAt(i, h) ?? "–"}</td>)}
               <td className="r mono u-fw-800">{totals[i] || "–"}</td>
             </tr>
@@ -104,7 +100,7 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
           {/* Delta (so com 2 tees) */}
           {two && (
             <tr className="u-bt-2px-solid-border">
-              <td style={lblStyle}>Δ (m)</td>
+              <td className="hdt-lbl">Δ (m)</td>
               {holes.map(h => {
                 const a = distAt(0, h), b = distAt(1, h);
                 const delta = a != null && b != null ? a - b : null;
@@ -124,12 +120,12 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
           {data.map((d, i) => (
             <React.Fragment key={"blk" + i}>
               <tr style={{ background: d.hex + "1f", borderTop: "2px solid var(--border)" }}>
-                <td style={lblStyle}>{d.label} <span className="u-fw-600">· após drive faltam (m)</span></td>
+                <td className="hdt-lbl">{d.label} <span className="u-fw-600">· após drive faltam (m)</span></td>
                 {holes.map(h => <td key={h} className="r">{appCell(byHole[i].get(h)?.afterDrive ?? null)}</td>)}
                 <td />
               </tr>
               <tr style={{ background: d.hex + "1f" }}>
-                <td style={lblStyle}>{d.label} <span className="u-fw-600">· após 2ª pancada faltam (m)</span></td>
+                <td className="hdt-lbl">{d.label} <span className="u-fw-600">· após 2ª pancada faltam (m)</span></td>
                 {holes.map(h => <td key={h} className="r">{appCell(byHole[i].get(h)?.after2 ?? null)}</td>)}
                 <td />
               </tr>

@@ -60,7 +60,6 @@ function EventInfo({ name, origin }: {
   );
 }
 
-const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden", width: "fit-content", maxWidth: "calc(100% - 16px)" };
 
 export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
   data: PlayerPageData;
@@ -188,7 +187,7 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
                   {isOpen && holes && (
                     <tr>
                       <td colSpan={12} className="bg-page p-0">
-                        <div className="scroll-x" style={scHostStyle}>
+                        <div className="scroll-x l20-sc-host">
                           <ScorecardTable
                             holes={holes}
                             courseName={r.course}

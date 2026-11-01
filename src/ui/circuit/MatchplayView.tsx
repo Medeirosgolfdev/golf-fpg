@@ -24,7 +24,7 @@
  *     mitarjeta, `scripts/scrape-lgs-matchplay.js` (/rfeg);
  *   - prop `roundPicker`: selector das rondas (ex.: Dia 1 / Dia 2 / Total).
  */
-import { Fragment, useMemo, useState, type CSSProperties } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import ResultMark from "../ResultMark";
@@ -111,9 +111,8 @@ const flipStatus = (s: string): string =>
 function GameHolesStrip({ g, flipped }: { g: MatchplayGame; flipped: boolean }) {
   const holes = (g.holes ?? []);
   const lastPlayed = holes.reduce((acc, h, i) => (h.status ? i : acc), -1);
-  const cLbl: CSSProperties = { padding: "4px 10px", fontSize: "var(--fs-10)", color: "var(--text-3)", textAlign: "left", width: "1%", whiteSpace: "nowrap", textTransform: "uppercase", letterSpacing: "0.4px" };
-  const cSc: CSSProperties = { padding: "4px 2px", textAlign: "center", fontSize: "var(--fs-10)", minWidth: 30, whiteSpace: "nowrap" };
-  const sep = (i: number): CSSProperties => (i === 9 || i === 18 ? { borderLeft: "2px solid var(--sc-par-border)" } : {});
+  // Classes .mp-lbl / .mp-sc (App.css); .mp-nine separa as voltas de 9.
+  const sc = (i: number) => "mp-sc" + (i === 9 || i === 18 ? " mp-nine" : "");
   const disp = (s: string | null): string => (s ? (flipped ? flipStatus(s) : s).replace("A/S", "AS") : "");
   return (
     // Sem header próprio: os nomes e o badge do resultado estão na linha do jogo
@@ -125,19 +124,19 @@ function GameHolesStrip({ g, flipped }: { g: MatchplayGame; flipped: boolean }) 
         <table className="mx-table u-w-100pc u-fs-fs-11">
           <thead>
             <tr className="u-bg-accent-light">
-              <th style={cLbl}>Buraco</th>
-              {holes.map((h, i) => <th key={i} style={{ ...cSc, ...sep(i), color: "var(--accent-text)", fontWeight: 700 }}>{h.hole}</th>)}
+              <th className="mp-lbl">Buraco</th>
+              {holes.map((h, i) => <th key={i} className={sc(i) + " u-c-accent-text u-fw-700"}>{h.hole}</th>)}
             </tr>
             {holes.some(h => h.par != null) && (
               <tr className="u-bg-sc-par-bg">
-                <th style={{ ...cLbl, fontWeight: 400 }}>Par</th>
-                {holes.map((h, i) => <td key={i} style={{ ...cSc, ...sep(i), color: "var(--text-2)" }}>{h.par ?? ""}</td>)}
+                <th className="mp-lbl u-fw-400">Par</th>
+                {holes.map((h, i) => <td key={i} className={sc(i) + " u-c-text-2"}>{h.par ?? ""}</td>)}
               </tr>
             )}
           </thead>
           <tbody>
             <tr>
-              <td style={cLbl}>Estado</td>
+              <td className="mp-lbl">Estado</td>
               {holes.map((h, i) => {
                 const label = disp(h.status);
                 // All square é o estado "nada a assinalar" — um ponto discreto.
@@ -147,9 +146,9 @@ function GameHolesStrip({ g, flipped }: { g: MatchplayGame; flipped: boolean }) 
                 const showChip = label && (!isAS || i === lastPlayed);
                 const kind = /UP$/i.test(label) ? "mp-up" : /DN$/i.test(label) ? "mp-dn" : "mp-as";
                 return (
-                  <td key={i} style={{ ...cSc, ...sep(i), padding: "5px 2px" }}>
+                  <td key={i} className={sc(i) + " u-p-4px-2px"}>
                     {showChip ? (
-                      <span className={`mp-hole-chip ${kind}`} style={i === lastPlayed ? { fontWeight: 800, boxShadow: "inset 0 0 0 1px currentColor" } : undefined}>{label}</span>
+                      <span className={`mp-hole-chip ${kind}${i === lastPlayed ? " mp-last" : ""}`}>{label}</span>
                     ) : label ? (
                       <span className="u-c-text-4">·</span>
                     ) : ""}

@@ -2272,6 +2272,23 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
   background: var(--bg-muted); border: 1px solid var(--border-light); }
 .advice-card.warn { background: var(--color-warn-alpha); border-color: var(--color-warn); }
 .advice-card.off { background: transparent; opacity: 0.6; }
+/* Rótulo fixo à esquerda nas tabelas de distâncias por tee (ui/HoleDiffTable). */
+.dtable :is(th, td).hdt-lbl { position: sticky; left: 0; background: var(--bg-card); z-index: var(--z-base);
+  font-weight: 700; font-size: var(--fs-12); white-space: nowrap; }
+/* Cartão buraco-a-buraco de um jogo de match play (ui/circuit/MatchplayView). */
+.mx-table :is(th, td).mp-lbl { padding: var(--space-4) var(--space-10); font-size: var(--fs-10); color: var(--text-3); text-align: left;
+  width: 1%; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.4px; }
+.mx-table :is(th, td).mp-sc { padding: var(--space-4) var(--space-2); text-align: center; font-size: var(--fs-10); min-width: 30px; white-space: nowrap; }
+.mx-table :is(th, td).mp-sc.mp-nine { border-left: 2px solid var(--sc-par-border); }
+.mp-hole-chip.mp-last { font-weight: 800; box-shadow: inset 0 0 0 1px currentColor; }
+/* Scout: separador entre blocos de colunas e cabeçalho do bloco (Carreira, Nesta prova…). */
+table.sc-lb :is(th, td).scout-sep { border-left: 1px solid var(--border); }
+table.sc-lb th.scout-grp { background: var(--bg-success-subtle); color: var(--color-good-dark); font-weight: 600;
+  font-size: var(--fs-11); text-align: center; padding: 3px var(--space-8); }
+/* Cartão de buracos aberto dentro da lista das últimas 20 voltas (ui/Last20Table). */
+.l20-sc-host { margin: var(--space-6) var(--space-8); border: 1px solid var(--border); border-radius: var(--radius-xl);
+  background: var(--bg-card); padding: var(--space-10); overflow: hidden; width: fit-content; max-width: calc(100% - 16px); }
+
 /* SVG: os atributos não aceitam var() — o traço vem daqui. */
 .donut-base { stroke: var(--bg-neutral); }
 .pt-ring { stroke: var(--bg-card); }

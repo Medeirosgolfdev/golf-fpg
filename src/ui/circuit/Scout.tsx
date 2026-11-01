@@ -266,19 +266,17 @@ export default function Scout({
     const ult = blocosDepois[blocosDepois.length - 1];
     if (ult && ult.grupo === g) ult.n++; else blocosDepois.push({ grupo: g, n: 1 });
   }
-  const SEP = { borderLeft: "1px solid var(--border)" } as const;
-  const GRUPO = { background: "var(--bg-success-subtle)", color: "var(--color-good-dark)", fontWeight: 600, fontSize: "var(--fs-11)", textAlign: "center" as const, padding: "3px 8px" };
   const hdr = (k: string, label: React.ReactNode, title?: string, sep?: boolean) =>
-    <SortableHdr k={k} {...hp} title={title} style={sep ? SEP : undefined}>{label}</SortableHdr>;
+    <SortableHdr k={k} {...hp} title={title} className={sep ? "scout-sep" : undefined}>{label}</SortableHdr>;
   const extraHdr = (c: ScoutExtraCol, i: number, arr: ScoutExtraCol[]) => {
     const sep = i === 0 || (arr[i - 1].grupo ?? "") !== (c.grupo ?? "");
     return c.sort
-      ? <SortableHdr key={c.key} k={c.key} {...hp} title={c.title} style={sep ? SEP : undefined}>{c.label}</SortableHdr>
-      : <th key={c.key} title={c.title} style={sep ? SEP : undefined}>{c.label}</th>;
+      ? <SortableHdr key={c.key} k={c.key} {...hp} title={c.title} className={sep ? "scout-sep" : undefined}>{c.label}</SortableHdr>
+      : <th key={c.key} title={c.title} className={sep ? "scout-sep" : undefined}>{c.label}</th>;
   };
   const extraTd = (l: Linha) => (c: ScoutExtraCol, i: number, arr: ScoutExtraCol[]) => {
     const sep = i === 0 || (arr[i - 1].grupo ?? "") !== (c.grupo ?? "");
-    return <td key={c.key} style={sep ? SEP : undefined}>{c.cell(l.name)}</td>;
+    return <td key={c.key} className={sep ? "scout-sep" : undefined}>{c.cell(l.name)}</td>;
   };
 
   return (
@@ -297,11 +295,11 @@ export default function Scout({
             <tr>
               {colsAntes.length > 0 && <th colSpan={colsAntes.length} />}
               <th />
-              <th colSpan={nCarreira} style={{ ...GRUPO, ...SEP }}>Carreira</th>
-              {nProva > 0 && <th colSpan={nProva} style={{ ...GRUPO, ...SEP }}>Nesta prova</th>}
-              {nManuel > 0 && <th colSpan={nManuel} style={{ ...GRUPO, ...SEP }}>Com o Manuel</th>}
-              {tem.prox && <th style={{ ...GRUPO, ...SEP }}>Próximos</th>}
-              {blocosDepois.map((b, i) => <th key={i} colSpan={b.n} style={{ ...GRUPO, ...SEP }}>{b.grupo}</th>)}
+              <th colSpan={nCarreira} className="scout-grp scout-sep">Carreira</th>
+              {nProva > 0 && <th colSpan={nProva} className="scout-grp scout-sep">Nesta prova</th>}
+              {nManuel > 0 && <th colSpan={nManuel} className="scout-grp scout-sep">Com o Manuel</th>}
+              {tem.prox && <th className="scout-grp scout-sep">Próximos</th>}
+              {blocosDepois.map((b, i) => <th key={i} colSpan={b.n} className="scout-grp scout-sep">{b.grupo}</th>)}
             </tr>
             <tr>
               {colsAntes.map(extraHdr)}
@@ -352,14 +350,14 @@ export default function Scout({
                       {bandeira}{l.name} <KidsLink nome={l.name} fed={l.fed} />
                       {mostraClube && <span className="muted fs-11"> · {clube}</span>}
                     </td>
-                    {tem.idade && <td style={SEP}>{l.idade ?? "–"}</td>}
+                    {tem.idade && <td className="scout-sep">{l.idade ?? "–"}</td>}
                     {tem.hcp && (
-                      <td style={!tem.idade ? SEP : undefined}
+                      <td className={!tem.idade ? "scout-sep" : undefined}
                           title={l.sc?.hr ? `Handicap oficial da Federação Espanhola${l.sc.hr[1] ? ` — actualizado a ${shortDateSlash(l.sc.hr[1], true)}` : ""}` : undefined}>
                         {l.sc?.h != null ? l.sc.h.toFixed(1) : "–"}
                       </td>
                     )}
-                    <td style={!tem.idade && !tem.hcp ? SEP : undefined}
+                    <td className={!tem.idade && !tem.hcp ? "scout-sep" : undefined}
                         title={!l.isManuel && l.threat.level !== "none" ? `Ameaça ${THREAT_LABEL[l.threat.level]} para o Manuel — ${l.threat.reasons.join(" · ")}` : undefined}>
                       {l.sc?.t ? getTierLabel(l.sc.t) : "–"}
                     </td>
@@ -379,7 +377,7 @@ export default function Scout({
                       </td>
                     )}
                     {nProva > 0 && (
-                      <td style={SEP} title={l.rep?.avgToPar != null ? `Média ${fmtToPar(l.rep.avgToPar)} nas edições que acabou` : undefined}>
+                      <td className="scout-sep" title={l.rep?.avgToPar != null ? `Média ${fmtToPar(l.rep.avgToPar)} nas edições que acabou` : undefined}>
                         {l.rep ? l.rep.n : "–"}
                       </td>
                     )}
@@ -395,10 +393,10 @@ export default function Scout({
                         </td>
                       );
                     })}
-                    {tem.vsm && <td style={SEP}>{nM ? `${l.atras} de ${nM}` : "–"}</td>}
+                    {tem.vsm && <td className="scout-sep">{nM ? `${l.atras} de ${nM}` : "–"}</td>}
                     {tem.vsm && <td>{l.vsMMedia != null ? `${l.vsMMedia > 0 ? "+" : l.vsMMedia < 0 ? "−" : ""}${Math.abs(Math.round(l.vsMMedia))}` : "–"}</td>}
                     {tem.prox && (
-                      <td style={SEP} title={l.proximas.map((x) => `${x.name} · ${x.escalao} (${shortDateSlash(x.date)})`).join("\n") || undefined}>
+                      <td className="scout-sep" title={l.proximas.map((x) => `${x.name} · ${x.escalao} (${shortDateSlash(x.date)})`).join("\n") || undefined}>
                         {l.proximas.length || "–"}
                       </td>
                     )}

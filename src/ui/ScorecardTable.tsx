@@ -44,7 +44,6 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
 }) {
   const ecArr = eclectic.holes.slice(0, holeCount).map(h => h?.best ?? null);
   const parArr = eclectic.holes.slice(0, holeCount).map((h, i) => h?.par ?? par[i]);
-  const ecBorder = { borderTop: "1px solid var(--border-light)" } as const;
 
   const sumEc = sumArr(ecArr, 0, holeCount);
   const sumGross = sumArr(gross, 0, holeCount);
@@ -53,13 +52,13 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
     <>
       {/* Eclectic row */}
       <tr>
-        <td className="row-label" style={ecBorder}>Eclético</td>
+        <td className="row-label u-bt-1px-solid-border-light">Eclético</td>
         {Array.from({ length: holeCount }, (_, h) => {
           const ev = ecArr[h];
           const cls = scClass(ev, parArr[h]);
           return (
             <React.Fragment key={h}>
-              <td style={ecBorder}>
+              <td className="u-bt-1px-solid-border-light">
                 {ev != null ? <span className={`sc-score ${cls}`}>{ev}</span> : ""}
               </td>
               {h === frontEnd - 1 && !is9 && (() => {
@@ -68,7 +67,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
                 const outTP = outEc - outP;
                 const tpCls = toParClass(outTP);
                 return (
-                  <td className="col-out" style={{ fontWeight: 700, ...ecBorder }}>
+                  <td className="col-out u-fw-700 u-bt-1px-solid-border-light">
                     {outEc}<span className={`sc-topar ${tpCls}`}>{fmtSign(outTP)}</span>
                   </td>
                 );
@@ -82,7 +81,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
           const inTP = inEc - inP;
           const inCls = toParClass(inTP);
           return (
-            <td className={`col-${is9 ? "total" : "in"}`} style={{ fontWeight: 700, ...ecBorder }}>
+            <td className={`col-${is9 ? "total" : "in"} u-fw-700 u-bt-1px-solid-border-light`}>
               {inEc}<span className={`sc-topar ${inCls}`}>{fmtSign(inTP)}</span>
             </td>
           );
@@ -91,7 +90,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
           const ecTP = sumEc - sumArr(parArr, 0, holeCount);
           const totCls = toParClass(ecTP);
           return (
-            <td className="col-total" style={ecBorder}>
+            <td className="col-total u-bt-1px-solid-border-light">
               {sumEc}<span className={`sc-topar ${totCls}`}>{fmtSign(ecTP)}</span>
             </td>
           );
