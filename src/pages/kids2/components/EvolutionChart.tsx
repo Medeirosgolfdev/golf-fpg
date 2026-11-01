@@ -336,7 +336,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
         <div className="u-d-flex u-fwr-wrap u-gap-8px u-p-6px-8px u-fs-fs-10 u-c-text-3">
           {sources.map((src) => (
             <span key={src} className="u-d-inline-flex u-ai-center u-gap-4px">
-              <span style={{ width: 9, height: 9, borderRadius: "50%", background: SOURCE_COLORS[src] || "var(--text-3)", display: "inline-block" }} />
+              <span className="cor-dot cor-dot-9" style={{ background: SOURCE_COLORS[src] || "var(--text-3)" }} />
               {SOURCE_LABELS[src] || src}
             </span>
           ))}

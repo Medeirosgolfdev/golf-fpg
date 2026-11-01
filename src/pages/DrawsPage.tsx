@@ -439,35 +439,12 @@ function TorneiosList({
       <button
         type="button"
         onClick={() => setOpen(o => !o)}
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          padding: "9px 12px",
-          background: "var(--bg-header)",
-          border: "none",
-          borderBottom: open ? "1px solid var(--border-light)" : "none",
-          cursor: "pointer",
-          textAlign: "left",
-          fontSize: "var(--fs-12)",
-          fontWeight: 800,
-          color: "var(--text)",
-        }}
+        className={"draws-grupo-hdr" + (open ? " open" : "")}
       >
         <span className="u-c-text-3 u-fs-fs-11">
           {open ? "▾" : "▸"}
         </span>
-        <span
-          style={{
-            display: "inline-block",
-            width: 9,
-            height: 9,
-            borderRadius: "50%",
-            background: cor,
-            flexShrink: 0,
-          }}
-        />
+        <span className="cor-dot cor-dot-9" style={{ background: cor }} />
         <span className="u-tt-uppercase u-ls-0_03em">{titulo}</span>
         <span className="chip ml-auto u-fw-700">
           {items.length}
@@ -494,8 +471,7 @@ function TorneiosList({
                   </span>
                   <Link
                     to={linkTorneioFPG(t.torneioId, t.nome)}
-                    className="courseLink"
-                    style={{ flex: 1, lineHeight: 1.3 }}
+                    className="courseLink u-fl-1 u-lh-1_3"
                   >
                     {t.nome || t.torneioId}
                   </Link>
@@ -600,7 +576,7 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
                               )}
                             </span>
                             {dot && (
-                              <span title={dot.title} style={{ width: 8, height: 8, borderRadius: "50%", background: dot.color, flexShrink: 0 }} />
+                              <span title={dot.title} className="cor-dot" style={{ background: dot.color }} />
                             )}
                             <span className="muted u-fvn-tabular-nums u-fsh-0">
                               {fmtScore(g.score)}
@@ -1095,12 +1071,7 @@ export default function DrawsPage() {
         )}
 
         {data && viewMode === "companheiro" && linhasOrdenadas.length > 0 && (
-          <div style={{
-            display: tab === "FPG" ? "flex" : "block",
-            gap: 16,
-            alignItems: "flex-start",
-            flexWrap: "wrap",
-          }}>
+          <div className={tab === "FPG" ? "u-d-flex u-gap-16px u-ai-flex-start u-fwr-wrap" : undefined}>
           <div
             className="card u-m-0 u-p-0 u-ox-auto u-fl-0-1-auto u-minw-0"
 
@@ -1112,7 +1083,7 @@ export default function DrawsPage() {
                   <SortableHdr k="nome" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>
                     Companheiro
                   </SortableHdr>
-                  <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 78 }}>
+                  <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-78px">
                     Escalão
                   </SortableHdr>
                   <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>
@@ -1137,8 +1108,7 @@ export default function DrawsPage() {
                   return (
                     <Fragment key={row.key}>
                       <tr
-                        className="roundRow"
-                        style={{ cursor: "pointer", background: open ? "var(--bg-detail)" : undefined }}
+                        className={"roundRow u-cur-pointer" + (open ? " u-bg-bg-detail" : "")}
                         onClick={() => toggleExpand(row.key)}
                       >
                         <td className="u-ta-center u-c-text-3">
@@ -1234,9 +1204,9 @@ export default function DrawsPage() {
                                     </span>
                                     <span className="u-d-inline-flex u-ai-center u-gap-8px u-fsh-0 u-fvn-tabular-nums">
                                       {dot && (
-                                        <span title={dot.title} style={{ width: 8, height: 8, borderRadius: "50%", background: dot.color, flexShrink: 0 }} />
+                                        <span title={dot.title} className="cor-dot" style={{ background: dot.color }} />
                                       )}
-                                      <span style={{ color: manuelCor, fontWeight: 700, minWidth: 60, textAlign: "right" }}>
+                                      <span className="u-fw-700 u-minw-60px u-ta-right" style={{ color: manuelCor }}>
                                         {fmtScore(r.manuelScore)}
                                       </span>
                                       <span className="muted u-fs-fs-11">vs</span>

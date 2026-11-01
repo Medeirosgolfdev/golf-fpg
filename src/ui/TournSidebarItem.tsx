@@ -33,13 +33,7 @@ function LinkBtn({ ccode, tcode, active }: { ccode?: string; tcode?: string; act
   return (
     <button type="button"
       onClick={e => { e.stopPropagation(); openFpg(ccode, tcode); }}
-      style={{
-        background: "none", border: "none", padding: "0 1px",
-        cursor: "pointer", color: "var(--accent)",
-        opacity: active ? 1 : 0.5,
-        fontSize: "var(--fs-11)", lineHeight: 1,
-        display: "inline-flex", alignItems: "center", verticalAlign: "middle",
-      }}>🔗</button>
+      className={"sidebar-fpg-link" + (active ? " active" : "")}>🔗</button>
   );
 }
 
@@ -135,7 +129,7 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
     <Wrapper {...commonProps} {...wrapperProps}>
       {/* Linha 1: nome */}
       <div className="gap-4 u-d-flex u-ai-flex-start u-mb-3px">
-        <span className="course-item-name" style={{ flex: 1, fontSize: "var(--fs-12)", fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>
+        <span className={"course-item-name u-fl-1 u-fs-fs-12 u-lh-1_3 " + (isActive ? "u-fw-700" : "u-fw-500")}>
           {t.name}
         </span>
         {nAces > 0 && (

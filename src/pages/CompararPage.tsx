@@ -161,7 +161,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
               borderColor: COLORS[i], background: COLORS_LIGHT[i],
               display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: "var(--fs-13)", borderRadius: 20,
             }}>
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS[i], flexShrink: 0 }} />
+              <span className="cor-dot cor-dot-10" style={{ background: COLORS[i] }} />
               <b>{shortName(s.player.name)}</b>
               <span className="muted u-fs-fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
               {s.loading && <span className="u-fs-fs-11">⏳</span>}

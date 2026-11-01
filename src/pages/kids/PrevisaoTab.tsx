@@ -535,6 +535,6 @@ function vsParColor(v: number | null, par: number | null): string {
 }
 
 function Dot({ c }: { c: string }) {
-  return <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: c, verticalAlign: "middle" }} />;
+  return <span className="cor-dot" style={{ background: c }} />;
 }
 

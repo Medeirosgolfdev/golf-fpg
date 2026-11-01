@@ -194,7 +194,7 @@ function PlayerSidebarItemInner({
   return (
     <a
       href={`/jogadores/${p.fed}`}
-      className={`course-item ${isActive ? "active" : ""}`}
+      className={`course-item sidebar-player${isActive ? " active" : ""}${isFedsOnly ? " fed-only" : ""}`}
       onClick={e => {
         // Click simples selecciona; Ctrl/Cmd/Shift/middle deixa o <a> abrir
         // em nova aba (padrão TournSidebarItem).
@@ -203,12 +203,7 @@ function PlayerSidebarItemInner({
           onSelect(p.fed);
         }
       }}
-      style={{
-        borderLeft: `4px solid ${accent}`,
-        paddingLeft: 10,
-        borderRadius: "0 6px 6px 0",
-        opacity: isFedsOnly ? 0.82 : 1,
-      }}
+      style={{ borderLeftColor: accent }}
     >
       {/* Linha 1: rank (se rankingMode) + flag + nome + sexo + indicadores */}
       <div className="course-item-name flex-center u-mb-3px">
@@ -219,7 +214,7 @@ function PlayerSidebarItemInner({
         )}
         <span className="flex-1 u-minw-0">
           {showFlag && <span className="mr-4" title={pm._federadoRaw?.country}>{gf(countryPrefix!)}</span>}
-          <span style={{ fontWeight: isActive ? 700 : 600 }}>{p.name}</span>
+          <span className={isActive ? "u-fw-700" : "u-fw-600"}>{p.name}</span>
           <SexBadge sex={p.sex} size="sm" className="ml-4" />
           {isNewRound && <span className="new-round-dot ml-4" title="Ronda recente (< 7 dias)" />}
           {isFedsOnly && <span className="ml-4 c-muted fs-10" title="Só cadastro FPG — sem análise de scorecards">ø</span>}

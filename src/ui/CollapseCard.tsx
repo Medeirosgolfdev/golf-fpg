@@ -19,7 +19,7 @@ export default function CollapseCard({ title, icon, defaultOpen = false, childre
         tabIndex={0}
         onClick={() => setOpen(v => !v)}
         onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpen(v => !v)}
-        style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", userSelect: "none", marginBottom: open ? 12 : 0 }}
+        className={"collapse-card-hdr" + (open ? " open" : "")}
       >
         {icon && <span className="u-fs-fs-16">{icon}</span>}
         <span className="h-xs flex-1 u-m-0">{title}</span>
