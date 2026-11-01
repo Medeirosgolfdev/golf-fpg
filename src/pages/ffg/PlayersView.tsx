@@ -31,6 +31,7 @@ import { kidsUrl } from "../../ui/KidsLink";
 import { useJuniorsLinks } from "../../hooks/useKidsLinkMap";
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { PlayerTournaments, type FfgPlayerTournamentsFile } from "./PlayerTournaments";
+import Pager from "../../ui/Pager";
 
 interface FrancePlayer {
   license: string;
@@ -307,8 +308,8 @@ export function FFGPlayersView() {
         </select>
         <button
           onClick={() => setJovens((j) => !j)}
-          className={"btn-pill" + (jovens ? " active" : "")}
-          style={jovens ? { background: "var(--accent)", color: "#fff" } : undefined}
+          type="button" aria-pressed={jovens}
+          className={"tourn-tab tourn-tab-sm" + (jovens ? " active" : "")}
           title="Só séries juvenis (Poucet, Poussin, Benjamin, Minime, Cadet, Junior / U8-U21)"
         >
           🧒 Só Jovens
@@ -424,15 +425,7 @@ export function FFGPlayersView() {
           </div>
 
           {/* Paginação */}
-          {totalPages > 1 && (
-            <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
-              <button onClick={() => setPage(1)} disabled={page === 1} className="btn-pill">«</button>
-              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-pill">‹</button>
-              <span className="u-minw-90px u-ta-center">Página <b>{page}</b> de {totalPages}</span>
-              <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="btn-pill">›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="btn-pill">»</button>
-            </div>
-          )}
+          <Pager page={page} totalPages={totalPages} onPage={setPage} />
         </>
       )}
 

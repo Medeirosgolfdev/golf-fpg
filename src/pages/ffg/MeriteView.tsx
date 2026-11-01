@@ -22,6 +22,7 @@ import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { isPTByName } from "../../utils/ptPlayers";
 import { isManuelByName } from "../../constants/manuel";
 import { displayName } from "../../utils/format";
+import Pager from "../../ui/Pager";
 
 /** [trnId|null, data ISO, nome, lugar, voltas, pontos, Moy.SSS] */
 type Prova = [string | null, string, string, string, number[], number | null, number | null];
@@ -267,15 +268,7 @@ export function FFGMeriteView() {
             </table>
           </div>
 
-          {totalPages > 1 && (
-            <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
-              <button onClick={() => setPage(1)} disabled={page === 1} className="btn-pill">«</button>
-              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-pill">‹</button>
-              <span className="u-minw-90px u-ta-center">Página <b>{page}</b> de {totalPages}</span>
-              <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="btn-pill">›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="btn-pill">»</button>
-            </div>
-          )}
+          <Pager page={page} totalPages={totalPages} onPage={setPage} />
         </>
       )}
 

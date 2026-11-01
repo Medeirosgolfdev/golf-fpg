@@ -135,12 +135,12 @@ function ClubsTable({ stats, onDrillDown, maxClub }: {
         <table className="dt-compact">
           <thead>
             <tr className="sticky-head">
-              <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} style={{ width: 30 }}>#</SortableHdr>
+              <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="u-w-30px">#</SortableHdr>
               <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)}>Clube</SortableHdr>
               <th className="u-w-40pc">Distribuição</th>
-              <SortableHdr k="m" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="ta-c" style={{ width: 50 }}><SexBadge sex="M" /></SortableHdr>
-              <SortableHdr k="f" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="ta-c" style={{ width: 50 }}><SexBadge sex="F" /></SortableHdr>
-              <SortableHdr k="count" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="r" style={{ width: 60 }}>Total</SortableHdr>
+              <SortableHdr k="m" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="ta-c u-w-50px"><SexBadge sex="M" /></SortableHdr>
+              <SortableHdr k="f" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="ta-c u-w-50px"><SexBadge sex="F" /></SortableHdr>
+              <SortableHdr k="count" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="r u-w-60px">Total</SortableHdr>
             </tr>
           </thead>
           <tbody>

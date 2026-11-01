@@ -11,9 +11,9 @@ import type { CSSProperties } from "react";
 
 export type ResultMarkKind = "win" | "loss" | "half";
 
-export default function ResultMark({ kind, gap = 6, style }: { kind: ResultMarkKind; gap?: number; style?: CSSProperties }) {
+export default function ResultMark({ kind, gap = 6, style, className }: { kind: ResultMarkKind; gap?: number; style?: CSSProperties; className?: string }) {
   const base: CSSProperties = { display: "inline-block", marginRight: gap, ...style };
-  if (kind === "win") return <span style={base} title="Ganhou">🏆</span>;
-  if (kind === "loss") return <span style={{ ...base, color: "var(--color-danger-dark, #b91c1c)", fontWeight: 700 }} title="Perdeu">✗</span>;
-  return <span style={{ ...base, color: "var(--text-2)", fontWeight: 700 }} title="Empatado">½</span>;
+  if (kind === "win") return <span className={className} style={base} title="Ganhou">🏆</span>;
+  if (kind === "loss") return <span className={className} style={{ ...base, color: "var(--color-danger-dark, #b91c1c)", fontWeight: 700 }} title="Perdeu">✗</span>;
+  return <span className={className} style={{ ...base, color: "var(--text-2)", fontWeight: 700 }} title="Empatado">½</span>;
 }

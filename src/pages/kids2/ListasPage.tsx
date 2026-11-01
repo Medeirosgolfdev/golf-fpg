@@ -168,9 +168,9 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
           <thead>
             <tr>
               <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Ordem por handicap">#</SortableHdr>
-              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Jogador</SortableHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-left">Jogador</SortableHdr>
               <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nasc.</SortableHdr>
-              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Clube</SortableHdr>
+              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-left">Clube</SortableHdr>
               <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Handicap de hoje (FPG)">HCP</SortableHdr>
               <SortableHdr k="inscrito" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Se já está na Entry List">Inscrito</SortableHdr>
               {ant && <>

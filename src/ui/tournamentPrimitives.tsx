@@ -77,8 +77,8 @@ export function SDPill({ sd, hcp, est }: { sd: number | null; hcp?: number | nul
   const cls = sdClassByHcp(sd, hcp ?? null);
   // Com CR/Slope estimados: a MESMA pílula colorida pelo HCP (regra de sempre),
   // só com o número em itálico e o contorno tracejado — 22/10/2026.
-  if (est) return <span className={"p p-sm p-" + cls} title={`SD estimado — ${est}`}
-    style={{ fontStyle: "italic", borderStyle: "dashed" }}>{sd.toFixed(1)}</span>;
+  if (est) return <span className={`${"p p-sm p-" + cls} u-fst-italic u-border-style-dashed`} title={`SD estimado — ${est}`}
+>{sd.toFixed(1)}</span>;
   return <span className={"p p-sm p-" + cls} title="Score Differential">{sd.toFixed(1)}</span>;
 }
 

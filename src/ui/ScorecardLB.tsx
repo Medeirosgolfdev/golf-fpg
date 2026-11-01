@@ -848,8 +848,8 @@ export function ScorecardLB({
               sortKey={sortKey}
               sortDir={sortDir}
               onSort={handleSort}
-              className="lb-esc"
-              style={{ width: 70, minWidth: 70 }}
+              className="lb-esc u-w-70px u-minw-70px"
+
             >
               ESC.
             </SortableHdr>
@@ -860,8 +860,8 @@ export function ScorecardLB({
               sortKey={sortKey}
               sortDir={sortDir}
               onSort={handleSort}
-              className="lb-age"
-              style={{ width: 52, minWidth: 52 }}
+              className="lb-age u-w-52px u-minw-52px"
+
               title="Ano de nascimento estimado (≈ class year − 18)"
             >
               Nasc.
@@ -873,8 +873,8 @@ export function ScorecardLB({
               sortKey={sortKey}
               sortDir={sortDir}
               onSort={handleSort}
-              className="lb-age"
-              style={{ width: 44, minWidth: 44 }}
+              className="lb-age u-w-44px u-minw-44px"
+
             >
               Idade
             </SortableHdr>

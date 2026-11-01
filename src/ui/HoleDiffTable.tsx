@@ -12,7 +12,6 @@ import type { Tee } from "../data/types";
 import { getTeeHex } from "../utils/teeColors";
 import { buildReach, type HoleReach } from "../utils/reach";
 
-const MONO = "'JetBrains Mono', monospace";
 
 export interface ReachTee { tee: Tee; label?: React.ReactNode }
 
@@ -20,7 +19,7 @@ function appCell(app: HoleReach["afterDrive"]) {
   if (app == null) return "–";
   return (
     <span
-      style={{ fontFamily: MONO, color: app.reachable ? "var(--color-good-dark)" : "var(--color-warn-dark)", fontWeight: app.reachable ? 400 : 800 }}
+      className={"mono " + (app.reachable ? "u-c-color-good-dark u-fw-400" : "u-c-color-warn-dark u-fw-800")}
       title={app.reachable
         ? "Metros que sobram para o green — alcançável em regulação"
         : "Green NÃO alcançável em regulação com o alcance configurado"}
@@ -73,8 +72,8 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
         <thead>
           <tr>
             <th style={lblStyle}>Buraco</th>
-            {holes.map(h => <th key={h} className="r" style={{ fontFamily: MONO }}>{h}</th>)}
-            <th className="r" style={{ fontFamily: MONO }}>Σ</th>
+            {holes.map(h => <th key={h} className="r mono">{h}</th>)}
+            <th className="r mono">Σ</th>
           </tr>
         </thead>
         <tbody>
@@ -85,20 +84,20 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
               const ps = byHole.map(m => m.get(h)?.par ?? null);
               const distinct = [...new Set(ps.filter(p => p != null))];
               return (
-                <td key={h} className="r" style={{ fontFamily: MONO, color: "var(--text-3)" }}>
+                <td key={h} className="r mono u-c-text-3">
                   {distinct.length > 1 ? distinct.join("/") : (parAt(h) ?? "–")}
                 </td>
               );
             })}
-            <td className="r" style={{ fontFamily: MONO, color: "var(--text-3)" }}>{parTotal || "–"}</td>
+            <td className="r mono u-c-text-3">{parTotal || "–"}</td>
           </tr>
 
           {/* Metros por tee */}
           {data.map((d, i) => (
             <tr key={"m" + i} style={{ background: d.hex + "1f" }}>
               <td style={lblStyle}>{d.label} <span className="u-fw-600">(m)</span></td>
-              {holes.map(h => <td key={h} className="r" style={{ fontFamily: MONO }}>{distAt(i, h) ?? "–"}</td>)}
-              <td className="r" style={{ fontFamily: MONO, fontWeight: 800 }}>{totals[i] || "–"}</td>
+              {holes.map(h => <td key={h} className="r mono">{distAt(i, h) ?? "–"}</td>)}
+              <td className="r mono u-fw-800">{totals[i] || "–"}</td>
             </tr>
           ))}
 
@@ -110,12 +109,12 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
                 const a = distAt(0, h), b = distAt(1, h);
                 const delta = a != null && b != null ? a - b : null;
                 return (
-                  <td key={h} className="r" style={{ fontFamily: MONO, fontWeight: delta != null && Math.abs(delta) >= 30 ? 800 : 400 }}>
+                  <td key={h} className={"r mono " + (delta != null && Math.abs(delta) >= 30 ? "u-fw-800" : "u-fw-400")}>
                     {delta != null ? (delta > 0 ? "+" : "") + delta : "–"}
                   </td>
                 );
               })}
-              <td className="r" style={{ fontFamily: MONO, fontWeight: 800 }}>
+              <td className="r mono u-fw-800">
                 {totals[0] && totals[1] ? (totals[0] - totals[1] > 0 ? "+" : "") + (totals[0] - totals[1]) : "–"}
               </td>
             </tr>

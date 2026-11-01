@@ -235,7 +235,7 @@ export default function TitulosPage() {
 
       {/* Tabs */}
       {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
-      <TabRow active={activeTab} onChange={(k) => navigate(`/titulos/${k}`)} style={{ margin: "10px 16px 0" }}
+      <TabRow active={activeTab} onChange={(k) => navigate(`/titulos/${k}`)} className="u-m-10px-16px-0"
         tabs={(Object.keys(TAB_LABELS) as TabKey[]).map((k) => ({ key: k, label: TAB_LABELS[k] }))} />
 
       {activeTab === "nacional" && (

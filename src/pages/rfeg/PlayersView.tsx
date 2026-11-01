@@ -26,6 +26,7 @@ import { formatPlayerName } from "../../utils/playerUtils";
 import { displayName } from "../../utils/format";
 import { isManuelByName } from "../../constants/manuel";
 import { PlayerTournaments, type EsPlayerTournamentsFile } from "./PlayerTournaments";
+import Pager from "../../ui/Pager";
 
 interface SpainPlayer {
   licencia: string;
@@ -372,8 +373,8 @@ export function RFEGPlayersView() {
         </select>
         <button
           onClick={() => setJovens((j) => !j)}
-          className={"btn-pill" + (jovens ? " active" : "")}
-          style={jovens ? { background: "var(--accent)", color: "#fff" } : undefined}
+          type="button" aria-pressed={jovens}
+          className={"tourn-tab tourn-tab-sm" + (jovens ? " active" : "")}
           title="Só escalões juvenis (Benjamín, Alevín, Infantil, Cadete, Juvenil)"
         >
           🧒 Só Jovens
@@ -497,15 +498,7 @@ export function RFEGPlayersView() {
           </div>
 
           {/* Paginação */}
-          {totalPages > 1 && (
-            <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
-              <button onClick={() => setPage(1)} disabled={page === 1} className="btn-pill">«</button>
-              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="btn-pill">‹</button>
-              <span className="u-minw-90px u-ta-center">Página <b>{page}</b> de {totalPages}</span>
-              <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="btn-pill">›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="btn-pill">»</button>
-            </div>
-          )}
+          <Pager page={page} totalPages={totalPages} onPage={setPage} />
         </>
       )}
 

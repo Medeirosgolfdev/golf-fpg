@@ -59,9 +59,9 @@ export function useCompareSelection<K extends string | number>(): CompareSelecti
   const bar: React.ReactNode = selected.size > 0 ? (
     <div className="lb-info-line u-d-flex u-ai-center u-gap-8px u-fwr-wrap">
       <span
-        className={"tab-under" + (compareOn ? " active" : "")}
+        className={`${"tab-under" + (compareOn ? " active" : "")} u-cur-pointer u-fw-700`}
         onClick={() => setCompareOn(v => !v)}
-        style={{ cursor: "pointer", fontWeight: 700 }}
+
         title="Mostrar só os jogadores seleccionados (lado a lado)"
       >
         ⚖️ Comparar seleccionados ({selected.size})

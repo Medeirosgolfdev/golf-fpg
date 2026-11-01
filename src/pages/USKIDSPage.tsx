@@ -727,8 +727,8 @@ export default function USKidsFieldPage() {
           to={`/uskids?t=${t.t}&tab=${tab}&rt=scout`}
           onClick={e => { e.stopPropagation(); onSelect(); }}
           title="Scout — os jogadores, o nível de cada um, as edições anteriores e os confrontos com o Manuel"
-          className="p p-sm td-none"
-          style={{ background:"var(--bg-info-subtle)", color:"var(--color-info-dark, #1e3a8a)", borderColor:"var(--border-info, #93c5fd)" }}>
+          className="p p-sm td-none u-bg-bg-info-subtle u-c-var-color-info-dark-1e3a8a u-border-color-var-border-info-93c5fd"
+>
           🔭 Scout
         </Link>
       </>
@@ -789,7 +789,7 @@ export default function USKidsFieldPage() {
     <DataSourcesChip sources={fileMeta} />
     <ToolbarSep />
     {/* Vistas: o mesmo interruptor segmentado do resto do site. */}
-    <TabRow active={tab} onChange={handleTabChange} style={{ flexShrink:0 }}
+    <TabRow active={tab} onChange={handleTabChange} className="u-fsh-0"
       tabs={TABS.map(tb => ({ key: tb.id, label: tb.label, count: tb.badge ?? undefined }))} />
     <ToolbarSep />
     <button

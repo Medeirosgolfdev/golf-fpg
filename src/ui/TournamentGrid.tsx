@@ -312,8 +312,8 @@ function TournamentGrid({
             s={sortKey}
             d={sortDir}
             on={handleSort}
-            className="cs-s-pts cs-col"
-            style={{ color: "var(--color-warn-dark)" }}
+            className="cs-s-pts cs-col u-c-color-warn-dark"
+
           >
             Pts
           </CSortTh>

@@ -183,15 +183,15 @@ export function FileBadge({
   };
 
   return (
-    <span ref={ref} style={{ display: "inline-flex", position: "relative" }} className={className}>
+    <span ref={ref} className={`${className ?? ""} u-d-inline-flex u-pos-relative`}>
       <span
+        className="mono"
         title={`${path}${tournaments ? "  ·  Clique direito: ver torneios" : ""}`}
         onContextMenu={onContext}
         style={{
           // Mesmo tamanho/cor do "data" e "N jog" ao lado — aparência mínima, sem pill
           fontSize: "var(--fs-10)",
           fontWeight: 500,
-          fontFamily: "var(--font-mono)",
           color: "var(--text-muted)",
           opacity: 0.75,
           cursor: tournaments ? "context-menu" : "default",
@@ -471,9 +471,8 @@ function SourceRow({ source }: { source: DataSource }) {
         {statusIcon}
       </span>
       <span className="u-fl-1 u-minw-0">
-        <div style={{
+        <div className="mono" style={{
           fontSize: "var(--fs-11)",
-          fontFamily: "var(--font-mono)",
           wordBreak: "break-all",
           color: isError ? "var(--color-warn-dark)" : undefined,
           fontWeight: isError ? 600 : 400,

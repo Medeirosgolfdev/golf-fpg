@@ -232,8 +232,8 @@ interface FedColumn {
   cell: (f: RFEGFederation) => React.ReactNode;
   /** Alinhamento do conteúdo (default: "center"). */
   align?: "left" | "center" | "right";
-  /** Estilo extra aplicado à célula. */
-  cellStyle?: React.CSSProperties;
+  /** Classes extra da célula (ex.: "mono" para números). */
+  cellClass?: string;
   /** Direcção inicial ao seleccionar esta coluna (default: "asc"). */
   defaultDir?: "asc" | "desc";
 }
@@ -290,7 +290,7 @@ function FedTable({ rows, columns }: { rows: RFEGFederation[]; columns: FedColum
           {sorted.map(f => (
             <tr key={f.name}>
               {columns.map(c => (
-                <td key={c.key} style={{ textAlign: c.align ?? "center", ...c.cellStyle }}>
+                <td key={c.key} className={c.cellClass} style={{ textAlign: c.align ?? "center" }}>
                   {c.cell(f)}
                 </td>
               ))}
@@ -322,8 +322,8 @@ export function RFEGFederationsView() {
             </span>
             <ExtLink
               href="https://rfeg.es/rfeg/federaciones-autonomicas"
-              className="tourn-ext-link"
-              style={{ marginLeft: 8 }}
+              className="tourn-ext-link u-ml-8px"
+
             >
               🔗 rfeg.es
             </ExtLink>
@@ -382,19 +382,19 @@ export function RFEGFederationsView() {
           },
           {
             key: "lic", label: "Lic.",
-            cellStyle: { fontFamily: "var(--font-mono)" },
+            cellClass: "mono",
             sortVal: f => f.licPrefix ?? "",
             cell: f => <code>{f.licPrefix}</code>,
           },
           {
             key: "ncCode", label: "Cód. NC",
-            cellStyle: { fontFamily: "var(--font-mono)" },
+            cellClass: "mono",
             sortVal: f => f.ncCode ?? "",
             cell: f => <code>{f.ncCode}</code>,
           },
           {
             key: "scrapedCount", label: "Torneios", align: "right", defaultDir: "desc",
-            cellStyle: { fontFamily: "var(--font-mono)", color: "var(--color-good)", fontWeight: 600 },
+            cellClass: "mono u-c-color-good u-fw-600",
             sortVal: f => f.scrapedCount ?? 0,
             cell: f => f.scrapedCount,
           },
@@ -438,7 +438,7 @@ export function RFEGFederationsView() {
           },
           {
             key: "lic", label: "Lic.",
-            cellStyle: { fontFamily: "var(--font-mono)" },
+            cellClass: "mono",
             sortVal: f => f.licPrefix ?? "",
             cell: f => <code>{f.licPrefix}</code>,
           },
@@ -448,7 +448,7 @@ export function RFEGFederationsView() {
           },
           {
             key: "scrapedCount", label: "Games scrapados", align: "right", defaultDir: "desc",
-            cellStyle: { fontFamily: "var(--font-mono)", color: "var(--color-good)", fontWeight: 600 },
+            cellClass: "mono u-c-color-good u-fw-600",
             sortVal: f => f.scrapedCount ?? 0,
             cell: f => f.scrapedCount,
           },
@@ -485,7 +485,7 @@ export function RFEGFederationsView() {
           },
           {
             key: "lic", label: "Lic.",
-            cellStyle: { fontFamily: "var(--font-mono)" },
+            cellClass: "mono",
             sortVal: f => f.licPrefix ?? "",
             cell: f => <code>{f.licPrefix}</code>,
           },
@@ -516,13 +516,13 @@ export function RFEGFederationsView() {
           },
           {
             key: "lic", label: "Lic.",
-            cellStyle: { fontFamily: "var(--font-mono)" },
+            cellClass: "mono",
             sortVal: f => f.licPrefix ?? "",
             cell: f => <code>{f.licPrefix}</code>,
           },
           {
             key: "ncCode", label: "Cód. NC (vazio)",
-            cellStyle: { fontFamily: "var(--font-mono)" },
+            cellClass: "mono",
             sortVal: f => f.ncCode ?? "",
             cell: f => <code>{f.ncCode}</code>,
           },

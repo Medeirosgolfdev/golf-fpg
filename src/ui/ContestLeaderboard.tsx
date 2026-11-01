@@ -142,7 +142,7 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
               const isM = isManuelByName(e.n);
               return (
                 <tr key={idx} style={{ background: isM ? "var(--bg-success-subtle)" : undefined }}>
-                  <td className={isM ? "fw-800" : "fw-600"} style={{ whiteSpace: "nowrap" }}>{e.n}</td>
+                  <td className={`${isM ? "fw-800" : "fw-600"} u-ws-nowrap`}>{e.n}</td>
                   <td className="r mono">{e.y25}</td>
                   <td className="r mono">{e.y26}</td>
                   <td className="r fw-700" style={{ color: deltaColor(e.delta, SC.danger) }}>{e.delta > 0 ? "+" : ""}{e.delta}</td>

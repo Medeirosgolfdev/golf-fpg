@@ -171,8 +171,8 @@ function KIDS2PageContent() {
           return (
             <button
               key={p.key}
-              className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
-              style={{ flexShrink: 0 }}
+              className={`${"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")} u-fsh-0`}
+
               onClick={() => toggleSource(p.key)}
               title={`Filtrar: ${p.label}`}
             >
@@ -182,8 +182,8 @@ function KIDS2PageContent() {
         })}
         <ToolbarSep />
         <button
-          className={"tourn-tab tourn-tab-sm" + (onlyVsManuel ? " active" : " tourn-tab-muted")}
-          style={{ flexShrink: 0 }}
+          className={`${"tourn-tab tourn-tab-sm" + (onlyVsManuel ? " active" : " tourn-tab-muted")} u-fsh-0`}
+
           onClick={() => setOnlyVsManuel((v) => !v)}
           title="Só rivais que cruzaram com Manuel"
           disabled={!manuel}
@@ -191,8 +191,8 @@ function KIDS2PageContent() {
           ⚔️ vs Manuel
         </button>
         <button
-          className={"tourn-tab tourn-tab-sm" + (onlyWins ? " active" : " tourn-tab-muted")}
-          style={{ flexShrink: 0 }}
+          className={`${"tourn-tab tourn-tab-sm" + (onlyWins ? " active" : " tourn-tab-muted")} u-fsh-0`}
+
           onClick={() => setOnlyWins((v) => !v)}
           title="Só rivais com pelo menos 1 vitória"
         >

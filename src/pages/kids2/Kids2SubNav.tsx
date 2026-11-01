@@ -38,7 +38,7 @@ export function Kids2Nav() {
   const { pathname } = useLocation();
   return (
     <>
-      <Link to="/kids2" className="toolbar-title" style={{ textDecoration: "none" }}>🌍 Kids 2</Link>
+      <Link to="/kids2" className="toolbar-title u-td-none">🌍 Kids 2</Link>
       <ToolbarSep />
       {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
       <div className="segmented-toggle u-fsh-0" role="tablist" aria-label="Vista">
@@ -46,7 +46,7 @@ export function Kids2Nav() {
           const active = t.match(pathname);
           return (
             <Link key={t.to} to={t.to} role="tab" aria-selected={active}
-              className={"seg-btn" + (active ? " active" : "")} style={{ textDecoration: "none" }}>
+              className={`${"seg-btn" + (active ? " active" : "")} u-td-none`}>
               <span className="seg-label">{t.label}</span>
             </Link>
           );

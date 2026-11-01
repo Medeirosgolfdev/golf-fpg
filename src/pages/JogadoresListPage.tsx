@@ -26,6 +26,7 @@ import { useAppContext } from "../context/AppContext";
 import { norm, shortDate, ageAtDate, todayIso } from "../utils/format";
 import { gf } from "../utils/flagUtils";
 import { hcpDisplay } from "../utils/playerUtils";
+import Pager from "../ui/Pager";
 import {
   loadFederados,
   mergePlayersWithFederados,
@@ -455,7 +456,7 @@ export default function JogadoresListPage() {
           {sorted.length.toLocaleString("pt-PT")} de {rows.length.toLocaleString("pt-PT")}
         </ToolbarMeta>
         <ToolbarSep />
-        <button onClick={resetFilters} className="btn-pill u-fs-fs-12">
+        <button type="button" onClick={resetFilters} className="btn">
           Limpar filtros
         </button>
         <span className="u-ml-auto u-fs-fs-11 u-c-text-muted">
@@ -623,8 +624,8 @@ export default function JogadoresListPage() {
                     onDoubleClick={() => window.open(`/jogadores/${r.fed}`, "_blank", "noopener,noreferrer")}
                     onAuxClick={e => { if (e.button === 1) window.open(`/jogadores/${r.fed}`, "_blank", "noopener,noreferrer"); }}
                     title="Click no nome: abrir ficha · Click na linha: seleccionar · Duplo-click: abrir ficha"
-                    style={{ cursor: "pointer" }}
-                    className={cls}
+
+                    className={`${cls ?? ""} u-cur-pointer`}
                   >
                     <td>{r.fed}</td>
                     <td className="u-fw-500">
@@ -680,17 +681,7 @@ export default function JogadoresListPage() {
           </div>
 
           {/* Paginação */}
-          {totalPages > 1 && (
-            <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
-              <button onClick={() => setPage(1)} disabled={page === 1} className="btn-pill">«</button>
-              <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="btn-pill">‹</button>
-              <span className="u-minw-80px u-ta-center">
-                Página <b>{page}</b> de {totalPages}
-              </span>
-              <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="btn-pill">›</button>
-              <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="btn-pill">»</button>
-            </div>
-          )}
+          <Pager page={page} totalPages={totalPages} onPage={setPage} />
         </>
       )}
 

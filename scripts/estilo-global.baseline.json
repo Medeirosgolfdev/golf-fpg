@@ -1,10 +1,10 @@
 {
   "gerado": "2026-11-01",
   "totais": {
-    "estilosInline": 551,
-    "coresHex": 182,
+    "estilosInline": 470,
+    "coresHex": 177,
     "letraNumero": 5,
-    "cantosNumero": 10
+    "cantosNumero": 9
   },
   "ficheiros": {
     "pages/BJGTAnalysisPage.tsx": {
@@ -31,7 +31,6 @@
       "estilosInline": 6
     },
     "pages/drive/driveRanking.tsx": {
-      "estilosInline": 1,
       "letraNumero": 2
     },
     "pages/EGRPage.tsx": {
@@ -43,34 +42,31 @@
     },
     "pages/ffg/PlayersView.tsx": {
       "estilosInline": 3,
-      "coresHex": 2
+      "coresHex": 1
     },
     "pages/FFGPage.tsx": {
       "coresHex": 1
     },
     "pages/fpg/fpgOmRanking.tsx": {
-      "estilosInline": 13,
+      "estilosInline": 8,
       "coresHex": 12
     },
     "pages/fpg/FpgScout.tsx": {
       "estilosInline": 2
     },
     "pages/fpg/TournamentDetail.tsx": {
-      "estilosInline": 2,
+      "estilosInline": 1,
       "coresHex": 1
-    },
-    "pages/FPGPage.tsx": {
-      "estilosInline": 1
     },
     "pages/GlobalJuniorPage.tsx": {
       "coresHex": 1
     },
     "pages/jogadores/federadoFields.tsx": {
-      "estilosInline": 2,
+      "estilosInline": 1,
       "coresHex": 3
     },
     "pages/jogadores/FederadosStatsPanel.tsx": {
-      "estilosInline": 14
+      "estilosInline": 10
     },
     "pages/jogadores/FilteredStatsCard.tsx": {
       "estilosInline": 4
@@ -80,9 +76,6 @@
     },
     "pages/jogadores/JogadoresToolbar.tsx": {
       "coresHex": 1
-    },
-    "pages/jogadores/PlayerKpiStrip.tsx": {
-      "estilosInline": 1
     },
     "pages/jogadores/PlayerSidebarItem.tsx": {
       "estilosInline": 1,
@@ -101,11 +94,11 @@
       "estilosInline": 1
     },
     "pages/JogadoresListPage.tsx": {
-      "estilosInline": 3,
+      "estilosInline": 2,
       "coresHex": 1
     },
     "pages/JogadoresPorAnoPage.tsx": {
-      "estilosInline": 2,
+      "estilosInline": 1,
       "coresHex": 4
     },
     "pages/kids/FieldRivaisDashboard.tsx": {
@@ -152,11 +145,8 @@
       "estilosInline": 3,
       "coresHex": 6
     },
-    "pages/kids2/Kids2SubNav.tsx": {
-      "estilosInline": 2
-    },
     "pages/kids2/ListasPage.tsx": {
-      "estilosInline": 3
+      "estilosInline": 1
     },
     "pages/kids2/RankingPage.tsx": {
       "estilosInline": 2
@@ -164,39 +154,29 @@
     "pages/kids2/Sidebar.tsx": {
       "estilosInline": 3
     },
-    "pages/KIDS2Page.tsx": {
-      "estilosInline": 3
-    },
     "pages/major/MajorVeteransView.tsx": {
-      "estilosInline": 6,
+      "estilosInline": 2,
       "coresHex": 2,
       "cantosNumero": 1
     },
     "pages/rfeg/FederationsView.tsx": {
-      "estilosInline": 4,
+      "estilosInline": 3,
       "coresHex": 10
     },
     "pages/rfeg/PlayersView.tsx": {
       "estilosInline": 4,
-      "coresHex": 3,
+      "coresHex": 2,
       "cantosNumero": 1
     },
     "pages/SimuladorPage.tsx": {
       "estilosInline": 7
     },
-    "pages/TitulosPage.tsx": {
-      "estilosInline": 1
-    },
     "pages/USKIDSPage.tsx": {
-      "estilosInline": 6,
-      "coresHex": 2
+      "estilosInline": 4
     },
     "pages/WAGRPage.tsx": {
       "estilosInline": 1,
       "coresHex": 5
-    },
-    "ui/AdmissionsTab.tsx": {
-      "estilosInline": 2
     },
     "ui/AllRoundsScorecardLB.tsx": {
       "estilosInline": 11,
@@ -218,24 +198,24 @@
       "estilosInline": 6
     },
     "ui/circuit/CircuitShell.tsx": {
-      "estilosInline": 5,
+      "estilosInline": 4,
       "coresHex": 4,
       "cantosNumero": 1
     },
     "ui/circuit/MatchplayView.tsx": {
-      "estilosInline": 17
+      "estilosInline": 12
     },
     "ui/circuit/PastEditionsTable.tsx": {
       "estilosInline": 6
     },
     "ui/circuit/Scout.tsx": {
-      "estilosInline": 8
+      "estilosInline": 6
     },
     "ui/circuit/TeamStrokeStandings.tsx": {
       "estilosInline": 6
     },
     "ui/ContestLeaderboard.tsx": {
-      "estilosInline": 5
+      "estilosInline": 4
     },
     "ui/CourseHeroCard.tsx": {
       "estilosInline": 6,
@@ -246,10 +226,10 @@
       "estilosInline": 1
     },
     "ui/DataSources.tsx": {
-      "estilosInline": 7
+      "estilosInline": 6
     },
     "ui/DrawTab.tsx": {
-      "estilosInline": 7,
+      "estilosInline": 4,
       "coresHex": 1
     },
     "ui/EclecticSection.tsx": {
@@ -265,13 +245,6 @@
       "estilosInline": 1,
       "coresHex": 1
     },
-    "ui/FilterField.tsx": {
-      "estilosInline": 1,
-      "coresHex": 1
-    },
-    "ui/FilterPillRow.tsx": {
-      "estilosInline": 1
-    },
     "ui/FilterPills.tsx": {
       "estilosInline": 2,
       "coresHex": 1,
@@ -282,7 +255,7 @@
       "coresHex": 8
     },
     "ui/HoleDiffTable.tsx": {
-      "estilosInline": 12
+      "estilosInline": 3
     },
     "ui/HoleStatsSection.tsx": {
       "estilosInline": 14
@@ -295,9 +268,8 @@
       "coresHex": 1
     },
     "ui/JovensAnaliseView.tsx": {
-      "estilosInline": 11,
-      "coresHex": 1,
-      "cantosNumero": 1
+      "estilosInline": 8,
+      "coresHex": 1
     },
     "ui/KpiCard.tsx": {
       "estilosInline": 1
@@ -320,7 +292,7 @@
       "coresHex": 19
     },
     "ui/PJARankingView.tsx": {
-      "estilosInline": 13,
+      "estilosInline": 9,
       "cantosNumero": 1
     },
     "ui/PlayerFilterBar.tsx": {
@@ -348,10 +320,10 @@
       "coresHex": 58
     },
     "ui/SantoDaSerraPanel.tsx": {
-      "estilosInline": 6
+      "estilosInline": 2
     },
     "ui/ScorecardLB.tsx": {
-      "estilosInline": 4,
+      "estilosInline": 1,
       "coresHex": 1
     },
     "ui/ScorecardLeaderboard.tsx": {
@@ -377,7 +349,7 @@
       "cantosNumero": 1
     },
     "ui/TabelaGlobal.tsx": {
-      "estilosInline": 13,
+      "estilosInline": 9,
       "coresHex": 2
     },
     "ui/tableCells.tsx": {
@@ -400,17 +372,14 @@
       "estilosInline": 1
     },
     "ui/TopClubesPanel.tsx": {
-      "estilosInline": 4
+      "estilosInline": 1
     },
     "ui/TournamentGrid.tsx": {
-      "estilosInline": 2
+      "estilosInline": 1
     },
     "ui/tournamentPrimitives.tsx": {
-      "estilosInline": 2,
+      "estilosInline": 1,
       "cantosNumero": 1
-    },
-    "ui/useCompareSelection.tsx": {
-      "estilosInline": 1
     }
   }
 }

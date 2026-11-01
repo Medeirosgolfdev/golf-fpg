@@ -346,7 +346,7 @@ export default function JogadoresPorAnoPage() {
                   {showYear && <td className="u-fw-700">{birthYear(p.dob)}</td>}
                   <td className="row-label u-ws-nowrap">
                     {hasAnalysis
-                      ? <Link to={`/jogadores/${p.fed}`} style={{ color: "var(--accent)", fontWeight: 700 }}>{p.name}</Link>
+                      ? <Link to={`/jogadores/${p.fed}`} className="u-c-accent u-fw-700">{p.name}</Link>
                       : <span className="u-fw-600">{p.name}</span>}
                     <FormBadge ps={ps} />
                   </td>

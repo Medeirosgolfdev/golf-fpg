@@ -244,7 +244,7 @@ export default function TopClubesPanel({
                 sortKey={sortKey}
                 sortDir={sortDir}
                 onSort={onSort}
-                style={{ textAlign: "right" }}
+                className="u-ta-right"
               >
                 Títulos
               </SortableHdr>
@@ -253,7 +253,7 @@ export default function TopClubesPanel({
                 sortKey={sortKey}
                 sortDir={sortDir}
                 onSort={onSort}
-                style={{ textAlign: "right" }}
+                className="u-ta-right"
               >
                 Atletas
               </SortableHdr>
@@ -262,7 +262,7 @@ export default function TopClubesPanel({
                 sortKey={sortKey}
                 sortDir={sortDir}
                 onSort={onSort}
-                style={{ textAlign: "right" }}
+                className="u-ta-right"
               >
                 Escalões
               </SortableHdr>

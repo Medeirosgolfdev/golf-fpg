@@ -79,9 +79,10 @@ function entriesByDateDesc(a: CircuitEntry, b: CircuitEntry): number {
 
 /** Pills 🗺️ de liga com cap — as qualificações nacionais FFG aparecem nas 22
  *  ligas todas; mostramos `max` + "+N" com as restantes no tooltip. */
-function LigaPills({ entry, config, max, style }: {
-  entry: CircuitEntry; config: CircuitConfig; max: number; style?: React.CSSProperties;
+function LigaPills({ entry, config, max, className }: {
+  entry: CircuitEntry; config: CircuitConfig; max: number; className?: string;
 }) {
+  const cls = "p p-sm p-muted" + (className ? " " + className : "");
   const names = entryLigas(entry).map(l => config.ligaLabels?.[l] ?? l);
   if (!names.length) return null;
   const shown = names.slice(0, max);
@@ -89,10 +90,10 @@ function LigaPills({ entry, config, max, style }: {
   return (
     <>
       {shown.map(n => (
-        <span key={n} className="p p-sm p-muted" style={style} title={`Liga: ${n}`}>🗺️ {n}</span>
+        <span key={n} className={cls} title={`Liga: ${n}`}>🗺️ {n}</span>
       ))}
       {rest.length > 0 && (
-        <span className="p p-sm p-muted" style={style} title={`Também em: ${rest.join(", ")}`}>
+        <span className={cls} title={`Também em: ${rest.join(", ")}`}>
           +{rest.length}
         </span>
       )}
@@ -842,7 +843,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                       {curDateStr && <span className="muted ml-8">{curDateStr}</span>}
                       {cur.federation && <span className="muted ml-8">🏛️ {cur.federation}</span>}
                       <LigaPills entry={cur} config={config} max={3}
-                        style={{ marginLeft: 8, background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }} />
+                        className="u-ml-8px u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border" />
                       <span className="gap-4 ml-8 u-d-inline-flex u-ai-center u-fwr-wrap">
                         {headerStats.nPlayers > 0 && (
                           <span className="p p-sm u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border">

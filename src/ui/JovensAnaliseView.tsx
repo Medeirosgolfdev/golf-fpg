@@ -202,13 +202,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
             {ch.ccode && ch.tcode && (
               <Link to={tournamentUrl("FPG", ch.ccode, ch.tcode.split("+")[0])}
                 title="Ver no nosso scoreboard"
-                style={{
-                  fontSize: "var(--fs-10)", textDecoration: "none",
-                  color: "var(--text-2)", fontWeight: 600,
-                  whiteSpace: "nowrap",
-                  padding: "0 4px", borderRadius: 3,
-                  border: "1px solid var(--border-light)",
-                }}>
+                className="u-fs-fs-10 u-td-none u-c-text-2 u-fw-600 u-ws-nowrap u-p-0-4px u-br-3px u-bd-1px-solid-border-light">
                 SCORE
               </Link>
             )}
@@ -562,11 +556,11 @@ function RegionChampionsBlock({
           <thead>
             <tr>
               <SortableHdr k="esc" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort as any}
-                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", position: "sticky", left: 0, background: "var(--bg-card)", minWidth: 90, width: 90, zIndex: "var(--z-float)", cursor: "pointer" }}>
+                className="u-p-6px-8px u-bb-2px-solid-border u-ta-left u-pos-sticky u-left-0 u-bg-bg-card u-minw-90px u-w-90px u-z-z-float u-cur-pointer">
                 Escalão
               </SortableHdr>
               <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort as any}
-                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", position: "sticky", left: 90, background: "var(--bg-card)", minWidth: 90, zIndex: "var(--z-float)", cursor: "pointer", borderRight: "1px solid var(--border-light)" }}>
+                className="u-p-6px-8px u-bb-2px-solid-border u-ta-left u-pos-sticky u-left-90px u-bg-bg-card u-minw-90px u-z-z-float u-cur-pointer u-brd-1px-solid-border-light">
                 Tipo
               </SortableHdr>
               {yearCols.map(y => (

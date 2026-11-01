@@ -668,7 +668,7 @@ function Content() {
                 const href = urlSeg ? `/FPG/${urlSeg}` : "/FPG";
                 return (
                   <a key={key} href={href} role="tab" aria-selected={active}
-                    className={"seg-btn" + (active ? " active" : "")}
+                    className={`${"seg-btn" + (active ? " active" : "")} u-td-none`}
                     onClick={e => {
                       if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
                         e.preventDefault();
@@ -680,7 +680,7 @@ function Content() {
                         navigate((urlSeg ? `/FPG/${urlSeg}` : "/FPG") + (_s ? `?${_s}` : ""));
                       }
                     }}
-                    style={{ textDecoration: "none" }}>
+>
                     <span className="seg-label">{label}</span>
                   </a>
                 );

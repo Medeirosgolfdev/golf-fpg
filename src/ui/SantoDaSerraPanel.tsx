@@ -188,10 +188,10 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
               <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Atleta</SortableHdr>
               <SortableHdr k="fed" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Fed</SortableHdr>
               <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Nasc.</SortableHdr>
-              <SortableHdr k="top5" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ textAlign: "right" }}>Top-5</SortableHdr>
-              <SortableHdr k="champ" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ textAlign: "right" }}>🥇</SortableHdr>
-              <SortableHdr k="podium" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ textAlign: "right" }}>Pódio</SortableHdr>
-              <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ textAlign: "right" }}>Melhor</SortableHdr>
+              <SortableHdr k="top5" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="u-ta-right">Top-5</SortableHdr>
+              <SortableHdr k="champ" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="u-ta-right">🥇</SortableHdr>
+              <SortableHdr k="podium" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="u-ta-right">Pódio</SortableHdr>
+              <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="u-ta-right">Melhor</SortableHdr>
               <SortableHdr k="years" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Anos</SortableHdr>
             </tr>
           </thead>

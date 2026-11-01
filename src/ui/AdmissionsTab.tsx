@@ -446,11 +446,11 @@ export default function AdmissionsTab({
       {!hide.tee && <th className="lb-tee">TEE</th>}
       {hasPts && (
         <SortableHdr k="pts" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}
-          style={{ textAlign: "center" }} title="Pontos no ranking que o apurou (e a posição nesse ranking)">PTS</SortableHdr>
+          className="u-ta-center" title="Pontos no ranking que o apurou (e a posição nesse ranking)">PTS</SortableHdr>
       )}
       {extraCols.map(c => (
         <SortableHdr key={c.key} k={`x:${c.key}`} sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}
-          style={{ textAlign: "center" }} title={c.title}>{c.label}</SortableHdr>
+          className="u-ta-center" title={c.title}>{c.label}</SortableHdr>
       ))}
     </>
   );

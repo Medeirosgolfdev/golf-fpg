@@ -199,9 +199,9 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
                   <th className="u-w-34px u-ta-right">#</th>
                   <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
                   <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>País</SortableHdr>
-                  <SortableHdr k="tournaments" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }} title="Nº de torneios internacionais">Torneios</SortableHdr>
-                  <SortableHdr k="years" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }} title="Anos distintos de presença (assiduidade)">Anos</SortableHdr>
-                  <SortableHdr k="seriesCount" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }} title="Nº de circuitos diferentes">Circuitos</SortableHdr>
+                  <SortableHdr k="tournaments" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-right" title="Nº de torneios internacionais">Torneios</SortableHdr>
+                  <SortableHdr k="years" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-right" title="Anos distintos de presença (assiduidade)">Anos</SortableHdr>
+                  <SortableHdr k="seriesCount" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-right" title="Nº de circuitos diferentes">Circuitos</SortableHdr>
                   <th>Séries</th>
                 </tr>
               </thead>
@@ -212,8 +212,8 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
                   return (
                     <Fragment key={p.name + i}>
                       <tr
-                        className={isM ? "row-manuel" : p.pt ? "row-portuguese" : undefined}
-                        style={{ cursor: "pointer" }}
+                        className={`${isM ? "row-manuel" : p.pt ? "row-portuguese" : ""} u-cur-pointer`}
+
                         onClick={() => toggleRow(p.name)}
                         title="Clique para ver os torneios"
                       >

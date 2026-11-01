@@ -380,9 +380,9 @@ export function PJARankingView({
     <div className="u-d-flex u-gap-4px">
       {years.map(yr => (
         <button key={yr}
-          className={"tourn-tab tourn-tab-sm" + (yr === year ? " active" : " tourn-tab-muted")}
+          className={`${"tourn-tab tourn-tab-sm" + (yr === year ? " active" : " tourn-tab-muted")} u-fsh-0`}
           onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterSex(""); setFilterRegiao([]); setFilterHcp(false); setFilterName(""); resetYearSort(); }}
-          style={{ flexShrink: 0 }}>
+>
           {yr}
         </button>
       ))}
@@ -521,7 +521,7 @@ export function PJARankingView({
                                     : `Ronda ${r.label.slice(1)}`}>{r.label}</span>
                           : "±Par"}
                       </CSortTh>
-                      <CSortTh k={"pts_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 700 }}>{metric === "sd" ? "SD" : "Pts"}</CSortTh>
+                      <CSortTh k={"pts_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col u-c-color-warn-dark u-fw-700">{metric === "sd" ? "SD" : "Pts"}</CSortTh>
                       {showMeters && (
                         <CSortTh k={"m_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-topar cs-col"
                           title="Metros jogados nesta volta">m</CSortTh>
@@ -536,7 +536,7 @@ export function PJARankingView({
             </th>}
             summarySubHeaders={<>
               <CSortTh k="voltas" s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Voltas</CSortTh>
-              <CSortTh k="total"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 800 }}
+              <CSortTh k="total"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col u-c-color-warn-dark u-fw-800"
                 title={metric === "sd" ? `Média das ${BEST_SD_N} melhores voltas — MENOR é melhor` : undefined}>
                 {metric === "sd" ? "SD méd" : "Total"}
               </CSortTh>
@@ -561,9 +561,9 @@ export function PJARankingView({
                 isSel ? "row-selected" : "",
               ].filter(Boolean).join(" ") || undefined;
               return (
-                <tr key={row.key} className={classes}
+                <tr key={row.key} className={`${classes ?? ""} u-cur-pointer`}
                     onClick={() => setSelectedKey(isSel ? null : row.key)}
-                    style={{ cursor: "pointer" }}>
+>
                   <td className="cs-pos sticky-col-0" title={`Posição no ranking (${sortKey === "total" ? "ordem actual" : "independente da ordenação da tabela"})`}>
                     {rankByKey.get(row.key) ?? idx + 1}
                   </td>

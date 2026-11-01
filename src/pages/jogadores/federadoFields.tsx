@@ -263,7 +263,7 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
   if (key === "rounds_current_year") {
     const n = Number(v);
     const isZero = isFinite(n) && n === 0;
-    return <span className={isZero ? "muted" : "fw-700"} style={{ fontSize: "var(--fs-13)" }}>{isFinite(n) ? n : String(v)}</span>;
+    return <span className={`${isZero ? "muted" : "fw-700"} u-fs-fs-13`}>{isFinite(n) ? n : String(v)}</span>;
   }
 
   // ── Flags booleanas (notpublic, club_notpublic) ─────────────

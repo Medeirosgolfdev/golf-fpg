@@ -370,7 +370,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
             </span>
           : <span className="p p-sm p-muted">Categoria Júnior · classificação de hoje</span>}
         {tournament && (
-          <Link to="/om-cgss" className="p p-sm p-muted" style={{ textDecoration: "none" }}
+          <Link to="/om-cgss" className="p p-sm p-muted u-td-none"
             title="Página só da Ordem de Mérito Júnior, com tudo">abrir página da OM ↗</Link>
         )}
       </div>
@@ -437,7 +437,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
               <thead>
                 <tr>
                   <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>#</SortableHdr>
-                  <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Jogador</SortableHdr>
+                  <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-left">Jogador</SortableHdr>
                   <SortableHdr k="total" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Pontos</SortableHdr>
                   <SortableHdr k="played" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Provas jogadas">Prov.</SortableHdr>
                   {eventCols.map(ev => {
@@ -704,12 +704,12 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
           <thead>
             <tr>
               <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
-              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Prova</SortableHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-left">Prova</SortableHdr>
               <SortableHdr k="level" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nível</SortableHdr>
-              <SortableHdr k="scoring" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}
+              <SortableHdr k="scoring" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-left"
                 title="A classificação principal da prova">Modalidade da prova</SortableHdr>
               <th className="u-ta-left">O que os Termos dizem dos juniores</th>
-              <SortableHdr k="junior" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}
+              <SortableHdr k="junior" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-left"
                 title="Como a OM júnior classificou os juniores nesta prova">Juniores contados em</SortableHdr>
               <th className="u-ta-left" title="Se o clube publicou na FPG a classificação «OM JUNIORES» desta prova, e em que modalidade">O clube publicou</th>
               <th className="u-ta-left">Desempate (Termos)</th>

@@ -561,15 +561,15 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                 {manuelKpis.best && <span><span className="fw-700 fs-13 u-c-color-good-dark">{manuelKpis.best}</span><span className="u-fs-fs-9 u-c-text-3 u-ml-2px">min</span></span>}
               </div>
             }
-            style={{ flex:"0 0 auto", padding:"6px 10px", background:"var(--bg-info-subtle,var(--bg-info))", borderLeft:"3px solid var(--accent)", minWidth:0 }}
+            className="u-fl-0-0-auto u-p-6px-10px u-bg-var-bg-info-subtle-bg-info u-bl-3px-solid-accent u-minw-0"
           />
           {TG_T.map(t => {
             const res = manuelRef?.r[t.id];
             if (!res) return (
-              <KpiCard key={t.id} label={t.short} value="–" size="sm" style={{ opacity:.4, padding:"6px 8px", flex:"1 1 60px", minWidth:60 }} />
+              <KpiCard key={t.id} label={t.short} value="–" size="sm" className="u-op-0_4 u-p-6px-8px u-fl-1-1-60px u-minw-60px" />
             );
             return (
-              <KpiCard key={t.id} label={t.short} value={tgFmtSign(res.tp)} sub={<>#{res.p as number}{res.rd?.length > 0 && <span className="u-ml-3px u-op-0_7">{res.rd.join("-")}</span>}</>} color={tgTpColorDark(res.tp)} size="sm" style={{ padding:"6px 8px", flex:"1 1 60px", minWidth:60 }} />
+              <KpiCard key={t.id} label={t.short} value={tgFmtSign(res.tp)} sub={<>#{res.p as number}{res.rd?.length > 0 && <span className="u-ml-3px u-op-0_7">{res.rd.join("-")}</span>}</>} color={tgTpColorDark(res.tp)} size="sm" className="u-p-6px-8px u-fl-1-1-60px u-minw-60px" />
             );
           })}
         </div>
@@ -641,7 +641,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                     </SortableHdr>
                   );
                 })}
-                <SortableHdr k="rank" sortKey={sort} sortDir={dir} onSort={toggleSort} className="rivais-th ta-c" style={{ borderLeft:"3px solid var(--text-muted)", minWidth:56 }}>Rank</SortableHdr>
+                <SortableHdr k="rank" sortKey={sort} sortDir={dir} onSort={toggleSort} className="rivais-th ta-c u-bl-3px-solid-text-muted u-minw-56px">Rank</SortableHdr>
                 <th className="rivais-th ta-c">Tend.</th>
               </tr>
             </thead>

@@ -122,7 +122,7 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
         <span className="fw-800 drive-player-name">{row.name}</span>
         <span className="muted fs-11">{row.club} · {regionLabel(row.region)} · HCP {fmtHcp(row.hcp)}</span>
         {/* PlayerLink põe cor/sublinhado em linha: o estilo tem de ir pela prop. */}
-        <PlayerLink fed={row.fed} name="Ver perfil →" style={{ fontSize: "var(--fs-11)", color: "var(--accent)", textDecoration: "underline" }} />
+        <PlayerLink fed={row.fed} name="Ver perfil →" className="tourn-pname u-fs-fs-11 u-c-accent u-td-underline" />
       </div>
       <div className="mb-10 flex-wrap d-flex gap-6">
         <KpiCard label="Torneios" value={String(row.tourneiosPlayed)} />

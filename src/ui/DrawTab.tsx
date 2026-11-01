@@ -680,7 +680,7 @@ export default function DrawTab({
 
   const prefixHeaderCells = (
     <>
-      {showOm && <SortableHdr k="om" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px" }} title="Categoria na Ordem de Mérito CGSS">OM</SortableHdr>}
+      {showOm && <SortableHdr k="om" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="u-p-7px-8px" title="Categoria na Ordem de Mérito CGSS">OM</SortableHdr>}
       {/* Ordem e aspecto das colunas = Resumo: ESC. · Nasc. · Idade · FED · Clube · HCP · TEE */}
       {!hc.esc && <SortableHdr k="esc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
       {!hc.nasc && <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Nasc.</SortableHdr>}
@@ -693,8 +693,8 @@ export default function DrawTab({
   );
   const postScorecardHeaderCells = (
     <>
-      <SortableHdr k="hora"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Hora</SortableHdr>
-      {showHole && <SortableHdr k="buraco" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Buraco</SortableHdr>}
+      <SortableHdr k="hora"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="u-p-7px-8px u-ta-center">Hora</SortableHdr>
+      {showHole && <SortableHdr k="buraco" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="u-p-7px-8px u-ta-center">Buraco</SortableHdr>}
     </>
   );
 

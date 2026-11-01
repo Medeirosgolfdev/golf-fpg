@@ -5,7 +5,7 @@
  * 2026-08-15 para reutilização na toolbar da JogadoresPage):
  *
  *   - FilterField: rótulo pequeno por cima do controlo (.filter-field/.filter-label)
- *   - ToggleChip:  botão-pill on/off com rótulo completo (.btn-pill)
+ *   - ToggleChip:  filtro liga/desliga com rótulo completo (pill global .tourn-tab-sm)
  */
 import type { ReactNode } from "react";
 
@@ -26,17 +26,12 @@ export function ToggleChip({ checked, onChange, label, title }: {
 }) {
   return (
     <button
+      type="button"
       onClick={() => onChange(!checked)}
-      className="btn-pill"
+      // Ligado verde, desligado cinzento — a pill global (Mariana, 31/10/2026).
+      className={"tourn-tab tourn-tab-sm" + (checked ? " active" : "")}
       aria-pressed={checked}
       title={title}
-      style={{
-        // Desligado = cinzento, como todas as pills de filtro (Mariana, 31/10/2026).
-        background: checked ? "var(--accent)" : "var(--bg-muted)",
-        color: checked ? "#fff" : "var(--text-2)",
-        borderColor: checked ? "var(--accent)" : "var(--border)",
-        fontSize: "var(--fs-12)",
-      }}
     >
       {label}
     </button>

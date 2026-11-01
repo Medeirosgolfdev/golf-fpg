@@ -924,7 +924,11 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 
 .actions { display: flex; gap: 6px; align-items: center; }
 .btn { padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); cursor: pointer; font: inherit; font-size: var(--fs-11); font-weight: 600; }
-.btn:hover { background: var(--bg-hover); }
+.btn:hover:not(:disabled) { background: var(--bg-hover); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+/* Paginação das listas longas (ui/Pager.tsx). */
+.pager { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 12px 0; font-size: var(--fs-12); }
+.pager-info { min-width: 90px; text-align: center; }
 /* Botão redondo de ícone (‹ › do Calendário). -sm: sem moldura, para mini-calendários. */
 .btn-round { width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid var(--border);
   background: var(--bg-card); color: var(--text-2); font-size: var(--fs-18); cursor: pointer;
@@ -3822,23 +3826,6 @@ table td.lb-col-divider {
   box-shadow: var(--shadow-focus-blue);
 }
 
-.btn-pill {
-  padding: 4px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  background: var(--bg-card);
-  color: var(--text);
-  cursor: pointer;
-  font: inherit; font-size: var(--fs-12); font-weight: 500;
-  transition: background 0.15s, border-color 0.15s;
-}
-.btn-pill:hover:not(:disabled) {
-  background: var(--bg-hover, var(--bg-card));
-  border-color: var(--accent);
-}
-.btn-pill:disabled {
-  opacity: 0.4; cursor: not-allowed;
-}
 
 /* O aspecto (letra, cabeçalho, linhas) vem do «MODELO ÚNICO DAS TABELAS» no fim
    do ficheiro; aqui só o que é desta tabela: cabeçalho fixo e células numa linha. */
@@ -4902,3 +4889,14 @@ table td.lb-col-divider {
 .u-z-z-overlay { z-index: var(--z-overlay) !important; }
 .u-z-z-raised { z-index: var(--z-raised) !important; }
 .u-z-z-sidebar { z-index: var(--z-sidebar) !important; }
+.u-w-30px { width: 30px !important; }
+.u-bg-badge-pp-alpha { background: var(--badge-pp-alpha) !important; }
+.u-m-10px-16px-0 { margin: 10px 16px 0 !important; }
+.u-bg-bg-info-subtle { background: var(--bg-info-subtle) !important; }
+.u-border-color-var-border-info-93c5fd { border-color: var(--border-info, #93c5fd) !important; }
+.u-w-34pc { width: 34% !important; }
+.u-p-7px-8px { padding: 7px 8px !important; }
+.u-br-3px { border-radius: 3px !important; }
+.u-z-z-float { z-index: var(--z-float) !important; }
+.u-bg-var-bg-info-subtle-bg-info { background: var(--bg-info-subtle,var(--bg-info)) !important; }
+.u-fl-1-1-60px { flex: 1 1 60px !important; }

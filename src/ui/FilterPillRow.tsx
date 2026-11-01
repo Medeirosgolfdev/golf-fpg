@@ -36,7 +36,7 @@ export default function FilterPillRow<K extends string>({
     </button>
     <FilterPills items={items} active={sel}
       onToggle={k => onChange(sel.includes(k) ? sel.filter(x => x !== k) : [...sel, k])}
-      style={{ display: "contents" }} />
+      className="u-d-contents" />
   </>);
   if (inline) return body;
   return <div className={"filter-pill-row" + (className ? " " + className : "")}>{body}</div>;

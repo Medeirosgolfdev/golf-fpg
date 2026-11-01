@@ -63,7 +63,7 @@ function RecentDetail({ t, escLookup, playersDB, extras }: {
         </span>
         {t.scraped && t.ccode && (
           <a href={`/FPG/torneio/${t.ccode}-${t.tcode}`} target="_blank" rel="noopener noreferrer"
-             className="btn-pill u-fs-fs-12">
+             className="btn u-td-none">
             ↗ Leaderboard completa no site
           </a>
         )}

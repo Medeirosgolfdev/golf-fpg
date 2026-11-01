@@ -555,8 +555,8 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
                 key={t.key}
                 to={{ search: `?${sp.toString()}` }}
                 replace
-                className={`tab-under${tab === i ? " active" : ""}`}
-                style={{ textDecoration: "none" }}
+                className={`tab-under${tab === i ? " active" : ""} u-td-none`}
+
               >
                 {t.label}
               </Link>

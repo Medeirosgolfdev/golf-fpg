@@ -305,7 +305,7 @@ export default function Scout({
             </tr>
             <tr>
               {colsAntes.map(extraHdr)}
-              <SortableHdr k="name" {...hp} style={{ textAlign: "left" }}>Jogador</SortableHdr>
+              <SortableHdr k="name" {...hp} className="u-ta-left">Jogador</SortableHdr>
               {tem.idade && hdr("idade", "Idade", undefined, true)}
               {tem.hcp && hdr("hcp", "HCP", "Handicap (Portugal / Espanha / França)", !tem.idade)}
               {hdr("nivel", "Nível", "Nível na carreira (Elite, Forte, Sólido, Em Dev., Iniciante). Ordenar por aqui põe primeiro os mais perigosos para o Manuel — o porquê está no tooltip de cada um.", !tem.idade && !tem.hcp)}
@@ -348,7 +348,7 @@ export default function Scout({
                       style={{ cursor: temDetalhe ? "pointer" : undefined, background: isOpen ? "var(--bg-hover)" : undefined }}
                       title={temDetalhe ? "Ver o detalhe: provas em comum com o Manuel e próximas inscrições" : undefined}>
                     {colsAntes.map(extraTd(l))}
-                    <td style={{ textAlign: "left", whiteSpace: "nowrap" }} className={l.isManuel ? "fw-700" : undefined}>
+                    <td className={`${l.isManuel ? "fw-700" : ""} u-ta-left u-ws-nowrap`}>
                       {bandeira}{l.name} <KidsLink nome={l.name} fed={l.fed} />
                       {mostraClube && <span className="muted fs-11"> · {clube}</span>}
                     </td>

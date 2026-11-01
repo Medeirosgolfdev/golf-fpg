@@ -211,7 +211,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
             <SortableHdr k="order" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
             <SortableHdr k="format" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Formato</SortableHdr>
             <th className="u-ta-right u-w-32pc">{multi ? "" : <>{sideFlag(home?.iso ?? null, home?.country ?? null)} {home?.name ?? "Casa"}</>}</th>
-            <SortableHdr k="result" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Resultado</SortableHdr>
+            <SortableHdr k="result" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-center">Resultado</SortableHdr>
             <th className="u-w-32pc">{multi ? "" : <>{sideFlag(away?.iso ?? null, away?.country ?? null)} {away?.name ?? "Fora"}</>}</th>
             <th className="tight" />
           </tr>
@@ -314,7 +314,7 @@ function RoundTable({ round }: { round: MatchplayRound }) {
     // para a seta é igual em todas as linhas.
     const mark = (
       <span className="mp-slot u-w-18px">
-        {settled ? <ResultMark kind={won ? "win" : "loss"} gap={0} style={{ width: 18, textAlign: "center" }} /> : null}
+        {settled ? <ResultMark kind={won ? "win" : "loss"} gap={0} className="u-w-18px u-ta-center" /> : null}
       </span>
     );
     const fl = sideFlag(s?.iso ?? null, s?.country ?? null);
@@ -345,9 +345,9 @@ function RoundTable({ round }: { round: MatchplayRound }) {
         <thead>
           <tr>
             <SortableHdr k="no" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
-            <SortableHdr k="home" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right", width: "34%" }}>Casa</SortableHdr>
-            <SortableHdr k="res" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Resultado</SortableHdr>
-            <SortableHdr k="away" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: "34%" }}>Fora</SortableHdr>
+            <SortableHdr k="home" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-right u-w-34pc">Casa</SortableHdr>
+            <SortableHdr k="res" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-center">Resultado</SortableHdr>
+            <SortableHdr k="away" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-34pc">Fora</SortableHdr>
             {hasLabel && <SortableHdr k="label" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Disputa</SortableHdr>}
             {hasTime && <SortableHdr k="time" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Hora</SortableHdr>}
             <th className="tight">Jogos</th>
