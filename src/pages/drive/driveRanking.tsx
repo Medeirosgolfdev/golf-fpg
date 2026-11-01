@@ -32,6 +32,7 @@ import PlayerLink from "../../ui/PlayerLink";
 import TournamentGrid from "../../ui/TournamentGrid";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { EscLookup, Sub12Row, TournResult } from "../../ui/driveTypes";
+import TabRow from "../../ui/TabRow";
 
 export const SERIE_LABELS: Record<DriveSeries, string> = { tour: "Tour", challenge: "Challenge", aquapor: "AQUAPOR" };
 const REGION_LABEL: Record<string, string> = { norte: "Norte", tejo: "Tejo", sul: "Sul", madeira: "Madeira", acores: "Açores", nacional: "Nacional" };
@@ -238,14 +239,8 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
           </div>
           <div className="drive-rank-filters">
             {d.series === "all" && (
-              <div className="segmented-toggle" role="tablist" aria-label="Série">
-                {(["tour", "challenge", "aquapor"] as DriveSeries[]).map(x => (
-                  <button key={x} type="button" role="tab" aria-selected={x === d.seriesAll}
-                    className={"seg-btn" + (x === d.seriesAll ? " active" : "")} onClick={() => d.set({ s12s: x })}>
-                    <span className="seg-label">{SERIE_LABELS[x]}</span>
-                  </button>
-                ))}
-              </div>
+              <TabRow<DriveSeries> ariaLabel="Série" active={d.seriesAll} onChange={x => d.set({ s12s: x })}
+                tabs={(["tour", "challenge", "aquapor"] as DriveSeries[]).map(x => ({ key: x, label: SERIE_LABELS[x] }))} />
             )}
             <select className="select fs-11" value={d.esc} onChange={e => { d.set({ s12e: e.target.value }); d.setSelected(null); }} aria-label="Escalão">
               <option value="all">Todos os escalões</option>

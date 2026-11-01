@@ -15,7 +15,7 @@ import TeePill from "../../ui/TeePill";
 import TeeDate from "../../ui/TeeDate";
 import { PillBadge } from "../../ui/PillBadge";
 import { CourseLink } from "../../ui/jogadoresHelpers";
-import { OriginPill, effectivePill } from "./eventInfo";
+import { OriginPill, effectivePill } from "../../ui/eventInfo";
 
 /** Info extra de cada ronda extraída do ScoreCard (tee, gross, CR, slope). */
 export type RoundExtra = { tee: string; gross: number | null; cr: number | null; slope: number | null };

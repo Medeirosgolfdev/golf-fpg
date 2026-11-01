@@ -24,7 +24,7 @@ import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
 import { useSort } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName } from "../../utils/format";
+import { displayName, fmtDatePt } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { isManuelByName } from "../../constants/manuel";
 import { kidsUrl } from "../../ui/KidsLink";
@@ -32,6 +32,8 @@ import { useJuniorsLinks } from "../../hooks/useKidsLinkMap";
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { PlayerTournaments, type FfgPlayerTournamentsFile } from "./PlayerTournaments";
 import Pager from "../../ui/Pager";
+import { MUTED } from "../../ui/tableCells";
+import { usePaged } from "../../hooks/usePaged";
 
 interface FrancePlayer {
   license: string;
@@ -69,11 +71,6 @@ interface FrancePlayersFile {
 }
 
 /** ISO "2026-03-29" → "29/03/2026". Outros formatos passam tal-qual. */
-function isoToBr(iso: string | null | undefined): string {
-  if (!iso) return "—";
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
-  return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
-}
 
 /** "Sub-14 (Benjamin)" → { sub: "Sub-14", fr: "Benjamin" }. */
 function splitCat(cat: string): { sub: string; fr: string | null } {
@@ -84,9 +81,7 @@ function splitCat(cat: string): { sub: string; fr: string | null } {
 
 type SK = "name" | "license" | "cat" | "birth" | "merite" | "sex" | "hcp" | "club" | "region" | "tot" | "ano" | "hcpDate";
 
-const PAGE_SIZE = 100;
 const CUR_YEAR = new Date().getFullYear();
-const MUTED = <span className="muted">—</span>;
 
 interface Row extends FrancePlayer {
   _name: string;
@@ -110,7 +105,6 @@ export function FFGPlayersView() {
   const [cat, setCat] = useState<string>("ALL");
   const [region, setRegion] = useState<string>("ALL");
   const [jovens, setJovens] = useState(false);
-  const [page, setPage] = useState(1);
   // Roster kids2 compacto (juniors-links.json, partilhado com useKidsLinkMap) —
   // as setas ↗ aparecem quando chegar, sem bloquear a tabela.
   const roster = useJuniorsLinks();
@@ -260,11 +254,7 @@ export function FFGPlayersView() {
 
   // Reset de página quando filtros/ordenação mudam
   const filterSig = `${q}|${sex}|${cat}|${region}|${jovens}|${sortKey}|${sortDir}`;
-  const [lastSig, setLastSig] = useState(filterSig);
-  if (filterSig !== lastSig) { setLastSig(filterSig); if (page !== 1) setPage(1); }
-
-  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
-  const pageRows = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const { page, setPage, totalPages, pageRows } = usePaged(sorted, filterSig);
   const kidsCount = useMemo(() => all.reduce((n, p) => n + (p._kid ? 1 : 0), 0), [all]);
 
   if (err) return <EmptyState message={`Erro: ${err}`} />;
@@ -402,7 +392,7 @@ export function FFGPlayersView() {
                       )}
                       {has.tot && <td style={{ textAlign: "right", color: r._tot ? undefined : "var(--text-muted)" }}>{r._tot || "—"}</td>}
                       {has.tot && <td style={{ textAlign: "right", color: r._ano ? "var(--color-good-dark)" : "var(--text-muted)", fontWeight: r._ano ? 600 : undefined }}>{r._ano || "—"}</td>}
-                      {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{r.hcpDate ? isoToBr(r.hcpDate) : MUTED}</td>}
+                      {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{r.hcpDate ? fmtDatePt(r.hcpDate) : MUTED}</td>}
                     </tr>
                     {isOpen && (
                       <tr className="player-list-row-detail">

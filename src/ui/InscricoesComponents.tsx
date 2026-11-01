@@ -24,7 +24,7 @@ import type { TorneioData, BdPlayer, StatsDb } from "../pages/nacionais/types";
 import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { escCls } from "../utils/playerUtils";
-import { escShort, fmtTime, anoEscalao, todayIso } from "../utils/format";
+import { escShort, fmtTime, anoEscalao, todayIso, isRecentHours } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
 import { TORNEIOS_CONFIG, CN_JOVENS_EDICAO } from "../constants/config";
 import SexBadge from "./SexBadge";
@@ -180,12 +180,6 @@ function CountryFlag({ fed, fedCountries, country }: { fed: string | null; fedCo
    UTILITÁRIOS
    ═══════════════════════════════════════════════════════ */
 
-/** Verifica se dataInscricao ("2026/04/03 09:14") é das últimas N horas */
-function isRecentHours(s: string | null, hours: number): boolean {
-  if (!s) return false;
-  const d = new Date(s.replace(/\//g, "-"));
-  return !isNaN(d.getTime()) && (Date.now() - d.getTime()) < hours * 3600_000;
-}
 
 /* ═══════════════════════════════════════════════════════
    PAINEL DE RESUMO — sempre visível

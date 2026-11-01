@@ -25,6 +25,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import TabRow from "../../ui/TabRow";
 import LoadingState from "../../ui/LoadingState";
 import { kidsUrl } from "../../ui/KidsLink";
+import { tpColor } from "../../ui/tournamentPrimitives";
 
 interface FieldEscalao { nome: string; jogadores?: unknown[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -624,7 +625,7 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
             </td>
             <td className="lb-tee fw-600 fs-10 c-muted" style={{ borderTop: bTop }}>R{r.rn}</td>
             <td className="lb-topar"
-                style={{ color: r.toPar < 0 ? "var(--color-good)" : r.toPar > 0 ? "var(--color-danger)" : "var(--text)", borderTop: bTop }}>
+                style={{ color: tpColor(r.toPar) ?? "var(--text)", borderTop: bTop }}>
               {ed.parPerRound > 0 ? fmtToPar(r.toPar) : "—"}
             </td>
             <td className="lb-gross" style={{ borderTop: bTop }}>{r.gross}</td>
@@ -668,7 +669,7 @@ function IndependentRow({ f, pos, hpr, is9 }: {
       <td className="lb-club">{fmtCountry(f.pl.country)}</td>
       <td className="lb-tee fw-600 fs-10 c-muted">R{f.r.rn}</td>
       <td className="lb-topar"
-          style={{ color: f.r.toPar < 0 ? "var(--color-good)" : f.r.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>
+          style={{ color: tpColor(f.r.toPar) ?? "var(--text)" }}>
         {ed.parPerRound > 0 ? fmtToPar(f.r.toPar) : "—"}
       </td>
       <td className="lb-gross">{f.r.gross}</td>
@@ -971,7 +972,7 @@ function EcleticRow({ row, pos, hpr, is9 }: {
       <td className="lb-club">{fmtCountry(pl.country)}</td>
       <td className="lb-tee fw-600 fs-10 u-c-accent" title={`Ecléctico de ${pl.rounds.length} voltas`}>Ecl</td>
       <td className="lb-topar"
-          style={{ color: ecl.toPar < 0 ? "var(--color-good)" : ecl.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>
+          style={{ color: tpColor(ecl.toPar) ?? "var(--text)" }}>
         {ed.parPerRound > 0 ? fmtToPar(ecl.toPar) : "—"}
       </td>
       <td className="lb-gross fw-600">{ecl.total}</td>

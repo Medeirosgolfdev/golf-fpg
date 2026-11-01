@@ -17,6 +17,7 @@ import ResultMark from "../ResultMark";
 import { KidsLink } from "../KidsLink";
 import { fmtToPar } from "../../utils/format";
 import { fmtPoints, type TeamPointsData, type TeamPointsPlayerRow, type TeamPointsResult } from "./teamPointsTypes";
+import TabRow from "../TabRow";
 
 type TeamRow = {
   key: string;
@@ -144,18 +145,8 @@ export default function TeamPointsStandings({ data, defaultRound = "all" }: {
     <div>
       {data.rounds.length > 1 && (
         <div className="mp-round-picker">
-          <div className="segmented-toggle" role="tablist" aria-label="Dia da prova">
-            {data.rounds.map(r => (
-              <button key={r.n} role="tab" aria-selected={sel === String(r.n)}
-                className={`seg-btn${sel === String(r.n) ? " active" : ""}`} onClick={() => setSel(String(r.n))}>
-                <span className="seg-label">{r.label}</span>
-              </button>
-            ))}
-            <button role="tab" aria-selected={sel === "all"}
-              className={`seg-btn${sel === "all" ? " active" : ""}`} onClick={() => setSel("all")} title="Somar todos os dias">
-              <span className="seg-label">Total</span>
-            </button>
-          </div>
+          <TabRow ariaLabel="Dia da prova" active={sel} onChange={setSel}
+            tabs={[...data.rounds.map(r => ({ key: String(r.n), label: r.label })), { key: "all", label: "Total", title: "Somar todos os dias" }]} />
         </div>
       )}
       {cur.pending > 0 && (

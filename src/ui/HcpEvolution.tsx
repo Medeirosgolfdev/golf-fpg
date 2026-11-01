@@ -19,6 +19,8 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import SexBadge from "./SexBadge";
 import { C } from "../utils/colors";
+import { HcpDelta } from "./tableCells";
+import { tpColor } from "./tournamentPrimitives";
 
 export interface EvoPlayer {
   fed: string;
@@ -47,15 +49,6 @@ function fmtMonth(ms: number): string {
   return `${MONTHS_PT[d.getMonth()]}/${String(d.getFullYear()).slice(2)}`;
 }
 
-function DeltaCell({ d }: { d: number }) {
-  if (d === 0) return <span className="muted">0</span>;
-  const improved = d < 0;
-  return (
-    <span style={{ color: improved ? "var(--color-good)" : "var(--color-danger)", fontWeight: 700 }}>
-      {improved ? "▼" : "▲"} {d > 0 ? "+" : ""}{d.toFixed(1)}
-    </span>
-  );
-}
 
 export default function HcpEvolution({ players, history, showChart = true }: {
   players: EvoPlayer[]; history: HcpHistoryDb; showChart?: boolean;
@@ -276,11 +269,11 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                   <td className="r">{r.m.nPts}</td>
                   <td className="r">{r.m.start.toFixed(1)}</td>
                   <td className="r"><b>{r.m.end.toFixed(1)}</b></td>
-                  <td className="r"><DeltaCell d={r.m.delta} /></td>
+                  <td className="r"><HcpDelta d={r.m.delta} zero="0" /></td>
                   <td className="r">{r.m.best.toFixed(1)}</td>
                   <td className="r">
                     {r.m.slopePerMonth == null ? <span className="muted">—</span>
-                      : <span style={{ color: r.m.slopePerMonth < 0 ? "var(--color-good)" : r.m.slopePerMonth > 0 ? "var(--color-danger)" : undefined }}>
+                      : <span style={{ color: tpColor(r.m.slopePerMonth) }}>
                           {r.m.slopePerMonth > 0 ? "+" : ""}{r.m.slopePerMonth.toFixed(2)}
                         </span>}
                   </td>

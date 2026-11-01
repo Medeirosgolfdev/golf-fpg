@@ -24,7 +24,7 @@ import { ScorecardTable } from "../../../ui/ScorecardTable";
 import { EclecticSection } from "../../../ui/EclecticSection";
 import { findCourseKey } from "../../../ui/jogadoresHelpers";
 import { courseDisplayName } from "../../../utils/courseAliases";
-import { EventInfo, effectivePill } from "../eventInfo";
+import { EventInfo, effectivePill } from "../../../ui/eventInfo";
 import { scHostStyle, type CourseSort } from "../shared";
 import CoursePerformanceSection from "./CoursePerformanceSection";
 

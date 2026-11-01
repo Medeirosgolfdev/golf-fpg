@@ -23,7 +23,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import { norm, shortDate, ageAtDate, todayIso } from "../utils/format";
+import { norm, shortDate, ageAtDate, todayIso, fmtSD } from "../utils/format";
 import { gf } from "../utils/flagUtils";
 import { hcpDisplay } from "../utils/playerUtils";
 import Pager from "../ui/Pager";
@@ -110,10 +110,6 @@ type Row = {
   ppOnly: boolean;             // só existe no mundo P&P (não está na lista de golfe)
 };
 
-function fmtSD(v: number | null): string {
-  if (v == null) return "—";
-  return v >= 0 ? `+${v.toFixed(1)}` : v.toFixed(1);
-}
 
 /** Constrói tooltip multi-linha descrevendo as diferenças entre o nosso
  *  players.json e o snapshot actual da FPG. Devolve string vazia se não

@@ -309,6 +309,17 @@ export function ClubePill({ clube, ccode }: { clube?: string | null; ccode?: str
  * ────────────────────────────────────────────────────────────────── */
 const YEAR_PALETTE: readonly { bg: string; fg: string }[] = C.yearPills;
 
+/** Etiqueta SCRATCH / HCP de uma prova (`scoringType` publicado pela federação). */
+export function ScoringTag({ scoringType }: { scoringType?: string | null }) {
+  if (!scoringType) return null;
+  const scratch = /SCRATCH/i.test(scoringType);
+  return (
+    <span title={scratch ? "Competição scratch (gross)" : "Competição com handicap (net)"} className={"scoring-tag " + (scratch ? "scratch" : "hcp")}>
+      {scratch ? "SCRATCH" : "HCP"}
+    </span>
+  );
+}
+
 export function YearPill({ year }: { year: number | string | null | undefined }) {
   if (year == null || year === "") return <span className="muted">–</span>;
   const y = typeof year === "number" ? year : parseInt(String(year), 10);

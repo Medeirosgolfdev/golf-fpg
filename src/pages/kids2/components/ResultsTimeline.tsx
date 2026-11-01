@@ -12,7 +12,7 @@ import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import InlineScorecard from "./InlineScorecard";
 import { categorizeTournamentLinks } from "../tournamentLinks";
-import { RoundPill, NineHPill } from "../../../ui/PillBadge";
+import { RoundPill, NineHPill, ScoringTag } from "../../../ui/PillBadge";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar, MONTHS_PT } from "../../../utils/format";
 import { medalClass } from "../../../ui/PosBadge";
@@ -366,7 +366,8 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
             const nR = (r.result.rounds || []).filter((rd) => typeof rd.gross === "number").length;
             return <RoundPill nR={nR} />;
           })()}
-          <ScoringPill tournament={r.tournament} flight={r.flight} />
+          {/* SCRATCH/HCP só nas provas da RFEG — as outras federações não publicam este atributo. */}
+          {r.tournament.sourceId === "rfeg" && <ScoringTag scoringType={(r.tournament.extra as any)?.scoringType} />}
           {(() => {
             // 9H também pelas voltas do PRÓPRIO jogador: escalões novos jogam
             // 9 buracos num torneio cuja meta é de 18 (British Kids 2021, Boys
@@ -491,24 +492,6 @@ const DNF_LABEL: Record<string, string> = {
   IE: "Inelegível (IE)",
 };
 
-/** Pill SCRATCH/HANDICAP — SÓ se aplica a torneios RFEG, onde o eixo
- *  scratch vs handicap é metadado oficial publicado pela federação. Outras
- *  federações (USKids, FPG, FFG, BJGT, ...) não publicam este atributo
- *  formalmente — não mostramos o pill nesses casos para não criar leitura
- *  falsa. Quando RFEG, cor: SCRATCH=âmbar (gross), HANDICAP=info (net). */
-function ScoringPill({ tournament, flight }: { tournament: Tournament; flight: Flight }) {
-  if (tournament.sourceId !== "rfeg") return null;
-  const st = (tournament.extra as any)?.scoringType as string | undefined;
-  if (!st) return null;
-  const isScratch = /SCRATCH/i.test(st);
-  void flight; // reservado para futuras heurísticas (flight-level override)
-  return (
-    <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"}
-      className={"scoring-tag " + (isScratch ? "scratch" : "hcp")}>
-      {isScratch ? "SCRATCH" : "HCP"}
-    </span>
-  );
-}
 
 function fmtDate(iso: string): string {
   if (!iso) return "—";

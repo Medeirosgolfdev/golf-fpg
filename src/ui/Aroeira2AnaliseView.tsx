@@ -24,6 +24,7 @@ import { fmtToPar, fmtHcp } from "../utils/format";
 import { scClass } from "../utils/scoreDisplay";
 import PlayerLink from "./PlayerLink";
 import { MANUEL_FED } from "../constants/manuel";
+import { tpColor } from "./tournamentPrimitives";
 
 const fmtPct = (p: number) => p.toFixed(0) + "%";
 const fmtAvg = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : n.toFixed(d);
@@ -275,7 +276,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
         <span className="fs-12">{card.nRounds} rds</span>
         <span className="fs-13 fw-700">Avg {fmtAvg(card.avgGross, 0)}</span>
         <span className="fs-13">Best {card.bestGross ?? "–"}</span>
-        <span className="fs-13 fw-700" style={{ color: card.avgToPar != null && card.avgToPar < 0 ? "var(--color-good)" : card.avgToPar != null && card.avgToPar > 0 ? "var(--color-danger)" : "var(--text)" }}>
+        <span className="fs-13 fw-700" style={{ color: tpColor(card.avgToPar) ?? "var(--text)" }}>
           {fmtDelta(card.avgToPar)}
         </span>
         {card.category === "top21" && <span className="muted fs-11 u-minw-50px">Pos {card.currentPos ?? "–"}</span>}
@@ -316,7 +317,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
                 return (
                   <tr key={idx}>
                     <td className="lb-name muted fs-11 u-ws-nowrap">{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
-                    <td className="lb-topar fw-700" style={{ color: r.toPar != null && r.toPar < 0 ? "var(--color-good)" : r.toPar != null && r.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>{r.toPar != null ? fmtToPar(r.toPar) : "–"}</td>
+                    <td className="lb-topar fw-700" style={{ color: tpColor(r.toPar) ?? "var(--text)" }}>{r.toPar != null ? fmtToPar(r.toPar) : "–"}</td>
                     <td className="lb-gross fw-700">{r.gross ?? "–"}</td>
                     {r.scores.slice(0, 9).map((sc, i) => (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
@@ -606,7 +607,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                   <td className="lb-hole">{pg.fieldAvg.toFixed(2)}</td>
                   <td className="lb-hole fw-700" style={{ color: pg.fieldDelta < 0 ? "var(--color-good)" : "var(--color-danger)" }}>{fmtDelta(pg.fieldDelta, 2)}</td>
                   <td className="lb-hole u-c-color-good-dark">{fmtAvg(pg.manuelAvg, 2)}</td>
-                  <td className="lb-hole fw-700" style={{ color: pg.manuelDelta != null && pg.manuelDelta < 0 ? "var(--color-good)" : pg.manuelDelta != null && pg.manuelDelta > 0 ? "var(--color-danger)" : "var(--text)" }}>{fmtDelta(pg.manuelDelta, 2)}</td>
+                  <td className="lb-hole fw-700" style={{ color: tpColor(pg.manuelDelta) ?? "var(--text)" }}>{fmtDelta(pg.manuelDelta, 2)}</td>
                   <td className="lb-hole u-c-color-good">{fmtPct(pg.pctBirdiePlus)}</td>
                   <td className="lb-hole u-c-color-danger">{fmtPct(pg.pctBogey)}</td>
                   <td className="lb-hole fw-700">{fmtPct(pg.pctDoublePlus)}</td>
@@ -769,7 +770,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                   <td className="lb-hcp">{fmtHcp(s.hcpExact)}</td>
                   <td className="lb-name fs-11 u-fw-600" style={{ color: statusColor }}>{statusLabel}</td>
                   <td className="lb-hole fw-600">{s.nRounds}</td>
-                  <td className="lb-topar fw-700" style={{ color: s.avgToPar != null && s.avgToPar < 0 ? "var(--color-good)" : s.avgToPar != null && s.avgToPar > 0 ? "var(--color-danger)" : "var(--text)" }}>{s.avgToPar != null ? fmtDelta(s.avgToPar, 1) : "–"}</td>
+                  <td className="lb-topar fw-700" style={{ color: tpColor(s.avgToPar) ?? "var(--text)" }}>{s.avgToPar != null ? fmtDelta(s.avgToPar, 1) : "–"}</td>
                   <td className="lb-gross">{fmtAvg(s.avgGross, 1)}</td>
                   <td className="lb-hole fw-600">{s.bestGross ?? "–"}</td>
                   <td className="lb-hole muted">{s.worstGross ?? "–"}</td>
@@ -830,7 +831,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                     <td className="lb-name muted fs-11 u-ws-nowrap">{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
                     <td className="lb-name fw-600">{r.fedCode ? <PlayerLink fed={r.fedCode} name={r.playerName} /> : r.playerName}{isManuel && " ⭐"}</td>
                     <td className="lb-hcp fs-11">{fmtHcp(r.hcpExact)}</td>
-                    <td className="lb-topar fw-700" style={{ color: r.toPar != null && r.toPar < 0 ? "var(--color-good)" : r.toPar != null && r.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>{r.toPar != null ? fmtToPar(r.toPar) : "–"}</td>
+                    <td className="lb-topar fw-700" style={{ color: tpColor(r.toPar) ?? "var(--text)" }}>{r.toPar != null ? fmtToPar(r.toPar) : "–"}</td>
                     <td className="lb-gross fw-700">{r.gross ?? "–"}</td>
                     {r.scores.slice(0, 9).map((sc, i) => (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
@@ -887,8 +888,8 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                   <td className="lb-hole">{e.lastGross ?? "–"}</td>
                   <td className="lb-hole" style={{ color: e.lastVsBest != null && e.lastVsBest <= 2 ? "var(--color-good)" : e.lastVsBest != null && e.lastVsBest >= 8 ? "var(--color-danger)" : "var(--text-muted)" }}>{e.lastVsBest != null ? "+" + e.lastVsBest : "–"}</td>
                   <td className="lb-hole fw-700" style={{ color: e.slope < -0.5 ? "var(--color-good)" : e.slope > 0.5 ? "var(--color-danger)" : "var(--text)" }}>{fmtDelta(e.slope, 2)}</td>
-                  <td className="lb-hole" style={{ color: e.firstToLast != null && e.firstToLast < 0 ? "var(--color-good)" : e.firstToLast != null && e.firstToLast > 0 ? "var(--color-danger)" : "var(--text)" }}>{fmtDelta(e.firstToLast, 0)}</td>
-                  <td className="lb-hole" style={{ color: e.trendDelta != null && e.trendDelta < 0 ? "var(--color-good)" : e.trendDelta != null && e.trendDelta > 0 ? "var(--color-danger)" : "var(--text)" }}>{fmtDelta(e.trendDelta, 1)}</td>
+                  <td className="lb-hole" style={{ color: tpColor(e.firstToLast) ?? "var(--text)" }}>{fmtDelta(e.firstToLast, 0)}</td>
+                  <td className="lb-hole" style={{ color: tpColor(e.trendDelta) ?? "var(--text)" }}>{fmtDelta(e.trendDelta, 1)}</td>
                   <td className="lb-name fw-600">{e.trendLabel}</td>
                 </tr>
               );

@@ -13,7 +13,7 @@ import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } from "../data/fpgTypes";
 import { numGross, resolveEsc, playerDob, computeRoundSD, filterPlayers, fillBlankHoles, isRoundInProgress } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
-import { fmtHcp, ageAtDate, fmtDobPt } from "../utils/format";
+import { fmtHcp, ageAtDate, fmtDobPt, medal as medalOf } from "../utils/format";
 import { medalNet, stablefordNet } from "../utils/whsCalc";
 import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
@@ -38,6 +38,7 @@ import { useFedBirthdates } from "./InscricoesComponents";
 import { displayFed } from "../utils/fedKeys";
 import ShareRoundPanel from "./ShareRoundPanel";
 import { shareOptionsForRound } from "./overlay/shareOptions";
+import TabRow from "./TabRow";
 
 /* PName — alias local */
 const PName = ({
@@ -481,7 +482,7 @@ export function ScorecardLB({
     const gross = isWDPlayer ? 0 : numGross(p);
     const dp = posOf(p);
     const showPos = idx === 0 || dp !== posOf(sorted[idx - 1]);
-    const medalEmoji = dp === 1 ? "🥇" : dp === 2 ? "🥈" : dp === 3 ? "🥉" : null;
+    const medalEmoji = medalOf(dp);
     const vModo = valorModo(p);
     const semModo = modoAtivo !== "stroke" && vModo == null;
     const posDisplay =
@@ -817,15 +818,9 @@ export function ScorecardLB({
           </InfoGroup>
           <RatingFontes list={tournament._ratingFontes} />
           {temModos && (
-            <div className="segmented-toggle seg-sm" role="tablist" aria-label="Modalidade da classificação">
-              {MODOS.map((m) => (
-                <button key={m.key} role="tab" aria-selected={modoAtivo === m.key}
-                  title={modoDaProva === m.key ? `${m.title} — a modalidade desta prova` : m.title}
-                  className={`seg-btn${modoAtivo === m.key ? " active" : ""}`} onClick={() => setModo(m.key)}>
-                  <span className="seg-label">{m.label}{modoDaProva === m.key ? " ✓" : ""}</span>
-                </button>
-              ))}
-            </div>
+            <TabRow className="seg-sm" ariaLabel="Modalidade da classificação" active={modoAtivo} onChange={setModo}
+              tabs={MODOS.map((m) => ({ key: m.key, label: m.label + (modoDaProva === m.key ? " ✓" : ""),
+                title: modoDaProva === m.key ? `${m.title} — a modalidade desta prova` : m.title }))} />
           )}
         </>
       }

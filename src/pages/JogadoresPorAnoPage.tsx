@@ -41,6 +41,7 @@ import type { PlayerClub } from "../data/types";
 
 import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
 import { HCP_UNESTABLISHED_THRESHOLD as HCP_UNESTABLISHED } from "./jogadores/filterPlayers";
+import { HcpDelta } from "../ui/tableCells";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -70,16 +71,6 @@ const num = (v: number | null | undefined): number | null =>
 
 const birthYear = (dob: string): number => parseInt(dob.slice(0, 4), 10);
 
-/* Métrica de "evolução" — Δ HCP a 3 meses. Negativo = melhorou (HCP desceu). */
-function DeltaHcp({ d }: { d: number | null }) {
-  if (d == null || d === 0) return <span className="muted">—</span>;
-  const improved = d < 0;
-  return (
-    <span style={{ color: improved ? "var(--color-good)" : "var(--color-danger)", fontWeight: 700 }}>
-      {improved ? "▼" : "▲"} {d > 0 ? "+" : ""}{d.toFixed(1)}
-    </span>
-  );
-}
 
 /* 🔥/🧊 só faz sentido se o jogador ANDA a jogar — exigimos rondas nos
  * últimos 3 meses. Sem isso, o formAlert é calculado sobre rondas antigas
@@ -354,7 +345,7 @@ export default function JogadoresPorAnoPage() {
                   <td className="u-ta-left u-maxw-150px u-ov-hidden u-tov-ellipsis u-ws-nowrap">{clubName(p.club) || <span className="muted">—</span>}</td>
                   <td><EscPill esc={p.escalao} /></td>
                   <td className="u-fw-700">{p.hcp == null ? <span className="muted">—</span> : p.hcp.toFixed(1)}</td>
-                  <td><DeltaHcp d={ps?.hcpDelta3m ?? null} /></td>
+                  <td><HcpDelta d={ps?.hcpDelta3m ?? null} /></td>
                   <td>{ps?.bestGross ?? <span className="muted">—</span>}</td>
                   <td>{ps?.avgSD5 == null ? <span className="muted">—</span> : ps.avgSD5.toFixed(1)}</td>
                   <td>{ps?.lastSD == null ? <span className="muted">—</span> : ps.lastSD.toFixed(1)}</td>

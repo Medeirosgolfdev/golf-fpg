@@ -4,7 +4,7 @@ import { ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import LoadingState from "../ui/LoadingState";
 import { useSearchParams, Link } from "react-router-dom";
-import { isoDate, fmtToPar, todayIso } from "../utils/format";
+import { isoDate, fmtToPar, todayIso, medal as medalOf } from "../utils/format";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
 import TabRow from "../ui/TabRow";
@@ -710,7 +710,7 @@ export default function USKidsFieldPage() {
             color: manuelPos === 1 ? "var(--color-warn-dark)" : manuelPos <= 3 ? "var(--color-navy)" : "var(--text-2)",
             borderColor: "transparent",
           }}>
-            {manuelPos === 1 ? "🥇" : manuelPos === 2 ? "🥈" : manuelPos === 3 ? "🥉" : `#${manuelPos}`}
+            {medalOf(manuelPos) ?? `#${manuelPos}`}
             {manuelScore != null && ` (${fmtToPar(manuelScore)})`}
           </span>
         )}

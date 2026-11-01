@@ -354,15 +354,8 @@ function DriveContent() {
             {availYears.length > 1 && (<>
               <ToolbarSep />
               {/* Anos: o mesmo interruptor segmentado das vistas. */}
-              <div className="segmented-toggle" role="tablist" aria-label="Ano">
-                {availYears.map(y => (
-                  <button key={y} role="tab" aria-selected={activeYear === y}
-                    className={"seg-btn" + (activeYear === y ? " active" : "")}
-                    onClick={() => go({ year: y === activeYear && availYears.length > 1 ? null : y })}>
-                    <span className="seg-label">{y}</span>
-                  </button>
-                ))}
-              </div>
+              <TabRow ariaLabel="Ano" active={activeYear} tabs={availYears.map(y => ({ key: y, label: y }))}
+                onChange={y => go({ year: y === activeYear && availYears.length > 1 ? null : y })} />
               <ToolbarSep />
               <button
                 className={"tourn-tab tourn-tab-sm drive-manuel" + (filterManuel ? " active" : " tourn-tab-muted")}

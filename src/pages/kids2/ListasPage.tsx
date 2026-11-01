@@ -17,6 +17,7 @@ import { isManuel, MANUEL_FED } from "../../constants/manuel";
 import AdmissionsTab, { type AdmissionsExtraCol } from "../../ui/AdmissionsTab";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../../data/nacional2026Loader";
 import Kids2SubNav from "./Kids2SubNav";
+import { fmtHcp } from "../../utils/format";
 
 interface Inscrito {
   ordem: number; pos: number; lista: "entry" | "waiting" | null;
@@ -53,8 +54,6 @@ function CelAnterior({ a, ano }: { a: Anterior | null | undefined; ano: string }
 const posAnt = (a: Anterior | null | undefined) => (a?.pos ?? (a ? 900 : 999));
 const nomeLista = (l: Lista) => (l.sexo === "M" ? "Rapazes" : l.sexo === "F" ? "Raparigas" : l.label);
 
-/** Handicap à maneira das listas: «+» para os de handicap positivo (guardados em negativo). */
-const fmtHcp = (h: number | null | undefined) => (h == null ? "—" : h < 0 ? `+${(-h).toFixed(1)}` : h.toFixed(1));
 const ddmmaa = (iso: string | null) => (iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(2, 4)}` : "");
 
 /** A lista de inscritos na tabela de inscrições partilhada (AdmissionsTab —

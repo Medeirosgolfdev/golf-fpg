@@ -24,6 +24,7 @@ import {
   type ComputeRoundSD,
   type RdData,
 } from "../hooks/useAllRoundsData";
+import TabRow from "./TabRow";
 
 export function AllRoundsScorecardLB({
   tournament,
@@ -215,13 +216,8 @@ export function AllRoundsScorecardLB({
           <span>
             {groupMode ? gDisplayed.length : displayed.length} {groupMode ? "jogadores" : "scorecards"} · {playedRounds}R{parTot > 0 ? ` · Par ${parTot}` : ""}
           </span>
-          <span className="segmented-toggle seg-sm">
-            {([true, false] as const).map((g) => (
-              <button key={String(g)} onClick={() => setGroupMode(g)} className={"seg-btn fs-10" + (groupMode === g ? " active" : "")}>
-                {g ? "Agrupado" : "Independente"}
-              </button>
-            ))}
-          </span>
+          <TabRow<boolean> className="seg-sm" active={groupMode} onChange={setGroupMode}
+            tabs={[{ key: true, label: "Agrupado" }, { key: false, label: "Independente" }]} />
         </span>
       }
       filterBar={<RowsFilterBar rows={allGrouped} filter={filter} onChange={setFilter} total={allGrouped.length} playersDB={playersDB} />}

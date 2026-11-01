@@ -19,6 +19,7 @@ import { categorizeTournamentLinks } from "../tournamentLinks";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar } from "../../../utils/format";
 import { medalClass } from "../../../ui/PosBadge";
+import { ScoringTag } from "../../../ui/PillBadge";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -228,7 +229,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
             >
               {formatStars(tournWeight.stars)}
             </span>
-            <SeriesScoringPill tournament={last.tournament} />
+            <ScoringTag scoringType={(last.tournament.extra as any)?.scoringType} />
             <SeriesNineHolesPill tournament={last.tournament} flight={last.flight} />
           </div>
           <div className="u-fs-fs-10 u-c-text-3 u-mt-1px">
@@ -419,19 +420,6 @@ function trophyColor(pos: number | null | undefined): string {
   return "var(--border)";
 }
 
-/** Pill SCRATCH/HCP no header de uma série — usa o tournament.extra.scoringType
- *  da edição mais recente como representativo de toda a série. */
-function SeriesScoringPill({ tournament }: { tournament: Tournament }) {
-  const st = (tournament.extra as any)?.scoringType as string | undefined;
-  if (!st) return null;
-  const isScratch = /SCRATCH/i.test(st);
-  return (
-    <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"}
-      className={"scoring-tag " + (isScratch ? "scratch" : "hcp")}>
-      {isScratch ? "SCRATCH" : "HCP"}
-    </span>
-  );
-}
 
 function SeriesNineHolesPill({ tournament, flight }: { tournament: Tournament; flight: Flight }) {
   const is9 = tournament.holesPerRound === 9 ||

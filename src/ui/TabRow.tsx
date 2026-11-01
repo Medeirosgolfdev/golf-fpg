@@ -40,15 +40,18 @@ interface TabRowProps<K> {
   children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  /** Nome do grupo para leitores de ecrã (ex.: «Ano», «Vista»). */
+  ariaLabel?: string;
 }
 
 // Interruptor segmentado (o mesmo de Campos/Jogadores) — 13/10/2026: vistas e
 // filtros de escolha única com UM só aspecto em todo o site. A API mantém-se.
-function TabRow<K>({ tabs, active, onChange, children, className, style }: TabRowProps<K>) {
+function TabRow<K>({ tabs, active, onChange, children, className, style, ariaLabel }: TabRowProps<K>) {
   return (
     <div
       className={`segmented-toggle${className ? " " + className : ""}`}
       role="tablist"
+      aria-label={ariaLabel}
       style={style}
     >
       {tabs?.map(({ key, label, count, disabled, title }) => {

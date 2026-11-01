@@ -24,13 +24,14 @@ import {
   type HoleStatsData,
 } from "../data/playerDataLoader";
 import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
-import { norm, shortName } from "../utils/format";
+import { norm, shortName, firstName, fD, fD2 } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import LoadingState from "../ui/LoadingState";
 import { C } from "../utils/colors";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
+import { tpColor } from "../ui/tournamentPrimitives";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
 const COLORS = [C.chartGreen, C.chartBlue, C.chartRed, C.chartAmber];
@@ -106,9 +107,6 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
   };
 }
 
-function firstName(name: string) { return name.split(" ")[0]; }
-const fD = (v: number) => (v >= 0 ? "+" : "") + v.toFixed(1);
-const fD2 = (v: number) => (v >= 0 ? "+" : "") + v.toFixed(2);
 const pct = (v: number) => v.toFixed(0) + "%";
 
 /* ═══════════════════ Search + Chips ═══════════════════ */
@@ -706,7 +704,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
               <div className="caKpiLbl">{shortName(s.name)}</div>
               {delta != null && (
-                <div className="u-fs-fs-10 u-fw-700 u-mt-2px" style={{ color: delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--color-danger)" : "var(--text-3)" }}>
+                <div className="u-fs-fs-10 u-fw-700 u-mt-2px" style={{ color: tpColor(delta) ?? "var(--text-3)" }}>
                   {delta > 0 ? "+" : ""}{delta.toFixed(1)} no período
                 </div>
               )}

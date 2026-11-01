@@ -18,6 +18,7 @@ import { useFedBirthdates } from "./InscricoesComponents";
 import type { MultiRoundRow as MRRow, MRRound, ExtraColumn } from "./multiRoundTypes";
 import { medalNet, stablefordNet } from "../utils/whsCalc";
 import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
+import TabRow from "./TabRow";
 
 /** As mesmas três modalidades do tab da volta (ScorecardLB). */
 const MODOS: Array<{ key: ModoClassif; label: string; title: string }> = [
@@ -268,15 +269,9 @@ export function AccumulatedLB({
         </InfoGroup>
         <RatingFontes list={tournament._ratingFontes} />
         {temModos && (
-          <div className="segmented-toggle seg-sm" role="tablist" aria-label="Modalidade da classificação">
-            {MODOS.map((m) => (
-              <button key={m.key} role="tab" aria-selected={modo === m.key}
-                title={modoDaProva === m.key ? `${m.title} — a modalidade desta prova` : m.title}
-                className={`seg-btn${modo === m.key ? " active" : ""}`} onClick={() => setModo(m.key)}>
-                <span className="seg-label">{m.label}{modoDaProva === m.key ? " ✓" : ""}</span>
-              </button>
-            ))}
-          </div>
+          <TabRow className="seg-sm" ariaLabel="Modalidade da classificação" active={modo} onChange={setModo}
+            tabs={MODOS.map((m) => ({ key: m.key, label: m.label + (modoDaProva === m.key ? " ✓" : ""),
+              title: modoDaProva === m.key ? `${m.title} — a modalidade desta prova` : m.title }))} />
         )}
       </div>
       <MultiRoundLeaderboard

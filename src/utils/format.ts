@@ -134,6 +134,13 @@ export function fmtDobPt(dob?: string | null): string | null {
   return m ? `${m[3]}/${m[2]}/${m[1]}` : dob;
 }
 
+/** Data ISO → "27/02/2026"; `placeholder` quando vazia; uma data que não seja ISO volta como veio. */
+export function fmtDatePt(iso: string | null | undefined, placeholder = "—"): string {
+  if (!iso) return placeholder;
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
+}
+
 /** Intervalo de datas ISO → "15/05/2026 → 17/05/2026" (uma só data se iguais). */
 export function fmtDateRangePt(d1?: string | null, d2?: string | null): string {
   const a = fmtDobPt(d1) ?? "", b = fmtDobPt(d2) ?? "";
@@ -175,6 +182,13 @@ export function fmtToPar(tp: number | null | undefined, placeholder = "—"): st
   if (tp == null || !Number.isFinite(tp)) return placeholder;
   if (tp === 0) return "E";
   return tp > 0 ? `+${tp}` : `${tp}`;
+}
+
+/** Data/hora «2026/04/03 09:14» (como a FPG publica as inscrições) nas últimas N horas? */
+export function isRecentHours(s: string | null | undefined, hours: number): boolean {
+  if (!s) return false;
+  const d = new Date(s.replace(/\//g, "-"));
+  return !isNaN(d.getTime()) && (Date.now() - d.getTime()) < hours * 3600_000;
 }
 
 /** Formata handicap: +2.3, -1.0, 0.0 */

@@ -39,6 +39,7 @@ import {
 import { buildWagrEntries, wagrEventUrl, wagrPlayerUrl, WAGR_SITE } from "./wagr/wagrCircuit";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { C } from "../utils/colors";
+import { RankChange } from "../ui/tableCells";
 
 /**
  * Nº de shards do rollup jogador→eventos.
@@ -92,16 +93,6 @@ interface WagrPlayerEvent {
 }
 
 /* ── Helpers ───────────────────────────────────────────────────── */
-/** Variação de ranking na semana: positivo = subiu. */
-function ChangeCell({ v }: { v: number | null }) {
-  if (v == null || v === 0) return <span className="u-c-text-muted">–</span>;
-  const up = v > 0;
-  return (
-    <span className={up ? "u-c-color-good" : "u-c-color-danger"}>
-      {up ? "▲" : "▼"}{Math.abs(v)}
-    </span>
-  );
-}
 
 /* ═══════════════════════════════════════════════════════════════ */
 const CFG: RankingPageConfig<WagrRanking, Parameters<typeof buildWagrEntries>[0][number]> = {
@@ -141,7 +132,7 @@ export default function WAGRPage() {
 /* ── Lista (ranking mundial) ───────────────────────────────────── */
 const LIST_COLS: RankingCol<WagrPlayer>[] = [
   { key: "rank", label: "#", title: "Ranking WAGR (por sexo)", className: "num", sort: (p) => p.rank ?? 1e9, cell: (p) => p.rank ?? "—", tdStyle: { color: "var(--text-muted)" } },
-  { key: "change", label: "Var.", title: "Variação face à semana anterior", className: "tight", sort: (p) => p.change ?? 0, firstDir: "desc", cell: (p) => <ChangeCell v={p.change} /> },
+  { key: "change", label: "Var.", title: "Variação face à semana anterior", className: "tight", sort: (p) => p.change ?? 0, firstDir: "desc", cell: (p) => <RankChange up={p.change} empty={<span className="u-c-text-muted">–</span>} /> },
   { key: "name", label: "Nome", sort: (p) => norm(p.name), cell: (p) => nameCell(p.name), tdStyle: { fontWeight: 500 } },
   { key: "country", label: "País", sort: (p) => norm(p.country || ""), cell: (p) => countryCell(p.country) },
   { key: "sex", label: "Sexo", className: "tight", tdClassName: "", cell: (p) => <SexBadge sex={p.sex} /> },

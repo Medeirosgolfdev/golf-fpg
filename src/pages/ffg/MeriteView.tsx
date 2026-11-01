@@ -21,8 +21,9 @@ import { useSort } from "../../hooks/useSort";
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { isPTByName } from "../../utils/ptPlayers";
 import { isManuelByName } from "../../constants/manuel";
-import { displayName } from "../../utils/format";
+import { displayName, fmtDatePt } from "../../utils/format";
 import Pager from "../../ui/Pager";
+import { RankChange, MUTED } from "../../ui/tableCells";
 
 /** [trnId|null, data ISO, nome, lugar, voltas, pontos, Moy.SSS] */
 type Prova = [string | null, string, string, string, number[], number | null, number | null];
@@ -44,24 +45,12 @@ interface Row {
 type SK = "rank" | "name" | "cat" | "by" | "golf" | "idx" | "moy" | "moy6" | "nbt" | "total" | "rankAnn";
 
 const PAGE_SIZE = 100;
-const MUTED = <span className="muted">—</span>;
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
 const fmtSigned = (v: number | null) => (v == null ? MUTED : <>{v > 0 ? "+" : ""}{v.toFixed(2)}</>);
-const isoToBr = (iso: string) => iso.split("-").reverse().join("/");
 /** «Ricardo» + «CASTRO FERREIRA» → «Ricardo Castro Ferreira». */
 const nomeProprio = (prenom: string, nom: string) =>
   `${prenom} ${nom.toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (_, a: string, b: string) => a + b.toUpperCase())}`.trim();
 
-function Evolucao({ rank, prev }: { rank: number | null; prev: number | null }) {
-  if (rank == null || prev == null || rank === prev) return null;
-  const sobe = rank < prev;
-  return (
-    <span className="fs-11" style={{ marginLeft: 4, color: sobe ? "var(--color-good-dark)" : "var(--color-danger)" }}
-      title={`Mês anterior: ${prev}.º`}>
-      {sobe ? "▲" : "▼"}{Math.abs(prev - rank)}
-    </span>
-  );
-}
 
 /** Linhas da vista a partir do ficheiro (escalão Sub pelo ano de nascimento, PT pelo nome). */
 export function meriteRows(data: MeriteFile): Row[] {
@@ -214,7 +203,7 @@ export function FFGMeriteView() {
                     <Fragment key={id}>
                       <tr onClick={() => toggleOpen(id)} style={{ cursor: "pointer", background: destaque ? "var(--bg-success-subtle)" : undefined }}>
                         <td className="u-ta-right u-ws-nowrap u-fw-600">
-                          {r.rank != null ? `${r.rank}.º` : MUTED}<Evolucao rank={r.rank} prev={r.rankPrev} />
+                          {r.rank != null ? `${r.rank}.º` : MUTED}<RankChange up={r.rank != null && r.rankPrev != null ? r.rankPrev - r.rank : null} className="fs-11 u-ml-4px" title={r.rankPrev != null ? `Mês anterior: ${r.rankPrev}.º` : undefined} />
                         </td>
                         <td className="u-fw-600 u-ws-nowrap">
                           <span className="muted fs-11 u-mr-4px">{isOpen ? "▾" : "▸"}</span>
@@ -247,7 +236,7 @@ export function FFGMeriteView() {
                                 <tbody>
                                   {prov.map(([trnId, date, nome, lugar, t, pts, moy], i) => (
                                     <tr key={i}>
-                                      <td className="u-ws-nowrap">{isoToBr(date)}</td>
+                                      <td className="u-ws-nowrap">{fmtDatePt(date)}</td>
                                       <td>{trnId ? <Link to={`/ffg/t/${encodeURIComponent(`ffgres:${trnId}`)}`}>{nome}</Link> : nome}</td>
                                       <td className="u-ws-nowrap">{lugar || MUTED}</td>
                                       <td className="u-ta-right">{t.length ? t.join(" · ") : MUTED}</td>

@@ -18,6 +18,7 @@ import { EscPill } from "../PillBadge";
 import { medal, fmtToPar } from "../../utils/format";
 import { isManuelByName, MANUEL_FED } from "../../constants/manuel";
 import type { TsModel, TsTeam, TsCat, TsPlayer, Bpb } from "../../data/teamStroke";
+import TabRow from "../TabRow";
 
 type View = "cartoes" | "lista" | "jogadores";
 /** Volta escolhida (uma categoria): grupo = ordem das letras + 🐦○■ de todas as voltas. */
@@ -469,14 +470,7 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
   return (
     <div className="u-p-12px-16px-24px">
       <div className="mb-10 flex-wrap u-d-flex u-ai-center u-gap-6px">
-        <div className="segmented-toggle" role="tablist" aria-label="Vista">
-          {views.map(v => (
-            <button key={v.k} type="button" role="tab" aria-selected={view === v.k}
-              className={"seg-btn" + (view === v.k ? " active" : "")} onClick={() => setView(v.k)}>
-              <span className="seg-label">{v.l}</span>
-            </button>
-          ))}
-        </div>
+        <TabRow ariaLabel="Vista" active={view} onChange={setView} tabs={views.map(v => ({ key: v.k, label: v.l }))} />
         {view === "cartoes" && single && (played > 1 || model.showLetter) && (<>
           <span className="u-fs-fs-10 u-c-text-muted u-ml-6px">Ordenar:</span>
           {model.showLetter && <SelBtn label="Grupo" col="grupo" />}

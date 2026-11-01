@@ -38,6 +38,7 @@ import {
 import { fmtPoints } from "./teamPointsTypes";
 import { fmtToPar } from "../../utils/format";
 import { isManuel } from "../../constants/manuel";
+import TabRow from "../TabRow";
 
 /** Nome de um jogador: com federado liga à ficha /jogadores/:fed; ↗ kids2 se
  *  existir no roster; gross (±par) ao lado quando a fonte o dá. */
@@ -588,18 +589,8 @@ export default function MatchplayView({ data, roundPicker = false }: {
     <div className="u-maxw-880px">
       {showPicker && (
         <div className="mp-round-picker">
-          <div className="segmented-toggle" role="tablist" aria-label="Ronda">
-            {roundOpts.map(o => (
-              <button key={o.n} role="tab" aria-selected={selRound === o.n}
-                className={`seg-btn${selRound === o.n ? " active" : ""}`} onClick={() => setSelRound(o.n)}>
-                <span className="seg-label">{o.label}</span>
-              </button>
-            ))}
-            <button role="tab" aria-selected={selRound == null}
-              className={`seg-btn${selRound == null ? " active" : ""}`} onClick={() => setSelRound(null)} title="Todas as rondas">
-              <span className="seg-label">Total</span>
-            </button>
-          </div>
+          <TabRow<number | null> ariaLabel="Ronda" active={selRound} onChange={setSelRound}
+            tabs={[...roundOpts.map(o => ({ key: o.n as number | null, label: o.label })), { key: null, label: "Total", title: "Todas as rondas" }]} />
         </div>
       )}
       {pendentes > 0 && (

@@ -17,7 +17,7 @@ import TeeDate from "../../../ui/TeeDate";
 import EmptyState from "../../../ui/EmptyState";
 import { ScorecardTable } from "../../../ui/ScorecardTable";
 import { CourseLink } from "../../../ui/jogadoresHelpers";
-import { EventInfo, effectivePill } from "../eventInfo";
+import { EventInfo, effectivePill } from "../../../ui/eventInfo";
 import { scHostStyle } from "../shared";
 
 export default function ByDateView({ data, search }: {

@@ -20,6 +20,7 @@ import React, { useMemo } from "react";
 import { RankingTable, type RankingCol } from "../ranking/RankingPage";
 import EmptyState from "../EmptyState";
 import type { CircuitEntry } from "./types";
+import TabRow from "../TabRow";
 
 export interface CircuitRankingContext {
   /** Os torneios: na vista Ranking os visíveis; na «Época» os da época. */
@@ -89,15 +90,8 @@ export function CircuitRankingView<R>({ ranking, ctx }: { ranking: CircuitRankin
     <div className="circuit-ranking">
       {season ? ranking.seasonTitle?.(rows, ctx) : ranking.header?.(rows, ctx)}
       {!season && views.length > 1 && (
-        <div className="segmented-toggle circuit-ranking-views" role="tablist" aria-label="Vista">
-          {views.map(v => (
-            <button key={v.key} type="button" role="tab" aria-selected={v.key === view.key}
-              className={"seg-btn" + (v.key === view.key ? " active" : "")}
-              onClick={() => ranking.onView?.(v.key)}>
-              <span className="seg-label">{v.label}</span>
-            </button>
-          ))}
-        </div>
+        <TabRow className="circuit-ranking-views" ariaLabel="Vista" active={view.key}
+          onChange={k => ranking.onView?.(k)} tabs={views.map(v => ({ key: v.key, label: v.label }))} />
       )}
       {sel && ranking.detail!.render(sel, () => ranking.detail!.onSelect(null))}
       {rows.length === 0

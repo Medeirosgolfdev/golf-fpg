@@ -12,6 +12,30 @@ import { fmtGrossDelta, fmtSdVal, fmtStb } from "../utils/scoreDisplay";
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import TeePill from "./TeePill";
 
+/** Traço esbatido para «sem valor» nas tabelas. */
+export const MUTED = <span className="muted">—</span>;
+
+/** Variação de HCP: ▼ verde quando desce (melhorou), ▲ vermelho quando sobe. */
+export function HcpDelta({ d, zero = "—" }: { d: number | null; zero?: string }) {
+  if (d == null || d === 0) return <span className="muted">{d === 0 ? zero : "—"}</span>;
+  const melhorou = d < 0;
+  return (
+    <span className={"u-fw-700 " + (melhorou ? "u-c-color-good" : "u-c-color-danger")}>
+      {melhorou ? "▼" : "▲"} {d > 0 ? "+" : ""}{d.toFixed(1)}
+    </span>
+  );
+}
+
+/** Variação de posição num ranking: ▲N verde (subiu), ▼N vermelho (desceu). `up` = lugares ganhos. */
+export function RankChange({ up, empty = null, title, className }: { up: number | null; empty?: React.ReactNode; title?: string; className?: string }) {
+  if (up == null || up === 0) return <>{empty}</>;
+  return (
+    <span className={(up > 0 ? "u-c-color-good" : "u-c-color-danger") + (className ? " " + className : "")} title={title}>
+      {up > 0 ? "▲" : "▼"}{Math.abs(up)}
+    </span>
+  );
+}
+
 /** Badge do número de buracos (9 / 18). */
 export function HoleBadge({ hc }: { hc: number }) {
   return hc === 9

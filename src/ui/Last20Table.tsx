@@ -3,7 +3,8 @@ import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
 import { norm } from "../utils/format";
 import { normKey } from "../utils/teeColors";
 import { fmtStb } from "../utils/scoreDisplay";
-import { GrossCell, SdCell } from "./tableCells";
+import { GrossCell, SdCell, HoleBadge } from "./tableCells";
+import { OriginPill, effectivePill } from "./eventInfo";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
@@ -15,39 +16,8 @@ import { CourseLink } from "./jogadoresHelpers";
 export type L20SortKey = "whs" | "date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd" | "rank";
 
 
-function HoleBadge({ hc }: { hc: number }) {
-  return hc === 9
-    ? <span className="hb hb9">9</span>
-    : <span className="hb hb18">18</span>;
-}
 
-function effectivePill(round: { _pill?: string; course?: string; scoreOrigin?: string; eventName?: string }, courseName?: string): string {
-  if (round._pill) return round._pill;
-  const o = (round.scoreOrigin || "").trim().toUpperCase();
-  if (o === "INTERN") return "INTL";
-  const c = (courseName || round.course || "").trim().toUpperCase();
-  if (c === "INTERNACIONAL" || c === "INTERNATIONAL") return "INTL";
-  const ev = (round.eventName || "").trim();
-  if (/regional/i.test(ev)) return "REGIONAL";
-  if (/nacional/i.test(ev)) return "NACIONAL";
-  return "";
-}
 
-function OriginPill({ origin }: { origin?: string }) {
-  if (!origin) return null;
-  const key = origin.trim().toUpperCase();
-  if (!key || key === "TORN" || key === "INTERN") return null;
-  const ORIGIN_MAP: Record<string, { label: string; cls: string }> = {
-    EDS: { label: "EDS", cls: "p p-sm p-origin p-eds" },
-    IMPORT: { label: "IMPORT", cls: "p p-sm p-origin p-import" },
-    INDIV: { label: "INDIV", cls: "p p-sm p-origin p-indiv" },
-    TREINO: { label: "TREINO", cls: "p p-sm p-origin p-treino" },
-    EXTRA: { label: "EXTRA", cls: "p p-sm p-origin p-extra" },
-  };
-  const entry = ORIGIN_MAP[key];
-  if (!entry) return null;
-  return <span className={entry.cls}>{entry.label}</span>;
-}
 
 function EventInfo({ name, origin }: {
   name?: string; origin?: string; pill?: string;

@@ -14,7 +14,7 @@
  * `PastEditionsTab` na MajorPage, que faz lazy-load dos `{slug}_{ano}.json`).
  */
 import { useMemo, useState } from "react";
-import { fmtToPar } from "../../utils/format";
+import { fmtToPar, medal as medalOf } from "../../utils/format";
 import { clubFlagPrefix } from "../../utils/flagUtils";
 import { tpColorDark } from "../../utils/scoreDisplay";
 import EmptyState from "../EmptyState";
@@ -179,7 +179,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
           <tbody>
             {Array.from({ length: maxRows }, (_, ri) => {
               // Pódio como no scorecard: medalha na coluna da posição, sem fundo de cor.
-              const medal = ri === 0 ? "🥇" : ri === 1 ? "🥈" : ri === 2 ? "🥉" : null;
+              const medal = medalOf(ri + 1);
               return (
                 <tr key={ri}>
                   <td className="lb-pos u-pos-sticky u-left-0 u-bg-bg-card u-z-z-base u-ws-nowrap">

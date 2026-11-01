@@ -1,13 +1,13 @@
 /**
- * src/pages/jogadores/eventInfo.tsx
+ * src/ui/eventInfo.tsx
  *
  * Pills e links de prova partilhados pelas vistas de rondas da JogadoresPage
  * (ByDateView, ByCourseView, FederadoRoundsTable): pill efectiva INTL/REGIONAL/
  * NACIONAL, pill de origem (EDS/Treino/…), links externos e a heurística
  * campo → ccode para abrir o torneio na federação.
  */
-import { fpgScoringUrl } from "../../utils/format";
-import { PillBadge } from "../../ui/PillBadge";
+import { fpgScoringUrl } from "../utils/format";
+import { PillBadge } from "./PillBadge";
 
 /** Retorna a pill efectiva: usa _pill dos dados ou auto-detecta INTL/REGIONAL/NACIONAL */
 export function effectivePill(round: { _pill?: string; course?: string; scoreOrigin?: string; eventName?: string }, courseName?: string): string {

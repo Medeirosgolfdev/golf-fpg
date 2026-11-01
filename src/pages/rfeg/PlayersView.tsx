@@ -23,10 +23,12 @@ import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
 import { useSort } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName } from "../../utils/format";
+import { displayName, fmtDatePt } from "../../utils/format";
 import { isManuelByName } from "../../constants/manuel";
 import { PlayerTournaments, type EsPlayerTournamentsFile } from "./PlayerTournaments";
 import Pager from "../../ui/Pager";
+import { MUTED } from "../../ui/tableCells";
+import { usePaged } from "../../hooks/usePaged";
 
 interface SpainPlayer {
   licencia: string;
@@ -118,18 +120,13 @@ function ageFromIso(iso: string | null): number | null {
   return a >= 0 && a < 120 ? a : null;
 }
 /** ISO "2026-03-29" → "29/03/2026". Outros formatos passam tal-qual. */
-function isoToBr(iso: string | null): string {
-  if (!iso) return "—";
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
-  return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
-}
 /** Período em que a licença foi vista em competição — "06/07/2021 → 28/06/2022"
  *  (ou uma só data se apareceu só uma vez) a partir de firstSeen/lastSeen ISO.
  *  É o melhor proxy de "de quando a quando a licença existiu" — a RFEG não expõe
  *  a data oficial de emissão, só as inscrições onde o jogador apareceu. */
 function activePeriod(first: string | null, last: string | null): string {
-  const a = isoToBr(first);
-  const b = isoToBr(last);
+  const a = fmtDatePt(first);
+  const b = fmtDatePt(last);
   if (a === "—" && b === "—") return "—";
   if (a === "—" || b === "—") return a === "—" ? b : a;
   return a === b ? a : `${a} → ${b}`;
@@ -137,7 +134,6 @@ function activePeriod(first: string | null, last: string | null): string {
 
 type SK = "name" | "licencia" | "cat" | "sex" | "hcp" | "club" | "dob" | "age" | "tot" | "ano" | "hcpDate";
 
-const PAGE_SIZE = 100;
 const CUR_YEAR = new Date().getFullYear();
 
 interface Row extends SpainPlayer {
@@ -172,7 +168,6 @@ interface CellView {
   ano: number;
   hcpDate: string | null;
 }
-const MUTED = <span className="muted">—</span>;
 /** As células de dados (tudo DEPOIS da coluna Licencia), nas mesmas colunas e
  *  estilos da tabela principal, respeitando as colunas escondidas (`has`). */
 function dataCells(v: CellView, has: { club: boolean; dob: boolean; sex: boolean; cat: boolean; tot: boolean; hcpDate: boolean }) {
@@ -187,7 +182,7 @@ function dataCells(v: CellView, has: { club: boolean; dob: boolean; sex: boolean
       {has.cat && <td>{v.cat ? (v.young ? <EscPill esc={v.cat} /> : <span className="muted fs-11">{v.cat}</span>) : MUTED}</td>}
       {has.tot && <td style={{ textAlign: "right", color: v.tot ? undefined : "var(--text-muted)" }}>{v.tot || "—"}</td>}
       {has.tot && <td style={{ textAlign: "right", color: v.ano ? "var(--color-good-dark)" : "var(--text-muted)", fontWeight: v.ano ? 600 : undefined }}>{v.ano || "—"}</td>}
-      {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{v.hcpDate ? isoToBr(v.hcpDate) : MUTED}</td>}
+      {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{v.hcpDate ? fmtDatePt(v.hcpDate) : MUTED}</td>}
     </>
   );
 }
@@ -199,7 +194,6 @@ export function RFEGPlayersView() {
   const [sex, setSex] = useState<"" | "M" | "F">("");
   const [cat, setCat] = useState<string>("ALL");
   const [jovens, setJovens] = useState(false);
-  const [page, setPage] = useState(1);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const { sortKey, sortDir, toggleSort } = useSort<SK>("name");
   // Torneios por jogador — ficheiro pesado (~2,5 MB), só carrega quando o
@@ -331,11 +325,7 @@ export function RFEGPlayersView() {
 
   // Reset de página quando filtros/ordenação mudam
   const filterSig = `${q}|${sex}|${cat}|${jovens}|${sortKey}|${sortDir}`;
-  const [lastSig, setLastSig] = useState(filterSig);
-  if (filterSig !== lastSig) { setLastSig(filterSig); if (page !== 1) setPage(1); }
-
-  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
-  const pageRows = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const { page, setPage, totalPages, pageRows } = usePaged(sorted, filterSig);
 
   if (err) return <EmptyState message={`Erro: ${err}`} />;
   if (!data) return <LoadingState message="A carregar jogadores espanhóis..." />;

@@ -16,7 +16,7 @@ import { useCourses } from "../context/CoursesContext";
 import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex, teeBorder } from "../utils/teeColors";
-import { fmt, fmtCR, norm, sumRange, fmtToPar, titleCase } from "../utils/format";
+import { fmt, fmtCR, norm, sumRange, fmtToPar, titleCase, fmtDatePt, fmtDateShort } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
@@ -434,16 +434,6 @@ function tpTextColor(tp: number | null): string {
   return "var(--color-danger-dark)";
 }
 
-/** "2026-02-27" → "27/02"; "" se a data não for ISO. */
-function fmtDM(d: string | null): string {
-  const m = d && d.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  return m ? `${m[3]}/${m[2]}` : "";
-}
-/** "2026-02-27" → "27/02/2026"; "" se a data não for ISO. */
-function fmtDMYfull(d: string | null): string {
-  const m = d && d.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  return m ? `${m[3]}/${m[2]}/${m[1]}` : "";
-}
 
 type CPBucket = {
   n: number;
@@ -620,7 +610,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
           </>
         ) : <span className="muted">–</span>}
       </td>
-      <td className="cp-num cp-muted u-ws-nowrap">{fmtDMYfull(b.last) || "–"}</td>
+      <td className="cp-num cp-muted u-ws-nowrap">{fmtDatePt(b.last, "") || "–"}</td>
     </>
   );
 
@@ -674,12 +664,12 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
                       <td colSpan={5}>
                         <div className="cp-rounds">
                           {s.rounds.map((r, i) => {
-                            const dia = fmtDM(r.date);
+                            const dia = fmtDateShort(r.date ?? "");
                             const ok = validGross(r.gross);
                             if (!ok && !dia) return null;
                             const h = roundHoles(r);
                             const title = [
-                              fmtDMYfull(r.date),
+                              fmtDatePt(r.date, ""),
                               h ? `${h} buracos` : (r.gross != null && !ok ? "sem cartão" : null),
                               r.event, r.tee, r.sd != null ? `SD ${r.sd}` : null,
                             ].filter(Boolean).join(" · ");
@@ -937,7 +927,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
   );
   const when = (date: string | null, sd: number | null) => (
     <span className="muted u-fs-fs-10 u-ws-nowrap u-ta-right">
-      {fmtDMYfull(date)}{sd != null ? ` · SD ${sd.toFixed(1)}` : ""}
+      {fmtDatePt(date, "")}{sd != null ? ` · SD ${sd.toFixed(1)}` : ""}
     </span>
   );
   const nameEl = (fed: string, name: string) => {
@@ -966,7 +956,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
         ]} />
         <span className="muted u-ml-auto u-fs-fs-11 u-cur-help"
           title={"Fonte: melhores voltas WHS (scorecards) de todos os jogadores que seguimos — course-players.json, regenerado semanalmente (workflow update-data.yml). Escalão calculado à DATA da volta pela coorte FPG (ano de nascimento, dos federados)."}>
-          ⓘ dados: voltas dos nossos{lastDate ? ` · última ${fmtDMYfull(lastDate)}` : ""}
+          ⓘ dados: voltas dos nossos{lastDate ? ` · última ${fmtDatePt(lastDate, "")}` : ""}
         </span>
       </div>
 
@@ -1043,7 +1033,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
                                 <span className="u-minw-0 u-d-block u-p-3px-0">
                                   {nameEl(b.fed, b.name)}
                                   <span className="muted u-d-block u-fs-fs-10 u-ws-nowrap u-ov-hidden u-tov-ellipsis">
-                                    {fmtDMYfull(b.date)}{b.sd != null ? ` · SD ${b.sd.toFixed(1)}` : ""}
+                                    {fmtDatePt(b.date, "")}{b.sd != null ? ` · SD ${b.sd.toFixed(1)}` : ""}
                                   </span>
                                 </span>
                               </Fragment>

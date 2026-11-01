@@ -14,7 +14,7 @@
 
 import { useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
-import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf } from "../utils/format";
+import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf, isRecentHours } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
@@ -85,12 +85,6 @@ export interface AdmissionsExtraCol {
   dir?: "asc" | "desc";
 }
 
-/** «2026/04/03 09:14» (hora de Lisboa, como a FPG publica) nas últimas N horas? */
-function isRecentHours(s: string | null | undefined, hours: number): boolean {
-  if (!s) return false;
-  const d = new Date(s.replace(/\//g, "-"));
-  return !isNaN(d.getTime()) && (Date.now() - d.getTime()) < hours * 3600_000;
-}
 
 /** «2026/09/15 16:05» (FPG) → «15/09 16:05», o formato de datas do resto da
  *  app (14/10/2026). O ano só aparece se não for o corrente. Outros formatos

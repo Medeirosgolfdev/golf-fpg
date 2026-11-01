@@ -12,6 +12,8 @@ import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import SortableHdr from "./SortableHdr";
 import { useSort } from "../hooks/useSort";
+import { fmtDatePt } from "../utils/format";
+import { MUTED } from "./tableCells";
 
 export interface PlayerTournItem {
   /** Chave React (id da prova; sufixado pelo adaptador se puder repetir). */
@@ -37,14 +39,8 @@ export interface PlayerTournItem {
 
 type SK = "date" | "name" | "sub" | "pos" | "total";
 
-const MUTED = <span className="muted">—</span>;
 
 /** ISO "2026-07-20" → "20/07/2026". */
-function br(iso: string | null | undefined): string {
-  if (!iso) return "—";
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
-  return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
-}
 
 export default function PlayerTournamentsPanel({
   items, subLabel = "Série", emptyMessage = "Sem torneios registados.",
@@ -110,7 +106,7 @@ export default function PlayerTournamentsPanel({
         <tbody>
           {sorted.map((i) => (
             <tr key={i.key} className="player-list-row">
-              <td className="u-ws-nowrap">{br(i.date)}</td>
+              <td className="u-ws-nowrap">{fmtDatePt(i.date)}</td>
               <td className="u-fw-600">
                 {i.url ? (
                   <a

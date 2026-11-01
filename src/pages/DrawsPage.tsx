@@ -33,7 +33,7 @@ import FilterPillRow from "../ui/FilterPillRow";
 import { EscPill, PILL_ROUND } from "../ui/PillBadge";
 import { kidsUrl } from "../ui/KidsLink";
 import { FLAG } from "../utils/flagUtils";
-import { norm, escalaoAtDate, displayName, fmtToPar } from "../utils/format";
+import { norm, escalaoAtDate, displayName, fmtToPar, medal as medalOf, fmtDatePt } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
 import { loadPlayers } from "../data/loader";
 import { cachedFetchJson } from "../data/fetchCache";
@@ -175,13 +175,6 @@ function fmtScore(s: Score): string {
   return `${s.gross}${tp}`;
 }
 
-function fmtDateShort(iso: string | null): string {
-  if (!iso) return "—";
-  // YYYY-MM-DD → DD/MM/YYYY
-  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (!m) return iso;
-  return `${m[3]}/${m[2]}/${m[1]}`;
-}
 
 // ── Resolução de identidade dos companheiros ──────────────────────────
 // Os dados de draws trazem por vezes o nome invertido ("Apelido,Nome"), em
@@ -270,7 +263,6 @@ function RondaPill({ n }: { n: number }) {
 }
 
 // Medalha para os 3 companheiros com mais rondas em conjunto
-const MEDALS: Record<number, string> = { 1: "🥇", 2: "🥈", 3: "🥉" };
 
 // Resultado do Manuel face ao companheiro numa ronda (cor do ponto)
 function h2hDot(manuel: Score, comp: Score): { res: "W" | "D" | "L"; color: string; title: string } | null {
@@ -467,7 +459,7 @@ function TorneiosList({
                     className="muted u-w-78px u-fsh-0 u-fvn-tabular-nums"
 
                   >
-                    {fmtDateShort(t.data)}
+                    {fmtDatePt(t.data)}
                   </span>
                   <Link
                     to={linkTorneioFPG(t.torneioId, t.nome)}
@@ -515,8 +507,8 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
       {torneios.map((t) => {
         const isFpg = t.circuito === "FPG" && t.torneioId.includes("-");
         const rangeData = t.dataMin && t.dataMax && t.dataMin !== t.dataMax
-          ? `${fmtDateShort(t.dataMin)} – ${fmtDateShort(t.dataMax)}`
-          : fmtDateShort(t.dataMax || t.dataMin);
+          ? `${fmtDatePt(t.dataMin)} – ${fmtDatePt(t.dataMax)}`
+          : fmtDatePt(t.dataMax || t.dataMin);
         return (
           <div key={t.torneioId} className="card u-m-0 u-p-14px">
             {/* Cabeçalho do torneio */}
@@ -546,7 +538,7 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
                     <div className="u-d-flex u-ai-center u-gap-8px u-mb-8px u-fwr-wrap">
                       <RondaPill n={d.ronda} />
                       <span className="muted u-fs-fs-11 u-fvn-tabular-nums">
-                        {fmtDateShort(d.data)}
+                        {fmtDatePt(d.data)}
                       </span>
                       {info && (
                         <span className="muted u-fs-fs-11">{info}</span>
@@ -959,7 +951,7 @@ export default function DrawsPage() {
         <ToolbarMeta>Companheiros de jogo do Manuel em torneios</ToolbarMeta>
         {data && (
           <span className="chip ml-auto">
-            actualizado {fmtDateShort(data.geradoEm.slice(0, 10))}
+            actualizado {fmtDatePt(data.geradoEm.slice(0, 10))}
           </span>
         )}
       </Toolbar>
@@ -1022,7 +1014,7 @@ export default function DrawsPage() {
           <div className="notice notice-warn">
             ⚠ Torneios USKids do Manuel sem draw capturado:{" "}
             {data.cobertura!.uskids.torneiosSemDrawDetalhe!
-              .map(t => `${t.nome}${t.data ? ` (${fmtDateShort(t.data)})` : ""}`)
+              .map(t => `${t.nome}${t.data ? ` (${fmtDatePt(t.data)})` : ""}`)
               .join(", ")}
             . Os tee times USKids são efémeros — só se capturam durante a prova.
           </div>
@@ -1104,7 +1096,7 @@ export default function DrawsPage() {
                   // para se ver logo a(s) ronda(s) partilhada(s) sem clicar em cada um.
                   const open = q.trim() !== "" || anoFilter.size > 0 || expanded.has(row.key);
                   const rank = rankByVezes.get(row.key) || 0;
-                  const medal = MEDALS[rank];
+                  const medal = medalOf(rank);
                   return (
                     <Fragment key={row.key}>
                       <tr
@@ -1128,7 +1120,7 @@ export default function DrawsPage() {
                         <td className="r u-fw-800 u-fvn-tabular-nums u-ws-nowrap">
                           {medal ? <span className="u-mr-3px">{medal}</span> : null}{row.vezes}
                         </td>
-                        <td>{fmtDateShort(row.ultimaData)}</td>
+                        <td>{fmtDatePt(row.ultimaData)}</td>
                         <td className="u-ta-center u-ws-nowrap">
                           <CircuitBadge circuitos={row.circuitos} />
                         </td>
@@ -1187,7 +1179,7 @@ export default function DrawsPage() {
                                     className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-p-8px-10px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius"
                                   >
                                     <span className="muted u-w-74px u-fsh-0 u-fvn-tabular-nums">
-                                      {fmtDateShort(r.data)}
+                                      {fmtDatePt(r.data)}
                                     </span>
                                     <span className="u-fsh-0">
                                       <RondaPill n={r.ronda} />
@@ -1320,7 +1312,7 @@ export default function DrawsPage() {
                             {tn.nome}
                           </a>
                           <span className="muted">
-                            {" "}— signupanytime · {tn.rondas} {tn.rondas === 1 ? "ronda" : "rondas"}{tn.data ? ` · ${fmtDateShort(tn.data)}` : ""}
+                            {" "}— signupanytime · {tn.rondas} {tn.rondas === 1 ? "ronda" : "rondas"}{tn.data ? ` · ${fmtDatePt(tn.data)}` : ""}
                           </span>
                         </li>
                       ))}

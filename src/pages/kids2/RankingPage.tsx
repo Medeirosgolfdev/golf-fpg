@@ -27,6 +27,7 @@ import EmptyState from "../../ui/EmptyState";
 import Kids2SubNav from "./Kids2SubNav";
 import { MANUEL_BIRTH_YEAR, isManuel } from "../../constants/manuel";
 import { useScoutRanking } from "./useScoutRanking";
+import { medal as medalOf } from "../../utils/format";
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -134,7 +135,6 @@ function JourneyChip({ item }: { item: JourneyItem }) {
 
 // ── Colunas (a RankingTable partilhada, a do EGR/WAGR/Drive/FPG) ─────────────
 
-const MEDALS = ["🥇", "🥈", "🥉"];
 
 /** Nome + tier + vitórias + o percurso (chips dos torneios >3★). */
 function NameCell({ row }: { row: CohortRow }) {
@@ -181,7 +181,7 @@ function NameCell({ row }: { row: CohortRow }) {
 const COLS: RankingCol<CohortRow>[] = [
   { key: "rank", label: "#", className: "num", sort: (r) => r.entry.rank, firstDir: "asc",
     cell: (r) => <span className={"u-fw-800 u-ws-nowrap " + (r.entry.rank <= 3 ? "u-fs-fs-18" : "u-fs-fs-14")}>
-      {r.entry.rank <= 3 ? MEDALS[r.entry.rank - 1] : r.entry.rank}</span> },
+      {medalOf(r.entry.rank) ?? r.entry.rank}</span> },
   { key: "flag", label: "", cell: (r) => flagOf(r.junior.country || r.junior.nationality || "") || "",
     tdClassName: "u-ta-center u-fs-fs-16" },
   { key: "name", label: "Nome", sort: (r) => (r.junior.canonicalName || "").toLowerCase(), firstDir: "asc", cell: (r) => <NameCell row={r} /> },
