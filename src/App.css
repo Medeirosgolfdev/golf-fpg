@@ -2446,6 +2446,47 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .si-pill.on { background: var(--accent); color: #fff; font-weight: 800; }
 /* Barras por buraco (jogador vs field) na Análise do Kids 2 — a altura vem dos dados. */
 .hole-bar { width: 40%; border-radius: 2px 2px 0 0; }
+/* ── /comparar ── */
+/* Jogador escolhido para comparar (o fundo vem da cor do jogador). */
+.cmp-slot { display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; font-size: var(--fs-13); border-radius: var(--radius-pill); }
+/* Barra de % por jogador e barra de vitórias (largura e cor vêm dos dados). */
+.bar-fill { height: 100%; border-radius: var(--radius-sm); opacity: 0.75; }
+.win-bar-seg { display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800;
+  font-size: var(--fs-12); font-family: var(--font-mono); }
+.win-bar-seg.draw { background: var(--bg-muted); color: var(--text-muted); font-weight: 700; font-family: inherit; }
+/* Similitude de campos: % de parecença e linha escolhida. */
+.sim-badge { font-family: var(--font-mono); font-weight: 700; min-width: 52px; justify-content: center; border: 1px solid; }
+.sim-badge.good { color: var(--color-good-dark); background: var(--color-good-alpha); border-color: var(--color-good); }
+.sim-badge.info { color: var(--color-info); background: var(--bg-info-strong); border-color: var(--color-info); }
+.sim-badge.warn { color: var(--color-warn-dark); background: var(--color-warn-alpha); border-color: var(--color-warn); }
+.dtable tr.row-picked { background: var(--accent-light); outline: 2px solid var(--accent); }
+/* Tabela ±Par × tees de dois campos (TwoTeeSDTable). Dois níveis sticky: a fila de cima fica
+   +1 acima de --z-panel-hdr (não há token maior); 26px = altura da 1.ª fila. */
+.mt-sticky0 { position: sticky; top: 0; z-index: calc(var(--z-panel-hdr) + 1); }
+.mt-sticky1 { position: sticky; top: 26px; z-index: var(--z-panel-hdr); }
+.dtable .mt-th-par { text-align: center; vertical-align: middle; padding: 4px 8px; font-size: var(--fs-11); font-weight: 600;
+  color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 2px solid var(--border);
+  border-right: 1px solid var(--border); min-width: 44px; background: var(--bg-muted); }
+.dtable .mt-th-course { background: var(--bg-muted); color: var(--text-2); text-align: center; padding: 4px 8px;
+  font-size: var(--fs-11); font-weight: 700; border-bottom: none; }
+.dtable .mt-th-course.mt-div-r { border-right: 2px solid var(--border); }
+.dtable .mt-th-tee { background: var(--bg-muted); text-align: center; padding: 4px 8px; font-size: var(--fs-10);
+  border-bottom: 2px solid var(--border); white-space: nowrap; }
+.dtable :is(th, td).mt-div { border-left: 2px solid var(--border); }
+.dtable .mt-delta { text-align: center; font-weight: 700; padding: 4px 8px; border-bottom: 1px solid var(--border-light); }
+.dtable .mt-sd { text-align: right; padding: 3px 8px; border-bottom: 1px solid var(--border-light); }
+.dtable :is(.mt-delta, .mt-sd).is-par { background: var(--accent-light); color: var(--accent); font-weight: 700; }
+.dtable .mt-sd.is-hcp { font-weight: 800; color: var(--grey-900); }
+/* Cabeçalho de cada par na comparação de distâncias (a cor vem do par). */
+.par-group-hdr { font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 4px 0; border-bottom: 1px solid var(--border); margin-bottom: 6px; }
+/* Distância de um buraco, pintada pela posição dentro do par (cor vem dos dados). */
+.dist-pill { border-radius: var(--radius); padding: 3px 10px; font-size: var(--fs-12); font-weight: 700; font-family: var(--font-mono); }
+/* Conclusões do conselheiro de tees. .warn = alerta; .off = não se aplica. */
+.advice-card { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: var(--radius);
+  background: var(--bg-muted); border: 1px solid var(--border-light); }
+.advice-card.warn { background: var(--color-warn-alpha); border-color: var(--color-warn); }
+.advice-card.off { background: transparent; opacity: 0.6; }
 .trend-pill { font-size: var(--fs-10); padding: 2px 8px; border-radius: var(--radius-lg); font-weight: 700;
   border: 1px solid; white-space: nowrap; flex-shrink: 0; }
 /* Cabeçalho abre/fecha dos grupos de torneios (Draws do jogador). */
@@ -4935,6 +4976,7 @@ table td.lb-col-divider {
 .u-fs-fs-14 { font-size: var(--fs-14) !important; }
 .u-fs-fs-15 { font-size: var(--fs-15) !important; }
 .u-fs-fs-16 { font-size: var(--fs-16) !important; }
+.u-fs-fs-17 { font-size: var(--fs-17) !important; }
 .u-fs-fs-18 { font-size: var(--fs-18) !important; }
 .u-fs-fs-28 { font-size: var(--fs-28) !important; }
 .u-fs-fs-20 { font-size: var(--fs-20) !important; }

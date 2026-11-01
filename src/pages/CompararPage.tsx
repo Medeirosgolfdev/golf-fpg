@@ -157,10 +157,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
       {slots.length > 0 && (
         <div className="u-d-flex u-gap-8px u-fwr-wrap">
           {slots.map((s, i) => (
-            <span key={s.fed} className="jog-pill" style={{
-              borderColor: COLORS[i], background: COLORS_LIGHT[i],
-              display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: "var(--fs-13)", borderRadius: 20,
-            }}>
+            <span key={s.fed} className="cmp-slot" style={{ background: COLORS_LIGHT[i] }}>
               <span className="cor-dot cor-dot-10" style={{ background: COLORS[i] }} />
               <b>{shortName(s.player.name)}</b>
               <span className="muted u-fs-fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
@@ -305,9 +302,9 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
         <table className="dtable">
           <thead>
             <tr>
-              <SortableHdr k="label" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ minWidth: 140 }}>Métrica</SortableHdr>
+              <SortableHdr k="label" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-minw-140px">Métrica</SortableHdr>
               {loaded.map(x => (
-                <th key={x.i} className="r" style={{ color: COLORS[x.i], minWidth: 80 }}>
+                <th key={x.i} className="r u-minw-80px" style={{ color: COLORS[x.i] }}>
                   {firstName(x.s.player.name)}
                 </th>
               ))}
@@ -323,12 +320,8 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
                   const v = r.values[ci];
                   const isBest = r.bi === ci;
                   return (
-                    <td key={ci} className="r" style={{
-                      fontWeight: isBest ? 800 : 400,
-                      color: isBest ? COLORS[x.i] : undefined,
-                      fontFamily: "var(--font-mono)",
-                      background: isBest ? COLORS_LIGHT[x.i] : undefined,
-                    }}>
+                    <td key={ci} className={"r mono " + (isBest ? "u-fw-800" : "u-fw-400")}
+                      style={isBest ? { color: COLORS[x.i], background: COLORS_LIGHT[x.i] } : undefined}>
                       {v ?? "–"}
                     </td>
                   );
@@ -381,14 +374,11 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                   const barW = Math.max(2, (v / maxVal) * 100);
                   return (
                     <div key={x.i} className="u-d-flex u-ai-center u-gap-8px">
-                      <span style={{ fontSize: "var(--fs-11)", width: 60, textAlign: "right", color: COLORS[x.i], fontWeight: 600, flexShrink: 0 }}>
+                      <span className="u-fs-fs-11 u-w-60px u-ta-right u-fw-600 u-fsh-0" style={{ color: COLORS[x.i] }}>
                         {firstName(x.s.player.name)}
                       </span>
                       <div className="u-fl-1 u-bg-bg-subtle u-br-radius-sm u-h-18px u-ov-hidden">
-                        <div style={{
-                          width: `${barW}%`, height: "100%", background: COLORS[x.i],
-                          borderRadius: "var(--radius-sm)", opacity: 0.75,
-                        }} />
+                        <div className="bar-fill" style={{ width: `${barW}%`, background: COLORS[x.i] }} />
                       </div>
                       <span className="u-fs-fs-11 u-ff-font-mono u-fw-700 u-w-46px u-ta-right u-c-text-2">
                         {v.toFixed(1)}%
@@ -613,20 +603,13 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           const w = totalMatches > 0 ? (wins[i] / totalMatches * 100) : 0;
           if (w === 0) return null;
           return (
-            <div key={i} style={{
-              width: `${w}%`, background: COLORS[i], display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fff", fontWeight: 800, fontSize: "var(--fs-12)", fontFamily: "var(--font-mono)",
-            }}>
+            <div key={i} className="win-bar-seg" style={{ width: `${w}%`, background: COLORS[i] }}>
               {wins[i] > 0 && `${firstName(s.player.name)} ${wins[i]}`}
             </div>
           );
         })}
         {loaded.length === 2 && totalMatches - wins[0] - wins[1] > 0 && (
-          <div style={{
-            width: `${(totalMatches - wins[0] - wins[1]) / totalMatches * 100}%`,
-            background: "var(--bg-muted)", display: "flex", alignItems: "center", justifyContent: "center",
-            color: "var(--text-muted)", fontWeight: 700, fontSize: "var(--fs-12)",
-          }}>
+          <div className="win-bar-seg draw" style={{ width: `${(totalMatches - wins[0] - wins[1]) / totalMatches * 100}%` }}>
             {totalMatches - wins[0] - wins[1]}
           </div>
         )}
@@ -666,7 +649,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
                 {loaded.map((_, i) => {
                   const r = m.results.find(r => r.idx === i);
                   if (!r) return <td key={i} className="r">–</td>;
-                  return <td key={i} className="r" style={{ color: r.gross === bestGross ? COLORS[i] : undefined, fontWeight: r.gross === bestGross ? 800 : 400 }}>{r.gross}</td>;
+                  return <td key={i} className={"r " + (r.gross === bestGross ? "u-fw-800" : "u-fw-400")} style={r.gross === bestGross ? { color: COLORS[i] } : undefined}>{r.gross}</td>;
                 })}
                 <td className="r u-c-text-3">
                   {loaded.length === 2 ? (() => {
@@ -723,7 +706,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
               <div className="caKpiLbl">{shortName(s.name)}</div>
               {delta != null && (
-                <div style={{ fontSize: "var(--fs-10)", fontWeight: 700, marginTop: 2, color: delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--color-danger)" : "var(--text-3)" }}>
+                <div className="u-fs-fs-10 u-fw-700 u-mt-2px" style={{ color: delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--color-danger)" : "var(--text-3)" }}>
                   {delta > 0 ? "+" : ""}{delta.toFixed(1)} no período
                 </div>
               )}

@@ -38,7 +38,6 @@ import { reachBudget } from "../../utils/reach";
 import { MANUEL_FED } from "../../constants/manuel";
 import { resolvePlayedMeters, resolvePlayedTee, courseKeyName } from "../../utils/playedDistance";
 
-const MONO = "'JetBrains Mono', monospace";
 
 /** Coerção segura para número — alguns campos do JSON vêm como string (ex: sd "14"). */
 const toNum = (v: unknown): number | null => {
@@ -105,10 +104,10 @@ function ClubDistanceTable({ driveM }: { driveM: number }) {
         </thead>
         <tbody>
           {sorted.map(c => (
-            <tr key={c.abbr} style={c.abbr === "D" ? { fontWeight: 800 } : undefined}>
+            <tr key={c.abbr} className={c.abbr === "D" ? "u-fw-800" : undefined}>
               <td>{c.club} <span className="muted u-fs-fs-11">({c.abbr})</span></td>
-              <td className="r" style={{ fontFamily: MONO }}>{c.pct}%</td>
-              <td className="r" style={{ fontFamily: MONO, fontWeight: 700 }}>{c.dist}</td>
+              <td className="r mono">{c.pct}%</td>
+              <td className="r mono u-fw-700">{c.dist}</td>
             </tr>
           ))}
         </tbody>
@@ -489,9 +488,9 @@ function NumInput({ value, onChange, step = 1, width = 70, title }: {
 }) {
   return (
     <input
-      className="input" type="number" value={value} step={step} title={title}
+      className="input mono u-p-4px-8px u-fs-fs-13" type="number" value={value} step={step} title={title}
       onChange={e => { const v = parseFloat(e.target.value); if (Number.isFinite(v)) onChange(v); }}
-      style={{ width, padding: "4px 8px", fontFamily: MONO, fontSize: "var(--fs-13)" }}
+      style={{ width }}
     />
   );
 }
@@ -550,18 +549,18 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
           {sorted.map(m => (
             <tr key={m.tee.teeId + "|" + (m.dist ?? "") + "|" + (m.cr ?? "")}>
               <td><TeePill tee={m.tee} /></td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.dist ?? "–"}</td>
-              <td className="r" style={{ fontFamily: MONO, color: m.deltaHab != null && Math.abs(m.deltaHab) <= 200 ? "var(--color-good-dark)" : undefined }}>
+              <td className="r mono">{m.dist ?? "–"}</td>
+              <td className="r mono" style={{ color: m.deltaHab != null && Math.abs(m.deltaHab) <= 200 ? "var(--color-good-dark)" : undefined }}>
                 {m.deltaHab != null && habitual != null ? (m.deltaHab > 0 ? "+" : "") + m.deltaHab.toFixed(0) : "–"}
               </td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.par || "–"}</td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.cr != null ? m.cr.toFixed(1) : "–"}</td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.slope ?? "–"}</td>
-              <td className="r" style={{ fontFamily: MONO, fontWeight: 700 }}>{m.ph != null ? m.ph : "–"}</td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.grossAlvo ?? "–"}</td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.gir.total > 0 ? `${m.gir.reach.length}/${m.gir.total}` : "–"}</td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.hist.n || "–"}</td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.hist.recentTypVsPar != null ? fmtToPar(Math.round(m.hist.recentTypVsPar)) : "–"}</td>
+              <td className="r mono">{m.par || "–"}</td>
+              <td className="r mono">{m.cr != null ? m.cr.toFixed(1) : "–"}</td>
+              <td className="r mono">{m.slope ?? "–"}</td>
+              <td className="r mono u-fw-700">{m.ph != null ? m.ph : "–"}</td>
+              <td className="r mono">{m.grossAlvo ?? "–"}</td>
+              <td className="r mono">{m.gir.total > 0 ? `${m.gir.reach.length}/${m.gir.total}` : "–"}</td>
+              <td className="r mono">{m.hist.n || "–"}</td>
+              <td className="r mono">{m.hist.recentTypVsPar != null ? fmtToPar(Math.round(m.hist.recentTypVsPar)) : "–"}</td>
             </tr>
           ))}
         </tbody>
@@ -787,11 +786,10 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
         <span className="u-fs-fs-22">📏</span>
         <span className="u-fw-800 u-fs-fs-15">Distância habitual</span>
         <input
-          className="input" type="number" step={50}
+          className="input mono u-w-110px u-p-6px-10px u-fs-fs-17 u-fw-700" type="number" step={50}
           value={habEff != null ? Math.round(habEff) : ""}
           onChange={e => { const v = parseFloat(e.target.value); setHabOverride(Number.isFinite(v) ? v : null); }}
           title="Distância de referência a que o jogador está habituado — edita para simular outro cenário"
-          style={{ width: 110, padding: "6px 10px", fontFamily: MONO, fontSize: "var(--fs-17)", fontWeight: 700 }}
         />
         <span className="u-fw-700 u-fs-fs-15">m</span>
         {habOverride != null ? (
@@ -836,13 +834,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
 
               <div className="u-d-flex u-fd-column u-gap-10px u-mt-12px">
                 {conclusions.map((c, i) => (
-                  <div key={i} style={{
-                    display: "flex", gap: 10, alignItems: "flex-start",
-                    padding: "10px 12px", borderRadius: "var(--radius)",
-                    background: c.tone === "warn" ? "var(--color-warn-alpha)" : c.available ? "var(--bg-muted)" : "transparent",
-                    border: c.tone === "warn" ? "1px solid var(--color-warn)" : "1px solid var(--border-light)",
-                    opacity: c.available ? 1 : 0.6,
-                  }}>
+                  <div key={i} className={"advice-card" + (c.tone === "warn" ? " warn" : "") + (c.available ? "" : " off")}>
                     <span className="u-fs-fs-18 u-lh-1_2">{c.icon}</span>
                     <div className="u-fl-1">
                       <div className="u-fw-700 u-fs-fs-13">{c.title}</div>

@@ -14,7 +14,7 @@
  *
  * Tabela ordenável por clique no cabeçalho (useState local + SortableHdr).
  */
-import { useState, useMemo, lazy, Suspense } from "react";
+import { Fragment, useState, useMemo, lazy, Suspense } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useCourses } from "../context/CoursesContext";
@@ -30,7 +30,6 @@ import { physicalTeeGroups, physicalTeeKey } from "../utils/teeGroups";
 import { calcSD, calcPlayingHcp } from "../utils/whsCalc";
 import { fmtSD } from "../utils/format";
 import { teeHexFromTee as teeHex } from "../utils/teeUtils";
-import { textOnColor } from "../utils/teeColors";
 import { MANUEL_FED } from "../constants/manuel";
 
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
@@ -117,13 +116,6 @@ function simTier(overall: number): "good" | "info" | "warn" | null {
   return null;
 }
 
-function simBadgeStyle(tier: "good" | "info" | "warn"): { color: string; background: string; border: string } {
-  switch (tier) {
-    case "good": return { color: "var(--color-good-dark)", background: "var(--color-good-alpha)", border: "1px solid var(--color-good)" };
-    case "info": return { color: "var(--color-info)", background: "var(--bg-info-strong)", border: "1px solid var(--color-info)" };
-    case "warn": return { color: "var(--color-warn-dark)", background: "var(--color-warn-alpha)", border: "1px solid var(--color-warn)" };
-  }
-}
 
 // ═══════════════════ Tabela de similitude (sortable) ═══════════════════
 
@@ -206,11 +198,7 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
               <tr
                 key={rowKey}
                 onClick={() => onPick?.(row)}
-                style={{
-                  cursor: onPick ? "pointer" : undefined,
-                  background: isPicked ? "var(--accent-light)" : undefined,
-                  outline: isPicked ? "2px solid var(--accent)" : undefined,
-                }}
+                className={(onPick ? "u-cur-pointer" : "") + (isPicked ? " row-picked" : "") || undefined}
                 title={onPick ? "Click para comparar buracos com este campo" : undefined}
               >
                 <td className="u-fw-700">{course.master.name}</td>
@@ -225,14 +213,7 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
                 </td>
                 <td className="r">
                   <span
-                    className="p p-sm"
-                    style={{
-                      ...simBadgeStyle(tier),
-                      fontFamily: "var(--font-mono)",
-                      fontWeight: 700,
-                      minWidth: 52,
-                      justifyContent: "center",
-                    }}
+                    className={"p p-sm sim-badge " + tier}
                     title={`Dist ${sim.distance.toFixed(0)}% · Par ${sim.par.toFixed(0)}% · Slope ${sim.slope.toFixed(0)}% · CR ${sim.cr.toFixed(0)}%`}
                   >
                     {Math.round(sim.overall)}%
@@ -264,7 +245,7 @@ function Delta({ a, b, decimals = 0, unit = "" }: {
   const color = d > 0 ? "var(--color-info)" : "var(--color-warn-dark)";
   const sign = d > 0 ? "+" : "−";
   return (
-    <span style={{ fontFamily: "var(--font-mono)", color, fontWeight: 700 }}>
+    <span className="u-ff-font-mono u-fw-700" style={{ color }}>
       {sign}{fmt}{unit}
     </span>
   );
@@ -329,11 +310,6 @@ function TwoTeeSDTable({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bestMatchA?.teeId, bestMatchB?.teeId, teeA.teeId, teeB.teeId, pcc]);
 
-  const ROW1_H = 26;
-  // Dois níveis sticky distintos (linha 1 acima da linha 2); não há token > --z-panel-hdr,
-  // por isso usa-se --z-panel-hdr como base e +1 para a fila de cima preservar a ordem relativa.
-  const sticky0: React.CSSProperties = { position: "sticky", top: 0, zIndex: "calc(var(--z-panel-hdr) + 1)" as React.CSSProperties["zIndex"], background: "var(--bg)" };
-  const sticky1: React.CSSProperties = { position: "sticky", top: ROW1_H, zIndex: "var(--z-panel-hdr)" as React.CSSProperties["zIndex"], background: "var(--bg)" };
 
   return (
     <div className="sim-scroll-x scroll-x u-maxh-520px">
@@ -341,36 +317,14 @@ function TwoTeeSDTable({
         <thead>
           {/* Fila 1: nome do campo */}
           <tr>
-            <th rowSpan={2} style={{
-              ...sticky0,
-              textAlign: "center", verticalAlign: "middle",
-              padding: "4px 8px", fontSize: "var(--fs-11)", fontWeight: 600,
-              color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.04em",
-              borderBottom: "2px solid var(--border)", borderRight: "1px solid var(--border)",
-              minWidth: 44, background: "var(--bg-muted)",
-            }}>±Par</th>
+            <th rowSpan={2} className="mt-sticky0 mt-th-par">±Par</th>
             {colsA.length > 0 && (
-              <th colSpan={colsA.length} style={{
-                ...sticky0,
-                background: "var(--bg-muted)",
-                color: "var(--text-2)",
-                textAlign: "center", padding: "4px 8px",
-                fontSize: "var(--fs-11)", fontWeight: 700,
-                borderBottom: "none",
-                borderRight: "2px solid var(--border)",
-              }}>
+              <th colSpan={colsA.length} className="mt-sticky0 mt-th-course mt-div-r">
                 {courseA.master.name}
               </th>
             )}
             {colsB.length > 0 && (
-              <th colSpan={colsB.length} style={{
-                ...sticky0,
-                background: "var(--bg-muted)",
-                color: "var(--text-2)",
-                textAlign: "center", padding: "4px 8px",
-                fontSize: "var(--fs-11)", fontWeight: 700,
-                borderBottom: "none",
-              }}>
+              <th colSpan={colsB.length} className="mt-sticky0 mt-th-course">
                 {courseB.master.name}
               </th>
             )}
@@ -378,24 +332,9 @@ function TwoTeeSDTable({
           {/* Fila 2: tee + CR/SR */}
           <tr>
             {allCols.map((c, i) => (
-              <th key={i} style={{
-                ...sticky1,
-                background: "var(--bg-muted)",
-                textAlign: "center",
-                padding: "4px 8px",
-                fontSize: "var(--fs-10)",
-                fontWeight: c.isChosen ? 700 : 500,
-                borderBottom: "2px solid var(--border)",
-                borderLeft: i === divIdx ? "2px solid var(--border)" : undefined,
-                whiteSpace: "nowrap",
-              }}>
-                <span style={{
-                  display: "inline-block",
-                  background: c.hex, color: textOnColor(c.hex),
-                  borderRadius: "var(--radius-sm)", padding: "1px 8px",
-                  fontSize: "var(--fs-10)", fontWeight: 700, marginBottom: 3,
-                }}>
-                  {c.tee.teeName}{!c.isChosen && " ≈"}
+              <th key={i} className={"mt-sticky1 mt-th-tee " + (c.isChosen ? "u-fw-700" : "u-fw-500") + (i === divIdx ? " mt-div" : "")}>
+                <span className="u-d-inline-block u-mb-4px">
+                  <TeePill name={c.tee.teeName + (c.isChosen ? "" : " ≈")} hex={c.hex} />
                 </span>
                 <div className="u-fw-500 u-c-text-3 u-fs-fs-9 u-mt-1px">
                   CR {c.cr.toFixed(1)} · SR {c.sl}
@@ -409,28 +348,15 @@ function TwoTeeSDTable({
             const isPar = r.delta === 0;
             return (
               <tr key={r.delta} className={["sim-row", isPar ? "sim-row-par" : ""].join(" ")}>
-                <td style={{
-                  textAlign: "center", fontWeight: 700, padding: "4px 8px",
-                  borderBottom: "1px solid var(--border-light)",
-                  background: isPar ? "var(--accent-light)" : undefined,
-                  color: isPar ? "var(--accent)" : undefined,
-                }}>
+                <td className={"mt-delta" + (isPar ? " is-par" : "")}>
                   {r.delta === 0 ? "E" : r.delta > 0 ? `+${r.delta}` : r.delta}
                 </td>
                 {allCols.map((c, i) => {
                   const sd = r.sds[i];
                   const isHcp = r.delta === phcps[i];
                   return (
-                    <td key={i} className="mono" style={{
-                      textAlign: "right", padding: "3px 8px",
-                      borderBottom: "1px solid var(--border-light)",
-                      borderLeft: i === divIdx ? "2px solid var(--border)" : undefined,
-                      fontWeight: isHcp ? 800 : isPar ? 700 : 400,
-                      background: isHcp ? c.hex + "28" : isPar ? "var(--accent-light)" : undefined,
-                      color: isHcp ? "var(--grey-900)" : isPar ? "var(--accent)" : undefined,
-                      borderTop: isHcp ? "2px solid " + c.hex : undefined,
-                      borderBottomColor: isHcp ? c.hex : undefined,
-                    }}>
+                    <td key={i} className={"mono mt-sd" + (i === divIdx ? " mt-div" : "") + (isHcp ? " is-hcp" : isPar ? " is-par" : "")}
+                      style={isHcp ? { background: c.hex + "28", borderTop: "2px solid " + c.hex, borderBottomColor: c.hex } : undefined}>
                       {fmtSD(sd)}
                     </td>
                   );
@@ -666,11 +592,7 @@ function CourseSideBySide({
               const pairs = matchHoles(holesA, holesB);
               return (
                 <div key={par} className="u-mb-12px">
-                  <div style={{
-                    fontSize: "var(--fs-11)", fontWeight: 700, color: parAccent,
-                    textTransform: "uppercase", letterSpacing: "0.06em",
-                    padding: "4px 0", borderBottom: "1px solid var(--border)", marginBottom: 6,
-                  }}>
+                  <div className="par-group-hdr" style={{ color: parAccent }}>
                     Par {par} — A: {holesA.length} · B: {holesB.length}
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: sameCourse ? "1fr auto 1fr" : "1fr 1fr", gap: "4px 0" }}>
@@ -679,12 +601,12 @@ function CourseSideBySide({
                       const psB = b ? pillStyle(par, rankB, holesB.length) : null;
                       const delta = a && b ? (a.distance ?? 0) - (b.distance ?? 0) : null;
                       return (
-                        <>
+                        <Fragment key={i}>
                           <div key={`a${i}`} className="u-d-flex u-jc-flex-end u-pr-8px">
                             {a && psA ? (
                               <span className="u-d-flex u-ai-center u-gap-4px u-ws-nowrap">
                                 <span className="u-fs-fs-11 u-fw-600 u-c-text-2 u-ff-font-mono">B{a.hole}</span>
-                                <span style={{ ...psA, borderRadius: "var(--radius)", padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{a.distance}m</span>
+                                <span className="dist-pill" style={psA}>{a.distance}m</span>
                               </span>
                             ) : (
                               <span className="muted u-fs-fs-12 u-p-3px-10px">–</span>
@@ -702,14 +624,14 @@ function CourseSideBySide({
                           <div key={`b${i}`} className="u-d-flex u-jc-flex-start u-pl-8px">
                             {b && psB ? (
                               <span className="u-d-flex u-ai-center u-gap-4px u-ws-nowrap">
-                                <span style={{ ...psB, borderRadius: "var(--radius)", padding: "3px 10px", fontSize: "var(--fs-12)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>{b.distance}m</span>
+                                <span className="dist-pill" style={psB}>{b.distance}m</span>
                                 <span className="u-fs-fs-11 u-fw-600 u-c-text-2 u-ff-font-mono">B{b.hole}</span>
                               </span>
                             ) : (
                               <span className="muted u-fs-fs-12 u-p-3px-10px">–</span>
                             )}
                           </div>
-                        </>
+                        </Fragment>
                       );
                     })}
                   </div>
@@ -738,20 +660,12 @@ function CourseSideBySide({
                     <th>B#</th>
                     <th className="r">
                       Par
-                      <span style={{
-                        display: "inline-block", marginLeft: 6,
-                        background: teeHex(teeA), color: textOnColor(teeHex(teeA)),
-                        borderRadius: "var(--radius-sm)", padding: "1px 6px", fontSize: "var(--fs-10)", fontWeight: 700,
-                      }}>{teeA.teeName}</span>
+                      <span className="u-ml-6px"><TeePill name={teeA.teeName} hex={teeHex(teeA)} /></span>
                     </th>
                     <th className="r">Dist A (m)</th>
                     <th className="r">
                       Par
-                      <span style={{
-                        display: "inline-block", marginLeft: 6,
-                        background: teeHex(teeB), color: textOnColor(teeHex(teeB)),
-                        borderRadius: "var(--radius-sm)", padding: "1px 6px", fontSize: "var(--fs-10)", fontWeight: 700,
-                      }}>{teeB.teeName}</span>
+                      <span className="u-ml-6px"><TeePill name={teeB.teeName} hex={teeHex(teeB)} /></span>
                     </th>
                     <th className="r">Dist B (m)</th>
                     <th className="r">Δ dist</th>
@@ -765,14 +679,11 @@ function CourseSideBySide({
                     const dA = a?.distance ?? null;
                     const dB = b?.distance ?? null;
                     return (
-                      <tr key={holeNum} style={{
-                        background: (parA !== null && parB !== null && parA !== parB) ? "var(--bg-warn)" : undefined,
-                        fontFamily: "var(--font-mono)",
-                      }}>
+                      <tr key={holeNum} className={"mono" + ((parA !== null && parB !== null && parA !== parB) ? " u-bg-bg-warn" : "")}>
                         <td className="u-fw-700">B{holeNum}</td>
-                        <td className="r" style={{ color: parA === 3 ? PAR_COLOR[3] : parA === 4 ? PAR_COLOR[4] : parA === 5 ? PAR_COLOR[5] : undefined, fontWeight: 700 }}>{parA ?? "–"}</td>
+                        <td className="r u-fw-700" style={{ color: parA === 3 ? PAR_COLOR[3] : parA === 4 ? PAR_COLOR[4] : parA === 5 ? PAR_COLOR[5] : undefined }}>{parA ?? "–"}</td>
                         <td className="r">{dA != null && dA > 0 ? dA : "–"}</td>
-                        <td className="r" style={{ color: parB === 3 ? PAR_COLOR[3] : parB === 4 ? PAR_COLOR[4] : parB === 5 ? PAR_COLOR[5] : undefined, fontWeight: 700 }}>{parB ?? "–"}</td>
+                        <td className="r u-fw-700" style={{ color: parB === 3 ? PAR_COLOR[3] : parB === 4 ? PAR_COLOR[4] : parB === 5 ? PAR_COLOR[5] : undefined }}>{parB ?? "–"}</td>
                         <td className="r">{dB != null && dB > 0 ? dB : "–"}</td>
                         <td className="r"><Delta a={dA} b={dB} unit="m" /></td>
                         <td className="r"><Delta a={parA} b={parB} /></td>
