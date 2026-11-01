@@ -166,16 +166,7 @@ export default function HeroIdentity({ data, junior }: Props) {
             {tier && (() => {
               const c = getTierColors(tier);
               return (
-                <span style={{
-                  background: c.bg,
-                  color: c.fg,
-                  fontSize: "var(--fs-12)",
-                  padding: "3px 10px",
-                  borderRadius: "var(--radius-pill)",
-                  fontWeight: 700,
-                  border: `1px solid ${c.fg}`,
-                  letterSpacing: 0.2,
-                }}>
+                <span className="tier-pill" style={{ background: c.bg, color: c.fg, borderColor: c.fg }}>
                   {tier === "elite" ? "★ " : tier === "strong" ? "⚔️ " : ""}{getTierLabel(tier)}
                 </span>
               );
@@ -268,13 +259,8 @@ export default function HeroIdentity({ data, junior }: Props) {
         </div>
       </div>
 
-      <div style={{
-        display: "grid",
-        // 5 colunas quando há card EGR — os 5 cartões cabem numa linha só.
-        gridTemplateColumns: `repeat(${egr ? 5 : 4}, 1fr)`,
-        gap: 10,
-        marginTop: 16,
-      }}>
+      {/* 5 colunas quando há card EGR — os 5 cartões cabem numa linha só. */}
+      <div className="u-d-grid u-gap-10px u-mt-16px" style={{ gridTemplateColumns: `repeat(${egr ? 5 : 4}, 1fr)` }}>
         <FedCard
           label="USKIDS"
           value={junior.sources.uskids?.memberId ? `#${junior.sources.uskids.memberId}` : null}
@@ -403,44 +389,15 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
   const flag = SOURCE_FLAGS[label] || "";
   const isClickable = !!linkTo && !empty;
 
-  const cardStyle: React.CSSProperties = {
-    background: empty ? "var(--bg-muted)" : "var(--bg)",
-    border: empty ? "1px dashed var(--border-light)" : "1px solid var(--border)",
-    borderRadius: 8,
-    padding: "10px 12px",
-    opacity: empty ? 0.65 : 1,
-    transition: isClickable ? "border-color 120ms, box-shadow 120ms" : undefined,
-    cursor: isClickable ? "pointer" : undefined,
-    textDecoration: "none",
-    color: "inherit",
-    display: "block",
-  };
+  const cardClass = "fed-card" + (empty ? " empty" : "");
 
   const inner = (
     <>
-      <div style={{
-        fontSize: "var(--fs-11)",
-        color: empty ? "var(--text-3)" : "var(--accent, var(--color-info-dark))",
-        fontWeight: 800,
-        letterSpacing: 0.6,
-        textTransform: "uppercase",
-        display: "flex",
-        alignItems: "center",
-        gap: 5,
-      }}>
+      <div className="fed-card-label">
         <span>{label}</span>
-        {flag && <span style={{ fontSize: "var(--fs-12)", lineHeight: 1, opacity: empty ? 0.5 : 1 }} title={`Federação: ${label}`}>{flag}</span>}
+        {flag && <span className="fed-card-flag" title={`Federação: ${label}`}>{flag}</span>}
       </div>
-      <div style={{
-        fontSize: "var(--fs-15)",
-        fontWeight: 700,
-        marginTop: 3,
-        color: empty ? "var(--text-3)" : "var(--text)",
-        fontVariantNumeric: "tabular-nums",
-        display: "flex",
-        alignItems: "baseline",
-        gap: 6,
-      }}>
+      <div className="fed-card-value">
         <span>{value || "sem registo"}</span>
         {isClickable && (
           <span className="u-fs-fs-10 u-c-var-color-info-dark-color-navy u-fw-600" title="Abrir ficha do jogador">↗</span>
@@ -469,22 +426,14 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
         to={linkTo}
         target="_blank"
         rel="noreferrer"
-        style={cardStyle}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.borderColor = "var(--color-info-dark, var(--color-navy))";
-          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 1px var(--color-info-dark, var(--color-navy))";
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
-          (e.currentTarget as HTMLElement).style.boxShadow = "none";
-        }}
+        className={cardClass}
       >
         {inner}
       </Link>
     );
   }
 
-  return <div style={cardStyle}>{inner}</div>;
+  return <div className={cardClass}>{inner}</div>;
 }
 
 function EscPill({ label, accent, strong }: { label: string; accent?: boolean; strong?: boolean }) {
@@ -539,11 +488,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
     : info.state === "inferred" ? "DOB inferida a partir dos torneios + escalões"
     : "DOB desconhecida";
   return (
-    <span title={title} style={{
-      ...styles[info.state],
-      fontSize: "var(--fs-11)", padding: "2px 9px", borderRadius: "var(--radius-pill)",
-      fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5,
-    }}>
+    <span title={title} className="dob-pill" style={styles[info.state]}>
       🎂 {info.dobLabel}
       <span className="u-op-0_7">·</span>
       <span className="u-fw-700">{info.ageLabel}</span>

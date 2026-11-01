@@ -22,6 +22,7 @@ import { useMemo, useState } from "react";
 import { scClass } from "../../utils/scoreDisplay";
 import { fmtToPar } from "../../utils/format";
 import SortableHdr from "../../ui/SortableHdr";
+import TabRow from "../../ui/TabRow";
 import LoadingState from "../../ui/LoadingState";
 import { kidsUrl } from "../../ui/KidsLink";
 
@@ -145,15 +146,9 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
     const Tag = as as "td";
     return (
       <Tag
-        className={"lb-hole lb-sortable" + (first ? " lb-hole-first" : "") + (as === "th" ? " fs-10" : "")}
+        className={"lb-hole lb-sortable u-cur-pointer" + (first ? " lb-hole-first" : "") + (as === "th" ? " fs-10" : "") + (active ? " lb-hole-sorted" : "")}
         onClick={() => toggleSort(`h${n}` as SortKey)}
         title={`Ordenar pelo buraco ${n} (melhor resultado)`}
-        style={{
-          cursor: "pointer",
-          color: active ? "var(--accent)" : undefined,
-          fontWeight: active ? 700 : undefined,
-          background: active ? "var(--accent-light)" : undefined,
-        }}
       >
         {children}
       </Tag>
@@ -314,51 +309,13 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         {/* Top-N selector */}
         <span className="u-d-flex u-ai-center u-gap-4px u-ml-8px">
           <span className="c-muted fs-10">Top:</span>
-          <span
-            className="u-d-flex u-gap-2px u-bd-1px-solid-border u-br-radius-lg u-ov-hidden"
-          >
-            {([5, 10, 20, 0] as const).map(n => (
-              <button
-                key={n}
-                onClick={() => setTopN(n)}
-                className="fs-10"
-                style={{
-                  padding: "2px 9px",
-                  border: "none",
-                  cursor: "pointer",
-                  background: topN === n ? "var(--accent)" : "transparent",
-                  color: topN === n ? "#fff" : "var(--text-muted)",
-                  fontWeight: topN === n ? 700 : 400,
-                }}
-              >
-                {n === 0 ? "Todos" : n}
-              </button>
-            ))}
-          </span>
+          <TabRow<typeof topN> className="seg-sm" active={topN} onChange={setTopN}
+            tabs={([5, 10, 20, 0] as const).map(n => ({ key: n, label: n === 0 ? "Todos" : String(n) }))} />
         </span>
 
         {/* Toggle Agrupado/Independente — copia visual exacto de AllRoundsScorecardLB */}
-        <span
-          className="u-d-flex u-gap-2px u-ml-4px u-bd-1px-solid-border u-br-radius-lg u-ov-hidden"
-        >
-          {([true, false] as const).map(g => (
-            <button
-              key={String(g)}
-              onClick={() => setGroupMode(g)}
-              className="fs-10"
-              style={{
-                padding: "2px 9px",
-                border: "none",
-                cursor: "pointer",
-                background: groupMode === g ? "var(--accent)" : "transparent",
-                color: groupMode === g ? "#fff" : "var(--text-muted)",
-                fontWeight: groupMode === g ? 700 : 400,
-              }}
-            >
-              {g ? "Agrupado" : "Independente"}
-            </button>
-          ))}
-        </span>
+        <TabRow<boolean> className="seg-sm u-ml-4px" active={groupMode} onChange={setGroupMode}
+          tabs={[{ key: true, label: "Agrupado" }, { key: false, label: "Independente" }]} />
       </div>
 
       <div className="bjgt-chart-scroll">
@@ -366,8 +323,8 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
           <thead>
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
-              <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-tee fs-10 fw-600" style={{ minWidth: 38 }}>Ano</SortableHdr>
-              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1" style={{ maxWidth: 140 }}>Jogador</SortableHdr>
+              <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-tee fs-10 fw-600 u-minw-38px">Ano</SortableHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1 u-maxw-140px">Jogador</SortableHdr>
               <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">País</SortableHdr>
               <SortableHdr k="rnd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-tee fs-10 fw-600">Rnd</SortableHdr>
               <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
@@ -648,8 +605,8 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
                 title={`${ed.year}${ed.course ? " · " + ed.course : ""}${ed.meters ? " · " + ed.meters + "m" : ""}${ed.parPerRound ? " · Par " + ed.parPerRound : ""}`}>
               {isFirstRd ? ed.year : ""}
             </td>
-            <td className="lb-name sticky-col-1"
-                style={{ background: bg, fontWeight: isFirstRd ? 600 : 400, borderTop: bTop, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <td className={"lb-name sticky-col-1 u-maxw-140px u-ov-hidden u-tov-ellipsis u-ws-nowrap " + (isFirstRd ? "u-fw-600" : "u-fw-400")}
+                style={{ background: bg, borderTop: bTop }}>
               {isFirstRd ? (
                 <a href={kidsUrl({ name: player.name })}
                    target="_blank" rel="noreferrer"
@@ -661,8 +618,8 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
                 <span className="muted fs-10 u-pl-8px">↳</span>
               )}
             </td>
-            <td className="lb-club"
-                style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)", fontSize: isFirstRd ? undefined : 11 }}>
+            <td className={"lb-club" + (isFirstRd ? "" : " u-c-text-muted u-fs-fs-11")}
+                style={{ borderTop: bTop }}>
               {isFirstRd ? fmtCountry(player.country) : ""}
             </td>
             <td className="lb-tee fw-600 fs-10 c-muted" style={{ borderTop: bTop }}>R{r.rn}</td>
@@ -700,8 +657,8 @@ function IndependentRow({ f, pos, hpr, is9 }: {
           title={`${ed.year}${ed.course ? " · " + ed.course : ""}${ed.meters ? " · " + ed.meters + "m" : ""}${ed.parPerRound ? " · Par " + ed.parPerRound : ""}`}>
         {ed.year}
       </td>
-      <td className="lb-name sticky-col-1 fw-600"
-          style={{ background: bg, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+      <td className="lb-name sticky-col-1 fw-600 u-maxw-140px u-ov-hidden u-tov-ellipsis u-ws-nowrap"
+          style={{ background: bg }}>
         <a href={kidsUrl({ name: f.pl.name })}
            target="_blank" rel="noreferrer"
            className="u-c-text u-td-none">
@@ -909,8 +866,8 @@ function EcleticTable({ editions, limit, hpr, is9 }: {
           <thead>
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
-              <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-tee fs-10 fw-600" style={{ minWidth: 38 }}>Ano</SortableHdr>
-              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1" style={{ maxWidth: 140 }}>Jogador</SortableHdr>
+              <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-tee fs-10 fw-600 u-minw-38px">Ano</SortableHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1 u-maxw-140px">Jogador</SortableHdr>
               <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">País</SortableHdr>
               <th className="lb-tee fs-10 fw-600 c-muted">Ecl</th>
               <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
@@ -1003,8 +960,8 @@ function EcleticRow({ row, pos, hpr, is9 }: {
           title={`${ed.year}${ed.course ? " · " + ed.course : ""}${ed.parPerRound ? " · Par " + ed.parPerRound : ""}`}>
         {ed.year}
       </td>
-      <td className="lb-name sticky-col-1 fw-600"
-          style={{ background: bg, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+      <td className="lb-name sticky-col-1 fw-600 u-maxw-140px u-ov-hidden u-tov-ellipsis u-ws-nowrap"
+          style={{ background: bg }}>
         <a href={kidsUrl({ name: pl.name })}
            target="_blank" rel="noreferrer"
            className="u-c-text u-td-none">
