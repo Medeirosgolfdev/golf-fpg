@@ -19,6 +19,7 @@ import {
   buildTournCols, buildRankRows, visibleTournCols as visibleCols, rankPositions, cutInfo, playerRounds,
   type RankMetric, type RankRow, type RankRoundResult, type RankTournCol, type RankPlayerRound,
 } from "../data/ranking/fpgRanking";
+import ExtLink from "./ExternalLink";
 
 /* ─────────────────────────────────────────────
    RANKINGS DA /FPG — Ranking PJA, Ranking Sub-12 por SD e Classificações.
@@ -492,11 +493,11 @@ export function PJARankingView({
                 return (
                   <th key={tc.tournKey} colSpan={tc.colSpan} className="cs-grp u-p-0 u-va-top" title={tc.name + (tc.campo ? " — " + tc.campo : "") + (href ? " · clicar para abrir" : "")}>
                     {href ? (
-                      <a href={href} target="_blank" rel="noopener noreferrer"
+                      <ExtLink href={href}
 
                          className="tourn-header-link u-d-block u-p-4px-3px u-td-none u-c-inherit">
                         {content}
-                      </a>
+                      </ExtLink>
                     ) : (
                       <div className="u-p-4px-3px">{content}</div>
                     )}

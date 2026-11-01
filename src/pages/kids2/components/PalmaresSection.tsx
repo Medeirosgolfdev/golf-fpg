@@ -18,6 +18,7 @@ import type { CanonicalData, Junior, Tournament, Flight, Result } from "../data"
 import { getTournWeight, formatStars } from "../tournWeight";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar, MONTHS_PT } from "../../../utils/format";
+import ExtLink from "../../../ui/ExternalLink";
 
 const DEFAULT_LIMIT = 6;
 const RECENT_MONTHS = 24; // "recente" = últimos 24 meses
@@ -142,7 +143,7 @@ function WinCard({ win }: { win: WinCard }) {
           </span>
         )}
         {url && (
-          <a href={url} target="_blank" rel="noreferrer" className="u-ml-auto u-c-text-3 u-td-none u-fs-fs-12 u-fw-600" title="Abrir resultados">↗</a>
+          <ExtLink href={url} className="u-ml-auto u-c-text-3 u-td-none u-fs-fs-12 u-fw-600" title="Abrir resultados">↗</ExtLink>
         )}
       </div>
     </div>

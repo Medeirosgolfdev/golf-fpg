@@ -18,6 +18,7 @@ import { useJuniorsCanonical, type Junior } from "./data";
 import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
 import Kids2SubNav from "./Kids2SubNav";
 import { fmtDayMonthYear } from "../../utils/format";
+import ExtLink from "../../ui/ExternalLink";
 
 export default function NextTournamentsGlobal() {
   const { unlocked, unlock } = usePasswordGate();
@@ -114,19 +115,18 @@ function Content() {
                 {rows.map((row, i) => (
                   <tr key={row.junior.id + ":" + row.reg.circuit + ":" + row.reg.tournamentId + ":" + i}>
                     <td>
-                      <a
+                      <ExtLink
                         href={"/kids2/" + encodeURIComponent(row.junior.id)}
-                        target="_blank" rel="noopener noreferrer"
                         className="u-fw-600 u-c-color-info u-td-none"
                         title="Abrir ficha do jogador (nova aba)">
                         {row.junior.canonicalName}
-                      </a>
+                      </ExtLink>
                     </td>
                     <td className="u-ws-nowrap">{CIRCUIT_LABEL[row.reg.circuit]}</td>
                     <td>
-                      <a href={row.reg.link} target="_blank" rel="noopener noreferrer" className="u-c-text u-td-none" title={row.reg.campo || row.reg.name}>
+                      <ExtLink href={row.reg.link} className="u-c-text u-td-none" title={row.reg.campo || row.reg.name}>
                         {row.reg.name}
-                      </a>
+                      </ExtLink>
                       {row.reg.status === "reserva" && (
                         <span className="u-ml-6px u-fs-fs-9 u-fw-700 u-p-1px-4px u-br-radius-sm u-bg-var-bg-warn-orange-fff7ed u-c-var-color-orange-deep-c2410c u-bd-ltbl9">RESERVA</span>
                       )}
@@ -134,7 +134,7 @@ function Content() {
                     <td className="u-ws-nowrap u-c-text-2">{fmtDayMonthYear(row.reg.date)}</td>
                     <td className="u-ws-nowrap u-c-text-3">{row.reg.escalao || "—"}</td>
                     <td>
-                      <a href={row.reg.link} target="_blank" rel="noopener noreferrer" className="u-c-text-3 u-td-none u-fw-600" title="Abrir torneio (nova aba)">↗</a>
+                      <ExtLink href={row.reg.link} className="u-c-text-3 u-td-none u-fw-600" title="Abrir torneio (nova aba)">↗</ExtLink>
                     </td>
                   </tr>
                 ))}

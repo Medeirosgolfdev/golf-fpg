@@ -26,6 +26,7 @@ import {
   formatFedValue, KV, normalizeAgeLabel,
 } from "./federadoFields";
 import IdentityPills, { PlayerExtLinks } from "./IdentityPills";
+import LoadingState from "../../ui/LoadingState";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
  *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
@@ -359,7 +360,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
         )}
         {liveRounds && liveRounds.length > 0 && <FederadoRoundsTable rounds={liveRounds} hcpRef={player.hcp} onOpenScorecard={openScorecard} extraMap={extraMap} localIds={localIds} />}
         {liveRounds && liveRounds.length === 0 && (
-          <div className="muted fs-10 ta-c">Sem rondas registadas no WHS</div>
+          <EmptyState size="sm" message="Sem rondas registadas no WHS." />
         )}
       </div>
 
@@ -393,7 +394,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
               totalRounds={1}
             />
 
-            {scorecardModal.loading && <div className="muted p-16 ta-c">⏳ A carregar scorecard…</div>}
+            {scorecardModal.loading && <LoadingState size="sm" message="A carregar scorecard…" />}
             {scorecardModal.error && (
               <div className="p-16 u-c-color-warn-vivid">
                 ⚠ Erro a carregar: <code>{scorecardModal.error}</code>

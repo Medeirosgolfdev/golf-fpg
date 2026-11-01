@@ -16,6 +16,9 @@ import { RoundPill, NineHPill, ScoringTag } from "../../../ui/PillBadge";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar, MONTHS_PT } from "../../../utils/format";
 import { medalClass } from "../../../ui/PosBadge";
+import ClearButton from "../../../ui/ClearButton";
+import ExpandArrow from "../../../ui/ExpandArrow";
+import ExtLink from "../../../ui/ExternalLink";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -170,14 +173,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
             );
           })}
           {activeSources.size > 0 && (
-            <button
-              type="button"
-              onClick={() => setActiveSources(new Set())}
-              className="btn"
-              title="Limpar filtros de fonte"
-            >
-              ✕ limpar
-            </button>
+            <ClearButton onClick={() => setActiveSources(new Set())} title="Limpar filtros de fonte" />
           )}
         </div>
       )}
@@ -193,7 +189,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
               onClick={() => toggleYear(y)}
               className="u-d-flex u-ai-baseline u-jc-space-between u-p-6px-8px u-bg-bg-muted u-br-radius-sm u-cur-pointer u-mb-4px"
             >
-              <span className="u-fs-fs-13 u-fw-700">{expanded ? "▼" : "▶"} {y}</span>
+              <span className="u-fs-fs-13 u-fw-700"><ExpandArrow open={expanded} /> {y}</span>
               <span className="u-fs-fs-11 u-c-text-3">
                 {yearRows.length} torneios · {wins} vitórias{manuelEncounters > 0 ? ` · ${manuelEncounters}× vs Manuel` : ""}
               </span>
@@ -386,17 +382,15 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
             return is9 ? <NineHPill /> : null;
           })()}
           {categorizedLinks.map((l) => (
-            <a
+            <ExtLink
               key={l.key + l.url}
               href={l.url}
-              target="_blank"
-              rel="noreferrer"
               title={`Abrir em ${l.label}`}
               className="src-link-tag"
               style={{ color: `var(${l.colorVar})`, borderColor: `var(${l.colorVar})` }}
             >
               {l.label} ↗
-            </a>
+            </ExtLink>
           ))}
         </div>
         {/* Field size REAL (do aggregator) — não confundir com results.length que

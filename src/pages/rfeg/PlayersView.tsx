@@ -29,6 +29,7 @@ import { PlayerTournaments, type EsPlayerTournamentsFile } from "./PlayerTournam
 import Pager from "../../ui/Pager";
 import { MUTED } from "../../ui/tableCells";
 import { usePaged } from "../../hooks/usePaged";
+import ExpandArrow from "../../ui/ExpandArrow";
 
 interface SpainPlayer {
   licencia: string;
@@ -423,7 +424,7 @@ export function RFEGPlayersView() {
                     title="Ver os torneios e resultados deste jogador"
                   >
                     <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap">
-                      <span aria-hidden className="u-mr-4px u-c-accent">{isOpen ? "▾" : "▸"}</span>
+                      <span aria-hidden className="u-mr-4px u-c-accent"><ExpandArrow open={isOpen} /></span>
                       {r.licencia}
                       {nLic > 1 && (
                         <button

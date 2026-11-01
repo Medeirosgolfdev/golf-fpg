@@ -37,6 +37,7 @@ import HoleDiffTable from "../../ui/HoleDiffTable";
 import { reachBudget } from "../../utils/reach";
 import { MANUEL_FED } from "../../constants/manuel";
 import { resolvePlayedMeters, resolvePlayedTee, courseKeyName } from "../../utils/playedDistance";
+import ExtLink from "../../ui/ExternalLink";
 
 
 /** Coerção segura para número — alguns campos do JSON vêm como string (ex: sd "14"). */
@@ -1004,11 +1005,11 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 a síntese das duas referências.
               </p>
               <div className="u-mt-10px u-d-flex u-fd-column u-gap-4px u-fs-fs-12">
-                <a href="http://www.longleafteesystem.com/" target="_blank" rel="noopener noreferrer">↗ Longleaf Tee System (US Kids Golf Foundation + ASGCA)</a>
-                <a href="https://tournaments.uskidsgolf.com/play-and-learn/forward-tees/forward-tee-yardages" target="_blank" rel="noopener noreferrer">↗ U.S. Kids Golf — Forward Tee Yardages</a>
-                <a href="https://www.usga.org/content/usga/home-page/course-care/green-section-record/61/issue-06/forward-tees-for-the-future.html" target="_blank" rel="noopener noreferrer">↗ USGA — Forward Tees for the Future</a>
-                <a href="https://www.usga.org/content/usga/home-page/course-care/green-section-record/61/issue-11/helping-golfers-choose-their--best-tees--.html" target="_blank" rel="noopener noreferrer">↗ USGA — Helping Golfers Choose Their "Best Tees"</a>
-                <a href="https://pdf.pgalinks.com/p-g-a/Tee_It_Forward_Guidelines.pdf" target="_blank" rel="noopener noreferrer">↗ PGA/USGA — Tee It Forward Guidelines (PDF)</a>
+                <ExtLink href="http://www.longleafteesystem.com/">↗ Longleaf Tee System (US Kids Golf Foundation + ASGCA)</ExtLink>
+                <ExtLink href="https://tournaments.uskidsgolf.com/play-and-learn/forward-tees/forward-tee-yardages">↗ U.S. Kids Golf — Forward Tee Yardages</ExtLink>
+                <ExtLink href="https://www.usga.org/content/usga/home-page/course-care/green-section-record/61/issue-06/forward-tees-for-the-future.html">↗ USGA — Forward Tees for the Future</ExtLink>
+                <ExtLink href="https://www.usga.org/content/usga/home-page/course-care/green-section-record/61/issue-11/helping-golfers-choose-their--best-tees--.html">↗ USGA — Helping Golfers Choose Their "Best Tees"</ExtLink>
+                <ExtLink href="https://pdf.pgalinks.com/p-g-a/Tee_It_Forward_Guidelines.pdf">↗ PGA/USGA — Tee It Forward Guidelines (PDF)</ExtLink>
               </div>
             </div>
           </details>
@@ -1045,9 +1046,9 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 depressa e o que fazia há mais de um ano já não representa o jogo de hoje.
               </p>
               <div className="u-mt-10px u-d-flex u-fd-column u-gap-4px u-fs-fs-12">
-                <a href="https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/handicap-index-calculation.html" target="_blank" rel="noopener noreferrer">↗ USGA — The Handicap Index Calculation (8 melhores de 20)</a>
-                <a href="https://www.randa.org/en/roh/the-rules-of-handicapping/rule-5" target="_blank" rel="noopener noreferrer">↗ R&A — Rules of Handicapping, Rule 5</a>
-                <a href="https://www.nationalclubgolfer.com/whs/odds-of-beating-your-handicap/" target="_blank" rel="noopener noreferrer">↗ National Club Golfer — odds de bater o teu handicap (~1 em 5)</a>
+                <ExtLink href="https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/handicap-index-calculation.html">↗ USGA — The Handicap Index Calculation (8 melhores de 20)</ExtLink>
+                <ExtLink href="https://www.randa.org/en/roh/the-rules-of-handicapping/rule-5">↗ R&A — Rules of Handicapping, Rule 5</ExtLink>
+                <ExtLink href="https://www.nationalclubgolfer.com/whs/odds-of-beating-your-handicap/">↗ National Club Golfer — odds de bater o teu handicap (~1 em 5)</ExtLink>
               </div>
             </div>
           </details>

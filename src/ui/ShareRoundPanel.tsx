@@ -11,6 +11,7 @@ import { lazy, Suspense, useMemo, useState } from "react";
 import type { OverlayData } from "./overlay/types";
 import type { Tournament } from "../data/fpgTypes";
 import { shareOptionsForRounds, shareOptionsForTournament } from "./overlay/shareOptions";
+import LoadingState from "./LoadingState";
 
 const OverlayExport = lazy(() => import("./OverlayExport"));
 const RoundAnalysisPanel = lazy(() => import("./RoundAnalysisPanel"));
@@ -36,7 +37,7 @@ export default function ShareRoundPanel({ options, defaultKey }: { options: Shar
               </select>
             </label>
           )}
-          <Suspense fallback={<div className="muted fs-12">A carregar…</div>}>
+          <Suspense fallback={<LoadingState size="sm" message="A carregar…" />}>
             <OverlayExport data={cur.data} inline />
           </Suspense>
         </div>

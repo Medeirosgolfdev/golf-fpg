@@ -31,6 +31,7 @@ import type { FFGCategoriesData, LGPIDFTournament } from "../data/ffg/types";
 import type { FfgRenderers } from "../data/ffg/ffgEntries";
 import { useFfgData } from "../data/ffg/useFfgData";
 import { C } from "../utils/colors";
+import EmptyState from "../ui/EmptyState";
 
 /* ── CategoriesView (Catégories d'âge FFG — info no body) ─────── */
 function CategoriesView({ data }: { data: FFGCategoriesData }) {
@@ -125,7 +126,7 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
             <div className="fs-10 muted mt-8">
               <em>
                 Distâncias máximas em metros (par 72 indicativo). Extraído do{" "}
-                <a href={data._vademecumUrl} target="_blank" rel="noopener noreferrer">Vademecum FFG</a>
+                <ExtLink href={data._vademecumUrl}>Vademecum FFG</ExtLink>
                 {data.distancesParCategorie._source ? ` — ${data.distancesParCategorie._source}` : ""}.
               </em>
             </div>
@@ -164,7 +165,7 @@ node scripts/parse-vademecum-distances.js`}
 }
 
 function LGPIDFCourseMapTab({ data }: { data: LGPIDFTournament }) {
-  if (!data.courseMapPdfs.length) return <div className="muted">Sem mapa do campo.</div>;
+  if (!data.courseMapPdfs.length) return <EmptyState size="sm" message="Sem mapa do campo." />;
   return (
     <div>
       {data.courseMapPdfs.map((pdf) => {

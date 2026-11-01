@@ -41,6 +41,7 @@ import { TOURNAMENT_EXTRA_LINKS } from "./constants";
 import { initialTabIndex } from "./detailTabs";
 import { crossApuradosInscritos } from "../../data/drive/driveCircuitData";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
+import ExtLink from "../../ui/ExternalLink";
 
 /** Junta listas de links extra removendo repetidos pelo URL (a mesma página do
  *  clube pode vir do synthetic FEATURED e da config ao mesmo tempo). */
@@ -396,14 +397,12 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
           {(() => {
             const canonicalUrl = tournamentUrl("FPG", tournament.ccode, tournament.tcode);
             return canonicalUrl ? (
-              <a
+              <ExtLink
                 href={canonicalUrl}
                 title="Link canónico do torneio (abrir em nova aba para partilhar)"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="u-c-inherit u-td-none">
                 <h2 className="detail-title u-m-0">{tournament.name}</h2>
-              </a>
+              </ExtLink>
             ) : (
               <h2 className="detail-title u-m-0">{tournament.name}</h2>
             );
@@ -429,47 +428,41 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
               ? (tournament._subRounds ?? []).map((sr, i) => (
                   sr.ccode && sr.tcode
                     ? <React.Fragment key={sr.tcode}>
-                        <a href={fpgAdmissionsUrl(sr.ccode, sr.tcode)}
-                          target="_blank" rel="noopener noreferrer"
+                        <ExtLink href={fpgAdmissionsUrl(sr.ccode, sr.tcode)}
                           title={`Inscrições do Dia ${i + 1}`}
                           className="tourn-ext-link">
                           Inscrições D{i + 1} ↗
-                        </a>
-                        <a href={fpgDrawUrl(sr.ccode, sr.tcode)}
-                          target="_blank" rel="noopener noreferrer"
+                        </ExtLink>
+                        <ExtLink href={fpgDrawUrl(sr.ccode, sr.tcode)}
                           title={`Draw do Dia ${i + 1}`}
                           className="tourn-ext-link">
                           Draw D{i + 1} ↗
-                        </a>
-                        <a href={fpgScoringUrl(sr.ccode, sr.tcode)}
-                          target="_blank" rel="noopener noreferrer"
+                        </ExtLink>
+                        <ExtLink href={fpgScoringUrl(sr.ccode, sr.tcode)}
                           title={`Classificação do Dia ${i + 1}`}
                           className="tourn-ext-link">
                           Scoring D{i + 1} ↗
-                        </a>
+                        </ExtLink>
                       </React.Fragment>
                     : null
                 ))
               : tournament.ccode && tournament.tcode && !featured?.semLinksFpg && (
                   <>
-                    <a href={fpgAdmissionsUrl(tournament.ccode, tournament.tcode)}
-                      target="_blank" rel="noopener noreferrer"
+                    <ExtLink href={fpgAdmissionsUrl(tournament.ccode, tournament.tcode)}
                       title="Inscrições (tournAdmissions) na Federação"
                       className="tourn-ext-link">
                       Inscrições ↗
-                    </a>
-                    <a href={fpgDrawUrl(tournament.ccode, tournament.tcode)}
-                      target="_blank" rel="noopener noreferrer"
+                    </ExtLink>
+                    <ExtLink href={fpgDrawUrl(tournament.ccode, tournament.tcode)}
                       title="Emparelhamentos (Draw) na Federação"
                       className="tourn-ext-link">
                       Draw ↗
-                    </a>
-                    <a href={fpgScoringUrl(tournament.ccode, tournament.tcode)}
-                      target="_blank" rel="noopener noreferrer"
+                    </ExtLink>
+                    <ExtLink href={fpgScoringUrl(tournament.ccode, tournament.tcode)}
                       title="Classificação (Scoring) na Federação"
                       className="tourn-ext-link">
                       Scoring ↗
-                    </a>
+                    </ExtLink>
                   </>
                 )
             }
@@ -486,12 +479,11 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
               ...(featured?.extraLinks || []),
               ...(TOURNAMENT_EXTRA_LINKS[`${tournament.ccode}-${tournament.tcode}`] || []),
             ]).map((lnk) => (
-              <a key={lnk.url} href={lnk.url}
-                target="_blank" rel="noopener noreferrer"
+              <ExtLink key={lnk.url} href={lnk.url}
                 title={lnk.label}
                 className="tourn-ext-link">
                 {lnk.icon ? `${lnk.icon} ` : ""}{lnk.label} ↗
-              </a>
+              </ExtLink>
             ))}
           </div>
         </div>

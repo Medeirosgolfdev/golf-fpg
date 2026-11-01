@@ -33,6 +33,7 @@ import { physicalTeeGroups, physicalTeeKey, sexesIn, type SexKey, type PhysTeeGr
 import TeeBars from "../ui/TeeBars";
 import DetailHeader from "../ui/DetailHeader";
 import MasterDetail from "../ui/MasterDetail";
+import PlayerLink from "../ui/PlayerLink";
 
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
@@ -198,7 +199,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
     return m;
   }, [refTee]);
 
-  if (!groups.length) return <div className="muted">Sem tees disponíveis</div>;
+  if (!groups.length) return <EmptyState size="sm" message="Sem tees disponíveis." />;
 
   // Separadores: .sc-sep entre pares de tee, .sc-sep-thin entre CR e Slope (App.css).
   // PAR/SI não têm CR/Slope: o rótulo abrange (merge) a coluna Tee + as colunas
@@ -578,9 +579,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
         {s.name}
       </button>
     ) : (
-      <a href={`/jogadores/${s.nfed}`} target="_blank" rel="noopener noreferrer" className="tourn-pname tourn-pname-link cp-name">
-        {s.name}
-      </a>
+      <PlayerLink fed={s.nfed} name={s.name} className="tourn-pname cp-name" />
     );
 
   /** Células de estatística (Voltas/Melhor/Média/Última) de um bucket. */

@@ -21,6 +21,7 @@ import SexBadge from "./SexBadge";
 import { C } from "../utils/colors";
 import { HcpDelta } from "./tableCells";
 import { tpColor } from "./tournamentPrimitives";
+import ClearButton from "./ClearButton";
 
 export interface EvoPlayer {
   fed: string;
@@ -233,7 +234,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
           );
         })}
         {focused.length > 0 && (
-          <button className="p p-sm p-muted" onClick={() => setFocused([])} title="Limpar destaques">✕</button>
+          <ClearButton onClick={() => setFocused([])} title="Limpar destaques" label="destaques" />
         )}
       </div>}
 

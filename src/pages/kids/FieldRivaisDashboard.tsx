@@ -25,6 +25,9 @@ import CourseTab from "./CourseTab";
 import { CoursesGate } from "../../context/CoursesContext";
 import PrevisaoTab from "./PrevisaoTab";
 import { kidsUrl } from "../../ui/KidsLink";
+import SortableHdr from "../../ui/SortableHdr";
+import EmptyState from "../../ui/EmptyState";
+import ExtLink from "../../ui/ExternalLink";
 
 // ─────────────────────────────────────────────────────────────────────
 // Tcodes "canónicos" que aparecem sempre como coluna se metadata existe.
@@ -1516,7 +1519,7 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
   if (section === "sc-edicoes") return <HistoricScorecardsTab mh={mh} torneio={torneio} escalaoNome={escalaoNome} />;
   if (section === "campo") return <CoursesGate><CourseTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} /></CoursesGate>;
   if (section === "previsao") return <CoursesGate><PrevisaoTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} /></CoursesGate>;
-  if (!dataset) return <div className="muted p-16">Sem dados para este torneio/escalão.</div>;
+  if (!dataset) return <EmptyState size="sm" message="Sem dados para este torneio/escalão." />;
   return (
     <RivaisDashboard
       onSelectPlayer={onSelectPlayer}
@@ -1890,7 +1893,6 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
     if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
     else { setSortKey(k); setSortDir("asc"); }
   };
-  const arrow = (k: SortKey) => sortKey === k ? (sortDir === "asc" ? " ↑" : " ↓") : "";
 
   /* ── Selecção para comparação (hook partilhado da família de tabelas) ──
    * Aqui cada linha é uma POSIÇÃO (cada coluna-edição tem o jogador que lá
@@ -1901,9 +1903,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
 
   if (!data) {
     return (
-      <div className="muted p-16">
-        Sem histórico de pancadas para esta combinação torneio/escalão. (Edições com &ge; {MIN_FIELD_SIZE} jogadores e cobertura &ge; 60% apenas.)
-      </div>
+      <EmptyState size="sm" message={`Sem histórico de pancadas para esta combinação torneio/escalão. (Só edições com ≥ ${MIN_FIELD_SIZE} jogadores e cobertura ≥ 60%.)`} />
     );
   }
 
@@ -1922,10 +1922,10 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       <table className="mx-table u-fs-fs-11 u-w-max-content">
         <thead>
           <tr className="u-bg-bg-muted u-c-text-2 u-bb-1px-solid-border">
-            <th rowSpan={2} onClick={() => onSort("rank")}
-                className="u-p-6px-8px u-ta-center u-fw-700 u-pos-sticky u-left-0 u-bg-bg-muted u-z-z-raised u-cur-pointer u-user-select-none u-w-50px u-minw-50px">
-              Pos{arrow("rank")}
-            </th>
+            <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={onSort} rowSpan={2}
+                className="u-p-6px-8px u-ta-center u-pos-sticky u-left-0 u-bg-bg-muted u-z-z-raised u-w-50px u-minw-50px">
+              Pos
+            </SortableHdr>
             {data.editions.map((e, ei) => (
               <th key={e.tcode} colSpan={e.nRounds + 2 + (e.parPerRound ? 1 : 0)}
                   style={{ padding: "10px 10px 8px", textAlign: "center", fontWeight: 700, borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)" }}>
@@ -1939,13 +1939,12 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                       </span>
                     )}
                     {/^\d+$/.test(e.tcode) && (
-                      <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${e.tcode}`}
-                         target="_blank" rel="noreferrer"
+                      <ExtLink href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${e.tcode}`}
                          onClick={(ev) => ev.stopPropagation()}
                          title="Abrir resultados oficiais USKids/signupanytime"
                          className="u-fs-fs-11 u-c-color-info u-td-none u-fw-700">
                         ↗
-                      </a>
+                      </ExtLink>
                     )}
                     <span className="u-fs-fs-10 u-c-text-3 u-fw-500">(n={e.fieldSize})</span>
                   </div>
@@ -1972,30 +1971,30 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
               // T (total) — antes de R1 — sortable, fundo destacado
               const totalKey = `${e.year}_T`;
               cells.push(
-              <th key={totalKey} onClick={() => onSort(totalKey)}
-                  className="u-p-3px-6px u-ta-center u-fw-700 u-fs-fs-10 u-bg-var-bg-card-bg u-c-text-2 u-cur-pointer u-user-select-none u-w-44px u-minw-44px">
-                  T{arrow(totalKey)}
-                </th>
+              <SortableHdr key={totalKey} k={totalKey} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
+                  className="u-p-3px-6px u-ta-center u-fs-fs-10 u-bg-var-bg-card-bg u-w-44px u-minw-44px">
+                  T
+                </SortableHdr>
               );
               // ±par (TP) — diferença para o par total do torneio
               if (e.parPerRound) {
                 const tpKey = `${e.year}_TP`;
                 cells.push(
-                  <th key={tpKey} onClick={() => onSort(tpKey)}
+                  <SortableHdr key={tpKey} k={tpKey} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
                       title={`Par por ronda: ${e.parPerRound} (total: ${e.parPerRound * e.nRounds})`}
-                      className="u-p-3px-6px u-ta-center u-fw-600 u-fs-fs-10 u-c-text-3 u-cur-pointer u-user-select-none u-w-44px u-minw-44px">
-                    ±par{arrow(tpKey)}
-                  </th>
+                      className="u-p-3px-6px u-ta-center u-fs-fs-10 u-w-44px u-minw-44px">
+                    ±par
+                  </SortableHdr>
                 );
               }
               // R1, R2, R3
               for (let i = 0; i < e.nRounds; i++) {
                 const key = `${e.year}_R${i + 1}`;
                 cells.push(
-                  <th key={key} onClick={() => onSort(key)}
-                      className="u-p-3px-6px u-ta-center u-fw-600 u-fs-fs-10 u-cur-pointer u-user-select-none u-w-38px u-minw-38px">
-                    R{i + 1}{arrow(key)}
-                  </th>
+                  <SortableHdr key={key} k={key} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
+                      className="u-p-3px-6px u-ta-center u-fs-fs-10 u-w-38px u-minw-38px">
+                    R{i + 1}
+                  </SortableHdr>
                 );
               }
               return cells;
@@ -2035,12 +2034,11 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                     <td key={e.tcode + "_name"} style={{ padding: "4px 6px", borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}>
                       {entry ? (
                         <span className="u-d-inline-flex u-ai-center u-gap-4px">
-                          <a href={kidsUrl({ name: entry.name })}
-                             target="_blank" rel="noreferrer"
+                          <ExtLink href={kidsUrl({ name: entry.name })}
                              style={{ color: entry.officialPlace == null ? "var(--text-2)" : "var(--text)", textDecoration: "none", cursor: "pointer", opacity: entry.officialPlace == null ? 0.7 : 1 }}
                              title={entry.officialPlace == null ? `${entry.name} — IE/DSQ/WD (sem classificação oficial)` : `Abrir perfil de ${entry.name} em nova janela`}>
                             {entry.name}
-                          </a>
+                          </ExtLink>
                           {entry.officialPlace == null && (
                             <span title="Sem classificação oficial (IE / DSQ / WD)"
                                   className="u-fs-fs-8 u-p-0-4px u-br-radius-sm u-bg-var-bg-danger-subtle-fecaca u-c-var-color-danger-dark-991b1b u-fw-700 u-ls-0_3px">

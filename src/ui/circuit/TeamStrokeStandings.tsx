@@ -19,6 +19,8 @@ import { medal, fmtToPar } from "../../utils/format";
 import { isManuelByName, MANUEL_FED } from "../../constants/manuel";
 import type { TsModel, TsTeam, TsCat, TsPlayer, Bpb } from "../../data/teamStroke";
 import TabRow from "../TabRow";
+import ExpandArrow from "../ExpandArrow";
+import PlayerLink from "../PlayerLink";
 
 type View = "cartoes" | "lista" | "jogadores";
 /** Volta escolhida (uma categoria): grupo = ordem das letras + 🐦○■ de todas as voltas. */
@@ -42,8 +44,7 @@ function teamVal(c: TsCat, model: TsModel, ri: number | null): number | null {
 /* ── Nome do jogador (link à ficha FPG quando há) ── */
 function PName({ p }: { p: TsPlayer }) {
   const txt = p.link && p.fed
-    ? <a href={`/jogadores/${p.fed}`} target="_blank" rel="noopener noreferrer" className="td-none u-c-inherit"
-        onClick={e => e.stopPropagation()}>{p.name}</a>
+    ? <PlayerLink fed={p.fed} name={p.name} />
     : <>{p.name}</>;
   if (!p.esc) return txt;
   return (
@@ -317,7 +318,7 @@ function TeamList({ model, catKey, label, nLabel }: { model: TsModel; catKey: st
                       {t.isMulti && <span className="legend-dot shrink-0 u-mr-6px" style={{ background: t.color }} />}
                       {model.showLetter && t.letter && <b className="u-mr-6px">{t.letter}</b>}
                       {t.name}{t.sub && <span className="muted fs-11"> · {t.sub}</span>}
-                      <span className="muted fs-11"> {open ? "▾" : "▸"}</span>
+                      <span className="muted fs-11"> <ExpandArrow open={open} /></span>
                     </td>
                     {byGross && c.rdTotals.map((v, ri) => <td key={ri} className="ta-c">{v ?? "–"}</td>)}
                     {byGross && <td className="ta-c fw-700">{c.total ?? "–"}</td>}

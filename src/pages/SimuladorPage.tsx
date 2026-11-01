@@ -31,6 +31,7 @@ import { MANUEL_FED } from "../constants/manuel";
 import { SIM_NAMED_PLAYERS, SIM_REGION, PERCURSO_COHORT_FEDS } from "../constants/simuladorPlayers";
 import { cachedFetchJson } from "../data/fetchCache";
 import { courseMatchKey, resolvePlayedTee } from "../utils/playedDistance";
+import ClearButton from "../ui/ClearButton";
 
 /* Jogadores do selector que não estão no players.json (Drive da Madeira e
  * escolhidos à mão) — gerado por scripts/build-simulador-players.js com o HI
@@ -442,7 +443,7 @@ function AgsSection({
           Scorecard {hasAgs ? "— Net Double Bogey / AGS" : ""}
         </h3>
         {Object.keys(scores).length > 0 && (
-          <button type="button" className="btn" onClick={clearAll} title="Limpar selecção">Limpar</button>
+          <ClearButton onClick={clearAll} title="Limpar selecção" />
         )}
       </div>
 
@@ -1444,11 +1445,10 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
             Preenche o <strong>Handicap Index (HI)</strong> em cima para calcular o
             {" "}<strong>Course Handicap</strong>, <strong>Playing Handicap</strong>,
             e as linhas de <strong>Adjusted Gross Score</strong> (Panc., Máx, Ajust.).
-            {" "}<a href="https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/net-double-bogey.html"
-              target="_blank" rel="noopener noreferrer"
+            {" "}<ExtLink href="https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/net-double-bogey.html"
               className="c-teal">
               Saber mais (USGA) →
-            </a>
+            </ExtLink>
           </span>
         </div>
       )}

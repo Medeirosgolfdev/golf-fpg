@@ -16,6 +16,7 @@ import KpiCard from "../../../ui/KpiCard";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { MONTHS_PT, fmtToPar } from "../../../utils/format";
 import { medalClass } from "../../../ui/PosBadge";
+import ExtLink from "../../../ui/ExternalLink";
 
 type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff" | "result";
 
@@ -164,7 +165,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
               <td>
                 {r.t.name || r.t.id}
                 {r.t.links?.[0]?.url && (
-                  <a href={r.t.links[0].url} target="_blank" rel="noreferrer" className="u-ml-4px u-c-color-info">↗</a>
+                  <ExtLink href={r.t.links[0].url} className="u-ml-4px u-c-color-info">↗</ExtLink>
                 )}
               </td>
               <td className="u-c-text-3">{r.flight.label}</td>

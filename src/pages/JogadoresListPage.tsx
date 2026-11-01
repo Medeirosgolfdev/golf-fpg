@@ -49,6 +49,9 @@ import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 import { FilterField, ToggleChip } from "../ui/FilterField";
+import ClearButton from "../ui/ClearButton";
+import PlayerLink from "../ui/PlayerLink";
+import ExtLink from "../ui/ExternalLink";
 
 /* ── URL FPG (referência exacta pedida pelo user) ─────────────── */
 const FPG_LIST_URL =
@@ -452,19 +455,15 @@ export default function JogadoresListPage() {
           {sorted.length.toLocaleString("pt-PT")} de {rows.length.toLocaleString("pt-PT")}
         </ToolbarMeta>
         <ToolbarSep />
-        <button type="button" onClick={resetFilters} className="btn">
-          Limpar filtros
-        </button>
+        <ClearButton onClick={resetFilters} />
         <span className="u-ml-auto u-fs-fs-11 u-c-text-muted">
-          <a
+          <ExtLink
             href={FPG_LIST_URL}
-            target="_blank"
-            rel="noopener noreferrer"
             className="u-c-chart-2 u-td-none"
             title="Abrir tabela oficial da Federação Portuguesa de Golfe"
           >
             🔗 Tabela FPG
-          </a>
+          </ExtLink>
         </span>
       </Toolbar>
 
@@ -625,16 +624,7 @@ export default function JogadoresListPage() {
                   >
                     <td>{r.fed}</td>
                     <td className="u-fw-500">
-                      <a
-                        href={`/jogadores/${r.fed}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        title={`Abrir ficha de ${r.name} em nova janela`}
-                        className="player-list-name-link"
-                      >
-                        {r.name}
-                      </a>
+                      <PlayerLink fed={r.fed} name={r.name} title={`Abrir ficha de ${r.name} em nova janela`} />
                       {r.hasAnalysis && <span title="Análise local disponível" className="u-ml-4px u-op-0_6">★</span>}
                       {r.ppOnly && <span title="Só federado de Pitch & Putt (sem registo no golfe)" className="u-ml-4px u-op-0_7">🏑</span>}
                       {r.hasDiffs && (
@@ -684,9 +674,9 @@ export default function JogadoresListPage() {
       {/* Footer com link FPG */}
       <div className="u-mt-16px u-fs-fs-11 u-c-text-muted u-ta-center">
         Fonte: <code>federados.json</code> (~{rows.length.toLocaleString("pt-PT")} federados) ·{" "}
-        <a href={FPG_LIST_URL} target="_blank" rel="noopener noreferrer" className="u-c-chart-2">
+        <ExtLink href={FPG_LIST_URL} className="u-c-chart-2">
           Tabela oficial FPG (handicaps.asp) ↗
-        </a>
+        </ExtLink>
       </div>
     </div>
   );

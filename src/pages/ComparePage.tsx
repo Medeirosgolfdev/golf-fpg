@@ -31,6 +31,7 @@ import { calcSD, calcPlayingHcp } from "../utils/whsCalc";
 import { fmtSD } from "../utils/format";
 import { teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { MANUEL_FED } from "../constants/manuel";
+import { isPtCountry } from "../utils/flagUtils";
 
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
@@ -38,8 +39,9 @@ const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
 function filterCoursesForComparison(courses: Course[]): Course[] {
   return courses.filter(c => {
-    const country = c.master.country?.toUpperCase().trim();
-    const isPortuguese = !country || country === "PT" || country === "PORTUGAL";
+    // Sem país = campo do master da FPG (os campos de fora trazem o país).
+    const country = c.master.country?.trim();
+    const isPortuguese = !country || isPtCountry(country);
     if (isPortuguese) return true;
     const hasManuelPlayed = c.master._players && Object.keys(c.master._players).some(fed => fed === MANUEL_FED);
     return !!hasManuelPlayed;

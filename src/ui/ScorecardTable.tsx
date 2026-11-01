@@ -6,6 +6,7 @@ import { fmtSign } from "../utils/format";
 import { scClass, toParClass } from "../utils/scoreDisplay";
 import { PillBadge } from "./PillBadge";
 import { CourseLink } from "./jogadoresHelpers";
+import ExtLink from "./ExternalLink";
 
 /** Props for ScorecardTable component */
 export interface ScorecardTableProps {
@@ -180,9 +181,9 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
           {linkEntries.length > 0 && (
             <div className="sc-links">
               {linkEntries.map(([label, url]) => (
-                <a key={label} href={url} target="_blank" rel="noopener noreferrer" className="sc-ext-link" title={linkLabels[label] || label}>
+                <ExtLink key={label} href={url} className="sc-ext-link" title={linkLabels[label] || label}>
                   🔗 {linkLabels[label] || label}
-                </a>
+                </ExtLink>
               ))}
             </div>
           )}

@@ -35,6 +35,8 @@ import { cachedFetchJson } from "../data/fetchCache";
 import AdmissionsTab, { type AdmissionsExtraCol } from "./AdmissionsTab";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
 import type { PlayersDB } from "./tournamentPrimitives";
+import ExpandArrow from "./ExpandArrow";
+import ExtLink from "./ExternalLink";
 
 /* ═══════════════════════════════════════════════════════
    HOOKS
@@ -281,7 +283,7 @@ function PainelResumo({ torneios, nossosByFed }: {
             <span className="muted fs-11">·</span>
             <button type="button" className="btn" onClick={() => setClubesAbertos(v => !v)}
               aria-expanded={clubesAbertos} title="Inscritos por clube">
-              Clubes ({clubes.length}) {clubesAbertos ? "▾" : "▸"}
+              Clubes ({clubes.length}) <ExpandArrow open={clubesAbertos} />
             </button>
           </>
         )}
@@ -574,10 +576,8 @@ export function InscricoesPanel() {
           <div className="detail-header-top">
             <h2 className="detail-title">Campeonato Nacional de Jovens — {escShort(torneioActivo.escalao).replace(/^S/, "Sub ")} {torneioActivo.sex === "F" ? "Feminino" : "Masculino"}</h2>
             <div className="u-d-flex u-gap-4px u-fwr-wrap u-ai-center">
-              <a href={`https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=${torneioActivo.tcode}`}
-                 target="_blank" rel="noopener noreferrer" className="tourn-ext-link">📋 Inscrições ↗</a>
-              <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
-                 target="_blank" rel="noopener noreferrer" className="tourn-ext-link">🏆 Página oficial ↗</a>
+              <ExtLink href={`https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=${torneioActivo.tcode}`} className="tourn-ext-link">📋 Inscrições ↗</ExtLink>
+              <ExtLink href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/" className="tourn-ext-link">🏆 Página oficial ↗</ExtLink>
             </div>
           </div>
           <div className="detail-sub">

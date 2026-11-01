@@ -10,6 +10,7 @@ import React, { useMemo, useState } from "react";
 import type { CanonicalData, Junior } from "./data";
 import { getSharedFlightTids } from "./data";
 import { flag as flagOf } from "../../utils/flagUtils";
+import ExpandArrow from "../../ui/ExpandArrow";
 
 const MAX_VISIBLE = 8000;
 
@@ -221,7 +222,7 @@ export default function Sidebar({
                 <span className="u-fs-fs-10 u-op-0_7 u-fw-600 u-mr-4px">
                   {juniors.length}{totalInCountry > juniors.length ? `/${totalInCountry}` : ""}
                 </span>
-                <span className="u-fs-fs-9 u-op-0_5">{collapsed ? "▶" : "▼"}</span>
+                <span className="u-fs-fs-9 u-op-0_5"><ExpandArrow open={!collapsed} /></span>
               </SectionHeader>
               {!collapsed && juniors.map((j) => (
                 <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} sharedCount={sharedCountByJunior.get(j.id) || 0} />

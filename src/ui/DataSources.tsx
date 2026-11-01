@@ -13,6 +13,7 @@
  * DrivePage: driveLoader meta; KIDSPage: KIDSdataLoader meta) e passa o mesmo shape.
  */
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import ExpandArrow from "./ExpandArrow";
 
 type DataSourceStatus = "loaded" | "loading" | "error";
 
@@ -363,7 +364,7 @@ export function DataSourcesChip({
         📂 {sources.length} {label}
         {errors > 0 && <span className="u-c-color-warn-dark u-fw-700">⚠ {errors}</span>}
         {loading > 0 && <span className="c-muted">…</span>}
-        <span className="c-muted u-fs-fs-9">{open ? "▲" : "▼"}</span>
+        <span className="c-muted u-fs-fs-9"><ExpandArrow open={open} /></span>
       </button>
       {open && anchorRect && (
         <DataSourcesPanel

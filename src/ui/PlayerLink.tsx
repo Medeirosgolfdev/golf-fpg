@@ -1,63 +1,36 @@
 /**
  * src/ui/PlayerLink.tsx
  *
- * Nome de jogador clicável que navega para o perfil (/jogadores/:fed).
- * Suporta 3 modos:
- *   - href externo (target _blank) — padrão para tabelas de torneio
- *   - onSelect callback — para navegação SPA
- *   - sem link (fed=null) — render passivo
+ * Nome de jogador que abre a ficha (/jogadores/:fed) numa janela nova — o mesmo
+ * em todas as tabelas: cor do texto, sublinhado só ao passar o rato (.player-link).
+ * Sem federado fica só o nome. O clique não chega à linha da tabela (que muitas
+ * vezes abre o detalhe).
  *
  * Uso:
  *   <PlayerLink fed={row.fed} name={row.name} />
- *   <PlayerLink fed={row.fed} name={row.name} query="?view=by_date" />
- *   <PlayerLink fed={row.fed} name={row.name} onSelect={setSelected} />
- *   <PlayerLink fed={null} name="Jogador desconhecido" />
+ *   <PlayerLink fed={row.fed} name={row.name} query="?view=federado" className="fw-700" />
  */
 import React from "react";
 
 interface PlayerLinkProps {
-  fed: string | null | undefined;
+  fed: string | number | null | undefined;
   name: React.ReactNode;
-  /** Query string a adicionar ao href, ex: "?view=by_date" */
+  /** Query string a acrescentar ao endereço, ex: "?view=federado" */
   query?: string;
-  /** Se fornecido, usa callback em vez de href */
-  onSelect?: (fed: string) => void;
   className?: string;
-  style?: React.CSSProperties;
+  title?: string;
 }
 
-export default function PlayerLink({
-  fed,
-  name,
-  query = "",
-  onSelect,
-  className = "tourn-pname",
-  style,
-}: PlayerLinkProps) {
-  if (!fed) return <span className={className} style={style}>{name}</span>;
-
-  if (onSelect) {
-    return (
-      <span
-        className={`${className} tourn-pname-link`}
-        role="button"
-        tabIndex={0}
-        style={style}
-        onClick={() => onSelect(fed)}
-        onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(fed); } }}
-      >
-        {name}
-      </span>
-    );
-  }
-
+export default function PlayerLink({ fed, name, query = "", className, title }: PlayerLinkProps) {
+  if (!fed) return <span className={className} title={title}>{name}</span>;
   return (
     <a
       href={`/jogadores/${fed}${query}`}
       target="_blank"
       rel="noopener noreferrer"
-      className={className}
-      style={{ color: "inherit", textDecoration: "none", ...style }}
+      className={"player-link" + (className ? " " + className : "")}
+      title={title}
+      onClick={e => e.stopPropagation()}
     >
       {name}
     </a>

@@ -30,6 +30,8 @@ import { norm, shortDateSlash } from "../../utils/format";
 import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
 import termosJson from "../../data/omCgssTermos.json";
 import { ModalidadePill } from "../../ui/PillBadge";
+import LoadingState from "../../ui/LoadingState";
+import ExtLink from "../../ui/ExternalLink";
 
 /* ── Tipos do om-cgss-junior.json ── */
 type Level = "A" | "B" | "C";
@@ -382,11 +384,11 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
               🏅 {l.label} ↓
             </span>
           ) : l.href ? (
-            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer"
+            <ExtLink key={l.label} href={l.href}
               className="p p-sm p-muted u-td-none"
               title={`Ranking oficial ${l.label} (scoring.datagolf.pt)`}>
               {l.label} ↗
-            </a>
+            </ExtLink>
           ) : (
             <span key={l.label} className="p p-sm p-muted u-op-0_5">{l.label}</span>
           )
@@ -394,7 +396,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
       </div>
 
       {err && <p className="p-muted">Ranking júnior indisponível de momento.</p>}
-      {!data && !err && <p className="p-muted">A carregar ranking júnior…</p>}
+      {!data && !err && <LoadingState size="sm" message="A carregar ranking júnior…" />}
 
       {data && (
         <>

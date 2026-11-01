@@ -31,6 +31,10 @@ import { EscPill } from "./PillBadge";
 import { isManuel } from "../constants/manuel";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
+import ExpandArrow from "./ExpandArrow";
+import EmptyState from "./EmptyState";
+import PlayerLink from "./PlayerLink";
+import ExtLink from "./ExternalLink";
 
 const ESC_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 24"];
 
@@ -95,16 +99,7 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
       <div className="fs-12 u-d-flex u-ai-center u-gap-4px u-fwr-wrap">
         <YearInEscBadge year={p.yearInEscalao} escalao={columnEsc} />
         {p.fed ? (
-          <a
-            href={`/jogadores/${p.fed}?view=federado`}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={`${p.name} — ver perfil federado (abre em nova janela)`}
-            className="fw-700 u-td-none u-c-inherit u-bb-1px-dotted-currentcolor"
-
-          >
-            {abreviarNome(p.name || "—", 22)}
-          </a>
+          <PlayerLink fed={p.fed} name={abreviarNome(p.name || "—", 22)} query="?view=federado" className="fw-700" title={`${p.name} — ver perfil federado (abre em nova janela)`} />
         ) : (
           <span className="fw-700" title={p.name}>{abreviarNome(p.name || "—", 22)}</span>
         )}
@@ -193,11 +188,11 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
               </span>
             )}
             {scoringUrl && (
-              <a href={scoringUrl} target="_blank" rel="noopener noreferrer"
+              <ExtLink href={scoringUrl}
                 title="Ver resultados oficiais na FPG ↗"
                 className="u-fs-fs-11 u-td-none u-c-accent u-fw-700 u-ws-nowrap">
                 ↗ FPG
-              </a>
+              </ExtLink>
             )}
             {ch.ccode && ch.tcode && (
               <Link to={tournamentUrl("FPG", ch.ccode, ch.tcode.split("+")[0])}
@@ -280,7 +275,7 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
     return (
       <section className="u-m-16px-12px">
         <h3 className="fs-14 fw-700 u-mb-8px">{title}</h3>
-        <p className="muted fs-12">Sem dados disponíveis.</p>
+        <EmptyState size="sm" message="Sem dados disponíveis." />
       </section>
     );
   }
@@ -536,7 +531,7 @@ function RegionChampionsBlock({
           title={open ? "Colapsar" : "Expandir"}
         >
           <span className="u-ff-font-mono u-fs-fs-11 u-op-0_7">
-            {open ? "▼" : "▶"}
+            <ExpandArrow open={open} />
           </span>
           <span>📍 {region}</span>
           <span className="fs-11 muted u-fw-400">
@@ -658,12 +653,7 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
                   <td className="fw-600 r">{i + 1}</td>
                   <td>
                     {p.fed ? (
-                      <a href={`/jogadores/${p.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
-                        className="fw-600 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
-
-                        title={`${p.displayName || p.name} — perfil federado (nova janela)`}>
-                        {p.displayName || p.name}
-                      </a>
+                      <PlayerLink fed={p.fed} name={p.displayName || p.name} query="?view=federado" className="fw-600" title={`${p.displayName || p.name} — perfil federado (nova janela)`} />
                     ) : (
                       <span className="fw-600">{p.displayName || p.name}</span>
                     )}
@@ -748,12 +738,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
     <div className="u-d-flex u-fd-column u-gap-4px u-p-8px-12px u-bb-1px-solid-border-light">
       <div className="u-d-flex u-ai-center u-gap-8px">
         {player.fed ? (
-          <a href={`/jogadores/${player.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
-            className="fw-700 fs-13 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
-
-            title={`${player.displayName || player.name} — perfil federado (nova janela)`}>
-            {player.displayName || player.name}
-          </a>
+          <PlayerLink fed={player.fed} name={player.displayName || player.name} query="?view=federado" className="fw-700 fs-13" title={`${player.displayName || player.name} — perfil federado (nova janela)`} />
         ) : (
           <span className="fw-700 fs-13">{player.displayName || player.name}</span>
         )}
@@ -798,11 +783,11 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               {yrIn && <YearInEscBadge year={yrIn} />}
               {titles.map((t, i) => (
                 t.ccode && t.tcode ? (
-                  <a key={i} href={fpgScoringUrl(t.ccode, t.tcode.split("+")[0])} target="_blank" rel="noopener noreferrer"
+                  <ExtLink key={i} href={fpgScoringUrl(t.ccode, t.tcode.split("+")[0])}
                     title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region}) — abrir torneio na FPG ↗`}
                     className="u-fs-fs-11 u-td-none">
                     🏆
-                  </a>
+                  </ExtLink>
                 ) : (
                   <span key={i} title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region})`} className="u-fs-fs-11">
                     🏆
@@ -812,15 +797,13 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               {/* Pos/total — só quando jogou e não ganhou (sem 🏆 redundante).
                   Linka ao torneio na FPG. */}
               {titles.length === 0 && bestApp && bestApp.ccode && bestApp.tcode && (
-                <a
+                <ExtLink
                   href={fpgScoringUrl(bestApp.ccode, bestApp.tcode.split("+")[0])}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName} — abrir torneio na FPG ↗`}
                   className="u-fs-fs-10 u-fw-700 u-c-text-3 u-td-none u-bg-bg-muted u-p-1px-4px u-br-radius-sm"
                 >
                   {bestApp.pos}/{bestApp.total}
-                </a>
+                </ExtLink>
               )}
               {titles.length === 0 && bestApp && (!bestApp.ccode || !bestApp.tcode) && (
                 <span

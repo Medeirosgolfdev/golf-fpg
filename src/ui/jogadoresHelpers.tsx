@@ -1,5 +1,6 @@
 import { norm } from "../utils/format";
 import { canonicalCourseName, courseDisplayName } from "../utils/courseAliases";
+import ExtLink from "./ExternalLink";
 
 /* —— Course key lookup: course display name → courseKey for /campos/:courseKey —— */
 let _courseKeyMap: Map<string, string> = new Map();
@@ -40,10 +41,9 @@ export function CourseLink({ name: rawName }: { name: string }) {
   return (
     <>
       {name}
-      <a href={`/campos/${key}`} className="courseLink fs-10 ml-4" title={`Ver campo: ${name}`}
-         target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+      <ExtLink href={`/campos/${key}`} className="courseLink fs-10 ml-4" title={`Ver campo: ${name}`} onClick={e => e.stopPropagation()}>
         ↗
-      </a>
+      </ExtLink>
     </>
   );
 }

@@ -16,6 +16,9 @@ import { fmtToPar, fpgScoringUrl } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import PosBadge from "./PosBadge";
 import SortableHdr from "./SortableHdr";
+import ExpandArrow from "./ExpandArrow";
+import PlayerLink from "./PlayerLink";
+import ExtLink from "./ExternalLink";
 
 interface Player {
   pos: number | string | null;
@@ -208,15 +211,9 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                     title={isOpen ? "Fechar detalhes" : "Ver todos os top-5"}>
                     <td className="u-va-middle">
                       <span className="u-d-inline-flex u-ai-center u-gap-6px">
-                        <span className="u-ff-font-mono u-fs-fs-11 u-op-0_6 u-w-10px">{isOpen ? "▼" : "▶"}</span>
+                        <span className="u-ff-font-mono u-fs-fs-11 u-op-0_6 u-w-10px"><ExpandArrow open={isOpen} /></span>
                         {a.fed ? (
-                          <a href={`/jogadores/${a.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="fw-700 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
-
-                            title={`${a.name} — ver perfil federado (nova janela)`}>
-                            {a.name}
-                          </a>
+                          <PlayerLink fed={a.fed} name={a.name} query="?view=federado" className="fw-700" title={`${a.name} — ver perfil federado (nova janela)`} />
                         ) : (
                           <span className="fw-700">{a.name}</span>
                         )}
@@ -262,11 +259,11 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                                 <td>{e.escalao}{e.isClubes ? " · Clubes" : ""}</td>
                                 <td className="r u-fw-600">{e.gross ?? "\u2014"}</td>
                                 <td className="r">{e.toPar != null ? fmtToPar(e.toPar) : "\u2014"}</td>
-                                <td ><a href={fpgScoringUrl(e.ccode, e.tcode)} target="_blank" rel="noopener noreferrer"
+                                <td ><ExtLink href={fpgScoringUrl(e.ccode, e.tcode)}
                                     className="u-c-accent u-td-none"
                                     title="Ver torneio na FPG (nova janela)">
                                     {e.tournamentName} ↗
-                                  </a>
+                                  </ExtLink>
                                 </td>
                               </tr>
                             ))}

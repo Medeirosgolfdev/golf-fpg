@@ -29,6 +29,8 @@ import HoleDiffTable from "../../ui/HoleDiffTable";
 import KpiCard from "../../ui/KpiCard";
 import { scClass } from "../../utils/scoreDisplay";
 import { buildReach, notReachableHoles } from "../../utils/reach";
+import EmptyState from "../../ui/EmptyState";
+import LoadingState from "../../ui/LoadingState";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -159,7 +161,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
   const reach = useMemo(() => resolved ? buildReach(resolved.tee, driveM, secondM) : [], [resolved, driveM, secondM]);
   const notReach = useMemo(() => notReachableHoles(reach), [reach]);
 
-  if (!torneio) return <div className="muted p-16">Sem torneio selecionado.</div>;
+  if (!torneio) return <EmptyState size="sm" message="Sem torneio seleccionado." />;
   if (!resolved) {
     return (
       <div className="muted p-16">
@@ -404,7 +406,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
               </tr>
             </tfoot>
           </table>
-          {!playerData && <p className="muted fs-11 u-m-6px-0-0">A carregar o histórico do Manuel para o "esperado"…</p>}
+          {!playerData && <LoadingState size="sm" message="A carregar o histórico do Manuel para o «esperado»…" />}
           <p className="muted fs-11 u-m-6px-0-0">
             "Média/Já/Pode" = pancadas esperadas por buraco em 3 cenários (média da forma 6m · melhor volta recente · teto histórico); cada coluna soma ao total respectivo, e os buracos fáceis passam a birdie no cenário "Pode" (verde = abaixo do par). Base: média do Manuel em buracos do mesmo par e distância ({profile.recent ? "últimos 6 meses" : "todas as voltas"}). "Plano" = dificuldade do buraco para o field na edição anterior (atacar = mais fáceis, defender = mais difíceis). "T5 R#" = scores dos 5 melhores classificados da edição anterior nessa ronda, por ordem de classificação (cor = convenção dos scorecards: birdie/par/bogey). Mostra que os bons fazem birdies onde a média fica acima do par; nome do jogador no hover.
           </p>

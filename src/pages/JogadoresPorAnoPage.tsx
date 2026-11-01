@@ -42,6 +42,7 @@ import type { PlayerClub } from "../data/types";
 import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
 import { HCP_UNESTABLISHED_THRESHOLD as HCP_UNESTABLISHED } from "./jogadores/filterPlayers";
 import { HcpDelta } from "../ui/tableCells";
+import ClearButton from "../ui/ClearButton";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -435,10 +436,7 @@ export default function JogadoresPorAnoPage() {
         </button>
 
         {activeFiltersCount > 0 && (
-          <button className="p u-bg-color-warn-vivid u-c-fff u-gap-4px" onClick={clearFilters}
->
-            ✕ Limpar <span className="p-filter-count">{activeFiltersCount}</span>
-          </button>
+          <ClearButton onClick={clearFilters} count={activeFiltersCount} />
         )}
 
         <Counter ml="auto">{filtered.length.toLocaleString("pt-PT")} jogadores · {cohorts.length} anos</Counter>
@@ -477,7 +475,7 @@ export default function JogadoresPorAnoPage() {
             </button>
           ))}
           {yearSet.size > 0 && (
-            <button className="p p-sm p-muted" onClick={() => setYearSet(new Set())} title="Limpar selecção de anos">✕ anos</button>
+            <ClearButton onClick={() => setYearSet(new Set())} title="Limpar selecção de anos" label="anos" />
           )}
         </div>
       )}

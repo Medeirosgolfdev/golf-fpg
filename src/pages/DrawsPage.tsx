@@ -38,6 +38,8 @@ import { MANUEL_FED } from "../constants/manuel";
 import { loadPlayers } from "../data/loader";
 import { cachedFetchJson } from "../data/fetchCache";
 import type { PlayersDb } from "../data/types";
+import ExpandArrow from "../ui/ExpandArrow";
+import ExtLink from "../ui/ExternalLink";
 
 // ── Tipos ─────────────────────────────────────────────────────────────
 
@@ -434,7 +436,7 @@ function TorneiosList({
         className={"draws-grupo-hdr" + (open ? " open" : "")}
       >
         <span className="u-c-text-3 u-fs-fs-11">
-          {open ? "▾" : "▸"}
+          <ExpandArrow open={open} />
         </span>
         <span className="cor-dot cor-dot-9" style={{ background: cor }} />
         <span className="u-tt-uppercase u-ls-0_03em">{titulo}</span>
@@ -1104,7 +1106,7 @@ export default function DrawsPage() {
                         onClick={() => toggleExpand(row.key)}
                       >
                         <td className="u-ta-center u-c-text-3">
-                          {open ? "▾" : "▸"}
+                          <ExpandArrow open={open} />
                         </td>
                         <td>
                           <CompanionNameLink row={row} />
@@ -1308,9 +1310,9 @@ export default function DrawsPage() {
                     <ul className="u-m-0 u-pl-18px">
                       {lista.map((tn, i) => (
                         <li key={i} className="u-mb-2px">
-                          <a href={`https://www.signupanytime.com/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${tn.t}`} target="_blank" rel="noopener" className="courseLink">
+                          <ExtLink href={`https://www.signupanytime.com/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${tn.t}`} className="courseLink">
                             {tn.nome}
-                          </a>
+                          </ExtLink>
                           <span className="muted">
                             {" "}— signupanytime · {tn.rondas} {tn.rondas === 1 ? "ronda" : "rondas"}{tn.data ? ` · ${fmtDatePt(tn.data)}` : ""}
                           </span>
@@ -1327,9 +1329,9 @@ export default function DrawsPage() {
                     <ul className="u-m-0 u-pl-18px">
                       {intlLinks.map((lnk, i) => (
                         <li key={i} className="u-mb-2px">
-                          <a href={lnk.url} target="_blank" rel="noopener" className="courseLink">
+                          <ExtLink href={lnk.url} className="courseLink">
                             {lnk.nome}
-                          </a>
+                          </ExtLink>
                           <span className="muted">
                             {" "}— {lnk.fonte}{lnk.ronda !== "all" ? ` R${lnk.ronda}` : ""}{lnk.notas ? ` · ${lnk.notas}` : ""}
                           </span>

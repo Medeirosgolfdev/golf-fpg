@@ -11,6 +11,7 @@
  * ordenação por colunas continua a aplicar-se por cima do filtro.
  */
 import React, { useState } from "react";
+import ClearButton from "./ClearButton";
 
 export interface CompareSelection<K extends string | number> {
   /** Chaves seleccionadas. */
@@ -66,9 +67,7 @@ export function useCompareSelection<K extends string | number>(): CompareSelecti
       >
         ⚖️ Comparar seleccionados ({selected.size})
       </span>
-      <span onClick={clear} className="muted u-cur-pointer" title="Limpar selecção">
-        ✕ limpar
-      </span>
+      <ClearButton onClick={clear} title="Limpar selecção" />
       {!compareOn && (
         <span className="muted fs-10">marca ☑ nas linhas e activa para ver só esses</span>
       )}

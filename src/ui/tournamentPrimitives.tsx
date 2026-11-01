@@ -40,6 +40,8 @@ import { flag as flagOf } from "../utils/flagUtils";
 /* ─── Constante do jogador especial (re-export de constants/manuel) ─── */
 import { MANUEL_FED as _MANUEL_FED, isManuel } from "../constants/manuel";
 import { kidsUrl, KidsLinkCtx } from "./KidsLink";
+import PlayerLink from "./PlayerLink";
+import ExtLink from "./ExternalLink";
 export { _MANUEL_FED as MANUEL_FED, isManuel };
 
 /* ─── Formatação to-par ─── */
@@ -236,14 +238,7 @@ export function TournPName({
     </>
   );
   const nameEl = hasLink ? (
-    <a
-      href={`/jogadores/${fedKey}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="tourn-pname tourn-pname-link u-c-inherit u-td-none"
-      title={titleMsg}
-
-    >{inner}</a>
+    <PlayerLink fed={fedKey} name={inner} className="tourn-pname" title={titleMsg} />
   ) : (
     <span className="tourn-pname" title={titleMsg}>{inner}</span>
   );
@@ -251,14 +246,12 @@ export function TournPName({
     <>
       {nameEl}
       {kidsLink && (
-        <a
+        <ExtLink
           href={kidsLink}
-          target="_blank"
-          rel="noopener noreferrer"
           title="Ver em Kids"
           className="u-ml-4px u-fw-800 u-c-color-good-dark u-fs-fs-11 u-td-none">
           ↗
-        </a>
+        </ExtLink>
       )}
     </>
   );

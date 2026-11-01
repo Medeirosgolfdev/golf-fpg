@@ -10,6 +10,9 @@ import type { FieldData } from "./uskidsTypes";
 import { HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
 import { zTier } from "../utils/mathUtils";
 import { isManuelByName } from "../constants/manuel";
+import ClearButton from "./ClearButton";
+import ExpandArrow from "./ExpandArrow";
+import ExtLink from "./ExternalLink";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
 interface TGTournDef {
@@ -591,14 +594,14 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
             className={`p p-filter p-sm${showFilters ? " active" : ""} u-pos-relative`}
             onClick={() => setShowFilters(s => !s)}
 >
-            Filtros {showFilters ? "▲" : "▼"}
+            Filtros <ExpandArrow open={showFilters} />
             {activeCount > 0 && (
               <span className="u-pos-absolute u-top-4px u-right-4px u-bg-accent u-c-fff u-br-50pc u-w-16px u-h-16px u-fs-fs-10 u-fw-700 u-d-flex u-ai-center u-jc-center">
                 {activeCount}
               </span>
             )}
           </button>
-          {activeCount > 0 && <button className="p p-filter p-sm u-c-color-danger" onClick={resetAll}>✕ Limpar</button>}
+          {activeCount > 0 && <ClearButton onClick={resetAll} />}
           <div className="chip u-ml-auto">{list.length} jogadores</div>
         </div>
         {showFilters && (
@@ -635,7 +638,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       className="rivais-th ta-c"
                       style={{ minWidth:56, opacity: isFixed ? 1 : 0.85,
                         color: isFuture ? "var(--color-info)" : undefined }}>
-                      {url ? <a href={url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</a> : info.short}
+                      {url ? <ExtLink href={url} className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</ExtLink> : info.short}
                       {!isFuture && <div className="fs-10 fw-500 op-6 mt-1">{stars} {info.date}</div>}
                       {isFuture && <div className="fs-10 fw-500 mt-1 u-c-color-info">inscrito</div>}
                     </SortableHdr>

@@ -13,6 +13,7 @@ import { sumArr } from "../utils/mathUtils";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
 import { SC, fmtStb, fmtSdVal } from "../utils/scoreDisplay";
+import ExpandArrow from "./ExpandArrow";
 
 const tpColorOf = (d: number) => d > 0 ? SC.danger : d < 0 ? SC.good : SC.muted;
 
@@ -157,7 +158,7 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
           {ecTotal > 0 && <span className="fw-700" style={{ color: tpColorOf(ecTotal - ecTotalPar) }}>{fmtToPar(ecTotal - ecTotalPar)}</span>}
           <button type="button" className="btn-link fs-12 u-c-accent" onClick={() => setAberto(v => !v)}
 >
-            {aberto ? "▾" : "▸"} {teeRounds.length} volta{teeRounds.length === 1 ? "" : "s"}
+            <ExpandArrow open={aberto} /> {teeRounds.length} volta{teeRounds.length === 1 ? "" : "s"}
           </button>
           <TeeDots tees={dots} active={primary.teeKey}
             onSelect={k => { if (k !== activeTee) onSelectTee(k); }} />

@@ -18,6 +18,9 @@ import { KidsLink } from "../KidsLink";
 import { fmtToPar } from "../../utils/format";
 import { fmtPoints, type TeamPointsData, type TeamPointsPlayerRow, type TeamPointsResult } from "./teamPointsTypes";
 import TabRow from "../TabRow";
+import ExpandArrow from "../ExpandArrow";
+import EmptyState from "../EmptyState";
+import PlayerLink from "../PlayerLink";
 
 type TeamRow = {
   key: string;
@@ -70,7 +73,7 @@ function TeamPlayers({ rows, opps, catLabel }: {
       return va < vb ? -dir : va > vb ? dir : a.i - b.i;
     }).map(x => x.r);
   }, [rows, sortKey, sortDir, catOrder]);
-  if (!rows.length) return <div className="muted">Sem jogadores nesta vista.</div>;
+  if (!rows.length) return <EmptyState size="sm" message="Sem jogadores nesta vista." />;
   const hp = { sortKey, sortDir, onSort: toggleSort };
   return (
     <table className="sc-lb tps-players">
@@ -88,7 +91,7 @@ function TeamPlayers({ rows, opps, catLabel }: {
           <tr key={r.key}>
             <td className="c-muted">{catLabel(r.catKey)}</td>
             <td className="tps-name">
-              {r.fed ? <a href={`/jogadores/${r.fed}`} className="mp-player-link">{r.name}</a> : r.name}
+              {r.fed ? <PlayerLink fed={r.fed} name={r.name} /> : r.name}
               <KidsLink nome={r.name} fed={r.fed} />
             </td>
             <td>{r.gross != null ? `${r.gross}${r.toPar != null ? ` (${fmtToPar(r.toPar)})` : ""}` : "—"}</td>
@@ -177,7 +180,7 @@ export default function TeamPointsStandings({ data, defaultRound = "all" }: {
                   <tr className={`tps-row${isOpen ? " tps-open" : ""}${data.highlight?.includes(r.key) ? " row-manuel" : ""}`}
                     onClick={() => setOpen(isOpen ? null : r.key)} title="Ver os jogadores e os confrontos">
                     <td className="lb-pos">{r.pos}</td>
-                    <td className="tps-team fw-700">{r.name} <span className="c-muted">{isOpen ? "▴" : "▾"}</span></td>
+                    <td className="tps-team fw-700">{r.name} <span className="c-muted"><ExpandArrow open={isOpen} /></span></td>
                     {data.categories.map(c => {
                       const v = r.cats[c.key];
                       return v == null

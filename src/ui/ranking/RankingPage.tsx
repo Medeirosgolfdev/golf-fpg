@@ -26,6 +26,7 @@ import EmptyState from "../EmptyState";
 import CircuitShell from "../circuit/CircuitShell";
 import type { CircuitConfig, CircuitEntry } from "../circuit/types";
 import { circuitRanking } from "../circuit/CircuitRanking";
+import ExtLink from "../ExternalLink";
 
 const PAGE_SIZE = 100;
 
@@ -295,7 +296,7 @@ export function RankingMeta({ totalMen, totalWomen, extra, site, siteLabel, site
       <ToolbarMeta>{totalMen.toLocaleString("pt")} <SexBadge sex="M" /> · {totalWomen.toLocaleString("pt")} <SexBadge sex="F" /></ToolbarMeta>
       {extra && <><ToolbarSep /><ToolbarMeta>{extra}</ToolbarMeta></>}
       <ToolbarSep />
-      <ToolbarMeta><a href={site} target="_blank" rel="noopener noreferrer" title={siteTitle}>{siteLabel} ↗</a></ToolbarMeta>
+      <ToolbarMeta><ExtLink href={site} title={siteTitle}>{siteLabel} ↗</ExtLink></ToolbarMeta>
     </>
   );
 }

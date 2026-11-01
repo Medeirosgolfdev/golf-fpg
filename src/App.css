@@ -926,6 +926,9 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .btn { padding: var(--space-4) var(--space-10); border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); cursor: pointer; font: inherit; font-size: var(--fs-11); font-weight: 600; }
 .btn:hover:not(:disabled) { background: var(--bg-hover); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+/* «✕ Limpar» (ui/ClearButton): o mesmo botão, a vermelho discreto */
+.btn-clear { display: inline-flex; align-items: center; gap: var(--space-2); flex-shrink: 0; white-space: nowrap; color: var(--color-danger-dark); }
+.btn.btn-clear:hover:not(:disabled) { background: var(--bg-danger); border-color: var(--color-danger); }
 /* Paginação das listas longas (ui/Pager.tsx). */
 .pager { display: flex; justify-content: center; align-items: center; gap: var(--space-8); padding: var(--space-12) 0; font-size: var(--fs-12); }
 .pager-info { min-width: 90px; text-align: center; }
@@ -2029,6 +2032,9 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-pname { font-weight: 700; font-size: var(--fs-14); white-space: nowrap; color: var(--text); }
 .tourn-pname.tourn-pname-link { cursor: pointer; color: var(--link-color); text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 2px; }
 .tourn-pname.tourn-pname-link:hover { color: var(--link-hover); text-decoration-color: var(--link-hover); }
+/* Nome de jogador que abre a ficha (ui/PlayerLink) — igual em todas as tabelas */
+a.player-link { color: inherit; text-decoration: none; cursor: pointer; }
+a.player-link:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 2px; }
 /* Quando o nome é renderizado como <button> (callback onSelectPlayer), repor o
    styling default do browser (borda/fundo/padding) para parecer um link puro.
    Sem isto, o botão aparece como caixa com chrome do sistema. */
@@ -2956,7 +2962,7 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 
 /* ─── Empty / loading states ─── */
 .empty-state { text-align: center; padding: var(--space-32) var(--space-20); }
-.empty-state-sm { text-align: center; padding: var(--space-20); }
+.empty-state-sm { text-align: center; padding: var(--space-20); color: var(--text-3); font-size: var(--fs-12); }
 
 /* ─── Leaderboard-specific cells ─── */
 
@@ -4056,8 +4062,6 @@ table td.lb-col-divider {
 .fpg-pane-scroll { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; }
 
 /* Match play a N lados e jogadores com identidade (MatchplayView — 3-way dos Clubes) */
-.mp-player-link { color: inherit; text-decoration: none; }
-.mp-player-link:hover { text-decoration: underline; }
 .mp-gross { margin-left: var(--space-4); font-size: var(--fs-10); font-weight: 400; color: var(--text-3); white-space: nowrap; }
 .mp-nway-cell { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); }
 .mp-pts {
@@ -4172,7 +4176,6 @@ table td.lb-col-divider {
 .circuit-ranking { display: flex; flex-direction: column; gap: var(--space-8); }
 .circuit-ranking-views { align-self: flex-start; }
 .drive-rank-filters { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: center; }
-.drive-rank-name { color: inherit; text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 2px; }
 .drive-pts { color: var(--color-warn-dark); }
 .drive-evo-chart { height: 340px; }
 .card.drive-player-card { border: 2px solid var(--accent); position: relative; }

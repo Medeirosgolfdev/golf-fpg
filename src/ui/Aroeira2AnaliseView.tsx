@@ -25,6 +25,7 @@ import { scClass } from "../utils/scoreDisplay";
 import PlayerLink from "./PlayerLink";
 import { MANUEL_FED } from "../constants/manuel";
 import { tpColor } from "./tournamentPrimitives";
+import ExpandArrow from "./ExpandArrow";
 
 const fmtPct = (p: number) => p.toFixed(0) + "%";
 const fmtAvg = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : n.toFixed(d);
@@ -266,7 +267,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
         className="fs-13 u-w-100pc u-p-8px-12px u-bd-none u-bg-transparent u-cur-pointer u-d-flex u-ai-center u-gap-12px u-ta-left"
 
       >
-        <span className="muted">{open ? "▼" : "▶"}</span>
+        <span className="muted"><ExpandArrow open={open} /></span>
         <span className="fw-700 u-fl-1">
           {card.fedCode ? <PlayerLink fed={card.fedCode} name={card.name} /> : card.name}
           {isManuel && " ⭐"}

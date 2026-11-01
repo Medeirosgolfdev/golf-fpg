@@ -23,6 +23,7 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import MasterDetail from "../ui/MasterDetail";
+import ClearButton from "../ui/ClearButton";
 
 export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv";
 
@@ -199,14 +200,7 @@ function KIDS2PageContent() {
           🏆 c/ vitórias
         </button>
         {hasActiveFilter && (
-          <button
-            onClick={clearFilters}
-            className="tourn-tab tourn-tab-sm u-fsh-0 u-bg-bg-danger u-c-color-danger-dark u-border-color-color-danger"
-
-            title="Limpar filtros"
-          >
-            ✕
-          </button>
+          <ClearButton onClick={clearFilters} />
         )}
       </Kids2SubNav>
 

@@ -19,6 +19,7 @@ import SortableHdr from "../../../ui/SortableHdr";
 import { MONTHS_PT, fmtToPar } from "../../../utils/format";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { categorizeTournamentLinks } from "../tournamentLinks";
+import ExtLink from "../../../ui/ExternalLink";
 
 interface Props {
   data: CanonicalData;
@@ -159,11 +160,11 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
                 </td>
                 <td className="u-ta-right">
                   {links.length > 0 ? (
-                    <a href={links[0].url} target="_blank" rel="noreferrer"
+                    <ExtLink href={links[0].url}
                       title={`Abrir em ${links[0].label}`}
                       className="u-td-none u-fw-700 u-fs-fs-12"
                       style={{ color: `var(${links[0].colorVar})` }}
-                    >↗</a>
+                    >↗</ExtLink>
                   ) : <span className="u-c-text-3">—</span>}
                 </td>
               </tr>

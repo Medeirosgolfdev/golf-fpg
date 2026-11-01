@@ -18,6 +18,8 @@ import { fmtToPar, medal as medalOf } from "../../utils/format";
 import { clubFlagPrefix } from "../../utils/flagUtils";
 import { tpColorDark } from "../../utils/scoreDisplay";
 import EmptyState from "../EmptyState";
+import SortableHdr from "../SortableHdr";
+import ExtLink from "../ExternalLink";
 
 export interface PastEditionPlayer {
   pos: number | null;
@@ -69,7 +71,6 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
     if (k === sortKey) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     else { setSortKey(k); setSortDir("asc"); }
   };
-  const arrow = (k: string) => (sortKey === k ? (sortDir === "asc" ? " ↑" : " ↓") : " ↕");
 
   const cols = useMemo(() => editions.map((e) => {
     const metric = sortKey.startsWith(`${e.id}_`) ? sortKey.slice(e.id.length + 1) : null;
@@ -117,10 +118,10 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
         <table className="sc-lb sc-lb-dense u-fvn-tabular-nums u-w-max-content">
           <thead>
             <tr>
-              <th rowSpan={2} onClick={() => onSort("pos")}
-                  className="u-p-6px-8px u-fs-fs-11 u-pos-sticky u-left-0 u-z-z-raised u-cur-pointer u-user-select-none u-w-50px u-minw-50px">
-                Pos{arrow("pos")}
-              </th>
+              <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={onSort} rowSpan={2}
+                  className="u-p-6px-8px u-fs-fs-11 u-pos-sticky u-left-0 u-z-z-raised u-w-50px u-minw-50px">
+                Pos
+              </SortableHdr>
               {cols.map((e, ei) => (
                 <th key={e.id} colSpan={2 + (e.parPerRound ? 1 : 0) + e.nRounds}
                     style={{ padding: "10px 10px 8px", fontSize: "var(--fs-11)", borderLeft: bl(ei) }}>
@@ -128,8 +129,8 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                     <div className="u-d-flex u-ai-baseline u-gap-8px u-c-text">
                       <span className="u-fs-fs-16 u-fw-700">{e.year}</span>
                       {e.url && (
-                        <a href={e.url} target="_blank" rel="noreferrer" title="Leaderboard oficial"
-                           className="u-fs-fs-11 u-c-color-info u-td-none u-fw-700">↗</a>
+                        <ExtLink href={e.url} title="Leaderboard oficial"
+                           className="u-fs-fs-11 u-c-color-info u-td-none u-fw-700">↗</ExtLink>
                       )}
                       <span className="u-fs-fs-10 u-c-text-3 u-fw-500">(n={e.players.length})</span>
                     </div>
@@ -155,22 +156,22 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
               {cols.flatMap((e, ei) => {
                 const cells = [
                   <th key={`${e.id}_n`} style={{ textAlign: "left", borderLeft: bl(ei), width: 150, minWidth: 150 }}>Jogador</th>,
-                  <th key={`${e.id}_T`} onClick={() => onSort(`${e.id}_T`)}
-                      className="u-cur-pointer u-user-select-none u-w-46px u-minw-46px">
-                    Tot{arrow(`${e.id}_T`)}
-                  </th>,
+                  <SortableHdr key={`${e.id}_T`} k={`${e.id}_T`} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
+                      className="u-w-46px u-minw-46px">
+                    Tot
+                  </SortableHdr>,
                 ];
                 if (e.parPerRound) cells.push(
-                  <th key={`${e.id}_TP`} onClick={() => onSort(`${e.id}_TP`)}
-                      className="u-cur-pointer u-user-select-none u-w-42px u-minw-42px">
-                    ±{arrow(`${e.id}_TP`)}
-                  </th>,
+                  <SortableHdr key={`${e.id}_TP`} k={`${e.id}_TP`} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
+                      className="u-w-42px u-minw-42px">
+                    ±
+                  </SortableHdr>,
                 );
                 for (let r = 1; r <= e.nRounds; r++) cells.push(
-                  <th key={`${e.id}_R${r}`} onClick={() => onSort(`${e.id}_R${r}`)}
-                      className="u-cur-pointer u-user-select-none u-w-38px u-minw-38px">
-                    R{r}{arrow(`${e.id}_R${r}`)}
-                  </th>,
+                  <SortableHdr key={`${e.id}_R${r}`} k={`${e.id}_R${r}`} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
+                      className="u-w-38px u-minw-38px">
+                    R{r}
+                  </SortableHdr>,
                 );
                 return cells;
               })}

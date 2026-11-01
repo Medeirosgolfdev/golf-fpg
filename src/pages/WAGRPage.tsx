@@ -40,6 +40,7 @@ import { buildWagrEntries, wagrEventUrl, wagrPlayerUrl, WAGR_SITE } from "./wagr
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { C } from "../utils/colors";
 import { RankChange } from "../ui/tableCells";
+import ExtLink from "../ui/ExternalLink";
 
 /**
  * Nº de shards do rollup jogador→eventos.
@@ -167,7 +168,7 @@ function WAGRDetail({ ranking, id }: { ranking: WagrRanking; id: string }) {
   const cols = useMemo((): RankingCol<WagrPlayerEvent>[] => [
     { key: "date", label: "Data", sort: (e) => e.date || "", cell: (e) => e.date || "—", tdStyle: { whiteSpace: "nowrap", color: "var(--text-muted)" } },
     { key: "event", label: "Evento", sort: (e) => norm(e.name || ""), firstDir: "asc", cell: (e) => <>
-      <a href={wagrEventUrl(e.eventId)} target="_blank" rel="noopener noreferrer">{e.name || `Evento ${e.eventId}`}</a>
+      <ExtLink href={wagrEventUrl(e.eventId)}>{e.name || `Evento ${e.eventId}`}</ExtLink>
       {" "}
       <button className="btn-link u-fs-fs-11" onClick={() => navigate(`/wagr/evt/${e.eventId}`)}
         title="Abrir o leaderboard deste evento no site">↗ leaderboard</button>
@@ -187,7 +188,7 @@ function WAGRDetail({ ranking, id }: { ranking: WagrRanking; id: string }) {
         <h2 className="u-m-0">{flagOrEmpty(player.country)} {player.name}</h2>
         <SexBadge sex={player.sex} />
         {player.profileLink && (
-          <a href={wagrPlayerUrl(player.profileLink)} target="_blank" rel="noopener noreferrer" className="u-fs-fs-12">perfil WAGR ↗</a>
+          <ExtLink href={wagrPlayerUrl(player.profileLink)} className="u-fs-fs-12">perfil WAGR ↗</ExtLink>
         )}
       </>}
       stats={[

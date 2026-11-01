@@ -9,6 +9,7 @@
 import type { CanonicalData, Junior } from "../data";
 import { useUpcomingByJunior, type UpcomingReg } from "../upcomingRegs";
 import { fmtDayMonthYear } from "../../../utils/format";
+import ExtLink from "../../../ui/ExternalLink";
 
 interface Props {
   data: CanonicalData;
@@ -40,11 +41,9 @@ export default function NextTournamentsSection({ data, junior }: Props) {
 
       <div className="u-d-flex u-fd-column u-gap-6px">
         {regs.map((r) => (
-          <a
+          <ExtLink
             key={r.circuit + ":" + r.tournamentId}
             href={r.link}
-            target="_blank"
-            rel="noopener noreferrer"
             className="u-d-flex u-ai-center u-gap-10px u-bg-bg-card u-bd-1px-solid-border-light u-bl-3px-solid-accent u-br-radius u-p-8px-12px u-td-none u-c-inherit"
             title={`${r.name}${r.campo ? " · " + r.campo : ""}`}
           >
@@ -65,7 +64,7 @@ export default function NextTournamentsSection({ data, junior }: Props) {
               <span className="u-fs-fs-9 u-fw-700 u-p-1px-6px u-br-radius-sm u-bg-var-bg-warn-orange-fff7ed u-c-var-color-orange-deep-c2410c u-bd-ltbl9 u-fsh-0">RESERVA</span>
             )}
             <span className="u-c-text-3 u-fs-fs-13 u-fw-600 u-fsh-0">↗</span>
-          </a>
+          </ExtLink>
         ))}
       </div>
     </section>

@@ -34,6 +34,7 @@ import {
   RECENT_URL, RECENT_SOURCES, normalizeRecent, recentEntry,
   type RecentDoc, type RecentTournament,
 } from "../data/recentTournaments";
+import ExtLink from "../ui/ExternalLink";
 
 const CONFIG: CircuitConfig = {
   routeBase: "/torneios-recentes",
@@ -62,10 +63,10 @@ function RecentDetail({ t, escLookup, playersDB, extras }: {
           {t.nOurs} dos nossos · {t.scraped ? "leaderboard completa scrapeada" : "só os nossos (por scrapear)"}
         </span>
         {t.scraped && t.ccode && (
-          <a href={`/FPG/torneio/${t.ccode}-${t.tcode}`} target="_blank" rel="noopener noreferrer"
+          <ExtLink href={`/FPG/torneio/${t.ccode}-${t.tcode}`}
              className="btn u-td-none">
             ↗ Leaderboard completa no site
-          </a>
+          </ExtLink>
         )}
       </div>
       <div className="u-p-0-0-4px u-fs-fs-11 u-c-text-muted">

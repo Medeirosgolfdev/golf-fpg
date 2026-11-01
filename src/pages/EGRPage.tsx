@@ -34,6 +34,7 @@ import {
 import { buildEgrEntries } from "./egr/egrCircuit";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { C } from "../utils/colors";
+import ExtLink from "../ui/ExternalLink";
 
 const EGR_SITE = "https://www.europeangolfrankings.com";
 const PLAYER_EVENTS_URL = "/data/egr/egr-player-events.json";
@@ -146,7 +147,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
 const EVENT_COLS: RankingCol<EgrEvent>[] = [
   { key: "date", label: "Data", sort: (e) => e.date ? new Date(e.date).getTime() || 0 : 0, cell: (e) => e.date || "—", tdStyle: { whiteSpace: "nowrap", color: "var(--text-muted)" } },
   { key: "event", label: "Evento", sort: (e) => norm(e.name || ""), firstDir: "asc",
-    cell: (e) => <a href={`${EGR_SITE}/events/${e.eventId}`} target="_blank" rel="noopener noreferrer">{e.name || `Evento ${e.eventId}`}</a> },
+    cell: (e) => <ExtLink href={`${EGR_SITE}/events/${e.eventId}`}>{e.name || `Evento ${e.eventId}`}</ExtLink> },
   { key: "country", label: "Local", className: "tight", sort: (e) => norm(e.country || ""), firstDir: "asc", cell: (e) => <span title={e.country || ""}>{flagOrEmpty(e.country)}</span> },
   { key: "age", label: "Escalão", className: "tight", sort: (e) => ageNum(e.ageGroup), firstDir: "asc", cell: (e) => e.ageGroup || "—" },
   { key: "pos", label: "Pos", className: "num", sort: (e) => typeof e.pos === "number" ? e.pos : 9999, firstDir: "asc", cell: (e) => e.pos ?? "—", tdStyle: { fontWeight: 600 } },
@@ -168,7 +169,7 @@ function EGRDetail({ ranking, id }: { ranking: EgrRanking; id: string }) {
         <h2 className="u-m-0">{flagOrEmpty(player.country)} {player.name}</h2>
         {player.sex && <SexBadge sex={player.sex} />}
         {player.ageGroup && <span className="p p-sm">{player.ageGroup}</span>}
-        <a href={`${EGR_SITE}/players/${id}`} target="_blank" rel="noopener noreferrer" className="u-fs-fs-12">perfil EGR ↗</a>
+        <ExtLink href={`${EGR_SITE}/players/${id}`} className="u-fs-fs-12">perfil EGR ↗</ExtLink>
       </>}
       stats={[
         { label: "País", value: player.country || "—" },

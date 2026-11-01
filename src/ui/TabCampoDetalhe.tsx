@@ -11,6 +11,7 @@ import {
   LINKS_EXTRA, REGIONAL_CHAMPIONSHIPS, ArMapCtx,
   badgeVagas, diasAte, isTerminado, seriesBase, playerSeriesResult
 } from "./USKIDSPageHelpers";
+import ExtLink from "./ExternalLink";
 
 /** Dias desde a inscrição de um jogador.
  *  Prefere `regDia` — o dia de inscrição vindo do `pid` do signupanytime (ver
@@ -91,10 +92,10 @@ export function TournExternalLinks({ t, urlUskids }: { t: number; urlUskids?: st
   return (
     <div className="u-d-flex u-gap-4px u-fwr-wrap u-ai-center">
       {uskidsLinks(t, urlUskids).map(l => (
-        <a key={l.url + l.label} href={l.url} target="_blank" rel="noopener noreferrer"
+        <ExtLink key={l.url + l.label} href={l.url}
           className="tourn-ext-link">
           {l.label}
-        </a>
+        </ExtLink>
       ))}
     </div>
   );

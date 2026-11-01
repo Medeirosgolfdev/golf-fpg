@@ -34,6 +34,7 @@ import { normName } from "../data/KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
 import { formaMedia, type ScoutFile, type JuniorScout } from "./circuit/scoutModel";
 import { getTierLabel, type TierKey } from "../pages/kids2/juniorCalc";
+import ExtLink from "./ExternalLink";
 
 interface Props {
   admissions: FpgAdmissions;
@@ -467,10 +468,10 @@ export default function AdmissionsTab({
         {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
         {infoExtra}
         {fpgUrl && (
-          <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
+          <ExtLink href={fpgUrl}
             className="fs-11 u-c-chart-2 u-ml-auto">
             scoring.fpg.pt ↗
-          </a>
+          </ExtLink>
         )}
       </div>
       {/* Inscrições e desistências recentes (era o aviso do painel dos Nacionais). */}

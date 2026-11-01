@@ -17,6 +17,7 @@ import { CourseLink } from "./jogadoresHelpers";
 import SortableHdr from "./SortableHdr";
 import TabRow from "./TabRow";
 import { useSort } from "../hooks/useSort";
+import ClearButton from "./ClearButton";
 
 type PoolSortKey = "whs" | "date" | "course" | "hcp" | "tee" | "gross" | "sd" | "sdAdj" | "top";
 
@@ -1152,12 +1153,7 @@ export function RoundSimulator({
               📄 PDF
             </button>
           )}
-          <button
-            onClick={clearAll}
-            className="btn u-c-text-3"
-          >
-            ✕ Limpar
-          </button>
+          <ClearButton onClick={clearAll} title="Limpar tudo" />
         </div>
       </div>
 

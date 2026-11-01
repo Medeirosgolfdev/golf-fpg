@@ -33,6 +33,7 @@ import { displayFed } from "../utils/fedKeys";
 import { isNoCardGross } from "../data/intlCommon";
 import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
 import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
+import ExtLink from "./ExternalLink";
 
 interface Props {
   draw: FpgDraw;
@@ -659,10 +660,10 @@ export default function DrawTab({
     return <div className="detail-toolbar u-p-16px">
       <span className="muted">Erro a carregar draw: {draw.error}</span>
       {fpgUrl && (
-        <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
+        <ExtLink href={fpgUrl}
           className="ml-auto fs-11 u-c-chart-2">
           scoring.fpg.pt ↗
-        </a>
+        </ExtLink>
       )}
     </div>;
   }
@@ -670,10 +671,10 @@ export default function DrawTab({
     return <div className="detail-toolbar u-p-16px">
       <span className="muted">{draw.note || "Draw ainda não publicado."}{roundNum ? ` (Ronda ${roundNum})` : ""}</span>
       {fpgUrl && (
-        <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
+        <ExtLink href={fpgUrl}
           className="ml-auto fs-11 u-c-chart-2">
           scoring.fpg.pt ↗
-        </a>
+        </ExtLink>
       )}
     </div>;
   }
@@ -714,10 +715,10 @@ export default function DrawTab({
         <span>{visibleOwn !== total ? `${visibleOwn}/${total}` : total} jog{nOther ? ` (+${nOther} de outro escalão)` : ""} · {(draw.groups || []).length} grupos{roundNum ? ` · R${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
         {draw.date && <span>· {draw.date.split("-").reverse().join("/")}</span>}
         {fpgUrl && (
-          <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
+          <ExtLink href={fpgUrl}
             className="ml-auto fs-11 u-c-chart-2 u-ml-auto">
             scoring.fpg.pt ↗
-          </a>
+          </ExtLink>
         )}
       </div>
       <RowsFilterBar rows={filterRowsAll} filter={pFilter} onChange={setPFilter} total={total} playersDB={playersDB} />

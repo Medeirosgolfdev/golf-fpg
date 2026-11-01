@@ -20,6 +20,8 @@ import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar } from "../../../utils/format";
 import { medalClass } from "../../../ui/PosBadge";
 import { ScoringTag } from "../../../ui/PillBadge";
+import ExpandArrow from "../../../ui/ExpandArrow";
+import ExtLink from "../../../ui/ExternalLink";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -216,7 +218,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
         className={"series-hdr" + (expanded ? " open" : "")}
       >
         <span className="u-fs-fs-11 u-c-text-3 u-fsh-0 u-w-12px">
-          {expanded ? "▼" : "▶"}
+          <ExpandArrow open={expanded} />
         </span>
         <div className="u-fl-1 u-minw-0">
           <div className="u-d-flex u-ai-center u-gap-6px u-ov-hidden u-fwr-wrap">
@@ -308,11 +310,11 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                     <td className="u-ta-right">
                       <span className="u-d-inline-flex u-gap-3px u-fwr-nowrap">
                         {links.map((l) => (
-                          <a key={l.key + l.url} href={l.url} target="_blank" rel="noreferrer"
+                          <ExtLink key={l.key + l.url} href={l.url}
                             title={`Abrir em ${l.label}`}
                             className="src-link-tag"
                             style={{ color: `var(${l.colorVar})`, borderColor: `var(${l.colorVar})` }}
-                          >{l.label}</a>
+                          >{l.label}</ExtLink>
                         ))}
                       </span>
                     </td>

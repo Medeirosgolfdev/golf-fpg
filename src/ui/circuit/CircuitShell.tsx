@@ -48,12 +48,14 @@ import { entryManuelState, entryPtState, entryHasAce } from "./entryState";
 import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
 import { monthLabel, fmtDateRangePt } from "../../utils/format";
+import { textOnColor } from "../../utils/teeColors";
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import MasterDetail from "../MasterDetail";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
   CircuitSectionKind,
 } from "./types";
+import ClearButton from "../ClearButton";
 
 // ── Helpers ─────────────────────────────────────────────────────────── //
 
@@ -141,12 +143,6 @@ function entryPlayerCount(e: CircuitEntry): number {
   return (e.divisions ?? []).reduce((acc, d) => acc + (d.results?.players.length ?? 0), 0);
 }
 
-/** Texto branco/preto consoante a luminosidade da cor de fundo (hex #rrggbb). */
-function fgFor(bg?: string): string {
-  if (!bg || !/^#[0-9a-f]{6}$/i.test(bg)) return "#fff";
-  const r = parseInt(bg.slice(1, 3), 16), g = parseInt(bg.slice(3, 5), 16), b = parseInt(bg.slice(5, 7), 16);
-  return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? "#000" : "#fff";
-}
 
 // ── Filtros de toggles aplicados ao leaderboard ───────────────────────
 
@@ -754,7 +750,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
           )}
 
           {hasActiveFilters && (
-            <button type="button" className="tourn-tab tourn-tab-sm" onClick={clearFilters} title="Limpar filtros">✕</button>
+            <ClearButton onClick={clearFilters} />
           )}
 
           <Counter ml="auto">
@@ -1127,7 +1123,7 @@ function CircuitSidebarItem({ e, config, active, onSelect }: { e: CircuitEntry; 
         </span>
         <div className="u-d-flex u-ai-center u-gap-4px u-fsh-0">
           {srcLabel && (
-            <span className="chip u-fs-fs-9 u-p-1px-6px u-br-radius-lg" title={`Fonte: ${srcLabel}`} style={{ background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
+            <span className="chip u-fs-fs-9 u-p-1px-6px u-br-radius-lg" title={`Fonte: ${srcLabel}`} style={{ background: srcColor, color: srcColor ? textOnColor(srcColor) : undefined }}>{srcLabel}</span>
           )}
           {nP > 0 && <span className="u-fs-fs-11 u-c-text-muted">{nP} jog</span>}
         </div>

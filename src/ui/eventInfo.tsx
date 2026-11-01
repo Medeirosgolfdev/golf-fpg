@@ -8,6 +8,7 @@
  */
 import { fpgScoringUrl } from "../utils/format";
 import { PillBadge } from "./PillBadge";
+import ExtLink from "./ExternalLink";
 
 /** Retorna a pill efectiva: usa _pill dos dados ou auto-detecta INTL/REGIONAL/NACIONAL */
 export function effectivePill(round: { _pill?: string; course?: string; scoreOrigin?: string; eventName?: string }, courseName?: string): string {
@@ -47,17 +48,15 @@ export function LinkBtns({ links }: { links?: Record<string, string> }) {
   return (
     <>
       {Object.entries(links).map(([label, url]) => (
-        <a
+        <ExtLink
           key={label}
           href={url}
-          target="_blank"
-          rel="noopener noreferrer"
           title={label.replace(/_/g, " ")}
           className="u-d-inline-flex u-ai-center u-gap-3px u-fs-fs-10 u-ml-4px u-c-chart-2 u-td-none u-va-middle"
           onClick={(e) => e.stopPropagation()}
         >
           🔗
-        </a>
+        </ExtLink>
       ))}
     </>
   );
@@ -151,15 +150,13 @@ export function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course
     ? "Abrir torneio na federação"
     : "Abrir histórico WHS do jogador na federação (link directo ao torneio não disponível)";
   const nameNode = fedUrl ? (
-    <a
+    <ExtLink
       href={fedUrl}
-      target="_blank"
-      rel="noopener noreferrer"
       title={fedTitle}
       className="muted u-td-none"
 
       onClick={e => e.stopPropagation()}
-    >{name || ""}</a>
+    >{name || ""}</ExtLink>
   ) : (
     <span className="muted">{name || ""}</span>
   );
@@ -172,14 +169,12 @@ export function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course
       <PillBadge pill={pill} />
       <LinkBtns links={links} />
       {showFallbackIcon && (
-        <a
+        <ExtLink
           href={fedUrl!}
-          target="_blank"
-          rel="noopener noreferrer"
           title={fedTitle}
           className="u-d-inline-flex u-ai-center u-gap-3px u-fs-fs-10 u-c-text-muted u-td-none u-va-middle u-op-0_6"
           onClick={e => e.stopPropagation()}
-        >🔗</a>
+        >🔗</ExtLink>
       )}
     </span>
   );

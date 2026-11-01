@@ -15,6 +15,7 @@ import { fmtToPar } from "../utils/format";
 import { SC } from "../utils/scoreDisplay";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
+import ExpandArrow from "./ExpandArrow";
 
 const soma = (g: (number | null)[]) => g.reduce<number>((s, v) => s + (v ?? 0), 0);
 const corPar = (d: number) => (d > 0 ? SC.danger : d < 0 ? SC.good : SC.muted);
@@ -51,7 +52,7 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
         <span className="fw-700">{t.total ?? "–"}</span>
         {t.total != null && <span className="fw-700" style={{ color: corPar(t.total - parTot) }}>{fmtToPar(t.total - parTot)}</span>}
         <button type="button" className="fs-12" onClick={() => setAberto(v => !v)} style={{ ...semBorda, color: "var(--accent)" }}>
-          {aberto ? "▾" : "▸"} {nVoltas(t)} volta{nVoltas(t) === 1 ? "" : "s"}
+          <ExpandArrow open={aberto} /> {nVoltas(t)} volta{nVoltas(t) === 1 ? "" : "s"}
         </button>
         <TeeDots active={t.teeKey} onSelect={setTeeKey}
           tees={l.tees.map(x => ({ key: x.teeKey, name: x.teeName, title: `${x.teeName} · ${nVoltas(x)} volta${nVoltas(x) === 1 ? "" : "s"}` }))} />

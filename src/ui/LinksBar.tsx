@@ -4,6 +4,7 @@
  */
 import React from "react";
 import { C } from "../utils/colors";
+import ExtLink from "./ExternalLink";
 
 type LinkGroup = { label: string; color: string; items: { name: string; url: string }[] };
 
@@ -60,11 +61,11 @@ export function LinksBar({ links, escalao }: { links?: Record<string, string>; e
           {gi > 0 && <span className="fs-12 u-c-border">·</span>}
           <span className="label-caps c-muted u-mr-2px">{g.label}</span>
           {g.items.map(item => (
-            <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer"
+            <ExtLink key={item.name} href={item.url}
               className="tourn-ext-link"
               style={{ color: g.color, borderColor: g.color }}>
               {item.name} ↗
-            </a>
+            </ExtLink>
           ))}
         </React.Fragment>
       ))}

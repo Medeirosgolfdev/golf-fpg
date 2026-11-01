@@ -22,6 +22,8 @@ import { useSort } from "../hooks/useSort";
 import PosBadge from "./PosBadge";
 import SortableHdr from "./SortableHdr";
 import KpiCard from "./KpiCard";
+import PlayerLink from "./PlayerLink";
+import ExtLink from "./ExternalLink";
 
 interface PlayerEntry {
   pos: number | string | null;
@@ -354,15 +356,7 @@ export default function AtletaSearchPanel({
             <div className="u-fl-1 u-minw-200px">
               <h3 className="fs-15 fw-800 u-m-0">
                 {selected.fed ? (
-                  <a
-                    href={`/jogadores/${selected.fed}?view=federado`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
-                    title="Ver perfil federado (nova janela)"
-                  >
-                    {selected.name}
-                  </a>
+                  <PlayerLink fed={selected.fed} name={selected.name} query="?view=federado" title="Ver perfil federado (nova janela)" />
                 ) : (
                   selected.name
                 )}
@@ -432,15 +426,13 @@ export default function AtletaSearchPanel({
                       {r.totalPlayers > 0 ? `${r.pos}/${r.totalPlayers}` : "—"}
                     </td>
                     <td>
-                      <a
+                      <ExtLink
                         href={fpgScoringUrl(r.ccode, r.tcode)}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className="u-c-accent u-td-none"
                         title="Ver torneio na FPG (nova janela)"
                       >
                         {r.tournamentName} ↗
-                      </a>
+                      </ExtLink>
                     </td>
                   </tr>
                 ))}

@@ -15,6 +15,7 @@ import type { Tournament } from "../../data/fpgTypes";
 import { cachedFetchJson } from "../../data/fetchCache";
 import MatchplayView from "../../ui/circuit/MatchplayView";
 import type { MatchplayFile } from "../../ui/circuit/matchplayTypes";
+import ExtLink from "../../ui/ExternalLink";
 
 export interface FpgMatchplayData {
   lastUpdated: string;
@@ -54,7 +55,7 @@ export function fpgMatchplayTabs(
             : <span className="p p-sm u-ml-6px">em curso</span>}
           <span className="u-c-text-muted">
             {" "}· {fl.rounds.length} eliminatórias · os cartões são só os da qualificação ·{" "}
-            <a href={fl.source} target="_blank" rel="noreferrer">quadro na FPG ↗</a>
+            <ExtLink href={fl.source}>quadro na FPG ↗</ExtLink>
           </span>
         </div>
         <MatchplayView data={mp} />

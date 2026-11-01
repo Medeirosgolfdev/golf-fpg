@@ -39,6 +39,9 @@ import { fmtPoints } from "./teamPointsTypes";
 import { fmtToPar } from "../../utils/format";
 import { isManuel } from "../../constants/manuel";
 import TabRow from "../TabRow";
+import ExpandArrow from "../ExpandArrow";
+import EmptyState from "../EmptyState";
+import PlayerLink from "../PlayerLink";
 
 /** Nome de um jogador: com federado liga à ficha /jogadores/:fed; ↗ kids2 se
  *  existir no roster; gross (±par) ao lado quando a fonte o dá. */
@@ -46,7 +49,7 @@ function PlayerName({ name, info: r }: { name: string; info?: MatchplayPlayerRef
   const fed = r?.fed ?? null;
   return (
     <>
-      {fed ? <a href={`/jogadores/${fed}`} className="mp-player-link">{name}</a> : name}
+      {fed ? <PlayerLink fed={fed} name={name} /> : name}
       <KidsLink nome={name} fed={fed} />
       {r?.gross != null && (
         <span className="mp-gross">{r.gross}{r.toPar != null ? ` (${fmtToPar(r.toPar)})` : ""}</span>
@@ -250,7 +253,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
                     {names(right, "right")}
                   </td>
                   <td className="tight u-c-text-muted u-ws-nowrap">
-                    {expandable ? `${g.playedHoles ?? ""}${g.playedHoles ? "b " : ""}${isOpen ? "▴" : "▾"}` : ""}
+                    {expandable && <>{g.playedHoles ? `${g.playedHoles}b ` : ""}<ExpandArrow open={isOpen} /></>}
                   </td>
                 </tr>
                 {isOpen && (
@@ -384,7 +387,7 @@ function RoundTable({ round }: { round: MatchplayRound }) {
                   {hasLabel && <td className="tight u-c-text-muted u-ws-nowrap">{m.label ?? "—"}</td>}
                   {hasTime && <td className="tight u-c-text-muted">{m.startTime ?? "—"}</td>}
                   <td className="tight u-c-text-muted">
-                    {m.games.length ? `${m.games.length} ${isExpanded ? "▴" : "▾"}` : "—"}
+                    {m.games.length ? <>{m.games.length} <ExpandArrow open={isExpanded} /></> : "—"}
                   </td>
                 </tr>
                 {isExpanded && (
@@ -486,7 +489,7 @@ function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
                     );
                   })}
                   <td className="tight c-muted">{m.startTime ?? "—"}</td>
-                  <td className="tight c-muted">{m.games.length ? `${m.games.length} ${isOpen ? "▴" : "▾"}` : "—"}</td>
+                  <td className="tight c-muted">{m.games.length ? <>{m.games.length} <ExpandArrow open={isOpen} /></> : "—"}</td>
                 </tr>
                 {isOpen && (
                   <tr className="row-expanded">
@@ -555,7 +558,7 @@ function FlightSection({ fl, showTitle, roundFilter }: { fl: MatchplayFlight; sh
             {r.name || `Ronda ${r.number}`}
             {r.date && <span className="u-fw-400 u-c-text-muted"> · {fmtRoundDate(r.date)}</span>}
           </div>
-          {!r.matches.length ? <div className="muted">Sem confrontos.</div>
+          {!r.matches.length ? <EmptyState size="sm" message="Sem confrontos." />
             : r.matches.some(m => m.sides) ? <MultiWayRoundTable round={r} />
             : <RoundTable round={r} />}
         </div>
@@ -577,7 +580,7 @@ export default function MatchplayView({ data, roundPicker = false }: {
   const showPicker = roundPicker && roundOpts.length > 1;
   const [selRound, setSelRound] = useState<number | null>(roundOpts[0]?.n ?? null);
   const roundFilter = showPicker ? selRound : null;
-  if (!data.flights.length) return <div className="muted">Sem brackets de match play.</div>;
+  if (!data.flights.length) return <EmptyState size="sm" message="Sem brackets de match play." />;
   const multiFlight = data.flights.length > 1;
   const visRounds = data.flights.flatMap(fl => fl.rounds.filter(r => roundFilter == null || r.number === roundFilter));
   const pendentes = data.pendingNote ? visRounds.reduce((s, r) => s + r.matches.filter(m => !m.isSettled).length, 0) : 0;

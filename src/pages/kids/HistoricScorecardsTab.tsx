@@ -26,6 +26,8 @@ import TabRow from "../../ui/TabRow";
 import LoadingState from "../../ui/LoadingState";
 import { kidsUrl } from "../../ui/KidsLink";
 import { tpColor } from "../../ui/tournamentPrimitives";
+import EmptyState from "../../ui/EmptyState";
+import ExtLink from "../../ui/ExternalLink";
 
 interface FieldEscalao { nome: string; jogadores?: unknown[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -270,7 +272,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
   }, [mh, torneio, escalaoNome]);
 
   if (!torneio) {
-    return <div className="muted p-16">Sem torneio selecionado.</div>;
+    return <EmptyState size="sm" message="Sem torneio seleccionado." />;
   }
   if (editions === null) {
     return <LoadingState message="A carregar histórico…" />;
@@ -609,12 +611,11 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
             <td className={"lb-name sticky-col-1 u-maxw-140px u-ov-hidden u-tov-ellipsis u-ws-nowrap " + (isFirstRd ? "u-fw-600" : "u-fw-400")}
                 style={{ background: bg, borderTop: bTop }}>
               {isFirstRd ? (
-                <a href={kidsUrl({ name: player.name })}
-                   target="_blank" rel="noreferrer"
+                <ExtLink href={kidsUrl({ name: player.name })}
                    className="u-c-text u-td-none"
                    title={`Abrir ${player.name} em Kids2`}>
                   {player.name}
-                </a>
+                </ExtLink>
               ) : (
                 <span className="muted fs-10 u-pl-8px">↳</span>
               )}
@@ -660,11 +661,10 @@ function IndependentRow({ f, pos, hpr, is9 }: {
       </td>
       <td className="lb-name sticky-col-1 fw-600 u-maxw-140px u-ov-hidden u-tov-ellipsis u-ws-nowrap"
           style={{ background: bg }}>
-        <a href={kidsUrl({ name: f.pl.name })}
-           target="_blank" rel="noreferrer"
+        <ExtLink href={kidsUrl({ name: f.pl.name })}
            className="u-c-text u-td-none">
           {f.pl.name}
-        </a>
+        </ExtLink>
       </td>
       <td className="lb-club">{fmtCountry(f.pl.country)}</td>
       <td className="lb-tee fw-600 fs-10 c-muted">R{f.r.rn}</td>
@@ -963,11 +963,10 @@ function EcleticRow({ row, pos, hpr, is9 }: {
       </td>
       <td className="lb-name sticky-col-1 fw-600 u-maxw-140px u-ov-hidden u-tov-ellipsis u-ws-nowrap"
           style={{ background: bg }}>
-        <a href={kidsUrl({ name: pl.name })}
-           target="_blank" rel="noreferrer"
+        <ExtLink href={kidsUrl({ name: pl.name })}
            className="u-c-text u-td-none">
           {pl.name}
-        </a>
+        </ExtLink>
       </td>
       <td className="lb-club">{fmtCountry(pl.country)}</td>
       <td className="lb-tee fw-600 fs-10 u-c-accent" title={`Ecléctico de ${pl.rounds.length} voltas`}>Ecl</td>

@@ -23,6 +23,8 @@ import TeeDate from "../../ui/TeeDate";
 import TeePill from "../../ui/TeePill";
 import { ScorecardTable } from "../../ui/ScorecardTable";
 import LoadingState from "../../ui/LoadingState";
+import EmptyState from "../../ui/EmptyState";
+import ExtLink from "../../ui/ExternalLink";
 
 type SortKey = "date" | "tourn" | "course" | "holes" | "gross" | "stb" | "sd" | "index";
 
@@ -76,10 +78,10 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
   if (!hist || !hist.rounds.length) {
     return (
       <div className="u-p-20px">
-        <p className="muted">Sem histórico Pitch &amp; Putt descarregado para este jogador.</p>
+        <EmptyState size="sm" message="Sem histórico Pitch & Putt descarregado para este jogador." />
         <p className="fs-13">
           Gerado por <code>scrape-pp-whs-node.js</code>. Entretanto:{" "}
-          <a href={ppPlayerUrl(fed)} target="_blank" rel="noopener noreferrer">ficha P&amp;P no FPG Scoring ↗</a>
+          <ExtLink href={ppPlayerUrl(fed)}>ficha P&amp;P no FPG Scoring ↗</ExtLink>
         </p>
       </div>
     );
@@ -117,7 +119,7 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
           </span>
         )}
         <span className="p p-outline">{hist.rounds.length} voltas</span>
-        <a href={ppPlayerUrl(fed)} target="_blank" rel="noopener noreferrer" className="fs-12">ficha pública ↗</a>
+        <ExtLink href={ppPlayerUrl(fed)} className="fs-12">ficha pública ↗</ExtLink>
       </div>
 
       <div className="card">

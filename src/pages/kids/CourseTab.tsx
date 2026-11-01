@@ -18,6 +18,7 @@ import { useMemo } from "react";
 import CourseHeroCard from "../../ui/CourseHeroCard";
 import { useCourses } from "../../context/CoursesContext";
 import type { Course, Tee } from "../../data/types";
+import EmptyState from "../../ui/EmptyState";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -351,7 +352,7 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
   );
 
   if (!torneio) {
-    return <div className="muted p-16">Sem torneio selecionado.</div>;
+    return <EmptyState size="sm" message="Sem torneio seleccionado." />;
   }
   if (!result) {
     return (

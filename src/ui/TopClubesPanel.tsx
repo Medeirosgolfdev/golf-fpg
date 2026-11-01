@@ -23,6 +23,9 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import type { Tournament } from "../data/fpgTypes";
 import type { Champion } from "../data/jovensAnaliseData";
+import ExpandArrow from "./ExpandArrow";
+import PlayerLink from "./PlayerLink";
+import ExtLink from "./ExternalLink";
 
 const MAX_CLUBS = 10;
 
@@ -295,7 +298,7 @@ export default function TopClubesPanel({
                         <span
                           className="u-ff-font-mono u-fs-fs-11 u-op-0_6 u-w-10px"
                         >
-                          {isOpen ? "▼" : "▶"}
+                          <ExpandArrow open={isOpen} />
                         </span>
                         <span className="fw-700">{c.displayName}</span>
                       </span>
@@ -341,17 +344,7 @@ export default function TopClubesPanel({
                                 className="u-d-inline-flex u-ai-center u-gap-6px u-p-3px-8px u-br-radius-xl u-bg-bg-card u-bd-1px-solid-border-light u-fs-fs-12"
                               >
                                 {a.fed ? (
-                                  <a
-                                    href={`/jogadores/${a.fed}?view=federado`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={(ev) => ev.stopPropagation()}
-                                    className="fw-700 u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
-
-                                    title={`${a.name} — ver perfil federado (nova janela)`}
-                                  >
-                                    {a.name}
-                                  </a>
+                                  <PlayerLink fed={a.fed} name={a.name} query="?view=federado" className="fw-700" title={`${a.name} — ver perfil federado (nova janela)`} />
                                 ) : (
                                   <span className="fw-700">{a.name}</span>
                                 )}
@@ -385,15 +378,7 @@ export default function TopClubesPanel({
                                 <td>{t.sex}</td>
                                 <td>
                                   {t.athleteFed ? (
-                                    <a
-                                      href={`/jogadores/${t.athleteFed}?view=federado`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="u-c-inherit u-td-none u-bb-1px-dotted-currentcolor"
-                                      title="Ver perfil federado (nova janela)"
-                                    >
-                                      {t.athleteName}
-                                    </a>
+                                    <PlayerLink fed={t.athleteFed} name={t.athleteName} query="?view=federado" title="Ver perfil federado (nova janela)" />
                                   ) : (
                                     t.athleteName
                                   )}
@@ -401,15 +386,13 @@ export default function TopClubesPanel({
                                 <td className="r u-fw-600">{t.gross ?? "—"}</td>
                                 <td className="r">{t.toPar != null ? fmtToPar(t.toPar) : "—"}</td>
                                 <td>
-                                  <a
+                                  <ExtLink
                                     href={fpgScoringUrl(t.ccode, t.tcode)}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
                                     className="u-c-accent u-td-none"
                                     title="Ver torneio na FPG (nova janela)"
                                   >
                                     {t.tournamentName} ↗
-                                  </a>
+                                  </ExtLink>
                                 </td>
                               </tr>
                             ))}

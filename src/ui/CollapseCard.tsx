@@ -6,6 +6,7 @@
  * página e reutilizável em qualquer vista com secções abre/fecha.
  */
 import React, { useState } from "react";
+import ExpandArrow from "./ExpandArrow";
 
 export default function CollapseCard({ title, icon, defaultOpen = false, children, badge }: {
   title: string; icon?: string; defaultOpen?: boolean;
@@ -24,7 +25,7 @@ export default function CollapseCard({ title, icon, defaultOpen = false, childre
         {icon && <span className="u-fs-fs-16">{icon}</span>}
         <span className="h-xs flex-1 u-m-0">{title}</span>
         {badge}
-        <span className="u-fs-fs-12 u-c-text-3 u-ml-4px">{open ? "▲" : "▼"}</span>
+        <span className="u-fs-fs-12 u-c-text-3 u-ml-4px"><ExpandArrow open={open} /></span>
       </div>
       {open && children}
     </div>

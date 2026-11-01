@@ -12,6 +12,7 @@ import { RoundPill } from "./PillBadge";
 import { TIER } from "../data/rivalData";
 import { TIER_L, TR_I } from "../constants/config";
 import type { RivalPlayer, TournDef, RoundAvg } from "./bjgtAnalysisTypes";
+import ExtLink from "./ExternalLink";
 
 // DOB formatter — aceita YYYY-MM-DD, DD/MM/YYYY, ou outro; devolve "DD/MM/YY"
 function fmtDob(dob?: string): string {
@@ -400,7 +401,7 @@ export default function RivaisDashboard({
                           }}
                         >
                         {g.url ? (
-                          <a href={g.url} target="_blank" rel="noopener noreferrer" className="rivais-link" title={`Página oficial — ${g.label}`}>{g.label}</a>
+                          <ExtLink href={g.url} className="rivais-link" title={`Página oficial — ${g.label}`}>{g.label}</ExtLink>
                         ) : g.label}
                         </span>
                       </th>
@@ -435,15 +436,13 @@ export default function RivaisDashboard({
                       onClick={() => doSort("t:" + t.id)}
                     >
                       {t.url ? (
-                        <a
+                        <ExtLink
                           href={t.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           className="rivais-link"
                           onClick={e => e.stopPropagation()}
                         >
                           {t.short}
-                        </a>
+                        </ExtLink>
                       ) : (
                         t.short
                       )}
@@ -469,15 +468,13 @@ export default function RivaisDashboard({
                     onClick={() => doSort("up:" + u.id)}
                   >
                     {u.url ? (
-                      <a
+                      <ExtLink
                         href={u.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className="rivais-link"
                         onClick={e => e.stopPropagation()}
                       >
                         {u.short}
-                      </a>
+                      </ExtLink>
                     ) : (
                       u.short
                     )}

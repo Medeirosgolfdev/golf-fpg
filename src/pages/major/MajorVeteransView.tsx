@@ -23,6 +23,7 @@ import { useSort } from "../../hooks/useSort";
 import { displayName } from "../../utils/format";
 import { gf } from "../../utils/flagUtils";
 import { isManuelByName } from "../../constants/manuel";
+import ExpandArrow from "../../ui/ExpandArrow";
 
 interface VetPlayer {
   name: string;
@@ -215,7 +216,7 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
                       >
                         <td className="u-ta-right u-c-text-muted">{i + 1}</td>
                         <td className="u-fw-600">
-                          <span className="u-mr-4px u-c-text-muted">{open ? "▾" : "▸"}</span>
+                          <span className="u-mr-4px u-c-text-muted"><ExpandArrow open={open} /></span>
                           {displayName(p.name)}
                         </td>
                         <td className="u-ws-nowrap">

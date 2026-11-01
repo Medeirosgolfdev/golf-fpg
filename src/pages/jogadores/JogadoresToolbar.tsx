@@ -26,6 +26,7 @@ import { DataSourcesChip, type DataSource } from "../../ui/DataSources";
 import { FilterField, ToggleChip } from "../../ui/FilterField";
 import type { JogadoresFiltersApi } from "./useJogadoresFilters";
 import { NEW_DAYS, type SortKey, type ViewMode } from "./filterPlayers";
+import ClearButton from "../../ui/ClearButton";
 
 /** Contagens calculadas (memoizadas) no shell — a toolbar não varre listas. */
 export interface ToolbarCounts {
@@ -249,14 +250,8 @@ export default function JogadoresToolbar({
         </button>
         {/* Limpar filtros + badge */}
         {activeFiltersCount > 0 && (
-          <button
-            className="p u-bg-color-warn-vivid u-c-fff u-gap-4px"
-            onClick={clearAllFilters}
-            title="Limpar todos os filtros activos (mantém ordenação e preferências)"
-
-          >
-            ✕ Limpar <span className="p-filter-count">{activeFiltersCount}</span>
-          </button>
+          <ClearButton onClick={clearAllFilters} count={activeFiltersCount}
+            title="Limpar todos os filtros activos (mantém ordenação e preferências)" />
         )}
         {/* ⓘ Info — páginas relacionadas (padrão CircuitShell). Rotas internas
             navegam na SPA; só a página estática abre em novo tab. Vive ANTES
@@ -369,7 +364,7 @@ export default function JogadoresToolbar({
                   aria-label={filters.sortDir === "asc" ? "Ordem crescente" : "Ordem decrescente"}
 
                 >
-                  {filters.sortDir === "asc" ? "↑ asc" : "↓ desc"}
+                  {filters.sortDir === "asc" ? "▲ asc" : "▼ desc"}
                 </button>
               </div>
             </FilterField>

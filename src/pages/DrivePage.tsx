@@ -37,6 +37,7 @@ import {
   resolveDriveTkey, type DriveUrlState,
 } from "../data/drive/driveUrl";
 import type { Tournament, DriveData } from "../ui/driveTypes";
+import ExtLink from "../ui/ExternalLink";
 
 /* ── Constants ── */
 const REGIONS = [
@@ -216,7 +217,7 @@ function DriveContent() {
         if (!t) continue;  // as divisões do Drive trazem sempre `results`
         const eqData = equipasIdx[`${t.ccode}-${t.tcode}`];
         const equipasTab = eqData ? { key: "equipas", label: "Equipas", content: <TeamStrokeStandings model={buildDriveEquipas(eqData)}
-          footnote={<>Fonte: <a href={eqData.fonte} target="_blank" rel="noreferrer">PDF «Resultados» da FPG</a>.</>} /> } : null;
+          footnote={<>Fonte: <ExtLink href={eqData.fonte}>PDF «Resultados» da FPG</ExtLink>.</>} /> } : null;
         d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup} playersDB={pdb}
           extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab, extras?.repeatersTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
       }
@@ -331,9 +332,9 @@ function DriveContent() {
   const driveLead = (<>
           <ToolbarTitle>🏁 DRIVE</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
-          <a href="https://competicoes.fpg.pt/ranking/" target="_blank" rel="noopener noreferrer"
+          <ExtLink href="https://competicoes.fpg.pt/ranking/"
             className="p p-sm drive-rank-link"
-            title="Rankings oficiais da FPG (competicoes.fpg.pt)">🏆 Rankings FPG</a>
+            title="Rankings oficiais da FPG (competicoes.fpg.pt)">🏆 Rankings FPG</ExtLink>
           <ToolbarSep />
             <TabRow
               className="drive-tabrow"

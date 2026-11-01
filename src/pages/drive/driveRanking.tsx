@@ -173,7 +173,7 @@ function cols(rows: Sub12Row[], withEsc: boolean, pdb: PlayersDB): RankingCol<Su
     { key: "rank", label: "#", className: "num", sort: r => rk.get(r.fed) ?? 9999, firstDir: "asc",
       cell: r => r.totalPts > 0 ? (medal(rk.get(r.fed)!) ?? <span className="mono fw-700">{rk.get(r.fed)}</span>) : <span className="c-muted">–</span> },
     { key: "name", label: "Jogador", sort: r => norm(r.name), firstDir: "asc",
-      cell: r => <>{pdb[r.fed]?.country && pdb[r.fed]!.country !== "PT" ? <span title={pdb[r.fed]!.country ?? ""}>{flagOrEmpty(pdb[r.fed]!.country)} </span> : null}<a href={`/jogadores/${r.fed}`} target="_blank" rel="noopener noreferrer" className="fw-700 drive-rank-name" onClick={e => e.stopPropagation()}>{r.name}</a>
+      cell: r => <>{pdb[r.fed]?.country && pdb[r.fed]!.country !== "PT" ? <span title={pdb[r.fed]!.country ?? ""}>{flagOrEmpty(pdb[r.fed]!.country)} </span> : null}<PlayerLink fed={r.fed} name={r.name} className="fw-700" />
         {(r.sex === "M" || r.sex === "F") && <SexBadge sex={r.sex} size="sm" className="ml-4" />}</> },
     ...(withEsc ? [{ key: "esc", label: "Escalão", sort: (r: Sub12Row) => ESCALOES_DRIVE.indexOf(r.esc ?? "") + 1 || 99, firstDir: "asc" as const,
       cell: (r: Sub12Row) => r.esc || "—" }] : []),

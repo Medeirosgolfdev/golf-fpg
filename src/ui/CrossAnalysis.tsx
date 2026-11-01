@@ -1,9 +1,9 @@
 ﻿import { useState, useMemo, useEffect } from "react";
-import { Link } from "react-router-dom";
 import type { PlayerPageData, CrossPlayerData } from "../data/playerDataLoader";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
+import PlayerLink from "./PlayerLink";
 
 // Common Courses
 function CommonCourses({ players }: {
@@ -161,16 +161,7 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
                 <tr key={p.fed} className={isCurrent ? "cross-current" : ""}>
                   <td className="r"><b>{i + 1}</b></td>
                   <td>
-                    <Link
-                      to={`/jogadores/${p.fed}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="courseLink"
-                      style={{ fontWeight: isCurrent ? 700 : undefined }}
-                      onClick={e => e.stopPropagation()}
-                    >
-                      {p.name}
-                    </Link>
+                    <PlayerLink fed={p.fed} name={p.name} className={isCurrent ? "u-fw-700" : undefined} />
                     {" "}<span className="muted fs-10">{p.fed}</span>
                     {p.birthYear && <span className="p p-sm p-birth ml-4">{p.birthYear}</span>}
                     {p.club && <span className="p p-sm p-club ml-4">{p.club}</span>}

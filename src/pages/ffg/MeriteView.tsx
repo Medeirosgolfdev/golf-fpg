@@ -24,6 +24,8 @@ import { isManuelByName } from "../../constants/manuel";
 import { displayName, fmtDatePt } from "../../utils/format";
 import Pager from "../../ui/Pager";
 import { RankChange, MUTED } from "../../ui/tableCells";
+import ExpandArrow from "../../ui/ExpandArrow";
+import ExtLink from "../../ui/ExternalLink";
 
 /** [trnId|null, data ISO, nome, lugar, voltas, pontos, Moy.SSS] */
 type Prova = [string | null, string, string, string, number[], number | null, number | null];
@@ -206,7 +208,7 @@ export function FFGMeriteView() {
                           {r.rank != null ? `${r.rank}.º` : MUTED}<RankChange up={r.rank != null && r.rankPrev != null ? r.rankPrev - r.rank : null} className="fs-11 u-ml-4px" title={r.rankPrev != null ? `Mês anterior: ${r.rankPrev}.º` : undefined} />
                         </td>
                         <td className="u-fw-600 u-ws-nowrap">
-                          <span className="muted fs-11 u-mr-4px">{isOpen ? "▾" : "▸"}</span>
+                          <span className="muted fs-11 u-mr-4px"><ExpandArrow open={isOpen} /></span>
                           {r.pt && <span title="Português" className="u-mr-4px">🇵🇹</span>}
                           {r.name}
                           {/PRO/i.test(r.statut ?? "") && <span className="muted fs-11 u-ml-4px" title="Passou a profissional este ano (fica até ao fecho do Mérite)">PRO</span>}
@@ -262,7 +264,7 @@ export function FFGMeriteView() {
       )}
 
       <div className="muted fs-11 u-mt-16px u-ta-center">
-        Fonte: <a href={`https://pages.ffgolf.org/merite/jeunes/${sex === "M" ? "messieurs" : "dames"}`} target="_blank" rel="noreferrer">Mérite National Jeunes — FFG</a>
+        Fonte: <ExtLink href={`https://pages.ffgolf.org/merite/jeunes/${sex === "M" ? "messieurs" : "dames"}`}>Mérite National Jeunes — FFG</ExtLink>
         {" "}(<code>ffgolf-merite-ranking.json</code>, actualizado todos os meses).
       </div>
     </div>

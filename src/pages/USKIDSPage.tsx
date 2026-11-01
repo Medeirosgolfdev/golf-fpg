@@ -30,6 +30,7 @@ import {
   uskidsDivisions, resultadosDivKey, uskidsCircuitLinks, edicaoEntry,
   USKIDS_CONFIG_CAMPO, USKIDS_CONFIG_RESULTADOS, type EdicoesIndex,
 } from "./uskids/uskidsCircuit";
+import ExtLink from "../ui/ExternalLink";
 
 
 
@@ -715,11 +716,11 @@ export default function USKidsFieldPage() {
           </span>
         )}
         {t.urlResultados && (
-          <a href={t.urlResultados} target="_blank" rel="noopener noreferrer"
+          <ExtLink href={t.urlResultados}
             onClick={e => e.stopPropagation()}
             className="p p-sm p-muted td-none">
             Resultados ↗
-          </a>
+          </ExtLink>
         )}
         {/* Scout (20/10/2026): a aba «Scout» do próprio torneio — com os
             resultados, ou com os inscritos nos torneios por disputar. */}
@@ -833,10 +834,10 @@ export default function USKidsFieldPage() {
     )}
   </>);
   const trail = (
-    <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
+    <ExtLink href="https://uskids-golf.vercel.app/"
       className="fs-11 fw-600 u-fsh-0 u-c-accent u-bd-1px-solid-accent u-br-radius u-p-3px-8px u-td-none u-ws-nowrap u-d-inline-flex u-ai-center u-gap-3px">
       Histórico ↗
-    </a>
+    </ExtLink>
   );
 
   return (

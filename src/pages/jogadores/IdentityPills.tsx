@@ -12,15 +12,15 @@ import { escCls } from "../../utils/playerUtils";
 import { gf } from "../../utils/flagUtils";
 import { ppPlayerUrl } from "../../data/federadosPPLoader";
 import SexBadge from "../../ui/SexBadge";
+import ExtLink from "../../ui/ExternalLink";
 
 /** Link externo para a ficha P&P no site da FPG — separado para os mundos
  *  poderem ordená-lo a seguir ao botão "Vista P&P" interno (2026-08-15). */
 export function PPExtLink({ fed }: { fed: string }) {
   return (
-    <a className="dh-link"
+    <ExtLink className="dh-link"
       href={ppPlayerUrl(fed)}
-      target="_blank" rel="noopener noreferrer"
-      title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>P&amp;P ↗</a>
+      title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>P&amp;P ↗</ExtLink>
   );
 }
 
@@ -31,14 +31,12 @@ export function PPExtLink({ fed }: { fed: string }) {
 export function PlayerExtLinks({ fed, includePP = true }: { fed: string; includePP?: boolean }) {
   return (
     <>
-      <a className="dh-link"
+      <ExtLink className="dh-link"
         href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed}`}
-        target="_blank" rel="noopener noreferrer"
-        title="Ver ficha WHS no FPG Scoring" onClick={e => e.stopPropagation()}>FPG ↗</a>
-      <a className="dh-link"
+        title="Ver ficha WHS no FPG Scoring" onClick={e => e.stopPropagation()}>FPG ↗</ExtLink>
+      <ExtLink className="dh-link"
         href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${fed}`}
-        target="_blank" rel="noopener noreferrer"
-        title="Ver ficha WHS no My FPG" onClick={e => e.stopPropagation()}>My FPG ↗</a>
+        title="Ver ficha WHS no My FPG" onClick={e => e.stopPropagation()}>My FPG ↗</ExtLink>
       {includePP && <PPExtLink fed={fed} />}
     </>
   );

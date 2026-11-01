@@ -44,6 +44,7 @@
  *   </CrossSeasonTable>
  */
 import React from "react";
+import SortableHdr from "./SortableHdr";
 
 /* ── SortTh exportado ───────────────────────────────────────────────────────
    Reutilizável em qualquer tabela ordenável.                                */
@@ -64,18 +65,10 @@ export interface SortThProps {
 }
 
 export function SortTh({ k, s, d, on, className, colSpan, style, title, children }: SortThProps) {
-  const active = s === k;
   return (
-    <th
-      colSpan={colSpan}
-      title={title}
-      style={style}
-      className={"cs-sortable " + (className || "")}
-      onClick={() => on(k)}
-    >
+    <SortableHdr k={k} sortKey={s} sortDir={d} onSort={on} colSpan={colSpan} title={title} style={style} className={className}>
       {children}
-      {active && <span className="sort-arrow">{d === "asc" ? "▲" : "▼"}</span>}
-    </th>
+    </SortableHdr>
   );
 }
 
