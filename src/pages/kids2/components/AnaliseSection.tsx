@@ -337,7 +337,7 @@ function RoundBar({ entry }: { entry: { tornLabel: string; round: number; gross:
       <div className="u-fw-600 u-c-text u-ov-hidden u-tov-ellipsis u-ws-nowrap">
         {entry.tornLabel} <span className="u-c-text-3 u-fw-400">· R{entry.round}</span>
       </div>
-      <div style={{ textAlign: "center", fontWeight: 700, color: tpCol, fontVariantNumeric: "tabular-nums" }}>
+      <div className="u-ta-center u-fw-700 u-fvn-tabular-nums" style={{ color: tpCol }}>
         {entry.gross != null ? `${entry.gross}` : "—"}
         {entry.toPar != null && <span className="u-fs-fs-10 u-ml-4px">({fmtToPar(entry.toPar)})</span>}
       </div>
@@ -367,7 +367,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
       <div className="u-p-14px-16px u-bd-1px-solid-border-light u-br-radius u-bg-bg">
         <div className="u-fs-fs-11 u-c-text-3 u-ls-0_6px u-fw-700 u-mb-4px u-tt-uppercase">{label}</div>
         <div className="u-d-flex u-ai-baseline u-gap-8px u-mb-10px">
-          <span style={{ fontSize: "var(--fs-28)", fontWeight: 800, color: toPar == null ? "var(--text-3)" : tpColor(toPar) ?? "var(--text)", fontVariantNumeric: "tabular-nums" }}>
+          <span className="u-fs-fs-28 u-fw-800 u-fvn-tabular-nums" style={{ color: toPar == null ? "var(--text-3)" : tpColor(toPar) ?? "var(--text)" }}>
             {toPar != null ? (toPar >= 0 ? `+${toPar.toFixed(1)}` : toPar.toFixed(1)) : "—"}
           </span>
           <span className="u-fs-fs-11 u-c-text-3">
@@ -467,9 +467,9 @@ function HolesPane({ player, field }: {
               <div key={r.hole} className="u-d-flex u-fd-column u-ai-center u-gap-2px u-h-100pc">
                 <div className="u-fl-1 u-d-flex u-ai-flex-end u-gap-1px u-w-100pc u-jc-center">
                   <div title={`Jogador ${r.hole}: ${r.avg?.toFixed(2) ?? "—"}`}
-                    style={{ width: "40%", height: `${pHeight}%`, minHeight: r.avg != null ? 2 : 0, background: "var(--accent)", borderRadius: "2px 2px 0 0" }} />
+                    className="hole-bar u-bg-accent" style={{ height: `${pHeight}%`, minHeight: r.avg != null ? 2 : 0 }} />
                   <div title={`Field ${r.hole}: ${r.fieldAvg?.toFixed(2) ?? "—"}`}
-                    style={{ width: "40%", height: `${fHeight}%`, minHeight: r.fieldAvg != null ? 2 : 0, background: "var(--text-3)", borderRadius: "2px 2px 0 0" }} />
+                    className="hole-bar u-bg-text-3" style={{ height: `${fHeight}%`, minHeight: r.fieldAvg != null ? 2 : 0 }} />
                 </div>
                 <div className="u-fs-fs-9 u-c-text-3">{r.hole}</div>
               </div>

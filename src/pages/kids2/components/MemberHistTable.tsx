@@ -128,10 +128,10 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
             <tr>
               <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
               <SortableHdr k="name"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
-              <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 80 }}>Escalão</SortableHdr>
-              <SortableHdr k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 50, textAlign: "center" }}>Pos</SortableHdr>
-              <SortableHdr k="total"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 60, textAlign: "right" }}>Total</SortableHdr>
-              <SortableHdr k="toPar"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 50, textAlign: "right" }}>±par</SortableHdr>
+              <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-80px">Escalão</SortableHdr>
+              <SortableHdr k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-50px u-ta-center">Pos</SortableHdr>
+              <SortableHdr k="total"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-60px u-ta-right">Total</SortableHdr>
+              <SortableHdr k="toPar"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-50px u-ta-right">±par</SortableHdr>
               <th className="u-w-100px u-ta-right">Rondas</th>
               <th className="u-w-50px u-ta-right">↗</th>
             </tr>
@@ -144,12 +144,12 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
                 <td className="u-c-text-3">{fmtDate(r.date)}</td>
                 <td className="u-fw-600">{r.name}</td>
                 <td className="u-c-text-3">{r.flight}</td>
-                <td style={{ textAlign: "center", fontWeight: 700,
+                <td className="u-ta-center u-fw-700" style={{
                   color: r.pos != null && r.pos <= 3 ? "var(--medal-gold-strong)" : "var(--text-2)" }}>
                   {r.pos != null ? `#${r.pos}` : "—"}
                 </td>
                 <td className="u-ta-right">{r.total != null ? r.total : "—"}</td>
-                <td style={{ textAlign: "right", fontWeight: r.toPar != null && r.toPar !== 0 ? 700 : 400,
+                <td className={"u-ta-right " + (r.toPar != null && r.toPar !== 0 ? "u-fw-700" : "u-fw-400")} style={{
                   color: r.toPar == null ? "var(--text-3)"
                     : tpColor(r.toPar) ?? "var(--text-2)" }}>
                   {fmtToPar(r.toPar)}
@@ -161,10 +161,8 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
                   {links.length > 0 ? (
                     <a href={links[0].url} target="_blank" rel="noreferrer"
                       title={`Abrir em ${links[0].label}`}
-                      style={{
-                        color: `var(${links[0].colorVar})`,
-                        textDecoration: "none", fontWeight: 700, fontSize: "var(--fs-12)",
-                      }}
+                      className="u-td-none u-fw-700 u-fs-fs-12"
+                      style={{ color: `var(${links[0].colorVar})` }}
                     >↗</a>
                   ) : <span className="u-c-text-3">—</span>}
                 </td>

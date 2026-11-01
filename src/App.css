@@ -2432,6 +2432,20 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
   border: 1px solid; letter-spacing: 0.2px; }
 .dob-pill { font-size: var(--fs-11); padding: 2px 8px; border-radius: var(--radius-pill); font-weight: 600;
   display: inline-flex; align-items: center; gap: 4px; }
+/* Versão pequena da pill do nível (ranking do Kids 2: coluna e legenda). */
+.tier-pill.tier-pill-sm { font-size: var(--fs-11); padding: 2px 8px; border-color: transparent; white-space: nowrap; }
+/* Chip de um torneio no percurso do jogador (ranking do Kids 2). Pódio = .pos-medal-N; top 10 = .top10; resto = .rest. */
+.journey-chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: var(--radius-pill);
+  font-size: var(--fs-11); font-weight: 500; border: 1px solid var(--border-subtle); white-space: nowrap; }
+.journey-chip.rest { color: var(--text-3); }
+.journey-chip.top10 { background: var(--bg-info-subtle); color: var(--color-info-dark); }
+.journey-chip:is(.pos-medal-1, .pos-medal-2, .pos-medal-3) { font-weight: 700; }
+/* SI do buraco na Previsão; .on = recebe pancada de handicap. */
+.si-pill { display: inline-block; min-width: 22px; padding: 1px 8px; border-radius: 999px; font-size: var(--fs-11);
+  font-weight: 600; background: var(--accent-light); color: var(--text-2); }
+.si-pill.on { background: var(--accent); color: #fff; font-weight: 800; }
+/* Barras por buraco (jogador vs field) na Análise do Kids 2 — a altura vem dos dados. */
+.hole-bar { width: 40%; border-radius: 2px 2px 0 0; }
 .trend-pill { font-size: var(--fs-10); padding: 2px 8px; border-radius: var(--radius-lg); font-weight: 700;
   border: 1px solid; white-space: nowrap; flex-shrink: 0; }
 /* Cabeçalho abre/fecha dos grupos de torneios (Draws do jogador). */
@@ -4922,6 +4936,7 @@ table td.lb-col-divider {
 .u-fs-fs-15 { font-size: var(--fs-15) !important; }
 .u-fs-fs-16 { font-size: var(--fs-16) !important; }
 .u-fs-fs-18 { font-size: var(--fs-18) !important; }
+.u-fs-fs-28 { font-size: var(--fs-28) !important; }
 .u-fs-fs-20 { font-size: var(--fs-20) !important; }
 .u-fs-fs-22 { font-size: var(--fs-22) !important; }
 .u-fs-fs-24 { font-size: var(--fs-24) !important; }
@@ -5131,6 +5146,7 @@ table td.lb-col-divider {
 .u-minw-104px { min-width: 104px !important; }
 .u-minw-10px { min-width: 10px !important; }
 .u-minw-140px { min-width: 140px !important; }
+.u-minw-14px { min-width: 14px !important; }
 .u-minw-160px { min-width: 160px !important; }
 .u-minw-180px { min-width: 180px !important; }
 .u-minw-18px { min-width: 18px !important; }

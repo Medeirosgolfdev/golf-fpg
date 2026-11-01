@@ -292,7 +292,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                 else if (atIndex) nivel = "ao índice";
                 else nivel = "acima do índice";
                 return (
-                  <tr key={row.gross} style={isPred ? { background: "var(--accent-light, var(--bg-muted))", fontWeight: 700 } : undefined}>
+                  <tr key={row.gross} className={isPred ? "u-bg-accent-light u-fw-700" : undefined}>
                     <td className="r">{row.gross}</td>
                     <td className="r">{fmtToPar(row.toPar)}</td>
                     <td className="r">{fmtSD(row.sd)}</td>
@@ -360,20 +360,15 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                     <td className="u-ta-center u-ws-nowrap">
                       <span
                         title={h.getsStroke ? "Recebe pancada de handicap neste buraco" : `Stroke index ${h.si ?? "-"}`}
-                        style={{
-                          display: "inline-block", minWidth: 22, padding: "1px 8px", borderRadius: 999,
-                          background: h.getsStroke ? "var(--accent)" : "var(--accent-light, var(--bg-muted))",
-                          color: h.getsStroke ? "#fff" : "var(--text-2)",
-                          fontWeight: h.getsStroke ? 800 : 600, fontSize: "var(--fs-11)",
-                        }}
+                        className={"si-pill" + (h.getsStroke ? " on" : "")}
                       >
                         {h.si ?? "–"}
                       </span>
                     </td>
-                    <td className="r" style={{ fontWeight: 600, color: vsParColor(h.expStrokes, h.par) }}>{h.expStrokes != null ? h.expStrokes.toFixed(1) : "–"}</td>
+                    <td className="r u-fw-600" style={{ color: vsParColor(h.expStrokes, h.par) }}>{h.expStrokes != null ? h.expStrokes.toFixed(1) : "–"}</td>
                     <td className="r" style={{ color: vsParColor(h.expJa, h.par) }}>{h.expJa != null ? h.expJa.toFixed(1) : "–"}</td>
                     <td className="r" style={{ color: vsParColor(h.expPode, h.par) }}>{h.expPode != null ? h.expPode.toFixed(1) : "–"}</td>
-                    <td style={{ color: c, fontWeight: 700, whiteSpace: "nowrap" }} title={h.fieldVsPar != null ? `Field (edição anterior): ${h.fieldVsPar > 0 ? "+" : ""}${h.fieldVsPar.toFixed(1)} vs par` : "Sem dados do field — alcance/heurística"}><Dot c={c} /> {tagL}</td>
+                    <td className="u-fw-700 u-ws-nowrap" style={{ color: c }} title={h.fieldVsPar != null ? `Field (edição anterior): ${h.fieldVsPar > 0 ? "+" : ""}${h.fieldVsPar.toFixed(1)} vs par` : "Sem dados do field — alcance/heurística"}><Dot c={c} /> {tagL}</td>
                     <td className="muted u-ws-nowrap">{h.note}</td>
                     {topField && topField.roundKeys.map((rk, ri) => {
                       const cell = topField.holes[h.hole - 1]?.[ri];
@@ -383,7 +378,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                           {cell && cell.scores.length ? (
                             <span className="u-d-inline-flex u-gap-1px u-jc-center">
                               {cell.scores.map((sc, j) => (
-                                <span key={j} className={"sc-score " + scClass(sc, hp)} title={topField.players[j]} style={{ minWidth: 14, fontSize: "var(--fs-10)" }}>{sc}</span>
+                                <span key={j} className={"sc-score u-minw-14px u-fs-fs-10 " + scClass(sc, hp)} title={topField.players[j]}>{sc}</span>
                               ))}
                             </span>
                           ) : <span className="muted">–</span>}
@@ -489,7 +484,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                   ? `Field pequeno (${e.field}${field.minField ? " < " + field.minField : ""}) — amostra pouco fiável, fora da estimativa`
                   : undefined;
                 return (
-                <tr key={e.tcode} style={e.counted ? undefined : { opacity: 0.5 }} title={rowTitle}>
+                <tr key={e.tcode} className={e.counted ? undefined : "u-op-0_5"} title={rowTitle}>
                   <td>{e.year}</td>
                   <td className="r">
                     {e.nRounds}

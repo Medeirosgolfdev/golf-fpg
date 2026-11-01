@@ -58,20 +58,11 @@ function shortName(name: string): string {
     .replace(/20(\d{2})\b/, "'$1");
 }
 
-function posColor(pos: number | null | undefined): string {
-  if (pos === 1) return "var(--medal-gold-fg)";
-  if (pos === 2) return "var(--medal-silver-fg)";
-  if (pos === 3) return "var(--medal-bronze-fg)";
-  if (pos != null && pos <= 10) return "var(--color-info-dark, #1e3a8a)";
-  return "var(--text-3)";
-}
-
-function posBg(pos: number | null | undefined): string {
-  if (pos === 1) return "var(--medal-gold-bg)";
-  if (pos === 2) return "var(--medal-silver-bg)";
-  if (pos === 3) return "var(--medal-bronze-bg)";
-  if (pos != null && pos <= 10) return "var(--bg-info-subtle, #eff6ff)";
-  return "transparent";
+/** Classe do chip do percurso: pódio = cores da medalha; top 10 = azul. */
+function journeyClass(pos: number | null | undefined): string {
+  if (pos != null && pos >= 1 && pos <= 3) return "journey-chip pos-medal-" + pos;
+  if (pos != null && pos <= 10) return "journey-chip top10";
+  return "journey-chip rest";
 }
 
 interface JourneyItem {
@@ -120,11 +111,7 @@ function buildJourney(j: Junior, tournamentById: Map<string, Tournament>): Journ
 function TierBadge({ tier }: { tier: TierKey }) {
   const c = getTierColors(tier);
   return (
-    <span style={{
-      display: "inline-block", padding: "2px 8px", borderRadius: "var(--radius-xl)",
-      fontSize: "var(--fs-11)", fontWeight: 700,
-      background: c.bg, color: c.fg, whiteSpace: "nowrap",
-    }}>
+    <span className="tier-pill tier-pill-sm" style={{ background: c.bg, color: c.fg }}>
       {getTierLabel(tier)}
     </span>
   );
@@ -134,15 +121,7 @@ function JourneyChip({ item }: { item: JourneyItem }) {
   return (
     <span
       title={`${item.name} | ${item.flightLabel} | ${formatStars(item.stars)}`}
-      style={{
-        display: "inline-flex", alignItems: "center", gap: 3,
-        padding: "2px 7px", borderRadius: 8, fontSize: "var(--fs-11)",
-        background: posBg(item.pos),
-        color: posColor(item.pos),
-        fontWeight: item.pos != null && item.pos <= 3 ? 700 : 500,
-        border: "1px solid var(--border-subtle, #e5e7eb)",
-        whiteSpace: "nowrap",
-      }}
+      className={journeyClass(item.pos)}
     >
       <span className="u-op-0_65 u-fs-fs-10">{item.shortName}</span>
       {item.pos != null && <span className="u-fw-700">{ordinal(item.pos)}</span>}
@@ -169,11 +148,7 @@ function NameCell({ row }: { row: CohortRow }) {
           to={`/kids2/${junior.id}`}
           target="_blank"
           rel="noopener noreferrer"
-          style={{
-            fontWeight: 700, fontSize: "var(--fs-13)",
-            color: isManuel ? "var(--color-good-dark)" : "var(--color-info)",
-            textDecoration: "none",
-          }}
+          className={"u-fw-700 u-fs-fs-13 u-td-none " + (isManuel ? "u-c-color-good-dark" : "u-c-color-info")}
         >
           {junior.canonicalName || junior.id}
           {isManuel && (
@@ -205,10 +180,10 @@ function NameCell({ row }: { row: CohortRow }) {
 
 const COLS: RankingCol<CohortRow>[] = [
   { key: "rank", label: "#", className: "num", sort: (r) => r.entry.rank, firstDir: "asc",
-    cell: (r) => <span style={{ fontWeight: 800, fontSize: r.entry.rank <= 3 ? "var(--fs-18)" : "var(--fs-14)", whiteSpace: "nowrap" }}>
+    cell: (r) => <span className={"u-fw-800 u-ws-nowrap " + (r.entry.rank <= 3 ? "u-fs-fs-18" : "u-fs-fs-14")}>
       {r.entry.rank <= 3 ? MEDALS[r.entry.rank - 1] : r.entry.rank}</span> },
   { key: "flag", label: "", cell: (r) => flagOf(r.junior.country || r.junior.nationality || "") || "",
-    tdStyle: { textAlign: "center", fontSize: "var(--fs-16)" } },
+    tdClassName: "u-ta-center u-fs-fs-16" },
   { key: "name", label: "Nome", sort: (r) => (r.junior.canonicalName || "").toLowerCase(), firstDir: "asc", cell: (r) => <NameCell row={r} /> },
   { key: "tourneys", label: "Torn.", className: "num", sort: (r) => r.journey.length, firstDir: "desc", cell: (r) => r.journey.length },
   { key: "wins", label: "Vit.", className: "num", sort: (r) => r.wins, firstDir: "desc", cell: (r) => r.wins > 0 ? r.wins : "—" },
@@ -329,11 +304,7 @@ export default function RankingPage() {
               if (count === 0) return null;
               const c = getTierColors(t);
               return (
-                <span key={t} style={{
-                  padding: "1px 8px", borderRadius: "var(--radius-lg)",
-                  fontSize: "var(--fs-11)", fontWeight: 600,
-                  background: c.bg, color: c.fg,
-                }}>
+                <span key={t} className="tier-pill tier-pill-sm" style={{ background: c.bg, color: c.fg }}>
                   {getTierLabel(t)} {count}
                 </span>
               );
