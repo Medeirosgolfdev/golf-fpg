@@ -2487,6 +2487,27 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
   background: var(--bg-muted); border: 1px solid var(--border-light); }
 .advice-card.warn { background: var(--color-warn-alpha); border-color: var(--color-warn); }
 .advice-card.off { background: transparent; opacity: 0.6; }
+/* ── Campos: tabela de tees e cartões por tee (pages/CamposPage) ── */
+/* Separadores verticais: entre pares de tee (.sc-sep) e entre CR e Slope (.sc-sep-thin). */
+.sc-table :is(th, td).sc-sep { border-left: 1px solid var(--border); }
+.sc-table :is(th, td).sc-sep-thin { border-left: 1px solid var(--border-light); }
+.sc-table th.sc-grp-h { border-bottom: none; text-align: center; padding: 1px 6px; }
+.sc-table th.sc-nine-h { text-align: center; padding: 2px 6px; }
+.sc-table th.sc-cr-h { padding: 2px 6px; font-weight: 400; color: var(--text-3); }
+/* «SD par» — a coluna que interessa, a verde. */
+.sc-table th.sc-sdpar-h { padding: 2px 6px; font-weight: 700; color: var(--accent-text); background: var(--accent-light); }
+.sc-table td.sc-sdpar { font-size: var(--fs-12); font-weight: 700; color: var(--accent-text); background: var(--accent-light); }
+.sc-table .sc-tee-row.sel { background: var(--accent-light); }
+.sc-table .sc-tee-row.sel td.sc-sticky { background: var(--accent-light); }
+/* Nome de jogador nos cartões de recorde (corta com reticências). */
+.cp-pname { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; font-weight: 500; }
+/* Cartão por tee: risca de cima na cor do tee (style borderTopColor), banda do cabeçalho tingida (style background). */
+.tee-card { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); border-top: 3px solid var(--border);
+  background: var(--bg-card); box-shadow: var(--shadow-sm); }
+.tee-card.tee-card-flex { flex: 1 1 300px; min-width: 282px; max-width: 460px; display: flex; flex-direction: column; }
+.tee-card-hdr { padding: 8px 12px; border-bottom: 1px solid var(--border-light); }
+.tee-card-hdr.manuel { display: flex; align-items: center; gap: 8px; font-weight: 800; }
+
 /* ── Calendário (pages/CalendarioPage) ── */
 /* Mini-calendário: hoje / dia escolhido / fora do mês / dia livre / dia de aulas. */
 .cal-day-cell { color: var(--text); font-weight: 400; }

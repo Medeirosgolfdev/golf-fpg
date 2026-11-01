@@ -161,8 +161,6 @@ function isAway(c: Course): boolean {
 /* ——— «SD par»: o Score Differential de quem fizer o par do campo num tee ———
  * Coluna calculada (não vem do cartão), por isso com destaque próprio. */
 const SD_PAR_TITLE = "Score Differential de quem fizer o par do campo neste tee (sem PCC) — calculado, não vem do cartão";
-const sdParHead: React.CSSProperties = { padding: "2px 6px", fontWeight: 700, color: "var(--accent-text)", background: "var(--accent-light)" };
-const sdParCell: React.CSSProperties = { fontSize: "var(--fs-12)", fontWeight: 700, color: "var(--accent-text)", background: "var(--accent-light)" };
 
 /** Par de um tee nos buracos [from, to] (todos com par), ou null. */
 function teeParRange(t: Tee | undefined, from: number, to: number): number | null {
@@ -202,8 +200,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
 
   if (!groups.length) return <div className="muted">Sem tees disponíveis</div>;
 
-  const sepL = "1px solid var(--border)";        // separa cada par de tee
-  const sepThin = "1px solid var(--border-light)"; // separa CR de Slope
+  // Separadores: .sc-sep entre pares de tee, .sc-sep-thin entre CR e Slope (App.css).
   // PAR/SI não têm CR/Slope: o rótulo abrange (merge) a coluna Tee + as colunas
   // de rating, alinhado à direita, junto ao início dos dados (sem riscos).
   // Por sexo: CR · Slope · «SD par» (o SD de quem fizer o par do campo nesse tee).
@@ -225,7 +222,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
           <tr className="sc-meta-row sc-par-row">
             <td className="sc-sticky sc-meta-label u-ta-right u-pr-12px" colSpan={labelSpan}>PAR</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 1} className="ta-c" style={i === 0 ? { borderLeft: sepL } : undefined}>{refByHole.get(i + 1)?.par ?? "–"}</td>
+              <td key={i + 1} className={"ta-c" + (i === 0 ? " sc-sep" : "")}>{refByHole.get(i + 1)?.par ?? "–"}</td>
             ))}
             <td className="ta-c sc-tot-val sc-col-out">{fmt(sumRange(1, 9, (i) => refByHole.get(i)?.par ?? null))}</td>
             {Array.from({ length: 9 }, (_, i) => (
@@ -233,30 +230,30 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
             ))}
             <td className="ta-c sc-tot-val sc-col-in">{fmt(sumRange(10, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
             <td className="ta-c sc-tot-val">{fmt(sumRange(1, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
-            {showDelta && <td className="ta-c sc-tot-val" style={{ borderLeft: sepL }} />}
+            {showDelta && <td className="ta-c sc-tot-val sc-sep" />}
           </tr>
           <tr className="sc-meta-row sc-hcp-row">
             <td className="sc-sticky sc-meta-label u-ta-right u-pr-12px" colSpan={labelSpan}>SI</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 1} className="ta-c" style={i === 0 ? { borderLeft: sepL } : undefined}>{refByHole.get(i + 1)?.si ?? "–"}</td>
+              <td key={i + 1} className={"ta-c" + (i === 0 ? " sc-sep" : "")}>{refByHole.get(i + 1)?.si ?? "–"}</td>
             ))}
             <td className="ta-c sc-tot-val sc-col-out" />
             {Array.from({ length: 9 }, (_, i) => (
               <td key={i + 10} className="ta-c">{refByHole.get(i + 10)?.si ?? "–"}</td>
             ))}
             <td className="ta-c sc-tot-val" colSpan={2} />
-            {showDelta && <td className="ta-c sc-tot-val" style={{ borderLeft: sepL }} />}
+            {showDelta && <td className="ta-c sc-tot-val sc-sep" />}
           </tr>
           {/* Linha 1: Tee + grupos M/F (cada um abrange CR+Slope) + buracos */}
           <tr>
             <th className="sc-sticky" rowSpan={2}>Tee</th>
             {sexes.map((s) => (
-              <th key={`g-${s}`} colSpan={3} className="sc-h" style={{ borderLeft: sepL, borderBottom: "none", textAlign: "center", padding: "1px 6px" }}>
+              <th key={`g-${s}`} colSpan={3} className="sc-h sc-sep sc-grp-h">
                 {(s === "M" || s === "F") ? <SexBadge sex={s} /> : "—"}
               </th>
             ))}
             {Array.from({ length: 9 }, (_, i) => (
-              <th key={i + 1} rowSpan={2} className="sc-h" style={i === 0 ? { borderLeft: sepL } : undefined}>{i + 1}</th>
+              <th key={i + 1} rowSpan={2} className={"sc-h" + (i === 0 ? " sc-sep" : "")}>{i + 1}</th>
             ))}
             <th className="sc-h sc-tot sc-col-out" rowSpan={2}>OUT</th>
             {Array.from({ length: 9 }, (_, i) => (
@@ -265,7 +262,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
             <th className="sc-h sc-tot sc-col-in" rowSpan={2}>IN</th>
             <th className="sc-h sc-tot" rowSpan={2}>TOT</th>
             {showDelta && (
-              <th className="sc-h sc-tot" rowSpan={2} style={{ borderLeft: sepL }} title={`Diferença de metros para ${selGroup!.label}`}>
+              <th className="sc-h sc-tot sc-sep" rowSpan={2} title={`Diferença de metros para ${selGroup!.label}`}>
                 Δm
               </th>
             )}
@@ -273,9 +270,9 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
           {/* Linha 2: sub-cabeçalhos CR / Slope por sexo */}
           <tr>
             {sexes.flatMap((s) => [
-              <th key={`h-${s}-cr`} className="sc-h" style={{ borderLeft: sepL, padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>CR</th>,
+              <th key={`h-${s}-cr`} className="sc-h sc-sep sc-cr-h">CR</th>,
               <th key={`h-${s}-sl`} className="sc-h u-p-2px-6px u-fw-400 u-c-text-3">Slope</th>,
-              <th key={`h-${s}-sd`} className="sc-h" style={{ ...sdParHead, borderLeft: sepThin }} title={SD_PAR_TITLE}>SD par</th>,
+              <th key={`h-${s}-sd`} className="sc-h sc-sep-thin sc-sdpar-h" title={SD_PAR_TITLE}>SD par</th>,
             ])}
           </tr>
         </thead>
@@ -293,8 +290,8 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
             const deltaM = showDelta && myTot != null && selTot != null ? myTot - selTot : null;
 
             return (
-              <tr key={g.key} className="sc-tee-row" style={isSel ? { background: "var(--accent-light)" } : undefined}>
-                <td className="sc-sticky sc-tee-cell" style={isSel ? { background: "var(--accent-light)" } : undefined}>
+              <tr key={g.key} className={"sc-tee-row" + (isSel ? " sel" : "")}>
+                <td className="sc-sticky sc-tee-cell">
                   <TeeBadge label={g.label} colorHex={g.colorHex} />
                   {showTeePar && teeParOf(g) != null && (
                     <span className="muted u-fs-fs-10 u-ml-6px u-ws-nowrap">par {teeParOf(g)}</span>
@@ -304,19 +301,19 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                   const r = g.h18[s];
                   const teePar = teeParRange(g.teeHoles, 1, 18) ?? fallbackPar;
                   return [
-                    <td key={`r-${s}-cr`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepL }}>
+                    <td key={`r-${s}-cr`} className="ta-c u-fs-fs-12 sc-sep">
                       {r ? fmtCR(r.cr) : ""}
                     </td>,
-                    <td key={`r-${s}-sl`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepThin }}>
+                    <td key={`r-${s}-sl`} className="ta-c u-fs-fs-12 sc-sep-thin">
                       {r ? r.sl : ""}
                     </td>,
-                    <td key={`r-${s}-sd`} className="ta-c" style={{ ...sdParCell, borderLeft: sepThin }} title={SD_PAR_TITLE}>
+                    <td key={`r-${s}-sd`} className="ta-c sc-sep-thin sc-sdpar" title={SD_PAR_TITLE}>
                       {fmtSdPar(teePar, r)}
                     </td>,
                   ];
                 })}
                 {Array.from({ length: 9 }, (_, i) => (
-                  <td key={i + 1} className="ta-c" style={i === 0 ? { borderLeft: sepL } : undefined}>{fmt(byHole.get(i + 1)?.distance ?? null)}</td>
+                  <td key={i + 1} className={"ta-c" + (i === 0 ? " sc-sep" : "")}>{fmt(byHole.get(i + 1)?.distance ?? null)}</td>
                 ))}
                 <td className="ta-c sc-tot-val sc-col-out">{fmt(out)}</td>
                 {Array.from({ length: 9 }, (_, i) => (
@@ -330,8 +327,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                 </td>
                 {showDelta && (
                   <td
-                    className="ta-c sc-tot-val"
-                    style={{ borderLeft: sepL, fontWeight: 700, color: "var(--text-2)" }}
+                    className="ta-c sc-tot-val sc-sep u-fw-700 u-c-text-2"
                   >
                     {isSel ? "—" : deltaM == null ? "–" : `${deltaM > 0 ? "+" : ""}${deltaM}`}
                   </td>
@@ -370,8 +366,6 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
   );
   if (!groups.length || nines.length === 0) return null;
 
-  const sepL = "1px solid var(--border)";
-  const sepThin = "1px solid var(--border-light)";
   const sexBadge = (s: SexKey) => (s === "M" || s === "F") ? <SexBadge sex={s} /> : "—";
   // Par do nove quando o tee não traz os 9 buracos com par: o de outro tee do campo.
   const refPar = (from: number, to: number): number | null => {
@@ -389,13 +383,13 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
             <tr>
               <th className="sc-sticky" rowSpan={3}>Tee</th>
               {nines.map((n) => (
-                <th key={n.id} className="sc-h" colSpan={n.sexes.length * 3} style={{ borderLeft: sepL, textAlign: "center", padding: "2px 6px" }}>{n.label}</th>
+                <th key={n.id} className="sc-h sc-sep sc-nine-h" colSpan={n.sexes.length * 3}>{n.label}</th>
               ))}
             </tr>
             {/* Linha 2: sexo (abrange CR+Slope) — caixa sem linhas internas */}
             <tr>
               {nines.flatMap((n) => n.sexes.map((s, i) => (
-                <th key={`${n.id}-${s}`} className="sc-h" colSpan={3} style={{ borderLeft: i === 0 ? sepL : sepThin, borderBottom: "none", textAlign: "center", padding: "1px 6px" }}>
+                <th key={`${n.id}-${s}`} className={"sc-h sc-grp-h " + (i === 0 ? "sc-sep" : "sc-sep-thin")} colSpan={3}>
                   {sexBadge(s)}
                 </th>
               )))}
@@ -403,9 +397,9 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
             {/* Linha 3: CR / Slope (sem linha interna entre eles) */}
             <tr>
               {nines.flatMap((n) => n.sexes.flatMap((s, i) => [
-                <th key={`${n.id}-${s}-cr`} className="sc-h" style={{ borderLeft: i === 0 ? sepL : sepThin, padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>CR</th>,
+                <th key={`${n.id}-${s}-cr`} className={"sc-h sc-cr-h " + (i === 0 ? "sc-sep" : "sc-sep-thin")}>CR</th>,
                 <th key={`${n.id}-${s}-sl`} className="sc-h u-p-2px-6px u-fw-400 u-c-text-3">Slope</th>,
-                <th key={`${n.id}-${s}-sd`} className="sc-h" style={{ ...sdParHead, borderLeft: sepThin }} title={SD_PAR_TITLE}>SD par</th>,
+                <th key={`${n.id}-${s}-sd`} className="sc-h sc-sep-thin sc-sdpar-h" title={SD_PAR_TITLE}>SD par</th>,
               ]))}
             </tr>
           </thead>
@@ -417,9 +411,9 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
                   const r = n.get(g)[s];
                   const ninePar = n.id === "f9" ? teeParRange(g.teeHoles, 1, 9) ?? refPar(1, 9) : teeParRange(g.teeHoles, 10, 18) ?? refPar(10, 18);
                   return [
-                    <td key={`${n.id}-${s}-cr`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: i === 0 ? sepL : sepThin }}>{r ? fmtCR(r.cr) : ""}</td>,
-                    <td key={`${n.id}-${s}-sl`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepThin }}>{r ? r.sl : ""}</td>,
-                    <td key={`${n.id}-${s}-sd`} className="ta-c" style={{ ...sdParCell, borderLeft: sepThin }} title={SD_PAR_TITLE}>{fmtSdPar(ninePar, r)}</td>,
+                    <td key={`${n.id}-${s}-cr`} className={"ta-c u-fs-fs-12 " + (i === 0 ? "sc-sep" : "sc-sep-thin")}>{r ? fmtCR(r.cr) : ""}</td>,
+                    <td key={`${n.id}-${s}-sl`} className="ta-c u-fs-fs-12 sc-sep-thin">{r ? r.sl : ""}</td>,
+                    <td key={`${n.id}-${s}-sd`} className="ta-c sc-sep-thin sc-sdpar" title={SD_PAR_TITLE}>{fmtSdPar(ninePar, r)}</td>,
                   ];
                 }))}
               </tr>
@@ -947,10 +941,9 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
     </span>
   );
   const nameEl = (fed: string, name: string) => {
-    const st: CSSProperties = { display: "block", maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textAlign: "left", fontWeight: 500 };
     return onSelectPlayer
-      ? <button type="button" className="tourn-pname tourn-pname-link" style={st} onClick={() => onSelectPlayer(fed)} title={name}>{name}</button>
-      : <span style={st} title={name}>{name}</span>;
+      ? <button type="button" className="tourn-pname tourn-pname-link cp-pname" onClick={() => onSelectPlayer(fed)} title={name}>{name}</button>
+      : <span className="cp-pname" title={name}>{name}</span>;
   };
   /** Marcador de posição para o 2º/3º (o 1º leva o pill do escalão). */
   const rankBadge = (i: number) => (
@@ -980,7 +973,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
       {/* Cartão do Manuel — recorde por tee */}
       {manuel.length > 0 && (
         <div className="u-br-radius-xl u-ov-hidden u-bd-1px-solid-accent u-bs-shadow-sm u-mb-12px">
-          <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: tint("var(--accent)", 12), borderBottom: "1px solid var(--border-light, var(--border))", fontWeight: 800 }}>
+          <div className="tee-card-hdr manuel" style={{ background: tint("var(--accent)", 12) }}>
             <span className="u-fs-var-fs-15-15px">🧒 Manuel</span>
             <span className="muted u-fw-400 u-fs-fs-11">recorde por tee · {voltaLabel}</span>
           </div>
@@ -1018,9 +1011,9 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
             const dist = distFor(c.label);
             const escs = ESC_KPI_ORDER.filter((e) => c.esc.has(e));
             return (
-              <div key={c.label} style={{ flex: "1 1 300px", minWidth: 282, maxWidth: 460, borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)", display: "flex", flexDirection: "column" }}>
+              <div key={c.label} className="tee-card tee-card-flex" style={{ borderTopColor: stripe }}>
                 {/* Header do tee (banda tingida) */}
-                <div style={{ padding: "7px 12px", background: tint(hex, 13), borderBottom: "1px solid var(--border-light, var(--border))" }}>
+                <div className="tee-card-hdr" style={{ background: tint(hex, 13) }}>
                   <div className="u-d-flex u-ai-center u-gap-8px">
                     <span aria-hidden style={dotStyle(hex, 14)} />
                     <span className="u-fw-800 u-fs-var-fs-15-15px">{c.label}</span>
@@ -1114,9 +1107,9 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
           const dist = info?.dist ?? 0;
           const rM = info?.group.h18.M, rF = info?.group.h18.F;
           return (
-            <div key={g.label} style={{ borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+            <div key={g.label} className="tee-card" style={{ borderTopColor: stripe }}>
               {/* Header do tee (banda tingida) — mesmo look dos KPIs */}
-              <div style={{ padding: "7px 12px", background: teeTint(hex, 13), borderBottom: "1px solid var(--border-light, var(--border))" }}>
+              <div className="tee-card-hdr" style={{ background: teeTint(hex, 13) }}>
                 <div className="u-d-flex u-ai-center u-gap-8px">
                   <span aria-hidden style={teeDot(hex, 14)} />
                   <span className="u-fw-800 u-fs-var-fs-15-15px">{g.label}</span>
