@@ -1,8 +1,132 @@
 {
-  "generatedAt": "2026-10-31T01:02:27.018Z",
+  "generatedAt": "2026-11-01T00:24:58.608Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1278,
+  "total": 1281,
   "tournaments": [
+    {
+      "file": "03-03-2601471990.json",
+      "trnId": "2601471990",
+      "partKey": "f6517291543f5eb172db7293dcf43c7f",
+      "name": "Grand Prix JEUNES U12",
+      "formule": "Simple",
+      "date": "31/10/2026",
+      "dateIso": "2026-10-31",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "03",
+      "seriesCount": 2,
+      "totalPlayers": 103,
+      "course": "Pau",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 25
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 78
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "rms9": null,
+      "ligues": [
+        "03"
+      ]
+    },
+    {
+      "file": "03-03-2601487343.json",
+      "trnId": "2601487343",
+      "partKey": "ebc0ea3e26c235e0a7b52c23b44ae115",
+      "name": "GRAND PRIX JEUNES BENJAMINS 2026",
+      "formule": "Simple",
+      "date": "31/10/2026",
+      "dateIso": "2026-10-31",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "03",
+      "seriesCount": 2,
+      "totalPlayers": 76,
+      "course": "Les 3 Lacs",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 56
+        },
+        {
+          "serieId": "22",
+          "label": "Dames",
+          "players": 20
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "rms9": null,
+      "ligues": [
+        "03"
+      ]
+    },
+    {
+      "file": "03-14-2601489595.json",
+      "trnId": "2601489595",
+      "partKey": "b3fa7f0588e2462f27d9ac9d18832d71",
+      "name": "GRAND PRIX JEUNES LRGR DE BOURBON 2026",
+      "formule": "Simple",
+      "date": "31/10/2026",
+      "dateIso": "2026-10-31",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "14",
+      "seriesCount": 4,
+      "totalPlayers": 30,
+      "course": "Bourbon",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12 G",
+          "players": 11
+        },
+        {
+          "serieId": "113",
+          "label": "U14/16 G",
+          "players": 11
+        },
+        {
+          "serieId": "211",
+          "label": "U12 F",
+          "players": 3
+        },
+        {
+          "serieId": "215",
+          "label": "U14/16 F",
+          "players": 5
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "rms9": null,
+      "ligues": [
+        "14"
+      ]
+    },
     {
       "file": "01-00-2601483390.json",
       "trnId": "2601483390",
