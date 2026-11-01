@@ -154,7 +154,7 @@ export default function HeroIdentity({ data, junior }: Props) {
   return (
     <div className="u-bg-bg u-bd-1px-solid-border u-br-radius-lg u-p-18px-20px">
       <div className="u-d-flex u-ai-flex-start u-gap-18px">
-        <div className="u-w-72px u-h-72px u-br-50pc u-bg-bg-muted u-bd-1px-solid-border u-d-flex u-ai-center u-jc-center u-fs-38px u-fsh-0">{flagEmoji}</div>
+        <div className="u-w-72px u-h-72px u-br-50pc u-bg-bg-muted u-bd-1px-solid-border u-d-flex u-ai-center u-jc-center u-fs-40px u-fsh-0">{flagEmoji}</div>
         <div className="u-fl-1 u-minw-0">
           <div className="u-d-flex u-ai-center u-gap-12px u-fwr-wrap">
             <h2 className="u-m-0 u-fs-30px u-fw-700 u-c-text u-lh-1_15 u-ls-0_5pxx">{junior.canonicalName}</h2>

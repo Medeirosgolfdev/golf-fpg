@@ -61,8 +61,8 @@ export function TeeDot({ teeName }: { teeName?: string }) {
   return (
     <span title={teeName} className="u-d-inline-flex u-ai-center u-gap-4px u-ws-nowrap u-cur-default">
       <span
-        className="shrink-0"
-        style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: hex, border, verticalAlign: "middle" }}
+        className="tee-sq shrink-0"
+        style={{ background: hex, border }}
       />
     </span>
   );

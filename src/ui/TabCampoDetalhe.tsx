@@ -260,7 +260,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                         {e.inscritos}<span className="fs-11 fw-400 c-text-3">/{e.maximo}</span>
                       </div>
                       {bd && (
-                        <span className="fs-11 fw-700" style={{ background:bd.bg, color:bd.cor, padding:"1px 6px", borderRadius:5 }}>
+                        <span className="fs-11 fw-700 u-p-1px-6px u-br-radius" style={{ background: bd.bg, color: bd.cor }}>
                           {bd.label}
                         </span>
                       )}

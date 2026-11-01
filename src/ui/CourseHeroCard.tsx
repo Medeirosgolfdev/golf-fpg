@@ -279,15 +279,9 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   return (
                     <div
                       key={h.hole}
-                      className="mono"
+                      className="hole-chip mono"
                       title={`Buraco ${h.hole} · Par ${h.par ?? "?"} · ${h.distance ?? "—"}m`}
-                      style={{
-                        display: "flex", flexDirection: "column", alignItems: "center",
-                        flex: "1 1 0", minWidth: 52, padding: "6px 4px 8px", borderRadius: 8,
-                        background: col?.bg ?? "var(--bg-muted)",
-                        color: col?.fg ?? "var(--text-3)",
-                        border: `1px solid ${col?.border ?? "var(--border)"}`,
-                      }}
+                      style={{ background: col?.bg ?? "var(--bg-muted)", color: col?.fg ?? "var(--text-3)", borderColor: col?.border ?? "var(--border)" }}
                     >
                       <span className="u-fs-fs-10 u-fw-700 u-op-0_85">B{h.hole}</span>
                       <span className="u-fs-fs-15 u-fw-800 u-lh-1_1 u-mt-2px">

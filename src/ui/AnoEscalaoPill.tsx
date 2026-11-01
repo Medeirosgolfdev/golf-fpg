@@ -15,10 +15,10 @@ export function AnoEscalaoPill({ dob, escalao }: { dob: string; escalao: string 
   const bg = cor ? `var(--esc-${k}-bg)` : "var(--text-3)";
   return (
     <span title={isUltimo ? `${anoNasc} — 2.º ano do escalão` : `${anoNasc} — 1.º ano do escalão`}
-      style={{ fontSize: "var(--fs-9)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, lineHeight: 1.4, flexShrink: 0,
-        border: `1px solid ${bg}`,
+      className="ano-esc-pill"
+      style={{ borderColor: bg,
         background: isUltimo ? bg : `color-mix(in srgb, ${bg} 22%, transparent)`,
-        color: isUltimo ? (cor ? `var(--esc-${k}-fg)` : "#fff") : `color-mix(in srgb, ${bg} 70%, var(--text))` }}>
+        color: isUltimo ? (cor ? `var(--esc-${k}-fg)` : "var(--text-on-color)") : `color-mix(in srgb, ${bg} 70%, var(--text))` }}>
       {anoNasc}
     </span>
   );

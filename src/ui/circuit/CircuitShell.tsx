@@ -1127,7 +1127,7 @@ function CircuitSidebarItem({ e, config, active, onSelect }: { e: CircuitEntry; 
         </span>
         <div className="u-d-flex u-ai-center u-gap-4px u-fsh-0">
           {srcLabel && (
-            <span className="chip" title={`Fonte: ${srcLabel}`} style={{ fontSize: "var(--fs-9)", padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
+            <span className="chip u-fs-fs-9 u-p-1px-6px u-br-radius-lg" title={`Fonte: ${srcLabel}`} style={{ background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
           )}
           {nP > 0 && <span className="u-fs-fs-11 u-c-text-muted">{nP} jog</span>}
         </div>

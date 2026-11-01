@@ -46,13 +46,7 @@ const RankingNotas = ({ year }: { year: string | number }) => {
       {notas.map((n, i) => (
         <div
           key={i}
-          style={{
-            display: "flex", gap: 9, alignItems: "flex-start",
-            background: n.tipo === "info" ? "var(--bg-info)" : "var(--bg-warn)",
-            border: "1px solid var(--border)",
-            borderLeft: `4px solid var(${n.tipo === "info" ? "--color-info" : "--color-warn"})`,
-            borderRadius: 8, padding: "9px 12px",
-          }}
+          className={"pja-aviso " + (n.tipo === "info" ? "info" : "warn")}
         >
           <span className="u-fs-fs-14 u-lh-1_25">{n.tipo === "info" ? "📅" : "⚠️"}</span>
           <span>

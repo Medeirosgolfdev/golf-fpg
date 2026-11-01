@@ -202,7 +202,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
             {ch.ccode && ch.tcode && (
               <Link to={tournamentUrl("FPG", ch.ccode, ch.tcode.split("+")[0])}
                 title="Ver no nosso scoreboard"
-                className="u-fs-fs-10 u-td-none u-c-text-2 u-fw-600 u-ws-nowrap u-p-0-4px u-br-3px u-bd-1px-solid-border-light">
+                className="u-fs-fs-10 u-td-none u-c-text-2 u-fw-600 u-ws-nowrap u-p-0-4px u-br-radius-sm u-bd-1px-solid-border-light">
                 SCORE
               </Link>
             )}

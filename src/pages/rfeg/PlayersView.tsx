@@ -440,12 +440,7 @@ export function RFEGPlayersView() {
                           type="button"
                           onClick={(e) => { e.stopPropagation(); toggleExp(r.licencia); }}
                           title={`Mudou de clube — ${nLic} licenças. Clica para ver o histórico.`}
-                          style={{
-                            marginLeft: 6, cursor: "pointer", border: "1px solid var(--accent)",
-                            background: isOpen ? "var(--accent)" : "transparent", color: isOpen ? "#fff" : "var(--accent)",
-                            borderRadius: 999, padding: "0 6px", fontSize: "var(--fs-10)",
-                            fontWeight: 700, lineHeight: 1.6, fontFamily: "var(--font-sans)",
-                          }}
+                          className={"lic-pill" + (isOpen ? " open" : "")}
                         >
                           🔄 {nLic}
                         </button>

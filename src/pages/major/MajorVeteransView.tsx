@@ -144,13 +144,9 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
   const chip = (s: string) => (
     <span
       key={s}
-      className="fs-11"
+      className="src-tag fs-11"
       title={srcLabel(s)}
-      style={{
-        display: "inline-block", padding: "0 6px", marginRight: 4, marginBottom: 2, borderRadius: 999,
-        background: sourceColors[s] ?? "var(--bg-neutral)", color: sourceColors[s] ? "#fff" : "var(--text)",
-        fontWeight: 600, whiteSpace: "nowrap",
-      }}
+      style={{ background: sourceColors[s] ?? "var(--bg-neutral)", color: sourceColors[s] ? "var(--text-on-color)" : "var(--text)" }}
     >{srcLabel(s)}</span>
   );
 
