@@ -43,7 +43,7 @@ function dateFromRounds(players, year) {
       }
     }
   }
-  return `${year}-07-01`; // época dos trophies EG — fallback plausível
+  return null; // sem data não se inventa (antes: 01/07, e o Kids 2 via o Carris, o McGregor e o Reid no mesmo dia)
 }
 
 function seriesFor(tournament) {
@@ -74,7 +74,8 @@ function load() {
       : (par ? par.reduce((a, b) => a + (b || 0), 0) : null);
     const ageMax = /U(\d+)/.exec(data.ageGroup || "")?.[1] ? +/U(\d+)/.exec(data.ageGroup)[1] : null;
     const sex = data.gender === "M" || data.gender === "F" ? data.gender : null;
-    const dateIso = dateFromRounds(data.players, year);
+    // datas da GolfGenius (scripts/backfill-england-dates.js); senão, o cabeçalho dos cartões
+    const dateIso = data.startDate || dateFromRounds(data.players, year);
     const series = seriesFor(name);
 
     const results = [];
@@ -127,6 +128,7 @@ function load() {
       name,
       date: dateIso,
       startDate: dateIso,
+      endDate: data.endDate || undefined,
       year,
       seriesId: series.id,
       seriesLabel: series.label,

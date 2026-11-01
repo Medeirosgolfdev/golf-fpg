@@ -42,6 +42,15 @@ describe("umaCategoriaPorProva", () => {
     expect(Object.keys(t).sort()).toEqual(["nc1_alevín_sc", "nc2_alevín_sc"]);
   });
 
+  it("a linha que fica ganha o que só a repetida tinha, sem trocar a posição", () => {
+    const t = {
+      nc7_alevín_sc: { ageGroup: "Alevín", categoryName: "Scratch Alevín", players: [{ n: "A", lic: "L1", p: 1, t: 70 }] },
+      nc7_alevín_hcp: { ageGroup: "Alevín", categoryName: "Handicap Alevín", players: [{ n: "A", lic: "L1", p: 4, t: 70, sc: [[4, 3, 5]], dob: "2014-04-29" }] },
+    };
+    umaCategoriaPorProva(t, prova);
+    expect(t.nc7_alevín_sc.players[0]).toEqual({ n: "A", lic: "L1", p: 1, t: 70, sc: [[4, 3, 5]], dob: "2014-04-29" });
+  });
+
   it("Sub-N mais baixo é mais específico", () => {
     expect(especificidade("Sub-12")).toBeGreaterThan(especificidade("Sub-18"));
     expect(especificidade("Sub-18")).toBeGreaterThan(especificidade("Sub-25"));

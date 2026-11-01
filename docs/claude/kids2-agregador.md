@@ -121,7 +121,39 @@ geral Juvenil/Sub-18/Sub-25). `scripts/lib/uma-categoria.js` deixa cada jogador
 numa só: scratch antes de hándicap, escalão mais específico, posições da fonte
 (no `build-rfegolf-rivals` e no `build-fcg-rivals`). O id NextCaddy é
 `nc{tour}_{escalão}_{m|f}_{sc|hcp}` — sem o sexo, «Scratch Alevín Masculino» e
-«… Femenino» colidiam e a última apagava a outra.
+«… Femenino» colidiam e a última apagava a outra. A linha que fica ganha os
+campos que só a repetida tinha (cartões, nascimento, clube); a posição não.
+
+### Provas repetidas — fundir, nunca só apagar (01/11/2026)
+
+A mesma prova publicada 2× (EGR com dois ids; Evian no `evianjc` e na FFG;
+Orange Bowl no `job` e no WAGR; FFG com a mesma volta em duas competições;
+golfdirecto + PDF da FVG) passa a ser uma só em
+`scripts/aggregator/util/fundir-torneios.js`, logo depois do identity-matcher.
+Pedido da Mariana: «merge as entradas repetidas para ficar com toda a
+informação disponível».
+
+- **Quando são a mesma:** datas a ≤ 3 dias, ≥ 3 jogadores (mesmo `juniorId`)
+  com as MESMAS pancadas (total e voltas comuns) em ≥ 90 % dos comparáveis.
+  Voltas diferentes no mesmo dia (9 buracos de manhã e de tarde) têm pancadas
+  diferentes e não se tocam.
+- **Qual fica:** fonte dedicada > federação > EGR/WAGR; em empate, a que tem
+  mais cartões buraco-a-buraco. Cada campo que lhe falta (posição, total,
+  ±par, voltas, buracos, par/metros, campo, datas, ligações) vem das outras;
+  quem só estava numa cópia passa para a principal, no flight dos colegas.
+  `extra.fundidoCom` lista as cópias.
+- **Classificação transversal** (WJGC/EOWAGR «Boys WAGR» por cima dos
+  escalões; FFG «Junior Series» por cima de «U16 et U14»): liga-se a provas que
+  não se ligam entre si, ou o nome acaba em «WAGR» — só saem as linhas
+  repetidas (enriquecendo a do escalão); quem só lá está fica.
+- **Fonte rica partida por escalão no EGR** (Estonian Junior Open, GJGL): as
+  cópias EGR fundem-se nela, não o contrário.
+- Mesmo nome com outra ficha e as mesmas pancadas conta como o mesmo jogador
+  (10 casos em 01/11, quase todos na Evian) — a linha funde-se e a ficha dupla
+  perde a prova; o par de fichas fica por juntar (identidade, outro assunto).
+- O que sobra no mesmo dia (373 grupos em 01/11) tem pancadas diferentes:
+  voltas diferentes ou homónimos juntos numa ficha (USKids locais, UA Worlds).
+  Diagnóstico: agrupar por jogador e data as `tournamentIds`.
 
 O adapter `rfeg` resolve resultados **sem licença** (todo o LGS + blocos
 nativos do microsite) por lookup de nome normalizado contra `spain.byName`

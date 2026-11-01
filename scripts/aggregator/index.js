@@ -234,6 +234,20 @@ async function main() {
     }
   }
 
+  // A mesma prova publicada 2× (EGR com dois ids, Evian no evianjc e na FFG,
+  // WJGC «Boys WAGR» por cima dos escalões…) passa a ser uma só, com toda a
+  // informação das cópias. Ver util/fundir-torneios.js.
+  {
+    const { fundirTorneiosRepetidos } = require("./util/fundir-torneios");
+    const r = fundirTorneiosRepetidos(matchResult);
+    if (r.inteiras || r.transversais) {
+      step("Provas repetidas fundidas");
+      sub(`${r.inteiras} cópia(s) fundida(s) na principal · ${r.transversais} classificação(ões) transversal(is) · ${r.removidas} torneio(s) a menos · ${r.linhasFundidas} linhas fundidas · ${r.linhasMovidas} jogadores passados para a principal · ${r.homonimos} por nome`);
+      if (process.env.DEBUG) for (const a of r.amostra) sub(`  · ${a}`);
+      console.log("");
+    }
+  }
+
   step("Enrichment");
   try {
     const beforeNations = matchResult.tournaments.filter((t) => t.extra && typeof t.extra.nationsCount === "number").length;

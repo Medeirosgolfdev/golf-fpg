@@ -86,6 +86,20 @@ Chromium não fala com um proxy que re-termina TLS — dá `ERR_CONNECTION_RESET
 enquanto o `curl` funciona perfeitamente). Em CI nenhuma das duas está definida
 e o comportamento é o de sempre.
 
+### Datas das provas — `backfill-england-dates.js` (01/11/2026)
+
+As provas sem cartões (todas as de 2026) não traziam data: o adapter punha
+`{ano}-07-01` e o Kids 2 via o Carris, o McGregor, o Reid e a Bronte Law no
+mesmo dia. A GolfGenius publica as datas por ronda em
+`/v2tournaments/{eventId}` (`event.rounds[].date`; o `eventId` vem de cada
+jogador). `scripts/backfill-england-dates.js` grava `startDate`, `endDate` e
+`roundDates` no `england_{slug}.json` (só fetch, um pedido de cada vez; corre no
+`update-england.yml` depois do scrape, que reescreve os ficheiros). O adapter usa
+`startDate`, senão o cabeçalho dos cartões, senão **fica sem data** — nada de
+data inventada. Sem data na GolfGenius (01/11): Bronte Law Edgbaston, Moor
+Allerton e Royal Mid Surrey 2026, Bronte Law Farnham 2025, Justin Rose 2023 div1
+(eventos de uma ronda, sem `rounds` no JSON).
+
 ### Output enriquecido (refactor 2026-05-18)
 
 `public/data/england_{slug}.json` (single division) ou `england_{slug}_div1.json`, `_div2.json`... (multi-divisão).

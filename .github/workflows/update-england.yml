@@ -141,6 +141,12 @@ jobs:
           fi
           exit 0
 
+      - name: Datas das provas (GolfGenius)
+        # O scrape reescreve os ficheiros sem datas; as provas sem cartões só as
+        # têm no evento da GolfGenius. Exit 2 = nada de novo.
+        if: steps.scrape.outputs.exit_code == '0'
+        run: node scripts/backfill-england-dates.js || [ $? -eq 2 ]
+
       - name: Regenerar juniores canónicos (agregador)
         if: steps.scrape.outputs.exit_code == '0'
         run: node scripts/aggregator/index.js

@@ -8,7 +8,8 @@
  * (Juvenil, Sub-18, Sub-25). No Kids 2 isso dava duas ou mais linhas do mesmo
  * resultado (Dmitrii Elchaninov, Circuito Juvenil Zona C: Scratch #1 e
  * Hándicap #8). Fica a melhor: scratch antes de hándicap, depois o escalão
- * mais específico; em empate, a primeira. As posições ficam as da fonte.
+ * mais específico; em empate, a primeira. As posições ficam as da fonte, e a
+ * linha que fica ganha os campos que só a repetida tinha (cartões, nascimento…).
  */
 
 const HCP_RE = /\bH[aá]ndicap\b|\bHcp\b|\bHdc\b|\bNet[oa]?\b/i;
@@ -26,6 +27,8 @@ function especificidade(escalao) {
   if (/Juvenil/i.test(e)) return 10;
   return 30;
 }
+
+const vazio = (v) => v == null || v === "" || (Array.isArray(v) && v.length === 0);
 
 const semAcentos = (s) => String(s || "").toLowerCase().normalize("NFKD")
   .replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
@@ -49,15 +52,21 @@ function umaCategoriaPorProva(torneios, prova, hcp = (_tid, t) => HCP_RE.test(t.
     if (tids.length < 2) continue;
     const valor = (tid) => (hcp(tid, torneios[tid]) ? 0 : 1000) + especificidade(torneios[tid].ageGroup);
     const ordem = [...tids].sort((a, b) => valor(b) - valor(a));   // sort estável: empate fica a primeira
-    const vistos = new Set();
+    const vistos = new Map();
     for (const tid of ordem) {
       const t = torneios[tid];
       const antes = t.players.length;
       t.players = t.players.filter((p) => {
         const lic = p.lic || p.license || p.licencia;
         const chave = lic ? `l:${lic}` : `n:${semAcentos(p.n || p.name)}`;
-        if (vistos.has(chave)) return false;
-        vistos.add(chave);
+        const ficou = vistos.get(chave);
+        if (ficou) {
+          // a linha que fica ganha o que só a repetida tinha (cartões, data de
+          // nascimento, clube…); a posição é da outra classificação e não vem
+          for (const [k, v] of Object.entries(p)) if (k !== "p" && vazio(ficou[k]) && !vazio(v)) ficou[k] = v;
+          return false;
+        }
+        vistos.set(chave, p);
         return true;
       });
       retirados += antes - t.players.length;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T15:31:00.429Z",
+  "generatedAt": "2026-11-01T18:40:09.015Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -730,6 +730,9 @@
       "label": "GP Jeunes",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601471990",
+        "ffgolf-2601487343",
+        "ffgolf-2601489595",
         "ffgolf-2601405026",
         "ffgolf-2601405027",
         "ffgolf-2601414323",
@@ -917,7 +920,6 @@
         "ffgolf-2401168622",
         "ffgolf-2401185114",
         "ffgolf-2401160425",
-        "ffgolf-2401184315",
         "ffgolf-2401191722",
         "ffgolf-2301123442",
         "ffgolf-2401169038",
@@ -1054,8 +1056,8 @@
         "ffgolf-2200792232"
       ],
       "firstDate": "2022-02-15",
-      "lastDate": "2026-10-28",
-      "editionsCount": 322
+      "lastDate": "2026-10-31",
+      "editionsCount": 324
     },
     {
       "id": "dgv-jugend",
@@ -1401,10 +1403,6 @@
         "fcg-fcg687fbe7648ce2a4c95f6cbcc_Alevín_f6cc12",
         "fcg-fcg6888a1a444de0b4f0168b1e4_Junior_68b221",
         "fcg-fcg6888a1f344de0b4f016e9c0b_Infantil_6e9c48",
-        "fcg-fcg68ac7c0ab58b8c821cacb2be_Infantil_acb2fa",
-        "fcg-fcg68ac7c0ab58b8c821cacb2be_Infantil_acb2fd",
-        "fcg-fcg68ac7c0ab58b8c821cacb2be_Alevín_acb300",
-        "fcg-fcg68ac7c0ab58b8c821cacb2be_Alevín_acb303",
         "fcg-fcg69b167feaf950ae9a8ea99d3_Infantil_ea9a10",
         "fcg-fcg69b167feaf950ae9a8ea99d3_Infantil_ea9a13",
         "fcg-fcg69b167feaf950ae9a8ea99d3_Alevín_ea9a16",
@@ -1476,7 +1474,7 @@
       ],
       "firstDate": "2025-07-02",
       "lastDate": "2026-08-25",
-      "editionsCount": 90
+      "editionsCount": 86
     },
     {
       "id": "rfeg-fgcv",
@@ -2199,56 +2197,6 @@
       "editionsCount": 40
     },
     {
-      "id": "wjgc",
-      "label": "WJGC · BJGT",
-      "sourceId": "wjgc",
-      "tournamentIds": [
-        "wjgc-brjgt2431_boys_12-13",
-        "wjgc-brjgt2431_boys_14-15",
-        "wjgc-brjgt2431_boys_16-18",
-        "wjgc-brjgt2431_girls_14-15",
-        "wjgc-brjgt2431_girls_16-18",
-        "wjgc-brjgt243_boys_10-11",
-        "wjgc-brjgt243_boys_7under",
-        "wjgc-brjgt243_boys_8-9",
-        "wjgc-brjgt243_girls_10-11",
-        "wjgc-brjgt243_girls_12-13",
-        "wjgc-brjgt243_girls_7under",
-        "wjgc-brjgt243_girls_8-9",
-        "wjgc-brjgt251_boys_10-11",
-        "wjgc-brjgt251_boys_12-13",
-        "wjgc-brjgt251_boys_14-15",
-        "wjgc-brjgt251_boys_16-18",
-        "wjgc-brjgt251_boys_7under",
-        "wjgc-brjgt251_boys_8-9",
-        "wjgc-brjgt251_boys_wagr",
-        "wjgc-brjgt251_girls_10-11",
-        "wjgc-brjgt251_girls_12-13",
-        "wjgc-brjgt251_girls_14-15",
-        "wjgc-brjgt251_girls_16-18",
-        "wjgc-brjgt251_girls_7under",
-        "wjgc-brjgt251_girls_8-9",
-        "wjgc-brjgt251_girls_wagr",
-        "wjgc-brjgt2537_boys_10-11",
-        "wjgc-brjgt2537_boys_12-13",
-        "wjgc-brjgt2537_boys_14-15",
-        "wjgc-brjgt2537_boys_16-18",
-        "wjgc-brjgt2537_boys_7under",
-        "wjgc-brjgt2537_boys_8-9",
-        "wjgc-brjgt2537_boys_wagr",
-        "wjgc-brjgt2537_girls_10-11",
-        "wjgc-brjgt2537_girls_12-13",
-        "wjgc-brjgt2537_girls_14-15",
-        "wjgc-brjgt2537_girls_16-18",
-        "wjgc-brjgt2537_girls_7under",
-        "wjgc-brjgt2537_girls_8-9",
-        "wjgc-brjgt2537_girls_wagr"
-      ],
-      "firstDate": "2024-02-20",
-      "lastDate": "2026-02-25",
-      "editionsCount": 40
-    },
-    {
       "id": "estonian-junior-tour",
       "label": "Estonian Junior Tour",
       "sourceId": "ejt",
@@ -2489,6 +2437,53 @@
       ],
       "firstDate": "2017-11-25",
       "lastDate": "2026-01-17",
+      "editionsCount": 37
+    },
+    {
+      "id": "wjgc",
+      "label": "WJGC · BJGT",
+      "sourceId": "wjgc",
+      "tournamentIds": [
+        "wjgc-brjgt2431_boys_12-13",
+        "wjgc-brjgt2431_boys_14-15",
+        "wjgc-brjgt2431_boys_16-18",
+        "wjgc-brjgt2431_girls_14-15",
+        "wjgc-brjgt2431_girls_16-18",
+        "wjgc-brjgt243_boys_10-11",
+        "wjgc-brjgt243_boys_7under",
+        "wjgc-brjgt243_boys_8-9",
+        "wjgc-brjgt243_girls_10-11",
+        "wjgc-brjgt243_girls_12-13",
+        "wjgc-brjgt243_girls_7under",
+        "wjgc-brjgt243_girls_8-9",
+        "wjgc-brjgt251_boys_10-11",
+        "wjgc-brjgt251_boys_12-13",
+        "wjgc-brjgt251_boys_14-15",
+        "wjgc-brjgt251_boys_16-18",
+        "wjgc-brjgt251_boys_7under",
+        "wjgc-brjgt251_boys_8-9",
+        "wjgc-brjgt251_boys_wagr",
+        "wjgc-brjgt251_girls_10-11",
+        "wjgc-brjgt251_girls_12-13",
+        "wjgc-brjgt251_girls_14-15",
+        "wjgc-brjgt251_girls_16-18",
+        "wjgc-brjgt251_girls_7under",
+        "wjgc-brjgt251_girls_8-9",
+        "wjgc-brjgt2537_boys_10-11",
+        "wjgc-brjgt2537_boys_12-13",
+        "wjgc-brjgt2537_boys_14-15",
+        "wjgc-brjgt2537_boys_16-18",
+        "wjgc-brjgt2537_boys_7under",
+        "wjgc-brjgt2537_boys_8-9",
+        "wjgc-brjgt2537_girls_10-11",
+        "wjgc-brjgt2537_girls_12-13",
+        "wjgc-brjgt2537_girls_14-15",
+        "wjgc-brjgt2537_girls_16-18",
+        "wjgc-brjgt2537_girls_7under",
+        "wjgc-brjgt2537_girls_8-9"
+      ],
+      "firstDate": "2024-02-20",
+      "lastDate": "2026-02-25",
       "editionsCount": 37
     },
     {
@@ -10213,29 +10208,6 @@
       "editionsCount": 13
     },
     {
-      "id": "eowagr",
-      "label": "European Open WAGR",
-      "sourceId": "eowagr",
-      "tournamentIds": [
-        "eowagr-eowagr25_contest109",
-        "eowagr-eowagr25_contest121",
-        "eowagr-eowagr25_contest13",
-        "eowagr-eowagr25_contest132",
-        "eowagr-eowagr25_contest151",
-        "eowagr-eowagr25_contest155",
-        "eowagr-eowagr25_contest159",
-        "eowagr-eowagr25_contest162",
-        "eowagr-eowagr25_contest17",
-        "eowagr-eowagr25_contest21",
-        "eowagr-eowagr25_contest5",
-        "eowagr-eowagr25_contest73",
-        "eowagr-eowagr25_contest77"
-      ],
-      "firstDate": "2025-07-01",
-      "lastDate": "2025-07-01",
-      "editionsCount": 13
-    },
-    {
       "id": "uskids-european-championship",
       "label": "European Championship",
       "sourceId": "uskids",
@@ -10805,6 +10777,28 @@
       ],
       "firstDate": "2023-06-13",
       "lastDate": "2026-10-04",
+      "editionsCount": 12
+    },
+    {
+      "id": "uskids-the-tony-jacklin-casablanca",
+      "label": "The Tony Jacklin - Casablanca",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-15812",
+        "uskids-13944",
+        "uskids-15809",
+        "uskids-18153",
+        "uskids-18156",
+        "uskids-18502",
+        "uskids-18505",
+        "uskids-20623",
+        "uskids-20625",
+        "uskids-21211",
+        "uskids-21212",
+        "uskids-23819"
+      ],
+      "firstDate": "2023-03-19",
+      "lastDate": "2026-11-01",
       "editionsCount": 12
     },
     {
@@ -11477,6 +11471,27 @@
       "editionsCount": 11
     },
     {
+      "id": "uskids-brambleton-golf-course-tour-championship",
+      "label": "Brambleton Golf Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-2003",
+        "uskids-2478",
+        "uskids-6592",
+        "uskids-8082",
+        "uskids-9492",
+        "uskids-11179",
+        "uskids-15386",
+        "uskids-13027",
+        "uskids-17697",
+        "uskids-20146",
+        "uskids-22849"
+      ],
+      "firstDate": "2015-11-07",
+      "lastDate": "2026-11-01",
+      "editionsCount": 11
+    },
+    {
       "id": "uskids-hawk-s-landing-country-club",
       "label": "Hawk's Landing Country Club",
       "sourceId": "uskids",
@@ -12065,27 +12080,6 @@
       "editionsCount": 11
     },
     {
-      "id": "uskids-the-tony-jacklin-casablanca",
-      "label": "The Tony Jacklin - Casablanca",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-15812",
-        "uskids-13944",
-        "uskids-15809",
-        "uskids-18153",
-        "uskids-18156",
-        "uskids-18502",
-        "uskids-18505",
-        "uskids-20623",
-        "uskids-20625",
-        "uskids-21211",
-        "uskids-21212"
-      ],
-      "firstDate": "2023-03-19",
-      "lastDate": "2026-03-15",
-      "editionsCount": 11
-    },
-    {
       "id": "uskids-boulder-city-golf-club",
       "label": "Boulder City Golf Club",
       "sourceId": "uskids",
@@ -12485,6 +12479,27 @@
       "editionsCount": 11
     },
     {
+      "id": "eowagr",
+      "label": "European Open WAGR",
+      "sourceId": "eowagr",
+      "tournamentIds": [
+        "eowagr-eowagr25_contest109",
+        "eowagr-eowagr25_contest121",
+        "eowagr-eowagr25_contest13",
+        "eowagr-eowagr25_contest132",
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest155",
+        "eowagr-eowagr25_contest17",
+        "eowagr-eowagr25_contest21",
+        "eowagr-eowagr25_contest5",
+        "eowagr-eowagr25_contest73",
+        "eowagr-eowagr25_contest77"
+      ],
+      "firstDate": "2025-07-01",
+      "lastDate": "2025-07-01",
+      "editionsCount": 11
+    },
+    {
       "id": "uskids-golf-club-della-montecchia-tour-championship",
       "label": "Golf Club Della Montecchia (Tour Championship)",
       "sourceId": "uskids",
@@ -12625,6 +12640,26 @@
       "editionsCount": 10
     },
     {
+      "id": "uskids-arzaga-golf-club-tour-championship",
+      "label": "Arzaga Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-3165",
+        "uskids-4819",
+        "uskids-6403",
+        "uskids-9486",
+        "uskids-12777",
+        "uskids-15327",
+        "uskids-11230",
+        "uskids-18130",
+        "uskids-20541",
+        "uskids-23556"
+      ],
+      "firstDate": "2016-10-31",
+      "lastDate": "2026-11-01",
+      "editionsCount": 10
+    },
+    {
       "id": "uskids-nevada-state-invitational",
       "label": "Nevada State Invitational",
       "sourceId": "uskids",
@@ -12722,26 +12757,6 @@
       ],
       "firstDate": "2014-05-04",
       "lastDate": "2018-11-04",
-      "editionsCount": 10
-    },
-    {
-      "id": "uskids-brambleton-golf-course-tour-championship",
-      "label": "Brambleton Golf Course (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-2003",
-        "uskids-2478",
-        "uskids-6592",
-        "uskids-8082",
-        "uskids-9492",
-        "uskids-11179",
-        "uskids-15386",
-        "uskids-13027",
-        "uskids-17697",
-        "uskids-20146"
-      ],
-      "firstDate": "2015-11-07",
-      "lastDate": "2025-11-02",
       "editionsCount": 10
     },
     {
@@ -14140,25 +14155,6 @@
       ],
       "firstDate": "2018-06-17",
       "lastDate": "2026-10-18",
-      "editionsCount": 9
-    },
-    {
-      "id": "uskids-arzaga-golf-club-tour-championship",
-      "label": "Arzaga Golf Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-3165",
-        "uskids-4819",
-        "uskids-6403",
-        "uskids-9486",
-        "uskids-12777",
-        "uskids-15327",
-        "uskids-11230",
-        "uskids-18130",
-        "uskids-20541"
-      ],
-      "firstDate": "2016-10-31",
-      "lastDate": "2025-11-02",
       "editionsCount": 9
     },
     {
@@ -19612,6 +19608,23 @@
       "editionsCount": 7
     },
     {
+      "id": "uskids-kiln-creek-golf-club-and-resort-tour-championship",
+      "label": "Kiln Creek Golf Club and Resort (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-13839",
+        "uskids-14972",
+        "uskids-16190",
+        "uskids-17810",
+        "uskids-18872",
+        "uskids-21921",
+        "uskids-23226"
+      ],
+      "firstDate": "2023-05-21",
+      "lastDate": "2026-11-01",
+      "editionsCount": 7
+    },
+    {
       "id": "uskids-copperleaf-golf-club",
       "label": "Copperleaf Golf Club",
       "sourceId": "uskids",
@@ -20238,6 +20251,23 @@
       ],
       "firstDate": "2021-08-29",
       "lastDate": "2026-09-12",
+      "editionsCount": 7
+    },
+    {
+      "id": "uskids-oak-hollow-golf-course-tour-championship",
+      "label": "Oak Hollow Golf Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-11971",
+        "uskids-20799",
+        "uskids-18863",
+        "uskids-16300",
+        "uskids-22287",
+        "uskids-14059",
+        "uskids-23016"
+      ],
+      "firstDate": "2022-05-22",
+      "lastDate": "2026-11-01",
       "editionsCount": 7
     },
     {
@@ -21426,8 +21456,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -22572,22 +22602,6 @@
       "editionsCount": 6
     },
     {
-      "id": "uskids-kiln-creek-golf-club-and-resort-tour-championship",
-      "label": "Kiln Creek Golf Club and Resort (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-13839",
-        "uskids-14972",
-        "uskids-16190",
-        "uskids-17810",
-        "uskids-18872",
-        "uskids-21921"
-      ],
-      "firstDate": "2023-05-21",
-      "lastDate": "2026-05-17",
-      "editionsCount": 6
-    },
-    {
       "id": "uskids-classic-golf-and-country-club-tour-championship",
       "label": "Classic Golf and Country Club (Tour Championship)",
       "sourceId": "uskids",
@@ -23369,22 +23383,6 @@
       ],
       "firstDate": "2022-10-15",
       "lastDate": "2026-03-21",
-      "editionsCount": 6
-    },
-    {
-      "id": "uskids-oak-hollow-golf-course-tour-championship",
-      "label": "Oak Hollow Golf Course (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-11971",
-        "uskids-20799",
-        "uskids-18863",
-        "uskids-16300",
-        "uskids-22287",
-        "uskids-14059"
-      ],
-      "firstDate": "2022-05-22",
-      "lastDate": "2026-08-09",
       "editionsCount": 6
     },
     {
@@ -24940,6 +24938,22 @@
       "editionsCount": 6
     },
     {
+      "id": "uskids-uganda-golf-club-tour-championship",
+      "label": "Uganda Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-16404",
+        "uskids-17226",
+        "uskids-21086",
+        "uskids-21831",
+        "uskids-18348",
+        "uskids-23232"
+      ],
+      "firstDate": "2024-06-02",
+      "lastDate": "2026-11-01",
+      "editionsCount": 6
+    },
+    {
       "id": "uskids-los-inkas-golf-club",
       "label": "Los Inkas Golf Club",
       "sourceId": "uskids",
@@ -25001,22 +25015,6 @@
       ],
       "firstDate": "2024-08-01",
       "lastDate": "2026-08-04",
-      "editionsCount": 6
-    },
-    {
-      "id": "egr-trofeo-giovanile-federale-u16",
-      "label": "Trofeo Giovanile Federale U16",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11963",
-        "egr-egr11953",
-        "egr-egr11996",
-        "egr-egr12004",
-        "egr-egr12005",
-        "egr-egr11997"
-      ],
-      "firstDate": "2026-06-07",
-      "lastDate": "2026-09-05",
       "editionsCount": 6
     },
     {
@@ -28298,6 +28296,21 @@
       "editionsCount": 5
     },
     {
+      "id": "uskids-casa-de-campo-links-tour-championship",
+      "label": "Casa de Campo - Links (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-6551",
+        "uskids-10684",
+        "uskids-17973",
+        "uskids-20822",
+        "uskids-23311"
+      ],
+      "firstDate": "2018-11-18",
+      "lastDate": "2026-11-01",
+      "editionsCount": 5
+    },
+    {
       "id": "uskids-green-sire-golf-cabanillas",
       "label": "Green Sire Golf Cabanillas",
       "sourceId": "uskids",
@@ -28688,21 +28701,6 @@
       "editionsCount": 5
     },
     {
-      "id": "uskids-uganda-golf-club-tour-championship",
-      "label": "Uganda Golf Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-16404",
-        "uskids-17226",
-        "uskids-21086",
-        "uskids-21831",
-        "uskids-18348"
-      ],
-      "firstDate": "2024-06-02",
-      "lastDate": "2026-06-07",
-      "editionsCount": 5
-    },
-    {
       "id": "uskids-bondhay-golf-club",
       "label": "Bondhay Golf Club",
       "sourceId": "uskids",
@@ -28833,7 +28831,7 @@
         "england-england_justin-rose-telegraph-2024_div1",
         "england-england_justin-rose-telegraph-2024_div2"
       ],
-      "firstDate": "2023-07-01",
+      "firstDate": "2023-11-01",
       "lastDate": "2024-12-09",
       "editionsCount": 5
     },
@@ -28850,6 +28848,21 @@
       ],
       "firstDate": "2022-07-21",
       "lastDate": "2026-07-23",
+      "editionsCount": 5
+    },
+    {
+      "id": "egr-trofeo-giovanile-federale-u16",
+      "label": "Trofeo Giovanile Federale U16",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11963",
+        "egr-egr11953",
+        "egr-egr11996",
+        "egr-egr12004",
+        "egr-egr11997"
+      ],
+      "firstDate": "2026-06-07",
+      "lastDate": "2026-09-05",
       "editionsCount": 5
     },
     {
@@ -29158,9 +29171,9 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-271900",
-        "wagr-235865",
         "wagr-260403",
         "wagr-225888",
+        "wagr-235865",
         "wagr-219502"
       ],
       "firstDate": "2022-09-17",
@@ -29270,21 +29283,6 @@
       ],
       "firstDate": "2022-03-17",
       "lastDate": "2026-03-13",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-junior-orange-bowl-international",
-      "label": "Junior Orange Bowl International",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-268254",
-        "wagr-255516",
-        "wagr-231367",
-        "wagr-221808",
-        "wagr-73333"
-      ],
-      "firstDate": "2022-01-02",
-      "lastDate": "2026-01-03",
       "editionsCount": 5
     },
     {
@@ -30188,21 +30186,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-hope-valley-junior-invitational",
-      "label": "Hope Valley Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259604",
-        "wagr-235031",
-        "wagr-271309",
-        "wagr-225120",
-        "wagr-75920"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2026-08-04",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-korea-junior-championship-blue-one-cup",
       "label": "Korea Junior Championship - Blue One Cup",
       "sourceId": "wagr",
@@ -30323,6 +30306,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-georgia-junior-championship",
+      "label": "Georgia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270174",
+        "wagr-258188",
+        "wagr-233854",
+        "wagr-223986",
+        "wagr-74879"
+      ],
+      "firstDate": "2022-06-20",
+      "lastDate": "2026-07-06",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-georgia-pga-junior-championship",
       "label": "Georgia PGA Junior Championship",
       "sourceId": "wagr",
@@ -30350,6 +30348,21 @@
       ],
       "firstDate": "2022-08-01",
       "lastDate": "2026-07-27",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-hope-valley-junior-invitational",
+      "label": "Hope Valley Junior Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271309",
+        "wagr-259604",
+        "wagr-235031",
+        "wagr-225120",
+        "wagr-75920"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2026-08-04",
       "editionsCount": 5
     },
     {
@@ -34529,20 +34542,6 @@
       "editionsCount": 4
     },
     {
-      "id": "uskids-casa-de-campo-links-tour-championship",
-      "label": "Casa de Campo - Links (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-6551",
-        "uskids-10684",
-        "uskids-17973",
-        "uskids-20822"
-      ],
-      "firstDate": "2018-11-18",
-      "lastDate": "2025-11-09",
-      "editionsCount": 4
-    },
-    {
       "id": "uskids-hopewell-valley-golf-course",
       "label": "Hopewell Valley Golf Course",
       "sourceId": "uskids",
@@ -35607,20 +35606,6 @@
       "editionsCount": 4
     },
     {
-      "id": "ffgolf-the-amundi-evian-juniors-cup",
-      "label": "The Amundi Evian Juniors Cup",
-      "sourceId": "ffgolf",
-      "tournamentIds": [
-        "ffgolf-2601480823",
-        "ffgolf-2401276441",
-        "ffgolf-2301099390",
-        "ffgolf-2200909351"
-      ],
-      "firstDate": "2022-09-20",
-      "lastDate": "2026-09-22",
-      "editionsCount": 4
-    },
-    {
       "id": "ffgolf-qualification-cfj-2-benjamins-ligue-paris-ile-de-france",
       "label": "Qualification CFJ 2 - Benjamins Ligue Paris Ile-de-France",
       "sourceId": "ffgolf",
@@ -35701,21 +35686,7 @@
         "england-england_english-girls-u16-u14-2026_div2"
       ],
       "firstDate": "2025-07-29",
-      "lastDate": "2026-07-01",
-      "editionsCount": 4
-    },
-    {
-      "id": "england-reid-trophy",
-      "label": "Reid Trophy",
-      "sourceId": "england",
-      "tournamentIds": [
-        "england-england_reid-trophy-2023",
-        "england-england_reid-trophy-2024",
-        "england-england_reid-trophy-2025",
-        "england-england_reid-trophy-2026"
-      ],
-      "firstDate": "2023-08-08",
-      "lastDate": "2026-07-01",
+      "lastDate": "2026-08-18",
       "editionsCount": 4
     },
     {
@@ -35756,8 +35727,8 @@
         "job-orangebowl_2025",
         "job-orangebowl_2026"
       ],
-      "firstDate": "2023-01-01",
-      "lastDate": "2026-01-01",
+      "firstDate": "2023-01-03",
+      "lastDate": "2026-01-03",
       "editionsCount": 4
     },
     {
@@ -35786,20 +35757,6 @@
       ],
       "firstDate": "2025-07-24",
       "lastDate": "2026-07-23",
-      "editionsCount": 4
-    },
-    {
-      "id": "egr-english-u18-carris-trophy",
-      "label": "English U18 (Carris Trophy)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11777",
-        "egr-egr9770",
-        "egr-egr6661",
-        "egr-egr4684"
-      ],
-      "firstDate": "2020-08-25",
-      "lastDate": "2026-07-21",
       "editionsCount": 4
     },
     {
@@ -36304,20 +36261,6 @@
       ],
       "firstDate": "2021-06-12",
       "lastDate": "2024-04-20",
-      "editionsCount": 4
-    },
-    {
-      "id": "egr-swiss-golf-junior-tour-7",
-      "label": "Swiss Golf Junior Tour 7",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr7382",
-        "egr-egr8494",
-        "egr-egr6373",
-        "egr-egr6374"
-      ],
-      "firstDate": "2022-08-08",
-      "lastDate": "2023-09-23",
       "editionsCount": 4
     },
     {
@@ -37189,20 +37132,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-english-boys-open-amateur-stroke-play-championship-carris-trophy",
-      "label": "English Boys' Open Amateur Stroke Play Championship (Carris Trophy)",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271001",
-        "wagr-259210",
-        "wagr-234763",
-        "wagr-75584"
-      ],
-      "firstDate": "2022-07-19",
-      "lastDate": "2026-07-21",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-scottish-boys-amateur-championship",
       "label": "Scottish Boys' Amateur Championship",
       "sourceId": "wagr",
@@ -37396,20 +37325,6 @@
       ],
       "firstDate": "2022-06-06",
       "lastDate": "2026-08-04",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-cga-dogwood-state-junior-boys-championship",
-      "label": "CGA Dogwood State Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259377",
-        "wagr-234649",
-        "wagr-271132",
-        "wagr-224807"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-27",
       "editionsCount": 4
     },
     {
@@ -37634,20 +37549,6 @@
       ],
       "firstDate": "2022-07-25",
       "lastDate": "2026-07-07",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-georgia-junior-championship",
-      "label": "Georgia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270174",
-        "wagr-258188",
-        "wagr-233854",
-        "wagr-223986"
-      ],
-      "firstDate": "2023-06-19",
-      "lastDate": "2026-07-06",
       "editionsCount": 4
     },
     {
@@ -43103,6 +43004,19 @@
       "editionsCount": 3
     },
     {
+      "id": "uskids-golf-bluegreen-grand-lyon-chassieu-tour-championship",
+      "label": "Golf Bluegreen Grand Lyon Chassieu (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-17453",
+        "uskids-20343",
+        "uskids-23008"
+      ],
+      "firstDate": "2024-11-10",
+      "lastDate": "2026-11-01",
+      "editionsCount": 3
+    },
+    {
       "id": "uskids-redhawk-golf-club",
       "label": "RedHawk Golf Club",
       "sourceId": "uskids",
@@ -45777,7 +45691,7 @@
         "england-england_carris-trophy-2026"
       ],
       "firstDate": "2023-07-25",
-      "lastDate": "2026-07-01",
+      "lastDate": "2026-07-21",
       "editionsCount": 3
     },
     {
@@ -45803,7 +45717,20 @@
         "england-england_mcgregor-trophy-2026"
       ],
       "firstDate": "2024-07-16",
-      "lastDate": "2026-07-01",
+      "lastDate": "2026-07-14",
+      "editionsCount": 3
+    },
+    {
+      "id": "england-reid-trophy",
+      "label": "Reid Trophy",
+      "sourceId": "england",
+      "tournamentIds": [
+        "england-england_reid-trophy-2023",
+        "england-england_reid-trophy-2024",
+        "england-england_reid-trophy-2025"
+      ],
+      "firstDate": "2023-08-08",
+      "lastDate": "2025-08-05",
       "editionsCount": 3
     },
     {
@@ -45830,32 +45757,6 @@
       ],
       "firstDate": "2023-09-23",
       "lastDate": "2026-09-26",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-8-u18",
-      "label": "FootJoy Finnish Junior Tour 8 (U18)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12905",
-        "egr-egr12906",
-        "egr-egr12369"
-      ],
-      "firstDate": "2026-08-29",
-      "lastDate": "2026-08-29",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-english-girls-open-stroke-play-championship",
-      "label": "English Girls' Open Stroke Play Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11780",
-        "egr-egr8363",
-        "egr-egr6678"
-      ],
-      "firstDate": "2022-07-19",
-      "lastDate": "2026-07-21",
       "editionsCount": 3
     },
     {
@@ -46470,6 +46371,19 @@
       "editionsCount": 3
     },
     {
+      "id": "egr-english-u18-carris-trophy",
+      "label": "English U18 (Carris Trophy)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9770",
+        "egr-egr6661",
+        "egr-egr4684"
+      ],
+      "firstDate": "2020-08-25",
+      "lastDate": "2024-07-23",
+      "editionsCount": 3
+    },
+    {
       "id": "egr-dm-juniorer-slagspilskvalifikation",
       "label": "DM Juniorer - Slagspilskvalifikation",
       "sourceId": "egr",
@@ -46545,6 +46459,19 @@
       ],
       "firstDate": "2022-04-30",
       "lastDate": "2024-04-20",
+      "editionsCount": 3
+    },
+    {
+      "id": "egr-swiss-golf-junior-tour-7",
+      "label": "Swiss Golf Junior Tour 7",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr7382",
+        "egr-egr6373",
+        "egr-egr6374"
+      ],
+      "firstDate": "2022-08-08",
+      "lastDate": "2023-09-23",
       "editionsCount": 3
     },
     {
@@ -46818,19 +46745,6 @@
       ],
       "firstDate": "2025-10-27",
       "lastDate": "2026-04-14",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-grand-prix-de-la-grange-aux-ormes",
-      "label": "Grand Prix de la Grange aux Ormes",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12896",
-        "egr-egr12172",
-        "egr-egr12171"
-      ],
-      "firstDate": "2026-08-21",
-      "lastDate": "2026-08-21",
       "editionsCount": 3
     },
     {
@@ -48191,8 +48105,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-258636",
-        "wagr-234217",
-        "wagr-270533"
+        "wagr-270533",
+        "wagr-234217"
       ],
       "firstDate": "2024-07-01",
       "lastDate": "2026-06-22",
@@ -48225,19 +48139,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-visit-owensboro-junior-championship",
-      "label": "Visit Owensboro Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269461",
-        "wagr-257236",
-        "wagr-251444"
-      ],
-      "firstDate": "2024-05-03",
-      "lastDate": "2026-04-30",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-visit-goldsboro-nc-junior-championship",
       "label": "Visit Goldsboro NC Junior Championship",
       "sourceId": "wagr",
@@ -48248,19 +48149,6 @@
       ],
       "firstDate": "2024-04-11",
       "lastDate": "2026-04-16",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-north-carolina-junior-boys-championship",
-      "label": "North Carolina Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-233861",
-        "wagr-258192",
-        "wagr-270178"
-      ],
-      "firstDate": "2024-06-19",
-      "lastDate": "2026-06-23",
       "editionsCount": 3
     },
     {
@@ -48732,6 +48620,19 @@
       "editionsCount": 3
     },
     {
+      "id": "wagr-english-boys-open-amateur-stroke-play-championship-carris-trophy",
+      "label": "English Boys' Open Amateur Stroke Play Championship (Carris Trophy)",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-259210",
+        "wagr-234763",
+        "wagr-75584"
+      ],
+      "firstDate": "2022-07-19",
+      "lastDate": "2025-07-22",
+      "editionsCount": 3
+    },
+    {
       "id": "wagr-triple-a-series-world-final",
       "label": "Triple A Series World Final",
       "sourceId": "wagr",
@@ -48823,16 +48724,16 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
-      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "id": "wagr-cga-dogwood-state-junior-boys-championship",
+      "label": "CGA Dogwood State Junior Boys Championship",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-269997",
-        "wagr-257942",
-        "wagr-251448"
+        "wagr-271132",
+        "wagr-234649",
+        "wagr-224807"
       ],
-      "firstDate": "2024-06-04",
-      "lastDate": "2026-05-26",
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-27",
       "editionsCount": 3
     },
     {
@@ -49184,6 +49085,19 @@
       ],
       "firstDate": "2022-08-02",
       "lastDate": "2025-08-05",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
+      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269997",
+        "wagr-257942",
+        "wagr-251448"
+      ],
+      "firstDate": "2024-06-04",
+      "lastDate": "2026-05-26",
       "editionsCount": 3
     },
     {
@@ -54721,6 +54635,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-sudden-valley-golf-course-tour-championship",
+      "label": "Sudden Valley Golf Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-18770",
+        "uskids-23505"
+      ],
+      "firstDate": "2025-05-25",
+      "lastDate": "2026-11-01",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-the-cedars-at-dungeness-golf-club",
       "label": "The Cedars At Dungeness Golf Club",
       "sourceId": "uskids",
@@ -56254,18 +56180,6 @@
       ],
       "firstDate": "2023-09-02",
       "lastDate": "2024-10-13",
-      "editionsCount": 2
-    },
-    {
-      "id": "uskids-golf-bluegreen-grand-lyon-chassieu-tour-championship",
-      "label": "Golf Bluegreen Grand Lyon Chassieu (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-17453",
-        "uskids-20343"
-      ],
-      "firstDate": "2024-11-10",
-      "lastDate": "2025-11-02",
       "editionsCount": 2
     },
     {
@@ -60097,18 +60011,6 @@
       "editionsCount": 2
     },
     {
-      "id": "uskids-great-northern-tour-championship",
-      "label": "Great Northern (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-22097",
-        "uskids-21594"
-      ],
-      "firstDate": "2026-05-10",
-      "lastDate": "2026-05-10",
-      "editionsCount": 2
-    },
-    {
       "id": "uskids-gyttegard-golf-club",
       "label": "Gyttegård Golf Club",
       "sourceId": "uskids",
@@ -60709,6 +60611,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-east-sea-golf-country-club-tour-championship",
+      "label": "East Sea Golf & Country Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-19586",
+        "uskids-23119"
+      ],
+      "firstDate": "2025-06-15",
+      "lastDate": "2026-11-01",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-golfclub-moosburg",
       "label": "Golfclub Moosburg",
       "sourceId": "uskids",
@@ -61245,7 +61159,7 @@
         "england-england_bronte-law-moor-allerton-2026"
       ],
       "firstDate": "2025-08-24",
-      "lastDate": "2026-07-01",
+      "lastDate": "2025-08-24",
       "editionsCount": 2
     },
     {
@@ -61465,6 +61379,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-footjoy-finnish-junior-tour-8-u18",
+      "label": "FootJoy Finnish Junior Tour 8 (U18)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12905",
+        "egr-egr12369"
+      ],
+      "firstDate": "2026-08-29",
+      "lastDate": "2026-08-29",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-r-a-boys-amateur",
       "label": "R&A Boys Amateur",
       "sourceId": "egr",
@@ -61618,18 +61544,6 @@
       ],
       "firstDate": "2026-07-15",
       "lastDate": "2026-07-15",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-english-u16-mcgregor-trophy",
-      "label": "English U16 (McGregor Trophy)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11776",
-        "egr-egr8315"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-14",
       "editionsCount": 2
     },
     {
@@ -63397,18 +63311,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-swiss-golf-national-u14-3",
-      "label": "Swiss Golf National U14 #3",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9125",
-        "egr-egr9126"
-      ],
-      "firstDate": "2024-07-06",
-      "lastDate": "2024-07-06",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-belgian-international-u14-golf-championship",
       "label": "Belgian International U14 Golf Championship",
       "sourceId": "egr",
@@ -63538,6 +63440,18 @@
       ],
       "firstDate": "2023-08-01",
       "lastDate": "2023-08-01",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-english-girls-open-stroke-play-championship",
+      "label": "English Girls' Open Stroke Play Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8363",
+        "egr-egr6678"
+      ],
+      "firstDate": "2022-07-19",
+      "lastDate": "2023-07-25",
       "editionsCount": 2
     },
     {
@@ -63886,18 +63800,6 @@
       ],
       "firstDate": "2021-07-14",
       "lastDate": "2022-07-13",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-open",
-      "label": "Junior Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9731",
-        "egr-egr4913"
-      ],
-      "firstDate": "2020-09-12",
-      "lastDate": "2022-07-11",
       "editionsCount": 2
     },
     {
@@ -64693,18 +64595,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-lake-constance-junior-games-gjg",
-      "label": "Lake Constance Junior Games (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11547",
-        "egr-egr11546"
-      ],
-      "firstDate": "2026-04-10",
-      "lastDate": "2026-04-10",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-grand-prix-d-amiens",
       "label": "Grand Prix d'Amiens",
       "sourceId": "egr",
@@ -65149,36 +65039,12 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-rhein-main-junior-golf-open-by-pdi",
-      "label": "Rhein Main Junior Golf Open by PDI",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11566",
-        "egr-egr11567"
-      ],
-      "firstDate": "2026-07-14",
-      "lastDate": "2026-07-14",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-czech-international-amateur",
       "label": "Czech International Amateur",
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr12842",
         "egr-egr12843"
-      ],
-      "firstDate": "2026-07-29",
-      "lastDate": "2026-07-29",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-gjg-muhlheim-junior-open",
-      "label": "GJG Mühlheim Junior Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11570",
-        "egr-egr11571"
       ],
       "firstDate": "2026-07-29",
       "lastDate": "2026-07-29",
@@ -65209,18 +65075,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-berlin-junior-international-gjg",
-      "label": "Berlin Junior International (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11568",
-        "egr-egr11569"
-      ],
-      "firstDate": "2026-07-29",
-      "lastDate": "2026-07-29",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-junior-golf-tour-open-furth-jtg",
       "label": "Junior Golf Tour Open Fürth (JTG)",
       "sourceId": "egr",
@@ -65230,18 +65084,6 @@
       ],
       "firstDate": "2026-08-11",
       "lastDate": "2026-08-11",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-rb-german-junior-gjg",
-      "label": "RB German Junior (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11552",
-        "egr-egr11553"
-      ],
-      "firstDate": "2026-06-03",
-      "lastDate": "2026-06-03",
       "editionsCount": 2
     },
     {
@@ -65458,42 +65300,6 @@
       ],
       "firstDate": "2026-07-02",
       "lastDate": "2026-07-02",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dresden-junior-international-gjg",
-      "label": "Dresden Junior International (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11564",
-        "egr-egr11565"
-      ],
-      "firstDate": "2026-07-09",
-      "lastDate": "2026-07-09",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-gjg-grand-final-qualifier",
-      "label": "GJG Grand Final Qualifier",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11544",
-        "egr-egr11545"
-      ],
-      "firstDate": "2026-04-10",
-      "lastDate": "2026-04-10",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-bad-saarow-junior-trophy-gjg",
-      "label": "Bad Saarow Junior Trophy (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10112",
-        "egr-egr10113"
-      ],
-      "firstDate": "2025-10-03",
-      "lastDate": "2025-10-03",
       "editionsCount": 2
     },
     {
@@ -65785,18 +65591,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-bang-golf-city-junior-international-cologne-gjg",
-      "label": "Bang Golf City Junior International Cologne (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11579",
-        "egr-egr11578"
-      ],
-      "firstDate": "2026-08-21",
-      "lastDate": "2026-08-21",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-stirling-international-bucs",
       "label": "Stirling International (BUCS)",
       "sourceId": "egr",
@@ -65854,18 +65648,6 @@
       ],
       "firstDate": "2026-04-05",
       "lastDate": "2026-04-05",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dortmund-junior-international-gjg",
-      "label": "Dortmund Junior International (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11577",
-        "egr-egr11576"
-      ],
-      "firstDate": "2026-08-18",
-      "lastDate": "2026-08-18",
       "editionsCount": 2
     },
     {
@@ -66181,18 +65963,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-carlsberg-viborg-open",
-      "label": "Carlsberg Viborg Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12545",
-        "egr-egr12563"
-      ],
-      "firstDate": "2026-05-25",
-      "lastDate": "2026-05-25",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-kronberg-masters",
       "label": "Kronberg Masters",
       "sourceId": "egr",
@@ -66310,18 +66080,6 @@
       ],
       "firstDate": "2026-09-05",
       "lastDate": "2026-09-05",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-7-u18-u21",
-      "label": "FootJoy Finnish Junior Tour 7 U18/U21",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12915",
-        "egr-egr12364"
-      ],
-      "firstDate": "2026-08-08",
-      "lastDate": "2026-08-08",
       "editionsCount": 2
     },
     {
@@ -66574,6 +66332,18 @@
       ],
       "firstDate": "2026-07-04",
       "lastDate": "2026-07-04",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-grand-prix-de-la-grange-aux-ormes",
+      "label": "Grand Prix de la Grange aux Ormes",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12896",
+        "egr-egr12171"
+      ],
+      "firstDate": "2026-08-21",
+      "lastDate": "2026-08-21",
       "editionsCount": 2
     },
     {
@@ -67825,18 +67595,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-italian-national-championship-cadetti-g-agnelli-trophy",
-      "label": "Italian National Championship Cadetti G. Agnelli Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234100",
-        "wagr-270494"
-      ],
-      "firstDate": "2024-07-02",
-      "lastDate": "2026-06-30",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-candy-hannemann-ajga-ips-junior-championship",
       "label": "Candy Hannemann AJGA IPS Junior Championship",
       "sourceId": "wagr",
@@ -68254,6 +68012,18 @@
       ],
       "firstDate": "2025-08-19",
       "lastDate": "2026-08-18",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071",
+        "wagr-77024"
+      ],
+      "firstDate": "2022-06-14",
+      "lastDate": "2026-06-15",
       "editionsCount": 2
     },
     {
@@ -69397,18 +69167,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-jimmy-anderson-junior-boys",
-      "label": "Jimmy Anderson Junior Boys",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-236605",
-        "wagr-261130"
-      ],
-      "firstDate": "2024-10-19",
-      "lastDate": "2025-10-25",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-north-and-south-junior-amateur",
       "label": "North and South Junior Amateur",
       "sourceId": "wagr",
@@ -69958,6 +69716,18 @@
       ],
       "firstDate": "2025-05-18",
       "lastDate": "2026-05-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-north-carolina-junior-boys-championship",
+      "label": "North Carolina Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258192",
+        "wagr-270178"
+      ],
+      "firstDate": "2025-06-17",
+      "lastDate": "2026-06-23",
       "editionsCount": 2
     },
     {
@@ -71638,6 +71408,18 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2023-07-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-tennessee-junior-amateur",
+      "label": "Tennessee Junior Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234076",
+        "wagr-224241"
+      ],
+      "firstDate": "2023-06-27",
+      "lastDate": "2024-06-24",
       "editionsCount": 2
     },
     {
@@ -80913,17 +80695,6 @@
       ],
       "firstDate": "2025-03-23",
       "lastDate": "2025-03-23",
-      "editionsCount": 1
-    },
-    {
-      "id": "uskids-sudden-valley-golf-course-tour-championship",
-      "label": "Sudden Valley Golf Course (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-18770"
-      ],
-      "firstDate": "2025-05-25",
-      "lastDate": "2025-05-25",
       "editionsCount": 1
     },
     {
@@ -92983,6 +92754,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-great-northern-tour-championship",
+      "label": "Great Northern (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22097"
+      ],
+      "firstDate": "2026-05-10",
+      "lastDate": "2026-05-10",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-stensballegaard-golfklub",
       "label": "Stensballegaard Golfklub",
       "sourceId": "uskids",
@@ -95095,17 +94877,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-east-sea-golf-country-club-tour-championship",
-      "label": "East Sea Golf & Country Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-19586"
-      ],
-      "firstDate": "2025-06-15",
-      "lastDate": "2025-06-15",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-elton-furze-golf-club",
       "label": "Elton Furze Golf Club",
       "sourceId": "uskids",
@@ -95301,6 +95072,39 @@
       ],
       "firstDate": "2026-04-19",
       "lastDate": "2026-04-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-asolo-golf-club-tour-championship",
+      "label": "Asolo Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23235"
+      ],
+      "firstDate": "2026-11-01",
+      "lastDate": "2026-11-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-golf-club-margara-la-guazzetta-course-tour-championship",
+      "label": "Golf Club Margara - La Guazzetta Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23534"
+      ],
+      "firstDate": "2026-11-01",
+      "lastDate": "2026-11-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-bayside-resort-golf-club-tour-championship",
+      "label": "Bayside Resort Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23041"
+      ],
+      "firstDate": "2026-11-01",
+      "lastDate": "2026-11-01",
       "editionsCount": 1
     },
     {
@@ -96839,8 +96643,8 @@
       "tournamentIds": [
         "england-england_bronte-law-edgbaston-2026"
       ],
-      "firstDate": "2026-07-01",
-      "lastDate": "2026-07-01",
+      "firstDate": null,
+      "lastDate": null,
       "editionsCount": 1
     },
     {
@@ -96850,8 +96654,8 @@
       "tournamentIds": [
         "england-england_bronte-law-farnham-2025"
       ],
-      "firstDate": "2025-07-01",
-      "lastDate": "2025-07-01",
+      "firstDate": null,
+      "lastDate": null,
       "editionsCount": 1
     },
     {
@@ -96872,8 +96676,8 @@
       "tournamentIds": [
         "england-england_bronte-law-royal-mid-surrey-2026"
       ],
-      "firstDate": "2026-07-01",
-      "lastDate": "2026-07-01",
+      "firstDate": null,
+      "lastDate": null,
       "editionsCount": 1
     },
     {
@@ -96883,8 +96687,8 @@
       "tournamentIds": [
         "england-england_english-girls-open-stroke-play-2026"
       ],
-      "firstDate": "2026-07-01",
-      "lastDate": "2026-07-01",
+      "firstDate": "2026-07-21",
+      "lastDate": "2026-07-21",
       "editionsCount": 1
     },
     {
@@ -98315,17 +98119,6 @@
       ],
       "firstDate": "2026-06-06",
       "lastDate": "2026-06-06",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-trofeo-boys-challenge-lucio-visona",
-      "label": "Trofeo Boys Challenge Lucio Visona",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12793"
-      ],
-      "firstDate": "2026-06-05",
-      "lastDate": "2026-06-05",
       "editionsCount": 1
     },
     {
@@ -100353,6 +100146,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-swiss-golf-national-u14-3",
+      "label": "Swiss Golf National U14 #3",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9125"
+      ],
+      "firstDate": "2024-07-06",
+      "lastDate": "2024-07-06",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-swiss-national-championships-u14-girls",
       "label": "Swiss National Championships U14 Girls",
       "sourceId": "egr",
@@ -101252,6 +101056,17 @@
       ],
       "firstDate": "2023-07-19",
       "lastDate": "2023-07-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-english-u16-mcgregor-trophy",
+      "label": "English U16 (McGregor Trophy)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8315"
+      ],
+      "firstDate": "2023-07-18",
+      "lastDate": "2023-07-18",
       "editionsCount": 1
     },
     {
@@ -103807,6 +103622,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-junior-open",
+      "label": "Junior Open",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr4913"
+      ],
+      "firstDate": "2020-09-12",
+      "lastDate": "2020-09-12",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-grand-prix-jeunes-majeur-st-emilionais",
       "label": "Grand Prix Jeunes Majeur St. Emilionais",
       "sourceId": "egr",
@@ -104453,28 +104279,6 @@
       ],
       "firstDate": "2020-07-15",
       "lastDate": "2020-07-15",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-estonian-u18-junior-open",
-      "label": "Estonian U18 Junior Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr4997"
-      ],
-      "firstDate": "2020-07-14",
-      "lastDate": "2020-07-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-estonian-u14-junior-open",
-      "label": "Estonian U14 Junior Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr4999"
-      ],
-      "firstDate": "2020-07-14",
-      "lastDate": "2020-07-14",
       "editionsCount": 1
     },
     {
@@ -105479,17 +105283,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-european-amateur-team-championship-division-2",
-      "label": "European Amateur Team Championship, Division 2",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12632"
-      ],
-      "firstDate": "2026-07-07",
-      "lastDate": "2026-07-07",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dgv-gvnb-landesmeisterschaft-herren",
       "label": "DGV-GVNB Landesmeisterschaft Herren",
       "sourceId": "egr",
@@ -106081,61 +105874,6 @@
       ],
       "firstDate": "2026-08-04",
       "lastDate": "2026-08-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-mid-summer-junior-international",
-      "label": "Mid Summer Junior International",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11560"
-      ],
-      "firstDate": "2026-06-30",
-      "lastDate": "2026-06-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-junior-golf-challenge-schwabisch-hall",
-      "label": "Junior Golf Challenge Schwäbisch Hall",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11550"
-      ],
-      "firstDate": "2026-05-26",
-      "lastDate": "2026-05-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-golfing-knights-junior-open",
-      "label": "Golfing Knights Junior Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11538"
-      ],
-      "firstDate": "2026-04-05",
-      "lastDate": "2026-04-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-portuguese-junior-classics-gjg",
-      "label": "Portuguese Junior Classics (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10124"
-      ],
-      "firstDate": "2025-11-21",
-      "lastDate": "2025-11-21",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-gjg-junior-trophy-gjg",
-      "label": "GJG Junior Trophy (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10122"
-      ],
-      "firstDate": "2025-11-17",
-      "lastDate": "2025-11-17",
       "editionsCount": 1
     },
     {
@@ -106744,17 +106482,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-golfing-knights-junior-open-gjg",
-      "label": "Golfing Knights Junior Open (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11539"
-      ],
-      "firstDate": "2026-04-05",
-      "lastDate": "2026-04-05",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-weiherhof-youth-mixed",
       "label": "Weiherhof Youth (MIXED)",
       "sourceId": "egr",
@@ -106788,17 +106515,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-german-international-youth-trophy-by-pdi",
-      "label": "German International Youth Trophy by PDI",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11575"
-      ],
-      "firstDate": "2026-08-11",
-      "lastDate": "2026-08-11",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-junior-golf-tour-open-katharinenhof-jtg",
       "label": "Junior Golf Tour Open Katharinenhof (JTG)",
       "sourceId": "egr",
@@ -106810,14 +106526,14 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-junior-golf-challenge-schwabisch-hall-gjg",
-      "label": "Junior Golf Challenge Schwäbisch Hall (GJG)",
+      "id": "egr-rb-german-junior-gjg",
+      "label": "RB German Junior (GJG)",
       "sourceId": "egr",
       "tournamentIds": [
-        "egr-egr11551"
+        "egr-egr11553"
       ],
-      "firstDate": "2026-05-26",
-      "lastDate": "2026-05-26",
+      "firstDate": "2026-06-03",
+      "lastDate": "2026-06-03",
       "editionsCount": 1
     },
     {
@@ -107118,6 +106834,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-carlsberg-viborg-open",
+      "label": "Carlsberg Viborg Open",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12545"
+      ],
+      "firstDate": "2026-05-25",
+      "lastDate": "2026-05-25",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-hovborg-kro-open-dormy-elite-tour-i-herrer",
       "label": "Hovborg Kro Open - Dormy Elite Tour I Herrer",
       "sourceId": "egr",
@@ -107206,6 +106933,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-footjoy-finnish-junior-tour-7-u18-u21",
+      "label": "FootJoy Finnish Junior Tour 7 (U18 & U21)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12364"
+      ],
+      "firstDate": "2026-08-08",
+      "lastDate": "2026-08-08",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-dgv-rp-s-meisterschaft-akoffen-damen",
       "label": "DGV-RP/S Meisterschaft AKOffen Damen",
       "sourceId": "egr",
@@ -107214,28 +106952,6 @@
       ],
       "firstDate": "2026-09-12",
       "lastDate": "2026-09-12",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-gjg-paderborner-land-juniors-international",
-      "label": "GJG Paderborner Land Juniors International",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11548"
-      ],
-      "firstDate": "2026-04-10",
-      "lastDate": "2026-04-10",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-paderborner-land-junior-international-gjg",
-      "label": "Paderborner Land Junior International (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11549"
-      ],
-      "firstDate": "2026-04-10",
-      "lastDate": "2026-04-10",
       "editionsCount": 1
     },
     {
@@ -107280,17 +106996,6 @@
       ],
       "firstDate": "2026-09-01",
       "lastDate": "2026-09-01",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-bang-golf-city-juniors-international-munich-gjg",
-      "label": "Bang Golf City Juniors International Munich (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11554"
-      ],
-      "firstDate": "2026-06-05",
-      "lastDate": "2026-06-05",
       "editionsCount": 1
     },
     {
@@ -107514,17 +107219,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-gjg-portuguese-intercollegiate-by-ugpm",
-      "label": "GJG Portuguese Intercollegiate By UGPM",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11502"
-      ],
-      "firstDate": "2026-01-12",
-      "lastDate": "2026-01-12",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-voorjaarswedstrijd-dames",
       "label": "Voorjaarswedstrijd Dames",
       "sourceId": "egr",
@@ -107544,17 +107238,6 @@
       ],
       "firstDate": "2026-07-30",
       "lastDate": "2026-07-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-mid-summer-junior-international-gjg",
-      "label": "Mid Summer Junior International (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11561"
-      ],
-      "firstDate": "2026-06-30",
-      "lastDate": "2026-06-30",
       "editionsCount": 1
     },
     {
@@ -107610,17 +107293,6 @@
       ],
       "firstDate": "2026-06-30",
       "lastDate": "2026-06-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-gjg-edge-mason-championship",
-      "label": "GJG Edge Mason Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11638"
-      ],
-      "firstDate": "2026-01-19",
-      "lastDate": "2026-01-19",
       "editionsCount": 1
     },
     {
@@ -107844,17 +107516,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-bang-golf-city-junior-international-munich-gjg",
-      "label": "Bang Golf City Junior International Munich (GJG)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11555"
-      ],
-      "firstDate": "2026-06-05",
-      "lastDate": "2026-06-05",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dormy-elite-tour-ii-drenge-u22",
       "label": "Dormy Elite Tour II Drenge U22",
       "sourceId": "egr",
@@ -107951,17 +107612,6 @@
       ],
       "firstDate": "2025-10-24",
       "lastDate": "2025-10-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-english-girls-u16-stroke-play",
-      "label": "English Girls U16 Stroke Play",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11781"
-      ],
-      "firstDate": "2026-08-18",
-      "lastDate": "2026-08-18",
       "editionsCount": 1
     },
     {
@@ -108141,28 +107791,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-footjoy-finnish-junior-tour-7-u18",
-      "label": "FootJoy Finnish Junior Tour 7 (U18)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12366"
-      ],
-      "firstDate": "2026-08-08",
-      "lastDate": "2026-08-08",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-english-girls-u14-stroke-play",
-      "label": "English Girls U14 Stroke Play",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11782"
-      ],
-      "firstDate": "2026-08-18",
-      "lastDate": "2026-08-18",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-djga-spring-open-u19",
       "label": "DJGA Spring Open (U19)",
       "sourceId": "egr",
@@ -108171,6 +107799,17 @@
       ],
       "firstDate": "2026-03-31",
       "lastDate": "2026-03-31",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-berlin-junior-international-gjg",
+      "label": "Berlin Junior International (GJG)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11569"
+      ],
+      "firstDate": "2026-07-29",
+      "lastDate": "2026-07-29",
       "editionsCount": 1
     },
     {
@@ -108622,6 +108261,17 @@
       ],
       "firstDate": "2026-10-16",
       "lastDate": "2026-10-16",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-italian-national-championship-cadetti-g-agnelli-trophy",
+      "label": "Italian National Championship Cadetti G. Agnelli Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234100"
+      ],
+      "firstDate": "2024-07-02",
+      "lastDate": "2024-07-02",
       "editionsCount": 1
     },
     {
@@ -109942,17 +109592,6 @@
       ],
       "firstDate": "2025-09-26",
       "lastDate": "2025-09-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071"
-      ],
-      "firstDate": "2026-06-15",
-      "lastDate": "2026-06-15",
       "editionsCount": 1
     },
     {
@@ -112057,6 +111696,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-visit-owensboro-junior-championship",
+      "label": "Visit Owensboro Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269461"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-gba-junior-golf-tour-leg-2",
       "label": "GBA Junior Golf Tour Leg 2",
       "sourceId": "wagr",
@@ -113168,6 +112818,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-west-virginia-junior-amateur-championship",
+      "label": "West Virginia Junior Amateur Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-274544"
+      ],
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-06-30",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-fm-junior-championship-presented-by-john-d-mineck-foundation",
       "label": "FM Junior Championship presented by John D. Mineck Foundation",
       "sourceId": "wagr",
@@ -113938,6 +113599,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-jimmy-anderson-junior-boys",
+      "label": "Jimmy Anderson Junior Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261130"
+      ],
+      "firstDate": "2025-10-25",
+      "lastDate": "2025-10-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-tyga-bojangles-junior-open",
       "label": "TYGA Bojangles Junior Open",
       "sourceId": "wagr",
@@ -114705,17 +114377,6 @@
       ],
       "firstDate": "2024-08-30",
       "lastDate": "2024-08-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-haskins-junior-invitational",
-      "label": "Haskins Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259106"
-      ],
-      "firstDate": "2025-07-15",
-      "lastDate": "2025-07-15",
       "editionsCount": 1
     },
     {
@@ -120032,6 +119693,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-junior-orange-bowl-international",
+      "label": "Junior Orange Bowl International",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-73333"
+      ],
+      "firstDate": "2022-01-02",
+      "lastDate": "2022-01-02",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-circle-k-junior-championship-hosted-by-otter-creek",
       "label": "Circle K Junior Championship hosted by Otter Creek",
       "sourceId": "wagr",
@@ -120326,17 +119998,6 @@
       ],
       "firstDate": "2022-05-14",
       "lastDate": "2022-05-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-tennessee-junior-amateur",
-      "label": "Tennessee Junior Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234076"
-      ],
-      "firstDate": "2024-06-24",
-      "lastDate": "2024-06-24",
       "editionsCount": 1
     },
     {
