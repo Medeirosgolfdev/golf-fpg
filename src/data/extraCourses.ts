@@ -1821,6 +1821,90 @@ const longleafGolf = wc26Course("longleaf-golf-family-club", "Longleaf Golf & Fa
   ukYdTee("ll-uk-g7", "F", "USKids Girls 7 & Under", wc26G7.par, wc26G7.yd, 1, 29.2, 97, null), // Tee RS, 1–9
   ukYdTee("ll-uk-b6", "M", "USKids Boys 6 & Under", wc26B6.par, wc26B6.yd, 10, 27.8, 85, null), // Tee RS, 10–18
 ], true);
+// North Carolina State Invitational 2026 no Longleaf: CR/Slope de state_invitational_course_rating_-_nc.png,
+// jardas e par de nc_state_invitational_yardages_2026.pdf (Tee 6/5 par 71, Tee 4/3 par 72; 9 buracos no 10–18).
+const NCSI26_LINKS = [
+  { label: "US Kids North Carolina State Invitational 2026 - Course Rating & Slope", url: "https://tournaments.uskidsgolf.com/sites/default/files/state_invitational_course_rating_-_nc.png" },
+  { label: "US Kids North Carolina State Invitational 2026 - Yardages", url: "https://tournaments.uskidsgolf.com/sites/default/files/nc_state_invitational_yardages_2026.pdf" },
+];
+const ncPar71 = [4,4,3,3,4,3,4,5,4, 4,3,4,4,5,4,5,4,4];
+const ncPar72 = [4,4,3,3,5,3,4,5,4, 4,3,4,4,5,4,5,4,4];
+const ncParB9 = [4,5,3,3,5,3,4,5,4, 4,3,4,4,5,4,5,3,4];
+const ncPar9 = [4,3,4,4,5,4,5,3,4];
+const ncT6 = [385,363,171,178,340,140,338,497,308, 350,182,363,380,455,352,450,305,344]; // 5901 jd
+const ncT5 = [343,319,171,153,340,138,297,446,280, 286,141,330,337,455,324,420,300,304]; // 5384 jd
+const ncT4 = [317,288,153,141,340,130,267,386,242, 286,141,302,295,396,324,420,269,304]; // 5001 jd
+const ncT3 = [281,260,135,118,340,121,238,300,220, 220,127,302,295,396,291,375,255,270]; // 4544 jd
+const ncT2 = [256,260,102,118,316,92,238,300,220, 218,104,207,224,298,224,282,110,241];  // 3810 jd
+const ncT2b9 = ncT2.slice(9);                                                               // 1908 jd
+const ncT1 = [155,81,168,177,222,188,249,85,177];                                          // 1502 jd
+const ncRS = [141,60,123,153,176,128,199,80,142];                                          // 1202 jd
+longleafGolf.master.links.extra = [...(longleafGolf.master.links.extra ?? []), ...NCSI26_LINKS];
+longleafGolf.master.tees.push(
+  ukYdTee("ll-nc-b1314", "M", "USKids Boys 13-14 (NC State 2026)", ncPar71, ncT6, 1, 68.7, 123), // Tee 6
+  ukYdTee("ll-nc-b12", "M", "USKids Boys 12 (NC State 2026)", ncPar71, ncT5, 1, 66.2, 115), // Tee 5
+  ukYdTee("ll-nc-b11", "M", "USKids Boys 11 / Girls 13-14 (NC State 2026)", ncPar72, ncT4, 1, 64.2, 108), // Tee 4
+  ukYdTee("ll-nc-g1314", "F", "USKids Boys 11 / Girls 13-14 (NC State 2026)", ncPar72, ncT4, 1, 69.1, 123), // Tee 4
+  ukYdTee("ll-nc-b10", "M", "USKids Boys 10 / Girls 11-12 (NC State 2026)", ncPar72, ncT3, 1, 62.4, 102), // Tee 3
+  ukYdTee("ll-nc-g1112", "F", "USKids Boys 10 / Girls 11-12 (NC State 2026)", ncPar72, ncT3, 1, 66.7, 118), // Tee 3
+  ukYdTee("ll-nc-b9", "M", "USKids Boys 9 (NC State 2026)", ncParB9, ncT2, 1, 59.8, 93), // Tee 2
+  ukYdTee("ll-nc-b8", "M", "USKids Boys 8 / Girls 9-10 (NC State 2026)", ncPar9, ncT2b9, 10, 29.9, 88), // Tee 2, 10–18
+  ukYdTee("ll-nc-g910", "F", "USKids Boys 8 / Girls 9-10 (NC State 2026)", ncPar9, ncT2b9, 10, 31.1, 106), // Tee 2, 10–18
+  ukYdTee("ll-nc-b7", "M", "USKids Boys 7 (NC State 2026)", ncPar9, ncT1, 10, 28.3, 82), // Tee 1, 10–18
+  ukYdTee("ll-nc-b6", "M", "USKids Boys 6U / Girls 8U (NC State 2026)", ncPar9, ncRS, 10, 26.8, 76), // Tee RS, 10–18
+  ukYdTee("ll-nc-g8", "F", "USKids Boys 6U / Girls 8U (NC State 2026)", ncPar9, ncRS, 10, 27.2, 88), // Tee RS, 10–18
+);
+
+/* ─────────────────────────────────────────────────────────────────────────
+   US Kids Panama Invitational — Santa Maria Golf & Country Club (Panamá).
+   Jardas e par de panama_invitational_2026_-_yards.pdf (× 0,9144). CR/Slope de
+   course_slope_and_ratings_-_panama_invitational_2023.pdf, só para os tees com
+   distância «rated» (os totais batem com os de 2026): Boys 15-18 6774, Boys 13-14
+   6258, Boys 12 5749 — e Girls 15-18, que em 2023 jogaram o tee dos Boys 12.
+   Em 2026 a ordem das voltas trocou (o buraco 1 é o antigo 10). Tee 2, buraco 17:
+   o PDF de 2026 diz 22 jd; 2023–2025 dizem 222 (total 3839) — fica 222.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const PANAMA_LINKS = [
+  { label: "US Kids Panama Invitational 2026 - Yardages", url: "https://tournaments.uskidsgolf.com/sites/default/files/panama_invitational_2026_-_yards.pdf" },
+  { label: "US Kids Panama Invitational 2023 - Course Rating & Slope", url: "https://tournaments.uskidsgolf.com/sites/default/files/course_slope_and_ratings_-_panama_invitational_2023.pdf" },
+];
+const smPar = [5,4,4,4,3,4,5,3,4, 4,5,3,4,3,4,5,4,4];
+const smT7 = [528,313,327,470,187,352,546,183,419, 401,564,179,408,148,365,538,438,408]; // 6774 jd
+const smT6 = [517,297,313,448,180,342,509,150,380, 364,531,168,397,134,300,474,357,397]; // 6258 jd
+const smT5 = [458,278,313,406,140,342,500,141,338, 358,509,123,358,134,253,418,357,323]; // 5749 jd
+const smT4 = [458,278,276,357,140,290,439,91,338, 325,475,123,358,87,253,418,281,323];   // 5310 jd
+const smT3 = [355,221,247,273,120,267,367,91,271, 262,380,108,278,87,235,364,248,263];   // 4437 jd
+const smT2 = [315,181,223,241,116,224,330,91,197, 183,318,96,242,87,225,330,222,218];    // 3839 jd
+const smT1 = [285,166,197,196,87,187,271,84,179];                                       // 1652 jd, 1–9
+const smRS = [220,141,155,168,74,160,224,62,151];                                       // 1355 jd, 1–9
+
+const santaMaria: Course = {
+  courseKey: "away-santa-maria-golf-country-club",
+  master: {
+    courseId: "away-santa-maria-golf-country-club",
+    name: "Santa Maria Golf & Country Club",
+    country: "Panamá",
+    links: { fpg: null, scorecards: null, extra: PANAMA_LINKS },
+    tees: [
+      ukYdTee("sm-uk-b1518", "M", "USKids Boys 15-18", smPar, smT7, 1, 75.3, 142), // Tee 7
+      ukYdTee("sm-uk-b1314", "M", "USKids Boys 13-14", smPar, smT6, 1, 72.9, 139), // Tee 6
+      ukYdTee("sm-uk-b12", "M", "USKids Boys 12 / Girls 15-18 (2023)", smPar, smT5, 1, 70.6, 133), // Tee 5
+      ukYdTee("sm-uk-g1518-23", "F", "USKids Boys 12 / Girls 15-18 (2023)", smPar, smT5, 1, 76.2, 138), // Tee 5 (2023)
+      ukYdTee("sm-uk-b11", "M", "USKids Boys 11 / Girls 13-18", smPar, smT4, 1, null, null), // Tee 4
+      ukYdTee("sm-uk-g1318", "F", "USKids Boys 11 / Girls 13-18", smPar, smT4, 1, null, null), // Tee 4
+      ukYdTee("sm-uk-b10", "M", "USKids Boys 10 / Girls 11-12", smPar, smT3, 1, null, null), // Tee 3
+      ukYdTee("sm-uk-g1112", "F", "USKids Boys 10 / Girls 11-12", smPar, smT3, 1, null, null), // Tee 3
+      ukYdTee("sm-uk-b9", "M", "USKids Boys 9 / Girls 9-10", smPar, smT2, 1, null, null), // Tee 2
+      ukYdTee("sm-uk-g910", "F", "USKids Boys 9 / Girls 9-10", smPar, smT2, 1, null, null), // Tee 2
+      ukYdTee("sm-uk-b8", "M", "USKids Boys 8", smPar, smT2.slice(0, 9), 1, null, null), // Tee 2, 1–9
+      ukYdTee("sm-uk-b7", "M", "USKids Boys 7", smPar, smT1, 1, null, null), // Tee 1, 1–9
+      ukYdTee("sm-uk-b6", "M", "USKids Boys 6U / Girls 8U", smPar, smRS, 1, null, null), // Tee RS, 1–9
+      ukYdTee("sm-uk-g8", "F", "USKids Boys 6U / Girls 8U", smPar, smRS, 1, null, null), // Tee RS, 1–9
+    ],
+  },
+};
+
 const pineNeedles = wc26Course("pine-needles-lodge-golf-club", "Pine Needles Lodge & Golf Club", [
   ukYdTee("pn-uk-g14", "F", "USKids Girls 14", pnPar, wct26G14, 1, 73.9, 136), // Mundial Teen
   ukYdTee("pn-uk-g13", "F", "USKids Girls 13", pnPar, wct26G13, 1, 72.1, 132), // Mundial Teen
@@ -2727,6 +2811,7 @@ export function getExtraCourses(): Course[] {
     longleafGolf,
     midPines,
     pineNeedles,
+    santaMaria,
     royalMusselburgh,
     musselburgh,
     elPratRosa,
