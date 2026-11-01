@@ -4,6 +4,7 @@ import { sdClassByHcp } from "../utils/scoreDisplay";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import PlayerLink from "./PlayerLink";
+import { ESC_ORDER_FULL } from "../constants/escaloes";
 
 // Common Courses
 function CommonCourses({ players }: {
@@ -67,8 +68,7 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
     return map;
   }, [data.CROSS_DATA]);
 
-  const escOrder = ["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Absoluto", "Sénior", "Sem escalão"];
-  const escalaos = escOrder.filter(e => byEscalao[e]?.length >= 1);
+  const escalaos = [...ESC_ORDER_FULL, "Sem escalão"].filter(e => byEscalao[e]?.length >= 1);
 
   useEffect(() => {
     if (!activeEsc && escalaos.length > 0) {

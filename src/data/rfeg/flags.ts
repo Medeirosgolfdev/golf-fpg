@@ -4,6 +4,7 @@
  *
  * Tirado da RFEGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
+import { stripAccents } from "../../utils/normName";
 
 /** O RFEGolf devolve o país por extenso em espanhol ("ESPAÑA", "PORTUGAL").
  *  Convertemos para código ISO-2 para a função flag() (que aceita ISO/EN/PT). */
@@ -61,7 +62,7 @@ export const RFEG_NAT_OVERRIDE: Record<string, string> = {
  *  e "Dmitrii Elchaninov" dão a mesma chave). O primeiro nome mantém os irmãos
  *  distintos (Dmitrii ≠ Nikita). */
 export function rfegNatNorm(name: string | null | undefined): string {
-  return (name || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+  return stripAccents((name || "").toLowerCase())
     .replace(/,/g, " ").split(/\s+/).filter(Boolean).sort().join(" ");
 }
 /** País de cada inscrito, por licença e por nome (`norm`, nas duas ordens que a

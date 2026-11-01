@@ -22,6 +22,7 @@
 import type { Tournament } from "./fpgTypes";
 import { fmtToPar } from "../utils/format";
 import { MANUEL_FED, isManuel as isManuelPlayer } from "../constants/manuel";
+import { normLoose } from "../utils/normName";
 
 const SUB12_NACIONAL_2026_TCODE = "10941"; // Campeonato Nacional de Jovens Sub 12 H
 
@@ -38,9 +39,7 @@ function isAroeiraIICourse(courseOrCampo: string | null | undefined): boolean {
   return AROEIRA2_NORMS.some(k => n.includes(k));
 }
 
-function normName(s: string | null | undefined): string {
-  return (s || "").toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/\s+/g, " ").trim();
-}
+const normName = (s: string | null | undefined): string => normLoose(s || "");
 
 /* ── Estruturas devolvidas ────────────────────────────────────── */
 

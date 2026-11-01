@@ -40,6 +40,7 @@ import { cachedFetchJson } from "../data/fetchCache";
 import type { PlayersDb } from "../data/types";
 import ExpandArrow from "../ui/ExpandArrow";
 import ExtLink from "../ui/ExternalLink";
+import { compareEscalao } from "../data/model/escalao";
 
 // ── Tipos ─────────────────────────────────────────────────────────────
 
@@ -239,13 +240,6 @@ const MANUAL_ESCALAO: Record<string, string> = {
   "valentin bonnet": "Sub 12",
 };
 
-// Ordem dos escalões (para ordenação da coluna)
-const ESC_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 21", "Sub 24", "Absoluto", "Sénior", "Super Sénior"];
-function escRank(esc: string | null): number {
-  if (!esc) return 99;
-  const i = ESC_ORDER.indexOf(esc);
-  return i === -1 ? 98 : i;
-}
 
 // Pill de ronda — usa as cores globais do projecto (PILL_ROUND: 2R cyan, 3R
 // vermelho, 4R violeta). Rondas sem cor global (R1) ficam neutras.
@@ -830,7 +824,7 @@ export default function DrawsPage() {
           v = a.nome.localeCompare(b.nome, "pt");
           break;
         case "escalao":
-          v = escRank(a.escalao) - escRank(b.escalao);
+          v = compareEscalao(a.escalao, b.escalao);
           if (v === 0) v = a.nome.localeCompare(b.nome, "pt");
           break;
         case "clube":
@@ -852,7 +846,7 @@ export default function DrawsPage() {
   const escaloesPresentes = useMemo(() => {
     const s = new Set<string>();
     for (const r of linhas) s.add(r.escalao || "—");
-    return [...s].sort((a, b) => escRank(a === "—" ? null : a) - escRank(b === "—" ? null : b));
+    return [...s].sort((a, b) => compareEscalao(a === "—" ? null : a, b === "—" ? null : b));
   }, [linhas]);
 
   // Ranking por nº de rondas (independente da ordenação da tabela) — medalhas

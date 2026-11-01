@@ -9,6 +9,7 @@ import type { ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CircuitToolbarSlotCtx } from "./circuit/toolbarSlot";
 import { ToolbarSep } from "./Toolbar";
+import TabRow from "./TabRow";
 
 const TABS = [
   { key: "egr", label: "🇪🇺 EGR", path: "/egr", title: "European Golf Rankings" },
@@ -22,15 +23,8 @@ export default function RankingsTabs({ children }: { children: ReactNode }) {
   const seg = pathname.split("/")[1] || "";
   const lead = (
     <>
-      <div className="segmented-toggle" role="tablist" aria-label="Rankings">
-        {TABS.map((t) => (
-          <button key={t.key} role="tab" aria-selected={seg === t.key} title={t.title}
-            className={`seg-btn${seg === t.key ? " active" : ""}`}
-            onClick={() => navigate(t.path)}>
-            <span className="seg-label">{t.label}</span>
-          </button>
-        ))}
-      </div>
+      <TabRow ariaLabel="Rankings" active={"/" + seg} onChange={(path) => navigate(path)}
+        tabs={TABS.map((t) => ({ key: t.path as string, label: t.label, title: t.title, href: t.path }))} />
       <ToolbarSep />
     </>
   );

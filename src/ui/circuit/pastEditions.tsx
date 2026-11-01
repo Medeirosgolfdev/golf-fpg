@@ -24,6 +24,7 @@ import EmptyState from "../EmptyState";
 import PastEditionsTable, { type PastEdition } from "./PastEditionsTable";
 import Scout from "./Scout";
 import type { FieldPlayer } from "./repeaters";
+import { stripAccents } from "../../utils/normName";
 
 /** Field de hoje de uma divisão: resultados → inscritos (o 1º que houver). */
 export function divisionField(d: CircuitDivision | null | undefined): FieldPlayer[] {
@@ -48,8 +49,7 @@ export function divisionField(d: CircuitDivision | null | undefined): FieldPlaye
  * vez ficam singletons e a tab esconde-se (precisa de ≥2 edições).
  */
 export function tournamentFamilyKey(name?: string | null): string | null {
-  const base = String(name || "")
-    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+  const base = stripAccents(String(name || ""))
     .replace(/[\u{1F1E6}-\u{1F1FF}\u{1F3F4}][\u{1F1E6}-\u{1F1FF}\u{E0000}-\u{E007F}]*/gu, " ") // bandeiras
     .replace(/^\s*\d{4}\s*\/\/\s*/, " ")           // "2025 // " (FFG)
     .toLowerCase()

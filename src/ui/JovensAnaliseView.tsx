@@ -105,10 +105,10 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
         )}
         {manuel && highlightManuel && <span title="Manuel" className="u-fs-fs-10">★</span>}
         {elevated && (
-          <span title={`Foi ${p.pos}º na classificação geral. O pódio do escalão+sexo é específico — quem ficou à frente pode ter sido de outra categoria (outro sexo, outro escalão num torneio combinado) ou um jogador estrangeiro.`}
+          <span title={`Foi ${p.pos}.º na classificação geral. O pódio do escalão+sexo é específico — quem ficou à frente pode ter sido de outra categoria (outro sexo, outro escalão num torneio combinado) ou um jogador estrangeiro.`}
             className="fs-10 muted fw-600 u-p-0-4px u-br-radius-sm u-bg-bg-muted"
 >
-            {p.pos}º
+            {p.pos}.º
           </span>
         )}
       </div>
@@ -799,7 +799,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               {titles.length === 0 && bestApp && bestApp.ccode && bestApp.tcode && (
                 <ExtLink
                   href={fpgScoringUrl(bestApp.ccode, bestApp.tcode.split("+")[0])}
-                  title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName} — abrir torneio na FPG ↗`}
+                  title={`${bestApp.pos}.º de ${bestApp.total} em ${bestApp.tournamentName} — abrir torneio na FPG ↗`}
                   className="u-fs-fs-10 u-fw-700 u-c-text-3 u-td-none u-bg-bg-muted u-p-1px-4px u-br-radius-sm"
                 >
                   {bestApp.pos}/{bestApp.total}
@@ -807,7 +807,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               )}
               {titles.length === 0 && bestApp && (!bestApp.ccode || !bestApp.tcode) && (
                 <span
-                  title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName}`}
+                  title={`${bestApp.pos}.º de ${bestApp.total} em ${bestApp.tournamentName}`}
                   className="u-fs-fs-10 u-fw-700 u-c-text-3 u-bg-bg-muted u-p-1px-4px u-br-radius-sm"
                 >
                   {bestApp.pos}/{bestApp.total}

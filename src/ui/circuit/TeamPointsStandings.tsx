@@ -188,7 +188,7 @@ export default function TeamPointsStandings({ data, defaultRound = "all" }: {
                         : <td key={c.key}>{fmtPoints(v)}</td>;
                     })}
                     <td className="tps-total">{fmtPoints(r.total)}</td>
-                    {showOfficial && <td>{r.official != null ? `${r.official}º` : "—"}</td>}
+                    {showOfficial && <td>{r.official != null ? `${r.official}.º` : "—"}</td>}
                   </tr>
                   {isOpen && (
                     <tr className="row-expanded">

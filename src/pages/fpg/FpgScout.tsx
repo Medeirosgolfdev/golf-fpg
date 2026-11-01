@@ -119,7 +119,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
       } });
       for (const y of anos) depois.push({ grupo: "Nesta prova", key: `ano${y}`, label: String(y), title: `Lugar na edição de ${y}`,
         sort: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e?.pos ?? null; },
-        cell: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e ? (e.pos ? `${e.pos}º` : "jogou") : "–"; } });
+        cell: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e ? (e.pos ? `${e.pos}.º` : "jogou") : "–"; } });
       depois.push({ grupo: "Nesta prova", key: "fit", label: "vs Campo", title: "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio", sort: (n) => R(n)?.courseFit ?? null, cell: (n) => {
         const c = R(n)?.courseFit;
         return c == null ? "–" : `${c > 0 ? "+" : ""}${c}`;
@@ -151,7 +151,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
             {r.editions.map((e) => (
               <div key={e.id} className="u-c-text-muted">
                 <b className="u-c-text">{e.year}</b>
-                {e.pos ? ` · ${e.pos}º` : ""}
+                {e.pos ? ` · ${e.pos}.º` : ""}
                 {e.total != null ? ` · ${e.total}` : ""}
                 {e.toPar != null ? <span style={{ color: tpColorDark(e.toPar) }}> {fmtToPar(e.toPar)}</span> : null}
                 {e.hcpThen != null ? ` · índice ${e.hcpThen}` : ""}

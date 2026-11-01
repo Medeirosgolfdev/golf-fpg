@@ -12,8 +12,9 @@
  */
 
 import { type ReactNode } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Toolbar, ToolbarSep } from "../../ui/Toolbar";
+import TabRow from "../../ui/TabRow";
 
 
 interface Props {
@@ -36,22 +37,14 @@ const TABS: { to: string; label: string; match: (p: string) => boolean }[] = [
  *  torneios (lead do CircuitToolbarSlotCtx). */
 export function Kids2Nav() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   return (
     <>
       <Link to="/kids2" className="toolbar-title u-td-none">🌍 Kids 2</Link>
       <ToolbarSep />
       {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
-      <div className="segmented-toggle u-fsh-0" role="tablist" aria-label="Vista">
-        {TABS.map((t) => {
-          const active = t.match(pathname);
-          return (
-            <Link key={t.to} to={t.to} role="tab" aria-selected={active}
-              className={`${"seg-btn" + (active ? " active" : "")} u-td-none`}>
-              <span className="seg-label">{t.label}</span>
-            </Link>
-          );
-        })}
-      </div>
+      <TabRow className="u-fsh-0" ariaLabel="Vista" active={TABS.find((t) => t.match(pathname))?.to ?? ""} onChange={(to) => navigate(to)}
+        tabs={TABS.map((t) => ({ key: t.to, label: t.label, href: t.to }))} />
     </>
   );
 }

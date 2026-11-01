@@ -49,6 +49,7 @@ import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
 import { monthLabel, fmtDateRangePt } from "../../utils/format";
 import { textOnColor } from "../../utils/teeColors";
+import SidebarCard from "../SidebarCard";
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import MasterDetail from "../MasterDetail";
 import type {
@@ -56,6 +57,7 @@ import type {
   CircuitSectionKind,
 } from "./types";
 import ClearButton from "../ClearButton";
+import TabRow from "../TabRow";
 
 // ── Helpers ─────────────────────────────────────────────────────────── //
 
@@ -662,33 +664,11 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
             <>
               <ToolbarSep />
               {/* Anos: o mesmo interruptor segmentado das vistas (clicar no activo = todos). */}
-              <div className="segmented-toggle" role="tablist" aria-label="Ano">
-                {recentYears.map(y => (
-                  <button
-                    key={y}
-                    type="button"
-                    role="tab"
-                    aria-selected={fYear === String(y)}
-                    className={"seg-btn" + (fYear === String(y) ? " active" : "")}
-                    onClick={() => setFYear(fYear === String(y) ? "all" : String(y))}
-                  >
-                    <span className="seg-label">{y}</span>
-                  </button>
-                ))}
-                {oldCutoff != null && (
-                  <button
-                    key="__old__"
-                    type="button"
-                    role="tab"
-                    aria-selected={fYear === "__old__"}
-                    title={`Anteriores a ${oldCutoff}`}
-                    className={"seg-btn" + (fYear === "__old__" ? " active" : "")}
-                    onClick={() => setFYear(fYear === "__old__" ? "all" : "__old__")}
-                  >
-                    <span className="seg-label">{`<${oldCutoff}`}</span>
-                  </button>
-                )}
-              </div>
+              <TabRow ariaLabel="Ano" active={fYear} onChange={(k) => setFYear(fYear === k ? "all" : k)}
+                tabs={[
+                  ...recentYears.map((y) => ({ key: String(y), label: y })),
+                  ...(oldCutoff != null ? [{ key: "__old__", label: `<${oldCutoff}`, title: `Anteriores a ${oldCutoff}` }] : []),
+                ]} />
               <ToolbarSep />
             </>
           )}
@@ -1078,31 +1058,15 @@ function CircuitSidebarItem({ e, config, active, onSelect }: { e: CircuitEntry; 
   const dateStr = fmtDateRangePt(e.dateStart, e.dateEnd);
   const accent = srcColor ?? config.color ?? "var(--accent)";
   return (
-    <div
-      role="button" tabIndex={0}
-      className={`course-item ${active ? "active" : ""}`}
-      onClick={onSelect}
-      onKeyDown={ev => { if (ev.key === "Enter" || ev.key === " ") onSelect(); }}
-      style={{ borderLeft: `4px solid ${accent}`, borderRadius: "0 6px 6px 0" }}
-    >
-      {/* Linha 1: nome */}
-      <div className="course-item-name" style={{ fontSize: "var(--fs-12)", fontWeight: active ? 700 : 500, lineHeight: 1.3 }}>
-        {e.name}
+    <SidebarCard
+      active={active} accent={accent} onSelect={onSelect}
+      name={e.name}
+      nameExtra={<>
         {e.hasManuel && <ManuelPill />}
-        {entryHasAce(e) && <span title="Hole-in-one neste torneio"> 🕳️</span>}
-      </div>
-
-      {/* Linha 2: campo */}
-      {e.course && (
-        <div className="u-fs-fs-12 u-c-text-2 u-fw-500 u-mt-3px">
-          📍 {e.course.length > 50 ? e.course.slice(0, 50) + "…" : e.course}
-        </div>
-      )}
-
-      <div className="u-h-_5px u-bg-1h5y7 u-m-4px-0" />
-
-      {/* Linha 3: pills */}
-      <div className="u-d-flex u-gap-4px u-fwr-wrap u-ai-center u-m-3px-0">
+        {entryHasAce(e) && <span title="Hole-in-one neste torneio" className="u-fsh-0">🕳️</span>}
+      </>}
+      course={e.course && (e.course.length > 50 ? e.course.slice(0, 50) + "…" : e.course)}
+      pills={<>
         {e.tcode && <span className="p p-sm p-muted">{e.tcode}</span>}
         {/* Escalão/sexo só fazem sentido quando há UM escalão; com vários
             mostrar apenas "N esc." (senão parece que só tem o 1º). */}
@@ -1112,22 +1076,14 @@ function CircuitSidebarItem({ e, config, active, onSelect }: { e: CircuitEntry; 
         {nDiv > 1 && <span className="p p-sm p-muted">{nDiv} esc.</span>}
         {nR > 1 && <RoundPill nR={nR} />}
         <LigaPills entry={e} config={config} max={2} />
-      </div>
-
-      <div className="u-h-_5px u-bg-1h5y7 u-m-4px-0" />
-
-      {/* Linha 4: data · fonte (ficheiro) · nº jog */}
-      <div className="u-d-flex u-jc-space-between u-ai-center u-gap-6px">
-        <span className="u-fs-fs-11 u-c-text-muted u-fsh-0">
-          {dateStr ? `📅 ${dateStr}` : "—"}
-        </span>
-        <div className="u-d-flex u-ai-center u-gap-4px u-fsh-0">
-          {srcLabel && (
-            <span className="chip u-fs-fs-9 u-p-1px-6px u-br-radius-lg" title={`Fonte: ${srcLabel}`} style={{ background: srcColor, color: srcColor ? textOnColor(srcColor) : undefined }}>{srcLabel}</span>
-          )}
-          {nP > 0 && <span className="u-fs-fs-11 u-c-text-muted">{nP} jog</span>}
-        </div>
-      </div>
-    </div>
+      </>}
+      date={dateStr ? `📅 ${dateStr}` : "—"}
+      right={<>
+        {srcLabel && (
+          <span className="chip u-fs-fs-9 u-p-1px-6px u-br-radius-lg" title={`Fonte: ${srcLabel}`} style={{ background: srcColor, color: srcColor ? textOnColor(srcColor) : undefined }}>{srcLabel}</span>
+        )}
+        {nP > 0 && <span className="u-fs-fs-11 u-c-text-muted">{nP} jog</span>}
+      </>}
+    />
   );
 }

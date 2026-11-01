@@ -52,6 +52,7 @@ import { FilterField, ToggleChip } from "../ui/FilterField";
 import ClearButton from "../ui/ClearButton";
 import PlayerLink from "../ui/PlayerLink";
 import ExtLink from "../ui/ExternalLink";
+import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
 
 /* ── URL FPG (referência exacta pedida pelo user) ─────────────── */
 const FPG_LIST_URL =
@@ -69,10 +70,6 @@ const COUNTRY_OVERRIDE: Record<string, string> = {
 };
 
 /* ── Constantes ───────────────────────────────────────────────── */
-const ESC_ORDER = [
-  "Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18",
-  "Sub-21", "Sub-24", "Absoluto", "MidAmateur", "Sénior", "SuperSenior",
-];
 const PAGE_SIZE = 100;
 
 type SortKey =
@@ -584,7 +581,7 @@ export default function JogadoresListPage() {
       ) : (
         <>
           <div className="u-ox-auto">
-            <table className="player-list-table u-w-100pc u-fs-fs-12">
+            <table className="dtable player-list-table u-w-100pc u-fs-fs-12">
               <thead>
                 <tr>
                   <SortableHdr k="nfed" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Nº Fed</SortableHdr>

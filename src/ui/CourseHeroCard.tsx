@@ -112,6 +112,29 @@ function InfoIcon({ title }: { title: string }) {
  * CourseHeroCard — KPIs + distribuição de pares.
  * Drop-in replacement do HeroCard interno da ComparePage.
  */
+/** Número com ícone (Distância, Par, Slope, CR…) — o mesmo na ficha do campo e
+ *  na comparação de campos (.haDiagCard). `valueColor` só para cores dos dados. */
+export function HeroStat({ icon, tone, value, unit, label, valueColor }: {
+  icon: string;
+  tone: "info" | "accent" | "warn" | "good";
+  value: React.ReactNode;
+  unit?: string;
+  label: React.ReactNode;
+  valueColor?: string;
+}) {
+  return (
+    <div className="haDiagCard">
+      <div className={"haDiagIcon is-" + tone}>{icon}</div>
+      <div>
+        <div className="haDiagVal" style={valueColor ? { color: valueColor } : undefined}>
+          {value}{unit && value !== "–" && <span className="u-fs-fs-13 u-fw-600 u-c-text-3 u-ml-4px">{unit}</span>}
+        </div>
+        <div className="haDiagLbl u-d-flex u-ai-center">{label}</div>
+      </div>
+    </div>
+  );
+}
+
 export default function CourseHeroCard({ course, tee }: { course: Course; tee: Tee }) {
   const pars = useMemo(() => parBreakdown(tee), [tee]);
   const orderedHoles = useMemo(() => holesByNumber(tee), [tee]);
@@ -139,43 +162,10 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
       </div>
 
       <div className="haDiag">
-        <div className="haDiagCard">
-          <div className="haDiagIcon u-bg-bg-info-strong">📏</div>
-          <div>
-            <div className="haDiagVal">
-              {distance ?? "–"}
-              <span className="u-fs-fs-13 u-fw-600 u-c-text-3 u-ml-4px">m</span>
-            </div>
-            <div className="haDiagLbl">Distância total</div>
-          </div>
-        </div>
-        <div className="haDiagCard">
-          <div className="haDiagIcon u-bg-accent-light">⛳</div>
-          <div>
-            <div className="haDiagVal">{parTotal || "–"}</div>
-            <div className="haDiagLbl">Par total · {totalParHoles} buracos</div>
-          </div>
-        </div>
-        <div className="haDiagCard">
-          <div className="haDiagIcon u-bg-bg-warn">📐</div>
-          <div>
-            <div className="haDiagVal">{slope != null ? slope.toFixed(0) : "–"}</div>
-            <div className="haDiagLbl u-d-flex u-ai-center">
-              Slope rating
-              <InfoIcon title={SLOPE_INFO} />
-            </div>
-          </div>
-        </div>
-        <div className="haDiagCard">
-          <div className="haDiagIcon u-bg-bg-success-strong">🎯</div>
-          <div>
-            <div className="haDiagVal">{cr != null ? cr.toFixed(1) : "–"}</div>
-            <div className="haDiagLbl u-d-flex u-ai-center">
-              Course rating
-              <InfoIcon title={CR_INFO} />
-            </div>
-          </div>
-        </div>
+        <HeroStat icon="📏" tone="info" value={distance ?? "–"} unit="m" label="Distância total" />
+        <HeroStat icon="⛳" tone="accent" value={parTotal || "–"} label={`Par total · ${totalParHoles} buracos`} />
+        <HeroStat icon="📐" tone="warn" value={slope != null ? slope.toFixed(0) : "–"} label={<>Slope rating<InfoIcon title={SLOPE_INFO} /></>} />
+        <HeroStat icon="🎯" tone="good" value={cr != null ? cr.toFixed(1) : "–"} label={<>Course rating<InfoIcon title={CR_INFO} /></>} />
       </div>
 
       {totalParHoles > 0 && (

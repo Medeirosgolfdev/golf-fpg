@@ -117,14 +117,22 @@ const PECAS = [
     <div class="ds-box">
       <div class="ds-box-label">Acções (nunca uma pill de filtro)</div>
       <div class="ds-row">
-        <button class="btn">Limpar filtros</button>
+        <button class="btn">Exportar</button>
+        <button class="btn btn-clear">✕ Limpar <span class="p-filter-count">3</span></button>
         <button class="btn" disabled>Desactivado</button>
         <button class="btn-link">▸ 12 voltas</button>
         <button class="btn-round">‹</button><button class="btn-round">›</button>
         <button class="btn-round btn-round-sm">›</button>
         <button class="btn-add">＋ Adicionar ronda</button>
       </div>
-      ${uso([".btn", ".btn-link", ".btn-round", ".btn-round-sm", ".btn-add"], "App.css")}
+      ${uso([".btn", "ClearButton", ".btn-link", ".btn-round", ".btn-round-sm", ".btn-add"], "App.css · ui/ClearButton.tsx")}
+      <div class="ds-box-label">Abrir/fechar · links</div>
+      <div class="ds-row">
+        <span><span class="expand-arrow">▸</span> fechado</span><span><span class="expand-arrow">▾</span> aberto</span>
+        <a class="player-link" href="#">Nome do jogador</a>
+        <a href="#" class="tourn-ext-link">Site oficial ↗</a>
+      </div>
+      ${uso(["ExpandArrow", "PlayerLink", "ExtLink"], "ui/ExpandArrow.tsx · ui/PlayerLink.tsx · ui/ExternalLink.tsx")}
     </div>
     <div class="ds-box">
       <div class="ds-box-label">Paginação das listas longas</div>
@@ -217,6 +225,8 @@ const PECAS = [
         <div class="fed-card"><div class="fed-card-label">USKIDS <span class="fed-card-flag">🇺🇸</span></div><div class="fed-card-value">#549578</div></div>
         <div class="fed-card empty"><div class="fed-card-label">FPG</div><div class="fed-card-value">sem registo</div></div>
       </div>
+      <div class="course-item side-card u-maxw-280px"><div class="side-card-name"><span class="course-item-name">Final Drive Tour — Oeiras</span></div><div class="side-card-course">📍 Oeiras Green Valley</div><div class="side-card-sep"></div><div class="side-card-pills"><span class="p p-sm p-muted">10246</span><span class="p p-sm p-sub12">Sub-12</span></div><div class="side-card-sep"></div><div class="side-card-foot"><span class="side-card-date">07/11/2026</span><div class="side-card-right"><span class="muted">87 jog</span></div></div></div>
+      ${uso(["SidebarCard"], "ui/SidebarCard.tsx — barra lateral de todos os circuitos")}
       <div class="tee-card"><div class="tee-card-hdr" style="background:color-mix(in srgb, #f0d000 13%, var(--bg-card))">Amarelas · 5200 m</div><div class="u-p-8px-12px">Cartão por tee (risca e banda na cor do tee)</div></div>
       ${uso([".fed-card", ".tee-card", ".tee-card-hdr"], "App.css")}
     </div>

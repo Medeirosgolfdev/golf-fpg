@@ -176,7 +176,7 @@ function LGPIDFCourseMapTab({ data }: { data: LGPIDFTournament }) {
               <ExtLink href={pdf.pdfUrl}>📄 {pdf.pdfFilename}</ExtLink> · {pdf.holes.length} buracos · Total: {total.toLocaleString("pt-PT")} {pdf.holes[0]?.unit || ""}
             </div>
             <div className="scroll-x">
-              <table className="dtable-sm ta-c">
+              <table className="dtable dtable-sm ta-c">
                 <thead>
                   <tr>
                     <th>Buraco</th>

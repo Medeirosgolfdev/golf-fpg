@@ -59,7 +59,7 @@ export default function ListaTabela<T>({
   if (hasWidths) tableStyle.tableLayout = "fixed";
   const inner = (
     <div className="scroll-x">
-        <table className={`dtable-lg${dense ? " dtable-dense" : ""}`} style={tableStyle}>
+        <table className={`dtable dtable-lg${dense ? " dtable-dense" : ""}`} style={tableStyle}>
           {hasWidths && (
             <colgroup>
               {columns.map(c => <col key={c.key} style={c.width ? { width: c.width } : undefined} />)}

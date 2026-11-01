@@ -358,7 +358,7 @@ export default function TopClubesPanel({
                           </div>
                         </div>
                         {/* Títulos detalhados */}
-                        <table className="dtable-sm u-mt-4px">
+                        <table className="dtable dtable-sm u-mt-4px">
                           <thead>
                             <tr>
                               <th>Data</th>

@@ -6,6 +6,7 @@
  * Tirado da FFGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
+import { stripAccents } from "../../utils/normName";
 
 /* ── Normalização de nome (FFGolf/GolfGenius usam "APELIDO(S) Nome") ────
  * O run INICIAL de tokens todo-em-CAPS é o apelido (pode ser composto):
@@ -72,7 +73,7 @@ export function ffgCategoryLabel(raw: string): string | null {
   const n = +m[1];
   const cat = m[2] || (n <= 8 ? "Enfant" : null);
   if (!cat) return null;
-  const u = raw.toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const u = stripAccents(raw.toUpperCase());
   const fem = /FILLE|GIRL|DAMES|\bF\b|\dF\b|^[A-Z]{1,3}F$|INES\b|CADETTES|^F\s*\//.test(u);
   const masc = /GAR[CÇ]ON|BOY|MESSIEURS|HOMMES|\bG\b|\dG\b|^[A-Z]{1,3}G$|^[HM]\s*\//.test(u);
   const sex = fem && !masc ? "Filles" : masc && !fem ? "Garçons" : null;

@@ -88,11 +88,11 @@ export default function PlayerTournamentsPanel({
     <div className="u-p-6px-0-10px">
       <div className="muted fs-11 u-mb-6px">
         <b>{resumo.n}</b> {resumo.n === 1 ? "torneio" : "torneios"} em {resumo.anos} {resumo.anos === 1 ? "época" : "épocas"}
-        {resumo.best != null && <> · melhor classificação <b>{resumo.best}º</b></>}
+        {resumo.best != null && <> · melhor classificação <b>{resumo.best}.º</b></>}
         {resumo.semResultado > 0 && <> · {resumo.semResultado} sem resultado publicado</>}
         <span className="u-ml-8px u-fst-italic">clica no torneio para ver a leaderboard completa</span>
       </div>
-      <table className="player-list-table u-w-100pc u-fs-fs-11">
+      <table className="dtable player-list-table u-w-100pc u-fs-fs-11">
         <thead>
           <tr>
             <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Data</SortableHdr>
@@ -127,7 +127,7 @@ export default function PlayerTournamentsPanel({
               <td className="num u-ws-nowrap">
                 {i.pos != null ? (
                   <>
-                    <b>{i.pos}º</b>
+                    <b>{i.pos}.º</b>
                     {i.field ? <span className="muted fs-10"> de {i.field}</span> : null}
                   </>
                 ) : (

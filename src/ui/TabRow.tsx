@@ -27,10 +27,15 @@ import React from "react";
 interface TabDef<K> {
   key: K;
   label: React.ReactNode;
-  /** Badge numérico opcional ao lado do label (ex: `45` jogadores). */
-  count?: number;
+  /** Contador opcional ao lado do label (ex: `45` jogadores; 0 não aparece). */
+  count?: React.ReactNode;
   disabled?: boolean;
   title?: string;
+  /** Separador que é um link (barras de navegação): o clique normal chama
+   *  onChange; Ctrl/clique do meio abre o endereço noutra janela. */
+  href?: string;
+  /** Classe extra do separador (ex.: `is-warn` quando a fonte falhou). */
+  className?: string;
 }
 
 interface TabRowProps<K> {
@@ -54,21 +59,38 @@ function TabRow<K>({ tabs, active, onChange, children, className, style, ariaLab
       aria-label={ariaLabel}
       style={style}
     >
-      {tabs?.map(({ key, label, count, disabled, title }) => {
+      {tabs?.map(({ key, label, count, disabled, title, href, className: tabClass }) => {
         const isActive = active === key;
+        const cls = `seg-btn${isActive ? " active" : ""}${tabClass ? " " + tabClass : ""}`;
+        const inner = (
+          <>
+            <span className="seg-label">{label}</span>
+            {count != null && count !== 0 && count !== "" && <span className="seg-count">{count}</span>}
+          </>
+        );
+        if (href) return (
+          <a key={String(key)} href={href} role="tab" aria-selected={isActive} className={cls} title={title}
+            onClick={e => {
+              if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey) return;
+              e.preventDefault();
+              onChange(key);
+            }}>
+            {inner}
+          </a>
+        );
         return (
           <button
             key={String(key)}
+            type="button"
             role="tab"
             aria-selected={isActive}
-            className={`seg-btn${isActive ? " active" : ""}`}
+            className={cls}
             onClick={() => !disabled && onChange(key)}
             disabled={disabled}
             title={title}
             style={disabled ? { cursor: "not-allowed", opacity: 0.5 } : undefined}
           >
-            <span className="seg-label">{label}</span>
-            {count != null && count > 0 && <span className="seg-count">{count}</span>}
+            {inner}
           </button>
         );
       })}

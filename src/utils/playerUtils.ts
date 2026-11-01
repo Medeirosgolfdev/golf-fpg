@@ -7,6 +7,7 @@
 
 import type { Player } from "../data/types";
 import { displayName } from "./format";
+import { stripAccents } from "./normName";
 
 /** Nome curto do clube (aceita string ou objecto {short, long}) */
 export function clubShort(p: Player): string {
@@ -92,7 +93,7 @@ export function buildEscLookup(
  * Usado para gerar classes como "p p-sm p-sub12".
  */
 export function escCls(esc: string): string {
-  return esc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  return stripAccents(esc).toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
 /**

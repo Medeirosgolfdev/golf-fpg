@@ -500,7 +500,7 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
   return (
     <div className="card">
       <div className="scroll-x">
-        <table className="dtable-lg dtable-dense u-table-layout-fixed">
+        <table className="dtable dtable-lg dtable-dense u-table-layout-fixed">
           <colgroup>
             <col className="u-w-108px" /><col className="u-w-64px" />
             <col /><col /><col className="u-w-72px" />
@@ -544,7 +544,7 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
                     <tr className="details open">
                       <td className="inner" colSpan={5}>
                         <div className="innerWrap">
-                          <table className="dt-compact">
+                          <table className="dtable dt-compact">
                             <thead>
                               <tr>
                                 <th>Volta</th><th className="r">Bur.</th><th className="r">HCP</th>

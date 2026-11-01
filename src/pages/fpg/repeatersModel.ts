@@ -17,6 +17,7 @@
 import type { Tournament, Player } from "../../data/fpgTypes";
 import { computeSD } from "../../data/fpgUtils";
 import { calcScore } from "../../utils/whsCalc";
+import { stripAccents } from "../../utils/normName";
 
 /** Uma volta jogada por um repetente numa edição anterior. */
 export interface RepeaterRound {
@@ -137,7 +138,7 @@ export interface FedInfo {
 }
 
 const norm = (s: string | null | undefined): string =>
-  String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
+  stripAccents(String(s || ""))
     .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 
 /**

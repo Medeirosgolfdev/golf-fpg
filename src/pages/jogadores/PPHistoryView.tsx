@@ -124,7 +124,7 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
 
       <div className="card">
         <div className="scroll-x">
-          <table className="dtable-lg">
+          <table className="dtable dtable-lg">
             <thead>
               <tr>
                 <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>

@@ -26,6 +26,7 @@
  * ⚠ Fase 0: a tabela existe e tem testes, mas AINDA NÃO está ligada ao filtro
  * do CircuitShell (isso muda o ecrã — decisão da Mariana).
  */
+import { stripAccents } from "../../utils/normName";
 
 /** Fonte do nome, para os nomes de categoria que mudam de país para país. */
 export type EscalaoSource = "fpg" | "ffg" | "es" | "uskids";
@@ -61,7 +62,7 @@ const sub = (n: number) => `Sub ${n}`;
 
 /** Forma de comparação: minúsculas, sem acentos, sem «Division»/parênteses. */
 function clean(raw: string): string {
-  return raw.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+  return stripAccents(raw).toLowerCase()
     .replace(/\(([^)]*)\)/g, " ").replace(/\bdivision\b/g, " ").replace(/\s+/g, " ").trim();
 }
 
@@ -134,12 +135,16 @@ export function escalaoOrder(canon: string): [number, number, string] {
   return [3, 0, canon];
 }
 
+/** Compara dois escalões pela ordem de apresentação; sem escalão vai para o fim. */
+export function compareEscalao(x: string | null | undefined, y: string | null | undefined): number {
+  if (!x || !y) return (x ? 0 : 1) - (y ? 0 : 1);
+  const a = escalaoOrder(x), b = escalaoOrder(y);
+  return a[0] - b[0] || a[1] - b[1] || a[2].localeCompare(b[2]);
+}
+
 /** Ordena escalões canónicos (ver `escalaoOrder`). */
 export function sortEscaloes(list: string[]): string[] {
-  return [...list].sort((x, y) => {
-    const a = escalaoOrder(x), b = escalaoOrder(y);
-    return a[0] - b[0] || a[1] - b[1] || a[2].localeCompare(b[2]);
-  });
+  return [...list].sort(compareEscalao);
 }
 
 /** As opções que o filtro «Escalão» teria com a tabela ligada: os escalões

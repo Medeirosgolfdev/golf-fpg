@@ -132,7 +132,7 @@ function ClubsTable({ stats, onDrillDown, maxClub }: {
         <MFLegend long gap={12} />
       </div>
       <div className="u-maxh-520px u-oy-auto u-pr-4px">
-        <table className="dt-compact">
+        <table className="dtable dt-compact">
           <thead>
             <tr className="sticky-head">
               <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="u-w-30px">#</SortableHdr>

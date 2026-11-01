@@ -37,6 +37,7 @@ import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Load
 import type { PlayersDB } from "./tournamentPrimitives";
 import ExpandArrow from "./ExpandArrow";
 import ExtLink from "./ExternalLink";
+import { stripAccents } from "../utils/normName";
 
 /* ═══════════════════════════════════════════════════════
    HOOKS
@@ -613,7 +614,7 @@ export interface EventGroup {
  *  Sub-N, Rapazes/Raparigas, Masc/Fem, M/H/F isolados, ano de 4 dígitos),
  *  lowercase, remover diacríticos, partir por whitespace/separadores. */
 export function eventNameTokens(name: string): Set<string> {
-  const cleaned = (name || "")
+  const cleaned = stripAccents(name || "")
     .replace(/\s*\bDia\b\s*\d+/gi, " ")
     .replace(/\s*\bR\d+\b/gi, " ")
     .replace(/\s*\bSub[\s-]*\d+\s*[HMSFR]?\b/gi, " ")
@@ -621,7 +622,6 @@ export function eventNameTokens(name: string): Set<string> {
     .replace(/\s+[HMF]\b/g, " ") // H/M/F isolados (ex: "Sub 12 H")
     .replace(/\s*\b20\d{2}\b/g, " ")
     .replace(/[-–—·/|()]/g, " ")
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
   return new Set(
     cleaned.split(/\s+/).map(s => s.trim()).filter(w => w.length >= 2)
@@ -780,8 +780,7 @@ export function buildEventGroups(
  *  número de edição final ("… 2") e ano. Duas séries com o mesmo resultado são
  *  edições da mesma prova. */
 function editionSeriesKey(name: string): string {
-  return (name || "")
-    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+  return stripAccents(name || "")
     .toLowerCase()
     .replace(/\b20\d{2}\b/g, " ")               // ano
     .replace(/^\s*\d{1,3}\s*[ºªo°.]+\s*/, " ")  // ordinal inicial "1º"/"2.ª"

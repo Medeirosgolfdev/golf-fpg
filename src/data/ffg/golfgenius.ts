@@ -11,6 +11,7 @@ import type { MatchplayFile, MatchplayRound, MatchplayTeamMatch } from "../../ui
 import { normalizeName, ffgEscaloesOfTournament, ffgCategoryLabel } from "./names";
 import { isPT } from "../../utils/ptPlayers";
 import type { FFGTournament, FFGDrawRound, CatalogEntry } from "./types";
+import { stripAccents } from "../../utils/normName";
 
 export function ggDrawToFpgDraw(round: FFGDrawRound): FpgDraw {
   return buildFpgDraw(
@@ -35,7 +36,7 @@ export function ggDrawToFpgDraw(round: FFGDrawRound): FpgDraw {
    sem tee sheet publicado (a FFG publica-o em cima da hora), os pares
    sintetizam-se pela ordem do bracket: vencedores dos matches 1+2 defrontam-se
    no match 1 da ronda seguinte (knockout standard). */
-const mpKey = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+const mpKey = (s: string) => stripAccents(s).toLowerCase().replace(/\s+/g, " ").trim();
 const mpLabelBase = (s: string | null | undefined) => mpKey((s || "").replace(/\(.*$/, ""));
 /** Mesma pessoa? Tokens do nome sem ordem nem acentos («MARTA Muñoz Escudero» = «MUNOZ ESCUDERO Marta»). */
 const nameToks = (s: string | null | undefined) => mpKey(s || "").replace(/[^a-z ]/g, " ").split(/\s+/).filter(Boolean).sort().join(" ");

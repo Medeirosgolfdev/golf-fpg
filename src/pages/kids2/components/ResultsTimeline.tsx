@@ -286,7 +286,7 @@ function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
   }, [rows, sortKey, sortDir]);
 
   return (
-    <table className="dtable-sm">
+    <table className="dtable dtable-sm">
       <thead>
         <tr>
           <SortableHdr<ResKey> k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-56px">Data</SortableHdr>

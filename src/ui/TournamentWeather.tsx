@@ -20,6 +20,7 @@
 import { useEffect, useState } from "react";
 import { cachedFetchJson } from "../data/fetchCache";
 import ExtLink from "./ExternalLink";
+import { stripAccents } from "../utils/normName";
 
 const WEATHER_URL = "/data/weather.json";
 
@@ -32,8 +33,7 @@ interface WeatherFile {
 
 /** Normalização de nome de campo — TEM de espelhar a do scripts/fetch-weather.js. */
 function normCourseKey(s: string): string {
-  return (s || "")
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  return stripAccents(s || "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, " ")
     .trim()

@@ -11,6 +11,7 @@
  * Poucet=U9-10 · Poussin=U11-12 · Benjamin=U13-14 · Minime=U15-16 ·
  * Cadet=U17-18 · Junior=U19-21.
  */
+import { stripAccents } from "./normName";
 
 /** Escalões do mais novo para o mais velho (ordem de comparação). */
 export const FFG_ESC_ORDER = [
@@ -28,7 +29,7 @@ export const FFG_ESC_ORDER = [
 export function ffgEscalaoCanonico(raw: string | null | undefined): string | null {
   const s = String(raw || "").trim();
   if (!s) return null;
-  const u = s.toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&#\d+;/g, "'");
+  const u = stripAccents(s.toUpperCase()).replace(/&#\d+;/g, "'");
   const bucket = (n: number): string =>
     n <= 8 ? "Sub-8" : n <= 10 ? "Sub-10 (Poucet)" : n <= 12 ? "Sub-12 (Poussin)"
     : n <= 14 ? "Sub-14 (Benjamin)" : n <= 16 ? "Sub-16 (Minime)"

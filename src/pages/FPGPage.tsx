@@ -61,6 +61,7 @@ import {
   buildFpgEntries, buildJovensEntries, buildClubesEntries, fpgRepDivision, resolveFpgTkey, fpgMemberKey,
   FPG_CONFIG, CLUBES_CONFIG,
 } from "./fpg/fpgCircuitData";
+import TabRow from "../ui/TabRow";
 
 /** Junta o tab do Match Play (Taça da Federação), o da Ordem de Mérito (CGSS)
  *  e o do campo («⛳ O campo», o «Como jogou» da /campos) aos tabs de "Edições
@@ -629,63 +630,43 @@ function Content() {
           {!loading && (<>
             <ToolbarSep />
             {/* Vistas: interruptor segmentado (o mesmo de Campos/Jogadores/Drive). */}
-            <div className="segmented-toggle" role="tablist" aria-label="Vista">
-            {([
-              { key: "torneios",      label: "Torneios" },
-              { key: "ranking-pja",   label: "📊 Ranking PJA" },
-              { key: "ranking-sub12", label: "🏅 Ranking Sub-12 por SD" },
-              { key: "classificacoes", label: "🏆 Classificações" },
-            ] as const).map(({ key, label }) => (
-              <button key={key} role="tab" aria-selected={navMode === key}
-                className={"seg-btn" + (navMode === key ? " active" : "")}
-                onClick={() => {
-                  setNavMode(key);
-                  setSeriesFilter("");
-                  const seg = NAV_TO_URL[key];
-                  const target = seg ? `/FPG/${seg}` : "/FPG";
-                  if (location.pathname !== target) navigate(target);
-                }}>
-                <span className="seg-label">{label}</span>
-              </button>
-            ))}
-            </div>
+            <TabRow ariaLabel="Vista" active={navMode}
+              tabs={[
+                { key: "torneios" as const,       label: "Torneios" },
+                { key: "ranking-pja" as const,    label: "📊 Ranking PJA" },
+                { key: "ranking-sub12" as const,  label: "🏅 Ranking Sub-12 por SD" },
+                { key: "classificacoes" as const, label: "🏆 Classificações" },
+              ]}
+              onChange={(key) => {
+                setNavMode(key);
+                setSeriesFilter("");
+                const seg = NAV_TO_URL[key];
+                const target = seg ? `/FPG/${seg}` : "/FPG";
+                if (location.pathname !== target) navigate(target);
+              }} />
             {/* Tabs de série (Todos/JOVENS/CLUBES/STO/PJA) — na MESMA barra, a
                 seguir ao mode-switcher (antes ficavam numa 2ª linha). Só em modo
                 Torneios. */}
             {navMode === "torneios" && (<>
               <ToolbarSep />
               {/* Séries: o mesmo interruptor segmentado (activo = estilo-padrão). */}
-              <div className="segmented-toggle" role="tablist" aria-label="Série">
-              {([
-                { key: "",        label: "Todos" },
-                { key: "jovens",  label: "🏆 Jovens" },
-                { key: "clubes",  label: "🏅 Clubes" },
-                { key: "santo",   label: "⛳ STO" },
-                { key: "circuit", label: "🏆 PJA" },
-              ] as const).map(({ key, label }) => {
-                const active = seriesFilter === key;
-                const urlSeg = FILTER_TO_URL[key];
-                const href = urlSeg ? `/FPG/${urlSeg}` : "/FPG";
-                return (
-                  <a key={key} href={href} role="tab" aria-selected={active}
-                    className={`${"seg-btn" + (active ? " active" : "")} u-td-none`}
-                    onClick={e => {
-                      if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                        e.preventDefault();
-                        setSeriesFilter(key);
-                        // Preserva a query (ex.: ?q=…); remove `tab` (é por-torneio).
-                        const _sp = new URLSearchParams(location.search);
-                        _sp.delete("tab");
-                        const _s = _sp.toString();
-                        navigate((urlSeg ? `/FPG/${urlSeg}` : "/FPG") + (_s ? `?${_s}` : ""));
-                      }
-                    }}
->
-                    <span className="seg-label">{label}</span>
-                  </a>
-                );
-              })}
-              </div>
+              <TabRow ariaLabel="Série" active={seriesFilter}
+                tabs={([
+                  { key: "",        label: "Todos" },
+                  { key: "jovens",  label: "🏆 Jovens" },
+                  { key: "clubes",  label: "🏅 Clubes" },
+                  { key: "santo",   label: "⛳ STO" },
+                  { key: "circuit", label: "🏆 PJA" },
+                ] as const).map(({ key, label }) => ({ key: key as string, label, href: FILTER_TO_URL[key] ? `/FPG/${FILTER_TO_URL[key]}` : "/FPG" }))}
+                onChange={(key) => {
+                  setSeriesFilter(key as typeof seriesFilter);
+                  // Preserva a query (ex.: ?q=…); remove `tab` (é por-torneio).
+                  const _sp = new URLSearchParams(location.search);
+                  _sp.delete("tab");
+                  const _s = _sp.toString();
+                  const urlSeg = FILTER_TO_URL[key as keyof typeof FILTER_TO_URL];
+                  navigate((urlSeg ? `/FPG/${urlSeg}` : "/FPG") + (_s ? `?${_s}` : ""));
+                }} />
             </>)}
             </>)}
   </>);

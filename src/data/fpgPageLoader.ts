@@ -36,12 +36,13 @@ import { loadFpgFilesIndex, fpgFileUrls, pullTorneiosIndexOf } from "./fpgFilesI
 import { yearMatchesFilter, type DriveData, type FileMeta, type TournPill } from "../pages/fpg/constants";
 import { isDriveOrAquapor, isHiddenNonManuelDrive, tournamentHasManuel, matchesTournamentSearch } from "./fpgUtils";
 import { isClubesMatchPlay } from "./clubesFormats";
+import { stripAccents } from "../utils/normName";
 
 /* ── Nomes e draws ────────────────────────────────────────────────────── */
 
 /** Nome de torneio normalizado para comparar registos (sem acentos/pontuação). */
 export function normTournamentName(s: string | undefined | null): string {
-  return String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+  return stripAccents(String(s || "")).toLowerCase()
     .replace(/[^a-z0-9]+/g, " ").trim();
 }
 
@@ -344,13 +345,12 @@ export function mergeJovensWithAdmissions(rows: Tournament[], admIdx: Map<string
     } as unknown as Tournament;
     seen.set(key, synthetic);
   }
-  const stripDia = (s: string) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   for (const [, ad] of admIdx) {
     const tournKey = `${ad.ccode}/${ad.tcode}`;
     if (seen.has(tournKey)) continue;
     const playerCount = ad.admissions?.totalInscritos ?? (ad.admissions?.players?.length ?? 0);
     if (playerCount === 0) continue;
-    if (!ADM_JOVEM_RE.test(stripDia(ad.name || ""))) continue;
+    if (!ADM_JOVEM_RE.test(stripAccents(ad.name || ""))) continue;
     const year = ad.date?.substring(0, 4) || String(new Date().getFullYear());
     const baseName = stripEscalaoSuffix(ad.name || "") || `Torneio ${ad.tcode}`;
     seen.set(tournKey, {
@@ -602,9 +602,8 @@ export function jovensCandidates(jovensTournaments: Tournament[], tournaments: T
     const k = keyOf(j);
     if (!dedupMap.has(k)) dedupMap.set(k, j);
   }
-  const stripAcc = (s: string) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   for (const t of tournaments) {
-    const cleanName = stripAcc(t.name || "");
+    const cleanName = stripAccents(t.name || "");
     // "kids" pode vir colado ao nome do clube ("CityKids") — teste à parte.
     if (!JOVEM_NAME_RE.test(cleanName) && !/kids/i.test(cleanName)) continue;
     // Falsos positivos de "academia": "Academia Militar" não é juvenil.

@@ -163,7 +163,7 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
         (os {cands.length} primeiros). A linha marca os {n} primeiros.
       </div>
       <div className="u-ox-auto">
-        <table className="player-list-table u-fvn-tabular-nums">
+        <table className="dtable player-list-table u-fvn-tabular-nums">
           <thead>
             <tr>
               <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Ordem por handicap">#</SortableHdr>

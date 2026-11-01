@@ -38,21 +38,21 @@ html, body, #root {
 /* ─── Cards ─── */
 .card { margin: var(--space-section) 0; padding: var(--space-12) var(--space-16); border: 1px solid var(--border-light); border-radius: var(--radius-lg); background: var(--bg-card); box-shadow: var(--shadow-sm); }
 
-/* ─── Tabelas de dados — UMA família (.dtable, .dtable-sm, .dtable-lg, .dt-compact) ───
-   O aspecto (letra, cabeçalho, linhas, padding) vive num só sítio: o «MODELO
-   ÚNICO DAS TABELAS» no fim deste ficheiro, que também cobre .player-list-table
-   e .cs-table. Aqui fica só a estrutura comum; as quatro classes são sinónimos
-   (o -lg tem cabeçalho fixo). Arrumado a 30/10/2026 — antes eram quatro cópias
-   das mesmas regras, que o modelo único já tapava. */
-:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact) { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+/* ─── Tabelas de dados — UMA classe: .dtable ───
+   Toda a tabela de dados leva .dtable; .dtable-sm, .dtable-lg (cabeçalho fixo),
+   .dt-compact e .player-list-table (cabeçalho fixo, sem quebra de linha) são só
+   variantes que se juntam a ela (01/11/2026 — antes eram famílias paralelas).
+   O aspecto (letra, cabeçalho, linhas, padding) vive no «MODELO ÚNICO DAS
+   TABELAS» no fim deste ficheiro. */
+.dtable { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 /* Grelhas e matrizes (colunas = torneios, anos ou buracos; cada célula com a sua cor):
    matrizes de rivais, pódios por ano, pancadas por edição, grelha de match play.
    O modelo das listas não se aplica — só a base comum (31/10/2026). */
 .mx-table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
-:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact) th { text-align: left; white-space: nowrap; }
-:is(.dtable, .dtable-sm, .dtable-lg) td { vertical-align: middle; }
-:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact) :is(th.r, td.r) { text-align: right; }
-:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact) tbody tr:hover { background: var(--bg-hover); }
+.dtable th { text-align: left; white-space: nowrap; }
+.dtable td { vertical-align: middle; }
+.dtable :is(th.r, td.r) { text-align: right; }
+.dtable tbody tr:hover { background: var(--bg-hover); }
 .dtable-lg th { position: sticky; top: 0; z-index: var(--z-sticky); }
 .dtable-lg .r { text-align: right; }
 .dtable-lg .roundRow { cursor: pointer; transition: background 0.15s; }
@@ -337,6 +337,9 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
   transition: background 0.15s, color 0.15s, box-shadow 0.15s;
   white-space: nowrap;
 }
+/* Separador-link (TabRow com href) e fonte que falhou a carregar. */
+a.seg-btn { text-decoration: none; }
+.segmented-toggle .seg-btn.is-warn { background: var(--color-warn-vivid); color: var(--text-on-color); }
 .segmented-toggle .seg-btn + .seg-btn {
   border-left: none;
 }
@@ -1208,6 +1211,10 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── Hole-by-hole Analysis ─── */
 .haDiag { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-8); margin-bottom: var(--space-4); }
 .haDiagCard { display: flex; align-items: center; gap: var(--space-10); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-10) var(--space-12); }
+.haDiagIcon.is-info { background: var(--bg-info-strong); }
+.haDiagIcon.is-accent { background: var(--accent-light); }
+.haDiagIcon.is-warn { background: var(--bg-warn); }
+.haDiagIcon.is-good { background: var(--bg-success-strong); }
 .haDiagIcon { width: 36px; height: 36px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--fs-18); flex-shrink: 0; }
 .haDiagVal { font-size: var(--fs-20); font-weight: 900; line-height: 1.1; }
 .haDiagLbl { font-size: var(--fs-10); color: var(--text-3); font-weight: 600; margin-top: var(--space-1); line-height: 1.2; }
@@ -2449,6 +2456,17 @@ table.sc-lb th.scout-grp { background: var(--bg-success-subtle); color: var(--co
   font-size: var(--fs-12); font-weight: 800; color: var(--text); font-family: inherit; }
 .draws-grupo-hdr.open { border-bottom: 1px solid var(--border-light); }
 /* Linha de jogador da sidebar: barra de cor à esquerda (a cor vem do escalão: borderLeftColor). */
+/* Cartão de torneio na barra lateral (ui/SidebarCard) — barra de cor da série/fonte. */
+.course-item.side-card, .course-item.side-card.active { border-left: 4px solid var(--side-accent, var(--accent)); border-radius: 0 var(--radius) var(--radius) 0; }
+.side-card-name { display: flex; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-3); }
+.side-card-name .course-item-name { flex: 1; font-size: var(--fs-12); font-weight: 500; line-height: 1.3; }
+.side-card.active .side-card-name .course-item-name { font-weight: 700; }
+.side-card-course { font-size: var(--fs-12); font-weight: 500; color: var(--text-2); margin-bottom: var(--space-3); }
+.side-card-sep { height: 0.5px; background: var(--border-light); margin: var(--space-4) 0; }
+.side-card-pills { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); margin: var(--space-3) 0; }
+.side-card-foot { display: flex; justify-content: space-between; align-items: center; gap: var(--space-6); }
+.side-card-date { font-size: var(--fs-11); color: var(--text-muted); flex-shrink: 0; }
+.side-card-right { display: flex; align-items: center; gap: var(--space-4); flex-shrink: 0; }
 .course-item.sidebar-player { border-left: 4px solid transparent; padding-left: var(--space-10); border-radius: 0 var(--radius) var(--radius) 0; }
 .course-item.sidebar-player.fed-only { opacity: 0.82; }
 /* Link 🔗 para a página da FPG na sidebar de torneios. */
@@ -4100,15 +4118,15 @@ table td.lb-col-divider {
    ficheiro de propósito, para ganhar às regras antigas de cada família.
    Os cartões de buracos (.sc-table-modern / .sc-table-ec) e as tabelas de
    torneio (.sc-lb) não entram — têm regras próprias. */
-:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) { font-size: var(--fs-12); }
-:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) :is(thead th, tbody th, tr > th) {
+:is(.dtable, .cs-table) { font-size: var(--fs-12); }
+:is(.dtable, .cs-table) :is(thead th, tbody th, tr > th) {
   background: var(--bg-header); font-size: var(--fs-11); font-weight: 600; color: var(--text-2);
   text-transform: none; letter-spacing: 0; padding: var(--space-8) var(--space-6); border-bottom: 1px solid var(--border);
 }
-:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) :is(tbody td, tr > td) {
+:is(.dtable, .cs-table) :is(tbody td, tr > td) {
   padding: var(--space-3) var(--space-6); border-bottom: 1px solid var(--border-light);
 }
-:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) .tourn-pname { font-weight: 400; font-size: var(--fs-11); }
+:is(.dtable, .cs-table) .tourn-pname { font-weight: 400; font-size: var(--fs-11); }
 /* Tabelas de muitas colunas numéricas («Quem repete»): mais folga lateral. */
 .sc-lb.sc-lb-airy th, .sc-lb.sc-lb-airy td { padding-left: var(--space-10); padding-right: var(--space-10); }
 

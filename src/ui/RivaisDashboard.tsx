@@ -712,7 +712,7 @@ export default function RivaisDashboard({
                                       : "var(--text-3)",
                               }}
                             >
-                              {rankMap[p.n]}º
+                              {rankMap[p.n]}.º
                             </div>
                             <div className="fs-10 c-text-3">
                               {nPlayed(p)}T

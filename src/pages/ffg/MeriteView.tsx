@@ -26,6 +26,7 @@ import Pager from "../../ui/Pager";
 import { RankChange, MUTED } from "../../ui/tableCells";
 import ExpandArrow from "../../ui/ExpandArrow";
 import ExtLink from "../../ui/ExternalLink";
+import { stripAccents } from "../../utils/normName";
 
 /** [trnId|null, data ISO, nome, lugar, voltas, pontos, Moy.SSS] */
 type Prova = [string | null, string, string, string, number[], number | null, number | null];
@@ -47,7 +48,7 @@ interface Row {
 type SK = "rank" | "name" | "cat" | "by" | "golf" | "idx" | "moy" | "moy6" | "nbt" | "total" | "rankAnn";
 
 const PAGE_SIZE = 100;
-const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
+const norm = (s: string) => stripAccents(s).toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
 const fmtSigned = (v: number | null) => (v == null ? MUTED : <>{v > 0 ? "+" : ""}{v.toFixed(2)}</>);
 /** «Ricardo» + «CASTRO FERREIRA» → «Ricardo Castro Ferreira». */
 const nomeProprio = (prenom: string, nom: string) =>
@@ -177,7 +178,7 @@ export function FFGMeriteView() {
       ) : (
         <>
           <div className="u-ox-auto u-pb-8px">
-            <table className="player-list-table u-w-100pc u-fs-fs-12">
+            <table className="dtable player-list-table u-w-100pc u-fs-fs-12">
               <thead>
                 <tr>
                   {hdr("rank", "Lugar", "num")}
@@ -231,7 +232,7 @@ export function FFGMeriteView() {
                         <tr className="player-list-row-detail">
                           <td colSpan={COLS} className="u-bg-bg-detail u-p-4px-12px-8px">
                             {prov?.length ? (
-                              <table className="player-list-table u-w-100pc u-fs-fs-11">
+                              <table className="dtable player-list-table u-w-100pc u-fs-fs-11">
                                 <thead>
                                   <tr><th>Data</th><th>Prova</th><th>Lugar</th><th className="num">Voltas</th><th className="num">Pontos</th><th className="num">Média vs SSS</th></tr>
                                 </thead>

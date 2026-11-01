@@ -365,15 +365,15 @@ export default function Scout({
                     {tem.vit && <td>{l.sc?.w || "–"}</td>}
                     {tem.forma && (
                       <td title={[
-                        ult ? `Último: ${ult[3] ? `${ult[3]}º de ${ult[4]}` : fmtToPar(ult[1])} (${shortDateSlash(ult[0])})` : null,
-                        ...(l.fm?.r.slice(0, N_FORMA).map((x) => `${shortDateSlash(x[0])} · ${fmtToPar(x[1])} (${x[2]} b.)${x[3] ? ` · ${x[3]}º/${x[4]}` : ""}`) ?? []),
+                        ult ? `Último: ${ult[3] ? `${ult[3]}.º de ${ult[4]}` : fmtToPar(ult[1])} (${shortDateSlash(ult[0])})` : null,
+                        ...(l.fm?.r.slice(0, N_FORMA).map((x) => `${shortDateSlash(x[0])} · ${fmtToPar(x[1])} (${x[2]} b.)${x[3] ? ` · ${x[3]}.º/${x[4]}` : ""}`) ?? []),
                       ].filter(Boolean).join("\n") || undefined}>
                         {fmd != null ? fmtToPar(fmd) : "–"}
                       </td>
                     )}
                     {tem.rfeg && (
                       <td title={l.sc?.rk ? `${l.sc.rk[2]}${l.sc.rk[3] ? ` · ranking de ${shortDateSlash(l.sc.rk[3], true)}` : ""}` : undefined}>
-                        {l.sc?.rk ? `${l.sc.rk[0]}º/${l.sc.rk[1]}` : "–"}
+                        {l.sc?.rk ? `${l.sc.rk[0]}.º/${l.sc.rk[1]}` : "–"}
                       </td>
                     )}
                     {nProva > 0 && (
@@ -381,15 +381,15 @@ export default function Scout({
                         {l.rep ? l.rep.n : "–"}
                       </td>
                     )}
-                    {nProva > 0 && <td>{l.rep?.bestPos != null ? `${l.rep.bestPos}º` : "–"}</td>}
+                    {nProva > 0 && <td>{l.rep?.bestPos != null ? `${l.rep.bestPos}.º` : "–"}</td>}
                     {eds.map((e) => {
                       const c = l.rep?.byEd[e.id];
                       if (!c) return <td key={e.id}>–</td>;
                       return (
                         <td key={e.id}
-                            title={[c.pos != null ? `${c.pos}º de ${c.field}` : null, c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ")}
+                            title={[c.pos != null ? `${c.pos}.º de ${c.field}` : null, c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ")}
                             style={c.complete ? undefined : { fontStyle: "italic", color: "var(--text-3)" }}>
-                          {c.pos != null ? `${c.pos}º` : "–"}
+                          {c.pos != null ? `${c.pos}.º` : "–"}
                         </td>
                       );
                     })}
@@ -414,8 +414,8 @@ export default function Scout({
                                 <tr key={i}>
                                   <td className="u-ta-left">{x[1]}</td>
                                   <td>{x[0] ? shortDateSlash(x[0]) : "–"}</td>
-                                  <td>{x[2] != null ? `${x[2]}º` : "–"}</td>
-                                  <td>{x[3] != null ? `${x[3]}º` : "–"}</td>
+                                  <td>{x[2] != null ? `${x[2]}.º` : "–"}</td>
+                                  <td>{x[3] != null ? `${x[3]}.º` : "–"}</td>
                                   <td>{x[4] > 0 ? "+" : x[4] < 0 ? "−" : ""}{Math.abs(x[4])}</td>
                                 </tr>
                               ))}

@@ -23,7 +23,7 @@ import LoadingState from "../ui/LoadingState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import SortableHdr from "../ui/SortableHdr";
 import type { Course, Tee, Hole } from "../data/types";
-import CourseHeroCard, { getParTotal, PAR_HSL } from "../ui/CourseHeroCard";
+import CourseHeroCard, { getParTotal, PAR_HSL, HeroStat } from "../ui/CourseHeroCard";
 import { MultiTeeSDTable } from "../ui/ScoreTable";
 import TeePill from "../ui/TeePill";
 import { physicalTeeGroups, physicalTeeKey } from "../utils/teeGroups";
@@ -433,29 +433,10 @@ function CourseSideBySide({
           if (a == null || b == null) return "var(--text-3)";
           return a !== b ? "var(--text-1)" : "var(--text-3)";
         };
-        const KpiCard = ({ icon, bg, val, unit, lbl }: { icon: string; bg: string; val: string | number; unit?: string; lbl: string }) => (
-          <div className="haDiagCard">
-            <div className="haDiagIcon" style={{ background: bg }}>{icon}</div>
-            <div>
-              <div className="haDiagVal">{val}{unit && <span className="u-fs-fs-13 u-fw-600 u-c-text-3 u-ml-4px">{unit}</span>}</div>
-              <div className="haDiagLbl">{lbl}</div>
-            </div>
-          </div>
-        );
-        const DeltaCard = ({ label, a, b, dec = 0, unit, icon, iconBg }: { label: string; a: number | null; b: number | null; dec?: number; unit?: string; icon: string; iconBg: string }) => {
+        const DeltaCard = ({ label, a, b, dec = 0, unit, icon, tone }: { label: string; a: number | null; b: number | null; dec?: number; unit?: string; icon: string; tone: "info" | "accent" | "warn" | "good" }) => {
           const val = fmtDelta(a, b, dec);
           const col = deltaColor(a, b);
-          return (
-            <div className="haDiagCard">
-              <div className="haDiagIcon" style={{ background: iconBg }}>{icon}</div>
-              <div>
-                <div className="haDiagVal" style={{ color: col }}>
-                  {val}{val !== "–" && unit ? <span className="u-fs-fs-13 u-fw-600 u-c-text-3 u-ml-4px">{unit}</span> : null}
-                </div>
-                <div className="haDiagLbl">{label}</div>
-              </div>
-            </div>
-          );
+          return <HeroStat icon={icon} tone={tone} value={val} unit={unit} label={label} valueColor={col} />;
         };
         const CourseHeader = ({ course, tee }: { course: typeof courseA; tee: typeof teeA }) => (
           <div className="u-fw-700 u-fs-fs-13 u-mb-8px u-d-flex u-ai-center u-gap-8px u-minh-28px">
@@ -465,17 +446,17 @@ function CourseSideBySide({
         );
         const renderKpis = (dist: number | null, par: number | null, cr: number | null, slope: number | null) => (
           <div className="haDiag u-grid-template-columns-1rohv">
-            <KpiCard icon="📏" bg="var(--bg-info-strong)" val={dist ?? "–"} unit={dist != null ? "m" : undefined} lbl="Distância total" />
-            <KpiCard icon="⛳" bg="var(--accent-light)" val={par || "–"} lbl="Par total · 18H" />
-            <KpiCard icon="📐" bg="var(--bg-warn)" val={slope ?? "–"} lbl="Slope" />
-            <KpiCard icon="🎯" bg="var(--color-good-alpha)" val={cr != null ? cr.toFixed(1) : "–"} lbl="Course rating" />
+            <HeroStat icon="📏" tone="info" value={dist ?? "–"} unit="m" label="Distância total" />
+            <HeroStat icon="⛳" tone="accent" value={par || "–"} label="Par total · 18H" />
+            <HeroStat icon="📐" tone="warn" value={slope ?? "–"} label="Slope" />
+            <HeroStat icon="🎯" tone="good" value={cr != null ? cr.toFixed(1) : "–"} label="Course rating" />
           </div>
         );
         const deltas = [
-          { label: "Distância", a: distA, b: distB, unit: "m", icon: "📏", iconBg: "var(--bg-info-strong)" },
-          { label: "Par", a: parTotalA, b: parTotalB, icon: "⛳", iconBg: "var(--accent-light)" },
-          { label: "Slope", a: slopeA, b: slopeB, icon: "📐", iconBg: "var(--bg-warn)" },
-          { label: "CR", a: crA, b: crB, dec: 1, icon: "🎯", iconBg: "var(--color-good-alpha)" },
+          { label: "Distância", a: distA, b: distB, unit: "m", icon: "📏", tone: "info" as const },
+          { label: "Par", a: parTotalA, b: parTotalB, icon: "⛳", tone: "accent" as const },
+          { label: "Slope", a: slopeA, b: slopeB, icon: "📐", tone: "warn" as const },
+          { label: "CR", a: crA, b: crB, dec: 1, icon: "🎯", tone: "good" as const },
         ] as const;
         return (
           <div className="u-d-grid u-grid-template-columns-1l51h u-gap-24px u-mb-18px u-ai-start">
@@ -491,7 +472,7 @@ function CourseSideBySide({
               </div>
               <div className="u-d-grid u-grid-template-columns-1fr-1fr u-gap-6px">
                 {deltas.map((d, i) => (
-                  <DeltaCard key={i} label={d.label} a={d.a} b={d.b} dec={(d as any).dec} unit={(d as any).unit} icon={d.icon} iconBg={d.iconBg} />
+                  <DeltaCard key={i} label={d.label} a={d.a} b={d.b} dec={(d as any).dec} unit={(d as any).unit} icon={d.icon} tone={d.tone} />
                 ))}
               </div>
             </div>

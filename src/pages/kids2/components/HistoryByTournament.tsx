@@ -255,7 +255,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
 
       {expanded && (
         <div className="u-p-8px-12px">
-          <table className="dtable-sm">
+          <table className="dtable dtable-sm">
             <thead>
               <tr>
                 <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Ano</SortableHdr>

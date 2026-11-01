@@ -7,6 +7,7 @@
  */
 
 import { canonicalCourseName, rotateAroeira2HolesIfNeeded, resolveAroeiraIIByPar, resolveSantoDaSerraByPar } from "../utils/courseAliases";
+import { stripAccents } from "../utils/normName";
 
 /* ─── Tipos (espelham a estrutura gerada pelo pipeline Node) ─── */
 
@@ -317,10 +318,8 @@ function mergeCanonicalCourses(input: CourseData[]): CourseData[] {
  * substituir a bugada, e a UI continua a ler o EC original (errado).
  */
 function normCourseKey(s: string): string {
-  return String(s || "")
+  return stripAccents(String(s || ""))
     .toLowerCase()
-    // Remover diacríticos (combining chars U+0300..U+036F)
-    .normalize("NFD").replace(/[̀-ͯ]/g, "")
     // Remover apóstrofes curvas (U+2018, U+2019) e simples
     .replace(/[‘’']/g, "")
     // Colapsar whitespace múltiplo

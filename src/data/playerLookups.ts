@@ -9,6 +9,7 @@
  * camada de dados de Espanha, src/data/rfeg/).
  */
 import { cachedFetchJson } from "./fetchCache";
+import { stripAccents } from "../utils/normName";
 
 /* ── nome → ficha do federado FPG (lazy-load, mesma cache dos hooks de federados) ──
  *
@@ -29,7 +30,7 @@ import { cachedFetchJson } from "./fetchCache";
  */
 export interface FedByNameEntry { fed: string; name: string; dob: string | null; hcp: number | null; club: string | null; sex: string | null }
 const _fedNameKeys = (name: string): string[] => {
-  const toks = String(name || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  const toks = stripAccents(String(name || ""))
     .toLowerCase().replace(/[^a-z\s]/g, " ").split(/\s+/).filter(Boolean);
   if (toks.length < 2) return [];
   const ordenado = [...toks].sort().join(" ");

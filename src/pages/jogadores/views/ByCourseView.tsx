@@ -181,7 +181,7 @@ function CourseRoundsTable({ rows, data, courseName, note, openScorecardId, open
   return (
     <div className="mt-8">
       {note && <div className="muted fs-11 mb-4">{note}</div>}
-      <table className="dt-compact">
+      <table className="dtable dt-compact">
         <colgroup>
           <col className="col-p12" /><col className="col-p19" /><col className="col-p7" /><col className="col-p8" />
           <col className="col-p15" /><col className="col-p10" /><col className="col-p12" />
@@ -321,7 +321,7 @@ export default function ByCourseView({ data, search, sort }: {
   return (
     <div className="card">
       <div className="scroll-x">
-        <table className="dtable-lg dtable-roomy dtable-dense u-table-layout-fixed">
+        <table className="dtable dtable-lg dtable-roomy dtable-dense u-table-layout-fixed">
           <colgroup>
             <col className="u-w-72px" /><col /><col className="u-w-72px" />
             <col className="u-w-44px" /><col className="u-w-46px" /><col className="u-w-92px" />

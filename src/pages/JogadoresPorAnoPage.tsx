@@ -43,6 +43,7 @@ import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
 import { HCP_UNESTABLISHED_THRESHOLD as HCP_UNESTABLISHED } from "./jogadores/filterPlayers";
 import { HcpDelta } from "../ui/tableCells";
 import ClearButton from "../ui/ClearButton";
+import TabRow from "../ui/TabRow";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -369,29 +370,14 @@ export default function JogadoresPorAnoPage() {
         <span className="toolbar-title">📅 Jogadores por ano de nascimento</span>
 
         {/* Fonte: Nossos / TODOS */}
-        <div className="segmented-toggle" role="tablist" aria-label="Fonte de jogadores">
-          <button
-            role="tab" aria-selected={viewMode === "ours"}
-            className={`seg-btn ${viewMode === "ours" ? "active" : ""}`}
-            onClick={() => setViewMode("ours")}
-            title="Jogadores curados com análise detalhada"
-          >
-            <span className="seg-label">Nossos</span>
-            <span className="seg-count">{Object.keys(players).length}</span>
-          </button>
-          <button
-            role="tab" aria-selected={viewMode === "todos"}
-            className={`seg-btn ${viewMode === "todos" ? "active" : ""}`}
-            onClick={() => { setFedsError(null); setViewMode("todos"); }}
-            title={fedsError ? `Erro: ${fedsError}` : "Universo FPG completo (cadastro)"}
-            style={fedsError ? { background: "var(--color-warn-vivid)", color: "var(--text-on-color)" } : undefined}
-          >
-            <span className="seg-label">TODOS</span>
-            <span className="seg-count">
-              {federados ? federados.length.toLocaleString("pt-PT") : loadingFeds ? "⏳" : fedsError ? "⚠" : "15k+"}
-            </span>
-          </button>
-        </div>
+        <TabRow ariaLabel="Fonte de jogadores" active={viewMode}
+          onChange={(k) => { if (k === "todos") setFedsError(null); setViewMode(k); }}
+          tabs={[
+            { key: "ours" as const, label: "Nossos", count: Object.keys(players).length, title: "Jogadores curados com análise detalhada" },
+            { key: "todos" as const, label: "TODOS", className: fedsError ? "is-warn" : undefined,
+              count: federados ? federados.length.toLocaleString("pt-PT") : loadingFeds ? "⏳" : fedsError ? "⚠" : "15k+",
+              title: fedsError ? `Erro: ${fedsError}` : "Universo FPG completo (cadastro)" },
+          ]} />
 
         <input
           className="select u-minw-180px" placeholder="Procurar nome / clube / nº…"

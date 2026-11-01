@@ -15,6 +15,7 @@ import { tournamentPccs } from "../data/fpgUtils";
 import { shortDateSlash } from "../utils/format";
 import { FileBadge } from "./DataSources";
 import { tournamentAces } from "../utils/aces";
+import SidebarCard from "./SidebarCard";
 
 export const SSERRA_CCODE = "007";
 
@@ -68,8 +69,6 @@ export interface TournSidebarItemProps {
   href?: string;
 }
 
-const Sep = () => <div className="u-h-0_5px u-bg-1h5y7 u-m-4px-0" />;
-
 export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills, footer, href }: TournSidebarItemProps) {
   const nR       = t.rounds || 1;
   const nh       = t.nholes ?? (t.players[0] as any)?.nholes ?? (t.players[0] as any)?.par?.length ?? 18;
@@ -102,53 +101,15 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
     SIDEBAR_ACCENT.default
   );
 
-  // Wrap the item in <a href> if href is provided — allows native
-  // Ctrl/Cmd+click "open in new tab" and right-click "copy link address".
-  const commonProps = {
-    className: `course-item ${isActive ? "active" : ""}`,
-    style: { borderLeft: `4px solid ${accent}`, borderRadius: "0 6px 6px 0", cursor: "pointer",
-             color: "inherit", textDecoration: "none", display: "block" } as React.CSSProperties,
-  };
-  const Wrapper: any = href ? "a" : "div";
-  const wrapperProps = href ? {
-    href,
-    onClick: (e: React.MouseEvent) => {
-      // Click normal → chamar onClick local (seleciona na sidebar sem navegar).
-      // Ctrl/Cmd/Shift/middle-click → deixar comportamento default (nova aba).
-      if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
-      e.preventDefault();
-      onClick();
-    },
-  } : {
-    onClick,
-    role: "button",
-    tabIndex: 0,
-    onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") onClick(); },
-  };
   return (
-    <Wrapper {...commonProps} {...wrapperProps}>
-      {/* Linha 1: nome */}
-      <div className="gap-4 u-d-flex u-ai-flex-start u-mb-3px">
-        <span className={"course-item-name u-fl-1 u-fs-fs-12 u-lh-1_3 " + (isActive ? "u-fw-700" : "u-fw-500")}>
-          {t.name}
-        </span>
-        {nAces > 0 && (
-          <span title={`${nAces} hole-in-one neste torneio`} className="u-fsh-0 u-fs-fs-12">🕳️</span>
-        )}
-      </div>
-
-      {/* Linha 2: campo */}
-      {t.campo && (
-        <div className="u-fs-fs-12 u-c-text-2 u-fw-500 u-mb-3px">
-          📍 {t.campo}
-        </div>
+    <SidebarCard
+      active={isActive} accent={accent} onSelect={onClick} href={href}
+      name={t.name}
+      nameExtra={nAces > 0 && (
+        <span title={`${nAces} hole-in-one neste torneio`} className="u-fsh-0 u-fs-fs-12">🕳️</span>
       )}
-
-      <Sep />
-
-      {/* Linha 3: pills */}
-      <div className="gap-4 flex-wrap u-d-flex u-ai-center u-m-3px-0">
-
+      course={t.campo}
+      pills={<>
         {/* tcode(s) + link individual */}
         {tcodes.map(tc => (
           <span key={tc} className="gap-2 u-d-inline-flex u-ai-center">
@@ -156,7 +117,6 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
             <LinkBtn ccode={t.ccode} tcode={tc} active={isActive} />
           </span>
         ))}
-
         <RoundPill nR={nR} />
         {is9h && <NineHPill />}
         {isSserra && <SserraPill />}
@@ -168,24 +128,16 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
         {tournamentPccs(t).map(x => <PccPill key={x.round} pcc={x.pcc} round={nR > 1 ? x.round : undefined} />)}
         {manuelPlayed && <ManuelPill />}
         {!isSserra && <ClubePill clube={t.clube} ccode={t.ccode} />}
-      </div>
-
-      <Sep />
-
-      {/* Footer extra (conteúdo específico de cada página, ex: barra de inscritos USKids) */}
-      {footer}
-
-      {/* Linha 4: data + nº jog + origem do ficheiro */}
-      <div className="u-d-flex u-jc-space-between u-ai-center u-gap-6px">
-        <span className="u-fs-fs-11 u-c-text-muted u-fsh-0">{shortDate(t.date)}</span>
-        <div className="u-d-flex u-ai-center u-gap-4px u-fsh-0">
-          {t._sourceFile && <FileBadge path={t._sourceFile} />}
-          {(t.playerCount ?? 0) > 0 && (
-            <span className="u-fs-fs-11 u-c-text-muted">{t.playerCount} jog</span>
-          )}
-        </div>
-      </div>
-    </Wrapper>
+      </>}
+      footer={footer}
+      date={shortDate(t.date)}
+      right={<>
+        {t._sourceFile && <FileBadge path={t._sourceFile} />}
+        {(t.playerCount ?? 0) > 0 && (
+          <span className="u-fs-fs-11 u-c-text-muted">{t.playerCount} jog</span>
+        )}
+      </>}
+    />
   );
 }
 

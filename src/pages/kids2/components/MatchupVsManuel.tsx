@@ -130,7 +130,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
         </h3>
         {avgPosJ != null && avgPosM != null && (
           <span className="u-fs-fs-11 u-c-text-3 u-ml-auto">
-            Avg: {firstName} {avgPosJ}º · Manuel {avgPosM}º
+            Avg: {firstName} {avgPosJ}.º · Manuel {avgPosM}.º
           </span>
         )}
       </div>

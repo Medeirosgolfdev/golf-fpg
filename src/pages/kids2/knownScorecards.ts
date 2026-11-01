@@ -26,6 +26,7 @@ import {
   LT_FORET_PAR, LT_FORET_SI, LT_FORET_M,
 } from "../../data/rivalData";
 import type { Flight, Result } from "./data";
+import { stripAccents } from "../../utils/normName";
 
 // ═══════════════════════════════════════════════════════════════════════
 // Tipos
@@ -63,10 +64,9 @@ interface KnownTournamentEntry {
 // ═══════════════════════════════════════════════════════════════════════
 
 function normName(s: string | undefined | null): string {
-  return (s || "").trim().toLowerCase()
+  return stripAccents((s || "").trim().toLowerCase()
     .replace(/[-'’.·\/]+/g, " ")
-    .replace(/\s+/g, " ")
-    .normalize("NFD").replace(/[̀-ͯ]/g, "");
+    .replace(/\s+/g, " "));
 }
 
 function buildPlayerCards(

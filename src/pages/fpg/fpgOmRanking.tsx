@@ -122,8 +122,8 @@ export function OmCatBadge({ hit }: { hit: OmHit }) {
   }
   return (
     <span className="p p-sm" style={{ background: c.bg, color: c.fg, borderColor: "transparent" }}
-      title={`Ordem de Mérito · ${hit.label} — ${hit.pos}º (${hit.pts} pts)`}>
-      {CAT_SHORT[hit.catKey] || hit.label} {hit.pos}º
+      title={`Ordem de Mérito · ${hit.label} — ${hit.pos}.º (${hit.pts} pts)`}>
+      {CAT_SHORT[hit.catKey] || hit.label} {hit.pos}.º
     </span>
   );
 }
@@ -211,7 +211,7 @@ function pointsLadder(
   const pts = (data?.points?.[lv] || {}) as Record<string, number>;
   const bands = (data?.bands?.[lv] || {}) as Record<string, number>;
   const out: Array<{ pos: string; pts: number }> = [];
-  for (let p = 1; p <= 10; p++) if (pts[p] != null) out.push({ pos: `${p}º`, pts: pts[p] });
+  for (let p = 1; p <= 10; p++) if (pts[p] != null) out.push({ pos: `${p}.º`, pts: pts[p] });
   if (bands["11-15"] != null) out.push({ pos: "11-15º", pts: bands["11-15"] });
   if (bands["16-20"] != null) out.push({ pos: "16-20º", pts: bands["16-20"] });
   return out;
@@ -433,7 +433,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
               célula é a posição do jogador nesse torneio (+ pontos). A coluna
               desta prova (se já pontuou) fica realçada. */}
           <div className="u-ox-auto">
-            <table className="player-list-table om-rank-table u-fvn-tabular-nums">
+            <table className="dtable player-list-table om-rank-table u-fvn-tabular-nums">
               <thead>
                 <tr>
                   <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>#</SortableHdr>
@@ -493,9 +493,9 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                         return (
                           <td key={ev.tcode} className="fs-12"
                             style={{ textAlign: "center", whiteSpace: "nowrap", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? HERE_CELL : {}) }}
-                            title={e ? `${ev.name}: ${e.pos}º · ${ev.juniorScoring ? `${ev.juniorScoring}: ${e.score ?? ""} · ` : ""}gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
+                            title={e ? `${ev.name}: ${e.pos}.º · ${ev.juniorScoring ? `${ev.juniorScoring}: ${e.score ?? ""} · ` : ""}gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
                             {e
-                              ? <><b>{e.pos}º</b> <span className="fs-11 u-c-accent u-fw-700">{e.pts}</span></>
+                              ? <><b>{e.pos}.º</b> <span className="fs-11 u-c-accent u-fw-700">{e.pts}</span></>
                               : <span className="p-muted">—</span>}
                           </td>
                         );
@@ -609,7 +609,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                   {" "}({jogo.porNivel.map(n => `${n.provas}× ${LEVEL_LABEL[n.level].replace(" (Major)", "")} a ${n.porProva}`).join(" · ")}).
                 </div>
                 <div className="u-ox-auto">
-                  <table className="player-list-table u-fvn-tabular-nums">
+                  <table className="dtable player-list-table u-fvn-tabular-nums">
                     <thead>
                       <tr>
                         <th>#</th><th>Jogador</th>
@@ -700,7 +700,7 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
     <div className="u-mt-14px">
       <div className="fs-13 u-mb-6px"><strong>Como se pontuam os juniores em cada prova</strong></div>
       <div className="u-ox-auto">
-        <table className="player-list-table u-fvn-tabular-nums">
+        <table className="dtable player-list-table u-fvn-tabular-nums">
           <thead>
             <tr>
               <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
@@ -771,7 +771,7 @@ const SHORT_EV: Array<[RegExp, string]> = [
 function shortEv(name: string): string {
   for (const [rx, s] of SHORT_EV) if (rx.test(name || "")) return s;
   const om = (name || "").match(/(\d+)\s*º.*\bom\s*\/?\s*nos\b/i);
-  if (om) return `${om[1]}º OM NOS`;
+  if (om) return `${om[1]}.º OM NOS`;
   return (name || "")
     .replace(/torneio\s+(d[ae]\s+)?/i, "")
     .replace(/\s*cgss.*$/i, "")

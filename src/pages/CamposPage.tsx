@@ -34,6 +34,7 @@ import TeeBars from "../ui/TeeBars";
 import DetailHeader from "../ui/DetailHeader";
 import MasterDetail from "../ui/MasterDetail";
 import PlayerLink from "../ui/PlayerLink";
+import { stripAccents } from "../utils/normName";
 
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
@@ -731,7 +732,7 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
  * "Sem tee" vão para o fim. */
 const TEE_COLOR_ORDER = ["pretas", "azuis", "brancas", "amarelas", "laranjas", "verdes", "vermelhas", "rosas", "douradas", "castanhas"];
 function teeRankKey(label: string): number {
-  const k = label.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+  const k = stripAccents(label).toLowerCase().trim();
   const i = TEE_COLOR_ORDER.indexOf(k);
   return i < 0 ? 90 : i;
 }

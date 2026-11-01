@@ -8,6 +8,7 @@
  */
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import type { RFEGIndex, RFEGIndexEntry } from "./types";
+import { stripAccents } from "../../utils/normName";
 
 export function rfegSex(s: string | null | undefined): CircuitSex | undefined {
   return s === "M" ? "M" : s === "F" ? "F" : (s === "Mixto" || s === "Mixed") ? "Mixed" : undefined;
@@ -29,7 +30,7 @@ export function rfegSourceUrl(t: RFEGIndexEntry): string {
  *  Masculino 2026" → "Campeonato de España 2026"). */
 function rfegBaseName(t: RFEGIndexEntry): string {
   let n = t.name || "";
-  const fold = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const fold = (s: string) => stripAccents(s).toLowerCase();
   if (t.category) {
     n = n.replace(new RegExp(`\\b${t.category.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "gi"), " ");
     // Strip adicional SEM acentos: o nome pode trazer o escalão sem acento
@@ -89,7 +90,7 @@ function clusterByDate(group: RFEGIndexEntry[], win: number): RFEGIndexEntry[][]
   return clusters;
 }
 
-const slugify = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+const slugify = (s: string) => stripAccents(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
 /** Janela máxima (dias) para um grupo ser "o mesmo evento" e não uma SÉRIE
  *  (Puntuável/Circuito espalhado por meses). */
@@ -118,7 +119,7 @@ function esMonthLabel(dateStr?: string): string {
   if (!dateStr) return "";
   const iso = /^\d{4}-(\d{2})/.exec(dateStr);
   if (iso) { const i = +iso[1] - 1; return (i >= 0 && i < 12) ? MESES_ES[i] : ""; }
-  const norm = dateStr.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const norm = stripAccents(dateStr.toLowerCase());
   const m = /\b(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)\b/.exec(norm);
   if (!m) return "";
   const w = m[1] === "setiembre" ? "septiembre" : m[1];

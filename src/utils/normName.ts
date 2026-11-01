@@ -11,14 +11,17 @@
  * pontuação ( -  '  ’  .  ·  / ) convertida em espaço + espaços condensados.
  */
 export function normName(n: string): string {
-  return (n || "")
+  return stripAccents((n || "")
     .trim()
     .toLowerCase()
     .replace(/[-'’.·/]+/g, " ")
     .replace(/\s+/g, " ")
-    .trim()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "");
+    .trim());
+}
+
+/** Tira os acentos («João» → «Joao»): decompõe (NFD) e apaga as marcas. Um só sítio. */
+export function stripAccents(s: string): string {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
 /**
@@ -28,7 +31,7 @@ export function normName(n: string): string {
  * leaderboard onde o nome já vem limpo e não se quer colapsar "Jean-Pierre".
  */
 export function normLoose(s: string): string {
-  return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+  return stripAccents(s || "").toLowerCase().replace(/\s+/g, " ").trim();
 }
 
 /**

@@ -127,7 +127,7 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
       <div className="h-md fs-14">📈 Evolução 2025 → 2026</div>
       <div className="muted fs-10 mb-8">{evo.length} jogadores em ambas as edições</div>
       <div className="tourn-scroll">
-        <table className="dtable-lg">
+        <table className="dtable dtable-lg">
           <thead>
             <tr>
               {hdr("n", "Jogador", "ta-left", { minWidth: 120 })}

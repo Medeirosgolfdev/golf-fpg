@@ -21,6 +21,7 @@ import { ESCALOES_DRIVE as DRIVE_ESCALOES } from "../../constants/escaloes";
 import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../../ui/circuit/types";
 import { isManuelByName } from "../../constants/manuel";
 import { withDivisionModel } from "../model/division";
+import { stripAccents } from "../../utils/normName";
 
 /** Ordem canónica de escalões do Drive (para ordenar tabs/divisões). */
 
@@ -372,7 +373,7 @@ export const DRIVE_CONFIG: CircuitConfig = {
   // `matchDivision` casa-o por label (escalões Drive distam 2, sem contaminação ±1).
   editionKey: (e) => {
     if (!e.series) return null;
-    const campo = shortCampo(e.course).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+    const campo = stripAccents(shortCampo(e.course).toLowerCase()).replace(/[^a-z0-9]+/g, " ").trim();
     if (!campo) return null;
     return `${e.series}|${campo}`;
   },
@@ -390,7 +391,7 @@ export const DRIVE_CONFIG: CircuitConfig = {
 /** Nome-base de um torneio Drive para casar duplicados: sem acentos, minúsculas,
  *  cortado no primeiro " – "/" - " (o sufixo é o campo: "Final Drive Tour – Oeiras…"). */
 function driveBaseName(name: string | undefined | null): string {
-  return String(name || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+  return stripAccents(String(name || "")).toLowerCase()
     .split(/\s+[–-]\s+/)[0].replace(/\s+/g, " ").trim();
 }
 

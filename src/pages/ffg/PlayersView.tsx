@@ -316,7 +316,7 @@ export function FFGPlayersView() {
       ) : (
         <>
           <div className="u-ox-auto">
-            <table className="player-list-table u-w-100pc u-fs-fs-12">
+            <table className="dtable player-list-table u-w-100pc u-fs-fs-12">
               <thead>
                 <tr>
                   <SortableHdr k="license" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Licence</SortableHdr>

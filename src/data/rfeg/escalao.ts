@@ -5,6 +5,7 @@
  * Tirado da RFEGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { SUB_TO_ES_TERM } from "../../ui/PillBadge";
+import { stripAccents } from "../../utils/normName";
 
 /* ── Helpers de conversão idade → Sub-N (escalão FPG/RFEG) ──────
  * Todos os adapters (LGS/NC/RFEGolf) usam isto para preencher
@@ -35,7 +36,7 @@ export const ES_TERM_CANON: Record<string, string> = {
 };
 export function canonEscaloEs(s: string | null | undefined): string | null {
   if (!s) return null;
-  const k = s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[\s-]/g, "");
+  const k = stripAccents(s.toLowerCase()).replace(/[\s-]/g, "");
   return ES_TERM_CANON[k] || s.trim();
 }
 /** Escalão RFEG a partir do NOME de uma categoria de prova (golfdirecto e
@@ -46,7 +47,7 @@ export function canonEscaloEs(s: string | null | undefined): string | null {
  *  como «Sub-18»/«Sub-21» (o que o golfdirecto já mostrava). */
 export function escaloEsFromCategory(name: string | null | undefined): string | null {
   if (!name) return null;
-  const t = name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const t = stripAccents(name.toLowerCase());
   const found = new Set<string>();
   const word = (re: string) => new RegExp(`(?:^|[^a-z])(?:${re})`).test(t);
   if (word("benj")) found.add("Benjamín");

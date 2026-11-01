@@ -387,7 +387,7 @@ export default function AtletaSearchPanel({
             <Kpi label="Top-10" value={selected.top10 || "—"} />
             <Kpi
               label="Melhor"
-              value={selected.best < 999 ? `${selected.best}º` : "—"}
+              value={selected.best < 999 ? `${selected.best}.º` : "—"}
               accent={selected.best === 1}
             />
           </div>

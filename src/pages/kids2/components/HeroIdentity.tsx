@@ -19,6 +19,7 @@ import { MANUEL_DOB } from "../../../constants/manuel";
 import { cachedFetchJson } from "../../../data/fetchCache";
 import HcpSparkline from "./HcpSparkline";
 import { shortDateSlash } from "../../../utils/format";
+import { stripAccents } from "../../../utils/normName";
 
 /** Bandeira por federação — mostrada junto ao número de licença. */
 const SOURCE_FLAGS: Record<string, string> = {
@@ -39,8 +40,7 @@ type EgrSlimEntry = [string, string | null, number | null, number | null, number
 interface EgrSlimFile { players: Record<string, EgrSlimEntry>; byName: Record<string, EgrSlimEntry> }
 
 export function egrNameKey(s: string): string {
-  return String(s || "")
-    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+  return stripAccents(String(s || ""))
     .toLowerCase().replace(/[.,'\-]/g, " ")
     .split(/\s+/).filter(Boolean).sort().join(" ");
 }
@@ -349,7 +349,7 @@ export default function HeroIdentity({ data, junior }: Props) {
                   title={`${r.t}${r.f ? ` — ranking de ${shortDateSlash(r.f, true)}` : ""}${r.pts != null ? ` · ${r.pts} pontos` : ""}${r.via === "nome" ? " · ligado por nome e ano de nascimento" : ""}`}
                   className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
               <span className="u-fs-fs-12 u-lh-1">{SOURCE_FLAGS.RFEG}</span>
-              {r.pos}º de {r.n} <span className="u-c-text-3 u-ml-3px">· Ranking {r.curto}</span>
+              {r.pos}.º de {r.n} <span className="u-c-text-3 u-ml-3px">· Ranking {r.curto}</span>
             </span>
           ))}
           {hcpLista && (

@@ -1882,7 +1882,7 @@ export function RoundSimulator({
             )}
           </div>
           <div className="scroll-x">
-            <table className="dtable-sm">
+            <table className="dtable dtable-sm">
               <thead>
                 <tr>
                   <th className="r">Pancadas{grossTable.is9 ? " (9h)" : ""}</th>
@@ -1996,7 +1996,7 @@ export function RoundSimulator({
           </summary>
           <div className="rsim-collapse-body">
           <div className="scroll-x">
-          <table className="dtable-sm">
+          <table className="dtable dtable-sm">
             <thead>
               <tr>
                 {poolHdr("whs", "WHS#", "r")}

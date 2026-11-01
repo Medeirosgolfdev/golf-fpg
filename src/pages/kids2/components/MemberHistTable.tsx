@@ -124,7 +124,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
       </div>
 
       <div className="u-ox-auto">
-        <table className="dtable-sm">
+        <table className="dtable dtable-sm">
           <thead>
             <tr>
               <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>

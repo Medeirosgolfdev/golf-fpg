@@ -190,7 +190,7 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
       ) : (
         <>
           <div className="u-ox-auto">
-            <table className="player-list-table u-w-100pc">
+            <table className="dtable player-list-table u-w-100pc">
               <thead>
                 <tr>
                   <th className="u-w-34px u-ta-right">#</th>

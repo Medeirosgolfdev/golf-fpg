@@ -195,7 +195,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                       <td key={`${e.id}_n`}
                           className={[p?.isManuel ? "cell-manuel fw-700" : p?.isPt ? "cell-portuguese" : ""].filter(Boolean).join(" ") || undefined}
                           style={{ textAlign: "left", borderLeft: bl(ei), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}
-                          title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${p.pos}º oficial` : ""}` : undefined}>
+                          title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${p.pos}.º oficial` : ""}` : undefined}>
                         {p ? <>{clubFlagPrefix(p.club) }{p.name}</> : <span className="c-muted">–</span>}
                       </td>,
                       // Total de quem NÃO completou (WD/DNF ou volta a decorrer)

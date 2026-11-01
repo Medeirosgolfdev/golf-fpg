@@ -208,7 +208,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
 
   return (
     <div className="u-bd-1px-solid-border u-br-radius u-ov-hidden u-bs-shadow-sm">
-      <table className="player-list-table u-fs-fs-12 u-w-100pc">
+      <table className="dtable player-list-table u-fs-fs-12 u-w-100pc">
         <thead>
           <tr>
             <SortableHdr k="order" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
@@ -344,7 +344,7 @@ function RoundTable({ round }: { round: MatchplayRound }) {
 
   return (
     <div className="u-ox-auto">
-      <table className="player-list-table u-fs-fs-12 u-w-100pc">
+      <table className="dtable player-list-table u-fs-fs-12 u-w-100pc">
         <thead>
           <tr>
             <SortableHdr k="no" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
@@ -446,7 +446,7 @@ function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
 
   return (
     <div className="u-ox-auto">
-      <table className="player-list-table u-fs-fs-12 u-w-100pc">
+      <table className="dtable player-list-table u-fs-fs-12 u-w-100pc">
         <thead>
           <tr>
             <SortableHdr k="no" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
@@ -517,7 +517,7 @@ function StandingsTable({ rows }: { rows: { pos: number; name: string }[] }) {
   return (
     <div className="u-mb-20px">
       <div className="fw-700 u-mb-4px">Classificação final</div>
-      <table className="player-list-table u-fs-fs-12 u-w-auto u-minw-260px">
+      <table className="dtable player-list-table u-fs-fs-12 u-w-auto u-minw-260px">
         <thead>
           <tr>
             <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>

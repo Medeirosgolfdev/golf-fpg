@@ -27,6 +27,8 @@ import CircuitShell from "../circuit/CircuitShell";
 import type { CircuitConfig, CircuitEntry } from "../circuit/types";
 import { circuitRanking } from "../circuit/CircuitRanking";
 import ExtLink from "../ExternalLink";
+import Pager from "../Pager";
+import { usePaged } from "../../hooks/usePaged";
 
 const PAGE_SIZE = 100;
 
@@ -151,8 +153,6 @@ export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, t
 }) {
   const firstDirs = useMemo(() => Object.fromEntries(cols.filter((c) => c.firstDir).map((c) => [c.key, c.firstDir!])), [cols]);
   const { sortKey, sortDir, toggleSort } = useSort<string>(defaultSort, defaultDir, firstDirs);
-  const [page, setPage] = useState(0);
-
   const sorted = useMemo(() => {
     const col = cols.find((c) => c.key === sortKey);
     if (!col?.sort) return rows;
@@ -167,15 +167,13 @@ export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, t
     });
   }, [rows, cols, sortKey, sortDir, tieBreak]);
 
-  // Volta à 1ª página quando a lista ou a ordem mudam.
-  useEffect(() => { setPage(0); }, [rows, sortKey, sortDir]);
-  const totalPages = paged ? Math.max(1, Math.ceil(sorted.length / PAGE_SIZE)) : 1;
-  const shown = paged ? sorted.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE) : sorted;
+  // Volta à 1.ª página quando a lista ou a ordem mudam (sorted muda nos dois casos).
+  const { page, setPage, totalPages, pageRows: shown } = usePaged(sorted, sorted, paged ? PAGE_SIZE : Math.max(1, sorted.length));
 
   return (
     <>
       <div className="u-ox-auto">
-        <table className="player-list-table u-w-100pc u-fs-fs-12">
+        <table className="dtable player-list-table u-w-100pc u-fs-fs-12">
           <thead>
             <tr>
               {cols.map((c) => c.sort
@@ -194,7 +192,7 @@ export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, t
           </tbody>
         </table>
       </div>
-      {totalPages > 1 && <Pagination page={page} totalPages={totalPages} onPage={setPage} />}
+      <Pager page={page} totalPages={totalPages} onPage={setPage} />
     </>
   );
 }
@@ -371,14 +369,3 @@ function Stat({ label, value, title }: { label: string; value: React.ReactNode; 
   );
 }
 
-function Pagination({ page, totalPages, onPage }: { page: number; totalPages: number; onPage: (p: number) => void }) {
-  return (
-    <div className="u-d-flex u-jc-center u-ai-center u-gap-8px u-p-12px-0 u-fs-fs-12">
-      <button className="btn-link" disabled={page === 0} onClick={() => onPage(0)}>«</button>
-      <button className="btn-link" disabled={page === 0} onClick={() => onPage(page - 1)}>‹</button>
-      <span>Página {page + 1} de {totalPages}</span>
-      <button className="btn-link" disabled={page >= totalPages - 1} onClick={() => onPage(page + 1)}>›</button>
-      <button className="btn-link" disabled={page >= totalPages - 1} onClick={() => onPage(totalPages - 1)}>»</button>
-    </div>
-  );
-}

@@ -27,6 +27,7 @@ import { FilterField, ToggleChip } from "../../ui/FilterField";
 import type { JogadoresFiltersApi } from "./useJogadoresFilters";
 import { NEW_DAYS, type SortKey, type ViewMode } from "./filterPlayers";
 import ClearButton from "../../ui/ClearButton";
+import TabRow from "../../ui/TabRow";
 
 /** Contagens calculadas (memoizadas) no shell — a toolbar não varre listas. */
 export interface ToolbarCounts {
@@ -96,61 +97,25 @@ export default function JogadoresToolbar({
         <ToolbarTitle>🏌️ Jogadores</ToolbarTitle>
         <DataSourcesChip sources={dataSources} />
         {/* Toggle Nossos / TODOS (lazy-load federados.json) */}
-        <div className="segmented-toggle" role="tablist" aria-label="Fonte de jogadores">
-          <button
-            role="tab"
-            aria-selected={viewMode === "ours"}
-            className={`seg-btn ${viewMode === "ours" ? "active" : ""}`}
-            onClick={() => onSetViewMode("ours")}
-            title={filters.includeSeniors
-              ? `${counts.nossosTotal} jogadores com análise detalhada`
-              : `${counts.nossosNonSenior} não-seniores (total ${counts.nossosTotal} com seniores)`}
-          >
-            <span className="seg-label">Nossos</span>
-            <span className="seg-count">{nossosShown}</span>
-          </button>
-          <button
-            role="tab"
-            aria-selected={viewMode === "todos"}
-            className={`seg-btn ${viewMode === "todos" ? "active" : ""}`}
-            onClick={() => onSetViewMode("todos")}
-            title={federadosError ? `Erro: ${federadosError}` : (filters.includeSeniors ? "Lista FPG completa (cadastro)" : `Sem seniores — total ${counts.todosTotal ?? "?"} com seniores`)}
-            style={federadosError ? { background: "var(--color-warn-vivid)", color: "var(--text-on-color)" } : undefined}
-          >
-            <span className="seg-label">TODOS</span>
-            <span className="seg-count">
-              {todosShown != null ? todosShown.toLocaleString("pt-PT")
-                : loadingFeds ? "⏳"
-                : federadosError ? "⚠"
-                : "15k+"}
-            </span>
-          </button>
-        </div>
+        <TabRow ariaLabel="Fonte de jogadores" active={viewMode} onChange={onSetViewMode}
+          tabs={[
+            { key: "ours" as const, label: "Nossos", count: nossosShown,
+              title: filters.includeSeniors
+                ? `${counts.nossosTotal} jogadores com análise detalhada`
+                : `${counts.nossosNonSenior} não-seniores (total ${counts.nossosTotal} com seniores)` },
+            { key: "todos" as const, label: "TODOS", className: federadosError ? "is-warn" : undefined,
+              count: todosShown != null ? todosShown.toLocaleString("pt-PT") : loadingFeds ? "⏳" : federadosError ? "⚠" : "15k+",
+              title: federadosError ? `Erro: ${federadosError}` : (filters.includeSeniors ? "Lista FPG completa (cadastro)" : `Sem seniores — total ${counts.todosTotal ?? "?"} com seniores`) },
+          ]} />
         {/* Vista Lista | 📊 Stats — era um botão de "filtro" 📊; é uma troca de
             vista, por isso ganha a forma segmented (padrão CamposPage). */}
-        <div className="segmented-toggle" role="tablist" aria-label="Vista">
-          <button role="tab" aria-selected={!showStats && !showCompare}
-            className={`seg-btn ${!showStats && !showCompare ? "active" : ""}`}
-            onClick={() => { onSetShowStats(false); onSetShowCompare?.(false); }}>
-            <span className="seg-label">Lista</span>
-          </button>
-          {viewMode === "todos" && (
-            <button role="tab" aria-selected={showStats && !showCompare}
-              className={`seg-btn ${showStats && !showCompare ? "active" : ""}`}
-              onClick={() => { onSetShowCompare?.(false); onSetShowStats(true); }}
-              title="Estatísticas globais dos federados FPG">
-              <span className="seg-label">📊 Stats</span>
-            </button>
-          )}
-          {onSetShowCompare && (
-            <button role="tab" aria-selected={showCompare}
-              className={`seg-btn ${showCompare ? "active" : ""}`}
-              onClick={() => { onSetShowStats(false); onSetShowCompare(true); }}
-              title="Comparar até 4 jogadores lado a lado">
-              <span className="seg-label">⚔️ Comparar</span>
-            </button>
-          )}
-        </div>
+        <TabRow ariaLabel="Vista" active={showCompare ? "compare" : showStats ? "stats" : "lista"}
+          onChange={(k) => { onSetShowCompare?.(k === "compare"); onSetShowStats(k === "stats"); }}
+          tabs={[
+            { key: "lista", label: "Lista" },
+            ...(viewMode === "todos" ? [{ key: "stats", label: "📊 Stats", title: "Estatísticas globais dos federados FPG" }] : []),
+            ...(onSetShowCompare ? [{ key: "compare", label: "⚔️ Comparar", title: "Comparar até 4 jogadores lado a lado" }] : []),
+          ]} />
         {viewMode === "todos" && federadosError && (
           <div className="muted fs-10 fw-600 u-c-color-warn-vivid">
             ⚠ Erro a carregar federados.json: {federadosError}

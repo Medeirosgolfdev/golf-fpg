@@ -19,6 +19,7 @@ import CourseHeroCard from "../../ui/CourseHeroCard";
 import { useCourses } from "../../context/CoursesContext";
 import type { Course, Tee } from "../../data/types";
 import EmptyState from "../../ui/EmptyState";
+import { stripAccents } from "../../utils/normName";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -82,9 +83,8 @@ const COURSE_STOPWORDS = new Set([
 
 function courseTokens(name: string): Set<string> {
   return new Set(
-    name
-      .toLowerCase()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    stripAccents(name
+      .toLowerCase())
       .replace(/[^a-z0-9]+/g, " ")
       .split(" ")
       // D\u00edgitos isolados CONTAM (distinguem "No. 2" de "No. 8" no mesmo clube);

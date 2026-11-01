@@ -34,6 +34,7 @@ import { eclecticos9 } from "../../data/sserraLoops";
 import { useCamposDe9 } from "../../hooks/useCamposDe9";
 import type { ViewKey, CourseSort } from "./shared";
 import { MANUEL_FED } from "../../constants/manuel";
+import TabRow from "../../ui/TabRow";
 // Draws (companheiros de jogo) — só na ficha do Manuel; saiu da barra (13/10/2026).
 const DrawsPage = lazy(() => import("../DrawsPage"));
 
@@ -336,20 +337,11 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   {fedId === MANUEL_FED && <option value="draws">🤝 Draws (companheiros)</option>}
                 </select>
                 {viewBucket === "by_date" && (
-                  <div className="segmented-toggle" role="tablist" aria-label="Agrupamento das rondas">
-                    <button role="tab" aria-selected={view !== "by_tournament"}
-                      className={`seg-btn ${view !== "by_tournament" ? "active" : ""}`}
-                      onClick={() => setView("by_date")}
-                      title="Todas as rondas por ordem cronológica">
-                      <span className="seg-label">Data</span>
-                    </button>
-                    <button role="tab" aria-selected={view === "by_tournament"}
-                      className={`seg-btn ${view === "by_tournament" ? "active" : ""}`}
-                      onClick={() => setView("by_tournament")}
-                      title="Rondas agrupadas por torneio (multi-ronda junto)">
-                      <span className="seg-label">Torneio</span>
-                    </button>
-                  </div>
+                  <TabRow ariaLabel="Agrupamento das rondas" active={view === "by_tournament" ? "by_tournament" : "by_date"} onChange={setView}
+                    tabs={[
+                      { key: "by_date" as const, label: "Data", title: "Todas as rondas por ordem cronológica" },
+                      { key: "by_tournament" as const, label: "Torneio", title: "Rondas agrupadas por torneio (multi-ronda junto)" },
+                    ]} />
                 )}
                 {viewBucket === "by_course" && (
                   <select className="select" value={courseSort}
