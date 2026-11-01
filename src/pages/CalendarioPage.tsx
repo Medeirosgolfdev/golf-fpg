@@ -14,7 +14,7 @@
  * quando duplicam a mesma prova no calendário FPG.
  */
 import TabRow from "../ui/TabRow";
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, type CSSProperties } from "react";
 import { C } from "../utils/colors";
 import type { PlayersDb } from "../data/types";
 import { useAppContext } from "../context/AppContext";
@@ -41,15 +41,7 @@ interface CalendarSource {
    eram onze cores diferentes, e o "FPG Jr" usava a dos US Kids — o que fazia o
    calendário parecer um saco de missangas em vez de dizer, à distância, de que
    tipo de compromisso se trata. */
-const FAMILIA: Record<CalGroup, string> = {
-  CGSS:     "#1d4ed8",   // azul — o clube
-  JUNIOR:   "#047857",   // verde-esmeralda — academia júnior
-  DRIVE:    "#7c3aed",   // violeta — circuito Drive
-  FPG:      "#be185d",   // magenta — federação
-  DESTAQUE: "#b91c1c",   // vermelho — as provas que contam
-  ANIVER:   "#9ca3af",   // cinzento neutro — aniversários (contexto, não agenda)
-  VIAGENS:  "#0e7490",   // ciano — deslocações (céu e mar, e não compete com as provas)
-};
+const FAMILIA: Record<CalGroup, string> = C.calFamilia;  // cores em utils/colors.ts
 
 /** Tom `i` de `n` dentro da família: mesma cor, cada vez mais clara. */
 function tom(base: string, i: number, n: number): string {
@@ -299,12 +291,8 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
           const sd = schoolDay(d.date);
           const livreMini = isFreeDay(d.date);
           return (
-            <div key={i} onClick={() => onSelect(d.date)} {...clickableA11y(() => onSelect(d.date))} className="cal-day-cell" style={{
-              color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : isSel ? "var(--accent)" : "var(--text)",
-              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)"
-                : livreMini ? "var(--cal-livre-bg)" : sd.tipo === "aulas" ? "var(--cal-escola-bg)" : "transparent",
-              fontWeight: isToday || isSel ? 600 : 400,
-            }} title={livreMini ? `Livre — ${freeDayReason(d.date)}` : sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : undefined}>
+            <div key={i} onClick={() => onSelect(d.date)} {...clickableA11y(() => onSelect(d.date))}
+              className={"cal-day-cell" + (!d.inMonth ? " out" : "") + (isToday ? " today" : isSel ? " sel" : livreMini ? " livre" : sd.tipo === "aulas" ? " aulas" : "")} title={livreMini ? `Livre — ${freeDayReason(d.date)}` : sd.tipo === "aulas" ? `Escola — ${sd.periodo}` : undefined}>
               {d.date.getDate()}
               {has && d.inMonth && !isToday && (
                 <span className="cal-dot-indicator u-w-3px u-h-3px u-bg-accent" />
@@ -332,7 +320,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
       <div ref={ref} className="u-bg-bg-card u-br-radius-xl u-bs-shadow-lg u-w-380px u-ov-hidden u-animation-calpopin-0_2s-ease">
         <div style={{ background: hl ? hl.bg : color,
           padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
- <span className="uppercase fw-600 fs-12" style={{ color: hl ? hl.text : "#fff", letterSpacing: "0.04em" }}>
+ <span className="uppercase fw-600 fs-12 u-ls-0_04em" style={{ color: hl ? hl.text : "var(--text-on-color)" }}>
             {calName}
           </span>
           <button onClick={onClose} title="Fechar" aria-label="Fechar"
@@ -407,20 +395,13 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
                 <div key={e.id}
                   ref={isFirstUpcoming ? firstUpcomingRef : undefined}
                   onClick={() => onSelect(e)} {...clickableA11y(() => onSelect(e))}
-                  style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px",
-                    borderRadius: hl ? 8 : "var(--radius)", cursor: "pointer", transition: "background 0.15s",
-                    background: hl ? `${hl.bg}18` : "transparent",
-                    border: hl ? `2px solid ${hl.bg}66` : "2px solid transparent",
-                    opacity: isPast ? 0.45 : opacidadeDe(e),
-                  }}
-                  onMouseEnter={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}30` : "var(--bg-hover)")}
-                  onMouseLeave={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}18` : "transparent")}>
+                  className={"cal-list-item" + (hl ? " hl" : "")}
+                  style={{ opacity: isPast ? 0.45 : opacidadeDe(e), ...(hl ? { "--cal-hl": hl.bg } as CSSProperties : {}) }}>
                   <div className="col-w42 ta-c shrink-0">
  <div className="uppercase fw-500 fs-10" style={{ color: hl ? hl.border : "var(--text-3)" }}>{DAY_NAMES[e.date.getDay()]}</div>
- <div className="fw-600 fs-18" style={{ color: hl ? hl.border : "var(--text)", lineHeight: 1.2 }}>{e.date.getDate()}</div>
+ <div className="fw-600 fs-18 u-lh-1_2" style={{ color: hl ? hl.border : "var(--text)" }}>{e.date.getDate()}</div>
                   </div>
-                  <div style={{ width: 4, alignSelf: "stretch", borderRadius: "var(--radius-xs)",
-                    background: hl ? hl.bg : c, flexShrink: 0 }} />
+                  <div className="cal-bar" style={{ background: hl ? hl.bg : c }} />
                   <div className="flex-1 u-minw-0">
                     <div className="text-ellipsis fs-13 fw-600 u-c-text">
                       {hl ? `${hl.icon} ` : ""}{omNivel(e) ? <span className="p p-sm u-mr-4px u-fw-800 u-fs-fs-9" title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`}>{omNivel(e)}</span> : null}{e.title}
@@ -429,9 +410,7 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
                       {e.modalidade}{e.modalidade && " · "}{e.campo}
                     </div>
                   </div>
-                  <span className="fs-10 fw-600" style={{ padding: "2px 8px", borderRadius: "var(--radius-lg)",
-                    background: hl ? hl.bg : c,
-                    color: hl ? hl.text : "#fff", whiteSpace: "nowrap", flexShrink: 0 }}>
+                  <span className="cal-name-pill" style={{ background: hl ? hl.bg : c, ...(hl ? { color: hl.text } : {}) }}>
                     {CAL_MAP.get(e.calId)?.name ?? ""}
                   </span>
                 </div>
@@ -631,28 +610,13 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                         <div className="flex-center u-gap-0">
                           {/* Checkbox */}
                           <button onClick={() => toggleCal(cal.id)} className="shrink-0 u-w-28px u-h-26px u-bd-none u-cur-pointer u-bg-transparent u-d-flex u-ai-center u-jc-center u-p-0">
-                            <span style={{
-                              width: 12, height: 12, borderRadius: "var(--radius-xs)", transition: "all 0.15s",
-                              background: enabledCals.has(cal.id) ? cal.color : "transparent",
-                              border: `2px solid ${enabledCals.has(cal.id) ? cal.color : "var(--border)"}`,
-                            }} />
+                            <span className="cal-check" style={enabledCals.has(cal.id) ? { background: cal.color, borderColor: cal.color } : undefined} />
                           </button>
                           {/* Name — click to expand */}
-                          <button onClick={() => setExpandedCal(isExpanded ? null : cal.id)} style={{
-                            flex: 1, display: "flex", alignItems: "center", gap: 4, minWidth: 0,
-                            padding: "3px 4px", border: "none", cursor: "pointer", fontFamily: "inherit",
-                            background: isExpanded ? "var(--accent-light)" : "transparent",
-                            borderRadius: "var(--radius)", transition: "background 0.15s",
-                          }}
-                            onMouseEnter={e => { if (!isExpanded) e.currentTarget.style.background = "var(--bg-hover)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = isExpanded ? "var(--accent-light)" : "transparent"; }}>
-                            <span className="text-ellipsis fs-11 ta-left" style={{
-                              color: enabledCals.has(cal.id) ? "var(--text)" : "var(--text-3)",
-                              flex: 1, fontWeight: isExpanded ? 600 : enabledCals.has(cal.id) ? 500 : 400,
-                            }}>{cal.name}</span>
+                          <button onClick={() => setExpandedCal(isExpanded ? null : cal.id)} className={"cal-cat-btn" + (isExpanded ? " open" : "")}>
+                            <span className={"cal-cat-name text-ellipsis fs-11 ta-left" + (enabledCals.has(cal.id) ? " on" : "")}>{cal.name}</span>
                             <span className="fs-10 u-ff-font-mono u-c-text-3 u-fsh-0">{calEvts.length}</span>
-                            <span className="fs-10" style={{ color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
-                              transform: isExpanded ? "rotate(180deg)" : "none" }}>▼</span>
+                            <span className="cal-caret fs-10">▼</span>
                           </button>
                         </div>
                         {/* Expanded event list */}
@@ -667,15 +631,8 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                                   setCurrentMonth(miDe(d));
                                   setSelectedDate(d);
                                   setSelectedEvent(ev);
-                                }} style={{
-                                  display: "flex", alignItems: "center", gap: 6, width: "100%",
-                                  padding: "3px 6px", border: "none", cursor: "pointer", fontFamily: "inherit",
-                                  background: "transparent", borderRadius: "var(--radius)", transition: "background 0.12s",
-                                  opacity: isPast ? 0.45 : 1,
-                                }}
-                                  onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
-                                  onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-                                  <span className="fs-10 fw-600 shrink-0" style={{ fontFamily: "var(--font-mono)", color: cal.color, minWidth: 30 }}>{dd}</span>
+                                }} className={"cal-ev-btn" + (isPast ? " past" : "")}>
+                                  <span className="fs-10 fw-600 shrink-0 u-ff-font-mono u-minw-30px" style={{ color: cal.color }}>{dd}</span>
                                   <span className="text-ellipsis fs-10 ta-left u-c-text-2 u-fl-1">{ev.title}</span>
                                 </button>
                               );
@@ -755,7 +712,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                   <div key={i} className="uppercase ta-c fs-11 fw-600 cal-dow u-p-8px-0 u-c-text-3 u-ls-0_04em">{d}</div>
                 ))}
               </div>
-              <div className="cal-month-grid" style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(7,1fr)", gridTemplateRows: `repeat(${gridRows},1fr)` }}>
+              <div className="cal-month-grid u-fl-1 u-d-grid" style={{ gridTemplateColumns: "repeat(7,1fr)", gridTemplateRows: `repeat(${gridRows},1fr)` }}>
                 {monthDays.map((d, i) => {
                   const dayEvts = sortEventsForGrid(visibleEvents.filter(e => eventOnDay(e, d.date)));
                   const isToday = isSameDay(d.date, today);
@@ -782,25 +739,18 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                     const titleLines = hlEvt.title.split(/\s*[—–-]\s*/).filter(Boolean);
                     return (
                       <div key={i} onClick={() => setSelectedEvent(hlEvt)} {...clickableA11y(() => setSelectedEvent(hlEvt))}
-                        className={`hl-cell ${hl.cls}`}
-                        style={{
-                          background: hl.bg, border: `2px solid ${hl.border}`,
-                          cursor: "pointer",
-                          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                          padding: 4, overflow: "hidden", transition: "filter 0.15s",
-                        }}
-                        onMouseEnter={ev => (ev.currentTarget.style.filter = "brightness(1.1)")}
-                        onMouseLeave={ev => (ev.currentTarget.style.filter = "none")}>
- <div className="fs-10 fw-800" style={{ color: hl.text, opacity: 0.5 }}>
+                        className={`hl-cell hl-cell-box ${hl.cls}`}
+                        style={{ background: hl.bg, borderColor: hl.border }}>
+ <div className="fs-10 fw-800 u-op-0_5" style={{ color: hl.text }}>
                           <span className="fs-10">{MONTHS_SHORT[d.date.getMonth()]}</span> {d.date.getDate()}
                         </div>
                         <div className="fs-14 u-lh-1">{hl.icon}</div>
                         {isFirst ? (
-                          <div className="fs-10 fw-900 ta-c mt-1" style={{ color: hl.text, lineHeight: 1.1, letterSpacing: "0.02em" }}>
+                          <div className="fs-10 fw-900 ta-c mt-1 u-lh-1_1 u-ls-0_02em" style={{ color: hl.text }}>
                             {titleLines.map((l, j) => <div key={j}>{l}</div>)}
                           </div>
                         ) : (
-                          <div className="fs-10 fw-700 ta-c mt-1" style={{ color: hl.text, opacity: 0.6, lineHeight: 1.1 }}>
+                          <div className="fs-10 fw-700 ta-c mt-1 u-op-0_6 u-lh-1_1" style={{ color: hl.text }}>
                             {hlEvt.title}
                           </div>
                         )}
@@ -810,24 +760,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
 
                   return (
                     <div key={i} onClick={() => setSelectedDate(d.date)} {...clickableA11y(() => setSelectedDate(d.date))}
-                      style={{
-                      borderRight: "1px solid var(--border-light)",
-                      borderBottom: "1px solid var(--border-light)",
-                      padding: CP, overflow: "hidden", cursor: "pointer",
-                      background: isSel ? "var(--accent-light)" : livre ? "var(--cal-livre-bg)"
-                        : sd.tipo === "aulas" ? "var(--cal-escola-bg)" : "transparent",
-                      transition: "background 0.12s",
-                    }}
-                      onMouseEnter={ev => { if (!isSel) ev.currentTarget.style.background = "var(--bg-hover)"; }}
-                      onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = livre ? "var(--cal-livre-bg)" : sd.tipo === "aulas" ? "var(--cal-escola-bg)" : "transparent"; }} title={tipDia}>
-                      <div className="fs-11" style={{
-                        fontWeight: isToday ? 700 : 500,
-                        minHeight: 22, borderRadius: "var(--radius-lg)", padding: "1px 4px",
-                        display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 2px",
-                        color: !d.inMonth ? "var(--text-3)" : isToday ? "#fff" : "var(--text)",
-                        background: isToday ? "var(--accent)" : !d.inMonth ? "var(--bg-hover)" : "transparent",
-                        gap: 2, whiteSpace: "nowrap" }}>
- <span className="fw-600 fs-10" style={{ opacity: !d.inMonth ? 0.7 : 0.45 }}>{MONTHS_SHORT[d.date.getMonth()]}</span>
+                      className={"cal-cell" + (isSel ? " sel" : livre ? " livre" : sd.tipo === "aulas" ? " aulas" : "")} title={tipDia}>
+                      <div className={"fs-11 cal-cell-num" + (isToday ? " today" : !d.inMonth ? " out" : "")}>
+ <span className="fw-600 fs-10 cal-cell-mes">{MONTHS_SHORT[d.date.getMonth()]}</span>
                         {d.date.getDate()}
                       </div>
                       {dayEvts.slice(0, cellCap).map(e => {
@@ -844,21 +779,16 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                         return (
                         <div key={e.id} role="button" tabIndex={0} onClick={ev => { ev.stopPropagation(); setSelectedEvent(e); }} onKeyDown={ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); ev.stopPropagation(); setSelectedEvent(e); } }}
                           title={e.title}
-                          className={barCls ? `hl-bar ${barCls}` : undefined}
+                          className={"cal-ev-bar" + (barCls ? ` hl-bar ${barCls}` : "")}
                           style={{
-                            fontSize: "var(--fs-10)",
                             padding: showTitle ? "1px 5px" : "1px 0",
-                            marginBottom: 1,
                             marginLeft:  (pos === "mid" || pos === "end") ? -CP : 0,
                             marginRight: (pos === "mid" || pos === "start") ? -CP : 0,
                             borderRadius: bRadius,
                             background: calColor(e),
-                            color: "#fff", overflow: "hidden", whiteSpace: "nowrap",
-                            textOverflow: "ellipsis", cursor: "pointer",
-                            fontWeight: emDestaque(e) ? 800 : 600, lineHeight: 1.6,
+                            fontWeight: emDestaque(e) ? 800 : 600,
                             opacity: isPast ? 0.4 : opacidadeDe(e),
                             minHeight: pos !== "single" && !showTitle ? 16 : undefined,
-                            transition: "opacity 0.15s",
                           }}
                           onMouseEnter={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.55 : Math.min(0.85, opacidadeDe(e) + 0.25)))}
                           onMouseLeave={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.4 : opacidadeDe(e)))}>
@@ -928,11 +858,8 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
         </div>
         <div className="cal-sidebar d-flex flex-col gap-4 u-oy-auto">
           {events.map(e => (
-            <button key={e.id} onClick={() => onSelect(e)} className="u-d-flex u-ai-center u-gap-10px u-p-8px-10px u-w-100pc u-bd-none u-cur-pointer u-ff-inherit u-ta-left u-bg-transparent u-br-radius u-transition-background-0_15s"
-              onMouseEnter={ev => (ev.currentTarget.style.background = "var(--bg-hover)")}
-              onMouseLeave={ev => (ev.currentTarget.style.background = "transparent")}>
-              <span style={{ width: 4, alignSelf: "stretch", borderRadius: "var(--radius-xs)",
-                background: calColor(e), flexShrink: 0 }} />
+            <button key={e.id} onClick={() => onSelect(e)} className="cal-row-btn u-d-flex u-ai-center u-gap-10px u-p-8px-10px u-w-100pc u-bd-none u-cur-pointer u-ff-inherit u-ta-left u-bg-transparent u-br-radius u-transition-background-0_15s">
+              <span className="cal-bar" style={{ background: calColor(e) }} />
               <span className="flex-1 u-minw-0">
                 <span className="text-ellipsis fs-13 fw-600 u-c-text u-d-block">{e.title}</span>
                 {(e.modalidade || e.campo) && (
@@ -941,8 +868,7 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
                   </span>
                 )}
               </span>
-              <span className="fs-10 fw-600 shrink-0" style={{ padding: "2px 8px", borderRadius: "var(--radius-lg)",
-                background: calColor(e), color: "#fff", whiteSpace: "nowrap" }}>
+              <span className="cal-name-pill" style={{ background: calColor(e) }}>
                 {CAL_MAP.get(e.calId)?.name ?? ""}
               </span>
             </button>

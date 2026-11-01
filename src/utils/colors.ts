@@ -177,6 +177,19 @@ export const C = {
   },
 
 
+  // ── Calendário — cor-mãe de cada família (CalendarioPage.tsx) ────────────────
+  // Uma cor por família; dentro dela, tons do escuro ao claro (função tom()).
+  // Ficam em hex porque a página calcula os tons a partir deles.
+  calFamilia: {
+    CGSS:     "#1d4ed8",   // azul — o clube
+    JUNIOR:   "#047857",   // verde-esmeralda — academia júnior
+    DRIVE:    "#7c3aed",   // violeta — circuito Drive
+    FPG:      "#be185d",   // magenta — federação
+    DESTAQUE: "#b91c1c",   // vermelho — as provas que contam
+    ANIVER:   "#9ca3af",   // cinzento neutro — aniversários (contexto, não agenda)
+    VIAGENS:  "#0e7490",   // ciano — deslocações (céu e mar, e não compete com as provas)
+  },
+
   // ── Calendário — cores de categoria (CalendarioPage.tsx) ─────────────────────
   // Editar aqui para mudar as cores do calendário; CalendarioPage importa C.cal
   cal: {
