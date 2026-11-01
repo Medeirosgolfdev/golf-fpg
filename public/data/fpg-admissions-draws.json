@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-10-31T21:04:03.591Z",
-  "total": 1250,
+  "scrapedAt": "2026-11-01T21:04:03.138Z",
+  "total": 1251,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -401757,6 +401757,976 @@
         ]
       },
       "draws": {}
+    },
+    {
+      "ccode": "004",
+      "tcode": "10588",
+      "name": "Taça DUARTE ESPIRITO SANTO SILVA",
+      "date": "2026-10-31",
+      "expectedYear": "2026",
+      "campo": "Estoril",
+      "admissions": {
+        "name": "Taça DUARTE ESPIRITO SANTO SILVA",
+        "date": "2026-10-31",
+        "totalInscritos": 52,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10588",
+        "ccode": "004",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "4003",
+            "nome": "Luis Filipe Braga",
+            "clube": "Estoril",
+            "hcp": 17.3,
+            "vacf": null,
+            "registo": "2026/09/15 15:35",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "11949",
+            "nome": "Paulo Guerreiro",
+            "clube": "Estoril",
+            "hcp": 19,
+            "vacf": null,
+            "registo": "2026/09/15 15:36",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "15999",
+            "nome": "Finn Kastrup",
+            "clube": "Estoril",
+            "hcp": 12.6,
+            "vacf": null,
+            "registo": "2026/09/28 12:02",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "16000",
+            "nome": "Nanna Kastrup",
+            "clube": "Estoril",
+            "hcp": 16.3,
+            "vacf": null,
+            "registo": "2026/09/28 12:02",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "51454",
+            "nome": "Francisco Sottomayor",
+            "clube": "Estoril",
+            "hcp": 17.6,
+            "vacf": null,
+            "registo": "2026/10/10 21:06",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "1480",
+            "nome": "Fernando Pereira Duarte",
+            "clube": "Estoril",
+            "hcp": 27.7,
+            "vacf": null,
+            "registo": "2026/10/19 11:25",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "28527",
+            "nome": "Filipe Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 19.1,
+            "vacf": null,
+            "registo": "2026/10/21 08:31",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "57756",
+            "nome": "Miguel Maria Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 15.4,
+            "vacf": null,
+            "registo": "2026/10/21 08:54",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "57587",
+            "nome": "Maria Madalena Neves Ferreira",
+            "clube": "Estoril",
+            "hcp": 22.6,
+            "vacf": null,
+            "registo": "2026/10/21 08:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "1511",
+            "nome": "José de Macedo Vaz Pinto",
+            "clube": "Estoril",
+            "hcp": 32.7,
+            "vacf": null,
+            "registo": "2026/10/25 06:34",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "263",
+            "nome": "Sofia M. de Paiva",
+            "clube": "Estoril",
+            "hcp": 6.2,
+            "vacf": null,
+            "registo": "2026/10/25 17:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "1599",
+            "nome": "Vasco Franco Sousa",
+            "clube": "Estoril",
+            "hcp": 14,
+            "vacf": null,
+            "registo": "2026/10/26 15:52",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "1256",
+            "nome": "António Sobral",
+            "clube": "Estoril",
+            "hcp": 16.6,
+            "vacf": null,
+            "registo": "2026/10/26 17:20",
+            "status": "confirmed"
+          },
+          {
+            "pos": 14,
+            "fed": "1156",
+            "nome": "Jorge Goeben",
+            "clube": "Estoril",
+            "hcp": 7.2,
+            "vacf": null,
+            "registo": "2026/10/27 09:53",
+            "status": "confirmed"
+          },
+          {
+            "pos": 15,
+            "fed": "57899",
+            "nome": "Zé Ribeiro Da Cunha",
+            "clube": "Estoril",
+            "hcp": 11.1,
+            "vacf": null,
+            "registo": "2026/10/27 09:53",
+            "status": "confirmed"
+          },
+          {
+            "pos": 16,
+            "fed": "58864",
+            "nome": "Mikhail Khontulev",
+            "clube": "Estoril",
+            "hcp": 19.8,
+            "vacf": null,
+            "registo": "2026/10/27 09:54",
+            "status": "confirmed"
+          },
+          {
+            "pos": 17,
+            "fed": "1170",
+            "nome": "Pedro B. Guedes de Sousa",
+            "clube": "Estoril",
+            "hcp": 8.7,
+            "vacf": null,
+            "registo": "2026/10/27 09:54",
+            "status": "confirmed"
+          },
+          {
+            "pos": 18,
+            "fed": "1146",
+            "nome": "Teresa Matta",
+            "clube": "Estoril",
+            "hcp": 9.2,
+            "vacf": null,
+            "registo": "2026/10/27 09:54",
+            "status": "confirmed"
+          },
+          {
+            "pos": 19,
+            "fed": "2065",
+            "nome": "Pedro Palmares",
+            "clube": "Estoril",
+            "hcp": 13.1,
+            "vacf": null,
+            "registo": "2026/10/27 09:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 20,
+            "fed": "12123",
+            "nome": "Vikki Ricciardi",
+            "clube": "Estoril",
+            "hcp": 22.3,
+            "vacf": null,
+            "registo": "2026/10/27 09:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 21,
+            "fed": "1605",
+            "nome": "Ricardo V. Ricciardi",
+            "clube": "Estoril",
+            "hcp": 10.4,
+            "vacf": null,
+            "registo": "2026/10/27 09:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 22,
+            "fed": "51251",
+            "nome": "Michael Deignan",
+            "clube": "Estoril",
+            "hcp": 13.9,
+            "vacf": null,
+            "registo": "2026/10/27 09:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 23,
+            "fed": "1426",
+            "nome": "Manuel Salgado",
+            "clube": "Estoril",
+            "hcp": 24,
+            "vacf": null,
+            "registo": "2026/10/27 09:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 24,
+            "fed": "1150",
+            "nome": "Francisco Sousa Coutinho",
+            "clube": "Estoril",
+            "hcp": 23.6,
+            "vacf": null,
+            "registo": "2026/10/27 09:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 25,
+            "fed": "1180",
+            "nome": "Luis Cardim",
+            "clube": "Estoril",
+            "hcp": 18.5,
+            "vacf": null,
+            "registo": "2026/10/27 09:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 26,
+            "fed": "1147",
+            "nome": "Maria Da Graça Medina",
+            "clube": "Estoril",
+            "hcp": 8.7,
+            "vacf": null,
+            "registo": "2026/10/27 09:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 27,
+            "fed": "1175",
+            "nome": "Gilda Abreu",
+            "clube": "Estoril",
+            "hcp": 24.7,
+            "vacf": null,
+            "registo": "2026/10/27 09:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 28,
+            "fed": "1562",
+            "nome": "Francisco M. Nobre Guedes",
+            "clube": "Estoril",
+            "hcp": 19.6,
+            "vacf": null,
+            "registo": "2026/10/27 09:57",
+            "status": "confirmed"
+          },
+          {
+            "pos": 29,
+            "fed": "48531",
+            "nome": "Duarte Soares Franco",
+            "clube": "Estoril",
+            "hcp": 4,
+            "vacf": null,
+            "registo": "2026/10/27 09:57",
+            "status": "confirmed"
+          },
+          {
+            "pos": 30,
+            "fed": "498",
+            "nome": "Joao Talone",
+            "clube": "Estoril",
+            "hcp": 24.9,
+            "vacf": null,
+            "registo": "2026/10/27 09:58",
+            "status": "confirmed"
+          },
+          {
+            "pos": 31,
+            "fed": "3117",
+            "nome": "Martim Norton Dos Reis",
+            "clube": "Estoril",
+            "hcp": 20.8,
+            "vacf": null,
+            "registo": "2026/10/27 09:58",
+            "status": "confirmed"
+          },
+          {
+            "pos": 32,
+            "fed": "1153",
+            "nome": "José Sousa E Melo",
+            "clube": "Estoril",
+            "hcp": 5.6,
+            "vacf": null,
+            "registo": "2026/10/27 09:58",
+            "status": "confirmed"
+          },
+          {
+            "pos": 33,
+            "fed": "17350",
+            "nome": "Diogo Melo",
+            "clube": "Estoril",
+            "hcp": 12.3,
+            "vacf": null,
+            "registo": "2026/10/27 09:58",
+            "status": "confirmed"
+          },
+          {
+            "pos": 34,
+            "fed": "41461",
+            "nome": "Gino Vassily Sganzerla",
+            "clube": "Estoril",
+            "hcp": 9.4,
+            "vacf": null,
+            "registo": "2026/10/27 11:32",
+            "status": "confirmed"
+          },
+          {
+            "pos": 35,
+            "fed": "49076",
+            "nome": "Ruiqi Li",
+            "clube": "Estoril",
+            "hcp": 3.6,
+            "vacf": null,
+            "registo": "2026/10/27 14:27",
+            "status": "confirmed"
+          },
+          {
+            "pos": 36,
+            "fed": "47552",
+            "nome": "Reuben Thapa",
+            "clube": "Estoril",
+            "hcp": 4.2,
+            "vacf": null,
+            "registo": "2026/10/27 18:49",
+            "status": "confirmed"
+          },
+          {
+            "pos": 37,
+            "fed": "48297",
+            "nome": "João Rocha",
+            "clube": "Estoril",
+            "hcp": 3.5,
+            "vacf": null,
+            "registo": "2026/10/27 19:29",
+            "status": "confirmed"
+          },
+          {
+            "pos": 38,
+            "fed": "1531",
+            "nome": "Joao Homem de Mello",
+            "clube": "Estoril",
+            "hcp": 19.8,
+            "vacf": null,
+            "registo": "2026/10/27 21:57",
+            "status": "confirmed"
+          },
+          {
+            "pos": 39,
+            "fed": "1183",
+            "nome": "Luis Leitao Ricciardi",
+            "clube": "Estoril",
+            "hcp": 14.9,
+            "vacf": null,
+            "registo": "2026/10/27 22:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 40,
+            "fed": "49124",
+            "nome": "Nuno Palmares Jr.",
+            "clube": "Estoril",
+            "hcp": 1.4,
+            "vacf": null,
+            "registo": "2026/10/28 16:27",
+            "status": "confirmed"
+          },
+          {
+            "pos": 41,
+            "fed": "1585",
+            "nome": "Bo Rasmussen",
+            "clube": "Estoril",
+            "hcp": 16.7,
+            "vacf": null,
+            "registo": "2026/10/28 17:30",
+            "status": "confirmed"
+          },
+          {
+            "pos": 42,
+            "fed": "34709",
+            "nome": "Francisco Anjos",
+            "clube": "Estoril",
+            "hcp": 6.7,
+            "vacf": null,
+            "registo": "2026/10/28 18:06",
+            "status": "confirmed"
+          },
+          {
+            "pos": 43,
+            "fed": "47551",
+            "nome": "Dhruba Thapa",
+            "clube": "Estoril",
+            "hcp": 6.2,
+            "vacf": null,
+            "registo": "2026/10/28 19:29",
+            "status": "confirmed"
+          },
+          {
+            "pos": 44,
+            "fed": "1300",
+            "nome": "Pedro R. Vasconcelos",
+            "clube": "Estoril",
+            "hcp": 19.1,
+            "vacf": null,
+            "registo": "2026/10/28 23:53",
+            "status": "confirmed"
+          },
+          {
+            "pos": 45,
+            "fed": "49650",
+            "nome": "Pedro Roquette de Vasconcelos Jr",
+            "clube": "Estoril",
+            "hcp": 11.8,
+            "vacf": null,
+            "registo": "2026/10/29 02:33",
+            "status": "confirmed"
+          },
+          {
+            "pos": 46,
+            "fed": "1317",
+            "nome": "Miguel Soares Franco",
+            "clube": "Estoril",
+            "hcp": 9.5,
+            "vacf": null,
+            "registo": "2026/10/29 09:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 47,
+            "fed": "43968",
+            "nome": "Salvador Ivo de Carvalho",
+            "clube": "Estoril",
+            "hcp": 3.4,
+            "vacf": null,
+            "registo": "2026/10/29 11:01",
+            "status": "confirmed"
+          },
+          {
+            "pos": 48,
+            "fed": "1194",
+            "nome": "Filomena Lorena",
+            "clube": "Estoril",
+            "hcp": 13.5,
+            "vacf": null,
+            "registo": "2026/10/29 11:27",
+            "status": "confirmed"
+          },
+          {
+            "pos": 49,
+            "fed": "1532",
+            "nome": "Eduardo Fonseca",
+            "clube": "Estoril",
+            "hcp": 18.5,
+            "vacf": null,
+            "registo": "2026/10/29 11:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 50,
+            "fed": "1151",
+            "nome": "Jean Marie Le Bellec",
+            "clube": "Estoril",
+            "hcp": 15.5,
+            "vacf": null,
+            "registo": "2026/10/29 11:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 51,
+            "fed": "6472",
+            "nome": "José Braamcamp Sobral",
+            "clube": "Estoril",
+            "hcp": 20.1,
+            "vacf": null,
+            "registo": "2026/10/29 11:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 52,
+            "fed": "1227",
+            "nome": "José Maria Ribeiro Da Cunha",
+            "clube": "Estoril",
+            "hcp": 17.8,
+            "vacf": null,
+            "registo": "2026/10/29 12:10",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {
+        "1": {
+          "name": "Taça DUARTE ESPIRITO SANTO SILVA",
+          "date": "2026-10-31",
+          "campo": "Estoril",
+          "clube": "Clube de Golf do Estoril",
+          "totalJogadores": 48,
+          "groups": [
+            {
+              "teeTime": "09:04",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "DEIGNAN,Michael",
+                  "fed": "51251",
+                  "clube": null,
+                  "hcp": 13.7
+                },
+                {
+                  "nome": "SOUSA,Vasco Franco",
+                  "fed": "1599",
+                  "clube": null,
+                  "hcp": 14
+                },
+                {
+                  "nome": "REIS,Martim Norton dos",
+                  "fed": "3117",
+                  "clube": null,
+                  "tee": "Amarelas",
+                  "hcp": 20.8
+                }
+              ]
+            },
+            {
+              "teeTime": "09:12",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "SOBRAL,António",
+                  "fed": "1256",
+                  "clube": null,
+                  "hcp": 16.6
+                },
+                {
+                  "nome": "RASMUSSEN,Bo",
+                  "fed": "1585",
+                  "clube": null,
+                  "hcp": 16.7
+                },
+                {
+                  "nome": "KASTRUP,Nanna",
+                  "fed": "16000",
+                  "clube": null,
+                  "tee": "Azuis",
+                  "hcp": 16.3
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "BRAGA,Luis Filipe",
+                  "fed": "4003",
+                  "clube": null,
+                  "hcp": 17.7
+                },
+                {
+                  "nome": "GUEDES,Francisco M. Nobre",
+                  "fed": "1562",
+                  "clube": null,
+                  "hcp": 19.6
+                },
+                {
+                  "nome": "GUERREIRO,Paulo",
+                  "fed": "11949",
+                  "clube": null,
+                  "hcp": 19.9
+                }
+              ]
+            },
+            {
+              "teeTime": "09:28",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "TALONE,Joao",
+                  "fed": "498",
+                  "clube": null,
+                  "hcp": 24.9
+                },
+                {
+                  "nome": "PINTO,José de Macedo Vaz",
+                  "fed": "1511",
+                  "clube": null,
+                  "tee": "Amarelas",
+                  "hcp": 32.7
+                },
+                {
+                  "nome": "SALGADO,Manuel",
+                  "fed": "1426",
+                  "clube": null,
+                  "tee": "Azuis",
+                  "hcp": 24
+                }
+              ]
+            },
+            {
+              "teeTime": "09:36",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "PALMARES JR.,Nuno",
+                  "fed": "49124",
+                  "clube": null,
+                  "hcp": 1.4
+                },
+                {
+                  "nome": "IVO DE CARVALHO,Salvador",
+                  "fed": "43968",
+                  "clube": null,
+                  "hcp": 3.4
+                },
+                {
+                  "nome": "LI,Ruiqi",
+                  "fed": "49076",
+                  "clube": null,
+                  "tee": "Azuis",
+                  "hcp": 3.6
+                }
+              ]
+            },
+            {
+              "teeTime": "09:44",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "FRANCO,Duarte Soares",
+                  "fed": "48531",
+                  "clube": null,
+                  "hcp": 4
+                },
+                {
+                  "nome": "THAPA,Reuben",
+                  "fed": "47552",
+                  "clube": null,
+                  "hcp": 4.2
+                },
+                {
+                  "nome": "ROCHA,João",
+                  "fed": "48297",
+                  "clube": null,
+                  "hcp": 3.5
+                }
+              ]
+            },
+            {
+              "teeTime": "09:52",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "MELO,José Sousa e",
+                  "fed": "1153",
+                  "clube": null,
+                  "hcp": 5.6
+                },
+                {
+                  "nome": "THAPA,Dhruba",
+                  "fed": "47551",
+                  "clube": null,
+                  "hcp": 6.2
+                },
+                {
+                  "nome": "PAIVA,Sofia M. de",
+                  "fed": "263",
+                  "clube": null,
+                  "tee": "Azuis",
+                  "hcp": 6.2
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "ANJOS,Francisco",
+                  "fed": "34709",
+                  "clube": null,
+                  "hcp": 6.7
+                },
+                {
+                  "nome": "FRANCO,Diogo Soares",
+                  "fed": "41187",
+                  "clube": null,
+                  "hcp": 5
+                },
+                {
+                  "nome": "KASTRUP,Finn",
+                  "fed": "15999",
+                  "clube": null,
+                  "tee": "Amarelas",
+                  "hcp": 12.6
+                }
+              ]
+            },
+            {
+              "teeTime": "10:08",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "SGANZERLA,Gino Vassily",
+                  "fed": "41461",
+                  "clube": null,
+                  "hcp": 9.4
+                },
+                {
+                  "nome": "MEDINA,Maria da Graça",
+                  "fed": "1147",
+                  "clube": null,
+                  "tee": "Azuis",
+                  "hcp": 8.7
+                },
+                {
+                  "nome": "MATTA,Teresa",
+                  "fed": "1146",
+                  "clube": null,
+                  "tee": "Azuis",
+                  "hcp": 9.2
+                }
+              ]
+            },
+            {
+              "teeTime": "10:16",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "RICCIARDI,Ricardo V.",
+                  "fed": "1605",
+                  "clube": null,
+                  "hcp": 10.4
+                },
+                {
+                  "nome": "FRANCO,Miguel Soares",
+                  "fed": "1317",
+                  "clube": null,
+                  "tee": "Amarelas",
+                  "hcp": 9.5
+                },
+                {
+                  "nome": "VASCONCELOS,Pedro R.",
+                  "fed": "1300",
+                  "clube": null,
+                  "tee": "Amarelas",
+                  "hcp": 19.1
+                }
+              ]
+            },
+            {
+              "teeTime": "10:24",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "VASCONCELOS JR,Pedro Roquette de",
+                  "fed": "49650",
+                  "clube": null,
+                  "hcp": 11.8
+                },
+                {
+                  "nome": "SOTTOMAYOR,Francisco",
+                  "fed": "51454",
+                  "clube": null,
+                  "hcp": 17.6
+                },
+                {
+                  "nome": "PALMARES,Pedro",
+                  "fed": "2065",
+                  "clube": null,
+                  "hcp": 13.1
+                }
+              ]
+            },
+            {
+              "teeTime": "10:32",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "LE BELLEC,Jean Marie",
+                  "fed": "1151",
+                  "clube": null,
+                  "hcp": 15.5
+                },
+                {
+                  "nome": "RIBEIRO DA CUNHA,José Maria",
+                  "fed": "1227",
+                  "clube": null,
+                  "tee": "Azuis",
+                  "hcp": 17.8
+                },
+                {
+                  "nome": "ABREU,Gilda",
+                  "fed": "1175",
+                  "clube": null,
+                  "tee": "Azuis",
+                  "hcp": 24.7
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "FERREIRA,Miguel Maria Neves",
+                  "fed": "57756",
+                  "clube": null,
+                  "hcp": 15.4
+                },
+                {
+                  "nome": "MELLO,Joao Homem de",
+                  "fed": "1531",
+                  "clube": null,
+                  "tee": "Amarelas",
+                  "hcp": 19.8
+                },
+                {
+                  "nome": "RICCIARDI,Luis Leitao",
+                  "fed": "1183",
+                  "clube": null,
+                  "tee": "Amarelas",
+                  "hcp": 14.9
+                }
+              ]
+            },
+            {
+              "teeTime": "10:48",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "FONSECA,Eduardo",
+                  "fed": "1532",
+                  "clube": null,
+                  "hcp": 18.5
+                },
+                {
+                  "nome": "FERNANDES,Paulo Jorge",
+                  "fed": "1474",
+                  "clube": null,
+                  "tee": "Brancas",
+                  "hcp": 23.5
+                },
+                {
+                  "nome": "CARDIM,Luis",
+                  "fed": "1180",
+                  "clube": null,
+                  "hcp": 18.5
+                }
+              ]
+            },
+            {
+              "teeTime": "10:56",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "FERREIRA,Filipe Neves",
+                  "fed": "28527",
+                  "clube": null,
+                  "hcp": 19.1
+                },
+                {
+                  "nome": "SOBRAL,José Braamcamp",
+                  "fed": "6472",
+                  "clube": null,
+                  "tee": "Amarelas",
+                  "hcp": 20.1
+                },
+                {
+                  "nome": "DUARTE,Fernando Pereira",
+                  "fed": "1480",
+                  "clube": null,
+                  "tee": "Azuis",
+                  "hcp": 27.7
+                }
+              ]
+            },
+            {
+              "teeTime": "11:04",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                {
+                  "nome": "KHONTULEV,Mikhail",
+                  "fed": "58864",
+                  "clube": null,
+                  "hcp": 19.8
+                },
+                {
+                  "nome": "FERREIRA,Maria Madalena Neves",
+                  "fed": "57587",
+                  "clube": null,
+                  "hcp": 22.6
+                },
+                {
+                  "nome": "RICCIARDI,Vikki",
+                  "fed": "12123",
+                  "clube": null,
+                  "tee": "Vermelhas",
+                  "hcp": 22.3
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "988",
