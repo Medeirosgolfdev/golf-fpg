@@ -120,7 +120,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .notice code { background: var(--bg-code); padding: 1px 5px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: var(--fs-12); }
 .notice-info    { background: var(--bg-info);            border: 1px solid var(--score-bogey-border); color: var(--color-info); }
 .notice-warn    { background: var(--bg-warn);            border: 1px solid var(--border-warn);        color: var(--color-warn-dark); }
-.notice-success { background: var(--bg-success-subtle);  border: 1px solid var(--color-good);         color: var(--color-good-dark); }
 /* notice-error funciona standalone (sem .notice) ou combinado — tem o seu próprio espaçamento */
 .notice-error { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: var(--fs-12); line-height: 1.5; background: var(--bg-danger); border: 1px solid var(--border-danger); color: var(--color-danger-dark); }
 /* Variante horizontal (icon + texto lado a lado) */
@@ -129,10 +128,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 /* Texto de aviso inline (sem caixa) */
 .notice-warn-text { color: var(--color-warn-dark); font-weight: 600; }
 .notice-error.ta-c { text-align: center; }
-.notice-error-msg { color: var(--color-danger-dark); font-weight: 600; font-size: var(--fs-12); }
-
-/* ─── Conclusion Boxes ─── */
-.conclusion-box { margin-top: 10px; padding: 10px 14px; background: var(--bg-warn); border: 1px solid var(--border-warn); border-radius: var(--radius-lg); }
 
 /* ─── Page Layouts ─── */
 .page-full { max-width: 1060px; margin: 0 auto; padding: var(--space-inner); overflow: auto; flex: 1; background: var(--bg-detail); }
@@ -229,12 +224,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
    espremer/desconfigurar os controlos. Comportamento uniforme, igual ao nav
    superior do site. */
 .toolbar > * { flex-shrink: 0; }
-.campos-page .toolbar-left,
-.jogadores-page .toolbar-left,
-.tourn-layout .toolbar-left {
- gap: 8px;
- align-items: center;
-}
 
 /* Compact selects inside jogadores/tourn toolbar */
 .jogadores-page .toolbar .select,
@@ -703,26 +692,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 .sc-par-row .sc-meta-label { color: var(--text-2); }
 .sc-hcp-row .sc-meta-label { color: var(--text-3); }
-.ratings-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.ratings-table th {
- padding: 6px 10px;
- font-size: var(--fs-11);
- font-weight: 700;
- color: var(--text-3);
- text-transform: uppercase;
- letter-spacing: 0.04em;
- background: var(--bg-header);
- border-bottom: 2px solid var(--border);
- text-align: left;
-}
-.ratings-table td {
- padding: 6px 10px;
- border-bottom: 1px solid var(--border-light);
- vertical-align: middle;
-}
-.ratings-table tbody tr:hover {
- background: var(--bg-hover);
-}
 
 /* ─── Jogadores Page ─── */
 
@@ -777,16 +746,13 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  white-space: nowrap;
  vertical-align: middle;
 }
-.sex-M, .jog-sex-M { background: var(--badge-male);   color: #fff; }
-.sex-F, .jog-sex-F { background: var(--badge-female); color: #fff; }
+.sex-M { background: var(--badge-male);   color: #fff; }
+.sex-F { background: var(--badge-female); color: #fff; }
 
 /* SD pill colors (generated dynamically via sdClassByHcp) */
 .p-sd-excellent { background: var(--color-good); color: #fff; }
 .p-sd-good      { background: var(--sd-badge-good); color: var(--text); }
 .p-sd-poor      { background: var(--color-danger); color: #fff; }
-.sortable-th:hover {
- color: var(--accent);
-}
 .master-detail .jog-detail {
  display: flex;
  flex-direction: column;
@@ -805,16 +771,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  min-height: 0;
  overflow: hidden;
 }
-.pa-controls {
- display: flex;
- align-items: center;
- justify-content: space-between;
- gap: 10px;
- padding: 8px 12px;
- background: var(--bg);
- border-bottom: 1px solid var(--border-light);
- flex-shrink: 0;
-}
 .pa-controls-left { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
 /* ── Hero bar reorganizada — foto à esquerda · ícones empilhados · nome+pills
@@ -823,9 +779,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-top { display: flex; align-items: center; gap: 10px; }
 /* A foto mantém o tamanho — a utilizadora gosta de a ver (2026-08-15). */
 .dh-photo { width: 88px; height: 110px; border-radius: 6px; object-fit: cover; flex-shrink: 0; box-shadow: var(--shadow-sm); }
-.dh-iconcol { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; }
-.dh-iconcol a { font-size: var(--fs-12); line-height: 1; text-decoration: none; padding: 2px; border-radius: 4px; }
-.dh-iconcol a:hover { background: var(--bg-hover); }
 .dh-idblock { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
 /* Nome + acções na mesma linha; os links quebram para baixo em ecrãs
    estreitos (flex-wrap). O gap maior separa o título do grupo de acções. */
@@ -972,7 +925,6 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .actions { display: flex; gap: 6px; align-items: center; }
 .btn { padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); cursor: pointer; font: inherit; font-size: var(--fs-11); font-weight: 600; }
 .btn:hover { background: var(--bg-hover); }
-.btnGhost { border-color: transparent; color: var(--accent); }
 /* Botão redondo de ícone (‹ › do Calendário). -sm: sem moldura, para mini-calendários. */
 .btn-round { width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid var(--border);
   background: var(--bg-card); color: var(--text-2); font-size: var(--fs-18); cursor: pointer;
@@ -990,7 +942,6 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .btn-add:hover { background: var(--bg-hover); border-color: var(--chart-2); color: var(--chart-2); }
 
 .an-wrap { padding: 12px 0; }
-.an-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
 .an-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
 
 .kpi-info { font-size: var(--fs-11); cursor: help; margin-left: 4px; }
@@ -1001,11 +952,6 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 
 tr.cross-current { background: var(--bg-success); }
 .cross-current td:first-child { border-left: 3px solid var(--color-good); }
-/* .ec-sum → eclectic summary table */
-.ec-sum th { padding: 6px 10px; text-align: left; font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
-.ec-sum th.r, .ec-sum td.r { text-align: right; }
-.ec-sum td { padding: 6px 10px; border-bottom: 1px solid var(--border-light); }
-.ec-sum tr:hover { background: var(--bg-hover); cursor: pointer; }
 
 .sc-table-ec { border-collapse: collapse; font-size: var(--fs-12); white-space: nowrap; font-variant-numeric: tabular-nums; }
 /* Sem grelha completa — só linhas horizontais subtis (como na leaderboard .sc-lb),
@@ -1260,14 +1206,11 @@ tr.cross-current { background: var(--bg-success); }
 .haDiagLbl { font-size: var(--fs-10); color: var(--text-3); font-weight: 600; margin-top: 1px; line-height: 1.2; }
 .haParGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
 .haParCard { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 10px 12px; background: var(--bg-card); }
-.haParAlert { font-size: var(--fs-10); font-weight: 700; color: var(--color-danger); margin-bottom: 4px; }
 .haParHead { font-size: var(--fs-13); font-weight: 800; color: var(--text); margin-bottom: 4px; }
 .haParAvg { font-size: var(--fs-18); font-weight: 900; line-height: 1.2; }
 .haParStat { font-size: var(--fs-11); color: var(--text-3); margin-top: 2px; }
 .haParStat span { font-weight: 400; }
 .haParDistBar { display: flex; height: 10px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
-.haParDistNums { font-size: var(--fs-10); color: var(--text-muted); margin-top: 2px; }
-.haDistBar { display: flex; height: 20px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 6px; border: 1px solid var(--border); }
 .haDistSeg { min-width: 2px; transition: width 0.3s; }
 .seg-eagle { background: var(--score-eagle); }
 .seg-birdie { background: var(--score-birdie); }
@@ -1275,9 +1218,6 @@ tr.cross-current { background: var(--bg-success); }
 .seg-bogey { background: var(--score-bogey-border); }
 .seg-double { background: var(--score-double); }
 .seg-triple { background: var(--score-triple); }
-.haDistLegend { display: flex; flex-wrap: wrap; gap: 8px; font-size: var(--fs-10); color: var(--text-2); }
-.haLeg { display: flex; align-items: center; gap: 3px; }
-.haLegDot { display: inline-block; width: 10px; height: 10px; border-radius: var(--radius-xs); }
 .haTopWrap { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
 @media (max-width: 700px) { .haTopWrap { grid-template-columns: 1fr; } }
 .haTopCol { background: var(--bg-card); border-radius: var(--radius-lg); padding: 10px 12px; border: 1px solid var(--border); }
@@ -1345,8 +1285,6 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 /* ─── Linha temporal das rondas (CoursePerformanceSection) ─── */
-/* O SVG é responsivo via width:100%; o scroll-x do wrapper trata de ecrãs muito estreitos. */
-.course-evolution-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
 /* ─── Score distribution chart (bar chart vertical compacto) ─── */
 .score-dist { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-top: 6px; align-items: end; }
@@ -1356,10 +1294,6 @@ tr.cross-current { background: var(--bg-success); }
 .score-dist-bar { width: 100%; min-height: 2px; transition: height 0.3s; opacity: 0.85; }
 .score-dist-pct { font-size: var(--fs-10); font-weight: 700; color: var(--text-2); margin-top: 2px; font-variant-numeric: tabular-nums; }
 .score-dist-lbl { font-size: var(--fs-9); color: var(--text-3); text-transform: uppercase; letter-spacing: 0.03em; }
-
-/* ─── FRAG Scorecard (injected HTML fragments) ─── */
-.scHost table { border-collapse: collapse; font-size: var(--fs-11); }
-.scHost td, .scHost th { padding: 2px 4px; text-align: center; border: 1px solid var(--border-light); }
 
 .sc-bar-head { background: var(--bg-header); padding: 8px 12px; font-size: var(--fs-12); font-weight: 700; color: var(--text-2); display: flex; justify-content: space-between; border-bottom: 2px solid var(--border); }
 
@@ -1430,7 +1364,7 @@ tr.cross-current { background: var(--bg-success); }
 
 /* FRAG scorecard score circles — note: class name is .eagle not .sc-eagle
    Tamanho unificado: 26×26 / 13px em modern, lb e scHost */
-.sc-table-modern .sc-score, .sc-table-ec .sc-score, .scHost .sc-score {
+.sc-table-modern .sc-score, .sc-table-ec .sc-score {
  font-weight: 700; font-size: var(--fs-12); min-width: 22px; min-height: 22px;
  width: 22px; height: 22px;
  display: inline-flex; align-items: center; justify-content: center;
@@ -1484,7 +1418,7 @@ tr.cross-current { background: var(--bg-success); }
  .sc-header-right { width: 100%; justify-content: space-around; }
  .sc-table-modern { font-size: var(--fs-12); }
  .sc-table-modern th, .sc-table-modern td { padding: 5px 4px; }
- .sc-table-modern .sc-score, .sc-table-ec .sc-score, .scHost .sc-score { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-12); }
+ .sc-table-modern .sc-score, .sc-table-ec .sc-score { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-12); }
  .sc-title { font-size: var(--fs-16); }
  .sc-subtitle { font-size: var(--fs-11); }
  .sc-stat-label { font-size: var(--fs-10); }
@@ -1493,9 +1427,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 @media (max-width: 900px) {
- .an-grid { grid-template-columns: repeat(2, 1fr); }
  .an-grid3 { grid-template-columns: 1fr; }
- .pa-controls { flex-direction: column; align-items: flex-start; }
 }
 
 .player-embed-error {
@@ -1518,37 +1450,6 @@ tr.cross-current { background: var(--bg-success); }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
 
 /* ─── Simulador Page ─── */
-
-.sim-tee-selector {
- display: flex;
- flex-wrap: wrap;
- gap: 8px;
- padding: 12px 0;
- border-bottom: 1px solid var(--border-light);
-}
-
-.sim-tee-btn {
- display: flex;
- align-items: center;
- gap: 8px;
- padding: 6px 12px;
- border: 2px solid var(--border);
- border-radius: var(--radius);
- background: var(--bg-card);
- cursor: pointer;
- transition: border-color 0.15s, box-shadow 0.15s;
- font: inherit;
-}
-
-.sim-tee-btn:hover {
- border-color: var(--accent);
-}
-
-.sim-tee-active {
- border-color: var(--accent);
- box-shadow: 0 0 0 1px var(--accent);
- background: var(--accent-light);
-}
 
 
 /* sim-section-title → .h-xs (unified) */
@@ -1607,27 +1508,6 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 /* ─── HI Banner: prompt to fill Handicap Index ─── */
-
-.sim-hi-banner {
- display: flex;
- align-items: center;
- justify-content: center;
- gap: 10px;
- padding: 10px 16px;
- background: var(--bg-warn);
- border: 1.5px solid var(--border-warn);
- border-radius: var(--radius);
- font-size: var(--fs-13);
- color: var(--color-warn-dark);
- line-height: 1.5;
- margin: 0 0 -1px;
- text-align: center;
-}
-
-.sim-hi-banner-icon {
- font-size: var(--fs-18);
- flex-shrink: 0;
-}
 
 /* ─── HCP Strip: single row with handicaps, ratings, calc ─── */
 
@@ -1919,9 +1799,6 @@ tr.cross-current { background: var(--bg-success); }
 
 /* Mobile utilities */
 
-/* CompararPage search row */
-.cmp-search-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
 /* ════════════════════════════════════════════════════════════════
    MOBILE — 768 px
    ════════════════════════════════════════════════════════════════ */
@@ -1983,14 +1860,12 @@ tr.cross-current { background: var(--bg-success); }
   padding: 0 !important;
  }
  .master-detail > .course-detail,
- .master-detail > .flex-1-scroll,
  .master-detail > .flex-1 { flex: 1 1 0 !important; min-height: 0; }
 
  .course-detail      { overflow-x: hidden; padding: 8px; flex: 1 1 0; min-height: 0; }
  .detail-header      { flex-direction: column; }
  .detail-header-top  { flex-direction: column; align-items: flex-start; }
  .detail-title       { font-size: 17px; }
- .detail-actions     { flex-wrap: wrap; gap: 4px; }
 
  /* ── Mobile: scroll natural da página de detalhe do jogador ──────────────
     No desktop o .pa-page tem altura fixa (overflow:hidden) e é o .pa-content
@@ -2001,7 +1876,6 @@ tr.cross-current { background: var(--bg-success); }
     (que já tem overflow-y:auto) passa a ser o único scroller — cabeçalho e
     tabela rolam juntos como uma página normal. */
  .pa-page            { min-height: 0; overflow: visible; height: auto; flex: 1 0 auto; }
- .pa-controls        { flex-direction: column; align-items: flex-start; gap: 5px; }
  .pa-controls-left   { flex-wrap: wrap; gap: 4px; }
  .pa-content         { padding: 8px; overflow: visible; height: auto; flex: 0 0 auto; min-height: 0; }
  /* Tabelas de rondas do detalhe do jogador (vistas Por data / Por campo / Por
@@ -2067,32 +1941,22 @@ tr.cross-current { background: var(--bg-success); }
  .sc-table-modern th,
  .sc-table-modern td            { padding: 4px 3px; }
  .sc-table-modern .sc-score,
- .sc-table-ec .sc-score,
- .scHost .sc-score              { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-10); }
+ .sc-table-ec .sc-score              { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-10); }
  .sc-table-modern .row-label    { min-width: 52px; font-size: var(--fs-10); padding-left: 4px; }
  .sc-header                     { flex-direction: column; gap: 6px; padding: 10px 12px; }
  .sc-header-right               { width: 100%; justify-content: space-around; }
  .sc-title                      { font-size: var(--fs-14); }
  .sc-stat-value                 { font-size: var(--fs-16); }
-
- .tourn-scorecard th,
- .tourn-scorecard td  { padding: 4px 4px; font-size: var(--fs-11); }
- .tourn-lb-name-col   { min-width: 110px !important; }
- .tourn-player-row td { font-size: var(--fs-11); }
- .tourn-hole-cell     { min-width: 24px !important; padding: 2px 1px !important; font-size: var(--fs-10); }
- .tourn-lb-pills .p   { font-size: var(--fs-9); padding: 1px 4px; }
-
- .an-grid  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
  .an-grid3 { grid-template-columns: repeat(2, 1fr); gap: 8px; }
- .kpis, .tourn-kpis     { grid-template-columns: repeat(3, 1fr); gap: 5px; }
- .kpi, .tourn-kpi       { padding: 8px 6px; }
- .kpi-val, .tourn-kpi-val { font-size: var(--fs-18); }
- .kpi-lbl, .tourn-kpi-lbl { font-size: var(--fs-9); }
+ .kpis     { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+ .kpi       { padding: 8px 6px; }
+ .kpi-val { font-size: var(--fs-18); }
+ .kpi-lbl { font-size: var(--fs-9); }
  .kpi-card              { padding: 8px 10px; }
  .haDiag                { grid-template-columns: repeat(2, 1fr); }
  .haParGrid             { grid-template-columns: repeat(2, 1fr); }
  .haTopWrap             { grid-template-columns: 1fr; }
- .grid-3, .grid-3-tc    { grid-template-columns: 1fr 1fr; gap: 5px; }
+ .grid-3-tc    { grid-template-columns: 1fr 1fr; gap: 5px; }
 
  .card         { padding: 10px; margin: 6px 0; }
  .escalao-pills  { gap: 2px; flex-wrap: wrap; }
@@ -2102,14 +1966,6 @@ tr.cross-current { background: var(--bg-success); }
  .chip           { font-size: var(--fs-10); padding: 2px 6px; }
 
  .page-full         { padding: 8px; }
- .cmp-radar-wrap    { max-width: 100%; }
- .cmp-search-input  { width: 100% !important; font-size: var(--fs-13); }
- .cmp-search-row    { flex-direction: column; align-items: stretch; gap: 6px; }
- .cmp-search-row .cmp-search-wrap { width: 100%; }
- .cmp-chip          { align-self: flex-start; }
-
- .mobile-hide     { display: none; }
- .mobile-only     { display: initial; }
  .sidebar-toggle  { width: 30px; height: 30px; font-size: var(--fs-12); }
 
  /* Botões com tap target mais confortável em mobile */
@@ -2129,11 +1985,10 @@ tr.cross-current { background: var(--bg-success); }
  .input        { width: 100px; }
  .select       { min-width: 60px; max-width: 110px; }
  .sidebar      { flex: 0 0 32vh; height: 32vh; max-height: 32vh; }
- .grid-3, .grid-3-tc,
- .jog-record-grid            { grid-template-columns: 1fr; }
- .an-grid, .an-grid3         { grid-template-columns: 1fr; }
+ .grid-3-tc, .jog-record-grid            { grid-template-columns: 1fr; }
+ .an-grid3         { grid-template-columns: 1fr; }
  .haDiag, .haParGrid         { grid-template-columns: 1fr; }
- .kpis, .tourn-kpis          { grid-template-columns: repeat(2, 1fr); }
+ .kpis          { grid-template-columns: repeat(2, 1fr); }
  .pa-content                 { padding: 6px; }
  .tourn-tab    { font-size: var(--fs-10); padding: 2px 5px; }
  .tourn-tab-sm { font-size: var(--fs-9);  padding: 1px 4px; }
@@ -2162,25 +2017,6 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-meta { font-size: var(--fs-12); color: var(--text-3); margin-bottom: 12px; }
 .tourn-scroll { border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--bg-card); }
 
-/* ─── DRAW TABLE ─── */
-.tourn-draw th {
- padding: 10px 14px; text-align: left;
- font-size: var(--fs-11); font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
- color: var(--text-2); background: var(--bg-header); border-bottom: 2px solid var(--border);
-}
-.tourn-draw th.r { text-align: right; }
-.tourn-draw td {
- padding: 10px 14px; vertical-align: middle;
- border-bottom: 1px solid var(--bg-hover); font-size: var(--fs-14);
-}
-.tourn-draw .r { text-align: right; }
-
-/* Group visual: first row gets heavy top border */
-.tourn-draw .tourn-group-first td { border-top: 3px solid var(--border); }
-.tourn-draw tbody tr:first-child td { border-top: none; }
-/* Last row in group gets slightly thicker bottom */
-.tourn-draw .tourn-group-last td { border-bottom: none; }
-
 /* Tee badge — prominent colored pill */
 
 /* Time column */
@@ -2207,12 +2043,6 @@ button.tourn-pname {
 button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline-offset: 2px; border-radius: 2px; }
 
 /* Override .p sizes for tournament draw context */
-.tourn-draw-player .p {
- padding: 2px 10px; font-size: var(--fs-12); font-weight: 600; border-radius: var(--radius); line-height: 1.5;
-}
-.tourn-draw-player .p-tee,
-.tourn-draw-tee .p-tee { font-size: var(--fs-10); padding: 2px 8px; }
-.tourn-lb-pills .p-tee,
 .tourn-meta .p-tee { font-size: var(--fs-10); padding: 1px 7px; vertical-align: middle; }
 
 /* PJA + INTL use their own solid backgrounds */
@@ -2233,43 +2063,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* HCP columns */
 
-/* ─── LEADERBOARD / SCORECARD TABLE ─── */
-.tourn-scorecard th, .tourn-scorecard td {
- padding: 6px 5px; text-align: center; border: none;
-}
-.tourn-scorecard th {
- background: var(--bg-header); font-weight: 600; font-size: var(--fs-11); color: var(--text-2); border-bottom: 1px solid var(--border);
-}
-.tourn-scorecard tbody td { border-bottom: 1px solid var(--border-light); }
-.tourn-scorecard th.sortable { cursor: pointer; user-select: none; }
-.tourn-scorecard th.sortable:hover { background: var(--bg-hover-subtle); }
-
-/* Column widths — flexible */
-.tourn-scorecard .tourn-lb-name-col { text-align: left; padding-left: 10px; white-space: nowrap; }
-.tourn-lb-pills .p { font-size: var(--fs-10); padding: 1px 7px; }
-.tourn-scorecard .tourn-sum-col { background: var(--bg-hover); white-space: nowrap; padding: 6px 5px; }
-
-/* Course info rows */
-.tourn-par-row td { font-size: var(--fs-11); font-weight: 600; color: var(--text-muted); background: var(--bg-hover); border-bottom: 2px solid var(--border); }
-.tourn-dist-row td { font-size: var(--fs-10); color: var(--text-muted); background: var(--bg-detail); }
-.tourn-si-row td { font-size: var(--fs-10); color: var(--text-muted); background: var(--bg); border-bottom: 1px solid var(--border-light); }
-.tourn-scorecard .tourn-in-border { border-left: 2px solid var(--border); }
-
-/* Player rows */
-.tourn-player-row td { font-size: var(--fs-12); }
-.tourn-player-row:hover { background: var(--bg-detail); }
-.tourn-scorecard .tourn-sum-under { background: var(--accent-light); }
-.tourn-lb-name-col .tourn-pname { font-weight: 700; font-size: var(--fs-12); white-space: nowrap; }
-.tourn-lb-name-col .tourn-pname.tourn-pname-link { color: var(--link-color); }
-
-/* Female row — subtle blue tint */
-.tourn-scorecard .tourn-female-row { background: var(--bg-female); }
-.tourn-scorecard .tourn-female-row:hover { background: var(--bg-female-hover); }
-
 /* Female tee pill */
-
-/* ─── Tournament Scorecard Cells ─── */
-.tourn-scorecard .tourn-hole-cell { padding: 3px 2px; text-align: center; vertical-align: middle; min-width: 33px; }
 
 
 /* To-par */
@@ -2303,21 +2097,11 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .kpi-delta { font-size: var(--fs-11); font-weight: 700; margin-top: 1px; }
 .kpi-sub { font-size: var(--fs-11); color: var(--text-3); margin-top: 1px; }
 
-/* ─── Form Analysis Table ─── */
-.tourn-form-table th { background: var(--bg-header); font-weight: 700; font-size: var(--fs-10); color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 8px; border: none; border-bottom: 2px solid var(--border); text-align: left; }
-.tourn-form-table td { padding: 6px 8px; border: none; border-bottom: 1px solid var(--border-light); font-size: var(--fs-12); vertical-align: middle; }
-.tourn-form-table tbody tr:hover { background: var(--bg-detail); }
-.tourn-form-table .tourn-pname { font-weight: 700; font-size: var(--fs-12); }
-.tourn-form-table .tourn-pname.tourn-pname-link { color: var(--link-color); }
-
 /* Sparkline — mini SD dots */
 
 /* Trend badge */
 .trend-up { background: var(--bg-success-strong); color: var(--color-good-dark); }
 .trend-down { background: var(--bg-danger-subtle); color: var(--color-danger-dark); }
-
-/* Utility classes for tournament */
-.tourn-scorecard .tourn-lbl { text-align: left; padding-left: 8px; font-weight: 800; color: var(--text-2); border-right: 2px solid var(--border); font-size: var(--fs-10); text-transform: uppercase; }
 
 /* ═══════ Overlay Export ═══════ */
 
@@ -2344,10 +2128,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .ov-toggle input[type="checkbox"] { accent-color: var(--link-color); width: 15px; height: 15px; margin: 0; cursor: pointer; }
 
 @media (max-width: 600px) {
- .ov-fields { gap: 6px; }
  .ov-field .input { font-size: var(--fs-12); padding: 5px 8px; }
- .ov-options { gap: 8px; }
- .ov-toggles { gap: 4px 8px; }
  .ov-gallery { gap: 8px; }
  .ov-section { padding: 8px 10px; }
 }
@@ -2695,9 +2476,7 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .gap-3 { gap: 3px; }
 .gap-4  { gap: 4px; }
 .gap-8  { gap: 8px; }
-.gap-10 { gap: 10px; }
 .gap-12 { gap: 12px; }
-.gap-16 { gap: 16px; }
 
 /* ─── Text ─── */
 .fw-600 { font-weight: var(--fw-600); }
@@ -2724,10 +2503,8 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .c-muted       { color: var(--text-muted); }
 .c-good        { color: var(--color-good); }
 .c-good-dark   { color: var(--color-good-dark); }
-.c-warn        { color: var(--color-warn); }
 .c-warn-dark   { color: var(--color-warn-dark); }
 .c-danger      { color: var(--color-danger); }
-.c-purple      { color: var(--chart-5); }
 /* ─── Display / Flex ─── */
 .d-flex { display: flex; }
 .inline-flex { display: inline-flex; }
@@ -2742,7 +2519,6 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 /* ─── Backgrounds ─── */
 .bg-page { background: var(--bg); }
 .bg-detail { background: var(--bg-detail); }
-.bg-muted { background: var(--bg-muted); }
 
 /* ─── Borders ─── */
 .br { border-radius: var(--radius); }
@@ -2757,19 +2533,12 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 /* ─── Score Colors (semantic — used across all pages) ─── */
 .c-birdie  { color: var(--color-danger); }
 .c-eagle  { color: var(--color-warn); }
-.c-blue   { color: var(--color-info-alt); }
 .c-amber  { color: var(--color-warn-dark); }
 
 /* Score color + bold combos */
 .cb-birdie { color: var(--color-danger); font-weight: 700; }
 .cb-good { color: var(--color-good); font-weight: 700; }
-.cb-blue  { color: var(--color-info-alt); font-weight: 700; }
-.cb-blue-10 { color: var(--color-info-alt); font-weight: 700; font-size: var(--fs-10); }
-.cb-blue-800 { color: var(--color-info-alt); font-weight: 800; }
 .cb-amber  { color: var(--color-warn-dark); font-weight: 700; }
-
-/* ─── Diagnosis Icon Backgrounds (tinted) ─── */
-.diag-bg-purple { background: var(--bg-purple); color: var(--text-purple); }
 
 /* ─── Scorecard Cell Patterns (BJGT/analysis tables) ─── */
 
@@ -2820,7 +2589,6 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .mt-3 { margin-top: 3px; }
 .mt-10 { margin-top: 10px; }
 .mt-14 { margin-top: 14px; }
-.mt-20 { margin-top: 20px; }
 .ml-4 { margin-left: 4px; }
 .ml-6 { margin-left: 6px; }
 .ml-auto { margin-left: auto; }
@@ -2877,8 +2645,6 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .ml-8      { margin-left: 8px; }
 /* ─── Cursor ─── */
 .pointer { cursor: pointer; }
-/* ─── Table helpers ─── */
-.bc-collapse { border-collapse: collapse; }
 /* ─── Uppercase label (cabeçalhos compactos, sec headers) ─── */
 .label-caps { font-size: var(--fs-10); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
 
@@ -2893,7 +2659,6 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .sc-lb thead tr:last-child .sticky-col-1 { z-index: 6; }
 
 /* Contexto partilhado para scorecards (Drive, Diversos, BJGT) */
-.tourn-scorecard .sc-score { min-width: 22px; min-height: 22px; font-size: var(--fs-11); }
 .mt-24            { margin-top: 24px; }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -3098,10 +2863,6 @@ table.has-cmp .sticky-col-1 { left: 48px; }
 .row-manuel .sticky-col-1 { background: var(--bg-manuel-sticky) !important; }
 .row-manuel:hover { background: var(--bg-success-subtle) !important; }
 
-/* Jogador português (não-Manuel) destacado subtilmente nas tabelas de inscritos. */
-.row-pt { background: color-mix(in srgb, var(--color-rfeg-red) 7%, transparent); }
-.row-pt:hover { background: color-mix(in srgb, var(--color-rfeg-red) 12%, transparent); }
-
 /* ─── Destaque Português — usado em páginas internacionais (FFG, etc.)
    onde queremos marcar conterrâneos. Cor: verde néon #00FF00 (mesma do
    pill INTL global, ver --pill-intl-bg em tokens.css). ─── */
@@ -3167,11 +2928,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 .mini-badge { font-size: var(--fs-11); padding: 2px 6px; border: 1px solid var(--border); border-radius: var(--radius); }
 
 /* ─── JogadoresPage cross-table border ─── */
-.bg-success { background: var(--bg-success); }
 .cross-table { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); font-variant-numeric: tabular-nums; }
-
-/* ─── Comparar dropdown ─── */
-.cmp-dropdown { position: absolute; top: 100%; left: 0; right: 0; z-index: 50; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-lg); max-height: 280px; overflow-y: auto; }
 
 /* ═══ Phase 4: Deep Migration — remaining static patterns ═══ */
 
@@ -3183,7 +2940,6 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 .fw-400 { font-weight: 400; }
 
 /* ─── Color + size combos ─── */
-.c-blue-13 { color: var(--color-info-alt); font-size: var(--fs-13); font-weight: 800; }
 .c-amber-underline { color: var(--color-warn-dark); font-weight: 600; text-decoration: underline; }
 .c-blue-2563 { color: var(--chart-2); }
 .c-blue-2563-10 { color: var(--chart-2); font-size: var(--fs-10); font-weight: 600; }
@@ -3293,27 +3049,6 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
  pointer-events: none; border-radius: inherit;
 }
 .hl-green { animation: hlGlowGreen 2s ease-in-out infinite; }
-.hl-teal  { animation: hlGlowTeal  2s ease-in-out infinite; }
-.hl-red   { animation: hlGlowRed   2s ease-in-out infinite; }
-.hl-gold  { animation: hlGlowGold  1.5s ease-in-out infinite; }
-
-
-/* Comparar */
-.cmp-search-input { width: 100%; font-size: var(--fs-14); padding: 10px 14px; }
-.cmp-search-wrap { position: relative; flex: 1; }
-.cmp-result-list { max-height: 340px; overflow-y: auto; }
-.cmp-radar-wrap { width: 100%; max-width: 420px; display: block; margin: 0 auto; }
-.cmp-radar-wrap-sm { width: 100%; max-height: 280px; background: var(--bg); border-radius: var(--radius-lg); border: 1px solid var(--border-light); }
-.cmp-radar-sm { width: 100%; max-height: 230px; margin-top: 8px; }
-.cmp-chip { font-size: var(--fs-13); padding: 6px 12px; }
-.cmp-remove-btn { background: none; border: none; cursor: pointer; color: var(--text-3); padding: 0 2px; font-size: var(--fs-15); line-height: 1; }
-.cmp-empty-icon { font-size: 40px; margin-bottom: 12px; }
-.cmp-empty-title { text-align: center; font-size: var(--fs-16); margin-bottom: 6px; }
-.cmp-distrib-bar { display: flex; height: 32px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 12px; border: 1px solid var(--border); }
-.cmp-distrib-track { flex: 1; background: var(--bg-hover); border-radius: var(--radius-sm); height: 18px; overflow: hidden; }
-.cmp-stat-label { font-size: var(--fs-12); width: 75px; font-weight: 600; color: var(--text-2); }
-.cmp-feature-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
-.cmp-feature-tag { padding: 4px 12px; border-radius: var(--radius-xl); background: var(--bg-hover); font-size: var(--fs-11); font-weight: 600; color: var(--text-2); }
 
 /* Simulador extras */
 .sim-note-block { display: block; margin: 6px 0; padding: 4px 10px; background: var(--bg-note-warn-strong); border-radius: var(--radius); color: var(--color-warn-dark); }
@@ -3334,7 +3069,6 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 
 /* ─── Card / container patterns ─── */
 .card-detail { background: var(--bg-detail); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 8px 12px; }
-.card-detail-inner { border: 1px solid var(--border-light); border-top: 0; border-radius: 0 0 8px 8px; padding: 12px; background: var(--bg-card); }
 
 /* ─── Conclusion boxes (caConclusion overrides) ─── */
 
@@ -3348,7 +3082,6 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 
 /* ─── Border top/bottom combos ─── */
 .bt-heavy { border-top: 2px solid var(--border); }
-.bb-border { border-bottom: 1px solid var(--border, #ddd); margin: 2px 0; }
 
 /* ─── Empty / loading states ─── */
 .empty-icon { font-size: var(--fs-32); margin-bottom: 12px; }
@@ -3483,11 +3216,6 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 }
 .detail-link:hover {
  text-decoration: underline;
-}
-.detail-actions {
- display: flex;
- gap: 2px;
- flex-shrink: 0;
 }
 /* ── Tab underline (FPGPage, USKIDSPage, etc.) ────────────── */
 .tab-under {
@@ -3720,11 +3448,6 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
  padding-left: 10px;
  text-align: left;
 }
-.ratings-table .r-num {
- text-align: right;
- font-family: var(--font-mono);
- font-size: var(--fs-12);
-}
 .r-sex {
  font-weight: 600;
  text-align: center;
@@ -3786,17 +3509,13 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 .fs-18 { font-size: var(--fs-18); }
 .fs-24 { font-size: var(--fs-24); }
 .fw-500 { font-weight: var(--fw-500); }
-.jc-center { justify-content: center; }
 .ta-left         { text-align: left; }
 .ta-right        { text-align: right; }
 .overflow-hidden { overflow: hidden; }
 .uppercase { text-transform: uppercase; }
 .round { border-radius: 50%; }
 .c-border { color: var(--border); }
-.bb-light { border-bottom: 1px solid var(--border-light); }
 .p-14 { padding: 14px; }
-.mb-18 { margin-bottom: 18px; }
-.br-sm { border-radius: var(--radius-sm); }
 .td-none { text-decoration: none; }
 
 /* ═══════════════════════════════════════════
@@ -3849,12 +3568,6 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 }
 /* Linha de filtro «Rótulo: Todos · a · b» (ui/FilterPillRow.tsx) */
 .filter-pill-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
-/* ★ Manuel ligado (filtro da /FPG) — verde em vez do escuro do .active */
-.tourn-tab.manuel-on {
- background: var(--bg-success-subtle);
- border-color: var(--color-good);
- color: var(--color-good-dark);
-}
 /* Link externo com contorno na toolbar (ex.: «FPG Torneios ↗» na /FPG) */
 .ext-link-outline {
  flex-shrink: 0; display: inline-flex; align-items: center; gap: 3px;
@@ -3886,8 +3599,6 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 /* ─── Restored: fs combos e utilitários ─── */
 .stats { display: flex; gap: 8px; }
 .underline { text-decoration: underline; }
-.progress-track { flex: 1; height: 14px; background: var(--bg); border-radius: var(--radius-sm); position: relative; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 .c-white { color: #fff; }
 
 /* ═══════════════════════════════════════════
@@ -3902,7 +3613,6 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 
 /* ─── Torneio / competição ─── */
 .badge-gf      { font-size: var(--fs-10); font-weight: 800; color: var(--color-amber); margin-left: 5px; }
-.badge-warn-sm { font-size: var(--fs-10); color: var(--color-warn); }
 .badge-next    { display: inline-block; font-size: var(--fs-10); font-weight: 700; color: #fff; padding: 0 4px; border-radius: var(--radius-sm); margin-left: 2px; }
 
 /* ─── Série de torneios (a cor vem de uma classe .drive-serie-*) ─── */
@@ -3933,16 +3643,8 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 /* ─── Badge torneio agrupado (multi-ronda) ─── */
 
 /* ─── Spacing em falta ─── */
-.ml-3  { margin-left: 3px; }
 .mt-2  { margin-top: 2px; }
 .gap-6 { gap: 6px; }
-
-/* ─── Column widths para tabelas ─── */
-.w-40 { width: 40px; }
-
-/* ─── Destaque genérico de linha em tabela (match na BD) ─── */
-.row-match { background: color-mix(in srgb, var(--color-good) 8%, transparent); }
-.row-match:hover { background: color-mix(in srgb, var(--color-good) 14%, transparent); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    UTILITY CLASSES — Substituem inline styles repetidos (auditoria Abril 2026)
@@ -3994,13 +3696,6 @@ table td.lb-col-divider {
   border-left: 2px solid var(--grey-300) !important;
 }
 
-/* --- Common text/visual --- */
-.bg-info-subtle { background: var(--bg-info-subtle); }
-
-/* --- USKids toggle pills --- */
-.toggle-pill-info { background:var(--bg-info-strong); color:var(--color-info); border-color:var(--border-info); }
-.toggle-pill-success { background:var(--bg-success-strong); color:var(--color-good-dark); border-color:var(--border-success); }
-
 /* ══════════════════════════════════════════════════════════════════════
    IMPRESSÃO / PDF — disparada por PrintButton (window.print)
    Regra geral: mostrar APENAS o conteúdo do detalhe do torneio (ou a
@@ -4022,8 +3717,7 @@ table td.lb-col-divider {
   }
 
   /* Layout full-width, sem margens exageradas */
-  .app, .main, .master-detail, .detail, .detail-body,
-  .tournament-detail, .content-scroll, .main-content {
+  .app, .main, .master-detail, .detail {
     display: block !important;
     width: 100% !important;
     max-width: none !important;
@@ -4075,10 +3769,7 @@ table td.lb-col-divider {
   /* Manter as cores semânticas do scorecard (birdie/eagle/bogey) porque é
      precisamente o que o utilizador quer imprimir. force-color-adjust
      garante que o Chrome não descarta as cores de fundo no PDF. */
-  .sc-score, .sc-score-eagle, .sc-score-birdie,
-  .sc-score-bogey, .sc-score-dbogey, .sc-score-par,
-  .lb-acc-bird, .lb-acc-bog, .lb-acc-par,
-  [class*="score-"], [class*="-tp-"] {
+  .sc-score, .lb-acc-bird, .lb-acc-bog, .lb-acc-par, [class*="score-"], [class*="-tp-"] {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -4092,169 +3783,6 @@ table td.lb-col-divider {
     margin: 10mm 8mm;
   }
 }
-
-/* ═══════════════════════════════════════════════════════════════════
-   NACIONAIS DE JOVENS — page styles (NacionaisJovensPage)
-   ═══════════════════════════════════════════════════════════════════ */
-
-.njov-page { padding-bottom: 60px; }
-
-.njov-filters {
-  display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
-  padding: 12px 0; border-bottom: 1px solid var(--border-light);
-}
-.njov-filter-group {
-  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
-}
-.njov-filter-label {
-  font-size: var(--fs-11); font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.04em; color: var(--text-3);
-}
-.njov-chip {
-  cursor: pointer; user-select: none;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  color: var(--text-2);
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
-}
-.njov-chip:hover { background: var(--bg-hover); }
-.njov-chip-on {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-.njov-chip-on:hover { background: var(--accent); opacity: 0.9; }
-.njov-chip-clear {
-  cursor: pointer;
-  color: var(--text-3);
-  background: transparent;
-  border: 1px dashed var(--border);
-}
-
-.hoc-wrap { margin: 20px 0 28px; }
-.hoc-title {
-  font-size: var(--fs-14); font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: var(--text-2);
-  margin: 0 0 10px;
-}
-.hoc-tablewrap {
-  overflow-x: auto; border: 1px solid var(--border);
-  border-radius: 6px; background: var(--bg-card);
-}
-.hoc-table {
-  width: 100%; border-collapse: collapse;
-  font-size: var(--fs-12); font-variant-numeric: tabular-nums;
-}
-.hoc-table th {
-  padding: 6px 8px; text-align: center;
-  background: var(--bg-header);
-  border-bottom: 2px solid var(--border);
-  font-size: var(--fs-11); font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.04em;
-  color: var(--text-3); white-space: nowrap;
-}
-.hoc-th-year { width: 60px; }
-.hoc-th-esc { font-size: var(--fs-11); }
-.hoc-th-sex { font-weight: 600; padding: 4px; }
-.hoc-table tbody tr { border-bottom: 1px solid var(--border-light); }
-.hoc-year {
-  padding: 8px; text-align: center;
-  font-weight: 800; color: var(--text-1);
-  background: var(--bg-header);
-  white-space: nowrap;
-}
-.hoc-cell {
-  padding: 6px 8px;
-  vertical-align: middle;
-  border-left: 1px solid var(--border-light);
-  text-align: center;
-}
-.hoc-cell-empty {
-  color: var(--text-3); font-style: italic;
-}
-.hoc-cell-active {
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.hoc-cell-active:hover {
-  background: var(--bg-hover);
-}
-.hoc-name {
-  font-weight: 600; color: var(--text-1);
-  white-space: nowrap; max-width: 150px;
-  overflow: hidden; text-overflow: ellipsis;
-  font-size: var(--fs-12);
-}
-.hoc-score {
-  font-size: var(--fs-11); color: var(--text-3);
-  margin-top: 2px;
-}
-.hoc-gross { font-weight: 700; color: var(--text-2); margin-right: 4px; }
-.hoc-topar { font-weight: 500; }
-
-.njov-list {
-  display: flex; flex-direction: column; gap: 16px;
-  margin-top: 24px;
-}
-.njov-card {
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--bg-card);
-  overflow: hidden;
-}
-.njov-card-head {
-  padding: 10px 14px;
-  background: var(--bg-header);
-  border-bottom: 1px solid var(--border);
-}
-.njov-card-title {
-  display: flex; align-items: center; gap: 10px;
-  font-size: var(--fs-16); font-weight: 700;
-}
-.njov-card-year {
-  font-weight: 800; color: var(--accent);
-  background: var(--bg-card); padding: 2px 8px;
-  border-radius: 4px; font-size: var(--fs-14);
-}
-.njov-card-esc {
-  font-weight: 700; color: var(--text-1);
-}
-.njov-card-meta {
-  display: flex; gap: 8px; flex-wrap: wrap;
-  font-size: var(--fs-12); color: var(--text-3);
-  margin-top: 4px;
-}
-.njov-dot { color: var(--text-3); opacity: 0.6; }
-
-.njov-table { margin: 0; }
-.njov-table th { background: transparent; }
-.njov-th-club { font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); padding: 6px 10px; text-align: left; background: transparent; border-bottom: 2px solid var(--border); white-space: nowrap; }
-.njov-th-round { color: var(--text-3); font-weight: 600; }
-.njov-td-pos { font-weight: 700; color: var(--text-2); }
-.njov-td-name { font-weight: 600; color: var(--text-1); white-space: nowrap; }
-.njov-td-club {
-  color: var(--text-3); font-size: var(--fs-12);
-  max-width: 220px; overflow: hidden;
-  text-overflow: ellipsis; white-space: nowrap;
-}
-.njov-td-round { color: var(--text-2); font-size: var(--fs-12); }
-.njov-td-gross { font-weight: 700; color: var(--text-1); }
-.njov-td-topar { color: var(--text-2); font-size: var(--fs-12); }
-.njov-row-gold { background: var(--bg-gold-subtle); }
-.njov-row-gold:hover { background: var(--bg-gold-hover); }
-
-.njov-footer {
-  margin-top: 32px; padding-top: 16px;
-  border-top: 1px solid var(--border-light);
-  font-size: var(--fs-11); color: var(--text-3);
-  line-height: 1.6;
-}
-.njov-footer code {
-  font-size: var(--fs-11);
-  background: var(--bg-header);
-  padding: 1px 4px; border-radius: 3px;
-}
-.njov-footer p { margin: 0 0 6px; }
 
 /* ════════════════════════════════════════════════════════════════════
    JogadoresListPage — landing page de /jogadores (lista tipo FPG)
@@ -4356,13 +3884,6 @@ table td.lb-col-divider {
    COMPAREPAGE - Comparacao de Campos + Jogadores
    =================================================================== */
 
-.compare-page {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-}
-
 /* Barra de tabs (BJGTPage, DORALPage, FPGPage, DrivePage, IntlTournView…).
    Definição única — antes estava duplicada (a 2ª vencia por cascata). */
 .tab-bar {
@@ -4376,93 +3897,6 @@ table td.lb-col-divider {
   /* A barra de scroll horizontal fica POR BAIXO dos nomes das tabs, nunca por
      cima do texto (regra da Mariana — ver também os wrappers das tabelas). */
   padding-bottom: 8px;
-}
-
-.selector-group {
-  margin-bottom: 20px;
-}
-
-.selector-group > label {
-  display: block;
-  font-size: var(--fs-12);
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 6px;
-}
-
-.input-select {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius);
-  font-size: var(--fs-13);
-  background: var(--bg-card);
-  color: var(--text-1);
-  transition: all 0.2s;
-}
-
-.input-select:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-alpha-10);
-}
-
-.selector-dropdown {
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius);
-  background: var(--bg-card);
-}
-
-.selector-empty {
-  padding: 12px;
-  text-align: center;
-  color: var(--text-3);
-  font-size: var(--fs-13);
-}
-
-.selector-item {
-  display: block;
-  width: 100%;
-  padding: 10px 12px;
-  border: none;
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.15s;
-  border-bottom: 1px solid var(--border-light);
-  font-size: var(--fs-13);
-}
-
-.selector-item:last-child {
-  border-bottom: none;
-}
-
-.selector-item:hover {
-  background: rgba(0, 0, 0, 0.03);
-}
-
-.selector-item.selected {
-  background: var(--accent);
-  color: white;
-  border-bottom-color: var(--accent);
-}
-
-.selector-item-name {
-  font-weight: 500;
-  margin-bottom: 2px;
-}
-
-.selector-item-meta {
-  font-size: var(--fs-11);
-  opacity: 0.7;
-  margin-top: 2px;
-}
-
-.selector-item.selected .selector-item-meta {
-  opacity: 0.9;
 }
 
 .scorecard-table-wrapper {
@@ -4505,131 +3939,11 @@ table td.lb-col-divider {
   background: rgba(0, 0, 0, 0.02);
 }
 
-.cell-course-name {
-  font-weight: 500;
-  color: var(--accent);
-}
-
-.cell-tee-name {
-  font-weight: 500;
-}
-
-.cell-numeric {
-  text-align: right;
-  font-family: "Monaco", monospace;
-}
-
-.cell-diff {
-  font-size: var(--fs-11);
-  color: var(--text-3);
-  display: block;
-  margin-top: 2px;
-}
-
-.cell-similarity {
-  text-align: center;
-}
-
-.similarity-badge {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: var(--fs-12);
-  font-weight: 600;
-  border: 1px solid;
-}
-
-.sim-100 {
-  background: rgba(34, 197, 94, 0.15);
-  color: #15803d;
-  border-color: rgba(34, 197, 94, 0.3);
-}
-
-.sim-90 {
-  background: rgba(34, 197, 94, 0.12);
-  color: #22c55e;
-  border-color: rgba(34, 197, 94, 0.2);
-}
-
-.sim-80 {
-  background: rgba(34, 197, 94, 0.1);
-  color: #86efac;
-  border-color: rgba(34, 197, 94, 0.15);
-}
-
-.sim-70 {
-  background: rgba(34, 197, 94, 0.05);
-  color: #86efac;
-  border-color: rgba(34, 197, 94, 0.1);
-}
-
-.sim-60 {
-  background: rgba(251, 191, 36, 0.15);
-  color: #ca8a04;
-  border-color: rgba(251, 191, 36, 0.3);
-}
-
-.sim-50 {
-  background: rgba(251, 146, 60, 0.15);
-  color: #ea580c;
-  border-color: rgba(251, 146, 60, 0.3);
-}
-
-.sim-40 {
-  background: rgba(239, 68, 68, 0.1);
-  color: #dc2626;
-  border-color: rgba(239, 68, 68, 0.2);
-}
-
-.sim-30,
-.sim-20,
-.sim-10,
-.sim-0 {
-  background: rgba(239, 68, 68, 0.05);
-  color: #ef4444;
-  border-color: rgba(239, 68, 68, 0.1);
-}
-
-.comparison-legend {
-  margin-top: 16px;
-  padding: 12px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-}
-
-.comparison-legend h4 {
-  font-size: var(--fs-12);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-3);
-  margin: 0 0 8px;
-}
-
-.legend-items {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 8px;
-}
-
 .legend-item {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: var(--fs-12);
-}
-
-.legend-label {
-  color: var(--text-2);
-  font-weight: 500;
-}
-
-.legend-value {
-  color: var(--accent);
-  font-weight: 700;
-  min-width: 30px;
-  text-align: right;
 }
 
 /* ── Match play (MatchplayView) — badge central estilo GolfBox/R&A ──────── */
@@ -4771,9 +4085,7 @@ table td.lb-col-divider {
    rolam na horizontal reservam espaço em baixo para a barra (era só o
    .bjgt-chart-scroll, desde o caso do Ranking PJA). As toolbars e o nav ficam
    de fora: escondem a barra de propósito. */
-.scroll-x, .tourn-scroll, .sc-modern, .sc-wrap, .hoc-tablewrap, .scorecard-table-wrapper,
-[style*="overflow-x: auto"], [style*="overflow-x:auto"], .u-ox-auto,
-[style*="overflow-x: scroll"] {
+.scroll-x, .tourn-scroll, .sc-modern, .sc-wrap, .scorecard-table-wrapper, [style*="overflow-x: auto"], [style*="overflow-x:auto"], .u-ox-auto, [style*="overflow-x: scroll"] {
   padding-bottom: 12px;
 }
 
@@ -4892,7 +4204,6 @@ table td.lb-col-divider {
 .u-bd-1px-solid-badge-pp { border: 1px solid var(--badge-pp) !important; }
 .u-bd-1px-solid-border { border: 1px solid var(--border) !important; }
 .u-bd-1px-solid-border-light { border: 1px solid var(--border-light) !important; }
-.u-bd-1px-solid-color-danger-dark { border: 1px solid var(--color-danger-dark) !important; }
 .u-bd-1px-solid-color-good-dark { border: 1px solid var(--color-good-dark) !important; }
 .u-bd-1px-solid-color-warn { border: 1px solid var(--color-warn) !important; }
 .u-bd-1px-solid-good { border: 1px solid var(--good) !important; }
@@ -4904,7 +4215,6 @@ table td.lb-col-divider {
 .u-bd-2px-solid-color-danger { border: 2px solid var(--color-danger) !important; }
 .u-bd-2px-solid-color-good { border: 2px solid var(--color-good) !important; }
 .u-bd-ci9jy { border: 1px solid var(--border-success, #97c459) !important; }
-.u-bd-eig1p { border: 1px solid var(--border-light, #e5e7eb) !important; }
 .u-bd-ltbl9 { border: 1px solid var(--color-amber, #f59e0b) !important; }
 .u-bd-nmb3o { border: 1px solid var(--color-warn-dark, var(--color-warn-dark)) !important; }
 .u-bd-none { border: none !important; }
@@ -5476,7 +4786,6 @@ table td.lb-col-divider {
 .u-p-8px-12px-40px { padding: 8px 12px 40px !important; }
 .u-p-8px-12px-6px { padding: 8px 12px 6px !important; }
 .u-p-8px-14px { padding: 8px 14px !important; }
-.u-p-8px-16px { padding: 8px 16px !important; }
 .u-p-8px-4px { padding: 8px 4px !important; }
 .u-pb-14px { padding-bottom: 14px !important; }
 .u-pb-3px { padding-bottom: 3px !important; }
