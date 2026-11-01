@@ -27,6 +27,7 @@
  */
 
 const { rosterKey } = require("./egr-dedup");
+const { juntarFichas } = require("./juntar-fichas");
 
 const DAY_MS = 86400000;
 const DATE_SLACK_DAYS = 3;
@@ -124,7 +125,7 @@ function fundirCabecalho(p, s) {
  * @returns {{inteiras:number, transversais:number, linhasFundidas:number, linhasMovidas:number, homonimos:number, amostra:string[]}}
  */
 function fundirTorneiosRepetidos(matchResult) {
-  const stats = { inteiras: 0, transversais: 0, linhasFundidas: 0, linhasMovidas: 0, homonimos: 0, amostra: [] };
+  const stats = { inteiras: 0, transversais: 0, linhasFundidas: 0, linhasMovidas: 0, homonimos: 0, amostra: [], fichasDuplas: [] };
   const ts = matchResult.tournaments;
   const byId = new Map(ts.map((t) => [t.id, t]));
   const juniorById = new Map(matchResult.juniors.map((j) => [j.id, j]));
@@ -229,6 +230,8 @@ function fundirTorneiosRepetidos(matchResult) {
           stats.linhasFundidas++;
           if (homonimo) {
             stats.homonimos++;
+            // mesmas pancadas (não só «sem pancadas para comparar»): a mesma pessoa
+            if (mesmasPancadas(homonimo, r) === true && homonimo.juniorId !== r.juniorId) stats.fichasDuplas.push([homonimo.juniorId, r.juniorId]);
             if (stats.amostra.length < 60) stats.amostra.push(`por nome: ${r.playerNameInSource} ${r.juniorId} = ${homonimo.juniorId} (${s.id} → ${p.id})`);
           }
           continue;
@@ -316,7 +319,10 @@ function fundirTorneiosRepetidos(matchResult) {
   }
 
   if (removidas.size) matchResult.tournaments = ts.filter((t) => !removidas.has(t.id));
-  // quem ficou sem provas (homónimo de outra ficha) sai, como no matcher
+  // a outra ficha da mesma pessoa junta-se antes de sair por ficar sem provas
+  // (as chaves e o que só ela tinha passam para a que fica)
+  stats.fichas = juntarFichas(matchResult, stats.fichasDuplas);
+  // quem ficou sem provas sai, como no matcher
   matchResult.juniors = matchResult.juniors.filter((j) => j.tournamentIds.length > 0);
   stats.removidas = removidas.size;
   return stats;

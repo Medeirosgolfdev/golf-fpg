@@ -149,11 +149,48 @@ informação disponível».
 - **Fonte rica partida por escalão no EGR** (Estonian Junior Open, GJGL): as
   cópias EGR fundem-se nela, não o contrário.
 - Mesmo nome com outra ficha e as mesmas pancadas conta como o mesmo jogador
-  (10 casos em 01/11, quase todos na Evian) — a linha funde-se e a ficha dupla
-  perde a prova; o par de fichas fica por juntar (identidade, outro assunto).
-- O que sobra no mesmo dia (373 grupos em 01/11) tem pancadas diferentes:
-  voltas diferentes ou homónimos juntos numa ficha (USKids locais, UA Worlds).
-  Diagnóstico: agrupar por jogador e data as `tournamentIds`.
+  — a linha funde-se e as duas fichas juntam-se (ver «Fichas duplas» abaixo).
+- O que sobra no mesmo dia (~370 grupos em 01/11) tem pancadas diferentes e,
+  revisto caso a caso, quase tudo é a mesma pessoa em provas de vários dias que
+  se cruzam (UA Worlds e USKids local, R&A Boys e uma prova de fim de semana) ou
+  datas erradas de uma das fontes — não são homónimos. Diagnóstico: por ficha,
+  pares de provas de fontes diferentes cujas datas (início–fim) se sobrepõem.
+
+### Fichas duplas e homónimos (01/11/2026)
+
+`scripts/aggregator/util/juntar-fichas.js`, logo a seguir às provas repetidas
+(passo «Fichas duplas juntas» no log). Junta duas fichas só com PROVA:
+- o mesmo nome com as MESMAS pancadas na mesma prova publicada 2× (Francisca
+  Costa da FPG = a licença «E77995991» da FFG na Evian 2024; Marius Dupraz,
+  Arthur Haghedooren, Maria Sueiro Nieves com duas licenças RFEG do mesmo sufixo);
+- uma ficha só com licença «E…» da FFG (a FFG dá uma nova ao estrangeiro em
+  cada prova) com o mesmo nome e nascimento de UMA ficha a sério — as outras
+  «E…» com o mesmo nome e nascimento vão com ela (Louis Dirickx tinha 3).
+Fica a ficha com mais provas; a chave da outra vai para o histórico da fonte
+(`historicalLicenses`/`historicalFeds`/`historicalMemberIds`) e passa tudo o
+que ela não tinha. O «(U18)» que a FFG cola ao nome sai no `ffgolf.js`.
+
+**Homónimos do EGR:** o EGR distingue jogadores com o mesmo nome por uma marca
+entre parênteses («Callum (ENG) Brown», «Callum (SCO) Brown», «Jack (RMS)
+Turner»). O `normName` tira os parênteses, e 95 fichas juntavam pessoas
+diferentes. Agora o identity-matcher veta (como o `notDuplicates`) juntar
+entidades EGR do mesmo nome com marca diferente — 127 pares em 01/11. Quando o
+próprio EGR mostra a mesma pessoa com e sem marca na mesma prova (Danny Lyne,
+James Walsh), as mesmas pancadas voltam a juntá-las.
+
+Casos à mão no `juniors-overrides.json` (01/11): Paul Martin n. 2009 (FFG
+041933301) ≠ Paul Martin de Maisons-Laffitte (551742239) ≠ Paul-Antoine Martin
+(514734273); Jack Smith US (USKids 574084) ≠ Jack Smith FR (4 provas de um dia
+no mesmo dia nos dois lados do Atlântico); Jake Williams US ≠ o do EGR (Welsh
+Closed); Isabel Sirel com três datas de nascimento na GolfBox = uma só.
+⚠ No `notDuplicates`, uma regra com mais de 2 chaves veta TODOS os pares entre
+elas (também entre as do mesmo lado) — escrever pares.
+
+**Datas do LiveGolfScoring:** em 46 de 72 provas o `dateIso` é o ÚLTIMO dia
+(«25 junio - 27 junio» → 2025-06-27). O `sources/rfeg.js` usa o primeiro dia
+do `dateRange` (`datasDoIntervalo`, com `endDate`); sem isto o Campeonato de
+España Alevín caía em cima do Nacional de Jovens Sub-12 e o Raul Pazos e a
+Sabrina Crisóstomo pareciam dois. O `rfegolf-rivals.json` em si não mudou.
 
 O adapter `rfeg` resolve resultados **sem licença** (todo o LGS + blocos
 nativos do microsite) por lookup de nome normalizado contra `spain.byName`

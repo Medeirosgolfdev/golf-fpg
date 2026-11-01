@@ -18,6 +18,9 @@ const { seriesId } = require("../util/id");
 const SOURCE_ID = "ffgolf";
 const SOURCE_LABEL = "Fédération française de golf";
 
+// A FFG cola o escalão ao nome dos estrangeiros: «Sofia (U18) Cherif Essakali».
+const nomeFfg = (n) => displayName(String(n || "").replace(/\s*\((?:U|Sub-?)\d{1,2}\)\s*/gi, " ").replace(/\s+/g, " ").trim());
+
 function load(opts) {
   const france = readJsonSafe(DATA.ffgFrancePlayers, { byName: {} });
   const slim = readJsonSafe(DATA.ffgJuniorsSlim, { tournaments: [] });
@@ -54,7 +57,7 @@ function load(opts) {
   for (const [lic, p] of byLic) {
     if (licCanonica(lic, p.name) !== lic) continue; // outra licença E do mesmo estrangeiro
     const country = countryToIso2(p.country) || (/^E\d/.test(lic) ? null : "FR");
-    const cleanName = displayName(p.name || "");
+    const cleanName = nomeFfg(p.name);
     if (!cleanName) continue;
     players.push({
       sourceKey: lic,
@@ -105,7 +108,7 @@ function load(opts) {
         if (!lic) continue;
         let player = playersByLic.get(lic);
         if (!player) {
-          const cleanName = displayName(pl.name || "");
+          const cleanName = nomeFfg(pl.name);
           if (!cleanName) continue;
           player = {
             // Licença E sem par no roster: é estrangeiro, o país é desconhecido
@@ -157,7 +160,7 @@ function normalizeFfgTournament(t, licCanonica = (lic) => lic) {
   const flightPlayers = Array.isArray(t.players) ? t.players : [];
   const results = flightPlayers.map((pl) => ({
     playerSourceKey: pl.license ? licCanonica(String(pl.license), pl.name) : null,
-    playerName: displayName(pl.name || ""),
+    playerName: nomeFfg(pl.name),
     pos: typeof pl.pos === "number" ? pl.pos : null,
     status: "OK",
     totalGross: typeof pl.total === "number" ? pl.total : null,

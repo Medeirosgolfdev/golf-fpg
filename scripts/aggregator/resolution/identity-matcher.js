@@ -85,6 +85,34 @@ function resolve(rawSources, overrides) {
     }
   }
 
+  // EGR: quando há dois jogadores com o mesmo nome, o EGR distingue-os com uma
+  // marca entre parênteses — «Callum (ENG) Brown» ≠ «Callum (SCO) Brown» ≠
+  // «Callum Brown». O normName tira os parênteses (para «(IRE)», «(jr)» das
+  // outras fontes), e até 01/11/2026 os homónimos do EGR acabavam numa só ficha
+  // (95, ex.: Harris Fleming irlandês + escocês + USKids). Marca diferente =
+  // pessoa diferente: o mesmo veto do notDuplicates.
+  const marcaEgr = (k) => (/\(([^)]*)\)/.exec(String(k).split("|")[0]) || [])[1]?.trim().toLowerCase() || "";
+  const egrPorNome = new Map();
+  for (const e of entities) {
+    if (e.sourceId !== "egr" || !e.normName) continue;
+    if (!egrPorNome.has(e.normName)) egrPorNome.set(e.normName, []);
+    egrPorNome.get(e.normName).push(e);
+  }
+  let vetosEgr = 0;
+  for (const arr of egrPorNome.values()) {
+    if (arr.length < 2) continue;
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (marcaEgr(arr[i].sourceKey) === marcaEgr(arr[j].sourceKey)) continue;
+        const a = arr[i].entityKey, b = arr[j].entityKey;
+        if (!notDupByKey.has(a)) notDupByKey.set(a, new Set());
+        if (!notDupByKey.has(b)) notDupByKey.set(b, new Set());
+        notDupByKey.get(a).add(b); notDupByKey.get(b).add(a);
+        vetosEgr++;
+      }
+    }
+  }
+
   const parent = new Map();
   // groupEntities: root → Entity[] (todas as entidades do grupo)
   const groupEntities = new Map();
@@ -535,7 +563,7 @@ function resolve(rawSources, overrides) {
     total: juniors.length,
     droppedNoTourn,
     strong: 0, probable: 0, manual: 0,
-    strongMerges, probableMerges, manualMerges, collisionMerges, collisionSplits,
+    strongMerges, probableMerges, manualMerges, collisionMerges, collisionSplits, vetosEgr,
   };
   for (const j of juniors) {
     stats[j._match.confidence] = (stats[j._match.confidence] || 0) + 1;

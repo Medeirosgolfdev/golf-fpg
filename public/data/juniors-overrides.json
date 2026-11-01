@@ -7999,6 +7999,24 @@
    ],
    "auto": true,
    "reason": "[órfã 2026-09-18] Matthew Morrone (optimist-optimist2_2024) → Matt Morrone [1T] — variante; idade pelos escalões compatível; mesmo país; apelido em 3 fichas; nunca jogaram juntos."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:041933301",
+    "england:paul martin|FR",
+    "evianjc:paul martin|FR",
+    "eym:eym-gb44170536",
+    "egr:paul martin|FR"
+   ],
+   "reason": "[2026-11-01] Paul Martin n. 2009 (FFG 041933301, Bordelais): a Evian 2023 na FFG traz esta licença com as mesmas pancadas da classificação da Evian — as chaves de fora (England, Evian, EYM, EGR) são dele, não do Paul Martin de Maisons-Laffitte (551742239)."
+  },
+  {
+   "sourceKeys": [
+    "ejo:ejo-gb18272240",
+    "ejo:ejo-gb21438515",
+    "ejo:ejo-gb25331928"
+   ],
+   "reason": "[2026-11-01] Isabel Sirel (EE, Estonian G&CC): a GolfBox dá-lhe três datas de nascimento — 2006-08-16 em 10 provas, 2007-08-16 (2020-2021) e 2006-06-18 (2021). Mesmo nome, mesmo clube, handicap seguido e as mesmas pancadas no EGR e no EJO 2020: é uma só."
   }
  ],
  "forceSplit": [],
@@ -8038,6 +8056,104 @@
     "uskids:577624"
    ],
    "reason": "[2026-09-18] Michael Egan GB (n. 2013) ≠ Michael Egan US (n. 2014): jogaram torneios diferentes no mesmo dia 4 vezes (2022-07-17, 2024-03-17, 2024-06-09, 2024-09-29)."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:551742239",
+    "england:paul martin|FR"
+   ],
+   "reason": "[2026-11-01] Paul Martin (FFG 551742239, Maisons-Laffitte, hcp 23,9, visto 2016-2017 como Minime → nascido ~2002) ≠ Paul Martin nascido em 2009 (FFG 041933301, Bordelais, hcp −0,8). A Evian 2023 na FFG traz a licença 041933301 com as mesmas pancadas da classificação evianjc: as chaves England/Evian/EYM/EGR são do de 2009. Paul-Antoine Martin (FFG 514734273, Monte Carlo, hcp 30,5, Minime em 2019 → nascido ~2004) também é outro: o matcher juntava-o pelo nome contido."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:551742239",
+    "evianjc:paul martin|FR"
+   ],
+   "reason": "[2026-11-01] Paul Martin (FFG 551742239, Maisons-Laffitte, hcp 23,9, visto 2016-2017 como Minime → nascido ~2002) ≠ Paul Martin nascido em 2009 (FFG 041933301, Bordelais, hcp −0,8). A Evian 2023 na FFG traz a licença 041933301 com as mesmas pancadas da classificação evianjc: as chaves England/Evian/EYM/EGR são do de 2009. Paul-Antoine Martin (FFG 514734273, Monte Carlo, hcp 30,5, Minime em 2019 → nascido ~2004) também é outro: o matcher juntava-o pelo nome contido."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:551742239",
+    "eym:eym-gb44170536"
+   ],
+   "reason": "[2026-11-01] Paul Martin (FFG 551742239, Maisons-Laffitte, hcp 23,9, visto 2016-2017 como Minime → nascido ~2002) ≠ Paul Martin nascido em 2009 (FFG 041933301, Bordelais, hcp −0,8). A Evian 2023 na FFG traz a licença 041933301 com as mesmas pancadas da classificação evianjc: as chaves England/Evian/EYM/EGR são do de 2009. Paul-Antoine Martin (FFG 514734273, Monte Carlo, hcp 30,5, Minime em 2019 → nascido ~2004) também é outro: o matcher juntava-o pelo nome contido."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:551742239",
+    "egr:paul martin|FR"
+   ],
+   "reason": "[2026-11-01] Paul Martin (FFG 551742239, Maisons-Laffitte, hcp 23,9, visto 2016-2017 como Minime → nascido ~2002) ≠ Paul Martin nascido em 2009 (FFG 041933301, Bordelais, hcp −0,8). A Evian 2023 na FFG traz a licença 041933301 com as mesmas pancadas da classificação evianjc: as chaves England/Evian/EYM/EGR são do de 2009. Paul-Antoine Martin (FFG 514734273, Monte Carlo, hcp 30,5, Minime em 2019 → nascido ~2004) também é outro: o matcher juntava-o pelo nome contido."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:551742239",
+    "ffgolf:514734273"
+   ],
+   "reason": "[2026-11-01] Paul Martin (FFG 551742239, Maisons-Laffitte, hcp 23,9, visto 2016-2017 como Minime → nascido ~2002) ≠ Paul Martin nascido em 2009 (FFG 041933301, Bordelais, hcp −0,8). A Evian 2023 na FFG traz a licença 041933301 com as mesmas pancadas da classificação evianjc: as chaves England/Evian/EYM/EGR são do de 2009. Paul-Antoine Martin (FFG 514734273, Monte Carlo, hcp 30,5, Minime em 2019 → nascido ~2004) também é outro: o matcher juntava-o pelo nome contido."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:514734273",
+    "ffgolf:041933301"
+   ],
+   "reason": "[2026-11-01] Paul-Antoine Martin (Monte Carlo, Minime em 2019) ≠ Paul Martin n. 2009 (Bordelais)."
+  },
+  {
+   "sourceKeys": [
+    "uskids:574084",
+    "ffgolf:526724332"
+   ],
+   "reason": "[2026-11-01] Jack Smith US (USKids 574084, Florida) ≠ Jack Smith FR (FFG 526724332, Grand Prix Jeunes na Normandia/Bretanha, EGR FR, Albert Vermeiren Trophy): jogaram provas de um dia nos dois lados do Atlântico no mesmo dia 4 vezes (2023-10-07, 2024-09-07, 2025-05-24, 2026-03-28)."
+  },
+  {
+   "sourceKeys": [
+    "uskids:574084",
+    "egr:jack smith|FR"
+   ],
+   "reason": "[2026-11-01] Jack Smith US (USKids 574084, Florida) ≠ Jack Smith FR (FFG 526724332, Grand Prix Jeunes na Normandia/Bretanha, EGR FR, Albert Vermeiren Trophy): jogaram provas de um dia nos dois lados do Atlântico no mesmo dia 4 vezes (2023-10-07, 2024-09-07, 2025-05-24, 2026-03-28)."
+  },
+  {
+   "sourceKeys": [
+    "uskids:574084",
+    "avtrophy:avtrophy-gb47648963"
+   ],
+   "reason": "[2026-11-01] Jack Smith US (USKids 574084, Florida) ≠ Jack Smith FR (FFG 526724332, Grand Prix Jeunes na Normandia/Bretanha, EGR FR, Albert Vermeiren Trophy): jogaram provas de um dia nos dois lados do Atlântico no mesmo dia 4 vezes (2023-10-07, 2024-09-07, 2025-05-24, 2026-03-28)."
+  },
+  {
+   "sourceKeys": [
+    "uskids:495440",
+    "egr:jake williams|GB"
+   ],
+   "reason": "[2026-11-01] Jake Williams US (USKids 495440, Florida) ≠ Jake Williams GB do EGR: no Welsh Boys Championship (Closed) de 18-21/07/2021 o americano jogava a USKids em Key Biscayne (20/07)."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:514734273",
+    "england:paul martin|FR"
+   ],
+   "reason": "[2026-11-01] Paul-Antoine Martin (FFG 514734273, Monte Carlo, Minime em 2019, hcp 30,5) não é o Paul Martin n. 2009 das provas internacionais — o matcher juntava-o pelo nome contido."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:514734273",
+    "evianjc:paul martin|FR"
+   ],
+   "reason": "[2026-11-01] Paul-Antoine Martin (FFG 514734273, Monte Carlo, Minime em 2019, hcp 30,5) não é o Paul Martin n. 2009 das provas internacionais — o matcher juntava-o pelo nome contido."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:514734273",
+    "eym:eym-gb44170536"
+   ],
+   "reason": "[2026-11-01] Paul-Antoine Martin (FFG 514734273, Monte Carlo, Minime em 2019, hcp 30,5) não é o Paul Martin n. 2009 das provas internacionais — o matcher juntava-o pelo nome contido."
+  },
+  {
+   "sourceKeys": [
+    "ffgolf:514734273",
+    "egr:paul martin|FR"
+   ],
+   "reason": "[2026-11-01] Paul-Antoine Martin (FFG 514734273, Monte Carlo, Minime em 2019, hcp 30,5) não é o Paul Martin n. 2009 das provas internacionais — o matcher juntava-o pelo nome contido."
   }
  ],
  "manualPlayers": []

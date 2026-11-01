@@ -178,6 +178,7 @@ async function main() {
     matchResult = matcher.resolve(rawSources, overrides);
     sub(`${matchResult.juniors.length} juniores resolvidos · ${matchResult.tournaments.length} torneios`);
     sub(`evidência: ${matchResult.stats.strong} fortes · ${matchResult.stats.probable} prováveis · ${matchResult.stats.manual} manuais`);
+    if (matchResult.stats.vetosEgr) sub(`${matchResult.stats.vetosEgr} pares de homónimos do EGR mantidos à parte (marca entre parênteses diferente)`);
   } catch (err) {
     if (err.code === "MODULE_NOT_FOUND") {
       warn("identity-matcher ainda não existe — saltado. Output será cru (1 entrada por sourceKey).");
@@ -244,6 +245,17 @@ async function main() {
       step("Provas repetidas fundidas");
       sub(`${r.inteiras} cópia(s) fundida(s) na principal · ${r.transversais} classificação(ões) transversal(is) · ${r.removidas} torneio(s) a menos · ${r.linhasFundidas} linhas fundidas · ${r.linhasMovidas} jogadores passados para a principal · ${r.homonimos} por nome`);
       if (process.env.DEBUG) for (const a of r.amostra) sub(`  · ${a}`);
+      console.log("");
+    }
+    // A mesma pessoa com duas fichas, provado pela prova repetida (acima) ou
+    // por uma licença «E…» da FFG com o mesmo nome e nascimento. Ver util/juntar-fichas.js.
+    const { juntarFichas, paresLicencaE } = require("./util/juntar-fichas");
+    const e = juntarFichas(matchResult, paresLicencaE(matchResult.juniors));
+    const juntas = (r.fichas?.juntas || 0) + e.juntas;
+    if (juntas) {
+      step("Fichas duplas juntas");
+      sub(`${r.fichas?.juntas || 0} pelas mesmas pancadas na mesma prova · ${e.juntas} licença(s) «E…» da FFG com o mesmo nome e nascimento`);
+      for (const a of [...(r.fichas?.amostra || []), ...e.amostra].slice(0, process.env.DEBUG ? 200 : 12)) sub(`  · ${a}`);
       console.log("");
     }
   }

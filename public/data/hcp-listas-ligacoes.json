@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T18:46:31.977Z",
+  "generatedAt": "2026-11-01T21:27:32.680Z",
   "listas": [
     {
       "id": "fpg-entry-list-girls-2026-10-01",
@@ -1477,7 +1477,10 @@
           "country": "United Kingdom",
           "hcp": 0,
           "junior": null,
-          "ambiguo": null,
+          "ambiguo": [
+            "Oliver (K) Smith (GB)",
+            "Oliver (QdL) Smith (GB)"
+          ],
           "duplicadoDe": null,
           "anterior": null,
           "hcpAtual": null
@@ -2921,11 +2924,14 @@
           "name": "Luis Maier",
           "country": "Germany",
           "hcp": 3.2,
-          "junior": null,
-          "ambiguo": [
-            "Luis Maier (DE)",
-            "Luis Maier (DE)"
-          ],
+          "junior": {
+            "id": "u588026",
+            "name": "Luis Maier",
+            "dob": null,
+            "club": "Reutlingen",
+            "via": "nome"
+          },
+          "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
           "hcpAtual": null
@@ -14317,7 +14323,10 @@
           "country": "United Kingdom",
           "hcp": 0,
           "junior": null,
-          "ambiguo": null,
+          "ambiguo": [
+            "Oliver (K) Smith (GB)",
+            "Oliver (QdL) Smith (GB)"
+          ],
           "duplicadoDe": null,
           "anterior": null,
           "hcpAtual": null
