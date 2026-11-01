@@ -163,6 +163,15 @@
   --color-good-alpha:   rgba(22, 163, 74, 0.12);
   --color-danger-alpha: rgba(220, 38, 38, 0.12);
   --color-warn-alpha:   rgba(217, 119, 6, 0.12);
+
+  /* Escala de intensidade das análises por buraco (Aroeira): verde → lima →
+   * texto → laranja → vermelho → preto. E as fatias de uma distribuição. */
+  --heat-good-mid:  #65a30d;   /* lima — bom, abaixo do melhor escalão */
+  --heat-warn:      #ea580c;   /* laranja — atenção */
+  --heat-max:       #000;      /* preto — o pior escalão (duplo+ frequente) */
+  --heat-par:       #eab308;   /* amarelo — buraco «de par» */
+  --dist-par:       #d4d4d4;   /* fatia «par» de uma distribuição */
+  --dist-bogey:     #60a5fa;   /* fatia «bogey» de uma distribuição */
   --rgb-success:        22, 163, 74;   /* = #16a34a — para uso em rgba() */
 
   --sd-badge-good:      #ffc107;   /* badge de SD bom */

@@ -2487,6 +2487,47 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
   background: var(--bg-muted); border: 1px solid var(--border-light); }
 .advice-card.warn { background: var(--color-warn-alpha); border-color: var(--color-warn); }
 .advice-card.off { background: transparent; opacity: 0.6; }
+/* ── Equipas em stroke play (ui/circuit/TeamStrokeStandings) ── */
+/* Tabela de jogadores do cartão: tudo ao centro; nome à esquerda; a cor da equipa vem no style. */
+.dtable.ts-table :is(th, td) { text-align: center; }
+.dtable.ts-table .ts-name { text-align: left; padding-left: 10px; }
+.ts-name.ts-name-cell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-weight: 500; }
+.ts-name.ts-name-cell.no-score { color: var(--text-muted); font-weight: 400; opacity: 0.55; }
+.dtable td.ts-score { padding: 4px; text-align: center; }
+.ts-score-tp { font-size: var(--fs-9); line-height: 1; color: var(--text-muted); opacity: 0.65; }
+.ts-score-tp.counts { opacity: 0.85; }
+.dtable.ts-table .ts-bpb-b { color: var(--color-good); border-left: 1px solid var(--border); }
+.dtable.ts-table .ts-bpb-p { color: var(--text-3); border-left: 1px solid var(--border-light); }
+.dtable.ts-table .ts-bpb-g { color: var(--color-danger); border-left: 1px solid var(--border-light); }
+/* Rodapé: total da equipa (claro) ou, com .all, soma de todos na cor da equipa (style background). */
+.ts-foot { background: var(--accent-light); }
+.dtable.ts-table .ts-foot td { border-bottom: none; font-weight: 700; }
+.dtable.ts-table .ts-foot td.ts-foot-lbl { text-align: left; padding-left: 10px; font-size: var(--fs-10);
+  text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-2); }
+.dtable.ts-table .ts-foot.all td { color: #fff; font-weight: 600; }
+.dtable.ts-table .ts-foot.all td.ts-foot-lbl { color: rgba(255,255,255,0.85); }
+.dtable.ts-table .ts-foot.all td.ts-grand-all { font-weight: 700; }
+.dtable.ts-table .ts-foot td.ts-grand { font-weight: 900; }
+.dtable.ts-table .ts-foot td.ts-bpb-b { color: #fff; font-weight: 600; border-left: 1px solid rgba(255,255,255,0.3); opacity: 0.9; }
+.dtable.ts-table .ts-foot td:is(.ts-bpb-p, .ts-bpb-g) { color: #fff; font-weight: 400; border-left: 1px solid rgba(255,255,255,0.2); opacity: 0.8; }
+/* Cartão de uma equipa (cabeçalho na cor da equipa — style background). */
+.ts-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
+.ts-card-hdr { color: #fff; padding: 8px 12px; display: flex; align-items: center; gap: 10px; }
+.ts-cat-hdr { background: var(--bg-hover); padding: 4px 10px; font-size: var(--fs-11); font-weight: 700; color: var(--text-2);
+  display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ts-cat-hdr.first { border-top: none; }
+.ts-cat-hdr.win { background: var(--accent-light); }
+.ts-capitao.split { border-right: 1px solid var(--border); }
+/* Legenda dos clubes com 2+ equipas (cor do clube no style). */
+.ts-legend { font-size: var(--fs-10); display: inline-flex; align-items: center; gap: 4px; border: 1px solid; border-radius: var(--radius-sm); padding: 2px 8px; }
+
+/* ── Análise da Aroeira ── */
+/* Cartão por jogador (.is-manuel: o Manuel, realçado a verde). */
+.aro-card { border: 1px solid var(--border); border-radius: var(--radius-lg); margin-bottom: 8px; background: var(--bg-card); }
+.aro-card.is-manuel { border: 2px solid var(--color-good); background: color-mix(in srgb, var(--chart-1-light) 55%, transparent); }
+/* Legenda dos tipos de buraco e recomendações por buraco — fundo/borda vêm do tipo. */
+.aro-tag { font-size: var(--fs-12); font-weight: 600; padding: 4px 12px; border-radius: var(--radius); border: 1px solid; }
+.aro-tip { font-size: var(--fs-13); padding: 10px; border-radius: var(--radius); border: 1.5px solid; background: var(--bg-card); }
 .trend-pill { font-size: var(--fs-10); padding: 2px 8px; border-radius: var(--radius-lg); font-weight: 700;
   border: 1px solid; white-space: nowrap; flex-shrink: 0; }
 /* Cabeçalho abre/fecha dos grupos de torneios (Draws do jogador). */
@@ -4895,6 +4936,9 @@ table td.lb-col-divider {
 .u-c-525252 { color: #525252 !important; }
 .u-c-accent { color: var(--accent) !important; }
 .u-c-accent-text { color: var(--accent-text) !important; }
+.u-c-heat-good-mid { color: var(--heat-good-mid) !important; }
+.u-c-heat-max { color: var(--heat-max) !important; }
+.u-c-heat-warn { color: var(--heat-warn) !important; }
 .u-c-bg { color: var(--bg) !important; }
 .u-c-border { color: var(--border) !important; }
 .u-c-chart-2 { color: var(--chart-2) !important; }
@@ -4956,6 +5000,7 @@ table td.lb-col-divider {
 .u-fl-1 { flex: 1 !important; }
 .u-fl-1-1-100px { flex: 1 1 100px !important; }
 .u-fl-1-1-120px { flex: 1 1 120px !important; }
+.u-fl-1-1-200px { flex: 1 1 200px !important; }
 .u-fl-1-1-160px { flex: 1 1 160px !important; }
 .u-fl-1-1-220px { flex: 1 1 220px !important; }
 .u-fl-1-1-240px { flex: 1 1 240px !important; }
@@ -4994,6 +5039,7 @@ table td.lb-col-divider {
 .u-fw-600 { font-weight: 600 !important; }
 .u-fw-700 { font-weight: 700 !important; }
 .u-fw-800 { font-weight: 800 !important; }
+.u-fw-900 { font-weight: 900 !important; }
 .u-fwr-nowrap { flex-wrap: nowrap !important; }
 .u-fwr-wrap { flex-wrap: wrap !important; }
 .u-gap-0 { gap: 0 !important; }

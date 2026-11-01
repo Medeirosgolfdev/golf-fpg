@@ -24,9 +24,6 @@ type View = "cartoes" | "lista" | "jogadores";
 type RoundSel = "grupo" | "total" | number;
 
 // Letra, cabeçalho, linhas e separadores vêm da .dtable (modelo único das tabelas).
-const tdC: React.CSSProperties = { textAlign: "center" };
-const tdL: React.CSSProperties = { textAlign: "left" };
-const thC = tdC;
 
 const tpTxt = (tp: number | null | undefined) => (tp == null ? "" : tp === 0 ? "PAR" : tp > 0 ? `+${tp}` : String(tp));
 const isEu = (p: TsPlayer) => (p.fed ? p.fed === MANUEL_FED : isManuelByName(p.name));
@@ -58,13 +55,13 @@ function PName({ p }: { p: TsPlayer }) {
 
 /* ── Gross (±par) de uma volta; os que contam a cheio, na cor da equipa ── */
 function ScoreCell({ r, color }: { r: TsPlayer["rds"][number]; color: string }) {
-  if (r.gross == null && r.toPar == null) return <td style={{ ...tdC, color: "var(--text-muted)" }}><span className="u-op-0_4">–</span></td>;
+  if (r.gross == null && r.toPar == null) return <td className="u-ta-center u-c-text-muted"><span className="u-op-0_4">–</span></td>;
   return (
-    <td style={{ ...tdC, fontWeight: r.counts ? 700 : 400, color: r.counts ? color : "var(--text)", padding: "4px 4px" }}>
+    <td className={"ts-score " + (r.counts ? "u-fw-700" : "u-fw-400 u-c-text")} style={r.counts ? { color } : undefined}>
       <div className="u-lh-1_2">
         <div>{r.gross ?? "—"}</div>
         {r.toPar != null && (
-          <div style={{ fontSize: "var(--fs-9)", lineHeight: 1, color: r.counts ? color : "var(--text-muted)", opacity: r.counts ? 0.85 : 0.65 }}>
+          <div className={"ts-score-tp" + (r.counts ? " counts" : "")} style={r.counts ? { color } : undefined}>
             ({fmtToPar(r.toPar)})
           </div>
         )}
@@ -104,24 +101,24 @@ function PlayersTable({ cat, model, color, cols, bpbMode, showTotal }: {
       return dir * ((av as number) - (bv as number));
     });
   }, [cat.players, sortKey, sortDir, model.rankBy]);
-  const hdr = (k: PKey, label: React.ReactNode, style?: React.CSSProperties, title?: string) => (
-    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={title} style={{ ...thC, cursor: "pointer", ...style }}>{label}</SortableHdr>
+  const hdr = (k: PKey, label: React.ReactNode, cls?: string, title?: string) => (
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={title} className={"u-cur-pointer" + (cls ? " " + cls : "")}>{label}</SortableHdr>
   );
   const bpbOf = (p: TsPlayer) => (bpbMode === "all" ? sumBpb(p.rds.map(r => r.bpb)) : bpbMode != null ? p.rds[bpbMode]?.bpb ?? null : null);
   const footBpb = bpbMode != null ? sumBpb(cat.players.map(bpbOf)) : null;
   const withFooter = model.rankBy !== "toPar";
   return (
-    <table className="dtable">
+    <table className="dtable ts-table">
       <thead>
         <tr>
-          {hdr("nome", "Jogador", { textAlign: "left", paddingLeft: 10 })}
+          {hdr("nome", "Jogador", "ts-name")}
           {model.showHcp && hdr("hcp", "HCP")}
           {model.showHoles && hdr("bur", "Bur.", undefined, "Sub-10 joga 9 buracos")}
           {cols.map(ri => hdr(`r${ri}`, model.rankBy === "toPar" ? "Gross" : `R${model.rounds[ri]}`))}
           {bpbMode != null ? (<>
-            <th style={{ ...thC, color: "var(--color-good)", borderLeft: "1px solid var(--border)" }}>🐦</th>
-            <th style={{ ...thC, color: "var(--text-3)", borderLeft: "1px solid var(--border-light)" }}>○</th>
-            <th style={{ ...thC, color: "var(--color-danger)", borderLeft: "1px solid var(--border-light)" }}>■</th>
+            <th className="ts-bpb-b">🐦</th>
+            <th className="ts-bpb-p">○</th>
+            <th className="ts-bpb-g">■</th>
           </>) : showTotal && hdr("tot", "Tot.")}
           {model.showConta && hdr("conta", "Conta", undefined, "Entra no total da equipa")}
         </tr>
@@ -131,46 +128,44 @@ function PlayersTable({ cat, model, color, cols, bpbMode, showTotal }: {
           const b = bpbOf(p);
           return (
             <tr key={p.key} className={isEu(p) ? "row-manuel" : undefined}>
-              <td style={{ ...tdL, paddingLeft: 10, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                color: p.hasScore ? "var(--text)" : "var(--text-muted)", fontWeight: p.hasScore ? 500 : 400, opacity: p.hasScore ? 1 : 0.55 }}>
+              <td className={"ts-name ts-name-cell" + (p.hasScore ? "" : " no-score")}>
                 <PName p={p} />
               </td>
-              {model.showHcp && <td style={{ ...tdC, color: "var(--text-muted)", opacity: p.hasScore || model.multiCat ? 1 : 0.55 }}>{p.hcp}</td>}
-              {model.showHoles && <td style={tdC}>{p.holes ?? "–"}</td>}
+              {model.showHcp && <td className={"u-c-text-muted" + (p.hasScore || model.multiCat ? "" : " u-op-0_55")}>{p.hcp}</td>}
+              {model.showHoles && <td>{p.holes ?? "–"}</td>}
               {cols.map(ri => <ScoreCell key={ri} r={p.rds[ri]} color={color} />)}
               {bpbMode != null ? (<>
-                <td style={{ ...tdC, color: "var(--color-good)", fontWeight: 600, borderLeft: "1px solid var(--border)" }}>{b ? (b.bir || "") : "–"}</td>
-                <td style={{ ...tdC, color: "var(--text-3)", borderLeft: "1px solid var(--border-light)" }}>{b ? (b.par || "") : "–"}</td>
-                <td style={{ ...tdC, color: "var(--color-danger)", borderLeft: "1px solid var(--border-light)" }}>{b ? (b.bog || "") : "–"}</td>
-              </>) : showTotal && <td style={{ ...tdC, fontWeight: 500, color: p.hasScore ? "var(--text)" : "var(--text-muted)" }}>{p.total ?? "–"}</td>}
-              {model.showConta && <td style={tdC}>{p.conta ? "✓" : ""}</td>}
+                <td className="ts-bpb-b u-fw-600">{b ? (b.bir || "") : "–"}</td>
+                <td className="ts-bpb-p">{b ? (b.par || "") : "–"}</td>
+                <td className="ts-bpb-g">{b ? (b.bog || "") : "–"}</td>
+              </>) : showTotal && <td className={"u-fw-500 " + (p.hasScore ? "u-c-text" : "u-c-text-muted")}>{p.total ?? "–"}</td>}
+              {model.showConta && <td>{p.conta ? "✓" : ""}</td>}
             </tr>
           );
         })}
       </tbody>
       {withFooter && (
         <tfoot>
-          <tr style={{ background: model.footerAll ? color : "var(--accent-light, #eef6ef)" }}>
-            <td colSpan={1 + (model.showHcp ? 1 : 0) + (model.showHoles ? 1 : 0)} style={{ ...tdL, paddingLeft: 10, fontWeight: model.footerAll ? 600 : 700, fontSize: "var(--fs-10)",
-              textTransform: "uppercase", letterSpacing: "0.04em", color: model.footerAll ? "rgba(255,255,255,0.85)" : "var(--text-2)" }}>
+          <tr className={"ts-foot" + (model.footerAll ? " all" : "")} style={model.footerAll ? { background: color } : undefined}>
+            <td colSpan={1 + (model.showHcp ? 1 : 0) + (model.showHoles ? 1 : 0)} className="ts-foot-lbl">
               {cat.footerLabel}
             </td>
             {cols.map(ri => {
               // Uma categoria: soma de todos os jogadores; com categorias: o total da equipa (best-N).
               const v = model.footerAll ? cat.rdSumsAll[ri] : cat.rdTotals[ri];
-              return <td key={ri} style={{ ...tdC, borderBottom: "none", fontWeight: model.footerAll ? 600 : 700, color: model.footerAll ? "#fff" : undefined }}>{v ?? "–"}</td>;
+              return <td key={ri}>{v ?? "–"}</td>;
             })}
             {bpbMode != null ? (<>
-              <td style={{ ...tdC, color: "#fff", fontWeight: 600, borderBottom: "none", borderLeft: "1px solid rgba(255,255,255,0.3)", opacity: 0.9 }}>{footBpb ? (footBpb.bir || "") : "–"}</td>
-              <td style={{ ...tdC, color: "#fff", borderBottom: "none", borderLeft: "1px solid rgba(255,255,255,0.2)", opacity: 0.8 }}>{footBpb ? (footBpb.par || "") : "–"}</td>
-              <td style={{ ...tdC, color: "#fff", borderBottom: "none", borderLeft: "1px solid rgba(255,255,255,0.2)", opacity: 0.8 }}>{footBpb ? (footBpb.bog || "") : "–"}</td>
+              <td className="ts-bpb-b">{footBpb ? (footBpb.bir || "") : "–"}</td>
+              <td className="ts-bpb-p">{footBpb ? (footBpb.par || "") : "–"}</td>
+              <td className="ts-bpb-g">{footBpb ? (footBpb.bog || "") : "–"}</td>
             </>) : showTotal && (
               model.footerAll ? (() => {
                 const vs = cols.map(ri => cat.rdSumsAll[ri]);
                 const grand = vs.every(v => v != null) ? (vs as number[]).reduce((s, v) => s + v, 0) : null;
-                return <td style={{ ...tdC, color: "#fff", fontWeight: 700, borderBottom: "none" }}>{grand ?? "–"}</td>;
+                return <td className="ts-grand-all">{grand ?? "–"}</td>;
               })() : (
-                <td style={{ ...tdC, fontWeight: 900, borderBottom: "none" }}>
+                <td className="ts-grand">
                   <div className="u-lh-1_15">
                     <div>{cat.total ?? "–"}</div>
                     {cat.toPar != null && <div className="u-fs-fs-9 u-lh-1 u-op-0_7">({fmtToPar(cat.toPar)})</div>}
@@ -178,7 +173,7 @@ function PlayersTable({ cat, model, color, cols, bpbMode, showTotal }: {
                 </td>
               )
             )}
-            {model.showConta && <td style={{ ...tdC, borderBottom: "none" }} />}
+            {model.showConta && <td />}
           </tr>
         </tfoot>
       )}
@@ -198,11 +193,8 @@ function TeamCard({ team, model, sel }: { team: TsTeam; model: TsModel; sel: Rou
   const dispTp = single && c0 ? (ri != null ? c0.rdToPar[ri] : c0.toPar) : null;
   const mdl = c0?.pos != null ? medal(c0.pos) : null;
   return (
-    <div style={{
-      background: "var(--bg-card,#fff)", border: `1px solid ${team.isMulti ? team.color + "80" : "var(--border)"}`,
-      borderRadius: 8, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)",
-    }}>
-      <div style={{ background: team.color, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
+    <div className="ts-card" style={team.isMulti ? { borderColor: team.color + "80" } : undefined}>
+      <div className="ts-card-hdr" style={{ background: team.color }}>
         {model.showLetter && team.letter && (
           <div className="shrink-0 fw-900 u-w-34px u-h-34px u-bg-rgba-255-255-255-0_18 u-br-radius u-d-flex u-ai-center u-jc-center u-fs-fs-20 u-lh-1">
             {team.letter}
@@ -225,16 +217,12 @@ function TeamCard({ team, model, sel }: { team: TsTeam; model: TsModel; sel: Rou
         )}
       </div>
       {team.cats.map((cat, idx) => (
-        <div key={cat.key} style={{ marginTop: model.multiCat && idx > 0 ? 10 : 0 }}>
+        <div key={cat.key} className={model.multiCat && idx > 0 ? "u-mt-10px" : undefined}>
           {model.multiCat && (
-            <div style={{
-              background: cat.pos === 1 ? "var(--accent-light, #eef6ef)" : "var(--bg-hover)", padding: "4px 10px",
-              fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)", display: "flex", justifyContent: "space-between", alignItems: "center",
-              borderTop: idx === 0 ? "none" : "1px solid var(--border)", borderBottom: "1px solid var(--border)",
-            }}>
+            <div className={"ts-cat-hdr" + (idx === 0 ? " first" : "") + (cat.pos === 1 ? " win" : "")}>
               <span>
                 {cat.pos != null && (
-                  <span style={{ fontWeight: 900, color: cat.pos === 1 ? team.color : "var(--text-2)", marginRight: 6 }}>
+                  <span className={"u-fw-900 u-mr-6px" + (cat.pos === 1 ? "" : " u-c-text-2")} style={cat.pos === 1 ? { color: team.color } : undefined}>
                     {cat.pos === 1 ? "🏆 " : ""}#{cat.pos}{cat.fieldSize > 1 ? `/${cat.fieldSize}` : ""}
                   </span>
                 )}
@@ -250,7 +238,7 @@ function TeamCard({ team, model, sel }: { team: TsTeam; model: TsModel; sel: Rou
       {(team.capitao || team.suplente) && (
         <div className="u-d-flex u-bt-1px-solid-border u-fs-fs-11">
           {team.capitao && (
-            <div style={{ flex: 1, padding: "5px 10px", display: "flex", alignItems: "center", gap: 5, borderRight: team.suplente ? "1px solid var(--border)" : "none", color: "var(--text-2)" }}>
+            <div className={"ts-capitao u-fl-1 u-p-4px-10px u-d-flex u-ai-center u-gap-4px u-c-text-2" + (team.suplente ? " split" : "")}>
               <span className="fs-13">🎖️</span>
               <span>
                 <span className="u-fs-fs-9 u-fw-700 u-tt-uppercase u-ls-0_05em u-c-text-muted u-d-block u-lh-1">Capitão</span>
@@ -299,8 +287,8 @@ function TeamList({ model, catKey, label, nLabel }: { model: TsModel; catKey: st
   }, [model, catKey, sortKey, sortDir]);
   const byGross = model.rankBy === "gross";
   const nCols = 2 + (byGross ? model.rounds.length + 1 : 0) + 2;
-  const hdr = (k: LKey, l: React.ReactNode, style?: React.CSSProperties, title?: string) =>
-    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={style} title={title}>{l}</SortableHdr>;
+  const hdr = (k: LKey, l: React.ReactNode, cls?: string, title?: string) =>
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={cls} title={title}>{l}</SortableHdr>;
   return (
     <div className="mb-16">
       {label && <div className="fw-700 fs-13 mb-6">{label}{nLabel && <span className="muted fw-400 fs-12"> · {nLabel}</span>}</div>}
@@ -309,7 +297,7 @@ function TeamList({ model, catKey, label, nLabel }: { model: TsModel; catKey: st
           <thead>
             <tr>
               {hdr("pos", "Pos.")}
-              {hdr("equipa", model.rankBy === "toPar" ? "Região" : "Equipa", { textAlign: "left" })}
+              {hdr("equipa", model.rankBy === "toPar" ? "Região" : "Equipa", "u-ta-left")}
               {byGross && model.rounds.map((rd, ri) => <React.Fragment key={rd}>{hdr(`r${ri}`, `R${rd}`)}</React.Fragment>)}
               {byGross && hdr("tot", "Total")}
               {hdr("tp", byGross ? "±Par" : "10 melhores", undefined, byGross ? undefined : "Soma dos 10 melhores resultados em relação ao par")}
@@ -321,11 +309,11 @@ function TeamList({ model, catKey, label, nLabel }: { model: TsModel; catKey: st
               const open = aberta === t.key;
               return (
                 <React.Fragment key={t.key}>
-                  <tr onClick={() => setAberta(open ? null : t.key)} className={open ? "row-selected" : undefined} style={{ cursor: "pointer" }}
+                  <tr onClick={() => setAberta(open ? null : t.key)} className={"u-cur-pointer" + (open ? " row-selected" : "")}
                     title="Clicar para ver os jogadores">
                     <td className="ta-c fw-700">{c.pos != null ? (medal(c.pos) ?? c.pos) : "–"}</td>
                     <td className="u-ta-left u-ws-nowrap">
-                      {t.isMulti && <span className="shrink-0" style={{ width: 9, height: 9, borderRadius: "var(--radius-xs)", background: t.color, display: "inline-block", marginRight: 6 }} />}
+                      {t.isMulti && <span className="legend-dot shrink-0 u-mr-6px" style={{ background: t.color }} />}
                       {model.showLetter && t.letter && <b className="u-mr-6px">{t.letter}</b>}
                       {t.name}{t.sub && <span className="muted fs-11"> · {t.sub}</span>}
                       <span className="muted fs-11"> {open ? "▾" : "▸"}</span>
@@ -386,8 +374,8 @@ function AllPlayers({ model }: { model: TsModel }) {
       return dir * ((av as number) - (bv as number)) || a.p.name.localeCompare(b.p.name, "pt");
     });
   }, [model, equipa, sortKey, sortDir]);
-  const hdr = (k: JKey, l: React.ReactNode, style?: React.CSSProperties, title?: string) =>
-    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={style} title={title}>{l}</SortableHdr>;
+  const hdr = (k: JKey, l: React.ReactNode, cls?: string, title?: string) =>
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={cls} title={title}>{l}</SortableHdr>;
   return (
     <div>
       <div className="mb-8 u-d-flex u-ai-center u-gap-8px u-fwr-wrap">
@@ -401,9 +389,9 @@ function AllPlayers({ model }: { model: TsModel }) {
         <table className="dtable tbl-compact u-w-auto u-minw-420px">
           <thead>
             <tr>
-              {hdr("equipa", model.rankBy === "toPar" ? "Região" : "Equipa", { textAlign: "left" })}
-              {model.multiCat && hdr("cat", "Categoria", { textAlign: "left" })}
-              {hdr("nome", "Jogador", { textAlign: "left" })}
+              {hdr("equipa", model.rankBy === "toPar" ? "Região" : "Equipa", "u-ta-left")}
+              {model.multiCat && hdr("cat", "Categoria", "u-ta-left")}
+              {hdr("nome", "Jogador", "u-ta-left")}
               {model.showHcp && hdr("hcp", "HCP")}
               {model.showHoles && hdr("bur", "Bur.", undefined, "Sub-10 joga 9 buracos")}
               {model.rounds.map((rd, ri) => <React.Fragment key={rd}>{hdr(`r${ri}`, model.rankBy === "toPar" ? "Gross (±Par)" : `R${rd}`)}</React.Fragment>)}
@@ -468,11 +456,8 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
   const SelBtn = ({ label, col }: { label: string; col: RoundSel }) => {
     const active = sel === col;
     return (
-      <button type="button" onClick={() => toggleSort(col)} style={{
-        fontSize: "var(--fs-11)", fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: "var(--radius-sm)",
-        border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`, background: active ? "var(--accent)" : "var(--bg-hover)",
-        color: active ? "#fff" : "var(--text-muted)", cursor: "pointer",
-      }}>{label}{active ? (sortDir === "asc" ? " ▲" : " ▼") : ""}</button>
+      <button type="button" onClick={() => toggleSort(col)} aria-pressed={active}
+        className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}>{label}{active ? (sortDir === "asc" ? " ▲" : " ▼") : ""}</button>
     );
   };
 
@@ -501,7 +486,7 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
         <span className="u-ml-auto u-fs-fs-13 u-c-text-muted u-mt-4px">
           {intro ?? model.rule}
           {model.nRounds > 1 && played > 0 && (
-            <span style={{ marginLeft: 8, fontWeight: 600, color: single ? (played >= model.nRounds ? "var(--color-good)" : "var(--color-warn)") : undefined }}>
+            <span className="u-ml-8px u-fw-600" style={single ? { color: played >= model.nRounds ? "var(--color-good)" : "var(--color-warn)" } : undefined}>
               · R{played}/{model.nRounds}
             </span>
           )}
@@ -513,8 +498,8 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
       {model.legend.length > 0 && view !== "jogadores" && (
         <div className="flex-wrap mb-12 u-d-flex u-gap-6px">
           {model.legend.map(l => (
-            <span key={l.clube} style={{ fontSize: "var(--fs-10)", display: "inline-flex", alignItems: "center", gap: 5, border: `1px solid ${l.color}`, borderRadius: "var(--radius-sm)", padding: "2px 8px", background: `${l.color}12` }}>
-              <span className="shrink-0" style={{ width: 9, height: 9, borderRadius: "var(--radius-xs)", background: l.color, display: "inline-block" }} />
+            <span key={l.clube} className="ts-legend" style={{ borderColor: l.color, background: `${l.color}12` }}>
+              <span className="legend-dot shrink-0" style={{ background: l.color }} />
               <strong style={{ color: l.color }}>{l.teams}</strong>
               <span className="u-c-text-muted">— {l.clube}</span>
             </span>
@@ -523,7 +508,7 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
       )}
 
       {view === "cartoes" && (
-        <div style={{ display: "grid", gridTemplateColumns: `repeat(auto-fill, minmax(${model.multiCat ? 340 : 310}px, 1fr))`, gap: model.multiCat ? 12 : 10 }}>
+        <div className={"u-d-grid " + (model.multiCat ? "u-gap-12px" : "u-gap-10px")} style={{ gridTemplateColumns: `repeat(auto-fill, minmax(${model.multiCat ? 340 : 310}px, 1fr))` }}>
           {cards.map(t => <TeamCard key={t.key} team={t} model={model} sel={sel} />)}
         </div>
       )}

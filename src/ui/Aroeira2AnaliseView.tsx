@@ -31,12 +31,17 @@ const fmtDelta = (n: number | null | undefined, d = 1) => (n == null || !isFinit
 
 const LABEL_INFO = {
   birdie: { emoji: "🟢", text: "Oportunidade", bg: "rgba(22, 163, 74, .15)", border: "var(--color-good)" },
-  par:    { emoji: "🟡", text: "Par",          bg: "rgba(234, 179, 8, .12)",  border: "#eab308" },
+  par:    { emoji: "🟡", text: "Par",          bg: "rgba(234, 179, 8, .12)",  border: "var(--heat-par)" },
   bogey:  { emoji: "🔴", text: "Bogey",         bg: "rgba(220, 38, 38, .12)", border: "var(--color-danger)" },
-  danger: { emoji: "⚫", text: "Perigo",        bg: "rgba(0, 0, 0, .15)",     border: "#000" },
+  danger: { emoji: "⚫", text: "Perigo",        bg: "rgba(0, 0, 0, .15)",     border: "var(--heat-max)" },
 } as const;
 
-const TONE_COLOR = { good: "var(--color-good)", warn: "#ea580c", danger: "var(--color-danger)", neutral: "var(--text-muted)" } as const;
+/* Classes de cor/peso por nível (escala --heat-* do tokens.css). */
+const birdieCls = (p: number) => p >= 20 ? "u-c-color-good u-fw-700" : p >= 10 ? "u-c-heat-good-mid u-fw-400" : "u-c-text-muted u-fw-400";
+const bogeyCls = (p: number) => p >= 50 ? "u-c-color-danger u-fw-700" : p >= 35 ? "u-c-heat-warn u-fw-400" : "u-c-text u-fw-400";
+const doubleCls = (p: number) => p >= 25 ? "u-c-heat-max u-fw-700" : p >= 15 ? "u-c-color-danger u-fw-400" : "u-c-text-muted u-fw-400";
+
+const TONE_COLOR = { good: "var(--color-good)", warn: "var(--heat-warn)", danger: "var(--color-danger)", neutral: "var(--text-muted)" } as const;
 
 /* ── KPI card — aspecto consistente ─────────────────── */
 /* Adaptador fino → delega na definição única UiKpiCard (realce por tom). */
@@ -49,7 +54,7 @@ function KpiCard({ label, value, hint, tone = "neutral" }: { label: string; valu
       sub={hint}
       color={tone === "neutral" ? undefined : c}
       accentBorder={c}
-      style={{ flex: "1 1 200px", minWidth: 200 }}
+      className="u-fl-1-1-200px u-minw-200px"
     />
   );
 }
@@ -98,9 +103,9 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
           </tr>
           <tr>
             <td className="lb-name fw-600 u-c-color-good">% Birdie+</td>
-            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBirdiePlus >= 20 ? "var(--color-good)" : h.pctBirdiePlus >= 10 ? "#65a30d" : "var(--text-muted)", fontWeight: h.pctBirdiePlus >= 20 ? 700 : 400 }}>{fmtPct(h.pctBirdiePlus)}</td>)}
+            {holes.slice(0, 9).map(h => <td key={h.hole} className={"lb-hole " + birdieCls(h.pctBirdiePlus)}>{fmtPct(h.pctBirdiePlus)}</td>)}
             <td className="lb-halftot">—</td>
-            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBirdiePlus >= 20 ? "var(--color-good)" : h.pctBirdiePlus >= 10 ? "#65a30d" : "var(--text-muted)", fontWeight: h.pctBirdiePlus >= 20 ? 700 : 400 }}>{fmtPct(h.pctBirdiePlus)}</td>)}
+            {holes.slice(9).map(h => <td key={h.hole} className={"lb-hole " + birdieCls(h.pctBirdiePlus)}>{fmtPct(h.pctBirdiePlus)}</td>)}
             <td className="lb-halftot">—</td>
             <td className="lb-halftot">—</td>
           </tr>
@@ -114,17 +119,17 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
           </tr>
           <tr>
             <td className="lb-name u-c-color-danger">% Bogey</td>
-            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBogey >= 50 ? "var(--color-danger)" : h.pctBogey >= 35 ? "#ea580c" : "var(--text)", fontWeight: h.pctBogey >= 50 ? 700 : 400 }}>{fmtPct(h.pctBogey)}</td>)}
+            {holes.slice(0, 9).map(h => <td key={h.hole} className={"lb-hole " + bogeyCls(h.pctBogey)}>{fmtPct(h.pctBogey)}</td>)}
             <td className="lb-halftot">—</td>
-            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctBogey >= 50 ? "var(--color-danger)" : h.pctBogey >= 35 ? "#ea580c" : "var(--text)", fontWeight: h.pctBogey >= 50 ? 700 : 400 }}>{fmtPct(h.pctBogey)}</td>)}
+            {holes.slice(9).map(h => <td key={h.hole} className={"lb-hole " + bogeyCls(h.pctBogey)}>{fmtPct(h.pctBogey)}</td>)}
             <td className="lb-halftot">—</td>
             <td className="lb-halftot">—</td>
           </tr>
           <tr>
             <td className="lb-name fw-700">% Duplo+</td>
-            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctDoublePlus >= 25 ? "#000" : h.pctDoublePlus >= 15 ? "var(--color-danger)" : "var(--text-muted)", fontWeight: h.pctDoublePlus >= 25 ? 700 : 400 }}>{fmtPct(h.pctDoublePlus)}</td>)}
+            {holes.slice(0, 9).map(h => <td key={h.hole} className={"lb-hole " + doubleCls(h.pctDoublePlus)}>{fmtPct(h.pctDoublePlus)}</td>)}
             <td className="lb-halftot">—</td>
-            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole" style={{ color: h.pctDoublePlus >= 25 ? "#000" : h.pctDoublePlus >= 15 ? "var(--color-danger)" : "var(--text-muted)", fontWeight: h.pctDoublePlus >= 25 ? 700 : 400 }}>{fmtPct(h.pctDoublePlus)}</td>)}
+            {holes.slice(9).map(h => <td key={h.hole} className={"lb-hole " + doubleCls(h.pctDoublePlus)}>{fmtPct(h.pctDoublePlus)}</td>)}
             <td className="lb-halftot">—</td>
             <td className="lb-halftot">—</td>
           </tr>
@@ -186,8 +191,8 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
   const pct = (n: number) => (n / dist.n) * 100;
   const segs = [
     { v: dist.birdiePlus, color: "var(--color-good)", name: "Birdie+" },
-    { v: dist.par,        color: "#d4d4d4", name: "Par" },
-    { v: dist.bogey,      color: "#60a5fa", name: "Bogey" },
+    { v: dist.par,        color: "var(--dist-par)", name: "Par" },
+    { v: dist.bogey,      color: "var(--dist-bogey)", name: "Bogey" },
     { v: dist.doublePlus, color: "var(--color-danger)", name: "Duplo+" },
   ];
   let acc = 0;
@@ -254,11 +259,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
   const parF9 = parRef.slice(0, 9).reduce((a, b) => a + b, 0);
   const parB9 = parRef.slice(9, 18).reduce((a, b) => a + b, 0);
   return (
-    <div className="player-card-block" style={{
-      border: isManuel ? "2px solid var(--color-good)" : "1px solid var(--border)",
-      borderRadius: 8, marginBottom: 8,
-      background: isManuel ? "rgba(220, 252, 231, .55)" : "var(--bg-card)",
-    }}>
+    <div className={"player-card-block aro-card" + (isManuel ? " is-manuel" : "")}>
       <button
         onClick={() => setOpen(o => !o)}
         className="fs-13 u-w-100pc u-p-8px-12px u-bd-none u-bg-transparent u-cur-pointer u-d-flex u-ai-center u-gap-12px u-ta-left"
@@ -506,7 +507,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* Legenda */}
       <section className="u-d-flex u-fwr-wrap u-gap-10px">
         {(Object.keys(LABEL_INFO) as Array<keyof typeof LABEL_INFO>).map(k => (
-          <span key={k} className="fs-12 fw-600" style={{ background: LABEL_INFO[k].bg, padding: "5px 12px", borderRadius: "var(--radius)", border: `1px solid ${LABEL_INFO[k].border}` }}>
+          <span key={k} className="aro-tag" style={{ background: LABEL_INFO[k].bg, borderColor: LABEL_INFO[k].border }}>
             {LABEL_INFO[k].emoji} {LABEL_INFO[k].text}
           </span>
         ))}
@@ -655,7 +656,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                   <td className="lb-name fw-600">Pior – Melhor</td>
                   {manuelStats.map(s => {
                     const gap = s.scores.length ? s.worst - s.best : 0;
-                    const color = gap === 0 ? "var(--color-good)" : gap <= 1 ? "#65a30d" : gap <= 2 ? "var(--text)" : "var(--color-danger)";
+                    const color = gap === 0 ? "var(--color-good)" : gap <= 1 ? "var(--heat-good-mid)" : gap <= 2 ? "var(--text)" : "var(--color-danger)";
                     return <td key={s.hole} className="lb-hole fw-700" style={{ color }}>{s.scores.length ? gap : "–"}</td>;
                   })}
                   <td className="lb-halftot fw-700">{manuelStats.filter(s => s.scores.length).reduce((a, s) => a + (s.worst - s.best), 0) || "–"}</td>
@@ -674,7 +675,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
         <h3>5. Plano táctico buraco-a-buraco</h3>
         <ol className="u-m-0 u-pl-0 u-list-style-none u-d-grid u-grid-template-columns-d873z u-gap-8px">
           {holeRecs.map(r => (
-            <li key={r.hole} className="fs-13" style={{ padding: 10, borderRadius: "var(--radius)", border: `1.5px solid ${TONE_COLOR[r.type]}`, background: "var(--bg-card)" }}>
+            <li key={r.hole} className="aro-tip" style={{ borderColor: TONE_COLOR[r.type] }}>
               <strong style={{ color: TONE_COLOR[r.type] }}>B{r.hole}</strong> — {r.text}
             </li>
           ))}
@@ -688,7 +689,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
           <thead>
             <tr>
               <th className="lb-pos">#</th>
-              <SortableHdr k="name" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Jogador</SortableHdr>
+              <SortableHdr k="name" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-name u-ta-left">Jogador</SortableHdr>
               <SortableHdr k="hcp" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-hcp">HCP</SortableHdr>
               <SortableHdr k="rds" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-hole">Rds</SortableHdr>
               <SortableHdr k="avgToPar" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-topar">Avg ±</SortableHdr>
@@ -701,7 +702,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
             {sortedFieldRanking.map((r, i) => {
               const isManuel = r.fedCode === MANUEL_FED;
               return (
-                <tr key={i} style={{ background: isManuel ? "rgba(220, 252, 231, .8)" : undefined }}>
+                <tr key={i} className={isManuel ? "row-manuel" : undefined}>
                   <td className="lb-pos fw-700">{i + 1}</td>
                   <td className="lb-name fw-600">{r.fedCode ? <PlayerLink fed={r.fedCode} name={r.name} /> : r.name}{isManuel && " ⭐"}</td>
                   <td className="lb-hcp">{fmtHcp(r.hcpExact)}</td>
@@ -742,31 +743,31 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
           <thead>
             <tr>
               <th className="lb-pos">#</th>
-              <SortableHdr k="name" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Jogador</SortableHdr>
-              <SortableHdr k="club" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-club" style={{ textAlign: "left" }}>Clube</SortableHdr>
+              <SortableHdr k="name" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-name u-ta-left">Jogador</SortableHdr>
+              <SortableHdr k="club" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-club u-ta-left">Clube</SortableHdr>
               <SortableHdr k="hcp" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hcp">HCP</SortableHdr>
-              <SortableHdr k="status" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Estado</SortableHdr>
+              <SortableHdr k="status" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-name u-ta-left">Estado</SortableHdr>
               <SortableHdr k="rds" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hole">Rds</SortableHdr>
               <SortableHdr k="avgToPar" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-topar">Avg ±</SortableHdr>
               <SortableHdr k="avgGross" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-gross">Avg G</SortableHdr>
               <SortableHdr k="best" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hole">Best</SortableHdr>
               <SortableHdr k="worst" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hole">Worst</SortableHdr>
               <SortableHdr k="last" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hole">Última</SortableHdr>
-              <SortableHdr k="date" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Data</SortableHdr>
+              <SortableHdr k="date" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-name u-ta-left">Data</SortableHdr>
             </tr>
           </thead>
           <tbody>
             {sortedSub12Perf.map((s, i) => {
               const isManuel = s.fedCode === MANUEL_FED;
               const statusLabel = s.status === "top21+inscrito" ? "🏆 jogou + inscrito" : s.status === "top21_so" ? "🏆 só jogou" : s.status === "inscrito_com_historico" ? "📋 inscrito + histórico" : "🆕 estreante";
-              const statusColor = s.status === "top21+inscrito" ? "var(--color-good)" : s.status === "top21_so" ? "#65a30d" : s.status === "inscrito_com_historico" ? "var(--color-info)" : "#ea580c";
+              const statusColor = s.status === "top21+inscrito" ? "var(--color-good)" : s.status === "top21_so" ? "var(--heat-good-mid)" : s.status === "inscrito_com_historico" ? "var(--color-info)" : "var(--heat-warn)";
               return (
-                <tr key={i} style={{ background: isManuel ? "rgba(220, 252, 231, .65)" : undefined }}>
+                <tr key={i} className={isManuel ? "row-manuel" : undefined}>
                   <td className="lb-pos fw-700">{i + 1}</td>
                   <td className="lb-name fw-600">{s.fedCode ? <PlayerLink fed={s.fedCode} name={s.name} /> : s.name}{isManuel && " ⭐"}</td>
                   <td className="lb-club muted">{s.club || "–"}</td>
                   <td className="lb-hcp">{fmtHcp(s.hcpExact)}</td>
-                  <td className="lb-name fs-11" style={{ color: statusColor, fontWeight: 600 }}>{statusLabel}</td>
+                  <td className="lb-name fs-11 u-fw-600" style={{ color: statusColor }}>{statusLabel}</td>
                   <td className="lb-hole fw-600">{s.nRounds}</td>
                   <td className="lb-topar fw-700" style={{ color: s.avgToPar != null && s.avgToPar < 0 ? "var(--color-good)" : s.avgToPar != null && s.avgToPar > 0 ? "var(--color-danger)" : "var(--text)" }}>{s.avgToPar != null ? fmtDelta(s.avgToPar, 1) : "–"}</td>
                   <td className="lb-gross">{fmtAvg(s.avgGross, 1)}</td>
@@ -824,7 +825,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                 const rParF9 = rPars.slice(0, 9).reduce((a, p, i) => a + (r.scores[i] ? p : 0), 0);
                 const rParB9 = rPars.slice(9, 18).reduce((a, p, i) => a + (r.scores[9 + i] ? p : 0), 0);
                 return (
-                  <tr key={idx} style={{ background: isManuel ? "rgba(220, 252, 231, .65)" : undefined }}>
+                  <tr key={idx} className={isManuel ? "row-manuel" : undefined}>
                     <td className="lb-pos muted fs-11">{idx + 1}</td>
                     <td className="lb-name muted fs-11 u-ws-nowrap">{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
                     <td className="lb-name fw-600">{r.fedCode ? <PlayerLink fed={r.fedCode} name={r.playerName} /> : r.playerName}{isManuel && " ⭐"}</td>
@@ -861,7 +862,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
           <thead>
             <tr>
               <th className="lb-pos">#</th>
-              <SortableHdr k="name" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Jogador</SortableHdr>
+              <SortableHdr k="name" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-name u-ta-left">Jogador</SortableHdr>
               <SortableHdr k="hcp" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hcp">HCP</SortableHdr>
               <SortableHdr k="rds" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Rds</SortableHdr>
               <SortableHdr k="best" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Best</SortableHdr>
@@ -870,14 +871,14 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
               <SortableHdr k="slope" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Slope</SortableHdr>
               <SortableHdr k="firstToLast" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Δ first→last</SortableHdr>
               <SortableHdr k="trendDelta" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Δ trend</SortableHdr>
-              <SortableHdr k="trend" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Tendência</SortableHdr>
+              <SortableHdr k="trend" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-name u-ta-left">Tendência</SortableHdr>
             </tr>
           </thead>
           <tbody>
             {sortedEvolution.map((e, i) => {
               const isManuel = e.fedCode === MANUEL_FED;
               return (
-                <tr key={i} style={{ background: isManuel ? "rgba(220, 252, 231, .8)" : undefined }}>
+                <tr key={i} className={isManuel ? "row-manuel" : undefined}>
                   <td className="lb-pos fw-700">{i + 1}</td>
                   <td className="lb-name fw-600">{e.fedCode ? <PlayerLink fed={e.fedCode} name={e.name} /> : e.name}{isManuel && " ⭐"}</td>
                   <td className="lb-hcp">{fmtHcp(e.hcpExact)}</td>
