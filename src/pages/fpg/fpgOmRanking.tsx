@@ -25,6 +25,7 @@ import { cachedFetchJson } from "../../data/fetchCache";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
+import { C } from "../../utils/colors";
 import { norm, shortDateSlash } from "../../utils/format";
 import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
 import termosJson from "../../data/omCgssTermos.json";
@@ -60,10 +61,7 @@ export const OM_CAT_ORDER = ["junior", "homens", "senhoras", "seniores", "superS
 const CAT_SHORT: Record<string, string> = { junior: "Jr", homens: "H", senhoras: "S", seniores: "Sen", superSeniores: "SSen" };
 // Tons de cinzento (não cores) — a categoria lê-se do texto (Jr/H/S/Sen/SSen);
 // rampa de escuro→claro, com o Júnior (o nosso ranking) mais escuro para destacar.
-const CAT_COLOR: Record<string, { bg: string; fg: string }> = {
-  junior: { bg: "#374151", fg: "#fff" }, homens: { bg: "#4b5563", fg: "#fff" }, senhoras: { bg: "#6b7280", fg: "#fff" },
-  seniores: { bg: "#9ca3af", fg: "#111827" }, superSeniores: { bg: "#d1d5db", fg: "#111827" },
-};
+const CAT_COLOR = C.omCat;  // utils/colors.ts
 
 /** Constrói um Map (fed E nome-normalizado → OmHit) a partir do om-cgss-junior.json. */
 export function buildOmLookup(data: OmJuniorData | null): Map<string, OmHit> {
@@ -110,7 +108,7 @@ export function useOmData(enabled: boolean): OmJuniorData | null {
 }
 /** Badge da categoria OM (usado na coluna do draw). */
 export function OmCatBadge({ hit }: { hit: OmHit }) {
-  const c = CAT_COLOR[hit.catKey] || { bg: "#555", fg: "#fff" };
+  const c = CAT_COLOR[hit.catKey] || C.omCat.outra;
   // Sócio elegível ainda sem pontos: só o escalão, estilo tracejado (pontua ao jogar).
   if (hit.eligible) {
     return (

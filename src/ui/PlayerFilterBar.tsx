@@ -154,8 +154,8 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
       )}
       {sexes.length === 2 && (
         <>
-          <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })} color="var(--badge-male, #2563eb)">M</FilterChip>
-          <FilterChip active={filter.sex === "F"} onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })} color="var(--badge-female, #ec4899)">F</FilterChip>
+          <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })} color="var(--badge-male)">M</FilterChip>
+          <FilterChip active={filter.sex === "F"} onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })} color="var(--badge-female)">F</FilterChip>
         </>
       )}
       {years.length > 1 && (

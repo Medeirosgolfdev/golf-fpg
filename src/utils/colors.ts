@@ -114,6 +114,29 @@ export const C = {
     "#ea580c",   // 11 laranja extra
   ],
 
+  // Séries do gráfico de evolução de HCP (até 8 jogadores destacados ao mesmo tempo).
+  hcpSeries: ["#2563eb", "#dc2626", "#16a34a", "#d97706", "#9333ea", "#0891b2", "#db2777", "#65a30d"],
+
+  // Pills de ano (YearPill): pastel com texto escuro; sem verde (Manuel) nem roxo (escalões).
+  yearPills: [
+    { bg: "#dbeafe", fg: "#1e40af" },   // azul
+    { bg: "#fef3c7", fg: "#78350f" },   // âmbar
+    { bg: "#fce7f3", fg: "#9d174d" },   // rosa
+    { bg: "#fed7aa", fg: "#7c2d12" },   // pêssego
+    { bg: "#cffafe", fg: "#155e75" },   // ciano
+    { bg: "#fecdd3", fg: "#881337" },   // vermelho-rosa
+  ],
+
+  // Categorias da OM CGSS — tons de cinzento, do Júnior (mais escuro) aos Super Séniores.
+  omCat: {
+    junior: { bg: "#374151", fg: "#fff" }, homens: { bg: "#4b5563", fg: "#fff" }, senhoras: { bg: "#6b7280", fg: "#fff" },
+    seniores: { bg: "#9ca3af", fg: "#111827" }, superSeniores: { bg: "#d1d5db", fg: "#111827" },
+    outra: { bg: "#555", fg: "#fff" },
+  } as Record<string, { bg: string; fg: string }>,
+
+  // Cor de cada circuito na barra lateral (em hex: o CircuitShell junta-lhe transparência).
+  circuit: { egr: "#1e3a8a", egrSrc: "#1e40af", wagr: "#0f3d2e" },
+
   // Aliases individuais para recharts <Line/> etc.
   chartGreen:   "#16a34a",
   chartBlue:    "#2563eb",

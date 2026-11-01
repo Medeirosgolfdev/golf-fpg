@@ -592,7 +592,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
                         </span>
                       )}
                       {admissionsDiff.saidos.length > 0 && (
-                        <span style={{ color: "var(--color-warn, #dc2626)", marginLeft: admissionsDiff.novos.length > 0 ? 8 : 0 }}>
+                        <span style={{ color: "var(--color-warn)", marginLeft: admissionsDiff.novos.length > 0 ? 8 : 0 }}>
                           −{admissionsDiff.saidos.length} saíram: {admissionsDiff.saidos.map(p => p.nome).join(", ")}
                         </span>
                       )}

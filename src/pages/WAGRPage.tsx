@@ -38,6 +38,7 @@ import {
 } from "../ui/ranking/RankingPage";
 import { buildWagrEntries, wagrEventUrl, wagrPlayerUrl, WAGR_SITE } from "./wagr/wagrCircuit";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
+import { C } from "../utils/colors";
 
 /**
  * Nº de shards do rollup jogador→eventos.
@@ -96,7 +97,7 @@ function ChangeCell({ v }: { v: number | null }) {
   if (v == null || v === 0) return <span className="u-c-text-muted">–</span>;
   const up = v > 0;
   return (
-    <span style={{ color: up ? "var(--score-birdie, #16a34a)" : "var(--score-bogey, #dc2626)" }}>
+    <span className={up ? "u-c-color-good" : "u-c-color-danger"}>
       {up ? "▲" : "▼"}{Math.abs(v)}
     </span>
   );
@@ -111,10 +112,10 @@ const CFG: RankingPageConfig<WagrRanking, Parameters<typeof buildWagrEntries>[0]
   buildEntries: buildWagrEntries,
   shell: {
     title: "🌍 World Amateur Golf Ranking",
-    color: "#0f3d2e",
-    textColor: "#fff",
+    color: C.circuit.wagr,
+    textColor: "var(--text-on-color)",
     grouping: "month-year",   // ~4.000 eventos por ano — o mês é a granularidade útil
-    sourceColors: { wagr: "#0f3d2e" },
+    sourceColors: { wagr: C.circuit.wagr },
     sourceLabels: { wagr: "WAGR" },
     // ⚠ `defaultYear: "current"` não é gosto, é custo de render: são ~4.000
     // eventos POR ANO (o mundo inteiro) e a sidebar do shell desenha todas as

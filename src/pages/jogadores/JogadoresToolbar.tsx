@@ -114,7 +114,7 @@ export default function JogadoresToolbar({
             className={`seg-btn ${viewMode === "todos" ? "active" : ""}`}
             onClick={() => onSetViewMode("todos")}
             title={federadosError ? `Erro: ${federadosError}` : (filters.includeSeniors ? "Lista FPG completa (cadastro)" : `Sem seniores — total ${counts.todosTotal ?? "?"} com seniores`)}
-            style={federadosError ? { background: "var(--color-warn-vivid)", color: "#fff" } : undefined}
+            style={federadosError ? { background: "var(--color-warn-vivid)", color: "var(--text-on-color)" } : undefined}
           >
             <span className="seg-label">TODOS</span>
             <span className="seg-count">

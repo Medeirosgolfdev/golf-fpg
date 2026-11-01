@@ -26,9 +26,9 @@ import { C } from "../utils/colors";
 
 /** Rondas — só mostrar se nR > 1. Cores chamativas para chamar atenção. */
 export const PILL_ROUND: Record<number, CSSProperties> = {
-  2: { background: C.chartCyan,   color: "#fff", borderColor: "transparent" }, // cyan
-  3: { background: C.chartRed,    color: "#fff", borderColor: "transparent" }, // vermelho
-  4: { background: C.chartPurple, color: "#fff", borderColor: "transparent" }, // violeta
+  2: { background: C.chartCyan,   color: "var(--text-on-color)", borderColor: "transparent" }, // cyan
+  3: { background: C.chartRed,    color: "var(--text-on-color)", borderColor: "transparent" }, // vermelho
+  4: { background: C.chartPurple, color: "var(--text-on-color)", borderColor: "transparent" }, // violeta
 };
 
 /** IDs de torneio (tcode) */
@@ -38,12 +38,12 @@ export const PILL_TCODE: CSSProperties = {
 
 /** 9 buracos — só mostrar se nholes ≤ 9 */
 const PILL_9H: CSSProperties = {
-  background: C.warn, color: "#fff", borderColor: "transparent",
+  background: C.warn, color: "var(--text-on-color)", borderColor: "transparent",
 };
 
 /** Santo da Serra */
 export const PILL_SSERRA: CSSProperties = {
-  background: C.goodDark, color: "#fff", borderColor: "transparent",
+  background: C.goodDark, color: "var(--text-on-color)", borderColor: "transparent",
 };
 
 /** Torneios Junior (auto-detectado pelo nome) */
@@ -58,7 +58,7 @@ const PILL_MANUEL: CSSProperties = {
 
 /** Ordem de Mérito CGSS (dourado/medalha) */
 const PILL_OM: CSSProperties = {
-  background: "#a16207", color: "#fff", borderColor: "transparent",
+  background: "var(--pill-om-bg)", color: "var(--text-on-color)", borderColor: "transparent",
 };
 
 /** Accent lateral da sidebar por série/tipo */
@@ -307,14 +307,7 @@ export function ClubePill({ clube, ccode }: { clube?: string | null; ccode?: str
  *
  * Todas pastel com foreground escuro (contraste AA para fs-10/11).
  * ────────────────────────────────────────────────────────────────── */
-const YEAR_PALETTE: { bg: string; fg: string }[] = [
-  { bg: "#dbeafe", fg: "#1e40af" },   // azul
-  { bg: "#fef3c7", fg: "#78350f" },   // âmbar
-  { bg: "#fce7f3", fg: "#9d174d" },   // rosa
-  { bg: "#fed7aa", fg: "#7c2d12" },   // pêssego
-  { bg: "#cffafe", fg: "#155e75" },   // ciano
-  { bg: "#fecdd3", fg: "#881337" },   // vermelho-rosa
-];
+const YEAR_PALETTE: readonly { bg: string; fg: string }[] = C.yearPills;
 
 export function YearPill({ year }: { year: number | string | null | undefined }) {
   if (year == null || year === "") return <span className="muted">–</span>;

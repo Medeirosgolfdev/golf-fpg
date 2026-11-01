@@ -480,10 +480,10 @@ function computeSeriesTrend(editions: Edition[]): SeriesTrend | null {
   const tail2 = positions.slice(-2);
   const wins = validPos.filter((p) => p === 1).length;
   if (tail2.every((p) => p === 1)) {
-    return { label: "dono", icon: "👑", bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))", title: "Última(s) edição(ões) ganhou — dono da série" };
+    return { label: "dono", icon: "👑", bg: "var(--bg-warn-subtle)", fg: "var(--color-warn-dark)", title: "Última(s) edição(ões) ganhou — dono da série" };
   }
   if (wins >= 3 && wins / validPos.length >= 0.6) {
-    return { label: "dono", icon: "👑", bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))", title: `${wins} vitórias em ${validPos.length} edições` };
+    return { label: "dono", icon: "👑", bg: "var(--bg-warn-subtle)", fg: "var(--color-warn-dark)", title: `${wins} vitórias em ${validPos.length} edições` };
   }
 
   if (validPos.length >= 3) {
@@ -491,7 +491,7 @@ function computeSeriesTrend(editions: Edition[]): SeriesTrend | null {
     const prev = validPos.slice(0, -1);
     const avgPrev = prev.reduce((a, b) => a + b, 0) / prev.length;
     if (last <= 3 && last < avgPrev - 5) {
-      return { label: `recuperou`, icon: "↗️", bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)", title: `Última edição #${last} — média anterior #${avgPrev.toFixed(0)}` };
+      return { label: `recuperou`, icon: "↗️", bg: "var(--bg-success-subtle)", fg: "var(--color-good-dark)", title: `Última edição #${last} — média anterior #${avgPrev.toFixed(0)}` };
     }
   }
 
@@ -503,15 +503,15 @@ function computeSeriesTrend(editions: Edition[]): SeriesTrend | null {
     const avg2 = secondHalf.reduce((a, b) => a + b, 0) / secondHalf.length;
     const delta = avg2 - avg1;
     if (delta < -3) {
-      return { label: "a subir", icon: "▲", bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)", title: `Posição melhorou de média #${avg1.toFixed(0)} para #${avg2.toFixed(0)}` };
+      return { label: "a subir", icon: "▲", bg: "var(--bg-success-subtle)", fg: "var(--color-good-dark)", title: `Posição melhorou de média #${avg1.toFixed(0)} para #${avg2.toFixed(0)}` };
     }
     if (delta > 3) {
-      return { label: "a piorar", icon: "▼", bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))", title: `Posição piorou de média #${avg1.toFixed(0)} para #${avg2.toFixed(0)}` };
+      return { label: "a piorar", icon: "▼", bg: "var(--bg-warn-subtle)", fg: "var(--color-warn-dark)", title: `Posição piorou de média #${avg1.toFixed(0)} para #${avg2.toFixed(0)}` };
     }
   }
 
   if (validPos.every((p) => p <= 10)) {
-    return { label: "consistente", icon: "●", bg: "var(--bg-info-subtle, var(--bg-info))", fg: "var(--color-info-dark, var(--color-navy))", title: "Sempre em top-10 nesta série" };
+    return { label: "consistente", icon: "●", bg: "var(--bg-info-subtle)", fg: "var(--color-info-dark)", title: "Sempre em top-10 nesta série" };
   }
 
   return null;

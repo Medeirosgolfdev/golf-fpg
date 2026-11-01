@@ -180,7 +180,7 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
     return (
       <div className="u-fl-1 u-ta-center">
         <svg width={SIZE} height={SIZE}>
-          <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="#e5e7eb" strokeWidth={STROKE} />
+          <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" className="donut-base" strokeWidth={STROKE} />
           <text x={SIZE / 2} y={SIZE / 2 + 4} fontSize="11" fill="var(--text-muted)" textAnchor="middle">–</text>
         </svg>
         <div className="u-fs-fs-11 u-fw-700 u-mt-2px">{label}</div>
@@ -244,7 +244,7 @@ function HoleDial({ d }: { d: HoleDial }) {
       {/* Mini-legenda das cores */}
       <div className="u-d-flex u-jc-space-around u-mt-8px u-fs-fs-9">
         <span className="u-c-color-good u-fw-700">● Birdie+</span>
-        <span className="u-c-525252 u-fw-700">● Par</span>
+        <span className="u-c-text-2 u-fw-700">● Par</span>
         <span className="u-c-score-quad u-fw-700">● Bogey</span>
         <span className="u-c-color-danger u-fw-700">● Duplo+</span>
       </div>

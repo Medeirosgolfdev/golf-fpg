@@ -392,7 +392,7 @@ export default function JogadoresPorAnoPage() {
             className={`seg-btn ${viewMode === "todos" ? "active" : ""}`}
             onClick={() => { setFedsError(null); setViewMode("todos"); }}
             title={fedsError ? `Erro: ${fedsError}` : "Universo FPG completo (cadastro)"}
-            style={fedsError ? { background: "var(--color-warn-vivid)", color: "#fff" } : undefined}
+            style={fedsError ? { background: "var(--color-warn-vivid)", color: "var(--text-on-color)" } : undefined}
           >
             <span className="seg-label">TODOS</span>
             <span className="seg-count">
@@ -468,7 +468,7 @@ export default function JogadoresPorAnoPage() {
               key={y}
               className={`p p-sm ${yearSet.has(y) ? "" : "p-muted"}`}
               onClick={() => toggleYear(y)}
-              style={yearSet.has(y) ? { background: "var(--accent)", color: "#fff" } : undefined}
+              style={yearSet.has(y) ? { background: "var(--accent)", color: "var(--text-on-color)" } : undefined}
               title={`Nascidos em ${y} (≈ ${CURRENT_YEAR - y} anos)`}
             >
               {y}
@@ -479,7 +479,7 @@ export default function JogadoresPorAnoPage() {
               key={b.high}
               className={`p p-sm ${bucketActive(b.years) ? "" : "p-muted"}`}
               onClick={() => toggleBucket(b.years)}
-              style={bucketActive(b.years) ? { background: "var(--accent)", color: "#fff" } : undefined}
+              style={bucketActive(b.years) ? { background: "var(--accent)", color: "var(--text-on-color)" } : undefined}
               title={`Nascidos entre ${b.low} e ${b.high} (${b.years.length} ${b.years.length === 1 ? "ano" : "anos"} com jogadores)`}
             >
               {b.low}–{String(b.high).slice(2)}
@@ -500,7 +500,7 @@ export default function JogadoresPorAnoPage() {
               key={e}
               className={`p p-sm ${escSet.has(e) ? "" : "p-muted"}`}
               onClick={() => toggleEsc(e)}
-              style={escSet.has(e) ? { background: "var(--accent)", color: "#fff" } : undefined}
+              style={escSet.has(e) ? { background: "var(--accent)", color: "var(--text-on-color)" } : undefined}
             >
               {e}
             </button>

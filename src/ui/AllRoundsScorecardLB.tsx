@@ -104,7 +104,7 @@ export function AllRoundsScorecardLB({
     const d = fmtDobPt(dob);
     return (
       <span className="p p-sm" title={d ? `Nascido a ${d}` : undefined}
-        style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent", cursor: d ? "help" : undefined }}>{age}a</span>
+        style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent", cursor: d ? "help" : undefined }}>{age}a</span>
     );
   }
 

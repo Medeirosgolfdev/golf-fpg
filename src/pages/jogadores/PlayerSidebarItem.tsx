@@ -66,7 +66,7 @@ export function HcpPill({ hcp, escHcps }: { hcp: number | null; escHcps?: EscHcp
     const { p25, p75, count } = escHcps;
     if (hcp <= p25) {
       // Topo do escalão — único destaque forte
-      style = { background: "var(--color-good)", color: "#fff", borderColor: "transparent" };
+      style = { background: "var(--color-good)", color: "var(--text-on-color)", borderColor: "transparent" };
       tooltip += ` · TOP 25% do escalão (entre ${count} jogadores)`;
     } else if (hcp > p75) {
       // Fundo do escalão — sem fundo, sem borda, só texto esmaecido

@@ -146,10 +146,10 @@ const TG_TR_I: Record<string, { i: string; c: string }> = {
 };
 const TG_TIER = {
   elite:      { bg: "var(--bg-success-strong)",  c: "var(--color-good-dark)" },
-  strong:     { bg: "var(--bg-current,#e0f7fa)", c: "var(--text-current,#006064)" },
+  strong:     { bg: "var(--bg-current)", c: "var(--text-current)" },
   solid:      { bg: "var(--bg-warn-light)",       c: "var(--color-warn-dark)" },
   developing: { bg: "var(--bg-warn-strong)",      c: "var(--color-warn-dark)" },
-  beginner:   { bg: "var(--bg-danger-subtle,var(--bg-danger-strong))", c: "var(--color-danger-dark)" },
+  beginner:   { bg: "var(--bg-danger-subtle)", c: "var(--color-danger-dark)" },
 };
 
 // Base partilhada (tidAliases.ts) + extras específicos desta vista
@@ -669,7 +669,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                           : inscribed?.has(norm2(p.n)) ?? false;
                         return (
                           <td key={tid} className="ta-c"
-                            style={{ background: inscrito ? "var(--bg-info-strong,var(--bg-info))" : undefined }}>
+                            style={{ background: inscrito ? "var(--bg-info-strong)" : undefined }}>
                             {inscrito
                               ? <span className="u-fs-fs-14">⛳</span>
                               : <span className="fs-10 c-border">—</span>}

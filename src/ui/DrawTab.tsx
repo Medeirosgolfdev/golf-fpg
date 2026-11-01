@@ -731,7 +731,7 @@ export default function DrawTab({
                 className="p p-sm" style={{
                   cursor: "pointer",
                   background: active ? "var(--accent)" : "var(--bg-card)",
-                  color: active ? "#fff" : "var(--text-1)",
+                  color: active ? "var(--text-on-color)" : "var(--text-1)",
                   borderColor: active ? "var(--accent)" : "var(--border)",
                   fontWeight: active ? 700 : 400,
                 }}>

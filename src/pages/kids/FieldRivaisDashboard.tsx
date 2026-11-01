@@ -2054,7 +2054,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                     </td>
                   );
                   cells.push(
-                    <td key={e.tcode + "_T"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-card, var(--bg))", color: entry ? "var(--text)" : "var(--text-3)" }}>
+                    <td key={e.tcode + "_T"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-card)", color: entry ? "var(--text)" : "var(--text-3)" }}>
                       {entry ? entry.total : "—"}
                     </td>
                   );

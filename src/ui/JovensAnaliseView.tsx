@@ -786,7 +786,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               borderRadius: "var(--radius-sm)",
               padding: "3px 6px",
               background: titles.length > 0
-                ? "var(--medal-gold-bg, #fde68a)"  // amber/dourado para anos com título (🏆)
+                ? "var(--medal-gold-bg)"  // amber/dourado para anos com título (🏆)
                 : (played ? undefined : "var(--bg-muted)"),
               opacity: played ? 1 : 0.6,
               fontSize: "var(--fs-11)",

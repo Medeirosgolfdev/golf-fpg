@@ -1051,7 +1051,7 @@ function CircuitSidebar({
           )}
           {g.buckets.map(({ bk, label, items }) => (
             <React.Fragment key={bk}>
-              <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color ?? "var(--color-good-dark)", color: config.textColor ?? "#fff" }}>
+              <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color ?? "var(--color-good-dark)", color: config.textColor ?? "var(--text-on-color)" }}>
                 {label}
               </div>
               {items.map(e => {

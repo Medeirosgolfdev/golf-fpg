@@ -47,11 +47,11 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
   //   Bogey    → --score-bogey + --score-bogey-fg + border --score-bogey-border
   //   Duplo+   → --score-double + #fff
   const buckets: Bucket[] = [
-    { label: "Eagle+",  count: stats.eaglesPlus,  bg: "var(--score-eagle)",   fg: "#ffffff" },
-    { label: "Birdie",  count: stats.birdies,     bg: "var(--score-birdie)",  fg: "#ffffff" },
+    { label: "Eagle+",  count: stats.eaglesPlus,  bg: "var(--score-eagle)",   fg: "var(--text-on-color)" },
+    { label: "Birdie",  count: stats.birdies,     bg: "var(--score-birdie)",  fg: "var(--text-on-color)" },
     { label: "Par",     count: stats.pars,        bg: "transparent",          fg: "var(--text)" },
     { label: "Bogey",   count: stats.bogeys,      bg: "var(--score-bogey)",   fg: "var(--score-bogey-fg)" },
-    { label: "Duplo+",  count: stats.doublesPlus, bg: "var(--score-double)",  fg: "#ffffff" },
+    { label: "Duplo+",  count: stats.doublesPlus, bg: "var(--score-double)",  fg: "var(--text-on-color)" },
   ];
 
   return (

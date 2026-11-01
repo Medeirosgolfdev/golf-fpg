@@ -304,7 +304,7 @@ function PainelResumo({ torneios, nossosByFed }: {
                 cursor: "pointer", padding: "1px 8px", borderRadius: "var(--radius-lg)",
                 border: "1px solid var(--border)",
                 background: clubeSel === c ? "var(--accent)" : "var(--bg-muted)",
-                color: clubeSel === c ? "#fff" : "var(--text-1)",
+                color: clubeSel === c ? "var(--text-on-color)" : "var(--text-1)",
               }}>
               {c} {d.n}
             </button>

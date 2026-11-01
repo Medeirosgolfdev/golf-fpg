@@ -455,7 +455,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
   // Para o Manuel: verde (consistente com identidade dele).
   // Para outros: neutro bege/cinzento.
   const known = isManuel ? {
-    background: "var(--bg-success-subtle, #ecfdf5)",
+    background: "var(--bg-success-subtle)",
     color: "var(--color-good-dark)",
     border: "1px solid var(--color-good-dark)",
   } : {
@@ -464,7 +464,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
     border: "1px solid var(--border)",
   };
   const range = isManuel ? {
-    background: "var(--bg-success-subtle, #ecfdf5)",
+    background: "var(--bg-success-subtle)",
     color: "var(--color-good-dark)",
     border: "1px dashed var(--color-good-dark)",
   } : {

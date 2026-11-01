@@ -668,7 +668,7 @@ export default function JogadoresListPage() {
                     <td style={{ textAlign: "right", color: r.roundsTotal ? undefined : "var(--text-muted)" }}>
                       {r.roundsTotal ?? "—"}
                     </td>
-                    <td style={{ textAlign: "right", color: r.roundsYear && r.roundsYear > 0 ? "var(--color-good-dark, #166534)" : "var(--text-muted)", fontWeight: r.roundsYear ? 600 : undefined }}>
+                    <td style={{ textAlign: "right", color: r.roundsYear && r.roundsYear > 0 ? "var(--color-good-dark)" : "var(--text-muted)", fontWeight: r.roundsYear ? 600 : undefined }}>
                       {r.roundsYear ?? "—"}
                     </td>
                     <td className="num">{fmtSD(r.lastSD)}</td>

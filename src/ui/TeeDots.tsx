@@ -19,7 +19,7 @@ export default function TeeDots({ tees, active, onSelect }: {
             title={x.title} aria-label={x.name} aria-pressed={sel}
             style={{ padding: 0, cursor: "pointer", width: 14, height: 14, borderRadius: "50%",
               background: getTeeHex(x.name), border: "1px solid var(--border)",
-              boxShadow: sel ? "0 0 0 2px var(--bg-card, #fff), 0 0 0 3.5px var(--text-2)" : "none",
+              boxShadow: sel ? "0 0 0 2px var(--bg-card), 0 0 0 3.5px var(--text-2)" : "none",
               opacity: sel ? 1 : 0.55 }} />
         );
       })}

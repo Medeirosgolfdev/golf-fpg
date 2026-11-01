@@ -89,7 +89,7 @@ html, body, #root {
 .rsim-collapse-body { padding: var(--space-2) var(--space-10) var(--space-12); }
 
 /* Linha realçada (gross introduzido) na tabela de impacto */
-.dtable-sm tr.rsim-entered { background: var(--bg-active, rgba(59,130,246,0.10)); box-shadow: inset 3px 0 0 var(--chart-2); }
+.dtable-sm tr.rsim-entered { background: var(--bg-active); box-shadow: inset 3px 0 0 var(--chart-2); }
 .dtable-sm tr.rsim-toprow { background: var(--bg-success); }
 
 /* ─── Sortable header (global, all tables) ─── */
@@ -346,7 +346,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 }
 .segmented-toggle .seg-btn.active {
   background: var(--accent);
-  color: #fff;
+  color: var(--text-on-color);
   box-shadow: var(--shadow-accent-sm);
 }
 .segmented-toggle .seg-btn .seg-count {
@@ -420,7 +420,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 /* Sidebar items (shared between Campos and Jogadores) */
 .sidebar-section-title { padding: var(--space-6) var(--space-10); border-bottom: 1px solid var(--border-light); font-size: var(--fs-11); font-weight: 700; color: var(--text-2); }
-.sidebar-section-title-dark { padding: var(--space-6) var(--space-10); font-size: var(--fs-11); font-weight: 700; color: #fff; background: var(--color-good-dark); letter-spacing: 0.04em; }
+.sidebar-section-title-dark { padding: var(--space-6) var(--space-10); font-size: var(--fs-11); font-weight: 700; color: var(--text-on-color); background: var(--color-good-dark); letter-spacing: 0.04em; }
 
 .course-item {
  display: block;
@@ -504,7 +504,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .p-outline { border-color: var(--text-dark); color: var(--text-dark); background: transparent; }
 
 /* ── Player identity ── */
-.p-fed { background: var(--badge-fed); color: #fff; }
+.p-fed { background: var(--badge-fed); color: var(--text-on-color); }
 .p-muted { background: var(--bg-muted); color: var(--text-2); }
 .p-birth { background: var(--badge-birth-bg); color: var(--badge-birth-text); }
 .p-club { background: var(--badge-club-bg); color: var(--badge-club-text); }
@@ -517,7 +517,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .p-regional { background: var(--pill-regional-bg); color: var(--pill-regional-fg); }
 .p-nacional { background: var(--pill-nacional-bg); color: var(--pill-nacional-fg); }
 .p-intl { background: var(--pill-intl-bg); color: var(--pill-regional-bg); }
-.p-pja { background: var(--pill-pja-bg); color: #fff; }
+.p-pja { background: var(--pill-pja-bg); color: var(--text-on-color); }
 /* Modalidade de jogo (OM CGSS) — uma cor por modalidade; quebra em 2 linhas
    quando a coluna é estreita (cabeçalho da matriz da OM) */
 .p-mod { font-weight: 700; white-space: normal; max-width: 100%; line-height: 1.15; text-align: center; }
@@ -533,11 +533,11 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 /* Origin (score_origin) — same rectangular form */
 .p-origin { border-radius: var(--radius-sm); font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
-.p-eds { background: var(--color-amber); color: #fff; }
-.p-import { background: var(--pill-import-bg); color: #fff; }
-.p-indiv { background: var(--color-amber); color: #fff; }
-.p-treino { background: var(--color-amber); color: #fff; }
-.p-extra { background: var(--color-amber); color: #fff; }
+.p-eds { background: var(--color-amber); color: var(--text-on-color); }
+.p-import { background: var(--pill-import-bg); color: var(--text-on-color); }
+.p-indiv { background: var(--color-amber); color: var(--text-on-color); }
+.p-treino { background: var(--color-amber); color: var(--text-on-color); }
+.p-extra { background: var(--color-amber); color: var(--text-on-color); }
 
 /* ── Tee (12px radius — arredondado, cores inline via TeePill) ── */
 .p-tee { border-radius: var(--radius-lg); font-weight: 700; }
@@ -547,7 +547,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 /* ── Interactivos (filtros) ── */
 .p-filter { cursor: pointer; transition: all 0.15s; background: var(--bg); color: var(--text-3); opacity: 0.6; }
 .p-filter:hover { opacity: 0.85; }
-.p-filter.active { opacity: 1; background: var(--text-dark); color: #fff; box-shadow: var(--shadow-sm); }
+.p-filter.active { opacity: 1; background: var(--text-dark); color: var(--text-on-color); box-shadow: var(--shadow-sm); }
 .p-filter-count { font-size: var(--fs-10); font-weight: 500; opacity: 0.7; margin-left: var(--space-2); }
 .active .p-filter-count { opacity: 0.85; }
 
@@ -746,13 +746,13 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  white-space: nowrap;
  vertical-align: middle;
 }
-.sex-M { background: var(--badge-male);   color: #fff; }
-.sex-F { background: var(--badge-female); color: #fff; }
+.sex-M { background: var(--badge-male);   color: var(--text-on-color); }
+.sex-F { background: var(--badge-female); color: var(--text-on-color); }
 
 /* SD pill colors (generated dynamically via sdClassByHcp) */
-.p-sd-excellent { background: var(--color-good); color: #fff; }
+.p-sd-excellent { background: var(--color-good); color: var(--text-on-color); }
 .p-sd-good      { background: var(--sd-badge-good); color: var(--text); }
-.p-sd-poor      { background: var(--color-danger); color: #fff; }
+.p-sd-poor      { background: var(--color-danger); color: var(--text-on-color); }
 .master-detail .jog-detail {
  display: flex;
  flex-direction: column;
@@ -897,8 +897,8 @@ tr.clickable { cursor: pointer; }
   padding: var(--space-1) var(--space-6); border: 1.5px solid transparent;
   border-radius: var(--radius-sm); white-space: nowrap; vertical-align: middle;
 }
-.hb9 { background: var(--color-warn); color: #fff; }
-.hb18 { background: var(--badge-fed); color: #fff; }
+.hb9 { background: var(--color-warn); color: var(--text-on-color); }
+.hb18 { background: var(--badge-fed); color: var(--text-on-color); }
 /* Pill badges (from melhorias.json) */
 
 a.dateLink { color: var(--text); text-decoration: none; cursor: pointer; }
@@ -937,7 +937,7 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .btn-round.btn-round-sm { width: 24px; height: 24px; border: none; background: none; font-size: var(--fs-16); color: var(--text-3); }
 .btn-round.btn-round-sm:disabled { color: var(--border); }
 /* ✕ dos popups com cabeçalho de cor (Calendário). .on-light: cabeçalho claro — a cor do ✕ vem do evento. */
-.btn-round.btn-round-close { width: 26px; height: 26px; border: none; background: rgba(255,255,255,0.2); color: #fff; font-size: var(--fs-14); }
+.btn-round.btn-round-close { width: 26px; height: 26px; border: none; background: rgba(255,255,255,0.2); color: var(--text-on-color); font-size: var(--fs-14); }
 .btn-round.btn-round-close.on-light { background: rgba(0,0,0,0.15); }
 /* Botão tracejado «＋ Acrescentar…» (simulador). */
 .btn-add { display: flex; align-items: center; justify-content: center; gap: var(--space-6); padding: var(--space-8) var(--space-16);
@@ -952,7 +952,7 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 
 .an-hist-row { display: flex; align-items: center; gap: var(--space-8); margin-bottom: var(--space-3); }
 .an-hist-label { width: 140px; font-size: var(--fs-11); color: var(--text-2); text-align: right; flex-shrink: 0; }
-.an-hist-bar { height: 18px; border-radius: var(--radius-sm); color: #fff; font-size: var(--fs-10); font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 4%; transition: width 0.3s; }
+.an-hist-bar { height: 18px; border-radius: var(--radius-sm); color: var(--text-on-color); font-size: var(--fs-10); font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 4%; transition: width 0.3s; }
 
 tr.cross-current { background: var(--bg-success); }
 .cross-current td:first-child { border-left: 3px solid var(--color-good); }
@@ -1302,7 +1302,7 @@ tr.cross-current { background: var(--bg-success); }
 .sc-bar-head { background: var(--bg-header); padding: var(--space-8) var(--space-12); font-size: var(--fs-12); font-weight: 700; color: var(--text-2); display: flex; justify-content: space-between; border-bottom: 2px solid var(--border); }
 
 .sc-modern { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); background: var(--bg-card); margin: var(--space-12) 0; width: fit-content; max-width: 100%; }
-.sc-header { padding: var(--space-12) var(--space-16); color: #fff; display: flex; justify-content: space-between; align-items: center; gap: var(--space-16); }
+.sc-header { padding: var(--space-12) var(--space-16); color: var(--text-on-color); display: flex; justify-content: space-between; align-items: center; gap: var(--space-16); }
 .sc-header-light { color: var(--grey-900); }
 .sc-header-left { flex: 1; min-width: 0; }
 .sc-header-right { display: flex; gap: var(--space-12); align-items: center; }
@@ -1384,17 +1384,17 @@ tr.cross-current { background: var(--bg-success); }
  * Cores: ramp do verde/amarelo/vermelho (under) ao azul progressivo (over)
  * Não existem outros sistemas de score (sc-dot foi eliminado).
  */
-.sc-score.holeinone { background: var(--score-hio); color: #fff; border-radius: 50%; }
-.sc-score.albatross { background: var(--score-hio); color: #fff; border-radius: 50%; }
-.sc-score.eagle { background: var(--score-eagle); color: #fff; border-radius: 50%; }
-.sc-score.birdie { background: var(--score-birdie); color: #fff; border-radius: 50%; }
+.sc-score.holeinone { background: var(--score-hio); color: var(--text-on-color); border-radius: 50%; }
+.sc-score.albatross { background: var(--score-hio); color: var(--text-on-color); border-radius: 50%; }
+.sc-score.eagle { background: var(--score-eagle); color: var(--text-on-color); border-radius: 50%; }
+.sc-score.birdie { background: var(--score-birdie); color: var(--text-on-color); border-radius: 50%; }
 .sc-score.par { background: transparent; color: var(--text); border-radius: 0; }
 .sc-score.bogey { background: var(--score-bogey); color: var(--score-bogey-fg); border-radius: 0; border: 1px solid var(--score-bogey-border); }
-.sc-score.double { background: var(--score-double); color: #fff; border-radius: 0; }
-.sc-score.triple { background: var(--score-triple); color: #fff; border-radius: 0; }
-.sc-score.quad { background: var(--score-quad); color: #fff; border-radius: 0; }
-.sc-score.quint { background: var(--score-quint); color: #fff; border-radius: 0; }
-.sc-score.worse { background: var(--score-worse); color: #fff; border-radius: 0; }
+.sc-score.double { background: var(--score-double); color: var(--text-on-color); border-radius: 0; }
+.sc-score.triple { background: var(--score-triple); color: var(--text-on-color); border-radius: 0; }
+.sc-score.quad { background: var(--score-quad); color: var(--text-on-color); border-radius: 0; }
+.sc-score.quint { background: var(--score-quint); color: var(--text-on-color); border-radius: 0; }
+.sc-score.worse { background: var(--score-worse); color: var(--text-on-color); border-radius: 0; }
 .sc-score.sc-empty { color: var(--border); font-weight: 400; background: none; }
 .sc-score.sc-nr { color: var(--border); font-weight: 400; font-size: var(--fs-10); background: none; }
 /* Buraco não terminado — valor inferido (Net Double Bogey). Pintado a cinzento
@@ -1750,8 +1750,8 @@ tr.cross-current { background: var(--bg-success); }
  margin: var(--space-12) 0;
  padding: var(--space-14);
  background: var(--bg);
- border: 1px solid var(--border, #e2e8f0);
- border-radius: var(--radius, 6px);
+ border: 1px solid var(--border);
+ border-radius: var(--radius);
 }
 
 .sim-manual-group {
@@ -1764,7 +1764,7 @@ tr.cross-current { background: var(--bg-success); }
  font-weight: 600;
  font-size: var(--fs-12);
  min-width: 80px;
- color: var(--text-2, #555);
+ color: var(--text-2);
 }
 
 .sim-manual-fields {
@@ -2124,7 +2124,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   cursor: pointer; transition: all .15s; user-select: none; line-height: 1.3;
 }
 .ov-opt-btn:hover { background: var(--bg-hover); border-color: var(--text-3); }
-.ov-opt-btn.active { background: var(--link-color); color: #fff; border-color: var(--link-color); }
+.ov-opt-btn.active { background: var(--link-color); color: var(--text-on-color); border-color: var(--link-color); }
 
 /* Toggle checkboxes — estilo pill */
 .ov-toggle { display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-2) var(--space-8) var(--space-2) var(--space-4); border-radius: var(--radius); cursor: pointer; transition: background .12s; user-select: none; font-size: var(--fs-12); font-weight: 600; color: var(--text-2); }
@@ -2228,7 +2228,7 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 /* SI do buraco na Previsão; .on = recebe pancada de handicap. */
 .si-pill { display: inline-block; min-width: 22px; padding: var(--space-1) var(--space-8); border-radius: 999px; font-size: var(--fs-11);
   font-weight: 600; background: var(--accent-light); color: var(--text-2); }
-.si-pill.on { background: var(--accent); color: #fff; font-weight: 800; }
+.si-pill.on { background: var(--accent); color: var(--text-on-color); font-weight: 800; }
 /* Barras por buraco (jogador vs field) na Análise do Kids 2 — a altura vem dos dados. */
 .hole-bar { width: 40%; border-radius: var(--radius-xs) var(--radius-xs) 0 0; }
 /* ── /comparar ── */
@@ -2236,7 +2236,7 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .cmp-slot { display: inline-flex; align-items: center; gap: var(--space-6); padding: var(--space-4) var(--space-14); font-size: var(--fs-13); border-radius: var(--radius-pill); }
 /* Barra de % por jogador e barra de vitórias (largura e cor vêm dos dados). */
 .bar-fill { height: 100%; border-radius: var(--radius-sm); opacity: 0.75; }
-.win-bar-seg { display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800;
+.win-bar-seg { display: flex; align-items: center; justify-content: center; color: var(--text-on-color); font-weight: 800;
   font-size: var(--fs-12); font-family: var(--font-mono); }
 .win-bar-seg.draw { background: var(--bg-muted); color: var(--text-muted); font-weight: 700; font-family: inherit; }
 /* Similitude de campos: % de parecença e linha escolhida. */
@@ -2272,6 +2272,10 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
   background: var(--bg-muted); border: 1px solid var(--border-light); }
 .advice-card.warn { background: var(--color-warn-alpha); border-color: var(--color-warn); }
 .advice-card.off { background: transparent; opacity: 0.6; }
+/* SVG: os atributos não aceitam var() — o traço vem daqui. */
+.donut-base { stroke: var(--bg-neutral); }
+.pt-ring { stroke: var(--bg-card); }
+
 /* ── Pequenas pills com a cor dos dados (cor no style) ── */
 /* Fonte de um resultado (veteranos da MAJOR). */
 .src-tag { display: inline-block; padding: 0 var(--space-6); margin: 0 var(--space-4) var(--space-2) 0; border-radius: 999px;
@@ -2390,15 +2394,15 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .dtable.ts-table .ts-foot td { border-bottom: none; font-weight: 700; }
 .dtable.ts-table .ts-foot td.ts-foot-lbl { text-align: left; padding-left: var(--space-10); font-size: var(--fs-10);
   text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-2); }
-.dtable.ts-table .ts-foot.all td { color: #fff; font-weight: 600; }
+.dtable.ts-table .ts-foot.all td { color: var(--text-on-color); font-weight: 600; }
 .dtable.ts-table .ts-foot.all td.ts-foot-lbl { color: rgba(255,255,255,0.85); }
 .dtable.ts-table .ts-foot.all td.ts-grand-all { font-weight: 700; }
 .dtable.ts-table .ts-foot td.ts-grand { font-weight: 900; }
-.dtable.ts-table .ts-foot td.ts-bpb-b { color: #fff; font-weight: 600; border-left: 1px solid rgba(255,255,255,0.3); opacity: 0.9; }
-.dtable.ts-table .ts-foot td:is(.ts-bpb-p, .ts-bpb-g) { color: #fff; font-weight: 400; border-left: 1px solid rgba(255,255,255,0.2); opacity: 0.8; }
+.dtable.ts-table .ts-foot td.ts-bpb-b { color: var(--text-on-color); font-weight: 600; border-left: 1px solid rgba(255,255,255,0.3); opacity: 0.9; }
+.dtable.ts-table .ts-foot td:is(.ts-bpb-p, .ts-bpb-g) { color: var(--text-on-color); font-weight: 400; border-left: 1px solid rgba(255,255,255,0.2); opacity: 0.8; }
 /* Cartão de uma equipa (cabeçalho na cor da equipa — style background). */
 .ts-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
-.ts-card-hdr { color: #fff; padding: var(--space-8) var(--space-12); display: flex; align-items: center; gap: var(--space-10); }
+.ts-card-hdr { color: var(--text-on-color); padding: var(--space-8) var(--space-12); display: flex; align-items: center; gap: var(--space-10); }
 .ts-cat-hdr { background: var(--bg-hover); padding: var(--space-4) var(--space-10); font-size: var(--fs-11); font-weight: 700; color: var(--text-2);
   display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .ts-cat-hdr.first { border-top: none; }
@@ -2441,7 +2445,7 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .pw-sub { font-size: var(--fs-13); color: var(--text-3); }
 .pw-input { padding: var(--space-8) var(--space-14); border: 1.5px solid var(--border); border-radius: var(--radius); font-size: var(--fs-14); width: 200px; }
 .pw-input-error { border-color: var(--color-danger); }
-.pw-btn { padding: var(--space-8) var(--space-20); background: var(--bg-topbar); color: #fff; border: none; border-radius: var(--radius); font-size: var(--fs-13); font-weight: 700; cursor: pointer; }
+.pw-btn { padding: var(--space-8) var(--space-20); background: var(--bg-topbar); color: var(--text-on-color); border: none; border-radius: var(--radius); font-size: var(--fs-13); font-weight: 700; cursor: pointer; }
 .pw-error { font-size: var(--fs-11); color: var(--color-danger); font-weight: 600; }
 
 /* ─── Rivais/Cross (previously Comparar.css) ─── */
@@ -2678,8 +2682,8 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 
 /* ─── Table / layout combos (DrivePage) ─── */
 .tbl-compact      { font-size: var(--fs-12); border-collapse: collapse; width: auto; font-variant-numeric: tabular-nums; }
-.sticky-col-0     { position: sticky; left: 0; z-index: 2; background: var(--bg-card, #fff); }
-.sticky-col-1     { position: sticky; left: 26px; z-index: 2; background: var(--bg-card, #fff); box-shadow: var(--shadow-sticky-col); }
+.sticky-col-0     { position: sticky; left: 0; z-index: 2; background: var(--bg-card); }
+.sticky-col-1     { position: sticky; left: 26px; z-index: 2; background: var(--bg-card); box-shadow: var(--shadow-sticky-col); }
 
 /* Só o header de colunas fica sticky — SI e PAR fazem scroll */
 .sc-lb thead tr:last-child th { position: sticky; top: 0; z-index: 4; }
@@ -2710,7 +2714,7 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 
 /* Separadores */
 .cs-table .cs-grp  { border-left: 3px solid var(--border) !important; }
-.cs-table .cs-col  { border-left: 1px solid var(--border-light, #e5e7eb) !important; }
+.cs-table .cs-col  { border-left: 1px solid var(--border-light) !important; }
 .cs-table .cs-id-end { border-right: 3px solid var(--border) !important; }
 
 /* Colunas de identidade (fixas à esquerda) */
@@ -2807,19 +2811,19 @@ table.has-cmp .sticky-col-1 { left: 48px; }
 .sc-lb .lb-bog      { width: 28px; font-size: var(--fs-12); color: var(--color-danger); border-left: 1px solid var(--border-light); }
 
 /* Colunas por ronda (MultiRoundLeaderboard) — separador no início de cada grupo */
-.sc-lb .lb-rnd    { width: 38px; background: var(--bg-rnd, #e8f2e4);
+.sc-lb .lb-rnd    { width: 38px; background: var(--bg-rnd);
   font-weight: 700; font-family: var(--font-mono);
   border-left: 2px solid var(--grey-300); }
-.sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd, #e8f2e4); font-size: var(--fs-11);
+.sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd); font-size: var(--fs-11);
   font-family: var(--font-mono); }
-.sc-lb .lb-rnd-sd   { width: 44px; background: var(--bg-rnd-stats, #f5f9f3); }
-.sc-lb .lb-rnd-eag  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
+.sc-lb .lb-rnd-sd   { width: 44px; background: var(--bg-rnd-stats); }
+.sc-lb .lb-rnd-eag  { width: 22px; background: var(--bg-rnd-stats);
   font-size: var(--fs-11); color: var(--score-eagle); font-weight: 700; }
-.sc-lb .lb-rnd-bird { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
+.sc-lb .lb-rnd-bird { width: 22px; background: var(--bg-rnd-stats);
   font-size: var(--fs-11); color: var(--color-good); font-weight: 700; }
-.sc-lb .lb-rnd-par  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
+.sc-lb .lb-rnd-par  { width: 22px; background: var(--bg-rnd-stats);
   font-size: var(--fs-11); color: var(--text-3); }
-.sc-lb .lb-rnd-bog  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
+.sc-lb .lb-rnd-bog  { width: 22px; background: var(--bg-rnd-stats);
   font-size: var(--fs-11); color: var(--color-danger); }
 /* Headers usam a variante mais escura (mockup: #dde8d9 / #f0f5ee) */
 .sc-lb thead th.lb-rnd, .sc-lb thead th.lb-rnd-tp { background: var(--bg-rnd-header); }
@@ -2851,7 +2855,7 @@ table.has-cmp .sticky-col-1 { left: 48px; }
    começam no 10). Realça a célula com uma moldura discreta na cor das linhas
    (sem cantos arredondados), sem mexer na cor do score nem na ordem. */
 .sc-lb td.lb-hole.sc-start-hole {
-  box-shadow: inset 0 0 0 2px var(--border, #bcc5ad);
+  box-shadow: inset 0 0 0 2px var(--border);
 }
 /* Células de buraco em linhas de jogador: padding compacto */
 .sc-lb tbody tr:not(.lb-par-row):not(.lb-si-row) td.lb-hole { padding: var(--space-3) var(--space-2); }
@@ -2898,36 +2902,36 @@ table.has-cmp .sticky-col-1 { left: 48px; }
    discreto, caso Ricardo na /ffg). Tinta suave do MESMO verde néon, misturada
    com o fundo do cartão para as sticky-cols ficarem OPACAS (senão o conteúdo
    por baixo aparecia através delas no scroll horizontal). */
-.row-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, #fff)) !important; }
+.row-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var(--bg-card)) !important; }
 .row-portuguese .sticky-col-0,
-.row-portuguese .sticky-col-1 { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, #fff)) !important; }
-.row-portuguese:hover { background: color-mix(in srgb, #00FF00 26%, var(--bg-card, #fff)) !important; }
-.row-portuguese.row-selected { background: var(--bg-warn-subtle, #FFF4C4) !important; }
+.row-portuguese .sticky-col-1 { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var(--bg-card)) !important; }
+.row-portuguese:hover { background: color-mix(in srgb, var(--pill-intl-bg) 26%, var(--bg-card)) !important; }
+.row-portuguese.row-selected { background: var(--bg-warn-subtle) !important; }
 .row-portuguese.row-selected .sticky-col-0,
-.row-portuguese.row-selected .sticky-col-1 { background: var(--bg-warn-subtle, #FFF4C4) !important; }
+.row-portuguese.row-selected .sticky-col-1 { background: var(--bg-warn-subtle) !important; }
 
 /* Mesmo destaque, mas por CÉLULA — a tabela "Edições anteriores" da /major põe
    um torneio diferente em cada coluna, logo cada linha tem jogadores distintos
    e o realce não pode ir no <tr>. Cores idênticas às regras acima. */
 td.cell-manuel { background: var(--bg-success-subtle) !important; }
-td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, #fff)) !important; }
+td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var(--bg-card)) !important; }
 
 /* Link no header do torneio (Ranking PJA) — hover subtil para indicar
    que é clicável sem ser ruidoso. */
-.tourn-header-link:hover { background: var(--bg-hover-subtle, #F5F5F5); }
+.tourn-header-link:hover { background: var(--bg-hover-subtle); }
 .tourn-header-link:hover > div:first-child { text-decoration: underline; }
 
 /* Linha seleccionada via clique (Ranking PJA e outros rankings clicáveis).
    Destaca com fundo amarelo suave — sem border nas células (era ruidoso
    dentro do cs-table com dezenas de colunas). */
-.row-selected { background: var(--bg-warn-subtle, #FFF4C4) !important; }
+.row-selected { background: var(--bg-warn-subtle) !important; }
 .row-selected .sticky-col-0,
-.row-selected .sticky-col-1 { background: var(--bg-warn-subtle, #FFF4C4) !important; }
-.row-selected:hover { background: var(--bg-warn-subtle, #FFF4C4) !important; filter: brightness(0.97); }
+.row-selected .sticky-col-1 { background: var(--bg-warn-subtle) !important; }
+.row-selected:hover { background: var(--bg-warn-subtle) !important; filter: brightness(0.97); }
 /* Combinação Manuel + seleccionado: mantém amarelo (seleccionado vence) */
-.row-manuel.row-selected { background: var(--bg-warn-subtle, #FFF4C4) !important; }
+.row-manuel.row-selected { background: var(--bg-warn-subtle) !important; }
 .row-manuel.row-selected .sticky-col-0,
-.row-manuel.row-selected .sticky-col-1 { background: var(--bg-warn-subtle, #FFF4C4) !important; }
+.row-manuel.row-selected .sticky-col-1 { background: var(--bg-warn-subtle) !important; }
 
 .sc-lb tbody tr:hover { background: var(--bg-detail); }
 .sc-lb tbody tr:hover .sticky-col-0,
@@ -3004,7 +3008,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
  width: 16px; height: 16px; border-radius: var(--radius-sm);
  border: 2px solid var(--accent); background: transparent;
  display: flex; align-items: center; justify-content: center;
- flex-shrink: 0; font-size: var(--fs-10); color: #fff; line-height: 1;
+ flex-shrink: 0; font-size: var(--fs-10); color: var(--text-on-color); line-height: 1;
  transition: all 0.15s;
 }
 .cal-toggle-check.on { background: var(--accent); }
@@ -3253,7 +3257,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
   transition: all .15s; white-space: nowrap;
 }
 .tab-under.active { font-weight: 700; color: var(--text);
-  border-bottom-color: var(--accent); background: var(--bg-card,#fff); }
+  border-bottom-color: var(--accent); background: var(--bg-card); }
 
 /* Contentor de tabs uniforme (páginas full-width: Comparar, Draws).
    Substitui os <div style> inline ad-hoc — mesma forma em todo o lado. */
@@ -3278,11 +3282,11 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 
 /* ── Search input + compact select (DrivePage, FPGPage) ── */
 .input-search { font-size: var(--fs-11); padding: var(--space-3) var(--space-8) var(--space-3) 22px; border-radius: var(--radius);
-  border: 1px solid var(--border); background: var(--bg-card,#fff);
+  border: 1px solid var(--border); background: var(--bg-card);
   outline: none; width: 140px; }
 .input-search:focus { border-color: var(--accent); }
 .select-compact { font-size: var(--fs-11); padding: var(--space-3) var(--space-6); border-radius: var(--radius);
-  border: 1px solid var(--border); background: var(--bg-card,#fff); }
+  border: 1px solid var(--border); background: var(--bg-card); }
 
 .tee-badges-row {
  display: flex;
@@ -3344,11 +3348,11 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 .cp-row:hover { background: var(--bg-hover); }
 .cp-row td { vertical-align: baseline; }
 .cp-row-manuel {
-  background: var(--bg-subtle, rgba(0,0,0,0.04));
+  background: var(--bg-subtle);
 }
-.cp-row-manuel:hover { background: var(--bg-subtle, rgba(0,0,0,0.06)); }
+.cp-row-manuel:hover { background: var(--bg-subtle); }
 .cp-row-manuel .cp-name { font-weight: 700; }
-.cp-row-open { background: var(--bg-subtle, rgba(0,0,0,0.03)); }
+.cp-row-open { background: var(--bg-subtle); }
 /* Chevron de expansão */
 .cp-exp { width: 26px; padding-right: 0 !important; text-align: center; }
 .cp-chev {
@@ -3368,7 +3372,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
   font-size: var(--fs-10);
   font-weight: 700;
   color: var(--text-muted);
-  background: var(--bg-subtle, rgba(0,0,0,0.06));
+  background: var(--bg-subtle);
   border-radius: var(--radius-sm);
   padding: 0 var(--space-4);
   margin-right: var(--space-6);
@@ -3378,8 +3382,8 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 .dtable .cp-row-paired > td:not([rowspan]) { border-bottom: none; }
 .cp-row-sub { cursor: pointer; }
 .dtable .cp-row-sub > td { padding-top: 0; vertical-align: baseline; }
-.cp-row-paired:hover, .cp-row-sub:hover { background: var(--bg-subtle, rgba(0,0,0,0.025)); }
-.cp-row-sub.cp-row-manuel { background: var(--bg-subtle, rgba(0,0,0,0.04)); }
+.cp-row-paired:hover, .cp-row-sub:hover { background: var(--bg-subtle); }
+.cp-row-sub.cp-row-manuel { background: var(--bg-subtle); }
 .cp-round-9 { font-size: var(--fs-10); font-weight: 600; color: var(--text-muted); }
 .cp-round-nc { font-size: var(--fs-11); font-style: italic; color: var(--text-muted); }
 .cp-tp { font-weight: 600; font-size: var(--fs-12); }
@@ -3397,7 +3401,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
   gap: var(--space-6);
   padding: var(--space-3) var(--space-8);
   border-radius: var(--radius);
-  background: var(--bg-subtle, rgba(0,0,0,0.04));
+  background: var(--bg-subtle);
   cursor: default;
   white-space: nowrap;
 }
@@ -3493,7 +3497,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 }
 .ov-header { padding: 0 0 var(--space-8); }
 .ov-export-btn {
- padding: var(--space-10) var(--space-24); background: var(--link-color); color: #fff; border: none; border-radius: var(--radius-lg);
+ padding: var(--space-10) var(--space-24); background: var(--link-color); color: var(--text-on-color); border: none; border-radius: var(--radius-lg);
  font-size: var(--fs-14); font-weight: 800; cursor: pointer; transition: all 0.15s;
  box-shadow: var(--shadow-float); letter-spacing: .3px;
 }
@@ -3515,7 +3519,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
  border: 1.5px solid var(--accent-alpha-20); cursor: pointer; font-size: var(--fs-13); line-height: 1;
  transition: all .12s; font-weight: 600;
 }
-.ov-share-btn:hover { background: var(--link-color); color: #fff; border-color: var(--link-color); transform: scale(1.05); }
+.ov-share-btn:hover { background: var(--link-color); color: var(--text-on-color); border-color: var(--link-color); transform: scale(1.05); }
 .ov-share-btn:active { transform: scale(0.98); }
 .ov-card-preview {
  display: inline-flex; border-radius: var(--radius); overflow-x: auto; overflow-y: hidden; border: 1px solid var(--border-light);
@@ -3571,7 +3575,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 .tourn-tab.active,
 .tourn-tab-sm.active {
  background: var(--accent);
- color: #fff;
+ color: var(--text-on-color);
  border-color: var(--accent);
 }
 .tourn-tab-sm {
@@ -3625,7 +3629,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 /* ─── Restored: fs combos e utilitários ─── */
 .stats { display: flex; gap: var(--space-8); }
 .underline { text-decoration: underline; }
-.c-white { color: #fff; }
+.c-white { color: var(--text-on-color); }
 
 /* ═══════════════════════════════════════════
    GLOBAL INLINE BADGES
@@ -3639,7 +3643,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 
 /* ─── Torneio / competição ─── */
 .badge-gf      { font-size: var(--fs-10); font-weight: 800; color: var(--color-amber); margin-left: var(--space-4); }
-.badge-next    { display: inline-block; font-size: var(--fs-10); font-weight: 700; color: #fff; padding: 0 var(--space-4); border-radius: var(--radius-sm); margin-left: var(--space-2); }
+.badge-next    { display: inline-block; font-size: var(--fs-10); font-weight: 700; color: var(--text-on-color); padding: 0 var(--space-4); border-radius: var(--radius-sm); margin-left: var(--space-2); }
 
 /* ─── Série de torneios (a cor vem de uma classe .drive-serie-*) ─── */
 .badge-serie {
@@ -3870,16 +3874,16 @@ table td.lb-col-divider {
   position: static;
 }
 .player-list-row:hover {
-  background: var(--bg-hover, rgba(0, 0, 0, 0.03));
+  background: var(--bg-hover);
 }
 .player-list-row:nth-child(even) {
   background: rgba(0, 0, 0, 0.015);
 }
 .player-list-row:nth-child(even):hover {
-  background: var(--bg-hover, rgba(0, 0, 0, 0.05));
+  background: var(--bg-hover);
 }
 .player-list-name-link {
-  color: var(--accent, #0d61a8);
+  color: var(--accent);
   text-decoration: none;
   cursor: pointer;
 }
@@ -4064,7 +4068,7 @@ table td.lb-col-divider {
 
 /* Vista "Simulador" dentro dos Campos — os controlos que antes viviam na toolbar */
 .sim-controls { display: flex; flex-wrap: wrap; gap: var(--space-8); align-items: center; margin: var(--space-4) 0 var(--space-12); }
-.sim-controls .btn.active { background: var(--accent); color: #fff; border-color: transparent; } /* = .seg-btn.active */
+.sim-controls .btn.active { background: var(--accent); color: var(--text-on-color); border-color: transparent; } /* = .seg-btn.active */
 
 
 /* ═══════════════ MODELO ÚNICO DAS TABELAS (13/10/2026) ═══════════════
@@ -4203,9 +4207,9 @@ table td.lb-col-divider {
 .u-bb-2px-solid-accent-light { border-bottom: 2px solid var(--accent-light) !important; }
 .u-bb-2px-solid-border { border-bottom: 2px solid var(--border) !important; }
 .u-bd-1_5px-solid-accent { border: 1.5px solid var(--accent) !important; }
-.u-bd-152rb { border: 1px solid var(--color-info-dark, var(--color-navy)) !important; }
-.u-bd-1bl4k { border: 1px solid var(--score-eagle, #f59e0b) !important; }
-.u-bd-1epci { border: 1px solid var(--border, var(--color-rfeg-yellow)) !important; }
+.u-bd-152rb { border: 1px solid var(--color-info-dark) !important; }
+.u-bd-1bl4k { border: 1px solid var(--score-eagle) !important; }
+.u-bd-1epci { border: 1px solid var(--border) !important; }
 .u-bd-1px-dashed-border { border: 1px dashed var(--border) !important; }
 .u-bd-1px-dashed-border-light { border: 1px dashed var(--border-light) !important; }
 .u-bd-1px-dashed-text-3 { border: 1px dashed var(--text-3) !important; }
@@ -4219,22 +4223,22 @@ table td.lb-col-divider {
 .u-bd-1px-solid-line { border: 1px solid var(--line) !important; }
 .u-bd-1px-solid-medal-gold-fg { border: 1px solid var(--medal-gold-fg) !important; }
 .u-bd-1px-solid-score-eagle { border: 1px solid var(--score-eagle) !important; }
-.u-bd-1px-solid-var-badge-pp-0e7490 { border: 1px solid var(--badge-pp, #0e7490) !important; }
+.u-bd-1px-solid-var-badge-pp-0e7490 { border: 1px solid var(--badge-pp) !important; }
 .u-bd-2px-solid-accent { border: 2px solid var(--accent) !important; }
 .u-bd-2px-solid-color-danger { border: 2px solid var(--color-danger) !important; }
 .u-bd-2px-solid-color-good { border: 2px solid var(--color-good) !important; }
-.u-bd-ci9jy { border: 1px solid var(--border-success, #97c459) !important; }
-.u-bd-ltbl9 { border: 1px solid var(--color-amber, #f59e0b) !important; }
-.u-bd-nmb3o { border: 1px solid var(--color-warn-dark, var(--color-warn-dark)) !important; }
+.u-bd-ci9jy { border: 1px solid var(--border-success) !important; }
+.u-bd-ltbl9 { border: 1px solid var(--color-amber) !important; }
+.u-bd-nmb3o { border: 1px solid var(--color-warn-dark) !important; }
 .u-bd-none { border: none !important; }
-.u-bd-qeurg { border: 1px solid var(--color-warn, #f59e0b) !important; }
-.u-bd-qj328 { border: 1px solid color-mix(in srgb, var(--danger, #dc2626) 32%, transparent) !important; }
-.u-bd-qpvg4 { border: 1px solid var(--color-warn-alpha, var(--border)) !important; }
-.u-bg-13a26 { background: var(--color-info-dark, var(--color-navy)) !important; }
-.u-bg-1h5y7 { background: var(--border-light,rgba(0,0,0,.08)) !important; }
+.u-bd-qeurg { border: 1px solid var(--color-warn) !important; }
+.u-bd-qj328 { border: 1px solid color-mix(in srgb, var(--danger) 32%, transparent) !important; }
+.u-bd-qpvg4 { border: 1px solid var(--color-warn-alpha) !important; }
+.u-bg-13a26 { background: var(--color-info-dark) !important; }
+.u-bg-1h5y7 { background: var(--border-light) !important; }
 .u-bg-accent { background: var(--accent) !important; }
 .u-bg-accent-light { background: var(--accent-light) !important; }
-.u-bg-b3bq4 { background: color-mix(in srgb, var(--danger, #dc2626) 12%, transparent) !important; }
+.u-bg-b3bq4 { background: color-mix(in srgb, var(--danger) 12%, transparent) !important; }
 .u-bg-badge-pp { background: var(--badge-pp) !important; }
 .u-bg-bg { background: var(--bg) !important; }
 .u-bg-bg-card { background: var(--bg-card) !important; }
@@ -4257,7 +4261,7 @@ table td.lb-col-divider {
 .u-bg-color-good-dark { background: var(--color-good-dark) !important; }
 .u-bg-color-warn { background: var(--color-warn) !important; }
 .u-bg-color-warn-vivid { background: var(--color-warn-vivid) !important; }
-.u-bg-jqabh { background: var(--bg-info-subtle, rgba(59,130,246,0.02)) !important; }
+.u-bg-jqabh { background: var(--bg-info-subtle) !important; }
 .u-bg-medal-bronze-bg { background: var(--medal-bronze-bg) !important; }
 .u-bg-medal-gold-bg { background: var(--medal-gold-bg) !important; }
 .u-bg-medal-silver-bg { background: var(--medal-silver-bg) !important; }
@@ -4276,19 +4280,19 @@ table td.lb-col-divider {
 .u-bg-text-3 { background: var(--text-3) !important; }
 .u-bg-text-muted { background: var(--text-muted) !important; }
 .u-bg-transparent { background: transparent !important; }
-.u-bg-var-badge-pp-0e7490 { background: var(--badge-pp, #0e7490) !important; }
-.u-bg-var-bg-card-bg { background: var(--bg-card, var(--bg)) !important; }
-.u-bg-var-bg-code-rgba-0-0-0-0_06 { background: var(--bg-code, rgba(0,0,0,0.06)) !important; }
-.u-bg-var-bg-danger-subtle-fecaca { background: var(--bg-danger-subtle, #fecaca) !important; }
-.u-bg-var-bg-hover-rgba-0-0-0-0_06 { background: var(--bg-hover, rgba(0,0,0,0.06)) !important; }
-.u-bg-var-bg-muted-e5e7eb { background: var(--bg-muted, #e5e7eb) !important; }
-.u-bg-var-bg-muted-f5f5f5 { background: var(--bg-muted, #f5f5f5) !important; }
-.u-bg-var-bg-muted-fff7e6 { background: var(--bg-muted, #fff7e6) !important; }
-.u-bg-var-bg-success-subtle-ecfdf5 { background: var(--bg-success-subtle, #ecfdf5) !important; }
-.u-bg-var-bg-warn-orange-fff7ed { background: var(--bg-warn-orange, #fff7ed) !important; }
-.u-bg-var-bg-warn-subtle-bg-warn { background: var(--bg-warn-subtle, var(--bg-warn)) !important; }
-.u-bg-var-bg-warn-subtle-fef3c7 { background: var(--bg-warn-subtle, #fef3c7) !important; }
-.u-bg-var-score-eagle-f59e0b { background: var(--score-eagle, #f59e0b) !important; }
+.u-bg-var-badge-pp-0e7490 { background: var(--badge-pp) !important; }
+.u-bg-var-bg-card-bg { background: var(--bg-card) !important; }
+.u-bg-var-bg-code-rgba-0-0-0-0_06 { background: var(--bg-code) !important; }
+.u-bg-var-bg-danger-subtle-fecaca { background: var(--bg-danger-subtle) !important; }
+.u-bg-var-bg-hover-rgba-0-0-0-0_06 { background: var(--bg-hover) !important; }
+.u-bg-var-bg-muted-e5e7eb { background: var(--bg-muted) !important; }
+.u-bg-var-bg-muted-f5f5f5 { background: var(--bg-muted) !important; }
+.u-bg-var-bg-muted-fff7e6 { background: var(--bg-muted) !important; }
+.u-bg-var-bg-success-subtle-ecfdf5 { background: var(--bg-success-subtle) !important; }
+.u-bg-var-bg-warn-orange-fff7ed { background: var(--bg-warn-orange) !important; }
+.u-bg-var-bg-warn-subtle-bg-warn { background: var(--bg-warn-subtle) !important; }
+.u-bg-var-bg-warn-subtle-fef3c7 { background: var(--bg-warn-subtle) !important; }
+.u-bg-var-score-eagle-f59e0b { background: var(--score-eagle) !important; }
 .u-bl-1px-solid-border-light { border-left: 1px solid var(--border-light) !important; }
 .u-bl-3px-solid-accent { border-left: 3px solid var(--accent) !important; }
 .u-bl-3px-solid-border-light { border-left: 3px solid var(--border-light) !important; }
@@ -4325,9 +4329,8 @@ table td.lb-col-divider {
 .u-bt-1px-solid-border-light { border-top: 1px solid var(--border-light) !important; }
 .u-bt-2px-dashed-color-good-dark { border-top: 2px dashed var(--color-good-dark) !important; }
 .u-bt-2px-solid-border { border-top: 2px solid var(--border) !important; }
-.u-bt-gwkbz { border-top: 1px solid var(--border-light, var(--border)) !important; }
-.u-c-1b214 { color: var(--color-warn-dark, var(--color-warn-dark)) !important; }
-.u-c-525252 { color: #525252 !important; }
+.u-bt-gwkbz { border-top: 1px solid var(--border-light) !important; }
+.u-c-1b214 { color: var(--color-warn-dark) !important; }
 .u-c-accent { color: var(--accent) !important; }
 .u-c-accent-text { color: var(--accent-text) !important; }
 .u-c-heat-good-mid { color: var(--heat-good-mid) !important; }
@@ -4346,7 +4349,7 @@ table td.lb-col-divider {
 .u-c-color-success { color: var(--color-success) !important; }
 .u-c-color-warn-dark { color: var(--color-warn-dark) !important; }
 .u-c-color-warn-vivid { color: var(--color-warn-vivid) !important; }
-.u-c-fff { color: #fff !important; }
+.u-c-fff { color: var(--text-on-color) !important; }
 .u-c-good-dark { color: var(--good-dark) !important; }
 .u-c-inherit { color: inherit !important; }
 .u-c-medal-bronze-fg { color: var(--medal-bronze-fg) !important; }
@@ -4364,14 +4367,14 @@ table td.lb-col-divider {
 .u-c-text-3 { color: var(--text-3) !important; }
 .u-c-text-4 { color: var(--text-4) !important; }
 .u-c-text-muted { color: var(--text-muted) !important; }
-.u-c-var-color-danger-dark-991b1b { color: var(--color-danger-dark, #991b1b) !important; }
-.u-c-var-color-info-dark-1e3a8a { color: var(--color-info-dark, #1e3a8a) !important; }
-.u-c-var-color-info-dark-color-navy { color: var(--color-info-dark, var(--color-navy)) !important; }
-.u-c-var-color-orange-deep-c2410c { color: var(--color-orange-deep, #c2410c) !important; }
-.u-c-var-color-warn-e07b00 { color: var(--color-warn, #e07b00) !important; }
-.u-c-var-danger-dc2626 { color: var(--danger, #dc2626) !important; }
-.u-c-var-text-1-1f2937 { color: var(--text-1, #1f2937) !important; }
-.u-c-var-text-3-6b7280 { color: var(--text-3, #6b7280) !important; }
+.u-c-var-color-danger-dark-991b1b { color: var(--color-danger-dark) !important; }
+.u-c-var-color-info-dark-1e3a8a { color: var(--color-info-dark) !important; }
+.u-c-var-color-info-dark-color-navy { color: var(--color-info-dark) !important; }
+.u-c-var-color-orange-deep-c2410c { color: var(--color-orange-deep) !important; }
+.u-c-var-color-warn-e07b00 { color: var(--color-warn) !important; }
+.u-c-var-danger-dc2626 { color: var(--danger) !important; }
+.u-c-var-text-1-1f2937 { color: var(--text-1) !important; }
+.u-c-var-text-3-6b7280 { color: var(--text-3) !important; }
 .u-column-gap-6px { column-gap: 6px !important; }
 .u-column-gap-8px { column-gap: 8px !important; }
 .u-cur-default { cursor: default !important; }
@@ -4422,8 +4425,8 @@ table td.lb-col-divider {
 .u-fs-fs-24 { font-size: var(--fs-24) !important; }
 .u-fs-fs-8 { font-size: var(--fs-8) !important; }
 .u-fs-fs-9 { font-size: var(--fs-9) !important; }
-.u-fs-var-fs-13-13px { font-size: var(--fs-13, 13px) !important; }
-.u-fs-var-fs-15-15px { font-size: var(--fs-15, 15px) !important; }
+.u-fs-var-fs-13-13px { font-size: var(--fs-13) !important; }
+.u-fs-var-fs-15-15px { font-size: var(--fs-15) !important; }
 .u-fsh-0 { flex-shrink: 0 !important; }
 .u-fst-italic { font-style: italic !important; }
 .u-fvn-tabular-nums { font-variant-numeric: tabular-nums !important; }
@@ -4913,9 +4916,9 @@ table td.lb-col-divider {
 .u-bg-badge-pp-alpha { background: var(--badge-pp-alpha) !important; }
 .u-m-10px-16px-0 { margin: 10px 16px 0 !important; }
 .u-bg-bg-info-subtle { background: var(--bg-info-subtle) !important; }
-.u-border-color-var-border-info-93c5fd { border-color: var(--border-info, #93c5fd) !important; }
+.u-border-color-var-border-info-93c5fd { border-color: var(--border-info) !important; }
 .u-w-34pc { width: 34% !important; }
 .u-p-7px-8px { padding: 7px 8px !important; }
 .u-z-z-float { z-index: var(--z-float) !important; }
-.u-bg-var-bg-info-subtle-bg-info { background: var(--bg-info-subtle,var(--bg-info)) !important; }
+.u-bg-var-bg-info-subtle-bg-info { background: var(--bg-info-subtle) !important; }
 .u-fl-1-1-60px { flex: 1 1 60px !important; }

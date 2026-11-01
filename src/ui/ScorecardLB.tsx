@@ -700,7 +700,7 @@ export function ScorecardLB({
                 const dob = fmtDobPt((p as any).dob);
                 return (
                   <span className="p p-sm" title={dob ? `Nascido a ${dob}` : undefined}
-                    style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent", cursor: dob ? "help" : undefined }}>{age}a</span>
+                    style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent", cursor: dob ? "help" : undefined }}>{age}a</span>
                 );
               })()}
             </td>

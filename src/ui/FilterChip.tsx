@@ -30,7 +30,7 @@ export default function FilterChip({ active, onClick, color, children }: FilterC
         borderRadius: "var(--radius-pill)",
         border: `1px solid ${active ? accent : "var(--border)"}`,
         background: active ? accent : "var(--bg-hover)",
-        color: active ? "#fff" : "var(--text-muted)",
+        color: active ? "var(--text-on-color)" : "var(--text-muted)",
         cursor: "pointer",
         whiteSpace: "nowrap",
         fontWeight: active ? 700 : 500,

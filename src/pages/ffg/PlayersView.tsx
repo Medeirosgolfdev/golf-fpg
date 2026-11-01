@@ -401,7 +401,7 @@ export function FFGPlayersView() {
                         </td>
                       )}
                       {has.tot && <td style={{ textAlign: "right", color: r._tot ? undefined : "var(--text-muted)" }}>{r._tot || "—"}</td>}
-                      {has.tot && <td style={{ textAlign: "right", color: r._ano ? "var(--color-good-dark, #166534)" : "var(--text-muted)", fontWeight: r._ano ? 600 : undefined }}>{r._ano || "—"}</td>}
+                      {has.tot && <td style={{ textAlign: "right", color: r._ano ? "var(--color-good-dark)" : "var(--text-muted)", fontWeight: r._ano ? 600 : undefined }}>{r._ano || "—"}</td>}
                       {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{r.hcpDate ? isoToBr(r.hcpDate) : MUTED}</td>}
                     </tr>
                     {isOpen && (

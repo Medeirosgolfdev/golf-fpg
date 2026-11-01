@@ -255,7 +255,7 @@ function FFGShellContent() {
       routeBase: "/ffg",
       title: "🇫🇷 France",
       color: "var(--color-ffg-dark)",
-      textColor: "#fff",
+      textColor: "var(--text-on-color)",
       // Agrupar só por ANO, não por série: um torneio é um torneio, e a fonte
       // de onde o extraímos é um detalhe nosso, não uma divisão do calendário.
       // Separado por série, o punhado de eventos GolfGenius ficava debaixo de

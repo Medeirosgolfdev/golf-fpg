@@ -303,7 +303,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                             margin: isM ? "2px -14px" : "0",
                             borderRadius: isM ? 5 : 0,
                             background: isM ? "var(--accent)" : "transparent",
-                            color: isM ? "#fff" : j.pais === "PT" ? "var(--accent)" : "var(--text)",
+                            color: isM ? "var(--text-on-color)" : j.pais === "PT" ? "var(--accent)" : "var(--text)",
                           }}>
                             <span className="u-d-flex u-ai-center u-gap-2px">
                               {isM ? "★ " : ""}{displayName(j.nome)}
@@ -315,7 +315,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                                 // Degradê: 0d=100%, 10d=60%, 25d=20%
                                 const pct = d <= 10 ? Math.round(100 - d * 4) : Math.round(60 - (d - 10) * 2.7);
                                 const bg = `color-mix(in srgb, var(--score-eagle) ${pct}%, transparent)`;
-                                const fg = pct >= 60 ? "#fff" : "var(--text-2)";
+                                const fg = pct >= 60 ? "var(--text-on-color)" : "var(--text-2)";
                                 return <span className="fs-10 fw-700" style={{
                                   background: bg, color: fg,
                                   border: pct < 60 ? "1px solid color-mix(in srgb, var(--score-eagle) 40%, transparent)" : "none",

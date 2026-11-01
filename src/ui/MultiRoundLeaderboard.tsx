@@ -468,7 +468,7 @@ export function MultiRoundLeaderboard({
                 : undefined;
               const stickyBg = row.isHighlighted ? "var(--bg-manuel-sticky)"
                 : (isInc || isWD) ? "var(--bg-hover)"
-                : "var(--bg-card,#fff)";
+                : "var(--bg-card)";
 
               // Manuel toma precedência sobre Portuguese (só uma classe é aplicada).
               const rowCls = row.isHighlighted ? "row-manuel" : (row.isPortuguese ? "row-portuguese" : undefined);

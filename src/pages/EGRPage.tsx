@@ -33,6 +33,7 @@ import {
 } from "../ui/ranking/RankingPage";
 import { buildEgrEntries } from "./egr/egrCircuit";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
+import { C } from "../utils/colors";
 
 const EGR_SITE = "https://www.europeangolfrankings.com";
 const PLAYER_EVENTS_URL = "/data/egr/egr-player-events.json";
@@ -92,10 +93,10 @@ const CFG: RankingPageConfig<EgrRanking, Parameters<typeof buildEgrEntries>[0][n
   buildEntries: buildEgrEntries,
   shell: {
     title: "🇪🇺 European Golf Rankings",
-    color: "#1e3a8a",
-    textColor: "#fff",
+    color: C.circuit.egr,
+    textColor: "var(--text-on-color)",
     grouping: "year",
-    sourceColors: { egr: "#1e40af" },
+    sourceColors: { egr: C.circuit.egrSrc },
     sourceLabels: { egr: "EGR" },
     filters: { search: true, year: true, escalao: true, sex: true, intl: true, toggles: ["pt", "top10", "veteranos"] },
     // «Edições anteriores» (20/10/2026): a mesma prova noutros anos, pelo nome sem
@@ -152,7 +153,7 @@ const EVENT_COLS: RankingCol<EgrEvent>[] = [
   { key: "rounds", label: "Rondas", title: "Rondas", className: "tight", cell: (e) => e.rounds.join("·") || "—", tdStyle: { color: "var(--text-muted)" } },
   { key: "total", label: "Total", className: "num", sort: (e) => e.total ?? 1e9, firstDir: "asc", cell: (e) => e.total ?? "—" },
   { key: "toPar", label: "±Par", title: "To par (total − par×rondas)", className: "num", sort: (e) => toPar(e.total, e.par, e.rounds.length) ?? 1e9, firstDir: "asc",
-    cell: (e) => { const tp = toPar(e.total, e.par, e.rounds.length); return <span style={{ color: tp != null && tp < 0 ? "var(--score-birdie, #dc2626)" : undefined }}>{fmtToPar(tp, "")}</span>; } },
+    cell: (e) => { const tp = toPar(e.total, e.par, e.rounds.length); return <span style={{ color: tp != null && tp < 0 ? "var(--score-birdie)" : undefined }}>{fmtToPar(tp, "")}</span>; } },
   { key: "points", label: "Pts", title: "Pontos EGR", className: "num", sort: (e) => e.egrPoints ?? -1, cell: (e) => num(e.egrPoints, 0), tdStyle: { color: "var(--text-muted)" } },
 ];
 

@@ -54,7 +54,7 @@ export default function HcpSparkline({ points, width = 80, height = 20, playerNa
   const last = sorted[sorted.length - 1];
   const first = sorted[0];
   const delta = last.hcpExact - first.hcpExact;
-  const trendColor = delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--danger, var(--color-danger))" : "var(--text-3, #6b7280)";
+  const trendColor = delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--color-danger)" : "var(--text-3)";
 
   return (
     <>

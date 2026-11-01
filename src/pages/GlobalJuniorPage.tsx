@@ -26,7 +26,7 @@ const GJGL_CONFIG: CircuitConfig = {
   routeBase: "/global-junior",
   title: "🏌️ Global Junior",
   color: "var(--color-good-dark)",
-  textColor: "#fff",
+  textColor: "var(--text-on-color)",
   grouping: "year",
   filters: { search: true, year: true, toggles: ["manuel", "pt", "top10"] },
   // "Edições anteriores": família pelo nome (sem bandeira/ano) — agrupa a mesma

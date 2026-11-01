@@ -118,13 +118,13 @@ export const FEDERADO_FIELD_DESCRIPTIONS: Record<string, string> = {
    Cada valor vira pill apropriado ao tipo de campo.
    ──────────────────────────────────────────────────────────────── */
 const STATUS_GOOD_PILL: React.CSSProperties = {
-  background: "var(--color-good)", color: "#fff", borderColor: "transparent",
+  background: "var(--color-good)", color: "var(--text-on-color)", borderColor: "transparent",
 };
 const STATUS_WARN_PILL: React.CSSProperties = {
-  background: "var(--color-warn)", color: "#fff", borderColor: "transparent",
+  background: "var(--color-warn)", color: "var(--text-on-color)", borderColor: "transparent",
 };
 const STATUS_DANGER_PILL: React.CSSProperties = {
-  background: "var(--color-danger)", color: "#fff", borderColor: "transparent",
+  background: "var(--color-danger)", color: "var(--text-on-color)", borderColor: "transparent",
 };
 
 export function normalizeAgeLabel(s: string): string {
