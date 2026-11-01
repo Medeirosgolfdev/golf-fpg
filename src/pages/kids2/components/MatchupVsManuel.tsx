@@ -8,7 +8,6 @@
  * preferindo ±par (robusto a WD/menos rondas), e KPIs de médias de posição.
  */
 
-import React from "react";
 import type { CanonicalData, Junior, Flight, Result, Tournament } from "../data";
 import { getSharedTournamentIds } from "../data";
 import { useSort } from "../../../hooks/useSort";
@@ -16,6 +15,7 @@ import SortableHdr from "../../../ui/SortableHdr";
 import KpiCard from "../../../ui/KpiCard";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { MONTHS_PT, fmtToPar } from "../../../utils/format";
+import { medalClass } from "../../../ui/PosBadge";
 
 type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff" | "result";
 
@@ -147,12 +147,12 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
             <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
             <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
             <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Escalão</SortableHdr>
-            <SortableHdr k="jGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>{firstName}</SortableHdr>
-            <SortableHdr k="jPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Pos</SortableHdr>
-            <SortableHdr k="mGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thManuel, textAlign: "right" }}>Manuel</SortableHdr>
-            <SortableHdr k="mPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thManuel, textAlign: "center" }}>Pos</SortableHdr>
-            <SortableHdr k="diff" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>Dif.</SortableHdr>
-            <SortableHdr k="result" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>Resultado</SortableHdr>
+            <SortableHdr k="jGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-right">{firstName}</SortableHdr>
+            <SortableHdr k="jPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-center">Pos</SortableHdr>
+            <SortableHdr k="mGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="col-manuel-th u-ta-right">Manuel</SortableHdr>
+            <SortableHdr k="mPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="col-manuel-th u-ta-center">Pos</SortableHdr>
+            <SortableHdr k="diff" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-right">Dif.</SortableHdr>
+            <SortableHdr k="result" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-right">Resultado</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -173,16 +173,15 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
                 <ToParTag tp={r.rJ.toPar} />
               </td>
               <td className="u-ta-center"><PosTrophy pos={r.rJ.pos} /></td>
-              <td style={{ ...tdManuel, textAlign: "right" }}>
+              <td className="col-manuel u-ta-right">
                 <RoundsCell result={r.rM} />
                 <ToParTag tp={r.rM.toPar} />
               </td>
-              <td style={{ ...tdManuel, textAlign: "center" }}><PosTrophy pos={r.rM.pos} /></td>
-              <td style={{ textAlign: "right", fontWeight: 700, color: r.diff != null ? (tpColor(r.diff) ?? "var(--text-3)") : "var(--text-3)" }}>
+              <td className="col-manuel u-ta-center"><PosTrophy pos={r.rM.pos} /></td>
+              <td className="u-ta-right u-fw-700" style={{ color: r.diff != null ? (tpColor(r.diff) ?? "var(--text-3)") : "var(--text-3)" }}>
                 {r.diff != null ? fmtDiff(r.diff) : "—"}
               </td>
-              <td style={{
-                textAlign: "right", fontWeight: 700, fontSize: "var(--fs-11)",
+              <td className="u-ta-right u-fw-700 u-fs-fs-11" style={{
                 color: r.outcome === -1 ? "var(--color-good-dark)" : r.outcome === 1 ? "var(--color-danger-vivid)" : "var(--text-3)",
               }}>
                 {r.outcome === -1 ? `${firstName} venceu` : r.outcome === 1 ? "Manuel venceu" : r.outcome === 0 ? "empate" : "—"}
@@ -200,8 +199,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
 // Definida em tokens.css: --bg-success-subtle (#d1fae5) e --bg-manuel-sticky
 // (#c3f5dc, ligeiramente mais escuro para colunas).
 // Mesma cor usada nas linhas vs-Manuel do ResultsTimeline.
-const thManuel: React.CSSProperties = { background: "color-mix(in srgb, var(--bg-manuel-sticky) 35%, transparent)" };
-const tdManuel: React.CSSProperties = { background: "color-mix(in srgb, var(--bg-success-subtle) 35%, transparent)" };
+// → classes .col-manuel-th / .col-manuel (App.css).
 
 /** Adaptador fino → definição única KpiCard. */
 function Stat({ value, label }: { value: string; label: string }) {
@@ -211,7 +209,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 function ToParTag({ tp }: { tp: number | null | undefined }) {
   if (tp == null) return null;
   return (
-    <span style={{ fontSize: "var(--fs-10)", marginLeft: 4, color: tp <= 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>
+    <span className="u-fs-fs-10 u-ml-4px" style={{ color: tp <= 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>
       ({fmtToPar(tp)})
     </span>
   );
@@ -237,9 +235,7 @@ function RoundsCell({ result }: { result: Result }) {
 function PosTrophy({ pos }: { pos: number | null | undefined }) {
   if (typeof pos !== "number") return <span className="u-c-text-3">—</span>;
   if (pos <= 3) {
-    const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
-    const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";
-    return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 6px", borderRadius: "var(--radius-sm)", fontSize: "var(--fs-11)" }}>🏆 #{pos}</span>;
+    return <span className={"pos-medal pos-medal-sm u-fs-fs-11 " + medalClass(pos)}>🏆 #{pos}</span>;
   }
   return <span>#{pos}</span>;
 }

@@ -2389,6 +2389,31 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cor-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; vertical-align: middle; }
 .cor-dot.cor-dot-9 { width: 9px; height: 9px; }
 .cor-dot.cor-dot-10 { width: 10px; height: 10px; }
+/* Selo da posição no pódio (🏆 #1 / 🥇 1º). -sm: dentro de pills e tabelas compactas. */
+.pos-medal { display: inline-block; padding: 2px 6px; border-radius: var(--radius-sm); font-weight: 700;
+  font-size: var(--fs-11); white-space: nowrap; }
+.pos-medal.pos-medal-sm { padding: 1px 5px; font-size: var(--fs-10); }
+.pos-medal-1 { background: var(--medal-gold-bg); color: var(--medal-gold-fg); }
+.pos-medal-2 { background: var(--medal-silver-bg); color: var(--medal-silver-fg); }
+.pos-medal-3 { background: var(--medal-bronze-bg); color: var(--medal-bronze-fg); }
+.pos-medal-n { background: var(--bg-muted); color: var(--text-2); }
+/* Etiqueta SCRATCH / HCP das provas RFEG (Kids 2). */
+.scoring-tag { font-size: var(--fs-9); padding: 1px 5px; border-radius: var(--radius-sm); font-weight: 700;
+  line-height: 1.4; flex-shrink: 0; border: 1px solid; }
+.scoring-tag.scratch { background: var(--bg-warn-subtle); color: var(--color-warn-dark); border-color: var(--color-warn-dark); }
+.scoring-tag.hcp { background: var(--bg-info-subtle); color: var(--color-info-dark); border-color: var(--color-info-dark); }
+/* Link para a fonte de um torneio (USKids, FPG, RFEG…). A cor vem da fonte: style={{ color, borderColor }}. */
+.src-link-tag { font-size: var(--fs-9); padding: 1px 5px; border-radius: var(--radius-sm); font-weight: 700;
+  border: 1px solid; text-decoration: none; line-height: 1.4; background: var(--bg); white-space: nowrap; }
+/* Colunas do Manuel nas tabelas de confronto (Kids 2). */
+.dtable .col-manuel-th { background: color-mix(in srgb, var(--bg-manuel-sticky) 35%, transparent); }
+.dtable .col-manuel { background: color-mix(in srgb, var(--bg-success-subtle) 35%, transparent); }
+/* Cabeçalho abre/fecha de uma série de torneios (Kids 2, Histórico por torneio). */
+.series-hdr { display: flex; align-items: center; padding: 8px 12px; gap: 10px; cursor: pointer; }
+.series-hdr.open { background: var(--bg-muted); border-bottom: 1px solid var(--border-light); }
+/* Pill de tendência da série (a cor vem da tendência: style={{ background, color, borderColor }}). */
+.trend-pill { font-size: var(--fs-10); padding: 2px 8px; border-radius: var(--radius-lg); font-weight: 700;
+  border: 1px solid; white-space: nowrap; flex-shrink: 0; }
 /* Cabeçalho abre/fecha dos grupos de torneios (Draws do jogador). */
 .draws-grupo-hdr { width: 100%; display: flex; align-items: center; gap: 8px; padding: 8px 12px;
   background: var(--bg-header); border: none; cursor: pointer; text-align: left;
@@ -5338,6 +5363,7 @@ table td.lb-col-divider {
 .u-w-44px { width: 44px !important; }
 .u-w-46px { width: 46px !important; }
 .u-w-50px { width: 50px !important; }
+.u-w-56px { width: 56px !important; }
 .u-w-52px { width: 52px !important; }
 .u-w-54px { width: 54px !important; }
 .u-w-60px { width: 60px !important; }

@@ -18,6 +18,7 @@ import { getTournWeight, formatStars } from "../tournWeight";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar } from "../../../utils/format";
+import { medalClass } from "../../../ui/PosBadge";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -211,15 +212,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
     <div className="u-bg-bg u-bd-1px-solid-border u-br-radius u-ov-hidden">
       <div
         onClick={() => setExpanded(!expanded)}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          padding: "8px 12px",
-          gap: 10,
-          cursor: "pointer",
-          background: expanded ? "var(--bg-muted)" : "transparent",
-          borderBottom: expanded ? "1px solid var(--border-light)" : "none",
-        }}
+        className={"series-hdr" + (expanded ? " open" : "")}
       >
         <span className="u-fs-fs-11 u-c-text-3 u-fsh-0 u-w-12px">
           {expanded ? "▼" : "▶"}
@@ -251,11 +244,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
           <div className="u-fs-fs-9 u-c-text-3 u-mt-1px">{fmtYear(last?.tournament.date)}</div>
         </div>
         {trend && (
-          <span style={{
-            fontSize: "var(--fs-10)", padding: "2px 7px", borderRadius: "var(--radius-lg)", fontWeight: 700,
-            background: trend.bg, color: trend.fg, border: `1px solid ${trend.fg}`,
-            whiteSpace: "nowrap", flexShrink: 0,
-          }} title={trend.title}>
+          <span className="trend-pill" style={{ background: trend.bg, color: trend.fg, borderColor: trend.fg }} title={trend.title}>
             {trend.icon} {trend.label}
           </span>
         )}
@@ -268,10 +257,10 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
               <tr>
                 <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Ano</SortableHdr>
                 <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Escalão</SortableHdr>
-                <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Pos</SortableHdr>
-                <SortableHdr k="topPct" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }} title="Posição como percentil do field">Top%</SortableHdr>
-                <SortableHdr k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>Rondas</SortableHdr>
-                <SortableHdr k="toPar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>±par</SortableHdr>
+                <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-center">Pos</SortableHdr>
+                <SortableHdr k="topPct" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-center" title="Posição como percentil do field">Top%</SortableHdr>
+                <SortableHdr k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-right">Rondas</SortableHdr>
+                <SortableHdr k="toPar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-ta-right">±par</SortableHdr>
                 {manuel && manuel.id !== editions[0]?.result.juniorId && <th className="u-ta-center u-w-60px" title="Posição do Manuel quando também jogou">M</th>}
                 <th className="u-ta-right">↗</th>
               </tr>
@@ -295,37 +284,33 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                 const links = categorizeTournamentLinks(ed.tournament);
                 return (
                   <tr key={i} className="u-bt-1px-solid-border-light">
-                    <td style={tdC}>{fmtYear(ed.tournament.date)}</td>
-                    <td style={{ ...tdC, color: "var(--text-3)" }}>{ed.flight.label}</td>
-                    <td style={{ ...tdC, textAlign: "center" }}><PosBadge pos={ed.result.pos} /></td>
-                    <td style={{ ...tdC, textAlign: "center", color: topPct != null ? (topPct <= 10 ? "var(--medal-gold-strong)" : topPct <= 25 ? "var(--text-2)" : "var(--text-3)") : "var(--text-3)" }}>
+                    <td>{fmtYear(ed.tournament.date)}</td>
+                    <td className="u-c-text-3">{ed.flight.label}</td>
+                    <td className="u-ta-center"><PosBadge pos={ed.result.pos} /></td>
+                    <td className="u-ta-center" style={{ color: topPct != null ? (topPct <= 10 ? "var(--medal-gold-strong)" : topPct <= 25 ? "var(--text-2)" : "var(--text-3)") : "var(--text-3)" }}>
                       {topPct != null ? `${topPct}%` : "—"}
                     </td>
-                    <td style={{ ...tdC, textAlign: "right" }}>
+                    <td className="u-ta-right">
                       {grosses.length ? grosses.join("·") : total ?? "—"}
                       {total != null && grosses.length > 1 && <span className="u-c-text-3 u-ml-4px">({total})</span>}
                     </td>
-                    <td style={{ ...tdC, textAlign: "right", color: tpColor(toPar) ?? "var(--text-3)", fontWeight: toPar != null && toPar !== 0 ? 700 : 400 }}>
+                    <td className={"u-ta-right " + (toPar != null && toPar !== 0 ? "u-fw-700" : "u-fw-400")} style={{ color: tpColor(toPar) ?? "var(--text-3)" }}>
                       {fmtToPar(toPar)}
                     </td>
                     {manuel && manuel.id !== ed.result.juniorId && (
-                      <td style={{ ...tdC, textAlign: "center" }}>
+                      <td className="u-ta-center">
                         {manuelPos != null ? (
                           <span title={`Manuel ficou em #${manuelPos} neste torneio`} className="u-fs-fs-10 u-p-1px-4px u-br-radius-sm u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-bd-1px-solid-color-good-dark u-ws-nowrap">★M #{manuelPos}</span>
                         ) : <span className="u-c-text-3">—</span>}
                       </td>
                     )}
-                    <td style={{ ...tdC, textAlign: "right" }}>
+                    <td className="u-ta-right">
                       <span className="u-d-inline-flex u-gap-3px u-fwr-nowrap">
                         {links.map((l) => (
                           <a key={l.key + l.url} href={l.url} target="_blank" rel="noreferrer"
                             title={`Abrir em ${l.label}`}
-                            style={{
-                              fontSize: "var(--fs-9)", padding: "1px 4px", borderRadius: 3, fontWeight: 700,
-                              color: `var(${l.colorVar})`, border: `1px solid var(${l.colorVar})`,
-                              textDecoration: "none", lineHeight: 1.3, background: "var(--bg)",
-                              whiteSpace: "nowrap",
-                            }}
+                            className="src-link-tag"
+                            style={{ color: `var(${l.colorVar})`, borderColor: `var(${l.colorVar})` }}
                           >{l.label}</a>
                         ))}
                       </span>
@@ -340,8 +325,6 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
     </div>
   );
 }
-
-const tdC: React.CSSProperties = { padding: "5px 6px", textAlign: "left" };
 
 function Sparkline({ editions }: { editions: Edition[] }) {
   const positions = editions.map((e) => (typeof e.result.pos === "number" ? e.result.pos : null));
@@ -415,22 +398,10 @@ function OneOffPill({ ed }: { ed: Edition }) {
 }
 
 function PosBadge({ pos, small }: { pos: number | null | undefined; small?: boolean }) {
-  if (typeof pos !== "number") return <span style={{ fontSize: small ? 10 : 11, color: "var(--text-3)" }}>—</span>;
-  if (pos <= 3) {
-    const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
-    const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";
-    return (
-      <span style={{
-        background: bg,
-        color: fg,
-        fontWeight: 700,
-        padding: small ? "1px 5px" : "2px 6px",
-        borderRadius: "var(--radius-sm)",
-        fontSize: small ? 10 : 11,
-      }}>🏆 #{pos}</span>
-    );
-  }
-  return <span style={{ fontSize: small ? 10 : 11, color: "var(--text-3)", fontWeight: 600 }}>#{pos}</span>;
+  const fs = small ? "u-fs-fs-10" : "u-fs-fs-11";
+  if (typeof pos !== "number") return <span className={fs + " u-c-text-3"}>—</span>;
+  if (pos <= 3) return <span className={"pos-medal " + medalClass(pos) + (small ? " pos-medal-sm" : "")}>🏆 #{pos}</span>;
+  return <span className={fs + " u-c-text-3 u-fw-600"}>#{pos}</span>;
 }
 
 /** Procura a posição do Manuel APENAS no flight indicado. Devolve null se não
@@ -455,13 +426,8 @@ function SeriesScoringPill({ tournament }: { tournament: Tournament }) {
   if (!st) return null;
   const isScratch = /SCRATCH/i.test(st);
   return (
-    <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"} style={{
-      fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-      background: isScratch ? "var(--bg-warn-subtle, var(--bg-warn))" : "var(--bg-info-subtle, var(--bg-info))",
-      color: isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, var(--color-navy))",
-      border: `1px solid ${isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, var(--color-navy))"}`,
-      lineHeight: 1.4, flexShrink: 0,
-    }}>
+    <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"}
+      className={"scoring-tag " + (isScratch ? "scratch" : "hcp")}>
       {isScratch ? "SCRATCH" : "HCP"}
     </span>
   );

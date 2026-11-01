@@ -15,6 +15,7 @@ import { categorizeTournamentLinks } from "../tournamentLinks";
 import { RoundPill, NineHPill } from "../../../ui/PillBadge";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar, MONTHS_PT } from "../../../utils/format";
+import { medalClass } from "../../../ui/PosBadge";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -158,17 +159,10 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
             return (
               <button
                 key={src}
+                type="button"
                 onClick={() => toggleSource(src)}
-                style={{
-                  fontSize: "var(--fs-11)",
-                  padding: "2px 9px",
-                  borderRadius: "var(--radius-pill)",
-                  border: `1px solid ${active ? "var(--color-info-dark)" : "var(--border-light)"}`,
-                  background: active ? "var(--color-info-dark)" : "var(--bg)",
-                  color: active ? "var(--bg)" : "var(--text-2)",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                }}
+                className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
+                aria-pressed={active}
                 title={`Filtrar: ${SOURCE_LABELS[src] || src}`}
               >
                 {SOURCE_LABELS[src] || src} <span className="u-op-0_7 u-ml-3px">{count}</span>
@@ -177,8 +171,9 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
           })}
           {activeSources.size > 0 && (
             <button
+              type="button"
               onClick={() => setActiveSources(new Set())}
-              className="u-fs-fs-11 u-p-2px-8px u-br-radius-pill u-bd-1px-solid-color-danger-dark u-bg-bg u-c-color-danger-dark u-cur-pointer u-fw-600"
+              className="btn"
               title="Limpar filtros de fonte"
             >
               ✕ limpar
@@ -298,14 +293,14 @@ function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
     <table className="dtable-sm">
       <thead>
         <tr>
-          <SortableHdr<ResKey> k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 56 }}>Data</SortableHdr>
-          <SortableHdr<ResKey> k="type"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 56 }}>Tipo</SortableHdr>
-          <SortableHdr<ResKey> k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 50, textAlign: "center" }}>Pos</SortableHdr>
+          <SortableHdr<ResKey> k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-56px">Data</SortableHdr>
+          <SortableHdr<ResKey> k="type"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-56px">Tipo</SortableHdr>
+          <SortableHdr<ResKey> k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-50px u-ta-center">Pos</SortableHdr>
           <SortableHdr<ResKey> k="name"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
-          <SortableHdr<ResKey> k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 70 }}>Escalão</SortableHdr>
-          <SortableHdr<ResKey> k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 80, textAlign: "right" }}>Rondas</SortableHdr>
-          <SortableHdr<ResKey> k="toPar"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 42, textAlign: "right" }}>±par</SortableHdr>
-          <SortableHdr<ResKey> k="vsM"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 46, textAlign: "right" }}>vs M</SortableHdr>
+          <SortableHdr<ResKey> k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-70px">Escalão</SortableHdr>
+          <SortableHdr<ResKey> k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-80px u-ta-right">Rondas</SortableHdr>
+          <SortableHdr<ResKey> k="toPar"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-42px u-ta-right">±par</SortableHdr>
+          <SortableHdr<ResKey> k="vsM"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-w-46px u-ta-right">vs M</SortableHdr>
         </tr>
       </thead>
       <tbody>
@@ -358,11 +353,8 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
       <td className="u-ta-center">
         <PosBadgeSmall pos={r.result.pos} status={r.result.status} />
         {r.topPct != null && (
-          <div style={{
-            fontSize: "var(--fs-9)", marginTop: 1,
-            color: r.topPct <= 10 ? "var(--medal-gold-strong)" : r.topPct <= 25 ? "var(--text-2)" : "var(--text-3)",
-            fontWeight: r.topPct <= 25 ? 700 : 400,
-          }} title={`Posição como percentil do field (#${r.result.pos}/${r.flight.fieldSize})`}>
+          <div className={"u-fs-fs-9 u-mt-1px " + (r.topPct <= 25 ? "u-fw-700" : "u-fw-400")}
+            style={{ color: r.topPct <= 10 ? "var(--medal-gold-strong)" : r.topPct <= 25 ? "var(--text-2)" : "var(--text-3)" }} title={`Posição como percentil do field (#${r.result.pos}/${r.flight.fieldSize})`}>
             top {r.topPct}%
           </div>
         )}
@@ -399,13 +391,8 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
               target="_blank"
               rel="noreferrer"
               title={`Abrir em ${l.label}`}
-              style={{
-                fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-                background: "var(--bg)", color: `var(${l.colorVar})`,
-                border: `1px solid var(${l.colorVar})`,
-                textDecoration: "none", lineHeight: 1.4,
-                whiteSpace: "nowrap",
-              }}
+              className="src-link-tag"
+              style={{ color: `var(${l.colorVar})`, borderColor: `var(${l.colorVar})` }}
             >
               {l.label} ↗
             </a>
@@ -448,7 +435,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           })
         ) : (total ?? "—")}
       </td>
-      <td style={{ textAlign: "right", color: tpColor(toPar) ?? "var(--text-3)", fontWeight: toPar != null && toPar < 0 ? 700 : 400 }}>
+      <td className={"u-ta-right " + (toPar != null && toPar < 0 ? "u-fw-700" : "u-fw-400")} style={{ color: tpColor(toPar) ?? "var(--text-3)" }}>
         {fmtToPar(toPar)}
       </td>
       <td className="u-ta-right">
@@ -479,9 +466,7 @@ function PosBadgeSmall({ pos, status }: { pos: number | null | undefined; status
     return <span className="u-c-text-3">—</span>;
   }
   if (pos <= 3) {
-    const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
-    const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";
-    return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #{pos}</span>;
+    return <span className={"pos-medal pos-medal-sm " + medalClass(pos)}>🏆 #{pos}</span>;
   }
   // Não-finalista com posição real: mostra "#45" (posição na leaderboard) em vez
   // de "CUT". O número fica IDÊNTICO ao das outras linhas (mesmo tamanho); o
@@ -518,13 +503,8 @@ function ScoringPill({ tournament, flight }: { tournament: Tournament; flight: F
   const isScratch = /SCRATCH/i.test(st);
   void flight; // reservado para futuras heurísticas (flight-level override)
   return (
-    <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"} style={{
-      fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-      background: isScratch ? "var(--bg-warn-subtle, var(--bg-warn))" : "var(--bg-info-subtle, #eff6ff)",
-      color: isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, #1e3a8a)",
-      border: `1px solid ${isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, #1e3a8a)"}`,
-      lineHeight: 1.4,
-    }}>
+    <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"}
+      className={"scoring-tag " + (isScratch ? "scratch" : "hcp")}>
       {isScratch ? "SCRATCH" : "HCP"}
     </span>
   );

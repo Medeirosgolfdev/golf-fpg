@@ -1,19 +1,12 @@
+/** Classe de cor do selo de posição (.pos-medal-1/2/3; -n fora do pódio). */
+export function medalClass(pos: number): string {
+  return pos >= 1 && pos <= 3 ? "pos-medal-" + pos : "pos-medal-n";
+}
+
 /** Badge de posição com medalha no pódio (1º/2º/3º) e cor neutra no resto.
- *  Partilhado por AtletaSearchPanel e SantoDaSerraPanel. */
+ *  Partilhado por AtletaSearchPanel e SantoDaSerraPanel; o Kids 2 usa as
+ *  mesmas classes (.pos-medal) com o rótulo «🏆 #N». */
 export default function PosBadge({ pos }: { pos: number }) {
-  const styles: Record<number, { bg: string; fg: string; label: string }> = {
-    1: { bg: "var(--medal-gold-bg, #fef3c7)", fg: "var(--medal-gold-fg, var(--color-warn-dark))", label: "🥇 1º" },
-    2: { bg: "var(--medal-silver-bg, #f1f5f9)", fg: "var(--medal-silver-fg, #475569)", label: "🥈 2º" },
-    3: { bg: "var(--medal-bronze-bg, #fdf2e9)", fg: "var(--medal-bronze-fg, #9a3412)", label: "🥉 3º" },
-  };
-  const s = styles[pos] || { bg: "var(--bg-muted)", fg: "var(--text-2)", label: pos + "º" };
-  return (
-    <span style={{
-      display: "inline-block", padding: "2px 6px", borderRadius: "var(--radius-sm)",
-      background: s.bg, color: s.fg, fontWeight: 700, fontSize: "var(--fs-11)",
-      whiteSpace: "nowrap", letterSpacing: 0.2,
-    }}>
-      {s.label}
-    </span>
-  );
+  const label = pos === 1 ? "🥇 1º" : pos === 2 ? "🥈 2º" : pos === 3 ? "🥉 3º" : pos + "º";
+  return <span className={"pos-medal " + medalClass(pos)}>{label}</span>;
 }
