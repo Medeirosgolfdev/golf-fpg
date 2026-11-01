@@ -210,7 +210,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   `FilterPillRow`; escolha única → `TabRow`; filtro liga/desliga → pill
   `.tourn-tab tourn-tab-sm` (+ `active`; desligada SEMPRE cinzenta, ligada SEMPRE verde `--accent`, regra
   global — decisão dela, 31/10/2026); botão de acção → `.btn` (`.btn-link`,
-  `.btn-round` para ‹ ›), nunca uma pill de filtro; KPIs → `KpiCard` numa `.kpi-row`;
+  `.btn-round` para ‹ ›), nunca uma pill de filtro; paginação → `ui/Pager`; espaçamento, letra e cantos no `App.css` sempre com `var(--space-*)`/`--fs-*`/`--radius-*` (só ficam em px os redondos, os negativos e o bloco de impressão); KPIs → `KpiCard` numa `.kpi-row`;
   cartão de buracos → `ScorecardTable` ou a grelha `.sc-table-modern`/`.sc-table-ec`
   + `.sc-grid`; tabela simples → `.dtable` (o aspecto vive no «MODELO ÚNICO DAS
   TABELAS», fim do `App.css`); só totais → `TotalsResumo`; lista +
