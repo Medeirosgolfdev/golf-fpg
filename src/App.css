@@ -340,7 +340,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
   white-space: nowrap;
 }
 /* Separador-link (TabRow com href) e fonte que falhou a carregar. */
-a.seg-btn { text-decoration: none; }
+a.seg-btn, a.tab-under { text-decoration: none; }
 .segmented-toggle .seg-btn.is-warn { background: var(--color-warn-vivid); color: var(--text-on-color); }
 .segmented-toggle .seg-btn + .seg-btn {
   border-left: none;
