@@ -10,6 +10,8 @@ import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes"
 import { intlScorecardOptions } from "../intlScorecard";
 import { buildFPGTournament, parOrNone, type IntlPlayerIn } from "../intlTournament";
 import { escalaoCanon } from "../model/escalao";
+import type { TotalsExtraCol } from "../model/types";
+import { flagOrEmpty } from "../../utils/flagUtils";
 import type { FgProva } from "./types";
 
 /** «D'ADDABBO» → «D'Addabbo», «BIANCHI FEDRIGONI» → «Bianchi Fedrigoni»,
@@ -28,6 +30,28 @@ export function fgNome(nome: string): string {
 }
 
 export const fgClube = (clube: string | null | undefined): string => (clube ? fgTitulo(clube) : "");
+
+/** Nos estrangeiros a Federgolf põe o país no lugar do clube, com códigos
+ *  próprios (SWI, DAN, SLK, IRE, SCO…). Código → ISO-2; um clube italiano → null. */
+const PAIS: Record<string, string> = {
+  FRA: "FR", RSA: "ZA", NED: "NL", ENG: "GB-ENG", SCO: "GB-SCT", WAL: "GB-WLS", IRE: "IE", BEL: "BE",
+  SWE: "SE", FIN: "FI", AUT: "AT", CZE: "CZ", SWI: "CH", SUI: "CH", NOR: "NO", POL: "PL", DAN: "DK",
+  DEN: "DK", EST: "EE", SLK: "SK", SVK: "SK", GER: "DE", LIT: "LT", LTU: "LT", CRO: "HR", POR: "PT",
+  ESP: "ES", SPA: "ES", USA: "US", GBR: "GB", HUN: "HU", SLO: "SI", LAT: "LV", ISL: "IS", LUX: "LU",
+  MON: "MC", SMR: "SM", MLT: "MT", GRE: "GR", TUR: "TR", UKR: "UA", ROU: "RO", BUL: "BG", SRB: "RS",
+  ISR: "IL", MEX: "MX", CAN: "CA", BRA: "BR", ARG: "AR", CHN: "CN", JPN: "JP", KOR: "KR", IND: "IN",
+  AUS: "AU", NZL: "NZ", UAE: "AE", MAR: "MA", THA: "TH",
+};
+export function fgPais(clube: string | null | undefined): string | null {
+  const c = String(clube ?? "").trim().toUpperCase();
+  return /^[A-Z]{3}$/.test(c) ? PAIS[c] ?? null : null;
+}
+
+/** Coluna Clube: o clube, ou a bandeira e o código nos estrangeiros. */
+export function clubeOuPais(clube: string | null | undefined): string {
+  const pais = fgPais(clube);
+  return pais ? `${flagOrEmpty(pais)} ${String(clube).trim().toUpperCase()}` : fgClube(clube);
+}
 
 /** Letra da categoria da Federgolf → nome (para a tabela de escalões). */
 const CATEGORIA: Record<string, string> = { B: "Baby", P: "Pulcini", C: "Cadetti", R: "Ragazzi" };
@@ -54,7 +78,8 @@ export function fgToTournament(d: FgProva): FPGTournament {
         id: j.id,
         name: fgNome(j.nome),
         pos: j.pos,
-        club: fgClube(j.clube),
+        club: clubeOuPais(j.clube),
+        country: fgPais(j.clube),
         total: j.total,
         hcp: j.indice ?? j.hcp,
         ...(tee ? { course: { teeName: tee } } : {}),
@@ -82,14 +107,23 @@ export const fgTemCartoes = (d: FgProva): boolean => d.jogadores.some((j) => j.c
 
 /** Prova só com totais → o Resumo comum (TotalsResumo). */
 export function fgTotais(d: FgProva) {
+  // SD oficial de cada volta (relatório de handicap) — colunas «SD R1»…, só
+  // nas voltas em que alguém o tem.
+  const voltasComSd = Array.from({ length: d.voltas }, (_, i) => i).filter((i) => d.jogadores.some((j) => j.rating[i]?.sd != null));
   return {
     players: d.jogadores.map((j) => ({
-      name: fgNome(j.nome), club: fgClube(j.clube), hcp: j.indice ?? j.hcp, pos: j.pos,
+      name: fgNome(j.nome), club: clubeOuPais(j.clube), country: fgPais(j.clube), hcp: j.indice ?? j.hcp, pos: j.pos,
       rounds: j.voltas, total: j.total,
       ...(j.toPar != null ? { toPar: j.toPar } : {}),
+      ...Object.fromEntries(voltasComSd.map((i) => [`sd${i + 1}`, j.rating[i]?.sd ?? null])),
     })),
     parPerRound: d.parTotal ?? null,
     tournamentDate: d.data ?? undefined,
+    ...(voltasComSd.length ? {
+      extra: voltasComSd.map((i): TotalsExtraCol => ({
+        header: `SD R${i + 1}`, title: `SD oficial da Federgolf na ${i + 1}.ª volta`, field: `sd${i + 1}`, decimals: 1,
+      })),
+    } : {}),
   };
 }
 

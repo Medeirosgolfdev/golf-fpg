@@ -46,7 +46,10 @@ verificato un errore» e timeouts. O scraper usa 4 e repete com espera.
 ## Scraper — `scripts/scrape-federgolf.js`
 
 - `--anos 2026,2025…` (por omissão o ano corrente), `--ids`, `--max-min N`,
-  `--refazer`, `--force`, `--so-indice`.
+  `--refazer`, `--force`, `--so-indice`, `--futuras`, `--paralelo N` (cartões em
+  paralelo; 4 por omissão — duas cargas ao mesmo tempo, 3 + 3).
+- Prova de uma volta: a classificação não traz «G1», só o total (corrigido a
+  02/11; as gravadas antes ficavam sem voltas).
 - **`--sem-cartoes`**: passagem rápida (4 pedidos por prova, 3 provas de cada
   vez) que só grava provas novas; ficam `completo: false` e os cartões chegam
   nas passagens normais seguintes. Uma prova completa e jogada há mais de 10
@@ -64,9 +67,70 @@ verificato un errore» e timeouts. O scraper usa 4 e repete com espera.
   de cada jogador pela categoria; `fgTotais` para as provas ainda sem cartões
   → `TotalsResumo`), `entries.ts` (`buildFgEntries`: M e F da mesma prova numa
   entrada, `memberIds`; «Pulcine»/«Pulcini» do mesmo dia e clube juntam-se).
+- `admissions.tsx` — a «Lista iscritti» (gravada em `inscritos[]` desde
+  02/11/2026, com quem não chegou a jogar) → separador Inscrições
+  (`AdmissionsTab`): escalão pela Cat., país dos estrangeiros, HCP, data e
+  estado (ammesso/wildcard → confirmado, in attesa → pendente, cancellato →
+  desistiu); Qual., OdM e WAGR entram como `extraCols`, que o CircuitShell
+  passa por divisão (`CircuitDivision.admissionsExtraCols`).
+- **Estrangeiros:** na Federgolf o «clube» é o país, com códigos próprios
+  (SWI, DAN, SLK, IRE, SCO, ENG, WAL, LIT…) → `fgPais` (ISO-2) → bandeira e
+  destaque PT.
 - `src/pages/FedergolfPage.tsx` — só o `CircuitShell` (sem estilos próprios).
 - Testes: `src/data/__tests__/federgolfConverters.test.ts`.
 
+## Ranking juvenil nacional — `scripts/scrape-federgolf-ranking.js` (02/11/2026)
+
+Página `/attivita-agonistica/attivita-giovanile/ranking/`, JS
+`federgolf-crm-ranking-nazionale-2026.js`. `POST admin-ajax.php`
+`action=ranking-nazionale-2026-search` com `anno` (2006→), `sesso` (1 M, 2 F),
+`categoria` (18 Ragazzi, 16 Cadetti, 14 Pulcini, 12 Baby), `tipo_ranking=8`,
+`zona` (8 nacional, 1–7), `anni_giocatore` (0 todos, 8–18). O `_wpnonce` da
+página não é exigido. Rápido (~2 s). Linha: lugar, nome («APELIDO NOME», sem
+vírgula), clube, zona, **idade**, qual., voltas, mínimo de voltas (pallino
+verde/rosso), **média de (gross − CR)** das voltas que contam (mais baixa =
+melhor), —, **id do jogador = o mesmo das classificações**.
+`ranking-nazionale-2026-details` (`id`, `anno`) → `risultatiData`: as voltas do
+jogador no ano (prova, data, clube, volta, gross, par, CR, gross − CR), também
+Opens, provas de equipas e USKids em Itália (Venice Open).
+
+- Grava `federgolf-ranking.json` (listas por ano → «M-12»…) e
+  `federgolf-ranking-voltas.json` (voltas por ano → id; lido só ao abrir um
+  jogador). Por omissão o ano corrente e o anterior; aditivo por ano.
+- **Datas de nascimento:** a Federgolf não as publica em lado nenhum público
+  (nem provas, nem listas, nem PDFs, nem ranking; a consulta de handicap é com
+  login na app). Só a idade do ranking.
+
+## Provas futuras — `scrape-federgolf.js --futuras`
+
+As provas juvenis por jogar (ano corrente e seguinte) com a «Lista iscritti»,
+refeitas em cada corrida → `federgolf/{id}.json` com `futura: true` e
+`jogadores: []`. A 02/11/2026 não havia nenhuma: a época 2026 acabou a 31/10 e o
+calendário de 2027 ainda não saiu.
+
+## Anos sem dados na API
+
+Até ~2016–2017 a `competition-tipologia-classifica` vem vazia: os resultados só
+estão nos PDFs («classifica.pdf», por volta) e há a lista de inscritos. 2018 e
+2021 já têm classificação na API (2019, 2020 e 2022 deram timeout no teste de
+02/11 — o servidor estava sobrecarregado). Ler esses PDFs é trabalho à parte.
+
+## Site — menu ⓘ Info (`src/pages/fig/FgInfoViews.tsx`)
+
+As duas vistas usam as peças comuns com a /ffg e a /rfeg: `ui/info/CategoriasInfo`
+(a página de categorias das três) e `ui/ranking/RankingListaView` (o ranking
+juvenil da /fig e da /rfeg) — melhorar uma melhora as outras.
+
+- `/fig/info/categorias` — categorias (Cat., escalão, idades, nascidos no ano,
+  equivalentes FPG/RFEG/FFG, nº de provas), legenda das colunas (Cat., Qual.,
+  WAGR, Hcp, OdM, Data, Stato, SD) e tipos de prova.
+- `/fig/info/ranking` — ranking juvenil (`RankingTable`): ano, categoria, sexo,
+  pesquisa; clique num jogador → `/fig/jogador/:id?ano=` (`RankingDetail`): lugar,
+  idade, média, voltas e a tabela de todas as voltas do ano.
+- Provas sem cartões: o Resumo de totais com «SD R1…» (`TotalsExtraCol`).
+
 ## Por fazer
-- Ligar ao agregador do Kids 2 (rivais italianos do Manuel).
+- Ligar ao agregador do Kids 2 (rivais italianos do Manuel; o Durando,
+  u557351, só tem lá USKids/Doral/EGR).
+- Ler os PDFs das provas antigas (até ~2017).
 - Match play e equipas (Campionati a squadre, Match Play Ragazzi) ficaram de fora.

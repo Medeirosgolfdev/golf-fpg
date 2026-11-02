@@ -36,6 +36,7 @@
  * USO: node scripts/scrape-federgolf.js [--anos 2026,2025] [--ids id1,id2]
  *        [--max-min 300] [--refazer] [--sem-cartoes] [--force]
  *      node scripts/scrape-federgolf.js --so-indice   (só refaz o índice)
+ *      node scripts/scrape-federgolf.js --futuras     (provas por jogar: inscritos)
  * Exit: 0 gravou · 2 nada de novo · 1 erro.
  */
 "use strict";
@@ -48,13 +49,19 @@ const INDEX = path.resolve(__dirname, "../public/data/federgolf-index.json");
 const AJAX = "https://www.federgolf.it/wp-admin/admin-ajax.php";
 const PAGINA = (id) => `https://www.federgolf.it/attivita-agonistica/dettaglio-gara/${id}/`;
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
-const PARALELO = 4;
+// Cartões em paralelo (4 aguenta; com 8 o servidor deles começa a falhar).
+// `--paralelo N` para correr duas cargas ao mesmo tempo (ex.: 3 + 3).
+const PARALELO = Number(process.argv[process.argv.indexOf("--paralelo") + 1]) > 0 && process.argv.includes("--paralelo")
+  ? Number(process.argv[process.argv.indexOf("--paralelo") + 1]) : 4;
 const TENTATIVAS = 5;
 const ESTAVEL_DIAS = 10;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const arg = (k) => { const i = process.argv.indexOf(k); return i >= 0 ? process.argv[i + 1] : null; };
-const ANOS = (arg("--anos") || String(new Date().getFullYear())).split(",").map(Number).filter(Boolean);
+// `--futuras`: só as provas por jogar (lista de inscritos), do ano corrente e do seguinte.
+const FUTURAS = process.argv.includes("--futuras");
+const ANOS = (arg("--anos") || (FUTURAS ? `${new Date().getFullYear()},${new Date().getFullYear() + 1}` : String(new Date().getFullYear())))
+  .split(",").map(Number).filter(Boolean);
 const IDS = arg("--ids") ? arg("--ids").split(",").map((s) => s.trim().toLowerCase()) : null;
 const MAX_MS = (Number(arg("--max-min")) || 0) * 60_000;
 const REFAZER = process.argv.includes("--refazer");
@@ -139,6 +146,48 @@ async function emParalelo(itens, n, fn) {
   return out;
 }
 
+/* ── Lista de inscritos (separador «Lista iscritti») ───────────────── */
+// Linha: [nº, nome+clube (HTML), Cat., Qual., WAGR, Hcp (índice), Odm, Data, Stato (ícone)].
+// Legenda da própria lista: Cat. B Baby · P Pulcini · C Cadetti · R Ragazzi ·
+// D Dilettanti · M Mid-Amateur · S Senior · Ss Super senior; Qual. B Brevetto ·
+// BG Brevetto Giovanile · BN Brevetto Nazionale · GIF Interesse Federale · GIN
+// Interesse Nazionale; Odm = lugar na Ordine di Merito; Stato = ammesso, in
+// attesa, cancellato (não admitido/cancelado), wildcard. Estrangeiros: o
+// «clube» é o país (FRA, ENG, SWI…).
+const ESTADO = { "icona-ammesso": "ammesso", "icona-in-attesa": "attesa", "icona-cancellato": "cancellato", "icona-wildcard": "wildcard" };
+const num = (v) => (v !== "" && v != null && Number.isFinite(Number(v)) ? Number(v) : null);
+function lerInscritos(plData) {
+  return (plData.processedData || []).map((r) => ({
+    n: num(r[0]),
+    nome: texto((/nome-giocatore">([^<]*)/.exec(r[1]) || [])[1]),
+    clube: texto((/circolo-giocatore">([^<]*)/.exec(r[1]) || [])[1]) || null,
+    cat: texto(r[2]) || null,
+    qual: texto(r[3]) || null,
+    wagr: num(r[4]),
+    indice: num(r[5]),
+    odm: num(r[6]),
+    data: isoDe(texto(r[7])),
+    estado: ESTADO[(/icona-[a-z-]+/.exec(r[8] || "") || [])[0]] || null,
+  })).filter((i) => i.nome);
+}
+
+/** Acrescenta a lista de inscritos a uma prova já gravada (sem voltar aos cartões). */
+async function completarInscritos(file, ant) {
+  const lista = lerInscritos(await ajax("competition-player-list", { competition_id: ant.id }));
+  const porNome = new Map(lista.map((i) => [i.nome.toUpperCase(), i]));
+  const prova = {
+    ...ant,
+    jogadores: ant.jogadores.map((j) => {
+      const i = porNome.get(j.nome.toUpperCase());
+      return i ? { ...j, clube: j.clube ?? i.clube, indice: j.indice ?? i.indice, cat: j.cat || i.cat, qual: j.qual || i.qual, odm: j.odm ?? i.odm, wagr: i.wagr } : j;
+    }),
+    inscritos: lista,
+  };
+  const r = writeJsonGuarded(file, prova, { count: (d) => d.jogadores.length, maxDrop: 0.3, force: FORCE, spaces: 0, label: ant.id });
+  console.log(`  ${r.written ? "✓" : "✗"} ${ant.data} ${ant.nome} — +${lista.length} inscritos`);
+  return r.written;
+}
+
 /* ── Uma prova ─────────────────────────────────────────────────────── */
 async function lerProva(c) {
   const comp = { competition_id: c.competition_id };
@@ -157,17 +206,9 @@ async function lerProva(c) {
   const linhas = (clData.results?.items || []).filter((p) => p.id && p.nome);
   if (!linhas.length) return null;
 
-  const inscritos = new Map();
-  for (const r of plData.processedData || []) {
-    const nome = texto((/nome-giocatore">([^<]*)/.exec(r[1]) || [])[1]);
-    // [nº, nome+clube, categoria (B/P/C/R…), qualificação, —, índice, ordem de mérito, data de inscrição, admitido]
-    inscritos.set(nome, {
-      clube: texto((/circolo-giocatore">([^<]*)/.exec(r[1]) || [])[1]) || null,
-      cat: texto(r[2]) || null, qual: texto(r[3]) || null,
-      indice: r[5] !== "" && r[5] != null && Number.isFinite(Number(r[5])) ? Number(r[5]) : null,
-      odm: Number(r[6]) || null,
-    });
-  }
+  const listaInscritos = lerInscritos(plData);
+  // A lista escreve às vezes o nome próprio em minúsculas («FABRE, Anatole»).
+  const inscritos = new Map(listaInscritos.map((i) => [i.nome.toUpperCase(), i]));
   // Relatório de handicap: uma linha por jogador e volta (pela data).
   // [nome, apelido, data, par, tee, CR, Slope, índice, HCP de jogo, gross, pontos, SD]
   const rel = new Map();
@@ -191,9 +232,10 @@ async function lerProva(c) {
       cartoes[g.nome] = [...v.slice(0, 9), ...v.slice(10, 19)];
     }
     const nome = texto(p.nome);
-    const ins = inscritos.get(nome);
+    const ins = inscritos.get(nome.toUpperCase());
     const linhasRel = rel.get(nome.toUpperCase()) || [];
-    const gv = Array.from({ length: voltas }, (_, i) => { const g = p[`G${i + 1}`]; return g > 0 ? g : null; });
+    // Prova de uma volta: a classificação não traz «G1», só o total.
+    const gv = Array.from({ length: voltas }, (_, i) => { const g = p[`G${i + 1}`] ?? (voltas === 1 ? p.tot : undefined); return g > 0 ? g : null; });
     // Cada volta jogada leva o seu tee/CR/Slope/SD: a volta N é o N.º dia da
     // prova (o gross do relatório é o ajustado, não serve para casar).
     const rating = gv.map((g, i) => {
@@ -203,7 +245,7 @@ async function lerProva(c) {
     return {
       pos: typeof p.posizione === "number" ? p.posizione : null,
       nome, id: p.id, clube: ins?.clube ?? null, indice: ins?.indice ?? null,
-      cat: ins?.cat || texto(p.cat) || null, qual: ins?.qual || texto(p.qual) || null, odm: ins?.odm ?? null,
+      cat: ins?.cat || texto(p.cat) || null, qual: ins?.qual || texto(p.qual) || null, odm: ins?.odm ?? null, wagr: ins?.wagr ?? null,
       hcp: typeof p.hcp === "number" ? p.hcp : null,
       voltas: gv, total: p.tot > 0 ? p.tot : null,
       // Com voltas em falta a fonte conta-as a zero (−57) → sem ±par da fonte.
@@ -230,8 +272,20 @@ async function lerProva(c) {
     // Par do campo (do relatório de handicap), para quando não há cartões.
     parTotal: moda([...rel.values()].flat().map((x) => Number(x.par)).filter((x) => x > 0)),
     jogadores,
+    inscritos: listaInscritos,
     completo: nCartoes === nVoltas,
     extraidoEm: new Date().toISOString(),
+  };
+}
+
+/* ── Provas por jogar: só a lista de inscritos (para ver quem vai) ──── */
+async function lerFutura(c) {
+  const inscritos = lerInscritos(await ajax("competition-player-list", { competition_id: c.competition_id }));
+  return {
+    fonte: "federgolf.it", id: c.competition_id, nome: texto(c.nome), data: isoDe(c.data), clube: texto(c.club),
+    tipo: c.tipo, categoria: categoria(c.nome, c.tipo), sexo: sexo(c.nome), voltas: null,
+    url: PAGINA(c.competition_id), campo: null, parTotal: null,
+    jogadores: [], inscritos, futura: true, completo: false, extraidoEm: new Date().toISOString(),
   };
 }
 
@@ -247,6 +301,8 @@ function construirIndice() {
       parTotal: d.campo?.par?.every((x) => typeof x === "number") ? d.campo.par.reduce((a, b) => a + b, 0) : (d.parTotal ?? null),
       tees, completo: d.completo,
       cartoes: d.jogadores.some((j) => (j.cartoes || []).some(Boolean)),
+      inscritos: d.inscritos?.length ?? null,
+      ...(d.futura ? { futura: true } : {}),
     });
   }
   provas.sort((a, b) => String(b.data).localeCompare(String(a.data)) || a.nome.localeCompare(b.nome));
@@ -265,9 +321,30 @@ function construirIndice() {
   const hoje = hojeIso();
   const cal = (await emParalelo(ANOS, 4, async (ano) => {
     const d = await ajax("competitions-search", { tipo: 0, keyword: "", anno: ano, mese: 0 });
+    // O ano seguinte pode ainda não ter calendário (só nas futuras isso é normal).
+    if (FUTURAS && ano > Number(hoje.slice(0, 4)) && Array.isArray(d)) return d;
     if (!Array.isArray(d) || !d.length) throw new Error(`calendário ${ano} vazio — a API mudou?`);
     return d;
   })).flat();
+  if (FUTURAS) {
+    // Provas por jogar: a lista de inscritos de cada uma (muda todos os dias).
+    const futuras = cal.filter((c) => entra(c) && (isoDe(c.data) || "") > hoje);
+    console.log(`Calendário ${ANOS.join(",")}: ${futuras.length} provas juvenis por jogar`);
+    let n = 0, err = 0;
+    await emParalelo(futuras, 3, async (c) => {
+      try {
+        const prova = await lerFutura(c);
+        const file = path.join(OUT_DIR, `${c.competition_id}.json`);
+        const r = writeJsonGuarded(file, prova, { count: (d) => d.inscritos.length, maxDrop: 0.5, force: FORCE, spaces: 0, label: c.competition_id });
+        if (r.written) n++;
+        console.log(`  ${r.written ? "✓" : "✗"} ${prova.data} ${prova.nome} — ${prova.inscritos.length} inscritos`);
+      } catch (e) { err++; console.error(`  ✗ ${c.data} ${texto(c.nome)}: ${e.message}`); }
+    });
+    const ri = writeJsonGuarded(INDEX, construirIndice(), { count: (d) => d.provas.length, maxDrop: 0.3, force: FORCE, label: "federgolf-index" });
+    console.log(`Futuras gravadas ${n}, erros ${err}`);
+    process.exitCode = !ri.written || (err && !n) ? 1 : n ? 0 : 2;
+    return;
+  }
   const alvo = cal.filter((c) => (IDS ? IDS.includes(c.competition_id.toLowerCase()) : entra(c)) && (isoDe(c.data) || "9999") <= hoje);
   console.log(`Calendário ${ANOS.join(",")}: ${cal.length} provas, ${alvo.length} juvenis já jogadas`);
 
@@ -278,7 +355,13 @@ function construirIndice() {
     const file = path.join(OUT_DIR, `${c.competition_id}.json`);
     if (!REFAZER && !IDS && fs.existsSync(file)) {
       const ant = JSON.parse(fs.readFileSync(file, "utf8"));
-      if (SEM_CARTOES) { saltadas++; return; }
+      if (SEM_CARTOES) {
+        // Gravada antes de haver a lista de inscritos (02/11/2026): só esse pedido.
+        if (!ant.inscritos) {
+          try { if (await completarInscritos(file, ant)) gravadas++; } catch (e) { erros++; console.error(`  ✗ inscritos ${ant.nome}: ${e.message}`); }
+        } else saltadas++;
+        return;
+      }
       const dias = (Date.parse(hoje) - Date.parse(ant.data)) / 86_400_000;
       if (ant.completo && dias > ESTAVEL_DIAS && Date.parse(ant.extraidoEm) - Date.parse(ant.data) > ESTAVEL_DIAS * 86_400_000) { saltadas++; return; }
     }

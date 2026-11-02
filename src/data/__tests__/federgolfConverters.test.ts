@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { escalaoCanon } from "../model/escalao";
-import { fgNome, fgClube, fgEscalao, fgEscalaoProva, fgTemCartoes, fgTitulo, fgTotais, fgToTournament } from "../federgolf/toTournament";
+import { fgNome, fgClube, fgEscalao, fgEscalaoProva, fgPais, fgTemCartoes, fgTitulo, fgTotais, fgToTournament } from "../federgolf/toTournament";
+import { fgAdmissions, fgAdmissionsCols } from "../federgolf/admissions";
+import { FG_RANKING_CATS, fgRankingDoJogador, type FgRanking } from "../federgolf/ranking";
 import { buildFgEntries, fgNomeBase } from "../federgolf/entries";
 import type { FgIndice, FgProva } from "../federgolf/types";
 
@@ -73,6 +75,47 @@ describe("Federgolf — prova → Tournament", () => {
   });
 });
 
+describe("Federgolf — inscritos e estrangeiros", () => {
+  it("o «clube» dos estrangeiros é o país (códigos próprios da Federgolf)", () => {
+    expect(fgPais("FRA")).toBe("FR");
+    expect(fgPais("SWI")).toBe("CH");
+    expect(fgPais("SCO")).toBe("GB-SCT");
+    expect(fgPais("POR")).toBe("PT");
+    expect(fgPais("MONTICELLO")).toBeNull();
+  });
+  it("Lista iscritti → AdmissionsTab: estado, escalão, país e as colunas Qual./OdM/WAGR", () => {
+    const comLista: FgProva = { ...prova, inscritos: [
+      { n: 1, nome: "BIELLI, PIERGIORGIO", clube: "MILANO", cat: "C", qual: "BN", wagr: null, indice: -0.6, odm: 67, data: "2026-10-17", estado: "ammesso" },
+      { n: 2, nome: "FABRE, Anatole", clube: "FRA", cat: "C", qual: null, wagr: 818, indice: -5.3, odm: null, data: "2026-07-10", estado: "wildcard" },
+      { n: 3, nome: "ROSSI, LUCA", clube: "OLGIATA", cat: "R", qual: "B", wagr: null, indice: 4, odm: null, data: null, estado: "cancellato" },
+      { n: 4, nome: "VERDI, PAOLO", clube: "ASOLO", cat: "P", qual: "BG", wagr: null, indice: 9, odm: 300, data: "2026-10-18", estado: "attesa" },
+    ] };
+    const adm = fgAdmissions(comLista)!;
+    const [a, b, c, d] = adm.players!;
+    expect(a).toMatchObject({ nome: "Piergiorgio Bielli", clube: "Milano", hcp: -0.6, escalao: "Sub 16", status: "confirmed", dataInscricao: "2026/10/17" });
+    expect(b).toMatchObject({ nome: "Anatole Fabre", country: "FR", status: "confirmed", tags: ["Wildcard"] });
+    expect(c.status).toBe("desistente");
+    expect(d).toMatchObject({ status: "reserva", escalao: "Sub 14" });
+    expect(adm.totalInscritos).toBe(2);
+    expect(adm.reservas).toBe(1);
+    expect(fgAdmissionsCols(adm).map((col) => col.key)).toEqual(["qual", "odm", "wagr"]);
+    expect(fgAdmissions(prova)).toBeUndefined();
+  });
+});
+
+describe("Federgolf — ranking juvenil", () => {
+  it("encontra o jogador em todas as listas, do ano mais recente para trás", () => {
+    const l = (pos: number, id: string, idade: number) => ({ pos, nome: "DURANDO MATTEO", clube: "MONTICELLO", zona: 2, idade, qual: "BG", voltas: 25, minimo: true, media: 4.3, id });
+    const r: FgRanking = { geradoEm: "", anos: {
+      "2025": { "M-12": [l(3, "x", 11), l(5, "a1", 11)] },
+      "2026": { "M-12": [l(1, "a1", 12)], "M-14": [l(40, "a1", 12), l(1, "y", 14)] },
+    } };
+    const e = fgRankingDoJogador(r, "a1");
+    expect(e.map((x) => [x.ano, x.categoria, x.pos, x.de])).toEqual([["2026", "Baby", 1, 1], ["2026", "Pulcini", 40, 2], ["2025", "Baby", 5, 2]]);
+    expect(FG_RANKING_CATS.map((c) => c.escalao)).toEqual(["Sub 12", "Sub 14", "Sub 16", "Sub 18"]);
+  });
+});
+
 describe("Federgolf — entradas", () => {
   it("tira o sexo do nome", () => {
     expect(fgNomeBase("TROFEO ROCCA D'ASOLO- MASCHILE")).toBe("TROFEO ROCCA D'ASOLO");
@@ -115,5 +158,9 @@ describe("Federgolf — entradas", () => {
     expect(t.parPerRound).toBe(71);
     expect(t.players[0]).toMatchObject({ name: "Matteo Durando", rounds: [69, 72], total: 141, toPar: -1 });
     expect(t.players[1].toPar).toBeUndefined();
+    // SD oficial por volta nas colunas extra (sem cartões não há outro sítio).
+    expect(t.extra?.map((c) => c.header)).toEqual(["SD R1", "SD R2"]);
+    expect(t.players[0]).toMatchObject({ sd1: 3.1, sd2: 6.1 });
+    expect(t.players[1]).toMatchObject({ sd1: 18.9, sd2: null });
   });
 });

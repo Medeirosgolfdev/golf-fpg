@@ -20,7 +20,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ExtLink from "../ui/ExternalLink";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
-import DetailHeader from "../ui/DetailHeader";
+import CategoriasInfo from "../ui/info/CategoriasInfo";
 import LoadingState from "../ui/LoadingState";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitConfig, CircuitSpecialItem } from "../ui/circuit/types";
@@ -34,108 +34,69 @@ import { C } from "../utils/colors";
 import EmptyState from "../ui/EmptyState";
 
 /* ── CategoriesView (Catégories d'âge FFG — info no body) ─────── */
+// Desenhada pela peça comum CategoriasInfo (a mesma da /rfeg e da /fig).
+const FFG_DISTANCIAS = [
+  { uCode: "U8",  ffgLabel: "Enfant",    keys: ["U8"] },
+  { uCode: "U10", ffgLabel: "Poucet",    keys: ["U10", "Poucets", "Poucet"] },
+  { uCode: "U12", ffgLabel: "Poussin",   keys: ["U12", "Poussins", "Poussin"] },
+  { uCode: "U14", ffgLabel: "Benjamins", keys: ["Benjamins", "Benjamin", "U14"] },
+  { uCode: "U16", ffgLabel: "Minimes",   keys: ["Minimes", "Minime", "U16"] },
+  { uCode: "U18", ffgLabel: "Cadets",    keys: ["Cadets", "Cadet", "U18"] },
+];
+
 function CategoriesView({ data }: { data: FFGCategoriesData }) {
+  const matches = data.distancesParCategorie?.matches;
+  const temDistancias = !!matches && Object.keys(matches).length > 0;
   return (
-    <div className="p-12-16">
-      <DetailHeader
-        title="📚 Catégories d'âge FFG"
-        sub={
+    <CategoriasInfo
+      titulo="📚 Catégories d'âge FFG"
+      subtitulo="Federação Francesa de Golf — categorias oficiais por idade"
+      links={[
+        { label: "🔗 Página oficial", url: data._source },
+        { label: "📄 Vademecum FFG (PDF, 388 págs)", url: data._vademecumUrl, destaque: true },
+      ]}
+      tabela={{
+        colunas: [
+          { label: "Catégorie FR", ordenavel: true },
+          { label: "Millésime (ano nasc.)", className: "ta-c", ordenavel: true },
+          { label: "Idade", className: "ta-c" },
+          { label: "Catégorie Internationale", className: "ta-c", ordenavel: true },
+          { label: "Sub-catégorie", className: "ta-c", ordenavel: true },
+        ],
+        linhas: data.categories.map((c) => ({
+          key: c.name,
+          celulas: [<strong>{c.name}</strong>, c.millesime, c.age, c.intl, <span className="chip fw-600">{c.subIntl}</span>],
+          ordem: [c.name, c.millesime, null, c.intl, c.subIntl],
+        })),
+      }}
+      seccoes={[{
+        titulo: "📏 Distâncias máximas por categoria",
+        texto: <p className="muted">Definidas no <em>Cahier des charges des Grands Prix Jeunes</em> (Vademecum FFG, secção 1.2.x).</p>,
+        tabela: temDistancias ? {
+          colunas: [
+            { label: "Categoria", ordenavel: true }, { label: "FFG" }, { label: "#Trous", className: "ta-c", ordenavel: true },
+            { label: "Garçons (m)", className: "r mono", ordenavel: true }, { label: "Filles (m)", className: "r mono", ordenavel: true },
+          ],
+          linhas: FFG_DISTANCIAS.map(({ uCode, ffgLabel, keys }) => {
+            const m = keys.map((k) => matches![k]).find((v) => v != null);
+            return {
+              key: uCode,
+              celulas: [<strong>{uCode}</strong>, <span className="muted">{ffgLabel}</span>, m?.trous ?? "—",
+                m?.Garcons ? m.Garcons.toLocaleString("pt-PT") : "—", m?.Filles ? m.Filles.toLocaleString("pt-PT") : "—"],
+              ordem: [Number(uCode.slice(1)), null, m?.trous ?? null, m?.Garcons ?? null, m?.Filles ?? null],
+            };
+          }),
+        } : undefined,
+        nota: temDistancias ? (
+          <em>
+            Distâncias máximas em metros (par 72 indicativo). Extraído do{" "}
+            <ExtLink href={data._vademecumUrl}>Vademecum FFG</ExtLink>
+            {data.distancesParCategorie?._source ? ` — ${data.distancesParCategorie._source}` : ""}.
+          </em>
+        ) : undefined,
+        pendente: temDistancias ? undefined : (
           <>
-            <span className="muted">Federação Francesa de Golf — categorias oficiais por idade</span>
-            <ExtLink href={data._source} className="tourn-ext-link ml-8">
-              🔗 Página oficial
-            </ExtLink>
-            <ExtLink href={data._vademecumUrl} className="tourn-ext-link ml-8 link-accent">
-              📄 Vademecum FFG (PDF, 388 págs)
-            </ExtLink>
-          </>
-        }
-      />
-
-      <div className="scroll-x mt-16">
-        <table className="dtable">
-          <thead>
-            <tr>
-              <th>Catégorie FR</th>
-              <th>Millésime (ano nasc.)</th>
-              <th>Idade</th>
-              <th>Catégorie Internationale</th>
-              <th>Sub-catégorie</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.categories.map((c) => (
-              <tr key={c.name}>
-                <td><strong>{c.name}</strong></td>
-                <td className="ta-c">{c.millesime}</td>
-                <td className="ta-c">{c.age}</td>
-                <td className="ta-c">{c.intl}</td>
-                <td className="ta-c">
-                  <span className="chip fw-600">{c.subIntl}</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="mt-24">
-        <h3 className="mb-8">📏 Distâncias máximas por categoria</h3>
-        <p className="muted">
-          Definidas no <em>Cahier des charges des Grands Prix Jeunes</em> (Vademecum FFG, secção 1.2.x).
-        </p>
-        {data.distancesParCategorie?.matches && Object.keys(data.distancesParCategorie.matches).length > 0 ? (
-          <>
-            <table className="dtable">
-              <thead>
-                <tr>
-                  <th>Categoria</th>
-                  <th>FFG</th>
-                  <th className="th-c">#Trous</th>
-                  <th className="r">Garçons (m)</th>
-                  <th className="r">Filles (m)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {([
-                  { uCode: "U8",  ffgLabel: "Enfant",    keys: ["U8"] },
-                  { uCode: "U10", ffgLabel: "Poucet",    keys: ["U10", "Poucets", "Poucet"] },
-                  { uCode: "U12", ffgLabel: "Poussin",   keys: ["U12", "Poussins", "Poussin"] },
-                  { uCode: "U14", ffgLabel: "Benjamins", keys: ["Benjamins", "Benjamin", "U14"] },
-                  { uCode: "U16", ffgLabel: "Minimes",   keys: ["Minimes", "Minime", "U16"] },
-                  { uCode: "U18", ffgLabel: "Cadets",    keys: ["Cadets", "Cadet", "U18"] },
-                ]).map(({ uCode, ffgLabel, keys }) => {
-                  const matches = data.distancesParCategorie!.matches!;
-                  const m = keys.map((k) => matches[k]).find((v) => v != null);
-                  return (
-                    <tr key={uCode}>
-                      <td><strong>{uCode}</strong></td>
-                      <td className="muted">{ffgLabel}</td>
-                      <td className="ta-c">{m?.trous ?? "—"}</td>
-                      <td className="r mono">
-                        {m?.Garcons ? m.Garcons.toLocaleString("pt-PT") : "—"}
-                      </td>
-                      <td className="r mono">
-                        {m?.Filles ? m.Filles.toLocaleString("pt-PT") : "—"}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            <div className="fs-10 muted mt-8">
-              <em>
-                Distâncias máximas em metros (par 72 indicativo). Extraído do{" "}
-                <ExtLink href={data._vademecumUrl}>Vademecum FFG</ExtLink>
-                {data.distancesParCategorie._source ? ` — ${data.distancesParCategorie._source}` : ""}.
-              </em>
-            </div>
-          </>
-        ) : (
-          <div className="info-pending">
-            <p className="fs-12">
-              <strong>Distâncias ainda não extraídas.</strong> Para popular esta tabela:
-            </p>
+            <p className="fs-12"><strong>Distâncias ainda não extraídas.</strong> Para popular esta tabela:</p>
             <pre className="info-pre">
 {`# 1. Descarregar o Vademecum (PDF ~88MB)
 Invoke-WebRequest "${data._vademecumUrl}" \`
@@ -148,19 +109,15 @@ node scripts/parse-vademecum-distances.js`}
               O parser procura a secção <em>"Cahier des charges des Grands Prix Jeunes"</em> e
               extrai distâncias por categoria. Resultado é guardado em <code>public/data/ffg-categories-age.json</code>.
             </p>
-          </div>
-        )}
-      </div>
-
-      <div className="muted fs-11 mt-24">
-        <strong>Notas:</strong>
-        <ul className="mt-4">
-          <li>O Vademecum FFG é actualizado anualmente (este link aponta para 2024).</li>
-          <li>O <em>Cahier des charges</em> contém também regulamentos sobre tees, formato de competição, etc.</li>
-          <li>A categoria <strong>Poucet(te)</strong> não tem equivalente directo PT — é a faixa 9-10 anos.</li>
-        </ul>
-      </div>
-    </div>
+          </>
+        ),
+      }]}
+      notas={[
+        "O Vademecum FFG é actualizado anualmente (este link aponta para 2024).",
+        <>O <em>Cahier des charges</em> contém também regulamentos sobre tees, formato de competição, etc.</>,
+        <>A categoria <strong>Poucet(te)</strong> não tem equivalente directo PT — é a faixa 9-10 anos.</>,
+      ]}
+    />
   );
 }
 

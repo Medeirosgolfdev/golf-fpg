@@ -30,6 +30,17 @@ labels reais do portal e falha se divergirem (padrão do `lib/course-aliases.cjs
 Quem o usa importa-o de `src/utils/ffgEscalao.ts` (a `FFGPage` deixou de o
 reexportar a 21/10/2026 — ninguém o lia de lá).
 
+### Páginas «Categorias» e «Ranking juvenil» — peças comuns (02/11/2026)
+
+Pedido da Mariana («se melhorarmos uma melhora a outra»): a «📚 Catégories d'âge» da
+/ffg, a «📚 Categorías de edad» da /rfeg e a «📚 Categorias e legenda» da /fig são a
+MESMA peça, `src/ui/info/CategoriasInfo.tsx` — cada página dá só os dados
+(cabeçalho, aviso, tabela, secções, notas); tabelas ordenáveis por clique. O
+«🏆 Ranking juvenil» da /rfeg (`src/pages/rfeg/RankingView.tsx`, dados
+`src/data/rfeg/rankings.ts`: as 52 listas de `rfeg-rankings/`, nacionais primeiro)
+e o da /fig usam `src/ui/ranking/RankingListaView.tsx` (+ `RankingTable`, a do
+EGR/WAGR). A classe `.rfeg-es-notice` saiu (o aviso é `notice notice-info`).
+
 ### Onde está o código de França (21/10/2026)
 
 A `FFGPage` só desenha (Catégories d'âge, totais e mapa LGPIDF, DrawTab). Os

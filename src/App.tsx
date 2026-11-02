@@ -235,6 +235,7 @@ export default function App() {
                 <Route path="/rfeg/:source/:id" element={<RFEGPage />} />
                 <Route path="/fig" element={<FedergolfPage />} />
                 <Route path="/fig/:id" element={<FedergolfPage />} />
+                <Route path="/fig/:source/:id" element={<FedergolfPage />} />
                 {/* Página Títulos — tabs Nacional/Regional/Atleta */}
                 <Route path="/titulos" element={<TitulosPage />} />
                 <Route path="/titulos/:tab" element={<TitulosPage />} />

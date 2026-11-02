@@ -11,10 +11,10 @@
 import { withDivisionModel } from "../data/model/division";
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import DetailHeader from "../ui/DetailHeader";
+import CategoriasInfo from "../ui/info/CategoriasInfo";
+import { RFEGRankingView } from "./rfeg/RankingView";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
-import ExtLink from "../ui/ExternalLink";
 import { C } from "../utils/colors";
 import DrawTab from "../ui/DrawTab";
 import type { Player as FPGPlayer } from "./FPGPage";
@@ -200,162 +200,105 @@ const RFEG_CATEGORIES: RFEGCategory[] = [
 
 function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }) {
   const refYear = 2026;
+  // Desenhada pela peça comum CategoriasInfo (a mesma da /ffg e da /fig).
   return (
-    <div className="p-12-16">
-      <DetailHeader
-        title="📚 Categorías de edad RFEG"
-        sub={
-          <>
-            <span className="muted">
-              Real Federación Española de Golf — categorias oficiais por idade (ano de
-              referência {refYear})
-            </span>
-            <ExtLink
-              href="https://rfegolf.es/"
-              className="tourn-ext-link ml-8"
-            >
-              🔗 rfegolf.es
-            </ExtLink>
-          </>
-        }
-      />
-
-      <div className="rfeg-es-notice">
+    <CategoriasInfo
+      titulo="📚 Categorías de edad RFEG"
+      subtitulo={`Real Federación Española de Golf — categorias oficiais por idade (ano de referência ${refYear})`}
+      links={[{ label: "🔗 rfegolf.es", url: "https://rfegolf.es/" }]}
+      aviso={<>
         <strong>⚠ Espanha não tem federação única.</strong> A RFEG (federação
         nacional) coexiste com 17 federações autonómicas (Andalucía, Madrid,
         Catalunya, Valencia, ...). Os resultados aparecem dispersos por três
         plataformas: <code>rfegolf.es</code> (campeonatos nacionais),{" "}
         <code>livegolfscoring.es</code> (scorecards hbh) e{" "}
         <code>nextcaddy.com</code> (circuitos regionais Andaluzia/Madrid).
-      </div>
-
-      <div className="scroll-x mt-16">
-        <table className="dtable">
-          <thead>
-            <tr>
-              <th>Categoría RFEG</th>
-              <th>Sub-N moderno</th>
-              <th>Idade</th>
-              <th>Millésime ({refYear})</th>
-              <th>Internacional</th>
-              <th>FPG 🇵🇹</th>
-              <th>FFG 🇫🇷</th>
-              <th>Torneios no índice</th>
-            </tr>
-          </thead>
-          <tbody>
-            {RFEG_CATEGORIES.map((c) => {
-              const subShort = c.subN.replace("Sub-", "");
-              const subRfeg = `Sub-${subShort}`;
-              // Conta torneios para este escalão (somando o nome tradicional + Sub-N)
-              const traditionalKey = c.name === "JUNIOR / BOY" ? "Junior" : (c.name === "BENJAMÍN" ? "Benjamín" : c.name === "ALEVÍN" ? "Alevín" : c.name === "INFANTIL" ? "Infantil" : c.name === "CADETE" ? "Cadete" : c.name === "JUVENIL" ? "Juvenil" : c.name);
-              const trad = catCounts[traditionalKey] || 0;
-              const sub = catCounts[subRfeg] || 0;
-              const total = trad + sub;
-              return (
-                <tr key={c.name}>
-                  <td>
-                    <span className={c.pillClass || "p p-sm"}>{c.name}</span>
-                  </td>
-                  <td className="ta-c mono">
-                    <strong>{c.subN}</strong>
-                  </td>
-                  <td className="ta-c">{c.age}</td>
-                  <td className="ta-c mono">
-                    {c.millesime}
-                  </td>
-                  <td className="ta-c mono">
-                    {c.intl}
-                  </td>
-                  <td className="ta-c">{c.fpg}</td>
-                  <td className="ta-c c-text-2">
-                    {c.ffg}
-                  </td>
-                  <td className="r mono">
-                    {total > 0 ? (
-                      <span title={`${trad} como "${traditionalKey}" + ${sub} como "${subRfeg}"`}>
-                        {total}
-                        {trad > 0 && sub > 0 && (
-                          <span className="muted fs-10">
-                            {" "}({trad}+{sub})
-                          </span>
-                        )}
-                      </span>
-                    ) : (
-                      MUTED
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="mt-24">
-        <h3 className="mb-8">📐 Critério de cálculo do escalão</h3>
-        <p className="fs-12">
-          Tal como na FPG, o escalão é determinado pelo <strong>ano civil</strong>
-          {" "}(year-based), não pela idade exacta na data do torneio. A fórmula é:
-        </p>
-        <pre className="info-pre info-pre-muted">
-          {`escalão = ano_torneio − ano_nascimento
+      </>}
+      tabela={{
+        colunas: [
+          { label: "Categoría RFEG", ordenavel: true },
+          { label: "Sub-N moderno", className: "ta-c mono", ordenavel: true },
+          { label: "Idade", className: "ta-c" },
+          { label: `Millésime (${refYear})`, className: "ta-c mono", ordenavel: true },
+          { label: "Internacional", className: "ta-c mono" },
+          { label: "FPG 🇵🇹", className: "ta-c" },
+          { label: "FFG 🇫🇷", className: "ta-c c-text-2" },
+          { label: "Torneios no índice", className: "r mono", ordenavel: true },
+        ],
+        linhas: RFEG_CATEGORIES.map((c) => {
+          const subShort = c.subN.replace("Sub-", "");
+          const subRfeg = `Sub-${subShort}`;
+          // Conta torneios para este escalão (somando o nome tradicional + Sub-N)
+          const traditionalKey = c.name === "JUNIOR / BOY" ? "Junior" : (c.name === "BENJAMÍN" ? "Benjamín" : c.name === "ALEVÍN" ? "Alevín" : c.name === "INFANTIL" ? "Infantil" : c.name === "CADETE" ? "Cadete" : c.name === "JUVENIL" ? "Juvenil" : c.name);
+          const trad = catCounts[traditionalKey] || 0;
+          const sub = catCounts[subRfeg] || 0;
+          const total = trad + sub;
+          return {
+            key: c.name,
+            celulas: [
+              <span className={c.pillClass || "p p-sm"}>{c.name}</span>,
+              <strong>{c.subN}</strong>,
+              c.age, c.millesime, c.intl, c.fpg, c.ffg,
+              total > 0 ? (
+                <span title={`${trad} como "${traditionalKey}" + ${sub} como "${subRfeg}"`}>
+                  {total}
+                  {trad > 0 && sub > 0 && <span className="muted fs-10"> ({trad}+{sub})</span>}
+                </span>
+              ) : MUTED,
+            ],
+            ordem: [c.name, Number(subShort), null, c.millesime, null, null, null, total],
+          };
+        }),
+      }}
+      seccoes={[
+        {
+          titulo: "📐 Critério de cálculo do escalão",
+          texto: <p className="fs-12">
+            Tal como na FPG, o escalão é determinado pelo <strong>ano civil</strong>
+            {" "}(year-based), não pela idade exacta na data do torneio. A fórmula é:
+          </p>,
+          pre: `escalão = ano_torneio − ano_nascimento
 
 p.ex. jogador nascido em 2014, em 2026:
-  escalão = 2026 − 2014 = 12 → ALEVÍN (Sub-12)`}
-        </pre>
-      </div>
-
-      <div className="mt-24">
-        <h3 className="mb-8">🗂️ Nomenclatura dupla</h3>
-        <p className="fs-12">
-          Nos torneios scrapados aparecem <em>simultaneamente</em> as duas
-          nomenclaturas:
-        </p>
-        <ul className="fs-12 mt-8">
-          <li>
-            <strong>Tradicional</strong> — nomes históricos (Benjamín, Alevín,
-            Infantil, Cadete, Junior, Juvenil). Usados sobretudo nos campeonatos
-            regionais e em torneios mais antigos. Vêm directamente do nome do
-            torneio na <code>rfegolf.es</code>.
-          </li>
-          <li>
-            <strong>Moderno Sub-N</strong> — Sub-14, Sub-16, Sub-18, Sub-21, Sub-25.
-            Usados em campeonatos nacionais juvenis recentes e nos
-            inter-territoriais. Aparecem em "Campeonato Nacional Sub 16
-            Masculino", etc.
-          </li>
-        </ul>
-        <p className="muted fs-11 mt-8">
-          A coluna <strong>Torneios no índice</strong> soma ocorrências das duas
-          nomenclaturas. Em algumas categorias (p.ex. Sub-21/Juvenil) os
-          critérios de idade variam ligeiramente entre torneios — verificar
-          regulamento específico.
-        </p>
-      </div>
-
-      <div className="muted fs-11 mt-24">
-        <strong>Notas:</strong>
-        <ul className="mt-4">
-          <li>
-            <em>Benjamín</em> abrange tipicamente 7-10 anos (raramente &lt;7,
-            depende do clube/comité). O critério é só o limite superior.
-          </li>
-          <li>
-            <em>Juvenil</em> é o termo histórico amplo para idades 17-21+ — em
-            alguns torneios é equivalente a Sub-18, noutros estende até Sub-21.
-          </li>
-          <li>
-            <em>Junior</em> e <em>Boy/Girl</em> são intercambiáveis em RFEG;
-            <em> Boy</em> aparece em torneios internacionais.
-          </li>
-          <li>
-            Distância de saída e número de buracos são definidos pelo Comité da
-            prova (regulamento RFEG Art. comum).
-          </li>
-        </ul>
-      </div>
-    </div>
+  escalão = 2026 − 2014 = 12 → ALEVÍN (Sub-12)`,
+        },
+        {
+          titulo: "🗂️ Nomenclatura dupla",
+          texto: <>
+            <p className="fs-12">
+              Nos torneios scrapados aparecem <em>simultaneamente</em> as duas
+              nomenclaturas:
+            </p>
+            <ul className="fs-12 mt-8">
+              <li>
+                <strong>Tradicional</strong> — nomes históricos (Benjamín, Alevín,
+                Infantil, Cadete, Junior, Juvenil). Usados sobretudo nos campeonatos
+                regionais e em torneios mais antigos. Vêm directamente do nome do
+                torneio na <code>rfegolf.es</code>.
+              </li>
+              <li>
+                <strong>Moderno Sub-N</strong> — Sub-14, Sub-16, Sub-18, Sub-21, Sub-25.
+                Usados em campeonatos nacionais juvenis recentes e nos
+                inter-territoriais. Aparecem em "Campeonato Nacional Sub 16
+                Masculino", etc.
+              </li>
+            </ul>
+            <p className="muted fs-11 mt-8">
+              A coluna <strong>Torneios no índice</strong> soma ocorrências das duas
+              nomenclaturas. Em algumas categorias (p.ex. Sub-21/Juvenil) os
+              critérios de idade variam ligeiramente entre torneios — verificar
+              regulamento específico.
+            </p>
+          </>,
+        },
+      ]}
+      notas={[
+        <><em>Benjamín</em> abrange tipicamente 7-10 anos (raramente &lt;7, depende do clube/comité). O critério é só o limite superior.</>,
+        <><em>Juvenil</em> é o termo histórico amplo para idades 17-21+ — em alguns torneios é equivalente a Sub-18, noutros estende até Sub-21.</>,
+        <><em>Junior</em> e <em>Boy/Girl</em> são intercambiáveis em RFEG;<em> Boy</em> aparece em torneios internacionais.</>,
+        "Distância de saída e número de buracos são definidos pelo Comité da prova (regulamento RFEG Art. comum).",
+      ]}
+    />
   );
 }
 
@@ -480,6 +423,7 @@ export default function RFEGPage() {
     specialItems: index ? [
       { key: "jugadores", label: "👥 Jugadores de España", render: () => <RFEGPlayersView /> },
       { key: "categorias", label: "📚 Categorías de edad", render: () => <RFEGCategoriesView catCounts={index.byCategory} /> },
+      { key: "ranking", label: "🏆 Ranking juvenil", render: () => <RFEGRankingView /> },
       { key: "federaciones", label: "🏛️ Federaciones de España", render: () => <RFEGFederationsView /> },
     ] : [],
   }), [index, vetIndex]);

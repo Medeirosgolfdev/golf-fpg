@@ -24,6 +24,8 @@ export interface FgJogador {
   qual: string | null;
   /** Lugar na ordem de mérito. */
   odm: number | null;
+  /** Lugar no WAGR (lista de inscritos). */
+  wagr?: number | null;
   /** HCP de jogo da classificação. */
   hcp: number | null;
   /** Gross de cada volta (null = não jogou). */
@@ -52,8 +54,26 @@ export interface FgProva {
   /** Par de uma volta (do relatório de handicap) — para as provas sem cartões. */
   parTotal?: number | null;
   jogadores: FgJogador[];
+  /** Lista de inscritos (separador «Lista iscritti»); falta nas provas gravadas antes de 02/11/2026. */
+  inscritos?: FgInscrito[];
   completo: boolean;
   extraidoEm: string;
+}
+
+/** Uma linha da «Lista iscritti». Estrangeiros: `clube` é o país (FRA, ENG…). */
+export interface FgInscrito {
+  n: number | null;
+  nome: string;
+  clube: string | null;
+  /** B Baby · P Pulcini · C Cadetti · R Ragazzi · D Dilettanti · M Mid-Amateur · S Senior · Ss Super senior. */
+  cat: string | null;
+  /** B Brevetto · BG Brevetto Giovanile · BN Brevetto Nazionale · GIF Interesse Federale · GIN Interesse Nazionale. */
+  qual: string | null;
+  wagr: number | null;
+  indice: number | null;
+  odm: number | null;
+  data: string | null;
+  estado: "ammesso" | "attesa" | "cancellato" | "wildcard" | null;
 }
 
 export interface FgIndiceProva {

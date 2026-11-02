@@ -42,6 +42,14 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
+      # Provas por jogar: a lista de inscritos (rápido, ~2 s por prova).
+      - name: Provas futuras (inscritos)
+        run: node scripts/scrape-federgolf.js --futuras || [ $? -eq 2 ]
+
+      # Ranking juvenil nacional (idade, lugar, média) e as voltas de cada jogador.
+      - name: Ranking juvenil
+        run: node scripts/scrape-federgolf-ranking.js || [ $? -eq 2 ]
+
       # Todas as provas desde 2006, só as que faltam (as gravadas saltam-se).
       - name: Provas novas (só totais, até 2 h)
         run: |
@@ -57,4 +65,6 @@ jobs:
         run: |
           bash scripts/ci/push-generated.sh -m "data: Federgolf $(date -u +'%Y-%m-%d %H:%M UTC')" \
             -o 'public/data/federgolf' -o public/data/federgolf-index.json \
-            -- public/data/federgolf public/data/federgolf-index.json
+            -o public/data/federgolf-ranking.json -o public/data/federgolf-ranking-voltas.json \
+            -- public/data/federgolf public/data/federgolf-index.json \
+               public/data/federgolf-ranking.json public/data/federgolf-ranking-voltas.json

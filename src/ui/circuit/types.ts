@@ -17,6 +17,7 @@ import type { Tournament as FPGTournament, ScorecardOptions } from "../../data/f
 import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
 import type { MatchplayFile } from "./matchplayTypes";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
+import type { AdmissionsExtraCol } from "../AdmissionsTab";
 import type { TotalsPlayer } from "./TotalsResumo";
 import type { TournamentModel, RoundDrawData, TotalsNotice, TotalsExtraCol } from "../../data/model/types";
 
@@ -105,6 +106,9 @@ export interface CircuitDivision extends TournamentModel {
   /** Inscrições, no formato da FPG — desenhadas pelo AdmissionsTab partilhado
    *  (o mesmo da FPG/Drive). Cada jogador pode trazer dob/país/escalão/tee. */
   admissions?: FpgAdmissions;
+  /** Colunas próprias da fonte no separador Inscrições (as `extraCols` do
+   *  AdmissionsTab — ex.: Qual., OdM e WAGR da Federgolf). */
+  admissionsExtraCols?: AdmissionsExtraCol[];
 
   /** Links de origem desta divisão (ex: BlueGolf/GolfGenius do escalão) —
    *  mostrados no header do detalhe junto aos links do torneio. */

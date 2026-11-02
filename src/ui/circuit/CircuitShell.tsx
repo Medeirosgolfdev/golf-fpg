@@ -19,7 +19,7 @@
 import { escalaoFilterOptions, escaloesCanon } from "../../data/model/escalao";
 import { roundDrawNode, divisionResultsNode } from "./divisionPieces";
 import ManuelResultPills from "../ManuelResultPills";
-import AdmissionsTab from "../AdmissionsTab";
+import AdmissionsTab, { type AdmissionsExtraCol } from "../AdmissionsTab";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import React, { useMemo, useState, useEffect, useCallback, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -186,12 +186,14 @@ function applyToggles(
 }
 
 // ── Inscrições: o AdmissionsTab partilhado (o mesmo da FPG/Drive) ──
-function DivisionAdmissions({ admissions, date }: { admissions: FpgAdmissions; date?: string }) {
+function DivisionAdmissions({ admissions, date, extraCols }: { admissions: FpgAdmissions; date?: string; extraCols?: AdmissionsExtraCol[] }) {
   const ps = admissions.players ?? [];
   // VAC/Registo/Status só quando a fonte os tem (a FPG tem; Espanha não).
   const hidePostCols = !ps.some(p => p.vac != null || p.dataInscricao);
   // Circuitos de fora: a inscrição só traz nome e cidade — o Kids 2 completa.
-  return <AdmissionsTab admissions={admissions} date={date} hidePostCols={hidePostCols} kidsCols />;
+  // Sem VAC na fonte (Itália: só a data de inscrição) → sem a coluna vazia.
+  const hideCols = ps.some(p => p.vac != null) ? undefined : { vac: true };
+  return <AdmissionsTab admissions={admissions} date={date} hidePostCols={hidePostCols} hideCols={hideCols} extraCols={extraCols} kidsCols />;
 }
 
 /** Draws por ronda numa só secção (quando não há resultados de ronda onde os intercalar). */
@@ -481,7 +483,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       leadingTabs.push({
         key: "inscritos",
         label: sectionLabel("inscritos"),
-        content: <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} />,
+        content: <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} extraCols={curDiv.admissionsExtraCols} />,
       });
     }
   }
@@ -898,7 +900,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     )}
                     {curSection === "results" && divisionResultsNode(curDiv)}
                     {curSection === "inscritos" && curDiv.admissions && (
-                      <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} />
+                      <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} extraCols={curDiv.admissionsExtraCols} />
                     )}
                     {curSection === "draw" && curDiv.roundDraws && <DivisionDraws roundDraws={curDiv.roundDraws} />}
                     {curSection === "matchplay" && curDiv.matchplay && (

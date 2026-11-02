@@ -7,6 +7,7 @@ import { withDivisionModel } from "../model/division";
 import { cachedFetchJson } from "../fetchCache";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import type { FgIndice, FgIndiceProva, FgProva } from "./types";
+import { fgAdmissions, fgAdmissionsCols } from "./admissions";
 import { fgClube, fgEscalaoProva, fgScorecardOptions, fgTemCartoes, fgTitulo, fgTotais, fgToTournament } from "./toTournament";
 
 export const FG_INDEX_URL = "/data/federgolf-index.json";
@@ -22,6 +23,7 @@ const SEXO_LABEL: Record<"M" | "F", string> = { M: "Masculino", F: "Feminino" };
 function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
   return cachedFetchJson<FgProva>(provaUrl(p.id)).then((d) => {
     if (!d?.jogadores?.length) return null;
+    const admissions = fgAdmissions(d);
     return withDivisionModel({
       key: p.sexo ?? p.id,
       escalao: fgEscalaoProva(p.categoria),
@@ -29,6 +31,8 @@ function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
       sex: p.sexo ?? undefined,
       // Sem cartões (passagem rápida, ainda por completar) → só os totais.
       ...(fgTemCartoes(d) ? { results: fgToTournament(d) } : { totals: fgTotais(d) }),
+      // A «Lista iscritti» (com quem não chegou a jogar) no separador Inscrições.
+      ...(admissions ? { admissions, admissionsExtraCols: fgAdmissionsCols(admissions) } : {}),
       scOptions: fgScorecardOptions(),
       links: [{ label: "Federgolf", url: d.url, icon: "🌐" }],
     } as CircuitDivision);

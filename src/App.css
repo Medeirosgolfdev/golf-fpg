@@ -4130,7 +4130,6 @@ table td.lb-col-divider {
 .info-pending { padding: var(--space-16); background: var(--bg-muted); border-radius: var(--radius); margin-top: var(--space-8); }
 .info-pre { padding: var(--space-12); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: var(--fs-11); overflow: auto; }
 .info-pre.info-pre-muted { background: var(--bg-muted); font-size: var(--fs-12); }
-.rfeg-es-notice { margin-top: var(--space-12); padding: var(--space-10) var(--space-12); background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-size: var(--fs-12); }
 /* Doral — nº de edições na coluna «Ant.» da evolução. */
 .evo-ed-count { font-size: var(--fs-9); font-weight: 700; background: var(--bg-muted); color: var(--text-2); border-radius: var(--radius-lg); padding: 0 var(--space-4); line-height: 14px; }
 
