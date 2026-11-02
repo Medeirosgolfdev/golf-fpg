@@ -26,6 +26,7 @@ import PlayerLink from "./PlayerLink";
 import { MANUEL_FED } from "../constants/manuel";
 import { tpColor } from "./tournamentPrimitives";
 import ExpandArrow from "./ExpandArrow";
+import ErrorState from "./ErrorState";
 
 const fmtPct = (p: number) => p.toFixed(0) + "%";
 const fmtAvg = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : n.toFixed(d);
@@ -478,7 +479,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
   }, [pkg, sub12FedSet]);
 
   if (loading) return <LoadingState message="A carregar análise…" />;
-  if (error) return <div className="fs-13 u-p-24px u-c-color-danger">Erro: {error}</div>;
+  if (error) return <ErrorState message="Erro ao carregar a análise" detail={error} />;
   if (!pkg) return <EmptyState size="sm" message="Sem dados" />;
 
   const top21Cards = pkg.playerCards.filter(c => c.category === "top21");

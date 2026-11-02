@@ -24,6 +24,8 @@ import { displayName } from "../../utils/format";
 import { gf } from "../../utils/flagUtils";
 import { isManuelByName } from "../../constants/manuel";
 import ExpandArrow from "../../ui/ExpandArrow";
+import SearchInput from "../../ui/SearchInput";
+import { ToggleChip } from "../../ui/FilterField";
 
 interface VetPlayer {
   name: string;
@@ -160,10 +162,7 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
 
       {/* Toolbar de filtros */}
       <div className="u-d-flex u-gap-8px u-fwr-wrap u-ai-center u-m-8px-0-10px">
-        <input
-          className="input u-minw-180px" placeholder="🔍 Nome ou país…" value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
+        <SearchInput value={q} onChange={setQ} placeholder="Nome ou país…" />
         <select className="input" value={circuito} onChange={(e) => setCircuito(e.target.value)} title="Filtrar por circuito">
           <option value="">Todos os circuitos</option>
           {circuitos.map((s) => <option key={s} value={s}>{srcLabel(s)}</option>)}
@@ -174,14 +173,8 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
             {[2, 3, 4, 5, 6, 7, 8].map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </label>
-        <button
-          type="button" className={`tourn-tab tourn-tab-sm${onlyPt ? " active" : ""}`}
-          onClick={() => setOnlyPt((v) => !v)} title="Só jogadores portugueses / Manuel"
-        >🇵🇹 Só PT</button>
-        <button
-          type="button" className={`tourn-tab tourn-tab-sm${hideUsa ? " active" : ""}`}
-          onClick={() => setHideUsa((v) => !v)} title="Esconder jogadores dos EUA (destaca europeus)"
-        >🚫🇺🇸 Esconder EUA</button>
+        <ToggleChip checked={onlyPt} onChange={setOnlyPt} label="🇵🇹 Só PT" title="Só jogadores portugueses / Manuel" />
+        <ToggleChip checked={hideUsa} onChange={setHideUsa} label="🚫🇺🇸 Esconder EUA" title="Esconder jogadores dos EUA (destaca europeus)" />
         <span className="muted fs-12 u-ml-auto">{filtered.length} jogadores</span>
       </div>
 

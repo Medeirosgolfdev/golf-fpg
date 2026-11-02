@@ -30,6 +30,10 @@ import Pager from "../../ui/Pager";
 import { MUTED } from "../../ui/tableCells";
 import { usePaged } from "../../hooks/usePaged";
 import ExpandArrow from "../../ui/ExpandArrow";
+import SearchInput from "../../ui/SearchInput";
+import ErrorState from "../../ui/ErrorState";
+import SexSelect from "../../ui/SexSelect";
+import { ToggleChip } from "../../ui/FilterField";
 
 interface SpainPlayer {
   licencia: string;
@@ -328,7 +332,7 @@ export function RFEGPlayersView() {
   const filterSig = `${q}|${sex}|${cat}|${jovens}|${sortKey}|${sortDir}`;
   const { page, setPage, totalPages, pageRows } = usePaged(sorted, filterSig);
 
-  if (err) return <EmptyState message={`Erro: ${err}`} />;
+  if (err) return <ErrorState message="Erro ao carregar os jogadores" detail={err} />;
   if (!data) return <LoadingState message="A carregar jogadores espanhóis..." />;
 
   return (
@@ -345,31 +349,14 @@ export function RFEGPlayersView() {
 
       {/* ── Filtros ─────────────────────────────────────────── */}
       <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-12px-0">
-        <input
-          type="text"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="🔍 Nome, licença ou clube…"
-          className="filter-input u-minw-240px u-fl-1-1-240px u-maxw-360px"
-
-        />
-        <select value={sex} onChange={(e) => setSex(e.target.value as "" | "M" | "F")} className="filter-input u-w-130px">
-          <option value="">Todos os sexos</option>
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
-        </select>
+        <SearchInput value={q} onChange={setQ} placeholder="Nome, licença ou clube…" size="full" className="u-maxw-360px" />
+        <SexSelect value={sex} onChange={setSex} allValue="" />
         <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input u-w-150px">
           <option value="ALL">Todas as categorias</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
-        <button
-          onClick={() => setJovens((j) => !j)}
-          type="button" aria-pressed={jovens}
-          className={"tourn-tab tourn-tab-sm" + (jovens ? " active" : "")}
-          title="Só escalões juvenis (Benjamín, Alevín, Infantil, Cadete, Juvenil)"
-        >
-          🧒 Só Jovens
-        </button>
+        <ToggleChip checked={jovens} onChange={setJovens} label="🧒 Só Jovens"
+          title="Só escalões juvenis (Benjamín, Alevín, Infantil, Cadete, Juvenil)" />
         <span className="muted fs-12 u-ml-auto">
           {filtered.length.toLocaleString("pt")} de {all.length.toLocaleString("pt")}
         </span>

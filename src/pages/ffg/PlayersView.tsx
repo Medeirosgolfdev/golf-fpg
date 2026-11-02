@@ -35,6 +35,10 @@ import Pager from "../../ui/Pager";
 import { MUTED } from "../../ui/tableCells";
 import { usePaged } from "../../hooks/usePaged";
 import ExpandArrow from "../../ui/ExpandArrow";
+import SearchInput from "../../ui/SearchInput";
+import ErrorState from "../../ui/ErrorState";
+import SexSelect from "../../ui/SexSelect";
+import { ToggleChip } from "../../ui/FilterField";
 
 interface FrancePlayer {
   license: string;
@@ -258,7 +262,7 @@ export function FFGPlayersView() {
   const { page, setPage, totalPages, pageRows } = usePaged(sorted, filterSig);
   const kidsCount = useMemo(() => all.reduce((n, p) => n + (p._kid ? 1 : 0), 0), [all]);
 
-  if (err) return <EmptyState message={`Erro: ${err}`} />;
+  if (err) return <ErrorState message="Erro ao carregar os jogadores" detail={err} />;
   if (!data) return <LoadingState message="A carregar jogadores franceses..." />;
 
   return (
@@ -276,19 +280,8 @@ export function FFGPlayersView() {
 
       {/* ── Filtros ─────────────────────────────────────────── */}
       <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-12px-0">
-        <input
-          type="text"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="🔍 Nome, licença ou clube…"
-          className="filter-input u-minw-240px u-fl-1-1-240px u-maxw-360px"
-
-        />
-        <select value={sex} onChange={(e) => setSex(e.target.value as "" | "M" | "F")} className="filter-input u-w-130px">
-          <option value="">Todos os sexos</option>
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
-        </select>
+        <SearchInput value={q} onChange={setQ} placeholder="Nome, licença ou clube…" size="full" className="u-maxw-360px" />
+        <SexSelect value={sex} onChange={setSex} allValue="" />
         <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input u-w-170px">
           <option value="ALL">Todas as categorias</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -297,14 +290,8 @@ export function FFGPlayersView() {
           <option value="ALL">Todas as ligues</option>
           {regionOptions.map((r) => <option key={r} value={r}>{r}</option>)}
         </select>
-        <button
-          onClick={() => setJovens((j) => !j)}
-          type="button" aria-pressed={jovens}
-          className={"tourn-tab tourn-tab-sm" + (jovens ? " active" : "")}
-          title="Só séries juvenis (Poucet, Poussin, Benjamin, Minime, Cadet, Junior / U8-U21)"
-        >
-          🧒 Só Jovens
-        </button>
+        <ToggleChip checked={jovens} onChange={setJovens} label="🧒 Só Jovens"
+          title="Só séries juvenis (Poucet, Poussin, Benjamin, Minime, Cadet, Junior / U8-U21)" />
         <span className="muted fs-12 u-ml-auto">
           {filtered.length.toLocaleString("pt")} de {all.length.toLocaleString("pt")}
         </span>

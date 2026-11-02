@@ -19,6 +19,7 @@ import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
 import Kids2SubNav from "./Kids2SubNav";
 import { fmtDayMonthYear } from "../../utils/format";
 import ExtLink from "../../ui/ExternalLink";
+import SearchInput from "../../ui/SearchInput";
 
 export default function NextTournamentsGlobal() {
   const { unlocked, unlock } = usePasswordGate();
@@ -91,10 +92,7 @@ function Content() {
             {/* Circuito: o interruptor segmentado do resto do site (14/10/2026). */}
             <TabRow active={circuit} onChange={setCircuit}
               tabs={(["all", "uskids", "fpg"] as const).map(c => ({ key: c, label: c === "all" ? "Todos" : c === "uskids" ? "🇺🇸 USKids" : "🇵🇹 FPG" }))} />
-            <input
-              type="text" value={q} onChange={e => setQ(e.target.value)}
-              placeholder="🔍 Jogador ou torneio…"
-              className="u-ml-auto u-p-4px-10px u-fs-fs-13 u-bd-1px-solid-border-light u-br-radius u-bg-bg-card u-c-text u-minw-200px" />
+            <SearchInput value={q} onChange={setQ} placeholder="Jogador ou torneio…" className="u-ml-auto" />
           </div>
 
           {rows.length === 0 ? (

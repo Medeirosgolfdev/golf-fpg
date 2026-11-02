@@ -47,6 +47,10 @@ import TabRow from "../ui/TabRow";
 import FilterPillRow from "../ui/FilterPillRow";
 import EmptyState from "../ui/EmptyState";
 import { fmtHcp } from "../utils/format";
+import SearchInput from "../ui/SearchInput";
+import ErrorState from "../ui/ErrorState";
+import SexSelect from "../ui/SexSelect";
+import { ToggleChip } from "../ui/FilterField";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -378,16 +382,9 @@ export default function JogadoresPorAnoPage() {
               title: fedsError ? `Erro: ${fedsError}` : "Universo FPG completo (cadastro)" },
           ]} />
 
-        <input
-          className="select u-minw-180px" placeholder="Procurar nome / clube / nº…"
-          value={q} onChange={e => setQ(e.target.value)}
-        />
+        <SearchInput value={q} onChange={setQ} placeholder="Procurar nome / clube / nº…" />
 
-        <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as "ALL" | "M" | "F")}>
-          <option value="ALL">Sexo (todos)</option>
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
-        </select>
+        <SexSelect value={sexFilter} onChange={setSexFilter} allValue="ALL" />
 
         <select className="select" value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
           <option value="ALL">Região (todas)</option>
@@ -400,20 +397,10 @@ export default function JogadoresPorAnoPage() {
           title="Mostrar só jogadores com HCP igual ou inferior a este valor"
         />
 
-        <label className="muted fs-10 u-d-inline-flex u-ai-center u-gap-4px">
-          <input type="checkbox" checked={activeOnly} onChange={e => setActiveOnly(e.target.checked)} />
-          Só activos (12m)
-        </label>
-        <label className="muted fs-10 u-d-inline-flex u-ai-center u-gap-4px">
-          <input type="checkbox" checked={withStatsOnly} onChange={e => setWithStatsOnly(e.target.checked)} />
-          Só com estatísticas
-        </label>
-
-        <label className="muted fs-10 u-d-inline-flex u-ai-center u-gap-4px"
-          title="Junta todos os anos seleccionados numa só tabela, em vez de uma tabela por ano">
-          <input type="checkbox" checked={combine} onChange={e => setCombine(e.target.checked)} />
-          Tabela única
-        </label>
+        <ToggleChip checked={activeOnly} onChange={setActiveOnly} label="Só activos (12m)" />
+        <ToggleChip checked={withStatsOnly} onChange={setWithStatsOnly} label="Só com estatísticas" />
+        <ToggleChip checked={combine} onChange={setCombine} label="Tabela única"
+          title="Junta todos os anos seleccionados numa só tabela, em vez de uma tabela por ano" />
 
         <button type="button" className="btn" onClick={() => setOrder(o => o === "asc" ? "desc" : "asc")}
           title="Inverter ordem das coortes (ano)">
@@ -428,9 +415,7 @@ export default function JogadoresPorAnoPage() {
       </Toolbar>
 
       {viewMode === "todos" && fedsError && (
-        <div className="muted fs-10 fw-600 u-c-color-warn-vivid">
-          ⚠ Erro a carregar federados.json: {fedsError}
-        </div>
+        <ErrorState message="Erro ao carregar a lista de federados (federados.json)" detail={fedsError} />
       )}
 
       {/* Filtro por ANO de nascimento — anos recentes individuais, antigos em escalões de 5 anos */}

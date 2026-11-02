@@ -16,7 +16,6 @@
  */
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { SexFilter } from "../../data/types";
 import { escCls } from "../../utils/playerUtils";
 import { isSeniorEscalao, ESCALOES_JOVENS } from "../../constants/escaloes";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../../ui/Toolbar";
@@ -28,6 +27,8 @@ import type { JogadoresFiltersApi } from "./useJogadoresFilters";
 import { NEW_DAYS, type SortKey, type ViewMode } from "./filterPlayers";
 import ClearButton from "../../ui/ClearButton";
 import TabRow from "../../ui/TabRow";
+import SearchInput from "../../ui/SearchInput";
+import SexSelect from "../../ui/SexSelect";
 
 /** Contagens calculadas (memoizadas) no shell — a toolbar não varre listas. */
 export interface ToolbarCounts {
@@ -123,25 +124,7 @@ export default function JogadoresToolbar({
         )}
         <ToolbarSep />
         {/* Pesquisa — padrão unificado da FPGPage (type=search + 🔎 + ×) */}
-        <div className="u-fsh-0 u-pos-relative u-d-inline-flex u-ai-center">
-          <span aria-hidden="true" className="u-pos-absolute u-left-8px u-fs-fs-11 u-c-text-muted u-pointer-events-none">🔎</span>
-          <input
-            type="search"
-            value={filters.q}
-            onChange={e => update({ q: e.target.value })}
-            placeholder="nome, clube, nº fed…"
-            aria-label="Pesquisar jogadores"
-            className="u-fs-fs-12 u-p-4px-22px-4px-24px u-w-180px u-bd-1px-solid-border u-br-radius u-bg-bg-card u-c-text u-outline-none"
-          />
-          {filters.q && (
-            <button
-              type="button"
-              aria-label="Limpar pesquisa"
-              onClick={() => update({ q: "" })}
-              className="u-pos-absolute u-right-2px u-bg-none u-bd-none u-cur-pointer u-c-text-muted u-fs-fs-14 u-p-0-4px u-lh-1"
-            >×</button>
-          )}
-        </div>
+        <SearchInput value={filters.q} onChange={v => update({ q: v })} placeholder="nome, clube, nº fed…" ariaLabel="Pesquisar jogadores" />
         <ToolbarSep />
         {/* Escalão pills — em NOSSOS sempre visíveis; em TODOS só quando o filtro
              de jovens está activo. Com Jovens activo escondemos pills de
@@ -173,37 +156,20 @@ export default function JogadoresToolbar({
           </div>
         )}
         {/* Preset 🧒 Jovens — pill ROTULADA (antes era botão-ícone sem texto) */}
-        <button
-          className={`tourn-tab tourn-tab-sm${isJuvenilFilter ? " active" : ""}`}
-          onClick={() => update({ escalaoFilter: isJuvenilFilter ? new Set() : new Set(ESCALOES_JOVENS) })}
-          aria-pressed={isJuvenilFilter}
-          title={isJuvenilFilter ? "Limpar filtro de jovens" : "Só escalões jovens (Sub-10 a Sub-21)"}
-        >
-          🧒 Jovens
-        </button>
+        <ToggleChip checked={isJuvenilFilter} label="🧒 Jovens"
+          onChange={() => update({ escalaoFilter: isJuvenilFilter ? new Set() : new Set(ESCALOES_JOVENS) })}
+          title={isJuvenilFilter ? "Limpar filtro de jovens" : "Só escalões jovens (Sub-10 a Sub-21)"} />
         {/* 🟢 Novos — pill rotulada com count; disabled em vez de desaparecer
             (evita layout-shift quando os stats acabam de carregar) */}
-        <button
-          className={`tourn-tab tourn-tab-sm${filters.newFilter ? " active" : ""}`}
-          onClick={() => update({ newFilter: !filters.newFilter })}
-          aria-pressed={filters.newFilter}
+        <ToggleChip checked={filters.newFilter} onChange={v => update({ newFilter: v })}
           disabled={counts.newCount === 0}
-          style={counts.newCount === 0 ? { opacity: 0.45, cursor: "default" } : undefined}
+          label={<>🟢 Novos{counts.newCount > 0 && <span className="p-filter-count">{counts.newCount}</span>}</>}
           title={filters.newFilter
             ? `Filtrando ${counts.newCount} jogadores com rondas nos últimos ${NEW_DAYS} dias — clicar para limpar`
-            : `Mostrar só os ${counts.newCount} jogadores com rondas nos últimos ${NEW_DAYS} dias`}
-        >
-          🟢 Novos{counts.newCount > 0 && <span className="p-filter-count">{counts.newCount}</span>}
-        </button>
+            : `Mostrar só os ${counts.newCount} jogadores com rondas nos últimos ${NEW_DAYS} dias`} />
         {/* Activos (ambos os modos) — com rondas este ano */}
-        <button
-          className={`tourn-tab tourn-tab-sm${filters.activeOnlyFilter ? " active" : ""}`}
-          onClick={() => update({ activeOnlyFilter: !filters.activeOnlyFilter })}
-          aria-pressed={filters.activeOnlyFilter}
-          title={`Jogadores com rondas em ${new Date().getFullYear()} (união: player-stats locais + cadastro FPG)`}
-        >
-          🏌️ Activos
-        </button>
+        <ToggleChip checked={filters.activeOnlyFilter} onChange={v => update({ activeOnlyFilter: v })} label="🏌️ Activos"
+          title={`Jogadores com rondas em ${new Date().getFullYear()} (união: player-stats locais + cadastro FPG)`} />
         {/* ⚙️ Filtros — abre o painel secundário; badge = filtros do painel activos */}
         <button
           className={`tourn-tab tourn-tab-sm${panelOpen ? " active" : ""}`}
@@ -253,9 +219,7 @@ export default function JogadoresToolbar({
         <div className="u-bb-1px-solid-border u-bg-bg-card u-p-8px-12px">
           <div className="filter-grid">
             <FilterField label="SEXO">
-              <select className="filter-input" value={filters.sexFilter} onChange={e => update({ sexFilter: e.target.value as SexFilter })}>
-                <option value="ALL">Todos</option><option value="M">Masculino</option><option value="F">Feminino</option>
-              </select>
+              <SexSelect className="filter-input" value={filters.sexFilter} onChange={v => update({ sexFilter: v })} allValue="ALL" />
             </FilterField>
             {viewMode === "todos" && (
               <FilterField label="NACIONALIDADE">

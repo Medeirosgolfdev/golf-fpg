@@ -18,20 +18,23 @@ export function FilterField({ label, children }: { label: string; children: Reac
   );
 }
 
-export function ToggleChip({ checked, onChange, label, title }: {
+export function ToggleChip({ checked, onChange, label, title, disabled, className }: {
   checked: boolean;
   onChange: (v: boolean) => void;
-  label: string;
+  label: ReactNode;
   title?: string;
+  disabled?: boolean;
+  className?: string;
 }) {
   return (
     <button
       type="button"
       onClick={() => onChange(!checked)}
       // Ligado verde, desligado cinzento — a pill global (Mariana, 31/10/2026).
-      className={"tourn-tab tourn-tab-sm" + (checked ? " active" : "")}
+      className={"tourn-tab tourn-tab-sm shrink-0" + (checked ? " active" : "") + (className ? " " + className : "")}
       aria-pressed={checked}
       title={title}
+      disabled={disabled}
     >
       {label}
     </button>

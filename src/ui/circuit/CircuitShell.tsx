@@ -58,6 +58,9 @@ import type {
 } from "./types";
 import ClearButton from "../ClearButton";
 import TabRow from "../TabRow";
+import SearchInput from "../SearchInput";
+import SexSelect from "../SexSelect";
+import { ToggleChip } from "../FilterField";
 
 // ── Helpers ─────────────────────────────────────────────────────────── //
 
@@ -639,26 +642,11 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
               da página — no fim da barra ficavam fora do ecrã (20/10/2026). O
               campo do torneio já está no cabeçalho do detalhe, não se repete aqui. */}
           {enabledToggles.map(t => (
-            <button
-              key={t}
-              type="button"
-              title={TOGGLE_DEF[t].title}
-              className={`tourn-tab tourn-tab-sm${toggles.has(t) ? " active" : ""} u-fsh-0`}
-              onClick={() => toggle(t)}
-
-            >
-              {TOGGLE_DEF[t].label}
-            </button>
+            <ToggleChip key={t} checked={toggles.has(t)} onChange={() => toggle(t)} label={TOGGLE_DEF[t].label} title={TOGGLE_DEF[t].title} />
           ))}
 
           {flt.search && (
-            <input
-              className="input u-w-160px u-fs-fs-12 u-p-3px-8px u-ml-8px"
-
-              placeholder="🔍 Pesquisar…"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-            />
+            <SearchInput value={search} onChange={setSearch} size="sm" className="u-ml-8px" />
           )}
           {flt.year && years.length > 1 && (
             <>
@@ -679,11 +667,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
             </select>
           )}
           {flt.sex && (
-            <select className="input u-fs-fs-12 u-p-3px-6px" value={fSex} onChange={e => setFSex(e.target.value)}>
-              <option value="all">M+F</option>
-              <option value="M">Masculino</option>
-              <option value="F">Feminino</option>
-            </select>
+            <SexSelect className="input u-fs-fs-12 u-p-3px-6px" value={fSex} onChange={setFSex} allValue="all" />
           )}
           {flt.source && sources.length > 1 && (
             <select className="input u-fs-fs-12 u-p-3px-6px" value={fSource} onChange={e => setFSource(e.target.value)}>

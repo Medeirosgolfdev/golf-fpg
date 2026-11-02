@@ -35,6 +35,8 @@ import { useCamposDe9 } from "../../hooks/useCamposDe9";
 import type { ViewKey, CourseSort } from "./shared";
 import { MANUEL_FED } from "../../constants/manuel";
 import TabRow from "../../ui/TabRow";
+import SearchInput from "../../ui/SearchInput";
+import ErrorState from "../../ui/ErrorState";
 // Draws (companheiros de jogo) — só na ficha do Manuel; saiu da barra (13/10/2026).
 const DrawsPage = lazy(() => import("../DrawsPage"));
 
@@ -321,8 +323,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
           <div className="dh-right">
             {data && (
               <div className="pa-controls-left">
-                <input className="input" placeholder="Pesquisar campo…" value={courseSearch}
-                  onChange={e => setCourseSearch(e.target.value)} />
+                <SearchInput value={courseSearch} onChange={setCourseSearch} placeholder="Pesquisar campo…" />
                 {/* Consolidação 5→3 (2026-08-15): Rondas funde "Por data" +
                     "Por torneio" (agrupamento no segmented ao lado); Campos
                     absorve a "Análise por campo" (o detalhe expandido mostra
@@ -361,7 +362,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
       {loading ? (
         <LoadingState size="sm" message="A carregar análise…" />
       ) : error || !data ? (
-        <div className="player-embed-error">Não foi possível carregar: {error}</div>
+        <ErrorState message="Não foi possível carregar a análise" detail={error} />
       ) : (
         <>
           {/* View content — Campos é sempre a versão rica (a antiga "Análise

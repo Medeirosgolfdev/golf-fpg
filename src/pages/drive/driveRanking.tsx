@@ -34,6 +34,8 @@ import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { EscLookup, Sub12Row, TournResult } from "../../ui/driveTypes";
 import TabRow from "../../ui/TabRow";
 import CloseButton from "../../ui/CloseButton";
+import SearchInput from "../../ui/SearchInput";
+import SexSelect from "../../ui/SexSelect";
 
 export const SERIE_LABELS: Record<DriveSeries, string> = { tour: "Tour", challenge: "Challenge", aquapor: "AQUAPOR" };
 const REGION_LABEL: Record<string, string> = { norte: "Norte", tejo: "Tejo", sul: "Sul", madeira: "Madeira", acores: "Açores", nacional: "Nacional" };
@@ -247,12 +249,8 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
               <option value="all">Todos os escalões</option>
               {ESCALOES_DRIVE.map(esc => <option key={esc} value={esc}>{esc}</option>)}
             </select>
-            <select className="select fs-11" value={d.sex} onChange={e => d.set({ s12x: e.target.value })} aria-label="Sexo">
-              <option value="all">Ambos os sexos</option>
-              <option value="M">Masculino</option>
-              <option value="F">Feminino</option>
-            </select>
-            <input className="input fs-11 drive-boxed" value={d.search} onChange={e => d.setSearch(e.target.value)} placeholder="Nome, clube…" />
+            <SexSelect value={d.sex} onChange={v => d.set({ s12x: v })} allValue="all" />
+            <SearchInput value={d.search} onChange={d.setSearch} placeholder="Nome, clube…" />
           </div>
         </div>
       );

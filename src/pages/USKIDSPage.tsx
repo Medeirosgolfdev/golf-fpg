@@ -31,6 +31,8 @@ import {
   USKIDS_CONFIG_CAMPO, USKIDS_CONFIG_RESULTADOS, type EdicoesIndex,
 } from "./uskids/uskidsCircuit";
 import ExtLink from "../ui/ExternalLink";
+import ErrorState from "../ui/ErrorState";
+import { ToggleChip } from "../ui/FilterField";
 
 
 
@@ -651,11 +653,7 @@ export default function USKidsFieldPage() {
 
   if (erro) return (
     <div className="u-p-32px">
-      <div className="notice-error">
-        <div className="fw-700 c-danger mb-4">Erro ao carregar dados USKids</div>
-        <div className="muted fs-11 mono">{erro}</div>
-        <button className="btn mt-8" onClick={() => window.location.reload()}>Recarregar</button>
-      </div>
+      <ErrorState message="Erro ao carregar os dados USKids" detail={erro} onRetry={() => window.location.reload()} />
     </div>
   );
   if (!fieldData) return <LoadingState message="A carregar dados USKids…" size="lg" icon="🏌️" />;
@@ -793,14 +791,7 @@ export default function USKidsFieldPage() {
     <TabRow active={tab} onChange={handleTabChange} className="u-fsh-0"
       tabs={TABS.map(tb => ({ key: tb.id, label: tb.label, count: tb.badge ?? undefined }))} />
     <ToolbarSep />
-    <button
-        className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
-        onClick={() => setFilterManuel(v => !v)}
-        style={filterManuel
-          ? { flexShrink:0, background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }
-          : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
-        ★ Manuel
-      </button>
+    <ToggleChip checked={filterManuel} onChange={setFilterManuel} label="★ Manuel" />
       {/* Categorias: vigiam-se todas, a lista mostra só as ligadas. Azul, para
           não se confundirem com o ★ Manuel. */}
       {mostrarChips && (<>
@@ -808,29 +799,15 @@ export default function USKidsFieldPage() {
         {contagemCat.map(c => {
           const on = catVisiveis.has(c.tipo);
           return (
-            <button key={c.tipo}
-              className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
-              onClick={() => alternarCategoria(c.tipo)}
-              aria-pressed={on}
+            <ToggleChip key={c.tipo} checked={on} onChange={() => alternarCategoria(c.tipo)}
               title={on ? "Clicar para esconder" : `${c.n} escondidos — clicar para mostrar`}
-              style={on
-                ? { flexShrink:0, background:"var(--bg-info)", borderColor:"var(--border-info)", color:"var(--color-info)" }
-                : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-3)", borderColor:"var(--border)", textDecoration:"line-through" }}>
-              {c.label} <span className="fs-10 u-op-0_7">{c.n}</span>
-            </button>
+              label={<>{c.label} <span className="fs-10 u-op-0_7">{c.n}</span></>} />
           );
         })}
       </>)}
     {tab === "resultados" && (
-      <button
-        className={"tourn-tab tourn-tab-sm" + (filterSmallField ? " active" : "")}
-        onClick={() => setFilterSmallField(v => !v)}
-        title={`Ocultar torneios com menos de ${MIN_FIELD} jogadores`}
-        style={filterSmallField
-          ? { flexShrink:0, background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }
-          : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
-        Campo ≥{MIN_FIELD}
-      </button>
+      <ToggleChip checked={filterSmallField} onChange={setFilterSmallField} label={`Campo ≥${MIN_FIELD}`}
+        title={`Ocultar torneios com menos de ${MIN_FIELD} jogadores`} />
     )}
   </>);
   const trail = (

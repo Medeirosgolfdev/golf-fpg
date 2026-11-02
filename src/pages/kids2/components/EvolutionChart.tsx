@@ -17,6 +17,7 @@ import type { CanonicalData, Junior } from "../data";
 import TabRow from "../../../ui/TabRow";
 import { fmtDate } from "../../../utils/format";
 import { SOURCE_COLORS, SOURCE_LABELS } from "../../../constants/kids2Sources";
+import { ToggleChip } from "../../../ui/FilterField";
 
 interface Props {
   data: CanonicalData;
@@ -183,17 +184,10 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
             { key: "toParNorm", label: "±par/18H", title: "±par/ronda normalizado para equivalente 18 buracos — útil para misturar 9H e 18H" },
             { key: "pos", label: "Posição" },
           ]} />
-          <button
-            type="button"
-            onClick={() => setInclude9H((v) => !v)}
-            aria-pressed={include9H}
-            className={"tourn-tab tourn-tab-sm" + (include9H ? " active" : "")}
+          <ToggleChip checked={include9H} onChange={setInclude9H} label="9H"
             title={include9H
               ? "A mostrar torneios de 9 e 18 buracos juntos"
-              : `Mostrar também ${hidden9HCount} torneio(s) de 9 buracos`}
-          >
-            9H {include9H ? "✓" : "✗"}
-          </button>
+              : `Mostrar também ${hidden9HCount} torneio(s) de 9 buracos`} />
         </div>
       </div>
 

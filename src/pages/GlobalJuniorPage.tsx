@@ -21,7 +21,7 @@ import type { CircuitConfig } from "../ui/circuit/types";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import type { Catalog, GjglIndex, GjglOverrides } from "../data/gjgl/types";
 import { CATALOG_URL, buildGjglEntries, loadGjglOverrides } from "../data/gjgl/entries";
-import EmptyState from "../ui/EmptyState";
+import ErrorState from "../ui/ErrorState";
 
 const GJGL_CONFIG: CircuitConfig = {
   routeBase: "/global-junior",
@@ -68,7 +68,7 @@ export default function GlobalJuniorPage() {
   );
 
   if (catalogError) {
-    return <EmptyState icon="⚠️" message={`Erro a carregar o catálogo: ${catalogError}`} />;
+    return <ErrorState message="Erro ao carregar o catálogo" detail={catalogError} />;
   }
   if (!catalog || index === undefined) {
     return <LoadingState message="A carregar catálogo GJGL…" />;

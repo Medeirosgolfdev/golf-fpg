@@ -53,6 +53,9 @@ import ClearButton from "../ui/ClearButton";
 import PlayerLink from "../ui/PlayerLink";
 import ExtLink from "../ui/ExternalLink";
 import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
+import SearchInput from "../ui/SearchInput";
+import ErrorState from "../ui/ErrorState";
+import SexSelect from "../ui/SexSelect";
 
 /* ── URL FPG (referência exacta pedida pelo user) ─────────────── */
 const FPG_LIST_URL =
@@ -435,7 +438,7 @@ export default function JogadoresListPage() {
     return (
       <div className="u-p-24px">
         <h2>Lista de Jogadores</h2>
-        <EmptyState size="md" message={`Erro ao carregar federados: ${loadError}`} />
+        <ErrorState message="Erro ao carregar os federados" detail={loadError} />
       </div>
     );
   }
@@ -467,13 +470,7 @@ export default function JogadoresListPage() {
       {/* ── Filtros essenciais ───────────────────────────────── */}
       <div className="filter-grid">
         <FilterField label="NOME / Nº FED">
-          <input
-            type="text"
-            value={q}
-            onChange={e => setQ(e.target.value)}
-            placeholder="Pesquisar por nome ou nº federado…"
-            className="filter-input"
-          />
+          <SearchInput value={q} onChange={setQ} placeholder="Pesquisar por nome ou nº federado…" size="full" />
         </FilterField>
 
         <FilterField label="ESCALÃO">
@@ -539,11 +536,7 @@ export default function JogadoresListPage() {
         </FilterField>
 
         <FilterField label="SEXO">
-          <select value={sex} onChange={e => setSex(e.target.value as typeof sex)} className="filter-input">
-            <option value="ALL">Todos</option>
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-          </select>
+          <SexSelect className="filter-input" value={sex} onChange={setSex} allValue="ALL" />
         </FilterField>
 
         <FilterField label="AM / PRO">

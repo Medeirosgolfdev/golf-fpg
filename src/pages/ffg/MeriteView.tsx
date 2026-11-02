@@ -27,6 +27,9 @@ import { RankChange, MUTED } from "../../ui/tableCells";
 import ExpandArrow from "../../ui/ExpandArrow";
 import ExtLink from "../../ui/ExternalLink";
 import { stripAccents } from "../../utils/normName";
+import SearchInput from "../../ui/SearchInput";
+import ErrorState from "../../ui/ErrorState";
+import { ToggleChip } from "../../ui/FilterField";
 
 /** [trnId|null, data ISO, nome, lugar, voltas, pontos, Moy.SSS] */
 type Prova = [string | null, string, string, string, number[], number | null, number | null];
@@ -133,7 +136,7 @@ export function FFGMeriteView() {
   const [lastSig, setLastSig] = useState(sig);
   if (sig !== lastSig) { setLastSig(sig); if (page !== 1) setPage(1); }
 
-  if (err) return <EmptyState message={`Erro: ${err}`} />;
+  if (err) return <ErrorState message="Erro ao carregar o Mérite" detail={err} />;
   if (!data) return <LoadingState message="A carregar o Mérite Jeunes..." />;
 
   const info = data.info[sex];
@@ -164,12 +167,9 @@ export function FFGMeriteView() {
           <option value="ALL">Todos os escalões</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
-        <input type="text" value={q} onChange={(e) => setQ(e.target.value)} placeholder="🔍 Nome ou clube…"
-          className="filter-input u-minw-220px u-fl-1-1-220px u-maxw-320px" />
-        <button type="button" onClick={() => setSoClass((v) => !v)} className={"tourn-tab tourn-tab-sm" + (soClass ? " active" : "")} aria-pressed={soClass}
-          title="O Mérite só classifica quem tem provas suficientes; os outros aparecem sem lugar">
-          Só classificados
-        </button>
+        <SearchInput value={q} onChange={setQ} placeholder="Nome ou clube…" size="full" className="u-maxw-320px" />
+        <ToggleChip checked={soClass} onChange={setSoClass} label="Só classificados"
+          title="O Mérite só classifica quem tem provas suficientes; os outros aparecem sem lugar" />
         <span className="muted fs-12 u-ml-auto">{sorted.length.toLocaleString("pt")} jogadores</span>
       </div>
 

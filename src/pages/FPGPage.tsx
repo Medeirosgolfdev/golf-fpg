@@ -62,6 +62,7 @@ import {
   FPG_CONFIG, CLUBES_CONFIG,
 } from "./fpg/fpgCircuitData";
 import TabRow from "../ui/TabRow";
+import SearchInput from "../ui/SearchInput";
 
 /** Junta o tab do Match Play (Taça da Federação), o da Ordem de Mérito (CGSS)
  *  e o do campo («⛳ O campo», o «Como jogou» da /campos) aos tabs de "Edições
@@ -607,25 +608,8 @@ function Content() {
               jogadores). Nas vistas de torneios é o CircuitShell que pesquisa. */}
           {!loading && navMode !== "torneios" && (<>
             <ToolbarSep />
-            <div className="toolbar-search">
-              <span aria-hidden="true" className="toolbar-search-icon">🔎</span>
-              <input
-                type="search"
-                className="toolbar-search-input"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder={navMode === "ranking-sub12" ? "jogador..." : "jogador ou clube..."}
-                aria-label="Pesquisar"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  aria-label="Limpar pesquisa"
-                  onClick={() => setSearchQuery("")}
-                  className="toolbar-search-clear"
-                >×</button>
-              )}
-            </div>
+            <SearchInput value={searchQuery} onChange={setSearchQuery} ariaLabel="Pesquisar"
+              placeholder={navMode === "ranking-sub12" ? "jogador…" : "jogador ou clube…"} />
           </>)}
           {!loading && (<>
             <ToolbarSep />

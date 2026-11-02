@@ -11,6 +11,7 @@ import type { CanonicalData, Junior } from "./data";
 import { getSharedFlightTids } from "./data";
 import { flag as flagOf } from "../../utils/flagUtils";
 import ExpandArrow from "../../ui/ExpandArrow";
+import SearchInput from "../../ui/SearchInput";
 
 const MAX_VISIBLE = 8000;
 
@@ -188,13 +189,7 @@ export default function Sidebar({
               : `${totalShown} de ${totalFiltered}`}
           </span>
         </div>
-        <input
-          type="text"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Pesquisar rival..."
-          className="u-w-100pc u-p-6px-10px u-bd-1px-solid-border u-br-radius u-fs-fs-13 u-bg-bg u-c-text"
-        />
+        <SearchInput value={q} onChange={setQ} placeholder="Pesquisar rival…" size="full" />
       </div>
 
       <div className="u-fl-1 u-oy-auto">

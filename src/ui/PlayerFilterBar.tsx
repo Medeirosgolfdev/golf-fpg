@@ -21,6 +21,7 @@ import ClearButton from "./ClearButton";
 import { getTeeHex } from "../utils/teeColors";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
+import SearchInput from "./SearchInput";
 
 /* ── Sexo por nome (entradas kids:* do playersDB com sex) ── */
 
@@ -124,12 +125,7 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
 
   return (
     <div className="filter-bar">
-      <div className="search-wrap">
-        <span className="search-icon-abs">🔍</span>
-        <input type="text" placeholder="Nome ou clube…" value={filter.name}
-          onChange={(e) => onChange({ ...filter, name: e.target.value })}
-          className="input-search u-w-140px" />
-      </div>
+      <SearchInput value={filter.name} onChange={v => onChange({ ...filter, name: v })} placeholder="Nome ou clube…" size="sm" />
       {hasOpts && sep}
       {escs.length > 1 && escs.map((e) => (
         <FilterChip key={e} active={filter.escs.includes(e)} color={ESC_STYLE[e.toLowerCase().replace(/[\s-]/g, "")]?.bg}

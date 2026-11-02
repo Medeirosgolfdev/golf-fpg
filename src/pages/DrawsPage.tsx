@@ -41,6 +41,8 @@ import type { PlayersDb } from "../data/types";
 import ExpandArrow from "../ui/ExpandArrow";
 import ExtLink from "../ui/ExternalLink";
 import { compareEscalao } from "../data/model/escalao";
+import SearchInput from "../ui/SearchInput";
+import ErrorState from "../ui/ErrorState";
 
 // ── Tipos ─────────────────────────────────────────────────────────────
 
@@ -978,9 +980,7 @@ export default function DrawsPage() {
       {/* Conteúdo */}
       <div>
         {erro && (
-          <div className="notice notice-error">
-            Erro ao carregar pairings: {erro}
-          </div>
+          <ErrorState message="Erro ao carregar os pairings" detail={erro} />
         )}
 
         {!erro && !data && (
@@ -1019,12 +1019,12 @@ export default function DrawsPage() {
         {/* Pesquisa — por torneio, campo, jogador ou clube */}
         {data && linhas.length > 0 && (
           <div className="u-d-flex u-ai-center u-gap-8px u-mb-12px u-fwr-wrap">
-            <input
-              className="input u-maxw-340px u-fl-1-1-240px"
+            <SearchInput
+              size="full" className="u-maxw-340px"
               value={q}
-              onChange={e => setQ(e.target.value)}
+              onChange={setQ}
               placeholder="Pesquisar por torneio, campo, jogador ou clube…"
-              aria-label="Pesquisar companheiros por torneio, campo, jogador ou clube"
+              ariaLabel="Pesquisar companheiros por torneio, campo, jogador ou clube"
 
             />
             {q.trim() && (

@@ -38,6 +38,8 @@ import {
 } from "../data/drive/driveUrl";
 import type { Tournament, DriveData } from "../ui/driveTypes";
 import ExtLink from "../ui/ExternalLink";
+import ErrorState from "../ui/ErrorState";
+import { ToggleChip } from "../ui/FilterField";
 
 /* ── Constants ── */
 const REGIONS = [
@@ -317,7 +319,7 @@ function DriveContent() {
 
 
   if (loading) return <LoadingState />;
-  if (error)   return <div className="jogadores-page"><div className="notice-error drive-error">Erro: {error}</div></div>;
+  if (error)   return <div className="jogadores-page"><ErrorState className="drive-error" message="Erro ao carregar os dados do Drive" detail={error} /></div>;
   if (!data)   return null;
 
   const allSources: DataSource[] = [...monthlyMeta, ...admissionsMeta];
@@ -358,11 +360,7 @@ function DriveContent() {
               <TabRow ariaLabel="Ano" active={activeYear} tabs={availYears.map(y => ({ key: y, label: y }))}
                 onChange={y => go({ year: y === activeYear && availYears.length > 1 ? null : y })} />
               <ToolbarSep />
-              <button
-                className={"tourn-tab tourn-tab-sm drive-manuel" + (filterManuel ? " active" : " tourn-tab-muted")}
-                onClick={() => go({ manuel: !filterManuel })}>
-                ★ Manuel
-              </button>
+              <ToggleChip checked={filterManuel} onChange={v => go({ manuel: v })} label="★ Manuel" className="u-ws-nowrap" />
             </>)}
   </>);
   const driveBelow = (<>

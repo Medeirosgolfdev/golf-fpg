@@ -26,7 +26,6 @@ import { JovensAnaliseView } from "../ui/JovensAnaliseView";
 import LoadingState from "../ui/LoadingState";
 import TabRow from "../ui/TabRow";
 import { fmtDate } from "../utils/format";
-import EmptyState from "../ui/EmptyState";
 import { useAppContext } from "../context/AppContext";
 import type { Tournament } from "../data/fpgTypes";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
@@ -38,6 +37,7 @@ import {
   type NationalityMap,
   type PlayerInfoMap,
 } from "../data/jovensAnaliseData";
+import ErrorState from "../ui/ErrorState";
 
 interface HistoricoFile {
   lastUpdated: string;
@@ -213,7 +213,7 @@ export default function TitulosPage() {
   // Navigate AFTER all hooks (Rules of Hooks: hooks must be called in same
   // order on every render — no early returns before useState/useEffect).
   if (validTab === null) return <Navigate to="/titulos/nacional" replace />;
-  if (historicoErr) return <EmptyState message={`Erro a carregar dados: ${historicoErr}`} />;
+  if (historicoErr) return <ErrorState message="Erro ao carregar os títulos" detail={historicoErr} />;
   if (!historico) return <LoadingState message="A carregar Títulos…" />;
 
   return (

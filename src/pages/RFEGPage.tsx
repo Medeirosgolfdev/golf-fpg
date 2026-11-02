@@ -30,6 +30,7 @@ import { rfegRoundDraw, type RfegDrawDetail } from "../data/rfeg/roundDraw";
 import { loadRfegDivisionData } from "../data/rfeg/divisionData";
 import TotalsResumo, { type TotalsPlayer } from "../ui/circuit/TotalsResumo";
 import { useRfegData } from "../data/rfeg/useRfegData";
+import ErrorState from "../ui/ErrorState";
 
 /* ── DrawSaidaView ──────────────────────────────────────────
  * Aba "Draw R{n}" da RFEGPage — o DrawTab partilhado (= FPG). Os dados (horários
@@ -482,7 +483,7 @@ export default function RFEGPage() {
     ] : [],
   }), [index, vetIndex]);
 
-  if (error) return <EmptyState message={`Erro: ${error}`} />;
+  if (error) return <ErrorState message="Erro ao carregar os dados de Espanha" detail={error} />;
   if (!index) return <LoadingState message="A carregar índice RFEGolf..." />;
 
   return (

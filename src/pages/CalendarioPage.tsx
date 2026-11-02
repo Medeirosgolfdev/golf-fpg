@@ -27,6 +27,7 @@ import { CAL_DEFS, EVENTS, DOB_OVERRIDES, ANO_BASE, ANO_FIM } from "../data/cale
 import type { CalEvent, CalGroup, CalDef } from "../data/calendarEvents";
 import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
 import SidebarToggle from "../ui/SidebarToggle";
+import SearchInput from "../ui/SearchInput";
 
 interface CalendarSource {
   id: string;
@@ -655,13 +656,10 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
             <SidebarToggle open={sidebarOpen} onToggle={() => setSidebarOpen(v => !v)} backLabel="Filtros" />
             <h2 className="cal-month-title fs-14 u-m-0 u-ws-nowrap">Calendário {miAno(currentMonth)}</h2>
             <button type="button" onClick={goToday} className="btn shrink-0" title="Ir para hoje">Hoje</button>
-            <div ref={searchRef} className="u-pos-relative u-fl-1-1-120px u-minw-100px u-maxw-220px">
-              <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
-                onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
-                placeholder="Pesquisar…"
-                className="u-w-100pc u-p-5px-8px-5px-26px u-bd-1px-solid-border u-br-radius u-fs-fs-11 u-ff-inherit u-bg-bg-card u-c-text u-outline-none"
-                onKeyDown={e => { if (e.key === "Escape") { setSearchOpen(false); setSearchQ(""); } }} />
-              <span className="u-pos-absolute u-left-8px u-top-50pc u-transform-translatey-50pc u-fs-fs-12 u-c-text-muted u-pointer-events-none">🔍</span>
+            <SearchInput wrapRef={searchRef} size="full" className="u-minw-100px u-maxw-220px"
+              value={searchQ} onChange={v => { setSearchQ(v); setSearchOpen(true); }}
+              onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
+              onKeyDown={e => { if (e.key === "Escape") { setSearchOpen(false); setSearchQ(""); } }}>
               {searchOpen && searchResults.length > 0 && (
                 <div className="u-pos-absolute u-top-100pc u-left-0 u-right-0 u-mt-4px u-bg-bg-card u-bd-1px-solid-border-light u-br-radius-lg u-bs-shadow-lg u-maxh-320px u-oy-auto u-z-z-sidebar">
                   {searchResults.map(ev => {
@@ -683,7 +681,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                   Nenhum evento encontrado
                 </div>
               )}
-            </div>
+            </SearchInput>
             {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
             <TabRow className="ml-auto shrink-0" active={viewMode} onChange={setViewMode}
               tabs={[{ key: "month" as ViewMode, label: "Mês" }, { key: "list" as ViewMode, label: "Lista" }]} />

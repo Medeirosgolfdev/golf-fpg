@@ -32,6 +32,7 @@ import { C } from "../utils/colors";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { tpColor } from "../ui/tournamentPrimitives";
+import SearchInput from "../ui/SearchInput";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
 const COLORS = [C.chartGreen, C.chartBlue, C.chartRed, C.chartAmber];
@@ -135,10 +136,8 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
   return (
     <div className="u-mb-18px">
       <div className="u-d-flex u-gap-8px u-ai-center u-mb-10px" ref={ref}>
-        <div className="u-pos-relative u-fl-1">
-          <input className="input u-w-100pc u-fs-fs-14 u-p-10px-14px" value={q} onChange={e => { setQ(e.target.value); setOpen(true); }} onFocus={() => q.trim() && setOpen(true)}
-            placeholder="Pesquisar jogador…" disabled={slots.length >= 4}
- />
+        <SearchInput size="full" value={q} onChange={v => { setQ(v); setOpen(true); }} onFocus={() => { if (q.trim()) setOpen(true); }}
+          placeholder="Pesquisar jogador…" disabled={slots.length >= 4}>
           {open && results.length > 0 && (
             <div className="u-pos-absolute u-top-100pc u-left-0 u-right-0 u-z-z-dropdown u-bg-bg-card u-bd-1px-solid-border u-br-radius u-bs-shadow-lg u-maxh-280px u-oy-auto">
               {results.map(p => (
@@ -149,7 +148,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
               ))}
             </div>
           )}
-        </div>
+        </SearchInput>
         <span className="chip u-fs-fs-13 u-p-6px-12px">{slots.length}/4</span>
       </div>
       {slots.length > 0 && (

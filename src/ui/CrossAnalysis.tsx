@@ -6,6 +6,8 @@ import SortableHdr from "./SortableHdr";
 import PlayerLink from "./PlayerLink";
 import { ESC_ORDER_FULL } from "../constants/escaloes";
 import { fmtHcp } from "../utils/format";
+import TabRow from "./TabRow";
+import SexSelect from "./SexSelect";
 
 // Common Courses
 function CommonCourses({ players }: {
@@ -113,22 +115,11 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
     <div className={bare ? undefined : "card mt-24"}>
       {!bare && <div className="h-xs fs-18 mb-16">📊 Cross-Análise por Escalão</div>}
       {/* Tabs */}
-      <div className="escalao-pills jog-cross-wrap">
-        {escalaos.map(esc => (
-          <button key={esc} className={`p p-filter${esc === activeEsc ? " active" : ""}`}
-            onClick={() => setActiveEsc(esc)}>
-            {esc} <span className="p-filter-count">{byEscalao[esc].length}</span>
-          </button>
-        ))}
-      </div>
+      <TabRow className="jog-cross-wrap" ariaLabel="Escalão" active={activeEsc} onChange={setActiveEsc}
+        tabs={escalaos.map(esc => ({ key: esc, label: esc, count: byEscalao[esc].length }))} />
       {/* Filters */}
       <div className="jog-cross-filter">
-        <select className="mini-badge"
-          value={sexFilter} onChange={e => setSexFilter(e.target.value)}>
-          <option value="all">Sexo</option>
-          <option value="M">Masc.</option>
-          <option value="F">Fem.</option>
-        </select>
+        <SexSelect className="mini-badge" value={sexFilter} onChange={setSexFilter} allValue="all" />
         <select className="mini-badge"
           value={hcpMax} onChange={e => setHcpMax(e.target.value)}>
           <option value="all">HCP máx</option>

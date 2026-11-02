@@ -25,7 +25,6 @@ import { loadPlayers } from "../data/loader";
 import { buildEscLookup } from "../utils/playerUtils";
 import { ToolbarTitle } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
-import EmptyState from "../ui/EmptyState";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
 import type { CircuitConfig, CircuitEntry, CircuitRenderFullExtras } from "../ui/circuit/types";
@@ -35,6 +34,7 @@ import {
   type RecentDoc, type RecentTournament,
 } from "../data/recentTournaments";
 import ExtLink from "../ui/ExternalLink";
+import ErrorState from "../ui/ErrorState";
 
 const CONFIG: CircuitConfig = {
   routeBase: "/torneios-recentes",
@@ -114,7 +114,7 @@ export default function RecentTournamentsPage() {
   }, [all, minOurs]);
   const selectedId = key && all.some((e) => e.id === key) ? key : undefined;
 
-  if (err) return <div className="u-p-24px"><EmptyState size="md" message={`Erro ao carregar: ${err}`} /></div>;
+  if (err) return <div className="u-p-24px"><ErrorState message="Erro ao carregar os torneios recentes" detail={err} /></div>;
   if (!doc) return <LoadingState size="md" message="A carregar torneios recentes…" />;
 
   const lead = (<>

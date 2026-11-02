@@ -128,6 +128,9 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 /* Texto de aviso inline (sem caixa) */
 .notice-warn-text { color: var(--color-warn-dark); font-weight: 600; }
 .notice-error.ta-c { text-align: center; }
+/* Mensagem de erro (ui/ErrorState) */
+.error-state-msg { font-weight: 600; }
+.error-state-detail { margin-top: var(--space-4); font-family: var(--font-mono); font-size: var(--fs-11); opacity: 0.85; word-break: break-word; }
 
 /* ─── Page Layouts ─── */
 .page-full { max-width: 1060px; margin: 0 auto; padding: var(--space-inner); overflow: auto; flex: 1; background: var(--bg-detail); }
@@ -1445,12 +1448,6 @@ tr.cross-current { background: var(--bg-success); }
  .an-grid3 { grid-template-columns: 1fr; }
 }
 
-.player-embed-error {
- padding: var(--space-24);
- text-align: center;
- color: var(--text-3);
- font-size: var(--fs-13);
-}
 
 /* ─── Utility ─── */
 
@@ -3323,10 +3320,6 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 .kpi-row { display: flex; flex-wrap: wrap; gap: var(--space-10); margin: var(--space-12) 0; }
 
 /* ── Search input + compact select (DrivePage, FPGPage) ── */
-.input-search { font-size: var(--fs-11); padding: var(--space-3) var(--space-8) var(--space-3) 22px; border-radius: var(--radius);
-  border: 1px solid var(--border); background: var(--bg-card);
-  outline: none; width: 140px; }
-.input-search:focus { border-color: var(--accent); }
 .select-compact { font-size: var(--fs-11); padding: var(--space-3) var(--space-6); border-radius: var(--radius);
   border: 1px solid var(--border); background: var(--bg-card); }
 
@@ -3726,27 +3719,29 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 /* --- Flex layout --- */
 
 /* --- Search input icon (PlayerFilterBar pattern) --- */
-.search-icon-abs {
-  position: absolute; left: 7px; top: 50%; transform: translateY(-50%);
-  font-size: var(--fs-11); color: var(--text-muted); pointer-events: none;
-}
-.search-wrap { position: relative; flex-shrink: 0; }
-/* Pesquisa da toolbar da /FPG (Clubes/Jovens/rankings): 🔎 à esquerda, × à direita */
-.toolbar-search { position: relative; display: inline-flex; align-items: center; flex-shrink: 0; }
-.toolbar-search-icon {
-  position: absolute; left: 8px; pointer-events: none;
+/* Caixa de pesquisa (ui/SearchInput): 🔎 à esquerda, × à direita. A mesma em todo o lado. */
+.search-box { position: relative; display: inline-flex; align-items: center; flex-shrink: 0; min-width: 0; }
+.search-box.is-sm { width: 140px; }
+.search-box.is-md { width: 200px; }
+.search-box.is-full { flex: 1 1 auto; width: 100%; min-width: 120px; }
+.search-box-icon {
+  position: absolute; left: var(--space-8); pointer-events: none;
   font-size: var(--fs-11); color: var(--text-muted);
 }
-.toolbar-search-input {
-  width: 200px; padding: var(--space-4) 22px var(--space-4) var(--space-24); outline: none;
-  font-size: var(--fs-12); color: var(--text); background: var(--bg-card);
-  border: 1px solid var(--border); border-radius: var(--radius);
+.search-box-input {
+  width: 100%; box-sizing: border-box; padding: var(--space-4) var(--space-20) var(--space-4) var(--space-24); outline: none;
+  font: inherit; font-size: var(--fs-12); color: var(--text); background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius); transition: border-color 0.15s;
 }
-.toolbar-search-clear {
-  position: absolute; right: 2px; padding: 0 var(--space-4); line-height: 1;
+.search-box-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-light); }
+.search-box-input:disabled { opacity: 0.5; cursor: not-allowed; }
+.search-box-input::-webkit-search-cancel-button { display: none; }
+.search-box-clear {
+  position: absolute; right: var(--space-2); padding: 0 var(--space-4); line-height: 1;
   background: none; border: none; cursor: pointer;
   color: var(--text-muted); font-size: var(--fs-14);
 }
+.search-box-clear:hover { color: var(--text); }
 .filter-bar { display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-6); padding:var(--space-6) 0 var(--space-8); border-bottom:1px solid var(--border); margin-bottom:var(--space-8); }
 
 /* --- Tee color dot (in filter chips) --- */
@@ -4198,12 +4193,9 @@ table td.lb-col-divider {
 .notice-error.drive-error { margin: var(--space-16); }
 .p.drive-rank-link { text-decoration: none; background: var(--bg-muted); color: var(--accent); border: 1px solid var(--border); }
 .segmented-toggle.drive-tabrow { margin-bottom: 0; }
-.tourn-tab.drive-manuel { flex-shrink: 0; white-space: nowrap; }
-.tourn-tab.drive-manuel.active { background: var(--bg-success-subtle); border-color: var(--color-good); color: var(--color-good-dark); }
 .tourn-tab.drive-region { flex-shrink: 0; }
 .drive-below { display: flex; align-items: center; column-gap: var(--space-6); row-gap: var(--space-4); padding: var(--space-4) var(--space-12) var(--space-6); flex-wrap: wrap; border-top: 1px solid var(--border-light); }
 .drive-below.is-mobile { column-gap: var(--space-4); }
-.input.drive-boxed { box-sizing: border-box; }
 .drive-kpi { font-weight: 700; color: var(--text); }
 .drive-kpi.is-good { color: var(--color-good); }
 .drive-kpi.is-good-dark { color: var(--color-good-dark); }

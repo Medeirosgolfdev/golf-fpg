@@ -29,6 +29,7 @@ import { circuitRanking } from "../circuit/CircuitRanking";
 import ExtLink from "../ExternalLink";
 import Pager from "../Pager";
 import { usePaged } from "../../hooks/usePaged";
+import ErrorState from "../ErrorState";
 
 const PAGE_SIZE = 100;
 
@@ -73,7 +74,7 @@ function RankingRoot<R, E>({ cfg, playerId }: { cfg: RankingPageConfig<R, E>; pl
       .catch((e) => { if (alive) setErr(String(e?.message || e)); });
     return () => { alive = false; };
   }, [cfg.rankingUrl]);
-  if (err) return <EmptyState icon="⚠️" message={`Erro ao carregar o ranking ${cfg.name}: ${err}`} />;
+  if (err) return <ErrorState message={`Erro ao carregar o ranking ${cfg.name}`} detail={err} />;
   if (!ranking) return <LoadingState message={cfg.loadingRanking} />;
   return <>{playerId ? cfg.Detail(ranking, playerId) : cfg.List(ranking)}</>;
 }
@@ -105,7 +106,7 @@ function EventsCircuit<R, E>({ cfg, params }: { cfg: RankingPageConfig<R, E>; pa
     loadingMessage: `A carregar eventos ${cfg.name}…`,
   }), [cfg]);
 
-  if (err) return <EmptyState icon="⚠️" message={`Erro ao carregar os eventos ${cfg.name}: ${err}`} />;
+  if (err) return <ErrorState message={`Erro ao carregar os eventos ${cfg.name}`} detail={err} />;
   return (
     <CircuitShell
       entries={entries || []}

@@ -35,6 +35,8 @@ import DetailHeader from "../ui/DetailHeader";
 import MasterDetail from "../ui/MasterDetail";
 import PlayerLink from "../ui/PlayerLink";
 import { stripAccents } from "../utils/normName";
+import SearchInput from "../ui/SearchInput";
+import SexSelect from "../ui/SexSelect";
 
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
@@ -1385,12 +1387,7 @@ export default function CamposPage() {
       <Toolbar>
                 <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Campos" />
         <ToolbarTitle>⛳ Campos</ToolbarTitle>
-        <input
-          className="input"
-          value={q}
-          onChange={(e) => { setQ(e.target.value); selectCourse(null); }}
-          placeholder="Nome do campo…"
-        />
+        <SearchInput value={q} onChange={(v) => { setQ(v); selectCourse(null); }} placeholder="Nome do campo…" />
         <input
           className="input"
           value={playerQ}
@@ -1429,11 +1426,7 @@ export default function CamposPage() {
             ))}
           </select>
         )}
-        <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
-          <option value="ALL">Sexo</option>
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
-        </select>
+        <SexSelect value={sexFilter} onChange={setSexFilter} allValue="ALL" />
         <select
           className="select"
           value={teeFilter}

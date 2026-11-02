@@ -28,6 +28,7 @@ import Kids2SubNav from "./Kids2SubNav";
 import { MANUEL_BIRTH_YEAR, isManuel } from "../../constants/manuel";
 import { useScoutRanking } from "./useScoutRanking";
 import { medal as medalOf } from "../../utils/format";
+import SearchInput from "../../ui/SearchInput";
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -287,13 +288,7 @@ export default function RankingPage() {
             tabs={YEARS.map((y) => ({ key: y, label: String(y) }))} />
 
           {/* search */}
-          <input
-            type="text"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="🔍 Nome do jogador…"
-            className="u-ml-auto u-p-4px-10px u-fs-fs-13 u-bd-1px-solid-border-light u-br-radius u-bg-bg-card u-c-text u-minw-200px"
-          />
+          <SearchInput value={q} onChange={setQ} placeholder="Nome do jogador…" className="u-ml-auto" />
         </div>
 
         {/* tier pills */}

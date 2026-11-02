@@ -38,6 +38,7 @@ import { reachBudget } from "../../utils/reach";
 import { MANUEL_FED } from "../../constants/manuel";
 import { resolvePlayedMeters, resolvePlayedTee, courseKeyName } from "../../utils/playedDistance";
 import ExtLink from "../../ui/ExternalLink";
+import SexSelect from "../../ui/SexSelect";
 
 
 /** Coerção segura para número — alguns campos do JSON vêm como string (ex: sd "14"). */
@@ -769,10 +770,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
         </select>
         <ToolbarSep />
         <ToolbarMeta>Tees</ToolbarMeta>
-        <select className="select" value={sexFilter} onChange={e => { setSexFilter(e.target.value as "M" | "F"); setTeeAId(""); setTeeBId(""); }}>
-          <option value="M">Masculinos</option>
-          <option value="F">Femininos</option>
-        </select>
+        <SexSelect value={sexFilter} onChange={v => { setSexFilter(v); setTeeAId(""); setTeeBId(""); }} />
         <ToolbarSep />
         <ToolbarMeta>HCP</ToolbarMeta>
         <NumInput value={hcp} step={0.1} title="Handicap index do jogador" onChange={v => { setHcp(v); setHcpTouched(true); }} />

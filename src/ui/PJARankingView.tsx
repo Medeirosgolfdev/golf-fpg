@@ -22,6 +22,7 @@ import {
 import ExtLink from "./ExternalLink";
 import CloseButton from "./CloseButton";
 import ClearButton from "./ClearButton";
+import SearchInput from "./SearchInput";
 
 /* ─────────────────────────────────────────────
    RANKINGS DA /FPG — Ranking PJA, Ranking Sub-12 por SD e Classificações.
@@ -388,12 +389,7 @@ export function PJARankingView({
         e passa o valor via `externalFilterName`. Fallback inline quando o
         componente é usado standalone (sem externalFilterName). */}
     {externalFilterName === undefined && (
-      <div className="shrink-0 u-pos-relative">
-        <span className="u-pos-absolute u-left-7px u-top-50pc u-transform-translatey-50pc u-fs-fs-11 u-c-text-muted u-pointer-events-none">🔍</span>
-        <input type="text" placeholder="Nome ou clube…" value={internalFilterName}
-          onChange={e => setFilterName(e.target.value)}
-          className="input-search u-w-140px" />
-      </div>
+      <SearchInput value={internalFilterName} onChange={setFilterName} placeholder="Nome ou clube…" size="sm" />
     )}
     {availSexes.length > 1 && <>
       <span className="u-c-border">|</span>

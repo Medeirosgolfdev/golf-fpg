@@ -28,6 +28,7 @@ import {
 import IdentityPills, { PlayerExtLinks } from "./IdentityPills";
 import LoadingState from "../../ui/LoadingState";
 import CloseButton from "../../ui/CloseButton";
+import ErrorState from "../../ui/ErrorState";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
  *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
@@ -393,9 +394,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
 
             {scorecardModal.loading && <LoadingState size="sm" message="A carregar scorecard…" />}
             {scorecardModal.error && (
-              <div className="p-16 u-c-color-warn-vivid">
-                ⚠ Erro a carregar: <code>{scorecardModal.error}</code>
-              </div>
+              <ErrorState message="Erro ao carregar o cartão" detail={scorecardModal.error} />
             )}
             {scorecardModal.data && (() => {
               const sc = scorecardModal.data as unknown as Record<string, number | string | null | undefined>;
