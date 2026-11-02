@@ -32,6 +32,7 @@ import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoun
 import { KidsLinkCtx } from "./KidsLink";
 import { normName } from "../data/KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
+import { makeKidsDobLookup } from "../data/kidsDob";
 import { formaMedia, type ScoutFile, type JuniorScout } from "./circuit/scoutModel";
 import { getTierLabel, type TierKey } from "../pages/kids2/juniorCalc";
 import ExtLink from "./ExternalLink";
@@ -147,6 +148,8 @@ export default function AdmissionsTab({
     }
     return m;
   }, [scout, players, kidsMap]);
+  // A data do Kids 2 pela regra comum (src/data/kidsDob.ts — a mesma do Draw e do Resumo).
+  const kidsDobOf = useMemo(() => makeKidsDobLookup(kidsMap, scout), [kidsMap, scout]);
   const extraCols = useMemo<AdmissionsExtraCol[]>(() => {
     const cols = [...extraColsProp];
     if (hcpActual) cols.push({
@@ -195,7 +198,7 @@ export default function AdmissionsTab({
     // sem escalao e sem marcacao calculada pelo regulamento.
     const dob: string | undefined =
       p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined) || (p as any)._rfeg?.dob ||
-      (/^\d{4}-\d{2}-\d{2}/.test(scoutOf.get(scoutKey(p))?.d ?? "") ? scoutOf.get(scoutKey(p))!.d : undefined);
+      kidsDobOf(p.nome, p.fed);
     const dobYear = birthYearOf(dob);
     let clube = p.clube;
     if (!clube && bd) {
@@ -224,7 +227,7 @@ export default function AdmissionsTab({
       _escHist: escHist,
       _ruleTee: ruleTee,
     };
-  }), [players, playersDB, fedBirthdates, fedGenders, date, teeRule, tournamentSex, scoutOf]);
+  }), [players, playersDB, fedBirthdates, fedGenders, date, teeRule, tournamentSex, kidsDobOf]);
 
   // Colunas sem nada para mostrar escondem-se sozinhas; o ESC. também quando
   // todos são do mesmo escalão (USKids: a divisão já é o escalão, 30/10/2026).

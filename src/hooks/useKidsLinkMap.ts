@@ -48,40 +48,42 @@ export function useJuniorsLinks(): LinkJunior[] {
   return roster;
 }
 
+/** normName → ficha do Kids 2 (nome canónico, aliases e variantes sem um nome
+ *  do meio) — o mapa das setas ↗. */
+export function buildKidsLinkMap(roster: LinkJunior[]): Map<string, KidsLinkEntry> {
+  const m = new Map<string, KidsLinkEntry>();
+  for (const j of roster) {
+    const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.memberId, id: j.id, fed: j.fed };
+    // Nome canónico + aliases → mesma chave normName que o KidsLink usa no
+    // lookup. Primeiro-a-entrar ganha em caso de homónimos (igual ao
+    // juniorByNormName do kids2).
+    const nk = normName(j.canonicalName);
+    if (!m.has(nk)) m.set(nk, entry);
+    for (const alias of j.aliases) {
+      const ak = normName(alias);
+      if (!m.has(ak)) m.set(ak, entry);
+    }
+  }
+  // Variantes sem UM nome do meio: a inscrição USKids diz "Niko Alvarez van
+  // der Walt" e a ficha "Niko Eduardo Alvarez Van Der Walt". Só entram se não
+  // colidirem com um nome real nem com a variante de outro jogador.
+  const variantes = new Map<string, KidsLinkEntry | null>();
+  for (const j of roster) {
+    const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.memberId, id: j.id, fed: j.fed };
+    const toks = normName(j.canonicalName).split(" ").filter(Boolean);
+    for (let i = 1; i < toks.length - 1; i++) {
+      const vk = [...toks.slice(0, i), ...toks.slice(i + 1)].join(" ");
+      if (m.has(vk)) continue;
+      const antes = variantes.get(vk);
+      variantes.set(vk, antes === undefined || antes?.id === entry.id ? entry : null);
+    }
+  }
+  for (const [vk, entry] of variantes) if (entry) m.set(vk, entry);
+  return m;
+}
+
 export function useKidsLinkMap() {
   const roster = useJuniorsLinks();
-
-  const kidsMap = useMemo(() => {
-    const m = new Map<string, KidsLinkEntry>();
-    for (const j of roster) {
-      const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.memberId, id: j.id, fed: j.fed };
-      // Nome canónico + aliases → mesma chave normName que o KidsLink usa no
-      // lookup. Primeiro-a-entrar ganha em caso de homónimos (igual ao
-      // juniorByNormName do kids2).
-      const nk = normName(j.canonicalName);
-      if (!m.has(nk)) m.set(nk, entry);
-      for (const alias of j.aliases) {
-        const ak = normName(alias);
-        if (!m.has(ak)) m.set(ak, entry);
-      }
-    }
-    // Variantes sem UM nome do meio: a inscrição USKids diz "Niko Alvarez van
-    // der Walt" e a ficha "Niko Eduardo Alvarez Van Der Walt". Só entram se não
-    // colidirem com um nome real nem com a variante de outro jogador.
-    const variantes = new Map<string, KidsLinkEntry | null>();
-    for (const j of roster) {
-      const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.memberId, id: j.id, fed: j.fed };
-      const toks = normName(j.canonicalName).split(" ").filter(Boolean);
-      for (let i = 1; i < toks.length - 1; i++) {
-        const vk = [...toks.slice(0, i), ...toks.slice(i + 1)].join(" ");
-        if (m.has(vk)) continue;
-        const antes = variantes.get(vk);
-        variantes.set(vk, antes === undefined || antes?.id === entry.id ? entry : null);
-      }
-    }
-    for (const [vk, entry] of variantes) if (entry) m.set(vk, entry);
-    return m;
-  }, [roster]);
-
+  const kidsMap = useMemo(() => buildKidsLinkMap(roster), [roster]);
   return { kidsMap };
 }

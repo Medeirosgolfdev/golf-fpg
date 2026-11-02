@@ -20,6 +20,7 @@ import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill } from "./PillBadge";
 import BirthPill from "./BirthPill";
 import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
+import { useKidsDob } from "../hooks/useKidsDob";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate, fmtDatePt } from "../utils/format";
 import { teeNameFor } from "../utils/teeRegulation";
 import { formatPlayerName } from "../utils/playerUtils";
@@ -168,6 +169,8 @@ export default function DrawTab({
   const effDate = tournamentDate || draw.date || null;
   const fedBirthdates = useFedBirthdates();
   const fedHcp = useFedHcp();
+  // Nascimento do Kids 2 para quem o draw não identifica (internacionais sem federado).
+  const kidsDob = useKidsDob((draw.groups || []).some(g => (g.players || []).some(p => !(p as { dob?: string | null }).dob && !(p as { fed?: string | null }).fed)));
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc", { om: "desc" });
 
@@ -425,7 +428,8 @@ export default function DrawTab({
         const srcDob = ((p as { dob?: string | null }).dob) || undefined;
         const srcBirthYear = (p as { birthYear?: number | null }).birthYear ?? null;
         const dob: string | undefined =
-          srcDob || bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined);
+          srcDob || bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined) ||
+          (srcBirthYear == null ? kidsDob?.(p.nome, fed) : undefined);
         const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : srcBirthYear;
         // Data completa visível na coluna (só quando vem da fonte do draw).
         const dobShown = srcDob ? fmtDatePt(srcDob) : null;
@@ -481,7 +485,7 @@ export default function DrawTab({
       }
     }
     return out;
-  }, [draw, nameToFeds, admFedByName, playersDB, fedBirthdates, fedHcp, effDate, tournamentEscalao, admHcpByFed, admHcpByName, results]);
+  }, [draw, nameToFeds, admFedByName, playersDB, fedBirthdates, fedHcp, effDate, tournamentEscalao, admHcpByFed, admHcpByName, results, kidsDob]);
 
   // Ordenar por sortKey
   const sorted = useMemo(() => {

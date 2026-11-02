@@ -24,6 +24,8 @@ import { tournamentHasManuel, tournamentPccs } from "../../data/fpgUtils";
 import { fmtDate, fpgAdmissionsUrl, fpgDrawUrl, fpgScoringUrl, tournamentUrl, norm } from "../../utils/format";
 import { FEATURED_TOURNAMENTS } from "../../data/featuredTournaments";
 import { useLiveAdmissions } from "../../hooks/useLiveAdmissions";
+import { useKidsDob } from "../../hooks/useKidsDob";
+import { precisaKidsDob, withKidsDob } from "../../data/kidsDob";
 import {
   EscPill, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill,
   ClubePill, ManuelPill, ModalidadePill, OmPill, PccPill,
@@ -96,7 +98,11 @@ export interface TournamentDetailProps {
   defaultTab?: string;
 }
 
-function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab", defaultTab }: TournamentDetailProps) {
+function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extraTabs, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab", defaultTab }: TournamentDetailProps) {
+  // Nascimento do Kids 2 para quem a fonte não o traz (USKids, MAJOR, FFG…) —
+  // nas voltas, no Resumo e nos Scorecards (02/11/2026).
+  const kidsDob = useKidsDob(precisaKidsDob(tournamentIn.players));
+  const tournament = useMemo(() => withKidsDob(tournamentIn, kidsDob), [tournamentIn, kidsDob]);
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
