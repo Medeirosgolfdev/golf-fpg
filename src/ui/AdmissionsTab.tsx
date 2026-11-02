@@ -19,7 +19,7 @@ import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
-import { EscPill } from "./PillBadge";
+import { EscPill, Pill } from "./PillBadge";
 import BirthPill from "./BirthPill";
 import { useFedCountries, useFedBirthdates, useFedGenders, useFedHcp } from "./InscricoesComponents";
 import { parseSubNumber, teeNameFor, type TeeRule } from "../utils/teeRegulation";
@@ -402,16 +402,14 @@ export default function AdmissionsTab({
             {!hide.vac && <td className="lb-hcp u-fw-600">{fmtHcp(p.vac)}</td>}
             {!hide.registo && <td className="fs-11 muted u-ws-nowrap">
               {fmtRegisto(p.dataInscricao)}
-              {novo && <span className="p p-sm fs-10 fw-700 u-bg-score-eagle u-c-fff u-ml-4px u-p-1px-4px u-br-radius-lg"
-                title={`Inscrito nas últimas ${recentHours} h`}>NOVO</span>}
+              {novo && <Pill className="p-estado p-novo u-ml-4px" title={`Inscrito nas últimas ${recentHours} h`}>novo</Pill>}
             </td>}
             <td className="u-ta-center">
               {isDesist
-                ? <span
-                    title={desinscritoEm ? `Desinscreveu-se (já não estava na lista a ${fmtDatePt(desinscritoEm)})` : "Desinscreveu-se"}
-                    className="u-bg-b3bq4 u-c-color-danger u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-qj328 u-ws-nowrap">desinscreveu-se</span>
+                ? <Pill className="p-estado p-desinscrito"
+                    title={desinscritoEm ? `Desinscreveu-se (já não estava na lista a ${fmtDatePt(desinscritoEm)})` : "Desinscreveu-se"}>desinscreveu-se</Pill>
                 : isReserva
-                ? <span className="u-bg-bg-muted u-c-text-muted u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-1px-solid-border-light">{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</span>
+                ? <Pill className="p-estado p-muted">{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</Pill>
                 : <span className="muted fs-10">✓</span>}
             </td>
           </>

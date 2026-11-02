@@ -345,7 +345,7 @@ export default function Scout({
 
   return (
     <div className="scout">
-      <div className="scout-resumo">
+      <div className="lb-info-line scout-resumo">
         <span><b>{rivais.length}</b> {manuelNoField ? "adversários" : "jogadores"}</span>
         {paises > 1 && <><span className="muted">·</span><span><b>{paises}</b> países</span></>}
         <span className="muted">·</span><span title="Elite ou Forte"><b>{altos}</b> de nível alto</span>

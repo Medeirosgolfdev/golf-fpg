@@ -503,6 +503,12 @@ a.seg-btn, a.tab-under { text-decoration: none; }
 /* ── Player identity ── */
 .p-fed { background: var(--badge-fed); color: var(--text-on-color); }
 .p-muted { background: var(--bg-muted); color: var(--text-2); }
+
+/* ── Estado de uma inscrição (AdmissionsTab): NOVO · DESINSCREVEU-SE · POR INSCREVER ──
+   Mesma forma para todos (<Pill className="p-estado p-…">); só muda a cor. */
+.p-estado { font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+.p-novo { background: var(--score-eagle); color: var(--text-on-color); }
+.p-desinscrito { background: var(--color-danger); color: var(--text-on-color); }
 .p-birth { background: var(--badge-birth-bg); color: var(--badge-birth-text); }
 .p-club { background: var(--badge-club-bg); color: var(--badge-club-text); }
 
@@ -2304,7 +2310,9 @@ table.sc-lb th.scout-grp { background: var(--bg-success-subtle); color: var(--co
    do nome, lugares em caixinhas (.pos-medal), nível em etiqueta e cor só no que
    diz bom/mau (forma, saldo e pancadas com o Manuel). */
 .scout { display: flex; flex-direction: column; gap: var(--space-8); }
-.scout-resumo { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--space-6); font-size: var(--fs-13); color: var(--text-2); }
+/* Resumo do Scout = a linha de resumo global (.lb-info-line, a mesma das Inscrições,
+   do scorecard e do draw); aqui só o arranjo em flex. */
+.scout-resumo { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--space-6); }
 .scout-resumo b { color: var(--text); }
 table.sc-lb.scout-table :is(th, td) { padding: var(--space-3) var(--space-8); }
 table.sc-lb.scout-table td { vertical-align: middle; }
