@@ -253,6 +253,7 @@ function buildJobfileSource(opts) {
         results,
       });
     }
+    umaDivisaoPorJogador(flights, playerMap, sourceId);
 
     return {
       sourceKey,
@@ -284,6 +285,48 @@ function buildJobfileSource(opts) {
   return { load, SOURCE_ID: sourceId, SOURCE_LABEL: sourceLabel };
 }
 
+// Uma só divisão por jogador e prova (02/11/2026, pedido dela): o GolfGenius
+// repete a mesma volta no escalão e nas gerais («Overall Boys (WAGR)»,
+// «Overall Leaderboard» — Faldo Madeira), e o Kids 2 mostrava 3 linhas do
+// Manuel. Fica o escalão mais específico (com sexo e idade máxima mais baixa;
+// «Overall» por último). Mesmo jogador = mesmo nome + país + as mesmas
+// pancadas por volta, por isso homónimos não se juntam. As posições e o
+// fieldSize ficam os da fonte; uma divisão que fique vazia sai.
+function especificidadeDivisao(f) {
+  if (/overall|geral|general/i.test(f.label || "")) return 0;
+  return 10 + (f.sex ? 5 : 0) + (f.ageMax != null ? 100 - f.ageMax : 0);
+}
+
+function umaDivisaoPorJogador(flights, playerMap, sourceId) {
+  if (flights.length < 2) return;
+  const quem = (r) => {
+    const p = playerMap.get(r.playerSourceKey);
+    return `${r.playerName.toLowerCase()}|${p?.country || ""}|${r.rounds.map((x) => x.gross ?? "-").join(",")}|${r.totalGross ?? ""}`;
+  };
+  const ordem = flights.map((f, i) => ({ f, i })).sort((a, b) => especificidadeDivisao(b.f) - especificidadeDivisao(a.f) || a.i - b.i);
+  const ficou = new Map();   // quem → playerSourceKey da linha que fica
+  const tirados = [];
+  for (const { f } of ordem) {
+    f.results = f.results.filter((r) => {
+      const k = quem(r);
+      if (!ficou.has(k)) { ficou.set(k, r.playerSourceKey); return true; }
+      tirados.push([r.playerSourceKey, ficou.get(k)]);
+      return false;
+    });
+  }
+  // A entidade da linha retirada (chave por detailId, única da divisão) sai,
+  // passando à que fica o que só ela tinha (nascimento, clube…).
+  const usadas = new Set(flights.flatMap((f) => f.results.map((r) => r.playerSourceKey)));
+  for (const [tirada, fica] of tirados) {
+    if (usadas.has(tirada) || !tirada.startsWith(`${sourceId}-`)) continue;
+    const a = playerMap.get(tirada), b = playerMap.get(fica);
+    if (a && b) for (const c of ["dob", "dobRange", "sex", "club", "country"]) if (b[c] == null && a[c] != null) b[c] = a[c];
+    playerMap.delete(tirada);
+  }
+  const antes = new Map(ordem.map(({ f }) => [f, f.fieldSize]));
+  for (let i = flights.length - 1; i >= 0; i--) if (flights[i].results.length === 0 && antes.get(flights[i]) > 0) flights.splice(i, 1);
+}
+
 // "Boys 13-14"/"Girls 8U"/"Varonil 18"/"Femenil 12-13"/"Overall"/"13-15" →
 // {ageMin, ageMax, sex}. Boys/Varonil→M, Girls/Femenil→F, senão null (misto).
 function parseSexAge(divKey) {
@@ -301,4 +344,4 @@ function parseSexAge(divKey) {
   return { ageMin: null, ageMax: null, sex };
 }
 
-module.exports = { buildJobfileSource, parseSexAge };
+module.exports = { buildJobfileSource, parseSexAge, umaDivisaoPorJogador };

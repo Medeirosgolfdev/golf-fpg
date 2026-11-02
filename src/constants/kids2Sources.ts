@@ -44,7 +44,7 @@ export const SOURCE_LABELS: Record<string, string> = {
   uskids: "USKids", fpg: "FPG", rfeg: "RFEG", ffgolf: "FFG",
   wjgc: "WJGC", eowagr: "EOWAGR", doral: "Doral",
   fcg: "FCG", england: "England", gjgl: "GJGL",
-  fsga: "FSGA", uajt: "Under Armour", uaworlds: "UA Worlds", mexnacional: "México", coc: "Champion of Champions", reidtrophy: "Reid Trophy", evianjc: "Evian Juniors Cup", faldomadeira: "Faldo Junior Tour Madeira", dgv: "DGV (Alemanha)", fig: "FIG (Itália)", optimist: "Optimist Intl",
+  fsga: "FSGA", uajt: "Under Armour", uaworlds: "UA Worlds", mexnacional: "México", coc: "Champion of Champions", reidtrophy: "Reid Trophy", evianjc: "Evian Juniors Cup", faldomadeira: "Faldo", dgv: "DGV (Alemanha)", fig: "FIG (Itália)", optimist: "Optimist Intl",
   icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14",
   job: "JOB", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies",
   eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", egr: "EGR",
