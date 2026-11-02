@@ -52,7 +52,9 @@ export function driveCalendar(src: Tournament[], series: DriveSeries, year: stri
     .map((e): DriveCalEntry => {
       const date = e.dateStart!;
       const n = Math.max(1, e.roundsCount ?? 1);
-      const ad = e.divisions?.[0]?.results?._admissions;
+      // Inscritos de todas as divisões (um Challenge tem uma por escalão).
+      const ads = (e.divisions ?? []).flatMap(d => d.results?._admissions ? [d.results._admissions] : []);
+      const inscritos = ads.flatMap(a => (a.players ?? []).map(p => String(p.fed ?? ""))).filter(Boolean);
       return {
         name: driveCalLabel(e.name, series, e.liga),
         date,
@@ -60,8 +62,8 @@ export function driveCalendar(src: Tournament[], series: DriveSeries, year: stri
         campo: shortCampo(e.course),
         region: e.liga || "nacional",
         series,
-        ...(ad?.players?.length ? { inscritos: ad.players.map(p => String(p.fed ?? "")).filter(Boolean) } : {}),
-        ...(ad?.status ? { estado: ad.status } : {}),
+        ...(inscritos.length ? { inscritos } : {}),
+        ...(ads[0]?.status ? { estado: ads[0].status } : {}),
       };
     })
     .sort((a, b) => a.date.localeCompare(b.date) || a.name.localeCompare(b.name));

@@ -7,7 +7,7 @@
  * (`buildSub12Data`, regra em `constants/drivePoints.ts`), nunca os das cópias da
  * «Classificação» por escalão. Três vistas: Tabela (a grelha por torneio), Ranking
  * (a `RankingTable`, ordenável) e Evolução (SD). A aba «Época» de cada torneio
- * mostra a mesma tabela só com as etapas da época (série/zona/ano).
+ * é a grelha jogador × torneio das etapas da época (série/zona/ano) — `DriveSeason`.
  */
 import type React from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
@@ -16,12 +16,13 @@ import type { CircuitEntry } from "../../ui/circuit/types";
 import type { CircuitRanking, CircuitRankingContext } from "../../ui/circuit/CircuitRanking";
 import { RankingTable, type RankingCol } from "../../ui/ranking/RankingPage";
 import { buildSub12Data, dateToSort, escMatches, filterBySub12Series, sub12Kpis, sub12Tournaments } from "../../data/drive/driveSub12";
-import type { DriveSeries } from "../../data/drive/driveSource";
+import { inferDriveRegion, type DriveSeries } from "../../data/drive/driveSource";
+import { isNacionalFinal } from "../../constants/drivePoints";
 import type { Sub12View } from "../../data/drive/driveUrl";
 import { escalaoCanon } from "../../data/model/escalao";
 import type { TemporalEscLookup } from "../../data/fpgUtils";
 import { ESCALOES_DRIVE } from "../../constants/escaloes";
-import { fmtToPar, fmtHcp, medal, shortDateSlash } from "../../utils/format";
+import { fmtToPar, fmtHcp, medal, shortDateSlash, todayIso } from "../../utils/format";
 import { sdClassByHcp } from "../../utils/scoreDisplay";
 import { flagOrEmpty, isPtCountry } from "../../utils/flagUtils";
 import { C } from "../../utils/colors";
@@ -38,7 +39,7 @@ import SearchInput from "../../ui/SearchInput";
 import SexSelect from "../../ui/SexSelect";
 import { MUTED } from "../../ui/tableCells";
 import { regionLabel } from "../../data/drive/driveRegions";
-import AquaporSeason from "./AquaporSeason";
+import DriveSeason from "./DriveSeason";
 import type { DriveCalEntry } from "../../data/drive/driveCalendar";
 
 export const SERIE_LABELS: Record<DriveSeries, string> = { tour: "Tour", challenge: "Challenge", aquapor: "AQUAPOR" };
@@ -268,23 +269,31 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
       render: (row, close) => <PlayerDetail row={row} onClose={close} />,
     },
     emptyMessage: "Nenhum jogador com resultados neste escalão.",
-    // AQUAPOR: a «Época» é a grelha jogador × torneio, rapazes e raparigas à parte.
-    seasonRender: ctx => {
-      if (seriesOf(ctx) !== "aquapor") return null;
+    // A «Época» é a grelha jogador × torneio (DriveSeason); no AQUAPOR rapazes
+    // e raparigas à parte, como o ranking oficial.
+    seasonRender: ctx0 => {
+      const s = seriesOf(ctx0);
+      const aq = s === "aquapor";
+      // A Final Nacional (Jamor) é de todas as zonas: não entra na época de uma
+      // zona (trazia jogadores de outras regiões). A «Final Nacional … Açores» é
+      // a final regional dos Açores — tem a zona no nome e fica.
+      const ctx = aq ? ctx0 : { ...ctx0, entries: ctx0.entries.filter(e => !(isNacionalFinal(e.name) && !inferDriveRegion(e.name))) };
       const all = rowsOf(ctx, "all");
       const esc = d.classEsc?.length ? null : escOf(ctx);
       const rows = d.classEsc?.length ? all.filter(r => d.classEsc!.some(e => escMatches(r.esc ?? "", e)))
         : esc === "all" ? all : rowsOf(ctx);
       const year = ctx.entries[0]?.dateStart?.slice(0, 4);
-      return <AquaporSeason rows={rows} allRows={all} entries={ctx.entries} pdb={d.pdb}
-        upcoming={year ? d.calendar?.("aquapor", year) ?? [] : []}
+      // As etapas por jogar: as da mesma zona (o Drive tem uma época por zona).
+      const zona = ctx.entries[0]?.liga || "nacional";
+      const upcoming = year ? (d.calendar?.(s, year) ?? [])
+        .filter(c => (c.endDate || c.date) >= todayIso() && (aq || (c.region === zona && !(isNacionalFinal(c.name) && !inferDriveRegion(c.name))))) : [];
+      const zonaLabel = aq || zona === "nacional" ? "" : ` ${regionLabel(zona)}`;
+      return <DriveSeason title={`${aq ? "AQUAPOR" : `Drive ${SERIE_LABELS[s]}`}${zonaLabel} ${year ?? ""}`.trim()} bySex={aq}
+        pointsNote={aq ? "Pontos do ranking oficial (lugar dentro do sexo; empates partilham os pontos)"
+          : "Pontos do Drive: as 4 melhores da fase regular + a Final regional ×1,5"}
+        calId={aq ? "fpg_aquapor" : undefined}
+        rows={rows} allRows={all} entries={ctx.entries} pdb={d.pdb} upcoming={upcoming}
         fedBirthdates={d.fedBirthdates} initialSex={/senhora|femin/i.test(ctx.division ?? "") ? "F" : "M"} escLabel={esc ? escLabel(esc) : d.classEsc!.join(" · ")} />;
     },
-    seasonTitle: (rows, ctx) => (
-      <div className="h-sm mb-6">
-        🏅 Classificação acumulada — {SERIE_LABELS[seriesOf(ctx)]} · {escLabel(escOf(ctx))} · {rows.length} jogadores
-        <span className="muted fs-11 ml-4">(pontos do Drive: as 4 melhores da fase regular + a Final regional ×1,5)</span>
-      </div>
-    ),
   };
 }

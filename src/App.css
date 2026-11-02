@@ -4142,7 +4142,7 @@ table td.lb-col-divider {
 .aq-season .dtable :is(th, td).aq-futuro { background: var(--bg-muted); }
 .aq-th { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
 .aq-th-num { font-size: var(--fs-10); font-weight: 600; color: var(--text-3); }
-.aq-th-campo { font-weight: 700; color: var(--text); }
+.aq-th-campo { font-weight: 700; color: var(--text); white-space: normal; line-height: 1.2; }
 .aq-th-meta { font-size: var(--fs-10); font-weight: 400; color: var(--text-3); }
 .aq-th-meta .p-tee { font-size: var(--fs-10); padding: var(--space-1) var(--space-6); }
 /* A célula: 2 linhas, para a linha da tabela não engordar — em cima as voltas
@@ -4157,6 +4157,8 @@ table td.lb-col-divider {
 .aq-volta { min-width: var(--space-24); padding: 0 var(--space-2); text-align: center; font-size: var(--fs-12); font-weight: 600;
   color: var(--text); border: 1px solid var(--border-light); border-radius: var(--radius-sm); background: var(--bg-card); }
 .aq-season .dtable td { padding-top: var(--space-3); padding-bottom: var(--space-3); }
+/* Com poucas provas a tabela não estica à largura toda (a coluna do jogador ficava enorme). */
+.aq-season .dtable { width: auto; }
 /* O nome pode quebrar: a coluna do jogador não estica a tabela. */
 .aq-season .dtable :is(th, td).aq-col-jog { white-space: normal; min-width: calc(var(--space-40) * 3); max-width: calc(var(--space-40) * 4); }
 .aq-season .dtable td.aq-col-jog { line-height: 1.2; }
