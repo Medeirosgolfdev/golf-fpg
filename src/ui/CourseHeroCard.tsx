@@ -11,6 +11,7 @@
  */
 import { useMemo, useState } from "react";
 import type { Course, Tee } from "../data/types";
+import InfoIcon from "./InfoIcon";
 
 interface HoleEntry { hole: number; distance: number | null }
 interface ParBreakdown {
@@ -97,15 +98,6 @@ function holesByNumber(tee: Tee): Array<{ hole: number; par: 3|4|5|null; distanc
         color: info ? holeColor(info.par, info.t) : null,
       };
     });
-}
-
-function InfoIcon({ title }: { title: string }) {
-  return (
-    <span
-      title={title}
-      className="u-d-inline-flex u-ai-center u-jc-center u-w-14px u-h-14px u-br-50pc u-bg-bg-muted u-c-text-2 u-fs-fs-9 u-fw-800 u-ml-4px u-cur-help u-ff-system-ui-sans-serif"
-    >ⓘ</span>
-  );
 }
 
 /**

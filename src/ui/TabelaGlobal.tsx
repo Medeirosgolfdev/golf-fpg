@@ -13,6 +13,10 @@ import { isManuelByName } from "../constants/manuel";
 import ClearButton from "./ClearButton";
 import ExpandArrow from "./ExpandArrow";
 import ExtLink from "./ExternalLink";
+import { MUTED } from "./tableCells";
+import { TIER } from "../data/rivalData";
+import { TR_I } from "../constants/config";
+import TierLegend from "./TierLegend";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
 interface TGTournDef {
@@ -139,21 +143,6 @@ for (const t of TG_T) {
   }
 }
 
-const TG_TIER_L = { elite: "Elite", strong: "Forte", solid: "Sólido", developing: "Em Desenv.", beginner: "Iniciante" };
-const TG_TR_I: Record<string, { i: string; c: string }> = {
-  up2:    { i: "▲▲", c: "var(--color-good)" },
-  up:     { i: "▲",  c: "var(--score-par-seg)" },
-  stable: { i: "●",  c: "var(--text-muted)" },
-  down:   { i: "▼",  c: "var(--color-warn)" },
-  down2:  { i: "▼▼", c: "var(--color-danger)" },
-};
-const TG_TIER = {
-  elite:      { bg: "var(--bg-success-strong)",  c: "var(--color-good-dark)" },
-  strong:     { bg: "var(--bg-current)", c: "var(--text-current)" },
-  solid:      { bg: "var(--bg-warn-light)",       c: "var(--color-warn-dark)" },
-  developing: { bg: "var(--bg-warn-strong)",      c: "var(--color-warn-dark)" },
-  beginner:   { bg: "var(--bg-danger-subtle)", c: "var(--color-danger-dark)" },
-};
 
 // Base partilhada (tidAliases.ts) + extras específicos desta vista
 // (o TG_T cobre mais torneios do que o detalhe de rival).
@@ -614,14 +603,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
       </div>
 
       {/* Legenda tiers */}
-      <div className="legend-row u-mb-8px">
-        {(Object.keys(TG_TIER) as Array<keyof typeof TG_TIER>).map(k => (
-          <span key={k} className="legend-item">
-            <span className="legend-dot" style={{ background: TG_TIER[k].bg }} />
-            <span style={{ color: TG_TIER[k].c, fontSize: "var(--fs-10)" }}>{TG_TIER_L[k]}</span>
-          </span>
-        ))}
-      </div>
+      <TierLegend className="u-mb-8px" />
 
       {/* Tabela */}
       <div className="card">
@@ -675,7 +657,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                             style={{ background: inscrito ? "var(--bg-info-strong)" : undefined }}>
                             {inscrito
                               ? <span className="u-fs-fs-14">⛳</span>
-                              : <span className="fs-10 c-border">—</span>}
+                              : MUTED}
                           </td>
                         );
                       }
@@ -689,7 +671,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       const playerAvg = validRd.length
                         ? validRd.reduce((a: number, b: number) => a + b, 0) / rounds
                         : (res.t != null ? res.t / rounds : 0);
-                      let ti: keyof typeof TG_TIER | null = null;
+                      let ti: keyof typeof TIER | null = null;
                       const fixedAvgs = TG_AVG_R[tid];
                       const hasFixedAvg = fixedAvgs?.some((x: any) => x != null);
                       if (hasFixedAvg) {
@@ -700,7 +682,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                         const ar = autoAvgR[tid];
                         if (ar) ti = zTier(playerAvg, { m: ar.avg, s: ar.std });
                       }
-                      const st = ti ? TG_TIER[ti] : null;
+                      const st = ti ? TIER[ti] : null;
                       const tpStr = res.tp != null ? tgFmtSign(res.tp) : "—";
                       return (
                         <td key={tid} className="ta-c" style={{ background: st?.bg || "transparent", padding:"5px 4px" }}>
@@ -720,7 +702,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       ) : <span className="fs-10 c-border">s/d</span>}
                     </td>
                     <td className="ta-c">
-                      {tr ? <span className="fw-700 fs-13" style={{ color: TG_TR_I[tr]?.c }}>{TG_TR_I[tr]?.i}</span> : <span className="c-border">—</span>}
+                      {tr ? <span className="fw-700 fs-13" style={{ color: TR_I[tr]?.c }}>{TR_I[tr]?.i}</span> : MUTED}
                     </td>
                   </tr>
                 );

@@ -301,6 +301,7 @@
 
   /* ── 11. Medals ────────────────────────────────────────────── */
   /* Cores sólidas (círculos sparkline, bordas, troféus em SVG) */
+  --swatch-border: rgba(0, 0, 0, 0.18);   /* contorno dos quadradinhos de cor (tee, legenda) */
   --medal-gold:   #f59e0b;   /* 1.º lugar — âmbar quente */
   --medal-silver: #94a3b8;   /* 2.º lugar — slate */
   --medal-bronze: #b45309;   /* 3.º lugar — bronze escuro */

@@ -8,8 +8,7 @@ import {
   whsQtyCalc, hiAdjustment, addRoundToPool, historicExceptionalAdj, topRanks, topIds,
   scoreDifferential, sd18FromSd9, expectedSD9, round1, get9hRatings,
 } from "../utils/whsCalc";
-import { sdClassByHcp } from "../utils/scoreDisplay";
-import { GrossCell } from "./tableCells";
+import { GrossCell, MUTED } from "./tableCells";
 import TeePill from "./TeePill";
 import TeeDate from "./TeeDate";
 import SexBadge from "./SexBadge";
@@ -18,6 +17,7 @@ import SortableHdr from "./SortableHdr";
 import TabRow from "./TabRow";
 import { useSort } from "../hooks/useSort";
 import ClearButton from "./ClearButton";
+import { SDPill } from "./tournamentPrimitives";
 
 type PoolSortKey = "whs" | "date" | "course" | "hcp" | "tee" | "gross" | "sd" | "sdAdj" | "top";
 
@@ -1383,11 +1383,7 @@ export function RoundSimulator({
                       return (
                         <span className="muted fs-11">
                           + exp9({hiRef.toFixed(1)}) = {e9.toFixed(1)} →{" "}
-                          <span
-                            className={`p p-${sdClassByHcp(sd18, hiRef)} fs-12 fw-800`}
-                          >
-                            SD18 {sd18.toFixed(1)}
-                          </span>
+                          <SDPill sd={sd18} hcp={hiRef} size="lg" prefix="SD18" />
                         </span>
                       );
                     })()}
@@ -1446,29 +1442,15 @@ export function RoundSimulator({
                       />
                     </label>
                     {computedSdRaw != null && !is9 && (
-                      <span
-                        className={`p p-${sdClassByHcp(computedSdRaw, hiRef)} fs-13 fw-800`}
-                      >
-                        SD {computedSdRaw.toFixed(1)}
-                      </span>
+                      <SDPill sd={computedSdRaw} hcp={hiRef} size="lg" prefix="SD" />
                     )}
                     {computedSdRaw != null && is9 && exp9Preview != null && computedSd18 != null && (
                       <span className="u-d-inline-flex u-ai-center u-gap-6px u-fwr-wrap">
-                        <span
-                          className={`p p-${sdClassByHcp(computedSd18, hiRef)} fs-12 fw-700`}
-                          title="SD de 9 buracos antes da conversão para 18H"
-                        >
-                          SD9 {computedSdRaw.toFixed(1)}
-                        </span>
+                        <SDPill sd={computedSdRaw} hcp={hiRef} colorSd={computedSd18} size="lg" prefix="SD9" title="SD de 9 buracos antes da conversão para 18H" />
                         <span className="muted fs-11">
                           + exp9({hiRef.toFixed(1)}) = {exp9Preview.toFixed(1)} →
                         </span>
-                        <span
-                          className={`p p-${sdClassByHcp(computedSd18, hiRef)} fs-13 fw-800`}
-                          title="SD equivalente a 18H — é este que entra no pool WHS"
-                        >
-                          SD18 {computedSd18.toFixed(1)}
-                        </span>
+                        <SDPill sd={computedSd18} hcp={hiRef} size="lg" prefix="SD18" title="SD equivalente a 18H — é este que entra no pool WHS" />
                       </span>
                     )}
                     {(ratings.cr == null || ratings.slope == null) && (
@@ -1564,38 +1546,15 @@ export function RoundSimulator({
                       />
                     </label>
                     {computedSdRaw != null && !is9 && (
-                      <span
-                        className={`p p-${sdClassByHcp(
-                          computedSdRaw,
-                          hiRef
-                        )} fs-13 fw-800`}
-                      >
-                        SD {computedSdRaw.toFixed(1)}
-                      </span>
+                      <SDPill sd={computedSdRaw} hcp={hiRef} size="lg" prefix="SD" />
                     )}
                     {computedSdRaw != null && is9 && exp9Preview != null && computedSd18 != null && (
                       <span className="u-d-inline-flex u-ai-center u-gap-6px u-fwr-wrap">
-                        <span
-                          className={`p p-${sdClassByHcp(
-                            computedSd18,
-                            hiRef
-                          )} fs-12 fw-700`}
-                          title="SD de 9 buracos antes da conversão para 18H"
-                        >
-                          SD9 {computedSdRaw.toFixed(1)}
-                        </span>
+                        <SDPill sd={computedSdRaw} hcp={hiRef} colorSd={computedSd18} size="lg" prefix="SD9" title="SD de 9 buracos antes da conversão para 18H" />
                         <span className="muted fs-11">
                           + exp9({hiRef.toFixed(1)}) = {exp9Preview.toFixed(1)} →
                         </span>
-                        <span
-                          className={`p p-${sdClassByHcp(
-                            computedSd18,
-                            hiRef
-                          )} fs-13 fw-800`}
-                          title="SD equivalente a 18H — é este que entra no pool WHS"
-                        >
-                          SD18 {computedSd18.toFixed(1)}
-                        </span>
+                        <SDPill sd={computedSd18} hcp={hiRef} size="lg" prefix="SD18" title="SD equivalente a 18H — é este que entra no pool WHS" />
                       </span>
                     )}
                     {ratings.cr != null && (
@@ -1939,11 +1898,7 @@ export function RoundSimulator({
                               ⚡{row.exceptionalAdj}
                             </span>
                           )}
-                          <span
-                            className={`p p-${sdClassByHcp(row.sd, hiRef)} fs-11`}
-                          >
-                            {row.sd.toFixed(1)}
-                          </span>
+                          <SDPill sd={row.sd} hcp={hiRef} size="md" />
                         </span>
                       </td>
                       <td className="r fw-700" style={{ color: dc }}>
@@ -2084,28 +2039,14 @@ export function RoundSimulator({
                       )}
                     </td>
                     <td className="r">
-                      <span
-                        className={`p p-${sdClassByHcp(
-                          entry.sd,
-                          currentHI
-                        )} fs-11`}
-                      >
-                        {entry.sd.toFixed(1)}
-                      </span>
+                      <SDPill sd={entry.sd} hcp={currentHI} size="md" />
                     </td>
                     <td className="r">
                       {hasAdj ? (
                         <span
                           className="u-d-inline-flex u-fd-column u-ai-flex-end u-gap-1px"
                         >
-                          <span
-                            className={`p p-${sdClassByHcp(
-                              adjSd,
-                              currentHI
-                            )} fs-11 fw-700`}
-                          >
-                            {adjSd.toFixed(1)}
-                          </span>
+                          <SDPill sd={adjSd} hcp={currentHI} size="md" />
                           <span
                             className="u-fs-fs-9 u-c-text-3 u-td-line-through"
                           >
@@ -2113,7 +2054,7 @@ export function RoundSimulator({
                           </span>
                         </span>
                       ) : (
-                        <span className="muted">—</span>
+                        MUTED
                       )}
                     </td>
                     <td className="r">
@@ -2151,7 +2092,7 @@ export function RoundSimulator({
                             </span>
                           );
                         }
-                        return <span className="muted">–</span>;
+                        return MUTED;
                       })()}
                     </td>
                   </tr>
@@ -2219,17 +2160,10 @@ export function RoundSimulator({
                           )}
                         </td>
                         <td className="r">
-                          <span
-                            className={`p p-${sdClassByHcp(
-                              entry.sd,
-                              currentHI
-                            )} fs-11`}
-                          >
-                            {entry.sd.toFixed(1)}
-                          </span>
+                          <SDPill sd={entry.sd} hcp={currentHI} size="md" />
                         </td>
                         <td className="r">
-                          <span className="muted">—</span>
+                          {MUTED}
                         </td>
                         <td className="r">
                           {wasTop ? (
@@ -2239,7 +2173,7 @@ export function RoundSimulator({
                               ★ saiu
                             </span>
                           ) : (
-                            <span className="muted">–</span>
+                            MUTED
                           )}
                         </td>
                       </tr>

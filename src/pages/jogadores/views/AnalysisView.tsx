@@ -17,6 +17,7 @@ import { Last20Table } from "../../../ui/Last20Table";
 import { CrossAnalysis } from "../../../ui/CrossAnalysis";
 import { historicExceptionalAdj, topRanks } from "../../../utils/whsCalc";
 import { courseDisplayName } from "../../../utils/courseAliases";
+import { MUTED } from "../../../ui/tableCells";
 
 export default function AnalysisView({ data }: { data: PlayerPageData }) {
   const [histPeriod, setHistPeriod] = useState(12);
@@ -196,7 +197,7 @@ function KPICard({ title, val, sub, delta, deltaLabel, tip, accent }: {
   return (
     <UiKpiCard
       label={title}
-      value={val ?? <span className="u-c-text-3">–</span>}
+      value={val ?? MUTED}
       sub={sub}
       delta={delta}
       deltaLabel={deltaLabel}

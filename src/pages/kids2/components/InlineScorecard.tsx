@@ -14,6 +14,7 @@ import { scClass, toParClass } from "../../../utils/scoreDisplay";
 import { fmtSign } from "../../../utils/format";
 import { getKnownScorecard, mergeFlightWithKnown } from "../knownScorecards";
 import CloseButton from "../../../ui/CloseButton";
+import { MUTED } from "../../../ui/tableCells";
 
 interface Props {
   tournament: Tournament;
@@ -194,7 +195,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
                     const p = parEff[i];
                     return (
                       <td key={i}>
-                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : <span className="u-c-text-3">—</span>}
+                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : MUTED}
                       </td>
                     );
                   })}
@@ -203,7 +204,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
                     const p = parEff[i + 9];
                     return (
                       <td key={`b${i}`}>
-                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : <span className="u-c-text-3">—</span>}
+                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : MUTED}
                       </td>
                     );
                   })}

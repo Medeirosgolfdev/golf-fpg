@@ -18,7 +18,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { fmtStb, sdClassByHcp } from "../../utils/scoreDisplay";
 import { numSafe } from "../../utils/mathUtils";
-import { GrossCell as GrossDeltaCell } from "../../ui/tableCells";
+import { GrossCell as GrossDeltaCell, MUTED } from "../../ui/tableCells";
 import TeeDate from "../../ui/TeeDate";
 import TeePill from "../../ui/TeePill";
 import { ScorecardTable } from "../../ui/ScorecardTable";
@@ -57,7 +57,7 @@ function Scorecard({ r }: { r: PPRound }) {
 function GrossCell({ r }: { r: PPRound }) {
   const g = r.scorecard?.grossTotal ?? null;
   const par = r.scorecard?.parTotal ?? null;
-  if (g == null) return <span className="muted">—</span>;
+  if (g == null) return MUTED;
   return <GrossDeltaCell gross={g} par={par} />;
 }
 

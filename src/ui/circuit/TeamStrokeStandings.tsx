@@ -21,6 +21,7 @@ import type { TsModel, TsTeam, TsCat, TsPlayer, Bpb } from "../../data/teamStrok
 import TabRow from "../TabRow";
 import ExpandArrow from "../ExpandArrow";
 import PlayerLink from "../PlayerLink";
+import { MUTED } from "../tableCells";
 
 type View = "cartoes" | "lista" | "jogadores";
 /** Volta escolhida (uma categoria): grupo = ordem das letras + 🐦○■ de todas as voltas. */
@@ -57,7 +58,7 @@ function PName({ p }: { p: TsPlayer }) {
 
 /* ── Gross (±par) de uma volta; os que contam a cheio, na cor da equipa ── */
 function ScoreCell({ r, color }: { r: TsPlayer["rds"][number]; color: string }) {
-  if (r.gross == null && r.toPar == null) return <td className="u-ta-center u-c-text-muted"><span className="u-op-0_4">–</span></td>;
+  if (r.gross == null && r.toPar == null) return <td className="u-ta-center u-c-text-muted">{MUTED}</td>;
   return (
     <td className={"ts-score " + (r.counts ? "u-fw-700" : "u-fw-400 u-c-text")} style={r.counts ? { color } : undefined}>
       <div className="u-lh-1_2">

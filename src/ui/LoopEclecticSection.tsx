@@ -16,6 +16,7 @@ import { SC } from "../utils/scoreDisplay";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
 import ExpandArrow from "./ExpandArrow";
+import { MUTED } from "./tableCells";
 
 const soma = (g: (number | null)[]) => g.reduce<number>((s, v) => s + (v ?? 0), 0);
 const corPar = (d: number) => (d > 0 ? SC.danger : d < 0 ? SC.good : SC.muted);
@@ -86,7 +87,7 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
               <td className="row-label fw-700">Eclético</td>
               {pars.map((p, i) => (
                 <td key={i} title={t.bestFrom[i] ? `Melhor a ${t.bestFrom[i]}` : undefined}>
-                  {t.best[i] != null ? <ScoreCircle gross={t.best[i]!} par={p} /> : <span className="muted">–</span>}
+                  {t.best[i] != null ? <ScoreCircle gross={t.best[i]!} par={p} /> : MUTED}
                 </td>
               ))}
               {t.total != null ? (

@@ -12,8 +12,9 @@ import { fmtGrossDelta, fmtSdVal, fmtStb } from "../utils/scoreDisplay";
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import TeePill from "./TeePill";
 
-/** Traço esbatido para «sem valor» nas tabelas. */
-export const MUTED = <span className="muted">—</span>;
+/** Traço esbatido para «sem valor» (o mesmo em todas as tabelas: «—» cinzento,
+ *  no tamanho de letra da célula). Antes havia 17 variantes à mão. */
+export const MUTED = <span className="cell-empty">—</span>;
 
 /** Variação de HCP: ▼ verde quando desce (melhorou), ▲ vermelho quando sobe. */
 export function HcpDelta({ d, zero = "—" }: { d: number | null; zero?: string }) {

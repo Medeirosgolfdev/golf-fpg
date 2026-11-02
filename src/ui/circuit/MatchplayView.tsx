@@ -42,6 +42,7 @@ import TabRow from "../TabRow";
 import ExpandArrow from "../ExpandArrow";
 import EmptyState from "../EmptyState";
 import PlayerLink from "../PlayerLink";
+import { MUTED } from "../tableCells";
 
 /** Nome de um jogador: com federado liga à ficha /jogadores/:fed; ↗ kids2 se
  *  existir no roster; gross (±par) ao lado quando a fonte o dá. */
@@ -246,7 +247,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
                     {g.result ? (
                       <span className={`mp-res${left?.won ? " mp-arr-l" : right?.won ? " mp-arr-r" : ""}`}>{g.result}</span>
                     ) : (
-                      <span className="u-c-text-muted">—</span>
+                      MUTED
                     )}
                   </td>
                   <td style={{ whiteSpace: "normal", fontWeight: right?.won ? 700 : 400, color: settled && !right?.won ? "var(--text-3)" : undefined }}>
@@ -380,7 +381,7 @@ function RoundTable({ round }: { round: MatchplayRound }) {
                     ) : m.isStarted ? (
                       <span className="mp-res mp-res-open">em curso</span>
                     ) : (
-                      <span className="u-c-text-muted">—</span>
+                      MUTED
                     )}
                   </td>
                   <td>{teamCell(m.away, m.winner === "away", settled, "left")}</td>

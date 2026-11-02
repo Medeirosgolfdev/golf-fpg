@@ -17,6 +17,7 @@ import { tpColor } from "../../../ui/tournamentPrimitives";
 import { MONTHS_PT, fmtToPar } from "../../../utils/format";
 import { medalClass } from "../../../ui/PosBadge";
 import ExtLink from "../../../ui/ExternalLink";
+import { MUTED } from "../../../ui/tableCells";
 
 type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff" | "result";
 
@@ -234,7 +235,7 @@ function RoundsCell({ result }: { result: Result }) {
 }
 
 function PosTrophy({ pos }: { pos: number | null | undefined }) {
-  if (typeof pos !== "number") return <span className="u-c-text-3">—</span>;
+  if (typeof pos !== "number") return MUTED;
   if (pos <= 3) {
     return <span className={"pos-medal pos-medal-sm u-fs-fs-11 " + medalClass(pos)}>🏆 #{pos}</span>;
   }

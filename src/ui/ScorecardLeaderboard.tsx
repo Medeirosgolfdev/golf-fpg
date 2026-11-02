@@ -31,8 +31,8 @@ import { scClass } from "../utils/scoreDisplay";
 import { fmtToPar } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import { tpColor } from "./tournamentPrimitives";
-import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { useCompareSelection } from "./useCompareSelection";
+import TeeSwatch from "./TeeSwatch";
 
 export interface ScorecardRow {
   key: string | number;
@@ -247,14 +247,12 @@ export function ScorecardLeaderboard({
               const mF9  = mArr.slice(0, 9).reduce((a, b) => a + b, 0);
               const mB9  = !is9 ? mArr.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
               const mTot = mArr.reduce((a, b) => a + b, 0);
-              const hex  = getTeeHex(tm.teeName);
-              const bdr  = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
               return (
                 <tr key={tm.teeName} className="lb-si-row">
                   <td className="sticky-col-0" />
                   <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>
                     <span className="u-d-inline-flex u-ai-center u-gap-4px">
-                      <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "var(--radius-xs)", background: hex, border: bdr, flexShrink: 0 }} />
+                      <TeeSwatch tee={tm.teeName} />
                       <span>m</span>
                     </span>
                   </td>

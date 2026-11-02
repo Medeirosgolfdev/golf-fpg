@@ -22,6 +22,8 @@ import { medalClass } from "../../../ui/PosBadge";
 import { ScoringTag } from "../../../ui/PillBadge";
 import ExpandArrow from "../../../ui/ExpandArrow";
 import ExtLink from "../../../ui/ExternalLink";
+import { MUTED } from "../../../ui/tableCells";
+import ShowMoreButton from "../../../ui/ShowMoreButton";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -128,12 +130,9 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
       </div>
 
       {hiddenSeriesCount > 0 && (
-        <button
-          onClick={() => setShowAllSeries(true)}
-          className="u-mt-8px u-w-100pc u-p-6px-10px u-fs-fs-12 u-bg-bg-muted u-bd-1px-solid-border-light u-br-radius u-c-text-2 u-cur-pointer u-fw-600"
-        >
-          Ver mais {hiddenSeriesCount} {hiddenSeriesCount === 1 ? "série" : "séries"} →
-        </button>
+        <ShowMoreButton onClick={() => setShowAllSeries(true)}>
+          Mostrar mais ({hiddenSeriesCount} {hiddenSeriesCount === 1 ? "série" : "séries"})
+        </ShowMoreButton>
       )}
 
       {oneOffs.length > 0 && (
@@ -149,11 +148,8 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
                 <OneOffPill key={i} ed={ed} />
               ))}
             {!showAllOneOffs && oneOffs.length > 16 && (
-              <button
-                onClick={() => setShowAllOneOffs(true)}
-                className="u-fs-fs-11 u-p-3px-8px u-bd-1px-solid-border-light u-br-radius-pill u-bg-bg u-c-text-2 u-cur-pointer u-fw-600"
-              >
-                +{oneOffs.length - 16} →
+              <button type="button" className="btn" onClick={() => setShowAllOneOffs(true)} title="Mostrar todas">
+                +{oneOffs.length - 16}
               </button>
             )}
           </div>
@@ -304,7 +300,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                       <td className="u-ta-center">
                         {manuelPos != null ? (
                           <span title={`Manuel ficou em #${manuelPos} neste torneio`} className="u-fs-fs-10 u-p-1px-4px u-br-radius-sm u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-bd-1px-solid-color-good-dark u-ws-nowrap">★M #{manuelPos}</span>
-                        ) : <span className="u-c-text-3">—</span>}
+                        ) : MUTED}
                       </td>
                     )}
                     <td className="u-ta-right">

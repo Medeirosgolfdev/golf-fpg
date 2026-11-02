@@ -28,6 +28,7 @@ import { kidsUrl } from "../../ui/KidsLink";
 import SortableHdr from "../../ui/SortableHdr";
 import EmptyState from "../../ui/EmptyState";
 import ExtLink from "../../ui/ExternalLink";
+import { MUTED } from "../../ui/tableCells";
 
 // ─────────────────────────────────────────────────────────────────────
 // Tcodes "canónicos" que aparecem sempre como coluna se metadata existe.
@@ -2047,7 +2048,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                           )}
                         </span>
                       ) : (
-                        <span className="u-c-text-3">—</span>
+                        MUTED
                       )}
                     </td>
                   );

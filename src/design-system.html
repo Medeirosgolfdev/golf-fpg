@@ -49,7 +49,7 @@
 
 <div class="ds-hero">
   <h1>⛳ Golf Portugal — Design System</h1>
-  <p>Cores e peças globais da app, com o CSS real (tokens.css + App.css) · 382 tokens em 20 secções</p>
+  <p>Cores e peças globais da app, com o CSS real (tokens.css + App.css) · 383 tokens em 20 secções</p>
 </div>
 <div class="ds-indice"><a href="#t1">1. Base / Backgrounds</a> · <a href="#t2">2. Text / Greyscale</a> · <a href="#t3">3. Accent (verde FPG)</a> · <a href="#t4">4. Semantic</a> · <a href="#t5">Cores de circuito</a> · <a href="#t6">5. Overlays / Alphas</a> · <a href="#t7">6. Badges &amp; Pills</a> · <a href="#t8">7. Score ramp (abaixo → acima do par)</a> · <a href="#t9">8. Charts / Data-viz (10 séries)</a> · <a href="#t10">9. Performance tiers (histograma gross vs par)</a> · <a href="#t11">10. Escalão (sub-10 … super sénior)</a> · <a href="#t12">11. Medals</a> · <a href="#t13">11b. Source colors (fontes de dados kids2)</a> · <a href="#t14">11c. Fontes das páginas de circuito (/major, /ffg, /rfeg)</a> · <a href="#t15">12. Borders</a> · <a href="#t16">13. Aliases de retrocompatibilidade</a> · <a href="#t17">14. Tamanhos · Raios · Sombras</a> · <a href="#t18">15. Tipografia</a> · <a href="#t19">16. Espaçamento</a> · <a href="#t20">17. Z-index</a> · <a href="#p1">Tipografia</a> · <a href="#p2">Filtros e interruptores</a> · <a href="#p3">Botões e paginação</a> · <a href="#p4">Pills e etiquetas</a> · <a href="#p5">Números</a> · <a href="#p6">Tabelas</a> · <a href="#p7">Cartões e avisos</a> · <a href="#p8">Regras</a></div>
 
@@ -334,8 +334,9 @@
 </div>
 
 <div class="ds-section" id="t12">
-  <div class="ds-title">11. Medals <span>tokens.css · 12</span></div>
+  <div class="ds-title">11. Medals <span>tokens.css · 13</span></div>
   <div class="ds-box"><div class="ds-tok-grid">
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--swatch-border)"></span><div><code class="ds-code">--swatch-border</code><div class="ds-tok-val">rgba(0, 0, 0, 0.18)</div><div class="ds-tok-nota">contorno dos quadradinhos de cor (tee, legenda)</div></div></div>
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--medal-gold)"></span><div><code class="ds-code">--medal-gold</code><div class="ds-tok-val">#f59e0b</div><div class="ds-tok-nota">1.º lugar — âmbar quente</div></div></div>
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--medal-silver)"></span><div><code class="ds-code">--medal-silver</code><div class="ds-tok-val">#94a3b8</div><div class="ds-tok-nota">2.º lugar — slate</div></div></div>
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--medal-bronze)"></span><div><code class="ds-code">--medal-bronze</code><div class="ds-tok-val">#b45309</div><div class="ds-tok-nota">3.º lugar — bronze escuro</div></div></div>
@@ -593,6 +594,14 @@
       </div>
       <div class="ds-usage"><b>Peça:</b> <code>TabRow</code> <span class="ds-file">ui/TabRow.tsx</span></div>
     </div>
+    <div class="ds-box">
+      <div class="ds-box-label">Pesquisa · sexo</div>
+      <div class="ds-row">
+        <div class="search-box is-md"><span aria-hidden="true" class="search-box-icon">🔎</span><input type="search" class="search-box-input" value="Medeiros" aria-label="Pesquisar" /><button type="button" class="search-box-clear">×</button></div>
+        <select class="select" aria-label="Sexo"><option>Ambos os sexos</option><option>Masculino</option><option>Feminino</option></select>
+      </div>
+      <div class="ds-usage"><b>Peça:</b> <code>SearchInput</code> <code>SexSelect</code> <span class="ds-file">ui/SearchInput.tsx · ui/SexSelect.tsx</span></div>
+    </div>
   </div>
 </div>
 
@@ -611,7 +620,9 @@
         <button class="btn-round btn-round-sm btn-close" title="Fechar (CloseButton)">✕</button>
         <button class="btn-add">＋ Adicionar ronda</button>
       </div>
-      <div class="ds-usage"><b>Peça:</b> <code>.btn</code> <code>ClearButton</code> <code>.btn-link</code> <code>.btn-round</code> <code>.btn-round-sm</code> <code>.btn-add</code> <span class="ds-file">App.css · ui/ClearButton.tsx</span></div>
+      <div class="ds-usage"><b>Peça:</b> <code>.btn</code> <code>ClearButton</code> <code>CloseButton</code> <code>.btn-link</code> <code>.btn-round</code> <code>.btn-round-sm</code> <code>.btn-add</code> <span class="ds-file">App.css · ui/ClearButton.tsx · ui/CloseButton.tsx</span></div>
+      <button class="btn btn-more">Mostrar mais (24 restantes)</button>
+      <div class="ds-usage"><b>Peça:</b> <code>ShowMoreButton</code> <span class="ds-file">ui/ShowMoreButton.tsx</span></div>
       <div class="ds-box-label">Abrir/fechar · links</div>
       <div class="ds-row">
         <span><span class="expand-arrow">▸</span> fechado</span><span><span class="expand-arrow">▾</span> aberto</span>
@@ -693,6 +704,13 @@
         </tbody>
       </table>
       <div class="ds-usage"><b>Peça:</b> <code>.dtable</code> <code>.row-manuel</code> <code>.row-portuguese</code> <code>SortableHdr</code> <code>RankingTable</code> <span class="ds-file">App.css «MODELO ÚNICO DAS TABELAS»</span></div>
+      <div class="ds-row">
+        <span>Célula vazia: <span class="cell-empty">—</span></span>
+        <span><span class="tee-swatch is-sm" style="background:#f0d000"></span> <span class="tee-swatch is-md" style="background:#1d4ed8"></span> cor do tee</span>
+        <span class="p p-sm p-sd-good">12.4</span><span class="p fs-13 fw-800 p-sd-excellent">SD18 8.1</span>
+        <span>CR<span class="info-icon" title="Course rating">ⓘ</span></span>
+      </div>
+      <div class="ds-usage"><b>Peça:</b> <code>MUTED</code> <code>TeeSwatch</code> <code>SDPill</code> <code>InfoIcon</code> <span class="ds-file">ui/tableCells.tsx · ui/TeeSwatch.tsx · ui/tournamentPrimitives.tsx · ui/InfoIcon.tsx</span></div>
     </div>
     <div class="ds-box">
       <div class="ds-box-label">Cartão de buracos — eagle âmbar, birdie vermelho, par branco, bogey azul</div>
@@ -723,8 +741,8 @@
     <div class="ds-box">
       <div class="notice notice-info">Aviso informativo — <code class="ds-code">.notice-info</code></div>
       <div class="notice notice-warn">Atenção — <code class="ds-code">.notice-warn</code></div>
-      <div class="notice-error">Erro — <code class="ds-code">.notice-error</code></div>
-      <div class="ds-usage"><b>Peça:</b> <code>.notice</code> <code>.notice-info</code> <code>.notice-warn</code> <code>.notice-error</code> <span class="ds-file">App.css</span></div>
+      <div class="notice-error error-state"><div class="error-state-msg">⚠️ Erro ao carregar o ranking</div><div class="error-state-detail">HTTP 500</div><button type="button" class="btn mt-8">Tentar de novo</button></div>
+      <div class="ds-usage"><b>Peça:</b> <code>.notice</code> <code>.notice-info</code> <code>.notice-warn</code> <code>ErrorState</code> <span class="ds-file">App.css · ui/ErrorState.tsx</span></div>
     </div>
   </div>
 </div>

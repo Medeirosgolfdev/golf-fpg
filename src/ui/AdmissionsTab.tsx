@@ -35,6 +35,7 @@ import { cachedFetchJson } from "../data/fetchCache";
 import { formaMedia, type ScoutFile, type JuniorScout } from "./circuit/scoutModel";
 import { getTierLabel, type TierKey } from "../pages/kids2/juniorCalc";
 import ExtLink from "./ExternalLink";
+import { MUTED } from "./tableCells";
 
 interface Props {
   admissions: FpgAdmissions;
@@ -155,7 +156,7 @@ export default function AdmissionsTab({
     });
     if (kidsCols && scoutOf.size > 0) {
       const sc = (p: FpgAdmissionPlayer) => scoutOf.get(scoutKey(p));
-      const sem = <span className="muted">–</span>;
+      const sem = MUTED;
       cols.push(
         { key: "k2nivel", label: "Nível", title: "Nível no Kids 2 (pela carreira)",
           sort: (p) => { const t = sc(p)?.t; return t ? TIER_ORDEM.indexOf(t) : null; }, cell: (p) => { const t = sc(p)?.t; return t ? getTierLabel(t) : sem; } },
@@ -332,7 +333,7 @@ export default function AdmissionsTab({
         : nameNode;
       return {
         key: `${p.fed ?? p.nome}-${i}`,
-        pos: posContent ? posContent(p) : isDesist ? <span className="muted">–</span> : numPos,
+        pos: posContent ? posContent(p) : isDesist ? MUTED : numPos,
         gross: 0,
         toPar: null,
         scores: [],
@@ -349,15 +350,15 @@ export default function AdmissionsTab({
         prefixCells: (
           <>
             {!hide.esc && <td className="lb-esc">
-              {p._escHist ? <EscPill esc={p._escHist} /> : <span className="muted">–</span>}
+              {p._escHist ? <EscPill esc={p._escHist} /> : MUTED}
             </td>}
             {/* Nasc. + Idade como no Resumo (pílulas neutras, colunas próprias). */}
             {!hide.nasc && <>
             <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
-              {p._dobYear != null ? <BirthPill>{p._dobYear}</BirthPill> : <span className="muted">–</span>}
+              {p._dobYear != null ? <BirthPill>{p._dobYear}</BirthPill> : MUTED}
             </td>
             <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
-              {age != null ? <BirthPill>{age}a</BirthPill> : <span className="muted">–</span>}
+              {age != null ? <BirthPill>{age}a</BirthPill> : MUTED}
             </td>
             </>}
             {/* Chaves virtuais (`kids:`/`intl:`) sao ids internos derivados do
@@ -383,7 +384,7 @@ export default function AdmissionsTab({
                     <b>{p.pts}</b>
                     {p.ptsRank && <span className="muted fs-10"> · {p.ptsRank}</span>}
                   </>
-                ) : <span className="muted">–</span>}
+                ) : MUTED}
               </td>
             )}
             {extraCols.map(c => <td key={c.key} className="u-ta-center">{c.cell(p)}</td>)}

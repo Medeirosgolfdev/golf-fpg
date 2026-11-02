@@ -22,7 +22,6 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from "react"
 import type { Tournament } from "../data/fpgTypes";
 import type { TorneioData, BdPlayer, StatsDb } from "../pages/nacionais/types";
 import { useAppContext } from "../context/AppContext";
-import { sdClassByHcp } from "../utils/scoreDisplay";
 import { escCls } from "../utils/playerUtils";
 import { escShort, fmtTime, anoEscalao, todayIso, isRecentHours } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
@@ -38,6 +37,8 @@ import type { PlayersDB } from "./tournamentPrimitives";
 import ExpandArrow from "./ExpandArrow";
 import ExtLink from "./ExternalLink";
 import { stripAccents } from "../utils/normName";
+import { MUTED } from "./tableCells";
+import { SDPill } from "./tournamentPrimitives";
 
 /* ═══════════════════════════════════════════════════════
    HOOKS
@@ -415,12 +416,12 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
     return [
       { key: "sd5", label: "SD5", title: "Média dos últimos 5 SD", sort: p => st(p)?.avgSD5 ?? null,
         cell: p => { const s = st(p); const sd5 = s?.avgSD5 ?? null;
-          return sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, s?.currentHcp ?? p.hcp ?? null)} fs-11`}>{sd5.toFixed(1)}</span> : <span className="muted">–</span>; } },
+          return sd5 != null ? <SDPill sd={sd5} hcp={s?.currentHcp ?? p.hcp ?? null} size="md" /> : MUTED; } },
       { key: "trend", label: "T", title: "Tendência do HCP (3 meses)", sort: p => ordTrend[st(p)?.hcpTrend ?? ""] ?? null,
         cell: p => <TrendBadge trend={st(p)?.hcpTrend ?? null} delta={st(p)?.hcpDelta3m ?? null} /> },
       { key: "r3m", label: "R3m", title: "Voltas nos últimos 3 meses", dir: "desc", sort: p => st(p)?.roundsLast3m ?? null,
         cell: p => { const r = st(p)?.roundsLast3m;
-          return r != null ? <span style={{ fontWeight: r >= 4 ? 600 : 400, color: r === 0 ? "var(--color-bad)" : "inherit" }}>{r}</span> : <span className="muted">–</span>; } },
+          return r != null ? <span style={{ fontWeight: r >= 4 ? 600 : 400, color: r === 0 ? "var(--color-bad)" : "inherit" }}>{r}</span> : MUTED; } },
       { key: "bd", label: "Na BD", title: "Na nossa base de dados: sexo e 1.º/2.º ano no escalão (o escalão, o nascimento e o clube estão nas suas colunas)",
         sort: p => (p.fed && nossosByFed.get(p.fed)?.escalao) || null,
         cell: p => { const b = p.fed ? nossosByFed.get(p.fed) : undefined;

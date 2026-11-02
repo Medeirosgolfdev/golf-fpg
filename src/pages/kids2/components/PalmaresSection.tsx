@@ -19,6 +19,7 @@ import { getTournWeight, formatStars } from "../tournWeight";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar, MONTHS_PT } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
+import ShowMoreButton from "../../../ui/ShowMoreButton";
 
 const DEFAULT_LIMIT = 6;
 const RECENT_MONTHS = 24; // "recente" = últimos 24 meses
@@ -85,20 +86,12 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
       </div>
 
       {hiddenCount > 0 && (
-        <button
-          onClick={() => setShowAll(true)}
-          className="u-mt-10px u-p-6px-14px u-bg-bg-muted u-bd-1px-solid-border-light u-br-radius u-fs-fs-12 u-fw-600 u-c-text-2 u-cur-pointer u-w-100pc"
-        >
-          Ver as restantes {hiddenCount} {hiddenCount === 1 ? "vitória" : "vitórias"} (inclui ★)
-        </button>
+        <ShowMoreButton onClick={() => setShowAll(true)}>
+          Mostrar mais ({hiddenCount} {hiddenCount === 1 ? "vitória" : "vitórias"}, inclui ★)
+        </ShowMoreButton>
       )}
       {showAll && allWins.length > DEFAULT_LIMIT && (
-        <button
-          onClick={() => setShowAll(false)}
-          className="u-mt-10px u-p-6px-14px u-bg-bg u-bd-1px-solid-border-light u-br-radius u-fs-fs-11 u-fw-600 u-c-text-3 u-cur-pointer u-w-100pc"
-        >
-          Recolher (mostrar só destaques)
-        </button>
+        <ShowMoreButton onClick={() => setShowAll(false)}>Recolher (mostrar só destaques)</ShowMoreButton>
       )}
     </section>
   );

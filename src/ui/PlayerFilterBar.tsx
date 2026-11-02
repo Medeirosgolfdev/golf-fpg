@@ -22,6 +22,7 @@ import { getTeeHex } from "../utils/teeColors";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import SearchInput from "./SearchInput";
+import TeeSwatch from "./TeeSwatch";
 
 /* ── Sexo por nome (entradas kids:* do playersDB com sex) ── */
 
@@ -137,7 +138,7 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
           <FilterChip key={t} active={filter.tees.includes(t)} color={hex}
             onClick={() => onChange({ ...filter, tees: toggleArr(filter.tees, t) })}>
             <span className="u-d-flex u-ai-center u-gap-4px">
-              <span className="tee-dot-sq" style={{ background: hex }} />{t}
+              <TeeSwatch tee={t} />{t}
             </span>
           </FilterChip>
         );

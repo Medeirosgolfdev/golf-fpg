@@ -19,6 +19,7 @@
 
 import React, { type CSSProperties } from "react";
 import { C } from "../utils/colors";
+import { MUTED } from "./tableCells";
 
 /* ════════════════════════════════════════════════════════════
    ESTILOS — usados como style={PILL_XXX} em className="p p-sm [p-tourn]"
@@ -321,9 +322,9 @@ export function ScoringTag({ scoringType }: { scoringType?: string | null }) {
 }
 
 export function YearPill({ year }: { year: number | string | null | undefined }) {
-  if (year == null || year === "") return <span className="muted">–</span>;
+  if (year == null || year === "") return MUTED;
   const y = typeof year === "number" ? year : parseInt(String(year), 10);
-  if (!Number.isFinite(y)) return <span className="muted">–</span>;
+  if (!Number.isFinite(y)) return MUTED;
   // Módulo positivo — evita índices negativos se y for negativo (improvável, mas seguro).
   const idx = ((y % YEAR_PALETTE.length) + YEAR_PALETTE.length) % YEAR_PALETTE.length;
   const c = YEAR_PALETTE[idx];

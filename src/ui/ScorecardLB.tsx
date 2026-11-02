@@ -20,8 +20,9 @@ import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { EMPTY_FILTER } from "./multiRoundTypes";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { EscPill } from "./PillBadge";
-import { HoleBadge } from "./tableCells";
-import { InfoGroup, InfoItem, RatingFontes, TeeDistances, TeeSwatch } from "./InfoLine";
+import { HoleBadge, MUTED } from "./tableCells";
+import { InfoGroup, InfoItem, RatingFontes, TeeDistances } from "./InfoLine";
+import TeeSwatch from "./TeeSwatch";
 import SexBadge from "./SexBadge";
 import SortableHdr from "./SortableHdr";
 import EmptyState from "./EmptyState";
@@ -670,7 +671,7 @@ export function ScorecardLB({
                     </span>
                   );
                 }
-                return <span className="muted">–</span>;
+                return MUTED;
               })()}
             </td>
           )}
@@ -681,7 +682,7 @@ export function ScorecardLB({
             <td className="lb-age u-w-52px u-minw-52px u-ta-center">
               {(() => {
                 const cy = (p as any)._classYear as (number | null | undefined);
-                if (cy == null) return <span className="muted">–</span>;
+                if (cy == null) return MUTED;
                 const birth = cy - 18;
                 return (
                   <span className="p p-sm u-bg-var-bg-muted-e5e7eb u-c-text-2 u-border-color-transparent" title={`Class of ${cy} · ≈ nascido ${birth}`}
@@ -741,7 +742,7 @@ export function ScorecardLB({
           {modoAtivo !== "stroke" && (
             <td className="lb-modo u-ta-center u-fw-700 u-c-accent"
               title={vModo == null ? (p.hcpPlay == null ? "Sem HCP de jogo" : "Sem cartão buraco a buraco") : `HCP de jogo ${p.hcpPlay}`}>
-              {vModo ?? <span className="muted">–</span>}
+              {vModo ?? MUTED}
             </td>
           )}
         </>
@@ -753,7 +754,7 @@ export function ScorecardLB({
               {sd != null ? (
                 <SDPill sd={sd} hcp={p.hcpExact ?? null} est={tournament._sdEstimate} />
               ) : (
-                <span className="muted">–</span>
+                MUTED
               )}
             </td>
           )}

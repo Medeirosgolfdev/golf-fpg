@@ -53,6 +53,7 @@ import {
 } from "./tournamentPrimitives";
 import { EscPill } from "../ui/PillBadge";
 import { displayFed } from "../utils/fedKeys";
+import { MUTED } from "./tableCells";
 
 /* ══════════════════════════════════════════════════════════════
    TIPOS SORT
@@ -514,7 +515,7 @@ export function MultiRoundLeaderboard({
                         }
                       }
                     }
-                    return <span className="muted">–</span>;
+                    return MUTED;
                   })()}</td>}
                   {(showBirthYear || showAge) && (() => {
                     const dob = dobOf(row);
@@ -539,12 +540,12 @@ export function MultiRoundLeaderboard({
                     return <>
                       {showBirthYear && (
                         <td className="lb-esc" title={tip} style={tip ? { cursor: "help" } : undefined}>
-                          {yr != null ? pill(yr) : <span className="muted">–</span>}
+                          {yr != null ? pill(yr) : MUTED}
                         </td>
                       )}
                       {showAge && (
                         <td className="lb-esc" title={tip} style={tip ? { cursor: "help" } : undefined}>
-                          {age != null ? pill(`${age}a`) : <span className="muted">–</span>}
+                          {age != null ? pill(`${age}a`) : MUTED}
                         </td>
                       )}
                     </>;
@@ -606,7 +607,7 @@ export function MultiRoundLeaderboard({
                               {hasAnySD && <td className="lb-rnd-sd">
                                 {rd.sd != null
                                   ? <SDPill sd={rd.sd} hcp={row.hcp} est={sdEstimate} />
-                                  : <span className="muted">–</span>}
+                                  : MUTED}
                               </td>}
                               <td className="lb-rnd-eag">{rd.eagles || ""}</td>
                               <td className="lb-rnd-bird">{rd.birdies || ""}</td>
@@ -623,7 +624,7 @@ export function MultiRoundLeaderboard({
                             {hasAnySD && <td className="lb-sd">
                               {rd?.sd != null
                                 ? <SDPill sd={rd.sd} hcp={row.hcp} est={sdEstimate} />
-                                : <span className="muted">–</span>}
+                                : MUTED}
                             </td>}
                             <td className="lb-eag">{rd?.eagles || ""}</td>
                             <td className="lb-bird">{rd?.birdies || ""}</td>

@@ -31,6 +31,7 @@ import { loadRfegDivisionData } from "../data/rfeg/divisionData";
 import TotalsResumo, { type TotalsPlayer } from "../ui/circuit/TotalsResumo";
 import { useRfegData } from "../data/rfeg/useRfegData";
 import ErrorState from "../ui/ErrorState";
+import { MUTED } from "../ui/tableCells";
 
 /* ── DrawSaidaView ──────────────────────────────────────────
  * Aba "Draw R{n}" da RFEGPage — o DrawTab partilhado (= FPG). Os dados (horários
@@ -281,7 +282,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
                         )}
                       </span>
                     ) : (
-                      <span className="muted">—</span>
+                      MUTED
                     )}
                   </td>
                 </tr>

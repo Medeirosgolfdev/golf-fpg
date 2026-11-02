@@ -35,6 +35,7 @@ import ExpandArrow from "./ExpandArrow";
 import EmptyState from "./EmptyState";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
+import ShowMoreButton from "./ShowMoreButton";
 
 const ESC_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 24"];
 
@@ -688,10 +689,9 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
         </table>
       </div>
       {limit < filteredByMode.length && (
-        <button className="btn u-mt-8px" onClick={() => setLimit(limit + 20)}
->
+        <ShowMoreButton onClick={() => setLimit(limit + 20)}>
           Mostrar mais ({filteredByMode.length - limit} restantes)
-        </button>
+        </ShowMoreButton>
       )}
     </section>
   );
@@ -845,10 +845,9 @@ function PlayerTimelines({ players, years, mode = "all" }: { players: PlayerStat
         ))}
       </div>
       {limit < filteredByMode.filter(p => p.dob).length && (
-        <button className="btn u-mt-8px" onClick={() => setLimit(limit + 8)}
->
-          Mostrar mais
-        </button>
+        <ShowMoreButton onClick={() => setLimit(limit + 8)}>
+          Mostrar mais ({filteredByMode.filter(p => p.dob).length - limit} restantes)
+        </ShowMoreButton>
       )}
     </section>
   );

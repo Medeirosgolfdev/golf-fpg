@@ -16,7 +16,6 @@ import EmptyState from "./EmptyState";
 import PlayerLink from "./PlayerLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { RowsFilterBar } from "./PlayerFilterBar";
-import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { SDPill, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import {
@@ -25,6 +24,8 @@ import {
   type RdData,
 } from "../hooks/useAllRoundsData";
 import TabRow from "./TabRow";
+import { MUTED } from "./tableCells";
+import TeeSwatch from "./TeeSwatch";
 
 export function AllRoundsScorecardLB({
   tournament,
@@ -88,20 +89,13 @@ export function AllRoundsScorecardLB({
 
   /* Marca de tee — só o quadrado colorido (substitui a coluna de clube no scorecard) */
   function TeeLabel({ tee }: { tee?: string }) {
-    if (!tee) return <span className="muted">–</span>;
-    const hex = getTeeHex(tee);
-    const bdr = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
-    return (
-      <span
-        title={tee}
-        style={{ display: "inline-block", width: 12, height: 12, borderRadius: "var(--radius-xs)", background: hex, border: bdr }}
-      />
-    );
+    if (!tee) return MUTED;
+    return <TeeSwatch tee={tee} size="md" title={tee} />;
   }
 
   /** Pill de idade (coluna IDADE) — tooltip com a DOB completa quando existe. */
   function AgePill({ age, dob }: { age: number | null; dob: string | null }) {
-    if (age == null || age < 0) return <span className="muted">–</span>;
+    if (age == null || age < 0) return MUTED;
     const d = fmtDobPt(dob);
     return (
       <span className="p p-sm" title={d ? `Nascido a ${d}` : undefined}
@@ -139,7 +133,7 @@ export function AllRoundsScorecardLB({
     <>
       {!hideSD && (
         <td className="lb-sd" style={{ borderTop: bTop }}>
-          {rd.sd != null ? <SDPill sd={rd.sd} hcp={hcp} est={tournament._sdEstimate} /> : <span className="muted">–</span>}
+          {rd.sd != null ? <SDPill sd={rd.sd} hcp={hcp} est={tournament._sdEstimate} /> : MUTED}
         </td>
       )}
       <td className="lb-eag" style={{ borderTop: bTop }}>{rd.eags || ""}</td>

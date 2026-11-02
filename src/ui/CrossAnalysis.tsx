@@ -1,6 +1,5 @@
 ﻿import { useState, useMemo, useEffect } from "react";
 import type { PlayerPageData, CrossPlayerData } from "../data/playerDataLoader";
-import { sdClassByHcp } from "../utils/scoreDisplay";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import PlayerLink from "./PlayerLink";
@@ -8,6 +7,7 @@ import { ESC_ORDER_FULL } from "../constants/escaloes";
 import { fmtHcp } from "../utils/format";
 import TabRow from "./TabRow";
 import SexSelect from "./SexSelect";
+import { SDPill } from "./tournamentPrimitives";
 
 // Common Courses
 function CommonCourses({ players }: {
@@ -161,12 +161,12 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
                   <td className="r"><b>{fmtHcp(p.currentHcp, "–")}</b></td>
                   <td className="r">
                     {p.lastSD != null
-                      ? <span className={`p p-${sdClassByHcp(p.lastSD, p.currentHcp)}`}>{p.lastSD.toFixed(1)}</span>
+                      ? <SDPill sd={p.lastSD} hcp={p.currentHcp} />
                       : "–"}
                   </td>
                   <td className="r">
                     {p.avgSD20 != null
-                      ? <span className={`p p-${sdClassByHcp(p.avgSD20, p.currentHcp)}`}>{p.avgSD20.toFixed(1)}</span>
+                      ? <SDPill sd={p.avgSD20} hcp={p.currentHcp} />
                       : "–"}
                   </td>
                   <td className="r">{p.numTournaments}</td>

@@ -39,7 +39,7 @@ import {
 import { buildWagrEntries, wagrEventUrl, wagrPlayerUrl, WAGR_SITE } from "./wagr/wagrCircuit";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { C } from "../utils/colors";
-import { RankChange } from "../ui/tableCells";
+import { RankChange, MUTED } from "../ui/tableCells";
 import ExtLink from "../ui/ExternalLink";
 
 /**
@@ -133,7 +133,7 @@ export default function WAGRPage() {
 /* ── Lista (ranking mundial) ───────────────────────────────────── */
 const LIST_COLS: RankingCol<WagrPlayer>[] = [
   { key: "rank", label: "#", title: "Ranking WAGR (por sexo)", className: "num", sort: (p) => p.rank ?? 1e9, cell: (p) => p.rank ?? "—", tdStyle: { color: "var(--text-muted)" } },
-  { key: "change", label: "Var.", title: "Variação face à semana anterior", className: "tight", sort: (p) => p.change ?? 0, firstDir: "desc", cell: (p) => <RankChange up={p.change} empty={<span className="u-c-text-muted">–</span>} /> },
+  { key: "change", label: "Var.", title: "Variação face à semana anterior", className: "tight", sort: (p) => p.change ?? 0, firstDir: "desc", cell: (p) => <RankChange up={p.change} empty={MUTED} /> },
   { key: "name", label: "Nome", sort: (p) => norm(p.name), cell: (p) => nameCell(p.name), tdStyle: { fontWeight: 500 } },
   { key: "country", label: "País", sort: (p) => norm(p.country || ""), cell: (p) => countryCell(p.country) },
   { key: "sex", label: "Sexo", className: "tight", tdClassName: "", cell: (p) => <SexBadge sex={p.sex} /> },

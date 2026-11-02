@@ -26,6 +26,8 @@ import { isManuelByName } from "../../constants/manuel";
 import ExpandArrow from "../../ui/ExpandArrow";
 import SearchInput from "../../ui/SearchInput";
 import { ToggleChip } from "../../ui/FilterField";
+import { MUTED } from "../../ui/tableCells";
+import ShowMoreButton from "../../ui/ShowMoreButton";
 
 interface VetPlayer {
   name: string;
@@ -213,7 +215,7 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
                           {displayName(p.name)}
                         </td>
                         <td className="u-ws-nowrap">
-                          {p.country ? <>{gf(p.country)} <span className="fs-12">{p.country}</span></> : <span className="muted">—</span>}
+                          {p.country ? <>{gf(p.country)} <span className="fs-12">{p.country}</span></> : MUTED}
                         </td>
                         <td className="u-ta-right u-fw-700">{p.tournaments}</td>
                         <td className="u-ta-right">{p.years}</td>
@@ -253,11 +255,9 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
             </table>
           </div>
           {limit < sorted.length && (
-            <div className="u-ta-center u-m-10px-0">
-              <button type="button" className="btn" onClick={() => setLimit((l) => l + PAGE)}>
-                Mostrar mais ({sorted.length - limit} restantes)
-              </button>
-            </div>
+            <ShowMoreButton onClick={() => setLimit((l) => l + PAGE)}>
+              Mostrar mais ({sorted.length - limit} restantes)
+            </ShowMoreButton>
           )}
         </>
       )}

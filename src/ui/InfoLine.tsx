@@ -11,7 +11,7 @@
  *   <TeeDistances> a distância por tee, com o quadradinho da cor do tee.
  */
 import React from "react";
-import { getTeeHex, teeBorder } from "../utils/teeColors";
+import TeeSwatch from "./TeeSwatch";
 
 export function InfoItem({ v, l, pre, title, muted }: {
   /** Valor (a carregado). */
@@ -48,11 +48,6 @@ export function InfoGroup({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Quadradinho da cor do tee. */
-export function TeeSwatch({ tee }: { tee: string }) {
-  const hex = getTeeHex(tee);
-  return <span className="info-swatch" style={{ background: hex, border: teeBorder(hex) || "1px solid rgba(0,0,0,.18)" }} />;
-}
 
 /** Distância jogada: um tee → «5.257 m»; vários → por tee, com a cor. */
 export function TeeDistances({ list }: { list: { tee: string; meters: number }[] }) {

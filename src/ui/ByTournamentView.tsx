@@ -4,7 +4,7 @@ import { norm, fmtToPar, fmtSign, MONTHS_PT } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
 import { scClass, toParClass, sc2 } from "../utils/scoreDisplay";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
-import { GrossCell, CountPill, RoundNumericCells } from "./tableCells";
+import { GrossCell, CountPill, RoundNumericCells, MUTED } from "./tableCells";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
@@ -537,7 +537,7 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
                     <td className="r">
                       {best
                         ? <GrossCell gross={best.gross} par={best.gross - best.toPar} />
-                        : <span className="muted">—</span>}
+                        : MUTED}
                     </td>
                   </tr>
                   {isOpen && (

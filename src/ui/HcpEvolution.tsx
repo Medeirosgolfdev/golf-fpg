@@ -19,7 +19,7 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import SexBadge from "./SexBadge";
 import { C } from "../utils/colors";
-import { HcpDelta } from "./tableCells";
+import { HcpDelta, MUTED } from "./tableCells";
 import { tpColor } from "./tournamentPrimitives";
 import ClearButton from "./ClearButton";
 
@@ -266,14 +266,14 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                     {on && <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "var(--radius-xs)", background: colorFor(r.p.fed), marginRight: 6 }} />}
                     {r.p.name}
                   </td>
-                  <td>{r.p.sex ? <SexBadge sex={r.p.sex} /> : <span className="muted">—</span>}</td>
+                  <td>{r.p.sex ? <SexBadge sex={r.p.sex} /> : MUTED}</td>
                   <td className="r">{r.m.nPts}</td>
                   <td className="r">{fmtHcp(r.m.start)}</td>
                   <td className="r"><b>{fmtHcp(r.m.end)}</b></td>
                   <td className="r"><HcpDelta d={r.m.delta} zero="0" /></td>
                   <td className="r">{fmtHcp(r.m.best)}</td>
                   <td className="r">
-                    {r.m.slopePerMonth == null ? <span className="muted">—</span>
+                    {r.m.slopePerMonth == null ? MUTED
                       : <span style={{ color: tpColor(r.m.slopePerMonth) }}>
                           {r.m.slopePerMonth > 0 ? "+" : ""}{r.m.slopePerMonth.toFixed(2)}
                         </span>}

@@ -22,6 +22,7 @@
  *   <KpiCard label="SD · últ.5" value="13.1" delta={-1.2} deltaLabel="vs últ.20" tip="…" />
  */
 import React from "react";
+import InfoIcon from "./InfoIcon";
 
 interface KpiCardProps {
   label: React.ReactNode;
@@ -92,7 +93,7 @@ export default function KpiCard({
       style={onClick ? { ...rootStyle, cursor: "pointer" } : rootStyle}
       onClick={onClick} title={title}>
       <div className="kpi-lbl" style={labelStyle}>
-        {label}{tip && <span className="kpi-info ml-4" title={tip}>ℹ</span>}
+        {label}{tip && <InfoIcon title={tip} />}
       </div>
       <div className={valClass} style={valColor ? { color: valColor } : undefined}>{value}</div>
       {delta != null && (

@@ -16,6 +16,7 @@ import EmptyState from "./EmptyState";
 import { escPillCls } from "../utils/playerUtils";
 import { isManuel, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import type { Sub12Row, EscLookup } from "./driveTypes";
+import { MUTED } from "./tableCells";
 
 // Wrapper que aceita style (não incluído nos props originais de SortTh)
 const CSortTh = _CSortTh as React.ComponentType<
@@ -382,7 +383,7 @@ function TournamentGrid({
               {escalao ? (
                 <span className={cls + " fs-10"}>{escalao}</span>
               ) : (
-                <span className="c-muted fs-10">–</span>
+                MUTED
               )}
             </td>
             <td className="cs-club">{p.club}</td>

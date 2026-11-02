@@ -37,6 +37,7 @@ import PlayerLink from "../ui/PlayerLink";
 import { stripAccents } from "../utils/normName";
 import SearchInput from "../ui/SearchInput";
 import SexSelect from "../ui/SexSelect";
+import { MUTED } from "../ui/tableCells";
 
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
@@ -600,7 +601,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
               <span className="cp-tp" style={{ color: tpTextColor(b.bestToPar) }}> {fmtToPar(b.bestToPar)}</span>
             )}
           </>
-        ) : <span className="muted">–</span>}
+        ) : MUTED}
       </td>
       <td className="cp-num">
         {b.avgGross != null ? (
@@ -610,7 +611,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
               <span className="cp-tp" style={{ color: tpTextColor(Math.round(b.avgToPar)) }}> ({b.avgToPar >= 0 ? "+" : ""}{fmtCR(b.avgToPar)})</span>
             )}
           </>
-        ) : <span className="muted">–</span>}
+        ) : MUTED}
       </td>
       <td className="cp-num cp-muted u-ws-nowrap">{fmtDatePt(b.last, "") || "–"}</td>
     </>
@@ -980,7 +981,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
                     {distFor(mr.label) ? <span className="muted u-fw-400 u-fs-fs-10">{distFor(mr.label)}m</span> : null}
                   </span>
                   {score(mr.val, mr.tp)}
-                  <span>{mr.esc ? <EscPill esc={mr.esc} /> : <span className="muted">–</span>}</span>
+                  <span>{mr.esc ? <EscPill esc={mr.esc} /> : MUTED}</span>
                   {when(mr.date, mr.sd)}
                 </Fragment>
               );

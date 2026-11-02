@@ -20,6 +20,7 @@ import ClearButton from "../../../ui/ClearButton";
 import ExpandArrow from "../../../ui/ExpandArrow";
 import ExtLink from "../../../ui/ExternalLink";
 import { SOURCE_LABELS } from "../../../constants/kids2Sources";
+import { MUTED } from "../../../ui/tableCells";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -455,7 +456,7 @@ function PosBadgeSmall({ pos, status }: { pos: number | null | undefined; status
     if (status && status !== "OK") {
       return <span className="u-c-text-3 u-fw-700 u-fs-fs-9" title="Não classificado">{status}</span>;
     }
-    return <span className="u-c-text-3">—</span>;
+    return MUTED;
   }
   if (pos <= 3) {
     return <span className={"pos-medal pos-medal-sm " + medalClass(pos)}>🏆 #{pos}</span>;

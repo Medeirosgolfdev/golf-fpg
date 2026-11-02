@@ -10,6 +10,7 @@
 import type { ReactNode } from "react";
 import BirthPill from "./BirthPill";
 import { ageAtDate } from "../utils/format";
+import { MUTED } from "./tableCells";
 
 export interface BirthInfo {
   /** Data de nascimento ISO (ou só o ano em `birthYear`). */
@@ -39,9 +40,9 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
   const shown = b.showDate !== false && dob && /^\d{4}-\d{2}-\d{2}$/.test(dob) ? dob.split("-").reverse().join("/") : dobYear;
   return {
     nasc: dobYear != null ? <BirthPill>{shown}</BirthPill>
-      : est ? <span className="est-value">{estYear}</span> : <span className="muted">–</span>,
+      : est ? <span className="est-value">{estYear}</span> : MUTED,
     idade: age != null ? <BirthPill>{!dob ? "~" : ""}{age}a</BirthPill>
-      : estAge ? <span className="est-value">{estAge}a</span> : <span className="muted">–</span>,
+      : estAge ? <span className="est-value">{estAge}a</span> : MUTED,
     tip,
   };
 }

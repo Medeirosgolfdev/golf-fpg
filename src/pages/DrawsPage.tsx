@@ -43,6 +43,7 @@ import ExtLink from "../ui/ExternalLink";
 import { compareEscalao } from "../data/model/escalao";
 import SearchInput from "../ui/SearchInput";
 import ErrorState from "../ui/ErrorState";
+import { MUTED } from "../ui/tableCells";
 
 // ── Tipos ─────────────────────────────────────────────────────────────
 
@@ -1106,7 +1107,7 @@ export default function DrawsPage() {
                           <CompanionNameLink row={row} />
                         </td>
                         <td>
-                          {row.escalao ? <EscPill esc={row.escalao} /> : <span className="muted">—</span>}
+                          {row.escalao ? <EscPill esc={row.escalao} /> : MUTED}
                         </td>
                         <td className="u-c-text-2">
                           {tab === "FPG"

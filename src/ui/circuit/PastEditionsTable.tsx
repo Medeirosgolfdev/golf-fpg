@@ -20,6 +20,7 @@ import { tpColorDark } from "../../utils/scoreDisplay";
 import EmptyState from "../EmptyState";
 import SortableHdr from "../SortableHdr";
 import ExtLink from "../ExternalLink";
+import { MUTED } from "../tableCells";
 
 export interface PastEditionPlayer {
   pos: number | null;
@@ -196,7 +197,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                           className={[p?.isManuel ? "cell-manuel fw-700" : p?.isPt ? "cell-portuguese" : ""].filter(Boolean).join(" ") || undefined}
                           style={{ textAlign: "left", borderLeft: bl(ei), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}
                           title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${p.pos}.º oficial` : ""}` : undefined}>
-                        {p ? <>{clubFlagPrefix(p.club) }{p.name}</> : <span className="c-muted">–</span>}
+                        {p ? <>{clubFlagPrefix(p.club) }{p.name}</> : MUTED}
                       </td>,
                       // Total de quem NÃO completou (WD/DNF ou volta a decorrer)
                       // fica esbatido — 2 voltas somam menos que 3 e um total

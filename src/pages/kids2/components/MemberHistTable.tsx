@@ -20,6 +20,7 @@ import { MONTHS_PT, fmtToPar } from "../../../utils/format";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import ExtLink from "../../../ui/ExternalLink";
+import { MUTED } from "../../../ui/tableCells";
 
 interface Props {
   data: CanonicalData;
@@ -165,7 +166,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
                       className="u-td-none u-fw-700 u-fs-fs-12"
                       style={{ color: `var(${links[0].colorVar})` }}
                     >↗</ExtLink>
-                  ) : <span className="u-c-text-3">—</span>}
+                  ) : MUTED}
                 </td>
               </tr>
               );

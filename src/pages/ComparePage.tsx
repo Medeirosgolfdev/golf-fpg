@@ -32,6 +32,7 @@ import { fmtSD, fmtHcp } from "../utils/format";
 import { teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { isPtCountry } from "../utils/flagUtils";
+import { MUTED } from "../ui/tableCells";
 
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
@@ -239,7 +240,7 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
 function Delta({ a, b, decimals = 0, unit = "" }: {
   a: number | null; b: number | null; decimals?: number; unit?: string;
 }) {
-  if (a === null || b === null) return <span className="muted">–</span>;
+  if (a === null || b === null) return MUTED;
   const d = b - a;
   const abs = Math.abs(d);
   const fmt = decimals > 0 ? abs.toFixed(decimals) : String(Math.round(abs));
@@ -601,7 +602,7 @@ function CourseSideBySide({
                                 <span className="u-fs-fs-10 u-fw-700 u-ff-font-mono u-c-text-2">
                                   {delta > 0 ? `+${delta}` : delta}m
                                 </span>
-                              ) : <span className="u-fs-fs-10 u-c-text-3">–</span>}
+                              ) : MUTED}
                             </div>
                           )}
                           <div key={`b${i}`} className="u-d-flex u-jc-flex-start u-pl-8px">

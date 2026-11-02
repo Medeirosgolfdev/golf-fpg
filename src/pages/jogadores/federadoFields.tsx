@@ -9,6 +9,7 @@ import React from "react";
 import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
 import { gf } from "../../utils/flagUtils";
+import InfoIcon from "../../ui/InfoIcon";
 
 /** Secções visíveis por defeito. Cada uma agrupa campos relacionados. */
 export const FEDERADO_SECTIONS: { title: string; fields: string[] }[] = [
@@ -322,7 +323,7 @@ export function KV({ label, value, description }: { label: string; value: React.
         }}
         title={description ? `${label} — ${description}` : label}
       >
-        {label}{hasDesc && <span aria-hidden className="u-ml-3px u-op-0_5">ⓘ</span>}
+        {label}{hasDesc && <InfoIcon />}
       </div>
       <div className="u-d-flex u-ai-center u-fwr-wrap u-gap-4px u-lh-1_25">
         {value}

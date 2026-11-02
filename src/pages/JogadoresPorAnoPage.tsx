@@ -41,7 +41,7 @@ import type { PlayerClub } from "../data/types";
 
 import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
 import { HCP_UNESTABLISHED_THRESHOLD as HCP_UNESTABLISHED } from "./jogadores/filterPlayers";
-import { HcpDelta } from "../ui/tableCells";
+import { HcpDelta, MUTED } from "../ui/tableCells";
 import ClearButton from "../ui/ClearButton";
 import TabRow from "../ui/TabRow";
 import FilterPillRow from "../ui/FilterPillRow";
@@ -347,16 +347,16 @@ export default function JogadoresPorAnoPage() {
                     <FormBadge ps={ps} />
                   </td>
                   <td><SexBadge sex={p.sex} /></td>
-                  <td className="u-ta-left u-maxw-150px u-ov-hidden u-tov-ellipsis u-ws-nowrap">{clubName(p.club) || <span className="muted">—</span>}</td>
+                  <td className="u-ta-left u-maxw-150px u-ov-hidden u-tov-ellipsis u-ws-nowrap">{clubName(p.club) || MUTED}</td>
                   <td><EscPill esc={p.escalao} /></td>
-                  <td className="u-fw-700">{p.hcp == null ? <span className="muted">—</span> : fmtHcp(p.hcp)}</td>
+                  <td className="u-fw-700">{p.hcp == null ? MUTED : fmtHcp(p.hcp)}</td>
                   <td><HcpDelta d={ps?.hcpDelta3m ?? null} /></td>
-                  <td>{ps?.bestGross ?? <span className="muted">—</span>}</td>
-                  <td>{ps?.avgSD5 == null ? <span className="muted">—</span> : ps.avgSD5.toFixed(1)}</td>
-                  <td>{ps?.lastSD == null ? <span className="muted">—</span> : ps.lastSD.toFixed(1)}</td>
-                  <td className="u-fw-600">{ps?.roundsLast3m ?? <span className="muted">—</span>}</td>
-                  <td className="u-fw-600">{ps?.roundsLast12m ?? <span className="muted">—</span>}</td>
-                  <td>{ps?.aces ? `🕳️${ps.aces > 1 ? "×" + ps.aces : ""}` : <span className="muted">—</span>}</td>
+                  <td>{ps?.bestGross ?? MUTED}</td>
+                  <td>{ps?.avgSD5 == null ? MUTED : ps.avgSD5.toFixed(1)}</td>
+                  <td>{ps?.lastSD == null ? MUTED : ps.lastSD.toFixed(1)}</td>
+                  <td className="u-fw-600">{ps?.roundsLast3m ?? MUTED}</td>
+                  <td className="u-fw-600">{ps?.roundsLast12m ?? MUTED}</td>
+                  <td>{ps?.aces ? `🕳️${ps.aces > 1 ? "×" + ps.aces : ""}` : MUTED}</td>
                 </tr>
               );
             })}

@@ -31,7 +31,6 @@
 
 import { useContext } from "react";
 import SexBadge from "./SexBadge";
-import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { normLoose } from "../utils/normName";
 import { fmtToPar } from "../utils/format";
@@ -42,6 +41,8 @@ import { MANUEL_FED as _MANUEL_FED, isManuel } from "../constants/manuel";
 import { kidsUrl, KidsLinkCtx } from "./KidsLink";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
+import { MUTED } from "./tableCells";
+import TeeSwatch from "./TeeSwatch";
 export { _MANUEL_FED as MANUEL_FED, isManuel };
 
 /* ─── Formatação to-par ─── */
@@ -57,31 +58,34 @@ export function tpColor(v: number | null | undefined): string | undefined {
 
 /* ─── Tee dot ─── */
 export function TeeDot({ teeName }: { teeName?: string }) {
-  if (!teeName) return <span className="muted">–</span>;
-  const hex = getTeeHex(teeName);
-  const border = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
+  if (!teeName) return MUTED;
   return (
     <span title={teeName} className="u-d-inline-flex u-ai-center u-gap-4px u-ws-nowrap u-cur-default">
-      <span
-        className="tee-sq shrink-0"
-        style={{ background: hex, border }}
-      />
+      <TeeSwatch tee={teeName} size="md" />
     </span>
   );
 }
 
 /* ─── SD pill inline (sem <td>) ─── */
-export function SDPill({ sd, hcp, est }: { sd: number | null; hcp?: number | null; est?: string | null }) {
+export function SDPill({ sd, hcp, est, size = "sm", prefix, colorSd, title }: {
+  sd: number | null; hcp?: number | null; est?: string | null;
+  /** sm = pílula pequena das tabelas · md = letra 11 · lg = destaque (simulador). */
+  size?: "sm" | "md" | "lg";
+  /** Texto antes do número («SD18»). */
+  prefix?: string;
+  /** Cor pelo HCP a partir de outro SD (ex.: o SD9 pinta-se pelo SD18 equivalente). */
+  colorSd?: number | null;
+  title?: string;
+}) {
   // O SD oficial da FPG ou, sem ele, o calculado com o HCP da inscrição (computeSD).
-  if (sd == null) {
-    return <span className="muted" title="Sem SD para esta volta">–</span>;
-  }
-  const cls = sdClassByHcp(sd, hcp ?? null);
+  if (sd == null) return MUTED;
+  const cls = sdClassByHcp(colorSd ?? sd, hcp ?? null);
+  const base = (size === "sm" ? "p p-sm p-" : size === "md" ? "p fs-11 p-" : "p fs-13 fw-800 p-") + cls;
+  const txt = (prefix ? prefix + " " : "") + sd.toFixed(1);
   // Com CR/Slope estimados: a MESMA pílula colorida pelo HCP (regra de sempre),
   // só com o número em itálico e o contorno tracejado — 22/10/2026.
-  if (est) return <span className={`${"p p-sm p-" + cls} u-fst-italic u-border-style-dashed`} title={`SD estimado — ${est}`}
->{sd.toFixed(1)}</span>;
-  return <span className={"p p-sm p-" + cls} title="Score Differential">{sd.toFixed(1)}</span>;
+  if (est) return <span className={`${base} u-fst-italic u-border-style-dashed`} title={`SD estimado — ${est}`}>{txt}</span>;
+  return <span className={base} title={title ?? "Score Differential"}>{txt}</span>;
 }
 
 /* ─── Nome do jogador ───────────────────────────────────────── */

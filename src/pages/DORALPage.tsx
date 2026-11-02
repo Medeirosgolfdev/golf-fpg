@@ -16,6 +16,7 @@ import { EvoSummary, tagEvo } from "../ui/evo";
 import type { CircuitDivision } from "../ui/circuit/types";
 import { intlScorecardOptions } from "../data/intlScorecard";
 import { doralEntryToTournament, type DoralEntry } from "../data/major/doral";
+import { MUTED } from "../ui/tableCells";
 
 /** EvoEntry estendido para Doral:
  *  - prevYear: ano de origem da comparação (mais recente onde participou)
@@ -122,7 +123,7 @@ export function doralMajorDivision(entry: DoralEntry, evo: Map<string, EvoEntryD
       headerStyle: { width: 72, textAlign: "left" as const, padding: "0 6px" },
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
-        if (!ev) return <span className="c-muted">–</span>;
+        if (!ev) return MUTED;
         const tooltip = ev.history.map((h) => `${h.year}: ${h.total} (${h.category}${h.pos != null ? ` #${h.pos}` : ""})`).join("\n");
         const nEditions = ev.history.length;
         return (
@@ -137,7 +138,7 @@ export function doralMajorDivision(entry: DoralEntry, evo: Map<string, EvoEntryD
       header: "Δ", className: "ta-l fs-11 fw-700", headerStyle: { width: 60, textAlign: "left" as const, padding: "0 6px" },
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
-        if (!ev) return <span className="c-muted">–</span>;
+        if (!ev) return MUTED;
         const value = ev.deltaIsComparable ? ev.deltaGross : ev.delta;
         const sign = value > 0 ? "+" : "";
         const suffix = ev.deltaIsComparable ? "" : <span className="c-muted fs-9 ml-1">/r</span>;

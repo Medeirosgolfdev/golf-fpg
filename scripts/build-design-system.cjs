@@ -109,6 +109,14 @@ const PECAS = [
       </div>
       ${uso(["TabRow"], "ui/TabRow.tsx")}
     </div>
+    <div class="ds-box">
+      <div class="ds-box-label">Pesquisa · sexo</div>
+      <div class="ds-row">
+        <div class="search-box is-md"><span aria-hidden="true" class="search-box-icon">🔎</span><input type="search" class="search-box-input" value="Medeiros" aria-label="Pesquisar" /><button type="button" class="search-box-clear">×</button></div>
+        <select class="select" aria-label="Sexo"><option>Ambos os sexos</option><option>Masculino</option><option>Feminino</option></select>
+      </div>
+      ${uso(["SearchInput", "SexSelect"], "ui/SearchInput.tsx · ui/SexSelect.tsx")}
+    </div>
   </div>`,
   },
   {
@@ -126,7 +134,9 @@ const PECAS = [
         <button class="btn-round btn-round-sm btn-close" title="Fechar (CloseButton)">✕</button>
         <button class="btn-add">＋ Adicionar ronda</button>
       </div>
-      ${uso([".btn", "ClearButton", ".btn-link", ".btn-round", ".btn-round-sm", ".btn-add"], "App.css · ui/ClearButton.tsx")}
+      ${uso([".btn", "ClearButton", "CloseButton", ".btn-link", ".btn-round", ".btn-round-sm", ".btn-add"], "App.css · ui/ClearButton.tsx · ui/CloseButton.tsx")}
+      <button class="btn btn-more">Mostrar mais (24 restantes)</button>
+      ${uso(["ShowMoreButton"], "ui/ShowMoreButton.tsx")}
       <div class="ds-box-label">Abrir/fechar · links</div>
       <div class="ds-row">
         <span><span class="expand-arrow">▸</span> fechado</span><span><span class="expand-arrow">▾</span> aberto</span>
@@ -205,6 +215,13 @@ const PECAS = [
         </tbody>
       </table>
       ${uso([".dtable", ".row-manuel", ".row-portuguese", "SortableHdr", "RankingTable"], "App.css «MODELO ÚNICO DAS TABELAS»")}
+      <div class="ds-row">
+        <span>Célula vazia: <span class="cell-empty">—</span></span>
+        <span><span class="tee-swatch is-sm" style="background:#f0d000"></span> <span class="tee-swatch is-md" style="background:#1d4ed8"></span> cor do tee</span>
+        <span class="p p-sm p-sd-good">12.4</span><span class="p fs-13 fw-800 p-sd-excellent">SD18 8.1</span>
+        <span>CR<span class="info-icon" title="Course rating">ⓘ</span></span>
+      </div>
+      ${uso(["MUTED", "TeeSwatch", "SDPill", "InfoIcon"], "ui/tableCells.tsx · ui/TeeSwatch.tsx · ui/tournamentPrimitives.tsx · ui/InfoIcon.tsx")}
     </div>
     <div class="ds-box">
       <div class="ds-box-label">Cartão de buracos — eagle âmbar, birdie vermelho, par branco, bogey azul</div>
@@ -234,8 +251,8 @@ const PECAS = [
     <div class="ds-box">
       <div class="notice notice-info">Aviso informativo — <code class="ds-code">.notice-info</code></div>
       <div class="notice notice-warn">Atenção — <code class="ds-code">.notice-warn</code></div>
-      <div class="notice-error">Erro — <code class="ds-code">.notice-error</code></div>
-      ${uso([".notice", ".notice-info", ".notice-warn", ".notice-error"], "App.css")}
+      <div class="notice-error error-state"><div class="error-state-msg">⚠️ Erro ao carregar o ranking</div><div class="error-state-detail">HTTP 500</div><button type="button" class="btn mt-8">Tentar de novo</button></div>
+      ${uso([".notice", ".notice-info", ".notice-warn", "ErrorState"], "App.css · ui/ErrorState.tsx")}
     </div>
   </div>`,
   },

@@ -56,6 +56,7 @@ import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
 import SearchInput from "../ui/SearchInput";
 import ErrorState from "../ui/ErrorState";
 import SexSelect from "../ui/SexSelect";
+import { MUTED } from "../ui/tableCells";
 
 /* ── URL FPG (referência exacta pedida pelo user) ─────────────── */
 const FPG_LIST_URL =
@@ -637,7 +638,7 @@ export default function JogadoresListPage() {
 >
                           🏑 {hcpDisplay(r.ppHcp!)}
                         </span>
-                      ) : <span className="u-c-text-muted">—</span>}
+                      ) : MUTED}
                     </td>
                     <td><SexBadge sex={r.sex as "M" | "F"} /></td>
                     <td><EscPill esc={r.escalao} /></td>

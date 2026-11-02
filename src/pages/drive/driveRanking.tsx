@@ -36,6 +36,7 @@ import TabRow from "../../ui/TabRow";
 import CloseButton from "../../ui/CloseButton";
 import SearchInput from "../../ui/SearchInput";
 import SexSelect from "../../ui/SexSelect";
+import { MUTED } from "../../ui/tableCells";
 
 export const SERIE_LABELS: Record<DriveSeries, string> = { tour: "Tour", challenge: "Challenge", aquapor: "AQUAPOR" };
 const REGION_LABEL: Record<string, string> = { norte: "Norte", tejo: "Tejo", sul: "Sul", madeira: "Madeira", acores: "Açores", nacional: "Nacional" };
@@ -43,11 +44,11 @@ export const regionLabel = (r: string): string => REGION_LABEL[r.toLowerCase()] 
 
 /* ── Peças pequenas ─────────────────────────────────────────────── */
 function SdSpan({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
-  if (sd == null) return <span className="c-muted">–</span>;
+  if (sd == null) return MUTED;
   return <span className={"p p-sm fs-11 p-" + sdClassByHcp(sd, hcp ?? null)}>{sd.toFixed(1)}</span>;
 }
 function ToParSpan({ tp }: { tp: number | null }) {
-  if (tp == null) return <span className="c-muted">–</span>;
+  if (tp == null) return MUTED;
   return <span className={"fw-700 fs-11" + (tp < 0 ? " c-good" : tp > 0 ? " c-danger" : "")}>{fmtToPar(tp)}</span>;
 }
 
@@ -174,7 +175,7 @@ function cols(rows: Sub12Row[], withEsc: boolean, pdb: PlayersDB): RankingCol<Su
   const rk = rankByPts(rows);
   return [
     { key: "rank", label: "#", className: "num", sort: r => rk.get(r.fed) ?? 9999, firstDir: "asc",
-      cell: r => r.totalPts > 0 ? (medal(rk.get(r.fed)!) ?? <span className="mono fw-700">{rk.get(r.fed)}</span>) : <span className="c-muted">–</span> },
+      cell: r => r.totalPts > 0 ? (medal(rk.get(r.fed)!) ?? <span className="mono fw-700">{rk.get(r.fed)}</span>) : MUTED },
     { key: "name", label: "Jogador", sort: r => norm(r.name), firstDir: "asc",
       cell: r => <>{pdb[r.fed]?.country && pdb[r.fed]!.country !== "PT" ? <span title={pdb[r.fed]!.country ?? ""}>{flagOrEmpty(pdb[r.fed]!.country)} </span> : null}<PlayerLink fed={r.fed} name={r.name} className="fw-700" />
         {(r.sex === "M" || r.sex === "F") && <SexBadge sex={r.sex} size="sm" className="ml-4" />}</> },

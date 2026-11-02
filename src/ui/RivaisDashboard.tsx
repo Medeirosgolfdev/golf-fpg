@@ -10,9 +10,11 @@ import KpiCard from "./KpiCard";
 import WdBadge from "./WdBadge";
 import { RoundPill } from "./PillBadge";
 import { TIER } from "../data/rivalData";
-import { TIER_L, TR_I } from "../constants/config";
+import { TR_I } from "../constants/config";
+import TierLegend from "./TierLegend";
 import type { RivalPlayer, TournDef, RoundAvg } from "./bjgtAnalysisTypes";
 import ExtLink from "./ExternalLink";
+import { MUTED } from "./tableCells";
 
 // DOB formatter — aceita YYYY-MM-DD, DD/MM/YYYY, ou outro; devolve "DD/MM/YY"
 function fmtDob(dob?: string): string {
@@ -309,19 +311,7 @@ export default function RivaisDashboard({
       </div>
 
       {/* Legend */}
-      <div className="legend-row">
-        {(Object.keys(TIER) as Array<keyof typeof TIER>).map(k => (
-          <span key={k} className="legend-item">
-            <span
-              className="legend-dot"
-              style={{ background: TIER[k].bg }}
-            />
-            <span className="fs-10" style={{ color: TIER[k].c }}>
-              {TIER_L[k]}
-            </span>
-          </span>
-        ))}
-      </div>
+      <TierLegend />
 
       {/* Table — quando noScroll, omite o wrapper .card (bg branca) para a tabela
           fluir com o background da pagina. */}
@@ -741,7 +731,7 @@ export default function RivaisDashboard({
                             {TR_I[tr].i}
                           </span>
                         ) : (
-                          <span className="c-border">—</span>
+                          MUTED
                         )}
                       </td>
                     )}
@@ -752,7 +742,7 @@ export default function RivaisDashboard({
                         {p.up.includes(u.id) ? (
                           <span className="fw-700 c-good-dark">✓</span>
                         ) : (
-                          <span className="c-border">—</span>
+                          MUTED
                         )}
                       </td>
                     ))}
@@ -761,7 +751,7 @@ export default function RivaisDashboard({
                     {!fieldMode && vsOn && (
                       <td className="ta-c">
                         {isM ? (
-                          <span className="fs-10 c-border">—</span>
+                          MUTED
                         ) : vsAvg != null ? (
                           <span
                             className="fs-12 fw-700"
@@ -770,7 +760,7 @@ export default function RivaisDashboard({
                             {fmtSign(vsAvg)}
                           </span>
                         ) : (
-                          <span className="fs-10 c-border">—</span>
+                          MUTED
                         )}
                       </td>
                     )}

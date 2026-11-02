@@ -21,6 +21,7 @@ import TabRow from "../TabRow";
 import ExpandArrow from "../ExpandArrow";
 import EmptyState from "../EmptyState";
 import PlayerLink from "../PlayerLink";
+import { MUTED } from "../tableCells";
 
 type TeamRow = {
   key: string;
@@ -32,7 +33,7 @@ type TeamRow = {
 };
 
 function ResultCell({ results }: { results: TeamPointsResult[] | undefined }) {
-  if (!results?.length) return <span className="c-muted">—</span>;
+  if (!results?.length) return MUTED;
   return (
     // Um confronto por linha: no Total, os dois dias lado a lado liam-se como um só.
     <span className="tps-res">

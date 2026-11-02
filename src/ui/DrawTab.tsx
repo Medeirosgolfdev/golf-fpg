@@ -34,6 +34,7 @@ import { isNoCardGross } from "../data/intlCommon";
 import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
 import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
 import ExtLink from "./ExternalLink";
+import { MUTED } from "./tableCells";
 
 interface Props {
   draw: FpgDraw;
@@ -609,12 +610,12 @@ export default function DrawTab({
             {showOm && (() => {
               const hit = lookupOm(omLookup, p.fed, p.nome);
               return <td style={{ padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>
-                {hit ? <OmCatBadge hit={hit} /> : <span className="muted">–</span>}
+                {hit ? <OmCatBadge hit={hit} /> : MUTED}
               </td>;
             })()}
             {!hc.esc && (
               <td className="lb-esc" style={bStyle}>
-                {p.escHist ? <EscPill esc={p.escHist} /> : <span className="muted">–</span>}
+                {p.escHist ? <EscPill esc={p.escHist} /> : MUTED}
               </td>
             )}
             {!hc.nasc && (() => {

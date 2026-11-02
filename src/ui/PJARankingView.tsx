@@ -23,6 +23,7 @@ import ExtLink from "./ExternalLink";
 import CloseButton from "./CloseButton";
 import ClearButton from "./ClearButton";
 import SearchInput from "./SearchInput";
+import { MUTED } from "./tableCells";
 
 /* ─────────────────────────────────────────────
    RANKINGS DA /FPG — Ranking PJA, Ranking Sub-12 por SD e Classificações.
@@ -71,7 +72,7 @@ type RankView = "tabela" | "ranking";
 const RANK_CTX: CircuitRankingContext = { entries: [], scope: "view" };
 
 const EscPill = ({ esc }: { esc: string }) =>
-  esc ? <span className={escPillCls(esc) + " fs-10"}>{esc}</span> : <span className="muted">–</span>;
+  esc ? <span className={escPillCls(esc) + " fs-10"}>{esc}</span> : MUTED;
 
 /** Nº de torneios em que o jogador tem voltas. */
 function nTorneios(row: RankRow): number {
@@ -98,7 +99,7 @@ function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: Play
   const isSd = metric === "sd";
   return [
     { key: "rank", label: "#", className: "num", sort: r => rank.get(r.key) ?? 9999, firstDir: "asc",
-      cell: r => { const p = rank.get(r.key); return p == null ? <span className="c-muted">–</span> : ((medals && medal(p)) || <span className="mono fw-700">{p}</span>); } },
+      cell: r => { const p = rank.get(r.key); return p == null ? MUTED : ((medals && medal(p)) || <span className="mono fw-700">{p}</span>); } },
     { key: "name", label: "Jogador", sort: r => r.name.toLowerCase(), firstDir: "asc",
       cell: r => <PName name={r.name} fedCode={r.fedCode} playersDB={playersDB} sex={r.sex} /> },
     { key: "esc", label: "Esc.", sort: r => r.escalao, firstDir: "asc", cell: r => <EscPill esc={r.escalao} /> },
@@ -127,7 +128,7 @@ function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: Play
       ? { key: "best", label: "Melhor SD", className: "num", sort: r => bestSd(r) ?? 999, firstDir: "asc",
           cell: r => { const v = bestSd(r); return <span className="mono fw-700 c-good-dark">{v != null ? v.toFixed(1) : "–"}</span>; } }
       : { key: "best", label: "Melhor", title: "Melhor volta (±par)", className: "num", sort: r => bestToPar(r) ?? 999, firstDir: "asc",
-          cell: r => { const v = bestToPar(r); return v == null ? <span className="c-muted">–</span> : <span className="fw-700" style={{ color: tpColor(v) }}>{fmtTP(v)}</span>; } },
+          cell: r => { const v = bestToPar(r); return v == null ? MUTED : <span className="fw-700" style={{ color: tpColor(v) }}>{fmtTP(v)}</span>; } },
   ];
 }
 
@@ -564,7 +565,7 @@ export function PJARankingView({
                     <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} sex={row.sex} />
                   </td>
                   <td className="cs-esc">
-                    {row.escalao ? <span className={escPillCls(row.escalao) + " fs-10"}>{row.escalao}</span> : <span className="muted">–</span>}
+                    {row.escalao ? <span className={escPillCls(row.escalao) + " fs-10"}>{row.escalao}</span> : MUTED}
                   </td>
                   <td className="cs-club cs-id-end">{row.club || "–"}</td>
 

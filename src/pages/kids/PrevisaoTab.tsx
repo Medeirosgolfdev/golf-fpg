@@ -31,6 +31,7 @@ import { scClass } from "../../utils/scoreDisplay";
 import { buildReach, notReachableHoles } from "../../utils/reach";
 import EmptyState from "../../ui/EmptyState";
 import LoadingState from "../../ui/LoadingState";
+import { MUTED } from "../../ui/tableCells";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -383,7 +384,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                                 <span key={j} className={"sc-score u-minw-14px u-fs-fs-10 " + scClass(sc, hp)} title={topField.players[j]}>{sc}</span>
                               ))}
                             </span>
-                          ) : <span className="muted">–</span>}
+                          ) : MUTED}
                         </td>
                       );
                     })}
