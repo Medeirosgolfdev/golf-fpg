@@ -22,14 +22,19 @@ const ESTADO: Record<NonNullable<FgInscrito["estado"]>, FpgAdmissionPlayer["stat
   ammesso: "confirmed", wildcard: "confirmed", attesa: "reserva", cancellato: "desistente",
 };
 
-export function fgAdmissions(d: FgProva): FpgAdmissions | undefined {
+/** `nascimentos`: id do jogador → ano de nascimento (ranking juvenil — `fgAnosNascimento`).
+ *  A lista de inscritos não traz o id: casa-se pelo nome «APELIDO, NOME» com
+ *  os jogadores da classificação da mesma prova. */
+export function fgAdmissions(d: FgProva, nascimentos?: Map<string, number>): FpgAdmissions | undefined {
   if (!d.inscritos?.length) return undefined;
+  const idPorNome = new Map(d.jogadores.map((j) => [j.nome.toUpperCase(), j.id]));
+  const anoDe = (nome: string) => { const id = idPorNome.get(nome.toUpperCase()); return id ? nascimentos?.get(id) ?? null : null; };
   const players = d.inscritos.map((i): FgAdmissionPlayer => ({
     pos: i.n, fed: null, nome: fgNome(i.nome), clube: clubeOuPais(i.clube),
     hcp: i.indice, vac: null,
     dataInscricao: i.data ? i.data.replace(/-/g, "/") : null,
     status: i.estado ? ESTADO[i.estado] : "confirmed",
-    country: fgPais(i.clube), escalao: fgEscalao(i.cat),
+    country: fgPais(i.clube), escalao: fgEscalao(i.cat), birthYear: anoDe(i.nome),
     ...(i.estado === "wildcard" ? { tags: ["Wildcard"] } : {}),
     qual: i.qual, odm: i.odm, wagr: i.wagr,
   }));

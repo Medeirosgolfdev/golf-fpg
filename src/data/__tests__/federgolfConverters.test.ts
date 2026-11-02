@@ -124,6 +124,12 @@ describe("Federgolf — ranking juvenil", () => {
     expect((t.players[0] as unknown as { birthYear: number }).birthYear).toBe(2014);
     expect((t.players[1] as unknown as { birthYear?: number }).birthYear).toBeUndefined();
     expect(fgTotais(prova, nasc).players[0].birthYear).toBe(2014);
+    // Inscrições: pelo nome do inscrito → id da classificação (a lista não traz o id).
+    const adm = fgAdmissions({ ...prova, inscritos: [
+      { n: 1, nome: "DURANDO, Matteo", clube: "MONTICELLO", cat: "B", qual: "BG", wagr: null, indice: 6.2, odm: 356, data: null, estado: "ammesso" },
+      { n: 2, nome: "ROSSI, LUCA", clube: "OLGIATA", cat: "B", qual: null, wagr: null, indice: 20, odm: null, data: null, estado: "cancellato" },
+    ] }, nasc)!;
+    expect(adm.players!.map((p) => p.birthYear)).toEqual([2014, null]);
   });
 });
 

@@ -28,7 +28,7 @@ const loadNascimentos = () => (_nascimentos ??= loadFgRanking().then(fgAnosNasci
 function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
   return Promise.all([cachedFetchJson<FgProva>(provaUrl(p.id)), loadNascimentos()]).then(([d, nasc]) => {
     if (!d?.jogadores?.length) return null;
-    const admissions = fgAdmissions(d);
+    const admissions = fgAdmissions(d, nasc);
     return withDivisionModel({
       key: p.sexo ?? p.id,
       escalao: fgEscalaoProva(p.categoria),
