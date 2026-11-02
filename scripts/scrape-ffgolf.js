@@ -595,13 +595,11 @@ async function fetchLeaderboard(page, ggPage, eventId) {
 
     // Capturar texto da divisão (header do v2tournament-event div) para CADA jogador
     const players = [];
-    let rowIdx = 0;
     for (const tr of doc.querySelectorAll("tr")) {
       const link = tr.querySelector('a[href*="tournaments2/details"]');
       if (!link) continue;
       const idM = (link.getAttribute("href") || "").match(/details\/(\d+)/);
       if (!idM) continue;
-      rowIdx++;
       // Detectar a divisão: procurar tournament_container ancestor (contém tanto título como tabela)
       let division = null;
       let ancestor = tr.parentElement;
@@ -666,12 +664,13 @@ async function fetchLeaderboard(page, ggPage, eventId) {
         roundScores = validNums.slice(0, -1);
       }
 
-      // Posição: do cells[0] (número) OU rowIdx como fallback
+      // Posição: do cells[0] («1», «T5»); sem número fica sem lugar. O nº da
+      // linha como recurso inventava lugares — Arthur Boue (só a 1.ª volta,
+      // CFJ 2026 U12 Garçons) saía 87.º nas segundas (02/11/2026).
       let pos = parseInt(cells[0], 10);
       if (isNaN(pos)) {
-        // Pode estar em formato "T5" (tied) ou "1"
         const m = cells[0]?.match(/^T?(\d+)/);
-        pos = m ? parseInt(m[1], 10) : rowIdx;
+        pos = m ? parseInt(m[1], 10) : null;
       }
 
       players.push({
