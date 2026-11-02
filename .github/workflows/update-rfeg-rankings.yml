@@ -7,7 +7,7 @@ name: Actualizar RFEG — hándicap oficial e rankings juvenis
 #   2. scrape-federados-es.js   → public/data/rfeg-hcp.json
 #      (pesquisa pública de hándicap; ~1,1 mil licenças do kids2, uma de cada
 #      vez com pausa — 25 a 40 min)
-#   3. agregador                → junior.rfegOficial no juniors.json e hr/rk no
+#   3. agregador                → junior.rfegOficial no juniors.json e hr no
 #      juniors-scout.json (Scout dos circuitos, ficha do kids2)
 # Push com GITHUB_TOKEN não dispara o build-juniors.yml → o agregador corre AQUI.
 # Doc: docs/claude/ffg-rfeg.md («Espanha — hándicap oficial e rankings RFEG»).

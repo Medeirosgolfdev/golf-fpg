@@ -259,14 +259,17 @@ Scripts (lib partilhada `scripts/lib/rfeg-web.js`):
   licença (num Sub-12 nunca aparece um adulto, nem um cadete); hándicap com o
   sexo trocado não entra; nunca se casa hándicap só pelo nome (sem idade).
 - **Agregador** `util/rfeg-oficial.js` (corre depois do matcher, só enriquece):
-  `junior.rfegOficial = { lic, hcp, hcpData, hcpClube, hcpVia, rankings:[{t, curto,
-  ano, pos, n, pts, f, nac, via}] }` (rankings: ano mais recente, nacional antes
-  de zona, melhor lugar). O `util/scout.js` passa a preferir o hándicap oficial
-  da RFEG ao da última inscrição (`h`, com `hr: [hcp, data]`) e grava
-  `rk: [lugar, jogadores, ranking curto, data]`.
+  `junior.rfegOficial = { lic, hcp, hcpData, hcpClube, hcpVia }`. O `util/scout.js`
+  prefere o hándicap oficial da RFEG ao da última inscrição (`h`, com
+  `hr: [hcp, data]`).
+- **O lugar nos rankings juvenis NÃO se mostra nem se guarda** (02/11/2026, a
+  Mariana: «está parado, não serve de nada»): são rankings de pontos por
+  participar, de zona, misturam os 11 aos 16 anos e a RFEG publica-os até Maio
+  — punham o Dmitrii (HCP 0.3) atrás de jogadores de HCP 7. Saíram a coluna
+  «Rk RFEG» do Scout e as pills da ficha do kids2. Os rankings ficam só para
+  achar a licença (e por ela o hándicap) de quem não a tem, e na página /rfeg.
 - **Interface:** Scout dos circuitos — tooltip do HCP com «oficial … actualizado
-  a» e coluna **Rk RFEG** (bloco Carreira, ordenável); ficha do kids2
-  (`HeroIdentity`) — pill do HCP RFEG com a data e pills «Nº de N · Ranking …».
+  a»; ficha do kids2 (`HeroIdentity`) — pill do HCP RFEG com a data.
 - Workflow `update-rfeg-rankings.yml` (terça 05:00 UTC) → agregador → push.
   Testes: `scripts/lib/rfeg-oficial.test.js`.
 
