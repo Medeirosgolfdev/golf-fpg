@@ -23,6 +23,7 @@
  */
 import React from "react";
 import InfoIcon from "./InfoIcon";
+import { fmtSign } from "../utils/format";
 
 interface KpiCardProps {
   label: React.ReactNode;
@@ -98,7 +99,7 @@ export default function KpiCard({
       <div className={valClass} style={valColor ? { color: valColor } : undefined}>{value}</div>
       {delta != null && (
         <div className="kpi-delta" style={{ color: dColor }}>
-          {delta > 0 ? "+" : ""}{delta.toFixed(1)} {deltaLabel ?? "vs média"}
+          {fmtSign(delta, 1)} {deltaLabel ?? "vs média"}
         </div>
       )}
       {pct != null && <div className="kpi-sub">{(pct * 100).toFixed(1)}%</div>}

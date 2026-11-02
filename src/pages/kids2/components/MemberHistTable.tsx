@@ -16,7 +16,7 @@ import type {} from "react";
 import type { CanonicalData, Junior, Tournament } from "../data";
 import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
-import { MONTHS_PT, fmtToPar } from "../../../utils/format";
+import { fmtToPar, monthLabel } from "../../../utils/format";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import ExtLink from "../../../ui/ExternalLink";
@@ -102,8 +102,8 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
 
   return (
     <section className="u-mb-4px">
-      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px u-gap-8px">
-        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">
+      <div className="section-hdr">
+        <h3 className="section-hdr-title">
           📊 Histórico USKids
         </h3>
         <div className="u-d-flex u-gap-6px u-ai-center u-fs-fs-11 u-c-text-3">
@@ -178,9 +178,5 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
 
 
 function fmtDate(iso: string): string {
-  if (!iso) return "—";
-  const [y, m] = iso.split("-");
-  const mn = parseInt(m, 10);
-  if (!y || !mn) return iso;
-  return `${MONTHS_PT[mn - 1]} ${y}`;
+  return iso ? monthLabel(iso.slice(0, 7)) : "—";
 }

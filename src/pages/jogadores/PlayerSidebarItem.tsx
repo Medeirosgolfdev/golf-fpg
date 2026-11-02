@@ -8,7 +8,7 @@
 import React from "react";
 import type { FederadoRaw, MergedPlayer } from "../../data/federadosLoader";
 import { hcpDisplay } from "../../utils/playerUtils";
-import { gf } from "../../utils/flagUtils";
+import { gf, isForeignPrefix } from "../../utils/flagUtils";
 import SexBadge from "../../ui/SexBadge";
 import { PillBadge, EscPill, SIDEBAR_ACCENT } from "../../ui/PillBadge";
 import { HCP_UNESTABLISHED_THRESHOLD, type EscHcpStats } from "./filterPlayers";
@@ -168,7 +168,7 @@ function PlayerSidebarItemInner({
   const isNacional = isPja || hasNacionalTag;
 
   const countryPrefix = pm._federadoRaw?.country_prefix;
-  const showFlag = countryPrefix && countryPrefix !== "PT" && !countryPrefix.startsWith("@");
+  const showFlag = isForeignPrefix(countryPrefix);
 
   // ── Accent lateral: prioridade nacional > PJA > orphan > escalão > feds-only ──
   const escKey = (displayEscalao || "").toLowerCase().replace(/[\s-]/g, "");

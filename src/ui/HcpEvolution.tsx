@@ -14,7 +14,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { HcpHistoryDb } from "../data/hcpHistoryLoader";
 import { computeEvoMetrics, pointsInWindow, type EvoMetrics } from "../utils/hcpEvolution";
-import { MONTHS_PT, fmtHcp } from "../utils/format";
+import { MONTHS_PT, fmtHcp, fmtSign } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import SexBadge from "./SexBadge";
@@ -221,7 +221,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
           const color = isOn ? colorFor(r.p.fed) : undefined;
           return (
             <button key={r.p.fed} onClick={() => toggleFocus(r.p.fed)}
-              title={`${r.m.start.toFixed(1)} → ${r.m.end.toFixed(1)} (Δ ${r.m.delta > 0 ? "+" : ""}${r.m.delta.toFixed(1)})`}
+              title={`${r.m.start.toFixed(1)} → ${r.m.end.toFixed(1)} (Δ ${fmtSign(r.m.delta, 1)})`}
               style={{
                 padding: "3px 8px", fontSize: "var(--fs-11)", borderRadius: "var(--radius-sm)", cursor: "pointer",
                 background: isOn ? color + "22" : "var(--bg-muted)",
@@ -275,7 +275,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                   <td className="r">
                     {r.m.slopePerMonth == null ? MUTED
                       : <span style={{ color: tpColor(r.m.slopePerMonth) }}>
-                          {r.m.slopePerMonth > 0 ? "+" : ""}{r.m.slopePerMonth.toFixed(2)}
+                          {fmtSign(r.m.slopePerMonth, 2)}
                         </span>}
                   </td>
                 </tr>

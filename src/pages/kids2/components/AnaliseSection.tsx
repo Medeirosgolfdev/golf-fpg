@@ -200,8 +200,8 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
 
   return (
     <section>
-      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px">
-        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Análise</h3>
+      <div className="section-hdr">
+        <h3 className="section-hdr-title">Análise</h3>
         <span className="u-fs-fs-11 u-c-text-3">
           {valid.length} {valid.length === 1 ? "torneio" : "torneios"} com scorecard
           {fieldCards.length > 0 && <> · field {fieldCards.length}</>}

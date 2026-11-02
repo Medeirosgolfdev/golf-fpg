@@ -16,7 +16,7 @@ import { useCourses } from "../context/CoursesContext";
 import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex, teeBorder } from "../utils/teeColors";
-import { fmt, fmtCR, norm, sumRange, fmtToPar, titleCase, fmtDatePt, fmtDateShort } from "../utils/format";
+import { fmt, fmtCR, norm, sumRange, fmtToPar, titleCase, fmtDatePt, fmtDateShort, fmtSign } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
@@ -38,6 +38,7 @@ import { stripAccents } from "../utils/normName";
 import SearchInput from "../ui/SearchInput";
 import SexSelect from "../ui/SexSelect";
 import { MUTED } from "../ui/tableCells";
+import { toggleSet } from "../utils/mathUtils";
 
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
@@ -334,7 +335,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                   <td
                     className="ta-c sc-tot-val sc-sep u-fw-700 u-c-text-2"
                   >
-                    {isSel ? "—" : deltaM == null ? "–" : `${deltaM > 0 ? "+" : ""}${deltaM}`}
+                    {isSel ? "—" : deltaM == null ? "–" : `${fmtSign(deltaM)}`}
                   </td>
                 )}
               </tr>
@@ -571,11 +572,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
   if (entries.length === 0) return null;
 
   const toggle = (nfed: string) =>
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      next.has(nfed) ? next.delete(nfed) : next.add(nfed);
-      return next;
-    });
+    setExpanded((prev) => toggleSet(prev, nfed));
 
   const nameCell = (s: PlayerSummary) =>
     onSelectPlayer ? (

@@ -9,7 +9,7 @@
  */
 import type { ReactNode } from "react";
 import BirthPill from "./BirthPill";
-import { ageAtDate } from "../utils/format";
+import { ageAtDate, fmtDatePt } from "../utils/format";
 import { MUTED } from "./tableCells";
 
 export interface BirthInfo {
@@ -37,7 +37,7 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
   const estYear = !est ? null : hi === null ? `≥${lo}` : hi != null && hi > lo! ? `${lo}–${String(hi).slice(2)}` : `${lo}`;
   const estAge = !est || !y ? null : hi === null ? `≤${y - lo!}` : hi != null && hi > lo! ? `~${y - hi}–${y - lo!}` : `~${y - lo!}`;
   const tip = dob ? `${dob} (${age ?? "?"} anos à data)` : est ? `Estimativa — ${b.estNote || "ano deduzido, não lido"}` : "";
-  const shown = b.showDate !== false && dob && /^\d{4}-\d{2}-\d{2}$/.test(dob) ? dob.split("-").reverse().join("/") : dobYear;
+  const shown = b.showDate !== false && dob && /^\d{4}-\d{2}-\d{2}$/.test(dob) ? fmtDatePt(dob) : dobYear;
   return {
     nasc: dobYear != null ? <BirthPill>{shown}</BirthPill>
       : est ? <span className="est-value">{estYear}</span> : MUTED,

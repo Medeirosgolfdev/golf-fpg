@@ -152,3 +152,10 @@ export function getAvgZ(
 export function toggleArr<T>(arr: T[], v: T): T[] {
   return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
 }
+
+/** Alterna um elemento num Set (devolve um Set novo — para setState). */
+export function toggleSet<T>(set: ReadonlySet<T>, v: T): Set<T> {
+  const n = new Set(set);
+  if (n.has(v)) n.delete(v); else n.add(v);
+  return n;
+}

@@ -24,7 +24,7 @@ import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
 import { useSort } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName, fmtDatePt, fmtHcp } from "../../utils/format";
+import { displayName, fmtDatePt, fmtHcp, fmtSign } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { isManuelByName } from "../../constants/manuel";
 import { kidsUrl, KidsArrow } from "../../ui/KidsLink";
@@ -39,6 +39,7 @@ import SearchInput from "../../ui/SearchInput";
 import ErrorState from "../../ui/ErrorState";
 import SexSelect from "../../ui/SexSelect";
 import { ToggleChip } from "../../ui/FilterField";
+import { toggleSet } from "../../utils/mathUtils";
 
 interface FrancePlayer {
   license: string;
@@ -121,11 +122,7 @@ export function FFGPlayersView() {
   const [tournsState, setTournsState] = useState<"idle" | "loading" | "error">("idle");
 
   const toggleOpen = (lic: string) => {
-    setOpen((prev) => {
-      const next = new Set(prev);
-      if (next.has(lic)) next.delete(lic); else next.add(lic);
-      return next;
-    });
+    setOpen((prev) => toggleSet(prev, lic));
     if (!tourns && tournsState === "idle") {
       setTournsState("loading");
       cachedFetchJson<FfgPlayerTournamentsFile>("/data/ffgolf-player-tournaments.json")
@@ -367,7 +364,7 @@ export function FFGPlayersView() {
                       {has.birth && <td className="u-ta-right">{r.birthYear ?? MUTED}</td>}
                       {has.merite && (
                         <td className="u-ta-right"
-                          title={r.merite ? [`Mérite Jeunes ${r.merite.month.slice(4)}/${r.merite.month.slice(0, 4)}`, r.merite.rankAnn ? `${r.merite.rankAnn}.º do ano de nascimento` : null, `${r.merite.nbt} provas`, r.merite.moy != null ? `média ${r.merite.moy > 0 ? "+" : ""}${r.merite.moy.toFixed(2)} vs SSS` : null, r.merite.idx != null ? `index ${r.merite.idx.toFixed(1)}` : null].filter(Boolean).join(" · ") : undefined}>
+                          title={r.merite ? [`Mérite Jeunes ${r.merite.month.slice(4)}/${r.merite.month.slice(0, 4)}`, r.merite.rankAnn ? `${r.merite.rankAnn}.º do ano de nascimento` : null, `${r.merite.nbt} provas`, r.merite.moy != null ? `média ${fmtSign(r.merite.moy, 2)} vs SSS` : null, r.merite.idx != null ? `index ${r.merite.idx.toFixed(1)}` : null].filter(Boolean).join(" · ") : undefined}>
                           {r.merite?.rank != null ? `${r.merite.rank}.º` : MUTED}
                         </td>
                       )}

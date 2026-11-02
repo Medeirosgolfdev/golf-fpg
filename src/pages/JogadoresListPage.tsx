@@ -24,7 +24,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { norm, shortDate, ageAtDate, todayIso, fmtSD } from "../utils/format";
-import { gf } from "../utils/flagUtils";
+import { gf, isPtCountry } from "../utils/flagUtils";
 import { hcpDisplay } from "../utils/playerUtils";
 import Pager from "../ui/Pager";
 import {
@@ -325,7 +325,7 @@ export default function JogadoresListPage() {
       if (diffsOnly && !r.hasDiffs) return false;
       if (onlyPP && !r.ppReal) return false;
       if (natFilter !== "ALL") {
-        const isForeign = !!r.countryName && r.countryName !== "Portugal";
+        const isForeign = !!r.countryName && !isPtCountry(r.countryName);
         if (natFilter === "FOREIGN" && !isForeign) return false;
         if (natFilter === "PT" && isForeign) return false;
       }
@@ -626,7 +626,7 @@ export default function JogadoresListPage() {
                       )}
                     </td>
                     <td title={r.countryName} className="u-fs-fs-14">
-                      {r.countryName && r.countryName !== "Portugal" ? gf(r.countryName) : ""}
+                      {r.countryName && !isPtCountry(r.countryName) ? gf(r.countryName) : ""}
                     </td>
                     <td title={r.clubLong}>{r.clubShort}{r.clubCode ? ` (${r.clubCode})` : ""}</td>
                     <td>{r.dob ? shortDate(r.dob) : "—"}</td>

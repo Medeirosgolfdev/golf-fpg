@@ -22,6 +22,7 @@ import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../../ui/circ
 import { isManuelByName } from "../../constants/manuel";
 import { withDivisionModel } from "../model/division";
 import { stripAccents } from "../../utils/normName";
+import { DRIVE_REGION_LABEL } from "./driveRegions";
 
 /** Ordem canónica de escalões do Drive (para ordenar tabs/divisões). */
 
@@ -32,15 +33,7 @@ const DRIVE_SERIES_LABEL: Record<string, string> = {
   aquapor: "AQUAPOR",
 };
 
-/** Labels de região (filtro `liga` do CircuitShell). */
-const DRIVE_REGION_LABEL: Record<string, string> = {
-  norte: "Norte",
-  tejo: "Tejo",
-  sul: "Sul",
-  madeira: "Madeira",
-  acores: "Açores",
-  nacional: "Nacional",
-};
+
 
 const escIdx = (esc: string | null | undefined): number => {
   const i = DRIVE_ESCALOES.indexOf(esc || "");

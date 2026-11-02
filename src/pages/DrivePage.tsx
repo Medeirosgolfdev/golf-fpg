@@ -40,16 +40,9 @@ import type { Tournament, DriveData } from "../ui/driveTypes";
 import ExtLink from "../ui/ExternalLink";
 import ErrorState from "../ui/ErrorState";
 import { ToggleChip } from "../ui/FilterField";
+import { DRIVE_REGIONS, DRIVE_REGION_EMOJI } from "../data/drive/driveRegions";
 
 /* ── Constants ── */
-const REGIONS = [
-  { id: "norte",   label: "Norte",   emoji: "📍" },
-  { id: "tejo",    label: "Tejo",    emoji: "📍" },
-  { id: "sul",     label: "Sul",     emoji: "📍" },
-  { id: "madeira", label: "Madeira", emoji: "📍" },
-  { id: "acores",  label: "Açores",  emoji: "📍" },
-];
-const REGION_EMOJI: Record<string, string>  = { norte: "🔵", tejo: "🟡", sul: "🟢", madeira: "🟣", acores: "🔴", nacional: "⚪" };
 
 /* ─ Calendário da época (decisão E): sai dos dados — src/data/drive/driveCalendar.ts ─ */
 const ddmm = (iso: string) => iso.slice(8, 10) + "/" + iso.slice(5, 7);
@@ -65,7 +58,7 @@ function UpcomingSchedule({ series, year, entries }: { series: DriveSeries; year
           return (
             // Cor da série por classe (decisão C): tokens --drive-* + color-mix.
             <div key={i} className={`drive-cal-pill drive-serie-${series}` + (isNext ? " is-next" : isPast ? " is-past" : "")}>
-              {REGION_EMOJI[e.region] || ""} <span className="fw-700">{ddmm(e.date)}{e.endDate ? "–" + ddmm(e.endDate) : ""}</span> {e.name} <span className="c-muted">{e.campo}</span>
+              {DRIVE_REGION_EMOJI[e.region] || ""} <span className="fw-700">{ddmm(e.date)}{e.endDate ? "–" + ddmm(e.endDate) : ""}</span> {e.name} <span className="c-muted">{e.campo}</span>
               {isNext && <span className="badge-next">PRÓXIMO</span>}
             </div>
           );
@@ -302,7 +295,7 @@ function DriveContent() {
   const seriesT = series === "all" ? allT : series === "tour" ? tourT : series === "challenge" ? challT : aquaporT;
   const availRegions = useMemo(() => {
     const s = new Set(seriesT.map(t => t.region));
-    return REGIONS.filter(r => s.has(r.id));
+    return DRIVE_REGIONS.filter(r => s.has(r.id));
   }, [series, seriesT]);
 
   const regionT = useMemo(() => regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT, [seriesT, regionFilter]);

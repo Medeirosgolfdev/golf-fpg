@@ -2191,6 +2191,9 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cor-dot.cor-dot-9 { width: 9px; height: 9px; }
 .cor-dot.cor-dot-10 { width: 10px; height: 10px; }
 /* Selo da posição no pódio (🏆 #1 / 🥇 1º). -sm: dentro de pills e tabelas compactas. */
+/* Cabeçalho de secção (título à esquerda, contagem/controlos à direita) — Kids 2 */
+.section-hdr { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-8); margin: var(--space-8) 0 var(--space-10); }
+.section-hdr-title { margin: 0; font-size: var(--fs-14); font-weight: 700; color: var(--text); }
 /* Seta ↗ para a ficha Kids (ui/KidsLink KidsArrow) */
 .kids-arrow { margin-left: var(--space-4); font-weight: 800; font-size: var(--fs-12); color: var(--color-good-dark); text-decoration: none; flex-shrink: 0; }
 .kids-arrow:hover { text-decoration: underline; }

@@ -18,7 +18,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useCourses } from "../../context/CoursesContext";
 import { resolveCourseTee, type ResolvedCourse } from "./CourseTab";
 import { calcSD, calcScore, calcCourseHcp, calcPlayingHcp } from "../../utils/whsCalc";
-import { fmtCR, fmtSD, fmtToPar } from "../../utils/format";
+import { fmtCR, fmtSD, fmtToPar, fmtSign } from "../../utils/format";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { loadPlayerData } from "../../data/playerDataLoader";
@@ -371,7 +371,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                     <td className="r u-fw-600" style={{ color: vsParColor(h.expStrokes, h.par) }}>{h.expStrokes != null ? h.expStrokes.toFixed(1) : "–"}</td>
                     <td className="r" style={{ color: vsParColor(h.expJa, h.par) }}>{h.expJa != null ? h.expJa.toFixed(1) : "–"}</td>
                     <td className="r" style={{ color: vsParColor(h.expPode, h.par) }}>{h.expPode != null ? h.expPode.toFixed(1) : "–"}</td>
-                    <td className="u-fw-700 u-ws-nowrap" style={{ color: c }} title={h.fieldVsPar != null ? `Field (edição anterior): ${h.fieldVsPar > 0 ? "+" : ""}${h.fieldVsPar.toFixed(1)} vs par` : "Sem dados do field — alcance/heurística"}><Dot c={c} /> {tagL}</td>
+                    <td className="u-fw-700 u-ws-nowrap" style={{ color: c }} title={h.fieldVsPar != null ? `Field (edição anterior): ${fmtSign(h.fieldVsPar, 1)} vs par` : "Sem dados do field — alcance/heurística"}><Dot c={c} /> {tagL}</td>
                     <td className="muted u-ws-nowrap">{h.note}</td>
                     {topField && topField.roundKeys.map((rk, ri) => {
                       const cell = topField.holes[h.hole - 1]?.[ri];

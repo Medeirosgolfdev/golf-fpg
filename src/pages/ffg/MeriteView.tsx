@@ -21,7 +21,7 @@ import { useSort } from "../../hooks/useSort";
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { isPTByName } from "../../utils/ptPlayers";
 import { isManuelByName } from "../../constants/manuel";
-import { displayName, fmtDatePt } from "../../utils/format";
+import { displayName, fmtDatePt, fmtSign } from "../../utils/format";
 import Pager from "../../ui/Pager";
 import { RankChange, MUTED } from "../../ui/tableCells";
 import ExpandArrow from "../../ui/ExpandArrow";
@@ -30,6 +30,7 @@ import { stripAccents } from "../../utils/normName";
 import SearchInput from "../../ui/SearchInput";
 import ErrorState from "../../ui/ErrorState";
 import { ToggleChip } from "../../ui/FilterField";
+import { toggleSet } from "../../utils/mathUtils";
 
 /** [trnId|null, data ISO, nome, lugar, voltas, pontos, Moy.SSS] */
 type Prova = [string | null, string, string, string, number[], number | null, number | null];
@@ -52,7 +53,7 @@ type SK = "rank" | "name" | "cat" | "by" | "golf" | "idx" | "moy" | "moy6" | "nb
 
 const PAGE_SIZE = 100;
 const norm = (s: string) => stripAccents(s).toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
-const fmtSigned = (v: number | null) => (v == null ? MUTED : <>{v > 0 ? "+" : ""}{v.toFixed(2)}</>);
+const fmtSigned = (v: number | null) => (v == null ? MUTED : <>{fmtSign(v, 2)}</>);
 /** «Ricardo» + «CASTRO FERREIRA» → «Ricardo Castro Ferreira». */
 const nomeProprio = (prenom: string, nom: string) =>
   `${prenom} ${nom.toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (_, a: string, b: string) => a + b.toUpperCase())}`.trim();
@@ -142,7 +143,7 @@ export function FFGMeriteView() {
   const info = data.info[sex];
   const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
   const pageRows = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-  const toggleOpen = (k: string) => setOpen((p) => { const n = new Set(p); if (n.has(k)) n.delete(k); else n.add(k); return n; });
+  const toggleOpen = (k: string) => setOpen((p) => toggleSet(p, k));
   const hdr = (k: SK, label: string, cls?: string, title?: string) =>
     <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={cls} title={title}>{label}</SortableHdr>;
   const COLS = 12;

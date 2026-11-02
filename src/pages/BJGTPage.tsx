@@ -118,7 +118,7 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
         {[{ label: "Par 3", d: p3 },{ label: "Par 4", d: p4 },{ label: "Par 5", d: p5 }].map(({ label, d }) => (
           <div key={label} className="card-detail br p-4-8">
             <div className="fw-700 fs-11">{label} ({d.n})</div>
-            <div className="fs-10">{d.scores.join(", ")} → <span className={d.total < 0 ? "fw-700 c-good" : d.total > 0 ? "fw-700 c-danger" : "fw-700"}>{d.total > 0 ? "+"+d.total : d.total === 0 ? "E" : d.total}</span><span className="c-text-3"> (avg {d.avg > 0 ? "+" : ""}{d.avg.toFixed(2)})</span></div>
+            <div className="fs-10">{d.scores.join(", ")} → <span className={d.total < 0 ? "fw-700 c-good" : d.total > 0 ? "fw-700 c-danger" : "fw-700"}>{d.total > 0 ? "+"+d.total : d.total === 0 ? "E" : d.total}</span><span className="c-text-3"> (avg {fmtSign(d.avg, 2)})</span></div>
           </div>
         ))}
       </div>

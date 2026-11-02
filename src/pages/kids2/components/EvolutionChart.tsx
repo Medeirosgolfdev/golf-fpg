@@ -176,8 +176,8 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
 
   return (
     <section className="u-mb-14px">
-      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px">
-        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Evolução</h3>
+      <div className="section-hdr">
+        <h3 className="section-hdr-title">Evolução</h3>
         <div className="u-d-flex u-gap-4px u-ai-center">
           <TabRow<typeof yMode> className="seg-sm" active={yMode} onChange={setYMode} tabs={[
             { key: "toPar", label: "±par/ronda", title: "±par médio por ronda do torneio" },

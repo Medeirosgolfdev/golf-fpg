@@ -19,6 +19,7 @@ import SortableHdr from "./SortableHdr";
 import ExpandArrow from "./ExpandArrow";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
+import { toggleSet } from "../utils/mathUtils";
 
 interface Player {
   pos: number | string | null;
@@ -165,11 +166,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
   if (athletes.length === 0) return null;
 
   const toggle = (key: string) => {
-    setExpanded((s) => {
-      const next = new Set(s);
-      if (next.has(key)) next.delete(key); else next.add(key);
-      return next;
-    });
+    setExpanded((s) => toggleSet(s, key));
   };
 
   const totalEntries = athletes.reduce((s, a) => s + a.totalTop5, 0);

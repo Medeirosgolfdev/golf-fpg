@@ -21,6 +21,7 @@ import ExtLink from "../../../ui/ExternalLink";
 import { SOURCE_LABELS } from "../../../constants/kids2Sources";
 import { MUTED } from "../../../ui/tableCells";
 import { TrophyPos } from "../../../ui/PosBadge";
+import { toggleSet } from "../../../utils/mathUtils";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -116,11 +117,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
   }, [rows]);
 
   const toggleSource = (s: string) => {
-    setActiveSources((prev) => {
-      const next = new Set(prev);
-      if (next.has(s)) next.delete(s); else next.add(s);
-      return next;
-    });
+    setActiveSources((prev) => toggleSet(prev, s));
   };
 
   if (allRows.length === 0) return null;
@@ -143,8 +140,8 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
 
   return (
     <section>
-      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px u-gap-12px">
-        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Resultados</h3>
+      <div className="section-hdr">
+        <h3 className="section-hdr-title">Resultados</h3>
         <span className="u-fs-fs-11 u-c-text-3">
           {rows.length}{activeSources.size > 0 ? ` de ${allRows.length}` : ""} {rows.length === 1 ? "resultado" : "resultados"}
         </span>

@@ -14,7 +14,7 @@ import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import KpiCard from "../../../ui/KpiCard";
 import { tpColor } from "../../../ui/tournamentPrimitives";
-import { MONTHS_PT, fmtToPar } from "../../../utils/format";
+import { fmtToPar, monthLabel } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
 import { TrophyPos } from "../../../ui/PosBadge";
 
@@ -246,8 +246,5 @@ function fmtDiff(n: number): string {
 }
 
 function fmtDateShort(iso: string | undefined): string {
-  if (!iso) return "—";
-  const [y, m] = iso.split("-").map(Number);
-  if (!y || !m) return iso;
-  return `${MONTHS_PT[m - 1]} ${y}`;
+  return iso ? monthLabel(iso.slice(0, 7)) : "—";
 }

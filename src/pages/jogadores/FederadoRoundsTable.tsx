@@ -16,6 +16,7 @@ import TeeDate from "../../ui/TeeDate";
 import { PillBadge } from "../../ui/PillBadge";
 import { CourseLink } from "../../ui/jogadoresHelpers";
 import { OriginPill, effectivePill } from "../../ui/eventInfo";
+import { isoToDmy } from "../../utils/format";
 
 /** Info extra de cada ronda extraída do ScoreCard (tee, gross, CR, slope). */
 export type RoundExtra = { tee: string; gross: number | null; cr: number | null; slope: number | null };
@@ -76,7 +77,7 @@ export default function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, e
       key: "date", label: "Data", width: "68px", sortable: true,
       render: r => {
         const dateStr = (r.score_dateStr || "").slice(0, 10);
-        const ddmm = dateStr.split("-").reverse().join("-"); // YYYY-MM-DD → DD-MM-YYYY
+        const ddmm = isoToDmy(dateStr); // YYYY-MM-DD → DD-MM-YYYY
         const tee = extraMap?.get(r.id)?.tee || "";
         const isMissing = !!r.id && !!localIds && localIds.size > 0 && !localIds.has(r.id);
         // scoreId no tooltip (não numa 2ª linha — duplicava a altura da linha).

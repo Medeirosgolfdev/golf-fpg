@@ -8,7 +8,7 @@
  */
 import React from "react";
 import type { FederadoRaw } from "../../data/federadosLoader";
-import { gf } from "../../utils/flagUtils";
+import { gf, isForeignPrefix, prefixFlag } from "../../utils/flagUtils";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
@@ -287,7 +287,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
             >
               <span className="fw-700 u-w-22px u-ta-center u-fs-fs-11">{i + 1}</span>
               <span className="fw-600 u-fl-1 u-ta-left u-fs-fs-12">
-                {p.country_prefix && p.country_prefix !== "PT" && !p.country_prefix.startsWith("@") && <span className="mr-4">{gf(p.country_prefix)}</span>}
+                {isForeignPrefix(p.country_prefix) && <span className="mr-4">{gf(p.country_prefix)}</span>}
                 {p.name}
                 <span className="muted fs-10 ml-4">({p.acronym})</span>
               </span>
@@ -355,7 +355,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
             <div key={c.cp} className="u-mb-6px">
               <div className="u-d-flex u-jc-space-between u-fs-fs-12 u-ai-center u-gap-6px">
                 <span className="u-fl-1 u-minw-0 u-ov-hidden u-tov-ellipsis u-ws-nowrap">
-                  {c.cp && !c.cp.startsWith("@") ? gf(c.cp) : "🏴"} <span className="fw-600">{c.name}</span> <span className="muted fs-10">({c.cp})</span>
+                  {prefixFlag(c.cp)} <span className="fw-600">{c.name}</span> <span className="muted fs-10">({c.cp})</span>
                 </span>
                 <span className="muted fs-10 u-d-inline-flex u-gap-6px u-ws-nowrap">
                   <span style={{ color: COL_M, fontWeight: 600 }}>{c.m}</span>·
@@ -423,7 +423,7 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
             <span className="fw-700 muted u-w-22px u-fs-fs-11">{i + 1}</span>
             <SexBadge sex={p.gender as "M" | "F"} />
             <span className="u-fl-1 u-fs-fs-12">
-              {p.country_prefix && p.country_prefix !== "PT" && !p.country_prefix.startsWith("@") && <span className="mr-4">{gf(p.country_prefix)}</span>}
+              {isForeignPrefix(p.country_prefix) && <span className="mr-4">{gf(p.country_prefix)}</span>}
               <span className="fw-600">{p.name}</span>
               <span className="muted fs-10 ml-4">({p.acronym})</span>
             </span>
@@ -546,7 +546,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
             <div className="fw-700 fs-14 mb-4">Por país</div>
             {topCountriesDrill.map(([cp, n]) => (
               <div key={cp} className="u-d-flex u-jc-space-between u-fs-fs-12 u-mb-2px">
-                <span>{cp && !cp.startsWith("@") ? gf(cp) : "🏴"} {cp}</span><span className="fw-700">{n}</span>
+                <span>{prefixFlag(cp)} {cp}</span><span className="fw-700">{n}</span>
               </div>
             ))}
           </div>

@@ -12,6 +12,7 @@ import { getSharedFlightTids } from "./data";
 import { flag as flagOf } from "../../utils/flagUtils";
 import ExpandArrow from "../../ui/ExpandArrow";
 import SearchInput from "../../ui/SearchInput";
+import { toggleSet } from "../../utils/mathUtils";
 
 const MAX_VISIBLE = 8000;
 
@@ -68,11 +69,7 @@ export default function Sidebar({
   const [collapsedCountries, setCollapsedCountries] = useState<Set<string>>(new Set());
 
   const toggleCountry = (c: string) => {
-    setCollapsedCountries((prev) => {
-      const next = new Set(prev);
-      if (next.has(c)) next.delete(c); else next.add(c);
-      return next;
-    });
+    setCollapsedCountries((prev) => toggleSet(prev, c));
   };
 
   const { directos, byCountry, totalFiltered, totalShown, sharedCountByJunior } = useMemo(() => {

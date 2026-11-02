@@ -1,6 +1,6 @@
 import { useContext, useMemo } from "react";
 import { isoDate, fmtDate, displayName, medal as medalOf } from "../utils/format";
-import { flag } from "../utils/flagUtils";
+import { flag, isPtCountry } from "../utils/flagUtils";
 import { normName as normNameAuto } from "../data/KIDSdataLoader";
 import { kidsUrl, KidsArrow, KidsLinkCtx } from "./KidsLink";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
@@ -124,7 +124,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
   // escalão "Girls" do mesmo número (ex: Veteran Qualifier t=21666) destacavam o
   // escalão errado. Se não existir Boys do escalão dele, não há destaque.
   const b12     = t.escaloes.find(e => e.age_group === escalaoM && /boys/i.test(e.nome));
-  const ptTotal = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => j.pais === "PT");
+  const ptTotal = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => isPtCountry(j.pais));
   const dias    = diasAte(t.date_inicio);
   const urgente = b12 && b12.vagas <= 3 && b12.vagas > 0;
   // Um erro só esconde o campo quando não há dados nenhuns. Se a fonte recusou
@@ -296,7 +296,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                             margin: isM ? "2px -14px" : "0",
                             borderRadius: isM ? 5 : 0,
                             background: isM ? "var(--accent)" : "transparent",
-                            color: isM ? "var(--text-on-color)" : j.pais === "PT" ? "var(--accent)" : "var(--text)",
+                            color: isM ? "var(--text-on-color)" : isPtCountry(j.pais) ? "var(--accent)" : "var(--text)",
                           }}>
                             <span className="u-d-flex u-ai-center u-gap-2px">
                               {isM ? "★ " : ""}{displayName(j.nome)}
@@ -387,10 +387,10 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           {ptTotal.length > 0 && (
             <div className="card u-bg-accent-light u-bd-1_5px-solid-accent u-mb-12px">
               <div className="h-sm u-c-accent u-mb-10px">🇵🇹 Portugueses inscritos</div>
-              {t.escaloes.filter(e => e.jogadores?.some(j => j.pais === "PT")).map(e => (
+              {t.escaloes.filter(e => e.jogadores?.some(j => isPtCountry(j.pais))).map(e => (
                 <div key={e.age_group} className="u-mb-8px">
                   <div className="h-xs u-c-accent-text u-mb-4px">{e.nome}</div>
-                  {e.jogadores!.filter(j => j.pais === "PT").map((j, i) => (
+                  {e.jogadores!.filter(j => isPtCountry(j.pais)).map((j, i) => (
                     <div key={i} className="fs-13 u-d-flex u-jc-space-between u-p-3px-8px u-br-radius-sm u-bg-rgba-255-255-255-_5 u-mb-2px">
                       <span className="fw-600 u-d-flex u-ai-center u-gap-2px">
                         {displayName(j.nome)}<KidsLink nome={j.nome} />

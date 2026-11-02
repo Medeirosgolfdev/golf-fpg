@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import type { RoundData, PlayerPageData, HcpInfo } from "../data/playerDataLoader";
 import type {} from "../data/types";
 import { useCourses } from "../context/CoursesContext";
-import { norm, fmtHcp } from "../utils/format";
+import { norm, fmtHcp, fmtSign } from "../utils/format";
 import {
   whsQtyCalc, hiAdjustment, addRoundToPool, historicExceptionalAdj, topRanks, topIds,
   scoreDifferential, sd18FromSd9, expectedSD9, round1, get9hRatings,
@@ -795,7 +795,7 @@ export function RoundSimulator({
       const c = sdColor(displaySd, hi);
       const adjNote =
         adj !== 0
-          ? `<span style="font-size:9px;opacity:.8;margin-left:3px">(${adj > 0 ? "+" : ""}${adj})</span>`
+          ? `<span style="font-size:9px;opacity:.8;margin-left:3px">(${fmtSign(adj)})</span>`
           : "";
       return `<span style="background:${c.bg};color:${c.fg};border-radius:6px;padding:2px 7px;font-size:11px;font-weight:700;display:inline-block;white-space:nowrap">${displaySd.toFixed(1)}${adjNote}</span>`;
     }
@@ -830,7 +830,7 @@ export function RoundSimulator({
         <div class="tl-box" style="background:${deltaBg(r.delta)};border-color:${deltaBorder(r.delta)}">
           <div class="tl-lbl">R${i + 1}${r.exceptionalAdj !== 0 ? " ⚡" : ""}</div>
           <div class="tl-hi" style="color:${deltaColor(r.delta)}">${r.hiAfterRound.toFixed(1)}</div>
-          <div class="tl-sub" style="color:${deltaColor(r.delta)}">${r.delta > 0 ? "+" : ""}${r.delta.toFixed(1)}</div>
+          <div class="tl-sub" style="color:${deltaColor(r.delta)}">${fmtSign(r.delta, 1)}</div>
         </div>`
       );
     });
@@ -840,7 +840,7 @@ export function RoundSimulator({
         <div class="tl-box tl-final" style="background:${deltaBg(finalDelta)};border:2px solid ${deltaBorder(finalDelta)}">
           <div class="tl-lbl">Final</div>
           <div class="tl-hi" style="color:${deltaColor(finalDelta)};font-size:26px">${finalHIv.toFixed(1)}</div>
-          <div class="tl-sub" style="color:${deltaColor(finalDelta)}">${finalDelta > 0 ? "+" : ""}${finalDelta.toFixed(1)} total</div>
+          <div class="tl-sub" style="color:${deltaColor(finalDelta)}">${fmtSign(finalDelta, 1)} total</div>
         </div>`
       );
     }
@@ -913,7 +913,7 @@ export function RoundSimulator({
           <!-- Variação -->
           <div style="text-align:center">
             <div style="font-size:10px;color:${mutedClr};text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">Δ HCP</div>
-            <div style="font-size:20px;font-weight:800;color:${clr}">${r.delta > 0 ? "+" : ""}${r.delta.toFixed(1)}</div>
+            <div style="font-size:20px;font-weight:800;color:${clr}">${fmtSign(r.delta, 1)}</div>
           </div>
           ${r.exceptionalAdj !== 0
             ? `
@@ -1038,7 +1038,7 @@ export function RoundSimulator({
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Variação Total</div>
-      <div class="kpi-val" style="color:${deltaColor(finalDelta)}">${finalDelta > 0 ? "+" : ""}${finalDelta.toFixed(1)}</div>
+      <div class="kpi-val" style="color:${deltaColor(finalDelta)}">${fmtSign(finalDelta, 1)}</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Janela WHS</div>
@@ -1722,7 +1722,7 @@ export function RoundSimulator({
                     marginTop: 2,
                   }}
                 >
-                  {r.delta > 0 ? "+" : ""}{r.delta.toFixed(1)}
+                  {fmtSign(r.delta, 1)}
                 </div>
               </div>
             </React.Fragment>
@@ -1767,7 +1767,7 @@ export function RoundSimulator({
                   className="fs-11 fw-700"
                   style={{ color: finalDColor, marginTop: 2 }}
                 >
-                  {finalDelta > 0 ? "+" : ""}{finalDelta.toFixed(1)} total
+                  {fmtSign(finalDelta, 1)} total
                 </div>
               </div>
             </>
@@ -1892,7 +1892,7 @@ export function RoundSimulator({
                         {fmtHcp(row.newHI)}
                       </td>
                       <td className="r fw-700" style={{ color: dc }}>
-                        {row.delta > 0 ? "+" : ""}{row.delta.toFixed(1)}
+                        {fmtSign(row.delta, 1)}
                       </td>
                       <td className="fs-11">
                         {row.entersTop ? (

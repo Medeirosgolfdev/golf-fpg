@@ -28,7 +28,7 @@ import { MultiTeeSDTable } from "../ui/ScoreTable";
 import TeePill from "../ui/TeePill";
 import { physicalTeeGroups, physicalTeeKey } from "../utils/teeGroups";
 import { calcSD, calcPlayingHcp } from "../utils/whsCalc";
-import { fmtSD, fmtHcp } from "../utils/format";
+import { fmtSD, fmtHcp, fmtSign } from "../utils/format";
 import { teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { isPtCountry } from "../utils/flagUtils";
@@ -429,8 +429,7 @@ function CourseSideBySide({
       {(() => {
         const fmtDelta = (a: number | null, b: number | null, dec = 0) => {
           if (a == null || b == null) return "–";
-          const d = a - b;
-          return (d > 0 ? "+" : "") + d.toFixed(dec);
+          return fmtSign(a - b, dec);
         };
         const deltaColor = (a: number | null, b: number | null) => {
           if (a == null || b == null) return "var(--text-3)";

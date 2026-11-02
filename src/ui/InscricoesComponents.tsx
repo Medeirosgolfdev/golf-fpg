@@ -23,7 +23,7 @@ import type { Tournament } from "../data/fpgTypes";
 import type { TorneioData, BdPlayer, StatsDb } from "../pages/nacionais/types";
 import { useAppContext } from "../context/AppContext";
 import { escCls } from "../utils/playerUtils";
-import { escShort, fmtTime, anoEscalao, todayIso, isRecentHours } from "../utils/format";
+import { escShort, fmtTime, anoEscalao, todayIso, isRecentHours, fmtDatePt } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
 import { TORNEIOS_CONFIG, CN_JOVENS_EDICAO } from "../constants/config";
 import SexBadge from "./SexBadge";
@@ -583,7 +583,7 @@ export function InscricoesPanel() {
             </div>
           </div>
           <div className="detail-sub">
-            <span className="muted">📅 {CN_JOVENS_EDICAO.inicio.split("-").reverse().join("/")} → {CN_JOVENS_EDICAO.fim.split("-").reverse().join("/")}</span>
+            <span className="muted">📅 {fmtDatePt(CN_JOVENS_EDICAO.inicio)} → {fmtDatePt(CN_JOVENS_EDICAO.fim)}</span>
             {todayIso() > CN_JOVENS_EDICAO.fim && <span className="muted ml-8">· terminado — inscritos finais</span>}
           </div>
           <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />

@@ -23,7 +23,7 @@ import type { TemporalEscLookup } from "../../data/fpgUtils";
 import { ESCALOES_DRIVE } from "../../constants/escaloes";
 import { fmtToPar, fmtHcp, medal, shortDateSlash } from "../../utils/format";
 import { sdClassByHcp } from "../../utils/scoreDisplay";
-import { flagOrEmpty } from "../../utils/flagUtils";
+import { flagOrEmpty, isPtCountry } from "../../utils/flagUtils";
 import { C } from "../../utils/colors";
 import { norm } from "../../utils/format";
 import SexBadge from "../../ui/SexBadge";
@@ -37,10 +37,9 @@ import CloseButton from "../../ui/CloseButton";
 import SearchInput from "../../ui/SearchInput";
 import SexSelect from "../../ui/SexSelect";
 import { MUTED } from "../../ui/tableCells";
+import { regionLabel } from "../../data/drive/driveRegions";
 
 export const SERIE_LABELS: Record<DriveSeries, string> = { tour: "Tour", challenge: "Challenge", aquapor: "AQUAPOR" };
-const REGION_LABEL: Record<string, string> = { norte: "Norte", tejo: "Tejo", sul: "Sul", madeira: "Madeira", acores: "Açores", nacional: "Nacional" };
-export const regionLabel = (r: string): string => REGION_LABEL[r.toLowerCase()] || r;
 
 /* ── Peças pequenas ─────────────────────────────────────────────── */
 function SdSpan({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
@@ -177,7 +176,7 @@ function cols(rows: Sub12Row[], withEsc: boolean, pdb: PlayersDB): RankingCol<Su
     { key: "rank", label: "#", className: "num", sort: r => rk.get(r.fed) ?? 9999, firstDir: "asc",
       cell: r => r.totalPts > 0 ? (medal(rk.get(r.fed)!) ?? <span className="mono fw-700">{rk.get(r.fed)}</span>) : MUTED },
     { key: "name", label: "Jogador", sort: r => norm(r.name), firstDir: "asc",
-      cell: r => <>{pdb[r.fed]?.country && pdb[r.fed]!.country !== "PT" ? <span title={pdb[r.fed]!.country ?? ""}>{flagOrEmpty(pdb[r.fed]!.country)} </span> : null}<PlayerLink fed={r.fed} name={r.name} className="fw-700" />
+      cell: r => <>{pdb[r.fed]?.country && !isPtCountry(pdb[r.fed]!.country) ? <span title={pdb[r.fed]!.country ?? ""}>{flagOrEmpty(pdb[r.fed]!.country)} </span> : null}<PlayerLink fed={r.fed} name={r.name} className="fw-700" />
         {(r.sex === "M" || r.sex === "F") && <SexBadge sex={r.sex} size="sm" className="ml-4" />}</> },
     ...(withEsc ? [{ key: "esc", label: "Escalão", sort: (r: Sub12Row) => ESCALOES_DRIVE.indexOf(r.esc ?? "") + 1 || 99, firstDir: "asc" as const,
       cell: (r: Sub12Row) => r.esc || "—" }] : []),

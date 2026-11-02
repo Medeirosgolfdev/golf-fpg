@@ -18,7 +18,7 @@ import { flag as flagOf } from "../../../utils/flagUtils";
 import { MANUEL_DOB } from "../../../constants/manuel";
 import { cachedFetchJson } from "../../../data/fetchCache";
 import HcpSparkline from "./HcpSparkline";
-import { shortDateSlash, fmtHcp } from "../../../utils/format";
+import { shortDateSlash, fmtHcp, MONTHS_PT } from "../../../utils/format";
 import { stripAccents } from "../../../utils/normName";
 
 /** Bandeira por federação — mostrada junto ao número de licença. */
@@ -135,8 +135,7 @@ export default function HeroIdentity({ data, junior }: Props) {
   // Handicap tirado de uma lista de inscritos (Entry List) — o mais recente;
   // mostra-se sempre, com o mês, mesmo quando há o da FPG/RFEG/FFG.
   const hcpLista = junior.hcpHistory?.find(h => h.source === "entry-list") ?? null;
-  const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-  const mesLista = hcpLista ? `${MESES[Number(hcpLista.date.slice(5, 7)) - 1]}/${hcpLista.date.slice(2, 4)}` : "";
+  const mesLista = hcpLista ? `${MONTHS_PT[Number(hcpLista.date.slice(5, 7)) - 1]}/${hcpLista.date.slice(2, 4)}` : "";
 
   const ajga = (junior.meta as any)?.ajgaRank ?? (junior.computed as any)?.ajgaRank;
   const wagr = (junior.meta as any)?.wagrRank ?? (junior.computed as any)?.wagrRank;

@@ -129,9 +129,7 @@ export function fmtDateShort(s: string): string {
 
 /** DOB "2016-09-28" (ISO) → "28/09/2016". Datas noutro formato passam como vieram. */
 export function fmtDobPt(dob?: string | null): string | null {
-  if (!dob) return null;
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(dob.trim());
-  return m ? `${m[3]}/${m[2]}/${m[1]}` : dob;
+  return dob ? fmtDatePt(dob.trim()) : null;
 }
 
 /** Data ISO → "27/02/2026"; `placeholder` quando vazia; uma data que não seja ISO volta como veio. */
@@ -139,6 +137,11 @@ export function fmtDatePt(iso: string | null | undefined, placeholder = "—"): 
   if (!iso) return placeholder;
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
   return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
+}
+
+/** ISO "2026-02-27" (ou com hora) → "27-02-2026" — o formato `date` do ScorecardTable. */
+export function isoToDmy(iso: string | null | undefined): string {
+  return (iso || "").slice(0, 10).split("-").reverse().join("-");
 }
 
 /** Intervalo de datas ISO → "15/05/2026 → 17/05/2026" (uma só data se iguais). */
@@ -246,12 +249,6 @@ export function escShort(esc: string): string { return esc.replace("Sub-", "S");
 export function fmtTime(iso: string | null): string | null {
   if (!iso) return null;
   return new Date(iso).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" });
-}
-
-/** Data de inscrição sem o ano: "2026/03/15" → "03/15" */
-export function fmtDataInscricao(s: string | null): string {
-  if (!s) return "–";
-  return s.replace(/^\d{4}\//, "").replace("/", "/");
 }
 
 /** Calcula se jogador está no 1º ou 2º ano do escalão, relativo ao ano do torneio

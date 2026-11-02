@@ -24,6 +24,7 @@ import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import MasterDetail from "../ui/MasterDetail";
 import ClearButton from "../ui/ClearButton";
+import { toggleSet } from "../utils/mathUtils";
 
 export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv";
 
@@ -99,11 +100,7 @@ function KIDS2PageContent() {
   const [onlyWins, setOnlyWins] = useState(false);
 
   const toggleSource = (k: Kids2SourceKey) => {
-    setActiveSources((prev) => {
-      const next = new Set(prev);
-      if (next.has(k)) next.delete(k); else next.add(k);
-      return next;
-    });
+    setActiveSources((prev) => toggleSet(prev, k));
   };
 
   const clearFilters = () => {

@@ -89,8 +89,9 @@ interface Edition {
 }
 
 const MIN_FIELD_SIZE = 3;
-const MIN_GROSS_18H = 55;
-const MIN_GROSS_9H = 28;
+/** Abaixo disto o gross é erro de dados (cartão incompleto), não uma volta. */
+export const MIN_GROSS_18H = 55;
+export const MIN_GROSS_9H = 28;
 
 type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" | "birds" | "pars" | "bogeys" | `h${number}`;
 

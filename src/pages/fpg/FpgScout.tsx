@@ -15,7 +15,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Tournament } from "../../data/fpgTypes";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import { TeeDot } from "../../ui/tournamentPrimitives";
-import { fmtToPar } from "../../utils/format";
+import { fmtToPar, fmtSign } from "../../utils/format";
 import { tpColorDark } from "../../utils/scoreDisplay";
 import { normName } from "../../utils/normName";
 import { loadMasterData } from "../../data/loader";
@@ -105,7 +105,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
       depois.push({ grupo: "WHS", key: "fpghcp", label: "Índice", title: "Índice de hoje (FPG)", cell: (n) => R(n)?.hcpNow ?? "–", sort: (n) => R(n)?.hcpNow ?? null });
       depois.push({ grupo: "WHS", key: "d3m", label: "Δ 3m", title: "Variação do índice nos últimos 3 meses", cell: (n) => {
         const d = R(n)?.form?.hcpDelta3m;
-        return d ? `${d > 0 ? "+" : ""}${d}` : "–";
+        return d ? `${fmtSign(d)}` : "–";
       } });
     }
     if (tem.forma) {
@@ -122,7 +122,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
         cell: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e ? (e.pos ? `${e.pos}.º` : "jogou") : "–"; } });
       depois.push({ grupo: "Nesta prova", key: "fit", label: "vs Campo", title: "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio", sort: (n) => R(n)?.courseFit ?? null, cell: (n) => {
         const c = R(n)?.courseFit;
-        return c == null ? "–" : `${c > 0 ? "+" : ""}${c}`;
+        return c == null ? "–" : `${fmtSign(c)}`;
       } });
     }
     if (tem.prev) {

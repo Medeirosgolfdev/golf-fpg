@@ -17,6 +17,7 @@ import { MUTED } from "./tableCells";
 import { TIER } from "../data/rivalData";
 import { TR_I } from "../constants/config";
 import TierLegend from "./TierLegend";
+import { fmtSign } from "../utils/format";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
 interface TGTournDef {
@@ -216,8 +217,7 @@ function tgGetTournWeight(tid: string): number {
 
 function tgFmtSign(n: number | null | undefined, dec = 0): string {
   if (n == null) return "—";
-  const s = dec === 0 ? Math.round(n).toString() : n.toFixed(dec);
-  return n > 0 ? `+${s}` : s;
+  return dec === 0 ? fmtSign(Math.round(n)) : fmtSign(n, dec);
 }
 
 function tgTpColorDark(tp: number | null | undefined): string {

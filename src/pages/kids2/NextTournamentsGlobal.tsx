@@ -20,6 +20,7 @@ import Kids2SubNav from "./Kids2SubNav";
 import { fmtDayMonthYear } from "../../utils/format";
 import ExtLink from "../../ui/ExternalLink";
 import SearchInput from "../../ui/SearchInput";
+import { CIRCUIT_LABEL } from "./components/NextTournamentsSection";
 
 export default function NextTournamentsGlobal() {
   const { unlocked, unlock } = usePasswordGate();
@@ -30,7 +31,6 @@ export default function NextTournamentsGlobal() {
 interface Row { junior: Junior; reg: UpcomingReg; }
 type SortK = "date" | "player" | "tournament" | "circuit" | "escalao";
 
-const CIRCUIT_LABEL: Record<UpcomingReg["circuit"], string> = { uskids: "🇺🇸 USKids", fpg: "🇵🇹 FPG" };
 
 function Content() {
   const status = useJuniorsCanonical();

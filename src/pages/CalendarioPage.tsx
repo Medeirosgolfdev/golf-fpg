@@ -21,7 +21,7 @@ import { useAppContext } from "../context/AppContext";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import { clickableA11y } from "../utils/a11y";
-import { norm } from "../utils/format";
+import { norm, todayIso } from "../utils/format";
 import { schoolDay, isFreeDay, freeDayReason } from "../data/schoolCalendar";
 import { CAL_DEFS, EVENTS, DOB_OVERRIDES, ANO_BASE, ANO_FIM } from "../data/calendarEvents";
 import type { CalEvent, CalGroup, CalDef } from "../data/calendarEvents";
@@ -30,6 +30,7 @@ import SidebarToggle from "../ui/SidebarToggle";
 import SearchInput from "../ui/SearchInput";
 import Modal from "../ui/Modal";
 import ExpandArrow from "../ui/ExpandArrow";
+import { toggleSet } from "../utils/mathUtils";
 
 interface CalendarSource {
   id: string;
@@ -208,8 +209,7 @@ const NAO_VAI: { titulo: string; data: string }[] = [
   // 7 de Novembro: Final do Drive Tour em Oeiras.
   { titulo: "Torneio de São Martinho", data: "2026-11-07" },
 ];
-const diaISO = (d: Date) =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const diaISO = (d: Date) => todayIso(d);
 /** Prova que ele NÃO PODE jogar por estar noutro sítio nesse dia. */
 function naoPode(e: CalEvent): boolean {
   const dia = diaISO(e.date);
@@ -536,9 +536,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
     setSearchQ("");
   };
 
-  const toggleCal = (id: string) => setEnabledCals(prev => {
-    const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next;
-  });
+  const toggleCal = (id: string) => setEnabledCals((prev) => toggleSet(prev, id));
   const toggleGroup = (group: GroupKey) => {
     const ids = CALENDARS.filter(c => c.group === group).map(c => c.id);
     const allOn = ids.every(id => enabledCals.has(id));

@@ -6,7 +6,7 @@
  * por HCP, distribuições por escalão/clube/região e histograma de HCP).
  */
 import type { FederadoRaw, MergedPlayer } from "../../data/federadosLoader";
-import { gf } from "../../utils/flagUtils";
+import { gf, isForeignPrefix } from "../../utils/flagUtils";
 import SexBadge from "../../ui/SexBadge";
 import EmptyState from "../../ui/EmptyState";
 import { HCP_BINS, emptyHcpBins, hcpBinKey, isCountableHcp } from "./hcpBins";
@@ -110,7 +110,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                   <span className="fw-700 muted u-w-22px u-fs-fs-11">{i + 1}</span>
                   {p.sex === "M" || p.sex === "F" ? <SexBadge sex={p.sex} /> : null}
                   <span className="u-fl-1 u-fs-fs-12">
-                    {cp && cp !== "PT" && !cp.startsWith("@") && <span className="mr-4">{gf(cp)}</span>}
+                    {isForeignPrefix(cp) && <span className="mr-4">{gf(cp)}</span>}
                     <span className="fw-600">{p.name}</span>
                     {(() => {
                       const club = typeof p.club === "object" && p.club ? (p.club as { short?: string }).short : null;

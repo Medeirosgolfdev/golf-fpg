@@ -20,7 +20,7 @@ import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill } from "./PillBadge";
 import BirthPill from "./BirthPill";
 import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
-import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
+import { norm, fmtHcp, ageAtDate, escalaoAtDate, fmtDatePt } from "../utils/format";
 import { teeNameFor } from "../utils/teeRegulation";
 import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -428,7 +428,7 @@ export default function DrawTab({
           srcDob || bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined);
         const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : srcBirthYear;
         // Data completa visível na coluna (só quando vem da fonte do draw).
-        const dobShown = srcDob ? srcDob.slice(0, 10).split("-").reverse().join("/") : null;
+        const dobShown = srcDob ? fmtDatePt(srcDob) : null;
         // Escalão: calculado da dob (fonte autoritativa). NÃO caímos em
         // `tournamentEscalao` porque torneios combinados (Regional Sub 14-24,
         // Sub 10+12) têm múltiplos escalões em disputa — o genérico engana.
@@ -714,7 +714,7 @@ export default function DrawTab({
       {/* Linha de resumo no formato do scorecard: «N jog · N grupos · data». */}
       <div className="lb-info-line flex-wrap u-d-flex u-gap-4px u-ai-baseline">
         <span>{visibleOwn !== total ? `${visibleOwn}/${total}` : total} jog{nOther ? ` (+${nOther} de outro escalão)` : ""} · {(draw.groups || []).length} grupos{roundNum ? ` · R${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
-        {draw.date && <span>· {draw.date.split("-").reverse().join("/")}</span>}
+        {draw.date && <span>· {fmtDatePt(draw.date)}</span>}
         {fpgUrl && (
           <ExtLink href={fpgUrl}
             className="ml-auto fs-11 u-c-chart-2 u-ml-auto">

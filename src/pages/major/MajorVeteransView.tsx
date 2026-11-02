@@ -28,6 +28,7 @@ import SearchInput from "../../ui/SearchInput";
 import { ToggleChip } from "../../ui/FilterField";
 import { MUTED } from "../../ui/tableCells";
 import ShowMoreButton from "../../ui/ShowMoreButton";
+import { toggleSet } from "../../utils/mathUtils";
 
 interface VetPlayer {
   name: string;
@@ -144,7 +145,7 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
 
   const shown = sorted.slice(0, limit);
   const toggleRow = (name: string) =>
-    setExpanded((prev) => { const n = new Set(prev); n.has(name) ? n.delete(name) : n.add(name); return n; });
+    setExpanded((prev) => toggleSet(prev, name));
 
   const chip = (s: string) => (
     <span

@@ -24,7 +24,7 @@ import {
   type HoleStatsData,
 } from "../data/playerDataLoader";
 import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
-import { norm, shortName, firstName, fD, fD2, fmtHcp } from "../utils/format";
+import { norm, shortName, firstName, fD, fD2, fmtHcp, fmtSign } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import LoadingState from "../ui/LoadingState";
@@ -464,7 +464,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
         <line x1={PAD.left} x2={W - PAD.right} y1={yPos(0)} y2={yPos(0)} stroke="var(--color-good)" strokeWidth={1} strokeDasharray="4,3" opacity={0.5} />
         {[-0.5, 0.5, 1.0].filter(v => v >= minV && v <= maxV).map(v => (
           <g key={v}><line x1={PAD.left} x2={W - PAD.right} y1={yPos(v)} y2={yPos(v)} stroke="var(--border)" strokeWidth={0.5} />
-          <text x={PAD.left - 4} y={yPos(v) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{v > 0 ? "+" : ""}{v.toFixed(1)}</text></g>
+          <text x={PAD.left - 4} y={yPos(v) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{fmtSign(v, 1)}</text></g>
         ))}
         {refStats.holes.map((h, i) => (
           <React.Fragment key={i}>
@@ -705,7 +705,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
               <div className="caKpiLbl">{shortName(s.name)}</div>
               {delta != null && (
                 <div className="u-fs-fs-10 u-fw-700 u-mt-2px" style={{ color: tpColor(delta) ?? "var(--text-3)" }}>
-                  {delta > 0 ? "+" : ""}{delta.toFixed(1)} no período
+                  {fmtSign(delta, 1)} no período
                 </div>
               )}
             </div>

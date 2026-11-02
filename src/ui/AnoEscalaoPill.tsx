@@ -1,4 +1,4 @@
-﻿import { anoEscalao } from "../utils/format";
+﻿import { anoEscalao, fmtSign } from "../utils/format";
 import { escCls } from "../utils/playerUtils";
 
 const ESC_COM_COR = new Set(["sub10", "sub12", "sub14", "sub16", "sub18", "sub21", "sub24"]);
@@ -29,7 +29,7 @@ export function TrendBadge({ trend, delta }: { trend: string | null; delta: numb
   const up = trend === "up";
   return (
     <span style={{ color: up ? "var(--color-good)" : "var(--color-bad)", fontWeight: 700, fontSize: "var(--fs-13)" }}
-      title={delta != null ? `${delta > 0 ? "+" : ""}${delta.toFixed(1)} (3m)` : ""}>
+      title={delta != null ? `${fmtSign(delta, 1)} (3m)` : ""}>
       {up ? "↓" : "↑"}
     </span>
   );

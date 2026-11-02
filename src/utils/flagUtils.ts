@@ -272,6 +272,17 @@ export function flagOrEmpty(country: string | null | undefined): string {
   return country ? gf(country) : "";
 }
 
+/** Prefixo de país do cadastro FPG (country_prefix): estrangeiro quando é um
+ *  código de país que não PT ("@…" são códigos internos, não países). */
+export function isForeignPrefix(cp: string | null | undefined): cp is string {
+  return !!cp && cp !== "PT" && !cp.startsWith("@");
+}
+
+/** Bandeira do prefixo de país do cadastro FPG; 🏴 para os códigos internos ("@…"). */
+export function prefixFlag(cp: string | null | undefined): string {
+  return cp && !cp.startsWith("@") ? gf(cp) : "🏴";
+}
+
 /** Só a bandeira de um rótulo de clube com emoji ("🇿🇼 Zimbabwe" → "🇿🇼 "), para
  *  colunas estreitas. Rótulos sem emoji não dão nada. */
 export function clubFlagPrefix(club?: string | null): string {

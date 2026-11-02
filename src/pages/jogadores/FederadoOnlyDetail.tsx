@@ -11,7 +11,7 @@ import type { MergedPlayer } from "../../data/federadosLoader";
 import { getPlayerHistory, getScorecard, type WhsRound, type Scorecard } from "../../data/datagolfClient";
 import { playerDataUrl } from "../../data/playerDataLoader";
 import { cachedFetchJson } from "../../data/fetchCache";
-import { gf } from "../../utils/flagUtils";
+import { gf, isForeignPrefix } from "../../utils/flagUtils";
 import { canonicalCourseName } from "../../utils/courseAliases";
 import EmptyState from "../../ui/EmptyState";
 import DetailHeader from "../../ui/DetailHeader";
@@ -29,6 +29,7 @@ import IdentityPills, { PlayerExtLinks } from "./IdentityPills";
 import LoadingState from "../../ui/LoadingState";
 import ErrorState from "../../ui/ErrorState";
 import Modal from "../../ui/Modal";
+import { isoToDmy } from "../../utils/format";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
  *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
@@ -42,7 +43,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
   // dentro dos efeitos), senão a ordem de hooks mudava entre renders.
   const f = player._federadoRaw ?? null;
   const fedCode = f?.federation_code ?? "";
-  const showFlag = f && f.country_prefix && f.country_prefix !== "PT" && !f.country_prefix.startsWith("@");
+  const showFlag = f && isForeignPrefix(f.country_prefix);
 
   /* ── Rondas em tempo real via /api/datagolf ── */
   const [liveRounds, setLiveRounds] = useState<WhsRound[] | null>(null);
@@ -410,7 +411,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
                       hc: nh,
                     }}
                     courseName={scorecardModal.round.course_description || ""}
-                    date={(scorecardModal.round.score_dateStr || "").slice(0, 10).split("-").reverse().join("-")}
+                    date={isoToDmy(scorecardModal.round.score_dateStr || "")}
                     tee={String(sc.tee_name ?? "")}
                   />
                 </>

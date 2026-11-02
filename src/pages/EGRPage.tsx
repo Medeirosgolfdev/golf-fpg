@@ -24,7 +24,7 @@
  */
 
 import { useMemo } from "react";
-import { flagOrEmpty } from "../utils/flagUtils";
+import { flagOrEmpty, isPtCountry } from "../utils/flagUtils";
 import { norm, fmtToPar } from "../utils/format";
 import SexBadge from "../ui/SexBadge";
 import {
@@ -139,7 +139,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
       rowKey={(p) => p.id} playerHref={(p) => `/egr/jogador/${p.id}`}
       defaultSort="points" defaultDir="desc"
       sexOptions={[["", "M + F"], ["M", "Rapazes"], ["F", "Raparigas"]]}
-      ageGroupOf={(p) => p.ageGroup} isPt={(p) => p.country === "Portugal"} />
+      ageGroupOf={(p) => p.ageGroup} isPt={(p) => isPtCountry(p.country)} />
   );
 }
 

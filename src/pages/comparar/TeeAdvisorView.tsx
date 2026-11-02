@@ -28,7 +28,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import EmptyState from "../../ui/EmptyState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar";
-import { norm, fmtToPar } from "../../utils/format";
+import { norm, fmtToPar, fmtSign } from "../../utils/format";
 import { median } from "../../utils/mathUtils";
 import { calcCourseHcp } from "../../utils/whsCalc";
 import { getTeeHex } from "../../utils/teeColors";
@@ -840,7 +840,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                       <div className="u-fs-fs-13 u-lh-1_5 u-mt-2px">{c.text}</div>
                     </div>
                     {c.available && c.pts !== 0 && (
-                      <span className="u-fsh-0" title={`Contribuição para o veredicto: ${c.pts > 0 ? "+" : ""}${c.pts.toFixed(1)}`}>
+                      <span className="u-fsh-0" title={`Contribuição para o veredicto: ${fmtSign(c.pts, 1)}`}>
                         <TeePill tee={(c.pts > 0 ? teeA : teeB).tee} />
                       </span>
                     )}

@@ -17,7 +17,7 @@ interface Props {
 }
 
 
-const CIRCUIT_LABEL: Record<UpcomingReg["circuit"], string> = {
+export const CIRCUIT_LABEL: Record<UpcomingReg["circuit"], string> = {
   uskids: "🇺🇸 USKids",
   fpg: "🇵🇹 FPG",
 };
@@ -30,8 +30,8 @@ export default function NextTournamentsSection({ data, junior }: Props) {
 
   return (
     <section className="u-mb-4px">
-      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px u-gap-8px">
-        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">
+      <div className="section-hdr">
+        <h3 className="section-hdr-title">
           📅 Próximos torneios
         </h3>
         <span className="u-fs-fs-11 u-c-text-3">

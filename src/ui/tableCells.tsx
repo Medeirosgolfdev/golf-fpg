@@ -11,6 +11,7 @@ import type { RoundData } from "../data/playerDataLoader";
 import { fmtGrossDelta, fmtSdVal, fmtStb } from "../utils/scoreDisplay";
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import TeePill from "./TeePill";
+import { fmtSign } from "../utils/format";
 
 /** Traço esbatido para «sem valor» (o mesmo em todas as tabelas: «—» cinzento,
  *  no tamanho de letra da célula). Antes havia 17 variantes à mão. */
@@ -22,7 +23,7 @@ export function HcpDelta({ d, zero = "—" }: { d: number | null; zero?: string 
   const melhorou = d < 0;
   return (
     <span className={"u-fw-700 " + (melhorou ? "u-c-color-good" : "u-c-color-danger")}>
-      {melhorou ? "▼" : "▲"} {d > 0 ? "+" : ""}{d.toFixed(1)}
+      {melhorou ? "▼" : "▲"} {fmtSign(d, 1)}
     </span>
   );
 }

@@ -20,7 +20,7 @@ import { normPaisDisplay } from "../../utils/flagUtils";
 import { fmtToPar, displayName, todayIso } from "../../utils/format";
 import { tpColor } from "../../ui/tournamentPrimitives";
 import { useCompareSelection } from "../../ui/useCompareSelection";
-import HistoricScorecardsTab from "./HistoricScorecardsTab";
+import HistoricScorecardsTab, { MIN_GROSS_18H, MIN_GROSS_9H } from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import { CoursesGate } from "../../context/CoursesContext";
 import PrevisaoTab from "./PrevisaoTab";
@@ -1561,8 +1561,6 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
   // Scores impossíveis (data quality): qualquer ronda 18H abaixo deste valor
   // é descartada (jogador tratado como DNF nessa ronda). Ex: WJGC25 Parker
   // Christianson R3=21 → upstream bug.
-  const MIN_GROSS_18H = 55;
-  const MIN_GROSS_9H = 28;
 
   const data = useMemo(() => {
     if (!torneio) return null;

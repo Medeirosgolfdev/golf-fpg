@@ -17,7 +17,7 @@ import { loadPPHistory, ppPlayerUrl, type PPHistory, type PPRound } from "../../
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { fmtStb, sdClassByHcp } from "../../utils/scoreDisplay";
-import { numSafe } from "../../utils/mathUtils";
+import { numSafe, toggleSet } from "../../utils/mathUtils";
 import { GrossCell as GrossDeltaCell, MUTED } from "../../ui/tableCells";
 import TeeDate from "../../ui/TeeDate";
 import TeePill from "../../ui/TeePill";
@@ -25,6 +25,7 @@ import { ScorecardTable } from "../../ui/ScorecardTable";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import ExtLink from "../../ui/ExternalLink";
+import { isoToDmy } from "../../utils/format";
 
 type SortKey = "date" | "tourn" | "course" | "holes" | "gross" | "stb" | "sd" | "index";
 
@@ -49,7 +50,7 @@ function Scorecard({ r }: { r: PPRound }) {
       {/* O cartão global (o mesmo das outras vistas), sem cabeçalho — já vem por cima. */}
       <ScorecardTable bare
         holes={{ g: arr(sc.gross), p: arr(sc.par), si: Array(nh).fill(null), m: arr(sc.meters), hc: nh }}
-        courseName={sc.course || ""} date={(r.date || "").slice(0, 10).split("-").reverse().join("-")} tee={sc.teeName || ""} />
+        courseName={sc.course || ""} date={isoToDmy(r.date || "")} tee={sc.teeName || ""} />
     </div>
   );
 }
@@ -105,7 +106,7 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
     return sortDir === "asc" ? cmp : -cmp;
   });
 
-  const toggle = (k: string) => setOpen(p => { const n = new Set(p); n.has(k) ? n.delete(k) : n.add(k); return n; });
+  const toggle = (k: string) => setOpen((p) => toggleSet(p, k));
 
   return (
     <div className="pa-content u-p-12px">

@@ -10,6 +10,7 @@
 import type { Tournament } from "../fpgTypes";
 import { buildDriveEntries, shortCampo } from "./driveCircuitData";
 import { filterDriveSource, type DriveSeries } from "./driveSource";
+import { DRIVE_REGION_LABEL } from "./driveRegions";
 
 export interface DriveCalEntry {
   /** «1º DT Sul», «Final DC Madeira», «3º AQUAPOR». */
@@ -24,7 +25,6 @@ export interface DriveCalEntry {
 }
 
 const PREFIX: Record<DriveSeries, string> = { tour: "DT", challenge: "DC", aquapor: "AQUAPOR" };
-const REGION: Record<string, string> = { norte: "Norte", tejo: "Tejo", sul: "Sul", madeira: "Madeira", acores: "Açores", nacional: "Nacional" };
 
 /** AAAA-MM-DD + n dias. */
 function addDays(iso: string, n: number): string {
@@ -37,7 +37,7 @@ function addDays(iso: string, n: number): string {
 export function driveCalLabel(name: string, series: DriveSeries, region: string | null | undefined): string {
   const n = /(\d+)\s*º/.exec(name)?.[1];
   const ord = /\bfinal\b/i.test(name) ? (/nacional/i.test(name) ? "Final Nacional" : "Final") : n ? `${n}º` : "";
-  const zona = series === "aquapor" || !region || region === "nacional" ? "" : REGION[region] ?? region;
+  const zona = series === "aquapor" || !region || region === "nacional" ? "" : DRIVE_REGION_LABEL[region] ?? region;
   return [ord, PREFIX[series], zona].filter(Boolean).join(" ");
 }
 

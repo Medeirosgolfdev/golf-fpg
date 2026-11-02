@@ -26,7 +26,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
 import { C } from "../../utils/colors";
-import { norm, shortDateSlash } from "../../utils/format";
+import { norm, shortDateSlash, fmtDatePt, todayIso } from "../../utils/format";
 import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
 import termosJson from "../../data/omCgssTermos.json";
 import { ModalidadePill } from "../../ui/PillBadge";
@@ -253,10 +253,7 @@ const OM_CALENDAR: Array<{ name: string; level: Level; rx: RegExp; date: string 
   { name: "Rali", level: "C", rx: /\brali\b/i, date: "2026-08-01" },
   { name: "Summer", level: "C", rx: /\bsummer\b/i, date: "2026-08-22" },
 ];
-const hojeISO = () => {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-};
+const hojeISO = () => todayIso();
 
 /* ── A tab (dentro de uma prova) e a página /om-cgss (sem prova: tournament e level null) ── */
 export function OmRankingTab({ tournament, level }: { tournament: Tournament | null; level: Level | null }) {
@@ -423,7 +420,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
 
           <div className="fs-12 p-muted u-mb-6px">
             <strong>Categoria Júnior</strong> (0-18) — {asOf
-              ? <>classificação <strong>logo após esta prova</strong> ({asOf.split("-").reverse().join("/")}) · {rows.length} pontuadores</>
+              ? <>classificação <strong>logo após esta prova</strong> ({fmtDatePt(asOf)}) · {rows.length} pontuadores</>
               : <>classificação <strong>atual</strong> · {rows.length} já pontuaram{data.eligibleCount ? ` de ${data.eligibleCount} elegíveis (Sub-18 e abaixo)` : ""}</>}
             {!tournament ? null : thisEvent
               ? (thisEvent.nJuniors > 0 ? <> · nesta prova pontuaram {thisEvent.nJuniors} juniores.</> : <> · esta prova não teve juniores a pontuar.</>)
@@ -444,7 +441,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                     const isHere = !!thisEvent && String(ev.tcode) === String(thisEvent.tcode);
                     return (
                       <SortableHdr key={ev.tcode} k={`ev:${ev.tcode}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
-                        title={`${ev.name} — ${ev.date.split("-").reverse().join("/")} — ${LEVEL_LABEL[ev.level]}${isHere ? " (esta prova)" : ""}`}
+                        title={`${ev.name} — ${fmtDatePt(ev.date)} — ${LEVEL_LABEL[ev.level]}${isHere ? " (esta prova)" : ""}`}
                         style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? HERE_HDR : {}) }}>
                         {/* nome · data · pills (modalidade da prova / nível / modalidade dos juniores) */}
                         <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>

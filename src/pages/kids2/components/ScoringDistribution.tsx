@@ -56,8 +56,8 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
 
   return (
     <section className="u-mb-4px">
-      <div className="u-d-flex u-ai-baseline u-jc-space-between u-m-8px-0-10px">
-        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">Distribuição de scoring</h3>
+      <div className="section-hdr">
+        <h3 className="section-hdr-title">Distribuição de scoring</h3>
         <span className="u-fs-fs-11 u-c-text-3">
           {total} {total === 1 ? "buraco jogado" : "buracos jogados"} · {stats.subParPct}% sub-par
         </span>

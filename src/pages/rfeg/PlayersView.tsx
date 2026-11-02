@@ -34,6 +34,7 @@ import SearchInput from "../../ui/SearchInput";
 import ErrorState from "../../ui/ErrorState";
 import SexSelect from "../../ui/SexSelect";
 import { ToggleChip } from "../../ui/FilterField";
+import { toggleSet } from "../../utils/mathUtils";
 
 interface SpainPlayer {
   licencia: string;
@@ -207,7 +208,7 @@ export function RFEGPlayersView() {
   const [tournsState, setTournsState] = useState<"idle" | "loading" | "error">("idle");
 
   const toggleExp = (lic: string) => {
-    setExpanded((s) => { const n = new Set(s); n.has(lic) ? n.delete(lic) : n.add(lic); return n; });
+    setExpanded((s) => toggleSet(s, lic));
     if (!tourns && tournsState === "idle") {
       setTournsState("loading");
       cachedFetchJson<EsPlayerTournamentsFile>("/data/spain-player-tournaments.json")

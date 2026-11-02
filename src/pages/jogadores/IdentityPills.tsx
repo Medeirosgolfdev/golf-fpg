@@ -9,10 +9,11 @@
  */
 import type { ReactNode } from "react";
 import { escCls } from "../../utils/playerUtils";
-import { gf } from "../../utils/flagUtils";
+import { gf, isForeignPrefix } from "../../utils/flagUtils";
 import { ppPlayerUrl } from "../../data/federadosPPLoader";
 import SexBadge from "../../ui/SexBadge";
 import ExtLink from "../../ui/ExternalLink";
+import { fmtDatePt } from "../../utils/format";
 
 /** Link externo para a ficha P&P no site da FPG — separado para os mundos
  *  poderem ordená-lo a seguir ao botão "Vista P&P" interno (2026-08-15). */
@@ -53,7 +54,7 @@ export default function IdentityPills({ fed, sex, dob, escalao, club, countryPre
   country?: string | null;
   children?: ReactNode;
 }) {
-  const showFlag = countryPrefix && countryPrefix !== "PT" && !countryPrefix.startsWith("@");
+  const showFlag = isForeignPrefix(countryPrefix);
   // Linha de identidade UNIFORME (2026-08-15, 2ª iteração com a utilizadora):
   // cada dado é uma unidade individual (pill própria) mas TODAS com a mesma
   // forma discreta (fundo muted, mesmo raio) — sem arco-íris a disputar
@@ -69,7 +70,7 @@ export default function IdentityPills({ fed, sex, dob, escalao, club, countryPre
         </span>
       )}
       {dob && (
-        <span className="p p-ident" title={`Data de nascimento: ${dob.split("-").reverse().join("/")}`}>
+        <span className="p p-ident" title={`Data de nascimento: ${fmtDatePt(dob)}`}>
           {dob.slice(0, 4)}
         </span>
       )}

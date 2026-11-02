@@ -14,7 +14,7 @@
 
 import { useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
-import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf, isRecentHours } from "../utils/format";
+import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf, isRecentHours, fmtDatePt } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
@@ -465,7 +465,7 @@ export default function AdmissionsTab({
         {convocados
           ? <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} convocados · {confirmedCount} inscritos{reservasCount > 0 && ` · ${reservasCount} por inscrever`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>
           : <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} jog · {confirmedCount} confirmados{reservasCount > 0 && (reservaLabel ? ` · ${reservasCount} em ${reservaLabel}` : ` · ${reservasCount} pendentes`)}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>}
-        {effDate && <span>· início {effDate.split("-").reverse().join("/")}</span>}
+        {effDate && <span>· início {fmtDatePt(effDate)}</span>}
         {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
         {infoExtra}
         {fpgUrl && (

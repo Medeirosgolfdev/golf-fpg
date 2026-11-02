@@ -43,6 +43,7 @@ import ExpandArrow from "../ExpandArrow";
 import EmptyState from "../EmptyState";
 import PlayerLink from "../PlayerLink";
 import { MUTED } from "../tableCells";
+import { toggleSet } from "../../utils/mathUtils";
 
 /** Nome de um jogador: com federado liga à ficha /jogadores/:fed; ↗ kids2 se
  *  existir no roster; gross (±par) ao lado quando a fonte o dá. */
@@ -182,9 +183,7 @@ type GameSortKey = "order" | "format" | "result";
 function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame[]; home: MatchplaySide | null; away: MatchplaySide | null; /** Confronto a N: cada jogo é um par de lados diferente — o lado vai em cada célula, não no cabeçalho. */ multi?: boolean }) {
   const { sortKey, sortDir, toggleSort } = useSort<GameSortKey>("order");
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
-  const toggleGame = (id: number) => setExpanded(prev => {
-    const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n;
-  });
+  const toggleGame = (id: number) => setExpanded((prev) => toggleSet(prev, id));
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
     const val = (g: MatchplayGame): string | number => {
@@ -279,9 +278,7 @@ type MatchSortKey = "no" | "home" | "res" | "away" | "label" | "time";
 function RoundTable({ round }: { round: MatchplayRound }) {
   const { sortKey, sortDir, toggleSort } = useSort<MatchSortKey>("no");
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
-  const toggle = (id: number) => setExpanded(prev => {
-    const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n;
-  });
+  const toggle = (id: number) => setExpanded((prev) => toggleSet(prev, id));
 
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
@@ -428,9 +425,7 @@ function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
   }, [round.matches]);
   const { sortKey, sortDir, toggleSort } = useSort<string>("no");
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
-  const toggle = (id: number) => setExpanded(prev => {
-    const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n;
-  });
+  const toggle = (id: number) => setExpanded((prev) => toggleSet(prev, id));
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
     const val = (m: MatchplayTeamMatch): string | number => {

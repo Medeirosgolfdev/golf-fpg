@@ -156,7 +156,7 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
             deltaLabel="vs últ. 20"
             sub={`${last5.length} rondas 18B`} />
           <KPICard title="Tendência SD (últ. 10)"
-            val={sdTrend != null ? `${sdTrend.slope > 0 ? "+" : ""}${sdTrend.slope.toFixed(2)}` : null}
+            val={sdTrend != null ? `${fmtSign(sdTrend.slope, 2)}` : null}
             sub={sdTrend ? `por ronda · ${sdTrend.n} rondas analisadas` : "mín. 3 rondas necessárias"}
             accent={sdTrend != null
               ? sdTrend.slope < -0.1 ? "var(--color-good)"

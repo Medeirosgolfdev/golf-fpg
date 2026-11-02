@@ -33,6 +33,8 @@ import {
 import ExtLink from "../ui/ExternalLink";
 import ErrorState from "../ui/ErrorState";
 import { ToggleChip } from "../ui/FilterField";
+import { toggleSet } from "../utils/mathUtils";
+import { isPtCountry } from "../utils/flagUtils";
 
 
 
@@ -226,11 +228,7 @@ export default function USKidsFieldPage() {
   useEffect(() => {
     try { localStorage.setItem(CAT_LS_KEY, JSON.stringify([...catVisiveis])); } catch { /* sem storage */ }
   }, [catVisiveis]);
-  const alternarCategoria = (tipo: number) => setCatVisiveis(prev => {
-    const n = new Set(prev);
-    if (n.has(tipo)) n.delete(tipo); else n.add(tipo);
-    return n;
-  });
+  const alternarCategoria = (tipo: number) => setCatVisiveis((prev) => toggleSet(prev, tipo));
 
   // selectedT sincronizado com URL params (?t=)
   const paramT = searchParams.get("t");
@@ -444,7 +442,7 @@ export default function USKidsFieldPage() {
     // Helper: confirmação estrita de que é o nosso Manuel (nome + PT + cidade de Madeira quando disponível)
     const isManuelStrict = (j: { nome: string; pais: string; cidade?: string }) => {
       if (!isManuel(j.nome)) return false;
-      if (j.pais && j.pais !== "PT") return false;
+      if (j.pais && !isPtCountry(j.pais)) return false;
       // Se cidade está preenchida, tem de ser Madeira/Funchal/Santo da Serra/CGSS
       if (j.cidade) {
         const c = j.cidade.toLowerCase();

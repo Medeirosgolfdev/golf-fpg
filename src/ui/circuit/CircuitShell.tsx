@@ -61,6 +61,7 @@ import TabRow from "../TabRow";
 import SearchInput from "../SearchInput";
 import SexSelect from "../SexSelect";
 import { ToggleChip } from "../FilterField";
+import { toggleSet } from "../../utils/mathUtils";
 
 // ── Helpers ─────────────────────────────────────────────────────────── //
 
@@ -454,9 +455,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     ...(curDiv?.extraSections ?? []).map(x => ({ key: x.key, label: x.label })),
   ], [sections, curDiv]);
 
-  const toggle = (t: CircuitToggle) => setToggles(prev => {
-    const n = new Set(prev); n.has(t) ? n.delete(t) : n.add(t); return n;
-  });
+  const toggle = (t: CircuitToggle) => setToggles((prev) => toggleSet(prev, t));
 
   const hasActiveFilters =
     !!search || fYear !== "all" || fEsc !== "all" || fSex !== "all" || fSource !== "all"
