@@ -89,6 +89,10 @@ export interface Tournament extends BaseTournament, TournamentModel {
    *  saiu para ela não é um jogador incompleto — sem isto o acumulado marcava
    *  metade do field como eliminado no cut a meio da manhã. */
   _openRound?: number;
+  /** A posição do Resumo é a OFICIAL da fonte (`pos` de cada jogador), não a do
+   *  total de pancadas — provas stroke play + match play e leaderboards parciais
+   *  (WAGR: o vencedor do match play não é quem fez menos pancadas). */
+  _officialPos?: boolean;
   /** Override do label do botão/tab de escalão na Jovens view. Usar quando o
    *  `escalao` canónico (ex: "Sub 10") não descreve bem o torneio — p.ex. num
    *  Regional combinado Sub 10/12 ou Sub 14 a 24, o label fica "Sub 10 e 12"

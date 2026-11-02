@@ -28,7 +28,8 @@ const FG_CONFIG: CircuitConfig = {
   color: "var(--color-good-dark)",
   textColor: "var(--text-on-color)",
   grouping: "year",
-  filters: { search: true, year: true, escalao: true, sex: true, toggles: ["top10"] },
+  // Os mesmos filtros da /ffg e da /rfeg (★ Manuel, 🇵🇹 PT, Top 10, Com resultados).
+  filters: { search: true, year: true, escalao: true, sex: true, toggles: ["manuel", "pt", "top10", "results"] },
   escalaoSource: "it",
   editionKey: (e) => tournamentFamilyKey(e.name),
   loadingMessage: "A carregar Federgolf…",

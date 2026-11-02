@@ -172,6 +172,7 @@ export function AccumulatedLB({
       return {
         key: p.scoreId || p.name,
         name: p.name,
+        pos: Number(p.pos) || 0,
         fed: p.fedCode,
         club: p.club || "",
         hcp: p.hcpExact ?? null,
@@ -288,6 +289,7 @@ export function AccumulatedLB({
         renderName={renderName}
         sdEstimate={tournament._sdEstimate}
         rankBy={rankBy}
+        officialPos={!!tournament._officialPos}
       />
     </div>
   );

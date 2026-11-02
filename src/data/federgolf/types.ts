@@ -91,6 +91,11 @@ export interface FgIndiceProva {
   completo: boolean;
   /** Há cartões buraco a buraco (a passagem rápida grava só os totais). */
   cartoes?: boolean;
+  /** Há portugueses / o Manuel (classificação ou inscritos) — filtros 🇵🇹 e ★. */
+  hasPt?: boolean;
+  hasManuel?: boolean;
+  /** Prova por jogar (só a lista de inscritos). */
+  futura?: boolean;
 }
 
 export interface FgIndice {

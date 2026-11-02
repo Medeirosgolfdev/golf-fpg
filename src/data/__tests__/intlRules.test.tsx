@@ -17,6 +17,7 @@ import { expandMultiRound } from "../fpgUtils";
 import { ScorecardLeaderboard } from "../../ui/ScorecardLeaderboard";
 import { normalizeBlueGolf } from "../major/bluegolf";
 import { totalsDivisionView } from "../../ui/circuit/divisionPieces";
+import { AccumulatedLB } from "../../ui/AccumulatedLB";
 import { ncTotalsPlayers } from "../rfeg/divisionData";
 
 /**
@@ -120,6 +121,17 @@ describe("3. Totais do NextCaddy no Resumo comum (peça única)", () => {
     expect(p.toPar).toBe(6);
     expect(p.sex).toBe("F");
     expect(p.fed).toBe("AM1");
+  });
+
+  it("só totais com officialPos (WAGR, match play): a posição é a da fonte, não a do total", () => {
+    // Taça da Federação 2026: o melhor no stroke play (136) saiu nos quartos (5.º).
+    const v = totalsDivisionView({ key: "m", escalao: "", totals: { parPerRound: null, officialPos: true, players: [
+      { name: "Vencedor", pos: 1, rounds: [66, 72], total: 138 },
+      { name: "Medalhista", pos: 5, rounds: [72, 64], total: 136 },
+    ] } }, { name: "x" })!;
+    expect((v.tournament as unknown as { _officialPos?: boolean })._officialPos).toBe(true);
+    const html = renderToStaticMarkup(<AccumulatedLB tournament={v.tournament} nRounds={2} escLookup={new Map()} playersDB={{}} />);
+    expect(html.indexOf("Vencedor")).toBeLessThan(html.indexOf("Medalhista"));
   });
 });
 

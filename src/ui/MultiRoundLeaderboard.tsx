@@ -2,7 +2,7 @@
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { useCompareSelection } from "./useCompareSelection";
 import { fmtHcp, medal, birthYearOf, ageAtDate, todayIso } from "../utils/format";
-import { birthCells, birthFieldsOf } from "./BirthCells";
+import { birthCells, birthFieldsOf, escDoAno } from "./BirthCells";
 import BirthPill from "./BirthPill";
 import { RowsFilterBar, filterRows, buildSexByName } from "./PlayerFilterBar";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
@@ -113,6 +113,9 @@ interface MultiRoundLBProps {
   /** Classificação noutra modalidade (Medal Net, Stableford Net): a posição sai deste
    *  valor em vez do gross, e aparece uma coluna com ele ao lado do Total. */
   rankBy?: { label: string; higherIsBetter?: boolean; value: (r: MultiRoundRow) => number | null };
+  /** Posição oficial da fonte (`row.pos`) em vez da calculada pelo total —
+   *  stroke play + match play, leaderboards parciais (WAGR). */
+  officialPos?: boolean;
 }
 
 export function MultiRoundLeaderboard({
@@ -126,6 +129,7 @@ export function MultiRoundLeaderboard({
   renderName,
   sdEstimate,
   rankBy,
+  officialPos,
 }: MultiRoundLBProps) {
   const {
     esc: wantEsc = true,
@@ -208,6 +212,13 @@ export function MultiRoundLeaderboard({
 
   /* Posições — apenas jogadores completos e não-WD */
   const withPos: RowWithPos[] = useMemo(() => {
+    // Posição oficial (match play, WAGR): a da fonte, tal e qual.
+    if (officialPos && !rankBy) {
+      return rows.map(r => ({
+        ...r,
+        _pos: (r.isIncomplete || r.isWD || r.isCut || !(r.pos > 0)) ? null : r.pos,
+      }));
+    }
     // Sem resultado (gross null) não há posição — nem «1.º empatado» de todos.
     // Com `rankBy` (Medal Net / Stableford Net) a ordem sai desse valor.
     const val = (r: MultiRoundRow) => (rankBy ? rankBy.value(r) : r.gross);
@@ -223,7 +234,7 @@ export function MultiRoundLeaderboard({
       ...r,
       _pos: (r.isIncomplete || r.isWD || r.isCut) ? null : (posMap.get(r.key || r.name) ?? null),
     }));
-  }, [rows, rankBy]);
+  }, [rows, rankBy, officialPos]);
 
   /* Filtro — passa playersDB para resolver sexo de jogadores sem fedCode */
   const sexByName = useMemo(() => buildSexByName(playersDB), [playersDB]);
@@ -545,7 +556,7 @@ export function MultiRoundLeaderboard({
                     // Nas colunas só o ano; a data completa fica no tooltip.
                     const bc = birthCells({ dob: dobOf(row), ...birthFieldsOf(row), showDate: false }, refIso);
                     // Idade pré-calculada pelo adapter (row.age) → CONSISTENTE com as tabs R1/R2/R3.
-                    const idade = row.age != null ? <BirthPill>{row.age}a</BirthPill> : bc.idade;
+                    const idade = row.age != null ? <BirthPill esc={escDoAno(anoOf(row), refIso)}>{row.age}a</BirthPill> : bc.idade;
                     const tip = bc.tip || undefined;
                     return <>
                       {showBirthYear && <td className="lb-esc" title={tip}>{bc.nasc}</td>}

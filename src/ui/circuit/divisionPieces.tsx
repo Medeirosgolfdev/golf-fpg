@@ -31,8 +31,8 @@ export function roundDrawNode(rd: CircuitRoundDraw): React.ReactNode {
   );
 }
 
-/** Aviso por cima da tabela de totais. */
-function noticeNode(n: TotalsNotice): React.ReactNode {
+/** Aviso por cima de uma tabela (totais, ou o Resumo de qualquer divisão). */
+export function noticeNode(n: TotalsNotice): React.ReactNode {
   return n.kind === "aviso"
     ? <div className="notice u-mb-8px" title={n.title}>{n.text}</div>
     : <span className="muted fs-10" title={n.title}>{n.text}</span>;
@@ -77,7 +77,7 @@ export function totalsDivisionView(d: CircuitDivision, meta: { name: string; dat
     { name: meta.name, tcode: d.key, date: t.tournamentDate ?? meta.date ?? "", campo: meta.campo ?? "", rounds: nRounds },
     { par: [], holes: 18, parTotal: t.parPerRound ?? null },
     players,
-    { keepNoRounds: true, extra: { _noHbh: true } },
+    { keepNoRounds: true, extra: { _noHbh: true, ...(t.officialPos ? { _officialPos: true } : {}) } },
   );
   const accExtraColumns = t.extra?.map((c: TotalsExtraCol): ExtraColumn => {
     const valor = (key?: string) => { const v = key ? porId.get(key)?.[c.field] : undefined; return typeof v === "number" ? v : null; };

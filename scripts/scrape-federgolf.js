@@ -299,6 +299,9 @@ function construirIndice() {
   const provas = [];
   for (const f of fs.readdirSync(OUT_DIR).filter((x) => x.endsWith(".json"))) {
     const d = JSON.parse(fs.readFileSync(path.join(OUT_DIR, f), "utf8")); // ilegível = erro
+    // Filtros 🇵🇹 PT e ★ Manuel da /fig: na classificação OU na lista de inscritos
+    // (quem ficou em lista de espera também conta — a página diz que não jogou).
+    const quem = [...d.jogadores, ...(d.inscritos || [])];
     const tees = [...new Set(d.jogadores.flatMap((j) => (j.rating || []).filter(Boolean).map((r) => r.tee)).filter(Boolean))];
     provas.push({
       id: d.id, nome: d.nome, data: d.data, clube: d.clube, tipo: d.tipo, categoria: categoria(d.nome, d.tipo),
@@ -307,6 +310,8 @@ function construirIndice() {
       tees, completo: d.completo,
       cartoes: d.jogadores.some((j) => (j.cartoes || []).some(Boolean)),
       inscritos: d.inscritos?.length ?? null,
+      ...(quem.some((j) => PORTUGAL.test(j.clube || "")) ? { hasPt: true } : {}),
+      ...(quem.some((j) => /^MEDEIROS,\s*MANUEL\b/i.test(j.nome || "")) ? { hasManuel: true } : {}),
       ...(d.futura ? { futura: true } : {}),
     });
   }

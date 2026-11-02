@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { escalaoCanon } from "../model/escalao";
 import { fgNome, fgClube, fgEscalao, fgEscalaoProva, fgPais, fgTemCartoes, fgTitulo, fgToTournament } from "../federgolf/toTournament";
-import { fgAdmissions, fgAdmissionsCols } from "../federgolf/admissions";
+import { fgAdmissions, fgAdmissionsCols, fgNotaPtNaoJogaram } from "../federgolf/admissions";
 import { FG_RANKING_CATS, fgAnosNascimento, fgIdPorNomeUnico, fgRankingDoJogador, type FgRanking } from "../federgolf/ranking";
 import { buildFgEntries, fgNomeBase } from "../federgolf/entries";
 import type { FgIndice, FgProva } from "../federgolf/types";
@@ -100,6 +100,14 @@ describe("Federgolf — inscritos e estrangeiros", () => {
     expect(adm.reservas).toBe(1);
     expect(fgAdmissionsCols(adm).map((col) => col.key)).toEqual(["qual", "odm", "wagr"]);
     expect(fgAdmissions(prova)).toBeUndefined();
+  });
+  it("portugueses inscritos que não jogaram → nota no Resumo", () => {
+    const comPt: FgProva = { ...prova, inscritos: [
+      { n: 1, nome: "DURANDO, MATTEO", clube: "MONTICELLO", cat: "B", qual: null, wagr: null, indice: 6.2, odm: null, data: null, estado: "ammesso" },
+      { n: 2, nome: "DIAS, SANTIAGO", clube: "POR", cat: "C", qual: null, wagr: null, indice: 2, odm: null, data: null, estado: "attesa" },
+    ] };
+    expect(fgNotaPtNaoJogaram(comPt)?.text).toBe("🇵🇹 Inscritos que não chegaram a jogar: Santiago Dias (ficou em lista de espera)");
+    expect(fgNotaPtNaoJogaram(prova)).toBeNull();
   });
 });
 

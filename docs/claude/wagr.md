@@ -63,6 +63,13 @@ o scraper não guarda slugs.
 ⚠ **Não há par do campo** em lado nenhum → sem ±Par. O `wagrCircuit` usa
 `hideTotals` do `ScorecardLeaderboard` e põe TOT/PTS como colunas próprias.
 
+⚠ **A posição é SEMPRE a oficial do WAGR** (`pos`), nunca a do total de pancadas
+(02/11/2026) — `totals.officialPos` → `_officialPos` no torneio →
+`MultiRoundLeaderboard officialPos`. Duas razões: a lista é parcial (o 10.º da
+tabela foi 18.º) e há provas **stroke play + match play** (`mpRounds > 0`, ex.
+Taça da Federação 2026: o Luís Silva fez 136 no stroke play mas saiu nos quartos,
+5.º; ganhou o João Miguel Pereira, 138, com 7.95 pts). Nessas o aviso di-lo.
+
 ⚠ **`filters.defaultYear: "current"` — opção NOVA do CircuitShell, criada para
 esta página e por CUSTO DE RENDER.** A sidebar do shell desenha *todas* as
 entradas e a /wagr traz ~8.000 (o mundo, 2 anos): medido em dev, montar a página

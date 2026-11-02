@@ -176,20 +176,26 @@ export const SUB_TO_ES_TERM: Record<string, string> = {
   "Sub-25": "Sub-25",
 };
 
+/** A classe de cor de um escalão (`p-sub12`, `p-absoluto`…) — a MESMA do
+ *  EscPill, também para as pílulas de nascimento/idade (BirthPill). Aceita os
+ *  termos da RFEG (Alevín → sub12) e «Sénior»; null = sem cor própria. */
+export function escClassOf(esc: string | null | undefined): string | null {
+  if (!esc) return null;
+  const key = esc.toLowerCase().replace(/[\s-]/g, "").replace("é", "e");
+  const sub = ES_TERM_TO_SUB[key] ?? key;
+  return ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","midamateur","senior","supersenior"].includes(sub)
+    ? `p-${sub}` : null;
+}
+
 /** Escalão — usa classes CSS globais (.p-sub14, etc.).
  *  Aceita também termos da RFEG (Alevín, Benjamín, etc.) → mapeados ao Sub-N
  *  equivalente para herdar a cor canónica do projecto. */
 export function EscPill({ esc }: { esc: string }) {
   if (!esc) return null;
   const key = esc.toLowerCase().replace(/[\s-]/g, "");
-  // 1) Termos espanhois (Alevín, etc.) → mapear para Sub-N CSS
-  const esSubKey = ES_TERM_TO_SUB[key];
-  if (esSubKey) {
-    return <span className={`p p-sm p-${esSubKey}`}>{esc}</span>;
-  }
-  // 2) Sub-N directo ou escalão adulto (absoluto/midamateur/senior/supersenior)
-  const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","midamateur","senior","supersenior"].includes(key);
-  if (hasCssClass) return <span className={`p p-sm p-${key}`}>{esc}</span>;
+  // 1) Termos espanhois (Alevín, etc.), Sub-N directo ou escalão adulto
+  const cls = escClassOf(esc);
+  if (cls) return <span className={`p p-sm ${cls}`}>{esc}</span>;
   // 3) Fallback inline style
   const s = ESC_STYLE[key] ?? ESC_STYLE.default;
   return <span className="p p-sm" style={{ background: s.bg, color: s.color, borderColor: "transparent" }}>{esc}</span>;

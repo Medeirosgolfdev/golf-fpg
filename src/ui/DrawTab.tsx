@@ -11,7 +11,7 @@
  * Usa `useSort` + `SortableHdr` nas colunas custom.
  */
 
-import { birthCells } from "./BirthCells";
+import { birthCells, escDoAno } from "./BirthCells";
 import { useMemo, useState } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { isManuel } from "../constants/manuel";
@@ -639,7 +639,7 @@ export default function DrawTab({
                 ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote }, effDate);
               return <>
                 <td className="lb-esc" title={bc.tip} style={bStyle}>{bc.nasc}</td>
-                <td className="lb-esc" title={bc.tip} style={bStyle}>{age != null && !p.dob && p.dobShown == null ? <BirthPill>~{age}a</BirthPill> : bc.idade}</td>
+                <td className="lb-esc" title={bc.tip} style={bStyle}>{age != null && !p.dob && p.dobShown == null ? <BirthPill esc={escDoAno(p.dobYear, effDate)}>~{age}a</BirthPill> : bc.idade}</td>
               </>;
             })()}
             {!hc.fed && <td className="lb-fed" style={bStyle}>{displayFed(p.fed) || "–"}</td>}

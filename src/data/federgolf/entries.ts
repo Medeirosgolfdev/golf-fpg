@@ -7,7 +7,8 @@ import { withDivisionModel } from "../model/division";
 import { cachedFetchJson } from "../fetchCache";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import type { FgIndice, FgIndiceProva, FgProva } from "./types";
-import { fgAdmissions, fgAdmissionsCols } from "./admissions";
+import { noticeNode } from "../../ui/circuit/divisionPieces";
+import { fgAdmissions, fgAdmissionsCols, fgNotaPtNaoJogaram } from "./admissions";
 import { fgAnosNascimento, fgIdPorNomeUnico, loadFgRanking } from "./ranking";
 import { fgClube, fgEscalaoProva, fgScorecardOptions, fgTitulo, fgToTournament } from "./toTournament";
 
@@ -31,16 +32,20 @@ const loadNascimentos = () => (_nascimentos ??= loadFgRanking()
 
 function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
   return Promise.all([cachedFetchJson<FgProva>(provaUrl(p.id)), loadNascimentos()]).then(([d, n]) => {
-    if (!d?.jogadores?.length) return null;
+    // Prova por jogar: só a lista de inscritos (separador Inscrições).
+    if (!d?.jogadores?.length && !d?.inscritos?.length) return null;
     const nasc = n.porId;
     const admissions = fgAdmissions(d, nasc, n.idPorNome);
+    // Portugueses inscritos que não jogaram (lista de espera…): nota no Resumo.
+    const nota = fgNotaPtNaoJogaram(d);
     return withDivisionModel({
       key: p.sexo ?? p.id,
       escalao: fgEscalaoProva(p.categoria),
       tabLabel: p.sexo ? SEXO_LABEL[p.sexo] : undefined,
       sex: p.sexo ?? undefined,
       // Com ou sem cartões (sem eles, prova `_noHbh`: o mesmo Resumo, sem Scorecards).
-      results: fgToTournament(d, nasc),
+      ...(d.jogadores.length ? { results: fgToTournament(d, nasc) } : {}),
+      ...(nota ? { accHeader: noticeNode(nota) } : {}),
       // A «Lista iscritti» (com quem não chegou a jogar) no separador Inscrições.
       ...(admissions ? { admissions, admissionsExtraCols: fgAdmissionsCols(admissions) } : {}),
       scOptions: fgScorecardOptions(),
@@ -77,7 +82,10 @@ export function buildFgEntries(idx: FgIndice): CircuitEntry[] {
       roundsCount: Math.max(...ps.map((p) => p.voltas)),
       divisionCount: ps.length,
       playerCount: ps.reduce((a, p) => a + p.jogadores, 0),
-      hasResults: true,
+      // Provas por jogar (só inscritos) não têm resultados — o filtro «Com resultados» esconde-as.
+      hasResults: ps.some((p) => !p.futura && p.jogadores > 0),
+      hasPt: ps.some((p) => p.hasPt),
+      hasManuel: ps.some((p) => p.hasManuel),
       loadDivisions: () => Promise.all(ps.map(loadDivision)).then((ds) => ds.filter((d): d is CircuitDivision => !!d)),
     };
   });

@@ -7,6 +7,7 @@
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
 import type { AdmissionsExtraCol } from "../../ui/AdmissionsTab";
 import { MUTED } from "../../ui/tableCells";
+import type { TotalsNotice } from "../model/types";
 import type { FgInscrito, FgProva } from "./types";
 import { clubeOuPais, fgEscalao, fgNome, fgPais, fgTitulo } from "./toTournament";
 
@@ -72,3 +73,19 @@ export function fgAdmissionsCols(adm: FpgAdmissions | undefined): AdmissionsExtr
   return cols;
 }
 
+
+const NAO_JOGOU: Record<NonNullable<FgInscrito["estado"]>, string> = {
+  ammesso: "admitido, não jogou", wildcard: "wildcard, não jogou", attesa: "ficou em lista de espera", cancellato: "desinscreveu-se",
+};
+
+/** Portugueses inscritos que não aparecem na classificação (lista de espera,
+ *  desistência) — a nota por cima do Resumo: a prova entra no filtro 🇵🇹 e
+ *  explica porque não estão lá. */
+export function fgNotaPtNaoJogaram(d: FgProva): TotalsNotice | null {
+  if (!d.jogadores.length) return null;
+  const jogaram = new Set(d.jogadores.map((j) => j.nome.trim().toUpperCase()));
+  const fora = (d.inscritos ?? []).filter((i) => fgPais(i.clube) === "PT" && !jogaram.has(i.nome.trim().toUpperCase()));
+  if (!fora.length) return null;
+  const quem = fora.map((i) => `${fgNome(i.nome)} (${i.estado ? NAO_JOGOU[i.estado] : "não jogou"})`).join(" · ");
+  return { kind: "aviso", text: `🇵🇹 Inscritos que não chegaram a jogar: ${quem}` };
+}

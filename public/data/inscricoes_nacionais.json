@@ -687,8 +687,16 @@
     "nome": "Torneio 000/10884",
     "escalao": "",
     "sex": "",
-    "totalInscritos": 37,
+    "totalInscritos": 42,
     "jogadores": [
+      {
+        "fed": "37010",
+        "nome": "Gabriel Sardo",
+        "clube": "Quinta do Peru",
+        "hcp": -2.5,
+        "vac": 68.5,
+        "dataInscricao": "2026/11/02 08:28"
+      },
       {
         "fed": "40452",
         "nome": "Afonso Rui Oliveira",
@@ -738,14 +746,6 @@
         "dataInscricao": "2026/10/22 20:01"
       },
       {
-        "fed": "44934",
-        "nome": "Rodrigo Sousa Correia",
-        "clube": "Vilamoura, C. G",
-        "hcp": 1.3,
-        "vac": 72.4,
-        "dataInscricao": "2026/10/25 21:16"
-      },
-      {
         "fed": "19988",
         "nome": "Francisco Maria Ataíde",
         "clube": "Quinta do Peru",
@@ -760,6 +760,14 @@
         "hcp": 2.3,
         "vac": 73.7,
         "dataInscricao": "2026/10/30 14:42"
+      },
+      {
+        "fed": "46591",
+        "nome": "Filipe Pinheiro",
+        "clube": "Belas",
+        "hcp": 2.1,
+        "vac": 74.2,
+        "dataInscricao": "2026/11/02 14:04"
       },
       {
         "fed": "45278",
@@ -794,6 +802,14 @@
         "dataInscricao": "2026/10/21 09:12"
       },
       {
+        "fed": "8617",
+        "nome": "Frederico Quintela",
+        "clube": "ACP Golfe",
+        "hcp": 3.1,
+        "vac": 75.2,
+        "dataInscricao": "2026/11/01 18:46"
+      },
+      {
         "fed": "51524",
         "nome": "William Gao",
         "clube": "Quinta do Peru",
@@ -816,6 +832,14 @@
         "hcp": 1.8,
         "vac": 75.5,
         "dataInscricao": "2026/10/28 18:48"
+      },
+      {
+        "fed": "43972",
+        "nome": "Sebastião Cadete",
+        "clube": "Belas",
+        "hcp": 3.2,
+        "vac": 75.7,
+        "dataInscricao": "2026/11/01 21:58"
       },
       {
         "fed": "43968",
@@ -864,6 +888,14 @@
         "hcp": 3.5,
         "vac": 76.9,
         "dataInscricao": "2026/10/16 10:25"
+      },
+      {
+        "fed": "32252",
+        "nome": "Guilherme Brehm",
+        "clube": "Estoril",
+        "hcp": 2.7,
+        "vac": 76.9,
+        "dataInscricao": "2026/11/01 16:22"
       },
       {
         "fed": "56654",
@@ -962,6 +994,14 @@
         "dataInscricao": "2026/10/29 10:00"
       },
       {
+        "fed": "57904",
+        "nome": "Guo Ziyang",
+        "clube": "Estoril",
+        "hcp": 8,
+        "vac": 79.4,
+        "dataInscricao": "2026/10/31 09:59"
+      },
+      {
         "fed": "51949",
         "nome": "David Filip Jr",
         "clube": "Quinta do Peru",
@@ -986,8 +1026,8 @@
         "dataInscricao": "2026/10/28 07:22"
       }
     ],
-    "lastFetched": "2026-10-30T18:08:21.996Z",
-    "lastChanged": "2026-10-30T18:08:21.996Z",
+    "lastFetched": "2026-11-02T14:17:19.771Z",
+    "lastChanged": "2026-11-02T14:17:19.771Z",
     "fpgUrl": "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=000&tourn=10884&ack=XH256YF450"
   },
   "10885": {
@@ -3348,46 +3388,62 @@
     "nome": "Torneio 985/10246",
     "escalao": "",
     "sex": "",
-    "totalInscritos": 35,
+    "totalInscritos": 43,
     "jogadores": [
       {
-        "fed": "51524",
-        "nome": "William Gao",
-        "clube": "Quinta do Peru",
-        "hcp": 3.6,
-        "vac": null,
-        "dataInscricao": "2026/10/07 17:33"
+        "fed": "42908",
+        "nome": "Santiago Dias",
+        "clube": "Oporto",
+        "hcp": -2,
+        "vac": 70.5,
+        "dataInscricao": "2026/10/29 17:52"
+      },
+      {
+        "fed": "44406",
+        "nome": "Matteo Balzer",
+        "clube": "Amendoeira",
+        "hcp": 0.6,
+        "vac": 72.2,
+        "dataInscricao": "2026/10/08 21:28"
+      },
+      {
+        "fed": "46299",
+        "nome": "Francisco Nunes (jr)",
+        "clube": "Miramar",
+        "hcp": 1.2,
+        "vac": 72.3,
+        "dataInscricao": "2026/10/30 17:26"
+      },
+      {
+        "fed": "49124",
+        "nome": "Nuno Palmares Jr.",
+        "clube": "Estoril",
+        "hcp": 1.3,
+        "vac": 72.7,
+        "dataInscricao": "2026/11/02 10:48"
+      },
+      {
+        "fed": "46706",
+        "nome": "Pedro Costa Alemão",
+        "clube": "Estoril",
+        "hcp": 1.5,
+        "vac": 73.6,
+        "dataInscricao": "2026/11/01 20:40"
       },
       {
         "fed": "51523",
         "nome": "Angelina Gao",
         "clube": "Quinta do Peru",
         "hcp": 2.9,
-        "vac": null,
+        "vac": 74.3,
         "dataInscricao": "2026/10/07 17:33"
-      },
-      {
-        "fed": "52884",
-        "nome": "Manuel Goulartt Medeiros",
-        "clube": "Santo da Serra",
-        "hcp": 6.4,
-        "vac": null,
-        "dataInscricao": "2026/10/07 18:09"
-      },
-      {
-        "fed": "48046",
-        "nome": "Tomás Sarmento de Beires",
-        "clube": "Citynorte",
-        "hcp": 9.2,
-        "vac": null,
-        "dataInscricao": "2026/10/07 18:21"
       },
       {
         "fed": "42374",
         "nome": "Ethan Prybys Orton",
         "clube": "Vila Sol",
         "hcp": 2.5,
-        "vac": null,
+        "vac": 74.4,
         "dataInscricao": "2026/10/07 18:48"
       },
       {
@@ -3395,244 +3451,292 @@
         "nome": "João Rocha",
         "clube": "Estoril",
         "hcp": 3.5,
-        "vac": null,
+        "vac": 74.9,
         "dataInscricao": "2026/10/07 18:57"
       },
       {
-        "fed": "52393",
-        "nome": "Mateus Penucho",
-        "clube": "Santo da Serra",
-        "hcp": 12.6,
-        "vac": null,
-        "dataInscricao": "2026/10/07 19:45"
+        "fed": "48705",
+        "nome": "Jorge Xavier Graça Silva",
+        "clube": "Oporto",
+        "hcp": 3.4,
+        "vac": 75.1,
+        "dataInscricao": "2026/11/02 13:00"
       },
       {
-        "fed": "53847",
-        "nome": "Madalena Miguel Araujo",
-        "clube": "Ponte de Lima",
-        "hcp": 8.6,
-        "vac": null,
-        "dataInscricao": "2026/10/07 19:45"
-      },
-      {
-        "fed": "50247",
-        "nome": "Beau Delfortrie",
-        "clube": "Vila Sol",
-        "hcp": 10.5,
-        "vac": null,
-        "dataInscricao": "2026/10/07 21:07"
-      },
-      {
-        "fed": "51804",
-        "nome": "Joe Short",
-        "clube": "Vila Sol",
-        "hcp": 9.2,
-        "vac": null,
-        "dataInscricao": "2026/10/07 21:12"
+        "fed": "51524",
+        "nome": "William Gao",
+        "clube": "Quinta do Peru",
+        "hcp": 3.7,
+        "vac": 75.3,
+        "dataInscricao": "2026/10/07 17:33"
       },
       {
         "fed": "43968",
         "nome": "Salvador Ivo de Carvalho",
         "clube": "Estoril",
-        "hcp": 4,
-        "vac": null,
+        "hcp": 3.4,
+        "vac": 75.3,
         "dataInscricao": "2026/10/07 21:17"
-      },
-      {
-        "fed": "47341",
-        "nome": "Sebastião Soares",
-        "clube": "Oporto",
-        "hcp": 8.1,
-        "vac": null,
-        "dataInscricao": "2026/10/07 22:02"
-      },
-      {
-        "fed": "53838",
-        "nome": "Gabriel Costa",
-        "clube": "Amendoeira",
-        "hcp": 14.1,
-        "vac": null,
-        "dataInscricao": "2026/10/07 23:34"
-      },
-      {
-        "fed": "48791",
-        "nome": "Miguel Silva",
-        "clube": "Amendoeira",
-        "hcp": 7.6,
-        "vac": null,
-        "dataInscricao": "2026/10/08 00:40"
-      },
-      {
-        "fed": "41609",
-        "nome": "Martim Sousa de Morais",
-        "clube": "Belas",
-        "hcp": 3.5,
-        "vac": null,
-        "dataInscricao": "2026/10/08 09:36"
-      },
-      {
-        "fed": "54774",
-        "nome": "Rafael Gonçales Benesi",
-        "clube": "Estoril",
-        "hcp": 6.1,
-        "vac": null,
-        "dataInscricao": "2026/10/08 10:58"
-      },
-      {
-        "fed": "53715",
-        "nome": "João Gomes",
-        "clube": "Lisbon SC",
-        "hcp": 10.6,
-        "vac": null,
-        "dataInscricao": "2026/10/08 13:02"
-      },
-      {
-        "fed": "44406",
-        "nome": "Matteo Balzer",
-        "clube": "Amendoeira",
-        "hcp": 0.8,
-        "vac": null,
-        "dataInscricao": "2026/10/08 21:28"
       },
       {
         "fed": "48971",
         "nome": "Sabrina Ribeiro Crisóstomo",
         "clube": "Vilamoura, C. G",
-        "hcp": 4.8,
-        "vac": null,
+        "hcp": 4.2,
+        "vac": 75.5,
         "dataInscricao": "2026/10/08 21:47"
       },
       {
-        "fed": "47078",
-        "nome": "Madalena Plantier Van Zeller",
-        "clube": "Ilha Terceira",
-        "hcp": 6.7,
-        "vac": null,
-        "dataInscricao": "2026/10/08 22:46"
-      },
-      {
-        "fed": "46480",
-        "nome": "Afonso de Sousa Pinto",
-        "clube": "Oporto",
-        "hcp": 6,
-        "vac": null,
-        "dataInscricao": "2026/10/09 05:24"
-      },
-      {
-        "fed": "56749",
-        "nome": "João Pereira",
-        "clube": "Quinta do Peru",
-        "hcp": 16.4,
-        "vac": null,
-        "dataInscricao": "2026/10/09 14:45"
-      },
-      {
-        "fed": "41130",
-        "nome": "Vasco Leal Gouveia",
-        "clube": "Santo da Serra",
-        "hcp": 18.1,
-        "vac": null,
-        "dataInscricao": "2026/10/11 13:47"
-      },
-      {
-        "fed": "46308",
-        "nome": "Marc Costa",
-        "clube": "Citynorte",
-        "hcp": 10.3,
-        "vac": null,
-        "dataInscricao": "2026/10/12 16:12"
-      },
-      {
-        "fed": "52011",
-        "nome": "Madalena Figueiredo",
-        "clube": "Belas",
-        "hcp": 4.8,
-        "vac": null,
-        "dataInscricao": "2026/10/13 07:11"
-      },
-      {
-        "fed": "40473",
-        "nome": "André Von Hafe",
-        "clube": "Estela",
-        "hcp": 7.9,
-        "vac": null,
-        "dataInscricao": "2026/10/13 11:54"
-      },
-      {
-        "fed": "49085",
-        "nome": "Ricardo Castro Ferreira",
+        "fed": "48531",
+        "nome": "Duarte Soares Franco",
         "clube": "Estoril",
-        "hcp": 3.9,
-        "vac": null,
-        "dataInscricao": "2026/10/15 04:58"
+        "hcp": 4,
+        "vac": 75.5,
+        "dataInscricao": "2026/11/01 20:44"
+      },
+      {
+        "fed": "56072",
+        "nome": "Igor Kostyn",
+        "clube": "Vilamoura, C. G",
+        "hcp": 4.7,
+        "vac": 75.9,
+        "dataInscricao": "2026/11/02 13:32"
       },
       {
         "fed": "48933",
         "nome": "Ethan Sutherland",
         "clube": "Vila Sol",
         "hcp": 3.9,
-        "vac": null,
+        "vac": 76,
         "dataInscricao": "2026/10/15 09:24"
       },
       {
-        "fed": "50398",
-        "nome": "Gonçalo Gouveia",
-        "clube": "Santo da Serra",
-        "hcp": 14.9,
-        "vac": null,
-        "dataInscricao": "2026/10/18 18:22"
+        "fed": "39465",
+        "nome": "Salvador Rodrigues",
+        "clube": "Palheiro",
+        "hcp": 5.4,
+        "vac": 76.1,
+        "dataInscricao": "2026/11/02 11:02"
       },
       {
-        "fed": "48794",
-        "nome": "Catarina Sousa Conceição",
-        "clube": "Vilamoura, C. G",
-        "hcp": 5,
-        "vac": null,
-        "dataInscricao": "2026/10/20 20:55"
+        "fed": "39097",
+        "nome": "Francisco Saraiva",
+        "clube": "Oporto",
+        "hcp": 5.3,
+        "vac": 76.2,
+        "dataInscricao": "2026/11/02 13:12"
       },
       {
-        "fed": "38006",
-        "nome": "Marcelo Gaspar",
+        "fed": "52011",
+        "nome": "Madalena Figueiredo",
+        "clube": "Belas",
+        "hcp": 4.8,
+        "vac": 76.6,
+        "dataInscricao": "2026/10/13 07:11"
+      },
+      {
+        "fed": "41609",
+        "nome": "Martim Sousa de Morais",
+        "clube": "Belas",
+        "hcp": 3.5,
+        "vac": 76.9,
+        "dataInscricao": "2026/10/08 09:36"
+      },
+      {
+        "fed": "47341",
+        "nome": "Sebastião Soares",
+        "clube": "Oporto",
+        "hcp": 6.6,
+        "vac": 77.6,
+        "dataInscricao": "2026/10/07 22:02"
+      },
+      {
+        "fed": "54774",
+        "nome": "Rafael Gonçales Benesi",
+        "clube": "Estoril",
+        "hcp": 6.1,
+        "vac": 77.6,
+        "dataInscricao": "2026/10/08 10:58"
+      },
+      {
+        "fed": "46480",
+        "nome": "Afonso de Sousa Pinto",
+        "clube": "Oporto",
+        "hcp": 5.9,
+        "vac": 77.6,
+        "dataInscricao": "2026/10/09 05:24"
+      },
+      {
+        "fed": "52884",
+        "nome": "Manuel Goulartt Medeiros",
         "clube": "Santo da Serra",
-        "hcp": 7.8,
-        "vac": null,
-        "dataInscricao": "2026/10/24 07:35"
+        "hcp": 6.4,
+        "vac": 78.1,
+        "dataInscricao": "2026/10/07 18:09"
+      },
+      {
+        "fed": "49085",
+        "nome": "Ricardo Castro Ferreira",
+        "clube": "Estoril",
+        "hcp": 3.9,
+        "vac": 78.3,
+        "dataInscricao": "2026/10/15 04:58"
+      },
+      {
+        "fed": "38976",
+        "nome": "José Pedro Miranda",
+        "clube": "Palheiro",
+        "hcp": 7.3,
+        "vac": 79.2,
+        "dataInscricao": "2026/11/02 17:44"
+      },
+      {
+        "fed": "48791",
+        "nome": "Miguel Silva",
+        "clube": "Amendoeira",
+        "hcp": 7.6,
+        "vac": 79.3,
+        "dataInscricao": "2026/10/08 00:40"
       },
       {
         "fed": "54845",
         "nome": "José Silva",
         "clube": "Amendoeira",
         "hcp": 8.3,
-        "vac": null,
+        "vac": 79.5,
         "dataInscricao": "2026/10/24 16:08"
+      },
+      {
+        "fed": "51949",
+        "nome": "David Filip Jr",
+        "clube": "Quinta do Peru",
+        "hcp": 6.1,
+        "vac": 79.8,
+        "dataInscricao": "2026/11/02 16:59"
+      },
+      {
+        "fed": "48046",
+        "nome": "Tomás Sarmento de Beires",
+        "clube": "Citynorte",
+        "hcp": 9.2,
+        "vac": 80.4,
+        "dataInscricao": "2026/10/07 18:21"
+      },
+      {
+        "fed": "51804",
+        "nome": "Joe Short",
+        "clube": "Vila Sol",
+        "hcp": 9.2,
+        "vac": 80.5,
+        "dataInscricao": "2026/10/07 21:12"
+      },
+      {
+        "fed": "40473",
+        "nome": "André Von Hafe",
+        "clube": "Estela",
+        "hcp": 8.2,
+        "vac": 81.1,
+        "dataInscricao": "2026/10/13 11:54"
+      },
+      {
+        "fed": "51180",
+        "nome": "Ricardo Rocha Ferreira",
+        "clube": "Miramar",
+        "hcp": 10.5,
+        "vac": 81.2,
+        "dataInscricao": "2026/11/02 13:18"
+      },
+      {
+        "fed": "53847",
+        "nome": "Madalena Miguel Araujo",
+        "clube": "Ponte de Lima",
+        "hcp": 8.2,
+        "vac": 81.3,
+        "dataInscricao": "2026/10/07 19:45"
+      },
+      {
+        "fed": "38006",
+        "nome": "Marcelo Gaspar",
+        "clube": "Santo da Serra",
+        "hcp": 7.8,
+        "vac": 81.4,
+        "dataInscricao": "2026/10/24 07:35"
+      },
+      {
+        "fed": "50247",
+        "nome": "Beau Delfortrie",
+        "clube": "Vila Sol",
+        "hcp": 10.5,
+        "vac": 81.7,
+        "dataInscricao": "2026/10/07 21:07"
+      },
+      {
+        "fed": "53715",
+        "nome": "João Gomes",
+        "clube": "Lisbon SC",
+        "hcp": 9.9,
+        "vac": 81.8,
+        "dataInscricao": "2026/10/08 13:02"
+      },
+      {
+        "fed": "46308",
+        "nome": "Marc Costa",
+        "clube": "Citynorte",
+        "hcp": 10.2,
+        "vac": 81.8,
+        "dataInscricao": "2026/10/12 16:12"
+      },
+      {
+        "fed": "52393",
+        "nome": "Mateus Penucho",
+        "clube": "Santo da Serra",
+        "hcp": 12.5,
+        "vac": 83.5,
+        "dataInscricao": "2026/10/07 19:45"
       },
       {
         "fed": "41124",
         "nome": "Manuel Gouveia",
         "clube": "Santo da Serra",
         "hcp": 13.9,
-        "vac": null,
+        "vac": 84.8,
         "dataInscricao": "2026/10/28 10:24"
       },
       {
-        "fed": "42908",
-        "nome": "Santiago Dias",
-        "clube": "Oporto",
-        "hcp": -2,
-        "vac": null,
-        "dataInscricao": "2026/10/29 17:52"
+        "fed": "53838",
+        "nome": "Gabriel Costa",
+        "clube": "Amendoeira",
+        "hcp": 14.1,
+        "vac": 85.9,
+        "dataInscricao": "2026/10/07 23:34"
       },
       {
-        "fed": "46299",
-        "nome": "Francisco Nunes (jr)",
-        "clube": "Miramar",
-        "hcp": 1.2,
-        "vac": null,
-        "dataInscricao": "2026/10/30 17:26"
+        "fed": "56749",
+        "nome": "João Pereira",
+        "clube": "Quinta do Peru",
+        "hcp": 16,
+        "vac": 87.2,
+        "dataInscricao": "2026/10/09 14:45"
+      },
+      {
+        "fed": "50398",
+        "nome": "Gonçalo Gouveia",
+        "clube": "Santo da Serra",
+        "hcp": 14.6,
+        "vac": 87.7,
+        "dataInscricao": "2026/10/18 18:22"
+      },
+      {
+        "fed": "41130",
+        "nome": "Vasco Leal Gouveia",
+        "clube": "Santo da Serra",
+        "hcp": 18.1,
+        "vac": 93.1,
+        "dataInscricao": "2026/10/11 13:47"
       }
     ],
-    "lastFetched": "2026-10-30T18:13:45.725Z",
-    "lastChanged": "2026-10-30T18:02:10.740Z",
+    "lastFetched": "2026-11-02T18:07:18.032Z",
+    "lastChanged": "2026-11-02T18:06:32.615Z",
     "fpgUrl": "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=985&tourn=10246&ack=XH256YF450"
   },
   "985/10254": {
@@ -3651,7 +3755,7 @@
         "dataInscricao": "2026/10/10 18:57"
       }
     ],
-    "lastFetched": "2026-10-30T18:07:40.518Z",
+    "lastFetched": "2026-11-02T14:01:13.556Z",
     "lastChanged": "2026-10-22T17:41:56.681Z",
     "fpgUrl": "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=985&tourn=10254&ack=XH256YF450"
   },
@@ -4177,5 +4281,16 @@
     "lastFetched": "2026-10-30T18:08:11.271Z",
     "lastChanged": "2026-10-30T18:08:11.271Z",
     "fpgUrl": "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=985&tourn=10262&ack=XH256YF450"
+  },
+  "985/10255": {
+    "tcode": "10255",
+    "nome": "Torneio 985/10255",
+    "escalao": "",
+    "sex": "",
+    "totalInscritos": 0,
+    "jogadores": [],
+    "lastFetched": "2026-11-02T14:31:45.244Z",
+    "lastChanged": "2026-11-02T14:31:41.862Z",
+    "fpgUrl": "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=985&tourn=10255&ack=XH256YF450"
   }
 }

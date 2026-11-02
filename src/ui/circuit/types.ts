@@ -102,6 +102,9 @@ export interface CircuitDivision extends TournamentModel {
     notice?: TotalsNotice;
     /** Colunas extra (ex.: pontos WAGR). */
     extra?: TotalsExtraCol[];
+    /** A posição do Resumo é a `pos` de cada jogador (a oficial), não a do
+     *  total — WAGR: parcial e com provas stroke play + match play. */
+    officialPos?: boolean;
   };
   /** Inscrições, no formato da FPG — desenhadas pelo AdmissionsTab partilhado
    *  (o mesmo da FPG/Drive). Cada jogador pode trazer dob/país/escalão/tee. */

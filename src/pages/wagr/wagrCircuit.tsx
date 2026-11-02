@@ -67,6 +67,9 @@ export const wagrPlayerUrl = (link: string) => `${WAGR_SITE}/playerprofile/${lin
 async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[]> {
   const ev = await cachedFetchJson<WagrEventFull>(`/data/wagr/events/wagr_${e.id}.json`);
   const players = ev?.players || [];
+  // Stroke play + match play (Taça da Federação): quem ganha é o do match play,
+  // não quem fez menos pancadas nas voltas de qualificação.
+  const matchPlay = (ev?.mpRounds ?? 0) > 0;
   return [withDivisionModel({
     key: "main",
     escalao: e.eventType || "—",
@@ -76,8 +79,12 @@ async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[
     totals: {
       players: totaisWagr(players), parPerRound: null, tournamentDate: e.startDate || undefined,
       notice: { kind: "aviso", title: "O WAGR só publica os jogadores que pontuaram no ranking — não é o campo todo.",
-        text: `⚠ Só os classificados que pontuaram no WAGR (${players.length}) — não é o campo completo.` },
+        text: `⚠ Só os classificados que pontuaram no WAGR (${players.length}) — não é o campo completo.`
+          + (matchPlay ? " Prova stroke play + match play: a posição é a oficial (decidida no match play), não a do total de pancadas." : "") },
       extra: [{ header: "PTS", title: "Pontos WAGR ganhos no evento", field: "points", decimals: 2 }],
+      // A posição é sempre a oficial do WAGR: a lista é parcial (o 10.º da
+      // tabela pode ter sido 18.º) e há provas decididas em match play.
+      officialPos: true,
     },
   })];
 }

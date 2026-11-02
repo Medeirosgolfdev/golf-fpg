@@ -4,12 +4,12 @@
  * mostrava as estimativas a vermelho e a data completa em pílula, e a tabela da
  * R1 mostrava só o ano, sem estimativas.
  *
- * Valor lido → pílula neutra (BirthPill). Estimativa → itálico vermelho
- * (.est-value), com a nota no tooltip.
+ * Valor lido → pílula com a cor do escalão à data da prova (BirthPill, 02/11/2026).
+ * Estimativa → itálico vermelho (.est-value), com a nota no tooltip.
  */
 import type { ReactNode } from "react";
 import BirthPill from "./BirthPill";
-import { ageAtDate, dateParts, fmtDatePt } from "../utils/format";
+import { ageAtDate, dateParts, escalaoAtDate, fmtDatePt } from "../utils/format";
 import { MUTED } from "./tableCells";
 
 export interface BirthInfo {
@@ -41,13 +41,22 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
   const estAge = !est || !y ? null : hi === null ? `≤${y - lo!}` : hi != null && hi > lo! ? `~${y - hi}–${y - lo!}` : `~${y - lo!}`;
   const tip = dob ? `${dob} (${age ?? "?"} anos à data)` : est ? `Estimativa — ${b.estNote || "ano deduzido, não lido"}` : "";
   const shown = b.showDate !== false && dob && /^\d{4}-\d{2}-\d{2}$/.test(dob) ? fmtDatePt(dob) : dobYear;
+  // Ano e idade lidos pintam-se com a cor do escalão (pelo ano, como a FPG);
+  // as estimativas ficam a vermelho, como sempre.
+  const esc = escDoAno(dobYear, refDate);
   return {
-    nasc: dobYear != null ? <BirthPill>{shown}</BirthPill>
+    nasc: dobYear != null ? <BirthPill esc={esc}>{shown}</BirthPill>
       : est ? <span className="est-value">{estYear}</span> : MUTED,
-    idade: age != null ? <BirthPill>{!dob ? "~" : ""}{age}a</BirthPill>
+    idade: age != null ? <BirthPill esc={esc}>{!dob ? "~" : ""}{age}a</BirthPill>
       : estAge ? <span className="est-value">{estAge}a</span> : MUTED,
     tip,
   };
+}
+
+/** Escalão de quem nasceu em `ano`, à data `refDate` (pelo ano civil, como a
+ *  FPG — `escalaoAtDate`): a cor da pílula de nascimento/idade. */
+export function escDoAno(ano: number | null | undefined, refDate?: string | null): string | null {
+  return ano != null && refDate ? escalaoAtDate(`${ano}-01-01`, refDate) : null;
 }
 
 /** Os campos de nascimento além da data (ano solto, estimativa e nota) de um
