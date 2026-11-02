@@ -4115,6 +4115,10 @@ table td.lb-col-divider {
 .bg-success-subtle { background: var(--bg-success-subtle); }
 /* Cabeçalho centrado numa .dtable (o .dtable th alinha à esquerda). */
 .dtable th.th-c { text-align: center; }
+/* Coluna centrada/à direita (.ta-c/.ta-right na coluna): o cabeçalho segue a
+   célula — o «thead th» das tabelas de lista alinhava-o à esquerda (/fig, 02/11/2026). */
+.dtable thead th.ta-c { text-align: center; }
+.dtable thead th.ta-right { text-align: right; }
 /* Link do cabeçalho em cor de destaque, também no hover. */
 .tourn-ext-link.link-accent, .tourn-ext-link.link-accent:hover { color: var(--accent); }
 /* Botões de volta (R1 · N jog) do draw da /rfeg — mesmo tamanho também no telemóvel. */
