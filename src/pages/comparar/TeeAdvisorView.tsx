@@ -795,7 +795,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
           <button
             type="button"
             onClick={() => setHabOverride(null)}
-            className="u-p-4px-10px u-fs-fs-12 u-fw-600 u-bg-bg-muted u-bd-1px-solid-border u-br-radius u-cur-pointer u-c-text-2"
+            className="btn"
           >
             ↺ Repor automático{hab.value != null ? ` (${hab.value.toFixed(0)} m)` : ""}
           </button>

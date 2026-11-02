@@ -34,6 +34,7 @@ import { MANUEL_FED } from "../constants/manuel";
 import { isPtCountry } from "../utils/flagUtils";
 import { MUTED } from "../ui/tableCells";
 import TabRow from "../ui/TabRow";
+import ExpandArrow from "../ui/ExpandArrow";
 
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
@@ -635,7 +636,7 @@ function CourseSideBySide({
             onClick={() => setShowHoles(v => !v)}
             className="btn"
           >
-            {showHoles ? "▲ Esconder buraco a buraco" : "▼ Ver buraco a buraco"}
+            <ExpandArrow open={showHoles} /> {showHoles ? "Esconder buraco a buraco" : "Ver buraco a buraco"}
           </button>
           {showHoles && (
             <div className="u-ox-auto u-mt-10px">

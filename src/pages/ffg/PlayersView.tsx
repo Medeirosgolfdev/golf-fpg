@@ -27,7 +27,7 @@ import { formatPlayerName } from "../../utils/playerUtils";
 import { displayName, fmtDatePt, fmtHcp } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { isManuelByName } from "../../constants/manuel";
-import { kidsUrl } from "../../ui/KidsLink";
+import { kidsUrl, KidsArrow } from "../../ui/KidsLink";
 import { useJuniorsLinks } from "../../hooks/useKidsLinkMap";
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { PlayerTournaments, type FfgPlayerTournamentsFile } from "./PlayerTournaments";
@@ -342,14 +342,7 @@ export function FFGPlayersView() {
                           <span className="muted fs-10 u-ml-6px u-fw-400">{r.country}</span>
                         )}
                         {r._kid && (
-                          <a
-                            href={kidsUrl({ id: r._kid })}
-                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(kidsUrl({ id: r._kid }), "_blank"); }}
-                            title="Ver ficha em Kids"
-                            className="u-fw-800 u-c-color-good-dark u-fs-fs-13 u-cur-pointer u-td-none u-ml-4px"
-                          >
-                            ↗
-                          </a>
+                          <KidsArrow to={kidsUrl({ id: r._kid })} title="Ver ficha em Kids" />
                         )}
                       </td>
                       {has.club && <td title={r._club}>{r._club || MUTED}</td>}

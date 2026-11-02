@@ -5,6 +5,7 @@
  */
 import React from "react";
 import { normName } from "../data/KIDSdataLoader";
+import ExtLink from "./ExternalLink";
 
 export interface KidsLinkEntry {
   n: string;            // nome display
@@ -28,6 +29,11 @@ export function kidsUrl(opts: { id?: string | null; memberId?: string | null; fe
   return `/kids2#${encodeURIComponent(opts.name ?? "")}`;
 }
 
+/** A seta ↗ para a ficha Kids — a mesma em todas as tabelas (nova janela). */
+export function KidsArrow({ to, title = "Ver em Kids" }: { to: string; title?: string }) {
+  return <ExtLink href={to} title={title} className="kids-arrow">↗</ExtLink>;
+}
+
 /** Context para partilhar o mapa de juniores dentro de uma página */
 export const KidsLinkCtx = React.createContext<Map<string, KidsLinkEntry>>(new Map());
 
@@ -39,13 +45,5 @@ export function KidsLink({ nome, fed }: { nome: string; /** Federado FPG da linh
   // Preferir o link canónico /kids2/{id} (inequívoco). Sem id, cair no hash
   // retro-compatível (memberId ou nome), que o KIDS2Page resolve.
   const to = kidsUrl({ id: entry.id, memberId: entry.memberId, name: entry.n });
-  return (
-    <a
-      href={to}
-      onClick={e => { e.preventDefault(); window.open(to, "_blank"); }}
-      title="Ver em Kids"
-      className="u-fw-800 u-c-color-good-dark u-fs-fs-13 u-cur-pointer u-td-none u-fsh-0 u-ml-4px">
-      ↗
-    </a>
-  );
+  return <KidsArrow to={to} />;
 }

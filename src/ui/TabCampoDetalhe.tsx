@@ -2,7 +2,7 @@ import { useContext, useMemo } from "react";
 import { isoDate, fmtDate, displayName, medal as medalOf } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { normName as normNameAuto } from "../data/KIDSdataLoader";
-import { kidsUrl, KidsLinkCtx } from "./KidsLink";
+import { kidsUrl, KidsArrow, KidsLinkCtx } from "./KidsLink";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import type { Torneio } from "./uskidsTypes";
 import { RoundPill } from "./PillBadge";
@@ -57,15 +57,7 @@ export function KidsLink({ nome }: { nome: string }) {
   const to = kid
     ? kidsUrl({ id: kid.id, memberId: kid.memberId, name: kid.n })
     : kidsUrl({ memberId: (arEntry as any).memberId as string | undefined, name: arEntry!.n });
-  return (
-    <a
-      href={to}
-      onClick={e => { e.preventDefault(); window.open(to, "_blank"); }}
-      title="Ver em Kids"
-      className="u-fw-800 u-c-color-good-dark u-fs-fs-13 u-cur-pointer u-td-none u-fsh-0 u-ml-4px">
-      ↗
-    </a>
-  );
+  return <KidsArrow to={to} />;
 }
 
 /** Links oficiais de um torneio USKids (inscritos, resultados, página USKids e

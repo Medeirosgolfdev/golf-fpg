@@ -33,6 +33,7 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { tpColor } from "../ui/tournamentPrimitives";
 import SearchInput from "../ui/SearchInput";
+import CloseButton from "../ui/CloseButton";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
 const COLORS = [C.chartGreen, C.chartBlue, C.chartRed, C.chartAmber];
@@ -159,7 +160,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
               <b>{shortName(s.player.name)}</b>
               <span className="muted u-fs-fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
               {s.loading && <span className="u-fs-fs-11">⏳</span>}
-              <button onClick={() => onRemove(s.fed)} className="u-bg-none u-bd-none u-cur-pointer u-c-text-3 u-p-0-2px u-fs-fs-15 u-lh-1" title="Remover">✕</button>
+              <CloseButton onClick={() => onRemove(s.fed)} title="Remover" />
             </span>
           ))}
         </div>

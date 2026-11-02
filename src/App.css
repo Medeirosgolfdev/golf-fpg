@@ -2191,6 +2191,9 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cor-dot.cor-dot-9 { width: 9px; height: 9px; }
 .cor-dot.cor-dot-10 { width: 10px; height: 10px; }
 /* Selo da posição no pódio (🏆 #1 / 🥇 1º). -sm: dentro de pills e tabelas compactas. */
+/* Seta ↗ para a ficha Kids (ui/KidsLink KidsArrow) */
+.kids-arrow { margin-left: var(--space-4); font-weight: 800; font-size: var(--fs-12); color: var(--color-good-dark); text-decoration: none; flex-shrink: 0; }
+.kids-arrow:hover { text-decoration: underline; }
 /* «#N» fora do pódio (ui/PosBadge TrophyPos) */
 .pos-plain { color: var(--text-3); font-weight: 600; }
 .pos-medal { display: inline-block; padding: var(--space-2) var(--space-6); border-radius: var(--radius-sm); font-weight: 700;
@@ -2385,8 +2388,6 @@ table.sc-lb th.scout-grp { background: var(--bg-success-subtle); color: var(--co
 .cal-cat-name { flex: 1; color: var(--text-3); font-weight: 400; }
 .cal-cat-name.on { color: var(--text); font-weight: 500; }
 .cal-cat-btn.open .cal-cat-name { font-weight: 600; }
-.cal-caret { color: var(--text-3); flex-shrink: 0; transition: transform 0.15s; }
-.cal-cat-btn.open .cal-caret { transform: rotate(180deg); }
 .cal-ev-btn { display: flex; align-items: center; gap: var(--space-6); width: 100%; padding: var(--space-3) var(--space-6); border: none; cursor: pointer;
   font-family: inherit; background: transparent; border-radius: var(--radius); transition: background 0.12s; }
 .cal-ev-btn:hover { background: var(--bg-hover); }

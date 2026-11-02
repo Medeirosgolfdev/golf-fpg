@@ -29,6 +29,7 @@ import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
 import SidebarToggle from "../ui/SidebarToggle";
 import SearchInput from "../ui/SearchInput";
 import Modal from "../ui/Modal";
+import ExpandArrow from "../ui/ExpandArrow";
 
 interface CalendarSource {
   id: string;
@@ -609,7 +610,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                           <button onClick={() => setExpandedCal(isExpanded ? null : cal.id)} className={"cal-cat-btn" + (isExpanded ? " open" : "")}>
                             <span className={"cal-cat-name text-ellipsis fs-11 ta-left" + (enabledCals.has(cal.id) ? " on" : "")}>{cal.name}</span>
                             <span className="fs-10 u-ff-font-mono u-c-text-3 u-fsh-0">{calEvts.length}</span>
-                            <span className="cal-caret fs-10">▼</span>
+                            <ExpandArrow open={isExpanded} />
                           </button>
                         </div>
                         {/* Expanded event list */}

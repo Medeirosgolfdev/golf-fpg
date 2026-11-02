@@ -38,9 +38,8 @@ import { flag as flagOf } from "../utils/flagUtils";
 
 /* ─── Constante do jogador especial (re-export de constants/manuel) ─── */
 import { MANUEL_FED as _MANUEL_FED, isManuel } from "../constants/manuel";
-import { kidsUrl, KidsLinkCtx } from "./KidsLink";
+import { kidsUrl, KidsArrow, KidsLinkCtx } from "./KidsLink";
 import PlayerLink from "./PlayerLink";
-import ExtLink from "./ExternalLink";
 import { MUTED } from "./tableCells";
 import TeeSwatch from "./TeeSwatch";
 export { _MANUEL_FED as MANUEL_FED, isManuel };
@@ -249,14 +248,7 @@ export function TournPName({
   return (
     <>
       {nameEl}
-      {kidsLink && (
-        <ExtLink
-          href={kidsLink}
-          title="Ver em Kids"
-          className="u-ml-4px u-fw-800 u-c-color-good-dark u-fs-fs-11 u-td-none">
-          ↗
-        </ExtLink>
-      )}
+      {kidsLink && <KidsArrow to={kidsLink} />}
     </>
   );
 }

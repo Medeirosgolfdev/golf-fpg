@@ -18,6 +18,8 @@ import TabRow from "./TabRow";
 import { useSort } from "../hooks/useSort";
 import ClearButton from "./ClearButton";
 import { SDPill } from "./tournamentPrimitives";
+import ExpandArrow from "./ExpandArrow";
+import CloseButton from "./CloseButton";
 
 type PoolSortKey = "whs" | "date" | "course" | "hcp" | "tee" | "gross" | "sd" | "sdAdj" | "top";
 
@@ -1332,22 +1334,7 @@ export function RoundSimulator({
 
                 {/* Remover */}
                 {rounds.length > 1 && (
-                  <button
-                    onClick={() => removeRound(round.id)}
-                    title="Remover"
-                    style={{
-                      border: "none",
-                      background: "transparent",
-                      cursor: "pointer",
-                      color: "var(--text-3)",
-                      fontSize: "var(--fs-18)",
-                      padding: "0 2px",
-                      lineHeight: 1,
-                      marginLeft: result?.valid ? 0 : "auto",
-                    }}
-                  >
-                    ×
-                  </button>
+                  <CloseButton onClick={() => removeRound(round.id)} title="Remover" className={result?.valid ? undefined : "ml-auto"} />
                 )}
               </div>
 
@@ -1836,7 +1823,7 @@ export function RoundSimulator({
                 onClick={() => setImpactFull((v) => !v)}
                 className="btn u-ml-auto u-c-text-2"
               >
-                {impactFull ? "▾ Intervalo focado" : `▸ Ver intervalo completo (+${hidden})`}
+                <ExpandArrow open={impactFull} /> {impactFull ? "Intervalo focado" : `Ver intervalo completo (+${hidden})`}
               </button>
             )}
           </div>

@@ -24,6 +24,7 @@ import SortableHdr from "./SortableHdr";
 import KpiCard from "./KpiCard";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
+import CloseButton from "./CloseButton";
 
 interface PlayerEntry {
   pos: number | string | null;
@@ -368,13 +369,7 @@ export default function AtletaSearchPanel({
                 {selected.club ? ` · ${selected.club}` : ""}
               </div>
             </div>
-            <button
-              onClick={() => setSelectedKey(null)}
-              className="u-p-4px-10px u-fs-fs-12 u-bg-bg-card u-bd-1px-solid-border u-br-radius-sm u-cur-pointer u-c-text-1"
-              title="Voltar à pesquisa"
-            >
-              ✕ Fechar
-            </button>
+            <CloseButton onClick={() => setSelectedKey(null)} title="Voltar à pesquisa" />
           </header>
 
           {/* KPIs */}
