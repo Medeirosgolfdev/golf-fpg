@@ -1,7 +1,7 @@
 {
   "tourId": 67743,
   "url": "https://www.nextcaddy.com/tour/67743",
-  "scrapedAt": "2026-10-30T18:39:24.273Z",
+  "scrapedAt": "2026-11-02T12:11:54.633Z",
   "meta": {
     "name": "8ª Prueba Ranking Escuela Benjamín 2026 HALLOWEEN",
     "organizer": null,
@@ -23,10 +23,855 @@
     "dateIso": "2026-10-31",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "par": [
+      4,
+      3,
+      5,
+      3,
+      5,
+      4,
+      4,
+      4,
+      4
+    ],
+    "si": [
+      6,
+      14,
+      8,
+      18,
+      10,
+      16,
+      2,
+      12,
+      4
+    ],
+    "meters": [
+      281,
+      124,
+      431,
+      104,
+      442,
+      274,
+      323,
+      271,
+      346
+    ],
+    "parTotal": 36
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Señoras Femenino Hasta Nan Handicap General",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marta Gil Ortega",
+          "licencia": "AM11412040",
+          "hcp": 22.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": -1,
+          "inscribedId": 2431427,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                7,
+                5,
+                4,
+                7,
+                7
+              ],
+              "total": 48,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Señoras Femenino Hasta Nan Scratch General",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marta Gil Ortega",
+          "licencia": "AM11412040",
+          "hcp": 22.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 48,
+          "toPar": 12,
+          "inscribedId": 2431427,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                7,
+                5,
+                4,
+                7,
+                7
+              ],
+              "total": 48,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Individual Caballeros Masculino Handicap General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Iker Barragan Jimenez",
+          "licencia": "AM11353935",
+          "hcp": 30.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": -5,
+          "inscribedId": 2432672,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                7,
+                4,
+                6,
+                4,
+                5,
+                4,
+                6
+              ],
+              "total": 46,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Timur Tsyrenzhapov",
+          "licencia": "AM11017651",
+          "hcp": 40.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": -5,
+          "inscribedId": 2429028,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                6,
+                3,
+                7,
+                5,
+                5,
+                8,
+                6
+              ],
+              "total": 51,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Luis Ramirez Barba",
+          "licencia": "AM11414965",
+          "hcp": 44,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": -5,
+          "inscribedId": 2430016,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                7,
+                4,
+                7,
+                4,
+                7,
+                6,
+                6
+              ],
+              "total": 53,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Martin Lopez Menjibar",
+          "licencia": "AM11056951",
+          "hcp": 20.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": -2,
+          "inscribedId": 2437700,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                2,
+                7,
+                5,
+                6,
+                5,
+                6
+              ],
+              "total": 43,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Ivan Duran Campos",
+          "licencia": "AM11353768",
+          "hcp": 31.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": -2,
+          "inscribedId": 2434207,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                6,
+                4,
+                9,
+                4,
+                6,
+                5,
+                6
+              ],
+              "total": 49,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Martin Quiros Lopez",
+          "licencia": "AM11056975",
+          "hcp": 19.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": -1,
+          "inscribedId": 2429409,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                3,
+                7,
+                5,
+                4,
+                5,
+                5
+              ],
+              "total": 43,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Pau Caceres Gago",
+          "licencia": "AM11352016",
+          "hcp": 21,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2338073,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                3,
+                6,
+                3,
+                5,
+                6,
+                4,
+                5,
+                6
+              ],
+              "total": 45,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Ramiro Amaya Cozzi",
+          "licencia": "AM11414583",
+          "hcp": 31.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": 7,
+          "inscribedId": 2428801,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                9,
+                4,
+                7,
+                6,
+                7,
+                6,
+                7
+              ],
+              "total": 58,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Individual Caballeros Masculino Scratch General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Martin Lopez Menjibar",
+          "licencia": "AM11056951",
+          "hcp": 20.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": 7,
+          "inscribedId": 2437700,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                2,
+                7,
+                5,
+                6,
+                5,
+                6
+              ],
+              "total": 43,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Martin Quiros Lopez",
+          "licencia": "AM11056975",
+          "hcp": 19.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": 7,
+          "inscribedId": 2429409,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                3,
+                7,
+                5,
+                4,
+                5,
+                5
+              ],
+              "total": 43,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Pau Caceres Gago",
+          "licencia": "AM11352016",
+          "hcp": 21,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 45,
+          "toPar": 9,
+          "inscribedId": 2338073,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                3,
+                6,
+                3,
+                5,
+                6,
+                4,
+                5,
+                6
+              ],
+              "total": 45,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Iker Barragan Jimenez",
+          "licencia": "AM11353935",
+          "hcp": 30.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 46,
+          "toPar": 10,
+          "inscribedId": 2432672,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                7,
+                4,
+                6,
+                4,
+                5,
+                4,
+                6
+              ],
+              "total": 46,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Ivan Duran Campos",
+          "licencia": "AM11353768",
+          "hcp": 31.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 49,
+          "toPar": 13,
+          "inscribedId": 2434207,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                6,
+                4,
+                9,
+                4,
+                6,
+                5,
+                6
+              ],
+              "total": 49,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Timur Tsyrenzhapov",
+          "licencia": "AM11017651",
+          "hcp": 40.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 51,
+          "toPar": 15,
+          "inscribedId": 2429028,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                6,
+                3,
+                7,
+                5,
+                5,
+                8,
+                6
+              ],
+              "total": 51,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Luis Ramirez Barba",
+          "licencia": "AM11414965",
+          "hcp": 44,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 53,
+          "toPar": 17,
+          "inscribedId": 2430016,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                7,
+                4,
+                7,
+                4,
+                7,
+                6,
+                6
+              ],
+              "total": 53,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Ramiro Amaya Cozzi",
+          "licencia": "AM11414583",
+          "hcp": 31.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 22,
+          "inscribedId": 2428801,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                9,
+                4,
+                7,
+                6,
+                7,
+                6,
+                7
+              ],
+              "total": 58,
+              "meters": [
+                281,
+                124,
+                431,
+                104,
+                442,
+                274,
+                323,
+                271,
+                346
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Señoras Femenino Hasta Nan Handicap General",
+      "jugadores": 1
+    },
+    "2": {
+      "name": "Individual Señoras Femenino Hasta Nan Scratch General",
+      "jugadores": 1
+    },
+    "3": {
+      "name": "Individual Caballeros Masculino Handicap General",
+      "jugadores": 8
+    },
+    "4": {
+      "name": "Individual Caballeros Masculino Scratch General",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,

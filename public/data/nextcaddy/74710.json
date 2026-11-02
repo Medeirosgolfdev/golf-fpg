@@ -1,7 +1,7 @@
 {
   "tourId": 74710,
   "url": "https://www.nextcaddy.com/tour/74710",
-  "scrapedAt": "2026-10-30T18:39:31.031Z",
+  "scrapedAt": "2026-11-02T12:09:07.241Z",
   "meta": {
     "name": "GALAXIA GOLF",
     "organizer": null,
@@ -21,10 +21,256 @@
     "dateIso": "2026-11-01",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Manuel Zulueta Castañeda",
+          "licencia": "AMC9819581",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2434497
+        },
+        {
+          "pos": 2,
+          "name": "Pierre-Alain Roessli",
+          "licencia": "AM96627451",
+          "hcp": 19.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2431457
+        },
+        {
+          "pos": 3,
+          "name": "Sergio Aragon Lombardo",
+          "licencia": "AM93802309",
+          "hcp": 14,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2431365
+        },
+        {
+          "pos": 4,
+          "name": "Diego Cano Hernandez",
+          "licencia": "MM06773319",
+          "hcp": 20.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2433795
+        },
+        {
+          "pos": 5,
+          "name": "Antonio Llatas Melon",
+          "licencia": "AM93106120",
+          "hcp": 16.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2433811
+        },
+        {
+          "pos": 6,
+          "name": "Rodrigo Martinez Carvajal",
+          "licencia": "CM11211950",
+          "hcp": 11.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2431375
+        },
+        {
+          "pos": 7,
+          "name": "Manuel Sanchez Mateos",
+          "licencia": "AM93370327",
+          "hcp": 15.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2433957
+        },
+        {
+          "pos": 8,
+          "name": "Ricardo Luque Muñoz",
+          "licencia": "AMC3695184",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2431446
+        },
+        {
+          "pos": 9,
+          "name": "Alfonso Llamas Sanchez",
+          "licencia": "AM93609439",
+          "hcp": 14.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2431382
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Perez Budia",
+          "licencia": "AMB5602498",
+          "hcp": 16.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2435849
+        },
+        {
+          "pos": 11,
+          "name": "Javier Sierra Sopranis",
+          "licencia": "CM00251373",
+          "hcp": 11.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435104
+        },
+        {
+          "pos": 12,
+          "name": "Francisco Javier Haro Alarcon",
+          "licencia": "AM85801916",
+          "hcp": 11.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2433072
+        },
+        {
+          "pos": 13,
+          "name": "Juan Gabriel Perez Gonzalez",
+          "licencia": "AM85970337",
+          "hcp": 19.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2431366
+        },
+        {
+          "pos": 14,
+          "name": "Adolfo Lopez Paredes",
+          "licencia": "AM93440721",
+          "hcp": 19.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2431759
+        },
+        {
+          "pos": 15,
+          "name": "Fernando Amador Zambrano",
+          "licencia": "CM66249093",
+          "hcp": 9.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2431456
+        },
+        {
+          "pos": 16,
+          "name": "Jose Manuel Rojano Martinez",
+          "licencia": "7773790872",
+          "hcp": 9.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2433770
+        },
+        {
+          "pos": 17,
+          "name": "Raul Suazo Tejeda",
+          "licencia": "CM66783350",
+          "hcp": 18.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2431379
+        },
+        {
+          "pos": 18,
+          "name": "Sofie Kvist",
+          "licencia": "EXX1912689",
+          "hcp": 31.1,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2435908
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,

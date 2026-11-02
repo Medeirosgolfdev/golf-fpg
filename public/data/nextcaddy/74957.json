@@ -1,7 +1,7 @@
 {
   "tourId": 74957,
   "url": "https://www.nextcaddy.com/tour/74957",
-  "scrapedAt": "2026-10-30T18:39:29.486Z",
+  "scrapedAt": "2026-11-02T12:09:04.928Z",
   "meta": {
     "name": "VI Torneo Golfos OCT 2026",
     "organizer": null,
@@ -21,10 +21,160 @@
     "dateIso": "2026-10-31",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Clasificacion Vi Torneo Golfos",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Damian Jimenez Villasclaras",
+          "licencia": "AM67982446",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2437312
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Serrano Martinez",
+          "licencia": "AM67951247",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2437318
+        },
+        {
+          "pos": 3,
+          "name": "Hugo Villaden Carretie",
+          "licencia": "AM00356693",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2437315
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Gonzalez Martin More",
+          "licencia": "AM67133904",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2437321
+        },
+        {
+          "pos": 5,
+          "name": "Carlos Jimenez Villasclaras",
+          "licencia": "AM67951158",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2437316
+        },
+        {
+          "pos": 6,
+          "name": "Andres Baena Diaz",
+          "licencia": "AM67900591",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2437319
+        },
+        {
+          "pos": 7,
+          "name": "Fernando Mantilla Gonzalez",
+          "licencia": "AM67892722",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2437313
+        },
+        {
+          "pos": 8,
+          "name": "Juan Fernandez-Figares Gonzalez",
+          "licencia": "AME4974675",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2437320
+        },
+        {
+          "pos": 9,
+          "name": "Francisco Ortega Morales",
+          "licencia": "AM67342402",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2437314
+        },
+        {
+          "pos": 10,
+          "name": "Juan Manuel Lucena Martin",
+          "licencia": "AM67235310",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2437317
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Clasificacion Vi Torneo Golfos",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -38,49 +188,49 @@
       "name": "Fernando Mantilla Gonzalez",
       "licencia": "AM67892722",
       "hcp": 16.5,
-      "nivel": "S"
+      "nivel": "Mid"
     },
     {
       "orden": 3,
       "name": "Francisco Ortega Morales",
       "licencia": "AM67342402",
       "hcp": 23.8,
-      "nivel": "S"
+      "nivel": "Mid"
     },
     {
       "orden": 4,
       "name": "Hugo Villaden Carretie",
       "licencia": "AM00356693",
       "hcp": 15.4,
-      "nivel": "S"
+      "nivel": "Mid"
     },
     {
       "orden": 5,
       "name": "Carlos Jimenez Villasclaras",
       "licencia": "AM67951158",
       "hcp": 25.5,
-      "nivel": "S"
+      "nivel": "Mid"
     },
     {
       "orden": 6,
       "name": "Juan Manuel Lucena Martin",
       "licencia": "AM67235310",
       "hcp": 36,
-      "nivel": "S"
+      "nivel": "Mid"
     },
     {
       "orden": 7,
       "name": "Miguel Serrano Martinez",
       "licencia": "AM67951247",
       "hcp": 5.5,
-      "nivel": "S"
+      "nivel": "Mid"
     },
     {
       "orden": 8,
       "name": "Andres Baena Diaz",
       "licencia": "AM67900591",
       "hcp": 11.3,
-      "nivel": "S"
+      "nivel": "Mid"
     },
     {
       "orden": 9,
@@ -117,7 +267,7 @@
           "hcp": 16.5,
           "ins": "2437313",
           "jid": "80323",
-          "nivel": "S"
+          "nivel": "M"
         },
         {
           "time": "09:44",
@@ -126,7 +276,7 @@
           "hcp": 23.8,
           "ins": "2437314",
           "jid": "80323",
-          "nivel": "S"
+          "nivel": "M"
         },
         {
           "time": "09:52",
@@ -135,7 +285,7 @@
           "hcp": 15.4,
           "ins": "2437315",
           "jid": "80323",
-          "nivel": "S"
+          "nivel": "M"
         },
         {
           "time": "09:52",
@@ -144,7 +294,7 @@
           "hcp": 25.5,
           "ins": "2437316",
           "jid": "80323",
-          "nivel": "S"
+          "nivel": "M"
         },
         {
           "time": "09:52",
@@ -153,7 +303,7 @@
           "hcp": 36,
           "ins": "2437317",
           "jid": "80323",
-          "nivel": "S"
+          "nivel": "M"
         },
         {
           "time": "10:00",
@@ -162,7 +312,7 @@
           "hcp": 5.5,
           "ins": "2437318",
           "jid": "80323",
-          "nivel": "S"
+          "nivel": "M"
         },
         {
           "time": "10:00",
@@ -171,7 +321,7 @@
           "hcp": 11.3,
           "ins": "2437319",
           "jid": "80323",
-          "nivel": "S"
+          "nivel": "M"
         },
         {
           "time": "10:00",
@@ -195,13 +345,370 @@
     }
   ],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 162348,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            52
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            55
+          ],
+          [
+            "Peor",
+            49
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162349,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            5
+          ],
+          [
+            "2",
+            7
+          ],
+          [
+            "3",
+            13
+          ],
+          [
+            "4",
+            18
+          ],
+          [
+            "5",
+            6
+          ],
+          [
+            "6",
+            5
+          ],
+          [
+            "7",
+            6
+          ],
+          [
+            "8",
+            15
+          ],
+          [
+            "9",
+            13
+          ],
+          [
+            "10",
+            6
+          ],
+          [
+            "11",
+            10
+          ],
+          [
+            "12",
+            8
+          ],
+          [
+            "13",
+            12
+          ],
+          [
+            "14",
+            5
+          ],
+          [
+            "15",
+            5
+          ],
+          [
+            "16",
+            16
+          ],
+          [
+            "17",
+            11
+          ],
+          [
+            "18",
+            10
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162350,
+        "datos": [
+          [
+            "Hoyo",
+            "DAMIAN JIMENEZ VILLASCLARAS",
+            "MIGUEL SERRANO MARTINEZ",
+            "HUGO VILLADEN CARRETIE"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            2,
+            1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -3,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -4,
+            3,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            -5,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -5,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -5,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -3,
+            0,
+            2
+          ],
+          [
+            "Hoyo 18",
+            -3,
+            0,
+            1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162351,
+        "datos": [
+          [
+            "Hoyo",
+            "DAMIAN JIMENEZ VILLASCLARAS",
+            "MIGUEL SERRANO MARTINEZ",
+            "HUGO VILLADEN CARRETIE"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 5",
+            2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 16",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            2,
+            0,
+            2
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            -1
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {

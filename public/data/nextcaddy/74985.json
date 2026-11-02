@@ -1,7 +1,7 @@
 {
   "tourId": 74985,
   "url": "https://www.nextcaddy.com/tour/74985",
-  "scrapedAt": "2026-10-30T18:39:30.558Z",
+  "scrapedAt": "2026-11-02T12:11:59.178Z",
   "meta": {
     "name": "TORNEO INFANTIL 18 HOYOS",
     "organizer": null,
@@ -22,30 +22,485 @@
     "dateIso": "2026-10-31",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      4,
+      4,
+      5,
+      4,
+      4,
+      3,
+      4,
+      3,
+      5,
+      3,
+      4,
+      5,
+      4,
+      4
+    ],
+    "si": [
+      16,
+      14,
+      12,
+      8,
+      4,
+      18,
+      6,
+      10,
+      2,
+      13,
+      9,
+      17,
+      7,
+      15,
+      5,
+      11,
+      1,
+      3
+    ],
+    "meters": [
+      221,
+      250,
+      137,
+      352,
+      323,
+      252,
+      415,
+      316,
+      353,
+      130,
+      293,
+      112,
+      433,
+      124,
+      291,
+      408,
+      365,
+      265
+    ],
+    "parTotal": 72
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mar Rosa Curcho",
+          "licencia": "AMG8952909",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2438486,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                6,
+                7,
+                6,
+                6,
+                8,
+                7,
+                6,
+                7,
+                6,
+                5,
+                6,
+                4,
+                5,
+                6,
+                6,
+                5
+              ],
+              "total": 106,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Julia Coello Baquero",
+          "licencia": "AMG8989359",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2438487,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                4,
+                6,
+                5,
+                5,
+                8,
+                6,
+                6,
+                4,
+                5,
+                3,
+                7,
+                3,
+                6,
+                7,
+                6,
+                5
+              ],
+              "total": 97,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Manuel Rosa Curcho",
+          "licencia": "AMG8948451",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2438485,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                5,
+                5,
+                4,
+                6,
+                6,
+                7,
+                5,
+                5,
+                4,
+                4,
+                5,
+                5,
+                3,
+                7,
+                6,
+                6,
+                5
+              ],
+              "total": 96,
+              "meters": [
+                273,
+                287,
+                171,
+                453,
+                368,
+                293,
+                462,
+                355,
+                407,
+                170,
+                323,
+                145,
+                476,
+                153,
+                361,
+                458,
+                405,
+                365
+              ]
+            }
+          ]
+        },
+        {
+          "pos": null,
+          "name": "Clara Bescansa Gutierrez",
+          "licencia": "AMG8947907",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2439208,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        },
+        {
+          "pos": null,
+          "name": "Blanca Gonzalez Diaz",
+          "licencia": "AMG8973463",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2439209,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        },
+        {
+          "pos": null,
+          "name": "Roger William Magnusson Hernandez",
+          "licencia": "AMG8086937",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2439210,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                273,
+                287,
+                171,
+                453,
+                368,
+                293,
+                462,
+                355,
+                407,
+                170,
+                323,
+                145,
+                476,
+                153,
+                361,
+                458,
+                405,
+                365
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Manuel Rosa Curcho",
       "licencia": "AMG8948451",
       "hcp": 16.8,
-      "nivel": "C"
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Roger William Magnusson Hernandez",
+      "licencia": "AMG8086937",
+      "hcp": 54,
+      "nivel": "B"
     },
     {
       "orden": 1,
       "name": "Mar Rosa Curcho",
       "licencia": "AMG8952909",
       "hcp": 36,
-      "nivel": "I"
+      "nivel": "B"
     },
     {
       "orden": 2,
       "name": "Julia Coello Baquero",
       "licencia": "AMG8989359",
       "hcp": 23.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Clara Bescansa Gutierrez",
+      "licencia": "AMG8947907",
+      "hcp": 39.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Blanca Gonzalez Diaz",
+      "licencia": "AMG8973463",
+      "hcp": 48.6,
       "nivel": "I"
     }
   ],
@@ -60,7 +515,7 @@
           "hcp": 16.8,
           "ins": "2438485",
           "jid": "80351",
-          "nivel": "C"
+          "nivel": "A"
         },
         {
           "time": "09:00",
@@ -69,7 +524,7 @@
           "hcp": 36,
           "ins": "2438486",
           "jid": "80351",
-          "nivel": "I"
+          "nivel": "B"
         },
         {
           "time": "09:00",
@@ -78,19 +533,376 @@
           "hcp": 23.4,
           "ins": "2438487",
           "jid": "80351",
-          "nivel": "I"
+          "nivel": "A"
         }
       ]
     }
   ],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 162356,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            5
+          ],
+          [
+            "Birdie",
+            1
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            21
+          ],
+          [
+            "Peor",
+            27
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162357,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            7
+          ],
+          [
+            "2",
+            3
+          ],
+          [
+            "3",
+            6
+          ],
+          [
+            "4",
+            2
+          ],
+          [
+            "5",
+            5
+          ],
+          [
+            "6",
+            5
+          ],
+          [
+            "7",
+            8
+          ],
+          [
+            "8",
+            6
+          ],
+          [
+            "9",
+            5
+          ],
+          [
+            "10",
+            6
+          ],
+          [
+            "11",
+            3
+          ],
+          [
+            "12",
+            4
+          ],
+          [
+            "13",
+            3
+          ],
+          [
+            "14",
+            1
+          ],
+          [
+            "15",
+            6
+          ],
+          [
+            "16",
+            4
+          ],
+          [
+            "17",
+            6
+          ],
+          [
+            "18",
+            3
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162358,
+        "datos": [
+          [
+            "Hoyo",
+            "MAR ROSA CURCHO",
+            "JULIA  COELLO BAQUERO",
+            "MANUEL ROSA CURCHO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            1,
+            2
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            3
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            0,
+            4
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            5
+          ],
+          [
+            "Hoyo 8",
+            1,
+            2,
+            5
+          ],
+          [
+            "Hoyo 9",
+            1,
+            2,
+            5
+          ],
+          [
+            "Hoyo 10",
+            3,
+            2,
+            5
+          ],
+          [
+            "Hoyo 11",
+            3,
+            2,
+            4
+          ],
+          [
+            "Hoyo 12",
+            3,
+            1,
+            5
+          ],
+          [
+            "Hoyo 13",
+            2,
+            2,
+            4
+          ],
+          [
+            "Hoyo 14",
+            1,
+            1,
+            3
+          ],
+          [
+            "Hoyo 15",
+            0,
+            1,
+            5
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            2,
+            5
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            2,
+            6
+          ],
+          [
+            "Hoyo 18",
+            -3,
+            1,
+            6
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162359,
+        "datos": [
+          [
+            "Hoyo",
+            "MAR ROSA CURCHO",
+            "JULIA  COELLO BAQUERO",
+            "MANUEL ROSA CURCHO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 7",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            -1,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {

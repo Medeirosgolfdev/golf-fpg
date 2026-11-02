@@ -1,7 +1,7 @@
 {
   "tourId": 74956,
   "url": "https://www.nextcaddy.com/tour/74956",
-  "scrapedAt": "2026-10-30T18:39:29.588Z",
+  "scrapedAt": "2026-11-02T12:09:05.208Z",
   "meta": {
     "name": "CIRCUITO DE GOLF HEINEKEN 2026",
     "organizer": null,
@@ -23,8 +23,17 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja",
+      "jugadores": 52
+    },
+    "2": {
+      "name": "Scratch Pareja",
+      "jugadores": 52
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
