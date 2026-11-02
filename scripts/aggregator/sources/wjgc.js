@@ -175,7 +175,7 @@ const EVENT_DATES = {
   // Daily Mail WJGC — Villa Padierna, Espanha
   brjgt243: { start: "2024-02-20", end: "2024-02-22" },
   brjgt2431: { start: "2024-02-20", end: "2024-02-22" },
-  brjgt251: { start: "2025-04-05", end: "2025-04-06" },
+  brjgt251: { start: "2025-02-25", end: "2025-02-27" }, // voltas WHS do Manuel (D2 26/02, D3 27/02)
   brjgt2537: { start: "2026-02-25", end: "2026-02-27" },
   // European Open WAGR — Le Touquet (La Forêt), França
   eowagr25: { start: "2025-08-11", end: "2025-08-13" },
