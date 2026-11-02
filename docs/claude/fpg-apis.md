@@ -125,6 +125,8 @@ DOM. Detalhe completo no cabeçalho de `scripts/scrape-fpg-livescoring.js`.
 
 **O `ack` é universal cross-domain** (mesma infra ASP.NET partilhada) — `XH256YF450` para admissions, `8428ACK987` para draw/classif, iguais em ambos os domínios.
 
+⚠ **Excepção (02/11/2026):** o 985/10246 (Final Drive Tour 2026) recusa o `XH256YF450` (`Param_Errors.aspx?Err=400`) e só abre com o ack do link da FPG, `K4KLCDCAAB`. Acks destes guardam-se no campo `ack` da entrada em `scripts/fpg-admissions-scope.json`; o `scrape-fpg-admissions-draws-node.js` usa-o nas inscrições (os draws continuam com o `8428ACK987`). Sem ele o scraper cai no fallback directo, que traz os inscritos mas não o estado («Inscrições fechadas»). A API live (`api/inscricoes.js`) não precisa: entra pela sessão pública (`1PreparePage`).
+
 Implicação para o middleware: as duas fontes (`FPG_URL_1` e `FPG_URL_2`) passam a ser ambas linkpage — redundância real, não mais "scoring.datagolf.pt só por esperança". Em cada pedido esperamos os mesmos inscritos dos dois domínios; se divergirem, o log marca como "novos" os de cada fonte e sabes que uma está desincronizada.
 
 ```

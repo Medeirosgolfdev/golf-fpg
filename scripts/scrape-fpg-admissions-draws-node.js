@@ -116,6 +116,9 @@ const AUTO_EXTEND   = args.includes("--auto-extend");
 const ACK_ADMISSIONS = "XH256YF450";
 const ACK_DRAW       = "8428ACK987";
 const ACK_TOURNLIST  = "XH256YF45T";  // entry-gate scoring-pt.datagolf.pt
+// O ack universal não abre todos os clubes: o 985/10246 (Final Drive Tour 2026)
+// dá Param_Errors?Err=400 com ele e só entra com o ack do link da própria FPG.
+// Esses acks vivem no scope (campo `ack` da entrada) e só valem para as inscrições.
 
 /* ── Cookies ────────────────────────────────────────────────────────────── */
 const { loadCookieHeader } = require("./lib/cookies");
@@ -173,8 +176,8 @@ async function ensureDgWarmup() {
   }
 }
 
-async function fetchLinkpage(ccode, tcode, page, round) {
-  const ack = page === "admissions" ? ACK_ADMISSIONS : ACK_DRAW;
+async function fetchLinkpage(ccode, tcode, page, round, ackAdmissions) {
+  const ack = page === "admissions" ? (ackAdmissions || ACK_ADMISSIONS) : ACK_DRAW;
   // 1) scoring.fpg.pt/lists/linkpage.aspx (caminho canónico)
   let url = `https://scoring.fpg.pt/lists/linkpage.aspx?page=${page}&club=${ccode}&tourn=${tcode}&ack=${ack}`;
   if (round) url += `&round=${round}`;
@@ -289,7 +292,7 @@ async function fetchAdmissionsSessaoPublica(ccode, tcode) {
 
 /* ── Scrape uma admissions ──────────────────────────────────────────────── */
 async function scrapeAdmissions(t) {
-  const r = await fetchLinkpage(t.ccode, t.tcode, "admissions", null);
+  const r = await fetchLinkpage(t.ccode, t.tcode, "admissions", null, t.ack);
   const primary = (r.ok && !r.paramErr) ? markSuspect(parseAdmissions(r.html), t.date) : null;
   if (primary && !primary.error && (primary.players?.length ?? 0) > 0) return primary;
 
@@ -848,6 +851,7 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
         date: existing ? ("date" in existing ? existing.date : today) : null,
         expectedYear: existing?.expectedYear || Number(today.slice(0, 4)),
         _src: spec.ccode ? "cli" : (existing?._src || "scope"),
+        ...(existing?.ack ? { ack: existing.ack } : {}),
       };
     });
     console.log(`[adm-draws] Filtro --tcodes: ${scope.length} torneios (${scope.map(t => `${t.ccode}/${t.tcode}`).join(", ")})`);
