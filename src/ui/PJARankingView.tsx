@@ -20,6 +20,8 @@ import {
   type RankMetric, type RankRow, type RankRoundResult, type RankTournCol, type RankPlayerRound,
 } from "../data/ranking/fpgRanking";
 import ExtLink from "./ExternalLink";
+import CloseButton from "./CloseButton";
+import ClearButton from "./ClearButton";
 
 /* ─────────────────────────────────────────────
    RANKINGS DA /FPG — Ranking PJA, Ranking Sub-12 por SD e Classificações.
@@ -166,7 +168,7 @@ function PlayerDetail({ row, cols, metric, showMeters, playersDB, onClose }: {
   ];
   return (
     <div className="card drive-player-card mb-8">
-      <button onClick={onClose} title="Fechar" aria-label="Fechar" className="drive-player-close">✕</button>
+      <CloseButton onClick={onClose} className="drive-player-close" />
       <div className="mb-8 drive-player-head">
         <span className="fw-800 drive-player-name"><PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} sex={row.sex} /></span>
         <span className="muted fs-11">{row.club || "–"}{row.escalao ? ` · ${row.escalao}` : ""} · HCP {fmtHcp(row.hcp)} · {row.voltas} voltas</span>
@@ -427,7 +429,7 @@ export function PJARankingView({
     })}
     {(filterEsc.length > 0 || filterSex || filterRegiao.length > 0 || filterHcp || filterName) && <>
       <span className="muted fs-10 u-ws-nowrap u-fsh-0">{sortedRows.length} de {allRows.length}</span>
-      <FilterChip active={false} onClick={() => { setFilterEsc([]); setFilterSex(""); setFilterRegiao([]); setFilterHcp(false); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
+      <ClearButton onClick={() => { setFilterEsc([]); setFilterSex(""); setFilterRegiao([]); setFilterHcp(false); if (externalFilterName === undefined) setFilterName(""); }} />
     </>}
     <span className="muted fs-10 ml-auto u-ws-nowrap u-cur-help" title={metric === "sd" ? `SD oficial da FPG de cada volta (o do WHS de cada miúdo) · média das ${BEST_SD_N} melhores, mínimo ${MIN_SD_ROUNDS} voltas · MENOR é melhor` : !specialRules ? "Par=25pts · Top-14 voltas · todas as rondas contam · todos os torneios pesam o mesmo (sem multiplicadores)" : year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"}>
       ℹ Regras

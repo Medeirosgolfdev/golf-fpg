@@ -14,6 +14,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
 import { HCP_BINS, emptyHcpBins, hcpBinKey, hcpBinRange, isCountableHcp } from "./hcpBins";
 import { COL_M, COL_F, barPct, KpiCard, MFBar, MFColumn, MFLegend } from "./statsWidgets";
+import CloseButton from "../../ui/CloseButton";
 
 export interface GlobalStats {
   total: number; male: number; female: number; withHcp: number; avgHcp: number;
@@ -407,7 +408,7 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
             <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="F" />{female}</span>
           </div>
         </div>
-        <button type="button" className="btn-round btn-round-sm" onClick={onClose} title="Fechar" aria-label="Fechar">✕</button>
+        <CloseButton onClick={onClose} />
       </div>
       <div className="fw-800 fs-12 mb-4">Top 15 (ordenados por HCP)</div>
       <div className="u-d-grid u-grid-template-columns-120gf u-gap-4px">
@@ -481,7 +482,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
         <div className="fw-900 fs-14">
           {drillDown.type === "club" ? "🏌️ Clube" : "🎯 Escalão"}: {title}
         </div>
-        <button type="button" className="btn-round btn-round-sm" onClick={onClose} title="Fechar drill-down" aria-label="Fechar">✕</button>
+        <CloseButton onClick={onClose} title="Fechar drill-down" />
       </div>
 
       {/* KPIs do drill */}

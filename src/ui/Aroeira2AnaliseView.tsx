@@ -143,7 +143,7 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
             <td className="lb-halftot muted fw-600">{holes.slice(9).reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
             <td className="lb-halftot fw-700">{holes.reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
           </tr>
-          <tr className="u-bg-rgba-220-252-231-_65">
+          <tr className="u-bg-bg-success">
             <td className="lb-name fw-700 u-c-color-good-dark">⭐ Manuel</td>
             {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole fw-600 u-c-color-good-dark">{fmtAvg(h.manuelAvg, 2)}</td>)}
             <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(holes.slice(0, 9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
@@ -281,7 +281,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
           {fmtDelta(card.avgToPar)}
         </span>
         {card.category === "top21" && <span className="muted fs-11 u-minw-50px">Pos {card.currentPos ?? "–"}</span>}
-        {card.category === "sub12_inscrito" && <span className="fs-11 fw-600 u-bg-rgba-59-130-246-_15 u-p-3px-8px u-br-radius u-c-color-info">Sub-12 inscrito</span>}
+        {card.category === "sub12_inscrito" && <span className="fs-11 fw-600 u-bg-bg-info-strong u-p-3px-8px u-br-radius u-c-color-info">Sub-12 inscrito</span>}
       </button>
       {open && card.rounds.length > 0 && (
         <div className="bjgt-chart-scroll u-p-0-12px-10px">
@@ -539,7 +539,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       <section>
         <h3>2. Buracos chave — Top 5 difíceis vs Top 5 fáceis</h3>
         <div className="u-d-grid u-grid-template-columns-1fr-1fr u-gap-16px">
-          <div className="u-bd-2px-solid-color-danger u-br-radius-lg u-p-12px u-bg-rgba-220-38-38-_04">
+          <div className="u-bd-2px-solid-color-danger u-br-radius-lg u-p-12px u-bg-bg-danger">
             <h4 className="u-m-0-0-8px u-c-color-danger-dark">🔴 Mais difíceis (vão preparados)</h4>
             <table className="sc-lb">
               <thead>
@@ -559,7 +559,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
               </tbody>
             </table>
           </div>
-          <div className="u-bd-2px-solid-color-good u-br-radius-lg u-p-12px u-bg-rgba-22-163-74-_04">
+          <div className="u-bd-2px-solid-color-good u-br-radius-lg u-p-12px u-bg-bg-success">
             <h4 className="u-m-0-0-8px u-c-color-good-dark">🟢 Mais fáceis (capitalizar)</h4>
             <table className="sc-lb">
               <thead>

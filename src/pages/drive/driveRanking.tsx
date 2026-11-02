@@ -33,6 +33,7 @@ import TournamentGrid from "../../ui/TournamentGrid";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { EscLookup, Sub12Row, TournResult } from "../../ui/driveTypes";
 import TabRow from "../../ui/TabRow";
+import CloseButton from "../../ui/CloseButton";
 
 export const SERIE_LABELS: Record<DriveSeries, string> = { tour: "Tour", challenge: "Challenge", aquapor: "AQUAPOR" };
 const REGION_LABEL: Record<string, string> = { norte: "Norte", tejo: "Tejo", sul: "Sul", madeira: "Madeira", acores: "Açores", nacional: "Nacional" };
@@ -118,7 +119,7 @@ const RESULT_COLS: RankingCol<TournResult>[] = [
 function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) {
   return (
     <div className="card drive-player-card mb-8">
-      <button onClick={onClose} title="Fechar" aria-label="Fechar" className="drive-player-close">✕</button>
+      <CloseButton onClick={onClose} className="drive-player-close" />
       <div className="mb-8 drive-player-head">
         <span className="fw-800 drive-player-name">{row.name}</span>
         <span className="muted fs-11">{row.club} · {regionLabel(row.region)} · HCP {fmtHcp(row.hcp)}</span>

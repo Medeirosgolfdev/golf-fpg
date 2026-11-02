@@ -17,6 +17,7 @@ import { toggleArr } from "../utils/mathUtils";
 import { EMPTY_FILTER, type MultiRoundRow } from "./multiRoundTypes";
 import { ESC_STYLE } from "./PillBadge";
 import FilterChip from "./FilterChip";
+import ClearButton from "./ClearButton";
 import { getTeeHex } from "../utils/teeColors";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
@@ -170,7 +171,7 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
       {isActive && (
         <>
           <span className="fs-10 c-muted u-ml-2px">{shown} de {total}</span>
-          <button onClick={() => onChange(EMPTY_FILTER)} className="filter-clear-btn fs-10 c-muted">✕ limpar</button>
+          <ClearButton onClick={() => onChange(EMPTY_FILTER)} />
         </>
       )}
     </div>

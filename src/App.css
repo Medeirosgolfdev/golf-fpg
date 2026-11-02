@@ -940,6 +940,9 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .btn-round:disabled { color: var(--border); cursor: default; }
 .btn-round.btn-round-sm { width: 24px; height: 24px; border: none; background: none; font-size: var(--fs-16); color: var(--text-3); }
 .btn-round.btn-round-sm:disabled { color: var(--border); }
+/* ✕ de fechar (ui/CloseButton): o mesmo em todo o lado. */
+.btn-round.btn-close { cursor: pointer; }
+.btn-round.btn-close:hover { background: var(--bg-hover); color: var(--text); }
 /* ✕ dos popups com cabeçalho de cor (Calendário). .on-light: cabeçalho claro — a cor do ✕ vem do evento. */
 .btn-round.btn-round-close { width: 26px; height: 26px; border: none; background: rgba(255,255,255,0.2); color: var(--text-on-color); font-size: var(--fs-14); }
 .btn-round.btn-round-close.on-light { background: rgba(0,0,0,0.15); }
@@ -2295,7 +2298,7 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 /* Scout: separador entre blocos de colunas e cabeçalho do bloco (Carreira, Nesta prova…). */
 table.sc-lb :is(th, td).scout-sep { border-left: 1px solid var(--border); }
 table.sc-lb th.scout-grp { background: var(--bg-success-subtle); color: var(--color-good-dark); font-weight: 600;
-  font-size: var(--fs-11); text-align: center; padding: 3px var(--space-8); }
+  font-size: var(--fs-11); text-align: center; padding: var(--space-3) var(--space-8); }
 /* Cartão de buracos aberto dentro da lista das últimas 20 voltas (ui/Last20Table). */
 .l20-sc-host { margin: var(--space-6) var(--space-8); border: 1px solid var(--border); border-radius: var(--radius-xl);
   background: var(--bg-card); padding: var(--space-10); overflow: hidden; width: fit-content; max-width: calc(100% - 16px); }
@@ -2309,7 +2312,7 @@ table.sc-lb th.scout-grp { background: var(--bg-success-subtle); color: var(--co
 .src-tag { display: inline-block; padding: 0 var(--space-6); margin: 0 var(--space-4) var(--space-2) 0; border-radius: 999px;
   font-weight: 600; white-space: nowrap; }
 /* Ano de nascimento no escalão (1.º/2.º ano). */
-.ano-esc-pill { font-size: var(--fs-9); font-weight: 700; padding: 1px var(--space-4); border-radius: var(--radius-sm);
+.ano-esc-pill { font-size: var(--fs-9); font-weight: 700; padding: var(--space-1) var(--space-4); border-radius: var(--radius-sm);
   line-height: 1.4; flex-shrink: 0; border: 1px solid; }
 /* «🔄 N» licenças de um jogador espanhol que mudou de clube; .open = histórico aberto. */
 .lic-pill { margin-left: var(--space-6); cursor: pointer; border: 1px solid var(--accent); background: transparent; color: var(--accent);
@@ -3745,12 +3748,6 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
   color: var(--text-muted); font-size: var(--fs-14);
 }
 .filter-bar { display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-6); padding:var(--space-6) 0 var(--space-8); border-bottom:1px solid var(--border); margin-bottom:var(--space-8); }
-.filter-clear-btn {
-  font-size: var(--fs-10); padding: var(--space-2) var(--space-8); border-radius: 20px;
-  border: 1px solid var(--border); background: var(--bg-hover);
-  color: var(--text-muted); cursor: pointer; font-family: inherit;
-}
-.filter-clear-btn:hover { background: var(--bg-muted); }
 
 /* --- Tee color dot (in filter chips) --- */
 .tee-dot-sq { display:inline-block; width:8px; height:8px; border-radius:var(--radius-xs); border:1px solid rgba(0,0,0,.18); }
@@ -4195,7 +4192,7 @@ table td.lb-col-divider {
 .drive-pts { color: var(--color-warn-dark); }
 .drive-evo-chart { height: 340px; }
 .card.drive-player-card { border: 2px solid var(--accent); position: relative; }
-.drive-player-card .drive-player-close { position: absolute; top: 8px; right: 10px; background: none; border: none; cursor: pointer; font-size: var(--fs-18); color: var(--text-3); }
+.drive-player-card .drive-player-close { position: absolute; top: var(--space-8); right: var(--space-10); }
 .drive-player-head { display: flex; align-items: baseline; gap: var(--space-10); }
 .drive-player-name { font-size: var(--fs-16); }
 .notice-error.drive-error { margin: var(--space-16); }
@@ -4279,6 +4276,7 @@ table td.lb-col-divider {
 .u-bg-bg { background: var(--bg) !important; }
 .u-bg-bg-card { background: var(--bg-card) !important; }
 .u-bg-bg-danger { background: var(--bg-danger) !important; }
+.u-bg-bg-success { background: var(--bg-success) !important; }
 .u-bg-bg-detail { background: var(--bg-detail) !important; }
 .u-bg-bg-header { background: var(--bg-header) !important; }
 .u-bg-bg-hover { background: var(--bg-hover) !important; }
@@ -4304,13 +4302,9 @@ table td.lb-col-divider {
 .u-bg-none { background: none !important; }
 .u-bg-overlay-black-50 { background: var(--overlay-black-50) !important; }
 .u-bg-rgba-0-0-0-0_5 { background: rgba(0,0,0,0.5) !important; }
-.u-bg-rgba-22-163-74-_04 { background: rgba(22, 163, 74, .04) !important; }
-.u-bg-rgba-220-252-231-_65 { background: rgba(220, 252, 231, .65) !important; }
-.u-bg-rgba-220-38-38-_04 { background: rgba(220, 38, 38, .04) !important; }
 .u-bg-rgba-255-255-255-_5 { background: rgba(255,255,255,.5) !important; }
 .u-bg-rgba-255-255-255-0_18 { background: rgba(255,255,255,0.18) !important; }
 .u-bg-rgba-255-255-255-0_85 { background: rgba(255,255,255,0.85) !important; }
-.u-bg-rgba-59-130-246-_15 { background: rgba(59, 130, 246, .15) !important; }
 .u-bg-sc-par-bg { background: var(--sc-par-bg) !important; }
 .u-bg-score-eagle { background: var(--score-eagle) !important; }
 .u-bg-text-3 { background: var(--text-3) !important; }

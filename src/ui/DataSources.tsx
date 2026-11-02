@@ -14,6 +14,7 @@
  */
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import ExpandArrow from "./ExpandArrow";
+import CloseButton from "./CloseButton";
 
 type DataSourceStatus = "loaded" | "loading" | "error";
 
@@ -255,12 +256,7 @@ function FilePopover({
           <div className="c-muted fs-10 u-word-break-break-all">{path}</div>
           <div className="c-muted fs-10">{tournaments.length} torneio{tournaments.length !== 1 ? "s" : ""}</div>
         </div>
-        <button
-          onClick={onClose}
-          className="btn fs-10 u-p-2px-8px u-fsh-0"
-
-          title="Fechar (Esc)"
-        >✕</button>
+        <CloseButton onClick={onClose} title="Fechar (Esc)" />
       </div>
       <div>
         {sorted.map((t, i) => (

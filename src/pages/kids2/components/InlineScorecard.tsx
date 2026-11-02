@@ -13,6 +13,7 @@ import type { Tournament, Flight, Result, Junior } from "../data";
 import { scClass, toParClass } from "../../../utils/scoreDisplay";
 import { fmtSign } from "../../../utils/format";
 import { getKnownScorecard, mergeFlightWithKnown } from "../knownScorecards";
+import CloseButton from "../../../ui/CloseButton";
 
 interface Props {
   tournament: Tournament;
@@ -117,10 +118,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
           </div>
         </div>
         {onClose && (
-          <button
-            onClick={onClose}
-            className="btn u-fsh-0" title="Fechar" aria-label="Fechar"
-          >✕</button>
+          <CloseButton onClick={onClose} />
         )}
       </div>
 

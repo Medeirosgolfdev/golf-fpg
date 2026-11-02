@@ -123,6 +123,7 @@ const PECAS = [
         <button class="btn-link">▸ 12 voltas</button>
         <button class="btn-round">‹</button><button class="btn-round">›</button>
         <button class="btn-round btn-round-sm">›</button>
+        <button class="btn-round btn-round-sm btn-close" title="Fechar (CloseButton)">✕</button>
         <button class="btn-add">＋ Adicionar ronda</button>
       </div>
       ${uso([".btn", "ClearButton", ".btn-link", ".btn-round", ".btn-round-sm", ".btn-add"], "App.css · ui/ClearButton.tsx")}

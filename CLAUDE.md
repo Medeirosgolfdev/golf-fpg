@@ -211,7 +211,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   com `href`); filtro liga/desliga → pill
   `.tourn-tab tourn-tab-sm` (+ `active`; desligada SEMPRE cinzenta, ligada SEMPRE verde `--accent`, regra
   global — decisão dela, 31/10/2026); botão de acção → `.btn` (`.btn-link`,
-  `.btn-round` para ‹ ›), nunca uma pill de filtro; «✕ Limpar» → `ClearButton`;
+  `.btn-round` para ‹ ›), nunca uma pill de filtro; «✕ Limpar» → `ClearButton`; «✕» de fechar → `CloseButton`;
   abrir/fechar → `ExpandArrow` (▸/▾); link para fora → `ExtLink` (nada de
   `<a target="_blank">` à mão); nome que abre a ficha → `PlayerLink`; cabeçalho
   ordenável → `SortableHdr` (▲▼); a carregar / sem dados → `LoadingState` /

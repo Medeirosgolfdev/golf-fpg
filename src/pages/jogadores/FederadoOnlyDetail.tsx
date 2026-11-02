@@ -27,6 +27,7 @@ import {
 } from "./federadoFields";
 import IdentityPills, { PlayerExtLinks } from "./IdentityPills";
 import LoadingState from "../../ui/LoadingState";
+import CloseButton from "../../ui/CloseButton";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
  *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
@@ -379,11 +380,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
                 <div className="h-md fs-14 fw-700">{scorecardModal.round.tournament_description || "Scorecard"}</div>
                 <div className="muted fs-11">{scorecardModal.round.course_description} · {(scorecardModal.round.score_dateStr || "").slice(0, 10)}</div>
               </div>
-              <button
-                onClick={() => setScorecardModal(null)}
-                className="u-bd-none u-bg-transparent u-fs-fs-20 u-cur-pointer u-p-4px"
-                title="Fechar"
-              >✕</button>
+              <CloseButton onClick={() => setScorecardModal(null)} />
             </div>
             {/* Nota se a ronda foi rotacionada (Aroeira No.2 config antiga) */}
             <RotatedNotice rotated={(scorecardModal.data as { _rotated?: number } | null)?._rotated} />
