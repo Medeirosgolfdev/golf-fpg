@@ -43,6 +43,8 @@ const { buildUltimos } = require("./ultimos");
 const { anosPelosEscaloesUskids } = require("./nascimento-uskids");
 
 const MANUEL_ID = "u630106";
+/** Par mínimo de um campo de 18 buracos «a sério» (os de par 3 têm 54). */
+const PAR_MIN_18 = 60;
 
 let calc, tidLib;
 function loadTid() {
@@ -116,12 +118,15 @@ function voltasDoAno(j, tById, desde, voltasFpg = []) {
       const r = f.results.find((x) => x.juniorId === j.id);
       if (!r) continue;
       const par = Array.isArray(f.par) && f.par.length === 18 && f.par.every((x) => typeof x === "number") ? f.par.reduce((s, x) => s + x, 0) : null;
-      // Só voltas de 18 buracos a sério: com cartão, 18 buracos jogados quando há
-      // os buracos, e ≥ 50 pancadas (havia voltas de 9 buracos com 36 dentro de
-      // provas «de 18» — davam «melhor 36, −36»).
+      // Só voltas de 18 buracos num campo a sério: com cartão, 18 buracos jogados
+      // quando há os buracos (havia voltas de 9 com 36 dentro de provas «de 18» —
+      // «melhor 36, −36») e nada de campos de par 3 (par 54 — «melhor 50, −4»):
+      // par ≥ 60 quando se sabe, senão ≥ 60 pancadas. E nunca menos de 50 nem mais
+      // de 10 abaixo do par (cartões com só parte dos buracos — «melhor 18, −53»).
+      if (par != null && par < PAR_MIN_18) break;
       for (const rd of r.rounds || []) {
         const nb = (rd.strokes || []).filter((x) => x > 0).length;
-        if (ok(rd.gross) && rd.gross >= 50 && (!nb || nb === 18)) voltas.push([rd.gross, par == null ? null : rd.gross - par]);
+        if (ok(rd.gross) && rd.gross >= 50 && (par != null ? rd.gross >= par - 10 : rd.gross >= PAR_MIN_18) && (!nb || nb === 18)) voltas.push([rd.gross, par == null ? null : rd.gross - par]);
       }
       break;
     }

@@ -190,7 +190,8 @@ function buildUltimos(juniors, tournaments, generatedAt) {
         sdDaProva(sdRows, p.tcode, p.data)]);
       if (p.data >= desdeAno) {
         extraAno++;
-        for (const v of ok) if (v.buracos === 18 && v.gross >= 50) voltasAno.push([v.gross, v.par != null ? v.gross - v.par : null]);
+        // Campos de par 3 (par 54) ficam fora da média/melhor de 18 (util/scout.js).
+        for (const v of ok) if (v.buracos === 18 && v.gross >= 50 && (v.par != null ? v.par >= 60 && v.gross >= v.par - 10 : v.gross >= 60)) voltasAno.push([v.gross, v.par != null ? v.gross - v.par : null]);
       }
     }
     if (!lista.length) continue;
