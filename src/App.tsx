@@ -53,6 +53,7 @@ const EGRPage = lazy(() => import("./pages/EGRPage"));
 const WAGRPage = lazy(() => import("./pages/WAGRPage"));
 const GlobalJuniorPage = lazy(() => import("./pages/GlobalJuniorPage"));
 const RFEGPage = lazy(() => import("./pages/RFEGPage"));
+const FedergolfPage = lazy(() => import("./pages/FedergolfPage"));
 const TitulosPage = lazy(() => import("./pages/TitulosPage"));
 const JogadoresListPage = lazy(() => import("./pages/JogadoresListPage"));
 const JogadoresPorAnoPage = lazy(() => import("./pages/JogadoresPorAnoPage"));
@@ -232,6 +233,8 @@ export default function App() {
                 <Route path="/rfeg" element={<RFEGPage />} />
                 <Route path="/rfeg/:compId" element={<RFEGPage />} />
                 <Route path="/rfeg/:source/:id" element={<RFEGPage />} />
+                <Route path="/fig" element={<FedergolfPage />} />
+                <Route path="/fig/:id" element={<FedergolfPage />} />
                 {/* Página Títulos — tabs Nacional/Regional/Atleta */}
                 <Route path="/titulos" element={<TitulosPage />} />
                 <Route path="/titulos/:tab" element={<TitulosPage />} />

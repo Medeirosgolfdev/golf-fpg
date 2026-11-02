@@ -25,7 +25,7 @@ export interface IdentityContext {
   /** Base por federado (FPG): sexo, nascimento, país, escalão. */
   byFed?: Record<string, { sex?: string | null; dob?: string | null; country?: string | null; escalao?: string | null } | undefined>;
   /** Fonte do escalão, para os nomes ambíguos (ver `escalaoCanon`). */
-  escalaoSource?: "fpg" | "ffg" | "es" | "uskids";
+  escalaoSource?: "fpg" | "ffg" | "es" | "uskids" | "it";
 }
 
 /** «M»/«F» a partir de M, F, Male, Female, Masculino, Feminino, Boys, Girls… */

@@ -16,7 +16,7 @@ import golfBallSvg from "../assets/golf-ball.svg";
 
 type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
-  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "england" | "rfeg" | "faldo" | "nacionais" | "global-junior" | "major" | "egr" | "wagr" | "galeria" | "draws";
+  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "england" | "rfeg" | "faldo" | "nacionais" | "global-junior" | "major" | "egr" | "wagr" | "galeria" | "draws" | "fig";
 
 // ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
 // `external: true` → abre em nova aba sem SPA navigation (ficheiros estáticos
@@ -32,6 +32,7 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "major",      label: "🎖️ MAJOR",   path: "/major", title: "Doral + BJGT" },
   { tab: "ffg",        label: "🇫🇷",          path: "/ffg", title: "France — FFGolf" },
   { tab: "rfeg",       label: "🇪🇸",          path: "/rfeg", title: "España — RFEGolf" },
+  { tab: "fig",        label: "🇮🇹",          path: "/fig", title: "Italia — Federgolf" },
   // EGR · WAGR · GJGL numa só entrada (13/10/2026) — os separadores estão no topo de cada uma (RankingsTabs).
   { tab: "egr",        label: "🏅 Rankings",  path: "/egr", title: "Rankings — EGR · WAGR · GJGL", group: ["egr", "wagr", "global-junior"] },
   { tab: "kids",       label: "🌍 Kids",      path: "/kids2"      },
@@ -61,6 +62,7 @@ function tabFromPath(pathname: string): Tab {
     doral: "major",
     ffg: "ffg",
     rfeg: "rfeg",
+    fig: "fig",
     titulos: "nacionais",
     "global-junior": "global-junior",
     england: "england",
@@ -89,6 +91,7 @@ const TAB_TITLES: Record<Tab, string> = {
   ffg:        "Golf Junior – FFGolf",
   england:    "Golf Junior – England Golf",
   rfeg:       "Golf Junior – RFEGolf",
+  fig:        "Golf Junior – Federgolf",
   faldo:      "Golf Junior – Faldo Series",
   nacionais:  "Golf Junior – Títulos",
   "global-junior": "Golf Junior – Global Junior Golf Live",

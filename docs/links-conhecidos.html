@@ -452,6 +452,17 @@ const S = [
   { n: "Calendário jovens", a: "ok", u: "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/{secção}/{ano}/{slug}/page-scores-tournoi",
     d: "Calendário e páginas de resultados dos Championnats de France e Internationaux.", ex: [["Abrir calendário", "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats"]], where: "scrape-ffgolf-calendar-jeunes.js" },
  ]},
+ { grp: "Circuitos", id: "italia", title: "Itália", sub: "Federgolf (Federazione Italiana Golf): API pública do plugin federgolf-crm, sem login. Página /fig (02/11/2026).", items: [
+  { n: "Prova Federgolf", a: "ok", u: "https://www.federgolf.it/attivita-agonistica/dettaglio-gara/{competition_id}/",
+    d: "Página de cada prova (INFO, Lista iscritti, Orari partenze, Classifiche, Dettagli, Report HCP). O competition_id é um GUID.",
+    ex: [["Campionato Nazionale Baby Maschile 2026", "https://www.federgolf.it/attivita-agonistica/dettaglio-gara/6ef43695-bfef-f011-8406-7ced8d5cadb4/"], ["Calendário (Gare e Campionati)", "https://www.federgolf.it/attivita-agonistica/gare/"]],
+    where: "scrape-federgolf.js → federgolf/{id}.json + federgolf-index.json (/fig)" },
+  { n: "API das gare", a: "ok", u: "https://www.federgolf.it/wp-admin/admin-ajax.php (POST action=… competition_id=…)",
+    d: "competitions-search (anno, tipo=0, mese=0, keyword: calendário desde 2006) · competition-tipologia-classifica · competition-details-classifica (+tipologia_classifica, giro) · competition-details-classifica-giri (+player_id: todas as voltas, par e metros) · competition-player-list (clube, categoria B/P/C/R, índice, ordem de mérito) · competition-hcp-report (tee, CR, Slope e SD oficial por volta) · competition-classifiche / competition-orari-partenze (PDFs; download-allegato-gara + allegato_id, em base64).",
+    w: "~20 s por pedido; com 8 em paralelo devolve «Si è verificato un errore». Volta não jogada vem como cartão a zeros. Os PDFs não trazem licença nem idade.", where: "scrape-federgolf.js (update-federgolf.yml, diário)" },
+  { n: "Ranking juvenil (categorias)", a: "ok", u: "https://www.federgolf.it/attivita-agonistica/attivita-giovanile/ranking/",
+    d: "Under 12 Baby, Under 14 Pulcini, Under 16 Cadetti, Under 18 Ragazzi — as categorias da coluna «Cat.»." },
+ ]},
  { grp: "Circuitos", id: "intl-2027", title: "Internacionais júnior 2027", sub: "O site principal de cada prova internacional que interessa ao Manuel em 2027. A ficha completa de cada uma (todos os links, distâncias, histórico, portugueses) está em docs/torneios-intl-2027/ — pesquisa de 19 Out 2026.", items: [
   { n: "Global Junior Golf — o circuito", a: "ok", u: "https://globaljuniorgolflive.com/tour-calendar/list/",
     d: "Época 2026/27: provas de Out/2026 a Jul/2027 ·  · Manuel: U14.",

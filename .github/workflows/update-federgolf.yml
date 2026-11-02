@@ -1,0 +1,60 @@
+name: Actualizar Federgolf (Itália) — provas juvenis
+
+# Provas juvenis da Federazione Italiana Golf (federgolf.it, API pública sem
+# login) para a /fig. Ver scripts/scrape-federgolf.js e docs/claude/italia.md.
+#
+# 1) Passagem rápida (só totais) de 2006 ao ano corrente: só as provas que
+#    ainda não estão gravadas (~20 s cada), por isso as novas aparecem logo.
+# 2) Cartões buraco a buraco, do mais recente para trás, até 2,5 h por corrida:
+#    o servidor deles demora ~20 s por pedido e há ~1000 provas desde 2006,
+#    por isso os cartões vão-se completando corrida a corrida (uma prova com
+#    todos os cartões e jogada há mais de 10 dias não se volta a pedir).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 1 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  update-federgolf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 1
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # Todas as provas desde 2006, só as que faltam (as gravadas saltam-se).
+      - name: Provas novas (só totais, até 2 h)
+        run: |
+          ANOS=$(seq -s, "$(date -u +%Y)" -1 2006)
+          node scripts/scrape-federgolf.js --sem-cartoes --max-min 120 --anos "$ANOS" || [ $? -eq 2 ]
+
+      - name: Cartões (até 2,5 h)
+        run: |
+          ANOS=$(seq -s, "$(date -u +%Y)" -1 2006)
+          node scripts/scrape-federgolf.js --max-min 150 --anos "$ANOS" || [ $? -eq 2 ]
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          bash scripts/ci/push-generated.sh -m "data: Federgolf $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            -o 'public/data/federgolf' -o public/data/federgolf-index.json \
+            -- public/data/federgolf public/data/federgolf-index.json

@@ -14,7 +14,8 @@
  *    10, Alevín/Alevim → Sub 12, Infantil → Sub 14, Cadete → Sub 16, Poucet →
  *    Sub 10, Poussin → Sub 12, Minime → Sub 16. Os nomes que mudam de país
  *    para país só com a fonte: «Benjamin» (FR Sub 14 · ES Sub 10), «Junior»
- *    (FR Sub 21 · ES Sub 18), «Juvenil» (ES Sub 21), «Cadet» (FR Sub 18).
+ *    (FR Sub 21 · ES Sub 18), «Juvenil» (ES Sub 21), «Cadet» (FR Sub 18);
+ *    Itália: Baby Sub 12, Pulcini Sub 14, Cadetti Sub 16, Ragazzi Sub 18.
  *  - **Idade ou intervalo de idades** (USKids, MAJOR) — «Boys 10» → «10 anos»,
  *    «Boys 13-14», «13 & 14», «Varonil 10-11» → «13-14 anos».
  *  - **Adultos** — Absoluto (também «All Ages» do WAGR), Seniores, Mid-Amateur, Adultos.
@@ -29,7 +30,7 @@
 import { stripAccents } from "../../utils/normName";
 
 /** Fonte do nome, para os nomes de categoria que mudam de país para país. */
-export type EscalaoSource = "fpg" | "ffg" | "es" | "uskids";
+export type EscalaoSource = "fpg" | "ffg" | "es" | "uskids" | "it";
 
 /** Escalões de adultos (canónico ← sinónimos, sem acentos e em minúsculas). */
 const ADULTOS: [string, RegExp][] = [
@@ -53,6 +54,9 @@ const NOMES_FONTE: Record<EscalaoSource, Record<string, number>> = {
   },
   fpg: {},
   uskids: {},
+  // Federgolf (página de ranking juvenil, 02/11/2026): Under 12 Baby, Under 14
+  // Pulcini, Under 16 Cadetti, Under 18 Ragazzi (e os femininos).
+  it: { baby: 12, pulcini: 14, pulcine: 14, cadetti: 16, cadette: 16, ragazzi: 18, ragazze: 18 },
 };
 
 /** Palavras de sexo que se tiram antes de ler o escalão (o sexo tem filtro próprio). */

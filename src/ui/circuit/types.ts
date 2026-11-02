@@ -306,7 +306,7 @@ export interface CircuitConfig {
   /** De que federação são os nomes de escalão (resolve «Benjamin», «Junior»,
    *  «Juvenil», que mudam de país para país) — filtro «Escalão» pela tabela
    *  única de `src/data/model/escalao.ts`. */
-  escalaoSource?: "fpg" | "ffg" | "es" | "uskids";
+  escalaoSource?: "fpg" | "ffg" | "es" | "uskids" | "it";
   /** Itens especiais fixos no topo da sidebar. */
   specialItems?: CircuitSpecialItem[];
   /** Ranking de jogadores como vista do shell (botão na barra, ou opção do menu

@@ -109,6 +109,7 @@ npm run login     # login FPG (gera sessão)
 | MAJOR — catálogo, GolfGenius, GolfBox, Champion of Champions, México | [major.md](docs/claude/major.md) |
 | WAGR | [wagr.md](docs/claude/wagr.md) |
 | França (FFG) e Espanha (RFEG) | [ffg-rfeg.md](docs/claude/ffg-rfeg.md) |
+| Itália (Federgolf, /fig) — API, scraper, categorias | [italia.md](docs/claude/italia.md) |
 | England Golf | [england.md](docs/claude/england.md) |
 | Formatos JSON e tabela de todos os ficheiros de dados | [estruturas-json.md](docs/claude/estruturas-json.md) |
 | `/campos`, `/simulador`, Vantagem de Tee | [campos-simulador.md](docs/claude/campos-simulador.md) |
@@ -129,7 +130,7 @@ descobrir um link novo, acrescentá-lo lá.**
 Rotas principais (tabela completa em [paginas.md](docs/claude/paginas.md)):
 `/jogadores` e `/jogadores/:fed` · `/FPG` · `/drive` · `/uskids` · `/kids2`
 (tracker de rivais; `/kids` redirecciona) · `/major` (BJGT, Doral, GolfGenius,
-GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
+GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr` ·
 `/campos` · `/comparar` · `/calendario` ·
 `/titulos` · `/torneios-recentes` · `/bjgt-analysis`.
 
