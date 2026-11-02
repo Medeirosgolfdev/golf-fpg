@@ -18,6 +18,11 @@
  *                                                  catSrc "merite") e lugar/médias do ranking
  *   hcp, hcpDate                                 — HCP mais recente COM valor
  *   tot, ano, firstSeenIso, lastSeenIso          — contagem/período (por trnId)
+ *   licencas                                     — outras licenças «E» do mesmo estrangeiro,
+ *                                                  juntas a esta linha (ver «Licenças E»)
+ *
+ * Fora do roster: os lugares de equipa «JOUEUR A…» e, nos nomes, os escapes
+ * «J\E9r\E9my» e o «(U18)» colado — regra única em src/data/ffg/ffgJogador.ts.
  *
  * Passagem 2 — torneios GolfGenius (public/data/ffgolf/{year}_{slug}.json:
  * Championnats de France, Internationaux, GP Majeur/National). O GG não
@@ -34,7 +39,7 @@ const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 const { listGgTournaments, buildNameMaps, matchGgName } = require("./lib/ffgolf-gg");
 const { ffgEscalaoCanonico, ffgEscalaoMaisNovo } = require("./lib/ffg-escalao.cjs");
-const { isLugarEquipa } = require("./lib/ffg-lugar-equipa");
+const { isLugarEquipa, limparTextoFfg, limparNomeFfg, escalaoNoNome } = require("./lib/ffg-jogador.cjs");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA = path.join(ROOT, "public", "data");
@@ -52,7 +57,7 @@ const norm = s => (s || "")
   .normalize("NFD").replace(/[̀-ͯ]/g, "")
   .toLowerCase().replace(/\s+/g, " ").trim();
 
-const decode = s => (s || "").replace(/&#039;/g, "'").replace(/&amp;/g, "&");
+const decode = limparTextoFfg;
 
 /** "DD/MM/YYYY" → "YYYY-MM-DD" (vazio se não parsear). */
 function dateIso(d) {
@@ -70,11 +75,12 @@ function titleCaseCaps(s) {
 
 /** Nome canónico "Prenom Apelido" a partir do bloco de jogador FFGolf. */
 function canonName(p) {
-  let first = decode(p.namePrenom || "").trim();
-  let last = decode(p.nameNom || "").trim();
+  // limparNomeFfg: escapes «J\E9r\E9my» e o escalão colado «Amalie (U18)».
+  let first = limparNomeFfg(p.namePrenom);
+  let last = limparNomeFfg(p.nameNom);
   if (!first || !last) {
     // `name` cru vem "Lastname Firstname" — invertido.
-    const parts = decode(p.name || "").trim().split(/\s+/);
+    const parts = limparNomeFfg(p.name).split(/\s+/);
     if (parts.length >= 2) {
       if (!last) last = parts[0];
       if (!first) first = parts.slice(1).join(" ");
@@ -212,7 +218,7 @@ for (const f of fs.existsSync(DIR) ? fs.readdirSync(DIR) : []) {
       if (!e.sex && (p.sex === "M" || p.sex === "F")) e.sex = p.sex;
       if (!e.country && p.nationality) e.country = p.nationality;
       if (!e.glfLic && p.glfLic) e.glfLic = p.glfLic;
-      if (p.nameNom && iso >= e._lastDate) { e._nom = p.nameNom; e._prenom = p.namePrenom; }
+      if (p.nameNom && iso >= e._lastDate) { e._nom = limparNomeFfg(p.nameNom); e._prenom = limparNomeFfg(p.namePrenom); }
 
       // Contagem por torneio (dedup por trnId — o mesmo jogador pode surgir
       // em mais do que uma série do mesmo torneio).
@@ -237,7 +243,8 @@ for (const f of fs.existsSync(DIR) ? fs.readdirSync(DIR) : []) {
       // portal FFG as divisões de uma prova juvenil chamam-se muitas vezes só
       // "Messieurs"/"Dames" — aí a idade vive no NOME ("1re Division U16
       // Garçons"). Guardar os dois por ano; a categoria sai daqui no output.
-      addEsc(e, year, label, d.name || d?.details?.name);
+      // Nos Internationaux a FFG cola o escalão ao nome («Amalie (U18)»): também é sinal.
+      addEsc(e, year, label, d.name || d?.details?.name, escalaoNoNome(p.namePrenom || p.name));
       // Participação (torneio + resultado) para a lista expansível da /ffg.
       const rounds = [p.t1, p.t2, p.t3, p.t4].filter((g) => typeof g === "number" && g > 0);
       const gross = typeof p.total === "number" && p.total > 0 ? p.total : null;
@@ -260,6 +267,86 @@ for (const f of fs.existsSync(DIR) ? fs.readdirSync(DIR) : []) {
 
 console.log(`Scaneados ${nFiles} ficheiros FFG resultats (${nParseErr} erros parse, ${nNoSeries} sem séries)`);
 console.log(`Total jogadores únicos (por license): ${players.size} — ${nOcc} aparições${nLugares ? ` (${nLugares} lugares de equipa «Joueur A…» ignorados)` : ""}`);
+
+// ── Licenças «E» do mesmo estrangeiro → uma só linha ──────────────────────
+// A FFG dá a cada estrangeiro uma licença E NOVA em cada prova (Meja Ortengren:
+// E61466993 nos Internationaux 2022, E66717929 em 2023) — eram linhas
+// repetidas na /ffg/info/joueurs. Juntam-se quando têm o mesmo sexo e o mesmo
+// nome, o país é igual (ou falta num dos lados) e nunca jogaram a mesma prova
+// (aí são duas pessoas). Uma licença a sério (não-E) com o mesmo nome absorve as
+// E; com duas licenças a sério o grupo fica como está (não se sabe de quem são).
+// As licenças absorvidas ficam em `licencas`. Antes da passagem GG: com nomes
+// repetidos o matching por nome dava ambíguo e não ligava ninguém.
+const isLicE = (lic) => /^E\d/.test(lic);
+/** A FFG escreve Inglaterra/Escócia/… como «EN1»/«SC1» — para comparar é «GBR». */
+const paisBase = (c) => (/^(?:EN|SC|WA|NI)1$/.test(c) ? "GBR" : c);
+
+/** Junta o registo `b` ao `a` (b sai do roster). */
+function juntarRegisto(a, b) {
+  for (const trnId of b._seen) {
+    a._seen.add(trnId);
+    const t = trnLics.get(trnId);
+    if (t) { t.lics.delete(b.license); t.lics.add(a.license); }
+  }
+  for (const [ti, row] of b._apps) addTourn(a, ti, row);
+  for (const [y, set] of b._escByYear) {
+    const cur = a._escByYear.get(y);
+    if (cur) for (const x of set) cur.add(x); else a._escByYear.set(y, new Set(set));
+  }
+  a.tot += b.tot;
+  a.ano += b.ano;
+  if (b.firstSeenIso && (!a.firstSeenIso || b.firstSeenIso < a.firstSeenIso)) a.firstSeenIso = b.firstSeenIso;
+  if (b.lastSeenIso && (!a.lastSeenIso || b.lastSeenIso > a.lastSeenIso)) a.lastSeenIso = b.lastSeenIso;
+  if (b._lastDate > a._lastDate) {
+    a._lastDate = b._lastDate;
+    if (b.name) a.name = b.name;
+    if (b.club) a.club = b.club;
+    if (b.region) a.region = b.region;
+    if (b.lastSerie) a.lastSerie = b.lastSerie;
+    if (b._nom) { a._nom = b._nom; a._prenom = b._prenom; }
+  }
+  if (b.hcp !== undefined && b._lastHcpDate > a._lastHcpDate) {
+    a._lastHcpDate = b._lastHcpDate; a.hcp = b.hcp; a.hcpDate = b.hcpDate;
+  }
+  if (!a.sex) a.sex = b.sex;
+  if (!a.country) a.country = b.country;
+  if (!a.glfLic) a.glfLic = b.glfLic;
+  a.licencas = [...(a.licencas || []), b.license].sort();
+  players.delete(b.license);
+}
+
+let nLicJuntas = 0;
+{
+  const grupos = new Map();
+  for (const e of players.values()) {
+    if (!e.sex || !e.name) continue;
+    const k = `${e.sex}|${norm(e.name)}`;
+    if (!grupos.has(k)) grupos.set(k, []);
+    grupos.get(k).push(e);
+  }
+  for (const g of grupos.values()) {
+    if (g.length < 2 || !g.some((e) => isLicE(e.license))) continue;
+    const reais = g.filter((e) => !isLicE(e.license));
+    if (reais.length > 1) continue;
+    // Principal: a licença a sério; sem ela, a E mais recente. As E que não
+    // cabem nela (outro país, mesma prova) juntam-se entre si na volta seguinte.
+    let resto = [...g].sort((a, b) => b._lastDate.localeCompare(a._lastDate));
+    let principal = reais[0] || resto[0];
+    while (principal) {
+      const ficam = [];
+      for (const e of resto) {
+        if (e === principal) continue;
+        const outroPais = e.country && principal.country && paisBase(e.country) !== paisBase(principal.country);
+        if (outroPais || [...e._seen].some((t) => principal._seen.has(t))) { ficam.push(e); continue; }
+        juntarRegisto(principal, e);
+        nLicJuntas++;
+      }
+      resto = ficam.filter((e) => isLicE(e.license));
+      principal = resto[0];
+    }
+  }
+}
+console.log(`Licenças E do mesmo estrangeiro: ${nLicJuntas} juntas a outra linha — ${players.size} jogadores`);
 
 // ── Passagem 2: torneios GolfGenius (matching por nome + dedup de gémeos) ──
 const nameMaps = buildNameMaps(

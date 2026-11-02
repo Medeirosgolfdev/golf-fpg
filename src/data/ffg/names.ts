@@ -7,6 +7,7 @@
  */
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { stripAccents } from "../../utils/normName";
+import { limparNomeFfg } from "./ffgJogador";
 
 /* ── Normalização de nome (FFGolf/GolfGenius usam "APELIDO(S) Nome") ────
  * O run INICIAL de tokens todo-em-CAPS é o apelido (pode ser composto):
@@ -36,13 +37,13 @@ export function toTitleCase(s: string): string {
 
 /* Construir nome canónico "Nome Apelido" para um FFG player.
  * Cruza com KIDS page: o KIDS usa "Nome Apelido" (ex: "Valentina Marciniak").
- * O FFG dá `nameNom: "MARCINIAK"` (caps) e `namePrenom: "Valentina"`. */
+ * O FFG dá `nameNom: "MARCINIAK"` (caps) e `namePrenom: "Valentina"`.
+ * Sem os escapes «J\E9r\E9my» nem o escalão colado «Amalie (U18)» (ffgJogador.ts). */
 export function ffgPlayerName(p: { name?: string; nameNom?: string | null; namePrenom?: string | null }): string {
-  if (p.namePrenom && p.nameNom) {
-    const apelido = toTitleCase(p.nameNom.trim());
-    return `${p.namePrenom.trim()} ${apelido}`;
-  }
-  return normalizeName(p.name || "");
+  const prenom = limparNomeFfg(p.namePrenom);
+  const nom = limparNomeFfg(p.nameNom);
+  if (prenom && nom) return `${prenom} ${toTitleCase(nom)}`;
+  return normalizeName(limparNomeFfg(p.name));
 }
 
 /** País do jogador FFG para bandeira. Só o que a fonte dá — NUNCA inventar

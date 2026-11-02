@@ -67,6 +67,8 @@ interface FrancePlayer {
   ano?: number;
   firstSeenIso?: string | null;
   lastSeenIso?: string | null;
+  /** Outras licenças «E» do mesmo estrangeiro (a FFG dá uma nova a cada prova), juntas a esta linha. */
+  licencas?: string[];
 }
 interface FrancePlayersFile {
   generatedAt: string;
@@ -183,7 +185,8 @@ export function FFGPlayersView() {
         _tot: p.tot ?? 0,
         _ano: p.ano ?? 0,
         _manuel: isManuelByName(_name),
-        _kid: kidsByLic.get(p.license) ?? kidsByName.get(normName(_name)) ?? null,
+        _kid: [p.license, ...(p.licencas ?? [])].map((l) => kidsByLic.get(l)).find(Boolean)
+          ?? kidsByName.get(normName(_name)) ?? null,
       };
     });
   }, [data, kidsByLic, kidsByName]);
@@ -224,7 +227,7 @@ export function FFGPlayersView() {
       if (cat !== "ALL" && p._cat !== cat) return false;
       if (region !== "ALL" && p._region !== region) return false;
       if (needle) {
-        const hay = `${p._name} ${p.license} ${p._club}`.toLowerCase();
+        const hay = `${p._name} ${p.license} ${(p.licencas ?? []).join(" ")} ${p._club}`.toLowerCase();
         if (!hay.includes(needle)) return false;
       }
       return true;
@@ -329,9 +332,10 @@ export function FFGPlayersView() {
                       style={{ cursor: "pointer", background: isOpen ? "var(--bg-detail)" : undefined }}
                       title="Ver os torneios e resultados deste jogador"
                     >
-                      <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap">
+                      <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap"
+                        title={r.licencas?.length ? `Também com a licença ${r.licencas.join(", ")} (a FFG dá uma licença E nova a cada prova)` : undefined}>
                         <span aria-hidden className="u-mr-4px u-c-accent"><ExpandArrow open={isOpen} /></span>
-                        {r.license}
+                        {r.license}{r.licencas?.length ? ` +${r.licencas.length}` : ""}
                       </td>
                       <td className="u-fw-600" title={r.lastSerie ? `Série mais recente: ${r.lastSerie}` : undefined}>
                         {r._name || "—"}

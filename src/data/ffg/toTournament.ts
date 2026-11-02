@@ -12,6 +12,7 @@ import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes"
 import { intlScorecardOptions } from "../intlScorecard";
 import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
 import { normalizeName, ffgPlayerName, ffgCountry } from "./names";
+import { isLugarEquipa } from "./ffgJogador";
 import type { FFGTournament, CatalogEntry, FFGResTournament, FFGResSerie, FFGSerieCourse } from "./types";
 
 /** «U12G»/«U12 G»/«BG»/«MF» → chave única U12G/U14G/U16F… (BG/BF = Benjamins = U14,
@@ -88,7 +89,10 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
   // Detectar nº de rondas REALMENTE jogadas (algum player tem tN não-null).
   // Importante: torneios futuros ou em curso podem ter t2/t3/t4 todos null
   // — nesse caso numRounds=1 para não marcar todos como WD.
-  const allPlayers = seriesToUse.flatMap((s) => s.players.map((p) => ({ ...p, _serieId: s.serieId })));
+  // Sem os lugares de equipa por preencher («JOUEUR A Touraine», CF clubes U16 2019).
+  const allPlayers = seriesToUse.flatMap((s) => s.players
+    .filter((p) => !isLugarEquipa(p))
+    .map((p) => ({ ...p, _serieId: s.serieId })));
   const hasT2 = allPlayers.some((p) => p.t2 != null);
   const hasT3 = allPlayers.some((p) => p.t3 != null);
   const hasT4 = allPlayers.some((p) => p.t4 != null);
