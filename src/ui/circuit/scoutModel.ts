@@ -15,13 +15,27 @@ import { getTierLabel, type TierKey, type RankingRow } from "../../pages/kids2/j
  *  mesmo escalão [à frente, atrás]. */
 export interface JuniorForm { r: [string, number, number, number | null, number][]; m?: [number, number] }
 
-/** Uma prova em comum com o Manuel: [data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel]. */
-export type ScoutComManuel = [string, string, number | null, number | null, number];
+/** Uma prova em comum com o Manuel: [data, torneio, lugar dele, lugar do Manuel,
+ *  pancadas dele − Manuel, voltas, buracos por volta]. As pancadas são só das
+ *  voltas que os dois jogaram; sem `voltas`/`buracos` (provas da página, ex.
+ *  FPG) conta como 1 volta de 18. */
+export type ScoutComManuel = [string, string, number | null, number | null, number, number?, number?];
+
+/** Pancadas dele − Manuel por volta de 18 buracos, em todas as provas em comum. */
+export function porVolta(m: readonly ScoutComManuel[]): number | null {
+  let soma = 0, voltas = 0;
+  for (const x of m) { soma += (x[4] * 18) / (x[6] || 18); voltas += x[5] || 1; }
+  return voltas ? Math.round((soma / voltas) * 10) / 10 : null;
+}
 
 /** juniors-scout.json (scripts/aggregator/util/scout.js). */
 export interface JuniorScout {
   /** Torneios na carreira. */
   n?: number;
+  /** Último ano (365 dias): [torneios, vitórias, top-3]. */
+  a?: [number, number, number];
+  /** Voltas de 18 buracos no último ano: [voltas, média, melhor, ±par médio, ±par da melhor] (±par null sem par oficial). */
+  v?: [number, number, number, number | null, number | null];
   t?: TierKey; w?: number; t3?: number; h?: number; d?: string; c?: string; p?: string;
   /** Provas em comum com o Manuel: [data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel]. */
   m?: ScoutComManuel[];

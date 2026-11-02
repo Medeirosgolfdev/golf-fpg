@@ -538,6 +538,10 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     const k = editionKey(cur);
     if (!k) return null;
     const sib = editionsSource.filter((e) => editionKey(e) === k);
+    // A prova por disputar pode não estar no pool (a /drive só lá põe as
+    // jogadas): entra na mesma, para as edições anteriores aparecerem antes de
+    // se jogar (decisão de 20/10/2026).
+    if (!sib.some((e) => e.id === cur.id)) sib.unshift(cur);
     return sib.length >= 2 ? sib : null;
   }, [cur, editionsSource, editionKey]);
   const curField = useMemo(() => divisionField(curDiv), [curDiv]);

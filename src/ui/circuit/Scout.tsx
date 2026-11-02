@@ -8,6 +8,13 @@
  * ~180 MB; agora lê o resumo juniors-scout.json, que traz também a forma).
  * Clicar numa linha abre as provas em comum com o Manuel e as próximas.
  *
+ * Desenho de 02/11/2026 (pedido da Mariana: «precisa nitidamente de uma grande
+ * melhoria»), no estilo da «Época» da /drive: escalão com o selo do ano de
+ * nascimento, nível como etiqueta, o ÚLTIMO ANO (torneios, vitórias, pódios e
+ * os últimos lugares em caixinhas) em vez da carreira toda, o saldo com o
+ * Manuel por extenso e as pancadas POR VOLTA (só voltas que os dois jogaram),
+ * filtros e linhas verticais entre os blocos.
+ *
  * Usado no CircuitShell (todas as provas dos circuitos), na /uskids e no kids2
  * (Próximos torneios). Modelo de tabela do scorecard (.sc-lb), ordenável.
  */
@@ -19,15 +26,21 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
-import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp } from "../../utils/format";
+import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp, escalaoAtDate } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
 import { isManuel as isManuelPlayer } from "../../constants/manuel";
 import { useFedBirthdates } from "../InscricoesComponents";
-import { getTierLabel } from "../../pages/kids2/juniorCalc";
+import TierBadge from "../TierBadge";
+import { medalClass } from "../PosBadge";
+import { AnoEscalaoPill } from "../AnoEscalaoPill";
+import { RowsFilterBar, filterRows, type FilterableRow } from "../PlayerFilterBar";
+import { EMPTY_FILTER } from "../multiRoundTypes";
+import type { PlayerFilter } from "../../data/fpgTypes";
+import { compareEscalao } from "../../data/model/escalao";
 import { buildRepeaters, type FieldPlayer, type RepeaterRow } from "./repeaters";
 import type { PastEdition } from "./PastEditionsTable";
 import {
-  computeThreat, formaMedia, idade, N_FORMA, THREAT_LABEL,
+  computeThreat, formaMedia, idade, N_FORMA, THREAT_LABEL, porVolta,
   type JuniorForm, type JuniorScout, type ScoutComManuel, type ScoutFile, type ThreatInfo,
 } from "./scoutModel";
 
@@ -82,6 +95,8 @@ interface Linha {
   key: string; name: string; club: string | null; country: string | null; isManuel: boolean;
   sc?: JuniorScout; fm?: JuniorForm; rep?: RepeaterRow;
   idade: number | null; threat: ThreatInfo; frente: number; atras: number; vsMMedia: number | null;
+  /** Nascimento (ISO, ou só o ano) e o escalão deste ano. */
+  nasc: string | null; escalao: string | null;
   proximas: Proxima[];
   fed: string | null;
 }
@@ -130,6 +145,7 @@ export default function Scout({
   // Idade: a do Kids 2 e, sem ela, a da base de federados (que tem todos os da FPG).
   const fedBirthdates = useFedBirthdates();
   const [aberto, setAberto] = useState<string | null>(null);
+  const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
   useEffect(() => {
     let vivo = true;
     cachedFetchJson<ScoutFile>("/data/juniors-scout.json").then((d) => { if (vivo) setScout(d ?? { players: {} }); }).catch(() => { if (vivo) setScout({ players: {} }); });
@@ -165,16 +181,24 @@ export default function Scout({
       const atrasDele = (x: ScoutComManuel) => (x[2] != null && x[3] != null ? x[2] > x[3] : x[4] > 0);
       const frente = m.filter(atrasDele).length;
       const atras = m.filter(naFrente).length;
-      const vsMMedia = m.length ? m.reduce((s, x) => s + x[4], 0) / m.length : null;
+      // Pancadas por volta de 18 buracos, só nas voltas que os dois jogaram.
+      const vsMMedia = porVolta(m);
       const threat = isManuel
         ? { score: -99, level: "none" as const, reasons: [] }
         : computeThreat({
             hasManuel: true, vsMTotal: vsMMedia, vsMCount: m.length, vsMSameFlight: sc?.mf ?? 0,
             tier: sc?.t ?? null, recentPos: fm?.r[0]?.[3] ?? null, wins: sc?.w ?? 0,
           });
+      // Nascimento: o do Kids 2, o que a prova traz, ou o da base de federados —
+      // pelo federado da prova ou, sem ele (o scrape do Drive às vezes não o
+      // traz), pelo da ficha do Kids 2.
+      const fedNasc = p.fed || (!outraPessoa ? kid?.fed : null);
+      const nasc = sc?.d ?? p.dob ?? (fedNasc ? fedBirthdates.get(fedNasc) : undefined) ?? null;
       out.push({
         key: k, name: p.name, club: p.club ?? sc?.c ?? null, country: p.country ?? null, isManuel, sc, fm, rep: rr,
-        idade: idade(sc?.d ?? (p.fed ? fedBirthdates.get(p.fed) : undefined)), threat, frente, atras, vsMMedia,
+        idade: nasc ? idade(nasc) ?? (/^\d{4}$/.test(nasc) ? new Date().getFullYear() - +nasc : null) : null,
+        nasc, escalao: nasc ? escalaoAtDate(nasc, todayIso()) : null,
+        threat, frente, atras, vsMMedia,
         // As inscrições USKids são por nome: um homónimo (outro federado) não as herda.
         proximas: outraPessoa ? [] : (proximas?.get(k) ?? []).filter((x) => x.t !== tCode),
         fed: p.fed ?? null,
@@ -187,7 +211,7 @@ export default function Scout({
   const { sortKey, sortDir, toggleSort } = useSort<string>(
     ordemInicial?.key ?? (manuelNoField ? "nivel" : "tier"),
     ordemInicial?.dir ?? (manuelNoField ? "desc" : "asc"), {
-    name: "asc", idade: "asc", hcp: "asc", tier: "asc", nivel: "desc", torn: "desc", vit: "desc", forma: "asc", ult: "desc",
+    name: "asc", idade: "asc", esc: "asc", hcp: "asc", tier: "asc", nivel: "desc", torn: "desc", vit: "desc", pod: "desc", media: "asc", melhor: "asc", forma: "asc", ult: "desc",
     rfeg: "asc", n: "desc", best: "asc", vsm: "desc", vsmp: "asc", prox: "desc",
     ...Object.fromEntries(extras.map((c) => [c.key, c.dir ?? "asc"])),
   });
@@ -196,11 +220,15 @@ export default function Scout({
       switch (sortKey) {
         case "name": return l.name;
         case "idade": return l.idade;
+        case "esc": return l.escalao;
         case "hcp": return l.sc?.h ?? null;
         case "tier": return l.sc?.t ? TIER_ORD[l.sc.t] : null;
         case "nivel": return l.isManuel ? null : l.threat.score;
-        case "torn": return l.sc?.n ?? null;
-        case "vit": return l.sc?.w ?? null;
+        case "torn": return l.sc?.a?.[0] ?? null;
+        case "vit": return l.sc?.a?.[1] ?? null;
+        case "pod": return l.sc?.a?.[2] ?? null;
+        case "media": return l.sc?.v ? l.sc.v[3] ?? 500 + l.sc.v[1] : null; // sem par oficial vai para o fim
+        case "melhor": return l.sc?.v?.[2] ?? null;
         case "forma": return formaMedia(l.fm);
         case "ult": return l.fm?.r[0]?.[0] ?? null;
         case "rfeg": return l.sc?.rk?.[0] ?? null;
@@ -222,10 +250,21 @@ export default function Scout({
       if (va == null && vb == null) return a.name.localeCompare(b.name);
       if (va == null) return 1;
       if (vb == null) return -1;
-      const c = typeof va === "string" ? va.localeCompare(String(vb)) : (va as number) - (vb as number);
+      const c = sortKey === "esc" ? compareEscalao(String(va), String(vb))
+        : typeof va === "string" ? va.localeCompare(String(vb)) : (va as number) - (vb as number);
       return c * dir || a.name.localeCompare(b.name);
     });
   }, [linhas, sortKey, sortDir, extras]);
+
+  // A barra de filtros de jogadores do site: nome/clube, escalão, clube e ano de nascimento.
+  const filtraveis = useMemo(() => ordenadas.map((l): FilterableRow & { key: string } => ({
+    key: l.key, name: l.name, club: l.club ?? "", esc: l.escalao ?? undefined, fed: l.fed ?? undefined,
+    dob: l.nasc && /^\d{4}-\d{2}-\d{2}/.test(l.nasc) ? l.nasc : null,
+  })), [ordenadas]);
+  const visiveis = useMemo(() => {
+    const ok = new Set(filterRows(filtraveis, filter).map((x) => x.key));
+    return ordenadas.filter((l) => l.isManuel || ok.has(l.key));
+  }, [ordenadas, filtraveis, filter]);
 
   if (!scout || !proximas) return <LoadingState />;
   if (!field.length) return <EmptyState size="md" message="Ainda não há jogadores conhecidos nesta prova." />;
@@ -239,29 +278,28 @@ export default function Scout({
   const altos = rivais.filter((l) => l.sc?.t === "elite" || l.sc?.t === "strong").length;
   const comManuel = rivais.filter((l) => l.sc?.m?.length).length;
   const repetem = rivais.filter((l) => l.rep).length;
-  // Desenho (20/10/2026, pedido da Mariana: «não tem visualmente nada a ver com
-  // nada»): o modelo do Resumo — mesma letra, sem bolas nem cores soltas (o verde
-  // só na linha do Manuel), bandeira antes do nome, e as colunas agrupadas em
-  // blocos com uma linha de grupos por cima: Carreira · Nesta prova · Com o
-  // Manuel · Próximos (+ os blocos próprios da página, ex.: FPG). Colunas sem
-  // dados não aparecem. A ameaça já não se pinta: é a ordem por omissão, e o
-  // motivo fica no tooltip do Nível.
+  // Blocos: Perfil · Último ano · Nesta prova · Com o Manuel · Próximos (+ os da
+  // página, ex.: FPG). Colunas sem dados não aparecem; cada bloco abre com uma
+  // linha vertical (.scout-sep). A ameaça é a ordem por omissão e o pontinho no Nível.
   const tem = {
-    idade: linhas.some((l) => l.idade != null),
+    esc: linhas.some((l) => l.escalao),
     hcp: !semHcp && linhas.some((l) => l.sc?.h != null),
-    torn: linhas.some((l) => l.sc?.n),
-    vit: linhas.some((l) => l.sc?.w),
-    forma: linhas.some((l) => formaMedia(l.fm) != null),
     rfeg: linhas.some((l) => l.sc?.rk),
+    torn: linhas.some((l) => l.sc?.a?.[0]),
+    vit: linhas.some((l) => l.sc?.a?.[1]),
+    pod: linhas.some((l) => l.sc?.a?.[2]),
+    voltas: linhas.some((l) => l.sc?.v),
+    forma: linhas.some((l) => (l.fm?.r.length ?? 0) > 0),
     vsm: linhas.some((l) => l.sc?.m?.length),
     prox: linhas.some((l) => l.proximas.length),
   };
   const sameYear = (e: PastEdition) => eds.some((o) => o !== e && o.year === e.year);
   const hp = { sortKey, sortDir, onSort: toggleSort };
-  const nCarreira = 1 + (tem.idade ? 1 : 0) + (tem.hcp ? 1 : 0) + (tem.torn ? 1 : 0) + (tem.vit ? 1 : 0) + (tem.forma ? 1 : 0) + (tem.rfeg ? 1 : 0);
+  const nPerfil = (tem.esc ? 1 : 0) + (tem.hcp ? 1 : 0) + 1 + (tem.rfeg ? 1 : 0);
+  const nAno = (tem.torn ? 1 : 0) + (tem.vit ? 1 : 0) + (tem.pod ? 1 : 0) + (tem.voltas ? 2 : 0) + (tem.forma ? 1 : 0);
   const nProva = eds.length ? 2 + eds.length : 0;
   const nManuel = tem.vsm ? 2 : 0;
-  const nCols = colsAntes.length + 1 + nCarreira + nProva + nManuel + (tem.prox ? 1 : 0) + colsDepois.length;
+  const nCols = colsAntes.length + 1 + nPerfil + nAno + nProva + nManuel + (tem.prox ? 1 : 0) + colsDepois.length;
   // Blocos das colunas da página (cada coluna diz o seu grupo; seguidas = um bloco).
   const blocosDepois: { grupo: string; n: number }[] = [];
   for (const c of colsDepois) {
@@ -281,24 +319,33 @@ export default function Scout({
     const sep = i === 0 || (arr[i - 1].grupo ?? "") !== (c.grupo ?? "");
     return <td key={c.key} className={sep ? "scout-sep" : undefined}>{c.cell(l.name)}</td>;
   };
+  // Separador do 1.º de cada bloco (a 1.ª coluna que aparece).
+  const sepPerfil = { esc: tem.esc, hcp: !tem.esc && tem.hcp, nivel: !tem.esc && !tem.hcp };
+  const sepAno = { torn: tem.torn, vit: !tem.torn && tem.vit, pod: !tem.torn && !tem.vit && tem.pod,
+    voltas: !tem.torn && !tem.vit && !tem.pod && tem.voltas, forma: !tem.torn && !tem.vit && !tem.pod && !tem.voltas };
+  const lugar = (pos: number | null | undefined, title?: string, field?: number | null) => pos != null
+    ? <span className={"pos-medal pos-medal-sm " + medalClass(pos)} title={title}>{pos}.º{field ? <span className="scout-field">/{field}</span> : null}</span>
+    : <span className="scout-sem" title={title}>–</span>;
 
   return (
-    <div>
-      <div className="fs-13 u-d-flex u-ai-baseline u-gap-6px u-fwr-wrap u-m-2px-0-10px u-c-text-2">
-        <span><b className="u-c-text">{rivais.length}</b> {manuelNoField ? "adversários" : "jogadores"}</span>
-        {paises > 1 && <><span className="muted">·</span><span><b className="u-c-text">{paises}</b> países</span></>}
-        <span className="muted">·</span><span title="Elite ou Forte"><b className="u-c-text">{altos}</b> de nível alto</span>
-        <span className="muted">·</span><span><b className="u-c-text">{comManuel}</b> já jogaram com o Manuel</span>
-        {edsTodas.length > 0 && <><span className="muted">·</span><span><b className="u-c-text">{repetem}</b> já jogaram esta prova ({edsTodas.length} edi{edsTodas.length === 1 ? "ção anterior" : "ções anteriores"})</span></>}
+    <div className="scout">
+      <div className="scout-resumo">
+        <span><b>{rivais.length}</b> {manuelNoField ? "adversários" : "jogadores"}</span>
+        {paises > 1 && <><span className="muted">·</span><span><b>{paises}</b> países</span></>}
+        <span className="muted">·</span><span title="Elite ou Forte"><b>{altos}</b> de nível alto</span>
+        <span className="muted">·</span><span><b>{comManuel}</b> já jogaram com o Manuel</span>
+        {edsTodas.length > 0 && <><span className="muted">·</span><span><b>{repetem}</b> já jogaram esta prova ({edsTodas.length} edi{edsTodas.length === 1 ? "ção anterior" : "ções anteriores"})</span></>}
         {resumoExtra}
       </div>
+      <RowsFilterBar rows={filtraveis} filter={filter} onChange={setFilter} total={filtraveis.length} />
       <div className="u-ox-auto u-pb-6px">
-        <table className="sc-lb sc-lb-airy u-fvn-tabular-nums u-w-max-content">
+        <table className="sc-lb scout-table u-fvn-tabular-nums u-w-max-content">
           <thead>
             <tr>
               {colsAntes.length > 0 && <th colSpan={colsAntes.length} />}
               <th />
-              <th colSpan={nCarreira} className="scout-grp scout-sep">Carreira</th>
+              <th colSpan={nPerfil} className="scout-grp scout-sep">Perfil</th>
+              {nAno > 0 && <th colSpan={nAno} className="scout-grp scout-sep" title="Os últimos 12 meses">Último ano</th>}
               {nProva > 0 && <th colSpan={nProva} className="scout-grp scout-sep">Nesta prova</th>}
               {nManuel > 0 && <th colSpan={nManuel} className="scout-grp scout-sep">Com o Manuel</th>}
               {tem.prox && <th className="scout-grp scout-sep">Próximos</th>}
@@ -307,13 +354,16 @@ export default function Scout({
             <tr>
               {colsAntes.map(extraHdr)}
               <SortableHdr k="name" {...hp} className="u-ta-left">Jogador</SortableHdr>
-              {tem.idade && hdr("idade", "Idade", undefined, true)}
-              {tem.hcp && hdr("hcp", "HCP", "Handicap (Portugal / Espanha / França)", !tem.idade)}
-              {hdr("nivel", "Nível", "Nível na carreira (Elite, Forte, Sólido, Em Dev., Iniciante). Ordenar por aqui põe primeiro os mais perigosos para o Manuel — o porquê está no tooltip de cada um.", !tem.idade && !tem.hcp)}
-              {tem.torn && hdr("torn", "Torneios", "Torneios na carreira (todas as fontes)")}
-              {tem.vit && hdr("vit", "Vitórias", "Vitórias na carreira")}
-              {tem.forma && hdr("forma", "Forma", `±par médio por 18 buracos nos últimos ${N_FORMA} torneios (últimos 18 meses) — o último está no tooltip`)}
+              {tem.esc && hdr("esc", "Escalão", "Escalão deste ano e o ano de nascimento (1.º ou 2.º ano do escalão); a idade no tooltip", sepPerfil.esc)}
+              {tem.hcp && hdr("hcp", "HCP", "Handicap (Portugal / Espanha / França)", sepPerfil.hcp)}
+              {hdr("nivel", "Nível", "Nível na carreira (Elite, Forte, Sólido, Em Dev., Iniciante); o pontinho é a ameaça para o Manuel. Ordenar por aqui põe primeiro os mais perigosos — o porquê está no tooltip de cada um.", sepPerfil.nivel)}
               {tem.rfeg && hdr("rfeg", "Rk RFEG", "Lugar no ranking juvenil da Federação Espanhola (Infantil, Cadete ou de zona) — qual ranking e a data no tooltip")}
+              {tem.torn && hdr("torn", "Torn.", "Torneios nos últimos 12 meses (todas as fontes)", sepAno.torn)}
+              {tem.vit && hdr("vit", "Vit.", "Vitórias nos últimos 12 meses", sepAno.vit)}
+              {tem.pod && hdr("pod", "Pódios", "Pódios (1.º a 3.º) nos últimos 12 meses", sepAno.pod)}
+              {tem.voltas && hdr("media", "Média", "Média por volta de 18 buracos no último ano: ±par (quando há o par oficial) e as pancadas; quantas voltas no tooltip", sepAno.voltas)}
+              {tem.voltas && hdr("melhor", "Melhor", "Melhor volta de 18 buracos no último ano")}
+              {tem.forma && hdr("forma", "Últimos torneios", `Os últimos ${N_FORMA} lugares — lugar / jogadores, o mais recente à esquerda (data e ±par no tooltip)`, sepAno.forma)}
               {nProva > 0 && hdr("n", "Vezes", "Quantas edições anteriores desta prova jogou", true)}
               {nProva > 0 && hdr("best", "Melhor", "Melhor lugar numa edição anterior desta prova")}
               {eds.map((e) => (
@@ -322,14 +372,14 @@ export default function Scout({
                   {sameYear(e) && e.label ? <div className="fs-10 muted u-fw-500">{e.label}</div> : null}
                 </SortableHdr>
               ))}
-              {tem.vsm && hdr("vsm", "Ele à frente", "Em quantas das provas em comum ficou à frente do Manuel", true)}
-              {tem.vsm && hdr("vsmp", "Pancadas", "Pancadas a mais (+) ou a menos (−) que o Manuel, em média, nas provas em comum")}
+              {tem.vsm && hdr("vsm", "Manuel × ele", "Nas provas em comum: quantas vezes o Manuel ficou à frente × quantas ele ficou à frente", true)}
+              {tem.vsm && hdr("vsmp", "Pancadas", "Pancadas dele a mais (+) ou a menos (−) que o Manuel, por volta de 18 buracos — só as voltas que os dois jogaram")}
               {tem.prox && hdr("prox", "Torneios", "Próximos torneios USKids em que está inscrito (a lista no tooltip)", true)}
               {colsDepois.map(extraHdr)}
             </tr>
           </thead>
           <tbody>
-            {ordenadas.map((l) => {
+            {visiveis.map((l) => {
               const isOpen = aberto === l.key;
               // Bandeira: a do clube, senão o país que a prova publica, senão o do kids2.
               const paisFlag = l.country ? flag(l.country) : "";
@@ -338,90 +388,126 @@ export default function Scout({
               const clube = (l.club || "").replace(/^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}][\u{1F1E6}-\u{1F1FF}\u{E0000}-\u{E007F}]*\s*/u, "").trim();
               const mostraClube = clube && !/^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(clube);
               const fmd = formaMedia(l.fm);
-              const ult = l.fm?.r[0];
+              const ultimos = (l.fm?.r ?? []).slice(0, N_FORMA);
               const detExtra = detalheExtra?.(l.name) ?? null;
               const temDetalhe = !!(l.sc?.m?.length || l.proximas.length || detExtra);
               const nM = l.sc?.m?.length ?? 0;
+              const empates = nM - l.frente - l.atras;
+              const ameaca = !l.isManuel && l.threat.level !== "none" ? l.threat.level : null;
               return (
                 <React.Fragment key={l.key}>
-                  <tr className={l.isManuel ? "row-manuel" : undefined}
+                  <tr className={[l.isManuel ? "row-manuel" : "", temDetalhe ? "scout-clicavel" : "", isOpen ? "is-aberto" : ""].filter(Boolean).join(" ") || undefined}
                       onClick={temDetalhe ? () => setAberto(isOpen ? null : l.key) : undefined}
-                      style={{ cursor: temDetalhe ? "pointer" : undefined, background: isOpen ? "var(--bg-hover)" : undefined }}
                       title={temDetalhe ? "Ver o detalhe: provas em comum com o Manuel e próximas inscrições" : undefined}>
                     {colsAntes.map(extraTd(l))}
-                    <td className={`${l.isManuel ? "fw-700" : ""} u-ta-left u-ws-nowrap`}>
-                      {bandeira}{l.name} <KidsLink nome={l.name} fed={l.fed} />
-                      {mostraClube && <span className="muted fs-11"> · {clube}</span>}
+                    <td className="u-ta-left scout-jog">
+                      <span className={l.isManuel ? "fw-700" : "fw-600"}>{bandeira}{l.name}</span> <KidsLink nome={l.name} fed={l.fed} />
+                      {mostraClube && <div className="scout-clube">{clube}</div>}
                     </td>
-                    {tem.idade && <td className="scout-sep">{l.idade ?? "–"}</td>}
+                    {tem.esc && (
+                      <td className={sepPerfil.esc ? "scout-sep" : undefined} title={l.idade != null ? `${l.idade} anos` : undefined}>
+                        {l.escalao ? <span className="u-ws-nowrap">{l.escalao} {l.nasc && <AnoEscalaoPill dob={l.nasc} escalao={l.escalao} />}</span> : <span className="scout-sem">–</span>}
+                      </td>
+                    )}
                     {tem.hcp && (
-                      <td className={!tem.idade ? "scout-sep" : undefined}
+                      <td className={sepPerfil.hcp ? "scout-sep" : undefined}
                           title={l.sc?.hr ? `Handicap oficial da Federação Espanhola${l.sc.hr[1] ? ` — actualizado a ${shortDateSlash(l.sc.hr[1], true)}` : ""}` : undefined}>
-                        {fmtHcp(l.sc?.h, "–")}
+                        {l.sc?.h != null ? <span className="fw-600">{fmtHcp(l.sc.h)}</span> : <span className="scout-sem">–</span>}
                       </td>
                     )}
-                    <td className={!tem.idade && !tem.hcp ? "scout-sep" : undefined}
-                        title={!l.isManuel && l.threat.level !== "none" ? `Ameaça ${THREAT_LABEL[l.threat.level]} para o Manuel — ${l.threat.reasons.join(" · ")}` : undefined}>
-                      {l.sc?.t ? getTierLabel(l.sc.t) : "–"}
+                    <td className={sepPerfil.nivel ? "scout-sep" : undefined}>
+                      {l.sc?.t
+                        ? <span className="scout-nivel">
+                            <TierBadge tier={l.sc.t} title={ameaca ? `Ameaça ${THREAT_LABEL[ameaca]} para o Manuel — ${l.threat.reasons.join(" · ")}` : undefined} />
+                            {ameaca && <span className={"scout-ameaca is-" + ameaca} title={`Ameaça ${THREAT_LABEL[ameaca]} para o Manuel`} />}
+                          </span>
+                        : <span className="scout-sem">–</span>}
                     </td>
-                    {tem.torn && <td>{l.sc?.n || "–"}</td>}
-                    {tem.vit && <td>{l.sc?.w || "–"}</td>}
-                    {tem.forma && (
-                      <td title={[
-                        ult ? `Último: ${ult[3] ? `${ult[3]}.º de ${ult[4]}` : fmtToPar(ult[1])} (${shortDateSlash(ult[0])})` : null,
-                        ...(l.fm?.r.slice(0, N_FORMA).map((x) => `${shortDateSlash(x[0])} · ${fmtToPar(x[1])} (${x[2]} b.)${x[3] ? ` · ${x[3]}.º/${x[4]}` : ""}`) ?? []),
-                      ].filter(Boolean).join("\n") || undefined}>
-                        {fmd != null ? fmtToPar(fmd) : "–"}
-                      </td>
-                    )}
                     {tem.rfeg && (
                       <td title={l.sc?.rk ? `${l.sc.rk[2]}${l.sc.rk[3] ? ` · ranking de ${shortDateSlash(l.sc.rk[3], true)}` : ""}` : undefined}>
-                        {l.sc?.rk ? `${l.sc.rk[0]}.º/${l.sc.rk[1]}` : "–"}
+                        {l.sc?.rk ? `${l.sc.rk[0]}.º/${l.sc.rk[1]}` : <span className="scout-sem">–</span>}
+                      </td>
+                    )}
+                    {tem.torn && <td className={sepAno.torn ? "scout-sep" : undefined}>{l.sc?.a?.[0] || <span className="scout-sem">–</span>}</td>}
+                    {tem.vit && <td className={sepAno.vit ? "scout-sep" : undefined}>{l.sc?.a?.[1] ? <b>{l.sc.a[1]}</b> : <span className="scout-sem">–</span>}</td>}
+                    {tem.pod && <td className={sepAno.pod ? "scout-sep" : undefined}>{l.sc?.a?.[2] || <span className="scout-sem">–</span>}</td>}
+                    {tem.voltas && (
+                      <td className={sepAno.voltas ? "scout-sep" : undefined}
+                          title={l.sc?.v ? `${l.sc.v[0]} volta${l.sc.v[0] > 1 ? "s" : ""} de 18 buracos · média ${l.sc.v[1].toFixed(1)} pancadas${l.sc.v[3] != null ? ` (${fmtToPar(l.sc.v[3])})` : ""}` : undefined}>
+                        {l.sc?.v
+                          ? <span className="scout-media">
+                              {l.sc.v[3] != null && <b className={l.sc.v[3] <= 0 ? "c-good" : undefined}>{fmtToPar(l.sc.v[3])}</b>}
+                              <span className={l.sc.v[3] != null ? "scout-sub" : "fw-600"}>{l.sc.v[1].toFixed(1)}</span>
+                            </span>
+                          : <span className="scout-sem">–</span>}
+                      </td>
+                    )}
+                    {tem.voltas && (
+                      <td>{l.sc?.v
+                        ? <span className="scout-media"><b>{l.sc.v[2]}</b>{l.sc.v[4] != null && <span className="scout-sub">{fmtToPar(l.sc.v[4])}</span>}</span>
+                        : <span className="scout-sem">–</span>}</td>
+                    )}
+                    {tem.forma && (
+                      <td className={sepAno.forma ? "scout-sep" : undefined}>
+                        {ultimos.length
+                          ? <span className="scout-forma" title={fmd != null ? `±par médio por 18 buracos nestes torneios: ${fmtToPar(fmd)}` : undefined}>
+                              {ultimos.map((x, i) => (
+                                <React.Fragment key={i}>{lugar(x[3], `${shortDateSlash(x[0])} · ${x[3] ? `${x[3]}.º de ${x[4]}` : "sem lugar"} · ${fmtToPar(x[1])} (${x[2]} b.)`, x[4])}</React.Fragment>
+                              ))}
+                            </span>
+                          : <span className="scout-sem">–</span>}
                       </td>
                     )}
                     {nProva > 0 && (
                       <td className="scout-sep" title={l.rep?.avgToPar != null ? `Média ${fmtToPar(l.rep.avgToPar)} nas edições que acabou` : undefined}>
-                        {l.rep ? l.rep.n : "–"}
+                        {l.rep ? l.rep.n : <span className="scout-sem">–</span>}
                       </td>
                     )}
-                    {nProva > 0 && <td>{l.rep?.bestPos != null ? `${l.rep.bestPos}.º` : "–"}</td>}
+                    {nProva > 0 && <td>{l.rep?.bestPos != null ? lugar(l.rep.bestPos) : <span className="scout-sem">–</span>}</td>}
                     {eds.map((e) => {
                       const c = l.rep?.byEd[e.id];
-                      if (!c) return <td key={e.id}>–</td>;
-                      return (
-                        <td key={e.id}
-                            title={[c.pos != null ? `${c.pos}.º de ${c.field}` : null, c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ")}
-                            style={c.complete ? undefined : { fontStyle: "italic", color: "var(--text-3)" }}>
-                          {c.pos != null ? `${c.pos}.º` : "–"}
-                        </td>
-                      );
+                      if (!c) return <td key={e.id}><span className="scout-sem">–</span></td>;
+                      const title = [c.pos != null ? `${c.pos}.º de ${c.field}` : null, c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ");
+                      return <td key={e.id}>{c.complete ? lugar(c.pos, title) : <span className="scout-wd" title={title}>{c.pos != null ? `${c.pos}.º` : "WD"}</span>}</td>;
                     })}
-                    {tem.vsm && <td className="scout-sep">{nM ? `${l.atras} de ${nM}` : "–"}</td>}
-                    {tem.vsm && <td>{l.vsMMedia != null ? `${l.vsMMedia > 0 ? "+" : l.vsMMedia < 0 ? "−" : ""}${Math.abs(Math.round(l.vsMMedia))}` : "–"}</td>}
+                    {tem.vsm && (
+                      <td className="scout-sep" title={nM ? `${nM} prova${nM > 1 ? "s" : ""} em comum${empates > 0 ? ` · ${empates} empate${empates > 1 ? "s" : ""}` : ""}` : undefined}>
+                        {nM ? <span className={"scout-saldo" + (l.frente > l.atras ? " is-good" : l.frente < l.atras ? " is-bad" : "")}>{l.frente} × {l.atras}</span> : <span className="scout-sem">–</span>}
+                      </td>
+                    )}
+                    {tem.vsm && (
+                      <td>{l.vsMMedia != null
+                        ? <span className={"scout-topar" + (l.vsMMedia > 0.05 ? " is-good" : l.vsMMedia < -0.05 ? " is-bad" : "")}>{l.vsMMedia > 0 ? "+" : l.vsMMedia < 0 ? "−" : ""}{Math.abs(l.vsMMedia).toFixed(1)}</span>
+                        : <span className="scout-sem">–</span>}</td>
+                    )}
                     {tem.prox && (
                       <td className="scout-sep" title={l.proximas.map((x) => `${x.name} · ${x.escalao} (${shortDateSlash(x.date)})`).join("\n") || undefined}>
-                        {l.proximas.length || "–"}
+                        {l.proximas.length || <span className="scout-sem">–</span>}
                       </td>
                     )}
                     {colsDepois.map(extraTd(l))}
                   </tr>
                   {isOpen && (
-                    <tr>
-                      <td colSpan={nCols} className="u-ta-left u-bg-bg-hover u-p-6px-10px-12px-28px">
+                    <tr className="scout-detalhe">
+                      <td colSpan={nCols} className="u-ta-left">
                         {detExtra && <div className="u-mb-8px">{detExtra}</div>}
                         {nM ? (
-                          <table className="sc-lb u-w-max-content u-mb-6px">
-                            <thead><tr><th className="u-ta-left">Prova em comum com o Manuel</th><th>Data</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel">Pancadas</th></tr></thead>
+                          <table className="sc-lb scout-table u-w-max-content u-mb-6px">
+                            <thead><tr><th className="u-ta-left">Prova em comum com o Manuel</th><th>Data</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel, por volta de 18 buracos (só as voltas que os dois jogaram)">Por volta</th><th>Voltas</th></tr></thead>
                             <tbody>
-                              {l.sc!.m!.map((x, i) => (
-                                <tr key={i}>
-                                  <td className="u-ta-left">{x[1]}</td>
-                                  <td>{x[0] ? shortDateSlash(x[0]) : "–"}</td>
-                                  <td>{x[2] != null ? `${x[2]}.º` : "–"}</td>
-                                  <td>{x[3] != null ? `${x[3]}.º` : "–"}</td>
-                                  <td>{x[4] > 0 ? "+" : x[4] < 0 ? "−" : ""}{Math.abs(x[4])}</td>
-                                </tr>
-                              ))}
+                              {l.sc!.m!.map((x, i) => {
+                                const pv = porVolta([x]);
+                                return (
+                                  <tr key={i}>
+                                    <td className="u-ta-left">{x[1]}</td>
+                                    <td>{x[0] ? shortDateSlash(x[0]) : "–"}</td>
+                                    <td>{lugar(x[2])}</td>
+                                    <td>{lugar(x[3])}</td>
+                                    <td>{pv != null ? <span className={"scout-topar" + (pv > 0.05 ? " is-good" : pv < -0.05 ? " is-bad" : "")}>{pv > 0 ? "+" : pv < 0 ? "−" : ""}{Math.abs(pv).toFixed(1)}</span> : "–"}</td>
+                                    <td>{x[5] ?? "–"}</td>
+                                  </tr>
+                                );
+                              })}
                             </tbody>
                           </table>
                         ) : <div className="muted fs-12 u-mb-6px">Ainda não jogou nenhuma prova com o Manuel.</div>}

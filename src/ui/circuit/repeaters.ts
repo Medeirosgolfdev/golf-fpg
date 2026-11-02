@@ -14,7 +14,11 @@ import type { PastEdition } from "./PastEditionsTable";
 
 /** Jogador do field. O `fed` (FPG), quando há, identifica-o melhor do que o
  *  nome — «Manuel Medeiros» é também o nome do pai (54907). */
-export interface FieldPlayer { name: string; club?: string | null; country?: string | null; fed?: string | null }
+export interface FieldPlayer {
+  name: string; club?: string | null; country?: string | null; fed?: string | null;
+  /** Nascimento que a prova traz (ISO, ou só o ano). */
+  dob?: string | null;
+}
 
 export interface RepeaterCell {
   pos: number | null;

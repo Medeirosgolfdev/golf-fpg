@@ -370,11 +370,12 @@ export function getResultInTournament(junior: Junior, tournament: Tournament): {
   return null;
 }
 
-export function countWins(junior: Junior, tournamentById: Map<string, Tournament>): number {
+/** `desde` (AAAA-MM-DD): só os torneios a partir dessa data (o «último ano» do Scout). */
+export function countWins(junior: Junior, tournamentById: Map<string, Tournament>, desde?: string): number {
   let wins = 0;
   for (const tid of junior.tournamentIds) {
     const t = tournamentById.get(tid);
-    if (!t) continue;
+    if (!t || (desde && (t.date || t.startDate || "") < desde)) continue;
     for (const f of t.flights) {
       const r = f.results.find((x) => x.juniorId === junior.id);
       if (r?.pos === 1) wins++;
@@ -383,11 +384,11 @@ export function countWins(junior: Junior, tournamentById: Map<string, Tournament
   return wins;
 }
 
-export function countTop3(junior: Junior, tournamentById: Map<string, Tournament>): number {
+export function countTop3(junior: Junior, tournamentById: Map<string, Tournament>, desde?: string): number {
   let n = 0;
   for (const tid of junior.tournamentIds) {
     const t = tournamentById.get(tid);
-    if (!t) continue;
+    if (!t || (desde && (t.date || t.startDate || "") < desde)) continue;
     for (const f of t.flights) {
       const r = f.results.find((x) => x.juniorId === junior.id);
       if (typeof r?.pos === "number" && r.pos <= 3) n++;

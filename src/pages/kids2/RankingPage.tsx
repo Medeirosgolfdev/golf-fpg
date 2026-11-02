@@ -29,6 +29,7 @@ import { MANUEL_BIRTH_YEAR, isManuel } from "../../constants/manuel";
 import { useScoutRanking } from "./useScoutRanking";
 import { medal as medalOf } from "../../utils/format";
 import SearchInput from "../../ui/SearchInput";
+import TierBadge from "../../ui/TierBadge";
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -110,14 +111,6 @@ function buildJourney(j: Junior, tournamentById: Map<string, Tournament>): Journ
 
 // ── Sub-componentes ───────────────────────────────────────────────────────────
 
-function TierBadge({ tier }: { tier: TierKey }) {
-  const c = getTierColors(tier);
-  return (
-    <span className="tier-pill tier-pill-sm" style={{ background: c.bg, color: c.fg }}>
-      {getTierLabel(tier)}
-    </span>
-  );
-}
 
 function JourneyChip({ item }: { item: JourneyItem }) {
   return (

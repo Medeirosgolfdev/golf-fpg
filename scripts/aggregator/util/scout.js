@@ -16,7 +16,13 @@
  *   { schemaVersion, generatedAt, manuelId, players: {
  *       [juniorId]: { n: torneios na carreira, t?: tier, w?: vitórias, t3?: top-3, h?: HCP, d?: "AAAA-MM-DD",
  *                     c?: clube, p?: país,
- *                     m?: [[data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel], …],
+ *                     m?: [[data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel, voltas, buracos], …]
+ *                         — as pancadas só das voltas que OS DOIS jogaram (com cartão); `voltas` quantas
+ *                         foram e `buracos` os de cada volta (02/11/2026: comparava totais de 36 contra 18
+ *                         buracos e «sem cartão» 999 — dava −122 e +907),
+ *                     a?: [torneios, vitórias, top-3] no último ano (365 dias até ao generatedAt),
+ *                     v?: voltas de 18 buracos no último ano — [voltas, média de pancadas, melhor volta,
+ *                         ±par médio, ±par da melhor] (os ±par só com o par oficial do escalão, senão null),
  *                     mf?: confrontos no mesmo flight,
  *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição],
  *                     hr?: [hcp, "AAAA-MM-DD"] — o «h» é o hándicap OFICIAL actual da RFEG, com a data,
@@ -78,6 +84,44 @@ function buildExtra(tournaments) {
   return { meta, players };
 }
 
+/** As voltas que os dois jogaram (com cartão), pela ordem: a diferença de
+ *  pancadas dele − Manuel e quantas voltas. Sem voltas, compara os totais só
+ *  quando os dois têm cartão. Nada em comum → null. */
+function voltasEmComum(rJ, rM) {
+  const ok = (g) => typeof g === "number" && g > 0 && g < 900;
+  const vJ = rJ.rounds || [], vM = rM.rounds || [];
+  let diff = 0, n = 0;
+  for (let i = 0; i < Math.min(vJ.length, vM.length); i++) {
+    if (ok(vJ[i]?.gross) && ok(vM[i]?.gross)) { diff += vJ[i].gross - vM[i].gross; n++; }
+  }
+  if (n) return { diff, n };
+  if (!vJ.length && !vM.length && ok(rJ.totalGross) && ok(rM.totalGross)) return { diff: rJ.totalGross - rM.totalGross, n: 1 };
+  return null;
+}
+
+/** As voltas de 18 buracos do último ano: quantas, média, melhor e os ±par
+ *  (só quando o escalão tem o par oficial dos 18 buracos — nunca inventado). */
+function voltasDoAno(j, tById, desde) {
+  const ok = (g) => typeof g === "number" && g > 0 && g < 900;
+  const voltas = [];
+  for (const tid of j.tournamentIds) {
+    const t = tById.get(tid);
+    if (!t || (t.date || t.startDate || "") < desde || (t.holesPerRound || 18) !== 18) continue;
+    for (const f of t.flights || []) {
+      const r = f.results.find((x) => x.juniorId === j.id);
+      if (!r) continue;
+      const par = Array.isArray(f.par) && f.par.length === 18 && f.par.every((x) => typeof x === "number") ? f.par.reduce((s, x) => s + x, 0) : null;
+      for (const rd of r.rounds || []) if (ok(rd.gross)) voltas.push([rd.gross, par == null ? null : rd.gross - par]);
+      break;
+    }
+  }
+  if (!voltas.length) return null;
+  const media = (xs) => Math.round((xs.reduce((s, x) => s + x, 0) / xs.length) * 10) / 10;
+  const melhor = voltas.reduce((b, x) => (x[0] < b[0] ? x : b));
+  const tps = voltas.filter((x) => x[1] != null).map((x) => x[1]);
+  return [voltas.length, media(voltas.map((x) => x[0])), melhor[0], tps.length === voltas.length ? media(tps) : null, melhor[1]];
+}
+
 function buildScout(juniors, tournaments, generatedAt, form) {
   const { computeRanking, encodeRankingEntry, computeTier, countWins, countTop3, getSharedTournamentIds, getSharedFlightTids } = loadCalc();
   const tById = new Map(tournaments.map((t) => [t.id, t]));
@@ -85,6 +129,7 @@ function buildScout(juniors, tournaments, generatedAt, form) {
   const formPlayers = form?.players || {};
   const ranking = computeRanking(juniors, tById);
   const manuel = juniors.find((j) => j.id === MANUEL_ID) || null;
+  const desdeAno = new Date(new Date(generatedAt || Date.now()).getTime() - 365 * 864e5).toISOString().slice(0, 10);
   const players = {};
   for (const j of juniors) {
     if (!j.tournamentIds?.length) continue;
@@ -98,6 +143,11 @@ function buildScout(juniors, tournaments, generatedAt, form) {
     if (w) o.w = w;
     const t3 = countTop3(j, tById);
     if (t3) o.t3 = t3;
+    // Último ano: torneios, vitórias e top-3 dos últimos 365 dias.
+    const nAno = j.tournamentIds.filter((tid) => (tById.get(tid)?.date || tById.get(tid)?.startDate || "") >= desdeAno).length;
+    if (nAno) o.a = [nAno, countWins(j, tById, desdeAno), countTop3(j, tById, desdeAno)];
+    const v = voltasDoAno(j, tById, desdeAno);
+    if (v) o.v = v;
     const src = j.sources || {};
     // HCP: o da FPG; senão o oficial actual da RFEG (com data); senão o da
     // última inscrição RFEG; senão o da FFG.
@@ -121,10 +171,12 @@ function buildScout(juniors, tournaments, generatedAt, form) {
         for (const f of t.flights) {
           const rJ = f.results.find((x) => x.juniorId === j.id);
           const rM = f.results.find((x) => x.juniorId === manuel.id);
-          if (rJ?.totalGross == null || rM?.totalGross == null) continue;
+          if (!rJ || !rM) continue;
+          const d = voltasEmComum(rJ, rM);
+          if (!d) break;
           m.push([t.date || t.startDate || "", t.name || t.shortName || tid,
             typeof rJ.pos === "number" ? rJ.pos : null, typeof rM.pos === "number" ? rM.pos : null,
-            rJ.totalGross - rM.totalGross]);
+            d.diff, d.n, t.holesPerRound || 18]);
           break;
         }
       }
@@ -138,7 +190,7 @@ function buildScout(juniors, tournaments, generatedAt, form) {
     if (formPlayers[j.id]) o.f = formPlayers[j.id];
     const x = extra.players.get(j.id);
     if (x) o.x = x;
-    if (o.t || o.w || o.m || o.h != null || o.r || o.f || o.x || o.d || o.p || o.rk) players[j.id] = o;
+    if (o.t || o.w || o.m || o.a || o.v || o.h != null || o.r || o.f || o.x || o.d || o.p || o.rk) players[j.id] = o;
   }
   return { schemaVersion: 2, generatedAt, manuelId: MANUEL_ID, keep: form?.keep, x: extra.meta, players };
 }

@@ -23,6 +23,7 @@ import { isManuelByName } from "../../constants/manuel";
 import { withDivisionModel } from "../model/division";
 import { stripAccents } from "../../utils/normName";
 import { DRIVE_REGION_LABEL } from "./driveRegions";
+import { isFinalEvent, isNacionalFinal } from "../../constants/drivePoints";
 
 /** Ordem canónica de escalões do Drive (para ordenar tabs/divisões). */
 
@@ -365,9 +366,12 @@ export const DRIVE_CONFIG: CircuitConfig = {
   // Série na chave para não misturar Tour/Challenge/Aquapor no mesmo campo
   // (leaderboards de escalões diferentes). Escalão FORA da chave — o
   // `matchDivision` casa-o por label (escalões Drive distam 2, sem contaminação ±1).
+  // As FINAIS mudam de campo todos os anos: casam com as Finais anteriores da
+  // mesma série e zona (a Nacional à parte) — 02/11/2026.
   editionKey: (e) => {
     if (!e.series) return null;
-    const campo = stripAccents(shortCampo(e.course).toLowerCase()).replace(/[^a-z0-9]+/g, " ").trim();
+    if (isFinalEvent(e.name)) return `${e.series}|final|${isNacionalFinal(e.name) ? "nacional" : e.liga ?? ""}`;
+    const campo = campoKey(e.course || campoDoNome(e.name));
     if (!campo) return null;
     return `${e.series}|${campo}`;
   },
@@ -381,6 +385,23 @@ export const DRIVE_CONFIG: CircuitConfig = {
   seasonTabLabel: "Época",
   loadingMessage: "A carregar torneios do Drive…",
 };
+
+/** Chave do campo para casar edições: `shortCampo`, sem acentos, «Qtª» =
+ *  «Quinta» e sem as palavras que variam entre fontes (do/da/de, Golf, Clube…). */
+export function campoKey(c: string | null | undefined): string {
+  return stripAccents(shortCampo(c || "").toLowerCase())
+    .replace(/\bqt\S*/g, "quinta")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\b(do|da|de|dos|das|golf|golfe|club|clube|cc|gc)\b/g, " ")
+    .replace(/\s+/g, " ").trim();
+}
+
+/** O campo pelo nome, quando a FPG ainda não o deu (provas por disputar):
+ *  «1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 18» → «Qtª Peru». */
+export function campoDoNome(name: string | null | undefined): string {
+  const partes = String(name || "").split(/\s*[-–]\s*/).map(x => x.trim()).filter(Boolean);
+  return partes.find(x => !/torneio|drive|aquapor|circuito|final|^sub\s*\d+$/i.test(x)) ?? "";
+}
 
 /** Nome-base de um torneio Drive para casar duplicados: sem acentos, minúsculas,
  *  cortado no primeiro " – "/" - " (o sufixo é o campo: "Final Drive Tour – Oeiras…"). */

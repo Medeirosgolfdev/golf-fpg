@@ -30,11 +30,17 @@ import { stripAccents } from "../../utils/normName";
 export function divisionField(d: CircuitDivision | null | undefined): FieldPlayer[] {
   if (!d) return [];
   const res = d.results?.players?.filter((p) => p.name);
-  if (res?.length) return res.map((p) => ({ name: p.name, club: p.club || null }));
+  // O federado e o nascimento seguem para o Scout (idade/escalão pela base de federados).
+  if (res?.length) return res.map((p) => {
+    const x = p as typeof p & { dob?: string | null; birthYear?: number | null };
+    return { name: p.name, club: p.club || null, fed: p.fed || p.fedCode || null,
+      dob: x.dob || (x.birthYear ? String(x.birthYear) : null) };
+  });
   const tot = d.totals?.players?.filter((p) => p.name);
   if (tot?.length) return tot.map((p) => ({ name: p.name, club: p.club || null, country: p.country || null }));
-  const ins = d.admissions?.players?.filter((p) => p.status !== "desistente");
-  if (ins?.length) return ins.map((p) => ({ name: p.nome, club: p.clube || p.country || null }));
+  // Por disputar: as inscrições da divisão ou as que vêm penduradas no torneio (/drive).
+  const ins = (d.admissions ?? d.results?._admissions)?.players?.filter((p) => p.status !== "desistente");
+  if (ins?.length) return ins.map((p) => ({ name: p.nome, club: p.clube || p.country || null, fed: p.fed || null }));
   return [];
 }
 

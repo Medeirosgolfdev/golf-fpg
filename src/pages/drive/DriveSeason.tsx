@@ -75,8 +75,8 @@ function etapas(entries: CircuitEntry[], upcoming: DriveCalEntry[], calId?: stri
   // As etapas por jogar vêm do calendário da época (as inscrições da FPG).
   const porJogar = upcoming
     .filter(c => !jogadas.some(j => j.date === c.date))
-    .map(c => ({
-      id: `cal_${c.date}_${c.name}`, num: numOf(c.name), campo: c.campo || campoDoCalendario(calId, c.date), date: c.date,
+    .map((c, i) => ({
+      id: `cal_${c.date}_${i}`, num: numOf(c.name), campo: c.campo || campoDoCalendario(calId, c.date), date: c.date,
       keys: new Set<string>(), inscritos: new Set(c.inscritos ?? []), estado: c.estado,
     }));
   return [...jogadas, ...porJogar].sort((a, b) => a.date.localeCompare(b.date));
