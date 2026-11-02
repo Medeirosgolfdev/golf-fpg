@@ -233,7 +233,7 @@ export default function Scout({
         case "vit": return l.sc?.a?.[1] ?? null;
         case "pod": return l.sc?.a?.[2] ?? null;
         case "media": return l.sc?.v ? l.sc.v[3] ?? 500 + l.sc.v[1] : null; // sem par oficial vai para o fim
-        case "melhor": return l.sc?.v?.[2] ?? null;
+        case "melhor": return l.sc?.v ? l.sc.v[4] ?? 500 + l.sc.v[2] : null; // pelo ±par; sem par oficial vai para o fim
         case "forma": return formaMedia(l.sc?.u);
         case "ult": return l.ult[0]?.data ?? null;
         case "rfeg": return l.sc?.rk?.[0] ?? null;
@@ -378,7 +378,7 @@ export default function Scout({
               {tem.vit && hdr("vit", "Vit.", "Vitórias nos últimos 12 meses", sepAno.vit)}
               {tem.pod && hdr("pod", "Pódios", "Pódios (1.º a 3.º) nos últimos 12 meses", sepAno.pod)}
               {tem.voltas && hdr("media", "Média", "Média por volta de 18 buracos no último ano: ±par (quando há o par oficial) e as pancadas; quantas voltas no tooltip", sepAno.voltas)}
-              {tem.voltas && hdr("melhor", "Melhor", "Melhor volta de 18 buracos no último ano")}
+              {tem.voltas && hdr("melhor", "Melhor", "Melhor volta de 18 buracos no último ano — a de melhor ±par (Kids 2 e provas de clube FPG)")}
               {tem.forma && hdr("forma", "Últimos torneios", `Os últimos ${N_FORMA} torneios (Kids 2 e provas de clube FPG), o mais recente à esquerda: lugar / jogadores, ou o ±par nas provas de clube, que não têm classificação. O torneio, as pancadas e o SD no tooltip; tudo no detalhe (clicar na linha). Ordena pelo ±par médio.`, sepAno.forma)}
               {nProva > 0 && hdr("n", "Vezes", "Quantas edições anteriores desta prova jogou", true)}
               {nProva > 0 && hdr("best", "Melhor", "Melhor lugar numa edição anterior desta prova")}

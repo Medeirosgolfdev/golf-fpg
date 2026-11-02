@@ -128,9 +128,13 @@ function voltasDoAno(j, tById, desde, voltasFpg = []) {
   }
   if (!voltas.length) return null;
   const media = (xs) => Math.round((xs.reduce((s, x) => s + x, 0) / xs.length) * 10) / 10;
-  const melhor = voltas.reduce((b, x) => (x[0] < b[0] ? x : b));
   const tps = voltas.filter((x) => x[1] != null).map((x) => x[1]);
-  return [voltas.length, media(voltas.map((x) => x[0])), melhor[0], tps.length === voltas.length ? media(tps) : null, melhor[1]];
+  // A melhor é a de melhor ±par quando todas têm par (72 num par 72 é melhor do
+  // que 72 num par 70 — dava «72 (+2)» ao Manuel, que fez E duas vezes); sem
+  // par em todas, a de menos pancadas.
+  const comPar = tps.length === voltas.length;
+  const melhor = voltas.reduce((b, x) => (comPar ? x[1] < b[1] || (x[1] === b[1] && x[0] < b[0]) : x[0] < b[0]) ? x : b);
+  return [voltas.length, media(voltas.map((x) => x[0])), melhor[0], comPar ? media(tps) : null, comPar ? melhor[1] : null];
 }
 
 function buildScout(juniors, tournaments, generatedAt) {
