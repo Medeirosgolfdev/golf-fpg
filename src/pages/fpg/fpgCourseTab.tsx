@@ -37,8 +37,9 @@ function CampoDaProva({ campo }: { campo: string }) {
   return (
     <div className="mt-8">
       <div className="muted fs-11 mb-8">
-        <a href={`/campos/${course.courseKey}?view=manuel`} onClick={(e) => { e.preventDefault(); navigate(`/campos/${course.courseKey}?view=manuel`); }}>
-          {course.master.name} ↗
+        <a href={`/campos/${course.courseKey}?view=manuel`} className="tourn-ext-link" title="Abrir a página do campo"
+          onClick={(e) => { e.preventDefault(); navigate(`/campos/${course.courseKey}?view=manuel`); }}>
+          ⛳ {course.master.name} ↗
         </a>{" "}
         — o mesmo «Como jogou» da página do campo.
       </div>
