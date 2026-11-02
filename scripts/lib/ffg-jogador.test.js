@@ -81,6 +81,22 @@ describe("france-players.json (gerado)", () => {
     expect(hugo[0].license).toBe("514523296");
   });
 
+  it.skipIf(!fs.existsSync(OUT))("os 13 nomes com países diferentes juntam-se (decisão de 02/11/2026)", () => {
+    const l = lista();
+    for (const nome of ["Elise Bishop", "Axelle Wille", "Leo Taylor", "Pablo Jacquot", "Emile Chibert-Puel"]) {
+      expect(l.filter((p) => p.name === nome), nome).toHaveLength(1);
+    }
+    // Hardelot 2025: inscrição repetida (linha belga em branco) — conta uma vez, com o resultado.
+    const pablo = l.find((p) => p.name === "Pablo Jacquot");
+    expect(pablo.licencas).toEqual(["E83688948"]);
+    const t = JSON.parse(fs.readFileSync(path.join(DATA, "ffgolf-player-tournaments.json"), "utf8"));
+    const rows = t.byLicense[pablo.license];
+    expect(rows).toHaveLength(pablo.tot);
+    const hardelot = rows.filter((r) => /Hardelot/.test(t.tournaments[r[0]].name));
+    expect(hardelot).toHaveLength(1);
+    expect(hardelot[0][2]).toBe(157);
+  });
+
   // A fonte que trazia os lugares (CF clubes U16 2019) — se o predicado deixar
   // de os reconhecer, rebenta aqui e não só no ficheiro gerado.
   const SRC = path.join(DATA, "ffgolf-resultats", "01-00-1900525980.json");

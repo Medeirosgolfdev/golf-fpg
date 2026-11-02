@@ -280,21 +280,54 @@ console.log(`Total jogadores únicos (por license): ${players.size} — ${nOcc} 
 const isLicE = (lic) => /^E\d/.test(lic);
 /** A FFG escreve Inglaterra/Escócia/… como «EN1»/«SC1» — para comparar é «GBR». */
 const paisBase = (c) => (/^(?:EN|SC|WA|NI)1$/.test(c) ? "GBR" : c);
+/**
+ * Mesmo nome, países diferentes — a mesma pessoa por decisão da Mariana
+ * (02/11/2026, «Juntar os 13»; provável dupla nacionalidade). Para estes nomes
+ * o país não trava a junção; a guarda «nunca na mesma prova» continua.
+ * Chave = sexo|nome normalizado, como a dos grupos abaixo.
+ */
+const JUNTAR_APESAR_DO_PAIS = new Set([
+  "M|emile chibert-puel",   // 510499311 FRA · E90895706 LUX
+  "M|quintin hoffmann",     // 511222321 DEU · E79227596 FRA
+  "F|anais arafi",          // 514939203 FRA · E66717979 CHE
+  "F|elise bishop",         // 518683311 FRA · E61467052 BEL
+  "M|alexandre schrevens",  // 522873321 FRA · E61599809 BEL
+  "F|axelle wille",         // 525207312 FRA · E40627779/E40017796/E41019201 DEU
+  "M|nael smail",           // 530566326 FRA · E74307686 MAR
+  "M|jules durel",          // 044888339 FRA · E45673676/E44929838 DEU
+  "M|alexandre el khomri",  // 003364345 FRA · E77995952 MAR
+  "M|francis choquer",      // 041025299 FRA · E76572844 CHE
+  "M|pablo jacquot",        // 046524337 FRA · E83688948 BEL
+  "M|leo taylor",           // E86125997 EN1 · E90895670 SVK
+  "M|martin chiggiato",     // E76716178 FRA · E76122351 BEL
+]);
+
+/**
+ * Na mesma prova, duas linhas de quem é a mesma pessoa só podem ser uma
+ * inscrição repetida: uma joga e a outra fica sem score (Pablo Jacquot,
+ * Hardelot 23/08/2025 — 80+77 com a licença francesa e uma linha belga em
+ * branco). Só vale para os nomes de JUNTAR_APESAR_DO_PAIS.
+ */
+function inscricaoRepetida(a, b, trnId) {
+  const ti = tournIdx.get(`ffgres:${trnId}`);
+  return ti !== undefined && (!rowHasResult(a._apps.get(ti)) || !rowHasResult(b._apps.get(ti)));
+}
 
 /** Junta o registo `b` ao `a` (b sai do roster). */
 function juntarRegisto(a, b) {
   for (const trnId of b._seen) {
-    a._seen.add(trnId);
     const t = trnLics.get(trnId);
     if (t) { t.lics.delete(b.license); t.lics.add(a.license); }
+    if (a._seen.has(trnId)) continue; // inscrição repetida na mesma prova (ver inscricaoRepetida)
+    a._seen.add(trnId);
+    a.tot++;
+    if (t?.year === CUR_YEAR) a.ano++;
   }
   for (const [ti, row] of b._apps) addTourn(a, ti, row);
   for (const [y, set] of b._escByYear) {
     const cur = a._escByYear.get(y);
     if (cur) for (const x of set) cur.add(x); else a._escByYear.set(y, new Set(set));
   }
-  a.tot += b.tot;
-  a.ano += b.ano;
   if (b.firstSeenIso && (!a.firstSeenIso || b.firstSeenIso < a.firstSeenIso)) a.firstSeenIso = b.firstSeenIso;
   if (b.lastSeenIso && (!a.lastSeenIso || b.lastSeenIso > a.lastSeenIso)) a.lastSeenIso = b.lastSeenIso;
   if (b._lastDate > a._lastDate) {
@@ -324,7 +357,8 @@ let nLicJuntas = 0;
     if (!grupos.has(k)) grupos.set(k, []);
     grupos.get(k).push(e);
   }
-  for (const g of grupos.values()) {
+  for (const [chave, g] of grupos) {
+    const ignoraPais = JUNTAR_APESAR_DO_PAIS.has(chave);
     if (g.length < 2 || !g.some((e) => isLicE(e.license))) continue;
     const reais = g.filter((e) => !isLicE(e.license));
     if (reais.length > 1) continue;
@@ -336,8 +370,9 @@ let nLicJuntas = 0;
       const ficam = [];
       for (const e of resto) {
         if (e === principal) continue;
-        const outroPais = e.country && principal.country && paisBase(e.country) !== paisBase(principal.country);
-        if (outroPais || [...e._seen].some((t) => principal._seen.has(t))) { ficam.push(e); continue; }
+        const outroPais = !ignoraPais && e.country && principal.country && paisBase(e.country) !== paisBase(principal.country);
+        const mesmaProva = [...e._seen].some((t) => principal._seen.has(t) && !(ignoraPais && inscricaoRepetida(principal, e, t)));
+        if (outroPais || mesmaProva) { ficam.push(e); continue; }
         juntarRegisto(principal, e);
         nLicJuntas++;
       }
