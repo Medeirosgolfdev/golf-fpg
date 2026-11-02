@@ -257,8 +257,8 @@ export default function HeroIdentity({ data, junior }: Props) {
         </div>
       </div>
 
-      {/* 5 colunas quando há card EGR — os 5 cartões cabem numa linha só. */}
-      <div className="u-d-grid u-gap-10px u-mt-16px" style={{ gridTemplateColumns: `repeat(${egr ? 5 : 4}, 1fr)` }}>
+      {/* Uma linha no ecrã largo; no telemóvel passam à linha de baixo (antes eram 5 colunas fixas e o último ficava cortado). */}
+      <div className="fed-cards">
         <FedCard
           label="USKIDS"
           value={junior.sources.uskids?.memberId ? `#${junior.sources.uskids.memberId}` : null}

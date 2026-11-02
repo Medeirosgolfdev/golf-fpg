@@ -2221,6 +2221,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Buraco pelo qual a tabela está ordenada (scorecards históricos). */
 .sc-lb .lb-hole.lb-hole-sorted { color: var(--accent); font-weight: 700; background: var(--accent-light); }
 /* Cartão de federação na ficha do Kids 2 (USKids, FPG, RFEG, FFG, EGR). */
+.fed-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-10); margin-top: var(--space-16); }
 .fed-card { display: block; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
   padding: var(--space-10) var(--space-12); text-decoration: none; color: inherit; }
 .fed-card.empty { background: var(--bg-muted); border: 1px dashed var(--border-light); opacity: 0.65; }

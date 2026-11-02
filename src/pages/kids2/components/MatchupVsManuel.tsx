@@ -14,7 +14,7 @@ import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import KpiCard from "../../../ui/KpiCard";
 import { tpColor } from "../../../ui/tournamentPrimitives";
-import { fmtToPar, monthLabel } from "../../../utils/format";
+import { fmtSign, fmtToPar, monthLabel } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
 import { TrophyPos } from "../../../ui/PosBadge";
 
@@ -233,16 +233,9 @@ function RoundsCell({ result }: { result: Result }) {
   );
 }
 
-/** Formata diff com sinal e máximo 3 casas decimais. Inteiros não recebem
- *  ponto decimal; floats são arredondados para 3 casas e zeros à direita
- *  são removidos (ex: -14.7777 → "-14.778"; -14.5 → "-14.5"; -14 → "-14"). */
+/** Diferença com sinal: inteiros como estão, médias com uma casa (antes saíam 3: «-13.143»). */
 function fmtDiff(n: number): string {
-  if (n === 0) return "0";
-  if (Number.isInteger(n)) return n > 0 ? `+${n}` : String(n);
-  // Round to 3 decimals, then trim trailing zeros and lonely dot.
-  const rounded = Math.round(n * 1000) / 1000;
-  const fmt = rounded.toFixed(3).replace(/\.?0+$/, "");
-  return rounded > 0 ? `+${fmt}` : fmt;
+  return Number.isInteger(n) ? fmtSign(n) : fmtSign(Math.round(n * 10) / 10, 1);
 }
 
 function fmtDateShort(iso: string | undefined): string {

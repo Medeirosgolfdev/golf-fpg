@@ -444,6 +444,22 @@ describe("computeRoundStats", () => {
     const stats = computeRoundStats(r, mkTournamentByMap([t]));
     expect(stats.total).toBe(1);
   });
+
+  it("volta de 9 buracos com par de 18 não conta (Fioranello 2022, Boys 7: 52 → «−18»)", () => {
+    const r = mkRival("u1", "X", ["t1"]);
+    const nove = [6, 5, 6, 5, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const t: Tournament = {
+      id: "t1", sourceId: "uskids", sourceKey: "1",
+      flights: [{
+        flightKey: "b7", label: "Boys 7",
+        par: [4, 3, 4, 4, 3, 4, 4, 5, 3, 5, 3, 4, 4, 5, 4, 4, 3, 4],
+        results: [{ juniorId: "u1", pos: 1, rounds: [{ round: 1, gross: 52, strokes: nove }, { round: 2, gross: 58 }] }],
+      }],
+    };
+    const stats = computeRoundStats(r, mkTournamentByMap([t]));
+    expect(stats.total).toBe(0);
+    expect(stats.bestToPar).toBeNull();
+  });
 });
 
 /* ------------------------------------------------------------------

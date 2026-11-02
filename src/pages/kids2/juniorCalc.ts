@@ -730,18 +730,7 @@ function scoringTier(j: Junior, tournamentById: Map<string, Tournament>): TierKe
       if (parTotal < 60) continue;
       for (const rd of r.rounds) {
         if (typeof rd.gross !== "number" || rd.gross < 50 || rd.gross > 200) continue;
-        // Excluir voltas que NÃO são de 18 buracos. As provas USKids de 9H
-        // partilham um par[18] completo, por isso um gross de 9 buracos (ex: 37)
-        // contra par 72 dá um differential absurdamente negativo (−35) que
-        // inflacionava o tier para "elite". Contamos os buracos realmente
-        // jogados via strokes; sem strokes, rejeitamos differentials impossíveis
-        // para 18H (< −8, típico de uma volta de 9H).
-        if (Array.isArray(rd.strokes)) {
-          const played = rd.strokes.filter((x) => x > 0).length;
-          if (played < 15) continue;
-        } else if (rd.gross - parTotal < -8) {
-          continue;
-        }
+        if (!isVolta18(rd, parTotal)) continue;
         toPars.push(rd.gross - parTotal);
       }
     }
@@ -803,6 +792,20 @@ export interface RoundStats {
   subParPct: number | null;
 }
 
+/**
+ * Volta de 18 buracos a sério? As provas USKids de 9H partilham um par[18]
+ * completo, por isso um gross de 9 buracos contra o par dos 18 dá um ±par
+ * impossível (Ricardo Castro-Ferreira, Fioranello 2022, Boys 7: 52 em 9
+ * buracos → «−18»; e o 37 contra par 72 que punha o nível em «elite»).
+ * Conta os buracos jogados pelos strokes (o USKids traz sempre 18 posições,
+ * com zeros nos não jogados); sem strokes, um ±par abaixo de −8 é de 9H.
+ */
+function isVolta18(rd: { gross?: number | null; strokes?: number[] }, parTotal: number): boolean {
+  if (typeof rd.gross !== "number") return false;
+  if (Array.isArray(rd.strokes)) return rd.strokes.filter((x) => x > 0).length >= 15;
+  return rd.gross - parTotal >= -8;
+}
+
 export function computeRoundStats(junior: Junior, tournamentById: Map<string, Tournament>, filterTids?: Set<string> | null): RoundStats {
   const grosses: number[] = [];
   const toPars: Array<{ value: number; tournamentId: string; round: number }> = [];
@@ -828,6 +831,7 @@ export function computeRoundStats(junior: Junior, tournamentById: Map<string, To
         // Sanity: gross de 18H deve ser ≥ 50 (alguém com nível profissional)
         // ou ≤ 200. Valores fora disto são bugs de scrape.
         if (rd.gross < 50 || rd.gross > 200) continue;
+        if (!isVolta18(rd, parTotal)) continue;
         grosses.push(rd.gross);
         withParCount++;
         const diff = rd.gross - parTotal;
