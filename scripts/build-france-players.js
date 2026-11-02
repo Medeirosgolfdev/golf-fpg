@@ -34,6 +34,7 @@ const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 const { listGgTournaments, buildNameMaps, matchGgName } = require("./lib/ffgolf-gg");
 const { ffgEscalaoCanonico, ffgEscalaoMaisNovo } = require("./lib/ffg-escalao.cjs");
+const { isLugarEquipa } = require("./lib/ffg-lugar-equipa");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA = path.join(ROOT, "public", "data");
@@ -157,7 +158,7 @@ const players = new Map();
 // trnId → { iso, year, lics:Set } — para a detecção de gémeos GG↔resultats.
 const trnLics = new Map();
 
-let nFiles = 0, nParseErr = 0, nNoSeries = 0, nOcc = 0;
+let nFiles = 0, nParseErr = 0, nNoSeries = 0, nOcc = 0, nLugares = 0;
 for (const f of fs.existsSync(DIR) ? fs.readdirSync(DIR) : []) {
   if (!f.endsWith(".json")) continue;
   nFiles++;
@@ -191,6 +192,8 @@ for (const f of fs.existsSync(DIR) ? fs.readdirSync(DIR) : []) {
     for (const p of (s.players || [])) {
       const lic = (p.license || "").trim();
       if (!lic) continue;
+      // «JOUEUR A Touraine» — lugar de equipa por preencher, não é pessoa.
+      if (isLugarEquipa(p)) { nLugares++; continue; }
       trn.lics.add(lic);
       let e = players.get(lic);
       if (!e) {
@@ -256,7 +259,7 @@ for (const f of fs.existsSync(DIR) ? fs.readdirSync(DIR) : []) {
 }
 
 console.log(`Scaneados ${nFiles} ficheiros FFG resultats (${nParseErr} erros parse, ${nNoSeries} sem séries)`);
-console.log(`Total jogadores únicos (por license): ${players.size} — ${nOcc} aparições`);
+console.log(`Total jogadores únicos (por license): ${players.size} — ${nOcc} aparições${nLugares ? ` (${nLugares} lugares de equipa «Joueur A…» ignorados)` : ""}`);
 
 // ── Passagem 2: torneios GolfGenius (matching por nome + dedup de gémeos) ──
 const nameMaps = buildNameMaps(
