@@ -42,25 +42,32 @@ export function makeKidsDobLookup(kidsMap: Map<string, KidsLinkEntry>, scout: Sc
 
 interface DobPlayer { name: string; fed?: string; fedCode?: string; dob?: string | null; birthYear?: number | null; birthYearEst?: number | null }
 
-/** Sem nascimento nenhum (nem lido nem estimado)? */
-const semNasc = (p: DobPlayer) => !p.dob && p.birthYear == null && p.birthYearEst == null;
-
-/** Há alguém sem nascimento nem federado (o federado tem-no pelo playersDB)? */
+/** Há alguém sem data nem federado (o federado tem-na pelo playersDB)? */
 export function precisaKidsDob(players: readonly DobPlayer[]): boolean {
-  return players.some(p => semNasc(p) && !(p.fed || p.fedCode));
+  return players.some(p => !p.dob && !(p.fed || p.fedCode));
 }
 
-/** Cópia do torneio com o nascimento do Kids 2 em quem não tem nenhum.
+/** O que o Kids 2 acrescenta a um jogador sem data: tudo, se não tiver nada;
+ *  só a data lida, se a fonte já der o ano (e for o mesmo ano — ex.: ranking da
+ *  Federgolf) ou uma estimativa. Uma estimativa nunca passa por cima de nada. */
+export function kidsAcrescento(p: Omit<DobPlayer, "name">, n: KidsNasc): KidsNasc | null {
+  if (p.birthYear == null && p.birthYearEst == null) return n;
+  if (!("dob" in n)) return null;
+  return p.birthYear == null || +n.dob.slice(0, 4) === p.birthYear ? n : null;
+}
+
+/** Cópia do torneio com o nascimento do Kids 2 em quem não tem data.
  *  Devolve o MESMO objecto quando não há nada a acrescentar. */
 export function withKidsDob<P extends DobPlayer, T extends { players: P[] }>(t: T, lookup: KidsDobLookup | null): T {
   if (!lookup) return t;
   let mudou = false;
   const players = t.players.map((p): P => {
-    if (!semNasc(p)) return p;
+    if (p.dob) return p;
     const n = lookup(p.name, p.fed || p.fedCode);
-    if (!n) return p;
+    const a = n ? kidsAcrescento(p, n) : null;
+    if (!a) return p;
     mudou = true;
-    return { ...p, ...n };
+    return { ...p, ...a };
   });
   return mudou ? { ...t, players } : t;
 }

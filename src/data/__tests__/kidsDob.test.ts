@@ -30,6 +30,11 @@ describe("withKidsDob — regras", () => {
     expect(out.players.map(p => p.dob ?? null)).toEqual(["2013-02-03", "2013-01-01", null]);
   });
 
+  it("a data lida ganha ao ano solto da fonte quando é o mesmo ano (ranking da Federgolf)", () => {
+    const out = withKidsDob({ players: [{ name: "Ana Silva", birthYear: 2013 }, { name: "Ana Silva", birthYearEst: 2012 }] }, lookup);
+    expect(out.players.map(p => (p as { dob?: string }).dob ?? null)).toEqual(["2013-02-03", "2013-02-03"]);
+  });
+
   it("um homónimo com outro federado não herda a data (o pai do Manuel)", () => {
     expect(lookup("Manuel Medeiros", "54907")).toBeUndefined();
     expect(kidsDobLida(lookup("Manuel Medeiros", "52884"))).toBe("2014-04-29");

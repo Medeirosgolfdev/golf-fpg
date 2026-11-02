@@ -21,7 +21,7 @@ import { EscPill } from "./PillBadge";
 import BirthPill from "./BirthPill";
 import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
 import { useKidsDob } from "../hooks/useKidsDob";
-import { kidsDobLida } from "../data/kidsDob";
+import { kidsAcrescento, kidsDobLida } from "../data/kidsDob";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate, fmtDatePt } from "../utils/format";
 import { teeNameFor } from "../utils/teeRegulation";
 import { formatPlayerName } from "../utils/playerUtils";
@@ -431,8 +431,10 @@ export default function DrawTab({
         const dobSemKids: string | undefined =
           srcDob || bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined);
         // Kids 2: a data lida, ou o ano estimado pelos escalões USKids (a vermelho).
-        const kidsNasc = !dobSemKids && srcBirthYear == null && (p as { birthYearEst?: number | null }).birthYearEst == null
-          ? kidsDob?.(p.nome, fed) : undefined;
+        const kidsLido = !dobSemKids ? kidsDob?.(p.nome, fed) : undefined;
+        const kidsNasc = kidsLido
+          ? kidsAcrescento({ birthYear: srcBirthYear, birthYearEst: (p as { birthYearEst?: number | null }).birthYearEst }, kidsLido) ?? undefined
+          : undefined;
         const dob: string | undefined = dobSemKids || kidsDobLida(kidsNasc);
         const kidsEst = kidsNasc && "birthYearEst" in kidsNasc ? kidsNasc : null;
         const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : srcBirthYear;
