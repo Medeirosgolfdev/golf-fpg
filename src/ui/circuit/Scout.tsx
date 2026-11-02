@@ -236,7 +236,6 @@ export default function Scout({
         case "melhor": return l.sc?.v ? l.sc.v[4] ?? 500 + l.sc.v[2] : null; // pelo ±par; sem par oficial vai para o fim
         case "forma": return formaMedia(l.sc?.u);
         case "ult": return l.ult[0]?.data ?? null;
-        case "rfeg": return l.sc?.rk?.[0] ?? null;
         case "n": return l.rep?.n ?? null;
         case "best": return l.rep?.bestPos ?? null;
         case "vsm": return l.sc?.m?.length ? l.atras / l.sc.m.length : null;
@@ -289,7 +288,6 @@ export default function Scout({
   const tem = {
     esc: linhas.some((l) => l.escalao),
     hcp: !semHcp && linhas.some((l) => l.sc?.h != null),
-    rfeg: linhas.some((l) => l.sc?.rk),
     torn: linhas.some((l) => l.sc?.a?.[0]),
     vit: linhas.some((l) => l.sc?.a?.[1]),
     pod: linhas.some((l) => l.sc?.a?.[2]),
@@ -300,7 +298,7 @@ export default function Scout({
   };
   const sameYear = (e: PastEdition) => eds.some((o) => o !== e && o.year === e.year);
   const hp = { sortKey, sortDir, onSort: toggleSort };
-  const nPerfil = (tem.esc ? 1 : 0) + (tem.hcp ? 1 : 0) + 1 + (tem.rfeg ? 1 : 0);
+  const nPerfil = (tem.esc ? 1 : 0) + (tem.hcp ? 1 : 0) + 1;
   const nAno = (tem.torn ? 1 : 0) + (tem.vit ? 1 : 0) + (tem.pod ? 1 : 0) + (tem.voltas ? 2 : 0) + (tem.forma ? 1 : 0);
   const nProva = eds.length ? 2 + eds.length : 0;
   const nManuel = tem.vsm ? 2 : 0;
@@ -373,7 +371,6 @@ export default function Scout({
               {tem.esc && hdr("esc", "Escalão", "Escalão deste ano e o ano de nascimento (1.º ou 2.º ano do escalão); a idade no tooltip", sepPerfil.esc)}
               {tem.hcp && hdr("hcp", "HCP", "Handicap (Portugal / Espanha / França)", sepPerfil.hcp)}
               {hdr("nivel", "Nível", "Nível na carreira (Elite, Forte, Sólido, Em Dev., Iniciante); o pontinho é a ameaça para o Manuel. Ordenar por aqui põe primeiro os mais perigosos — o porquê está no tooltip de cada um.", sepPerfil.nivel)}
-              {tem.rfeg && hdr("rfeg", "Rk RFEG", "Lugar no ranking juvenil da Federação Espanhola (Infantil, Cadete ou de zona) — qual ranking e a data no tooltip")}
               {tem.torn && hdr("torn", "Torn.", "Torneios nos últimos 12 meses (todas as fontes)", sepAno.torn)}
               {tem.vit && hdr("vit", "Vit.", "Vitórias nos últimos 12 meses", sepAno.vit)}
               {tem.pod && hdr("pod", "Pódios", "Pódios (1.º a 3.º) nos últimos 12 meses", sepAno.pod)}
@@ -439,11 +436,6 @@ export default function Scout({
                           </span>
                         : <span className="scout-sem">–</span>}
                     </td>
-                    {tem.rfeg && (
-                      <td title={l.sc?.rk ? `${l.sc.rk[2]}${l.sc.rk[3] ? ` · ranking de ${shortDateSlash(l.sc.rk[3], true)}` : ""}` : undefined}>
-                        {l.sc?.rk ? `${l.sc.rk[0]}.º/${l.sc.rk[1]}` : <span className="scout-sem">–</span>}
-                      </td>
-                    )}
                     {tem.torn && <td className={sepAno.torn ? "scout-sep" : undefined}>{l.sc?.a?.[0] || <span className="scout-sem">–</span>}</td>}
                     {tem.vit && <td className={sepAno.vit ? "scout-sep" : undefined}>{l.sc?.a?.[1] ? <b>{l.sc.a[1]}</b> : <span className="scout-sem">–</span>}</td>}
                     {tem.pod && <td className={sepAno.pod ? "scout-sep" : undefined}>{l.sc?.a?.[2] || <span className="scout-sem">–</span>}</td>}

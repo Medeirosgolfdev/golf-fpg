@@ -26,14 +26,15 @@
  *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição],
  *                     ne?: [ano, ano] — nascimento ESTIMADO pelos escalões USKids (sem `d`; util/nascimento-uskids.js),
  *                     hr?: [hcp, "AAAA-MM-DD"] — o «h» é o hándicap OFICIAL actual da RFEG, com a data,
- *                     rk?: [posição, jogadores, "ranking curto", "AAAA-MM-DD" | null] — ranking juvenil RFEG,
- *                     u?: últimos torneios — [[data, iNome, lugar | "WD" | "DQ" | "DNS" | null, field | null, voltas,
+ * *                     u?: últimos torneios — [[data, iNome, lugar | "WD" | "DQ" | "DNS" | null, field | null, voltas,
                          pancadas | null, ±par | null, buracos, SD médio | null], …] (iNome → `tn`),
  *                     x?: { [tid]: [lugar, gross, ±par, voltas[], escalão, buracos] } } },
  *     x: { [tid]: [nome, data ISO, link] },   ← os torneios WJGC/Doral/EOWAGR
     tn: [nome do torneio, …] }              ← os nomes do `u`
  * Os tids e os resultados saem de src/data/kidsTid.ts (o mesmo do browser).
- * O hr/rk vêm de junior.rfegOficial (util/rfeg-oficial.js, 22/10/2026).
+ * O hr vem de junior.rfegOficial (util/rfeg-oficial.js, 22/10/2026). O ranking
+ * juvenil da RFEG (`rk`) saiu do Scout a 02/11/2026: é de pontos por participar
+ * no circuito da zona, mistura os 11 aos 16 anos e estava parado em Maio.
  * O `r` poupa ao browser o computeRanking sobre ~38 mil juniores (ficha do kids2
  * e /kids2/ranking; 21/10/2026).
  * Só entram juniores com alguma coisa para mostrar.
@@ -178,8 +179,6 @@ function buildScout(juniors, tournaments, generatedAt) {
     const h = src.fpg?.hcpExact ?? hOficial ?? src.rfeg?.hcp ?? src.ffgolf?.hcp ?? null;
     if (typeof h === "number") o.h = h;
     if (hOficial != null) o.hr = [hOficial, rfo.hcpData || null];
-    const rkRfeg = rfo?.rankings?.[0];
-    if (rkRfeg && rkRfeg.pos != null) o.rk = [rkRfeg.pos, rkRfeg.n, rkRfeg.curto, rkRfeg.f || null];
     if (j.dob) o.d = j.dob;
     else {
       const ne = anosPelosEscaloesUskids(j, tById);
@@ -216,7 +215,7 @@ function buildScout(juniors, tournaments, generatedAt) {
     if (ul) o.u = ul.u;
     const x = extra.players.get(j.id);
     if (x) o.x = x;
-    if (o.t || o.w || o.m || o.a || o.v || o.h != null || o.r || o.u || o.x || o.d || o.p || o.rk) players[j.id] = o;
+    if (o.t || o.w || o.m || o.a || o.v || o.h != null || o.r || o.u || o.x || o.d || o.p) players[j.id] = o;
   }
   return { schemaVersion: 3, generatedAt, manuelId: MANUEL_ID, keep: ultimos.keep, x: extra.meta, tn: ultimos.nomes, players };
 }
