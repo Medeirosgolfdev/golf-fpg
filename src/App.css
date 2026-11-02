@@ -2322,6 +2322,9 @@ table.sc-lb.scout-table td { vertical-align: middle; }
 .scout-media { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.15; }
 .scout-sub { font-size: var(--fs-10); color: var(--text-3); }
 .scout-wd { font-style: italic; color: var(--text-3); }
+/* Prova de clube nos últimos torneios (sem classificação): o ±par numa caixinha tracejada. */
+.scout-clubpar { display: inline-block; padding: var(--space-1) var(--space-4); font-size: var(--fs-10); font-weight: 600;
+  border: 1px dashed var(--border); border-radius: var(--radius-sm); color: var(--text-2); }
 tr.scout-clicavel { cursor: pointer; }
 tr.is-aberto td, tr.scout-detalhe > td { background: var(--bg-hover); }
 tr.scout-detalhe > td { padding: var(--space-6) var(--space-10) var(--space-12) var(--space-24); }

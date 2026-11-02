@@ -6,7 +6,12 @@
  * «Quem repete») e a carreira — nível, vitórias, HCP, idade, forma, confrontos
  * com o Manuel e próximas inscrições (era o Scout do kids2, que carregava
  * ~180 MB; agora lê o resumo juniors-scout.json, que traz também a forma).
- * Clicar numa linha abre as provas em comum com o Manuel e as próximas.
+ * Clicar numa linha abre os últimos torneios, as provas em comum com o Manuel
+ * e as próximas.
+ *
+ * Os últimos torneios (02/11/2026) juntam o Kids 2 e as provas de clube dos
+ * cartões FPG (Aberto do Estoril, Jamor Summer Series…), com o nome, as
+ * pancadas, o ±par e o SD oficial — util/ultimos.js do agregador.
  *
  * Desenho de 02/11/2026 (pedido da Mariana: «precisa nitidamente de uma grande
  * melhoria»), no estilo da «Época» da /drive: escalão com o selo do ano de
@@ -33,6 +38,7 @@ import { useFedBirthdates } from "../InscricoesComponents";
 import TierBadge from "../TierBadge";
 import { medalClass } from "../PosBadge";
 import { AnoEscalaoPill } from "../AnoEscalaoPill";
+import { SDPill } from "../tournamentPrimitives";
 import { RowsFilterBar, filterRows, type FilterableRow } from "../PlayerFilterBar";
 import { EMPTY_FILTER } from "../multiRoundTypes";
 import type { PlayerFilter } from "../../data/fpgTypes";
@@ -40,8 +46,8 @@ import { compareEscalao } from "../../data/model/escalao";
 import { buildRepeaters, type FieldPlayer, type RepeaterRow } from "./repeaters";
 import type { PastEdition } from "./PastEditionsTable";
 import {
-  computeThreat, formaMedia, idade, N_FORMA, THREAT_LABEL, porVolta,
-  type JuniorForm, type JuniorScout, type ScoutComManuel, type ScoutFile, type ThreatInfo,
+  computeThreat, formaMedia, idade, N_FORMA, THREAT_LABEL, porVolta, ultimoLugar, ultimosTorneios,
+  type JuniorScout, type ScoutComManuel, type ScoutFile, type ScoutTorneio, type ThreatInfo,
 } from "./scoutModel";
 
 interface UskFieldFile {
@@ -93,7 +99,7 @@ export interface ScoutExtraCol {
 
 interface Linha {
   key: string; name: string; club: string | null; country: string | null; isManuel: boolean;
-  sc?: JuniorScout; fm?: JuniorForm; rep?: RepeaterRow;
+  sc?: JuniorScout; ult: ScoutTorneio[]; rep?: RepeaterRow;
   idade: number | null; threat: ThreatInfo; frente: number; atras: number; vsMMedia: number | null;
   /** Nascimento (ISO, ou só o ano) e o escalão deste ano. */
   nasc: string | null; escalao: string | null;
@@ -170,7 +176,6 @@ export default function Scout({
       const outraPessoa = !!(p.fed && kid?.fed && kid.fed !== p.fed);
       const id = kid && !outraPessoa ? kid.id : undefined;
       const scBase = id ? scout.players[id] : undefined;
-      const fm = scBase?.f;
       const rr = repByName.get(k);
       const isManuel = eManuel(p);
       const extraM = !isManuel ? provasComManuel?.(p) : null;
@@ -187,7 +192,7 @@ export default function Scout({
         ? { score: -99, level: "none" as const, reasons: [] }
         : computeThreat({
             hasManuel: true, vsMTotal: vsMMedia, vsMCount: m.length, vsMSameFlight: sc?.mf ?? 0,
-            tier: sc?.t ?? null, recentPos: fm?.r[0]?.[3] ?? null, wins: sc?.w ?? 0,
+            tier: sc?.t ?? null, recentPos: ultimoLugar(sc?.u), wins: sc?.w ?? 0,
           });
       // Nascimento: o do Kids 2, o que a prova traz, ou o da base de federados —
       // pelo federado da prova ou, sem ele (o scrape do Drive às vezes não o
@@ -195,7 +200,7 @@ export default function Scout({
       const fedNasc = p.fed || (!outraPessoa ? kid?.fed : null);
       const nasc = sc?.d ?? p.dob ?? (fedNasc ? fedBirthdates.get(fedNasc) : undefined) ?? null;
       out.push({
-        key: k, name: p.name, club: p.club ?? sc?.c ?? null, country: p.country ?? null, isManuel, sc, fm, rep: rr,
+        key: k, name: p.name, club: p.club ?? sc?.c ?? null, country: p.country ?? null, isManuel, sc, ult: ultimosTorneios(sc?.u, scout.tn), rep: rr,
         idade: nasc ? idade(nasc) ?? (/^\d{4}$/.test(nasc) ? new Date().getFullYear() - +nasc : null) : null,
         nasc, escalao: nasc ? escalaoAtDate(nasc, todayIso()) : null,
         threat, frente, atras, vsMMedia,
@@ -229,8 +234,8 @@ export default function Scout({
         case "pod": return l.sc?.a?.[2] ?? null;
         case "media": return l.sc?.v ? l.sc.v[3] ?? 500 + l.sc.v[1] : null; // sem par oficial vai para o fim
         case "melhor": return l.sc?.v?.[2] ?? null;
-        case "forma": return formaMedia(l.fm);
-        case "ult": return l.fm?.r[0]?.[0] ?? null;
+        case "forma": return formaMedia(l.sc?.u);
+        case "ult": return l.ult[0]?.data ?? null;
         case "rfeg": return l.sc?.rk?.[0] ?? null;
         case "n": return l.rep?.n ?? null;
         case "best": return l.rep?.bestPos ?? null;
@@ -289,7 +294,7 @@ export default function Scout({
     vit: linhas.some((l) => l.sc?.a?.[1]),
     pod: linhas.some((l) => l.sc?.a?.[2]),
     voltas: linhas.some((l) => l.sc?.v),
-    forma: linhas.some((l) => (l.fm?.r.length ?? 0) > 0),
+    forma: linhas.some((l) => l.ult.length > 0),
     vsm: linhas.some((l) => l.sc?.m?.length),
     prox: linhas.some((l) => l.proximas.length),
   };
@@ -326,6 +331,17 @@ export default function Scout({
   const lugar = (pos: number | null | undefined, title?: string, field?: number | null) => pos != null
     ? <span className={"pos-medal pos-medal-sm " + medalClass(pos)} title={title}>{pos}.º{field ? <span className="scout-field">/{field}</span> : null}</span>
     : <span className="scout-sem" title={title}>–</span>;
+  // Um dos últimos torneios numa caixinha: o lugar quando há classificação, «WD»
+  // quando não acabou, e nas provas de clube (sem classificação) o ±par.
+  const caixaTorneio = (x: ScoutTorneio) => {
+    const title = [shortDateSlash(x.data), x.nome,
+      x.lugar != null ? `${x.lugar}.º${x.field ? ` de ${x.field}` : ""}` : x.estado ?? "prova de clube (sem classificação)",
+      x.pancadas != null ? `${x.pancadas} pancadas${x.voltas > 1 ? ` em ${x.voltas} voltas` : ""}${x.toPar != null ? ` (${fmtToPar(x.toPar)})` : ""}` : null,
+      x.sd != null ? `SD ${x.sd.toFixed(1)}` : null].filter(Boolean).join(" · ");
+    if (x.lugar != null) return lugar(x.lugar, title, x.field);
+    if (x.estado) return <span className="scout-wd" title={title}>{x.estado}</span>;
+    return <span className="scout-clubpar" title={title}>{x.toPar != null ? fmtToPar(x.toPar) : x.pancadas ?? "–"}</span>;
+  };
 
   return (
     <div className="scout">
@@ -363,7 +379,7 @@ export default function Scout({
               {tem.pod && hdr("pod", "Pódios", "Pódios (1.º a 3.º) nos últimos 12 meses", sepAno.pod)}
               {tem.voltas && hdr("media", "Média", "Média por volta de 18 buracos no último ano: ±par (quando há o par oficial) e as pancadas; quantas voltas no tooltip", sepAno.voltas)}
               {tem.voltas && hdr("melhor", "Melhor", "Melhor volta de 18 buracos no último ano")}
-              {tem.forma && hdr("forma", "Últimos torneios", `Os últimos ${N_FORMA} lugares — lugar / jogadores, o mais recente à esquerda (data e ±par no tooltip)`, sepAno.forma)}
+              {tem.forma && hdr("forma", "Últimos torneios", `Os últimos ${N_FORMA} torneios (Kids 2 e provas de clube FPG), o mais recente à esquerda: lugar / jogadores, ou o ±par nas provas de clube, que não têm classificação. O torneio, as pancadas e o SD no tooltip; tudo no detalhe (clicar na linha). Ordena pelo ±par médio.`, sepAno.forma)}
               {nProva > 0 && hdr("n", "Vezes", "Quantas edições anteriores desta prova jogou", true)}
               {nProva > 0 && hdr("best", "Melhor", "Melhor lugar numa edição anterior desta prova")}
               {eds.map((e) => (
@@ -387,10 +403,10 @@ export default function Scout({
               // Clube sem a bandeira do início (quando o «clube» é só a bandeira, fica vazio).
               const clube = (l.club || "").replace(/^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}][\u{1F1E6}-\u{1F1FF}\u{E0000}-\u{E007F}]*\s*/u, "").trim();
               const mostraClube = clube && !/^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(clube);
-              const fmd = formaMedia(l.fm);
-              const ultimos = (l.fm?.r ?? []).slice(0, N_FORMA);
+              const fmd = formaMedia(l.sc?.u);
+              const ultimos = l.ult.slice(0, N_FORMA);
               const detExtra = detalheExtra?.(l.name) ?? null;
-              const temDetalhe = !!(l.sc?.m?.length || l.proximas.length || detExtra);
+              const temDetalhe = !!(l.ult.length || l.sc?.m?.length || l.proximas.length || detExtra);
               const nM = l.sc?.m?.length ?? 0;
               const empates = nM - l.frente - l.atras;
               const ameaca = !l.isManuel && l.threat.level !== "none" ? l.threat.level : null;
@@ -398,7 +414,7 @@ export default function Scout({
                 <React.Fragment key={l.key}>
                   <tr className={[l.isManuel ? "row-manuel" : "", temDetalhe ? "scout-clicavel" : "", isOpen ? "is-aberto" : ""].filter(Boolean).join(" ") || undefined}
                       onClick={temDetalhe ? () => setAberto(isOpen ? null : l.key) : undefined}
-                      title={temDetalhe ? "Ver o detalhe: provas em comum com o Manuel e próximas inscrições" : undefined}>
+                      title={temDetalhe ? "Ver o detalhe: últimos torneios, provas em comum com o Manuel e próximas inscrições" : undefined}>
                     {colsAntes.map(extraTd(l))}
                     <td className="u-ta-left scout-jog">
                       <span className={l.isManuel ? "fw-700" : "fw-600"}>{bandeira}{l.name}</span> <KidsLink nome={l.name} fed={l.fed} />
@@ -451,9 +467,7 @@ export default function Scout({
                       <td className={sepAno.forma ? "scout-sep" : undefined}>
                         {ultimos.length
                           ? <span className="scout-forma" title={fmd != null ? `±par médio por 18 buracos nestes torneios: ${fmtToPar(fmd)}` : undefined}>
-                              {ultimos.map((x, i) => (
-                                <React.Fragment key={i}>{lugar(x[3], `${shortDateSlash(x[0])} · ${x[3] ? `${x[3]}.º de ${x[4]}` : "sem lugar"} · ${fmtToPar(x[1])} (${x[2]} b.)`, x[4])}</React.Fragment>
-                              ))}
+                              {ultimos.map((x, i) => <React.Fragment key={i}>{caixaTorneio(x)}</React.Fragment>)}
                             </span>
                           : <span className="scout-sem">–</span>}
                       </td>
@@ -491,6 +505,24 @@ export default function Scout({
                     <tr className="scout-detalhe">
                       <td colSpan={nCols} className="u-ta-left">
                         {detExtra && <div className="u-mb-8px">{detExtra}</div>}
+                        {l.ult.length > 0 && (
+                          <table className="sc-lb scout-table u-w-max-content u-mb-6px">
+                            <thead><tr><th className="u-ta-left">Últimos torneios</th><th>Data</th><th>Lugar</th><th>Voltas</th><th>Pancadas</th><th>±par</th><th title="SD oficial da FPG (média das voltas)">SD</th></tr></thead>
+                            <tbody>
+                              {l.ult.map((x, i) => (
+                                <tr key={i}>
+                                  <td className="u-ta-left">{x.nome}</td>
+                                  <td>{shortDateSlash(x.data)}</td>
+                                  <td>{x.lugar != null ? lugar(x.lugar, undefined, x.field) : x.estado ? <span className="scout-wd">{x.estado}</span> : <span className="scout-sem" title="Prova de clube — sem classificação">–</span>}</td>
+                                  <td>{x.voltas || "–"}</td>
+                                  <td>{x.pancadas ?? "–"}</td>
+                                  <td>{x.toPar != null ? <span className={x.toPar <= 0 ? "c-good fw-600" : undefined}>{fmtToPar(x.toPar)}</span> : "–"}</td>
+                                  <td>{x.sd != null ? <SDPill sd={x.sd} /> : <span className="scout-sem">–</span>}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        )}
                         {nM ? (
                           <table className="sc-lb scout-table u-w-max-content u-mb-6px">
                             <thead><tr><th className="u-ta-left">Prova em comum com o Manuel</th><th>Data</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel, por volta de 18 buracos (só as voltas que os dois jogaram)">Por volta</th><th>Voltas</th></tr></thead>

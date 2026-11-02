@@ -167,9 +167,9 @@ export default function AdmissionsTab({
           sort: (p) => sc(p)?.n ?? null, cell: (p) => sc(p)?.n ?? sem },
         { key: "k2w", label: "Vit.", title: "Vitórias na carreira (Kids 2)", dir: "desc",
           sort: (p) => sc(p)?.w ?? null, cell: (p) => sc(p) ? (sc(p)!.w ?? 0) : sem },
-        { key: "k2forma", label: "Forma", title: "±par médio por 18 buracos nos últimos torneios (Kids 2)",
-          sort: (p) => formaMedia(sc(p)?.f),
-          cell: (p) => { const f = formaMedia(sc(p)?.f); return f == null ? sem : f > 0 ? `+${f}` : f === 0 ? "E" : `${f}`.replace("-", "−"); } },
+        { key: "k2forma", label: "Forma", title: "±par médio por 18 buracos nos últimos torneios (Kids 2 e provas de clube FPG)",
+          sort: (p) => formaMedia(sc(p)?.u),
+          cell: (p) => { const f = formaMedia(sc(p)?.u); return f == null ? sem : f > 0 ? `+${f}` : f === 0 ? "E" : `${f}`.replace("-", "−"); } },
       );
     }
     return cols;

@@ -325,13 +325,11 @@ async function main() {
 
     // Resumo do Scout (aba «Scout» dos circuitos e da /uskids, Ranking e ficha do
     // kids2, Próximos torneios): nível, vitórias, HCP, clube, provas em comum com
-    // o Manuel — mesmas contas do kids2 —, a forma recente (util/form.js; era o
-    // juniors-form.json) e os resultados WJGC/Doral/EOWAGR. Um ficheiro só.
+    // o Manuel — mesmas contas do kids2 —, os últimos torneios (util/ultimos.js:
+    // Kids 2 + cartões FPG) e os resultados WJGC/Doral/EOWAGR. Um ficheiro só.
     {
-      const { buildForm } = require("./util/form");
       const { buildScout } = require("./util/scout");
-      const form = buildForm(matchResult.tournaments, generatedAt);
-      const scout = buildScout(matchResult.juniors, matchResult.tournaments, generatedAt, form);
+      const scout = buildScout(matchResult.juniors, matchResult.tournaments, generatedAt);
       writeAtomic(path.join(DATA_DIR, "juniors-scout.json"), JSON.stringify(scout), "utf-8");
       sub(`juniors-scout.json: ${Object.keys(scout.players).length} juniores`);
     }

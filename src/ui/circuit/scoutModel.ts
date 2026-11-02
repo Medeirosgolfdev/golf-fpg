@@ -10,10 +10,21 @@
  */
 import { getTierLabel, type TierKey, type RankingRow } from "../../pages/kids2/juniorCalc";
 
-/** A forma (`f` do juniors-scout.json; era o juniors-form.json) — últimos
- *  torneios [data, ±par, buracos, lugar, field] e confrontos com o Manuel no
- *  mesmo escalão [à frente, atrás]. */
-export interface JuniorForm { r: [string, number, number, number | null, number][]; m?: [number, number] }
+/** Um dos últimos torneios (`u` do juniors-scout.json, 02/11/2026 — Kids 2 +
+ *  as provas de clube dos cartões FPG): [data, índice do nome em `tn`, lugar
+ *  (ou "WD"/"DQ"/"DNS"; null nas provas de clube, sem classificação), field,
+ *  voltas, pancadas, ±par, buracos, SD oficial médio]. */
+export type ScoutTorneioRaw = [string, number, number | string | null, number | null, number, number | null, number | null, number, number | null];
+export interface ScoutTorneio {
+  data: string; nome: string; lugar: number | null; estado: string | null; field: number | null;
+  voltas: number; pancadas: number | null; toPar: number | null; buracos: number; sd: number | null;
+}
+export function ultimosTorneios(u: readonly ScoutTorneioRaw[] | undefined, tn: readonly string[] | undefined): ScoutTorneio[] {
+  return (u ?? []).map(([data, i, l, field, voltas, pancadas, toPar, buracos, sd]) => ({
+    data, nome: tn?.[i] ?? "", lugar: typeof l === "number" ? l : null, estado: typeof l === "string" ? l : null,
+    field, voltas, pancadas, toPar, buracos, sd,
+  }));
+}
 
 /** Uma prova em comum com o Manuel: [data, torneio, lugar dele, lugar do Manuel,
  *  pancadas dele − Manuel, voltas, buracos por volta]. As pancadas são só das
@@ -43,23 +54,28 @@ export interface JuniorScout {
   mf?: number;
   /** Ranking da coorte (ano × sexo), compacto — `decodeRanking` do juniorCalc. */
   r?: RankingRow;
-  /** A forma recente. */
-  f?: JuniorForm;
+  /** Os últimos torneios (os nomes em `ScoutFile.tn`). */
+  u?: ScoutTorneioRaw[];
   /** O `h` é o hándicap OFICIAL actual da RFEG: [hcp, "AAAA-MM-DD" da última actualização]. */
   hr?: [number, string | null];
   /** Ranking juvenil da RFEG: [posição, jogadores, "ranking curto", "AAAA-MM-DD" do ranking]. */
   rk?: [number, number, string, string | null];
 }
-export interface ScoutFile { players: Record<string, JuniorScout> }
+export interface ScoutFile { players: Record<string, JuniorScout>; tn?: string[] }
 
 export const N_FORMA = 5;
-/** ±par médio por 18 buracos nos últimos torneios (9 buracos contam metade).
- *  Torneios com menos de 9 buracos ficam de fora: levados a 18 explodiam
- *  (+248 numa volta de 1 buraco, 20/10/2026). */
-export function formaMedia(f: JuniorForm | undefined): number | null {
-  const r = (f?.r ?? []).filter((x) => x[2] >= 9).slice(0, N_FORMA);
+/** ±par médio por 18 buracos nos últimos torneios acabados (9 buracos contam
+ *  metade). Torneios com menos de 9 buracos ficam de fora: levados a 18
+ *  explodiam (+248 numa volta de 1 buraco, 20/10/2026). */
+export function formaMedia(u: readonly ScoutTorneioRaw[] | undefined): number | null {
+  const r = (u ?? []).filter((x) => x[6] != null && x[7] >= 9).slice(0, N_FORMA);
   if (!r.length) return null;
-  return Math.round((r.reduce((s, x) => s + (x[1] * 18) / x[2], 0) / r.length) * 10) / 10;
+  return Math.round((r.reduce((s, x) => s + (x[6]! * 18) / x[7], 0) / r.length) * 10) / 10;
+}
+/** O lugar mais recente conhecido (as provas de clube não têm classificação). */
+export function ultimoLugar(u: readonly ScoutTorneioRaw[] | undefined): number | null {
+  const x = (u ?? []).find((t) => typeof t[2] === "number");
+  return x ? (x[2] as number) : null;
 }
 
 /** Idade hoje a partir de "AAAA-MM-DD". */

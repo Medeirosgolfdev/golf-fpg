@@ -64,6 +64,10 @@ on:
       - 'public/data/wagr/wagr-events-list.json'
       - 'public/data/wagr/events/**'
       - 'public/data/juniors-overrides.json'
+      # Últimos torneios do Scout (util/ultimos.js): os cartões e o WHS de cada federado seguido.
+      - 'output/*/scorecards.json'
+      - 'output/*/whs.json'
+      - 'data-archive/whs-sd.json'
       - 'scripts/aggregator/**'
       - '.github/workflows/build-juniors.yml'
   workflow_dispatch:

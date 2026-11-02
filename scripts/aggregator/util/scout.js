@@ -6,11 +6,10 @@
  * (~180 MB), por isso o agregador escreve aqui o que o Scout mostra, com as
  * MESMAS contas do kids2 (src/pages/kids2/juniorCalc.ts, carregado pelo Node —
  * nada copiado): nível (tier), vitórias, top-3, HCP, data de nascimento, clube,
- * país e as provas em comum com o Manuel. Desde 23/10/2026 leva também a forma
- * recente (`f`, de util/form.js — era o juniors-form.json, que o Scout lia
- * sempre junto com este) e os resultados WJGC/Doral/EOWAGR (`x`), para os
- * Próximos torneios do kids2 não carregarem a base inteira: um ficheiro só em
- * vez de três.
+ * país e as provas em comum com o Manuel. Leva também os resultados
+ * WJGC/Doral/EOWAGR (`x`, 23/10/2026), para os Próximos torneios do kids2 não
+ * carregarem a base inteira, e os últimos torneios (`u`, util/ultimos.js —
+ * 02/11/2026: Kids 2 + as provas de clube dos cartões FPG; era a «forma» `f`).
  *
  * Saída (`public/data/juniors-scout.json`, compacta):
  *   { schemaVersion, generatedAt, manuelId, players: {
@@ -28,9 +27,11 @@
  *                     ne?: [ano, ano] — nascimento ESTIMADO pelos escalões USKids (sem `d`; util/nascimento-uskids.js),
  *                     hr?: [hcp, "AAAA-MM-DD"] — o «h» é o hándicap OFICIAL actual da RFEG, com a data,
  *                     rk?: [posição, jogadores, "ranking curto", "AAAA-MM-DD" | null] — ranking juvenil RFEG,
- *                     f?: forma — { r: [[data, ±par, buracos, lugar, field], …], m?: [Manuel à frente, atrás] },
+ *                     u?: últimos torneios — [[data, iNome, lugar | "WD" | "DQ" | "DNS" | null, field | null, voltas,
+                         pancadas | null, ±par | null, buracos, SD médio | null], …] (iNome → `tn`),
  *                     x?: { [tid]: [lugar, gross, ±par, voltas[], escalão, buracos] } } },
- *     x: { [tid]: [nome, data ISO, link] } }   ← os torneios WJGC/Doral/EOWAGR
+ *     x: { [tid]: [nome, data ISO, link] },   ← os torneios WJGC/Doral/EOWAGR
+    tn: [nome do torneio, …] }              ← os nomes do `u`
  * Os tids e os resultados saem de src/data/kidsTid.ts (o mesmo do browser).
  * O hr/rk vêm de junior.rfegOficial (util/rfeg-oficial.js, 22/10/2026).
  * O `r` poupa ao browser o computeRanking sobre ~38 mil juniores (ficha do kids2
@@ -38,8 +39,10 @@
  * Só entram juniores com alguma coisa para mostrar.
  */
 const path = require("path");
-const { MANUEL_ID } = require("./form");
+const { buildUltimos } = require("./ultimos");
 const { anosPelosEscaloesUskids } = require("./nascimento-uskids");
+
+const MANUEL_ID = "u630106";
 
 let calc, tidLib;
 function loadTid() {
@@ -103,9 +106,9 @@ function voltasEmComum(rJ, rM) {
 
 /** As voltas de 18 buracos do último ano: quantas, média, melhor e os ±par
  *  (só quando o escalão tem o par oficial dos 18 buracos — nunca inventado). */
-function voltasDoAno(j, tById, desde) {
+function voltasDoAno(j, tById, desde, voltasFpg = []) {
   const ok = (g) => typeof g === "number" && g > 0 && g < 900;
-  const voltas = [];
+  const voltas = [...voltasFpg];
   for (const tid of j.tournamentIds) {
     const t = tById.get(tid);
     if (!t || (t.date || t.startDate || "") < desde || (t.holesPerRound || 18) !== 18) continue;
@@ -113,7 +116,13 @@ function voltasDoAno(j, tById, desde) {
       const r = f.results.find((x) => x.juniorId === j.id);
       if (!r) continue;
       const par = Array.isArray(f.par) && f.par.length === 18 && f.par.every((x) => typeof x === "number") ? f.par.reduce((s, x) => s + x, 0) : null;
-      for (const rd of r.rounds || []) if (ok(rd.gross)) voltas.push([rd.gross, par == null ? null : rd.gross - par]);
+      // Só voltas de 18 buracos a sério: com cartão, 18 buracos jogados quando há
+      // os buracos, e ≥ 50 pancadas (havia voltas de 9 buracos com 36 dentro de
+      // provas «de 18» — davam «melhor 36, −36»).
+      for (const rd of r.rounds || []) {
+        const nb = (rd.strokes || []).filter((x) => x > 0).length;
+        if (ok(rd.gross) && rd.gross >= 50 && (!nb || nb === 18)) voltas.push([rd.gross, par == null ? null : rd.gross - par]);
+      }
       break;
     }
   }
@@ -124,11 +133,11 @@ function voltasDoAno(j, tById, desde) {
   return [voltas.length, media(voltas.map((x) => x[0])), melhor[0], tps.length === voltas.length ? media(tps) : null, melhor[1]];
 }
 
-function buildScout(juniors, tournaments, generatedAt, form) {
+function buildScout(juniors, tournaments, generatedAt) {
   const { computeRanking, encodeRankingEntry, computeTier, countWins, countTop3, getSharedTournamentIds, getSharedFlightTids } = loadCalc();
   const tById = new Map(tournaments.map((t) => [t.id, t]));
   const extra = buildExtra(tournaments);
-  const formPlayers = form?.players || {};
+  const ultimos = buildUltimos(juniors, tournaments, generatedAt);
   const ranking = computeRanking(juniors, tById);
   const manuel = juniors.find((j) => j.id === MANUEL_ID) || null;
   const desdeAno = new Date(new Date(generatedAt || Date.now()).getTime() - 365 * 864e5).toISOString().slice(0, 10);
@@ -146,9 +155,11 @@ function buildScout(juniors, tournaments, generatedAt, form) {
     const t3 = countTop3(j, tById);
     if (t3) o.t3 = t3;
     // Último ano: torneios, vitórias e top-3 dos últimos 365 dias.
-    const nAno = j.tournamentIds.filter((tid) => (tById.get(tid)?.date || tById.get(tid)?.startDate || "") >= desdeAno).length;
+    // Mais as provas de clube dos cartões FPG que o Kids 2 não tem.
+    const ul = ultimos.porJunior.get(j.id);
+    const nAno = j.tournamentIds.filter((tid) => (tById.get(tid)?.date || tById.get(tid)?.startDate || "") >= desdeAno).length + (ul?.extraAno || 0);
     if (nAno) o.a = [nAno, countWins(j, tById, desdeAno), countTop3(j, tById, desdeAno)];
-    const v = voltasDoAno(j, tById, desdeAno);
+    const v = voltasDoAno(j, tById, desdeAno, ul?.voltasAno);
     if (v) o.v = v;
     const src = j.sources || {};
     // HCP: o da FPG; senão o oficial actual da RFEG (com data); senão o da
@@ -193,12 +204,12 @@ function buildScout(juniors, tournaments, generatedAt, form) {
         if (mf) o.mf = mf;
       }
     }
-    if (formPlayers[j.id]) o.f = formPlayers[j.id];
+    if (ul) o.u = ul.u;
     const x = extra.players.get(j.id);
     if (x) o.x = x;
-    if (o.t || o.w || o.m || o.a || o.v || o.h != null || o.r || o.f || o.x || o.d || o.p || o.rk) players[j.id] = o;
+    if (o.t || o.w || o.m || o.a || o.v || o.h != null || o.r || o.u || o.x || o.d || o.p || o.rk) players[j.id] = o;
   }
-  return { schemaVersion: 2, generatedAt, manuelId: MANUEL_ID, keep: form?.keep, x: extra.meta, players };
+  return { schemaVersion: 3, generatedAt, manuelId: MANUEL_ID, keep: ultimos.keep, x: extra.meta, tn: ultimos.nomes, players };
 }
 
 module.exports = { buildScout };
