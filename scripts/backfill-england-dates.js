@@ -48,6 +48,15 @@ async function main() {
     } catch (e) { console.error(`✗ ${f}: ${e.message}`); erros++; continue; }
     // o evento é do ano do ficheiro; datas de outro ano são outra edição
     const doAno = [...datas].filter((x) => !d.year || x.startsWith(String(d.year))).sort();
+    if (!doAno.length && datas.size) {
+      // Só datas de outro ano = a página do catálogo é de OUTRA edição (a English
+      // Girls' U16 & U14 «2023» era a de 2021 e parecia jogar-se em cima do
+      // English Girls' Open de 2023). Corrigir o england-golf-catalog.json.
+      const anos = [...new Set([...datas].map((x) => x.slice(0, 4)))].join(", ");
+      console.error(`✗ ${f}: o ficheiro diz ${d.year} mas as rondas são de ${anos} — a gg_page do catálogo é de outra edição`);
+      erros++;
+      continue;
+    }
     if (!doAno.length) { console.log(`· ${f}: a GolfGenius não tem datas`); continue; }
     const novo = { startDate: doAno[0], endDate: doAno[doAno.length - 1], roundDates: doAno };
     if (d.startDate === novo.startDate && d.endDate === novo.endDate && JSON.stringify(d.roundDates) === JSON.stringify(doAno)) continue;
