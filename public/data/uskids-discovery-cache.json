@@ -1915,6 +1915,17 @@
       "type": 5
     },
     {
+      "t": 23885,
+      "name": "Carya Golf Club (Tour Championship)",
+      "date_inicio": "1/24/2027",
+      "date_fim": "1/24/2027",
+      "rondas": 1,
+      "campo": "Carya Golf Club",
+      "fee_18": "47.00",
+      "tour": "Antalya (TR) Tour",
+      "type": 6
+    },
+    {
       "t": 23527,
       "name": "International Teen Series - Antalya Turkish Open 2027",
       "date_inicio": "1/29/2027",
@@ -2124,19 +2135,19 @@
       "type": 13
     }
   ],
-  "gerado_em": "2026-11-01T14:07:18.098Z",
-  "varredura_max_t": 23879,
+  "gerado_em": "2026-11-02T16:55:19.194Z",
+  "varredura_max_t": 23885,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 41,
-    "novos": 0,
+    "pedidos": 47,
+    "novos": 1,
     "buracos_revistos": 1,
-    "catalogo": 1572,
+    "catalogo": 1578,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23879,
-  "fronteira_avancou_em": "2026-10-31",
-  "dias_sem_descoberta": 1,
-  "dias_sem_avanco": 1,
-  "ultima_descoberta": "2026-10-31"
+  "fronteira_max_t_visto": 23885,
+  "fronteira_avancou_em": "2026-11-02",
+  "dias_sem_descoberta": 0,
+  "dias_sem_avanco": 0,
+  "ultima_descoberta": "2026-11-02"
 }
