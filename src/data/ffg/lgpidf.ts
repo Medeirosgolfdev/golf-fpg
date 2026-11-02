@@ -1,7 +1,7 @@
 /**
  * lgpidf.ts — LGPIDF (PDFs Paris-Île-de-France) para os componentes
  * partilhados: inscritos → AdmissionsTab, tee times → DrawTab, leaderboard (só
- * totais) → TotalsResumo.
+ * totais) → prova sem buraco a buraco no TournamentDetail (via CircuitShell).
  *
  * Tirado da FFGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */

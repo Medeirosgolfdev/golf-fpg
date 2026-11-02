@@ -4,8 +4,9 @@
  * Os eventos EGR (europeangolfrankings.com) trazem leaderboard de TOTAIS por
  * ronda (R1-R4) + país/clube, mas NÃO scorecards buraco-a-buraco. Por isso cada
  * evento vira uma `CircuitEntry` (lazy) com UMA `CircuitDivision` só com
- * `totals` (dados) — o shell desenha o TotalsResumo partilhado (o mesmo do
- * GJGL, da LGPIDF e do WAGR). Sem React: o loader serve também o Kids 2.
+ * `totals` (dados) — o shell passa-os ao TournamentDetail como prova sem
+ * buraco a buraco (o mesmo Resumo de todas as provas). Sem React: o loader
+ * serve também o Kids 2.
  */
 import { withDivisionModel } from "../../data/model/division";
 import { cachedFetchJson } from "../../data/fetchCache";
@@ -83,7 +84,7 @@ async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]>
     escalao: e.ageGroup || "—",
     sex: (e.sex || undefined) as CircuitSex | undefined,
     hasManuel: e.hasManuel,
-    // Só totais → o shell desenha o TotalsResumo comum (ui/circuit/divisionPieces).
+    // Só totais → prova sem buraco a buraco no Resumo comum (totalsDivisionView).
     totals: { players: totais, parPerRound: par, tournamentDate: e.startDate || undefined },
   })];
 }

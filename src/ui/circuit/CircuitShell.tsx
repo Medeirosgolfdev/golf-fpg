@@ -15,12 +15,13 @@
  * apenas: loader + adaptador → CircuitShell. Sem layout próprio.
  *
  * UM SÓ CAMINHO (02/11/2026): com ou sem cartões, tudo passa pelo
- * IntlTournView. Sem cartões (só totais / desenho da página) o «Resumo» é o
- * TotalsResumo e não há R1/Scorecards — já não há barra de secções à parte.
+ * IntlTournView. Só com totais, a prova vai como prova sem buraco a buraco
+ * (`totalsDivisionView`): o mesmo Resumo, sem Scorecards — já não há barra de
+ * secções à parte nem tabela de totais própria.
  */
 
 import { escalaoFilterOptions, escaloesCanon } from "../../data/model/escalao";
-import { divisionResultsNode } from "./divisionPieces";
+import { totalsDivisionView } from "./divisionPieces";
 import ManuelResultPills from "../ManuelResultPills";
 import AdmissionsTab, { type AdmissionsExtraCol } from "../AdmissionsTab";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
@@ -125,7 +126,7 @@ const TOGGLE_DEF: Record<CircuitToggle, { label: string; title: string }> = {
 // Inscrições → Draw → R1 → … → Resumo → 📋 Scorecards. Texto simples, sem ícones
 // de secção (a FPG só usa ícone no "📋 Scorecards", que vem do IntlTournView).
 const SECTION_DEF: Record<CircuitSectionKind, { label: string; icon: string }> = {
-  // «Resumo», como nas provas com cartões: o conteúdo é o mesmo Resumo (TotalsResumo).
+  // «Resumo», como nas provas com cartões (desenho próprio de página sem resultados).
   results:   { label: "Resumo",      icon: "" },
   inscritos: { label: "Inscrições",  icon: "" },
   draw:      { label: "Draw",        icon: "" },
@@ -439,18 +440,21 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     setFLiga("all"); setFIntl(false); setToggles(new Set());
   };
 
-  // ── Leaderboard com toggles aplicados ───────────────────────────────
-  const resultsTourn = curDiv?.results
-    ? applyToggles(curDiv.results, toggles, vetIndex, vetThreshold)
-    : null;
-
   // ── UM SÓ CAMINHO (02/11/2026): todas as divisões passam pelo IntlTournView
   // (o TournamentDetail da FPG), com ou sem cartões — pedido da Mariana: «os 2
   // caminhos não podem passar a um caminho só?». A barra é sempre a mesma:
   //   Inscrições → Draw → R1 → … → Resumo → 📋 Scorecards → Época → Edições → Scout
-  // Sem cartões (só totais: EGR, WAGR, GJGL, Liguillas NextCaddy, Itália por
-  // completar) o «Resumo» é o TotalsResumo (ou o desenho da página), e não há
-  // R1/R2/Scorecards.
+  // Só com totais (EGR, WAGR, GJGL, Liguillas NextCaddy, LGPIDF): a prova é
+  // convertida numa prova sem buraco a buraco (`_noHbh`) e desenhada pelo MESMO
+  // Resumo — sem o separador Scorecards.
+  const totalsView = useMemo(() => (curDiv && !curDiv.renderFull && !curDiv.results && cur
+    ? totalsDivisionView(curDiv, { name: cur.name, date: cur.dateStart, campo: cur.course })
+    : null), [curDiv, cur]);
+
+  // ── Leaderboard com toggles aplicados ───────────────────────────────
+  const baseTourn = curDiv?.results ?? totalsView?.tournament ?? null;
+  const resultsTourn = baseTourn ? applyToggles(baseTourn, toggles, vetIndex, vetThreshold) : null;
+
   const leadingTabs: { key: string; label: string; content: React.ReactNode }[] = [];
   if (curDiv && !curDiv.renderFull) {
     if (curDiv.admissions?.players?.length) {
@@ -460,9 +464,10 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
         content: <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} extraCols={curDiv.admissionsExtraCols} />,
       });
     }
-    if (!curDiv.results) {
-      const resumo = divisionResultsNode(curDiv);
-      if (resumo !== undefined) leadingTabs.push({ key: "resumo", label: sectionLabel("results"), content: resumo });
+    // Desenho próprio da página sem resultados (destaques de live scoring do
+    // NextCaddy: só HiO/eagles/birdies, sem pancadas) → no lugar do «Resumo».
+    if (!resultsTourn && curDiv.customResults !== undefined) {
+      leadingTabs.push({ key: "resumo", label: sectionLabel("results"), content: curDiv.customResults });
     }
   }
   // Match Play (brackets) — aba no FIM da barra (é a fase final do torneio,
@@ -575,11 +580,12 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       : <Scout field={curField} tCode={tCodeScout} />,
   } : null;
   if (repeatersTabNode && !curDiv?.renderFull) trailingTabs.push(repeatersTabNode);
-  // Sem cartões, o TournamentDetail recebe um torneio sem voltas (só para a
-  // barra): os separadores vêm todos de fora e abre no «Resumo».
-  const semVoltasTourn = useMemo<FPGTournament | null>(() => (curDiv && !curDiv.renderFull && !curDiv.results && cur
+  // Sem resultados (só inscritos, ou o desenho próprio da página), o
+  // TournamentDetail recebe um torneio sem voltas (só para a barra): os
+  // separadores vêm todos de fora e abre no «Resumo» quando o há.
+  const semVoltasTourn = useMemo<FPGTournament | null>(() => (curDiv && !curDiv.renderFull && !baseTourn && cur
     ? { name: cur.name, tcode: cur.id, date: cur.dateStart ?? "", campo: cur.course ?? "", rounds: 0, playerCount: 0, players: [] } as unknown as FPGTournament
-    : null), [curDiv, cur]);
+    : null), [curDiv, cur, baseTourn]);
   const detailTourn = resultsTourn ?? semVoltasTourn;
   const temResumoSemVoltas = !resultsTourn && leadingTabs.some((t) => t.key === "resumo");
 
@@ -846,8 +852,8 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     scOptions={{ ...(curDiv.scOptions ?? {}), showCourse: !!detailTourn.campo && detailTourn.campo.trim() !== String(cur.course || "").trim(), shareEvent: cur.name, shareCourse: detailTourn.campo || cur.course, shareDate: cur.dateStart }}
                     roundLabels={curDiv.roundLabels}
                     siLabel={curDiv.siLabel}
-                    evoCols={curDiv.evoCols}
-                    accHeader={curDiv.accHeader}
+                    evoCols={curDiv.evoCols ?? totalsView?.accExtraColumns}
+                    accHeader={curDiv.accHeader ?? totalsView?.accHeader}
                     roundExtra={curDiv.roundExtra}
                     accExtra={curDiv.accExtra}
                     renderAccSection={curDiv.renderAccSection}

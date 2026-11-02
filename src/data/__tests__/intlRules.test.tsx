@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
-import { MemoryRouter } from "react-router-dom";
 import { isNoCardGross } from "../intlCommon";
 import { buildFPGTournament, parOrNone, type IntlPlayerIn } from "../intlTournament";
 import { isLgsCard, rfegolfToFPGTournament, mitarjetaToFPGTournament } from "../rfeg/toTournament";
@@ -17,8 +16,7 @@ import { isPT } from "../../utils/ptPlayers";
 import { expandMultiRound } from "../fpgUtils";
 import { ScorecardLeaderboard } from "../../ui/ScorecardLeaderboard";
 import { normalizeBlueGolf } from "../major/bluegolf";
-import type React from "react";
-import TotalsResumo from "../../ui/circuit/TotalsResumo";
+import { totalsDivisionView } from "../../ui/circuit/divisionPieces";
 import { ncTotalsPlayers } from "../rfeg/divisionData";
 
 /**
@@ -57,19 +55,17 @@ describe("1. Gross ≥ 900 = sem cartão (isNoCardGross)", () => {
     expect(d.players.map((p) => [p.name, p.pos])).toEqual([["Y", 1], ["X", null]]);
   });
 
-  it("TotalsResumo: volta e total ≥ 900 ficam fora das classificações e da média", () => {
-    const html = renderToStaticMarkup(
-      <MemoryRouter>
-        <TotalsResumo parPerRound={72} players={[
-          { name: "A", rounds: [80], total: 80 },
-          { name: "B", rounds: [998], total: 998 },
-        ]} />
-      </MemoryRouter>,
-    );
-    expect(html).toContain("1 classif.");
-    expect(html).toContain("1 inc.");
-    expect(html).toContain("Média 80.0");
-    expect(html).not.toContain(">998<");
+  it("só totais (totalsDivisionView): volta e total ≥ 900 ficam fora das classificações", () => {
+    const v = totalsDivisionView({ key: "m", escalao: "", totals: { parPerRound: 72, players: [
+      { name: "A", rounds: [80], total: 80 },
+      { name: "B", rounds: [998], total: 998 },
+    ] } }, { name: "x" })!;
+    const [a, b] = v.tournament.players;
+    expect(a.grossTotal).toBe(80);
+    expect(a.toPar).toBe(8);
+    expect(b.grossTotal).toBeNull();
+    expect(b.pos).toBeNull();
+    expect(b.roundScores).toHaveLength(0);
   });
 });
 
@@ -110,25 +106,20 @@ describe("2. Sem par oficial fica SEM PAR (nunca 4×18 inventado)", () => {
   });
 });
 
-describe("3. Totais do NextCaddy no TotalsResumo (peça única)", () => {
+describe("3. Totais do NextCaddy no Resumo comum (peça única)", () => {
   it("ncTotalsPlayers: nome, ±par da fonte, sexo, licença, clube e bandeira dos estrangeiros", () => {
     const [p] = ncTotalsPlayers([{ pos: 2, name: "PEREZ, JUAN", licencia: "AM1", pais: "PORTUGAL", hcp: 3.1, catEdad: null, sexo: "M", club: "REAL CLUB X", dob: null, estado: null, total: 150, toPar: 6 }]);
     expect(p).toMatchObject({ name: "Juan Perez", pos: 2, total: 150, toPar: 6, fed: "AM1", sex: "M", country: "PT", club: "Real Club X" });
   });
 
-  it("TotalsResumo: ±par directo, SexBadge, FED; destaques sem coluna Total e ordenáveis", () => {
-    const wrap = (n: React.ReactNode) => renderToStaticMarkup(<MemoryRouter>{n}</MemoryRouter>);
-    const html = wrap(<TotalsResumo parPerRound={null} players={[{ name: "A", rounds: [], total: 150, toPar: 6, sex: "F", fed: "AM1" }]} />);
-    expect(html).toContain("±Par");
-    expect(html).toContain("+6");
-    expect(html).toContain("FED");
-    expect(html).toContain("sex-badge");
-    const hl = wrap(<TotalsResumo parPerRound={null} players={[{ name: "B", rounds: [], birdie: 3 }]}
-      extra={[{ header: "🐦 Birdie", value: (p) => p.birdie as number, sortValue: (p) => -(p.birdie as number) }]} />);
-    expect(hl).toContain("1 jogadores");
-    expect(hl).not.toContain(">Tot<");
-    expect(hl).toMatch(/<th class="lb-sortable[^"]*"[^>]*>(?:(?!<\/th>).)*🐦 Birdie/);
-    expect(hl).not.toContain("🥇");
+  it("só totais: ±par directo, sexo e licença chegam ao jogador da prova", () => {
+    const v = totalsDivisionView({ key: "m", escalao: "", totals: { parPerRound: null, players: [
+      { name: "A", rounds: [150], total: 150, toPar: 6, sex: "F", fed: "AM1" },
+    ] } }, { name: "x" })!;
+    const p = v.tournament.players[0] as unknown as { toPar: number; sex: string; fed: string };
+    expect(p.toPar).toBe(6);
+    expect(p.sex).toBe("F");
+    expect(p.fed).toBe("AM1");
   });
 });
 

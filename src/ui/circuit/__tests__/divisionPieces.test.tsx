@@ -3,8 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { MemoryRouter } from "react-router-dom";
 import type React from "react";
 import DrawTab from "../../DrawTab";
-import TotalsResumo from "../TotalsResumo";
-import { roundDrawNode, divisionResultsNode } from "../divisionPieces";
+import { roundDrawNode, totalsDivisionView } from "../divisionPieces";
 import type { CircuitDivision } from "../types";
 
 const html = (n: React.ReactNode) => renderToStaticMarkup(<MemoryRouter>{n}</MemoryRouter>);
@@ -24,23 +23,26 @@ describe("roundDrawNode — draw como dados", () => {
   });
 });
 
-describe("divisionResultsNode — só totais como dados", () => {
+describe("totalsDivisionView — só totais como dados → prova sem buraco a buraco", () => {
   const players = [{ name: "Ana Silva", country: "Portugal", pos: 1, rounds: [70, 72], total: 142, points: 12.345 }];
-  it("TotalsResumo com aviso e coluna extra, igual ao que o WAGR desenhava", () => {
+  it("prova `_noHbh` com as voltas, o aviso e a coluna extra (valor de cada jogador)", () => {
     const d: CircuitDivision = { key: "m", escalao: "Junior", totals: {
       players, parPerRound: null, tournamentDate: "2026-05-01",
       notice: { kind: "aviso", title: "t", text: "⚠ aviso" },
       extra: [{ header: "PTS", title: "Pontos", field: "points", decimals: 2 }],
     } };
-    const aMao = <TotalsResumo parPerRound={null} tournamentDate="2026-05-01" players={players}
-      notice={<div className="notice u-mb-8px" title="t">⚠ aviso</div>}
-      extra={[{ header: "PTS", title: "Pontos", value: (p) => (typeof p.points === "number" ? p.points.toFixed(2) : "–"),
-        sortValue: (p) => (typeof p.points === "number" ? p.points : null) }]} />;
-    expect(html(divisionResultsNode(d))).toBe(html(aMao));
-    expect(html(divisionResultsNode(d))).toContain("12.35");
+    const v = totalsDivisionView(d, { name: "Prova" })!;
+    expect((v.tournament as unknown as { _noHbh: boolean })._noHbh).toBe(true);
+    expect(v.tournament.rounds).toBe(2);
+    const p = v.tournament.players[0];
+    expect(p.roundScores?.map((r) => r.gross)).toEqual([70, 72]);
+    const col = v.accExtraColumns![0];
+    const row = { key: p.scoreId, name: p.name, toPar: null, gross: 142, pos: 1, rounds: [] };
+    expect(col.cell(row, 0)).toBe("12.35");
+    expect(col.sortValue?.(row)).toBe(12.345);
+    expect(html(v.accHeader)).toContain("⚠ aviso");
   });
-  it("`customResults` ganha; sem totais → nada", () => {
-    expect(divisionResultsNode({ key: "m", escalao: "", customResults: "x", totals: { players, parPerRound: 72 } })).toBe("x");
-    expect(divisionResultsNode({ key: "m", escalao: "" })).toBeUndefined();
+  it("sem totais → nada", () => {
+    expect(totalsDivisionView({ key: "m", escalao: "" }, { name: "x" })).toBeNull();
   });
 });

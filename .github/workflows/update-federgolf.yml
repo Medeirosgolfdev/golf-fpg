@@ -3,12 +3,15 @@ name: Actualizar Federgolf (Itália) — provas juvenis
 # Provas juvenis da Federazione Italiana Golf (federgolf.it, API pública sem
 # login) para a /fig. Ver scripts/scrape-federgolf.js e docs/claude/italia.md.
 #
-# 1) Passagem rápida (só totais) de 2006 ao ano corrente: só as provas que
-#    ainda não estão gravadas (~20 s cada), por isso as novas aparecem logo.
+# Âmbito (Mariana, 02/11/2026): todas as provas de 2022 em diante; de 2018 a
+# 2021 só as que têm portugueses inscritos (`--so-pt-antes 2022`). Antes de
+# 2018 a Federgolf não tem classificação na API (só PDF).
+# 1) Passagem rápida (só totais): só as provas que ainda não estão gravadas
+#    (~20 s cada), por isso as novas aparecem logo.
 # 2) Cartões buraco a buraco, do mais recente para trás, até 2,5 h por corrida:
-#    o servidor deles demora ~20 s por pedido e há ~1000 provas desde 2006,
-#    por isso os cartões vão-se completando corrida a corrida (uma prova com
-#    todos os cartões e jogada há mais de 10 dias não se volta a pedir).
+#    o servidor deles demora ~20 s por pedido, por isso os cartões vão-se
+#    completando corrida a corrida (uma prova com todos os cartões e jogada há
+#    mais de 10 dias não se volta a pedir).
 on:
   workflow_dispatch:
   schedule:
@@ -50,16 +53,16 @@ jobs:
       - name: Ranking juvenil
         run: node scripts/scrape-federgolf-ranking.js || [ $? -eq 2 ]
 
-      # Todas as provas desde 2006, só as que faltam (as gravadas saltam-se).
+      # Só as que faltam (as gravadas saltam-se).
       - name: Provas novas (só totais, até 2 h)
         run: |
-          ANOS=$(seq -s, "$(date -u +%Y)" -1 2006)
-          node scripts/scrape-federgolf.js --sem-cartoes --max-min 120 --anos "$ANOS" || [ $? -eq 2 ]
+          ANOS=$(seq -s, "$(date -u +%Y)" -1 2018)
+          node scripts/scrape-federgolf.js --sem-cartoes --so-pt-antes 2022 --max-min 120 --anos "$ANOS" || [ $? -eq 2 ]
 
       - name: Cartões (até 2,5 h)
         run: |
-          ANOS=$(seq -s, "$(date -u +%Y)" -1 2006)
-          node scripts/scrape-federgolf.js --max-min 150 --anos "$ANOS" || [ $? -eq 2 ]
+          ANOS=$(seq -s, "$(date -u +%Y)" -1 2018)
+          node scripts/scrape-federgolf.js --so-pt-antes 2022 --max-min 150 --anos "$ANOS" || [ $? -eq 2 ]
 
       - name: Commit e push (se houver mudanças)
         run: |

@@ -9,7 +9,7 @@ import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit
 import type { FgIndice, FgIndiceProva, FgProva } from "./types";
 import { fgAdmissions, fgAdmissionsCols } from "./admissions";
 import { fgAnosNascimento, fgIdPorNomeUnico, loadFgRanking } from "./ranking";
-import { fgClube, fgEscalaoProva, fgScorecardOptions, fgTemCartoes, fgTitulo, fgTotais, fgToTournament } from "./toTournament";
+import { fgClube, fgEscalaoProva, fgScorecardOptions, fgTitulo, fgToTournament } from "./toTournament";
 
 export const FG_INDEX_URL = "/data/federgolf-index.json";
 const provaUrl = (id: string) => `/data/federgolf/${id}.json`;
@@ -39,8 +39,8 @@ function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
       escalao: fgEscalaoProva(p.categoria),
       tabLabel: p.sexo ? SEXO_LABEL[p.sexo] : undefined,
       sex: p.sexo ?? undefined,
-      // Sem cartões (passagem rápida, ainda por completar) → só os totais.
-      ...(fgTemCartoes(d) ? { results: fgToTournament(d, nasc) } : { totals: fgTotais(d, nasc) }),
+      // Com ou sem cartões (sem eles, prova `_noHbh`: o mesmo Resumo, sem Scorecards).
+      results: fgToTournament(d, nasc),
       // A «Lista iscritti» (com quem não chegou a jogar) no separador Inscrições.
       ...(admissions ? { admissions, admissionsExtraCols: fgAdmissionsCols(admissions) } : {}),
       scOptions: fgScorecardOptions(),

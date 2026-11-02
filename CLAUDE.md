@@ -229,7 +229,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   cartão de buracos → `ScorecardTable` ou a grelha `.sc-table-modern`/`.sc-table-ec`
   + `.sc-grid`; tabela simples → `.dtable` (variantes `-sm`/`-lg`/`dt-compact`/
   `player-list-table` só JUNTO com `.dtable`; o aspecto vive no «MODELO ÚNICO DAS
-  TABELAS», fim do `App.css`); só totais → `TotalsResumo`; lista +
+  TABELAS», fim do `App.css`); só totais → dados `totals` da divisão, que o CircuitShell passa ao `TournamentDetail` como prova sem buraco a buraco (`totalsDivisionView`, um só caminho); lista +
   detalhe → `MasterDetail`; **rankings → capacidade `ranking` do CircuitShell**
   (`CircuitConfig.ranking`, `ui/circuit/CircuitRanking.tsx`: vista «Ranking» com
   linhas calculadas dos torneios visíveis, `RankingTable` ordenável, e a
@@ -291,7 +291,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
 - **Gross ≥ 900 (998/999…) é "sem cartão"** — não pontua nem entra em médias,
   posições ou ±par. `grossTotal` pode vir como texto ("WD"). Nas fontes de fora
   e nos draws a regra é uma só: `isNoCardGross` (`src/data/intlCommon.ts`),
-  aplicada no `buildFPGTournament`, `TotalsResumo` e `DrawTab`.
+  aplicada no `buildFPGTournament` (também nas provas só com totais) e no `DrawTab`.
 - **Datas `/Date(ms)/` da FPG são meia-noite de Lisboa** — converter com
   `lisbonCivilDay`/`lisbonCivilDayStr` (`lib/helpers.js`), nunca com `toISOString()`.
 - **Cartões WHS de voltas internacionais NÃO são fonte oficial do campo:** quem os

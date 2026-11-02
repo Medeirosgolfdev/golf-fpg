@@ -10,7 +10,6 @@ import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes"
 import { intlScorecardOptions } from "../intlScorecard";
 import { buildFPGTournament, parOrNone, type IntlPlayerIn } from "../intlTournament";
 import { escalaoCanon } from "../model/escalao";
-import type { TotalsExtraCol } from "../model/types";
 import { flagOrEmpty } from "../../utils/flagUtils";
 import type { FgProva } from "./types";
 
@@ -65,16 +64,27 @@ export function fgEscalao(cat: string | null | undefined): string | null {
 /** Escalão de uma prova (Baby → Sub 12, U16 → Sub 16); o resto fica com o nome. */
 export const fgEscalaoProva = (categoria: string): string => escalaoCanon(categoria, "it") ?? categoria;
 
-/** `nascimentos`: id do jogador → ano de nascimento (do ranking juvenil — `fgAnosNascimento`). */
+/** `nascimentos`: id do jogador → ano de nascimento (do ranking juvenil — `fgAnosNascimento`).
+ *  Prova ainda sem cartões (passagem rápida): o gross de cada volta, o SD e o
+ *  tee sem buraco a buraco, marcada `_noHbh` — o TournamentDetail desenha o
+ *  MESMO Resumo das provas com cartões, sem o separador Scorecards (como as
+ *  provas só em PDF da /rfeg). */
 export function fgToTournament(d: FgProva, nascimentos?: Map<string, number>): FPGTournament {
+  const semCartoes = !fgTemCartoes(d);
   const par = parOrNone(d.campo?.par, 18);
   const metros = d.campo?.metros?.every((m) => typeof m === "number" && m > 0) ? (d.campo.metros as number[]) : null;
+  // Sem cartões não há par por buraco; o par da volta vem do relatório de handicap.
+  const parVolta = semCartoes ? d.parTotal ?? null : null;
   return buildFPGTournament(
     { name: fgTitulo(d.nome), tcode: d.id, date: d.data ?? "", campo: fgClube(d.clube), rounds: d.voltas },
-    { par, meters: metros, holes: 18, parTotal: par.length ? undefined : null },
+    { par, meters: metros, holes: 18, parTotal: par.length ? undefined : parVolta },
     d.jogadores.map((j): IntlPlayerIn => {
       const escalao = fgEscalao(j.cat);
       const tee = j.rating.find((r) => r?.tee)?.tee;
+      const jogadas = j.voltas.filter((g) => g != null).length;
+      // ±par: o da fonte; sem ele (voltas em falta), pelas voltas jogadas — com
+      // cartões o buildFPGTournament conta pelo par, sem cartões pelo par da volta.
+      const toPar = j.toPar ?? (semCartoes && parVolta && j.total != null ? j.total - parVolta * jogadas : undefined);
       return {
         id: j.id,
         name: fgNome(j.nome),
@@ -84,8 +94,7 @@ export function fgToTournament(d: FgProva, nascimentos?: Map<string, number>): F
         total: j.total,
         hcp: j.indice ?? j.hcp,
         ...(tee ? { course: { teeName: tee } } : {}),
-        // Sem ±par da fonte (voltas em falta), conta-se pelas voltas jogadas.
-        ...(j.toPar != null ? { toPar: j.toPar } : {}),
+        ...(toPar != null ? { toPar } : {}),
         rounds: j.voltas.flatMap((g, i) => {
           if (g == null) return [];
           const r = j.rating[i];
@@ -103,33 +112,12 @@ export function fgToTournament(d: FgProva, nascimentos?: Map<string, number>): F
         },
       };
     }),
+    semCartoes ? { extra: { _noHbh: true } } : {},
   );
 }
 
 /** A prova tem cartões buraco a buraco? (a passagem rápida só grava totais) */
 export const fgTemCartoes = (d: FgProva): boolean => d.jogadores.some((j) => j.cartoes.some(Boolean));
-
-/** Prova só com totais → o Resumo comum (TotalsResumo). */
-export function fgTotais(d: FgProva, nascimentos?: Map<string, number>) {
-  // SD oficial de cada volta (relatório de handicap) — colunas «SD R1»…, só
-  // nas voltas em que alguém o tem.
-  const voltasComSd = Array.from({ length: d.voltas }, (_, i) => i).filter((i) => d.jogadores.some((j) => j.rating[i]?.sd != null));
-  return {
-    players: d.jogadores.map((j) => ({
-      name: fgNome(j.nome), club: clubeOuPais(j.clube), country: fgPais(j.clube), hcp: j.indice ?? j.hcp, pos: j.pos,
-      rounds: j.voltas, total: j.total, birthYear: nascimentos?.get(j.id) ?? null,
-      ...(j.toPar != null ? { toPar: j.toPar } : {}),
-      ...Object.fromEntries(voltasComSd.map((i) => [`sd${i + 1}`, j.rating[i]?.sd ?? null])),
-    })),
-    parPerRound: d.parTotal ?? null,
-    tournamentDate: d.data ?? undefined,
-    ...(voltasComSd.length ? {
-      extra: voltasComSd.map((i): TotalsExtraCol => ({
-        header: `SD R${i + 1}`, title: `SD oficial da Federgolf na ${i + 1}.ª volta`, field: `sd${i + 1}`, decimals: 1, kind: "sd",
-      })),
-    } : {}),
-  };
-}
 
 export function fgScorecardOptions(): ScorecardOptions {
   return intlScorecardOptions({ hideHCP: false, hideTee: false, hideEsc: false, clubLabel: "Clube" });

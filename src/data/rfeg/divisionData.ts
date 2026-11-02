@@ -10,7 +10,7 @@ import { cachedFetchJson } from "../fetchCache";
 import { adaptFcg, fcgToFPGTournament, type FCGDetail, type MinimalRFEGShape } from "../fcgAdapter";
 import { formatPlayerName } from "../../utils/playerUtils";
 import { displayName } from "../../utils/format";
-import type { TotalsPlayer } from "../../ui/circuit/TotalsResumo";
+import type { TotalsPlayer } from "../model/types";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../fpgTypes";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
 import type { CircuitLink } from "../../ui/circuit/types";
@@ -51,8 +51,9 @@ export function ncHighlightRows(scoreTypes: NCDetail["scoreTypes"]): NCHighlight
   return rows.sort((a, b) => b.pts - a.pts);
 }
 
-/** NextCaddy só com totais (Liguillas: pos/total/±par, sem cartões) → linhas do
- *  TotalsResumo partilhado (22/10/2026 — era uma tabela própria na RFEGPage). */
+/** NextCaddy só com totais (Liguillas: pos/total/±par, sem cartões) → os totais
+ *  da divisão, que o shell desenha no Resumo comum (22/10/2026 — era uma tabela
+ *  própria na RFEGPage). */
 export function ncTotalsPlayers(admit: RFEGPlayer[]): TotalsPlayer[] {
   return admit.map((p) => {
     const name = formatPlayerName(p.name || "");
@@ -71,8 +72,8 @@ export function ncTotalsPlayers(admit: RFEGPlayer[]): TotalsPlayer[] {
   });
 }
 
-/** Destaques de live scoring → linhas do TotalsResumo (sem resultados; as
- *  colunas HiO/Eagle/Birdie entram como colunas extra ordenáveis). */
+/** Destaques de live scoring → linhas da lista de destaques (sem resultados;
+ *  HiO/Eagle/Birdie como colunas ordenáveis da RankingTable). */
 export function ncHighlightPlayers(rows: NCHighlightRow[]): TotalsPlayer[] {
   return rows.map((r) => ({ name: r.name, rounds: [], ace: r.ace, eagle: r.eagle, birdie: r.birdie }));
 }
@@ -181,7 +182,7 @@ export interface RfegDivisionData {
   /** Voltas com jogadores no draw → abas "Draw R{n}" intercaladas. */
   drawRounds: number[];
   /** NextCaddy sem cartões: leaderboard só de totais (Liguillas) e, sem nem
-   *  isso, os destaques de live scoring — os dois no formato do TotalsResumo. */
+   *  isso, os destaques de live scoring (TotalsPlayer). */
   ncTotals: TotalsPlayer[] | null;
   ncHighlights: { players: TotalsPlayer[]; hasPdf: boolean } | null;
   /** NextCaddy com rapazes E raparigas: o leaderboard partido por sexo

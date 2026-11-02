@@ -75,7 +75,7 @@ export function gjglScorecardOptions(hasTees?: boolean): ScorecardOptions {
   return intlScorecardOptions({ hideHCP: false, hideTee: !hasTees });
 }
 
-/** Divisão GJGL sem buraco a buraco → o Resumo comum (TotalsResumo). O par de
+/** Divisão GJGL sem buraco a buraco → os totais que o shell desenha no Resumo comum. O par de
  *  uma volta tira-se de quem tem total e ±par numéricos. */
 export function gjglTotais(div: GjglDivision) {
   const ref = div.players.find((p) => typeof p.toPar === "number" && p.total != null && (p.rounds || []).some((r) => r?.gross));

@@ -177,7 +177,8 @@ RFEGolf/mitarjeta → Tournament FPG), `horarios.ts`, `roundDraw.ts`
 voltas com draw, totais/destaques NextCaddy, divisão M/F), `entries.ts`
 (`buildRfegEntries`: sidebar, gémeos, `grp-…`), `lookups.ts` e o hook
 `useRfegData.ts`. NextCaddy sem cartões: `ncTotalsPlayers`/`ncHighlightPlayers`
-(divisionData) dão as linhas do `TotalsResumo` partilhado. Destaque PT
+(divisionData) dão os `totals` da divisão (Resumo comum do TournamentDetail) e a
+lista de destaques (`RankingTable`). Destaque PT
 (22/10/2026): `isPtCountry` sobre o país da fonte; RFEGolf PDF e mitarjeta não
 trazem país e vão buscá-lo às listas de inscritos (`rfegPaisLookup`), e o LGS
 com gémeo RFEGolf aos inscritos do gémeo (`lgsWithTwinCountries`). Escalão:

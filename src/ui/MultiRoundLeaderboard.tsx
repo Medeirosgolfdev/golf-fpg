@@ -137,7 +137,7 @@ export function MultiRoundLeaderboard({
     age: wantAge = true,
     roundStats: wantRoundStats = true,
     roundToPar: wantRoundToPar = true,
-    toPar: showToPar = true,
+    toPar: wantToPar = true,
     gross: showGross = true,
   } = showCols;
 
@@ -191,6 +191,11 @@ export function MultiRoundLeaderboard({
   const showBirthYear = wantBirthYear && hasAnyDob;
   const showAge = wantAge && hasAnyDob;
   const showRoundStats = wantRoundStats && (hasAnySD || hasAnyRoundHoleStats);
+  // ±Par só quando alguém o tem (fontes sem par — WAGR — não mostram uma coluna de traços).
+  const showToPar = wantToPar && rows.some(r => r.toPar != null);
+  // Contadores por buraco (🦅 🐦 = ■) só com cartões: as provas só com totais
+  // por volta (`_noHbh`) ficam com o SD no mesmo sítio e sem colunas vazias.
+  const showHoleStats = showRoundStats && hasAnyRoundHoleStats;
   const showRoundToPar = wantRoundToPar;
 
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<MRSortKey>("pos", "asc");
@@ -418,7 +423,7 @@ export function MultiRoundLeaderboard({
               {rankBy && <SHdr k="modo" className="lb-modo">{rankBy.label}</SHdr>}
 
               {/* Acumulados multi-ronda (entre Total e R1) */}
-              {isMulti && showRoundStats && <>
+              {isMulti && showHoleStats && <>
                 <SHdr k="acc:eag"  className="lb-acc-eag">🦅</SHdr>
                 <SHdr k="acc:bird" className="lb-acc-bird">🐦</SHdr>
                 <SHdr k="acc:par"  className="lb-acc-par">=</SHdr>
@@ -436,20 +441,24 @@ export function MultiRoundLeaderboard({
                       {showRoundToPar && <SHdr k={`rtp:${r}` as MRSortKey} className="lb-rnd-tp">±</SHdr>}
                       {showRoundStats && <>
                         {hasAnySD && <SHdr k={`sd:${r}` as MRSortKey} className="lb-rnd-sd">SD</SHdr>}
-                        <SHdr k={`eag:${r}` as MRSortKey} className="lb-rnd-eag">🦅</SHdr>
-                        <SHdr k={`bird:${r}` as MRSortKey} className="lb-rnd-bird">🐦</SHdr>
-                        <SHdr k={`par:${r}`  as MRSortKey} className="lb-rnd-par">=</SHdr>
-                        <SHdr k={`bog:${r}`  as MRSortKey} className="lb-rnd-bog">■</SHdr>
+                        {showHoleStats && <>
+                          <SHdr k={`eag:${r}` as MRSortKey} className="lb-rnd-eag">🦅</SHdr>
+                          <SHdr k={`bird:${r}` as MRSortKey} className="lb-rnd-bird">🐦</SHdr>
+                          <SHdr k={`par:${r}`  as MRSortKey} className="lb-rnd-par">=</SHdr>
+                          <SHdr k={`bog:${r}`  as MRSortKey} className="lb-rnd-bog">■</SHdr>
+                        </>}
                       </>}
                     </React.Fragment>
                   ))
                 : <>
                     {showRoundStats && <>
                       {hasAnySD && <SHdr k="sd" className="lb-sd">SD</SHdr>}
-                      <SHdr k="eag"      className="lb-eag">🦅</SHdr>
-                      <SHdr k="bird"     className="lb-bird">🐦</SHdr>
-                      <SHdr k="par-stat" className="lb-par-stat">Par</SHdr>
-                      <SHdr k="bog"      className="lb-bog">■</SHdr>
+                      {showHoleStats && <>
+                        <SHdr k="eag"      className="lb-eag">🦅</SHdr>
+                        <SHdr k="bird"     className="lb-bird">🐦</SHdr>
+                        <SHdr k="par-stat" className="lb-par-stat">Par</SHdr>
+                        <SHdr k="bog"      className="lb-bog">■</SHdr>
+                      </>}
                     </>}
                   </>
               }
@@ -567,7 +576,7 @@ export function MultiRoundLeaderboard({
                   {rankBy && <td className="lb-modo" style={{ textAlign: "center", fontWeight: 700, color: "var(--accent)", opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{rankBy.value(row) ?? "–"}</td>}
 
                   {/* Acumulados multi-ronda */}
-                  {isMulti && showRoundStats && (() => {
+                  {isMulti && showHoleStats && (() => {
                     let tEag = 0, tBird = 0, tPar = 0, tBog = 0;
                     for (const rd of row.rounds) { if (rd) { tEag += rd.eagles || 0; tBird += rd.birdies || 0; tPar += rd.pars || 0; tBog += rd.bogeys || 0; } }
                     return <>
@@ -582,7 +591,7 @@ export function MultiRoundLeaderboard({
                   {isMulti
                     ? Array.from({ length: nRounds }, (_, r) => {
                         const rd = row.rounds[r];
-                        const emptyCols = (showRoundToPar ? 1 : 0) + (showRoundStats ? (hasAnySD ? 5 : 4) : 0);
+                        const emptyCols = (showRoundToPar ? 1 : 0) + (showRoundStats && hasAnySD ? 1 : 0) + (showHoleStats ? 4 : 0);
                         if (!rd) return (
                           <React.Fragment key={r}>
                             <td className="lb-rnd c-muted">–</td>
@@ -602,10 +611,12 @@ export function MultiRoundLeaderboard({
                                   ? <SDPill sd={rd.sd} hcp={row.hcp} est={sdEstimate} />
                                   : MUTED}
                               </td>}
-                              <td className="lb-rnd-eag">{rd.eagles || ""}</td>
-                              <td className="lb-rnd-bird">{rd.birdies || ""}</td>
-                              <td className="lb-rnd-par">{rd.pars || ""}</td>
-                              <td className="lb-rnd-bog">{rd.bogeys || ""}</td>
+                              {showHoleStats && <>
+                                <td className="lb-rnd-eag">{rd.eagles || ""}</td>
+                                <td className="lb-rnd-bird">{rd.birdies || ""}</td>
+                                <td className="lb-rnd-par">{rd.pars || ""}</td>
+                                <td className="lb-rnd-bog">{rd.bogeys || ""}</td>
+                              </>}
                             </>}
                           </React.Fragment>
                         );
@@ -619,10 +630,12 @@ export function MultiRoundLeaderboard({
                                 ? <SDPill sd={rd.sd} hcp={row.hcp} est={sdEstimate} />
                                 : MUTED}
                             </td>}
-                            <td className="lb-eag">{rd?.eagles || ""}</td>
-                            <td className="lb-bird">{rd?.birdies || ""}</td>
-                            <td className="lb-par-stat">{rd?.pars || ""}</td>
-                            <td className="lb-bog">{rd?.bogeys || ""}</td>
+                            {showHoleStats && <>
+                              <td className="lb-eag">{rd?.eagles || ""}</td>
+                              <td className="lb-bird">{rd?.birdies || ""}</td>
+                              <td className="lb-par-stat">{rd?.pars || ""}</td>
+                              <td className="lb-bog">{rd?.bogeys || ""}</td>
+                            </>}
                           </>
                         );
                       })() : null

@@ -58,7 +58,8 @@ function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
           escalao: `U${div.ak}`,
           tabLabel: `U${div.ak} (${div.players.length})`,
           hasManuel,
-          // Só totais → o shell desenha o TotalsResumo comum (ui/circuit/divisionPieces).
+          // Só totais → o shell desenha-os como prova sem buraco a buraco no
+          // TournamentDetail (totalsDivisionView, ui/circuit/divisionPieces).
           totals: gjglTotais(div),
         };
       })()));

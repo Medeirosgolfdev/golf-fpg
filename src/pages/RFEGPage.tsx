@@ -28,7 +28,8 @@ import { lgsScorecardOptions } from "../data/rfeg/toTournament";
 import { rfegSex } from "../data/rfeg/entries";
 import { rfegRoundDraw, type RfegDrawDetail } from "../data/rfeg/roundDraw";
 import { loadRfegDivisionData } from "../data/rfeg/divisionData";
-import TotalsResumo, { type TotalsPlayer } from "../ui/circuit/TotalsResumo";
+import type { TotalsPlayer } from "../data/model/types";
+import { RankingTable, nameCell, type RankingCol } from "../ui/ranking/RankingPage";
 import { useRfegData } from "../data/rfeg/useRfegData";
 import ErrorState from "../ui/ErrorState";
 import { MUTED } from "../ui/tableCells";
@@ -302,12 +303,16 @@ p.ex. jogador nascido em 2014, em 2026:
   );
 }
 
-/** Destaques de live scoring (NextCaddy só-PDF) no TotalsResumo partilhado. */
-const NC_HIGHLIGHT_COLS = ([["ace", "🏌 HiO", "Hole-in-one"], ["eagle", "🦅 Eagle", "Eagles"], ["birdie", "🐦 Birdie", "Birdies"]] as const).map(([k, header, title]) => ({
-  header, title,
-  value: (p: TotalsPlayer) => (p[k] as number) || "—",
-  sortValue: (p: TotalsPlayer) => -((p[k] as number) || 0),
-}));
+/** Destaques de live scoring (NextCaddy só-PDF): não são resultados (sem
+ *  pancadas) — lista ordenável na RankingTable comum. */
+const NC_HIGHLIGHT_COLS: RankingCol<TotalsPlayer>[] = [
+  { key: "nome", label: "Jogador", sort: (p) => p.name, firstDir: "asc", cell: (p) => nameCell(p.name) },
+  ...([["ace", "🏌 HiO", "Hole-in-one"], ["eagle", "🦅 Eagle", "Eagles"], ["birdie", "🐦 Birdie", "Birdies"]] as const).map(([k, label, title]): RankingCol<TotalsPlayer> => ({
+    key: k, label, title, className: "ta-c", firstDir: "desc",
+    sort: (p) => (p[k] as number) || 0,
+    cell: (p) => (p[k] as number) || "—",
+  })),
+];
 
 /** Carrega o detalhe de um torneio (src/data/rfeg/divisionData.ts) e desenha a
  *  sua divisão — ou duas (M/F) no NextCaddy com rapazes e raparigas. */
@@ -318,17 +323,19 @@ async function rfegLoadDivisions(
   if (!d) return [];
   const { data, results } = d;
 
-  // NextCaddy sem cartões: leaderboard de totais (Liguillas) ou, sem nem isso,
-  // os destaques de live scoring.
+  // NextCaddy sem cartões: leaderboard de totais (Liguillas — dados `totals`,
+  // o shell desenha-o como as outras provas) ou, sem nem isso, os destaques de
+  // live scoring.
   const tDate = data.meta.dateStart ?? undefined;
-  const customResults: React.ReactNode = d.ncTotals
-    ? <TotalsResumo parPerRound={null} players={d.ncTotals} tournamentDate={tDate} />
-    : d.ncHighlights ? (
-      <TotalsResumo parPerRound={null} players={d.ncHighlights.players} tournamentDate={tDate} extra={NC_HIGHLIGHT_COLS}
-        notice={<p className="muted fs-13 mb-8">{d.ncHighlights.hasPdf
-          ? "⚠ Resultados finais só publicados em PDF (ver link no cabeçalho). Destaques de live-scoring registados durante o jogo:"
-          : "⚠ Sem leaderboard publicado na plataforma — apenas destaques de live-scoring registados durante o jogo:"}</p>} />
-    ) : undefined;
+  const totals = d.ncTotals ? { players: d.ncTotals, parPerRound: null, tournamentDate: tDate } : undefined;
+  const customResults: React.ReactNode = !d.ncTotals && d.ncHighlights ? (
+    <>
+      <p className="muted fs-13 mb-8">{d.ncHighlights.hasPdf
+        ? "⚠ Resultados finais só publicados em PDF (ver link no cabeçalho). Destaques de live-scoring registados durante o jogo:"
+        : "⚠ Sem leaderboard publicado na plataforma — apenas destaques de live-scoring registados durante o jogo:"}</p>
+      <RankingTable rows={d.ncHighlights.players} cols={NC_HIGHLIGHT_COLS} rowKey={(p) => p.name} defaultSort="ace" defaultDir="desc" />
+    </>
+  ) : undefined;
 
   // Draw por ronda → abas "Draw R{n}" intercaladas com os resultados (o MESMO
   // DrawSaidaView → DrawTab partilhado, uma ronda de cada vez).
@@ -340,6 +347,7 @@ async function rfegLoadDivisions(
     sex: rfegSex(t.sex),
     results: results ?? undefined,
     customResults,
+    totals,
     // Inscrições no formato FPG → AdmissionsTab partilhado.
     admissions: d.admissions,
     // Draw por ronda intercalado (ver roundDraws acima) — sem aba "Draw" agregada.

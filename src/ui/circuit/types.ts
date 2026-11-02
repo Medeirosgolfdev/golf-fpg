@@ -18,7 +18,7 @@ import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
 import type { MatchplayFile } from "./matchplayTypes";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import type { AdmissionsExtraCol } from "../AdmissionsTab";
-import type { TotalsPlayer } from "./TotalsResumo";
+import type { TotalsPlayer } from "../../data/model/types";
 import type { TournamentModel, RoundDrawData, TotalsNotice, TotalsExtraCol } from "../../data/model/types";
 
 /** Draw de uma volta numa divisão: os DADOS (`draw`…, desenhados pelo DrawTab
@@ -84,9 +84,9 @@ export interface CircuitDivision extends TournamentModel {
   results?: FPGTournament;
   /**
    * Conteúdo de resultados à medida, renderizado em vez do IntlTournView quando
-   * não há scorecards hole-by-hole. Para só totais, preferir `totals` (dados —
-   * o shell desenha o TotalsResumo); isto fica para o que ainda não é dados
-   * (destaques de live scoring do NextCaddy, Escócia).
+   * não há resultados. Para só totais, usar `totals` (dados — o shell passa-os
+   * ao TournamentDetail como prova sem buraco a buraco); isto fica para o que
+   * não são resultados (destaques de live scoring do NextCaddy).
    * Se `results` existir, tem precedência sobre `customResults`.
    */
   customResults?: React.ReactNode;

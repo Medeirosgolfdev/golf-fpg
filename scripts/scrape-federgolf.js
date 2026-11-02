@@ -37,6 +37,7 @@
  *        [--max-min 300] [--refazer] [--sem-cartoes] [--force]
  *      node scripts/scrape-federgolf.js --so-indice   (só refaz o índice)
  *      node scripts/scrape-federgolf.js --futuras     (provas por jogar: inscritos)
+ *      --so-pt-antes 2022   antes desse ano, só provas com portugueses inscritos
  * Exit: 0 gravou · 2 nada de novo · 1 erro.
  */
 "use strict";
@@ -66,6 +67,10 @@ const IDS = arg("--ids") ? arg("--ids").split(",").map((s) => s.trim().toLowerCa
 const MAX_MS = (Number(arg("--max-min")) || 0) * 60_000;
 const REFAZER = process.argv.includes("--refazer");
 const SEM_CARTOES = process.argv.includes("--sem-cartoes");
+// `--so-pt-antes 2022`: nas provas anteriores a esse ano, só as que têm
+// portugueses (na Federgolf o «clube» dos estrangeiros é o país: POR/PRT).
+const SO_PT_ANTES = Number(arg("--so-pt-antes")) || 0;
+const PORTUGAL = /^(POR|PRT|PORTUGAL)$/i;
 const FORCE = process.argv.includes("--force");
 const inicio = Date.now();
 
@@ -349,7 +354,7 @@ function construirIndice() {
   console.log(`Calendário ${ANOS.join(",")}: ${cal.length} provas, ${alvo.length} juvenis já jogadas`);
 
   // Passagem rápida: 3 provas de cada vez; com cartões, uma (os cartões já vão 4 a 4).
-  let gravadas = 0, saltadas = 0, erros = 0, vazias = 0, desdeIndice = 0;
+  let gravadas = 0, saltadas = 0, erros = 0, vazias = 0, semPt = 0, desdeIndice = 0;
   await emParalelo(alvo, SEM_CARTOES ? 3 : 1, async (c) => {
     if (MAX_MS && Date.now() - inicio > MAX_MS) return;
     const file = path.join(OUT_DIR, `${c.competition_id}.json`);
@@ -367,6 +372,12 @@ function construirIndice() {
     }
     const t0 = Date.now();
     try {
+      // Antes de `--so-pt-antes` (2022): só as provas com portugueses inscritos
+      // (pedido da Mariana, 02/11/2026). Um pedido à lista antes de tudo o resto.
+      if (SO_PT_ANTES && Number(String(isoDe(c.data)).slice(0, 4)) < SO_PT_ANTES && !fs.existsSync(file)) {
+        const ins = lerInscritos(await ajax("competition-player-list", { competition_id: c.competition_id }));
+        if (!ins.some((i) => PORTUGAL.test(i.clube || ""))) { semPt++; return; }
+      }
       const prova = await lerProva(c);
       if (!prova) { vazias++; console.log(`  — ${c.data} ${texto(c.nome)}: sem classificação`); return; }
       const r = writeJsonGuarded(file, prova, { count: (d) => d.jogadores.length, maxDrop: 0.3, force: FORCE, spaces: 0, label: c.competition_id });
@@ -386,7 +397,7 @@ function construirIndice() {
 
   const idx = construirIndice();
   const ri = writeJsonGuarded(INDEX, idx, { count: (d) => d.provas.length, maxDrop: 0.3, force: FORCE, label: "federgolf-index" });
-  console.log(`Gravadas ${gravadas}, já estáveis ${saltadas}, sem classificação ${vazias}, erros ${erros}; índice ${idx.provas.length} provas`);
+  console.log(`Gravadas ${gravadas}, já estáveis ${saltadas}, sem classificação ${vazias}, sem portugueses (antes de ${SO_PT_ANTES || "—"}) ${semPt}, erros ${erros}; índice ${idx.provas.length} provas`);
   if (!ri.written || (erros && !gravadas)) process.exitCode = 1;
   else if (!gravadas) process.exitCode = 2;
 })().catch((e) => { console.error(e); process.exitCode = 1; });

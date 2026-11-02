@@ -290,7 +290,8 @@ export function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament, R: F
       key: "main",
       escalao: meta.divisions?.length ? meta.divisions.join("/") : "—",
       hasManuel,
-      // Só totais → o shell desenha o TotalsResumo. O PDF não traz o par do
+      // Só totais → o shell desenha-os como prova sem buraco a buraco (o mesmo
+      // Resumo do TournamentDetail). O PDF não traz o par do
       // campo: sem par oficial fica SEM PAR (decisão dela, 22/10/2026 — antes
       // assumia-se 72), por isso não há ±par.
       totals: data.players.length ? {

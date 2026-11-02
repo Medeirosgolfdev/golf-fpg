@@ -16,7 +16,7 @@ import type { FpgDraw } from "../nacional2026Loader";
 export type TournamentFormat =
   /** Stroke play com cartões buraco a buraco (TournamentDetail). */
   | "stroke"
-  /** Só totais por volta, sem cartões (TotalsResumo). */
+  /** Só totais por volta, sem cartões (prova `_noHbh` no TournamentDetail). */
   | "totals"
   /** Match play individual (MatchplayView: Taça FPG, CFJ…). */
   | "matchplay-ind"
@@ -98,6 +98,28 @@ export interface RoundDrawData {
 export interface TotalsNotice { kind: "aviso" | "nota"; text: string; title?: string }
 
 /** Coluna extra de uma tabela de totais, como dados: o valor é o campo `field`
- *  do jogador, com `decimals` casas (sem número → «–»). `kind: "sd"` desenha
- *  o valor com a pílula de SD comum (cor pelo HCP do jogador). */
-export interface TotalsExtraCol { header: string; title?: string; field: string; decimals?: number; kind?: "sd" }
+ *  do jogador, com `decimals` casas (sem número → «–»). */
+export interface TotalsExtraCol { header: string; title?: string; field: string; decimals?: number }
+
+/** Um jogador de uma prova só com totais por volta (sem buraco a buraco). O
+ *  CircuitShell transforma-os numa prova `_noHbh` do TournamentDetail
+ *  (`totalsDivisionView`, ui/circuit/divisionPieces). */
+export interface TotalsPlayer {
+  name: string;
+  country?: string | null;
+  club?: string | null;
+  hcp?: number | null;
+  /** Ano de nascimento — coluna Nasc. */
+  birthYear?: number | null;
+  pos?: number | null;
+  /** Gross de cada volta, por ordem (null = não jogou). */
+  rounds: (number | null)[];
+  total?: number | null;
+  /** ±par da fonte (null = sem ±par); omitido, total − par × voltas jogadas. */
+  toPar?: number | null;
+  sex?: "M" | "F" | null;
+  /** Licença/federado → coluna FED. */
+  fed?: string | null;
+  /** Colunas extra (ex.: pontos WAGR) — lidas pelos `extra`. */
+  [k: string]: unknown;
+}

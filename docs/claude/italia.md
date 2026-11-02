@@ -4,11 +4,12 @@
 
 ## O que há
 
-Página **`/fig`** (🇮🇹 na barra): todas as provas juvenis individuais da
-Federazione Italiana Golf desde 2006 — Trofei Giovanili (Federali, U16, WAGR e
-os antigos), Campionati Nazionali/Internazionali Baby/Pulcini/Cadetti/Ragazzi e
-qualquer outra com escalão juvenil no nome. Fora: equipas, match play,
-qualificações e anuladas. ~1000 provas (1003 a 02/11/2026; ~45 por ano).
+Página **`/fig`** (🇮🇹 na barra): as provas juvenis individuais da Federazione
+Italiana Golf — Trofei Giovanili (Federali, U16, WAGR e os antigos), Campionati
+Nazionali/Internazionali Baby/Pulcini/Cadetti/Ragazzi e qualquer outra com
+escalão juvenil no nome. Fora: equipas, match play, qualificações e anuladas.
+~45 por ano. Âmbito (02/11/2026): todas de 2022 em diante; 2018–2021 só com
+portugueses inscritos; antes de 2018 não há classificação na API.
 
 ## API (pública, sem login nem nonce)
 
@@ -57,15 +58,19 @@ verificato un errore» e timeouts. O scraper usa 4 e repete com espera.
 - Grava `public/data/federgolf/{id}.json` (uma prova = um sexo, guarda
   anti-encolhimento) e `public/data/federgolf-index.json` (de todos os
   ficheiros em disco; refeito de 20 em 20 provas durante a corrida).
+- **Âmbito (02/11/2026, decisão da Mariana):** todas as provas de 2022 em diante;
+  de 2018 a 2021 só as que têm portugueses inscritos (`--so-pt-antes 2022`: um
+  pedido à lista de inscritos antes de tudo; português = «clube» POR/PRT).
 - Workflow `update-federgolf.yml` (diário 01:00 UTC): provas que faltam desde
-  2006 (só totais, até 2 h), depois cartões até 2,5 h, do mais recente para trás.
+  2018 com essa regra (só totais, até 2 h), depois cartões até 2,5 h, do mais
+  recente para trás.
 
 ## Site
 
 - `src/data/federgolf/` — `types.ts`, `toTournament.ts` (`fgToTournament`:
   voltas com cartão, tee, CR/Slope e SD oficial em `roundScores[].sd`; escalão
-  de cada jogador pela categoria; `fgTotais` para as provas ainda sem cartões
-  → `TotalsResumo`), `entries.ts` (`buildFgEntries`: M e F da mesma prova numa
+  de cada jogador pela categoria; sem cartões ainda, a mesma prova marcada
+  `_noHbh` — mesmo Resumo, SD em cada volta, sem Scorecards), `entries.ts` (`buildFgEntries`: M e F da mesma prova numa
   entrada, `memberIds`; «Pulcine»/«Pulcini» do mesmo dia e clube juntam-se).
 - `admissions.tsx` — a «Lista iscritti» (gravada em `inscritos[]` desde
   02/11/2026, com quem não chegou a jogar) → separador Inscrições

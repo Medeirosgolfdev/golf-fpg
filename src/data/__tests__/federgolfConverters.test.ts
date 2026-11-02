@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { escalaoCanon } from "../model/escalao";
-import { fgNome, fgClube, fgEscalao, fgEscalaoProva, fgPais, fgTemCartoes, fgTitulo, fgTotais, fgToTournament } from "../federgolf/toTournament";
+import { fgNome, fgClube, fgEscalao, fgEscalaoProva, fgPais, fgTemCartoes, fgTitulo, fgToTournament } from "../federgolf/toTournament";
 import { fgAdmissions, fgAdmissionsCols } from "../federgolf/admissions";
 import { FG_RANKING_CATS, fgAnosNascimento, fgIdPorNomeUnico, fgRankingDoJogador, type FgRanking } from "../federgolf/ranking";
 import { buildFgEntries, fgNomeBase } from "../federgolf/entries";
@@ -123,7 +123,6 @@ describe("Federgolf — ranking juvenil", () => {
     const t = fgToTournament(prova, nasc);
     expect((t.players[0] as unknown as { birthYear: number }).birthYear).toBe(2014);
     expect((t.players[1] as unknown as { birthYear?: number }).birthYear).toBeUndefined();
-    expect(fgTotais(prova, nasc).players[0].birthYear).toBe(2014);
     // Inscrições: pelo nome do inscrito → id da classificação (a lista não traz o id).
     const adm = fgAdmissions({ ...prova, inscritos: [
       { n: 1, nome: "DURANDO, Matteo", clube: "MONTICELLO", cat: "B", qual: "BG", wagr: null, indice: 6.2, odm: 356, data: null, estado: "ammesso" },
@@ -179,17 +178,19 @@ describe("Federgolf — entradas", () => {
     expect(es).toHaveLength(1);
     expect(es[0].memberIds).toEqual(["a", "b"]);
   });
-  it("prova só com totais (passagem rápida) → Resumo de totais com o par do relatório", () => {
-    const semCartoes: FgProva = { ...prova, parTotal: 71, jogadores: prova.jogadores.map((j) => ({ ...j, cartoes: j.cartoes.map(() => null) })) };
+  it("prova só com totais (passagem rápida) → a MESMA prova do TournamentDetail, sem buraco a buraco", () => {
+    const semCartoes: FgProva = { ...prova, campo: null, parTotal: 71, jogadores: prova.jogadores.map((j) => ({ ...j, cartoes: j.cartoes.map(() => null) })) };
     expect(fgTemCartoes(semCartoes)).toBe(false);
     expect(fgTemCartoes(prova)).toBe(true);
-    const t = fgTotais(semCartoes);
-    expect(t.parPerRound).toBe(71);
-    expect(t.players[0]).toMatchObject({ name: "Matteo Durando", rounds: [69, 72], total: 141, toPar: -1 });
-    expect(t.players[1].toPar).toBeUndefined();
-    // SD oficial por volta nas colunas extra (sem cartões não há outro sítio).
-    expect(t.extra?.map((c) => c.header)).toEqual(["SD R1", "SD R2"]);
-    expect(t.players[0]).toMatchObject({ sd1: 3.1, sd2: 6.1 });
-    expect(t.players[1]).toMatchObject({ sd1: 18.9, sd2: null });
+    const t = fgToTournament(semCartoes);
+    expect((t as unknown as { _noHbh: boolean })._noHbh).toBe(true);
+    expect((fgToTournament(prova) as unknown as { _noHbh?: boolean })._noHbh).toBeUndefined();
+    const [p1, p2] = t.players;
+    expect(p1.toPar).toBe(-1);
+    // Sem ±par da fonte (falta a R2): total − par da volta × voltas jogadas.
+    expect(p2.toPar).toBe(85 - 71);
+    // O SD oficial fica em cada volta, como nas provas com cartões.
+    expect((p1.roundScores ?? []).map((r) => (r as unknown as { sd: number }).sd)).toEqual([3.1, 6.1]);
+    expect(p1.roundScores?.[0].courseRating).toBe(65.8);
   });
 });
