@@ -1,7 +1,8 @@
 /**
- * scripts/aggregator/util/rfeg-oficial.js — hándicap oficial actual e ranking
- * juvenil da RFEG nos juniores espanhóis (22/10/2026, «quero acompanhar os
- * espanhóis»).
+ * scripts/aggregator/util/rfeg-oficial.js — hándicap oficial actual da RFEG
+ * nos juniores espanhóis (22/10/2026, «quero acompanhar os espanhóis»). Os
+ * rankings juvenis só ajudam a achar a licença; o lugar já não se guarda
+ * (02/11/2026 — ver scripts/lib/rfeg-oficial.js).
  *
  * Não é uma fonte: não cria fichas nem torneios. Corre depois do matcher e só
  * acrescenta `junior.rfegOficial` a quem já existe — a regra de casamento

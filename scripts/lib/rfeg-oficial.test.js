@@ -127,6 +127,7 @@ describe("rfeg-oficial — casar juniores com rankings e hándicap", () => {
     expect(hcpDoJunior(j({ sources: { rfeg: { lic: "CM01952325" } } }), hcp)).toBeNull();
     const st = enriquecer([d], { hcp, linhas: L });
     expect(st).toMatchObject({ comHcp: 1, comRanking: 1 });
-    expect(d.rfegOficial).toMatchObject({ hcp: 0.3, hcpData: "2026-10-05", rankings: [{ pos: 20, n: 100, curto: "Nacional Infantil M 2026" }] });
+    expect(d.rfegOficial).toMatchObject({ hcp: 0.3, hcpData: "2026-10-05" });
+    expect(d.rfegOficial.rankings).toBeUndefined(); // o lugar no ranking já não se guarda (02/11/2026)
   });
 });

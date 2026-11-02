@@ -146,7 +146,11 @@ function hcpDoJunior(j, hcp, licsExtra = []) {
 
 /**
  * Acrescenta `junior.rfegOficial` a quem casar:
- *   { lic?, hcp?, hcpData?, hcpClube?, hcpVia?, rankings?: [{t, curto, ano, pos, n, pts, f, nac, via}] }
+ *   { lic?, hcp?, hcpData?, hcpClube?, hcpVia? }
+ * Os rankings juvenis só servem para achar a licença (e por ela o hándicap) de
+ * quem não a tem no kids2: o lugar deixou de se guardar a 02/11/2026 — é um
+ * ranking de pontos por participar, mistura os 11 aos 16 anos e está parado em
+ * Maio (a Mariana: «está parado, não serve de nada»).
  * Devolve contagens para o log do agregador.
  */
 function enriquecer(juniors, { hcp, linhas }) {
@@ -159,12 +163,11 @@ function enriquecer(juniors, { hcp, linhas }) {
     st.recusadas += recusadas;
     const licsRanking = [...new Set(ls.map((l) => l.lic).filter(Boolean))];
     const h = hcpDoJunior(j, hcp, licsRanking);
-    if (!h && !ls.length) { if (temLic) st.semNada++; continue; }
+    if (!h && !ls.some((l) => l.lic)) { if (temLic) st.semNada++; continue; }
     const o = {};
     if (h) { o.lic = h.lic; o.hcp = h.hcp; o.hcpData = h.data; if (h.clube) o.hcpClube = h.clube; o.hcpVia = h.via; st.comHcp++; }
     if (ls.length) {
       if (!o.lic && ls[0].lic) o.lic = ls[0].lic;
-      o.rankings = ls.slice(0, 4).map((l) => ({ t: l.titulo, curto: l.curto, ano: l.ano, pos: l.pos, n: l.n, pts: l.pts, f: l.fecha, nac: l.nacional, via: l.via }));
       st.comRanking++;
       if (ls[0].via === "nome") st.porNome++;
     }

@@ -130,7 +130,6 @@ export default function HeroIdentity({ data, junior }: Props) {
   const rfo = junior.rfegOficial;
   if (rfo?.hcp != null) hcps.push({ source: "RFEG", value: rfo.hcp, date: rfo.hcpData ?? undefined, oficial: true });
   else if (junior.sources.rfeg?.hcp != null) hcps.push({ source: "RFEG", value: junior.sources.rfeg.hcp, date: junior.sources.rfeg.hcpDate });
-  const rankingsRfeg = (rfo?.rankings ?? []).filter((r) => r.pos != null).slice(0, 2);
   if (junior.sources.ffgolf?.hcp != null) hcps.push({ source: "FFG", value: junior.sources.ffgolf.hcp });
   // Handicap tirado de uma lista de inscritos (Entry List) — o mais recente;
   // mostra-se sempre, com o mês, mesmo quando há o da FPG/RFEG/FFG.
@@ -326,7 +325,7 @@ export default function HeroIdentity({ data, junior }: Props) {
         )}
       </div>
 
-      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || rankingsRfeg.length > 0 || hcpLista || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
+      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || hcpLista || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
         <div className="u-d-flex u-gap-6px u-mt-14px u-fwr-wrap">
           {escIntl && <EscPill label={escIntl} accent strong />}
           {escUskids && <EscPill label={`${escUskids} · USKids`} />}
@@ -341,14 +340,6 @@ export default function HeroIdentity({ data, junior }: Props) {
               {i === hcps.length - 1 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
                 <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
               )}
-            </span>
-          ))}
-          {rankingsRfeg.map((r) => (
-            <span key={`${r.t}-${r.ano}`}
-                  title={`${r.t}${r.f ? ` — ranking de ${shortDateSlash(r.f, true)}` : ""}${r.pts != null ? ` · ${r.pts} pontos` : ""}${r.via === "nome" ? " · ligado por nome e ano de nascimento" : ""}`}
-                  className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
-              <span className="u-fs-fs-12 u-lh-1">{SOURCE_FLAGS.RFEG}</span>
-              {r.pos}.º de {r.n} <span className="u-c-text-3 u-ml-3px">· Ranking {r.curto}</span>
             </span>
           ))}
           {hcpLista && (
