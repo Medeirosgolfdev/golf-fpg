@@ -81,6 +81,12 @@ verificato un errore» e timeouts. O scraper usa 4 e repete com espera.
 - **Estrangeiros:** na Federgolf o «clube» é o país, com códigos próprios
   (SWI, DAN, SLK, IRE, SCO, ENG, WAL, LIT…) → `fgPais` (ISO-2) → bandeira e
   destaque PT.
+- **Filtros ★ Manuel e 🇵🇹 PT** (os mesmos da /ffg e /rfeg): o índice grava
+  `hasPt`/`hasManuel` por prova (`construirIndice`), contando a classificação
+  **e** a lista de inscritos. Quem se inscreveu e não jogou (lista de espera,
+  desistência) aparece numa nota por cima do Resumo (`fgNotaPtNaoJogaram` →
+  `noticeNode`, a mesma peça do aviso do WAGR) — pedido dela, 02/11/2026: a
+  prova aparece no filtro e diz que não conseguiu jogar.
 - `src/pages/FedergolfPage.tsx` — só o `CircuitShell` (sem estilos próprios).
 - Testes: `src/data/__tests__/federgolfConverters.test.ts`.
 
