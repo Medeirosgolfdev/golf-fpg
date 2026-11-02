@@ -11,7 +11,7 @@
  *  - Cada nome é link para `/jogadores/{fed}?view=federado` (nova janela)
  */
 
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { fmtToPar, fpgScoringUrl } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import PosBadge from "./PosBadge";
@@ -204,9 +204,9 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
               const isOpen = expanded.has(key);
               const years = [...new Set(a.entries.map((e) => e.year))].sort();
               return (
-                <>
-                  <tr key={key}
-                    style={{ cursor: "pointer", background: isOpen ? "var(--bg-info-subtle, rgba(59,130,246,0.04))" : undefined }}
+                <Fragment key={key}>
+                  <tr
+                    className={"u-cur-pointer" + (isOpen ? " u-bg-bg-info-subtle" : "")}
                     onClick={() => toggle(key)}
                     title={isOpen ? "Fechar detalhes" : "Ver todos os top-5"}>
                     <td className="u-va-middle">
@@ -238,7 +238,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                     </td>
                   </tr>
                   {isOpen && (
-                    <tr key={key + "-details"}>
+                    <tr>
                       <td colSpan={8} className="u-p-0-12px-14px-36px u-bg-jqabh">
                         <table className="dtable dtable-sm u-mt-4px">
                           <thead>
@@ -272,7 +272,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                       </td>
                     </tr>
                   )}
-                </>
+                </Fragment>
               );
             })}
           </tbody>

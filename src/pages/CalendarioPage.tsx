@@ -20,13 +20,13 @@ import type { PlayersDb } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
-import { useIsMobile } from "../hooks/useIsMobile";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
 import { schoolDay, isFreeDay, freeDayReason } from "../data/schoolCalendar";
 import { CAL_DEFS, EVENTS, DOB_OVERRIDES, ANO_BASE, ANO_FIM } from "../data/calendarEvents";
 import type { CalEvent, CalGroup, CalDef } from "../data/calendarEvents";
 import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
+import SidebarToggle from "../ui/SidebarToggle";
 
 interface CalendarSource {
   id: string;
@@ -459,7 +459,6 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
   );
   const [expandedCal, setExpandedCal] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const isMobile = useIsMobile();
   const [searchQ, setSearchQ] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -653,11 +652,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
  <div className="flex-1 d-flex flex-col overflow-hidden">
         <div className="u-bb-1px-solid-border-light u-fsh-0">
           <div className="gap-8 flex-wrap u-d-flex u-ai-center u-p-8px-12px">
-            <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-              {sidebarOpen ? "◀" : "▶"}
-            </button>
+            <SidebarToggle open={sidebarOpen} onToggle={() => setSidebarOpen(v => !v)} backLabel="Filtros" />
             <h2 className="cal-month-title fs-14 u-m-0 u-ws-nowrap">Calendário {miAno(currentMonth)}</h2>
-            <button onClick={goToday} className="p p-filter shrink-0 u-op-1" title="Ir para hoje">Hoje</button>
+            <button type="button" onClick={goToday} className="btn shrink-0" title="Ir para hoje">Hoje</button>
             <div ref={searchRef} className="u-pos-relative u-fl-1-1-120px u-minw-100px u-maxw-220px">
               <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
                 onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
@@ -702,9 +699,6 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
         </div>
 
         <div className="flex-1 scroll-y scroll-y">
-          {!sidebarOpen && isMobile && (
-            <button className="sidebar-back-btn" onClick={() => setSidebarOpen(true)}>▶ Filtros</button>
-          )}
           {viewMode === "month" ? (
             <div className="cal-content">
               <div className="cal-week-header u-d-grid u-grid-template-columns-6cy1v u-bb-1px-solid-border-light u-mb-4px">

@@ -149,7 +149,7 @@ export default function JogadoresToolbar({
         {(viewMode === "ours" || isJuvenilFilter || filters.escalaoFilter.size > 0) && (
           <div className="escalao-pills">
             {filters.escalaoFilter.size > 0 && (
-              <button className="p p-esc-clear" onClick={clearEscalao} title="Limpar filtros de escalão">✕</button>
+              <ClearButton onClick={clearEscalao} title="Limpar filtros de escalão" />
             )}
             {escaloes.map(esc => {
               const active = filters.escalaoFilter.has(esc);

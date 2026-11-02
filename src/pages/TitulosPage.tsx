@@ -214,12 +214,12 @@ export default function TitulosPage() {
   // order on every render — no early returns before useState/useEffect).
   if (validTab === null) return <Navigate to="/titulos/nacional" replace />;
   if (historicoErr) return <EmptyState message={`Erro a carregar dados: ${historicoErr}`} />;
-  if (!historico) return <LoadingState message="A carregar Titulos..." />;
+  if (!historico) return <LoadingState message="A carregar Títulos…" />;
 
   return (
     <div className="page-full u-maxw-none">
       <Toolbar>
-        <ToolbarTitle>🏆 Titulos - Campeonatos de Jovens</ToolbarTitle>
+        <ToolbarTitle>🏆 Títulos — Campeonatos de Jovens</ToolbarTitle>
         <ToolbarMeta>
           {yearsCovered.length > 0
             ? `${yearsCovered[0]}-${yearsCovered[yearsCovered.length - 1]}`
@@ -236,7 +236,7 @@ export default function TitulosPage() {
       {/* Tabs */}
       {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
       <TabRow active={activeTab} onChange={(k) => navigate(`/titulos/${k}`)} className="u-m-10px-16px-0"
-        tabs={(Object.keys(TAB_LABELS) as TabKey[]).map((k) => ({ key: k, label: TAB_LABELS[k] }))} />
+        tabs={(Object.keys(TAB_LABELS) as TabKey[]).map((k) => ({ key: k, label: TAB_LABELS[k], href: `/titulos/${k}` }))} />
 
       {activeTab === "nacional" && (
         <>
@@ -261,7 +261,7 @@ export default function TitulosPage() {
             hideHeader={true}
           />
         ) : (
-          <LoadingState message="A carregar Regionais..." />
+          <LoadingState message="A carregar Regionais…" />
         )
       )}
 

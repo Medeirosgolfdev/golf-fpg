@@ -211,7 +211,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
     return (
       <div className="pa-page">
         <div className="u-p-8px-12px u-d-flex u-gap-8px u-ai-center u-bb-1px-solid-border u-fsh-0">
-          <button className="p p-outline u-cur-pointer"
+          <button type="button" className="btn"
             onClick={() => setFederadoView(false)}
             title="Voltar à vista completa com análise">
             ← Vista completa
@@ -232,7 +232,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
     return (
       <div className="pa-page">
         <div className="u-p-8px-12px u-d-flex u-gap-8px u-ai-center u-bb-1px-solid-border u-fsh-0">
-          <button className="p p-outline u-cur-pointer" onClick={() => setPpView(false)} title="Voltar à vista completa">
+          <button type="button" className="btn" onClick={() => setPpView(false)} title="Voltar à vista completa">
             ← Vista completa
           </button>
           <span className="muted fs-12">Histórico Pitch &amp; Putt (cartões P&amp;P, par-3 × 18)</span>

@@ -54,8 +54,8 @@ export default function FieldPlayerDetail({
   if (!lbEntry && !rival)
     return (
       <div className="tourn-section">
-        <button
-          className="p p-filter active mb-8"
+        <button type="button"
+          className="btn mb-8"
           onClick={onBack}
           title="Voltar à lista"
         >
@@ -369,7 +369,7 @@ export default function FieldPlayerDetail({
 
   return (
     <div className="tourn-section">
-      <button className="p p-filter mb-12" onClick={onBack}>
+      <button type="button" className="btn mb-12" onClick={onBack}>
         ← Análise
       </button>
 

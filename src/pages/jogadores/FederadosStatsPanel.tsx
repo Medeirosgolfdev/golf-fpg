@@ -200,7 +200,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
     <div className="p-16">
       <div className="u-d-flex u-ai-center u-jc-space-between u-mb-12px">
         <h2 className="detail-title u-m-0">📊 Estatísticas FPG</h2>
-        <button className="p" onClick={onClose} title="Fechar estatísticas">✕ Fechar</button>
+        <button type="button" className="btn" onClick={onClose} title="Fechar estatísticas">✕ Fechar</button>
       </div>
 
       {/* KPIs — 6 cards */}
@@ -407,7 +407,7 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
             <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="F" />{female}</span>
           </div>
         </div>
-        <button className="p p-sm" onClick={onClose} title="Fechar">✕</button>
+        <button type="button" className="btn-round btn-round-sm" onClick={onClose} title="Fechar" aria-label="Fechar">✕</button>
       </div>
       <div className="fw-800 fs-12 mb-4">Top 15 (ordenados por HCP)</div>
       <div className="u-d-grid u-grid-template-columns-120gf u-gap-4px">
@@ -481,7 +481,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
         <div className="fw-900 fs-14">
           {drillDown.type === "club" ? "🏌️ Clube" : "🎯 Escalão"}: {title}
         </div>
-        <button className="p p-sm" onClick={onClose} title="Fechar drill-down">✕</button>
+        <button type="button" className="btn-round btn-round-sm" onClick={onClose} title="Fechar drill-down" aria-label="Fechar">✕</button>
       </div>
 
       {/* KPIs do drill */}

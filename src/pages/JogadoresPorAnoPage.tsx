@@ -44,6 +44,8 @@ import { HCP_UNESTABLISHED_THRESHOLD as HCP_UNESTABLISHED } from "./jogadores/fi
 import { HcpDelta } from "../ui/tableCells";
 import ClearButton from "../ui/ClearButton";
 import TabRow from "../ui/TabRow";
+import FilterPillRow from "../ui/FilterPillRow";
+import EmptyState from "../ui/EmptyState";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -259,18 +261,14 @@ export default function JogadoresPorAnoPage() {
   // seleccionados, ou forçado pela checkbox "Tabela única".
   const effectiveCombine = combine || yearSet.size > 1;
 
-  const toggleEsc = (e: string) =>
-    setEscSet(prev => { const n = new Set(prev); n.has(e) ? n.delete(e) : n.add(e); return n; });
-  const toggleYear = (y: number) =>
-    setYearSet(prev => { const n = new Set(prev); n.has(y) ? n.delete(y) : n.add(y); return n; });
-  const toggleBucket = (years: number[]) =>
-    setYearSet(prev => {
-      const n = new Set(prev);
-      const allIn = years.length > 0 && years.every(y => n.has(y));
-      years.forEach(y => allIn ? n.delete(y) : n.add(y));
-      return n;
-    });
-  const bucketActive = (years: number[]) => years.length > 0 && years.every(y => yearSet.has(y));
+  // Filtro de anos: cada pill (ano ou bloco de anos) é uma chave; os blocos acendem
+  // quando todos os seus anos estão escolhidos.
+  const bucketKey = (b: { low: number; high: number }) => `${b.low}-${b.high}`;
+  const yearsOfKey = useMemo(() => new Map<string, number[]>([
+    ...recentYears.map(y => [String(y), [y]] as [string, number[]]),
+    ...yearBuckets.map(b => [bucketKey(b), b.years] as [string, number[]]),
+  ]), [recentYears, yearBuckets]);
+  const yearKeys = [...yearsOfKey].filter(([, ys]) => ys.length > 0 && ys.every(y => yearSet.has(y))).map(([k]) => k);
 
   const clearFilters = () => {
     setQ(""); setSexFilter("ALL"); setEscSet(new Set()); setYearSet(new Set());
@@ -416,7 +414,7 @@ export default function JogadoresPorAnoPage() {
           Tabela única
         </label>
 
-        <button className="p" onClick={() => setOrder(o => o === "asc" ? "desc" : "asc")}
+        <button type="button" className="btn" onClick={() => setOrder(o => o === "asc" ? "desc" : "asc")}
           title="Inverter ordem das coortes (ano)">
           Ano {order === "asc" ? "▲ mais antigo" : "▼ mais novo"}
         </button>
@@ -436,51 +434,19 @@ export default function JogadoresPorAnoPage() {
 
       {/* Filtro por ANO de nascimento — anos recentes individuais, antigos em escalões de 5 anos */}
       {yearsPresent.length > 0 && (
-        <div className="u-d-flex u-fwr-wrap u-gap-6px u-m-8px-0 u-ai-center">
-          <span className="muted fs-10 u-fw-700">Ano:</span>
-          {recentYears.map(y => (
-            <button
-              key={y}
-              className={`p p-sm ${yearSet.has(y) ? "" : "p-muted"}`}
-              onClick={() => toggleYear(y)}
-              style={yearSet.has(y) ? { background: "var(--accent)", color: "var(--text-on-color)" } : undefined}
-              title={`Nascidos em ${y} (≈ ${CURRENT_YEAR - y} anos)`}
-            >
-              {y}
-            </button>
-          ))}
-          {yearBuckets.map(b => (
-            <button
-              key={b.high}
-              className={`p p-sm ${bucketActive(b.years) ? "" : "p-muted"}`}
-              onClick={() => toggleBucket(b.years)}
-              style={bucketActive(b.years) ? { background: "var(--accent)", color: "var(--text-on-color)" } : undefined}
-              title={`Nascidos entre ${b.low} e ${b.high} (${b.years.length} ${b.years.length === 1 ? "ano" : "anos"} com jogadores)`}
-            >
-              {b.low}–{String(b.high).slice(2)}
-            </button>
-          ))}
-          {yearSet.size > 0 && (
-            <ClearButton onClick={() => setYearSet(new Set())} title="Limpar selecção de anos" label="anos" />
-          )}
-        </div>
+        <FilterPillRow label="Ano:" active={yearKeys}
+          onChange={keys => setYearSet(new Set(keys.flatMap(k => yearsOfKey.get(k) ?? [])))}
+          items={[
+            ...recentYears.map(y => ({ key: String(y), label: y, title: `Nascidos em ${y} (≈ ${CURRENT_YEAR - y} anos)` })),
+            ...yearBuckets.map(b => ({ key: bucketKey(b), label: `${b.low}–${String(b.high).slice(2)}`,
+              title: `Nascidos entre ${b.low} e ${b.high} (${b.years.length} ${b.years.length === 1 ? "ano" : "anos"} com jogadores)` })),
+          ]} />
       )}
 
       {/* Filtro rápido por escalão */}
       {escaloesPresent.length > 0 && (
-        <div className="u-d-flex u-fwr-wrap u-gap-6px u-m-8px-0 u-ai-center">
-          <span className="muted fs-10 u-fw-700">Escalão:</span>
-          {escaloesPresent.map(e => (
-            <button
-              key={e}
-              className={`p p-sm ${escSet.has(e) ? "" : "p-muted"}`}
-              onClick={() => toggleEsc(e)}
-              style={escSet.has(e) ? { background: "var(--accent)", color: "var(--text-on-color)" } : undefined}
-            >
-              {e}
-            </button>
-          ))}
-        </div>
+        <FilterPillRow label="Escalão:" active={escSet} onChange={keys => setEscSet(new Set(keys))}
+          items={escaloesPresent.map(e => ({ key: e, label: e }))} />
       )}
 
       {/* Métricas de evolução de HCP da selecção filtrada (tabela, sem gráfico) */}
@@ -492,9 +458,7 @@ export default function JogadoresPorAnoPage() {
 
       {/* Sem resultados */}
       {cohorts.length === 0 && (
-        <div className="muted u-p-24px u-ta-center">
-          Nenhum jogador corresponde aos filtros (ou sem data de nascimento registada).
-        </div>
+        <EmptyState>Nenhum jogador corresponde aos filtros (ou sem data de nascimento registada).</EmptyState>
       )}
 
       {/* MODO TABELA ÚNICA — todos os anos filtrados juntos */}
