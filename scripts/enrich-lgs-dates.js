@@ -34,11 +34,8 @@ function get(url, hops = 0) {
   });
 }
 
-const MESES = {
-  enero: "01", febrero: "02", marzo: "03", abril: "04", mayo: "05", junio: "06",
-  julio: "07", agosto: "08", septiembre: "09", setiembre: "09", octubre: "10",
-  noviembre: "11", diciembre: "12",
-};
+const { MESES_ES, datasDoIntervalo } = require("./lib/lgs-datas");
+const MESES = Object.fromEntries(Object.entries(MESES_ES).map(([m, n]) => [m, String(n).padStart(2, "0")]));
 function mesLower(s) {
   return String(s || "").toLowerCase();   // nenhum mes em espanhol leva acento
 }
@@ -60,7 +57,18 @@ async function enrich(file) {
   const fp = path.join(ROOT, file);
   const raw = fs.readFileSync(fp, "utf-8");
   const d = JSON.parse(raw);
-  if (d.meta && d.meta.year && d.meta.dateIso && dataNoIntervalo(d.meta)) return { skipped: true };
+  // Dentro do intervalo mas não no 1.º dia (as lidas antes de Out/2026 ficaram
+  // com o último): corrige-se aqui, sem ir à rede.
+  if (d.meta && d.meta.dateIso && dataNoIntervalo(d.meta)) {
+    const { inicio } = datasDoIntervalo(d.meta.dateIso, d.meta.dateRange);
+    if (inicio && inicio !== d.meta.dateIso.slice(0, 10)) {
+      d.meta.dateIso = inicio;
+      d.meta.year = parseInt(inicio.slice(0, 4), 10);
+      writeAtomic(fp, raw.includes("\n") ? JSON.stringify(d, null, 2) : JSON.stringify(d));
+      return { ok: true, primeiroDia: true, dateIso: inicio };
+    }
+    if (d.meta.year) return { skipped: true };
+  }
   const id = d.id;
   try {
     const html = await get(`https://mitarjeta.golf/torneos/imprimir/${id}`);
@@ -112,7 +120,7 @@ async function enrich(file) {
 (async () => {
   const files = fs.readdirSync(ROOT).filter(f => /^\d+\.json$/.test(f));
   console.log(`Enriching ${files.length} files...`);
-  let ok = 0, fail = 0, skip = 0, semData = 0;
+  let ok = 0, fail = 0, skip = 0, semData = 0, primeiroDia = 0;
   const concurrency = 10;
   let cursor = 0;
   async function worker() {
@@ -120,7 +128,7 @@ async function enrich(file) {
       const f = files[cursor++];
       const r = await enrich(f);
       if (r.skipped) skip++;
-      else if (r.ok) { ok++; }
+      else if (r.ok) { ok++; if (r.primeiroDia) primeiroDia++; }
       else if (r.semData) { semData++; console.log(`  ${f}: a página não traz a data`); }
       else { fail++; console.log(`  ${f}: ${r.error}`); }
     }
@@ -128,7 +136,7 @@ async function enrich(file) {
   const ws = [];
   for (let i = 0; i < concurrency; i++) ws.push(worker());
   await Promise.all(ws);
-  console.log(`ok=${ok} fail=${fail} sem-data=${semData} skip=${skip}`);
+  console.log(`ok=${ok} (1.º dia corrigido: ${primeiroDia}) fail=${fail} sem-data=${semData} skip=${skip}`);
   // Exit: 0 gravou · 2 nada de novo · 1 tudo falhou (antes acabava sempre em 0).
   // «sem-data» (a página respondeu mas não tem a data) não é erro: senão as
   // provas que nunca a terão punham o passo vermelho em todas as corridas.

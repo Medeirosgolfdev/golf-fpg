@@ -31,6 +31,11 @@ describe("mesmasPancadas", () => {
     expect(mesmasPancadas(linha("a", 1, [70, 72]), linha("a", 1, [71, 71]))).toBe(false);
     expect(mesmasPancadas({ pos: 1 }, { pos: 1 })).toBe(null);
   });
+
+  it("com nº de voltas diferente compara só as voltas comuns (Aisha Wu, Berlin 2026: 85 no EGR, 85+56 no GJGL)", () => {
+    expect(mesmasPancadas(linha("a", 1, [85]), linha("a", 1, [85, 56]))).toBe(true);
+    expect(mesmasPancadas(linha("a", 1, [84]), linha("a", 1, [85, 56]))).toBe(false);
+  });
 });
 
 describe("fundirTorneiosRepetidos", () => {
@@ -104,5 +109,35 @@ describe("fundirTorneiosRepetidos", () => {
     fundirTorneiosRepetidos(mr);
     expect(mr.tournaments.map((t) => t.id)).toEqual(["ejo-2020"]);
     expect(mr.tournaments[0].flights.flatMap((f) => f.results).map((x) => x.juniorId).sort()).toEqual(["a", "b", "c", "d", "e", "f", "h"]);
+  });
+
+  it("a cópia com todas as voltas fica como principal e as posições finais vêm dela (golfdirecto «Ronda 1» × «Ronda 3»)", () => {
+    const r1 = torneio("fcg-r1", "fcg", "Ronda 1", "2026-07-10", [flight("s18", "Sub-18", [
+      linha("a", 2, [74]), linha("b", 1, [70]), linha("c", 3, [71]), linha("d", 4, [80]),
+    ])]);
+    const r3 = torneio("fcg-r3", "fcg", "Ronda 3", "2026-07-12", [flight("s18", "Sub-18", [
+      linha("a", 1, [74, 71, 70]), linha("b", 2, [70, 76, 71]), linha("c", 3, [71, 74, 73]),
+    ])]);
+    const mr = montar([r1, r3]);
+    fundirTorneiosRepetidos(mr);
+    expect(mr.tournaments.map((t) => t.id)).toEqual(["fcg-r3"]);
+    const rs = mr.tournaments[0].flights[0].results;
+    expect(rs.map((x) => [x.juniorId, x.pos])).toEqual([["a", 1], ["b", 2], ["c", 3], ["d", 4]]);
+  });
+
+  it("colegas espalhados por vários escalões: quem só está na cópia fica à parte, sem escalão inventado", () => {
+    const gjgl = torneio("gjgl-berlin", "gjgl", "Berlin Juniors International 2026", "2026-07-28", [
+      flight("u14", "U14", [linha("a", 1, [74, 76]), linha("b", 2, [84, 80]), linha("c", 3, [86, 87])]),
+      flight("u18", "U18", [linha("d", 1, [89, 90])]),
+    ], { endDate: "2026-07-31" });
+    const egr = torneio("egr-1", "egr", "Berlin Junior International (GJG) 2026", "2026-07-29", [flight("geral", "Geral", [
+      linha("a", 1, [74, 76]), linha("b", 2, [84, 80]), linha("c", 3, [86, 87]), linha("d", 4, [89, 90]), linha("x", 5, [83, 80]),
+    ])]);
+    const mr = montar([gjgl, egr]);
+    fundirTorneiosRepetidos(mr);
+    expect(mr.tournaments.map((t) => t.id)).toEqual(["gjgl-berlin"]);
+    const fl = mr.tournaments[0].flights;
+    expect(fl.map((f) => f.label)).toEqual(["U14", "U18", "Geral (EGR)"]);
+    expect(fl[2].results.map((r) => r.juniorId)).toEqual(["x"]);
   });
 });

@@ -286,6 +286,13 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
 - **LGS → mitarjeta.golf:** `rfegolf.livegolfscoring.es` responde 301 para
   `mitarjeta.golf` desde Out/2026; o `enrich-lgs-dates` segue o redirect e tira
   o ano do nome quando a página não o traz (Interclubes, Adaptado).
+- **`meta.dateIso` do LGS = 1.º dia da prova** (02/11/2026): as provas lidas
+  antes de Out/2026 tinham o último (183 de 295; «25 junio - 27 junio» com
+  27/06), e o Campeonato de España Alevín caía em cima do Nacional Sub-12 da
+  FPG. O `enrich-lgs-dates` corrige sem rede a data que está dentro do
+  intervalo mas não é o 1.º dia; a conta vive em `scripts/lib/lgs-datas.js`
+  (também a usa o agregador). Depois: `build-rfegolf-index` → `build-lgs-twins`
+  → `build-spain-*` → `build-rfegolf-rivals` → agregador.
 - `build-lgs-twins` ignora a edição em numeração romana ao casar nomes
   («XIV Memorial Blanca Mayor» RFEG = «Memorial Blanca Mayor» LGS).
 

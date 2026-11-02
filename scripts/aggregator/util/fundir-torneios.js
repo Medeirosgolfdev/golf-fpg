@@ -55,7 +55,11 @@ function intervalo(t) {
 /** true/false quando há pancadas para comparar; null quando não há. */
 function mesmasPancadas(a, b) {
   let comparou = false;
-  if (grossOk(a.totalGross) && grossOk(b.totalGross)) {
+  // com nº de voltas diferente (uma cópia sem a volta parcial de quem
+  // desistiu) os totais não se comparam — só as voltas comuns
+  const nv = (x) => (x.rounds || []).filter((r) => grossOk(r.gross)).length;
+  const na = nv(a), nb = nv(b);
+  if (grossOk(a.totalGross) && grossOk(b.totalGross) && !(na && nb && na !== nb)) {
     if (a.totalGross !== b.totalGross) return false;
     comparou = true;
   }
@@ -69,15 +73,19 @@ function mesmasPancadas(a, b) {
 }
 
 function riqueza(t) {
-  let buracos = 0, voltas = 0, linhas = 0;
+  let buracos = 0, voltas = 0, linhas = 0, maxVoltas = 0;
   for (const f of t.flights || []) for (const r of f.results || []) {
     linhas++;
     if ((r.rounds || []).some((x) => Array.isArray(x.strokes) && x.strokes.some((s) => s > 0))) buracos++;
-    if ((r.rounds || []).some((x) => grossOk(x.gross))) voltas++;
+    const nv = (r.rounds || []).filter((x) => grossOk(x.gross)).length;
+    if (nv) voltas++;
+    if (nv > maxVoltas) maxVoltas = nv;
   }
   // dentro da mesma fonte, a classificação «Boys WAGR» perde para o escalão
   const transversal = ehTransversal(t) ? 0 : 5e8;
-  return prioridade(t) * 1e9 + transversal + buracos * 1e5 + voltas * 1e2 + Math.min(linhas, 99);
+  // a cópia com mais voltas é a classificação final (golfdirecto: «Ronda 3»
+  // com as 3 voltas e «Ronda 1» publicada à parte) — as posições vêm dela
+  return prioridade(t) * 1e9 + transversal + Math.min(maxVoltas, 4) * 1e8 + Math.min(buracos, 999) * 1e5 + Math.min(voltas, 999) * 1e2 + Math.min(linhas, 99);
 }
 
 const ehTransversal = (t) => /\bWAGR$/i.test(String(t.name || "").trim());
@@ -214,11 +222,19 @@ function fundirTorneiosRepetidos(matchResult) {
     const lp = linhas.get(p.id);
     const nomesP = porNome(p);
     for (const fs of s.flights || []) {
-      // flight de destino: onde estão (em p) os colegas deste flight
-      const votos = new Map();
-      for (const r of fs.results) { const x = lp.get(r.juniorId); if (x) votos.set(x.f, (votos.get(x.f) || 0) + 1); }
-      let fp = [...votos.entries()].sort((a, b) => b[1] - a[1])[0]?.[0]
-        || p.flights.find((f) => f.label === fs.label) || null;
+      // flight de destino: onde estão (em p) os colegas deste flight. Se estão
+      // espalhados por vários (o «Geral» do EGR sobre U14 e U18), quem só está
+      // nesta cópia fica num flight à parte — o escalão dele não se sabe.
+      const destinos = new Set();
+      for (const r of fs.results) { const x = lp.get(r.juniorId); if (x) destinos.add(x.f); }
+      let fp = destinos.size === 1 ? [...destinos][0]
+        : destinos.size ? null : p.flights.find((f) => f.label === fs.label) || null;
+      // sexo do flight à parte: o das fichas, quando são todas do mesmo
+      const sexos = new Set(fs.results.map((r) => (juniorById.get(r.juniorId) || {}).sex || null));
+      const sexo = fs.sex || (sexos.size === 1 ? [...sexos][0] : null);
+      const novoLabel = destinos.size > 1
+        ? `${fs.label}${sexo === "F" ? " Raparigas" : sexo === "M" ? " Rapazes" : ""} (${String(s.sourceId || "").toUpperCase()})`
+        : fs.label;
       if (fp) fundirFlight(fp, fs);
       for (const r of fs.results) {
         const x = lp.get(r.juniorId);
@@ -237,7 +253,7 @@ function fundirTorneiosRepetidos(matchResult) {
           continue;
         }
         if (!fp) {
-          fp = { ...fs, flightKey: `${s.id}:${fs.flightKey}`, results: [] };
+          fp = { ...fs, flightKey: `${s.id}:${fs.flightKey}`, label: novoLabel, sex: fs.sex || (destinos.size > 1 ? sexo : null), results: [] };
           p.flights.push(fp);
         }
         const nova = { ...r };

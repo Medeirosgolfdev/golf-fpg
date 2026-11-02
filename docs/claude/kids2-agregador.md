@@ -135,13 +135,19 @@ informação disponível».
 
 - **Quando são a mesma:** datas a ≤ 3 dias, ≥ 3 jogadores (mesmo `juniorId`)
   com as MESMAS pancadas (total e voltas comuns) em ≥ 90 % dos comparáveis.
+  Com nº de voltas diferente só contam as voltas comuns, não o total (Aisha Wu
+  na Berlin 2026: 85 no EGR, 85+56 no GJGL — era isso que a deixava separada).
   Voltas diferentes no mesmo dia (9 buracos de manhã e de tarde) têm pancadas
   diferentes e não se tocam.
-- **Qual fica:** fonte dedicada > federação > EGR/WAGR; em empate, a que tem
-  mais cartões buraco-a-buraco. Cada campo que lhe falta (posição, total,
+- **Qual fica:** fonte dedicada > federação > EGR/WAGR; em empate,
+  a com mais voltas (golfdirecto publica «Ronda 1» e «Ronda 3» à parte — as
+  posições finais estão na segunda), depois a com mais cartões buraco-a-buraco.
+  Cada campo que lhe falta (posição, total,
   ±par, voltas, buracos, par/metros, campo, datas, ligações) vem das outras;
-  quem só estava numa cópia passa para a principal, no flight dos colegas.
-  `extra.fundidoCom` lista as cópias.
+  quem só estava numa cópia passa para a principal, no flight dos colegas —
+  se os colegas estão em vários escalões (o «Geral» do EGR sobre U14 e U18 do
+  GJGL), fica num flight à parte «Geral Rapazes (EGR)»/«Geral Raparigas (EGR)»
+  (sexo pelas fichas), sem escalão inventado. `extra.fundidoCom` lista as cópias.
 - **Classificação transversal** (WJGC/EOWAGR «Boys WAGR» por cima dos
   escalões; FFG «Junior Series» por cima de «U16 et U14»): liga-se a provas que
   não se ligam entre si, ou o nome acaba em «WAGR» — só saem as linhas
