@@ -40,6 +40,12 @@ export interface MultiRoundRow {
   sex?: string;
   /** Data de nascimento (ISO "YYYY-MM-DD" ou "DD/MM/YYYY"). Alimenta as colunas Nasc./Idade. */
   dob?: string | null;
+  /** Só o ano (fonte sem data completa). */
+  birthYear?: number | null;
+  /** Ano ESTIMADO (mais antigo / mais recente; null = em aberto) e a nota — a vermelho (BirthCells). */
+  birthYearEst?: number | null;
+  birthYearEstMax?: number | null;
+  estNote?: string | null;
   /** Idade pré-calculada pelo adapter (à data do torneio). Preferida sobre recalcular
    *  por dob, para a coluna Idade ser CONSISTENTE com as tabs R1/R2/R3. */
   age?: number | null;

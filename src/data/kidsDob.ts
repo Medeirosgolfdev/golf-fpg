@@ -1,55 +1,69 @@
 /**
- * src/data/kidsDob.ts — data de nascimento do Kids 2 para quem a fonte do
- * torneio não traz (02/11/2026: no Venice Open 2026 da USKids as colunas
- * Nasc./Idade saíam vazias para toda a gente, mesmo para quem tem a data na
- * ficha do Kids 2).
+ * src/data/kidsDob.ts — nascimento do Kids 2 para quem a fonte do torneio não
+ * o traz (02/11/2026: no Venice Open 2026 da USKids as colunas Nasc./Idade
+ * saíam vazias para toda a gente, mesmo para quem tem a data na ficha).
  *
  * Liga como a seta ↗: nome → ficha (o mapa do juniors-links.json, KidsLinkCtx)
- * → `d` do juniors-scout.json. Um homónimo com outro federado não conta (o pai
- * do Manuel). Só a data COMPLETA lida (`d`) — nunca o ano estimado do ranking
- * (`r`), que é deduzido dos escalões e falha por um ano em metade dos miúdos.
- * Usado pelo TournamentDetail (voltas e Resumo), pelo DrawTab e pelo
- * AdmissionsTab, por isso todas as páginas de torneio ficam iguais.
+ * → juniors-scout.json. Um homónimo com outro federado não conta (o pai do
+ * Manuel). A data completa lida (`d`) ganha sempre; sem ela, o ano ESTIMADO
+ * pelos escalões USKids (`ne`, scripts/aggregator/util/nascimento-uskids.js —
+ * acerta ~97%), que as tabelas mostram a vermelho, como estimativa. Nunca o ano
+ * do ranking (`r`), que falha. Usado pelo TournamentDetail (voltas e Resumo),
+ * pelo DrawTab e pelo AdmissionsTab, por isso as páginas de torneio ficam iguais.
  */
 import type { KidsLinkEntry } from "../ui/KidsLink";
 import { normName } from "../utils/normName";
 
 /** O que interessa do juniors-scout.json. */
-export interface ScoutDobFile { players: Record<string, { d?: string }> }
+export interface ScoutDobFile { players: Record<string, { d?: string; ne?: [number, number] }> }
 
-/** Nome (e federado, se houver) → data de nascimento ISO do Kids 2. */
-export type KidsDobLookup = (nome: string | null | undefined, fed?: string | null) => string | undefined;
+/** Nascimento do Kids 2: a data lida, ou o ano estimado (um ou dois anos). */
+export type KidsNasc =
+  | { dob: string }
+  | { birthYearEst: number; birthYearEstMax: number; estNote: string };
+
+/** Nome (e federado, se houver) → nascimento do Kids 2. */
+export type KidsDobLookup = (nome: string | null | undefined, fed?: string | null) => KidsNasc | undefined;
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}/;
+export const KIDS_EST_NOTE = "ano deduzido dos escalões USKids em que jogou (Kids 2)";
 
 export function makeKidsDobLookup(kidsMap: Map<string, KidsLinkEntry>, scout: ScoutDobFile | null | undefined): KidsDobLookup {
   return (nome, fed) => {
     if (!scout || !nome) return undefined;
     const kid = kidsMap.get(normName(nome));
     if (!kid?.id || (fed && kid.fed && kid.fed !== fed)) return undefined;
-    const d = scout.players[kid.id]?.d;
-    return d && ISO_DATE.test(d) ? d.slice(0, 10) : undefined;
+    const s = scout.players[kid.id];
+    if (s?.d && ISO_DATE.test(s.d)) return { dob: s.d.slice(0, 10) };
+    if (s?.ne) return { birthYearEst: s.ne[0], birthYearEstMax: s.ne[1], estNote: KIDS_EST_NOTE };
+    return undefined;
   };
 }
 
-interface DobPlayer { name: string; fed?: string; fedCode?: string; dob?: string | null; birthYear?: number | null }
+interface DobPlayer { name: string; fed?: string; fedCode?: string; dob?: string | null; birthYear?: number | null; birthYearEst?: number | null }
+
+/** Sem nascimento nenhum (nem lido nem estimado)? */
+const semNasc = (p: DobPlayer) => !p.dob && p.birthYear == null && p.birthYearEst == null;
 
 /** Há alguém sem nascimento nem federado (o federado tem-no pelo playersDB)? */
 export function precisaKidsDob(players: readonly DobPlayer[]): boolean {
-  return players.some(p => !p.dob && p.birthYear == null && !(p.fed || p.fedCode));
+  return players.some(p => semNasc(p) && !(p.fed || p.fedCode));
 }
 
-/** Cópia do torneio com a data do Kids 2 em quem não tem nascimento. Devolve o
- *  MESMO objecto quando não há nada a acrescentar. */
+/** Cópia do torneio com o nascimento do Kids 2 em quem não tem nenhum.
+ *  Devolve o MESMO objecto quando não há nada a acrescentar. */
 export function withKidsDob<P extends DobPlayer, T extends { players: P[] }>(t: T, lookup: KidsDobLookup | null): T {
   if (!lookup) return t;
   let mudou = false;
   const players = t.players.map((p): P => {
-    if (p.dob || p.birthYear != null) return p;
-    const dob = lookup(p.name, p.fed || p.fedCode);
-    if (!dob) return p;
+    if (!semNasc(p)) return p;
+    const n = lookup(p.name, p.fed || p.fedCode);
+    if (!n) return p;
     mudou = true;
-    return { ...p, dob };
+    return { ...p, ...n };
   });
   return mudou ? { ...t, players } : t;
 }
+
+/** Só a data lida (as Inscrições não mostram estimativas). */
+export const kidsDobLida = (n: KidsNasc | undefined): string | undefined => (n && "dob" in n ? n.dob : undefined);

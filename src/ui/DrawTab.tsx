@@ -21,6 +21,7 @@ import { EscPill } from "./PillBadge";
 import BirthPill from "./BirthPill";
 import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
 import { useKidsDob } from "../hooks/useKidsDob";
+import { kidsDobLida } from "../data/kidsDob";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate, fmtDatePt } from "../utils/format";
 import { teeNameFor } from "../utils/teeRegulation";
 import { formatPlayerName } from "../utils/playerUtils";
@@ -427,9 +428,13 @@ export default function DrawTab({
         // Draws internacionais (MAJOR) trazem a dob — ou só o ano — da própria fonte.
         const srcDob = ((p as { dob?: string | null }).dob) || undefined;
         const srcBirthYear = (p as { birthYear?: number | null }).birthYear ?? null;
-        const dob: string | undefined =
-          srcDob || bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined) ||
-          (srcBirthYear == null ? kidsDob?.(p.nome, fed) : undefined);
+        const dobSemKids: string | undefined =
+          srcDob || bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined);
+        // Kids 2: a data lida, ou o ano estimado pelos escalões USKids (a vermelho).
+        const kidsNasc = !dobSemKids && srcBirthYear == null && (p as { birthYearEst?: number | null }).birthYearEst == null
+          ? kidsDob?.(p.nome, fed) : undefined;
+        const dob: string | undefined = dobSemKids || kidsDobLida(kidsNasc);
+        const kidsEst = kidsNasc && "birthYearEst" in kidsNasc ? kidsNasc : null;
         const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : srcBirthYear;
         // Data completa visível na coluna (só quando vem da fonte do draw).
         const dobShown = srcDob ? fmtDatePt(srcDob) : null;
@@ -466,9 +471,10 @@ export default function DrawTab({
           dobYear,
           dobShown,
           hcpEstimated: !!(p as { hcpEstimated?: boolean }).hcpEstimated,
-          birthYearEst: (p as { birthYearEst?: number | null }).birthYearEst ?? null,
-          ...("birthYearEstMax" in (p as object) ? { birthYearEstMax: (p as { birthYearEstMax?: number | null }).birthYearEstMax ?? null } : {}),
-          estNote: (p as { estNote?: string | null }).estNote ?? null,
+          birthYearEst: (p as { birthYearEst?: number | null }).birthYearEst ?? kidsEst?.birthYearEst ?? null,
+          ...("birthYearEstMax" in (p as object) ? { birthYearEstMax: (p as { birthYearEstMax?: number | null }).birthYearEstMax ?? null }
+            : kidsEst ? { birthYearEstMax: kidsEst.birthYearEstMax } : {}),
+          estNote: (p as { estNote?: string | null }).estNote ?? kidsEst?.estNote ?? null,
           countryEstimated: !!(p as { countryEstimated?: boolean }).countryEstimated,
           escHist,
           // Gross ≥ 900 (998/999) é «sem cartão» — regra comum: mostra «–», sem ±.

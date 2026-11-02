@@ -15,6 +15,7 @@ import { InfoGroup, InfoItem, RatingFontes, TeeDistances } from "./InfoLine";
 import EmptyState from "./EmptyState";
 import { isManuel, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
+import { birthFieldsOf } from "./BirthCells";
 import type { MultiRoundRow as MRRow, MRRound, ExtraColumn } from "./multiRoundTypes";
 import { medalNet, stablefordNet } from "../utils/whsCalc";
 import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
@@ -176,6 +177,7 @@ export function AccumulatedLB({
         hcp: p.hcpExact ?? null,
         esc: esc || undefined,
         dob,
+        ...birthFieldsOf(p),
         // Idade pré-calculada pelo adapter (mesma que as tabs R1/R2/R3 usam) —
         // evita divergência entre tabs por recalcular com datas diferentes.
         age: (p as { _age?: number | null })._age ?? null,

@@ -9,7 +9,7 @@
  */
 import type { ReactNode } from "react";
 import BirthPill from "./BirthPill";
-import { ageAtDate, fmtDatePt } from "../utils/format";
+import { ageAtDate, dateParts, fmtDatePt } from "../utils/format";
 import { MUTED } from "./tableCells";
 
 export interface BirthInfo {
@@ -27,8 +27,11 @@ export interface BirthInfo {
 
 /** Nasc. e Idade (ReactNode) + tooltip, à data `refDate` (ISO). */
 export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: ReactNode; idade: ReactNode; tip: string } {
-  const dob = b.dob ? String(b.dob).slice(0, 10) : null;
-  const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : (b.birthYear ?? null);
+  // «AAAA-MM-DD» ou «DD/MM/AAAA» → ISO; só o ano («2014») conta como ano solto.
+  const dp = dateParts(b.dob ? String(b.dob) : null);
+  const dob = dp ? `${dp.y}-${String(dp.m).padStart(2, "0")}-${String(dp.d).padStart(2, "0")}` : null;
+  const soAno = !dp && /^\d{4}$/.test(String(b.dob ?? "").trim()) ? +String(b.dob).trim() : null;
+  const dobYear = dp ? dp.y : (b.birthYear ?? soAno);
   const y = Number(String(refDate || "").slice(0, 4)) || null;
   const age = dob ? ageAtDate(dob, refDate || undefined) : dobYear != null && y ? y - dobYear : null;
   const lo = b.birthYearEst ?? null;
@@ -44,5 +47,17 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
     idade: age != null ? <BirthPill>{!dob ? "~" : ""}{age}a</BirthPill>
       : estAge ? <span className="est-value">{estAge}a</span> : MUTED,
     tip,
+  };
+}
+
+/** Os campos de nascimento além da data (ano solto, estimativa e nota) de um
+ *  jogador, para passar a uma linha de tabela sem os perder. */
+export function birthFieldsOf(p: object): Pick<BirthInfo, "birthYear" | "birthYearEst" | "birthYearEstMax" | "estNote"> {
+  const x = p as BirthInfo;
+  return {
+    ...(x.birthYear != null ? { birthYear: x.birthYear } : {}),
+    ...(x.birthYearEst != null
+      ? { birthYearEst: x.birthYearEst, ...("birthYearEstMax" in x ? { birthYearEstMax: x.birthYearEstMax } : {}), estNote: x.estNote ?? null }
+      : {}),
   };
 }

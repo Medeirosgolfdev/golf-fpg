@@ -25,6 +25,7 @@
  *                         ±par médio, ±par da melhor] (os ±par só com o par oficial do escalão, senão null),
  *                     mf?: confrontos no mesmo flight,
  *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição],
+ *                     ne?: [ano, ano] — nascimento ESTIMADO pelos escalões USKids (sem `d`; util/nascimento-uskids.js),
  *                     hr?: [hcp, "AAAA-MM-DD"] — o «h» é o hándicap OFICIAL actual da RFEG, com a data,
  *                     rk?: [posição, jogadores, "ranking curto", "AAAA-MM-DD" | null] — ranking juvenil RFEG,
  *                     f?: forma — { r: [[data, ±par, buracos, lugar, field], …], m?: [Manuel à frente, atrás] },
@@ -38,6 +39,7 @@
  */
 const path = require("path");
 const { MANUEL_ID } = require("./form");
+const { anosPelosEscaloesUskids } = require("./nascimento-uskids");
 
 let calc, tidLib;
 function loadTid() {
@@ -159,6 +161,10 @@ function buildScout(juniors, tournaments, generatedAt, form) {
     const rkRfeg = rfo?.rankings?.[0];
     if (rkRfeg && rkRfeg.pos != null) o.rk = [rkRfeg.pos, rkRfeg.n, rkRfeg.curto, rkRfeg.f || null];
     if (j.dob) o.d = j.dob;
+    else {
+      const ne = anosPelosEscaloesUskids(j, tById);
+      if (ne) o.ne = ne;
+    }
     const club = j.club || src.fpg?.club || src.rfeg?.club || src.ffgolf?.club || null;
     if (club) o.c = club;
     const pais = j.country || j.nationality;

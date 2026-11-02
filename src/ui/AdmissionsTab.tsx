@@ -32,7 +32,7 @@ import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoun
 import { KidsLinkCtx } from "./KidsLink";
 import { normName } from "../data/KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
-import { makeKidsDobLookup } from "../data/kidsDob";
+import { makeKidsDobLookup, kidsDobLida } from "../data/kidsDob";
 import { formaMedia, type ScoutFile, type JuniorScout } from "./circuit/scoutModel";
 import { getTierLabel, type TierKey } from "../pages/kids2/juniorCalc";
 import ExtLink from "./ExternalLink";
@@ -198,7 +198,7 @@ export default function AdmissionsTab({
     // sem escalao e sem marcacao calculada pelo regulamento.
     const dob: string | undefined =
       p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined) || (p as any)._rfeg?.dob ||
-      kidsDobOf(p.nome, p.fed);
+      kidsDobLida(kidsDobOf(p.nome, p.fed));
     const dobYear = birthYearOf(dob);
     let clube = p.clube;
     if (!clube && bd) {

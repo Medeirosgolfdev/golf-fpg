@@ -1,7 +1,9 @@
 ﻿// @refresh reset
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { useCompareSelection } from "./useCompareSelection";
-import { fmtHcp, medal, fmtDobPt, birthYearOf, ageAtDate, todayIso } from "../utils/format";
+import { fmtHcp, medal, birthYearOf, ageAtDate, todayIso } from "../utils/format";
+import { birthCells, birthFieldsOf } from "./BirthCells";
+import BirthPill from "./BirthPill";
 import { RowsFilterBar, filterRows, buildSexByName } from "./PlayerFilterBar";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { useSort } from "../hooks/useSort";
@@ -169,7 +171,17 @@ export function MultiRoundLeaderboard({
   // Nasc./Idade: usa dob da row, com fallback ao playersDB[fed].dob.
   const dobOf = useMemo(() => (r: MultiRoundRow): string | null =>
     r.dob || (r.fed ? (playersDB?.[r.fed] as any)?.dob ?? null : null), [playersDB]);
-  const hasAnyDob  = useMemo(() => rows.some(r => birthYearOf(dobOf(r)) != null), [rows, dobOf]);
+  /** Ano para ordenar: o da data, o solto, ou o mais antigo da estimativa. */
+  const anoOf = useMemo(() => (r: MultiRoundRow): number | null =>
+    birthYearOf(dobOf(r)) ?? r.birthYear ?? r.birthYearEst ?? null, [dobOf]);
+  const hasAnyDob  = useMemo(() => rows.some(r => anoOf(r) != null), [rows, anoOf]);
+  /** Data do torneio em ISO para as idades — a USKids dá «8/13/2026» (formato americano). */
+  const refIso = useMemo(() => {
+    if (!tournamentDate) return null;
+    if (/^\d{4}-\d{2}-\d{2}/.test(tournamentDate)) return tournamentDate.slice(0, 10);
+    const d = new Date(tournamentDate);
+    return isNaN(+d) ? null : `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  }, [tournamentDate]);
 
   const showEsc = wantEsc && hasAnyEsc;
   const showFed = wantFed && hasAnyFed;
@@ -326,8 +338,8 @@ export function MultiRoundLeaderboard({
         return sortDir === "asc" ? sa - sb : sb - sa;
       }
       case "birthYear": {
-        const ya = birthYearOf(dobOf(a));
-        const yb = birthYearOf(dobOf(b));
+        const ya = anoOf(a);
+        const yb = anoOf(b);
         if (ya == null && yb == null) return 0;
         if (ya == null) return 1;   // sem data → sempre no fim
         if (yb == null) return -1;
@@ -336,8 +348,10 @@ export function MultiRoundLeaderboard({
       case "age": {
         // Idade real à data do torneio (não o ano) — dois jogadores do mesmo
         // ano podem ter idades diferentes consoante já fizeram anos.
-        const aa = ageAtDate(dobOf(a), tournamentDate ?? todayIso());
-        const ab = ageAtDate(dobOf(b), tournamentDate ?? todayIso());
+        const ref = refIso ?? todayIso();
+        const idadeOf = (r: MultiRoundRow) => ageAtDate(dobOf(r), ref) ?? (anoOf(r) != null ? +ref.slice(0, 4) - anoOf(r)! : null);
+        const aa = idadeOf(a);
+        const ab = idadeOf(b);
         if (aa == null && ab == null) return 0;
         if (aa == null) return 1;   // sem data → sempre no fim
         if (ab == null) return -1;
@@ -359,7 +373,7 @@ export function MultiRoundLeaderboard({
       [...filteredIncomplete].sort(cmpGross),
       [...filteredWD].sort(cmpGross),
     );
-  }, [filteredComplete, filteredCut, filteredIncomplete, filteredWD, sortKey, sortDir, sortable]);
+  }, [filteredComplete, filteredCut, filteredIncomplete, filteredWD, sortKey, sortDir, sortable, dobOf, anoOf, refIso]);
 
   /* ── Selecção para comparação (hook partilhado da família de tabelas) ──
    * Chave = key da linha ou, sem ela, o nome (o render usa o mesmo fallback). */
@@ -518,36 +532,15 @@ export function MultiRoundLeaderboard({
                     return MUTED;
                   })()}</td>}
                   {(showBirthYear || showAge) && (() => {
-                    const dob = dobOf(row);
-                    const yr = birthYearOf(dob);
-                    // ⚠ "X anos à data do torneio" SÓ quando há data real do torneio.
-                    // Sem ela o ageAt caía em HOJE e o tooltip contradizia o pill
-                    // (pill "19a" = idade no ano do torneio, tooltip "18 anos" = hoje).
-                    const hasTDate = !!(tournamentDate && !isNaN(+new Date(tournamentDate)));
-                    const ageReal = hasTDate ? ageAtDate(dob, tournamentDate) : null;
-                    // Tooltip COMPLETO (DOB + idade) nas DUAS colunas — o utilizador
-                    // pousa o rato numa qualquer e recebe a informação toda.
-                    const tip = [
-                      yr != null ? `Nascido a ${fmtDobPt(dob)}` : null,
-                      ageReal != null ? `${ageReal} anos à data do torneio` : null,
-                    ].filter(Boolean).join(" · ") || undefined;
-                    // Preferir a idade pré-calculada pelo adapter (row.age) → CONSISTENTE
-                    // com as tabs R1/R2/R3. Só recalcular por dob se o adapter não a deu.
-                    const age = row.age != null ? row.age : ageReal;
-                    const pill = (v: React.ReactNode) => (
-                      <span className="p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent">{v}</span>
-                    );
+                    // A peça comum (BirthCells): data/ano lidos em pílula, estimativa a vermelho.
+                    // Nas colunas só o ano; a data completa fica no tooltip.
+                    const bc = birthCells({ dob: dobOf(row), ...birthFieldsOf(row), showDate: false }, refIso);
+                    // Idade pré-calculada pelo adapter (row.age) → CONSISTENTE com as tabs R1/R2/R3.
+                    const idade = row.age != null ? <BirthPill>{row.age}a</BirthPill> : bc.idade;
+                    const tip = bc.tip || undefined;
                     return <>
-                      {showBirthYear && (
-                        <td className="lb-esc" title={tip} style={tip ? { cursor: "help" } : undefined}>
-                          {yr != null ? pill(yr) : MUTED}
-                        </td>
-                      )}
-                      {showAge && (
-                        <td className="lb-esc" title={tip} style={tip ? { cursor: "help" } : undefined}>
-                          {age != null ? pill(`${age}a`) : MUTED}
-                        </td>
-                      )}
+                      {showBirthYear && <td className="lb-esc" title={tip}>{bc.nasc}</td>}
+                      {showAge && <td className="lb-esc" title={tip}>{idade}</td>}
                     </>;
                   })()}
                   {showFed && <td className="lb-fed">{displayFed(row.fed) || "–"}</td>}
