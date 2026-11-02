@@ -225,6 +225,7 @@ Lido pelo agregador (`scripts/aggregator/sources/uskids.js`) como lookup de nome
 | recent-tournaments.json | FPG | build-recent-tournaments.js | ✓ | RecentTournamentsPage (`/torneios-recentes`) — torneios reconstruídos das voltas dos nossos |
 | fpg-modalidades.json | FPG (TournamentsLST, campo `scoring`) | build-fpg-modalidades.js | ✓ | `useModalidadeProva` (src/data/fpgModalidades.ts): pill da modalidade no cabeçalho de cada prova e modalidade em que o «Scorecard»/Resumo abre. `"ccode-tcode": "Stableford Net"` (a FPG escreve «Gross» para o Stroke Play) |
 | simulador-players.json | FPG | build-simulador-players.js (update-drive + update-federados) | ✗ | SimuladorPage — selector: Drive da Madeira dos últimos 12 meses (Drive Tour + Drive Challenge só Sub-12/Sub-14) + escolhidos à mão, com HI/sexo do cadastro (a página não carrega o federados.json de 18 MB) |
+| federados-inativos-lista.json | FPG (FedStat=7, scrape 14/04/2026) | build-inativos-lista.js (à mão, a partir de `data-archive/federados-inativos.json`) | ✗ | JogadoresListPage (`/jogadores`, pill «Inactivo») e ficha de um inactivo — `j: [fed, nome, sexo, nascimento, clube, país, hcp, estadoHcpId, tipoId, escalão]` + `clubes`/`estadosHcp` |
 | drive-data-YYYY-MM.json | FPG | scrape-drive-node.js (mensal) | ✓ | DrivePage |
 | aquapor-data-YYYY-MM.json | FPG | scrape-drive-node.js (mensal) | ✓ | DrivePage |
 | melhorias.json (⚠ na RAIZ, não em public/data) | FPG | enrich-intl-round.js | ✓ | JogadoresPage, CamposPage (importado em `App.tsx`) |

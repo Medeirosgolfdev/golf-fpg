@@ -20,7 +20,7 @@ import { useCourses } from "../context/CoursesContext";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { MOBILE_BREAKPOINT } from "../hooks/useIsMobile";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
-import { loadFederados, federadoToPlayer, mergePlayersWithFederados, normalizeAgeLevel, type FederadoRaw, type MergedPlayer } from "../data/federadosLoader";
+import { loadFederados, loadFederadosInativos, federadoToPlayer, mergePlayersWithFederados, normalizeAgeLevel, type FederadoRaw, type MergedPlayer } from "../data/federadosLoader";
 import { loadFederadosPP, getPPByFed, hasRealPPHcp, type FederadoPP } from "../data/federadosPPLoader";
 import { coerceEscalao, isSeniorEscalao, ESC_ORDER_FULL as ESC_ORDER, ESCALOES_JOVENS } from "../constants/escaloes";
 import { clubShort } from "../utils/playerUtils";
@@ -107,6 +107,9 @@ export default function JogadoresPage() {
   // curados de players.json. O user pode alternar para "Nossos" na toolbar.
   const [viewMode, setViewMode] = useState<ViewMode>(initialState.viewMode);
   const [federados, setFederados] = useState<FederadoRaw[] | null>(null);
+  // Os que já saíram (federados-inativos-lista.json) — só se carregam quando a
+  // ficha aberta não está nos activos (a lista /jogadores liga para eles).
+  const [inativos, setInativos] = useState<FederadoRaw[] | null>(null);
   const [loadingFeds, setLoadingFeds] = useState(false);
   // Pitch & Putt: mapa fed → registo P&P (federados-pp.json) + filtro "só P&P".
   const [ppMap, setPpMap] = useState<Map<string, FederadoPP>>(new Map());
@@ -365,7 +368,8 @@ export default function JogadoresPage() {
     // directamente em federados.json e construir entry sintético — assim
     // a página renderiza sempre, mostrando vista federado mínima.
     if (federados && federados.length > 0) {
-      const fp = federados.find(f => String(f.federation_code) === String(selectedFed));
+      const fp = federados.find(f => String(f.federation_code) === String(selectedFed))
+        ?? inativos?.find(f => f.federation_code === String(selectedFed));
       if (fp) {
         const baseP = federadoToPlayer(fp);
         const synth = {
@@ -399,7 +403,15 @@ export default function JogadoresPage() {
       _federadoRaw:   syntheticFederadoFromFedCode(fedStr),
     } as unknown as MergedPlayer & { fed: string };
     return stub;
-  }, [allPlayers, selectedFed, federados]);
+  }, [allPlayers, selectedFed, federados, inativos]);
+
+  // A ficha aberta é o stub vazio (não está nos activos) → procurar nos
+  // inactivos (uma vez).
+  const fichaForaDosActivos = !!selected && selected._source === "feds" && !selected._federadoRaw?.name;
+  useEffect(() => {
+    if (inativos || !federados || !fichaForaDosActivos) return;
+    loadFederadosInativos().then(setInativos).catch(() => setInativos([]));
+  }, [inativos, federados, fichaForaDosActivos]);
 
   return (
     <div className="jogadores-page">

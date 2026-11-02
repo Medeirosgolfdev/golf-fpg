@@ -138,15 +138,16 @@ function shortClubFromField(clube?: string | null, ccode?: string | null): strin
 
 /** Base — wrapper que garante sempre "p p-sm" */
 export function Pill({
-  children, className = "", style, tourn = false,
+  children, className = "", style, tourn = false, title,
 }: {
   children: React.ReactNode;
   className?: string;
   style?: CSSProperties;
   tourn?: boolean;
+  title?: string;
 }) {
   return (
-    <span className={`p p-sm${tourn ? " p-tourn" : ""}${className ? " " + className : ""}`} style={style}>
+    <span className={`p p-sm${tourn ? " p-tourn" : ""}${className ? " " + className : ""}`} style={style} title={title}>
       {children}
     </span>
   );

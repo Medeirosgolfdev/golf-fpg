@@ -10,7 +10,9 @@
  *   /jogadores/:fed  → JogadoresPage (detalhe individual)
  *
  * Fontes de dados:
- *   - federados.json     (~16.000 federados activos)
+ *   - federados.json     (~18.000 federados activos)
+ *   - federados-inativos-lista.json (~42.600 que já saíram — marcados
+ *     «Inactivo»; o filtro Estado federativo separa-os)
  *   - players.json       (~396 curados, via AppContext)
  *   - player-stats.json  (SDs pré-calculados a partir de data.json)
  *
@@ -31,6 +33,8 @@ import {
   loadFederados,
   mergePlayersWithFederados,
   normalizeAgeLevel,
+  loadFederadosInativos,
+  FED_STATUS_INATIVO,
   type FederadoRaw,
 } from "../data/federadosLoader";
 import { loadFederadosPP, getPPByFed, hasRealPPHcp, type FederadoPP } from "../data/federadosPPLoader";
@@ -44,7 +48,7 @@ import { PIN_RANK } from "../constants/pinnedPlayers";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import SexBadge from "../ui/SexBadge";
-import { EscPill } from "../ui/PillBadge";
+import { EscPill, Pill } from "../ui/PillBadge";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
@@ -97,6 +101,8 @@ type Row = {
   sex: string;                  // "M" / "F"
   escalao: string;
   fedStatusId: number;
+  /** Já não é federado (FedStat=7) — mostra a marca «Inactivo». */
+  inactive: boolean;
   // Métricas locais (player-stats.json) — só ~396 jogadores
   roundsTotal: number | null;
   roundsYear: number | null;
@@ -140,6 +146,8 @@ export default function JogadoresListPage() {
 
   /* Dados */
   const [federados, setFederados] = useState<FederadoRaw[] | null>(null);
+  // Os que já saíram — chegam depois dos activos (a lista não espera por eles).
+  const [inativos, setInativos] = useState<FederadoRaw[]>([]);
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
   const [loadError, setLoadError] = useState<string | null>(null);
   // Pitch & Putt: mapa fed → registo P&P (federados-pp.json). Vazio se ausente.
@@ -149,6 +157,7 @@ export default function JogadoresListPage() {
     loadFederados()
       .then(f => setFederados(f.players))
       .catch(err => setLoadError(String(err?.message || err)));
+    loadFederadosInativos().then(setInativos).catch(() => { /* sem o ficheiro → só activos */ });
     loadPlayerStats().then(setStatsDb).catch(() => setStatsDb({}));
     loadFederadosPP().then(() => setPpMap(getPPByFed())).catch(() => { /* sem P&P → coluna vazia */ });
   }, []);
@@ -164,7 +173,8 @@ export default function JogadoresListPage() {
   const [hcpStatus, setHcpStatus] = useState<string>("ALL"); // "10"=Válido, etc.
   const [sex, setSex] = useState<"ALL" | "M" | "F">("ALL");
   const [tipo, setTipo] = useState<"ALL" | "1" | "2">("ALL"); // 1=Amador, 2=Pro
-  const [fedStatus, setFedStatus] = useState<"ALL" | "9" | "7">("9"); // default activos
+  // Todos por defeito: os inactivos aparecem, com a marca (Mariana, 02/11/2026).
+  const [fedStatus, setFedStatus] = useState<"ALL" | "9" | "7">("ALL");
   const [activosAnoOnly, setActivosAnoOnly] = useState(false);
   const [jovensOnly, setJovensOnly] = useState(false);
   const [comSDOnly, setComSDOnly] = useState(false);
@@ -194,7 +204,12 @@ export default function JogadoresListPage() {
   /* Build merged rows */
   const rows: Row[] = useMemo(() => {
     if (!federados) return [];
-    const merged = mergePlayersWithFederados(players, federados);
+    // Quem voltou a ser federado está nos dois ficheiros: ganha o activo.
+    const activos = new Set(federados.map(f => String(f.federation_code)));
+    const merged = mergePlayersWithFederados(players, [
+      ...federados,
+      ...inativos.filter(f => !activos.has(String(f.federation_code))),
+    ]);
     const seen = new Set<string>();
 
     const out: Row[] = merged.map(p => {
@@ -230,6 +245,7 @@ export default function JogadoresListPage() {
         sex: (p.sex === "M" || p.sex === "F") ? p.sex : (f?.gender === "F" ? "F" : "M"),
         escalao: p.escalao || "Absoluto",
         fedStatusId: f?.federated_status_id ?? 9,
+        inactive: f?.federated_status_id === FED_STATUS_INATIVO,
         roundsTotal: ps?.roundsTotal ?? null,
         roundsYear: ps?.roundsCurrentYear ?? f?.rounds_current_year ?? null,
         lastSD: ps?.lastSD ?? null,
@@ -266,6 +282,7 @@ export default function JogadoresListPage() {
         sex: ppr.sex === "F" ? "F" : "M",
         escalao: normalizeAgeLevel(ppr.age),
         fedStatusId: 9,
+        inactive: false,
         roundsTotal: null,
         roundsYear: null,
         lastSD: null,
@@ -281,7 +298,7 @@ export default function JogadoresListPage() {
     }
 
     return out;
-  }, [federados, players, statsDb, ppMap]);
+  }, [federados, inativos, players, statsDb, ppMap]);
 
   /* Filter */
   const filtered = useMemo(() => {
@@ -428,7 +445,7 @@ export default function JogadoresListPage() {
     setQ(""); setEscalao("ALL"); setClubFilter("ALL");
     setAnoMin(""); setAnoMax("");
     setHcpMin(""); setHcpMax(""); setHcpStatus("ALL");
-    setSex("ALL"); setTipo("ALL"); setFedStatus("9");
+    setSex("ALL"); setTipo("ALL"); setFedStatus("ALL");
     setActivosAnoOnly(false); setJovensOnly(false);
     setComSDOnly(false); setDiffsOnly(false); setNatFilter("ALL");
     setPrioritizeDestaques(false); // volta à ordem alfabética pura
@@ -616,6 +633,7 @@ export default function JogadoresListPage() {
                     <td>{r.fed}</td>
                     <td className="u-fw-500">
                       <PlayerLink fed={r.fed} name={r.name} title={`Abrir ficha de ${r.name} em nova janela`} />
+                      {r.inactive && <Pill className="p-muted u-ml-4px" title="Já não é federado na FPG (estado federativo «Inativo»)">Inactivo</Pill>}
                       {r.hasAnalysis && <span title="Análise local disponível" className="u-ml-4px u-op-0_6">★</span>}
                       {r.ppOnly && <span title="Só federado de Pitch & Putt (sem registo no golfe)" className="u-ml-4px u-op-0_7">🏑</span>}
                       {r.hasDiffs && (
@@ -664,7 +682,7 @@ export default function JogadoresListPage() {
 
       {/* Footer com link FPG */}
       <div className="u-mt-16px u-fs-fs-11 u-c-text-muted u-ta-center">
-        Fonte: <code>federados.json</code> (~{rows.length.toLocaleString("pt-PT")} federados) ·{" "}
+        Fonte: <code>federados.json</code> + <code>federados-inativos-lista.json</code> (~{rows.length.toLocaleString("pt-PT")} federados, activos e inactivos) ·{" "}
         <ExtLink href={FPG_LIST_URL} className="u-c-chart-2">
           Tabela oficial FPG (handicaps.asp) ↗
         </ExtLink>

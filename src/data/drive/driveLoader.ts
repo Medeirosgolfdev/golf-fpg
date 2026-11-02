@@ -118,8 +118,8 @@ export async function loadDriveDataProgressive(onData: (d: DriveDataLoad, comple
   // O 2.º tempo espera por `before2nd` (a /drive: as inscrições — sem isso
   // disputavam a largura de banda com os ~20 MB dos outros anos).
   await before2nd?.catch(() => {});
-  // Objecto novo: o `loadFpgPlayersDB` acrescenta ao do `players.json` (o mesmo
-  // da cache), e a página tem de ver que mudou.
+  // Objecto novo: a página tem de ver que o playersDB mudou (o `loadDriveData`
+  // pode devolver o mesmo da 1.ª vez).
   const all = await loadDriveData();
   onData({ ...all, players: { ...all.players } }, true);
 }

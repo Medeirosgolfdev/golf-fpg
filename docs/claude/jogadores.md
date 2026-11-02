@@ -55,6 +55,24 @@ Depois das correcções 2026-04-14/15:
 - A `FederadoRoundsTable` renderiza as 200 primeiras rondas (ordenáveis) com data, torneio, campo, buracos,
   HCP, stableford, score differential, origem
 
+### Lista `/jogadores` — activos e INACTIVOS (02/11/2026)
+
+A `JogadoresListPage` mostra os federados activos (`federados.json`, ~18,4 mil)
+**e os que já saíram** (`federados-inativos-lista.json`, ~41,6 mil que não
+voltaram a ser federados — pedido dela: «desde que estejam com a indicação
+INACTIVOS»). Os inactivos levam a pill cinzenta «Inactivo» ao lado do nome; o
+filtro «Estado federativo» (por defeito Todos) separa Activo/Inactivo. Quem está
+nos dois ficheiros conta como activo. A lista chega depois dos activos (não
+atrasa a página).
+
+- `federados-inativos-lista.json` (~3,2 MB, ~0,85 MB comprimido) é gerado por
+  `node scripts/build-inativos-lista.js` a partir do `data-archive/federados-inativos.json`
+  (scrape FPG FedStat=7 de 14/04/2026, `scrape-federados-inativos.js`) — refazer
+  os dois quando se quiser actualizar os inactivos. Leitura:
+  `loadFederadosInativos()` (`src/data/federadosLoader.ts`).
+- A ficha `/jogadores/{fed}` de um inactivo vai buscar o cadastro a esta lista
+  (nome, clube, HCP, «Status federado: Inativo») em vez do stub vazio.
+
 ### Sidebar de JogadoresPage — sem tecto fixo
 
 Rendering progressivo (2026-08-15): `SIDEBAR_CHUNK = 300` + sentinel

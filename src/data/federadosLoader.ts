@@ -142,7 +142,9 @@ export function loadFederados(): Promise<FederadosFile> {
       // Performance: o ficheiro é grande (~15 MB) → reparamos só os campos de
       // texto relevantes por registo (não recursão cega no objecto inteiro).
       for (const f of data.players) {
-        if (f.name) f.name = fixMojibake(f.name);
+        // trim: a FPG manda nomes com um tab à frente («\tluis Veiga»), que
+        // ficavam no topo da lista por ordem alfabética.
+        if (f.name) f.name = fixMojibake(f.name).trim();
         if (f.club_name) f.club_name = fixMojibake(f.club_name);
         if (f.acronym) f.acronym = fixMojibake(f.acronym);
         if (f.country) f.country = fixMojibake(f.country);
@@ -153,6 +155,62 @@ export function loadFederados(): Promise<FederadosFile> {
     })
     .catch(err => { _loading = null; throw err; });
   return _loading;
+}
+
+/* ── Lista dos inactivos (federados-inativos-lista.json, ~3 MB) ─
+ * Gerada por scripts/build-inativos-lista.js a partir do scrape FedStat=7.
+ * Cada linha vira um FederadoRaw com `federated_status_id` 7 («Inativo»),
+ * para entrar no mesmo merge e nos mesmos filtros da /jogadores. */
+type InativoRow = [string, string, string, string, string, string, number | null, number, number, string];
+interface InativosListaFile {
+  clubes: Record<string, [string, string]>;
+  estadosHcp: Record<string, string>;
+  j: InativoRow[];
+}
+
+export const FED_STATUS_INATIVO = 7;
+
+let _inatLista: Promise<FederadoRaw[]> | null = null;
+
+export function loadFederadosInativos(): Promise<FederadoRaw[]> {
+  if (_inatLista) return _inatLista;
+  _inatLista = cachedFetchJson<InativosListaFile>("/data/federados-inativos-lista.json")
+    .then(data => {
+      if (!data?.j) throw new Error("Falha ao carregar /data/federados-inativos-lista.json");
+      return data.j.map(([fed, name, gender, birthdate, club, country, hcp, hcpStatusId, typeId, ageLevel]) => {
+        const [acronym, clubName] = data.clubes[club] ?? ["", ""];
+        return {
+          federation_code: fed,
+          federation_number: fed.padStart(7, "0"),
+          name: fixMojibake(name),
+          gender,
+          birthdate: birthdate || null,
+          admission_date: null,
+          club_code: club,
+          club_name: fixMojibake(clubName),
+          acronym: fixMojibake(acronym),
+          country_prefix: country ? "" : "PT",
+          country: country || "Portugal",
+          hcp_exact: hcp,
+          hcp_index: hcp,
+          hcp_status: data.estadosHcp[hcpStatusId] ?? "",
+          hcp_status_id: hcpStatusId,
+          hcp_type: "",
+          age_level: ageLevel,
+          age_level_id: 0,
+          player_type: typeId === 2 ? "Profissional" : "Amador",
+          player_type_id: typeId,
+          federated_status: "Inativo",
+          federated_status_id: FED_STATUS_INATIVO,
+          rounds_current_year: 0,
+          photo: null,
+          last_hcp_date: null,
+          encryptedfedcode: "",
+        } satisfies FederadoRaw;
+      });
+    })
+    .catch(err => { _inatLista = null; throw err; });
+  return _inatLista;
 }
 
 /* ── Estatísticas dos inactivos (ficheiro leve ~25 KB) ──────── */

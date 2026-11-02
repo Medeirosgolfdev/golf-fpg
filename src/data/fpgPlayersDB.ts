@@ -19,9 +19,11 @@ interface PlayersNationalityFile {
   info?: Record<string, { country?: string; dob?: string; sex?: string; name?: string }>;
 }
 
-/** players.json + nacionalidades + jogadores /kids. ⚠ Muda o objecto do
- *  `loadPlayers()` (o mesmo da cache) — como sempre fez; as fusões só
- *  acrescentam, por isso repetir não altera nada. */
+/** players.json + nacionalidades + jogadores /kids, numa CÓPIA. ⚠ Nunca mexer
+ *  no objecto do `loadPlayers()`: é o mesmo do AppContext, e as ~100 mil
+ *  entradas de consulta (federados antigos, `kids:*`) apareciam na /jogadores
+ *  depois de passar pela /FPG ou pela /drive (02/11/2026). Uma entrada que
+ *  ganhe país/nascimento/sexo é copiada antes. */
 export async function loadFpgPlayersDB(): Promise<PlayersDB> {
   const [players, nat, links, lite] = await Promise.all([
     loadPlayers().catch(() => ({})),
@@ -33,7 +35,7 @@ export async function loadFpgPlayersDB(): Promise<PlayersDB> {
   // ~9 mil federados (a meia-noite de Lisboa lida como UTC, no verão); a do
   // federados.json (via federados-lite.json) é a certa e ganha (22/10/2026).
   const dobOf = (fed: string, inf: { dob?: string }) => lite?.b?.[fed] ?? inf.dob;
-  const pdb = players as PlayersDB;
+  const pdb: PlayersDB = { ...(players as PlayersDB) };
   // Merge players-nationality.json — para cada federado FPG estrangeiro (Joe
   // Short→GB, Peter Yao→CN, etc.) injecta `country` no entry existente, para o
   // TournPName renderizar 🇬🇧 antes do nome.
@@ -47,8 +49,8 @@ export async function loadFpgPlayersDB(): Promise<PlayersDB> {
         // «@1»…«@4» (~4 mil federados) não são países: sem bandeira (era 🏴).
         const iso = /^[A-Z]{2}$/.test(cc) ? cc : undefined;
         const inf = info[fed] || {};
-        const entry = pdb[fed];
-        if (entry) {
+        if (pdb[fed]) {
+          const entry = pdb[fed] = { ...pdb[fed] };
           if (!entry.country && iso) entry.country = iso;
           if (!entry.dob && dobOf(fed, inf)) entry.dob = dobOf(fed, inf);
           if (!entry.sex && inf.sex) entry.sex = inf.sex;

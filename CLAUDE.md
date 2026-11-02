@@ -377,6 +377,10 @@ tornam o JSON inválido e a `/major` fica sem torneios nenhuns.
   (não `find()`), juntando todas as entradas. Nunca reimplementar com
   `includes("medeiros")`. Quando o registo traz o federado, é ele que decide no
   `isManuel` — o pai (54907) também se chama «Manuel Medeiros».
+- **O `players.json` da cache é o mesmo objecto do AppContext** — nunca lhe
+  acrescentar entradas (fazer `{ ...players }` primeiro). O loader da /FPG e da
+  /drive enchia-o com ~100 mil nomes de consulta e a /jogadores mostrava-os
+  (corrigido a 02/11/2026).
 - **USKids vs resto na `/uskids`:** a tab Resultados só lê `uskids-results.json`
   e os `uskids_torneios_completos(N).json`; Doral, WJGC, QDL, etc. só entram nos
   rivais. Este erro já voltou várias vezes.
