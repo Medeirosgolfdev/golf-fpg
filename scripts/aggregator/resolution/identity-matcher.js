@@ -16,6 +16,7 @@
 const { normName, stripDupAbbrev, displayName } = require("../util/names");
 const { juniorId } = require("../util/id");
 const { sub, warn } = require("../util/log");
+const { mesmasPancadas } = require("../util/fundir-torneios");
 
 function resolve(rawSources, overrides) {
   // ────────────────────────────────────────────────────────────────────
@@ -58,7 +59,10 @@ function resolve(rawSources, overrides) {
   // Fontes fracas (wjgc, eowagr, doral, fpg-anon): podem ter várias entries
   //   por pessoa (nomes variantes, sem ID oficial) — sem invariante
   // ────────────────────────────────────────────────────────────────────
-  const STRONG_SOURCES = new Set(["uskids", "fpg", "rfeg", "ffgolf"]);
+  const STRONG_SOURCES = new Set(["uskids", "fpg", "rfeg", "ffgolf", "fig"]);
+  // Fontes com id por jogador mas sem data nem país fiável: ficam FORA dos
+  // passos 4–5 (nome + país) e casam no passo 5b, por provas em comum.
+  const CASAMENTO_POR_PROVAS = new Set(["fig"]);
   function isStrongEntity(e) {
     if (!STRONG_SOURCES.has(e.sourceId)) return false;
     if (typeof e.raw.sourceKey === "string" && e.raw.sourceKey.startsWith("anon|")) return false;
@@ -214,6 +218,7 @@ function resolve(rawSources, overrides) {
       for (let j = i + 1; j < arr.length; j++) {
         const a = arr[i], b = arr[j];
         if (a.sourceId === b.sourceId && STRONG_SOURCES.has(a.sourceId)) continue;
+        if (CASAMENTO_POR_PROVAS.has(a.sourceId) || CASAMENTO_POR_PROVAS.has(b.sourceId)) continue;
         if (find(a.entityKey) === find(b.entityKey)) continue;
         if (dobConflict(a.raw.dob, b.raw.dob)) continue;
         if (a.normName !== b.normName) continue; // EXIGIR full match — não basta first+last
@@ -239,6 +244,7 @@ function resolve(rawSources, overrides) {
       for (let j = i + 1; j < arr.length; j++) {
         const a = arr[i], b = arr[j];
         if (a.sourceId === b.sourceId && STRONG_SOURCES.has(a.sourceId)) continue;
+        if (CASAMENTO_POR_PROVAS.has(a.sourceId) || CASAMENTO_POR_PROVAS.has(b.sourceId)) continue;
         if (find(a.entityKey) === find(b.entityKey)) continue;
         if (dobConflict(a.raw.dob, b.raw.dob)) continue;
         if (a.normName === b.normName) continue; // já tratado em pass 1
@@ -253,6 +259,116 @@ function resolve(rawSources, overrides) {
         if (!dobsCompatible(a.raw, b.raw)) continue;
         if (tryUnion(a.entityKey, b.entityKey)) probableMerges++;
       }
+    }
+  }
+
+  // ────────────────────────────────────────────────────────────────────
+  // 5b. Casamento por provas (Federgolf, 02/11/2026 — regra dela: «apenas o
+  // D é que não se liga»). Os italianos não têm data nem país fiável (≈400
+  // têm a ficha do Kids 2 com outro país), por isso não casam por nome + país:
+  //   A) a ficha que tem uma prova em comum (≤ 3 dias, as mesmas pancadas);
+  //   B/C) senão, a única ficha com esse nome (ordem dos nomes indiferente);
+  //   D) várias fichas possíveis e nenhuma prova em comum → não casa;
+  // e nunca uma ficha de outro sexo ou com o ano de nascimento contra (data
+  // da ficha, ano anual de outra fonte, escalões USKids). Sem candidata → fica
+  // ficha nova. Medido antes de ligar: 1121 A · 149 B/C · 7 D · 196 novas.
+  // ────────────────────────────────────────────────────────────────────
+  const casamentoPorProvas = { data: 0, prova: 0, nome: 0, varios: 0, novos: 0, homonimos: 0, travadosAno: 0 };
+  {
+    const proprias = entities.filter((e) => CASAMENTO_POR_PROVAS.has(e.sourceId));
+    if (proprias.length) {
+      const chave = (n) => n.split(" ").filter(Boolean).sort().join(" ");
+      const outrasPorNome = new Map();
+      for (const e of entities) {
+        if (CASAMENTO_POR_PROVAS.has(e.sourceId) || !e.normName) continue;
+        const k = chave(e.normName);
+        if (!outrasPorNome.has(k)) outrasPorNome.set(k, []);
+        outrasPorNome.get(k).push(e);
+      }
+      const resultados = new Map(); // entityKey → [{ ms, r }]
+      const escaloesUsk = new Map(); // entityKey → [ano − idade − 1, ano − idade]
+      for (const src of rawSources) {
+        // tournamentsRemovidos: cópias EGR que o util/egr-dedup tirou (a fonte
+        // dedicada ganha) — continuam a provar quem jogou o quê.
+        for (const t of [...(src.tournaments || []), ...(src.tournamentsRemovidos || [])]) {
+          const ms = Date.parse(String(t.startDate || t.date || "").slice(0, 10));
+          const ano = Number(String(t.date || t.startDate || "").slice(0, 4)) || null;
+          for (const f of t.flights || []) {
+            const exacto = src.sourceId === "uskids" && ano && typeof f.ageMin === "number" && f.ageMin === f.ageMax;
+            for (const r of f.results || []) {
+              if (!r.playerSourceKey) continue;
+              const k = `${src.sourceId}:${r.playerSourceKey}`;
+              if (!Number.isNaN(ms)) {
+                if (!resultados.has(k)) resultados.set(k, []);
+                resultados.get(k).push({ ms, r });
+              }
+              if (exacto) {
+                if (!escaloesUsk.has(k)) escaloesUsk.set(k, []);
+                escaloesUsk.get(k).push([ano - f.ageMin - 1, ano - f.ageMin]);
+              }
+            }
+          }
+        }
+      }
+      /** Anos de nascimento possíveis de um grupo (null = sem evidência). */
+      const anosDoGrupo = (grupo) => {
+        const datas = grupo.map((e) => e.raw.dob).filter(Boolean).map((d) => +d.slice(0, 4));
+        if (datas.length) return new Set(datas);
+        const anuais = grupo.map((e) => e.raw.dobRange)
+          .filter((r) => r && r.lo && r.hi && r.lo.slice(0, 4) === r.hi.slice(0, 4) && r.lo.endsWith("-01-01") && r.hi.endsWith("-12-31"))
+          .map((r) => +r.lo.slice(0, 4));
+        if (anuais.length) return new Set(anuais);
+        // Escalões USKids: os anos em que TODAS as provas concordam (util/nascimento-uskids.js).
+        const janelas = grupo.flatMap((e) => escaloesUsk.get(e.entityKey) || []);
+        if (!janelas.length) return null;
+        const votos = new Map();
+        for (const j of janelas) for (const y of j) votos.set(y, (votos.get(y) || 0) + 1);
+        const comuns = [...votos].filter(([, c]) => c === janelas.length).map(([y]) => y);
+        return comuns.length ? new Set(comuns) : null;
+      };
+      const provaEmComum = (fRes, grupo) => {
+        for (const e of grupo) {
+          for (const o of resultados.get(e.entityKey) || []) {
+            for (const p of fRes) {
+              if (Math.abs(o.ms - p.ms) > 3 * 86400000) continue;
+              if (mesmasPancadas(p.r, o.r) === true) return true;
+            }
+          }
+        }
+        return false;
+      };
+      for (const f of proprias) {
+        if (!f.normName) continue;
+        // Já junto pela data de nascimento (roster GolfBox + nome, passo 4).
+        if ((groupEntities.get(find(f.entityKey)) || []).some((e) => !CASAMENTO_POR_PROVAS.has(e.sourceId))) { casamentoPorProvas.data++; continue; }
+        const anosF = new Set(f.raw.dob ? [+f.raw.dob.slice(0, 4)] : f.raw.extra?.anosNascimento || []);
+        const roots = new Set();
+        for (const e of outrasPorNome.get(chave(f.normName)) || []) {
+          if (f.raw.sex && e.raw.sex && f.raw.sex !== e.raw.sex) continue;
+          roots.add(find(e.entityKey));
+        }
+        const candidatos = [];
+        for (const root of roots) {
+          const grupo = groupEntities.get(root) || [];
+          const anosG = anosF.size ? anosDoGrupo(grupo) : null;
+          if (anosG && ![...anosF].some((y) => anosG.has(y))) { casamentoPorProvas.travadosAno++; continue; }
+          candidatos.push({ root, grupo });
+        }
+        const fRes = resultados.get(f.entityKey) || [];
+        const comProva = candidatos.filter((c) => provaEmComum(fRes, c.grupo));
+        // tryUnion recusa quando a ficha já tem OUTRO id da Federgolf (homónimo italiano).
+        if (comProva.length === 1) {
+          if (tryUnion(f.entityKey, comProva[0].root)) casamentoPorProvas.prova++; else casamentoPorProvas.homonimos++;
+        } else if (comProva.length > 1 || candidatos.length > 1) {
+          casamentoPorProvas.varios++;
+          if (process.env.DEBUG) sub(`  · fig não casa (várias fichas): ${f.raw.name} → ${candidatos.map((c) => c.grupo.map((e) => e.entityKey).join("+")).join(" | ")}`);
+        } else if (candidatos.length === 1) {
+          if (tryUnion(f.entityKey, candidatos[0].root)) casamentoPorProvas.nome++; else casamentoPorProvas.homonimos++;
+        } else {
+          casamentoPorProvas.novos++;
+        }
+      }
+      sub(`casamento por provas (fig): ${casamentoPorProvas.data} pela data de nascimento · ${casamentoPorProvas.prova} por prova em comum · ${casamentoPorProvas.nome} pela única ficha com o nome · ${casamentoPorProvas.varios} com várias fichas possíveis (não casam) · ${casamentoPorProvas.novos} fichas novas · ${casamentoPorProvas.homonimos} homónimos com outro id da Federgolf · ${casamentoPorProvas.travadosAno} candidatas travadas pelo ano`);
     }
   }
 
@@ -661,6 +777,10 @@ function buildJunior(entities) {
     fpgFed: sources.fpg?.fed,
     rfegLic: sources.rfeg?.lic,
     ffgolfLic: sources.ffgolf?.lic,
+    // Ficha só da Federgolf: id pelo id dela (o hash do nome colidia com as
+    // fichas homónimas que o passo 5b decidiu não juntar). Com outra fonte,
+    // fica o id de sempre (links e overrides não mudam).
+    figId: entities.every((e) => e.sourceId === "fig") ? entities[0].raw.sourceKey : undefined,
     canonicalName,
     dob,
   });

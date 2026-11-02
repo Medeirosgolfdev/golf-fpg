@@ -18,6 +18,7 @@ const { normName } = require("./names");
  *   fpgFed?: string,
  *   rfegLic?: string,
  *   ffgolfLic?: string,
+ *   figId?: string,
  *   canonicalName?: string,
  *   dob?: string,
  *   salt?: string
@@ -31,6 +32,7 @@ function juniorId(ev) {
   if (ev.fpgFed) return `f${ev.fpgFed}`;
   if (ev.rfegLic) return `r${ev.rfegLic}`;
   if (ev.ffgolfLic) return `g${ev.ffgolfLic}`;
+  if (ev.figId) return `i${crypto.createHash("sha1").update(String(ev.figId)).digest("hex").slice(0, 10)}`;
   // Sem ID forte: hash determinístico de nome+dob.
   const seed = `${normName(ev.canonicalName || "")}|${ev.dob || ""}${ev.salt ? `|${ev.salt}` : ""}`;
   const h = crypto.createHash("sha1").update(seed).digest("hex").slice(0, 10);

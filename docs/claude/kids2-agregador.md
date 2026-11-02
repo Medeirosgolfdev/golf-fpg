@@ -210,7 +210,7 @@ mitarjeta os traz).
 1. `Kids2SourceKey` + `SOURCE_PILLS` em `KIDS2Page.tsx` e `SourceKey` em `kids2/Sidebar.tsx` (o filtro para fontes fracas funciona via `tournament.sourceId`, sem mais código).
 2. Token `--source-{id}` em `tokens.css` + `SOURCE_COLORS`/`SOURCE_LABELS` no `kids2/components/EvolutionChart.tsx`.
 3. Matcher de domínio em `kids2/tournamentLinks.ts` (nota: `eg-*.golfgenius.com` → england tem de vir ANTES do matcher genérico `golfgenius.com` → doral).
-4. Paths de trigger no `build-juniors.yml`.
+4. Paths de trigger no `build-juniors.yml` (o workflow NÃO instala dependências: um adapter não pode precisar de `node_modules`).
 5. Sanity: Manuel×Dmitrii = **7 confrontos** (EC26, Venice25, Venice26, QDL25, EOWAGR LTQ25, WJGC25, WJGC26).
 
 ### Limpeza de duplicados — `scripts/find-junior-duplicates.js` (2026-07-08)
@@ -317,6 +317,32 @@ As classificações dos eventos EGR continuam publicadas depois dos 2 anos (só 
 - **Cartões:** o buraco a buraco é uma imagem PNG; do cartão só se lê par, CR, Slope, percurso e tee (`membership-card-api.golf.de/…/details`).
 - **Workflow** `update-dgv.yml` (Sex/Sáb/Dom 19:30 UTC + Seg 06:00): janela de −21 a +7 dias; a pedido com `ids` ou `from_days`. Guarda anti-encolhimento por nº de jogadores com voltas; exit 2 = nada mudou.
 - Ainda **não** está na `/major` (só kids2). Mapa de links: secção «DGV — Alemanha» em `docs/links-conhecidos.html`.
+
+## Fonte FIG — Itália (02/11/2026)
+
+`public/data/federgolf/{id}.json` (a /fig, `scrape-federgolf.js`) + `federgolf-ranking.json` →
+adapter `sources/fig.js` (sourceId `fig`, pill «FIG», cor `--source-fig`). M e F da mesma prova
+juntam-se num torneio com dois flights (`fgChaveProva`); links para `/fig/{id}` e para a Federgolf.
+Nomes, país dos estrangeiros, chave da prova e ano de nascimento vêm de
+`src/data/federgolf/nomes.ts` — o MESMO ficheiro da /fig, lido pelo Node como o whsCalc (o
+`build-juniors.yml` não instala dependências: nada de esbuild; trava em
+`scripts/federgolf-nomes-loader.test.js`).
+
+**Casamento — passo 5b do identity-matcher** (regra dela: «apenas o D é que não se liga»).
+Os italianos não têm data nem país fiável (≈400 têm a ficha com outro país — residentes,
+Mónaco…), por isso a `fig` fica FORA dos passos 4–5 (nome + país) e casa assim:
+1. já junto pela data (roster GolfBox + nome, passo 4) — ~280;
+2. **A** a ficha com uma prova em comum (≤ 3 dias, as mesmas pancadas — `mesmasPancadas`) — ~830;
+3. **B/C** senão, a ÚNICA ficha com esse nome (ordem dos nomes indiferente) — ~80;
+4. **D** várias fichas possíveis sem prova em comum → não casa (ficha própria) — 8;
+5. nenhuma → ficha nova — ~180, id `i{sha1(id Federgolf)}` (o hash do nome colidia com
+   os homónimos do passo 5.9). Uma ficha com outra fonte mantém o id de sempre.
+Nunca casa com outro sexo nem com o ano contra: data da ficha > ano anual de outra fonte
+(EGR/GolfBox) > escalões USKids (como o `nascimento-uskids.js`). O ano da Federgolf bate com
+a data real em 66/66 e com o ano USKids em 191/192. Um 2.º id da Federgolf com o mesmo nome
+(homónimo) fica à parte (`fig` é fonte forte). As cópias EGR das provas italianas saem antes
+do matcher (`egr-dedup`), mas ficam em `egr.tournamentsRemovidos` para servirem de prova no 5b.
+Testes: `resolution/casamento-fig.test.js`. Linha do log: «casamento por provas (fig)».
 
 ## Resumos leves para as páginas dos circuitos (2026-10-20)
 

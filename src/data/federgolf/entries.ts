@@ -10,15 +10,13 @@ import type { FgIndice, FgIndiceProva, FgProva } from "./types";
 import { noticeNode } from "../../ui/circuit/divisionPieces";
 import { fgAdmissions, fgAdmissionsCols, fgNotaPtNaoJogaram } from "./admissions";
 import { fgAnosNascimento, fgIdPorNomeUnico, loadFgRanking } from "./ranking";
-import { fgClube, fgEscalaoProva, fgScorecardOptions, fgTitulo, fgToTournament } from "./toTournament";
+import { fgEscalaoProva, fgScorecardOptions, fgToTournament } from "./toTournament";
+import { fgChaveProva, fgClube, fgNomeBase, fgTitulo } from "./nomes";
+
+export { fgNomeBase };
 
 export const FG_INDEX_URL = "/data/federgolf-index.json";
 const provaUrl = (id: string) => `/data/federgolf/${id}.json`;
-
-/** Nome da prova sem o sexo («… - MASCHILE», «… - FEMMINILE»). */
-export function fgNomeBase(nome: string): string {
-  return nome.replace(/\s*-?\s*\b(MASCHILE|FEMMINILE)\b\s*/i, " ").replace(/\s+-\s*$/, "").replace(/\s+/g, " ").trim();
-}
 
 const SEXO_LABEL: Record<"M" | "F", string> = { M: "Masculino", F: "Feminino" };
 
@@ -58,8 +56,7 @@ function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
 export function buildFgEntries(idx: FgIndice): CircuitEntry[] {
   const grupos = new Map<string, FgIndiceProva[]>();
   for (const p of idx.provas) {
-    // «Pulcine»/«Pulcini», «Ragazze»/«Ragazzi» no mesmo dia e clube = a mesma prova.
-    const k = `${p.data}|${p.clube}|${fgNomeBase(p.nome).replace(/\b(PULCIN|CADETT|RAGAZZ)[IE]\b/gi, "$1I")}`;
+    const k = fgChaveProva(p);
     if (!grupos.has(k)) grupos.set(k, []);
     grupos.get(k)!.push(p);
   }

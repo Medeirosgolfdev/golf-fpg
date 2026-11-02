@@ -13,7 +13,7 @@
 import type { Tournament } from "./data";
 
 export interface CategorizedLink {
-  key: "sat" | "fpg" | "doral" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "fcg" | "england" | "gjgl" | "avtrophy" | "optimist" | "dgv" | "other";
+  key: "sat" | "fpg" | "doral" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "fcg" | "england" | "gjgl" | "avtrophy" | "optimist" | "dgv" | "fig" | "other";
   label: string;
   url: string;
   /** CSS var-name para cor (já existe em tokens.css). */
@@ -23,6 +23,9 @@ export interface CategorizedLink {
 const DOMAIN_MAP: Array<{ test: RegExp; key: CategorizedLink["key"]; label: string; colorVar: string }> = [
   // Interno: página France com deep-link ?t={trnId} (portal FFG é POST-only)
   { test: /^\/ffg(\?|$)/,           key: "ffgolf",  label: "France",  colorVar: "--source-ffgolf" },
+  // Interno: a prova na página Itália (/fig/{id}).
+  { test: /^\/fig\//,               key: "fig",     label: "Itália",  colorVar: "--source-fig" },
+  { test: /federgolf\.it/i,         key: "fig",     label: "Federgolf", colorVar: "--source-fig" },
   { test: /signupanytime\.com/i,    key: "sat",     label: "SAT",     colorVar: "--source-uskids" },
   { test: /tournaments\.uskidsgolf\.com/i, key: "sat", label: "USKids", colorVar: "--source-uskids" },
   { test: /scoring\.fpg\.pt|scoring\.datagolf\.pt|my\.fpg\.pt/i, key: "fpg", label: "FPG", colorVar: "--source-fpg" },
@@ -63,7 +66,7 @@ export function categorizeTournamentLinks(tournament: Tournament): CategorizedLi
   }
   // Ordem fixa preferida (USKids primeiro, FPG ao meio, outros depois)
   const order: Record<CategorizedLink["key"], number> = {
-    sat: 0, fpg: 1, ffgolf: 2, rfeg: 3, fcg: 4, doral: 5, wjgc: 6, eowagr: 7, england: 8, gjgl: 9, avtrophy: 10, optimist: 11, dgv: 12, other: 99,
+    sat: 0, fpg: 1, ffgolf: 2, rfeg: 3, fcg: 4, doral: 5, wjgc: 6, eowagr: 7, england: 8, gjgl: 9, avtrophy: 10, optimist: 11, dgv: 12, fig: 13, other: 99,
   };
   out.sort((a, b) => order[a.key] - order[b.key]);
   return out;

@@ -13,38 +13,10 @@ import { escalaoCanon } from "../model/escalao";
 import { flagOrEmpty } from "../../utils/flagUtils";
 import type { FgProva } from "./types";
 
-/** «D'ADDABBO» → «D'Addabbo», «BIANCHI FEDRIGONI» → «Bianchi Fedrigoni»,
- *  «SICILIA'S PICCIOLO» → «Sicilia's Picciolo». */
-export function fgTitulo(s: string): string {
-  return s.toLowerCase().replace(/(^|[\s'’"(“-])(\p{L})/gu, (_, a: string, b: string) => a + b.toUpperCase())
-    .replace(/(['’])S\b/g, "$1s")
-    // Siglas e escalões ficam em maiúsculas («TGF U18», «AJGA IPS», «WAGR»).
-    .replace(/\b(Tgf|Wagr|Ajga|Ips|Cjga|Gc|Cg|Fig|Ssd|Asd|U\d{2})\b/g, (m) => m.toUpperCase());
-}
+import { fgClube, fgNome, fgPais, fgTitulo } from "./nomes";
 
-/** «DURANDO, MATTEO» → «Matteo Durando». */
-export function fgNome(nome: string): string {
-  const [apelido, proprio] = nome.split(",").map((s) => s.trim());
-  return fgTitulo(proprio ? `${proprio} ${apelido}` : apelido);
-}
-
-export const fgClube = (clube: string | null | undefined): string => (clube ? fgTitulo(clube) : "");
-
-/** Nos estrangeiros a Federgolf põe o país no lugar do clube, com códigos
- *  próprios (SWI, DAN, SLK, IRE, SCO…). Código → ISO-2; um clube italiano → null. */
-const PAIS: Record<string, string> = {
-  FRA: "FR", RSA: "ZA", NED: "NL", ENG: "GB-ENG", SCO: "GB-SCT", WAL: "GB-WLS", IRE: "IE", BEL: "BE",
-  SWE: "SE", FIN: "FI", AUT: "AT", CZE: "CZ", SWI: "CH", SUI: "CH", NOR: "NO", POL: "PL", DAN: "DK",
-  DEN: "DK", EST: "EE", SLK: "SK", SVK: "SK", GER: "DE", LIT: "LT", LTU: "LT", CRO: "HR", POR: "PT",
-  ESP: "ES", SPA: "ES", USA: "US", GBR: "GB", HUN: "HU", SLO: "SI", LAT: "LV", ISL: "IS", LUX: "LU",
-  MON: "MC", SMR: "SM", MLT: "MT", GRE: "GR", TUR: "TR", UKR: "UA", ROU: "RO", BUL: "BG", SRB: "RS",
-  ISR: "IL", MEX: "MX", CAN: "CA", BRA: "BR", ARG: "AR", CHN: "CN", JPN: "JP", KOR: "KR", IND: "IN",
-  AUS: "AU", NZL: "NZ", UAE: "AE", MAR: "MA", THA: "TH",
-};
-export function fgPais(clube: string | null | undefined): string | null {
-  const c = String(clube ?? "").trim().toUpperCase();
-  return /^[A-Z]{3}$/.test(c) ? PAIS[c] ?? null : null;
-}
+// Nomes, clube/país e a chave da prova vivem em nomes.ts (o agregador do Kids 2 lê-os de lá).
+export { fgChaveProva, fgClube, fgNome, fgNomeBase, fgPais, fgTitulo } from "./nomes";
 
 /** Coluna Clube: o clube, ou a bandeira e o código nos estrangeiros. */
 export function clubeOuPais(clube: string | null | undefined): string {

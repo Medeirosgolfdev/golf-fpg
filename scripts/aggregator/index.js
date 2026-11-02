@@ -33,6 +33,7 @@ const SOURCES = [
   { id: "fpg", label: "Federação Portuguesa de Golfe", load: () => require("./sources/fpg") },
   { id: "rfeg", label: "Real Federación Española de Golf", load: () => require("./sources/rfeg") },
   { id: "ffgolf", label: "Fédération française de golf", load: () => require("./sources/ffgolf") },
+  { id: "fig", label: "Federazione Italiana Golf", load: () => require("./sources/fig") },
   { id: "eowagr", label: "European Open WAGR", load: () => require("./sources/eowagr") },
   { id: "wjgc", label: "WJGC / BJGT", load: () => require("./sources/wjgc") },
   { id: "doral", label: "First Tee Miami Doral", load: () => require("./sources/doral") },

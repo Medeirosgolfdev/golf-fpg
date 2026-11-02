@@ -81,6 +81,7 @@ function dedupeEgrTournaments(rawSources) {
 
   const slack = DATE_SLACK_DAYS * DAY_MS;
   const keep = [];
+  const removidos = [];
   for (const e of egr.tournaments) {
     const er = dateRange(e);
     const es = er ? rosterOf(e) : null;
@@ -101,9 +102,12 @@ function dedupeEgrTournaments(rawSources) {
         }
       }
     }
-    if (hit) dropped.push(hit); else keep.push(e);
+    if (hit) { dropped.push(hit); removidos.push(e); } else keep.push(e);
   }
   egr.tournaments = keep;
+  // Saem do Kids 2 mas continuam a servir de PROVA de identidade (mesmas
+  // pancadas na mesma prova) no passo 5b do identity-matcher.
+  egr.tournamentsRemovidos = removidos;
   return { dropped };
 }
 

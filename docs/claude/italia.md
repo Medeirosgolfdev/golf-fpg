@@ -140,8 +140,13 @@ juvenil da /fig e da /rfeg) — melhorar uma melhora as outras.
   idade, média, voltas e a tabela de todas as voltas do ano.
 - Provas sem cartões: o Resumo de totais com «SD R1…» (`TotalsExtraCol`).
 
+## Kids 2 (02/11/2026)
+As provas da /fig entram no Kids 2 pela fonte `fig` do agregador (89 provas, ~1440 jogadores;
+o Durando passou de 8 provas italianas pelo EGR para as 15). Regras do casamento e números em
+[kids2-agregador.md](kids2-agregador.md#fonte-fig--itália-02112026). Nomes, país, chave da
+prova e ano de nascimento vivem em `src/data/federgolf/nomes.ts` (sem imports de valores:
+o agregador lê-o com o Node).
+
 ## Por fazer
-- Ligar ao agregador do Kids 2 (rivais italianos do Manuel; o Durando,
-  u557351, só tem lá USKids/Doral/EGR).
 - Ler os PDFs das provas antigas (até ~2017).
 - Match play e equipas (Campionati a squadre, Match Play Ragazzi) ficaram de fora.
