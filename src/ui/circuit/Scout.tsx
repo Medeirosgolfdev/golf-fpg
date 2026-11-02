@@ -19,7 +19,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
-import { fmtToPar, isoDate, shortDateSlash, todayIso } from "../../utils/format";
+import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
 import { isManuel as isManuelPlayer } from "../../constants/manuel";
 import { getTierLabel } from "../../pages/kids2/juniorCalc";
@@ -354,7 +354,7 @@ export default function Scout({
                     {tem.hcp && (
                       <td className={!tem.idade ? "scout-sep" : undefined}
                           title={l.sc?.hr ? `Handicap oficial da Federação Espanhola${l.sc.hr[1] ? ` — actualizado a ${shortDateSlash(l.sc.hr[1], true)}` : ""}` : undefined}>
-                        {l.sc?.h != null ? l.sc.h.toFixed(1) : "–"}
+                        {fmtHcp(l.sc?.h, "–")}
                       </td>
                     )}
                     <td className={!tem.idade && !tem.hcp ? "scout-sep" : undefined}

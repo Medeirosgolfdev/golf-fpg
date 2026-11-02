@@ -6,7 +6,7 @@
  */
 import React, { useMemo, useState } from "react";
 import type { PlayerPageData, RoundData, HcpInfo } from "../../../data/playerDataLoader";
-import { shortDate, fmtSign } from "../../../utils/format";
+import { shortDate, fmtSign, fmtHcp } from "../../../utils/format";
 import { numSafe, meanArr, stdevArr, linearSlope, median } from "../../../utils/mathUtils";
 import { sc3m, SC } from "../../../utils/scoreDisplay";
 import UiKpiCard from "../../../ui/KpiCard";
@@ -394,9 +394,9 @@ export function WHSDetail({ hcp, bare }: { hcp: HcpInfo; bare?: boolean }) {
   return (
     <Wrap>
       <div className="jog-record-grid">
-        <UiKpiCard label="Mínimo atingido" value={hcp.lowHcp?.toFixed(1) ?? "–"}
+        <UiKpiCard label="Mínimo atingido" value={fmtHcp(hcp.lowHcp, "–")}
           color="var(--color-good)" accentBorder="var(--color-good)" />
-        <UiKpiCard label="Actual" value={hcp.current.toFixed(1)}
+        <UiKpiCard label="Actual" value={fmtHcp(hcp.current)}
           color="var(--chart-2)" accentBorder="var(--chart-2)"
           sub={hcp.lowHcp != null
             ? <span style={{ color: SC.danger, fontWeight: 600 }}>+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</span>

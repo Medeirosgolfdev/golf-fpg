@@ -5,6 +5,7 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import PlayerLink from "./PlayerLink";
 import { ESC_ORDER_FULL } from "../constants/escaloes";
+import { fmtHcp } from "../utils/format";
 
 // Common Courses
 function CommonCourses({ players }: {
@@ -166,7 +167,7 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
                     {p.birthYear && <span className="p p-sm p-birth ml-4">{p.birthYear}</span>}
                     {p.club && <span className="p p-sm p-club ml-4">{p.club}</span>}
                   </td>
-                  <td className="r"><b>{p.currentHcp?.toFixed(1) ?? "–"}</b></td>
+                  <td className="r"><b>{fmtHcp(p.currentHcp, "–")}</b></td>
                   <td className="r">
                     {p.lastSD != null
                       ? <span className={`p p-${sdClassByHcp(p.lastSD, p.currentHcp)}`}>{p.lastSD.toFixed(1)}</span>

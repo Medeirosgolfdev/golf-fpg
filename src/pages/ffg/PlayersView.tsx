@@ -24,7 +24,7 @@ import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
 import { useSort } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName, fmtDatePt } from "../../utils/format";
+import { displayName, fmtDatePt, fmtHcp } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { isManuelByName } from "../../constants/manuel";
 import { kidsUrl } from "../../ui/KidsLink";
@@ -367,7 +367,7 @@ export function FFGPlayersView() {
                       </td>
                       {has.club && <td title={r._club}>{r._club || MUTED}</td>}
                       {has.region && <td className="fs-11" title={r._region}>{r._region || MUTED}</td>}
-                      <td className="u-ta-right u-fw-600">{r.hcp != null ? r.hcp.toFixed(1) : MUTED}</td>
+                      <td className="u-ta-right u-fw-600">{r.hcp != null ? fmtHcp(r.hcp) : MUTED}</td>
                       {has.sex && <td>{r.sex === "M" || r.sex === "F" ? <SexBadge sex={r.sex} /> : MUTED}</td>}
                       {has.cat && (
                         <td title={[r.catSrc === "merite" ? `Mérite Jeunes: ${r.merite?.cat ?? ""} (nascido em ${r.birthYear})` : r.catYear ? `Época ${r.catYear} (inferido das provas)` : null, r.lastSerie ? `Série mais recente: ${r.lastSerie}` : null].filter(Boolean).join(" · ") || undefined}>

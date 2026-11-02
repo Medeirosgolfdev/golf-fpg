@@ -9,6 +9,7 @@ import { useMemo } from "react";
 import type { PlayerPageData, RoundData } from "../../data/playerDataLoader";
 import { numSafe, meanArr } from "../../utils/mathUtils";
 import UiKpiCard from "../../ui/KpiCard";
+import { fmtHcp } from "../../utils/format";
 
 export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear, ppHcp, onPpClick }: {
   data: PlayerPageData; currentHcp: number | null; roundsThisYear: number;
@@ -39,7 +40,7 @@ export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear, ppHcp
   const curY = new Date().getFullYear();
   return (
     <div className="jog-kpi-strip">
-      <UiKpiCard size="sm" className="kpi-hero" label="Índice" value={currentHcp != null ? currentHcp.toFixed(1) : "—"}
+      <UiKpiCard size="sm" className="kpi-hero" label="Índice" value={fmtHcp(currentHcp)}
         delta={k.idxDelta} deltaLabel="em 12m"
         fill={k.idxDelta == null ? null
           : k.idxDelta < -0.05 ? "good"   /* índice desceu → melhorou → verde */

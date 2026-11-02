@@ -1,0 +1,51 @@
+/**
+ * Fontes do Kids 2 (sourceId do agregador): nome e cor. Um só sítio — antes a
+ * linha do tempo tinha só 7 nomes e mostrava o código cru («fcg», «gjgl»…).
+ */
+export const SOURCE_COLORS: Record<string, string> = {
+  uskids: "var(--source-uskids)",
+  fpg:    "var(--source-fpg)",
+  rfeg:   "var(--source-rfeg)",
+  ffgolf: "var(--source-ffgolf)",
+  wjgc:   "var(--source-wjgc)",
+  eowagr: "var(--source-eowagr)",
+  doral:  "var(--source-doral)",
+  fcg:    "var(--source-fcg)",
+  england: "var(--source-england)",
+  gjgl:   "var(--source-gjgl)",
+  fsga:   "var(--source-fsga)",
+  uajt:   "var(--source-uajt)",
+  uaworlds: "var(--source-uaworlds)",
+  mexnacional: "var(--source-mexnacional)",
+  coc:    "var(--source-coc)",
+  reidtrophy: "var(--source-reidtrophy)",
+  evianjc: "var(--source-evianjc)",
+  faldomadeira: "var(--source-faldomadeira)",
+  optimist: "var(--source-optimist)",
+  dgv: "var(--source-dgv)",
+  icopa:  "var(--source-icopa)",
+  interzonas: "var(--source-interzonas)",
+  avtrophy: "var(--source-avtrophy)",
+  job:    "var(--source-job)",
+  ebtc2:  "var(--source-ebtc2)",
+  egtc:   "var(--source-egtc)",
+  elg:    "var(--source-elg)",
+  eym:    "var(--source-eym)",
+  ejo:    "var(--source-ejo)",
+  ejt:    "var(--source-ejt)",
+  egr:    "var(--source-egr)",
+  eatc:   "var(--major-src-eatc)",
+  eatc2:  "var(--major-src-eatc2)",
+  fm:     "var(--major-src-fm)",
+};
+
+export const SOURCE_LABELS: Record<string, string> = {
+  uskids: "USKids", fpg: "FPG", rfeg: "RFEG", ffgolf: "FFG",
+  wjgc: "WJGC", eowagr: "EOWAGR", doral: "Doral",
+  fcg: "FCG", england: "England", gjgl: "GJGL",
+  fsga: "FSGA", uajt: "Under Armour", uaworlds: "UA Worlds", mexnacional: "México", coc: "Champion of Champions", reidtrophy: "Reid Trophy", evianjc: "Evian Juniors Cup", faldomadeira: "Faldo Junior Tour Madeira", dgv: "DGV (Alemanha)", optimist: "Optimist Intl",
+  icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14",
+  job: "JOB", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies",
+  eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", egr: "EGR",
+  eatc: "ETC Men", eatc2: "ETC Men 2", fm: "Future Masters", wagr: "WAGR",
+};

@@ -15,6 +15,7 @@ import type { HcpPoint } from "../data";
 import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { tpColor } from "../../../ui/tournamentPrimitives";
+import { fmtHcp } from "../../../utils/format";
 
 interface Props {
   points: HcpPoint[];
@@ -65,7 +66,7 @@ export default function HcpSparkline({ points, width = 80, height = 20, playerNa
           e.stopPropagation();
           setShowModal(true);
         }}
-        title={`HCP: ${first.hcpExact.toFixed(1)} (${first.date}) → ${last.hcpExact.toFixed(1)} (${last.date}) · ${sorted.length} snapshots · click para ver tudo`}
+        title={`HCP: ${fmtHcp(first.hcpExact)} (${first.date}) → ${fmtHcp(last.hcpExact)} (${last.date}) · ${sorted.length} snapshots · click para ver tudo`}
         className="u-d-inline-flex u-ai-center u-bg-transparent u-bd-none u-p-0 u-ml-4px u-cur-pointer u-va-middle"
         aria-label={`Série de HCP (${sorted.length} snapshots)`}
       >
@@ -149,7 +150,7 @@ function HcpHistoryModal({
               <tr key={i}>
                 <td>{p.date}</td>
                 <td className="r u-fw-600">
-                  {p.hcpExact.toFixed(1)}
+                  {fmtHcp(p.hcpExact)}
                 </td>
                 <td className="u-c-text-2">{p.source}</td>
                 <td className="u-c-text-2">

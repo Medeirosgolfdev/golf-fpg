@@ -14,7 +14,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { HcpHistoryDb } from "../data/hcpHistoryLoader";
 import { computeEvoMetrics, pointsInWindow, type EvoMetrics } from "../utils/hcpEvolution";
-import { MONTHS_PT } from "../utils/format";
+import { MONTHS_PT, fmtHcp } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import SexBadge from "./SexBadge";
@@ -268,10 +268,10 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                   </td>
                   <td>{r.p.sex ? <SexBadge sex={r.p.sex} /> : <span className="muted">—</span>}</td>
                   <td className="r">{r.m.nPts}</td>
-                  <td className="r">{r.m.start.toFixed(1)}</td>
-                  <td className="r"><b>{r.m.end.toFixed(1)}</b></td>
+                  <td className="r">{fmtHcp(r.m.start)}</td>
+                  <td className="r"><b>{fmtHcp(r.m.end)}</b></td>
                   <td className="r"><HcpDelta d={r.m.delta} zero="0" /></td>
-                  <td className="r">{r.m.best.toFixed(1)}</td>
+                  <td className="r">{fmtHcp(r.m.best)}</td>
                   <td className="r">
                     {r.m.slopePerMonth == null ? <span className="muted">—</span>
                       : <span style={{ color: tpColor(r.m.slopePerMonth) }}>

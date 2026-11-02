@@ -24,7 +24,7 @@ import {
   type HoleStatsData,
 } from "../data/playerDataLoader";
 import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
-import { norm, shortName, firstName, fD, fD2 } from "../utils/format";
+import { norm, shortName, firstName, fD, fD2, fmtHcp } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import LoadingState from "../ui/LoadingState";
@@ -263,7 +263,7 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
   const val = (fn: (agg: AggStats | null, st: typeof loaded[0]["st"]) => string | null) =>
     loaded.map(x => fn(x.agg, x.st));
 
-  rows.push({ label: "HCP Atual", emoji: "🏌️", values: val((_, st) => st?.currentHcp != null ? st.currentHcp.toFixed(1) : null), best: "low" });
+  rows.push({ label: "HCP Atual", emoji: "🏌️", values: val((_, st) => st?.currentHcp != null ? fmtHcp(st.currentHcp) : null), best: "low" });
   rows.push({ label: "Melhor Gross", emoji: "🏆", values: val((a, st) => {
     const v = a?.bestGross ?? st?.bestGross; return v != null ? String(v) : null;
   }), best: "low" });

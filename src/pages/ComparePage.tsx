@@ -28,7 +28,7 @@ import { MultiTeeSDTable } from "../ui/ScoreTable";
 import TeePill from "../ui/TeePill";
 import { physicalTeeGroups, physicalTeeKey } from "../utils/teeGroups";
 import { calcSD, calcPlayingHcp } from "../utils/whsCalc";
-import { fmtSD } from "../utils/format";
+import { fmtSD, fmtHcp } from "../utils/format";
 import { teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { isPtCountry } from "../utils/flagUtils";
@@ -369,7 +369,7 @@ function TwoTeeSDTable({
         </tbody>
       </table>
       <div className="muted u-fs-fs-11 u-mt-6pxx">
-        ≈ = tee com CR/Slope mais próximo do tee do outro campo · Linha realçada = playing handicap (HI {hi.toFixed(1)})
+        ≈ = tee com CR/Slope mais próximo do tee do outro campo · Linha realçada = playing handicap (HI {fmtHcp(hi)})
       </div>
     </div>
   );

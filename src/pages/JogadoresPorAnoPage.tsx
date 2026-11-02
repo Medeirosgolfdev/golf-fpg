@@ -46,6 +46,7 @@ import ClearButton from "../ui/ClearButton";
 import TabRow from "../ui/TabRow";
 import FilterPillRow from "../ui/FilterPillRow";
 import EmptyState from "../ui/EmptyState";
+import { fmtHcp } from "../utils/format";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -294,8 +295,8 @@ export default function JogadoresPorAnoPage() {
     return (
       <span className="u-d-inline-flex u-ai-center u-gap-6px u-ml-auto u-fwr-wrap">
         <Kpi label="Sexo" value={<span className="u-d-inline-flex u-gap-4px u-fs-fs-14 u-ai-center"><SexBadge sex="M" />{m.nM} <SexBadge sex="F" />{m.nF}</span>} />
-        <Kpi label="HCP médio" value={m.avgHcp == null ? "—" : m.avgHcp.toFixed(1)} />
-        <Kpi label="Melhor HCP" value={m.bestHcp == null ? "—" : m.bestHcp.toFixed(1)} />
+        <Kpi label="HCP médio" value={fmtHcp(m.avgHcp)} />
+        <Kpi label="Melhor HCP" value={fmtHcp(m.bestHcp)} />
         <Kpi label="Rondas 12m" value={m.avgR12 == null ? "—" : m.avgR12.toFixed(1)} sub="média" />
         <Kpi label="Activos 12m" value={m.nActive} sub={`de ${rows.length}`}
           title="Jogadores que fizeram pelo menos 1 ronda nos últimos 12 meses" />
@@ -344,7 +345,7 @@ export default function JogadoresPorAnoPage() {
                   <td><SexBadge sex={p.sex} /></td>
                   <td className="u-ta-left u-maxw-150px u-ov-hidden u-tov-ellipsis u-ws-nowrap">{clubName(p.club) || <span className="muted">—</span>}</td>
                   <td><EscPill esc={p.escalao} /></td>
-                  <td className="u-fw-700">{p.hcp == null ? <span className="muted">—</span> : p.hcp.toFixed(1)}</td>
+                  <td className="u-fw-700">{p.hcp == null ? <span className="muted">—</span> : fmtHcp(p.hcp)}</td>
                   <td><HcpDelta d={ps?.hcpDelta3m ?? null} /></td>
                   <td>{ps?.bestGross ?? <span className="muted">—</span>}</td>
                   <td>{ps?.avgSD5 == null ? <span className="muted">—</span> : ps.avgSD5.toFixed(1)}</td>

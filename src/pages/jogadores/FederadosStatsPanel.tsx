@@ -15,6 +15,7 @@ import SexBadge from "../../ui/SexBadge";
 import { HCP_BINS, emptyHcpBins, hcpBinKey, hcpBinRange, isCountableHcp } from "./hcpBins";
 import { COL_M, COL_F, barPct, KpiCard, MFBar, MFColumn, MFLegend } from "./statsWidgets";
 import CloseButton from "../../ui/CloseButton";
+import { fmtHcp } from "../../utils/format";
 
 export interface GlobalStats {
   total: number; male: number; female: number; withHcp: number; avgHcp: number;
@@ -291,7 +292,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
                 <span className="muted fs-10 ml-4">({p.acronym})</span>
               </span>
               <span className="fw-900" style={{ fontSize: "var(--fs-14)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
-                {(p.hcp_exact as number).toFixed(1)}
+                {fmtHcp(p.hcp_exact as number)}
               </span>
             </button>
           ))}
@@ -427,7 +428,7 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
               <span className="muted fs-10 ml-4">({p.acronym})</span>
             </span>
             <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
-              {(p.hcp_exact as number).toFixed(1)}
+              {fmtHcp(p.hcp_exact as number)}
             </span>
           </button>
         ))}
@@ -509,7 +510,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
               <span className="fw-700 u-w-18px u-fs-fs-11">{i + 1}</span>
               <span className="u-fl-1 u-ta-left u-fs-fs-12">{p.name}</span>
               <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
-                {(p.hcp_exact as number).toFixed(1)}
+                {fmtHcp(p.hcp_exact as number)}
               </span>
             </button>
           ))}

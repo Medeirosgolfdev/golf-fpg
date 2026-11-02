@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import type { RoundData, PlayerPageData, HcpInfo } from "../data/playerDataLoader";
 import type {} from "../data/types";
 import { useCourses } from "../context/CoursesContext";
-import { norm } from "../utils/format";
+import { norm, fmtHcp } from "../utils/format";
 import {
   whsQtyCalc, hiAdjustment, addRoundToPool, historicExceptionalAdj, topRanks, topIds,
   scoreDifferential, sd18FromSd9, expectedSD9, round1, get9hRatings,
@@ -1310,7 +1310,7 @@ export function RoundSimulator({
                               : "var(--text-1)",
                       }}
                     >
-                      {result.hiAfterRound.toFixed(1)}
+                      {fmtHcp(result.hiAfterRound)}
                     </span>
                     <span
                       style={{
@@ -1704,7 +1704,7 @@ export function RoundSimulator({
               className="fw-900 u-fs-fs-22 u-lh-1"
 
             >
-              {currentHI.toFixed(1)}
+              {fmtHcp(currentHI)}
             </div>
             <div className="u-fs-fs-10 u-c-text-3 u-mt-2px">
               {qtyCalcCur} mel./{initialPool.length}
@@ -1761,7 +1761,7 @@ export function RoundSimulator({
                           : "var(--text-1)",
                   }}
                 >
-                  {r.hiAfterRound.toFixed(1)}
+                  {fmtHcp(r.hiAfterRound)}
                 </div>
                 <div
                   style={{
@@ -1815,7 +1815,7 @@ export function RoundSimulator({
                     color: finalDColor,
                   }}
                 >
-                  {finalHI.toFixed(1)}
+                  {fmtHcp(finalHI)}
                 </div>
                 <div
                   className="fs-11 fw-700"
@@ -1947,7 +1947,7 @@ export function RoundSimulator({
                         </span>
                       </td>
                       <td className="r fw-700" style={{ color: dc }}>
-                        {row.newHI.toFixed(1)}
+                        {fmtHcp(row.newHI)}
                       </td>
                       <td className="r fw-700" style={{ color: dc }}>
                         {row.delta > 0 ? "+" : ""}{row.delta.toFixed(1)}

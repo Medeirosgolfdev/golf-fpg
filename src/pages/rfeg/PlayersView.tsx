@@ -23,7 +23,7 @@ import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
 import { useSort } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName, fmtDatePt } from "../../utils/format";
+import { displayName, fmtDatePt, fmtHcp } from "../../utils/format";
 import { isManuelByName } from "../../constants/manuel";
 import { PlayerTournaments, type EsPlayerTournamentsFile } from "./PlayerTournaments";
 import Pager from "../../ui/Pager";
@@ -178,7 +178,7 @@ function dataCells(v: CellView, has: { club: boolean; dob: boolean; sex: boolean
       {has.club && <td title={v.club}>{v.club || MUTED}</td>}
       {has.dob && <td className="u-ws-nowrap">{v.dob || MUTED}</td>}
       {has.dob && <td className="u-ta-right">{v.age != null ? v.age : MUTED}</td>}
-      <td className="u-ta-right u-fw-600">{v.hcp != null ? v.hcp.toFixed(1) : MUTED}</td>
+      <td className="u-ta-right u-fw-600">{v.hcp != null ? fmtHcp(v.hcp) : MUTED}</td>
       {has.sex && <td>{v.sex === "M" || v.sex === "F" ? <SexBadge sex={v.sex} /> : MUTED}</td>}
       {has.cat && <td>{v.cat ? (v.young ? <EscPill esc={v.cat} /> : <span className="muted fs-11">{v.cat}</span>) : MUTED}</td>}
       {has.tot && <td style={{ textAlign: "right", color: v.tot ? undefined : "var(--text-muted)" }}>{v.tot || "—"}</td>}

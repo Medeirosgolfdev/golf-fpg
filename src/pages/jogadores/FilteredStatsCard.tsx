@@ -12,6 +12,7 @@ import EmptyState from "../../ui/EmptyState";
 import { HCP_BINS, emptyHcpBins, hcpBinKey, isCountableHcp } from "./hcpBins";
 import { barPct, KpiCard, MFBar, MFColumn, MFLegend } from "./statsWidgets";
 import { ESC_IDX, type ViewMode } from "./filterPlayers";
+import { fmtHcp } from "../../utils/format";
 
 export type FilteredPlayer = { name: string; fed: string; escalao: string; sex?: "M" | "F" | string; hcp: number | null; club: unknown; region?: string; _federadoRaw?: FederadoRaw; _source?: MergedPlayer["_source"]; tags?: string[] };
 
@@ -117,7 +118,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                     })()}
                   </span>
                   <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
-                    {(p.hcp as number).toFixed(1)}
+                    {fmtHcp(p.hcp as number)}
                   </span>
                 </button>
               );

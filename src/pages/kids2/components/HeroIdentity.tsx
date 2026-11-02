@@ -18,7 +18,7 @@ import { flag as flagOf } from "../../../utils/flagUtils";
 import { MANUEL_DOB } from "../../../constants/manuel";
 import { cachedFetchJson } from "../../../data/fetchCache";
 import HcpSparkline from "./HcpSparkline";
-import { shortDateSlash } from "../../../utils/format";
+import { shortDateSlash, fmtHcp } from "../../../utils/format";
 import { stripAccents } from "../../../utils/normName";
 
 /** Bandeira por federação — mostrada junto ao número de licença. */
@@ -338,7 +338,7 @@ export default function HeroIdentity({ data, junior }: Props) {
               ? `Handicap oficial da Federação Espanhola${h.date ? ` — actualizado a ${shortDateSlash(h.date, true)}` : ""}`
               : `Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
               {SOURCE_FLAGS[h.source] && <span className="u-fs-fs-12 u-lh-1">{SOURCE_FLAGS[h.source]}</span>}
-              🎯 HCP {h.value?.toFixed(1)} <span className="u-c-text-3 u-ml-3px">· {h.source}{h.oficial && h.date ? ` · ${shortDateSlash(h.date, true)}` : ""}</span>
+              🎯 HCP {fmtHcp(h.value)} <span className="u-c-text-3 u-ml-3px">· {h.source}{h.oficial && h.date ? ` · ${shortDateSlash(h.date, true)}` : ""}</span>
               {i === hcps.length - 1 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
                 <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
               )}
@@ -354,13 +354,13 @@ export default function HeroIdentity({ data, junior }: Props) {
           ))}
           {hcpLista && (
             <span title={`Handicap na ${hcpLista.label ?? "lista de inscritos"} · ${hcpLista.date}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
-              🎯 HCP {hcpLista.hcpExact < 0 ? `+${(-hcpLista.hcpExact).toFixed(1)}` : hcpLista.hcpExact.toFixed(1)}
+              🎯 HCP {fmtHcp(hcpLista.hcpExact)}
               <span className="u-c-text-3 u-ml-3px">· {mesLista} · Entry List</span>
             </span>
           )}
           {hcps.length === 0 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
             <span className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
-              🎯 HCP {junior.hcpHistory[0].hcpExact.toFixed(1)} <span className="u-c-text-3 u-ml-3px">· {junior.hcpHistory[0].source}</span>
+              🎯 HCP {fmtHcp(junior.hcpHistory[0].hcpExact)} <span className="u-c-text-3 u-ml-3px">· {junior.hcpHistory[0].source}</span>
               <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
             </span>
           )}

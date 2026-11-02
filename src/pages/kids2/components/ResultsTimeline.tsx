@@ -19,6 +19,7 @@ import { medalClass } from "../../../ui/PosBadge";
 import ClearButton from "../../../ui/ClearButton";
 import ExpandArrow from "../../../ui/ExpandArrow";
 import ExtLink from "../../../ui/ExternalLink";
+import { SOURCE_LABELS } from "../../../constants/kids2Sources";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -41,10 +42,6 @@ interface Row {
   /** Top % = pos/fieldSize. null se faltar pos ou fieldSize. */
   topPct: number | null;
 }
-
-const SOURCE_LABELS: Record<string, string> = {
-  uskids: "USKids", fpg: "FPG", rfeg: "RFEG", ffgolf: "FFG", wjgc: "WJGC", eowagr: "EOWAGR", doral: "Doral",
-};
 
 export default function ResultsTimeline({ data, junior, filterTids }: Props) {
   // Por default todos os anos com torneios ficam abertos (incluindo "?" para
