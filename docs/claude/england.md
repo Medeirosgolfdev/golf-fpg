@@ -100,6 +100,16 @@ data inventada. Sem data na GolfGenius (01/11): Bronte Law Edgbaston, Moor
 Allerton e Royal Mid Surrey 2026, Bronte Law Farnham 2025, Justin Rose 2023 div1
 (eventos de uma ronda, sem `rounds` no JSON).
 
+**Ano do catálogo errado** (02/11/2026): três `gg_page` eram de outra edição —
+«English Girls' U16 & U14 2023» era a de 2021 (Morecambe), «… 2024» a de 2023 e
+«English U18 Amateur 2023» a de 2021. No Kids 2 a de «2023» caía em cima do
+English Girls' Open 2023 (EGR) com as mesmas meninas e pancadas diferentes.
+Corrigidos o catálogo e os ficheiros; o backfill passa a dar **erro** quando as
+rondas da GolfGenius são todas de outro ano (antes dizia «não tem datas»).
+Faltam as páginas das edições 2024 (U16 & U14) e 2023 (U18 Amateur). Conferir
+uma entrada nova: o dia da semana do cabeçalho dos cartões («Tue, July 27») tem
+de bater com o ano.
+
 ### Output enriquecido (refactor 2026-05-18)
 
 `public/data/england_{slug}.json` (single division) ou `england_{slug}_div1.json`, `_div2.json`... (multi-divisão).
