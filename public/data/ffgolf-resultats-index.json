@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-01T23:45:03.836Z",
+  "generatedAt": "2026-11-02T01:03:27.162Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1281,
+  "total": 1282,
   "tournaments": [
     {
       "file": "03-03-2601471990.json",
@@ -18,17 +18,17 @@
       "totalPlayers": 103,
       "course": "Pau",
       "sex": "MF",
-      "roundsPlayed": 1,
+      "roundsPlayed": 2,
       "divisions": [
         {
-          "serieId": "29",
-          "label": "U12F",
-          "players": 25
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 78
         },
         {
-          "serieId": "111",
-          "label": "U12G",
-          "players": 78
+          "serieId": "22",
+          "label": "Dames",
+          "players": 25
         }
       ],
       "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
@@ -56,7 +56,7 @@
       "totalPlayers": 76,
       "course": "Les 3 Lacs",
       "sex": "MF",
-      "roundsPlayed": 1,
+      "roundsPlayed": 2,
       "divisions": [
         {
           "serieId": "11",
@@ -94,7 +94,7 @@
       "totalPlayers": 30,
       "course": "Bourbon",
       "sex": "MF",
-      "roundsPlayed": 1,
+      "roundsPlayed": 2,
       "divisions": [
         {
           "serieId": "19",
@@ -125,6 +125,44 @@
       "rms9": null,
       "ligues": [
         "14"
+      ]
+    },
+    {
+      "file": "01-00-2601490085.json",
+      "trnId": "2601490085",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "Championnat U18 WAGR - Cholet",
+      "formule": "Simple",
+      "date": "29/10/2026",
+      "dateIso": "2026-10-29",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 2,
+      "totalPlayers": 57,
+      "course": "Golf de Cholet",
+      "sex": "MF",
+      "roundsPlayed": 3,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 41
+        },
+        {
+          "serieId": "22",
+          "label": "Dames",
+          "players": 16
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "rms9": null,
+      "ligues": [
+        "00"
       ]
     },
     {
