@@ -429,11 +429,14 @@ export function crossApuradosInscritos<A extends Record<string, any>>(apur: A, i
   const players = (apur.players || []).map((a: any) => {
     const i = a.fed ? byFed.get(String(a.fed)) : undefined;
     if (!i) return { ...a, status: "reserva", pos: ++nPend, dataInscricao: null };
+    // Inscreveu-se e saiu: fica «desistente», não «por inscrever» (src/data/desistentes.ts).
+    if (i.status === "desistente") return { ...a, status: "desistente", pos: null, hcp: i.hcp ?? a.hcp, vac: i.vac ?? a.vac,
+      dataInscricao: i.dataInscricao ?? null, desinscritoEm: i.desinscritoEm ?? null, clube: i.clube || a.clube };
     return { ...a, status: "confirmed", pos: i.pos ?? a.pos, hcp: i.hcp ?? a.hcp, vac: i.vac ?? a.vac,
       dataInscricao: i.dataInscricao ?? null, clube: i.clube || a.clube };
   });
   for (const i of inscPlayers) {
-    if (!i.fed || !apFeds.has(String(i.fed))) players.push({ ...i, status: "confirmed", tags: [...(i.tags || []), "fora dos apurados"] });
+    if (!i.fed || !apFeds.has(String(i.fed))) players.push({ ...i, status: i.status === "desistente" ? "desistente" : "confirmed", tags: [...(i.tags || []), "fora dos apurados"] });
   }
   const nConf = players.filter((p: any) => p.status === "confirmed").length;
   return { ...apur, ...insc, players, totalInscritos: nConf, reservas: nPend,

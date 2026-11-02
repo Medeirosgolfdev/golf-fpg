@@ -44,6 +44,13 @@
       "autoPort": false
     },
     {
+      "name": "golf-fpg-5499",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["node_modules/vite/bin/vite.js", "--port", "5499", "--strictPort"],
+      "port": 5499,
+      "autoPort": false
+    },
+    {
       "name": "verify",
       "runtimeExecutable": "node",
       "runtimeArgs": ["_probe-tmp/static.cjs"],

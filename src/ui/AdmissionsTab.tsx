@@ -408,8 +408,8 @@ export default function AdmissionsTab({
             <td className="u-ta-center">
               {isDesist
                 ? <span
-                    title={desinscritoEm ? `Desinscreveu-se em ${desinscritoEm}` : "Desinscreveu-se"}
-                    className="u-bg-b3bq4 u-c-color-danger u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-qj328 u-ws-nowrap">desistiu</span>
+                    title={desinscritoEm ? `Desinscreveu-se (já não estava na lista a ${fmtDatePt(desinscritoEm)})` : "Desinscreveu-se"}
+                    className="u-bg-b3bq4 u-c-color-danger u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-qj328 u-ws-nowrap">desinscreveu-se</span>
                 : isReserva
                 ? <span className="u-bg-bg-muted u-c-text-muted u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-1px-solid-border-light">{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</span>
                 : <span className="muted fs-10">✓</span>}
@@ -468,12 +468,12 @@ export default function AdmissionsTab({
   // Linha de resumo + barra de filtros: o MESMO formato e ordem do scorecard e do draw.
   const filterBar = (
     <>
-      <div className="lb-info-line flex-wrap">
+      <div className="lb-info-line flex-wrap u-d-flex u-ai-center u-gap-10px">
         {convocados
-          ? <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} convocados · {confirmedCount} inscritos{reservasCount > 0 && ` · ${reservasCount} por inscrever`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>
-          : <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} jog · {confirmedCount} confirmados{reservasCount > 0 && (reservaLabel ? ` · ${reservasCount} em ${reservaLabel}` : ` · ${reservasCount} pendentes`)}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>}
+          ? <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} convocados · {confirmedCount} inscritos{reservasCount > 0 && ` · ${reservasCount} por inscrever`}{desistentesCount > 0 && ` · ${desistentesCount} desinscreveram-se`}</span>
+          : <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} jog · {confirmedCount} confirmados{reservasCount > 0 && (reservaLabel ? ` · ${reservasCount} em ${reservaLabel}` : ` · ${reservasCount} pendentes`)}{desistentesCount > 0 && ` · ${desistentesCount} desinscreveram-se`}</span>}
         {effDate && <span>· início {fmtDatePt(effDate)}</span>}
-        {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
+        {admissions.status && <span className={`chip${/fechad/i.test(admissions.status) ? " chip-fechado" : ""}`} title="Estado FPG">{admissions.status}</span>}
         {infoExtra}
         {fpgUrl && (
           <ExtLink href={fpgUrl}

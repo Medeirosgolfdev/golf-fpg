@@ -241,4 +241,16 @@ describe("mergeDrivePlaceholders", () => {
     const again = crossApuradosInscritos({ players: adm._apuradosBase }, { ...adm, players: [{ pos: 1, fed: "1", nome: "A", hcp: 5, status: "confirmed" }] });
     expect(again.players.map((p: any) => `${p.fed}:${p.status}`)).toEqual(["1:confirmed", "2:reserva"]);
   });
+  it("convocado que se inscreveu e saiu fica «desistente», não «por inscrever»", () => {
+    const apur = { players: [{ fed: "1", nome: "A" }, { fed: "2", nome: "B" }, { fed: "3", nome: "C" }] };
+    const insc = { players: [
+      { pos: 1, fed: "1", nome: "A", status: "confirmed" },
+      { pos: null, fed: "2", nome: "B", status: "desistente", desinscritoEm: "2026-11-02", dataInscricao: "2026/10/08 22:46" },
+    ] };
+    const out: any = crossApuradosInscritos(apur, insc);
+    expect(out.players.map((p: any) => `${p.fed}:${p.status}`)).toEqual(["1:confirmed", "2:desistente", "3:reserva"]);
+    expect(out.players[1].desinscritoEm).toBe("2026-11-02");
+    expect(out.totalInscritos).toBe(1);
+    expect(out.reservas).toBe(1);
+  });
 });

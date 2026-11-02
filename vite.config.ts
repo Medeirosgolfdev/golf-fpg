@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import { join, extname } from 'path'
 import { existsSync, statSync, createReadStream, readFileSync, writeFileSync, mkdirSync, renameSync, unlinkSync } from 'fs'
 import { fetchSessaoPublica, parseTournStatus } from './api/inscricoes.js'
+import { juntarDesistentes } from './src/data/desistentes'
 
 function loadEnvLocal() {
   const p = join(process.cwd(), '.env.local')
@@ -362,24 +363,26 @@ function persistLiveAdmissions(
       return
     }
     const antes = prev?.admissions?.totalInscritos ?? 0
-    if (jogadores.length < antes) {
-      // Menos gente do que já tínhamos: pode ser fonte parcial. Não destruir.
-      console.warn('[inscricoes] ' + ccode + '/' + tcode + ' live tem ' + jogadores.length
-        + ' < ' + antes + ' gravados — NÃO gravado (suspeito de fonte parcial)')
-      return
-    }
-    // nada de novo, evita reescrever o ficheiro
-    if (jogadores.length === antes && (!estado || estado === prev?.admissions?.status)) return
-
-    const players = jogadores.map((j, i) => ({
+    const inscritos = jogadores.map((j, i) => ({
       pos: i + 1, fed: j.fed, nome: j.nome, clube: j.clube,
       hcp: j.hcp, vac: j.vac, dataInscricao: j.dataInscricao, status: 'confirmed',
     }))
+    // Quem saiu fica marcado como desistente (src/data/desistentes.ts);
+    // null = saem demasiados de uma vez (fonte parcial?).
+    const comDesist = juntarDesistentes(prev?.admissions?.players, inscritos)
+    if (!comDesist) {
+      console.warn('[inscricoes] ' + ccode + '/' + tcode + ' live tem ' + jogadores.length
+        + ' contra ' + antes + ' gravados — NÃO gravado (suspeito de fonte parcial)')
+      return
+    }
+    // nada de novo, evita reescrever o ficheiro
+    if (jogadores.length === antes && comDesist.saidas.length === 0 && (!estado || estado === prev?.admissions?.status)) return
+    const players = comDesist.players
     const admissions = {
       ...(prev?.admissions || {}),
       name: prev?.admissions?.name || meta.nome || prev?.name,
       ...(estado ? { status: estado } : {}),
-      totalInscritos: players.length,
+      totalInscritos: inscritos.length,
       players,
       _liveUpdatedAt: new Date().toISOString(),
     }

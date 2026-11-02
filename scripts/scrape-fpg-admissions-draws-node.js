@@ -52,6 +52,7 @@ const path = require("path");
 const { parseAdmissions, parseAdmissionsPt, parseDraw } = require("./fpg-admissions-draw-parser.js");
 const { lisbonCivilDayStr } = require("../lib/helpers");
 const { Sessao, BASE_PT } = require("./lib/fpg-session.js");
+const { juntarDesistentes } = require("./lib/desistentes.cjs");
 
 /* ── Paths ──────────────────────────────────────────────────────────────── */
 const REPO = path.resolve(__dirname, "..");
@@ -933,8 +934,20 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     }
 
     // ADMISSIONS: comparar scores; novo wins se >= anterior E não é suspect
-    const newAdm = cleanSuspectAdm(admissions, tournament.date);
+    let newAdm = cleanSuspectAdm(admissions, tournament.date);
     const prevAdm = prev.admissions;
+    // Quem estava inscrito e já não está fica na lista como «desistente»
+    // (src/data/desistentes.ts). Só entre listas do MESMO torneio (mesma data).
+    if (newAdm?.players?.length && !newAdm.error && prevAdm?.players?.length && !prevAdm.error
+        && newAdm.date && newAdm.date === prevAdm.date) {
+      const j = juntarDesistentes(prevAdm.players, newAdm.players);
+      if (j) {
+        newAdm = { ...newAdm, players: j.players };
+        if (j.saidas.length) console.log(`[adm-draws] ${key}: desinscreveram-se ${j.saidas.map(p => p.nome).join(", ")}`);
+      } else {
+        console.warn(`[adm-draws] ${key}: saem demasiados de uma vez — ninguém marcado como desistente (fonte parcial?)`);
+      }
+    }
     const nAdm = admScore(newAdm, tournament.date);
     const pAdm = admScore(prevAdm, tournament.date);
     // Com --force-adm a lista nova ganha desde que não seja vazia/suspect

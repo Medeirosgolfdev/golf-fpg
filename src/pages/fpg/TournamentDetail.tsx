@@ -24,6 +24,7 @@ import { tournamentHasManuel, tournamentPccs } from "../../data/fpgUtils";
 import { fmtDate, fpgAdmissionsUrl, fpgDrawUrl, fpgScoringUrl, tournamentUrl, norm } from "../../utils/format";
 import { FEATURED_TOURNAMENTS } from "../../data/featuredTournaments";
 import { useLiveAdmissions } from "../../hooks/useLiveAdmissions";
+import { juntarDesistentes } from "../../data/desistentes";
 import { useKidsDob } from "../../hooks/useKidsDob";
 import { precisaKidsDob, withKidsDob } from "../../data/kidsDob";
 import {
@@ -140,7 +141,11 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
   // ter dias e dizer «ainda não abertas» ao lado de uma lista já cheia.
   const effAdmissions = useMemo(() => {
     if (!liveActive) return admissions;
-    const base = { ...(admissions || {}), ...(live.estado ? { status: live.estado } : {}), players: live.players, error: undefined };
+    // Quem estava inscrito no último scrape e já não está no live fica como
+    // desistente (os «por inscrever» dos convocados não contam como inscritos).
+    const anteriores = (admissions?.players ?? []).filter(p => p.status !== "reserva");
+    const players = juntarDesistentes(anteriores, live.players)?.players ?? live.players;
+    const base = { ...(admissions || {}), ...(live.estado ? { status: live.estado } : {}), players, error: undefined };
     return convocados
       ? crossApuradosInscritos<FpgAdmissions>({ players: convocados }, base)
       : { ...base, totalInscritos: live.players.length, reservas: 0 };
@@ -148,7 +153,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
   const admissionsDiff = useMemo(() => {
     if (!liveActive) return null;
     // Convocados: compara só com quem já estava inscrito no último scrape.
-    const scraped = (admissions?.players ?? []).filter(p => !convocados || p.status === "confirmed");
+    const scraped = (admissions?.players ?? []).filter(p => p.status !== "desistente" && (!convocados || p.status === "confirmed"));
     if (scraped.length === 0) return null;
     const keyOf = (p: { fed: string | null; nome: string }) => p.fed || norm(p.nome || "");
     const liveKeys = new Set(live.players.map(keyOf));
@@ -585,7 +590,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
                       )}
                       {admissionsDiff.saidos.length > 0 && (
                         <span style={{ color: "var(--color-warn)", marginLeft: admissionsDiff.novos.length > 0 ? 8 : 0 }}>
-                          −{admissionsDiff.saidos.length} saíram: {admissionsDiff.saidos.map(p => p.nome).join(", ")}
+                          −{admissionsDiff.saidos.length} desinscreveram-se: {admissionsDiff.saidos.map(p => p.nome).join(", ")}
                         </span>
                       )}
                     </span>

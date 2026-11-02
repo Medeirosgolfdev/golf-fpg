@@ -384,6 +384,8 @@ a.seg-btn, a.tab-under { text-decoration: none; }
  white-space: nowrap;
  flex-shrink: 0;
 }
+/* Estado «Inscrições fechadas» da FPG: verde escuro cheio, para se distinguir do «em curso». */
+.chip.chip-fechado { color: var(--text-on-color); background: var(--accent); }
 
 .btn-link {
  background: none;
