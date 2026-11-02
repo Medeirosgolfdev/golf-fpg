@@ -236,8 +236,9 @@ export function buildRfegEntries(
     escaloes: t.escaloes?.length ? t.escaloes : undefined,
     sex: rfegSex(t.sex),
     federation: t.federation ?? undefined,
-    hasManuel: t.hasManuel ?? undefined,
-    hasPt: t.hasPt ?? undefined,
+    // O índice marca todas as fontes (build-rfegolf-index.js): sem marca = não.
+    hasManuel: !!t.hasManuel,
+    hasPt: !!t.hasPt,
     hasResults: (t.leaderboardPlayers || 0) > 0,
     // Sem resultados ainda → mostrar nº de inscritos na sidebar.
     playerCount: t.leaderboardPlayers || t.counts?.admitidos || undefined,

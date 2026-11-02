@@ -122,16 +122,53 @@ function extractSexFromName(name) {
 const tournaments = [];
 let skipped = 0;
 
-// Há ≥1 inscrito português? (RFEGolf expõe pais por extenso em espanhol.)
-function rfegHasPt(j) {
-  const ins = (j && j.inscritos) || {};
-  for (const k of ["admitidos", "reservas", "invitados", "provisional", "noAdmitidos"]) {
-    for (const p of (ins[k] || [])) {
-      // microsite antigo: "PORTUGAL" por extenso; GolfBox (site novo): ISO "PT"
-      if (p && typeof p.pais === "string" && /^(PORTUGAL|PT|PRT|POR)$/i.test(p.pais.trim())) return true;
+// ── Portugueses e Manuel (filtros 🇵🇹 PT e ★ Manuel da /rfeg) ─────────
+// As MESMAS regras do site (isPtCountry, isManuelByName), empacotadas do src.
+const { isPtCountry, isManuelByName } = (() => {
+  const esbuild = require("esbuild");
+  const res = esbuild.buildSync({
+    stdin: {
+      contents: 'export { isPtCountry } from "./src/utils/flagUtils"; export { isManuelByName } from "./src/constants/manuel";',
+      resolveDir: path.resolve(__dirname, ".."), loader: "ts",
+    },
+    bundle: true, platform: "node", format: "cjs", target: "node20", write: false, logLevel: "silent",
+  });
+  const mod = { exports: {} };
+  new Function("module", "exports", "require", res.outputFiles[0].text)(mod, mod.exports, require);
+  return mod.exports;
+})();
+
+// O país destes objectos é o do clube/campo/prova, não o de um jogador desta
+// prova (o `palmares` são os vencedores de outros anos).
+const NAO_JOGADORES = new Set(["meta", "game", "club", "course", "tournament", "team", "palmares"]);
+
+/** Jogadores portugueses e o Manuel em QUALQUER fonte (classificação, cartões
+ *  e inscritos): percorre o ficheiro todo, porque cada fonte guarda o nome e o
+ *  país à sua maneira — `name`/`playerName`/`firstName`+`surname` e
+ *  `pais`/`country`/`countryCode`. Uma prova sem país nenhum (NextCaddy) fica
+ *  sem portugueses: o filtro 🇵🇹 só mostra o que se consegue provar.
+ *  (Até 02/11/2026 só os inscritos do site da RFEG contavam; as outras fontes
+ *  ficavam sem marca e o filtro deixava-as todas passar.) */
+function marcasPtManuel(j) {
+  const r = { pt: false, manuel: false };
+  (function walk(o, key) {
+    if (r.pt && r.manuel) return;
+    if (Array.isArray(o)) { for (const x of o) walk(x, key); return; }
+    if (!o || typeof o !== "object") return;
+    if (!NAO_JOGADORES.has(key)) {
+      const nome = o.name || o.playerName || o.nombre || [o.firstName, o.surname].filter(Boolean).join(" ");
+      if (typeof nome === "string" && nome && isManuelByName(nome)) r.manuel = true;
+      const pais = o.pais ?? o.country ?? o.countryCode ?? o.nacionalidad;
+      if (typeof pais === "string" && isPtCountry(pais)) r.pt = true;
     }
-  }
-  return false;
+    for (const [k, v] of Object.entries(o)) if (v && typeof v === "object") walk(v, k);
+  })(j, "");
+  return r;
+}
+/** Para o índice: só o `true` (o site lê a falta como «não»). */
+function marcasIndice(j) {
+  const m = marcasPtManuel(j);
+  return { ...(m.pt ? { hasPt: true } : {}), ...(m.manuel ? { hasManuel: true } : {}) };
 }
 
 // ── Escalões pelas CLASSIFICAÇÕES (NextCaddy) ──────────────────
@@ -243,7 +280,7 @@ for (const file of rfegFiles) {
       // meta.region vem vazio — por isso NÃO há federação utilizável aqui.
       hcpLimitMen: meta.hcpLimitMen != null ? meta.hcpLimitMen : null,
       hcpLimitWomen: meta.hcpLimitWomen != null ? meta.hcpLimitWomen : null,
-      hasPt: rfegHasPt(j) || undefined,
+      ...marcasIndice(j),
       counts: {
         admitidos: counts.admitidos || 0,
         reservas: counts.reservas || 0,
@@ -381,6 +418,7 @@ for (const file of ncFiles) {
       holes: buracosNC(j, name) || undefined,
       // Vários escalões jogados (Sub 12 + Infantil + Cadete…) → a prova aparece em todos os filtros.
       escaloes: escaloesLb.length > 1 ? escaloesLb : undefined,
+      ...marcasIndice(j),
       roster: rosterFrom((j.leaderboard || []).flatMap((t) => (t && t.players) || [])),
       scrapedAt: j.scrapedAt || null,
     });
@@ -430,6 +468,7 @@ for (const file of lgsFiles) {
       leaderboardPlayers: totalPlayers,
       holes: (j.course && Array.isArray(j.course.par) && j.course.par.length) || buracosDoNome(name) || undefined,
       nRounds: (j.rounds || []).length,
+      ...marcasIndice(j),
       roster: rosterFrom((j.rounds && j.rounds[0] && j.rounds[0].players) || []),
       // Fase de match play (campeonatos por equipas) — scrape-lgs-matchplay.js.
       matchplayFile: fs.existsSync(path.join(LGS_MP_ROOT, file)) ? `lgs-matchplay/${file}` : undefined,
@@ -503,6 +542,7 @@ for (const file of fcgFiles) {
       },
       leaderboardPlayers: totalPlayers,
       holes: buracosDoNome(`${tName} ${cats.map((c) => c.name).join(" ")}`) || undefined,
+      ...marcasIndice(j),
       roster: rosterFrom(cats.flatMap((c) => (c && c.players) || [])),
       // Um jogo «Ronda 2» traz as voltas anteriores no previous[] de cada jogador
       // (se a soma der o acumulado, o previous já inclui a volta do jogo).
@@ -568,7 +608,7 @@ for (const { source, root, re } of REGIONAIS) for (const file of (fs.existsSync(
       course: meta.course || null,
       federation: meta.federation || null,
       holes: buracosDoNome(name) || undefined,
-      hasPt: rfegHasPt(j) || undefined,
+      ...marcasIndice(j),
       counts: { admitidos: insc.length, reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0 },
       leaderboardPlayers: results.reduce((a, r) => a + ((r && r.players) ? r.players.length : 0), 0),
       nRounds: Math.max(0, ...results.map((r) => r.nRounds || 0)) || undefined,

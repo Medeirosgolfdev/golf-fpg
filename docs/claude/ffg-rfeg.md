@@ -190,6 +190,20 @@ par fica «–». As fichas por nome (`loadFedByName`, `loadGolfboxPlayers`)
 passaram para `src/data/playerLookups.ts`. Testes:
 `src/data/__tests__/rfegConverters.test.ts`.
 
+## Espanha — filtros 🇵🇹 PT e ★ Manuel (2026-11-02)
+
+`build-rfegolf-index.js` marca `hasPt`/`hasManuel` em **todas** as fontes
+(`marcasPtManuel`): percorre o ficheiro inteiro — classificação, cartões e
+inscritos, cada fonte com os seus campos (`name`/`playerName`/`firstName`+
+`surname`; `pais`/`country`/`countryCode`) — com as regras do site
+(`isPtCountry`, `isManuelByName`, empacotadas do `src` com o esbuild, como o
+`build-ffg-list-index.js`). Não contam `meta`, `game`, `club`, `course`,
+`tournament`, `team` nem o `palmares` (vencedores de outros anos). O índice
+só grava o `true`; a página (`entries.ts`) lê a falta como «não».
+Até 02/11 só os inscritos do site da RFEG contavam: as provas das outras
+fontes ficavam sem marca e o filtro deixava-as todas passar. O NextCaddy não
+traz o país de ninguém → nunca entra no filtro PT.
+
 ## Espanha — guardas dos scrapers (2026-10-20)
 
 As fontes espanholas respondem às vezes 200 com lixo (listas vazias, páginas de
