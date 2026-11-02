@@ -4158,7 +4158,8 @@ table td.lb-col-divider {
   color: var(--text); border: 1px solid var(--border-light); border-radius: var(--radius-sm); background: var(--bg-card); }
 .aq-season .dtable td { padding-top: var(--space-3); padding-bottom: var(--space-3); }
 /* Com poucas provas a tabela não estica à largura toda (a coluna do jogador ficava enorme). */
-.aq-season .dtable { width: auto; }
+/* (a RankingTable traz sempre .u-w-100pc, que é !important — daí o !important aqui) */
+.aq-season .dtable.u-w-100pc { width: max-content !important; }
 /* O nome pode quebrar: a coluna do jogador não estica a tabela. */
 .aq-season .dtable :is(th, td).aq-col-jog { white-space: normal; min-width: calc(var(--space-40) * 3); max-width: calc(var(--space-40) * 4); }
 .aq-season .dtable td.aq-col-jog { line-height: 1.2; }

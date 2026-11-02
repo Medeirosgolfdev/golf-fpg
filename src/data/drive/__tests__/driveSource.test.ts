@@ -38,4 +38,16 @@ describe("driveSource", () => {
     expect(driveDefaultYear(src, "2027-06-01")).toBe("2027");
     expect(driveDefaultYear([], "2026-10-30")).toBeNull();
   });
+  it("AQUAPOR: o «S» das Senhoras recebe as voltas das inscritas do torneio principal", () => {
+    const pl = (fed: string, grossTotal: number, pos: number) => ({ scoreId: fed, fedCode: fed, name: "J" + fed, grossTotal, pos, toPar: 0 });
+    const main = T({ ccode: "000", tcode: "10883", name: "5º Torneio do Circuito Aquapor - Estela", series: "aquapor", date: "2026-10-17", rounds: 2,
+      players: [pl("m1", 140, 1), pl("f1", 149, 3), pl("f2", 152, 9), pl("f3", 149, 4), pl("f4", 1084, 50)] as never });
+    const s = T({ ccode: "000", tcode: "10886", name: "5º Torneio do Circuito Aquapor S", series: "aquapor", date: "2026-10-17",
+      _admissions: { players: [{ fed: "f1" }, { fed: "f2" }, { fed: "f3" }, { fed: "f4" }] } as never });
+    const out = buildDriveSource([main, s], new Map());
+    const senhoras = out.find((t) => t.tcode === "10886")!;
+    expect(senhoras.players.map((p) => [p.fedCode, p.pos])).toEqual([["f1", 1], ["f3", 1], ["f2", 3], ["f4", "WD"]]);
+    expect(senhoras.rounds).toBe(2);
+    expect(out.find((t) => t.tcode === "10883")!.players).toHaveLength(5);   // o principal fica igual
+  });
 });

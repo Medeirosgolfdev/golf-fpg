@@ -86,7 +86,7 @@ export interface DriveGroup {
  *  ("4º Torneio do Circuito Aquapor S"). São a MESMA prova — na sidebar têm de
  *  aparecer como uma entrada só, com tabs Masculino/Senhoras. */
 const AQUAPOR_SENHORAS_RE = /\bS\s*$/;
-function isAquaporSenhoras(t: FPGTournament | undefined): boolean {
+export function isAquaporSenhoras(t: { name?: string | null } | undefined): boolean {
   return !!t && AQUAPOR_SENHORAS_RE.test((t.name || "").trim());
 }
 
@@ -333,7 +333,8 @@ export function buildDriveEntries(tournaments: FPGTournament[]): CircuitEntry[] 
       course: g.campo || undefined,
       dateStart: g.date,
       escalao: g.escalao || undefined,
-      playerCount: divisions.reduce((acc, d) => acc + (d.results?.players.length ?? 0), 0),
+      // Jogadores ÚNICOS: as Senhoras do AQUAPOR também estão no torneio principal.
+      playerCount: new Set(divisions.flatMap(d => (d.results?.players ?? []).map(p => p.fedCode || p.fed || p.name))).size,
       roundsCount: g.totalRounds,
       divisionCount: divisions.length,
       hasManuel: divisions.some(d => d.hasManuel),

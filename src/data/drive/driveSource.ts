@@ -6,7 +6,7 @@
 import type { Tournament } from "../fpgTypes";
 import type { FpgTournamentData } from "../nacional2026Loader";
 import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic } from "../featuredTournaments";
-import { mergeDrivePlaceholders } from "./driveCircuitData";
+import { isAquaporSenhoras, mergeDrivePlaceholders } from "./driveCircuitData";
 import { todayIso } from "../../utils/format";
 
 export type DriveSeries = "tour" | "challenge" | "aquapor";
@@ -45,7 +45,9 @@ export function inferDriveRegion(name: string): string | null {
  *    tour/challenge/aquapor) e (b) pelo nome em `fpg-admissions-draws.json`;
  *    dedup por ccode/tcode;
  *  - o provisório (lista de apurados, tcode inventado) e o real da FPG do mesmo
- *    dia ficam numa só entrada (`mergeDrivePlaceholders`).
+ *    dia ficam numa só entrada (`mergeDrivePlaceholders`);
+ *  - as Senhoras do AQUAPOR recebem as voltas do torneio principal
+ *    (`preencherSenhorasAquapor`).
  */
 export function buildDriveSource(raw: Tournament[], idx: DriveAdmissionsIndex): Tournament[] {
   let src: Tournament[] = raw;
@@ -75,7 +77,34 @@ export function buildDriveSource(raw: Tournament[], idx: DriveAdmissionsIndex): 
       have.add(key);
     }
   }
-  return mergeDrivePlaceholders(src);
+  return mergeDrivePlaceholders(preencherSenhorasAquapor(src));
+}
+
+/** AQUAPOR — Senhoras (02/11/2026): a FPG põe a classificação feminina num 2.º
+ *  tcode («… S») que só tem as inscritas; as pancadas delas estão no torneio
+ *  principal (mesmo clube e dia). O «S» sem resultados recebe as voltas das
+ *  inscritas, com o lugar contado entre elas (empates partilham); quem ficou
+ *  sem cartão vai para o fim como «WD». */
+export function preencherSenhorasAquapor(src: Tournament[]): Tournament[] {
+  return src.map(t => {
+    if (t.series !== "aquapor" || !isAquaporSenhoras(t) || t.players?.length) return t;
+    const inscritas = new Set((t._admissions?.players ?? []).map(p => String(p.fed ?? "")).filter(Boolean));
+    if (!inscritas.size) return t;
+    const main = src.find(m => m !== t && m.series === "aquapor" && !isAquaporSenhoras(m)
+      && m.ccode === t.ccode && m.date === t.date && m.players?.length);
+    if (!main) return t;
+    const elas = main.players.filter(p => inscritas.has(String(p.fedCode || p.fed || "")));
+    if (!elas.length) return t;
+    const temCartao = (p: Tournament["players"][number]) => typeof p.grossTotal === "number" && p.grossTotal < 900;
+    const ord = elas.filter(temCartao).sort((a, b) => (a.grossTotal as number) - (b.grossTotal as number));
+    const players: Tournament["players"] = [];
+    ord.forEach((p, i) => {
+      const pos = i > 0 && ord[i - 1].grossTotal === p.grossTotal ? players[i - 1].pos : i + 1;
+      players.push({ ...p, pos });
+    });
+    for (const p of elas.filter(p => !temCartao(p))) players.push({ ...p, pos: "WD" });
+    return { ...t, players, playerCount: players.length, rounds: main.rounds, campo: t.campo ?? main.campo, num: main.num };
+  });
 }
 
 /** Ano por omissão (decisão B: abrir o mais recente/próximo): o do próximo
