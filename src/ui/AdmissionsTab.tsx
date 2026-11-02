@@ -402,7 +402,6 @@ export default function AdmissionsTab({
             {!hide.vac && <td className="lb-hcp u-fw-600">{fmtHcp(p.vac)}</td>}
             {!hide.registo && <td className="fs-11 muted u-ws-nowrap">
               {fmtRegisto(p.dataInscricao)}
-              {novo && <Pill className="p-estado p-novo u-ml-4px" title={`Inscrito nas últimas ${recentHours} h`}>novo</Pill>}
             </td>}
             <td className="u-ta-center">
               {isDesist
@@ -410,6 +409,8 @@ export default function AdmissionsTab({
                     title={desinscritoEm ? `Desinscreveu-se (já não estava na lista a ${fmtDatePt(desinscritoEm)})` : "Desinscreveu-se"}>desinscreveu-se</Pill>
                 : isReserva
                 ? <Pill className="p-estado p-muted">{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</Pill>
+                : novo
+                ? <Pill className="p-estado p-novo" title={`Inscrito nas últimas ${recentHours} h`}>novo</Pill>
                 : <span className="muted fs-10">✓</span>}
             </td>
           </>
