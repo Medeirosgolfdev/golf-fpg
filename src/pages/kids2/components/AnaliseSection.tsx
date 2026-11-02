@@ -27,6 +27,7 @@ import {
 import { fmtToPar } from "../../../utils/format";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import ComparisonDonut from "../../../ui/ComparisonDonut";
+import TabRow from "../../../ui/TabRow";
 
 type SubTab = "scoring" | "rounds" | "ninesplit" | "holes";
 
@@ -227,22 +228,8 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
       )}
 
       {/* Sub-tabs */}
-      <div className="tabbar-under">
-        {([
-          { k: "scoring", l: "Scoring" },
-          { k: "rounds", l: "Por Ronda" },
-          { k: "ninesplit", l: "F9 vs B9" },
-          { k: "holes", l: "Por Buraco" },
-        ] as const).map((t) => (
-          <button
-            key={t.k}
-            onClick={() => setSubTab(t.k)}
-            className={"tab-under" + (subTab === t.k ? " active" : "")}
-          >
-            {t.l}
-          </button>
-        ))}
-      </div>
+      <TabRow variant="under" className="u-mb-16px" active={subTab} onChange={setSubTab}
+        tabs={[{ key: "scoring" as const, label: "Scoring" }, { key: "rounds" as const, label: "Por Ronda" }, { key: "ninesplit" as const, label: "F9 vs B9" }, { key: "holes" as const, label: "Por Buraco" }]} />
 
       {/* Conteúdo */}
       {subTab === "scoring" && <ScoringPane player={aggregated.dist} field={fieldAgg.dist} />}

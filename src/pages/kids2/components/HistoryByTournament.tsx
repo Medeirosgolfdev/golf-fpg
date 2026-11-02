@@ -18,12 +18,12 @@ import { getTournWeight, formatStars } from "../tournWeight";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar } from "../../../utils/format";
-import { medalClass } from "../../../ui/PosBadge";
 import { ScoringTag } from "../../../ui/PillBadge";
 import ExpandArrow from "../../../ui/ExpandArrow";
 import ExtLink from "../../../ui/ExternalLink";
 import { MUTED } from "../../../ui/tableCells";
 import ShowMoreButton from "../../../ui/ShowMoreButton";
+import { TrophyPos } from "../../../ui/PosBadge";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -239,7 +239,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
         </div>
         <Sparkline editions={editions} />
         <div className="u-fsh-0 u-minw-50px u-ta-right">
-          <PosBadge pos={lastPos} />
+          <TrophyPos pos={lastPos} />
           <div className="u-fs-fs-9 u-c-text-3 u-mt-1px">{fmtYear(last?.tournament.date)}</div>
         </div>
         {trend && (
@@ -285,7 +285,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                   <tr key={i} className="u-bt-1px-solid-border-light">
                     <td>{fmtYear(ed.tournament.date)}</td>
                     <td className="u-c-text-3">{ed.flight.label}</td>
-                    <td className="u-ta-center"><PosBadge pos={ed.result.pos} /></td>
+                    <td className="u-ta-center"><TrophyPos pos={ed.result.pos} /></td>
                     <td className="u-ta-center" style={{ color: topPct != null ? (topPct <= 10 ? "var(--medal-gold-strong)" : topPct <= 25 ? "var(--text-2)" : "var(--text-3)") : "var(--text-3)" }}>
                       {topPct != null ? `${topPct}%` : "—"}
                     </td>
@@ -391,16 +391,9 @@ function OneOffPill({ ed }: { ed: Edition }) {
     }} title={`${ed.tournament.name || ""} · ${ed.flight.label}`}>
       <span className="u-c-text-3 u-fs-fs-10">{fmtYear(ed.tournament.date)}</span>
       <span className="u-fw-600">{shorten(ed.tournament.name || "")}</span>
-      <PosBadge pos={pos} small />
+      <TrophyPos pos={pos} small />
     </span>
   );
-}
-
-function PosBadge({ pos, small }: { pos: number | null | undefined; small?: boolean }) {
-  const fs = small ? "u-fs-fs-10" : "u-fs-fs-11";
-  if (typeof pos !== "number") return <span className={fs + " u-c-text-3"}>—</span>;
-  if (pos <= 3) return <span className={"pos-medal " + medalClass(pos) + (small ? " pos-medal-sm" : "")}>🏆 #{pos}</span>;
-  return <span className={fs + " u-c-text-3 u-fw-600"}>#{pos}</span>;
 }
 
 /** Procura a posição do Manuel APENAS no flight indicado. Devolve null se não

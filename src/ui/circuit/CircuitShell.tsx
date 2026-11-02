@@ -887,17 +887,8 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                   <>
                     {/* Sem rondas: barra de secção (Resultados custom / Inscritos / Draw) */}
                     {abasSecao.length > 1 && (
-                      <div className="tab-bar u-mb-8px">
-                        {abasSecao.map(t => (
-                          <button
-                            key={t.key}
-                            className={`tab-under${curSection === t.key ? " active" : ""}`}
-                            onClick={() => setSection(t.key)}
-                          >
-                            {t.label}
-                          </button>
-                        ))}
-                      </div>
+                      <TabRow variant="under" className="u-mb-8px" active={curSection} onChange={setSection}
+                        tabs={abasSecao.map(t => ({ key: t.key, label: t.label }))} />
                     )}
                     {curSection === "results" && divisionResultsNode(curDiv)}
                     {curSection === "inscritos" && curDiv.admissions && (

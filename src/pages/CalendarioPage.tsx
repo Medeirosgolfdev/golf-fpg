@@ -28,6 +28,7 @@ import type { CalEvent, CalGroup, CalDef } from "../data/calendarEvents";
 import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
 import SidebarToggle from "../ui/SidebarToggle";
 import SearchInput from "../ui/SearchInput";
+import Modal from "../ui/Modal";
 
 interface CalendarSource {
   id: string;
@@ -309,16 +310,9 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
 function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }) {
   const color = calColor(event);
   const calName = CAL_MAP.get(event.calId)?.name ?? "";
-  const ref = useRef<HTMLDivElement>(null);
   const hl = HIGHLIGHT[event.calId];
-  useEffect(() => {
-    const h = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) onClose(); };
-    setTimeout(() => document.addEventListener("mousedown", h), 10);
-    return () => document.removeEventListener("mousedown", h);
-  }, [onClose]);
   return (
-    <div className="cal-overlay u-backdrop-filter-blur-3px">
-      <div ref={ref} className="u-bg-bg-card u-br-radius-xl u-bs-shadow-lg u-w-380px u-ov-hidden u-animation-calpopin-0_2s-ease">
+    <Modal onClose={onClose} size="sm" bare className="u-animation-calpopin-0_2s-ease">
         <div style={{ background: hl ? hl.bg : color,
           padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
  <span className="uppercase fw-600 fs-12 u-ls-0_04em" style={{ color: hl ? hl.text : "var(--text-on-color)" }}>
@@ -340,8 +334,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
             </div>
           )}
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 }
 function InfoRow({ icon, label }: { icon: string; label: string }) {
@@ -834,16 +827,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
 function DayEventsPopup({ date, events, onSelect, onClose }: {
   date: Date; events: CalEvent[]; onSelect: (e: CalEvent) => void; onClose: () => void;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const h = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) onClose(); };
-    setTimeout(() => document.addEventListener("mousedown", h), 10);
-    return () => document.removeEventListener("mousedown", h);
-  }, [onClose]);
   const title = `${DAY_NAMES[date.getDay()]}, ${date.toLocaleDateString("pt-PT", { day: "numeric", month: "long" })} ${date.getFullYear()}`;
   return (
-    <div className="cal-overlay u-backdrop-filter-blur-3px">
-      <div ref={ref} className="u-bg-bg-card u-br-radius-xl u-bs-shadow-lg u-w-380px u-maxh-80vh u-ov-hidden u-d-flex u-fd-column u-animation-calpopin-0_2s-ease">
+    <Modal onClose={onClose} size="sm" bare className="u-maxh-80vh u-d-flex u-fd-column u-animation-calpopin-0_2s-ease">
         <div className="u-bg-accent u-p-14px-18px u-d-flex u-jc-space-between u-ai-center u-fsh-0">
           <span className="fw-600 fs-13 u-c-fff">{title}</span>
           <button onClick={onClose} title="Fechar" aria-label="Fechar" className="btn-round btn-round-close">✕</button>
@@ -866,8 +852,7 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
             </button>
           ))}
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 }
 

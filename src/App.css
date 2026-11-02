@@ -2191,6 +2191,8 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cor-dot.cor-dot-9 { width: 9px; height: 9px; }
 .cor-dot.cor-dot-10 { width: 10px; height: 10px; }
 /* Selo da posição no pódio (🏆 #1 / 🥇 1º). -sm: dentro de pills e tabelas compactas. */
+/* «#N» fora do pódio (ui/PosBadge TrophyPos) */
+.pos-plain { color: var(--text-3); font-weight: 600; }
 .pos-medal { display: inline-block; padding: var(--space-2) var(--space-6); border-radius: var(--radius-sm); font-weight: 700;
   font-size: var(--fs-11); white-space: nowrap; }
 .pos-medal.pos-medal-sm { padding: var(--space-1) var(--space-4); font-size: var(--fs-10); }
@@ -3039,7 +3041,15 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 .cal-day-label { padding: var(--space-2) 0; }
 .cal-dot-indicator { position: absolute; bottom: 1px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; }
 .cal-day-cell { font-size: var(--fs-11); cursor: pointer; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; margin: var(--space-1) auto; position: relative; transition: background 0.15s; }
-.cal-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); }
+/* Janela por cima da página (ui/Modal) */
+.modal-overlay { position: fixed; inset: 0; z-index: var(--z-overlay); display: flex; align-items: center; justify-content: center; padding: var(--space-20); background: var(--overlay-black-50); backdrop-filter: blur(3px); }
+.modal-panel { background: var(--bg-card); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); width: 100%; max-height: 90vh; overflow: auto; padding: var(--space-20); }
+.modal-panel.is-sm { max-width: 380px; border-radius: var(--radius-xl); }
+.modal-panel.is-md { max-width: 600px; }
+.modal-panel.is-lg { max-width: 900px; }
+.modal-panel.is-bare { padding: 0; overflow: hidden; }
+.modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-12); margin-bottom: var(--space-12); }
+.modal-title { font-size: var(--fs-16); font-weight: 700; }
 .cal-no-select { user-select: none; }
 .cal-day-num { font-size: var(--fs-15); width: 22px; text-align: center; }
 
@@ -3306,18 +3316,6 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 .tab-under.active { font-weight: 700; color: var(--text);
   border-bottom-color: var(--accent); background: var(--bg-card); }
 
-/* Contentor de tabs uniforme (páginas full-width: Comparar, Draws).
-   Substitui os <div style> inline ad-hoc — mesma forma em todo o lado. */
-.tabbar-under {
-  display: flex;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-  border-bottom: 1px solid var(--border-light);
-  margin-bottom: var(--space-16);
-}
-.tabbar-under::-webkit-scrollbar { display: none; }
 
 /* Modifier de largura para páginas full-width centradas (Comparar, Draws).
    Largura uniforme entre elas — substitui maxWidth inline. */

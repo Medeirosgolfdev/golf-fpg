@@ -14,7 +14,7 @@ import { roundDrawNode } from "../../ui/circuit/divisionPieces";
 import { ShareRoundsPanel, RoundAnalysisFor } from "../../ui/ShareRoundPanel";
 import ManuelResultPills from "../../ui/ManuelResultPills";
 import React, { useMemo } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import type { Tournament, ScorecardOptions } from "../../data/fpgTypes";
 import type { EscLookup } from "../../utils/playerUtils";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
@@ -42,6 +42,7 @@ import { initialTabIndex } from "./detailTabs";
 import { crossApuradosInscritos } from "../../data/drive/driveCircuitData";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import ExtLink from "../../ui/ExternalLink";
+import TabRow from "../../ui/TabRow";
 
 /** Junta listas de links extra removendo repetidos pelo URL (a mesma página do
  *  clube pode vir do synthetic FEATURED e da config ao mesmo tempo). */
@@ -297,7 +298,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
   // R1 quando se jogar, draw R2 quando publicado, etc.). Os tabs de agregação
   // ("📋 Scorecards", "🎯 Análise") são vistas alternativas e ficam fora do
   // auto-select — quem quer essas vai por link explícito.
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const urlTabKey = searchParams.get(tabParam);
   const lastProgressionIdx = useMemo(() => {
     // "matchplay" fora do auto-select: o default fica no Resumo (regra global);
@@ -538,23 +539,16 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
       {/* Tabs renderizadas como Link → cada tab tem URL próprio (?tab=KEY),
           deep-linkable e copiável via right-click. Só mostra se há >1 tab. */}
       {tabs.length > 1 && (
-        <div className="tab-bar">
-          {tabs.map((t, i) => {
+        <TabRow variant="under" active={tab} onChange={(i) => {
+            const sp = new URLSearchParams(searchParams);
+            sp.set(tabParam, tabs[i].key);
+            setSearchParams(sp, { replace: true });
+          }}
+          tabs={tabs.map((t, i) => {
             const sp = new URLSearchParams(searchParams);
             sp.set(tabParam, t.key);
-            return (
-              <Link
-                key={t.key}
-                to={{ search: `?${sp.toString()}` }}
-                replace
-                className={`tab-under${tab === i ? " active" : ""} u-td-none`}
-
-              >
-                {t.label}
-              </Link>
-            );
-          })}
-        </div>
+            return { key: i, label: t.label, href: `?${sp.toString()}` };
+          })} />
       )}
 
       {/* Conteúdo */}

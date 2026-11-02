@@ -13,7 +13,7 @@ import { SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
 import { useCompareSelection } from "./useCompareSelection";
 import EmptyState from "./EmptyState";
-import { escPillCls } from "../utils/playerUtils";
+import { EscPill } from "./PillBadge";
 import { isManuel, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import type { Sub12Row, EscLookup } from "./driveTypes";
 import { MUTED } from "./tableCells";
@@ -359,7 +359,6 @@ function TournamentGrid({
     >
       {compareRows.map((p) => {
         const escalao = escalaoDeRow(p);
-        const cls = escPillCls(escalao);
         return (
           <tr
             key={p.fed}
@@ -380,11 +379,7 @@ function TournamentGrid({
             </td>
             <td className="cs-fed">{p.fed || "–"}</td>
             <td className="cs-esc">
-              {escalao ? (
-                <span className={cls + " fs-10"}>{escalao}</span>
-              ) : (
-                MUTED
-              )}
+              {escalao ? <EscPill esc={escalao} /> : MUTED}
             </td>
             <td className="cs-club">{p.club}</td>
             <td className="cs-hcp cs-id-end">{fmtHcp(p.hcp)}</td>

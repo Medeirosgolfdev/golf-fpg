@@ -2,8 +2,7 @@
 import { createPortal } from "react-dom";
 import { useSearchParams } from "react-router-dom";
 import { useSort } from "../hooks/useSort";
-import { escPillCls } from "../utils/playerUtils";
-import { ESC_STYLE, RoundPill } from "./PillBadge";
+import { ESC_STYLE, EscPill, RoundPill } from "./PillBadge";
 import SexBadge from "./SexBadge";
 import LoadingState from "./LoadingState";
 import FilterChip from "./FilterChip";
@@ -71,8 +70,7 @@ export interface PjaPdfEntry {
 type RankView = "tabela" | "ranking";
 const RANK_CTX: CircuitRankingContext = { entries: [], scope: "view" };
 
-const EscPill = ({ esc }: { esc: string }) =>
-  esc ? <span className={escPillCls(esc) + " fs-10"}>{esc}</span> : MUTED;
+const EscCell = ({ esc }: { esc: string }) => esc ? <EscPill esc={esc} /> : MUTED;
 
 /** Nº de torneios em que o jogador tem voltas. */
 function nTorneios(row: RankRow): number {
@@ -102,7 +100,7 @@ function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: Play
       cell: r => { const p = rank.get(r.key); return p == null ? MUTED : ((medals && medal(p)) || <span className="mono fw-700">{p}</span>); } },
     { key: "name", label: "Jogador", sort: r => r.name.toLowerCase(), firstDir: "asc",
       cell: r => <PName name={r.name} fedCode={r.fedCode} playersDB={playersDB} sex={r.sex} /> },
-    { key: "esc", label: "Esc.", sort: r => r.escalao, firstDir: "asc", cell: r => <EscPill esc={r.escalao} /> },
+    { key: "esc", label: "Esc.", sort: r => r.escalao, firstDir: "asc", cell: r => <EscCell esc={r.escalao} /> },
     { key: "club", label: "Clube", sort: r => r.club.toLowerCase(), firstDir: "asc", cell: r => r.club || "–", tdClassName: "c-muted fs-11" },
     { key: "hcp", label: "HCP", className: "num", sort: r => r.hcp ?? 99, firstDir: "asc", cell: r => <span className="mono">{fmtHcp(r.hcp)}</span> },
     { key: "t", label: "T", title: "Torneios jogados", className: "num", sort: nTorneios, firstDir: "desc", cell: r => <span className="mono">{nTorneios(r)}</span> },
@@ -565,7 +563,7 @@ export function PJARankingView({
                     <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} sex={row.sex} />
                   </td>
                   <td className="cs-esc">
-                    {row.escalao ? <span className={escPillCls(row.escalao) + " fs-10"}>{row.escalao}</span> : MUTED}
+                    <EscCell esc={row.escalao} />
                   </td>
                   <td className="cs-club cs-id-end">{row.club || "–"}</td>
 

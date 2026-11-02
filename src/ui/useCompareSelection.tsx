@@ -12,6 +12,7 @@
  */
 import React, { useState } from "react";
 import ClearButton from "./ClearButton";
+import { ToggleChip } from "./FilterField";
 
 export interface CompareSelection<K extends string | number> {
   /** Chaves seleccionadas. */
@@ -59,14 +60,8 @@ export function useCompareSelection<K extends string | number>(): CompareSelecti
 
   const bar: React.ReactNode = selected.size > 0 ? (
     <div className="lb-info-line u-d-flex u-ai-center u-gap-8px u-fwr-wrap">
-      <span
-        className={`${"tab-under" + (compareOn ? " active" : "")} u-cur-pointer u-fw-700`}
-        onClick={() => setCompareOn(v => !v)}
-
-        title="Mostrar só os jogadores seleccionados (lado a lado)"
-      >
-        ⚖️ Comparar seleccionados ({selected.size})
-      </span>
+      <ToggleChip checked={compareOn} onChange={setCompareOn} label={`⚖️ Comparar seleccionados (${selected.size})`}
+        title="Mostrar só os jogadores seleccionados (lado a lado)" />
       <ClearButton onClick={clear} title="Limpar selecção" />
       {!compareOn && (
         <span className="muted fs-10">marca ☑ nas linhas e activa para ver só esses</span>

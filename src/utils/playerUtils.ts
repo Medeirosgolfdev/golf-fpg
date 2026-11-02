@@ -96,15 +96,6 @@ export function escCls(esc: string): string {
   return stripAccents(esc).toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
-/**
- * Escalão → className completo para pill badge: "Sub 12" → "p p-sm p-sub12".
- * Retorna string vazia se escalão estiver em falta.
- */
-export function escPillCls(esc: string | undefined | null): string {
-  if (!esc) return "";
-  return "p p-sm p-" + escCls(esc);
-}
-
 /* ── Player normalization ── */
 
 /**

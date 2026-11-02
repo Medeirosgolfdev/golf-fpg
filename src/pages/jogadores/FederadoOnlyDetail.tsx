@@ -27,8 +27,8 @@ import {
 } from "./federadoFields";
 import IdentityPills, { PlayerExtLinks } from "./IdentityPills";
 import LoadingState from "../../ui/LoadingState";
-import CloseButton from "../../ui/CloseButton";
 import ErrorState from "../../ui/ErrorState";
+import Modal from "../../ui/Modal";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
  *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
@@ -368,21 +368,9 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
 
       {/* Modal de scorecard detalhado */}
       {scorecardModal && (
-        <div
-          onClick={() => setScorecardModal(null)}
-          className="u-pos-fixed u-inset-0 u-bg-overlay-black-50 u-z-z-overlay u-d-flex u-ai-center u-jc-center u-p-20px"
-        >
-          <div
-            onClick={e => e.stopPropagation()}
-            className="u-bg-bg-card u-br-radius-lg u-p-20px u-maxw-900px u-w-100pc u-maxh-90vh u-oy-auto u-bs-0-10px-40px-overlay-black-30"
-          >
-            <div className="u-d-flex u-jc-space-between u-ai-flex-start u-mb-12px">
-              <div>
-                <div className="h-md fs-14 fw-700">{scorecardModal.round.tournament_description || "Scorecard"}</div>
-                <div className="muted fs-11">{scorecardModal.round.course_description} · {(scorecardModal.round.score_dateStr || "").slice(0, 10)}</div>
-              </div>
-              <CloseButton onClick={() => setScorecardModal(null)} />
-            </div>
+        <Modal onClose={() => setScorecardModal(null)} size="lg"
+          title={scorecardModal.round.tournament_description || "Scorecard"}
+          subtitle={`${scorecardModal.round.course_description} · ${(scorecardModal.round.score_dateStr || "").slice(0, 10)}`}>
             {/* Nota se a ronda foi rotacionada (Aroeira No.2 config antiga) */}
             <RotatedNotice rotated={(scorecardModal.data as { _rotated?: number } | null)?._rotated} />
             {/* Nota geral para campos Aroeira (mesmo se esta ronda específica não foi rotacionada) */}
@@ -428,8 +416,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
                 </>
               );
             })()}
-          </div>
-        </div>
+        </Modal>
       )}
 
       <div className="muted fs-10 p-8 ta-c u-mt-8px">

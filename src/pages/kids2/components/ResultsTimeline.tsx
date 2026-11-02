@@ -15,12 +15,12 @@ import { categorizeTournamentLinks } from "../tournamentLinks";
 import { RoundPill, NineHPill, ScoringTag } from "../../../ui/PillBadge";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar, MONTHS_PT } from "../../../utils/format";
-import { medalClass } from "../../../ui/PosBadge";
 import ClearButton from "../../../ui/ClearButton";
 import ExpandArrow from "../../../ui/ExpandArrow";
 import ExtLink from "../../../ui/ExternalLink";
 import { SOURCE_LABELS } from "../../../constants/kids2Sources";
 import { MUTED } from "../../../ui/tableCells";
+import { TrophyPos } from "../../../ui/PosBadge";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -458,9 +458,7 @@ function PosBadgeSmall({ pos, status }: { pos: number | null | undefined; status
     }
     return MUTED;
   }
-  if (pos <= 3) {
-    return <span className={"pos-medal pos-medal-sm " + medalClass(pos)}>🏆 #{pos}</span>;
-  }
+  if (pos <= 3) return <TrophyPos pos={pos} small />;
   // Não-finalista com posição real: mostra "#45" (posição na leaderboard) em vez
   // de "CUT". O número fica IDÊNTICO ao das outras linhas (mesmo tamanho); o
   // motivo vai numa 2ª linha, a vermelho, + tooltip.
@@ -468,12 +466,12 @@ function PosBadgeSmall({ pos, status }: { pos: number | null | undefined; status
   if (dnf) {
     return (
       <span className="u-d-inline-flex u-fd-column u-ai-center u-lh-1_1" title={DNF_LABEL[status] || status}>
-        <span className="u-c-text-3">#{pos}</span>
+        <TrophyPos pos={pos} />
         <span className="u-fs-fs-9 u-fw-700 u-c-color-danger u-tt-lowercase">{status === "CUT" ? "cut" : status.toLowerCase()}</span>
       </span>
     );
   }
-  return <span className="u-c-text-3">#{pos}</span>;
+  return <TrophyPos pos={pos} />;
 }
 
 const DNF_LABEL: Record<string, string> = {

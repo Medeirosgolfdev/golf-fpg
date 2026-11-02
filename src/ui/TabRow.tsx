@@ -47,21 +47,25 @@ interface TabRowProps<K> {
   style?: React.CSSProperties;
   /** Nome do grupo para leitores de ecrã (ex.: «Ano», «Vista»). */
   ariaLabel?: string;
+  /** "under" = separadores sublinhados (secções do detalhe de um torneio,
+   *  sub-abas de análise) em vez do interruptor segmentado. */
+  variant?: "segmented" | "under";
 }
 
 // Interruptor segmentado (o mesmo de Campos/Jogadores) — 13/10/2026: vistas e
 // filtros de escolha única com UM só aspecto em todo o site. A API mantém-se.
-function TabRow<K>({ tabs, active, onChange, children, className, style, ariaLabel }: TabRowProps<K>) {
+function TabRow<K>({ tabs, active, onChange, children, className, style, ariaLabel, variant = "segmented" }: TabRowProps<K>) {
+  const under = variant === "under";
   return (
     <div
-      className={`segmented-toggle${className ? " " + className : ""}`}
+      className={`${under ? "tab-bar" : "segmented-toggle"}${className ? " " + className : ""}`}
       role="tablist"
       aria-label={ariaLabel}
       style={style}
     >
       {tabs?.map(({ key, label, count, disabled, title, href, className: tabClass }) => {
         const isActive = active === key;
-        const cls = `seg-btn${isActive ? " active" : ""}${tabClass ? " " + tabClass : ""}`;
+        const cls = `${under ? "tab-under" : "seg-btn"}${isActive ? " active" : ""}${tabClass ? " " + tabClass : ""}`;
         const inner = (
           <>
             <span className="seg-label">{label}</span>

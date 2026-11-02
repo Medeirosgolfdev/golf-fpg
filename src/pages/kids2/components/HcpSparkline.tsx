@@ -16,6 +16,7 @@ import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtHcp } from "../../../utils/format";
+import Modal from "../../../ui/Modal";
 
 interface Props {
   points: HcpPoint[];
@@ -112,25 +113,7 @@ function HcpHistoryModal({
     <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className}>{label}</SortableHdr>;
 
   return (
-    <div
-      onClick={onClose}
-      className="u-pos-fixed u-inset-0 u-bg-rgba-0-0-0-0_5 u-z-z-overlay u-d-flex u-ai-center u-jc-center u-p-20px"
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="u-bg-bg-card u-br-radius-lg u-maxw-600px u-w-100pc u-maxh-85vh u-ov-auto u-p-20px u-bs-0-20px-50px-rgba-0-0-0-0_3"
-      >
-        <div className="u-d-flex u-jc-space-between u-ai-center u-mb-14px">
-          <h3 className="u-m-0 u-fs-fs-16 u-fw-700">
-            📈 Histórico de HCP{playerName ? ` — ${playerName}` : ""}
-          </h3>
-          <button
-            onClick={onClose}
-            className="btn"
-          >
-            Fechar
-          </button>
-        </div>
+    <Modal onClose={onClose} size="md" title={`📈 Histórico de HCP${playerName ? ` — ${playerName}` : ""}`}>
 
         <div className="u-fs-fs-12 u-c-var-text-3-6b7280 u-mb-10px">
           {desc.length} snapshots · {desc[desc.length - 1]?.date} → {desc[0]?.date}
@@ -160,7 +143,6 @@ function HcpHistoryModal({
             ))}
           </tbody>
         </table>
-      </div>
-    </div>
+    </Modal>
   );
 }

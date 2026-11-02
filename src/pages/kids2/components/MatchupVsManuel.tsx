@@ -15,9 +15,8 @@ import SortableHdr from "../../../ui/SortableHdr";
 import KpiCard from "../../../ui/KpiCard";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { MONTHS_PT, fmtToPar } from "../../../utils/format";
-import { medalClass } from "../../../ui/PosBadge";
 import ExtLink from "../../../ui/ExternalLink";
-import { MUTED } from "../../../ui/tableCells";
+import { TrophyPos } from "../../../ui/PosBadge";
 
 type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff" | "result";
 
@@ -174,12 +173,12 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
                 <RoundsCell result={r.rJ} />
                 <ToParTag tp={r.rJ.toPar} />
               </td>
-              <td className="u-ta-center"><PosTrophy pos={r.rJ.pos} /></td>
+              <td className="u-ta-center"><TrophyPos pos={r.rJ.pos} /></td>
               <td className="col-manuel u-ta-right">
                 <RoundsCell result={r.rM} />
                 <ToParTag tp={r.rM.toPar} />
               </td>
-              <td className="col-manuel u-ta-center"><PosTrophy pos={r.rM.pos} /></td>
+              <td className="col-manuel u-ta-center"><TrophyPos pos={r.rM.pos} /></td>
               <td className="u-ta-right u-fw-700" style={{ color: r.diff != null ? (tpColor(r.diff) ?? "var(--text-3)") : "var(--text-3)" }}>
                 {r.diff != null ? fmtDiff(r.diff) : "—"}
               </td>
@@ -232,14 +231,6 @@ function RoundsCell({ result }: { result: Result }) {
       {total != null && <span className="u-c-text-3 u-ml-4px">({total})</span>}
     </>
   );
-}
-
-function PosTrophy({ pos }: { pos: number | null | undefined }) {
-  if (typeof pos !== "number") return MUTED;
-  if (pos <= 3) {
-    return <span className={"pos-medal pos-medal-sm u-fs-fs-11 " + medalClass(pos)}>🏆 #{pos}</span>;
-  }
-  return <span>#{pos}</span>;
 }
 
 /** Formata diff com sinal e máximo 3 casas decimais. Inteiros não recebem

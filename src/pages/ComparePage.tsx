@@ -33,6 +33,7 @@ import { teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { isPtCountry } from "../utils/flagUtils";
 import { MUTED } from "../ui/tableCells";
+import TabRow from "../ui/TabRow";
 
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
@@ -939,18 +940,8 @@ export function CamposCompareView({ courseKey }: { courseKey?: string }) {
   const [activeTab, setActiveTab] = useState<"campos" | "tees">("campos");
   return (
     <div>
-      <div className="tabbar-under" role="tablist" aria-label="Modo de comparação">
-        <button type="button" role="tab" aria-selected={activeTab === "campos"}
-          className={"tab-under" + (activeTab === "campos" ? " active" : "")}
-          onClick={() => setActiveTab("campos")}>
-          ⛳ Campo A vs B
-        </button>
-        <button type="button" role="tab" aria-selected={activeTab === "tees"}
-          className={"tab-under" + (activeTab === "tees" ? " active" : "")}
-          onClick={() => setActiveTab("tees")}>
-          🟡 Vantagem de Tee
-        </button>
-      </div>
+      <TabRow variant="under" className="u-mb-16px" ariaLabel="Modo de comparação" active={activeTab} onChange={setActiveTab}
+        tabs={[{ key: "campos" as const, label: "⛳ Campo A vs B" }, { key: "tees" as const, label: "🟡 Vantagem de Tee" }]} />
       <Suspense fallback={<LoadingState message="A carregar…" />}>
         {activeTab === "campos"
           ? <CourseComparisonView key={courseKey} simCourses={simCourses} initialCourseKey={courseKey} />

@@ -21,6 +21,7 @@ import { tpColor } from "../../../ui/tournamentPrimitives";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import ExtLink from "../../../ui/ExternalLink";
 import { MUTED } from "../../../ui/tableCells";
+import { TrophyPos } from "../../../ui/PosBadge";
 
 interface Props {
   data: CanonicalData;
@@ -146,10 +147,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
                 <td className="u-c-text-3">{fmtDate(r.date)}</td>
                 <td className="u-fw-600">{r.name}</td>
                 <td className="u-c-text-3">{r.flight}</td>
-                <td className="u-ta-center u-fw-700" style={{
-                  color: r.pos != null && r.pos <= 3 ? "var(--medal-gold-strong)" : "var(--text-2)" }}>
-                  {r.pos != null ? `#${r.pos}` : "—"}
-                </td>
+                <td className="u-ta-center"><TrophyPos pos={r.pos} small /></td>
                 <td className="u-ta-right">{r.total != null ? r.total : "—"}</td>
                 <td className={"u-ta-right " + (r.toPar != null && r.toPar !== 0 ? "u-fw-700" : "u-fw-400")} style={{
                   color: r.toPar == null ? "var(--text-3)"
