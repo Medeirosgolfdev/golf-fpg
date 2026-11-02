@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T20:55:21.009Z",
+  "generatedAt": "2026-11-02T21:00:09.153Z",
   "juniors": [
     {
       "id": "u391389",
@@ -10145,10 +10145,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147876"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148712"
           },
           {
@@ -10320,7 +10316,6 @@
           "doral:doral-1298062962",
           "doral:doral-1594941713",
           "doral:doral-1875120444",
-          "fsga:fsga-2329147876",
           "fsga:fsga-2329148712",
           "uajt:uajt-10719123830124608559",
           "uajt:uajt-11785303451854994914",
@@ -36964,10 +36959,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147919"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148722"
           },
           {
@@ -37125,7 +37116,6 @@
           "uskids:502666",
           "doral:doral-1594941689",
           "doral:doral-2174304428",
-          "fsga:fsga-2329147919",
           "fsga:fsga-2329148722",
           "egr:clint lewis|US",
           "dob:2010-08-21"
@@ -68491,10 +68481,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147979"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148734"
           }
         ]
@@ -68612,7 +68598,6 @@
           "fm:fm-9660002742365600100",
           "fm:fm-10721177878772332986",
           "fm:fm-11770939361250523597",
-          "fsga:fsga-2329147979",
           "fsga:fsga-2329148734"
         ],
         "mergedFromSources": [
@@ -82020,10 +82005,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147923"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148725"
           },
           {
@@ -82156,7 +82137,6 @@
           "fm:fm-10721177878772332985",
           "fm:fm-11770939361250523577",
           "fm:fm-12826377461201648040",
-          "fsga:fsga-2329147923",
           "fsga:fsga-2329148725",
           "job:job-12338986637290679303"
         ],
@@ -83594,10 +83574,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147956"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148730"
           }
         ]
@@ -83649,7 +83625,6 @@
         "evidence": [
           "uskids:521222",
           "fm:fm-9660002742466263462",
-          "fsga:fsga-2329147956",
           "fsga:fsga-2329148730"
         ],
         "mergedFromSources": [
@@ -87029,10 +87004,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147907"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148719"
           }
         ]
@@ -87104,7 +87075,6 @@
           "fm:fm-10735288800046495953",
           "fm:fm-11770939361183414670",
           "fm:fm-12843476098259892636",
-          "fsga:fsga-2329147907",
           "fsga:fsga-2329148719"
         ],
         "mergedFromSources": [
@@ -98265,30 +98235,16 @@
       "canonicalName": "Christopher Grota",
       "aliases": [],
       "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "countries": [
-        "ZA",
-        "US"
-      ],
+      "sex": null,
+      "nationality": "ZA",
+      "country": "ZA",
       "region": null,
       "club": null,
       "sources": {
         "uskids": {
           "memberId": "525215",
           "ageGroupCurrent": "Boys 14"
-        },
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147985"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148736"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "uskids-6713",
@@ -98337,19 +98293,15 @@
         "uskids-18510",
         "uskids-18511",
         "uskids-18512",
-        "uskids-18513",
-        "fsga-fsga_2026"
+        "uskids-18513"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:525215",
-          "fsga:fsga-2329147985",
-          "fsga:fsga-2329148736"
+          "uskids:525215"
         ],
         "mergedFromSources": [
-          "uskids",
-          "fsga"
+          "uskids"
         ]
       }
     },
@@ -98575,10 +98527,6 @@
         "_secondary": [
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147943"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148726"
           }
         ]
@@ -98625,7 +98573,6 @@
         "confidence": "strong",
         "evidence": [
           "uskids:525241",
-          "fsga:fsga-2329147943",
           "fsga:fsga-2329148726"
         ],
         "mergedFromSources": [
@@ -102140,14 +102087,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924748515282719"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067584376632"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931926"
           }
         ]
       },
@@ -102203,9 +102142,7 @@
           "uskids:526147",
           "wjgc:daniel hobbs|",
           "gjgl:Daniel_Hobbs",
-          "faldomadeira:faldomadeira-13164924748515282719",
-          "faldomadeira:faldomadeira-13164925067584376632",
-          "faldomadeira:faldomadeira-13164924301066931926"
+          "faldomadeira:faldomadeira-13164924748515282719"
         ],
         "mergedFromSources": [
           "uskids",
@@ -106287,10 +106224,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147911"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148721"
           },
           {
@@ -106379,7 +106312,6 @@
           "uskids:527293",
           "ffgolf:E79411668",
           "england:henry liebwein|DE",
-          "fsga:fsga-2329147911",
           "fsga:fsga-2329148721",
           "coc:coc-9747600364592447628",
           "egr:henry liebwein|DE",
@@ -110420,10 +110352,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147893"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148715"
           }
         ]
@@ -110540,7 +110468,6 @@
           "fm:fm-9660002742332045662",
           "fm:fm-10721177878738778539",
           "fm:fm-11770939361284078063",
-          "fsga:fsga-2329147893",
           "fsga:fsga-2329148715"
         ],
         "mergedFromSources": [
@@ -132977,10 +132904,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147992"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148738"
           }
         ]
@@ -133015,7 +132938,6 @@
           "doral:doral-1594941688",
           "fm:fm-11770939361317632500",
           "fm:fm-12843476098192783740",
-          "fsga:fsga-2329147992",
           "fsga:fsga-2329148738"
         ],
         "mergedFromSources": [
@@ -150941,10 +150863,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147902"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148717"
           },
           {
@@ -151025,7 +150943,6 @@
           "fm:fm-9660002742365600097",
           "fm:fm-10721177878805887442",
           "fm:fm-11770939361183414677",
-          "fsga:fsga-2329147902",
           "fsga:fsga-2329148717",
           "optimist:optimist-10787869870696467153"
         ],
@@ -176167,10 +176084,6 @@
         "_secondary": [
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147921"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148724"
           },
           {
@@ -176265,7 +176178,6 @@
         "confidence": "strong",
         "evidence": [
           "uskids:543388",
-          "fsga:fsga-2329147921",
           "fsga:fsga-2329148724",
           "uaworlds:uaworlds-10791132713998908648"
         ],
@@ -178894,10 +178806,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147910"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148720"
           },
           {
@@ -178960,7 +178868,6 @@
           "wjgc:victor kornienko|",
           "doral:doral-2173605220",
           "fm:fm-12826377461302311390",
-          "fsga:fsga-2329147910",
           "fsga:fsga-2329148720",
           "uaworlds:uaworlds-9736169493314436564",
           "uaworlds:uaworlds-10791132713998908655",
@@ -186019,10 +185926,6 @@
         "_secondary": [
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147949"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148729"
           }
         ]
@@ -186147,7 +186050,6 @@
         "confidence": "strong",
         "evidence": [
           "uskids:548350",
-          "fsga:fsga-2329147949",
           "fsga:fsga-2329148729"
         ],
         "mergedFromSources": [
@@ -198815,10 +198717,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147889"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148714"
           },
           {
@@ -198912,7 +198810,6 @@
           "fm:fm-9660002742466263460",
           "fm:fm-10735288800180713719",
           "fm:fm-11770939361216969140",
-          "fsga:fsga-2329147889",
           "fsga:fsga-2329148714",
           "uaworlds:uaworlds-11851591820335152238",
           "uaworlds:uaworlds-12898269832377564656"
@@ -234983,10 +234880,6 @@
         "_secondary": [
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147947"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148727"
           },
           {
@@ -235063,7 +234956,6 @@
         "confidence": "strong",
         "evidence": [
           "uskids:557853",
-          "fsga:fsga-2329147947",
           "fsga:fsga-2329148727",
           "uaworlds:uaworlds-9736176371201244559",
           "uaworlds:uaworlds-10791374682121600106"
@@ -250834,10 +250726,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147967"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148731"
           },
           {
@@ -250978,7 +250866,6 @@
           "fm:fm-10721177878805887447",
           "fm:fm-11787901654471293038",
           "fm:fm-12826377461235202491",
-          "fsga:fsga-2329147967",
           "fsga:fsga-2329148731",
           "uaworlds:uaworlds-9736169493280882118",
           "uaworlds:uaworlds-10791132713965354196",
@@ -285574,10 +285461,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147948"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148728"
           }
         ]
@@ -285633,7 +285516,6 @@
           "doral:doral-1025199330",
           "doral:doral-1298062942",
           "fm:fm-12826377461335865845",
-          "fsga:fsga-2329147948",
           "fsga:fsga-2329148728"
         ],
         "mergedFromSources": [
@@ -307566,10 +307448,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147882"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148713"
           }
         ]
@@ -307680,7 +307558,6 @@
         "evidence": [
           "uskids:574468",
           "fm:fm-11770939361216969139",
-          "fsga:fsga-2329147882",
           "fsga:fsga-2329148713"
         ],
         "mergedFromSources": [
@@ -327456,14 +327333,6 @@
             "key": "faldomadeira-13164924553564032767"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067584376628"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931922"
-          },
-          {
             "sourceId": "avtrophy",
             "key": "avtrophy-gb46400244"
           },
@@ -327529,8 +327398,6 @@
           "gjgl:Harrison_Barnett",
           "reidtrophy:reidtrophy-2387511267",
           "faldomadeira:faldomadeira-13164924553564032767",
-          "faldomadeira:faldomadeira-13164925067584376628",
-          "faldomadeira:faldomadeira-13164924301066931922",
           "avtrophy:avtrophy-gb46400244",
           "egr:harrison barnett|GB",
           "dob:2013-04-21"
@@ -330454,14 +330321,6 @@
             "key": "faldomadeira-13164924553597587201"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067584376631"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931925"
-          },
-          {
             "sourceId": "egr",
             "key": "ralph barnett|GB"
           }
@@ -330501,8 +330360,6 @@
           "england:ralph barnett|GB",
           "gjgl:Ralph_Barnett",
           "faldomadeira:faldomadeira-13164924553597587201",
-          "faldomadeira:faldomadeira-13164925067584376631",
-          "faldomadeira:faldomadeira-13164924301066931925",
           "egr:ralph barnett|GB"
         ],
         "mergedFromSources": [
@@ -415256,14 +415113,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924553597587211"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931076"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486370"
           }
         ]
       },
@@ -415922,8 +415771,6 @@
           "wjgc:manuel francisco medeiros|PT",
           "doral:doral-2173590307",
           "faldomadeira:faldomadeira-13164924553597587211",
-          "faldomadeira:faldomadeira-13164925067617931076",
-          "faldomadeira:faldomadeira-13164924301100486370",
           "uskids:630106",
           "dob:2014-04-29"
         ],
@@ -429193,14 +429040,6 @@
             "key": "faldomadeira-13164924553597587208"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931073"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486367"
-          },
-          {
             "sourceId": "egr",
             "key": "santiago dias|PT"
           }
@@ -429947,8 +429786,6 @@
           "evianjc:evianjc-12019710461487395381",
           "evianjc:evianjc-13095632111816192701",
           "faldomadeira:faldomadeira-13164924553597587208",
-          "faldomadeira:faldomadeira-13164925067617931073",
-          "faldomadeira:faldomadeira-13164924301100486367",
           "egr:santiago dias|PT",
           "dob:2012-05-29"
         ],
@@ -486756,14 +486593,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924553597587205"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931070"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486364"
           }
         ]
       },
@@ -487222,8 +487051,6 @@
         "evidence": [
           "fpg:41121",
           "faldomadeira:faldomadeira-13164924553597587205",
-          "faldomadeira:faldomadeira-13164925067617931070",
-          "faldomadeira:faldomadeira-13164924301100486364",
           "dob:2009-11-27"
         ],
         "mergedFromSources": [
@@ -503013,14 +502840,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924895483694892"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925313102155616"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931920"
           }
         ]
       },
@@ -503368,8 +503187,6 @@
         "evidence": [
           "fpg:46482",
           "faldomadeira:faldomadeira-13164924895483694892",
-          "faldomadeira:faldomadeira-13164925313102155616",
-          "faldomadeira:faldomadeira-13164924301066931920",
           "dob:2011-02-18"
         ],
         "mergedFromSources": [
@@ -509775,14 +509592,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924553597587209"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931074"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486368"
           }
         ]
       },
@@ -510053,8 +509862,6 @@
         "evidence": [
           "fpg:50398",
           "faldomadeira:faldomadeira-13164924553597587209",
-          "faldomadeira:faldomadeira-13164925067617931074",
-          "faldomadeira:faldomadeira-13164924301100486368",
           "dob:2012-01-14"
         ],
         "mergedFromSources": [
@@ -511540,14 +511347,6 @@
             "key": "faldomadeira-13164924895483694889"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925313102155613"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931917"
-          },
-          {
             "sourceId": "egr",
             "key": "angelina gao|CN"
           }
@@ -511850,8 +511649,6 @@
           "fpg:51523",
           "gjgl:Angelina_Gao",
           "faldomadeira:faldomadeira-13164924895483694889",
-          "faldomadeira:faldomadeira-13164925313102155613",
-          "faldomadeira:faldomadeira-13164924301066931917",
           "egr:angelina gao|CN",
           "dob:2011-06-09"
         ],
@@ -511899,14 +511696,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924553597587207"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931072"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486366"
           },
           {
             "sourceId": "egr",
@@ -512214,8 +512003,6 @@
           "fpg:51524",
           "gjgl:William_Gao",
           "faldomadeira:faldomadeira-13164924553597587207",
-          "faldomadeira:faldomadeira-13164925067617931072",
-          "faldomadeira:faldomadeira-13164924301100486366",
           "egr:william gao|US",
           "dob:2012-11-14"
         ],
@@ -513733,14 +513520,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924553597587204"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931069"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486363"
           }
         ]
       },
@@ -514133,8 +513912,6 @@
         "evidence": [
           "fpg:52393",
           "faldomadeira:faldomadeira-13164924553597587204",
-          "faldomadeira:faldomadeira-13164925067617931069",
-          "faldomadeira:faldomadeira-13164924301100486363",
           "dob:2013-08-05"
         ],
         "mergedFromSources": [
@@ -520537,7 +520314,7 @@
       "nationality": "PT",
       "country": "PT",
       "region": null,
-      "club": "Clube de Golfe do Santo da Serra",
+      "club": "Santo da Serra",
       "sources": {
         "fpg": {
           "fed": "47374",
@@ -520549,14 +520326,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924895483694890"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925313102155614"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931918"
           }
         ]
       },
@@ -520925,8 +520694,6 @@
         "evidence": [
           "fpg:47374",
           "faldomadeira:faldomadeira-13164924895483694890",
-          "faldomadeira:faldomadeira-13164925313102155614",
-          "faldomadeira:faldomadeira-13164924301066931918",
           "dob:2012-07-18"
         ],
         "mergedFromSources": [
@@ -1211588,14 +1211355,6 @@
             "key": "faldomadeira-13164924895483694887"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925313068601179"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931915"
-          },
-          {
             "sourceId": "egtc",
             "key": "egtc-gb48738107"
           },
@@ -1211685,8 +1211444,6 @@
           "coc:coc-9747600028175712383",
           "evianjc:ashling poynton|BE",
           "faldomadeira:faldomadeira-13164924895483694887",
-          "faldomadeira:faldomadeira-13164925313068601179",
-          "faldomadeira:faldomadeira-13164924301066931915",
           "egtc:egtc-gb48738107",
           "eym:eym-gb49107272",
           "egr:ashling poynton|BE",
@@ -1446872,14 +1446629,6 @@
             "key": "faldomadeira-13164924895483694888"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925313068601180"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931916"
-          },
-          {
             "sourceId": "egr",
             "key": "emily tuck|GB"
           }
@@ -1446903,8 +1446652,6 @@
           "wjgc:emily tuck|",
           "gjgl:Emily_Tuck",
           "faldomadeira:faldomadeira-13164924895483694888",
-          "faldomadeira:faldomadeira-13164925313068601180",
-          "faldomadeira:faldomadeira-13164924301066931916",
           "egr:emily tuck|GB"
         ],
         "mergedFromSources": [
@@ -1505824,10 +1505571,6 @@
           },
           {
             "sourceId": "fsga",
-            "key": "fsga-2329147997"
-          },
-          {
-            "sourceId": "fsga",
             "key": "fsga-2329148740"
           },
           {
@@ -1505872,7 +1505615,6 @@
           "doral:doral-1298062952",
           "doral:doral-1594941696",
           "doral:doral-1875207559",
-          "fsga:fsga-2329147997",
           "fsga:fsga-2329148740",
           "uaworlds:uaworlds-9736176371201244549",
           "uaworlds:uaworlds-10791074793579904435",
@@ -1614633,14 +1614375,6 @@
             "key": "faldomadeira-13164924895483694891"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925313102155615"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931919"
-          },
-          {
             "sourceId": "egtc",
             "key": "egtc-gb48738055"
           },
@@ -1614697,8 +1614431,6 @@
           "england:daisy lee|",
           "england:daisy lee|GB",
           "faldomadeira:faldomadeira-13164924895483694891",
-          "faldomadeira:faldomadeira-13164925313102155615",
-          "faldomadeira:faldomadeira-13164924301066931919",
           "egtc:egtc-gb48738055",
           "egr:daisy lee|GB",
           "dob:2009-10-28"
@@ -1624531,14 +1624263,6 @@
             "key": "faldomadeira-13164924553597587200"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067584376629"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931923"
-          },
-          {
             "sourceId": "egr",
             "key": "joshua hockenhull|GB"
           }
@@ -1624564,8 +1624288,6 @@
         "evidence": [
           "england:joshua hockenhull|GB",
           "faldomadeira:faldomadeira-13164924553597587200",
-          "faldomadeira:faldomadeira-13164925067584376629",
-          "faldomadeira:faldomadeira-13164924301066931923",
           "egr:joshua hockenhull|GB"
         ],
         "mergedFromSources": [
@@ -1642691,14 +1642413,6 @@
             "key": "faldomadeira-13164924748515282717"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067584376627"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931921"
-          },
-          {
             "sourceId": "egr",
             "key": "calum dalby|GB"
           }
@@ -1642717,8 +1642431,6 @@
         "evidence": [
           "england:calum dalby|",
           "faldomadeira:faldomadeira-13164924748515282717",
-          "faldomadeira:faldomadeira-13164925067584376627",
-          "faldomadeira:faldomadeira-13164924301066931921",
           "egr:calum dalby|GB"
         ],
         "mergedFromSources": [
@@ -1652489,14 +1652201,6 @@
             "key": "faldomadeira-13164924553597587212"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931077"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486371"
-          },
-          {
             "sourceId": "egr",
             "key": "alfie kitteridge|GB"
           }
@@ -1652517,8 +1652221,6 @@
         "evidence": [
           "england:alfie kitteridge|GB",
           "faldomadeira:faldomadeira-13164924553597587212",
-          "faldomadeira:faldomadeira-13164925067617931077",
-          "faldomadeira:faldomadeira-13164924301100486371",
           "egr:alfie kitteridge|GB"
         ],
         "mergedFromSources": [
@@ -1654023,7 +1653725,7 @@
       }
     },
     {
-      "id": "xa723834dbd",
+      "id": "xa8142bb61c",
       "canonicalName": "Ethan Kwan",
       "aliases": [],
       "dob": null,
@@ -1654047,14 +1653749,6 @@
             "key": "faldomadeira-13164924553597587202"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931067"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486361"
-          },
-          {
             "sourceId": "egr",
             "key": "ethan kwan|GB"
           }
@@ -1654072,8 +1653766,6 @@
           "england:ethan kwan|GB",
           "reidtrophy:reidtrophy-2387511344",
           "faldomadeira:faldomadeira-13164924553597587202",
-          "faldomadeira:faldomadeira-13164925067617931067",
-          "faldomadeira:faldomadeira-13164924301100486361",
           "egr:ethan kwan|GB"
         ],
         "mergedFromSources": [
@@ -1655864,7 +1655556,7 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Berlin-Wannsee",
+      "club": "Golf- und Land-Club Berlin-Wannsee e.V.",
       "sources": {
         "_secondary": [
           {
@@ -1655874,14 +1655566,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924553597587210"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931075"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486369"
           },
           {
             "sourceId": "egr",
@@ -1655931,8 +1655615,6 @@
         "evidence": [
           "gjgl:Leonardo_Könemund",
           "faldomadeira:faldomadeira-13164924553597587210",
-          "faldomadeira:faldomadeira-13164925067617931075",
-          "faldomadeira:faldomadeira-13164924301100486369",
           "egr:leonardo konemund|DE",
           "dgv:dgv-dgv490001362997"
         ],
@@ -1713435,42 +1713117,6 @@
       }
     },
     {
-      "id": "x42f97f2739",
-      "canonicalName": "Hunter Glantz",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147905"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148718"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fsga:fsga-2329147905",
-          "fsga:fsga-2329148718"
-        ],
-        "mergedFromSources": [
-          "fsga"
-        ]
-      }
-    },
-    {
       "id": "x155905f96d",
       "canonicalName": "Josh Orgen",
       "aliases": [],
@@ -1713595,78 +1713241,6 @@
         "confidence": "strong",
         "evidence": [
           "fsga:fsga-2329147873"
-        ],
-        "mergedFromSources": [
-          "fsga"
-        ]
-      }
-    },
-    {
-      "id": "x6cb19ea7de",
-      "canonicalName": "Benjamin Li",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147842"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148710"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fsga:fsga-2329147842",
-          "fsga:fsga-2329148710"
-        ],
-        "mergedFromSources": [
-          "fsga"
-        ]
-      }
-    },
-    {
-      "id": "x8c22d575af",
-      "canonicalName": "Samuel Friday",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147835"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148708"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fsga:fsga-2329147835",
-          "fsga:fsga-2329148708"
         ],
         "mergedFromSources": [
           "fsga"
@@ -1714139,42 +1713713,6 @@
       }
     },
     {
-      "id": "x6df7ed0bfb",
-      "canonicalName": "Dracus Wu",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147994"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148739"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fsga:fsga-2329147994",
-          "fsga:fsga-2329148739"
-        ],
-        "mergedFromSources": [
-          "fsga"
-        ]
-      }
-    },
-    {
       "id": "xe12cda2b52",
       "canonicalName": "Ryan Woodward",
       "aliases": [],
@@ -1714274,85 +1713812,6 @@
       }
     },
     {
-      "id": "xa64e1408b9",
-      "canonicalName": "Jeremy Castellanos",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147898"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148716"
-          },
-          {
-            "sourceId": "job",
-            "key": "job-12338986637257125358"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026",
-        "job-orangebowl_2026"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "fsga:fsga-2329147898",
-          "fsga:fsga-2329148716",
-          "job:job-12338986637257125358"
-        ],
-        "mergedFromSources": [
-          "fsga",
-          "job"
-        ]
-      }
-    },
-    {
-      "id": "xa042f2b43e",
-      "canonicalName": "Charles Sundermeier",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147867"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148711"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fsga:fsga-2329147867",
-          "fsga:fsga-2329148711"
-        ],
-        "mergedFromSources": [
-          "fsga"
-        ]
-      }
-    },
-    {
       "id": "xbdab0adf04",
       "canonicalName": "Will Storoe",
       "aliases": [],
@@ -1714410,42 +1713869,6 @@
         "confidence": "strong",
         "evidence": [
           "fsga:fsga-2329147922"
-        ],
-        "mergedFromSources": [
-          "fsga"
-        ]
-      }
-    },
-    {
-      "id": "x750e5bcd0c",
-      "canonicalName": "Jude Menard",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147839"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148709"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fsga:fsga-2329147839",
-          "fsga:fsga-2329148709"
         ],
         "mergedFromSources": [
           "fsga"
@@ -1714546,42 +1713969,6 @@
       }
     },
     {
-      "id": "x1bf495f268",
-      "canonicalName": "Jaden Nacional",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147920"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148723"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fsga:fsga-2329147920",
-          "fsga:fsga-2329148723"
-        ],
-        "mergedFromSources": [
-          "fsga"
-        ]
-      }
-    },
-    {
       "id": "xba8340042f",
       "canonicalName": "Hunter Ives",
       "aliases": [],
@@ -1714609,74 +1713996,6 @@
         ],
         "mergedFromSources": [
           "fsga"
-        ]
-      }
-    },
-    {
-      "id": "x712d5f4d72",
-      "canonicalName": "Ripken Sullivan",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147981"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148735"
-          },
-          {
-            "sourceId": "uajt",
-            "key": "uajt-10719123830057499649"
-          },
-          {
-            "sourceId": "uajt",
-            "key": "uajt-11785303451955657779"
-          },
-          {
-            "sourceId": "uajt",
-            "key": "uajt-12837779284139473976"
-          },
-          {
-            "sourceId": "uaworlds",
-            "key": "uaworlds-11851591820268043324"
-          },
-          {
-            "sourceId": "uaworlds",
-            "key": "uaworlds-12898269832344010212"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026",
-        "uajt-uajt_2024",
-        "uajt-uajt_2025",
-        "uajt-uajt_2026",
-        "uaworlds-uaworlds_2025",
-        "uaworlds-uaworlds_2026"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "fsga:fsga-2329147981",
-          "fsga:fsga-2329148735",
-          "uajt:uajt-10719123830057499649",
-          "uajt:uajt-11785303451955657779",
-          "uajt:uajt-12837779284139473976",
-          "uaworlds:uaworlds-11851591820268043324",
-          "uaworlds:uaworlds-12898269832344010212"
-        ],
-        "mergedFromSources": [
-          "fsga",
-          "uajt",
-          "uaworlds"
         ]
       }
     },
@@ -1714890,42 +1714209,6 @@
       }
     },
     {
-      "id": "x9bf71c6658",
-      "canonicalName": "Andrew Milajecki",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147968"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148732"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fsga:fsga-2329147968",
-          "fsga:fsga-2329148732"
-        ],
-        "mergedFromSources": [
-          "fsga"
-        ]
-      }
-    },
-    {
       "id": "x22d7634fb2",
       "canonicalName": "Rikuto Goto",
       "aliases": [],
@@ -1715046,58 +1714329,6 @@
         ],
         "mergedFromSources": [
           "fsga"
-        ]
-      }
-    },
-    {
-      "id": "x70b2c210b3",
-      "canonicalName": "Nanxi Ren",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "US",
-      "country": "US",
-      "countries": [
-        "US",
-        "CN"
-      ],
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329147990"
-          },
-          {
-            "sourceId": "fsga",
-            "key": "fsga-2329148737"
-          },
-          {
-            "sourceId": "optimist",
-            "key": "optimist-11900571657477065659"
-          },
-          {
-            "sourceId": "optimist",
-            "key": "optimist-11857537113111169726"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "fsga-fsga_2026",
-        "optimist-optimist2_2025"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "fsga:fsga-2329147990",
-          "fsga:fsga-2329148737",
-          "optimist:optimist-11900571657477065659",
-          "optimist:optimist-11857537113111169726"
-        ],
-        "mergedFromSources": [
-          "fsga",
-          "optimist"
         ]
       }
     },
@@ -1715305,6 +1714536,433 @@
         "mergedFromSources": [
           "fsga",
           "uaworlds"
+        ]
+      }
+    },
+    {
+      "id": "x42f97f2739",
+      "canonicalName": "Hunter Glantz",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148718"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fsga:fsga-2329148718"
+        ],
+        "mergedFromSources": [
+          "fsga"
+        ]
+      }
+    },
+    {
+      "id": "x6cb19ea7de",
+      "canonicalName": "Benjamin Li",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148710"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fsga:fsga-2329148710"
+        ],
+        "mergedFromSources": [
+          "fsga"
+        ]
+      }
+    },
+    {
+      "id": "x8c22d575af",
+      "canonicalName": "Samuel Friday",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148708"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fsga:fsga-2329148708"
+        ],
+        "mergedFromSources": [
+          "fsga"
+        ]
+      }
+    },
+    {
+      "id": "x1ab7d49e93",
+      "canonicalName": "Christopher Grota",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148736"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fsga:fsga-2329148736"
+        ],
+        "mergedFromSources": [
+          "fsga"
+        ]
+      }
+    },
+    {
+      "id": "x6df7ed0bfb",
+      "canonicalName": "Dracus Wu",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148739"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fsga:fsga-2329148739"
+        ],
+        "mergedFromSources": [
+          "fsga"
+        ]
+      }
+    },
+    {
+      "id": "xa64e1408b9",
+      "canonicalName": "Jeremy Castellanos",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148716"
+          },
+          {
+            "sourceId": "job",
+            "key": "job-12338986637257125358"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026",
+        "job-orangebowl_2026"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "fsga:fsga-2329148716",
+          "job:job-12338986637257125358"
+        ],
+        "mergedFromSources": [
+          "fsga",
+          "job"
+        ]
+      }
+    },
+    {
+      "id": "xa042f2b43e",
+      "canonicalName": "Charles Sundermeier",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148711"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fsga:fsga-2329148711"
+        ],
+        "mergedFromSources": [
+          "fsga"
+        ]
+      }
+    },
+    {
+      "id": "x750e5bcd0c",
+      "canonicalName": "Jude Menard",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148709"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fsga:fsga-2329148709"
+        ],
+        "mergedFromSources": [
+          "fsga"
+        ]
+      }
+    },
+    {
+      "id": "x1bf495f268",
+      "canonicalName": "Jaden Nacional",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148723"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fsga:fsga-2329148723"
+        ],
+        "mergedFromSources": [
+          "fsga"
+        ]
+      }
+    },
+    {
+      "id": "x712d5f4d72",
+      "canonicalName": "Ripken Sullivan",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148735"
+          },
+          {
+            "sourceId": "uajt",
+            "key": "uajt-10719123830057499649"
+          },
+          {
+            "sourceId": "uajt",
+            "key": "uajt-11785303451955657779"
+          },
+          {
+            "sourceId": "uajt",
+            "key": "uajt-12837779284139473976"
+          },
+          {
+            "sourceId": "uaworlds",
+            "key": "uaworlds-11851591820268043324"
+          },
+          {
+            "sourceId": "uaworlds",
+            "key": "uaworlds-12898269832344010212"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026",
+        "uajt-uajt_2024",
+        "uajt-uajt_2025",
+        "uajt-uajt_2026",
+        "uaworlds-uaworlds_2025",
+        "uaworlds-uaworlds_2026"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "fsga:fsga-2329148735",
+          "uajt:uajt-10719123830057499649",
+          "uajt:uajt-11785303451955657779",
+          "uajt:uajt-12837779284139473976",
+          "uaworlds:uaworlds-11851591820268043324",
+          "uaworlds:uaworlds-12898269832344010212"
+        ],
+        "mergedFromSources": [
+          "fsga",
+          "uajt",
+          "uaworlds"
+        ]
+      }
+    },
+    {
+      "id": "x9bf71c6658",
+      "canonicalName": "Andrew Milajecki",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148732"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fsga:fsga-2329148732"
+        ],
+        "mergedFromSources": [
+          "fsga"
+        ]
+      }
+    },
+    {
+      "id": "x70b2c210b3",
+      "canonicalName": "Nanxi Ren",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "CN",
+      "country": "CN",
+      "countries": [
+        "US",
+        "CN"
+      ],
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fsga",
+            "key": "fsga-2329148737"
+          },
+          {
+            "sourceId": "optimist",
+            "key": "optimist-11900571657477065659"
+          },
+          {
+            "sourceId": "optimist",
+            "key": "optimist-11857537113111169726"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fsga-fsga_2026",
+        "optimist-optimist2_2025"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "fsga:fsga-2329148737",
+          "optimist:optimist-11900571657477065659",
+          "optimist:optimist-11857537113111169726"
+        ],
+        "mergedFromSources": [
+          "fsga",
+          "optimist"
         ]
       }
     },
@@ -1789583,14 +1789241,6 @@
             "key": "faldomadeira-13164924553597587213"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931078"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486372"
-          },
-          {
             "sourceId": "egr",
             "key": "richard groß|DE"
           }
@@ -1789606,8 +1789256,6 @@
         "confidence": "probable",
         "evidence": [
           "faldomadeira:faldomadeira-13164924553597587213",
-          "faldomadeira:faldomadeira-13164925067617931078",
-          "faldomadeira:faldomadeira-13164924301100486372",
           "egr:richard groß|DE"
         ],
         "mergedFromSources": [
@@ -1789631,14 +1789279,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924553597587206"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931071"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486365"
           }
         ]
       },
@@ -1789649,8 +1789289,6 @@
         "confidence": "strong",
         "evidence": [
           "faldomadeira:faldomadeira-13164924553597587206",
-          "faldomadeira:faldomadeira-13164925067617931071",
-          "faldomadeira:faldomadeira-13164924301100486365",
           "dob:2010-04-27"
         ],
         "mergedFromSources": [
@@ -1789673,14 +1789311,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924553597587203"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931068"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486362"
           }
         ]
       },
@@ -1789690,9 +1789320,7 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "faldomadeira:faldomadeira-13164924553597587203",
-          "faldomadeira:faldomadeira-13164925067617931068",
-          "faldomadeira:faldomadeira-13164924301100486362"
+          "faldomadeira:faldomadeira-13164924553597587203"
         ],
         "mergedFromSources": [
           "faldomadeira"
@@ -1789716,14 +1789344,6 @@
             "key": "faldomadeira-13164924748515282718"
           },
           {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067584376630"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301066931924"
-          },
-          {
             "sourceId": "egr",
             "key": "leon brooks|GB"
           }
@@ -1789741,8 +1789361,6 @@
         "confidence": "strong",
         "evidence": [
           "faldomadeira:faldomadeira-13164924748515282718",
-          "faldomadeira:faldomadeira-13164925067584376630",
-          "faldomadeira:faldomadeira-13164924301066931924",
           "egr:leon brooks|GB",
           "dob:2008-04-14"
         ],
@@ -1789767,14 +1789385,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924748515282720"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067584376633"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486359"
           }
         ]
       },
@@ -1789784,9 +1789394,7 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "faldomadeira:faldomadeira-13164924748515282720",
-          "faldomadeira:faldomadeira-13164925067584376633",
-          "faldomadeira:faldomadeira-13164924301100486359"
+          "faldomadeira:faldomadeira-13164924748515282720"
         ],
         "mergedFromSources": [
           "faldomadeira"
@@ -1789808,14 +1789416,6 @@
           {
             "sourceId": "faldomadeira",
             "key": "faldomadeira-13164924748515282721"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164925067617931066"
-          },
-          {
-            "sourceId": "faldomadeira",
-            "key": "faldomadeira-13164924301100486360"
           }
         ]
       },
@@ -1789825,9 +1789425,7 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "faldomadeira:faldomadeira-13164924748515282721",
-          "faldomadeira:faldomadeira-13164925067617931066",
-          "faldomadeira:faldomadeira-13164924301100486360"
+          "faldomadeira:faldomadeira-13164924748515282721"
         ],
         "mergedFromSources": [
           "faldomadeira"
@@ -2271756,7 +2271354,7 @@
       }
     },
     {
-      "id": "xd1a1346a80",
+      "id": "xa723834dbd",
       "canonicalName": "Ethan Kwan",
       "aliases": [],
       "dob": null,
@@ -2312768,14 +2312366,14 @@
     }
   ],
   "stats": {
-    "total": 40172,
+    "total": 40173,
     "droppedNoTourn": 34462,
-    "strong": 35834,
+    "strong": 35835,
     "probable": 4338,
     "manual": 0,
-    "strongMerges": 9844,
-    "probableMerges": 16943,
-    "manualMerges": 851,
+    "strongMerges": 9815,
+    "probableMerges": 16888,
+    "manualMerges": 850,
     "collisionMerges": 178,
     "collisionSplits": 88,
     "vetosEgr": 127
