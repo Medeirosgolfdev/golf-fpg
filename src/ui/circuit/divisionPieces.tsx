@@ -12,6 +12,7 @@
 import type React from "react";
 import DrawTab from "../DrawTab";
 import TotalsResumo, { type TotalsPlayer } from "./TotalsResumo";
+import { SDPill } from "../tournamentPrimitives";
 import type { CircuitDivision, CircuitRoundDraw } from "./types";
 import type { TotalsExtraCol, TotalsNotice } from "../../data/model/types";
 
@@ -32,14 +33,17 @@ function noticeNode(n: TotalsNotice): React.ReactNode {
     : <span className="muted fs-10" title={n.title}>{n.text}</span>;
 }
 
-/** Coluna extra de totais (dados → coluna do TotalsResumo). */
+/** Coluna extra de totais (dados → coluna do TotalsResumo), ordenável pelo valor. */
 function extraCol(c: TotalsExtraCol) {
   return {
     header: c.header, title: c.title,
     value: (p: TotalsPlayer) => {
       const v = p[c.field];
-      return typeof v === "number" ? (c.decimals != null ? v.toFixed(c.decimals) : v) : "–";
+      if (typeof v !== "number") return "–";
+      if (c.kind === "sd") return <SDPill sd={v} hcp={typeof p.hcp === "number" ? p.hcp : null} />;
+      return c.decimals != null ? v.toFixed(c.decimals) : v;
     },
+    sortValue: (p: TotalsPlayer) => { const v = p[c.field]; return typeof v === "number" ? v : null; },
   };
 }
 

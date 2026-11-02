@@ -243,7 +243,8 @@ export function FgJogadorView({ id, ano }: { id: string; ano?: string | null }) 
         { label: "Média (gross − CR)", value: e.media != null ? e.media.toFixed(2) : "—" },
         { label: "Voltas", value: `${e.voltas ?? "—"}${e.minimo ? " ✓" : ""}`, title: e.minimo ? "Cumpriu o mínimo de voltas" : "Ainda sem o mínimo de voltas" },
         { label: "Qual.", value: e.qual || "—" },
-        ...entradas.filter((x) => x.ano !== e.ano).map((x) => ({ label: `Ranking ${x.ano}`, value: `${x.pos ?? "—"}.º de ${x.de} (${x.categoria})` })),
+        // Um jogador aparece em várias categorias do mesmo ano (joga acima da idade).
+        ...entradas.filter((x) => x !== e).map((x) => ({ label: `Ranking ${x.ano} · ${x.categoria}`, value: `${x.pos ?? "—"}.º de ${x.de}` })),
       ]}
       eventsTitle={`Voltas de ${e.ano}`}
       events={voltas}

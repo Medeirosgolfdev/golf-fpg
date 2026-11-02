@@ -19,6 +19,7 @@ import { RoundPill } from "../PillBadge";
 import { gf, isPtCountry } from "../../utils/flagUtils";
 import { isManuelByName } from "../../constants/manuel";
 import SexBadge from "../SexBadge";
+import { KidsLink } from "../KidsLink";
 import { isNoCardGross } from "../../data/intlCommon";
 
 export interface TotalsPlayer {
@@ -94,13 +95,15 @@ export default function TotalsResumo({ players, parPerRound, notice, extra, tour
   }));
   const hasToPar = !!parPerRound || players.some((p) => typeof p.toPar === "number");
   const hasGross = rows.some((r) => r.gross != null);
-  // SexBadge a seguir ao nome (mesmo desenho do nome por omissão da tabela).
-  const renderName = players.some((p) => p.sex) ? (row: MultiRoundRow) => (
-    <>
+  // Nome com a seta ↗ para a ficha do Kids 2 (como no leaderboard com cartões —
+  // IntlTournView) e o SexBadge, quando o há (mesmo desenho do nome por omissão).
+  const renderName = (row: MultiRoundRow) => (
+    <span className="inline-flex items-center">
       {row.countryFlag && <>{row.countryFlag} </>}<span className="fw-700">{row.name}</span>
       {(row.sex === "M" || row.sex === "F") && <> <SexBadge sex={row.sex} /></>}
-    </>
-  ) : undefined;
+      <KidsLink nome={row.name} />
+    </span>
+  );
 
   return (
     <div>

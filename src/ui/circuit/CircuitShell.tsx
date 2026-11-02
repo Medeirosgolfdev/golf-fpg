@@ -7,17 +7,20 @@
  *   • master-detail (sidebar agrupada por ano / série / fonte)
  *   • toolbar de filtros (pesquisa, ano, escalão, sexo, fonte) + toggles
  *     rápidos (★ Manuel, 🇵🇹 PT, 🏆 Top 10, ✦ Veteranos, ↻ Regressados, ⬆ Subiram)
- *   • detalhe: DetailHeader + tabs de secção (.tab-under) + tabs de escalão
- *     (.tab-under) + leaderboard via <IntlTournView> (ou inscritos / draw)
+ *   • detalhe: DetailHeader + tabs de escalão + a barra ÚNICA do <IntlTournView>
+ *     (o TournamentDetail da FPG): Inscrições → Draw → R1 → … → Resumo →
+ *     📋 Scorecards → Época → Edições anteriores → Scout
  *
  * Cada página de circuito (RFEG, France, England, GJGL, MAJOR) passa a ser
  * apenas: loader + adaptador → CircuitShell. Sem layout próprio.
  *
- * O leaderboard em si é desenhado pelo <IntlTournView> (round tabs + scorecards).
+ * UM SÓ CAMINHO (02/11/2026): com ou sem cartões, tudo passa pelo
+ * IntlTournView. Sem cartões (só totais / desenho da página) o «Resumo» é o
+ * TotalsResumo e não há R1/Scorecards — já não há barra de secções à parte.
  */
 
 import { escalaoFilterOptions, escaloesCanon } from "../../data/model/escalao";
-import { roundDrawNode, divisionResultsNode } from "./divisionPieces";
+import { divisionResultsNode } from "./divisionPieces";
 import ManuelResultPills from "../ManuelResultPills";
 import AdmissionsTab, { type AdmissionsExtraCol } from "../AdmissionsTab";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
@@ -122,7 +125,8 @@ const TOGGLE_DEF: Record<CircuitToggle, { label: string; title: string }> = {
 // Inscrições → Draw → R1 → … → Resumo → 📋 Scorecards. Texto simples, sem ícones
 // de secção (a FPG só usa ícone no "📋 Scorecards", que vem do IntlTournView).
 const SECTION_DEF: Record<CircuitSectionKind, { label: string; icon: string }> = {
-  results:   { label: "Resultados",  icon: "" },
+  // «Resumo», como nas provas com cartões: o conteúdo é o mesmo Resumo (TotalsResumo).
+  results:   { label: "Resumo",      icon: "" },
   inscritos: { label: "Inscrições",  icon: "" },
   draw:      { label: "Draw",        icon: "" },
   matchplay: { label: "Match Play",  icon: "" },
@@ -132,16 +136,6 @@ const sectionLabel = (s: CircuitSectionKind): string => {
   const d = SECTION_DEF[s];
   return d.icon ? `${d.icon} ${d.label}` : d.label;
 };
-
-/** Secções disponíveis numa divisão (apenas as que têm dados). */
-function divisionSections(d: CircuitDivision): CircuitSectionKind[] {
-  const out: CircuitSectionKind[] = [];
-  if (d.results || d.customResults || d.totals) out.push("results");
-  if (d.admissions?.players?.length) out.push("inscritos");
-  if (d.roundDraws?.length) out.push("draw");
-  if (d.matchplay && d.matchplay.flights.length > 0) out.push("matchplay");
-  return out;
-}
 
 /** Jogadores totais de um entry (metadado leve, ou soma das divisões carregadas). */
 function entryPlayerCount(e: CircuitEntry): number {
@@ -194,20 +188,6 @@ function DivisionAdmissions({ admissions, date, extraCols }: { admissions: FpgAd
   // Sem VAC na fonte (Itália: só a data de inscrição) → sem a coluna vazia.
   const hideCols = ps.some(p => p.vac != null) ? undefined : { vac: true };
   return <AdmissionsTab admissions={admissions} date={date} hidePostCols={hidePostCols} hideCols={hideCols} extraCols={extraCols} kidsCols />;
-}
-
-/** Draws por ronda numa só secção (quando não há resultados de ronda onde os intercalar). */
-function DivisionDraws({ roundDraws }: { roundDraws: NonNullable<CircuitDivision["roundDraws"]> }) {
-  return (
-    <>
-      {roundDraws.map(rd => (
-        <div key={rd.round} className="mb-12">
-          {roundDraws.length > 1 && <div className="fw-700 mb-4">Draw R{rd.round}</div>}
-          {roundDrawNode(rd)}
-        </div>
-      ))}
-    </>
-  );
 }
 
 // ── Componente principal ──────────────────────────────────────────────
@@ -449,14 +429,6 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     }
   }, [divControlled, cur, curDiv, selectedDivKey, onSelectDivision]);
 
-  // ── Secção activa ───────────────────────────────────────────────────
-  const sections = useMemo(() => (curDiv ? divisionSections(curDiv) : []), [curDiv]);
-  // Barra de secções (sem resultados de ronda): as secções-padrão e as abas próprias da divisão.
-  const sectionTabs = useMemo(() => [
-    ...sections.map(s => ({ key: s as string, label: sectionLabel(s) })),
-    ...(curDiv?.extraSections ?? []).map(x => ({ key: x.key, label: x.label })),
-  ], [sections, curDiv]);
-
   const toggle = (t: CircuitToggle) => setToggles((prev) => toggleSet(prev, t));
 
   const hasActiveFilters =
@@ -472,19 +444,25 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     ? applyToggles(curDiv.results, toggles, vetIndex, vetThreshold)
     : null;
 
-  // ── Inscritos / Draw como tabs iniciais da barra única (estilo FPG) ──
-  // Quando há resultados de ronda, fundem-se na barra do IntlTournView:
-  //   Inscritos → Draw → R1 → R2 → … → Resumo → 📋 Scorecards
-  // (em vez de viverem numa barra de secção separada por cima). Sem rondas
-  // (customResults / só inscritos), ficam como barra de secção — ver render.
+  // ── UM SÓ CAMINHO (02/11/2026): todas as divisões passam pelo IntlTournView
+  // (o TournamentDetail da FPG), com ou sem cartões — pedido da Mariana: «os 2
+  // caminhos não podem passar a um caminho só?». A barra é sempre a mesma:
+  //   Inscrições → Draw → R1 → … → Resumo → 📋 Scorecards → Época → Edições → Scout
+  // Sem cartões (só totais: EGR, WAGR, GJGL, Liguillas NextCaddy, Itália por
+  // completar) o «Resumo» é o TotalsResumo (ou o desenho da página), e não há
+  // R1/R2/Scorecards.
   const leadingTabs: { key: string; label: string; content: React.ReactNode }[] = [];
   if (curDiv && !curDiv.renderFull) {
-    if (sections.includes("inscritos") && curDiv.admissions) {
+    if (curDiv.admissions?.players?.length) {
       leadingTabs.push({
         key: "inscritos",
         label: sectionLabel("inscritos"),
         content: <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} extraCols={curDiv.admissionsExtraCols} />,
       });
+    }
+    if (!curDiv.results) {
+      const resumo = divisionResultsNode(curDiv);
+      if (resumo !== undefined) leadingTabs.push({ key: "resumo", label: sectionLabel("results"), content: resumo });
     }
   }
   // Match Play (brackets) — aba no FIM da barra (é a fase final do torneio,
@@ -513,13 +491,6 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       return next;
     }, { replace: true });
   }, [setSearchParams, tabParamName]);
-  // Barra de secções (provas sem voltas): a aba também vive no URL — um link
-  // «…&tab=scout» abre o Scout. Ao mudar de escalão volta à primeira, salvo se
-  // o URL pedir outra que exista.
-  const [section, setSectionState] = useState<string | null>(() => tabParam ?? null);
-  const setSection = (k: string) => { setSectionState(k); setTabParam(k); };
-  useEffect(() => { setSectionState(tabParam ?? null); }, [curDiv?.key, tabParam]);
-
   // ── Tab "Edições anteriores" (embutida, keyed por config.editionKey) ──────
   // O shell tem TODAS as entradas (todos os anos) em memória, cada uma com o
   // seu `loadDivisions` lazy → basta agrupar as irmãs (mesma `editionKey`) e
@@ -604,14 +575,13 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       : <Scout field={curField} tCode={tCodeScout} />,
   } : null;
   if (repeatersTabNode && !curDiv?.renderFull) trailingTabs.push(repeatersTabNode);
-  // Provas sem voltas (só totais — EGR, WAGR, GJGL…): a barra é a de secções, e
-  // as abas extra (Época, Edições anteriores, Scout) entram nela também
-  // (20/10/2026 — antes ficavam de fora e estas provas não as tinham).
-  const extrasSemVoltas = curDiv && !curDiv.renderFull
-    ? [seasonTabNode, pastEditionsTabNode, repeatersTabNode].filter((x): x is NonNullable<typeof x> => !!x)
-    : [];
-  const abasSecao = [...sectionTabs, ...extrasSemVoltas.map(x => ({ key: x.key, label: x.label }))];
-  const curSection: string | null = section && abasSecao.some(t => t.key === section) ? section : abasSecao[0]?.key ?? null;
+  // Sem cartões, o TournamentDetail recebe um torneio sem voltas (só para a
+  // barra): os separadores vêm todos de fora e abre no «Resumo».
+  const semVoltasTourn = useMemo<FPGTournament | null>(() => (curDiv && !curDiv.renderFull && !curDiv.results && cur
+    ? { name: cur.name, tcode: cur.id, date: cur.dateStart ?? "", campo: cur.course ?? "", rounds: 0, playerCount: 0, players: [] } as unknown as FPGTournament
+    : null), [curDiv, cur]);
+  const detailTourn = resultsTourn ?? semVoltasTourn;
+  const temResumoSemVoltas = !resultsTourn && leadingTabs.some((t) => t.key === "resumo");
 
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
   const headerStats = (() => {
@@ -864,19 +834,16 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                 </DetailHeader>
                 )}
 
-                {/* Conteúdo do torneio.
-                    • Com resultados de ronda → barra ÚNICA estilo FPG: as tabs
-                      Inscritos/Draw entram como `leadingTabs` ANTES de R1, na mesma
-                      barra do IntlTournView (Inscritos → Draw → R1 → … → Resumo).
-                    • Sem rondas (customResults / só inscritos) → barra de secção
-                      simples (já era plana, sem aninhamento). */}
+                {/* Conteúdo do torneio: barra ÚNICA estilo FPG (IntlTournView →
+                    TournamentDetail), com ou sem cartões — Inscrições → Draw →
+                    R1 → … → Resumo → 📋 Scorecards → Época → Edições → Scout. */}
                 {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined, repeatersTab: repeatersTabNode ?? undefined })}
-                {!curDiv.renderFull && (resultsTourn ? (
+                {!curDiv.renderFull && detailTourn && (
                   <IntlTournView
-                    tournament={resultsTourn}
+                    tournament={detailTourn}
                     // Campo próprio do escalão (≠ do torneio) → na linha de
                     // informação, junto do CR/Slope (14/10/2026).
-                    scOptions={{ ...(curDiv.scOptions ?? {}), showCourse: !!resultsTourn.campo && resultsTourn.campo.trim() !== String(cur.course || "").trim(), shareEvent: cur.name, shareCourse: resultsTourn.campo || cur.course, shareDate: cur.dateStart }}
+                    scOptions={{ ...(curDiv.scOptions ?? {}), showCourse: !!detailTourn.campo && detailTourn.campo.trim() !== String(cur.course || "").trim(), shareEvent: cur.name, shareCourse: detailTourn.campo || cur.course, shareDate: cur.dateStart }}
                     roundLabels={curDiv.roundLabels}
                     siLabel={curDiv.siLabel}
                     evoCols={curDiv.evoCols}
@@ -890,26 +857,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     roundDraws={curDiv.roundDraws}
                     tabKey={tabParam}
                     onTabKey={setTabParam}
+                    defaultTab={temResumoSemVoltas ? "resumo" : undefined}
                   />
-                ) : (
-                  <>
-                    {/* Sem rondas: barra de secção (Resultados custom / Inscritos / Draw) */}
-                    {abasSecao.length > 1 && (
-                      <TabRow variant="under" className="u-mb-8px" active={curSection} onChange={setSection}
-                        tabs={abasSecao.map(t => ({ key: t.key, label: t.label }))} />
-                    )}
-                    {curSection === "results" && divisionResultsNode(curDiv)}
-                    {curSection === "inscritos" && curDiv.admissions && (
-                      <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} extraCols={curDiv.admissionsExtraCols} />
-                    )}
-                    {curSection === "draw" && curDiv.roundDraws && <DivisionDraws roundDraws={curDiv.roundDraws} />}
-                    {curSection === "matchplay" && curDiv.matchplay && (
-                      <MatchplayView data={curDiv.matchplay} />
-                    )}
-                    {curDiv.extraSections?.find(x => x.key === curSection)?.content}
-                    {extrasSemVoltas.find(x => x.key === curSection)?.content}
-                  </>
-                ))}
+                )}
               </>
             ) : (
               <EmptyState message="Sem dados para este torneio." />

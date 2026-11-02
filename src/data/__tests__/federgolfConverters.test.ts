@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { escalaoCanon } from "../model/escalao";
 import { fgNome, fgClube, fgEscalao, fgEscalaoProva, fgPais, fgTemCartoes, fgTitulo, fgTotais, fgToTournament } from "../federgolf/toTournament";
 import { fgAdmissions, fgAdmissionsCols } from "../federgolf/admissions";
-import { FG_RANKING_CATS, fgAnosNascimento, fgRankingDoJogador, type FgRanking } from "../federgolf/ranking";
+import { FG_RANKING_CATS, fgAnosNascimento, fgIdPorNomeUnico, fgRankingDoJogador, type FgRanking } from "../federgolf/ranking";
 import { buildFgEntries, fgNomeBase } from "../federgolf/entries";
 import type { FgIndice, FgProva } from "../federgolf/types";
 
@@ -130,6 +130,18 @@ describe("Federgolf — ranking juvenil", () => {
       { n: 2, nome: "ROSSI, LUCA", clube: "OLGIATA", cat: "B", qual: null, wagr: null, indice: 20, odm: null, data: null, estado: "cancellato" },
     ] }, nasc)!;
     expect(adm.players!.map((p) => p.birthYear)).toEqual([2014, null]);
+    // Quem não jogou: pelo nome no ranking, só se o nome der UM id.
+    const r: FgRanking = { geradoEm: "", anos: { "2026": {
+      "M-12": [{ ...l("r1", 12), nome: "ROSSI, LUCA" }, { ...l("h1", 12), nome: "BIANCHI, PAOLO" }],
+      "M-14": [{ ...l("h2", 13), nome: "BIANCHI, PAOLO" }],
+    } } };
+    const porNome = fgIdPorNomeUnico(r);
+    expect(porNome.get("ROSSI, LUCA")).toBe("r1");
+    expect(porNome.has("BIANCHI, PAOLO")).toBe(false);
+    const adm2 = fgAdmissions({ ...prova, inscritos: [
+      { n: 2, nome: "ROSSI, LUCA", clube: "OLGIATA", cat: "B", qual: null, wagr: null, indice: 20, odm: null, data: null, estado: "cancellato" },
+    ] }, fgAnosNascimento(r), porNome)!;
+    expect(adm2.players![0].birthYear).toBe(2014);
   });
 });
 

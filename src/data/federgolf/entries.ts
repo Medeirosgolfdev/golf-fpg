@@ -8,7 +8,7 @@ import { cachedFetchJson } from "../fetchCache";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import type { FgIndice, FgIndiceProva, FgProva } from "./types";
 import { fgAdmissions, fgAdmissionsCols } from "./admissions";
-import { fgAnosNascimento, loadFgRanking } from "./ranking";
+import { fgAnosNascimento, fgIdPorNomeUnico, loadFgRanking } from "./ranking";
 import { fgClube, fgEscalaoProva, fgScorecardOptions, fgTemCartoes, fgTitulo, fgTotais, fgToTournament } from "./toTournament";
 
 export const FG_INDEX_URL = "/data/federgolf-index.json";
@@ -21,14 +21,19 @@ export function fgNomeBase(nome: string): string {
 
 const SEXO_LABEL: Record<"M" | "F", string> = { M: "Masculino", F: "Feminino" };
 
-/** Ano de nascimento por id, do ranking juvenil (~0,5 MB, partilhado por todas as provas). */
-let _nascimentos: Promise<Map<string, number>> | null = null;
-const loadNascimentos = () => (_nascimentos ??= loadFgRanking().then(fgAnosNascimento).catch(() => new Map<string, number>()));
+/** Do ranking juvenil (~0,5 MB, partilhado por todas as provas): ano de
+ *  nascimento por id e id por nome (só nomes sem homónimos). */
+type Nascimentos = { porId: Map<string, number>; idPorNome: Map<string, string> };
+let _nascimentos: Promise<Nascimentos> | null = null;
+const loadNascimentos = () => (_nascimentos ??= loadFgRanking()
+  .then((r) => ({ porId: fgAnosNascimento(r), idPorNome: fgIdPorNomeUnico(r) }))
+  .catch(() => ({ porId: new Map<string, number>(), idPorNome: new Map<string, string>() })));
 
 function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
-  return Promise.all([cachedFetchJson<FgProva>(provaUrl(p.id)), loadNascimentos()]).then(([d, nasc]) => {
+  return Promise.all([cachedFetchJson<FgProva>(provaUrl(p.id)), loadNascimentos()]).then(([d, n]) => {
     if (!d?.jogadores?.length) return null;
-    const admissions = fgAdmissions(d, nasc);
+    const nasc = n.porId;
+    const admissions = fgAdmissions(d, nasc, n.idPorNome);
     return withDivisionModel({
       key: p.sexo ?? p.id,
       escalao: fgEscalaoProva(p.categoria),

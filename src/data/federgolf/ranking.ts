@@ -63,6 +63,24 @@ export function fgAnosNascimento(r: FgRanking | null | undefined): Map<string, n
   return m;
 }
 
+/** Nome «APELIDO, NOME» (maiúsculas) → id, só quando o nome dá UM id em todo o
+ *  ranking (homónimos ficam de fora). Para os inscritos que não chegaram a jogar
+ *  (sem id na classificação da prova). */
+export function fgIdPorNomeUnico(r: FgRanking | null | undefined): Map<string, string> {
+  const ids = new Map<string, Set<string>>();
+  for (const listas of Object.values(r?.anos ?? {})) {
+    for (const linhas of Object.values(listas)) {
+      for (const l of linhas) {
+        if (!l.id || !l.nome.includes(",")) continue;
+        const k = l.nome.toUpperCase();
+        if (!ids.has(k)) ids.set(k, new Set());
+        ids.get(k)!.add(l.id);
+      }
+    }
+  }
+  return new Map([...ids].filter(([, s]) => s.size === 1).map(([k, s]) => [k, [...s][0]]));
+}
+
 /** Uma entrada do jogador no ranking: o ano mais recente em que aparece. */
 export interface FgRankingDoJogador extends FgRankingLinha {
   ano: string;

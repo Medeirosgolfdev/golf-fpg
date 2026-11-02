@@ -32,6 +32,8 @@ export interface IntlTournViewProps {
   roundDraws?: CircuitRoundDraw[];
   trailingTabs?: { key: string; label: string; content: React.ReactNode }[];
   tabParam?: string;
+  /** Separador que abre sem `?tab=` (o shell abre no «Resumo» as provas sem cartões). */
+  defaultTab?: string;
   /** Obsoletos: a aba vive no URL (?tab=…) — aceites só por compatibilidade. */
   tabKey?: string;
   onTabKey?: (key: string) => void;
@@ -39,7 +41,7 @@ export interface IntlTournViewProps {
 
 export function IntlTournView({
   tournament, scOptions, roundLabels, evoCols, accHeader, roundExtra, accExtra, siLabel,
-  renderRoundSection, renderAccSection, accShowCols, leadingTabs, roundDraws, trailingTabs, tabParam,
+  renderRoundSection, renderAccSection, accShowCols, leadingTabs, roundDraws, trailingTabs, tabParam, defaultTab,
 }: IntlTournViewProps) {
   const nameDecorator: ScorecardOptions["nameDecorator"] = useCallback(
     (name: string, content: React.ReactNode) => <span className="inline-flex items-center">{content}<KidsLink nome={name} /></span>, []);
@@ -58,7 +60,7 @@ export function IntlTournView({
       accHeader={accHeader} accExtra={accExtra} roundExtra={roundExtra}
       renderRoundSection={renderRoundSection} renderAccSection={renderAccSection}
       renderAccName={renderAccName}
-      leadingTabs={leadingTabs} roundDraws={roundDraws} extraTabs={trailingTabs} tabParam={tabParam}
+      leadingTabs={leadingTabs} roundDraws={roundDraws} extraTabs={trailingTabs} tabParam={tabParam} defaultTab={defaultTab}
     />
   );
 }

@@ -24,11 +24,16 @@ const ESTADO: Record<NonNullable<FgInscrito["estado"]>, FpgAdmissionPlayer["stat
 
 /** `nascimentos`: id do jogador → ano de nascimento (ranking juvenil — `fgAnosNascimento`).
  *  A lista de inscritos não traz o id: casa-se pelo nome «APELIDO, NOME» com
- *  os jogadores da classificação da mesma prova. */
-export function fgAdmissions(d: FgProva, nascimentos?: Map<string, number>): FpgAdmissions | undefined {
+ *  os jogadores da classificação da mesma prova; quem não jogou, com o nome no
+ *  ranking quando dá um só id (`idsDoRanking` — `fgIdPorNomeUnico`). */
+export function fgAdmissions(d: FgProva, nascimentos?: Map<string, number>, idsDoRanking?: Map<string, string>): FpgAdmissions | undefined {
   if (!d.inscritos?.length) return undefined;
   const idPorNome = new Map(d.jogadores.map((j) => [j.nome.toUpperCase(), j.id]));
-  const anoDe = (nome: string) => { const id = idPorNome.get(nome.toUpperCase()); return id ? nascimentos?.get(id) ?? null : null; };
+  const anoDe = (nome: string) => {
+    const k = nome.toUpperCase();
+    const id = idPorNome.get(k) ?? idsDoRanking?.get(k);
+    return id ? nascimentos?.get(id) ?? null : null;
+  };
   const players = d.inscritos.map((i): FgAdmissionPlayer => ({
     pos: i.n, fed: null, nome: fgNome(i.nome), clube: clubeOuPais(i.clube),
     hcp: i.indice, vac: null,

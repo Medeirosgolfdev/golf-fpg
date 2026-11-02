@@ -98,5 +98,6 @@ export interface RoundDrawData {
 export interface TotalsNotice { kind: "aviso" | "nota"; text: string; title?: string }
 
 /** Coluna extra de uma tabela de totais, como dados: o valor é o campo `field`
- *  do jogador, com `decimals` casas (sem número → «–»). */
-export interface TotalsExtraCol { header: string; title?: string; field: string; decimals?: number }
+ *  do jogador, com `decimals` casas (sem número → «–»). `kind: "sd"` desenha
+ *  o valor com a pílula de SD comum (cor pelo HCP do jogador). */
+export interface TotalsExtraCol { header: string; title?: string; field: string; decimals?: number; kind?: "sd" }

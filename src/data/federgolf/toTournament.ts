@@ -125,7 +125,7 @@ export function fgTotais(d: FgProva, nascimentos?: Map<string, number>) {
     tournamentDate: d.data ?? undefined,
     ...(voltasComSd.length ? {
       extra: voltasComSd.map((i): TotalsExtraCol => ({
-        header: `SD R${i + 1}`, title: `SD oficial da Federgolf na ${i + 1}.ª volta`, field: `sd${i + 1}`, decimals: 1,
+        header: `SD R${i + 1}`, title: `SD oficial da Federgolf na ${i + 1}.ª volta`, field: `sd${i + 1}`, decimals: 1, kind: "sd",
       })),
     } : {}),
   };
