@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T12:45:18.526Z",
+  "generatedAt": "2026-11-02T12:48:35.134Z",
   "juniors": [
     {
       "id": "u391389",
@@ -90285,7 +90285,7 @@
       "nationality": "DE",
       "country": "DE",
       "region": "AUVERGNE-RHÔNE-ALPES",
-      "club": "Divonne",
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "523828",
@@ -90293,8 +90293,8 @@
         },
         "ffgolf": {
           "lic": "511222321",
-          "club": "Divonne",
-          "hcp": 14.5,
+          "club": "",
+          "hcp": 8.2,
           "region": "AUVERGNE-RHÔNE-ALPES",
           "sex": "M",
           "glfLic": "0015"
@@ -206460,8 +206460,8 @@
       "country": "GB",
       "countries": [
         "US",
-        "GB",
-        "SK"
+        "SK",
+        "GB"
       ],
       "region": null,
       "club": "Hillside",
@@ -206471,9 +206471,9 @@
           "ageGroupCurrent": "Boys 13-14"
         },
         "ffgolf": {
-          "lic": "E86125997",
+          "lic": "E90895670",
           "club": "",
-          "hcp": 0.5,
+          "hcp": -0.4,
           "region": null,
           "sex": "M",
           "glfLic": "0000"
@@ -206625,7 +206625,7 @@
         "confidence": "strong",
         "evidence": [
           "uskids:552079",
-          "ffgolf:E86125997",
+          "ffgolf:E90895670",
           "wjgc:leo taylor|",
           "doral:doral-2173605227",
           "england:leo taylor|GB",
@@ -1041245,63 +1041245,6 @@
       }
     },
     {
-      "id": "gE61467052",
-      "canonicalName": "Elise Bishop",
-      "aliases": [],
-      "dob": "2003-03-20",
-      "sex": "F",
-      "nationality": "BE",
-      "country": "BE",
-      "region": null,
-      "club": "ROYAL GOLF CLUB OF BELGIUM ",
-      "sources": {
-        "ffgolf": {
-          "lic": "E61467052",
-          "club": "ROYAL GOLF CLUB OF BELGIUM ",
-          "hcp": -1.5,
-          "region": null,
-          "sex": "F",
-          "glfLic": "0000"
-        },
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "elise bishop|BE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "ffgolf-2200823639",
-        "egr-egr5308",
-        "egr-egr5637",
-        "egr-egr4852",
-        "egr-egr4896",
-        "egr-egr3849",
-        "egr-egr3748"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2022-04-14",
-          "hcpExact": -1.5,
-          "source": "ffg",
-          "tcode": "2200823639",
-          "label": "FRENCH INTERNATIONAL LADY JUNIORS AMATEU"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:E61467052",
-          "egr:elise bishop|BE",
-          "dob:2003-03-20"
-        ],
-        "mergedFromSources": [
-          "ffgolf",
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "gE61467029",
       "canonicalName": "Emilia von Glahn",
       "aliases": [
@@ -1414473,6 +1414416,60 @@
         "evidence": [
           "ffgolf:E66717979",
           "egr:anais arafi|CH"
+        ],
+        "mergedFromSources": [
+          "ffgolf",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "gE61467052",
+      "canonicalName": "Elise Bishop",
+      "aliases": [],
+      "dob": "2003-03-20",
+      "sex": "F",
+      "nationality": "BE",
+      "country": "BE",
+      "region": null,
+      "club": " ",
+      "sources": {
+        "ffgolf": {
+          "lic": "E61467052",
+          "club": " ",
+          "hcp": -1.5
+        },
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "elise bishop|BE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "ffgolf-2200823639",
+        "egr-egr5308",
+        "egr-egr5637",
+        "egr-egr4852",
+        "egr-egr4896",
+        "egr-egr3849",
+        "egr-egr3748"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2022-04-14",
+          "hcpExact": -1.5,
+          "source": "ffg",
+          "tcode": "2200823639",
+          "label": "FRENCH INTERNATIONAL LADY JUNIORS AMATEU"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:E61467052",
+          "egr:elise bishop|BE",
+          "dob:2003-03-20"
         ],
         "mergedFromSources": [
           "ffgolf",
@@ -2315218,12 +2315215,12 @@
   ],
   "stats": {
     "total": 39917,
-    "droppedNoTourn": 34462,
+    "droppedNoTourn": 34463,
     "strong": 36173,
     "probable": 3744,
     "manual": 0,
-    "strongMerges": 9559,
-    "probableMerges": 16926,
+    "strongMerges": 9560,
+    "probableMerges": 16925,
     "manualMerges": 852,
     "collisionMerges": 178,
     "collisionSplits": 86,
