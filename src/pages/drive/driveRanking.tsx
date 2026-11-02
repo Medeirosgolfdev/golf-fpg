@@ -15,7 +15,7 @@ import type { Tournament } from "../../data/fpgTypes";
 import type { CircuitEntry } from "../../ui/circuit/types";
 import type { CircuitRanking, CircuitRankingContext } from "../../ui/circuit/CircuitRanking";
 import { RankingTable, type RankingCol } from "../../ui/ranking/RankingPage";
-import { buildSub12Data, dateToSort, filterBySub12Series, sub12Kpis, sub12Tournaments } from "../../data/drive/driveSub12";
+import { buildSub12Data, dateToSort, escMatches, filterBySub12Series, sub12Kpis, sub12Tournaments } from "../../data/drive/driveSub12";
 import type { DriveSeries } from "../../data/drive/driveSource";
 import type { Sub12View } from "../../data/drive/driveUrl";
 import { escalaoCanon } from "../../data/model/escalao";
@@ -38,6 +38,8 @@ import SearchInput from "../../ui/SearchInput";
 import SexSelect from "../../ui/SexSelect";
 import { MUTED } from "../../ui/tableCells";
 import { regionLabel } from "../../data/drive/driveRegions";
+import AquaporSeason from "./AquaporSeason";
+import type { DriveCalEntry } from "../../data/drive/driveCalendar";
 
 export const SERIE_LABELS: Record<DriveSeries, string> = { tour: "Tour", challenge: "Challenge", aquapor: "AQUAPOR" };
 
@@ -146,6 +148,8 @@ export interface DriveRankingDeps {
   escLookup: EscLookup;
   temporal: TemporalEscLookup;
   fedBirthdates: Map<string, string>;
+  /** Sexo por federado (base de federados): o lugar no AQUAPOR conta-se dentro do sexo. */
+  fedGenders: Map<string, string>;
   /** Série da barra; com «Todos», a série do ranking escolhe-se na vista (`s12s`). */
   series: DriveSeries | "all";
   seriesAll: DriveSeries;
@@ -158,6 +162,10 @@ export interface DriveRankingDeps {
   set: (p: { s12s?: DriveSeries; s12e?: string; s12x?: string; s12v?: Sub12View }) => void;
   setSearch: (q: string) => void;
   setSelected: (fed: string | null) => void;
+  /** Os escalões da barra «Classificação» (a «Época» do AQUAPOR filtra por eles). */
+  classEsc?: string[];
+  /** O calendário da série num ano (a «Época» do AQUAPOR mostra as etapas por jogar). */
+  calendar?: (series: DriveSeries, year: string) => DriveCalEntry[];
   /** Acima de tudo na vista (o calendário). */
   top?: (series: DriveSeries) => React.ReactNode;
 }
@@ -195,9 +203,8 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
     ctx.scope === "view" && d.series === "all" ? d.seriesAll
       : ((ctx.entries[0]?.divisions?.[0]?.results?.series || (d.series === "all" ? d.seriesAll : d.series)) as DriveSeries);
   const escOf = (ctx: CircuitRankingContext) => ctx.scope === "season" ? seasonEscalao(ctx.division) : d.esc;
-  const rowsOf = (ctx: CircuitRankingContext): Sub12Row[] => {
-    const esc = escOf(ctx);
-    let rows = buildSub12Data(rankingTournaments(ctx.entries, d.expanded), d.pdb, d.escLookup, d.temporal, d.fedBirthdates, esc);
+  const rowsOf = (ctx: CircuitRankingContext, esc = escOf(ctx)): Sub12Row[] => {
+    let rows = buildSub12Data(rankingTournaments(ctx.entries, d.expanded), d.pdb, d.escLookup, d.temporal, d.fedBirthdates, esc, d.fedGenders);
     rows = filterBySub12Series(rows, seriesOf(ctx));
     if (ctx.scope === "view") {
       if (d.sex !== "all") rows = rows.filter(p => p.sex === d.sex);
@@ -261,6 +268,18 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
       render: (row, close) => <PlayerDetail row={row} onClose={close} />,
     },
     emptyMessage: "Nenhum jogador com resultados neste escalão.",
+    // AQUAPOR: a «Época» é a grelha jogador × torneio, rapazes e raparigas à parte.
+    seasonRender: ctx => {
+      if (seriesOf(ctx) !== "aquapor") return null;
+      const all = rowsOf(ctx, "all");
+      const esc = d.classEsc?.length ? null : escOf(ctx);
+      const rows = d.classEsc?.length ? all.filter(r => d.classEsc!.some(e => escMatches(r.esc ?? "", e)))
+        : esc === "all" ? all : rowsOf(ctx);
+      const year = ctx.entries[0]?.dateStart?.slice(0, 4);
+      return <AquaporSeason rows={rows} allRows={all} entries={ctx.entries} pdb={d.pdb}
+        upcoming={year ? d.calendar?.("aquapor", year) ?? [] : []}
+        fedBirthdates={d.fedBirthdates} initialSex={/senhora|femin/i.test(ctx.division ?? "") ? "F" : "M"} escLabel={esc ? escLabel(esc) : d.classEsc!.join(" · ")} />;
+    },
     seasonTitle: (rows, ctx) => (
       <div className="h-sm mb-6">
         🏅 Classificação acumulada — {SERIE_LABELS[seriesOf(ctx)]} · {escLabel(escOf(ctx))} · {rows.length} jogadores

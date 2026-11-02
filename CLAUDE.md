@@ -258,6 +258,10 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   `backfill-sd.js`); sem ele, o calculado com o HCP da inscrição (`hcpExact`).
   Tudo passa pelo `computeSD` (`src/data/fpgUtils.ts`). Nunca estimar sem
   CR/Slope. Não se descarrega WHS de ninguém só para ter o SD.
+- **Toda a volta jogada tem SD** (Mariana, 02/11/2026: «TUDO TEM DE TER SD»).
+  Numa prova de várias voltas o acumulado não tem SD — tem-no CADA volta:
+  `computeRoundSDs` (fpgUtils). Nunca deixar uma coluna de SD vazia por a
+  entrada ser o Resumo.
 - Os scripts Node usam o **mesmo** ficheiro via `scripts/lib/whs.cjs` (o Node
   corre TypeScript). Por isso o `whsCalc.ts` só pode ter tipos e interfaces
   (nada de `enum`/`namespace`) e não importa outros ficheiros do `src`

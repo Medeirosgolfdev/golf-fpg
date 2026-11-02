@@ -4127,6 +4127,48 @@ table td.lb-col-divider {
 .drive-player-name { font-size: var(--fs-16); }
 .notice-error.drive-error { margin: var(--space-16); }
 .p.drive-rank-link { text-decoration: none; background: var(--bg-muted); color: var(--accent); border: 1px solid var(--border); }
+
+/* AQUAPOR — a «Época» (pages/drive/AquaporSeason.tsx): jogador × torneio.
+   Colunas das provas com a MESMA largura, linhas verticais a separá-las e o
+   cabeçalho em 3 linhas (n.º e data · campo · distância). */
+.aq-season-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-8) var(--space-16); }
+.aq-season-sub { margin-top: var(--space-2); font-size: var(--fs-11); color: var(--text-3); }
+.aq-season .dtable :is(th, td).aq-etapa {
+  width: calc(var(--space-40) * 2.75); min-width: calc(var(--space-40) * 2.75);
+  text-align: center; border-left: 1px solid var(--border-light); white-space: nowrap;
+}
+.aq-season .dtable :is(th, td).aq-col-pts { border-right: 2px solid var(--border); }
+.aq-season .dtable th.aq-etapa { vertical-align: bottom; }
+.aq-season .dtable :is(th, td).aq-futuro { background: var(--bg-muted); }
+.aq-th { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+.aq-th-num { font-size: var(--fs-10); font-weight: 600; color: var(--text-3); }
+.aq-th-campo { font-weight: 700; color: var(--text); }
+.aq-th-meta { font-size: var(--fs-10); font-weight: 400; color: var(--text-3); }
+.aq-th-meta .p-tee { font-size: var(--fs-10); padding: var(--space-1) var(--space-6); }
+/* A célula: 2 linhas, para a linha da tabela não engordar — em cima as voltas
+   e o lugar, em baixo o SD de cada volta e os pontos (aq-cell-N = N voltas). */
+.aq-cell { display: inline-grid; align-items: center; justify-items: center; column-gap: var(--space-3); row-gap: var(--space-1); }
+.aq-cell-1 { grid-template-columns: repeat(1, auto) auto; }
+.aq-cell-2 { grid-template-columns: repeat(2, auto) auto; }
+.aq-cell-3 { grid-template-columns: repeat(3, auto) auto; }
+.aq-cell-4 { grid-template-columns: repeat(4, auto) auto; }
+.aq-sd { font-size: var(--fs-9); line-height: 1.2; padding: 0 var(--space-2); }
+/* Cada volta numa caixinha (como no cartão): vê-se que são resultados separados. */
+.aq-volta { min-width: var(--space-24); padding: 0 var(--space-2); text-align: center; font-size: var(--fs-12); font-weight: 600;
+  color: var(--text); border: 1px solid var(--border-light); border-radius: var(--radius-sm); background: var(--bg-card); }
+.aq-season .dtable td { padding-top: var(--space-3); padding-bottom: var(--space-3); }
+/* O nome pode quebrar: a coluna do jogador não estica a tabela. */
+.aq-season .dtable :is(th, td).aq-col-jog { white-space: normal; min-width: calc(var(--space-40) * 3); max-width: calc(var(--space-40) * 4); }
+.aq-season .dtable td.aq-col-jog { line-height: 1.2; }
+.aq-inscritos { color: var(--accent); font-weight: 600; }
+.aq-inscrito { display: inline-block; padding: var(--space-1) var(--space-6); border-radius: var(--radius-sm);
+  background: var(--accent-light); color: var(--accent); font-size: var(--fs-10); font-weight: 600; }
+.aq-lugar { display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-10); padding-left: var(--space-2); }
+.aq-pts { color: var(--color-warn-dark); font-weight: 600; font-size: var(--fs-10); padding-left: var(--space-2); }
+.aq-wd { color: var(--text-3); font-style: italic; }
+.aq-evol { font-size: var(--fs-11); font-weight: 700; white-space: nowrap; }
+.aq-evol.is-good { color: var(--color-good); }
+.aq-evol.is-bad { color: var(--color-danger); }
 .segmented-toggle.drive-tabrow { margin-bottom: 0; }
 .tourn-tab.drive-region { flex-shrink: 0; }
 .drive-below { display: flex; align-items: center; column-gap: var(--space-6); row-gap: var(--space-4); padding: var(--space-4) var(--space-12) var(--space-6); flex-wrap: wrap; border-top: 1px solid var(--border-light); }

@@ -24,7 +24,11 @@ export interface TStats {
   pos: number | string | null;
   gross: number;
   toPar: number;
-  sd18: number | null;
+  /** SD da prova (volta única, ou a média das voltas) e o de cada volta. */
+  sd: number | null;
+  sds: number[];
+  /** O SD de cada volta, alinhado com `roundScores` (`null` sem cartão). */
+  roundSds: (number | null)[];
   nholes: number;
   birdies: number;
   pars: number;
@@ -36,11 +40,27 @@ export interface TournResult {
   tournKey: string; tournName: string; tournShort: string;
   date: string; dateSort: number; campo: string; region: string;
   series: "tour" | "challenge" | "aquapor";
-  gross: number; toPar: number; sd: number | null;
+  gross: number; toPar: number;
+  /** SD da prova: o da volta única, ou a média das voltas numa prova de várias. */
+  sd: number | null;
+  /** O SD de cada volta jogada (o Best SD e a média da época saem daqui). */
+  sds: number[];
   pos: number | string | null; totalPlayers: number;
   /** Pontos oficiais desta prova (já com empates partilhados; nas Finais é o
    *  valor SIMPLES — o ×1.5 é aplicado pelo rankingTotal). */
   pts: number;
+  /** AQUAPOR: o lugar no ranking oficial — dentro do sexo, empates partilhados. */
+  sexPos?: number | null;
+  /** Não acabou todas as voltas (sem lugar nem pontos). */
+  wd?: boolean;
+  /** Pancadas de cada volta jogada e o SD de cada uma (alinhados). */
+  rounds?: number[];
+  roundSds?: (number | null)[];
+  /** HCP da inscrição nesta prova. */
+  hcpExact?: number | null;
+  /** Tee e distância (m) da volta jogada. */
+  tee?: string | null;
+  meters?: number | null;
   nholes: number; birdies: number; pars: number; bogeys: number;
 }
 

@@ -94,6 +94,28 @@ export interface FieldEntry {
   sex?: string | null;
 }
 
+/** Lugar e pontos de cada jogador numa prova AQUAPOR: o ranking oficial
+ *  (RCAH/RCAS) classifica DENTRO do sexo, por gross, e os empatados partilham
+ *  o lugar e os pontos. Sem sexo conhecido fica num grupo à parte. */
+export function aquaporPlaces(field: FieldEntry[]): Map<string, { pos: number; pts: number }> {
+  const out = new Map<string, { pos: number; pts: number }>();
+  const scored = field.filter(p => p.fed && hasCard(p.gross));
+  for (const sex of ["M", "F", ""]) {
+    const grupo = scored.filter(p => (p.sex || "") === sex);
+    if (!grupo.length) continue;
+    const ord = [...grupo].sort((a, b) => (a.gross as number) - (b.gross as number));
+    let i = 0;
+    while (i < ord.length) {
+      let j = i + 1;
+      while (j < ord.length && ord[j].gross === ord[i].gross) j++;
+      const pts = sharedPoints(i + 1, j - i, "aquapor");
+      for (let k = i; k < j; k++) out.set(ord[k].fed, { pos: i + 1, pts });
+      i = j;
+    }
+  }
+  return out;
+}
+
 /** Pontos de UM torneio, por federado — com as regras oficiais de empate.
  *  · Aquapor: classifica DENTRO do sexo e empates partilham lugar/pontos.
  *  · Challenge/Tour: usa a posição já desempatada por countback no scrape;
@@ -109,19 +131,7 @@ export function tournamentPoints(
   const scored = field.filter(p => p.fed && hasCard(p.gross));
 
   if (series === "aquapor") {
-    for (const sex of ["M", "F", ""]) {
-      const grupo = scored.filter(p => (p.sex || "") === sex);
-      if (!grupo.length) continue;
-      const ord = [...grupo].sort((a, b) => (a.gross as number) - (b.gross as number));
-      let i = 0;
-      while (i < ord.length) {
-        let j = i + 1;
-        while (j < ord.length && ord[j].gross === ord[i].gross) j++;
-        const pts = sharedPoints(i + 1, j - i, series);
-        for (let k = i; k < j; k++) out.set(ord[k].fed, pts);
-        i = j;
-      }
-    }
+    for (const [fed, x] of aquaporPlaces(field)) out.set(fed, x.pts);
     return out;
   }
 

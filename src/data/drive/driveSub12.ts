@@ -7,8 +7,8 @@
  * do próprio torneio Challenge). Pontos: `constants/drivePoints.ts`.
  */
 import { ESCALOES_DRIVE as ESCALOES } from "../../constants/escaloes";
-import { tournamentPoints, rankingTotal } from "../../constants/drivePoints";
-import { resolveEsc, computeSD, type TemporalEscLookup } from "../fpgUtils";
+import { tournamentPoints, rankingTotal, aquaporPlaces } from "../../constants/drivePoints";
+import { resolveEsc, computeSD, computeRoundSDs, type TemporalEscLookup } from "../fpgUtils";
 import { isDNS } from "../../ui/driveUtils";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { Tournament, Player, TStats, Sub12Row, EscLookup } from "../../ui/driveTypes";
@@ -21,7 +21,8 @@ export type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
 export function computeStats(p: Player, date?: string | null): TStats | null {
   if (isDNS(p)) return null;
   const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
-  if (gross == null || isNaN(gross as number)) return null;
+  // 0 = sem volta nenhuma (o Resumo de quem desistiu na 1.ª): não há cartão.
+  if (gross == null || isNaN(gross as number) || (gross as number) <= 0) return null;
   const g = gross as number;
 
   // Flat fields may be absent when player uses roundScores format;
@@ -34,14 +35,19 @@ export function computeStats(p: Player, date?: string | null): TStats | null {
   const tp = g - parT;
   const nh = p.nholes || scores.length || parArr.length || 18;
   // SD: o oficial da FPG, ou o calculado com o HCP da inscrição (ver computeSD).
-  // Entradas multi-ronda combinadas (nholes > 18) não têm SD.
-  const sd18 = nh <= 18
-    ? computeSD({
-        ...p, scores, par: parArr, si: p.si?.length ? p.si : rs0?.si || [],
-        courseRating: p.courseRating ?? rs0?.courseRating, slope: p.slope ?? rs0?.slope,
-        pcc: p.pcc ?? rs0?.pcc, nholes: nh,
-      }, date).sd
-    : null;
+  // Numa prova de várias voltas o acumulado não tem SD — conta o de CADA volta
+  // (o Best SD é a melhor volta; o SD da prova, a média delas).
+  const rawSds = (p.roundScores?.length ?? 0) > 1
+    ? computeRoundSDs(p, date)
+    : [nh <= 18
+      ? computeSD({
+          ...p, scores, par: parArr, si: p.si?.length ? p.si : rs0?.si || [],
+          courseRating: p.courseRating ?? rs0?.courseRating, slope: p.slope ?? rs0?.slope,
+          pcc: p.pcc ?? rs0?.pcc, nholes: nh,
+        }, date).sd
+      : null];
+  const sds = rawSds.filter((x): x is number => x != null).map(x => Math.round(x * 10) / 10);
+  const sd = sds.length ? Math.round((sds.reduce((s, x) => s + x, 0) / sds.length) * 10) / 10 : null;
 
   let birdies = 0, pars = 0, bogeys = 0;
   // If player has multiple roundScores, count across all rounds
@@ -64,7 +70,8 @@ export function computeStats(p: Player, date?: string | null): TStats | null {
       else bogeys++;
     }
   }
-  return { pos: p.pos, gross: g, toPar: tp, sd18, nholes: nh, birdies, pars, bogeys };
+  return { pos: p.pos, gross: g, toPar: tp, sd, sds, roundSds: rawSds.map(x => x == null ? null : Math.round(x * 10) / 10),
+    nholes: nh, birdies, pars, bogeys };
 }
 
 export function uniquePC(ts: Tournament[]): number {
@@ -249,14 +256,28 @@ export function dateToSort(d: string): number {
   if (parts.length === 3 && parts[2].length === 4) return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).getTime() || 0;
   return new Date(d).getTime() || 0;
 }
+/** Desistiu (ou ficou sem cartão) numa das voltas. */
+function desistiu(p: Player): boolean {
+  return !!p._wd || !!p.roundScores?.some(r => r.gross >= 900);
+}
+/** Distância (m) da volta jogada: a soma dos metros da 1.ª volta; `null`
+ *  quando a fonte não os traz. */
+function roundMeters(p: Player): number | null {
+  const m = p.roundScores?.[0]?.meters?.length ? p.roundScores[0].meters : p.meters;
+  const sum = (m ?? []).reduce((s, x) => s + (x || 0), 0);
+  return sum > 0 ? sum : null;
+}
 export function buildSub12Data(
   tournaments: Tournament[],
   playersDB: PlayersDB,
   escLookup: EscLookup,
   temporalEscLookup?: TemporalEscLookup,
   fedBirthdates?: Map<string, string>,
-  targetEsc: string = "Sub 12"
+  targetEsc: string = "Sub 12",
+  /** Sexo por federado (base de federados) — o players.json não tem os adultos. */
+  fedGenders?: Map<string, string>,
 ): Sub12Row[] {
+  const sexOf = (fed: string) => playersDB[fed]?.sex || fedGenders?.get(fed) || "";
   // Incluir apenas ronda única OU a entrada "Total" de torneios multi-ronda
   // (nunca R1/R2 individuais — pontos são pela classificação do Total)
   const validTournaments = tournaments.filter(t =>
@@ -266,17 +287,17 @@ export function buildSub12Data(
   for (const t of validTournaments) {
     // Pontos oficiais da prova, para o campo TODO (não só o escalão filtrado):
     // a posição que pontua é a do leaderboard completo. No Aquapor é dentro do
-    // sexo, daí passar o sexo do players.json.
-    const ptsByFed = tournamentPoints(
-      t.players.map(p => ({
-        fed: p.fed || p.fedCode || "",
-        pos: p.pos,
-        gross: typeof p.grossTotal === "number" ? p.grossTotal : null,
-        sex: playersDB[p.fed || p.fedCode || ""]?.sex || "",
-      })),
-      t.series,
-      t.name,
-    );
+    // sexo (de todos: sem ele, os pontos saem errados — 2026-11-02).
+    // Quem não acabou todas as voltas não tem cartão: o Resumo soma só as voltas
+    // válidas (87 de uma volta ficava à frente de 138 em duas — 2026-11-02).
+    const field = t.players.map(p => ({
+      fed: p.fed || p.fedCode || "",
+      pos: p.pos,
+      gross: typeof p.grossTotal === "number" && !desistiu(p) ? p.grossTotal : null,
+      sex: sexOf(p.fed || p.fedCode || ""),
+    }));
+    const ptsByFed = tournamentPoints(field, t.series, t.name);
+    const places = t.series === "aquapor" ? aquaporPlaces(field) : null;
     for (const p of t.players) {
       if (isDNS(p)) continue;
       // Escalão no ANO do torneio (year-based) — crucial para filtrar o escalão
@@ -294,7 +315,10 @@ export function buildSub12Data(
       if (!fed) continue;
       const stats = computeStats(p, t.date);
       if (!stats) continue;
-      const { gross: g, toPar: tp, sd18, nholes, birdies, pars: parsCount, bogeys } = stats;
+      const { gross: g, toPar: tp, sd, sds, roundSds, nholes, birdies, pars: parsCount, bogeys } = stats;
+      // Cada volta jogada com o seu SD (alinhados; sem as voltas sem cartão).
+      const voltas = (p.roundScores?.length ? p.roundScores.map((r, i) => ({ g: r.gross, sd: roundSds[i] ?? null })) : [{ g, sd }])
+        .filter(v => v.g > 0 && v.g < 900);
       const tournKey = t.tcode + "_" + t.date;
       if (!playerMap.has(fed)) {
         const dbInfo = playersDB[fed];
@@ -302,7 +326,7 @@ export function buildSub12Data(
           fed, name: p.name || dbInfo?.name || `Fed. ${fed}`,
           club: p.club || dbInfo?.club?.short || "",
           region: dbInfo?.region || t.region || "",
-          sex: dbInfo?.sex || "", hcp: dbInfo?.hcp ?? p.hcpExact ?? null,
+          sex: sexOf(fed), hcp: dbInfo?.hcp ?? p.hcpExact ?? null,
           results: [], avgGross: null, avgSD: null, bestGross: null, bestSD: null, tourneiosPlayed: 0,
           totalBird: 0, totalPars: 0, totalBog: 0, totalPts: 0,
         });
@@ -315,8 +339,15 @@ export function buildSub12Data(
         date: t.date, dateSort: dateToSort(t.date),
         campo: t.campo || "", region: t.region || "", series: (t.series || "tour") as "tour" | "challenge" | "aquapor",
         gross: g, toPar: tp,
-        sd: sd18 != null ? Math.round(sd18 * 10) / 10 : null,
+        sd, sds,
         pos: p.pos, totalPlayers: t.playerCount, pts: ptsByFed.get(fed) ?? 0,
+        sexPos: places?.get(fed)?.pos ?? null,
+        wd: desistiu(p) || undefined,
+        rounds: voltas.map(v => v.g),
+        roundSds: voltas.map(v => v.sd),
+        hcpExact: p.hcpExact ?? null,
+        tee: p.teeName || p.roundScores?.[0]?.teeName || null,
+        meters: roundMeters(p),
         nholes, birdies, pars: parsCount, bogeys,
       });
       row.totalBird += birdies;
@@ -337,7 +368,7 @@ export function buildSub12Data(
     const modalZone = [...zoneCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
     if (modalZone) row.region = modalZone;
     const grosses = row.results.map(r => r.gross);
-    const sds = row.results.filter(r => r.sd != null).map(r => r.sd!);
+    const sds = row.results.flatMap(r => r.sds);
     row.tourneiosPlayed = row.results.length;
     row.avgGross = numAvg(grosses);
     row.avgSD = numAvg(sds);
@@ -353,7 +384,7 @@ export function filterBySub12Series(rows: Sub12Row[], series: Sub12SeriesTab): S
     const fR = p.results.filter(r => r.series === series);
     if (fR.length === 0) return null;
     const fG = fR.map(r => r.gross);
-    const fS = fR.filter(r => r.sd != null).map(r => r.sd!);
+    const fS = fR.flatMap(r => r.sds);
     return {
       ...p, results: fR, tourneiosPlayed: fR.length,
       avgGross: numAvg(fG), avgSD: numAvg(fS),

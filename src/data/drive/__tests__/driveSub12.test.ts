@@ -48,4 +48,25 @@ describe("driveSub12", () => {
     expect(countEvents(ts)).toBe(3);
     expect(uniquePC(ts)).toBe(2);
   });
+
+  it("AQUAPOR (2 voltas): SD de CADA volta, lugar e pontos dentro do sexo (sexo da base de federados)", () => {
+    const rs = (gross: number, sd: number | null) => ({ round: 1, gross, scores: Array(18).fill(gross / 18), pars: par, si: par.map((_, i) => i + 1), meters: Array(18).fill(300), courseRating: 72, slope: 113, teeName: "BRANCAS", ...(sd != null ? { sd } : {}) });
+    const aq = (fed: string, r1: number, r2: number, pos: number, sd1: number | null = null) =>
+      ({ ...pl(fed, r1 + r2, pos), hcpExact: 5, parTotal: 144, nholes: 36, roundScores: [rs(r1, sd1), rs(r2, null)] });
+    const t = T({ tcode: "Q", ccode: "000", series: "aquapor", name: "1º Torneio do Circuito Aquapor", region: "nacional",
+      players: [aq("m1", 70, 72, 1, -1.5), aq("f1", 72, 72, 2), aq("m2", 74, 75, 3)] });
+    const sexo = new Map([["m1", "M"], ["m2", "M"], ["f1", "F"]]);
+    const rows = buildSub12Data([t], {}, new Map(), undefined, undefined, "all", sexo);
+    const m1 = rows.find((r) => r.fed === "m1")!.results[0];
+    expect(m1.sds).toEqual([-1.5, 0]);            // R1 oficial, R2 calculado (CR 72, slope 113)
+    expect(m1.sd).toBe(-0.7);                     // média das voltas (−0,75)
+    expect(m1.rounds).toEqual([70, 72]);
+    expect(m1.roundSds).toEqual([-1.5, 0]);       // alinhado com as voltas (a grelha da Época)
+    expect(m1.meters).toBe(5400);
+    expect(rows.find((r) => r.fed === "m1")!.bestSD).toBe(-1.5);
+    // a rapariga é 1.ª no feminino (não 2.ª do campo todo) e o m2 é 2.º no masculino
+    const f1 = rows.find((r) => r.fed === "f1")!.results[0];
+    expect([f1.sexPos, f1.pts]).toEqual([1, 250]);
+    expect(rows.find((r) => r.fed === "m2")!.results[0].sexPos).toBe(2);
+  });
 });

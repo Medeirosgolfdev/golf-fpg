@@ -22,6 +22,9 @@ export interface DriveCalEntry {
   campo: string;
   region: string;
   series: DriveSeries;
+  /** Por jogar: os federados inscritos e o estado das inscrições (da FPG). */
+  inscritos?: string[];
+  estado?: string;
 }
 
 const PREFIX: Record<DriveSeries, string> = { tour: "DT", challenge: "DC", aquapor: "AQUAPOR" };
@@ -49,6 +52,7 @@ export function driveCalendar(src: Tournament[], series: DriveSeries, year: stri
     .map((e): DriveCalEntry => {
       const date = e.dateStart!;
       const n = Math.max(1, e.roundsCount ?? 1);
+      const ad = e.divisions?.[0]?.results?._admissions;
       return {
         name: driveCalLabel(e.name, series, e.liga),
         date,
@@ -56,6 +60,8 @@ export function driveCalendar(src: Tournament[], series: DriveSeries, year: stri
         campo: shortCampo(e.course),
         region: e.liga || "nacional",
         series,
+        ...(ad?.players?.length ? { inscritos: ad.players.map(p => String(p.fed ?? "")).filter(Boolean) } : {}),
+        ...(ad?.status ? { estado: ad.status } : {}),
       };
     })
     .sort((a, b) => a.date.localeCompare(b.date) || a.name.localeCompare(b.name));

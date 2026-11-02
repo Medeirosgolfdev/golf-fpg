@@ -520,6 +520,27 @@ export function computeRoundSD(p: Player, date?: string | null): SDResult {
   return computeSD(p, date);
 }
 
+/** O SD de CADA volta de um jogador (uma entrada por `roundScores[]`, `null`
+ *  nas voltas sem cartão). O acumulado de várias voltas não tem SD — tem um
+ *  por volta, e é esse que se mostra. Sem `roundScores`, a própria entrada é
+ *  a volta única. */
+export function computeRoundSDs(p: Player, date?: string | null): (number | null)[] {
+  const rounds = p.roundScores ?? [];
+  if (rounds.length <= 1) return [computeRoundSD(p, date).sd];
+  return rounds.map(rs => !rs.gross ? null : computeSD({
+    grossTotal: rs.gross,
+    sd: rs.sd,
+    scores: rs.scores,
+    par: rs.pars,
+    si: rs.si,
+    courseRating: rs.courseRating,
+    slope: rs.slope,
+    hcpExact: p.hcpExact,
+    pcc: rs.pcc,
+    nholes: rs.pars?.length || rs.scores?.length || null,
+  }, date).sd);
+}
+
 export function filterPlayers(
   players: Player[],
   f: PlayerFilter,

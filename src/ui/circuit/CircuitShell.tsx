@@ -570,8 +570,11 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     if (!curDiv || !cur || !seasonSiblings) return null;
     // Com a capacidade «ranking», a «Época» abre com a classificação acumulada
     // das etapas da época (a mesma vista Ranking, só com estes torneios).
+    const seasonCtx = { entries: seasonSiblings, scope: "season" as const, division: curDivLabel };
+    const own = ranking?.seasonRender?.(seasonCtx);
+    if (own) return { key: "season", label: config.seasonTabLabel ?? "Época", content: own };
     const rankingNode = ranking?.rows && ranking.seasonTitle
-      ? <CircuitRankingView ranking={ranking} ctx={{ entries: seasonSiblings, scope: "season", division: curDivLabel }} />
+      ? <CircuitRankingView ranking={ranking} ctx={seasonCtx} />
       : null;
     return { key: "season", label: config.seasonTabLabel ?? "Época",
       content: <>{rankingNode}<CircuitPastEditionsTab editions={seasonSiblings} division={curDivLabel} match={matchDiv} /></> };

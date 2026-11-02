@@ -71,6 +71,9 @@ export interface CircuitRanking<R> {
   emptyMessage?: string;
   /** Título da secção na «Época» (sem ele, a «Época» não leva ranking). */
   seasonTitle?: (rows: R[], ctx: CircuitRankingContext) => React.ReactNode;
+  /** «Época» própria: quando devolve conteúdo, substitui a classificação E a
+   *  lista das etapas (ex.: a grelha jogador × torneio do AQUAPOR). */
+  seasonRender?: (ctx: CircuitRankingContext) => React.ReactNode | null;
 }
 
 /** A vista (ou a secção da «Época») de um ranking com linhas. */

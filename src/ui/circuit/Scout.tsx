@@ -22,6 +22,7 @@ import LoadingState from "../LoadingState";
 import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
 import { isManuel as isManuelPlayer } from "../../constants/manuel";
+import { useFedBirthdates } from "../InscricoesComponents";
 import { getTierLabel } from "../../pages/kids2/juniorCalc";
 import { buildRepeaters, type FieldPlayer, type RepeaterRow } from "./repeaters";
 import type { PastEdition } from "./PastEditionsTable";
@@ -126,6 +127,8 @@ export default function Scout({
   const kidsMap = useContext(KidsLinkCtx);
   const [scout, setScout] = useState<ScoutFile | null>(null);
   const proximas = useProximas();
+  // Idade: a do Kids 2 e, sem ela, a da base de federados (que tem todos os da FPG).
+  const fedBirthdates = useFedBirthdates();
   const [aberto, setAberto] = useState<string | null>(null);
   useEffect(() => {
     let vivo = true;
@@ -171,14 +174,14 @@ export default function Scout({
           });
       out.push({
         key: k, name: p.name, club: p.club ?? sc?.c ?? null, country: p.country ?? null, isManuel, sc, fm, rep: rr,
-        idade: idade(sc?.d), threat, frente, atras, vsMMedia,
+        idade: idade(sc?.d ?? (p.fed ? fedBirthdates.get(p.fed) : undefined)), threat, frente, atras, vsMMedia,
         // As inscrições USKids são por nome: um homónimo (outro federado) não as herda.
         proximas: outraPessoa ? [] : (proximas?.get(k) ?? []).filter((x) => x.t !== tCode),
         fed: p.fed ?? null,
       });
     }
     return out;
-  }, [field, scout, rep, kidsMap, proximas, tCode, provasComManuel]);
+  }, [field, scout, rep, kidsMap, proximas, tCode, provasComManuel, fedBirthdates]);
 
   const extras = useMemo(() => [...colsAntes, ...colsDepois], [colsAntes, colsDepois]);
   const { sortKey, sortDir, toggleSort } = useSort<string>(

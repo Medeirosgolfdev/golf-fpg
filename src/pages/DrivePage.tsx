@@ -16,7 +16,7 @@ import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/Dat
 import { ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
 import { circuitRanking } from "../ui/circuit/CircuitRanking";
-import { useFedBirthdates } from "../ui/InscricoesComponents";
+import { useFedBirthdates, useFedGenders } from "../ui/InscricoesComponents";
 import { availEscaloes, countEvents, driveEntriesByEsc, resolveEscForTournament, uniquePC } from "../data/drive/driveSub12";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
@@ -79,6 +79,7 @@ function DriveContent() {
   const [error, setError]         = useState<string | null>(null);
   // Fallback DOB p/ federados fora de players.json curado.
   const fedBirthdates = useFedBirthdates();
+  const fedGenders = useFedGenders();
   // O URL é a única fonte de verdade (decisão A, src/data/drive/driveUrl.ts):
   // o torneio/escalão no caminho /drive/torneio/{ccode}-{tcode}, os filtros na
   // query. Só as acções do utilizador mudam a query — nada se perde ao montar.
@@ -281,14 +282,16 @@ function DriveContent() {
   // Ranking (decisões D e G): capacidade `ranking` do CircuitShell — vista
   // «🏅 Ranking» (nav=ranking-sub12 no URL) e a classificação acumulada na «Época».
   const rankingCap = useMemo(() => data ? circuitRanking(driveRanking({
-    expanded: data.tournaments, pdb, escLookup, temporal: temporalEscLookup, fedBirthdates,
+    expanded: data.tournaments, pdb, escLookup, temporal: temporalEscLookup, fedBirthdates, fedGenders,
     series, seriesAll: sub12Series, year: activeYear, esc: sub12Esc, sex: sub12Sex, search: sub12Search,
     view: sub12View, selected: sub12Player,
     set: (p) => go(p),
     setSearch: setSub12Search,
     setSelected: setSub12Player,
+    classEsc: escFilter,
+    calendar: (s, y) => driveCalendar(allSrc, s, y),
     top: (s) => { const y = activeYear ?? todayIso().slice(0, 4); return <UpcomingSchedule series={s} year={y} entries={driveCalendar(allSrc, s, y)} />; },
-  })) : undefined, [data, pdb, escLookup, temporalEscLookup, fedBirthdates, series, sub12Series, activeYear, sub12Esc, sub12Sex, sub12Search, sub12View, sub12Player, go, allSrc]);
+  })) : undefined, [data, pdb, escLookup, temporalEscLookup, fedBirthdates, fedGenders, escFilter, series, sub12Series, activeYear, sub12Esc, sub12Sex, sub12Search, sub12View, sub12Player, go, allSrc]);
   const shellConfig = useMemo(() => ({ ...DRIVE_CONFIG, color: "var(--color-good-dark)", filters: { search: true }, ranking: rankingCap }), [rankingCap]);
 
   // Série normal (tour/challenge/aquapor)

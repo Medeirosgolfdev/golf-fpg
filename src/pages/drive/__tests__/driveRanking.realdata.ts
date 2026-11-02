@@ -28,7 +28,7 @@ beforeAll(async () => {
 const deps = (over = {}) => {
   const escLookup = buildEscLookup(pdb, expanded);
   const temporal = buildTemporalEscLookup(expanded);
-  return { expanded, pdb, escLookup, temporal, fedBirthdates: new Map<string, string>(), series: "tour" as const, seriesAll: "tour" as const,
+  return { expanded, pdb, escLookup, temporal, fedBirthdates: new Map<string, string>(), fedGenders: new Map<string, string>(), series: "tour" as const, seriesAll: "tour" as const,
     year: "2026", esc: "Sub 12", sex: "all", search: "", view: "ranking" as const, selected: null,
     set: () => {}, setSearch: () => {}, setSelected: () => {}, ...over };
 };
