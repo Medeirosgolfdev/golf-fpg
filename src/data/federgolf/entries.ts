@@ -8,6 +8,7 @@ import { cachedFetchJson } from "../fetchCache";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import type { FgIndice, FgIndiceProva, FgProva } from "./types";
 import { fgAdmissions, fgAdmissionsCols } from "./admissions";
+import { fgAnosNascimento, loadFgRanking } from "./ranking";
 import { fgClube, fgEscalaoProva, fgScorecardOptions, fgTemCartoes, fgTitulo, fgTotais, fgToTournament } from "./toTournament";
 
 export const FG_INDEX_URL = "/data/federgolf-index.json";
@@ -20,8 +21,12 @@ export function fgNomeBase(nome: string): string {
 
 const SEXO_LABEL: Record<"M" | "F", string> = { M: "Masculino", F: "Feminino" };
 
+/** Ano de nascimento por id, do ranking juvenil (~0,5 MB, partilhado por todas as provas). */
+let _nascimentos: Promise<Map<string, number>> | null = null;
+const loadNascimentos = () => (_nascimentos ??= loadFgRanking().then(fgAnosNascimento).catch(() => new Map<string, number>()));
+
 function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
-  return cachedFetchJson<FgProva>(provaUrl(p.id)).then((d) => {
+  return Promise.all([cachedFetchJson<FgProva>(provaUrl(p.id)), loadNascimentos()]).then(([d, nasc]) => {
     if (!d?.jogadores?.length) return null;
     const admissions = fgAdmissions(d);
     return withDivisionModel({
@@ -30,7 +35,7 @@ function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
       tabLabel: p.sexo ? SEXO_LABEL[p.sexo] : undefined,
       sex: p.sexo ?? undefined,
       // Sem cartões (passagem rápida, ainda por completar) → só os totais.
-      ...(fgTemCartoes(d) ? { results: fgToTournament(d) } : { totals: fgTotais(d) }),
+      ...(fgTemCartoes(d) ? { results: fgToTournament(d, nasc) } : { totals: fgTotais(d, nasc) }),
       // A «Lista iscritti» (com quem não chegou a jogar) no separador Inscrições.
       ...(admissions ? { admissions, admissionsExtraCols: fgAdmissionsCols(admissions) } : {}),
       scOptions: fgScorecardOptions(),

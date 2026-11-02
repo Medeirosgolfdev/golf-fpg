@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { escalaoCanon } from "../model/escalao";
 import { fgNome, fgClube, fgEscalao, fgEscalaoProva, fgPais, fgTemCartoes, fgTitulo, fgTotais, fgToTournament } from "../federgolf/toTournament";
 import { fgAdmissions, fgAdmissionsCols } from "../federgolf/admissions";
-import { FG_RANKING_CATS, fgRankingDoJogador, type FgRanking } from "../federgolf/ranking";
+import { FG_RANKING_CATS, fgAnosNascimento, fgRankingDoJogador, type FgRanking } from "../federgolf/ranking";
 import { buildFgEntries, fgNomeBase } from "../federgolf/entries";
 import type { FgIndice, FgProva } from "../federgolf/types";
 
@@ -113,6 +113,17 @@ describe("Federgolf — ranking juvenil", () => {
     const e = fgRankingDoJogador(r, "a1");
     expect(e.map((x) => [x.ano, x.categoria, x.pos, x.de])).toEqual([["2026", "Baby", 1, 1], ["2026", "Pulcini", 40, 2], ["2025", "Baby", 5, 2]]);
     expect(FG_RANKING_CATS.map((c) => c.escalao)).toEqual(["Sub 12", "Sub 14", "Sub 16", "Sub 18"]);
+  });
+  it("ano de nascimento = ano do ranking − idade (o ano mais recente) e chega às tabelas", () => {
+    const l = (id: string, idade: number) => ({ pos: 1, nome: "X", clube: null, zona: null, idade, qual: null, voltas: 1, minimo: true, media: 1, id });
+    const nasc = fgAnosNascimento({ geradoEm: "", anos: { "2025": { "M-12": [l("a1", 11), l("z9", 12)] }, "2026": { "M-12": [l("a1", 12)] } } });
+    expect(nasc.get("a1")).toBe(2014);
+    expect(nasc.get("z9")).toBe(2013);
+    expect(fgAnosNascimento(null).size).toBe(0);
+    const t = fgToTournament(prova, nasc);
+    expect((t.players[0] as unknown as { birthYear: number }).birthYear).toBe(2014);
+    expect((t.players[1] as unknown as { birthYear?: number }).birthYear).toBeUndefined();
+    expect(fgTotais(prova, nasc).players[0].birthYear).toBe(2014);
   });
 });
 

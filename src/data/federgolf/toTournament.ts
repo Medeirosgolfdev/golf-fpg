@@ -65,7 +65,8 @@ export function fgEscalao(cat: string | null | undefined): string | null {
 /** Escalão de uma prova (Baby → Sub 12, U16 → Sub 16); o resto fica com o nome. */
 export const fgEscalaoProva = (categoria: string): string => escalaoCanon(categoria, "it") ?? categoria;
 
-export function fgToTournament(d: FgProva): FPGTournament {
+/** `nascimentos`: id do jogador → ano de nascimento (do ranking juvenil — `fgAnosNascimento`). */
+export function fgToTournament(d: FgProva, nascimentos?: Map<string, number>): FPGTournament {
   const par = parOrNone(d.campo?.par, 18);
   const metros = d.campo?.metros?.every((m) => typeof m === "number" && m > 0) ? (d.campo.metros as number[]) : null;
   return buildFPGTournament(
@@ -96,7 +97,10 @@ export function fgToTournament(d: FgProva): FPGTournament {
             extra: r?.sd != null ? { sd: r.sd } : undefined,
           }];
         }),
-        extra: { ...(escalao ? { escalao } : {}), ...(d.sexo ? { sex: d.sexo } : {}) },
+        extra: {
+          ...(escalao ? { escalao } : {}), ...(d.sexo ? { sex: d.sexo } : {}),
+          ...(nascimentos?.has(j.id) ? { birthYear: nascimentos.get(j.id) } : {}),
+        },
       };
     }),
   );
@@ -106,14 +110,14 @@ export function fgToTournament(d: FgProva): FPGTournament {
 export const fgTemCartoes = (d: FgProva): boolean => d.jogadores.some((j) => j.cartoes.some(Boolean));
 
 /** Prova só com totais → o Resumo comum (TotalsResumo). */
-export function fgTotais(d: FgProva) {
+export function fgTotais(d: FgProva, nascimentos?: Map<string, number>) {
   // SD oficial de cada volta (relatório de handicap) — colunas «SD R1»…, só
   // nas voltas em que alguém o tem.
   const voltasComSd = Array.from({ length: d.voltas }, (_, i) => i).filter((i) => d.jogadores.some((j) => j.rating[i]?.sd != null));
   return {
     players: d.jogadores.map((j) => ({
       name: fgNome(j.nome), club: clubeOuPais(j.clube), country: fgPais(j.clube), hcp: j.indice ?? j.hcp, pos: j.pos,
-      rounds: j.voltas, total: j.total,
+      rounds: j.voltas, total: j.total, birthYear: nascimentos?.get(j.id) ?? null,
       ...(j.toPar != null ? { toPar: j.toPar } : {}),
       ...Object.fromEntries(voltasComSd.map((i) => [`sd${i + 1}`, j.rating[i]?.sd ?? null])),
     })),

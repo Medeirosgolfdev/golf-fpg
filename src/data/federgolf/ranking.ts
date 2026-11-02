@@ -48,6 +48,21 @@ export const FG_RANKING_CATS: { cod: string; nome: string; escalao: string }[] =
 export const loadFgRanking = () => cachedFetchJson<FgRanking>(FG_RANKING_URL);
 export const loadFgRankingVoltas = () => cachedFetchJson<FgRankingVoltas>(FG_RANKING_VOLTAS_URL);
 
+/** id do jogador → ano de nascimento. A `idade` do ranking é a idade civil
+ *  (ano do ranking − ano de nascimento, como as categorias): conferido a
+ *  02/11/2026 contra os 222 juniores do Kids 2 com data real — 222 batem.
+ *  É dado lido, não estimado. Vale o ano mais recente em que o jogador aparece. */
+export function fgAnosNascimento(r: FgRanking | null | undefined): Map<string, number> {
+  const m = new Map<string, number>();
+  if (!r) return m;
+  for (const ano of Object.keys(r.anos).sort().reverse()) {
+    for (const linhas of Object.values(r.anos[ano])) {
+      for (const l of linhas) if (l.id && l.idade != null && !m.has(l.id)) m.set(l.id, Number(ano) - l.idade);
+    }
+  }
+  return m;
+}
+
 /** Uma entrada do jogador no ranking: o ano mais recente em que aparece. */
 export interface FgRankingDoJogador extends FgRankingLinha {
   ano: string;
