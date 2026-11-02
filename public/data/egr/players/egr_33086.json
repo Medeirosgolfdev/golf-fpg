@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "St. Leon-Rot",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 262,
-  "egrPoints": 7064.1,
-  "avgScore": 76.38,
-  "avgToCR": 73.72,
+  "tournamentsPlayed": 13,
+  "egrRank": 257,
+  "egrPoints": 7229.56,
+  "avgScore": 76.04,
+  "avgToCR": 73.01,
   "events": [
     {
       "eventId": "12912",
@@ -40,6 +40,20 @@
       "r3": 74,
       "r4": null,
       "egrPoints": 538.56
+    },
+    {
+      "eventId": "12953",
+      "counting": true,
+      "pos": "1",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 74,
+      "r2": 67,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 373.28
     },
     {
       "eventId": "12839",
@@ -169,7 +183,7 @@
     },
     {
       "eventId": "11450",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "5 Stars International Cup 2026",
       "venue": "Kaya Belek",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:17:33.967Z",
+  "scrapedAt": "2026-11-02T15:26:12.601Z",
   "url": "https://www.europeangolfrankings.com/players/33086"
 }

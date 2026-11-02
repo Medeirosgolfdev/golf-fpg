@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Berlin Wannsee",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 3766,
-  "egrPoints": 1084.67,
-  "avgScore": 77.61,
-  "avgToCR": 77.09,
+  "tournamentsPlayed": 10,
+  "egrRank": 3918,
+  "egrPoints": 1028.72,
+  "avgScore": 77.3,
+  "avgToCR": 76.94,
   "events": [
+    {
+      "eventId": "12954",
+      "counting": true,
+      "pos": "10",
+      "event": "Faldo Series (Madeira) 2026",
+      "venue": "Clube de Golf Santo da Serra",
+      "country": "Portugal",
+      "startDateRaw": "16. Oct 26",
+      "r1": 75,
+      "r2": 83,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 57.18
+    },
     {
       "eventId": "12933",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11544",
-      "counting": true,
+      "counting": false,
       "pos": "19",
       "event": "GJG Grand Final Qualifier 2026",
       "venue": "Golf- und Landclub Semlin am See",
@@ -156,6 +170,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:07.179Z",
+  "scrapedAt": "2026-11-02T15:31:13.997Z",
   "url": "https://www.europeangolfrankings.com/players/47448"
 }

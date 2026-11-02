@@ -5,14 +5,42 @@
   "lastName": "BERNARDINI",
   "firstName": "Victor",
   "country": "France",
-  "club": "Royal Waterloo",
+  "club": "Bondues",
   "ageGroup": "U14",
-  "tournamentsPlayed": 13,
-  "egrRank": 1837,
-  "egrPoints": 3332.24,
-  "avgScore": 73.9,
-  "avgToCR": 73.81,
+  "tournamentsPlayed": 15,
+  "egrRank": 1757,
+  "egrPoints": 3589.76,
+  "avgScore": 73.95,
+  "avgToCR": 73.8,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": false,
+      "pos": "50",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 81,
+      "r2": 75,
+      "r3": 90,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "7",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 77,
+      "r2": 72,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 476.56
+    },
     {
       "eventId": "11790",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11729",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "Junior Open Wallonie - Vlaandere 2026",
       "venue": "Royal Waterloo Golf Club",
@@ -212,6 +240,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:44.644Z",
+  "scrapedAt": "2026-11-02T15:31:56.309Z",
   "url": "https://www.europeangolfrankings.com/players/49103"
 }

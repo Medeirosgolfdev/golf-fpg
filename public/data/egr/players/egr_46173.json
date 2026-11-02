@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Guerande",
   "ageGroup": "U21",
-  "tournamentsPlayed": 1,
-  "egrRank": 2533,
+  "tournamentsPlayed": 2,
+  "egrRank": 2558,
   "egrPoints": 103.2,
-  "avgScore": 80.67,
-  "avgToCR": 79.17,
+  "avgScore": 83,
+  "avgToCR": 81.62,
   "events": [
+    {
+      "eventId": "12201",
+      "counting": true,
+      "pos": "12",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 86,
+      "r2": 87,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12154",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:21:53.590Z",
+  "scrapedAt": "2026-11-02T15:30:58.082Z",
   "url": "https://www.europeangolfrankings.com/players/46173"
 }

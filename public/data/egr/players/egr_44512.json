@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Unterengstringen",
   "ageGroup": "U14",
-  "tournamentsPlayed": 17,
-  "egrRank": 491,
-  "egrPoints": 3971.4,
-  "avgScore": 73.95,
-  "avgToCR": 72.27,
+  "tournamentsPlayed": 18,
+  "egrRank": 486,
+  "egrPoints": 4085.13,
+  "avgScore": 73.6,
+  "avgToCR": 72.06,
   "events": [
+    {
+      "eventId": "12492",
+      "counting": false,
+      "pos": "6",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 71,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 242.29
+    },
+    {
+      "eventId": "12488",
+      "counting": true,
+      "pos": "1",
+      "event": "Swiss Golf Final U14 (Crans-sur-Sierre) 2026",
+      "venue": "Golf Club Crans-sur-Sierre",
+      "country": "Switzerland",
+      "startDateRaw": "03. Oct 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 392
+    },
     {
       "eventId": "12122",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12003",
-      "counting": true,
+      "counting": false,
       "pos": "85",
       "event": "Italian International U18 Girls Stroke Play Championship 2026",
       "venue": "Golf Club Villa Condulmer",
@@ -249,7 +277,8 @@
       "r2": 84,
       "r3": 74,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10369",
@@ -268,6 +297,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:21:18.536Z",
+  "scrapedAt": "2026-11-02T15:30:20.169Z",
   "url": "https://www.europeangolfrankings.com/players/44512"
 }

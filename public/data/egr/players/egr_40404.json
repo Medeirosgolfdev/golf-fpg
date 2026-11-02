@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Valcros",
   "ageGroup": "U21",
-  "tournamentsPlayed": 12,
-  "egrRank": 1141,
-  "egrPoints": 5766.25,
-  "avgScore": 76.63,
-  "avgToCR": 75.42,
+  "tournamentsPlayed": 14,
+  "egrRank": 1101,
+  "egrPoints": 6040.59,
+  "avgScore": 75.88,
+  "avgToCR": 75.01,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": false,
+      "pos": "26",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 486.95
+    },
+    {
+      "eventId": "12192",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix du Luberon 2026",
+      "venue": "Golf Du Luberon",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 68,
+      "r2": 76,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 593.51
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "12042",
-      "counting": true,
+      "counting": false,
       "pos": "38",
       "event": "41ème Grand Prix de Campagne 2026",
       "venue": "Golf de Nîmes Campagne",
@@ -183,6 +211,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:20:12.400Z",
+  "scrapedAt": "2026-11-02T15:29:05.879Z",
   "url": "https://www.europeangolfrankings.com/players/40404"
 }

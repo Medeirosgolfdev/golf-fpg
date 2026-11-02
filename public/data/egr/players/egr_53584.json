@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": "Carluke",
   "ageGroup": "U18",
-  "tournamentsPlayed": 0,
-  "egrRank": 10380,
-  "egrPoints": 0,
-  "avgScore": 0,
-  "avgToCR": 0,
+  "tournamentsPlayed": 2,
+  "egrRank": 6497,
+  "egrPoints": 318.03,
+  "avgScore": 81.25,
+  "avgToCR": 79.38,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "55",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 86,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "31",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 79,
+      "r2": 83,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 318.03
+    },
     {
       "eventId": "10437",
       "counting": true,
@@ -30,6 +58,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:31.526Z",
+  "scrapedAt": "2026-11-02T15:33:56.831Z",
   "url": "https://www.europeangolfrankings.com/players/53584"
 }

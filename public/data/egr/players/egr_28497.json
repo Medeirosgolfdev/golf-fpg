@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Montecchia",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 53,
-  "egrPoints": 31582.2,
-  "avgScore": 71.23,
-  "avgToCR": 68.39,
+  "tournamentsPlayed": 11,
+  "egrRank": 42,
+  "egrPoints": 33286.2,
+  "avgScore": 70.69,
+  "avgToCR": 68.03,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "1",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 71,
+      "r2": 70,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 2564.63
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12422",
-      "counting": true,
+      "counting": false,
       "pos": "27",
       "event": "Estonian Amateur Open by Tallink 2026",
       "venue": "Estonian CC (Sea)",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:27.355Z",
+  "scrapedAt": "2026-11-02T15:23:56.658Z",
   "url": "https://www.europeangolfrankings.com/players/28497"
 }

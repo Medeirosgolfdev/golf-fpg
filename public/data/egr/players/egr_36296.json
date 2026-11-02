@@ -7,11 +7,11 @@
   "country": "Austria",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
+  "tournamentsPlayed": 9,
   "egrRank": 256,
   "egrPoints": 7229.59,
-  "avgScore": 75.17,
-  "avgToCR": 72.25,
+  "avgScore": 75.37,
+  "avgToCR": 72.39,
   "events": [
     {
       "eventId": "11768",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11842",
-      "counting": false,
+      "counting": true,
       "pos": "109",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -151,10 +151,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:38.194Z",
+  "scrapedAt": "2026-11-02T15:27:22.050Z",
   "url": "https://www.europeangolfrankings.com/players/36296"
 }

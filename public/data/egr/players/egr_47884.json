@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Hetzenhof",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 4112,
-  "egrPoints": 922.15,
-  "avgScore": 79.04,
-  "avgToCR": 78.71,
+  "tournamentsPlayed": 10,
+  "egrRank": 4353,
+  "egrPoints": 844.15,
+  "avgScore": 78.46,
+  "avgToCR": 78.38,
   "events": [
     {
       "eventId": "11438",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12713",
-      "counting": false,
+      "counting": true,
       "pos": "43",
       "event": "BWGV International Match Play Trophy 2026",
       "venue": "GLC Schloss Liebenstein",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12737",
-      "counting": false,
+      "counting": true,
       "pos": "40",
       "event": "DGV-BWGV 1. AK16-18 Jungen 2026",
       "venue": "Tuniberg Golf Club",
@@ -165,7 +165,8 @@
       "r2": 75,
       "r3": 82,
       "r4": null,
-      "egrPoints": 78
+      "egrPoints": 78,
+      "_mantido": true
     },
     {
       "eventId": "11146",
@@ -179,10 +180,11 @@
       "r2": 83,
       "r3": 90,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:18.682Z",
+  "scrapedAt": "2026-11-02T15:31:27.215Z",
   "url": "https://www.europeangolfrankings.com/players/47884"
 }

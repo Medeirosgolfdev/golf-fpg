@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Saffron Walden",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 3587,
-  "egrPoints": 1181.53,
-  "avgScore": 78.41,
-  "avgToCR": 78.49,
+  "tournamentsPlayed": 11,
+  "egrRank": 3300,
+  "egrPoints": 1382.72,
+  "avgScore": 78.18,
+  "avgToCR": 78.35,
   "events": [
+    {
+      "eventId": "12968",
+      "counting": true,
+      "pos": "14",
+      "event": "County Championship (CAGU) 2026",
+      "venue": "Ely City Golf Club",
+      "country": "England",
+      "startDateRaw": "27. Sep 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 340.61
+    },
     {
       "eventId": "12897",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11802",
-      "counting": true,
+      "counting": false,
       "pos": "69",
       "event": "Midland Youths Open Amateur Championship 2026",
       "venue": "Stoke Rochford Golf Club",
@@ -84,8 +98,22 @@
       "egrPoints": 0
     },
     {
-      "eventId": "12800",
+      "eventId": "12957",
       "counting": true,
+      "pos": "3",
+      "event": "Boys Championship Cambridgeshire Area 2026",
+      "venue": "Girton Golf Club",
+      "country": "England",
+      "startDateRaw": "21. Jun 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 201.19
+    },
+    {
+      "eventId": "12800",
+      "counting": false,
       "pos": "37",
       "event": "Cambridgeshire Area County Championship 2026",
       "venue": "The Gog Magog (Wandlebury)",
@@ -156,6 +184,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:45.656Z",
+  "scrapedAt": "2026-11-02T15:34:12.841Z",
   "url": "https://www.europeangolfrankings.com/players/54278"
 }

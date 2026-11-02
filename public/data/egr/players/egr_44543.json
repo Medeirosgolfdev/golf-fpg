@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "San Marino",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 1818,
-  "egrPoints": 355.99,
-  "avgScore": 82.08,
-  "avgToCR": 80.05,
+  "tournamentsPlayed": 6,
+  "egrRank": 1808,
+  "egrPoints": 374.02,
+  "avgScore": 82.53,
+  "avgToCR": 80.31,
   "events": [
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "18",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 83,
+      "r2": 85,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 18.04
+    },
     {
       "eventId": "11999",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:19.600Z",
+  "scrapedAt": "2026-11-02T15:30:21.118Z",
   "url": "https://www.europeangolfrankings.com/players/44543"
 }

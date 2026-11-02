@@ -8,11 +8,25 @@
   "club": "Manville",
   "ageGroup": "U18",
   "tournamentsPlayed": 8,
-  "egrRank": 1232,
-  "egrPoints": 5387.94,
-  "avgScore": 75.17,
-  "avgToCR": 74.8,
+  "egrRank": 1330,
+  "egrPoints": 4951.77,
+  "avgScore": 75.33,
+  "avgToCR": 74.66,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "15",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 69,
+      "r2": 73,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 779.8
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -123,7 +137,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11409",
@@ -142,6 +157,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:37.393Z",
+  "scrapedAt": "2026-11-02T15:30:40.902Z",
   "url": "https://www.europeangolfrankings.com/players/45439"
 }

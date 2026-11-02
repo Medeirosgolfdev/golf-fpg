@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Aix Les Bains",
   "ageGroup": "U21",
-  "tournamentsPlayed": 1,
-  "egrRank": 5609,
-  "egrPoints": 464.84,
-  "avgScore": 78.67,
-  "avgToCR": 77.97,
+  "tournamentsPlayed": 3,
+  "egrRank": 4272,
+  "egrPoints": 873.88,
+  "avgScore": 79.13,
+  "avgToCR": 79.06,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "57",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 81,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "29",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 409.04
+    },
     {
       "eventId": "12165",
       "counting": true,
@@ -29,6 +57,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:20:13.256Z",
+  "scrapedAt": "2026-11-02T15:29:06.722Z",
   "url": "https://www.europeangolfrankings.com/players/40490"
 }

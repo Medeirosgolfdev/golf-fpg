@@ -5,14 +5,28 @@
   "lastName": "LANDMANN",
   "firstName": "Matteo",
   "country": "Germany",
-  "club": "Neuhof",
+  "club": "Bad Homburg",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 7044,
-  "egrPoints": 241.2,
-  "avgScore": 83.45,
-  "avgToCR": 83.22,
+  "tournamentsPlayed": 6,
+  "egrRank": 5399,
+  "egrPoints": 528.36,
+  "avgScore": 82.57,
+  "avgToCR": 82.34,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "17",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 287.16
+    },
     {
       "eventId": "11566",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:24.086Z",
+  "scrapedAt": "2026-11-02T15:31:32.803Z",
   "url": "https://www.europeangolfrankings.com/players/48113"
 }

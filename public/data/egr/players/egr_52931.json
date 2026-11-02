@@ -7,12 +7,26 @@
   "country": "China",
   "club": "Quinta do Peru",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 2636,
+  "tournamentsPlayed": 4,
+  "egrRank": 2670,
   "egrPoints": 84.6,
-  "avgScore": 83.13,
-  "avgToCR": 82.25,
+  "avgScore": 82.5,
+  "avgToCR": 82.3,
   "events": [
+    {
+      "eventId": "12954",
+      "counting": true,
+      "pos": "17",
+      "event": "Faldo Series (Madeira) 2026",
+      "venue": "Clube de Golf Santo da Serra",
+      "country": "Portugal",
+      "startDateRaw": "16. Oct 26",
+      "r1": 84,
+      "r2": 80,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11584",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:09.763Z",
+  "scrapedAt": "2026-11-02T15:33:33.235Z",
   "url": "https://www.europeangolfrankings.com/players/52931"
 }

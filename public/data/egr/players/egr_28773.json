@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Penati",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 1056,
-  "egrPoints": 6224.65,
-  "avgScore": 76.87,
-  "avgToCR": 75.43,
+  "tournamentsPlayed": 9,
+  "egrRank": 1206,
+  "egrPoints": 5523.76,
+  "avgScore": 77.5,
+  "avgToCR": 75.93,
   "events": [
     {
       "eventId": "12874",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11847",
-      "counting": false,
+      "counting": true,
       "pos": "126",
       "event": "East of Ireland Men's Amateur Open Championship 2026",
       "venue": "County Louth Golf Club",
@@ -151,7 +151,8 @@
       "r2": 77,
       "r3": 76,
       "r4": null,
-      "egrPoints": 700.89
+      "egrPoints": 700.89,
+      "_mantido": true
     },
     {
       "eventId": "11358",
@@ -170,6 +171,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:35.844Z",
+  "scrapedAt": "2026-11-02T15:24:05.476Z",
   "url": "https://www.europeangolfrankings.com/players/28773"
 }

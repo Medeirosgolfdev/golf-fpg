@@ -8,11 +8,25 @@
   "club": "Noordwijk",
   "ageGroup": "Adult",
   "tournamentsPlayed": 8,
-  "egrRank": 1003,
-  "egrPoints": 6495.03,
-  "avgScore": 75,
-  "avgToCR": 73.94,
+  "egrRank": 1057,
+  "egrPoints": 6261.23,
+  "avgScore": 75.55,
+  "avgToCR": 74.47,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "37",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 80,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 197.59
+    },
     {
       "eventId": "12535",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 76,
       "r3": 74,
       "r4": null,
-      "egrPoints": 431.39
+      "egrPoints": 431.39,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:21.385Z",
+  "scrapedAt": "2026-11-02T15:20:29.730Z",
   "url": "https://www.europeangolfrankings.com/players/19935"
 }

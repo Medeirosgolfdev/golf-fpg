@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Girasoli",
   "ageGroup": "U14",
-  "tournamentsPlayed": 18,
-  "egrRank": 234,
-  "egrPoints": 7900.44,
-  "avgScore": 75.29,
-  "avgToCR": 72.04,
+  "tournamentsPlayed": 19,
+  "egrRank": 189,
+  "egrPoints": 9720.15,
+  "avgScore": 74.86,
+  "avgToCR": 71.32,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "2",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 74,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 2033.99
+    },
+    {
+      "eventId": "12015",
+      "counting": true,
+      "pos": "3",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 73,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 892.5
+    },
     {
       "eventId": "12122",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "11782",
-      "counting": true,
+      "counting": false,
       "pos": "12",
       "event": "English Girls U14 Stroke Play 2026",
       "venue": "The Gof Magog Golf Club (Wandlebury)",
@@ -197,7 +225,7 @@
     },
     {
       "eventId": "11902",
-      "counting": true,
+      "counting": false,
       "pos": "28",
       "event": "Italian National Closed Match Play Championships (Trofeo Giuseppe Silva) 2026",
       "venue": "Golf Nazionale",
@@ -263,10 +291,11 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 437.65
+      "egrPoints": 437.65,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:15.586Z",
+  "scrapedAt": "2026-11-02T15:32:30.959Z",
   "url": "https://www.europeangolfrankings.com/players/50146"
 }

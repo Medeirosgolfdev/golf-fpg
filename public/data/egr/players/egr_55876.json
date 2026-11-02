@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bastide Salette",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 1549,
-  "egrPoints": 553.04,
-  "avgScore": 81.17,
-  "avgToCR": 80.13,
+  "tournamentsPlayed": 6,
+  "egrRank": 1484,
+  "egrPoints": 635.41,
+  "avgScore": 81.33,
+  "avgToCR": 80.04,
   "events": [
+    {
+      "eventId": "12216",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix de Valescure 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 76,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 82.37
+    },
     {
       "eventId": "12188",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:25:31.413Z",
+  "scrapedAt": "2026-11-02T15:35:04.704Z",
   "url": "https://www.europeangolfrankings.com/players/55876"
 }

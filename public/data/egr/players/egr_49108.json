@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Valescure",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 1098,
-  "egrPoints": 6003.99,
-  "avgScore": 74.5,
-  "avgToCR": 74.73,
+  "tournamentsPlayed": 12,
+  "egrRank": 607,
+  "egrPoints": 9821.69,
+  "avgScore": 73.74,
+  "avgToCR": 73.75,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "48",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 530.82
+    },
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 64,
+      "r2": 65,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 3652.31
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12112",
-      "counting": true,
+      "counting": false,
       "pos": "9",
       "event": "Grand Prix Jeunes Majeur Garçons U14 2026",
       "venue": "Golf de Bondues (Hawtree)",
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12054",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Grand Prix Jeunes Majeur #1 U14 2026",
       "venue": "Golf de Chiberta",
@@ -165,10 +193,11 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:44.933Z",
+  "scrapedAt": "2026-11-02T15:31:56.642Z",
   "url": "https://www.europeangolfrankings.com/players/49108"
 }

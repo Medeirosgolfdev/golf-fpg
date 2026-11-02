@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Biarritz",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 129,
-  "egrPoints": 11890.9,
-  "avgScore": 72.74,
-  "avgToCR": 70.17,
+  "tournamentsPlayed": 12,
+  "egrRank": 159,
+  "egrPoints": 10703,
+  "avgScore": 72.81,
+  "avgToCR": 70.56,
   "events": [
     {
       "eventId": "11768",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12107",
-      "counting": false,
+      "counting": true,
       "pos": "10",
       "event": "Coupe Didier Illouz Grand Prix du RCF La Boulie 2026",
       "venue": "Racing Club de France",
@@ -193,7 +193,8 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 370.41
+      "egrPoints": 370.41,
+      "_mantido": true
     },
     {
       "eventId": "11369",
@@ -207,7 +208,8 @@
       "r2": 67,
       "r3": 75,
       "r4": 76,
-      "egrPoints": 1672.1
+      "egrPoints": 1672.1,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -226,6 +228,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:09.879Z",
+  "scrapedAt": "2026-11-02T15:26:51.632Z",
   "url": "https://www.europeangolfrankings.com/players/34809"
 }

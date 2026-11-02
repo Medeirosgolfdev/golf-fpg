@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hamburg Hittfeld",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 3293,
-  "egrPoints": 5.55,
-  "avgScore": 96,
-  "avgToCR": 95.73,
+  "tournamentsPlayed": 3,
+  "egrRank": 3292,
+  "egrPoints": 9.11,
+  "avgScore": 95.8,
+  "avgToCR": 95,
   "events": [
+    {
+      "eventId": "12945",
+      "counting": true,
+      "pos": "11",
+      "event": "DGV-Region Nord 2. AK14 Mädchen 2026",
+      "venue": "Golfclub Segeberg",
+      "country": "Germany",
+      "startDateRaw": "04. Jul 26",
+      "r1": 91,
+      "r2": 102,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 3.56
+    },
     {
       "eventId": "12795",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:26:42.744Z",
+  "scrapedAt": "2026-11-02T15:36:27.268Z",
   "url": "https://www.europeangolfrankings.com/players/58785"
 }

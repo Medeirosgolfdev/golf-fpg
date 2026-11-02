@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Ayr Belleisle",
   "ageGroup": "U16",
-  "tournamentsPlayed": 16,
-  "egrRank": 1083,
-  "egrPoints": 6073.45,
-  "avgScore": 74.05,
-  "avgToCR": 73.69,
+  "tournamentsPlayed": 17,
+  "egrRank": 941,
+  "egrPoints": 6921.22,
+  "avgScore": 74.14,
+  "avgToCR": 73.45,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "5",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 1083.75
+    },
     {
       "eventId": "11723",
       "counting": false,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11715",
-      "counting": true,
+      "counting": false,
       "pos": "15",
       "event": "Junior Tour Peterculter Boys 2026",
       "venue": "Peterculter GC",
@@ -239,6 +253,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:52.638Z",
+  "scrapedAt": "2026-11-02T15:28:43.744Z",
   "url": "https://www.europeangolfrankings.com/players/39151"
 }

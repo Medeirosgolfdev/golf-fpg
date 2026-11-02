@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Breitenloo",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 1239,
-  "egrPoints": 5356.17,
-  "avgScore": 75.23,
-  "avgToCR": 74.26,
+  "tournamentsPlayed": 11,
+  "egrRank": 1373,
+  "egrPoints": 4794.06,
+  "avgScore": 76.33,
+  "avgToCR": 75.28,
   "events": [
     {
       "eventId": "12918",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11797",
-      "counting": false,
+      "counting": true,
       "pos": "108",
       "event": "Fairhaven Trophies 2026",
       "venue": "Fairhaven Golf Club",
@@ -179,7 +179,8 @@
       "r2": 73,
       "r3": 67,
       "r4": null,
-      "egrPoints": 915.86
+      "egrPoints": 915.86,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -198,6 +199,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:35.146Z",
+  "scrapedAt": "2026-11-02T15:27:19.157Z",
   "url": "https://www.europeangolfrankings.com/players/36065"
 }

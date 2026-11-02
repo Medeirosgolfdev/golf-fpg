@@ -8,11 +8,25 @@
   "club": "Aix Les Bains",
   "ageGroup": "U18",
   "tournamentsPlayed": 21,
-  "egrRank": 671,
+  "egrRank": 681,
   "egrPoints": 9232.54,
   "avgScore": 74.04,
   "avgToCR": 73,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": false,
+      "pos": "11",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 393.02
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -305,10 +319,11 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 272.67
+      "egrPoints": 272.67,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:47.920Z",
+  "scrapedAt": "2026-11-02T15:25:23.409Z",
   "url": "https://www.europeangolfrankings.com/players/31396"
 }

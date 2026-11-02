@@ -8,11 +8,39 @@
   "club": "Franciacorta",
   "ageGroup": "U16",
   "tournamentsPlayed": 16,
-  "egrRank": 1639,
-  "egrPoints": 3875.67,
-  "avgScore": 76.64,
-  "avgToCR": 74.94,
+  "egrRank": 1494,
+  "egrPoints": 4400.14,
+  "avgScore": 76.29,
+  "avgToCR": 74.58,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "52",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 578.12
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "50",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 71,
+      "r2": 78,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 474.21
+    },
     {
       "eventId": "11995",
       "counting": false,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11945",
-      "counting": true,
+      "counting": false,
       "pos": "34",
       "event": "Targa D'Oro Villa D'Este 2026",
       "venue": "Golf Club Villa d'Este",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11929",
-      "counting": true,
+      "counting": false,
       "pos": "19",
       "event": "Trofeo Giovanile U18 2026",
       "venue": "Parco di Roma Golf & CC",
@@ -221,7 +249,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -235,7 +264,8 @@
       "r2": 89,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -254,6 +284,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:09.248Z",
+  "scrapedAt": "2026-11-02T15:32:23.973Z",
   "url": "https://www.europeangolfrankings.com/players/49921"
 }

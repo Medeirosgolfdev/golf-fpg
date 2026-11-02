@@ -8,11 +8,39 @@
   "club": "Wylihof",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 1262,
-  "egrPoints": 5261.1,
-  "avgScore": 71.45,
-  "avgToCR": 71.18,
+  "egrRank": 1164,
+  "egrPoints": 5673.41,
+  "avgScore": 71.3,
+  "avgToCR": 71.21,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "3",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 72,
+      "r2": 69,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 785.63
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "10",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 76,
+      "r2": 71,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 323.64
+    },
     {
       "eventId": "12918",
       "counting": false,
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "12448",
-      "counting": true,
+      "counting": false,
       "pos": "12",
       "event": "Swiss Golf Junior Tour (Sierre) 2026",
       "venue": "Golf Club de Sierre",
@@ -193,7 +221,8 @@
       "r2": 73,
       "r3": 73,
       "r4": null,
-      "egrPoints": 436.12
+      "egrPoints": 436.12,
+      "_mantido": true
     },
     {
       "eventId": "10373",
@@ -207,7 +236,8 @@
       "r2": 77,
       "r3": 73,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -226,6 +256,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:38.414Z",
+  "scrapedAt": "2026-11-02T15:27:22.578Z",
   "url": "https://www.europeangolfrankings.com/players/36302"
 }

@@ -1,18 +1,32 @@
 {
   "id": "42347",
   "egrId": "MBEL42347",
-  "name": "Maxence Guillaume",
+  "name": "maxence Guillaume",
   "lastName": "GUILLAUME",
-  "firstName": "Maxence",
+  "firstName": "maxence",
   "country": "Belgium",
   "club": "GA 57",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 4127,
+  "tournamentsPlayed": 8,
+  "egrRank": 4163,
   "egrPoints": 916.22,
-  "avgScore": 78.79,
-  "avgToCR": 78.51,
+  "avgScore": 78.71,
+  "avgToCR": 78.38,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "32",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 83,
+      "r2": 74,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12934",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:38.050Z",
+  "scrapedAt": "2026-11-02T15:29:34.081Z",
   "url": "https://www.europeangolfrankings.com/players/42347"
 }

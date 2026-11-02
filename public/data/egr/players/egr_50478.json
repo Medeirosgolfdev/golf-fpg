@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Saint Malo",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 1344,
-  "egrPoints": 4888.57,
-  "avgScore": 74.25,
-  "avgToCR": 74.58,
+  "tournamentsPlayed": 12,
+  "egrRank": 1323,
+  "egrPoints": 4999.46,
+  "avgScore": 74.16,
+  "avgToCR": 74.34,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "25",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 337.8
+    },
+    {
+      "eventId": "12200",
+      "counting": false,
+      "pos": "19",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 76,
+      "r2": 78,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 289.06
+    },
     {
       "eventId": "12163",
       "counting": true,
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "11649",
-      "counting": true,
+      "counting": false,
       "pos": "25",
       "event": "Portuguese International U14 Championship (Major) 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -185,6 +213,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:23.488Z",
+  "scrapedAt": "2026-11-02T15:32:39.528Z",
   "url": "https://www.europeangolfrankings.com/players/50478"
 }

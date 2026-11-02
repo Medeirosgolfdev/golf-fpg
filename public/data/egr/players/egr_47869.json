@@ -1,18 +1,32 @@
 {
   "id": "47869",
   "egrId": "MDEU47869",
-  "name": "Ömer Ilhan Sahin",
+  "name": "Omer Ilhan Sahin",
   "lastName": "SAHIN",
-  "firstName": "Ömer Ilhan",
+  "firstName": "Omer Ilhan",
   "country": "Germany",
   "club": "Tiefenbach",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 2037,
-  "egrPoints": 2896.32,
-  "avgScore": 75.32,
-  "avgToCR": 74.15,
+  "tournamentsPlayed": 11,
+  "egrRank": 1948,
+  "egrPoints": 3142.24,
+  "avgScore": 75.25,
+  "avgToCR": 73.54,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "47",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 321.17
+    },
     {
       "eventId": "12121",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "12911",
-      "counting": true,
+      "counting": false,
       "pos": "47",
       "event": "DM AK14 Jungen 2026",
       "venue": "Club zur Vahr (Garlstedt)",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:18.003Z",
+  "scrapedAt": "2026-11-02T15:31:26.490Z",
   "url": "https://www.europeangolfrankings.com/players/47869"
 }

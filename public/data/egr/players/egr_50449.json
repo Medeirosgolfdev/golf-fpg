@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Ile d'OR",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1452,
-  "egrPoints": 4494.5,
-  "avgScore": 75,
-  "avgToCR": 75.02,
+  "tournamentsPlayed": 9,
+  "egrRank": 1390,
+  "egrPoints": 4742.55,
+  "avgScore": 74.44,
+  "avgToCR": 74.43,
   "events": [
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "18",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 312.5
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12054",
-      "counting": true,
+      "counting": false,
       "pos": "23",
       "event": "Grand Prix Jeunes Majeur #1 U14 2026",
       "venue": "Golf de Chiberta",
@@ -142,6 +156,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:22.060Z",
+  "scrapedAt": "2026-11-02T15:32:37.821Z",
   "url": "https://www.europeangolfrankings.com/players/50449"
 }

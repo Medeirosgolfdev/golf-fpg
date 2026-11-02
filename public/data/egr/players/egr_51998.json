@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Royal Park Roveri",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 4637,
-  "egrPoints": 718.62,
-  "avgScore": 80.22,
-  "avgToCR": 80.17,
+  "tournamentsPlayed": 9,
+  "egrRank": 4297,
+  "egrPoints": 863.7,
+  "avgScore": 80.45,
+  "avgToCR": 80.33,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "87",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 83,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 145.09
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:52.866Z",
+  "scrapedAt": "2026-11-02T15:33:12.673Z",
   "url": "https://www.europeangolfrankings.com/players/51998"
 }

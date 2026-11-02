@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Saint Cloud",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 2851,
-  "egrPoints": 51.25,
-  "avgScore": 83.22,
-  "avgToCR": 81.11,
+  "tournamentsPlayed": 5,
+  "egrRank": 1625,
+  "egrPoints": 505.23,
+  "avgScore": 81.7,
+  "avgToCR": 79.54,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "42",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 80,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 453.98
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:33.830Z",
+  "scrapedAt": "2026-11-02T15:33:59.477Z",
   "url": "https://www.europeangolfrankings.com/players/53673"
 }

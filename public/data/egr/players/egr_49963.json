@@ -8,11 +8,25 @@
   "club": "Ca'Amata",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 3707,
-  "egrPoints": 1113.93,
-  "avgScore": 79.16,
-  "avgToCR": 78.98,
+  "egrRank": 3369,
+  "egrPoints": 1336.74,
+  "avgScore": 79.05,
+  "avgToCR": 78.6,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "28",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 77,
+      "r2": 73,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 383.82
+    },
     {
       "eventId": "11992",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 161.02
+      "egrPoints": 161.02,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:10.861Z",
+  "scrapedAt": "2026-11-02T15:32:25.793Z",
   "url": "https://www.europeangolfrankings.com/players/49963"
 }

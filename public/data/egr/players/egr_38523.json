@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Breitenloo",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 1474,
+  "tournamentsPlayed": 15,
+  "egrRank": 1485,
   "egrPoints": 4422.61,
   "avgScore": 75.8,
   "avgToCR": 75.65,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": false,
+      "pos": "31",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 79,
+      "r2": 89,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 84.88
+    },
+    {
+      "eventId": "12484",
+      "counting": false,
+      "pos": "25",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 81,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 162.71
+    },
     {
       "eventId": "12918",
       "counting": true,
@@ -207,7 +235,8 @@
       "r2": 77,
       "r3": 72,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -226,6 +255,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:32.235Z",
+  "scrapedAt": "2026-11-02T15:28:21.210Z",
   "url": "https://www.europeangolfrankings.com/players/38523"
 }

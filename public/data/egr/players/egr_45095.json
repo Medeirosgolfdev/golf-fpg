@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Woburn",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 6992,
-  "egrPoints": 246.83,
-  "avgScore": 81.56,
-  "avgToCR": 80.53,
+  "tournamentsPlayed": 5,
+  "egrRank": 5773,
+  "egrPoints": 447.5,
+  "avgScore": 80.91,
+  "avgToCR": 79.16,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "40",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 77,
+      "r2": 81,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 200.67
+    },
     {
       "eventId": "12647",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:31.920Z",
+  "scrapedAt": "2026-11-02T15:30:34.939Z",
   "url": "https://www.europeangolfrankings.com/players/45095"
 }

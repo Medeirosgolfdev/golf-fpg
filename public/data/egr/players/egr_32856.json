@@ -7,12 +7,68 @@
   "country": "Italy",
   "club": "Molinetto",
   "ageGroup": "U21",
-  "tournamentsPlayed": 16,
-  "egrRank": 1246,
-  "egrPoints": 5334.36,
-  "avgScore": 75.22,
-  "avgToCR": 73.63,
+  "tournamentsPlayed": 17,
+  "egrRank": 1427,
+  "egrPoints": 4616.31,
+  "avgScore": 75.74,
+  "avgToCR": 74.06,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": false,
+      "pos": "43",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 80,
+      "r2": 82,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 160.66
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "24",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 81,
+      "r2": 77,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 442.7
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "55",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 83,
+      "r2": 70,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 403.08
+    },
+    {
+      "eventId": "12008",
+      "counting": false,
+      "pos": "11",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 297.08
+    },
     {
       "eventId": "11989",
       "counting": true,
@@ -207,7 +263,8 @@
       "r2": 73,
       "r3": 77,
       "r4": null,
-      "egrPoints": 451.19
+      "egrPoints": 451.19,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -221,7 +278,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 144.84
+      "egrPoints": 144.84,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -235,7 +293,8 @@
       "r2": 79,
       "r3": 72,
       "r4": null,
-      "egrPoints": 1112.64
+      "egrPoints": 1112.64,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -269,6 +328,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:28.051Z",
+  "scrapedAt": "2026-11-02T15:26:06.257Z",
   "url": "https://www.europeangolfrankings.com/players/32856"
 }

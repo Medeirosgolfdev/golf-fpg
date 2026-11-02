@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Frankfurt",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 9295,
-  "egrPoints": 57.42,
-  "avgScore": 84.6,
-  "avgToCR": 84.34,
+  "tournamentsPlayed": 5,
+  "egrRank": 7223,
+  "egrPoints": 229.3,
+  "avgScore": 83,
+  "avgToCR": 83.01,
   "events": [
+    {
+      "eventId": "12963",
+      "counting": true,
+      "pos": "9",
+      "event": "3. Spanish Junior Golf Masters 2026",
+      "venue": "UGOLF d’Hacienda del Alamo",
+      "country": "Spain",
+      "startDateRaw": "20. Oct 26",
+      "r1": 83,
+      "r2": 82,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "33",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 76,
+      "r2": 85,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 171.88
+    },
     {
       "eventId": "12855",
       "counting": true,
@@ -72,6 +100,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:26:17.829Z",
+  "scrapedAt": "2026-11-02T15:35:58.265Z",
   "url": "https://www.europeangolfrankings.com/players/57453"
 }

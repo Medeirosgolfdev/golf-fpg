@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Los Retamares",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 2288,
-  "egrPoints": 2428.75,
-  "avgScore": 77.32,
-  "avgToCR": 76.38,
+  "tournamentsPlayed": 8,
+  "egrRank": 2259,
+  "egrPoints": 2500.94,
+  "avgScore": 77.55,
+  "avgToCR": 76.57,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "31",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 75,
+      "r2": 87,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 72.19
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:04.980Z",
+  "scrapedAt": "2026-11-02T15:30:04.952Z",
   "url": "https://www.europeangolfrankings.com/players/43806"
 }

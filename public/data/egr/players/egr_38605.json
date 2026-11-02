@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Carimate",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 1063,
-  "egrPoints": 1266.57,
-  "avgScore": 80.16,
-  "avgToCR": 77.44,
+  "tournamentsPlayed": 13,
+  "egrRank": 991,
+  "egrPoints": 1492.15,
+  "avgScore": 79.46,
+  "avgToCR": 76.68,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "37",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 260.48
+    },
+    {
+      "eventId": "12009",
+      "counting": false,
+      "pos": "13",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 84,
+      "r2": 84,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12001",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "11946",
-      "counting": true,
+      "counting": false,
       "pos": "18",
       "event": "Targa D'Oro Villa D'Este 2026",
       "venue": "Golf Club Villa d'Este",
@@ -179,7 +207,8 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11384",
@@ -198,6 +227,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:36.754Z",
+  "scrapedAt": "2026-11-02T15:28:26.033Z",
   "url": "https://www.europeangolfrankings.com/players/38605"
 }

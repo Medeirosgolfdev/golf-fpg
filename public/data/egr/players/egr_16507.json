@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Berlin Wannsee",
   "ageGroup": "U25",
-  "tournamentsPlayed": 5,
-  "egrRank": 818,
-  "egrPoints": 7921.39,
-  "avgScore": 71.75,
-  "avgToCR": 69.19,
+  "tournamentsPlayed": 6,
+  "egrRank": 810,
+  "egrPoints": 8032.35,
+  "avgScore": 72,
+  "avgToCR": 70.13,
   "events": [
+    {
+      "eventId": "12943",
+      "counting": true,
+      "pos": "8",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 110.96
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:11:39.728Z",
+  "scrapedAt": "2026-11-02T15:19:43.988Z",
   "url": "https://www.europeangolfrankings.com/players/16507"
 }

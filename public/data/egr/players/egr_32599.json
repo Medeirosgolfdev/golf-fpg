@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Royal Limburg",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1429,
-  "egrPoints": 4547.04,
-  "avgScore": 74.92,
-  "avgToCR": 74.4,
+  "tournamentsPlayed": 11,
+  "egrRank": 1389,
+  "egrPoints": 4744.31,
+  "avgScore": 75,
+  "avgToCR": 74.29,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "15",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 76,
+      "r2": 73,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 552.74
+    },
     {
       "eventId": "11753",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11482",
-      "counting": true,
+      "counting": false,
       "pos": "43",
       "event": "Barrie Douglas Scottish Junior Masters 2026",
       "venue": "Strathmore GC",
@@ -170,6 +184,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:20.380Z",
+  "scrapedAt": "2026-11-02T15:25:57.769Z",
   "url": "https://www.europeangolfrankings.com/players/32599"
 }

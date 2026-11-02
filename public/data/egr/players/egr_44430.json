@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Entfelden",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 1345,
-  "egrPoints": 4886.05,
-  "avgScore": 73.95,
-  "avgToCR": 73.53,
+  "tournamentsPlayed": 14,
+  "egrRank": 1306,
+  "egrPoints": 5114.37,
+  "avgScore": 74,
+  "avgToCR": 73.8,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "16",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 328.7
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "12",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 302.18
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12457",
-      "counting": true,
+      "counting": false,
       "pos": "44",
       "event": "Swiss Golf West Championship (Sion) 2026",
       "venue": "Golf Club de Sion",
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12456",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Swiss Golf Junior Tour (Zürichsee) 2026",
       "venue": "Golfpark Zürichsee",
@@ -193,7 +221,8 @@
       "r2": 73,
       "r3": 73,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -212,6 +241,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:16.527Z",
+  "scrapedAt": "2026-11-02T15:30:17.855Z",
   "url": "https://www.europeangolfrankings.com/players/44430"
 }

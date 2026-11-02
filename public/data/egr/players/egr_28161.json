@@ -7,12 +7,26 @@
   "country": "Austria",
   "club": "Wien",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1697,
-  "egrPoints": 3707.03,
-  "avgScore": 75.58,
-  "avgToCR": 74.7,
+  "tournamentsPlayed": 11,
+  "egrRank": 1484,
+  "egrPoints": 4426.61,
+  "avgScore": 75.25,
+  "avgToCR": 74.71,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "12",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 772.14
+    },
     {
       "eventId": "12818",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11410",
-      "counting": true,
+      "counting": false,
       "pos": "30",
       "event": "29th Faldo Junior Tour Europe Grand Final 2025",
       "venue": "Al Ain Equestrian, Shooting & Golf Club",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:14.701Z",
+  "scrapedAt": "2026-11-02T15:23:43.149Z",
   "url": "https://www.europeangolfrankings.com/players/28161"
 }

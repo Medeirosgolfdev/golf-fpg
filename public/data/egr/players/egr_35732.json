@@ -14,6 +14,20 @@
   "avgToCR": 75.08,
   "events": [
     {
+      "eventId": "12956",
+      "counting": false,
+      "pos": "2",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 72,
+      "r2": 73,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 159.65
+    },
+    {
       "eventId": "12935",
       "counting": false,
       "pos": "3",
@@ -221,7 +235,8 @@
       "r2": 76,
       "r3": 70,
       "r4": null,
-      "egrPoints": 226.8
+      "egrPoints": 226.8,
+      "_mantido": true
     },
     {
       "eventId": "11342",
@@ -240,6 +255,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:25.903Z",
+  "scrapedAt": "2026-11-02T15:27:08.916Z",
   "url": "https://www.europeangolfrankings.com/players/35732"
 }

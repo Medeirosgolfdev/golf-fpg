@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Molinetto",
   "ageGroup": "U25",
-  "tournamentsPlayed": 9,
-  "egrRank": 929,
+  "tournamentsPlayed": 10,
+  "egrRank": 933,
   "egrPoints": 6974.78,
   "avgScore": 73.95,
   "avgToCR": 71.78,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "84",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": null,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "11931",
-      "counting": true,
+      "counting": false,
       "pos": "102",
       "event": "LXX Gran Premio Cittá Di Milano Trofeo Gianni Albertini 2026",
       "venue": "Golf Club Milano",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:15:33.615Z",
+  "scrapedAt": "2026-11-02T15:24:03.125Z",
   "url": "https://www.europeangolfrankings.com/players/28672"
 }

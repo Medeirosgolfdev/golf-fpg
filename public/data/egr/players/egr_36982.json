@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Saint Apollinaire",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 1301,
-  "egrPoints": 5106.63,
-  "avgScore": 74.96,
-  "avgToCR": 74.13,
+  "tournamentsPlayed": 15,
+  "egrRank": 1335,
+  "egrPoints": 4946.93,
+  "avgScore": 75.04,
+  "avgToCR": 74.35,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "20",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 73,
+      "r2": 78,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 255.55
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "10",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": 70,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 323.64
+    },
     {
       "eventId": "12918",
       "counting": true,
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "11797",
-      "counting": true,
+      "counting": false,
       "pos": "109",
       "event": "Fairhaven Trophies 2026",
       "venue": "Fairhaven Golf Club",
@@ -207,7 +235,8 @@
       "r2": 69,
       "r3": 66,
       "r4": null,
-      "egrPoints": 562.01
+      "egrPoints": 562.01,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -226,6 +255,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:56.370Z",
+  "scrapedAt": "2026-11-02T15:27:42.655Z",
   "url": "https://www.europeangolfrankings.com/players/36982"
 }

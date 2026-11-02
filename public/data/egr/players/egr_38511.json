@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Davos",
   "ageGroup": "U18",
-  "tournamentsPlayed": 17,
-  "egrRank": 265,
-  "egrPoints": 16364.3,
-  "avgScore": 70.96,
-  "avgToCR": 69.71,
+  "tournamentsPlayed": 16,
+  "egrRank": 231,
+  "egrPoints": 17751.7,
+  "avgScore": 71.08,
+  "avgToCR": 70.09,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "1",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 66,
+      "r2": 73,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 2147.38
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -183,7 +197,7 @@
     },
     {
       "eventId": "11544",
-      "counting": true,
+      "counting": false,
       "pos": "1",
       "event": "GJG Grand Final Qualifier 2026",
       "venue": "Golf- und Landclub Semlin am See",
@@ -235,7 +249,8 @@
       "r2": 75,
       "r3": 77,
       "r4": null,
-      "egrPoints": 327.09
+      "egrPoints": 327.09,
+      "_mantido": true
     },
     {
       "eventId": "10373",
@@ -249,7 +264,8 @@
       "r2": 77,
       "r3": 68,
       "r4": null,
-      "egrPoints": 193.19
+      "egrPoints": 193.19,
+      "_mantido": true
     },
     {
       "eventId": "10110",
@@ -283,6 +299,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:31.616Z",
+  "scrapedAt": "2026-11-02T15:28:20.506Z",
   "url": "https://www.europeangolfrankings.com/players/38511"
 }

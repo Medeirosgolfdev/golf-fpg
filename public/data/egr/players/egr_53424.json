@@ -6,13 +6,41 @@
   "firstName": "Emily",
   "country": "Austria",
   "club": null,
-  "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 1813,
-  "egrPoints": 359.43,
-  "avgScore": 83.22,
-  "avgToCR": 80.58,
+  "ageGroup": "U14",
+  "tournamentsPlayed": 6,
+  "egrRank": 1263,
+  "egrPoints": 927.99,
+  "avgScore": 83,
+  "avgToCR": 80.94,
   "events": [
+    {
+      "eventId": "12518",
+      "counting": true,
+      "pos": "3",
+      "event": "AJGT U14/U12 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 81,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 219
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "54",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 83,
+      "r2": 83,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 349.56
+    },
     {
       "eventId": "12511",
       "counting": true,
@@ -70,7 +98,7 @@
       "egrPoints": 52.5
     }
   ],
-  "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:26.002Z",
+  "ageNum": 14,
+  "scrapedAt": "2026-11-02T15:33:50.969Z",
   "url": "https://www.europeangolfrankings.com/players/53424"
 }

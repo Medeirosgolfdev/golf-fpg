@@ -7,12 +7,26 @@
   "country": "Croatia",
   "club": "Zagreb",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 1,
-  "egrRank": 4233,
-  "egrPoints": 873.69,
-  "avgScore": 78,
-  "avgToCR": 76.3,
+  "tournamentsPlayed": 2,
+  "egrRank": 3245,
+  "egrPoints": 1414.99,
+  "avgScore": 77.8,
+  "avgToCR": 75.56,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "33",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 73,
+      "r2": 80,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 541.3
+    },
     {
       "eventId": "12632",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:17:11.295Z",
+  "scrapedAt": "2026-11-02T15:25:48.255Z",
   "url": "https://www.europeangolfrankings.com/players/32318"
 }

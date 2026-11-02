@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Marco Simone",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 1655,
-  "egrPoints": 3829.02,
-  "avgScore": 76.8,
-  "avgToCR": 75.4,
+  "tournamentsPlayed": 13,
+  "egrRank": 1469,
+  "egrPoints": 4489.26,
+  "avgScore": 76.64,
+  "avgToCR": 74.92,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "31",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 73,
+      "r2": 78,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 803.19
+    },
+    {
+      "eventId": "12012",
+      "counting": false,
+      "pos": "28",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 81,
+      "r2": 83,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 112.95
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "10234",
-      "counting": true,
+      "counting": false,
       "pos": "44",
       "event": "Argentario Classic Open 2025",
       "venue": "Argentario Golf Resort",
@@ -184,6 +212,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:12.397Z",
+  "scrapedAt": "2026-11-02T15:30:13.280Z",
   "url": "https://www.europeangolfrankings.com/players/44275"
 }

@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Lyon",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
+  "tournamentsPlayed": 11,
   "egrRank": 14,
-  "egrPoints": 31794,
-  "avgScore": 72.35,
-  "avgToCR": 69.12,
+  "egrPoints": 31285.1,
+  "avgScore": 72.64,
+  "avgToCR": 69.38,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "25",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 72,
+      "r2": 77,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 1660.3
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -165,7 +179,8 @@
       "r2": 74,
       "r3": 88,
       "r4": null,
-      "egrPoints": 846.96
+      "egrPoints": 846.96,
+      "_mantido": true
     },
     {
       "eventId": "11369",
@@ -179,7 +194,8 @@
       "r2": 72,
       "r3": 78,
       "r4": 73,
-      "egrPoints": 2169.19
+      "egrPoints": 2169.19,
+      "_mantido": true
     },
     {
       "eventId": "10403",
@@ -213,6 +229,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:01.730Z",
+  "scrapedAt": "2026-11-02T15:26:42.681Z",
   "url": "https://www.europeangolfrankings.com/players/34163"
 }

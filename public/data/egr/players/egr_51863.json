@@ -7,12 +7,26 @@
   "country": "Netherlands",
   "club": "De Hoge Kleij",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 2560,
-  "egrPoints": 2090.14,
-  "avgScore": 79.37,
-  "avgToCR": 79.01,
+  "tournamentsPlayed": 10,
+  "egrRank": 2532,
+  "egrPoints": 2151.82,
+  "avgScore": 78.48,
+  "avgToCR": 78.33,
   "events": [
+    {
+      "eventId": "12963",
+      "counting": true,
+      "pos": "4",
+      "event": "3. Spanish Junior Golf Masters 2026",
+      "venue": "UGOLF d’Hacienda del Alamo",
+      "country": "Spain",
+      "startDateRaw": "20. Oct 26",
+      "r1": 72,
+      "r2": 74,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 61.68
+    },
     {
       "eventId": "12540",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12521",
-      "counting": true,
+      "counting": false,
       "pos": "85",
       "event": "Voorjaarswedstrijd Heren 2026",
       "venue": "Golfbaan Stippelberg",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:49.654Z",
+  "scrapedAt": "2026-11-02T15:33:09.200Z",
   "url": "https://www.europeangolfrankings.com/players/51863"
 }

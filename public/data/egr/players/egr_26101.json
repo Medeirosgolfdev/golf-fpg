@@ -8,11 +8,25 @@
   "club": "Conwy",
   "ageGroup": "U21",
   "tournamentsPlayed": 9,
-  "egrRank": 1467,
-  "egrPoints": 4439.28,
-  "avgScore": 77.13,
-  "avgToCR": 75.48,
+  "egrRank": 1686,
+  "egrPoints": 3764.7,
+  "avgScore": 77.61,
+  "avgToCR": 75.59,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "92",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 80,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12645",
       "counting": true,
@@ -137,7 +151,8 @@
       "r2": 78,
       "r3": 76,
       "r4": null,
-      "egrPoints": 221.94
+      "egrPoints": 221.94,
+      "_mantido": true
     },
     {
       "eventId": "10730",
@@ -156,6 +171,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:14:18.338Z",
+  "scrapedAt": "2026-11-02T15:22:40.693Z",
   "url": "https://www.europeangolfrankings.com/players/26101"
 }

@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Villa D'Este",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 6519,
+  "tournamentsPlayed": 4,
+  "egrRank": 6595,
   "egrPoints": 305.05,
-  "avgScore": 81.13,
-  "avgToCR": 80.78,
+  "avgScore": 82.22,
+  "avgToCR": 81.92,
   "events": [
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "44",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 91,
+      "r2": 91,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:26:42.004Z",
+  "scrapedAt": "2026-11-02T15:36:26.396Z",
   "url": "https://www.europeangolfrankings.com/players/58771"
 }

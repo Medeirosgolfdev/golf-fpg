@@ -6,13 +6,27 @@
   "firstName": "Murray",
   "country": "Scotland",
   "club": "Blairgowrie",
-  "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 5488,
+  "ageGroup": "U16",
+  "tournamentsPlayed": 4,
+  "egrRank": 5560,
   "egrPoints": 494.25,
-  "avgScore": 83.22,
-  "avgToCR": 82.59,
+  "avgScore": 81.89,
+  "avgToCR": 80.71,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "64",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 85,
+      "r2": 80,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11713",
       "counting": true,
@@ -71,7 +85,7 @@
       "_mantido": true
     }
   ],
-  "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:26:17.601Z",
+  "ageNum": 16,
+  "scrapedAt": "2026-11-02T15:35:57.886Z",
   "url": "https://www.europeangolfrankings.com/players/57391"
 }

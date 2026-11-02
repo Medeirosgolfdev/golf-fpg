@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 2077,
-  "egrPoints": 2812.53,
-  "avgScore": 75.43,
+  "tournamentsPlayed": 13,
+  "egrRank": 1887,
+  "egrPoints": 3271.58,
+  "avgScore": 75.52,
   "avgToCR": 74.37,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "6",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 81,
+      "r2": 71,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 347.96
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "31",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 318.03
+    },
     {
       "eventId": "11719",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12763",
-      "counting": true,
+      "counting": false,
       "pos": "26",
       "event": "The Foundatons Trophy 2026",
       "venue": "Alyth GC",
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "11474",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Trump Invitaitonal 2026",
       "venue": "Trump International",
@@ -184,6 +212,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:31.915Z",
+  "scrapedAt": "2026-11-02T15:32:49.414Z",
   "url": "https://www.europeangolfrankings.com/players/50974"
 }

@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Bourbon",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 3325,
-  "egrPoints": 2.62,
-  "avgScore": 89,
-  "avgToCR": 86.74,
+  "tournamentsPlayed": 4,
+  "egrRank": 2320,
+  "egrPoints": 160.29,
+  "avgScore": 87.33,
+  "avgToCR": 85.1,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "70",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 84,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 140.13
+    },
+    {
+      "eventId": "12216",
+      "counting": true,
+      "pos": "15",
+      "event": "Grand Prix de Valescure 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 17.53
+    },
+    {
+      "eventId": "12204",
+      "counting": true,
+      "pos": "21",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 90,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12104",
       "counting": true,
@@ -39,10 +81,11 @@
       "r2": 92,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:05.234Z",
+  "scrapedAt": "2026-11-02T15:33:27.629Z",
   "url": "https://www.europeangolfrankings.com/players/52660"
 }

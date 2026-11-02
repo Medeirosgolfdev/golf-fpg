@@ -8,11 +8,25 @@
   "club": "Hof Hausen",
   "ageGroup": "U18",
   "tournamentsPlayed": 13,
-  "egrRank": 3472,
-  "egrPoints": 1245.58,
-  "avgScore": 76.92,
-  "avgToCR": 76.44,
+  "egrRank": 3243,
+  "egrPoints": 1415.77,
+  "avgScore": 77.12,
+  "avgToCR": 76.66,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "25",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 82,
+      "r2": 78,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 227.66
+    },
     {
       "eventId": "12856",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12851",
-      "counting": true,
+      "counting": false,
       "pos": "45",
       "event": "Hanseatic International Youth Open Boys 2026",
       "venue": "Gut Kaden (A+B)",
@@ -193,10 +207,11 @@
       "r2": 99,
       "r3": 85,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:51.619Z",
+  "scrapedAt": "2026-11-02T15:30:55.970Z",
   "url": "https://www.europeangolfrankings.com/players/46115"
 }

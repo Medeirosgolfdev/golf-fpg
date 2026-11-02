@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Franciacorta",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 3573,
+  "tournamentsPlayed": 13,
+  "egrRank": 3597,
   "egrPoints": 1186.42,
   "avgScore": 78.35,
   "avgToCR": 78.93,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": false,
+      "pos": "39",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 82,
+      "r2": 81,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12934",
       "counting": true,
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:10.043Z",
+  "scrapedAt": "2026-11-02T15:32:24.906Z",
   "url": "https://www.europeangolfrankings.com/players/49937"
 }

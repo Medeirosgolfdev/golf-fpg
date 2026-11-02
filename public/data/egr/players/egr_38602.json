@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Madonna Campiglio",
   "ageGroup": "U14",
-  "tournamentsPlayed": 18,
-  "egrRank": 250,
+  "tournamentsPlayed": 17,
+  "egrRank": 252,
   "egrPoints": 7425.69,
   "avgScore": 74.5,
   "avgToCR": 71.35,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": false,
+      "pos": "30",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 76,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 414.67
+    },
     {
       "eventId": "12636",
       "counting": true,
@@ -249,7 +263,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 165.5
+      "egrPoints": 165.5,
+      "_mantido": true
     },
     {
       "eventId": "10323",
@@ -263,7 +278,8 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 139.65
+      "egrPoints": 139.65,
+      "_mantido": true
     },
     {
       "eventId": "10320",
@@ -282,6 +298,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:19:36.568Z",
+  "scrapedAt": "2026-11-02T15:28:25.864Z",
   "url": "https://www.europeangolfrankings.com/players/38602"
 }

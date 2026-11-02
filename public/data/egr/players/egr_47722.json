@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Terre Blanche",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 788,
-  "egrPoints": 2136.89,
-  "avgScore": 78.18,
-  "avgToCR": 77.26,
+  "tournamentsPlayed": 9,
+  "egrRank": 614,
+  "egrPoints": 2969.1,
+  "avgScore": 77.76,
+  "avgToCR": 76.13,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "26",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 78,
+      "r2": 74,
+      "r3": 71,
+      "r4": 75,
+      "egrPoints": 727.79
+    },
+    {
+      "eventId": "12216",
+      "counting": true,
+      "pos": "8",
+      "event": "Grand Prix de Valescure 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 78,
+      "r2": 72,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 121.8
+    },
     {
       "eventId": "12188",
       "counting": true,
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "12115",
-      "counting": true,
+      "counting": false,
       "pos": "16",
       "event": "Grand Prix Jeunes Majeur Filles U14 2026",
       "venue": "Golf Club de Besançon",
@@ -113,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:12.850Z",
+  "scrapedAt": "2026-11-02T15:31:20.398Z",
   "url": "https://www.europeangolfrankings.com/players/47722"
 }

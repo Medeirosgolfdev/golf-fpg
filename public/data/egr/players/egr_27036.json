@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Sempachersee",
   "ageGroup": "U25",
-  "tournamentsPlayed": 10,
-  "egrRank": 116,
-  "egrPoints": 12835.3,
-  "avgScore": 74.83,
-  "avgToCR": 71.54,
+  "tournamentsPlayed": 9,
+  "egrRank": 127,
+  "egrPoints": 12118.9,
+  "avgScore": 74.55,
+  "avgToCR": 71.35,
   "events": [
     {
       "eventId": "11765",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11842",
-      "counting": false,
+      "counting": true,
       "pos": "84",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -151,10 +151,11 @@
       "r2": 79,
       "r3": 85,
       "r4": null,
-      "egrPoints": 716.46
+      "egrPoints": 716.46,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:14:42.187Z",
+  "scrapedAt": "2026-11-02T15:23:07.621Z",
   "url": "https://www.europeangolfrankings.com/players/27036"
 }

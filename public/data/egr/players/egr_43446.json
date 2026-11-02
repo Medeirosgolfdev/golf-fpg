@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 447,
-  "egrPoints": 11831,
-  "avgScore": 72.29,
-  "avgToCR": 70.35,
+  "tournamentsPlayed": 9,
+  "egrRank": 451,
+  "egrPoints": 11729.4,
+  "avgScore": 72.04,
+  "avgToCR": 70.33,
   "events": [
     {
       "eventId": "12910",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12847",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "Bernhard Langer Youth Trophy 2026",
       "venue": "Golfclub Augsburg",
@@ -151,10 +151,11 @@
       "r2": 79,
       "r3": 76,
       "r4": null,
-      "egrPoints": 388.48
+      "egrPoints": 388.48,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:57.529Z",
+  "scrapedAt": "2026-11-02T15:29:56.368Z",
   "url": "https://www.europeangolfrankings.com/players/43446"
 }

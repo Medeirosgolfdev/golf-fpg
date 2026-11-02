@@ -1,18 +1,46 @@
 {
   "id": "53039",
-  "egrId": "MUSA53039",
+  "egrId": "MSCO53039",
   "name": "Caleb Pickett",
   "lastName": "PICKETT",
   "firstName": "Caleb",
-  "country": "USA",
+  "country": "Scotland",
   "club": "West Links",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 4664,
-  "egrPoints": 710.1,
-  "avgScore": 79.3,
-  "avgToCR": 79.36,
+  "tournamentsPlayed": 15,
+  "egrRank": 4057,
+  "egrPoints": 962.92,
+  "avgScore": 78.85,
+  "avgToCR": 78.82,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": false,
+      "pos": "55",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 104,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "38",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 80,
+      "r2": 81,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 252.83
+    },
     {
       "eventId": "11719",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11707",
-      "counting": true,
+      "counting": false,
       "pos": "19",
       "event": "Junior Tour Alyth Boys 2026",
       "venue": "Alyth GC",
@@ -212,6 +240,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:11.923Z",
+  "scrapedAt": "2026-11-02T15:33:35.641Z",
   "url": "https://www.europeangolfrankings.com/players/53039"
 }

@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Galway Bay",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 2473,
-  "egrPoints": 2199.45,
-  "avgScore": 79.2,
-  "avgToCR": 77.67,
+  "tournamentsPlayed": 12,
+  "egrRank": 2237,
+  "egrPoints": 2534.02,
+  "avgScore": 77.75,
+  "avgToCR": 76.29,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "6",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 71,
+      "r2": 72,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 334.56
+    },
     {
       "eventId": "11685",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12813",
-      "counting": true,
+      "counting": false,
       "pos": "44",
       "event": "KIlkenny Scratch Cup 2026",
       "venue": "Kilkenny Golf Club",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:12:24.890Z",
+  "scrapedAt": "2026-11-02T15:20:33.635Z",
   "url": "https://www.europeangolfrankings.com/players/20116"
 }

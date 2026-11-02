@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Aukrug",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 3338,
+  "tournamentsPlayed": 4,
+  "egrRank": 3378,
   "egrPoints": 0,
-  "avgScore": 88.2,
-  "avgToCR": 85.84,
+  "avgScore": 90.67,
+  "avgToCR": 88.84,
   "events": [
+    {
+      "eventId": "12948",
+      "counting": true,
+      "pos": "9",
+      "event": "DGV-GVSH Meisterschaft AK16/18 Mädchen 2026",
+      "venue": "Golfanlage Hohwacht",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 92,
+      "r2": 97,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12840",
       "counting": true,
@@ -24,6 +38,20 @@
       "r1": 85,
       "r2": 90,
       "r3": 93,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12944",
+      "counting": true,
+      "pos": "23",
+      "event": "DGV-Region Nord 2. AK16/18 Mädchen 2026",
+      "venue": "Golfclub Segeberg",
+      "country": "Germany",
+      "startDateRaw": "04. Jul 26",
+      "r1": 93,
+      "r2": 97,
+      "r3": null,
       "r4": null,
       "egrPoints": 0
     },
@@ -43,6 +71,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:47.181Z",
+  "scrapedAt": "2026-11-02T15:26:26.922Z",
   "url": "https://www.europeangolfrankings.com/players/33583"
 }

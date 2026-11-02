@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Varese",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 7,
-  "egrRank": 1338,
-  "egrPoints": 800.42,
-  "avgScore": 80.95,
-  "avgToCR": 77.61,
+  "tournamentsPlayed": 8,
+  "egrRank": 1245,
+  "egrPoints": 963.15,
+  "avgScore": 80.64,
+  "avgToCR": 77.05,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "8",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 83,
+      "r2": 80,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 126.26
+    },
+    {
+      "eventId": "12009",
+      "counting": true,
+      "pos": "8",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 79,
+      "r2": 83,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 36.47
+    },
     {
       "eventId": "11959",
       "counting": true,
@@ -109,7 +137,8 @@
       "r2": 83,
       "r3": 86,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -128,6 +157,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:13:38.265Z",
+  "scrapedAt": "2026-11-02T15:21:55.420Z",
   "url": "https://www.europeangolfrankings.com/players/24342"
 }

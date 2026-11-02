@@ -7,12 +7,40 @@
   "country": "Austria",
   "club": "Marco Polo Vienna",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 198,
-  "egrPoints": 8982.99,
-  "avgScore": 74.46,
-  "avgToCR": 71.05,
+  "tournamentsPlayed": 15,
+  "egrRank": 175,
+  "egrPoints": 10129.1,
+  "avgScore": 73.57,
+  "avgToCR": 70.12,
   "events": [
+    {
+      "eventId": "12516",
+      "counting": true,
+      "pos": "1",
+      "event": "AJGT U16/U18 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 911.23
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "7",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 1241.66
+    },
     {
       "eventId": "11767",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "11766",
-      "counting": true,
+      "counting": false,
       "pos": "16",
       "event": "Swiss International Women's Amateur 2026",
       "venue": "Golf Gerre Losone",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12497",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "2. AJGT U14-U18 presented by Bernd Wiesberger 2026",
       "venue": "Golfclub Gut Freiberg",
@@ -207,10 +235,11 @@
       "r2": 78,
       "r3": 75,
       "r4": null,
-      "egrPoints": 220.49
+      "egrPoints": 220.49,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:16.533Z",
+  "scrapedAt": "2026-11-02T15:23:45.483Z",
   "url": "https://www.europeangolfrankings.com/players/28200"
 }

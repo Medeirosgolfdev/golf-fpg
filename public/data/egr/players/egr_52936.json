@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Lucerne",
   "ageGroup": "U12",
-  "tournamentsPlayed": 5,
-  "egrRank": 6628,
-  "egrPoints": 289.52,
-  "avgScore": 80,
-  "avgToCR": 83.26,
+  "tournamentsPlayed": 6,
+  "egrRank": 6194,
+  "egrPoints": 373,
+  "avgScore": 78.2,
+  "avgToCR": 81.36,
   "events": [
+    {
+      "eventId": "12486",
+      "counting": true,
+      "pos": "3",
+      "event": "Swiss Golf Final U12/U10 (Crans-sur-Sierre) 2026",
+      "venue": "Golf Club Crans-sur-Sierre",
+      "country": "Switzerland",
+      "startDateRaw": "03. Oct 26",
+      "r1": 74,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 83.48
+    },
     {
       "eventId": "12481",
       "counting": true,
@@ -100,6 +114,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-10-05T14:24:09.910Z",
+  "scrapedAt": "2026-11-02T15:33:33.485Z",
   "url": "https://www.europeangolfrankings.com/players/52936"
 }

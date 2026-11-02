@@ -8,11 +8,25 @@
   "club": "Padova",
   "ageGroup": "U14",
   "tournamentsPlayed": 5,
-  "egrRank": 2098,
-  "egrPoints": 225.22,
-  "avgScore": 87.3,
-  "avgToCR": 85.34,
+  "egrRank": 2073,
+  "egrPoints": 243.26,
+  "avgScore": 87.82,
+  "avgToCR": 85.43,
   "events": [
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "24",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 89,
+      "r2": 87,
+      "r3": 101,
+      "r4": null,
+      "egrPoints": 18.04
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -81,10 +95,11 @@
       "r2": 91,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:03.276Z",
+  "scrapedAt": "2026-11-02T15:31:09.198Z",
   "url": "https://www.europeangolfrankings.com/players/47176"
 }

@@ -5,14 +5,28 @@
   "lastName": "ROBINSON",
   "firstName": "Will",
   "country": "England",
-  "club": "Pannal",
-  "ageGroup": "U18",
-  "tournamentsPlayed": 1,
-  "egrRank": 10380,
+  "club": "Girton",
+  "ageGroup": "U16",
+  "tournamentsPlayed": 2,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 84.5,
-  "avgToCR": 82.5,
+  "avgScore": 86.75,
+  "avgToCR": 85.55,
   "events": [
+    {
+      "eventId": "12957",
+      "counting": true,
+      "pos": "24",
+      "event": "Boys Championship Cambridgeshire Area 2026",
+      "venue": "Girton Golf Club",
+      "country": "England",
+      "startDateRaw": "21. Jun 26",
+      "r1": 87,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12735",
       "counting": true,
@@ -28,7 +42,7 @@
       "egrPoints": 0
     }
   ],
-  "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:43.982Z",
+  "ageNum": 16,
+  "scrapedAt": "2026-11-02T15:30:47.517Z",
   "url": "https://www.europeangolfrankings.com/players/45785"
 }

@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Buxtehude",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 10380,
+  "tournamentsPlayed": 2,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 90,
-  "avgToCR": 89.6,
+  "avgScore": 90.5,
+  "avgToCR": 90.1,
   "events": [
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "72",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 87,
+      "r2": 89,
+      "r3": 93,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12796",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:19.844Z",
+  "scrapedAt": "2026-11-02T15:33:44.626Z",
   "url": "https://www.europeangolfrankings.com/players/53326"
 }

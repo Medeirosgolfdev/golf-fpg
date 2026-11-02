@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Gaillon",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 1364,
-  "egrPoints": 4792.3,
-  "avgScore": 75.83,
-  "avgToCR": 75.04,
+  "tournamentsPlayed": 13,
+  "egrRank": 1199,
+  "egrPoints": 5540.09,
+  "avgScore": 74.87,
+  "avgToCR": 74.1,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "15",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 72,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 527.27
+    },
+    {
+      "eventId": "12210",
+      "counting": false,
+      "pos": "26",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 78,
+      "r2": 81,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 405.07
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "16",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 70,
+      "r2": 76,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 691.67
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -43,7 +85,7 @@
     },
     {
       "eventId": "12151",
-      "counting": true,
+      "counting": false,
       "pos": "14",
       "event": "Grand Prix de la Côte d'Albâtre 2026",
       "venue": "Golf du Havre",
@@ -141,7 +183,7 @@
     },
     {
       "eventId": "12048",
-      "counting": true,
+      "counting": false,
       "pos": "83",
       "event": "Grand Prix Elite de Landiforne 2026",
       "venue": "Golf de Moliets/Seignosse",
@@ -155,6 +197,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:20:03.452Z",
+  "scrapedAt": "2026-11-02T15:28:55.790Z",
   "url": "https://www.europeangolfrankings.com/players/39960"
 }

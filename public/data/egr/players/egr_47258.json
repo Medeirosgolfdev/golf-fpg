@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Millicent",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 273,
-  "egrPoints": 15908.6,
-  "avgScore": 73.13,
-  "avgToCR": 71.67,
+  "tournamentsPlayed": 14,
+  "egrRank": 270,
+  "egrPoints": 16132.5,
+  "avgScore": 72.68,
+  "avgToCR": 71.25,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "2",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 69,
+      "r2": 67,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1129.56
+    },
     {
       "eventId": "11859",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "12768",
-      "counting": true,
+      "counting": false,
       "pos": "23",
       "event": "Munster Men's Stroke Play Amateur Open Championship 2026",
       "venue": "Cork Golf Club",
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:05.089Z",
+  "scrapedAt": "2026-11-02T15:31:11.511Z",
   "url": "https://www.europeangolfrankings.com/players/47258"
 }

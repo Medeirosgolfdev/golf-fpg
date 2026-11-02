@@ -8,11 +8,25 @@
   "club": "Caen La Mer",
   "ageGroup": "U16",
   "tournamentsPlayed": 9,
-  "egrRank": 672,
-  "egrPoints": 2635.65,
-  "avgScore": 76.48,
-  "avgToCR": 74.96,
+  "egrRank": 610,
+  "egrPoints": 3009.44,
+  "avgScore": 76.52,
+  "avgToCR": 74.91,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "30",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 78,
+      "r2": 73,
+      "r3": 73,
+      "r4": 75,
+      "egrPoints": 687.1
+    },
     {
       "eventId": "12195",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 313.31
+      "egrPoints": 313.31,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:21.972Z",
+  "scrapedAt": "2026-11-02T15:29:16.767Z",
   "url": "https://www.europeangolfrankings.com/players/41503"
 }

@@ -7,12 +7,40 @@
   "country": "Austria",
   "club": "Linz St Florian",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 897,
-  "egrPoints": 1734.73,
-  "avgScore": 80.88,
-  "avgToCR": 77.92,
+  "tournamentsPlayed": 9,
+  "egrRank": 714,
+  "egrPoints": 2483.92,
+  "avgScore": 79.21,
+  "avgToCR": 76.48,
   "events": [
+    {
+      "eventId": "12516",
+      "counting": true,
+      "pos": "4",
+      "event": "AJGT U16/U18 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 222.25
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "36",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 75,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 526.94
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -123,10 +151,11 @@
       "r2": 79,
       "r3": 83,
       "r4": null,
-      "egrPoints": 42.94
+      "egrPoints": 42.94,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:16.394Z",
+  "scrapedAt": "2026-11-02T15:23:45.024Z",
   "url": "https://www.europeangolfrankings.com/players/28195"
 }

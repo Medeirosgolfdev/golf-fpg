@@ -8,11 +8,39 @@
   "club": "Sicilia's Picciolo",
   "ageGroup": "U16",
   "tournamentsPlayed": 15,
-  "egrRank": 496,
-  "egrPoints": 3857.01,
-  "avgScore": 77.87,
-  "avgToCR": 74.04,
+  "egrRank": 470,
+  "egrPoints": 4205.63,
+  "avgScore": 77.65,
+  "avgToCR": 73.74,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "4",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 984.19
+    },
+    {
+      "eventId": "12015",
+      "counting": false,
+      "pos": "21",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 77,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 115.2
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -207,7 +235,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 635.57
+      "egrPoints": 635.57,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -221,7 +250,8 @@
       "r2": 84,
       "r3": 75,
       "r4": null,
-      "egrPoints": 160.02
+      "egrPoints": 160.02,
+      "_mantido": true
     },
     {
       "eventId": "10316",
@@ -240,6 +270,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:19.770Z",
+  "scrapedAt": "2026-11-02T15:30:21.337Z",
   "url": "https://www.europeangolfrankings.com/players/44547"
 }

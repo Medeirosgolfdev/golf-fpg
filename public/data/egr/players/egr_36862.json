@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Padova",
   "ageGroup": "U16",
-  "tournamentsPlayed": 19,
-  "egrRank": 247,
-  "egrPoints": 7536.03,
-  "avgScore": 76,
-  "avgToCR": 72.34,
+  "tournamentsPlayed": 20,
+  "egrRank": 255,
+  "egrPoints": 7254.31,
+  "avgScore": 75.79,
+  "avgToCR": 72.05,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": false,
+      "pos": "7",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 79,
+      "r2": 79,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 144.3
+    },
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "12",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 76,
+      "r2": 71,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 633.16
+    },
+    {
+      "eventId": "12015",
+      "counting": false,
+      "pos": "33",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 85,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -263,7 +305,8 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 914.88
+      "egrPoints": 914.88,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -277,7 +320,8 @@
       "r2": 77,
       "r3": 80,
       "r4": null,
-      "egrPoints": 188.07
+      "egrPoints": 188.07,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -296,6 +340,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:18:52.347Z",
+  "scrapedAt": "2026-11-02T15:27:38.506Z",
   "url": "https://www.europeangolfrankings.com/players/36862"
 }

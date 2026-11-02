@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Fonti",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 123,
-  "egrPoints": 23963.1,
-  "avgScore": 71.32,
-  "avgToCR": 68.62,
+  "tournamentsPlayed": 15,
+  "egrRank": 95,
+  "egrPoints": 26820,
+  "avgScore": 70.8,
+  "avgToCR": 68.3,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "2",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 68,
+      "r2": 68,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 3671.56
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "1",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 68,
+      "r2": 69,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 4842.88
+    },
+    {
+      "eventId": "12008",
+      "counting": false,
+      "pos": "2",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 69,
+      "r2": 69,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 1083.45
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -85,7 +127,7 @@
     },
     {
       "eventId": "12789",
-      "counting": true,
+      "counting": false,
       "pos": "51",
       "event": "German International Amateur Championship Boys 2026",
       "venue": "GC Bad Saarow (Faldo)",
@@ -193,7 +235,8 @@
       "r2": 74,
       "r3": 68,
       "r4": null,
-      "egrPoints": 1378.03
+      "egrPoints": 1378.03,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -207,7 +250,8 @@
       "r2": 68,
       "r3": null,
       "r4": null,
-      "egrPoints": 4214.29
+      "egrPoints": 4214.29,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -226,6 +270,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:26.184Z",
+  "scrapedAt": "2026-11-02T15:26:04.205Z",
   "url": "https://www.europeangolfrankings.com/players/32821"
 }

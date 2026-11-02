@@ -6,14 +6,29 @@
   "firstName": "Henri",
   "country": "Germany",
   "club": null,
-  "ageGroup": "U18",
-  "tournamentsPlayed": 0,
-  "egrRank": 10380,
+  "ageGroup": "U16",
+  "tournamentsPlayed": 1,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 0,
-  "avgToCR": 0,
-  "events": [],
-  "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:21.067Z",
+  "avgScore": 91,
+  "avgToCR": 91.6,
+  "events": [
+    {
+      "eventId": "12946",
+      "counting": true,
+      "pos": "33",
+      "event": "DGV-GVSH Meisterschaft AK16/18 Jungen 2026",
+      "venue": "Golfanlage Hohwacht",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 91,
+      "r2": 93,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    }
+  ],
+  "ageNum": 16,
+  "scrapedAt": "2026-11-02T15:33:45.943Z",
   "url": "https://www.europeangolfrankings.com/players/53350"
 }

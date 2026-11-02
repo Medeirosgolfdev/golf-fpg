@@ -8,11 +8,25 @@
   "club": null,
   "ageGroup": "U16",
   "tournamentsPlayed": 5,
-  "egrRank": 6239,
-  "egrPoints": 350,
-  "avgScore": 81.33,
-  "avgToCR": 81.02,
+  "egrRank": 6605,
+  "egrPoints": 303.44,
+  "avgScore": 80.08,
+  "avgToCR": 80.25,
   "events": [
+    {
+      "eventId": "12943",
+      "counting": true,
+      "pos": "18",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 80,
+      "r2": 89,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12836",
       "counting": true,
@@ -45,7 +59,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "43",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -53,7 +67,7 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 46.57
+      "egrPoints": 0
     },
     {
       "eventId": "12796",
@@ -81,7 +95,8 @@
       "r2": 81,
       "r3": 76,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10112",
@@ -100,6 +115,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:50.274Z",
+  "scrapedAt": "2026-11-02T15:33:09.727Z",
   "url": "https://www.europeangolfrankings.com/players/51873"
 }

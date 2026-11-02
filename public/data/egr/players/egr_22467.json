@@ -7,11 +7,11 @@
   "country": "Finland",
   "club": "Tawast",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 1001,
-  "egrPoints": 6507.96,
-  "avgScore": 75.08,
-  "avgToCR": 73.27,
+  "tournamentsPlayed": 10,
+  "egrRank": 1023,
+  "egrPoints": 6461.27,
+  "avgScore": 75.27,
+  "avgToCR": 73.71,
   "events": [
     {
       "eventId": "11670",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11390",
-      "counting": false,
+      "counting": true,
       "pos": "28",
       "event": "Triple A European Classic 2025",
       "venue": "San Roque Golf Club",
@@ -165,7 +165,8 @@
       "r2": 76,
       "r3": 76,
       "r4": null,
-      "egrPoints": 150.99
+      "egrPoints": 150.99,
+      "_mantido": true
     },
     {
       "eventId": "10517",
@@ -184,6 +185,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:13:06.286Z",
+  "scrapedAt": "2026-11-02T15:21:20.213Z",
   "url": "https://www.europeangolfrankings.com/players/22467"
 }

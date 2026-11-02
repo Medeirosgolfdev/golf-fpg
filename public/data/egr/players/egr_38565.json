@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1122,
+  "tournamentsPlayed": 10,
+  "egrRank": 1146,
   "egrPoints": 1127.18,
-  "avgScore": 78.48,
-  "avgToCR": 76.85,
+  "avgScore": 78.79,
+  "avgToCR": 77.29,
   "events": [
     {
       "eventId": "12473",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11853",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "World WAGR Series #1 (Robert Rock) 2026",
       "venue": "La Manga Golf Club",
@@ -165,7 +165,8 @@
       "r2": 81,
       "r3": 76,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10367",
@@ -184,6 +185,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:34.770Z",
+  "scrapedAt": "2026-11-02T15:28:24.047Z",
   "url": "https://www.europeangolfrankings.com/players/38565"
 }

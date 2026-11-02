@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Fronde",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 600,
-  "egrPoints": 3096.14,
-  "avgScore": 77.39,
-  "avgToCR": 74.54,
+  "tournamentsPlayed": 16,
+  "egrRank": 547,
+  "egrPoints": 3450.63,
+  "avgScore": 77.45,
+  "avgToCR": 74.36,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "3",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 80,
+      "r2": 74,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 288.6
+    },
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "33",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 80,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 325.44
+    },
+    {
+      "eventId": "12015",
+      "counting": false,
+      "pos": "29",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 84,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -57,7 +99,7 @@
     },
     {
       "eventId": "11962",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Trofeo Chiocciola D'Oro 2026",
       "venue": "Golf Club Cherasco",
@@ -155,7 +197,7 @@
     },
     {
       "eventId": "11916",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "Trofeo Gianluca 2026",
       "venue": "Circolo Golf Torino La Mandria",
@@ -207,7 +249,8 @@
       "r2": 83,
       "r3": 82,
       "r4": null,
-      "egrPoints": 76.94
+      "egrPoints": 76.94,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -221,10 +264,11 @@
       "r2": 89,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:52.450Z",
+  "scrapedAt": "2026-11-02T15:29:50.204Z",
   "url": "https://www.europeangolfrankings.com/players/43071"
 }

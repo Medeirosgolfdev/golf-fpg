@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Padova",
   "ageGroup": "U21",
-  "tournamentsPlayed": 9,
-  "egrRank": 2008,
-  "egrPoints": 260.75,
-  "avgScore": 83.46,
-  "avgToCR": 79.84,
+  "tournamentsPlayed": 10,
+  "egrRank": 1838,
+  "egrPoints": 357.14,
+  "avgScore": 82.88,
+  "avgToCR": 79.26,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "10",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 79,
+      "r2": 80,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 90.19
+    },
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "20",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 84,
+      "r2": 82,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 18.04
+    },
     {
       "eventId": "11999",
       "counting": true,
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "11914",
-      "counting": true,
+      "counting": false,
       "pos": "26",
       "event": "Coppa D'Oro Citta Di Roma 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -137,7 +165,8 @@
       "r2": 82,
       "r3": 87,
       "r4": null,
-      "egrPoints": 11.84
+      "egrPoints": 11.84,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -156,6 +185,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:19:25.768Z",
+  "scrapedAt": "2026-11-02T15:28:14.400Z",
   "url": "https://www.europeangolfrankings.com/players/38349"
 }

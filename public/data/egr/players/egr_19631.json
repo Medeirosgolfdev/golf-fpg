@@ -7,11 +7,11 @@
   "country": "Ireland",
   "club": "Kinsale",
   "ageGroup": "U25",
-  "tournamentsPlayed": 15,
-  "egrRank": 192,
-  "egrPoints": 19346.1,
-  "avgScore": 72.09,
-  "avgToCR": 70.08,
+  "tournamentsPlayed": 14,
+  "egrRank": 204,
+  "egrPoints": 18841.1,
+  "avgScore": 73,
+  "avgToCR": 70.68,
   "events": [
     {
       "eventId": "11673",
@@ -197,7 +197,7 @@
     },
     {
       "eventId": "11770",
-      "counting": false,
+      "counting": true,
       "pos": "13",
       "event": "R&A Student Tour Series (Palmares) 2026",
       "venue": "Plamares Golf Resort",
@@ -221,10 +221,11 @@
       "r2": 74,
       "r3": 68,
       "r4": null,
-      "egrPoints": 1159.72
+      "egrPoints": 1159.72,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:12:16.220Z",
+  "scrapedAt": "2026-11-02T15:20:24.249Z",
   "url": "https://www.europeangolfrankings.com/players/19631"
 }

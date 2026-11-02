@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Am Reichswald",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 819,
-  "egrPoints": 7920.33,
-  "avgScore": 73.5,
-  "avgToCR": 72.45,
+  "tournamentsPlayed": 10,
+  "egrRank": 793,
+  "egrPoints": 8228.94,
+  "avgScore": 74.09,
+  "avgToCR": 72.8,
   "events": [
+    {
+      "eventId": "12676",
+      "counting": true,
+      "pos": "18",
+      "event": "Offene Bayerische Meisterschaft Herren 2026",
+      "venue": "Münchener Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "09. Oct 26",
+      "r1": 78,
+      "r2": 76,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 493.98
+    },
     {
       "eventId": "12910",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11544",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "GJG Grand Final Qualifier 2026",
       "venue": "Golf- und Landclub Semlin am See",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:15:41.527Z",
+  "scrapedAt": "2026-11-02T15:24:11.723Z",
   "url": "https://www.europeangolfrankings.com/players/28912"
 }

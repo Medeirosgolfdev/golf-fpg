@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Montecchia",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 91,
+  "tournamentsPlayed": 14,
+  "egrRank": 90,
   "egrPoints": 27369,
   "avgScore": 71.48,
   "avgToCR": 68.78,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": false,
+      "pos": "11",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 68,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1262.84
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -207,7 +221,8 @@
       "r2": 70,
       "r3": 75,
       "r4": null,
-      "egrPoints": 585.9
+      "egrPoints": 585.9,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -221,10 +236,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 1193.58
+      "egrPoints": 1193.58,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:28.387Z",
+  "scrapedAt": "2026-11-02T15:23:57.878Z",
   "url": "https://www.europeangolfrankings.com/players/28519"
 }

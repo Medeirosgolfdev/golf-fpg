@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Biarritz",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 633,
-  "egrPoints": 9491.74,
-  "avgScore": 73.28,
-  "avgToCR": 72.55,
+  "tournamentsPlayed": 14,
+  "egrRank": 595,
+  "egrPoints": 9952.43,
+  "avgScore": 72.92,
+  "avgToCR": 72.17,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "33",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 81,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 592
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "32",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 527.6
+    },
     {
       "eventId": "12185",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12043",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "Grand Prix de Bordeaux 2026",
       "venue": "Golf de Bordeaux-Lac",
@@ -193,10 +221,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 191.91
+      "egrPoints": 191.91,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:01.462Z",
+  "scrapedAt": "2026-11-02T15:31:07.271Z",
   "url": "https://www.europeangolfrankings.com/players/46739"
 }

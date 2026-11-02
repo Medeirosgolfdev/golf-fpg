@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Verona",
   "ageGroup": "U25",
-  "tournamentsPlayed": 12,
-  "egrRank": 913,
-  "egrPoints": 7140.95,
-  "avgScore": 74.71,
-  "avgToCR": 72.65,
+  "tournamentsPlayed": 14,
+  "egrRank": 908,
+  "egrPoints": 7172.93,
+  "avgScore": 74.96,
+  "avgToCR": 72.92,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": false,
+      "pos": "28",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 85,
+      "r2": 73,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 383.82
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "47",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 527.56
+    },
+    {
+      "eventId": "12008",
+      "counting": false,
+      "pos": "11",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 297.08
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -141,7 +183,7 @@
     },
     {
       "eventId": "11909",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Stella D'Oro 2026",
       "venue": "Olgiata Golf Club",
@@ -179,7 +221,8 @@
       "r2": 85,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -198,6 +241,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:15:32.615Z",
+  "scrapedAt": "2026-11-02T15:24:02.068Z",
   "url": "https://www.europeangolfrankings.com/players/28653"
 }

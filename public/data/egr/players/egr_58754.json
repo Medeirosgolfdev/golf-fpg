@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Aschaffenburg",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 6892,
-  "egrPoints": 258.33,
-  "avgScore": 81,
-  "avgToCR": 81.13,
+  "tournamentsPlayed": 5,
+  "egrRank": 6001,
+  "egrPoints": 407.9,
+  "avgScore": 80.91,
+  "avgToCR": 80.98,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "37",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 83,
+      "r2": 76,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 149.57
+    },
     {
       "eventId": "12835",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:26:41.250Z",
+  "scrapedAt": "2026-11-02T15:36:25.480Z",
   "url": "https://www.europeangolfrankings.com/players/58754"
 }

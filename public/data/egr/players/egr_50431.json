@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Marcilly",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 2715,
-  "egrPoints": 1920.17,
-  "avgScore": 76.81,
-  "avgToCR": 77.37,
+  "tournamentsPlayed": 8,
+  "egrRank": 2594,
+  "egrPoints": 2058.49,
+  "avgScore": 76.94,
+  "avgToCR": 77.14,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "39",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 86,
+      "r2": 84,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 138.32
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -128,6 +142,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:21.178Z",
+  "scrapedAt": "2026-11-02T15:32:36.937Z",
   "url": "https://www.europeangolfrankings.com/players/50431"
 }

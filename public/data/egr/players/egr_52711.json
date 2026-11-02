@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Altorreal",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 6458,
+  "tournamentsPlayed": 6,
+  "egrRank": 6534,
   "egrPoints": 313.79,
-  "avgScore": 80.36,
-  "avgToCR": 79.86,
+  "avgScore": 81.14,
+  "avgToCR": 80.54,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "44",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 82,
+      "r2": 81,
+      "r3": 92,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12926",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:06.532Z",
+  "scrapedAt": "2026-11-02T15:33:29.513Z",
   "url": "https://www.europeangolfrankings.com/players/52711"
 }

@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Huddersfield",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 7,
-  "egrRank": 325,
-  "egrPoints": 14153.1,
-  "avgScore": 72.75,
-  "avgToCR": 70.54,
+  "tournamentsPlayed": 8,
+  "egrRank": 273,
+  "egrPoints": 16091.7,
+  "avgScore": 72.55,
+  "avgToCR": 70.26,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "5",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 69,
+      "r2": 73,
+      "r3": 72,
+      "r4": 73,
+      "egrPoints": 2687.48
+    },
     {
       "eventId": "11783",
       "counting": true,
@@ -128,6 +142,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:18:24.476Z",
+  "scrapedAt": "2026-11-02T15:27:07.446Z",
   "url": "https://www.europeangolfrankings.com/players/35657"
 }

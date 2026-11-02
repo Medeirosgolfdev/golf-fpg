@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Montecchia",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 1154,
-  "egrPoints": 5691.58,
-  "avgScore": 75.43,
-  "avgToCR": 74.72,
+  "tournamentsPlayed": 11,
+  "egrRank": 1416,
+  "egrPoints": 4665.25,
+  "avgScore": 76.57,
+  "avgToCR": 76,
   "events": [
     {
       "eventId": "12002",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11979",
-      "counting": false,
+      "counting": true,
       "pos": "56",
       "event": "Trofeo Della Montecchia 2026",
       "venue": "Golf della Montecchia",
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "11906",
-      "counting": false,
+      "counting": true,
       "pos": "7",
       "event": "Trofeo Vincenzo de Benedictis 2026",
       "venue": "Il Picciolo Golf Club",
@@ -179,7 +179,8 @@
       "r2": 70,
       "r3": null,
       "r4": null,
-      "egrPoints": 566.77
+      "egrPoints": 566.77,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -193,10 +194,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 582.15
+      "egrPoints": 582.15,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:30.637Z",
+  "scrapedAt": "2026-11-02T15:28:19.404Z",
   "url": "https://www.europeangolfrankings.com/players/38477"
 }

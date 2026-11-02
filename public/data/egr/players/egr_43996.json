@@ -7,12 +7,26 @@
   "country": "France",
   "club": "RCF La Boulie",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 2504,
-  "egrPoints": 108.02,
-  "avgScore": 82.2,
-  "avgToCR": 79.14,
+  "tournamentsPlayed": 3,
+  "egrRank": 1562,
+  "egrPoints": 562,
+  "avgScore": 81.71,
+  "avgToCR": 78.59,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "42",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 75,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 453.98
+    },
     {
       "eventId": "12079",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:09.697Z",
+  "scrapedAt": "2026-11-02T15:30:10.460Z",
   "url": "https://www.europeangolfrankings.com/players/43996"
 }

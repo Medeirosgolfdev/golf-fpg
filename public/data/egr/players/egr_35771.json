@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Royal Musselburgh",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 1104,
-  "egrPoints": 1170.71,
-  "avgScore": 80.65,
-  "avgToCR": 80.01,
+  "tournamentsPlayed": 10,
+  "egrRank": 1130,
+  "egrPoints": 1175.99,
+  "avgScore": 81.26,
+  "avgToCR": 80.32,
   "events": [
+    {
+      "eventId": "11493",
+      "counting": true,
+      "pos": "6",
+      "event": "SGF Cardrona 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 88,
+      "r2": 87,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 5.28
+    },
     {
       "eventId": "11720",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "11483",
-      "counting": true,
+      "counting": false,
       "pos": "29",
       "event": "Barrie Douglas Scottish Junior Masters 2026",
       "venue": "Strathmore GC",
@@ -156,6 +170,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:26.344Z",
+  "scrapedAt": "2026-11-02T15:27:09.539Z",
   "url": "https://www.europeangolfrankings.com/players/35771"
 }

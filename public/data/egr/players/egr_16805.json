@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Hannover",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 2555,
-  "egrPoints": 2094.83,
-  "avgScore": 76.13,
-  "avgToCR": 76.04,
+  "tournamentsPlayed": 11,
+  "egrRank": 2211,
+  "egrPoints": 2576.41,
+  "avgScore": 74.64,
+  "avgToCR": 74.34,
   "events": [
+    {
+      "eventId": "12962",
+      "counting": true,
+      "pos": "3",
+      "event": "DEUTSCHLANDFINALE (JGM) 2026",
+      "venue": "Thüringer Golfclub",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 76,
+      "r2": 70,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 255.94
+    },
+    {
+      "eventId": "12951",
+      "counting": true,
+      "pos": "3",
+      "event": "Germany Final (Junior Golf Masters) 2026",
+      "venue": "Thüringer Golfclub Drei Geichen",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 76,
+      "r2": 70,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 374.06
+    },
     {
       "eventId": "12878",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12824",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "DGV-GVNB 1. AK16/18 Jungen 2026",
       "venue": "GC Harz",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12717",
-      "counting": true,
+      "counting": false,
       "pos": "54",
       "event": "KIFFE Youth Open 2026",
       "venue": "Golfclub Issum-Niederrhein",
@@ -156,6 +184,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:11:41.196Z",
+  "scrapedAt": "2026-11-02T15:19:45.687Z",
   "url": "https://www.europeangolfrankings.com/players/16805"
 }

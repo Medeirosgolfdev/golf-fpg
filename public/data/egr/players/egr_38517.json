@@ -5,14 +5,28 @@
   "lastName": "ZIMMERMANN",
   "firstName": "Luca",
   "country": "Switzerland",
-  "club": "Hittnau",
+  "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 16,
-  "egrRank": 620,
+  "tournamentsPlayed": 15,
+  "egrRank": 631,
   "egrPoints": 9585.24,
   "avgScore": 73.67,
   "avgToCR": 73.15,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": false,
+      "pos": "9",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 69,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 426.22
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -221,7 +235,8 @@
       "r2": 74,
       "r3": 72,
       "r4": null,
-      "egrPoints": 356.17
+      "egrPoints": 356.17,
+      "_mantido": true
     },
     {
       "eventId": "10373",
@@ -235,7 +250,8 @@
       "r2": 72,
       "r3": 71,
       "r4": null,
-      "egrPoints": 35.13
+      "egrPoints": 35.13,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -254,6 +270,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:31.902Z",
+  "scrapedAt": "2026-11-02T15:28:20.872Z",
   "url": "https://www.europeangolfrankings.com/players/38517"
 }

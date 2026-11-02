@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Neuhof",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 210,
-  "egrPoints": 18623.6,
-  "avgScore": 72.67,
-  "avgToCR": 70.6,
+  "tournamentsPlayed": 17,
+  "egrRank": 194,
+  "egrPoints": 19237.8,
+  "avgScore": 72.71,
+  "avgToCR": 70.72,
   "events": [
+    {
+      "eventId": "12943",
+      "counting": false,
+      "pos": "1",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 66,
+      "r2": 70,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 720.06
+    },
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "1",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 68,
+      "r2": 70,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 1558.51
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12908",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "DM AK18 Jungen 2026",
       "venue": "Westfälischer GC Gütersloh",
@@ -235,10 +263,11 @@
       "r2": 75,
       "r3": 78,
       "r4": null,
-      "egrPoints": 189.29
+      "egrPoints": 189.29,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:12:51.202Z",
+  "scrapedAt": "2026-11-02T15:21:03.241Z",
   "url": "https://www.europeangolfrankings.com/players/21745"
 }

@@ -5,14 +5,28 @@
   "lastName": "BROUWERS",
   "firstName": "Tom",
   "country": "Germany",
-  "club": "Neuhof",
+  "club": "Bad Homburg",
   "ageGroup": "U16",
   "tournamentsPlayed": 12,
-  "egrRank": 1109,
-  "egrPoints": 5955.06,
-  "avgScore": 72.71,
-  "avgToCR": 71.96,
+  "egrRank": 1084,
+  "egrPoints": 6156.47,
+  "avgScore": 72.96,
+  "avgToCR": 72.3,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "5",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 532.17
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12784",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Frohlinder Youth Open (IJGM) 2026",
       "venue": "Golfclub Castrop-Rauxel",
@@ -179,7 +193,8 @@
       "r2": 80,
       "r3": 85,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10110",
@@ -198,6 +213,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:49.480Z",
+  "scrapedAt": "2026-11-02T15:28:40.371Z",
   "url": "https://www.europeangolfrankings.com/players/39063"
 }

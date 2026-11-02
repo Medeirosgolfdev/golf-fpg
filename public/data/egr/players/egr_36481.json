@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Archi Claudio",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 168,
-  "egrPoints": 10426.2,
+  "tournamentsPlayed": 14,
+  "egrRank": 115,
+  "egrPoints": 12629.2,
   "avgScore": 74.61,
-  "avgToCR": 71.47,
+  "avgToCR": 71.39,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "1",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 76,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 2690.11
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -207,7 +221,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 487.13
+      "egrPoints": 487.13,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -221,10 +236,11 @@
       "r2": 84,
       "r3": 76,
       "r4": null,
-      "egrPoints": 309.64
+      "egrPoints": 309.64,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:18:43.556Z",
+  "scrapedAt": "2026-11-02T15:27:28.569Z",
   "url": "https://www.europeangolfrankings.com/players/36481"
 }

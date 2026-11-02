@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Burgdorf",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 1425,
-  "egrPoints": 693.3,
-  "avgScore": 80.3,
-  "avgToCR": 77.89,
+  "tournamentsPlayed": 5,
+  "egrRank": 1287,
+  "egrPoints": 887.03,
+  "avgScore": 79.38,
+  "avgToCR": 77.42,
   "events": [
+    {
+      "eventId": "12942",
+      "counting": true,
+      "pos": "1",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 77,
+      "r2": 77,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 193.73
+    },
     {
       "eventId": "12912",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:34.185Z",
+  "scrapedAt": "2026-11-02T15:33:59.788Z",
   "url": "https://www.europeangolfrankings.com/players/53687"
 }

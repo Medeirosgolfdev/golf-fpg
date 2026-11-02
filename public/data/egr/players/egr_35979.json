@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Aix-Marseille",
   "ageGroup": "U21",
-  "tournamentsPlayed": 9,
-  "egrRank": 462,
-  "egrPoints": 11579.1,
-  "avgScore": 73.04,
-  "avgToCR": 72.1,
+  "tournamentsPlayed": 8,
+  "egrRank": 510,
+  "egrPoints": 10888.6,
+  "avgScore": 72.95,
+  "avgToCR": 72.03,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "19",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 731
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -123,7 +137,8 @@
       "r2": 71,
       "r3": 71,
       "r4": null,
-      "egrPoints": 890.43
+      "egrPoints": 890.43,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -137,7 +152,8 @@
       "r2": 76,
       "r3": 68,
       "r4": null,
-      "egrPoints": 531.04
+      "egrPoints": 531.04,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -156,6 +172,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:32.505Z",
+  "scrapedAt": "2026-11-02T15:27:16.019Z",
   "url": "https://www.europeangolfrankings.com/players/35979"
 }

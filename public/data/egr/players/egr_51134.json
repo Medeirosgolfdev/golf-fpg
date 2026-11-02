@@ -8,11 +8,25 @@
   "club": "Prestbury",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 1151,
-  "egrPoints": 5701.17,
-  "avgScore": 77,
-  "avgToCR": 75.84,
+  "egrRank": 1094,
+  "egrPoints": 6079.76,
+  "avgScore": 75.47,
+  "avgToCR": 74.51,
   "events": [
+    {
+      "eventId": "12954",
+      "counting": true,
+      "pos": "2",
+      "event": "Faldo Series (Madeira) 2026",
+      "venue": "Clube de Golf Santo da Serra",
+      "country": "Portugal",
+      "startDateRaw": "16. Oct 26",
+      "r1": 69,
+      "r2": 72,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 378.59
+    },
     {
       "eventId": "11812",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 80,
       "r3": 82,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:34.121Z",
+  "scrapedAt": "2026-11-02T15:32:51.921Z",
   "url": "https://www.europeangolfrankings.com/players/51134"
 }

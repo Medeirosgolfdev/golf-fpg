@@ -8,11 +8,39 @@
   "club": "Barbaroux",
   "ageGroup": "U21",
   "tournamentsPlayed": 12,
-  "egrRank": 526,
-  "egrPoints": 10663.4,
-  "avgScore": 73.36,
-  "avgToCR": 72.33,
+  "egrRank": 554,
+  "egrPoints": 10386.7,
+  "avgScore": 73.44,
+  "avgToCR": 72.31,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "7",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 73,
+      "r2": 68,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 909.92
+    },
+    {
+      "eventId": "12196",
+      "counting": false,
+      "pos": "52",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 75,
+      "r2": 81,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 199.85
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "12145",
-      "counting": false,
+      "counting": true,
       "pos": "66",
       "event": "Grand Prix des Landes Hossegor 2026",
       "venue": "Golf d' Hossegor",
@@ -165,7 +193,8 @@
       "r2": 76,
       "r3": 71,
       "r4": null,
-      "egrPoints": 721.57
+      "egrPoints": 721.57,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -179,7 +208,8 @@
       "r2": 68,
       "r3": 70,
       "r4": null,
-      "egrPoints": 964.89
+      "egrPoints": 964.89,
+      "_mantido": true
     },
     {
       "eventId": "11409",
@@ -198,6 +228,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:29.470Z",
+  "scrapedAt": "2026-11-02T15:25:03.653Z",
   "url": "https://www.europeangolfrankings.com/players/30517"
 }

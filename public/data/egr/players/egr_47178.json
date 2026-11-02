@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Le Havre",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 3848,
-  "egrPoints": 1047.52,
-  "avgScore": 77.11,
-  "avgToCR": 76.4,
+  "tournamentsPlayed": 6,
+  "egrRank": 2868,
+  "egrPoints": 1780.77,
+  "avgScore": 77.14,
+  "avgToCR": 76.54,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "68",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 81,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 263.55
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "39",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 469.69
+    },
     {
       "eventId": "12170",
       "counting": true,
@@ -71,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:03.401Z",
+  "scrapedAt": "2026-11-02T15:31:09.372Z",
   "url": "https://www.europeangolfrankings.com/players/47178"
 }

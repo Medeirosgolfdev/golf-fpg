@@ -8,11 +8,25 @@
   "club": "San Domenico",
   "ageGroup": "U18",
   "tournamentsPlayed": 12,
-  "egrRank": 1638,
-  "egrPoints": 3884.48,
+  "egrRank": 1748,
+  "egrPoints": 3626.28,
   "avgScore": 76.59,
-  "avgToCR": 75.22,
+  "avgToCR": 75.3,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "52",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 578.12
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -179,7 +193,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 836.32
+      "egrPoints": 836.32,
+      "_mantido": true
     },
     {
       "eventId": "10315",
@@ -198,6 +213,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:26.703Z",
+  "scrapedAt": "2026-11-02T15:26:04.764Z",
   "url": "https://www.europeangolfrankings.com/players/32830"
 }

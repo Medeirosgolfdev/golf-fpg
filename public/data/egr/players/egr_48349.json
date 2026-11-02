@@ -8,11 +8,25 @@
   "club": "Madonna Campiglio",
   "ageGroup": "U16",
   "tournamentsPlayed": 13,
-  "egrRank": 407,
-  "egrPoints": 4714.02,
-  "avgScore": 75.29,
-  "avgToCR": 71.99,
+  "egrRank": 331,
+  "egrPoints": 5813.71,
+  "avgScore": 75.45,
+  "avgToCR": 71.67,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "3",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1509.08
+    },
     {
       "eventId": "12636",
       "counting": true,
@@ -26,6 +40,20 @@
       "r3": 73,
       "r4": null,
       "egrPoints": 312.28
+    },
+    {
+      "eventId": "12011",
+      "counting": false,
+      "pos": "4",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 83,
+      "r2": 80,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 92.5
     },
     {
       "eventId": "12003",
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "10232",
-      "counting": false,
+      "counting": true,
       "pos": "3",
       "event": "Argentario Classic Open 2025",
       "venue": "Argentario Golf Resort",
@@ -179,7 +207,8 @@
       "r2": 71,
       "r3": null,
       "r4": null,
-      "egrPoints": 347.55
+      "egrPoints": 347.55,
+      "_mantido": true
     },
     {
       "eventId": "10323",
@@ -193,7 +222,8 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 269.4
+      "egrPoints": 269.4,
+      "_mantido": true
     },
     {
       "eventId": "10320",
@@ -212,6 +242,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:31.465Z",
+  "scrapedAt": "2026-11-02T15:31:41.471Z",
   "url": "https://www.europeangolfrankings.com/players/48349"
 }

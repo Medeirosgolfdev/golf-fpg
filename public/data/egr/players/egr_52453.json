@@ -5,14 +5,28 @@
   "lastName": "VALASAKIS",
   "firstName": "Nikolaos",
   "country": "Greece",
-  "club": "Minthis Hills",
+  "club": "Glyfada",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 10380,
+  "tournamentsPlayed": 2,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 95,
-  "avgToCR": 94.7,
+  "avgScore": 95.33,
+  "avgToCR": 93.88,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "69",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 92,
+      "r2": 101,
+      "r3": 91,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12428",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:01.935Z",
+  "scrapedAt": "2026-11-02T15:33:23.558Z",
   "url": "https://www.europeangolfrankings.com/players/52453"
 }

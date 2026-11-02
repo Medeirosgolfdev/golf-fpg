@@ -8,11 +8,25 @@
   "club": "Augsburg",
   "ageGroup": "U25",
   "tournamentsPlayed": 2,
-  "egrRank": 2178,
-  "egrPoints": 2614.54,
-  "avgScore": 75.17,
-  "avgToCR": 70.97,
+  "egrRank": 2337,
+  "egrPoints": 2392.41,
+  "avgScore": 77.4,
+  "avgToCR": 73.02,
   "events": [
+    {
+      "eventId": "12676",
+      "counting": true,
+      "pos": "37",
+      "event": "Offene Bayerische Meisterschaft Herren 2026",
+      "venue": "Münchener Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "09. Oct 26",
+      "r1": 84,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 76.7
+    },
     {
       "eventId": "11660",
       "counting": true,
@@ -39,10 +53,11 @@
       "r2": 74,
       "r3": 75,
       "r4": null,
-      "egrPoints": 298.83
+      "egrPoints": 298.83,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:11:38.602Z",
+  "scrapedAt": "2026-11-02T15:19:42.841Z",
   "url": "https://www.europeangolfrankings.com/players/16462"
 }

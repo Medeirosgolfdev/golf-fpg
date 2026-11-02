@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Nimes Campagne",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 737,
-  "egrPoints": 8650.13,
-  "avgScore": 74.3,
-  "avgToCR": 73.5,
+  "tournamentsPlayed": 9,
+  "egrRank": 918,
+  "egrPoints": 7107.11,
+  "avgScore": 74.9,
+  "avgToCR": 73.76,
   "events": [
     {
       "eventId": "12185",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11379",
-      "counting": false,
+      "counting": true,
       "pos": "49",
       "event": "Grand Prix du Cap d’Agde 2025",
       "venue": "Golf International Cap d'agde (Volcan & Azur)",
@@ -151,7 +151,8 @@
       "r2": 72,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1234.01
+      "egrPoints": 1234.01,
+      "_mantido": true
     },
     {
       "eventId": "11409",
@@ -170,6 +171,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:34.962Z",
+  "scrapedAt": "2026-11-02T15:26:13.864Z",
   "url": "https://www.europeangolfrankings.com/players/33111"
 }

@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Shannon",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 743,
+  "tournamentsPlayed": 14,
+  "egrRank": 753,
   "egrPoints": 8602.8,
   "avgScore": 74.54,
   "avgToCR": 73.16,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": false,
+      "pos": "20",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 73,
+      "r2": 72,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 118.42
+    },
     {
       "eventId": "11859",
       "counting": false,
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:21.064Z",
+  "scrapedAt": "2026-11-02T15:25:58.444Z",
   "url": "https://www.europeangolfrankings.com/players/32620"
 }

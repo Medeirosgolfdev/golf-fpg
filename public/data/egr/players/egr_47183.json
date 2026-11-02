@@ -7,12 +7,40 @@
   "country": "France",
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 400,
-  "egrPoints": 12559.1,
-  "avgScore": 73.32,
-  "avgToCR": 71.85,
+  "tournamentsPlayed": 14,
+  "egrRank": 403,
+  "egrPoints": 12623,
+  "avgScore": 72.77,
+  "avgToCR": 71.37,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": false,
+      "pos": "40",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 631.04
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "10",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 69,
+      "r2": 71,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 744.75
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "12165",
-      "counting": true,
+      "counting": false,
       "pos": "23",
       "event": "Grand Prix de Bretagne 2026",
       "venue": "Golf de Dinard",
@@ -193,10 +221,11 @@
       "r2": 75,
       "r3": 67,
       "r4": 76,
-      "egrPoints": 508.07
+      "egrPoints": 508.07,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:03.597Z",
+  "scrapedAt": "2026-11-02T15:31:09.543Z",
   "url": "https://www.europeangolfrankings.com/players/47183"
 }

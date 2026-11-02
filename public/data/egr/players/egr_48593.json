@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Slaski",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 4520,
+  "tournamentsPlayed": 8,
+  "egrRank": 4564,
   "egrPoints": 761.95,
-  "avgScore": 78.56,
-  "avgToCR": 78.35,
+  "avgScore": 79.86,
+  "avgToCR": 79.54,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "53",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 89,
+      "r2": 90,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12920",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:38.023Z",
+  "scrapedAt": "2026-11-02T15:31:48.825Z",
   "url": "https://www.europeangolfrankings.com/players/48593"
 }

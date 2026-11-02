@@ -7,15 +7,43 @@
   "country": "China",
   "club": "RCF La Boulie",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 1575,
-  "egrPoints": 4096.62,
-  "avgScore": 76.71,
-  "avgToCR": 75.62,
+  "tournamentsPlayed": 11,
+  "egrRank": 1461,
+  "egrPoints": 4512.69,
+  "avgScore": 76.33,
+  "avgToCR": 75.53,
   "events": [
     {
-      "eventId": "12159",
+      "eventId": "12960",
       "counting": true,
+      "pos": "21",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 423.92
+    },
+    {
+      "eventId": "12213",
+      "counting": true,
+      "pos": "19",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 78,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 395.62
+    },
+    {
+      "eventId": "12159",
+      "counting": false,
       "pos": "61",
       "event": "Grand Prix d'Apremont 2026",
       "venue": "Apremont Golf",
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "12077",
-      "counting": true,
+      "counting": false,
       "pos": "51",
       "event": "Grand Prix de Saint-Cloud 2026",
       "venue": "Golf de Saint-Cloud",
@@ -141,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:04.874Z",
+  "scrapedAt": "2026-11-02T15:27:51.722Z",
   "url": "https://www.europeangolfrankings.com/players/37449"
 }

@@ -5,14 +5,28 @@
   "lastName": "DOLLING",
   "firstName": "Matthew",
   "country": "England",
-  "club": "Easingwold",
+  "club": "York",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 3,
-  "egrRank": 1305,
-  "egrPoints": 5095.23,
-  "avgScore": 73.78,
-  "avgToCR": 71.12,
+  "tournamentsPlayed": 4,
+  "egrRank": 1422,
+  "egrPoints": 4642.58,
+  "avgScore": 74.67,
+  "avgToCR": 71.93,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "102",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 81,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11783",
       "counting": true,
@@ -72,6 +86,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:14:33.403Z",
+  "scrapedAt": "2026-11-02T15:22:57.589Z",
   "url": "https://www.europeangolfrankings.com/players/26681"
 }

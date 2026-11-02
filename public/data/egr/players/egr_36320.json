@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Waldkirch",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 610,
-  "egrPoints": 3048.95,
-  "avgScore": 75.76,
-  "avgToCR": 73.36,
+  "tournamentsPlayed": 16,
+  "egrRank": 553,
+  "egrPoints": 3414.18,
+  "avgScore": 75.62,
+  "avgToCR": 73.17,
   "events": [
+    {
+      "eventId": "12492",
+      "counting": true,
+      "pos": "3",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 543.38
+    },
+    {
+      "eventId": "12485",
+      "counting": false,
+      "pos": "7",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 78,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 105.83
+    },
     {
       "eventId": "11768",
       "counting": false,
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "12473",
-      "counting": true,
+      "counting": false,
       "pos": "14",
       "event": "Swiss Golf National Championship 2026",
       "venue": "Ostschweizerischer Golf Club",
@@ -110,6 +138,20 @@
       "r3": 82,
       "r4": null,
       "egrPoints": 104.21
+    },
+    {
+      "eventId": "12939",
+      "counting": true,
+      "pos": "2",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 262.4
     },
     {
       "eventId": "12459",
@@ -207,7 +249,8 @@
       "r2": 76,
       "r3": 75,
       "r4": null,
-      "egrPoints": 295
+      "egrPoints": 295,
+      "_mantido": true
     },
     {
       "eventId": "10367",
@@ -226,6 +269,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:39.084Z",
+  "scrapedAt": "2026-11-02T15:27:23.274Z",
   "url": "https://www.europeangolfrankings.com/players/36320"
 }

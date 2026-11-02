@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Royal Park Roveri",
   "ageGroup": "U18",
-  "tournamentsPlayed": 19,
-  "egrRank": 1074,
-  "egrPoints": 6159.37,
-  "avgScore": 75,
-  "avgToCR": 72.98,
+  "tournamentsPlayed": 17,
+  "egrRank": 1125,
+  "egrPoints": 5939.79,
+  "avgScore": 75.04,
+  "avgToCR": 73,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "73",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 82,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11960",
-      "counting": false,
+      "counting": true,
       "pos": "84",
       "event": "Italian National Closed U18 Stroke Play (Trofeo Silvio Marazza) 2026",
       "venue": "Golf Club Lignano",
@@ -249,7 +263,8 @@
       "r2": 81,
       "r3": 79,
       "r4": null,
-      "egrPoints": 178.13
+      "egrPoints": 178.13,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -263,7 +278,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 582.15
+      "egrPoints": 582.15,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -277,10 +293,11 @@
       "r2": 80,
       "r3": 76,
       "r4": null,
-      "egrPoints": 368.03
+      "egrPoints": 368.03,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:25.992Z",
+  "scrapedAt": "2026-11-02T15:26:04.030Z",
   "url": "https://www.europeangolfrankings.com/players/32817"
 }

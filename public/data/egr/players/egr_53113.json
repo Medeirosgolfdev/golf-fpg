@@ -5,14 +5,28 @@
   "lastName": "O'SHEA",
   "firstName": "Ardagh",
   "country": "Ireland",
-  "club": "Borris",
+  "club": "Kilkenny",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 6070,
+  "tournamentsPlayed": 5,
+  "egrRank": 6154,
   "egrPoints": 378.71,
-  "avgScore": 81.44,
-  "avgToCR": 81.16,
+  "avgScore": 81.25,
+  "avgToCR": 80.86,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "28",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 81,
+      "r2": 84,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11873",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:16.205Z",
+  "scrapedAt": "2026-11-02T15:33:40.421Z",
   "url": "https://www.europeangolfrankings.com/players/53113"
 }

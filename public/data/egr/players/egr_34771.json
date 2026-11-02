@@ -8,11 +8,25 @@
   "club": "Coventry Hearsall",
   "ageGroup": "U18",
   "tournamentsPlayed": 6,
-  "egrRank": 177,
-  "egrPoints": 10042.6,
-  "avgScore": 73.81,
-  "avgToCR": 71.04,
+  "egrRank": 167,
+  "egrPoints": 10531.1,
+  "avgScore": 73.19,
+  "avgToCR": 69.86,
   "events": [
+    {
+      "eventId": "12902",
+      "counting": true,
+      "pos": "1",
+      "event": "Loretto Junior Golf Tour Autumn/Winter 2026",
+      "venue": "Longniddry Golf Club",
+      "country": "Scotland",
+      "startDateRaw": "28. Sep 26",
+      "r1": 70,
+      "r2": 76,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 597.7
+    },
     {
       "eventId": "11810",
       "counting": true,
@@ -95,10 +109,11 @@
       "r2": 81,
       "r3": 76,
       "r4": null,
-      "egrPoints": 109.18
+      "egrPoints": 109.18,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:09.061Z",
+  "scrapedAt": "2026-11-02T15:26:50.371Z",
   "url": "https://www.europeangolfrankings.com/players/34771"
 }

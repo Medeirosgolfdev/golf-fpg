@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Balmoral",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 971,
-  "egrPoints": 6747.21,
-  "avgScore": 73.45,
-  "avgToCR": 72.47,
+  "tournamentsPlayed": 13,
+  "egrRank": 951,
+  "egrPoints": 6872.11,
+  "avgScore": 73.18,
+  "avgToCR": 72.14,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "9",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 267.48
+    },
     {
       "eventId": "11687",
       "counting": false,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11679",
-      "counting": true,
+      "counting": false,
       "pos": "12",
       "event": "Irish Elite WAGR Tour #4 2026",
       "venue": "Royal Belfast Golf Club",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:12.663Z",
+  "scrapedAt": "2026-11-02T15:25:49.629Z",
   "url": "https://www.europeangolfrankings.com/players/32378"
 }

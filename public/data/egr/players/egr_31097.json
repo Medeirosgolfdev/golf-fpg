@@ -7,11 +7,11 @@
   "country": "Spain",
   "club": "Sant Cugat",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 42,
-  "egrPoints": 22105.4,
-  "avgScore": 72.5,
-  "avgToCR": 68.55,
+  "tournamentsPlayed": 10,
+  "egrRank": 44,
+  "egrPoints": 21638.8,
+  "avgScore": 72.48,
+  "avgToCR": 68.66,
   "events": [
     {
       "eventId": "11765",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12258",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "Spanish Women's Amateur Championship (Closed) 2026",
       "venue": "Pula Golf",
@@ -165,10 +165,11 @@
       "r2": 73,
       "r3": 81,
       "r4": null,
-      "egrPoints": 1499.45
+      "egrPoints": 1499.45,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:39.862Z",
+  "scrapedAt": "2026-11-02T15:25:15.263Z",
   "url": "https://www.europeangolfrankings.com/players/31097"
 }

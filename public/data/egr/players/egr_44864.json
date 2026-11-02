@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Ormskirk",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 1633,
+  "tournamentsPlayed": 5,
+  "egrRank": 1638,
   "egrPoints": 3896.15,
-  "avgScore": 75.27,
-  "avgToCR": 71.68,
+  "avgScore": 75.85,
+  "avgToCR": 72.38,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "87",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 85,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11839",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:21:27.007Z",
+  "scrapedAt": "2026-11-02T15:30:29.123Z",
   "url": "https://www.europeangolfrankings.com/players/44864"
 }

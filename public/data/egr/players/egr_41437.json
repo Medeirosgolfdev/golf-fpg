@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Roma Acquasanta",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 1365,
-  "egrPoints": 4783.39,
-  "avgScore": 75.72,
-  "avgToCR": 74.44,
+  "tournamentsPlayed": 11,
+  "egrRank": 1303,
+  "egrPoints": 5120.06,
+  "avgScore": 75.28,
+  "avgToCR": 73.92,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": false,
+      "pos": "90",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 86,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12012",
+      "counting": true,
+      "pos": "5",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 79,
+      "r2": 69,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 406.98
+    },
     {
       "eventId": "11998",
       "counting": true,
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "11929",
-      "counting": true,
+      "counting": false,
       "pos": "38",
       "event": "Trofeo Giovanile U18 2026",
       "venue": "Parco di Roma Golf & CC",
@@ -156,6 +184,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:21.581Z",
+  "scrapedAt": "2026-11-02T15:29:16.290Z",
   "url": "https://www.europeangolfrankings.com/players/41437"
 }

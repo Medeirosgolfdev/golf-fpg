@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Manchester",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 388,
-  "egrPoints": 12861.5,
-  "avgScore": 74.33,
-  "avgToCR": 72.46,
+  "tournamentsPlayed": 13,
+  "egrRank": 356,
+  "egrPoints": 13552.3,
+  "avgScore": 74.04,
+  "avgToCR": 72,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "23",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 73,
+      "r4": 76,
+      "egrPoints": 1167.05
+    },
     {
       "eventId": "11810",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11795",
-      "counting": true,
+      "counting": false,
       "pos": "43",
       "event": "Peter McEvoy Trophy 2026",
       "venue": "Copt Heath",
@@ -193,7 +207,8 @@
       "r2": 72,
       "r3": 73,
       "r4": null,
-      "egrPoints": 399.78
+      "egrPoints": 399.78,
+      "_mantido": true
     },
     {
       "eventId": "11146",
@@ -207,10 +222,11 @@
       "r2": 85,
       "r3": 76,
       "r4": null,
-      "egrPoints": 182.02
+      "egrPoints": 182.02,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:51.978Z",
+  "scrapedAt": "2026-11-02T15:28:43.088Z",
   "url": "https://www.europeangolfrankings.com/players/39141"
 }

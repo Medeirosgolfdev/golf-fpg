@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Bathgate",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 3844,
-  "egrPoints": 1049.25,
-  "avgScore": 80.8,
-  "avgToCR": 80.13,
+  "tournamentsPlayed": 5,
+  "egrRank": 3389,
+  "egrPoints": 1320.49,
+  "avgScore": 80.64,
+  "avgToCR": 79.52,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "30",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 80,
+      "r2": 79,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 363.67
+    },
     {
       "eventId": "12280",
       "counting": true,
@@ -86,6 +100,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:25.783Z",
+  "scrapedAt": "2026-11-02T15:30:27.890Z",
   "url": "https://www.europeangolfrankings.com/players/44843"
 }

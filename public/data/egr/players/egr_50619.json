@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Bondues",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 502,
+  "tournamentsPlayed": 13,
+  "egrRank": 504,
   "egrPoints": 3780.49,
   "avgScore": 75.17,
   "avgToCR": 74.69,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": false,
+      "pos": "12",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 245.78
+    },
+    {
+      "eventId": "12211",
+      "counting": false,
+      "pos": "3",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 85,
+      "r2": 69,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 196.61
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -169,6 +197,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:27.301Z",
+  "scrapedAt": "2026-11-02T15:32:44.055Z",
   "url": "https://www.europeangolfrankings.com/players/50619"
 }

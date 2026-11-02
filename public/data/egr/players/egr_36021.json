@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Biarritz",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 278,
-  "egrPoints": 15720.4,
-  "avgScore": 72.7,
-  "avgToCR": 71.47,
+  "tournamentsPlayed": 15,
+  "egrRank": 317,
+  "egrPoints": 14478.7,
+  "avgScore": 73.23,
+  "avgToCR": 71.57,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": false,
+      "pos": "33",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 81,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 592
+    },
+    {
+      "eventId": "12198",
+      "counting": false,
+      "pos": "19",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 662.71
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -183,7 +211,7 @@
     },
     {
       "eventId": "11504",
-      "counting": false,
+      "counting": true,
       "pos": "2",
       "event": "Desert Springs Junior Championship 2026",
       "venue": "Desert Springs Resort and Golf Club",
@@ -207,10 +235,11 @@
       "r2": 69,
       "r3": 67,
       "r4": 71,
-      "egrPoints": 1961.85
+      "egrPoints": 1961.85,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:33.592Z",
+  "scrapedAt": "2026-11-02T15:27:17.163Z",
   "url": "https://www.europeangolfrankings.com/players/36021"
 }

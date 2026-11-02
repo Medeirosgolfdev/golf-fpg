@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Pavoniere",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
+  "tournamentsPlayed": 10,
   "egrRank": 3018,
-  "egrPoints": 1597.46,
-  "avgScore": 79.76,
-  "avgToCR": 79.8,
+  "egrPoints": 1635.61,
+  "avgScore": 79.68,
+  "avgToCR": 79.45,
   "events": [
+    {
+      "eventId": "12010",
+      "counting": true,
+      "pos": "16",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 86,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 38.15
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "11931",
-      "counting": true,
+      "counting": false,
       "pos": "100",
       "event": "LXX Gran Premio Cittá Di Milano Trofeo Gianni Albertini 2026",
       "venue": "Golf Club Milano",
@@ -156,6 +170,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:22.198Z",
+  "scrapedAt": "2026-11-02T15:34:54.499Z",
   "url": "https://www.europeangolfrankings.com/players/55598"
 }

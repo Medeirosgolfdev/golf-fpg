@@ -8,11 +8,25 @@
   "club": "Montecchia",
   "ageGroup": "U16",
   "tournamentsPlayed": 12,
-  "egrRank": 6008,
+  "egrRank": 6092,
   "egrPoints": 391.39,
-  "avgScore": 82.95,
-  "avgToCR": 82.91,
+  "avgScore": 84,
+  "avgToCR": 83.76,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": false,
+      "pos": "64",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 85,
+      "r2": 86,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11979",
       "counting": false,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12653",
-      "counting": false,
+      "counting": true,
       "pos": "55",
       "event": "Faldo (Italy) 2026",
       "venue": "Gardagolf CC",
@@ -179,10 +193,11 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:58.766Z",
+  "scrapedAt": "2026-11-02T15:32:12.362Z",
   "url": "https://www.europeangolfrankings.com/players/49484"
 }

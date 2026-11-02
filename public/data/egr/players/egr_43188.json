@@ -7,15 +7,57 @@
   "country": "France",
   "club": "RCF La Boulie",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 757,
-  "egrPoints": 2256.84,
-  "avgScore": 76.48,
-  "avgToCR": 74.18,
+  "tournamentsPlayed": 15,
+  "egrRank": 847,
+  "egrPoints": 1926.52,
+  "avgScore": 76.52,
+  "avgToCR": 74.57,
   "events": [
     {
-      "eventId": "12195",
+      "eventId": "12959",
       "counting": true,
+      "pos": "12",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 79,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 245.78
+    },
+    {
+      "eventId": "12214",
+      "counting": true,
+      "pos": "8",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 76,
+      "r2": 80,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 94.66
+    },
+    {
+      "eventId": "12199",
+      "counting": false,
+      "pos": "10",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 76,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 54.17
+    },
+    {
+      "eventId": "12195",
+      "counting": false,
       "pos": "7",
       "event": "Grand Prix PGA France du Vaudreuil 2026",
       "venue": "Golf PGA France du Vaudreuil",
@@ -193,7 +235,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11369",
@@ -207,10 +250,11 @@
       "r2": 74,
       "r3": 76,
       "r4": 78,
-      "egrPoints": 589.42
+      "egrPoints": 589.42,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:53.241Z",
+  "scrapedAt": "2026-11-02T15:29:51.259Z",
   "url": "https://www.europeangolfrankings.com/players/43188"
 }

@@ -7,11 +7,11 @@
   "country": "Belgium",
   "club": "Koksijde",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 624,
-  "egrPoints": 9558.77,
-  "avgScore": 72.26,
-  "avgToCR": 71.85,
+  "tournamentsPlayed": 10,
+  "egrRank": 660,
+  "egrPoints": 9347.56,
+  "avgScore": 72.07,
+  "avgToCR": 71.77,
   "events": [
     {
       "eventId": "11753",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11727",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Junior Open Vlaanderen 2026",
       "venue": "Ternesse Golf & Country Club",
@@ -165,7 +165,8 @@
       "r2": 69,
       "r3": 76,
       "r4": null,
-      "egrPoints": 356.17
+      "egrPoints": 356.17,
+      "_mantido": true
     },
     {
       "eventId": "11366",
@@ -179,10 +180,11 @@
       "r2": 73,
       "r3": 75,
       "r4": null,
-      "egrPoints": 378
+      "egrPoints": 378,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:14.080Z",
+  "scrapedAt": "2026-11-02T15:28:01.738Z",
   "url": "https://www.europeangolfrankings.com/players/37932"
 }

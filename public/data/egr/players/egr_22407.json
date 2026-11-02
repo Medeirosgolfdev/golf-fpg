@@ -7,12 +7,26 @@
   "country": "Austria",
   "club": "Kremstal",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 8,
-  "egrRank": 133,
-  "egrPoints": 11788.1,
-  "avgScore": 74.21,
-  "avgToCR": 70.46,
+  "tournamentsPlayed": 9,
+  "egrRank": 111,
+  "egrPoints": 12893.1,
+  "avgScore": 74.63,
+  "avgToCR": 70.85,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "47",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 83,
+      "r2": 75,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 1105.07
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:13:04.490Z",
+  "scrapedAt": "2026-11-02T15:21:18.125Z",
   "url": "https://www.europeangolfrankings.com/players/22407"
 }

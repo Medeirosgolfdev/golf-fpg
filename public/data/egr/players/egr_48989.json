@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hamburg Holm",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 3250,
+  "tournamentsPlayed": 2,
+  "egrRank": 3293,
   "egrPoints": 9,
-  "avgScore": 86,
-  "avgToCR": 86.7,
+  "avgScore": 86.5,
+  "avgToCR": 86.05,
   "events": [
+    {
+      "eventId": "12944",
+      "counting": true,
+      "pos": "16",
+      "event": "DGV-Region Nord 2. AK16/18 Mädchen 2026",
+      "venue": "Golfclub Segeberg",
+      "country": "Germany",
+      "startDateRaw": "04. Jul 26",
+      "r1": 89,
+      "r2": 87,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12764",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:41.712Z",
+  "scrapedAt": "2026-11-02T15:31:53.040Z",
   "url": "https://www.europeangolfrankings.com/players/48989"
 }

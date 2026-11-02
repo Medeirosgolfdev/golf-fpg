@@ -8,11 +8,39 @@
   "club": "Pic Saint-Loup",
   "ageGroup": "U16",
   "tournamentsPlayed": 9,
-  "egrRank": 1946,
-  "egrPoints": 3071.86,
-  "avgScore": 77.88,
-  "avgToCR": 77.15,
+  "egrRank": 1807,
+  "egrPoints": 3461.29,
+  "avgScore": 78.36,
+  "avgToCR": 77.64,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "80",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 83,
+      "r2": 87,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 129.92
+    },
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "42",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 81,
+      "r2": 69,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 365.05
+    },
     {
       "eventId": "12185",
       "counting": true,
@@ -123,7 +151,8 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 105.54
+      "egrPoints": 105.54,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -137,10 +166,11 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:21.803Z",
+  "scrapedAt": "2026-11-02T15:29:16.602Z",
   "url": "https://www.europeangolfrankings.com/players/41500"
 }

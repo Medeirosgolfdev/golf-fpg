@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bordeaux Lac",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 662,
-  "egrPoints": 9277.7,
-  "avgScore": 73.72,
-  "avgToCR": 72.87,
+  "tournamentsPlayed": 13,
+  "egrRank": 638,
+  "egrPoints": 9535.7,
+  "avgScore": 74.38,
+  "avgToCR": 73.22,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "15",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 73,
+      "r2": 71,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 860.25
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -169,7 +183,7 @@
     },
     {
       "eventId": "11379",
-      "counting": false,
+      "counting": true,
       "pos": "8",
       "event": "Grand Prix du Cap d’Agde 2025",
       "venue": "Golf International Cap d'agde (Volcan & Azur)",
@@ -193,7 +207,8 @@
       "r2": 74,
       "r3": 69,
       "r4": null,
-      "egrPoints": 547.47
+      "egrPoints": 547.47,
+      "_mantido": true
     },
     {
       "eventId": "11368",
@@ -207,10 +222,11 @@
       "r2": 71,
       "r3": 73,
       "r4": 71,
-      "egrPoints": 483.21
+      "egrPoints": 483.21,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:23.281Z",
+  "scrapedAt": "2026-11-02T15:27:06.174Z",
   "url": "https://www.europeangolfrankings.com/players/35624"
 }

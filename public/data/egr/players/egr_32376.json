@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Galway Bay",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 478,
-  "egrPoints": 11260.1,
-  "avgScore": 73.25,
-  "avgToCR": 72.35,
+  "tournamentsPlayed": 11,
+  "egrRank": 481,
+  "egrPoints": 11332.3,
+  "avgScore": 72.68,
+  "avgToCR": 71.85,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "4",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 73,
+      "r2": 71,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 393.36
+    },
     {
       "eventId": "11685",
       "counting": false,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11863",
-      "counting": true,
+      "counting": false,
       "pos": "67",
       "event": "Connacht U18 Boys' Open Championship 2026",
       "venue": "Carrick On Shannon Golf Club",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:12.570Z",
+  "scrapedAt": "2026-11-02T15:25:49.494Z",
   "url": "https://www.europeangolfrankings.com/players/32376"
 }

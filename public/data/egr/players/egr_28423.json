@@ -8,14 +8,28 @@
   "club": "Madonna Campiglio",
   "ageGroup": "U18",
   "tournamentsPlayed": 19,
-  "egrRank": 134,
-  "egrPoints": 11732.3,
-  "avgScore": 75,
-  "avgToCR": 70.89,
+  "egrRank": 136,
+  "egrPoints": 11715.9,
+  "avgScore": 75.17,
+  "avgToCR": 71.07,
   "events": [
     {
-      "eventId": "12636",
+      "eventId": "12022",
       "counting": false,
+      "pos": "10",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 74,
+      "r2": 70,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 728.3
+    },
+    {
+      "eventId": "12636",
+      "counting": true,
       "pos": "10",
       "event": "European Ladies' Club Trophy 2026",
       "venue": "Hamburger Golf Club Falkenstein",
@@ -26,6 +40,20 @@
       "r3": 74,
       "r4": null,
       "egrPoints": 808.26
+    },
+    {
+      "eventId": "12011",
+      "counting": false,
+      "pos": "2",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 80,
+      "r2": 80,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 286.13
     },
     {
       "eventId": "12003",
@@ -263,7 +291,8 @@
       "r2": 71,
       "r3": null,
       "r4": null,
-      "egrPoints": 824.71
+      "egrPoints": 824.71,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -277,10 +306,11 @@
       "r2": 77,
       "r3": 77,
       "r4": null,
-      "egrPoints": 253.53
+      "egrPoints": 253.53,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:23.830Z",
+  "scrapedAt": "2026-11-02T15:23:52.748Z",
   "url": "https://www.europeangolfrankings.com/players/28423"
 }

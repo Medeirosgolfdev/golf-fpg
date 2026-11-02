@@ -7,12 +7,26 @@
   "country": "France",
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 2385,
-  "egrPoints": 2302.07,
-  "avgScore": 76.36,
-  "avgToCR": 75.94,
+  "tournamentsPlayed": 5,
+  "egrRank": 2174,
+  "egrPoints": 2639.87,
+  "avgScore": 76.46,
+  "avgToCR": 75.92,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "25",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 70,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 337.8
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:45.695Z",
+  "scrapedAt": "2026-11-02T15:28:36.011Z",
   "url": "https://www.europeangolfrankings.com/players/38919"
 }

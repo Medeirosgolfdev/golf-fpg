@@ -7,15 +7,43 @@
   "country": "France",
   "club": "Cice-Blossac",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1322,
-  "egrPoints": 809.72,
-  "avgScore": 79.29,
-  "avgToCR": 78.38,
+  "tournamentsPlayed": 10,
+  "egrRank": 1212,
+  "egrPoints": 1016.14,
+  "avgScore": 77.89,
+  "avgToCR": 77.46,
   "events": [
     {
-      "eventId": "11768",
+      "eventId": "12959",
       "counting": true,
+      "pos": "15",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 196.07
+    },
+    {
+      "eventId": "12201",
+      "counting": true,
+      "pos": "7",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 79,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 10.35
+    },
+    {
+      "eventId": "11768",
+      "counting": false,
       "pos": "93",
       "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
       "venue": "Golf de Morfontaine",
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12184",
-      "counting": true,
+      "counting": false,
       "pos": "31",
       "event": "Grand Prix de Saint Germain 2026",
       "venue": "Golf de St Germain",
@@ -127,6 +155,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:27.416Z",
+  "scrapedAt": "2026-11-02T15:32:44.213Z",
   "url": "https://www.europeangolfrankings.com/players/50621"
 }

@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 2133,
-  "egrPoints": 2696.24,
-  "avgScore": 77.35,
-  "avgToCR": 77.02,
+  "tournamentsPlayed": 10,
+  "egrRank": 2210,
+  "egrPoints": 2578.06,
+  "avgScore": 78.33,
+  "avgToCR": 77.41,
   "events": [
     {
       "eventId": "11987",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "10234",
-      "counting": false,
+      "counting": true,
       "pos": "43",
       "event": "Argentario Classic Open 2025",
       "venue": "Argentario Golf Resort",
@@ -165,7 +165,8 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 144.84
+      "egrPoints": 144.84,
+      "_mantido": true
     },
     {
       "eventId": "10319",
@@ -184,6 +185,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:29.575Z",
+  "scrapedAt": "2026-11-02T15:28:18.504Z",
   "url": "https://www.europeangolfrankings.com/players/38455"
 }

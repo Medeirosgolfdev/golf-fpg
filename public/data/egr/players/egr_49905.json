@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Franciacorta",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 1250,
-  "egrPoints": 919.75,
-  "avgScore": 81.05,
-  "avgToCR": 78.79,
+  "tournamentsPlayed": 14,
+  "egrRank": 1243,
+  "egrPoints": 964.44,
+  "avgScore": 80.67,
+  "avgToCR": 78.16,
   "events": [
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "12",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 85,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 90.19
+    },
+    {
+      "eventId": "12009",
+      "counting": false,
+      "pos": "12",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 80,
+      "r2": 85,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12001",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "11976",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "Italian National Closed U14 Championships 2026",
       "venue": "Golf Club Folgaria",
@@ -198,6 +226,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:08.303Z",
+  "scrapedAt": "2026-11-02T15:32:23.146Z",
   "url": "https://www.europeangolfrankings.com/players/49905"
 }

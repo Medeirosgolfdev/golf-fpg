@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Chantilly",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 3398,
-  "egrPoints": 1287.32,
-  "avgScore": 79.65,
-  "avgToCR": 79.19,
+  "tournamentsPlayed": 9,
+  "egrRank": 3108,
+  "egrPoints": 1541.46,
+  "avgScore": 79.06,
+  "avgToCR": 78.68,
   "events": [
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "53",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 77,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 254.15
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:23:53.272Z",
+  "scrapedAt": "2026-11-02T15:33:13.149Z",
   "url": "https://www.europeangolfrankings.com/players/52023"
 }

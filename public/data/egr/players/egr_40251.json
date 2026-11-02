@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Kempferhof",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 765,
-  "egrPoints": 2237.52,
-  "avgScore": 78.42,
-  "avgToCR": 76.74,
+  "tournamentsPlayed": 9,
+  "egrRank": 897,
+  "egrPoints": 1769.63,
+  "avgScore": 78.94,
+  "avgToCR": 77.98,
   "events": [
     {
       "eventId": "12186",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12115",
-      "counting": false,
+      "counting": true,
       "pos": "16",
       "event": "Grand Prix Jeunes Majeur Filles U14 2026",
       "venue": "Golf Club de Besançon",
@@ -151,7 +151,8 @@
       "r2": 76,
       "r3": 78,
       "r4": 83,
-      "egrPoints": 485.26
+      "egrPoints": 485.26,
+      "_mantido": true
     },
     {
       "eventId": "10111",
@@ -170,6 +171,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:20:09.484Z",
+  "scrapedAt": "2026-11-02T15:29:02.421Z",
   "url": "https://www.europeangolfrankings.com/players/40251"
 }

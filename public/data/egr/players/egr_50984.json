@@ -8,11 +8,25 @@
   "club": "Seddiner See",
   "ageGroup": "U16",
   "tournamentsPlayed": 3,
-  "egrRank": 10380,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 91.75,
-  "avgToCR": 90,
+  "avgScore": 88.44,
+  "avgToCR": 87.38,
   "events": [
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "66",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 89,
+      "r2": 87,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12640",
       "counting": true,
@@ -53,10 +67,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:32.207Z",
+  "scrapedAt": "2026-11-02T15:32:49.607Z",
   "url": "https://www.europeangolfrankings.com/players/50984"
 }

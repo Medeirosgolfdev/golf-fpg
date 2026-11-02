@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Black Bush",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 12,
-  "egrRank": 2491,
-  "egrPoints": 2177.61,
-  "avgScore": 80.11,
-  "avgToCR": 78.18,
+  "tournamentsPlayed": 13,
+  "egrRank": 2450,
+  "egrPoints": 2243.86,
+  "avgScore": 79.32,
+  "avgToCR": 77.56,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "23",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 76,
+      "r2": 80,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 66.25
+    },
     {
       "eventId": "11859",
       "counting": true,
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "11770",
-      "counting": true,
+      "counting": false,
       "pos": "56",
       "event": "R&A Student Tour Series (Palmares) 2026",
       "venue": "Plamares Golf Resort",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:11:55.484Z",
+  "scrapedAt": "2026-11-02T15:20:00.967Z",
   "url": "https://www.europeangolfrankings.com/players/17759"
 }

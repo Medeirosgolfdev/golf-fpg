@@ -7,15 +7,15 @@
   "country": "Denmark",
   "club": "Ikast",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 6723,
+  "tournamentsPlayed": 10,
+  "egrRank": 6792,
   "egrPoints": 276.83,
-  "avgScore": 82.11,
-  "avgToCR": 81.64,
+  "avgScore": 82.67,
+  "avgToCR": 82.54,
   "events": [
     {
       "eventId": "12596",
-      "counting": false,
+      "counting": true,
       "pos": "56",
       "event": "Dormy Elite Tour III Drenge U22 2026",
       "venue": "Esbjerg Golfklub",
@@ -56,20 +56,6 @@
       "egrPoints": 0
     },
     {
-      "eventId": "12579",
-      "counting": true,
-      "pos": "43",
-      "event": "Kronberg Masters 2026",
-      "venue": "Helsingør Golf Club (59)",
-      "country": "Denmark",
-      "startDateRaw": "07. Jul 26",
-      "r1": 77,
-      "r2": 91,
-      "r3": null,
-      "r4": null,
-      "egrPoints": 0
-    },
-    {
       "eventId": "12812",
       "counting": true,
       "pos": "37",
@@ -79,6 +65,20 @@
       "startDateRaw": "07. Jul 26",
       "r1": 93,
       "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12579",
+      "counting": true,
+      "pos": "43",
+      "event": "Kronberg Masters 2026",
+      "venue": "Helsingør Golf Club (59)",
+      "country": "Denmark",
+      "startDateRaw": "07. Jul 26",
+      "r1": 77,
+      "r2": 91,
       "r3": null,
       "r4": null,
       "egrPoints": 0
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12556",
-      "counting": false,
+      "counting": true,
       "pos": "60",
       "event": "Hovborg Kro Open - Dormy Elite Tour I Herrer 2026",
       "venue": "Gyttegård Golf Klub",
@@ -165,7 +165,8 @@
       "r2": 84,
       "r3": 76,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10116",
@@ -179,10 +180,11 @@
       "r2": 89,
       "r3": 82,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:18.094Z",
+  "scrapedAt": "2026-11-02T15:33:42.693Z",
   "url": "https://www.europeangolfrankings.com/players/53245"
 }

@@ -8,11 +8,25 @@
   "club": "Paris CC",
   "ageGroup": "U18",
   "tournamentsPlayed": 9,
-  "egrRank": 497,
-  "egrPoints": 3840.25,
-  "avgScore": 74.32,
-  "avgToCR": 72.11,
+  "egrRank": 613,
+  "egrPoints": 2980.17,
+  "avgScore": 75.19,
+  "avgToCR": 72.79,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "24",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 77,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 71.8
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 71,
       "r3": 69,
       "r4": null,
-      "egrPoints": 931.88
+      "egrPoints": 931.88,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:52.026Z",
+  "scrapedAt": "2026-11-02T15:25:27.875Z",
   "url": "https://www.europeangolfrankings.com/players/31501"
 }

@@ -5,14 +5,42 @@
   "lastName": "CHAPMAN",
   "firstName": "Steven",
   "country": "Netherlands",
-  "club": "Lauswolt",
+  "club": "Emmeloord",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 296,
-  "egrPoints": 15290.4,
-  "avgScore": 73.11,
-  "avgToCR": 71.93,
+  "tournamentsPlayed": 16,
+  "egrRank": 295,
+  "egrPoints": 15253.7,
+  "avgScore": 73.33,
+  "avgToCR": 71.99,
   "events": [
+    {
+      "eventId": "12962",
+      "counting": false,
+      "pos": "1",
+      "event": "DEUTSCHLANDFINALE (JGM) 2026",
+      "venue": "Thüringer Golfclub",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 67,
+      "r2": 66,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 511.88
+    },
+    {
+      "eventId": "12951",
+      "counting": false,
+      "pos": "1",
+      "event": "Germany Final (Junior Golf Masters) 2026",
+      "venue": "Thüringer Golfclub Drei Geichen",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 67,
+      "r2": 66,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 748.13
+    },
     {
       "eventId": "11672",
       "counting": false,
@@ -221,7 +249,8 @@
       "r2": 75,
       "r3": 73,
       "r4": 74,
-      "egrPoints": 477.25
+      "egrPoints": 477.25,
+      "_mantido": true
     },
     {
       "eventId": "11299",
@@ -255,6 +284,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:02.492Z",
+  "scrapedAt": "2026-11-02T15:28:54.744Z",
   "url": "https://www.europeangolfrankings.com/players/39928"
 }

@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Lecco",
   "ageGroup": "U14",
-  "tournamentsPlayed": 17,
+  "tournamentsPlayed": 19,
   "egrRank": 1289,
-  "egrPoints": 5144.89,
-  "avgScore": 75,
-  "avgToCR": 74.86,
+  "egrPoints": 5175.17,
+  "avgScore": 75.05,
+  "avgToCR": 74.67,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "25",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 79,
+      "r2": 73,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 441.35
+    },
+    {
+      "eventId": "12008",
+      "counting": false,
+      "pos": "4",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 67,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 378.63
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -183,7 +211,7 @@
     },
     {
       "eventId": "11841",
-      "counting": true,
+      "counting": false,
       "pos": "29",
       "event": "International French U14 Boys (Challenge Alexis Godillot) 2026",
       "venue": "Golf de Chantilly",
@@ -268,6 +296,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:08.915Z",
+  "scrapedAt": "2026-11-02T15:32:23.817Z",
   "url": "https://www.europeangolfrankings.com/players/49917"
 }

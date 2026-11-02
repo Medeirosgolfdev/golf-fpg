@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Castelgandolfo",
   "ageGroup": "U21",
-  "tournamentsPlayed": 0,
-  "egrRank": 3338,
-  "egrPoints": 0,
-  "avgScore": 85,
-  "avgToCR": 84.3,
+  "tournamentsPlayed": 1,
+  "egrRank": 3273,
+  "egrPoints": 10.55,
+  "avgScore": 86.33,
+  "avgToCR": 82.23,
   "events": [
+    {
+      "eventId": "12013",
+      "counting": true,
+      "pos": "13",
+      "event": "Copa D'Oro Cittá Di Castel Gandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 93,
+      "r2": 80,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 10.55
+    },
     {
       "eventId": "10320",
       "counting": true,
@@ -30,6 +44,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:23.543Z",
+  "scrapedAt": "2026-11-02T15:23:52.368Z",
   "url": "https://www.europeangolfrankings.com/players/28416"
 }

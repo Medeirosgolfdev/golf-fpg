@@ -5,14 +5,28 @@
   "lastName": "SAN JOSE LOPEZ",
   "firstName": "Hugo",
   "country": "Spain",
-  "club": "Fed. Madrid",
+  "club": "Villa Madrid",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 3913,
-  "egrPoints": 1009.79,
-  "avgScore": 78.78,
-  "avgToCR": 79.17,
+  "tournamentsPlayed": 5,
+  "egrRank": 3341,
+  "egrPoints": 1354.69,
+  "avgScore": 77.92,
+  "avgToCR": 77.83,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "13",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 344.9
+    },
     {
       "eventId": "12254",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:51.292Z",
+  "scrapedAt": "2026-11-02T15:32:03.733Z",
   "url": "https://www.europeangolfrankings.com/players/49303"
 }

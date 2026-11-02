@@ -7,12 +7,40 @@
   "country": "Belgium",
   "club": "Sart",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 6,
-  "egrRank": 1272,
-  "egrPoints": 5235.53,
-  "avgScore": 73.94,
-  "avgToCR": 72.56,
+  "tournamentsPlayed": 8,
+  "egrRank": 1079,
+  "egrPoints": 6176.42,
+  "avgScore": 74.14,
+  "avgToCR": 73.13,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "25",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 506.43
+    },
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "40",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 75,
+      "r2": 70,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 434.46
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -99,6 +127,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:15:31.629Z",
+  "scrapedAt": "2026-11-02T15:24:00.963Z",
   "url": "https://www.europeangolfrankings.com/players/28616"
 }

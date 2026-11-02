@@ -5,14 +5,28 @@
   "lastName": "CORDES",
   "firstName": "Clara",
   "country": "Germany",
-  "club": "Haseldorf",
+  "club": "Hamburg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 3338,
+  "tournamentsPlayed": 2,
+  "egrRank": 3378,
   "egrPoints": 0,
-  "avgScore": 89.5,
-  "avgToCR": 90.2,
+  "avgScore": 92,
+  "avgToCR": 91.55,
   "events": [
+    {
+      "eventId": "12944",
+      "counting": true,
+      "pos": "24",
+      "event": "DGV-Region Nord 2. AK16/18 Mädchen 2026",
+      "venue": "Golfclub Segeberg",
+      "country": "Germany",
+      "startDateRaw": "04. Jul 26",
+      "r1": 92,
+      "r2": 99,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12764",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:26:42.578Z",
+  "scrapedAt": "2026-11-02T15:36:26.891Z",
   "url": "https://www.europeangolfrankings.com/players/58780"
 }

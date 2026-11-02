@@ -7,11 +7,11 @@
   "country": "England",
   "club": "Bentley",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 1267,
-  "egrPoints": 5243.28,
-  "avgScore": 75.95,
-  "avgToCR": 74.77,
+  "tournamentsPlayed": 10,
+  "egrRank": 1942,
+  "egrPoints": 3163.74,
+  "avgScore": 77.45,
+  "avgToCR": 76.56,
   "events": [
     {
       "eventId": "11810",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "11817",
-      "counting": false,
+      "counting": true,
       "pos": "64",
       "event": "South of England Boys 2026",
       "venue": "Sherborne & Yeovil-Old Course",
@@ -165,7 +165,8 @@
       "r2": 76,
       "r3": 78,
       "r4": null,
-      "egrPoints": 840.95
+      "egrPoints": 840.95,
+      "_mantido": true
     },
     {
       "eventId": "10730",
@@ -184,6 +185,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:47.810Z",
+  "scrapedAt": "2026-11-02T15:28:38.406Z",
   "url": "https://www.europeangolfrankings.com/players/39018"
 }

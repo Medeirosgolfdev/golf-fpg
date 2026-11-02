@@ -8,11 +8,39 @@
   "club": "Molinetto",
   "ageGroup": "U16",
   "tournamentsPlayed": 22,
-  "egrRank": 1152,
-  "egrPoints": 5698.26,
-  "avgScore": 74.73,
-  "avgToCR": 72.65,
+  "egrRank": 1120,
+  "egrPoints": 5954.99,
+  "avgScore": 74.45,
+  "avgToCR": 72.55,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "58",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 79,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 524.83
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "35",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 72,
+      "r2": 78,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 723.17
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "11945",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Targa D'Oro Villa D'Este 2026",
       "venue": "Golf Club Villa d'Este",
@@ -305,7 +333,8 @@
       "r2": 71,
       "r3": null,
       "r4": null,
-      "egrPoints": 238.3
+      "egrPoints": 238.3,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -319,7 +348,8 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 582.15
+      "egrPoints": 582.15,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -353,6 +383,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:02.078Z",
+  "scrapedAt": "2026-11-02T15:31:07.954Z",
   "url": "https://www.europeangolfrankings.com/players/46803"
 }

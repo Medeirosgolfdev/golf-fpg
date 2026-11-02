@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Cookridge Hall",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 7,
-  "egrRank": 838,
-  "egrPoints": 7764.82,
+  "tournamentsPlayed": 8,
+  "egrRank": 797,
+  "egrPoints": 8182.95,
   "avgScore": 74.5,
-  "avgToCR": 72.34,
+  "avgToCR": 72.26,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "23",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 73,
+      "r2": 70,
+      "r3": 73,
+      "r4": 79,
+      "egrPoints": 1167.05
+    },
     {
       "eventId": "11783",
       "counting": true,
@@ -128,6 +142,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:11:54.818Z",
+  "scrapedAt": "2026-11-02T15:20:00.325Z",
   "url": "https://www.europeangolfrankings.com/players/17738"
 }

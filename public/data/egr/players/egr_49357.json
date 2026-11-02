@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Hulencourt",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 714,
-  "egrPoints": 2452,
-  "avgScore": 79.92,
-  "avgToCR": 76.97,
+  "tournamentsPlayed": 10,
+  "egrRank": 522,
+  "egrPoints": 3629.49,
+  "avgScore": 79.77,
+  "avgToCR": 76.58,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "44",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 78,
+      "r2": 78,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 1177.49
+    },
     {
       "eventId": "12917",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11650",
-      "counting": true,
+      "counting": false,
       "pos": "34",
       "event": "Portuguese International U14 Championship (Major) 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:53.931Z",
+  "scrapedAt": "2026-11-02T15:32:06.997Z",
   "url": "https://www.europeangolfrankings.com/players/49357"
 }

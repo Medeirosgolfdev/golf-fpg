@@ -7,12 +7,40 @@
   "country": "Austria",
   "club": "St.Lorenzen",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 5267,
-  "egrPoints": 546.7,
-  "avgScore": 81.13,
-  "avgToCR": 81.4,
+  "tournamentsPlayed": 9,
+  "egrRank": 5251,
+  "egrPoints": 563.41,
+  "avgScore": 81.71,
+  "avgToCR": 81.91,
   "events": [
+    {
+      "eventId": "12515",
+      "counting": true,
+      "pos": "10",
+      "event": "AJGT U14 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 90,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 16.72
+    },
+    {
+      "eventId": "12650",
+      "counting": false,
+      "pos": "77",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 82,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12509",
       "counting": true,
@@ -113,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:18.377Z",
+  "scrapedAt": "2026-11-02T15:32:33.701Z",
   "url": "https://www.europeangolfrankings.com/players/50292"
 }

@@ -5,14 +5,42 @@
   "lastName": "SLAMA",
   "firstName": "Mathieu",
   "country": "France",
-  "club": "Grenoble Bresson",
+  "club": "Charmeil",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 1122,
-  "egrPoints": 5891.59,
-  "avgScore": 74.96,
-  "avgToCR": 74.36,
+  "tournamentsPlayed": 14,
+  "egrRank": 1074,
+  "egrPoints": 6186.2,
+  "avgScore": 74.92,
+  "avgToCR": 74.22,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "17",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 76,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 642.78
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "22",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 71,
+      "r2": 77,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 610.72
+    },
     {
       "eventId": "12181",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12127",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Grand Prix du Lac d'Annecy 2026",
       "venue": "Golf du Lac d'Annecy (Lac/Tournette)",
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "12056",
-      "counting": true,
+      "counting": false,
       "pos": "16",
       "event": "Grand Prix de Château L'Arc 2026",
       "venue": "Château l'Arc Golf Club",
@@ -193,10 +221,11 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 142.2
+      "egrPoints": 142.2,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:23:53.127Z",
+  "scrapedAt": "2026-11-02T15:33:13.152Z",
   "url": "https://www.europeangolfrankings.com/players/52015"
 }

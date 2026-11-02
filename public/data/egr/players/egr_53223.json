@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Serra",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 2296,
+  "tournamentsPlayed": 8,
+  "egrRank": 2317,
   "egrPoints": 160.74,
-  "avgScore": 85.88,
-  "avgToCR": 82.96,
+  "avgScore": 85.44,
+  "avgToCR": 82.5,
   "events": [
+    {
+      "eventId": "12015",
+      "counting": true,
+      "pos": "36",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 93,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12001",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:17.967Z",
+  "scrapedAt": "2026-11-02T15:33:42.497Z",
   "url": "https://www.europeangolfrankings.com/players/53223"
 }

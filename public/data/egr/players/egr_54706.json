@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Terramar",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 7546,
-  "egrPoints": 189.43,
-  "avgScore": 81,
-  "avgToCR": 82.9,
+  "tournamentsPlayed": 2,
+  "egrRank": 6291,
+  "egrPoints": 357.46,
+  "avgScore": 80.6,
+  "avgToCR": 80.22,
   "events": [
+    {
+      "eventId": "12275",
+      "counting": true,
+      "pos": "29",
+      "event": "Campionat De Catalunya U16/U18 2026",
+      "venue": "Fontanals Golf Club",
+      "country": "Spain",
+      "startDateRaw": "02. Oct 26",
+      "r1": 79,
+      "r2": 82,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 168.03
+    },
     {
       "eventId": "12254",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:53.761Z",
+  "scrapedAt": "2026-11-02T15:34:22.209Z",
   "url": "https://www.europeangolfrankings.com/players/54706"
 }

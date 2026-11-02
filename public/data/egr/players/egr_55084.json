@@ -8,11 +8,25 @@
   "club": "Bogogno",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 4871,
-  "egrPoints": 646.47,
-  "avgScore": 79.33,
-  "avgToCR": 78.89,
+  "egrRank": 4337,
+  "egrPoints": 851.9,
+  "avgScore": 78.57,
+  "avgToCR": 78.18,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "13",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 205.43
+    },
     {
       "eventId": "12934",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 78,
       "r3": 73,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:07.480Z",
+  "scrapedAt": "2026-11-02T15:34:37.621Z",
   "url": "https://www.europeangolfrankings.com/players/55084"
 }

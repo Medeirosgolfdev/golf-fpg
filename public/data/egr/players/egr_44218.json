@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Rinkven",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 389,
-  "egrPoints": 12843.6,
-  "avgScore": 73.16,
+  "tournamentsPlayed": 13,
+  "egrRank": 420,
+  "egrPoints": 12331.5,
+  "avgScore": 73.44,
   "avgToCR": 71.41,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "23",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 71,
+      "r2": 79,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 761.44
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "11753",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Belgian National Championship (U16/18) 2026",
       "venue": "The National Golf Brussels",
@@ -193,7 +207,8 @@
       "r2": 77,
       "r3": 72,
       "r4": null,
-      "egrPoints": 549.5
+      "egrPoints": 549.5,
+      "_mantido": true
     },
     {
       "eventId": "10120",
@@ -207,7 +222,8 @@
       "r2": 81,
       "r3": 77,
       "r4": null,
-      "egrPoints": 189.29
+      "egrPoints": 189.29,
+      "_mantido": true
     },
     {
       "eventId": "10110",
@@ -226,6 +242,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:10.665Z",
+  "scrapedAt": "2026-11-02T15:30:11.497Z",
   "url": "https://www.europeangolfrankings.com/players/44218"
 }

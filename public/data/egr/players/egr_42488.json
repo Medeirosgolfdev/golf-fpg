@@ -8,11 +8,25 @@
   "club": "Bondues",
   "ageGroup": "U16",
   "tournamentsPlayed": 4,
-  "egrRank": 1210,
-  "egrPoints": 985,
-  "avgScore": 77.36,
-  "avgToCR": 74.96,
+  "egrRank": 865,
+  "egrPoints": 1873.19,
+  "avgScore": 76.08,
+  "avgToCR": 73.46,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "12",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 71,
+      "r4": 72,
+      "egrPoints": 896.33
+    },
     {
       "eventId": "12098",
       "counting": true,
@@ -67,10 +81,11 @@
       "r2": 79,
       "r3": 79,
       "r4": null,
-      "egrPoints": 8.15
+      "egrPoints": 8.15,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:43.524Z",
+  "scrapedAt": "2026-11-02T15:29:40.009Z",
   "url": "https://www.europeangolfrankings.com/players/42488"
 }

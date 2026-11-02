@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Bossey",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 2586,
+  "tournamentsPlayed": 8,
+  "egrRank": 2612,
   "egrPoints": 94.24,
-  "avgScore": 84.33,
-  "avgToCR": 82.57,
+  "avgScore": 84.67,
+  "avgToCR": 83.37,
   "events": [
+    {
+      "eventId": "11491",
+      "counting": true,
+      "pos": "23",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 87,
+      "r2": 90,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11724",
       "counting": true,
@@ -128,6 +142,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:11.950Z",
+  "scrapedAt": "2026-11-02T15:31:19.515Z",
   "url": "https://www.europeangolfrankings.com/players/47668"
 }

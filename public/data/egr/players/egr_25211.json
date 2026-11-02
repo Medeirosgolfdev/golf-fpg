@@ -5,14 +5,28 @@
   "lastName": "TEMPLEREAU",
   "firstName": "Alexandre",
   "country": "France",
-  "club": "Bressuire",
+  "club": "Cholet",
   "ageGroup": "U21",
   "tournamentsPlayed": 9,
-  "egrRank": 95,
-  "egrPoints": 26830.3,
+  "egrRank": 94,
+  "egrPoints": 26877.6,
   "avgScore": 70.91,
-  "avgToCR": 69.47,
+  "avgToCR": 69.4,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "10",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 68,
+      "r2": 74,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 901.88
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 73,
       "r3": 67,
       "r4": null,
-      "egrPoints": 854.59
+      "egrPoints": 854.59,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:13:59.236Z",
+  "scrapedAt": "2026-11-02T15:22:18.170Z",
   "url": "https://www.europeangolfrankings.com/players/25211"
 }

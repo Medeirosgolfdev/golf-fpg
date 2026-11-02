@@ -7,11 +7,11 @@
   "country": "England",
   "club": "Romford",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 610,
+  "tournamentsPlayed": 9,
+  "egrRank": 618,
   "egrPoints": 9671.9,
-  "avgScore": 73.95,
-  "avgToCR": 72.63,
+  "avgScore": 74.17,
+  "avgToCR": 72.75,
   "events": [
     {
       "eventId": "11783",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "11814",
-      "counting": false,
+      "counting": true,
       "pos": "123",
       "event": "Tillman Trophy 2026",
       "venue": "The Caversham",
@@ -151,10 +151,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:11.111Z",
+  "scrapedAt": "2026-11-02T15:31:18.177Z",
   "url": "https://www.europeangolfrankings.com/players/47633"
 }

@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bordelais",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 80,
-  "egrPoints": 16189.8,
-  "avgScore": 75.46,
-  "avgToCR": 71.46,
+  "tournamentsPlayed": 8,
+  "egrRank": 99,
+  "egrPoints": 14276.8,
+  "avgScore": 75.95,
+  "avgToCR": 72.13,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "61",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 83,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 552.54
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -123,7 +137,8 @@
       "r2": 73,
       "r3": 79,
       "r4": null,
-      "egrPoints": 1742.26
+      "egrPoints": 1742.26,
+      "_mantido": true
     },
     {
       "eventId": "11369",
@@ -137,7 +152,8 @@
       "r2": 77,
       "r3": 72,
       "r4": 74,
-      "egrPoints": 723.34
+      "egrPoints": 723.34,
+      "_mantido": true
     },
     {
       "eventId": "10365",
@@ -156,6 +172,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:46.479Z",
+  "scrapedAt": "2026-11-02T15:28:36.869Z",
   "url": "https://www.europeangolfrankings.com/players/38935"
 }

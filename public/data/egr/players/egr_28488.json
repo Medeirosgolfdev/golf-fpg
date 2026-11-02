@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Fonti",
   "ageGroup": "U21",
-  "tournamentsPlayed": 6,
-  "egrRank": 1717,
-  "egrPoints": 3646.01,
-  "avgScore": 76.88,
-  "avgToCR": 74.77,
+  "tournamentsPlayed": 5,
+  "egrRank": 2192,
+  "egrPoints": 2614.08,
+  "avgScore": 77.14,
+  "avgToCR": 74.96,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "47",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 81,
+      "r2": 74,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 527.56
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -81,7 +95,8 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 1080.2
+      "egrPoints": 1080.2,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -95,7 +110,8 @@
       "r2": 75,
       "r3": 77,
       "r4": null,
-      "egrPoints": 479.29
+      "egrPoints": 479.29,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -114,6 +130,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:26.853Z",
+  "scrapedAt": "2026-11-02T15:23:56.107Z",
   "url": "https://www.europeangolfrankings.com/players/28488"
 }

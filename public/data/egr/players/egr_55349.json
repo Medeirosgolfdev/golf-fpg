@@ -8,11 +8,25 @@
   "club": "Molinetto",
   "ageGroup": "U16",
   "tournamentsPlayed": 11,
-  "egrRank": 4836,
-  "egrPoints": 656.15,
-  "avgScore": 79.83,
-  "avgToCR": 80.03,
+  "egrRank": 4601,
+  "egrPoints": 751.1,
+  "avgScore": 79.63,
+  "avgToCR": 79.84,
   "events": [
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "26",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 78,
+      "r2": 77,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 122.33
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11958",
-      "counting": true,
+      "counting": false,
       "pos": "35",
       "event": "Vecchio Monastero 2026",
       "venue": "Varese Golf Club",
@@ -165,7 +179,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -184,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:17.058Z",
+  "scrapedAt": "2026-11-02T15:34:48.701Z",
   "url": "https://www.europeangolfrankings.com/players/55349"
 }

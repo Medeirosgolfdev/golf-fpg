@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Hittnau",
   "ageGroup": "U21",
-  "tournamentsPlayed": 7,
-  "egrRank": 1982,
-  "egrPoints": 3001,
-  "avgScore": 74.67,
-  "avgToCR": 74.94,
+  "tournamentsPlayed": 8,
+  "egrRank": 1860,
+  "egrPoints": 3331.41,
+  "avgScore": 74.25,
+  "avgToCR": 74.27,
   "events": [
     {
       "eventId": "12918",
@@ -70,6 +70,20 @@
       "egrPoints": 232.52
     },
     {
+      "eventId": "12940",
+      "counting": true,
+      "pos": "7",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 80,
+      "r2": 71,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 330.41
+    },
+    {
       "eventId": "12460",
       "counting": true,
       "pos": "43",
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:52.712Z",
+  "scrapedAt": "2026-11-02T15:26:32.543Z",
   "url": "https://www.europeangolfrankings.com/players/33859"
 }

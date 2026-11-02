@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Saint Donat",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 1008,
-  "egrPoints": 6470.02,
-  "avgScore": 75.44,
-  "avgToCR": 74.61,
+  "tournamentsPlayed": 15,
+  "egrRank": 964,
+  "egrPoints": 6783.93,
+  "avgScore": 75.42,
+  "avgToCR": 74.6,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "22",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": 70,
+      "r4": 75,
+      "egrPoints": 1020.05
+    },
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "15",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": 66,
+      "r4": null,
+      "egrPoints": 779.8
+    },
+    {
+      "eventId": "12621",
+      "counting": false,
+      "pos": "9",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": 69,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 258.71
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -193,7 +235,8 @@
       "r2": 72,
       "r3": 75,
       "r4": null,
-      "egrPoints": 521.05
+      "egrPoints": 521.05,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -207,10 +250,11 @@
       "r2": 67,
       "r3": 73,
       "r4": null,
-      "egrPoints": 964.89
+      "egrPoints": 964.89,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:06.540Z",
+  "scrapedAt": "2026-11-02T15:33:29.535Z",
   "url": "https://www.europeangolfrankings.com/players/52713"
 }

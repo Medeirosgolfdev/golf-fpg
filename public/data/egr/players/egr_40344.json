@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Toulouse",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1533,
-  "egrPoints": 4239.54,
-  "avgScore": 76.32,
-  "avgToCR": 76.21,
+  "tournamentsPlayed": 13,
+  "egrRank": 1470,
+  "egrPoints": 4481.08,
+  "avgScore": 76.08,
+  "avgToCR": 75.67,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "48",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 530.82
+    },
     {
       "eventId": "12185",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "12048",
-      "counting": true,
+      "counting": false,
       "pos": "78",
       "event": "Grand Prix Elite de Landiforne 2026",
       "venue": "Golf de Moliets/Seignosse",
@@ -198,6 +212,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:10.710Z",
+  "scrapedAt": "2026-11-02T15:29:03.836Z",
   "url": "https://www.europeangolfrankings.com/players/40344"
 }

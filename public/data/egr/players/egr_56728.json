@@ -7,12 +7,26 @@
   "country": "Bulgaria",
   "club": "Sofia",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 3920,
-  "egrPoints": 1005.39,
-  "avgScore": 75.5,
-  "avgToCR": 74.3,
+  "tournamentsPlayed": 3,
+  "egrRank": 3351,
+  "egrPoints": 1350.29,
+  "avgScore": 75.44,
+  "avgToCR": 74.14,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "13",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 76,
+      "r2": 73,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 344.9
+    },
     {
       "eventId": "12926",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:25:58.090Z",
+  "scrapedAt": "2026-11-02T15:35:35.021Z",
   "url": "https://www.europeangolfrankings.com/players/56728"
 }

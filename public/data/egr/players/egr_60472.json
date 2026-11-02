@@ -7,17 +7,31 @@
   "country": "Germany",
   "club": "Schloss Breitenburg",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 9816,
-  "egrPoints": 32.85,
-  "avgScore": 87,
-  "avgToCR": 87.5,
+  "tournamentsPlayed": 2,
+  "egrRank": 9865,
+  "egrPoints": 35.62,
+  "avgScore": 88.25,
+  "avgToCR": 88.8,
   "events": [
+    {
+      "eventId": "12947",
+      "counting": true,
+      "pos": "10",
+      "event": "DGV-GVSH Meisterschaft AK14 Jungen 2026",
+      "venue": "Golfanlage Hohwacht",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 89,
+      "r2": 92,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 30.51
+    },
     {
       "eventId": "12682",
       "counting": true,
       "pos": "15",
-      "event": "DGV-Hamburg Meisterschaft AK14 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK14 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -25,10 +39,10 @@
       "r2": 91,
       "r3": null,
       "r4": null,
-      "egrPoints": 32.85
+      "egrPoints": 5.11
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:27:22.396Z",
+  "scrapedAt": "2026-11-02T15:37:12.012Z",
   "url": "https://www.europeangolfrankings.com/players/60472"
 }

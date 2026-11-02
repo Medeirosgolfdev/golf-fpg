@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Stirling",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 4188,
-  "egrPoints": 889.93,
-  "avgScore": 79.17,
-  "avgToCR": 79.18,
+  "tournamentsPlayed": 15,
+  "egrRank": 3969,
+  "egrPoints": 999.32,
+  "avgScore": 78.65,
+  "avgToCR": 78.59,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "48",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 77,
+      "r2": 88,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 109.39
+    },
     {
       "eventId": "11723",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "11721",
-      "counting": true,
+      "counting": false,
       "pos": "26",
       "event": "Junior Tour Fraserburgh Boys 2026",
       "venue": "Fraserburgh GC",
@@ -241,6 +255,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:11.319Z",
+  "scrapedAt": "2026-11-02T15:32:26.273Z",
   "url": "https://www.europeangolfrankings.com/players/49978"
 }

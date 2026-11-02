@@ -5,14 +5,28 @@
   "lastName": "METCALF",
   "firstName": "Luke",
   "country": "England",
-  "club": "Tandridge",
+  "club": "Walton Heath",
   "ageGroup": "U25",
-  "tournamentsPlayed": 12,
-  "egrRank": 40,
-  "egrPoints": 34053.3,
-  "avgScore": 71.13,
-  "avgToCR": 69.04,
+  "tournamentsPlayed": 13,
+  "egrRank": 38,
+  "egrPoints": 34249.1,
+  "avgScore": 71.47,
+  "avgToCR": 69.21,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "9",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 71,
+      "r4": 76,
+      "egrPoints": 1487.31
+    },
     {
       "eventId": "11839",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12279",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "53rd East of Scotland Open Amateur 2026",
       "venue": "Lundin Golf Club",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:17:19.084Z",
+  "scrapedAt": "2026-11-02T15:25:56.335Z",
   "url": "https://www.europeangolfrankings.com/players/32537"
 }

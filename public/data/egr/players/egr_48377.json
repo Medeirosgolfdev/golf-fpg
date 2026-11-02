@@ -8,11 +8,25 @@
   "club": "Lyon Salvagny",
   "ageGroup": "U14",
   "tournamentsPlayed": 15,
-  "egrRank": 706,
+  "egrRank": 715,
   "egrPoints": 8937.63,
   "avgScore": 72.37,
   "avgToCR": 72.24,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": false,
+      "pos": "19",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 533.5
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -221,7 +235,8 @@
       "r2": 71,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -240,6 +255,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:32.276Z",
+  "scrapedAt": "2026-11-02T15:31:42.291Z",
   "url": "https://www.europeangolfrankings.com/players/48377"
 }

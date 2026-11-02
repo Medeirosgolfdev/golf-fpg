@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 2254,
-  "egrPoints": 2482.11,
-  "avgScore": 76.35,
-  "avgToCR": 75.91,
+  "tournamentsPlayed": 14,
+  "egrRank": 1810,
+  "egrPoints": 3450.03,
+  "avgScore": 76.18,
+  "avgToCR": 75.3,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "58",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 74,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 524.83
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "45",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 572.02
+    },
+    {
+      "eventId": "12012",
+      "counting": true,
+      "pos": "15",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 80,
+      "r2": 77,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 267.63
+    },
     {
       "eventId": "12006",
       "counting": true,
@@ -43,7 +85,7 @@
     },
     {
       "eventId": "11982",
-      "counting": true,
+      "counting": false,
       "pos": "29",
       "event": "Trofeo Citta' Di Treviso 2026",
       "venue": "Golf Villa Condulmer",
@@ -71,7 +113,7 @@
     },
     {
       "eventId": "11939",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Cerreto Miglianico Trophy 2026",
       "venue": "Golf Il Cerreto di Miglianico",
@@ -155,7 +197,7 @@
     },
     {
       "eventId": "11891",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Trofeo Rocco Forte 2026",
       "venue": "Verdura Golf Club",
@@ -199,6 +241,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:12.891Z",
+  "scrapedAt": "2026-11-02T15:30:13.850Z",
   "url": "https://www.europeangolfrankings.com/players/44285"
 }

@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Paris CC",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 561,
-  "egrPoints": 10223.5,
-  "avgScore": 73.78,
-  "avgToCR": 72.83,
+  "tournamentsPlayed": 12,
+  "egrRank": 417,
+  "egrPoints": 12413.6,
+  "avgScore": 72.56,
+  "avgToCR": 71.9,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "14",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 76,
+      "r2": 73,
+      "r3": 69,
+      "r4": 73,
+      "egrPoints": 1133.64
+    },
+    {
+      "eventId": "12210",
+      "counting": false,
+      "pos": "19",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 81,
+      "r2": 76,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 533.5
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 69,
+      "r2": 71,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 1769.38
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -71,7 +113,7 @@
     },
     {
       "eventId": "12073",
-      "counting": true,
+      "counting": false,
       "pos": "66",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -85,7 +127,7 @@
     },
     {
       "eventId": "12070",
-      "counting": true,
+      "counting": false,
       "pos": "29",
       "event": "Championnat de Ligue Amateur Paris Ile-de-France 2026",
       "venue": "Rcf - Golf De La Boulie",
@@ -141,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:03.833Z",
+  "scrapedAt": "2026-11-02T15:31:09.961Z",
   "url": "https://www.europeangolfrankings.com/players/47189"
 }

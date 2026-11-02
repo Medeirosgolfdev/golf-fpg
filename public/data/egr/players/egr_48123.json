@@ -5,14 +5,28 @@
   "lastName": "SUBTIL",
   "firstName": "Moritz",
   "country": "Germany",
-  "club": "Neuhof",
+  "club": "Hof Hausen",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 4788,
-  "egrPoints": 669.75,
-  "avgScore": 80.95,
-  "avgToCR": 81.25,
+  "tournamentsPlayed": 10,
+  "egrRank": 4167,
+  "egrPoints": 916,
+  "avgScore": 80.47,
+  "avgToCR": 80.76,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "24",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 81,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 246.25
+    },
     {
       "eventId": "12911",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "11560",
-      "counting": true,
+      "counting": false,
       "pos": "42",
       "event": "Mid Summer Junior International 2026",
       "venue": "Golf-Club Main-Taunus",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:24.477Z",
+  "scrapedAt": "2026-11-02T15:31:33.310Z",
   "url": "https://www.europeangolfrankings.com/players/48123"
 }

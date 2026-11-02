@@ -7,12 +7,26 @@
   "country": "England",
   "club": "City of Newcastle",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 4601,
-  "egrPoints": 734.65,
+  "tournamentsPlayed": 6,
+  "egrRank": 4478,
+  "egrPoints": 790.84,
   "avgScore": 81,
-  "avgToCR": 80.6,
+  "avgToCR": 80.09,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "29",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 86,
+      "r2": 81,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 56.18
+    },
     {
       "eventId": "11812",
       "counting": true,
@@ -100,6 +114,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:39.494Z",
+  "scrapedAt": "2026-11-02T15:32:57.816Z",
   "url": "https://www.europeangolfrankings.com/players/51282"
 }

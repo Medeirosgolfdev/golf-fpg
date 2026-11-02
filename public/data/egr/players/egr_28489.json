@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Royal Park Roveri",
   "ageGroup": "U18",
-  "tournamentsPlayed": 19,
-  "egrRank": 104,
-  "egrPoints": 25487.1,
-  "avgScore": 70.74,
-  "avgToCR": 68.01,
+  "tournamentsPlayed": 20,
+  "egrRank": 108,
+  "egrPoints": 25169.9,
+  "avgScore": 70.67,
+  "avgToCR": 67.99,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": false,
+      "pos": "22",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1122.94
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "3",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 2252.51
+    },
+    {
+      "eventId": "12010",
+      "counting": false,
+      "pos": "2",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 71,
+      "r2": 69,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 610.4
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -263,7 +305,8 @@
       "r2": 70,
       "r3": null,
       "r4": null,
-      "egrPoints": 2569.69
+      "egrPoints": 2569.69,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -277,7 +320,8 @@
       "r2": 77,
       "r3": 76,
       "r4": null,
-      "egrPoints": 744.61
+      "egrPoints": 744.61,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -296,6 +340,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:26.868Z",
+  "scrapedAt": "2026-11-02T15:23:56.129Z",
   "url": "https://www.europeangolfrankings.com/players/28489"
 }

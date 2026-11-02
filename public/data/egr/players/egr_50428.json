@@ -8,11 +8,25 @@
   "club": "Saint Cloud",
   "ageGroup": "U16",
   "tournamentsPlayed": 16,
-  "egrRank": 893,
-  "egrPoints": 7344.37,
-  "avgScore": 75.09,
-  "avgToCR": 74.61,
+  "egrRank": 812,
+  "egrPoints": 7981.34,
+  "avgScore": 74.96,
+  "avgToCR": 74.37,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "31",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 81,
+      "r4": 71,
+      "egrPoints": 906.47
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -183,7 +197,7 @@
     },
     {
       "eventId": "12059",
-      "counting": true,
+      "counting": false,
       "pos": "47",
       "event": "Grand Prix du Lys Chantilly 2026",
       "venue": "Club du Lys-Chantilly",
@@ -235,10 +249,11 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:21.182Z",
+  "scrapedAt": "2026-11-02T15:32:36.828Z",
   "url": "https://www.europeangolfrankings.com/players/50428"
 }

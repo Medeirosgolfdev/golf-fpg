@@ -8,11 +8,25 @@
   "club": "Porters Park",
   "ageGroup": "U18",
   "tournamentsPlayed": 9,
-  "egrRank": 777,
-  "egrPoints": 8317.96,
-  "avgScore": 74.63,
-  "avgToCR": 72.93,
+  "egrRank": 761,
+  "egrPoints": 8552.38,
+  "avgScore": 74.17,
+  "avgToCR": 72.31,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "65",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 72,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 308.48
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 78,
       "r3": 84,
       "r4": null,
-      "egrPoints": 74.06
+      "egrPoints": 74.06,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:48.277Z",
+  "scrapedAt": "2026-11-02T15:28:38.941Z",
   "url": "https://www.europeangolfrankings.com/players/39027"
 }

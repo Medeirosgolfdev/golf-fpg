@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Ennetsee",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 2531,
-  "egrPoints": 2126.24,
-  "avgScore": 76.87,
-  "avgToCR": 76.43,
+  "tournamentsPlayed": 10,
+  "egrRank": 2102,
+  "egrPoints": 2794.35,
+  "avgScore": 75.25,
+  "avgToCR": 74.91,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "17",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 70,
+      "r2": 76,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 296.19
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "5",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 71,
+      "r2": 70,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 371.92
+    },
     {
       "eventId": "12918",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12445",
-      "counting": true,
+      "counting": false,
       "pos": "39",
       "event": "Swiss Golf Junior Tour (Gams-Werdenberg) 2026",
       "venue": "Golf Gams Werdenberg",
@@ -157,6 +185,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:31.738Z",
+  "scrapedAt": "2026-11-02T15:28:20.696Z",
   "url": "https://www.europeangolfrankings.com/players/38514"
 }

@@ -8,11 +8,39 @@
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U16",
   "tournamentsPlayed": 17,
-  "egrRank": 78,
-  "egrPoints": 16530.4,
-  "avgScore": 72.04,
-  "avgToCR": 69.65,
+  "egrRank": 64,
+  "egrPoints": 17845.3,
+  "avgScore": 72.31,
+  "avgToCR": 69.8,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "22",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 73,
+      "r2": 76,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 1708.58
+    },
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "9",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 74,
+      "r4": 73,
+      "egrPoints": 1019.03
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -197,7 +225,7 @@
     },
     {
       "eventId": "11647",
-      "counting": true,
+      "counting": false,
       "pos": "67",
       "event": "Portuguese International Ladies' Amateur 2026",
       "venue": "Penina Hotel & Golf Resort",
@@ -235,7 +263,8 @@
       "r2": 71,
       "r3": 72,
       "r4": null,
-      "egrPoints": 687.81
+      "egrPoints": 687.81,
+      "_mantido": true
     },
     {
       "eventId": "11369",
@@ -249,7 +278,8 @@
       "r2": 72,
       "r3": 73,
       "r4": 76,
-      "egrPoints": 723.34
+      "egrPoints": 723.34,
+      "_mantido": true
     },
     {
       "eventId": "10365",
@@ -283,6 +313,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:23.411Z",
+  "scrapedAt": "2026-11-02T15:31:32.099Z",
   "url": "https://www.europeangolfrankings.com/players/48065"
 }

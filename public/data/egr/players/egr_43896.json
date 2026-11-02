@@ -5,14 +5,28 @@
   "lastName": "KLAUDY",
   "firstName": "Amelia Li",
   "country": "Czech",
-  "club": "Hradec Kralove",
+  "club": "Linz St. Florian",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 1069,
-  "egrPoints": 1250.02,
-  "avgScore": 80.5,
-  "avgToCR": 78.11,
+  "tournamentsPlayed": 5,
+  "egrRank": 713,
+  "egrPoints": 2488.87,
+  "avgScore": 77.94,
+  "avgToCR": 75.47,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "7",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 73,
+      "r2": 69,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 1241.66
+    },
     {
       "eventId": "11767",
       "counting": true,
@@ -81,7 +95,8 @@
       "r2": 79,
       "r3": 88,
       "r4": null,
-      "egrPoints": 8.59
+      "egrPoints": 8.59,
+      "_mantido": true
     },
     {
       "eventId": "11356",
@@ -95,7 +110,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 2.81
+      "egrPoints": 2.81,
+      "_mantido": true
     },
     {
       "eventId": "10111",
@@ -114,6 +130,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:07.270Z",
+  "scrapedAt": "2026-11-02T15:30:07.579Z",
   "url": "https://www.europeangolfrankings.com/players/43896"
 }

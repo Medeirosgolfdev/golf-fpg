@@ -7,11 +7,11 @@
   "country": "Denmark",
   "club": "Esbjerg",
   "ageGroup": "U21",
-  "tournamentsPlayed": 12,
-  "egrRank": 1788,
-  "egrPoints": 3449.26,
-  "avgScore": 76.67,
-  "avgToCR": 75.61,
+  "tournamentsPlayed": 11,
+  "egrRank": 1897,
+  "egrPoints": 3248.99,
+  "avgScore": 76.83,
+  "avgToCR": 76.14,
   "events": [
     {
       "eventId": "12606",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12549",
-      "counting": false,
+      "counting": true,
       "pos": "38",
       "event": "Vejle Matchen 2026",
       "venue": "Vejle Golf Club (58)",
@@ -179,7 +179,8 @@
       "r2": 72,
       "r3": 80,
       "r4": null,
-      "egrPoints": 360.13
+      "egrPoints": 360.13,
+      "_mantido": true
     },
     {
       "eventId": "11150",
@@ -198,6 +199,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:00.238Z",
+  "scrapedAt": "2026-11-02T15:25:36.785Z",
   "url": "https://www.europeangolfrankings.com/players/31838"
 }

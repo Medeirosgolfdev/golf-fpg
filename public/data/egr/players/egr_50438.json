@@ -7,12 +7,40 @@
   "country": "France",
   "club": "RCF La Boulie",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 1840,
-  "egrPoints": 3328.26,
-  "avgScore": 77,
-  "avgToCR": 77.04,
+  "tournamentsPlayed": 12,
+  "egrRank": 1358,
+  "egrPoints": 4850.21,
+  "avgScore": 76,
+  "avgToCR": 76.04,
   "events": [
+    {
+      "eventId": "12213",
+      "counting": true,
+      "pos": "2",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 68,
+      "r2": 75,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 1607.59
+    },
+    {
+      "eventId": "12198",
+      "counting": false,
+      "pos": "69",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 80,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 99.73
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11841",
-      "counting": true,
+      "counting": false,
       "pos": "51",
       "event": "International French U14 Boys (Challenge Alexis Godillot) 2026",
       "venue": "Golf de Chantilly",
@@ -155,6 +183,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:21.482Z",
+  "scrapedAt": "2026-11-02T15:32:37.322Z",
   "url": "https://www.europeangolfrankings.com/players/50438"
 }

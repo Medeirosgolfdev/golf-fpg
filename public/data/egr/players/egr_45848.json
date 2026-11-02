@@ -7,17 +7,31 @@
   "country": "Germany",
   "club": "Altenhof",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 10380,
-  "egrPoints": 0,
-  "avgScore": 87.5,
-  "avgToCR": 88,
+  "tournamentsPlayed": 2,
+  "egrRank": 9077,
+  "egrPoints": 77.22,
+  "avgScore": 86.5,
+  "avgToCR": 87.05,
   "events": [
+    {
+      "eventId": "12946",
+      "counting": true,
+      "pos": "17",
+      "event": "DGV-GVSH Meisterschaft AK16/18 Jungen 2026",
+      "venue": "Golfanlage Hohwacht",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 86,
+      "r2": 87,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 77.22
+    },
     {
       "eventId": "12687",
       "counting": true,
       "pos": "55",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:44.406Z",
+  "scrapedAt": "2026-11-02T15:30:48.023Z",
   "url": "https://www.europeangolfrankings.com/players/45848"
 }

@@ -5,14 +5,28 @@
   "lastName": "BOYES",
   "firstName": "Alex",
   "country": "England",
-  "club": "Cleveland",
+  "club": "Wynyard",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 247,
-  "egrPoints": 16908,
-  "avgScore": 72.96,
-  "avgToCR": 71.02,
+  "tournamentsPlayed": 13,
+  "egrRank": 254,
+  "egrPoints": 16712.4,
+  "avgScore": 73.16,
+  "avgToCR": 71.1,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": false,
+      "pos": "99",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 76,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12876",
       "counting": true,
@@ -198,6 +212,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:54.648Z",
+  "scrapedAt": "2026-11-02T15:26:34.787Z",
   "url": "https://www.europeangolfrankings.com/players/33913"
 }

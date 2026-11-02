@@ -8,11 +8,25 @@
   "club": "Old Course Cannes",
   "ageGroup": "U16",
   "tournamentsPlayed": 6,
-  "egrRank": 2554,
+  "egrRank": 2571,
   "egrPoints": 2096.36,
-  "avgScore": 77.8,
-  "avgToCR": 76.77,
+  "avgScore": 78.27,
+  "avgToCR": 77.37,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "70",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 84,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12167",
       "counting": true,
@@ -95,10 +109,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:21.842Z",
+  "scrapedAt": "2026-11-02T15:29:16.669Z",
   "url": "https://www.europeangolfrankings.com/players/41501"
 }

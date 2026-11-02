@@ -6,13 +6,27 @@
   "firstName": "Stefi",
   "country": "Scotland",
   "club": null,
-  "ageGroup": "U18",
-  "tournamentsPlayed": 1,
-  "egrRank": 2662,
+  "ageGroup": "U16",
+  "tournamentsPlayed": 2,
+  "egrRank": 2700,
   "egrPoints": 79.88,
-  "avgScore": 88.5,
-  "avgToCR": 88.8,
+  "avgScore": 88.2,
+  "avgToCR": 88.92,
   "events": [
+    {
+      "eventId": "11491",
+      "counting": true,
+      "pos": "24",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 94,
+      "r2": 88,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12841",
       "counting": true,
@@ -28,7 +42,7 @@
       "egrPoints": 79.88
     }
   ],
-  "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:27:38.476Z",
+  "ageNum": 16,
+  "scrapedAt": "2026-11-02T15:37:30.077Z",
   "url": "https://www.europeangolfrankings.com/players/61080"
 }

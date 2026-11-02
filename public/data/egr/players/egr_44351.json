@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Hannover",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 1807,
-  "egrPoints": 362.07,
-  "avgScore": 82,
-  "avgToCR": 80.35,
+  "tournamentsPlayed": 10,
+  "egrRank": 1747,
+  "egrPoints": 414.08,
+  "avgScore": 80.83,
+  "avgToCR": 78.73,
   "events": [
+    {
+      "eventId": "12942",
+      "counting": true,
+      "pos": "4",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 47.25
+    },
+    {
+      "eventId": "12953",
+      "counting": true,
+      "pos": "10",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 84,
+      "r2": 81,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 40.88
+    },
     {
       "eventId": "12857",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12640",
-      "counting": true,
+      "counting": false,
       "pos": "55",
       "event": "Faldo Junior Tour (Germany) 2026",
       "venue": "Bad Saarow",
@@ -137,7 +165,8 @@
       "r2": 82,
       "r3": 88,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10113",
@@ -156,6 +185,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:14.890Z",
+  "scrapedAt": "2026-11-02T15:30:16.101Z",
   "url": "https://www.europeangolfrankings.com/players/44351"
 }

@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hubbelrath",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 474,
+  "tournamentsPlayed": 11,
+  "egrRank": 479,
   "egrPoints": 11337.8,
   "avgScore": 72.48,
   "avgToCR": 70.87,
   "events": [
+    {
+      "eventId": "12963",
+      "counting": false,
+      "pos": "1",
+      "event": "3. Spanish Junior Golf Masters 2026",
+      "venue": "UGOLF d’Hacienda del Alamo",
+      "country": "Spain",
+      "startDateRaw": "20. Oct 26",
+      "r1": 71,
+      "r2": 75,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 250.2
+    },
     {
       "eventId": "12926",
       "counting": true,
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:14.722Z",
+  "scrapedAt": "2026-11-02T15:23:43.316Z",
   "url": "https://www.europeangolfrankings.com/players/28163"
 }

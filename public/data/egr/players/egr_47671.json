@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Ybrig",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 1586,
-  "egrPoints": 4062.44,
-  "avgScore": 74.73,
-  "avgToCR": 75.07,
+  "tournamentsPlayed": 14,
+  "egrRank": 1562,
+  "egrPoints": 4159.71,
+  "avgScore": 74.78,
+  "avgToCR": 75.13,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "20",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 80,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 255.55
+    },
+    {
+      "eventId": "12484",
+      "counting": false,
+      "pos": "27",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 135.89
+    },
     {
       "eventId": "12475",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12456",
-      "counting": true,
+      "counting": false,
       "pos": "30",
       "event": "Swiss Golf Junior Tour (Zürichsee) 2026",
       "venue": "Golfpark Zürichsee",
@@ -193,7 +221,8 @@
       "r2": 79,
       "r3": 80,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10368",
@@ -227,6 +256,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:12.115Z",
+  "scrapedAt": "2026-11-02T15:31:19.686Z",
   "url": "https://www.europeangolfrankings.com/players/47671"
 }

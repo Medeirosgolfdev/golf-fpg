@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Monticello",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 7115,
+  "tournamentsPlayed": 9,
+  "egrRank": 7186,
   "egrPoints": 232.53,
-  "avgScore": 85.89,
-  "avgToCR": 85.36,
+  "avgScore": 85.78,
+  "avgToCR": 85.22,
   "events": [
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "39",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 85,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11998",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11917",
-      "counting": true,
+      "counting": false,
       "pos": "82",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:02.240Z",
+  "scrapedAt": "2026-11-02T15:33:23.895Z",
   "url": "https://www.europeangolfrankings.com/players/52463"
 }

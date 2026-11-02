@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Madonna Campiglio",
   "ageGroup": "U21",
-  "tournamentsPlayed": 3,
-  "egrRank": 1694,
-  "egrPoints": 440.74,
-  "avgScore": 78.18,
-  "avgToCR": 75.61,
+  "tournamentsPlayed": 4,
+  "egrRank": 1870,
+  "egrPoints": 340.32,
+  "avgScore": 79.91,
+  "avgToCR": 76.28,
   "events": [
+    {
+      "eventId": "12011",
+      "counting": true,
+      "pos": "9",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 87,
+      "r2": 87,
+      "r3": 91,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11988",
       "counting": true,
@@ -72,6 +86,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:24.356Z",
+  "scrapedAt": "2026-11-02T15:26:02.256Z",
   "url": "https://www.europeangolfrankings.com/players/32786"
 }

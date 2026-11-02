@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Rovedine",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 1389,
-  "egrPoints": 741.73,
-  "avgScore": 80.9,
-  "avgToCR": 79.12,
+  "tournamentsPlayed": 12,
+  "egrRank": 1273,
+  "egrPoints": 911.15,
+  "avgScore": 79.77,
+  "avgToCR": 77.61,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "5",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 80,
+      "r2": 80,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 189.39
+    },
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "15",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 84,
+      "r2": 86,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 49.6
+    },
     {
       "eventId": "11999",
       "counting": false,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "11928",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Menaggio Legacy 16 Trophy 2026",
       "venue": "Golf Club Menaggio & Cadenabbia",
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "11918",
-      "counting": true,
+      "counting": false,
       "pos": "27",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -155,6 +183,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:25:17.523Z",
+  "scrapedAt": "2026-11-02T15:34:49.264Z",
   "url": "https://www.europeangolfrankings.com/players/55360"
 }

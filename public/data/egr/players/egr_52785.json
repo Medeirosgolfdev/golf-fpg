@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Roissy",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 1124,
-  "egrPoints": 5876.71,
-  "avgScore": 74.06,
-  "avgToCR": 74.16,
+  "tournamentsPlayed": 11,
+  "egrRank": 600,
+  "egrPoints": 9895.26,
+  "avgScore": 72.29,
+  "avgToCR": 72.18,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "7",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 71,
+      "r2": 74,
+      "r3": 67,
+      "r4": 74,
+      "egrPoints": 1452.12
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 69,
+      "r2": 69,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 2901.78
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "12116",
-      "counting": true,
+      "counting": false,
       "pos": "16",
       "event": "Grand Prix Jeunes Majeur Garçons U14 2026",
       "venue": "Golf Club de Besançon",
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12059",
-      "counting": true,
+      "counting": false,
       "pos": "53",
       "event": "Grand Prix du Lys Chantilly 2026",
       "venue": "Club du Lys-Chantilly",
@@ -141,6 +169,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:07.141Z",
+  "scrapedAt": "2026-11-02T15:33:30.193Z",
   "url": "https://www.europeangolfrankings.com/players/52785"
 }

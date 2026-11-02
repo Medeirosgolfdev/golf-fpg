@@ -7,11 +7,11 @@
   "country": "Finland",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 8038,
+  "tournamentsPlayed": 13,
+  "egrRank": 8118,
   "egrPoints": 146.07,
-  "avgScore": 84.84,
-  "avgToCR": 83.02,
+  "avgScore": 84.53,
+  "avgToCR": 82.69,
   "events": [
     {
       "eventId": "12374",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12905",
-      "counting": false,
+      "counting": true,
       "pos": "54",
       "event": "FootJoy Finnish Junior Tour 8 (U18) 2026",
       "venue": "Nurmijärven Golfklubi",
@@ -56,22 +56,8 @@
       "egrPoints": 0
     },
     {
-      "eventId": "12915",
-      "counting": false,
-      "pos": "56",
-      "event": "FootJoy Finnish Junior Tour 7 U18/U21 2026",
-      "venue": "Tahkon Golfseura",
-      "country": "Finland",
-      "startDateRaw": "08. Aug 26",
-      "r1": 92,
-      "r2": 83,
-      "r3": 78,
-      "r4": null,
-      "egrPoints": 0
-    },
-    {
       "eventId": "12364",
-      "counting": false,
+      "counting": true,
       "pos": "56",
       "event": "FootJoy Finnish Junior Tour 7 (U18 & U21) 2026",
       "venue": "Aulangon Golfklubi (Eversti)",
@@ -89,6 +75,20 @@
       "pos": "41",
       "event": "FootJoy Finnish Junior Tour 7 (U18) 2026",
       "venue": "Tahko Golf (Lake & Forest)",
+      "country": "Finland",
+      "startDateRaw": "08. Aug 26",
+      "r1": 92,
+      "r2": 83,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12915",
+      "counting": false,
+      "pos": "56",
+      "event": "FootJoy Finnish Junior Tour 7 U18/U21 2026",
+      "venue": "Tahkon Golfseura",
       "country": "Finland",
       "startDateRaw": "08. Aug 26",
       "r1": 92,
@@ -207,7 +207,8 @@
       "r2": 85,
       "r3": 80,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10116",
@@ -221,7 +222,8 @@
       "r2": 88,
       "r3": 81,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10604",
@@ -240,6 +242,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:55.869Z",
+  "scrapedAt": "2026-11-02T15:29:54.137Z",
   "url": "https://www.europeangolfrankings.com/players/43406"
 }

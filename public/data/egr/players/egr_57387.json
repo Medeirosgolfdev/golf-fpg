@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Mionnay",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 1273,
-  "egrPoints": 5232.44,
-  "avgScore": 75.41,
-  "avgToCR": 74.79,
+  "tournamentsPlayed": 10,
+  "egrRank": 1039,
+  "egrPoints": 6348.79,
+  "avgScore": 75.59,
+  "avgToCR": 74.91,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "43",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 75,
+      "r2": 73,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 340.65
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 775.7
+    },
+    {
+      "eventId": "12192",
+      "counting": false,
+      "pos": "47",
+      "event": "Grand Prix du Luberon 2026",
+      "venue": "Golf Du Luberon",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": null,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12647",
       "counting": true,
@@ -128,6 +170,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:26:17.396Z",
+  "scrapedAt": "2026-11-02T15:35:57.701Z",
   "url": "https://www.europeangolfrankings.com/players/57387"
 }

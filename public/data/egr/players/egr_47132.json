@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Crans-sur-Sierre",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1604,
-  "egrPoints": 505.4,
-  "avgScore": 81.19,
-  "avgToCR": 78.8,
+  "tournamentsPlayed": 11,
+  "egrRank": 1609,
+  "egrPoints": 515.08,
+  "avgScore": 80.7,
+  "avgToCR": 78.33,
   "events": [
+    {
+      "eventId": "12485",
+      "counting": true,
+      "pos": "11",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 80,
+      "r2": 74,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 59.93
+    },
     {
       "eventId": "11766",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "12440",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Ticino Championship 2026",
       "venue": "Golf Ascona",
@@ -185,6 +199,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:02.676Z",
+  "scrapedAt": "2026-11-02T15:31:08.528Z",
   "url": "https://www.europeangolfrankings.com/players/47132"
 }

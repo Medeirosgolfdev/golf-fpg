@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": "Drumpellier",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 2547,
-  "egrPoints": 2110.61,
-  "avgScore": 78,
-  "avgToCR": 77.81,
+  "tournamentsPlayed": 17,
+  "egrRank": 2481,
+  "egrPoints": 2219.87,
+  "avgScore": 77.68,
+  "avgToCR": 77.27,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "18",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 84,
+      "r2": 75,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 176.85
+    },
+    {
+      "eventId": "11490",
+      "counting": false,
+      "pos": "56",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 81,
+      "r2": 87,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11723",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "11717",
-      "counting": true,
+      "counting": false,
       "pos": "40",
       "event": "Junior Tour Hilton Park Boys 2026",
       "venue": "Hilton Park GC",
@@ -255,6 +283,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:37.743Z",
+  "scrapedAt": "2026-11-02T15:24:07.321Z",
   "url": "https://www.europeangolfrankings.com/players/28821"
 }

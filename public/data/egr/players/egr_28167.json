@@ -7,12 +7,40 @@
   "country": "Austria",
   "club": "am Mondsee",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 918,
-  "egrPoints": 7075.1,
-  "avgScore": 74.29,
-  "avgToCR": 72.75,
+  "tournamentsPlayed": 14,
+  "egrRank": 878,
+  "egrPoints": 7470.61,
+  "avgScore": 73.79,
+  "avgToCR": 72.57,
   "events": [
+    {
+      "eventId": "12517",
+      "counting": false,
+      "pos": "6",
+      "event": "AJGT U16-U18 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 80,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 294.46
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "24",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 73,
+      "r2": 76,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 646.93
+    },
     {
       "eventId": "11446",
       "counting": true,
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "12653",
-      "counting": true,
+      "counting": false,
       "pos": "17",
       "event": "Faldo (Italy) 2026",
       "venue": "Gardagolf CC",
@@ -193,10 +221,11 @@
       "r2": 70,
       "r3": null,
       "r4": null,
-      "egrPoints": 221.51
+      "egrPoints": 221.51,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:14.991Z",
+  "scrapedAt": "2026-11-02T15:23:43.482Z",
   "url": "https://www.europeangolfrankings.com/players/28167"
 }

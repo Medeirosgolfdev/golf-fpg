@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Pordenone",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 2579,
-  "egrPoints": 2062.16,
-  "avgScore": 78.45,
-  "avgToCR": 77.48,
+  "tournamentsPlayed": 11,
+  "egrRank": 2461,
+  "egrPoints": 2234.88,
+  "avgScore": 78.33,
+  "avgToCR": 77.17,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "83",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 85,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 198.38
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11951",
-      "counting": true,
+      "counting": false,
       "pos": "41",
       "event": "28th Trofeo Boys Challenge Lucio Visona 2026",
       "venue": "Golf Club Folgaria",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:10.215Z",
+  "scrapedAt": "2026-11-02T15:32:25.084Z",
   "url": "https://www.europeangolfrankings.com/players/49940"
 }

@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Chemnitz",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 3623,
-  "egrPoints": 1160.56,
-  "avgScore": 78.12,
-  "avgToCR": 77.05,
+  "tournamentsPlayed": 8,
+  "egrRank": 2947,
+  "egrPoints": 1709.35,
+  "avgScore": 76.72,
+  "avgToCR": 75.84,
   "events": [
+    {
+      "eventId": "12965",
+      "counting": true,
+      "pos": "1",
+      "event": "DGV-GVST Meisterschaft AK16/18 Jungen 2026",
+      "venue": "Thüringer Golf Club",
+      "country": "Germany",
+      "startDateRaw": "22. Aug 26",
+      "r1": 72,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 366.95
+    },
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "16",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 70,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 330.69
+    },
     {
       "eventId": "12507",
       "counting": true,
@@ -114,6 +142,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:38.902Z",
+  "scrapedAt": "2026-11-02T15:28:28.435Z",
   "url": "https://www.europeangolfrankings.com/players/38669"
 }

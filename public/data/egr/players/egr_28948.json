@@ -1,18 +1,32 @@
 {
   "id": "28948",
-  "egrId": "MDEU28948",
+  "egrId": "MXXX28948",
   "name": "Ferdinand Glaessgen",
   "lastName": "GLAESSGEN",
   "firstName": "Ferdinand",
-  "country": "Germany",
+  "country": "Germanv",
   "club": "Frankfurt",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 2007,
+  "tournamentsPlayed": 9,
+  "egrRank": 2028,
   "egrPoints": 2963.32,
-  "avgScore": 74.68,
-  "avgToCR": 74.3,
+  "avgScore": 75.84,
+  "avgToCR": 75.42,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "57",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 83,
+      "r2": 80,
+      "r3": 90,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12837",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:42.602Z",
+  "scrapedAt": "2026-11-02T15:24:13.186Z",
   "url": "https://www.europeangolfrankings.com/players/28948"
 }

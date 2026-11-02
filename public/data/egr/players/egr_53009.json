@@ -8,11 +8,25 @@
   "club": "Altenhof",
   "ageGroup": "U14",
   "tournamentsPlayed": 7,
-  "egrRank": 9649,
-  "egrPoints": 39.4,
-  "avgScore": 90.39,
-  "avgToCR": 90.52,
+  "egrRank": 9218,
+  "egrPoints": 68.09,
+  "avgScore": 89.06,
+  "avgToCR": 89.56,
   "events": [
+    {
+      "eventId": "12947",
+      "counting": true,
+      "pos": "8",
+      "event": "DGV-GVSH Meisterschaft AK14 Jungen 2026",
+      "venue": "Golfanlage Hohwacht",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 92,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 37.51
+    },
     {
       "eventId": "12858",
       "counting": true,
@@ -45,7 +59,7 @@
       "eventId": "12682",
       "counting": true,
       "pos": "22",
-      "event": "DGV-Hamburg Meisterschaft AK14 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK14 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -53,7 +67,7 @@
       "r2": 89,
       "r3": null,
       "r4": null,
-      "egrPoints": 8.81
+      "egrPoints": 0
     },
     {
       "eventId": "11651",
@@ -109,10 +123,11 @@
       "r2": 95,
       "r3": 96,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:11.448Z",
+  "scrapedAt": "2026-11-02T15:33:35.053Z",
   "url": "https://www.europeangolfrankings.com/players/53009"
 }

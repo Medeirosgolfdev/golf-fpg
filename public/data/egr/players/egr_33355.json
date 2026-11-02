@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 492,
+  "tournamentsPlayed": 16,
+  "egrRank": 494,
   "egrPoints": 11149.5,
   "avgScore": 73.35,
   "avgToCR": 71.97,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": false,
+      "pos": "6",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 79,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 314.76
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -255,6 +269,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:17:40.150Z",
+  "scrapedAt": "2026-11-02T15:26:19.236Z",
   "url": "https://www.europeangolfrankings.com/players/33355"
 }

@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Nantes Vigneux",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 918,
-  "egrPoints": 1670.56,
-  "avgScore": 77.72,
-  "avgToCR": 75.91,
+  "tournamentsPlayed": 9,
+  "egrRank": 611,
+  "egrPoints": 3004.86,
+  "avgScore": 76.54,
+  "avgToCR": 74.46,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "21",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 80,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 104.94
+    },
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "7",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 72,
+      "r4": 73,
+      "egrPoints": 960.26
+    },
+    {
+      "eventId": "12201",
+      "counting": true,
+      "pos": "2",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 269.1
+    },
     {
       "eventId": "12195",
       "counting": true,
@@ -109,7 +151,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11372",
@@ -128,6 +171,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:40.435Z",
+  "scrapedAt": "2026-11-02T15:31:51.616Z",
   "url": "https://www.europeangolfrankings.com/players/48821"
 }

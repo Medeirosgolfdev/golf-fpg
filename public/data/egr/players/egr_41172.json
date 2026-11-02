@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Sotogrande",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 263,
+  "tournamentsPlayed": 11,
+  "egrRank": 265,
   "egrPoints": 16397.1,
   "avgScore": 72.61,
   "avgToCR": 70.9,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": false,
+      "pos": "7",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 497.29
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:18.158Z",
+  "scrapedAt": "2026-11-02T15:29:12.076Z",
   "url": "https://www.europeangolfrankings.com/players/41172"
 }

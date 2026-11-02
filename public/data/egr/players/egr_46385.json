@@ -8,11 +8,25 @@
   "club": "La Hacienda",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 1690,
-  "egrPoints": 3727.61,
-  "avgScore": 75.04,
-  "avgToCR": 73.53,
+  "egrRank": 1671,
+  "egrPoints": 3809.22,
+  "avgScore": 75.33,
+  "avgToCR": 73.97,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "21",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 78,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 232.6
+    },
     {
       "eventId": "12934",
       "counting": true,
@@ -221,7 +235,8 @@
       "r2": 74,
       "r3": 72,
       "r4": null,
-      "egrPoints": 150.99
+      "egrPoints": 150.99,
+      "_mantido": true
     },
     {
       "eventId": "11341",
@@ -240,6 +255,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:55.372Z",
+  "scrapedAt": "2026-11-02T15:31:00.182Z",
   "url": "https://www.europeangolfrankings.com/players/46385"
 }

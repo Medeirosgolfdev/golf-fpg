@@ -7,12 +7,40 @@
   "country": "France",
   "club": "La Porcelaine",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 754,
-  "egrPoints": 8509.16,
-  "avgScore": 73.84,
-  "avgToCR": 73.31,
+  "tournamentsPlayed": 15,
+  "egrRank": 738,
+  "egrPoints": 8713.48,
+  "avgScore": 73.72,
+  "avgToCR": 73.14,
   "events": [
+    {
+      "eventId": "12213",
+      "counting": false,
+      "pos": "28",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 82,
+      "r2": 77,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 282.59
+    },
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "24",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 77,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 693.75
+    },
     {
       "eventId": "12189",
       "counting": false,
@@ -169,7 +197,7 @@
     },
     {
       "eventId": "12048",
-      "counting": true,
+      "counting": false,
       "pos": "68",
       "event": "Grand Prix Elite de Landiforne 2026",
       "venue": "Golf de Moliets/Seignosse",
@@ -197,6 +225,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:44.432Z",
+  "scrapedAt": "2026-11-02T15:29:41.011Z",
   "url": "https://www.europeangolfrankings.com/players/42601"
 }

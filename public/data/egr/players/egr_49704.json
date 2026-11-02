@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 17,
-  "egrRank": 1433,
-  "egrPoints": 4536.58,
-  "avgScore": 76,
-  "avgToCR": 74.49,
+  "tournamentsPlayed": 15,
+  "egrRank": 1342,
+  "egrPoints": 4928.28,
+  "avgScore": 75.48,
+  "avgToCR": 73.79,
   "events": [
+    {
+      "eventId": "12610",
+      "counting": true,
+      "pos": "12",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 74,
+      "r2": 77,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 630.77
+    },
     {
       "eventId": "12606",
       "counting": true,
@@ -169,7 +183,7 @@
     },
     {
       "eventId": "12555",
-      "counting": true,
+      "counting": false,
       "pos": "37",
       "event": "Dormy Elite Tour I Drenge U22 2026",
       "venue": "Kokkedal Golfklub",
@@ -221,7 +235,8 @@
       "r2": 74,
       "r3": 83,
       "r4": null,
-      "egrPoints": 134
+      "egrPoints": 134,
+      "_mantido": true
     },
     {
       "eventId": "10118",
@@ -235,7 +250,8 @@
       "r2": 81,
       "r3": 80,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10116",
@@ -249,10 +265,11 @@
       "r2": 89,
       "r3": 77,
       "r4": null,
-      "egrPoints": 32.42
+      "egrPoints": 32.42,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:23:03.848Z",
+  "scrapedAt": "2026-11-02T15:32:18.063Z",
   "url": "https://www.europeangolfrankings.com/players/49704"
 }

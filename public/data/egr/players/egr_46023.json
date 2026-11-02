@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Lyon",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 125,
-  "egrPoints": 12134.5,
-  "avgScore": 73.67,
-  "avgToCR": 70.68,
+  "tournamentsPlayed": 15,
+  "egrRank": 84,
+  "egrPoints": 15316.7,
+  "avgScore": 73.52,
+  "avgToCR": 70.5,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": false,
+      "pos": "61",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 83,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 552.54
+    },
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "1",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 76,
+      "r2": 73,
+      "r3": 66,
+      "r4": 69,
+      "egrPoints": 3688.65
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12184",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "Grand Prix de Saint Germain 2026",
       "venue": "Golf de St Germain",
@@ -227,6 +255,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:49.905Z",
+  "scrapedAt": "2026-11-02T15:30:54.106Z",
   "url": "https://www.europeangolfrankings.com/players/46023"
 }

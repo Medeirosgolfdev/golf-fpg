@@ -8,11 +8,39 @@
   "club": "Montecchia",
   "ageGroup": "Adult",
   "tournamentsPlayed": 12,
-  "egrRank": 930,
-  "egrPoints": 6974.7,
-  "avgScore": 73.48,
-  "avgToCR": 71.6,
+  "egrRank": 923,
+  "egrPoints": 7035.44,
+  "avgScore": 74.16,
+  "avgToCR": 72.19,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "21",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 78,
+      "r2": 73,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 488.5
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "28",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 77,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 865.43
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "11965",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Gran Premio di Padova 2026",
       "venue": "Golf Club Padova",
@@ -165,7 +193,8 @@
       "r2": 74,
       "r3": 83,
       "r4": null,
-      "egrPoints": 151.7
+      "egrPoints": 151.7,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -179,7 +208,8 @@
       "r2": 77,
       "r3": 73,
       "r4": null,
-      "egrPoints": 915.79
+      "egrPoints": 915.79,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -198,6 +228,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:15:30.404Z",
+  "scrapedAt": "2026-11-02T15:23:59.999Z",
   "url": "https://www.europeangolfrankings.com/players/28554"
 }

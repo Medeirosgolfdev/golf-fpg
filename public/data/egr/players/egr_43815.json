@@ -5,14 +5,28 @@
   "lastName": "PEREZ-TASSO RODRIGUEZ",
   "firstName": "Javier",
   "country": "Spain",
-  "club": "El Prat",
+  "club": "La Canada",
   "ageGroup": "U16",
-  "tournamentsPlayed": 18,
-  "egrRank": 241,
-  "egrPoints": 17168,
-  "avgScore": 71.81,
-  "avgToCR": 70.54,
+  "tournamentsPlayed": 19,
+  "egrRank": 239,
+  "egrPoints": 17411.5,
+  "avgScore": 71.52,
+  "avgToCR": 70.57,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "2",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 67,
+      "r2": 67,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 946.67
+    },
     {
       "eventId": "12934",
       "counting": false,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "11753",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Belgian National Championship (U16/18) 2026",
       "venue": "The National Golf Brussels",
@@ -267,6 +281,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:05.408Z",
+  "scrapedAt": "2026-11-02T15:30:05.541Z",
   "url": "https://www.europeangolfrankings.com/players/43815"
 }

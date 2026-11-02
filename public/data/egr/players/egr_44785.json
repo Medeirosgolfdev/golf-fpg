@@ -8,11 +8,25 @@
   "club": "Hannover",
   "ageGroup": "U16",
   "tournamentsPlayed": 11,
-  "egrRank": 1215,
-  "egrPoints": 5458.08,
-  "avgScore": 75,
-  "avgToCR": 74.1,
+  "egrRank": 1240,
+  "egrPoints": 5389.39,
+  "avgScore": 74.04,
+  "avgToCR": 73.47,
   "events": [
+    {
+      "eventId": "12943",
+      "counting": true,
+      "pos": "6",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 139.7
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12824",
-      "counting": true,
+      "counting": false,
       "pos": "12",
       "event": "DGV-GVNB 1. AK16/18 Jungen 2026",
       "venue": "GC Harz",
@@ -165,7 +179,8 @@
       "r2": 75,
       "r3": 74,
       "r4": null,
-      "egrPoints": 96.94
+      "egrPoints": 96.94,
+      "_mantido": true
     },
     {
       "eventId": "10112",
@@ -184,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:23.253Z",
+  "scrapedAt": "2026-11-02T15:30:24.987Z",
   "url": "https://www.europeangolfrankings.com/players/44785"
 }

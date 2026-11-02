@@ -8,11 +8,25 @@
   "club": "Monticello",
   "ageGroup": "Adult",
   "tournamentsPlayed": 6,
-  "egrRank": 778,
-  "egrPoints": 2196.63,
-  "avgScore": 76.53,
-  "avgToCR": 72.67,
+  "egrRank": 739,
+  "egrPoints": 2366.12,
+  "avgScore": 76.07,
+  "avgToCR": 72.21,
   "events": [
+    {
+      "eventId": "12015",
+      "counting": true,
+      "pos": "14",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 235.99
+    },
     {
       "eventId": "11966",
       "counting": true,
@@ -95,7 +109,8 @@
       "r2": 82,
       "r3": 76,
       "r4": null,
-      "egrPoints": 66.5
+      "egrPoints": 66.5,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -114,6 +129,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:11:32.316Z",
+  "scrapedAt": "2026-11-02T15:19:35.745Z",
   "url": "https://www.europeangolfrankings.com/players/15968"
 }

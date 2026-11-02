@@ -7,12 +7,26 @@
   "country": "Czech",
   "club": "Hostivar",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 3536,
+  "tournamentsPlayed": 4,
+  "egrRank": 3561,
   "egrPoints": 1210.37,
-  "avgScore": 79,
-  "avgToCR": 76.93,
+  "avgScore": 78.18,
+  "avgToCR": 76.58,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "32",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 82,
+      "r2": 75,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12818",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:41.638Z",
+  "scrapedAt": "2026-11-02T15:35:16.493Z",
   "url": "https://www.europeangolfrankings.com/players/56185"
 }

@@ -7,12 +7,68 @@
   "country": "Italy",
   "club": "Pinetina",
   "ageGroup": "U18",
-  "tournamentsPlayed": 22,
-  "egrRank": 885,
-  "egrPoints": 7448.41,
-  "avgScore": 73.46,
-  "avgToCR": 72.01,
+  "tournamentsPlayed": 24,
+  "egrRank": 571,
+  "egrPoints": 10226.5,
+  "avgScore": 73.12,
+  "avgToCR": 71.34,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "1",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 70,
+      "r2": 70,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 2944.83
+    },
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "49",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 638.08
+    },
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "59",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 174.87
+    },
+    {
+      "eventId": "12012",
+      "counting": false,
+      "pos": "12",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 77,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 300.78
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -113,7 +169,7 @@
     },
     {
       "eventId": "12793",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Trofeo Boys Challenge Lucio Visona 2026",
       "venue": "Golf Club Folgaria",
@@ -183,7 +239,7 @@
     },
     {
       "eventId": "11917",
-      "counting": true,
+      "counting": false,
       "pos": "18",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -305,7 +361,8 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 209.32
+      "egrPoints": 209.32,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -319,7 +376,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -338,6 +396,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:27.340Z",
+  "scrapedAt": "2026-11-02T15:26:05.538Z",
   "url": "https://www.europeangolfrankings.com/players/32843"
 }

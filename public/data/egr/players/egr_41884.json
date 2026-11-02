@@ -8,11 +8,25 @@
   "club": "Rungsted",
   "ageGroup": "Adult",
   "tournamentsPlayed": 13,
-  "egrRank": 1165,
+  "egrRank": 1170,
   "egrPoints": 5646.7,
   "avgScore": 75.14,
   "avgToCR": 74.53,
   "events": [
+    {
+      "eventId": "12610",
+      "counting": false,
+      "pos": "36",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 77,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 155.53
+    },
     {
       "eventId": "12595",
       "counting": true,
@@ -193,7 +207,8 @@
       "r2": 76,
       "r3": 76,
       "r4": null,
-      "egrPoints": 360.13
+      "egrPoints": 360.13,
+      "_mantido": true
     },
     {
       "eventId": "11150",
@@ -212,6 +227,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:20:25.307Z",
+  "scrapedAt": "2026-11-02T15:29:20.620Z",
   "url": "https://www.europeangolfrankings.com/players/41884"
 }

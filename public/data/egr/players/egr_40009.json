@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Oliva Nova",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 2100,
+  "tournamentsPlayed": 8,
+  "egrRank": 2116,
   "egrPoints": 2775.56,
-  "avgScore": 78.12,
-  "avgToCR": 77.82,
+  "avgScore": 78.05,
+  "avgToCR": 77.63,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "36",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 88,
+      "r2": 76,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12926",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:04.570Z",
+  "scrapedAt": "2026-11-02T15:28:57.030Z",
   "url": "https://www.europeangolfrankings.com/players/40009"
 }

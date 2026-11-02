@@ -7,12 +7,40 @@
   "country": "Austria",
   "club": "Lengenfeld",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 3748,
-  "egrPoints": 1094.04,
-  "avgScore": 79.05,
-  "avgToCR": 78.14,
+  "tournamentsPlayed": 11,
+  "egrRank": 2703,
+  "egrPoints": 1933.45,
+  "avgScore": 76.9,
+  "avgToCR": 76.18,
   "events": [
+    {
+      "eventId": "12517",
+      "counting": true,
+      "pos": "15",
+      "event": "AJGT U16-U18 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 81,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 67.27
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "12",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 79,
+      "r2": 70,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 772.14
+    },
     {
       "eventId": "11442",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11496",
-      "counting": true,
+      "counting": false,
       "pos": "55",
       "event": "GJG Season Kick Off 2026",
       "venue": "Villa Padierna (Flamingos)",
@@ -151,10 +179,11 @@
       "r2": 84,
       "r3": 83,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:48.947Z",
+  "scrapedAt": "2026-11-02T15:29:46.185Z",
   "url": "https://www.europeangolfrankings.com/players/42836"
 }

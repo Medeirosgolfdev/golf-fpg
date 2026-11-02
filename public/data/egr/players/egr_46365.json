@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "T Golf",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 810,
-  "egrPoints": 8011.6,
-  "avgScore": 74.5,
-  "avgToCR": 73.16,
+  "tournamentsPlayed": 10,
+  "egrRank": 667,
+  "egrPoints": 9310.98,
+  "avgScore": 73.74,
+  "avgToCR": 72.39,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "2",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 70,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1299.38
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12251",
-      "counting": true,
+      "counting": false,
       "pos": "98",
       "event": "Spanish National U18 Championship (Closed) 2026",
       "venue": "Golf Los Lagos",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:54.796Z",
+  "scrapedAt": "2026-11-02T15:30:59.491Z",
   "url": "https://www.europeangolfrankings.com/players/46365"
 }

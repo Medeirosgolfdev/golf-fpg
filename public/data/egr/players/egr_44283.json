@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Madonna Campiglio",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1646,
-  "egrPoints": 3854.3,
-  "avgScore": 77.54,
-  "avgToCR": 76.96,
+  "tournamentsPlayed": 11,
+  "egrRank": 1542,
+  "egrPoints": 4225.38,
+  "avgScore": 77.63,
+  "avgToCR": 76.62,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "84",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 78,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 185.06
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "33",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 77,
+      "r2": 79,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 338.02
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11893",
-      "counting": true,
+      "counting": false,
       "pos": "41",
       "event": "Grand Premio Della Maremma 2026",
       "venue": "Golf Club Punta Ala",
@@ -151,7 +179,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 25.76
+      "egrPoints": 25.76,
+      "_mantido": true
     },
     {
       "eventId": "10319",
@@ -170,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:12.768Z",
+  "scrapedAt": "2026-11-02T15:30:13.863Z",
   "url": "https://www.europeangolfrankings.com/players/44283"
 }

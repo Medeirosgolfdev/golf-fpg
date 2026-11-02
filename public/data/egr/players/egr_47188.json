@@ -5,14 +5,42 @@
   "lastName": "THOMAS",
   "firstName": "Arthur",
   "country": "France",
-  "club": "Baden-Baden",
+  "club": "Freslonniere",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 4321,
-  "egrPoints": 839.01,
-  "avgScore": 76.44,
-  "avgToCR": 75.54,
+  "tournamentsPlayed": 5,
+  "egrRank": 3102,
+  "egrPoints": 1547.88,
+  "avgScore": 76.42,
+  "avgToCR": 75.62,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "68",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 263.55
+    },
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "9",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 77,
+      "r2": 72,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 445.31
+    },
     {
       "eventId": "12133",
       "counting": true,
@@ -67,7 +95,8 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11373",
@@ -86,6 +115,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:03.821Z",
+  "scrapedAt": "2026-11-02T15:31:09.959Z",
   "url": "https://www.europeangolfrankings.com/players/47188"
 }

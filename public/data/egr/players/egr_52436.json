@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Thorpe Hall",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 2078,
-  "egrPoints": 2809.71,
-  "avgScore": 77.2,
-  "avgToCR": 76.49,
+  "tournamentsPlayed": 8,
+  "egrRank": 2039,
+  "egrPoints": 2921.84,
+  "avgScore": 76.94,
+  "avgToCR": 76.52,
   "events": [
+    {
+      "eventId": "12954",
+      "counting": true,
+      "pos": "5",
+      "event": "Faldo Series (Madeira) 2026",
+      "venue": "Clube de Golf Santo da Serra",
+      "country": "Portugal",
+      "startDateRaw": "16. Oct 26",
+      "r1": 72,
+      "r2": 76,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 112.13
+    },
     {
       "eventId": "11812",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:01.497Z",
+  "scrapedAt": "2026-11-02T15:33:23.022Z",
   "url": "https://www.europeangolfrankings.com/players/52436"
 }

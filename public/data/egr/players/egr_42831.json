@@ -7,12 +7,40 @@
   "country": "Austria",
   "club": "Colony Gutenhof",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 844,
-  "egrPoints": 7715.07,
-  "avgScore": 73.83,
-  "avgToCR": 73.08,
+  "tournamentsPlayed": 13,
+  "egrRank": 842,
+  "egrPoints": 7774.3,
+  "avgScore": 74.04,
+  "avgToCR": 73.03,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "42",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 74,
+      "r2": 76,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 407.31
+    },
+    {
+      "eventId": "12650",
+      "counting": false,
+      "pos": "111",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 72,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12499",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "3. AJGT U14-U18 presented by Bernd Wiesberger 2026",
       "venue": "Golfanlage Millstätter See",
@@ -179,10 +207,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 162.29
+      "egrPoints": 162.29,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:48.714Z",
+  "scrapedAt": "2026-11-02T15:29:45.903Z",
   "url": "https://www.europeangolfrankings.com/players/42831"
 }

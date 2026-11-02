@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Murcar Links",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 351,
-  "egrPoints": 5503.27,
-  "avgScore": 77.09,
-  "avgToCR": 74.89,
+  "tournamentsPlayed": 11,
+  "egrRank": 329,
+  "egrPoints": 5844.09,
+  "avgScore": 76.39,
+  "avgToCR": 74.31,
   "events": [
+    {
+      "eventId": "11491",
+      "counting": true,
+      "pos": "2",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 430.95
+    },
     {
       "eventId": "11781",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11704",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Junior Tour Royal Dornoch Girls 2026",
       "venue": "Royal Dornoch GC",
@@ -185,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:18:06.254Z",
+  "scrapedAt": "2026-11-02T15:26:47.465Z",
   "url": "https://www.europeangolfrankings.com/players/34521"
 }

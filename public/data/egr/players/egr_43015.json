@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": "Vasatorps",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 275,
-  "egrPoints": 6770.97,
-  "avgScore": 75.65,
-  "avgToCR": 71.44,
+  "tournamentsPlayed": 13,
+  "egrRank": 216,
+  "egrPoints": 8482.02,
+  "avgScore": 75.45,
+  "avgToCR": 71.22,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "12",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 72,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1962.05
+    },
     {
       "eventId": "12397",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "12395",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Swedish Junior Tour Elite #6 2026",
       "venue": "Golfstar International (57)",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:51.800Z",
+  "scrapedAt": "2026-11-02T15:29:49.645Z",
   "url": "https://www.europeangolfrankings.com/players/43015"
 }

@@ -8,11 +8,39 @@
   "club": "Trois Vallons",
   "ageGroup": "U18",
   "tournamentsPlayed": 5,
-  "egrRank": 2908,
-  "egrPoints": 1724,
-  "avgScore": 76.77,
-  "avgToCR": 76.02,
+  "egrRank": 2591,
+  "egrPoints": 2059.34,
+  "avgScore": 77.15,
+  "avgToCR": 76.34,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "26",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 67,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 609.02
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "18",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 74,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 675.28
+    },
     {
       "eventId": "12077",
       "counting": true,
@@ -67,7 +95,8 @@
       "r2": 72,
       "r3": 76,
       "r4": null,
-      "egrPoints": 594.93
+      "egrPoints": 594.93,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -81,7 +110,8 @@
       "r2": 72,
       "r3": 73,
       "r4": null,
-      "egrPoints": 354.03
+      "egrPoints": 354.03,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -100,6 +130,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:34.712Z",
+  "scrapedAt": "2026-11-02T15:30:38.090Z",
   "url": "https://www.europeangolfrankings.com/players/45182"
 }

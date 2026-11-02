@@ -7,12 +7,40 @@
   "country": "France",
   "club": "L'Isle Adam",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 4943,
-  "egrPoints": 623.26,
-  "avgScore": 78.78,
-  "avgToCR": 78.74,
+  "tournamentsPlayed": 7,
+  "egrRank": 3417,
+  "egrPoints": 1297.23,
+  "avgScore": 78.54,
+  "avgToCR": 78.36,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "48",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 79,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 530.82
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "65",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 80,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 143.16
+    },
     {
       "eventId": "12159",
       "counting": true,
@@ -85,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:48.762Z",
+  "scrapedAt": "2026-11-02T15:34:16.385Z",
   "url": "https://www.europeangolfrankings.com/players/54520"
 }

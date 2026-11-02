@@ -8,11 +8,25 @@
   "club": null,
   "ageGroup": "U18",
   "tournamentsPlayed": 12,
-  "egrRank": 686,
+  "egrRank": 694,
   "egrPoints": 2576.96,
   "avgScore": 79.91,
   "avgToCR": 77.86,
   "events": [
+    {
+      "eventId": "12902",
+      "counting": false,
+      "pos": "15",
+      "event": "Loretto Junior Golf Tour Autumn/Winter 2026",
+      "venue": "Longniddry Golf Club",
+      "country": "Scotland",
+      "startDateRaw": "28. Sep 26",
+      "r1": 82,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 13.9
+    },
     {
       "eventId": "12909",
       "counting": true,
@@ -179,10 +193,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:40.852Z",
+  "scrapedAt": "2026-11-02T15:28:30.846Z",
   "url": "https://www.europeangolfrankings.com/players/38726"
 }

@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Dortmund",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 1386,
-  "egrPoints": 745.43,
-  "avgScore": 80.74,
-  "avgToCR": 79.16,
+  "tournamentsPlayed": 11,
+  "egrRank": 1379,
+  "egrPoints": 766.17,
+  "avgScore": 80.63,
+  "avgToCR": 79.07,
   "events": [
     {
       "eventId": "12913",
@@ -40,6 +40,20 @@
       "r3": 79,
       "r4": null,
       "egrPoints": 56.75
+    },
+    {
+      "eventId": "12953",
+      "counting": true,
+      "pos": "9",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 84,
+      "r2": 82,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 48.88
     },
     {
       "eventId": "12857",
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12852",
-      "counting": true,
+      "counting": false,
       "pos": "25",
       "event": "Hanseatic International Youth Open Girls 2026",
       "venue": "Gut Kaden (A+B)",
@@ -170,6 +184,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:21:51.914Z",
+  "scrapedAt": "2026-11-02T15:30:56.225Z",
   "url": "https://www.europeangolfrankings.com/players/46124"
 }

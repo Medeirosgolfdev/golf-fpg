@@ -8,11 +8,25 @@
   "club": "Bern",
   "ageGroup": "U21",
   "tournamentsPlayed": 10,
-  "egrRank": 252,
-  "egrPoints": 7351.12,
-  "avgScore": 74.92,
-  "avgToCR": 72.05,
+  "egrRank": 282,
+  "egrPoints": 6620.22,
+  "avgScore": 74.08,
+  "avgToCR": 71.79,
   "events": [
+    {
+      "eventId": "12214",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 70,
+      "r2": 70,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 626.19
+    },
     {
       "eventId": "11767",
       "counting": true,
@@ -151,7 +165,8 @@
       "r2": 77,
       "r3": 79,
       "r4": null,
-      "egrPoints": 1357.09
+      "egrPoints": 1357.09,
+      "_mantido": true
     },
     {
       "eventId": "10365",
@@ -170,6 +185,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:49.771Z",
+  "scrapedAt": "2026-11-02T15:26:29.378Z",
   "url": "https://www.europeangolfrankings.com/players/33805"
 }

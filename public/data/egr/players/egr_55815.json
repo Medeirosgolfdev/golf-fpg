@@ -7,12 +7,26 @@
   "country": "Ukraine",
   "club": "Kozyn",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 7950,
+  "tournamentsPlayed": 4,
+  "egrRank": 8036,
   "egrPoints": 152.82,
-  "avgScore": 89,
-  "avgToCR": 87.47,
+  "avgScore": 86.82,
+  "avgToCR": 85.52,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "46",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 85,
+      "r2": 82,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12934",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:25:30.554Z",
+  "scrapedAt": "2026-11-02T15:35:03.848Z",
   "url": "https://www.europeangolfrankings.com/players/55815"
 }

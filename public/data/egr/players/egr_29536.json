@@ -9,10 +9,24 @@
   "ageGroup": "U21",
   "tournamentsPlayed": 11,
   "egrRank": 821,
-  "egrPoints": 7855.85,
-  "avgScore": 73.3,
-  "avgToCR": 72.13,
+  "egrPoints": 7930.84,
+  "avgScore": 73.26,
+  "avgToCR": 72.02,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "7",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 70,
+      "r2": 75,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 319.66
+    },
     {
       "eventId": "11685",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11679",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Irish Elite WAGR Tour #4 2026",
       "venue": "Royal Belfast Golf Club",
@@ -165,10 +179,11 @@
       "r2": 83,
       "r3": 73,
       "r4": null,
-      "egrPoints": 173.62
+      "egrPoints": 173.62,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:04.323Z",
+  "scrapedAt": "2026-11-02T15:24:36.097Z",
   "url": "https://www.europeangolfrankings.com/players/29536"
 }

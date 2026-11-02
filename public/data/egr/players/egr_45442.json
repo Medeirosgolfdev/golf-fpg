@@ -8,11 +8,25 @@
   "club": "Bordeaux Lac",
   "ageGroup": "U16",
   "tournamentsPlayed": 3,
-  "egrRank": 2514,
-  "egrPoints": 105.71,
-  "avgScore": 83.29,
-  "avgToCR": 80.31,
+  "egrRank": 1872,
+  "egrPoints": 338.83,
+  "avgScore": 82.43,
+  "avgToCR": 79.66,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "62",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 79,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 233.12
+    },
     {
       "eventId": "12176",
       "counting": true,
@@ -53,10 +67,11 @@
       "r2": 86,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:37.535Z",
+  "scrapedAt": "2026-11-02T15:30:40.897Z",
   "url": "https://www.europeangolfrankings.com/players/45442"
 }

@@ -7,15 +7,15 @@
   "country": "Scotland",
   "club": "Glenbervie",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 13,
-  "egrRank": 51,
-  "egrPoints": 31894.4,
-  "avgScore": 71.88,
-  "avgToCR": 69.32,
+  "tournamentsPlayed": 11,
+  "egrRank": 52,
+  "egrPoints": 31830.5,
+  "avgScore": 72.4,
+  "avgToCR": 69.6,
   "events": [
     {
       "eventId": "12632",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "European Amateur Team Championship, Division 2 2026",
       "venue": "Costa Navarino (Dunes)",
@@ -179,7 +179,8 @@
       "r2": 77,
       "r3": 70,
       "r4": null,
-      "egrPoints": 891.7
+      "egrPoints": 891.7,
+      "_mantido": true
     },
     {
       "eventId": "11774",
@@ -193,7 +194,8 @@
       "r2": 70,
       "r3": 71,
       "r4": null,
-      "egrPoints": 937.65
+      "egrPoints": 937.65,
+      "_mantido": true
     },
     {
       "eventId": "11358",
@@ -212,6 +214,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:35.828Z",
+  "scrapedAt": "2026-11-02T15:20:45.751Z",
   "url": "https://www.europeangolfrankings.com/players/20637"
 }

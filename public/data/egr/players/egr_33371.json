@@ -7,12 +7,40 @@
   "country": "Wales",
   "club": "Burnham & Berrow",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 291,
-  "egrPoints": 6452.87,
-  "avgScore": 78.6,
-  "avgToCR": 76.64,
+  "tournamentsPlayed": 12,
+  "egrRank": 289,
+  "egrPoints": 6549.61,
+  "avgScore": 78.4,
+  "avgToCR": 76.47,
   "events": [
+    {
+      "eventId": "12216",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix de Valescure 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 78,
+      "r2": 73,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 177
+    },
+    {
+      "eventId": "12204",
+      "counting": false,
+      "pos": "11",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 81,
+      "r2": 82,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 55.66
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12089",
-      "counting": true,
+      "counting": false,
       "pos": "18",
       "event": "Grand Prix d'Aix-Marseille Coupe Yves Caillol 2026",
       "venue": "Golf Club d' Aix Marseille",
@@ -165,7 +193,8 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11115",
@@ -184,6 +213,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:40.887Z",
+  "scrapedAt": "2026-11-02T15:26:20.144Z",
   "url": "https://www.europeangolfrankings.com/players/33371"
 }

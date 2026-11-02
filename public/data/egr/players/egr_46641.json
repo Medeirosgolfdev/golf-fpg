@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Brigode",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 2432,
-  "egrPoints": 2238.75,
-  "avgScore": 77,
-  "avgToCR": 76.49,
+  "tournamentsPlayed": 6,
+  "egrRank": 2272,
+  "egrPoints": 2483.1,
+  "avgScore": 76.43,
+  "avgToCR": 76.03,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "48",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 78,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 530.82
+    },
     {
       "eventId": "12097",
       "counting": true,
@@ -95,7 +109,8 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11366",
@@ -109,10 +124,11 @@
       "r2": 74,
       "r3": 83,
       "r4": null,
-      "egrPoints": 286.46
+      "egrPoints": 286.46,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:00.884Z",
+  "scrapedAt": "2026-11-02T15:31:06.427Z",
   "url": "https://www.europeangolfrankings.com/players/46641"
 }

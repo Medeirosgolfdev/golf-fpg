@@ -8,11 +8,39 @@
   "club": "Saint Germain",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 255,
-  "egrPoints": 16604.4,
-  "avgScore": 72,
-  "avgToCR": 70.97,
+  "egrRank": 227,
+  "egrPoints": 17804.1,
+  "avgScore": 73,
+  "avgToCR": 71.45,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 75,
+      "r2": 73,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 3161.5
+    },
+    {
+      "eventId": "12205",
+      "counting": false,
+      "pos": "33",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 74,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 592
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12789",
-      "counting": false,
+      "counting": true,
       "pos": "87",
       "event": "German International Amateur Championship Boys 2026",
       "venue": "GC Bad Saarow (Faldo)",
@@ -193,7 +221,8 @@
       "r2": 68,
       "r3": 70,
       "r4": 71,
-      "egrPoints": 1082.4
+      "egrPoints": 1082.4,
+      "_mantido": true
     },
     {
       "eventId": "11366",
@@ -207,10 +236,11 @@
       "r2": 72,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1530.64
+      "egrPoints": 1530.64,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:33.420Z",
+  "scrapedAt": "2026-11-02T15:27:17.016Z",
   "url": "https://www.europeangolfrankings.com/players/36018"
 }

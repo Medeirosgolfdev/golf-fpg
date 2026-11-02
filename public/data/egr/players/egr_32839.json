@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Madonna Campiglio",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 188,
-  "egrPoints": 19409.9,
-  "avgScore": 71.38,
-  "avgToCR": 69.22,
+  "tournamentsPlayed": 13,
+  "egrRank": 187,
+  "egrPoints": 19508.4,
+  "avgScore": 71.08,
+  "avgToCR": 68.99,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "3",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 67,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 3079.38
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -193,7 +207,8 @@
       "r2": 66,
       "r3": null,
       "r4": null,
-      "egrPoints": 1056.26
+      "egrPoints": 1056.26,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -207,7 +222,8 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 2980.84
+      "egrPoints": 2980.84,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -221,10 +237,11 @@
       "r2": 78,
       "r3": 78,
       "r4": null,
-      "egrPoints": 419.38
+      "egrPoints": 419.38,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:27.131Z",
+  "scrapedAt": "2026-11-02T15:26:05.332Z",
   "url": "https://www.europeangolfrankings.com/players/32839"
 }

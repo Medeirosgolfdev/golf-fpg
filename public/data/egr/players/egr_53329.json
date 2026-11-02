@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hamburg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 6156,
-  "egrPoints": 365.03,
-  "avgScore": 79.43,
-  "avgToCR": 79.63,
+  "tournamentsPlayed": 4,
+  "egrRank": 6295,
+  "egrPoints": 357.19,
+  "avgScore": 78.56,
+  "avgToCR": 78.62,
   "events": [
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "35",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 79,
+      "r2": 76,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 120.03
+    },
     {
       "eventId": "12836",
       "counting": true,
@@ -31,7 +45,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "30",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -39,7 +53,7 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 160.08
+      "egrPoints": 32.21
     },
     {
       "eventId": "12796",
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:20.022Z",
+  "scrapedAt": "2026-11-02T15:33:44.802Z",
   "url": "https://www.europeangolfrankings.com/players/53329"
 }

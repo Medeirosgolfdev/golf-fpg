@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Monticello",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1402,
-  "egrPoints": 4655.68,
-  "avgScore": 77.32,
-  "avgToCR": 75.77,
+  "tournamentsPlayed": 14,
+  "egrRank": 1376,
+  "egrPoints": 4773.87,
+  "avgScore": 77.17,
+  "avgToCR": 75.63,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "35",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 81,
+      "r2": 81,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 288.25
+    },
+    {
+      "eventId": "12023",
+      "counting": false,
+      "pos": "81",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 79,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 225.03
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "11969",
-      "counting": true,
+      "counting": false,
       "pos": "71",
       "event": "Italian National Closed U16 Championships 2026",
       "venue": "Asolo Golf Club",
@@ -213,6 +241,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:30.140Z",
+  "scrapedAt": "2026-11-02T15:28:19.020Z",
   "url": "https://www.europeangolfrankings.com/players/38466"
 }

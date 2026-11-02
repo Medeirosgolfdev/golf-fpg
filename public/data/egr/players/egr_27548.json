@@ -7,12 +7,26 @@
   "country": "Wales",
   "club": "St Pierre",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 1716,
+  "tournamentsPlayed": 8,
+  "egrRank": 1738,
   "egrPoints": 420.84,
-  "avgScore": 81.64,
-  "avgToCR": 81.44,
+  "avgScore": 80.79,
+  "avgToCR": 80.38,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "40",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 78,
+      "r2": 79,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11810",
       "counting": true,
@@ -123,7 +137,8 @@
       "r2": 87,
       "r3": 87,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11388",
@@ -137,7 +152,8 @@
       "r2": 79,
       "r3": 82,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11115",
@@ -156,6 +172,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:14:57.298Z",
+  "scrapedAt": "2026-11-02T15:23:23.844Z",
   "url": "https://www.europeangolfrankings.com/players/27548"
 }

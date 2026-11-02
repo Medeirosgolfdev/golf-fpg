@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Royal Latem",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 730,
-  "egrPoints": 8731.5,
-  "avgScore": 73.87,
-  "avgToCR": 73.48,
+  "tournamentsPlayed": 14,
+  "egrRank": 662,
+  "egrPoints": 9345.06,
+  "avgScore": 73.61,
+  "avgToCR": 73.1,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 1001.14
+    },
     {
       "eventId": "11758",
       "counting": false,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "11756",
-      "counting": true,
+      "counting": false,
       "pos": "18",
       "event": "Federal Summer Prize 2026",
       "venue": "Golf De Liege-Gomze",
@@ -212,6 +226,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:24.822Z",
+  "scrapedAt": "2026-11-02T15:29:20.002Z",
   "url": "https://www.europeangolfrankings.com/players/41849"
 }

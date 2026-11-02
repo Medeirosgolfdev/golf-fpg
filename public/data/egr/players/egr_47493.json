@@ -7,12 +7,40 @@
   "country": "Austria",
   "club": "Innsbruck-Igls",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 1777,
-  "egrPoints": 379.19,
-  "avgScore": 84.92,
-  "avgToCR": 81.65,
+  "tournamentsPlayed": 8,
+  "egrRank": 1696,
+  "egrPoints": 451.42,
+  "avgScore": 85.24,
+  "avgToCR": 82.24,
   "events": [
+    {
+      "eventId": "12516",
+      "counting": true,
+      "pos": "10",
+      "event": "AJGT U16/U18 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 83,
+      "r2": 88,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 72.23
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "98",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 85,
+      "r2": 91,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12511",
       "counting": true,
@@ -99,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:08.502Z",
+  "scrapedAt": "2026-11-02T15:31:15.421Z",
   "url": "https://www.europeangolfrankings.com/players/47493"
 }

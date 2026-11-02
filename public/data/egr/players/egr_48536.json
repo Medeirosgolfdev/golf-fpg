@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": null,
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 4502,
-  "egrPoints": 770.84,
-  "avgScore": 77.08,
-  "avgToCR": 78.51,
+  "tournamentsPlayed": 10,
+  "egrRank": 3971,
+  "egrPoints": 997.64,
+  "avgScore": 76.38,
+  "avgToCR": 77.3,
   "events": [
+    {
+      "eventId": "12490",
+      "counting": true,
+      "pos": "3",
+      "event": "Swiss Golf Final U14 (Crans-sur-Sierre) 2026",
+      "venue": "Golf Club Crans-sur-Sierre",
+      "country": "Switzerland",
+      "startDateRaw": "03. Oct 26",
+      "r1": 75,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 210.5
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "35",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 75,
+      "r2": 81,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 55.43
+    },
     {
       "eventId": "12478",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12448",
-      "counting": true,
+      "counting": false,
       "pos": "51",
       "event": "Swiss Golf Junior Tour (Sierre) 2026",
       "venue": "Golf Club de Sierre",
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12445",
-      "counting": true,
+      "counting": false,
       "pos": "36",
       "event": "Swiss Golf Junior Tour (Gams-Werdenberg) 2026",
       "venue": "Golf Gams Werdenberg",
@@ -142,6 +170,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:36.721Z",
+  "scrapedAt": "2026-11-02T15:31:47.254Z",
   "url": "https://www.europeangolfrankings.com/players/48536"
 }

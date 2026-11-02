@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Darlington",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 2,
-  "egrRank": 2553,
-  "egrPoints": 2096.94,
-  "avgScore": 73.29,
-  "avgToCR": 71.06,
+  "tournamentsPlayed": 3,
+  "egrRank": 2305,
+  "egrPoints": 2427.78,
+  "avgScore": 73.56,
+  "avgToCR": 71.16,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "20",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 79,
+      "r4": 71,
+      "egrPoints": 1218.63
+    },
     {
       "eventId": "11783",
       "counting": true,
@@ -58,6 +72,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:16:33.522Z",
+  "scrapedAt": "2026-11-02T15:25:08.448Z",
   "url": "https://www.europeangolfrankings.com/players/30771"
 }

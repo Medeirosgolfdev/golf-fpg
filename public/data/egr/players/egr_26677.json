@@ -7,15 +7,15 @@
   "country": "England",
   "club": "Buckingham",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 15,
-  "egrRank": 199,
-  "egrPoints": 18971.2,
-  "avgScore": 71.81,
-  "avgToCR": 70.44,
+  "tournamentsPlayed": 12,
+  "egrRank": 241,
+  "egrPoints": 17330.5,
+  "avgScore": 72.26,
+  "avgToCR": 70.96,
   "events": [
     {
       "eventId": "11829",
-      "counting": false,
+      "counting": true,
       "pos": "8",
       "event": "BB&O Amateur Championship 2026",
       "venue": "Woburn Golf Club",
@@ -193,7 +193,8 @@
       "r2": 70,
       "r3": 68,
       "r4": null,
-      "egrPoints": 2491.76
+      "egrPoints": 2491.76,
+      "_mantido": true
     },
     {
       "eventId": "11360",
@@ -207,7 +208,8 @@
       "r2": 67,
       "r3": 73,
       "r4": null,
-      "egrPoints": 784.75
+      "egrPoints": 784.75,
+      "_mantido": true
     },
     {
       "eventId": "11774",
@@ -221,10 +223,11 @@
       "r2": 69,
       "r3": 74,
       "r4": null,
-      "egrPoints": 604.54
+      "egrPoints": 604.54,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:14:33.229Z",
+  "scrapedAt": "2026-11-02T15:22:57.412Z",
   "url": "https://www.europeangolfrankings.com/players/26677"
 }

@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Cherasco",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1511,
-  "egrPoints": 603.38,
-  "avgScore": 80.76,
-  "avgToCR": 78.27,
+  "tournamentsPlayed": 13,
+  "egrRank": 1206,
+  "egrPoints": 1026.14,
+  "avgScore": 80.21,
+  "avgToCR": 77.8,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "26",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 79,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 456.01
+    },
+    {
+      "eventId": "12011",
+      "counting": false,
+      "pos": "8",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 89,
+      "r2": 80,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12001",
       "counting": true,
@@ -179,7 +207,8 @@
       "r2": 81,
       "r3": 81,
       "r4": null,
-      "egrPoints": 33.25
+      "egrPoints": 33.25,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -198,6 +227,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:39.506Z",
+  "scrapedAt": "2026-11-02T15:31:50.411Z",
   "url": "https://www.europeangolfrankings.com/players/48674"
 }

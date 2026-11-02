@@ -8,11 +8,25 @@
   "club": "Kolding",
   "ageGroup": "U18",
   "tournamentsPlayed": 7,
-  "egrRank": 7266,
-  "egrPoints": 217.86,
-  "avgScore": 82.69,
-  "avgToCR": 80.81,
+  "egrRank": 6192,
+  "egrPoints": 373.39,
+  "avgScore": 82.54,
+  "avgToCR": 80.65,
   "events": [
+    {
+      "eventId": "12610",
+      "counting": true,
+      "pos": "36",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 79,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 155.53
+    },
     {
       "eventId": "12600",
       "counting": true,
@@ -109,10 +123,11 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:09.789Z",
+  "scrapedAt": "2026-11-02T15:29:02.754Z",
   "url": "https://www.europeangolfrankings.com/players/40320"
 }

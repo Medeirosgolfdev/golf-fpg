@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Grande Bastide",
   "ageGroup": "U14",
-  "tournamentsPlayed": 17,
-  "egrRank": 653,
-  "egrPoints": 2728.6,
-  "avgScore": 74.77,
-  "avgToCR": 73.27,
+  "tournamentsPlayed": 18,
+  "egrRank": 535,
+  "egrPoints": 3515.88,
+  "avgScore": 74.61,
+  "avgToCR": 72.8,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "7",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 76,
+      "r2": 73,
+      "r3": 69,
+      "r4": 72,
+      "egrPoints": 960.26
+    },
+    {
+      "eventId": "12216",
+      "counting": false,
+      "pos": "6",
+      "event": "Grand Prix de Valescure 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 161.23
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12188",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "Grand Prix de Valcros 2026",
       "venue": "Golf de Valcros Hyères",
@@ -249,10 +277,11 @@
       "r2": 78,
       "r3": 76,
       "r4": null,
-      "egrPoints": 18.63
+      "egrPoints": 18.63,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:21:35.912Z",
+  "scrapedAt": "2026-11-02T15:30:39.216Z",
   "url": "https://www.europeangolfrankings.com/players/45277"
 }

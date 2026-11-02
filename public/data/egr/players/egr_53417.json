@@ -6,13 +6,27 @@
   "firstName": "Vito",
   "country": "Austria",
   "club": "Colony-Gutenhof",
-  "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 6380,
-  "egrPoints": 325.82,
-  "avgScore": 81.89,
-  "avgToCR": 80.93,
+  "ageGroup": "U16",
+  "tournamentsPlayed": 5,
+  "egrRank": 5543,
+  "egrPoints": 497.98,
+  "avgScore": 80,
+  "avgToCR": 79.08,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "63",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 71,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 172.16
+    },
     {
       "eventId": "12507",
       "counting": true,
@@ -70,7 +84,7 @@
       "egrPoints": 0
     }
   ],
-  "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:25.713Z",
+  "ageNum": 16,
+  "scrapedAt": "2026-11-02T15:33:50.580Z",
   "url": "https://www.europeangolfrankings.com/players/53417"
 }

@@ -8,11 +8,25 @@
   "club": "Modena",
   "ageGroup": "U21",
   "tournamentsPlayed": 10,
-  "egrRank": 579,
-  "egrPoints": 10049.4,
-  "avgScore": 73.74,
-  "avgToCR": 71.52,
+  "egrRank": 643,
+  "egrPoints": 9499.63,
+  "avgScore": 74.43,
+  "avgToCR": 72.15,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "35",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 73,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 723.17
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -151,7 +165,8 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -185,6 +200,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:01.725Z",
+  "scrapedAt": "2026-11-02T15:23:28.871Z",
   "url": "https://www.europeangolfrankings.com/players/27710"
 }

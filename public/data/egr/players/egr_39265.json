@@ -8,11 +8,25 @@
   "club": "Royal Cinque Ports",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 291,
-  "egrPoints": 15391.3,
-  "avgScore": 74.54,
-  "avgToCR": 72.69,
+  "egrRank": 286,
+  "egrPoints": 15463.7,
+  "avgScore": 73.67,
+  "avgToCR": 71.81,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "4",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 71,
+      "r2": 69,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 366.46
+    },
     {
       "eventId": "11673",
       "counting": true,
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "12220",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Triple A European Open 2026",
       "venue": "San Roque Golf Resort (Old)",
@@ -221,7 +235,8 @@
       "r2": 72,
       "r3": 78,
       "r4": null,
-      "egrPoints": 218.17
+      "egrPoints": 218.17,
+      "_mantido": true
     },
     {
       "eventId": "11341",
@@ -240,6 +255,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:54.485Z",
+  "scrapedAt": "2026-11-02T15:28:45.741Z",
   "url": "https://www.europeangolfrankings.com/players/39265"
 }

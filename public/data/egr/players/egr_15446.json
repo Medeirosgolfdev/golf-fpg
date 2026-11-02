@@ -7,15 +7,29 @@
   "country": "Belgium",
   "club": "Sept Fontaines",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 9,
-  "egrRank": 255,
-  "egrPoints": 7260.31,
-  "avgScore": 73.84,
-  "avgToCR": 70.88,
+  "tournamentsPlayed": 10,
+  "egrRank": 204,
+  "egrPoints": 8872.33,
+  "avgScore": 73.77,
+  "avgToCR": 70.65,
   "events": [
     {
-      "eventId": "11768",
+      "eventId": "12265",
       "counting": true,
+      "pos": "27",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 1612.02
+    },
+    {
+      "eventId": "11768",
+      "counting": false,
       "pos": "61",
       "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
       "venue": "Golf de Morfontaine",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:11:29.682Z",
+  "scrapedAt": "2026-11-02T15:19:33.565Z",
   "url": "https://www.europeangolfrankings.com/players/15446"
 }

@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Riviera",
   "ageGroup": "U21",
-  "tournamentsPlayed": 9,
-  "egrRank": 973,
-  "egrPoints": 6742.16,
-  "avgScore": 75.41,
-  "avgToCR": 73.17,
+  "tournamentsPlayed": 10,
+  "egrRank": 1008,
+  "egrPoints": 6536.21,
+  "avgScore": 75.59,
+  "avgToCR": 73.37,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "11",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 73,
+      "r2": 70,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 688.01
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "18",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 75,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 527.75
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "65",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 112.62
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -29,7 +71,7 @@
     },
     {
       "eventId": "11955",
-      "counting": true,
+      "counting": false,
       "pos": "82",
       "event": "Gran Premio Di Monticello 2026",
       "venue": "Golf Club Monticello",
@@ -123,7 +165,8 @@
       "r2": 75,
       "r3": 73,
       "r4": null,
-      "egrPoints": 618.55
+      "egrPoints": 618.55,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -137,7 +180,8 @@
       "r2": 80,
       "r3": 74,
       "r4": null,
-      "egrPoints": 915.79
+      "egrPoints": 915.79,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -156,6 +200,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:26.422Z",
+  "scrapedAt": "2026-11-02T15:23:55.725Z",
   "url": "https://www.europeangolfrankings.com/players/28481"
 }

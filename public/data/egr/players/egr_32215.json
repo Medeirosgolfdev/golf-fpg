@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Royal Waterloo",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1828,
+  "tournamentsPlayed": 12,
+  "egrRank": 1850,
   "egrPoints": 3347.98,
   "avgScore": 76.67,
   "avgToCR": 76.3,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": false,
+      "pos": "32",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 80,
+      "r2": 77,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12917",
       "counting": true,
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:17:07.722Z",
+  "scrapedAt": "2026-11-02T15:25:44.373Z",
   "url": "https://www.europeangolfrankings.com/players/32215"
 }

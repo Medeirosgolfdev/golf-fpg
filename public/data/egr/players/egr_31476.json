@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Barriere La Baule",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 2180,
-  "egrPoints": 2612.49,
-  "avgScore": 75.64,
-  "avgToCR": 75.3,
+  "tournamentsPlayed": 6,
+  "egrRank": 1954,
+  "egrPoints": 3132.61,
+  "avgScore": 76.06,
+  "avgToCR": 75.8,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "38",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 113.87
+    },
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "12",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 76,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 406.25
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -71,6 +99,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:50.717Z",
+  "scrapedAt": "2026-11-02T15:25:26.526Z",
   "url": "https://www.europeangolfrankings.com/players/31476"
 }

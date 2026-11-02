@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Am Reichswald",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 768,
-  "egrPoints": 2223.89,
-  "avgScore": 76.36,
-  "avgToCR": 73.27,
+  "tournamentsPlayed": 12,
+  "egrRank": 677,
+  "egrPoints": 2644.03,
+  "avgScore": 75.73,
+  "avgToCR": 73.45,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "33",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 568.67
+    },
     {
       "eventId": "12913",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12671",
-      "counting": true,
+      "counting": false,
       "pos": "15",
       "event": "DGV-Bayern Meisterschaft Damen 2026",
       "venue": "Golfclub München Valley",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:20:55.951Z",
+  "scrapedAt": "2026-11-02T15:29:54.485Z",
   "url": "https://www.europeangolfrankings.com/players/43414"
 }

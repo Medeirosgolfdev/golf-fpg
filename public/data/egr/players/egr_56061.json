@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Lanark",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 1455,
-  "egrPoints": 4478.52,
-  "avgScore": 75.09,
-  "avgToCR": 74.92,
+  "tournamentsPlayed": 14,
+  "egrRank": 1423,
+  "egrPoints": 4630.19,
+  "avgScore": 75.78,
+  "avgToCR": 75.23,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "31",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 318.03
+    },
     {
       "eventId": "11723",
       "counting": false,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "11719",
-      "counting": true,
+      "counting": false,
       "pos": "14",
       "event": "Junior Tour Kilspindie Boys 2026",
       "venue": "Kilspindie GC",
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:38.993Z",
+  "scrapedAt": "2026-11-02T15:35:13.448Z",
   "url": "https://www.europeangolfrankings.com/players/56061"
 }

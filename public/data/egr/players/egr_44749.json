@@ -8,11 +8,25 @@
   "club": "Cognac",
   "ageGroup": "U18",
   "tournamentsPlayed": 3,
-  "egrRank": 6182,
-  "egrPoints": 359.62,
-  "avgScore": 82.43,
-  "avgToCR": 81.56,
+  "egrRank": 5550,
+  "egrPoints": 496.34,
+  "avgScore": 80,
+  "avgToCR": 78.96,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "17",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 81,
+      "r2": 71,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 136.72
+    },
     {
       "eventId": "12081",
       "counting": true,
@@ -53,10 +67,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:22.571Z",
+  "scrapedAt": "2026-11-02T15:30:24.280Z",
   "url": "https://www.europeangolfrankings.com/players/44749"
 }

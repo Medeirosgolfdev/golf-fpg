@@ -7,11 +7,11 @@
   "country": "China",
   "club": "Cathkin Braes",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 11,
-  "egrPoints": 32746.6,
-  "avgScore": 70.12,
-  "avgToCR": 67.26,
+  "tournamentsPlayed": 11,
+  "egrRank": 16,
+  "egrPoints": 30061.3,
+  "avgScore": 69.84,
+  "avgToCR": 67.08,
   "events": [
     {
       "eventId": "11768",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "12222",
-      "counting": false,
+      "counting": true,
       "pos": "1",
       "event": "Triple A Series World Final 2026",
       "venue": "San Roque Golf Club (Old)",
@@ -179,7 +179,8 @@
       "r2": 72,
       "r3": 74,
       "r4": null,
-      "egrPoints": 3612.5
+      "egrPoints": 3612.5,
+      "_mantido": true
     },
     {
       "eventId": "11337",
@@ -198,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:47.514Z",
+  "scrapedAt": "2026-11-02T15:29:44.590Z",
   "url": "https://www.europeangolfrankings.com/players/42773"
 }

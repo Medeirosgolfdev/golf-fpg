@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Altenhof",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 3043,
-  "egrPoints": 27.56,
-  "avgScore": 90.6,
-  "avgToCR": 88.6,
+  "tournamentsPlayed": 4,
+  "egrRank": 2499,
+  "egrPoints": 115.21,
+  "avgScore": 88.33,
+  "avgToCR": 86.71,
   "events": [
+    {
+      "eventId": "12948",
+      "counting": true,
+      "pos": "5",
+      "event": "DGV-GVSH Meisterschaft AK16/18 Mädchen 2026",
+      "venue": "Golfanlage Hohwacht",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 87,
+      "r2": 86,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 64.33
+    },
     {
       "eventId": "12839",
       "counting": true,
@@ -26,6 +40,20 @@
       "r3": 94,
       "r4": null,
       "egrPoints": 0
+    },
+    {
+      "eventId": "12944",
+      "counting": true,
+      "pos": "11",
+      "event": "DGV-Region Nord 2. AK16/18 Mädchen 2026",
+      "venue": "Golfclub Segeberg",
+      "country": "Germany",
+      "startDateRaw": "04. Jul 26",
+      "r1": 85,
+      "r2": 88,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 23.33
     },
     {
       "eventId": "12764",
@@ -43,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:45.003Z",
+  "scrapedAt": "2026-11-02T15:30:48.659Z",
   "url": "https://www.europeangolfrankings.com/players/45861"
 }

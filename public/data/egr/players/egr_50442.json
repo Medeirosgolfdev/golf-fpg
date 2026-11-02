@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Courson",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 5994,
-  "egrPoints": 392.99,
-  "avgScore": 79.33,
-  "avgToCR": 80.13,
+  "tournamentsPlayed": 4,
+  "egrRank": 4877,
+  "egrPoints": 656.74,
+  "avgScore": 79.56,
+  "avgToCR": 80.16,
   "events": [
+    {
+      "eventId": "12213",
+      "counting": true,
+      "pos": "30",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 83,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 263.75
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -72,6 +86,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:21.766Z",
+  "scrapedAt": "2026-11-02T15:32:37.480Z",
   "url": "https://www.europeangolfrankings.com/players/50442"
 }

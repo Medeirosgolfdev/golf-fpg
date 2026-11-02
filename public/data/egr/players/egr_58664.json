@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Fehmarn",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 10380,
+  "tournamentsPlayed": 2,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 101.33,
-  "avgToCR": 100.83,
+  "avgScore": 100.8,
+  "avgToCR": 100.74,
   "events": [
+    {
+      "eventId": "12947",
+      "counting": true,
+      "pos": "21",
+      "event": "DGV-GVSH Meisterschaft AK14 Jungen 2026",
+      "venue": "Golfanlage Hohwacht",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 104,
+      "r2": 98,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11651",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:26:39.663Z",
+  "scrapedAt": "2026-11-02T15:36:23.728Z",
   "url": "https://www.europeangolfrankings.com/players/58664"
 }

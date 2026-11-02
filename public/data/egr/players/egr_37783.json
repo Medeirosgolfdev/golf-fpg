@@ -8,11 +8,25 @@
   "club": "Massane",
   "ageGroup": "U21",
   "tournamentsPlayed": 11,
-  "egrRank": 658,
-  "egrPoints": 9309.9,
-  "avgScore": 73.54,
-  "avgToCR": 72.26,
+  "egrRank": 739,
+  "egrPoints": 8706.32,
+  "avgScore": 74.42,
+  "avgToCR": 73.05,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": false,
+      "pos": "43",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 74,
+      "r2": 76,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 340.65
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12042",
-      "counting": false,
+      "counting": true,
       "pos": "33",
       "event": "41ème Grand Prix de Campagne 2026",
       "venue": "Golf de Nîmes Campagne",
@@ -165,10 +179,11 @@
       "r2": 73,
       "r3": 72,
       "r4": null,
-      "egrPoints": 1017.07
+      "egrPoints": 1017.07,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:19:11.006Z",
+  "scrapedAt": "2026-11-02T15:27:58.453Z",
   "url": "https://www.europeangolfrankings.com/players/37783"
 }

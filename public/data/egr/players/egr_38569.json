@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Gerre Losone",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1072,
-  "egrPoints": 1241.34,
-  "avgScore": 77.39,
-  "avgToCR": 75.28,
+  "tournamentsPlayed": 11,
+  "egrRank": 1059,
+  "egrPoints": 1330.88,
+  "avgScore": 77.75,
+  "avgToCR": 75.69,
   "events": [
+    {
+      "eventId": "12492",
+      "counting": true,
+      "pos": "11",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 83,
+      "r2": 77,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 110.56
+    },
+    {
+      "eventId": "12485",
+      "counting": true,
+      "pos": "5",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 78,
+      "r2": 68,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 142.81
+    },
     {
       "eventId": "11766",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12447",
-      "counting": true,
+      "counting": false,
       "pos": "9",
       "event": "Swiss Golf Junior Tour (Sierre) 2026",
       "venue": "Golf Club de Sierre",
@@ -151,7 +179,8 @@
       "r2": 75,
       "r3": 72,
       "r4": null,
-      "egrPoints": 118
+      "egrPoints": 118,
+      "_mantido": true
     },
     {
       "eventId": "10367",
@@ -170,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:35.105Z",
+  "scrapedAt": "2026-11-02T15:28:24.335Z",
   "url": "https://www.europeangolfrankings.com/players/38569"
 }

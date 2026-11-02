@@ -8,11 +8,39 @@
   "club": "Lausanne",
   "ageGroup": "U21",
   "tournamentsPlayed": 10,
-  "egrRank": 221,
-  "egrPoints": 18104.3,
-  "avgScore": 72.36,
-  "avgToCR": 70.1,
+  "egrRank": 169,
+  "egrPoints": 20067.8,
+  "avgScore": 72.76,
+  "avgToCR": 70.09,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "5",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 73,
+      "r2": 71,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 880.17
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 69,
+      "r2": 67,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 3083.28
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "11958",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Vecchio Monastero 2026",
       "venue": "Varese Golf Club",
@@ -137,7 +165,8 @@
       "r2": 72,
       "r3": 71,
       "r4": null,
-      "egrPoints": 662.59
+      "egrPoints": 662.59,
+      "_mantido": true
     },
     {
       "eventId": "10373",
@@ -151,7 +180,8 @@
       "r2": 66,
       "r3": 72,
       "r4": null,
-      "egrPoints": 1124
+      "egrPoints": 1124,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -170,6 +200,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:06.116Z",
+  "scrapedAt": "2026-11-02T15:25:42.719Z",
   "url": "https://www.europeangolfrankings.com/players/32071"
 }

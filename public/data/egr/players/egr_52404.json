@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Sevilla",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 529,
-  "egrPoints": 3549.9,
-  "avgScore": 75.55,
-  "avgToCR": 73.35,
+  "tournamentsPlayed": 9,
+  "egrRank": 373,
+  "egrPoints": 5318.83,
+  "avgScore": 74.91,
+  "avgToCR": 72.62,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "20",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 75,
+      "r2": 73,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 1768.93
+    },
     {
       "eventId": "12122",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11377",
-      "counting": true,
+      "counting": false,
       "pos": "61",
       "event": "Copa de Andalucía 2026",
       "venue": "Sherry Golf Jerez",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:00.498Z",
+  "scrapedAt": "2026-11-02T15:33:21.955Z",
   "url": "https://www.europeangolfrankings.com/players/52404"
 }

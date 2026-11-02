@@ -8,11 +8,39 @@
   "club": "Marcilly",
   "ageGroup": "U16",
   "tournamentsPlayed": 5,
-  "egrRank": 1195,
-  "egrPoints": 1012.17,
-  "avgScore": 77.64,
-  "avgToCR": 75.23,
+  "egrRank": 818,
+  "egrPoints": 2020.07,
+  "avgScore": 76.77,
+  "avgToCR": 74.07,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "21",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 77,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 104.94
+    },
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "9",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 72,
+      "r2": 75,
+      "r3": 70,
+      "r4": 74,
+      "egrPoints": 931.2
+    },
     {
       "eventId": "12792",
       "counting": true,
@@ -67,7 +95,8 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 28.24
+      "egrPoints": 28.24,
+      "_mantido": true
     },
     {
       "eventId": "11369",
@@ -81,10 +110,11 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:53.896Z",
+  "scrapedAt": "2026-11-02T15:30:58.520Z",
   "url": "https://www.europeangolfrankings.com/players/46229"
 }

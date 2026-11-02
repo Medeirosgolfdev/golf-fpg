@@ -5,14 +5,28 @@
   "lastName": "BOBERSKI",
   "firstName": "Maximilian",
   "country": "Germany",
-  "club": "GH Hof Treudelberg",
+  "club": "Hamburg Treudelberg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 5901,
-  "egrPoints": 410.32,
-  "avgScore": 80.57,
-  "avgToCR": 80.43,
+  "tournamentsPlayed": 4,
+  "egrRank": 5922,
+  "egrPoints": 420.53,
+  "avgScore": 79.56,
+  "avgToCR": 79.36,
   "events": [
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "35",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 80,
+      "r2": 79,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 120.03
+    },
     {
       "eventId": "12851",
       "counting": true,
@@ -31,7 +45,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "20",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -39,7 +53,7 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 238.67
+      "egrPoints": 128.85
     },
     {
       "eventId": "12796",
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:27:04.755Z",
+  "scrapedAt": "2026-11-02T15:36:51.663Z",
   "url": "https://www.europeangolfrankings.com/players/59857"
 }

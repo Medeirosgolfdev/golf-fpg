@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Bogogno",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 2575,
-  "egrPoints": 2067.72,
-  "avgScore": 78.38,
-  "avgToCR": 77.8,
+  "tournamentsPlayed": 10,
+  "egrRank": 2416,
+  "egrPoints": 2287.92,
+  "avgScore": 78.09,
+  "avgToCR": 77.47,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "39",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 82,
+      "r2": 78,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 220.2
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "11978",
-      "counting": true,
+      "counting": false,
       "pos": "59",
       "event": "Gran Premio Castello Tolcinasco 2026",
       "venue": "Castello Tolcinasco Golf Resort & SPA",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:31.967Z",
+  "scrapedAt": "2026-11-02T15:31:41.963Z",
   "url": "https://www.europeangolfrankings.com/players/48360"
 }

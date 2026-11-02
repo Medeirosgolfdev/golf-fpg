@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Pont Royal",
   "ageGroup": "U21",
-  "tournamentsPlayed": 7,
-  "egrRank": 1133,
-  "egrPoints": 5822.55,
-  "avgScore": 73.94,
-  "avgToCR": 72.86,
+  "tournamentsPlayed": 9,
+  "egrRank": 978,
+  "egrPoints": 6700.45,
+  "avgScore": 74.43,
+  "avgToCR": 73.58,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "17",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 79,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 642.78
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "37",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 235.12
+    },
     {
       "eventId": "12189",
       "counting": true,
@@ -128,6 +156,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:56.849Z",
+  "scrapedAt": "2026-11-02T15:27:43.162Z",
   "url": "https://www.europeangolfrankings.com/players/36991"
 }

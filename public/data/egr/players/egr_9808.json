@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Saint Malo",
   "ageGroup": "U12",
-  "tournamentsPlayed": 6,
-  "egrRank": 4780,
-  "egrPoints": 672.23,
-  "avgScore": 77.73,
-  "avgToCR": 78.76,
+  "tournamentsPlayed": 7,
+  "egrRank": 4106,
+  "egrPoints": 937.86,
+  "avgScore": 77.86,
+  "avgToCR": 78.65,
   "events": [
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "21",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 78,
+      "r2": 81,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 265.63
+    },
     {
       "eventId": "12117",
       "counting": true,
@@ -114,6 +128,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-10-05T14:11:03.902Z",
+  "scrapedAt": "2026-11-02T15:19:05.111Z",
   "url": "https://www.europeangolfrankings.com/players/9808"
 }

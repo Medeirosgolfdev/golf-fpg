@@ -8,11 +8,25 @@
   "club": "Forsgardens",
   "ageGroup": "U16",
   "tournamentsPlayed": 14,
-  "egrRank": 213,
-  "egrPoints": 8451.69,
-  "avgScore": 73.83,
-  "avgToCR": 70.02,
+  "egrRank": 87,
+  "egrPoints": 15009.9,
+  "avgScore": 73.17,
+  "avgToCR": 69.38,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "1",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 7998.38
+    },
     {
       "eventId": "12397",
       "counting": true,
@@ -207,7 +221,8 @@
       "r2": 74,
       "r3": 80,
       "r4": null,
-      "egrPoints": 1440.14
+      "egrPoints": 1440.14,
+      "_mantido": true
     },
     {
       "eventId": "10819",
@@ -226,6 +241,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:03.795Z",
+  "scrapedAt": "2026-11-02T15:30:03.591Z",
   "url": "https://www.europeangolfrankings.com/players/43721"
 }

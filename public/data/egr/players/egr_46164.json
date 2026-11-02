@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Stolper Heide",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 356,
-  "egrPoints": 5432.5,
-  "avgScore": 76.3,
-  "avgToCR": 73.37,
+  "tournamentsPlayed": 11,
+  "egrRank": 387,
+  "egrPoints": 5147.02,
+  "avgScore": 76.86,
+  "avgToCR": 73.91,
   "events": [
     {
       "eventId": "12909",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12852",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "Hanseatic International Youth Open Girls 2026",
       "venue": "Gut Kaden (A+B)",
@@ -179,7 +179,8 @@
       "r2": 81,
       "r3": 76,
       "r4": null,
-      "egrPoints": 142.25
+      "egrPoints": 142.25,
+      "_mantido": true
     },
     {
       "eventId": "11365",
@@ -193,7 +194,8 @@
       "r2": 73,
       "r3": 78,
       "r4": 70,
-      "egrPoints": 458.33
+      "egrPoints": 458.33,
+      "_mantido": true
     },
     {
       "eventId": "10113",
@@ -212,6 +214,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:53.328Z",
+  "scrapedAt": "2026-11-02T15:30:57.809Z",
   "url": "https://www.europeangolfrankings.com/players/46164"
 }

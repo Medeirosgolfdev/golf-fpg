@@ -7,12 +7,26 @@
   "country": "Wales",
   "club": "Brynhill",
   "ageGroup": "U16",
-  "tournamentsPlayed": 0,
-  "egrRank": 10380,
+  "tournamentsPlayed": 1,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 0,
-  "avgToCR": 0,
+  "avgScore": 82,
+  "avgToCR": 82.8,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "40",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 74,
+      "r2": 84,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11115",
       "counting": true,
@@ -30,6 +44,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:26:15.479Z",
+  "scrapedAt": "2026-11-02T15:35:55.389Z",
   "url": "https://www.europeangolfrankings.com/players/57258"
 }

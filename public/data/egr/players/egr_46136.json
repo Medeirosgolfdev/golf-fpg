@@ -7,12 +7,54 @@
   "country": "Slovakia",
   "club": "Tale",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 155,
-  "egrPoints": 10751.8,
-  "avgScore": 73.81,
-  "avgToCR": 70.26,
+  "tournamentsPlayed": 12,
+  "egrRank": 149,
+  "egrPoints": 11114.6,
+  "avgScore": 73.23,
+  "avgToCR": 69.72,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "1",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 69,
+      "r2": 77,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 757.58
+    },
+    {
+      "eventId": "12017",
+      "counting": false,
+      "pos": "5",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 184.88
+    },
+    {
+      "eventId": "12015",
+      "counting": false,
+      "pos": "6",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 79,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 407.11
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -127,7 +169,7 @@
     },
     {
       "eventId": "11904",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Trofeo Citta' Di Modena 2026",
       "venue": "Modena Golf & CC",
@@ -151,7 +193,8 @@
       "r2": 78,
       "r3": 78,
       "r4": null,
-      "egrPoints": 253.53
+      "egrPoints": 253.53,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -170,6 +213,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:52.387Z",
+  "scrapedAt": "2026-11-02T15:30:56.741Z",
   "url": "https://www.europeangolfrankings.com/players/46136"
 }

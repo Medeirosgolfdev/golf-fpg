@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Roskilde",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 5297,
-  "egrPoints": 538.45,
-  "avgScore": 79.89,
-  "avgToCR": 79.36,
+  "tournamentsPlayed": 14,
+  "egrRank": 4610,
+  "egrPoints": 745.83,
+  "avgScore": 79.22,
+  "avgToCR": 78.47,
   "events": [
+    {
+      "eventId": "12610",
+      "counting": true,
+      "pos": "33",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 78,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 207.38
+    },
     {
       "eventId": "12606",
       "counting": true,
@@ -169,7 +183,7 @@
     },
     {
       "eventId": "12542",
-      "counting": true,
+      "counting": false,
       "pos": "31",
       "event": "Vordingborg Kommune/Møns Bank Møn Open 2026",
       "venue": "Møn GolfKlub",
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:12.103Z",
+  "scrapedAt": "2026-11-02T15:34:42.886Z",
   "url": "https://www.europeangolfrankings.com/players/55235"
 }

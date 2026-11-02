@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": "Balbirnie Park",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 4720,
+  "tournamentsPlayed": 6,
+  "egrRank": 4765,
   "egrPoints": 692.47,
-  "avgScore": 80.5,
-  "avgToCR": 80.19,
+  "avgScore": 81.86,
+  "avgToCR": 80.97,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "48",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 86,
+      "r2": 86,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "56",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 87,
+      "r2": 82,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12281",
       "counting": true,
@@ -86,6 +114,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:39.537Z",
+  "scrapedAt": "2026-11-02T15:28:29.128Z",
   "url": "https://www.europeangolfrankings.com/players/38694"
 }

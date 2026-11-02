@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Palmola",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 608,
-  "egrPoints": 9723.74,
-  "avgScore": 73.92,
-  "avgToCR": 72.57,
+  "tournamentsPlayed": 15,
+  "egrRank": 578,
+  "egrPoints": 10119.1,
+  "avgScore": 73.52,
+  "avgToCR": 72.26,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "10",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 75,
+      "r2": 74,
+      "r3": 70,
+      "r4": 70,
+      "egrPoints": 1180.41
+    },
+    {
+      "eventId": "12275",
+      "counting": false,
+      "pos": "2",
+      "event": "Campionat De Catalunya U16/U18 2026",
+      "venue": "Fontanals Golf Club",
+      "country": "Spain",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 66,
+      "r4": null,
+      "egrPoints": 758.72
+    },
     {
       "eventId": "12185",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "12175",
-      "counting": true,
+      "counting": false,
       "pos": "49",
       "event": "Grand Prix du Médoc 2026",
       "venue": "Golf du Médoc",
@@ -207,10 +235,11 @@
       "r2": 70,
       "r3": 73,
       "r4": 77,
-      "egrPoints": 483.21
+      "egrPoints": 483.21,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:12.841Z",
+  "scrapedAt": "2026-11-02T15:31:20.441Z",
   "url": "https://www.europeangolfrankings.com/players/47724"
 }

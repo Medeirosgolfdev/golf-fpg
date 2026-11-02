@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": "Gifford",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 10380,
+  "tournamentsPlayed": 8,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 84.33,
-  "avgToCR": 83.9,
+  "avgScore": 84.47,
+  "avgToCR": 83.51,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "45",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 85,
+      "r2": 85,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "75",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 86,
+      "r2": 80,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11587",
       "counting": true,
@@ -99,6 +127,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:25:40.073Z",
+  "scrapedAt": "2026-11-02T15:35:14.639Z",
   "url": "https://www.europeangolfrankings.com/players/56092"
 }

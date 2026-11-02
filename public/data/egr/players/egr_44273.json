@@ -8,11 +8,25 @@
   "club": "Margherita",
   "ageGroup": "U16",
   "tournamentsPlayed": 15,
-  "egrRank": 2466,
+  "egrRank": 2489,
   "egrPoints": 2206.42,
   "avgScore": 77.61,
   "avgToCR": 76.86,
   "events": [
+    {
+      "eventId": "12008",
+      "counting": false,
+      "pos": "40",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 94,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12000",
       "counting": false,
@@ -221,10 +235,11 @@
       "r2": 99,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:12.234Z",
+  "scrapedAt": "2026-11-02T15:30:13.154Z",
   "url": "https://www.europeangolfrankings.com/players/44273"
 }

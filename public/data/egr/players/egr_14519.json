@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": "Brommieknowe",
   "ageGroup": "U18",
-  "tournamentsPlayed": 1,
-  "egrRank": 10380,
-  "egrPoints": 0,
-  "avgScore": 85.75,
-  "avgToCR": 84.15,
+  "tournamentsPlayed": 3,
+  "egrRank": 7689,
+  "egrPoints": 183.92,
+  "avgScore": 81.63,
+  "avgToCR": 79.56,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "24",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 79,
+      "r2": 80,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 113.65
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "52",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 82,
+      "r2": 77,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 70.27
+    },
     {
       "eventId": "11484",
       "counting": true,
@@ -44,6 +72,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:11:22.050Z",
+  "scrapedAt": "2026-11-02T15:19:25.664Z",
   "url": "https://www.europeangolfrankings.com/players/14519"
 }

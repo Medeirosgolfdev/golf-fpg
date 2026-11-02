@@ -5,14 +5,42 @@
   "lastName": "ZHANG",
   "firstName": "Shiyu",
   "country": "Austria",
-  "club": "Am Wienerberg",
+  "club": null,
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 1564,
-  "egrPoints": 536.61,
-  "avgScore": 81.33,
-  "avgToCR": 78.32,
+  "tournamentsPlayed": 7,
+  "egrRank": 1253,
+  "egrPoints": 945.07,
+  "avgScore": 82.35,
+  "avgToCR": 79.84,
   "events": [
+    {
+      "eventId": "12518",
+      "counting": true,
+      "pos": "5",
+      "event": "AJGT U14/U12 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 84,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 95.42
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "58",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 87,
+      "r2": 91,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 313.04
+    },
     {
       "eventId": "12511",
       "counting": true,
@@ -85,6 +113,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:38.096Z",
+  "scrapedAt": "2026-11-02T15:34:04.391Z",
   "url": "https://www.europeangolfrankings.com/players/54018"
 }

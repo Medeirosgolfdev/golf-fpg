@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 1986,
-  "egrPoints": 270.18,
-  "avgScore": 82.65,
-  "avgToCR": 80.05,
+  "tournamentsPlayed": 10,
+  "egrRank": 1678,
+  "egrPoints": 465.42,
+  "avgScore": 81.65,
+  "avgToCR": 79.33,
   "events": [
+    {
+      "eventId": "12492",
+      "counting": true,
+      "pos": "7",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 80,
+      "r2": 80,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 195.24
+    },
+    {
+      "eventId": "12485",
+      "counting": true,
+      "pos": "16",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 77,
+      "r2": 82,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12474",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12454",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "Championnat du Léman 2026",
       "venue": "Montreux/Lausanne/Genève",
@@ -142,6 +170,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:16.197Z",
+  "scrapedAt": "2026-11-02T15:31:24.296Z",
   "url": "https://www.europeangolfrankings.com/players/47810"
 }

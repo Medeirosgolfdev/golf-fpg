@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Dinard",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 312,
-  "egrPoints": 14459.3,
-  "avgScore": 72.58,
-  "avgToCR": 71.44,
+  "tournamentsPlayed": 11,
+  "egrRank": 345,
+  "egrPoints": 13775.9,
+  "avgScore": 72.92,
+  "avgToCR": 71.66,
   "events": [
     {
       "eventId": "12194",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "12163",
-      "counting": false,
+      "counting": true,
       "pos": "10",
       "event": "Grand Prix des Aisses 2026",
       "venue": "Golf des Aisses",
@@ -179,10 +179,11 @@
       "r2": 70,
       "r3": 67,
       "r4": 69,
-      "egrPoints": 1285.35
+      "egrPoints": 1285.35,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:04.837Z",
+  "scrapedAt": "2026-11-02T15:27:51.724Z",
   "url": "https://www.europeangolfrankings.com/players/37450"
 }

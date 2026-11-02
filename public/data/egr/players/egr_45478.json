@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Ganton",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 5889,
-  "egrPoints": 413.57,
-  "avgScore": 81.5,
-  "avgToCR": 80.15,
+  "tournamentsPlayed": 3,
+  "egrRank": 5790,
+  "egrPoints": 444.39,
+  "avgScore": 81,
+  "avgToCR": 80.57,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "33",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 72,
+      "r2": 74,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 30.82
+    },
     {
       "eventId": "12617",
       "counting": true,
@@ -58,6 +72,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:37.849Z",
+  "scrapedAt": "2026-11-02T15:30:41.328Z",
   "url": "https://www.europeangolfrankings.com/players/45478"
 }

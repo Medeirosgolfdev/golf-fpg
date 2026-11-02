@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Ambrosiano",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1895,
-  "egrPoints": 3196.91,
-  "avgScore": 76.78,
-  "avgToCR": 76.47,
+  "tournamentsPlayed": 14,
+  "egrRank": 1916,
+  "egrPoints": 3213.3,
+  "avgScore": 76.96,
+  "avgToCR": 76.69,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "79",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 85,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "26",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 86,
+      "r2": 78,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 122.33
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11927",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "Menaggio Legacy 16 Trophy 2026",
       "venue": "Golf Club Menaggio & Cadenabbia",
@@ -198,6 +226,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:42.281Z",
+  "scrapedAt": "2026-11-02T15:31:53.728Z",
   "url": "https://www.europeangolfrankings.com/players/49012"
 }

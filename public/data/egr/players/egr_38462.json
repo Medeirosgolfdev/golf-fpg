@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Modena",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 3013,
-  "egrPoints": 1606.19,
-  "avgScore": 78.41,
-  "avgToCR": 77.26,
+  "tournamentsPlayed": 8,
+  "egrRank": 2661,
+  "egrPoints": 1972.37,
+  "avgScore": 77.74,
+  "avgToCR": 76.93,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "71",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 71,
+      "r2": 86,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 338.29
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "18",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 78,
+      "r2": 74,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 527.75
+    },
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "24",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 79,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 145.63
+    },
     {
       "eventId": "11993",
       "counting": true,
@@ -95,7 +137,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 388.72
+      "egrPoints": 388.72,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -109,7 +152,8 @@
       "r2": 76,
       "r3": 80,
       "r4": null,
-      "egrPoints": 256.76
+      "egrPoints": 256.76,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -128,6 +172,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:29.915Z",
+  "scrapedAt": "2026-11-02T15:28:18.804Z",
   "url": "https://www.europeangolfrankings.com/players/38462"
 }

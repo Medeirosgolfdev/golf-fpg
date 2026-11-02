@@ -8,11 +8,25 @@
   "club": "Southerndown",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 1857,
-  "egrPoints": 3278.29,
-  "avgScore": 77.6,
-  "avgToCR": 76.88,
+  "egrRank": 1793,
+  "egrPoints": 3489.54,
+  "avgScore": 77,
+  "avgToCR": 76.47,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "13",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 71,
+      "r2": 65,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 254.86
+    },
     {
       "eventId": "12619",
       "counting": true,
@@ -123,7 +137,8 @@
       "r2": 76,
       "r3": 80,
       "r4": null,
-      "egrPoints": 43.61
+      "egrPoints": 43.61,
+      "_mantido": true
     },
     {
       "eventId": "11115",
@@ -142,6 +157,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:25.090Z",
+  "scrapedAt": "2026-11-02T15:32:41.532Z",
   "url": "https://www.europeangolfrankings.com/players/50512"
 }

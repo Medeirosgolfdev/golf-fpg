@@ -8,11 +8,25 @@
   "club": null,
   "ageGroup": "U14",
   "tournamentsPlayed": 11,
-  "egrRank": 231,
-  "egrPoints": 7918.75,
-  "avgScore": 73.05,
-  "avgToCR": 70.63,
+  "egrRank": 225,
+  "egrPoints": 8210.4,
+  "avgScore": 72.86,
+  "avgToCR": 70.44,
   "events": [
+    {
+      "eventId": "12518",
+      "counting": true,
+      "pos": "1",
+      "event": "AJGT U14/U12 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 72,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 459.9
+    },
     {
       "eventId": "12122",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "12888",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "Faldo Junior Tour (Lithuania) 2026",
       "venue": "European Centre Golf Club",
@@ -165,10 +179,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 115.31
+      "egrPoints": 115.31,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:09.074Z",
+  "scrapedAt": "2026-11-02T15:33:32.486Z",
   "url": "https://www.europeangolfrankings.com/players/52910"
 }

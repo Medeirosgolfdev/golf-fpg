@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Gardagolf",
   "ageGroup": "U14",
-  "tournamentsPlayed": 6,
-  "egrRank": 3147,
-  "egrPoints": 17.89,
-  "avgScore": 92.07,
-  "avgToCR": 90.99,
+  "tournamentsPlayed": 9,
+  "egrRank": 2676,
+  "egrPoints": 83.5,
+  "avgScore": 92.18,
+  "avgToCR": 90.75,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "55",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 97,
+      "r2": 93,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 65.61
+    },
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "26",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 94,
+      "r2": 94,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12009",
+      "counting": true,
+      "pos": "14",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 94,
+      "r2": 96,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11952",
       "counting": true,
@@ -85,7 +127,7 @@
     },
     {
       "eventId": "12653",
-      "counting": true,
+      "counting": false,
       "pos": "63",
       "event": "Faldo (Italy) 2026",
       "venue": "Gardagolf CC",
@@ -99,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:25:11.802Z",
+  "scrapedAt": "2026-11-02T15:34:42.540Z",
   "url": "https://www.europeangolfrankings.com/players/55183"
 }

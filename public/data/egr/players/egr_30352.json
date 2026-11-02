@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Kempferhof",
   "ageGroup": "U21",
-  "tournamentsPlayed": 1,
-  "egrRank": 2284,
-  "egrPoints": 163.76,
-  "avgScore": 76.67,
-  "avgToCR": 75.47,
+  "tournamentsPlayed": 2,
+  "egrRank": 1401,
+  "egrPoints": 743.7,
+  "avgScore": 75.2,
+  "avgToCR": 74.24,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 73,
+      "r2": 71,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 579.94
+    },
     {
       "eventId": "12186",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:26.072Z",
+  "scrapedAt": "2026-11-02T15:25:00.002Z",
   "url": "https://www.europeangolfrankings.com/players/30352"
 }

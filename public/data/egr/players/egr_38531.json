@@ -7,15 +7,43 @@
   "country": "France",
   "club": "Esery",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 1846,
-  "egrPoints": 3309.76,
-  "avgScore": 76.18,
-  "avgToCR": 75.66,
+  "tournamentsPlayed": 11,
+  "egrRank": 1560,
+  "egrPoints": 4170.59,
+  "avgScore": 76.52,
+  "avgToCR": 75.95,
   "events": [
     {
-      "eventId": "12173",
+      "eventId": "12208",
       "counting": true,
+      "pos": "28",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 76,
+      "r2": 81,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 448
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "25",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 582.03
+    },
+    {
+      "eventId": "12173",
+      "counting": false,
       "pos": "6",
       "event": "Grand Prix de Rougemont 2026",
       "venue": "Golf de Rougemont-le-Château",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12056",
-      "counting": true,
+      "counting": false,
       "pos": "45",
       "event": "Grand Prix de Château L'Arc 2026",
       "venue": "Château l'Arc Golf Club",
@@ -141,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:32.541Z",
+  "scrapedAt": "2026-11-02T15:28:21.613Z",
   "url": "https://www.europeangolfrankings.com/players/38531"
 }

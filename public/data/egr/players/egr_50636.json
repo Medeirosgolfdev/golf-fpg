@@ -7,15 +7,29 @@
   "country": "France",
   "club": "Aix Les Bains",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 826,
-  "egrPoints": 1952.63,
-  "avgScore": 79.69,
-  "avgToCR": 78.91,
+  "tournamentsPlayed": 9,
+  "egrRank": 811,
+  "egrPoints": 2086.22,
+  "avgScore": 79.47,
+  "avgToCR": 78.72,
   "events": [
     {
-      "eventId": "11768",
+      "eventId": "12204",
       "counting": true,
+      "pos": "8",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 79,
+      "r2": 71,
+      "r3": 90,
+      "r4": null,
+      "egrPoints": 133.59
+    },
+    {
+      "eventId": "11768",
+      "counting": false,
       "pos": "87",
       "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
       "venue": "Golf de Morfontaine",
@@ -142,6 +156,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:28.130Z",
+  "scrapedAt": "2026-11-02T15:32:45.127Z",
   "url": "https://www.europeangolfrankings.com/players/50636"
 }

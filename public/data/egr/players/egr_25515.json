@@ -7,10 +7,10 @@
   "country": "Germany",
   "club": "Schloss Guttenburg",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 319,
-  "egrPoints": 5971.29,
-  "avgScore": 78.06,
+  "tournamentsPlayed": 11,
+  "egrRank": 343,
+  "egrPoints": 5695.32,
+  "avgScore": 78.28,
   "avgToCR": 73.72,
   "events": [
     {
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12671",
-      "counting": false,
+      "counting": true,
       "pos": "19",
       "event": "DGV-Bayern Meisterschaft Damen 2026",
       "venue": "Golfclub München Valley",
@@ -179,7 +179,8 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 370.41
+      "egrPoints": 370.41,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -198,6 +199,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:14:09.268Z",
+  "scrapedAt": "2026-11-02T15:22:30.684Z",
   "url": "https://www.europeangolfrankings.com/players/25515"
 }

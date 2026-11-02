@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Mionnay",
   "ageGroup": "U21",
-  "tournamentsPlayed": 8,
-  "egrRank": 434,
-  "egrPoints": 4387.73,
-  "avgScore": 76.37,
-  "avgToCR": 74.16,
+  "tournamentsPlayed": 9,
+  "egrRank": 429,
+  "egrPoints": 4523.56,
+  "avgScore": 76.73,
+  "avgToCR": 74.46,
   "events": [
+    {
+      "eventId": "12204",
+      "counting": true,
+      "pos": "7",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 78,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 135.82
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -142,6 +156,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:19:03.424Z",
+  "scrapedAt": "2026-11-02T15:27:50.189Z",
   "url": "https://www.europeangolfrankings.com/players/37359"
 }

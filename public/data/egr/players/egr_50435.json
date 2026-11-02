@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Nimes Campagne",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 2269,
-  "egrPoints": 2453.16,
-  "avgScore": 75.81,
-  "avgToCR": 76.48,
+  "tournamentsPlayed": 12,
+  "egrRank": 1920,
+  "egrPoints": 3203.32,
+  "avgScore": 75.61,
+  "avgToCR": 76.12,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "32",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 527.7
+    },
+    {
+      "eventId": "12208",
+      "counting": false,
+      "pos": "44",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 80,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12192",
+      "counting": true,
+      "pos": "7",
+      "event": "Grand Prix du Luberon 2026",
+      "venue": "Golf Du Luberon",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 247.94
+    },
     {
       "eventId": "12285",
       "counting": false,
@@ -71,7 +113,7 @@
     },
     {
       "eventId": "12112",
-      "counting": true,
+      "counting": false,
       "pos": "25",
       "event": "Grand Prix Jeunes Majeur Garçons U14 2026",
       "venue": "Golf de Bondues (Hawtree)",
@@ -99,7 +141,7 @@
     },
     {
       "eventId": "11841",
-      "counting": true,
+      "counting": false,
       "pos": "56",
       "event": "International French U14 Boys (Challenge Alexis Godillot) 2026",
       "venue": "Golf de Chantilly",
@@ -141,6 +183,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:21.345Z",
+  "scrapedAt": "2026-11-02T15:32:37.154Z",
   "url": "https://www.europeangolfrankings.com/players/50435"
 }

@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Montauban",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1908,
+  "tournamentsPlayed": 9,
+  "egrRank": 1939,
   "egrPoints": 3165.77,
-  "avgScore": 77.17,
-  "avgToCR": 76.36,
+  "avgScore": 77.13,
+  "avgToCR": 76.42,
   "events": [
     {
       "eventId": "12185",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12048",
-      "counting": false,
+      "counting": true,
       "pos": "100",
       "event": "Grand Prix Elite de Landiforne 2026",
       "venue": "Golf de Moliets/Seignosse",
@@ -151,10 +151,11 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:49.059Z",
+  "scrapedAt": "2026-11-02T15:33:08.460Z",
   "url": "https://www.europeangolfrankings.com/players/51849"
 }

@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Glenbervie",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 13,
-  "egrRank": 100,
-  "egrPoints": 25820.9,
-  "avgScore": 72.58,
-  "avgToCR": 69.43,
+  "tournamentsPlayed": 12,
+  "egrRank": 102,
+  "egrPoints": 25629.6,
+  "avgScore": 72.71,
+  "avgToCR": 69.67,
   "events": [
     {
       "eventId": "12882",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11771",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "R&A Student Series (St Andrews) 2026",
       "venue": "St Andrews (Old & Jubilee)",
@@ -193,7 +193,8 @@
       "r2": 71,
       "r3": 68,
       "r4": null,
-      "egrPoints": 937.65
+      "egrPoints": 937.65,
+      "_mantido": true
     },
     {
       "eventId": "11358",
@@ -212,6 +213,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:36.171Z",
+  "scrapedAt": "2026-11-02T15:20:46.347Z",
   "url": "https://www.europeangolfrankings.com/players/20644"
 }

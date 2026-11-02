@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Aldeburgh",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 7684,
-  "egrPoints": 177.46,
-  "avgScore": 77.5,
-  "avgToCR": 78.13,
+  "tournamentsPlayed": 2,
+  "egrRank": 8639,
+  "egrPoints": 105.9,
+  "avgScore": 81.4,
+  "avgToCR": 81.32,
   "events": [
+    {
+      "eventId": "12902",
+      "counting": true,
+      "pos": "21",
+      "event": "Loretto Junior Golf Tour Autumn/Winter 2026",
+      "venue": "Longniddry Golf Club",
+      "country": "Scotland",
+      "startDateRaw": "28. Sep 26",
+      "r1": 89,
+      "r2": 90,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12656",
       "counting": true,
@@ -39,7 +53,8 @@
       "r2": 69,
       "r3": 85,
       "r4": null,
-      "egrPoints": 58.31
+      "egrPoints": 58.31,
+      "_mantido": true
     },
     {
       "eventId": "11307",
@@ -53,10 +68,11 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 13.25
+      "egrPoints": 13.25,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:29.758Z",
+  "scrapedAt": "2026-11-02T15:30:32.371Z",
   "url": "https://www.europeangolfrankings.com/players/45033"
 }

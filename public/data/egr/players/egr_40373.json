@@ -8,11 +8,39 @@
   "club": "Terre Blanche",
   "ageGroup": "U16",
   "tournamentsPlayed": 15,
-  "egrRank": 201,
-  "egrPoints": 8751.35,
-  "avgScore": 73.64,
-  "avgToCR": 70.64,
+  "egrRank": 203,
+  "egrPoints": 9011.29,
+  "avgScore": 73.68,
+  "avgToCR": 70.79,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": false,
+      "pos": "10",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 287.21
+    },
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "9",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 76,
+      "r4": 72,
+      "egrPoints": 931.2
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -207,7 +235,8 @@
       "r2": 73,
       "r3": 76,
       "r4": 74,
-      "egrPoints": 671.26
+      "egrPoints": 671.26,
+      "_mantido": true
     },
     {
       "eventId": "10688",
@@ -221,7 +250,8 @@
       "r2": 67,
       "r3": 70,
       "r4": null,
-      "egrPoints": 156.45
+      "egrPoints": 156.45,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -240,6 +270,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:11.871Z",
+  "scrapedAt": "2026-11-02T15:29:05.372Z",
   "url": "https://www.europeangolfrankings.com/players/40373"
 }

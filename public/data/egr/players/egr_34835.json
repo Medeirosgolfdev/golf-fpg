@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Gog Magog",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 2761,
+  "tournamentsPlayed": 8,
+  "egrRank": 2771,
   "egrPoints": 1869.33,
   "avgScore": 79.24,
   "avgToCR": 78.34,
   "events": [
+    {
+      "eventId": "12968",
+      "counting": true,
+      "pos": "40",
+      "event": "County Championship (CAGU) 2026",
+      "venue": "Ely City Golf Club",
+      "country": "England",
+      "startDateRaw": "27. Sep 26",
+      "r1": 88,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12810",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:10.969Z",
+  "scrapedAt": "2026-11-02T15:26:53.059Z",
   "url": "https://www.europeangolfrankings.com/players/34835"
 }

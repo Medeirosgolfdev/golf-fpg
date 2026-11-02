@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Montecchia",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 1176,
-  "egrPoints": 1042.61,
-  "avgScore": 79.64,
-  "avgToCR": 77.45,
+  "tournamentsPlayed": 10,
+  "egrRank": 1107,
+  "egrPoints": 1217.54,
+  "avgScore": 79.5,
+  "avgToCR": 76.87,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "50",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 83,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 124.66
+    },
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "11",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 82,
+      "r2": 83,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 103.72
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11907",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "Trofeo Fondazione Sergio E Stella Montelatci 2026",
       "venue": "Pelagone Golf Club Toscana",
@@ -137,10 +165,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 36.2
+      "egrPoints": 36.2,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:08.435Z",
+  "scrapedAt": "2026-11-02T15:32:23.166Z",
   "url": "https://www.europeangolfrankings.com/players/49907"
 }

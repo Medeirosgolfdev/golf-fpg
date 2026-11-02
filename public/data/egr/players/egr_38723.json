@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hof Hausen",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 3032,
-  "egrPoints": 28.74,
-  "avgScore": 81.67,
-  "avgToCR": 80.22,
+  "tournamentsPlayed": 3,
+  "egrRank": 2180,
+  "egrPoints": 200.37,
+  "avgScore": 80,
+  "avgToCR": 78.8,
   "events": [
+    {
+      "eventId": "12937",
+      "counting": true,
+      "pos": "5",
+      "event": "DGV-Hessen Meisterschaft Mädchen 2026",
+      "venue": "Golfclub Friedberg",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 171.63
+    },
     {
       "eventId": "12783",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:40.695Z",
+  "scrapedAt": "2026-11-02T15:28:30.656Z",
   "url": "https://www.europeangolfrankings.com/players/38723"
 }

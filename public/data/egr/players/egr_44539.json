@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Milano",
   "ageGroup": "U14",
-  "tournamentsPlayed": 16,
-  "egrRank": 156,
-  "egrPoints": 10739.9,
-  "avgScore": 74.9,
-  "avgToCR": 71.17,
+  "tournamentsPlayed": 18,
+  "egrRank": 154,
+  "egrPoints": 10961.7,
+  "avgScore": 75.1,
+  "avgToCR": 70.82,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "14",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 77,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 609.54
+    },
+    {
+      "eventId": "12015",
+      "counting": false,
+      "pos": "26",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 82,
+      "r2": 78,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 42.5
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "11976",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Italian National Closed U14 Championships 2026",
       "venue": "Golf Club Folgaria",
@@ -254,6 +282,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:21:19.314Z",
+  "scrapedAt": "2026-11-02T15:30:20.921Z",
   "url": "https://www.europeangolfrankings.com/players/44539"
 }

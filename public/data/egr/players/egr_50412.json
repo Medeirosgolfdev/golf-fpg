@@ -8,11 +8,25 @@
   "club": "Lanniron Quimper",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 2748,
-  "egrPoints": 1885.14,
-  "avgScore": 77.94,
-  "avgToCR": 76.82,
+  "egrRank": 3423,
+  "egrPoints": 1294.35,
+  "avgScore": 80.65,
+  "avgToCR": 79.27,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "82",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 84,
+      "r2": 92,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 109.88
+    },
     {
       "eventId": "12185",
       "counting": true,
@@ -123,7 +137,8 @@
       "r2": 73,
       "r3": 69,
       "r4": 67,
-      "egrPoints": 700.66
+      "egrPoints": 700.66,
+      "_mantido": true
     },
     {
       "eventId": "11373",
@@ -142,6 +157,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:20.762Z",
+  "scrapedAt": "2026-11-02T15:32:36.454Z",
   "url": "https://www.europeangolfrankings.com/players/50412"
 }

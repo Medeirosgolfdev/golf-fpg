@@ -8,11 +8,39 @@
   "club": "Monticello",
   "ageGroup": "Adult",
   "tournamentsPlayed": 15,
-  "egrRank": 924,
+  "egrRank": 925,
   "egrPoints": 7032.51,
   "avgScore": 73.46,
   "avgToCR": 71.55,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": false,
+      "pos": "25",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 441.35
+    },
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "59",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 174.87
+    },
     {
       "eventId": "11995",
       "counting": false,
@@ -207,7 +235,8 @@
       "r2": 79,
       "r3": 77,
       "r4": null,
-      "egrPoints": 125.28
+      "egrPoints": 125.28,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -221,7 +250,8 @@
       "r2": 79,
       "r3": 78,
       "r4": null,
-      "egrPoints": 368.03
+      "egrPoints": 368.03,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -240,6 +270,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:16:45.823Z",
+  "scrapedAt": "2026-11-02T15:25:21.049Z",
   "url": "https://www.europeangolfrankings.com/players/31299"
 }

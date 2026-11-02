@@ -14,6 +14,20 @@
   "avgToCR": 67.2,
   "events": [
     {
+      "eventId": "12634",
+      "counting": false,
+      "pos": "9",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 69,
+      "r2": 77,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 1039
+    },
+    {
       "eventId": "12535",
       "counting": true,
       "pos": "4",
@@ -193,10 +207,11 @@
       "r2": 69,
       "r3": 70,
       "r4": null,
-      "egrPoints": 1001.7
+      "egrPoints": 1001.7,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:16:10.713Z",
+  "scrapedAt": "2026-11-02T15:24:43.077Z",
   "url": "https://www.europeangolfrankings.com/players/29730"
 }

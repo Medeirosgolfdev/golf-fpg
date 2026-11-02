@@ -7,11 +7,11 @@
   "country": "England",
   "club": "Oakmere",
   "ageGroup": "U25",
-  "tournamentsPlayed": 10,
-  "egrRank": 376,
-  "egrPoints": 5170.19,
+  "tournamentsPlayed": 9,
+  "egrRank": 391,
+  "egrPoints": 5047.92,
   "avgScore": 75.73,
-  "avgToCR": 74.11,
+  "avgToCR": 74.2,
   "events": [
     {
       "eventId": "12917",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11411",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "29th Faldo Junior Tour Europe Grand Final 2025",
       "venue": "Al Ain Equestrian, Shooting & Golf Club",
@@ -151,10 +151,11 @@
       "r2": 74,
       "r3": 74,
       "r4": null,
-      "egrPoints": 174.83
+      "egrPoints": 174.83,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:14:37.296Z",
+  "scrapedAt": "2026-11-02T15:23:02.270Z",
   "url": "https://www.europeangolfrankings.com/players/26837"
 }

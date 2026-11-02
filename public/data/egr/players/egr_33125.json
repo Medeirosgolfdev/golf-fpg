@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 44,
-  "egrPoints": 21789.4,
-  "avgScore": 72.65,
-  "avgToCR": 68.75,
+  "tournamentsPlayed": 14,
+  "egrRank": 48,
+  "egrPoints": 20776,
+  "avgScore": 72.4,
+  "avgToCR": 68.86,
   "events": [
     {
       "eventId": "11766",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12388",
-      "counting": false,
+      "counting": true,
       "pos": "19",
       "event": "Annika Invitational Europe 2026",
       "venue": "Upsala Golfklubb",
@@ -221,7 +221,8 @@
       "r2": 75,
       "r3": 76,
       "r4": null,
-      "egrPoints": 2452.5
+      "egrPoints": 2452.5,
+      "_mantido": true
     },
     {
       "eventId": "10372",
@@ -235,7 +236,8 @@
       "r2": 70,
       "r3": 77,
       "r4": null,
-      "egrPoints": 147.5
+      "egrPoints": 147.5,
+      "_mantido": true
     },
     {
       "eventId": "10365",
@@ -254,6 +256,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:35.577Z",
+  "scrapedAt": "2026-11-02T15:26:14.509Z",
   "url": "https://www.europeangolfrankings.com/players/33125"
 }

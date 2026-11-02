@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Lauro",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 1183,
-  "egrPoints": 1031.2,
-  "avgScore": 82.11,
-  "avgToCR": 79.03,
+  "tournamentsPlayed": 5,
+  "egrRank": 1060,
+  "egrPoints": 1330.27,
+  "avgScore": 82.36,
+  "avgToCR": 79.08,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "73",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 79,
+      "r2": 88,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 299.07
+    },
     {
       "eventId": "12258",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:58.168Z",
+  "scrapedAt": "2026-11-02T15:31:03.567Z",
   "url": "https://www.europeangolfrankings.com/players/46486"
 }

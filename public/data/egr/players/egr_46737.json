@@ -8,11 +8,25 @@
   "club": "Perigueux",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 1546,
-  "egrPoints": 555.41,
-  "avgScore": 80,
-  "avgToCR": 76.83,
+  "egrRank": 1061,
+  "egrPoints": 1328.4,
+  "avgScore": 79,
+  "avgToCR": 75.89,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "16",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": 72,
+      "r4": 74,
+      "egrPoints": 855.65
+    },
     {
       "eventId": "12182",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 82.67
+      "egrPoints": 82.67,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:01.433Z",
+  "scrapedAt": "2026-11-02T15:31:07.048Z",
   "url": "https://www.europeangolfrankings.com/players/46737"
 }

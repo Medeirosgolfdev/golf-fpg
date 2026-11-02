@@ -7,11 +7,11 @@
   "country": "Denmark",
   "club": "Ledreborg Palace",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1701,
+  "tournamentsPlayed": 11,
+  "egrRank": 1717,
   "egrPoints": 434.57,
   "avgScore": 83.77,
-  "avgToCR": 80.61,
+  "avgToCR": 80.4,
   "events": [
     {
       "eventId": "12609",
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "12409",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "Danish Juniors Int.-Marbæk by NorSea (U18) 2026",
       "venue": "Esbjerg Golfklub (52)",
@@ -179,7 +179,8 @@
       "r2": 88,
       "r3": 95,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11362",
@@ -198,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:31.792Z",
+  "scrapedAt": "2026-11-02T15:32:49.241Z",
   "url": "https://www.europeangolfrankings.com/players/50964"
 }

@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Mionnay",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 1836,
-  "egrPoints": 346.96,
-  "avgScore": 79.67,
-  "avgToCR": 78.37,
+  "tournamentsPlayed": 6,
+  "egrRank": 1411,
+  "egrPoints": 730.94,
+  "avgScore": 80.43,
+  "avgToCR": 78.63,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "59",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 262.18
+    },
+    {
+      "eventId": "12216",
+      "counting": true,
+      "pos": "8",
+      "event": "Grand Prix de Valescure 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 81,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 121.8
+    },
     {
       "eventId": "12182",
       "counting": true,
@@ -86,6 +114,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:34.486Z",
+  "scrapedAt": "2026-11-02T15:34:00.301Z",
   "url": "https://www.europeangolfrankings.com/players/53720"
 }

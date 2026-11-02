@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bordelais",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
+  "tournamentsPlayed": 9,
   "egrRank": 145,
-  "egrPoints": 21819.3,
-  "avgScore": 71.71,
-  "avgToCR": 70.4,
+  "egrPoints": 21584.9,
+  "avgScore": 72.13,
+  "avgToCR": 70.47,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "4",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 74,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 1659.79
+    },
     {
       "eventId": "12876",
       "counting": true,
@@ -137,7 +151,8 @@
       "r2": 68,
       "r3": 67,
       "r4": 71,
-      "egrPoints": 1894.2
+      "egrPoints": 1894.2,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -151,10 +166,11 @@
       "r2": 70,
       "r3": 72,
       "r4": null,
-      "egrPoints": 770.53
+      "egrPoints": 770.53,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:32.646Z",
+  "scrapedAt": "2026-11-02T15:27:16.184Z",
   "url": "https://www.europeangolfrankings.com/players/36002"
 }

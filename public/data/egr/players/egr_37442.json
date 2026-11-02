@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Savenay",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 1277,
-  "egrPoints": 5212.07,
-  "avgScore": 75.12,
-  "avgToCR": 73.68,
+  "tournamentsPlayed": 10,
+  "egrRank": 887,
+  "egrPoints": 7387.54,
+  "avgScore": 74.32,
+  "avgToCR": 73.5,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "4",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 68,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 796.8
+    },
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "7",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 69,
+      "r2": 70,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 909.92
+    },
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 71,
+      "r2": 77,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 468.75
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -71,7 +113,7 @@
     },
     {
       "eventId": "12073",
-      "counting": true,
+      "counting": false,
       "pos": "74",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -128,6 +170,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:04.581Z",
+  "scrapedAt": "2026-11-02T15:27:51.492Z",
   "url": "https://www.europeangolfrankings.com/players/37442"
 }

@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Royal Park Roveri",
   "ageGroup": "U18",
-  "tournamentsPlayed": 19,
-  "egrRank": 2275,
-  "egrPoints": 2446.66,
-  "avgScore": 76.88,
-  "avgToCR": 75.94,
+  "tournamentsPlayed": 18,
+  "egrRank": 2734,
+  "egrPoints": 1898.16,
+  "avgScore": 77.4,
+  "avgToCR": 76.8,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": false,
+      "pos": "60",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 83,
+      "r2": 89,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "66",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12000",
       "counting": false,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "11989",
-      "counting": false,
+      "counting": true,
       "pos": "20",
       "event": "Gara Nazionale (Caffe Vergnano) 2026",
       "venue": "Golf Club Sestrieres",
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11936",
-      "counting": false,
+      "counting": true,
       "pos": "23",
       "event": "Memorial Lillo Angelini 2026",
       "venue": "Golf Dei Laghi",
@@ -249,7 +277,8 @@
       "r2": 77,
       "r3": 83,
       "r4": null,
-      "egrPoints": 125.28
+      "egrPoints": 125.28,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -263,7 +292,8 @@
       "r2": 85,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -277,7 +307,8 @@
       "r2": 74,
       "r3": 76,
       "r4": null,
-      "egrPoints": 599.11
+      "egrPoints": 599.11,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -296,6 +327,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:08.442Z",
+  "scrapedAt": "2026-11-02T15:29:01.429Z",
   "url": "https://www.europeangolfrankings.com/players/40205"
 }

@@ -7,12 +7,54 @@
   "country": "Germany",
   "club": "Frankfurt",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 1324,
-  "egrPoints": 4971.55,
-  "avgScore": 73.04,
-  "avgToCR": 72.6,
+  "tournamentsPlayed": 16,
+  "egrRank": 1225,
+  "egrPoints": 5440.31,
+  "avgScore": 72.16,
+  "avgToCR": 71.91,
   "events": [
+    {
+      "eventId": "12962",
+      "counting": true,
+      "pos": "2",
+      "event": "DEUTSCHLANDFINALE (JGM) 2026",
+      "venue": "Thüringer Golfclub",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 377.82
+    },
+    {
+      "eventId": "12951",
+      "counting": true,
+      "pos": "2",
+      "event": "Germany Final (Junior Golf Masters) 2026",
+      "venue": "Thüringer Golfclub Drei Geichen",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 552.19
+    },
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "6",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 73,
+      "r2": 74,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 380.12
+    },
     {
       "eventId": "12910",
       "counting": true,
@@ -57,7 +99,7 @@
     },
     {
       "eventId": "11566",
-      "counting": true,
+      "counting": false,
       "pos": "14",
       "event": "Rhein Main Junior Golf Open by PDI 2026",
       "venue": "Golf Club Neuhof",
@@ -113,7 +155,7 @@
     },
     {
       "eventId": "12780",
-      "counting": true,
+      "counting": false,
       "pos": "10",
       "event": "DGV-Region 4 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Wiesensee",
@@ -141,7 +183,7 @@
     },
     {
       "eventId": "11546",
-      "counting": true,
+      "counting": false,
       "pos": "16",
       "event": "Lake Constance Junior Games (GJG) 2026",
       "venue": "Country Club Schloss Langenstein",
@@ -197,6 +239,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:18:40.073Z",
+  "scrapedAt": "2026-11-02T15:27:24.255Z",
   "url": "https://www.europeangolfrankings.com/players/36353"
 }

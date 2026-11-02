@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Angers",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 1092,
+  "tournamentsPlayed": 8,
+  "egrRank": 1121,
   "egrPoints": 1190.09,
-  "avgScore": 79.47,
-  "avgToCR": 78.72,
+  "avgScore": 79.78,
+  "avgToCR": 79.07,
   "events": [
     {
       "eventId": "12242",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11650",
-      "counting": false,
+      "counting": true,
       "pos": "24",
       "event": "Portuguese International U14 Championship (Major) 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -137,7 +137,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11372",
@@ -156,6 +157,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:27.756Z",
+  "scrapedAt": "2026-11-02T15:32:44.591Z",
   "url": "https://www.europeangolfrankings.com/players/50628"
 }

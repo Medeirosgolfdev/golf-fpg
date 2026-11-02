@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 3778,
-  "egrPoints": 1079.43,
-  "avgScore": 78.55,
-  "avgToCR": 78.95,
+  "tournamentsPlayed": 10,
+  "egrRank": 3743,
+  "egrPoints": 1102.61,
+  "avgScore": 78.75,
+  "avgToCR": 78.79,
   "events": [
+    {
+      "eventId": "11632",
+      "counting": true,
+      "pos": "5",
+      "event": "Neuenhof Open (JTG) 2026",
+      "venue": "Golfclub Gut Neuenhof",
+      "country": "Germany",
+      "startDateRaw": "20. Oct 26",
+      "r1": 74,
+      "r2": 77,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 64.88
+    },
     {
       "eventId": "12911",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11420",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Srixon Junior Open Birkhof (JTG) 2026",
       "venue": "Golfpark Rittergut Birkhof",
@@ -156,6 +170,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:46.582Z",
+  "scrapedAt": "2026-11-02T15:33:05.588Z",
   "url": "https://www.europeangolfrankings.com/players/51688"
 }

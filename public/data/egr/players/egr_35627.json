@@ -8,11 +8,25 @@
   "club": "Hossegor",
   "ageGroup": "U18",
   "tournamentsPlayed": 11,
-  "egrRank": 916,
-  "egrPoints": 7106.72,
-  "avgScore": 74.83,
-  "avgToCR": 74.72,
+  "egrRank": 945,
+  "egrPoints": 6886,
+  "avgScore": 75.1,
+  "avgToCR": 74.19,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "17",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 749.25
+    },
     {
       "eventId": "12185",
       "counting": true,
@@ -165,7 +179,8 @@
       "r2": 75,
       "r3": 72,
       "r4": 67,
-      "egrPoints": 582.62
+      "egrPoints": 582.62,
+      "_mantido": true
     },
     {
       "eventId": "11409",
@@ -184,6 +199,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:23.414Z",
+  "scrapedAt": "2026-11-02T15:27:06.389Z",
   "url": "https://www.europeangolfrankings.com/players/35627"
 }

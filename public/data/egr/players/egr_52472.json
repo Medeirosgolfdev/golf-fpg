@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Skerries",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 3274,
-  "egrPoints": 1375.56,
-  "avgScore": 79.43,
-  "avgToCR": 78.59,
+  "tournamentsPlayed": 13,
+  "egrRank": 3209,
+  "egrPoints": 1441.81,
+  "avgScore": 79.14,
+  "avgToCR": 78.66,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "23",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 76,
+      "r2": 78,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 66.25
+    },
     {
       "eventId": "12893",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12850",
-      "counting": true,
+      "counting": false,
       "pos": "33",
       "event": "Irish Elite WAGR Tour #7 2026",
       "venue": "Knightsbrook Hotel & Golf Resort",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:02.519Z",
+  "scrapedAt": "2026-11-02T15:33:24.260Z",
   "url": "https://www.europeangolfrankings.com/players/52472"
 }

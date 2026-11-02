@@ -8,11 +8,39 @@
   "club": "Basel",
   "ageGroup": "U18",
   "tournamentsPlayed": 12,
-  "egrRank": 1082,
+  "egrRank": 1095,
   "egrPoints": 6075.2,
   "avgScore": 73.31,
   "avgToCR": 73.56,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": false,
+      "pos": "17",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 77,
+      "r2": 77,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 304.79
+    },
+    {
+      "eventId": "12484",
+      "counting": false,
+      "pos": "14",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 72,
+      "r2": 70,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 286.09
+    },
     {
       "eventId": "12475",
       "counting": true,
@@ -165,7 +193,8 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10373",
@@ -179,7 +208,8 @@
       "r2": 77,
       "r3": 71,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -198,6 +228,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:34.589Z",
+  "scrapedAt": "2026-11-02T15:28:23.875Z",
   "url": "https://www.europeangolfrankings.com/players/38563"
 }

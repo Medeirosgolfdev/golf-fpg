@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Bern",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 5669,
-  "egrPoints": 451.87,
-  "avgScore": 82.27,
-  "avgToCR": 84.22,
+  "tournamentsPlayed": 11,
+  "egrRank": 5116,
+  "egrPoints": 593.5,
+  "avgScore": 80.17,
+  "avgToCR": 81.28,
   "events": [
+    {
+      "eventId": "12490",
+      "counting": true,
+      "pos": "10",
+      "event": "Swiss Golf Final U14 (Crans-sur-Sierre) 2026",
+      "venue": "Golf Club Crans-sur-Sierre",
+      "country": "Switzerland",
+      "startDateRaw": "03. Oct 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 73.68
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "31",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 75,
+      "r2": 80,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 98.34
+    },
     {
       "eventId": "12478",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "10124",
-      "counting": true,
+      "counting": false,
       "pos": "38",
       "event": "Portuguese Junior Classics (GJG) 2025",
       "venue": "Praia dèl Rey/Westcliff Golfcourse",
@@ -151,7 +179,8 @@
       "r2": 89,
       "r3": 80,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11353",
@@ -170,6 +199,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:15.501Z",
+  "scrapedAt": "2026-11-02T15:31:23.451Z",
   "url": "https://www.europeangolfrankings.com/players/47795"
 }

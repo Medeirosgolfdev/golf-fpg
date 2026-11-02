@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Ile D'Or",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 1649,
-  "egrPoints": 3843.63,
-  "avgScore": 75.8,
-  "avgToCR": 74.91,
+  "tournamentsPlayed": 10,
+  "egrRank": 1312,
+  "egrPoints": 5063.55,
+  "avgScore": 75.64,
+  "avgToCR": 74.76,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "19",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 458.37
+    },
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "40",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 631.04
+    },
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "16",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 79,
+      "r2": 73,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 335.94
+    },
     {
       "eventId": "12165",
       "counting": true,
@@ -99,7 +141,7 @@
     },
     {
       "eventId": "12048",
-      "counting": true,
+      "counting": false,
       "pos": "109",
       "event": "Grand Prix Elite de Landiforne 2026",
       "venue": "Golf de Moliets/Seignosse",
@@ -123,7 +165,8 @@
       "r2": 70,
       "r3": 78,
       "r4": null,
-      "egrPoints": 205.43
+      "egrPoints": 205.43,
+      "_mantido": true
     },
     {
       "eventId": "11373",
@@ -142,6 +185,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:03.765Z",
+  "scrapedAt": "2026-11-02T15:31:09.949Z",
   "url": "https://www.europeangolfrankings.com/players/47187"
 }

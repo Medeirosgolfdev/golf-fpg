@@ -5,14 +5,28 @@
   "lastName": "FÖRSTER",
   "firstName": "Jimi",
   "country": "Germany",
-  "club": "GH Hof Treudelberg",
+  "club": "Hamburg Treudelberg",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 5800,
-  "egrPoints": 426.23,
-  "avgScore": 78.5,
-  "avgToCR": 78.4,
+  "tournamentsPlayed": 4,
+  "egrRank": 5945,
+  "egrPoints": 418.23,
+  "avgScore": 77.78,
+  "avgToCR": 78.01,
   "events": [
+    {
+      "eventId": "12943",
+      "counting": true,
+      "pos": "10",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 82.22
+    },
     {
       "eventId": "12851",
       "counting": true,
@@ -31,7 +45,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "38",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -39,7 +53,7 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 90.23
+      "egrPoints": 0
     },
     {
       "eventId": "12796",
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:20.788Z",
+  "scrapedAt": "2026-11-02T15:33:45.663Z",
   "url": "https://www.europeangolfrankings.com/players/53345"
 }

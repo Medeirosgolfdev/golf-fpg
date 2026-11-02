@@ -8,11 +8,39 @@
   "club": "Royal Park Roveri",
   "ageGroup": "U21",
   "tournamentsPlayed": 9,
-  "egrRank": 1514,
-  "egrPoints": 4297.29,
-  "avgScore": 75.88,
-  "avgToCR": 74.25,
+  "egrRank": 1448,
+  "egrPoints": 4548.42,
+  "avgScore": 75.83,
+  "avgToCR": 74.15,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "55",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 82,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "56",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 79,
+      "r2": 76,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 376.41
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -123,7 +151,8 @@
       "r2": 80,
       "r3": 78,
       "r4": null,
-      "egrPoints": 125.28
+      "egrPoints": 125.28,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -137,10 +166,11 @@
       "r2": 86,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:20:52.128Z",
+  "scrapedAt": "2026-11-02T15:29:49.996Z",
   "url": "https://www.europeangolfrankings.com/players/43062"
 }

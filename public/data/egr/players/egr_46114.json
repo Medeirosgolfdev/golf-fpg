@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Kronberg",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 4442,
+  "tournamentsPlayed": 9,
+  "egrRank": 4484,
   "egrPoints": 789.13,
-  "avgScore": 80,
-  "avgToCR": 80.37,
+  "avgScore": 80.28,
+  "avgToCR": 80.61,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "48",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 87,
+      "r2": 91,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12938",
+      "counting": false,
+      "pos": "68",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 84,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12911",
       "counting": true,
@@ -123,10 +151,11 @@
       "r2": 84,
       "r3": 91,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:21:51.646Z",
+  "scrapedAt": "2026-11-02T15:30:55.932Z",
   "url": "https://www.europeangolfrankings.com/players/46114"
 }

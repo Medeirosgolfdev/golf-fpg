@@ -7,12 +7,26 @@
   "country": "Wales",
   "club": "Neath",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 1450,
-  "egrPoints": 4495.94,
-  "avgScore": 75,
-  "avgToCR": 74.01,
+  "tournamentsPlayed": 7,
+  "egrRank": 1408,
+  "egrPoints": 4695.2,
+  "avgScore": 75.06,
+  "avgToCR": 74.27,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "16",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 199.26
+    },
     {
       "eventId": "12619",
       "counting": true,
@@ -114,6 +128,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:18:19.594Z",
+  "scrapedAt": "2026-11-02T15:27:02.279Z",
   "url": "https://www.europeangolfrankings.com/players/35525"
 }

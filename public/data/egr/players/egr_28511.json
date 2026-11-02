@@ -8,11 +8,25 @@
   "club": "Margara",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 167,
+  "egrRank": 165,
   "egrPoints": 20143.8,
   "avgScore": 71.42,
   "avgToCR": 69.02,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "19",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 71,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 1034.37
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -207,10 +221,11 @@
       "r2": 81,
       "r3": 79,
       "r4": null,
-      "egrPoints": 445.05
+      "egrPoints": 445.05,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:28.006Z",
+  "scrapedAt": "2026-11-02T15:23:57.558Z",
   "url": "https://www.europeangolfrankings.com/players/28511"
 }

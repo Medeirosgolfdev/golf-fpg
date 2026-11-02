@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Garda",
   "ageGroup": "U21",
-  "tournamentsPlayed": 9,
-  "egrRank": 307,
-  "egrPoints": 14757.3,
-  "avgScore": 72.15,
-  "avgToCR": 69.78,
+  "tournamentsPlayed": 11,
+  "egrRank": 358,
+  "egrPoints": 13493.1,
+  "avgScore": 72.08,
+  "avgToCR": 69.7,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": false,
+      "pos": "17",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 77,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 577.44
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "4",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 1221.25
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "7",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 72,
+      "r2": 73,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 1464.13
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -57,7 +99,7 @@
     },
     {
       "eventId": "11986",
-      "counting": true,
+      "counting": false,
       "pos": "16",
       "event": "Mattone d'Oro 2026",
       "venue": "Golf Club Bergamo L'Albenza",
@@ -137,10 +179,11 @@
       "r2": 69,
       "r3": 76,
       "r4": null,
-      "egrPoints": 3594.68
+      "egrPoints": 3594.68,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:07.194Z",
+  "scrapedAt": "2026-11-02T15:25:43.692Z",
   "url": "https://www.europeangolfrankings.com/players/32180"
 }

@@ -8,11 +8,25 @@
   "club": "Smorum",
   "ageGroup": "U25",
   "tournamentsPlayed": 15,
-  "egrRank": 99,
-  "egrPoints": 25894,
-  "avgScore": 72.24,
-  "avgToCR": 69.85,
+  "egrRank": 70,
+  "egrPoints": 29151.2,
+  "avgScore": 71.96,
+  "avgToCR": 69.5,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "1",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 71,
+      "r2": 68,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 4534.6
+    },
     {
       "eventId": "11673",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11667",
-      "counting": true,
+      "counting": false,
       "pos": "116",
       "event": "St Andrews Links Trophy 2026",
       "venue": "St Andrews (New & Old)",
@@ -221,10 +235,11 @@
       "r2": 72,
       "r3": 72,
       "r4": null,
-      "egrPoints": 170.1
+      "egrPoints": 170.1,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:16:12.382Z",
+  "scrapedAt": "2026-11-02T15:24:45.185Z",
   "url": "https://www.europeangolfrankings.com/players/29801"
 }

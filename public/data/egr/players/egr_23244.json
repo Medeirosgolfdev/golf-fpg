@@ -7,12 +7,26 @@
   "country": "Austria",
   "club": "Murhof",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 1811,
-  "egrPoints": 3392.06,
-  "avgScore": 70.55,
-  "avgToCR": 68.98,
+  "tournamentsPlayed": 5,
+  "egrRank": 1754,
+  "egrPoints": 3597.79,
+  "avgScore": 71.43,
+  "avgToCR": 69.79,
   "events": [
+    {
+      "eventId": "11632",
+      "counting": true,
+      "pos": "2",
+      "event": "Neuenhof Open (JTG) 2026",
+      "venue": "Golfclub Gut Neuenhof",
+      "country": "Germany",
+      "startDateRaw": "20. Oct 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 205.73
+    },
     {
       "eventId": "11446",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:13:21.907Z",
+  "scrapedAt": "2026-11-02T15:21:37.991Z",
   "url": "https://www.europeangolfrankings.com/players/23244"
 }

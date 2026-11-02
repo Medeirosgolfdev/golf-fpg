@@ -7,12 +7,26 @@
   "country": "Austria",
   "club": "Regau",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 13,
-  "egrPoints": 32344.1,
-  "avgScore": 72.17,
-  "avgToCR": 67.56,
+  "tournamentsPlayed": 11,
+  "egrRank": 6,
+  "egrPoints": 36343.3,
+  "avgScore": 72.13,
+  "avgToCR": 67.69,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "3",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 71,
+      "r2": 71,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 3999.19
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11656",
-      "counting": true,
+      "counting": false,
       "pos": "38",
       "event": "Nations Cup (Copa Sotogrande) 2026",
       "venue": "Real Club de Golf Sotogrande",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:37.590Z",
+  "scrapedAt": "2026-11-02T15:26:16.546Z",
   "url": "https://www.europeangolfrankings.com/players/33200"
 }

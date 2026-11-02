@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Neuhof",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 9753,
-  "egrPoints": 36.35,
-  "avgScore": 85.33,
-  "avgToCR": 85.63,
+  "tournamentsPlayed": 4,
+  "egrRank": 9087,
+  "egrPoints": 76.84,
+  "avgScore": 85.89,
+  "avgToCR": 86.02,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "51",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 81,
+      "r2": 83,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 40.49
+    },
     {
       "eventId": "12798",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:25.201Z",
+  "scrapedAt": "2026-11-02T15:31:34.159Z",
   "url": "https://www.europeangolfrankings.com/players/48137"
 }

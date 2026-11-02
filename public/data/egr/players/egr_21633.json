@@ -8,11 +8,39 @@
   "club": "Valescure",
   "ageGroup": "Adult",
   "tournamentsPlayed": 8,
-  "egrRank": 747,
-  "egrPoints": 8570.34,
-  "avgScore": 73.39,
-  "avgToCR": 72.57,
+  "egrRank": 722,
+  "egrPoints": 8879.33,
+  "avgScore": 73.72,
+  "avgToCR": 73.18,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "2",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 67,
+      "r2": 71,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 2378.25
+    },
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "15",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 691.47
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -109,7 +137,8 @@
       "r2": 72,
       "r3": 73,
       "r4": null,
-      "egrPoints": 594.93
+      "egrPoints": 594.93,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -123,10 +152,11 @@
       "r2": 69,
       "r3": 65,
       "r4": null,
-      "egrPoints": 2165.8
+      "egrPoints": 2165.8,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:47.216Z",
+  "scrapedAt": "2026-11-02T15:20:59.085Z",
   "url": "https://www.europeangolfrankings.com/players/21633"
 }

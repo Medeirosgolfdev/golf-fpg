@@ -1,18 +1,32 @@
 {
   "id": "37527",
   "egrId": "MISL37527",
-  "name": "Markús Marelsson",
+  "name": "Markus Marelsson",
   "lastName": "MARELSSON",
-  "firstName": "Markús",
+  "firstName": "Markus",
   "country": "Iceland",
   "club": "Great Northern",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 841,
+  "tournamentsPlayed": 12,
+  "egrRank": 845,
   "egrPoints": 7756.95,
   "avgScore": 73.43,
   "avgToCR": 72.23,
   "events": [
+    {
+      "eventId": "12943",
+      "counting": false,
+      "pos": "6",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 76,
+      "r2": 71,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 139.7
+    },
     {
       "eventId": "11673",
       "counting": true,
@@ -184,6 +198,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:19:06.707Z",
+  "scrapedAt": "2026-11-02T15:27:53.851Z",
   "url": "https://www.europeangolfrankings.com/players/37527"
 }

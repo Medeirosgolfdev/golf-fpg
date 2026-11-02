@@ -1,18 +1,32 @@
 {
   "id": "30366",
-  "egrId": "MFRA30366",
+  "egrId": "PFRA30366",
   "name": "Martin Engel",
   "lastName": "ENGEL",
   "firstName": "Martin",
   "country": "France",
-  "club": "Manville",
+  "club": "Professional",
   "ageGroup": "Adult",
   "tournamentsPlayed": 4,
-  "egrRank": 786,
-  "egrPoints": 8259.23,
-  "avgScore": 72.09,
-  "avgToCR": 71.44,
+  "egrRank": null,
+  "egrPoints": 8767.75,
+  "avgScore": 71.45,
+  "avgToCR": 70.96,
   "events": [
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 71,
+      "r2": 72,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 1398.95
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -67,10 +81,11 @@
       "r2": 74,
       "r3": 71,
       "r4": null,
-      "egrPoints": 890.43
+      "egrPoints": 890.43,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:16:26.560Z",
+  "scrapedAt": "2026-11-02T15:25:00.468Z",
   "url": "https://www.europeangolfrankings.com/players/30366"
 }

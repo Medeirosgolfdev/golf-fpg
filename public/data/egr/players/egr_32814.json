@@ -8,11 +8,25 @@
   "club": "Tolcinasco",
   "ageGroup": "U18",
   "tournamentsPlayed": 13,
-  "egrRank": 2255,
+  "egrRank": 2273,
   "egrPoints": 2482.1,
   "avgScore": 76.67,
   "avgToCR": 76.18,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": false,
+      "pos": "85",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 80,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 165.07
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -193,7 +207,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10319",
@@ -227,6 +242,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:25.859Z",
+  "scrapedAt": "2026-11-02T15:26:03.857Z",
   "url": "https://www.europeangolfrankings.com/players/32814"
 }

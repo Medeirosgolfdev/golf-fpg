@@ -5,14 +5,28 @@
   "lastName": "MCGARVIE",
   "firstName": "Cameron",
   "country": "Scotland",
-  "club": "Prestwick St. Nicholas",
+  "club": "Prestwick",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 5,
-  "egrRank": 1934,
-  "egrPoints": 3098.87,
-  "avgScore": 76.46,
-  "avgToCR": 75.9,
+  "tournamentsPlayed": 6,
+  "egrRank": 1555,
+  "egrPoints": 4197.16,
+  "avgScore": 76.18,
+  "avgToCR": 75.21,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "27",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 76,
+      "r2": 69,
+      "r3": 75,
+      "r4": 77,
+      "egrPoints": 1098.29
+    },
     {
       "eventId": "12882",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:16:48.457Z",
+  "scrapedAt": "2026-11-02T15:25:23.887Z",
   "url": "https://www.europeangolfrankings.com/players/31414"
 }

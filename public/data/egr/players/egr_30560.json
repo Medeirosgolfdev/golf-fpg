@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Terre Blanche",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 158,
-  "egrPoints": 20907.2,
-  "avgScore": 71.92,
-  "avgToCR": 70.44,
+  "tournamentsPlayed": 9,
+  "egrRank": 182,
+  "egrPoints": 19657.7,
+  "avgScore": 72.13,
+  "avgToCR": 70.5,
   "events": [
     {
       "eventId": "12153",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12133",
-      "counting": false,
+      "counting": true,
       "pos": "73",
       "event": "Grand Prix de Chiberta 2026",
       "venue": "Golf de Chiberta",
@@ -151,7 +151,8 @@
       "r2": 75,
       "r3": 70,
       "r4": null,
-      "egrPoints": 1069.84
+      "egrPoints": 1069.84,
+      "_mantido": true
     },
     {
       "eventId": "11449",
@@ -165,7 +166,8 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -179,10 +181,11 @@
       "r2": 72,
       "r3": 69,
       "r4": null,
-      "egrPoints": 1249.5
+      "egrPoints": 1249.5,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:30.753Z",
+  "scrapedAt": "2026-11-02T15:25:05.395Z",
   "url": "https://www.europeangolfrankings.com/players/30560"
 }

@@ -5,14 +5,28 @@
   "lastName": "TÖPFNER",
   "firstName": "Lukas",
   "country": "Germany",
-  "club": "GH Hof Treudelberg",
+  "club": "Hamburg Treudelberg",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 6315,
-  "egrPoints": 336.79,
-  "avgScore": 80.29,
-  "avgToCR": 80.14,
+  "tournamentsPlayed": 4,
+  "egrRank": 5582,
+  "egrPoints": 487.05,
+  "avgScore": 78.11,
+  "avgToCR": 77.91,
   "events": [
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "20",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 78,
+      "r2": 74,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 292.88
+    },
     {
       "eventId": "12851",
       "counting": true,
@@ -31,7 +45,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "33",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -39,7 +53,7 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 142.62
+      "egrPoints": 0
     },
     {
       "eventId": "12796",
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:20.749Z",
+  "scrapedAt": "2026-11-02T15:33:45.675Z",
   "url": "https://www.europeangolfrankings.com/players/53344"
 }

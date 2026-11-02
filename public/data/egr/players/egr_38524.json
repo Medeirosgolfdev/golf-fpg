@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Kyburg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 17,
-  "egrRank": 1023,
-  "egrPoints": 6406.23,
-  "avgScore": 74.05,
-  "avgToCR": 73.95,
+  "tournamentsPlayed": 19,
+  "egrRank": 1000,
+  "egrPoints": 6560.39,
+  "avgScore": 73.61,
+  "avgToCR": 73.49,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "5",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 73,
+      "r2": 70,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 491.24
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "4",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": 66,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 432.72
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "12475",
-      "counting": true,
+      "counting": false,
       "pos": "13",
       "event": "Swiss Golf Junior Tour (Markgräflerland) 2026",
       "venue": "Golfclub Markgräflerland Kandern",
@@ -112,6 +140,20 @@
       "egrPoints": 394.52
     },
     {
+      "eventId": "12940",
+      "counting": false,
+      "pos": "9",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 73,
+      "r2": 81,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 277.91
+    },
+    {
       "eventId": "12460",
       "counting": true,
       "pos": "56",
@@ -155,7 +197,7 @@
     },
     {
       "eventId": "12448",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Swiss Golf Junior Tour (Sierre) 2026",
       "venue": "Golf Club de Sierre",
@@ -249,7 +291,8 @@
       "r2": 76,
       "r3": 71,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -268,6 +311,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:32.215Z",
+  "scrapedAt": "2026-11-02T15:28:21.185Z",
   "url": "https://www.europeangolfrankings.com/players/38524"
 }

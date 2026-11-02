@@ -7,12 +7,26 @@
   "country": "Netherlands",
   "club": "Eindhoven",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 82,
+  "tournamentsPlayed": 11,
+  "egrRank": 83,
   "egrPoints": 27801.2,
   "avgScore": 70.58,
   "avgToCR": 69.45,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": false,
+      "pos": "11",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 71,
+      "r2": 73,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 991.15
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:09.366Z",
+  "scrapedAt": "2026-11-02T15:27:56.805Z",
   "url": "https://www.europeangolfrankings.com/players/37685"
 }

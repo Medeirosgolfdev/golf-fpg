@@ -7,12 +7,40 @@
   "country": "Belgium",
   "club": "Royal Bercuit",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 1502,
-  "egrPoints": 4318.95,
-  "avgScore": 76.38,
-  "avgToCR": 76.35,
+  "tournamentsPlayed": 13,
+  "egrRank": 1425,
+  "egrPoints": 4619.45,
+  "avgScore": 76.25,
+  "avgToCR": 76.21,
   "events": [
+    {
+      "eventId": "12213",
+      "counting": true,
+      "pos": "21",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 82,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 364.22
+    },
+    {
+      "eventId": "12198",
+      "counting": false,
+      "pos": "58",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 78,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 215.54
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "11729",
-      "counting": true,
+      "counting": false,
       "pos": "17",
       "event": "Junior Open Wallonie - Vlaandere 2026",
       "venue": "Royal Waterloo Golf Club",
@@ -169,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:41.139Z",
+  "scrapedAt": "2026-11-02T15:27:25.581Z",
   "url": "https://www.europeangolfrankings.com/players/36417"
 }

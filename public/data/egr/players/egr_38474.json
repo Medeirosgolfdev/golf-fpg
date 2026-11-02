@@ -8,11 +8,39 @@
   "club": "Montecchia",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 1318,
-  "egrPoints": 5017.78,
-  "avgScore": 75.67,
-  "avgToCR": 73.87,
+  "egrRank": 1064,
+  "egrPoints": 6226.21,
+  "avgScore": 74.54,
+  "avgToCR": 72.97,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "19",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1156.25
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "6",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 854.87
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11931",
-      "counting": true,
+      "counting": false,
       "pos": "58",
       "event": "LXX Gran Premio Cittá Di Milano Trofeo Gianni Albertini 2026",
       "venue": "Golf Club Milano",
@@ -193,7 +221,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 127.2
+      "egrPoints": 127.2,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -207,10 +236,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 489.64
+      "egrPoints": 489.64,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:30.445Z",
+  "scrapedAt": "2026-11-02T15:28:19.279Z",
   "url": "https://www.europeangolfrankings.com/players/38474"
 }

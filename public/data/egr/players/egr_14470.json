@@ -7,12 +7,26 @@
   "country": "Finland",
   "club": "Tawast",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 9,
-  "egrRank": 65,
-  "egrPoints": 17785.6,
-  "avgScore": 73.83,
-  "avgToCR": 69.52,
+  "tournamentsPlayed": 10,
+  "egrRank": 47,
+  "egrPoints": 20782.8,
+  "avgScore": 73.71,
+  "avgToCR": 69.29,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "3",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 3999.19
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "12357",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "Finnish International Ladies' Amateur Championship 2026",
       "venue": "Aulangon Golfklubi (Eversti)",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:11:21.509Z",
+  "scrapedAt": "2026-11-02T15:19:25.148Z",
   "url": "https://www.europeangolfrankings.com/players/14470"
 }

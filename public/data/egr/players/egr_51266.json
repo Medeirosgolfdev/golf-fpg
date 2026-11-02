@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": "Lanark",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1366,
-  "egrPoints": 4781.02,
-  "avgScore": 74.95,
-  "avgToCR": 74.6,
+  "tournamentsPlayed": 12,
+  "egrRank": 1126,
+  "egrPoints": 5937.52,
+  "avgScore": 74.5,
+  "avgToCR": 73.85,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "9",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 80,
+      "r2": 79,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 286.03
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "5",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 77,
+      "r2": 71,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1083.75
+    },
     {
       "eventId": "11723",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "11719",
-      "counting": true,
+      "counting": false,
       "pos": "46",
       "event": "Junior Tour Kilspindie Boys 2026",
       "venue": "Kilspindie GC",
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "12729",
-      "counting": true,
+      "counting": false,
       "pos": "43",
       "event": "Goswick Classic (SGF) 2026",
       "venue": "Goswick Golf Club",
@@ -170,6 +198,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:38.751Z",
+  "scrapedAt": "2026-11-02T15:32:56.976Z",
   "url": "https://www.europeangolfrankings.com/players/51266"
 }

@@ -8,11 +8,25 @@
   "club": "Toulouse",
   "ageGroup": "U16",
   "tournamentsPlayed": 5,
-  "egrRank": 1469,
-  "egrPoints": 646.76,
-  "avgScore": 78.83,
-  "avgToCR": 75.78,
+  "egrRank": 1183,
+  "egrPoints": 1067.12,
+  "avgScore": 78.5,
+  "avgToCR": 75.47,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "37",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 517.91
+    },
     {
       "eventId": "12156",
       "counting": true,
@@ -81,10 +95,11 @@
       "r2": 84,
       "r3": null,
       "r4": null,
-      "egrPoints": 97.55
+      "egrPoints": 97.55,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:12.815Z",
+  "scrapedAt": "2026-11-02T15:31:20.418Z",
   "url": "https://www.europeangolfrankings.com/players/47721"
 }

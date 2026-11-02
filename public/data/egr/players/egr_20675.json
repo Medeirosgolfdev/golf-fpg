@@ -7,11 +7,11 @@
   "country": "England",
   "club": "Droitwich",
   "ageGroup": "U25",
-  "tournamentsPlayed": 12,
-  "egrRank": 54,
-  "egrPoints": 19248.3,
-  "avgScore": 72.85,
-  "avgToCR": 70.12,
+  "tournamentsPlayed": 10,
+  "egrRank": 60,
+  "egrPoints": 18229.8,
+  "avgScore": 73.31,
+  "avgToCR": 70.56,
   "events": [
     {
       "eventId": "11766",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11771",
-      "counting": false,
+      "counting": true,
       "pos": "26",
       "event": "R&A Student Series (St Andrews) 2026",
       "venue": "St Andrews (Old & Jubilee)",
@@ -165,7 +165,8 @@
       "r2": 74,
       "r3": 67,
       "r4": null,
-      "egrPoints": 330.75
+      "egrPoints": 330.75,
+      "_mantido": true
     },
     {
       "eventId": "11774",
@@ -179,7 +180,8 @@
       "r2": 76,
       "r3": 70,
       "r4": null,
-      "egrPoints": 1233.75
+      "egrPoints": 1233.75,
+      "_mantido": true
     },
     {
       "eventId": "11359",
@@ -198,6 +200,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:12:36.794Z",
+  "scrapedAt": "2026-11-02T15:20:46.992Z",
   "url": "https://www.europeangolfrankings.com/players/20675"
 }

@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Nimes Campagne",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 5480,
-  "egrPoints": 496.03,
-  "avgScore": 80.67,
-  "avgToCR": 80.33,
+  "tournamentsPlayed": 3,
+  "egrRank": 4905,
+  "egrPoints": 651.47,
+  "avgScore": 80.17,
+  "avgToCR": 80.45,
   "events": [
+    {
+      "eventId": "12192",
+      "counting": true,
+      "pos": "15",
+      "event": "Grand Prix du Luberon 2026",
+      "venue": "Golf Du Luberon",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 155.44
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:22.359Z",
+  "scrapedAt": "2026-11-02T15:32:38.148Z",
   "url": "https://www.europeangolfrankings.com/players/50455"
 }

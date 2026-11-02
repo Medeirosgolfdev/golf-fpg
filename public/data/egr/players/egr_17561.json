@@ -1,18 +1,32 @@
 {
   "id": "17561",
   "egrId": "MCZE17561",
-  "name": "Lukas Janda",
+  "name": "Lukáš Janda",
   "lastName": "JANDA",
-  "firstName": "Lukas",
+  "firstName": "Lukáš",
   "country": "Czech",
   "club": "Greensgate",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 1,
-  "egrRank": 2953,
-  "egrPoints": 1670.02,
-  "avgScore": 71,
-  "avgToCR": 68.3,
+  "tournamentsPlayed": 2,
+  "egrRank": 2256,
+  "egrPoints": 2508.03,
+  "avgScore": 72.71,
+  "avgToCR": 70.06,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "18",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 77,
+      "r2": 70,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 838.01
+    },
     {
       "eventId": "12842",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:11:51.705Z",
+  "scrapedAt": "2026-11-02T15:19:57.022Z",
   "url": "https://www.europeangolfrankings.com/players/17561"
 }

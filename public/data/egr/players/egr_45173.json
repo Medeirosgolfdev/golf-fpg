@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Esery",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 804,
-  "egrPoints": 2065.54,
-  "avgScore": 78.17,
-  "avgToCR": 76.55,
+  "tournamentsPlayed": 12,
+  "egrRank": 678,
+  "egrPoints": 2640.74,
+  "avgScore": 78.08,
+  "avgToCR": 76.16,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "37",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 517.91
+    },
+    {
+      "eventId": "12204",
+      "counting": true,
+      "pos": "9",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 82,
+      "r2": 80,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 95.74
+    },
     {
       "eventId": "11768",
       "counting": false,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "12150",
-      "counting": true,
+      "counting": false,
       "pos": "10",
       "event": "Grand Prix de La Bresse 2026",
       "venue": "Golf de la Bresse",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12052",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "Championnat U18 Filles 1 2026",
       "venue": "UGolf Albi - Château de Lasbordes",
@@ -155,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:34.698Z",
+  "scrapedAt": "2026-11-02T15:30:37.903Z",
   "url": "https://www.europeangolfrankings.com/players/45173"
 }

@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Asolo",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 349,
-  "egrPoints": 13617.4,
-  "avgScore": 73.44,
-  "avgToCR": 71.19,
+  "tournamentsPlayed": 15,
+  "egrRank": 292,
+  "egrPoints": 15369,
+  "avgScore": 73,
+  "avgToCR": 70.83,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "24",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 71,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1102.95
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "3",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 72,
+      "r2": 73,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 2252.51
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11931",
-      "counting": true,
+      "counting": false,
       "pos": "16",
       "event": "LXX Gran Premio Cittá Di Milano Trofeo Gianni Albertini 2026",
       "venue": "Golf Club Milano",
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "11913",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Coppa D'Oro Citta Di Roma 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -207,7 +235,8 @@
       "r2": 71,
       "r3": null,
       "r4": null,
-      "egrPoints": 412.2
+      "egrPoints": 412.2,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -226,6 +255,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:11.783Z",
+  "scrapedAt": "2026-11-02T15:31:18.964Z",
   "url": "https://www.europeangolfrankings.com/players/47662"
 }

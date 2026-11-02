@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Chemnitz",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 10380,
+  "tournamentsPlayed": 2,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 90.25,
-  "avgToCR": 90.15,
+  "avgScore": 85.4,
+  "avgToCR": 86,
   "events": [
+    {
+      "eventId": "12954",
+      "counting": true,
+      "pos": "20",
+      "event": "Faldo Series (Madeira) 2026",
+      "venue": "Clube de Golf Santo da Serra",
+      "country": "Portugal",
+      "startDateRaw": "16. Oct 26",
+      "r1": 88,
+      "r2": 86,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12774",
       "counting": true,
@@ -44,6 +58,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:38.180Z",
+  "scrapedAt": "2026-11-02T15:32:56.486Z",
   "url": "https://www.europeangolfrankings.com/players/51248"
 }

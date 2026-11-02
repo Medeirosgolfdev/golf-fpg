@@ -5,14 +5,28 @@
   "lastName": "TONN",
   "firstName": "Frederik",
   "country": "Germany",
-  "club": "GC HH Wendlohe",
+  "club": "Hamburg Wendlohe",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 5181,
-  "egrPoints": 568.38,
-  "avgScore": 80,
-  "avgToCR": 79.95,
+  "tournamentsPlayed": 6,
+  "egrRank": 5544,
+  "egrPoints": 497.89,
+  "avgScore": 80.43,
+  "avgToCR": 80.31,
   "events": [
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "46",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 81,
+      "r2": 85,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12836",
       "counting": true,
@@ -45,7 +59,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "5",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -53,7 +67,7 @@
       "r2": 71,
       "r3": null,
       "r4": null,
-      "egrPoints": 463.75
+      "egrPoints": 393.26
     },
     {
       "eventId": "12796",
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:41.871Z",
+  "scrapedAt": "2026-11-02T15:31:53.084Z",
   "url": "https://www.europeangolfrankings.com/players/48991"
 }

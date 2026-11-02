@@ -5,14 +5,28 @@
   "lastName": "SCHREIBMAYER",
   "firstName": "Noah",
   "country": "Austria",
-  "club": "Bad Waltersdorf",
+  "club": "Graz Murauen",
   "ageGroup": "U16",
   "tournamentsPlayed": 5,
-  "egrRank": 4567,
-  "egrPoints": 745.02,
-  "avgScore": 77.9,
-  "avgToCR": 77.37,
+  "egrRank": 4156,
+  "egrPoints": 917.18,
+  "avgScore": 76.7,
+  "avgToCR": 76.06,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "63",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 75,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 172.16
+    },
     {
       "eventId": "12503",
       "counting": true,
@@ -81,10 +95,11 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:25.843Z",
+  "scrapedAt": "2026-11-02T15:33:50.740Z",
   "url": "https://www.europeangolfrankings.com/players/53420"
 }

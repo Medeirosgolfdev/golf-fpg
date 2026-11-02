@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Villa d'Este",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 3203,
-  "egrPoints": 1425.46,
-  "avgScore": 79.44,
-  "avgToCR": 79.04,
+  "tournamentsPlayed": 10,
+  "egrRank": 2937,
+  "egrPoints": 1717.11,
+  "avgScore": 79.11,
+  "avgToCR": 78.67,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "75",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 81,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 291.65
+    },
     {
       "eventId": "11993",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11945",
-      "counting": true,
+      "counting": false,
       "pos": "81",
       "event": "Targa D'Oro Villa D'Este 2026",
       "venue": "Golf Club Villa d'Este",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:11:30.948Z",
+  "scrapedAt": "2026-11-02T15:19:34.267Z",
   "url": "https://www.europeangolfrankings.com/players/15625"
 }

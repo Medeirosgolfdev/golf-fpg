@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Waldkirch",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 814,
-  "egrPoints": 1980.96,
-  "avgScore": 75.48,
-  "avgToCR": 73.92,
+  "tournamentsPlayed": 15,
+  "egrRank": 795,
+  "egrPoints": 2144.37,
+  "avgScore": 76.4,
+  "avgToCR": 74.68,
   "events": [
+    {
+      "eventId": "12492",
+      "counting": true,
+      "pos": "9",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 81,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 142.31
+    },
+    {
+      "eventId": "12485",
+      "counting": false,
+      "pos": "4",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 140.25
+    },
     {
       "eventId": "11768",
       "counting": false,
@@ -84,6 +112,20 @@
       "egrPoints": 399.16
     },
     {
+      "eventId": "12939",
+      "counting": true,
+      "pos": "3",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 80,
+      "r2": 79,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 164
+    },
+    {
       "eventId": "12459",
       "counting": true,
       "pos": "9",
@@ -99,7 +141,7 @@
     },
     {
       "eventId": "12455",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Swiss Golf Junior Tour (Zürichsee) 2026",
       "venue": "Golfpark Zürichsee",
@@ -169,7 +211,7 @@
     },
     {
       "eventId": "12442",
-      "counting": true,
+      "counting": false,
       "pos": "10",
       "event": "WAGR Invitational Freiburg 2026",
       "venue": "Freiburger Golf Club",
@@ -193,10 +235,11 @@
       "r2": 78,
       "r3": 76,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:34.591Z",
+  "scrapedAt": "2026-11-02T15:28:23.888Z",
   "url": "https://www.europeangolfrankings.com/players/38564"
 }

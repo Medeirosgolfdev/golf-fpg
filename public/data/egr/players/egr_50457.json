@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Lyon-Salvagny",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 5131,
+  "tournamentsPlayed": 3,
+  "egrRank": 5187,
   "egrPoints": 579.63,
-  "avgScore": 81.33,
-  "avgToCR": 81.63,
+  "avgScore": 81,
+  "avgToCR": 80.62,
   "events": [
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "56",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -58,6 +72,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:22.479Z",
+  "scrapedAt": "2026-11-02T15:32:38.324Z",
   "url": "https://www.europeangolfrankings.com/players/50457"
 }

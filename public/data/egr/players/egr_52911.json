@@ -5,14 +5,42 @@
   "lastName": "SCHMITT",
   "firstName": "Anna",
   "country": "Austria",
-  "club": "Linz St Florian",
+  "club": "Linz St. Florian",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1311,
-  "egrPoints": 829.53,
-  "avgScore": 82,
-  "avgToCR": 79.42,
+  "tournamentsPlayed": 10,
+  "egrRank": 1080,
+  "egrPoints": 1281.05,
+  "avgScore": 81,
+  "avgToCR": 78.7,
   "events": [
+    {
+      "eventId": "12518",
+      "counting": true,
+      "pos": "4",
+      "event": "AJGT U14/U12 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 80,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 109.5
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "54",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 80,
+      "r2": 88,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 349.56
+    },
     {
       "eventId": "11767",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "12506",
-      "counting": true,
+      "counting": false,
       "pos": "16",
       "event": "5. AJGT U14-U18 presented by Bernd Wiesberger 2026",
       "venue": "Golfclub Innsbruck-Igls (Rinn)",
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12497",
-      "counting": true,
+      "counting": false,
       "pos": "23",
       "event": "2. AJGT U14-U18 presented by Bernd Wiesberger 2026",
       "venue": "Golfclub Gut Freiberg",
@@ -127,6 +155,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:09.195Z",
+  "scrapedAt": "2026-11-02T15:33:32.577Z",
   "url": "https://www.europeangolfrankings.com/players/52911"
 }

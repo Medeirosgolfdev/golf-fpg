@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Vaerlose",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 5337,
+  "tournamentsPlayed": 9,
+  "egrRank": 5405,
   "egrPoints": 526.71,
-  "avgScore": 81.29,
-  "avgToCR": 80.65,
+  "avgScore": 80.94,
+  "avgToCR": 80.18,
   "events": [
+    {
+      "eventId": "12610",
+      "counting": true,
+      "pos": "51",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 83,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12592",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12555",
-      "counting": true,
+      "counting": false,
       "pos": "69",
       "event": "Dormy Elite Tour I Drenge U22 2026",
       "venue": "Kokkedal Golfklub",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:16.395Z",
+  "scrapedAt": "2026-11-02T15:33:40.771Z",
   "url": "https://www.europeangolfrankings.com/players/53125"
 }

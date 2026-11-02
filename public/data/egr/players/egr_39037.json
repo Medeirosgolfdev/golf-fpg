@@ -5,14 +5,28 @@
   "lastName": "GANSON",
   "firstName": "Ross",
   "country": "Scotland",
-  "club": "St Annes Old Links",
+  "club": "Longridge",
   "ageGroup": "U18",
   "tournamentsPlayed": 8,
-  "egrRank": 2566,
-  "egrPoints": 2082.84,
-  "avgScore": 76.95,
-  "avgToCR": 76.35,
+  "egrRank": 2278,
+  "egrPoints": 2473.29,
+  "avgScore": 76.89,
+  "avgToCR": 76.25,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "21",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 474.5
+    },
     {
       "eventId": "11723",
       "counting": true,
@@ -123,7 +137,8 @@
       "r2": 79,
       "r3": 75,
       "r4": null,
-      "egrPoints": 84.05
+      "egrPoints": 84.05,
+      "_mantido": true
     },
     {
       "eventId": "11335",
@@ -142,6 +157,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:48.700Z",
+  "scrapedAt": "2026-11-02T15:28:39.473Z",
   "url": "https://www.europeangolfrankings.com/players/39037"
 }

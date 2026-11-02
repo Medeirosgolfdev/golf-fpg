@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Wylihof",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1557,
-  "egrPoints": 545.62,
-  "avgScore": 78.46,
-  "avgToCR": 77.34,
+  "tournamentsPlayed": 10,
+  "egrRank": 1483,
+  "egrPoints": 635.71,
+  "avgScore": 77.46,
+  "avgToCR": 76.27,
   "events": [
+    {
+      "eventId": "12488",
+      "counting": true,
+      "pos": "4",
+      "event": "Swiss Golf Final U14 (Crans-sur-Sierre) 2026",
+      "venue": "Golf Club Crans-sur-Sierre",
+      "country": "Switzerland",
+      "startDateRaw": "03. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 98
+    },
+    {
+      "eventId": "12485",
+      "counting": false,
+      "pos": "16",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 82,
+      "r2": 80,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12479",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "12465",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Swiss Golf National U14 (Losone) 2026",
       "venue": "Golf Gerre Losone",
@@ -142,6 +170,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:10.391Z",
+  "scrapedAt": "2026-11-02T15:33:34.086Z",
   "url": "https://www.europeangolfrankings.com/players/52946"
 }

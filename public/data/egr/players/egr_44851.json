@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Blairgowrie",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 1096,
+  "tournamentsPlayed": 10,
+  "egrRank": 1124,
   "egrPoints": 1184.62,
   "avgScore": 82.78,
   "avgToCR": 81.96,
   "events": [
+    {
+      "eventId": "11491",
+      "counting": false,
+      "pos": "19",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 88,
+      "r2": 84,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12907",
       "counting": true,
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:21:26.228Z",
+  "scrapedAt": "2026-11-02T15:30:28.426Z",
   "url": "https://www.europeangolfrankings.com/players/44851"
 }

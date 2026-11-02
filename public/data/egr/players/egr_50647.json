@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Chiberta",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 1530,
-  "egrPoints": 584.6,
+  "tournamentsPlayed": 4,
+  "egrRank": 998,
+  "egrPoints": 1480.93,
   "avgScore": 76,
-  "avgToCR": 75.4,
+  "avgToCR": 74.05,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "12",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 79,
+      "r2": 68,
+      "r3": 75,
+      "r4": 70,
+      "egrPoints": 896.33
+    },
     {
       "eventId": "12242",
       "counting": true,
@@ -72,6 +86,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:28.895Z",
+  "scrapedAt": "2026-11-02T15:32:45.772Z",
   "url": "https://www.europeangolfrankings.com/players/50647"
 }

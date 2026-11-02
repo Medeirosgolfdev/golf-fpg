@@ -7,12 +7,40 @@
   "country": "Netherlands",
   "club": "Emmeloord",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 451,
+  "tournamentsPlayed": 13,
+  "egrRank": 457,
   "egrPoints": 4308.48,
   "avgScore": 77.61,
   "avgToCR": 74.95,
   "events": [
+    {
+      "eventId": "11633",
+      "counting": false,
+      "pos": "1",
+      "event": "Junior Golf Tour Open Neuenhof (JTG) 2026",
+      "venue": "Golfclub Gut Neuenhof",
+      "country": "Germany",
+      "startDateRaw": "20. Oct 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 126.85
+    },
+    {
+      "eventId": "12942",
+      "counting": false,
+      "pos": "3",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 99.23
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -179,10 +207,11 @@
       "r2": 77,
       "r3": 76,
       "r4": null,
-      "egrPoints": 100.5
+      "egrPoints": 100.5,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:09.994Z",
+  "scrapedAt": "2026-11-02T15:26:51.701Z",
   "url": "https://www.europeangolfrankings.com/players/34812"
 }

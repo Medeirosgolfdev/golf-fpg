@@ -7,12 +7,40 @@
   "country": "Belgium",
   "club": "Rinkven",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 419,
-  "egrPoints": 4544.54,
-  "avgScore": 72.35,
-  "avgToCR": 72.9,
+  "tournamentsPlayed": 15,
+  "egrRank": 420,
+  "egrPoints": 4653.11,
+  "avgScore": 71.35,
+  "avgToCR": 72.07,
   "events": [
+    {
+      "eventId": "12956",
+      "counting": true,
+      "pos": "1",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 72,
+      "r2": 70,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 221.45
+    },
+    {
+      "eventId": "12954",
+      "counting": false,
+      "pos": "6",
+      "event": "Faldo Series (Madeira) 2026",
+      "venue": "Clube de Golf Santo da Serra",
+      "country": "Portugal",
+      "startDateRaw": "16. Oct 26",
+      "r1": 75,
+      "r2": 76,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 102.14
+    },
     {
       "eventId": "12935",
       "counting": true,
@@ -169,7 +197,7 @@
     },
     {
       "eventId": "11728",
-      "counting": true,
+      "counting": false,
       "pos": "1",
       "event": "Junior Open Vlaanderen 2026",
       "venue": "Ternesse Golf & Country Club",
@@ -197,6 +225,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:13.338Z",
+  "scrapedAt": "2026-11-02T15:28:00.939Z",
   "url": "https://www.europeangolfrankings.com/players/37858"
 }

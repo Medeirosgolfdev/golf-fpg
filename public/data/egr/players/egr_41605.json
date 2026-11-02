@@ -8,11 +8,39 @@
   "club": "Pont Royal",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 382,
-  "egrPoints": 12949,
-  "avgScore": 72.38,
-  "avgToCR": 71.1,
+  "egrRank": 376,
+  "egrPoints": 13186.9,
+  "avgScore": 71.92,
+  "avgToCR": 70.8,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "15",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 75,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 602.66
+    },
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "10",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 71,
+      "r2": 70,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 901.88
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12085",
-      "counting": true,
+      "counting": false,
       "pos": "29",
       "event": "Grand Prix de Saint Nom-la-Breteche 2026",
       "venue": "Golf de Saint-Nom-la-Bretèche",
@@ -207,7 +235,8 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11366",
@@ -221,10 +250,11 @@
       "r2": 73,
       "r3": 70,
       "r4": null,
-      "egrPoints": 698.36
+      "egrPoints": 698.36,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:23.024Z",
+  "scrapedAt": "2026-11-02T15:29:18.017Z",
   "url": "https://www.europeangolfrankings.com/players/41605"
 }

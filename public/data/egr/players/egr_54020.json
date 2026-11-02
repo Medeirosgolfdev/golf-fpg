@@ -5,14 +5,28 @@
   "lastName": "HIRNSCHRODT",
   "firstName": "Juliane",
   "country": "Austria",
-  "club": "Linz St Florian",
+  "club": "Linz St. Florian",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 3338,
+  "tournamentsPlayed": 5,
+  "egrRank": 3378,
   "egrPoints": 0,
-  "avgScore": 95.63,
-  "avgToCR": 93.58,
+  "avgScore": 95.11,
+  "avgToCR": 93.44,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "109",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 94,
+      "r2": 99,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12501",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:38.244Z",
+  "scrapedAt": "2026-11-02T15:34:04.530Z",
   "url": "https://www.europeangolfrankings.com/players/54020"
 }

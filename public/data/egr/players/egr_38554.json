@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Wylihof",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 5869,
-  "egrPoints": 416.46,
-  "avgScore": 80.08,
-  "avgToCR": 81.2,
+  "tournamentsPlayed": 11,
+  "egrRank": 5723,
+  "egrPoints": 458.56,
+  "avgScore": 79,
+  "avgToCR": 80.19,
   "events": [
+    {
+      "eventId": "12490",
+      "counting": true,
+      "pos": "15",
+      "event": "Swiss Golf Final U14 (Crans-sur-Sierre) 2026",
+      "venue": "Golf Club Crans-sur-Sierre",
+      "country": "Switzerland",
+      "startDateRaw": "03. Oct 26",
+      "r1": 78,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 42.1
+    },
+    {
+      "eventId": "12484",
+      "counting": false,
+      "pos": "45",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 84,
+      "r2": 84,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12478",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11538",
-      "counting": true,
+      "counting": false,
       "pos": "54",
       "event": "Golfing Knights Junior Open 2026",
       "venue": "Golfplatz Altenstadt",
@@ -141,6 +169,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:19:33.906Z",
+  "scrapedAt": "2026-11-02T15:28:23.117Z",
   "url": "https://www.europeangolfrankings.com/players/38554"
 }

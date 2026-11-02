@@ -5,14 +5,28 @@
   "lastName": "STEFFENS",
   "firstName": "Thorben",
   "country": "Germany",
-  "club": "GC HH-Holm",
+  "club": "Hamburg Holm",
   "ageGroup": "U21",
-  "tournamentsPlayed": 1,
-  "egrRank": 6276,
-  "egrPoints": 343.34,
-  "avgScore": 75,
-  "avgToCR": 74.6,
+  "tournamentsPlayed": 2,
+  "egrRank": 4951,
+  "egrPoints": 636.22,
+  "avgScore": 75.5,
+  "avgToCR": 75.1,
   "events": [
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "20",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 75,
+      "r2": 76,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 292.88
+    },
     {
       "eventId": "12851",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:52.980Z",
+  "scrapedAt": "2026-11-02T15:27:39.348Z",
   "url": "https://www.europeangolfrankings.com/players/36881"
 }

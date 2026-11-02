@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Paris CC",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 6923,
-  "egrPoints": 255.4,
-  "avgScore": 82.44,
-  "avgToCR": 82.12,
+  "tournamentsPlayed": 6,
+  "egrRank": 4215,
+  "egrPoints": 894.66,
+  "avgScore": 80.08,
+  "avgToCR": 79.82,
   "events": [
+    {
+      "eventId": "12213",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 496.1
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "65",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 143.16
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -71,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:22.771Z",
+  "scrapedAt": "2026-11-02T15:32:38.664Z",
   "url": "https://www.europeangolfrankings.com/players/50463"
 }

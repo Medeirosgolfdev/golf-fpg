@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Strasbourg",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 9,
-  "egrRank": 2085,
-  "egrPoints": 2794.56,
-  "avgScore": 77,
-  "avgToCR": 75.99,
+  "tournamentsPlayed": 11,
+  "egrRank": 1874,
+  "egrPoints": 3296.46,
+  "avgScore": 77.26,
+  "avgToCR": 76.32,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "37",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 262.95
+    },
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "50",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 75,
+      "r2": 80,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 238.95
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12077",
-      "counting": true,
+      "counting": false,
       "pos": "85",
       "event": "Grand Prix de Saint-Cloud 2026",
       "venue": "Golf de Saint-Cloud",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11800",
-      "counting": true,
+      "counting": false,
       "pos": "20",
       "event": "European Winter Series #7 (Toro Tour) 2026",
       "venue": "Los Arqueros Golf Club",
@@ -156,6 +184,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:14:49.731Z",
+  "scrapedAt": "2026-11-02T15:23:15.475Z",
   "url": "https://www.europeangolfrankings.com/players/27244"
 }

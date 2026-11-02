@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Rapallo",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 2079,
-  "egrPoints": 230.81,
-  "avgScore": 84.09,
-  "avgToCR": 81.49,
+  "tournamentsPlayed": 9,
+  "egrRank": 1661,
+  "egrPoints": 479.45,
+  "avgScore": 83.57,
+  "avgToCR": 81.2,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "37",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 80,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 260.48
+    },
     {
       "eventId": "11990",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "11916",
-      "counting": false,
+      "counting": true,
       "pos": "32",
       "event": "Trofeo Gianluca 2026",
       "venue": "Circolo Golf Torino La Mandria",
@@ -137,7 +151,8 @@
       "r2": 91,
       "r3": 91,
       "r4": null,
-      "egrPoints": 11.84
+      "egrPoints": 11.84,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -151,10 +166,11 @@
       "r2": 86,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:21.339Z",
+  "scrapedAt": "2026-11-02T15:29:15.866Z",
   "url": "https://www.europeangolfrankings.com/players/41424"
 }

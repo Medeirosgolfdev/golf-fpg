@@ -8,11 +8,25 @@
   "club": "Letchworth",
   "ageGroup": "U18",
   "tournamentsPlayed": 8,
-  "egrRank": 2257,
-  "egrPoints": 2478.01,
-  "avgScore": 76.73,
-  "avgToCR": 75.97,
+  "egrRank": 2393,
+  "egrPoints": 2317.95,
+  "avgScore": 76.36,
+  "avgToCR": 75.31,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "95",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 91,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11702",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 82,
       "r3": 78,
       "r4": null,
-      "egrPoints": 160.07
+      "egrPoints": 160.07,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:30.669Z",
+  "scrapedAt": "2026-11-02T15:33:56.022Z",
   "url": "https://www.europeangolfrankings.com/players/53542"
 }

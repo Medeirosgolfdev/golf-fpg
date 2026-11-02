@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Rennes Saint-Jacques",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 190,
-  "egrPoints": 9496.69,
-  "avgScore": 75.12,
-  "avgToCR": 72.34,
+  "tournamentsPlayed": 14,
+  "egrRank": 182,
+  "egrPoints": 9920.1,
+  "avgScore": 74.96,
+  "avgToCR": 72.15,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "20",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 73,
+      "r4": 73,
+      "egrPoints": 797.53
+    },
+    {
+      "eventId": "12201",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 69,
+      "r2": 74,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 434.7
+    },
     {
       "eventId": "11768",
       "counting": false,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12092",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Grand Prix de Caen la Mer 2026",
       "venue": "Golf de Caen La Mer",
@@ -193,7 +221,8 @@
       "r2": 79,
       "r3": 83,
       "r4": 79,
-      "egrPoints": 448.06
+      "egrPoints": 448.06,
+      "_mantido": true
     },
     {
       "eventId": "11372",
@@ -212,6 +241,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:10.139Z",
+  "scrapedAt": "2026-11-02T15:27:57.724Z",
   "url": "https://www.europeangolfrankings.com/players/37730"
 }

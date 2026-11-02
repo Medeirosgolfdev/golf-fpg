@@ -5,14 +5,28 @@
   "lastName": "BLESSING",
   "firstName": "Corwin",
   "country": "Scotland",
-  "club": "Carluke",
+  "club": "Arabian Ranch",
   "ageGroup": "U18",
-  "tournamentsPlayed": 5,
-  "egrRank": 10380,
+  "tournamentsPlayed": 6,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 85.22,
-  "avgToCR": 85.09,
+  "avgScore": 84.82,
+  "avgToCR": 84.35,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "82",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 78,
+      "r2": 92,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12282",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:26:35.013Z",
+  "scrapedAt": "2026-11-02T15:36:18.777Z",
   "url": "https://www.europeangolfrankings.com/players/58374"
 }

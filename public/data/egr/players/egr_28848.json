@@ -5,15 +5,30 @@
   "lastName": "BANKHOFER",
   "firstName": "Luis",
   "country": "Germany",
-  "club": null,
+  "club": "Leitershofen",
   "ageGroup": "U25",
-  "tournamentsPlayed": 0,
-  "egrRank": 10380,
+  "tournamentsPlayed": 1,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 0,
-  "avgToCR": 0,
-  "events": [],
+  "avgScore": 95.5,
+  "avgToCR": 92.2,
+  "events": [
+    {
+      "eventId": "12676",
+      "counting": true,
+      "pos": "48",
+      "event": "Offene Bayerische Meisterschaft Herren 2026",
+      "venue": "Münchener Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "09. Oct 26",
+      "r1": 86,
+      "r2": 105,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    }
+  ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:15:39.062Z",
+  "scrapedAt": "2026-11-02T15:24:08.895Z",
   "url": "https://www.europeangolfrankings.com/players/28848"
 }

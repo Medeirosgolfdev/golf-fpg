@@ -8,11 +8,25 @@
   "club": "Linz St Florian",
   "ageGroup": "U16",
   "tournamentsPlayed": 10,
-  "egrRank": 547,
-  "egrPoints": 3413.27,
-  "avgScore": 79.62,
-  "avgToCR": 76.93,
+  "egrRank": 568,
+  "egrPoints": 3343.38,
+  "avgScore": 80.05,
+  "avgToCR": 77.12,
   "events": [
+    {
+      "eventId": "12516",
+      "counting": true,
+      "pos": "8",
+      "event": "AJGT U16/U18 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 87,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 109.74
+    },
     {
       "eventId": "11767",
       "counting": true,
@@ -151,10 +165,11 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 179.62
+      "egrPoints": 179.62,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:48.231Z",
+  "scrapedAt": "2026-11-02T15:29:45.447Z",
   "url": "https://www.europeangolfrankings.com/players/42824"
 }

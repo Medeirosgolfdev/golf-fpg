@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": "Hinton",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 705,
-  "egrPoints": 8960.2,
-  "avgScore": 73.83,
-  "avgToCR": 71.76,
+  "tournamentsPlayed": 14,
+  "egrRank": 684,
+  "egrPoints": 9218.15,
+  "avgScore": 73.57,
+  "avgToCR": 71.75,
   "events": [
+    {
+      "eventId": "12378",
+      "counting": true,
+      "pos": "11",
+      "event": "54 Junior Tour by Visit Trelleborg #6 2026",
+      "venue": "Bedinge GK",
+      "country": "Sweden",
+      "startDateRaw": "25. Oct 26",
+      "r1": null,
+      "r2": 73,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 593.18
+    },
     {
       "eventId": "12396",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "12391",
-      "counting": true,
+      "counting": false,
       "pos": "28",
       "event": "Swedish Junior Tour Elite #5 2026",
       "venue": "Forsgårdens Golfklubb (64)",
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:48.039Z",
+  "scrapedAt": "2026-11-02T15:27:33.639Z",
   "url": "https://www.europeangolfrankings.com/players/36660"
 }

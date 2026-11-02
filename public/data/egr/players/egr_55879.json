@@ -7,12 +7,26 @@
   "country": "France",
   "club": "La Domangere",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 1447,
+  "tournamentsPlayed": 5,
+  "egrRank": 1453,
   "egrPoints": 675.92,
-  "avgScore": 77.67,
-  "avgToCR": 78.14,
+  "avgScore": 78.82,
+  "avgToCR": 79.1,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "31",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 85,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12195",
       "counting": true,
@@ -86,6 +100,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:25:31.537Z",
+  "scrapedAt": "2026-11-02T15:35:04.880Z",
   "url": "https://www.europeangolfrankings.com/players/55879"
 }

@@ -7,11 +7,11 @@
   "country": "Sweden",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 509,
-  "egrPoints": 3707.34,
-  "avgScore": 74.68,
-  "avgToCR": 71.46,
+  "tournamentsPlayed": 10,
+  "egrRank": 810,
+  "egrPoints": 2088.07,
+  "avgScore": 74.6,
+  "avgToCR": 71.9,
   "events": [
     {
       "eventId": "12397",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "12869",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "PGA Junior Championship by Titleist 2026",
       "venue": "Landskrona Golfklubb",
@@ -165,7 +165,8 @@
       "r2": 77,
       "r3": 78,
       "r4": null,
-      "egrPoints": 1742.26
+      "egrPoints": 1742.26,
+      "_mantido": true
     },
     {
       "eventId": "10819",
@@ -184,6 +185,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:36.140Z",
+  "scrapedAt": "2026-11-02T15:24:05.793Z",
   "url": "https://www.europeangolfrankings.com/players/28786"
 }

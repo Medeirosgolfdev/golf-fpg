@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Bourgenay",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 1929,
-  "egrPoints": 3115.49,
-  "avgScore": 76.26,
-  "avgToCR": 75.53,
+  "tournamentsPlayed": 9,
+  "egrRank": 1516,
+  "egrPoints": 4312.86,
+  "avgScore": 75.45,
+  "avgToCR": 74.75,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "47",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 81,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 577.59
+    },
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "4",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 71,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 619.79
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -123,7 +151,8 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11373",
@@ -142,6 +171,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:29.416Z",
+  "scrapedAt": "2026-11-02T15:32:46.635Z",
   "url": "https://www.europeangolfrankings.com/players/50699"
 }

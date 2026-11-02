@@ -5,14 +5,28 @@
   "lastName": "TIMMANN",
   "firstName": "Jasper Maximilian",
   "country": "Germany",
-  "club": "Neuhof",
+  "club": "Hanau",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 4625,
-  "egrPoints": 724.1,
-  "avgScore": 80.79,
-  "avgToCR": 81.12,
+  "tournamentsPlayed": 9,
+  "egrRank": 4185,
+  "egrPoints": 910.86,
+  "avgScore": 80.84,
+  "avgToCR": 81.17,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "32",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 186.76
+    },
     {
       "eventId": "12911",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "12858",
-      "counting": true,
+      "counting": false,
       "pos": "58",
       "event": "Planet Golf Junior Invitational 2026",
       "venue": "Golfclub Hannover",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:24.749Z",
+  "scrapedAt": "2026-11-02T15:31:33.680Z",
   "url": "https://www.europeangolfrankings.com/players/48129"
 }

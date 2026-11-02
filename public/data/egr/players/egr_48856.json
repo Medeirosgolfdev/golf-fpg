@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 5985,
+  "tournamentsPlayed": 7,
+  "egrRank": 6069,
   "egrPoints": 395.35,
-  "avgScore": 84.2,
-  "avgToCR": 84.21,
+  "avgScore": 84.4,
+  "avgToCR": 84.08,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "67",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 92,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12806",
       "counting": true,
@@ -114,6 +128,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:40.713Z",
+  "scrapedAt": "2026-11-02T15:31:51.921Z",
   "url": "https://www.europeangolfrankings.com/players/48856"
 }

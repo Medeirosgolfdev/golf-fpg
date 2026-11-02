@@ -7,11 +7,11 @@
   "country": "Spain",
   "club": "R.S.H.E. CC",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 9,
-  "egrPoints": 34847.8,
-  "avgScore": 72.04,
-  "avgToCR": 67.9,
+  "tournamentsPlayed": 11,
+  "egrRank": 13,
+  "egrPoints": 32180.8,
+  "avgScore": 72.48,
+  "avgToCR": 68.49,
   "events": [
     {
       "eventId": "12625",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "12258",
-      "counting": false,
+      "counting": true,
       "pos": "14",
       "event": "Spanish Women's Amateur Championship (Closed) 2026",
       "venue": "Pula Golf",
@@ -179,10 +179,11 @@
       "r2": 72,
       "r3": 78,
       "r4": null,
-      "egrPoints": 3612.5
+      "egrPoints": 3612.5,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:23.555Z",
+  "scrapedAt": "2026-11-02T15:24:57.209Z",
   "url": "https://www.europeangolfrankings.com/players/30298"
 }

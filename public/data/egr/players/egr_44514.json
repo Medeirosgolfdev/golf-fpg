@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Bubikon",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 2039,
-  "egrPoints": 251.83,
-  "avgScore": 82.5,
-  "avgToCR": 81.66,
+  "tournamentsPlayed": 7,
+  "egrRank": 2036,
+  "egrPoints": 257.82,
+  "avgScore": 83.67,
+  "avgToCR": 82.08,
   "events": [
+    {
+      "eventId": "12902",
+      "counting": true,
+      "pos": "13",
+      "event": "Loretto Junior Golf Tour Autumn/Winter 2026",
+      "venue": "Longniddry Golf Club",
+      "country": "Scotland",
+      "startDateRaw": "28. Sep 26",
+      "r1": 84,
+      "r2": 83,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 13.9
+    },
     {
       "eventId": "12471",
       "counting": true,
@@ -26,6 +40,20 @@
       "r3": 78,
       "r4": 82,
       "egrPoints": 243.92
+    },
+    {
+      "eventId": "12939",
+      "counting": true,
+      "pos": "9",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 82,
+      "r2": 90,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 0
     },
     {
       "eventId": "12447",
@@ -115,6 +143,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:18.529Z",
+  "scrapedAt": "2026-11-02T15:30:20.139Z",
   "url": "https://www.europeangolfrankings.com/players/44514"
 }

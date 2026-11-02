@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Saint Donat",
   "ageGroup": "U21",
-  "tournamentsPlayed": 5,
-  "egrRank": 3158,
-  "egrPoints": 1460.7,
-  "avgScore": 80.4,
-  "avgToCR": 79.97,
+  "tournamentsPlayed": 6,
+  "egrRank": 3372,
+  "egrPoints": 1334.68,
+  "avgScore": 80.36,
+  "avgToCR": 79.54,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "52",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 84,
+      "r2": 69,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 109.33
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -100,6 +114,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:50.164Z",
+  "scrapedAt": "2026-11-02T15:25:26.010Z",
   "url": "https://www.europeangolfrankings.com/players/31468"
 }

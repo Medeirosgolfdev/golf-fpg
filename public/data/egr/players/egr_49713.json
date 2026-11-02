@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Monticello",
   "ageGroup": "U12",
-  "tournamentsPlayed": 7,
-  "egrRank": 3526,
-  "egrPoints": 1214.77,
-  "avgScore": 78.42,
-  "avgToCR": 79.31,
+  "tournamentsPlayed": 9,
+  "egrRank": 3277,
+  "egrPoints": 1398.35,
+  "avgScore": 77.7,
+  "avgToCR": 78.42,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "43",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 79,
+      "r2": 80,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 194.09
+    },
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "36",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 87,
+      "r2": 78,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 34.95
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "11911",
-      "counting": true,
+      "counting": false,
       "pos": "70",
       "event": "Trofeo Angelo Corvini 2026",
       "venue": "Zoate Golf Club",
@@ -128,6 +156,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-10-05T14:23:04.008Z",
+  "scrapedAt": "2026-11-02T15:32:18.323Z",
   "url": "https://www.europeangolfrankings.com/players/49713"
 }

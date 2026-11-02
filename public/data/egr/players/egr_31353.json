@@ -7,11 +7,11 @@
   "country": "Denmark",
   "club": "Sollerod",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1181,
-  "egrPoints": 5588.9,
-  "avgScore": 75.14,
-  "avgToCR": 73.42,
+  "tournamentsPlayed": 11,
+  "egrRank": 1201,
+  "egrPoints": 5532.08,
+  "avgScore": 75.3,
+  "avgToCR": 73.65,
   "events": [
     {
       "eventId": "12604",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12581",
-      "counting": false,
+      "counting": true,
       "pos": "7",
       "event": "Royal Copenhagen Junior 2026",
       "venue": "Københavns Golf Klub",
@@ -179,7 +179,8 @@
       "r2": 74,
       "r3": 72,
       "r4": null,
-      "egrPoints": 210.68
+      "egrPoints": 210.68,
+      "_mantido": true
     },
     {
       "eventId": "11150",
@@ -198,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:16:47.503Z",
+  "scrapedAt": "2026-11-02T15:25:22.945Z",
   "url": "https://www.europeangolfrankings.com/players/31353"
 }

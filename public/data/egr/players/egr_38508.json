@@ -8,11 +8,25 @@
   "club": "Otelfingen",
   "ageGroup": "U18",
   "tournamentsPlayed": 16,
-  "egrRank": 366,
+  "egrRank": 367,
   "egrPoints": 13341.1,
   "avgScore": 71.78,
   "avgToCR": 71.04,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": false,
+      "pos": "5",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 67,
+      "r2": 75,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 491.24
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -235,7 +249,8 @@
       "r2": 73,
       "r3": 70,
       "r4": null,
-      "egrPoints": 193.19
+      "egrPoints": 193.19,
+      "_mantido": true
     },
     {
       "eventId": "10110",
@@ -269,6 +284,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:31.470Z",
+  "scrapedAt": "2026-11-02T15:28:20.340Z",
   "url": "https://www.europeangolfrankings.com/players/38508"
 }

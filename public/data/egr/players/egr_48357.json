@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Castelconturbia",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 2021,
-  "egrPoints": 256.72,
-  "avgScore": 85,
-  "avgToCR": 82.29,
+  "tournamentsPlayed": 6,
+  "egrRank": 1787,
+  "egrPoints": 387.61,
+  "avgScore": 83.69,
+  "avgToCR": 80.73,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "15",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 81,
+      "r2": 84,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 18.04
+    },
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "51",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 84,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 112.85
+    },
     {
       "eventId": "12001",
       "counting": true,
@@ -71,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:31.970Z",
+  "scrapedAt": "2026-11-02T15:31:41.834Z",
   "url": "https://www.europeangolfrankings.com/players/48357"
 }

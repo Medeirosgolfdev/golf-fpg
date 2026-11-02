@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bastide Salette",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 1835,
-  "egrPoints": 3334.47,
-  "avgScore": 75.5,
-  "avgToCR": 75.82,
+  "tournamentsPlayed": 10,
+  "egrRank": 1622,
+  "egrPoints": 3935.96,
+  "avgScore": 75,
+  "avgToCR": 75.32,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "22",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 71,
+      "r2": 66,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 665.95
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12054",
-      "counting": true,
+      "counting": false,
       "pos": "23",
       "event": "Grand Prix Jeunes Majeur #1 U14 2026",
       "venue": "Golf de Chiberta",
@@ -156,6 +170,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:32.260Z",
+  "scrapedAt": "2026-11-02T15:31:42.268Z",
   "url": "https://www.europeangolfrankings.com/players/48376"
 }

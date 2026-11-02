@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Chassieu",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 469,
-  "egrPoints": 11453.1,
-  "avgScore": 72.31,
-  "avgToCR": 71.37,
+  "tournamentsPlayed": 14,
+  "egrRank": 463,
+  "egrPoints": 11547,
+  "avgScore": 72.23,
+  "avgToCR": 71.19,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": false,
+      "pos": "32",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 331.13
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "13",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 68,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 754.18
+    },
     {
       "eventId": "12181",
       "counting": true,
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "12059",
-      "counting": true,
+      "counting": false,
       "pos": "21",
       "event": "Grand Prix du Lys Chantilly 2026",
       "venue": "Club du Lys-Chantilly",
@@ -193,7 +221,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 105.54
+      "egrPoints": 105.54,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -212,6 +241,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:23.552Z",
+  "scrapedAt": "2026-11-02T15:27:06.386Z",
   "url": "https://www.europeangolfrankings.com/players/35629"
 }

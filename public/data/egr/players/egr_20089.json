@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Gullane",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 13,
-  "egrRank": 149,
-  "egrPoints": 10933,
-  "avgScore": 74.4,
-  "avgToCR": 72.24,
+  "tournamentsPlayed": 11,
+  "egrRank": 184,
+  "egrPoints": 9892.24,
+  "avgScore": 74.88,
+  "avgToCR": 72.31,
   "events": [
     {
       "eventId": "12833",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "12310",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "R&A Student Tour Series (La Sella) 2026",
       "venue": "La Sella Golf Club",
@@ -179,7 +179,8 @@
       "r2": 80,
       "r3": 73,
       "r4": null,
-      "egrPoints": 104.34
+      "egrPoints": 104.34,
+      "_mantido": true
     },
     {
       "eventId": "11774",
@@ -193,7 +194,8 @@
       "r2": 76,
       "r3": 72,
       "r4": null,
-      "egrPoints": 1104.21
+      "egrPoints": 1104.21,
+      "_mantido": true
     },
     {
       "eventId": "11359",
@@ -212,6 +214,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:23.749Z",
+  "scrapedAt": "2026-11-02T15:20:32.457Z",
   "url": "https://www.europeangolfrankings.com/players/20089"
 }

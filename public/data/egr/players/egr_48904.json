@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Kempferhof",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 792,
-  "egrPoints": 2121.78,
-  "avgScore": 78.11,
-  "avgToCR": 77.41,
+  "tournamentsPlayed": 11,
+  "egrRank": 786,
+  "egrPoints": 2184.21,
+  "avgScore": 76.67,
+  "avgToCR": 76.41,
   "events": [
+    {
+      "eventId": "12214",
+      "counting": true,
+      "pos": "10",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 79,
+      "r2": 76,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 61.89
+    },
+    {
+      "eventId": "12199",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 72,
+      "r2": 82,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 32.98
+    },
     {
       "eventId": "11768",
       "counting": false,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12111",
-      "counting": true,
+      "counting": false,
       "pos": "19",
       "event": "Grand Prix Jeunes Majeur Filles U14 2026",
       "venue": "Golf de Bondues (Hawtree)",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12055",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Grand Prix Jeunes Majeur #1 U14 2026",
       "venue": "Golf de Chiberta",
@@ -156,6 +184,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:41.191Z",
+  "scrapedAt": "2026-11-02T15:31:52.443Z",
   "url": "https://www.europeangolfrankings.com/players/48904"
 }

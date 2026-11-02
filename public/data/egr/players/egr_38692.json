@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": "Lanark",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 4467,
-  "egrPoints": 782.46,
-  "avgScore": 80.44,
-  "avgToCR": 79.16,
+  "tournamentsPlayed": 6,
+  "egrRank": 4226,
+  "egrPoints": 891.85,
+  "avgScore": 81.92,
+  "avgToCR": 80.25,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "34",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 82,
+      "r2": 82,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "48",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 80,
+      "r2": 83,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 109.39
+    },
     {
       "eventId": "12281",
       "counting": true,
@@ -86,6 +114,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:39.458Z",
+  "scrapedAt": "2026-11-02T15:28:29.107Z",
   "url": "https://www.europeangolfrankings.com/players/38692"
 }

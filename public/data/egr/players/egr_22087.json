@@ -5,14 +5,28 @@
   "lastName": "LECOMTE",
   "firstName": "Thomas",
   "country": "Switzerland",
-  "club": "Lyon",
+  "club": "Professional",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 1,
+  "tournamentsPlayed": 2,
   "egrRank": null,
-  "egrPoints": 1818.03,
-  "avgScore": 74,
-  "avgToCR": 71.3,
+  "egrPoints": 1917.96,
+  "avgScore": 77.5,
+  "avgToCR": 75.9,
   "events": [
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "54",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 77,
+      "r2": 84,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 99.93
+    },
     {
       "eventId": "12463",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:58.823Z",
+  "scrapedAt": "2026-11-02T15:21:11.730Z",
   "url": "https://www.europeangolfrankings.com/players/22087"
 }

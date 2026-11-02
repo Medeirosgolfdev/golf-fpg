@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Marienburg",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 1972,
-  "egrPoints": 3015.38,
-  "avgScore": 74.29,
-  "avgToCR": 73.4,
+  "tournamentsPlayed": 9,
+  "egrRank": 2123,
+  "egrPoints": 2758.56,
+  "avgScore": 74.92,
+  "avgToCR": 73.83,
   "events": [
     {
       "eventId": "11570",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "11400",
-      "counting": false,
+      "counting": true,
       "pos": "16",
       "event": "European Winter Series #10 (Toro Tour) 2026",
       "venue": "San Roque Golf Resort",
@@ -151,7 +151,8 @@
       "r2": 72,
       "r3": 70,
       "r4": null,
-      "egrPoints": 228.81
+      "egrPoints": 228.81,
+      "_mantido": true
     },
     {
       "eventId": "10112",
@@ -185,6 +186,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:52.682Z",
+  "scrapedAt": "2026-11-02T15:24:23.898Z",
   "url": "https://www.europeangolfrankings.com/players/29259"
 }

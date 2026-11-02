@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Citta D'Asti",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 1593,
-  "egrPoints": 4024.55,
-  "avgScore": 77.48,
-  "avgToCR": 76.48,
+  "tournamentsPlayed": 11,
+  "egrRank": 1354,
+  "egrPoints": 4862.77,
+  "avgScore": 76.83,
+  "avgToCR": 75.6,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "41",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 80,
+      "r2": 77,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 186.18
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "40",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 652.04
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "11915",
-      "counting": true,
+      "counting": false,
       "pos": "61",
       "event": "Trofeo Gianluca 2026",
       "venue": "Circolo Golf Torino La Mandria",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11888",
-      "counting": true,
+      "counting": false,
       "pos": "57",
       "event": "Gara Nazionale Garlenda 2026",
       "venue": "Golf Club Garlenda",
@@ -141,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:09.888Z",
+  "scrapedAt": "2026-11-02T15:32:24.737Z",
   "url": "https://www.europeangolfrankings.com/players/49933"
 }

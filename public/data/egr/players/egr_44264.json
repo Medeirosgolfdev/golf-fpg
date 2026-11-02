@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Courmayeur",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 2010,
-  "egrPoints": 2957.06,
-  "avgScore": 77.25,
-  "avgToCR": 75.87,
+  "tournamentsPlayed": 13,
+  "egrRank": 1854,
+  "egrPoints": 3342.66,
+  "avgScore": 77.3,
+  "avgToCR": 76.03,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "39",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 78,
+      "r2": 83,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 220.2
+    },
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "60",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 79,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 484.85
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11936",
-      "counting": true,
+      "counting": false,
       "pos": "31",
       "event": "Memorial Lillo Angelini 2026",
       "venue": "Golf Dei Laghi",
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "11917",
-      "counting": true,
+      "counting": false,
       "pos": "66",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -184,6 +212,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:11.906Z",
+  "scrapedAt": "2026-11-02T15:30:12.779Z",
   "url": "https://www.europeangolfrankings.com/players/44264"
 }

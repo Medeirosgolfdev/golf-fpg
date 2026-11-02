@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Strasbourg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 2171,
-  "egrPoints": 2623.84,
-  "avgScore": 77,
-  "avgToCR": 76.65,
+  "tournamentsPlayed": 12,
+  "egrRank": 1847,
+  "egrPoints": 3354.6,
+  "avgScore": 76.52,
+  "avgToCR": 75.91,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "54",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 464
+    },
+    {
+      "eventId": "12208",
+      "counting": false,
+      "pos": "44",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 82,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "44",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 346.48
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -99,7 +141,7 @@
     },
     {
       "eventId": "12056",
-      "counting": true,
+      "counting": false,
       "pos": "46",
       "event": "Grand Prix de Château L'Arc 2026",
       "venue": "Château l'Arc Golf Club",
@@ -113,7 +155,7 @@
     },
     {
       "eventId": "11649",
-      "counting": true,
+      "counting": false,
       "pos": "33",
       "event": "Portuguese International U14 Championship (Major) 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -141,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:07.089Z",
+  "scrapedAt": "2026-11-02T15:33:30.180Z",
   "url": "https://www.europeangolfrankings.com/players/52784"
 }

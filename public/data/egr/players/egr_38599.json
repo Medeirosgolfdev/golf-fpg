@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Asolo",
   "ageGroup": "U16",
-  "tournamentsPlayed": 16,
-  "egrRank": 721,
-  "egrPoints": 2406.27,
-  "avgScore": 76.75,
-  "avgToCR": 73.93,
+  "tournamentsPlayed": 17,
+  "egrRank": 720,
+  "egrPoints": 2438.53,
+  "avgScore": 76.83,
+  "avgToCR": 73.94,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "45",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 80,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 171.91
+    },
+    {
+      "eventId": "12015",
+      "counting": false,
+      "pos": "27",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 80,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 42.5
+    },
+    {
+      "eventId": "12009",
+      "counting": false,
+      "pos": "10",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 85,
+      "r2": 83,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12001",
       "counting": false,
@@ -221,7 +263,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 73.44
+      "egrPoints": 73.44,
+      "_mantido": true
     },
     {
       "eventId": "10323",
@@ -235,7 +278,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 139.65
+      "egrPoints": 139.65,
+      "_mantido": true
     },
     {
       "eventId": "11384",
@@ -254,6 +298,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:36.289Z",
+  "scrapedAt": "2026-11-02T15:28:25.676Z",
   "url": "https://www.europeangolfrankings.com/players/38599"
 }

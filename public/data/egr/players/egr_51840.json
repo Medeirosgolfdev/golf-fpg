@@ -5,14 +5,28 @@
   "lastName": "HRBATA",
   "firstName": "Ella",
   "country": "Czech",
-  "club": "Brno",
+  "club": "Penati",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 500,
-  "egrPoints": 3811.2,
-  "avgScore": 75.55,
-  "avgToCR": 71.44,
+  "tournamentsPlayed": 5,
+  "egrRank": 431,
+  "egrPoints": 4505.08,
+  "avgScore": 75.29,
+  "avgToCR": 72,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "20",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 73,
+      "r2": 74,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 693.88
+    },
     {
       "eventId": "12843",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:48.757Z",
+  "scrapedAt": "2026-11-02T15:33:08.101Z",
   "url": "https://www.europeangolfrankings.com/players/51840"
 }

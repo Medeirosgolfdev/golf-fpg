@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Engadine",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 2791,
-  "egrPoints": 1837.49,
-  "avgScore": 75.07,
-  "avgToCR": 74.89,
+  "tournamentsPlayed": 8,
+  "egrRank": 2407,
+  "egrPoints": 2296.18,
+  "avgScore": 75.21,
+  "avgToCR": 74.93,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "23",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 75,
+      "r2": 79,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 206.79
+    },
     {
       "eventId": "12475",
       "counting": true,
@@ -40,6 +54,20 @@
       "r3": null,
       "r4": null,
       "egrPoints": 160.1
+    },
+    {
+      "eventId": "12940",
+      "counting": true,
+      "pos": "12",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 251.9
     },
     {
       "eventId": "12456",
@@ -114,6 +142,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:32.340Z",
+  "scrapedAt": "2026-11-02T15:32:49.768Z",
   "url": "https://www.europeangolfrankings.com/players/50987"
 }

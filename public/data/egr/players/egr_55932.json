@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Murtoli",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 1478,
-  "egrPoints": 4410.71,
-  "avgScore": 75.94,
-  "avgToCR": 75.88,
+  "tournamentsPlayed": 9,
+  "egrRank": 1261,
+  "egrPoints": 5297.13,
+  "avgScore": 75.91,
+  "avgToCR": 75.67,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "33",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 79,
+      "r2": 73,
+      "r3": 79,
+      "r4": 72,
+      "egrPoints": 886.42
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:33.991Z",
+  "scrapedAt": "2026-11-02T15:35:07.848Z",
   "url": "https://www.europeangolfrankings.com/players/55932"
 }

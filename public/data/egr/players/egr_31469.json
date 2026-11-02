@@ -7,12 +7,40 @@
   "country": "France",
   "club": "RCF La Boulie",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 2009,
-  "egrPoints": 2957.73,
-  "avgScore": 76.38,
-  "avgToCR": 76.3,
+  "tournamentsPlayed": 8,
+  "egrRank": 1675,
+  "egrPoints": 3796.3,
+  "avgScore": 75.8,
+  "avgToCR": 75.74,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "33",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 75,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 200
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "22",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 69,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 638.58
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -99,6 +127,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:50.341Z",
+  "scrapedAt": "2026-11-02T15:25:26.038Z",
   "url": "https://www.europeangolfrankings.com/players/31469"
 }

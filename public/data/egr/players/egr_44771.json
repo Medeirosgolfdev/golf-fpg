@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hamburg Holm",
   "ageGroup": "U18",
-  "tournamentsPlayed": 5,
-  "egrRank": 2186,
-  "egrPoints": 2603.66,
-  "avgScore": 75.36,
-  "avgToCR": 75.22,
+  "tournamentsPlayed": 6,
+  "egrRank": 2099,
+  "egrPoints": 2801.37,
+  "avgScore": 74.14,
+  "avgToCR": 73.9,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "4",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 70,
+      "r2": 70,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 366.46
+    },
     {
       "eventId": "12908",
       "counting": true,
@@ -59,7 +73,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "2",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -67,7 +81,7 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 1135.12
+      "egrPoints": 966.38
     },
     {
       "eventId": "12796",
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:22.664Z",
+  "scrapedAt": "2026-11-02T15:30:24.291Z",
   "url": "https://www.europeangolfrankings.com/players/44771"
 }

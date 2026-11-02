@@ -7,12 +7,26 @@
   "country": "France",
   "club": "St. Sylvain D'Anjou",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 3338,
-  "egrPoints": 0,
-  "avgScore": 83,
-  "avgToCR": 81.1,
+  "tournamentsPlayed": 3,
+  "egrRank": 2547,
+  "egrPoints": 104.94,
+  "avgScore": 81.67,
+  "avgToCR": 80.2,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "21",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 78,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 104.94
+    },
     {
       "eventId": "12154",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:27.274Z",
+  "scrapedAt": "2026-11-02T15:32:43.875Z",
   "url": "https://www.europeangolfrankings.com/players/50617"
 }

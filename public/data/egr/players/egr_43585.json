@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": "Vreta Kloster",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 578,
-  "egrPoints": 10049.5,
-  "avgScore": 73.64,
-  "avgToCR": 71.64,
+  "tournamentsPlayed": 12,
+  "egrRank": 563,
+  "egrPoints": 10301.5,
+  "avgScore": 73.58,
+  "avgToCR": 71.94,
   "events": [
+    {
+      "eventId": "12378",
+      "counting": true,
+      "pos": "21",
+      "event": "54 Junior Tour by Visit Trelleborg #6 2026",
+      "venue": "Bedinge GK",
+      "country": "Sweden",
+      "startDateRaw": "25. Oct 26",
+      "r1": null,
+      "r2": 77,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 493.39
+    },
     {
       "eventId": "11673",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "12802",
-      "counting": true,
+      "counting": false,
       "pos": "28",
       "event": "Stenson Sunesson Junior Challenge by Case 2026",
       "venue": "The National",
@@ -184,6 +198,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:01.058Z",
+  "scrapedAt": "2026-11-02T15:30:00.165Z",
   "url": "https://www.europeangolfrankings.com/players/43585"
 }

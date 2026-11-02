@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Frankfurt",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 3439,
-  "egrPoints": 1269.26,
-  "avgScore": 77.36,
-  "avgToCR": 77.13,
+  "tournamentsPlayed": 12,
+  "egrRank": 3397,
+  "egrPoints": 1313.67,
+  "avgScore": 77.59,
+  "avgToCR": 77.47,
   "events": [
     {
       "eventId": "11576",
@@ -26,6 +26,20 @@
       "r3": 77,
       "r4": null,
       "egrPoints": 136.51
+    },
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "44",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 79,
+      "r2": 84,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 44.41
     },
     {
       "eventId": "12858",
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11544",
-      "counting": true,
+      "counting": false,
       "pos": "23",
       "event": "GJG Grand Final Qualifier 2026",
       "venue": "Golf- und Landclub Semlin am See",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:51.319Z",
+  "scrapedAt": "2026-11-02T15:29:48.910Z",
   "url": "https://www.europeangolfrankings.com/players/42977"
 }

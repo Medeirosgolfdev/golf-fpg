@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Bergamo Albenza",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 3424,
-  "egrPoints": 1277.41,
-  "avgScore": 79.17,
-  "avgToCR": 78.41,
+  "tournamentsPlayed": 10,
+  "egrRank": 3075,
+  "egrPoints": 1570.24,
+  "avgScore": 78.55,
+  "avgToCR": 77.87,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "71",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 71,
+      "r2": 86,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 338.29
+    },
     {
       "eventId": "11987",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11955",
-      "counting": true,
+      "counting": false,
       "pos": "82",
       "event": "Gran Premio Di Monticello 2026",
       "venue": "Golf Club Monticello",
@@ -156,6 +170,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:27.515Z",
+  "scrapedAt": "2026-11-02T15:26:05.706Z",
   "url": "https://www.europeangolfrankings.com/players/32846"
 }

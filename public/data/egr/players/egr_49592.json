@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Paris CC",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 653,
-  "egrPoints": 9348.6,
-  "avgScore": 74.96,
-  "avgToCR": 73.62,
+  "tournamentsPlayed": 16,
+  "egrRank": 518,
+  "egrPoints": 10786.4,
+  "avgScore": 73.8,
+  "avgToCR": 72.67,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "22",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 73,
+      "r2": 79,
+      "r3": 73,
+      "r4": 72,
+      "egrPoints": 1020.05
+    },
+    {
+      "eventId": "12213",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 72,
+      "r2": 77,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 753.56
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "10",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 69,
+      "r2": 71,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 744.75
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -42,11 +84,11 @@
       "egrPoints": 2783.84
     },
     {
-      "eventId": "12170",
+      "eventId": "12177",
       "counting": false,
-      "pos": "101",
-      "event": "Grand Prix de Granville 2026",
-      "venue": "Golf Club de Granville",
+      "pos": "89",
+      "event": "Grand Prix de Vichy 2026",
+      "venue": "Golf de Vichy Sporting Club",
       "country": "France",
       "startDateRaw": "21. Aug 26",
       "r1": null,
@@ -56,11 +98,11 @@
       "egrPoints": 0
     },
     {
-      "eventId": "12177",
+      "eventId": "12170",
       "counting": false,
-      "pos": "89",
-      "event": "Grand Prix de Vichy 2026",
-      "venue": "Golf de Vichy Sporting Club",
+      "pos": "101",
+      "event": "Grand Prix de Granville 2026",
+      "venue": "Golf Club de Granville",
       "country": "France",
       "startDateRaw": "21. Aug 26",
       "r1": null,
@@ -85,7 +127,7 @@
     },
     {
       "eventId": "12141",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Grand Prix du Val de Sorne 2026",
       "venue": "Golf du Val de Sorne",
@@ -169,7 +211,7 @@
     },
     {
       "eventId": "12042",
-      "counting": true,
+      "counting": false,
       "pos": "33",
       "event": "41ème Grand Prix de Campagne 2026",
       "venue": "Golf de Nîmes Campagne",
@@ -207,7 +249,8 @@
       "r2": 72,
       "r3": 72,
       "r4": null,
-      "egrPoints": 390.32
+      "egrPoints": 390.32,
+      "_mantido": true
     },
     {
       "eventId": "11368",
@@ -221,10 +264,11 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:00.033Z",
+  "scrapedAt": "2026-11-02T15:32:13.799Z",
   "url": "https://www.europeangolfrankings.com/players/49592"
 }

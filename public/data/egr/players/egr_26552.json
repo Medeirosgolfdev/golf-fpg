@@ -7,12 +7,40 @@
   "country": "France",
   "club": "RCF La Boulie",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 3,
-  "egrRank": 500,
-  "egrPoints": 10981,
-  "avgScore": 71.29,
-  "avgToCR": 68.24,
+  "tournamentsPlayed": 5,
+  "egrRank": 401,
+  "egrPoints": 12658.2,
+  "avgScore": 71.5,
+  "avgToCR": 69.14,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "23",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 761.44
+    },
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "9",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 67,
+      "r2": 68,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 915.75
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -57,6 +85,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:14:31.011Z",
+  "scrapedAt": "2026-11-02T15:22:55.013Z",
   "url": "https://www.europeangolfrankings.com/players/26552"
 }

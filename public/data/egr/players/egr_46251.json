@@ -8,11 +8,25 @@
   "club": "Hardenberg",
   "ageGroup": "U18",
   "tournamentsPlayed": 18,
-  "egrRank": 1363,
-  "egrPoints": 4795.33,
-  "avgScore": 73.64,
-  "avgToCR": 72.44,
+  "egrRank": 1361,
+  "egrPoints": 4837.67,
+  "avgScore": 73.12,
+  "avgToCR": 71.92,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "10",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 72,
+      "r2": 70,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 242.91
+    },
     {
       "eventId": "12934",
       "counting": true,
@@ -239,7 +253,7 @@
     },
     {
       "eventId": "11390",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "Triple A European Classic 2025",
       "venue": "San Roque Golf Club",
@@ -263,7 +277,8 @@
       "r2": 70,
       "r3": 75,
       "r4": null,
-      "egrPoints": 168.94
+      "egrPoints": 168.94,
+      "_mantido": true
     },
     {
       "eventId": "11341",
@@ -282,6 +297,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:54.231Z",
+  "scrapedAt": "2026-11-02T15:30:58.748Z",
   "url": "https://www.europeangolfrankings.com/players/46251"
 }

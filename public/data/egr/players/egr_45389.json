@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Carton House",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1610,
-  "egrPoints": 3977.22,
-  "avgScore": 76.35,
-  "avgToCR": 74.86,
+  "tournamentsPlayed": 11,
+  "egrRank": 1590,
+  "egrPoints": 4070.25,
+  "avgScore": 75.75,
+  "avgToCR": 73.99,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "18",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 155.69
+    },
     {
       "eventId": "11685",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11676",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Irish Elite WAGR Tour #2 2026",
       "venue": "Lough Erne Resort",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:36.541Z",
+  "scrapedAt": "2026-11-02T15:30:39.877Z",
   "url": "https://www.europeangolfrankings.com/players/45389"
 }

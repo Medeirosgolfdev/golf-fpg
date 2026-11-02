@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Villa Condulmer",
   "ageGroup": "U14",
-  "tournamentsPlayed": 17,
-  "egrRank": 782,
+  "tournamentsPlayed": 18,
+  "egrRank": 792,
   "egrPoints": 2152.59,
   "avgScore": 78.19,
   "avgToCR": 75.71,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": false,
+      "pos": "13",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 85,
+      "r2": 80,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 36.08
+    },
+    {
+      "eventId": "12015",
+      "counting": false,
+      "pos": "29",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 82,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -249,7 +277,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 45.51
+      "egrPoints": 45.51,
+      "_mantido": true
     },
     {
       "eventId": "11384",
@@ -283,6 +312,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:42.319Z",
+  "scrapedAt": "2026-11-02T15:31:53.731Z",
   "url": "https://www.europeangolfrankings.com/players/49051"
 }

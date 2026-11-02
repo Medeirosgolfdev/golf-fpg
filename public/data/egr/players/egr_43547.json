@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Ile D'Or",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 605,
-  "egrPoints": 3078.91,
-  "avgScore": 76.32,
-  "avgToCR": 74.12,
+  "tournamentsPlayed": 13,
+  "egrRank": 362,
+  "egrPoints": 5466.42,
+  "avgScore": 75.3,
+  "avgToCR": 73.06,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 579.94
+    },
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "3",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 78,
+      "r2": 69,
+      "r3": 69,
+      "r4": 70,
+      "egrPoints": 2195.63
+    },
+    {
+      "eventId": "12201",
+      "counting": true,
+      "pos": "2",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 279.45
+    },
     {
       "eventId": "11768",
       "counting": false,
@@ -127,7 +169,7 @@
     },
     {
       "eventId": "12060",
-      "counting": true,
+      "counting": false,
       "pos": "13",
       "event": "Grand Prix du Lys Chantilly 2026",
       "venue": "Club du Lys-Chantilly",
@@ -165,7 +207,8 @@
       "r2": 75,
       "r3": 74,
       "r4": null,
-      "egrPoints": 207.76
+      "egrPoints": 207.76,
+      "_mantido": true
     },
     {
       "eventId": "11369",
@@ -179,7 +222,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 313.31
+      "egrPoints": 313.31,
+      "_mantido": true
     },
     {
       "eventId": "11372",
@@ -198,6 +242,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:00.589Z",
+  "scrapedAt": "2026-11-02T15:29:59.756Z",
   "url": "https://www.europeangolfrankings.com/players/43547"
 }

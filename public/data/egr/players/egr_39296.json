@@ -7,15 +7,43 @@
   "country": "Scotland",
   "club": "Dunbraken Ladies",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 998,
-  "egrPoints": 1438.37,
-  "avgScore": 75.36,
-  "avgToCR": 75.3,
+  "tournamentsPlayed": 12,
+  "egrRank": 970,
+  "egrPoints": 1528.16,
+  "avgScore": 75.14,
+  "avgToCR": 74.67,
   "events": [
     {
-      "eventId": "11724",
+      "eventId": "11493",
       "counting": true,
+      "pos": "2",
+      "event": "SGF Cardrona 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 163.53
+    },
+    {
+      "eventId": "11491",
+      "counting": false,
+      "pos": "13",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 85,
+      "r2": 80,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 35.4
+    },
+    {
+      "eventId": "11724",
+      "counting": false,
       "pos": "5",
       "event": "Junior Tour Baberton Girls 2026",
       "venue": "Baberton GC",
@@ -170,6 +198,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:55.148Z",
+  "scrapedAt": "2026-11-02T15:28:46.450Z",
   "url": "https://www.europeangolfrankings.com/players/39296"
 }

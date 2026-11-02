@@ -5,14 +5,28 @@
   "lastName": "BARTSCH",
   "firstName": "Leonard",
   "country": "Germany",
-  "club": "Frankfurt",
+  "club": "Lich",
   "ageGroup": "U16",
   "tournamentsPlayed": 9,
-  "egrRank": 862,
-  "egrPoints": 7583.54,
-  "avgScore": 72.84,
-  "avgToCR": 72.51,
+  "egrRank": 772,
+  "egrPoints": 8419.82,
+  "avgScore": 72.44,
+  "avgToCR": 72.18,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "3",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 68,
+      "r2": 69,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 836.28
+    },
     {
       "eventId": "12910",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 83,
       "r3": 75,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:22.723Z",
+  "scrapedAt": "2026-11-02T15:30:24.469Z",
   "url": "https://www.europeangolfrankings.com/players/44773"
 }

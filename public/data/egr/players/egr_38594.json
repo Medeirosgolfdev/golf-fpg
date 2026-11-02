@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Torino",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 606,
-  "egrPoints": 3072.44,
-  "avgScore": 78.08,
-  "avgToCR": 75.13,
+  "tournamentsPlayed": 11,
+  "egrRank": 693,
+  "egrPoints": 2582.55,
+  "avgScore": 77.76,
+  "avgToCR": 74.83,
   "events": [
     {
       "eventId": "11990",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11962",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Trofeo Chiocciola D'Oro 2026",
       "venue": "Golf Club Cherasco",
@@ -179,7 +179,8 @@
       "r2": 84,
       "r3": 81,
       "r4": null,
-      "egrPoints": 41.43
+      "egrPoints": 41.43,
+      "_mantido": true
     },
     {
       "eventId": "10323",
@@ -193,7 +194,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 615.78
+      "egrPoints": 615.78,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -212,6 +214,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:35.955Z",
+  "scrapedAt": "2026-11-02T15:28:25.311Z",
   "url": "https://www.europeangolfrankings.com/players/38594"
 }

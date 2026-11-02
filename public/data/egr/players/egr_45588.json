@@ -8,11 +8,25 @@
   "club": "Stockport",
   "ageGroup": "U16",
   "tournamentsPlayed": 9,
-  "egrRank": 723,
-  "egrPoints": 8824.21,
-  "avgScore": 75.5,
-  "avgToCR": 74.58,
+  "egrRank": 608,
+  "egrPoints": 9806.94,
+  "avgScore": 75.36,
+  "avgToCR": 74.1,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "19",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 71,
+      "r2": 75,
+      "r3": 73,
+      "r4": 74,
+      "egrPoints": 1253
+    },
     {
       "eventId": "11777",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 74,
       "r3": 76,
       "r4": null,
-      "egrPoints": 270.27
+      "egrPoints": 270.27,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:39.478Z",
+  "scrapedAt": "2026-11-02T15:30:42.929Z",
   "url": "https://www.europeangolfrankings.com/players/45588"
 }

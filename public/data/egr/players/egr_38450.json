@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Zoate",
   "ageGroup": "U18",
-  "tournamentsPlayed": 18,
-  "egrRank": 2705,
-  "egrPoints": 1928.95,
-  "avgScore": 78.08,
-  "avgToCR": 77.96,
+  "tournamentsPlayed": 19,
+  "egrRank": 2391,
+  "egrPoints": 2320.38,
+  "avgScore": 77.32,
+  "avgToCR": 77.24,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "25",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 80,
+      "r2": 79,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 441.35
+    },
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "28",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 82,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 99.03
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11933",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Trofeo Giovanile #2 U18 2026",
       "venue": "Cus Ferrara Golf",
@@ -183,7 +211,7 @@
     },
     {
       "eventId": "11903",
-      "counting": true,
+      "counting": false,
       "pos": "52",
       "event": "Gara Nazionale Modena 2026",
       "venue": "Modena Golf & CC",
@@ -263,7 +291,8 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -282,6 +311,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:29.409Z",
+  "scrapedAt": "2026-11-02T15:28:18.193Z",
   "url": "https://www.europeangolfrankings.com/players/38450"
 }

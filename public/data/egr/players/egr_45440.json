@@ -7,12 +7,26 @@
   "country": "France",
   "club": "La Pree La Rochelle",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 426,
-  "egrPoints": 4476.31,
-  "avgScore": 75.42,
-  "avgToCR": 73.3,
+  "tournamentsPlayed": 12,
+  "egrRank": 383,
+  "egrPoints": 5206.22,
+  "avgScore": 75.5,
+  "avgToCR": 73.24,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "20",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 72,
+      "r3": 77,
+      "r4": 70,
+      "egrPoints": 797.53
+    },
     {
       "eventId": "11768",
       "counting": false,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12134",
-      "counting": true,
+      "counting": false,
       "pos": "32",
       "event": "Grand Prix de Chiberta 2026",
       "venue": "Golf de Chiberta",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:37.534Z",
+  "scrapedAt": "2026-11-02T15:30:40.873Z",
   "url": "https://www.europeangolfrankings.com/players/45440"
 }

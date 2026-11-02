@@ -7,12 +7,26 @@
   "country": "Portugal",
   "club": "Oporto",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1307,
-  "egrPoints": 5086.96,
-  "avgScore": 75.95,
-  "avgToCR": 74.98,
+  "tournamentsPlayed": 9,
+  "egrRank": 1191,
+  "egrPoints": 5572.08,
+  "avgScore": 74.95,
+  "avgToCR": 74.35,
   "events": [
+    {
+      "eventId": "12954",
+      "counting": true,
+      "pos": "1",
+      "event": "Faldo Series (Madeira) 2026",
+      "venue": "Clube de Golf Santo da Serra",
+      "country": "Portugal",
+      "startDateRaw": "16. Oct 26",
+      "r1": 70,
+      "r2": 69,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 512.92
+    },
     {
       "eventId": "12121",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "11585",
-      "counting": true,
+      "counting": false,
       "pos": "18",
       "event": "GJG Algarve Juniors International 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:56.509Z",
+  "scrapedAt": "2026-11-02T15:33:17.231Z",
   "url": "https://www.europeangolfrankings.com/players/52235"
 }

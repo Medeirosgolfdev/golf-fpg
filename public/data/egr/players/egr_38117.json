@@ -5,14 +5,56 @@
   "lastName": "CEVIRGEN",
   "firstName": "Alan",
   "country": "France",
-  "club": "Rougemont-le-Chateau",
+  "club": "Rougemont",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 1121,
-  "egrPoints": 5908.43,
-  "avgScore": 74.42,
-  "avgToCR": 74.05,
+  "tournamentsPlayed": 15,
+  "egrRank": 1080,
+  "egrPoints": 6175.66,
+  "avgScore": 74.91,
+  "avgToCR": 74.62,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "48",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 76,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 530.82
+    },
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "33",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 478.9
+    },
+    {
+      "eventId": "12196",
+      "counting": false,
+      "pos": "48",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 74,
+      "r2": 80,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 268.28
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -71,7 +113,7 @@
     },
     {
       "eventId": "12149",
-      "counting": true,
+      "counting": false,
       "pos": "10",
       "event": "Grand Prix de La Bresse 2026",
       "venue": "Golf de la Bresse",
@@ -155,7 +197,7 @@
     },
     {
       "eventId": "11538",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Golfing Knights Junior Open 2026",
       "venue": "Golfplatz Altenstadt",
@@ -193,7 +235,8 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 142.2
+      "egrPoints": 142.2,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -207,7 +250,8 @@
       "r2": 73,
       "r3": 78,
       "r4": null,
-      "egrPoints": 83.3
+      "egrPoints": 83.3,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -226,6 +270,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:20.294Z",
+  "scrapedAt": "2026-11-02T15:28:08.396Z",
   "url": "https://www.europeangolfrankings.com/players/38117"
 }

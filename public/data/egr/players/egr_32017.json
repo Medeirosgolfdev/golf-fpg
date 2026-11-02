@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Rovedine",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 3,
-  "egrRank": 2328,
-  "egrPoints": 2382.45,
-  "avgScore": 74.56,
-  "avgToCR": 72.49,
+  "tournamentsPlayed": 4,
+  "egrRank": 2137,
+  "egrPoints": 2721.73,
+  "avgScore": 75,
+  "avgToCR": 72.93,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "32",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 86,
+      "r2": 78,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 339.28
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:17:04.229Z",
+  "scrapedAt": "2026-11-02T15:25:40.920Z",
   "url": "https://www.europeangolfrankings.com/players/32017"
 }

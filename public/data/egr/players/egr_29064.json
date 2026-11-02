@@ -5,14 +5,28 @@
   "lastName": "CHRAMOSTA",
   "firstName": "Matej",
   "country": "Czech",
-  "club": "Black Bridge",
+  "club": "Penati",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 2158,
-  "egrPoints": 2644.94,
-  "avgScore": 74,
-  "avgToCR": 71.67,
+  "tournamentsPlayed": 5,
+  "egrRank": 1867,
+  "egrPoints": 3310.67,
+  "avgScore": 74.5,
+  "avgToCR": 72.11,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "29",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 75,
+      "r2": 81,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 665.73
+    },
     {
       "eventId": "12818",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:46.963Z",
+  "scrapedAt": "2026-11-02T15:24:17.753Z",
   "url": "https://www.europeangolfrankings.com/players/29064"
 }

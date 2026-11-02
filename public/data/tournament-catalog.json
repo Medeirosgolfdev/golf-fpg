@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T15:45:04.533Z",
+  "generatedAt": "2026-11-02T16:08:13.499Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -25093,6 +25093,22 @@
       "editionsCount": 6
     },
     {
+      "id": "egr-falkenstein-international-junior-open",
+      "label": "Falkenstein International Junior Open",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11331",
+        "egr-egr11332",
+        "egr-egr6975",
+        "egr-egr6976",
+        "egr-egr12952",
+        "egr-egr12953"
+      ],
+      "firstDate": "2022-08-15",
+      "lastDate": "2026-08-11",
+      "editionsCount": 6
+    },
+    {
       "id": "egr-swiss-golf-junior-tour-5",
       "label": "Swiss Golf Junior Tour 5",
       "sourceId": "egr",
@@ -29162,21 +29178,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-swiss-golf-junior-tour-event-u18",
-      "label": "Swiss Golf Junior Tour Event U18",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272062",
-        "wagr-236007",
-        "wagr-235444",
-        "wagr-225984",
-        "wagr-233830"
-      ],
-      "firstDate": "2023-09-23",
-      "lastDate": "2026-09-26",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-creed-junior-boys-invitational",
       "label": "Creed Junior Boys' Invitational",
       "sourceId": "wagr",
@@ -29196,8 +29197,8 @@
       "label": "Lyngbygaard Junior Ynglinge Open",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-272393",
         "wagr-236532",
+        "wagr-272393",
         "wagr-261117",
         "wagr-226442",
         "wagr-77158"
@@ -29602,8 +29603,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-260728",
-        "wagr-272128",
         "wagr-236252",
+        "wagr-272128",
         "wagr-226134",
         "wagr-219532"
       ],
@@ -36022,20 +36023,6 @@
       "editionsCount": 4
     },
     {
-      "id": "egr-falkenstein-international-junior-open",
-      "label": "Falkenstein International Junior Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11331",
-        "egr-egr11332",
-        "egr-egr6975",
-        "egr-egr6976"
-      ],
-      "firstDate": "2022-08-15",
-      "lastDate": "2025-08-26",
-      "editionsCount": 4
-    },
-    {
       "id": "egr-falkenstein-international-junior-open-u14",
       "label": "Falkenstein International Junior Open U14",
       "sourceId": "egr",
@@ -36288,6 +36275,20 @@
       "editionsCount": 4
     },
     {
+      "id": "egr-lyngbygaard-junior-ynglinge-open",
+      "label": "Lyngbygaard Junior/Ynglinge Open",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11494",
+        "egr-egr12610",
+        "egr-egr11495",
+        "egr-egr12611"
+      ],
+      "firstDate": "2025-10-17",
+      "lastDate": "2026-10-16",
+      "editionsCount": 4
+    },
+    {
       "id": "egr-dormy-elite-tour-finale",
       "label": "Dormy Elite Tour Finale",
       "sourceId": "egr",
@@ -36299,6 +36300,76 @@
       ],
       "firstDate": "2025-09-19",
       "lastDate": "2026-09-18",
+      "editionsCount": 4
+    },
+    {
+      "id": "egr-trofeo-glauco-lolli-ghetti",
+      "label": "Trofeo Glauco Lolli Ghetti",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12015",
+        "egr-egr10228",
+        "egr-egr10229",
+        "egr-egr12014"
+      ],
+      "firstDate": "2025-10-09",
+      "lastDate": "2026-10-02",
+      "editionsCount": 4
+    },
+    {
+      "id": "egr-trofeo-citta-di-piacenza",
+      "label": "Trofeo Citta' Di Piacenza",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr10318",
+        "egr-egr12009",
+        "egr-egr10317",
+        "egr-egr12008"
+      ],
+      "firstDate": "2025-09-26",
+      "lastDate": "2026-09-18",
+      "editionsCount": 4
+    },
+    {
+      "id": "egr-grand-prix-de-la-cote-d-opale",
+      "label": "Grand Prix de la Côte d'Opale",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11366",
+        "egr-egr12210",
+        "egr-egr11367",
+        "egr-egr12211"
+      ],
+      "firstDate": "2025-10-10",
+      "lastDate": "2026-10-09",
+      "editionsCount": 4
+    },
+    {
+      "id": "egr-grand-prix-du-24h-le-mans",
+      "label": "Grand Prix du 24H Le Mans",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11449",
+        "egr-egr12959",
+        "egr-egr12960",
+        "egr-egr11448"
+      ],
+      "firstDate": "2025-10-24",
+      "lastDate": "2026-10-25",
+      "editionsCount": 4
+    },
+    {
+      "id": "egr-triple-a-european-championship",
+      "label": "Triple A European Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12955",
+        "egr-egr11387",
+        "egr-egr11388",
+        "egr-egr12956"
+      ],
+      "firstDate": "2025-10-22",
+      "lastDate": "2026-10-21",
       "editionsCount": 4
     },
     {
@@ -36316,6 +36387,20 @@
       "editionsCount": 4
     },
     {
+      "id": "egr-grand-prix-du-gouverneur",
+      "label": "Grand Prix du Gouverneur",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr10685",
+        "egr-egr12202",
+        "egr-egr12204",
+        "egr-egr10686"
+      ],
+      "firstDate": "2025-09-26",
+      "lastDate": "2026-09-25",
+      "editionsCount": 4
+    },
+    {
       "id": "egr-jmi-final",
       "label": "JMI Final",
       "sourceId": "egr",
@@ -36330,6 +36415,20 @@
       "editionsCount": 4
     },
     {
+      "id": "egr-grand-prix-de-st-malo",
+      "label": "Grand Prix de St Malo",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12200",
+        "egr-egr11373",
+        "egr-egr11372",
+        "egr-egr12201"
+      ],
+      "firstDate": "2025-09-19",
+      "lastDate": "2026-09-25",
+      "editionsCount": 4
+    },
+    {
       "id": "wagr-the-junior-players-championship-presented-by-rolex",
       "label": "The Junior PLAYERS Championship presented by Rolex",
       "sourceId": "wagr",
@@ -36341,6 +36440,20 @@
       ],
       "firstDate": "2023-08-31",
       "lastDate": "2026-09-04",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-swiss-golf-junior-tour-event-u18",
+      "label": "Swiss Golf Junior Tour Event U18",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-236007",
+        "wagr-235444",
+        "wagr-225984",
+        "wagr-233830"
+      ],
+      "firstDate": "2023-09-23",
+      "lastDate": "2024-09-28",
       "editionsCount": 4
     },
     {
@@ -36481,20 +36594,6 @@
       ],
       "firstDate": "2022-12-20",
       "lastDate": "2025-12-02",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-sgf-fairmont-boys-open",
-      "label": "SGF Fairmont Boys Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272212",
-        "wagr-260836",
-        "wagr-226167",
-        "wagr-220979"
-      ],
-      "firstDate": "2022-09-28",
-      "lastDate": "2026-09-30",
       "editionsCount": 4
     },
     {
@@ -37125,6 +37224,20 @@
       ],
       "firstDate": "2023-08-08",
       "lastDate": "2026-08-05",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-sgf-fairmont-boys-open",
+      "label": "SGF Fairmont Boys Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272212",
+        "wagr-260836",
+        "wagr-226167",
+        "wagr-220979"
+      ],
+      "firstDate": "2022-09-28",
+      "lastDate": "2026-09-30",
       "editionsCount": 4
     },
     {
@@ -46772,6 +46885,19 @@
       "editionsCount": 3
     },
     {
+      "id": "egr-grand-prix-de-valescure",
+      "label": "Grand Prix de Valescure",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr10687",
+        "egr-egr12216",
+        "egr-egr10688"
+      ],
+      "firstDate": "2025-10-10",
+      "lastDate": "2026-10-09",
+      "editionsCount": 3
+    },
+    {
       "id": "egr-world-wagr-series-2-robert-rock",
       "label": "World WAGR Series #2 (Robert Rock)",
       "sourceId": "egr",
@@ -46782,6 +46908,19 @@
       ],
       "firstDate": "2026-08-10",
       "lastDate": "2026-08-10",
+      "editionsCount": 3
+    },
+    {
+      "id": "egr-memorial-luca-lazzeroni",
+      "label": "Memorial Luca Lazzeroni",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12011",
+        "egr-egr12010",
+        "egr-egr11406"
+      ],
+      "firstDate": "2025-11-14",
+      "lastDate": "2026-09-18",
       "editionsCount": 3
     },
     {
@@ -46899,19 +47038,6 @@
       ],
       "firstDate": "2022-07-21",
       "lastDate": "2025-07-17",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-italian-boys-u18-national-championship-trofeo-andrea-brotto",
-      "label": "Italian Boys U18 National Championship -Trofeo Andrea Brotto",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271730",
-        "wagr-222243",
-        "wagr-74691"
-      ],
-      "firstDate": "2022-02-26",
-      "lastDate": "2026-10-15",
       "editionsCount": 3
     },
     {
@@ -48316,19 +48442,6 @@
       ],
       "firstDate": "2024-07-30",
       "lastDate": "2026-09-07",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-falkenstein-international-junior-open",
-      "label": "Falkenstein International Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271581",
-        "wagr-235382",
-        "wagr-225475"
-      ],
-      "firstDate": "2023-08-14",
-      "lastDate": "2026-08-11",
       "editionsCount": 3
     },
     {
@@ -63684,6 +63797,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-sergio-garcia-junior-championship",
+      "label": "Sergio Garcia Junior Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr7120",
+        "egr-egr11826"
+      ],
+      "firstDate": "2022-09-30",
+      "lastDate": "2026-10-03",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-fairmont-boys-sgf",
       "label": "Fairmont Boys (SGF)",
       "sourceId": "egr",
@@ -64572,6 +64697,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-european-men-s-club-trophy",
+      "label": "European Men's Club Trophy",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr10398",
+        "egr-egr12634"
+      ],
+      "firstDate": "2025-10-23",
+      "lastDate": "2026-10-22",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-european-amateur-team-championship",
       "label": "European Amateur Team Championship",
       "sourceId": "egr",
@@ -64665,6 +64802,18 @@
       ],
       "firstDate": "2026-05-23",
       "lastDate": "2026-05-23",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-international-spanish-ladies-championships",
+      "label": "International Spanish Ladies' Championships",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr10157",
+        "egr-egr12265"
+      ],
+      "firstDate": "2025-10-24",
+      "lastDate": "2026-10-23",
       "editionsCount": 2
     },
     {
@@ -64824,6 +64973,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-sgf-fairmont",
+      "label": "SGF Fairmont",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11490",
+        "egr-egr11491"
+      ],
+      "firstDate": "2026-09-30",
+      "lastDate": "2026-09-30",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-polish-national-championship",
       "label": "Polish National Championship",
       "sourceId": "egr",
@@ -64845,6 +65006,18 @@
       ],
       "firstDate": "2026-07-30",
       "lastDate": "2026-07-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-north-of-england-open-amateur-championship",
+      "label": "North of England Open Amateur Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11818",
+        "egr-egr10730"
+      ],
+      "firstDate": "2025-09-30",
+      "lastDate": "2026-09-29",
       "editionsCount": 2
     },
     {
@@ -64920,6 +65093,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-italian-national-closed-match-play-u18",
+      "label": "Italian National Closed Match Play U18",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12023",
+        "egr-egr12022"
+      ],
+      "firstDate": "2026-10-15",
+      "lastDate": "2026-10-15",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-trofeo-giovanile-federale-u18",
       "label": "Trofeo Giovanile Federale U18",
       "sourceId": "egr",
@@ -64980,18 +65165,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-lyngbygaard-junior-ynglinge-open",
-      "label": "Lyngbygaard Junior/Ynglinge Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11494",
-        "egr-egr11495"
-      ],
-      "firstDate": "2025-10-17",
-      "lastDate": "2025-10-17",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-gran-premio-di-padova",
       "label": "Gran Premio di Padova",
       "sourceId": "egr",
@@ -65025,30 +65198,6 @@
       ],
       "firstDate": "2026-03-05",
       "lastDate": "2026-03-05",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-trofeo-glauco-lolli-ghetti",
-      "label": "Trofeo Glauco Lolli Ghetti",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10228",
-        "egr-egr10229"
-      ],
-      "firstDate": "2025-10-09",
-      "lastDate": "2025-10-09",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-trofeo-citta-di-piacenza",
-      "label": "Trofeo Citta' Di Piacenza",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10318",
-        "egr-egr10317"
-      ],
-      "firstDate": "2025-09-26",
-      "lastDate": "2025-09-26",
       "editionsCount": 2
     },
     {
@@ -65133,6 +65282,18 @@
       ],
       "firstDate": "2026-04-08",
       "lastDate": "2026-04-08",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-european-juniors-international-gjg",
+      "label": "European Juniors International (GJG)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12943",
+        "egr-egr12942"
+      ],
+      "firstDate": "2026-10-04",
+      "lastDate": "2026-10-04",
       "editionsCount": 2
     },
     {
@@ -65229,18 +65390,6 @@
       ],
       "firstDate": "2026-03-27",
       "lastDate": "2026-03-27",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-grand-prix-de-la-cote-d-opale",
-      "label": "Grand Prix de la Côte d'Opale",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11366",
-        "egr-egr11367"
-      ],
-      "firstDate": "2025-10-10",
-      "lastDate": "2025-10-10",
       "editionsCount": 2
     },
     {
@@ -65472,18 +65621,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-grand-prix-de-valescure",
-      "label": "Grand Prix de Valescure",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10687",
-        "egr-egr10688"
-      ],
-      "firstDate": "2025-10-10",
-      "lastDate": "2025-10-10",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-grand-prix-du-stade-francais",
       "label": "Grand Prix du Stade Français",
       "sourceId": "egr",
@@ -65529,18 +65666,6 @@
       ],
       "firstDate": "2026-05-15",
       "lastDate": "2026-05-15",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-grand-prix-du-24h-le-mans",
-      "label": "Grand Prix du 24H Le Mans",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11449",
-        "egr-egr11448"
-      ],
-      "firstDate": "2025-10-24",
-      "lastDate": "2025-10-24",
       "editionsCount": 2
     },
     {
@@ -65772,6 +65897,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-the-engadine-amateur-championship",
+      "label": "The Engadine Amateur Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12940",
+        "egr-egr12939"
+      ],
+      "firstDate": "2026-06-25",
+      "lastDate": "2026-06-25",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-nationaal-strokeplay-kampioenschap-u21",
       "label": "Nationaal Strokeplay Kampioenschap U21",
       "sourceId": "egr",
@@ -65889,6 +66026,30 @@
       ],
       "firstDate": "2026-08-05",
       "lastDate": "2026-08-05",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-xix-trofeo-castelconturbia",
+      "label": "XIX Trofeo Castelconturbia",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12024",
+        "egr-egr12025"
+      ],
+      "firstDate": "2026-10-23",
+      "lastDate": "2026-10-23",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-trofeo-citta-di-verona",
+      "label": "Trofeo Città di Verona",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12016",
+        "egr-egr12017"
+      ],
+      "firstDate": "2026-10-09",
+      "lastDate": "2026-10-09",
       "editionsCount": 2
     },
     {
@@ -66057,6 +66218,18 @@
       ],
       "firstDate": "2026-08-14",
       "lastDate": "2026-08-14",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-grand-prix-de-roissy",
+      "label": "Grand Prix de Roissy",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12198",
+        "egr-egr12199"
+      ],
+      "firstDate": "2026-09-25",
+      "lastDate": "2026-09-25",
       "editionsCount": 2
     },
     {
@@ -66237,18 +66410,6 @@
       ],
       "firstDate": "2026-02-18",
       "lastDate": "2026-02-18",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-triple-a-european-championship",
-      "label": "Triple A European Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11387",
-        "egr-egr11388"
-      ],
-      "firstDate": "2025-10-22",
-      "lastDate": "2025-10-22",
       "editionsCount": 2
     },
     {
@@ -66816,18 +66977,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-grand-prix-du-gouverneur",
-      "label": "Grand Prix du Gouverneur",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10685",
-        "egr-egr10686"
-      ],
-      "firstDate": "2025-09-26",
-      "lastDate": "2025-09-26",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-gara-nazionale-garlenda",
       "label": "Gara Nazionale Garlenda",
       "sourceId": "egr",
@@ -66921,6 +67070,18 @@
       ],
       "firstDate": "2026-06-06",
       "lastDate": "2026-06-06",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-ajgt-u16-u18-finale-presented-by-bernd-wiesberger",
+      "label": "AJGT U16-U18 Finale presented by Bernd Wiesberger",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12517",
+        "egr-egr12516"
+      ],
+      "firstDate": "2026-10-10",
+      "lastDate": "2026-10-10",
       "editionsCount": 2
     },
     {
@@ -67080,6 +67241,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-54-junior-tour-by-visit-trelleborg-6",
+      "label": "54 Junior Tour by Visit Trelleborg #6",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12379",
+        "egr-egr12378"
+      ],
+      "firstDate": "2026-10-25",
+      "lastDate": "2026-10-25",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-titleist-masters",
       "label": "Titleist Masters",
       "sourceId": "egr",
@@ -67173,6 +67346,18 @@
       ],
       "firstDate": "2026-05-08",
       "lastDate": "2026-05-08",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-grand-prix-de-val-grand",
+      "label": "Grand Prix de Val Grand",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12213",
+        "egr-egr12214"
+      ],
+      "firstDate": "2026-10-09",
+      "lastDate": "2026-10-09",
       "editionsCount": 2
     },
     {
@@ -67320,18 +67505,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-grand-prix-de-st-malo",
-      "label": "Grand Prix de St Malo",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11373",
-        "egr-egr11372"
-      ],
-      "firstDate": "2025-09-19",
-      "lastDate": "2025-09-19",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-hammamet-open-jtg",
       "label": "Hammamet Open (JTG)",
       "sourceId": "egr",
@@ -67344,6 +67517,30 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-swiss-golf-junior-tour-final-lugano",
+      "label": "Swiss Golf Junior Tour Final (Lugano)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12491",
+        "egr-egr12492"
+      ],
+      "firstDate": "2026-10-17",
+      "lastDate": "2026-10-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-swiss-golf-junior-tour-waldkirch",
+      "label": "Swiss Golf Junior Tour (Waldkirch)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12484",
+        "egr-egr12485"
+      ],
+      "firstDate": "2026-09-26",
+      "lastDate": "2026-09-26",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-swedish-junior-tour-div-2-4",
       "label": "Swedish Junior Tour Div 2 #4",
       "sourceId": "egr",
@@ -67353,6 +67550,30 @@
       ],
       "firstDate": "2026-07-30",
       "lastDate": "2026-07-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-swiss-golf-final-u14-crans-sur-sierre",
+      "label": "Swiss Golf Final U14 (Crans-sur-Sierre)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12490",
+        "egr-egr12488"
+      ],
+      "firstDate": "2026-10-03",
+      "lastDate": "2026-10-03",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-swiss-golf-final-u12-u10-crans-sur-sierre",
+      "label": "Swiss Golf Final U12/U10 (Crans-sur-Sierre)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12486",
+        "egr-egr12487"
+      ],
+      "firstDate": "2026-10-03",
+      "lastDate": "2026-10-03",
       "editionsCount": 2
     },
     {
@@ -67449,18 +67670,6 @@
       ],
       "firstDate": "2024-08-10",
       "lastDate": "2025-07-26",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-swiss-golf-junior-tour-final-u18",
-      "label": "Swiss Golf Junior Tour Final U18",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272306",
-        "wagr-236398"
-      ],
-      "firstDate": "2024-10-12",
-      "lastDate": "2026-10-17",
       "editionsCount": 2
     },
     {
@@ -67737,6 +67946,18 @@
       ],
       "firstDate": "2023-02-14",
       "lastDate": "2025-02-19",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-eljgl-54-hole-masters",
+      "label": "ELJGL 54 hole Masters",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-267169",
+        "wagr-253969"
+      ],
+      "firstDate": "2024-08-08",
+      "lastDate": "2026-06-29",
       "editionsCount": 2
     },
     {
@@ -69984,6 +70205,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-falkenstein-international-junior-open",
+      "label": "Falkenstein International Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235382",
+        "wagr-225475"
+      ],
+      "firstDate": "2023-08-14",
+      "lastDate": "2024-08-20",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-fcg-tournament-of-champions",
       "label": "FCG Tournament of Champions",
       "sourceId": "wagr",
@@ -70137,6 +70370,18 @@
       ],
       "firstDate": "2023-05-12",
       "lastDate": "2024-05-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-italian-boys-u18-national-championship-trofeo-andrea-brotto",
+      "label": "Italian Boys U18 National Championship -Trofeo Andrea Brotto",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-222243",
+        "wagr-74691"
+      ],
+      "firstDate": "2022-02-26",
+      "lastDate": "2023-09-06",
       "editionsCount": 2
     },
     {
@@ -97420,6 +97665,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-ajgt-u12-finale-presented-by-bernd-wiesberger",
+      "label": "AJGT U12 Finale presented by Bernd Wiesberger",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12958"
+      ],
+      "firstDate": "2026-10-10",
+      "lastDate": "2026-10-10",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-dgv-hessen-meisterschaft-jungen",
       "label": "DGV-Hessen Meisterschaft Jungen",
       "sourceId": "egr",
@@ -97535,6 +97791,50 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr12892"
+      ],
+      "firstDate": "2026-08-22",
+      "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvst-meisterschaft-ak14-jungen",
+      "label": "DGV-GVST Meisterschaft AK14 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12964"
+      ],
+      "firstDate": "2026-08-22",
+      "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvst-meisterschaft-ak16-18-jungen",
+      "label": "DGV-GVST Meisterschaft AK16/18 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12965"
+      ],
+      "firstDate": "2026-08-22",
+      "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvst-meisterschaft-ak16-18-madchen",
+      "label": "DGV-GVST Meisterschaft AK16/18 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12966"
+      ],
+      "firstDate": "2026-08-22",
+      "lastDate": "2026-08-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvst-meisterschaft-ak14-madchen",
+      "label": "DGV-GVST Meisterschaft AK14 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12967"
       ],
       "firstDate": "2026-08-22",
       "lastDate": "2026-08-22",
@@ -101556,17 +101856,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-sergio-garcia-junior-championship",
-      "label": "Sergio Garcia Junior Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr7120"
-      ],
-      "firstDate": "2022-09-30",
-      "lastDate": "2022-09-30",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-srixon-tour-10-boys-u15",
       "label": "Srixon Tour 10 (Boys U15)",
       "sourceId": "egr",
@@ -104867,17 +105156,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-european-men-s-club-trophy",
-      "label": "European Men's Club Trophy",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10398"
-      ],
-      "firstDate": "2025-10-23",
-      "lastDate": "2025-10-23",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dgv-hessen-meisterschaft-herren",
       "label": "DGV-Hessen Meisterschaft Herren",
       "sourceId": "egr",
@@ -105043,6 +105321,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-offene-bayerische-meisterschaft-herren",
+      "label": "Offene Bayerische Meisterschaft Herren",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12676"
+      ],
+      "firstDate": "2026-10-09",
+      "lastDate": "2026-10-09",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-dgv-bayern-offene-meisterschaft-herren",
       "label": "DGV-Bayern Offene Meisterschaft Herren",
       "sourceId": "egr",
@@ -105073,17 +105362,6 @@
       ],
       "firstDate": "2026-06-04",
       "lastDate": "2026-06-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-international-spanish-ladies-championships",
-      "label": "International Spanish Ladies' Championships",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10157"
-      ],
-      "firstDate": "2025-10-24",
-      "lastDate": "2025-10-24",
       "editionsCount": 1
     },
     {
@@ -105172,6 +105450,17 @@
       ],
       "firstDate": "2026-02-12",
       "lastDate": "2026-02-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-grand-prix-de-prunevelle",
+      "label": "Grand Prix de Prunevelle",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12196"
+      ],
+      "firstDate": "2026-09-24",
+      "lastDate": "2026-09-24",
       "editionsCount": 1
     },
     {
@@ -105373,6 +105662,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-cardrona-sgf",
+      "label": "Cardrona (SGF)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11492"
+      ],
+      "firstDate": "2026-10-14",
+      "lastDate": "2026-10-14",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-french-international-amateur-coupe-gordon-bennett",
       "label": "French International Amateur (Coupe Gordon Bennett)",
       "sourceId": "egr",
@@ -105392,6 +105692,17 @@
       ],
       "firstDate": "2026-08-06",
       "lastDate": "2026-08-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-irish-elite-wagr-tour-12",
+      "label": "Irish Elite WAGR Tour #12",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11688"
+      ],
+      "firstDate": "2026-10-28",
+      "lastDate": "2026-10-28",
       "editionsCount": 1
     },
     {
@@ -105527,6 +105838,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-loretto-junior-golf-tour-autumn-winter",
+      "label": "Loretto Junior Golf Tour Autumn/Winter",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12902"
+      ],
+      "firstDate": "2026-09-28",
+      "lastDate": "2026-09-28",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-european-winter-series-5-toro-tour",
       "label": "European Winter Series #5 (Toro Tour)",
       "sourceId": "egr",
@@ -105645,17 +105967,6 @@
       ],
       "firstDate": "2026-04-24",
       "lastDate": "2026-04-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-north-of-england-open-amateur-championship",
-      "label": "North of England Open Amateur Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10730"
-      ],
-      "firstDate": "2025-09-30",
-      "lastDate": "2025-09-30",
       "editionsCount": 1
     },
     {
@@ -105835,6 +106146,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-offene-bayerische-meisterschaft-damen",
+      "label": "Offene Bayerische Meisterschaft Damen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12677"
+      ],
+      "firstDate": "2026-10-09",
+      "lastDate": "2026-10-09",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-framas-junior-open-jgm",
       "label": "Framas Junior Open (JGM)",
       "sourceId": "egr",
@@ -105975,6 +106297,17 @@
       ],
       "firstDate": "2026-05-01",
       "lastDate": "2026-05-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-germany-final-junior-golf-masters",
+      "label": "Germany Final (Junior Golf Masters)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12951"
+      ],
+      "firstDate": "2026-10-03",
+      "lastDate": "2026-10-03",
       "editionsCount": 1
     },
     {
@@ -106165,6 +106498,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-grand-prix-messieurs-de-chamonix-trophee-maurice-herzog",
+      "label": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12208"
+      ],
+      "firstDate": "2026-10-02",
+      "lastDate": "2026-10-02",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-dgv-nrw-meisterschaft-herren",
       "label": "DGV-NRW Meisterschaft Herren",
       "sourceId": "egr",
@@ -106275,6 +106619,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-gareth-bale-championship-mixed-closed",
+      "label": "Gareth Bale Championship (Mixed) Closed",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12621"
+      ],
+      "firstDate": "2026-09-26",
+      "lastDate": "2026-09-26",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-welsh-u14-mixed-closed-championship",
       "label": "Welsh U14 (Mixed) Closed Championship",
       "sourceId": "egr",
@@ -106382,6 +106737,17 @@
       ],
       "firstDate": "2026-03-13",
       "lastDate": "2026-03-13",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-open-d-arcachon",
+      "label": "Open d'Arcachon",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12205"
+      ],
+      "firstDate": "2026-10-01",
+      "lastDate": "2026-10-01",
       "editionsCount": 1
     },
     {
@@ -106657,6 +107023,17 @@
       ],
       "firstDate": "2026-09-09",
       "lastDate": "2026-09-09",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-grand-prix-de-valescure-trophee-jean-louis-jurion",
+      "label": "Grand Prix de Valescure Trophée Jean-Louis JURION",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12215"
+      ],
+      "firstDate": "2026-10-09",
+      "lastDate": "2026-10-09",
       "editionsCount": 1
     },
     {
@@ -107001,6 +107378,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-neuenhof-open-jtg",
+      "label": "Neuenhof Open (JTG)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11632"
+      ],
+      "firstDate": "2026-10-20",
+      "lastDate": "2026-10-20",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-bb-o-amateur-championship",
       "label": "BB&O Amateur Championship",
       "sourceId": "egr",
@@ -107144,6 +107532,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-faldo-junor-tour-austria-6-ajgt",
+      "label": "Faldo Junor Tour (Austria) 6. AJGT",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12650"
+      ],
+      "firstDate": "2026-09-18",
+      "lastDate": "2026-09-18",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-internationaux-de-france-dames",
       "label": "Internationaux de France Dames",
       "sourceId": "egr",
@@ -107265,6 +107664,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-county-championship-cagu",
+      "label": "County Championship (CAGU)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12968"
+      ],
+      "firstDate": "2026-09-27",
+      "lastDate": "2026-09-27",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-canary-island-men-s-championship",
       "label": "Canary Island Men's Championship",
       "sourceId": "egr",
@@ -107375,6 +107785,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-3-spanish-junior-golf-masters",
+      "label": "3. Spanish Junior Golf Masters",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12963"
+      ],
+      "firstDate": "2026-10-20",
+      "lastDate": "2026-10-20",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-faldo-junior-tour-czechia",
       "label": "Faldo Junior Tour (Czechia)",
       "sourceId": "egr",
@@ -107383,6 +107804,17 @@
       ],
       "firstDate": "2026-06-12",
       "lastDate": "2026-06-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-copa-d-oro-citta-di-castel-gandolfo",
+      "label": "Copa D'Oro Cittá Di Castel Gandolfo",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12013"
+      ],
+      "firstDate": "2026-09-18",
+      "lastDate": "2026-09-18",
       "editionsCount": 1
     },
     {
@@ -107419,14 +107851,14 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-memorial-luca-lazzeroni",
-      "label": "Memorial Luca Lazzeroni",
+      "id": "egr-copa-d-oro-citta-di-castelgandolfo",
+      "label": "Copa D'Oro Cittá Di Castelgandolfo",
       "sourceId": "egr",
       "tournamentIds": [
-        "egr-egr11406"
+        "egr-egr12012"
       ],
-      "firstDate": "2025-11-14",
-      "lastDate": "2025-11-14",
+      "firstDate": "2026-09-18",
+      "lastDate": "2026-09-18",
       "editionsCount": 1
     },
     {
@@ -107449,6 +107881,17 @@
       ],
       "firstDate": "2026-04-06",
       "lastDate": "2026-04-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-sgf-cardrona",
+      "label": "SGF Cardrona",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11493"
+      ],
+      "firstDate": "2026-10-14",
+      "lastDate": "2026-10-14",
       "editionsCount": 1
     },
     {
@@ -107650,6 +108093,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-junior-golf-tour-open-neuenhof-jtg",
+      "label": "Junior Golf Tour Open Neuenhof (JTG)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11633"
+      ],
+      "firstDate": "2026-10-20",
+      "lastDate": "2026-10-20",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-junior-golf-tour-kaiserwinkl-jtg",
       "label": "Junior Golf Tour Kaiserwinkl (JTG)",
       "sourceId": "egr",
@@ -107716,6 +108170,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-campionat-de-catalunya-u16-u18",
+      "label": "Campionat De Catalunya U16/U18",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12275"
+      ],
+      "firstDate": "2026-10-02",
+      "lastDate": "2026-10-02",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-welsh-u16-mixed-closed-championship",
       "label": "Welsh U16 (Mixed) Closed Championship",
       "sourceId": "egr",
@@ -107760,6 +108225,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-grand-prix-du-luberon",
+      "label": "Grand Prix du Luberon",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12192"
+      ],
+      "firstDate": "2026-09-18",
+      "lastDate": "2026-09-18",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-djga-spring-open-u19",
       "label": "DJGA Spring Open (U19)",
       "sourceId": "egr",
@@ -107793,6 +108269,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-ajgt-u14-u12-finale-presented-by-bernd-wiesberger",
+      "label": "AJGT U14/U12 Finale presented by Bernd Wiesberger",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12518"
+      ],
+      "firstDate": "2026-10-10",
+      "lastDate": "2026-10-10",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-irish-junior-tour-1",
       "label": "Irish Junior Tour #1",
       "sourceId": "egr",
@@ -107812,6 +108299,17 @@
       ],
       "firstDate": "2026-08-18",
       "lastDate": "2026-08-18",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-ajgt-u14-finale-presented-by-bernd-wiesberger",
+      "label": "AJGT U14 Finale presented by Bernd Wiesberger",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12515"
+      ],
+      "firstDate": "2026-10-10",
+      "lastDate": "2026-10-10",
       "editionsCount": 1
     },
     {
@@ -107944,6 +108442,17 @@
       ],
       "firstDate": "2026-08-25",
       "lastDate": "2026-08-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-swiss-golf-junior-tour-final-u18",
+      "label": "Swiss Golf Junior Tour Final U18",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-236398"
+      ],
+      "firstDate": "2024-10-12",
+      "lastDate": "2024-10-12",
       "editionsCount": 1
     },
     {
@@ -108615,17 +109124,6 @@
       ],
       "firstDate": "2024-09-30",
       "lastDate": "2024-09-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-sgf-cardrona",
-      "label": "SGF Cardrona",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274146"
-      ],
-      "firstDate": "2026-10-14",
-      "lastDate": "2026-10-14",
       "editionsCount": 1
     },
     {
@@ -111035,17 +111533,6 @@
       ],
       "firstDate": "2022-02-17",
       "lastDate": "2022-02-17",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-faldo-junior-tour-austria-golf-club-dilly",
-      "label": "Faldo Junior Tour: Austria - Golf Club Dilly",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272727"
-      ],
-      "firstDate": "2026-09-18",
-      "lastDate": "2026-09-18",
       "editionsCount": 1
     },
     {
@@ -116348,17 +116835,6 @@
       ],
       "firstDate": "2026-03-17",
       "lastDate": "2026-03-17",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-eljgl-54-hole-masters",
-      "label": "ELJGL 54 hole Masters",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-253969"
-      ],
-      "firstDate": "2024-08-08",
-      "lastDate": "2024-08-08",
       "editionsCount": 1
     },
     {

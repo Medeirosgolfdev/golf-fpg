@@ -7,11 +7,11 @@
   "country": "Netherlands",
   "club": "Vlaanderen",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 943,
-  "egrPoints": 6915.63,
-  "avgScore": 74.28,
-  "avgToCR": 73.96,
+  "tournamentsPlayed": 9,
+  "egrRank": 981,
+  "egrPoints": 6676.24,
+  "avgScore": 74.09,
+  "avgToCR": 73.78,
   "events": [
     {
       "eventId": "11758",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12521",
-      "counting": false,
+      "counting": true,
       "pos": "121",
       "event": "Voorjaarswedstrijd Heren 2026",
       "venue": "Golfbaan Stippelberg",
@@ -151,10 +151,11 @@
       "r2": 75,
       "r3": 74,
       "r4": null,
-      "egrPoints": 239.39
+      "egrPoints": 239.39,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:06.267Z",
+  "scrapedAt": "2026-11-02T15:24:38.154Z",
   "url": "https://www.europeangolfrankings.com/players/29617"
 }

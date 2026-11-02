@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Ennetsee",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 2635,
-  "egrPoints": 2002.57,
-  "avgScore": 77.5,
-  "avgToCR": 77.01,
+  "tournamentsPlayed": 11,
+  "egrRank": 2250,
+  "egrPoints": 2517.49,
+  "avgScore": 76.32,
+  "avgToCR": 75.91,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "17",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 73,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 296.19
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "27",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": 78,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 135.89
+    },
     {
       "eventId": "12918",
       "counting": true,
@@ -54,6 +82,20 @@
       "r3": 72,
       "r4": 76,
       "egrPoints": 683.08
+    },
+    {
+      "eventId": "12940",
+      "counting": true,
+      "pos": "32",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 78,
+      "r2": 80,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 82.84
     },
     {
       "eventId": "11552",
@@ -99,7 +141,7 @@
     },
     {
       "eventId": "12445",
-      "counting": true,
+      "counting": false,
       "pos": "43",
       "event": "Swiss Golf Junior Tour (Gams-Werdenberg) 2026",
       "venue": "Golf Gams Werdenberg",
@@ -113,7 +155,7 @@
     },
     {
       "eventId": "11546",
-      "counting": true,
+      "counting": false,
       "pos": "43",
       "event": "Lake Constance Junior Games (GJG) 2026",
       "venue": "Country Club Schloss Langenstein",
@@ -157,6 +199,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:16.943Z",
+  "scrapedAt": "2026-11-02T15:30:18.207Z",
   "url": "https://www.europeangolfrankings.com/players/44436"
 }

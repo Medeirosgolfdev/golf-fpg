@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Bussy",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 945,
+  "tournamentsPlayed": 9,
+  "egrRank": 954,
   "egrPoints": 1570.03,
-  "avgScore": 78.68,
-  "avgToCR": 76.2,
+  "avgScore": 78.41,
+  "avgToCR": 75.84,
   "events": [
     {
       "eventId": "12160",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "12107",
-      "counting": false,
+      "counting": true,
       "pos": "31",
       "event": "Coupe Didier Illouz Grand Prix du RCF La Boulie 2026",
       "venue": "Racing Club de France",
@@ -151,7 +151,8 @@
       "r2": 90,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -170,6 +171,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:41.611Z",
+  "scrapedAt": "2026-11-02T15:26:21.002Z",
   "url": "https://www.europeangolfrankings.com/players/33416"
 }

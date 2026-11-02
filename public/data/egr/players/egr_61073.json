@@ -6,13 +6,27 @@
   "firstName": "Zack",
   "country": "Scotland",
   "club": "Peebles",
-  "ageGroup": "U18",
-  "tournamentsPlayed": 1,
-  "egrRank": 7022,
+  "ageGroup": "U16",
+  "tournamentsPlayed": 2,
+  "egrRank": 7096,
   "egrPoints": 243.42,
-  "avgScore": 81.5,
-  "avgToCR": 79.8,
+  "avgScore": 90.8,
+  "avgToCR": 89.22,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "54",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 93,
+      "r2": 97,
+      "r3": 101,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12281",
       "counting": true,
@@ -28,7 +42,7 @@
       "egrPoints": 243.42
     }
   ],
-  "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:27:38.171Z",
+  "ageNum": 16,
+  "scrapedAt": "2026-11-02T15:37:29.707Z",
   "url": "https://www.europeangolfrankings.com/players/61073"
 }

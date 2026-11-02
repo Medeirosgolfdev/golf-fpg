@@ -7,12 +7,68 @@
   "country": "Italy",
   "club": "Verona",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 339,
-  "egrPoints": 5625.9,
-  "avgScore": 76.67,
-  "avgToCR": 73.59,
+  "tournamentsPlayed": 17,
+  "egrRank": 303,
+  "egrPoints": 6308.42,
+  "avgScore": 76.05,
+  "avgToCR": 72.56,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "21",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 79,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 532.77
+    },
+    {
+      "eventId": "12017",
+      "counting": false,
+      "pos": "4",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 198.41
+    },
+    {
+      "eventId": "12015",
+      "counting": true,
+      "pos": "11",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 316.51
+    },
+    {
+      "eventId": "12009",
+      "counting": true,
+      "pos": "2",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 403.78
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -85,7 +141,7 @@
     },
     {
       "eventId": "11957",
-      "counting": true,
+      "counting": false,
       "pos": "41",
       "event": "Italian National Closed Stroke Play (Trofeo Isa Goldschmid) 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -127,7 +183,7 @@
     },
     {
       "eventId": "11918",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -169,7 +225,7 @@
     },
     {
       "eventId": "11907",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Trofeo Fondazione Sergio E Stella Montelatci 2026",
       "venue": "Pelagone Golf Club Toscana",
@@ -207,7 +263,8 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10320",
@@ -226,6 +283,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:40.833Z",
+  "scrapedAt": "2026-11-02T15:30:44.470Z",
   "url": "https://www.europeangolfrankings.com/players/45613"
 }

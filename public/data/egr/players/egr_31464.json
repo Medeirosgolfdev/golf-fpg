@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Aix Les Bains",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 692,
-  "egrPoints": 9095.84,
-  "avgScore": 72.73,
-  "avgToCR": 72.48,
+  "tournamentsPlayed": 10,
+  "egrRank": 628,
+  "egrPoints": 9591.79,
+  "avgScore": 73.04,
+  "avgToCR": 72.87,
   "events": [
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "31",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 495.95
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12073",
-      "counting": true,
+      "counting": false,
       "pos": "74",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -156,6 +170,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:50.007Z",
+  "scrapedAt": "2026-11-02T15:25:25.833Z",
   "url": "https://www.europeangolfrankings.com/players/31464"
 }

@@ -6,13 +6,27 @@
   "firstName": "Marie",
   "country": "France",
   "club": "UGOLF Albi",
-  "ageGroup": "U18",
+  "ageGroup": "U16",
   "tournamentsPlayed": 4,
-  "egrRank": 1668,
-  "egrPoints": 457.25,
-  "avgScore": 78,
-  "avgToCR": 76.11,
+  "egrRank": 1240,
+  "egrPoints": 970.55,
+  "avgScore": 77.78,
+  "avgToCR": 75.73,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "35",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 78,
+      "r4": 78,
+      "egrPoints": 640.61
+    },
     {
       "eventId": "12186",
       "counting": true,
@@ -67,10 +81,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 127.31
+      "egrPoints": 127.31,
+      "_mantido": true
     }
   ],
-  "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:02.689Z",
+  "ageNum": 16,
+  "scrapedAt": "2026-11-02T15:31:08.563Z",
   "url": "https://www.europeangolfrankings.com/players/47134"
 }

@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Edenderry",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 580,
+  "tournamentsPlayed": 15,
+  "egrRank": 586,
   "egrPoints": 10036.5,
   "avgScore": 74.54,
   "avgToCR": 73.65,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": false,
+      "pos": "14",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 207.86
+    },
     {
       "eventId": "11859",
       "counting": true,
@@ -211,6 +225,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:16.055Z",
+  "scrapedAt": "2026-11-02T15:28:03.832Z",
   "url": "https://www.europeangolfrankings.com/players/38013"
 }

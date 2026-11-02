@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Cannes-Mougins",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 3624,
-  "egrPoints": 1159.96,
-  "avgScore": 80.05,
-  "avgToCR": 78.88,
+  "tournamentsPlayed": 7,
+  "egrRank": 3550,
+  "egrPoints": 1218.52,
+  "avgScore": 80.41,
+  "avgToCR": 79.14,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "50",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 141.86
+    },
     {
       "eventId": "12145",
       "counting": true,
@@ -109,7 +123,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -123,7 +138,8 @@
       "r2": 75,
       "r3": 76,
       "r4": null,
-      "egrPoints": 83.3
+      "egrPoints": 83.3,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -142,6 +158,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:57.216Z",
+  "scrapedAt": "2026-11-02T15:29:55.963Z",
   "url": "https://www.europeangolfrankings.com/players/43439"
 }

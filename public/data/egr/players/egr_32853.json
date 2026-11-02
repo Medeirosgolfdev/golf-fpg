@@ -8,11 +8,25 @@
   "club": "Valtellina",
   "ageGroup": "U21",
   "tournamentsPlayed": 6,
-  "egrRank": 2364,
-  "egrPoints": 2329.44,
-  "avgScore": 75.44,
-  "avgToCR": 74.33,
+  "egrRank": 2482,
+  "egrPoints": 2217.53,
+  "avgScore": 75.94,
+  "avgToCR": 74.83,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "32",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 74,
+      "r2": 80,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 339.28
+    },
     {
       "eventId": "11958",
       "counting": true,
@@ -95,10 +109,11 @@
       "r2": 74,
       "r3": 76,
       "r4": null,
-      "egrPoints": 451.19
+      "egrPoints": 451.19,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:27.917Z",
+  "scrapedAt": "2026-11-02T15:26:06.079Z",
   "url": "https://www.europeangolfrankings.com/players/32853"
 }

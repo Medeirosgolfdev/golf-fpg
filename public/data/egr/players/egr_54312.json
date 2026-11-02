@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 3338,
+  "tournamentsPlayed": 2,
+  "egrRank": 3378,
   "egrPoints": 0,
-  "avgScore": 100,
-  "avgToCR": 96.1,
+  "avgScore": 98.17,
+  "avgToCR": 94.37,
   "events": [
+    {
+      "eventId": "11633",
+      "counting": true,
+      "pos": "7",
+      "event": "Junior Golf Tour Open Neuenhof (JTG) 2026",
+      "venue": "Golfclub Gut Neuenhof",
+      "country": "Germany",
+      "startDateRaw": "20. Oct 26",
+      "r1": 102,
+      "r2": 93,
+      "r3": 91,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12681",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:46.138Z",
+  "scrapedAt": "2026-11-02T15:34:13.550Z",
   "url": "https://www.europeangolfrankings.com/players/54312"
 }

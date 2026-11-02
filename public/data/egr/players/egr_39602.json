@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Chantilly",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 1243,
-  "egrPoints": 5344.62,
-  "avgScore": 75.59,
-  "avgToCR": 74.55,
+  "tournamentsPlayed": 11,
+  "egrRank": 1205,
+  "egrPoints": 5526.41,
+  "avgScore": 75.7,
+  "avgToCR": 74.63,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "23",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 84,
+      "r2": 80,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 454.47
+    },
     {
       "eventId": "12170",
       "counting": false,
@@ -165,7 +179,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11368",
@@ -179,7 +194,8 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 272.67
+      "egrPoints": 272.67,
+      "_mantido": true
     },
     {
       "eventId": "11366",
@@ -193,10 +209,11 @@
       "r2": 73,
       "r3": 77,
       "r4": null,
-      "egrPoints": 95.77
+      "egrPoints": 95.77,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:59.466Z",
+  "scrapedAt": "2026-11-02T15:28:51.345Z",
   "url": "https://www.europeangolfrankings.com/players/39602"
 }

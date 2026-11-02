@@ -7,12 +7,54 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 2274,
-  "egrPoints": 2447.5,
-  "avgScore": 76.32,
-  "avgToCR": 76.83,
+  "tournamentsPlayed": 14,
+  "egrRank": 2158,
+  "egrPoints": 2676.59,
+  "avgScore": 75.96,
+  "avgToCR": 76.65,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": false,
+      "pos": "60",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 81,
+      "r2": 86,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "25",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 182.41
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "19",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 72,
+      "r2": 76,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 227.08
+    },
     {
       "eventId": "12475",
       "counting": true,
@@ -85,7 +127,7 @@
     },
     {
       "eventId": "12456",
-      "counting": true,
+      "counting": false,
       "pos": "29",
       "event": "Swiss Golf Junior Tour (Zürichsee) 2026",
       "venue": "Golfpark Zürichsee",
@@ -127,7 +169,7 @@
     },
     {
       "eventId": "12445",
-      "counting": true,
+      "counting": false,
       "pos": "28",
       "event": "Swiss Golf Junior Tour (Gams-Werdenberg) 2026",
       "venue": "Golf Gams Werdenberg",
@@ -199,6 +241,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:32.066Z",
+  "scrapedAt": "2026-11-02T15:28:21.177Z",
   "url": "https://www.europeangolfrankings.com/players/38522"
 }

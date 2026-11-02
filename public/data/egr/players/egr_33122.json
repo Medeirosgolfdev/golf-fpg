@@ -7,10 +7,10 @@
   "country": "Switzerland",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 157,
-  "egrPoints": 10690.7,
-  "avgScore": 73.72,
+  "tournamentsPlayed": 10,
+  "egrRank": 190,
+  "egrPoints": 9669.77,
+  "avgScore": 73.56,
   "avgToCR": 70.82,
   "events": [
     {
@@ -68,6 +68,20 @@
       "r3": null,
       "r4": null,
       "egrPoints": 571.2
+    },
+    {
+      "eventId": "12939",
+      "counting": true,
+      "pos": "1",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 71,
+      "r2": 80,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 336.2
     },
     {
       "eventId": "11763",
@@ -151,7 +165,8 @@
       "r2": 70,
       "r3": 84,
       "r4": null,
-      "egrPoints": 1357.09
+      "egrPoints": 1357.09,
+      "_mantido": true
     },
     {
       "eventId": "10372",
@@ -165,10 +180,11 @@
       "r2": 73,
       "r3": 73,
       "r4": null,
-      "egrPoints": 457.25
+      "egrPoints": 457.25,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:35.448Z",
+  "scrapedAt": "2026-11-02T15:26:14.338Z",
   "url": "https://www.europeangolfrankings.com/players/33122"
 }

@@ -7,12 +7,26 @@
   "country": "Netherlands",
   "club": "Kleiburg",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 1607,
+  "tournamentsPlayed": 5,
+  "egrRank": 1629,
   "egrPoints": 503.01,
-  "avgScore": 80.46,
-  "avgToCR": 78.98,
+  "avgScore": 81.13,
+  "avgToCR": 79.81,
   "events": [
+    {
+      "eventId": "12942",
+      "counting": true,
+      "pos": "7",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 88,
+      "r2": 85,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12536",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:26:43.155Z",
+  "scrapedAt": "2026-11-02T15:36:27.774Z",
   "url": "https://www.europeangolfrankings.com/players/58793"
 }

@@ -8,11 +8,39 @@
   "club": "Modena",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 4702,
-  "egrPoints": 696.2,
-  "avgScore": 81.95,
-  "avgToCR": 80.78,
+  "egrRank": 4817,
+  "egrPoints": 674.77,
+  "avgScore": 82.23,
+  "avgToCR": 80.7,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": false,
+      "pos": "64",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 90,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12010",
+      "counting": true,
+      "pos": "16",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 78,
+      "r2": 78,
+      "r3": 90,
+      "r4": null,
+      "egrPoints": 38.15
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -207,7 +235,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 59.58
+      "egrPoints": 59.58,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -221,10 +250,11 @@
       "r2": 88,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:39.163Z",
+  "scrapedAt": "2026-11-02T15:34:05.597Z",
   "url": "https://www.europeangolfrankings.com/players/54041"
 }

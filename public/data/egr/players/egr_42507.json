@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Bondues",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 2355,
-  "egrPoints": 2343.95,
-  "avgScore": 76.44,
-  "avgToCR": 76.27,
+  "tournamentsPlayed": 8,
+  "egrRank": 2082,
+  "egrPoints": 2831.34,
+  "avgScore": 76.6,
+  "avgToCR": 76.08,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "34",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 82,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 237.11
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "19",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 78,
+      "r2": 73,
+      "r3": 66,
+      "r4": null,
+      "egrPoints": 733.49
+    },
     {
       "eventId": "12167",
       "counting": true,
@@ -109,10 +137,11 @@
       "r2": 70,
       "r3": 72,
       "r4": 73,
-      "egrPoints": 483.21
+      "egrPoints": 483.21,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:43.539Z",
+  "scrapedAt": "2026-11-02T15:29:40.175Z",
   "url": "https://www.europeangolfrankings.com/players/42507"
 }

@@ -8,11 +8,39 @@
   "club": "Firenze Ugolino",
   "ageGroup": "U21",
   "tournamentsPlayed": 14,
-  "egrRank": 1306,
-  "egrPoints": 5094.62,
-  "avgScore": 75.67,
-  "avgToCR": 73.83,
+  "egrRank": 1296,
+  "egrPoints": 5139.73,
+  "avgScore": 75.84,
+  "avgToCR": 73.93,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "58",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 349.73
+    },
+    {
+      "eventId": "12010",
+      "counting": false,
+      "pos": "8",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 81,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 152.6
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -193,7 +221,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 304.62
+      "egrPoints": 304.62,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -207,10 +236,11 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:20:06.123Z",
+  "scrapedAt": "2026-11-02T15:28:58.872Z",
   "url": "https://www.europeangolfrankings.com/players/40076"
 }

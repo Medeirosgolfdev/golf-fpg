@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Strasbourg",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 5494,
-  "egrPoints": 492.16,
-  "avgScore": 78.2,
-  "avgToCR": 77.96,
+  "tournamentsPlayed": 5,
+  "egrRank": 1707,
+  "egrPoints": 3713.08,
+  "avgScore": 75,
+  "avgToCR": 74.82,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "2",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 71,
+      "r2": 68,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 2493.21
+    },
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "22",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 72,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 727.71
+    },
     {
       "eventId": "12173",
       "counting": true,
@@ -67,10 +95,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:59.540Z",
+  "scrapedAt": "2026-11-02T15:28:51.522Z",
   "url": "https://www.europeangolfrankings.com/players/39605"
 }

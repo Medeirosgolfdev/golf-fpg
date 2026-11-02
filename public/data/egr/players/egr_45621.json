@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Turnberry",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 780,
+  "tournamentsPlayed": 13,
+  "egrRank": 790,
   "egrPoints": 2160.36,
   "avgScore": 83.76,
   "avgToCR": 81.57,
   "events": [
+    {
+      "eventId": "11491",
+      "counting": false,
+      "pos": "15",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 91,
+      "r2": 78,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11724",
       "counting": false,
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:21:41.431Z",
+  "scrapedAt": "2026-11-02T15:30:45.197Z",
   "url": "https://www.europeangolfrankings.com/players/45621"
 }

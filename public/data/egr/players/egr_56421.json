@@ -6,13 +6,41 @@
   "firstName": "Fraser",
   "country": "Scotland",
   "club": "Scotscraig",
-  "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 6134,
-  "egrPoints": 369.44,
-  "avgScore": 80,
-  "avgToCR": 79.3,
+  "ageGroup": "U14",
+  "tournamentsPlayed": 3,
+  "egrRank": 5278,
+  "egrPoints": 558,
+  "avgScore": 81.13,
+  "avgToCR": 79.64,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "26",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 89,
+      "r2": 80,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 79.17
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "48",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 80,
+      "r2": 78,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 109.39
+    },
     {
       "eventId": "12285",
       "counting": true,
@@ -28,7 +56,7 @@
       "egrPoints": 369.44
     }
   ],
-  "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:49.360Z",
+  "ageNum": 14,
+  "scrapedAt": "2026-11-02T15:35:25.323Z",
   "url": "https://www.europeangolfrankings.com/players/56421"
 }

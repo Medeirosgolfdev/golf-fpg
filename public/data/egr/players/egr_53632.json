@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Bologna",
   "ageGroup": "U12",
-  "tournamentsPlayed": 6,
-  "egrRank": 5490,
-  "egrPoints": 493.21,
-  "avgScore": 78.71,
-  "avgToCR": 80.29,
+  "tournamentsPlayed": 7,
+  "egrRank": 5481,
+  "egrPoints": 512.29,
+  "avgScore": 79.47,
+  "avgToCR": 80.46,
   "events": [
+    {
+      "eventId": "12010",
+      "counting": true,
+      "pos": "22",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 80,
+      "r2": 92,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 19.08
+    },
     {
       "eventId": "11993",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-10-05T14:24:32.322Z",
+  "scrapedAt": "2026-11-02T15:33:57.636Z",
   "url": "https://www.europeangolfrankings.com/players/53632"
 }

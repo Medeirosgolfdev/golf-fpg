@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Marcilly",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 10,
-  "egrRank": 336,
-  "egrPoints": 13876.9,
-  "avgScore": 72.12,
-  "avgToCR": 71.06,
+  "tournamentsPlayed": 11,
+  "egrRank": 298,
+  "egrPoints": 15153.2,
+  "avgScore": 71.81,
+  "avgToCR": 71.05,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 1791.98
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12073",
-      "counting": true,
+      "counting": false,
       "pos": "54",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:05.806Z",
+  "scrapedAt": "2026-11-02T15:20:12.224Z",
   "url": "https://www.europeangolfrankings.com/players/18938"
 }

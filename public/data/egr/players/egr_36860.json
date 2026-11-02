@@ -8,11 +8,39 @@
   "club": "Ambrosiano",
   "ageGroup": "U18",
   "tournamentsPlayed": 7,
-  "egrRank": 518,
-  "egrPoints": 3657.32,
-  "avgScore": 75.5,
-  "avgToCR": 72.37,
+  "egrRank": 597,
+  "egrPoints": 3105.03,
+  "avgScore": 76.22,
+  "avgToCR": 72.92,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "37",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 80,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 260.48
+    },
+    {
+      "eventId": "12015",
+      "counting": true,
+      "pos": "6",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 75,
+      "r2": 78,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 407.11
+    },
     {
       "eventId": "11957",
       "counting": true,
@@ -95,7 +123,8 @@
       "r2": 76,
       "r3": 75,
       "r4": null,
-      "egrPoints": 485.34
+      "egrPoints": 485.34,
+      "_mantido": true
     },
     {
       "eventId": "10323",
@@ -109,7 +138,8 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 734.54
+      "egrPoints": 734.54,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -128,6 +158,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:52.344Z",
+  "scrapedAt": "2026-11-02T15:27:38.313Z",
   "url": "https://www.europeangolfrankings.com/players/36860"
 }

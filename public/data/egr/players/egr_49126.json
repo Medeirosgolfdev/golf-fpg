@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Prunevelle",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 7870,
-  "egrPoints": 159.8,
-  "avgScore": 73.67,
-  "avgToCR": 74.27,
+  "tournamentsPlayed": 2,
+  "egrRank": 4734,
+  "egrPoints": 701.79,
+  "avgScore": 74.33,
+  "avgToCR": 74.38,
   "events": [
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "33",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 541.99
+    },
     {
       "eventId": "12173",
       "counting": true,
@@ -44,6 +58,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:45.268Z",
+  "scrapedAt": "2026-11-02T15:31:56.924Z",
   "url": "https://www.europeangolfrankings.com/players/49126"
 }

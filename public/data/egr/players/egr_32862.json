@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Argentario",
   "ageGroup": "U21",
-  "tournamentsPlayed": 14,
-  "egrRank": 1519,
-  "egrPoints": 4280.8,
-  "avgScore": 76.28,
-  "avgToCR": 74.6,
+  "tournamentsPlayed": 15,
+  "egrRank": 1525,
+  "egrPoints": 4274.01,
+  "avgScore": 75.88,
+  "avgToCR": 74.3,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "69",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 83,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12012",
+      "counting": true,
+      "pos": "13",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 83,
+      "r2": 71,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 284.21
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -207,7 +235,8 @@
       "r2": 80,
       "r3": 79,
       "r4": null,
-      "egrPoints": 291
+      "egrPoints": 291,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -241,6 +270,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:28.368Z",
+  "scrapedAt": "2026-11-02T15:26:06.586Z",
   "url": "https://www.europeangolfrankings.com/players/32862"
 }

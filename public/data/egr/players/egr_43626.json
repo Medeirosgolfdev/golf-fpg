@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Padova",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 2008,
-  "egrPoints": 2962.45,
-  "avgScore": 75.65,
-  "avgToCR": 75.17,
+  "tournamentsPlayed": 11,
+  "egrRank": 1927,
+  "egrPoints": 3187.1,
+  "avgScore": 75.78,
+  "avgToCR": 75.08,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "28",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 79,
+      "r2": 75,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 383.82
+    },
     {
       "eventId": "11992",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11933",
-      "counting": true,
+      "counting": false,
       "pos": "14",
       "event": "Trofeo Giovanile #2 U18 2026",
       "venue": "Cus Ferrara Golf",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:01.256Z",
+  "scrapedAt": "2026-11-02T15:30:00.606Z",
   "url": "https://www.europeangolfrankings.com/players/43626"
 }

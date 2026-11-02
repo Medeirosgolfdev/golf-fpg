@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Domont",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 3829,
+  "tournamentsPlayed": 6,
+  "egrRank": 3851,
   "egrPoints": 1057.25,
-  "avgScore": 77.8,
-  "avgToCR": 78.18,
+  "avgScore": 78.17,
+  "avgToCR": 78.48,
   "events": [
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "75",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 79,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:21.491Z",
+  "scrapedAt": "2026-11-02T15:32:37.152Z",
   "url": "https://www.europeangolfrankings.com/players/50436"
 }

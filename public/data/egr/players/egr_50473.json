@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Terre Blanche",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 4742,
-  "egrPoints": 685.94,
-  "avgScore": 78.89,
-  "avgToCR": 79.46,
+  "tournamentsPlayed": 6,
+  "egrRank": 3576,
+  "egrPoints": 1196.24,
+  "avgScore": 78.92,
+  "avgToCR": 78.99,
   "events": [
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "30",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 78,
+      "r2": 72,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 510.3
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:23.255Z",
+  "scrapedAt": "2026-11-02T15:32:39.165Z",
   "url": "https://www.europeangolfrankings.com/players/50473"
 }

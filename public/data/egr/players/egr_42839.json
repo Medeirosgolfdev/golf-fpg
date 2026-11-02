@@ -8,11 +8,25 @@
   "club": "Klagenfurt-Seltenheim",
   "ageGroup": "U18",
   "tournamentsPlayed": 6,
-  "egrRank": 5111,
-  "egrPoints": 585.72,
-  "avgScore": 78.54,
-  "avgToCR": 77.23,
+  "egrRank": 4867,
+  "egrPoints": 658.76,
+  "avgScore": 78.23,
+  "avgToCR": 76.97,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "74",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 82,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 73.04
+    },
     {
       "eventId": "12519",
       "counting": true,
@@ -95,10 +109,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:49.073Z",
+  "scrapedAt": "2026-11-02T15:29:46.380Z",
   "url": "https://www.europeangolfrankings.com/players/42839"
 }

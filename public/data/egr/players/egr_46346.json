@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "West Links Junior",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 7775,
-  "egrPoints": 169.49,
-  "avgScore": 82.53,
-  "avgToCR": 83.07,
+  "tournamentsPlayed": 5,
+  "egrRank": 7690,
+  "egrPoints": 183.59,
+  "avgScore": 81.36,
+  "avgToCR": 81.37,
   "events": [
+    {
+      "eventId": "12902",
+      "counting": true,
+      "pos": "5",
+      "event": "Loretto Junior Golf Tour Autumn/Winter 2026",
+      "venue": "Longniddry Golf Club",
+      "country": "Scotland",
+      "startDateRaw": "28. Sep 26",
+      "r1": 73,
+      "r2": 76,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 137.26
+    },
     {
       "eventId": "12733",
       "counting": true,
@@ -81,7 +95,8 @@
       "r2": 73,
       "r3": 76,
       "r4": null,
-      "egrPoints": 123.16
+      "egrPoints": 123.16,
+      "_mantido": true
     },
     {
       "eventId": "11307",
@@ -95,7 +110,8 @@
       "r2": 87,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10437",
@@ -114,6 +130,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:54.570Z",
+  "scrapedAt": "2026-11-02T15:30:59.301Z",
   "url": "https://www.europeangolfrankings.com/players/46346"
 }

@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Toulouse",
   "ageGroup": "U16",
-  "tournamentsPlayed": 19,
-  "egrRank": 288,
-  "egrPoints": 15497,
-  "avgScore": 72.71,
-  "avgToCR": 70.84,
+  "tournamentsPlayed": 20,
+  "egrRank": 275,
+  "egrPoints": 15886.6,
+  "avgScore": 72.2,
+  "avgToCR": 70.52,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "10",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 72,
+      "r2": 75,
+      "r3": 73,
+      "r4": 69,
+      "egrPoints": 1180.41
+    },
+    {
+      "eventId": "12205",
+      "counting": false,
+      "pos": "17",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 749.25
+    },
     {
       "eventId": "12185",
       "counting": false,
@@ -197,7 +225,7 @@
     },
     {
       "eventId": "12042",
-      "counting": true,
+      "counting": false,
       "pos": "12",
       "event": "41ème Grand Prix de Campagne 2026",
       "venue": "Golf de Nîmes Campagne",
@@ -277,10 +305,11 @@
       "r2": 69,
       "r3": 69,
       "r4": 74,
-      "egrPoints": 700.66
+      "egrPoints": 700.66,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:58.964Z",
+  "scrapedAt": "2026-11-02T15:31:04.336Z",
   "url": "https://www.europeangolfrankings.com/players/46515"
 }

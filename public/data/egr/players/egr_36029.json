@@ -8,11 +8,25 @@
   "club": "Saint Cloud",
   "ageGroup": "U18",
   "tournamentsPlayed": 11,
-  "egrRank": 513,
-  "egrPoints": 3692.32,
-  "avgScore": 76.23,
-  "avgToCR": 73.74,
+  "egrRank": 581,
+  "egrPoints": 3229.32,
+  "avgScore": 76.08,
+  "avgToCR": 74.13,
   "events": [
+    {
+      "eventId": "12214",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 77,
+      "r2": 70,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 305.81
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -165,7 +179,8 @@
       "r2": 74,
       "r3": 77,
       "r4": 70,
-      "egrPoints": 768.81
+      "egrPoints": 768.81,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -184,6 +199,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:33.955Z",
+  "scrapedAt": "2026-11-02T15:27:17.531Z",
   "url": "https://www.europeangolfrankings.com/players/36029"
 }

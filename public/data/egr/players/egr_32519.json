@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 177,
+  "tournamentsPlayed": 17,
+  "egrRank": 178,
   "egrPoints": 19828.4,
   "avgScore": 72.46,
   "avgToCR": 69.9,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": false,
+      "pos": "16",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 905.01
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -239,6 +253,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:18.071Z",
+  "scrapedAt": "2026-11-02T15:25:55.322Z",
   "url": "https://www.europeangolfrankings.com/players/32519"
 }

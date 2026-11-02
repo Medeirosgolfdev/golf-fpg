@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Augsburg",
   "ageGroup": "U21",
-  "tournamentsPlayed": 8,
-  "egrRank": 723,
-  "egrPoints": 2401.83,
-  "avgScore": 76.68,
-  "avgToCR": 73.15,
+  "tournamentsPlayed": 9,
+  "egrRank": 665,
+  "egrPoints": 2702.8,
+  "avgScore": 77.91,
+  "avgToCR": 74.85,
   "events": [
+    {
+      "eventId": "12677",
+      "counting": true,
+      "pos": "15",
+      "event": "Offene Bayerische Meisterschaft Damen 2026",
+      "venue": "Münchener Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "09. Oct 26",
+      "r1": 87,
+      "r2": 85,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "44",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 78,
+      "r2": 76,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 453.9
+    },
     {
       "eventId": "12886",
       "counting": true,
@@ -123,10 +151,11 @@
       "r2": 78,
       "r3": 79,
       "r4": null,
-      "egrPoints": 152.93
+      "egrPoints": 152.93,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:14:09.273Z",
+  "scrapedAt": "2026-11-02T15:22:30.703Z",
   "url": "https://www.europeangolfrankings.com/players/25513"
 }

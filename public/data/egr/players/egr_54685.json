@@ -7,12 +7,54 @@
   "country": "Switzerland",
   "club": "Erlen",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 8767,
+  "tournamentsPlayed": 7,
+  "egrRank": 8864,
   "egrPoints": 89.9,
-  "avgScore": 87.6,
-  "avgToCR": 89.74,
+  "avgScore": 87.71,
+  "avgToCR": 89.24,
   "events": [
+    {
+      "eventId": "12951",
+      "counting": true,
+      "pos": "19",
+      "event": "Germany Final (Junior Golf Masters) 2026",
+      "venue": "Thüringer Golfclub Drei Geichen",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": null,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12490",
+      "counting": true,
+      "pos": "28",
+      "event": "Swiss Golf Final U14 (Crans-sur-Sierre) 2026",
+      "venue": "Golf Club Crans-sur-Sierre",
+      "country": "Switzerland",
+      "startDateRaw": "03. Oct 26",
+      "r1": 89,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12962",
+      "counting": true,
+      "pos": "19",
+      "event": "DEUTSCHLANDFINALE (JGM) 2026",
+      "venue": "Thüringer Golfclub",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": null,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12478",
       "counting": true,
@@ -71,6 +113,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:53.103Z",
+  "scrapedAt": "2026-11-02T15:34:21.500Z",
   "url": "https://www.europeangolfrankings.com/players/54685"
 }

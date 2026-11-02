@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Manville",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 4,
-  "egrRank": 534,
-  "egrPoints": 10551.7,
-  "avgScore": 70.36,
-  "avgToCR": 69.45,
+  "tournamentsPlayed": 6,
+  "egrRank": 306,
+  "egrPoints": 14835.2,
+  "avgScore": 70.41,
+  "avgToCR": 69.84,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 69,
+      "r2": 69,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 3272.33
+    },
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "10",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 70,
+      "r2": 68,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 1011.2
+    },
     {
       "eventId": "12157",
       "counting": true,
@@ -71,6 +99,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:11:56.434Z",
+  "scrapedAt": "2026-11-02T15:20:02.181Z",
   "url": "https://www.europeangolfrankings.com/players/17804"
 }

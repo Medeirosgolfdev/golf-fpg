@@ -8,11 +8,53 @@
   "club": "Torino",
   "ageGroup": "U16",
   "tournamentsPlayed": 19,
-  "egrRank": 1030,
-  "egrPoints": 6357.09,
-  "avgScore": 74.42,
-  "avgToCR": 73.31,
+  "egrRank": 1233,
+  "egrPoints": 5412.95,
+  "avgScore": 74.75,
+  "avgToCR": 73.84,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "29",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 80,
+      "r2": 73,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 398.82
+    },
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "35",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 797.97
+    },
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "59",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 174.87
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -249,7 +291,8 @@
       "r2": 77,
       "r3": 79,
       "r4": null,
-      "egrPoints": 213.36
+      "egrPoints": 213.36,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -263,7 +306,8 @@
       "r2": 71,
       "r3": null,
       "r4": null,
-      "egrPoints": 1541.82
+      "egrPoints": 1541.82,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -277,10 +321,11 @@
       "r2": 78,
       "r3": 76,
       "r4": null,
-      "egrPoints": 599.11
+      "egrPoints": 599.11,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:30.151Z",
+  "scrapedAt": "2026-11-02T15:28:18.853Z",
   "url": "https://www.europeangolfrankings.com/players/38464"
 }

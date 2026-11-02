@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 5,
-  "egrRank": 4985,
-  "egrPoints": 612.52,
-  "avgScore": 79.13,
-  "avgToCR": 78.58,
+  "tournamentsPlayed": 7,
+  "egrRank": 3962,
+  "egrPoints": 1002.04,
+  "avgScore": 78.47,
+  "avgToCR": 77.46,
   "events": [
+    {
+      "eventId": "12676",
+      "counting": true,
+      "pos": "31",
+      "event": "Offene Bayerische Meisterschaft Herren 2026",
+      "venue": "Münchener Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "09. Oct 26",
+      "r1": 78,
+      "r2": 82,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 254.66
+    },
     {
       "eventId": "11442",
       "counting": true,
@@ -70,6 +84,20 @@
       "egrPoints": 0
     },
     {
+      "eventId": "12940",
+      "counting": true,
+      "pos": "25",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 134.86
+    },
+    {
       "eventId": "11552",
       "counting": true,
       "pos": "13",
@@ -100,6 +128,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:39.510Z",
+  "scrapedAt": "2026-11-02T15:26:18.480Z",
   "url": "https://www.europeangolfrankings.com/players/33273"
 }

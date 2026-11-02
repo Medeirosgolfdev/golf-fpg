@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Terre Blanche",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 7,
-  "egrRank": 471,
-  "egrPoints": 11392.9,
-  "avgScore": 73.28,
-  "avgToCR": 71.79,
+  "tournamentsPlayed": 10,
+  "egrRank": 379,
+  "egrPoints": 13153.3,
+  "avgScore": 73.72,
+  "avgToCR": 72.7,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "25",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 78,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 337.8
+    },
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "15",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 68,
+      "r2": 73,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 779.8
+    },
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "17",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 642.78
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -29,7 +71,7 @@
     },
     {
       "eventId": "12170",
-      "counting": true,
+      "counting": false,
       "pos": "101",
       "event": "Grand Prix de Granville 2026",
       "venue": "Golf Club de Granville",
@@ -113,6 +155,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:16:26.517Z",
+  "scrapedAt": "2026-11-02T15:25:00.498Z",
   "url": "https://www.europeangolfrankings.com/players/30365"
 }

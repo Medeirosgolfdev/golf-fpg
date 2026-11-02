@@ -7,12 +7,26 @@
   "country": "France",
   "club": "RCF La Boulie",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 8,
-  "egrRank": 4872,
-  "egrPoints": 646.15,
-  "avgScore": 80.4,
-  "avgToCR": 80.14,
+  "tournamentsPlayed": 9,
+  "egrRank": 3496,
+  "egrPoints": 1250.95,
+  "avgScore": 79.22,
+  "avgToCR": 79.01,
   "events": [
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "26",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 604.8
+    },
     {
       "eventId": "12153",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:48.694Z",
+  "scrapedAt": "2026-11-02T15:21:00.434Z",
   "url": "https://www.europeangolfrankings.com/players/21657"
 }

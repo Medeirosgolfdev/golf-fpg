@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Kilmalcolm",
   "ageGroup": "U25",
-  "tournamentsPlayed": 14,
-  "egrRank": 185,
-  "egrPoints": 19503.6,
-  "avgScore": 73,
-  "avgToCR": 70.7,
+  "tournamentsPlayed": 12,
+  "egrRank": 209,
+  "egrPoints": 18761,
+  "avgScore": 73.76,
+  "avgToCR": 71.1,
   "events": [
     {
       "eventId": "12882",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "12533",
-      "counting": false,
+      "counting": true,
       "pos": "33",
       "event": "Dutch Junior Open 2026",
       "venue": "Toxandria Golf Club",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11655",
-      "counting": false,
+      "counting": true,
       "pos": "50",
       "event": "Nations Cup (Copa Sotogrande) 2026",
       "venue": "Real Club de Golf Sotogrande",
@@ -193,7 +193,8 @@
       "r2": 74,
       "r3": 75,
       "r4": null,
-      "egrPoints": 981.49
+      "egrPoints": 981.49,
+      "_mantido": true
     },
     {
       "eventId": "11774",
@@ -207,7 +208,8 @@
       "r2": 75,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1061.03
+      "egrPoints": 1061.03,
+      "_mantido": true
     },
     {
       "eventId": "11358",
@@ -226,6 +228,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:13:28.895Z",
+  "scrapedAt": "2026-11-02T15:21:46.034Z",
   "url": "https://www.europeangolfrankings.com/players/23559"
 }

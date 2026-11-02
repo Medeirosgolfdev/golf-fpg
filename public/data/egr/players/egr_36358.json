@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Trump International",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1403,
+  "tournamentsPlayed": 11,
+  "egrRank": 1419,
   "egrPoints": 4647.07,
   "avgScore": 74.33,
   "avgToCR": 72.95,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": false,
+      "pos": "20",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 80,
+      "r2": 80,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 148.12
+    },
     {
       "eventId": "12282",
       "counting": false,
@@ -185,6 +199,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:40.213Z",
+  "scrapedAt": "2026-11-02T15:27:24.391Z",
   "url": "https://www.europeangolfrankings.com/players/36358"
 }

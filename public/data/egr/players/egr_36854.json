@@ -8,11 +8,39 @@
   "club": "Saint Cloud",
   "ageGroup": "U16",
   "tournamentsPlayed": 12,
-  "egrRank": 269,
-  "egrPoints": 16130.3,
-  "avgScore": 73,
-  "avgToCR": 71.8,
+  "egrRank": 161,
+  "egrPoints": 20353.7,
+  "avgScore": 72.5,
+  "avgToCR": 71.04,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "1",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 68,
+      "r2": 71,
+      "r3": 71,
+      "r4": 67,
+      "egrPoints": 4638.5
+    },
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 701.46
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "12039",
-      "counting": true,
+      "counting": false,
       "pos": "10",
       "event": "Grand Prix Saint Donat 2026",
       "venue": "Golf de Saint Donat",
@@ -165,7 +193,8 @@
       "r2": 73,
       "r3": 74,
       "r4": null,
-      "egrPoints": 455.03
+      "egrPoints": 455.03,
+      "_mantido": true
     },
     {
       "eventId": "11368",
@@ -179,10 +208,11 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 272.67
+      "egrPoints": 272.67,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:18:52.005Z",
+  "scrapedAt": "2026-11-02T15:27:38.008Z",
   "url": "https://www.europeangolfrankings.com/players/36854"
 }

@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 1233,
-  "egrPoints": 5385.22,
-  "avgScore": 75.26,
-  "avgToCR": 73.19,
+  "tournamentsPlayed": 13,
+  "egrRank": 1143,
+  "egrPoints": 5801.52,
+  "avgScore": 74.65,
+  "avgToCR": 72.84,
   "events": [
+    {
+      "eventId": "12378",
+      "counting": true,
+      "pos": "11",
+      "event": "54 Junior Tour by Visit Trelleborg #6 2026",
+      "venue": "Bedinge GK",
+      "country": "Sweden",
+      "startDateRaw": "25. Oct 26",
+      "r1": null,
+      "r2": 72,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 593.18
+    },
     {
       "eventId": "11673",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11797",
-      "counting": true,
+      "counting": false,
       "pos": "114",
       "event": "Fairhaven Trophies 2026",
       "venue": "Fairhaven Golf Club",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:06.857Z",
+  "scrapedAt": "2026-11-02T15:31:13.452Z",
   "url": "https://www.europeangolfrankings.com/players/47420"
 }

@@ -8,11 +8,25 @@
   "club": "Pic Saint-Loup",
   "ageGroup": "U18",
   "tournamentsPlayed": 4,
-  "egrRank": 1779,
-  "egrPoints": 3469.01,
-  "avgScore": 75.36,
-  "avgToCR": 74.31,
+  "egrRank": 1740,
+  "egrPoints": 3645.11,
+  "avgScore": 75.1,
+  "avgToCR": 73.29,
   "events": [
+    {
+      "eventId": "12275",
+      "counting": true,
+      "pos": "2",
+      "event": "Campionat De Catalunya U16/U18 2026",
+      "venue": "Fontanals Golf Club",
+      "country": "Spain",
+      "startDateRaw": "02. Oct 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 758.72
+    },
     {
       "eventId": "12081",
       "counting": true,
@@ -67,10 +81,11 @@
       "r2": 70,
       "r3": 72,
       "r4": 74,
-      "egrPoints": 582.62
+      "egrPoints": 582.62,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:33.248Z",
+  "scrapedAt": "2026-11-02T15:27:16.823Z",
   "url": "https://www.europeangolfrankings.com/players/36015"
 }

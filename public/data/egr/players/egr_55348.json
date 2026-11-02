@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Pinetina",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 4606,
-  "egrPoints": 733.8,
-  "avgScore": 80.24,
-  "avgToCR": 80.01,
+  "tournamentsPlayed": 11,
+  "egrRank": 4014,
+  "egrPoints": 978.45,
+  "avgScore": 79.41,
+  "avgToCR": 79.12,
   "events": [
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "16",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 73,
+      "r2": 78,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 244.65
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11911",
-      "counting": true,
+      "counting": false,
       "pos": "66",
       "event": "Trofeo Angelo Corvini 2026",
       "venue": "Zoate Golf Club",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:16.890Z",
+  "scrapedAt": "2026-11-02T15:34:48.573Z",
   "url": "https://www.europeangolfrankings.com/players/55348"
 }

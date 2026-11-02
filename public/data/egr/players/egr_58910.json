@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Moossee",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 10380,
-  "egrPoints": 0,
-  "avgScore": 86.5,
-  "avgToCR": 86.6,
+  "tournamentsPlayed": 2,
+  "egrRank": 9190,
+  "egrPoints": 69.84,
+  "avgScore": 83.8,
+  "avgToCR": 83.12,
   "events": [
+    {
+      "eventId": "12940",
+      "counting": true,
+      "pos": "33",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 83,
+      "r2": 84,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 69.84
+    },
     {
       "eventId": "12448",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:26:46.706Z",
+  "scrapedAt": "2026-11-02T15:36:31.478Z",
   "url": "https://www.europeangolfrankings.com/players/58910"
 }

@@ -8,11 +8,39 @@
   "club": "Madonna Campiglio",
   "ageGroup": "U18",
   "tournamentsPlayed": 10,
-  "egrRank": 905,
-  "egrPoints": 1713.55,
-  "avgScore": 79.74,
-  "avgToCR": 76.77,
+  "egrRank": 812,
+  "egrPoints": 2083.73,
+  "avgScore": 79.88,
+  "avgToCR": 76.67,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "26",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 73,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 456.01
+    },
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "18",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 81,
+      "r2": 85,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 18.04
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -137,7 +165,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 26.89
+      "egrPoints": 26.89,
+      "_mantido": true
     },
     {
       "eventId": "10323",
@@ -151,7 +180,8 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 76.97
+      "egrPoints": 76.97,
+      "_mantido": true
     },
     {
       "eventId": "10320",
@@ -170,6 +200,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:31.630Z",
+  "scrapedAt": "2026-11-02T15:31:41.636Z",
   "url": "https://www.europeangolfrankings.com/players/48352"
 }

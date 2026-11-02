@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Cannes-Mougins",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 342,
-  "egrPoints": 13785.6,
-  "avgScore": 72.72,
-  "avgToCR": 71.81,
+  "tournamentsPlayed": 13,
+  "egrRank": 501,
+  "egrPoints": 11021.6,
+  "avgScore": 73.87,
+  "avgToCR": 72.43,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "54",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 82,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 464
+    },
+    {
+      "eventId": "12215",
+      "counting": false,
+      "pos": "55",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 75,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12789",
-      "counting": false,
+      "counting": true,
       "pos": "98",
       "event": "German International Amateur Championship Boys 2026",
       "venue": "GC Bad Saarow (Faldo)",
@@ -179,7 +207,8 @@
       "r2": 76,
       "r3": 74,
       "r4": null,
-      "egrPoints": 668.8
+      "egrPoints": 668.8,
+      "_mantido": true
     },
     {
       "eventId": "11368",
@@ -193,7 +222,8 @@
       "r2": 69,
       "r3": 64,
       "r4": 72,
-      "egrPoints": 2164.8
+      "egrPoints": 2164.8,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -207,10 +237,11 @@
       "r2": 70,
       "r3": 66,
       "r4": null,
-      "egrPoints": 1499.4
+      "egrPoints": 1499.4,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:10.941Z",
+  "scrapedAt": "2026-11-02T15:29:04.161Z",
   "url": "https://www.europeangolfrankings.com/players/40350"
 }

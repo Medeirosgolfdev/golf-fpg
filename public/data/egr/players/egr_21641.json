@@ -1,18 +1,32 @@
 {
   "id": "21641",
-  "egrId": "MFRA21641",
+  "egrId": "PFRA21641",
   "name": "Noa Auch-Roy",
   "lastName": "AUCH-ROY",
   "firstName": "Noa",
   "country": "France",
-  "club": "Mionnay",
+  "club": "Professional",
   "ageGroup": "U21",
-  "tournamentsPlayed": 8,
-  "egrRank": 135,
-  "egrPoints": 22949,
-  "avgScore": 72.84,
-  "avgToCR": 70.08,
+  "tournamentsPlayed": 9,
+  "egrRank": null,
+  "egrPoints": 23872.2,
+  "avgScore": 72.77,
+  "avgToCR": 70.32,
   "events": [
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "13",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 923.22
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:12:48.237Z",
+  "scrapedAt": "2026-11-02T15:20:59.655Z",
   "url": "https://www.europeangolfrankings.com/players/21641"
 }

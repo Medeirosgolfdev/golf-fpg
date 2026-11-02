@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Marco Simone",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 9763,
+  "tournamentsPlayed": 3,
+  "egrRank": 9867,
   "egrPoints": 35.5,
-  "avgScore": 92,
-  "avgToCR": 93.65,
+  "avgScore": 92.17,
+  "avgToCR": 92.83,
   "events": [
+    {
+      "eventId": "12012",
+      "counting": true,
+      "pos": "49",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 94,
+      "r2": 91,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12006",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:27:29.623Z",
+  "scrapedAt": "2026-11-02T15:37:20.289Z",
   "url": "https://www.europeangolfrankings.com/players/60744"
 }

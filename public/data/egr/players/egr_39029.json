@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Garforth",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 3142,
-  "egrPoints": 1473.72,
-  "avgScore": 76.6,
-  "avgToCR": 75.04,
+  "tournamentsPlayed": 3,
+  "egrRank": 3085,
+  "egrPoints": 1561.02,
+  "avgScore": 76.4,
+  "avgToCR": 74.56,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "65",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 308.48
+    },
     {
       "eventId": "12282",
       "counting": true,
@@ -58,6 +72,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:48.365Z",
+  "scrapedAt": "2026-11-02T15:28:39.103Z",
   "url": "https://www.europeangolfrankings.com/players/39029"
 }

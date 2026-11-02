@@ -7,15 +7,15 @@
   "country": "France",
   "club": "Aix Marseille",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 455,
-  "egrPoints": 4270.19,
-  "avgScore": 76.28,
-  "avgToCR": 73.28,
+  "tournamentsPlayed": 9,
+  "egrRank": 634,
+  "egrPoints": 2855.91,
+  "avgScore": 76.22,
+  "avgToCR": 73.53,
   "events": [
     {
       "eventId": "12846",
-      "counting": false,
+      "counting": true,
       "pos": "7",
       "event": "Grand Prix de Gap Bayard 2026",
       "venue": "Golf de Gap Bayard",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11842",
-      "counting": false,
+      "counting": true,
       "pos": "84",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -151,7 +151,8 @@
       "r2": 76,
       "r3": 86,
       "r4": null,
-      "egrPoints": 846.96
+      "egrPoints": 846.96,
+      "_mantido": true
     },
     {
       "eventId": "11369",
@@ -165,7 +166,8 @@
       "r2": 71,
       "r3": 75,
       "r4": 77,
-      "egrPoints": 641.5
+      "egrPoints": 641.5,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -184,6 +186,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:33.939Z",
+  "scrapedAt": "2026-11-02T15:27:17.515Z",
   "url": "https://www.europeangolfrankings.com/players/36027"
 }

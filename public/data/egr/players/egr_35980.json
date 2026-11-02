@@ -5,14 +5,42 @@
   "lastName": "CHAMBAUD",
   "firstName": "Patrick",
   "country": "France",
-  "club": "Dolce Fregate Provence",
+  "club": "Le Fregate Provence",
   "ageGroup": "U18",
   "tournamentsPlayed": 13,
-  "egrRank": 729,
-  "egrPoints": 8733.6,
-  "avgScore": 75.76,
-  "avgToCR": 74.2,
+  "egrRank": 767,
+  "egrPoints": 8451.25,
+  "avgScore": 75.73,
+  "avgToCR": 74.45,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "15",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 71,
+      "r2": 71,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 779.8
+    },
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "22",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 73,
+      "r2": 77,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 727.71
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "11671",
-      "counting": true,
+      "counting": false,
       "pos": "124",
       "event": "French International Amateur (Coupe Gordon Bennett) 2026",
       "venue": "Golf de Saint-Cloud",
@@ -179,7 +207,8 @@
       "r2": 73,
       "r3": 69,
       "r4": null,
-      "egrPoints": 1234.01
+      "egrPoints": 1234.01,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -193,10 +222,11 @@
       "r2": 68,
       "r3": 76,
       "r4": null,
-      "egrPoints": 531.04
+      "egrPoints": 531.04,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:32.500Z",
+  "scrapedAt": "2026-11-02T15:27:16.020Z",
   "url": "https://www.europeangolfrankings.com/players/35980"
 }

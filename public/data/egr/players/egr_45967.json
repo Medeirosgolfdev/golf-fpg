@@ -7,11 +7,11 @@
   "country": "Spain",
   "club": "El Prat",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 33,
-  "egrPoints": 24405,
-  "avgScore": 72.26,
-  "avgToCR": 67.91,
+  "tournamentsPlayed": 13,
+  "egrRank": 35,
+  "egrPoints": 23989.1,
+  "avgScore": 72.39,
+  "avgToCR": 68.47,
   "events": [
     {
       "eventId": "12625",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12388",
-      "counting": false,
+      "counting": true,
       "pos": "24",
       "event": "Annika Invitational Europe 2026",
       "venue": "Upsala Golfklubb",
@@ -207,7 +207,8 @@
       "r2": 73,
       "r3": 83,
       "r4": null,
-      "egrPoints": 1742.26
+      "egrPoints": 1742.26,
+      "_mantido": true
     },
     {
       "eventId": "10403",
@@ -226,6 +227,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:47.757Z",
+  "scrapedAt": "2026-11-02T15:30:51.762Z",
   "url": "https://www.europeangolfrankings.com/players/45967"
 }

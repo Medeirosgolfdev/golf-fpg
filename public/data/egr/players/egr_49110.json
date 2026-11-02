@@ -7,12 +7,40 @@
   "country": "France",
   "club": "St. Malo",
   "ageGroup": "U14",
-  "tournamentsPlayed": 16,
-  "egrRank": 246,
-  "egrPoints": 16919,
-  "avgScore": 70.77,
-  "avgToCR": 70.3,
+  "tournamentsPlayed": 17,
+  "egrRank": 186,
+  "egrPoints": 19523.1,
+  "avgScore": 69.95,
+  "avgToCR": 69.45,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": false,
+      "pos": "4",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 71,
+      "r2": 70,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 796.8
+    },
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "1",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 70,
+      "r2": 66,
+      "r3": 64,
+      "r4": null,
+      "egrPoints": 3579.75
+    },
     {
       "eventId": "12121",
       "counting": true,
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "12129",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Grand Prix du Stade Français 2026",
       "venue": "Golf du Stade Francais Courson",
@@ -235,7 +263,8 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11373",
@@ -254,6 +283,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:45.125Z",
+  "scrapedAt": "2026-11-02T15:31:56.745Z",
   "url": "https://www.europeangolfrankings.com/players/49110"
 }

@@ -8,11 +8,25 @@
   "club": "Biarritz",
   "ageGroup": "U18",
   "tournamentsPlayed": 12,
-  "egrRank": 118,
-  "egrPoints": 12593.3,
-  "avgScore": 73.26,
-  "avgToCR": 70.59,
+  "egrRank": 152,
+  "egrPoints": 11049.1,
+  "avgScore": 73.85,
+  "avgToCR": 71.32,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "36",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 77,
+      "r2": 80,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1370.62
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -179,7 +193,8 @@
       "r2": 72,
       "r3": 69,
       "r4": 70,
-      "egrPoints": 2914.86
+      "egrPoints": 2914.86,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -198,6 +213,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:34.110Z",
+  "scrapedAt": "2026-11-02T15:27:17.712Z",
   "url": "https://www.europeangolfrankings.com/players/36030"
 }

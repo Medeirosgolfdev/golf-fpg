@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 1290,
-  "egrPoints": 5143.77,
-  "avgScore": 74,
-  "avgToCR": 73.05,
+  "tournamentsPlayed": 9,
+  "egrRank": 1254,
+  "egrPoints": 5320.23,
+  "avgScore": 74.4,
+  "avgToCR": 73.4,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "24",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 77,
+      "r2": 83,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 176.46
+    },
     {
       "eventId": "12396",
       "counting": true,
@@ -142,6 +156,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:01.998Z",
+  "scrapedAt": "2026-11-02T15:28:54.232Z",
   "url": "https://www.europeangolfrankings.com/players/39887"
 }

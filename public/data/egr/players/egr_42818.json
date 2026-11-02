@@ -7,12 +7,40 @@
   "country": "Austria",
   "club": "Reiters",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 2911,
-  "egrPoints": 1720.93,
-  "avgScore": 76.94,
-  "avgToCR": 75.45,
+  "tournamentsPlayed": 11,
+  "egrRank": 2395,
+  "egrPoints": 2315.14,
+  "avgScore": 76.47,
+  "avgToCR": 75.46,
   "events": [
+    {
+      "eventId": "12517",
+      "counting": true,
+      "pos": "15",
+      "event": "AJGT U16-U18 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 78,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 67.27
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "36",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 526.94
+    },
     {
       "eventId": "12519",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "11660",
-      "counting": true,
+      "counting": false,
       "pos": "137",
       "event": "International Austrian Amateur 2026",
       "venue": "Fontana Golf",
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12495",
-      "counting": true,
+      "counting": false,
       "pos": "94",
       "event": "2. AJGT U14-U18 presented by Bernd Wiesberger 2026",
       "venue": "Golfclub Gut Freiberg",
@@ -141,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:47.900Z",
+  "scrapedAt": "2026-11-02T15:29:45.077Z",
   "url": "https://www.europeangolfrankings.com/players/42818"
 }

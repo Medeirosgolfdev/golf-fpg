@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Bathgate",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 381,
-  "egrPoints": 13010.8,
-  "avgScore": 73.96,
-  "avgToCR": 72.51,
+  "tournamentsPlayed": 9,
+  "egrRank": 564,
+  "egrPoints": 10296.2,
+  "avgScore": 75.13,
+  "avgToCR": 73.49,
   "events": [
     {
       "eventId": "12882",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11771",
-      "counting": false,
+      "counting": true,
       "pos": "30",
       "event": "R&A Student Series (St Andrews) 2026",
       "venue": "St Andrews (Old & Jubilee)",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11410",
-      "counting": false,
+      "counting": true,
       "pos": "29",
       "event": "29th Faldo Junior Tour Europe Grand Final 2025",
       "venue": "Al Ain Equestrian, Shooting & Golf Club",
@@ -151,7 +151,8 @@
       "r2": 68,
       "r3": 76,
       "r4": null,
-      "egrPoints": 1938.04
+      "egrPoints": 1938.04,
+      "_mantido": true
     },
     {
       "eventId": "11774",
@@ -165,7 +166,8 @@
       "r2": 68,
       "r3": 71,
       "r4": null,
-      "egrPoints": 937.65
+      "egrPoints": 937.65,
+      "_mantido": true
     },
     {
       "eventId": "11358",
@@ -184,6 +186,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:19.404Z",
+  "scrapedAt": "2026-11-02T15:25:56.704Z",
   "url": "https://www.europeangolfrankings.com/players/32547"
 }

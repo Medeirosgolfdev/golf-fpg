@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hamburg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 7355,
-  "egrPoints": 207.99,
-  "avgScore": 81.91,
-  "avgToCR": 82.01,
+  "tournamentsPlayed": 7,
+  "egrRank": 8492,
+  "egrPoints": 117.76,
+  "avgScore": 83.47,
+  "avgToCR": 83.12,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "82",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 82,
+      "r2": 81,
+      "r3": 93,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11723",
       "counting": true,
@@ -26,6 +40,20 @@
       "r3": 78,
       "r4": null,
       "egrPoints": 117.76
+    },
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "68",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 80,
+      "r2": 86,
+      "r3": 94,
+      "r4": null,
+      "egrPoints": 0
     },
     {
       "eventId": "12858",
@@ -59,7 +87,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "38",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -67,7 +95,7 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 90.23
+      "egrPoints": 0
     },
     {
       "eventId": "12796",
@@ -85,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:09.512Z",
+  "scrapedAt": "2026-11-02T15:30:10.126Z",
   "url": "https://www.europeangolfrankings.com/players/43991"
 }

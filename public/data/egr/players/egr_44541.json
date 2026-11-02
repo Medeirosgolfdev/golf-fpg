@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U16",
-  "tournamentsPlayed": 20,
-  "egrRank": 616,
-  "egrPoints": 2988.32,
-  "avgScore": 78.91,
-  "avgToCR": 75.71,
+  "tournamentsPlayed": 21,
+  "egrRank": 656,
+  "egrPoints": 2737.18,
+  "avgScore": 79.13,
+  "avgToCR": 75.79,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": false,
+      "pos": "41",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 83,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 219.15
+    },
+    {
+      "eventId": "12015",
+      "counting": true,
+      "pos": "14",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 77,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 235.99
+    },
+    {
+      "eventId": "12013",
+      "counting": false,
+      "pos": "4",
+      "event": "Copa D'Oro Cittá Di Castel Gandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 83,
+      "r2": 80,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 117.1
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -277,7 +319,8 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 487.13
+      "egrPoints": 487.13,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -291,7 +334,8 @@
       "r2": 80,
       "r3": 80,
       "r4": null,
-      "egrPoints": 122.61
+      "egrPoints": 122.61,
+      "_mantido": true
     },
     {
       "eventId": "11384",
@@ -325,6 +369,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:19.523Z",
+  "scrapedAt": "2026-11-02T15:30:20.974Z",
   "url": "https://www.europeangolfrankings.com/players/44541"
 }

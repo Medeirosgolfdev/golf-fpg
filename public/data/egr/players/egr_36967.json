@@ -7,11 +7,11 @@
   "country": "Netherlands",
   "club": "Noordwijk",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 1004,
-  "egrPoints": 6485.89,
-  "avgScore": 74.86,
-  "avgToCR": 74.36,
+  "tournamentsPlayed": 10,
+  "egrRank": 1046,
+  "egrPoints": 6320.79,
+  "avgScore": 74.89,
+  "avgToCR": 74.56,
   "events": [
     {
       "eventId": "12874",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11800",
-      "counting": false,
+      "counting": true,
       "pos": "13",
       "event": "European Winter Series #7 (Toro Tour) 2026",
       "venue": "Los Arqueros Golf Club",
@@ -165,10 +165,11 @@
       "r2": 69,
       "r3": 78,
       "r4": null,
-      "egrPoints": 308.43
+      "egrPoints": 308.43,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:55.565Z",
+  "scrapedAt": "2026-11-02T15:27:41.781Z",
   "url": "https://www.europeangolfrankings.com/players/36967"
 }

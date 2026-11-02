@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Fontcaude",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1408,
-  "egrPoints": 4615.14,
-  "avgScore": 76.11,
-  "avgToCR": 76.29,
+  "tournamentsPlayed": 9,
+  "egrRank": 1130,
+  "egrPoints": 5890.57,
+  "avgScore": 74.63,
+  "avgToCR": 74.61,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "13",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 70,
+      "r3": 76,
+      "r4": 67,
+      "egrPoints": 1275.43
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12039",
-      "counting": true,
+      "counting": false,
       "pos": "40",
       "event": "Grand Prix Saint Donat 2026",
       "venue": "Golf de Saint Donat",
@@ -142,6 +156,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:21.314Z",
+  "scrapedAt": "2026-11-02T15:32:36.998Z",
   "url": "https://www.europeangolfrankings.com/players/50433"
 }

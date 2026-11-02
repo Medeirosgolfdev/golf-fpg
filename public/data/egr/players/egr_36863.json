@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Padova",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 1137,
-  "egrPoints": 1103.74,
-  "avgScore": 82.22,
-  "avgToCR": 78.55,
+  "tournamentsPlayed": 14,
+  "egrRank": 1063,
+  "egrPoints": 1324.76,
+  "avgScore": 81.64,
+  "avgToCR": 78.3,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "41",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 79,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 219.15
+    },
+    {
+      "eventId": "12017",
+      "counting": false,
+      "pos": "16",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 85,
+      "r2": 77,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 36.08
+    },
+    {
+      "eventId": "12009",
+      "counting": true,
+      "pos": "6",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 80,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 83.36
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -43,7 +85,7 @@
     },
     {
       "eventId": "11991",
-      "counting": true,
+      "counting": false,
       "pos": "13",
       "event": "24th Trofeo Citta Di Lignano Sabbiadoro 2026",
       "venue": "Golf Club Lignano",
@@ -141,7 +183,7 @@
     },
     {
       "eventId": "11900",
-      "counting": true,
+      "counting": false,
       "pos": "17",
       "event": "LXVIII Leone Di San Marco 2026",
       "venue": "Circolo Golf Venezia",
@@ -179,7 +221,8 @@
       "r2": 0,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -193,10 +236,11 @@
       "r2": 89,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:18:52.487Z",
+  "scrapedAt": "2026-11-02T15:27:38.513Z",
   "url": "https://www.europeangolfrankings.com/players/36863"
 }

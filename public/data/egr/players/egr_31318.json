@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Ambrosiano",
   "ageGroup": "U18",
-  "tournamentsPlayed": 5,
-  "egrRank": 815,
-  "egrPoints": 1978.83,
-  "avgScore": 80.55,
-  "avgToCR": 77.13,
+  "tournamentsPlayed": 4,
+  "egrRank": 1120,
+  "egrPoints": 1191.58,
+  "avgScore": 84.89,
+  "avgToCR": 81.21,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "49",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 82,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 136.47
+    },
     {
       "eventId": "12786",
       "counting": true,
@@ -67,7 +81,8 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 358.47
+      "egrPoints": 358.47,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -81,10 +96,11 @@
       "r2": 80,
       "r3": 72,
       "r4": null,
-      "egrPoints": 565.25
+      "egrPoints": 565.25,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:46.678Z",
+  "scrapedAt": "2026-11-02T15:25:22.074Z",
   "url": "https://www.europeangolfrankings.com/players/31318"
 }

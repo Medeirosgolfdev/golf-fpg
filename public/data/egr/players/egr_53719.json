@@ -8,11 +8,25 @@
   "club": "Lyon",
   "ageGroup": "U14",
   "tournamentsPlayed": 11,
-  "egrRank": 570,
-  "egrPoints": 3303.21,
-  "avgScore": 76.79,
-  "avgToCR": 75.83,
+  "egrRank": 548,
+  "egrPoints": 3446.17,
+  "avgScore": 76.53,
+  "avgToCR": 75.44,
   "events": [
+    {
+      "eventId": "12204",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 73,
+      "r2": 74,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 193.71
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "12096",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Grand Prix de la Porcelaine 2026",
       "venue": "Golf Porcelain",
@@ -165,7 +179,8 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10686",
@@ -184,6 +199,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:34.502Z",
+  "scrapedAt": "2026-11-02T15:34:00.174Z",
   "url": "https://www.europeangolfrankings.com/players/53719"
 }

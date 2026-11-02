@@ -8,11 +8,25 @@
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 451,
-  "egrPoints": 11698.4,
-  "avgScore": 73.22,
-  "avgToCR": 71.33,
+  "egrRank": 319,
+  "egrPoints": 14410.4,
+  "avgScore": 72.39,
+  "avgToCR": 70.23,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "2",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 67,
+      "r3": 67,
+      "r4": 71,
+      "egrPoints": 3331.87
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 72,
       "r3": 70,
       "r4": 69,
-      "egrPoints": 619.9
+      "egrPoints": 619.9,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:10.963Z",
+  "scrapedAt": "2026-11-02T15:29:04.153Z",
   "url": "https://www.europeangolfrankings.com/players/40351"
 }

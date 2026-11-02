@@ -7,12 +7,68 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U18",
-  "tournamentsPlayed": 19,
-  "egrRank": 684,
-  "egrPoints": 9144.78,
-  "avgScore": 73.38,
-  "avgToCR": 72.47,
+  "tournamentsPlayed": 20,
+  "egrRank": 666,
+  "egrPoints": 9321.05,
+  "avgScore": 73.26,
+  "avgToCR": 72.03,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "18",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 71,
+      "r2": 79,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 838.01
+    },
+    {
+      "eventId": "12491",
+      "counting": false,
+      "pos": "12",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 70,
+      "r2": 73,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 377.46
+    },
+    {
+      "eventId": "12208",
+      "counting": false,
+      "pos": "13",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 730.43
+    },
+    {
+      "eventId": "12484",
+      "counting": false,
+      "pos": "19",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 79,
+      "r2": 68,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 227.08
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -57,7 +113,7 @@
     },
     {
       "eventId": "12470",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "Swiss Golf National Championship U18-U16 (Erlen) 2026",
       "venue": "Golf & Country Club Erlen",
@@ -249,7 +305,8 @@
       "r2": 74,
       "r3": 74,
       "r4": null,
-      "egrPoints": 210.79
+      "egrPoints": 210.79,
+      "_mantido": true
     },
     {
       "eventId": "11146",
@@ -263,7 +320,8 @@
       "r2": 81,
       "r3": 75,
       "r4": null,
-      "egrPoints": 135.66
+      "egrPoints": 135.66,
+      "_mantido": true
     },
     {
       "eventId": "10373",
@@ -277,7 +335,8 @@
       "r2": 81,
       "r3": 81,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -296,6 +355,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:31.240Z",
+  "scrapedAt": "2026-11-02T15:28:20.021Z",
   "url": "https://www.europeangolfrankings.com/players/38502"
 }

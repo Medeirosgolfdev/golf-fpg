@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bondues",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 2629,
-  "egrPoints": 2004.63,
-  "avgScore": 78.28,
-  "avgToCR": 78.91,
+  "tournamentsPlayed": 9,
+  "egrRank": 2455,
+  "egrPoints": 2239.75,
+  "avgScore": 77.35,
+  "avgToCR": 77.65,
   "events": [
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "37",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 79,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 235.12
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11649",
-      "counting": true,
+      "counting": false,
       "pos": "50",
       "event": "Portuguese International U14 Championship (Major) 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:22.604Z",
+  "scrapedAt": "2026-11-02T15:32:38.494Z",
   "url": "https://www.europeangolfrankings.com/players/50460"
 }

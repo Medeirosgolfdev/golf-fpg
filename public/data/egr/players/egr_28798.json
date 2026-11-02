@@ -7,15 +7,15 @@
   "country": "Scotland",
   "club": "Dunbar",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 870,
-  "egrPoints": 7531.38,
-  "avgScore": 74.2,
-  "avgToCR": 72.64,
+  "tournamentsPlayed": 9,
+  "egrRank": 1109,
+  "egrPoints": 5994.24,
+  "avgScore": 75.4,
+  "avgToCR": 73.73,
   "events": [
     {
       "eventId": "12463",
-      "counting": false,
+      "counting": true,
       "pos": "114",
       "event": "Memorial Olivier Barras (Mixed) 2026",
       "venue": "Golf Club Crans-sur-Sierre",
@@ -151,7 +151,8 @@
       "r2": 71,
       "r3": 66,
       "r4": null,
-      "egrPoints": 991.69
+      "egrPoints": 991.69,
+      "_mantido": true
     },
     {
       "eventId": "10437",
@@ -170,6 +171,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:36.452Z",
+  "scrapedAt": "2026-11-02T15:24:06.089Z",
   "url": "https://www.europeangolfrankings.com/players/28798"
 }

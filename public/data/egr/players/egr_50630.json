@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Lyon",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 593,
-  "egrPoints": 3151.26,
-  "avgScore": 75.89,
-  "avgToCR": 75.15,
+  "tournamentsPlayed": 13,
+  "egrRank": 543,
+  "egrPoints": 3461.47,
+  "avgScore": 75.67,
+  "avgToCR": 74.48,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "8",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 320.35
+    },
+    {
+      "eventId": "12204",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 374.06
+    },
     {
       "eventId": "11768",
       "counting": false,
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "11650",
-      "counting": true,
+      "counting": false,
       "pos": "14",
       "event": "Portuguese International U14 Championship (Major) 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -179,7 +207,8 @@
       "r2": 69,
       "r3": 77,
       "r4": null,
-      "egrPoints": 248.1
+      "egrPoints": 248.1,
+      "_mantido": true
     },
     {
       "eventId": "10686",
@@ -213,6 +242,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:27.880Z",
+  "scrapedAt": "2026-11-02T15:32:44.766Z",
   "url": "https://www.europeangolfrankings.com/players/50630"
 }

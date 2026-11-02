@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Biarritz",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 1482,
-  "egrPoints": 4403.39,
-  "avgScore": 74.89,
-  "avgToCR": 75.35,
+  "tournamentsPlayed": 11,
+  "egrRank": 1351,
+  "egrPoints": 4870.36,
+  "avgScore": 74.33,
+  "avgToCR": 74.67,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 75,
+      "r2": 70,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 596.16
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12112",
-      "counting": true,
+      "counting": false,
       "pos": "13",
       "event": "Grand Prix Jeunes Majeur Garçons U14 2026",
       "venue": "Golf de Bondues (Hawtree)",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:23.671Z",
+  "scrapedAt": "2026-11-02T15:32:39.718Z",
   "url": "https://www.europeangolfrankings.com/players/50483"
 }

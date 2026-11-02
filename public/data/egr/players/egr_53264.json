@@ -5,14 +5,28 @@
   "lastName": "LANKENAU",
   "firstName": "Laurenz",
   "country": "Germany",
-  "club": "GC HH-Holm",
+  "club": "Hamburg Holm",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 8679,
-  "egrPoints": 96.22,
-  "avgScore": 78.55,
-  "avgToCR": 77.65,
+  "tournamentsPlayed": 5,
+  "egrRank": 8359,
+  "egrPoints": 128.15,
+  "avgScore": 78.36,
+  "avgToCR": 77.84,
   "events": [
+    {
+      "eventId": "12943",
+      "counting": true,
+      "pos": "14",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 78,
+      "r2": 79,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 31.93
+    },
     {
       "eventId": "11574",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:24:18.827Z",
+  "scrapedAt": "2026-11-02T15:33:43.259Z",
   "url": "https://www.europeangolfrankings.com/players/53264"
 }

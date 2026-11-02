@@ -7,12 +7,40 @@
   "country": "France",
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1427,
-  "egrPoints": 4549.84,
+  "tournamentsPlayed": 13,
+  "egrRank": 1276,
+  "egrPoints": 5232.64,
   "avgScore": 76.35,
-  "avgToCR": 74.95,
+  "avgToCR": 74.64,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "54",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 80,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 464
+    },
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "9",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 73,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 740.98
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "12039",
-      "counting": true,
+      "counting": false,
       "pos": "31",
       "event": "Grand Prix Saint Donat 2026",
       "venue": "Golf de Saint Donat",
@@ -179,7 +207,8 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 272.67
+      "egrPoints": 272.67,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -198,6 +227,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:03.527Z",
+  "scrapedAt": "2026-11-02T15:31:09.523Z",
   "url": "https://www.europeangolfrankings.com/players/47181"
 }

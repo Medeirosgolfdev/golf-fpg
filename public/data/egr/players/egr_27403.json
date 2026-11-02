@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Ducato-La Rocca",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 8,
-  "egrRank": 938,
-  "egrPoints": 6934.48,
-  "avgScore": 74.36,
-  "avgToCR": 71.87,
+  "tournamentsPlayed": 10,
+  "egrRank": 635,
+  "egrPoints": 9556.28,
+  "avgScore": 73.04,
+  "avgToCR": 70.98,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "5",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 71,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 880.17
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "11",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1158.86
+    },
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "1",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 66,
+      "r2": 66,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1502.85
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -71,7 +113,7 @@
     },
     {
       "eventId": "11658",
-      "counting": true,
+      "counting": false,
       "pos": "112",
       "event": "Italian International Amateur Championship 2026",
       "venue": "Circolo Golf Villa d'Este",
@@ -123,10 +165,11 @@
       "r2": 72,
       "r3": 76,
       "r4": null,
-      "egrPoints": 556.89
+      "egrPoints": 556.89,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:14:52.373Z",
+  "scrapedAt": "2026-11-02T15:23:18.892Z",
   "url": "https://www.europeangolfrankings.com/players/27403"
 }

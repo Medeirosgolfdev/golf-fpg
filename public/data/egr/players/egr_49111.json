@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Paris CC",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 2915,
-  "egrPoints": 1715.56,
-  "avgScore": 77,
-  "avgToCR": 77.72,
+  "tournamentsPlayed": 8,
+  "egrRank": 2738,
+  "egrPoints": 1897.32,
+  "avgScore": 77.12,
+  "avgToCR": 77.75,
   "events": [
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "61",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 76,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 181.76
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:45.123Z",
+  "scrapedAt": "2026-11-02T15:31:56.762Z",
   "url": "https://www.europeangolfrankings.com/players/49111"
 }

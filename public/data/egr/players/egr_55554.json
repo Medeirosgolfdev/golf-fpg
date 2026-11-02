@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Augwil",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 1651,
-  "egrPoints": 470.55,
-  "avgScore": 81.15,
-  "avgToCR": 78.99,
+  "tournamentsPlayed": 7,
+  "egrRank": 1579,
+  "egrPoints": 541.95,
+  "avgScore": 80.75,
+  "avgToCR": 78.6,
   "events": [
+    {
+      "eventId": "12485",
+      "counting": true,
+      "pos": "10",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 71.4
+    },
     {
       "eventId": "12919",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:21.251Z",
+  "scrapedAt": "2026-11-02T15:34:53.319Z",
   "url": "https://www.europeangolfrankings.com/players/55554"
 }

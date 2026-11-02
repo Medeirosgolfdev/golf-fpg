@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 3647,
-  "egrPoints": 1147.35,
-  "avgScore": 77.89,
-  "avgToCR": 77.63,
+  "tournamentsPlayed": 11,
+  "egrRank": 3406,
+  "egrPoints": 1303.92,
+  "avgScore": 77.52,
+  "avgToCR": 77.4,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "30",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 79,
+      "r2": 76,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 101.14
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "35",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 78,
+      "r2": 78,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 55.43
+    },
     {
       "eventId": "12475",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12063",
-      "counting": true,
+      "counting": false,
       "pos": "59",
       "event": "Grand Prix de Haute Savoie 2026",
       "venue": "Golf & CC de Bossey",
@@ -151,7 +179,8 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -170,6 +199,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:32.050Z",
+  "scrapedAt": "2026-11-02T15:28:21.035Z",
   "url": "https://www.europeangolfrankings.com/players/38520"
 }

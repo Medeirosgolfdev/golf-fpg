@@ -5,14 +5,28 @@
   "lastName": "QUERNEC",
   "firstName": "Elie",
   "country": "France",
-  "club": "St Laurent",
+  "club": "Presqu'lle Quiberon",
   "ageGroup": "U21",
-  "tournamentsPlayed": 3,
-  "egrRank": 5315,
+  "tournamentsPlayed": 4,
+  "egrRank": 5377,
   "egrPoints": 533.54,
-  "avgScore": 83,
-  "avgToCR": 81.43,
+  "avgScore": 83.89,
+  "avgToCR": 82.87,
   "events": [
+    {
+      "eventId": "12192",
+      "counting": true,
+      "pos": "45",
+      "event": "Grand Prix du Luberon 2026",
+      "venue": "Golf Du Luberon",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 87,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12165",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:19:54.277Z",
+  "scrapedAt": "2026-11-02T15:28:45.564Z",
   "url": "https://www.europeangolfrankings.com/players/39218"
 }

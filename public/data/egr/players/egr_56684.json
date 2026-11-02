@@ -7,12 +7,40 @@
   "country": "England",
   "club": "Eaglescliffe",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 1399,
+  "tournamentsPlayed": 8,
+  "egrRank": 1416,
   "egrPoints": 725.04,
-  "avgScore": 87,
-  "avgToCR": 85.22,
+  "avgScore": 85.82,
+  "avgToCR": 84.75,
   "events": [
+    {
+      "eventId": "11493",
+      "counting": true,
+      "pos": "9",
+      "event": "SGF Cardrona 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 98,
+      "r2": 93,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "11491",
+      "counting": true,
+      "pos": "20",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 92,
+      "r2": 87,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12907",
       "counting": true,
@@ -109,7 +137,8 @@
       "r2": 96,
       "r3": 94,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10447",
@@ -128,6 +157,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:56.501Z",
+  "scrapedAt": "2026-11-02T15:35:33.411Z",
   "url": "https://www.europeangolfrankings.com/players/56684"
 }

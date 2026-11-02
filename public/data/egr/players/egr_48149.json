@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Bad Abbach",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 4740,
-  "egrPoints": 686.21,
-  "avgScore": 78,
-  "avgToCR": 76.53,
+  "tournamentsPlayed": 5,
+  "egrRank": 4260,
+  "egrPoints": 879.15,
+  "avgScore": 77,
+  "avgToCR": 75.75,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "14",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 79,
+      "r2": 70,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 192.94
+    },
     {
       "eventId": "12934",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:25.726Z",
+  "scrapedAt": "2026-11-02T15:31:34.827Z",
   "url": "https://www.europeangolfrankings.com/players/48149"
 }

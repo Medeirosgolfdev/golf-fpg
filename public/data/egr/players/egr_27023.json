@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Strasbourg",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 10,
-  "egrRank": 187,
-  "egrPoints": 19416,
-  "avgScore": 71.54,
-  "avgToCR": 69.94,
+  "tournamentsPlayed": 11,
+  "egrRank": 216,
+  "egrPoints": 18413.2,
+  "avgScore": 71.73,
+  "avgToCR": 70.3,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "17",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 78,
+      "r2": 68,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 749.25
+    },
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "20",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 825.47
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12073",
-      "counting": true,
+      "counting": false,
       "pos": "54",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -151,10 +179,11 @@
       "r2": 68,
       "r3": 73,
       "r4": null,
-      "egrPoints": 2061.88
+      "egrPoints": 2061.88,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:14:41.605Z",
+  "scrapedAt": "2026-11-02T15:23:06.823Z",
   "url": "https://www.europeangolfrankings.com/players/27023"
 }

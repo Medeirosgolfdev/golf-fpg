@@ -1,18 +1,32 @@
 {
   "id": "21645",
-  "egrId": "MFRA21645",
+  "egrId": "PFRA21645",
   "name": "Gregoire Hoyeau",
   "lastName": "HOYEAU",
   "firstName": "Gregoire",
   "country": "France",
   "club": "St. Nom-La-Breteche",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 1,
-  "egrRank": 4039,
-  "egrPoints": 953.39,
-  "avgScore": 72.5,
-  "avgToCR": 72.5,
+  "tournamentsPlayed": 2,
+  "egrRank": null,
+  "egrPoints": 3367.64,
+  "avgScore": 70,
+  "avgToCR": 69.64,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "2",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 65,
+      "r2": 70,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 2414.25
+    },
     {
       "eventId": "12157",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:48.258Z",
+  "scrapedAt": "2026-11-02T15:20:59.914Z",
   "url": "https://www.europeangolfrankings.com/players/21645"
 }

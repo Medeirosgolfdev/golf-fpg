@@ -5,14 +5,28 @@
   "lastName": "ANDREIKO",
   "firstName": "Emil",
   "country": "Germany",
-  "club": "Neuhof",
+  "club": "Bad Vilbel",
   "ageGroup": "U16",
   "tournamentsPlayed": 9,
-  "egrRank": 5815,
-  "egrPoints": 423.91,
-  "avgScore": 79.2,
-  "avgToCR": 78.52,
+  "egrRank": 4659,
+  "egrPoints": 729.66,
+  "avgScore": 78.6,
+  "avgToCR": 78,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "16",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 81,
+      "r2": 73,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 305.75
+    },
     {
       "eventId": "11576",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 87,
       "r3": 85,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:44.147Z",
+  "scrapedAt": "2026-11-02T15:33:02.974Z",
   "url": "https://www.europeangolfrankings.com/players/51459"
 }

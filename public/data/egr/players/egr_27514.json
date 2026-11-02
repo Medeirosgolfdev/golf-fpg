@@ -7,12 +7,26 @@
   "country": "Wales",
   "club": "Celtic Manor",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 3,
-  "egrRank": 2596,
-  "egrPoints": 2040.74,
-  "avgScore": 78.5,
-  "avgToCR": 76.17,
+  "tournamentsPlayed": 4,
+  "egrRank": 2441,
+  "egrPoints": 2256.62,
+  "avgScore": 79,
+  "avgToCR": 76.58,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "52",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 78,
+      "r2": 82,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 215.88
+    },
     {
       "eventId": "12616",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:14:55.739Z",
+  "scrapedAt": "2026-11-02T15:23:22.246Z",
   "url": "https://www.europeangolfrankings.com/players/27514"
 }

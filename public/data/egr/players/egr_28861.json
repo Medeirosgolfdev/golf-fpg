@@ -8,11 +8,25 @@
   "club": null,
   "ageGroup": "U21",
   "tournamentsPlayed": 6,
-  "egrRank": 1047,
-  "egrPoints": 1307.32,
-  "avgScore": 79.57,
-  "avgToCR": 75.87,
+  "egrRank": 974,
+  "egrPoints": 1518.66,
+  "avgScore": 78.94,
+  "avgToCR": 75.22,
   "events": [
+    {
+      "eventId": "12677",
+      "counting": true,
+      "pos": "5",
+      "event": "Offene Bayerische Meisterschaft Damen 2026",
+      "venue": "Münchener Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "09. Oct 26",
+      "r1": 73,
+      "r2": 80,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 211.34
+    },
     {
       "eventId": "12886",
       "counting": true,
@@ -95,10 +109,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:39.471Z",
+  "scrapedAt": "2026-11-02T15:24:09.407Z",
   "url": "https://www.europeangolfrankings.com/players/28861"
 }

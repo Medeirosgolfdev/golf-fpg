@@ -1,18 +1,46 @@
 {
   "id": "60801",
-  "egrId": "FUSA60801",
+  "egrId": "FSCO60801",
   "name": "Victoria Frias",
   "lastName": "FRIAS",
   "firstName": "Victoria",
-  "country": "USA",
+  "country": "Scotland",
   "club": "Haggs Castle",
   "ageGroup": "U14",
-  "tournamentsPlayed": 6,
-  "egrRank": 1275,
-  "egrPoints": 873.67,
-  "avgScore": 80.73,
-  "avgToCR": 80.19,
+  "tournamentsPlayed": 8,
+  "egrRank": 1252,
+  "egrPoints": 947.34,
+  "avgScore": 81,
+  "avgToCR": 80.3,
   "events": [
+    {
+      "eventId": "11493",
+      "counting": true,
+      "pos": "4",
+      "event": "SGF Cardrona 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 86,
+      "r2": 88,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 52.75
+    },
+    {
+      "eventId": "11491",
+      "counting": true,
+      "pos": "14",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 84,
+      "r2": 85,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 20.92
+    },
     {
       "eventId": "11724",
       "counting": true,
@@ -99,6 +127,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:27:31.845Z",
+  "scrapedAt": "2026-11-02T15:37:22.846Z",
   "url": "https://www.europeangolfrankings.com/players/60801"
 }

@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Modena",
   "ageGroup": "U18",
-  "tournamentsPlayed": 17,
-  "egrRank": 636,
-  "egrPoints": 9469.76,
-  "avgScore": 73.83,
-  "avgToCR": 71.8,
+  "tournamentsPlayed": 18,
+  "egrRank": 515,
+  "egrPoints": 10837.8,
+  "avgScore": 72.38,
+  "avgToCR": 70.27,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "9",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 71,
+      "r2": 68,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1296.15
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "17",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 71,
+      "r2": 77,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 1069.94
+    },
+    {
+      "eventId": "12010",
+      "counting": true,
+      "pos": "1",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 68,
+      "r2": 71,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 801.15
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -155,7 +197,7 @@
     },
     {
       "eventId": "11903",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Gara Nazionale Modena 2026",
       "venue": "Modena Golf & CC",
@@ -235,7 +277,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 785.86
+      "egrPoints": 785.86,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -249,7 +292,8 @@
       "r2": 70,
       "r3": 78,
       "r4": null,
-      "egrPoints": 530.64
+      "egrPoints": 530.64,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -268,6 +312,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:28.860Z",
+  "scrapedAt": "2026-11-02T15:28:17.847Z",
   "url": "https://www.europeangolfrankings.com/players/38441"
 }

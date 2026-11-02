@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Fonti",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 4044,
+  "tournamentsPlayed": 6,
+  "egrRank": 4077,
   "egrPoints": 951.17,
-  "avgScore": 76.67,
-  "avgToCR": 76.5,
+  "avgScore": 78,
+  "avgToCR": 77.73,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "71",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 93,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11982",
       "counting": true,
@@ -100,6 +114,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:39.245Z",
+  "scrapedAt": "2026-11-02T15:34:05.615Z",
   "url": "https://www.europeangolfrankings.com/players/54043"
 }

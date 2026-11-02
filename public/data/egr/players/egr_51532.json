@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Ilkley",
   "ageGroup": "U18",
-  "tournamentsPlayed": 5,
-  "egrRank": 1712,
+  "tournamentsPlayed": 6,
+  "egrRank": 1733,
   "egrPoints": 3653.48,
-  "avgScore": 75.93,
-  "avgToCR": 74.06,
+  "avgScore": 76.44,
+  "avgToCR": 74.51,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "80",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 78,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11779",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:23:44.978Z",
+  "scrapedAt": "2026-11-02T15:33:03.872Z",
   "url": "https://www.europeangolfrankings.com/players/51532"
 }

@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Royal Park Roveri",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 2669,
-  "egrPoints": 78.04,
-  "avgScore": 91,
-  "avgToCR": 87.92,
+  "tournamentsPlayed": 5,
+  "egrRank": 2275,
+  "egrPoints": 173.18,
+  "avgScore": 90,
+  "avgToCR": 86.88,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "52",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 89,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 95.14
+    },
     {
       "eventId": "12001",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:26:34.610Z",
+  "scrapedAt": "2026-11-02T15:36:17.826Z",
   "url": "https://www.europeangolfrankings.com/players/58330"
 }

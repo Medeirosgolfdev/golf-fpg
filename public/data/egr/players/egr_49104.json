@@ -8,11 +8,25 @@
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U14",
   "tournamentsPlayed": 15,
-  "egrRank": 822,
+  "egrRank": 827,
   "egrPoints": 7848.12,
   "avgScore": 73.11,
   "avgToCR": 72.59,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": false,
+      "pos": "15",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 76,
+      "r2": 78,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 602.66
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -221,10 +235,11 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:44.780Z",
+  "scrapedAt": "2026-11-02T15:31:56.453Z",
   "url": "https://www.europeangolfrankings.com/players/49104"
 }

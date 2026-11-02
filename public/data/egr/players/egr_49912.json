@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Carimate",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1766,
-  "egrPoints": 3493.71,
-  "avgScore": 76.61,
-  "avgToCR": 75.6,
+  "tournamentsPlayed": 11,
+  "egrRank": 1729,
+  "egrPoints": 3666.36,
+  "avgScore": 76.7,
+  "avgToCR": 75.56,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "67",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 391.58
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11927",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Menaggio Legacy 16 Trophy 2026",
       "venue": "Golf Club Menaggio & Cadenabbia",
@@ -170,6 +184,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:08.717Z",
+  "scrapedAt": "2026-11-02T15:32:23.484Z",
   "url": "https://www.europeangolfrankings.com/players/49912"
 }

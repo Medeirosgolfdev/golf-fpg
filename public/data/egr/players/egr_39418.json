@@ -8,14 +8,28 @@
   "club": "Rapallo",
   "ageGroup": "U16",
   "tournamentsPlayed": 13,
-  "egrRank": 1493,
-  "egrPoints": 4360.75,
-  "avgScore": 74.62,
-  "avgToCR": 73.84,
+  "egrRank": 1384,
+  "egrPoints": 4757.7,
+  "avgScore": 74.95,
+  "avgToCR": 73.93,
   "events": [
     {
-      "eventId": "12004",
+      "eventId": "12014",
       "counting": true,
+      "pos": "47",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 78,
+      "r2": 76,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 527.56
+    },
+    {
+      "eventId": "12004",
+      "counting": false,
       "pos": "1",
       "event": "Trofeo Giovanile Federale U16 2026",
       "venue": "Circolo Golf degli Ulivi Sanremo",
@@ -193,10 +207,11 @@
       "r2": 90,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:56.321Z",
+  "scrapedAt": "2026-11-02T15:28:47.630Z",
   "url": "https://www.europeangolfrankings.com/players/39418"
 }

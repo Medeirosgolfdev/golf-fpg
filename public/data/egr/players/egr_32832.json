@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Monticello",
   "ageGroup": "U18",
-  "tournamentsPlayed": 20,
-  "egrRank": 1090,
-  "egrPoints": 6050.97,
-  "avgScore": 74.79,
-  "avgToCR": 72.95,
+  "tournamentsPlayed": 19,
+  "egrRank": 1178,
+  "egrPoints": 5619.53,
+  "avgScore": 74.68,
+  "avgToCR": 73.2,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": false,
+      "pos": "64",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 80,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 438.22
+    },
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "78",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 79,
+      "r2": 88,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "11911",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Trofeo Angelo Corvini 2026",
       "venue": "Zoate Golf Club",
@@ -263,7 +291,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 228.64
+      "egrPoints": 228.64,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -277,7 +306,8 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 895.19
+      "egrPoints": 895.19,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -291,7 +321,8 @@
       "r2": 85,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10319",
@@ -340,6 +371,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:26.827Z",
+  "scrapedAt": "2026-11-02T15:26:04.952Z",
   "url": "https://www.europeangolfrankings.com/players/32832"
 }

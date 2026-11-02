@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Saint Donat",
   "ageGroup": "U21",
-  "tournamentsPlayed": 12,
-  "egrRank": 513,
-  "egrPoints": 10778.1,
-  "avgScore": 73.35,
-  "avgToCR": 72.62,
+  "tournamentsPlayed": 10,
+  "egrRank": 809,
+  "egrPoints": 8035.57,
+  "avgScore": 74.5,
+  "avgToCR": 73.28,
   "events": [
     {
       "eventId": "11671",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12085",
-      "counting": false,
+      "counting": true,
       "pos": "43",
       "event": "Grand Prix de Saint Nom-la-Breteche 2026",
       "venue": "Golf de Saint-Nom-la-Bretèche",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12073",
-      "counting": false,
+      "counting": true,
       "pos": "74",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -165,7 +165,8 @@
       "r2": 74,
       "r3": 74,
       "r4": null,
-      "egrPoints": 1017.07
+      "egrPoints": 1017.07,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -179,7 +180,8 @@
       "r2": 65,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1832.6
+      "egrPoints": 1832.6,
+      "_mantido": true
     },
     {
       "eventId": "11409",
@@ -198,6 +200,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:21:50.097Z",
+  "scrapedAt": "2026-11-02T15:30:54.275Z",
   "url": "https://www.europeangolfrankings.com/players/46031"
 }

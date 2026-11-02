@@ -7,12 +7,40 @@
   "country": "England",
   "club": "Morpeth",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 7825,
-  "egrPoints": 164.11,
-  "avgScore": 81,
-  "avgToCR": 80.94,
+  "tournamentsPlayed": 6,
+  "egrRank": 5117,
+  "egrPoints": 592.98,
+  "avgScore": 80.15,
+  "avgToCR": 79.27,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "34",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 79,
+      "r2": 83,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "24",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 428.86
+    },
     {
       "eventId": "12893",
       "counting": true,
@@ -71,6 +99,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:27:30.181Z",
+  "scrapedAt": "2026-11-02T15:37:20.913Z",
   "url": "https://www.europeangolfrankings.com/players/60767"
 }

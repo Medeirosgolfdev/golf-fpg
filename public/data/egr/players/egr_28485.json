@@ -8,11 +8,39 @@
   "club": "Arzaga",
   "ageGroup": "U21",
   "tournamentsPlayed": 9,
-  "egrRank": 621,
-  "egrPoints": 9565.83,
-  "avgScore": 73.83,
-  "avgToCR": 71.68,
+  "egrRank": 498,
+  "egrPoints": 11059,
+  "avgScore": 73.72,
+  "avgToCR": 71.64,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "2",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 69,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 2298.4
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "15",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 1105.5
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -123,7 +151,8 @@
       "r2": 66,
       "r3": null,
       "r4": null,
-      "egrPoints": 1166.17
+      "egrPoints": 1166.17,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -137,7 +166,8 @@
       "r2": 73,
       "r3": 75,
       "r4": null,
-      "egrPoints": 744.61
+      "egrPoints": 744.61,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -156,6 +186,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:26.677Z",
+  "scrapedAt": "2026-11-02T15:23:55.933Z",
   "url": "https://www.europeangolfrankings.com/players/28485"
 }

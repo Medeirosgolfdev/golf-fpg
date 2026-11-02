@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": "Ayr Belleisle",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 897,
-  "egrPoints": 7280.9,
-  "avgScore": 74.56,
-  "avgToCR": 73.95,
+  "tournamentsPlayed": 15,
+  "egrRank": 894,
+  "egrPoints": 7294.65,
+  "avgScore": 74.61,
+  "avgToCR": 73.78,
   "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "13",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 80,
+      "r2": 76,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 228.57
+    },
+    {
+      "eventId": "11490",
+      "counting": false,
+      "pos": "52",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 80,
+      "r2": 80,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 70.27
+    },
     {
       "eventId": "11721",
       "counting": false,
@@ -183,7 +211,7 @@
     },
     {
       "eventId": "11703",
-      "counting": true,
+      "counting": false,
       "pos": "14",
       "event": "Junior Tour Royal Dornoch Boys 2026",
       "venue": "Royal Dornoch GC",
@@ -197,6 +225,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:57.564Z",
+  "scrapedAt": "2026-11-02T15:32:11.241Z",
   "url": "https://www.europeangolfrankings.com/players/49445"
 }

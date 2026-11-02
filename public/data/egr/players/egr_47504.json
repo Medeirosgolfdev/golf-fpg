@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 2114,
-  "egrPoints": 2742.77,
-  "avgScore": 76.52,
-  "avgToCR": 76.41,
+  "tournamentsPlayed": 10,
+  "egrRank": 2080,
+  "egrPoints": 2838.56,
+  "avgScore": 76.42,
+  "avgToCR": 76.38,
   "events": [
     {
       "eventId": "12898",
@@ -28,8 +28,22 @@
       "egrPoints": 157.31
     },
     {
-      "eventId": "12692",
+      "eventId": "12952",
       "counting": true,
+      "pos": "29",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 206.46
+    },
+    {
+      "eventId": "12692",
+      "counting": false,
       "pos": "69",
       "event": "Preis von Refrtah Offene NRW Meisterschaft 2026",
       "venue": "Golf- und Land-Club Köln",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:09.020Z",
+  "scrapedAt": "2026-11-02T15:31:15.868Z",
   "url": "https://www.europeangolfrankings.com/players/47504"
 }

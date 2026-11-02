@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Val de Sorne",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 1725,
-  "egrPoints": 414.75,
-  "avgScore": 78.75,
-  "avgToCR": 77.15,
+  "tournamentsPlayed": 4,
+  "egrRank": 1720,
+  "egrPoints": 432.56,
+  "avgScore": 79.6,
+  "avgToCR": 77.66,
   "events": [
+    {
+      "eventId": "12204",
+      "counting": true,
+      "pos": "14",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 81,
+      "r2": 83,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 17.81
+    },
     {
       "eventId": "12182",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:46.967Z",
+  "scrapedAt": "2026-11-02T15:28:37.510Z",
   "url": "https://www.europeangolfrankings.com/players/38945"
 }

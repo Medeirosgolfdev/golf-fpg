@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Paris CC",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1373,
-  "egrPoints": 4745.4,
-  "avgScore": 75.33,
-  "avgToCR": 74.73,
+  "tournamentsPlayed": 12,
+  "egrRank": 891,
+  "egrPoints": 7334.05,
+  "avgScore": 73.57,
+  "avgToCR": 72.85,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "10",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": 71,
+      "r4": 72,
+      "egrPoints": 1180.41
+    },
+    {
+      "eventId": "12213",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1205.7
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "7",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 68,
+      "r2": 70,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 920.08
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -43,7 +85,7 @@
     },
     {
       "eventId": "12141",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Grand Prix du Val de Sorne 2026",
       "venue": "Golf du Val de Sorne",
@@ -57,7 +99,7 @@
     },
     {
       "eventId": "12125",
-      "counting": true,
+      "counting": false,
       "pos": "9",
       "event": "Grand Prix de Mérignies 2026",
       "venue": "Mérignies Golf & CC (Marque/Rupilly)",
@@ -151,10 +193,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 98.71
+      "egrPoints": 98.71,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:32.443Z",
+  "scrapedAt": "2026-11-02T15:31:42.461Z",
   "url": "https://www.europeangolfrankings.com/players/48379"
 }

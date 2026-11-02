@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U14",
-  "tournamentsPlayed": 16,
-  "egrRank": 1174,
-  "egrPoints": 1047.1,
-  "avgScore": 81.81,
-  "avgToCR": 79.39,
+  "tournamentsPlayed": 17,
+  "egrRank": 1066,
+  "egrPoints": 1321.75,
+  "avgScore": 82.1,
+  "avgToCR": 79.33,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "26",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 456.01
+    },
+    {
+      "eventId": "12013",
+      "counting": false,
+      "pos": "10",
+      "event": "Copa D'Oro Cittá Di Castel Gandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 84,
+      "r2": 84,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 10.55
+    },
     {
       "eventId": "12001",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "11999",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "30th Gran Premio Citta Di Cervia 2026",
       "venue": "Adriatic Golf Club Cervia",
@@ -235,7 +263,8 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10320",
@@ -254,6 +283,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:12.528Z",
+  "scrapedAt": "2026-11-02T15:31:20.075Z",
   "url": "https://www.europeangolfrankings.com/players/47702"
 }

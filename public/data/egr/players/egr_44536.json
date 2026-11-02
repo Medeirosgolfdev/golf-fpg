@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Royal Park Roveri",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 479,
-  "egrPoints": 4058.4,
-  "avgScore": 76.62,
-  "avgToCR": 73.18,
+  "tournamentsPlayed": 12,
+  "egrRank": 460,
+  "egrPoints": 4274.86,
+  "avgScore": 76.6,
+  "avgToCR": 73.06,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "30",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 80,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 414.67
+    },
+    {
+      "eventId": "12015",
+      "counting": false,
+      "pos": "19",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 81,
+      "r2": 81,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 155.46
+    },
+    {
+      "eventId": "12013",
+      "counting": true,
+      "pos": "2",
+      "event": "Copa D'Oro Cittá Di Castel Gandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 78,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 274.3
+    },
     {
       "eventId": "11999",
       "counting": true,
@@ -57,7 +99,7 @@
     },
     {
       "eventId": "11938",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Cittá Di Carmagnola 2026",
       "venue": "Golf Club \"La Margherita\"",
@@ -151,7 +193,8 @@
       "r2": 72,
       "r3": 82,
       "r4": null,
-      "egrPoints": 291.61
+      "egrPoints": 291.61,
+      "_mantido": true
     },
     {
       "eventId": "10320",
@@ -185,6 +228,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:19.347Z",
+  "scrapedAt": "2026-11-02T15:30:20.742Z",
   "url": "https://www.europeangolfrankings.com/players/44536"
 }

@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Lyon Salvagny",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 22,
-  "egrPoints": 27418.1,
-  "avgScore": 72.65,
-  "avgToCR": 69.2,
+  "tournamentsPlayed": 10,
+  "egrRank": 19,
+  "egrPoints": 27727.6,
+  "avgScore": 72.73,
+  "avgToCR": 69.28,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "14",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 1913.77
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -151,7 +165,8 @@
       "r2": 72,
       "r3": 70,
       "r4": 74,
-      "egrPoints": 1604.31
+      "egrPoints": 1604.31,
+      "_mantido": true
     },
     {
       "eventId": "10688",
@@ -165,7 +180,8 @@
       "r2": 71,
       "r3": 68,
       "r4": null,
-      "egrPoints": 391.13
+      "egrPoints": 391.13,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -184,6 +200,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:52.014Z",
+  "scrapedAt": "2026-11-02T15:25:27.879Z",
   "url": "https://www.europeangolfrankings.com/players/31502"
 }

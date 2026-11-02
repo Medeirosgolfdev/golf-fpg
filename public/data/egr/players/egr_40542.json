@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Carimate",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 1642,
-  "egrPoints": 3862.56,
-  "avgScore": 76.67,
-  "avgToCR": 75,
+  "tournamentsPlayed": 9,
+  "egrRank": 1596,
+  "egrPoints": 4051.9,
+  "avgScore": 76.78,
+  "avgToCR": 75.16,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "60",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 73,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 484.85
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -142,6 +156,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:13.760Z",
+  "scrapedAt": "2026-11-02T15:29:07.204Z",
   "url": "https://www.europeangolfrankings.com/players/40542"
 }

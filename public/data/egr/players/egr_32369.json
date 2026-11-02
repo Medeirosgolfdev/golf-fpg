@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Portmarnock",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 390,
-  "egrPoints": 12830.9,
-  "avgScore": 73.43,
-  "avgToCR": 71.69,
+  "tournamentsPlayed": 11,
+  "egrRank": 365,
+  "egrPoints": 13357.8,
+  "avgScore": 72.8,
+  "avgToCR": 71.21,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "3",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 68,
+      "r2": 70,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 728.75
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11849",
-      "counting": true,
+      "counting": false,
       "pos": "74",
       "event": "West of Ireland Men's Amateur Open Championship 2026",
       "venue": "County Sligo (Rosses Point)",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:12.243Z",
+  "scrapedAt": "2026-11-02T15:25:49.170Z",
   "url": "https://www.europeangolfrankings.com/players/32369"
 }

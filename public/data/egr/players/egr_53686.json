@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Club Zur Vahr",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 2486,
-  "egrPoints": 110.6,
-  "avgScore": 88.67,
-  "avgToCR": 88.02,
+  "tournamentsPlayed": 6,
+  "egrRank": 2498,
+  "egrPoints": 115.32,
+  "avgScore": 87.53,
+  "avgToCR": 86.58,
   "events": [
+    {
+      "eventId": "12942",
+      "counting": true,
+      "pos": "6",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 77,
+      "r2": 82,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 4.72
+    },
+    {
+      "eventId": "12953",
+      "counting": true,
+      "pos": "25",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 107,
+      "r2": 104,
+      "r3": 96,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12838",
       "counting": true,
@@ -86,6 +114,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:34.093Z",
+  "scrapedAt": "2026-11-02T15:33:59.769Z",
   "url": "https://www.europeangolfrankings.com/players/53686"
 }

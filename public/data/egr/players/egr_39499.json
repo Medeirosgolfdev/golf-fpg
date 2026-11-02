@@ -8,11 +8,25 @@
   "club": "Pennard",
   "ageGroup": "U18",
   "tournamentsPlayed": 4,
-  "egrRank": 6982,
-  "egrPoints": 247.82,
-  "avgScore": 81.67,
-  "avgToCR": 80.06,
+  "egrRank": 6256,
+  "egrPoints": 362.47,
+  "avgScore": 81.11,
+  "avgToCR": 80.33,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "20",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 79,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 149.72
+    },
     {
       "eventId": "12617",
       "counting": true,
@@ -67,7 +81,8 @@
       "r2": 81,
       "r3": 79,
       "r4": null,
-      "egrPoints": 35.07
+      "egrPoints": 35.07,
+      "_mantido": true
     },
     {
       "eventId": "11115",
@@ -86,6 +101,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:56.904Z",
+  "scrapedAt": "2026-11-02T15:28:48.329Z",
   "url": "https://www.europeangolfrankings.com/players/39499"
 }

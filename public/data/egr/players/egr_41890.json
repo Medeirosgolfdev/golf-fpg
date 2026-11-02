@@ -8,11 +8,25 @@
   "club": "Ledreborg Palace",
   "ageGroup": "U18",
   "tournamentsPlayed": 13,
-  "egrRank": 940,
-  "egrPoints": 1591.87,
-  "avgScore": 78.83,
-  "avgToCR": 75.79,
+  "egrRank": 943,
+  "egrPoints": 1621.56,
+  "avgScore": 78.33,
+  "avgToCR": 75.52,
   "events": [
+    {
+      "eventId": "12611",
+      "counting": true,
+      "pos": "4",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 123.07
+    },
     {
       "eventId": "12607",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "12602",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "Dragør Pokalen 2026",
       "venue": "Dragør Golfklub",
@@ -193,7 +207,8 @@
       "r2": 82,
       "r3": 80,
       "r4": null,
-      "egrPoints": 42.25
+      "egrPoints": 42.25,
+      "_mantido": true
     },
     {
       "eventId": "11362",
@@ -227,6 +242,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:25.542Z",
+  "scrapedAt": "2026-11-02T15:29:20.959Z",
   "url": "https://www.europeangolfrankings.com/players/41890"
 }

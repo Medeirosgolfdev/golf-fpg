@@ -5,14 +5,28 @@
   "lastName": "SALAS",
   "firstName": "Nadia",
   "country": "Spain",
-  "club": "San Sebastian",
+  "club": "Chantaco",
   "ageGroup": "U16",
   "tournamentsPlayed": 7,
-  "egrRank": 774,
-  "egrPoints": 2208.06,
-  "avgScore": 78.25,
-  "avgToCR": 75.72,
+  "egrRank": 748,
+  "egrPoints": 2340.61,
+  "avgScore": 78.2,
+  "avgToCR": 75.77,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "56",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 87,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 297.06
+    },
     {
       "eventId": "12161",
       "counting": true,
@@ -109,10 +123,11 @@
       "r2": 84,
       "r3": null,
       "r4": null,
-      "egrPoints": 164.51
+      "egrPoints": 164.51,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:22.588Z",
+  "scrapedAt": "2026-11-02T15:31:31.214Z",
   "url": "https://www.europeangolfrankings.com/players/48003"
 }

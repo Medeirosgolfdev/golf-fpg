@@ -7,12 +7,26 @@
   "country": "Wales",
   "club": "Tenby",
   "ageGroup": "U18",
-  "tournamentsPlayed": 1,
-  "egrRank": 8986,
+  "tournamentsPlayed": 2,
+  "egrRank": 9086,
   "egrPoints": 76.91,
-  "avgScore": 87,
-  "avgToCR": 86.3,
+  "avgScore": 85.4,
+  "avgToCR": 85.6,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "48",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 77,
+      "r2": 88,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12617",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:27:39.207Z",
+  "scrapedAt": "2026-11-02T15:37:30.940Z",
   "url": "https://www.europeangolfrankings.com/players/61182"
 }

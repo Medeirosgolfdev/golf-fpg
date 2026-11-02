@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Dinard",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 721,
-  "egrPoints": 8838.73,
-  "avgScore": 74.59,
-  "avgToCR": 73.19,
+  "tournamentsPlayed": 11,
+  "egrRank": 584,
+  "egrPoints": 10068,
+  "avgScore": 74.29,
+  "avgToCR": 72.82,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "25",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 78,
+      "r2": 72,
+      "r3": 73,
+      "r4": 75,
+      "egrPoints": 986.64
+    },
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "25",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 74,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 679.88
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12048",
-      "counting": true,
+      "counting": false,
       "pos": "78",
       "event": "Grand Prix Elite de Landiforne 2026",
       "venue": "Golf de Moliets/Seignosse",
@@ -151,7 +179,8 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 191.91
+      "egrPoints": 191.91,
+      "_mantido": true
     },
     {
       "eventId": "11373",
@@ -170,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:59.679Z",
+  "scrapedAt": "2026-11-02T15:28:51.534Z",
   "url": "https://www.europeangolfrankings.com/players/39607"
 }

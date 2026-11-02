@@ -7,12 +7,54 @@
   "country": "France",
   "club": "Gouverneur",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 2938,
-  "egrPoints": 1689,
-  "avgScore": 75.75,
-  "avgToCR": 76.16,
+  "tournamentsPlayed": 9,
+  "egrRank": 1775,
+  "egrPoints": 3540.55,
+  "avgScore": 75.78,
+  "avgToCR": 75.82,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "39",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": 80,
+      "r4": 83,
+      "egrPoints": 806.24
+    },
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "39",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 80,
+      "r2": 78,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 233.74
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "9",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 71,
+      "r2": 71,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 811.57
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -109,7 +151,8 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -128,6 +171,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:10.864Z",
+  "scrapedAt": "2026-11-02T15:29:04.090Z",
   "url": "https://www.europeangolfrankings.com/players/40349"
 }

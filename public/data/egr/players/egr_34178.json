@@ -5,14 +5,42 @@
   "lastName": "BURNET",
   "firstName": "Fadi",
   "country": "France",
-  "club": "Evian",
+  "club": "Evian Resort",
   "ageGroup": "U21",
-  "tournamentsPlayed": 3,
-  "egrRank": 6981,
-  "egrPoints": 247.86,
-  "avgScore": 79.75,
-  "avgToCR": 80.84,
+  "tournamentsPlayed": 5,
+  "egrRank": 4697,
+  "egrPoints": 715.33,
+  "avgScore": 78.92,
+  "avgToCR": 79.55,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "27",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 467.47
+    },
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "60",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 81,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12173",
       "counting": true,
@@ -57,6 +85,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:01.891Z",
+  "scrapedAt": "2026-11-02T15:26:42.856Z",
   "url": "https://www.europeangolfrankings.com/players/34178"
 }

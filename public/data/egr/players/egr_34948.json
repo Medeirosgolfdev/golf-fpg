@@ -8,11 +8,25 @@
   "club": "Mionnay",
   "ageGroup": "U21",
   "tournamentsPlayed": 5,
-  "egrRank": 2887,
-  "egrPoints": 1741.34,
-  "avgScore": 77.08,
-  "avgToCR": 76.07,
+  "egrRank": 2737,
+  "egrPoints": 1897.68,
+  "avgScore": 76.75,
+  "avgToCR": 75.73,
   "events": [
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "13",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 375
+    },
     {
       "eventId": "12165",
       "counting": true,
@@ -81,7 +95,8 @@
       "r2": 74,
       "r3": 76,
       "r4": null,
-      "egrPoints": 218.66
+      "egrPoints": 218.66,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -100,6 +115,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:12.684Z",
+  "scrapedAt": "2026-11-02T15:26:54.751Z",
   "url": "https://www.europeangolfrankings.com/players/34948"
 }

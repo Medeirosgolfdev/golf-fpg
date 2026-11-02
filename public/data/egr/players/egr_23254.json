@@ -7,11 +7,11 @@
   "country": "England",
   "club": "Hunstanton",
   "ageGroup": "U25",
-  "tournamentsPlayed": 11,
-  "egrRank": 141,
-  "egrPoints": 22145.4,
-  "avgScore": 72.22,
-  "avgToCR": 70.23,
+  "tournamentsPlayed": 10,
+  "egrRank": 252,
+  "egrPoints": 16796.5,
+  "avgScore": 72.82,
+  "avgToCR": 70.45,
   "events": [
     {
       "eventId": "11672",
@@ -98,6 +98,20 @@
       "egrPoints": 2062.17
     },
     {
+      "eventId": "11658",
+      "counting": true,
+      "pos": "120",
+      "event": "Italian International Amateur Championship 2026",
+      "venue": "Circolo Golf Villa d'Este",
+      "country": "Italy",
+      "startDateRaw": "23. Apr 26",
+      "r1": null,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
       "eventId": "12614",
       "counting": true,
       "pos": "6",
@@ -110,20 +124,6 @@
       "r3": 75,
       "r4": 70,
       "egrPoints": 3557.7
-    },
-    {
-      "eventId": "11658",
-      "counting": false,
-      "pos": "120",
-      "event": "Italian International Amateur Championship 2026",
-      "venue": "Circolo Golf Villa d'Este",
-      "country": "Italy",
-      "startDateRaw": "23. Apr 26",
-      "r1": null,
-      "r2": null,
-      "r3": null,
-      "r4": null,
-      "egrPoints": 0
     },
     {
       "eventId": "11793",
@@ -165,7 +165,8 @@
       "r2": 73,
       "r3": 72,
       "r4": null,
-      "egrPoints": 937.65
+      "egrPoints": 937.65,
+      "_mantido": true
     },
     {
       "eventId": "10730",
@@ -184,6 +185,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:13:22.214Z",
+  "scrapedAt": "2026-11-02T15:21:38.384Z",
   "url": "https://www.europeangolfrankings.com/players/23254"
 }

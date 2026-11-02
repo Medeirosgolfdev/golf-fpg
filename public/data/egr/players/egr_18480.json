@@ -7,12 +7,26 @@
   "country": "Wales",
   "club": "Mountain Ash",
   "ageGroup": "U14",
-  "tournamentsPlayed": 6,
-  "egrRank": 3476,
+  "tournamentsPlayed": 7,
+  "egrRank": 3506,
   "egrPoints": 1243.12,
-  "avgScore": 81,
-  "avgToCR": 80.95,
+  "avgScore": 82.06,
+  "avgToCR": 82.18,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "52",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 84,
+      "r2": 83,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12620",
       "counting": true,
@@ -114,6 +128,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:12:02.199Z",
+  "scrapedAt": "2026-11-02T15:20:08.836Z",
   "url": "https://www.europeangolfrankings.com/players/18480"
 }

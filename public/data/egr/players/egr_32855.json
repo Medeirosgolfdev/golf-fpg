@@ -8,11 +8,39 @@
   "club": "Asolo",
   "ageGroup": "U18",
   "tournamentsPlayed": 12,
-  "egrRank": 2458,
-  "egrPoints": 2213.63,
-  "avgScore": 77.79,
-  "avgToCR": 76.99,
+  "egrRank": 1857,
+  "egrPoints": 3335.82,
+  "avgScore": 77.09,
+  "avgToCR": 76.19,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "28",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 71,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1009.68
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "35",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 83,
+      "r2": 82,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 292.23
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "11979",
-      "counting": true,
+      "counting": false,
       "pos": "35",
       "event": "Trofeo Della Montecchia 2026",
       "venue": "Golf della Montecchia",
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "11965",
-      "counting": true,
+      "counting": false,
       "pos": "31",
       "event": "Gran Premio di Padova 2026",
       "venue": "Golf Club Padova",
@@ -165,7 +193,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 40.25
+      "egrPoints": 40.25,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -179,10 +208,11 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:27.961Z",
+  "scrapedAt": "2026-11-02T15:26:06.253Z",
   "url": "https://www.europeangolfrankings.com/players/32855"
 }

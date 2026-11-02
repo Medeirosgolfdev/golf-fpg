@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Valence St. Didier",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 2536,
+  "tournamentsPlayed": 2,
+  "egrRank": 2561,
   "egrPoints": 102.86,
-  "avgScore": 85.5,
-  "avgToCR": 86.3,
+  "avgScore": 85.25,
+  "avgToCR": 84,
   "events": [
+    {
+      "eventId": "12204",
+      "counting": true,
+      "pos": "17",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 81,
+      "r2": 87,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12242",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:27:43.270Z",
+  "scrapedAt": "2026-11-02T15:37:35.335Z",
   "url": "https://www.europeangolfrankings.com/players/61256"
 }

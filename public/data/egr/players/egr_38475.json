@@ -8,11 +8,39 @@
   "club": "Montecchia",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 778,
-  "egrPoints": 8301.02,
-  "avgScore": 74.23,
-  "avgToCR": 71.88,
+  "egrRank": 784,
+  "egrPoints": 8291.17,
+  "avgScore": 74,
+  "avgToCR": 71.75,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "45",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 78,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 684.72
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "35",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 73,
+      "r2": 80,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 723.17
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "11955",
-      "counting": true,
+      "counting": false,
       "pos": "53",
       "event": "Gran Premio Di Monticello 2026",
       "venue": "Golf Club Monticello",
@@ -193,7 +221,8 @@
       "r2": 74,
       "r3": 77,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -207,7 +236,8 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 836.32
+      "egrPoints": 836.32,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -226,6 +256,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:30.469Z",
+  "scrapedAt": "2026-11-02T15:28:19.341Z",
   "url": "https://www.europeangolfrankings.com/players/38475"
 }

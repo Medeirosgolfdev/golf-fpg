@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Chemnitz",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 6405,
-  "egrPoints": 320.28,
-  "avgScore": 78.67,
-  "avgToCR": 78.17,
+  "tournamentsPlayed": 5,
+  "egrRank": 5394,
+  "egrPoints": 530.28,
+  "avgScore": 76.14,
+  "avgToCR": 75.62,
   "events": [
+    {
+      "eventId": "12962",
+      "counting": true,
+      "pos": "6",
+      "event": "DEUTSCHLANDFINALE (JGM) 2026",
+      "venue": "Thüringer Golfclub",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 85.31
+    },
+    {
+      "eventId": "12951",
+      "counting": true,
+      "pos": "6",
+      "event": "Germany Final (Junior Golf Masters) 2026",
+      "venue": "Thüringer Golfclub Drei Geichen",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 124.69
+    },
     {
       "eventId": "11698",
       "counting": true,
@@ -57,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:27:26.320Z",
+  "scrapedAt": "2026-11-02T15:37:16.920Z",
   "url": "https://www.europeangolfrankings.com/players/60599"
 }

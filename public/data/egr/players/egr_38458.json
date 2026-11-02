@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Miglianico",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 1988,
-  "egrPoints": 2991.91,
-  "avgScore": 73.93,
-  "avgToCR": 72.83,
+  "tournamentsPlayed": 5,
+  "egrRank": 1744,
+  "egrPoints": 3636.36,
+  "avgScore": 73.5,
+  "avgToCR": 72.16,
   "events": [
+    {
+      "eventId": "12012",
+      "counting": true,
+      "pos": "3",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 825
+    },
     {
       "eventId": "11960",
       "counting": true,
@@ -86,6 +100,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:29.754Z",
+  "scrapedAt": "2026-11-02T15:28:18.664Z",
   "url": "https://www.europeangolfrankings.com/players/38458"
 }

@@ -8,11 +8,39 @@
   "club": "Fontainbleau",
   "ageGroup": "U18",
   "tournamentsPlayed": 16,
-  "egrRank": 199,
-  "egrPoints": 8959.11,
-  "avgScore": 77.13,
-  "avgToCR": 73.76,
+  "egrRank": 202,
+  "egrPoints": 9056.41,
+  "avgScore": 76.7,
+  "avgToCR": 73.65,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": false,
+      "pos": "14",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 73,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 220.93
+    },
+    {
+      "eventId": "12199",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 70,
+      "r2": 71,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 346.24
+    },
     {
       "eventId": "11768",
       "counting": false,
@@ -183,7 +211,7 @@
     },
     {
       "eventId": "12060",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Grand Prix du Lys Chantilly 2026",
       "venue": "Club du Lys-Chantilly",
@@ -221,7 +249,8 @@
       "r2": 75,
       "r3": 76,
       "r4": null,
-      "egrPoints": 144.22
+      "egrPoints": 144.22,
+      "_mantido": true
     },
     {
       "eventId": "11369",
@@ -235,7 +264,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 216.59
+      "egrPoints": 216.59,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -254,6 +284,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:10.361Z",
+  "scrapedAt": "2026-11-02T15:31:17.383Z",
   "url": "https://www.europeangolfrankings.com/players/47576"
 }

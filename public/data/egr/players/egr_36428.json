@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Lyon Salvagny",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 2904,
+  "tournamentsPlayed": 7,
+  "egrRank": 2928,
   "egrPoints": 1727.62,
-  "avgScore": 75.31,
-  "avgToCR": 75.64,
+  "avgScore": 75.94,
+  "avgToCR": 76.08,
   "events": [
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "57",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 79,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12181",
       "counting": true,
@@ -114,6 +128,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:18:41.278Z",
+  "scrapedAt": "2026-11-02T15:27:25.727Z",
   "url": "https://www.europeangolfrankings.com/players/36428"
 }

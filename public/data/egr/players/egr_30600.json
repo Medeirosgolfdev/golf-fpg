@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Ile d'Or",
   "ageGroup": "U25",
-  "tournamentsPlayed": 4,
-  "egrRank": 567,
-  "egrPoints": 3320.71,
-  "avgScore": 74,
-  "avgToCR": 71.07,
+  "tournamentsPlayed": 5,
+  "egrRank": 403,
+  "egrPoints": 4905.88,
+  "avgScore": 73.58,
+  "avgToCR": 71.04,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 73,
+      "r2": 68,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1585.16
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:16:32.229Z",
+  "scrapedAt": "2026-11-02T15:25:07.053Z",
   "url": "https://www.europeangolfrankings.com/players/30600"
 }

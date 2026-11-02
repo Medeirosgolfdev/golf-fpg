@@ -7,12 +7,26 @@
   "country": "Austria",
   "club": "Diamond",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 1960,
-  "egrPoints": 3043.15,
-  "avgScore": 76.5,
-  "avgToCR": 75.37,
+  "tournamentsPlayed": 9,
+  "egrRank": 1900,
+  "egrPoints": 3246.61,
+  "avgScore": 76.26,
+  "avgToCR": 75.18,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "61",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 72,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 203.46
+    },
     {
       "eventId": "12519",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:37.862Z",
+  "scrapedAt": "2026-11-02T15:27:21.881Z",
   "url": "https://www.europeangolfrankings.com/players/36290"
 }

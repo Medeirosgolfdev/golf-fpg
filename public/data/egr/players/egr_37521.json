@@ -8,11 +8,25 @@
   "club": "Saint Germain",
   "ageGroup": "U16",
   "tournamentsPlayed": 15,
-  "egrRank": 117,
-  "egrPoints": 12815.6,
-  "avgScore": 73.88,
-  "avgToCR": 70.34,
+  "egrRank": 123,
+  "egrPoints": 12315.5,
+  "avgScore": 74.54,
+  "avgToCR": 71.06,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "34",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 76,
+      "r2": 73,
+      "r3": 74,
+      "r4": 78,
+      "egrPoints": 652.23
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -221,7 +235,8 @@
       "r2": 73,
       "r3": 74,
       "r4": 74,
-      "egrPoints": 1152.39
+      "egrPoints": 1152.39,
+      "_mantido": true
     },
     {
       "eventId": "11384",
@@ -255,6 +270,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:06.365Z",
+  "scrapedAt": "2026-11-02T15:27:53.532Z",
   "url": "https://www.europeangolfrankings.com/players/37521"
 }

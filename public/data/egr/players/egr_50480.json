@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Isle Adam",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 10380,
-  "egrPoints": 0,
-  "avgScore": 82.25,
-  "avgToCR": 81.6,
+  "tournamentsPlayed": 3,
+  "egrRank": 9165,
+  "egrPoints": 70.78,
+  "avgScore": 81.33,
+  "avgToCR": 80.9,
   "events": [
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "74",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 84,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 70.78
+    },
     {
       "eventId": "12078",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:23.545Z",
+  "scrapedAt": "2026-11-02T15:32:39.516Z",
   "url": "https://www.europeangolfrankings.com/players/50480"
 }

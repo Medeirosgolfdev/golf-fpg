@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Lucerne",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 927,
-  "egrPoints": 1640.83,
-  "avgScore": 77.5,
-  "avgToCR": 75.97,
+  "tournamentsPlayed": 10,
+  "egrRank": 977,
+  "egrPoints": 1511.17,
+  "avgScore": 78.08,
+  "avgToCR": 76.41,
   "events": [
     {
       "eventId": "12003",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12447",
-      "counting": false,
+      "counting": true,
       "pos": "20",
       "event": "Swiss Golf Junior Tour (Sierre) 2026",
       "venue": "Golf Club de Sierre",
@@ -165,7 +165,8 @@
       "r2": 78,
       "r3": 79,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10369",
@@ -199,6 +200,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:36.489Z",
+  "scrapedAt": "2026-11-02T15:31:46.909Z",
   "url": "https://www.europeangolfrankings.com/players/48530"
 }

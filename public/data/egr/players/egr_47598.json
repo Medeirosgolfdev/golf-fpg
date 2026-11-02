@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Chiberta",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 253,
-  "egrPoints": 16758.4,
-  "avgScore": 71.86,
-  "avgToCR": 70.22,
+  "tournamentsPlayed": 13,
+  "egrRank": 244,
+  "egrPoints": 17044.4,
+  "avgScore": 72.11,
+  "avgToCR": 70.43,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "25",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 73,
+      "r2": 76,
+      "r3": 75,
+      "r4": 74,
+      "egrPoints": 986.64
+    },
+    {
+      "eventId": "12205",
+      "counting": false,
+      "pos": "31",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 80,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 624.38
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -179,10 +207,11 @@
       "r2": 67,
       "r3": 65,
       "r4": 73,
-      "egrPoints": 700.66
+      "egrPoints": 700.66,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:10.510Z",
+  "scrapedAt": "2026-11-02T15:31:17.691Z",
   "url": "https://www.europeangolfrankings.com/players/47598"
 }

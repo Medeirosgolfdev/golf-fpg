@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Kempferhof",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 2095,
-  "egrPoints": 2777.86,
-  "avgScore": 78.17,
-  "avgToCR": 78.07,
+  "tournamentsPlayed": 9,
+  "egrRank": 1966,
+  "egrPoints": 3091.18,
+  "avgScore": 77.61,
+  "avgToCR": 77.5,
   "events": [
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "41",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 76,
+      "r2": 78,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 405.13
+    },
     {
       "eventId": "12285",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12116",
-      "counting": true,
+      "counting": false,
       "pos": "47",
       "event": "Grand Prix Jeunes Majeur Garçons U14 2026",
       "venue": "Golf Club de Besançon",
@@ -157,6 +171,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:21.330Z",
+  "scrapedAt": "2026-11-02T15:32:37.099Z",
   "url": "https://www.europeangolfrankings.com/players/50434"
 }

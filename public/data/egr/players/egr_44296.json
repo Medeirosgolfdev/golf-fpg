@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Monticello",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 2357,
-  "egrPoints": 2341.66,
-  "avgScore": 76.52,
-  "avgToCR": 76,
+  "tournamentsPlayed": 12,
+  "egrRank": 2051,
+  "egrPoints": 2895.85,
+  "avgScore": 76.15,
+  "avgToCR": 75.74,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "45",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 74,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 684.72
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11936",
-      "counting": true,
+      "counting": false,
       "pos": "25",
       "event": "Memorial Lillo Angelini 2026",
       "venue": "Golf Dei Laghi",
@@ -179,7 +193,8 @@
       "r2": 77,
       "r3": 82,
       "r4": null,
-      "egrPoints": 62.64
+      "egrPoints": 62.64,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -193,7 +208,8 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -227,6 +243,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:13.394Z",
+  "scrapedAt": "2026-11-02T15:30:14.602Z",
   "url": "https://www.europeangolfrankings.com/players/44296"
 }

@@ -6,13 +6,27 @@
   "firstName": "Finlay",
   "country": "England",
   "club": "The Oaks",
-  "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 2367,
-  "egrPoints": 2328.28,
-  "avgScore": 74.46,
-  "avgToCR": 74.07,
+  "ageGroup": "Adult",
+  "tournamentsPlayed": 10,
+  "egrRank": 2179,
+  "egrPoints": 2632.96,
+  "avgScore": 73.68,
+  "avgToCR": 73.28,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "7",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 75,
+      "r2": 67,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 304.68
+    },
     {
       "eventId": "11702",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "11779",
-      "counting": true,
+      "counting": false,
       "pos": "73",
       "event": "English U18 (Closed Mixed) 2026",
       "venue": "Sand Moor",
@@ -140,7 +154,7 @@
       "egrPoints": 433.24
     }
   ],
-  "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:51.061Z",
+  "ageNum": 99,
+  "scrapedAt": "2026-11-02T15:27:37.015Z",
   "url": "https://www.europeangolfrankings.com/players/36749"
 }

@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 1328,
-  "egrPoints": 4964.72,
-  "avgScore": 76.35,
-  "avgToCR": 74.46,
+  "tournamentsPlayed": 16,
+  "egrRank": 1263,
+  "egrPoints": 5278.93,
+  "avgScore": 75.86,
+  "avgToCR": 74.09,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "67",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 76,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 391.58
+    },
+    {
+      "eventId": "12012",
+      "counting": true,
+      "pos": "8",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 68,
+      "r2": 81,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 328.4
+    },
     {
       "eventId": "12006",
       "counting": false,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11939",
-      "counting": true,
+      "counting": false,
       "pos": "9",
       "event": "Cerreto Miglianico Trophy 2026",
       "venue": "Golf Il Cerreto di Miglianico",
@@ -197,7 +225,7 @@
     },
     {
       "eventId": "10234",
-      "counting": true,
+      "counting": false,
       "pos": "27",
       "event": "Argentario Classic Open 2025",
       "venue": "Argentario Golf Resort",
@@ -221,10 +249,11 @@
       "r2": 77,
       "r3": 83,
       "r4": null,
-      "egrPoints": 62.64
+      "egrPoints": 62.64,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:33.225Z",
+  "scrapedAt": "2026-11-02T15:31:43.298Z",
   "url": "https://www.europeangolfrankings.com/players/48456"
 }

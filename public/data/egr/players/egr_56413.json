@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Bonnyton",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 1446,
+  "tournamentsPlayed": 12,
+  "egrRank": 1463,
   "egrPoints": 4507.58,
   "avgScore": 75.22,
   "avgToCR": 74.26,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": false,
+      "pos": "95",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 86,
+      "r2": 87,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12877",
       "counting": true,
@@ -184,6 +198,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:25:48.931Z",
+  "scrapedAt": "2026-11-02T15:35:24.785Z",
   "url": "https://www.europeangolfrankings.com/players/56413"
 }

@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Liphook",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 6572,
-  "egrPoints": 296.77,
-  "avgScore": 80,
-  "avgToCR": 78.6,
+  "tournamentsPlayed": 2,
+  "egrRank": 4666,
+  "egrPoints": 725.63,
+  "avgScore": 78.75,
+  "avgToCR": 76.9,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "24",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 76,
+      "r2": 80,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 428.86
+    },
     {
       "eventId": "11812",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:46.192Z",
+  "scrapedAt": "2026-11-02T15:35:21.780Z",
   "url": "https://www.europeangolfrankings.com/players/56317"
 }

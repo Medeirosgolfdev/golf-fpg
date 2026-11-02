@@ -7,12 +7,26 @@
   "country": "Finland",
   "club": "Pickala",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 299,
+  "tournamentsPlayed": 13,
+  "egrRank": 301,
   "egrPoints": 14999.6,
   "avgScore": 72.71,
   "avgToCR": 71.53,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": false,
+      "pos": "33",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 76,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 541.3
+    },
     {
       "eventId": "12121",
       "counting": true,
@@ -198,6 +212,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:19:18.876Z",
+  "scrapedAt": "2026-11-02T15:28:06.719Z",
   "url": "https://www.europeangolfrankings.com/players/38084"
 }

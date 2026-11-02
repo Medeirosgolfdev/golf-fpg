@@ -7,12 +7,26 @@
   "country": "Finland",
   "club": "Pirkkala",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 2828,
-  "egrPoints": 1799.26,
-  "avgScore": 78.3,
+  "tournamentsPlayed": 5,
+  "egrRank": 2789,
+  "egrPoints": 1854.78,
+  "avgScore": 78,
   "avgToCR": 76.39,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "24",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 76,
+      "r2": 79,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 55.52
+    },
     {
       "eventId": "12374",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:13:06.045Z",
+  "scrapedAt": "2026-11-02T15:21:20.011Z",
   "url": "https://www.europeangolfrankings.com/players/22461"
 }

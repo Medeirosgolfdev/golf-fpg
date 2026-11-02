@@ -7,12 +7,68 @@
   "country": "France",
   "club": "Esery",
   "ageGroup": "U16",
-  "tournamentsPlayed": 18,
+  "tournamentsPlayed": 21,
   "egrRank": 49,
-  "egrPoints": 32009.6,
-  "avgScore": 71.35,
-  "avgToCR": 69.67,
+  "egrPoints": 32294.9,
+  "avgScore": 71.09,
+  "avgToCR": 69.68,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 71,
+      "r2": 69,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1628.69
+    },
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "2",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 72,
+      "r2": 67,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 1623.63
+    },
+    {
+      "eventId": "12208",
+      "counting": false,
+      "pos": "5",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 70,
+      "r2": 71,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 1324.51
+    },
+    {
+      "eventId": "12484",
+      "counting": false,
+      "pos": "3",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 64,
+      "r2": 70,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 826.09
+    },
     {
       "eventId": "11672",
       "counting": false,
@@ -57,7 +113,7 @@
     },
     {
       "eventId": "12119",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "European Young Masters 2026",
       "venue": "Parador de El Saler",
@@ -113,7 +169,7 @@
     },
     {
       "eventId": "12453",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Championnat du Léman 2026",
       "venue": "Montreux/Lausanne/Genève",
@@ -263,7 +319,8 @@
       "r2": 72,
       "r3": 69,
       "r4": 71,
-      "egrPoints": 811.8
+      "egrPoints": 811.8,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -282,6 +339,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:31.461Z",
+  "scrapedAt": "2026-11-02T15:28:20.354Z",
   "url": "https://www.europeangolfrankings.com/players/38507"
 }

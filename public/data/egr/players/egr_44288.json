@@ -8,11 +8,25 @@
   "club": "Lecco",
   "ageGroup": "U18",
   "tournamentsPlayed": 9,
-  "egrRank": 8181,
-  "egrPoints": 134.92,
-  "avgScore": 85.11,
-  "avgToCR": 84.51,
+  "egrRank": 9972,
+  "egrPoints": 30.8,
+  "avgScore": 88.39,
+  "avgToCR": 87.76,
   "events": [
+    {
+      "eventId": "12008",
+      "counting": true,
+      "pos": "41",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 88,
+      "r2": 90,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11958",
       "counting": true,
@@ -137,7 +151,8 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -171,6 +186,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:13.029Z",
+  "scrapedAt": "2026-11-02T15:30:14.056Z",
   "url": "https://www.europeangolfrankings.com/players/44288"
 }

@@ -8,11 +8,25 @@
   "club": "Burhill",
   "ageGroup": "U18",
   "tournamentsPlayed": 6,
-  "egrRank": 1860,
-  "egrPoints": 3265.76,
-  "avgScore": 76,
-  "avgToCR": 75.28,
+  "egrRank": 1694,
+  "egrPoints": 3745.2,
+  "avgScore": 75.73,
+  "avgToCR": 74.99,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "48",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 75,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 617.91
+    },
     {
       "eventId": "11817",
       "counting": true,
@@ -95,10 +109,11 @@
       "r2": 77,
       "r3": 73,
       "r4": null,
-      "egrPoints": 138.47
+      "egrPoints": 138.47,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:09.771Z",
+  "scrapedAt": "2026-11-02T15:30:10.463Z",
   "url": "https://www.europeangolfrankings.com/players/44018"
 }

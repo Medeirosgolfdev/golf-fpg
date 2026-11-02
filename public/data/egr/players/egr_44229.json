@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Chiberta",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 439,
-  "egrPoints": 11956.8,
-  "avgScore": 73.24,
-  "avgToCR": 71.98,
+  "tournamentsPlayed": 11,
+  "egrRank": 355,
+  "egrPoints": 13559.7,
+  "avgScore": 72.74,
+  "avgToCR": 71.33,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "6",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 72,
+      "r2": 75,
+      "r3": 70,
+      "r4": 68,
+      "egrPoints": 1660
+    },
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "16",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 77,
+      "r2": 68,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 851
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12048",
-      "counting": true,
+      "counting": false,
       "pos": "68",
       "event": "Grand Prix Elite de Landiforne 2026",
       "venue": "Golf de Moliets/Seignosse",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12053",
-      "counting": true,
+      "counting": false,
       "pos": "12",
       "event": "Championnat U18 Garcon #1 2026",
       "venue": "UGolf Albi - Château de Lasbordes",
@@ -151,10 +179,11 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 272.67
+      "egrPoints": 272.67,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:11.069Z",
+  "scrapedAt": "2026-11-02T15:30:11.870Z",
   "url": "https://www.europeangolfrankings.com/players/44229"
 }

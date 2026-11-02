@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Ile D'Or",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 326,
-  "egrPoints": 5807.08,
-  "avgScore": 74.35,
-  "avgToCR": 71.57,
+  "tournamentsPlayed": 10,
+  "egrRank": 344,
+  "egrPoints": 5687.69,
+  "avgScore": 74.55,
+  "avgToCR": 71.38,
   "events": [
     {
       "eventId": "12158",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12076",
-      "counting": false,
+      "counting": true,
       "pos": "23",
       "event": "Grand Prix de Saint-Cloud 2026",
       "venue": "Golf de Saint-Cloud",
@@ -165,10 +165,11 @@
       "r2": 71,
       "r3": 76,
       "r4": null,
-      "egrPoints": 171.45
+      "egrPoints": 171.45,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:52.028Z",
+  "scrapedAt": "2026-11-02T15:25:27.805Z",
   "url": "https://www.europeangolfrankings.com/players/31500"
 }

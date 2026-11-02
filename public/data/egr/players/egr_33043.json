@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Am Reichswald",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 411,
+  "tournamentsPlayed": 14,
+  "egrRank": 415,
   "egrPoints": 12433.6,
   "avgScore": 74.6,
   "avgToCR": 73.3,
   "events": [
+    {
+      "eventId": "12962",
+      "counting": false,
+      "pos": "9",
+      "event": "DEUTSCHLANDFINALE (JGM) 2026",
+      "venue": "Thüringer Golfclub",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 78,
+      "r2": 74,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 30.47
+    },
+    {
+      "eventId": "12951",
+      "counting": false,
+      "pos": "9",
+      "event": "Germany Final (Junior Golf Masters) 2026",
+      "venue": "Thüringer Golfclub Drei Geichen",
+      "country": "Germany",
+      "startDateRaw": "03. Oct 26",
+      "r1": 78,
+      "r2": 74,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 44.53
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -183,6 +211,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:32.619Z",
+  "scrapedAt": "2026-11-02T15:26:11.480Z",
   "url": "https://www.europeangolfrankings.com/players/33043"
 }

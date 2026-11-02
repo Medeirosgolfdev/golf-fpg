@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Bogogno",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 3441,
-  "egrPoints": 1268.51,
-  "avgScore": 79.09,
-  "avgToCR": 78.97,
+  "tournamentsPlayed": 17,
+  "egrRank": 3004,
+  "egrPoints": 1654.39,
+  "avgScore": 78.77,
+  "avgToCR": 78.58,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": false,
+      "pos": "57",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 80,
+      "r2": 89,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "64",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 81,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 438.22
+    },
+    {
+      "eventId": "12010",
+      "counting": false,
+      "pos": "19",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 80,
+      "r2": 83,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 19.08
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -183,7 +225,7 @@
     },
     {
       "eventId": "11888",
-      "counting": true,
+      "counting": false,
       "pos": "45",
       "event": "Gara Nazionale Garlenda 2026",
       "venue": "Golf Club Garlenda",
@@ -221,7 +263,8 @@
       "r2": 79,
       "r3": 88,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -240,6 +283,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:54.077Z",
+  "scrapedAt": "2026-11-02T15:30:58.750Z",
   "url": "https://www.europeangolfrankings.com/players/46250"
 }

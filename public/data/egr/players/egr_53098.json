@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Wildernesse",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 639,
-  "egrPoints": 9432.22,
-  "avgScore": 74.28,
-  "avgToCR": 72.76,
+  "tournamentsPlayed": 9,
+  "egrRank": 597,
+  "egrPoints": 9916.32,
+  "avgScore": 74.2,
+  "avgToCR": 72.65,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "26",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 88,
+      "r2": 70,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 484.1
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:15.508Z",
+  "scrapedAt": "2026-11-02T15:33:39.702Z",
   "url": "https://www.europeangolfrankings.com/players/53098"
 }

@@ -8,11 +8,53 @@
   "club": "Marcilly",
   "ageGroup": "U25",
   "tournamentsPlayed": 15,
-  "egrRank": 974,
-  "egrPoints": 6737.81,
-  "avgScore": 74.08,
-  "avgToCR": 72.7,
+  "egrRank": 1078,
+  "egrPoints": 6179.49,
+  "avgScore": 74.87,
+  "avgToCR": 73.58,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": false,
+      "pos": "37",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 156.94
+    },
+    {
+      "eventId": "12210",
+      "counting": false,
+      "pos": "28",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 85,
+      "r2": 78,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 326.03
+    },
+    {
+      "eventId": "12198",
+      "counting": false,
+      "pos": "61",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 80,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 181.76
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -127,7 +169,7 @@
     },
     {
       "eventId": "12736",
-      "counting": false,
+      "counting": true,
       "pos": "83",
       "event": "French National Men's (Closed) Championship 2026",
       "venue": "Cabot Bordeaux",
@@ -141,7 +183,7 @@
     },
     {
       "eventId": "12059",
-      "counting": false,
+      "counting": true,
       "pos": "34",
       "event": "Grand Prix du Lys Chantilly 2026",
       "venue": "Club du Lys-Chantilly",
@@ -193,7 +235,8 @@
       "r2": 70,
       "r3": 71,
       "r4": null,
-      "egrPoints": 890.43
+      "egrPoints": 890.43,
+      "_mantido": true
     },
     {
       "eventId": "11449",
@@ -207,7 +250,8 @@
       "r2": 73,
       "r3": 75,
       "r4": null,
-      "egrPoints": 288.63
+      "egrPoints": 288.63,
+      "_mantido": true
     },
     {
       "eventId": "11366",
@@ -221,10 +265,11 @@
       "r2": 70,
       "r3": 76,
       "r4": null,
-      "egrPoints": 698.36
+      "egrPoints": 698.36,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:16:29.319Z",
+  "scrapedAt": "2026-11-02T15:25:03.452Z",
   "url": "https://www.europeangolfrankings.com/players/30496"
 }

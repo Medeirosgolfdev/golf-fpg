@@ -7,11 +7,11 @@
   "country": "Norway",
   "club": "Sola",
   "ageGroup": "U18",
-  "tournamentsPlayed": 19,
-  "egrRank": 1637,
-  "egrPoints": 3890,
-  "avgScore": 76.33,
-  "avgToCR": 74.48,
+  "tournamentsPlayed": 17,
+  "egrRank": 1676,
+  "egrPoints": 3790.13,
+  "avgScore": 76.75,
+  "avgToCR": 74.96,
   "events": [
     {
       "eventId": "12333",
@@ -225,7 +225,7 @@
     },
     {
       "eventId": "11500",
-      "counting": false,
+      "counting": true,
       "pos": "23",
       "event": "GJG Spanish Junior Classics 2026",
       "venue": "Villa Padierna (Alferini)",
@@ -263,7 +263,8 @@
       "r2": 76,
       "r3": 71,
       "r4": null,
-      "egrPoints": 210.68
+      "egrPoints": 210.68,
+      "_mantido": true
     },
     {
       "eventId": "10116",
@@ -277,7 +278,8 @@
       "r2": 76,
       "r3": 80,
       "r4": null,
-      "egrPoints": 90.79
+      "egrPoints": 90.79,
+      "_mantido": true
     },
     {
       "eventId": "10871",
@@ -296,6 +298,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:27.077Z",
+  "scrapedAt": "2026-11-02T15:33:52.235Z",
   "url": "https://www.europeangolfrankings.com/players/53448"
 }

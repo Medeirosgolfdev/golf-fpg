@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Crosland Heath",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 5,
-  "egrRank": 1401,
-  "egrPoints": 4658.87,
-  "avgScore": 75.36,
-  "avgToCR": 74.71,
+  "tournamentsPlayed": 6,
+  "egrRank": 1585,
+  "egrPoints": 4079.55,
+  "avgScore": 75.79,
+  "avgToCR": 75.04,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "65",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 73,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 308.48
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -100,6 +114,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:39.856Z",
+  "scrapedAt": "2026-11-02T15:20:50.788Z",
   "url": "https://www.europeangolfrankings.com/players/20980"
 }

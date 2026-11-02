@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Stuttgart",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 565,
+  "tournamentsPlayed": 8,
+  "egrRank": 569,
   "egrPoints": 3327.65,
-  "avgScore": 78.19,
-  "avgToCR": 77.02,
+  "avgScore": 78.33,
+  "avgToCR": 77.34,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "42",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 85,
+      "r2": 68,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12624",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:56.804Z",
+  "scrapedAt": "2026-11-02T15:29:55.452Z",
   "url": "https://www.europeangolfrankings.com/players/43431"
 }

@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Rastenmoos",
   "ageGroup": "U18",
-  "tournamentsPlayed": 5,
-  "egrRank": 8149,
+  "tournamentsPlayed": 6,
+  "egrRank": 8230,
   "egrPoints": 138.75,
-  "avgScore": 82.89,
-  "avgToCR": 82.67,
+  "avgScore": 82.92,
+  "avgToCR": 82.45,
   "events": [
     {
       "eventId": "12475",
@@ -56,6 +56,20 @@
       "egrPoints": 138.75
     },
     {
+      "eventId": "12940",
+      "counting": true,
+      "pos": "39",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 82,
+      "r2": 84,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
       "eventId": "12448",
       "counting": true,
       "pos": "62",
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:07.469Z",
+  "scrapedAt": "2026-11-02T15:33:30.722Z",
   "url": "https://www.europeangolfrankings.com/players/52870"
 }

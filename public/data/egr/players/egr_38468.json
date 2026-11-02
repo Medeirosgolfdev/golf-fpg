@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Colombera",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 3637,
-  "egrPoints": 1153.25,
-  "avgScore": 78.5,
-  "avgToCR": 77.69,
+  "tournamentsPlayed": 6,
+  "egrRank": 3684,
+  "egrPoints": 1136,
+  "avgScore": 79.64,
+  "avgToCR": 78.76,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "60",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 82,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 484.85
+    },
     {
       "eventId": "11931",
       "counting": true,
@@ -95,7 +109,8 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 252.79
+      "egrPoints": 252.79,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -109,7 +124,8 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -128,6 +144,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:30.304Z",
+  "scrapedAt": "2026-11-02T15:28:19.129Z",
   "url": "https://www.europeangolfrankings.com/players/38468"
 }

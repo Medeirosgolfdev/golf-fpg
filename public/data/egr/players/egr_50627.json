@@ -7,12 +7,26 @@
   "country": "France",
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1138,
-  "egrPoints": 1102.05,
-  "avgScore": 78.67,
-  "avgToCR": 78.73,
+  "tournamentsPlayed": 9,
+  "egrRank": 1104,
+  "egrPoints": 1221.28,
+  "avgScore": 77.47,
+  "avgToCR": 77.47,
   "events": [
+    {
+      "eventId": "12214",
+      "counting": true,
+      "pos": "6",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 72,
+      "r2": 79,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 119.23
+    },
     {
       "eventId": "11782",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11650",
-      "counting": true,
+      "counting": false,
       "pos": "25",
       "event": "Portuguese International U14 Championship (Major) 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -142,6 +156,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:27.730Z",
+  "scrapedAt": "2026-11-02T15:32:44.595Z",
   "url": "https://www.europeangolfrankings.com/players/50627"
 }

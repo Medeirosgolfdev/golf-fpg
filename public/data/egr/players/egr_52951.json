@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Sion",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 3338,
+  "tournamentsPlayed": 3,
+  "egrRank": 3378,
   "egrPoints": 0,
-  "avgScore": 89.75,
-  "avgToCR": 90.48,
+  "avgScore": 86.75,
+  "avgToCR": 87.13,
   "events": [
+    {
+      "eventId": "12488",
+      "counting": true,
+      "pos": "13",
+      "event": "Swiss Golf Final U14 (Crans-sur-Sierre) 2026",
+      "venue": "Golf Club Crans-sur-Sierre",
+      "country": "Switzerland",
+      "startDateRaw": "03. Oct 26",
+      "r1": 87,
+      "r2": 88,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12479",
       "counting": true,
@@ -58,6 +72,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:10.700Z",
+  "scrapedAt": "2026-11-02T15:33:34.341Z",
   "url": "https://www.europeangolfrankings.com/players/52951"
 }

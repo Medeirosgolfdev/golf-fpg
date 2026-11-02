@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Ambrosiano",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 258,
-  "egrPoints": 7158.51,
-  "avgScore": 75.04,
-  "avgToCR": 71.29,
+  "tournamentsPlayed": 10,
+  "egrRank": 380,
+  "egrPoints": 5275.68,
+  "avgScore": 75.67,
+  "avgToCR": 71.83,
   "events": [
     {
       "eventId": "12629",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11914",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Coppa D'Oro Citta Di Roma 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "10232",
-      "counting": false,
+      "counting": true,
       "pos": "5",
       "event": "Argentario Classic Open 2025",
       "venue": "Argentario Golf Resort",
@@ -165,7 +165,8 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 774.13
+      "egrPoints": 774.13,
+      "_mantido": true
     },
     {
       "eventId": "10228",
@@ -179,7 +180,8 @@
       "r2": 73,
       "r3": 70,
       "r4": null,
-      "egrPoints": 1429.75
+      "egrPoints": 1429.75,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -198,6 +200,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:15:25.625Z",
+  "scrapedAt": "2026-11-02T15:23:54.924Z",
   "url": "https://www.europeangolfrankings.com/players/28455"
 }

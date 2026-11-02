@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Manville",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 1437,
-  "egrPoints": 4531.46,
-  "avgScore": 76.2,
-  "avgToCR": 75.6,
+  "tournamentsPlayed": 10,
+  "egrRank": 1269,
+  "egrPoints": 5268.58,
+  "avgScore": 76.12,
+  "avgToCR": 75.39,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "38",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": 80,
+      "r4": 77,
+      "egrPoints": 819.61
+    },
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "7",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 69,
+      "r2": 73,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 909.92
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "12137",
-      "counting": true,
+      "counting": false,
       "pos": "68",
       "event": "Grand Prix de Massane 2026",
       "venue": "Golf de Montpellier Massane",
@@ -137,7 +165,8 @@
       "r2": 75,
       "r3": 78,
       "r4": null,
-      "egrPoints": 668.8
+      "egrPoints": 668.8,
+      "_mantido": true
     },
     {
       "eventId": "11409",
@@ -156,6 +185,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:57.106Z",
+  "scrapedAt": "2026-11-02T15:29:55.899Z",
   "url": "https://www.europeangolfrankings.com/players/43438"
 }

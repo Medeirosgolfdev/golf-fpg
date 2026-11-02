@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Rotherham",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 10,
-  "egrRank": 76,
-  "egrPoints": 28115.9,
-  "avgScore": 72.33,
-  "avgToCR": 69.6,
+  "tournamentsPlayed": 9,
+  "egrRank": 99,
+  "egrPoints": 26272.1,
+  "avgScore": 73.5,
+  "avgToCR": 70.6,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "1",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 67,
+      "r2": 73,
+      "r3": 75,
+      "r4": 68,
+      "egrPoints": 5502.93
+    },
     {
       "eventId": "11783",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11770",
-      "counting": false,
+      "counting": true,
       "pos": "24",
       "event": "R&A Student Tour Series (Palmares) 2026",
       "venue": "Plamares Golf Resort",
@@ -137,7 +151,8 @@
       "r2": 66,
       "r3": 76,
       "r4": null,
-      "egrPoints": 1058.4
+      "egrPoints": 1058.4,
+      "_mantido": true
     },
     {
       "eventId": "11774",
@@ -151,7 +166,8 @@
       "r2": 71,
       "r3": 73,
       "r4": null,
-      "egrPoints": 937.65
+      "egrPoints": 937.65,
+      "_mantido": true
     },
     {
       "eventId": "10730",
@@ -170,6 +186,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:13:26.066Z",
+  "scrapedAt": "2026-11-02T15:21:42.837Z",
   "url": "https://www.europeangolfrankings.com/players/23418"
 }

@@ -8,11 +8,25 @@
   "club": "Bad Griesbach",
   "ageGroup": "U16",
   "tournamentsPlayed": 14,
-  "egrRank": 486,
+  "egrRank": 489,
   "egrPoints": 11192.3,
   "avgScore": 72.76,
   "avgToCR": 70.58,
   "events": [
+    {
+      "eventId": "12676",
+      "counting": false,
+      "pos": "22",
+      "event": "Offene Bayerische Meisterschaft Herren 2026",
+      "venue": "Münchener Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "09. Oct 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 411.14
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -207,10 +221,11 @@
       "r2": 79,
       "r3": 75,
       "r4": null,
-      "egrPoints": 191.25
+      "egrPoints": 191.25,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:15:40.425Z",
+  "scrapedAt": "2026-11-02T15:24:10.799Z",
   "url": "https://www.europeangolfrankings.com/players/28886"
 }

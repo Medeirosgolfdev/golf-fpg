@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Paris CC",
   "ageGroup": "U14",
-  "tournamentsPlayed": 15,
-  "egrRank": 489,
-  "egrPoints": 11183.7,
-  "avgScore": 72.26,
-  "avgToCR": 71.42,
+  "tournamentsPlayed": 16,
+  "egrRank": 372,
+  "egrPoints": 13273.8,
+  "avgScore": 71.55,
+  "avgToCR": 70.57,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "4",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 70,
+      "r2": 71,
+      "r3": 71,
+      "r4": 70,
+      "egrPoints": 2209.37
+    },
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 1001.14
+    },
     {
       "eventId": "12121",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12108",
-      "counting": true,
+      "counting": false,
       "pos": "44",
       "event": "Coupe Didier Illouz Grand Prix du RCF La Boulie 2026",
       "venue": "Racing Club de France",
@@ -221,10 +249,11 @@
       "r2": 74,
       "r3": 70,
       "r4": null,
-      "egrPoints": 519.74
+      "egrPoints": 519.74,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:20:57.244Z",
+  "scrapedAt": "2026-11-02T15:29:56.001Z",
   "url": "https://www.europeangolfrankings.com/players/43440"
 }

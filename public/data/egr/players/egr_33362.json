@@ -7,15 +7,29 @@
   "country": "England",
   "club": "Wearside",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 320,
-  "egrPoints": 5963.72,
-  "avgScore": 76.14,
-  "avgToCR": 74.25,
+  "tournamentsPlayed": 11,
+  "egrRank": 311,
+  "egrPoints": 6146.05,
+  "avgScore": 75.58,
+  "avgToCR": 74.08,
   "events": [
     {
-      "eventId": "12907",
+      "eventId": "11491",
       "counting": true,
+      "pos": "4",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 182.33
+    },
+    {
+      "eventId": "12907",
+      "counting": false,
       "pos": "26",
       "event": "North of England U16 2026",
       "venue": "Heswall Golf Club",
@@ -170,6 +184,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:17:40.427Z",
+  "scrapedAt": "2026-11-02T15:26:19.621Z",
   "url": "https://www.europeangolfrankings.com/players/33362"
 }

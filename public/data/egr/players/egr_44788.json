@@ -5,14 +5,28 @@
   "lastName": "BRECHT",
   "firstName": "Levi Berthold",
   "country": "Germany",
-  "club": "Hamburger GC",
+  "club": "Hamburg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 3962,
-  "egrPoints": 988.7,
-  "avgScore": 77.17,
-  "avgToCR": 77.09,
+  "tournamentsPlayed": 6,
+  "egrRank": 3513,
+  "egrPoints": 1239.71,
+  "avgScore": 76.87,
+  "avgToCR": 76.73,
   "events": [
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "16",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 73,
+      "r2": 79,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 330.69
+    },
     {
       "eventId": "12836",
       "counting": true,
@@ -45,7 +59,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "12",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -53,7 +67,7 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 317.25
+      "egrPoints": 237.57
     },
     {
       "eventId": "12796",
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:23.372Z",
+  "scrapedAt": "2026-11-02T15:30:25.167Z",
   "url": "https://www.europeangolfrankings.com/players/44788"
 }

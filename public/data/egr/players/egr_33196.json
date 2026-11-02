@@ -5,14 +5,42 @@
   "lastName": "STRÖHER",
   "firstName": "Alexander",
   "country": "Austria",
-  "club": "Schloss Finkenstein",
+  "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 921,
-  "egrPoints": 7065.92,
-  "avgScore": 75,
-  "avgToCR": 73.91,
+  "tournamentsPlayed": 8,
+  "egrRank": 795,
+  "egrPoints": 8199.45,
+  "avgScore": 74.21,
+  "avgToCR": 73.11,
   "events": [
+    {
+      "eventId": "12517",
+      "counting": true,
+      "pos": "3",
+      "event": "AJGT U16-U18 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 495
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "7",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 71,
+      "r2": 75,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 1241.66
+    },
     {
       "eventId": "12507",
       "counting": true,
@@ -109,10 +137,11 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 603.12
+      "egrPoints": 603.12,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:37.427Z",
+  "scrapedAt": "2026-11-02T15:26:16.364Z",
   "url": "https://www.europeangolfrankings.com/players/33196"
 }

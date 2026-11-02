@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Saffron Walden",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 5669,
+  "tournamentsPlayed": 3,
+  "egrRank": 5693,
   "egrPoints": 463.37,
   "avgScore": 78.33,
   "avgToCR": 77.53,
   "events": [
+    {
+      "eventId": "12968",
+      "counting": true,
+      "pos": "22",
+      "event": "County Championship (CAGU) 2026",
+      "venue": "Ely City Golf Club",
+      "country": "England",
+      "startDateRaw": "27. Sep 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 186.37
+    },
     {
       "eventId": "12957",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-26T12:38:01.118Z",
+  "scrapedAt": "2026-11-02T15:36:54.137Z",
   "url": "https://www.europeangolfrankings.com/players/59997"
 }

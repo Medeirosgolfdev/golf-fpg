@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Gams-Werdenberg",
   "ageGroup": "U25",
-  "tournamentsPlayed": 10,
-  "egrRank": 2113,
-  "egrPoints": 2742.9,
-  "avgScore": 77.84,
-  "avgToCR": 77.33,
+  "tournamentsPlayed": 9,
+  "egrRank": 2106,
+  "egrPoints": 2790.44,
+  "avgScore": 77.2,
+  "avgToCR": 76.7,
   "events": [
     {
       "eventId": "12472",
@@ -40,6 +40,20 @@
       "r3": 82,
       "r4": null,
       "egrPoints": 140.87
+    },
+    {
+      "eventId": "12940",
+      "counting": true,
+      "pos": "8",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 290.91
     },
     {
       "eventId": "12460",
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "11544",
-      "counting": false,
+      "counting": true,
       "pos": "17",
       "event": "GJG Grand Final Qualifier 2026",
       "venue": "Golf- und Landclub Semlin am See",
@@ -137,7 +151,8 @@
       "r2": 80,
       "r3": 78,
       "r4": null,
-      "egrPoints": 125.28
+      "egrPoints": 125.28,
+      "_mantido": true
     },
     {
       "eventId": "10116",
@@ -151,7 +166,8 @@
       "r2": 77,
       "r3": 80,
       "r4": null,
-      "egrPoints": 178.34
+      "egrPoints": 178.34,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -170,6 +186,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:14:22.454Z",
+  "scrapedAt": "2026-11-02T15:22:45.398Z",
   "url": "https://www.europeangolfrankings.com/players/26285"
 }

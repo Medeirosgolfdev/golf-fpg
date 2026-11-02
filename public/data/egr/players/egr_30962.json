@@ -8,11 +8,25 @@
   "club": "Terre Blanche",
   "ageGroup": "Adult",
   "tournamentsPlayed": 1,
-  "egrRank": 7250,
-  "egrPoints": 218.66,
-  "avgScore": 77.33,
-  "avgToCR": 77.23,
+  "egrRank": 3470,
+  "egrPoints": 1274.06,
+  "avgScore": 73.67,
+  "avgToCR": 73.57,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 74,
+      "r2": 68,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 1274.06
+    },
     {
       "eventId": "10687",
       "counting": true,
@@ -25,10 +39,11 @@
       "r2": 69,
       "r3": 77,
       "r4": null,
-      "egrPoints": 218.66
+      "egrPoints": 218.66,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:16:36.871Z",
+  "scrapedAt": "2026-11-02T15:25:12.187Z",
   "url": "https://www.europeangolfrankings.com/players/30962"
 }

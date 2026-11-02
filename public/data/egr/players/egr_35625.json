@@ -8,11 +8,25 @@
   "club": "Le Havre",
   "ageGroup": "U18",
   "tournamentsPlayed": 13,
-  "egrRank": 152,
-  "egrPoints": 21230.4,
-  "avgScore": 71.67,
-  "avgToCR": 70.9,
+  "egrRank": 154,
+  "egrPoints": 20975.2,
+  "avgScore": 71.43,
+  "avgToCR": 70.47,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "7",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 75,
+      "r2": 69,
+      "r3": 65,
+      "r4": null,
+      "egrPoints": 1165.5
+    },
     {
       "eventId": "12194",
       "counting": false,
@@ -193,10 +207,11 @@
       "r2": 70,
       "r3": 66,
       "r4": 68,
-      "egrPoints": 1420.65
+      "egrPoints": 1420.65,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:23.359Z",
+  "scrapedAt": "2026-11-02T15:27:06.222Z",
   "url": "https://www.europeangolfrankings.com/players/35625"
 }

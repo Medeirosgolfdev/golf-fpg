@@ -7,12 +7,54 @@
   "country": "Switzerland",
   "club": "Maison Blanche",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 498,
-  "egrPoints": 11037.1,
-  "avgScore": 72.78,
-  "avgToCR": 72.13,
+  "tournamentsPlayed": 12,
+  "egrRank": 405,
+  "egrPoints": 12582.9,
+  "avgScore": 72.44,
+  "avgToCR": 72.12,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": false,
+      "pos": "9",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 70,
+      "r2": 79,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 426.22
+    },
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "12",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 759.65
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 80,
+      "r2": 65,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1819.41
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -57,7 +99,7 @@
     },
     {
       "eventId": "12630",
-      "counting": true,
+      "counting": false,
       "pos": "88",
       "event": "European Boys' Team Championship (Jean-Louis Dupont Trophy) 2026",
       "venue": "Barceló Montecastillo Golf",
@@ -85,7 +127,7 @@
     },
     {
       "eventId": "12073",
-      "counting": true,
+      "counting": false,
       "pos": "54",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -156,6 +198,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:33.077Z",
+  "scrapedAt": "2026-11-02T15:27:16.690Z",
   "url": "https://www.europeangolfrankings.com/players/36011"
 }

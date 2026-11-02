@@ -8,11 +8,25 @@
   "club": "Firenze Ugolino",
   "ageGroup": "U14",
   "tournamentsPlayed": 11,
-  "egrRank": 4215,
+  "egrRank": 4256,
   "egrPoints": 880.05,
   "avgScore": 78.05,
   "avgToCR": 78.7,
   "events": [
+    {
+      "eventId": "12010",
+      "counting": false,
+      "pos": "18",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 82,
+      "r2": 82,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 19.08
+    },
     {
       "eventId": "11993",
       "counting": false,
@@ -165,10 +179,11 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:08.769Z",
+  "scrapedAt": "2026-11-02T15:33:32.169Z",
   "url": "https://www.europeangolfrankings.com/players/52899"
 }

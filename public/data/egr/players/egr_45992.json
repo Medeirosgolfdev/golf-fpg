@@ -7,15 +7,29 @@
   "country": "Scotland",
   "club": "St Regulus Ladies",
   "ageGroup": "U14",
-  "tournamentsPlayed": 19,
-  "egrRank": 537,
-  "egrPoints": 3505.09,
-  "avgScore": 77,
-  "avgToCR": 75.98,
+  "tournamentsPlayed": 20,
+  "egrRank": 506,
+  "egrPoints": 3762.23,
+  "avgScore": 75.61,
+  "avgToCR": 74.99,
   "events": [
     {
-      "eventId": "12907",
+      "eventId": "11491",
       "counting": true,
+      "pos": "2",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 74,
+      "r2": 77,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 430.95
+    },
+    {
+      "eventId": "12907",
+      "counting": false,
       "pos": "16",
       "event": "North of England U16 2026",
       "venue": "Heswall Golf Club",
@@ -296,6 +310,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:21:48.667Z",
+  "scrapedAt": "2026-11-02T15:30:52.805Z",
   "url": "https://www.europeangolfrankings.com/players/45992"
 }

@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Pinetina",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 2624,
-  "egrPoints": 2007.39,
-  "avgScore": 76.64,
-  "avgToCR": 76.12,
+  "tournamentsPlayed": 12,
+  "egrRank": 2861,
+  "egrPoints": 1784.29,
+  "avgScore": 76.75,
+  "avgToCR": 76.28,
   "events": [
     {
       "eventId": "11978",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11958",
-      "counting": false,
+      "counting": true,
       "pos": "48",
       "event": "Vecchio Monastero 2026",
       "venue": "Varese Golf Club",
@@ -193,7 +193,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 59.58
+      "egrPoints": 59.58,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -207,7 +208,8 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -221,7 +223,8 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -240,6 +243,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:17:07.198Z",
+  "scrapedAt": "2026-11-02T15:25:43.801Z",
   "url": "https://www.europeangolfrankings.com/players/32183"
 }

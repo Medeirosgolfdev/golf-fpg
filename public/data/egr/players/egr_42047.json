@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": "Abbekas",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 890,
-  "egrPoints": 7377.4,
-  "avgScore": 74.41,
-  "avgToCR": 72.47,
+  "tournamentsPlayed": 12,
+  "egrRank": 614,
+  "egrPoints": 9701.58,
+  "avgScore": 73.67,
+  "avgToCR": 71.98,
   "events": [
+    {
+      "eventId": "12378",
+      "counting": true,
+      "pos": "1",
+      "event": "54 Junior Tour by Visit Trelleborg #6 2026",
+      "venue": "Bedinge GK",
+      "country": "Sweden",
+      "startDateRaw": "25. Oct 26",
+      "r1": null,
+      "r2": 68,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 2661
+    },
     {
       "eventId": "11673",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11566",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Rhein Main Junior Golf Open by PDI 2026",
       "venue": "Golf Club Neuhof",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:32.255Z",
+  "scrapedAt": "2026-11-02T15:29:27.887Z",
   "url": "https://www.europeangolfrankings.com/players/42047"
 }

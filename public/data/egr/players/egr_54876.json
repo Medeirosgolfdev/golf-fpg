@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Touraine",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 1374,
-  "egrPoints": 4737.13,
-  "avgScore": 73.9,
-  "avgToCR": 72.56,
+  "tournamentsPlayed": 6,
+  "egrRank": 1175,
+  "egrPoints": 5637.07,
+  "avgScore": 74.79,
+  "avgToCR": 73.67,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "29",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 268.9
+    },
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "40",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 631.04
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -71,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:00.819Z",
+  "scrapedAt": "2026-11-02T15:34:30.004Z",
   "url": "https://www.europeangolfrankings.com/players/54876"
 }

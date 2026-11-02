@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Valcros",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 4254,
+  "tournamentsPlayed": 3,
+  "egrRank": 4296,
   "egrPoints": 864.01,
-  "avgScore": 79.5,
-  "avgToCR": 79.1,
+  "avgScore": 83.44,
+  "avgToCR": 83.48,
   "events": [
+    {
+      "eventId": "12192",
+      "counting": true,
+      "pos": "38",
+      "event": "Grand Prix du Luberon 2026",
+      "venue": "Golf Du Luberon",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 85,
+      "r2": 94,
+      "r3": 92,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:45.533Z",
+  "scrapedAt": "2026-11-02T15:28:35.858Z",
   "url": "https://www.europeangolfrankings.com/players/38916"
 }

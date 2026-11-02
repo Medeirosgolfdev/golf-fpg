@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bastide Salette",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 1630,
-  "egrPoints": 3903.64,
-  "avgScore": 77.88,
-  "avgToCR": 76.74,
+  "tournamentsPlayed": 12,
+  "egrRank": 1691,
+  "egrPoints": 3753.04,
+  "avgScore": 78.39,
+  "avgToCR": 77.27,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "61",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 79,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 370.46
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -179,7 +193,8 @@
       "r2": 74,
       "r3": 75,
       "r4": null,
-      "egrPoints": 521.05
+      "egrPoints": 521.05,
+      "_mantido": true
     },
     {
       "eventId": "11368",
@@ -193,10 +208,11 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:10.708Z",
+  "scrapedAt": "2026-11-02T15:29:03.933Z",
   "url": "https://www.europeangolfrankings.com/players/40345"
 }

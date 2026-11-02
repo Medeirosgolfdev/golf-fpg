@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Saint Donal",
   "ageGroup": "U21",
-  "tournamentsPlayed": 2,
-  "egrRank": 2294,
-  "egrPoints": 2422.75,
-  "avgScore": 72.5,
-  "avgToCR": 72.2,
+  "tournamentsPlayed": 3,
+  "egrRank": 2152,
+  "egrPoints": 2685.7,
+  "avgScore": 74.56,
+  "avgToCR": 74.56,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "37",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 81,
+      "r2": 77,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 262.95
+    },
     {
       "eventId": "12167",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:31.346Z",
+  "scrapedAt": "2026-11-02T15:25:06.199Z",
   "url": "https://www.europeangolfrankings.com/players/30573"
 }

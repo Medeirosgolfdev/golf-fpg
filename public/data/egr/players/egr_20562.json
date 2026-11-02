@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Liganno",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 3,
-  "egrRank": 3730,
-  "egrPoints": 1100.14,
-  "avgScore": 77.22,
-  "avgToCR": 74.89,
+  "tournamentsPlayed": 5,
+  "egrRank": 2396,
+  "egrPoints": 2310.01,
+  "avgScore": 75.71,
+  "avgToCR": 73.82,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "17",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 577.44
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "10",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 632.43
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -57,6 +85,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:33.504Z",
+  "scrapedAt": "2026-11-02T15:20:43.141Z",
   "url": "https://www.europeangolfrankings.com/players/20562"
 }

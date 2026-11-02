@@ -7,12 +7,40 @@
   "country": "Scotland",
   "club": "Swanston",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 1136,
-  "egrPoints": 1108.19,
-  "avgScore": 79.74,
-  "avgToCR": 78.82,
+  "tournamentsPlayed": 16,
+  "egrRank": 1148,
+  "egrPoints": 1124.84,
+  "avgScore": 79.82,
+  "avgToCR": 78.68,
   "events": [
+    {
+      "eventId": "11493",
+      "counting": true,
+      "pos": "5",
+      "event": "SGF Cardrona 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 92,
+      "r2": 87,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 29.01
+    },
+    {
+      "eventId": "11491",
+      "counting": false,
+      "pos": "24",
+      "event": "SGF Fairmont 2026",
+      "venue": "St Andrews (Kittocks)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 91,
+      "r2": 94,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11718",
       "counting": false,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "11485",
-      "counting": true,
+      "counting": false,
       "pos": "13",
       "event": "SGF Vase 2026",
       "venue": "Duddingston GC",
@@ -226,6 +254,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:13.974Z",
+  "scrapedAt": "2026-11-02T15:32:29.143Z",
   "url": "https://www.europeangolfrankings.com/players/50104"
 }

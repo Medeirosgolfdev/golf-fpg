@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Essen-Heidhausen",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 14,
-  "egrRank": 186,
-  "egrPoints": 19418,
-  "avgScore": 73.18,
-  "avgToCR": 70.5,
+  "tournamentsPlayed": 13,
+  "egrRank": 198,
+  "egrPoints": 18993.4,
+  "avgScore": 74,
+  "avgToCR": 71.1,
   "events": [
     {
       "eventId": "11673",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "12887",
-      "counting": false,
+      "counting": true,
       "pos": "40",
       "event": "Deutsche Meisterschaft der Männer AK Offen 2026",
       "venue": "GC Teutoburger Wald",
@@ -207,10 +207,11 @@
       "r2": 70,
       "r3": 68,
       "r4": null,
-      "egrPoints": 1186.95
+      "egrPoints": 1186.95,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:55.158Z",
+  "scrapedAt": "2026-11-02T15:21:07.773Z",
   "url": "https://www.europeangolfrankings.com/players/21915"
 }

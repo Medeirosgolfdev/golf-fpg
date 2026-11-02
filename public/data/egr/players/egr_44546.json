@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Madonna Campiglio",
   "ageGroup": "U16",
-  "tournamentsPlayed": 17,
-  "egrRank": 591,
-  "egrPoints": 3152.75,
-  "avgScore": 77.43,
-  "avgToCR": 74.51,
+  "tournamentsPlayed": 18,
+  "egrRank": 537,
+  "egrPoints": 3514.04,
+  "avgScore": 77.22,
+  "avgToCR": 74.1,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "14",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 609.54
+    },
+    {
+      "eventId": "12017",
+      "counting": false,
+      "pos": "7",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 83,
+      "r2": 75,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 157.83
+    },
+    {
+      "eventId": "12015",
+      "counting": false,
+      "pos": "28",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 82,
+      "r2": 80,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 42.5
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -235,7 +277,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 248.25
+      "egrPoints": 248.25,
+      "_mantido": true
     },
     {
       "eventId": "10323",
@@ -249,10 +292,11 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:19.690Z",
+  "scrapedAt": "2026-11-02T15:30:21.262Z",
   "url": "https://www.europeangolfrankings.com/players/44546"
 }

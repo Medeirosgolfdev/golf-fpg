@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Saint-Brieuc",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 2147,
-  "egrPoints": 2673.97,
-  "avgScore": 77.61,
-  "avgToCR": 76.38,
+  "tournamentsPlayed": 9,
+  "egrRank": 1584,
+  "egrPoints": 4080.16,
+  "avgScore": 76.14,
+  "avgToCR": 75.06,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "13",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 561.72
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "8",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 72,
+      "r2": 68,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 844.47
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -123,7 +151,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11373",
@@ -142,6 +171,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:46.001Z",
+  "scrapedAt": "2026-11-02T15:28:36.364Z",
   "url": "https://www.europeangolfrankings.com/players/38926"
 }

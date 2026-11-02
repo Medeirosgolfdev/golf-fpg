@@ -7,13 +7,42 @@
   "country": "Scotland",
   "club": "Prestonfield",
   "ageGroup": "U16",
-  "tournamentsPlayed": 0,
-  "egrRank": 10380,
+  "tournamentsPlayed": 2,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 0,
-  "avgToCR": 0,
-  "events": [],
+  "avgScore": 85,
+  "avgToCR": 83.25,
+  "events": [
+    {
+      "eventId": "11492",
+      "counting": true,
+      "pos": "43",
+      "event": "Cardrona (SGF) 2026",
+      "venue": "Macdonald Cardrona GC",
+      "country": "Scotland",
+      "startDateRaw": "14. Oct 26",
+      "r1": 85,
+      "r2": 89,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "80",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 80,
+      "r2": 83,
+      "r3": 92,
+      "r4": null,
+      "egrPoints": 0
+    }
+  ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:01.958Z",
+  "scrapedAt": "2026-11-02T15:34:31.395Z",
   "url": "https://www.europeangolfrankings.com/players/54970"
 }

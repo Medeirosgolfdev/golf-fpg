@@ -7,11 +7,11 @@
   "country": "Norway",
   "club": "Bjaavann",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 1404,
-  "egrPoints": 4636.29,
-  "avgScore": 74.23,
-  "avgToCR": 72.67,
+  "tournamentsPlayed": 14,
+  "egrRank": 1618,
+  "egrPoints": 3962.52,
+  "avgScore": 75,
+  "avgToCR": 73.37,
   "events": [
     {
       "eventId": "12333",
@@ -183,7 +183,7 @@
     },
     {
       "eventId": "12288",
-      "counting": false,
+      "counting": true,
       "pos": "22",
       "event": "Srixon Tour 1 (U19) 2026",
       "venue": "Sola Golfklubb",
@@ -221,7 +221,8 @@
       "r2": 77,
       "r3": 73,
       "r4": null,
-      "egrPoints": 908.69
+      "egrPoints": 908.69,
+      "_mantido": true
     },
     {
       "eventId": "10116",
@@ -235,10 +236,11 @@
       "r2": 79,
       "r3": 78,
       "r4": null,
-      "egrPoints": 265.88
+      "egrPoints": 265.88,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:30.016Z",
+  "scrapedAt": "2026-11-02T15:31:39.923Z",
   "url": "https://www.europeangolfrankings.com/players/48313"
 }

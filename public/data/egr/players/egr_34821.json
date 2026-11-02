@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Teesside",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 176,
-  "egrPoints": 19839.3,
-  "avgScore": 72.48,
-  "avgToCR": 70.57,
+  "tournamentsPlayed": 10,
+  "egrRank": 135,
+  "egrPoints": 22387.3,
+  "avgScore": 72.22,
+  "avgToCR": 70.27,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "3",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": 68,
+      "r4": 72,
+      "egrPoints": 3327.35
+    },
     {
       "eventId": "12876",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11843",
-      "counting": true,
+      "counting": false,
       "pos": "91",
       "event": "French International U18 (Trophée Michel Carlhian) 2026",
       "venue": "Les Aisses Golf",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:10.393Z",
+  "scrapedAt": "2026-11-02T15:26:52.269Z",
   "url": "https://www.europeangolfrankings.com/players/34821"
 }

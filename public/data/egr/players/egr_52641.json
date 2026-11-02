@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Llavaneras",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 2875,
-  "egrPoints": 1751.6,
-  "avgScore": 76,
-  "avgToCR": 76.12,
+  "tournamentsPlayed": 6,
+  "egrRank": 2658,
+  "egrPoints": 1977.37,
+  "avgScore": 76.5,
+  "avgToCR": 76.24,
   "events": [
+    {
+      "eventId": "12275",
+      "counting": true,
+      "pos": "21",
+      "event": "Campionat De Catalunya U16/U18 2026",
+      "venue": "Fontanals Golf Club",
+      "country": "Spain",
+      "startDateRaw": "02. Oct 26",
+      "r1": 76,
+      "r2": 79,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 225.77
+    },
     {
       "eventId": "12269",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:04.730Z",
+  "scrapedAt": "2026-11-02T15:33:26.824Z",
   "url": "https://www.europeangolfrankings.com/players/52641"
 }

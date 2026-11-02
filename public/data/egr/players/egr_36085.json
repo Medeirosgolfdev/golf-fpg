@@ -8,11 +8,39 @@
   "club": "Le Mans",
   "ageGroup": "U25",
   "tournamentsPlayed": 17,
-  "egrRank": 184,
-  "egrPoints": 19557.5,
-  "avgScore": 71.85,
-  "avgToCR": 70.3,
+  "egrRank": 188,
+  "egrPoints": 19478.3,
+  "avgScore": 71.74,
+  "avgToCR": 70.13,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": false,
+      "pos": "11",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 73,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 596.16
+    },
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "5",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 70,
+      "r2": 68,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 1498.5
+    },
     {
       "eventId": "12194",
       "counting": false,
@@ -235,7 +263,8 @@
       "r2": 73,
       "r3": 68,
       "r4": null,
-      "egrPoints": 1577.7
+      "egrPoints": 1577.7,
+      "_mantido": true
     },
     {
       "eventId": "11366",
@@ -249,10 +278,11 @@
       "r2": 73,
       "r3": 70,
       "r4": null,
-      "egrPoints": 492.41
+      "egrPoints": 492.41,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:18:35.912Z",
+  "scrapedAt": "2026-11-02T15:27:19.956Z",
   "url": "https://www.europeangolfrankings.com/players/36085"
 }

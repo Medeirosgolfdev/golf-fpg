@@ -1,18 +1,32 @@
 {
   "id": "16751",
-  "egrId": "MDEU16751",
+  "egrId": "PDEU16751",
   "name": "Simon Haas",
   "lastName": "HAAS",
   "firstName": "Simon",
   "country": "Germany",
-  "club": "Am Reichswald",
+  "club": "Professional",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 0,
-  "egrRank": 10380,
-  "egrPoints": 0,
-  "avgScore": 0,
-  "avgToCR": 0,
+  "tournamentsPlayed": 1,
+  "egrRank": null,
+  "egrPoints": 641.25,
+  "avgScore": 74.67,
+  "avgToCR": 71.37,
   "events": [
+    {
+      "eventId": "12676",
+      "counting": true,
+      "pos": "10",
+      "event": "Offene Bayerische Meisterschaft Herren 2026",
+      "venue": "Münchener Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "09. Oct 26",
+      "r1": 73,
+      "r2": 79,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 641.25
+    },
     {
       "eventId": "10364",
       "counting": true,
@@ -30,6 +44,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:11:40.509Z",
+  "scrapedAt": "2026-11-02T15:19:44.829Z",
   "url": "https://www.europeangolfrankings.com/players/16751"
 }

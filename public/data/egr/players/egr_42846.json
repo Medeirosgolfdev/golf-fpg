@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 947,
-  "egrPoints": 1567.55,
-  "avgScore": 80.04,
-  "avgToCR": 77.11,
+  "tournamentsPlayed": 14,
+  "egrRank": 822,
+  "egrPoints": 2011.11,
+  "avgScore": 79.78,
+  "avgToCR": 76.88,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "24",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 74,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 491.44
+    },
+    {
+      "eventId": "12013",
+      "counting": false,
+      "pos": "12",
+      "event": "Copa D'Oro Cittá Di Castel Gandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 83,
+      "r2": 87,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 10.55
+    },
     {
       "eventId": "12001",
       "counting": false,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "11944",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Querica D'Oro 2026",
       "venue": "Golf Nazionale",
@@ -193,7 +221,8 @@
       "r2": 86,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10320",
@@ -212,6 +241,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:49.407Z",
+  "scrapedAt": "2026-11-02T15:29:46.776Z",
   "url": "https://www.europeangolfrankings.com/players/42846"
 }

@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Neuhof",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 1865,
-  "egrPoints": 331.16,
-  "avgScore": 78.67,
-  "avgToCR": 76.33,
+  "tournamentsPlayed": 4,
+  "egrRank": 1667,
+  "egrPoints": 475.3,
+  "avgScore": 78.27,
+  "avgToCR": 76.25,
   "events": [
+    {
+      "eventId": "12937",
+      "counting": true,
+      "pos": "10",
+      "event": "DGV-Hessen Meisterschaft Mädchen 2026",
+      "venue": "Golfclub Friedberg",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 83,
+      "r2": 79,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 144.14
+    },
     {
       "eventId": "12821",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:45.967Z",
+  "scrapedAt": "2026-11-02T15:26:25.574Z",
   "url": "https://www.europeangolfrankings.com/players/33559"
 }

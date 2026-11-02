@@ -5,14 +5,28 @@
   "lastName": "MARTINAITIS",
   "firstName": "Julius",
   "country": "Lithuania",
-  "club": "European Centre",
+  "club": "Lunds Akademiska",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 4061,
-  "egrPoints": 942.61,
-  "avgScore": 78.36,
-  "avgToCR": 77.5,
+  "tournamentsPlayed": 5,
+  "egrRank": 3416,
+  "egrPoints": 1297.41,
+  "avgScore": 78.08,
+  "avgToCR": 77.48,
   "events": [
+    {
+      "eventId": "12378",
+      "counting": true,
+      "pos": "34",
+      "event": "54 Junior Tour by Visit Trelleborg #6 2026",
+      "venue": "Bedinge GK",
+      "country": "Sweden",
+      "startDateRaw": "25. Oct 26",
+      "r1": null,
+      "r2": 78,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 354.8
+    },
     {
       "eventId": "12853",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:22.712Z",
+  "scrapedAt": "2026-11-02T15:29:17.581Z",
   "url": "https://www.europeangolfrankings.com/players/41559"
 }

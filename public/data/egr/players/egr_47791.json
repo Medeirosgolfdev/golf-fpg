@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Ennetsee",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 3667,
-  "egrPoints": 1136.71,
-  "avgScore": 77.71,
-  "avgToCR": 77.41,
+  "tournamentsPlayed": 11,
+  "egrRank": 3114,
+  "egrPoints": 1529.79,
+  "avgScore": 76.48,
+  "avgToCR": 76.32,
   "events": [
+    {
+      "eventId": "12491",
+      "counting": true,
+      "pos": "27",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 78,
+      "r2": 81,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 149.9
+    },
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "18",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 71,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 243.18
+    },
     {
       "eventId": "12475",
       "counting": true,
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "12456",
-      "counting": true,
+      "counting": false,
       "pos": "35",
       "event": "Swiss Golf Junior Tour (Zürichsee) 2026",
       "venue": "Golfpark Zürichsee",
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11538",
-      "counting": true,
+      "counting": false,
       "pos": "50",
       "event": "Golfing Knights Junior Open 2026",
       "venue": "Golfplatz Altenstadt",
@@ -141,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:15.318Z",
+  "scrapedAt": "2026-11-02T15:31:23.252Z",
   "url": "https://www.europeangolfrankings.com/players/47791"
 }

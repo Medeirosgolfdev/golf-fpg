@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 4612,
-  "egrPoints": 729.63,
-  "avgScore": 79.53,
-  "avgToCR": 79.58,
+  "tournamentsPlayed": 9,
+  "egrRank": 4358,
+  "egrPoints": 842.58,
+  "avgScore": 79,
+  "avgToCR": 78.89,
   "events": [
+    {
+      "eventId": "12012",
+      "counting": true,
+      "pos": "28",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 80,
+      "r2": 83,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 112.95
+    },
     {
       "eventId": "12006",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11909",
-      "counting": true,
+      "counting": false,
       "pos": "64",
       "event": "Stella D'Oro 2026",
       "venue": "Olgiata Golf Club",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:39.353Z",
+  "scrapedAt": "2026-11-02T15:31:50.238Z",
   "url": "https://www.europeangolfrankings.com/players/48635"
 }

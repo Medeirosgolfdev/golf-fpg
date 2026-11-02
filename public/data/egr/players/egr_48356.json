@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Pinetina",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 2057,
-  "egrPoints": 242.37,
-  "avgScore": 84.39,
-  "avgToCR": 81.76,
+  "tournamentsPlayed": 8,
+  "egrRank": 2027,
+  "egrPoints": 260.4,
+  "avgScore": 84.5,
+  "avgToCR": 81.68,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "18",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 89,
+      "r2": 88,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 18.04
+    },
     {
       "eventId": "11999",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:31.802Z",
+  "scrapedAt": "2026-11-02T15:31:41.798Z",
   "url": "https://www.europeangolfrankings.com/players/48356"
 }

@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Angers",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 764,
-  "egrPoints": 8435.14,
-  "avgScore": 73.83,
-  "avgToCR": 72.74,
+  "tournamentsPlayed": 9,
+  "egrRank": 846,
+  "egrPoints": 7731.65,
+  "avgScore": 74.6,
+  "avgToCR": 73.06,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "25",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 337.8
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12073",
-      "counting": false,
+      "counting": true,
       "pos": "105",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -137,7 +151,8 @@
       "r2": 73,
       "r3": 71,
       "r4": null,
-      "egrPoints": 390.32
+      "egrPoints": 390.32,
+      "_mantido": true
     },
     {
       "eventId": "11368",
@@ -151,10 +166,11 @@
       "r2": 69,
       "r3": 70,
       "r4": 72,
-      "egrPoints": 650.96
+      "egrPoints": 650.96,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:27.279Z",
+  "scrapedAt": "2026-11-02T15:30:29.403Z",
   "url": "https://www.europeangolfrankings.com/players/44926"
 }

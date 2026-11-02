@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Arzaga",
   "ageGroup": "U21",
-  "tournamentsPlayed": 2,
-  "egrRank": 1133,
-  "egrPoints": 1113.99,
-  "avgScore": 71,
-  "avgToCR": 68.25,
+  "tournamentsPlayed": 4,
+  "egrRank": 578,
+  "egrPoints": 3249.6,
+  "avgScore": 70.91,
+  "avgToCR": 67.92,
   "events": [
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "1",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 68,
+      "r2": 68,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 775.61
+    },
+    {
+      "eventId": "12015",
+      "counting": true,
+      "pos": "2",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 73,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 1360
+    },
     {
       "eventId": "11988",
       "counting": true,
@@ -43,6 +71,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:15:22.567Z",
+  "scrapedAt": "2026-11-02T15:23:51.480Z",
   "url": "https://www.europeangolfrankings.com/players/28399"
 }

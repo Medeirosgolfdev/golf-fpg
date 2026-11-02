@@ -7,12 +7,40 @@
   "country": "Spain",
   "club": "Emporda",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 880,
-  "egrPoints": 1779.77,
-  "avgScore": 76.8,
-  "avgToCR": 75.04,
+  "tournamentsPlayed": 6,
+  "egrRank": 731,
+  "egrPoints": 2394.89,
+  "avgScore": 77.93,
+  "avgToCR": 75.7,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "66",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 84,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 455.98
+    },
+    {
+      "eventId": "12276",
+      "counting": true,
+      "pos": "5",
+      "event": "Campionat De Catalunya U16/U18 2026",
+      "venue": "Fontanals Golf Club",
+      "country": "Spain",
+      "startDateRaw": "02. Oct 26",
+      "r1": 82,
+      "r2": 76,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 159.14
+    },
     {
       "eventId": "11781",
       "counting": true,
@@ -71,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:07.743Z",
+  "scrapedAt": "2026-11-02T15:29:00.873Z",
   "url": "https://www.europeangolfrankings.com/players/40176"
 }

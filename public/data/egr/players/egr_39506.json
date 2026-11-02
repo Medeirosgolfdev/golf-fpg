@@ -7,12 +7,26 @@
   "country": "Wales",
   "club": "Llanwern",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 4377,
+  "tournamentsPlayed": 4,
+  "egrRank": 4421,
   "egrPoints": 819.07,
-  "avgScore": 80.14,
-  "avgToCR": 79.93,
+  "avgScore": 80.56,
+  "avgToCR": 80.57,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "43",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 78,
+      "r2": 80,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12617",
       "counting": true,
@@ -72,6 +86,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:57.176Z",
+  "scrapedAt": "2026-11-02T15:28:48.825Z",
   "url": "https://www.europeangolfrankings.com/players/39506"
 }

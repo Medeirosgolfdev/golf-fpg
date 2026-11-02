@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Bellosguardo",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 3052,
-  "egrPoints": 1563.55,
-  "avgScore": 80.65,
-  "avgToCR": 79.49,
+  "tournamentsPlayed": 11,
+  "egrRank": 2957,
+  "egrPoints": 1694.69,
+  "avgScore": 80,
+  "avgToCR": 78.71,
   "events": [
+    {
+      "eventId": "12010",
+      "counting": true,
+      "pos": "9",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 81,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 131.14
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "10234",
-      "counting": true,
+      "counting": false,
       "pos": "49",
       "event": "Argentario Classic Open 2025",
       "venue": "Argentario Golf Resort",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:11.912Z",
+  "scrapedAt": "2026-11-02T15:30:12.796Z",
   "url": "https://www.europeangolfrankings.com/players/44265"
 }

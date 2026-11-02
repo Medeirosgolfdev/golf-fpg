@@ -8,11 +8,25 @@
   "club": "Hammel",
   "ageGroup": "U18",
   "tournamentsPlayed": 11,
-  "egrRank": 1073,
-  "egrPoints": 1238.67,
+  "egrRank": 1095,
+  "egrPoints": 1234.31,
   "avgScore": 80.1,
-  "avgToCR": 76.99,
+  "avgToCR": 76.63,
   "events": [
+    {
+      "eventId": "12611",
+      "counting": false,
+      "pos": "11",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 78,
+      "r2": 86,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12607",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12570",
-      "counting": false,
+      "counting": true,
       "pos": "24",
       "event": "Dormy Elite Tour II Damer/Piger 2026",
       "venue": "Ribe Golf Club (52)",
@@ -165,7 +179,8 @@
       "r2": 80,
       "r3": 83,
       "r4": null,
-      "egrPoints": 50
+      "egrPoints": 50,
+      "_mantido": true
     },
     {
       "eventId": "11362",
@@ -199,6 +214,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:50.089Z",
+  "scrapedAt": "2026-11-02T15:29:47.595Z",
   "url": "https://www.europeangolfrankings.com/players/42908"
 }

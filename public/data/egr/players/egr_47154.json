@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Massane",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 4179,
+  "tournamentsPlayed": 9,
+  "egrRank": 4220,
   "egrPoints": 893.78,
-  "avgScore": 81.32,
-  "avgToCR": 80.87,
+  "avgScore": 81.23,
+  "avgToCR": 80.85,
   "events": [
     {
       "eventId": "12187",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "12162",
-      "counting": false,
+      "counting": true,
       "pos": "91",
       "event": "Grand Prix de Pau Golf Club 1856 2026",
       "venue": "Pau Golf Club 1856",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12086",
-      "counting": false,
+      "counting": true,
       "pos": "85",
       "event": "Grand Prix d'Aix-Marseille Coupe Yves Caillol 2026",
       "venue": "Golf Club d'Aix Marseille",
@@ -151,7 +151,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10687",
@@ -165,10 +166,11 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:02.929Z",
+  "scrapedAt": "2026-11-02T15:31:08.838Z",
   "url": "https://www.europeangolfrankings.com/players/47154"
 }

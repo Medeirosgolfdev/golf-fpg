@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Neckertal",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 1910,
-  "egrPoints": 303.82,
-  "avgScore": 81.39,
-  "avgToCR": 80.69,
+  "tournamentsPlayed": 12,
+  "egrRank": 1770,
+  "egrPoints": 399.87,
+  "avgScore": 79.83,
+  "avgToCR": 79.69,
   "events": [
+    {
+      "eventId": "12956",
+      "counting": true,
+      "pos": "3",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 75,
+      "r2": 79,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 103
+    },
     {
       "eventId": "12935",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11417",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Junior Golf Tour Open Hetzenhof (JTG) 2026",
       "venue": "Golfclub Hetzenhof e.V.",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:22:10.222Z",
+  "scrapedAt": "2026-11-02T15:31:17.315Z",
   "url": "https://www.europeangolfrankings.com/players/47575"
 }

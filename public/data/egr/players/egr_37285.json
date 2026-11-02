@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Manises",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 2882,
-  "egrPoints": 1742.27,
-  "avgScore": 77.39,
-  "avgToCR": 76.31,
+  "tournamentsPlayed": 8,
+  "egrRank": 2790,
+  "egrPoints": 1854.56,
+  "avgScore": 77.3,
+  "avgToCR": 76.14,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "29",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 75,
+      "r2": 83,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 112.29
+    },
     {
       "eventId": "12926",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:01.630Z",
+  "scrapedAt": "2026-11-02T15:27:48.209Z",
   "url": "https://www.europeangolfrankings.com/players/37285"
 }

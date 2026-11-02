@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Escorpion",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 4735,
-  "egrPoints": 687.72,
-  "avgScore": 77.6,
-  "avgToCR": 78.42,
+  "tournamentsPlayed": 3,
+  "egrRank": 4149,
+  "egrPoints": 920.32,
+  "avgScore": 77.5,
+  "avgToCR": 77.45,
   "events": [
+    {
+      "eventId": "11826",
+      "counting": true,
+      "pos": "21",
+      "event": "Sergio García Junior Championship 2026",
+      "venue": "Mediterráneo Golf",
+      "country": "Spain",
+      "startDateRaw": "03. Oct 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 232.6
+    },
     {
       "eventId": "12254",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:05.472Z",
+  "scrapedAt": "2026-11-02T15:28:58.166Z",
   "url": "https://www.europeangolfrankings.com/players/40052"
 }

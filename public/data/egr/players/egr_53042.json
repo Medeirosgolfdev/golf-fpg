@@ -8,11 +8,25 @@
   "club": "Elm Park",
   "ageGroup": "U16",
   "tournamentsPlayed": 12,
-  "egrRank": 2312,
-  "egrPoints": 2401.21,
-  "avgScore": 78.42,
-  "avgToCR": 77.65,
+  "egrRank": 2306,
+  "egrPoints": 2427.71,
+  "avgScore": 77.58,
+  "avgToCR": 76.81,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": true,
+      "pos": "17",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 78,
+      "r2": 71,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 136.72
+    },
     {
       "eventId": "12934",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12221",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "Triple A Series World Final 2026",
       "venue": "San Roque Golf Club (Old)",
@@ -179,7 +193,8 @@
       "r2": 75,
       "r3": 76,
       "r4": null,
-      "egrPoints": 103.1
+      "egrPoints": 103.1,
+      "_mantido": true
     },
     {
       "eventId": "11341",
@@ -198,6 +213,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:12.122Z",
+  "scrapedAt": "2026-11-02T15:33:35.794Z",
   "url": "https://www.europeangolfrankings.com/players/53042"
 }

@@ -7,12 +7,26 @@
   "country": "Austria",
   "club": "Schloss Finkenstein",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 9523,
+  "tournamentsPlayed": 6,
+  "egrRank": 9635,
   "egrPoints": 46.69,
-  "avgScore": 88.22,
-  "avgToCR": 88.39,
+  "avgScore": 88.45,
+  "avgToCR": 88.55,
   "events": [
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "101",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 92,
+      "r2": 87,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12509",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:26:35.976Z",
+  "scrapedAt": "2026-11-02T15:36:19.639Z",
   "url": "https://www.europeangolfrankings.com/players/58457"
 }

@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Chantilly",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 1756,
-  "egrPoints": 3523.89,
-  "avgScore": 76.11,
-  "avgToCR": 76.41,
+  "tournamentsPlayed": 8,
+  "egrRank": 1767,
+  "egrPoints": 3563.27,
+  "avgScore": 76.22,
+  "avgToCR": 76.49,
   "events": [
+    {
+      "eventId": "12213",
+      "counting": true,
+      "pos": "73",
+      "event": "Grand Prix de Val Grand 2026",
+      "venue": "Golf Val-Grand",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 85,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "46",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 312.05
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -109,10 +137,11 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 272.67
+      "egrPoints": 272.67,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:45.990Z",
+  "scrapedAt": "2026-11-02T15:28:36.352Z",
   "url": "https://www.europeangolfrankings.com/players/38924"
 }

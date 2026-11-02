@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Roganstown",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 2814,
-  "egrPoints": 1816.12,
-  "avgScore": 78.52,
-  "avgToCR": 77.32,
+  "tournamentsPlayed": 14,
+  "egrRank": 2713,
+  "egrPoints": 1920.99,
+  "avgScore": 77.76,
+  "avgToCR": 76.58,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "19",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 140.78
+    },
     {
       "eventId": "11687",
       "counting": false,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "11683",
-      "counting": true,
+      "counting": false,
       "pos": "10",
       "event": "Irish Elite WAGR Tour #9 2026",
       "venue": "Hollywood Lakes",
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:02.265Z",
+  "scrapedAt": "2026-11-02T15:33:24.055Z",
   "url": "https://www.europeangolfrankings.com/players/52466"
 }

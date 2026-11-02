@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Strasbourg",
   "ageGroup": "U21",
-  "tournamentsPlayed": 9,
-  "egrRank": 683,
-  "egrPoints": 9145.53,
-  "avgScore": 73.82,
-  "avgToCR": 72.17,
+  "tournamentsPlayed": 10,
+  "egrRank": 585,
+  "egrPoints": 10042.3,
+  "avgScore": 73.88,
+  "avgToCR": 72.46,
   "events": [
+    {
+      "eventId": "12208",
+      "counting": true,
+      "pos": "10",
+      "event": "Grand Prix MESSIEURS de Chamonix Trophée Maurice Herzog 2026",
+      "venue": "Golf Club de Chamonix",
+      "country": "France",
+      "startDateRaw": "02. Oct 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 788.86
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "6",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 71,
+      "r2": 72,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 882.24
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12050",
-      "counting": true,
+      "counting": false,
       "pos": "92",
       "event": "Grand Prix de l'Isère Charmeil 2026",
       "venue": "Golf Grenoble Charmeil",
@@ -137,7 +165,8 @@
       "r2": 71,
       "r3": 76,
       "r4": null,
-      "egrPoints": 774.34
+      "egrPoints": 774.34,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -156,6 +185,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:30.740Z",
+  "scrapedAt": "2026-11-02T15:25:05.352Z",
   "url": "https://www.europeangolfrankings.com/players/30559"
 }

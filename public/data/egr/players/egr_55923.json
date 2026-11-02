@@ -5,14 +5,28 @@
   "lastName": "BEUVELET",
   "firstName": "Anatole",
   "country": "France",
-  "club": "Reims",
+  "club": "Le Touquet",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 4600,
-  "egrPoints": 735.96,
-  "avgScore": 74.33,
-  "avgToCR": 73.43,
+  "tournamentsPlayed": 2,
+  "egrRank": 3835,
+  "egrPoints": 1061.99,
+  "avgScore": 76.83,
+  "avgToCR": 75.48,
   "events": [
+    {
+      "eventId": "12210",
+      "counting": true,
+      "pos": "28",
+      "event": "Grand Prix de la Côte d'Opale 2026",
+      "venue": "Le Touquet Golf Resort",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 326.03
+    },
     {
       "eventId": "12078",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:25:33.579Z",
+  "scrapedAt": "2026-11-02T15:35:07.300Z",
   "url": "https://www.europeangolfrankings.com/players/55923"
 }

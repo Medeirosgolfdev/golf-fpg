@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Cosmopolitan",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 953,
-  "egrPoints": 1553.95,
-  "avgScore": 79.81,
-  "avgToCR": 77.37,
+  "tournamentsPlayed": 10,
+  "egrRank": 850,
+  "egrPoints": 1917.94,
+  "avgScore": 79.82,
+  "avgToCR": 77.06,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "22",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 515.06
+    },
+    {
+      "eventId": "12011",
+      "counting": true,
+      "pos": "6",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 86,
+      "r2": 82,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 37
+    },
     {
       "eventId": "11984",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "11957",
-      "counting": true,
+      "counting": false,
       "pos": "52",
       "event": "Italian National Closed Stroke Play (Trofeo Isa Goldschmid) 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -137,7 +165,8 @@
       "r2": 78,
       "r3": 76,
       "r4": null,
-      "egrPoints": 188.07
+      "egrPoints": 188.07,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -156,6 +185,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:19.355Z",
+  "scrapedAt": "2026-11-02T15:30:20.806Z",
   "url": "https://www.europeangolfrankings.com/players/44538"
 }

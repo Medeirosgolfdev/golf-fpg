@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Fehmarn",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 2223,
-  "egrPoints": 182.41,
-  "avgScore": 85.29,
-  "avgToCR": 84.41,
+  "tournamentsPlayed": 5,
+  "egrRank": 1836,
+  "egrPoints": 358.72,
+  "avgScore": 85.2,
+  "avgToCR": 84.06,
   "events": [
+    {
+      "eventId": "12949",
+      "counting": true,
+      "pos": "2",
+      "event": "DGV-GVSH Meisterschaft AK14 Mädchen 2026",
+      "venue": "Golfanlage Hohwacht",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 89,
+      "r2": 90,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 107.62
+    },
     {
       "eventId": "12913",
       "counting": true,
@@ -42,6 +56,20 @@
       "egrPoints": 84.65
     },
     {
+      "eventId": "12945",
+      "counting": true,
+      "pos": "1",
+      "event": "DGV-Region Nord 2. AK14 Mädchen 2026",
+      "venue": "Golfclub Segeberg",
+      "country": "Germany",
+      "startDateRaw": "04. Jul 26",
+      "r1": 84,
+      "r2": 86,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 68.68
+    },
+    {
       "eventId": "12765",
       "counting": true,
       "pos": "4",
@@ -57,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:24:30.381Z",
+  "scrapedAt": "2026-11-02T15:33:55.719Z",
   "url": "https://www.europeangolfrankings.com/players/53527"
 }

@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Kyburg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 7515,
+  "tournamentsPlayed": 7,
+  "egrRank": 7600,
   "egrPoints": 192.12,
-  "avgScore": 85.08,
-  "avgToCR": 84.63,
+  "avgScore": 84.53,
+  "avgToCR": 84.15,
   "events": [
+    {
+      "eventId": "12484",
+      "counting": true,
+      "pos": "43",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 84,
+      "r2": 81,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12918",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:14.810Z",
+  "scrapedAt": "2026-11-02T15:31:22.703Z",
   "url": "https://www.europeangolfrankings.com/players/47782"
 }

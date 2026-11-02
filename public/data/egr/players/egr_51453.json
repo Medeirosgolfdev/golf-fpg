@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hanau",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 3268,
-  "egrPoints": 1380.46,
-  "avgScore": 77.5,
-  "avgToCR": 77.06,
+  "tournamentsPlayed": 10,
+  "egrRank": 2904,
+  "egrPoints": 1749.43,
+  "avgScore": 76.77,
+  "avgToCR": 76.6,
   "events": [
+    {
+      "eventId": "12938",
+      "counting": true,
+      "pos": "7",
+      "event": "DGV-Hessen Meisterschaft Jungen 2026",
+      "venue": "Kronberg Golf & Country Club",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 368.97
+    },
     {
       "eventId": "12910",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11546",
-      "counting": true,
+      "counting": false,
       "pos": "49",
       "event": "Lake Constance Junior Games (GJG) 2026",
       "venue": "Country Club Schloss Langenstein",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:43.800Z",
+  "scrapedAt": "2026-11-02T15:33:02.630Z",
   "url": "https://www.europeangolfrankings.com/players/51453"
 }

@@ -7,11 +7,11 @@
   "country": "Ireland",
   "club": "Westport",
   "ageGroup": "U21",
-  "tournamentsPlayed": 14,
-  "egrRank": 164,
-  "egrPoints": 20195.5,
-  "avgScore": 72.18,
-  "avgToCR": 70.5,
+  "tournamentsPlayed": 13,
+  "egrRank": 170,
+  "egrPoints": 20065.9,
+  "avgScore": 72.32,
+  "avgToCR": 70.33,
   "events": [
     {
       "eventId": "11673",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11860",
-      "counting": false,
+      "counting": true,
       "pos": "20",
       "event": "Connacht Men's Open Stroke Play Championship 2026",
       "venue": "Galway Golf Club",
@@ -207,10 +207,11 @@
       "r2": 73,
       "r3": 74,
       "r4": null,
-      "egrPoints": 987
+      "egrPoints": 987,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:25.578Z",
+  "scrapedAt": "2026-11-02T15:27:08.757Z",
   "url": "https://www.europeangolfrankings.com/players/35724"
 }

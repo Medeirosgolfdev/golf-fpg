@@ -8,11 +8,39 @@
   "club": "Arzaga",
   "ageGroup": "U18",
   "tournamentsPlayed": 12,
-  "egrRank": 1546,
-  "egrPoints": 4207.23,
-  "avgScore": 76.32,
-  "avgToCR": 74.45,
+  "egrRank": 1535,
+  "egrPoints": 4250.23,
+  "avgScore": 76.5,
+  "avgToCR": 74.64,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "67",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 80,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 391.58
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "40",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 239.89
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "11987",
-      "counting": true,
+      "counting": false,
       "pos": "32",
       "event": "Trofeo Umberto Cristani 2026",
       "venue": "Golf Club Arzaga",
@@ -165,7 +193,8 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 388.72
+      "egrPoints": 388.72,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -179,7 +208,8 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -198,6 +228,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:26.350Z",
+  "scrapedAt": "2026-11-02T15:26:04.391Z",
   "url": "https://www.europeangolfrankings.com/players/32825"
 }

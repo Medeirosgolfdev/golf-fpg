@@ -7,12 +7,26 @@
   "country": "Morocco",
   "club": "Samanah",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 2,
-  "egrRank": 630,
-  "egrPoints": 2891.85,
-  "avgScore": 74.17,
-  "avgToCR": 70.47,
+  "tournamentsPlayed": 3,
+  "egrRank": 395,
+  "egrPoints": 4962.52,
+  "avgScore": 73.78,
+  "avgToCR": 69.91,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "7",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 2070.67
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:14:34.278Z",
+  "scrapedAt": "2026-11-02T15:22:58.604Z",
   "url": "https://www.europeangolfrankings.com/players/26703"
 }

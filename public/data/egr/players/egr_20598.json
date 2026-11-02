@@ -8,11 +8,39 @@
   "club": "Grand-Ducal",
   "ageGroup": "U21",
   "tournamentsPlayed": 8,
-  "egrRank": 797,
-  "egrPoints": 8152.07,
-  "avgScore": 74.48,
-  "avgToCR": 73.22,
+  "egrRank": 773,
+  "egrPoints": 8419.06,
+  "avgScore": 74.81,
+  "avgToCR": 73.7,
   "events": [
+    {
+      "eventId": "12634",
+      "counting": true,
+      "pos": "23",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 72,
+      "r2": 76,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 761.44
+    },
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "19",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 67,
+      "r2": 71,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 731
+    },
     {
       "eventId": "11747",
       "counting": true,
@@ -109,7 +137,8 @@
       "r2": 72,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1112.05
+      "egrPoints": 1112.05,
+      "_mantido": true
     },
     {
       "eventId": "10398",
@@ -123,10 +152,11 @@
       "r2": 77,
       "r3": 71,
       "r4": null,
-      "egrPoints": 113.4
+      "egrPoints": 113.4,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:12:34.446Z",
+  "scrapedAt": "2026-11-02T15:20:44.288Z",
   "url": "https://www.europeangolfrankings.com/players/20598"
 }

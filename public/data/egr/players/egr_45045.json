@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Bromsgrove",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 2771,
+  "tournamentsPlayed": 10,
+  "egrRank": 2784,
   "egrPoints": 1858.1,
   "avgScore": 78.14,
   "avgToCR": 77.78,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": false,
+      "pos": "84",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11702",
       "counting": true,
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:30.390Z",
+  "scrapedAt": "2026-11-02T15:30:33.081Z",
   "url": "https://www.europeangolfrankings.com/players/45045"
 }

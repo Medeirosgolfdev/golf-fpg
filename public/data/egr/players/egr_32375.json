@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Galgorm Castle",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 765,
-  "egrPoints": 8424.23,
-  "avgScore": 75.08,
-  "avgToCR": 73.33,
+  "tournamentsPlayed": 14,
+  "egrRank": 824,
+  "egrPoints": 7880.33,
+  "avgScore": 75.61,
+  "avgToCR": 73.91,
   "events": [
+    {
+      "eventId": "11688",
+      "counting": true,
+      "pos": "16",
+      "event": "Irish Elite WAGR Tour #12 2026",
+      "venue": "Moyvalley Hotel & Golf Resort",
+      "country": "Ireland",
+      "startDateRaw": "28. Oct 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 185.5
+    },
     {
       "eventId": "11683",
       "counting": false,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "11860",
-      "counting": false,
+      "counting": true,
       "pos": "45",
       "event": "Connacht Men's Open Stroke Play Championship 2026",
       "venue": "Galway Golf Club",
@@ -207,7 +221,8 @@
       "r2": 68,
       "r3": 67,
       "r4": null,
-      "egrPoints": 654.19
+      "egrPoints": 654.19,
+      "_mantido": true
     },
     {
       "eventId": "11146",
@@ -221,10 +236,11 @@
       "r2": 74,
       "r3": 76,
       "r4": null,
-      "egrPoints": 259.3
+      "egrPoints": 259.3,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:12.560Z",
+  "scrapedAt": "2026-11-02T15:25:49.487Z",
   "url": "https://www.europeangolfrankings.com/players/32375"
 }

@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Arbroath Artisan",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 1702,
-  "egrPoints": 3693.02,
+  "tournamentsPlayed": 14,
+  "egrRank": 1659,
+  "egrPoints": 3832.71,
   "avgScore": 75.36,
-  "avgToCR": 74.81,
+  "avgToCR": 74.61,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "31",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 82,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 318.03
+    },
     {
       "eventId": "11721",
       "counting": true,
@@ -169,7 +183,7 @@
     },
     {
       "eventId": "11703",
-      "counting": true,
+      "counting": false,
       "pos": "17",
       "event": "Junior Tour Royal Dornoch Boys 2026",
       "venue": "Royal Dornoch GC",
@@ -212,6 +226,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:29.460Z",
+  "scrapedAt": "2026-11-02T15:31:39.262Z",
   "url": "https://www.europeangolfrankings.com/players/48275"
 }

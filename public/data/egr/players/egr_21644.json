@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Beauvallon",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 1,
-  "egrRank": 4992,
-  "egrPoints": 609.73,
-  "avgScore": 76,
-  "avgToCR": 76.3,
+  "tournamentsPlayed": 2,
+  "egrRank": 3192,
+  "egrPoints": 1454.59,
+  "avgScore": 75.17,
+  "avgToCR": 75.27,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 74,
+      "r2": 68,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 844.86
+    },
     {
       "eventId": "12187",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:47.845Z",
+  "scrapedAt": "2026-11-02T15:20:59.827Z",
   "url": "https://www.europeangolfrankings.com/players/21644"
 }

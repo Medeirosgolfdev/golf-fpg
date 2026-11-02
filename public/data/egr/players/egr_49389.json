@@ -5,14 +5,28 @@
   "lastName": "HINZ",
   "firstName": "Jonas",
   "country": "Germany",
-  "club": "GC Jersbek",
+  "club": "Jersbek",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 10380,
-  "egrPoints": 0,
-  "avgScore": 81.6,
-  "avgToCR": 81.56,
+  "tournamentsPlayed": 3,
+  "egrRank": 8342,
+  "egrPoints": 129.13,
+  "avgScore": 81.71,
+  "avgToCR": 81.86,
   "events": [
+    {
+      "eventId": "12946",
+      "counting": true,
+      "pos": "10",
+      "event": "DGV-GVSH Meisterschaft AK16/18 Jungen 2026",
+      "venue": "Golfanlage Hohwacht",
+      "country": "Germany",
+      "startDateRaw": "19. Sep 26",
+      "r1": 83,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 129.13
+    },
     {
       "eventId": "12851",
       "counting": true,
@@ -31,7 +45,7 @@
       "eventId": "12687",
       "counting": true,
       "pos": "47",
-      "event": "DGV-Hamburg Meisterschaft AK16/18 Jungen 2026",
+      "event": "DGV-Region Nord 2. AK16/18 Jungen 2026",
       "venue": "Golfclub Treudelberg",
       "country": "Germany",
       "startDateRaw": "04. Jul 26",
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:55.461Z",
+  "scrapedAt": "2026-11-02T15:32:08.687Z",
   "url": "https://www.europeangolfrankings.com/players/49389"
 }

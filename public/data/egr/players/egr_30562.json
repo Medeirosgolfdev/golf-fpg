@@ -5,14 +5,42 @@
   "lastName": "LEFEBVRE",
   "firstName": "Titouan",
   "country": "France",
-  "club": "Val Queven",
+  "club": "Freslonniere",
   "ageGroup": "U21",
-  "tournamentsPlayed": 2,
-  "egrRank": 3786,
-  "egrPoints": 1074.63,
-  "avgScore": 75.6,
-  "avgToCR": 74.12,
+  "tournamentsPlayed": 4,
+  "egrRank": 2936,
+  "egrPoints": 1718.53,
+  "avgScore": 75.56,
+  "avgToCR": 74.79,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "29",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 268.9
+    },
+    {
+      "eventId": "12200",
+      "counting": true,
+      "pos": "13",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 375
+    },
     {
       "eventId": "12153",
       "counting": true,
@@ -43,6 +71,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:30.876Z",
+  "scrapedAt": "2026-11-02T15:25:05.545Z",
   "url": "https://www.europeangolfrankings.com/players/30562"
 }

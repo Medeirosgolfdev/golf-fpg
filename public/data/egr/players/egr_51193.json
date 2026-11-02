@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1615,
-  "egrPoints": 498.87,
-  "avgScore": 84.5,
-  "avgToCR": 81.52,
+  "tournamentsPlayed": 13,
+  "egrRank": 1605,
+  "egrPoints": 516.91,
+  "avgScore": 84.52,
+  "avgToCR": 81.49,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "19",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 86,
+      "r2": 91,
+      "r3": 93,
+      "r4": null,
+      "egrPoints": 18.04
+    },
     {
       "eventId": "11988",
       "counting": true,
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "11908",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Trofeo Vincenzo de Benedictis 2026",
       "venue": "Il Picciolo Golf Club",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:36.298Z",
+  "scrapedAt": "2026-11-02T15:32:54.366Z",
   "url": "https://www.europeangolfrankings.com/players/51193"
 }

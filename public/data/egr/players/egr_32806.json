@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Padova",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1050,
-  "egrPoints": 1302.93,
-  "avgScore": 82.05,
-  "avgToCR": 78.46,
+  "tournamentsPlayed": 11,
+  "egrRank": 1026,
+  "egrPoints": 1404.96,
+  "avgScore": 81.68,
+  "avgToCR": 78.17,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "20",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 81,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 18.04
+    },
+    {
+      "eventId": "12017",
+      "counting": true,
+      "pos": "10",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 79,
+      "r2": 81,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 117.24
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "11981",
-      "counting": true,
+      "counting": false,
       "pos": "21",
       "event": "Trofeo Citta' Di Treviso 2026",
       "venue": "Golf Villa Condulmer",
@@ -151,10 +179,11 @@
       "r2": 81,
       "r3": 82,
       "r4": null,
-      "egrPoints": 33.25
+      "egrPoints": 33.25,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:25.537Z",
+  "scrapedAt": "2026-11-02T15:26:03.319Z",
   "url": "https://www.europeangolfrankings.com/players/32806"
 }

@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Cus Parma",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 5,
-  "egrRank": 5318,
-  "egrPoints": 533.37,
-  "avgScore": 78.89,
-  "avgToCR": 77.12,
+  "tournamentsPlayed": 7,
+  "egrRank": 3796,
+  "egrPoints": 1080.2,
+  "avgScore": 79.67,
+  "avgToCR": 77.79,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "18",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 527.75
+    },
+    {
+      "eventId": "12010",
+      "counting": true,
+      "pos": "23",
+      "event": "Memorial Luca Lazzeroni 2026",
+      "venue": "Riva Toscana Golf Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 83,
+      "r2": 90,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 19.08
+    },
     {
       "eventId": "11978",
       "counting": true,
@@ -100,6 +128,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:22:22.445Z",
+  "scrapedAt": "2026-11-02T15:31:31.127Z",
   "url": "https://www.europeangolfrankings.com/players/47987"
 }

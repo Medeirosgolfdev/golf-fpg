@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 1268,
-  "egrPoints": 896.3,
-  "avgScore": 78,
-  "avgToCR": 75.8,
+  "tournamentsPlayed": 11,
+  "egrRank": 1258,
+  "egrPoints": 935.37,
+  "avgScore": 78.04,
+  "avgToCR": 75.83,
   "events": [
+    {
+      "eventId": "11633",
+      "counting": true,
+      "pos": "2",
+      "event": "Junior Golf Tour Open Neuenhof (JTG) 2026",
+      "venue": "Golfclub Gut Neuenhof",
+      "country": "Germany",
+      "startDateRaw": "20. Oct 26",
+      "r1": 82,
+      "r2": 74,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 88.5
+    },
     {
       "eventId": "11447",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11431",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Junior Golf Tour Open Am Alten Fliess (JTG) 2026",
       "venue": "Golfclub Am Alten Fliess e.V.",
@@ -170,6 +184,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:33.291Z",
+  "scrapedAt": "2026-11-02T15:26:11.968Z",
   "url": "https://www.europeangolfrankings.com/players/33053"
 }

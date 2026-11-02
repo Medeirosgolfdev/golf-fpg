@@ -8,11 +8,25 @@
   "club": "Le Havre",
   "ageGroup": "U16",
   "tournamentsPlayed": 13,
-  "egrRank": 1200,
-  "egrPoints": 5510.95,
-  "avgScore": 75.46,
-  "avgToCR": 74.92,
+  "egrRank": 1067,
+  "egrPoints": 6220.67,
+  "avgScore": 75.19,
+  "avgToCR": 74.61,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "22",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": 72,
+      "r4": 77,
+      "egrPoints": 1020.05
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12108",
-      "counting": true,
+      "counting": false,
       "pos": "50",
       "event": "Coupe Didier Illouz Grand Prix du RCF La Boulie 2026",
       "venue": "Racing Club de France",
@@ -193,10 +207,11 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 67.65
+      "egrPoints": 67.65,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:40.750Z",
+  "scrapedAt": "2026-11-02T15:32:59.095Z",
   "url": "https://www.europeangolfrankings.com/players/51336"
 }

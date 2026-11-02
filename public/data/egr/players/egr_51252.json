@@ -8,11 +8,25 @@
   "club": "Bussy",
   "ageGroup": "U16",
   "tournamentsPlayed": 5,
-  "egrRank": 1825,
-  "egrPoints": 352.8,
-  "avgScore": 84.67,
-  "avgToCR": 81.53,
+  "egrRank": 1373,
+  "egrPoints": 771.9,
+  "avgScore": 83.56,
+  "avgToCR": 80.58,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "46",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 81,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 419.11
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -81,10 +95,11 @@
       "r2": 85,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:38.347Z",
+  "scrapedAt": "2026-11-02T15:32:56.556Z",
   "url": "https://www.europeangolfrankings.com/players/51252"
 }

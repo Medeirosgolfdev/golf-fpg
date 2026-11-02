@@ -1,18 +1,32 @@
 {
   "id": "21655",
-  "egrId": "MCHE21655",
+  "egrId": "PCHE21655",
   "name": "Julien Bohnet",
   "lastName": "BOHNET",
   "firstName": "Julien",
   "country": "Switzerland",
-  "club": "Massane",
+  "club": "Professional",
   "ageGroup": "Adult",
   "tournamentsPlayed": 3,
-  "egrRank": 1878,
-  "egrPoints": 3234.11,
-  "avgScore": 74.78,
-  "avgToCR": 74.51,
+  "egrRank": null,
+  "egrPoints": 3870.24,
+  "avgScore": 73.56,
+  "avgToCR": 72.82,
   "events": [
+    {
+      "eventId": "12196",
+      "counting": true,
+      "pos": "18",
+      "event": "Grand Prix de Prunevelle 2026",
+      "venue": "Golf de Prunevelle",
+      "country": "France",
+      "startDateRaw": "24. Sep 26",
+      "r1": 73,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 854.79
+    },
     {
       "eventId": "12463",
       "counting": true,
@@ -53,10 +67,11 @@
       "r2": 71,
       "r3": 72,
       "r4": null,
-      "egrPoints": 218.66
+      "egrPoints": 218.66,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:48.534Z",
+  "scrapedAt": "2026-11-02T15:21:00.698Z",
   "url": "https://www.europeangolfrankings.com/players/21655"
 }

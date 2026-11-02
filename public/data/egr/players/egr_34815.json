@@ -8,11 +8,25 @@
   "club": "Lancaster",
   "ageGroup": "U18",
   "tournamentsPlayed": 11,
-  "egrRank": 73,
+  "egrRank": 71,
   "egrPoints": 16846.4,
   "avgScore": 73.8,
   "avgToCR": 71.17,
   "events": [
+    {
+      "eventId": "12954",
+      "counting": false,
+      "pos": "3",
+      "event": "Faldo Series (Madeira) 2026",
+      "venue": "Clube de Golf Santo da Serra",
+      "country": "Portugal",
+      "startDateRaw": "16. Oct 26",
+      "r1": 71,
+      "r2": 72,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 244.25
+    },
     {
       "eventId": "12647",
       "counting": true,
@@ -165,10 +179,11 @@
       "r2": 74,
       "r3": 75,
       "r4": null,
-      "egrPoints": 98
+      "egrPoints": 98,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:10.136Z",
+  "scrapedAt": "2026-11-02T15:26:51.864Z",
   "url": "https://www.europeangolfrankings.com/players/34815"
 }

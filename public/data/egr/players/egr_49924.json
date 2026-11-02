@@ -8,11 +8,25 @@
   "club": "Asolo",
   "ageGroup": "U16",
   "tournamentsPlayed": 11,
-  "egrRank": 1773,
-  "egrPoints": 3482.65,
-  "avgScore": 76.29,
-  "avgToCR": 75.47,
+  "egrRank": 1697,
+  "egrPoints": 3735.95,
+  "avgScore": 76.18,
+  "avgToCR": 75.35,
   "events": [
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "28",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 78,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 383.82
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11955",
-      "counting": true,
+      "counting": false,
       "pos": "77",
       "event": "Gran Premio Di Monticello 2026",
       "venue": "Golf Club Monticello",
@@ -165,10 +179,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 93.39
+      "egrPoints": 93.39,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:09.432Z",
+  "scrapedAt": "2026-11-02T15:32:24.175Z",
   "url": "https://www.europeangolfrankings.com/players/49924"
 }

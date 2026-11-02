@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U16",
-  "tournamentsPlayed": 19,
-  "egrRank": 917,
-  "egrPoints": 7092.54,
-  "avgScore": 74.73,
-  "avgToCR": 73.35,
+  "tournamentsPlayed": 20,
+  "egrRank": 1302,
+  "egrPoints": 5122.33,
+  "avgScore": 75.27,
+  "avgToCR": 73.91,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": false,
+      "pos": "71",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 338.29
+    },
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "66",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 77,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12012",
+      "counting": false,
+      "pos": "16",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 75,
+      "r2": 79,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 234.49
+    },
     {
       "eventId": "11995",
       "counting": false,
@@ -29,7 +71,7 @@
     },
     {
       "eventId": "12002",
-      "counting": false,
+      "counting": true,
       "pos": "119",
       "event": "Italian International U16 Boys 2026",
       "venue": "Golf Club Biella \"Le Betulle\"",
@@ -155,7 +197,7 @@
     },
     {
       "eventId": "11658",
-      "counting": false,
+      "counting": true,
       "pos": "111",
       "event": "Italian International Amateur Championship 2026",
       "venue": "Circolo Golf Villa d'Este",
@@ -263,7 +305,8 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 2158.54
+      "egrPoints": 2158.54,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -277,10 +320,11 @@
       "r2": 78,
       "r3": 71,
       "r4": null,
-      "egrPoints": 684.7
+      "egrPoints": 684.7,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:24.252Z",
+  "scrapedAt": "2026-11-02T15:29:19.427Z",
   "url": "https://www.europeangolfrankings.com/players/41670"
 }

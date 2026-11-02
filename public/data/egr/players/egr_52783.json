@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bussy",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 5695,
-  "egrPoints": 446.55,
-  "avgScore": 79.67,
-  "avgToCR": 80.2,
+  "tournamentsPlayed": 4,
+  "egrRank": 4928,
+  "egrPoints": 643.28,
+  "avgScore": 79.88,
+  "avgToCR": 80.03,
   "events": [
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "74",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 80,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 196.74
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:07.003Z",
+  "scrapedAt": "2026-11-02T15:33:30.011Z",
   "url": "https://www.europeangolfrankings.com/players/52783"
 }

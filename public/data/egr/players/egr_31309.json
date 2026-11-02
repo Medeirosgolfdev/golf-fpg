@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 4,
-  "egrRank": 3746,
-  "egrPoints": 1094.74,
-  "avgScore": 79.11,
-  "avgToCR": 77.31,
+  "tournamentsPlayed": 5,
+  "egrRank": 3611,
+  "egrPoints": 1180.06,
+  "avgScore": 79.5,
+  "avgToCR": 77.83,
   "events": [
+    {
+      "eventId": "12012",
+      "counting": true,
+      "pos": "31",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 84,
+      "r2": 81,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 85.32
+    },
     {
       "eventId": "11943",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:16:46.247Z",
+  "scrapedAt": "2026-11-02T15:25:21.581Z",
   "url": "https://www.europeangolfrankings.com/players/31309"
 }

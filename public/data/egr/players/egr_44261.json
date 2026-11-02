@@ -7,15 +7,43 @@
   "country": "Italy",
   "club": "Ambrosiano",
   "ageGroup": "U16",
-  "tournamentsPlayed": 17,
-  "egrRank": 330,
-  "egrPoints": 14023.8,
-  "avgScore": 72.88,
-  "avgToCR": 71.02,
+  "tournamentsPlayed": 18,
+  "egrRank": 162,
+  "egrPoints": 20283.3,
+  "avgScore": 71.87,
+  "avgToCR": 70.33,
   "events": [
     {
-      "eventId": "11995",
+      "eventId": "12023",
       "counting": true,
+      "pos": "1",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 68,
+      "r2": 70,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 4855.94
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "2",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 3491.38
+    },
+    {
+      "eventId": "11995",
+      "counting": false,
       "pos": "68",
       "event": "Italian National Closed Stroke Play (Trofeo Franco Bevione) 2026",
       "venue": "Circolo Golf Torino",
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11936",
-      "counting": true,
+      "counting": false,
       "pos": "1",
       "event": "Memorial Lillo Angelini 2026",
       "venue": "Golf Dei Laghi",
@@ -249,7 +277,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 836.32
+      "egrPoints": 836.32,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -268,6 +297,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:11.710Z",
+  "scrapedAt": "2026-11-02T15:30:12.585Z",
   "url": "https://www.europeangolfrankings.com/players/44261"
 }

@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "St. Leon-Rot",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1476,
-  "egrPoints": 4420.57,
-  "avgScore": 73.91,
-  "avgToCR": 73.75,
+  "tournamentsPlayed": 11,
+  "egrRank": 1388,
+  "egrPoints": 4751.26,
+  "avgScore": 73,
+  "avgToCR": 72.87,
   "events": [
     {
       "eventId": "12910",
@@ -26,6 +26,20 @@
       "r3": null,
       "r4": null,
       "egrPoints": 216.34
+    },
+    {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "16",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 330.69
     },
     {
       "eventId": "11436",
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11504",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Desert Springs Junior Championship 2026",
       "venue": "Desert Springs Resort and Golf Club",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:16:56.717Z",
+  "scrapedAt": "2026-11-02T15:25:32.728Z",
   "url": "https://www.europeangolfrankings.com/players/31739"
 }

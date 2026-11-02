@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Club Zur Vahr",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 647,
-  "egrPoints": 9385.54,
-  "avgScore": 72.7,
-  "avgToCR": 71.7,
+  "tournamentsPlayed": 12,
+  "egrRank": 657,
+  "egrPoints": 9367.76,
+  "avgScore": 71.74,
+  "avgToCR": 70.92,
   "events": [
+    {
+      "eventId": "12943",
+      "counting": true,
+      "pos": "2",
+      "event": "European Juniors International (GJG) 2026",
+      "venue": "Golfclub Verden",
+      "country": "Germany",
+      "startDateRaw": "04. Oct 26",
+      "r1": 69,
+      "r2": 67,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 544.44
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -56,6 +70,20 @@
       "egrPoints": 1139.47
     },
     {
+      "eventId": "12952",
+      "counting": true,
+      "pos": "4",
+      "event": "Falkenstein International Junior Open 2026",
+      "venue": "Hamburger Golf-Club",
+      "country": "Germany",
+      "startDateRaw": "11. Aug 26",
+      "r1": 71,
+      "r2": 71,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 888.25
+    },
+    {
       "eventId": "12858",
       "counting": true,
       "pos": "6",
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12533",
-      "counting": true,
+      "counting": false,
       "pos": "45",
       "event": "Dutch Junior Open 2026",
       "venue": "Toxandria Golf Club",
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12829",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "DGV-GVNB Meisterschaft AK16/18 Jungen 2026",
       "venue": "Golfklub Gifhorn",
@@ -165,7 +193,8 @@
       "r2": 72,
       "r3": 77,
       "r4": null,
-      "egrPoints": 264.96
+      "egrPoints": 264.96,
+      "_mantido": true
     },
     {
       "eventId": "10112",
@@ -184,6 +213,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:49.393Z",
+  "scrapedAt": "2026-11-02T15:25:25.178Z",
   "url": "https://www.europeangolfrankings.com/players/31442"
 }

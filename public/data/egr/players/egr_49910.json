@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Ambrosiano",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 1650,
-  "egrPoints": 470.71,
-  "avgScore": 81.9,
-  "avgToCR": 79.98,
+  "tournamentsPlayed": 13,
+  "egrRank": 1577,
+  "egrPoints": 542.42,
+  "avgScore": 81.8,
+  "avgToCR": 79.97,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "52",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 87,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 95.14
+    },
     {
       "eventId": "11990",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "11985",
-      "counting": true,
+      "counting": false,
       "pos": "10",
       "event": "Mattone d'Oro 2026",
       "venue": "Golf Club Bergamo L'Albenza",
@@ -198,6 +212,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:08.579Z",
+  "scrapedAt": "2026-11-02T15:32:23.326Z",
   "url": "https://www.europeangolfrankings.com/players/49910"
 }

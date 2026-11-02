@@ -7,15 +7,15 @@
   "country": "Norway",
   "club": "Sola",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 1598,
-  "egrPoints": 4005.5,
-  "avgScore": 74.74,
-  "avgToCR": 73.33,
+  "tournamentsPlayed": 9,
+  "egrRank": 1643,
+  "egrPoints": 3882.94,
+  "avgScore": 74.82,
+  "avgToCR": 73.38,
   "events": [
     {
       "eventId": "12316",
-      "counting": false,
+      "counting": true,
       "pos": "22",
       "event": "NEXTUP Invitational 2026",
       "venue": "Oslo Golfklubb",
@@ -151,7 +151,8 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10116",
@@ -165,7 +166,8 @@
       "r2": 78,
       "r3": 72,
       "r4": null,
-      "egrPoints": 309.66
+      "egrPoints": 309.66,
+      "_mantido": true
     },
     {
       "eventId": "10871",
@@ -184,6 +186,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:41.712Z",
+  "scrapedAt": "2026-11-02T15:27:26.224Z",
   "url": "https://www.europeangolfrankings.com/players/36437"
 }

@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Silkeborg",
   "ageGroup": "U21",
-  "tournamentsPlayed": 7,
-  "egrRank": 4879,
+  "tournamentsPlayed": 8,
+  "egrRank": 4932,
   "egrPoints": 641.91,
-  "avgScore": 81.5,
-  "avgToCR": 80.63,
+  "avgScore": 81.4,
+  "avgToCR": 80.38,
   "events": [
+    {
+      "eventId": "12610",
+      "counting": true,
+      "pos": "63",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 80,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12600",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:21:22.375Z",
+  "scrapedAt": "2026-11-02T15:30:23.954Z",
   "url": "https://www.europeangolfrankings.com/players/44701"
 }

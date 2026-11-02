@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Ile d'OR",
   "ageGroup": "U14",
-  "tournamentsPlayed": 6,
-  "egrRank": 1028,
-  "egrPoints": 1348.04,
-  "avgScore": 79.67,
-  "avgToCR": 78.95,
+  "tournamentsPlayed": 8,
+  "egrRank": 1003,
+  "egrPoints": 1461.89,
+  "avgScore": 79.12,
+  "avgToCR": 78.33,
   "events": [
+    {
+      "eventId": "12959",
+      "counting": true,
+      "pos": "26",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 76,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12201",
+      "counting": true,
+      "pos": "4",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 113.85
+    },
     {
       "eventId": "12242",
       "counting": true,
@@ -114,6 +142,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:27.578Z",
+  "scrapedAt": "2026-11-02T15:32:44.399Z",
   "url": "https://www.europeangolfrankings.com/players/50625"
 }

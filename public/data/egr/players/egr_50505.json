@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Barcelonnette",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 8360,
-  "egrPoints": 120.38,
-  "avgScore": 85.5,
-  "avgToCR": 84.7,
+  "tournamentsPlayed": 3,
+  "egrRank": 8043,
+  "egrPoints": 152.49,
+  "avgScore": 85.14,
+  "avgToCR": 85.07,
   "events": [
+    {
+      "eventId": "12192",
+      "counting": true,
+      "pos": "25",
+      "event": "Grand Prix du Luberon 2026",
+      "venue": "Golf Du Luberon",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 89,
+      "r2": 80,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 32.12
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:24.679Z",
+  "scrapedAt": "2026-11-02T15:32:41.165Z",
   "url": "https://www.europeangolfrankings.com/players/50505"
 }

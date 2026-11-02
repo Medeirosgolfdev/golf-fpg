@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Montecchia",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 21,
-  "egrPoints": 40182.7,
-  "avgScore": 71.1,
-  "avgToCR": 68.62,
+  "tournamentsPlayed": 9,
+  "egrRank": 22,
+  "egrPoints": 39267.7,
+  "avgScore": 71.33,
+  "avgToCR": 68.8,
   "events": [
     {
       "eventId": "12876",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "11667",
-      "counting": false,
+      "counting": true,
       "pos": "81",
       "event": "St Andrews Links Trophy 2026",
       "venue": "St Andrews (New & Old)",
@@ -151,7 +151,8 @@
       "r2": 68,
       "r3": null,
       "r4": null,
-      "egrPoints": 3186.41
+      "egrPoints": 3186.41,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -170,6 +171,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:28.856Z",
+  "scrapedAt": "2026-11-02T15:28:17.632Z",
   "url": "https://www.europeangolfrankings.com/players/38440"
 }

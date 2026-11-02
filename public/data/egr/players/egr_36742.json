@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Lecco",
   "ageGroup": "U18",
-  "tournamentsPlayed": 19,
-  "egrRank": 2325,
-  "egrPoints": 2384.59,
-  "avgScore": 78.61,
-  "avgToCR": 77.52,
+  "tournamentsPlayed": 17,
+  "egrRank": 2555,
+  "egrPoints": 2122.95,
+  "avgScore": 78.73,
+  "avgToCR": 77.72,
   "events": [
+    {
+      "eventId": "12008",
+      "counting": false,
+      "pos": "33",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 79,
+      "r2": 86,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 34.95
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -197,7 +211,7 @@
     },
     {
       "eventId": "11906",
-      "counting": false,
+      "counting": true,
       "pos": "10",
       "event": "Trofeo Vincenzo de Benedictis 2026",
       "venue": "Il Picciolo Golf Club",
@@ -225,7 +239,7 @@
     },
     {
       "eventId": "10234",
-      "counting": false,
+      "counting": true,
       "pos": "36",
       "event": "Argentario Classic Open 2025",
       "venue": "Argentario Golf Resort",
@@ -249,7 +263,8 @@
       "r2": 79,
       "r3": 83,
       "r4": null,
-      "egrPoints": 125.28
+      "egrPoints": 125.28,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -263,7 +278,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10229",
@@ -277,7 +293,8 @@
       "r2": 78,
       "r3": 80,
       "r4": null,
-      "egrPoints": 316.67
+      "egrPoints": 316.67,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -296,6 +313,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:50.820Z",
+  "scrapedAt": "2026-11-02T15:27:36.872Z",
   "url": "https://www.europeangolfrankings.com/players/36742"
 }

@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Lyngbygaard",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 5645,
-  "egrPoints": 457.74,
-  "avgScore": 81.63,
-  "avgToCR": 80.48,
+  "tournamentsPlayed": 10,
+  "egrRank": 4252,
+  "egrPoints": 881.14,
+  "avgScore": 81.16,
+  "avgToCR": 79.82,
   "events": [
+    {
+      "eventId": "12610",
+      "counting": true,
+      "pos": "25",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 423.4
+    },
     {
       "eventId": "12600",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12560",
-      "counting": false,
+      "counting": true,
       "pos": "64",
       "event": "PING Masters 2026",
       "venue": "Odense Golfklub",
@@ -151,7 +165,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10118",
@@ -165,10 +180,11 @@
       "r2": 87,
       "r3": 85,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:52.762Z",
+  "scrapedAt": "2026-11-02T15:33:12.497Z",
   "url": "https://www.europeangolfrankings.com/players/51995"
 }

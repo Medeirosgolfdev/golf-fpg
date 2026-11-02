@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Mionnay",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 3461,
-  "egrPoints": 1254.51,
-  "avgScore": 76.8,
-  "avgToCR": 77.3,
+  "tournamentsPlayed": 7,
+  "egrRank": 2456,
+  "egrPoints": 2237.91,
+  "avgScore": 77.31,
+  "avgToCR": 77.34,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "45",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 78,
+      "r2": 73,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 308.12
+    },
+    {
+      "eventId": "12202",
+      "counting": true,
+      "pos": "18",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 675.28
+    },
     {
       "eventId": "12239",
       "counting": true,
@@ -85,6 +113,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:22.892Z",
+  "scrapedAt": "2026-11-02T15:32:38.854Z",
   "url": "https://www.europeangolfrankings.com/players/50466"
 }

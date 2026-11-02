@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Biarritz",
   "ageGroup": "U21",
-  "tournamentsPlayed": 3,
-  "egrRank": 147,
-  "egrPoints": 21513.8,
-  "avgScore": 70.22,
-  "avgToCR": 68.33,
+  "tournamentsPlayed": 4,
+  "egrRank": 134,
+  "egrPoints": 22392.6,
+  "avgScore": 70.18,
+  "avgToCR": 68.56,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "13",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 878.75
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:16:31.348Z",
+  "scrapedAt": "2026-11-02T15:25:06.098Z",
   "url": "https://www.europeangolfrankings.com/players/30571"
 }

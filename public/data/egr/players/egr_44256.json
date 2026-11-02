@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Modena",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 1316,
-  "egrPoints": 5030.85,
-  "avgScore": 74.21,
-  "avgToCR": 73.02,
+  "tournamentsPlayed": 14,
+  "egrRank": 1147,
+  "egrPoints": 5775.78,
+  "avgScore": 74.13,
+  "avgToCR": 72.62,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "15",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1216.21
+    },
+    {
+      "eventId": "12016",
+      "counting": true,
+      "pos": "10",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 632.43
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11951",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "28th Trofeo Boys Challenge Lucio Visona 2026",
       "venue": "Golf Club Folgaria",
@@ -193,10 +221,11 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 836.32
+      "egrPoints": 836.32,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:11.335Z",
+  "scrapedAt": "2026-11-02T15:30:12.195Z",
   "url": "https://www.europeangolfrankings.com/players/44256"
 }

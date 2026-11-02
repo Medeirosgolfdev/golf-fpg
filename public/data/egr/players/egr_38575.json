@@ -7,12 +7,54 @@
   "country": "Switzerland",
   "club": "Bossey",
   "ageGroup": "U14",
-  "tournamentsPlayed": 14,
-  "egrRank": 787,
-  "egrPoints": 2137.97,
-  "avgScore": 76,
-  "avgToCR": 74.34,
+  "tournamentsPlayed": 17,
+  "egrRank": 718,
+  "egrPoints": 2455.9,
+  "avgScore": 75.35,
+  "avgToCR": 73.67,
   "events": [
+    {
+      "eventId": "12492",
+      "counting": true,
+      "pos": "4",
+      "event": "Swiss Golf Junior Tour Final (Lugano) 2026",
+      "venue": "Golf Club Lugano",
+      "country": "Switzerland",
+      "startDateRaw": "17. Oct 26",
+      "r1": 68,
+      "r2": 77,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 274.04
+    },
+    {
+      "eventId": "12488",
+      "counting": true,
+      "pos": "2",
+      "event": "Swiss Golf Final U14 (Crans-sur-Sierre) 2026",
+      "venue": "Golf Club Crans-sur-Sierre",
+      "country": "Switzerland",
+      "startDateRaw": "03. Oct 26",
+      "r1": 76,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 245
+    },
+    {
+      "eventId": "12485",
+      "counting": true,
+      "pos": "3",
+      "event": "Swiss Golf Junior Tour (Waldkirch) 2026",
+      "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
+      "country": "Switzerland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 280.5
+    },
     {
       "eventId": "12184",
       "counting": true,
@@ -29,7 +71,7 @@
     },
     {
       "eventId": "11766",
-      "counting": true,
+      "counting": false,
       "pos": "32",
       "event": "Swiss International Women's Amateur 2026",
       "venue": "Golf Gerre Losone",
@@ -43,7 +85,7 @@
     },
     {
       "eventId": "12479",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Swiss Golf National U14 (Sion) 2026",
       "venue": "Golf Club de Sion",
@@ -113,7 +155,7 @@
     },
     {
       "eventId": "12462",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "Swiss Golf Junior Tour (Leuk) 2026",
       "venue": "Links Leuk Golfresort",
@@ -241,6 +283,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:19:35.528Z",
+  "scrapedAt": "2026-11-02T15:28:24.798Z",
   "url": "https://www.europeangolfrankings.com/players/38575"
 }

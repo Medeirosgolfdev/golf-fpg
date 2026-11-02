@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Fonti",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 813,
-  "egrPoints": 7958.32,
-  "avgScore": 74.28,
-  "avgToCR": 72.41,
+  "tournamentsPlayed": 15,
+  "egrRank": 555,
+  "egrPoints": 10379.8,
+  "avgScore": 73.42,
+  "avgToCR": 71.49,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "22",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 73,
+      "r2": 71,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1122.94
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "3",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 2252.51
+    },
+    {
+      "eventId": "12008",
+      "counting": false,
+      "pos": "4",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 69,
+      "r2": 68,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 378.63
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -169,7 +211,7 @@
     },
     {
       "eventId": "11888",
-      "counting": true,
+      "counting": false,
       "pos": "17",
       "event": "Gara Nazionale Garlenda 2026",
       "venue": "Golf Club Garlenda",
@@ -193,7 +235,8 @@
       "r2": 74,
       "r3": 78,
       "r4": null,
-      "egrPoints": 530.64
+      "egrPoints": 530.64,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -212,6 +255,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:11.904Z",
+  "scrapedAt": "2026-11-02T15:30:12.583Z",
   "url": "https://www.europeangolfrankings.com/players/44263"
 }

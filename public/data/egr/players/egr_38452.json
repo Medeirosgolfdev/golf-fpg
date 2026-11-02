@@ -8,11 +8,39 @@
   "club": "Arzaga",
   "ageGroup": "U16",
   "tournamentsPlayed": 16,
-  "egrRank": 142,
-  "egrPoints": 22123.7,
-  "avgScore": 71.67,
-  "avgToCR": 69.39,
+  "egrRank": 140,
+  "egrPoints": 22074.3,
+  "avgScore": 72.04,
+  "avgToCR": 69.59,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": false,
+      "pos": "28",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1009.68
+    },
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "35",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 75,
+      "r2": 74,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 723.17
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "12876",
-      "counting": false,
+      "counting": true,
       "pos": "85",
       "event": "R&A Boys Amateur 2026",
       "venue": "Glasgow Gailes Links",
@@ -221,7 +249,8 @@
       "r2": 70,
       "r3": 69,
       "r4": null,
-      "egrPoints": 1744.5
+      "egrPoints": 1744.5,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -235,7 +264,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 1012.92
+      "egrPoints": 1012.92,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -269,6 +299,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:29.392Z",
+  "scrapedAt": "2026-11-02T15:28:18.357Z",
   "url": "https://www.europeangolfrankings.com/players/38452"
 }

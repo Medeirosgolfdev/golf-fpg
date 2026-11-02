@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 1673,
-  "egrPoints": 3786.92,
-  "avgScore": 74.35,
-  "avgToCR": 73.73,
+  "tournamentsPlayed": 10,
+  "egrRank": 1443,
+  "egrPoints": 4573.6,
+  "avgScore": 74.31,
+  "avgToCR": 73.27,
   "events": [
     {
       "eventId": "12895",
@@ -56,6 +56,20 @@
       "egrPoints": 683.08
     },
     {
+      "eventId": "12940",
+      "counting": true,
+      "pos": "2",
+      "event": "The Engadine Amateur Championship 2026",
+      "venue": "Golf Engadin St.Moritz",
+      "country": "Switzerland",
+      "startDateRaw": "25. Jun 26",
+      "r1": 71,
+      "r2": 75,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 801.45
+    },
+    {
       "eventId": "12460",
       "counting": true,
       "pos": "51",
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11554",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Bang Golf City Juniors International Munich (GJG) 2026",
       "venue": "GolfCity München-Puchheim",
@@ -156,6 +170,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:12.164Z",
+  "scrapedAt": "2026-11-02T15:31:19.703Z",
   "url": "https://www.europeangolfrankings.com/players/47673"
 }

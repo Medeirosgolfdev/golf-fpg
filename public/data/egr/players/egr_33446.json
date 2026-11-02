@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 863,
-  "egrPoints": 7582.7,
-  "avgScore": 74.13,
-  "avgToCR": 72.56,
+  "tournamentsPlayed": 12,
+  "egrRank": 954,
+  "egrPoints": 6855.64,
+  "avgScore": 74.64,
+  "avgToCR": 73.67,
   "events": [
     {
       "eventId": "11672",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12837",
-      "counting": false,
+      "counting": true,
       "pos": "62",
       "event": "DM-Vorausscheid Jungen AK18 2026",
       "venue": "Golf Club Pottenstein-Weidenloh",
@@ -193,7 +193,8 @@
       "r2": 75,
       "r3": 71,
       "r4": 70,
-      "egrPoints": 1002.23
+      "egrPoints": 1002.23,
+      "_mantido": true
     },
     {
       "eventId": "11020",
@@ -212,6 +213,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:43.127Z",
+  "scrapedAt": "2026-11-02T15:26:22.560Z",
   "url": "https://www.europeangolfrankings.com/players/33446"
 }

@@ -5,14 +5,42 @@
   "lastName": "ROBERT",
   "firstName": "Eva",
   "country": "France",
-  "club": "St. Etienne",
+  "club": "Lyon Salvagny",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 2744,
-  "egrPoints": 67.88,
-  "avgScore": 80.33,
-  "avgToCR": 79.43,
+  "tournamentsPlayed": 3,
+  "egrRank": 1565,
+  "egrPoints": 556.72,
+  "avgScore": 81.57,
+  "avgToCR": 79.3,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "40",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 76,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 488.85
+    },
+    {
+      "eventId": "12204",
+      "counting": true,
+      "pos": "17",
+      "event": "Grand Prix du Gouverneur 2026",
+      "venue": "Golf Club du Gouverneur",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 90,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12190",
       "counting": true,
@@ -29,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:29.446Z",
+  "scrapedAt": "2026-11-02T15:32:46.631Z",
   "url": "https://www.europeangolfrankings.com/players/50714"
 }

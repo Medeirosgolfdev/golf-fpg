@@ -8,11 +8,25 @@
   "club": "Close House",
   "ageGroup": "U21",
   "tournamentsPlayed": 3,
-  "egrRank": 1826,
-  "egrPoints": 3360.59,
-  "avgScore": 72.31,
-  "avgToCR": 71.55,
+  "egrRank": 1968,
+  "egrPoints": 3088.02,
+  "avgScore": 71.6,
+  "avgToCR": 70.62,
   "events": [
+    {
+      "eventId": "11818",
+      "counting": true,
+      "pos": "26",
+      "event": "North of England Open Amateur Championship 2026",
+      "venue": "Seaton Carew (Carew-Micklem)",
+      "country": "England",
+      "startDateRaw": "29. Sep 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 69,
+      "r4": 81,
+      "egrPoints": 1132.68
+    },
     {
       "eventId": "11791",
       "counting": true,
@@ -53,7 +67,8 @@
       "r2": 76,
       "r3": 76,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10730",
@@ -72,6 +87,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:18:07.442Z",
+  "scrapedAt": "2026-11-02T15:26:48.609Z",
   "url": "https://www.europeangolfrankings.com/players/34680"
 }

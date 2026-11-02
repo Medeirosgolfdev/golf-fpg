@@ -5,14 +5,28 @@
   "lastName": "MCWILLIAM",
   "firstName": "Dylan",
   "country": "Scotland",
-  "club": "East Kilbride",
+  "club": "Kirkhill",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 1043,
-  "egrPoints": 6277.94,
-  "avgScore": 73.94,
-  "avgToCR": 74.05,
+  "tournamentsPlayed": 16,
+  "egrRank": 1010,
+  "egrPoints": 6522.11,
+  "avgScore": 74.05,
+  "avgToCR": 73.83,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "18",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 507.1
+    },
     {
       "eventId": "11721",
       "counting": false,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11713",
-      "counting": true,
+      "counting": false,
       "pos": "13",
       "event": "Junior Tour Royal Musselburgh 2026",
       "venue": "Royal Musselburgh GC",
@@ -240,6 +254,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:40.268Z",
+  "scrapedAt": "2026-11-02T15:27:24.533Z",
   "url": "https://www.europeangolfrankings.com/players/36361"
 }

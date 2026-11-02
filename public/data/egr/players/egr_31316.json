@@ -8,11 +8,39 @@
   "club": "Robinie",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 967,
-  "egrPoints": 1519.42,
-  "avgScore": 79.3,
-  "avgToCR": 76.5,
+  "egrRank": 1032,
+  "egrPoints": 1383.24,
+  "avgScore": 79.38,
+  "avgToCR": 76.67,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "11",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 78,
+      "r2": 81,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 72.15
+    },
+    {
+      "eventId": "12009",
+      "counting": false,
+      "pos": "9",
+      "event": "Trofeo Citta' Di Piacenza 2026",
+      "venue": "Croara Country Club",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 82,
+      "r2": 80,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 13.03
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "11994",
-      "counting": false,
+      "counting": true,
       "pos": "7",
       "event": "Trofeo Giovanile Federale U18 2026",
       "venue": "Golf Club Bologna",
@@ -193,7 +221,8 @@
       "r2": 78,
       "r3": 85,
       "r4": null,
-      "egrPoints": 103.58
+      "egrPoints": 103.58,
+      "_mantido": true
     },
     {
       "eventId": "10323",
@@ -207,7 +236,8 @@
       "r2": 85,
       "r3": null,
       "r4": null,
-      "egrPoints": 139.65
+      "egrPoints": 139.65,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -226,6 +256,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:16:46.587Z",
+  "scrapedAt": "2026-11-02T15:25:21.935Z",
   "url": "https://www.europeangolfrankings.com/players/31316"
 }

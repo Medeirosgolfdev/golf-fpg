@@ -7,12 +7,68 @@
   "country": "France",
   "club": "Ile d'Or",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 249,
-  "egrPoints": 16876.3,
-  "avgScore": 72.24,
-  "avgToCR": 70.49,
+  "tournamentsPlayed": 16,
+  "egrRank": 200,
+  "egrPoints": 18969.3,
+  "avgScore": 71.62,
+  "avgToCR": 70.2,
   "events": [
+    {
+      "eventId": "12960",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix du 24H Le Mans 2026",
+      "venue": "Golf Des 24 Heures",
+      "country": "France",
+      "startDateRaw": "25. Oct 26",
+      "r1": 67,
+      "r2": 70,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 2903.31
+    },
+    {
+      "eventId": "12243",
+      "counting": true,
+      "pos": "4",
+      "event": "French National U16 Championships 2026",
+      "venue": "Grand Saint-Emilion Golf Club",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 74,
+      "r2": 68,
+      "r3": 69,
+      "r4": 71,
+      "egrPoints": 2209.37
+    },
+    {
+      "eventId": "12205",
+      "counting": false,
+      "pos": "20",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 73,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 726.12
+    },
+    {
+      "eventId": "12200",
+      "counting": false,
+      "pos": "2",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 68,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 1265.63
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -29,7 +85,7 @@
     },
     {
       "eventId": "12175",
-      "counting": true,
+      "counting": false,
       "pos": "12",
       "event": "Grand Prix du Médoc 2026",
       "venue": "Golf du Médoc",
@@ -141,7 +197,7 @@
     },
     {
       "eventId": "12736",
-      "counting": true,
+      "counting": false,
       "pos": "20",
       "event": "French National Men's (Closed) Championship 2026",
       "venue": "Cabot Bordeaux",
@@ -193,7 +249,8 @@
       "r2": 74,
       "r3": 74,
       "r4": null,
-      "egrPoints": 390.32
+      "egrPoints": 390.32,
+      "_mantido": true
     },
     {
       "eventId": "11368",
@@ -207,7 +264,8 @@
       "r2": 73,
       "r3": 71,
       "r4": 72,
-      "egrPoints": 545.34
+      "egrPoints": 545.34,
+      "_mantido": true
     },
     {
       "eventId": "11373",
@@ -226,6 +284,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:11.334Z",
+  "scrapedAt": "2026-11-02T15:29:04.701Z",
   "url": "https://www.europeangolfrankings.com/players/40360"
 }

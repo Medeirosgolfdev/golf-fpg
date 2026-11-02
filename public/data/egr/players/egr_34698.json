@@ -7,15 +7,29 @@
   "country": "Wales",
   "club": "Colchester",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 9,
-  "egrRank": 543,
-  "egrPoints": 10455.2,
-  "avgScore": 75.05,
-  "avgToCR": 73.5,
+  "tournamentsPlayed": 10,
+  "egrRank": 469,
+  "egrPoints": 11446.3,
+  "avgScore": 74.83,
+  "avgToCR": 73.17,
   "events": [
     {
-      "eventId": "11783",
+      "eventId": "12634",
       "counting": true,
+      "pos": "11",
+      "event": "European Men's Club Trophy 2026",
+      "venue": "Cabot Bordeaux Golf & Training Center",
+      "country": "France",
+      "startDateRaw": "22. Oct 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 991.15
+    },
+    {
+      "eventId": "11783",
+      "counting": false,
       "pos": "161",
       "event": "English Men's Amateur Championship (Closed) 2026",
       "venue": "Beau Desert/Sutton Coldfield GC",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:18:07.780Z",
+  "scrapedAt": "2026-11-02T15:26:48.967Z",
   "url": "https://www.europeangolfrankings.com/players/34698"
 }

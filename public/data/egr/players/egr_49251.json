@@ -5,14 +5,28 @@
   "lastName": "SCHREVENS",
   "firstName": "Alexandre",
   "country": "France",
-  "club": "Hulencourt",
+  "club": "Thumeries",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 1641,
-  "egrPoints": 3863.58,
-  "avgScore": 74.96,
-  "avgToCR": 74.36,
+  "tournamentsPlayed": 9,
+  "egrRank": 1472,
+  "egrPoints": 4472.6,
+  "avgScore": 75.07,
+  "avgToCR": 74.53,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "26",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 73,
+      "r2": 69,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 609.02
+    },
     {
       "eventId": "11761",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:49.353Z",
+  "scrapedAt": "2026-11-02T15:32:01.725Z",
   "url": "https://www.europeangolfrankings.com/players/49251"
 }

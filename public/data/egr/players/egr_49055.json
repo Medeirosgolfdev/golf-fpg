@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U16",
-  "tournamentsPlayed": 21,
-  "egrRank": 427,
-  "egrPoints": 12116.2,
-  "avgScore": 74.24,
-  "avgToCR": 72.14,
+  "tournamentsPlayed": 23,
+  "egrRank": 386,
+  "egrPoints": 12988.7,
+  "avgScore": 73.71,
+  "avgToCR": 71.85,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": true,
+      "pos": "11",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 688.01
+    },
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "25",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1076.3
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "28",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 72,
+      "r2": 76,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 865.43
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -155,7 +197,7 @@
     },
     {
       "eventId": "11931",
-      "counting": true,
+      "counting": false,
       "pos": "34",
       "event": "LXX Gran Premio Cittá Di Milano Trofeo Gianni Albertini 2026",
       "venue": "Golf Club Milano",
@@ -211,7 +253,7 @@
     },
     {
       "eventId": "11913",
-      "counting": true,
+      "counting": false,
       "pos": "21",
       "event": "Coppa D'Oro Citta Di Roma 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -253,7 +295,7 @@
     },
     {
       "eventId": "11909",
-      "counting": true,
+      "counting": false,
       "pos": "14",
       "event": "Stella D'Oro 2026",
       "venue": "Olgiata Golf Club",
@@ -305,7 +347,8 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 218.98
+      "egrPoints": 218.98,
+      "_mantido": true
     },
     {
       "eventId": "11383",
@@ -339,6 +382,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:42.593Z",
+  "scrapedAt": "2026-11-02T15:31:54.067Z",
   "url": "https://www.europeangolfrankings.com/players/49055"
 }

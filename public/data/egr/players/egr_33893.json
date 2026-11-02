@@ -7,12 +7,26 @@
   "country": "England",
   "club": "St Neots",
   "ageGroup": "U21",
-  "tournamentsPlayed": 15,
-  "egrRank": 252,
+  "tournamentsPlayed": 16,
+  "egrRank": 253,
   "egrPoints": 16796.1,
   "avgScore": 74.54,
   "avgToCR": 71.3,
   "events": [
+    {
+      "eventId": "12968",
+      "counting": false,
+      "pos": "14",
+      "event": "County Championship (CAGU) 2026",
+      "venue": "Ely City Golf Club",
+      "country": "England",
+      "startDateRaw": "27. Sep 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 340.61
+    },
     {
       "eventId": "11839",
       "counting": true,
@@ -225,6 +239,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-10-05T14:17:53.598Z",
+  "scrapedAt": "2026-11-02T15:26:33.500Z",
   "url": "https://www.europeangolfrankings.com/players/33893"
 }

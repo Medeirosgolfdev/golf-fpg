@@ -7,12 +7,40 @@
   "country": "Austria",
   "club": "Graz Andritz",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 1309,
-  "egrPoints": 5080.51,
-  "avgScore": 74,
-  "avgToCR": 72.36,
+  "tournamentsPlayed": 9,
+  "egrRank": 1221,
+  "egrPoints": 5452.51,
+  "avgScore": 74.55,
+  "avgToCR": 73,
   "events": [
+    {
+      "eventId": "12517",
+      "counting": true,
+      "pos": "9",
+      "event": "AJGT U16-U18 Finale presented by Bernd Wiesberger 2026",
+      "venue": "Golfclub Schloss Schönborn",
+      "country": "Austria",
+      "startDateRaw": "10. Oct 26",
+      "r1": 73,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 225.92
+    },
+    {
+      "eventId": "12650",
+      "counting": true,
+      "pos": "67",
+      "event": "Faldo Junor Tour (Austria) 6. AJGT 2026",
+      "venue": "Golfclub Dilly",
+      "country": "Austria",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 146.07
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -113,6 +141,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:20:48.838Z",
+  "scrapedAt": "2026-11-02T15:29:46.087Z",
   "url": "https://www.europeangolfrankings.com/players/42834"
 }

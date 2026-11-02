@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Give",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 617,
-  "egrPoints": 9602.84,
-  "avgScore": 73.24,
-  "avgToCR": 72.08,
+  "tournamentsPlayed": 16,
+  "egrRank": 622,
+  "egrPoints": 9624.42,
+  "avgScore": 73.48,
+  "avgToCR": 71.98,
   "events": [
+    {
+      "eventId": "12610",
+      "counting": true,
+      "pos": "22",
+      "event": "Lyngbygaard Junior/Ynglinge Open 2026",
+      "venue": "Lyngbygaard Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "16. Oct 26",
+      "r1": 74,
+      "r2": 76,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 483.88
+    },
     {
       "eventId": "12606",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12586",
-      "counting": true,
+      "counting": false,
       "pos": "15",
       "event": "Bravo Tours Masters 2026",
       "venue": "Herning Golf Klub (58)",
@@ -225,6 +239,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:16.501Z",
+  "scrapedAt": "2026-11-02T15:31:24.609Z",
   "url": "https://www.europeangolfrankings.com/players/47835"
 }

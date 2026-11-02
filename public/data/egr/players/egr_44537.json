@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Monticello",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 712,
-  "egrPoints": 2457.68,
-  "avgScore": 77.36,
-  "avgToCR": 74.35,
+  "tournamentsPlayed": 14,
+  "egrRank": 626,
+  "egrPoints": 2930.22,
+  "avgScore": 76.78,
+  "avgToCR": 73.43,
   "events": [
+    {
+      "eventId": "12022",
+      "counting": true,
+      "pos": "20",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Ambrosiano",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 544.58
+    },
+    {
+      "eventId": "12015",
+      "counting": true,
+      "pos": "5",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 447.37
+    },
+    {
+      "eventId": "12013",
+      "counting": false,
+      "pos": "6",
+      "event": "Copa D'Oro Cittá Di Castel Gandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 82,
+      "r2": 78,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 59.08
+    },
     {
       "eventId": "11999",
       "counting": true,
@@ -141,7 +183,7 @@
     },
     {
       "eventId": "11908",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Trofeo Vincenzo de Benedictis 2026",
       "venue": "Il Picciolo Golf Club",
@@ -179,7 +221,8 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 388.16
+      "egrPoints": 388.16,
+      "_mantido": true
     },
     {
       "eventId": "11384",
@@ -198,6 +241,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:21:19.172Z",
+  "scrapedAt": "2026-11-02T15:30:20.787Z",
   "url": "https://www.europeangolfrankings.com/players/44537"
 }

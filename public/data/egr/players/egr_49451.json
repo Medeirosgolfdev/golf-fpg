@@ -7,15 +7,29 @@
   "country": "Scotland",
   "club": "Royal Troon",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 1440,
-  "egrPoints": 4526.35,
-  "avgScore": 74.52,
-  "avgToCR": 74.48,
+  "tournamentsPlayed": 10,
+  "egrRank": 1375,
+  "egrPoints": 4784.04,
+  "avgScore": 74.24,
+  "avgToCR": 74.11,
   "events": [
     {
-      "eventId": "11721",
+      "eventId": "11490",
       "counting": true,
+      "pos": "23",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 74,
+      "r2": 85,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 454.94
+    },
+    {
+      "eventId": "11721",
+      "counting": false,
       "pos": "9",
       "event": "Junior Tour Fraserburgh Boys 2026",
       "venue": "Fraserburgh GC",
@@ -156,6 +170,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:22:57.726Z",
+  "scrapedAt": "2026-11-02T15:32:11.213Z",
   "url": "https://www.europeangolfrankings.com/players/49451"
 }

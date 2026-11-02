@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Mainz",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 3338,
+  "tournamentsPlayed": 3,
+  "egrRank": 3378,
   "egrPoints": 0,
-  "avgScore": 87.83,
-  "avgToCR": 86.73,
+  "avgScore": 86.78,
+  "avgToCR": 86.38,
   "events": [
+    {
+      "eventId": "12963",
+      "counting": true,
+      "pos": "11",
+      "event": "3. Spanish Junior Golf Masters 2026",
+      "venue": "UGOLF d’Hacienda del Alamo",
+      "country": "Spain",
+      "startDateRaw": "20. Oct 26",
+      "r1": 88,
+      "r2": 79,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12830",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:23:33.098Z",
+  "scrapedAt": "2026-11-02T15:32:50.628Z",
   "url": "https://www.europeangolfrankings.com/players/51046"
 }

@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Caen La Mer",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 4230,
-  "egrPoints": 875.45,
-  "avgScore": 79,
-  "avgToCR": 78.87,
+  "tournamentsPlayed": 4,
+  "egrRank": 4025,
+  "egrPoints": 975.18,
+  "avgScore": 78.3,
+  "avgToCR": 78.17,
   "events": [
+    {
+      "eventId": "12198",
+      "counting": true,
+      "pos": "69",
+      "event": "Grand Prix de Roissy 2026",
+      "venue": "Golf International de Roissy",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 99.73
+    },
     {
       "eventId": "12194",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:21.057Z",
+  "scrapedAt": "2026-11-02T15:32:36.845Z",
   "url": "https://www.europeangolfrankings.com/players/50424"
 }

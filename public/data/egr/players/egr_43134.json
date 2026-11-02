@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Amiens",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 879,
-  "egrPoints": 1782.08,
-  "avgScore": 77.21,
-  "avgToCR": 74.66,
+  "tournamentsPlayed": 8,
+  "egrRank": 1044,
+  "egrPoints": 1359.59,
+  "avgScore": 77.32,
+  "avgToCR": 75.03,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "52",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 75,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 337.74
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -123,7 +137,8 @@
       "r2": 70,
       "r3": 80,
       "r4": 82,
-      "egrPoints": 507.58
+      "egrPoints": 507.58,
+      "_mantido": true
     },
     {
       "eventId": "11367",
@@ -137,7 +152,8 @@
       "r2": 79,
       "r3": 80,
       "r4": null,
-      "egrPoints": 252.65
+      "egrPoints": 252.65,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -156,6 +172,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:20:53.053Z",
+  "scrapedAt": "2026-11-02T15:29:50.910Z",
   "url": "https://www.europeangolfrankings.com/players/43134"
 }

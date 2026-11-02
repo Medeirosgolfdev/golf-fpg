@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Freslonniere",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 2945,
-  "egrPoints": 38.15,
-  "avgScore": 80.33,
-  "avgToCR": 78.03,
+  "tournamentsPlayed": 3,
+  "egrRank": 2284,
+  "egrPoints": 171.2,
+  "avgScore": 83.13,
+  "avgToCR": 80.99,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "72",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 84,
+      "r2": 86,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 122.7
+    },
+    {
+      "eventId": "12201",
+      "counting": true,
+      "pos": "9",
+      "event": "Grand Prix de St Malo 2026",
+      "venue": "Saint Malo Golf Club",
+      "country": "France",
+      "startDateRaw": "25. Sep 26",
+      "r1": 79,
+      "r2": 83,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 10.35
+    },
     {
       "eventId": "12102",
       "counting": true,
@@ -29,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:23:20.244Z",
+  "scrapedAt": "2026-11-02T15:32:35.819Z",
   "url": "https://www.europeangolfrankings.com/players/50394"
 }

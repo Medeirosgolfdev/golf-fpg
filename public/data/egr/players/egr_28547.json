@@ -8,11 +8,25 @@
   "club": "Bogogno",
   "ageGroup": "U25",
   "tournamentsPlayed": 9,
-  "egrRank": 406,
-  "egrPoints": 12485.1,
-  "avgScore": 73.13,
-  "avgToCR": 70.62,
+  "egrRank": 449,
+  "egrPoints": 11746.6,
+  "avgScore": 73.46,
+  "avgToCR": 70.87,
   "events": [
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "10",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1203.31
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -137,7 +151,8 @@
       "r2": 71,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1941.76
+      "egrPoints": 1941.76,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -156,6 +171,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-10-05T14:15:29.874Z",
+  "scrapedAt": "2026-11-02T15:23:59.481Z",
   "url": "https://www.europeangolfrankings.com/players/28547"
 }

@@ -7,12 +7,54 @@
   "country": "Italy",
   "club": "Bergamo Albenza",
   "ageGroup": "U14",
-  "tournamentsPlayed": 19,
-  "egrRank": 1108,
-  "egrPoints": 5956.14,
-  "avgScore": 73.65,
-  "avgToCR": 73.57,
+  "tournamentsPlayed": 22,
+  "egrRank": 948,
+  "egrPoints": 6880.8,
+  "avgScore": 73.74,
+  "avgToCR": 73.23,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "35",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 797.97
+    },
+    {
+      "eventId": "12016",
+      "counting": false,
+      "pos": "21",
+      "event": "Trofeo Città di Verona 2026",
+      "venue": "Golf Club Verona",
+      "country": "Italy",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 71,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 488.5
+    },
+    {
+      "eventId": "12014",
+      "counting": true,
+      "pos": "26",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 76,
+      "r2": 72,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 909.89
+    },
     {
       "eventId": "12121",
       "counting": true,
@@ -197,7 +239,7 @@
     },
     {
       "eventId": "11841",
-      "counting": true,
+      "counting": false,
       "pos": "30",
       "event": "International French U14 Boys (Challenge Alexis Godillot) 2026",
       "venue": "Golf de Chantilly",
@@ -239,7 +281,7 @@
     },
     {
       "eventId": "11905",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Trofeo Fondazione Sergio E Stella Montelatci 2026",
       "venue": "Pelagone Golf Club Toscana",
@@ -296,6 +338,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:23:08.913Z",
+  "scrapedAt": "2026-11-02T15:32:23.657Z",
   "url": "https://www.europeangolfrankings.com/players/49916"
 }

@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Cannes-Mougins",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 10380,
+  "tournamentsPlayed": 2,
+  "egrRank": 10483,
   "egrPoints": 0,
-  "avgScore": 82.5,
-  "avgToCR": 82.3,
+  "avgScore": 83.75,
+  "avgToCR": 83.6,
   "events": [
+    {
+      "eventId": "12215",
+      "counting": true,
+      "pos": "68",
+      "event": "Grand Prix de Valescure Trophée Jean-Louis JURION 2026",
+      "venue": "Golf de Valescure",
+      "country": "France",
+      "startDateRaw": "09. Oct 26",
+      "r1": 80,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12148",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-10-05T14:25:35.396Z",
+  "scrapedAt": "2026-11-02T15:35:09.588Z",
   "url": "https://www.europeangolfrankings.com/players/55982"
 }

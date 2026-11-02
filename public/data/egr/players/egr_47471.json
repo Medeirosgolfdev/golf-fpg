@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 1297,
-  "egrPoints": 5127.22,
-  "avgScore": 75.96,
-  "avgToCR": 73.66,
+  "tournamentsPlayed": 14,
+  "egrRank": 1132,
+  "egrPoints": 5884.96,
+  "avgScore": 75.09,
+  "avgToCR": 73.04,
   "events": [
+    {
+      "eventId": "12023",
+      "counting": true,
+      "pos": "28",
+      "event": "Italian National Closed Match Play U18 2026",
+      "venue": "Golf Club Villa Paradiso",
+      "country": "Italy",
+      "startDateRaw": "15. Oct 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1009.68
+    },
+    {
+      "eventId": "12012",
+      "counting": true,
+      "pos": "8",
+      "event": "Copa D'Oro Cittá Di Castelgandolfo 2026",
+      "venue": "Country Club Castelgandolfo",
+      "country": "Italy",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 328.4
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "11909",
-      "counting": true,
+      "counting": false,
       "pos": "42",
       "event": "Stella D'Oro 2026",
       "venue": "Olgiata Golf Club",
@@ -193,10 +221,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 304.62
+      "egrPoints": 304.62,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:22:07.502Z",
+  "scrapedAt": "2026-11-02T15:31:14.325Z",
   "url": "https://www.europeangolfrankings.com/players/47471"
 }

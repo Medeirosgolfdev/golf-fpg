@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "St. Leon-Rot",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 163,
-  "egrPoints": 20435.3,
-  "avgScore": 71.13,
-  "avgToCR": 68.97,
+  "tournamentsPlayed": 10,
+  "egrRank": 166,
+  "egrPoints": 20141.6,
+  "avgScore": 71.35,
+  "avgToCR": 69.5,
   "events": [
     {
       "eventId": "11672",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12877",
-      "counting": false,
+      "counting": true,
       "pos": "8",
       "event": "ProDreamUSA College Showcase 2026",
       "venue": "Dundonald Links",
@@ -165,7 +165,8 @@
       "r2": 70,
       "r3": 71,
       "r4": null,
-      "egrPoints": 926.37
+      "egrPoints": 926.37,
+      "_mantido": true
     },
     {
       "eventId": "11299",
@@ -184,6 +185,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:12:57.554Z",
+  "scrapedAt": "2026-11-02T15:21:10.353Z",
   "url": "https://www.europeangolfrankings.com/players/22023"
 }

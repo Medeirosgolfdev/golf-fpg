@@ -7,12 +7,26 @@
   "country": "France",
   "club": "St. Nom-La-Breteche",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 5,
-  "egrRank": 567,
-  "egrPoints": 10147.7,
-  "avgScore": 72,
-  "avgToCR": 70.47,
+  "tournamentsPlayed": 6,
+  "egrRank": 511,
+  "egrPoints": 10855.3,
+  "avgScore": 72.19,
+  "avgToCR": 70.75,
   "events": [
+    {
+      "eventId": "12205",
+      "counting": true,
+      "pos": "22",
+      "event": "Open d'Arcachon 2026",
+      "venue": "Golf d' Arcachon",
+      "country": "France",
+      "startDateRaw": "01. Oct 26",
+      "r1": 71,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 707.62
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:12:05.828Z",
+  "scrapedAt": "2026-11-02T15:20:12.351Z",
   "url": "https://www.europeangolfrankings.com/players/18944"
 }

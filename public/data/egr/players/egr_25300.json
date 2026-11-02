@@ -7,11 +7,11 @@
   "country": "Sweden",
   "club": "Halmstad",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 11,
-  "egrRank": 64,
-  "egrPoints": 17806.1,
-  "avgScore": 72.72,
-  "avgToCR": 69.5,
+  "tournamentsPlayed": 10,
+  "egrRank": 76,
+  "egrPoints": 16182.9,
+  "avgScore": 72.84,
+  "avgToCR": 69.18,
   "events": [
     {
       "eventId": "11765",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12310",
-      "counting": false,
+      "counting": true,
       "pos": "3",
       "event": "R&A Student Tour Series (La Sella) 2026",
       "venue": "La Sella Golf Club",
@@ -165,10 +165,11 @@
       "r2": 70,
       "r3": 74,
       "r4": null,
-      "egrPoints": 2220.75
+      "egrPoints": 2220.75,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-10-05T14:14:02.569Z",
+  "scrapedAt": "2026-11-02T15:22:22.167Z",
   "url": "https://www.europeangolfrankings.com/players/25300"
 }

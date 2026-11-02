@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Bergamo Albenza",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 1739,
-  "egrPoints": 405.28,
-  "avgScore": 84.24,
-  "avgToCR": 81.9,
+  "tournamentsPlayed": 9,
+  "egrRank": 1732,
+  "egrPoints": 423.32,
+  "avgScore": 84.33,
+  "avgToCR": 81.87,
   "events": [
+    {
+      "eventId": "12025",
+      "counting": true,
+      "pos": "17",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 90,
+      "r2": 82,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 18.04
+    },
     {
       "eventId": "11988",
       "counting": true,
@@ -142,6 +156,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:51.391Z",
+  "scrapedAt": "2026-11-02T15:27:37.196Z",
   "url": "https://www.europeangolfrankings.com/players/36775"
 }

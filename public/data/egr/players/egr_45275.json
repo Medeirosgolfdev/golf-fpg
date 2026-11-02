@@ -7,11 +7,11 @@
   "country": "Sweden",
   "club": "Vasatorps",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 193,
-  "egrPoints": 9296.1,
-  "avgScore": 75.04,
-  "avgToCR": 72,
+  "tournamentsPlayed": 11,
+  "egrRank": 228,
+  "egrPoints": 8152.4,
+  "avgScore": 74.58,
+  "avgToCR": 71.92,
   "events": [
     {
       "eventId": "12404",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12383",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Swedish Junior Tour Elite #1 2026",
       "venue": "Halmstad Golfklubb Tylösand",
@@ -179,7 +179,8 @@
       "r2": 73,
       "r3": 83,
       "r4": null,
-      "egrPoints": 1440.14
+      "egrPoints": 1440.14,
+      "_mantido": true
     },
     {
       "eventId": "10819",
@@ -198,6 +199,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:35.724Z",
+  "scrapedAt": "2026-11-02T15:30:39.173Z",
   "url": "https://www.europeangolfrankings.com/players/45275"
 }

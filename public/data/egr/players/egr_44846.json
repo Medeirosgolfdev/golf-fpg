@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Auchterarder",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 4332,
+  "tournamentsPlayed": 6,
+  "egrRank": 4373,
   "egrPoints": 833.64,
-  "avgScore": 80.38,
-  "avgToCR": 79.95,
+  "avgScore": 81.14,
+  "avgToCR": 80.34,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "72",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 82,
+      "r2": 81,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12647",
       "counting": true,
@@ -100,6 +114,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:21:25.919Z",
+  "scrapedAt": "2026-11-02T15:30:28.046Z",
   "url": "https://www.europeangolfrankings.com/players/44846"
 }

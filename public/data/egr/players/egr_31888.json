@@ -8,11 +8,25 @@
   "club": "Royal Portrush",
   "ageGroup": "U18",
   "tournamentsPlayed": 16,
-  "egrRank": 30,
-  "egrPoints": 24812.3,
-  "avgScore": 72.68,
-  "avgToCR": 68.45,
+  "egrRank": 29,
+  "egrPoints": 25265,
+  "avgScore": 72.74,
+  "avgToCR": 68.42,
   "events": [
+    {
+      "eventId": "12265",
+      "counting": true,
+      "pos": "10",
+      "event": "International Spanish Ladies' Championships 2026",
+      "venue": "Isla Canela Golf Club",
+      "country": "Spain",
+      "startDateRaw": "23. Oct 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 2010.33
+    },
     {
       "eventId": "11768",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "11887",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "AIG Irish Women's Amateur Close Championship 2026",
       "venue": "Enniscrone",
@@ -235,10 +249,11 @@
       "r2": 76,
       "r3": 79,
       "r4": null,
-      "egrPoints": 1202.86
+      "egrPoints": 1202.86,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:17:01.875Z",
+  "scrapedAt": "2026-11-02T15:25:38.331Z",
   "url": "https://www.europeangolfrankings.com/players/31888"
 }

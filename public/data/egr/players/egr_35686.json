@@ -8,11 +8,39 @@
   "club": "Torino",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 1116,
-  "egrPoints": 5934.97,
-  "avgScore": 74.21,
-  "avgToCR": 72.3,
+  "egrRank": 1166,
+  "egrPoints": 5666.34,
+  "avgScore": 74.2,
+  "avgToCR": 72.82,
   "events": [
+    {
+      "eventId": "12024",
+      "counting": false,
+      "pos": "44",
+      "event": "XIX Trofeo Castelconturbia 2026",
+      "venue": "Golf Club Castelconturbia",
+      "country": "Italy",
+      "startDateRaw": "23. Oct 26",
+      "r1": 86,
+      "r2": 78,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 143.65
+    },
+    {
+      "eventId": "12014",
+      "counting": false,
+      "pos": "82",
+      "event": "Trofeo Glauco Lolli Ghetti 2026",
+      "venue": "Margara Golf Club",
+      "country": "Italy",
+      "startDateRaw": "02. Oct 26",
+      "r1": 80,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "11989",
-      "counting": false,
+      "counting": true,
       "pos": "10",
       "event": "Gara Nazionale (Caffe Vergnano) 2026",
       "venue": "Golf Club Sestrieres",
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "11961",
-      "counting": false,
+      "counting": true,
       "pos": "22",
       "event": "Trofeo Chiocciola D'Oro 2026",
       "venue": "Golf Club Cherasco",
@@ -193,7 +221,8 @@
       "r2": 75,
       "r3": 78,
       "r4": null,
-      "egrPoints": 398.34
+      "egrPoints": 398.34,
+      "_mantido": true
     },
     {
       "eventId": "10325",
@@ -207,7 +236,8 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 228.94
+      "egrPoints": 228.94,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -226,6 +256,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:18:24.878Z",
+  "scrapedAt": "2026-11-02T15:27:07.887Z",
   "url": "https://www.europeangolfrankings.com/players/35686"
 }

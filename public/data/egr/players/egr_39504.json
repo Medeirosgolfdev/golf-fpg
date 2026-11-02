@@ -7,12 +7,26 @@
   "country": "Wales",
   "club": "Greenmeadow",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 4906,
+  "tournamentsPlayed": 4,
+  "egrRank": 4959,
   "egrPoints": 634.91,
-  "avgScore": 81.2,
-  "avgToCR": 80.76,
+  "avgScore": 81.25,
+  "avgToCR": 81.28,
   "events": [
+    {
+      "eventId": "12621",
+      "counting": true,
+      "pos": "38",
+      "event": "Gareth Bale Championship (Mixed) Closed 2026",
+      "venue": "Cetic Manor Resort",
+      "country": "Wales",
+      "startDateRaw": "26. Sep 26",
+      "r1": 71,
+      "r2": 78,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12617",
       "counting": true,
@@ -72,6 +86,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:19:57.153Z",
+  "scrapedAt": "2026-11-02T15:28:48.654Z",
   "url": "https://www.europeangolfrankings.com/players/39504"
 }

@@ -8,11 +8,25 @@
   "club": "North Berwick",
   "ageGroup": "U16",
   "tournamentsPlayed": 13,
-  "egrRank": 900,
-  "egrPoints": 7258.53,
-  "avgScore": 74.64,
-  "avgToCR": 72.98,
+  "egrRank": 944,
+  "egrPoints": 6891.05,
+  "avgScore": 75.24,
+  "avgToCR": 73.92,
   "events": [
+    {
+      "eventId": "12955",
+      "counting": false,
+      "pos": "11",
+      "event": "Triple A European Championship 2026",
+      "venue": "San Roque Club",
+      "country": "Spain",
+      "startDateRaw": "21. Oct 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 224.17
+    },
     {
       "eventId": "12934",
       "counting": false,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12217",
-      "counting": false,
+      "counting": true,
       "pos": "5",
       "event": "Triple A European Invitational 2026",
       "venue": "Real Club de Golf Sotogrande",
@@ -193,7 +207,8 @@
       "r2": 72,
       "r3": 70,
       "r4": null,
-      "egrPoints": 631.88
+      "egrPoints": 631.88,
+      "_mantido": true
     },
     {
       "eventId": "11341",
@@ -212,6 +227,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:19:51.808Z",
+  "scrapedAt": "2026-11-02T15:28:43.239Z",
   "url": "https://www.europeangolfrankings.com/players/39137"
 }

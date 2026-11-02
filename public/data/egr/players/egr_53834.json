@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Palmola",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 1710,
-  "egrPoints": 427.15,
-  "avgScore": 78.92,
-  "avgToCR": 76.72,
+  "tournamentsPlayed": 6,
+  "egrRank": 1505,
+  "egrPoints": 619.6,
+  "avgScore": 79.47,
+  "avgToCR": 77.16,
   "events": [
+    {
+      "eventId": "12244",
+      "counting": true,
+      "pos": "65",
+      "event": "French National U16 Championships 2026",
+      "venue": "Biarritz Le Phare",
+      "country": "France",
+      "startDateRaw": "17. Oct 26",
+      "r1": 80,
+      "r2": 85,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 192.44
+    },
     {
       "eventId": "12186",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-10-05T14:24:36.226Z",
+  "scrapedAt": "2026-11-02T15:34:02.045Z",
   "url": "https://www.europeangolfrankings.com/players/53834"
 }

@@ -5,14 +5,28 @@
   "lastName": "LAVILLA",
   "firstName": "Jaime Vizcaino",
   "country": "Spain",
-  "club": "R.S.H.E. CC",
+  "club": "Hipica",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 9131,
+  "tournamentsPlayed": 4,
+  "egrRank": 9248,
   "egrPoints": 66.3,
-  "avgScore": 81,
-  "avgToCR": 80.25,
+  "avgScore": 80.58,
+  "avgToCR": 79.58,
   "events": [
+    {
+      "eventId": "11490",
+      "counting": true,
+      "pos": "68",
+      "event": "SGF Fairmont 2026",
+      "venue": "Fairmont St Andrews (Kittock)",
+      "country": "Scotland",
+      "startDateRaw": "30. Sep 26",
+      "r1": 90,
+      "r2": 82,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11723",
       "counting": true,
@@ -72,6 +86,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-10-05T14:24:33.630Z",
+  "scrapedAt": "2026-11-02T15:33:59.309Z",
   "url": "https://www.europeangolfrankings.com/players/53667"
 }
