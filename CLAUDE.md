@@ -211,7 +211,13 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   com `href`); filtro liga/desliga → pill
   `.tourn-tab tourn-tab-sm` (+ `active`; desligada SEMPRE cinzenta, ligada SEMPRE verde `--accent`, regra
   global — decisão dela, 31/10/2026); botão de acção → `.btn` (`.btn-link`,
-  `.btn-round` para ‹ ›), nunca uma pill de filtro; «✕ Limpar» → `ClearButton`; «✕» de fechar → `CloseButton`;
+  `.btn-round` para ‹ ›), nunca uma pill de filtro; «✕ Limpar» → `ClearButton`; «✕» de fechar → `CloseButton`; pesquisa → `SearchInput`; erro → `ErrorState`;
+  sexo → `SexSelect`; filtro liga/desliga com rótulo → `ToggleChip`; «Mostrar mais» →
+  `ShowMoreButton`; janela por cima → `Modal`; separadores sublinhados → `TabRow variant="under"`;
+  célula vazia → `MUTED`; cor do tee → `TeeSwatch`; SD → `SDPill`; ⓘ → `InfoIcon`;
+  seta ↗ Kids → `KidsArrow`; posição do Kids 2 → `TrophyPos`; legenda de níveis → `TierLegend`;
+  sinal → `fmtSign`; HCP → `fmtHcp` (plus = «+1.2»); números com PONTO decimal; zero do
+  ±par = «E»; um só cinzento esbatido (`--text-muted` = `--text-3`);
   abrir/fechar → `ExpandArrow` (▸/▾); link para fora → `ExtLink` (nada de
   `<a target="_blank">` à mão); nome que abre a ficha → `PlayerLink`; cabeçalho
   ordenável → `SortableHdr` (▲▼); a carregar / sem dados → `LoadingState` /
