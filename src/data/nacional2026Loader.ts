@@ -30,6 +30,7 @@ export interface FpgAdmissionPlayer {
   // España) que não passam por playersDB/federados.json. Quando ausentes (FPG),
   // o AdmissionsTab cai no comportamento normal (hooks de country/dob, tee por escalão).
   dob?: string | null;
+  birthYear?: number | null; // só o ano (fonte sem data completa, ex.: ranking da Federgolf)
   country?: string | null;   // código flag-icon (ex.: "ES")
   escalao?: string | null;   // escalão já resolvido (ex.: "Alevín")
   teeName?: string | null;   // tee do jogador (ex.: "5498 m") — texto, não cor

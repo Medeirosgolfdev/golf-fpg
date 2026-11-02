@@ -14,7 +14,7 @@
 
 import { useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
-import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf, isRecentHours, fmtDatePt } from "../utils/format";
+import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf, isRecentHours, fmtDatePt, todayIso } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
@@ -199,7 +199,8 @@ export default function AdmissionsTab({
     const dob: string | undefined =
       p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined) || (p as any)._rfeg?.dob ||
       kidsDobLida(kidsDobOf(p.nome, p.fed));
-    const dobYear = birthYearOf(dob);
+    // Sem data, o ano solto da fonte (ex.: ranking da Federgolf) — idade «~».
+    const dobYear = birthYearOf(dob) ?? p.birthYear ?? null;
     let clube = p.clube;
     if (!clube && bd) {
       const club = typeof bd.club === "string" ? bd.club : bd.club?.short;
@@ -236,7 +237,7 @@ export default function AdmissionsTab({
     return {
       ...hideCols,
       esc: hideCols.esc || escs.size <= 1,
-      nasc: hideCols.nasc || !enriched.some(p => p._dob),
+      nasc: hideCols.nasc || !enriched.some(p => p._dobYear != null),
       fed: hideCols.fed || !enriched.some(p => displayFed(p.fed)),
       hcp: !enriched.some(p => p.hcp != null),
       tee: hideCols.tee || (!teeName && !enriched.some(p => p._ruleTee || p.teeName)),
@@ -310,6 +311,9 @@ export default function AdmissionsTab({
       const isDesist = p.status === "desistente";
       const desinscritoEm = (p as any).desinscritoEm as string | undefined;
       const age = ageAtDate(p._dob, date || undefined);
+      // Só o ano: idade no ano do torneio, aproximada («~12a»).
+      const anoRef = Number(String(date || todayIso()).slice(0, 4));
+      const ageAprox = age == null && p._dobYear != null && anoRef ? anoRef - p._dobYear : null;
       // Desistentes não ocupam número de posição (a inscrição foi anulada);
       // confirmed 1..N, reservas N+1.., desistentes fora da numeração.
       const numPos = isDesist ? null : isReserva ? nConf + (p.pos ?? i + 1) : (p.pos ?? i + 1);
@@ -361,7 +365,7 @@ export default function AdmissionsTab({
               {p._dobYear != null ? <BirthPill>{p._dobYear}</BirthPill> : MUTED}
             </td>
             <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
-              {age != null ? <BirthPill>{age}a</BirthPill> : MUTED}
+              {age != null ? <BirthPill>{age}a</BirthPill> : ageAprox != null ? <BirthPill>~{ageAprox}a</BirthPill> : MUTED}
             </td>
             </>}
             {/* Chaves virtuais (`kids:`/`intl:`) sao ids internos derivados do
