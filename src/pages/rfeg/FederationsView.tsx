@@ -331,7 +331,7 @@ export function RFEGFederationsView() {
         }
       />
 
-      <div className="u-mt-12px u-p-10px-12px u-bg-var-bg-muted-fff7e6 u-bd-1epci u-br-radius u-fs-fs-12">
+      <div className="u-mt-12px u-p-10px-12px u-bg-bg-muted u-bd-1px-solid-border u-br-radius u-fs-fs-12">
         <strong>⚠ Estrutura federativa do golfe espanhol.</strong> A nível nacional
         existe a <strong>RFEG</strong> (Madrid, sede do golfe federado). Sob a sua tutela
         coexistem <strong>19 federações territoriais</strong> que organizam circuitos
@@ -341,22 +341,22 @@ export function RFEGFederationsView() {
       </div>
 
       <div className="u-mt-16px u-d-grid u-grid-template-columns-1bho3 u-gap-12px">
-        <div className="u-p-12px u-bg-var-bg-muted-f5f5f5 u-br-radius u-bd-1px-solid-border">
+        <div className="u-p-12px u-bg-bg-muted u-br-radius u-bd-1px-solid-border">
           <div className="u-fs-fs-24 u-fw-700 u-c-color-good">{ncFeds.length}</div>
           <div className="fs-11 muted">via NextCaddy (scrapadas)</div>
           <div className="fs-10 u-mt-4px">{totalScraped} torneios indexados</div>
         </div>
-        <div className="u-p-12px u-bg-var-bg-muted-f5f5f5 u-br-radius u-bd-1px-solid-border">
+        <div className="u-p-12px u-bg-bg-muted u-br-radius u-bd-1px-solid-border">
           <div className="u-fs-fs-24 u-fw-700 u-c-color-good">{gdFeds.length}</div>
           <div className="fs-11 muted">via GolfDirecto (scrapada)</div>
           <div className="fs-10 u-mt-4px">{totalGdScraped} games descobertos</div>
         </div>
-        <div className="u-p-12px u-bg-var-bg-muted-f5f5f5 u-br-radius u-bd-1px-solid-border">
+        <div className="u-p-12px u-bg-bg-muted u-br-radius u-bd-1px-solid-border">
           <div className="u-fs-fs-24 u-fw-700 u-c-text-2">{ownFeds.length}</div>
           <div className="fs-11 muted">com site próprio</div>
           <div className="fs-10 u-mt-4px">sem dados scrapados</div>
         </div>
-        <div className="u-p-12px u-bg-var-bg-muted-f5f5f5 u-br-radius u-bd-1px-solid-border">
+        <div className="u-p-12px u-bg-bg-muted u-br-radius u-bd-1px-solid-border">
           <div className="u-fs-fs-24 u-fw-700 u-c-text-3">{emptyFeds.length}</div>
           <div className="fs-11 muted">delegações</div>
           <div className="fs-10 u-mt-4px">Ceuta + Melilla</div>

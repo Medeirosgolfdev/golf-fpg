@@ -54,7 +54,7 @@ export const C = {
 
   // Neutral/muted (scoreDisplay.ts sc3m, scDark)
   muted:        "#888",      // cor neutra — meio termo em sc3m (C.muted)
-  infoDark:     "#0369a1",   // azul escuro info — scDark("info")  (= color-info-alt)
+  infoDark:     "#0369a1",   // azul escuro info — scDark("info")  (= --color-info-dark)
 
   // Greyscale
   grey900: "#111",

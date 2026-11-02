@@ -593,7 +593,7 @@ export default function DrawTab({
               highlight={manuel}
             />
             {p.otherDivision && (
-              <span className="p p-sm ml-4 u-bg-var-bg-muted-e5e7eb u-c-text-3 u-border-color-transparent" title={`Joga noutro escalão (${p.otherDivision}) — está aqui por ser do mesmo grupo`}
+              <span className="p p-sm ml-4 u-bg-bg-muted u-c-text-3 u-border-color-transparent" title={`Joga noutro escalão (${p.otherDivision}) — está aqui por ser do mesmo grupo`}
 >{p.otherDivision}</span>
             )}
             {/* Seta ↗ kids2 via KidsLinkCtx (CircuitShell — MAJOR/England/…).
@@ -744,7 +744,7 @@ export default function DrawTab({
         </div>
       )}
       {isEstimated && (
-        <div className="fs-12 fw-600 u-p-8px-14px u-m-6px-12px u-bg-var-bg-warn-subtle-fef3c7 u-bd-qeurg u-br-radius u-c-var-text-1-1f2937 u-lh-1_4">
+        <div className="fs-12 fw-600 u-p-8px-14px u-m-6px-12px u-bg-var-bg-warn-subtle-fef3c7 u-bd-1px-solid-color-warn u-br-radius u-c-text-1 u-lh-1_4">
           ⚠️ {draw.note}
         </div>
       )}

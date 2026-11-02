@@ -544,7 +544,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
         <div className="u-d-flex u-gap-6px u-fwr-nowrap u-ox-auto u-mb-12px u-ai-stretch u-scrollbar-width-none">
           <KpiCard
             label="MANUEL — TOTAL"
-            labelStyle={{ color:"var(--color-info-alt)", fontSize: "var(--fs-9)", marginBottom:3 }}
+            labelStyle={{ color:"var(--color-info-dark)", fontSize: "var(--fs-9)", marginBottom:3 }}
             value={
               <div className="u-d-flex u-gap-8px u-ai-baseline">
                 <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span className="u-fs-fs-9 u-c-text-3 u-ml-2px">T</span></span>
@@ -553,7 +553,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                 {manuelKpis.best && <span><span className="fw-700 fs-13 u-c-color-good-dark">{manuelKpis.best}</span><span className="u-fs-fs-9 u-c-text-3 u-ml-2px">min</span></span>}
               </div>
             }
-            className="u-fl-0-0-auto u-p-6px-10px u-bg-var-bg-info-subtle-bg-info u-bl-3px-solid-accent u-minw-0"
+            className="u-fl-0-0-auto u-p-6px-10px u-bg-bg-info-subtle u-bl-3px-solid-accent u-minw-0"
           />
           {TG_T.map(t => {
             const res = manuelRef?.r[t.id];

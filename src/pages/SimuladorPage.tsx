@@ -41,8 +41,8 @@ type SimPlayersFile = { months: number; players: Record<string, SimExtraPlayer>;
 
 
 
-/* Decimais à portuguesa em toda a página (a toolbar e o CR já usavam vírgula) */
-const dec1 = (v: number): string => v.toFixed(1).replace(".", ",");
+/* Decimais com ponto, como no resto do site (decisão de 02/11/2026) */
+const dec1 = (v: number): string => v.toFixed(1);
 const sdPt = (v: number | null | undefined): string =>
   v == null || !Number.isFinite(v) ? "—" : (v >= 0 ? "+" : "") + dec1(v);
 
@@ -1086,7 +1086,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
   /* Mudar de jogador. Ao passar para "HI manual" o campo começa com o HI que
    * estava a ser usado, para se poder ajustar a partir daí. */
   const selectPlayer = useCallback((fed: string) => {
-    if (!fed && playerHI != null) setHiInput(String(playerHI).replace(".", ","));
+    if (!fed && playerHI != null) setHiInput(String(playerHI));
     // Mudar de sexo muda a lista de tees — o índice do tee deixa de valer
     const s = fed ? sexOf(fed) : null;
     if (s && s !== sexFilter) setSelectedTeeIdx(null);
@@ -1396,7 +1396,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
             <optgroup key={g.label} label={g.label}>
               {g.items.map((p) => (
                 <option key={p.fed} value={p.fed}>
-                  {p.name}{p.hcp != null ? ` (${String(p.hcp).replace(".", ",")})` : ""}
+                  {p.name}{p.hcp != null ? ` (${p.hcp})` : ""}
                 </option>
               ))}
             </optgroup>
@@ -1404,7 +1404,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
         </select>
         <input
           className="input col-w100"
-          value={playerFed ? (playerHI != null ? String(playerHI).replace(".", ",") : "") : hiInput}
+          value={playerFed ? (playerHI != null ? String(playerHI) : "") : hiInput}
           onChange={(e) => {
             // Escrever um HI passa para o modo manual
             if (playerFed) { setPlayerFed(""); setIncomingRound(null); }

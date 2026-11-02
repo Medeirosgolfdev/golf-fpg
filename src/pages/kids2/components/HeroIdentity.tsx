@@ -399,7 +399,7 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
       <div className="fed-card-value">
         <span>{value || "sem registo"}</span>
         {isClickable && (
-          <span className="u-fs-fs-10 u-c-var-color-info-dark-color-navy u-fw-600" title="Abrir ficha do jogador">↗</span>
+          <span className="u-fs-fs-10 u-c-var-color-info-dark-1e3a8a u-fw-600" title="Abrir ficha do jogador">↗</span>
         )}
       </div>
       {subtitle && (
@@ -443,7 +443,7 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
     );
   }
   return (
-    <span className="u-bg-var-bg-info-subtle-bg-info u-c-var-color-info-dark-color-navy u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-bd-152rb">{label}</span>
+    <span className="u-bg-bg-info-subtle u-c-var-color-info-dark-1e3a8a u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-bd-152rb">{label}</span>
   );
 }
 
@@ -502,7 +502,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
 
 function RankPill({ label, value }: { label: string; value: number | string }) {
   return (
-    <span className="u-bg-var-bg-warn-subtle-bg-warn u-c-1b214 u-fs-fs-11 u-p-3px-8px u-br-radius u-fw-700 u-bd-nmb3o">
+    <span className="u-bg-var-bg-warn-subtle-fef3c7 u-c-color-warn-dark u-fs-fs-11 u-p-3px-8px u-br-radius u-fw-700 u-bd-nmb3o">
       🏆 {label} #{value}
     </span>
   );

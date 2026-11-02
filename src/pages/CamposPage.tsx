@@ -178,7 +178,7 @@ function teeParRange(t: Tee | undefined, from: number, to: number): number | nul
 function fmtSdPar(par: number | null, r: { cr: number; sl: number } | undefined): string {
   if (!r || par == null || !r.sl) return "";
   const v = round1(calcSD(par, r.cr, r.sl));
-  return `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(1).replace(".", ",")}`;
+  return `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(1)}`;
 }
 
 /* ——— Componente: Grelha Scorecard Multi-Tee ——— */
@@ -920,7 +920,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
   const dotStyle = teeDot;
 
   const score = (val: number, tp: number | null) => (
-    <span className="u-ta-right u-fw-600 u-fs-var-fs-13-13px u-ws-nowrap u-fvn-tabular-nums">
+    <span className="u-ta-right u-fw-600 u-fs-fs-13 u-ws-nowrap u-fvn-tabular-nums">
       {val}
       {tp != null && <span style={{ color: tpTextColor(tp), fontWeight: 700 }}> {fmtToPar(tp)}</span>}
     </span>
@@ -937,7 +937,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
   };
   /** Marcador de posição para o 2º/3º (o 1º leva o pill do escalão). */
   const rankBadge = (i: number) => (
-    <span aria-hidden className="u-justify-self-center u-align-self-center u-w-15px u-h-15px u-br-50pc u-bg-var-bg-hover-rgba-0-0-0-0_06 u-c-text-muted u-fs-fs-9 u-fw-700 u-d-inline-flex u-ai-center u-jc-center">{i + 1}</span>
+    <span aria-hidden className="u-justify-self-center u-align-self-center u-w-15px u-h-15px u-br-50pc u-bg-bg-hover u-c-text-muted u-fs-fs-9 u-fw-700 u-d-inline-flex u-ai-center u-jc-center">{i + 1}</span>
   );
 
   return (
@@ -964,7 +964,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
       {manuel.length > 0 && (
         <div className="u-br-radius-xl u-ov-hidden u-bd-1px-solid-accent u-bs-shadow-sm u-mb-12px">
           <div className="tee-card-hdr manuel" style={{ background: tint("var(--accent)", 12) }}>
-            <span className="u-fs-var-fs-15-15px">🧒 Manuel</span>
+            <span className="u-fs-fs-15">🧒 Manuel</span>
             <span className="muted u-fw-400 u-fs-fs-11">recorde por tee · {voltaLabel}</span>
           </div>
           <div className="u-p-6px-12px-8px u-d-grid u-grid-template-columns-cjqrw u-gap-4px-12px u-ai-center u-bg-bg-card">
@@ -1006,7 +1006,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
                 <div className="tee-card-hdr" style={{ background: tint(hex, 13) }}>
                   <div className="u-d-flex u-ai-center u-gap-8px">
                     <span aria-hidden style={dotStyle(hex, 14)} />
-                    <span className="u-fw-800 u-fs-var-fs-15-15px">{c.label}</span>
+                    <span className="u-fw-800 u-fs-fs-15">{c.label}</span>
                     <span className="muted u-fw-500 u-fs-fs-11 u-ml-auto u-ws-nowrap">{c.players.size} jog · {c.nRounds} voltas</span>
                   </div>
                   <div className="muted u-fs-fs-11 u-mt-2px u-pl-22px">
@@ -1025,7 +1025,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
                         const top3 = [...c.esc.get(e)!.values()].sort((a, b) => (a.val - b.val) || ((a.tp ?? 0) - (b.tp ?? 0))).slice(0, 3);
                         return (
                           <Fragment key={e}>
-                            {ei > 0 && <div className="u-grid-column-1-1 u-bt-gwkbz u-m-4px-0" />}
+                            {ei > 0 && <div className="u-grid-column-1-1 u-bt-1px-solid-border-light u-m-4px-0" />}
                             {top3.map((b, i) => (
                               <Fragment key={b.fed + i}>
                                 {i === 0 ? <span className="u-justify-self-start u-align-self-center"><EscPill esc={e} /></span> : rankBadge(i)}
@@ -1102,7 +1102,7 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
               <div className="tee-card-hdr" style={{ background: teeTint(hex, 13) }}>
                 <div className="u-d-flex u-ai-center u-gap-8px">
                   <span aria-hidden style={teeDot(hex, 14)} />
-                  <span className="u-fw-800 u-fs-var-fs-15-15px">{g.label}</span>
+                  <span className="u-fw-800 u-fs-fs-15">{g.label}</span>
                   <span className="muted u-fw-500 u-fs-fs-11 u-ml-auto u-ws-nowrap">{g.entries.length} jog.</span>
                 </div>
                 {(dist || rM || rF) && (

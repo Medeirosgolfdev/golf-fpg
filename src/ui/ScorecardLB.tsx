@@ -625,7 +625,7 @@ export function ScorecardLB({
           <span className="u-d-inline-flex u-ai-center u-gap-4px u-fwr-wrap">
             {base}
             <span title={(p as any)._absolutoNote || "Jogou em torneio simultâneo"}
-              className="u-fs-fs-9 u-lh-1_4 u-p-1px-6px u-br-radius-lg u-bg-var-bg-warn-subtle-fef3c7 u-c-1b214 u-bd-qeurg u-cur-help u-fw-700 u-ws-nowrap">⚠ Abs</span>
+              className="u-fs-fs-9 u-lh-1_4 u-p-1px-6px u-br-radius-lg u-bg-var-bg-warn-subtle-fef3c7 u-c-color-warn-dark u-bd-1px-solid-color-warn u-cur-help u-fw-700 u-ws-nowrap">⚠ Abs</span>
           </span>
         );
       })(),
@@ -665,7 +665,7 @@ export function ScorecardLB({
                 const age = ageAtDate(dob, tournament.date);
                 if (age != null && age >= 0 && age < 100) {
                   return (
-                    <span className="p p-sm u-bg-var-bg-muted-e5e7eb u-c-text-2 u-border-color-transparent" title={dob ? `${dob} (${age} anos no torneio)` : ""}
+                    <span className="p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent" title={dob ? `${dob} (${age} anos no torneio)` : ""}
 >
                       {age}a
                     </span>
@@ -685,7 +685,7 @@ export function ScorecardLB({
                 if (cy == null) return MUTED;
                 const birth = cy - 18;
                 return (
-                  <span className="p p-sm u-bg-var-bg-muted-e5e7eb u-c-text-2 u-border-color-transparent" title={`Class of ${cy} · ≈ nascido ${birth}`}
+                  <span className="p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent" title={`Class of ${cy} · ≈ nascido ${birth}`}
 >~{birth}</span>
                 );
               })()}

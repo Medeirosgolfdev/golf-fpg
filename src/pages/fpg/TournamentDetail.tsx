@@ -531,7 +531,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
           (ex: "alguns jogadores jogaram simultaneamente no Absoluto").
           Estilo de ALERTA (amber/warning) para chamar à atenção. */}
       {(tournament as any)._note && (
-        <div className="fs-12 fw-600 u-p-10px-14px u-m-8px-12px u-bg-var-bg-warn-subtle-fef3c7 u-bd-qeurg u-br-radius u-c-var-text-1-1f2937 u-lh-1_45">
+        <div className="fs-12 fw-600 u-p-10px-14px u-m-8px-12px u-bg-var-bg-warn-subtle-fef3c7 u-bd-1px-solid-color-warn u-br-radius u-c-text-1 u-lh-1_45">
           ⚠️ {(tournament as any)._note}
         </div>
       )}

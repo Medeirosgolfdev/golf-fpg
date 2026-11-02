@@ -817,7 +817,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                         )}
                         {headerStats.aces.length > 0 && (
                           <span
-                            className="p p-sm u-bg-var-score-eagle-f59e0b u-c-fff u-bd-1bl4k"
+                            className="p p-sm u-bg-score-eagle u-c-fff u-bd-1px-solid-score-eagle"
 
                             title={headerStats.aces
                               .map(a => `${a.name || "?"} — buraco ${a.hole} (par ${a.par})${a.round ? ` · R${a.round}` : ""}`)

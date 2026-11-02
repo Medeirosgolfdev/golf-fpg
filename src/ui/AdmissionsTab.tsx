@@ -402,7 +402,7 @@ export default function AdmissionsTab({
               {isDesist
                 ? <span
                     title={desinscritoEm ? `Desinscreveu-se em ${desinscritoEm}` : "Desinscreveu-se"}
-                    className="u-bg-b3bq4 u-c-var-danger-dc2626 u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-qj328 u-ws-nowrap">desistiu</span>
+                    className="u-bg-b3bq4 u-c-color-danger u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-qj328 u-ws-nowrap">desistiu</span>
                 : isReserva
                 ? <span className="u-bg-bg-muted u-c-text-muted u-fs-fs-10 u-p-1px-6px u-br-radius-lg u-bd-1px-solid-border-light">{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</span>
                 : <span className="muted fs-10">✓</span>}
@@ -485,7 +485,7 @@ export default function AdmissionsTab({
             </span>
           )}
           {removidos.length > 0 && (
-            <span className="u-c-color-bad">
+            <span className="u-c-color-danger">
               <span className="fw-700">-{removidos.length} desistência{removidos.length > 1 ? "s" : ""}:</span>{" "}
               {removidos.join(", ")}
             </span>

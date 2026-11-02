@@ -327,7 +327,7 @@ export default function TopClubesPanel({
                     <tr key={c.key + "-details"}>
                       <td
                         colSpan={6}
-                        className="u-p-10px-12px-14px-36px u-bg-jqabh"
+                        className="u-p-10px-12px-14px-36px u-bg-bg-info-subtle"
                       >
                         {/* Atletas (resumo) */}
                         <div className="u-mb-10px">

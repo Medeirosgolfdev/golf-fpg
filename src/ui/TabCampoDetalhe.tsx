@@ -358,7 +358,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                           const label = d == null ? null : d <= 0 ? "hoje" : `há ${d}d`;
                           return (
                             <div key={i} className="fs-11 u-d-flex u-ai-center u-gap-2px u-c-text-3 u-op-0_75 u-p-0-0-1px">
-                              <span className="u-c-color-bad u-fs-fs-9 u-mr-1px">✕</span>
+                              <span className="u-c-color-danger u-fs-fs-9 u-mr-1px">✕</span>
                               <span className="u-td-line-through">{displayName(r.nome)}</span>
                               {r.pais && <span className="u-ml-2px">{flag(r.pais)}</span>}
                               <KidsLink nome={r.nome} />

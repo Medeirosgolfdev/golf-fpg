@@ -115,7 +115,7 @@ function HcpHistoryModal({
   return (
     <Modal onClose={onClose} size="md" title={`📈 Histórico de HCP${playerName ? ` — ${playerName}` : ""}`}>
 
-        <div className="u-fs-fs-12 u-c-var-text-3-6b7280 u-mb-10px">
+        <div className="u-fs-fs-12 u-c-text-3 u-mb-10px">
           {desc.length} snapshots · {desc[desc.length - 1]?.date} → {desc[0]?.date}
         </div>
 

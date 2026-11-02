@@ -748,7 +748,7 @@ export default function USKidsFieldPage() {
               <span>
                 {t.inscritos}/{t.maximo}
                 {(t.vagas ?? 0) > 0
-                  ? <span className="u-c-color-success u-ml-4px">{t.vagas} vagas</span>
+                  ? <span className="u-c-color-good u-ml-4px">{t.vagas} vagas</span>
                   : <span className="u-c-color-danger u-ml-4px">cheio</span>}
               </span>
             </div>

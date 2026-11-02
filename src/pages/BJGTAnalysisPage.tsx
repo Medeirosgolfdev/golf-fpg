@@ -1063,7 +1063,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             {CONTEST_LABELS[tab]}
           </div>
           {CONTEST_MAP[tab].players.filter(p => p.rd.length > 0).map((p, idx) => (
-            <div key={idx} className="course-item" style={{padding:"6px 12px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid var(--border-subtle)", background: p.isM ? "var(--bg-success-subtle)" : undefined}}>
+            <div key={idx} className="course-item" style={{padding:"6px 12px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid var(--border-light)", background: p.isM ? "var(--bg-success-subtle)" : undefined}}>
               <div className="course-item-name">
                 <span className="fs-11 fw-800" style={{ minWidth: 22, color: typeof p.p === "number" && p.p <= 3 ? "var(--color-warn-dark)" : "var(--text-3)" }}>{typeof p.p === "number" ? `${p.p}.` : ""}</span>
                 {flag(p.co)} {firstName(p.n)}

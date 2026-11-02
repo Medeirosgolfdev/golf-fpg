@@ -6,10 +6,10 @@ export function fmt(n: number | null | undefined): string {
   return ptFmt.format(n);
 }
 
-/** Formata CR com 1 decimal e vírgula PT */
+/** Course Rating com 1 decimal (ponto, como os outros números do site). */
 export function fmtCR(n: number | null | undefined): string {
   if (n == null || !Number.isFinite(n)) return "—";
-  return n.toFixed(1).replace(".", ",");
+  return n.toFixed(1);
 }
 
 /** Normaliza texto para comparação.
@@ -219,9 +219,9 @@ export function fmtSignParen(n: number): string {
   return n > 0 ? `(+${n})` : `(${n})`;
 }
 
-/** Ícone de seta de ordenação: " ↑" / " ↓" / "" */
+/** Seta de ordenação: " ▲" / " ▼" / "" — as mesmas do SortableHdr. */
 export function sortArrow(col: string, activeCol: string, dir: "asc" | "desc"): string {
-  return col === activeCol ? (dir === "asc" ? " ↑" : " ↓") : "";
+  return col === activeCol ? (dir === "asc" ? " ▲" : " ▼") : "";
 }
 
 /** Meses PT por extenso (lowercase): "janeiro", "fevereiro", ... */

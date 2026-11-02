@@ -634,7 +634,7 @@ export default function JogadoresListPage() {
                     <td className="u-ta-right u-fw-600">{r.hcp != null ? hcpDisplay(r.hcp) : "—"}</td>
                     <td className="u-ta-right">
                       {r.ppReal ? (
-                        <span className="p p-sm u-bg-var-badge-pp-0e7490 u-c-fff u-bd-1px-solid-var-badge-pp-0e7490" title={`Handicap Pitch & Putt: ${r.ppHcp}${r.ppRoundsYear ? ` · ${r.ppRoundsYear} cartões este ano` : ""}`}
+                        <span className="p p-sm u-bg-badge-pp u-c-fff u-bd-1px-solid-badge-pp" title={`Handicap Pitch & Putt: ${r.ppHcp}${r.ppRoundsYear ? ` · ${r.ppRoundsYear} cartões este ano` : ""}`}
 >
                           🏑 {hcpDisplay(r.ppHcp!)}
                         </span>

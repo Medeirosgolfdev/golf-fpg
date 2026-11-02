@@ -276,7 +276,7 @@ function PainelResumo({ torneios, nossosByFed }: {
               <span className="muted">1º ano</span>
               <span className="fw-700 u-c-color-good">{anoTotals["1A"]}</span>
               <span className="muted">2º ano</span>
-              <span className="fw-700 u-c-color-bad">{anoTotals["2A"]}</span>
+              <span className="fw-700 u-c-color-danger">{anoTotals["2A"]}</span>
             </span>
           </>
         )}
@@ -372,7 +372,7 @@ function TorneioCard({ t, active, onClick }: {
       {escShort(t.escalao)}
       <SexBadge sex={t.sex} size="sm" />
       {t._status === "loading" && <span className="u-op-0_7"> ⟳</span>}
-      {t._status === "error"   && <span className="fw-700 u-c-color-bad"> !</span>}
+      {t._status === "error"   && <span className="fw-700 u-c-color-danger"> !</span>}
       {t._status === "ok" && t.totalInscritos > 0 && (
         <span className="fs-10 u-ml-3px u-op-0_8">({t.totalInscritos} jog)</span>
       )}
@@ -421,7 +421,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
         cell: p => <TrendBadge trend={st(p)?.hcpTrend ?? null} delta={st(p)?.hcpDelta3m ?? null} /> },
       { key: "r3m", label: "R3m", title: "Voltas nos últimos 3 meses", dir: "desc", sort: p => st(p)?.roundsLast3m ?? null,
         cell: p => { const r = st(p)?.roundsLast3m;
-          return r != null ? <span style={{ fontWeight: r >= 4 ? 600 : 400, color: r === 0 ? "var(--color-bad)" : "inherit" }}>{r}</span> : MUTED; } },
+          return r != null ? <span style={{ fontWeight: r >= 4 ? 600 : 400, color: r === 0 ? "var(--color-danger)" : "inherit" }}>{r}</span> : MUTED; } },
       { key: "bd", label: "Na BD", title: "Na nossa base de dados: sexo e 1.º/2.º ano no escalão (o escalão, o nascimento e o clube estão nas suas colunas)",
         sort: p => (p.fed && nossosByFed.get(p.fed)?.escalao) || null,
         cell: p => { const b = p.fed ? nossosByFed.get(p.fed) : undefined;

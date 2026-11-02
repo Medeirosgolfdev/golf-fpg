@@ -81,7 +81,7 @@ const PECAS = [
     <div class="h-md">Subtítulo — <code class="ds-code">.h-md</code></div>
     <div class="h-sm">Título pequeno — <code class="ds-code">.h-sm</code></div>
     <div class="h-xs">Rótulo em maiúsculas — <code class="ds-code">.h-xs</code></div>
-    <div class="mono">72 · 3,4 · −2 (números) — <code class="ds-code">.mono</code></div>
+    <div class="mono">72 · 3.4 · −2 (números) — <code class="ds-code">.mono</code></div>
     ${uso([".h-lg", ".h-md", ".h-sm", ".h-xs", ".mono"], "App.css")}
   </div>`,
   },
@@ -181,9 +181,9 @@ const PECAS = [
         <span class="trend-pill" style="background:var(--bg-success-subtle);color:var(--color-good-dark);border-color:var(--color-good-dark)">▲ a subir</span>
       </div>
       <div class="ds-row">
-        <span class="cor-dot" style="background:var(--chart-2)"></span><span class="cor-dot cor-dot-9" style="background:var(--chart-3)"></span><span class="cor-dot cor-dot-10" style="background:var(--chart-1)"></span>
+        <span class="cor-dot" style="background:var(--chart-2)"></span><span class="cor-dot cor-dot-9" style="background:var(--chart-4)"></span><span class="cor-dot cor-dot-10" style="background:var(--chart-5)"></span>
         <span class="legend-dot" style="background:var(--chart-5)"></span>
-        <span class="p p-sd-excellent">2,1 SD</span><span class="p p-sd-good">4,8 SD</span><span class="p p-sd-poor">9,2 SD</span>
+        <span class="p p-sd-excellent">2.1 SD</span><span class="p p-sd-good">4.8 SD</span><span class="p p-sd-poor">9.2 SD</span>
         <span class="badge-evo-up">▲</span><span class="badge-evo-eq">=</span><span class="badge-evo-new">NOVO</span><span class="badge-wd">WD</span>
       </div>
       ${uso(["PosBadge / medalClass()", ".tier-pill", ".scoring-tag", ".src-link-tag", ".trend-pill", ".cor-dot", ".legend-dot"], "App.css")}
@@ -194,9 +194,9 @@ const PECAS = [
     titulo: "Números",
     html: `<div class="ds-box">
     <div class="kpi-row">
-      <div class="kpi"><div class="kpi-lbl">Índice</div><div class="kpi-val">6,4</div><div class="kpi-sub">−3,2 em 12m</div></div>
+      <div class="kpi"><div class="kpi-lbl">Índice</div><div class="kpi-val">6.4</div><div class="kpi-sub">−3.2 em 12m</div></div>
       <div class="kpi"><div class="kpi-lbl">Voltas</div><div class="kpi-val">187</div><div class="kpi-sub">34 campos</div></div>
-      <div class="kpi" style="border-left:4px solid var(--color-good)"><div class="kpi-lbl">Melhor SD</div><div class="kpi-val" style="color:var(--color-good)">4,2</div><div class="kpi-delta" style="color:var(--color-good)">−1,1 vs média</div></div>
+      <div class="kpi" style="border-left:4px solid var(--color-good)"><div class="kpi-lbl">Melhor SD</div><div class="kpi-val" style="color:var(--color-good)">4.2</div><div class="kpi-delta" style="color:var(--color-good)">−1.1 vs média</div></div>
     </div>
     ${uso(["KpiCard", ".kpi-row"], "ui/KpiCard.tsx")}
   </div>`,
@@ -209,9 +209,9 @@ const PECAS = [
       <table class="dtable u-w-100pc">
         <thead><tr><th>Jogador</th><th>Clube</th><th class="r">HCP</th></tr></thead>
         <tbody>
-          <tr class="row-manuel"><td>Manuel Medeiros</td><td>Santo da Serra</td><td class="r">6,4</td></tr>
-          <tr class="row-portuguese"><td>Jogador português</td><td>Oporto</td><td class="r">5,1</td></tr>
-          <tr><td>Outro jogador</td><td>Real Madrid</td><td class="r">3,9</td></tr>
+          <tr class="row-manuel"><td>Manuel Medeiros</td><td>Santo da Serra</td><td class="r">6.4</td></tr>
+          <tr class="row-portuguese"><td>Jogador português</td><td>Oporto</td><td class="r">5.1</td></tr>
+          <tr><td>Outro jogador</td><td>Real Madrid</td><td class="r">3.9</td></tr>
         </tbody>
       </table>
       ${uso([".dtable", ".row-manuel", ".row-portuguese", "SortableHdr", "RankingTable"], "App.css «MODELO ÚNICO DAS TABELAS»")}

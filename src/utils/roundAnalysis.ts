@@ -21,7 +21,7 @@ const gross = (r: ARound) => sum(r.scores);
 const toPar = (r: ARound) => gross(r) - sum(r.par);
 const fmtTP = (v: number) => (v > 0 ? `+${v}` : v === 0 ? "par" : String(v));
 const pl = (n: number, s: string, p = `${s}s`) => `${n} ${n === 1 ? s : p}`;
-const fmt1 = (v: number) => v.toFixed(1).replace(".", ",");
+const fmt1 = (v: number) => v.toFixed(1);
 const fmtAvg = (v: number) => (v > 0 ? `+${fmt1(v)}` : fmt1(v));
 
 function count(r: ARound, from = 0, to = r.scores.length): Cnt {

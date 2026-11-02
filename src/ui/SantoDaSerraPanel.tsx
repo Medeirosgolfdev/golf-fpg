@@ -236,7 +236,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                   </tr>
                   {isOpen && (
                     <tr>
-                      <td colSpan={8} className="u-p-0-12px-14px-36px u-bg-jqabh">
+                      <td colSpan={8} className="u-p-0-12px-14px-36px u-bg-bg-info-subtle">
                         <table className="dtable dtable-sm u-mt-4px">
                           <thead>
                             <tr>

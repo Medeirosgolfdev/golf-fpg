@@ -82,7 +82,7 @@ export interface ThreatInfo { score: number; level: ThreatLevel; reasons: string
 const clamp = (v: number, lo: number, hi: number) => (v < lo ? lo : v > hi ? hi : v);
 function fmtMargin(n: number): string {
   const r = Math.round(n * 10) / 10;
-  return (Number.isInteger(r) ? String(r) : r.toFixed(1)).replace(".", ",");
+  return (Number.isInteger(r) ? String(r) : r.toFixed(1));
 }
 
 export function computeThreat(a: ThreatArgs): ThreatInfo {

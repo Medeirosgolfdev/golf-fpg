@@ -29,7 +29,7 @@ type RoundSel = "grupo" | "total" | number;
 
 // Letra, cabeçalho, linhas e separadores vêm da .dtable (modelo único das tabelas).
 
-const tpTxt = (tp: number | null | undefined) => (tp == null ? "" : tp === 0 ? "PAR" : tp > 0 ? `+${tp}` : String(tp));
+const tpTxt = (tp: number | null | undefined) => fmtToPar(tp, "");
 const isEu = (p: TsPlayer) => (p.fed ? p.fed === MANUEL_FED : isManuelByName(p.name));
 const sumBpb = (xs: (Bpb | null)[]): Bpb | null => {
   const ok = xs.filter((x): x is Bpb => !!x);

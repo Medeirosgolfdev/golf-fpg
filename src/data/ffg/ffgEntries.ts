@@ -55,7 +55,7 @@ export function withMeritePcc(sc: FFGSerieCourse): FFGSerieCourse {
   if (!s || sc.pcc || sc.courseRating == null || s.hi - s.lo > 1.5) return sc;
   const pcc = Math.round(s.sss - sc.courseRating);
   if (pcc < -1 || pcc > 3) return sc;
-  const nota = `PCC ${fmtSign(pcc)} = SSS da FFG ${s.sss.toFixed(1).replace(".", ",")} (Mérite Jeunes, ${s.n} jogador${s.n === 1 ? "" : "es"}) − CR ${sc.courseRating.toFixed(1).replace(".", ",")}; igual nas voltas todas.`;
+  const nota = `PCC ${fmtSign(pcc)} = SSS da FFG ${s.sss.toFixed(1)} (Mérite Jeunes, ${s.n} jogador${s.n === 1 ? "" : "es"}) − CR ${sc.courseRating.toFixed(1).replace(".", ",")}; igual nas voltas todas.`;
   return { ...sc, pcc: [pcc, pcc, pcc, pcc], pccNota: nota,
     ratingNota: `${(sc.ratingNota ?? "").replace(" Assume PCC 0.", "")} ${nota}`.trim() };
 }

@@ -78,7 +78,7 @@ export default function ContestLeaderboard({ contest, evo }: ContestLeaderboardP
 
 /* ── Evolução 2025 → 2026 ── */
 
-const deltaColor = (d: number, worse: string) => (d < 0 ? "var(--good-dark)" : d > 0 ? worse : "var(--text-3)");
+const deltaColor = (d: number, worse: string) => (d < 0 ? "var(--color-good-dark)" : d > 0 ? worse : "var(--text-3)");
 
 function ManuelEvo({ evo }: { evo: EvoEntry[] }) {
   const m = evo.find((e) => e.n.includes("Manuel"));
@@ -92,15 +92,15 @@ function ManuelEvo({ evo }: { evo: EvoEntry[] }) {
           <div className="fw-900 fs-24">{m.y25}</div>
           <div className="muted fs-10">{m.from}</div>
         </div>
-        <div className="fs-24 u-c-good-dark">→</div>
+        <div className="fs-24 u-c-color-good-dark">→</div>
         <div className="ta-c u-fl-1-1-100px">
           <div className="muted fs-10">2026</div>
-          <div className="fw-900 fs-24" style={{ color: m.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{m.y26}</div>
+          <div className="fw-900 fs-24" style={{ color: m.delta < 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>{m.y26}</div>
           <div className="muted fs-10">{m.to}</div>
         </div>
         <div className="ta-c u-fl-1-1-80px">
           <div className="muted fs-10">Δ</div>
-          <div className="fw-900 fs-24" style={{ color: m.delta < 0 ? "var(--good-dark)" : SC.danger }}>
+          <div className="fw-900 fs-24" style={{ color: m.delta < 0 ? "var(--color-good-dark)" : SC.danger }}>
             {m.delta > 0 ? "+" : ""}{m.delta}
           </div>
           <div className="muted fs-10">pancadas</div>

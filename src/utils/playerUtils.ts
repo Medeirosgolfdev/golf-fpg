@@ -6,7 +6,7 @@
  */
 
 import type { Player } from "../data/types";
-import { displayName } from "./format";
+import { displayName, fmtHcp } from "./format";
 import { stripAccents } from "./normName";
 
 /** Nome curto do clube (aceita string ou objecto {short, long}) */
@@ -21,11 +21,9 @@ export function clubLong(p: Player): string {
   return String(p.club || "");
 }
 
-/** Formata handicap para display PT: "12,3" ou "—"
- *  Nota: para contexto de torneio com sinal (+/−), usar fmtHcp de format.ts */
+/** Handicap para mostrar: "12.3", "+1.2" (plus) ou "—" — o mesmo do fmtHcp. */
 export function hcpDisplay(hcp: number | null | undefined): string {
-  if (hcp == null) return "—";
-  return hcp.toFixed(1).replace(".", ",");
+  return fmtHcp(hcp);
 }
 
 /**

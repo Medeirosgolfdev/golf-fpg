@@ -234,7 +234,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
           <span className="u-bg-medal-bronze-bg u-c-medal-bronze-fg u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10">🏆 #3</span> bronze
         </span>
         <span className="u-d-inline-flex u-ai-center u-gap-4px">
-          <span className="u-bg-var-bg-success-subtle-ecfdf5 u-bd-ci9jy u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10">±N</span>
+          <span className="u-bg-bg-success-subtle u-bd-ci9jy u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10">±N</span>
           diff vs Manuel
         </span>
         <span className="u-ml-auto">
@@ -430,7 +430,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
       </td>
       <td className="u-ta-right">
         {r.vsManuelDiff != null && (
-          <span className="u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10 u-bd-ci9jy"
+          <span className="u-bg-bg-success-subtle u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10 u-bd-ci9jy"
             title={r.manuelPos != null ? `Manuel ficou em #${r.manuelPos}` : "Manuel também jogou"}>
             {r.vsManuelDiff === 0 ? "0" : r.vsManuelDiff > 0 ? `+${r.vsManuelDiff}` : String(r.vsManuelDiff)}
           </span>

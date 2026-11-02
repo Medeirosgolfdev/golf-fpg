@@ -28,7 +28,7 @@ export function TrendBadge({ trend, delta }: { trend: string | null; delta: numb
   if (!trend || trend === "stable") return <span className="muted fs-11" >–</span>;
   const up = trend === "up";
   return (
-    <span style={{ color: up ? "var(--color-good)" : "var(--color-bad)", fontWeight: 700, fontSize: "var(--fs-13)" }}
+    <span style={{ color: up ? "var(--color-good)" : "var(--color-danger)", fontWeight: 700, fontSize: "var(--fs-13)" }}
       title={delta != null ? `${fmtSign(delta, 1)} (3m)` : ""}>
       {up ? "↓" : "↑"}
     </span>

@@ -232,7 +232,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
           </div>
           <div className="u-fs-fs-10 u-c-text-3 u-mt-1px">
             {editions.length} {editions.length === 1 ? "edição" : "edições"}
-            {wins > 0 && <> · <span className="u-c-1b214 u-fw-700">🏆 {wins}</span></>}
+            {wins > 0 && <> · <span className="u-c-color-warn-dark u-fw-700">🏆 {wins}</span></>}
             {podiums > wins && <> · {podiums} pódios</>}
             {fmtYearRange(editions)}
           </div>
@@ -299,7 +299,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                     {manuel && manuel.id !== ed.result.juniorId && (
                       <td className="u-ta-center">
                         {manuelPos != null ? (
-                          <span title={`Manuel ficou em #${manuelPos} neste torneio`} className="u-fs-fs-10 u-p-1px-4px u-br-radius-sm u-bg-var-bg-success-subtle-ecfdf5 u-c-color-good-dark u-fw-700 u-bd-1px-solid-color-good-dark u-ws-nowrap">★M #{manuelPos}</span>
+                          <span title={`Manuel ficou em #${manuelPos} neste torneio`} className="u-fs-fs-10 u-p-1px-4px u-br-radius-sm u-bg-bg-success-subtle u-c-color-good-dark u-fw-700 u-bd-1px-solid-color-good-dark u-ws-nowrap">★M #{manuelPos}</span>
                         ) : MUTED}
                       </td>
                     )}

@@ -22,7 +22,7 @@ const serieCourseKey = (label: string): string => {
   return alias[k] || k;
 };
 
-const fmtCr = (v: number) => v.toFixed(1).replace(".", ",");
+const fmtCr = (v: number) => v.toFixed(1);
 const faixa = (a: number, b: number, f: (v: number) => string) => (a === b ? f(a) : `${f(a)}–${f(b)}`);
 
 /** CR/Slope do tee por fonte: o do organizador (RMS9) e o que se deduz do
@@ -41,7 +41,7 @@ export function ratingFontes(sc: FFGSerieCourse | null | undefined): NonNullable
   if (s) out.push({ fonte: "SSS FFG", cr: fmtCr(s.sss), slope: "",
     title: `SSS que a FFG usou nesta série (Mérite Jeunes): média das voltas − média vs SSS, mediana de ${s.n} jogador${s.n === 1 ? "" : "es"}`
       + (s.n > 1 ? ` (${fmtCr(s.lo)} a ${fmtCr(s.hi)})` : "")
-      + (sc.courseRating != null ? `. SSS − CR = ${(s.sss - sc.courseRating).toFixed(1).replace(".", ",")} (PCC médio da prova)` : "") });
+      + (sc.courseRating != null ? `. SSS − CR = ${(s.sss - sc.courseRating).toFixed(1)} (PCC médio da prova)` : "") });
   return out;
 }
 

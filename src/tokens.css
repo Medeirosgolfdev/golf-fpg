@@ -61,15 +61,12 @@
 
   --bg-current:       #e0f7fa;   /* jogador atual no leaderboard */
   --bg-female:        #f0f4ff;   /* linha/card feminino */
-  --bg-female-hover:  #e8eeff;
   --bg-purple:        #f0edf5;
   --bg-pink:          #fdf2f8;  /* USKids — categoria especial / regional */
   --bg-warn-orange:   #fff3e0;  /* USKids — aviso laranja suave */
   --bg-code:          rgba(59, 130, 246, 0.10);
   --bg-note-warn:     rgba(146, 64, 14, 0.05);
   --bg-note-warn-strong: rgba(146, 64, 14, 0.08);
-  --bg-gold-subtle:   rgba(255, 215, 0, 0.06);   /* linha de campeão / destaque ouro */
-  --bg-gold-hover:    rgba(255, 215, 0, 0.12);
 
   --bg-rnd:           #e8f2e4;   /* colunas de ronda no leaderboard multi-ronda */
   --bg-rnd-stats:     #f5f9f3;
@@ -82,21 +79,17 @@
 
   /* ── 2. Text / Greyscale ───────────────────────────────────── */
   --text:       #1c2617;
-  --text-1:     #1c2617;         /* texto primário forte (valores KPI, ênfase) */
+  --text-1:     var(--text);     /* sinónimo antigo de --text (mesmo valor) */
   --text-2:     #4a5940;
   --text-3:     #7a8a6e;
   --text-inv:   #e8eddf;         /* texto sobre fundo escuro */
-  --text-muted: #9aab8e;
+  --text-muted: var(--text-3);   /* um só cinzento esbatido (decisão de 02/11/2026); era #9aab8e */
   --text-dark:  #3a4a2e;
   --text-on-color: #fff;
   --pill-om-bg:    #a16207;  /* Ordem de Mérito CGSS — pill dourada */     /* texto sobre um fundo de cor cheia (eventos do calendário, pills) */
 
   --grey-900:   #111;
-  --grey-700:   #374151;         /* texto cinza médio-escuro */
-  --grey-500:   #666;
-  --grey-400:   #888;
   --grey-300:   #999;
-  --grey-200:   #ddd;
 
 
   /* ── 3. Accent (verde FPG) ─────────────────────────────────── */
@@ -125,19 +118,13 @@
   --color-danger-dark:   #991b1b;
   --color-danger-vivid:  #b91c1c;  /* vermelho médio — rivalidades/confrontos USKids */
   --color-info:          #1e40af;
-  --color-info-alt:      #0369a1;
-  --color-info-dark:     #0369a1;  /* alias de info-alt — usar indistintamente */
+  --color-info-dark:     #0369a1;  /* azul escuro de informação (era também --color-info-alt) */
 
   /* ── Cores de circuito ───────────────────────────────────── */
-  --color-eowagr-dark:   #8a6200;   /* EOWAGR sidebar header background */
-  --color-eowagr-mid:    #e09820;   /* EOWAGR year label background */
-  --color-eowagr-text:   #fff8e1;   /* EOWAGR text (claro sobre âmbar escuro) */
-  --color-bjgt-mid:      #4a9b6f;   /* BJGT year label background */
   --color-doral-dark:    #1a5276;   /* Doral/FTM Miami sidebar header */
   --color-doral-mid:     #2980b9;   /* Doral border accent */
   --color-doral-text:    #d6eaf8;   /* Doral text (claro sobre azul escuro) */
   --color-ffg-dark:      #002654;   /* FFG/France sidebar header — bleu de France */
-  --color-ffg-text:      #ffffff;   /* FFG text (branco sobre azul) */
   --pill-level-fg:       #ffffff;   /* OM CGSS — texto dos pills de nível A/B/C (fundo cheio) */
   --color-rfeg-red:      #aa151b;   /* RFEG/Espanha — rojo de la bandera */
   --color-rfeg-yellow:   #f1bf00;   /* RFEG/Espanha — gualda (amarelo da bandeira) */
@@ -243,16 +230,9 @@
 
 
   /* ── 8. Charts / Data-viz (10 séries) ─────────────────────── */
-  --chart-1:   #16a34a;   /* verde — primário */
   --chart-2:   #2563eb;   /* azul */
-  --chart-3:   #dc2626;   /* vermelho */
   --chart-4:   #d97706;   /* âmbar */
   --chart-5:   #7c3aed;   /* roxo */
-  --chart-6:   #0891b2;   /* ciano */
-  --chart-7:   #be185d;   /* rosa */
-  --chart-8:   #65a30d;   /* lima */
-  --chart-9:   #c2410c;   /* ferrugem */
-  --chart-10:  #6366f1;   /* índigo */
 
   /* Variantes claras das 4 primeiras séries — fundos de série (cards/células
    * de comparação). Mesmos hex dos --bg-*-strong correspondentes, mas com
@@ -361,7 +341,7 @@
      ≠ das cores kids2 (11b) de propósito: são as que as páginas usavam.
      Espelhadas em colors.ts (C.major, C.majorSrc, C.ffgSrc, C.rfegSrc) —
      o shell decide o texto preto/branco pelo hex. */
-  --color-major: #b8860b;   /* ouro-escuro — cabeçalho da /major */
+  --color-major:     #b8860b;   /* espelho de C.major (colors.ts) — o teste circuit-source-colors confere */
   --major-src-doral: #c8102e;
   --major-src-bjgt: #1a7f5a;
   --major-src-eowagr: #0a4d8c;
@@ -403,24 +383,13 @@
   /* ── 12. Borders ───────────────────────────────────────────── */
   --border:               #bcc5ad;
   --border-light:         #d5dac9;
-  --border-subtle:        var(--border-light);
   --border-success:       #bbf7d0;
   --border-warn:          #fde68a;
   --border-info:          #bfdbfe;
   --border-danger:        #fca5a5;
-  --border-current-good:  #16a34a;   /* jogador atual em destaque verde */
 
 
-  /* ── 13. Aliases de retrocompatibilidade ───────────────────── */
-  /* Mantidos para não quebrar código existente.
-     Usar sempre os tokens canónicos em código novo. */
-  --color-bad:     var(--color-danger);
-  --color-success: var(--color-good);
-  --danger:        var(--color-danger);
-  --good:          var(--color-good);
-  --good-dark:     var(--color-good-dark);
-  --line:          var(--border);
-
+  /* ── 13. Superfícies avulsas ──────────────────────────────── */
   /* Superfícies que o código usava sem token (auditoria 20/10/2026). */
   --bg-stripe:      rgba(0, 0, 0, 0.02);   /* zebra muito suave de linhas de tabela */
   --bg-neutral:     #e5e7eb;               /* superfície cinzenta neutra */
@@ -482,7 +451,6 @@
   /* Aliases semânticos (preferir em componentes novos). */
 
   /* Pesos. */
-  --fw-400: 400;
   --fw-500: 500;
   --fw-600: 600;
   --fw-700: 700;

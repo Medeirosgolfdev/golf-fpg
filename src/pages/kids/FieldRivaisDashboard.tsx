@@ -1971,7 +1971,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
               const totalKey = `${e.year}_T`;
               cells.push(
               <SortableHdr key={totalKey} k={totalKey} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
-                  className="u-p-3px-6px u-ta-center u-fs-fs-10 u-bg-var-bg-card-bg u-w-44px u-minw-44px">
+                  className="u-p-3px-6px u-ta-center u-fs-fs-10 u-bg-bg-card u-w-44px u-minw-44px">
                   T
                 </SortableHdr>
               );
@@ -2040,7 +2040,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                           </ExtLink>
                           {entry.officialPlace == null && (
                             <span title="Sem classificação oficial (IE / DSQ / WD)"
-                                  className="u-fs-fs-8 u-p-0-4px u-br-radius-sm u-bg-var-bg-danger-subtle-fecaca u-c-var-color-danger-dark-991b1b u-fw-700 u-ls-0_3px">
+                                  className="u-fs-fs-8 u-p-0-4px u-br-radius-sm u-bg-var-bg-danger-subtle-fecaca u-c-color-danger-dark u-fw-700 u-ls-0_3px">
                               IE
                             </span>
                           )}

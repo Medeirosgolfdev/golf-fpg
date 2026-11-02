@@ -309,7 +309,7 @@ function RivalRow({ junior, manuel, selected, onSelect, sharedCount }: {
       <div className="u-pl-19px u-d-flex u-ai-center u-gap-6px u-fs-fs-10 u-c-text-3 u-mt-2px">
         {club && <span className="u-ov-hidden u-tov-ellipsis u-ws-nowrap">🏌️ {club}</span>}
         {shared > 0 && (
-          <span className="u-ml-auto u-p-0-4px u-br-radius-sm u-bg-var-bg-warn-subtle-bg-warn u-c-1b214 u-fw-700">
+          <span className="u-ml-auto u-p-0-4px u-br-radius-sm u-bg-var-bg-warn-subtle-fef3c7 u-c-color-warn-dark u-fw-700">
             {shared}× M
           </span>
         )}

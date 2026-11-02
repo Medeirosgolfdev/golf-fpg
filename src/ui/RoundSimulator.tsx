@@ -1359,7 +1359,7 @@ export function RoundSimulator({
                             sdInput: e.target.value,
                           })
                         }
-                        className="u-w-90px u-p-4px-8px u-br-radius u-bd-1px-solid-line u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
+                        className="u-w-90px u-p-4px-8px u-br-radius u-bd-1px-solid-border u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
                       />
                     </label>
                     {is9 && (() => {
@@ -1401,7 +1401,7 @@ export function RoundSimulator({
                             width: f === "par" ? 56 : 74,
                             padding: "4px 8px",
                             borderRadius: "var(--radius)",
-                            border: "1px solid var(--line)",
+                            border: "1px solid var(--border)",
                             background: "var(--bg-card)",
                             color: "var(--text-1)",
                             fontFamily: "inherit",
@@ -1425,7 +1425,7 @@ export function RoundSimulator({
                         onChange={(e) =>
                           updateRound(round.id, { grossInput: e.target.value })
                         }
-                        className="u-w-80px u-p-4px-8px u-br-radius u-bd-1px-solid-line u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
+                        className="u-w-80px u-p-4px-8px u-br-radius u-bd-1px-solid-border u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
                       />
                     </label>
                     {computedSdRaw != null && !is9 && (
@@ -1529,7 +1529,7 @@ export function RoundSimulator({
                             grossInput: e.target.value,
                           })
                         }
-                        className="u-w-80px u-p-4px-8px u-br-radius u-bd-1px-solid-line u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
+                        className="u-w-80px u-p-4px-8px u-br-radius u-bd-1px-solid-border u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
                       />
                     </label>
                     {computedSdRaw != null && !is9 && (
