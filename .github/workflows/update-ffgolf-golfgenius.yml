@@ -47,7 +47,7 @@ concurrency:
 jobs:
   update-ffgolf-golfgenius:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 75   # Playwright (~30 min) + fetch do ano todo (~15 min)
 
     steps:
       - name: Checkout
@@ -102,18 +102,22 @@ jobs:
           echo "Args: $ARGS"
           node scripts/scrape-ffgolf.js $ARGS || [ $? -eq 2 ]
 
-      - name: Rota fetch p/ torneios sem leaderboard no iframe
+      - name: Rota fetch (ganha ao Playwright)
         # Alguns torneios (Internationaux U14, Grand Prix National U12…) embebem o
         # widget `next_round` em vez do leaderboard → o scrape-ffgolf.js (Playwright)
         # devolve 0 jogadores. Esta rota vai directa ao `tournament_results` da league
-        # por `fetch` puro. Só toca nos slugs que ficaram sem ficheiro/vazios.
+        # por `fetch` puro.
+        # --force (02/11/2026): regrava TODOS os do ano, como o update-ffgolf-teesheet
+        # faz todas as noites. O Playwright punha os 36 rapazes do Junior Invitational
+        # na divisão das raparigas e numerava pela linha da tabela quem não tem lugar,
+        # e isso ficava à vista até à noite. Onde o fetch falha, fica o do Playwright.
         # Exit code 2 = nada novo (não é erro).
         run: |
-          ARGS=""
+          ARGS="--force"
           if [ -n "${{ github.event.inputs.year }}" ]; then
-            ARGS="--year ${{ github.event.inputs.year }}"
+            ARGS="$ARGS --year ${{ github.event.inputs.year }}"
           else
-            ARGS="--year $(date -u +%Y)"
+            ARGS="$ARGS --year $(date -u +%Y)"
           fi
           if [ -n "${{ github.event.inputs.slug }}" ]; then
             ARGS="$ARGS --slug ${{ github.event.inputs.slug }}"

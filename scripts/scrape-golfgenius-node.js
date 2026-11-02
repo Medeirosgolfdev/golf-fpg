@@ -92,10 +92,14 @@ function roundNum(label) { const m = label.match(/round\s+(\d+)/i); return m ? +
 // no regex e cada ronda virava uma DIVISÃO falsa (Reid Trophy 2026, quando o
 // GG acrescentou o <select> de rondas a meio da prova — o ficheiro ficou com
 // "Round 1"/"Round 2" como escalões, cada um com o leaderboard inteiro).
+// O divisionBase corta «Final Round» em «Final» (o corte é a partir de
+// « Round»), por isso «Final» sozinho também é só a ronda — sem isto o Junior
+// Invitational 2026 (Sage Valley) saía com 4 «escalões», um por ronda, todos
+// do evento das raparigas, e os rapazes desapareciam (02/11/2026).
 function isRoundOnlyLabel(label) {
   const noParen = (label || '').replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
   const base = divisionBase(noParen);
-  return !base || /^(final\s+round|round\s+\d+)$/i.test(base);
+  return !base || /^(final(\s+round)?|round\s+\d+)$/i.test(base);
 }
 
 // Divisões que NÃO são o campeonato stroke-play por escalão (scrambles, side
@@ -1230,4 +1234,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { applyFpgFederados, applyPlayerOverrides, discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };
+module.exports = { applyFpgFederados, applyPlayerOverrides, discoverDivisions, isRoundOnlyLabel, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };
