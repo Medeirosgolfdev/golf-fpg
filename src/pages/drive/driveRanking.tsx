@@ -22,8 +22,7 @@ import type { Sub12View } from "../../data/drive/driveUrl";
 import { escalaoCanon } from "../../data/model/escalao";
 import type { TemporalEscLookup } from "../../data/fpgUtils";
 import { ESCALOES_DRIVE } from "../../constants/escaloes";
-import { fmtToPar, fmtHcp, medal, shortDateSlash, todayIso } from "../../utils/format";
-import { sdClassByHcp } from "../../utils/scoreDisplay";
+import { fmtHcp, medal, shortDateSlash, todayIso } from "../../utils/format";
 import { flagOrEmpty, isPtCountry } from "../../utils/flagUtils";
 import { C } from "../../utils/colors";
 import { norm } from "../../utils/format";
@@ -31,7 +30,8 @@ import SexBadge from "../../ui/SexBadge";
 import KpiCard from "../../ui/KpiCard";
 import PlayerLink from "../../ui/PlayerLink";
 import TournamentGrid from "../../ui/TournamentGrid";
-import type { PlayersDB } from "../../ui/tournamentPrimitives";
+import { SDPill, type PlayersDB } from "../../ui/tournamentPrimitives";
+import ToPar from "../../ui/ToPar";
 import type { EscLookup, Sub12Row, TournResult } from "../../ui/driveTypes";
 import TabRow from "../../ui/TabRow";
 import CloseButton from "../../ui/CloseButton";
@@ -45,14 +45,6 @@ import type { DriveCalEntry } from "../../data/drive/driveCalendar";
 export const SERIE_LABELS: Record<DriveSeries, string> = { tour: "Tour", challenge: "Challenge", aquapor: "AQUAPOR" };
 
 /* ── Peças pequenas ─────────────────────────────────────────────── */
-function SdSpan({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
-  if (sd == null) return MUTED;
-  return <span className={"p p-sm fs-11 p-" + sdClassByHcp(sd, hcp ?? null)}>{sd.toFixed(1)}</span>;
-}
-function ToParSpan({ tp }: { tp: number | null }) {
-  if (tp == null) return MUTED;
-  return <span className={"fw-700 fs-11" + (tp < 0 ? " c-good" : tp > 0 ? " c-danger" : "")}>{fmtToPar(tp)}</span>;
-}
 
 /** O `ccode|tcode|data` de um torneio (sem sufixo de volta). */
 const tkeyOf = (t: { ccode?: string | null; tcode?: string | null; date?: string | null }) =>
@@ -116,8 +108,8 @@ const RESULT_COLS: RankingCol<TournResult>[] = [
   { key: "pos", label: "Pos", className: "num", sort: r => typeof r.pos === "number" ? r.pos : 999, firstDir: "asc",
     cell: r => <span className="mono">{r.pos ?? "–"}<span className="c-muted fs-10">/{r.totalPlayers}</span></span> },
   { key: "gross", label: "Gross", className: "num", sort: r => r.gross, firstDir: "asc", cell: r => <span className="mono fw-700">{r.gross}</span> },
-  { key: "toPar", label: "±Par", className: "num", sort: r => r.toPar, firstDir: "asc", cell: r => <ToParSpan tp={r.toPar} /> },
-  { key: "sd", label: "SD", className: "num", sort: r => r.sd ?? 999, firstDir: "asc", cell: r => <SdSpan sd={r.sd} /> },
+  { key: "toPar", label: "±Par", className: "num", sort: r => r.toPar, firstDir: "asc", cell: r => <ToPar v={r.toPar} className="fs-11" /> },
+  { key: "sd", label: "SD", className: "num", sort: r => r.sd ?? 999, firstDir: "asc", cell: r => <SDPill sd={r.sd} /> },
   { key: "pts", label: "Pts", className: "num", sort: r => r.pts, firstDir: "desc", cell: r => r.pts || "–" },
 ];
 
@@ -194,7 +186,7 @@ function cols(rows: Sub12Row[], withEsc: boolean, pdb: PlayersDB): RankingCol<Su
     { key: "t", label: "T", title: "Torneios jogados", className: "num", sort: r => r.tourneiosPlayed, firstDir: "desc", cell: r => <span className="mono">{r.tourneiosPlayed}</span> },
     { key: "pts", label: "Pts", title: "Pontos do Drive: as 4 melhores da fase regular + a Final regional ×1,5", className: "num", sort: r => r.totalPts, firstDir: "desc",
       cell: r => <span className="fw-800 drive-pts">{r.totalPts}</span> },
-    { key: "bestSD", label: "Best SD", className: "num", sort: r => r.bestSD ?? 999, firstDir: "asc", cell: r => <SdSpan sd={r.bestSD} hcp={r.hcp} /> },
+    { key: "bestSD", label: "Best SD", className: "num", sort: r => r.bestSD ?? 999, firstDir: "asc", cell: r => <SDPill sd={r.bestSD} hcp={r.hcp} /> },
     { key: "best", label: "Melhor", className: "num", sort: r => r.bestGross ?? 999, firstDir: "asc", cell: r => <span className="mono fw-700 c-good-dark">{r.bestGross ?? "–"}</span> },
   ];
 }

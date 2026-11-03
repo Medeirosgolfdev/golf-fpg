@@ -190,15 +190,27 @@ export function escClassOf(esc: string | null | undefined): string | null {
 /** Escalão — usa classes CSS globais (.p-sub14, etc.).
  *  Aceita também termos da RFEG (Alevín, Benjamín, etc.) → mapeados ao Sub-N
  *  equivalente para herdar a cor canónica do projecto. */
-export function EscPill({ esc }: { esc: string }) {
+export function EscPill({ esc, label }: { esc: string; /** Texto a mostrar, se não for o próprio escalão (ex.: «Sub-12 · USKids»). */ label?: string }) {
   if (!esc) return null;
   const key = esc.toLowerCase().replace(/[\s-]/g, "");
   // 1) Termos espanhois (Alevín, etc.), Sub-N directo ou escalão adulto
   const cls = escClassOf(esc);
-  if (cls) return <span className={`p p-sm ${cls}`}>{esc}</span>;
+  if (cls) return <span className={`p p-sm ${cls}`}>{label ?? esc}</span>;
   // 3) Fallback inline style
   const s = ESC_STYLE[key] ?? ESC_STYLE.default;
-  return <span className="p p-sm" style={{ background: s.bg, color: s.color, borderColor: "transparent" }}>{esc}</span>;
+  return <span className="p p-sm" style={{ background: s.bg, color: s.color, borderColor: "transparent" }}>{label ?? esc}</span>;
+}
+
+/** Circuito de origem de um torneio/jogador (FPG · USKids · Internacional) — Draws. */
+export type Circuito = "FPG" | "USKids" | "Intl";
+const CIRCUIT_PILL: Record<Circuito, { emoji: string; label: string; title: string; cls: string }> = {
+  FPG:    { emoji: "🇵🇹", label: "FPG",    title: "FPG",                            cls: "p-circ-fpg" },
+  USKids: { emoji: "🇺🇸", label: "USKids", title: "USKids",                         cls: "p-circ-uskids" },
+  Intl:   { emoji: "🌍", label: "Intl",   title: "Internacional (Bluegolf/Doral)", cls: "p-circ-intl" },
+};
+export function CircuitPill({ circ }: { circ: Circuito }) {
+  const p = CIRCUIT_PILL[circ];
+  return <span className={`p p-sm p-circ ${p.cls}`} title={p.title}>{p.emoji} {p.label}</span>;
 }
 
 /** REGIONAL / NACIONAL / INTL / PJA — substitui PillBadge.tsx */

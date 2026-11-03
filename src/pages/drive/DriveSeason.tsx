@@ -13,7 +13,7 @@
 import { useMemo, useState } from "react";
 import type { CircuitEntry } from "../../ui/circuit/types";
 import type { Sub12Row, TournResult } from "../../ui/driveTypes";
-import type { PlayersDB } from "../../ui/tournamentPrimitives";
+import { SDPill, type PlayersDB } from "../../ui/tournamentPrimitives";
 import { RankingTable, type RankingCol } from "../../ui/ranking/RankingPage";
 import TabRow from "../../ui/TabRow";
 import PlayerLink from "../../ui/PlayerLink";
@@ -29,7 +29,6 @@ import { shortCampo } from "../../data/drive/driveCircuitData";
 import { AnoEscalaoPill } from "../../ui/AnoEscalaoPill";
 import { MUTED } from "../../ui/tableCells";
 import { fmtHcp, medal, norm, shortDateSlash } from "../../utils/format";
-import { sdClassByHcp } from "../../utils/scoreDisplay";
 import { flagOrEmpty, isPtCountry } from "../../utils/flagUtils";
 import { ESCALOES_DRIVE } from "../../constants/escaloes";
 import type { DriveCalEntry } from "../../data/drive/driveCalendar";
@@ -127,7 +126,7 @@ function EtapaCell({ r, modal, bySex }: { r: TournResult | undefined; modal: { t
         {outroTee && <TeeSwatch tee={r.tee!} />}
       </span>
       {rounds.map((_, i) => sds[i] != null
-        ? <span key={"s" + i} className={"p p-sm aq-sd p-" + sdClassByHcp(sds[i]!, r.hcpExact ?? null)} title={`SD da ${i + 1}.ª volta`}>{sds[i]!.toFixed(1)}</span>
+        ? <SDPill key={"s" + i} sd={sds[i]!} hcp={r.hcpExact ?? null} className="aq-sd" title={`SD da ${i + 1}.ª volta`} />
         : <span key={"s" + i} className="aq-sd">{MUTED}</span>)}
       <span className="aq-pts">{r.pts ? r.pts : ""}</span>
     </div>

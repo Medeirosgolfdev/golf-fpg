@@ -16,11 +16,12 @@ import type { Tournament } from "../../data/fpgTypes";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import { TeeDot } from "../../ui/tournamentPrimitives";
 import { fmtToPar, fmtSign } from "../../utils/format";
-import { tpColorDark } from "../../utils/scoreDisplay";
+import ToPar from "../../ui/ToPar";
 import { normName } from "../../utils/normName";
 import { loadMasterData } from "../../data/loader";
 import { loadPlayerStats, type PlayerStatsDb } from "../../data/playerStatsTypes";
 import LoadingState from "../../ui/LoadingState";
+import { MUTED } from "../../ui/tableCells";
 import Scout, { type ScoutExtraCol } from "../../ui/circuit/Scout";
 import type { ScoutComManuel } from "../../ui/circuit/scoutModel";
 import type { FieldPlayer } from "../../ui/circuit/repeaters";
@@ -34,7 +35,7 @@ const n1 = (v: number | null | undefined) => (v == null ? "—" : v.toFixed(1));
 /** Forma WHS: differential médio das últimas 5 voltas (menos é melhor); o
  *  detalhe das 8 melhores e da média de 20 fica no tooltip. */
 function FormaCell({ f }: { f: PlayerForm | null }) {
-  if (!f || f.avgSD5 == null) return <>–</>;
+  if (!f || f.avgSD5 == null) return MUTED;
   return (
     <span
       title={`últimas 5 voltas: ${n1(f.avgSD5)} · 8 melhores de 20: ${n1(f.avgSD8)} · média de 20: ${n1(f.avgSD20)}\n`
@@ -153,7 +154,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
                 <b className="u-c-text">{e.year}</b>
                 {e.pos ? ` · ${e.pos}.º` : ""}
                 {e.total != null ? ` · ${e.total}` : ""}
-                {e.toPar != null ? <span style={{ color: tpColorDark(e.toPar) }}> {fmtToPar(e.toPar)}</span> : null}
+                {e.toPar != null ? <> <ToPar v={e.toPar} light /></> : null}
                 {e.hcpThen != null ? ` · índice ${e.hcpThen}` : ""}
                 <div>
                   {e.rounds.map((rd) => `R${rd.round} ${rd.gross}${rd.sd != null ? ` (SD ${rd.sd.toFixed(1)})` : ""}`).join(" · ")}
@@ -184,7 +185,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
             <div className="fw-700">Previsão</div>
             <div className="u-c-text-muted">
               {r.forecast.perRound} por volta · {r.forecast.total} no torneio
-              {r.forecast.toPar != null ? <span style={{ color: tpColorDark(r.forecast.toPar) }}> ({fmtToPar(r.forecast.toPar)})</span> : null}
+              {r.forecast.toPar != null ? <> <ToPar v={r.forecast.toPar} light prefix="(" suffix=")" /></> : null}
               <div>entre {r.forecast.low} e {r.forecast.high} · base: {r.forecast.basis}</div>
               {r.teeNow ? <div>tee de hoje: {r.teeNow}{r.forecast.teeKnown ? "" : " (rating desconhecido)"}</div> : null}
             </div>

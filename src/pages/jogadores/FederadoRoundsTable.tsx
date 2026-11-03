@@ -7,10 +7,11 @@
  */
 import { useMemo } from "react";
 import type { WhsRound } from "../../data/datagolfClient";
-import { fmtStb, sdClassByHcp } from "../../utils/scoreDisplay";
+import { fmtStb } from "../../utils/scoreDisplay";
+import { SDPill } from "../../ui/tournamentPrimitives";
 import { useSort } from "../../hooks/useSort";
 import ListaTabela, { type ListaColuna } from "../../ui/ListaTabela";
-import { HoleBadge, GrossCell } from "../../ui/tableCells";
+import { HoleBadge, GrossCell, MUTED } from "../../ui/tableCells";
 import TeePill from "../../ui/TeePill";
 import TeeDate from "../../ui/TeeDate";
 import { PillBadge } from "../../ui/PillBadge";
@@ -120,10 +121,7 @@ export default function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, e
       render: r => {
         const sdNum = r.score_differential != null ? Number(r.score_differential) : NaN;
         const hiRef = r.calc_hcp_index ?? r.calculated_exact_hcp ?? hcpRef ?? null;
-        const sdCls = isFinite(sdNum) && hiRef != null ? sdClassByHcp(sdNum, Number(hiRef)) : "";
-        return isFinite(sdNum)
-          ? <span className={sdCls ? `p p-${sdCls}` : ""}>{r.score_differential}</span>
-          : (r.score_differential ?? "");
+        return isFinite(sdNum) ? <SDPill sd={sdNum} hcp={hiRef != null ? Number(hiRef) : null} /> : MUTED;
       },
     },
     {

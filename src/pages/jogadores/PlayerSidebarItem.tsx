@@ -11,7 +11,8 @@ import { hcpDisplay } from "../../utils/playerUtils";
 import { gf, isForeignPrefix } from "../../utils/flagUtils";
 import SexBadge from "../../ui/SexBadge";
 import { PillBadge, EscPill, SIDEBAR_ACCENT } from "../../ui/PillBadge";
-import { HCP_UNESTABLISHED_THRESHOLD, type EscHcpStats } from "./filterPlayers";
+import type { EscHcpStats } from "./filterPlayers";
+import HcpPill from "../../ui/HcpPill";
 
 export type PlayerSidebarPlayer = {
   name: string;
@@ -30,64 +31,6 @@ export type PlayerSidebarPlayer = {
 const PlayerSidebarSep = () => (
   <div className="u-h-0_5px u-bg-border-light u-m-4px-0" />
 );
-
-/** Pill HCP com 3 níveis de destaque relativamente ao escalão:
- *   - TOP 25%  → verde (standout — "dos melhores do escalão")
- *   - MEIO 50% → pill neutro (estado maioritário e "normal")
- *   - BOTTOM 25% → outline esmaecido ("abaixo do escalão")
- *
- *  Usa percentis dentro do mesmo escalão para remover a falsa hierarquia
- *  do "HCP baixo = melhor em absoluto" (um Sub-10 com HCP 25 pode ser dos
- *  melhores do escalão; um Sub-18 com 15 pode ser dos piores do seu).
- *
- *  Nota de design: experimentámos 4 níveis (quartis) mas era confuso —
- *  dois jogadores com HCP 11.8 e 11.9 podiam cair em quartis adjacentes
- *  e mudar de cor por ruído estatístico. Com 3 níveis, só o topo e o
- *  fundo têm sinal visual, os 50% do meio ficam todos iguais. */
-export function HcpPill({ hcp, escHcps }: { hcp: number | null; escHcps?: EscHcpStats }) {
-  if (hcp == null || !isFinite(hcp)) return null;
-
-  // Caso especial: HI ainda não estabelecido (jogador em formação)
-  if (hcp >= HCP_UNESTABLISHED_THRESHOLD) {
-    return (
-      <span
-        className="p p-sm u-bg-transparent u-c-text-3 u-border-color-transparent"
-
-        title={`HCP ${hcpDisplay(hcp)} — HI ainda não estabelecido (jogador em formação, excluído das stats do escalão)`}
-      >
-        HCP {hcpDisplay(hcp)}
-      </span>
-    );
-  }
-
-  let style: React.CSSProperties;
-  let tooltip = `HCP ${hcpDisplay(hcp)}`;
-  if (escHcps && escHcps.count >= 5) {
-    const { p25, p75, count } = escHcps;
-    if (hcp <= p25) {
-      // Topo do escalão — único destaque forte
-      style = { background: "var(--color-good)", color: "var(--text-on-color)", borderColor: "transparent" };
-      tooltip += ` · TOP 25% do escalão (entre ${count} jogadores)`;
-    } else if (hcp > p75) {
-      // Fundo do escalão — sem fundo, sem borda, só texto esmaecido
-      style = { background: "transparent", color: "var(--text-3)", borderColor: "transparent" };
-      tooltip += ` · Bottom 25% do escalão (entre ${count} jogadores)`;
-    } else {
-      // Meio 50% — o estado "normal", sem sinal forte
-      style = { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
-      tooltip += ` · típico do escalão (entre ${count} jogadores)`;
-    }
-  } else {
-    // Sem estatísticas de escalão — pill neutro
-    style = { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
-    if (escHcps) tooltip += ` · escalão com poucos jogadores (${escHcps.count})`;
-  }
-  return (
-    <span className="p p-sm" style={style} title={tooltip}>
-      HCP {hcpDisplay(hcp)}
-    </span>
-  );
-}
 
 /** Pill de tag (PJA, inscrito-nacional, no-scrape, hidden) */
 export function TagPill({ tag }: { tag: string }) {
@@ -235,7 +178,7 @@ function PlayerSidebarItemInner({
           // directamente com a mesma classe .p-club para visual consistente.
           <span className="p p-sm p-club" title={clubText}>{clubText}</span>
         )}
-        <HcpPill hcp={displayHcp} escHcps={escHcps} />
+        <HcpPill hcp={displayHcp} band={escHcps} />
         {ppHcp != null && (
           <span className="p p-sm u-bg-badge-pp u-c-fff u-bd-1px-solid-badge-pp" title={`Handicap Pitch & Putt: ${ppHcp}`}
 >

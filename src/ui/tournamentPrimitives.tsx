@@ -66,7 +66,7 @@ export function TeeDot({ teeName }: { teeName?: string }) {
 }
 
 /* ─── SD pill inline (sem <td>) ─── */
-export function SDPill({ sd, hcp, est, size = "sm", prefix, colorSd, title }: {
+export function SDPill({ sd, hcp, est, size = "sm", prefix, colorSd, title, className }: {
   sd: number | null; hcp?: number | null; est?: string | null;
   /** sm = pílula pequena das tabelas · md = letra 11 · lg = destaque (simulador). */
   size?: "sm" | "md" | "lg";
@@ -75,11 +75,13 @@ export function SDPill({ sd, hcp, est, size = "sm", prefix, colorSd, title }: {
   /** Cor pelo HCP a partir de outro SD (ex.: o SD9 pinta-se pelo SD18 equivalente). */
   colorSd?: number | null;
   title?: string;
+  /** Classe extra de arrumação (ex.: `aq-sd` na grelha da época do Drive). */
+  className?: string;
 }) {
   // O SD oficial da FPG ou, sem ele, o calculado com o HCP da inscrição (computeSD).
   if (sd == null) return MUTED;
   const cls = sdClassByHcp(colorSd ?? sd, hcp ?? null);
-  const base = (size === "sm" ? "p p-sm p-" : size === "md" ? "p fs-11 p-" : "p fs-13 fw-800 p-") + cls;
+  const base = (size === "sm" ? "p p-sm p-" : size === "md" ? "p fs-11 p-" : "p fs-13 fw-800 p-") + cls + (className ? " " + className : "");
   const txt = (prefix ? prefix + " " : "") + sd.toFixed(1);
   // Com CR/Slope estimados: a MESMA pílula colorida pelo HCP (regra de sempre),
   // só com o número em itálico e o contorno tracejado — 22/10/2026.

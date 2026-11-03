@@ -29,6 +29,7 @@ import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
 import SidebarToggle from "../ui/SidebarToggle";
 import SearchInput from "../ui/SearchInput";
 import Modal from "../ui/Modal";
+import CloseButton from "../ui/CloseButton";
 import ExpandArrow from "../ui/ExpandArrow";
 import { toggleSet } from "../utils/mathUtils";
 
@@ -319,8 +320,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
  <span className="uppercase fw-600 fs-12 u-ls-0_04em" style={{ color: hl ? hl.text : "var(--text-on-color)" }}>
             {calName}
           </span>
-          <button onClick={onClose} title="Fechar" aria-label="Fechar"
-            className={"btn-round btn-round-close" + (hl ? " on-light" : "")} style={hl ? { color: hl.text } : undefined}>✕</button>
+          <CloseButton onClick={onClose} onColor={hl ? "light" : true} color={hl?.text} />
         </div>
         <div className="cal-sidebar">
           <div className="h-lg">{event.title}</div>
@@ -831,7 +831,7 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
     <Modal onClose={onClose} size="sm" bare className="u-maxh-80vh u-d-flex u-fd-column u-animation-calpopin-0_2s-ease">
         <div className="u-bg-accent u-p-14px-18px u-d-flex u-jc-space-between u-ai-center u-fsh-0">
           <span className="fw-600 fs-13 u-c-fff">{title}</span>
-          <button onClick={onClose} title="Fechar" aria-label="Fechar" className="btn-round btn-round-close">✕</button>
+          <CloseButton onClick={onClose} onColor />
         </div>
         <div className="cal-sidebar d-flex flex-col gap-4 u-oy-auto">
           {events.map(e => (

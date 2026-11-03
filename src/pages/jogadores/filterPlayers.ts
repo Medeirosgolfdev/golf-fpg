@@ -28,7 +28,8 @@ export const NEW_DAYS = 7;
 /** WHS cap é 54.0 — valores ≥ 54 (incluindo 99) são placeholders usados
  *  para jogadores sem HI estabelecido ("a começar a jogar"). Não entram
  *  nas estatísticas de escalão e têm um pill próprio (neutro, em formação). */
-export const HCP_UNESTABLISHED_THRESHOLD = 54;
+export { HCP_UNESTABLISHED_THRESHOLD } from "../../ui/HcpPill";
+import { HCP_UNESTABLISHED_THRESHOLD } from "../../ui/HcpPill";
 
 /** Índice de ordenação semântica dos escalões (Sub-10 → Outros). */
 export const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));

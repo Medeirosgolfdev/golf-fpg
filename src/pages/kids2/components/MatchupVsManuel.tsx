@@ -13,8 +13,8 @@ import { getSharedTournamentIds } from "../data";
 import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import KpiCard from "../../../ui/KpiCard";
-import { tpColor } from "../../../ui/tournamentPrimitives";
-import { fmtSign, fmtToPar, monthLabel } from "../../../utils/format";
+import ToPar from "../../../ui/ToPar";
+import { fmtSign, monthLabel } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
 import { TrophyPos } from "../../../ui/PosBadge";
 
@@ -179,8 +179,8 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
                 <ToParTag tp={r.rM.toPar} />
               </td>
               <td className="col-manuel u-ta-center"><TrophyPos pos={r.rM.pos} /></td>
-              <td className="u-ta-right u-fw-700" style={{ color: r.diff != null ? (tpColor(r.diff) ?? "var(--text-3)") : "var(--text-3)" }}>
-                {r.diff != null ? fmtDiff(r.diff) : "—"}
+              <td className="u-ta-right">
+                <ToPar v={r.diff} kind="delta" digits={r.diff != null && !Number.isInteger(r.diff) ? 1 : undefined} />
               </td>
               <td className="u-ta-right u-fw-700 u-fs-fs-11" style={{
                 color: r.outcome === -1 ? "var(--color-good-dark)" : r.outcome === 1 ? "var(--color-danger-vivid)" : "var(--text-3)",
@@ -209,11 +209,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 
 function ToParTag({ tp }: { tp: number | null | undefined }) {
   if (tp == null) return null;
-  return (
-    <span className="u-fs-fs-10 u-ml-4px" style={{ color: tp <= 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>
-      ({fmtToPar(tp)})
-    </span>
-  );
+  return <ToPar v={tp} light className="u-fs-fs-10 u-ml-4px" prefix="(" suffix=")" />;
 }
 
 function RoundsCell({ result }: { result: Result }) {

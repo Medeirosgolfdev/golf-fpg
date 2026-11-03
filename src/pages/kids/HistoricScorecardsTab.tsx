@@ -21,6 +21,7 @@
 import { useMemo, useState } from "react";
 import { scClass } from "../../utils/scoreDisplay";
 import { fmtToPar } from "../../utils/format";
+import ToPar from "../../ui/ToPar";
 import SortableHdr from "../../ui/SortableHdr";
 import TabRow from "../../ui/TabRow";
 import LoadingState from "../../ui/LoadingState";
@@ -997,10 +998,7 @@ function EcleticRow({ row, pos, hpr, is9 }: {
         </>
       )}
       <td className="lb-gross u-c-text-muted" title="Melhor volta real">{ecl.bestRound}</td>
-      <td className="lb-topar" style={{ color: ecl.delta > 0 ? "var(--color-good)" : "var(--text-muted)" }}
-          title="Pancadas deixadas na mesa (melhor volta − ecléctico)">
-        {ecl.delta > 0 ? "−" + ecl.delta : "0"}
-      </td>
+      <td className="lb-topar"><ToPar v={-ecl.delta} kind="delta" title="Pancadas deixadas na mesa (melhor volta − ecléctico)" /></td>
     </tr>
   );
 }

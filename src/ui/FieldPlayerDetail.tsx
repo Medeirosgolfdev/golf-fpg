@@ -9,6 +9,7 @@ import {
 import { FL } from "../utils/flagUtils";
 import { meanArr } from "../utils/mathUtils";
 import { scClass, toParClass, tpColorDark } from "../utils/scoreDisplay";
+import ToPar from "./ToPar";
 import KpiCard from "./KpiCard";
 import EmptyState from "./EmptyState";
 import { FIELD_2025, VP_PAR, FIELD_CARDS } from "../data/rivalData";
@@ -516,12 +517,7 @@ export default function FieldPlayerDetail({
                         );
                       })}
                       <td className="r mono fw-800">{r.total ?? "–"}</td>
-                      <td
-                        className="r fw-700"
-                        style={{ color: tpColorDark(r.tp, 15) }}
-                      >
-                        {fmtToPar(r.tp)}
-                      </td>
+                      <td className="r"><ToPar v={r.tp} /></td>
                     </tr>
                   );
                 })}

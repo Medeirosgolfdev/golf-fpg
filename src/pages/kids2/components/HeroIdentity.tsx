@@ -18,6 +18,8 @@ import { flag as flagOf } from "../../../utils/flagUtils";
 import { MANUEL_DOB } from "../../../constants/manuel";
 import { cachedFetchJson } from "../../../data/fetchCache";
 import HcpSparkline from "./HcpSparkline";
+import BirthPill from "../../../ui/BirthPill";
+import { EscPill } from "../../../ui/PillBadge";
 import { shortDateSlash, fmtHcp, MONTHS_PT } from "../../../utils/format";
 import { stripAccents } from "../../../utils/normName";
 
@@ -204,7 +206,7 @@ export default function HeroIdentity({ data, junior }: Props) {
             {dobInfo.state !== "unknown" && (
               <>
                 <span className="u-op-0_4">·</span>
-                <DobPill info={dobInfo} isManuel={isManuel} />
+                <DobPill info={dobInfo} esc={escIntl} />
               </>
             )}
             {ageDiff && (
@@ -346,10 +348,10 @@ export default function HeroIdentity({ data, junior }: Props) {
 
       {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || hcpLista || hcpJogo || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
         <div className="u-d-flex u-gap-6px u-mt-14px u-fwr-wrap">
-          {escIntl && <EscPill label={escIntl} accent strong />}
-          {escUskids && <EscPill label={`${escUskids} · USKids`} />}
-          {escRfeg && <EscPill label={`${escRfeg} · RFEG`} />}
-          {escFpgTag && <EscPill label={`${escFpgTag} · FPG`} />}
+          {escIntl && <EscPill esc={escIntl} />}
+          {escUskids && <EscPill esc={escUskids} label={`${escUskids} · USKids`} />}
+          {escRfeg && <EscPill esc={escRfeg} label={`${escRfeg} · RFEG`} />}
+          {escFpgTag && <EscPill esc={escFpgTag} label={`${escFpgTag} · FPG`} />}
           {hcps.map((h, i) => (
             <span key={i} title={h.oficial
               ? `Handicap oficial da Federação Espanhola${h.date ? ` — actualizado a ${shortDateSlash(h.date, true)}` : ""}`
@@ -451,59 +453,16 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
   return <div className={cardClass}>{inner}</div>;
 }
 
-function EscPill({ label, accent, strong }: { label: string; accent?: boolean; strong?: boolean }) {
-  // accent + strong = pill "primary" (escalão unificado Sub-N) — fundo escuro destacado
-  if (accent && strong) {
-    return (
-      <span className="u-bg-13a26 u-c-bg u-fs-fs-12 u-p-3px-12px u-br-radius-pill u-fw-700 u-ls-0_3px">{label}</span>
-    );
-  }
-  return (
-    <span className="u-bg-bg-info-subtle u-c-var-color-info-dark-1e3a8a u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-bd-152rb">{label}</span>
-  );
-}
-
-/** Pill da DOB — 4 estados visuais (known/range/inferred/unknown).
- *  O verde (--color-good-dark) é cor RESERVADA AO MANUEL (badge "★ Tu referência").
- *  Para outros juniores usamos cores neutras. */
-function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
-  // Para o Manuel: verde (consistente com identidade dele).
-  // Para outros: neutro bege/cinzento.
-  const known = isManuel ? {
-    background: "var(--bg-success-subtle)",
-    color: "var(--color-good-dark)",
-    border: "1px solid var(--color-good-dark)",
-  } : {
-    background: "var(--bg-muted)",
-    color: "var(--text-2)",
-    border: "1px solid var(--border)",
-  };
-  const range = isManuel ? {
-    background: "var(--bg-success-subtle)",
-    color: "var(--color-good-dark)",
-    border: "1px dashed var(--color-good-dark)",
-  } : {
-    background: "var(--bg-muted)",
-    color: "var(--text-2)",
-    border: "1px dashed var(--border)",
-  };
-  const styles: Record<DobInfo["state"], React.CSSProperties> = {
-    known,
-    range,
-    inferred: {
-      background: "var(--bg-muted)",
-      color: "var(--text-2)",
-      border: "1px dashed var(--border)",
-    },
-    unknown: { display: "none" },
-  };
+/** Pílula da data de nascimento — a BirthPill global, na cor do escalão;
+ *  tracejada quando a data não está confirmada (janela ou inferida). */
+function DobPill({ info, esc }: { info: DobInfo; esc?: string | null }) {
+  if (info.state === "unknown") return null;
   const title =
     info.state === "known" ? "Data de nascimento confirmada"
     : info.state === "range" ? "Janela de DOB pré-calculada"
-    : info.state === "inferred" ? "DOB inferida a partir dos torneios + escalões"
-    : "DOB desconhecida";
+    : "DOB inferida a partir dos torneios + escalões";
   return (
-    <span title={title} className="dob-pill" style={styles[info.state]}>
+    <BirthPill esc={esc} dashed={info.state !== "known"} title={title}>
       🎂 {info.dobLabel}
       <span className="u-op-0_7">·</span>
       <span className="u-fw-700">{info.ageLabel}</span>
@@ -512,7 +471,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
           🎉 {info.nextAge} em {info.nextBdayDays}d
         </span>
       )}
-    </span>
+    </BirthPill>
   );
 }
 

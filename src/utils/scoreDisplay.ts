@@ -107,9 +107,9 @@ export function sc3m(val: number, lo: number, hi: number): string {
 /** Export color constants for edge cases */
 export { C as SC };
 
-/** Classe CSS para to-par badge: "sc-topar-pos" | "sc-topar-neg" | "sc-topar-zero" */
+/** Classe CSS do ±par: "tp-pos" | "tp-neg" | "tp-zero" — a mesma regra da peça ToPar (ui/ToPar.tsx). */
 export function toParClass(tp: number): string {
-  return tp > 0 ? "sc-topar-pos" : tp < 0 ? "sc-topar-neg" : "sc-topar-zero";
+  return tp > 0 ? "tp-pos" : tp < 0 ? "tp-neg" : "tp-zero";
 }
 
 /** Cor CSS (variante dark) para to-par em KPIs e tabelas de resultados.

@@ -16,7 +16,8 @@ import { Fragment, useEffect, useState } from "react";
 import { loadPPHistory, ppPlayerUrl, type PPHistory, type PPRound } from "../../data/federadosPPLoader";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
-import { fmtStb, sdClassByHcp } from "../../utils/scoreDisplay";
+import { fmtStb } from "../../utils/scoreDisplay";
+import { SDPill } from "../../ui/tournamentPrimitives";
 import { numSafe, toggleSet } from "../../utils/mathUtils";
 import { GrossCell as GrossDeltaCell, MUTED } from "../../ui/tableCells";
 import TeeDate from "../../ui/TeeDate";
@@ -143,7 +144,6 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
                 const key = String(r.scoreId);
                 const isOpen = open.has(key);
                 const hasCard = !!r.scorecard;
-                const sdCls = r.sd != null ? sdClassByHcp(Number(r.sd), hist.index) : "";
                 return (
                   <Fragment key={key}>
                     <tr className={`roundRow${isOpen ? " pa-row-open" : ""}`}
@@ -158,7 +158,7 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
                       <td className="r"><span className={r.holes === 9 ? "hb hb9" : "hb hb18"}>{r.holes ?? 18}</span></td>
                       <td className="r"><GrossCell r={r} /></td>
                       <td className="r">{fmtStb(r.stableford, r.holes ?? undefined)}</td>
-                      <td className="r">{r.sd != null ? <span className={sdCls ? `p p-${sdCls}` : ""}>{r.sd}</span> : ""}</td>
+                      <td className="r"><SDPill sd={r.sd != null ? Number(r.sd) : null} hcp={hist.index} /></td>
                       <td className="r">{r.index ?? "—"}</td>
                     </tr>
                     {isOpen && hasCard && (

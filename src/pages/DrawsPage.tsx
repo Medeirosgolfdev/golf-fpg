@@ -30,7 +30,7 @@ import EmptyState from "../ui/EmptyState";
 import KpiCard from "../ui/KpiCard";
 import TabRow from "../ui/TabRow";
 import FilterPillRow from "../ui/FilterPillRow";
-import { EscPill, PILL_ROUND } from "../ui/PillBadge";
+import { EscPill, PILL_ROUND, CircuitPill, type Circuito } from "../ui/PillBadge";
 import { kidsUrl } from "../ui/KidsLink";
 import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName, fmtToPar, medal as medalOf, fmtDatePt } from "../utils/format";
@@ -370,29 +370,11 @@ function CompanionNameLink({ row }: { row: CompanionRow }) {
   );
 }
 
-const CIRCUIT_PILL: Record<string, { emoji: string; label: string; title: string; bg: string; fg: string }> = {
-  FPG:    { emoji: "🇵🇹", label: "FPG",   title: "FPG",                          bg: "var(--accent-light)", fg: "var(--accent)" },
-  USKids: { emoji: "🇺🇸", label: "USKids", title: "USKids",                       bg: "var(--bg-info)",      fg: "var(--color-info)" },
-  Intl:   { emoji: "🌍", label: "Intl",   title: "Internacional (Bluegolf/Doral)", bg: "var(--bg-muted)",     fg: "var(--text-2)" },
-};
-
-function CircuitBadge({ circuitos }: { circuitos: Set<"FPG" | "USKids" | "Intl"> }) {
-  const order: Array<"FPG" | "USKids" | "Intl"> = ["FPG", "USKids", "Intl"];
+function CircuitBadge({ circuitos }: { circuitos: Set<Circuito> }) {
+  const order: Circuito[] = ["FPG", "USKids", "Intl"];
   return (
     <span className="u-d-inline-flex u-gap-4px u-jc-center u-fwr-nowrap u-ws-nowrap">
-      {order.filter(c => circuitos.has(c)).map(c => {
-        const p = CIRCUIT_PILL[c];
-        return (
-          <span
-            key={c}
-            className="p p-sm"
-            title={p.title}
-            style={{ background: p.bg, color: p.fg, borderColor: "transparent", fontWeight: 700 }}
-          >
-            {p.emoji} {p.label}
-          </span>
-        );
-      })}
+      {order.filter(c => circuitos.has(c)).map(c => <CircuitPill key={c} circ={c} />)}
     </span>
   );
 }

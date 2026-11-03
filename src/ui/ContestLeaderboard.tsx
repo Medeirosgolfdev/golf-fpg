@@ -11,7 +11,7 @@ import { isManuelByName } from "../constants/manuel";
 import EvoBadge from "./EvoBadge";
 import SortableHdr from "./SortableHdr";
 import { useSort } from "../hooks/useSort";
-import { SC } from "../utils/scoreDisplay";
+import ToPar from "./ToPar";
 import { IntlTournView } from "./IntlTournView";
 import type { Tournament as FPGTournament } from "../pages/FPGPage";
 import { intlScorecardOptions } from "../data/intlScorecard";
@@ -78,8 +78,6 @@ export default function ContestLeaderboard({ contest, evo }: ContestLeaderboardP
 
 /* ── Evolução 2025 → 2026 ── */
 
-const deltaColor = (d: number, worse: string) => (d < 0 ? "var(--color-good-dark)" : d > 0 ? worse : "var(--text-3)");
-
 function ManuelEvo({ evo }: { evo: EvoEntry[] }) {
   const m = evo.find((e) => e.n.includes("Manuel"));
   if (!m) return null;
@@ -95,14 +93,12 @@ function ManuelEvo({ evo }: { evo: EvoEntry[] }) {
         <div className="fs-24 u-c-color-good-dark">→</div>
         <div className="ta-c u-fl-1-1-100px">
           <div className="muted fs-10">2026</div>
-          <div className="fw-900 fs-24" style={{ color: m.delta < 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>{m.y26}</div>
+          <div className={"fw-900 fs-24" + (m.delta < 0 ? " tp-neg" : " u-c-text-3")}>{m.y26}</div>
           <div className="muted fs-10">{m.to}</div>
         </div>
         <div className="ta-c u-fl-1-1-80px">
           <div className="muted fs-10">Δ</div>
-          <div className="fw-900 fs-24" style={{ color: m.delta < 0 ? "var(--color-good-dark)" : SC.danger }}>
-            {m.delta > 0 ? "+" : ""}{m.delta}
-          </div>
+          <ToPar v={m.delta} kind="delta" className="d-block fw-900 fs-24" />
           <div className="muted fs-10">pancadas</div>
         </div>
       </div>
@@ -145,7 +141,7 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
                   <td className={`${isM ? "fw-800" : "fw-600"} u-ws-nowrap`}>{e.n}</td>
                   <td className="r mono">{e.y25}</td>
                   <td className="r mono">{e.y26}</td>
-                  <td className="r fw-700" style={{ color: deltaColor(e.delta, SC.danger) }}>{e.delta > 0 ? "+" : ""}{e.delta}</td>
+                  <td className="r"><ToPar v={e.delta} kind="delta" /></td>
                   <td><EvoBadge pill={e.pill as "UP" | "EQ" | "NEW"} from={e.from} to={e.to} /></td>
                 </tr>
               );

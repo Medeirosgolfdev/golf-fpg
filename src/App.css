@@ -521,6 +521,15 @@ a.seg-btn, a.tab-under { text-decoration: none; }
 .p-nacional { background: var(--pill-nacional-bg); color: var(--pill-nacional-fg); }
 .p-intl { background: var(--pill-intl-bg); color: var(--pill-regional-bg); }
 .p-pja { background: var(--pill-pja-bg); color: var(--text-on-color); }
+/* Circuito de origem (CircuitPill — Draws) */
+.p-circ { font-weight: 700; border-color: transparent; }
+.p-circ-fpg { background: var(--accent-light); color: var(--accent); }
+.p-circ-uskids { background: var(--bg-info); color: var(--color-info); }
+.p-circ-intl { background: var(--bg-muted); color: var(--text-2); }
+/* HCP relativo ao escalão (HcpPill): topo 25% verde, meio neutro, fundo e «em formação» esbatidos */
+.p-hcp-top { background: var(--color-good); color: var(--text-on-color); border-color: transparent; }
+.p-hcp-mid { background: var(--bg-muted); color: var(--text-2); border-color: var(--border); }
+.p-hcp-low { background: transparent; color: var(--text-3); border-color: transparent; }
 /* Modalidade de jogo (OM CGSS) — uma cor por modalidade; quebra em 2 linhas
    quando a coluna é estreita (cabeçalho da matriz da OM) */
 .p-mod { font-weight: 700; white-space: normal; max-width: 100%; line-height: 1.15; text-align: center; }
@@ -1379,6 +1388,15 @@ tr.cross-current { background: var(--bg-success); }
 .sc-table-modern .par-label { color: var(--text-muted); font-weight: 600; font-size: var(--fs-11); }
 
 .sc-topar { display: block; font-size: var(--fs-10); font-weight: 600; margin-top: var(--space-1); }
+/* ±par e diferenças (ToPar, toParClass): regra ÚNICA — abaixo verde, acima vermelho, zero sem cor (03/11/2026).
+   tp-up/tp-down = diferença neutra (Comparar). */
+.tp { font-weight: 700; font-variant-numeric: tabular-nums; }
+.tp.tp-light { font-weight: 400; }
+.tp-neg { color: var(--color-good); }
+.tp-pos { color: var(--color-danger); }
+.tp-zero { color: inherit; }
+.tp-up { color: var(--color-info); }
+.tp-down { color: var(--color-warn-dark); }
 
 /* FRAG scorecard score circles — note: class name is .eagle not .sc-eagle
    Tamanho unificado: 26×26 / 13px em modern, lb e scHost */

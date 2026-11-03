@@ -33,6 +33,7 @@ import { teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { isPtCountry } from "../utils/flagUtils";
 import { MUTED } from "../ui/tableCells";
+import ToPar from "../ui/ToPar";
 import TabRow from "../ui/TabRow";
 import ExpandArrow from "../ui/ExpandArrow";
 
@@ -243,17 +244,7 @@ function Delta({ a, b, decimals = 0, unit = "" }: {
   a: number | null; b: number | null; decimals?: number; unit?: string;
 }) {
   if (a === null || b === null) return MUTED;
-  const d = b - a;
-  const abs = Math.abs(d);
-  const fmt = decimals > 0 ? abs.toFixed(decimals) : String(Math.round(abs));
-  if (d === 0) return <span className="muted u-ff-font-mono">=</span>;
-  const color = d > 0 ? "var(--color-info)" : "var(--color-warn-dark)";
-  const sign = d > 0 ? "+" : "−";
-  return (
-    <span className="u-ff-font-mono u-fw-700" style={{ color }}>
-      {sign}{fmt}{unit}
-    </span>
-  );
+  return <ToPar v={b - a} kind="delta" tone="neutral" digits={decimals} className="u-ff-font-mono" suffix={b !== a ? unit : undefined} />;
 }
 
 // ═══════════════════ Tabela Score→SD lado a lado (tee A vs tee B) ═══════════

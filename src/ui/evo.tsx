@@ -4,7 +4,7 @@
  * colunas Ant. · Δ · Percurso e a marcação dos regressados. Cada página só
  * constrói o seu mapa de evolução (`buildEvoMap` ou o histórico da Doral).
  */
-import { SC } from "../utils/scoreDisplay";
+import ToPar from "./ToPar";
 import { fmtSign } from "../utils/format";
 import EvoBadge from "./EvoBadge";
 import type { MultiRoundRow, ExtraColumn } from "./multiRoundTypes";
@@ -65,7 +65,7 @@ export function makeEvoCols(evo: Map<string, EvoEntry>, evoYear?: string): Extra
     },
     {
       header: "Δ", className: "ta-c fs-11 fw-700", headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },
-      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); if (!ev) return MUTED; return <span style={{ color: ev.delta < 0 ? "var(--color-good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>; },
+      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); if (!ev) return MUTED; return <ToPar v={ev.delta} kind="delta" />; },
     },
     {
       header: "Percurso", className: "ta-c", headerStyle: { width: 140, textAlign: "center" as const, padding: "0 4px" },

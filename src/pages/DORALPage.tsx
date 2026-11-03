@@ -17,6 +17,7 @@ import type { CircuitDivision } from "../ui/circuit/types";
 import { intlScorecardOptions } from "../data/intlScorecard";
 import { doralEntryToTournament, type DoralEntry } from "../data/major/doral";
 import { MUTED } from "../ui/tableCells";
+import ToPar from "../ui/ToPar";
 
 /** EvoEntry estendido para Doral:
  *  - prevYear: ano de origem da comparação (mais recente onde participou)
@@ -140,12 +141,11 @@ export function doralMajorDivision(entry: DoralEntry, evo: Map<string, EvoEntryD
         const ev = evo!.get(row.name);
         if (!ev) return MUTED;
         const value = ev.deltaIsComparable ? ev.deltaGross : ev.delta;
-        const sign = value > 0 ? "+" : "";
         const suffix = ev.deltaIsComparable ? "" : <span className="c-muted fs-9 ml-1">/r</span>;
         const tooltip = ev.deltaIsComparable
           ? `Δ vs ${ev.prevYear} (gross ${ev.otherValue}, mesmo escalão e nº de rondas)`
           : `Δ média strokes-vs-par por ronda · ${ev.prevYear}: ${ev.refAvgVsPar.toFixed(1)} vs hoje ${ev.curAvgVsPar.toFixed(1)}`;
-        return <span title={tooltip} className={value < 0 ? "c-good-dark" : value > 0 ? "c-danger" : "c-text-3"}>{sign}{value}{suffix}</span>;
+        return <ToPar v={value} kind="delta" title={tooltip} suffix={suffix} />;
       },
     },
     {

@@ -14,9 +14,9 @@
  * `PastEditionsTab` na MajorPage, que faz lazy-load dos `{slug}_{ano}.json`).
  */
 import { useMemo, useState } from "react";
-import { fmtToPar, medal as medalOf } from "../../utils/format";
+import { medal as medalOf } from "../../utils/format";
 import { clubFlagPrefix } from "../../utils/flagUtils";
-import { tpColorDark } from "../../utils/scoreDisplay";
+import ToPar from "../ToPar";
 import EmptyState from "../EmptyState";
 import SortableHdr from "../SortableHdr";
 import ExtLink from "../ExternalLink";
@@ -211,9 +211,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                       </td>,
                     ];
                     if (e.parPerRound) cells.push(
-                      <td key={`${e.id}_TP`} style={{ fontWeight: 600, color: p?.toPar != null ? (tpColorDark(p.toPar) ?? "var(--text-3)") : "var(--text-3)" }}>
-                        {p?.toPar != null ? fmtToPar(p.toPar) : "–"}
-                      </td>,
+                      <td key={`${e.id}_TP`}><ToPar v={p?.toPar} /></td>,
                     );
                     for (let r = 0; r < e.nRounds; r++) {
                       const v = p?.rounds[r] ?? null;
