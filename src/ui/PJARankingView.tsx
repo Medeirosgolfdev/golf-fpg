@@ -2,7 +2,7 @@
 import { createPortal } from "react-dom";
 import { useSearchParams } from "react-router-dom";
 import { useSort } from "../hooks/useSort";
-import { ESC_STYLE, EscPill, RoundPill } from "./PillBadge";
+import { EscPill, RoundPill } from "./PillBadge";
 import SexBadge from "./SexBadge";
 import LoadingState from "./LoadingState";
 import FilterChip from "./FilterChip";
@@ -394,8 +394,7 @@ export function PJARankingView({
       <span className="u-c-border">|</span>
       {availSexes.map(sx => (
         <FilterChip key={sx} active={filterSex === sx}
-                    onClick={() => setFilterSex(filterSex === sx ? "" : sx)}
-                    color={sx === "F" ? "var(--badge-female)" : "var(--badge-male)"}>
+                    onClick={() => setFilterSex(filterSex === sx ? "" : sx)}>
           <SexBadge sex={sx} size="sm" />
           {sx === "F" ? " Raparigas" : " Rapazes"}
         </FilterChip>
@@ -412,15 +411,13 @@ export function PJARankingView({
     </>}
     {hcpFilterMax != null && <>
       <span className="u-c-border">|</span>
-      <FilterChip active={filterHcp} onClick={() => setFilterHcp(v => !v)} color="var(--color-good)">
+      <FilterChip active={filterHcp} onClick={() => setFilterHcp(v => !v)}>
         HCP &lt; {hcpFilterMax}
       </FilterChip>
     </>}
     {availEscs.length > 1 && <span className="u-c-border">|</span>}
     {availEscs.map(e => {
-      const k = e.toLowerCase().replace(/[\s-]/g, "");
-      const s = ESC_STYLE[k];
-      return <FilterChip key={e} active={filterEsc.includes(e)} onClick={() => toggleEsc(e)} color={s?.bg}>{e}</FilterChip>;
+      return <FilterChip key={e} active={filterEsc.includes(e)} onClick={() => toggleEsc(e)}>{e}</FilterChip>;
     })}
     {(filterEsc.length > 0 || filterSex || filterRegiao.length > 0 || filterHcp || filterName) && <>
       <span className="muted fs-10 u-ws-nowrap u-fsh-0">{sortedRows.length} de {allRows.length}</span>

@@ -15,10 +15,8 @@ import type { Player, PlayerFilter } from "../data/fpgTypes";
 import { resolveEsc, filterPlayers } from "../data/fpgUtils";
 import { toggleArr } from "../utils/mathUtils";
 import { EMPTY_FILTER, type MultiRoundRow } from "./multiRoundTypes";
-import { ESC_STYLE } from "./PillBadge";
 import FilterChip from "./FilterChip";
 import ClearButton from "./ClearButton";
-import { getTeeHex } from "../utils/teeColors";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import SearchInput from "./SearchInput";
@@ -130,13 +128,12 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
       <SearchInput value={filter.name} onChange={v => onChange({ ...filter, name: v })} placeholder="Nome ou clube…" size="sm" />
       {hasOpts && sep}
       {escs.length > 1 && escs.map((e) => (
-        <FilterChip key={e} active={filter.escs.includes(e)} color={ESC_STYLE[e.toLowerCase().replace(/[\s-]/g, "")]?.bg}
+        <FilterChip key={e} active={filter.escs.includes(e)}
           onClick={() => onChange({ ...filter, escs: toggleArr(filter.escs, e) })}>{e}</FilterChip>
       ))}
       {tees.length > 1 && tees.map((t) => {
-        const hex = getTeeHex(t);
         return (
-          <FilterChip key={t} active={filter.tees.includes(t)} color={hex}
+          <FilterChip key={t} active={filter.tees.includes(t)}
             onClick={() => onChange({ ...filter, tees: toggleArr(filter.tees, t) })}>
             <span className="u-d-flex u-ai-center u-gap-4px">
               <TeeSwatch tee={t} />{t}
@@ -152,8 +149,8 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
       )}
       {sexes.length === 2 && (
         <>
-          <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })} color="var(--badge-male)">M</FilterChip>
-          <FilterChip active={filter.sex === "F"} onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })} color="var(--badge-female)">F</FilterChip>
+          <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })}>M</FilterChip>
+          <FilterChip active={filter.sex === "F"} onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })}>F</FilterChip>
         </>
       )}
       {years.length > 1 && (

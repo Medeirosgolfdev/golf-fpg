@@ -949,10 +949,10 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
   padding: var(--space-2) var(--space-8); border: 1px solid transparent; border-radius: var(--radius-pill);
   background: transparent; color: var(--color-danger-dark); font: inherit; font-size: var(--fs-11); font-weight: 600; line-height: 1.4; cursor: pointer; }
 .btn-clear:hover { background: var(--bg-danger); border-color: var(--color-danger); }
-/* Chip de filtro (ui/FilterChip.tsx): ligado na cor de --chip-c (por defeito --accent). */
+/* Chip de filtro (ui/FilterChip.tsx): desligado cinzento, ligado SEMPRE verde (regra global). */
 .filter-chip { font: inherit; font-size: var(--fs-10); font-weight: 500; padding: var(--space-2) var(--space-8); border-radius: var(--radius-pill);
   border: 1px solid var(--border); background: var(--bg-hover); color: var(--text-muted); cursor: pointer; white-space: nowrap; line-height: 1.4; }
-.filter-chip.active { background: var(--chip-c, var(--accent)); border-color: var(--chip-c, var(--accent)); color: var(--text-on-color); font-weight: 700; }
+.filter-chip.active { background: var(--accent); border-color: var(--accent); color: var(--text-on-color); font-weight: 700; }
 /* Paginação das listas longas (ui/Pager.tsx). */
 .pager { display: flex; justify-content: center; align-items: center; gap: var(--space-8); padding: var(--space-12) 0; font-size: var(--fs-12); }
 .pager-info { min-width: 90px; text-align: center; }

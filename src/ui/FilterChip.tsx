@@ -1,29 +1,26 @@
 ﻿/**
  * src/ui/FilterChip.tsx
  *
- * Botão pill de filtro com estado active/inactive e cor opcional.
+ * Botão pill de filtro com estado active/inactive.
  * Substitui a função chip() definida localmente em FPGPage (×2)
- * e MultiRoundLeaderboard. Aspecto em `.filter-chip` (App.css); a cor de
- * «ligado» chega pela variável `--chip-c` (escalão, tee, sexo…).
+ * e MultiRoundLeaderboard. Aspecto em `.filter-chip` (App.css): desligado
+ * cinzento, ligado SEMPRE verde `--accent` (regra global, Mariana 31/10 e 03/11/2026;
+ * antes cada chip ligado tinha a cor do escalão/tee/sexo).
  *
  * Uso:
  *   <FilterChip active={filter.escs.includes(e)} onClick={() => toggleEsc(e)}>{e}</FilterChip>
- *   <FilterChip active={sel} onClick={toggle} color="var(--accent)">Sub-12</FilterChip>
  */
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface FilterChipProps {
   active: boolean;
   onClick: () => void;
-  /** Cor de fundo/border quando active. Padrão: var(--accent) */
-  color?: string;
   children: ReactNode;
 }
 
-export default function FilterChip({ active, onClick, color, children }: FilterChipProps) {
+export default function FilterChip({ active, onClick, children }: FilterChipProps) {
   return (
-    <button type="button" className={`filter-chip${active ? " active" : ""}`} onClick={onClick}
-      style={color ? { "--chip-c": color } as CSSProperties : undefined}>
+    <button type="button" className={`filter-chip${active ? " active" : ""}`} onClick={onClick}>
       {children}
     </button>
   );
