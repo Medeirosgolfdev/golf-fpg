@@ -11,7 +11,7 @@ import { compareNullsLast } from "../hooks/useSort";
 import WdBadge from "./WdBadge";
 import { RoundPill } from "./PillBadge";
 import { TIER } from "../data/rivalData";
-import { TR_I } from "../constants/config";
+import TrendArrow from "./TrendArrow";
 import TierLegend from "./TierLegend";
 import type { RivalPlayer, TournDef, RoundAvg } from "./bjgtAnalysisTypes";
 import ExtLink from "./ExternalLink";
@@ -724,16 +724,7 @@ export default function RivaisDashboard({
                     {/* Trend — só em modo clássico */}
                     {!fieldMode && (
                       <td className="ta-c">
-                        {tr ? (
-                          <span
-                            className="fw-700 fs-13"
-                            style={{ color: TR_I[tr].c }}
-                          >
-                            {TR_I[tr].i}
-                          </span>
-                        ) : (
-                          MUTED
-                        )}
+                        <TrendArrow tr={tr} />
                       </td>
                     )}
 

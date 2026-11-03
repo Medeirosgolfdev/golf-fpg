@@ -16,7 +16,7 @@ import { useCourses } from "../context/CoursesContext";
 import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex, teeBorder } from "../utils/teeColors";
-import { fmt, fmtCR, norm, sumRange, fmtToPar, titleCase, fmtDatePt, fmtDateShort, fmtSign, escalaoAtDate } from "../utils/format";
+import { fmt, fmtCR, norm, sumRange, titleCase, fmtDatePt, fmtDateShort, fmtSign, escalaoAtDate } from "../utils/format";
 import { sortEscaloes } from "../data/model/escalao";
 import { flag } from "../utils/flagUtils";
 import { fixMojibake } from "../utils/fixEncoding";
@@ -42,6 +42,7 @@ import Select from "../ui/Select";
 import { MUTED } from "../ui/tableCells";
 import { toggleSet } from "../utils/mathUtils";
 
+import ToPar from "../ui/ToPar";
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
    Carregado uma única vez ao nível do módulo. */
@@ -434,14 +435,6 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
 }
 /* ——— Componente: Quem jogou neste campo ——— */
 
-/** Cor de TEXTO (subtil) para o to-par de uma volta. Sem fundos berrantes. */
-function tpTextColor(tp: number | null): string {
-  if (tp == null) return "var(--text-muted)";
-  if (tp <= 0) return "var(--color-good-dark)";
-  if (tp <= 6) return "var(--color-warn-dark)";
-  return "var(--color-danger-dark)";
-}
-
 
 type CPBucket = {
   n: number;
@@ -597,7 +590,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
           <>
             <span className="cp-strong">{b.bestGross}</span>
             {b.bestToPar != null && (
-              <span className="cp-tp" style={{ color: tpTextColor(b.bestToPar) }}> {fmtToPar(b.bestToPar)}</span>
+              <ToPar v={b.bestToPar} className="cp-tp" prefix=" " />
             )}
           </>
         ) : MUTED}
@@ -607,7 +600,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
           <>
             {fmtCR(b.avgGross)}
             {b.avgToPar != null && (
-              <span className="cp-tp" style={{ color: tpTextColor(Math.round(b.avgToPar)) }}> ({b.avgToPar >= 0 ? "+" : ""}{fmtCR(b.avgToPar)})</span>
+              <ToPar v={b.avgToPar} kind="delta" digits={1} className="cp-tp" prefix=" (" suffix=")" />
             )}
           </>
         ) : MUTED}
@@ -682,7 +675,7 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
                                   <span className="cp-round-score">
                                     {r.gross}
                                     {r.toPar != null && (
-                                      <span style={{ color: tpTextColor(r.toPar) }}> {fmtToPar(r.toPar)}</span>
+                                      <ToPar v={r.toPar} light prefix=" " />
                                     )}
                                     {h === 9 && <span className="cp-round-9"> 9b</span>}
                                   </span>
@@ -912,7 +905,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
   const score = (val: number, tp: number | null) => (
     <span className="u-ta-right u-fw-600 u-fs-fs-13 u-ws-nowrap u-fvn-tabular-nums">
       {val}
-      {tp != null && <span style={{ color: tpTextColor(tp), fontWeight: 700 }}> {fmtToPar(tp)}</span>}
+      {tp != null && <ToPar v={tp} prefix=" " />}
     </span>
   );
   const when = (date: string | null, sd: number | null) => (

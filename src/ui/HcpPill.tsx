@@ -11,7 +11,7 @@
  * Experimentámos 4 níveis (quartis) mas era confuso — 11.8 e 11.9 mudavam de cor
  * por ruído; com 3, só o topo e o fundo têm sinal.
  */
-import { hcpDisplay } from "../utils/playerUtils";
+import { fmtHcp } from "../utils/format";
 
 /** HCP a partir do qual o HI ainda não está estabelecido (fica fora das estatísticas do escalão). */
 export const HCP_UNESTABLISHED_THRESHOLD = 54;
@@ -21,7 +21,7 @@ export interface HcpBand { p25: number; p75: number; count: number }
 
 export default function HcpPill({ hcp, band }: { hcp: number | null; band?: HcpBand }) {
   if (hcp == null || !isFinite(hcp)) return null;
-  const txt = `HCP ${hcpDisplay(hcp)}`;
+  const txt = `HCP ${fmtHcp(hcp)}`;
   if (hcp >= HCP_UNESTABLISHED_THRESHOLD) {
     return <span className="p p-sm p-hcp-low"
       title={`${txt} — HI ainda não estabelecido (jogador em formação, excluído das stats do escalão)`}>{txt}</span>;
@@ -37,4 +37,12 @@ export default function HcpPill({ hcp, band }: { hcp: number | null; band?: HcpB
     tooltip += ` · escalão com poucos jogadores (${band.count})`;
   }
   return <span className={`p p-sm ${cls}`} title={tooltip}>{txt}</span>;
+}
+
+/** O HCP em texto, a negrito, com o «plus» a dourado («+1.2») — as listas de
+ *  «melhores HCP» dos federados (03/11/2026: eram 4 cópias com a cor em `style`).
+ *  O tamanho vai em `className` (fs-13, fs-14…). */
+export function HcpText({ hcp, className }: { hcp: number | null | undefined; className?: string }) {
+  const plus = hcp != null && hcp < 0;
+  return <span className={`hcp-text${plus ? " hcp-plus" : ""}${className ? " " + className : ""}`}>{fmtHcp(hcp)}</span>;
 }

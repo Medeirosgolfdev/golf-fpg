@@ -218,13 +218,13 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   {/* Cabeçalho do card */}
                   <div className="u-d-flex u-jc-space-between u-ai-flex-start u-mb-8px">
                     <div>
-                      <div className="fs-13 fw-700" style={{ color: man ? "var(--accent)" : dst ? "var(--text)" : "var(--text-2)" }}>
+                      <div className={`fs-13 fw-700 ${man ? "u-c-accent" : dst ? "u-c-text" : "u-c-text-2"}`}>
                         {man && <span className="u-mr-4px">★</span>}{e.nome}
                       </div>
                       <div className="fs-11 c-text-3 u-mt-1px">{e.holes} buracos</div>
                     </div>
                     <div className="u-ta-right">
-                      <div className="fw-800" style={{ fontSize: "var(--fs-15)", color: man ? "var(--accent)" : "var(--text)" }}>
+                      <div className={`fw-800 u-fs-fs-15 ${man ? "u-c-accent" : "u-c-text"}`}>
                         {e.inscritos}<span className="fs-11 fw-400 c-text-3">/{e.maximo}</span>
                       </div>
                       {bd && (

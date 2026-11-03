@@ -106,8 +106,6 @@ export function toneClass(v: number | null | undefined, opts: { highIsGood?: boo
   return opts.muted ? "tone-muted" : "";
 }
 
-/** Export color constants for edge cases */
-export { C as SC };
 
 /** Classe CSS do ±par: "tp-pos" | "tp-neg" | "tp-zero" — a mesma regra da peça ToPar (ui/ToPar.tsx). */
 export function toParClass(tp: number): string {

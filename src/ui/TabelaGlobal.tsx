@@ -15,7 +15,7 @@ import ExpandArrow from "./ExpandArrow";
 import ExtLink from "./ExternalLink";
 import { MUTED } from "./tableCells";
 import { TIER } from "../data/rivalData";
-import { TR_I } from "../constants/config";
+import TrendArrow from "./TrendArrow";
 import TierLegend from "./TierLegend";
 import Select from "./Select";
 import { fmtSign, fmtOrd } from "../utils/format";
@@ -645,7 +645,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                   <tr key={p.n} className={isM ? "rivais-row-ref" : ""}>
                     <td className="rivais-player-name">
                       <span className="rivais-flag" title={p.co}>{fl}</span>
-                      <span className={`fs-12${isM ? " fw-700" : " fw-600"}`} style={{ color: isM ? "var(--text)" : "var(--text-2)" }}>{p.n}</span>
+                      <span className={`fs-12 ${isM ? "fw-700 u-c-text" : "fw-600 u-c-text-2"}`}>{p.n}</span>
                       {isM && <span className="p p-sm p-outline ml-4">REF</span>}
                       {!isM && KidsLink && <KidsLink nome={p.n} />}
                     </td>
@@ -658,8 +658,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                           ? inscribed?.has(norm2("Manuel Medeiros")) ?? false
                           : inscribed?.has(norm2(p.n)) ?? false;
                         return (
-                          <td key={tid} className="ta-c"
-                            style={{ background: inscrito ? "var(--bg-info-strong)" : undefined }}>
+                          <td key={tid} className={inscrito ? "ta-c u-bg-bg-info-strong" : "ta-c"}>
                             {inscrito
                               ? <span className="u-fs-fs-14">⛳</span>
                               : MUTED}
@@ -699,7 +698,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                     <td className="ta-c u-bl-3px-solid-border-light u-p-4px-6px">
                       {rankMap[p.n] != null ? (
                         <div>
-                          <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
+                          <div className={`fw-800 fs-13 ${rankMap[p.n] <= 10 ? "u-c-color-good-dark" : rankMap[p.n] <= 30 ? "u-c-text" : "u-c-text-3"}`}>
                             {fmtOrd(rankMap[p.n])}
                           </div>
                           <div className="fs-10 c-text-3">{tgNPlayed(p)}T · {tgNRounds(p)}R</div>
@@ -707,7 +706,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       ) : <span className="fs-10 c-border">s/d</span>}
                     </td>
                     <td className="ta-c">
-                      {tr ? <span className="fw-700 fs-13" style={{ color: TR_I[tr]?.c }}>{TR_I[tr]?.i}</span> : MUTED}
+                      <TrendArrow tr={tr} />
                     </td>
                   </tr>
                 );

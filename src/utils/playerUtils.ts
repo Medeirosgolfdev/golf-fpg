@@ -6,7 +6,7 @@
  */
 
 import type { Player } from "../data/types";
-import { displayName, fmtHcp } from "./format";
+import { displayName } from "./format";
 import { stripAccents } from "./normName";
 
 /** Nome curto do clube (aceita string ou objecto {short, long}) */
@@ -19,11 +19,6 @@ export function clubShort(p: Player): string {
 export function clubLong(p: Player): string {
   if (typeof p.club === "object" && p.club) return p.club.long || p.club.short || "";
   return String(p.club || "");
-}
-
-/** Handicap para mostrar: "12.3", "+1.2" (plus) ou "—" — o mesmo do fmtHcp. */
-export function hcpDisplay(hcp: number | null | undefined): string {
-  return fmtHcp(hcp);
 }
 
 /**

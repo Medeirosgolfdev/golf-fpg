@@ -3962,6 +3962,28 @@ table td.lb-col-divider {
   color: var(--text);
   box-sizing: border-box;
 }
+/* Cores M/F (tokens --badge-male/--badge-female) — estatísticas dos federados (/jogadores) */
+.c-male { color: var(--badge-male); }
+.c-female { color: var(--badge-female); }
+.bg-male { background: var(--badge-male); }
+.bg-female { background: var(--badge-female); }
+/* Barra horizontal M/F (statsWidgets MFBar): a largura de cada parte vem dos dados */
+.mf-bar { height: 6px; background: var(--bg-subtle); border-radius: var(--radius-xs); overflow: hidden; }
+.mf-bar-lg { height: 8px; }
+/* Coluna vertical M/F (statsWidgets MFColumn): a altura vem dos dados; F em cima, M em baixo.
+   Largura por histograma: -lg (HCP dos federados, com sombra) · -wide (por ano) · -sm (HCP filtrado). */
+.mf-col { width: 85%; display: flex; flex-direction: column; border-radius: var(--radius-xs) var(--radius-xs) 0 0; overflow: hidden; }
+.mf-col-lg { min-width: 20px; box-shadow: 0 1px 2px var(--overlay-black-08); }
+.mf-col-wide { width: 90%; }
+.mf-col-sm { width: 80%; min-width: 14px; }
+.mf-seg { min-height: 2px; }
+/* OM CGSS (fpgOmRanking): colunas das provas, todas com 96px; .om-ev-here = a prova
+   que se está a ver (contorno verde, sem fundo); .om-ev-future = provas por jogar. */
+.om-rank-table :is(th, td).om-ev-col { text-align: center; width: 96px; min-width: 96px; max-width: 96px; }
+.om-rank-table :is(th, td).om-ev-future { background: var(--bg-card); }
+.om-rank-table :is(th, td).om-ev-here { border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+.om-rank-table th.om-ev-here { border-top: 3px solid var(--accent); }
+.om-ev-cell { display: inline-flex; flex-direction: column; align-items: center; gap: var(--space-3); line-height: 1.15; max-width: 88px; }
 /* Tom «bom/mau» (utils/scoreDisplay toneClass) — as cores do sinal em classe */
 .tone-good { color: var(--color-good); }
 .tone-bad { color: var(--color-danger); }
@@ -5020,3 +5042,11 @@ table td.lb-col-divider {
 .u-p-7px-8px { padding: 7px 8px !important; }
 .u-z-z-float { z-index: var(--z-float) !important; }
 .u-fl-1-1-60px { flex: 1 1 60px !important; }
+
+/* Seta da tendência (ui/TrendArrow) */
+.trend { font-weight: 700; font-size: var(--fs-13); }
+.trend-up2 { color: var(--color-good); } .trend-up { color: var(--score-par-seg); } .trend-stable { color: var(--text-muted); }
+.trend-down { color: var(--color-warn); } .trend-down2 { color: var(--color-danger); }
+/* HCP em texto (ui/HcpPill HcpText): negrito; o plus a dourado */
+.hcp-text { font-weight: 900; font-variant-numeric: tabular-nums; color: var(--text-1); }
+.hcp-text.hcp-plus { color: var(--medal-gold); }

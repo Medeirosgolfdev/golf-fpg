@@ -27,7 +27,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { norm, shortDate, ageAtDate, todayIso, fmtSD, fmtHcp } from "../utils/format";
 import { gf, isPtCountry } from "../utils/flagUtils";
-import { hcpDisplay } from "../utils/playerUtils";
 import Pager from "../ui/Pager";
 import {
   loadFederados,
@@ -633,12 +632,12 @@ export default function JogadoresListPage() {
                     <td title={r.clubLong}>{r.clubShort}{r.clubCode ? ` (${r.clubCode})` : ""}</td>
                     <td>{r.dob ? shortDate(r.dob) : "—"}</td>
                     <td className="u-ta-right">{r.age != null ? r.age : "—"}</td>
-                    <td className="u-ta-right u-fw-600">{r.hcp != null ? hcpDisplay(r.hcp) : "—"}</td>
+                    <td className="u-ta-right u-fw-600">{r.hcp != null ? fmtHcp(r.hcp) : "—"}</td>
                     <td className="u-ta-right">
                       {r.ppReal ? (
                         <span className="p p-sm u-bg-badge-pp u-c-fff u-bd-1px-solid-badge-pp" title={`Handicap Pitch & Putt: ${r.ppHcp}${r.ppRoundsYear ? ` · ${r.ppRoundsYear} cartões este ano` : ""}`}
 >
-                          🏑 {hcpDisplay(r.ppHcp!)}
+                          🏑 {fmtHcp(r.ppHcp!)}
                         </span>
                       ) : MUTED}
                     </td>

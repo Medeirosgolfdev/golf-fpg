@@ -25,7 +25,7 @@ import {
 } from "../data/playerDataLoader";
 import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { norm, shortName, firstName, fD, fD2, fmtHcp, fmtSign } from "../utils/format";
-import { clubShort, hcpDisplay } from "../utils/playerUtils";
+import { clubShort } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import LoadingState from "../ui/LoadingState";
 import { C } from "../utils/colors";
@@ -145,7 +145,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
               {results.map(p => (
                 <button key={p.fed} className="course-item" onClick={() => { onAdd(p.fed); setQ(""); setOpen(false); }}>
                   <div className="course-item-name">{p.name}</div>
-                  <div className="course-item-meta">{clubShort(p)} · {p.escalao} · HCP {hcpDisplay(p.hcp)}</div>
+                  <div className="course-item-meta">{clubShort(p)} · {p.escalao} · HCP {fmtHcp(p.hcp)}</div>
                 </button>
               ))}
             </div>
@@ -159,7 +159,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
             <span key={s.fed} className="cmp-slot" style={{ background: COLORS_LIGHT[i] }}>
               <span className="cor-dot cor-dot-10" style={{ background: COLORS[i] }} />
               <b>{shortName(s.player.name)}</b>
-              <span className="muted u-fs-fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
+              <span className="muted u-fs-fs-11">HCP {fmtHcp(s.player.hcp)}</span>
               {s.loading && <span className="u-fs-fs-11">⏳</span>}
               <CloseButton onClick={() => onRemove(s.fed)} title="Remover" />
             </span>

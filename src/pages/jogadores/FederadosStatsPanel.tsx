@@ -13,13 +13,14 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
 import { HCP_BINS, emptyHcpBins, hcpBinKey, hcpBinRange, isCountableHcp } from "./hcpBins";
-import { COL_M, COL_F, barPct, MFBar, MFColumn, MFLegend } from "./statsWidgets";
+import { barPct, MFBar, MFColumn, MFLegend } from "./statsWidgets";
 import KpiCard from "../../ui/KpiCard";
 import { fmt, todayIso } from "../../utils/format";
 import CloseButton from "../../ui/CloseButton";
 import { fmtHcp } from "../../utils/format";
 import SectionTitle from "../../ui/SectionTitle";
-
+
+import { HcpText } from "../../ui/HcpPill";
 export interface GlobalStats {
   total: number; male: number; female: number; withHcp: number; avgHcp: number;
   activeThisYear: number; pros: number;
@@ -130,7 +131,7 @@ function ClubsTable({ stats, onDrillDown, maxClub }: {
 
   return (
     <div className="card u-p-12px">
-      <SectionTitle sub={`${stats.allClubs.length} clubes · clica na linha para detalhe · clica no cabeçalho para ordenar`} right={<MFLegend long gap={12} />}>
+      <SectionTitle sub={`${stats.allClubs.length} clubes · clica na linha para detalhe · clica no cabeçalho para ordenar`} right={<MFLegend long />}>
         Todos os clubes
       </SectionTitle>
       <div className="u-maxh-520px u-oy-auto u-pr-4px">
@@ -153,10 +154,10 @@ function ClubsTable({ stats, onDrillDown, maxClub }: {
                   <span className="fw-600">{row.name}</span> <span className="muted fs-10">({row.code})</span>
                 </td>
                 <td>
-                  <MFBar m={row.m} f={row.f} widthPct={barPct(row.count, maxClub)} height={8} radius={3} />
+                  <MFBar m={row.m} f={row.f} widthPct={barPct(row.count, maxClub)} lg />
                 </td>
-                <td className="r fw-600" style={{ color: COL_M }}>{row.m}</td>
-                <td className="r fw-600" style={{ color: COL_F }}>{row.f}</td>
+                <td className="r fw-600 c-male">{row.m}</td>
+                <td className="r fw-600 c-female">{row.f}</td>
                 <td className="r fw-900">{row.count}</td>
               </tr>
             ))}
@@ -229,7 +230,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
 
       {/* Distribuição de HCP — histograma vertical stacked M/F */}
       <div className="card u-p-12px u-mb-16px">
-        <SectionTitle sub={`${stats.withHcp.toLocaleString("pt-PT")} jogadores com HCP válido`} right={<MFLegend long gap={12} />}>
+        <SectionTitle sub={`${stats.withHcp.toLocaleString("pt-PT")} jogadores com HCP válido`} right={<MFLegend long />}>
           Distribuição de HCP
         </SectionTitle>
         <div style={{ display: "grid", gridTemplateColumns: `repeat(${stats.hcpBinOrder.length}, 1fr)`, gap: 12, alignItems: "end", height: 300 }}>
@@ -250,7 +251,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
                   {total.toLocaleString("pt-PT")}
                 </div>
                 <div className="muted fs-10 u-mb-4px">{((total / stats.withHcp) * 100).toFixed(1)}%</div>
-                <MFColumn m={m} f={f} barHeight={barHeight} width="85%" minWidth={20} shadow />
+                <MFColumn m={m} f={f} barHeight={barHeight} className="mf-col-lg" />
                 <div className="fw-600 fs-11 u-mt-6pxx u-ta-center">{label}</div>
                 <div className="fs-10 u-d-flex u-fd-column u-ai-center u-gap-1px u-mt-2px">
                   <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="M" /><span className="fw-600">{m.toLocaleString("pt-PT")}</span></span>
@@ -290,9 +291,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
                 {p.name}
                 <span className="muted fs-10 ml-4">({p.acronym})</span>
               </span>
-              <span className="fw-900" style={{ fontSize: "var(--fs-14)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
-                {fmtHcp(p.hcp_exact as number)}
-              </span>
+              <HcpText hcp={p.hcp_exact as number} className="fs-14" />
             </button>
           ))}
         </div>
@@ -307,7 +306,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
               return (
                 <div key={y} className="u-d-flex u-fd-column u-ai-center u-h-100pc u-jc-flex-end">
                   <div className="fs-10 fw-600" title={`${v.m} M + ${v.f} F`}>{total}</div>
-                  <MFColumn m={v.m} f={v.f} barHeight={barHeight} width="90%" />
+                  <MFColumn m={v.m} f={v.f} barHeight={barHeight} className="mf-col-wide" />
                   <div className="fs-10 muted u-mt-3px">{y.slice(2)}</div>
                 </div>
               );
@@ -338,7 +337,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
                     <span className="fw-700">{total.toLocaleString("pt-PT")}</span>
                   </span>
                 </div>
-                <MFBar m={v.m} f={v.f} widthPct={barPct(total, maxAge)} height={8} radius={3} />
+                <MFBar m={v.m} f={v.f} widthPct={barPct(total, maxAge)} lg />
               </button>
             );
           })}
@@ -354,13 +353,13 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
                   {prefixFlag(c.cp)} <span className="fw-600">{c.name}</span> <span className="muted fs-10">({c.cp})</span>
                 </span>
                 <span className="muted fs-10 u-d-inline-flex u-gap-6px u-ws-nowrap">
-                  <span style={{ color: COL_M, fontWeight: 600 }}>{c.m}</span>·
-                  <span style={{ color: COL_F, fontWeight: 600 }}>{c.f}</span>
+                  <span className="c-male fw-600">{c.m}</span>·
+                  <span className="c-female fw-600">{c.f}</span>
                 </span>
                 <span className="fw-700 u-minw-40px u-ta-right">{c.count.toLocaleString("pt-PT")}</span>
               </div>
               <div className="u-mt-2px">
-                <MFBar m={c.m} f={c.f} widthPct={barPct(c.count, maxCountry)} height={6} />
+                <MFBar m={c.m} f={c.f} widthPct={barPct(c.count, maxCountry)} />
               </div>
             </div>
           ))}
@@ -423,9 +422,7 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
               <span className="fw-600">{p.name}</span>
               <span className="muted fs-10 ml-4">({p.acronym})</span>
             </span>
-            <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
-              {fmtHcp(p.hcp_exact as number)}
-            </span>
+            <HcpText hcp={p.hcp_exact as number} className="fs-13" />
           </button>
         ))}
       </div>
@@ -505,9 +502,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
             >
               <span className="fw-700 u-w-18px u-fs-fs-11">{i + 1}</span>
               <span className="u-fl-1 u-ta-left u-fs-fs-12">{p.name}</span>
-              <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
-                {fmtHcp(p.hcp_exact as number)}
-              </span>
+              <HcpText hcp={p.hcp_exact as number} className="fs-13" />
             </button>
           ))}
         </div>

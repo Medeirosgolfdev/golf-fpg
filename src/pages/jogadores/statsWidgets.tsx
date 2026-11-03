@@ -9,55 +9,50 @@
  */
 import SexBadge from "../../ui/SexBadge";
 
-/** Cores oficiais M/F (tokens.css). */
-export const COL_M = "var(--badge-male)";
-export const COL_F = "var(--badge-female)";
-
 /** Largura percentual de uma barra relativa ao máximo (mín. 2% para ser visível). */
 export function barPct(v: number, max: number): string {
   return `${Math.max(2, (v / Math.max(1, max)) * 100)}%`;
 }
 
 /** Barra horizontal stacked M/F sobre fundo subtle. `widthPct` = largura da
- *  parte preenchida relativa ao máximo da série (usar barPct). */
-export function MFBar({ m, f, widthPct, height = 6, radius = 2 }: {
-  m: number; f: number; widthPct: string; height?: number; radius?: number;
+ *  parte preenchida relativa ao máximo da série (usar barPct). Cores M/F nas
+ *  classes .bg-male/.bg-female (tokens --badge-male/--badge-female); `lg` = 8px. */
+export function MFBar({ m, f, widthPct, lg }: {
+  m: number; f: number; widthPct: string; lg?: boolean;
 }) {
   const total = m + f;
   const mPct = total > 0 ? (m / total) * 100 : 0;
   return (
-    <div style={{ height, background: "var(--bg-subtle)", borderRadius: radius, overflow: "hidden" }}>
-      <div style={{ width: widthPct, height: "100%", display: "flex" }}>
-        <div style={{ width: `${mPct}%`, background: COL_M }} />
-        <div style={{ width: `${100 - mPct}%`, background: COL_F }} />
+    <div className={lg ? "mf-bar mf-bar-lg" : "mf-bar"}>
+      <div className="u-d-flex u-h-100pc" style={{ width: widthPct }}>
+        <div className="bg-male" style={{ width: `${mPct}%` }} />
+        <div className="bg-female" style={{ width: `${100 - mPct}%` }} />
       </div>
     </div>
   );
 }
 
-/** Coluna vertical stacked M/F (histogramas). F em cima, M em baixo. */
-export function MFColumn({ m, f, barHeight, width = "85%", minWidth, shadow }: {
-  m: number; f: number; barHeight: number; width?: string; minWidth?: number; shadow?: boolean;
+/** Coluna vertical stacked M/F (histogramas). F em cima, M em baixo. A altura
+ *  vem dos dados; a largura de cada histograma vai em `className`
+ *  (.mf-col-lg · .mf-col-wide · .mf-col-sm, no App.css). */
+export function MFColumn({ m, f, barHeight, className }: {
+  m: number; f: number; barHeight: number; className?: string;
 }) {
   const total = m + f;
   const mHeight = (m / Math.max(1, total)) * barHeight;
   const fHeight = barHeight - mHeight;
   return (
-    <div style={{
-      width, minWidth, display: "flex", flexDirection: "column",
-      borderRadius: "3px 3px 0 0", overflow: "hidden",
-      boxShadow: shadow ? "0 1px 2px var(--overlay-black-08)" : undefined,
-    }}>
-      {f > 0 && <div title={`${f} Feminino`} style={{ height: fHeight, background: COL_F, minHeight: 2 }} />}
-      {m > 0 && <div title={`${m} Masculino`} style={{ height: mHeight, background: COL_M, minHeight: 2 }} />}
+    <div className={className ? `mf-col ${className}` : "mf-col"}>
+      {f > 0 && <div title={`${f} Feminino`} className="mf-seg bg-female" style={{ height: fHeight }} />}
+      {m > 0 && <div title={`${m} Masculino`} className="mf-seg bg-male" style={{ height: mHeight }} />}
     </div>
   );
 }
 
-/** Legenda M/F compacta (badges + rótulos). */
-export function MFLegend({ long, gap = 10 }: { long?: boolean; gap?: number }) {
+/** Legenda M/F compacta (badges + rótulos); `long` = «Masculino/Feminino». */
+export function MFLegend({ long }: { long?: boolean }) {
   return (
-    <div style={{ display: "flex", gap, fontSize: "var(--fs-10)" }}>
+    <div className={`u-d-flex u-fs-fs-10 ${long ? "u-gap-12px" : "u-gap-10px"}`}>
       <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="M" /> {long ? "Masculino" : "M"}</span>
       <span className="u-d-inline-flex u-ai-center u-gap-3px"><SexBadge sex="F" /> {long ? "Feminino" : "F"}</span>
     </div>

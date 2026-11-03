@@ -222,9 +222,6 @@ function pointsLadder(
    a 14/09/2026 dizia 135 (3 A + 4 C) quando só faltavam 90 (3 A + São Martinho).
    Actualizar as datas quando o clube mexer no calendário. */
 const OM_FIM_EPOCA = "2026-11-14"; // regra 8
-/** Coluna da prova que se está a ver: contorno verde (sem fundo de cor). */
-const HERE_HDR: React.CSSProperties = { borderTop: "3px solid var(--accent)", borderLeft: "2px solid var(--accent)", borderRight: "2px solid var(--accent)" };
-const HERE_CELL: React.CSSProperties = { borderLeft: "2px solid var(--accent)", borderRight: "2px solid var(--accent)" };
 /** Ausências já conhecidas nas provas da OM por jogar (nome do OM_CALENDAR →
  *  fed → motivo). Mariana, 02/10/2026: o Manuel falha estas duas. */
 const AUSENCIAS: Record<string, Record<string, string>> = {
@@ -427,9 +424,9 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                     return (
                       <SortableHdr key={ev.tcode} k={`ev:${ev.tcode}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
                         title={`${ev.name} — ${fmtDatePt(ev.date)} — ${LEVEL_LABEL[ev.level]}${isHere ? " (esta prova)" : ""}`}
-                        style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? HERE_HDR : {}) }}>
+                        className={isHere ? "om-ev-col om-ev-here" : "om-ev-col"}>
                         {/* nome · data · pills (modalidade da prova / nível / modalidade dos juniores) */}
-                        <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
+                        <span className="om-ev-cell">
                           {isHere && <span className="fs-11 u-c-accent u-fw-800">▼ esta prova</span>}
                           <span className="u-ws-nowrap u-ov-hidden u-tov-ellipsis u-maxw-100pc">{shortEv(ev.name)}</span>
                           <span className="fs-11 p-muted">{shortDateSlash(ev.date ?? undefined)}</span>
@@ -446,8 +443,8 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                   })}
                   {futuras.map(c => (
                     <th key={c.name} title={`${c.name} — ${shortDateSlash(c.date ?? undefined)} — por jogar`}
-                      style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-card)" }}>
-                      <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
+                      className="om-ev-col om-ev-future">
+                      <span className="om-ev-cell">
                         <span className="u-ws-nowrap u-ov-hidden u-tov-ellipsis u-maxw-100pc">{shortEv(c.name)}</span>
                         <span className="fs-11 p-muted">{shortDateSlash(c.date ?? undefined)}</span>
                         <LevelPill level={c.level} />
@@ -463,7 +460,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                   return (
                     <tr key={p.fed} className={isMan ? "row-manuel" : undefined}>
                       <td className="u-ta-center u-fw-700">{p.rank}</td>
-                      <td style={{ textAlign: "left", fontWeight: isMan ? 700 : undefined }}>
+                      <td className={isMan ? "u-ta-left u-fw-700" : "u-ta-left"}>
                         {p.name}{!p.canWin && <span className="p-muted" title="Não-CGSS: aparece no ranking mas não pode ganhar a OM (regulamento)."> *</span>}
                         <div className="p-muted fs-11">{p.club}</div>
                       </td>
@@ -473,8 +470,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                         const e = p.events.find(x => String(x.tcode) === String(ev.tcode));
                         const isHere = !!thisEvent && String(ev.tcode) === String(thisEvent.tcode);
                         return (
-                          <td key={ev.tcode} className="fs-12"
-                            style={{ textAlign: "center", whiteSpace: "nowrap", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? HERE_CELL : {}) }}
+                          <td key={ev.tcode} className={isHere ? "fs-12 u-ws-nowrap om-ev-col om-ev-here" : "fs-12 u-ws-nowrap om-ev-col"}
                             title={e ? `${ev.name}: ${fmtOrd(e.pos)} · ${ev.juniorScoring ? `${ev.juniorScoring}: ${e.score ?? ""} · ` : ""}gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
                             {e
                               ? <><b>{fmtOrd(e.pos)}</b> <span className="fs-11 u-c-accent u-fw-700">{e.pts}</span></>
@@ -485,8 +481,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                       {futuras.map(c => {
                         const falta = AUSENCIAS[c.name]?.[p.fed];
                         return (
-                          <td key={c.name} className="fs-11" title={falta ? `Não joga: ${falta}` : undefined}
-                            style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-card)" }}>
+                          <td key={c.name} className="fs-11 om-ev-col om-ev-future" title={falta ? `Não joga: ${falta}` : undefined}>
                             {falta && <span className="p-muted u-fst-italic">não joga</span>}
                           </td>
                         );
@@ -731,8 +726,6 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
 }
 
 /** Encurta o nome da prova para o detalhe (Torneio de Inverno CGSS → Inverno). */
-/** Largura fixa de cada coluna de prova na matriz — todas iguais. */
-const EV_COL_W = 96;
 /** Nome curto das provas da OM para o cabeçalho da matriz. */
 const SHORT_EV: Array<[RegExp, string]> = [
   [/\btrof[eé]u\s+jo[aã]o\s+sousa\b/i, "João Sousa"],

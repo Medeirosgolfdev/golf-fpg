@@ -16,7 +16,8 @@ import { fmt, todayIso } from "../../utils/format";
 import { ESC_IDX, type ViewMode } from "./filterPlayers";
 import { fmtHcp } from "../../utils/format";
 import SectionTitle from "../../ui/SectionTitle";
-
+
+import { HcpText } from "../../ui/HcpPill";
 export type FilteredPlayer = { name: string; fed: string; escalao: string; sex?: "M" | "F" | string; hcp: number | null; club: unknown; region?: string; _federadoRaw?: FederadoRaw; _source?: MergedPlayer["_source"]; tags?: string[] };
 
 export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCount }: {
@@ -120,9 +121,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                       return club ? <span className="muted fs-10 ml-4">({club})</span> : null;
                     })()}
                   </span>
-                  <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
-                    {fmtHcp(p.hcp as number)}
-                  </span>
+                  <HcpText hcp={p.hcp as number} className="fs-13" />
                 </button>
               );
             })}
@@ -143,7 +142,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                     <span className="fw-500">{k}</span>
                     <span className="fw-700">{total}</span>
                   </div>
-                  <MFBar m={v.m} f={v.f} widthPct={barPct(total, maxEsc)} height={6} />
+                  <MFBar m={v.m} f={v.f} widthPct={barPct(total, maxEsc)} />
                 </div>
               );
             })}
@@ -199,7 +198,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                 <div key={bin} className="u-d-flex u-fd-column u-ai-center u-h-100pc u-jc-flex-end">
                   <div className="fw-700 fs-11 u-mb-2px">{total}</div>
                   <div className="muted fs-10 u-mb-4px">{total > 0 ? ((total / withHcp) * 100).toFixed(0) + "%" : ""}</div>
-                  <MFColumn m={m} f={f} barHeight={barHeight} width="80%" minWidth={14} />
+                  <MFColumn m={m} f={f} barHeight={barHeight} className="mf-col-sm" />
                   <div className="fw-600 fs-10 u-mt-4px">{label}</div>
                 </div>
               );

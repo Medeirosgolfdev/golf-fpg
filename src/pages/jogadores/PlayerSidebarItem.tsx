@@ -7,13 +7,13 @@
  */
 import React from "react";
 import type { FederadoRaw, MergedPlayer } from "../../data/federadosLoader";
-import { hcpDisplay } from "../../utils/playerUtils";
 import { gf, isForeignPrefix } from "../../utils/flagUtils";
 import SexBadge from "../../ui/SexBadge";
 import { PillBadge, EscPill, SIDEBAR_ACCENT } from "../../ui/PillBadge";
 import type { EscHcpStats } from "./filterPlayers";
 import HcpPill from "../../ui/HcpPill";
-
+
+import { fmtHcp } from "../../utils/format";
 export type PlayerSidebarPlayer = {
   name: string;
   fed: string;
@@ -196,7 +196,7 @@ function PlayerSidebarItemInner({
         </span>
         {rankingMode && displayHcp != null && (
           <span className={`sidebar-sd ${displayHcp <= 5 ? "trend-up" : displayHcp <= 15 ? "sidebar-c-text-3" : "sidebar-sd-high"}`}>
-            {hcpDisplay(displayHcp)}
+            {fmtHcp(displayHcp)}
           </span>
         )}
       </div>

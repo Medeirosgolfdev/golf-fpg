@@ -9,7 +9,6 @@
  * Auth/password-gate constants live in utils/authConstants.ts.
  */
 
-import { SC } from "../utils/scoreDisplay";
 
 /* ═══════════════════════════════════════════════════════════════
    FPG TOURNAMENTS (from tournaments.ts)
@@ -51,11 +50,3 @@ export const TIER_L: Record<string, string> = {
   developing: "Em Desenv.", beginner: "Iniciante",
 };
 
-/** Ícones e cores dos indicadores de tendência */
-export const TR_I: Record<string, { i: string; c: string }> = {
-  up2:    { i: "▲▲", c: SC.good },
-  up:     { i: "▲",  c: "var(--score-par-seg)" },
-  stable: { i: "●",  c: "var(--text-muted)" },
-  down:   { i: "▼",  c: SC.warn },
-  down2:  { i: "▼▼", c: SC.danger },
-};
