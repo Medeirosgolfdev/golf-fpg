@@ -24,6 +24,11 @@
  *   4. homónimos: 1.º fica o único com data de nascimento dentro do escalão
  *      da lista; 2.º o único com handicap conhecido a ≤2 do da lista.
  * Só liga quando sobra UM candidato; os outros ficam no relatório.
+ *
+ * `ficha` numa linha (id da ficha, ex. "g531001335") liga-a à mão e salta os
+ * passos acima — nomes mal escritos no PDF («Nathan Bonefant») ou país da
+ * lista diferente do da ficha (Mariana, 03/11/2026). Ficha sem data de
+ * nascimento mas com federado FPG: a idade vem do federados.json.
  */
 const fs = require("fs");
 const path = require("path");
@@ -31,6 +36,15 @@ const { DATA_DIR, readJsonSafe } = require("./io");
 const { normName, countryToIso2 } = require("./names");
 
 const LISTAS_DIR = path.join(DATA_DIR, "hcp-listas");
+
+let fedCache = null;
+function federados() {
+  if (!fedCache) {
+    const fed = readJsonSafe(path.join(DATA_DIR, "federados.json"), null);
+    fedCache = (fed && fed.players) || [];
+  }
+  return fedCache;
+}
 
 const paisOk = (iso, j, exigir) => {
   const da = [j.country, j.nationality, ...(j.countries || [])].filter(Boolean).map((c) => String(c).toUpperCase());
@@ -57,6 +71,16 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
     }
   }
   const nomes = [...porNome.keys()];
+  const porId = new Map(res.juniors.map((j) => [j.id, j]));
+  let nascFed = null; // fed → data de nascimento (só se alguma ficha precisar)
+  const anoNasc = (j) => {
+    let d = j.dob || j.birthYear;
+    if (!d && j.sources?.fpg?.fed) {
+      if (!nascFed) nascFed = new Map(federados().map((x) => [String(x.federation_code), x.birthdate]));
+      d = nascFed.get(String(j.sources.fpg.fed));
+    }
+    return Number(String(d || "").slice(0, 4)) || 0;
+  };
 
   const relatorio = [];
   let ligados = 0;
@@ -77,15 +101,16 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
       const idadeOk = (j) => {
         if (lista.sexo && j.sex && j.sex !== lista.sexo) return false;
         if (!lista.nascidosDesde) return true;
-        const ano = Number(String(j.dob || j.birthYear || "").slice(0, 4));
+        const ano = anoNasc(j);
         return !ano || ano >= lista.nascidosDesde;
       };
       let cands = new Set([...(porNome.get(n) || []), ...(invertido ? porNome.get(invertido) || [] : [])]);
       cands = new Set([...cands].filter((j) => paisOk(iso, j, false) && idadeOk(j)));
       let via = "nome";
+      if (p.ficha) { cands = new Set(porId.has(p.ficha) ? [porId.get(p.ficha)] : []); via = "ficha (manual)"; }
       // `soNomeExacto` (listas de nomes ingleses comuns, intelligentgolf): sem o
       // passo do nome contido — «Ben Smith» não é o «Ben Cordwell-Smith»
-      if (!cands.size && toks.length >= 2 && !lista.soNomeExacto) {
+      if (!cands.size && !p.ficha && toks.length >= 2 && !lista.soNomeExacto) {
         via = "nome contido";
         const set = new Set(toks);
         for (const nm of nomes) {
@@ -102,7 +127,7 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
       // sem data). 2.º o handicap: o único com handicap conhecido (FPG/RFEG/FFG)
       // a menos de 2 pancadas do da lista.
       if (cands.size > 1 && lista.nascidosDesde) {
-        const comIdade = [...cands].filter((j) => Number(String(j.dob || j.birthYear || "").slice(0, 4)) >= lista.nascidosDesde);
+        const comIdade = [...cands].filter((j) => anoNasc(j) >= lista.nascidosDesde);
         if (comIdade.length === 1) { cands = new Set(comIdade); via += " + idade"; }
       }
       if (cands.size > 1) {
@@ -203,8 +228,7 @@ function ligacoesParaPagina(r, res) {
 const N_CANDIDATOS = 20;
 function candidatosWildCard(lista, players, res) {
   if (!lista.wildcardsFpg || !lista.sexo) return null;
-  const fed = readJsonSafe(path.join(DATA_DIR, "federados.json"), null);
-  const todos = (fed && fed.players) || [];
+  const todos = federados();
   const fichaPorFed = new Map();
   for (const j of res.juniors) if (j.sources?.fpg?.fed) fichaPorFed.set(String(j.sources.fpg.fed), j.id);
   const naLista = new Map(); // juniorId / nome → linha da lista

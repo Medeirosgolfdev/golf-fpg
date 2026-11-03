@@ -1,5 +1,5 @@
 {
- "_doc": "Lista de inscritos (Entry List) com o handicap de cada jogadora à data da lista. Lida do PDF da FPG. Usada pelo agregador kids2 (util/hcp-listas.js). Handicaps '+' guardados em negativo; 'duplicadoDe' = linha repetida no PDF (não entra nas fichas). 'italico' = linha em itálico no PDF (são as de HI acima de 6,0, o máximo dos Termos).",
+ "_doc": "Lista de inscritos (Entry List) com o handicap de cada jogadora à data da lista. Lida do PDF da FPG. Usada pelo agregador kids2 (util/hcp-listas.js). Handicaps '+' guardados em negativo; 'duplicadoDe' = linha repetida no PDF (não entra nas fichas). 'italico' = linha em itálico no PDF (são as de HI acima de 6,0, o máximo dos Termos). 'ficha' = id da ficha do kids2 ligada à mão (nome mal escrito no PDF ou país diferente).",
  "id": "fpg-entry-list-girls-2026-11-02",
  "label": "Entry List Castro Marim U14 — Raparigas (FPG, 02/11/2026)",
  "fonte": "Entry List Girls — Federação Portuguesa de Golfe",
@@ -526,7 +526,8 @@
    "lista": "waiting",
    "name": "Angelina Gao",
    "country": "Hong Kong",
-   "hcp": 4.1
+   "hcp": 4.1,
+   "ficha": "f51523"
   },
   {
    "pos": 9,
@@ -540,7 +541,8 @@
    "lista": "waiting",
    "name": "Rachel Strek",
    "country": "France",
-   "hcp": 4.7
+   "hcp": 4.7,
+   "ficha": "g042206335"
   },
   {
    "pos": 11,
