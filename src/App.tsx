@@ -112,8 +112,6 @@ export default function App() {
     return () => { alive = false; };
   }, []);
 
-  const playerCount = status.kind === "ready" ? Object.keys(status.players).length : 0;
-
   /* Valor do contexto — só fornecido quando os dados estão prontos.
      MEMOIZADO: sem useMemo, ctxValue era um novo objecto a cada render do
      App, fazendo qualquer useEffect com `players`/`simCourses`/`melhorias`
@@ -122,10 +120,9 @@ export default function App() {
     () => status.kind === "ready" ? {
       players: status.players,
       melhorias: status.melhorias,
-      playerCount,
       calUnlocked,
     } : null,
-    [status, playerCount, calUnlocked]
+    [status, calUnlocked]
   );
 
   return (

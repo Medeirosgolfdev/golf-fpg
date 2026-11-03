@@ -2,10 +2,10 @@
  * src/ui/NavBar.tsx
  *
  * Barra de navegação global — extraída de App.tsx.
- * Lê calUnlocked e stats do AppContext (sem props).
+ * Lê calUnlocked do AppContext (sem props).
  */
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { loadMasterData } from "../data/loader";
@@ -104,19 +104,11 @@ const TAB_TITLES: Record<Tab, string> = {
 // ── Componente ─────────────────────────────────────────────────────
 
 export default function NavBar() {
-  const { calUnlocked, playerCount } = useAppContext();
-  // Campos/tees do master-courses.json — em segundo plano, depois da página
-  // (os campos já não bloqueiam o arranque). Semeia também as cores de tees.
-  const [courseStats, setCourseStats] = useState<{ courses: number; tees: number } | null>(null);
+  const { calUnlocked } = useAppContext();
+  // Cores de tees do master-courses.json — em segundo plano, depois da página
+  // (os campos já não bloqueiam o arranque).
   useEffect(() => {
-    let alive = true;
-    loadMasterData()
-      .then((m) => {
-        initCourseColorCache(m.courses);
-        if (alive) setCourseStats({ courses: m.meta.stats.courses, tees: m.meta.stats.tees });
-      })
-      .catch(() => {});
-    return () => { alive = false; };
+    loadMasterData().then((m) => initCourseColorCache(m.courses)).catch(() => {});
   }, []);
   const navigate = useNavigate();
   const location = useLocation();
@@ -206,22 +198,6 @@ export default function NavBar() {
           </a>
         ))}
       </nav>
-
-      {/* Estatísticas de topo */}
-      <div className="top-stats">
-        <div className="ta-c">
-          <div className="ta-c-val">{courseStats?.courses ?? "…"}</div>
-          <div className="ta-c-label">Campos</div>
-        </div>
-        <div className="ta-c">
-          <div className="ta-c-val">{courseStats?.tees ?? "…"}</div>
-          <div className="ta-c-label">Tees</div>
-        </div>
-        <div className="ta-c">
-          <div className="ta-c-val">{playerCount}</div>
-          <div className="ta-c-label">Jogadores</div>
-        </div>
-      </div>
     </header>
   );
 }

@@ -22,8 +22,6 @@ export interface AppContextValue {
   players: PlayersDb;
   /** Dados de melhorias dos jogadores */
   melhorias: MelhoriasJson;
-  /** Nº de jogadores do players.json (estatística de topo da NavBar) */
-  playerCount: number;
   /** Se o utilizador desbloqueou as secções com password */
   calUnlocked: boolean;
 }

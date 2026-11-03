@@ -1890,7 +1890,6 @@ tr.cross-current { background: var(--bg-success); }
 
 @media (max-width: 768px) {
  .topbar      { gap: var(--space-6); padding: 0 var(--space-8); height: 44px; }
- .top-stats   { display: none; }
  .brand-icon  { width: 22px; height: 22px; }
  .brand-title { font-size: var(--fs-13); }
  .nav         { margin-left: var(--space-4); }
@@ -3339,12 +3338,6 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 .nav-btn:disabled {
  cursor: default;
  opacity: 0.45;
-}
-.top-stats {
- margin-left: auto;
- display: flex;
- gap: var(--space-16);
- flex-shrink: 0; /* nunca comprimir as estatísticas */
 }
 .center-msg {
  display: flex;
