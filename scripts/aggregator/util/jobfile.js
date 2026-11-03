@@ -155,7 +155,7 @@ function collectLinks(divisions, seriesLabel) {
  *   adultos em torneios "open"/seniores; jogadores sem birthYear passam sempre).
  */
 function buildJobfileSource(opts) {
-  const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv, maxAgeInYear = null, dobRangeFromGrad = false, countryFromLocation = false } = opts;
+  const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv, maxAgeInYear = null, dobRangeFromGrad = false, countryFromLocation = false, dir = DATA_DIR } = opts;
 
   function normalize(data, fileName, playerMap) {
     const year = data.year || (fileName.match(/(\d{4})/) ? +fileName.match(/(\d{4})/)[1] : null);
@@ -240,6 +240,8 @@ function buildJobfileSource(opts) {
           totalGross: typeof pl.total === "number" ? pl.total : null,
           toPar: typeof pl.toPar === "number" ? pl.toPar : null,
           rounds,
+          // Handicap de jogo do dia (Gross − Net, circuitos dos condados ingleses).
+          ...(typeof pl.hcpJogo === "number" ? { hcpJogo: pl.hcpJogo } : {}),
         });
       }
 
@@ -261,8 +263,9 @@ function buildJobfileSource(opts) {
       // Data real do evento: startDate da fonte (GolfBox) → data derivada dos
       // round.date (GolfGenius) → fallback a 1 de Janeiro do ano.
       date: data.startDate || data.date || deriveDateFromRounds(divisions, year) || (year ? `${year}-01-01` : null),
-      seriesId,
-      seriesLabel,
+      // Uma fonte com várias séries (condados ingleses) di-lo em cada ficheiro.
+      seriesId: data.seriesId || seriesId,
+      seriesLabel: data.seriesLabel || seriesLabel,
       course: data.course || null,
       flights,
       links: collectLinks(divisions, seriesLabel),
@@ -270,7 +273,7 @@ function buildJobfileSource(opts) {
   }
 
   function load() {
-    const files = listFiles(DATA_DIR, pattern);
+    const files = listFiles(dir, pattern);
     const tournaments = [];
     const playerMap = new Map();
     for (const file of files) {

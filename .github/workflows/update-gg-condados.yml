@@ -1,0 +1,82 @@
+name: Actualizar circuitos de juniores dos condados ingleses (GolfGenius)
+
+# Circuitos de juniores dos condados ingleses publicados no GolfGenius (BB&O
+# Futures Tour, …): resultados Gross com cartões, tee, distâncias, CR e slope,
+# e o handicap de jogo do dia (Gross − Net). Node puro, sem secrets.
+#   1. scrape-gg-condados.js → public/data/gg-condados/{circuito}_{data}.json
+#      (circuitos em scripts/gg-condados-scope.json; só lê as provas novas)
+#   2. agregador → provas e «HCP de jogo» nas fichas do kids2
+# Push com GITHUB_TOKEN não dispara o build-juniors.yml → o agregador corre AQUI.
+# Doc: docs/claude/england.md («Circuitos dos condados — GolfGenius»).
+on:
+  workflow_dispatch:
+  schedule:
+    # Segunda 05:30 UTC — as provas dos condados são ao fim-de-semana ou a meio da semana.
+    - cron: '30 5 * * 1'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  update-gg-condados:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Scrape GolfGenius dos condados
+        id: gg
+        timeout-minutes: 45
+        run: |
+          set +e
+          node scripts/scrape-gg-condados.js
+          rc=$?
+          # exit 2 = nada de novo (não é erro); um erro fica para o fim, depois do commit
+          if [ $rc != 0 ] && [ $rc != 2 ]; then echo "::error::scrape-gg-condados.js → exit $rc"; echo "failed=1" >> $GITHUB_OUTPUT; fi
+          exit 0
+
+      - name: Detectar alterações
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain -- public/data/gg-condados)" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  Sem alterações — a saltar agregador e commit"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Regenerar juniores canónicos (agregador)
+        if: steps.diff.outputs.changed == 'true'
+        run: node scripts/aggregator/index.js
+
+      - name: Commit e push (se houve alterações)
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          bash scripts/ci/push-generated.sh -m "data: circuitos de juniores dos condados ingleses (GolfGenius) $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            -f agregador -o 'public/data/gg-condados/*.json' -- \
+            public/data/gg-condados public/data
+
+      - name: Falhar se o scrape falhou
+        if: always() && steps.gg.outputs.failed != ''
+        run: |
+          echo "❌ O scrape falhou — o que correu bem já foi publicado."
+          exit 1

@@ -8,7 +8,8 @@
  * DEPOIS do identity-matcher e só ACRESCENTA um ponto ao `hcpHistory` de quem
  * já tem ficha (padrão do wagr-enrich.js).
  *
- * Dados: public/data/hcp-listas/*.json — {id, label, data, torneio, nascidosDesde?, players:
+ * Dados: public/data/hcp-listas/*.json — {id, label, data, torneio, nascidosDesde?, fonteCurta?
+ * (nome na pill da ficha em vez de «Entry List»), soNomeExacto?, players:
  * [{pos, lista: "entry"|"waiting", name, country, hcp}]} (hcp «+» em negativo).
  *
  * Ligação, por jogador da lista:
@@ -16,7 +17,8 @@
  *   2. sem nenhum: nome curto contido no da ficha com o mesmo 1.º e último
  *      nome («Manuel Medeiros» → «Manuel Goulartt Medeiros»);
  *   3. o país da lista tem de bater com o da ficha (GB cobre GB-ENG/SCT/…);
- *      ficha sem país não serve para o passo 2. Com `sexo` na lista (M/F), a
+ *      ficha sem país não serve para o passo 2 (nem há passo 2 em listas com
+ *      `soNomeExacto`). Com `sexo` na lista (M/F), a
  *      ficha não pode ser do outro sexo; com `nascidosDesde`, nem mais velha.
  *      Linhas com `duplicadoDe` (repetidas no PDF) não entram.
  *   4. homónimos: 1.º fica o único com data de nascimento dentro do escalão
@@ -81,7 +83,9 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
       let cands = new Set([...(porNome.get(n) || []), ...(invertido ? porNome.get(invertido) || [] : [])]);
       cands = new Set([...cands].filter((j) => paisOk(iso, j, false) && idadeOk(j)));
       let via = "nome";
-      if (!cands.size && toks.length >= 2) {
+      // `soNomeExacto` (listas de nomes ingleses comuns, intelligentgolf): sem o
+      // passo do nome contido — «Ben Smith» não é o «Ben Cordwell-Smith»
+      if (!cands.size && toks.length >= 2 && !lista.soNomeExacto) {
         via = "nome contido";
         const set = new Set(toks);
         for (const nm of nomes) {
@@ -114,7 +118,7 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
         const j = [...cands][0];
         linha.junior = { id: j.id, name: j.canonicalName, via };
         if (aplicar) {
-          const h = { date: lista.data, hcpExact: p.hcp, source: "entry-list", label: lista.label || lista.id };
+          const h = { date: lista.data, hcpExact: p.hcp, source: "entry-list", label: lista.label || lista.id, ...(lista.fonteCurta ? { fonte: lista.fonteCurta } : {}) };
           j.hcpHistory = Array.isArray(j.hcpHistory) ? j.hcpHistory : [];
           if (!j.hcpHistory.some((x) => x.date === h.date && x.source === h.source && x.hcpExact === h.hcpExact)) {
             j.hcpHistory.push(h);

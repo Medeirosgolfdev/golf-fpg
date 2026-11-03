@@ -1,0 +1,86 @@
+{
+  "_doc": [
+    "Circuitos de juniores dos condados ingleses no GolfGenius (scrape-gg-condados.js, 03/11/2026).",
+    "directorios: «customer directories» do GolfGenius (league + directory; pageId escolhe a época quando o directório mostra outra por omissão).",
+    "id: curto e estável (vai para o nome dos ficheiros e para a série do kids2) · nome: série no kids2 ·",
+    "filtro/excluir: regex (texto) sobre o nome das provas · country: país dos jogadores ·",
+    "sexoPorProva: [{re, sexo}] só quando o organizador o diz (os escalões só dizem U12/U14/U16) ·",
+    "jardas: true quando as distâncias do cartão são jardas — o rótulo do GolfGenius NÃO serve para o saber",
+    "(a Faldo Madeira diz «Yardage» e está em metros); confirmar contra o cartão do clube antes de pôr (jardasConfirmado).",
+    "Classificações de 9 buracos e por pontos (Stableford) ficam de fora (classificarLeaderboard).",
+    "Fora, por agora: PING Welsh Junior Tour (Stableford até U14), Oxfordshire Ladies (sem resultados), jogos de equipa.",
+    "prefixo: quando o directório mistura provas (BB&O, Cheshire), o nome da prova é o do evento com o prefixo à frente."
+  ],
+  "circuitos": [
+    {
+      "id": "bbo",
+      "nome": "BB&O (Berks, Bucks & Oxon)",
+      "organizacao": "Berks, Bucks & Oxon Golf",
+      "site": "https://bbogolf.com/junior-tours/",
+      "directorios": [
+        {
+          "league": "10291230293268402600",
+          "directory": "11227701262743015546",
+          "nota": "Junior Events: Futures + Development Tour + campeonatos"
+        }
+      ],
+      "filtro": "futures|development|championship|trophy",
+      "excluir": "consent|champion club|match|team|development",
+      "sexoPorProva": [
+        {
+          "re": "futures tour",
+          "sexo": "M",
+          "fonte": "bbogolf.com: «junior boys who are 16 and under»"
+        }
+      ],
+      "jardas": true,
+      "jardasConfirmado": "Thorney Park: GG 5829, cartão público do clube 5790–5816 jd (brancas)",
+      "country": "GB",
+      "prefixo": "BB&O",
+      "nota": "Development Tour fora: provas de iniciação de 9 buracos / pitch & putt (par 27–54)."
+    },
+    {
+      "id": "ping",
+      "nome": "PING Junior Golf Tour",
+      "organizacao": "PING Junior Golf Tour (antigo Northern Junior Golf Tour)",
+      "site": "https://www.golfgenius.com/leagues/7059116055997717986/v2_customer_directories/12100108134555589836",
+      "directorios": [
+        {
+          "league": "7059116055997717986",
+          "directory": "12100108134555589836",
+          "pageId": "13087065347968736764",
+          "nota": "época 2026 (por omissão o directório mostra a de 2027)"
+        }
+      ],
+      "filtro": ".",
+      "excluir": "scramble|parents|adult",
+      "jardas": true,
+      "jardasConfirmado": "Melton Mowbray, vermelhas: GG 5586, cartão público 5586 jd",
+      "country": "GB"
+    },
+    {
+      "id": "cheshire",
+      "nome": "Cheshire (juniores)",
+      "organizacao": "Cheshire Golf",
+      "prefixo": "Cheshire",
+      "site": "https://www.cheshiregolf.org/competitions",
+      "directorios": [
+        {
+          "league": "12176519269110033392",
+          "directory": "7513886162994375478",
+          "nota": "All Leagues & Events"
+        },
+        {
+          "league": "12176519269110033392",
+          "directory": "11079844207790172803",
+          "nota": "Girls Championships"
+        }
+      ],
+      "filtro": "boys|girls|junior|under 1[0-9]",
+      "excluir": "team|foursome|pairs|stableford|drive|chip|presentation| v |matchplay",
+      "jardas": true,
+      "jardasConfirmado": "Delamere Forest, azuis: GG 6542, cartões públicos 6440–6588 jd",
+      "country": "GB"
+    }
+  ]
+}

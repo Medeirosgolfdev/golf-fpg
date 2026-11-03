@@ -1,0 +1,1382 @@
+{
+  "_doc": "Clubes ingleses em intelligentgolf cujos opens de juniores o scrape-intelligentgolf-hcp.js lê (lista de inscritos → Handicap Index actual dos sócios do clube). Para acrescentar um clube basta o host (o site do clube, que pode ser <clube>.intelligentgolf.co.uk ou um domínio próprio) e o nome. country = país das fichas do kids2 (GB cobre GB-ENG/SCT/WLS). provas = opens que o site não lista (deixados «Competition in Progress»), com compid, título e data. Lista alargada a 02/11/2026 com os clubes dos juniores britânicos dos ficheiros England Golf que respondem em <slug>.intelligentgolf.co.uk (o HI aparece para qualquer inscrito cujo clube use intelligentgolf, por isso cada open de juniores a mais conta).",
+  "clubs": [
+    {
+      "host": "goodwood.intelligentgolf.co.uk",
+      "nome": "Golf At Goodwood",
+      "country": "GB",
+      "provas": [
+        {
+          "compid": 54977,
+          "title": "Golf At Goodwood Junior Open - PARK",
+          "date": "2026-05-29"
+        }
+      ]
+    },
+    {
+      "host": "sandiway.intelligentgolf.co.uk",
+      "nome": "Sandiway Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "harleyford.intelligentgolf.co.uk",
+      "nome": "Harleyford Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "www.petersfieldgolfclub.co.uk",
+      "nome": "Petersfield Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "enfield.intelligentgolf.co.uk",
+      "nome": "Enfield Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "slinfold.intelligentgolf.co.uk",
+      "nome": "Slinfold Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "ifield.intelligentgolf.co.uk",
+      "nome": "Ifield Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "exeter.intelligentgolf.co.uk",
+      "nome": "Exeter Golf & Country Club",
+      "country": "GB"
+    },
+    {
+      "host": "tiverton.intelligentgolf.co.uk",
+      "nome": "Tiverton Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "hayling.intelligentgolf.co.uk",
+      "nome": "Hayling Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "coventry.intelligentgolf.co.uk",
+      "nome": "Coventry Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "drift.intelligentgolf.co.uk",
+      "nome": "Drift Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "foresthills.intelligentgolf.co.uk",
+      "nome": "Forest Hills Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "www.broadstonegolfclub.com",
+      "nome": "Broadstone Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "www.westhertsgolfclub.co.uk",
+      "nome": "West Herts Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "hadleywood.intelligentgolf.co.uk",
+      "nome": "Hadley Wood Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "suttoncoldfield.intelligentgolf.co.uk",
+      "nome": "Sutton Coldfield Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "hillside.intelligentgolf.co.uk",
+      "nome": "Hillside Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "sandmartins.intelligentgolf.co.uk",
+      "nome": "Sand Martins Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "delamereforest.intelligentgolf.co.uk",
+      "nome": "Delamere Forest Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "harpendencommon.intelligentgolf.co.uk",
+      "nome": "Harpenden Common Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "knolepark.intelligentgolf.co.uk",
+      "nome": "Knole Park Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "bonnyton.intelligentgolf.co.uk",
+      "nome": "Bonnyton Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "moorhall.intelligentgolf.co.uk",
+      "nome": "Moor Hall Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "cuddington.intelligentgolf.co.uk",
+      "nome": "Cuddington Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "sundridge.intelligentgolf.co.uk",
+      "nome": "Sundridge Park Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "effingham.intelligentgolf.co.uk",
+      "nome": "Effingham Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "surbiton.intelligentgolf.co.uk",
+      "nome": "Surbiton Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "moorpark.intelligentgolf.co.uk",
+      "nome": "Moor Park Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "sunningdale.intelligentgolf.co.uk",
+      "nome": "Sunningdale Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "burhill.intelligentgolf.co.uk",
+      "nome": "Burhill Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "cosby.intelligentgolf.co.uk",
+      "nome": "Cosby Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "sandylodge.intelligentgolf.co.uk",
+      "nome": "Sandy Lodge Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "wellow.intelligentgolf.co.uk",
+      "nome": "Wellow Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "huddersfield.intelligentgolf.co.uk",
+      "nome": "Huddersfield Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "bolton.intelligentgolf.co.uk",
+      "nome": "Bolton Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "caversham.intelligentgolf.co.uk",
+      "nome": "The Caversham",
+      "country": "GB"
+    },
+    {
+      "host": "northamptonshirecountygolfclub.intelligentgolf.co.uk",
+      "nome": "Northamptonshire County Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "blackwell.intelligentgolf.co.uk",
+      "nome": "Blackwell Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "trentham.intelligentgolf.co.uk",
+      "nome": "Trentham Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "standrews.intelligentgolf.co.uk",
+      "nome": "St Andrews",
+      "country": "GB"
+    },
+    {
+      "host": "radyr.intelligentgolf.co.uk",
+      "nome": "Radyr Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "york.intelligentgolf.co.uk",
+      "nome": "York Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "royaljersey.intelligentgolf.co.uk",
+      "nome": "Royal Jersey Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "parkstone.intelligentgolf.co.uk",
+      "nome": "Parkstone Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "thorpehall.intelligentgolf.co.uk",
+      "nome": "Thorpe Hall Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "royalwimbledon.intelligentgolf.co.uk",
+      "nome": "Royal Wimbledon Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "cottinghamparks.intelligentgolf.co.uk",
+      "nome": "Cottingham Parks Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "worksop.intelligentgolf.co.uk",
+      "nome": "Worksop Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "saffronwalden.intelligentgolf.co.uk",
+      "nome": "Saffron Walden Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "stoneham.intelligentgolf.co.uk",
+      "nome": "Stoneham Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "hindhead.intelligentgolf.co.uk",
+      "nome": "Hindhead Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "broctonhall.intelligentgolf.co.uk",
+      "nome": "Brocton Hall Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "wearside.intelligentgolf.co.uk",
+      "nome": "Wearside Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "norwoodpark.intelligentgolf.co.uk",
+      "nome": "Norwood Park Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "wallasey.intelligentgolf.co.uk",
+      "nome": "Wallasey Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "coptheath.intelligentgolf.co.uk",
+      "nome": "Copt Heath Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "edgbaston.intelligentgolf.co.uk",
+      "nome": "Edgbaston Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "frilfordheath.intelligentgolf.co.uk",
+      "nome": "Frilford Heath Golf Club",
+      "country": "GB"
+    },
+    {
+      "host": "abbeydale.intelligentgolf.co.uk",
+      "nome": "Abbeydale",
+      "country": "GB"
+    },
+    {
+      "host": "abridge.intelligentgolf.co.uk",
+      "nome": "Abridge",
+      "country": "GB"
+    },
+    {
+      "host": "aldeburgh.intelligentgolf.co.uk",
+      "nome": "Aldeburgh",
+      "country": "GB"
+    },
+    {
+      "host": "alresford.intelligentgolf.co.uk",
+      "nome": "Alresford",
+      "country": "GB"
+    },
+    {
+      "host": "basingstoke.intelligentgolf.co.uk",
+      "nome": "Basingstoke",
+      "country": "GB"
+    },
+    {
+      "host": "bath.intelligentgolf.co.uk",
+      "nome": "Bath",
+      "country": "GB"
+    },
+    {
+      "host": "beaconsfield.intelligentgolf.co.uk",
+      "nome": "Beaconsfield",
+      "country": "GB"
+    },
+    {
+      "host": "beaudesert.intelligentgolf.co.uk",
+      "nome": "Beau Desert",
+      "country": "GB"
+    },
+    {
+      "host": "bedfordshire.intelligentgolf.co.uk",
+      "nome": "Bedfordshire",
+      "country": "GB"
+    },
+    {
+      "host": "beestonfields.intelligentgolf.co.uk",
+      "nome": "Beeston Fields",
+      "country": "GB"
+    },
+    {
+      "host": "bishopsstortford.intelligentgolf.co.uk",
+      "nome": "Bishop's Stortford",
+      "country": "GB"
+    },
+    {
+      "host": "blackwellgrange.intelligentgolf.co.uk",
+      "nome": "Blackwell Grange",
+      "country": "GB"
+    },
+    {
+      "host": "bognorregis.intelligentgolf.co.uk",
+      "nome": "Bognor Regis",
+      "country": "GB"
+    },
+    {
+      "host": "boycehill.intelligentgolf.co.uk",
+      "nome": "Boyce Hill",
+      "country": "GB"
+    },
+    {
+      "host": "bramallpark.intelligentgolf.co.uk",
+      "nome": "Bramall Park",
+      "country": "GB"
+    },
+    {
+      "host": "bramhall.intelligentgolf.co.uk",
+      "nome": "Bramhall",
+      "country": "GB"
+    },
+    {
+      "host": "bramptonpark.intelligentgolf.co.uk",
+      "nome": "Brampton Park",
+      "country": "GB"
+    },
+    {
+      "host": "breadsall.intelligentgolf.co.uk",
+      "nome": "Breadsall Priory",
+      "country": "GB"
+    },
+    {
+      "host": "broadway.intelligentgolf.co.uk",
+      "nome": "Broadway",
+      "country": "GB"
+    },
+    {
+      "host": "brocket.intelligentgolf.co.uk",
+      "nome": "Brocket Hall",
+      "country": "GB"
+    },
+    {
+      "host": "bruntsfield.intelligentgolf.co.uk",
+      "nome": "Bruntsfield",
+      "country": "GB"
+    },
+    {
+      "host": "buckingham.intelligentgolf.co.uk",
+      "nome": "Buckingham",
+      "country": "GB"
+    },
+    {
+      "host": "burford.intelligentgolf.co.uk",
+      "nome": "Burford",
+      "country": "GB"
+    },
+    {
+      "host": "burnham.intelligentgolf.co.uk",
+      "nome": "Burnham & Berrow",
+      "country": "GB"
+    },
+    {
+      "host": "burnley.intelligentgolf.co.uk",
+      "nome": "Burnley",
+      "country": "GB"
+    },
+    {
+      "host": "burystedmunds.intelligentgolf.co.uk",
+      "nome": "Bury St Edmunds",
+      "country": "GB"
+    },
+    {
+      "host": "bushhillpark.intelligentgolf.co.uk",
+      "nome": "Bush Hill Park",
+      "country": "GB"
+    },
+    {
+      "host": "cainhoewood.intelligentgolf.co.uk",
+      "nome": "Cainhoe Wood",
+      "country": "GB"
+    },
+    {
+      "host": "calcotpark.intelligentgolf.co.uk",
+      "nome": "Calcot Park",
+      "country": "GB"
+    },
+    {
+      "host": "caldy.intelligentgolf.co.uk",
+      "nome": "Caldy",
+      "country": "GB"
+    },
+    {
+      "host": "camberley.intelligentgolf.co.uk",
+      "nome": "Camberley Heath",
+      "country": "GB"
+    },
+    {
+      "host": "canonsbrook.intelligentgolf.co.uk",
+      "nome": "Canons Brook",
+      "country": "GB"
+    },
+    {
+      "host": "carnoustie.intelligentgolf.co.uk",
+      "nome": "Carnoustie",
+      "country": "GB"
+    },
+    {
+      "host": "centurion.intelligentgolf.co.uk",
+      "nome": "Centurion",
+      "country": "GB"
+    },
+    {
+      "host": "charthills.intelligentgolf.co.uk",
+      "nome": "Chart Hills",
+      "country": "GB"
+    },
+    {
+      "host": "chelmsford.intelligentgolf.co.uk",
+      "nome": "Chelmsford",
+      "country": "GB"
+    },
+    {
+      "host": "chesterlestreet.intelligentgolf.co.uk",
+      "nome": "Chester Le Street",
+      "country": "GB"
+    },
+    {
+      "host": "chesterfield.intelligentgolf.co.uk",
+      "nome": "Chesterfield",
+      "country": "GB"
+    },
+    {
+      "host": "chestfield.intelligentgolf.co.uk",
+      "nome": "Chestfield Lakes",
+      "country": "GB"
+    },
+    {
+      "host": "chigwell.intelligentgolf.co.uk",
+      "nome": "Chigwell",
+      "country": "GB"
+    },
+    {
+      "host": "chippenham.intelligentgolf.co.uk",
+      "nome": "Chippenham",
+      "country": "GB"
+    },
+    {
+      "host": "chorley.intelligentgolf.co.uk",
+      "nome": "Chorley",
+      "country": "GB"
+    },
+    {
+      "host": "churston.intelligentgolf.co.uk",
+      "nome": "Churston",
+      "country": "GB"
+    },
+    {
+      "host": "cityofnewcastle.intelligentgolf.co.uk",
+      "nome": "City of Newcastle",
+      "country": "GB"
+    },
+    {
+      "host": "clitheroe.intelligentgolf.co.uk",
+      "nome": "Clitheroe",
+      "country": "GB"
+    },
+    {
+      "host": "colchester.intelligentgolf.co.uk",
+      "nome": "Colchester",
+      "country": "GB"
+    },
+    {
+      "host": "colnevalley.intelligentgolf.co.uk",
+      "nome": "Colne Valley",
+      "country": "GB"
+    },
+    {
+      "host": "conwy.intelligentgolf.co.uk",
+      "nome": "Conwy",
+      "country": "GB"
+    },
+    {
+      "host": "coodenbeach.intelligentgolf.co.uk",
+      "nome": "Cooden Beach",
+      "country": "GB"
+    },
+    {
+      "host": "coombewood.intelligentgolf.co.uk",
+      "nome": "Coombewood",
+      "country": "GB"
+    },
+    {
+      "host": "corhampton.intelligentgolf.co.uk",
+      "nome": "Corhampton",
+      "country": "GB"
+    },
+    {
+      "host": "cowdray.intelligentgolf.co.uk",
+      "nome": "Cowdray",
+      "country": "GB"
+    },
+    {
+      "host": "coxmoor.intelligentgolf.co.uk",
+      "nome": "Coxmoor",
+      "country": "GB"
+    },
+    {
+      "host": "creigiau.intelligentgolf.co.uk",
+      "nome": "Creigiau",
+      "country": "GB"
+    },
+    {
+      "host": "crewe.intelligentgolf.co.uk",
+      "nome": "Crewe",
+      "country": "GB"
+    },
+    {
+      "host": "croslandheath.intelligentgolf.co.uk",
+      "nome": "Crosland heath",
+      "country": "GB"
+    },
+    {
+      "host": "crowborough.intelligentgolf.co.uk",
+      "nome": "Crowborough Beacon",
+      "country": "GB"
+    },
+    {
+      "host": "crudenbay.intelligentgolf.co.uk",
+      "nome": "Cruden Bay",
+      "country": "GB"
+    },
+    {
+      "host": "cumberwell.intelligentgolf.co.uk",
+      "nome": "Cumberwell Park",
+      "country": "GB"
+    },
+    {
+      "host": "dartford.intelligentgolf.co.uk",
+      "nome": "Dartford",
+      "country": "GB"
+    },
+    {
+      "host": "deanwood.intelligentgolf.co.uk",
+      "nome": "Dean Wood",
+      "country": "GB"
+    },
+    {
+      "host": "deeside.intelligentgolf.co.uk",
+      "nome": "Deeside",
+      "country": "GB"
+    },
+    {
+      "host": "dereham.intelligentgolf.co.uk",
+      "nome": "Dereham",
+      "country": "GB"
+    },
+    {
+      "host": "doncaster.intelligentgolf.co.uk",
+      "nome": "Doncaster",
+      "country": "GB"
+    },
+    {
+      "host": "droitwich.intelligentgolf.co.uk",
+      "nome": "Droitwich",
+      "country": "GB"
+    },
+    {
+      "host": "dunbar.intelligentgolf.co.uk",
+      "nome": "Dunbar",
+      "country": "GB"
+    },
+    {
+      "host": "dunhamforest.intelligentgolf.co.uk",
+      "nome": "Dunham Forest",
+      "country": "GB"
+    },
+    {
+      "host": "durhamcity.intelligentgolf.co.uk",
+      "nome": "Durham City",
+      "country": "GB"
+    },
+    {
+      "host": "eatonchester.intelligentgolf.co.uk",
+      "nome": "Eaton (Chester)",
+      "country": "GB"
+    },
+    {
+      "host": "eden.intelligentgolf.co.uk",
+      "nome": "Eden",
+      "country": "GB"
+    },
+    {
+      "host": "eltonfurze.intelligentgolf.co.uk",
+      "nome": "Elton furze",
+      "country": "GB"
+    },
+    {
+      "host": "elycity.intelligentgolf.co.uk",
+      "nome": "Ely City",
+      "country": "GB"
+    },
+    {
+      "host": "erewashvalley.intelligentgolf.co.uk",
+      "nome": "Erewash Valley",
+      "country": "GB"
+    },
+    {
+      "host": "essendon.intelligentgolf.co.uk",
+      "nome": "Essendon",
+      "country": "GB"
+    },
+    {
+      "host": "farringtonpark.intelligentgolf.co.uk",
+      "nome": "Farrington Park",
+      "country": "GB"
+    },
+    {
+      "host": "feldon.intelligentgolf.co.uk",
+      "nome": "Feldon Valley",
+      "country": "GB"
+    },
+    {
+      "host": "ferndown.intelligentgolf.co.uk",
+      "nome": "Ferndown",
+      "country": "GB"
+    },
+    {
+      "host": "formby.intelligentgolf.co.uk",
+      "nome": "Formby",
+      "country": "GB"
+    },
+    {
+      "host": "formbyladies.intelligentgolf.co.uk",
+      "nome": "Formby Ladies",
+      "country": "GB"
+    },
+    {
+      "host": "ganton.intelligentgolf.co.uk",
+      "nome": "Ganton",
+      "country": "GB"
+    },
+    {
+      "host": "garforth.intelligentgolf.co.uk",
+      "nome": "Garforth",
+      "country": "GB"
+    },
+    {
+      "host": "gerrardscross.intelligentgolf.co.uk",
+      "nome": "Gerrards Cross",
+      "country": "GB"
+    },
+    {
+      "host": "girton.intelligentgolf.co.uk",
+      "nome": "Girton",
+      "country": "GB"
+    },
+    {
+      "host": "gogmagog.intelligentgolf.co.uk",
+      "nome": "Gog Magog",
+      "country": "GB"
+    },
+    {
+      "host": "goring.intelligentgolf.co.uk",
+      "nome": "Goring & Streatley",
+      "country": "GB"
+    },
+    {
+      "host": "gullane.intelligentgolf.co.uk",
+      "nome": "Gullane",
+      "country": "GB"
+    },
+    {
+      "host": "halesworth.intelligentgolf.co.uk",
+      "nome": "Halesworth",
+      "country": "GB"
+    },
+    {
+      "host": "hallowes.intelligentgolf.co.uk",
+      "nome": "Hallowes",
+      "country": "GB"
+    },
+    {
+      "host": "hanburymanor.intelligentgolf.co.uk",
+      "nome": "Hanbury Manor",
+      "country": "GB"
+    },
+    {
+      "host": "harewooddowns.intelligentgolf.co.uk",
+      "nome": "Harewood Downs",
+      "country": "GB"
+    },
+    {
+      "host": "harrogate.intelligentgolf.co.uk",
+      "nome": "Harrogate",
+      "country": "GB"
+    },
+    {
+      "host": "hartley.intelligentgolf.co.uk",
+      "nome": "Hartley Wintney",
+      "country": "GB"
+    },
+    {
+      "host": "haywardsheath.intelligentgolf.co.uk",
+      "nome": "Haywards Heath",
+      "country": "GB"
+    },
+    {
+      "host": "herefordshire.intelligentgolf.co.uk",
+      "nome": "Herefordshire",
+      "country": "GB"
+    },
+    {
+      "host": "highpost.intelligentgolf.co.uk",
+      "nome": "High Post",
+      "country": "GB"
+    },
+    {
+      "host": "highgate.intelligentgolf.co.uk",
+      "nome": "Highgate",
+      "country": "GB"
+    },
+    {
+      "host": "holmehall.intelligentgolf.co.uk",
+      "nome": "Holme Hall",
+      "country": "GB"
+    },
+    {
+      "host": "hornsea.intelligentgolf.co.uk",
+      "nome": "Hornsea",
+      "country": "GB"
+    },
+    {
+      "host": "hunley.intelligentgolf.co.uk",
+      "nome": "Hunley",
+      "country": "GB"
+    },
+    {
+      "host": "inverness.intelligentgolf.co.uk",
+      "nome": "Inverness",
+      "country": "GB"
+    },
+    {
+      "host": "ipswich.intelligentgolf.co.uk",
+      "nome": "Ipswich",
+      "country": "GB"
+    },
+    {
+      "host": "isleofwedmore.intelligentgolf.co.uk",
+      "nome": "Isle of Wedmore",
+      "country": "GB"
+    },
+    {
+      "host": "johnogaunt.intelligentgolf.co.uk",
+      "nome": "John O Gaunt",
+      "country": "GB"
+    },
+    {
+      "host": "kedleston.intelligentgolf.co.uk",
+      "nome": "Kedleston Park",
+      "country": "GB"
+    },
+    {
+      "host": "kendleshire.intelligentgolf.co.uk",
+      "nome": "Kendleshire",
+      "country": "GB"
+    },
+    {
+      "host": "kenilworth.intelligentgolf.co.uk",
+      "nome": "Kenilworth",
+      "country": "GB"
+    },
+    {
+      "host": "kilworth.intelligentgolf.co.uk",
+      "nome": "Kilworth Spring",
+      "country": "GB"
+    },
+    {
+      "host": "kingsnorton.intelligentgolf.co.uk",
+      "nome": "Kings Norton",
+      "country": "GB"
+    },
+    {
+      "host": "knebworth.intelligentgolf.co.uk",
+      "nome": "Knebworth",
+      "country": "GB"
+    },
+    {
+      "host": "knowle.intelligentgolf.co.uk",
+      "nome": "Knowle",
+      "country": "GB"
+    },
+    {
+      "host": "lancaster.intelligentgolf.co.uk",
+      "nome": "Lancaster",
+      "country": "GB"
+    },
+    {
+      "host": "langleypark.intelligentgolf.co.uk",
+      "nome": "Langley Park",
+      "country": "GB"
+    },
+    {
+      "host": "letchworth.intelligentgolf.co.uk",
+      "nome": "Letchworth",
+      "country": "GB"
+    },
+    {
+      "host": "lilleybrook.intelligentgolf.co.uk",
+      "nome": "Lilley Brook",
+      "country": "GB"
+    },
+    {
+      "host": "lincoln.intelligentgolf.co.uk",
+      "nome": "Lincoln",
+      "country": "GB"
+    },
+    {
+      "host": "lindrick.intelligentgolf.co.uk",
+      "nome": "Lindrick",
+      "country": "GB"
+    },
+    {
+      "host": "liphook.intelligentgolf.co.uk",
+      "nome": "Liphook",
+      "country": "GB"
+    },
+    {
+      "host": "littleaston.intelligentgolf.co.uk",
+      "nome": "Little Aston",
+      "country": "GB"
+    },
+    {
+      "host": "littlestone.intelligentgolf.co.uk",
+      "nome": "Littlestone",
+      "country": "GB"
+    },
+    {
+      "host": "longashton.intelligentgolf.co.uk",
+      "nome": "Long Ashton",
+      "country": "GB"
+    },
+    {
+      "host": "longsutton.intelligentgolf.co.uk",
+      "nome": "Long Sutton",
+      "country": "GB"
+    },
+    {
+      "host": "longcliffe.intelligentgolf.co.uk",
+      "nome": "Longcliffe",
+      "country": "GB"
+    },
+    {
+      "host": "lutterworth.intelligentgolf.co.uk",
+      "nome": "Lutterworth",
+      "country": "GB"
+    },
+    {
+      "host": "lymeregis.intelligentgolf.co.uk",
+      "nome": "Lyme Regis",
+      "country": "GB"
+    },
+    {
+      "host": "lymm.intelligentgolf.co.uk",
+      "nome": "Lymm",
+      "country": "GB"
+    },
+    {
+      "host": "manningsheath.intelligentgolf.co.uk",
+      "nome": "Mannings Heath",
+      "country": "GB"
+    },
+    {
+      "host": "marketharborough.intelligentgolf.co.uk",
+      "nome": "Market Harborough",
+      "country": "GB"
+    },
+    {
+      "host": "mendip.intelligentgolf.co.uk",
+      "nome": "Mendip",
+      "country": "GB"
+    },
+    {
+      "host": "mendipspring.intelligentgolf.co.uk",
+      "nome": "Mendip Spring",
+      "country": "GB"
+    },
+    {
+      "host": "middlesbrough.intelligentgolf.co.uk",
+      "nome": "Middlesbrough",
+      "country": "GB"
+    },
+    {
+      "host": "minchinhampton.intelligentgolf.co.uk",
+      "nome": "Minchinhampton",
+      "country": "GB"
+    },
+    {
+      "host": "moortown.intelligentgolf.co.uk",
+      "nome": "Moortown",
+      "country": "GB"
+    },
+    {
+      "host": "morpeth.intelligentgolf.co.uk",
+      "nome": "Morpeth",
+      "country": "GB"
+    },
+    {
+      "host": "moseley.intelligentgolf.co.uk",
+      "nome": "Moseley",
+      "country": "GB"
+    },
+    {
+      "host": "nevill.intelligentgolf.co.uk",
+      "nome": "Nevill",
+      "country": "GB"
+    },
+    {
+      "host": "newport.intelligentgolf.co.uk",
+      "nome": "Newport",
+      "country": "GB"
+    },
+    {
+      "host": "northberwick.intelligentgolf.co.uk",
+      "nome": "North Berwick",
+      "country": "GB"
+    },
+    {
+      "host": "northforeland.intelligentgolf.co.uk",
+      "nome": "North Foreland",
+      "country": "GB"
+    },
+    {
+      "host": "northhants.intelligentgolf.co.uk",
+      "nome": "North Hants",
+      "country": "GB"
+    },
+    {
+      "host": "northumberland.intelligentgolf.co.uk",
+      "nome": "Northumberland",
+      "country": "GB"
+    },
+    {
+      "host": "oakdale.intelligentgolf.co.uk",
+      "nome": "Oakdale",
+      "country": "GB"
+    },
+    {
+      "host": "oakmere.intelligentgolf.co.uk",
+      "nome": "Oakmere",
+      "country": "GB"
+    },
+    {
+      "host": "olton.intelligentgolf.co.uk",
+      "nome": "Olton",
+      "country": "GB"
+    },
+    {
+      "host": "oswestry.intelligentgolf.co.uk",
+      "nome": "Oswestry",
+      "country": "GB"
+    },
+    {
+      "host": "otley.intelligentgolf.co.uk",
+      "nome": "Otley",
+      "country": "GB"
+    },
+    {
+      "host": "pannal.intelligentgolf.co.uk",
+      "nome": "Pannal",
+      "country": "GB"
+    },
+    {
+      "host": "pennard.intelligentgolf.co.uk",
+      "nome": "Pennard",
+      "country": "GB"
+    },
+    {
+      "host": "perranporth.intelligentgolf.co.uk",
+      "nome": "Perranporth",
+      "country": "GB"
+    },
+    {
+      "host": "piltdown.intelligentgolf.co.uk",
+      "nome": "Piltdown",
+      "country": "GB"
+    },
+    {
+      "host": "pleasington.intelligentgolf.co.uk",
+      "nome": "Pleasington",
+      "country": "GB"
+    },
+    {
+      "host": "ponteland.intelligentgolf.co.uk",
+      "nome": "Ponteland",
+      "country": "GB"
+    },
+    {
+      "host": "porterspark.intelligentgolf.co.uk",
+      "nome": "Porters Park",
+      "country": "GB"
+    },
+    {
+      "host": "retford.intelligentgolf.co.uk",
+      "nome": "Retford",
+      "country": "GB"
+    },
+    {
+      "host": "ringway.intelligentgolf.co.uk",
+      "nome": "Ringway",
+      "country": "GB"
+    },
+    {
+      "host": "rochester.intelligentgolf.co.uk",
+      "nome": "Rochester & Cobham",
+      "country": "GB"
+    },
+    {
+      "host": "rochfordhundred.intelligentgolf.co.uk",
+      "nome": "Rochford Hundred",
+      "country": "GB"
+    },
+    {
+      "host": "rockliffehall.intelligentgolf.co.uk",
+      "nome": "Rockliffe Hall",
+      "country": "GB"
+    },
+    {
+      "host": "romford.intelligentgolf.co.uk",
+      "nome": "Romford",
+      "country": "GB"
+    },
+    {
+      "host": "romiley.intelligentgolf.co.uk",
+      "nome": "Romiley",
+      "country": "GB"
+    },
+    {
+      "host": "rotherham.intelligentgolf.co.uk",
+      "nome": "Rotherham",
+      "country": "GB"
+    },
+    {
+      "host": "rowlandscastle.intelligentgolf.co.uk",
+      "nome": "Rowlands Castle",
+      "country": "GB"
+    },
+    {
+      "host": "royalblackheath.intelligentgolf.co.uk",
+      "nome": "Royal Blackheath",
+      "country": "GB"
+    },
+    {
+      "host": "royaleastbourne.intelligentgolf.co.uk",
+      "nome": "Royal Eastbourne",
+      "country": "GB"
+    },
+    {
+      "host": "royalguernsey.intelligentgolf.co.uk",
+      "nome": "Royal Guernsey",
+      "country": "GB"
+    },
+    {
+      "host": "royalliverpool.intelligentgolf.co.uk",
+      "nome": "Royal Liverpool",
+      "country": "GB"
+    },
+    {
+      "host": "royallytham.intelligentgolf.co.uk",
+      "nome": "Royal Lytham",
+      "country": "GB"
+    },
+    {
+      "host": "royalwinchester.intelligentgolf.co.uk",
+      "nome": "Royal Winchester",
+      "country": "GB"
+    },
+    {
+      "host": "salisbury.intelligentgolf.co.uk",
+      "nome": "Salisbury & South Wilts",
+      "country": "GB"
+    },
+    {
+      "host": "saltford.intelligentgolf.co.uk",
+      "nome": "Saltford",
+      "country": "GB"
+    },
+    {
+      "host": "saunton.intelligentgolf.co.uk",
+      "nome": "Saunton",
+      "country": "GB"
+    },
+    {
+      "host": "sherwoodforest.intelligentgolf.co.uk",
+      "nome": "Sherwood Forest",
+      "country": "GB"
+    },
+    {
+      "host": "shrewsbury.intelligentgolf.co.uk",
+      "nome": "Shrewsbury",
+      "country": "GB"
+    },
+    {
+      "host": "southkyme.intelligentgolf.co.uk",
+      "nome": "South Kyme",
+      "country": "GB"
+    },
+    {
+      "host": "southmoor.intelligentgolf.co.uk",
+      "nome": "South Moor",
+      "country": "GB"
+    },
+    {
+      "host": "southwinchester.intelligentgolf.co.uk",
+      "nome": "South Winchester",
+      "country": "GB"
+    },
+    {
+      "host": "spalding.intelligentgolf.co.uk",
+      "nome": "Spalding",
+      "country": "GB"
+    },
+    {
+      "host": "stannesoldlinks.intelligentgolf.co.uk",
+      "nome": "St Annes Old Links",
+      "country": "GB"
+    },
+    {
+      "host": "stenodoc.intelligentgolf.co.uk",
+      "nome": "St Enodoc",
+      "country": "GB"
+    },
+    {
+      "host": "stgeorgeshill.intelligentgolf.co.uk",
+      "nome": "St George's Hill",
+      "country": "GB"
+    },
+    {
+      "host": "stpierre.intelligentgolf.co.uk",
+      "nome": "St Pierre",
+      "country": "GB"
+    },
+    {
+      "host": "stirling.intelligentgolf.co.uk",
+      "nome": "Stirling",
+      "country": "GB"
+    },
+    {
+      "host": "stockport.intelligentgolf.co.uk",
+      "nome": "Stockport",
+      "country": "GB"
+    },
+    {
+      "host": "stokepark.intelligentgolf.co.uk",
+      "nome": "Stoke Park",
+      "country": "GB"
+    },
+    {
+      "host": "stratford.intelligentgolf.co.uk",
+      "nome": "Stratford upon Avon",
+      "country": "GB"
+    },
+    {
+      "host": "sunningdaleheath.intelligentgolf.co.uk",
+      "nome": "Sunningdale Heath",
+      "country": "GB"
+    },
+    {
+      "host": "tadmartonheath.intelligentgolf.co.uk",
+      "nome": "Tadmarton Heath",
+      "country": "GB"
+    },
+    {
+      "host": "tehidy.intelligentgolf.co.uk",
+      "nome": "Tehidy Park",
+      "country": "GB"
+    },
+    {
+      "host": "enville.intelligentgolf.co.uk",
+      "nome": "The Enville",
+      "country": "GB"
+    },
+    {
+      "host": "leicestershire.intelligentgolf.co.uk",
+      "nome": "The Leicestershire",
+      "country": "GB"
+    },
+    {
+      "host": "wilmslow.intelligentgolf.co.uk",
+      "nome": "The Wilmslow",
+      "country": "GB"
+    },
+    {
+      "host": "thetford.intelligentgolf.co.uk",
+      "nome": "Thetford",
+      "country": "GB"
+    },
+    {
+      "host": "theydonbois.intelligentgolf.co.uk",
+      "nome": "Theydon Bois",
+      "country": "GB"
+    },
+    {
+      "host": "thorndonpark.intelligentgolf.co.uk",
+      "nome": "Thorndon Park",
+      "country": "GB"
+    },
+    {
+      "host": "thurlestone.intelligentgolf.co.uk",
+      "nome": "Thurlestone",
+      "country": "GB"
+    },
+    {
+      "host": "turton.intelligentgolf.co.uk",
+      "nome": "Turton",
+      "country": "GB"
+    },
+    {
+      "host": "wakefield.intelligentgolf.co.uk",
+      "nome": "Wakefield",
+      "country": "GB"
+    },
+    {
+      "host": "waltonheath.intelligentgolf.co.uk",
+      "nome": "Walton Heath",
+      "country": "GB"
+    },
+    {
+      "host": "wells.intelligentgolf.co.uk",
+      "nome": "Wells",
+      "country": "GB"
+    },
+    {
+      "host": "westbyfleet.intelligentgolf.co.uk",
+      "nome": "West Byfleet",
+      "country": "GB"
+    },
+    {
+      "host": "westessex.intelligentgolf.co.uk",
+      "nome": "West Essex",
+      "country": "GB"
+    },
+    {
+      "host": "westhill.intelligentgolf.co.uk",
+      "nome": "West Hill",
+      "country": "GB"
+    },
+    {
+      "host": "westkent.intelligentgolf.co.uk",
+      "nome": "West Kent",
+      "country": "GB"
+    },
+    {
+      "host": "westsussex.intelligentgolf.co.uk",
+      "nome": "West Sussex",
+      "country": "GB"
+    },
+    {
+      "host": "westerhope.intelligentgolf.co.uk",
+      "nome": "Westerhope",
+      "country": "GB"
+    },
+    {
+      "host": "whickham.intelligentgolf.co.uk",
+      "nome": "Whickham",
+      "country": "GB"
+    },
+    {
+      "host": "wildernesse.intelligentgolf.co.uk",
+      "nome": "Wildernesse",
+      "country": "GB"
+    },
+    {
+      "host": "woburn.intelligentgolf.co.uk",
+      "nome": "Woburn",
+      "country": "GB"
+    },
+    {
+      "host": "woodbridge.intelligentgolf.co.uk",
+      "nome": "Woodbridge",
+      "country": "GB"
+    },
+    {
+      "host": "woodhallspa.intelligentgolf.co.uk",
+      "nome": "Woodhall Spa",
+      "country": "GB"
+    },
+    {
+      "host": "woodsomehall.intelligentgolf.co.uk",
+      "nome": "Woodsome Hall",
+      "country": "GB"
+    },
+    {
+      "host": "worcester.intelligentgolf.co.uk",
+      "nome": "Worcester",
+      "country": "GB"
+    },
+    {
+      "host": "worplesdon.intelligentgolf.co.uk",
+      "nome": "Worplesdon",
+      "country": "GB"
+    },
+    {
+      "host": "worsleypark.intelligentgolf.co.uk",
+      "nome": "Worsley Park",
+      "country": "GB"
+    },
+    {
+      "host": "wragbarn.intelligentgolf.co.uk",
+      "nome": "Wrag Barn",
+      "country": "GB"
+    },
+    {
+      "host": "wykegreen.intelligentgolf.co.uk",
+      "nome": "Wyke Green",
+      "country": "GB"
+    }
+  ]
+}

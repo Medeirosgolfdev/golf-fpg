@@ -30,6 +30,7 @@ export interface HcpPoint {
   tcode?: string;        // identificador do torneio na fonte
   ccode?: string;
   label?: string;        // nome do torneio (para tooltip)
+  fonte?: string;        // nome curto da lista na pill (entry-list; ex. «intelligentgolf»)
 }
 
 export interface Junior {
@@ -137,6 +138,7 @@ export interface Result {
   totalGross?: number | null;
   toPar?: number | null;
   rounds?: Array<{ round: number; gross?: number | null; strokes?: number[] }>;
+  hcpJogo?: number;      // handicap de jogo do dia (Gross − Net; circuitos dos condados ingleses)
 }
 
 export interface TournamentSeries {

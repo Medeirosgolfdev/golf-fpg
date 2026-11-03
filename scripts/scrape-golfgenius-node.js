@@ -466,6 +466,10 @@ async function fetchTeeCards(detailId) {
     const pRow = (h.match(/par_row[\s\S]*?<\/tr>/) || [''])[0];
     const pick18 = (arr) => (arr.length >= 21 ? [...arr.slice(0, 9), ...arr.slice(10, 19)] : null);  // tira Out/In/Total
     let meters = pick18(cells(yRow));
+    // ⚠ A unidade NÃO se tira do rótulo: o data-terms traz sempre «Yardage» e
+    // «Meters», e o texto visível também engana (Faldo Madeira diz «Yardage»
+    // e os valores são os metros oficiais da FPG). Quem sabe que um evento
+    // está em jardas di-lo no scope (`jardas: true`) e converte-se depois.
     if (meters && /Yards/i.test(yRow) && !/Meters/i.test(yRow)) meters = meters.map((y) => Math.round(y * 0.9144));
     if (!hdr[1] || !meters) continue;
     // SI: só se o cartão trouxer uma linha de handicap/stroke index (o de 2025
@@ -510,10 +514,14 @@ async function applyTeeCards(out, knownPlaceholders = [], fetcher = fetchTeeCard
     const sig = (c) => `${c.teeName}|${c.meters.join(',')}|${c.courseRating}|${c.slope}|${(c.si || []).join(',')}`;
     // Um cartão por DATA. Datas em que os dois jogadores amostrados discordam
     // (tees diferentes dentro do mesmo escalão) ficam de fora — não se escolhe.
+    // Prova de uma só volta (circuitos dos condados ingleses): o cartão vem sem
+    // data e não há dúvida sobre a volta a que pertence.
     const byDate = new Map();
-    for (const c of cards.filter((c) => c.date)) {
-      if (!byDate.has(c.date)) byDate.set(c.date, []);
-      byDate.get(c.date).push(c);
+    for (const c of cards) {
+      const d = c.date || (dates.size <= 1 ? "volta única" : null);
+      if (!d) continue;
+      if (!byDate.has(d)) byDate.set(d, []);
+      byDate.get(d).push(c);
     }
     const perDate = new Map();
     for (const [date, cs] of byDate) {

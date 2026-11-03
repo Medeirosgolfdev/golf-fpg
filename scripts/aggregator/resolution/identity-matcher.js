@@ -578,6 +578,7 @@ function resolve(rawSources, overrides) {
             totalGross: r.totalGross,
             toPar: r.toPar,
             rounds: r.rounds,
+            ...(typeof r.hcpJogo === "number" ? { hcpJogo: r.hcpJogo } : {}),
           });
         }
         flights.push({

@@ -1,0 +1,82 @@
+name: Actualizar HCP dos juniores ingleses (intelligentgolf)
+
+# Handicap Index actual de juniores ingleses, lido das listas de inscritos dos
+# opens de juniores dos clubes em intelligentgolf (os sócios do clube que
+# organiza aparecem com o HI entre parênteses). Node puro, sem secrets.
+#   1. scrape-intelligentgolf-hcp.js → public/data/hcp-listas/AAAA-MM_intelligentgolf.json
+#      (clubes em scripts/intelligentgolf-scope.json; um pedido de cada vez, ~20-40 min)
+#   2. agregador → ponto «intelligentgolf» no hcpHistory das fichas do kids2
+# Push com GITHUB_TOKEN não dispara o build-juniors.yml → o agregador corre AQUI.
+# Doc: docs/claude/england.md («HCP dos juniores ingleses»).
+on:
+  workflow_dispatch:
+  schedule:
+    # Quarta 06:00 UTC — uma vez por semana chega (o ficheiro é um por mês).
+    - cron: '0 6 * * 3'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  update-intelligentgolf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Scrape intelligentgolf (HI dos inscritos)
+        id: ig
+        timeout-minutes: 60
+        run: |
+          set +e
+          node scripts/scrape-intelligentgolf-hcp.js
+          rc=$?
+          # exit 2 = nada de novo (não é erro); um erro fica para o fim, depois do commit
+          if [ $rc != 0 ] && [ $rc != 2 ]; then echo "::error::scrape-intelligentgolf-hcp.js → exit $rc"; echo "failed=1" >> $GITHUB_OUTPUT; fi
+          exit 0
+
+      - name: Detectar alterações
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain -- public/data/hcp-listas)" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  Sem alterações — a saltar agregador e commit"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Regenerar juniores canónicos (agregador)
+        if: steps.diff.outputs.changed == 'true'
+        run: node scripts/aggregator/index.js
+
+      - name: Commit e push (se houve alterações)
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          bash scripts/ci/push-generated.sh -m "data: HCP dos juniores ingleses (intelligentgolf) $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            -f agregador -o 'public/data/hcp-listas/*_intelligentgolf.json' -- \
+            public/data/hcp-listas public/data
+
+      - name: Falhar se o scrape falhou
+        if: always() && steps.ig.outputs.failed != ''
+        run: |
+          echo "❌ O scrape falhou — o que correu bem já foi publicado."
+          exit 1

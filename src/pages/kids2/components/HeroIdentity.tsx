@@ -88,6 +88,24 @@ function countTotalRounds(junior: Junior, tournamentById: Map<string, Tournament
   return n;
 }
 
+/** Handicap de jogo mais recente (Gross − Net de um circuito de condado
+ *  inglês). Não é o HI: depende do campo e da percentagem do dia. */
+function ultimoHcpJogo(junior: Junior, tournamentById: Map<string, Tournament>): { valor: number; date: string; serie: string } | null {
+  let melhor: { valor: number; date: string; serie: string } | null = null;
+  for (const tid of junior.tournamentIds) {
+    const t = tournamentById.get(tid);
+    const date = t?.date || t?.startDate;
+    if (!t || !date) continue;
+    for (const f of t.flights) {
+      const r = f.results.find((x) => x.juniorId === junior.id);
+      if (typeof r?.hcpJogo === "number" && (!melhor || date > melhor.date)) {
+        melhor = { valor: r.hcpJogo, date, serie: t.seriesLabel || t.name || "" };
+      }
+    }
+  }
+  return melhor;
+}
+
 interface Props {
   data: CanonicalData;
   junior: Junior;
@@ -148,6 +166,7 @@ export default function HeroIdentity({ data, junior }: Props) {
 
   // Total de rondas jogadas (todas as fontes, incluindo 9H) — pill global no rodapé.
   const totalRounds = useMemo(() => countTotalRounds(junior, data.tournamentById), [junior, data.tournamentById]);
+  const hcpJogo = useMemo(() => ultimoHcpJogo(junior, data.tournamentById), [junior, data.tournamentById]);
 
   return (
     <div className="u-bg-bg u-bd-1px-solid-border u-br-radius-lg u-p-18px-20px">
@@ -325,7 +344,7 @@ export default function HeroIdentity({ data, junior }: Props) {
         )}
       </div>
 
-      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || hcpLista || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
+      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || hcpLista || hcpJogo || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
         <div className="u-d-flex u-gap-6px u-mt-14px u-fwr-wrap">
           {escIntl && <EscPill label={escIntl} accent strong />}
           {escUskids && <EscPill label={`${escUskids} · USKids`} />}
@@ -345,7 +364,13 @@ export default function HeroIdentity({ data, junior }: Props) {
           {hcpLista && (
             <span title={`Handicap na ${hcpLista.label ?? "lista de inscritos"} · ${hcpLista.date}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
               🎯 HCP {fmtHcp(hcpLista.hcpExact)}
-              <span className="u-c-text-3 u-ml-3px">· {mesLista} · Entry List</span>
+              <span className="u-c-text-3 u-ml-3px">· {mesLista} · {hcpLista.fonte ?? "Entry List"}</span>
+            </span>
+          )}
+          {hcpJogo && (
+            <span title={`Handicap de jogo na ${hcpJogo.serie} a ${shortDateSlash(hcpJogo.date, true)} (Gross − Net). Não é o Handicap Index: depende do campo.`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+              🎯 HCP de jogo {fmtHcp(hcpJogo.valor)}
+              <span className="u-c-text-3 u-ml-3px">· {MONTHS_PT[Number(hcpJogo.date.slice(5, 7)) - 1]}/{hcpJogo.date.slice(2, 4)} · {hcpJogo.serie}</span>
             </span>
           )}
           {hcps.length === 0 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
