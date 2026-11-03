@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T22:14:28.449Z",
+  "generatedAt": "2026-11-03T22:19:52.552Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -30401,6 +30401,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-campeonato-espana-de-federaciones-autonomicas-sub-18-masculino",
+      "label": "Campeonato Espana de Federaciones Autonomicas sub 18 Masculino",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269077",
+        "wagr-256683",
+        "wagr-232336",
+        "wagr-222789",
+        "wagr-74043"
+      ],
+      "firstDate": "2022-04-10",
+      "lastDate": "2026-04-23",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-nextgen-selection-camp",
       "label": "NextGen Selection Camp",
       "sourceId": "wagr",
@@ -37642,20 +37657,6 @@
       ],
       "firstDate": "2023-08-25",
       "lastDate": "2026-08-14",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-campeonato-espana-de-federaciones-autonomicas-sub-18-masculino",
-      "label": "Campeonato Espana de Federaciones Autonomicas sub 18 Masculino",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269077",
-        "wagr-256683",
-        "wagr-232336",
-        "wagr-222789"
-      ],
-      "firstDate": "2023-04-03",
-      "lastDate": "2026-04-23",
       "editionsCount": 4
     },
     {
@@ -71848,6 +71849,18 @@
       ],
       "firstDate": "2022-05-13",
       "lastDate": "2022-06-27",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-campeonato-de-catalunya-u18",
+      "label": "Campeonato de Catalunya U18",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-236096",
+        "wagr-76341"
+      ],
+      "firstDate": "2022-02-25",
+      "lastDate": "2024-10-04",
       "editionsCount": 2
     },
     {
@@ -119575,6 +119588,50 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-race-to-wagr-retamares-golf",
+      "label": "Race to WAGR - Retamares Golf",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-220977"
+      ],
+      "firstDate": "2022-10-21",
+      "lastDate": "2022-10-21",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-copa-alianza-centro",
+      "label": "Copa Alianza Centro",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-76531"
+      ],
+      "firstDate": "2022-09-30",
+      "lastDate": "2022-09-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-gran-premio-golf-xaz-u25",
+      "label": "Gran Premio Golf Xaz U25",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-219396"
+      ],
+      "firstDate": "2022-07-21",
+      "lastDate": "2022-07-21",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-race-to-wagr-la-valmuza",
+      "label": "Race to WAGR - La Valmuza",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-219992"
+      ],
+      "firstDate": "2022-06-18",
+      "lastDate": "2022-06-18",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-mcgp-race-to-wagr-final",
       "label": "MCGP Race to WAGR - Final",
       "sourceId": "wagr",
@@ -120004,6 +120061,28 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-golf-d-aro-international-cup",
+      "label": "Golf d’Aro International Cup",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-226815"
+      ],
+      "firstDate": "2023-07-14",
+      "lastDate": "2023-07-14",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-pge-spanish-junior-championship",
+      "label": "PGE Spanish Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-219150"
+      ],
+      "firstDate": "2022-10-21",
+      "lastDate": "2022-10-21",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-sbof-scholarbook-open-fleesensee",
       "label": "SBOF - Scholarbook Open Fleesensee",
       "sourceId": "wagr",
@@ -120378,17 +120457,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-race-to-wagr-la-valmuza",
-      "label": "Race to WAGR - La Valmuza",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-219992"
-      ],
-      "firstDate": "2022-06-18",
-      "lastDate": "2022-06-18",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-mcgp-race-to-wagr-las-rozas",
       "label": "MCGP Race to WAGR - Las Rozas",
       "sourceId": "wagr",
@@ -120397,17 +120465,6 @@
       ],
       "firstDate": "2022-09-24",
       "lastDate": "2022-09-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-gran-premio-golf-xaz-u25",
-      "label": "Gran Premio Golf Xaz U25",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-219396"
-      ],
-      "firstDate": "2022-07-21",
-      "lastDate": "2022-07-21",
       "editionsCount": 1
     },
     {
@@ -120617,17 +120674,6 @@
       ],
       "firstDate": "2022-03-05",
       "lastDate": "2022-03-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-golf-d-aro-international-cup",
-      "label": "Golf d’Aro International Cup",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-226815"
-      ],
-      "firstDate": "2023-07-14",
-      "lastDate": "2023-07-14",
       "editionsCount": 1
     },
     {
@@ -120862,17 +120908,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-pge-spanish-junior-championship",
-      "label": "PGE Spanish Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-219150"
-      ],
-      "firstDate": "2022-10-21",
-      "lastDate": "2022-10-21",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-bjgt-devon-swing",
       "label": "BJGT Devon Swing",
       "sourceId": "wagr",
@@ -121035,17 +121070,6 @@
       ],
       "firstDate": "2022-05-31",
       "lastDate": "2022-05-31",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-copa-alianza-centro",
-      "label": "Copa Alianza Centro",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-76531"
-      ],
-      "firstDate": "2022-09-30",
-      "lastDate": "2022-09-30",
       "editionsCount": 1
     },
     {
@@ -121332,17 +121356,6 @@
       ],
       "firstDate": "2022-03-11",
       "lastDate": "2022-03-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-campeonato-de-catalunya-u18",
-      "label": "Campeonato de Catalunya U18",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-76341"
-      ],
-      "firstDate": "2022-02-25",
-      "lastDate": "2022-02-25",
       "editionsCount": 1
     },
     {
