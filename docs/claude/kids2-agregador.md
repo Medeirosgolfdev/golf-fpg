@@ -289,6 +289,11 @@ Fontes que publicam só o ANO (Federgolf — ranking juvenil; GolfBox) entram co
 estimativa dos escalões USKids (`ne`, a vermelho). Antes perdia-se: os italianos do
 Venice Open apareciam estimados apesar de a FIG dar o ano. Ordem: `d` > `y` > `ne`.
 
+**HCP com data para o SD:** a Federgolf põe o `indice` de cada prova no `hcpHistory`
+(source `fig`); o scout leva `hh` (até 6 `[data, hcp]`, também o RFEG oficial) e
+`kidsDob.hcpAt` dá o mais perto da data do torneio (≤183 dias) a quem não tem
+`hcpExact` — o `SDPill` pinta o SD com ele (Venice Open 2026: 20 de 31; antes só o Manuel).
+
 ## Órfãs e cauda de duplicados (`find-orphan-duplicates.js`, 2026-09-18)
 
 O `find-junior-duplicates.js` exige idade (quase nunca há DOB) e desconfia de países diferentes (cada fonte regista coisas diferentes: residência, licença, nacionalidade) — por isso não apanhava a cauda. O `scripts/find-orphan-duplicates.js` usa:
