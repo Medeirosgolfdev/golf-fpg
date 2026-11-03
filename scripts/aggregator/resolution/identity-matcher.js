@@ -707,7 +707,12 @@ function buildJunior(entities) {
   // a estimativa dos escalões a vermelho).
   const anoCerto = (r) => (r && r.lo && r.hi && r.lo.slice(0, 4) === r.hi.slice(0, 4)
     && r.lo.endsWith("-01-01") && r.hi.endsWith("-12-31") ? +r.lo.slice(0, 4) : null);
-  const comAno = dob ? [] : entities.filter((e) => anoCerto(e.raw.dobRange) != null);
+  // Só fontes que PUBLICAM o ano (Federgolf: anosNascimento; GolfBox & c.: extra.birthYear).
+  // Fora: GJGL (birthYearEst, deduzido do ano de fim do liceu), EGR (não fiável) e as
+  // janelas dos escalões (03/11/2026: o Paul Berger ficou «2015» por causa da GJGL).
+  const publica = (e, y) => (e.raw.extra?.anosNascimento || []).includes(y)
+    || (e.sourceId !== "egr" && e.raw.extra?.birthYear === y);
+  const comAno = dob ? [] : entities.filter((e) => { const y = anoCerto(e.raw.dobRange); return y != null && publica(e, y); });
   const birthYear = comAno.length ? mostFrequent(comAno.map((e) => anoCerto(e.raw.dobRange))) : null;
   const birthYearSource = birthYear != null ? comAno.find((e) => anoCerto(e.raw.dobRange) === birthYear).sourceId : null;
 

@@ -196,10 +196,12 @@ function buildScout(juniors, tournaments, generatedAt) {
     }
     if (hh.length) o.hh = hh;
     if (j.dob) o.d = j.dob;
-    else if (j.birthYear) o.y = j.birthYear;
     else {
+      // Ano certo — se não contradiz os escalões USKids em que jogou (senão é sinal
+      // de duas pessoas na mesma ficha, e fica a estimativa).
       const ne = anosPelosEscaloesUskids(j, tById);
-      if (ne) o.ne = ne;
+      if (j.birthYear && (!ne || (j.birthYear >= ne[0] && j.birthYear <= ne[1]))) o.y = j.birthYear;
+      else if (ne) o.ne = ne;
     }
     const club = j.club || src.fpg?.club || src.rfeg?.club || src.ffgolf?.club || null;
     if (club) o.c = club;
