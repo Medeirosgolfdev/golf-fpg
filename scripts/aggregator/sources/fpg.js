@@ -15,13 +15,98 @@
  */
 
 const path = require("path");
+const { pathToFileURL } = require("url");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
-const { displayName, countryToIso2, dobToIso } = require("../util/names");
+const { displayName, normName, countryToIso2, dobToIso } = require("../util/names");
 const { seriesId } = require("../util/id");
 const { warn, sub } = require("../util/log");
 
 const SOURCE_ID = "fpg";
 const SOURCE_LABEL = "Federação Portuguesa de Golfe";
+
+/** O `MANUEL_FED` de src/constants/manuel.ts (o agregador é CommonJS). */
+const MANUEL_FED = "52884";
+/** As regras do PJA vivem só aqui (ESM, servidas ao browser). */
+const PJA_RULES = path.join(__dirname, "..", "..", "..", "ranking-pja", "pja-rules.mjs");
+
+/** Escalões adultos a excluir — só queremos juvenis até Sub-18. */
+const ADULT_ESCALAO = /Sub\s*(2[0-9]|3\d|4\d|5\d)|Absoluto|S[eé]nior|Master|Adultos?/i;
+
+/** Prova de jovens pelo nome: Drive Tour, Nacionais de Jovens, Junior, Kids, PJA, escalões no nome. */
+const PROVA_JOVENS = /Drive\s+Tour|Jovens|J[uú]nior|Kids|\bPJA\b|Race to Dunas|\bU\s?\d{2}\b|\bSub\s?\d{2}\b/i;
+
+/**
+ * Fica fora: as provas da Madeira (região «madeira» do Drive, CGSS 007, Palheiro
+ * 059, campos da ilha) e o Drive Challenge, regional ou Final Nacional — o
+ * circuito de iniciação, de onde vinham os miúdos da Madeira. «Não quero os
+ * miúdos (fracos) da Madeira no kids 2» (Mariana, 03/11/2026).
+ */
+const foraDoKids2 = (t) => t.region === "madeira" || ["007", "059"].includes(String(t.ccode || ""))
+  || /Santo da Serra|Palheiro|Porto Santo/i.test(String(t.campo || ""))
+  || /Drive\s+Challenge|D\.\s*Challenge/i.test(String(t.name || ""));
+
+/**
+ * Provas de jovens em que o Manuel jogou, com os escalões irmãos (mesmo clube e
+ * dia). Os torneios de clube de adultos ficam fora — só entram provas com
+ * marcador juvenil no nome ou tcode PJA. Quando a FPG publica as duas voltas
+ * juntas («10674+10676»), os dias soltos saem.
+ */
+function provasDeJovensDoManuel(entries, pjaTcodes = new Set()) {
+  const deJovens = (t) => !foraDoKids2(t)
+    && (PROVA_JOVENS.test(String(t.name || "")) || String(t.tcode).split("+").some((tc) => pjaTcodes.has(tc)));
+  const dia = (t) => `${t.ccode || "000"}|${String(t.date || "").slice(0, 10)}`;
+  const comManuel = new Set(entries
+    .filter((t) => deJovens(t) && (t.players || []).some((p) => String(p?.fedCode || "") === MANUEL_FED))
+    .map(dia));
+  const juntos = new Set(entries.flatMap((t) => (String(t.tcode).includes("+")
+    ? String(t.tcode).split("+").map((tc) => `${t.ccode || "000"}|${tc}`) : [])));
+  return entries.filter((t) => comManuel.has(dia(t)) && deJovens(t)
+    && !ADULT_ESCALAO.test(String(t.escalao || ""))
+    && !juntos.has(`${t.ccode || "000"}|${t.tcode}`));
+}
+
+/** fed → data de nascimento (federados.json; o federados-lite só existe depois do build). */
+function lerNascimentos() {
+  const data = readJsonSafe(DATA.fpgFederados, { players: [] });
+  const nascimento = new Map();
+  for (const p of Array.isArray(data?.players) ? data.players : []) {
+    if (p?.federation_code && /^\d{4}-\d{2}-\d{2}/.test(String(p.birthdate || ""))) {
+      nascimento.set(String(Number(p.federation_code)), String(p.birthdate).slice(0, 10));
+    }
+  }
+  return nascimento;
+}
+
+/**
+ * Federado de cada inscrito, pelas abas da PRÓPRIA prova (inscrições e draws,
+ * `fpg-admissions-draws*.json`): «ccode|tcode|ano» → (nome → fed). A
+ * classificação traz às vezes um jogador sem número (Ryan Dantas no Nacional
+ * Sub 16 2026); a prova sabe quem ele é. Nunca se procura o número noutras listas
+ * por nome + clube — isso é adivinhar.
+ */
+function lerFedsDasProvas() {
+  const porProva = new Map();
+  for (const file of [DATA.fpgAdmissionsDraws, DATA.fpgAdmissionsDrawsDrive]) {
+    const data = readJsonSafe(file, { tournaments: [] });
+    for (const t of Array.isArray(data?.tournaments) ? data.tournaments : []) {
+      if (!t?.tcode || !t.date) continue;
+      const k = `${t.ccode || "000"}|${t.tcode}|${String(t.date).slice(0, 4)}`;
+      const nomes = porProva.get(k) || new Map();
+      const juntar = (p) => { if (p?.fed && p.nome) nomes.set(normName(p.nome), String(Number(p.fed))); };
+      for (const p of t.admissions?.players || []) juntar(p);
+      for (const ronda of Object.values(t.draws || {})) for (const g of ronda?.groups || []) for (const p of g.players || []) juntar(p);
+      if (nomes.size) porProva.set(k, nomes);
+    }
+  }
+  return porProva;
+}
+
+/** O federado do jogador: o da classificação; sem ele, o das inscrições/draws da mesma prova. */
+function fedDoJogador(t, pl, fedsDasProvas = new Map()) {
+  if (pl?.fedCode) return String(pl.fedCode);
+  const k = `${t.ccode || "000"}|${t.tcode}|${String(t.date || "").slice(0, 4)}`;
+  return fedsDasProvas.get(k)?.get(normName(pl?.name)) || null;
+}
 
 /** Mapeia escalão FPG → ageMin/ageMax aproximados. */
 function escalaoToAges(esc) {
@@ -161,8 +246,10 @@ async function load(opts) {
   // Exclui: Drive Tour/Challenge regionais, Aquapor, torneios de clube.
   const RELEVANT = /Campeonato Nacional|Portuguese Junior Amateur|\bPJA\b|Greatgolf Junior Open|Quinta do Lago Junior Open|Grande Final Drive Tour|Final Drive Tour|Portuguese\s+Int(ernational)?\.?|Int(ernational)?\.?\s*U1[02-9]|Int(ernational)?\.?\s*U2[0-5]|Int(ernational)?\.?\s*Championship/i;
   const EXCLUDE = /Drive\s+(Tour|Challenge)|Aquapor|Cidade de|Clube de Golfe|\bClube\b|Torneio do |Open do |Open Clube/i;
-  // Escalões adultos a excluir — só queremos juvenis até Sub-18.
-  const ADULT_ESCALAO = /Sub\s*(2[0-9]|3\d|4\d|5\d)|Absoluto|S[eé]nior|Master|Adultos?/i;
+  // Com o Drive (só para as provas do Manuel, em 2c).
+  const todas = collectTournamentEntries([...pullFiles, ...jovensFiles, ...listFiles(DATA_DIR, DATA.fpgDrivePattern)]);
+  const nascimento = lerNascimentos();
+  const federados = { nascimento, fedsDasProvas: lerFedsDasProvas() };
 
   const tournaments = [];
   for (const t of tournEntries) {
@@ -182,7 +269,27 @@ async function load(opts) {
     // Isentar PJA do check por nome; o check por escalão acima é a rede de
     // segurança para um eventual "PJA" com escalão adulto (não existe hoje).
     if (ADULT_ESCALAO.test(name) && !/\bPJA\b/i.test(name)) continue;
-    const tourn = normalizeTournament(t, "pull", playerMap);
+    const tourn = normalizeTournament(t, "pull", playerMap, federados);
+    if (tourn) tournaments.push(tourn);
+  }
+
+  // 2c) Provas de jovens em que o Manuel jogou (Mariana, 03/11/2026: «procura
+  // mais miúdos com quem já jogamos, pelos torneios que jogamos»). A whitelist
+  // acima deixa de fora o Miramar, o World Kids, o Drive Tour e as provas PJA
+  // sem «PJA» no nome; aqui entram as que têm o Manuel no campo, com os escalões
+  // irmãos (sem a Madeira nem o Drive Challenge — ver `foraDoKids2`). Nas provas
+  // abertas a adultos (Miramar Open U25) saem os federados com mais de 18 anos.
+  const { PJA_TCODES } = await import(pathToFileURL(PJA_RULES).href);
+  const jaDentro = new Set(tournaments.map((x) => x.sourceKey));
+  for (const t of provasDeJovensDoManuel(todas, PJA_TCODES)) {
+    if (jaDentro.has(tournKey(t))) continue;
+    const ano = Number(String(t.date).slice(0, 4));
+    const players = (t.players || []).filter((pl) => {
+      const fed = fedDoJogador(t, pl, federados.fedsDasProvas);
+      const b = fed ? nascimento.get(String(Number(fed))) : null;
+      return !b || ano - Number(b.slice(0, 4)) <= 18;
+    });
+    const tourn = normalizeTournament({ ...t, players }, "pull", playerMap, federados);
     if (tourn) tournaments.push(tourn);
   }
 
@@ -237,7 +344,7 @@ function collectHcpHistory(tournEntries, playerMap) {
   }
 }
 
-function normalizeTournament(t, kind, playerMap) {
+function normalizeTournament(t, kind, playerMap, { nascimento = new Map(), fedsDasProvas = new Map() } = {}) {
   if (!t || !t.tcode) return null;
   // sourceKey inclui data para evitar colisão (tcodes são reutilizados entre anos)
   // Adicionalmente inclui escalão slug para distinguir flights do mesmo torneio.
@@ -255,8 +362,8 @@ function normalizeTournament(t, kind, playerMap) {
   const results = [];
   for (const pl of fpgPlayers) {
     if (!pl) continue;
-    let fedCode = pl.fedCode ? String(pl.fedCode) : null;
-    // Sem fedCode: criar entrada anónima keyed por nome+país
+    let fedCode = fedDoJogador(t, pl, fedsDasProvas);
+    // Sem fedCode (nem nas inscrições/draws da prova): criar entrada anónima keyed por nome+país
     // (estrangeiros em torneios FPG — e.g. Dmitrii no QDL 2025)
     if (!fedCode) {
       const cleanName = displayName(pl.name || "");
@@ -282,6 +389,7 @@ function normalizeTournament(t, kind, playerMap) {
       playerMap.set(fedCode, {
         sourceKey: fedCode,
         name: displayName(pl.name || ""),
+        dob: nascimento.get(String(Number(fedCode))) || null,
         country: "PT",
         club: pl.club || null,
         hcp: typeof pl.hcpExact === "number" ? pl.hcpExact : null,
@@ -354,7 +462,7 @@ function normalizeTournament(t, kind, playerMap) {
     seriesLabel: series.label,
     course: t.campo || null,
     parTotal,
-    holesPerRound: 18,
+    holesPerRound: par && par.length === 9 ? 9 : 18, // os Nacionais Sub-10 são de 9
     rounds: typeof t.rounds === "number" ? t.rounds : undefined,
     flights: [flight],
     links: [{
@@ -391,4 +499,4 @@ function detectScoringType(t) {
   return "HANDICAP";
 }
 
-module.exports = { load, SOURCE_ID, SOURCE_LABEL };
+module.exports = { load, SOURCE_ID, SOURCE_LABEL, provasDeJovensDoManuel, fedDoJogador };

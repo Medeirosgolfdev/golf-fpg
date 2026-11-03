@@ -93,6 +93,10 @@ function enrichWithGolfbox(rawSources, opts = {}) {
   for (const src of rawSources || []) {
     for (const p of src.players || []) {
       if (p.dob) continue;
+      // Federado da FPG: a data vem do federados.json pelo número. Pelo nome,
+      // o miúdo Francisco Silva (48649, Santo da Serra) ficava com a de 1990
+      // do adulto homónimo (14494).
+      if (src.sourceId === "fpg" && /^\d+$/.test(String(p.sourceKey || ""))) continue;
       // Sem país declarado não se arrisca: o roster tem 20+ nacionalidades.
       const hit = procurar(idx, p.name, p.country);
       if (!hit) continue;

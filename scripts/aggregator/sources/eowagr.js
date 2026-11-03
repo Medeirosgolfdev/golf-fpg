@@ -14,6 +14,10 @@ const { displayName, countryToIso2 } = require("../util/names");
 const SOURCE_ID = "eowagr";
 const SOURCE_LABEL = "European Open WAGR";
 
+/** Data e campo por ano — os ficheiros BlueGolf não os trazem («LTQ» = Le Touquet).
+ *  2025: Le Touquet, La Forêt, 11–13/08 (voltas WHS do Manuel, melhorias.json). */
+const EDICAO = { 2025: { date: "2025-08-11", course: "Le Touquet Golf Club - La Forêt" } };
+
 function load(opts) {
   const files = listFiles(DATA_DIR, DATA.eowagrPattern);
   const players = [];
@@ -87,10 +91,10 @@ function normalize(data, fileName, playerMap) {
   return {
     sourceKey,
     name,
-    date: year ? `${year}-07-01` : null,
+    date: EDICAO[year]?.date || (year ? `${year}-07-01` : null),
     seriesId: "eowagr",
     seriesLabel: "European Open WAGR",
-    course: data.course || null,
+    course: data.course || EDICAO[year]?.course || null,
     parTotal,
     flights: [{
       flightKey: category.toLowerCase().replace(/[^a-z0-9]+/g, "_"),

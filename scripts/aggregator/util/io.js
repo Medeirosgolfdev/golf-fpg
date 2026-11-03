@@ -80,6 +80,9 @@ function writeJson(filePath, obj, { spaces = 2 } = {}) {
 const DATA = {
   fpgPlayers: path.join(DATA_DIR, "players.json"),
   fpgFederados: path.join(DATA_DIR, "federados.json"),
+  // Inscrições e draws de cada prova (federado e escalão de cada inscrito).
+  fpgAdmissionsDraws: path.join(DATA_DIR, "fpg-admissions-draws.json"),
+  fpgAdmissionsDrawsDrive: path.join(DATA_DIR, "fpg-admissions-draws-drive.json"),
   fpgPullTorneios: (n) => path.join(DATA_DIR, `pull-torneios${String(n).padStart(3, "0")}.json`),
   fpgPullPattern: /^pull-torneios\d{3}\.json$/,
   // jovens_YYYY.json — mesma estrutura "fpg-pull". É a casa canónica dos

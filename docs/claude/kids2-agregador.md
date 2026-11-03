@@ -65,7 +65,7 @@ metade dos jogadores partia o kids2 e os Scouts dos circuitos.
 | Adapter | Lê | Tipo |
 |---|---|---|
 | `uskids` | member-history-slim + results + completos | **forte** (memberId) |
-| `fpg` | players.json + pull-torneios (whitelist: Nacionais/PJA/GG/QDL/Finais Drive; **Drive/Aquapor regionais excluídos por design**) | **forte** (fed) |
+| `fpg` | players.json + pull-torneios (whitelist: Nacionais/PJA/GG/QDL/Finais Drive; Drive/Aquapor regionais fora; **+ as provas de jovens do Manuel, sem Madeira nem Drive Challenge**, ver abaixo) | **forte** (fed) |
 | `rfeg` | spain-players.json (roster) + rfegolf-rivals.json | **forte** (licencia) |
 | `ffgolf` | france-players.json + ffgolf-juniors-slim.json | **forte** (lic) |
 | `eowagr` / `wjgc` / `doral` / `fm` | eowagr*/wjgc_*+brjgt*_*/ftm_doral_*/ftm_fm_* | fracas (nome+país) |
@@ -376,6 +376,42 @@ As classificações dos eventos EGR continuam publicadas depois dos 2 anos (só 
 ## Fonte «Condados ENG» — `ggcondados` (03/11/2026)
 
 Uma só fonte (pill «Condados ENG») que lê DUAS pastas, com o mesmo formato JobFile (`dirs` no `buildJobfileSource`): `public/data/gg-condados/` (circuitos no GolfGenius — BB&O, PING, Cheshire; `scrape-gg-condados.js`) e `public/data/ig-condados/` (sites das associações de condado em intelligentgolf — Surrey, Kent, Lancashire…; `scrape-ig-condados.js`). Fonte FRACA (nome + país GB + clube). Cada ficheiro traz a sua série (`ggc-bbo`, `igc-surrey`…). Por resultado o `hcpJogo` (handicap de jogo do dia, não o HI) → pill «🎯 HCP de jogo» na ficha. Detalhe: [england.md](england.md).
+
+## FPG — as provas de jovens em que o Manuel jogou (03/11/2026)
+
+Pedido dela: «procura mais miúdos com quem já jogamos, pelos torneios que jogamos». A whitelist
+da fonte `fpg` deixava de fora o Miramar Open, o World Kids 2024, o Drive Tour Norte e as quatro
+provas PJA sem «PJA» no nome (AT&T Pebble Beach, Aroeira Master by Details, Ribagolfe Oaks
+Masters, Race to Dunas G. Final — vão pelo `PJA_TCODES` de `ranking-pja/pja-rules.mjs`).
+
+- **Regra** (`provasDeJovensDoManuel`, `sources/fpg.js`): entra o escalão que tem o Manuel
+  (fed 52884) **e os escalões irmãos** (mesmo clube e mesmo dia), desde que o nome tenha marcador
+  juvenil (Drive Tour, Jovens, Junior, Kids, PJA, Sub NN, U NN) ou tcode PJA. Lê também os
+  `drive-data-*.json`. Torneios de clube de adultos (Rali, Taça Presidente, Taça Yeatman…) ficam
+  fora, mesmo com o Manuel; escalões adultos (Sub 24) também. Com as duas voltas juntas
+  («10674+10676») os dias soltos saem.
+- **⛔ Fora: a Madeira e o Drive Challenge** (`foraDoKids2`). Ela: «não quero os miúdos (fracos)
+  da Madeira no kids 2». Na 1.ª versão entraram o Drive Challenge e o Drive Tour da Madeira, os
+  Regionais, o CGSS Junior e a Academia do Palheiro, e o topo dos cruzamentos encheu-se de
+  miúdos da Madeira (Íris Costa 26×…). Fica fora tudo o que se joga na Madeira (região
+  «madeira», CGSS 007, Palheiro 059, campos da ilha) e o Drive Challenge, regional ou Final
+  Nacional — o circuito de iniciação, por onde esses miúdos chegavam.
+- **⛔ Federado e escalão vêm da PRÓPRIA prova** (regra no `CLAUDE.md`). Sem número na
+  classificação, o fed vem das inscrições/draw da mesma prova (`fedDoJogador` ←
+  `fpg-admissions-draws*.json`, chave ccode|tcode|ano + nome): Ryan Dantas, Frederico Almeida da
+  Silva, Maria Madalena Neves Ferreira… Na 1.ª versão casei por nome + clube noutras listas e
+  ela corrigiu: «tens o número também de federado dele… estás sempre a insistir no mesmo erro».
+- **Data de nascimento** dos federados não seguidos vem do `federados.json` pelo número; o roster
+  GolfBox (`util/golfbox-dob.js`) já não dá data a federados da FPG — pelo nome, um miúdo Sub-12
+  (Francisco Silva, 48649) ficava com a de 1990 do adulto homónimo.
+- **Provas abertas a adultos** (Miramar Open U25): saem os federados com mais de 18 anos no ano da
+  prova. Os estrangeiros não têm federado nem escalão na prova — ficam.
+- 9 buracos: `holesPerRound` = 9 quando o par tem 9 (Nacionais Sub-10).
+- Efeito: o Manuel passou de 29 para 38 provas; miúdos no mesmo escalão 325 → 391; topo dos
+  cruzamentos = Ricardo Castro-Ferreira, João Rocha, Pedro Costa Alemão… Miúdos de clubes da
+  Madeira: 19 fichas antes, 21 depois (os do Miramar e da AT&T).
+- No mesmo dia: o European Open WAGR 2025 («LTQ» = Le Touquet) tinha a data de 1 de Julho por
+  omissão; `EDICAO` em `sources/eowagr.js` dá 11/08/2025 e o campo (voltas WHS do Manuel).
 
 ## Fonte FIG — Itália (02/11/2026)
 

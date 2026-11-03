@@ -297,6 +297,15 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   tcode + data + campo (PCC), fed + data da volta (SD), `ccode:tcode` no
   `--tcodes`. No PJA, `PJA_TCODES` só leva tcodes que não se repetem; os outros
   entram por nome.
+- **Quem é o jogador e em que escalão jogou lê-se na PRÓPRIA prova** (Mariana,
+  03/11/2026: «nos torneios há sempre o draw e os outros tabs… tens o número de
+  federado dele»). Classificação, inscrições e draw (`fpg-admissions-draws*.json`:
+  `fed`, `escalao`, `regiao` por inscrito) dizem o federado e o escalão. Sem número
+  na classificação → o das inscrições/draw da MESMA prova (`fedDoJogador`,
+  `scripts/aggregator/sources/fpg.js`). **Nunca** adivinhar por nome + clube noutras
+  listas, nem dar a um federado a data de nascimento de um homónimo (roster GolfBox,
+  outra fonte), nem juntar pessoas cujo federado ou escalão o contradiz. Num escalão
+  Sub-N nunca entra alguém mais velho (regra já antiga do `pickBestFed`).
 - **Gross ≥ 900 (998/999…) é "sem cartão"** — não pontua nem entra em médias,
   posições ou ±par. `grossTotal` pode vir como texto ("WD"). Nas fontes de fora
   e nos draws a regra é uma só: `isNoCardGross` (`src/data/intlCommon.ts`),
