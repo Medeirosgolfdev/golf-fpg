@@ -12,7 +12,7 @@ import EmptyState from "../../ui/EmptyState";
 import { HCP_BINS, emptyHcpBins, hcpBinKey, isCountableHcp } from "./hcpBins";
 import { barPct, MFBar, MFColumn, MFLegend } from "./statsWidgets";
 import KpiCard from "../../ui/KpiCard";
-import { fmt } from "../../utils/format";
+import { fmt, todayIso } from "../../utils/format";
 import { ESC_IDX, type ViewMode } from "./filterPlayers";
 import { fmtHcp } from "../../utils/format";
 
@@ -29,7 +29,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
   }
 
   // Agregados
-  let male = 0, female = 0, withHcp = 0, totalHcp = 0, active2026 = 0;
+  let male = 0, female = 0, withHcp = 0, totalHcp = 0, activeThisYear = 0;
   let withAnalysis = 0, cadastroOnly = 0;
   const byEsc: Record<string, { m: number; f: number }> = {};
   const byClub: Record<string, { name: string; count: number }> = {};
@@ -45,7 +45,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
       const k = hcpBinKey(p.hcp);
       if (isM) hcpBins[k].m++; else if (isF) hcpBins[k].f++;
     }
-    if ((p._federadoRaw?.rounds_current_year || 0) > 0) active2026++;
+    if ((p._federadoRaw?.rounds_current_year || 0) > 0) activeThisYear++;
     if (!byEsc[p.escalao]) byEsc[p.escalao] = { m: 0, f: 0 };
     if (isM) byEsc[p.escalao].m++; else if (isF) byEsc[p.escalao].f++;
     const club = typeof p.club === "object" && p.club ? p.club as { code?: string; short?: string; long?: string } : null;
@@ -89,7 +89,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
         <KpiCard label={<><SexBadge sex="M" /> Masculino</>} value={fmt(male)} pct={male / filtered.length} />
         <KpiCard label={<><SexBadge sex="F" /> Feminino</>} value={fmt(female)} pct={female / filtered.length} />
         {withHcp > 0 && <KpiCard label="Com HCP" value={fmt(withHcp)} sub={`média ${avgHcp.toFixed(1)}`} />}
-        {viewMode === "todos" && active2026 > 0 && <KpiCard label="Activos 2026" value={fmt(active2026)} pct={active2026 / filtered.length} sub="com rondas" />}
+        {viewMode === "todos" && activeThisYear > 0 && <KpiCard label={`Activos ${todayIso().slice(0, 4)}`} value={fmt(activeThisYear)} pct={activeThisYear / filtered.length} sub="com rondas" />}
         {viewMode === "todos" && withAnalysis > 0 && cadastroOnly > 0 && (
           <KpiCard label="🔍 Com análise" value={fmt(withAnalysis)} sub={`+ ${cadastroOnly} cadastro`} />
         )}

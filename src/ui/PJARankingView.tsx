@@ -1,7 +1,7 @@
 ﻿import React, { useMemo, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useSearchParams } from "react-router-dom";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import { EscPill, RoundPill } from "./PillBadge";
 import SexBadge from "./SexBadge";
 import LoadingState from "./LoadingState";
@@ -96,13 +96,13 @@ const roundStyle = (res: RankRoundResult): React.CSSProperties =>
 function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: PlayersDB, totalLabel: string, medals = true): RankingCol<RankRow>[] {
   const isSd = metric === "sd";
   return [
-    { key: "rank", label: "#", className: "num", sort: r => rank.get(r.key) ?? 9999, firstDir: "asc",
+    { key: "rank", label: "#", className: "num", sort: r => rank.get(r.key), firstDir: "asc",
       cell: r => { const p = rank.get(r.key); return p == null ? MUTED : ((medals && medal(p)) || <span className="mono fw-700">{p}</span>); } },
     { key: "name", label: "Jogador", sort: r => r.name.toLowerCase(), firstDir: "asc",
       cell: r => <PName name={r.name} fedCode={r.fedCode} playersDB={playersDB} sex={r.sex} /> },
     { key: "esc", label: "Esc.", sort: r => r.escalao, firstDir: "asc", cell: r => <EscCell esc={r.escalao} /> },
     { key: "club", label: "Clube", sort: r => r.club.toLowerCase(), firstDir: "asc", cell: r => r.club || "–", tdClassName: "c-muted fs-11" },
-    { key: "hcp", label: "HCP", className: "num", sort: r => r.hcp ?? 99, firstDir: "asc", cell: r => <span className="mono">{fmtHcp(r.hcp)}</span> },
+    { key: "hcp", label: "HCP", className: "num", sort: r => r.hcp, firstDir: "asc", cell: r => <span className="mono">{fmtHcp(r.hcp)}</span> },
     { key: "t", label: "T", title: "Torneios jogados", className: "num", sort: nTorneios, firstDir: "desc", cell: r => <span className="mono">{nTorneios(r)}</span> },
     { key: "voltas", label: "Voltas", className: "num", sort: r => r.voltas, firstDir: "desc",
       cell: r => {
@@ -111,7 +111,7 @@ function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: Play
           ? <span className="mono" title={`${c.contadas} das ${r.voltas} voltas contam para o total`}>{c.contadas}<span className="muted fs-10">/{r.voltas}</span></span>
           : <span className="mono">{r.voltas}</span>;
       } },
-    { key: "total", label: totalLabel, className: "num", sort: r => isNaN(r.total) ? (isSd ? 999 : -1) : r.total, firstDir: isSd ? "asc" : "desc",
+    { key: "total", label: totalLabel, className: "num", sort: r => r.total, firstDir: isSd ? "asc" : "desc",
       title: isSd ? `Média das ${BEST_SD_N} melhores voltas — MENOR é melhor` : undefined,
       cell: r => {
         if (isSd) return <span className="fw-800 c-warn-dark">{isNaN(r.total) ? "–" : r.total.toFixed(1)}</span>;
@@ -123,9 +123,9 @@ function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: Play
         );
       } },
     isSd
-      ? { key: "best", label: "Melhor SD", className: "num", sort: r => bestSd(r) ?? 999, firstDir: "asc",
+      ? { key: "best", label: "Melhor SD", className: "num", sort: r => bestSd(r), firstDir: "asc",
           cell: r => { const v = bestSd(r); return <span className="mono fw-700 c-good-dark">{v != null ? v.toFixed(1) : "–"}</span>; } }
-      : { key: "best", label: "Melhor", title: "Melhor volta (±par)", className: "num", sort: r => bestToPar(r) ?? 999, firstDir: "asc",
+      : { key: "best", label: "Melhor", title: "Melhor volta (±par)", className: "num", sort: r => bestToPar(r), firstDir: "asc",
           cell: r => { const v = bestToPar(r); return v == null ? MUTED : <span className="fw-700" style={{ color: tpColor(v) }}>{fmtTP(v)}</span>; } },
   ];
 }
@@ -155,11 +155,11 @@ function PlayerDetail({ row, cols, metric, showMeters, playersDB, onClose }: {
     { key: "toPar", label: "±Par", className: "num", sort: r => r.res.toPar, firstDir: "asc",
       cell: r => <span className="fw-700" style={{ color: tpColor(r.res.toPar), ...roundStyle(r.res) }}>{fmtTP(r.res.toPar)}</span> },
     isSd
-      ? { key: "sd", label: "SD", className: "num", sort: r => r.res.sd ?? 999, firstDir: "asc",
+      ? { key: "sd", label: "SD", className: "num", sort: r => r.res.sd, firstDir: "asc",
           cell: r => <span className="c-warn-dark" style={roundStyle(r.res)}>{r.res.sd != null ? r.res.sd.toFixed(1) : "–"}</span> }
       : { key: "pts", label: "Pts", className: "num", sort: r => r.res.pts, firstDir: "desc",
           cell: r => <span className="c-warn-dark" style={roundStyle(r.res)}>{fmtPts(r.res.pts)}</span> },
-    ...(showMeters ? [{ key: "m", label: "m", title: "Metros jogados nesta volta", className: "num", sort: (r: RankPlayerRound) => r.res.meters ?? 0, firstDir: "desc" as const,
+    ...(showMeters ? [{ key: "m", label: "m", title: "Metros jogados nesta volta", className: "num", sort: (r: RankPlayerRound) => r.res.meters || null, firstDir: "desc" as const,
       cell: (r: RankPlayerRound) => <span className="mono muted">{r.res.meters ? r.res.meters.toLocaleString("pt-PT") : "–"}</span> }] : []),
     { key: "conta", label: "Conta", sort: r => r.res.excluded ? 2 : r.res.inTop14 ? 0 : 1, firstDir: "asc",
       cell: r => r.res.excluded ? <span className="muted fs-10" title={r.res.excludedReason}>não (regra)</span>
@@ -314,12 +314,12 @@ export function PJARankingView({
 
   /** A ordem da Tabela (a grelha ordena-se pelos cabeçalhos das voltas). */
   const sortedRows = useMemo(() => {
-    const INF = 99999;
     const mult = sortDir === "asc" ? 1 : -1;
     return [...filteredRows].sort((a, b) => {
       if (sortKey === "name")    return mult * a.name.localeCompare(b.name, "pt");
-      if (sortKey === "club")    return mult * a.club.localeCompare(b.club, "pt");
-      if (sortKey === "escalao") return mult * a.escalao.localeCompare(b.escalao, "pt");
+      // Vazios (sem clube/escalão/valor) sempre no fim, nas duas direcções.
+      if (sortKey === "club")    return compareTextNullsLast(a.club, b.club, mult);
+      if (sortKey === "escalao") return compareTextNullsLast(a.escalao, b.escalao, mult);
       if (sortKey === "voltas")  return mult * (a.voltas - b.voltas);
       // Ordenar por uma coluna de torneio: quem NÃO jogou essa prova fica
       // sempre no fim, nas duas direcções.
@@ -334,12 +334,10 @@ export function PJARankingView({
         // A 2ª coluna de cada ronda mostra Pts ou SD consoante a métrica —
         // ordenar pelo valor que está mesmo à vista.
         const val = (r: RankRoundResult) =>
-          isM ? (r.meters ?? INF) : isPts ? (metric === "sd" ? (r.sd ?? INF) : r.pts) : r.toPar;
-        return mult * (val(va) - val(vb));
+          isM ? (r.meters || null) : isPts ? (metric === "sd" ? r.sd : r.pts) : r.toPar;
+        return compareNullsLast(val(va), val(vb), mult);
       }
-      const ta = isNaN(a.total) ? INF : a.total;
-      const tb = isNaN(b.total) ? INF : b.total;
-      return mult * (ta - tb);
+      return compareNullsLast(a.total, b.total, mult); // NaN = sem total
     });
   }, [filteredRows, sortKey, sortDir, metric]);
 

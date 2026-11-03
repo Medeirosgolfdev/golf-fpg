@@ -12,7 +12,8 @@ import { normLoose } from "../utils/normName";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } from "../data/fpgTypes";
 import { numGross, resolveEsc, playerDob, computeRoundSD, filterPlayers, fillBlankHoles, isRoundInProgress } from "../data/fpgUtils";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareValuesNullsLast } from "../hooks/useSort";
+import { isNoCardGross } from "../data/intlCommon";
 import { fmtHcp, ageAtDate, fmtDobPt, medal as medalOf } from "../utils/format";
 import { medalNet, stablefordNet } from "../utils/whsCalc";
 import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
@@ -368,7 +369,13 @@ export function ScorecardLB({
   }, [rawPlayers, par]);
 
   const sorted = useMemo(() => {
-    const INF = 9999;
+    // Vazios (buraco por jogar, sem lugar/HCP/SD, gross «sem cartão»…) sempre no
+    // fim, nas duas direcções; os WD ficam abaixo de todos.
+    const d: 1 | -1 = sortDir === "asc" ? 1 : -1;
+    const grossOf = (p: (typeof filteredPlayers)[number]) => {
+      const g = numGross(p);
+      return Number.isFinite(g) && g > 0 && !isNoCardGross(g) ? g : null;
+    };
     return [...filteredPlayers].sort((a, b) => {
       // WD players sempre no fim, independentemente do sortKey
       const aWD = a._wd;
@@ -381,9 +388,7 @@ export function ScorecardLB({
         const hi = parseInt(sortKey.slice(5), 10);
         const sa = statsByPlayer.get(a)?.scores[hi];
         const sb = statsByPlayer.get(b)?.scores[hi];
-        const va = sa && sa > 0 ? sa : INF;
-        const vb = sb && sb > 0 ? sb : INF;
-        return sortDir === "asc" ? va - vb : vb - va;
+        return compareNullsLast(sa && sa > 0 ? sa : null, sb && sb > 0 ? sb : null, d);
       }
       // Sort por Out (f9) ou In (b9)
       if (sortKey === "f9" || sortKey === "b9") {
@@ -391,87 +396,90 @@ export function ScorecardLB({
           const s = statsByPlayer.get(p)?.scores ?? [];
           const arr = sortKey === "f9" ? s.slice(0, 9) : s.slice(9, 18);
           const valid = arr.filter(v => v > 0);
-          if (!valid.length) return INF;
+          if (!valid.length) return null;
           return arr.reduce((acc, v) => acc + (v || 0), 0);
         };
-        const va = sumHalf(a);
-        const vb = sumHalf(b);
-        return sortDir === "asc" ? va - vb : vb - va;
+        return compareNullsLast(sumHalf(a), sumHalf(b), d);
       }
 
-      let av: any, bv: any;
+      let av: number | string | null | undefined, bv: number | string | null | undefined;
+      let flip = false; // eagles/birdies/pares: mais primeiro quando asc
       switch (sortKey) {
         case "pos":
         case "modo":
-          av = posOf(a) ?? 999;
-          bv = posOf(b) ?? 999;
+          av = posOf(a);
+          bv = posOf(b);
           break;
         case "name":
           av = a.name;
           bv = b.name;
           break;
         case "club":
-          av = a.club || "";
-          bv = b.club || "";
+          av = a.club;
+          bv = b.club;
           break;
         case "esc":
           av = (a.escalao || resolveEsc(a, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || "");
           bv = (b.escalao || resolveEsc(b, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || "");
           break;
         case "age":
-          av = (a as any)._age ?? 999;
-          bv = (b as any)._age ?? 999;
+          av = (a as any)._age;
+          bv = (b as any)._age;
           break;
         case "class":
-          av = (a as any)._classYear ?? 99999;
-          bv = (b as any)._classYear ?? 99999;
+          av = (a as any)._classYear;
+          bv = (b as any)._classYear;
           break;
         case "hcp":
-          av = a.hcpExact ?? 999;
-          bv = b.hcpExact ?? 999;
+          av = a.hcpExact;
+          bv = b.hcpExact;
           break;
         case "gross":
-          av = numGross(a);
-          bv = numGross(b);
+          av = grossOf(a);
+          bv = grossOf(b);
           break;
-        case "toPar":
-          av = numGross(a) - parTotal;
-          bv = numGross(b) - parTotal;
+        case "toPar": {
+          const ga = grossOf(a), gb = grossOf(b);
+          av = ga != null ? ga - parTotal : null;
+          bv = gb != null ? gb - parTotal : null;
+          break;
+        }
           break;
         case "tee":
-          av = a.teeName || "";
-          bv = b.teeName || "";
+          av = a.teeName;
+          bv = b.teeName;
           break;
         case "sd":
-          av = sdOf(a).sd ?? 999;
-          bv = sdOf(b).sd ?? 999;
+          av = sdOf(a).sd;
+          bv = sdOf(b).sd;
           break;
         case "eag":
           // Mais eagles primeiro quando asc.
-          av = -(statsByPlayer.get(a)?.eags ?? 0);
-          bv = -(statsByPlayer.get(b)?.eags ?? 0);
+          av = statsByPlayer.get(a)?.eags;
+          bv = statsByPlayer.get(b)?.eags;
+          flip = true;
           break;
         case "bird":
-          // Mais birdies primeiro quando asc (mais útil) — invertemos o sinal.
-          av = -(statsByPlayer.get(a)?.birds ?? 0);
-          bv = -(statsByPlayer.get(b)?.birds ?? 0);
+          // Mais birdies primeiro quando asc (mais útil) — invertemos a direcção.
+          av = statsByPlayer.get(a)?.birds;
+          bv = statsByPlayer.get(b)?.birds;
+          flip = true;
           break;
         case "par-stat":
-          av = -(statsByPlayer.get(a)?.pars ?? 0);
-          bv = -(statsByPlayer.get(b)?.pars ?? 0);
+          av = statsByPlayer.get(a)?.pars;
+          bv = statsByPlayer.get(b)?.pars;
+          flip = true;
           break;
         case "bog":
           // Bogeys: menos primeiro quando asc (clássico — quem fez menos bogeys jogou melhor).
-          av = statsByPlayer.get(a)?.bogs ?? 999;
-          bv = statsByPlayer.get(b)?.bogs ?? 999;
+          av = statsByPlayer.get(a)?.bogs;
+          bv = statsByPlayer.get(b)?.bogs;
           break;
         default:
           av = 0;
           bv = 0;
       }
-      if (typeof av === "string")
-        return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
-      return sortDir === "asc" ? av - bv : bv - av;
+      return compareValuesNullsLast(av, bv, flip ? (d === 1 ? -1 : 1) : d);
     });
   }, [filteredPlayers, sortKey, sortDir, parTotal, escLookup, playersDB, tournament.date, fedBirthdates, statsByPlayer, posModo]);
 

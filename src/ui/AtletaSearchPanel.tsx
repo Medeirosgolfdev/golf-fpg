@@ -18,7 +18,8 @@ import { fmtToPar, fpgScoringUrl } from "../utils/format";
 import { normName } from "../utils/normName";
 import type { Tournament } from "../data/fpgTypes";
 import { RoundPill, EscPill } from "./PillBadge";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
+import { isNoCardGross } from "../data/intlCommon";
 import PosBadge from "./PosBadge";
 import SortableHdr from "./SortableHdr";
 import KpiCard from "./KpiCard";
@@ -147,10 +148,10 @@ function buildAthleteIndex(
   return map;
 }
 
-/** Valor numérico para ordenação; nulos/strings vão para o fim (asc). */
-function numVal(v: number | string | null): number {
+/** Valor numérico para ordenação; nulos/strings → null (vão para o fim). */
+function numVal(v: number | string | null): number | null {
   const n = typeof v === "number" ? v : v != null ? parseFloat(String(v)) : NaN;
-  return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+  return Number.isFinite(n) ? n : null;
 }
 
 
@@ -194,32 +195,33 @@ export default function AtletaSearchPanel({
     const dir = sortDir === "asc" ? 1 : -1;
     const arr = [...matches];
     arr.sort((a, b) => {
+      // cmp já com a direcção: os vazios ficam no fim nas duas.
       let cmp = 0;
       switch (sortKey) {
         case "name":
-          cmp = a.name.localeCompare(b.name, "pt");
+          cmp = a.name.localeCompare(b.name, "pt") * dir;
           break;
         case "fed":
-          cmp = (a.fed || "").localeCompare(b.fed || "", "pt");
+          cmp = compareTextNullsLast(a.fed, b.fed, dir);
           break;
         case "club":
-          cmp = (a.club || "").localeCompare(b.club || "", "pt");
+          cmp = compareTextNullsLast(a.club, b.club, dir);
           break;
         case "particip":
-          cmp = a.results.length - b.results.length;
+          cmp = (a.results.length - b.results.length) * dir;
           break;
         case "golds":
-          cmp = a.golds - b.golds;
+          cmp = (a.golds - b.golds) * dir;
           break;
         case "top5":
-          cmp = a.top5 - b.top5;
+          cmp = (a.top5 - b.top5) * dir;
           break;
         case "best":
-          cmp = a.best - b.best;
+          cmp = compareNullsLast(a.best < 999 ? a.best : null, b.best < 999 ? b.best : null, dir);
           break;
       }
-      if (cmp === 0) cmp = a.name.localeCompare(b.name, "pt");
-      return cmp * dir;
+      if (cmp === 0) cmp = a.name.localeCompare(b.name, "pt") * dir;
+      return cmp;
     });
     return arr;
   }, [matches, matchSort]);
@@ -235,35 +237,37 @@ export default function AtletaSearchPanel({
     const dir = sortDir === "asc" ? 1 : -1;
     const arr = [...selected.results];
     arr.sort((a, b) => {
+      // cmp já com a direcção: os vazios (e o gross «sem cartão») ficam no fim nas duas.
+      const gross = (r: NationalResult) => { const g = numVal(r.gross); return isNoCardGross(g) ? null : g; };
       let cmp = 0;
       switch (sortKey) {
         case "date":
-          cmp = (a.date || "").localeCompare(b.date || "");
+          cmp = compareTextNullsLast(a.date, b.date, dir);
           break;
         case "escalao":
-          cmp = (a.escalao || "").localeCompare(b.escalao || "", "pt");
+          cmp = compareTextNullsLast(a.escalao, b.escalao, dir);
           break;
         case "pos":
-          cmp = a.pos - b.pos;
+          cmp = (a.pos - b.pos) * dir;
           break;
         case "tipo":
-          cmp = Number(a.isClubes) - Number(b.isClubes);
+          cmp = (Number(a.isClubes) - Number(b.isClubes)) * dir;
           break;
         case "gross":
-          cmp = numVal(a.gross) - numVal(b.gross);
+          cmp = compareNullsLast(gross(a), gross(b), dir);
           break;
         case "toPar":
-          cmp = numVal(a.toPar) - numVal(b.toPar);
+          cmp = compareNullsLast(numVal(a.toPar), numVal(b.toPar), dir);
           break;
         case "em":
-          cmp = a.totalPlayers - b.totalPlayers;
+          cmp = (a.totalPlayers - b.totalPlayers) * dir;
           break;
         case "tournament":
-          cmp = (a.tournamentName || "").localeCompare(b.tournamentName || "", "pt");
+          cmp = compareTextNullsLast(a.tournamentName, b.tournamentName, dir);
           break;
       }
-      if (cmp === 0) cmp = (b.date || "").localeCompare(a.date || "") || a.pos - b.pos;
-      return cmp * dir;
+      if (cmp === 0) cmp = ((b.date || "").localeCompare(a.date || "") || a.pos - b.pos) * dir;
+      return cmp;
     });
     return arr;
   }, [selected, detailSort]);

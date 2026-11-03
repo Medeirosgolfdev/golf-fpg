@@ -10,7 +10,7 @@
 
 import type { CanonicalData, Junior, Flight, Result, Tournament } from "../data";
 import { getSharedTournamentIds } from "../data";
-import { useSort } from "../../../hooks/useSort";
+import { useSort, compareValuesNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import KpiCard from "../../../ui/KpiCard";
 import ToPar from "../../../ui/ToPar";
@@ -102,23 +102,21 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
   // Ordenação aplicada antes do render
   const sortedRows = [...rows].sort((a, b) => {
     const mul = sortDir === "asc" ? 1 : -1;
-    const getVal = (r: Row, key: SortKey): string | number => {
+    // Vazios (null / "") sempre no fim, nas duas direcções.
+    const getVal = (r: Row, key: SortKey): string | number | null => {
       switch (key) {
-        case "date": return r.t.date || "";
+        case "date": return r.t.date || null;
         case "name": return (r.t.name || r.t.id || "").toLowerCase();
-        case "flight": return r.flight.label || "";
-        case "jGross": return r.rJ.totalGross ?? Number.POSITIVE_INFINITY;
-        case "jPos": return typeof r.rJ.pos === "number" ? r.rJ.pos : Number.POSITIVE_INFINITY;
-        case "mGross": return r.rM.totalGross ?? Number.POSITIVE_INFINITY;
-        case "mPos": return typeof r.rM.pos === "number" ? r.rM.pos : Number.POSITIVE_INFINITY;
-        case "diff": return r.diff ?? Number.POSITIVE_INFINITY;
-        case "result": return r.outcome ?? Number.POSITIVE_INFINITY;
+        case "flight": return r.flight.label || null;
+        case "jGross": return r.rJ.totalGross ?? null;
+        case "jPos": return typeof r.rJ.pos === "number" ? r.rJ.pos : null;
+        case "mGross": return r.rM.totalGross ?? null;
+        case "mPos": return typeof r.rM.pos === "number" ? r.rM.pos : null;
+        case "diff": return r.diff ?? null;
+        case "result": return r.outcome ?? null;
       }
     };
-    const va = getVal(a, sortKey);
-    const vb = getVal(b, sortKey);
-    if (typeof va === "number" && typeof vb === "number") return (va - vb) * mul;
-    return String(va).localeCompare(String(vb)) * mul;
+    return compareValuesNullsLast(getVal(a, sortKey), getVal(b, sortKey), mul);
   });
 
   return (

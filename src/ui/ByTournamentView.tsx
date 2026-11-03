@@ -5,7 +5,7 @@ import { sumArr } from "../utils/mathUtils";
 import { scClass, toParClass, sc2 } from "../utils/scoreDisplay";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
 import { GrossCell, CountPill, RoundNumericCells, MUTED } from "./tableCells";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
 import { ScorecardTable } from "./ScorecardTable";
@@ -478,7 +478,7 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
     let sorted = [...items];
     const dir = sortDir === "asc" ? 1 : -1;
     sorted.sort((a, b) => {
-      let av: number, bv: number;
+      let av: number | null, bv: number | null;
       const al = a.rounds[a.rounds.length - 1]?.dateSort || 0;
       const bl = b.rounds[b.rounds.length - 1]?.dateSort || 0;
       switch (sortKey) {
@@ -487,12 +487,12 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
         case "rondas": av = a.rounds.length; bv = b.rounds.length; break;
         case "melhor": {
           const ab = eventBest(a.rounds), bb = eventBest(b.rounds);
-          av = ab ? ab.toPar : 9999; bv = bb ? bb.toPar : 9999; break;
+          av = ab ? ab.toPar : null; bv = bb ? bb.toPar : null; break;
         }
         case "datas": av = al; bv = bl; break;
         default: av = al; bv = bl;
       }
-      return dir * (av - bv);
+      return compareNullsLast(av, bv, dir);
     });
     return sorted;
   }, [items, sortKey, sortDir]);

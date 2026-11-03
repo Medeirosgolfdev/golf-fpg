@@ -22,7 +22,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Tournament } from "../../data/fpgTypes";
 import { cachedFetchJson } from "../../data/fetchCache";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
 import { C } from "../../utils/colors";
@@ -332,7 +332,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
     const dir = sortDir === "asc" ? 1 : -1;
     const posInEvent = (p: typeof standings[number], tc: string) => {
       const e = p.events.find(x => String(x.tcode) === tc);
-      return e ? e.pos : Infinity; // quem não jogou vai para o fim
+      return e ? e.pos : null; // quem não jogou vai para o fim (nas duas direcções)
     };
     r.sort((a, b) => {
       if (sortKey === "name") return dir * a.name.localeCompare(b.name);
@@ -340,7 +340,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
       if (sortKey === "total") return dir * (a.total - b.total) || a.rank - b.rank;
       if (sortKey.startsWith("ev:")) {
         const tc = sortKey.slice(3);
-        return dir * (posInEvent(a, tc) - posInEvent(b, tc)) || a.rank - b.rank;
+        return compareNullsLast(posInEvent(a, tc), posInEvent(b, tc), dir) || a.rank - b.rank;
       }
       return dir * (a.rank - b.rank); // "rank"
     });
@@ -685,7 +685,7 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
       if (sortKey === "junior") return e.juniorScoring || "";
       return e.date;
     };
-    return [...events].sort((a, b) => dir * val(a).localeCompare(val(b)) || a.date.localeCompare(b.date));
+    return [...events].sort((a, b) => compareTextNullsLast(val(a), val(b), dir) || a.date.localeCompare(b.date));
   }, [events, sortKey, sortDir]);
   if (!events.some(e => e.juniorScoring)) return null;
   const pill = (e: OmEvent) => e.juniorBasis === "termos"

@@ -14,7 +14,7 @@
 
 import { Fragment, useEffect, useState } from "react";
 import { loadPPHistory, ppPlayerUrl, type PPHistory, type PPRound } from "../../data/federadosPPLoader";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { fmtStb } from "../../utils/scoreDisplay";
 import { SDPill } from "../../ui/tournamentPrimitives";
@@ -92,19 +92,16 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
   const rounds = [...hist.rounds].sort((a, b) => {
     let av: number | string | null, bv: number | string | null;
     switch (sortKey) {
-      case "date": av = a.date || ""; bv = b.date || ""; break;
-      case "tourn": av = a.tourn || ""; bv = b.tourn || ""; break;
-      case "course": av = a.course || ""; bv = b.course || ""; break;
+      case "date": av = a.date || null; bv = b.date || null; break;
+      case "tourn": av = a.tourn || null; bv = b.tourn || null; break;
+      case "course": av = a.course || null; bv = b.course || null; break;
       case "holes": av = a.holes ?? 0; bv = b.holes ?? 0; break;
       case "gross": av = a.scorecard?.grossTotal ?? null; bv = b.scorecard?.grossTotal ?? null; break;
       case "stb": av = toNum(a.stableford); bv = toNum(b.stableford); break;
       case "sd": av = toNum(a.sd); bv = toNum(b.sd); break;
       case "index": av = toNum(a.index); bv = toNum(b.index); break;
     }
-    if (av == null) return 1;
-    if (bv == null) return -1;
-    const cmp = typeof av === "number" && typeof bv === "number" ? av - bv : String(av).localeCompare(String(bv), "pt");
-    return sortDir === "asc" ? cmp : -cmp;
+    return compareValuesNullsLast(av, bv, sortDir === "asc" ? 1 : -1);
   });
 
   const toggle = (k: string) => setOpen((p) => toggleSet(p, k));

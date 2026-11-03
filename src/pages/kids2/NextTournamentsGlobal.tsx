@@ -12,7 +12,7 @@ import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import { usePasswordGate } from "../../hooks/usePasswordGate";
 import PasswordGate from "../../ui/PasswordGate";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareTextNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { useJuniorsCanonical, type Junior } from "./data";
 import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
@@ -65,7 +65,7 @@ function Content() {
         case "player": return a.junior.canonicalName.localeCompare(b.junior.canonicalName) * dir;
         case "tournament": return a.reg.name.localeCompare(b.reg.name) * dir;
         case "circuit": return a.reg.circuit.localeCompare(b.reg.circuit) * dir;
-        case "escalao": return (a.reg.escalao || "").localeCompare(b.reg.escalao || "") * dir;
+        case "escalao": return compareTextNullsLast(a.reg.escalao, b.reg.escalao, dir);
         case "date":
         default: return (a.reg.date.localeCompare(b.reg.date) || a.junior.canonicalName.localeCompare(b.junior.canonicalName)) * dir;
       }

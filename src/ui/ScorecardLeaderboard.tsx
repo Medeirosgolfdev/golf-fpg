@@ -29,7 +29,8 @@
 import React, { useMemo } from "react";
 import { scClass } from "../utils/scoreDisplay";
 import { fmtToPar } from "../utils/format";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast } from "../hooks/useSort";
+import { isNoCardGross } from "../data/intlCommon";
 import { tpColor } from "./tournamentPrimitives";
 import { useCompareSelection } from "./useCompareSelection";
 import TeeSwatch from "./TeeSwatch";
@@ -173,7 +174,7 @@ export function ScorecardLeaderboard({
 
   const sortedRows = useMemo(() => {
     if (!sortable) return rows;
-    const INF = 9999;
+    // Vazios (buraco por jogar, sem lugar, WD/sem cartão) sempre no fim, nas duas direcções.
     return [...rows].sort((a, b) => {
       const dir = intSortDir === "asc" ? 1 : -1;
       // Sort por buraco específico: "hole:N" (0-based)
@@ -181,26 +182,24 @@ export function ScorecardLeaderboard({
         const hi = parseInt(intSortKey.slice(5), 10);
         const sa = a.scores?.[hi];
         const sb = b.scores?.[hi];
-        const va = sa && sa > 0 ? sa : INF;
-        const vb = sb && sb > 0 ? sb : INF;
-        return dir * (va - vb);
+        return compareNullsLast(sa && sa > 0 ? sa : null, sb && sb > 0 ? sb : null, dir);
       }
       // Sort por Out (F9) ou In (B9) — soma dos 9 primeiros / 9 últimos buracos
       if (intSortKey === "f9" || intSortKey === "b9") {
         const sliceFn = (s: number[] | undefined) => {
-          if (!s) return INF;
+          if (!s) return null;
           const arr = intSortKey === "f9" ? s.slice(0, 9) : s.slice(9, 18);
           const valid = arr.filter(v => v > 0);
-          if (!valid.length) return INF;
+          if (!valid.length) return null;
           return arr.reduce((acc, v) => acc + (v || 0), 0);
         };
-        return dir * (sliceFn(a.scores) - sliceFn(b.scores));
+        return compareNullsLast(sliceFn(a.scores), sliceFn(b.scores), dir);
       }
       switch (intSortKey) {
-        case "pos":   return dir * ((a.sortPos ?? INF) - (b.sortPos ?? INF));
+        case "pos":   return compareNullsLast(a.sortPos, b.sortPos, dir);
         case "name":  return dir * ((a.sortName ?? a.key.toString()).localeCompare(b.sortName ?? b.key.toString(), "pt"));
-        case "gross": return dir * (a.gross - b.gross);
-        case "toPar": return dir * ((a.toPar ?? INF) - (b.toPar ?? INF));
+        case "gross": return compareNullsLast(a.gross > 0 && !isNoCardGross(a.gross) ? a.gross : null, b.gross > 0 && !isNoCardGross(b.gross) ? b.gross : null, dir);
+        case "toPar": return compareNullsLast(a.toPar, b.toPar, dir);
         default:      return 0;
       }
     });

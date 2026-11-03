@@ -166,15 +166,15 @@ export function FgRankingView() {
   if (!r) return <LoadingState message="A carregar o ranking juvenil…" />;
 
   const cols: RankingCol<FgRankingLinha>[] = [
-    { key: "pos", label: "#", sort: (l) => l.pos ?? 1e9, firstDir: "asc", cell: (l) => l.pos ?? MUTED, className: "ta-c" },
+    { key: "pos", label: "#", sort: (l) => l.pos, firstDir: "asc", cell: (l) => l.pos ?? MUTED, className: "ta-c" },
     { key: "nome", label: "Jogador", sort: (l) => l.nome, firstDir: "asc", cell: (l) => nameCell(fgNome(l.nome)) },
-    { key: "clube", label: "Clube", sort: (l) => l.clube ?? "", firstDir: "asc", cell: (l) => fgClube(l.clube) || MUTED },
-    { key: "idade", label: "Idade", title: "Idade no ranking da Federgolf", sort: (l) => l.idade ?? 99, firstDir: "asc", cell: (l) => l.idade ?? MUTED, className: "ta-c" },
-    { key: "zona", label: "Zona", sort: (l) => l.zona ?? 99, firstDir: "asc", cell: (l) => l.zona ?? MUTED, className: "ta-c" },
-    { key: "qual", label: "Qual.", title: "B Brevetto · BG Brevetto Giovanile · BN Brevetto Nazionale · GIF Interesse Federale · GIN Interesse Nazionale", sort: (l) => l.qual ?? "", cell: (l) => l.qual || MUTED, className: "ta-c" },
-    { key: "voltas", label: "Voltas", sort: (l) => l.voltas ?? 0, firstDir: "desc", cell: (l) => l.voltas ?? MUTED, className: "ta-c" },
+    { key: "clube", label: "Clube", sort: (l) => l.clube, firstDir: "asc", cell: (l) => fgClube(l.clube) || MUTED },
+    { key: "idade", label: "Idade", title: "Idade no ranking da Federgolf", sort: (l) => l.idade, firstDir: "asc", cell: (l) => l.idade ?? MUTED, className: "ta-c" },
+    { key: "zona", label: "Zona", sort: (l) => l.zona, firstDir: "asc", cell: (l) => l.zona ?? MUTED, className: "ta-c" },
+    { key: "qual", label: "Qual.", title: "B Brevetto · BG Brevetto Giovanile · BN Brevetto Nazionale · GIF Interesse Federale · GIN Interesse Nazionale", sort: (l) => l.qual, cell: (l) => l.qual || MUTED, className: "ta-c" },
+    { key: "voltas", label: "Voltas", sort: (l) => l.voltas, firstDir: "desc", cell: (l) => l.voltas ?? MUTED, className: "ta-c" },
     { key: "min", label: "Mínimo", title: "Cumpriu o mínimo de voltas do ranking", sort: (l) => (l.minimo ? 0 : 1), cell: (l) => (l.minimo ? "✓" : MUTED), className: "ta-c" },
-    { key: "media", label: "Média", title: "Média de (gross − CR) das voltas que contam — mais baixa = melhor", sort: (l) => l.media ?? 999, firstDir: "asc", cell: (l) => fmt1(l.media), className: "ta-c mono" },
+    { key: "media", label: "Média", title: "Média de (gross − CR) das voltas que contam — mais baixa = melhor", sort: (l) => l.media, firstDir: "asc", cell: (l) => fmt1(l.media), className: "ta-c mono" },
   ];
 
   return (
@@ -219,14 +219,14 @@ export function FgJogadorView({ id, ano }: { id: string; ano?: string | null }) 
   if (!e) return <RankingDetail backTo="/fig/info/ranking" notFound="Este jogador não está no ranking juvenil da Federgolf." />;
 
   const cols: RankingCol<FgRankingVolta>[] = [
-    { key: "data", label: "Data", sort: (v) => v[1] ?? "", firstDir: "desc", cell: (v) => fmtData(v[1]) },
+    { key: "data", label: "Data", sort: (v) => v[1], firstDir: "desc", cell: (v) => fmtData(v[1]) },
     { key: "prova", label: "Prova", sort: (v) => v[0], firstDir: "asc", cell: (v) => fgTitulo(v[0]) },
-    { key: "clube", label: "Campo", sort: (v) => v[2] ?? "", firstDir: "asc", cell: (v) => fgClube(v[2]) || MUTED },
+    { key: "clube", label: "Campo", sort: (v) => v[2], firstDir: "asc", cell: (v) => fgClube(v[2]) || MUTED },
     { key: "volta", label: "Volta", cell: (v) => (v[3] != null ? `R${v[3]}` : MUTED), className: "ta-c" },
-    { key: "gross", label: "Gross", sort: (v) => v[4] ?? 999, firstDir: "asc", cell: (v) => v[4] ?? MUTED, className: "ta-c" },
+    { key: "gross", label: "Gross", sort: (v) => v[4], firstDir: "asc", cell: (v) => v[4] ?? MUTED, className: "ta-c" },
     { key: "par", label: "Par", cell: (v) => v[5] ?? MUTED, className: "ta-c" },
     { key: "cr", label: "CR", cell: (v) => fmt1(v[6]), className: "ta-c mono" },
-    { key: "score", label: "Gross − CR", title: "O valor que conta para a média do ranking", sort: (v) => v[7] ?? 999, firstDir: "asc", cell: (v) => fmt1(v[7]), className: "ta-c mono" },
+    { key: "score", label: "Gross − CR", title: "O valor que conta para a média do ranking", sort: (v) => v[7], firstDir: "asc", cell: (v) => fmt1(v[7]), className: "ta-c mono" },
   ];
 
   return (

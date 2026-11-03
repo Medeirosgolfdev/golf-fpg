@@ -22,6 +22,7 @@ import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import SortableHdr from "../ui/SortableHdr";
+import { compareValuesNullsLast } from "../hooks/useSort";
 import type { Course, Tee, Hole } from "../data/types";
 import CourseHeroCard, { getParTotal, PAR_HSL, HeroStat } from "../ui/CourseHeroCard";
 import { MultiTeeSDTable } from "../ui/ScoreTable";
@@ -136,14 +137,14 @@ type SimRow = {
 
 type SimSortKey = "name" | "tee" | "dist" | "par" | "slope" | "cr" | "overall";
 
-function getSortValue(row: SimRow, key: SimSortKey): number | string {
+function getSortValue(row: SimRow, key: SimSortKey): number | string | null {
   switch (key) {
     case "name":    return row.course.master.name.toLowerCase();
     case "tee":     return row.tee.teeName.toLowerCase();
-    case "dist":    return row.tee.distances?.total ?? -1;
-    case "par":     return getParTotal(row.tee);
-    case "slope":   return row.tee.ratings?.holes18?.slopeRating ?? -1;
-    case "cr":      return row.tee.ratings?.holes18?.courseRating ?? -1;
+    case "dist":    return row.tee.distances?.total ?? null;
+    case "par":     return getParTotal(row.tee) || null; // 0 = sem buracos
+    case "slope":   return row.tee.ratings?.holes18?.slopeRating ?? null;
+    case "cr":      return row.tee.ratings?.holes18?.courseRating ?? null;
     case "overall": return row.sim.overall;
   }
 }
@@ -173,10 +174,7 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
   const sortedRows = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
     return [...rows].sort((a, b) => {
-      const av = getSortValue(a, sortKey);
-      const bv = getSortValue(b, sortKey);
-      if (typeof av === "string" && typeof bv === "string") return av.localeCompare(bv, "pt") * dir;
-      return ((av as number) - (bv as number)) * dir;
+      return compareValuesNullsLast(getSortValue(a, sortKey), getSortValue(b, sortKey), dir);
     });
   }, [rows, sortKey, sortDir]);
 

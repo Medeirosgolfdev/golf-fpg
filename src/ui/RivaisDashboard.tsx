@@ -7,6 +7,7 @@ import { flag as countryFlag } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ, meanArr } from "../utils/mathUtils";
 import { sc3m } from "../utils/scoreDisplay";
 import KpiCard from "./KpiCard";
+import { compareNullsLast } from "../hooks/useSort";
 import WdBadge from "./WdBadge";
 import { RoundPill } from "./PillBadge";
 import { TIER } from "../data/rivalData";
@@ -89,29 +90,32 @@ export default function RivaisDashboard({
       const ql = q.toLowerCase();
       pl = pl.filter(x => x.n.toLowerCase().includes(ql));
     }
+    // Vazios (sem dados, sem resultado) sempre no fim, nas duas direcções.
+    const d = dir === "asc" ? 1 : -1;
     pl.sort((a, b) => {
       let cmp = 0;
       if (sort === "name") cmp = a.n.localeCompare(b.n);
       else if (sort === "zrank") {
-        cmp =
-          ((getAvgZ as unknown as (p: RivalPlayer) => number | null)(a) ?? 99) -
-          ((getAvgZ as unknown as (p: RivalPlayer) => number | null)(b) ?? 99);
+        const z = getAvgZ as unknown as (p: RivalPlayer) => number | null;
+        return compareNullsLast(z(a), z(b), d);
       } else if (sort === "vsManuel") {
-        cmp = (getVsAvg(a) ?? 999) - (getVsAvg(b) ?? 999);
+        return compareNullsLast(getVsAvg(a), getVsAvg(b), d);
       } else if (sort.startsWith("t:")) {
         const tid = sort.slice(2);
-        const posOf = (x: RivalPlayer) => {
+        // Lugar (0) · jogou sem lugar, WD/sem cartão (1) · não jogou (2): os
+        // dois últimos ficam no fim, por esta ordem, nas duas direcções.
+        const tier = (x: RivalPlayer) => {
           const r = x.r[tid];
-          if (!r || r.tp == null) return 9999;
-          return typeof r.p === "number" ? r.p : 9998;
+          return !r || r.tp == null ? 2 : typeof r.p === "number" ? 0 : 1;
         };
-        cmp = posOf(a) - posOf(b);
+        const posOf = (x: RivalPlayer) => { const p = x.r[tid]?.p; return typeof p === "number" ? p : null; };
+        return (tier(a) - tier(b)) || compareNullsLast(posOf(a), posOf(b), d);
       } else if (sort.startsWith("up:")) {
         const uid = sort.slice(3);
         cmp = (a.up.includes(uid) ? 0 : 1) - (b.up.includes(uid) ? 0 : 1);
         if (cmp === 0) cmp = a.n.localeCompare(b.n);
       } else if (sort === "avg18" || sort === "best18" || sort === "top10" || sort === "age") {
-        const stat = (x: RivalPlayer): number => {
+        const stat = (x: RivalPlayer): number | null => {
           if (sort === "top10") {
             let n = 0;
             for (const td of T) {
@@ -121,9 +125,9 @@ export default function RivaisDashboard({
             return -n; // mais top10 primeiro quando asc
           }
           if (sort === "age") {
-            if (!x.dob) return 9999;
+            if (!x.dob) return null;
             const dm = x.dob.match(/^(\d{4})-(\d{2})-(\d{2})/) || x.dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-            if (!dm) return 9999;
+            if (!dm) return null;
             let y, m, d;
             if (dm[0].includes("-")) { y = +dm[1]; m = +dm[2]; d = +dm[3]; }
             else { d = +dm[1]; m = +dm[2]; y = +dm[3]; }
@@ -137,13 +141,13 @@ export default function RivaisDashboard({
             if (!r || !r.rd) continue;
             for (const g of r.rd) if (g > 0) gross18.push(g);
           }
-          if (gross18.length === 0) return 9999;
+          if (gross18.length === 0) return null;
           if (sort === "best18") return Math.min(...gross18);
           return gross18.reduce((a, b) => a + b, 0) / gross18.length;
         };
-        cmp = stat(a) - stat(b);
+        return compareNullsLast(stat(a), stat(b), d);
       }
-      return dir === "desc" ? -cmp : cmp;
+      return cmp * d;
     });
     return pl;
   }, [fTour, fUp, fCo, q, sort, dir, dOnly, D, T]);

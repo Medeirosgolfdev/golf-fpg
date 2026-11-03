@@ -9,7 +9,7 @@ import { useMemo } from "react";
 import type { WhsRound } from "../../data/datagolfClient";
 import { fmtStb } from "../../utils/scoreDisplay";
 import { SDPill } from "../../ui/tournamentPrimitives";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import ListaTabela, { type ListaColuna } from "../../ui/ListaTabela";
 import { HoleBadge, GrossCell, MUTED } from "../../ui/tableCells";
 import TeePill from "../../ui/TeePill";
@@ -43,26 +43,24 @@ export default function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, e
     arr.sort((a, b) => {
       let va: unknown, vb: unknown;
       switch (sortKey) {
-        case "date":   va = a.score_dateStr; vb = b.score_dateStr; break;
-        case "event":  va = a.tournament_description; vb = b.tournament_description; break;
-        case "course": va = a.course_description; vb = b.course_description; break;
+        case "event":  return compareTextNullsLast(a.tournament_description, b.tournament_description, dir);
+        case "course": return compareTextNullsLast(a.course_description, b.course_description, dir);
         case "holes":  va = a.hole_count; vb = b.hole_count; break;
         case "hcp":    va = a.calc_hcp_index ?? a.calculated_exact_hcp; vb = b.calc_hcp_index ?? b.calculated_exact_hcp; break;
         case "par":    va = a.par_total; vb = b.par_total; break;
-        case "tee":    va = extraMap?.get(a.id)?.tee ?? ""; vb = extraMap?.get(b.id)?.tee ?? ""; break;
-        case "gross":  va = extraMap?.get(a.id)?.gross ?? 999; vb = extraMap?.get(b.id)?.gross ?? 999; break;
+        case "tee":    return compareTextNullsLast(extraMap?.get(a.id)?.tee, extraMap?.get(b.id)?.tee, dir);
+        case "gross":  va = extraMap?.get(a.id)?.gross; vb = extraMap?.get(b.id)?.gross; break;
         case "stb":    va = a.calculated_stablnet_total; vb = b.calculated_stablnet_total; break;
         case "sd":     va = a.score_differential; vb = b.score_differential; break;
-        case "origin": va = a.score_origin; vb = b.score_origin; break;
-        default:       va = a.score_dateStr; vb = b.score_dateStr;
+        case "origin": return compareTextNullsLast(a.score_origin, b.score_origin, dir);
+        default:       return compareTextNullsLast(a.score_dateStr, b.score_dateStr, dir); // "date"
       }
-      if (typeof va === "string" && typeof vb === "string") return va.localeCompare(vb) * dir;
-      return ((Number(va) || 0) - (Number(vb) || 0)) * dir;
+      return compareNullsLast(va == null ? null : Number(va), vb == null ? null : Number(vb), dir);
     });
     return arr;
     // extraMap nas deps: o parent preenche-o progressivamente (flush a cada 5
     // scorecards cria um Map novo) — sem isto, ordenar por Tee/Gross durante o
-    // batch ficava com a ordem calculada sobre o mapa antigo (tudo 999/"").
+    // batch ficava com a ordem calculada sobre o mapa antigo (tudo vazio).
   }, [rounds, sortKey, sortDir, extraMap]);
 
   // Contagem de rondas que NÃO temos em local

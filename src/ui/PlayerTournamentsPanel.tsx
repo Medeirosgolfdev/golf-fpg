@@ -11,7 +11,7 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import SortableHdr from "./SortableHdr";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import { fmtDatePt } from "../utils/format";
 import { MUTED } from "./tableCells";
 
@@ -57,17 +57,16 @@ export default function PlayerTournamentsPanel({
   });
 
   const sorted = useMemo(() => {
-    const INF = Number.MAX_SAFE_INTEGER;
     const mult = sortDir === "asc" ? 1 : -1;
     return [...items].sort((a, b) => {
       let v = 0;
       switch (sortKey) {
-        case "date":  v = (a.date || "").localeCompare(b.date || ""); break;
+        // Vazios (sem data, sem resultado — inscrito / prova por jogar) sempre no fim, nas duas direcções.
+        case "date":  return compareTextNullsLast(a.date, b.date, mult);
         case "name":  v = a.name.localeCompare(b.name); break;
-        case "sub":   v = (a.sub || "~").localeCompare(b.sub || "~"); break;
-        // Sem resultado (inscrito / prova por jogar) vai sempre para o fim.
-        case "pos":   v = (a.pos ?? INF) - (b.pos ?? INF); break;
-        case "total": v = (a.total ?? INF) - (b.total ?? INF); break;
+        case "sub":   return compareTextNullsLast(a.sub, b.sub, mult);
+        case "pos":   return compareNullsLast(a.pos, b.pos, mult);
+        case "total": return compareNullsLast(a.total, b.total, mult);
       }
       return mult * v;
     });

@@ -189,16 +189,16 @@ export default function DriveSeason({ title, bySex, pointsNote, calId, rows, all
   const evol = (r: Sub12Row) => { const a = hcp0(r); return a != null && r.hcp != null ? r.hcp - a : null; };
 
   const tableCols: RankingCol<Sub12Row>[] = [
-    { key: "rank", label: "#", className: "num", sort: r => r.totalPts > 0 ? rank.get(r.fed) ?? 9999 : 9999, firstDir: "asc",
+    { key: "rank", label: "#", className: "num", sort: r => r.totalPts > 0 ? rank.get(r.fed) : null, firstDir: "asc",
       cell: r => r.totalPts > 0 ? (medal(rank.get(r.fed)!) ?? <span className="fw-700">{rank.get(r.fed)}</span>) : MUTED },
     { key: "name", label: "Jogador", className: "aq-col-jog", sort: r => norm(r.name), firstDir: "asc",
       cell: r => <>{pdb[r.fed]?.country && !isPtCountry(pdb[r.fed]!.country) ? <span title={pdb[r.fed]!.country ?? ""}>{flagOrEmpty(pdb[r.fed]!.country)} </span> : null}
         <PlayerLink fed={r.fed} name={r.name} className="fw-700" /><div className="c-muted fs-10">{r.club}</div></> },
-    { key: "esc", label: "Escalão", sort: r => ESCALOES_DRIVE.indexOf(r.esc ?? "") + 1 || 99, firstDir: "asc",
+    { key: "esc", label: "Escalão", sort: r => ESCALOES_DRIVE.indexOf(r.esc ?? "") + 1 || null, firstDir: "asc",
       cell: r => r.esc ? <>{r.esc} {fedBirthdates.get(r.fed) && <AnoEscalaoPill dob={fedBirthdates.get(r.fed)!} escalao={r.esc} />}</> : MUTED },
-    { key: "hcp", label: "HCP", title: "HCP actual (e o da 1.ª prova da época)", className: "num", sort: r => r.hcp ?? 99, firstDir: "asc",
+    { key: "hcp", label: "HCP", title: "HCP actual (e o da 1.ª prova da época)", className: "num", sort: r => r.hcp, firstDir: "asc",
       cell: r => <><span className="fw-600">{fmtHcp(r.hcp)}</span>{hcp0(r) != null && hcp0(r) !== r.hcp && <div className="c-muted fs-10">era {fmtHcp(hcp0(r))}</div>}</> },
-    { key: "evol", label: "Evol.", title: "Quanto o HCP mudou desde a 1.ª prova da época (negativo = melhorou)", className: "num", sort: r => evol(r) ?? 99, firstDir: "asc",
+    { key: "evol", label: "Evol.", title: "Quanto o HCP mudou desde a 1.ª prova da época (negativo = melhorou)", className: "num", sort: r => evol(r), firstDir: "asc",
       cell: r => { const e = evol(r); return e == null || Math.abs(e) < 0.05 ? MUTED : <span className={"aq-evol " + (e < 0 ? "is-good" : "is-bad")}>{e < 0 ? "▼" : "▲"} {Math.abs(e).toFixed(1)}</span>; } },
     { key: "pts", label: "Pts", title: pointsNote, className: "num", sort: r => r.totalPts, firstDir: "desc",
       tdClassName: "num aq-col-pts", cell: r => r.totalPts ? <span className="fw-800 drive-pts">{r.totalPts}</span> : MUTED },
@@ -215,7 +215,7 @@ export default function DriveSeason({ title, bySex, pointsNote, calId, rows, all
         </span>,
         title: m ? `Tee mais jogado: ${m.tee}, ${fmtM(m.meters)} m` : c.estado ? `Por jogar · ${c.estado}` : porJogar ? "Ainda não se jogou" : undefined,
         className: "aq-etapa" + (porJogar ? " aq-futuro" : ""),
-        sort: r => porJogar ? (c.inscritos?.has(r.fed) ? 0 : 1) : (() => { const x = resOf(r, c); return x ? lugarOf(x, bySex) ?? 998 : 999; })(),
+        sort: r => porJogar ? (c.inscritos?.has(r.fed) ? 0 : 1) : (() => { const x = resOf(r, c); return x ? lugarOf(x, bySex) : null; })(),
         firstDir: "asc",
         cell: r => porJogar
           ? (c.inscritos?.has(r.fed) ? <span className="aq-inscrito">inscrito</span> : MUTED)

@@ -132,13 +132,13 @@ export default function WAGRPage() {
 
 /* ── Lista (ranking mundial) ───────────────────────────────────── */
 const LIST_COLS: RankingCol<WagrPlayer>[] = [
-  { key: "rank", label: "#", title: "Ranking WAGR (por sexo)", className: "num", sort: (p) => p.rank ?? 1e9, cell: (p) => p.rank ?? "—", tdStyle: { color: "var(--text-muted)" } },
-  { key: "change", label: "Var.", title: "Variação face à semana anterior", className: "tight", sort: (p) => p.change ?? 0, firstDir: "desc", cell: (p) => <RankChange up={p.change} empty={MUTED} /> },
+  { key: "rank", label: "#", title: "Ranking WAGR (por sexo)", className: "num", sort: (p) => p.rank, cell: (p) => p.rank ?? "—", tdStyle: { color: "var(--text-muted)" } },
+  { key: "change", label: "Var.", title: "Variação face à semana anterior", className: "tight", sort: (p) => p.change, firstDir: "desc", cell: (p) => <RankChange up={p.change} empty={MUTED} /> },
   { key: "name", label: "Nome", sort: (p) => norm(p.name), cell: (p) => nameCell(p.name), tdStyle: { fontWeight: 500 } },
   { key: "country", label: "País", sort: (p) => norm(p.country || ""), cell: (p) => countryCell(p.country) },
   { key: "sex", label: "Sexo", className: "tight", tdClassName: "", cell: (p) => <SexBadge sex={p.sex} /> },
-  { key: "divisor", label: "Divisor", title: "Divisor aplicado (nº de eventos sobre o qual a média é calculada)", className: "num", sort: (p) => p.divisor ?? 1e9, cell: (p) => num(p.divisor), tdStyle: { color: "var(--text-muted)" } },
-  { key: "points", label: "Pts méd.", title: "Pontos médios WAGR", className: "num", sort: (p) => p.pointsAverage ?? -1, firstDir: "desc", cell: (p) => num(p.pointsAverage), tdStyle: { fontWeight: 600 } },
+  { key: "divisor", label: "Divisor", title: "Divisor aplicado (nº de eventos sobre o qual a média é calculada)", className: "num", sort: (p) => p.divisor, cell: (p) => num(p.divisor), tdStyle: { color: "var(--text-muted)" } },
+  { key: "points", label: "Pts méd.", title: "Pontos médios WAGR", className: "num", sort: (p) => p.pointsAverage, firstDir: "desc", cell: (p) => num(p.pointsAverage), tdStyle: { fontWeight: 600 } },
 ];
 
 function WAGRList({ ranking }: { ranking: WagrRanking }) {
@@ -175,11 +175,11 @@ function WAGRDetail({ ranking, id }: { ranking: WagrRanking; id: string }) {
     </> },
     { key: "country", label: "Local", className: "tight", sort: (e) => norm(e.country || ""), firstDir: "asc", cell: (e) => <span title={e.country || ""}>{flagOrEmpty(e.country)}</span> },
     { key: "type", label: "Tipo", className: "tight", sort: (e) => norm(e.eventType || ""), firstDir: "asc", cell: (e) => e.eventType || "—" },
-    { key: "pos", label: "Pos", className: "num", sort: (e) => typeof e.pos === "number" ? e.pos : 9999, firstDir: "asc", cell: (e) => e.pos ?? "—", tdStyle: { fontWeight: 600 } },
+    { key: "pos", label: "Pos", className: "num", sort: (e) => typeof e.pos === "number" ? e.pos : null, firstDir: "asc", cell: (e) => e.pos ?? "—", tdStyle: { fontWeight: 600 } },
     { key: "rounds", label: "Rondas", title: "Rondas", className: "tight", cell: (e) => e.rounds.join("·") || "—", tdStyle: { color: "var(--text-muted)" } },
-    { key: "total", label: "Total", className: "num", sort: (e) => e.total ?? 1e9, firstDir: "asc", cell: (e) => e.total ?? "—" },
-    { key: "power", label: "Power", title: "Power do evento (força do campo segundo o WAGR)", className: "num", sort: (e) => e.power ?? -1, cell: (e) => num(e.power, 1), tdStyle: { color: "var(--text-muted)" } },
-    { key: "points", label: "Pts", title: "Pontos WAGR ganhos", className: "num", sort: (e) => e.points ?? -1, cell: (e) => num(e.points), tdStyle: { fontWeight: 600 } },
+    { key: "total", label: "Total", className: "num", sort: (e) => e.total, firstDir: "asc", cell: (e) => e.total ?? "—" },
+    { key: "power", label: "Power", title: "Power do evento (força do campo segundo o WAGR)", className: "num", sort: (e) => e.power, cell: (e) => num(e.power, 1), tdStyle: { color: "var(--text-muted)" } },
+    { key: "points", label: "Pts", title: "Pontos WAGR ganhos", className: "num", sort: (e) => e.points, cell: (e) => num(e.points), tdStyle: { fontWeight: 600 } },
   ], [navigate]);
   if (!player) return <RankingDetail backTo="/wagr/info/jogadores" notFound={`Jogador não encontrado — sem entrada para o id ${id} no ranking WAGR.`} />;
   return (

@@ -225,15 +225,15 @@ export default function Scout({
       switch (sortKey) {
         case "name": return l.name;
         case "idade": return l.idade;
-        case "esc": return l.escalao;
+        case "esc": return l.escalao || null;
         case "hcp": return l.sc?.h ?? null;
         case "tier": return l.sc?.t ? TIER_ORD[l.sc.t] : null;
         case "nivel": return l.isManuel ? null : l.threat.score;
         case "torn": return l.sc?.a?.[0] ?? null;
         case "vit": return l.sc?.a?.[1] ?? null;
         case "pod": return l.sc?.a?.[2] ?? null;
-        case "media": return l.sc?.v ? l.sc.v[3] ?? 500 + l.sc.v[1] : null; // sem par oficial vai para o fim
-        case "melhor": return l.sc?.v ? l.sc.v[4] ?? 500 + l.sc.v[2] : null; // pelo ±par; sem par oficial vai para o fim
+        case "media": return l.sc?.v ? l.sc.v[3] ?? l.sc.v[1] : null; // sem par oficial: pelas pancadas, depois dos outros (semPar)
+        case "melhor": return l.sc?.v ? l.sc.v[4] ?? l.sc.v[2] : null; // pelo ±par; sem par oficial: idem
         case "forma": return formaMedia(l.sc?.u);
         case "ult": return l.ult[0]?.data ?? null;
         case "n": return l.rep?.n ?? null;
@@ -247,6 +247,9 @@ export default function Scout({
         }
       }
     };
+    // «Média»/«Melhor» sem par oficial ficam depois dos que o têm, nas duas direcções.
+    const semPar = (l: typeof linhas[number]) =>
+      sortKey === "media" ? l.sc?.v?.[3] == null : sortKey === "melhor" ? l.sc?.v?.[4] == null : false;
     const dir = sortDir === "asc" ? 1 : -1;
     return [...linhas].sort((a, b) => {
       if (a.isManuel !== b.isManuel) return a.isManuel ? -1 : 1; // o Manuel fica em cima, como referência
@@ -254,6 +257,7 @@ export default function Scout({
       if (va == null && vb == null) return a.name.localeCompare(b.name);
       if (va == null) return 1;
       if (vb == null) return -1;
+      if (semPar(a) !== semPar(b)) return semPar(a) ? 1 : -1;
       const c = sortKey === "esc" ? compareEscalao(String(va), String(vb))
         : typeof va === "string" ? va.localeCompare(String(vb)) : (va as number) - (vb as number);
       return c * dir || a.name.localeCompare(b.name);

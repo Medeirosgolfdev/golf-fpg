@@ -12,7 +12,7 @@
 
 import { useState, useMemo } from "react";
 import type { HcpPoint } from "../data";
-import { useSort } from "../../../hooks/useSort";
+import { useSort, compareTextNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtHcp } from "../../../utils/format";
@@ -81,12 +81,14 @@ function HcpHistoryModal({
   const desc = [...points].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   const { sortKey, sortDir, toggleSort } = useSort<"date" | "hcp" | "source" | "label">("date", "desc", { source: "asc", label: "asc", hcp: "asc" });
   const labelOf = (p: HcpPoint) => p.label || (p.tcode ? `tcode ${p.tcode}` : "");
+  const dir = sortDir === "asc" ? 1 : -1;
   const rows = [...desc].sort((a, b) => {
-    const c = sortKey === "hcp" ? a.hcpExact - b.hcpExact
-      : sortKey === "source" ? (a.source || "").localeCompare(b.source || "", "pt")
-      : sortKey === "label" ? labelOf(a).localeCompare(labelOf(b), "pt")
-      : (a.date || "").localeCompare(b.date || "");
-    return (sortDir === "asc" ? c : -c) || (b.date || "").localeCompare(a.date || "");
+    // Vazios (sem fonte, sem data) sempre no fim, nas duas direcções.
+    const c = sortKey === "hcp" ? (a.hcpExact - b.hcpExact) * dir
+      : sortKey === "source" ? compareTextNullsLast(a.source, b.source, dir)
+      : sortKey === "label" ? labelOf(a).localeCompare(labelOf(b), "pt") * dir
+      : compareTextNullsLast(a.date, b.date, dir);
+    return c || (b.date || "").localeCompare(a.date || "");
   });
   const hdr = (k: "date" | "hcp" | "source" | "label", label: string, className?: string) =>
     <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className}>{label}</SortableHdr>;

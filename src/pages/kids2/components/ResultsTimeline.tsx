@@ -8,7 +8,7 @@
 import React, { useMemo, useState } from "react";
 import type { CanonicalData, Junior, Tournament, Flight, Result } from "../data";
 import { getSharedTournamentIds } from "../data";
-import { useSort } from "../../../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import InlineScorecard from "./InlineScorecard";
 import { categorizeTournamentLinks } from "../tournamentLinks";
@@ -259,21 +259,18 @@ function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
   const sorted = useMemo(() => {
     const arr = [...rows];
     const sign = sortDir === "asc" ? 1 : -1;
-    const safeNum = (v: any) => (typeof v === "number" ? v : Number.POSITIVE_INFINITY);
+    // Vazios (sem lugar, sem total, texto vazio) sempre no fim, nas duas direcções.
+    const num = (v: unknown) => (typeof v === "number" ? v : null);
     arr.sort((a, b) => {
       switch (sortKey) {
         case "date":   return sign * a.date.localeCompare(b.date);
-        case "type":   return sign * (a.tournament.sourceId || "").localeCompare(b.tournament.sourceId || "");
-        case "pos":    return sign * (safeNum(a.result.pos) - safeNum(b.result.pos));
-        case "name":   return sign * (a.tournament.name || "").localeCompare(b.tournament.name || "");
-        case "flight": return sign * (a.flight.label || "").localeCompare(b.flight.label || "");
-        case "rounds": {
-          const ta = a.result.totalGross ?? safeNum(null);
-          const tb = b.result.totalGross ?? safeNum(null);
-          return sign * (ta - tb);
-        }
-        case "toPar":  return sign * (safeNum(a.result.toPar) - safeNum(b.result.toPar));
-        case "vsM":    return sign * (safeNum(a.vsManuelDiff) - safeNum(b.vsManuelDiff));
+        case "type":   return compareTextNullsLast(a.tournament.sourceId, b.tournament.sourceId, sign);
+        case "pos":    return compareNullsLast(num(a.result.pos), num(b.result.pos), sign);
+        case "name":   return compareTextNullsLast(a.tournament.name, b.tournament.name, sign);
+        case "flight": return compareTextNullsLast(a.flight.label, b.flight.label, sign);
+        case "rounds": return compareNullsLast(a.result.totalGross, b.result.totalGross, sign);
+        case "toPar":  return compareNullsLast(num(a.result.toPar), num(b.result.toPar), sign);
+        case "vsM":    return compareNullsLast(num(a.vsManuelDiff), num(b.vsManuelDiff), sign);
         default: return 0;
       }
     });

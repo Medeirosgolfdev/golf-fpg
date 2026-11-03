@@ -19,7 +19,7 @@ import EmptyState from "./EmptyState";
 import LoadingState from "./LoadingState";
 import UiKpiCard from "./KpiCard";
 import SortableHdr from "./SortableHdr";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import { fmtToPar, fmtHcp } from "../utils/format";
 import { scClass } from "../utils/scoreDisplay";
 import PlayerLink from "./PlayerLink";
@@ -404,11 +404,10 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
   const frSort = useSort<"name" | "hcp" | "rds" | "avgToPar" | "avgGross" | "best" | "vsField">("avgToPar");
   const sortedFieldRanking = useMemo(() => {
     const mult = frSort.sortDir === "asc" ? 1 : -1;
-    const num = (v: number | null) => v == null ? Infinity : v;
     return [...fieldRanking].sort((a, b) => {
       switch (frSort.sortKey) {
         case "name":     return mult * a.name.localeCompare(b.name, "pt");
-        case "hcp":      return mult * (num(a.hcpExact) - num(b.hcpExact));
+        case "hcp":      return compareNullsLast(a.hcpExact, b.hcpExact, mult);
         case "rds":      return mult * (a.nRounds - b.nRounds);
         case "avgToPar": return mult * (a.avgToPar - b.avgToPar);
         case "avgGross": return mult * (a.avgGross - b.avgGross);
@@ -422,21 +421,19 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
   const s12Sort = useSort<"name" | "club" | "hcp" | "status" | "rds" | "avgToPar" | "avgGross" | "best" | "worst" | "last" | "date">("avgToPar");
   const sortedSub12Perf = useMemo(() => {
     const mult = s12Sort.sortDir === "asc" ? 1 : -1;
-    const num = (v: number | null) => v == null ? Infinity : v;
-    const str = (v: string | null) => v ?? "";
     return [...sub12Perf].sort((a, b) => {
       switch (s12Sort.sortKey) {
         case "name":     return mult * a.name.localeCompare(b.name, "pt");
-        case "club":     return mult * str(a.club).localeCompare(str(b.club), "pt");
-        case "hcp":      return mult * (num(a.hcpExact) - num(b.hcpExact));
+        case "club":     return compareTextNullsLast(a.club, b.club, mult);
+        case "hcp":      return compareNullsLast(a.hcpExact, b.hcpExact, mult);
         case "status":   return mult * a.status.localeCompare(b.status, "pt");
         case "rds":      return mult * (a.nRounds - b.nRounds);
-        case "avgToPar": return mult * (num(a.avgToPar) - num(b.avgToPar));
-        case "avgGross": return mult * (num(a.avgGross) - num(b.avgGross));
-        case "best":     return mult * (num(a.bestGross) - num(b.bestGross));
-        case "worst":    return mult * (num(a.worstGross) - num(b.worstGross));
-        case "last":     return mult * (num(a.lastGross) - num(b.lastGross));
-        case "date":     return mult * str(a.lastDate).localeCompare(str(b.lastDate));
+        case "avgToPar": return compareNullsLast(a.avgToPar, b.avgToPar, mult);
+        case "avgGross": return compareNullsLast(a.avgGross, b.avgGross, mult);
+        case "best":     return compareNullsLast(a.bestGross, b.bestGross, mult);
+        case "worst":    return compareNullsLast(a.worstGross, b.worstGross, mult);
+        case "last":     return compareNullsLast(a.lastGross, b.lastGross, mult);
+        case "date":     return compareTextNullsLast(a.lastDate, b.lastDate, mult);
         default:         return 0;
       }
     });
@@ -445,18 +442,17 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
   const evSort = useSort<"name" | "hcp" | "rds" | "best" | "last" | "lastVsBest" | "slope" | "firstToLast" | "trendDelta" | "trend">("slope");
   const sortedEvolution = useMemo(() => {
     const mult = evSort.sortDir === "asc" ? 1 : -1;
-    const num = (v: number | null) => v == null ? Infinity : v;
     return [...evolution].sort((a, b) => {
       switch (evSort.sortKey) {
         case "name":        return mult * a.name.localeCompare(b.name, "pt");
-        case "hcp":         return mult * (num(a.hcpExact) - num(b.hcpExact));
+        case "hcp":         return compareNullsLast(a.hcpExact, b.hcpExact, mult);
         case "rds":         return mult * (a.rounds.length - b.rounds.length);
-        case "best":        return mult * (num(a.bestGross) - num(b.bestGross));
-        case "last":        return mult * (num(a.lastGross) - num(b.lastGross));
-        case "lastVsBest":  return mult * (num(a.lastVsBest) - num(b.lastVsBest));
+        case "best":        return compareNullsLast(a.bestGross, b.bestGross, mult);
+        case "last":        return compareNullsLast(a.lastGross, b.lastGross, mult);
+        case "lastVsBest":  return compareNullsLast(a.lastVsBest, b.lastVsBest, mult);
         case "slope":       return mult * (a.slope - b.slope);
-        case "firstToLast": return mult * (num(a.firstToLast) - num(b.firstToLast));
-        case "trendDelta":  return mult * (num(a.trendDelta) - num(b.trendDelta));
+        case "firstToLast": return compareNullsLast(a.firstToLast, b.firstToLast, mult);
+        case "trendDelta":  return compareNullsLast(a.trendDelta, b.trendDelta, mult);
         case "trend":       return mult * a.trendLabel.localeCompare(b.trendLabel, "pt");
         default:            return 0;
       }

@@ -1,6 +1,6 @@
 ﻿import { useState, useMemo } from "react";
 import { flag, normPaisDisplay } from "../utils/flagUtils";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import WdBadge from "./WdBadge";
 import KpiCard from "./KpiCard";
@@ -498,10 +498,14 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
     if (fTour !== "all") pl = pl.filter(x => x.r[fTour]);
     if (fCo !== "all") pl = pl.filter(x => x.co === fCo);
     if (q) { const ql = q.toLowerCase(); pl = pl.filter(x => x.n.toLowerCase().includes(ql)); }
+    const d = dir === "asc" ? 1 : -1;
     pl.sort((a, b) => {
+      if (a.isM) return -999;
+      if (b.isM) return 999;
+      // Vazios (sem rank, sem resultado) sempre no fim, nas duas direcções.
       let cmp = 0;
       if (sort === "name") cmp = a.n.localeCompare(b.n);
-      else if (sort === "rank") cmp = (rankMap[a.n] ?? 9999) - (rankMap[b.n] ?? 9999);
+      else if (sort === "rank") return compareNullsLast(rankMap[a.n], rankMap[b.n], d);
       else if (sort === "nT") cmp = tgNPlayed(b) - tgNPlayed(a);
       else if (sort.startsWith("t:")) {
         const tid = sort.slice(2);
@@ -513,13 +517,13 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
           const bIn = inscribed ? (b.isM ? inscribed.has(norm2("Manuel Medeiros")) : inscribed.has(norm2(b.n))) : false;
           cmp = (bIn ? 1 : 0) - (aIn ? 1 : 0);
         } else {
-          const posOf = (x: TGPlayer) => { const r = x.r[tid]; if (!r || (r.tp == null && r.p !== "WD")) return 9999; return typeof r.p === "number" ? r.p : 9998; };
-          cmp = posOf(a) - posOf(b);
+          // Lugar (0) · WD/sem lugar (1) · não jogou (2): os dois últimos no fim, por esta ordem.
+          const tier = (x: TGPlayer) => { const r = x.r[tid]; return !r || (r.tp == null && r.p !== "WD") ? 2 : typeof r.p === "number" ? 0 : 1; };
+          const posOf = (x: TGPlayer) => { const p = x.r[tid]?.p; return typeof p === "number" ? p : null; };
+          return (tier(a) - tier(b)) || compareNullsLast(posOf(a), posOf(b), d);
         }
       }
-      if (a.isM) return -999;
-      if (b.isM) return 999;
-      return dir === "desc" ? -cmp : cmp;
+      return cmp * d;
     });
     return pl;
   }, [fTour, fCo, q, sort, dir, dOnly, rivals, rankMap, allTournCols, inscricaoMap, norm2]);

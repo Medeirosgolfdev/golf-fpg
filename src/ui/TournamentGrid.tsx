@@ -7,7 +7,7 @@
  * histórico onde o jogador era Sub-10/12.
  */
 import React, { useMemo } from "react";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import { fmtToPar, fmtHcp, shortDateSlash, escalaoAtDate } from "../utils/format";
 import { SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
@@ -77,21 +77,21 @@ function TournamentGrid({
   const sorted = useMemo(() => {
     const mult = sortDir === "asc" ? 1 : -1;
     return [...rows].sort((a, b) => {
-      const INF = 9999;
+      // Vazios (sem HCP, sem resultado nessa prova…) sempre no fim, nas duas direcções.
       switch (sortKey) {
         case "name":
           return mult * a.name.localeCompare(b.name, "pt");
         case "fed":
-          return mult * (a.fed || "").localeCompare(b.fed || "");
+          return compareTextNullsLast(a.fed, b.fed, mult);
         case "escalao": {
           const ea = escalaoDeRow(a);
           const eb = escalaoDeRow(b);
-          return mult * ea.localeCompare(eb, "pt");
+          return compareTextNullsLast(ea, eb, mult);
         }
         case "club":
-          return mult * (a.club || "").localeCompare(b.club || "", "pt");
+          return compareTextNullsLast(a.club, b.club, mult);
         case "hcp":
-          return mult * ((a.hcp ?? INF) - (b.hcp ?? INF));
+          return compareNullsLast(a.hcp, b.hcp, mult);
         // ⚠ Todos os comparadores devolvem ordem NATURAL ascendente (a−b);
         // a direcção vem SÓ do `mult` (useSort). Antes, totalPts/totalBird/
         // totalPars devolviam (b−a) e o mult de "desc" re-invertia → a tabela
@@ -105,59 +105,59 @@ function TournamentGrid({
         case "totalPts":
           return mult * (a.totalPts - b.totalPts);
         case "avgSD":
-          return mult * ((a.avgSD ?? INF) - (b.avgSD ?? INF));
+          return compareNullsLast(a.avgSD, b.avgSD, mult);
         case "bestSD":
-          return mult * ((a.bestSD ?? INF) - (b.bestSD ?? INF));
+          return compareNullsLast(a.bestSD, b.bestSD, mult);
         case "avgGross":
-          return mult * ((a.avgGross ?? INF) - (b.avgGross ?? INF));
+          return compareNullsLast(a.avgGross, b.avgGross, mult);
         default: {
           if (sortKey.startsWith("gross_")) {
             const tk = sortKey.replace("gross_", "");
-            const va = a.results.find((r) => r.tournKey === tk)?.gross ?? INF;
-            const vb = b.results.find((r) => r.tournKey === tk)?.gross ?? INF;
-            return mult * (va - vb);
+            const va = a.results.find((r) => r.tournKey === tk)?.gross ?? null;
+            const vb = b.results.find((r) => r.tournKey === tk)?.gross ?? null;
+            return compareNullsLast(va, vb, mult);
           }
           if (sortKey.startsWith("toPar_")) {
             const tk = sortKey.replace("toPar_", "");
-            const va = a.results.find((r) => r.tournKey === tk)?.toPar ?? INF;
-            const vb = b.results.find((r) => r.tournKey === tk)?.toPar ?? INF;
-            return mult * (va - vb);
+            const va = a.results.find((r) => r.tournKey === tk)?.toPar ?? null;
+            const vb = b.results.find((r) => r.tournKey === tk)?.toPar ?? null;
+            return compareNullsLast(va, vb, mult);
           }
           if (sortKey.startsWith("sd_")) {
             const tk = sortKey.replace("sd_", "");
-            const va = a.results.find((r) => r.tournKey === tk)?.sd ?? INF;
-            const vb = b.results.find((r) => r.tournKey === tk)?.sd ?? INF;
-            return mult * (va - vb);
+            const va = a.results.find((r) => r.tournKey === tk)?.sd ?? null;
+            const vb = b.results.find((r) => r.tournKey === tk)?.sd ?? null;
+            return compareNullsLast(va, vb, mult);
           }
           if (sortKey.startsWith("pos_")) {
             const tk = sortKey.replace("pos_", "");
             const va =
               typeof a.results.find((r) => r.tournKey === tk)?.pos === "number"
                 ? (a.results.find((r) => r.tournKey === tk)?.pos as number)
-                : INF;
+                : null;
             const vb =
               typeof b.results.find((r) => r.tournKey === tk)?.pos === "number"
                 ? (b.results.find((r) => r.tournKey === tk)?.pos as number)
-                : INF;
-            return mult * (va - vb);
+                : null;
+            return compareNullsLast(va, vb, mult);
           }
           if (sortKey.startsWith("bird_")) {
             const tk = sortKey.replace("bird_", "");
-            const va = a.results.find((r) => r.tournKey === tk)?.birdies ?? -1;
-            const vb = b.results.find((r) => r.tournKey === tk)?.birdies ?? -1;
-            return mult * (va - vb); // ordem natural; direcção vem do mult
+            const va = a.results.find((r) => r.tournKey === tk)?.birdies ?? null;
+            const vb = b.results.find((r) => r.tournKey === tk)?.birdies ?? null;
+            return compareNullsLast(va, vb, mult); // ordem natural; direcção vem do mult
           }
           if (sortKey.startsWith("par_")) {
             const tk = sortKey.replace("par_", "");
-            const va = a.results.find((r) => r.tournKey === tk)?.pars ?? -1;
-            const vb = b.results.find((r) => r.tournKey === tk)?.pars ?? -1;
-            return mult * (va - vb);
+            const va = a.results.find((r) => r.tournKey === tk)?.pars ?? null;
+            const vb = b.results.find((r) => r.tournKey === tk)?.pars ?? null;
+            return compareNullsLast(va, vb, mult);
           }
           if (sortKey.startsWith("bog_")) {
             const tk = sortKey.replace("bog_", "");
-            const va = a.results.find((r) => r.tournKey === tk)?.bogeys ?? 999;
-            const vb = b.results.find((r) => r.tournKey === tk)?.bogeys ?? 999;
-            return mult * (va - vb); // menos bogeys = melhor
+            const va = a.results.find((r) => r.tournKey === tk)?.bogeys ?? null;
+            const vb = b.results.find((r) => r.tournKey === tk)?.bogeys ?? null;
+            return compareNullsLast(va, vb, mult); // menos bogeys = melhor
           }
           return 0;
         }

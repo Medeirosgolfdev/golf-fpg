@@ -26,6 +26,7 @@ import { CoursesGate } from "../../context/CoursesContext";
 import PrevisaoTab from "./PrevisaoTab";
 import { kidsUrl } from "../../ui/KidsLink";
 import SortableHdr from "../../ui/SortableHdr";
+import { compareNullsLast } from "../../hooks/useSort";
 import EmptyState from "../../ui/EmptyState";
 import ExtLink from "../../ui/ExternalLink";
 import { MUTED } from "../../ui/tableCells";
@@ -1866,25 +1867,25 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
     if (!data) return [];
     const rows = Array.from({ length: data.maxPos }, (_, idx) => ({ rank: idx + 1, idx }));
     const mul = sortDir === "asc" ? 1 : -1;
-    const SAFE_INF = Number.POSITIVE_INFINITY;
-    const getVal = (r: { idx: number; rank: number }): number => {
+    // Sem edição / sem jogador nessa posição / sem par: vazio, sempre no fim.
+    const getVal = (r: { idx: number; rank: number }): number | null => {
       if (sortKey === "rank") return r.rank;
       const us = sortKey.indexOf("_");
       const year = sortKey.slice(0, us);
       const col = sortKey.slice(us + 1);
       const ed = data.editions.find(e => e.year === year);
-      if (!ed) return SAFE_INF;
+      if (!ed) return null;
       const entry = ed.ranked[r.idx];
-      if (!entry) return SAFE_INF;
+      if (!entry) return null;
       if (col === "T") return entry.total;
       if (col === "TP") {
-        if (!ed.parPerRound || !ed.nRounds) return SAFE_INF;
+        if (!ed.parPerRound || !ed.nRounds) return null;
         return entry.total - ed.parPerRound * ed.nRounds;
       }
       const rn = col.replace(/^R/, "");
-      return entry.rounds[rn] ?? SAFE_INF;
+      return entry.rounds[rn] ?? null;
     };
-    rows.sort((a, b) => mul * (getVal(a) - getVal(b)));
+    rows.sort((a, b) => compareNullsLast(getVal(a), getVal(b), mul));
     return rows;
   }, [data, sortKey, sortDir]);
 

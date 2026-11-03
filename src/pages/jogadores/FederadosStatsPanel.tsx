@@ -15,7 +15,7 @@ import SexBadge from "../../ui/SexBadge";
 import { HCP_BINS, emptyHcpBins, hcpBinKey, hcpBinRange, isCountableHcp } from "./hcpBins";
 import { COL_M, COL_F, barPct, MFBar, MFColumn, MFLegend } from "./statsWidgets";
 import KpiCard from "../../ui/KpiCard";
-import { fmt } from "../../utils/format";
+import { fmt, todayIso } from "../../utils/format";
 import CloseButton from "../../ui/CloseButton";
 import { fmtHcp } from "../../utils/format";
 
@@ -214,7 +214,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
         <KpiCard label={<><SexBadge sex="F" /> Feminino</>} value={fmt(stats.female)} pct={stats.female / stats.total} />
         <KpiCard label="🇵🇹 Portugueses" value={fmt(ptCount)} pct={ptCount / stats.total} />
         <KpiCard label="🌍 Estrangeiros" value={fmt(foreignCount)} pct={foreignCount / stats.total} />
-        <KpiCard label="Activos 2026" value={fmt(stats.activeThisYear)} pct={stats.activeThisYear / stats.total} sub="com rondas este ano" />
+        <KpiCard label={`Activos ${todayIso().slice(0, 4)}`} value={fmt(stats.activeThisYear)} pct={stats.activeThisYear / stats.total} sub="com rondas este ano" />
         <KpiCard label="Com HCP válido" value={fmt(stats.withHcp)} pct={stats.withHcp / stats.total} sub={`média ${stats.avgHcp.toFixed(1)}`} />
         <KpiCard label="Profissionais" value={fmt(stats.pros)} pct={stats.pros / stats.total} />
       </div>
@@ -494,7 +494,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
         <KpiCard label={<SexBadge sex="M" />} value={fmt(male)} pct={male / members.length} />
         <KpiCard label={<SexBadge sex="F" />} value={fmt(female)} pct={female / members.length} />
         <KpiCard label="Com HCP" value={fmt(withHcp)} sub={`média ${avgHcp.toFixed(1)}`} />
-        <KpiCard label="Activos 2026" value={fmt(active)} pct={active / members.length} />
+        <KpiCard label={`Activos ${todayIso().slice(0, 4)}`} value={fmt(active)} pct={active / members.length} />
         {pros > 0 && <KpiCard label="Pros" value={fmt(pros)} />}
       </div>
 

@@ -107,11 +107,11 @@ const RESULT_COLS: RankingCol<TournResult>[] = [
   { key: "tourn", label: "Torneio", sort: r => norm(r.tournName), firstDir: "asc",
     cell: r => <><span className="fw-600">{r.tournName}</span><span className={`badge-serie drive-serie drive-serie-${r.series} ml-4`}>{SERIE_LABELS[r.series]}</span></> },
   { key: "campo", label: "Campo", sort: r => norm(r.campo), firstDir: "asc", cell: r => r.campo, tdClassName: "c-muted fs-10" },
-  { key: "pos", label: "Pos", className: "num", sort: r => typeof r.pos === "number" ? r.pos : 999, firstDir: "asc",
+  { key: "pos", label: "Pos", className: "num", sort: r => typeof r.pos === "number" ? r.pos : null, firstDir: "asc",
     cell: r => <span className="mono">{r.pos ?? "–"}<span className="c-muted fs-10">/{r.totalPlayers}</span></span> },
   { key: "gross", label: "Gross", className: "num", sort: r => r.gross, firstDir: "asc", cell: r => <span className="mono fw-700">{r.gross}</span> },
   { key: "toPar", label: "±Par", className: "num", sort: r => r.toPar, firstDir: "asc", cell: r => <ToPar v={r.toPar} className="fs-11" /> },
-  { key: "sd", label: "SD", className: "num", sort: r => r.sd ?? 999, firstDir: "asc", cell: r => <SDPill sd={r.sd} /> },
+  { key: "sd", label: "SD", className: "num", sort: r => r.sd, firstDir: "asc", cell: r => <SDPill sd={r.sd} /> },
   { key: "pts", label: "Pts", className: "num", sort: r => r.pts, firstDir: "desc", cell: r => r.pts || "–" },
 ];
 
@@ -176,20 +176,20 @@ function rankByPts(rows: Sub12Row[]): Map<string, number> {
 function cols(rows: Sub12Row[], withEsc: boolean, pdb: PlayersDB): RankingCol<Sub12Row>[] {
   const rk = rankByPts(rows);
   return [
-    { key: "rank", label: "#", className: "num", sort: r => rk.get(r.fed) ?? 9999, firstDir: "asc",
+    { key: "rank", label: "#", className: "num", sort: r => r.totalPts > 0 ? rk.get(r.fed) : null, firstDir: "asc",
       cell: r => r.totalPts > 0 ? (medal(rk.get(r.fed)!) ?? <span className="mono fw-700">{rk.get(r.fed)}</span>) : MUTED },
     { key: "name", label: "Jogador", sort: r => norm(r.name), firstDir: "asc",
       cell: r => <>{pdb[r.fed]?.country && !isPtCountry(pdb[r.fed]!.country) ? <span title={pdb[r.fed]!.country ?? ""}>{flagOrEmpty(pdb[r.fed]!.country)} </span> : null}<PlayerLink fed={r.fed} name={r.name} className="fw-700" />
         {(r.sex === "M" || r.sex === "F") && <SexBadge sex={r.sex} size="sm" className="ml-4" />}</> },
-    ...(withEsc ? [{ key: "esc", label: "Escalão", sort: (r: Sub12Row) => ESCALOES_DRIVE.indexOf(r.esc ?? "") + 1 || 99, firstDir: "asc" as const,
+    ...(withEsc ? [{ key: "esc", label: "Escalão", sort: (r: Sub12Row) => ESCALOES_DRIVE.indexOf(r.esc ?? "") + 1 || null, firstDir: "asc" as const,
       cell: (r: Sub12Row) => r.esc || "—" }] : []),
     { key: "club", label: "Clube", sort: r => norm(r.club), firstDir: "asc", cell: r => r.club, tdClassName: "c-muted fs-11" },
-    { key: "hcp", label: "HCP", className: "num", sort: r => r.hcp ?? 99, firstDir: "asc", cell: r => <span className="mono">{fmtHcp(r.hcp)}</span> },
+    { key: "hcp", label: "HCP", className: "num", sort: r => r.hcp, firstDir: "asc", cell: r => <span className="mono">{fmtHcp(r.hcp)}</span> },
     { key: "t", label: "T", title: "Torneios jogados", className: "num", sort: r => r.tourneiosPlayed, firstDir: "desc", cell: r => <span className="mono">{r.tourneiosPlayed}</span> },
     { key: "pts", label: "Pts", title: "Pontos do Drive: as 4 melhores da fase regular + a Final regional ×1,5", className: "num", sort: r => r.totalPts, firstDir: "desc",
       cell: r => <span className="fw-800 drive-pts">{r.totalPts}</span> },
-    { key: "bestSD", label: "Best SD", className: "num", sort: r => r.bestSD ?? 999, firstDir: "asc", cell: r => <SDPill sd={r.bestSD} hcp={r.hcp} /> },
-    { key: "best", label: "Melhor", className: "num", sort: r => r.bestGross ?? 999, firstDir: "asc", cell: r => <span className="mono fw-700 c-good-dark">{r.bestGross ?? "–"}</span> },
+    { key: "bestSD", label: "Best SD", className: "num", sort: r => r.bestSD, firstDir: "asc", cell: r => <SDPill sd={r.bestSD} hcp={r.hcp} /> },
+    { key: "best", label: "Melhor", className: "num", sort: r => r.bestGross, firstDir: "asc", cell: r => <span className="mono fw-700 c-good-dark">{r.bestGross ?? "–"}</span> },
   ];
 }
 

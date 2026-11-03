@@ -12,7 +12,7 @@ import { useMemo, type ReactNode } from "react";
 import DetailHeader from "../DetailHeader";
 import ExtLink from "../ExternalLink";
 import SortableHdr from "../SortableHdr";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
 
 export interface InfoColuna {
   label: ReactNode;
@@ -67,9 +67,7 @@ export function InfoTable({ tabela }: { tabela: InfoTabela }) {
     if (i < 0) return tabela.linhas;
     const dir = sortDir === "asc" ? 1 : -1;
     return [...tabela.linhas].sort((a, b) => {
-      const va = a.ordem?.[i] ?? null, vb = b.ordem?.[i] ?? null;
-      if (va == null || vb == null) return (va == null ? 1 : 0) - (vb == null ? 1 : 0);
-      return (typeof va === "number" && typeof vb === "number" ? va - vb : String(va).localeCompare(String(vb), "pt")) * dir;
+      return compareValuesNullsLast(a.ordem?.[i], b.ordem?.[i], dir);
     });
   }, [tabela.linhas, sortKey, sortDir]);
   return (

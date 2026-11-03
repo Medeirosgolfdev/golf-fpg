@@ -9,7 +9,7 @@ import type { PlayerPageData, RoundData } from "../../../data/playerDataLoader";
 import { norm } from "../../../utils/format";
 import { normKey } from "../../../utils/teeColors";
 import { fmtStb } from "../../../utils/scoreDisplay";
-import { useSort } from "../../../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../../../hooks/useSort";
 import ListaTabela, { type ListaColuna } from "../../../ui/ListaTabela";
 import { HoleBadge, GrossCell, SdCell } from "../../../ui/tableCells";
 import TeePill from "../../../ui/TeePill";
@@ -43,21 +43,21 @@ export default function ByDateView({ data, search }: {
     }
     const dir = sortDir === "asc" ? 1 : -1;
     rounds.sort((a, b) => {
-      let av: number, bv: number;
+      let av: number | null, bv: number | null;
       switch (sortKey) {
         case "date": av = a.dateSort; bv = b.dateSort; break;
         case "course": return dir * a.course.localeCompare(b.course, "pt");
-        case "event": return dir * (a.eventName || "").localeCompare(b.eventName || "", "pt");
+        case "event": return compareTextNullsLast(a.eventName, b.eventName, dir);
         case "holes": av = a.holeCount; bv = b.holeCount; break;
-        case "hcp": av = a.hi ?? 999; bv = b.hi ?? 999; break;
-        case "tee": return dir * (a.tee || "").localeCompare(b.tee || "");
-        case "meters": av = a.meters ?? 0; bv = b.meters ?? 0; break;
-        case "gross": av = a.gross ?? 999; bv = b.gross ?? 999; break;
-        case "stb": av = a.stb ?? -999; bv = b.stb ?? -999; break;
-        case "sd": av = a.sd ?? 999; bv = b.sd ?? 999; break;
+        case "hcp": av = a.hi; bv = b.hi; break;
+        case "tee": return compareTextNullsLast(a.tee, b.tee, dir);
+        case "meters": av = a.meters || null; bv = b.meters || null; break;
+        case "gross": av = a.gross; bv = b.gross; break;
+        case "stb": av = a.stb; bv = b.stb; break;
+        case "sd": av = a.sd; bv = b.sd; break;
         default: av = a.dateSort; bv = b.dateSort;
       }
-      return dir * (av - bv);
+      return compareNullsLast(av, bv, dir);
     });
     return rounds;
   }, [data, search, sortKey, sortDir]);

@@ -10,7 +10,7 @@ import { flag } from "../utils/flagUtils";
 import { isManuelByName } from "../constants/manuel";
 import EvoBadge from "./EvoBadge";
 import SortableHdr from "./SortableHdr";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareTextNullsLast } from "../hooks/useSort";
 import ToPar from "./ToPar";
 import { IntlTournView } from "./IntlTournView";
 import type { Tournament as FPGTournament } from "../pages/FPGPage";
@@ -111,10 +111,10 @@ type EvoSortKey = "n" | "y25" | "y26" | "delta" | "pill";
 function EvoTable({ evo }: { evo: EvoEntry[] }) {
   const { sortKey, sortDir, toggleSort } = useSort<EvoSortKey>("delta");
   const rows = [...evo].sort((a, b) => {
-    const c = sortKey === "n" || sortKey === "pill"
-      ? (a[sortKey] || "").localeCompare(b[sortKey] || "", "pt")
-      : a[sortKey] - b[sortKey];
-    return sortDir === "asc" ? c : -c;
+    const dir = sortDir === "asc" ? 1 : -1;
+    return sortKey === "n" || sortKey === "pill"
+      ? compareTextNullsLast(a[sortKey], b[sortKey], dir) // sem texto sempre no fim
+      : (a[sortKey] - b[sortKey]) * dir;
   });
   const hdr = (k: EvoSortKey, label: string, className: string, style?: CSSProperties) =>
     <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className} style={style}>{label}</SortableHdr>;

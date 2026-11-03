@@ -1,6 +1,6 @@
 ﻿import { useState, useMemo, useEffect } from "react";
 import type { PlayerPageData, CrossPlayerData } from "../data/playerDataLoader";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import PlayerLink from "./PlayerLink";
 import { ESC_ORDER_FULL } from "../constants/escaloes";
@@ -93,17 +93,17 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
 
     const dir = sortDir === "asc" ? 1 : -1;
     p.sort((a, b) => {
-      let av: number, bv: number;
+      let av: number | null, bv: number | null;
       switch (sortKey) {
         case "jogador": return dir * a.name.localeCompare(b.name, "pt");
-        case "hcp": av = a.currentHcp ?? 999; bv = b.currentHcp ?? 999; break;
-        case "ult_sd": av = a.lastSD ?? 999; bv = b.lastSD ?? 999; break;
-        case "m_sd": av = a.avgSD20 ?? 999; bv = b.avgSD20 ?? 999; break;
+        case "hcp": av = a.currentHcp ?? null; bv = b.currentHcp ?? null; break;
+        case "ult_sd": av = a.lastSD ?? null; bv = b.lastSD ?? null; break;
+        case "m_sd": av = a.avgSD20 ?? null; bv = b.avgSD20 ?? null; break;
         case "torneios": av = a.numTournaments ?? 0; bv = b.numTournaments ?? 0; break;
         case "total": av = a.numRounds ?? 0; bv = b.numRounds ?? 0; break;
         default: av = a.numRounds ?? 0; bv = b.numRounds ?? 0;
       }
-      return dir * (av - bv);
+      return compareNullsLast(av, bv, dir);
     });
     return p;
   }, [byEscalao, activeEsc, sexFilter, hcpMax, sortKey, sortDir]);

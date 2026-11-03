@@ -17,6 +17,7 @@ import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
 import { C } from "../utils/colors";
 import DrawTab from "../ui/DrawTab";
+import TabRow from "../ui/TabRow";
 import type { Player as FPGPlayer } from "./FPGPage";
 import { RFEGFederationsView } from "./rfeg/FederationsView";
 import { RFEGPlayersView } from "./rfeg/PlayersView";
@@ -65,18 +66,9 @@ function DrawSaidaView({ detail, entry, onlyRound }: {
   return (
     <div>
       {onlyRound == null && horarios.length > 1 && (
-        <div className="d-flex gap-4 flex-wrap mb-12">
-          {horarios.map(r => (
-            <button
-              key={r.round}
-              type="button"
-              className={`chip chip-round ${activeRound === r.round ? "active" : ""}`}
-              onClick={() => setActiveRound(r.round)}
-            >
-              R{r.round} · {r.players.length} jog
-            </button>
-          ))}
-        </div>
+        <TabRow className="mb-12" ariaLabel="Ronda" active={activeRound}
+          onChange={setActiveRound}
+          tabs={horarios.map(r => ({ key: r.round, label: `R${r.round}`, count: r.players.length }))} />
       )}
       <DrawTab
         draw={draw}

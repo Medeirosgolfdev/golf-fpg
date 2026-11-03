@@ -27,7 +27,7 @@ import {
 } from "../data/federadosLoader";
 import { loadPlayerStats, type PlayerStatsDb, type PlayerStats } from "../data/playerStatsTypes";
 import { loadHcpHistory, type HcpHistoryDb } from "../data/hcpHistoryLoader";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import HcpEvolution from "../ui/HcpEvolution";
 import { Toolbar } from "../ui/Toolbar";
@@ -231,17 +231,17 @@ export default function JogadoresPorAnoPage() {
       switch (sortKey) {
         case "ano":    return dir * (birthYear(a.dob) - birthYear(b.dob));
         case "nome":   return dir * a.name.localeCompare(b.name, "pt");
-        case "sexo":   return dir * (a.sex || "").localeCompare(b.sex || "");
-        case "clube":  return dir * clubName(a.club).localeCompare(clubName(b.club), "pt");
-        case "escalao":return dir * ((ESC_IDX.get(a.escalao) ?? 99) - (ESC_IDX.get(b.escalao) ?? 99));
+        case "sexo":   return compareTextNullsLast(a.sex, b.sex, dir);
+        case "clube":  return compareTextNullsLast(clubName(a.club), clubName(b.club), dir);
+        case "escalao":return compareNullsLast(ESC_IDX.get(a.escalao), ESC_IDX.get(b.escalao), dir);
         case "hcp":    return dir * (nv(num(a.hcp), dir < 0) - nv(num(b.hcp), dir < 0));
         case "delta":  return dir * (nv(num(sa?.hcpDelta3m ?? null), dir < 0) - nv(num(sb?.hcpDelta3m ?? null), dir < 0));
         case "best":   return dir * (nv(num(sa?.bestGross ?? null), dir < 0) - nv(num(sb?.bestGross ?? null), dir < 0));
         case "sd5":    return dir * (nv(num(sa?.avgSD5 ?? null), dir < 0) - nv(num(sb?.avgSD5 ?? null), dir < 0));
         case "lastsd": return dir * (nv(num(sa?.lastSD ?? null), dir < 0) - nv(num(sb?.lastSD ?? null), dir < 0));
-        case "rondas3": return dir * ((sa?.roundsLast3m ?? -1) - (sb?.roundsLast3m ?? -1));
-        case "rondas": return dir * ((sa?.roundsLast12m ?? -1) - (sb?.roundsLast12m ?? -1));
-        case "aces":   return dir * ((sa?.aces ?? -1) - (sb?.aces ?? -1));
+        case "rondas3": return compareNullsLast(sa?.roundsLast3m, sb?.roundsLast3m, dir);
+        case "rondas": return compareNullsLast(sa?.roundsLast12m, sb?.roundsLast12m, dir);
+        case "aces":   return compareNullsLast(sa?.aces, sb?.aces, dir);
         default:       return 0;
       }
     };

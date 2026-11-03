@@ -25,7 +25,7 @@ import { escDoAno } from "./BirthCells";
 import { useFedCountries, useFedBirthdates, useFedGenders, useFedHcp } from "./InscricoesComponents";
 import { parseSubNumber, teeNameFor, type TeeRule } from "../utils/teeRegulation";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast, compareValuesNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import { displayFed } from "../utils/fedKeys";
 import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
@@ -281,20 +281,19 @@ export default function AdmissionsTab({
       switch (sortKey) {
         case "pos":     v = absPos(a) - absPos(b); break;
         case "nome":    v = a._nomeFormatted.localeCompare(b._nomeFormatted, "pt"); break;
-        case "esc":     v = (a._escHist || "").localeCompare(b._escHist || "", "pt"); break;
-        case "fed":     v = (a.fed || "").localeCompare(b.fed || ""); break;
-        case "clube":   v = a._clube.localeCompare(b._clube, "pt"); break;
-        case "hcp":     v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
-        case "nasc":    v = (a._dobYear ?? INF) - (b._dobYear ?? INF); break;
-        case "pts":     v = (a.pts ?? -1) - (b.pts ?? -1); break;
-        case "vac":     v = (a.vac ?? INF) - (b.vac ?? INF); break;
-        case "registo": v = (a.dataInscricao || "").localeCompare(b.dataInscricao || ""); break;
+        // Vazios (sem escalão, sem HCP, sem cartão…) sempre no fim, nas duas direcções.
+        case "esc":     return compareTextNullsLast(a._escHist, b._escHist, mult);
+        case "fed":     return compareTextNullsLast(a.fed, b.fed, mult);
+        case "clube":   return compareTextNullsLast(a._clube, b._clube, mult);
+        case "hcp":     return compareNullsLast(a.hcp, b.hcp, mult);
+        case "nasc":    return compareNullsLast(a._dobYear, b._dobYear, mult);
+        case "pts":     return compareNullsLast(a.pts, b.pts, mult);
+        case "vac":     return compareNullsLast(a.vac, b.vac, mult);
+        case "registo": return compareTextNullsLast(a.dataInscricao, b.dataInscricao, mult);
         case "status":  v = a.status.localeCompare(b.status); break;
         default: {
           const col = extraCols.find(c => `x:${c.key}` === sortKey);
-          const va = col?.sort?.(a) ?? null, vb = col?.sort?.(b) ?? null;
-          if (va == null || vb == null) return va == null && vb == null ? 0 : va == null ? 1 : -1; // vazios no fim
-          v = typeof va === "number" && typeof vb === "number" ? va - vb : String(va).localeCompare(String(vb), "pt");
+          return compareValuesNullsLast(col?.sort?.(a), col?.sort?.(b), mult);
         }
       }
       return mult * v;

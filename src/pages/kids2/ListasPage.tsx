@@ -9,7 +9,7 @@ import TabRow from "../../ui/TabRow";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { cachedFetchJson } from "../../data/fetchCache";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
@@ -52,7 +52,9 @@ function CelAnterior({ a, ano }: { a: Anterior | null | undefined; ano: string }
     <b>{a.empate ? "T" : ""}{a.pos}.º</b> <span className="fs-11 p-muted">/{a.de}</span>
   </span>;
 }
-const posAnt = (a: Anterior | null | undefined) => (a?.pos ?? (a ? 900 : 999));
+/** Ordenação pela edição anterior: lugar (0) · jogou sem lugar (1) · não jogou (2) —
+ *  os sem lugar ficam no fim nas duas direcções, os que jogaram antes dos outros. */
+const antTier = (a: Anterior | null | undefined) => (a?.pos != null ? 0 : a ? 1 : 2);
 const nomeLista = (l: Lista) => (l.sexo === "M" ? "Rapazes" : l.sexo === "F" ? "Raparigas" : l.label);
 
 const ddmmaa = (iso: string | null) => (iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(2, 4)}` : "");
@@ -97,7 +99,7 @@ function TabelaLista({ lista }: { lista: Lista }) {
     ];
     if (ant) cols.push(
       { key: "ant", label: ant.label, title: `Posição em ${ant.torneio}, no seu sexo, pelas pancadas`,
-        sort: a => posAnt(I(a)?.anterior), cell: a => <CelAnterior a={I(a)?.anterior} ano={ant.label} /> },
+        sort: a => I(a)?.anterior?.pos ?? null, cell: a => <CelAnterior a={I(a)?.anterior} ano={ant.label} /> },
       { key: "antg", label: `Pancadas ${ant.label}`, title: `Pancadas nas 3 voltas de ${ant.label}`,
         sort: a => I(a)?.anterior?.gross ?? null, cell: a => I(a)?.anterior?.gross ?? "—" },
     );
@@ -140,11 +142,11 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
     return [...cands].sort((a, b) => {
       switch (sortKey) {
         case "name": return dir * a.name.localeCompare(b.name);
-        case "dob": return dir * (a.dob || "9999").localeCompare(b.dob || "9999") || a.rank - b.rank;
-        case "club": return dir * (a.club || "~").localeCompare(b.club || "~") || a.rank - b.rank;
+        case "dob": return compareTextNullsLast(a.dob, b.dob, dir) || a.rank - b.rank;
+        case "club": return compareTextNullsLast(a.club, b.club, dir) || a.rank - b.rank;
         case "inscrito": return dir * ((a.inscrito ? 0 : 1) - (b.inscrito ? 0 : 1)) || a.rank - b.rank;
-        case "ant": return dir * (posAnt(a.anterior) - posAnt(b.anterior)) || a.rank - b.rank;
-        case "antg": return dir * ((a.anterior?.gross ?? 999) - (b.anterior?.gross ?? 999)) || a.rank - b.rank;
+        case "ant": return (antTier(a.anterior) - antTier(b.anterior)) || compareNullsLast(a.anterior?.pos, b.anterior?.pos, dir) || a.rank - b.rank;
+        case "antg": return compareNullsLast(a.anterior?.gross, b.anterior?.gross, dir) || a.rank - b.rank;
         default: return dir * (a.rank - b.rank);
       }
     });

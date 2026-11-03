@@ -14,7 +14,7 @@
  */
 
 import { useState, useMemo } from "react";
-import { useSort } from "./useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "./useSort";
 import type { Player, Tournament, RoundScore, PlayerFilter } from "../data/fpgTypes";
 import { EMPTY_FILTER } from "../ui/multiRoundTypes";
 import { filterRows } from "../ui/PlayerFilterBar";
@@ -410,60 +410,59 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   // que também começa por "h" — daí o \d+ exige pelo menos um dígito.
   const HOLE_RE = /^h\d+$/;
   const sortedGrouped = useMemo(() => {
-    const INF = 9999;
+    // Vazios (sem volta, buraco por jogar, sem lugar/HCP/idade) sempre no fim,
+    // nas duas direcções. `nd` = direcção invertida (birdies/pares: mais primeiro em asc).
+    const d: 1 | -1 = sortDir === "asc" ? 1 : -1;
+    const nd: 1 | -1 = sortDir === "asc" ? -1 : 1;
     function cmp(a: PRow, b: PRow) {
       if (sortKey === "topar" || sortKey === "gross" || HOLE_RE.test(sortKey)) {
-        const bestVal = (row: PRow): number => {
+        const bestVal = (row: PRow): number | null => {
           const vals = row.rds
             .filter((rd) => rd != null)
             .map((rd) => {
-              if (sortKey === "topar") return rd!.toPar ?? INF;
-              if (sortKey === "gross") return rd!.gross ?? INF;
+              if (sortKey === "topar") return rd!.toPar ?? null;
+              if (sortKey === "gross") return rd!.gross ?? null;
               const v = rd!.scores?.[parseInt(sortKey.slice(1))];
-              return v && v > 0 ? v : INF;
-            });
-          return vals.length ? Math.min(...vals) : INF;
+              return v && v > 0 ? v : null;
+            })
+            .filter((v): v is number => v != null);
+          return vals.length ? Math.min(...vals) : null;
         };
-        const av = bestVal(a), bv = bestVal(b);
-        return sortDir === "asc" ? av - bv : bv - av;
+        return compareNullsLast(bestVal(a), bestVal(b), d);
       }
       // Out / In — melhor (menor) volta nas 9 da frente / de trás
       if (sortKey === "out" || sortKey === "in") {
         const f = sortKey === "out" ? frontSum : backSum;
-        const best = (row: PRow): number => {
-          const vals = row.rds.filter((rd): rd is RdData => rd != null).map((rd) => { const v = f(rd); return v > 0 ? v : INF; });
-          return vals.length ? Math.min(...vals) : INF;
+        const best = (row: PRow): number | null => {
+          const vals = row.rds.filter((rd): rd is RdData => rd != null).map(f).filter((v) => v > 0);
+          return vals.length ? Math.min(...vals) : null;
         };
-        return sortDir === "asc" ? best(a) - best(b) : best(b) - best(a);
+        return compareNullsLast(best(a), best(b), d);
       }
       // Birdies / Pares / Bogeys — melhor ronda do jogador no torneio
       if (sortKey === "eag" || sortKey === "bird" || sortKey === "par" || sortKey === "bog") {
         const pick = (rd: RdData) => sortKey === "eag" ? rd.eags : sortKey === "bird" ? rd.birds : sortKey === "par" ? rd.pars : rd.bogs;
-        const agg = (row: PRow): number => {
+        const agg = (row: PRow): number | null => {
           const vals = row.rds.filter((rd): rd is RdData => rd != null).map(pick);
-          if (!vals.length) return sortKey === "bog" ? INF : -1;
+          if (!vals.length) return null;
           return sortKey === "bog" ? Math.min(...vals) : Math.max(...vals);
         };
-        const av = agg(a), bv = agg(b);
         // bird/par: mais primeiro em asc. bog: menos primeiro em asc.
-        if (sortKey === "bog") return sortDir === "asc" ? av - bv : bv - av;
-        return sortDir === "asc" ? bv - av : av - bv;
+        return compareNullsLast(agg(a), agg(b), sortKey === "bog" ? d : nd);
       }
       switch (sortKey) {
         case "pos":
-          return sortDir === "asc" ? (a.pos ?? INF) - (b.pos ?? INF) : (b.pos ?? INF) - (a.pos ?? INF);
+          return compareNullsLast(a.pos, b.pos, d);
         case "name":
           return sortDir === "asc" ? a.name.localeCompare(b.name, "pt") : b.name.localeCompare(a.name, "pt");
         case "club":
           return sortDir === "asc" ? a.club.localeCompare(b.club, "pt") : b.club.localeCompare(a.club, "pt");
         case "tee":
-          return sortDir === "asc"
-            ? (a.teeName || "").localeCompare(b.teeName || "", "pt")
-            : (b.teeName || "").localeCompare(a.teeName || "", "pt");
+          return compareTextNullsLast(a.teeName, b.teeName, d);
         case "hcp":
-          return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
+          return compareNullsLast(a.hcp, b.hcp, d);
         case "age":
-          return sortDir === "asc" ? (a.age ?? INF) - (b.age ?? INF) : (b.age ?? INF) - (a.age ?? INF);
+          return compareNullsLast(a.age, b.age, d);
         default:
           return 0;
       }
@@ -477,51 +476,38 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   }, [rankedGrouped, sortKey, sortDir]);
 
   const sortedFlat = useMemo(() => {
-    const INF = 9999;
+    const d: 1 | -1 = sortDir === "asc" ? 1 : -1;
+    const nd: 1 | -1 = sortDir === "asc" ? -1 : 1;
     function cmp(a: FlatRow, b: FlatRow) {
-      if (sortKey === "topar") {
-        const d = (a.rd.toPar ?? INF) - (b.rd.toPar ?? INF);
-        return sortDir === "asc" ? d : -d;
-      }
-      if (sortKey === "gross") {
-        const d = (a.rd.gross ?? INF) - (b.rd.gross ?? INF);
-        return sortDir === "asc" ? d : -d;
-      }
+      if (sortKey === "topar") return compareNullsLast(a.rd.toPar, b.rd.toPar, d);
+      if (sortKey === "gross") return compareNullsLast(a.rd.gross, b.rd.gross, d);
       if (HOLE_RE.test(sortKey)) {
         const h = parseInt(sortKey.slice(1));
         const va = a.rd.scores?.[h];
         const vb = b.rd.scores?.[h];
-        const av = va && va > 0 ? va : INF;
-        const bv = vb && vb > 0 ? vb : INF;
-        const d = av - bv;
-        return sortDir === "asc" ? d : -d;
+        return compareNullsLast(va && va > 0 ? va : null, vb && vb > 0 ? vb : null, d);
       }
       if (sortKey === "out" || sortKey === "in") {
         const f = sortKey === "out" ? frontSum : backSum;
-        const av = f(a.rd) || INF, bv = f(b.rd) || INF;
-        return sortDir === "asc" ? av - bv : bv - av;
+        return compareNullsLast(f(a.rd) || null, f(b.rd) || null, d); // 0 = sem buracos jogados
       }
       if (sortKey === "eag" || sortKey === "bird" || sortKey === "par" || sortKey === "bog") {
         const pick = (rd: RdData) => sortKey === "eag" ? rd.eags : sortKey === "bird" ? rd.birds : sortKey === "par" ? rd.pars : rd.bogs;
-        const av = pick(a.rd), bv = pick(b.rd);
-        if (sortKey === "bog") return sortDir === "asc" ? av - bv : bv - av;
-        return sortDir === "asc" ? bv - av : av - bv;
+        return compareNullsLast(pick(a.rd), pick(b.rd), sortKey === "bog" ? d : nd);
       }
       switch (sortKey) {
         case "pos":
-          return sortDir === "asc" ? (a.pos ?? INF) - (b.pos ?? INF) : (b.pos ?? INF) - (a.pos ?? INF);
+          return compareNullsLast(a.pos, b.pos, d);
         case "name":
           return sortDir === "asc" ? a.name.localeCompare(b.name, "pt") : b.name.localeCompare(a.name, "pt");
         case "club":
           return sortDir === "asc" ? a.club.localeCompare(b.club, "pt") : b.club.localeCompare(a.club, "pt");
         case "tee":
-          return sortDir === "asc"
-            ? (a.teeName || "").localeCompare(b.teeName || "", "pt")
-            : (b.teeName || "").localeCompare(a.teeName || "", "pt");
+          return compareTextNullsLast(a.teeName, b.teeName, d);
         case "hcp":
-          return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
+          return compareNullsLast(a.hcp, b.hcp, d);
         case "age":
-          return sortDir === "asc" ? (a.age ?? INF) - (b.age ?? INF) : (b.age ?? INF) - (a.age ?? INF);
+          return compareNullsLast(a.age, b.age, d);
         default:
           return 0;
       }

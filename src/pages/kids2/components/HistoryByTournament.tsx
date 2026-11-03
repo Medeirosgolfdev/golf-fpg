@@ -12,7 +12,7 @@
 
 import React, { useMemo, useState } from "react";
 import type { CanonicalData, Junior, Tournament, Flight, Result } from "../data";
-import { useSort } from "../../../hooks/useSort";
+import { useSort, compareValuesNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { getTournWeight, formatStars } from "../tournWeight";
 import { categorizeTournamentLinks } from "../tournamentLinks";
@@ -180,31 +180,29 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
 
   const sortedEditions = useMemo(() => {
     const mul = sortDir === "asc" ? 1 : -1;
-    const getVal = (ed: Edition, key: EdSortKey): string | number => {
+    // Vazios (null / "") sempre no fim, nas duas direcções.
+    const getVal = (ed: Edition, key: EdSortKey): string | number | null => {
       const parTotal = ed.flight.par?.reduce((a, b) => a + (b || 0), 0) || ed.tournament.parTotal;
       const rounds = ed.result.rounds || [];
       const grosses = rounds.map((r) => r.gross).filter((g): g is number => typeof g === "number");
       const total = ed.result.totalGross ?? (grosses.length ? grosses.reduce((a, b) => a + b, 0) : null);
       const toPar = ed.result.toPar ?? (total != null && parTotal && rounds.length ? total - parTotal * rounds.length : null);
       switch (key) {
-        case "year": return ed.tournament.date || "";
-        case "flight": return (ed.flight.label || "").toLowerCase();
-        case "pos": return typeof ed.result.pos === "number" ? ed.result.pos : Number.POSITIVE_INFINITY;
-        case "rounds": return total ?? Number.POSITIVE_INFINITY;
-        case "toPar": return toPar ?? Number.POSITIVE_INFINITY;
+        case "year": return ed.tournament.date || null;
+        case "flight": return (ed.flight.label || "").toLowerCase() || null;
+        case "pos": return typeof ed.result.pos === "number" ? ed.result.pos : null;
+        case "rounds": return total ?? null;
+        case "toPar": return toPar ?? null;
         case "topPct": {
           const pos = ed.result.pos;
           const fs = ed.flight.fieldSize ?? null;
-          if (typeof pos !== "number" || !fs || fs <= 0) return Number.POSITIVE_INFINITY;
+          if (typeof pos !== "number" || !fs || fs <= 0) return null;
           return pos / fs;
         }
       }
     };
     return [...editions].sort((a, b) => {
-      const va = getVal(a, sortKey);
-      const vb = getVal(b, sortKey);
-      if (typeof va === "number" && typeof vb === "number") return (va - vb) * mul;
-      return String(va).localeCompare(String(vb)) * mul;
+      return compareValuesNullsLast(getVal(a, sortKey), getVal(b, sortKey), mul);
     });
   }, [editions, sortKey, sortDir]);
 

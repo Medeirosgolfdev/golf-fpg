@@ -6,7 +6,7 @@ import { birthCells, birthFieldsOf, escDoAno } from "./BirthCells";
 import BirthPill from "./BirthPill";
 import { RowsFilterBar, filterRows, buildSexByName } from "./PlayerFilterBar";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast, compareValuesNullsLast } from "../hooks/useSort";
 import WdBadge from "../ui/WdBadge";
 import EmptyState from "../ui/EmptyState";
 import SortableHdr from "../ui/SortableHdr";
@@ -245,94 +245,80 @@ export function MultiRoundLeaderboard({
 
   /* Sort */
   function cmp(a: RowWithPos, b: RowWithPos): number {
-    const INF = 9999;
+    // Vazios (ronda por jogar, sem lugar/HCP/SD…) sempre no fim, nas duas direcções.
+    // `nd` = direcção invertida (eagles/birdies/pares: mais primeiro em asc).
+    const d: 1 | -1 = sortDir === "asc" ? 1 : -1;
+    const nd: 1 | -1 = sortDir === "asc" ? -1 : 1;
     // Coluna extra com `sortValue`: "x:0", "x:1", ... (índice em extraColumns)
     if (typeof sortKey === "string" && sortKey.startsWith("x:")) {
       const sv = extraColumns?.[parseInt(sortKey.slice(2), 10)]?.sortValue;
-      const va = sv?.(a), vb = sv?.(b);
-      if (va == null && vb == null) return 0;
-      if (va == null) return 1;
-      if (vb == null) return -1;
-      const d = typeof va === "number" && typeof vb === "number" ? va - vb : String(va).localeCompare(String(vb), "pt");
-      return sortDir === "asc" ? d : -d;
+      return compareValuesNullsLast(sv?.(a), sv?.(b), d);
     }
     // Gross por ronda específica: "gross:0", "gross:1", ... (índice 0-based)
     // Menos pancadas primeiro em asc. Rondas não jogadas vão para o fim.
     if (typeof sortKey === "string" && sortKey.startsWith("gross:")) {
       const ri = parseInt(sortKey.slice(6), 10);
-      const sa = a.rounds[ri]?.gross ?? INF;
-      const sb = b.rounds[ri]?.gross ?? INF;
-      return sortDir === "asc" ? sa - sb : sb - sa;
+      return compareNullsLast(a.rounds[ri]?.gross, b.rounds[ri]?.gross, d);
     }
     // ±par por ronda específica: "rtp:0", "rtp:1", ...
     if (typeof sortKey === "string" && sortKey.startsWith("rtp:")) {
       const ri = parseInt(sortKey.slice(4), 10);
       const ra = a.rounds[ri];
       const rb = b.rounds[ri];
-      const sa = ra ? (ra.gross ?? INF) - (ra.parPerRound ?? 0) : INF;
-      const sb = rb ? (rb.gross ?? INF) - (rb.parPerRound ?? 0) : INF;
-      return sortDir === "asc" ? sa - sb : sb - sa;
+      const sa = ra?.gross != null ? ra.gross - (ra.parPerRound ?? 0) : null;
+      const sb = rb?.gross != null ? rb.gross - (rb.parPerRound ?? 0) : null;
+      return compareNullsLast(sa, sb, d);
     }
     // SD por ronda específica: "sd:0", "sd:1", ... (índice 0-based da ronda)
     if (typeof sortKey === "string" && sortKey.startsWith("sd:")) {
       const ri = parseInt(sortKey.slice(3), 10);
-      const sa = a.rounds[ri]?.sd ?? INF;
-      const sb = b.rounds[ri]?.sd ?? INF;
-      return sortDir === "asc" ? sa - sb : sb - sa;
+      return compareNullsLast(a.rounds[ri]?.sd, b.rounds[ri]?.sd, d);
     }
     // Eagles por ronda específica: "eag:0", "eag:1", ...
     if (typeof sortKey === "string" && sortKey.startsWith("eag:")) {
       const ri = parseInt(sortKey.slice(4), 10);
-      const sa = a.rounds[ri]?.eagles ?? 0;
-      const sb = b.rounds[ri]?.eagles ?? 0;
-      return sortDir === "asc" ? sb - sa : sa - sb;
+      return compareNullsLast(a.rounds[ri]?.eagles, b.rounds[ri]?.eagles, nd);
     }
     // Birdies por ronda específica: "bird:0", "bird:1", ...
     if (typeof sortKey === "string" && sortKey.startsWith("bird:")) {
       const ri = parseInt(sortKey.slice(5), 10);
-      const sa = a.rounds[ri]?.birdies ?? 0;
-      const sb = b.rounds[ri]?.birdies ?? 0;
       // Mais birdies primeiro em asc (mais útil — clica e vê quem fez mais).
-      return sortDir === "asc" ? sb - sa : sa - sb;
+      return compareNullsLast(a.rounds[ri]?.birdies, b.rounds[ri]?.birdies, nd);
     }
     // Pares por ronda específica: "par:0", "par:1", ...
     if (typeof sortKey === "string" && sortKey.startsWith("par:")) {
       const ri = parseInt(sortKey.slice(4), 10);
-      const sa = a.rounds[ri]?.pars ?? 0;
-      const sb = b.rounds[ri]?.pars ?? 0;
-      return sortDir === "asc" ? sb - sa : sa - sb;
+      return compareNullsLast(a.rounds[ri]?.pars, b.rounds[ri]?.pars, nd);
     }
     // Bogeys por ronda específica: "bog:0", "bog:1", ...
     if (typeof sortKey === "string" && sortKey.startsWith("bog:")) {
       const ri = parseInt(sortKey.slice(4), 10);
-      const sa = a.rounds[ri]?.bogeys ?? 999;
-      const sb = b.rounds[ri]?.bogeys ?? 999;
       // Menos bogeys primeiro em asc (clássico — quem fez menos jogou melhor).
-      return sortDir === "asc" ? sa - sb : sb - sa;
+      return compareNullsLast(a.rounds[ri]?.bogeys, b.rounds[ri]?.bogeys, d);
     }
     switch (sortKey) {
-      case "pos":   return sortDir === "asc" ? (a._pos ?? INF) - (b._pos ?? INF) : (b._pos ?? INF) - (a._pos ?? INF);
+      case "pos":   return compareNullsLast(a._pos, b._pos, d);
       case "name":  return sortDir === "asc" ? a.name.localeCompare(b.name,"pt") : b.name.localeCompare(a.name,"pt");
-      case "club":  return sortDir === "asc" ? (a.club||"").localeCompare(b.club||"","pt") : (b.club||"").localeCompare(a.club||"","pt");
-      case "esc":   return sortDir === "asc" ? (a.esc||"").localeCompare(b.esc||"") : (b.esc||"").localeCompare(a.esc||"");
-      case "tee":   return sortDir === "asc" ? (a.teeName||"").localeCompare(b.teeName||"") : (b.teeName||"").localeCompare(a.teeName||"");
-      case "fed":   return sortDir === "asc" ? (a.fed||"").localeCompare(b.fed||"") : (b.fed||"").localeCompare(a.fed||"");
-      case "hcp":   return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
+      case "club":  return compareTextNullsLast(a.club, b.club, d);
+      case "esc":   return compareTextNullsLast(a.esc, b.esc, d);
+      case "tee":   return compareTextNullsLast(a.teeName, b.teeName, d);
+      case "fed":   return compareTextNullsLast(a.fed, b.fed, d);
+      case "hcp":   return compareNullsLast(a.hcp, b.hcp, d);
       case "modo": {
-        const v = (r: RowWithPos) => { const x = rankBy?.value(r); return x == null ? INF : rankBy?.higherIsBetter ? -x : x; };
-        return sortDir === "asc" ? v(a) - v(b) : v(b) - v(a);
+        const v = (r: RowWithPos) => { const x = rankBy?.value(r); return x == null ? null : rankBy?.higherIsBetter ? -x : x; };
+        return compareNullsLast(v(a), v(b), d);
       }
-      case "gross": return sortDir === "asc" ? (a.gross ?? INF) - (b.gross ?? INF) : (b.gross ?? INF) - (a.gross ?? INF);
+      case "gross": return compareNullsLast(a.gross, b.gross, d);
       case "toPar": {
         // O ±par da linha quando existe (fontes com ±par próprio); senão gross − par.
-        const tp = (r: RowWithPos) => r.toPar ?? ((r.gross ?? INF) - (r.parTotal ?? 0));
-        return sortDir === "asc" ? tp(a) - tp(b) : tp(b) - tp(a);
+        const tp = (r: RowWithPos) => r.toPar ?? (r.gross != null ? r.gross - (r.parTotal ?? 0) : null);
+        return compareNullsLast(tp(a), tp(b), d);
       }
-      case "sd":    { const sa = a.rounds[0]?.sd ?? INF; const sb = b.rounds[0]?.sd ?? INF; return sortDir === "asc" ? sa - sb : sb - sa; }
-      case "eag":       { const sa = a.rounds[0]?.eagles ?? 0;   const sb = b.rounds[0]?.eagles ?? 0;   return sortDir === "asc" ? sb - sa : sa - sb; }
-      case "bird":      { const sa = a.rounds[0]?.birdies ?? 0;  const sb = b.rounds[0]?.birdies ?? 0;  return sortDir === "asc" ? sb - sa : sa - sb; }
-      case "par-stat":  { const sa = a.rounds[0]?.pars ?? 0;     const sb = b.rounds[0]?.pars ?? 0;     return sortDir === "asc" ? sb - sa : sa - sb; }
-      case "bog":       { const sa = a.rounds[0]?.bogeys ?? 999; const sb = b.rounds[0]?.bogeys ?? 999; return sortDir === "asc" ? sa - sb : sb - sa; }
+      case "sd":        return compareNullsLast(a.rounds[0]?.sd, b.rounds[0]?.sd, d);
+      case "eag":       return compareNullsLast(a.rounds[0]?.eagles, b.rounds[0]?.eagles, nd);
+      case "bird":      return compareNullsLast(a.rounds[0]?.birdies, b.rounds[0]?.birdies, nd);
+      case "par-stat":  return compareNullsLast(a.rounds[0]?.pars, b.rounds[0]?.pars, nd);
+      case "bog":       return compareNullsLast(a.rounds[0]?.bogeys, b.rounds[0]?.bogeys, d);
       case "acc:eag":   {
         const sa = a.rounds.reduce((t, r) => t + (r?.eagles || 0), 0);
         const sb = b.rounds.reduce((t, r) => t + (r?.eagles || 0), 0);

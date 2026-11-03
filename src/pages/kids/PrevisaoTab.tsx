@@ -19,7 +19,7 @@ import { useCourses } from "../../context/CoursesContext";
 import { resolveCourseTee, type ResolvedCourse } from "./CourseTab";
 import { calcSD, calcScore, calcCourseHcp, calcPlayingHcp } from "../../utils/whsCalc";
 import { fmtCR, fmtSD, fmtToPar, fmtSign } from "../../utils/format";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { loadPlayerData } from "../../data/playerDataLoader";
 import type { PlayerPageData } from "../../data/playerDataLoader";
@@ -147,15 +147,15 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
     const dir = pD === "asc" ? 1 : -1;
     const tagRank: Record<string, number> = { attack: 0, neutral: 1, defend: 2 };
     arr.sort((a, b) => {
-      let va: number, vb: number;
+      let va: number | null, vb: number | null;
       switch (pK) {
-        case "par": va = a.par ?? 99; vb = b.par ?? 99; break;
-        case "dist": va = a.dist ?? 0; vb = b.dist ?? 0; break;
-        case "exp": va = a.expStrokes ?? 999; vb = b.expStrokes ?? 999; break;
+        case "par": va = a.par ?? null; vb = b.par ?? null; break;
+        case "dist": va = a.dist || null; vb = b.dist || null; break;
+        case "exp": va = a.expStrokes ?? null; vb = b.expStrokes ?? null; break;
         case "tag": va = tagRank[a.tag]; vb = tagRank[b.tag]; break;
         default: va = a.hole; vb = b.hole;
       }
-      return (va - vb) * dir;
+      return compareNullsLast(va, vb, dir);
     });
     return arr;
   }, [gamePlan, pK, pD]);

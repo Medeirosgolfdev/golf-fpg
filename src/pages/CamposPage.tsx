@@ -22,7 +22,7 @@ import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
 import { PillBadge, EscPill } from "../ui/PillBadge";
 import ExtLink from "../ui/ExternalLink";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { cachedFetchJson } from "../data/fetchCache";
 import { isTournamentCourse } from "../constants/tournamentCourses";
@@ -558,9 +558,9 @@ function PlayersTable({ entries, title, onSelectPlayer, bare }: { entries: Playe
     const cmp = (a: PlayerSummary, b: PlayerSummary): number => {
       switch (sortKey) {
         case "name": return a.name.localeCompare(b.name, "pt") * dir;
-        case "best": return ((headline(a).bestGross ?? Infinity) - (headline(b).bestGross ?? Infinity)) * dir;
-        case "avg":  return ((headline(a).avgGross ?? Infinity) - (headline(b).avgGross ?? Infinity)) * dir;
-        case "last": return ((a.b18.last ?? a.b9.last ?? "").localeCompare(b.b18.last ?? b.b9.last ?? "")) * dir;
+        case "best": return compareNullsLast(headline(a).bestGross, headline(b).bestGross, dir);
+        case "avg":  return compareNullsLast(headline(a).avgGross, headline(b).avgGross, dir);
+        case "last": return compareTextNullsLast(a.b18.last ?? a.b9.last, b.b18.last ?? b.b9.last, dir);
         case "n":
         default:     return ((a.total - b.total) || 0) * dir;
       }

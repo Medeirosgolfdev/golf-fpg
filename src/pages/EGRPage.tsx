@@ -83,7 +83,7 @@ interface EgrEvent {
 /* ── Helpers ───────────────────────────────────────────────────── */
 const toPar = (total: number | null, par: number | null, rounds: number) =>
   total != null && par != null && rounds > 0 ? total - par * rounds : null;
-const ageNum = (a: string | null) => parseInt((a || "").replace(/\D/g, "") || "999");
+const ageNum = (a: string | null) => { const d = (a || "").replace(/\D/g, ""); return d ? parseInt(d) : null; };
 
 /* ═══════════════════════════════════════════════════════════════ */
 const CFG: RankingPageConfig<EgrRanking, Parameters<typeof buildEgrEntries>[0][number]> = {
@@ -117,18 +117,18 @@ export default function EGRPage() {
 
 /* ── Lista (/egr/info/jogadores) ───────────────────────────────── */
 const LIST_COLS: RankingCol<EgrPlayer>[] = [
-  { key: "rank", label: "#", title: "Ranking EGR (por sexo)", className: "num", sort: (p) => p.egrRankSex ?? 1e9,
+  { key: "rank", label: "#", title: "Ranking EGR (por sexo)", className: "num", sort: (p) => p.egrRankSex,
     cell: (p) => p.egrRankSex ?? "—", tdStyle: { color: "var(--text-muted)" } },
   { key: "name", label: "Nome", sort: (p) => norm(p.name), firstDir: "asc", cell: (p) => nameCell(p.name), tdStyle: { fontWeight: 500 } },
   { key: "country", label: "País", sort: (p) => norm(p.country || ""), firstDir: "asc", cell: (p) => countryCell(p.country) },
   { key: "sex", label: "Sexo", className: "tight", tdClassName: "", cell: (p) => p.sex ? <SexBadge sex={p.sex} /> : "" },
-  { key: "age", label: "Escalão", title: "Escalão actual (não é DOB)", className: "tight", sort: (p) => p.ageNum ?? 999, firstDir: "asc", cell: (p) => p.ageGroup || "—" },
-  { key: "born", label: "Nasc.", title: "Ano de nascimento (via GolfBox — o EGR não expõe DOB)", className: "num", sort: (p) => p.birthYear ?? -1,
+  { key: "age", label: "Escalão", title: "Escalão actual (não é DOB)", className: "tight", sort: (p) => p.ageNum, firstDir: "asc", cell: (p) => p.ageGroup || "—" },
+  { key: "born", label: "Nasc.", title: "Ano de nascimento (via GolfBox — o EGR não expõe DOB)", className: "num", sort: (p) => p.birthYear,
     cell: (p) => <span title={p.birthYear ? "Ano de nascimento via GolfBox" : ""}>{p.birthYear ?? ""}</span> },
-  { key: "points", label: "Pontos", title: "Pontos EGR", className: "num", sort: (p) => p.egrPoints ?? -1, cell: (p) => num(p.egrPoints, 0), tdStyle: { fontWeight: 600 } },
-  { key: "avgScore", label: "Méd.", title: "Média de score", className: "num", sort: (p) => p.avgScore ?? 1e9, cell: (p) => num(p.avgScore) },
-  { key: "avgToCR", label: "vs CR", title: "Média do score menos o CR do campo (nível normalizado — menor é melhor)", className: "num", sort: (p) => p.avgToCR ?? 1e9, cell: (p) => num(p.avgToCR) },
-  { key: "events", label: "Ev.", title: "Eventos a contar", className: "num", sort: (p) => p.eventsCounting ?? -1, cell: (p) => p.eventsCounting ?? "—", tdStyle: { color: "var(--text-muted)" } },
+  { key: "points", label: "Pontos", title: "Pontos EGR", className: "num", sort: (p) => p.egrPoints, cell: (p) => num(p.egrPoints, 0), tdStyle: { fontWeight: 600 } },
+  { key: "avgScore", label: "Méd.", title: "Média de score", className: "num", sort: (p) => p.avgScore, cell: (p) => num(p.avgScore) },
+  { key: "avgToCR", label: "vs CR", title: "Média do score menos o CR do campo (nível normalizado — menor é melhor)", className: "num", sort: (p) => p.avgToCR, cell: (p) => num(p.avgToCR) },
+  { key: "events", label: "Ev.", title: "Eventos a contar", className: "num", sort: (p) => p.eventsCounting, cell: (p) => p.eventsCounting ?? "—", tdStyle: { color: "var(--text-muted)" } },
 ];
 
 function EGRList({ ranking }: { ranking: EgrRanking }) {
@@ -145,17 +145,17 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
 
 /* ── Detalhe (/egr/jogador/:id) ────────────────────────────────── */
 const EVENT_COLS: RankingCol<EgrEvent>[] = [
-  { key: "date", label: "Data", sort: (e) => e.date ? new Date(e.date).getTime() || 0 : 0, cell: (e) => e.date || "—", tdStyle: { whiteSpace: "nowrap", color: "var(--text-muted)" } },
+  { key: "date", label: "Data", sort: (e) => e.date ? new Date(e.date).getTime() : null, cell: (e) => e.date || "—", tdStyle: { whiteSpace: "nowrap", color: "var(--text-muted)" } },
   { key: "event", label: "Evento", sort: (e) => norm(e.name || ""), firstDir: "asc",
     cell: (e) => <ExtLink href={`${EGR_SITE}/events/${e.eventId}`}>{e.name || `Evento ${e.eventId}`}</ExtLink> },
   { key: "country", label: "Local", className: "tight", sort: (e) => norm(e.country || ""), firstDir: "asc", cell: (e) => <span title={e.country || ""}>{flagOrEmpty(e.country)}</span> },
   { key: "age", label: "Escalão", className: "tight", sort: (e) => ageNum(e.ageGroup), firstDir: "asc", cell: (e) => e.ageGroup || "—" },
-  { key: "pos", label: "Pos", className: "num", sort: (e) => typeof e.pos === "number" ? e.pos : 9999, firstDir: "asc", cell: (e) => e.pos ?? "—", tdStyle: { fontWeight: 600 } },
+  { key: "pos", label: "Pos", className: "num", sort: (e) => typeof e.pos === "number" ? e.pos : null, firstDir: "asc", cell: (e) => e.pos ?? "—", tdStyle: { fontWeight: 600 } },
   { key: "rounds", label: "Rondas", title: "Rondas", className: "tight", cell: (e) => e.rounds.join("·") || "—", tdStyle: { color: "var(--text-muted)" } },
-  { key: "total", label: "Total", className: "num", sort: (e) => e.total ?? 1e9, firstDir: "asc", cell: (e) => e.total ?? "—" },
-  { key: "toPar", label: "±Par", title: "To par (total − par×rondas)", className: "num", sort: (e) => toPar(e.total, e.par, e.rounds.length) ?? 1e9, firstDir: "asc",
+  { key: "total", label: "Total", className: "num", sort: (e) => e.total, firstDir: "asc", cell: (e) => e.total ?? "—" },
+  { key: "toPar", label: "±Par", title: "To par (total − par×rondas)", className: "num", sort: (e) => toPar(e.total, e.par, e.rounds.length), firstDir: "asc",
     cell: (e) => { const tp = toPar(e.total, e.par, e.rounds.length); return <span style={{ color: tp != null && tp < 0 ? "var(--score-birdie)" : undefined }}>{fmtToPar(tp, "")}</span>; } },
-  { key: "points", label: "Pts", title: "Pontos EGR", className: "num", sort: (e) => e.egrPoints ?? -1, cell: (e) => num(e.egrPoints, 0), tdStyle: { color: "var(--text-muted)" } },
+  { key: "points", label: "Pts", title: "Pontos EGR", className: "num", sort: (e) => e.egrPoints, cell: (e) => num(e.egrPoints, 0), tdStyle: { color: "var(--text-muted)" } },
 ];
 
 function EGRDetail({ ranking, id }: { ranking: EgrRanking; id: string }) {

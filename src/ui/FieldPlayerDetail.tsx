@@ -14,7 +14,7 @@ import KpiCard from "./KpiCard";
 import EmptyState from "./EmptyState";
 import { FIELD_2025, VP_PAR, FIELD_CARDS } from "../data/rivalData";
 import type { RivalPlayer } from "./bjgtAnalysisTypes";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 
 interface FieldPlayerDetailProps {
@@ -299,10 +299,7 @@ export default function FieldPlayerDetail({
 
   const sortedTournResults = (() => {
     const mul = sortDir === "asc" ? 1 : -1;
-    const safeNum = (v: number | null) =>
-      v == null ? Number.POSITIVE_INFINITY : v;
-    const posNum = (v: number | string) =>
-      typeof v === "number" ? v : Number.POSITIVE_INFINITY;
+    // Vazios (sem lugar — WD/CUT —, sem total) sempre no fim, nas duas direcções.
     return [...tournResults].sort((a, b) => {
       switch (sortKey) {
         case "name":
@@ -312,11 +309,11 @@ export default function FieldPlayerDetail({
         case "par":
           return mul * (a.par - b.par);
         case "pos":
-          return mul * (posNum(a.pos) - posNum(b.pos));
+          return compareNullsLast(typeof a.pos === "number" ? a.pos : null, typeof b.pos === "number" ? b.pos : null, mul);
         case "total":
-          return mul * (safeNum(a.total) - safeNum(b.total));
+          return compareNullsLast(a.total, b.total, mul);
         case "tp":
-          return mul * (safeNum(a.tp) - safeNum(b.tp));
+          return compareNullsLast(a.tp, b.tp, mul);
       }
     });
   })();

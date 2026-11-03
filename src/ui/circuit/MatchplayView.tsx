@@ -25,7 +25,7 @@
  *   - prop `roundPicker`: selector das rondas (ex.: Dia 1 / Dia 2 / Total).
  */
 import { Fragment, useMemo, useState } from "react";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import ResultMark from "../ResultMark";
 import { KidsLink } from "../KidsLink";
@@ -186,16 +186,17 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
   const toggleGame = (id: number) => setExpanded((prev) => toggleSet(prev, id));
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    const val = (g: MatchplayGame): string | number => {
+    const val = (g: MatchplayGame): string | number | null => {
       switch (sortKey) {
-        case "order": return g.order ?? g.matchNo ?? 999;
-        case "format": return g.format ?? "";
-        case "result": return g.result ?? "";
+        case "order": return g.order ?? g.matchNo ?? null;
+        case "format": return g.format || null;
+        case "result": return g.result || null;
       }
     };
     return [...games].sort((a, b) => {
       const va = val(a), vb = val(b);
-      return va < vb ? -dir : va > vb ? dir : 0;
+      if (typeof va === "string" && typeof vb === "string") return va < vb ? -dir : va > vb ? dir : 0;
+      return compareValuesNullsLast(va, vb, dir);
     });
   }, [games, sortKey, sortDir]);
 
@@ -282,19 +283,20 @@ function RoundTable({ round }: { round: MatchplayRound }) {
 
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    const val = (m: MatchplayTeamMatch): string | number => {
+    const val = (m: MatchplayTeamMatch): string | number | null => {
       switch (sortKey) {
-        case "no": return m.matchNo ?? 999;
-        case "home": return m.home?.name ?? "";
-        case "res": return m.result ?? "";
-        case "away": return m.away?.name ?? "";
-        case "label": return m.label ?? "";
-        case "time": return m.startTime ?? "";
+        case "no": return m.matchNo ?? null;
+        case "home": return m.home?.name || null;
+        case "res": return m.result || null;
+        case "away": return m.away?.name || null;
+        case "label": return m.label || null;
+        case "time": return m.startTime || null;
       }
     };
     return [...round.matches].sort((a, b) => {
       const va = val(a), vb = val(b);
-      return va < vb ? -dir : va > vb ? dir : 0;
+      if (typeof va === "string" && typeof vb === "string") return va < vb ? -dir : va > vb ? dir : 0;
+      return compareValuesNullsLast(va, vb, dir);
     });
   }, [round.matches, sortKey, sortDir]);
 
@@ -428,15 +430,16 @@ function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
   const toggle = (id: number) => setExpanded((prev) => toggleSet(prev, id));
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    const val = (m: MatchplayTeamMatch): string | number => {
-      if (sortKey === "no") return m.matchNo ?? 999;
-      if (sortKey === "time") return m.startTime ?? "";
+    const val = (m: MatchplayTeamMatch): string | number | null => {
+      if (sortKey === "no") return m.matchNo ?? null;
+      if (sortKey === "time") return m.startTime || null;
       const s = (m.sides ?? []).find(x => sideKey(x) === sortKey);
-      return s?.points ?? -1;
+      return s?.points ?? null;
     };
     return [...round.matches].sort((a, b) => {
       const va = val(a), vb = val(b);
-      return va < vb ? -dir : va > vb ? dir : 0;
+      if (typeof va === "string" && typeof vb === "string") return va < vb ? -dir : va > vb ? dir : 0;
+      return compareValuesNullsLast(va, vb, dir);
     });
   }, [round.matches, sortKey, sortDir]);
 

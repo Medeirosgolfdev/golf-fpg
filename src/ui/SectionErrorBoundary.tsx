@@ -12,6 +12,8 @@ import { isStaleChunkError, reloadForStaleChunk } from "../utils/staleChunk";
 
 type Props = {
   label: string;
+  /** Quando muda (ex.: o caminho do URL), o erro é limpo — sem remontar a página. */
+  resetKey?: string;
   children: React.ReactNode;
 };
 
@@ -24,6 +26,10 @@ export default class SectionErrorBoundary extends React.Component<Props, State> 
 
   static getDerivedStateFromError(error: Error) {
     return { error };
+  }
+
+  componentDidUpdate(prev: Props) {
+    if (this.state.error && prev.resetKey !== this.props.resetKey) this.setState({ error: null });
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {

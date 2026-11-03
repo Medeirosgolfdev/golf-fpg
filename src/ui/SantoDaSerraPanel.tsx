@@ -13,7 +13,7 @@
 
 import { Fragment, useMemo, useState } from "react";
 import { fmtToPar, fpgScoringUrl } from "../utils/format";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareTextNullsLast } from "../hooks/useSort";
 import PosBadge from "./PosBadge";
 import SortableHdr from "./SortableHdr";
 import ExpandArrow from "./ExpandArrow";
@@ -139,12 +139,14 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
 
   const sorted = useMemo(() => {
     const arr = [...athletes];
+    const dir = sortDir === "asc" ? 1 : -1;
     arr.sort((a, b) => {
       let cmp = 0;
       switch (sortKey) {
         case "name": cmp = a.name.localeCompare(b.name, "pt"); break;
-        case "fed": cmp = (a.fed || "").localeCompare(b.fed || ""); break;
-        case "dob": cmp = (a.dob || "9999").localeCompare(b.dob || "9999"); break;
+        // Vazios (sem federado, sem data) sempre no fim, nas duas direcções.
+        case "fed": return compareTextNullsLast(a.fed, b.fed, dir);
+        case "dob": return compareTextNullsLast(a.dob, b.dob, dir);
         case "top5": cmp = a.totalTop5 - b.totalTop5; break;
         case "champ": cmp = a.championships - b.championships; break;
         case "podium": cmp = a.podiums - b.podiums; break;
@@ -152,11 +154,10 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
         case "years": {
           const ay = [...new Set(a.entries.map(e => e.year))].sort();
           const by = [...new Set(b.entries.map(e => e.year))].sort();
-          cmp = (ay[ay.length - 1] || "").localeCompare(by[by.length - 1] || "");
-          break;
+          return compareTextNullsLast(ay[ay.length - 1], by[by.length - 1], dir);
         }
       }
-      return sortDir === "asc" ? cmp : -cmp;
+      return cmp * dir;
     });
     return arr;
   }, [athletes, sortKey, sortDir]);

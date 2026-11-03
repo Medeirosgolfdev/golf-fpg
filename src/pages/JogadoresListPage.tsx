@@ -271,7 +271,7 @@ export default function JogadoresListPage() {
       out.push({
         fed: String(fed),
         name: ppr.name,
-        countryName: ppr.country === "PT" ? "Portugal" : (ppr.country || ""),
+        countryName: isPtCountry(ppr.country) ? "Portugal" : (ppr.country || ""),
         clubCode: ppr.clubCode || "",
         clubShort: ppr.acronym || "",
         clubLong: ppr.club || "",

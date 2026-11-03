@@ -17,7 +17,7 @@ import EmptyState from "../../ui/EmptyState";
 import SortableHdr from "../../ui/SortableHdr";
 import TabRow from "../../ui/TabRow";
 import { EscPill } from "../../ui/PillBadge";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareNullsLast } from "../../hooks/useSort";
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { isPTByName } from "../../utils/ptPlayers";
 import { isManuelByName } from "../../constants/manuel";
@@ -112,25 +112,24 @@ export function FFGMeriteView() {
   }, [all, sex, soClass, cat, q]);
 
   const sorted = useMemo(() => {
-    const INF = Number.MAX_SAFE_INTEGER;
     const mult = sortDir === "asc" ? 1 : -1;
-    const n = (v: number | null) => v ?? INF;
     return [...filtered].sort((a, b) => {
+      // Vazios sempre no fim, nas duas direcções; desempate pelo lugar.
       let v = 0;
       switch (sortKey) {
-        case "rank": v = n(a.rank) - n(b.rank); break;
-        case "name": v = a.name.localeCompare(b.name, "fr"); break;
-        case "cat": v = n(b.by) - n(a.by); break;
-        case "by": v = n(a.by) - n(b.by); break;
-        case "golf": v = a.golf.localeCompare(b.golf, "fr"); break;
-        case "idx": v = n(a.idx) - n(b.idx); break;
-        case "moy": v = n(a.moy) - n(b.moy); break;
-        case "moy6": v = n(a.moy6) - n(b.moy6); break;
-        case "nbt": v = a.nbt - b.nbt; break;
-        case "total": v = (a.total ?? -INF) - (b.total ?? -INF); break;
-        case "rankAnn": v = n(a.rankAnn || null) - n(b.rankAnn || null); break;
+        case "rank": v = compareNullsLast(a.rank, b.rank, mult); break;
+        case "name": v = a.name.localeCompare(b.name, "fr") * mult; break;
+        case "cat": v = compareNullsLast(a.by, b.by, mult === 1 ? -1 : 1); break; // escalão = ano ao contrário
+        case "by": v = compareNullsLast(a.by, b.by, mult); break;
+        case "golf": v = a.golf.localeCompare(b.golf, "fr") * mult; break;
+        case "idx": v = compareNullsLast(a.idx, b.idx, mult); break;
+        case "moy": v = compareNullsLast(a.moy, b.moy, mult); break;
+        case "moy6": v = compareNullsLast(a.moy6, b.moy6, mult); break;
+        case "nbt": v = (a.nbt - b.nbt) * mult; break;
+        case "total": v = compareNullsLast(a.total, b.total, mult); break;
+        case "rankAnn": v = compareNullsLast(a.rankAnn || null, b.rankAnn || null, mult); break;
       }
-      return mult * v || n(a.rank) - n(b.rank);
+      return v || compareNullsLast(a.rank, b.rank, 1);
     });
   }, [filtered, sortKey, sortDir]);
 

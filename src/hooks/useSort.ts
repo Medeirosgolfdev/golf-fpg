@@ -58,3 +58,21 @@ export function compareNullsLast(a: number | null | undefined, b: number | null 
   if (va == null || vb == null) return va == null && vb == null ? 0 : va == null ? 1 : -1;
   return (va - vb) * dir;
 }
+
+/** O mesmo para texto (datas ISO incluídas): vazio (null/"") SEMPRE no fim,
+ *  nas duas direcções; o resto por `localeCompare(…, locale)` ("pt" por omissão;
+ *  as páginas de Espanha/França usam "es"/"fr"). */
+export function compareTextNullsLast(a: string | null | undefined, b: string | null | undefined, dir: 1 | -1, locale = "pt"): number {
+  const va = a || null;
+  const vb = b || null;
+  if (va == null || vb == null) return va == null && vb == null ? 0 : va == null ? 1 : -1;
+  return va.localeCompare(vb, locale) * dir;
+}
+
+/** Para colunas genéricas cujo valor tanto pode ser número como texto: se um dos
+ *  lados é texto compara como texto, senão como número — vazios sempre no fim. */
+export function compareValuesNullsLast(a: number | string | null | undefined, b: number | string | null | undefined, dir: 1 | -1): number {
+  if (typeof a === "string" || typeof b === "string")
+    return compareTextNullsLast(a == null ? null : String(a), b == null ? null : String(b), dir);
+  return compareNullsLast(a, b, dir);
+}

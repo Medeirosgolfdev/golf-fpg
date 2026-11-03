@@ -29,7 +29,7 @@ import { Link } from "react-router-dom";
 import SexBadge from "./SexBadge";
 import { EscPill, TrophyCount } from "./PillBadge";
 import { isManuel } from "../constants/manuel";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import ExpandArrow from "./ExpandArrow";
 import EmptyState from "./EmptyState";
@@ -488,15 +488,15 @@ function RegionChampionsBlock({
     if (sortKey === "esc") {
       const ea = ESC_ORDER.indexOf(a.esc);
       const eb = ESC_ORDER.indexOf(b.esc);
-      const cmp = (ea < 0 ? 99 : ea) - (eb < 0 ? 99 : eb);
-      if (cmp !== 0) return cmp * dirMul;
+      const cmp = compareNullsLast(ea < 0 ? null : ea, eb < 0 ? null : eb, dirMul); // sem escalão no fim
+      if (cmp !== 0) return cmp;
       // Dentro do mesmo escalão: M antes de F
       return (a.sex === "M" ? 0 : 1) - (b.sex === "M" ? 0 : 1);
     }
     if (sortKey === "sex") {
-      const sa = a.sex === "M" ? 0 : a.sex === "F" ? 1 : 2;
-      const sb = b.sex === "M" ? 0 : b.sex === "F" ? 1 : 2;
-      if (sa !== sb) return (sa - sb) * dirMul;
+      const sa = a.sex === "M" ? 0 : a.sex === "F" ? 1 : null;
+      const sb = b.sex === "M" ? 0 : b.sex === "F" ? 1 : null;
+      if (sa !== sb) return compareNullsLast(sa, sb, dirMul); // sem sexo no fim
       const ea = ESC_ORDER.indexOf(a.esc);
       const eb = ESC_ORDER.indexOf(b.esc);
       return (ea < 0 ? 99 : ea) - (eb < 0 ? 99 : eb);

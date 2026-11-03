@@ -12,7 +12,7 @@ import type { PlayerPageData, CourseData, RoundData } from "../../../data/player
 import { norm } from "../../../utils/format";
 import { normKey } from "../../../utils/teeColors";
 import { fmtStb } from "../../../utils/scoreDisplay";
-import { useSort } from "../../../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { HoleBadge, GrossCell, SdCell, CountPill, RoundNumericCells } from "../../../ui/tableCells";
 import TeePill from "../../../ui/TeePill";
@@ -165,14 +165,14 @@ function CourseRoundsTable({ rows, data, courseName, note, openScorecardId, open
     return [...rows].sort((a, b) => {
       switch (sortKey) {
         case "date": return dir * (a.dateSort - b.dateSort);
-        case "event": return dir * (a.eventName || "").localeCompare(b.eventName || "", "pt");
+        case "event": return compareTextNullsLast(a.eventName, b.eventName, dir);
         case "holes": return dir * (a.holeCount - b.holeCount);
-        case "hcp": return dir * ((a.hi ?? 999) - (b.hi ?? 999));
-        case "tee": return dir * (a.tee || "").localeCompare(b.tee || "");
-        case "meters": return dir * ((a.meters ?? 0) - (b.meters ?? 0));
-        case "gross": return dir * ((a.gross ?? 999) - (b.gross ?? 999));
-        case "stb": return dir * ((a.stb ?? -999) - (b.stb ?? -999));
-        case "sd": return dir * ((a.sd ?? 999) - (b.sd ?? 999));
+        case "hcp": return compareNullsLast(a.hi, b.hi, dir);
+        case "tee": return compareTextNullsLast(a.tee, b.tee, dir);
+        case "meters": return compareNullsLast(a.meters || null, b.meters || null, dir);
+        case "gross": return compareNullsLast(a.gross, b.gross, dir);
+        case "stb": return compareNullsLast(a.stb, b.stb, dir);
+        case "sd": return compareNullsLast(a.sd, b.sd, dir);
         default: return dir * (a.dateSort - b.dateSort);
       }
     });
@@ -297,23 +297,23 @@ export default function ByCourseView({ data, search, sort }: {
 
     const dir = sortDir === "asc" ? 1 : -1;
     l.sort((a, b) => {
-      let av: number, bv: number;
+      let av: number | null, bv: number | null;
       const lastA = a.rounds[0];
       const lastB = b.rounds[0];
       switch (sortKey) {
         case "course": return dir * a.course.localeCompare(b.course, "pt");
         case "voltas": av = a.count; bv = b.count; break;
         case "ultima": av = a.lastDateSort; bv = b.lastDateSort; break;
-        case "gross": av = (lastA?.gross ?? 999); bv = (lastB?.gross ?? 999); break;
-        case "stb": av = (lastA?.stb ?? -999); bv = (lastB?.stb ?? -999); break;
-        case "sd": av = (lastA?.sd ?? 999); bv = (lastB?.sd ?? 999); break;
+        case "gross": av = lastA?.gross ?? null; bv = lastB?.gross ?? null; break;
+        case "stb": av = lastA?.stb ?? null; bv = lastB?.stb ?? null; break;
+        case "sd": av = lastA?.sd ?? null; bv = lastB?.sd ?? null; break;
         default: av = a.count; bv = b.count;
       }
       if (av === bv) {
         const tieDate = b.lastDateSort - a.lastDateSort;
         return tieDate !== 0 ? tieDate : a.course.localeCompare(b.course, "pt");
       }
-      return dir * (av - bv);
+      return compareNullsLast(av, bv, dir); // sem valor sempre no fim
     });
     return l;
   }, [data, search, sortKey, sortDir]);

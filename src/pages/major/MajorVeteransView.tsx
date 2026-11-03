@@ -19,7 +19,7 @@ import DetailHeader from "../../ui/DetailHeader";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import SortableHdr from "../../ui/SortableHdr";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareTextNullsLast } from "../../hooks/useSort";
 import { displayName } from "../../utils/format";
 import { gf } from "../../utils/flagUtils";
 import { isManuelByName } from "../../constants/manuel";
@@ -122,7 +122,11 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
       let c = 0;
       switch (sortKey) {
         case "name": c = displayName(a.name).localeCompare(displayName(b.name)); break;
-        case "country": c = (a.country ?? "zzz").localeCompare(b.country ?? "zzz"); break;
+        case "country": { // sem país sempre no fim, nas duas direcções
+          const cc = compareTextNullsLast(a.country, b.country, dir);
+          if (cc) return cc;
+          break;
+        }
         case "years": c = a.years - b.years; break;
         case "seriesCount": c = a.seriesCount - b.seriesCount; break;
         case "tournaments":

@@ -22,7 +22,7 @@ import EmptyState from "../../ui/EmptyState";
 import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
 import { displayName, fmtDatePt, fmtHcp, fmtSign } from "../../utils/format";
 import { normName } from "../../utils/normName";
@@ -236,23 +236,23 @@ export function FFGPlayersView() {
   }, [all, q, sex, cat, region, jovens]);
 
   const sorted = useMemo(() => {
-    const INF = Number.MAX_SAFE_INTEGER;
     const mult = sortDir === "asc" ? 1 : -1;
     return [...filtered].sort((a, b) => {
       let v = 0;
       switch (sortKey) {
         case "name":    v = a._name.localeCompare(b._name, "fr"); break;
         case "license": v = a.license.localeCompare(b.license); break;
-        case "cat":     v = (a._cat || "~").localeCompare(b._cat || "~", "fr"); break;
-        case "birth":   v = (a.birthYear ?? INF) - (b.birthYear ?? INF); break;
-        case "merite":  v = (a.merite?.rank ?? INF) - (b.merite?.rank ?? INF); break;
-        case "sex":     v = (a.sex || "~").localeCompare(b.sex || "~"); break;
-        case "hcp":     v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
-        case "club":    v = (a._club || "~").localeCompare(b._club || "~", "fr"); break;
-        case "region":  v = (a._region || "~").localeCompare(b._region || "~", "fr"); break;
+        // Vazios sempre no fim, nas duas direcções.
+        case "cat":     return compareTextNullsLast(a._cat, b._cat, mult, "fr");
+        case "birth":   return compareNullsLast(a.birthYear, b.birthYear, mult);
+        case "merite":  return compareNullsLast(a.merite?.rank, b.merite?.rank, mult);
+        case "sex":     return compareTextNullsLast(a.sex, b.sex, mult);
+        case "hcp":     return compareNullsLast(a.hcp, b.hcp, mult);
+        case "club":    return compareTextNullsLast(a._club, b._club, mult, "fr");
+        case "region":  return compareTextNullsLast(a._region, b._region, mult, "fr");
         case "tot":     v = a._tot - b._tot; break;
         case "ano":     v = a._ano - b._ano; break;
-        case "hcpDate": v = (a.hcpDate || "").localeCompare(b.hcpDate || ""); break;
+        case "hcpDate": return compareTextNullsLast(a.hcpDate, b.hcpDate, mult);
       }
       return mult * v;
     });

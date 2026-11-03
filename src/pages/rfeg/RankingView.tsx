@@ -22,12 +22,12 @@ const RANKINGS_SITE = "https://rfegolf.es/competiciones/rankings-golf";
 const nomeJogador = (s: string) => titleCase(s.includes(",") ? s.split(",").map((x) => x.trim()).reverse().join(" ") : s);
 
 const COLS: RankingCol<RfegRankingJogador>[] = [
-  { key: "pos", label: "#", sort: (j) => j.pos ?? 1e9, firstDir: "asc", cell: (j) => j.pos ?? MUTED, className: "ta-c" },
+  { key: "pos", label: "#", sort: (j) => j.pos, firstDir: "asc", cell: (j) => j.pos ?? MUTED, className: "ta-c" },
   { key: "nome", label: "Jogador", sort: (j) => j.nombre, firstDir: "asc", cell: (j) => nameCell(nomeJogador(j.nombre)) },
-  { key: "lic", label: "Licença", sort: (j) => j.licencia ?? "", firstDir: "asc", cell: (j) => j.licencia || MUTED, className: "mono" },
-  { key: "cat", label: "Escalão", sort: (j) => j.cat ?? "", cell: (j) => { const e = rfegRankingEscalao(j.cat); return e ? <EscPill esc={e} /> : MUTED; } },
-  { key: "idade", label: "Idade", sort: (j) => j.edad ?? 99, firstDir: "asc", cell: (j) => j.edad ?? MUTED, className: "ta-c" },
-  { key: "pts", label: "Pontos", sort: (j) => -(j.puntos ?? -1e9), firstDir: "asc", cell: (j) => j.puntos ?? MUTED, className: "ta-c mono" },
+  { key: "lic", label: "Licença", sort: (j) => j.licencia, firstDir: "asc", cell: (j) => j.licencia || MUTED, className: "mono" },
+  { key: "cat", label: "Escalão", sort: (j) => j.cat, cell: (j) => { const e = rfegRankingEscalao(j.cat); return e ? <EscPill esc={e} /> : MUTED; } },
+  { key: "idade", label: "Idade", sort: (j) => j.edad, firstDir: "asc", cell: (j) => j.edad ?? MUTED, className: "ta-c" },
+  { key: "pts", label: "Pontos", sort: (j) => j.puntos == null ? null : -j.puntos, firstDir: "asc", cell: (j) => j.puntos ?? MUTED, className: "ta-c mono" },
 ];
 
 export function RFEGRankingView() {

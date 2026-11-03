@@ -15,7 +15,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { HcpHistoryDb } from "../data/hcpHistoryLoader";
 import { computeEvoMetrics, pointsInWindow, type EvoMetrics } from "../utils/hcpEvolution";
 import { MONTHS_PT, fmtHcp, fmtSign } from "../utils/format";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import SexBadge from "./SexBadge";
 import { C } from "../utils/colors";
@@ -102,7 +102,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
         case "actual": return dir * (a.m.end - b.m.end);
         case "delta":  return dir * (a.m.delta - b.m.delta);
         case "best":   return dir * (a.m.best - b.m.best);
-        case "slope":  return dir * ((a.m.slopePerMonth ?? 0) - (b.m.slopePerMonth ?? 0));
+        case "slope":  return compareNullsLast(a.m.slopePerMonth, b.m.slopePerMonth, dir);
         default:       return 0;
       }
     });

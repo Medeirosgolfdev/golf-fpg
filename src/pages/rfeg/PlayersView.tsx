@@ -21,7 +21,7 @@ import EmptyState from "../../ui/EmptyState";
 import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
 import { displayName, fmtDatePt, fmtHcp } from "../../utils/format";
 import { isManuelByName } from "../../constants/manuel";
@@ -309,22 +309,22 @@ export function RFEGPlayersView() {
   }, [all, q, sex, cat, jovens]);
 
   const sorted = useMemo(() => {
-    const INF = Number.MAX_SAFE_INTEGER;
     const mult = sortDir === "asc" ? 1 : -1;
     return [...filtered].sort((a, b) => {
       let v = 0;
       switch (sortKey) {
         case "name":     v = a._name.localeCompare(b._name, "es"); break;
         case "licencia": v = a.licencia.localeCompare(b.licencia); break;
-        case "cat":      v = (a._cat || "~").localeCompare(b._cat || "~", "es"); break;
-        case "sex":      v = (a.sex || "~").localeCompare(b.sex || "~"); break;
-        case "hcp":      v = (a._hcp ?? INF) - (b._hcp ?? INF); break;
-        case "club":     v = (a._club || "~").localeCompare(b._club || "~", "es"); break;
-        case "dob":      v = (a._year ?? INF) - (b._year ?? INF); break;
-        case "age":      v = (a._age ?? INF) - (b._age ?? INF); break;
+        // Vazios sempre no fim, nas duas direcções.
+        case "cat":      return compareTextNullsLast(a._cat, b._cat, mult, "es");
+        case "sex":      return compareTextNullsLast(a.sex, b.sex, mult);
+        case "hcp":      return compareNullsLast(a._hcp, b._hcp, mult);
+        case "club":     return compareTextNullsLast(a._club, b._club, mult, "es");
+        case "dob":      return compareNullsLast(a._year, b._year, mult);
+        case "age":      return compareNullsLast(a._age, b._age, mult);
         case "tot":      v = a._tot - b._tot; break;
         case "ano":      v = a._ano - b._ano; break;
-        case "hcpDate":  v = (a._hcpDate || "").localeCompare(b._hcpDate || ""); break;
+        case "hcpDate":  return compareTextNullsLast(a._hcpDate, b._hcpDate, mult);
       }
       return mult * v;
     });

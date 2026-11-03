@@ -22,7 +22,7 @@
 
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
@@ -800,27 +800,30 @@ export default function DrawsPage() {
 
   // Ordenação
   const linhasOrdenadas = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
     const cmp = (a: CompanionRow, b: CompanionRow): number => {
       let v = 0;
       switch (sortKey) {
         case "nome":
           v = a.nome.localeCompare(b.nome, "pt");
           break;
-        case "escalao":
+        case "escalao": {
+          // sem escalão sempre no fim, nas duas direcções
+          const vazio = compareNullsLast(a.escalao ? 0 : null, b.escalao ? 0 : null, 1);
+          if (vazio) return vazio;
           v = compareEscalao(a.escalao, b.escalao);
           if (v === 0) v = a.nome.localeCompare(b.nome, "pt");
           break;
-        case "clube":
-          v = (a.clube || a.pais || "").localeCompare(b.clube || b.pais || "", "pt");
-          break;
+        }
+        case "clube": // sem clube nem país sempre no fim
+          return compareTextNullsLast(a.clube || a.pais, b.clube || b.pais, dir);
         case "vezes":
           v = a.vezes - b.vezes;
           break;
         case "ultima":
-          v = (a.ultimaData || "").localeCompare(b.ultimaData || "");
-          break;
+          return compareTextNullsLast(a.ultimaData, b.ultimaData, dir);
       }
-      return sortDir === "asc" ? v : -v;
+      return v * dir;
     };
     return [...linhasFiltradas].sort(cmp);
   }, [linhasFiltradas, sortKey, sortDir]);

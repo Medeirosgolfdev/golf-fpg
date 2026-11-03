@@ -16,7 +16,7 @@ import SexBadge from "../SexBadge";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { gf, flagOrEmpty } from "../../utils/flagUtils";
 import { norm } from "../../utils/format";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { KidsLink, KidsLinkCtx } from "../KidsLink";
 import SortableHdr from "../SortableHdr";
@@ -128,8 +128,9 @@ export interface RankingCol<T> {
   label: React.ReactNode;
   title?: string;
   className?: string;
-  /** Valor de ordenação; sem ele, o cabeçalho não ordena. */
-  sort?: (r: T) => number | string;
+  /** Valor de ordenação; sem ele, o cabeçalho não ordena. Vazio (null/NaN/"")
+   *  fica sempre no fim, nas duas direcções. */
+  sort?: (r: T) => number | string | null | undefined;
   /** Sentido do 1º clique (default: o da tabela). */
   firstDir?: "asc" | "desc";
   cell: (r: T) => React.ReactNode;
@@ -161,10 +162,7 @@ export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, t
     const dir = sortDir === "asc" ? 1 : -1;
     const val = col.sort;
     return [...rows].sort((a, b) => {
-      const va = val(a), vb = val(b);
-      const cmp = (typeof va === "string" || typeof vb === "string")
-        ? String(va).localeCompare(String(vb)) * dir
-        : (va - vb) * dir;
+      const cmp = compareValuesNullsLast(val(a), val(b), dir);
       return cmp || (tieBreak ? tieBreak(a, b) : 0);
     });
   }, [rows, cols, sortKey, sortDir, tieBreak]);

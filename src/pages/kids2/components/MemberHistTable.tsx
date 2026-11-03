@@ -14,7 +14,7 @@
 import { useMemo } from "react";
 import type {} from "react";
 import type { CanonicalData, Junior, Tournament } from "../data";
-import { useSort } from "../../../hooks/useSort";
+import { useSort, compareNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { fmtToPar, monthLabel } from "../../../utils/format";
 import { tpColor } from "../../../ui/tournamentPrimitives";
@@ -81,15 +81,15 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
 
   const sortedRows = useMemo(() => {
     const mul = sortDir === "asc" ? 1 : -1;
-    const safeNum = (v: number | null) => (v == null ? Number.POSITIVE_INFINITY : v);
     return [...rows].sort((a, b) => {
       switch (sortKey) {
         case "date":   return mul * a.date.localeCompare(b.date);
         case "name":   return mul * a.name.localeCompare(b.name);
         case "flight": return mul * a.flight.localeCompare(b.flight);
-        case "pos":    return mul * (safeNum(a.pos) - safeNum(b.pos));
-        case "total":  return mul * (safeNum(a.total) - safeNum(b.total));
-        case "toPar":  return mul * (safeNum(a.toPar) - safeNum(b.toPar));
+        // Vazios sempre no fim, nas duas direcções.
+        case "pos":    return compareNullsLast(a.pos, b.pos, mul);
+        case "total":  return compareNullsLast(a.total, b.total, mul);
+        case "toPar":  return compareNullsLast(a.toPar, b.toPar, mul);
       }
     });
   }, [rows, sortKey, sortDir]);

@@ -11,7 +11,7 @@
  * Clubes da FPG (/FPG/clubes → 🏅 Grupos).
  */
 import { Fragment, useMemo, useState } from "react";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import ResultMark from "../ResultMark";
 import { KidsLink } from "../KidsLink";
@@ -60,18 +60,21 @@ function TeamPlayers({ rows, opps, catLabel }: {
   const catOrder = useMemo(() => new Map(rows.map((r, i) => [r.catKey, i])), [rows]);
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    const val = (r: TeamPointsPlayerRow): string | number => {
+    const val = (r: TeamPointsPlayerRow): string | number | null => {
       if (sortKey === "cat") return catOrder.get(r.catKey) ?? 99;
       if (sortKey === "name") return r.name;
-      if (sortKey === "gross") return r.gross ?? 999;
-      if (sortKey === "pts") return r.pts ?? -1;
+      if (sortKey === "gross") return r.gross ?? null;
+      if (sortKey === "pts") return r.pts;
       // vs:<equipa> → pontos ganhos contra essa equipa
       const res = r.vs[sortKey.slice(3)] ?? [];
       return res.reduce((s, x) => s + (x.won ? 1 : x.half ? 0.5 : 0), 0);
     };
     return rows.map((r, i) => ({ r, i })).sort((a, b) => {
       const va = val(a.r), vb = val(b.r);
-      return va < vb ? -dir : va > vb ? dir : a.i - b.i;
+      const cmp = typeof va === "string" && typeof vb === "string"
+        ? (va < vb ? -dir : va > vb ? dir : 0)
+        : compareValuesNullsLast(va, vb, dir);
+      return cmp || a.i - b.i;
     }).map(x => x.r);
   }, [rows, sortKey, sortDir, catOrder]);
   if (!rows.length) return <EmptyState size="sm" message="Sem jogadores nesta vista." />;
@@ -128,16 +131,19 @@ export default function TeamPointsStandings({ data, defaultRound = "all" }: {
 
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    const val = (r: TeamRow): string | number => {
+    const val = (r: TeamRow): string | number | null => {
       if (sortKey === "pos") return r.pos;
       if (sortKey === "name") return r.name;
       if (sortKey === "total") return r.total;
-      if (sortKey === "official") return r.official ?? 99;
-      return r.cats[sortKey.slice(2)] ?? -1;
+      if (sortKey === "official") return r.official;
+      return r.cats[sortKey.slice(2)] ?? null;
     };
     return [...rows].sort((a, b) => {
       const va = val(a), vb = val(b);
-      return va < vb ? -dir : va > vb ? dir : a.pos - b.pos;
+      const cmp = typeof va === "string" && typeof vb === "string"
+        ? (va < vb ? -dir : va > vb ? dir : 0)
+        : compareValuesNullsLast(va, vb, dir);
+      return cmp || a.pos - b.pos;
     });
   }, [rows, sortKey, sortDir]);
 

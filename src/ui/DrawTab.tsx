@@ -26,7 +26,7 @@ import { norm, fmtHcp, ageAtDate, escalaoAtDate, fmtDatePt } from "../utils/form
 import { teeNameFor } from "../utils/teeRegulation";
 import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import { lookupOm, OmCatBadge, type OmHit } from "../pages/fpg/fpgOmRanking";
 import { isVirtualFed } from "../utils/fedKeys";
@@ -497,33 +497,32 @@ export default function DrawTab({
 
   // Ordenar por sortKey
   const sorted = useMemo(() => {
-    const INF = 9999;
     const mult = sortDir === "asc" ? 1 : -1;
     return [...flat].sort((a, b) => {
       let v = 0;
       switch (sortKey) {
         case "pos":    v = a.pos - b.pos; break;
         case "nome":   v = a.nome.localeCompare(b.nome, "pt"); break;
-        case "esc":    v = (a.escHist || "").localeCompare(b.escHist || "", "pt"); break;
-        case "fed":    v = (a.fed || "").localeCompare(b.fed || ""); break;
-        case "clube":  v = a.clube.localeCompare(b.clube, "pt"); break;
-        case "hcp":    v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
-        case "tee":    v = (a.tee || "").localeCompare(b.tee || "", "pt"); break;
+        // Vazios (sem escalão/HCP/resultado…, gross 0 = sem cartão) sempre no fim, nas duas direcções.
+        case "esc":    return compareTextNullsLast(a.escHist, b.escHist, mult);
+        case "fed":    return compareTextNullsLast(a.fed, b.fed, mult);
+        case "clube":  return compareTextNullsLast(a.clube, b.clube, mult);
+        case "hcp":    return compareNullsLast(a.hcp, b.hcp, mult);
+        case "tee":    return compareTextNullsLast(a.tee, b.tee, mult);
         case "nasc": {
           // Data completa quando há; senão o ano (lido ou estimado) a meio do ano —
           // as estimativas ordenam-se junto das datas reais, não no fim.
           const k = (p: typeof a) => p.dob ? Date.parse(p.dob)
-            : (p.dobYear ?? p.birthYearEst) != null ? Date.UTC((p.dobYear ?? p.birthYearEst)!, 6, 1) : INF;
-          v = k(a) - k(b);
-          break;
+            : (p.dobYear ?? p.birthYearEst) != null ? Date.UTC((p.dobYear ?? p.birthYearEst)!, 6, 1) : null;
+          return compareNullsLast(k(a), k(b), mult);
         }
         case "hora":   v = a.teeTime.localeCompare(b.teeTime); break;
-        case "buraco": v = (a.startHole ?? INF) - (b.startHole ?? INF); break;
-        case "toPar":  v = (a.toPar ?? INF) - (b.toPar ?? INF); break;
-        case "gross":  v = (a.gross || INF) - (b.gross || INF); break;
+        case "buraco": return compareNullsLast(a.startHole, b.startHole, mult);
+        case "toPar":  return compareNullsLast(a.toPar, b.toPar, mult);
+        case "gross":  return compareNullsLast(a.gross || null, b.gross || null, mult);
         case "om": {
           const oa = lookupOm(omLookup, a.fed, a.nome), ob = lookupOm(omLookup, b.fed, b.nome);
-          v = (oa ? oa.pts : -1) - (ob ? ob.pts : -1); break;
+          return compareNullsLast(oa ? oa.pts : null, ob ? ob.pts : null, mult);
         }
       }
       return mult * v;

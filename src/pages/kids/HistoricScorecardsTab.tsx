@@ -22,6 +22,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 import ToPar from "../../ui/ToPar";
 import SortableHdr from "../../ui/SortableHdr";
+import { compareNullsLast, compareTextNullsLast, compareValuesNullsLast } from "../../hooks/useSort";
 import TabRow from "../../ui/TabRow";
 import LoadingState from "../../ui/LoadingState";
 import { kidsUrl } from "../../ui/KidsLink";
@@ -284,21 +285,21 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
     // agregadas de cada jogador. Edições ordenam pelo seu year.
     const dir = sortDir === "asc" ? 1 : -1;
     // Métricas agregadas por jogador (na ronda "best" para gross/toPar)
-    const playerMetric = (pl: PlayerCard, key: SortKey): number | string => {
+    const playerMetric = (pl: PlayerCard, key: SortKey): number | string | null => {
       if (key.startsWith("h")) {
         const hi = parseInt(key.slice(1), 10) - 1;
         // melhor (menor) resultado nesse buraco entre TODAS as
         // rondas do jogador.
-        let best = 99;
+        let best: number | null = null;
         for (const r of pl.rounds) {
           const v = r.strokes[hi];
-          if (v && v > 0 && v < best) best = v;
+          if (v && v > 0 && (best == null || v < best)) best = v;
         }
         return best;
       }
       switch (key) {
         case "name":    return pl.name;
-        case "country": return pl.country || "";
+        case "country": return pl.country || null;
         case "topar":   return Math.min(...pl.rounds.map(r => r.toPar));
         case "gross":   return Math.min(...pl.rounds.map(r => r.gross));
         case "birds":   return pl.rounds.reduce((a, r) => a + r.birds, 0);
@@ -307,7 +308,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         case "rnd":     return pl.rounds.length;
         case "year":    return 0; // year sort ordena edições, não players
         case "pos":
-        default:        return pl.officialPlace ?? Number.POSITIVE_INFINITY;
+        default:        return pl.officialPlace ?? null;
       }
     };
 
@@ -329,7 +330,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
           const va = playerMetric(a, sortKey);
           const vb = playerMetric(b, sortKey);
           if (typeof va === "string" && typeof vb === "string") return va.localeCompare(vb) * dir;
-          return ((va as number) - (vb as number)) * dir;
+          return compareValuesNullsLast(va, vb, dir);
         });
       }
       for (const pl of players) {
@@ -382,14 +383,12 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
     const cmp = (a: FlatRow, b: FlatRow): number => {
       if (sortKey.startsWith("h")) {
         const hi = parseInt(sortKey.slice(1), 10) - 1;
-        const va = a.r.strokes[hi] || 99;
-        const vb = b.r.strokes[hi] || 99;
-        return (va - vb) * dir;
+        return compareNullsLast(a.r.strokes[hi] || null, b.r.strokes[hi] || null, dir);
       }
       switch (sortKey) {
         case "year":    return (a.ed.year.localeCompare(b.ed.year)) * dir;
         case "name":    return a.pl.name.localeCompare(b.pl.name) * dir;
-        case "country": return (a.pl.country || "").localeCompare(b.pl.country || "") * dir;
+        case "country": return compareTextNullsLast(a.pl.country, b.pl.country, dir);
         case "rnd":     return (a.r.rn - b.r.rn) * dir;
         case "topar":   return (a.r.toPar - b.r.toPar) * dir;
         case "gross":   return (a.r.gross - b.r.gross) * dir;
@@ -401,9 +400,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
           // pos: fallback para ordem oficial (ano desc, place asc)
           const yr = b.ed.year.localeCompare(a.ed.year);
           if (yr !== 0) return yr;
-          const ap = a.pl.officialPlace ?? Number.POSITIVE_INFINITY;
-          const bp = b.pl.officialPlace ?? Number.POSITIVE_INFINITY;
-          return (ap - bp) * dir;
+          return compareNullsLast(a.pl.officialPlace, b.pl.officialPlace, dir);
         }
       }
     };
@@ -652,15 +649,15 @@ function EcleticTable({ editions, limit, hpr }: {
 
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    const metric = (row: EclRow): number | string => {
+    const metric = (row: EclRow): number | string | null => {
       if (sortKey.startsWith("h")) {
         const v = row.ecl.best[parseInt(sortKey.slice(1), 10) - 1];
-        return v && v > 0 ? v : 99;
+        return v && v > 0 ? v : null;
       }
       switch (sortKey) {
         case "year":    return row.ed.year;
         case "name":    return row.pl.name;
-        case "country": return row.pl.country || "";
+        case "country": return row.pl.country || null;
         case "topar":   return row.ecl.toPar;
         case "gross":   return row.ecl.total;
         case "delta":   return row.ecl.delta;
@@ -676,12 +673,8 @@ function EcleticTable({ editions, limit, hpr }: {
         if (yr !== 0) return yr;
         return a.ecl.total - b.ecl.total;
       }
-      const va = metric(a), vb = metric(b);
-      let cmp: number;
-      if (typeof va === "string" && typeof vb === "string") cmp = va.localeCompare(vb, "pt");
-      else cmp = (va as number) - (vb as number);
-      if (cmp === 0) cmp = a.ecl.total - b.ecl.total; // tiebreak
-      return cmp * dir;
+      return compareValuesNullsLast(metric(a), metric(b), dir)
+        || (a.ecl.total - b.ecl.total) * dir; // tiebreak
     });
   }, [rows, sortKey, sortDir]);
 

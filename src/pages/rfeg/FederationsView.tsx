@@ -12,7 +12,7 @@ import type React from "react";
 import DetailHeader from "../../ui/DetailHeader";
 import ExtLink from "../../ui/ExternalLink";
 import SortableHdr from "../../ui/SortableHdr";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareTextNullsLast } from "../../hooks/useSort";
 
 interface RFEGFederation {
   /** Nome oficial RFEG */
@@ -249,13 +249,9 @@ function FedTable({ rows, columns }: { rows: RFEGFederation[]; columns: FedColum
     ? [...rows].sort((a, b) => {
         const av = col.sortVal!(a);
         const bv = col.sortVal!(b);
-        let cmp: number;
-        if (typeof av === "number" && typeof bv === "number") {
-          cmp = av - bv;
-        } else {
-          cmp = String(av).localeCompare(String(bv), "es");
-        }
-        return sortDir === "asc" ? cmp : -cmp;
+        const dir = sortDir === "asc" ? 1 : -1;
+        if (typeof av === "number" && typeof bv === "number") return (av - bv) * dir;
+        return compareTextNullsLast(String(av), String(bv), dir, "es"); // vazio ("") sempre no fim
       })
     : rows;
 

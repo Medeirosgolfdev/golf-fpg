@@ -16,6 +16,7 @@ import type { FederadoPP } from "../../data/federadosPPLoader";
 import { hasRealPPHcp } from "../../data/federadosPPLoader";
 import { norm } from "../../utils/format";
 import { clubShort } from "../../utils/playerUtils";
+import { compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import { PIN_RANK } from "../../constants/pinnedPlayers";
 import { ESC_ORDER_FULL as ESC_ORDER, isSeniorEscalao } from "../../constants/escaloes";
 
@@ -264,14 +265,10 @@ export function filterAndSortPlayers<T extends ListPlayer>(
     }
     switch (f.sortKey) {
       case "name": return dir * a.name.localeCompare(b.name, "pt");
-      case "hcp": return dir * ((a.hcp ?? 999) - (b.hcp ?? 999));
-      case "club": return dir * clubShort(a as unknown as Player).localeCompare(clubShort(b as unknown as Player), "pt");
-      case "escalao": {
-        const ai = ESC_IDX.get(a.escalao) ?? 999;
-        const bi = ESC_IDX.get(b.escalao) ?? 999;
-        return dir * (ai - bi);
-      }
-      case "ranking": return dir * ((a.hcp ?? 999) - (b.hcp ?? 999));
+      case "hcp": return compareNullsLast(a.hcp, b.hcp, dir);
+      case "club": return compareTextNullsLast(clubShort(a as unknown as Player), clubShort(b as unknown as Player), dir);
+      case "escalao": return compareNullsLast(ESC_IDX.get(a.escalao), ESC_IDX.get(b.escalao), dir);
+      case "ranking": return compareNullsLast(a.hcp, b.hcp, dir);
       case "rounds":
         return dir * (playerRoundCount(a, statsDb[a.fed]) - playerRoundCount(b, statsDb[b.fed]))
           || (dir * ((statsDb[a.fed]?.roundsTotal ?? 0) - (statsDb[b.fed]?.roundsTotal ?? 0)));

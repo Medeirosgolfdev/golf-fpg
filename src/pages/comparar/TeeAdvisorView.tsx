@@ -24,7 +24,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import type { Course, Tee } from "../../data/types";
 import { loadPlayerData, type PlayerPageData } from "../../data/playerDataLoader";
 import { getParTotal } from "../../ui/CourseHeroCard";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import EmptyState from "../../ui/EmptyState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar";
@@ -500,18 +500,18 @@ function NumInput({ value, onChange, step = 1, title }: {
 
 type TeeSortKey = "tee" | "dist" | "dhab" | "par" | "cr" | "slope" | "ph" | "alvo" | "gir" | "nh" | "avg";
 
-const TEE_SORT_VAL: Record<TeeSortKey, (m: TeeMetrics) => number | string> = {
+const TEE_SORT_VAL: Record<TeeSortKey, (m: TeeMetrics) => number | string | null> = {
   tee: m => m.tee.teeName.toLowerCase(),
-  dist: m => m.dist ?? -1,
-  dhab: m => m.deltaHab != null ? Math.abs(m.deltaHab) : Number.MAX_SAFE_INTEGER,
+  dist: m => m.dist,
+  dhab: m => m.deltaHab != null ? Math.abs(m.deltaHab) : null,
   par: m => m.par,
-  cr: m => m.cr ?? -1,
-  slope: m => m.slope ?? -1,
-  ph: m => m.ph ?? -99,
-  alvo: m => m.grossAlvo ?? -1,
-  gir: m => m.gir.total > 0 ? m.gir.reach.length : -1,
+  cr: m => m.cr,
+  slope: m => m.slope,
+  ph: m => m.ph,
+  alvo: m => m.grossAlvo,
+  gir: m => m.gir.total > 0 ? m.gir.reach.length : null,
   nh: m => m.hist.n,
-  avg: m => m.hist.recentTypVsPar ?? Number.MAX_SAFE_INTEGER,
+  avg: m => m.hist.recentTypVsPar,
 };
 
 function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | null }) {
@@ -522,9 +522,7 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
     return [...rows].sort((a, b) => {
-      const av = TEE_SORT_VAL[sortKey](a), bv = TEE_SORT_VAL[sortKey](b);
-      if (typeof av === "string" && typeof bv === "string") return av.localeCompare(bv, "pt") * dir;
-      return ((av as number) - (bv as number)) * dir;
+      return compareValuesNullsLast(TEE_SORT_VAL[sortKey](a), TEE_SORT_VAL[sortKey](b), dir);
     });
   }, [rows, sortKey, sortDir]);
 

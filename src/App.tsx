@@ -12,6 +12,7 @@ import { CoursesGate } from "./context/CoursesContext";
 import NavBar from "./ui/NavBar";
 import PasswordGate from "./ui/PasswordGate";
 import LoadingState from "./ui/LoadingState";
+import SectionErrorBoundary from "./ui/SectionErrorBoundary";
 
 /* ── Cabeçalho mínimo — usado nos estados loading/error/gate ── */
 function MinimalHeader() {
@@ -87,6 +88,7 @@ function EnglandRedirect() {
 }
 
 export default function App() {
+  const { pathname } = useLocation();
   const [status, setStatus] = useState<Status>({ kind: "loading" });
 
   /* Calendar unlock state — passado para o contexto */
@@ -163,6 +165,9 @@ export default function App() {
         <AppContext.Provider value={ctxValue}>
           <NavBar />
           <main className="content">
+            {/* Um erro numa página (ou um ficheiro antigo depois de um deploy) mostra
+                o aviso em vez de deixar o site em branco; mudar de página limpa o erro. */}
+            <SectionErrorBoundary resetKey={pathname} label="esta página">
             <Suspense fallback={<LoadingState message="A carregar…" />}>
               <Routes>
                 <Route path="/campos/:courseKey?" element={<CoursesGate withPlayers><CamposPage /></CoursesGate>} />
@@ -248,6 +253,7 @@ export default function App() {
                 <Route path="/*" element={<Navigate to="/jogadores" replace />} />
               </Routes>
             </Suspense>
+            </SectionErrorBoundary>
           </main>
         </AppContext.Provider>
       )}
