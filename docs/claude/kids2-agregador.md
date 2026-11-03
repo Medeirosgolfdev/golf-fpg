@@ -299,6 +299,17 @@ condados ingleses entra no `hcpHistory` (source `hcp-jogo`, não é o HI).
 `kidsDob.hcpAt` dá o mais perto da data do torneio (≤183 dias) a quem não tem
 `hcpExact` — o `SDPill` pinta o SD com ele (Venice Open 2026: 20 de 31; antes só o Manuel).
 
+**Só no ranking juvenil da Federgolf** (sem prova nos `federgolf/*.json`): o `fig.js`
+acrescenta-os sem provas (`extra.soRanking`, com ano e clube). O passo 5b junta-os
+à ÚNICA ficha italiana (alguma entidade com país IT) com esse nome, mesmo sexo e
+ano compatível; sem ela não fazem ficha (fichas sem provas caem no passo 8).
+Venice 2026: Orlando Borghi, Francesco Monosi e Michael Spivak ganharam ano e clube.
+
+**Raparigas e quem não está no member-history USKids:** sem memberId os resultados
+caem no matcher e não há ficha (as raparigas do Venice ficaram sem seta). Testado a
+03/11/2026 dar ficha a todos pelo nome + país (5,4 mil novas) e desfeito — ela não
+as quer («as raparigas não me são relevantes»).
+
 ## Órfãs e cauda de duplicados (`find-orphan-duplicates.js`, 2026-09-18)
 
 O `find-junior-duplicates.js` exige idade (quase nunca há DOB) e desconfia de países diferentes (cada fonte regista coisas diferentes: residência, licença, nacionalidade) — por isso não apanhava a cauda. O `scripts/find-orphan-duplicates.js` usa:
