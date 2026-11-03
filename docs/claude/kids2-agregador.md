@@ -288,6 +288,11 @@ Fontes que publicam só o ANO (Federgolf — ranking juvenil; GolfBox) entram co
 `src/data/kidsDob.ts` usa-o como ano LIDO (pílula na cor do escalão), por cima da
 estimativa dos escalões USKids (`ne`, a vermelho). Antes perdia-se: os italianos do
 Venice Open apareciam estimados apesar de a FIG dar o ano. Ordem: `d` > `y` > `ne`.
+⚠ Só fontes que PUBLICAM o ano: Federgolf (`extra.anosNascimento`) e as com
+`extra.birthYear` (GolfBox…), nunca a GJGL (`birthYearEst`, estimado) nem a EGR; e o
+scout não dá `y` se contradiz os escalões USKids (`ne`) — sinal de duas pessoas na
+mesma ficha (caso Paul Berger, «2015» a jogar Boys 12). Também o `hcpJogo` dos
+condados ingleses entra no `hcpHistory` (source `hcp-jogo`, não é o HI).
 
 **HCP com data para o SD:** a Federgolf põe o `indice` de cada prova no `hcpHistory`
 (source `fig`); o scout leva `hh` (até 6 `[data, hcp]`, também o RFEG oficial) e
