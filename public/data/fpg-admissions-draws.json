@@ -1,6 +1,6 @@
 {
   "scrapedAt": "2026-11-03T11:16:47.287Z",
-  "total": 1251,
+  "total": 1252,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -404899,14 +404899,14 @@
       "date": "2026-12-03",
       "campo": "Quinta do Vale",
       "_manual": true,
-      "_note": "Rapazes. tcode PROVISÓRIO (a FPG ainda não abriu o torneio no scoring; as inscrições são pelo formulário do fpg.pt). Lido do PDF Entry List Boys de 28/10/2026 — OneDrive/Golfe/Arquivo_GOLF/2026/2026-10-28_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Lugares 1-12 = wild cards FPG por nomear; aqui a posição 1 = 13.º lugar da lista. Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json de 28/10): 20 de 23 portugueses/residentes; sem federado claro: Tiago Araujo, Miguel Ferreira (só há Miguel Maria Neves Ferreira, 15,4).",
+      "_note": "Rapazes. tcode PROVISÓRIO (a FPG ainda não abriu o torneio no scoring; as inscrições são pelo formulário do fpg.pt). Lido do PDF Entry List Boys de 02/11/2026 — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-02_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Lugares 1-12 = wild cards FPG por nomear; aqui a posição 1 = 13.º lugar da lista. Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json). Sem federado claro: Tiago Araujo, Miguel Ferreira (só há Miguel Maria Neves Ferreira, 15,4).",
       "admissions": {
         "name": "2nd Castro Marim Portuguese Int. U14 Championship — Rapazes",
         "date": "2026-12-03",
-        "status": "Entry List FPG 28/10 · 12 wild cards por nomear · inscrições até 3/11 13h",
+        "status": "Entry List FPG 02/11 · 12 wild cards por nomear · inscrições até 3/11 13h",
         "totalInscritos": 30,
         "reservas": 67,
-        "_source": "PDF Entry List Boys FPG 28/10/2026 (manual)",
+        "_source": "PDF Entry List Boys FPG 02/11/2026 (manual)",
         "players": [
           {
             "pos": 1,
@@ -405033,6 +405033,17 @@
           {
             "pos": 12,
             "fed": null,
+            "nome": "Victor Bernardini",
+            "clube": null,
+            "hcp": -2.1,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France"
+          },
+          {
+            "pos": 13,
+            "fed": null,
             "nome": "Artyom Becerra",
             "clube": null,
             "hcp": -1.9,
@@ -405042,7 +405053,7 @@
             "country": "France"
           },
           {
-            "pos": 13,
+            "pos": 14,
             "fed": null,
             "nome": "Marcus Latt",
             "clube": null,
@@ -405053,7 +405064,7 @@
             "country": "Estonia"
           },
           {
-            "pos": 14,
+            "pos": 15,
             "fed": null,
             "nome": "Paul Joly",
             "clube": null,
@@ -405064,7 +405075,7 @@
             "country": "France"
           },
           {
-            "pos": 15,
+            "pos": 16,
             "fed": null,
             "nome": "Tom Legueu",
             "clube": null,
@@ -405075,7 +405086,7 @@
             "country": "France"
           },
           {
-            "pos": 16,
+            "pos": 17,
             "fed": null,
             "nome": "Althys Ferbus Boisdet",
             "clube": null,
@@ -405086,7 +405097,7 @@
             "country": "France"
           },
           {
-            "pos": 17,
+            "pos": 18,
             "fed": null,
             "nome": "Matyáš Jirásek",
             "clube": null,
@@ -405095,17 +405106,6 @@
             "dataInscricao": null,
             "status": "confirmed",
             "country": "Czech Republic"
-          },
-          {
-            "pos": 18,
-            "fed": null,
-            "nome": "Victor Bernardini",
-            "clube": null,
-            "hcp": -1.6,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "confirmed",
-            "country": "France"
           },
           {
             "pos": 19,
@@ -405121,6 +405121,28 @@
           {
             "pos": 20,
             "fed": null,
+            "nome": "Aodhan Fitzgerald",
+            "clube": null,
+            "hcp": -1.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "United Arab Emirates"
+          },
+          {
+            "pos": 21,
+            "fed": null,
+            "nome": "Noa Warin",
+            "clube": null,
+            "hcp": -1.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France"
+          },
+          {
+            "pos": 22,
+            "fed": null,
             "nome": "Harry Poillerat",
             "clube": null,
             "hcp": -1.5,
@@ -405130,7 +405152,7 @@
             "country": "France"
           },
           {
-            "pos": 21,
+            "pos": 23,
             "fed": null,
             "nome": "Maël Le Solliec",
             "clube": null,
@@ -405141,7 +405163,7 @@
             "country": "France"
           },
           {
-            "pos": 22,
+            "pos": 24,
             "fed": null,
             "nome": "Tom Doyle",
             "clube": null,
@@ -405152,7 +405174,7 @@
             "country": "Ireland"
           },
           {
-            "pos": 23,
+            "pos": 25,
             "fed": null,
             "nome": "Candide Remoleur",
             "clube": null,
@@ -405163,7 +405185,7 @@
             "country": "France"
           },
           {
-            "pos": 24,
+            "pos": 26,
             "fed": null,
             "nome": "Raphael Barthouil",
             "clube": null,
@@ -405174,9 +405196,9 @@
             "country": "France"
           },
           {
-            "pos": 25,
+            "pos": 27,
             "fed": null,
-            "nome": "Warin Noa",
+            "nome": "Arthur Rolland",
             "clube": null,
             "hcp": -0.9,
             "vac": null,
@@ -405185,7 +405207,7 @@
             "country": "France"
           },
           {
-            "pos": 26,
+            "pos": 28,
             "fed": null,
             "nome": "Elia Secomandi",
             "clube": null,
@@ -405196,7 +405218,7 @@
             "country": "Italy"
           },
           {
-            "pos": 27,
+            "pos": 29,
             "fed": null,
             "nome": "Teyssier Léon",
             "clube": null,
@@ -405207,18 +405229,7 @@
             "country": "France"
           },
           {
-            "pos": 28,
-            "fed": null,
-            "nome": "Arthur Rolland",
-            "clube": null,
-            "hcp": -0.8,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "confirmed",
-            "country": "France"
-          },
-          {
-            "pos": 29,
+            "pos": 30,
             "fed": null,
             "nome": "Karol Gil",
             "clube": null,
@@ -405229,18 +405240,18 @@
             "country": "Poland"
           },
           {
-            "pos": 30,
+            "pos": 1,
             "fed": null,
             "nome": "Julius Gellermann",
             "clube": null,
             "hcp": -0.7,
             "vac": null,
             "dataInscricao": null,
-            "status": "confirmed",
+            "status": "reserva",
             "country": "Germany"
           },
           {
-            "pos": 1,
+            "pos": 2,
             "fed": null,
             "nome": "Allouache",
             "clube": null,
@@ -405251,7 +405262,7 @@
             "country": "France"
           },
           {
-            "pos": 2,
+            "pos": 3,
             "fed": null,
             "nome": "Adam Allouache",
             "clube": null,
@@ -405262,7 +405273,18 @@
             "country": "France"
           },
           {
-            "pos": 3,
+            "pos": 4,
+            "fed": null,
+            "nome": "Gaspard Bremond",
+            "clube": null,
+            "hcp": -0.7,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "France"
+          },
+          {
+            "pos": 5,
             "fed": null,
             "nome": "Riccardo Rizzo",
             "clube": null,
@@ -405273,18 +405295,18 @@
             "country": "Italy"
           },
           {
-            "pos": 4,
+            "pos": 6,
             "fed": null,
             "nome": "Samuele Pollastri",
             "clube": null,
-            "hcp": -0.5,
+            "hcp": -0.6,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
             "country": "Italy"
           },
           {
-            "pos": 5,
+            "pos": 7,
             "fed": null,
             "nome": "Gabin Tosatto",
             "clube": null,
@@ -405295,7 +405317,7 @@
             "country": "France"
           },
           {
-            "pos": 6,
+            "pos": 8,
             "fed": null,
             "nome": "Theophile Galle",
             "clube": null,
@@ -405306,7 +405328,18 @@
             "country": "France"
           },
           {
-            "pos": 7,
+            "pos": 9,
+            "fed": null,
+            "nome": "Giorgio Regoli",
+            "clube": null,
+            "hcp": -0.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Italy"
+          },
+          {
+            "pos": 10,
             "fed": null,
             "nome": "Arthur Mouy",
             "clube": null,
@@ -405317,19 +405350,7 @@
             "country": "France"
           },
           {
-            "pos": 8,
-            "fed": "51612",
-            "nome": "Oliver Smith",
-            "clube": "Vila Sol",
-            "hcp": 0,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "reserva",
-            "country": "United Kingdom",
-            "dob": "2013-05-03"
-          },
-          {
-            "pos": 9,
+            "pos": 11,
             "fed": null,
             "nome": "Giorgio Lopes",
             "clube": null,
@@ -405340,7 +405361,7 @@
             "country": "Italy"
           },
           {
-            "pos": 10,
+            "pos": 12,
             "fed": null,
             "nome": "Luan Burkhalter",
             "clube": null,
@@ -405351,7 +405372,7 @@
             "country": "Switzerland"
           },
           {
-            "pos": 11,
+            "pos": 13,
             "fed": null,
             "nome": "Côme Chaboud",
             "clube": null,
@@ -405362,18 +405383,7 @@
             "country": "France"
           },
           {
-            "pos": 12,
-            "fed": null,
-            "nome": "Emile Gonzalvez",
-            "clube": null,
-            "hcp": 0.3,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "reserva",
-            "country": "France"
-          },
-          {
-            "pos": 13,
+            "pos": 14,
             "fed": null,
             "nome": "Tommaso Falla",
             "clube": null,
@@ -405384,7 +405394,7 @@
             "country": "Italy"
           },
           {
-            "pos": 14,
+            "pos": 15,
             "fed": null,
             "nome": "Paul Berger",
             "clube": null,
@@ -405395,7 +405405,7 @@
             "country": "Germany"
           },
           {
-            "pos": 15,
+            "pos": 16,
             "fed": null,
             "nome": "Taïg Xian Camblong",
             "clube": null,
@@ -405406,7 +405416,7 @@
             "country": "France"
           },
           {
-            "pos": 16,
+            "pos": 17,
             "fed": null,
             "nome": "Kit Hill",
             "clube": null,
@@ -405417,7 +405427,7 @@
             "country": "United Kingdom"
           },
           {
-            "pos": 17,
+            "pos": 18,
             "fed": null,
             "nome": "Hafsi Hedi",
             "clube": null,
@@ -405428,7 +405438,7 @@
             "country": "France"
           },
           {
-            "pos": 18,
+            "pos": 19,
             "fed": null,
             "nome": "Harry Tiernan",
             "clube": null,
@@ -405439,18 +405449,18 @@
             "country": "Ireland"
           },
           {
-            "pos": 19,
+            "pos": 20,
             "fed": null,
             "nome": "Arthur Yanez",
             "clube": null,
-            "hcp": 0.7,
+            "hcp": 0.4,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
             "country": "France"
           },
           {
-            "pos": 20,
+            "pos": 21,
             "fed": null,
             "nome": "Nicolas Xu Chen",
             "clube": null,
@@ -405461,7 +405471,7 @@
             "country": "Spain"
           },
           {
-            "pos": 21,
+            "pos": 22,
             "fed": null,
             "nome": "Cayssi Dunlop",
             "clube": null,
@@ -405472,7 +405482,18 @@
             "country": "France"
           },
           {
-            "pos": 22,
+            "pos": 23,
+            "fed": null,
+            "nome": "Léon Teyssier",
+            "clube": null,
+            "hcp": 0.9,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "France"
+          },
+          {
+            "pos": 24,
             "fed": null,
             "nome": "Paul Misha",
             "clube": null,
@@ -405483,18 +405504,7 @@
             "country": "France"
           },
           {
-            "pos": 23,
-            "fed": null,
-            "nome": "Eliel Jeuch",
-            "clube": null,
-            "hcp": 1,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "reserva",
-            "country": "France"
-          },
-          {
-            "pos": 24,
+            "pos": 25,
             "fed": "46299",
             "nome": "Francisco Nunes",
             "clube": "Miramar",
@@ -405506,7 +405516,7 @@
             "dob": "2012-12-28"
           },
           {
-            "pos": 25,
+            "pos": 26,
             "fed": null,
             "nome": "Harry Wang",
             "clube": null,
@@ -405517,7 +405527,7 @@
             "country": "England"
           },
           {
-            "pos": 26,
+            "pos": 27,
             "fed": null,
             "nome": "Jules Dechery",
             "clube": null,
@@ -405528,18 +405538,18 @@
             "country": "France"
           },
           {
-            "pos": 27,
+            "pos": 28,
             "fed": null,
-            "nome": "William Harran",
+            "nome": "Casper Soudant",
             "clube": null,
-            "hcp": 1.3,
+            "hcp": 1.2,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "France"
+            "country": "The Netherlands"
           },
           {
-            "pos": 28,
+            "pos": 29,
             "fed": "49124",
             "nome": "Nuno Palmares",
             "clube": "Estoril",
@@ -405551,7 +405561,7 @@
             "dob": "2012-04-28"
           },
           {
-            "pos": 29,
+            "pos": 30,
             "fed": null,
             "nome": "Matteo Durando",
             "clube": null,
@@ -405562,20 +405572,6 @@
             "country": "Italy"
           },
           {
-            "pos": 30,
-            "fed": null,
-            "nome": "Harry Tiernan",
-            "clube": null,
-            "hcp": 1.5,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "reserva",
-            "country": "Ireland",
-            "tags": [
-              "repetido no PDF"
-            ]
-          },
-          {
             "pos": 31,
             "fed": null,
             "nome": "William Harran",
@@ -405584,21 +405580,19 @@
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Switzerland",
-            "tags": [
-              "repetido no PDF"
-            ]
+            "country": "Switzerland"
           },
           {
             "pos": 32,
-            "fed": null,
-            "nome": "Lenny Ray Lienert",
-            "clube": null,
+            "fed": "51612",
+            "nome": "Oliver Smith",
+            "clube": "Vila Sol",
             "hcp": 1.8,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Switzerland"
+            "country": "United Kingdom",
+            "dob": "2013-05-03"
           },
           {
             "pos": 33,
@@ -405671,17 +405665,6 @@
           {
             "pos": 39,
             "fed": null,
-            "nome": "Arthur Pralon",
-            "clube": null,
-            "hcp": 3.1,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "reserva",
-            "country": "France"
-          },
-          {
-            "pos": 40,
-            "fed": null,
             "nome": "Felipe Tavares de Araujo",
             "clube": null,
             "hcp": 3.1,
@@ -405691,7 +405674,7 @@
             "country": "Italy"
           },
           {
-            "pos": 41,
+            "pos": 40,
             "fed": null,
             "nome": "Nelson Nunez de Leon",
             "clube": null,
@@ -405700,6 +405683,17 @@
             "dataInscricao": null,
             "status": "reserva",
             "country": "Monaco"
+          },
+          {
+            "pos": 41,
+            "fed": null,
+            "nome": "Ilyes Cauden",
+            "clube": null,
+            "hcp": 3.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Maroc"
           },
           {
             "pos": 42,
@@ -405830,21 +405824,6 @@
           },
           {
             "pos": 53,
-            "fed": "46038",
-            "nome": "João Balixa",
-            "clube": "Miramar",
-            "hcp": 4.3,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "reserva",
-            "country": "Portugal",
-            "tags": [
-              "repetido no PDF"
-            ],
-            "dob": "2012-08-10"
-          },
-          {
-            "pos": 54,
             "fed": "58937",
             "nome": "Alfie Dunbar",
             "clube": "Vila Sol",
@@ -405856,7 +405835,7 @@
             "dob": "2012-02-18"
           },
           {
-            "pos": 55,
+            "pos": 54,
             "fed": null,
             "nome": "Haqvin Sylven",
             "clube": null,
@@ -405867,7 +405846,7 @@
             "country": "Switzerland"
           },
           {
-            "pos": 56,
+            "pos": 55,
             "fed": "46480",
             "nome": "Afonso Pinto",
             "clube": "Oporto",
@@ -405879,7 +405858,7 @@
             "dob": "2013-04-16"
           },
           {
-            "pos": 57,
+            "pos": 56,
             "fed": "46296",
             "nome": "Raul Pazos",
             "clube": "Miramar",
@@ -405891,7 +405870,7 @@
             "dob": "2013-02-08"
           },
           {
-            "pos": 58,
+            "pos": 57,
             "fed": null,
             "nome": "Aristophane Baruch",
             "clube": null,
@@ -405900,6 +405879,18 @@
             "dataInscricao": null,
             "status": "reserva",
             "country": "France"
+          },
+          {
+            "pos": 58,
+            "fed": "47341",
+            "nome": "Sebastião Soares",
+            "clube": "Oporto",
+            "hcp": 6.1,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Portugal",
+            "dob": "2012-02-15"
           },
           {
             "pos": 59,
@@ -405949,15 +405940,15 @@
           },
           {
             "pos": 63,
-            "fed": "47341",
-            "nome": "Sebastião Soares",
-            "clube": "Oporto",
-            "hcp": 6.1,
+            "fed": "46037",
+            "nome": "Tomas Lima Pinto",
+            "clube": "Vilamoura, C. G",
+            "hcp": 8.5,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
             "country": "Portugal",
-            "dob": "2012-02-15"
+            "dob": "2012-04-18"
           },
           {
             "pos": 64,
@@ -406004,6 +405995,597 @@
             "dataInscricao": null,
             "status": "reserva",
             "country": "Portugal"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "000",
+      "tcode": "90873",
+      "name": "2nd Castro Marim Portuguese Int. U14 Championship — Raparigas",
+      "date": "2026-12-03",
+      "campo": "Quinta do Vale",
+      "_manual": true,
+      "_note": "Raparigas. tcode PROVISÓRIO (a FPG ainda não abriu o torneio no scoring; as inscrições são pelo formulário do fpg.pt). Lido do PDF Entry List Girls de 02/11/2026 — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-02_FPG_Entry_List_Girls_Castro_Marim_U14.pdf. Lugares 1-12 = wild cards FPG por nomear; aqui a posição 1 = 13.º lugar da lista. Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json).",
+      "admissions": {
+        "name": "2nd Castro Marim Portuguese Int. U14 Championship — Raparigas",
+        "date": "2026-12-03",
+        "status": "Entry List FPG 02/11 · 12 wild cards por nomear · inscrições até 3/11 13h",
+        "totalInscritos": 30,
+        "reservas": 17,
+        "_source": "PDF Entry List Girls FPG 02/11/2026 (manual)",
+        "players": [
+          {
+            "pos": 1,
+            "fed": null,
+            "nome": "Ginevra Tassoni Teg",
+            "clube": null,
+            "hcp": -4.1,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Italy",
+            "sex": "F"
+          },
+          {
+            "pos": 2,
+            "fed": null,
+            "nome": "Morgane da Eira",
+            "clube": null,
+            "hcp": -3.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 3,
+            "fed": null,
+            "nome": "Romy Tertian",
+            "clube": null,
+            "hcp": -3.4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 4,
+            "fed": null,
+            "nome": "Clemence Hebert",
+            "clube": null,
+            "hcp": -2.9,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 5,
+            "fed": null,
+            "nome": "Safaa Assbai",
+            "clube": null,
+            "hcp": -2.7,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Maroc",
+            "sex": "F"
+          },
+          {
+            "pos": 6,
+            "fed": null,
+            "nome": "Zélie Guilloux",
+            "clube": null,
+            "hcp": -2.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 7,
+            "fed": null,
+            "nome": "Cornelia Bermudo del Rio",
+            "clube": null,
+            "hcp": -2.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 8,
+            "fed": null,
+            "nome": "Andrea Arnal Adsuara",
+            "clube": null,
+            "hcp": -2.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 9,
+            "fed": null,
+            "nome": "Anouchka Sandrini",
+            "clube": null,
+            "hcp": -2.5,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 10,
+            "fed": null,
+            "nome": "Valvanuz de Blas Palencia",
+            "clube": null,
+            "hcp": -1.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 11,
+            "fed": null,
+            "nome": "Prune Diguerher",
+            "clube": null,
+            "hcp": -1.7,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 12,
+            "fed": null,
+            "nome": "Chloe Huang Xu",
+            "clube": null,
+            "hcp": -1.5,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 13,
+            "fed": null,
+            "nome": "Liliane Binet",
+            "clube": null,
+            "hcp": -1.4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 14,
+            "fed": null,
+            "nome": "Clarisse Bonnard",
+            "clube": null,
+            "hcp": -0.9,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 15,
+            "fed": null,
+            "nome": "Moïra Humbert",
+            "clube": null,
+            "hcp": -0.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 16,
+            "fed": "45393",
+            "nome": "Laura Santos",
+            "clube": "PXO Clube",
+            "hcp": -0.7,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Portugal",
+            "dob": "2012-02-12",
+            "sex": "F"
+          },
+          {
+            "pos": 17,
+            "fed": null,
+            "nome": "Marie-Rose Boidron",
+            "clube": null,
+            "hcp": -0.5,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 18,
+            "fed": null,
+            "nome": "Aylin Baudy",
+            "clube": null,
+            "hcp": -0.4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 19,
+            "fed": null,
+            "nome": "Louisa Fournier",
+            "clube": null,
+            "hcp": -0.4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 20,
+            "fed": null,
+            "nome": "Anna Schmohl",
+            "clube": null,
+            "hcp": -0.3,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 21,
+            "fed": null,
+            "nome": "Julia Salvadores",
+            "clube": null,
+            "hcp": -0.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 22,
+            "fed": null,
+            "nome": "Valentina Marciniak",
+            "clube": null,
+            "hcp": -0.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 23,
+            "fed": null,
+            "nome": "Fabiola Merello Lloret",
+            "clube": null,
+            "hcp": -0.1,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 24,
+            "fed": null,
+            "nome": "Emma Bonvin",
+            "clube": null,
+            "hcp": 0.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Switzerland",
+            "sex": "F"
+          },
+          {
+            "pos": 25,
+            "fed": null,
+            "nome": "Lily Rose Kostelnik",
+            "clube": null,
+            "hcp": 1.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 26,
+            "fed": null,
+            "nome": "Zoe Zavoralova",
+            "clube": null,
+            "hcp": 1.3,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Czech Republic",
+            "sex": "F"
+          },
+          {
+            "pos": 27,
+            "fed": null,
+            "nome": "Anne-Constance Chabot",
+            "clube": null,
+            "hcp": 1.4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 28,
+            "fed": null,
+            "nome": "Ruby Caremier",
+            "clube": null,
+            "hcp": 1.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 29,
+            "fed": null,
+            "nome": "Liria Siyi Hao Zhang",
+            "clube": null,
+            "hcp": 2.1,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 30,
+            "fed": null,
+            "nome": "Iona Lage Vilella",
+            "clube": null,
+            "hcp": 2.7,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 1,
+            "fed": null,
+            "nome": "Emma de Los Rios",
+            "clube": null,
+            "hcp": 2.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 2,
+            "fed": null,
+            "nome": "Paula Jiménez Tirado",
+            "clube": null,
+            "hcp": 3,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 3,
+            "fed": null,
+            "nome": "Austine Farrando",
+            "clube": null,
+            "hcp": 3.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 4,
+            "fed": null,
+            "nome": "Diane Yousfi",
+            "clube": null,
+            "hcp": 3.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 5,
+            "fed": null,
+            "nome": "Louna Latard",
+            "clube": null,
+            "hcp": 3.3,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 6,
+            "fed": null,
+            "nome": "Gabriela Delgado Pascual",
+            "clube": null,
+            "hcp": 3.4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Spain",
+            "sex": "F"
+          },
+          {
+            "pos": 7,
+            "fed": null,
+            "nome": "Valentine Arosio",
+            "clube": null,
+            "hcp": 3.4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 8,
+            "fed": null,
+            "nome": "Angelina Gao",
+            "clube": null,
+            "hcp": 4.1,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Hong Kong",
+            "sex": "F"
+          },
+          {
+            "pos": 9,
+            "fed": null,
+            "nome": "Riana Kohler",
+            "clube": null,
+            "hcp": 4.1,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Switzerland",
+            "sex": "F"
+          },
+          {
+            "pos": 10,
+            "fed": null,
+            "nome": "Rachel Strek",
+            "clube": null,
+            "hcp": 4.7,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "France",
+            "sex": "F"
+          },
+          {
+            "pos": 11,
+            "fed": "48971",
+            "nome": "Sabrina Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 4.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Portugal",
+            "dob": "2014-02-27",
+            "sex": "F"
+          },
+          {
+            "pos": 12,
+            "fed": "46310",
+            "nome": "Margarida Pinto",
+            "clube": "Miramar",
+            "hcp": 4.9,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Portugal",
+            "dob": "2013-06-14",
+            "sex": "F"
+          },
+          {
+            "pos": 13,
+            "fed": "48794",
+            "nome": "Catarina Sousa Conceição",
+            "clube": "Vilamoura, C. G",
+            "hcp": 5.1,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Portugal",
+            "dob": "2012-08-11",
+            "sex": "F"
+          },
+          {
+            "pos": 14,
+            "fed": null,
+            "nome": "Allegra Kuhnert",
+            "clube": null,
+            "hcp": 5.5,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Austria",
+            "sex": "F"
+          },
+          {
+            "pos": 15,
+            "fed": "53847",
+            "nome": "Madalena Miguel Araújo",
+            "clube": "Ponte de Lima",
+            "hcp": 8.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Portugal",
+            "dob": "2013-08-07",
+            "sex": "F"
+          },
+          {
+            "pos": 16,
+            "fed": "46873",
+            "nome": "Catarina Valério",
+            "clube": "Vilamoura, C. G",
+            "hcp": 13.3,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Portugal",
+            "dob": "2012-07-24",
+            "sex": "F"
+          },
+          {
+            "pos": 17,
+            "fed": "53304",
+            "nome": "Francisca Fragoso",
+            "clube": "Vilamoura, C. G",
+            "hcp": 16.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Portugal",
+            "dob": "2014-10-16",
+            "sex": "F"
           }
         ]
       },
