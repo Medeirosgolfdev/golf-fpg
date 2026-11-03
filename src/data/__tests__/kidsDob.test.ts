@@ -95,13 +95,15 @@ describe("Venice Open 2026 · Boys 12 (USKids t=22243) — dados reais", () => {
     expect(dobDe("ormaechea")).toBe("2013-10-16");
     expect(dobDe("medeiros")).toBe("2014-04-29");
     // Sem data lida: o ano CERTO da Federgolf para os italianos (03/11/2026 — Matteo
-    // Durando 2014, Federico Bertolino 2013) e, sem ele, o estimado pelos escalões
-    // USKids (Luis Maier 2013).
+    // Durando 2014, Federico Bertolino 2013) e da DGV-Jugendrangliste para os
+    // alemães (Luis Maier 2013); sem ele, o estimado pelos escalões USKids
+    // (Kirill Sedov 2013).
     const ano = (n: string) => t.players.find(x => x.name.toLowerCase().includes(n))?.birthYear;
     expect(ano("durando")).toBe(2014);
     expect(ano("bertolino")).toBe(2013);
+    expect(ano("luis maier")).toBe(2013);
     const est = (n: string) => { const p = t.players.find(x => x.name.toLowerCase().includes(n)); return p && [p.birthYearEst, p.birthYearEstMax]; };
-    expect(est("luis maier")).toEqual([2013, 2013]);
+    expect(est("kirill sedov")).toEqual([2013, 2013]);
     // Regra geral: todos os que o Kids 2 conhece ficam com nascimento, e são quase todos.
     const esperados = base.players.filter(p => lookup(p.name)).length;
     expect(esperados).toBeGreaterThanOrEqual(28);

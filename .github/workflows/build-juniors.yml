@@ -69,6 +69,10 @@ on:
       - 'public/data/wagr/wagr-events-list.json'
       - 'public/data/wagr/events/**'
       - 'public/data/juniors-overrides.json'
+      # Nascimento/clube (só enriquecer; docs/claude/nascimento-hcp-europa.md).
+      - 'public/data/golfbox-players.json'
+      - 'public/data/dgv-rangliste.json'
+      - 'public/data/golfdata-se.json'
       # Últimos torneios do Scout (util/ultimos.js): os cartões e o WHS de cada federado seguido.
       - 'output/*/scorecards.json'
       - 'output/*/whs.json'

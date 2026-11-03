@@ -18,7 +18,7 @@
  *
  * ⚠ Os `CustomerId` são o mapa das federações: 925 = European Golf Association,
  * 18 = Norges Golfforbund, 22 = Royal Belgian, 15 = Dansk Golf Union, 4/7 =
- * Suécia, 121 = Estónia, 6 = R&A. Áustria (993), Irlanda (1190), England Golf
+ * Suécia, 121 = Estónia, 6 = R&A, 1085 = Swiss Golf. Áustria (993), Irlanda (1190), England Golf
  * (991) e Scottish Golf (10/1002) EXISTEM como clientes mas não publicam
  * calendário aqui — usam outros sistemas (a Inglaterra é GolfGenius, que já
  * scrapamos à parte). Não vale a pena voltar a tentá-los por esta via.
@@ -29,6 +29,9 @@
  *   node scripts/build-golfbox-players.js --anos 2025,2026 --all-comps
  *   node scripts/build-golfbox-players.js --concurrency 6
  *
+ * Gravação ADITIVA (03/11/2026): quem estava no ficheiro e não apareceu desta vez
+ * fica — dá para correr só uma federação (`--customers 1085`) sem perder as outras.
+ *
  * Output: public/data/golfbox-players.json
  *   { generatedAt, total, players: [{ name, dob, sex?, nat, club, memberId, hcp, fontes:[] }] }
  */
@@ -36,6 +39,7 @@
 const fs = require("fs");
 const path = require("path");
 const https = require("https");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 
 const HOST = "https://scores.golfbox.dk";
 const OUT = path.resolve(__dirname, "../public/data/golfbox-players.json");
@@ -53,6 +57,8 @@ const CUSTOMERS_DEFAULT = [
   { id: 238, nome: "Lithuanian Golf Federation" },
   { id: 911, nome: "Latvia Golf Federation" },
   { id: 1139, nome: "Golf Union of Iceland" },
+  // Swiss Golf: calendário e inscritos com data, clube e federado (03/11/2026).
+  { id: 1085, nome: "Swiss Golf" },
 ];
 
 /** Provas juvenis — o filtro existe para não puxar o calendário sénior inteiro. */
@@ -94,12 +100,18 @@ const normKey = (s) => normNome(s).sort().join(" ");
 function isoDob(v) {
   const s = String(v || "");
   if (!/^\d{8}/.test(s) || s.startsWith("0001")) return null;
+  // 1 de Janeiro = data por omissão de quem se inscreve sem ela (177 de 14 611
+  // no roster, 4× um dia normal; «1920-01-01»; Luis Maier «2014-01-01» quando a
+  // DGV e os escalões USKids dizem 2013). Não é uma data — fica sem.
+  if (s.slice(4, 8) === "0101") return null;
   return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
 }
 
 (async () => {
   const players = new Map();     // chave de nome → registo
   let comps = 0, entries = 0;
+  let anteriores = [];
+  try { anteriores = JSON.parse(fs.readFileSync(OUT, "utf8")).players || []; } catch { /* sem ficheiro: começa do zero */ }
 
   for (const c of CUSTOMERS) {
     // ⚠ O calendário devolve SÓ a época corrente — cada ano tem de ser pedido à
@@ -164,23 +176,27 @@ function isoDob(v) {
     console.log(`${c.nome.padEnd(34)} ${String(lista.length).padStart(4)} provas · +${novos} jogadores`);
   }
 
+  // Aditivo: os do ficheiro anterior que não apareceram agora ficam como estavam.
+  const lidos = new Set([...players.keys()]);
+  const mantidos = anteriores.filter((p) => p?.name && !lidos.has(normKey(p.name)) && !/-01-01$/.test(p.dob || ""));
   const out = {
     generatedAt: new Date().toISOString(),
     source: "scripts/build-golfbox-players.js",
     competitions: comps,
-    total: players.size,
+    total: players.size + mantidos.length,
     // ⚠ SLIM: guarda-se o nº de provas onde o jogador aparece, não a lista.
     // As 81 mil linhas de proveniência levavam o ficheiro de 1,4 para 8,5 MB —
     // e ele é descarregado pela /rfeg para preencher os estrangeiros.
     players: [...players.values()].map((p) => ({
       name: p.name, dob: p.dob, nat: p.nat, club: p.club, memberId: p.memberId,
       n: p.fontes.length, ...(p.dobAlt ? { dobAlt: p.dobAlt } : {}),
-    })).sort((a, b) => a.name.localeCompare(b.name, "pt")),
+    })).concat(mantidos).sort((a, b) => a.name.localeCompare(b.name, "pt")),
   };
   const ambiguos = out.players.filter((p) => p.dobAlt).length;
-  fs.writeFileSync(OUT, JSON.stringify(out));
+  const w = writeJsonGuarded(OUT, out, { count: (d) => d.players.length, spaces: 0, label: "golfbox-players.json" });
+  if (!w.written) { process.exitCode = 1; return; }
   console.log(`\n${out.total} jogadores com DOB · ${comps} provas · ${entries} inscrições lidas`);
   if (ambiguos) console.log(`⚠ ${ambiguos} nomes com mais do que uma data (homónimos) — marcados com dobAlt`);
   console.log(`-> ${OUT}`);
-  process.exit(out.total ? 0 : 2);
+  process.exitCode = players.size ? 0 : 2;
 })();

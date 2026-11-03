@@ -161,7 +161,13 @@ function monthsBack(from, to) {
   try { prevRank = JSON.parse(fs.readFileSync(OUT_RANK, "utf8")); } catch { /* 1.ª vez */ }
   const provBy = prevRank?.month === month ? { ...(prevRank.prov || {}) } : {};
   if (DETAILS) {
-    const todo = ["M", "F"].flatMap((sex) => lists[sex].datas.filter((p) => p.RANK !== "-").map((p) => ({ sex, p })));
+    // Classificados (Moy.SSS e Index) e também os rapazes NÃO classificados nascidos
+    // em 2010–2018 — a ficha deles dá o Index na mesma (03/11/2026: só 1 040 de
+    // 5 342 tinham índice; Jean Imperiali, RANK «-», tem 11.7).
+    const season = +month.slice(0, 4);
+    const daIdade = (p) => { const { age } = categoria(p.CATEGORIE); return age != null && season - age >= 2010 && season - age <= 2018; };
+    const todo = ["M", "F"].flatMap((sex) => lists[sex].datas
+      .filter((p) => p.RANK !== "-" || (sex === "M" && daIdade(p))).map((p) => ({ sex, p })));
     let n = 0, nRows = 0;
     for (const { sex, p } of todo.slice(0, LIMIT)) {
       const html = await get(`${BASE}/merite_details/${month}/jeunes?h=${p.CODE}`, false);

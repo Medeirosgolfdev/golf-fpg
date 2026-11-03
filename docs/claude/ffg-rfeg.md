@@ -408,6 +408,15 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
 - Prova de 1 volta só com totais: o `TournamentDetail` mostra a aba
   «Classificação» (AccumulatedLB) em vez do Scorecard vazio.
 
+### Mérite Jeunes — Index também dos não classificados (03/11/2026)
+
+O `scrape-ffgolf-merite.js` só abria a ficha (com o «Index») dos classificados — 1 040
+de 5 342 com índice. Agora abre também a dos **rapazes não classificados nascidos em
+2010–2018** (~1 770 pedidos a mais por mês, no workflow mensal): Jean Imperiali, RANK
+«-», tem 11.7. Raparigas não (decisão dela). O índice chega à ficha pelo
+`france-players.json` (`merite.idx`, `month`) e pelo `util/hcp-listas.js`. Quadro de
+todas as fontes europeias de nascimento/HCP: [nascimento-hcp-europa.md](nascimento-hcp-europa.md).
+
 ### Mérite Jeunes e Guide des golfs (pesquisa de 30/10/2026)
 
 - **Mérite Jeunes** — `pages.ffgolf.org/merite/datas/jeunes/{messieurs|dames}/{AAAAMM}` (JSON, sem login, mensal desde 202411; 757 rapazes classificados em Out/2026, ~2,5 mil com os não classificados). Traz `CATEGORIE` (Poucet 1 … Minime 2), que é o **ano de nascimento exacto**, coisa que o portal de resultados não dá (ver «Categoria FFG de um jogador», acima, inferida). Ficha: `/merite/merite_details/{AAAAMM}/jeunes?h={CODE}` (index FFG e Moy.SSS por prova).

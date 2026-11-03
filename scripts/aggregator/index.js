@@ -220,6 +220,30 @@ async function main() {
     }
   }
 
+  // Suécia: data de nascimento e clube pelo golfdata.se (ranking da federação;
+  // só enriquecer fichas suecas sem data). Ver util/golfdata-se.js.
+  {
+    const { enrichWithGolfdataSe } = require("./util/golfdata-se");
+    const r = enrichWithGolfdataSe(matchResult);
+    if (r.disponivel) {
+      step("Suécia — golfdata.se (só enriquecer)");
+      sub(`${r.datas} datas de nascimento · ${r.clubes} clubes · ${r.homonimos} nomes com várias fichas · ${r.recusados} recusados (idade/ano)`);
+      console.log("");
+    }
+  }
+
+  // Alemanha: ano de nascimento e clube pela DGV-Jugendrangliste (só enriquecer
+  // fichas alemãs sem data nem ano). Ver util/dgv-rangliste.js.
+  {
+    const { enrichWithDgvRangliste } = require("./util/dgv-rangliste");
+    const r = enrichWithDgvRangliste(matchResult);
+    if (r.disponivel) {
+      step("Alemanha — DGV-Jugendrangliste (só enriquecer)");
+      sub(`${r.anos} anos de nascimento · ${r.clubes} clubes · ${r.homonimos} homónimos sem clube que desempate`);
+      console.log("");
+    }
+  }
+
   // Listas de inscritos com handicap (Entry Lists): só acrescentam um ponto ao
   // hcpHistory de quem já tem ficha. Ver util/hcp-listas.js. As ligações
   // (inscrito → ficha) gravam-se em hcp-listas-ligacoes.json para a página

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T22:44:47.456Z",
+  "generatedAt": "2026-11-03T23:06:14.779Z",
   "listas": [
     {
       "id": "fpg-entry-list-girls-2026-10-01",
@@ -52,7 +52,7 @@
           "junior": {
             "id": "g003390325",
             "name": "Morgane da Eira",
-            "dob": "2012-09-27",
+            "dob": null,
             "club": "Golf Club Lyon",
             "via": "nome"
           },
@@ -110,7 +110,7 @@
           "junior": {
             "id": "g514236329",
             "name": "Zélie Guilloux",
-            "dob": "2013-12-10",
+            "dob": null,
             "club": "Golf Club Lyon",
             "via": "nome"
           },
@@ -256,7 +256,7 @@
           "junior": {
             "id": "g045879337",
             "name": "Marie-Rose Boidron",
-            "dob": "2012-01-06",
+            "dob": null,
             "club": "Golf Club Lyon",
             "via": "nome"
           },
@@ -1319,8 +1319,8 @@
           "junior": {
             "id": "u531162",
             "name": "Elia Secomandi",
-            "dob": "2012-10-04",
-            "club": "Golf Club Bergamo",
+            "dob": null,
+            "club": "Bergamo Albenza",
             "via": "nome"
           },
           "ambiguo": null,
@@ -1486,7 +1486,7 @@
           "junior": {
             "id": "u565185",
             "name": "Arthur Mouy",
-            "dob": "2013-02-08",
+            "dob": null,
             "club": "Valdaine",
             "via": "nome"
           },
@@ -1668,7 +1668,7 @@
           "junior": {
             "id": "g513398371",
             "name": "Taïg Xian Camblong",
-            "dob": "2012-05-24",
+            "dob": null,
             "club": "Hossegor",
             "via": "nome"
           },
@@ -1854,7 +1854,7 @@
           "junior": {
             "id": "u565559",
             "name": "William Harran",
-            "dob": null,
+            "dob": "2014-04-18",
             "club": "Esery",
             "via": "nome"
           },
@@ -2210,7 +2210,7 @@
           "junior": {
             "id": "g511861355",
             "name": "Leo Tunney",
-            "dob": null,
+            "dob": "2012-05-01",
             "club": "Maison Blanche",
             "via": "nome"
           },
@@ -2371,8 +2371,8 @@
           "junior": {
             "id": "u594609",
             "name": "Haqvin Sylven",
-            "dob": null,
-            "club": "Domaine Imperial",
+            "dob": "2014-04-18",
+            "club": "Golf Club du Domaine Impérial",
             "via": "nome"
           },
           "ambiguo": null,
@@ -3743,7 +3743,7 @@
           "junior": {
             "id": "u642216",
             "name": "Maximilian Oberlin",
-            "dob": null,
+            "dob": "2014-05-06",
             "club": "Golfclub Freiburg",
             "via": "nome"
           },
@@ -4060,8 +4060,8 @@
           "junior": {
             "id": "u582575",
             "name": "Frederik Endlich",
-            "dob": null,
-            "club": "GC Sankt Leon Rot",
+            "dob": "2012-08-08",
+            "club": "Öschberghof",
             "via": "nome"
           },
           "ambiguo": null,
@@ -4564,9 +4564,9 @@
           "country": "Germany",
           "hcp": 1.7,
           "junior": {
-            "id": "xbdbcd35619",
+            "id": "x4ffda52bb1",
             "name": "Lena Ilg",
-            "dob": null,
+            "dob": "2012-04-02",
             "club": "St Leon Rot",
             "via": "nome"
           },
@@ -5683,8 +5683,8 @@
           "junior": {
             "id": "u536900",
             "name": "Yuke Lu",
-            "dob": null,
-            "club": "St.Leon Rot",
+            "dob": "2011-09-03",
+            "club": "St. Leon-Rot",
             "via": "nome"
           },
           "ambiguo": null,
@@ -6257,8 +6257,8 @@
           "junior": {
             "id": "u577574",
             "name": "Maximilian Endlich",
-            "dob": null,
-            "club": "GC Sankt Leon Rot",
+            "dob": "2011-01-11",
+            "club": "Öschberghof, L&GC",
             "via": "nome"
           },
           "ambiguo": null,
@@ -6276,8 +6276,8 @@
           "junior": {
             "id": "u582822",
             "name": "Vincent Schneider",
-            "dob": null,
-            "club": "Golfclub Sankt Leon Rot",
+            "dob": "2010-03-16",
+            "club": "Freiburger GC",
             "via": "nome"
           },
           "ambiguo": null,
@@ -6547,7 +6547,7 @@
             "id": "x5ace8903cf",
             "name": "Jonas Müller",
             "dob": "2010-08-29",
-            "club": "SWITZERLAND",
+            "club": "Golfclub Wylihof",
             "via": "nome"
           },
           "ambiguo": null,
@@ -6825,8 +6825,8 @@
           "junior": {
             "id": "u610684",
             "name": "Haolin Andy Li",
-            "dob": null,
-            "club": "St.Leon Rot",
+            "dob": "2011-04-21",
+            "club": "St. Leon-Rot",
             "via": "nome"
           },
           "ambiguo": null,
@@ -7069,13 +7069,7 @@
           "name": "Max Henning",
           "country": "Germany",
           "hcp": 7.5,
-          "junior": {
-            "id": "x62e2154951",
-            "name": "Max-Henning Bendel",
-            "dob": null,
-            "club": "Köln",
-            "via": "nome"
-          },
+          "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
@@ -9966,8 +9960,8 @@
           "junior": {
             "id": "u521464",
             "name": "Simon Suntzenich",
-            "dob": null,
-            "club": "Solitude",
+            "dob": "2012-09-20",
+            "club": "Schönbuch, GC",
             "via": "nome"
           },
           "ambiguo": null,
@@ -14098,8 +14092,8 @@
           "junior": {
             "id": "u531162",
             "name": "Elia Secomandi",
-            "dob": "2012-10-04",
-            "club": "Golf Club Bergamo",
+            "dob": null,
+            "club": "Bergamo Albenza",
             "via": "nome"
           },
           "ambiguo": null,
@@ -14251,8 +14245,8 @@
           "junior": {
             "id": "gE86125998",
             "name": "Riccardo Rizzo",
-            "dob": "2012-01-19",
-            "club": "Golf club Lecco ",
+            "dob": null,
+            "club": "Lecco",
             "via": "nome"
           },
           "ambiguo": null,
@@ -14343,7 +14337,7 @@
           "junior": {
             "id": "u565185",
             "name": "Arthur Mouy",
-            "dob": "2013-02-08",
+            "dob": null,
             "club": "Valdaine",
             "via": "nome"
           },
@@ -14409,7 +14403,7 @@
             "id": "gE90895693",
             "name": "Luan Burkhalter",
             "dob": "2013-03-13",
-            "club": "Bern/Moossee",
+            "club": "Golfclub Bern / Golfpark Moossee",
             "via": "nome"
           },
           "ambiguo": null,
@@ -14502,8 +14496,8 @@
           "junior": {
             "id": "u537136",
             "name": "Paul Berger",
-            "dob": null,
-            "club": "Heitlinger Resort Tiefenbach",
+            "dob": "2014-01-14",
+            "club": "Heitlinger GR Tiefenbach",
             "via": "nome"
           },
           "ambiguo": null,
@@ -14525,7 +14519,7 @@
           "junior": {
             "id": "g513398371",
             "name": "Taïg Xian Camblong",
-            "dob": "2012-05-24",
+            "dob": null,
             "club": "Hossegor",
             "via": "nome"
           },
@@ -14805,7 +14799,7 @@
           "junior": {
             "id": "u565559",
             "name": "William Harran",
-            "dob": null,
+            "dob": "2014-04-18",
             "club": "Esery",
             "via": "nome"
           },
@@ -15207,7 +15201,7 @@
           "junior": {
             "id": "g511861355",
             "name": "Leo Tunney",
-            "dob": null,
+            "dob": "2012-05-01",
             "club": "Maison Blanche",
             "via": "nome"
           },
@@ -15429,8 +15423,8 @@
           "junior": {
             "id": "u594609",
             "name": "Haqvin Sylven",
-            "dob": null,
-            "club": "Domaine Imperial",
+            "dob": "2014-04-18",
+            "club": "Golf Club du Domaine Impérial",
             "via": "nome"
           },
           "ambiguo": null,
@@ -16727,8 +16721,8 @@
           "junior": {
             "id": "u531162",
             "name": "Elia Secomandi",
-            "dob": "2012-10-04",
-            "club": "Golf Club Bergamo",
+            "dob": null,
+            "club": "Bergamo Albenza",
             "via": "nome"
           },
           "ambiguo": null,
@@ -16880,8 +16874,8 @@
           "junior": {
             "id": "gE86125998",
             "name": "Riccardo Rizzo",
-            "dob": "2012-01-19",
-            "club": "Golf club Lecco ",
+            "dob": null,
+            "club": "Lecco",
             "via": "nome"
           },
           "ambiguo": null,
@@ -16995,7 +16989,7 @@
           "junior": {
             "id": "u565185",
             "name": "Arthur Mouy",
-            "dob": "2013-02-08",
+            "dob": null,
             "club": "Valdaine",
             "via": "nome"
           },
@@ -17038,7 +17032,7 @@
             "id": "gE90895693",
             "name": "Luan Burkhalter",
             "dob": "2013-03-13",
-            "club": "Bern/Moossee",
+            "club": "Golfclub Bern / Golfpark Moossee",
             "via": "nome"
           },
           "ambiguo": null,
@@ -17108,8 +17102,8 @@
           "junior": {
             "id": "u537136",
             "name": "Paul Berger",
-            "dob": null,
-            "club": "Heitlinger Resort Tiefenbach",
+            "dob": "2014-01-14",
+            "club": "Heitlinger GR Tiefenbach",
             "via": "nome"
           },
           "ambiguo": null,
@@ -17131,7 +17125,7 @@
           "junior": {
             "id": "g513398371",
             "name": "Taïg Xian Camblong",
-            "dob": "2012-05-24",
+            "dob": null,
             "club": "Hossegor",
             "via": "nome"
           },
@@ -17478,7 +17472,7 @@
           "junior": {
             "id": "u565559",
             "name": "William Harran",
-            "dob": null,
+            "dob": "2014-04-18",
             "club": "Esery",
             "via": "nome"
           },
@@ -17810,7 +17804,7 @@
           "junior": {
             "id": "g511861355",
             "name": "Leo Tunney",
-            "dob": null,
+            "dob": "2012-05-01",
             "club": "Maison Blanche",
             "via": "nome"
           },
@@ -18019,8 +18013,8 @@
           "junior": {
             "id": "u594609",
             "name": "Haqvin Sylven",
-            "dob": null,
-            "club": "Domaine Imperial",
+            "dob": "2014-04-18",
+            "club": "Golf Club du Domaine Impérial",
             "via": "nome"
           },
           "ambiguo": null,
@@ -18658,7 +18652,7 @@
           "junior": {
             "id": "g003390325",
             "name": "Morgane da Eira",
-            "dob": "2012-09-27",
+            "dob": null,
             "club": "Golf Club Lyon",
             "via": "nome"
           },
@@ -18774,7 +18768,7 @@
           "junior": {
             "id": "g514236329",
             "name": "Zélie Guilloux",
-            "dob": "2013-12-10",
+            "dob": null,
             "club": "Golf Club Lyon",
             "via": "nome"
           },
@@ -19057,7 +19051,7 @@
           "junior": {
             "id": "g045879337",
             "name": "Marie-Rose Boidron",
-            "dob": "2012-01-06",
+            "dob": null,
             "club": "Golf Club Lyon",
             "via": "nome"
           },
@@ -19587,9 +19581,9 @@
           "country": "Switzerland",
           "hcp": 4.1,
           "junior": {
-            "id": "x454b5c3d1e",
+            "id": "xd2eeeff4f0",
             "name": "Riana Kohler",
-            "dob": null,
+            "dob": "2014-03-20",
             "club": "Wylihof",
             "via": "nome"
           },
