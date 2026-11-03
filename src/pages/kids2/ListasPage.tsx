@@ -6,9 +6,9 @@
  * agregador (scripts/aggregator/util/hcp-listas.js → hcp-listas-ligacoes.json).
  */
 import TabRow from "../../ui/TabRow";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import LoadingState from "../../ui/LoadingState";
@@ -218,12 +218,8 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
 }
 
 export default function ListasPage() {
-  const [data, setData] = useState<{ listas: Lista[] } | null>(null);
-  const [err, setErr] = useState<string | null>(null);
+  const { data, error: err } = useJson<{ listas: Lista[] }>("/data/hcp-listas-ligacoes.json");
   const [sel, setSel] = useState<string | null>(null);
-  useEffect(() => {
-    cachedFetchJson<{ listas: Lista[] }>("/data/hcp-listas-ligacoes.json").then(setData).catch(e => setErr(String(e)));
-  }, []);
 
   // Rapazes primeiro, depois raparigas; listas sem sexo pela data (mais recente primeiro).
   const listas = useMemo(() => [...(data?.listas ?? [])].sort((a, b) =>

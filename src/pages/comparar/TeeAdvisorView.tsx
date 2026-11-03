@@ -28,7 +28,7 @@ import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import EmptyState from "../../ui/EmptyState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar";
-import { norm, fmtToPar, fmtSign } from "../../utils/format";
+import { norm, fmtToPar, fmtSign, fmtHcp } from "../../utils/format";
 import { median } from "../../utils/mathUtils";
 import { calcCourseHcp } from "../../utils/whsCalc";
 import { getTeeHex } from "../../utils/teeColors";
@@ -745,7 +745,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
     return (
       <>
         {" "}Os dados dão-te confiança: nos <b>últimos 12 meses</b> jogaste <b>{lp.nLong} voltas em campos de {lp.thresholdM} m ou mais</b> e
-        em <b>{lp.nLongGood}</b> delas jogaste ao nível do teu índice ({lp.index.toFixed(1)}) ou melhor
+        em <b>{lp.nLongGood}</b> delas jogaste ao nível do teu índice ({fmtHcp(lp.index)}) ou melhor
         {asGoodAsShort ? <> — tão frequente como nos campos curtos</> : null}.
         {lp.bestLong
           ? <> O teu melhor differential deste período (<b>{lp.bestLong.sd.toFixed(1)}</b>, abaixo do teu índice) foi em {lp.bestLong.course} ({lp.bestLong.meters} m).</>

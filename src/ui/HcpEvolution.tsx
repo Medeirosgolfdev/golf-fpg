@@ -171,7 +171,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
             return (
               <g key={`y${i}`}>
                 <line x1={PAD.left} y1={y} x2={W - PAD.right} y2={y} stroke="var(--border-light)" strokeDasharray="2,3" />
-                <text x={PAD.left - 6} y={y + 3} textAnchor="end" fontSize={10} fill="var(--text-3)">{h.toFixed(1)}</text>
+                <text x={PAD.left - 6} y={y + 3} textAnchor="end" fontSize={10} fill="var(--text-3)">{fmtHcp(h)}</text>
               </g>
             );
           })}
@@ -200,7 +200,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                 <path d={d} stroke={color} strokeWidth={2.5} fill="none" strokeLinejoin="round" />
                 {pts.map((pt, i) => (
                   <circle key={i} cx={sx(pt.d)} cy={sy(pt.h)} r={2.4} fill={color}>
-                    <title>{`${name} · ${fmtMonthShort(pt.d)} · HCP ${pt.h.toFixed(1)}`}</title>
+                    <title>{`${name} · ${fmtMonthShort(pt.d)} · HCP ${fmtHcp(pt.h)}`}</title>
                   </circle>
                 ))}
               </g>
@@ -217,7 +217,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
           const color = isOn ? colorFor(r.p.fed) : undefined;
           return (
             <button key={r.p.fed} onClick={() => toggleFocus(r.p.fed)}
-              title={`${r.m.start.toFixed(1)} → ${r.m.end.toFixed(1)} (Δ ${fmtSign(r.m.delta, 1)})`}
+              title={`${fmtHcp(r.m.start)} → ${fmtHcp(r.m.end)} (Δ ${fmtSign(r.m.delta, 1)})`}
               style={{
                 padding: "3px 8px", fontSize: "var(--fs-11)", borderRadius: "var(--radius-sm)", cursor: "pointer",
                 background: isOn ? color + "22" : "var(--bg-muted)",

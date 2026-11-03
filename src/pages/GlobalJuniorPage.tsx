@@ -14,7 +14,7 @@
  */
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import LoadingState from "../ui/LoadingState";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitConfig } from "../ui/circuit/types";
@@ -39,29 +39,22 @@ const GJGL_CONFIG: CircuitConfig = {
 export default function GlobalJuniorPage() {
   const { slug } = useParams<{ slug?: string }>();
   const navigate = useNavigate();
-  const [catalog, setCatalog] = useState<Catalog | null>(null);
-  // undefined = a carregar · null = falhou. O shell só arranca depois: as DATAS
-  // vêm do índice e, sem elas, o torneio por omissão (o mais recente) saía
-  // errado e ficava no URL (abria o UAE de Fevereiro — 14/10/2026).
-  const [index, setIndex] = useState<GjglIndex | null | undefined>(undefined);
+  const { data: catalog, error: catalogError } = useJson<Catalog>(CATALOG_URL);
+  // Índice slim — enriquece a sidebar/header; falha silenciosa (opcional → null).
+  // O shell só arranca depois de ele chegar (ou falhar): as DATAS vêm do índice e,
+  // sem elas, o torneio por omissão (o mais recente) saía errado e ficava no URL
+  // (abria o UAE de Fevereiro — 14/10/2026).
+  const { data: index, loading: indexLoading } = useJson<GjglIndex>("/data/gjgl-index.json");
   const [ovr, setOvr] = useState<GjglOverrides | null>(null);
-  const [catalogError, setCatalogError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    cachedFetchJson<Catalog>(CATALOG_URL)
-      .then((c) => { if (!cancelled) setCatalog(c); })
-      .catch((err) => { if (!cancelled) setCatalogError(String((err as Error).message || err)); });
-    // Índice slim — enriquece a sidebar/header; falha silenciosa (opcional).
-    cachedFetchJson<GjglIndex>("/data/gjgl-index.json")
-      .then((d) => { if (!cancelled) setIndex(d ?? null); })
-      .catch(() => { if (!cancelled) setIndex(null); });
     // Overrides de campo/distâncias (eventos PT) — falha silenciosa (opcional).
     loadGjglOverrides().then((o) => { if (!cancelled) setOvr(o); });
     return () => { cancelled = true; };
   }, []);
 
-  const entries = useMemo(() => (catalog && index !== undefined ? buildGjglEntries(catalog, index, ovr) : []), [catalog, index, ovr]);
+  const entries = useMemo(() => (catalog && !indexLoading ? buildGjglEntries(catalog, index, ovr) : []), [catalog, index, indexLoading, ovr]);
   const selectedId = useMemo<string | undefined>(
     () => (slug && entries.some((e) => e.id === slug) ? slug : undefined),
     [slug, entries],
@@ -70,7 +63,7 @@ export default function GlobalJuniorPage() {
   if (catalogError) {
     return <ErrorState message="Erro ao carregar o catálogo" detail={catalogError} />;
   }
-  if (!catalog || index === undefined) {
+  if (!catalog || indexLoading) {
     return <LoadingState message="A carregar catálogo GJGL…" />;
   }
 

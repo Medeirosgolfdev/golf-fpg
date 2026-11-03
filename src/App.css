@@ -536,6 +536,30 @@ a.seg-btn, a.tab-under { text-decoration: none; }
 .p-round-2 { background: var(--pill-round-2); } .p-round-3 { background: var(--pill-round-3); } .p-round-4 { background: var(--pill-round-4); }
 .p-regional { background: var(--pill-regional-bg); color: var(--pill-regional-fg); }
 .p-nacional { background: var(--pill-nacional-bg); color: var(--pill-nacional-fg); }
+/* Pílulas de torneio da PillBadge (cores no tokens.css; antes iam em style={PILL_*}) */
+.p-tcode { background: var(--pill-tcode-bg); color: var(--pill-tcode-fg); letter-spacing: 0.06em; border-color: transparent; }
+.p-9h { background: var(--color-warn); color: var(--text-on-color); border-color: transparent; }
+.p-sserra { background: var(--color-good-dark); color: var(--text-on-color); border-color: transparent; }
+.p-junior { background: var(--pill-junior-bg); color: var(--pill-junior-fg); border-color: transparent; }
+.p-manuel { background: var(--pill-manuel-bg); color: var(--pill-manuel-fg); border-color: var(--pill-manuel-bd); }
+.p-om { background: var(--pill-om-bg); color: var(--text-on-color); border-color: transparent; }
+/* Pílulas de estado cheias (Válido · Provisório · Inactivo…) — dados do federado */
+.p-good { background: var(--color-good); color: var(--text-on-color); border-color: transparent; }
+.p-warn { background: var(--color-warn); color: var(--text-on-color); border-color: transparent; }
+.p-bad { background: var(--color-danger); color: var(--text-on-color); border-color: transparent; }
+.p-cn { background: var(--color-good-dark); color: var(--text-on-color); border-color: transparent; } /* 🏆 CN — inscrito no Campeonato Nacional */
+/* /uskids: região do torneio (Europa / resto) e o lugar do Manuel (1.º / pódio / resto) */
+.p-reg-euro { background: var(--bg-info); color: var(--color-info); border-color: var(--border-info); }
+.p-reg-other { background: var(--bg-warn-orange); color: var(--color-orange-deep); border-color: var(--color-amber); }
+.p-pos-1 { background: var(--bg-warn-strong); color: var(--color-warn-dark); border-color: transparent; }
+.p-pos-podium { background: var(--bg-info-strong); color: var(--color-navy); border-color: transparent; }
+/* Categoria da Ordem de Mérito CGSS (fpgOmRanking OmCatBadge) */
+.p-omcat-junior { background: var(--om-cat-junior); color: var(--text-on-color); border-color: transparent; }
+.p-omcat-homens { background: var(--om-cat-homens); color: var(--text-on-color); border-color: transparent; }
+.p-omcat-senhoras { background: var(--om-cat-senhoras); color: var(--text-on-color); border-color: transparent; }
+.p-omcat-seniores { background: var(--om-cat-seniores); color: var(--text-1); border-color: transparent; }
+.p-omcat-superSeniores { background: var(--om-cat-superseniores); color: var(--text-1); border-color: transparent; }
+.p-omcat-outra { background: var(--om-cat-outra); color: var(--text-on-color); border-color: transparent; }
 .p-intl { background: var(--pill-intl-bg); color: var(--pill-regional-bg); }
 .p-pja { background: var(--pill-pja-bg); color: var(--text-on-color); }
 /* Circuito de origem (CircuitPill — Draws) */

@@ -18,14 +18,13 @@
  * majors) — nesses casos mostra o ranking júnior cumulativo + os links, com nota
  * de que a prova ainda não pontuou.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import type { Tournament } from "../../data/fpgTypes";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
-import { C } from "../../utils/colors";
 import { norm, shortDateSlash, fmtDatePt, todayIso, fmtOrd } from "../../utils/format";
 import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
 import termosJson from "../../data/omCgssTermos.json";
@@ -63,7 +62,8 @@ export const OM_CAT_ORDER = ["junior", "homens", "senhoras", "seniores", "superS
 const CAT_SHORT: Record<string, string> = { junior: "Jr", homens: "H", senhoras: "S", seniores: "Sen", superSeniores: "SSen" };
 // Tons de cinzento (não cores) — a categoria lê-se do texto (Jr/H/S/Sen/SSen);
 // rampa de escuro→claro, com o Júnior (o nosso ranking) mais escuro para destacar.
-const CAT_COLOR = C.omCat;  // utils/colors.ts
+/** Categorias da OM com cor própria (classes .p-omcat-* no App.css; as outras → «outra»). */
+const OM_CATS = new Set(["junior", "homens", "senhoras", "seniores", "superSeniores"]);
 
 /** Constrói um Map (fed E nome-normalizado → OmHit) a partir do om-cgss-junior.json. */
 export function buildOmLookup(data: OmJuniorData | null): Map<string, OmHit> {
@@ -97,20 +97,13 @@ export function lookupOm(m: Map<string, OmHit> | null | undefined, fed?: string 
   if (name && m.has("nm:" + norm(name))) return m.get("nm:" + norm(name))!;
   return null;
 }
+const OM_URL = "/data/om-cgss-junior.json";
 /** Carrega o om-cgss-junior.json (lazy, cacheado). `enabled` liga o fetch. */
 export function useOmData(enabled: boolean): OmJuniorData | null {
-  const [data, setData] = useState<OmJuniorData | null>(null);
-  useEffect(() => {
-    if (!enabled) return;
-    let alive = true;
-    cachedFetchJson<OmJuniorData>("/data/om-cgss-junior.json").then(d => { if (alive) setData(d); }).catch(() => {});
-    return () => { alive = false; };
-  }, [enabled]);
-  return data;
+  return useJson<OmJuniorData>(enabled ? OM_URL : null).data;
 }
 /** Badge da categoria OM (usado na coluna do draw). */
 export function OmCatBadge({ hit }: { hit: OmHit }) {
-  const c = CAT_COLOR[hit.catKey] || C.omCat.outra;
   // Sócio elegível ainda sem pontos: só o escalão, estilo tracejado (pontua ao jogar).
   if (hit.eligible) {
     return (
@@ -121,7 +114,7 @@ export function OmCatBadge({ hit }: { hit: OmHit }) {
     );
   }
   return (
-    <span className="p p-sm" style={{ background: c.bg, color: c.fg, borderColor: "transparent" }}
+    <span className={`p p-sm p-omcat-${OM_CATS.has(hit.catKey) ? hit.catKey : "outra"}`}
       title={`Ordem de Mérito · ${hit.label} — ${fmtOrd(hit.pos)} (${hit.pts} pts)`}>
       {CAT_SHORT[hit.catKey] || hit.label} {fmtOrd(hit.pos)}
     </span>
@@ -257,15 +250,7 @@ const hojeISO = () => todayIso();
 
 /* ── A tab (dentro de uma prova) e a página /om-cgss (sem prova: tournament e level null) ── */
 export function OmRankingTab({ tournament, level }: { tournament: Tournament | null; level: Level | null }) {
-  const [data, setData] = useState<OmJuniorData | null>(null);
-  const [err, setErr] = useState(false);
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<OmJuniorData>("/data/om-cgss-junior.json")
-      .then(d => { if (alive) setData(d); })
-      .catch(() => { if (alive) setErr(true); });
-    return () => { alive = false; };
-  }, []);
+  const { data, loading, error: err } = useJson<OmJuniorData>(OM_URL);
 
   // Chaves de ordenação: fixas ("rank"|"name"|"played"|"total") + dinâmicas por
   // torneio ("ev:{tcode}", ordena pela posição nesse torneio, 1º primeiro).
@@ -393,7 +378,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
       </div>
 
       {err && <p className="p-muted">Ranking júnior indisponível de momento.</p>}
-      {!data && !err && <LoadingState size="sm" message="A carregar ranking júnior…" />}
+      {loading && <LoadingState size="sm" message="A carregar ranking júnior…" />}
 
       {data && (
         <>

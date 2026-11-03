@@ -18,8 +18,7 @@
  * sem chave, dados desde 1940. Links de consulta no fim da strip.
  */
 import { norm } from "../utils/courseAliases";
-import { useEffect, useState } from "react";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import ExtLink from "./ExternalLink";
 
 const WEATHER_URL = "/data/weather.json";
@@ -87,18 +86,9 @@ export default function TournamentWeather({
   endDate?: string | null;
   rounds?: number;
 }) {
-  const [wx, setWx] = useState<WeatherFile | null>(null);
-  const [loaded, setLoaded] = useState(false);
+  const wx = useJson<WeatherFile>(WEATHER_URL).data;
 
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<WeatherFile>(WEATHER_URL)
-      .then((d) => { if (alive) { setWx(d); setLoaded(true); } })
-      .catch(() => { if (alive) setLoaded(true); });
-    return () => { alive = false; };
-  }, []);
-
-  if (!loaded || !wx || !course || !startDate) return null;
+  if (!wx || !course || !startDate) return null;
 
   const place = wx.places?.[norm(course)] /* chave = norm() da tabela única de campos, a mesma do scripts/fetch-weather.js */;
   if (!place) return null;

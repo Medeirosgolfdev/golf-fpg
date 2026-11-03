@@ -10,10 +10,10 @@
  * A lista tem pesquisa, país, escalão (se houver), sexo, «só Portugal» e
  * páginas de 100; todas as tabelas ordenam por clique no cabeçalho.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SexBadge from "../SexBadge";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import { gf, flagOrEmpty } from "../../utils/flagUtils";
 import { norm } from "../../utils/format";
 import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
@@ -67,15 +67,7 @@ export function RankingPage<R, E>({ cfg }: { cfg: RankingPageConfig<R, E> }) {
 
 /** Carrega o ranking (lazy — só quando se abre a lista ou um jogador). */
 function RankingRoot<R, E>({ cfg, playerId }: { cfg: RankingPageConfig<R, E>; playerId?: string }) {
-  const [ranking, setRanking] = useState<R | null>(null);
-  const [err, setErr] = useState<string | null>(null);
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<R>(cfg.rankingUrl)
-      .then((d) => { if (alive) setRanking(d); })
-      .catch((e) => { if (alive) setErr(String(e?.message || e)); });
-    return () => { alive = false; };
-  }, [cfg.rankingUrl]);
+  const { data: ranking, error: err } = useJson<R>(cfg.rankingUrl);
   if (err) return <ErrorState message={`Erro ao carregar o ranking ${cfg.name}`} detail={err} />;
   if (!ranking) return <LoadingState message={cfg.loadingRanking} />;
   return <>{playerId ? cfg.Detail(ranking, playerId) : cfg.List(ranking)}</>;
@@ -84,15 +76,11 @@ function RankingRoot<R, E>({ cfg, playerId }: { cfg: RankingPageConfig<R, E>; pl
 /** Os EVENTOS são as entries do CircuitShell; o ranking é a vista "info" "jogadores". */
 function EventsCircuit<R, E>({ cfg, params }: { cfg: RankingPageConfig<R, E>; params: { source?: string; id?: string } }) {
   const navigate = useNavigate();
-  const [entries, setEntries] = useState<CircuitEntry[] | null>(null);
-  const [err, setErr] = useState<string | null>(null);
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<{ events?: E[] }>(cfg.eventsUrl)
-      .then((d) => { if (alive) setEntries(cfg.buildEntries(d?.events || [])); })
-      .catch((e) => { if (alive) setErr(String(e?.message || e)); });
-    return () => { alive = false; };
-  }, [cfg]);
+  const { data: evFile, loading, error: err } = useJson<{ events?: E[] }>(cfg.eventsUrl);
+  const entries = useMemo<CircuitEntry[] | null>(
+    () => (loading || err ? null : cfg.buildEntries(evFile?.events || [])),
+    [evFile, loading, err, cfg],
+  );
 
   // "info" não colide com "evt" (evento) nem "jogador" (detalhe).
   const onInfo = params.source === "info";
@@ -318,16 +306,8 @@ export function countryCell(country: string | null) {
 
 /** Histórico de eventos de um jogador (ficheiro por URL, entrada por id). */
 export function usePlayerEvents<E>(url: string, id: string): E[] | null {
-  const [events, setEvents] = useState<E[] | null>(null);
-  useEffect(() => {
-    let alive = true;
-    setEvents(null);
-    cachedFetchJson<{ players?: Record<string, E[]> }>(url)
-      .then((d) => { if (alive) setEvents(d?.players?.[id] || []); })
-      .catch(() => { if (alive) setEvents([]); });
-    return () => { alive = false; };
-  }, [url, id]);
-  return events;
+  const { data, loading } = useJson<{ players?: Record<string, E[]> }>(url);
+  return useMemo(() => (loading ? null : data?.players?.[id] || []), [data, loading, id]);
 }
 
 export function RankingDetail({ backTo, notFound, header, stats, eventsTitle, events, emptyMessage, children }: {

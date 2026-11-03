@@ -6,7 +6,7 @@
 
 import TabRow from "../../ui/TabRow";
 import React, { useMemo, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   useJuniorsCanonical,
   computeCareerScore,
@@ -32,6 +32,8 @@ import SearchInput from "../../ui/SearchInput";
 import TierBadge from "../../ui/TierBadge";
 import { TrophyCount } from "../../ui/PillBadge";
 
+import ExtLink from "../../ui/ExternalLink";
+import { kidsUrl } from "../../ui/KidsLink";
 // ── Constantes ────────────────────────────────────────────────────────────────
 
 const YEARS = Array.from({ length: 12 }, (_, i) => 2019 - i); // 2019..2008
@@ -116,17 +118,15 @@ function NameCell({ row }: { row: CohortRow }) {
   return (
     <>
       <div className="u-d-flex u-ai-center u-gap-6px u-fwr-wrap u-mb-4px">
-        <Link
-          to={`/kids2/${junior.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
+        <ExtLink
+          href={kidsUrl({ id: junior.id })}
           className={"u-fw-700 u-fs-fs-13 u-td-none " + (isManuel ? "u-c-color-good-dark" : "u-c-color-info")}
         >
           {junior.canonicalName || junior.id}
           {isManuel && (
             <span className="u-ml-4px u-fs-fs-10 u-fw-600 u-c-color-good-dark">← tu</span>
           )}
-        </Link>
+        </ExtLink>
         <TierBadge tier={entry.tier} />
         {wins > 0 && (
           <TrophyCount n={wins} />

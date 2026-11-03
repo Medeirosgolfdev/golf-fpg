@@ -86,11 +86,6 @@ export const C = {
   white:   "#ffffff",
   onDark:  "#1a3a10",  // texto escuro sobre fundos claros (sub-16/18)
   rivaisLink:      "#1a5c2a",  // links de rivais
-  pillJuniorBg:    "#b45309",   // PILL_JUNIOR background
-  pillJuniorFg:    "#fef3c7",   // PILL_JUNIOR text
-  pillManuelBg:    "#dcfce7",   // PILL_MANUEL background
-  pillManuelFg:    "#166534",   // PILL_MANUEL text
-  pillManuelBd:    "#16a34a",   // PILL_MANUEL border
   pillPccNegBg:    "#b91c1c",   // PCC −1 (--pill-pcc-neg-bg)
   pillPccPos1Bg:   "#4d7c0f",   // PCC +1 (--pill-pcc-pos1-bg)
   pillPccPos2Bg:   "#15803d",   // PCC +2 (--pill-pcc-pos2-bg)
@@ -128,12 +123,6 @@ export const C = {
   ],
 
   // Categorias da OM CGSS — tons de cinzento, do Júnior (mais escuro) aos Super Séniores.
-  omCat: {
-    junior: { bg: "#374151", fg: "#fff" }, homens: { bg: "#4b5563", fg: "#fff" }, senhoras: { bg: "#6b7280", fg: "#fff" },
-    seniores: { bg: "#9ca3af", fg: "#111827" }, superSeniores: { bg: "#d1d5db", fg: "#111827" },
-    outra: { bg: "#555", fg: "#fff" },
-  } as Record<string, { bg: string; fg: string }>,
-
   // Cor de cada circuito na barra lateral (em hex: o CircuitShell junta-lhe transparência).
   circuit: { egr: "#1e3a8a", egrSrc: "#1e40af", wagr: "#0f3d2e" },
 

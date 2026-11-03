@@ -11,6 +11,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import RivaisDashboard from "../../ui/RivaisDashboard";
 import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import { loadUskidsResults } from "../../data/uskidsResultsLoader";
 import { meanArr } from "../../utils/mathUtils";
 import { normName, extraTidMeta, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
@@ -564,13 +565,20 @@ export interface FieldRivaisData {
 
 const toIso = usToIso;
 const MH_VAZIO = { torneios: {}, jogadores: {} } as unknown as MHSlim;
+type CatalogDatesFile = { id: string; dateStart?: string | null }[] | { entries?: { id: string; dateStart?: string | null }[] };
+/** Datas dos internacionais pelo catálogo da /major (id → dateStart). */
+function catalogDates(c: CatalogDatesFile): Map<string, string> {
+  const arr = Array.isArray(c) ? c : (c.entries ?? []);
+  return new Map(arr.filter(e => e.dateStart).map(e => [e.id, e.dateStart as string]));
+}
+const SEM_DATAS = new Map<string, string>();
 
 /** Carrega os dados e monta a lista. `pedido` = torneio pedido no link (entra
  *  sempre, mesmo já jogado); `escalaoNome` = escalão de referência dos passados
  *  (o do Manuel). Null enquanto carrega. */
 export function useFieldRivaisData(autoRivals: AutoRivalPlayer[] | undefined, pedido: number | null, escalaoNome: string): FieldRivaisData | null {
-  const [field, setField] = useState<FieldData | null>(null);
-  const [mh, setMh] = useState<MHSlim | null>(null);
+  const field = useJson<FieldData>("/data/uskids-field.json").data;
+  const mh = useJson<MHSlim>("/data/uskids-member-history-slim.json").data;
   // uskids-results.json — para sintetizar Passados quando o member-history
   // ainda não foi regenerado (torneio acabou hoje/ontem).
   const [uskRes, setUskRes] = useState<USKResData | null>(null);
@@ -579,27 +587,15 @@ export function useFieldRivaisData(autoRivals: AutoRivalPlayer[] | undefined, pe
   // Map neg ID → JobFile internacional (Future Masters, AV Trophy, Orange Bowl, FSGA)
   const [jobIntl, setJobIntl] = useState<Map<number, JobIntlFile>>(new Map());
   // Datas dos internacionais pelo catálogo da /major (as mesmas da página).
-  const [catDates, setCatDates] = useState<Map<string, string>>(new Map());
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<{ id: string; dateStart?: string | null }[] | { entries?: { id: string; dateStart?: string | null }[] }>("/data/major-catalog.json")
-      .then((c) => {
-        if (!alive || !c) return;
-        const arr = Array.isArray(c) ? c : (c.entries ?? []);
-        setCatDates(new Map(arr.filter(e => e.dateStart).map(e => [e.id, e.dateStart as string])));
-      }).catch(() => {});
-    return () => { alive = false; };
-  }, []);
+  const catDates = useJson<CatalogDatesFile, Map<string, string>>("/data/major-catalog.json", catalogDates).data ?? SEM_DATAS;
   // Colunas INTL normalizadas (id → dados), ver INTL_COLUMNS.
   const [intlCols, setIntlCols] = useState<Map<string, IntlColData>>(new Map());
   const pedidoT = useRef<number | null>(pedido);
 
-  // Load field + member history + uskids-results (último é fallback para
-  // sintetizar Passados de torneios UP_TORN que acabaram hoje/ontem).
+  // uskids-results: fallback para sintetizar Passados de torneios UP_TORN que
+  // acabaram hoje/ontem — os mesmos resultados da /uskids (completos + gerado,
+  // com as correcções).
   useEffect(() => {
-    cachedFetchJson<FieldData>("/data/uskids-field.json").then(d => d && setField(d)).catch(() => {});
-    cachedFetchJson<MHSlim>("/data/uskids-member-history-slim.json").then(d => d && setMh(d)).catch(() => {});
-    // Os mesmos resultados da /uskids (completos + gerado, com as correcções).
     loadUskidsResults().then(d => setUskRes(d as unknown as USKResData)).catch(() => {});
   }, []);
 

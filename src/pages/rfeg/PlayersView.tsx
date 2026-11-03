@@ -13,8 +13,9 @@
  *
  * Renderizada como item especial ("👥 Jugadores") no menu ⓘ Info da página España.
  */
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import DetailHeader from "../../ui/DetailHeader";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
@@ -195,8 +196,10 @@ function dataCells(v: CellView, has: { club: boolean; dob: boolean; sex: boolean
 }
 
 export function RFEGPlayersView() {
-  const [data, setData] = useState<SpainPlayersFile | null>(null);
-  const [err, setErr] = useState<string | null>(null);
+  const { data: raw, loading, error } = useJson<SpainPlayersFile>("/data/spain-players.json");
+  const data = raw?.byLicencia ? raw : null;
+  const err = error ?? (!loading && !data
+    ? "spain-players.json não encontrado. Corre `node scripts/build-spain-players-export.js`." : null);
   const [q, setQ] = useState("");
   const [sex, setSex] = useState<"" | "M" | "F">("");
   const [cat, setCat] = useState<string>("ALL");
@@ -221,15 +224,6 @@ export function RFEGPlayersView() {
         .catch(() => setTournsState("error"));
     }
   };
-
-  useEffect(() => {
-    cachedFetchJson<SpainPlayersFile>("/data/spain-players.json")
-      .then((d) => {
-        if (!d || !d.byLicencia) { setErr("spain-players.json não encontrado. Corre `node scripts/build-spain-players-export.js`."); return; }
-        setData(d);
-      })
-      .catch((e) => setErr(String(e?.message ?? e)));
-  }, []);
 
   const all = useMemo<Row[]>(() => {
     if (!data) return [];

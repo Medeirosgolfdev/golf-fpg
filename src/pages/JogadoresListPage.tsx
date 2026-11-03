@@ -25,7 +25,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import { norm, shortDate, ageAtDate, todayIso, fmtSD } from "../utils/format";
+import { norm, shortDate, ageAtDate, todayIso, fmtSD, fmtHcp } from "../utils/format";
 import { gf, isPtCountry } from "../utils/flagUtils";
 import { hcpDisplay } from "../utils/playerUtils";
 import Pager from "../ui/Pager";
@@ -133,7 +133,7 @@ function buildDiffsText(diffs: { hcpChanged?: { ours: number; fpg: number }; clu
     const { ours, fpg } = diffs.hcpChanged;
     const delta = fpg - ours;
     const arrow = delta > 0 ? "↑" : "↓";
-    lines.push(`  HCP: ${ours.toFixed(1)} → ${fpg.toFixed(1)} (${arrow} ${Math.abs(delta).toFixed(1)})`);
+    lines.push(`  HCP: ${fmtHcp(ours)} → ${fmtHcp(fpg)} (${arrow} ${Math.abs(delta).toFixed(1)})`);
   }
   if (diffs.clubChanged) {
     const { ours, fpg } = diffs.clubChanged;

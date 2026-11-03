@@ -685,11 +685,7 @@ export default function USKidsFieldPage() {
       <>
         <span className="p p-sm p-muted" title="Código do torneio (t=) USKids / signupanytime">t={t.t}</span>
         {reg && (
-          <span className="p p-sm p-tourn" style={{
-            background: isEuro ? "var(--bg-info)" : "var(--bg-warn-orange)",
-            color: isEuro ? "var(--color-info)" : "var(--color-orange-deep)",
-            borderColor: isEuro ? "var(--border-info)" : "var(--color-amber)",
-          }}>{reg}</span>
+          <span className={`p p-sm p-tourn ${isEuro ? "p-reg-euro" : "p-reg-other"}`}>{reg}</span>
         )}
         {isInvit && (
           <span className="p p-sm p-tourn u-bg-bg-pink u-c-color-purple u-border-color-border-purple">INVIT</span>
@@ -701,11 +697,7 @@ export default function USKidsFieldPage() {
         {nPaises > 1 && <span className="p p-sm p-muted">{nPaises} países</span>}
         {t.manuelJogou && <ManuelPill />}
         {t.manuelJogou && manuelPos != null && (
-          <span className="p p-sm p-tourn" style={{
-            background: manuelPos === 1 ? "var(--bg-warn-strong)" : manuelPos <= 3 ? "var(--bg-info-strong)" : "var(--bg-muted)",
-            color: manuelPos === 1 ? "var(--color-warn-dark)" : manuelPos <= 3 ? "var(--color-navy)" : "var(--text-2)",
-            borderColor: "transparent",
-          }}>
+          <span className={`p p-sm p-tourn ${manuelPos === 1 ? "p-pos-1" : manuelPos <= 3 ? "p-pos-podium" : "p-muted"}`}>
             {medalOf(manuelPos) ?? `#${manuelPos}`}
             {manuelScore != null && ` (${fmtToPar(manuelScore)})`}
           </span>

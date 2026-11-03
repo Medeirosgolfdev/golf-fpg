@@ -37,17 +37,7 @@ export function TagPill({ tag }: { tag: string }) {
   const t = tag.toLowerCase();
   // Mapeamento tag → estilo + label
   if (t === "pja") return <PillBadge pill="PJA" />;
-  if (t === "inscrito-nacional") {
-    return (
-      <span
-        className="p p-sm u-bg-color-good-dark u-c-fff u-border-color-transparent"
-
-        title="Inscrito no Campeonato Nacional 2026"
-      >
-        🏆 CN26
-      </span>
-    );
-  }
+  if (t === "inscrito-nacional") return <PillBadge pill="CN" title="Inscrito no Campeonato Nacional" />;
   if (t === "no-scrape") {
     return (
       <span

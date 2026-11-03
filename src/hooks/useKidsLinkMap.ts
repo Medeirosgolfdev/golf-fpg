@@ -10,8 +10,8 @@
  * que não passam pelo buildAutoRivals (FSGA, UA, México, Interzonas, avtrophy,
  * FM, JOB…). Surge quando o índice chega (fetch em background, não bloqueia o render).
  */
-import { useState, useEffect, useMemo } from "react";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useMemo } from "react";
+import { useJson } from "./useJson";
 import { normName } from "../utils/normName";
 import type { KidsLinkEntry } from "../ui/KidsLink";
 
@@ -36,16 +36,10 @@ export function fromLinkRow([id, canonicalName, aliases, memberId, fed, ffgLic]:
 }
 
 /** Roster compacto dos juniores do kids2 (juniors-links.json); [] até chegar. */
+const SEM_ROSTER: LinkJunior[] = [];
 export function useJuniorsLinks(): LinkJunior[] {
-  const [roster, setRoster] = useState<LinkJunior[]>([]);
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<{ j?: LinkRow[] }>("/data/juniors-links.json")
-      .then((d) => { if (alive) setRoster((d?.j ?? []).map(fromLinkRow)); })
-      .catch(() => {});
-    return () => { alive = false; };
-  }, []);
-  return roster;
+  return useJson<{ j?: LinkRow[] }, LinkJunior[]>("/data/juniors-links.json", (d) => (d.j ?? []).map(fromLinkRow)).data
+    ?? SEM_ROSTER;
 }
 
 /** normName → ficha do Kids 2 (nome canónico, aliases e variantes sem um nome

@@ -8,9 +8,9 @@
  *
  * Item «🏅 Mérite Jeunes» no menu ⓘ Info da /ffg.
  */
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import DetailHeader from "../../ui/DetailHeader";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
@@ -79,8 +79,9 @@ export function meriteRows(data: MeriteFile): Row[] {
 }
 
 export function FFGMeriteView() {
-  const [data, setData] = useState<MeriteFile | null>(null);
-  const [err, setErr] = useState<string | null>(null);
+  const { data: raw, loading, error } = useJson<MeriteFile>("/data/ffgolf-merite-ranking.json");
+  const data = raw?.rows ? raw : null;
+  const err = error ?? (!loading && !data ? "ficheiro vazio" : null);
   const [sex, setSex] = useState<"M" | "F">("M");
   const [cat, setCat] = useState("ALL");
   const [q, setQ] = useState("");
@@ -88,12 +89,6 @@ export function FFGMeriteView() {
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState<Set<string>>(() => new Set());
   const { sortKey, sortDir, toggleSort } = useSort<SK>("rank", "asc", { moy6: "asc", total: "desc", nbt: "desc", by: "desc" });
-
-  useEffect(() => {
-    cachedFetchJson<MeriteFile>("/data/ffgolf-merite-ranking.json")
-      .then((d) => (d?.rows ? setData(d) : setErr("ficheiro vazio")))
-      .catch((e) => setErr(String(e?.message || e)));
-  }, []);
 
   const all = useMemo<Row[]>(() => (data ? meriteRows(data) : []), [data]);
 

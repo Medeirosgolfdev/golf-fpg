@@ -23,9 +23,9 @@
  * Usado no CircuitShell (todas as provas dos circuitos), na /uskids e no kids2
  * (Próximos torneios). Modelo de tabela do scorecard (.sc-lb), ordenável.
  */
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { KidsLinkCtx, KidsLink } from "../KidsLink";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import { normName } from "../../utils/normName";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
@@ -57,31 +57,30 @@ interface Proxima { t: number; name: string; date: string; escalao: string }
 
 const TIER_ORD: Record<string, number> = { elite: 0, strong: 1, solid: 2, developing: 3, beginner: 4 };
 
-/** Inscrições futuras USKids por nome normalizado (uskids-field.json, ~2 MB). */
+/** Inscrições futuras USKids por nome normalizado. */
+function proximasPorNome(d: UskFieldFile): Map<string, Proxima[]> {
+  const hoje = todayIso();
+  const out = new Map<string, Proxima[]>();
+  for (const t of d.torneios ?? []) {
+    const date = isoDate(t.date_inicio || "");
+    if (!date || date < hoje) continue;
+    for (const e of t.escaloes ?? []) for (const j of e.jogadores ?? []) {
+      const k = normName(j.nome);
+      const arr = out.get(k) ?? [];
+      if (!arr.some((x) => x.t === t.t)) arr.push({ t: t.t, name: t.name, date, escalao: e.nome });
+      out.set(k, arr);
+    }
+  }
+  for (const arr of out.values()) arr.sort((a, b) => a.date.localeCompare(b.date));
+  return out;
+}
+const SEM_PROXIMAS = new Map<string, Proxima[]>();
+const SEM_SCOUT: ScoutFile = { players: {} };
+
+/** Inscrições futuras USKids por nome (uskids-field.json, ~2 MB); sem ficheiro → vazio. */
 function useProximas(): Map<string, Proxima[]> | null {
-  const [m, setM] = useState<Map<string, Proxima[]> | null>(null);
-  useEffect(() => {
-    let vivo = true;
-    cachedFetchJson<UskFieldFile>("/data/uskids-field.json").then((d) => {
-      if (!vivo) return;
-      const hoje = todayIso();
-      const out = new Map<string, Proxima[]>();
-      for (const t of d?.torneios ?? []) {
-        const date = isoDate(t.date_inicio || "");
-        if (!date || date < hoje) continue;
-        for (const e of t.escaloes ?? []) for (const j of e.jogadores ?? []) {
-          const k = normName(j.nome);
-          const arr = out.get(k) ?? [];
-          if (!arr.some((x) => x.t === t.t)) arr.push({ t: t.t, name: t.name, date, escalao: e.nome });
-          out.set(k, arr);
-        }
-      }
-      for (const arr of out.values()) arr.sort((a, b) => a.date.localeCompare(b.date));
-      setM(out);
-    }).catch(() => { if (vivo) setM(new Map()); });
-    return () => { vivo = false; };
-  }, []);
-  return m;
+  const { data, loading } = useJson<UskFieldFile, Map<string, Proxima[]>>("/data/uskids-field.json", proximasPorNome);
+  return loading ? null : (data ?? SEM_PROXIMAS);
 }
 
 /** Coluna própria de uma página (ex.: FPG — saída, HCP oficial, forma WHS,
@@ -146,17 +145,13 @@ export default function Scout({
   provasComManuel?: (p: FieldPlayer) => ScoutComManuel[] | null | undefined;
 }) {
   const kidsMap = useContext(KidsLinkCtx);
-  const [scout, setScout] = useState<ScoutFile | null>(null);
+  const scoutJson = useJson<ScoutFile>("/data/juniors-scout.json");
+  const scout = scoutJson.loading ? null : (scoutJson.data ?? SEM_SCOUT);
   const proximas = useProximas();
   // Idade: a do Kids 2 e, sem ela, a da base de federados (que tem todos os da FPG).
   const fedBirthdates = useFedBirthdates();
   const [aberto, setAberto] = useState<string | null>(null);
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
-  useEffect(() => {
-    let vivo = true;
-    cachedFetchJson<ScoutFile>("/data/juniors-scout.json").then((d) => { if (vivo) setScout(d ?? { players: {} }); }).catch(() => { if (vivo) setScout({ players: {} }); });
-    return () => { vivo = false; };
-  }, []);
 
   const rep = useMemo(() => buildRepeaters(field, editions, currentId), [field, editions, currentId]);
   const manuelNoField = field.some(eManuel);

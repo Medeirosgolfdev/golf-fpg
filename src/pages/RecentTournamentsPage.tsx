@@ -19,7 +19,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import type { EscLookup } from "../utils/playerUtils";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup } from "../utils/playerUtils";
@@ -84,16 +84,14 @@ export default function RecentTournamentsPage() {
   const { key } = useParams<{ key?: string }>();
   const navigate = useNavigate();
 
-  const [doc, setDoc] = useState<RecentDoc | null>(null);
+  const recent = useJson<RecentDoc>(RECENT_URL);
+  const doc = recent.data;
+  const err = recent.error ?? (!recent.loading && !doc ? "recent-tournaments.json vazio" : null);
   const [pdb, setPdb] = useState<PlayersDB>({});
-  const [err, setErr] = useState<string | null>(null);
   /** Mínimo de nossos no torneio (vazio = todos). */
   const [minOurs, setMinOurs] = useState("");
 
   useEffect(() => {
-    cachedFetchJson<RecentDoc>(RECENT_URL)
-      .then(d => { if (!d) throw new Error("recent-tournaments.json vazio"); setDoc(d); })
-      .catch(e => setErr(String(e?.message || e)));
     loadPlayers().then(p => setPdb(p as PlayersDB)).catch(() => setPdb({}));
   }, []);
 

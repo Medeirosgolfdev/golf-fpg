@@ -199,6 +199,19 @@
   --pill-pcc-pos2-bg:  #15803d;   /* PCC +2 */
   --pill-pcc-pos3-bg:  #14532d;   /* PCC +3 */
   --pill-pja-bg:       #dc2626;   /* vermelho PJA = danger */
+  --pill-tcode-bg:     #374151;   /* tcode do torneio — cinzento escuro */
+  --pill-tcode-fg:     #dddddd;
+  --pill-junior-bg:    #b45309;   /* JUNIOR (auto-detectado pelo nome) */
+  --pill-junior-fg:    #fef3c7;
+  --pill-manuel-bg:    #dcfce7;   /* ★ Manuel */
+  --pill-manuel-fg:    #166534;
+  --pill-manuel-bd:    #16a34a;
+  --om-cat-junior:     #374151;   /* categorias da OM CGSS: do mais escuro (Júnior) ao mais claro */
+  --om-cat-homens:     #4b5563;
+  --om-cat-senhoras:   #6b7280;
+  --om-cat-seniores:   #9ca3af;
+  --om-cat-superseniores: #d1d5db;
+  --om-cat-outra:      #555555;
   --pill-round-2:      #0891b2;   /* 2 rondas — ciano */
   --pill-round-3:      #dc2626;   /* 3 rondas — vermelho */
   --pill-round-4:      #7c3aed;   /* 4 rondas — violeta */

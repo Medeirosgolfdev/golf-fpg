@@ -89,7 +89,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
         <KpiCard label="Total" value={fmt(filtered.length)} />
         <KpiCard label={<><SexBadge sex="M" /> Masculino</>} value={fmt(male)} pct={male / filtered.length} />
         <KpiCard label={<><SexBadge sex="F" /> Feminino</>} value={fmt(female)} pct={female / filtered.length} />
-        {withHcp > 0 && <KpiCard label="Com HCP" value={fmt(withHcp)} sub={`média ${avgHcp.toFixed(1)}`} />}
+        {withHcp > 0 && <KpiCard label="Com HCP" value={fmt(withHcp)} sub={`média ${fmtHcp(avgHcp)}`} />}
         {viewMode === "todos" && activeThisYear > 0 && <KpiCard label={`Activos ${todayIso().slice(0, 4)}`} value={fmt(activeThisYear)} pct={activeThisYear / filtered.length} sub="com rondas" />}
         {viewMode === "todos" && withAnalysis > 0 && cadastroOnly > 0 && (
           <KpiCard label="🔍 Com análise" value={fmt(withAnalysis)} sub={`+ ${cadastroOnly} cadastro`} />

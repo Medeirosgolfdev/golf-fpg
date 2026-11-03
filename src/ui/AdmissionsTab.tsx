@@ -12,7 +12,7 @@
  * sabe ordenar pos/name/gross/toPar por ele próprio).
  */
 
-import { useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useContext, useMemo, useState, type ReactNode } from "react";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
 import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf, isRecentHours, fmtDatePt, todayIso } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
@@ -32,7 +32,7 @@ import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
 import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
 import { KidsLinkCtx } from "./KidsLink";
 import { normName } from "../data/KIDSdataLoader";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import { makeKidsDobLookup, kidsDobLida } from "../data/kidsDob";
 import { formaMedia, type ScoutFile, type JuniorScout } from "./circuit/scoutModel";
 import { getTierLabel, type TierKey } from "../pages/kids2/juniorCalc";
@@ -131,13 +131,7 @@ export default function AdmissionsTab({
   // completa (`d`) — nunca o ano estimado do ranking.
   const kidsMap = useContext(KidsLinkCtx);
   const precisaScout = kidsMap.size > 0 && (kidsCols || players.some(p => !p.dob && !p.fed));
-  const [scout, setScout] = useState<ScoutFile | null>(null);
-  useEffect(() => {
-    if (!precisaScout) return;
-    let vivo = true;
-    cachedFetchJson<ScoutFile>("/data/juniors-scout.json").then(d => { if (vivo) setScout(d ?? null); }).catch(() => {});
-    return () => { vivo = false; };
-  }, [precisaScout]);
+  const scout = useJson<ScoutFile>(precisaScout ? "/data/juniors-scout.json" : null).data;
   const scoutOf = useMemo(() => {
     const m = new Map<string, JuniorScout>();
     if (!scout) return m;

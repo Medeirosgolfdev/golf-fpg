@@ -36,7 +36,7 @@ import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName, fmtToPar, medal as medalOf, fmtDatePt } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
 import { loadPlayers } from "../data/loader";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import type { PlayersDb } from "../data/types";
 import ExpandArrow from "../ui/ExpandArrow";
 import ExtLink from "../ui/ExternalLink";
@@ -574,15 +574,10 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
 }
 
 export default function DrawsPage() {
-  const [data, setData] = useState<PairingsFile | null>(null);
-  const [intlLinks, setIntlLinks] = useState<IntlLink[]>([]);
   const [playersDb, setPlayersDb] = useState<PlayersDb>({});
-  const [inativos, setInativos] = useState<PlayerLite[]>([]);
-  const [fedAll, setFedAll] = useState<PlayerLite[]>([]);
   const [escFilter, setEscFilter] = useState<Set<string>>(new Set());
   const [anoFilter, setAnoFilter] = useState<Set<string>>(new Set());
   const [q, setQ] = useState("");
-  const [erro, setErro] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("FPG");
   const [viewMode, setViewMode] = useState<ViewMode>("companheiro");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -594,49 +589,35 @@ export default function DrawsPage() {
     ultima: "desc",
   });
 
+  const { data, loading, error: erro } = useJson<PairingsFile>("/data/manuel-pairings.json");
+  // Links externos (Bluegolf/GolfGenius) — opcional
+  const { data: intlLinksData } = useJson<IntlLinksFile, IntlLink[]>(
+    "/data/manuel-pairings-intl-links.json", (j) => j.links ?? []);
+  const intlLinks = intlLinksData ?? [];
+  // federados inativos juvenis — dob de quem já deixou de ser federado
+  const { data: inativos } = useJson<any, PlayerLite[]>("/data/federados-inativos-jovens.json",
+    (j) => (j?.players ?? []).map((p: any) => ({
+      fed: String(p.federation_code || ""),
+      name: p.name || "",
+      dob: p.birthdate || null,
+    })));
+  // federados activos — dob de adultos + resolução de nomes por clube
+  // (16MB; a cache do useJson é partilhada com as outras páginas)
+  const { data: fedAll } = useJson<any, PlayerLite[]>("/data/federados.json", (j) => {
+    const rows: any[] = Array.isArray(j) ? j : (j.players || []);
+    return rows.map((p: any) => ({
+      fed: String(p.federation_code || ""),
+      name: p.name || "",
+      dob: p.birthdate || null,
+      clubNorm: norm(`${p.club_name || ""} ${p.acronym || ""}`),
+    }));
+  });
+
+  // players.json (cache partilhada) — escalão dos companheiros FPG
   useEffect(() => {
     let alive = true;
-    fetch("/data/manuel-pairings.json")
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((j: PairingsFile) => alive && setData(j))
-      .catch((e) => alive && setErro(String(e.message || e)));
-    // Carregar links externos (Bluegolf/GolfGenius) — opcional
-    fetch("/data/manuel-pairings-intl-links.json")
-      .then(r => r.ok ? r.json() : null)
-      .then((j: IntlLinksFile | null) => { if (alive && j?.links) setIntlLinks(j.links); })
-      .catch(() => {});
-    // players.json (cache partilhada) — escalão dos companheiros FPG
     loadPlayers()
       .then((db) => { if (alive) setPlayersDb(db); })
-      .catch(() => {});
-    // federados inativos juvenis — dob de quem já deixou de ser federado
-    fetch("/data/federados-inativos-jovens.json")
-      .then(r => r.ok ? r.json() : null)
-      .then((j: any) => {
-        if (!alive || !j?.players) return;
-        setInativos(j.players.map((p: any) => ({
-          fed: String(p.federation_code || ""),
-          name: p.name || "",
-          dob: p.birthdate || null,
-        })));
-      })
-      .catch(() => {});
-    // federados activos — dob de adultos + resolução de nomes por clube
-    // (16MB; cachedFetchJson partilha a cache com as outras páginas)
-    cachedFetchJson<any>("/data/federados.json")
-      .then((j: any) => {
-        if (!alive || !j) return;
-        const rows: any[] = Array.isArray(j) ? j : (j.players || []);
-        setFedAll(rows.map((p: any) => ({
-          fed: String(p.federation_code || ""),
-          name: p.name || "",
-          dob: p.birthdate || null,
-          clubNorm: norm(`${p.club_name || ""} ${p.acronym || ""}`),
-        })));
-      })
       .catch(() => {});
     return () => { alive = false; };
   }, []);
@@ -667,11 +648,11 @@ export default function DrawsPage() {
       if (k) { const a = lk.byISsmall.get(k) || []; a.push(lite); lk.byISsmall.set(k, a); }
     };
     for (const [fed, p] of Object.entries(playersDb)) addSmall(fed, (p as any).name || "", (p as any).dob || null);
-    for (const p of inativos) addSmall(p.fed, p.name, p.dob);
+    for (const p of inativos ?? []) addSmall(p.fed, p.name, p.dob);
     // Federados activos — dob + índice por inicial/apelido (c/ clube) + exacto único
     const nameCount = new Map<string, number>();
-    for (const p of fedAll) { const nm = norm(p.name); if (nm) nameCount.set(nm, (nameCount.get(nm) || 0) + 1); }
-    for (const p of fedAll) {
+    for (const p of fedAll ?? []) { const nm = norm(p.name); if (nm) nameCount.set(nm, (nameCount.get(nm) || 0) + 1); }
+    for (const p of fedAll ?? []) {
       if (!p.fed) continue;
       if (p.dob && !lk.dobByFed.has(p.fed)) lk.dobByFed.set(p.fed, p.dob);
       const nm = norm(p.name);
@@ -964,11 +945,11 @@ export default function DrawsPage() {
 
       {/* Conteúdo */}
       <div>
-        {erro && (
-          <ErrorState message="Erro ao carregar os pairings" detail={erro} />
+        {!loading && !data && (
+          <ErrorState message="Erro ao carregar os pairings" detail={erro ?? "HTTP 404"} />
         )}
 
-        {!erro && !data && (
+        {loading && (
           <LoadingState size="sm" message="A carregar pairings…" />
         )}
 

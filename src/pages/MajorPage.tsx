@@ -14,9 +14,9 @@
  * As rotas antigas /doral e /bjgt redireccionam para /major (ver App.tsx).
  */
 import { withDivisionModel } from "../data/model/division";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
@@ -238,19 +238,8 @@ function catalogToEntry(cat: MajorCatalogEntry): CircuitEntry {
 function MajorContent() {
   const navigate = useNavigate();
   const params = useParams<{ source?: string; year?: string }>();
-  const [catalog, setCatalog] = useState<MajorCatalog | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let alive = true;
-    (async () => {
-      const cat = await cachedFetchJson<MajorCatalog>("/data/major-catalog.json").catch(() => null);
-      if (!alive) return;
-      setCatalog(cat);
-      setLoading(false);
-    })();
-    return () => { alive = false; };
-  }, []);
+  // Sem catálogo (404 ou erro): a página abre vazia.
+  const { data: catalog, loading } = useJson<MajorCatalog>("/data/major-catalog.json");
 
   const entries = useMemo(() => (catalog?.entries ?? []).map(catalogToEntry), [catalog]);
 

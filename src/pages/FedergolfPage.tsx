@@ -10,9 +10,9 @@
  *   /fig/info/:key       → categorias e legenda · ranking juvenil (menu ⓘ)
  *   /fig/jogador/:id     → as voltas de um jogador no ranking (?ano=)
  */
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import LoadingState from "../ui/LoadingState";
 import ErrorState from "../ui/ErrorState";
 import CircuitShell from "../ui/circuit/CircuitShell";
@@ -39,16 +39,7 @@ export default function FedergolfPage() {
   const params = useParams<{ id?: string; source?: string }>();
   const [search] = useSearchParams();
   const navigate = useNavigate();
-  const [idx, setIdx] = useState<FgIndice | null>(null);
-  const [erro, setErro] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    cachedFetchJson<FgIndice>(FG_INDEX_URL)
-      .then((d) => { if (!cancelled) setIdx(d); })
-      .catch((err) => { if (!cancelled) setErro(String((err as Error).message || err)); });
-    return () => { cancelled = true; };
-  }, []);
+  const { data: idx, error: erro } = useJson<FgIndice>(FG_INDEX_URL);
 
   const entries = useMemo(() => (idx ? buildFgEntries(idx) : []), [idx]);
   const onInfo = params.source === "info";

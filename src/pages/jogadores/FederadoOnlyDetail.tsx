@@ -10,7 +10,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import type { MergedPlayer } from "../../data/federadosLoader";
 import { getPlayerHistory, getScorecard, type WhsRound, type Scorecard } from "../../data/datagolfClient";
 import { playerDataUrl } from "../../data/playerDataLoader";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import { gf, isForeignPrefix } from "../../utils/flagUtils";
 import { canonicalCourseName } from "../../utils/courseAliases";
 import EmptyState from "../../ui/EmptyState";
@@ -37,6 +37,18 @@ import SectionTitle from "../../ui/SectionTitle";
  *  400+ rondas WHS disparava 400+ POSTs ao /api/datagolf para linhas nunca
  *  renderizadas. */
 const SCORECARD_BATCH_MAX = 200;
+
+interface LocalPlayerData { HOLES?: Record<string, unknown> }
+/** scoreIds que já temos em ficheiro: as chaves do HOLES do data.json local. */
+function holeScoreIds(json: LocalPlayerData): Set<number> {
+  const ids = new Set<number>();
+  for (const k of Object.keys(json.HOLES ?? {})) {
+    const n = Number(k);
+    if (isFinite(n)) ids.add(n);
+  }
+  return ids;
+}
+const SEM_IDS = new Set<number>();
 
 export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string } }) {
   // ⚠ Hooks SEMPRE antes de qualquer return — `f` pode em teoria faltar
@@ -70,7 +82,11 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
   const [extraMap, setExtraMap] = useState<Map<number, RoundExtra>>(new Map());
 
   /* ── Comparação com dados locais (scoreIds que já temos em ficheiro) ── */
-  const [localIds, setLocalIds] = useState<Set<number>>(new Set());
+  // useJson: partilha cache com o resto da app (a "vista federado" de um Nosso
+  // já descarregou este data.json) e dá null em 404 (federado sem análise
+  // local — o caso normal aqui).
+  const localJson = useJson<LocalPlayerData, Set<number>>(fedCode ? playerDataUrl(fedCode) : null, holeScoreIds);
+  const localIds = (localJson.loading ? null : localJson.data) ?? SEM_IDS;
 
   useEffect(() => {
     if (!fedCode) return;
@@ -125,33 +141,6 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
     for (let i = 0; i < CONC; i++) next();
     return () => { cancelled = true; };
   }, [liveRounds]);
-
-  /* Load local data scoreIds for comparison */
-  useEffect(() => {
-    let cancelled = false;
-    setLocalIds(new Set());
-    const fed = fedCode;
-    if (!fed) return;
-    (async () => {
-      try {
-        // cachedFetchJson: partilha cache com o resto da app (a "vista
-        // federado" de um Nosso já descarregou este data.json) e devolve
-        // null em 404 (federado sem análise local — o caso normal aqui).
-        const json = await cachedFetchJson<{ HOLES?: Record<string, unknown> }>(playerDataUrl(fed));
-        if (!json) return;
-        // HOLES keys are scoreId strings; DATA[].rounds[].scoreId too
-        const ids = new Set<number>();
-        if (json.HOLES) {
-          for (const k of Object.keys(json.HOLES)) {
-            const n = Number(k);
-            if (isFinite(n)) ids.add(n);
-          }
-        }
-        if (!cancelled && ids.size > 0) setLocalIds(ids);
-      } catch { /* no local data available — OK */ }
-    })();
-    return () => { cancelled = true; };
-  }, [fedCode]);
 
   if (!f) return <EmptyState message="Sem dados disponíveis" />;
 

@@ -49,7 +49,7 @@
 
 <div class="ds-hero">
   <h1>⛳ Golf Portugal — Design System</h1>
-  <p>Cores e peças globais da app, com o CSS real (tokens.css + App.css) · 361 tokens em 20 secções</p>
+  <p>Cores e peças globais da app, com o CSS real (tokens.css + App.css) · 374 tokens em 20 secções</p>
 </div>
 <div class="ds-indice"><a href="#t1">1. Base / Backgrounds</a> · <a href="#t2">2. Text / Greyscale</a> · <a href="#t3">3. Accent (verde FPG)</a> · <a href="#t4">4. Semantic</a> · <a href="#t5">Cores de circuito</a> · <a href="#t6">5. Overlays / Alphas</a> · <a href="#t7">6. Badges &amp; Pills</a> · <a href="#t8">7. Score ramp (abaixo → acima do par)</a> · <a href="#t9">8. Charts / Data-viz (10 séries)</a> · <a href="#t10">9. Performance tiers (histograma gross vs par)</a> · <a href="#t11">10. Escalão (sub-10 … super sénior)</a> · <a href="#t12">11. Medals</a> · <a href="#t13">11b. Source colors (fontes de dados kids2)</a> · <a href="#t14">11c. Fontes das páginas de circuito (/major, /ffg, /rfeg)</a> · <a href="#t15">12. Borders</a> · <a href="#t16">13. Superfícies avulsas</a> · <a href="#t17">14. Tamanhos · Raios · Sombras</a> · <a href="#t18">15. Tipografia</a> · <a href="#t19">16. Espaçamento</a> · <a href="#t20">17. Z-index</a> · <a href="#p1">Tipografia</a> · <a href="#p2">Filtros e interruptores</a> · <a href="#p3">Botões e paginação</a> · <a href="#p4">Pills e etiquetas</a> · <a href="#p5">Números</a> · <a href="#p6">Tabelas</a> · <a href="#p7">Cartões e avisos</a> · <a href="#p8">Regras</a></div>
 
@@ -209,7 +209,7 @@
 </div>
 
 <div class="ds-section" id="t7">
-  <div class="ds-title">6. Badges &amp; Pills <span>tokens.css · 32</span></div>
+  <div class="ds-title">6. Badges &amp; Pills <span>tokens.css · 45</span></div>
   <div class="ds-box"><div class="ds-tok-grid">
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--badge-birth-bg)"></span><div><code class="ds-code">--badge-birth-bg</code><div class="ds-tok-val">#f0ece4</div></div></div>
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--badge-birth-text)"></span><div><code class="ds-code">--badge-birth-text</code><div class="ds-tok-val">#6b5c3e</div></div></div>
@@ -230,6 +230,19 @@
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-pcc-pos2-bg)"></span><div><code class="ds-code">--pill-pcc-pos2-bg</code><div class="ds-tok-val">#15803d</div><div class="ds-tok-nota">PCC +2</div></div></div>
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-pcc-pos3-bg)"></span><div><code class="ds-code">--pill-pcc-pos3-bg</code><div class="ds-tok-val">#14532d</div><div class="ds-tok-nota">PCC +3</div></div></div>
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-pja-bg)"></span><div><code class="ds-code">--pill-pja-bg</code><div class="ds-tok-val">#dc2626</div><div class="ds-tok-nota">vermelho PJA = danger</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-tcode-bg)"></span><div><code class="ds-code">--pill-tcode-bg</code><div class="ds-tok-val">#374151</div><div class="ds-tok-nota">tcode do torneio — cinzento escuro</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-tcode-fg)"></span><div><code class="ds-code">--pill-tcode-fg</code><div class="ds-tok-val">#dddddd</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-junior-bg)"></span><div><code class="ds-code">--pill-junior-bg</code><div class="ds-tok-val">#b45309</div><div class="ds-tok-nota">JUNIOR (auto-detectado pelo nome)</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-junior-fg)"></span><div><code class="ds-code">--pill-junior-fg</code><div class="ds-tok-val">#fef3c7</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-manuel-bg)"></span><div><code class="ds-code">--pill-manuel-bg</code><div class="ds-tok-val">#dcfce7</div><div class="ds-tok-nota">★ Manuel</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-manuel-fg)"></span><div><code class="ds-code">--pill-manuel-fg</code><div class="ds-tok-val">#166534</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-manuel-bd)"></span><div><code class="ds-code">--pill-manuel-bd</code><div class="ds-tok-val">#16a34a</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--om-cat-junior)"></span><div><code class="ds-code">--om-cat-junior</code><div class="ds-tok-val">#374151</div><div class="ds-tok-nota">categorias da OM CGSS: do mais escuro (Júnior) ao mais claro</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--om-cat-homens)"></span><div><code class="ds-code">--om-cat-homens</code><div class="ds-tok-val">#4b5563</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--om-cat-senhoras)"></span><div><code class="ds-code">--om-cat-senhoras</code><div class="ds-tok-val">#6b7280</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--om-cat-seniores)"></span><div><code class="ds-code">--om-cat-seniores</code><div class="ds-tok-val">#9ca3af</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--om-cat-superseniores)"></span><div><code class="ds-code">--om-cat-superseniores</code><div class="ds-tok-val">#d1d5db</div></div></div>
+    <div class="ds-tok"><span class="ds-swatch" style="background:var(--om-cat-outra)"></span><div><code class="ds-code">--om-cat-outra</code><div class="ds-tok-val">#555555</div></div></div>
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-round-2)"></span><div><code class="ds-code">--pill-round-2</code><div class="ds-tok-val">#0891b2</div><div class="ds-tok-nota">2 rondas — ciano</div></div></div>
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-round-3)"></span><div><code class="ds-code">--pill-round-3</code><div class="ds-tok-val">#dc2626</div><div class="ds-tok-nota">3 rondas — vermelho</div></div></div>
     <div class="ds-tok"><span class="ds-swatch" style="background:var(--pill-round-4)"></span><div><code class="ds-code">--pill-round-4</code><div class="ds-tok-val">#7c3aed</div><div class="ds-tok-nota">4 rondas — violeta</div></div></div>

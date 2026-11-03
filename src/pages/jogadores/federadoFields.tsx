@@ -118,15 +118,7 @@ export const FEDERADO_FIELD_DESCRIPTIONS: Record<string, string> = {
    com os pills globais (PillBadge.tsx + App.css .p/.p-sm/.p-*).
    Cada valor vira pill apropriado ao tipo de campo.
    ──────────────────────────────────────────────────────────────── */
-const STATUS_GOOD_PILL: React.CSSProperties = {
-  background: "var(--color-good)", color: "var(--text-on-color)", borderColor: "transparent",
-};
-const STATUS_WARN_PILL: React.CSSProperties = {
-  background: "var(--color-warn)", color: "var(--text-on-color)", borderColor: "transparent",
-};
-const STATUS_DANGER_PILL: React.CSSProperties = {
-  background: "var(--color-danger)", color: "var(--text-on-color)", borderColor: "transparent",
-};
+/* Estados: classes globais .p-good / .p-warn / .p-bad (App.css). */
 
 export function normalizeAgeLabel(s: string): string {
   // "SUB12" → "Sub-12" · "SUB-14" → "Sub-14" · mantém "Absoluto", "Sénior", etc.
@@ -198,9 +190,9 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
     const s = String(v).toLowerCase();
     const isGood = /v[aá]lid|ativo|activo/.test(s);
     const isWarn = /provis|review|revis/.test(s);
-    const style = isGood ? STATUS_GOOD_PILL : isWarn ? STATUS_WARN_PILL : undefined;
-    return style
-      ? <span className="p p-sm" style={style}>{String(v)}</span>
+    const cls = isGood ? "p-good" : isWarn ? "p-warn" : null;
+    return cls
+      ? <span className={`p p-sm ${cls}`}>{String(v)}</span>
       : <span className="p p-sm p-muted">{String(v)}</span>;
   }
 
@@ -209,9 +201,9 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
     const s = String(v).toLowerCase();
     const isGood = /ativ/.test(s) && !/inativ/.test(s);
     const isBad = /inativ|suspen/.test(s);
-    const style = isGood ? STATUS_GOOD_PILL : isBad ? STATUS_DANGER_PILL : undefined;
-    return style
-      ? <span className="p p-sm" style={style}>{String(v)}</span>
+    const cls = isGood ? "p-good" : isBad ? "p-bad" : null;
+    return cls
+      ? <span className={`p p-sm ${cls}`}>{String(v)}</span>
       : <span className="p p-sm p-muted">{String(v)}</span>;
   }
 
@@ -225,7 +217,7 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
     const s = String(v).toLowerCase();
     const isPro = /profiss/.test(s);
     return isPro
-      ? <span className="p p-sm" style={STATUS_WARN_PILL}>{String(v)}</span>
+      ? <span className="p p-sm p-warn">{String(v)}</span>
       : <span className="p p-sm p-muted">{String(v)}</span>;
   }
 
@@ -272,7 +264,7 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
     // 1 = privado (warn), 0/null = público (good)
     const truthy = v === true || v === 1 || v === "1";
     return (
-      <span className="p p-sm" style={truthy ? STATUS_WARN_PILL : STATUS_GOOD_PILL}>
+      <span className={`p p-sm ${truthy ? "p-warn" : "p-good"}`}>
         {truthy ? "Privado" : "Público"}
       </span>
     );
@@ -296,7 +288,7 @@ export function formatFedValue(key: string, v: unknown): React.ReactNode {
   // ── Fallbacks por tipo ──────────────────────────────────────
   if (typeof v === "boolean") {
     return (
-      <span className="p p-sm" style={v ? STATUS_GOOD_PILL : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}>
+      <span className={`p p-sm ${v ? "p-good" : "p-muted"}`}>
         {v ? "Sim" : "Não"}
       </span>
     );

@@ -213,7 +213,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
         <KpiCard label="🇵🇹 Portugueses" value={fmt(ptCount)} pct={ptCount / stats.total} />
         <KpiCard label="🌍 Estrangeiros" value={fmt(foreignCount)} pct={foreignCount / stats.total} />
         <KpiCard label={`Activos ${todayIso().slice(0, 4)}`} value={fmt(stats.activeThisYear)} pct={stats.activeThisYear / stats.total} sub="com rondas este ano" />
-        <KpiCard label="Com HCP válido" value={fmt(stats.withHcp)} pct={stats.withHcp / stats.total} sub={`média ${stats.avgHcp.toFixed(1)}`} />
+        <KpiCard label="Com HCP válido" value={fmt(stats.withHcp)} pct={stats.withHcp / stats.total} sub={`média ${fmtHcp(stats.avgHcp)}`} />
         <KpiCard label="Profissionais" value={fmt(stats.pros)} pct={stats.pros / stats.total} />
       </div>
 
@@ -487,7 +487,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
         <KpiCard label="Total" value={fmt(members.length)} />
         <KpiCard label={<SexBadge sex="M" />} value={fmt(male)} pct={male / members.length} />
         <KpiCard label={<SexBadge sex="F" />} value={fmt(female)} pct={female / members.length} />
-        <KpiCard label="Com HCP" value={fmt(withHcp)} sub={`média ${avgHcp.toFixed(1)}`} />
+        <KpiCard label="Com HCP" value={fmt(withHcp)} sub={`média ${fmtHcp(avgHcp)}`} />
         <KpiCard label={`Activos ${todayIso().slice(0, 4)}`} value={fmt(active)} pct={active / members.length} />
         {pros > 0 && <KpiCard label="Pros" value={fmt(pros)} />}
       </div>

@@ -116,7 +116,7 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
       <CollapseCard title="Janela WHS — as 20 rondas do handicap" icon="📋" defaultOpen={true}>
         {data.HCP_INFO?.current != null && (
           <div className="fs-12 mb-8 u-c-text-2">
-            O índice <b>{Number(data.HCP_INFO.current).toFixed(1)}</b> é a média dos{" "}
+            O índice <b>{fmtHcp(Number(data.HCP_INFO.current))}</b> é a média dos{" "}
             <b>{data.HCP_INFO.qtyCalc || 8} melhores</b> Score Differentials (marcados com ★)
             das últimas <b>{data.HCP_INFO.qtyScores ?? 20}</b> rondas com SD — cada ronda nova
             empurra a mais antiga para fora da janela.
@@ -386,8 +386,8 @@ export function WHSDetail({ hcp, bare }: { hcp: HcpInfo; bare?: boolean }) {
         <UiKpiCard label={`Média ${hcp.qtyCalc || 8} melhores`} value={hcp.scoreAvg?.toFixed(1) ?? "–"} />
       </div>
  <div className="fs-11 c-text-3 d-flex u-gap-14px u-bt-1px-solid-bg u-pt-8px">
-        {hcp.softCap != null && <span>Soft cap: <b>{hcp.softCap.toFixed(1)}</b></span>}
-        {hcp.hardCap != null && <span>Hard cap: <b>{hcp.hardCap.toFixed(1)}</b></span>}
+        {hcp.softCap != null && <span>Soft cap: <b>{fmtHcp(hcp.softCap)}</b></span>}
+        {hcp.hardCap != null && <span>Hard cap: <b>{fmtHcp(hcp.hardCap)}</b></span>}
         {hcp.qtyScores != null && hcp.qtyCalc != null && (
           <span>Cálculo: <b>{hcp.qtyCalc}</b> de <b>{hcp.qtyScores}</b> scores
             {hcp.adjustTotal != null && hcp.adjustTotal !== 0 && ` (ajuste: ${hcp.adjustTotal})`}

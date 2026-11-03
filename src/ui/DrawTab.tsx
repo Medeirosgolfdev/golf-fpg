@@ -36,6 +36,7 @@ import { isNoCardGross } from "../data/intlCommon";
 import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
 import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
 import ExtLink from "./ExternalLink";
+import TabRow from "./TabRow";
 import { MUTED } from "./tableCells";
 
 interface Props {
@@ -737,21 +738,9 @@ export default function DrawTab({
       {showOm && (
         <div className="detail-toolbar u-gap-6px u-fwr-wrap">
           <span className="muted fs-11">Ordem de Mérito:</span>
-          {([{ k: null, l: "Todas" }, { k: "junior", l: "Júnior" }, { k: "homens", l: "Homens" }, { k: "senhoras", l: "Senhoras" }, { k: "seniores", l: "Seniores" }, { k: "superSeniores", l: "Super Sen." }, { k: "none", l: "Sem OM" }] as { k: string | null; l: string }[]).map(o => {
-            const active = omFilter === o.k;
-            return (
-              <button key={o.l} type="button" onClick={() => setOmFilter(o.k)}
-                className="p p-sm" style={{
-                  cursor: "pointer",
-                  background: active ? "var(--accent)" : "var(--bg-card)",
-                  color: active ? "var(--text-on-color)" : "var(--text-1)",
-                  borderColor: active ? "var(--accent)" : "var(--border)",
-                  fontWeight: active ? 700 : 400,
-                }}>
-                {o.l}
-              </button>
-            );
-          })}
+          <TabRow ariaLabel="Ordem de Mérito" active={omFilter ?? "all"} onChange={k => setOmFilter(k === "all" ? null : k)}
+            tabs={[{ key: "all", label: "Todas" }, { key: "junior", label: "Júnior" }, { key: "homens", label: "Homens" }, { key: "senhoras", label: "Senhoras" },
+              { key: "seniores", label: "Seniores" }, { key: "superSeniores", label: "Super Sen." }, { key: "none", label: "Sem OM" }]} />
         </div>
       )}
       {isEstimated && (

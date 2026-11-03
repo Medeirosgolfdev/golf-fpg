@@ -31,6 +31,7 @@ import { AnoEscalaoPill, TrendBadge } from "./AnoEscalaoPill";
 import LoadingState from "./LoadingState";
 import { FLAG } from "../utils/flagUtils";
 import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import AdmissionsTab, { type AdmissionsExtraCol } from "./AdmissionsTab";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
 import type { PlayersDB } from "./tournamentPrimitives";
@@ -44,14 +45,9 @@ import { SDPill } from "./tournamentPrimitives";
    HOOKS
    ═══════════════════════════════════════════════════════ */
 
-function usePlayerStats() {
-  const [stats, setStats] = useState<StatsDb>({});
-  useEffect(() => {
-    cachedFetchJson<StatsDb>("/player-stats.json")
-      .then(d => { if (d) setStats(d); })
-      .catch(() => {});
-  }, []);
-  return stats;
+const SEM_STATS: StatsDb = {};
+function usePlayerStats(): StatsDb {
+  return useJson<StatsDb>("/player-stats.json").data ?? SEM_STATS;
 }
 
 /* ── federados-lite.json ──

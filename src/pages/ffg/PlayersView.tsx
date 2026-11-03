@@ -14,8 +14,9 @@
  *
  * Renderizada como item especial ("👥 Joueurs") no menu ⓘ Info da página /ffg.
  */
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import DetailHeader from "../../ui/DetailHeader";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
@@ -107,8 +108,10 @@ interface Row extends FrancePlayer {
 }
 
 export function FFGPlayersView() {
-  const [data, setData] = useState<FrancePlayersFile | null>(null);
-  const [err, setErr] = useState<string | null>(null);
+  const { data: raw, loading, error } = useJson<FrancePlayersFile>("/data/france-players.json");
+  const data = raw?.byLicense ? raw : null;
+  const err = error ?? (!loading && !data
+    ? "france-players.json não encontrado. Corre `node scripts/build-france-players.js`." : null);
   const [q, setQ] = useState("");
   const [sex, setSex] = useState<"" | "M" | "F">("");
   const [cat, setCat] = useState<string>("ALL");
@@ -137,15 +140,6 @@ export function FFGPlayersView() {
         .catch(() => setTournsState("error"));
     }
   };
-
-  useEffect(() => {
-    cachedFetchJson<FrancePlayersFile>("/data/france-players.json")
-      .then((d) => {
-        if (!d || !d.byLicense) { setErr("france-players.json não encontrado. Corre `node scripts/build-france-players.js`."); return; }
-        setData(d);
-      })
-      .catch((e) => setErr(String(e?.message ?? e)));
-  }, []);
 
   // lic FFG → juniorId (exacto) e normName → juniorId (fallback, 1º vence).
   const kidsByLic = useMemo(() => {

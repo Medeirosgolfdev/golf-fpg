@@ -8,7 +8,7 @@
  *  - Jogadores mais frequentes (top ranking cross-campeonatos)
  *  - Evolução por jogador (timeline de escalão + títulos)
  */
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import type { Tournament } from "../data/fpgTypes";
 import type { PlayersDB } from "./tournamentPrimitives";
 import {
@@ -23,7 +23,7 @@ import {
   type PlayerInfoMap,
   type Sex,
 } from "../data/jovensAnaliseData";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import { fpgScoringUrl, tournamentUrl, abreviarNome, fmtToPar, fmtOrd } from "../utils/format";
 import { Link } from "react-router-dom";
 import SexBadge from "./SexBadge";
@@ -847,6 +847,9 @@ function PlayerTimelines({ players, years, mode = "all" }: { players: PlayerStat
 
 // ── Componente principal ────────────────────────────────────────────────
 
+const SEM_NAT: NationalityMap = {};
+const SEM_INFO: PlayerInfoMap = {};
+
 export function JovensAnaliseView({
   jovensTournaments,
   playersDB,
@@ -870,19 +873,9 @@ export function JovensAnaliseView({
 }) {
   // Carregar mapeamento fed → {country, dob, sex, name} (federados activos +
   // inactivos consolidados). Ficheiro leve (~38KB), cacheado globalmente.
-  const [nationality, setNationality] = useState<NationalityMap>({});
-  const [playerInfo, setPlayerInfo] = useState<PlayerInfoMap>({});
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<{ byFed?: NationalityMap; info?: PlayerInfoMap }>("/data/players-nationality.json")
-      .then(d => {
-        if (!alive) return;
-        if (d?.byFed) setNationality(d.byFed);
-        if (d?.info) setPlayerInfo(d.info);
-      })
-      .catch(() => {});
-    return () => { alive = false; };
-  }, []);
+  const natFile = useJson<{ byFed?: NationalityMap; info?: PlayerInfoMap }>("/data/players-nationality.json").data;
+  const nationality = natFile?.byFed ?? SEM_NAT;
+  const playerInfo = natFile?.info ?? SEM_INFO;
 
   const analise: AnaliseData = useMemo(
     () => buildJovensAnalise(jovensTournaments, playersDB, nationality, playerInfo),

@@ -5,7 +5,7 @@
  * Cores hardcoded intencionalmente (ver NOTA em OverlayExport.tsx) — o renderer
  * html-to-image converte DOM→SVG→Canvas→PNG e perde CSS custom properties.
  */
-import { fmtSD } from "../../utils/format";
+import { fmtSD, fmtHcp } from "../../utils/format";
 import { scoreDifferential } from "../../utils/whsCalc";
 import type { DD, Vis, Stats, StT } from "./types";
 
@@ -152,7 +152,7 @@ export function infoParts(d: DD, v: Vis, keys: InfoKey[] = INFO_ALL, o: { roundW
     else if (k === "tee" && d.tee) out.push(d.tee);
     else if (k === "teeDist" && d.teeDist) out.push(`${d.teeDist}m`);
     else if (k === "date" && d.date) out.push(d.date);
-    else if (k === "hiCh" && d.hi !== null) out.push([`HI ${d.hi.toFixed(1)}`, d.courseHcp !== null ? `CH ${d.courseHcp}` : ""].filter(Boolean).join(" · "));
+    else if (k === "hiCh" && d.hi !== null) out.push([`HI ${fmtHcp(d.hi)}`, d.courseHcp !== null ? `CH ${d.courseHcp}` : ""].filter(Boolean).join(" · "));
     else if (k === "sd" && d.sd !== null) out.push(`SD ${fmtSD(d.sd)}`);
   }
   return out;
@@ -162,7 +162,7 @@ export function infoParts(d: DD, v: Vis, keys: InfoKey[] = INFO_ALL, o: { roundW
 export function hiChStr(d: DD, v: Vis, _s: Stats): string {
   const p: string[] = [];
   if (v.hiCh && d.hi !== null) {
-    p.push(`HI ${d.hi.toFixed(1)}`);
+    p.push(`HI ${fmtHcp(d.hi)}`);
     if (d.courseHcp !== null) p.push(`CH ${d.courseHcp}`);
   }
   if (v.sd && d.sd !== null) p.push(`SD ${fmtSD(d.sd)}`);

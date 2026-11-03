@@ -7,8 +7,7 @@
  * Sem qualquer indicador de sexo (sem SexBadge, sem Unicode ♂/♀).
  */
 
-import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useMemo } from "react";
 import type { CanonicalData, Junior, Tournament } from "../data";
 import { computeTier, getTierLabel, getTierColors, hasRealConfrontWithManuel } from "../data";
 import { useScoutRanking } from "../useScoutRanking";
@@ -16,13 +15,14 @@ import { computeDobInfo, escalaoIntl, type DobInfo } from "../dobInfo";
 import { getTournWeight } from "../tournWeight";
 import { flag as flagOf } from "../../../utils/flagUtils";
 import { MANUEL_DOB } from "../../../constants/manuel";
-import { cachedFetchJson } from "../../../data/fetchCache";
 import HcpSparkline from "./HcpSparkline";
 import BirthPill from "../../../ui/BirthPill";
 import { EscPill, RankPill } from "../../../ui/PillBadge";
 import { shortDateSlash, fmtHcp, MONTHS_PT } from "../../../utils/format";
 import { stripAccents } from "../../../utils/normName";
 
+import ExtLink from "../../../ui/ExternalLink";
+import { useJson } from "../../../hooks/useJson";
 /** Bandeira por federação — mostrada junto ao número de licença. */
 const SOURCE_FLAGS: Record<string, string> = {
   USKIDS: flagOf("United States"),
@@ -48,10 +48,8 @@ export function egrNameKey(s: string): string {
 }
 
 function useEgrRank(junior: Junior): EgrSlimEntry | null {
-  const [db, setDb] = useState<EgrSlimFile | null>(null);
-  useEffect(() => {
-    cachedFetchJson<EgrSlimFile>("/data/egr-rank-slim.json").then((d) => { if (d?.players) setDb(d); }).catch(() => {});
-  }, []);
+  const { data: egr } = useJson<EgrSlimFile>("/data/egr-rank-slim.json");
+  const db = egr?.players ? egr : null;
   return useMemo(() => {
     if (!db) return null;
     const names = [junior.canonicalName, ...(junior.aliases || [])].filter(Boolean);
@@ -437,16 +435,10 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
 
   if (isClickable && linkTo) {
     // Regra global do projecto: TODOS os links abrem em janela nova.
-    // react-router-dom <Link> respeita target/rel quando passados.
     return (
-      <Link
-        to={linkTo}
-        target="_blank"
-        rel="noreferrer"
-        className={cardClass}
-      >
+      <ExtLink href={linkTo} className={cardClass}>
         {inner}
-      </Link>
+      </ExtLink>
     );
   }
 

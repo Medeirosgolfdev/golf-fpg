@@ -22,7 +22,7 @@ import CircuitShell from "../../ui/circuit/CircuitShell";
 import { CircuitToolbarSlotCtx } from "../../ui/circuit/toolbarSlot";
 import type { CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
 import { buildExtraRivals, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import { loadUskidsResults } from "../../data/uskidsResultsLoader";
 import { escalaoManuelParaData } from "../../constants/manuel";
 import type { TorneioResult, UskidsDrawsData } from "../../ui/uskidsTypes";
@@ -82,14 +82,11 @@ function NextTournamentsContent() {
   const data = useFieldRivaisData(autoRivals ?? undefined, pedido, escRef);
 
   const [results, setResults] = useState<TorneioResult[] | null>(null);
-  const [draws, setDraws] = useState<UskidsDrawsData | null>(null);
-  const [edicoes, setEdicoes] = useState<EdicoesIndex["torneios"] | null>(null);
+  const draws = useJson<UskidsDrawsData>("/data/uskids-draws.json").data;
+  const edicoes = useJson<EdicoesIndex>("/data/uskids-edicoes/index.json").data?.torneios;
   useEffect(() => {
     let alive = true;
     loadUskidsResults().then(d => { if (alive) setResults(d.resultados); }).catch(() => { if (alive) setResults([]); });
-    cachedFetchJson<UskidsDrawsData>("/data/uskids-draws.json").then(d => { if (alive) setDraws(d); }).catch(() => {});
-    cachedFetchJson<EdicoesIndex>("/data/uskids-edicoes/index.json")
-      .then(d => { if (alive) setEdicoes(d?.torneios ?? []); }).catch(() => { if (alive) setEdicoes([]); });
     return () => { alive = false; };
   }, []);
 

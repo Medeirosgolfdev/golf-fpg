@@ -3,8 +3,8 @@
  * PillBadge.tsx — FONTE ÚNICA de todos os pills da aplicação
  *
  * Exporta:
- *   Estilos:    PILL_TCODE, PILL_9H, PILL_SSERRA,
- *               PILL_JUNIOR, PILL_MANUEL, SIDEBAR_ACCENT, ESC_STYLE
+ *   Estilos:    SIDEBAR_ACCENT, ESC_STYLE (as cores das pílulas de torneio vivem em
+ *               classes do App.css: .p-tcode/.p-9h/.p-sserra/.p-junior/.p-manuel/.p-om)
  *   Dados:      CCODE_SHORT
  *   Funções:    clubeFromCcode, shortClubFromField
  *   Componentes: Pill (base), EscPill, PillBadge, RoundPill,
@@ -12,7 +12,7 @@
  *
  * Todos os pills usam sempre className="p p-sm [p-tourn]" (App.css global)
  * para garantir tamanho e padding uniformes.
- * Apenas background/color/borderColor são sobrescritos via style.
+ * As cores vêm de classes (tokens.css); `style` só para cores que vêm dos dados.
  *
  * PillBadge.tsx e tournamentPrimitives.tsx devem re-exportar daqui.
  */
@@ -22,38 +22,8 @@ import { C } from "../utils/colors";
 import { MUTED } from "./tableCells";
 
 /* ════════════════════════════════════════════════════════════
-   ESTILOS — usados como style={PILL_XXX} em className="p p-sm [p-tourn]"
+   ESTILOS — cores por série/escalão (as das pílulas estão em classes no App.css)
    ════════════════════════════════════════════════════════════ */
-
-/** IDs de torneio (tcode) */
-export const PILL_TCODE: CSSProperties = {
-  background: C.grey700,  color: C.grey200,  letterSpacing: "0.06em", borderColor: "transparent",
-};
-
-/** 9 buracos — só mostrar se nholes ≤ 9 */
-const PILL_9H: CSSProperties = {
-  background: C.warn, color: "var(--text-on-color)", borderColor: "transparent",
-};
-
-/** Santo da Serra */
-export const PILL_SSERRA: CSSProperties = {
-  background: C.goodDark, color: "var(--text-on-color)", borderColor: "transparent",
-};
-
-/** Torneios Junior (auto-detectado pelo nome) */
-const PILL_JUNIOR: CSSProperties = {
-  background: C.pillJuniorBg, color: C.pillJuniorFg, borderColor: "transparent",
-};
-
-/** Jogador especial Manuel */
-const PILL_MANUEL: CSSProperties = {
-  background: C.pillManuelBg, color: C.pillManuelFg, borderColor: C.pillManuelBd,
-};
-
-/** Ordem de Mérito CGSS (dourado/medalha) */
-const PILL_OM: CSSProperties = {
-  background: "var(--pill-om-bg)", color: "var(--text-on-color)", borderColor: "transparent",
-};
 
 /** Accent lateral da sidebar por série/tipo */
 export const SIDEBAR_ACCENT: Record<string, string> = {
@@ -206,27 +176,29 @@ export function CircuitPill({ circ }: { circ: Circuito }) {
   return <span className={`p p-sm p-circ ${p.cls}`} title={p.title}>{p.emoji} {p.label}</span>;
 }
 
-/** REGIONAL / NACIONAL / INTL / PJA — substitui PillBadge.tsx */
+/** REGIONAL / NACIONAL / INTL / PJA / CN (inscrito no Campeonato Nacional) */
 const PILL_BADGE_CLASSES: Record<string, string> = {
   REGIONAL: "p p-sm p-tourn p-regional",
   NACIONAL: "p p-sm p-tourn p-nacional",
   INTL:     "p p-sm p-tourn p-intl",
   PJA:      "p p-sm p-tourn p-pja",
+  CN:       "p p-sm p-cn",
 };
 function normalizePill(raw: string): string {
   const p = raw.trim().toUpperCase();
   if (["AWAY","AWAY INTL","INTERNACIONAL","INTERN"].includes(p)) return "INTL";
   return p;
 }
-export function PillBadge({ pill }: { pill?: string }) {
+export function PillBadge({ pill, title }: { pill?: string; title?: string }) {
   if (!pill) return null;
   const normalized = normalizePill(pill);
   const cls = PILL_BADGE_CLASSES[normalized];
   if (!cls) return null;
   const label = normalized === "INTL" ? "🌍 INTL"
     : normalized === "NACIONAL" ? "🇵🇹 NACIONAL"
+    : normalized === "CN" ? "🏆 CN"
     : normalized;
-  return <span className={cls}>{label}</span>;
+  return <span className={cls} title={title}>{label}</span>;
 }
 
 /** Posição num ranking — «🏆 WAGR #N». */
@@ -253,17 +225,17 @@ export function RoundPill({ nR }: { nR: number }) {
 /** Tcode — um pill por tcode (dividir "10370+10371" externamente) */
 export function TcodePill({ tc }: { tc: string }) {
   if (!tc) return null;
-  return <span className="p p-sm p-tourn" style={PILL_TCODE}>{tc}</span>;
+  return <span className="p p-sm p-tourn p-tcode">{tc}</span>;
 }
 
 /** 9 buracos */
 export function NineHPill() {
-  return <span className="p p-sm p-tourn" style={PILL_9H}>9H</span>;
+  return <span className="p p-sm p-tourn p-9h">9H</span>;
 }
 
 /** Santo da Serra */
 export function SserraPill() {
-  return <span className="p p-sm p-tourn" style={PILL_SSERRA}>SSerra</span>;
+  return <span className="p p-sm p-tourn p-sserra">SSerra</span>;
 }
 
 /** NACIONAL auto-detectado */
@@ -273,19 +245,19 @@ export function NacionalPill() {
 
 /** JUNIOR auto-detectado */
 export function JuniorPill() {
-  return <span className="p p-sm p-tourn" style={PILL_JUNIOR}>JUNIOR</span>;
+  return <span className="p p-sm p-tourn p-junior">JUNIOR</span>;
 }
 
 /** ★ Manuel */
 export function ManuelPill() {
-  return <span className="p p-sm" style={PILL_MANUEL}>★ Manuel</span>;
+  return <span className="p p-sm p-manuel">★ Manuel</span>;
 }
 
 /** Ordem de Mérito CGSS — marca torneios que contam para a OM do clube.
  *  `level` (A/B/C) vai só no tooltip; o pill mostra "OM". */
 export function OmPill({ level }: { level?: string | null }) {
   const t = level ? `Conta para a Ordem de Mérito CGSS · Nível ${level}` : "Conta para a Ordem de Mérito CGSS";
-  return <span className="p p-sm p-tourn" style={PILL_OM} title={t}>OM{level ? `·${level}` : ""}</span>;
+  return <span className="p p-sm p-tourn p-om" title={t}>OM{level ? `·${level}` : ""}</span>;
 }
 
 /** Pill da modalidade de jogo, com a palavra tal como vem escrita (FPG ou

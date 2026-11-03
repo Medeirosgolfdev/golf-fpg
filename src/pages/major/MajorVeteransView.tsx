@@ -14,7 +14,7 @@
  */
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import DetailHeader from "../../ui/DetailHeader";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
@@ -70,8 +70,10 @@ function splitEntry(id: string): { source: string; year: string } {
 }
 
 export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {} }: Props) {
-  const [file, setFile] = useState<VetFile | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const vet = useJson<VetFile>("/data/major-veterans.json");
+  const file = vet.data;
+  const error = vet.error
+    ?? (!vet.loading && !file ? "major-veterans.json não encontrado. Corre `node scripts/build-major-catalog.js`." : null);
   const [q, setQ] = useState("");
   const [minT, setMinT] = useState(2);
   const [circuito, setCircuito] = useState("");
@@ -82,12 +84,6 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
   const { sortKey, sortDir, toggleSort } = useSort<SK>("tournaments", "desc", {
     tournaments: "desc", years: "desc", seriesCount: "desc", rank: "asc", name: "asc", country: "asc",
   });
-
-  useEffect(() => {
-    cachedFetchJson<VetFile>("/data/major-veterans.json")
-      .then((d) => { if (d) setFile(d); else setError("major-veterans.json não encontrado. Corre `node scripts/build-major-catalog.js`."); })
-      .catch((e) => setError(String(e?.message ?? e)));
-  }, []);
 
   const srcLabel = (s: string) => sourceLabels[s] ?? s.toUpperCase();
 

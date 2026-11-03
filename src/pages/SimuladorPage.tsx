@@ -28,7 +28,7 @@ import { loadPlayerData } from "../data/playerDataLoader";
 import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
 import { SIM_NAMED_PLAYERS, SIM_REGION, PERCURSO_COHORT_FEDS } from "../constants/simuladorPlayers";
-import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import { courseMatchKey, resolvePlayedTee } from "../utils/playedDistance";
 import ClearButton from "../ui/ClearButton";
 import Select from "../ui/Select";
@@ -1012,14 +1012,8 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
   /* Volta do scorecard enviada para o simulador "E se?" */
   const [incomingRound, setIncomingRound] = useState<IncomingRound | null>(null);
 
-  const [simExtra, setSimExtra] = useState<SimPlayersFile | null>(null);
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<SimPlayersFile>("/data/simulador-players.json")
-      .then((d) => { if (alive && d) setSimExtra(d); })
-      .catch(() => { /* sem o ficheiro: ficam só os do players.json */ });
-    return () => { alive = false; };
-  }, []);
+  // Sem o ficheiro: ficam só os do players.json.
+  const simExtra = useJson<SimPlayersFile>("/data/simulador-players.json").data;
 
   const nameOf = useCallback(
     (fed: string) => SIM_NAMED_PLAYERS.find((p) => p.fed === fed)?.label

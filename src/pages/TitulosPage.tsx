@@ -22,6 +22,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { cachedFetchJson } from "../data/fetchCache";
+import { useJson } from "../hooks/useJson";
 import { JovensAnaliseView } from "../ui/JovensAnaliseView";
 import LoadingState from "../ui/LoadingState";
 import TabRow from "../ui/TabRow";
@@ -62,6 +63,9 @@ const TAB_LABELS: Record<TabKey, string> = {
   atleta: "🔍 Atleta",
 };
 
+const SEM_NAT: NationalityMap = {};
+const SEM_INFO: PlayerInfoMap = {};
+
 const JOVENS_YEARS = ["2026", "2025", "2024", "2023", "2022", "2020", "2019"];
 
 export default function TitulosPage() {
@@ -78,42 +82,18 @@ export default function TitulosPage() {
       : null;
   const activeTab: TabKey = validTab ?? "nacional";
 
-  const [historico, setHistorico] = useState<HistoricoFile | null>(null);
-  const [historicoErr, setHistoricoErr] = useState<string | null>(null);
+  // Nacional historico
+  const historicoJson = useJson<HistoricoFile>("/data/fpg-nacionais-historico.json");
+  const historico = historicoJson.data;
+  const historicoErr = historicoJson.error
+    ?? (!historicoJson.loading && !historico ? "Ficheiro fpg-nacionais-historico.json nao encontrado." : null);
   const [regionais, setRegionais] = useState<Tournament[]>([]);
   const [regLoaded, setRegLoaded] = useState(false);
-  const [nationality, setNationality] = useState<NationalityMap>({});
-  const [playerInfo, setPlayerInfo] = useState<PlayerInfoMap>({});
-
-  // Nacional historico
-  useEffect(() => {
-    cachedFetchJson<HistoricoFile>("/data/fpg-nacionais-historico.json")
-      .then((d) => {
-        if (!d) {
-          setHistoricoErr("Ficheiro fpg-nacionais-historico.json nao encontrado.");
-          return;
-        }
-        setHistorico(d);
-      })
-      .catch((e) => setHistoricoErr(String(e?.message ?? e)));
-  }, []);
 
   // Nationality map (foreigner rule)
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<{ byFed?: NationalityMap; info?: PlayerInfoMap }>(
-      "/data/players-nationality.json",
-    )
-      .then((d) => {
-        if (!alive) return;
-        if (d?.byFed) setNationality(d.byFed);
-        if (d?.info) setPlayerInfo(d.info);
-      })
-      .catch(() => {});
-    return () => {
-      alive = false;
-    };
-  }, []);
+  const natFile = useJson<{ byFed?: NationalityMap; info?: PlayerInfoMap }>("/data/players-nationality.json").data;
+  const nationality = natFile?.byFed ?? SEM_NAT;
+  const playerInfo = natFile?.info ?? SEM_INFO;
 
   // Regional - lazy load when tab activates
   useEffect(() => {

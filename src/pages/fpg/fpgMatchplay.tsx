@@ -10,9 +10,8 @@
  * A FPG não publica cartões dos jogos de match play: só o quadro (nomes,
  * cabeças de série, resultados, tee e hora).
  */
-import { useEffect, useState } from "react";
 import type { Tournament } from "../../data/fpgTypes";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import MatchplayView from "../../ui/circuit/MatchplayView";
 import type { MatchplayFile } from "../../ui/circuit/matchplayTypes";
 import ExtLink from "../../ui/ExternalLink";
@@ -25,13 +24,7 @@ export interface FpgMatchplayData {
 
 /** Carrega o fpg-matchplay.json (lazy, cacheado). */
 export function useFpgMatchplay(): FpgMatchplayData | null {
-  const [data, setData] = useState<FpgMatchplayData | null>(null);
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<FpgMatchplayData>("/data/fpg-matchplay.json").then(d => { if (alive) setData(d); }).catch(() => {});
-    return () => { alive = false; };
-  }, []);
-  return data;
+  return useJson<FpgMatchplayData>("/data/fpg-matchplay.json").data;
 }
 
 /** Devolve o extraTab "Match Play" do torneio aberto, ou `undefined` se não tem quadro. */

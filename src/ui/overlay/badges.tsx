@@ -8,7 +8,7 @@
 import React, { createContext, useContext } from "react";
 import { II } from "./shared";
 import { HIO_GREEN, scBg, INFO_ALL, isLightText, hexToRgba, onColor, type InfoKey } from "./shared";
-import { fmtSD } from "../../utils/format";
+import { fmtSD, fmtHcp } from "../../utils/format";
 import type { DD, StT, Vis } from "./types";
 
 /* ═══════ Par / S.I. por buraco (opções «Par» e «S.I.» do painel) ═══════
@@ -279,7 +279,7 @@ export function Info({ d, v, keys = INFO_ALL, tc, tc3, ta, fs = 10, align = "lef
   if (on("date") && d.date) chips.push({ val: d.date });
   if (on("position") && d.position) chips.push({ l: "POS", val: d.position });
   if (on("hiCh") && d.hi !== null) {
-    chips.push({ l: "HI", val: d.hi.toFixed(1) });
+    chips.push({ l: "HI", val: fmtHcp(d.hi) });
     if (d.courseHcp !== null) chips.push({ l: "CH", val: String(d.courseHcp) });
   }
   if (on("sd") && d.sd !== null) chips.push({ l: "SD", val: fmtSD(d.sd) });
