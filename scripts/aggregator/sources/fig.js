@@ -40,7 +40,8 @@ const paisIso2 = (clube) => { const p = FG.fgPais(clube); return p ? p.slice(0, 
 function load() {
   const dir = path.join(DATA_DIR, "federgolf");
   const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith(".json")) : [];
-  const anos = FG.fgAnosNascimento(readJsonSafe(path.join(DATA_DIR, "federgolf-ranking.json"), null));
+  const ranking = readJsonSafe(path.join(DATA_DIR, "federgolf-ranking.json"), null);
+  const anos = FG.fgAnosNascimento(ranking);
 
   const players = new Map();
   const grupos = new Map(); // data|clube|nome base → provas (M e F)
@@ -128,6 +129,27 @@ function load() {
       ],
       extra: { ids: provas.map((t) => t.id) },
     });
+  }
+  // Só no ranking juvenil (sem prova nos ficheiros): ano de nascimento e clube
+  // para uma ficha que JÁ exista — o passo 5b do identity-matcher só os junta à
+  // única ficha italiana com esse nome; sem provas, nunca fazem ficha própria
+  // (03/11/2026: as italianas do Venice Open não tinham ano nem clube).
+  for (const ano of Object.keys(ranking?.anos || {}).sort().reverse()) {
+    for (const [lista, linhas] of Object.entries(ranking.anos[ano])) {
+      for (const l of linhas) {
+        if (!l.id || players.has(l.id)) continue;
+        const a = anos.get(l.id);
+        players.set(l.id, {
+          sourceKey: l.id,
+          name: FG.fgNome(l.nome),
+          sex: lista.startsWith("F") ? "F" : "M",
+          country: paisIso2(l.clube),
+          club: FG.fgPais(l.clube) ? null : FG.fgClube(l.clube) || null,
+          dobRange: a ? { lo: `${a}-01-01`, hi: `${a}-12-31` } : undefined,
+          extra: { anosNascimento: a ? [a] : [], soRanking: true },
+        });
+      }
+    }
   }
   return { sourceId: SOURCE_ID, sourceLabel: SOURCE_LABEL, players: [...players.values()], tournaments };
 }

@@ -350,6 +350,8 @@ function resolve(rawSources, overrides) {
         const candidatos = [];
         for (const root of roots) {
           const grupo = groupEntities.get(root) || [];
+          // Só no ranking (sem provas): só uma ficha italiana — o nome é a única prova.
+          if (f.raw.extra?.soRanking && !grupo.some((e) => String(e.raw.country || "").toUpperCase().startsWith("IT"))) continue;
           const anosG = anosF.size ? anosDoGrupo(grupo) : null;
           if (anosG && ![...anosF].some((y) => anosG.has(y))) { casamentoPorProvas.travadosAno++; continue; }
           candidatos.push({ root, grupo });
