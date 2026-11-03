@@ -304,22 +304,37 @@ function main() {
     try {
       const antigos = JSON.parse(fs.readFileSync(outPath, "utf8")).tournaments || [];
       const porChave = new Map(out.map((t) => [t.ccode + "|" + t.tcode, t]));
-      for (const velho of antigos) {
-        const chave = velho.ccode + "|" + velho.tcode;
-        const novo = porChave.get(chave);
-        if (!novo) { out.push(velho); porChave.set(chave, velho); presTorn++; continue; }
-        const vistos = new Set((novo.players || []).map((p) => String(p.scoreId)));
-        for (const p of velho.players || []) {
-          if (vistos.has(String(p.scoreId))) continue;   // o build novo manda
-          novo.players.push(p); presJog++;
-        }
-        // Reordenar a posição ENTRE OS NOSSOS com o conjunto completo.
-        novo.players
+      // Um jogador entra UMA vez por torneio (a entrada junta as voltas todas):
+      // casar pelo federado, não pelo scoreId — a FPG às vezes volta a publicar o
+      // cartão com outro id (mesmo `score_id`) e a cópia antiga ficava como um
+      // segundo jogador (03/11/2026: 7 torneios com os nossos em duplicado).
+      const quem = (p) => String(p.fed || p.fedCode || "sid:" + p.scoreId);
+      const reordenar = (t) => {
+        // Posição ENTRE OS NOSSOS com o conjunto completo.
+        t.players
           .filter((p) => typeof p.grossTotal === "number")
           .sort((a, b) => a.grossTotal - b.grossTotal)
           .forEach((p, i) => { p.pos = i + 1; });
-        novo.playerCount = novo.players.length;
-        novo.nOurs = novo.players.length;
+        t.playerCount = t.players.length;
+        t.nOurs = t.players.length;
+      };
+      for (const velho of antigos) {
+        const chave = velho.ccode + "|" + velho.tcode;
+        const novo = porChave.get(chave);
+        // Duplicados já gravados: fica o cartão mais recente (id maior).
+        const velhos = [...new Map((velho.players || [])
+          .slice().sort((a, b) => Number(a.scoreId) - Number(b.scoreId))
+          .map((p) => [quem(p), p])).values()];
+        if (!novo) {
+          if (velhos.length !== (velho.players || []).length) { velho.players = velhos; reordenar(velho); }
+          out.push(velho); porChave.set(chave, velho); presTorn++; continue;
+        }
+        const vistos = new Set((novo.players || []).map(quem));
+        for (const p of velhos) {
+          if (vistos.has(quem(p))) continue;   // o build novo manda
+          novo.players.push(p); vistos.add(quem(p)); presJog++;
+        }
+        reordenar(novo);
       }
     } catch { /* ficheiro corrompido — segue com o build novo */ }
   }
