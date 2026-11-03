@@ -65,7 +65,7 @@ const SOURCES = [
   { id: "egr", label: "European Golf Rankings", load: () => require("./sources/egr") },
   { id: "optimist", label: "Optimist Intl Junior Championships", load: () => require("./sources/optimist") },
   { id: "dgv", label: "Deutscher Golf Verband (DM/DMM juvenis)", load: () => require("./sources/dgv") },
-  { id: "ggcondados", label: "Condados ingleses (GolfGenius)", load: () => require("./sources/ggcondados") },
+  { id: "ggcondados", label: "Condados ingleses (GolfGenius + intelligentgolf)", load: () => require("./sources/ggcondados") },
 ];
 
 function parseArgs(argv) {

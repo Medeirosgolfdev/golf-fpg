@@ -392,6 +392,15 @@ const S = [
   { n: "Classificação Gross / Net", a: "ok", u: "https://www.golfgenius.com/v2tournaments/{id}",
     d: "JSON. «… Gross - U14» é o resultado; «… Net - U14» só para o handicap de jogo (Gross − Net). Os ids saem do widget tournament_results?page_id={resultsPath}.", where: "scrape-gg-condados.js" },
  ]},
+ { grp: "Circuitos", id: "ig-condados", title: "intelligentgolf — sites das associações de condado", sub: "~21 condados ingleses (Surrey, Kent, Lancashire, Essex, Hampshire, Staffs…; lista em scripts/ig-condados-scope.json). Público, fetch simples; resultados com o handicap de jogo, sem HI.", items: [
+  { n: "Resultados de uma prova (Gross)", a: "ok", u: "https://{site}/competition.php?compid={N}&amp;sort=2",
+    d: "Uma volta: posição · Nome (handicap de jogo) · clube · gross (viewround). Várias voltas: «Gross Leaderboard» com R1/R2 (cada uma é outra prova). Divisões: &amp;division=N. compid inexistente = «Login Required». Os compid são sequenciais por site.",
+    ex: [["Surrey U13 &amp; U14 2026", "https://www.surreygolf.org/competition.php?compid=4975&amp;sort=2"], ["Lancashire Boys 36 buracos 2026", "https://www.lancashiregolf.org/competition.php?compid=822"], ["Kent Junior Championship 2026", "https://www.kentgolf.org/competition.php?compid=1921&amp;sort=2"]], where: "scrape-ig-condados.js" },
+  { n: "Cartão de uma volta", a: "ok", u: "https://{site}/viewround.php?roundid={N}",
+    d: "Yards, SI, Par, Score buraco a buraco; tee e data no cabeçalho. Sem CR/slope.", ex: [["Harry Wang · Leatherhead", "https://www.surreygolf.org/viewround.php?roundid=59793"]], where: "scrape-ig-condados.js" },
+  { n: "Histórico do jogador no condado", a: "ok", u: "https://{site}/roundmgmt.php?playerid={N}",
+    d: "Todas as provas do condado, de vários anos, com gross e nett. O gráfico de HI vem vazio.", ex: [["Archie Jones · Lancashire", "https://www.lancashiregolf.org/roundmgmt.php?playerid=20355"]] },
+ ]},
  { grp: "Circuitos", id: "golfbox", title: "GolfBox", sub: "Estonian Junior Open/Tour, EGA Team Championships e o Albert Vermeiren Trophy. JSONP público, sem cookies.", items: [
   { n: "Leaderboard", a: "ok", u: "https://scores.golfbox.dk/api/js/leaderboard/competitionid/{id}/template/ega",
     d: "Leaderboard individual com CR/Slope, HCP e ano de nascimento.",

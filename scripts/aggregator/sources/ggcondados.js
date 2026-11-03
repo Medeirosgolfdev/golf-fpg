@@ -1,11 +1,15 @@
 /**
  * scripts/aggregator/sources/ggcondados.js
  *
- * Adapter — circuitos de juniores dos condados ingleses no GolfGenius (BB&O
- * Futures Tour, …). Lê public/data/gg-condados/{circuito}_{data}.json (JobFile
- * do scrape-gg-condados.js): uma prova de uma volta por ficheiro, escalões
- * U12/U14/U16 com o sexo no rótulo, e por jogador o `hcpJogo` (Gross − Net do
- * dia). Cada ficheiro traz a sua série (seriesId/seriesLabel).
+ * Adapter — provas de juniores dos condados ingleses, de duas origens com o
+ * mesmo formato (JobFile, uma prova por ficheiro, cada um com a sua série):
+ *   - public/data/gg-condados/{circuito}_{data}_{evento}.json — circuitos no
+ *     GolfGenius (BB&O Futures Tour, PING, Cheshire) — scrape-gg-condados.js;
+ *   - public/data/ig-condados/{condado}_{data}_{compid}.json — campeonatos dos
+ *     sites das associações de condado em intelligentgolf (Surrey, Kent,
+ *     Lancashire…) — scrape-ig-condados.js (03/11/2026).
+ * Por jogador o `hcpJogo` (handicap de jogo do dia; não é o HI). Os escalões
+ * trazem o sexo no rótulo quando a fonte o diz.
  *
  * Fonte fraca (nome + país GB + clube); o matcher trata-a como o England.
  */
@@ -15,8 +19,9 @@ const { buildJobfileSource, parseSexAge } = require("../util/jobfile");
 
 module.exports = buildJobfileSource({
   sourceId: "ggcondados",
-  sourceLabel: "Condados ingleses (GolfGenius)",
-  dir: path.join(DATA_DIR, "gg-condados"),
+  sourceLabel: "Condados ingleses (GolfGenius + intelligentgolf)",
+  dirs: [path.join(DATA_DIR, "gg-condados"), path.join(DATA_DIR, "ig-condados")],
+  // o _estado.json do leitor dos condados não entra (começa por «_»)
   pattern: /^[a-z0-9-]+_\d{4}-\d{2}-\d{2}(?:_\w+)?\.json$/,
   seriesId: "ggc",
   seriesLabel: "Condados ingleses",

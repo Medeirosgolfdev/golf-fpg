@@ -134,7 +134,9 @@ function collectLinks(divisions, seriesLabel) {
   const seen = new Set(); const links = [];
   for (const div of divisions) {
     const url = div.source;
-    if (url && !seen.has(url)) { seen.add(url); links.push({ label: `GolfGenius — ${div.division || seriesLabel}`.trim(), url }); }
+    // o nome do site sai do endereço (os condados ingleses também vêm do intelligentgolf)
+    const site = /golfgenius\.com/i.test(url || "") ? "GolfGenius" : (() => { try { return new URL(url).host.replace(/^www\./, ""); } catch { return "GolfGenius"; } })();
+    if (url && !seen.has(url)) { seen.add(url); links.push({ label: `${site} — ${div.division || seriesLabel}`.trim(), url }); }
   }
   return links;
 }
@@ -156,6 +158,8 @@ function collectLinks(divisions, seriesLabel) {
  */
 function buildJobfileSource(opts) {
   const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv, maxAgeInYear = null, dobRangeFromGrad = false, countryFromLocation = false, dir = DATA_DIR } = opts;
+  // Uma fonte pode ler várias pastas (condados ingleses: GolfGenius + intelligentgolf).
+  const dirs = Array.isArray(opts.dirs) && opts.dirs.length ? opts.dirs : [dir];
 
   function normalize(data, fileName, playerMap) {
     const year = data.year || (fileName.match(/(\d{4})/) ? +fileName.match(/(\d{4})/)[1] : null);
@@ -273,7 +277,7 @@ function buildJobfileSource(opts) {
   }
 
   function load() {
-    const files = listFiles(dir, pattern);
+    const files = dirs.flatMap((d) => listFiles(d, pattern));
     const tournaments = [];
     const playerMap = new Map();
     for (const file of files) {

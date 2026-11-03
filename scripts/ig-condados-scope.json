@@ -1,0 +1,31 @@
+{
+  "_doc": [
+    "Associações de condado inglesas com o site em intelligentgolf (scrape-ig-condados.js, 03/11/2026).",
+    "id: curto e estável (vai para o nome dos ficheiros e para a série do kids2) · nome: série no kids2 · base: endereço do site (sem / no fim).",
+    "prefixo: o que vai à frente do nome da prova quando ela não diz o condado · sementes: compids conhecidos quando o site não mostra nenhum na lista de provas.",
+    "Lista de endereços: página «County organisations» da England Golf (03/11/2026; só abre no browser). Os condados com outro sistema (Cheshire, BB&O — GolfGenius; Yorkshire, Notts, Norfolk, Durham, Northumberland, Cumbria, Suffolk, Herts, Middlesex, Worcestershire, Lincolnshire) não estão aqui.",
+    "Sem compid de partida (não se lê): Cambridgeshire (cagu.co.uk). Fora: Hampshire (hampshiregolf.org.uk — o site não mostra provas sem login; os juniores estão no GolfGenius) e Sussex só tem provas antigas (juniores no GolfGenius, scgu-*)."
+  ],
+  "condados": [
+    { "id": "surrey", "nome": "Surrey", "base": "https://www.surreygolf.org" },
+    { "id": "kent", "nome": "Kent", "base": "https://www.kentgolf.org" },
+    { "id": "sussex", "nome": "Sussex", "base": "https://www.sussexgolf.org" },
+    { "id": "essex", "nome": "Essex", "base": "https://www.essexgolf.org" },
+    { "id": "lancashire", "nome": "Lancashire", "base": "https://www.lancashiregolf.org" },
+    { "id": "staffs", "nome": "Staffordshire", "base": "https://www.staffsgolf.co.uk" },
+    { "id": "warwickshire", "nome": "Warwickshire", "base": "https://www.warwickshiregolf.com" },
+    { "id": "midland", "nome": "Midland Golf Union", "base": "https://www.midlandgolfunion.co.uk", "prefixo": "Midland" },
+    { "id": "derbyshire", "nome": "Derbyshire", "base": "https://www.derbyshirecountygolf.co.uk" },
+    { "id": "leics", "nome": "Leicestershire & Rutland", "base": "https://www.lrgu.co.uk", "prefixo": "Leics & Rutland" },
+    { "id": "northants", "nome": "Northamptonshire", "base": "https://www.northantsgolf.co.uk", "prefixo": "Northants", "sementes": [4325] },
+    { "id": "beds", "nome": "Bedfordshire", "base": "https://www.bedfordshiregolf.org.uk" },
+    { "id": "shropshire", "nome": "Shropshire & Herefordshire", "base": "https://www.shugc.com", "prefixo": "Shropshire & Herefordshire" },
+    { "id": "glos", "nome": "Gloucestershire", "base": "https://www.gloucestershiregolfunion.co.uk" },
+    { "id": "wiltshire", "nome": "Wiltshire", "base": "https://www.wiltshiregolf.org" },
+    { "id": "somerset", "nome": "Somerset", "base": "https://www.somersetgolfunion.co.uk" },
+    { "id": "dorset", "nome": "Dorset", "base": "https://www.dorsetgolf.org" },
+    { "id": "devon", "nome": "Devon", "base": "https://www.devongolf.org.uk" },
+    { "id": "cornwall", "nome": "Cornwall", "base": "https://www.cornwallgolf.org.uk" },
+    { "id": "swcga", "nome": "South West Counties", "base": "https://www.swcga.co.uk", "prefixo": "South West" }
+  ]
+}

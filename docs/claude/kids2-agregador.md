@@ -318,6 +318,10 @@ As classificações dos eventos EGR continuam publicadas depois dos 2 anos (só 
 - **Workflow** `update-dgv.yml` (Sex/Sáb/Dom 19:30 UTC + Seg 06:00): janela de −21 a +7 dias; a pedido com `ids` ou `from_days`. Guarda anti-encolhimento por nº de jogadores com voltas; exit 2 = nada mudou.
 - Ainda **não** está na `/major` (só kids2). Mapa de links: secção «DGV — Alemanha» em `docs/links-conhecidos.html`.
 
+## Fonte «Condados ENG» — `ggcondados` (03/11/2026)
+
+Uma só fonte (pill «Condados ENG») que lê DUAS pastas, com o mesmo formato JobFile (`dirs` no `buildJobfileSource`): `public/data/gg-condados/` (circuitos no GolfGenius — BB&O, PING, Cheshire; `scrape-gg-condados.js`) e `public/data/ig-condados/` (sites das associações de condado em intelligentgolf — Surrey, Kent, Lancashire…; `scrape-ig-condados.js`). Fonte FRACA (nome + país GB + clube). Cada ficheiro traz a sua série (`ggc-bbo`, `igc-surrey`…). Por resultado o `hcpJogo` (handicap de jogo do dia, não o HI) → pill «🎯 HCP de jogo» na ficha. Detalhe: [england.md](england.md).
+
 ## Fonte FIG — Itália (02/11/2026)
 
 `public/data/federgolf/{id}.json` (a /fig, `scrape-federgolf.js`) + `federgolf-ranking.json` →
