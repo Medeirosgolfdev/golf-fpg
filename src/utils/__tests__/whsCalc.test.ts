@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   calcSD, calcCourseHcp, calcPlayingHcp, strokesOnHole, ndbCaps, ndbCapsForRound, expectedSD9, strokesPerHole, medalNet, stablefordNet,
-  scoreDifferential, scoreForDifferential, sd18FromSd9, roundDifferential,
+  scoreDifferential, scoreForDifferential, sd18FromSd9, roundDifferential, lengthAdjustedRating,
   whsQtyCalc, tableAdjustment, exceptionalAdjustment, applyCaps, historicExceptionalAdj,
   hiAdjustment, addRoundToPool, grossTargets, topIds, windowAverage, indexFromWindow,
 } from "../whsCalc";
@@ -56,6 +56,23 @@ describe("Medal Net e Stableford Net (classificação do tab Scorecard)", () => 
     const si = [15, 13, 5, 11, 1, 7, 3, 17, 9, 6, 14, 10, 4, 8, 16, 2, 18, 12];
     expect(stablefordNet(sc, par, si, 4)).toBe(34);
     expect(medalNet(78, 4)).toBe(74);
+  });
+});
+
+describe("lengthAdjustedRating — tees USKids a partir dos tees oficiais do clube", () => {
+  const Y = (m: number) => m / 0.9144;
+  // Marco Simone: tees oficiais do clube → PDF oficial USKids 2025/2026
+  it("rapazes: o CR bate à décima, o Slope fica perto", () => {
+    const verdi = { cr: 69.6, slope: 125, yards: Y(5252) };
+    expect(lengthAdjustedRating(verdi, Y(4959), "M")).toEqual({ cr: 68.1, slope: 122 }); // oficial 68.1/120
+    expect(lengthAdjustedRating(verdi, Y(3950), "M").cr).toBe(63.1);                     // oficial 63.1/108
+    const gialli = { cr: 72.1, slope: 129, yards: Y(5757) };
+    expect(lengthAdjustedRating(gialli, Y(6055), "M")).toEqual({ cr: 73.6, slope: 132 }); // oficial 73.6/132
+  });
+  it("raparigas: CR e Slope batem", () => {
+    const rossi = { cr: 75.0, slope: 137, yards: Y(5252) };
+    expect(lengthAdjustedRating(rossi, Y(4959), "F")).toEqual({ cr: 73.2, slope: 133 }); // oficial 73.2/133
+    expect(lengthAdjustedRating(rossi, Y(3950), "F")).toEqual({ cr: 67.1, slope: 120 }); // oficial 67.1/120
   });
 });
 

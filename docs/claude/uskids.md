@@ -611,6 +611,13 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
 - **Paginação do GetPlayerTeeTimes corrigida** (rich-players): com `t=1` a 1ª página já traz o flight todo — o ciclo seguia pelas páginas vazias com 2 pedidos cada (32 pedidos num flight de 37; agora 2). Pára na página vazia, sem novos, ou com tantos como os `registered` do meta.
 - **Página:** a `USKIDSPage` lê o `index.json` e põe cada edição no `pastEditionsPool` do CircuitShell (`edicaoEntry`); o ficheiro só carrega quando a prova dela está aberta e pede as edições; não entram na barra lateral.
 
+### CR/Slope dos escalões e SD (2026-11-03)
+
+- A coluna SD da /uskids só existe com CR/Slope no `TEES_LOOKUP[tcode][age_group]` (`src/ui/uskidsData.ts`). Primeiro, sempre, o **PDF oficial da USKids** do evento (lista de nomes conhecidos no doc 04 da base de conhecimento).
+- **Sem PDF → ESTIMADOS a partir dos tees oficiais do clube** (pedido da Mariana, 03/11/2026): a USKids calcula os ratings dos escalões ajustando o tee do clube pelas jardas com as fórmulas de comprimento da USGA (H: CR ±1 por 220 jd; S: ±1 por 180 jd; Slope pela diferença bogey−scratch). Conferido: a partir dos tees oficiais de Marco Simone (Verdi/Gialli/Rossi) reproduz **à décima** os CR dos 9 escalões do PDF; o Slope fica a 0–4 pontos nos rapazes pequenos e bate nas raparigas. Fórmula única: `lengthAdjustedRating` (`whsCalc.ts`); bases e resultados por torneio em `src/data/uskids/ratingsEstimados.ts` (rapazes a partir do tee de homens de comprimento parecido, raparigas do de senhoras), ligados ao `TEES_LOOKUP` com `ratingNota` e aos tees da /campos com `ratings.holes18.estimado`.
+- **Marcados sempre:** SD em itálico com contorno tracejado (`_sdEstimate` → `SDPill est`), «(estimados)» junto ao CR/Slope; na /campos «estimado» nos tees e CR/Slope em itálico (title com a origem).
+- Feito: **British Kids Championship 2026** (The Vale, t=22885) — base Wales Golf 2025 (Wales National Yellow 73.5/126, 6617 jd; Lake Yellow 70.3/123, 5986 jd; Lake Red F 74.9/134, 5745 jd). As jardas do Wales National vêm do cartão de 2020 (ratings de 2025). 9 buracos (Boys 7/8) ficam sem rating.
+
 ## API Signupanytime
 
 Base: `https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op={OP}&…`

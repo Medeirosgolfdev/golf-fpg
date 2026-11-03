@@ -143,6 +143,10 @@ export function escalaoToTournament(
     rounds: rondasComDados.length,
     playerCount: players.filter(p => !p._wd).length,
     players,
+    // CR/Slope não publicados pela USKids → SD marcado como estimado.
+    ...(teeInfo?.ratingNota && teeInfo.cr != null
+      ? { _sdEstimate: `CR ${teeInfo.cr.toFixed(1)} · Slope ${teeInfo.slope} estimados — ${teeInfo.ratingNota}` }
+      : {}),
   } as any;
 }
 

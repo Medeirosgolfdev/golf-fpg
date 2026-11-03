@@ -284,6 +284,25 @@ export function get9hRatings(
   return { cr: r.courseRating, slope: r.slopeRating, par: r.par ?? 36 };
 }
 
+/** CR/Slope ESTIMADOS de um tee sem avaliação, a partir de um tee avaliado do
+ *  mesmo campo, só pela diferença de comprimento (fórmulas de comprimento do
+ *  USGA Course Rating System: scratch = jardas/220 (H) · /180 (S); bogey =
+ *  /160 · /120; Slope = 5.381 (H) · 4.24 (S) × (bogey − scratch)).
+ *  É o método da USKids para os tees dos escalões: a partir dos tees oficiais do
+ *  clube reproduz à décima os CR do PDF oficial em Marco Simone (Verdi, Gialli e
+ *  Rossi → 9 escalões) e Paris (Rouges); o Slope fica a 0–4 pontos (03/11/2026).
+ *  Usar só quando a organização não publicou o rating, e marcar como estimado. */
+export function lengthAdjustedRating(
+  base: { cr: number; slope: number; yards: number },
+  yards: number,
+  sex: "M" | "F",
+): { cr: number; slope: number } {
+  const d = yards - base.yards;
+  const [scratch, bogey, k] = sex === "F" ? [180, 120, 4.24] : [220, 160, 5.381];
+  const slope = Math.round(base.slope + k * (d / bogey - d / scratch));
+  return { cr: round1(base.cr + d / scratch), slope: Math.min(155, Math.max(55, slope)) };
+}
+
 /* ═════════════════════════ 2. JANELA / ÍNDICE ═════════════════════════
  * A janela vai do resultado mais recente (índice 0) para o mais antigo (19):
  * uma volta nova entra à cabeça e empurra o mais antigo para fora. */

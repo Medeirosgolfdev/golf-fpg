@@ -9,6 +9,7 @@
  */
 
 import { compareEscalaoRaw } from "../data/model/escalao";
+import { BKC26, type RatingEstimado } from "../data/uskids/ratingsEstimados";
 import type { TeeInfo } from "./uskidsTypes";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -139,7 +140,29 @@ const parisTees: Record<number, TeeInfo> = {
   2102: { campo: "Golf Paris Val d'Europe", tee: "Boys 9",     par: PARIS_PAR, metros: PARIS_M_BOYS9 },
 };
 
+// The Vale (British Kids Championship 2026, t=22885) — CR/Slope ESTIMADOS a partir
+// dos tees oficiais do clube (src/data/uskids/ratingsEstimados.ts). Par e jardas
+// vêm dos results. Boys 7 e 8 (9 buracos) sem rating → SD «—».
+const est = (campo: string, tee: string, r: RatingEstimado): TeeInfo =>
+  ({ campo, tee, par: [], metros: [], cr: r.cr, slope: r.slope, ratingNota: r.nota });
+const VALE_WN = "The Vale Resort - Wales National Course";
+const VALE_LAKE = "The Vale Resort - Lake Course";
+const bkc26Tees: Record<number, TeeInfo> = {
+  2111: est(VALE_WN, "Boys 15-18", BKC26.wnBoys1518),
+  2106: est(VALE_WN, "Boys 13-14", BKC26.wnBoys1314),
+  2105: est(VALE_WN, "Boys 12", BKC26.wnBoys12),
+  2104: est(VALE_WN, "Boys 11 / 10", BKC26.wnBoys1011),
+  2103: est(VALE_WN, "Boys 11 / 10", BKC26.wnBoys1011),
+  2102: est(VALE_LAKE, "Boys 9", BKC26.lakeBoys9),
+  2112: est(VALE_LAKE, "Girls 15-18", BKC26.lakeGirls1518),
+  2121: est(VALE_LAKE, "Girls 13-14", BKC26.lakeGirls1314),
+  2120: est(VALE_LAKE, "Girls 11-12", BKC26.lakeGirls1112),
+  2119: est(VALE_LAKE, "Girls 11-12", BKC26.lakeGirls1112),
+};
+
 export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
+  // ── British Kids Championship 2026 – The Vale (ESTIMADOS) ──
+  22885: bkc26Tees,
   // ── Paris Invitational 2026 & 2025 – Golf Paris Val d'Europe (RED/BLUE) ──
   21795: parisTees,
   18975: parisTees,

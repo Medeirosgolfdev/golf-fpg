@@ -186,6 +186,9 @@ export interface TeeInfo {
   /** Slope Rating (opcional, 55-155) — necessário para cálculo de SD.
    *  Quando ausente, a UI mostra "—" na coluna SD para este escalão. */
   slope?: number;
+  /** CR/Slope ESTIMADOS (não publicados pela USKids) — a nota diz de onde vêm;
+   *  o SD aparece marcado como estimado (src/data/uskids/ratingsEstimados.ts). */
+  ratingNota?: string;
 }
 
 // ─────────────────────────────────────────────

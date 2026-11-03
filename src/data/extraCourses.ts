@@ -8,6 +8,7 @@
  */
 
 import type { Course, Tee, Hole } from "./types";
+import { BKC26, VALE_LAKE_RED_F, VALE_LAKE_YELLOW, VALE_WN_YELLOW, type RatingEstimado } from "./uskids/ratingsEstimados";
 
 /* Marco Simone Golf & Country Club — distâncias por tee (metros) */
 
@@ -1618,9 +1619,38 @@ const elPratValles = elPratRoute("valles", "El Vallès (9 buracos ×2)", pratVal
    Wales National; Boys 9 e raparigas no Lake; os de 9 buracos na volta da frente
    do Lake. Metros e par dos resultados USKids e dos cartões no Signupanytime
    (jardas × 0,9144); Girls 11-12 = tee dos Boys 9, Girls 9-10 = tee dos Boys 8.
-   Sem CR/Slope: a USKids não publicou (procurado a 30/10/2026; há as regras
-   locais local_rules_bkc_2026_-_wales_national.pdf e _-_lake.pdf).
+   A USKids não publicou CR/Slope (procurado a 30/10 e 03/11/2026). Os tees do
+   clube têm os OFICIAIS (Wales Golf 2025, valeresort.com; jardas dos cartões do
+   clube: Lake 2025, Wales National 2020); os tees USKids levam CR/Slope
+   ESTIMADOS a partir deles (src/data/uskids/ratingsEstimados.ts), marcados.
    ───────────────────────────────────────────────────────────────────────── */
+
+const jd = (yards: number[]) => yards.map((y) => Math.round(y * 0.9144));
+// Tees do clube — cartões oficiais (jardas), par e SI de homens e de senhoras.
+const valeWNClubPar  = [4,5,3,5,4,4,5,3,4, 5,4,3,4,3,5,4,4,4]; // 73
+const valeWNClubSI   = [3,1,17,5,13,15,9,7,11, 6,16,18,2,12,14,8,4,10];
+const valeWNRedPar   = [4,5,3,5,4,4,5,3,4, 5,4,3,4,3,5,5,5,4]; // 75
+const valeWNRedSI    = [5,1,9,3,7,17,13,11,15, 4,6,18,2,14,12,16,8,10];
+const valeWNBlue   = jd([485,607,247,563,423,322,486,188,468, 570,346,177,447,200,514,495,491,404]); // 7433 jd
+const valeWNWhite  = jd([456,571,219,534,394,284,466,177,453, 538,335,168,441,155,477,484,466,369]); // 6987 jd
+const valeWNYellow = jd([414,566,175,527,386,260,455,168,437, 519,318,152,419,131,455,434,449,352]); // 6617 jd
+const valeWNRed    = jd([404,545,144,436,355,236,383,118,313, 440,305,139,374,103,440,407,415,306]); // 5863 jd
+const valeLakeClubPar = [3,5,3,4,4,5,5,3,4, 3,4,4,3,5,4,4,4,5]; // 72
+const valeLakeClubSI  = [9,13,17,1,3,15,11,5,7, 18,12,6,16,4,14,2,10,8];
+const valeLakeRedPar  = [3,5,3,5,4,5,5,3,4, 3,4,4,3,5,4,5,4,5]; // 74
+const valeLakeRedSI   = [15,13,17,9,3,5,7,11,1, 18,8,2,16,4,14,10,12,6];
+const valeLakeWhite  = jd([199,491,157,440,403,483,510,210,387, 127,341,315,137,608,275,457,275,489]); // 6304 jd
+const valeLakeYellow = jd([180,445,144,435,362,463,510,207,382, 125,335,308,130,558,270,418,271,443]); // 5986 jd
+const valeLakeRed    = jd([160,430,131,430,357,449,475,196,370, 122,328,295,129,507,264,404,262,436]); // 5745 jd
+
+function valeClubTee(teeId: string, teeName: string, sex: "M" | "F", par: number[], si: number[], dist: number[], cr: number, slope: number): Tee {
+  return {
+    teeId, sex, teeName,
+    ratings: { holes18: { par: par.reduce((a, b) => a + b, 0), courseRating: cr, slopeRating: slope } },
+    holes: vHoles(par, dist, si),
+    distances: vDist(dist),
+  };
+}
 
 const valeWNPar = [4,5,3,5,4,4,4,3,4, 5,4,3,4,3,5,4,4,4]; // par USKids 72
 const valeWNB1314 = [293,437,125,409,306,294,315,140,280, 438,260,114,357,115,385,305,336,296]; // 5205 m
@@ -1636,10 +1666,14 @@ const valeLakeG1518 = [132,307,130,283,317,398,422,128,261,99,293,234,110,406,19
 const valeLakeG1314 = [116,307,114,251,229,340,325,121,239,83,251,234,110,352,197,321,252,248]; // 4090 m (4471 jd)
 const valeLakeG8 = [59,174,55,130,145,187,181,73,105]; // 1109 m (1214 jd)
 
-function valeTee(teeId: string, teeName: string, par: number[], dist: number[], sex: "M" | "F" | "U" = "M"): Tee {
+function valeTee(teeId: string, teeName: string, par: number[], dist: number[], sex: "M" | "F" | "U" = "M", r?: RatingEstimado): Tee {
   return {
     teeId, sex, teeName,
-    ratings: { holes18: { par: par.slice(0, dist.length).reduce((a, b) => a + b, 0), courseRating: null, slopeRating: null } },
+    ratings: { holes18: {
+      par: par.slice(0, dist.length).reduce((a, b) => a + b, 0),
+      courseRating: r?.cr ?? null, slopeRating: r?.slope ?? null,
+      ...(r ? { estimado: r.nota } : {}),
+    } },
     holes: vHoles(par, dist),
     distances: vDist(dist),
   };
@@ -1658,10 +1692,14 @@ const valeWalesNational: Course = {
     country: "Gales",
     links: { fpg: null, scorecards: "https://www.valeresort.com/the-wales-national-course/", extra: BKC26_LINKS },
     tees: [
-      valeTee("vale-wn-uk-b1518", "USKids Boys 15-18", valeWNPar, valeWNB1518),
-      valeTee("vale-wn-uk-b1314", "USKids Boys 13-14", valeWNPar, valeWNB1314),
-      valeTee("vale-wn-uk-b12", "USKids Boys 12", valeWNPar, valeWNB12),
-      valeTee("vale-wn-uk-b1011", "USKids Boys 11 / 10", valeWNPar, valeWNB1011),
+      valeClubTee("vale-wn-blue", "Blue", "M", valeWNClubPar, valeWNClubSI, valeWNBlue, 77.3, 134),
+      valeClubTee("vale-wn-white", "White", "M", valeWNClubPar, valeWNClubSI, valeWNWhite, 75.2, 130),
+      valeClubTee("vale-wn-yellow", "Yellow", "M", valeWNClubPar, valeWNClubSI, valeWNYellow, VALE_WN_YELLOW.cr, VALE_WN_YELLOW.slope),
+      valeClubTee("vale-wn-red", "Red", "F", valeWNRedPar, valeWNRedSI, valeWNRed, 75.7, 130),
+      valeTee("vale-wn-uk-b1518", "USKids Boys 15-18", valeWNPar, valeWNB1518, "M", BKC26.wnBoys1518),
+      valeTee("vale-wn-uk-b1314", "USKids Boys 13-14", valeWNPar, valeWNB1314, "M", BKC26.wnBoys1314),
+      valeTee("vale-wn-uk-b12", "USKids Boys 12", valeWNPar, valeWNB12, "M", BKC26.wnBoys12),
+      valeTee("vale-wn-uk-b1011", "USKids Boys 11 / 10", valeWNPar, valeWNB1011, "M", BKC26.wnBoys1011),
     ],
   },
 };
@@ -1674,9 +1712,14 @@ const valeLake: Course = {
     country: "Gales",
     links: { fpg: null, scorecards: "https://www.valeresort.com/the-lake-course/", extra: BKC26_LINKS },
     tees: [
-      valeTee("vale-lake-uk-g1518", "USKids Girls 15-18", valeLakePar, valeLakeG1518, "F"),
-      valeTee("vale-lake-uk-g1314", "USKids Girls 13-14", valeLakePar, valeLakeG1314, "F"),
-      valeTee("vale-lake-uk-b9", "USKids Boys 9 / Girls 11-12", valeLakePar, valeLakeB9, "U"),
+      valeClubTee("vale-lake-white", "White", "M", valeLakeClubPar, valeLakeClubSI, valeLakeWhite, 71.9, 130),
+      valeClubTee("vale-lake-yellow", "Yellow", "M", valeLakeClubPar, valeLakeClubSI, valeLakeYellow, VALE_LAKE_YELLOW.cr, VALE_LAKE_YELLOW.slope),
+      valeClubTee("vale-lake-red", "Red", "F", valeLakeRedPar, valeLakeRedSI, valeLakeRed, VALE_LAKE_RED_F.cr, VALE_LAKE_RED_F.slope),
+      valeTee("vale-lake-uk-g1518", "USKids Girls 15-18", valeLakePar, valeLakeG1518, "F", BKC26.lakeGirls1518),
+      valeTee("vale-lake-uk-g1314", "USKids Girls 13-14", valeLakePar, valeLakeG1314, "F", BKC26.lakeGirls1314),
+      // Mesmo tee físico, ratings diferentes: Boys 9 (base homens) e Girls 11-12 (base senhoras).
+      valeTee("vale-lake-uk-b9", "USKids Boys 9", valeLakePar, valeLakeB9, "M", BKC26.lakeBoys9),
+      valeTee("vale-lake-uk-g1112", "USKids Girls 11-12", valeLakePar, valeLakeB9, "F", BKC26.lakeGirls1112),
       valeTee("vale-lake-uk-b8", "USKids Boys 8 / Girls 9-10", valeLakePar, valeLakeB8, "U"),
       valeTee("vale-lake-uk-b7", "USKids Boys 7 & Under", valeLakePar, valeLakeB7),
       valeTee("vale-lake-uk-g8", "USKids Girls 8 & Under", valeLakePar, valeLakeG8, "F"),

@@ -10,6 +10,8 @@ export type Ratings = {
   par: number | null;
   courseRating: number | null;
   slopeRating: number | null;
+  /** CR/Slope ESTIMADOS (não publicados) — de onde vêm; a /campos marca-os. */
+  estimado?: string;
 };
 
 export type Hole = {
