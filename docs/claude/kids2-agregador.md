@@ -280,6 +280,15 @@ Pares já cobertos por `forceMerge`/`notDuplicates` nunca são re-sugeridos.
 Testes: `scripts/find-junior-duplicates.test.js` (vitest apanha
 `scripts/**/*.test.js`).
 
+## Ano de nascimento CERTO sem data (2026-11-03)
+
+Fontes que publicam só o ANO (Federgolf — ranking juvenil; GolfBox) entram com
+`dobRange` de um ano inteiro. Sem data completa, o `buildJunior` guarda esse ano em
+`junior.birthYear` (+ `birthYearSource`); o `juniors-scout.json` leva-o em `y`, e
+`src/data/kidsDob.ts` usa-o como ano LIDO (pílula na cor do escalão), por cima da
+estimativa dos escalões USKids (`ne`, a vermelho). Antes perdia-se: os italianos do
+Venice Open apareciam estimados apesar de a FIG dar o ano. Ordem: `d` > `y` > `ne`.
+
 ## Órfãs e cauda de duplicados (`find-orphan-duplicates.js`, 2026-09-18)
 
 O `find-junior-duplicates.js` exige idade (quase nunca há DOB) e desconfia de países diferentes (cada fonte regista coisas diferentes: residência, licença, nacionalidade) — por isso não apanhava a cauda. O `scripts/find-orphan-duplicates.js` usa:
