@@ -45,7 +45,7 @@ import {
 } from "../data/playerStatsTypes";
 import { MANUEL_FED } from "../constants/manuel";
 import { PIN_RANK } from "../constants/pinnedPlayers";
-import { useSort } from "../hooks/useSort";
+import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import SexBadge from "../ui/SexBadge";
 import { EscPill, Pill } from "../ui/PillBadge";
@@ -356,8 +356,6 @@ export default function JogadoresListPage() {
   const sorted = useMemo(() => {
     const arr = filtered.slice();
     const dir = sortDir === "asc" ? 1 : -1;
-    const num = (v: number | null | undefined) =>
-      v == null || isNaN(v as number) ? Number.POSITIVE_INFINITY : (v as number);
     const str = (v: string | null | undefined) => (v || "").toLocaleLowerCase("pt-PT");
 
     // Pin: Manuel, Gastão e o top 5 de cada escalão do Nacional de Jovens
@@ -381,18 +379,18 @@ export default function JogadoresListPage() {
         case "club":         return str(a.clubShort).localeCompare(str(b.clubShort), "pt") * dir;
         case "country":      return str(a.countryName).localeCompare(str(b.countryName), "pt") * dir;
         case "dob":          return ((a.dob || "") < (b.dob || "") ? -1 : (a.dob || "") > (b.dob || "") ? 1 : 0) * dir;
-        case "age":          return (num(a.age) - num(b.age)) * dir;
-        case "hcp":          return (num(a.hcp) - num(b.hcp)) * dir;
-        case "ppHcp":        return (num(a.ppHcp) - num(b.ppHcp)) * dir;
+        case "age":          return compareNullsLast(a.age, b.age, dir);
+        case "hcp":          return compareNullsLast(a.hcp, b.hcp, dir);
+        case "ppHcp":        return compareNullsLast(a.ppHcp, b.ppHcp, dir);
         case "sex":          return str(a.sex).localeCompare(str(b.sex), "pt") * dir;
         case "escalao": {
           const ai = ESC_ORDER.indexOf(a.escalao); const bi = ESC_ORDER.indexOf(b.escalao);
           return ((ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi)) * dir;
         }
-        case "roundsTotal":  return (num(a.roundsTotal) - num(b.roundsTotal)) * dir;
-        case "roundsYear":   return (num(a.roundsYear) - num(b.roundsYear)) * dir;
-        case "lastSD":       return (num(a.lastSD) - num(b.lastSD)) * dir;
-        case "avgSD5":       return (num(a.avgSD5) - num(b.avgSD5)) * dir;
+        case "roundsTotal":  return compareNullsLast(a.roundsTotal, b.roundsTotal, dir);
+        case "roundsYear":   return compareNullsLast(a.roundsYear, b.roundsYear, dir);
+        case "lastSD":       return compareNullsLast(a.lastSD, b.lastSD, dir);
+        case "avgSD5":       return compareNullsLast(a.avgSD5, b.avgSD5, dir);
         default:             return 0;
       }
     });

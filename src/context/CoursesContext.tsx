@@ -11,6 +11,7 @@
  * `withPlayers` junta o course-players.json («quem jogou» nos campos PT, ~10 MB)
  * — só a /campos (e a vista «Comparar» dela) precisa dele.
  */
+import { isStaleChunkError, reloadForStaleChunk } from "../utils/staleChunk";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { CoursesData } from "../data/courses";
 import LoadingState from "../ui/LoadingState";
@@ -31,7 +32,11 @@ export function CoursesGate({ withPlayers = false, children }: { withPlayers?: b
     import("../data/courses")
       .then((m) => m.loadCourses({ withPlayers }))
       .then((data) => { if (alive) setState({ data }); })
-      .catch((e) => { if (alive) setState({ error: e?.message ?? String(e) }); });
+      .catch((e) => {
+        // ficheiro antigo depois de um deploy → recarregar em vez de mostrar o erro
+        if (isStaleChunkError(e) && reloadForStaleChunk()) return;
+        if (alive) setState({ error: e?.message ?? String(e) });
+      });
     return () => { alive = false; };
   }, [withPlayers, reuse]);
 

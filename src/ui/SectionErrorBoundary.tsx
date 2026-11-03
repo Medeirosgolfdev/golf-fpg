@@ -8,6 +8,7 @@
  */
 
 import React from "react";
+import { isStaleChunkError, reloadForStaleChunk } from "../utils/staleChunk";
 
 type Props = {
   label: string;
@@ -26,6 +27,7 @@ export default class SectionErrorBoundary extends React.Component<Props, State> 
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
+    if (isStaleChunkError(error) && reloadForStaleChunk()) return;
     console.error(`[ErrorBoundary] Crash em "${this.props.label}":`, error, info.componentStack);
   }
 

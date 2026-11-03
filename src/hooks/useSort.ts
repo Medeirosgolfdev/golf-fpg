@@ -48,3 +48,13 @@ export function useSort<K extends string | number>(
 
   return { sortKey, sortDir, toggleSort, resetSort } as const;
 }
+
+/** Compara dois números com os vazios (null/NaN) SEMPRE no fim, nas duas
+ *  direcções — senão, ao ordenar do maior para o menor, os «—» saltam para o topo.
+ *  `dir` = 1 (asc) ou -1 (desc). */
+export function compareNullsLast(a: number | null | undefined, b: number | null | undefined, dir: 1 | -1): number {
+  const va = a == null || Number.isNaN(a) ? null : a;
+  const vb = b == null || Number.isNaN(b) ? null : b;
+  if (va == null || vb == null) return va == null && vb == null ? 0 : va == null ? 1 : -1;
+  return (va - vb) * dir;
+}
