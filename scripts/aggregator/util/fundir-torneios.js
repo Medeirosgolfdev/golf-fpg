@@ -33,6 +33,16 @@ const DAY_MS = 86400000;
 const DATE_SLACK_DAYS = 3;
 const MIN_IGUAIS = 3;
 const MIN_ACORDO = 0.9;
+// Gémeo já identificado pela fonte (PDF regional ↔ jogo do golfdirecto/NextCaddy,
+// `extra.gemeoDe`): basta um cartão igual e metade a bater — há escalões com 2
+// jogadoras e PDFs com uma gralha (03/11/2026, País Basco).
+const MIN_ACORDO_GEMEO = 0.5;
+/** true quando uma das provas diz que é cópia da outra. */
+function gemeoDeclarado(a, b) {
+  const ids = (t) => [t.extra?.gameId, String(t.sourceKey || "").match(/^nc\d+/)?.[0]].filter(Boolean);
+  const aponta = (x, y) => (x.extra?.gemeoDe || []).some((g) => ids(y).includes(String(g)));
+  return aponta(a, b) || aponta(b, a);
+}
 
 /** Meta-agregadores (só totais) perdem sempre; fontes de um só evento ganham. */
 const PRIORIDADE_BAIXA = new Set(["egr", "wagr"]);
@@ -182,7 +192,8 @@ function fundirTorneiosRepetidos(matchResult) {
       // a classificação «WAGR» da mesma fonte basta-lhe 1 cartão igual (há
       // escalões com 2 ou 3 jogadores nela)
       const transv = byId.get(tid).sourceId === byId.get(o).sourceId && (ehTransversal(byId.get(tid)) || ehTransversal(byId.get(o)));
-      if (iguais >= (transv ? 1 : MIN_IGUAIS) && iguais / comparaveis >= MIN_ACORDO) liga(tid, o);
+      const gemeo = gemeoDeclarado(byId.get(tid), byId.get(o));
+      if (iguais >= (transv || gemeo ? 1 : MIN_IGUAIS) && iguais / comparaveis >= (gemeo ? MIN_ACORDO_GEMEO : MIN_ACORDO)) liga(tid, o);
     }
   }
 

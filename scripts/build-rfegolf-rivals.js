@@ -425,10 +425,14 @@ for (const { dir, f, src } of rfFiles) {
   try {
     const d = JSON.parse(fs.readFileSync(path.join(dir, f), "utf-8"));
     if (!d.ok || !d.compId) { rfSkipped++; continue; }
-    // PDF regional com a mesma prova no golfdirecto → entra pelo fcg-rivals.
+    // PDF regional com a mesma prova no golfdirecto/NextCaddy (ou noutro PDF):
+    // entra MARCADO (`gemeoDe`) — a /rfeg não o conta duas vezes e o Kids 2 funde-o
+    // na outra cópia (fundir-torneios: mesmas pancadas), ficando com os jogadores
+    // que só o PDF tem e o que só ele traz (HCP, data). Antes saía inteiro.
+    let gemeoDe = null;
     if (src !== "rfegolf") {
-      if (gemeo(d.meta && d.meta.dateStart, licencasRegional(d), noKids)) { rfSkipped++; continue; }
-      registar(`${src}${d.compId}`, d.meta && d.meta.dateStart, licencasRegional(d));
+      gemeoDe = gemeo(d.meta && d.meta.dateStart, licencasRegional(d), noKids);
+      if (!gemeoDe) registar(`${src}${d.compId}`, d.meta && d.meta.dateStart, licencasRegional(d));
     }
     const compId = String(d.compId);
     // Gémeo com versão LGS já incluída → skip (a página /rfeg faz o mesmo)
@@ -501,6 +505,7 @@ for (const { dir, f, src } of rfFiles) {
         nholes, nRounds,
         source: src,
         compId,
+        ...(gemeoDe ? { gemeoDe } : {}),
         players: enriched,
       };
       anyAdded = true;

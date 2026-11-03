@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T22:26:33.912Z",
+  "generatedAt": "2026-11-03T22:37:58.919Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -4456,6 +4456,39 @@
       "editionsCount": 23
     },
     {
+      "id": "rfeg-fvg",
+      "label": "Federación Vasca de Golf",
+      "sourceId": "rfeg",
+      "tournamentIds": [
+        "rfeg-fvg315894f7-f8af-11ef-a0bc-506b4bb1f79e_alevin_f",
+        "rfeg-fvg315894f7-f8af-11ef-a0bc-506b4bb1f79e_alevin_m",
+        "rfeg-fvg315894f7-f8af-11ef-a0bc-506b4bb1f79e_infantil_f",
+        "rfeg-fvg315894f7-f8af-11ef-a0bc-506b4bb1f79e_infantil_m",
+        "rfeg-fvg37a43a84-f8ae-11ef-a0bc-506b4bb1f79e_alevin_f",
+        "rfeg-fvg37a43a84-f8ae-11ef-a0bc-506b4bb1f79e_alevin_m",
+        "rfeg-fvg37a43a84-f8ae-11ef-a0bc-506b4bb1f79e_infantil_f",
+        "rfeg-fvg37a43a84-f8ae-11ef-a0bc-506b4bb1f79e_infantil_m",
+        "rfeg-fvg6824a27b-f8af-11ef-a0bc-506b4bb1f79e_alevin_f",
+        "rfeg-fvg6824a27b-f8af-11ef-a0bc-506b4bb1f79e_alevin_x",
+        "rfeg-fvg6824a27b-f8af-11ef-a0bc-506b4bb1f79e_infantil_f",
+        "rfeg-fvg6824a27b-f8af-11ef-a0bc-506b4bb1f79e_infantil_m",
+        "rfeg-fvg6e907ca0-fa59-11ef-a0bc-506b4bb1f79e_alevin_f",
+        "rfeg-fvg6e907ca0-fa59-11ef-a0bc-506b4bb1f79e_alevin_m",
+        "rfeg-fvg6e907ca0-fa59-11ef-a0bc-506b4bb1f79e_infantil_f",
+        "rfeg-fvg6e907ca0-fa59-11ef-a0bc-506b4bb1f79e_infantil_m",
+        "rfeg-fvg8496b396-fa51-11ef-a0bc-506b4bb1f79e_alevin_m",
+        "rfeg-fvg8496b396-fa51-11ef-a0bc-506b4bb1f79e_infantil_f",
+        "rfeg-fvg8496b396-fa51-11ef-a0bc-506b4bb1f79e_infantil_m",
+        "rfeg-fvg8674f8a8-109a-11f1-afa6-506b4bb1f79e_alevin_f",
+        "rfeg-fvg8674f8a8-109a-11f1-afa6-506b4bb1f79e_alevin_m",
+        "rfeg-fvg8674f8a8-109a-11f1-afa6-506b4bb1f79e_infantil_f",
+        "rfeg-fvg8674f8a8-109a-11f1-afa6-506b4bb1f79e_infantil_m"
+      ],
+      "firstDate": "2025-03-30",
+      "lastDate": "2026-04-09",
+      "editionsCount": 23
+    },
+    {
       "id": "uskids-cedar-crest-golf-course",
       "label": "Cedar Crest Golf Course",
       "sourceId": "uskids",
@@ -5715,36 +5748,6 @@
       ],
       "firstDate": "2022-05-21",
       "lastDate": "2026-10-04",
-      "editionsCount": 20
-    },
-    {
-      "id": "rfeg-fvg",
-      "label": "Federación Vasca de Golf",
-      "sourceId": "rfeg",
-      "tournamentIds": [
-        "rfeg-fvg315894f7-f8af-11ef-a0bc-506b4bb1f79e_alevin_f",
-        "rfeg-fvg315894f7-f8af-11ef-a0bc-506b4bb1f79e_alevin_m",
-        "rfeg-fvg315894f7-f8af-11ef-a0bc-506b4bb1f79e_infantil_f",
-        "rfeg-fvg315894f7-f8af-11ef-a0bc-506b4bb1f79e_infantil_m",
-        "rfeg-fvg37a43a84-f8ae-11ef-a0bc-506b4bb1f79e_alevin_f",
-        "rfeg-fvg37a43a84-f8ae-11ef-a0bc-506b4bb1f79e_alevin_m",
-        "rfeg-fvg37a43a84-f8ae-11ef-a0bc-506b4bb1f79e_infantil_f",
-        "rfeg-fvg37a43a84-f8ae-11ef-a0bc-506b4bb1f79e_infantil_m",
-        "rfeg-fvg6824a27b-f8af-11ef-a0bc-506b4bb1f79e_alevin_f",
-        "rfeg-fvg6824a27b-f8af-11ef-a0bc-506b4bb1f79e_alevin_x",
-        "rfeg-fvg6824a27b-f8af-11ef-a0bc-506b4bb1f79e_infantil_f",
-        "rfeg-fvg6824a27b-f8af-11ef-a0bc-506b4bb1f79e_infantil_m",
-        "rfeg-fvg6e907ca0-fa59-11ef-a0bc-506b4bb1f79e_alevin_f",
-        "rfeg-fvg6e907ca0-fa59-11ef-a0bc-506b4bb1f79e_alevin_m",
-        "rfeg-fvg6e907ca0-fa59-11ef-a0bc-506b4bb1f79e_infantil_f",
-        "rfeg-fvg6e907ca0-fa59-11ef-a0bc-506b4bb1f79e_infantil_m",
-        "rfeg-fvg8674f8a8-109a-11f1-afa6-506b4bb1f79e_alevin_f",
-        "rfeg-fvg8674f8a8-109a-11f1-afa6-506b4bb1f79e_alevin_m",
-        "rfeg-fvg8674f8a8-109a-11f1-afa6-506b4bb1f79e_infantil_f",
-        "rfeg-fvg8674f8a8-109a-11f1-afa6-506b4bb1f79e_infantil_m"
-      ],
-      "firstDate": "2025-03-30",
-      "lastDate": "2026-04-09",
       "editionsCount": 20
     },
     {

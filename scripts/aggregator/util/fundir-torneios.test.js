@@ -66,6 +66,26 @@ describe("fundirTorneiosRepetidos", () => {
     expect(u4.tournamentIds).toEqual(["evianjc-2023"]);
   });
 
+  it("PDF regional marcado gémeo de um jogo do golfdirecto: basta um cartão igual (escalão de 2, País Basco 2026)", () => {
+    const gd = torneio("fcg-6a47_alevin_f", "fcg", "Campeonato Laukariz Infantil — Alevín F", "2026-07-01",
+      [flight("alevin_f", "Alevín Femenino", [linha("g1", 1, [103])])], { extra: { gameId: "6a47" } });
+    const pdf = torneio("rfeg-fvgc30b_alevin_f", "rfeg", "CAMPEONATO LAUKARIZ INFANTIL", "2026-07-01",
+      [flight("alevin", "Alevín", [linha("g1", 1, [103]), linha("g2", 2, [24])])], { extra: { gemeoDe: ["6a47"] } });
+    const mr = montar([gd, pdf]);
+    fundirTorneiosRepetidos(mr);
+    expect(mr.tournaments).toHaveLength(1);
+    expect(mr.tournaments[0].flights[0].results.map((x) => x.juniorId).sort()).toEqual(["g1", "g2"]);
+  });
+
+  it("sem a marca, ou com pancadas diferentes, um cartão igual não chega (Laukariz 2025 ≠ Puntuable da véspera)", () => {
+    const a = torneio("fcg-1", "fcg", "Puntuable", "2025-07-09", [flight("x", "Alevín", [linha("p", 1, [86, 85]), linha("q", 2, [88, 88])])], { extra: { gameId: "686d" } });
+    const b = torneio("rfeg-fvg-1", "rfeg", "Laukariz", "2025-07-10", [flight("y", "Alevín", [linha("p", 1, [88]), linha("q", 2, [85])])], { extra: { gemeoDe: ["686d"] } });
+    const sem = torneio("rfeg-2", "rfeg", "Outra", "2025-07-09", [flight("z", "Alevín", [linha("p", 1, [86, 85])])]);
+    const mr = montar([a, b, sem]);
+    fundirTorneiosRepetidos(mr);
+    expect(mr.tournaments.map((t) => t.id).sort()).toEqual(["fcg-1", "rfeg-2", "rfeg-fvg-1"]);
+  });
+
   it("classificação WAGR por cima dos escalões: só saem as linhas repetidas", () => {
     const b14 = torneio("w-14", "wjgc", "WJGC - Boys 14-15", "2025-04-05", [flight("b14", "Boys 14-15", [linha("a", 1, [70]), linha("b", 2, [72]), linha("c", 3, [74])])]);
     const b16 = torneio("w-16", "wjgc", "WJGC - Boys 16-18", "2025-04-05", [flight("b16", "Boys 16-18", [linha("d", 1, [68]), linha("e", 2, [69]), linha("f", 3, [71])])]);

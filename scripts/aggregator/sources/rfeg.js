@@ -359,6 +359,9 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
       results,
     }],
     links,
+    // PDF regional que repete um jogo do golfdirecto/NextCaddy (build-rfegolf-rivals):
+    // o fundir-torneios funde-o nele mesmo com poucos cartões para comparar.
+    ...(Array.isArray(t.gemeoDe) && t.gemeoDe.length ? { extra: { gemeoDe: t.gemeoDe.map(String) } } : {}),
   };
 }
 

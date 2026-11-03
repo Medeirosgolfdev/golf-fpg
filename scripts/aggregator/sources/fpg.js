@@ -190,10 +190,29 @@ function collectTournamentEntries(files) {
       if (!t || !t.tcode) continue;
       const key = tournKey(t);
       const prev = byKey.get(key);
-      if (!prev || playerRoundCount(t) > playerRoundCount(prev)) byKey.set(key, t);
+      if (!prev) { byKey.set(key, t); continue; }
+      // Fica a cópia com mais dados e a outra completa-a (03/11/2026, regra dela:
+      // das repetidas fica o máximo) — campos vazios de cada jogador e quem só lá está.
+      const [base, outra] = playerRoundCount(t) > playerRoundCount(prev) ? [t, prev] : [prev, t];
+      byKey.set(key, completarCopia(base, outra));
     }
   }
   return Array.from(byKey.values());
+}
+
+/** `base` com o que só `outra` tem: campos vazios de cada jogador (pelo federado,
+ *  senão pelo nome) e os jogadores que só estão nela. Não mexe nos ficheiros lidos. */
+function completarCopia(base, outra) {
+  const chave = (p) => String(p.fedCode || p.fed || p.name || "").trim().toLowerCase();
+  const vazio = (v) => v == null || v === "" || (Array.isArray(v) && v.length === 0);
+  const players = (base.players || []).map((p) => ({ ...p }));
+  const porChave = new Map(players.map((p) => [chave(p), p]));
+  for (const p of outra.players || []) {
+    const b = porChave.get(chave(p));
+    if (!b) { players.push(p); continue; }
+    for (const [c, v] of Object.entries(p)) if (!vazio(v) && vazio(b[c])) b[c] = v;
+  }
+  return { ...base, players };
 }
 
 async function load(opts) {

@@ -137,6 +137,14 @@ informação disponível».
   com as MESMAS pancadas (total e voltas comuns) em ≥ 90 % dos comparáveis.
   Com nº de voltas diferente só contam as voltas comuns, não o total (Aisha Wu
   na Berlin 2026: 85 no EGR, 85+56 no GJGL — era isso que a deixava separada).
+  **Gémeo declarado pela fonte** (03/11/2026): um PDF regional espanhol que o
+  `build-rfegolf-rivals.js` marca `gemeoDe` (jogo do golfdirecto/NextCaddy — antes
+  saía inteiro, agora entra marcado e a /rfeg não o conta) funde com 1 cartão igual
+  e ≥ 50 % a bater (escalões de 2 jogadoras, gralhas no PDF). A marca pode errar —
+  o Laukariz 2025 não é o Puntuable da véspera (0 cartões iguais) e fica à parte.
+  Na FPG, a mesma prova em `pull-torneios` e `jovens_` fica a mais rica completada
+  pela outra (`completarCopia` em `sources/fpg.js`); o EGR removido pelo
+  `egr-dedup` só perde os pontos do evento (clube e país vêm das fichas EGR).
   Voltas diferentes no mesmo dia (9 buracos de manhã e de tarde) têm pancadas
   diferentes e não se tocam.
 - **Qual fica:** fonte dedicada > federação > EGR/WAGR; em empate,

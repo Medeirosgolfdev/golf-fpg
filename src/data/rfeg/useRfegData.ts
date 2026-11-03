@@ -28,9 +28,12 @@ import { buildRfegEntries } from "./entries";
  * tolerante à ordem nome/apelido. */
 interface RfegRivalsFile {
   torneios?:
-    | Record<string, { players?: { n?: string }[] }>
-    | { players?: { n?: string }[] }[];
+    | Record<string, RivalsTorneio>
+    | RivalsTorneio[];
 }
+/** `gemeoDe`: PDF regional que repete uma prova do golfdirecto/NextCaddy (o Kids 2
+ *  funde-o; aqui não conta outra vez). */
+interface RivalsTorneio { players?: { n?: string }[]; gemeoDe?: string[] }
 
 const normNameVet = vetKey;
 
@@ -41,7 +44,7 @@ function buildRfegVetIndex(files: (RfegRivalsFile | null | undefined)[]): Map<st
     const tors = Array.isArray(f.torneios) ? f.torneios : Object.values(f.torneios);
     for (const t of tors) {
       const players = t?.players;
-      if (!Array.isArray(players)) continue;
+      if (!Array.isArray(players) || t?.gemeoDe) continue;
       const seen = new Set<string>(); // dedup por torneio (cross-divisão)
       for (const p of players) {
         const k = normNameVet(formatPlayerName(String(p?.n ?? "")));

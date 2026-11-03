@@ -141,6 +141,8 @@ function load() {
         fieldSize: results.length,
         results,
       }],
+      // o jogo do golfdirecto — um PDF regional que o repete (`gemeoDe`) aponta para ele
+      extra: t.gameId ? { gameId: String(t.gameId) } : undefined,
       links: t.gameId ? [{
         label: "GolfDirecto",
         url: `https://www.golfdirecto.com/micro/game/${t.gameId}/summary?lang=es`,
