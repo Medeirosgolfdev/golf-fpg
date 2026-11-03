@@ -301,7 +301,10 @@ function umaDivisaoPorJogador(flights, playerMap, sourceId) {
   if (flights.length < 2) return;
   const quem = (r) => {
     const p = playerMap.get(r.playerSourceKey);
-    return `${r.playerName.toLowerCase()}|${p?.country || ""}|${r.rounds.map((x) => x.gross ?? "-").join(",")}|${r.totalGross ?? ""}`;
+    // O total só conta sem voltas: quem falha o cut vem com total no escalão e
+    // vazio nas gerais (Faldo Astbury 2026) — as voltas são as mesmas.
+    const voltas = r.rounds.map((x) => x.gross ?? "-").join(",");
+    return `${r.playerName.toLowerCase()}|${p?.country || ""}|${voltas || `t${r.totalGross ?? ""}`}`;
   };
   const ordem = flights.map((f, i) => ({ f, i })).sort((a, b) => especificidadeDivisao(b.f) - especificidadeDivisao(a.f) || a.i - b.i);
   const ficou = new Map();   // quem → playerSourceKey da linha que fica

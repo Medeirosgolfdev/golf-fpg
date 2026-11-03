@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-01T18:45:48.352Z",
+  "generatedAt": "2026-11-03T00:16:14.954Z",
   "source": "build-major-catalog.js",
-  "tournamentsTotal": 124,
-  "count": 4321,
+  "tournamentsTotal": 132,
+  "count": 4455,
   "players": [
     {
       "name": "Kris Kuusk",
@@ -6119,6 +6119,32 @@
       ]
     },
     {
+      "name": "Sebastian Aigner",
+      "country": "AT",
+      "tournaments": 9,
+      "years": 4,
+      "seriesCount": 6,
+      "series": [
+        "bjgt",
+        "ejo",
+        "evianjc",
+        "eym",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "ejo:2026",
+        "evianjc:2023",
+        "evianjc:2024",
+        "eym:2026",
+        "faldo:2026:1",
+        "reidtrophy:2023",
+        "reidtrophy:2024"
+      ]
+    },
+    {
       "name": "Isabel Pikki",
       "country": "EE",
       "tournaments": 9,
@@ -6953,6 +6979,55 @@
       ]
     },
     {
+      "name": "Ance Ermansone",
+      "country": "LV",
+      "tournaments": 8,
+      "years": 4,
+      "seriesCount": 4,
+      "series": [
+        "ejo",
+        "ejt",
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "ejo:2023",
+        "ejo:2024",
+        "ejo:2025",
+        "ejo:2026",
+        "ejt:2023:1",
+        "ejt:2024:4",
+        "eym:2026",
+        "faldo:2026:10"
+      ]
+    },
+    {
+      "name": "Ashling Poynton",
+      "country": "BE",
+      "tournaments": 8,
+      "years": 4,
+      "seriesCount": 7,
+      "series": [
+        "bjgt",
+        "coc",
+        "egtc",
+        "evianjc",
+        "eym",
+        "faldo",
+        "faldomadeira"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "coc:2023",
+        "egtc:2026",
+        "evianjc:2024",
+        "eym:2026",
+        "faldo:2026:10",
+        "faldomadeira:2026"
+      ]
+    },
+    {
       "name": "Berit Virula",
       "country": "EE",
       "tournaments": 8,
@@ -7018,6 +7093,30 @@
         "uajt:2024",
         "uaworlds:2023",
         "uaworlds:2024"
+      ]
+    },
+    {
+      "name": "Hajkova, Tereza",
+      "country": "Eslováquia",
+      "tournaments": 8,
+      "years": 4,
+      "seriesCount": 5,
+      "series": [
+        "bjgt",
+        "doral",
+        "egtc",
+        "evianjc",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "bjgt:2026",
+        "doral:2023",
+        "doral:2025",
+        "egtc:2026",
+        "evianjc:2025",
+        "faldo:2026:1"
       ]
     },
     {
@@ -7183,30 +7282,6 @@
         "fm:2025",
         "fm:2026",
         "uaworlds:2024"
-      ]
-    },
-    {
-      "name": "Sebastian Aigner",
-      "country": "AT",
-      "tournaments": 8,
-      "years": 4,
-      "seriesCount": 5,
-      "series": [
-        "bjgt",
-        "ejo",
-        "evianjc",
-        "eym",
-        "reidtrophy"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "ejo:2026",
-        "evianjc:2023",
-        "evianjc:2024",
-        "eym:2026",
-        "reidtrophy:2023",
-        "reidtrophy:2024"
       ]
     },
     {
@@ -8220,51 +8295,6 @@
       ]
     },
     {
-      "name": "Ance Ermansone",
-      "country": "LV",
-      "tournaments": 7,
-      "years": 4,
-      "seriesCount": 3,
-      "series": [
-        "ejo",
-        "ejt",
-        "eym"
-      ],
-      "detail": [
-        "ejo:2023",
-        "ejo:2024",
-        "ejo:2025",
-        "ejo:2026",
-        "ejt:2023:1",
-        "ejt:2024:4",
-        "eym:2026"
-      ]
-    },
-    {
-      "name": "Ashling Poynton",
-      "country": "BE",
-      "tournaments": 7,
-      "years": 4,
-      "seriesCount": 6,
-      "series": [
-        "bjgt",
-        "coc",
-        "egtc",
-        "evianjc",
-        "eym",
-        "faldomadeira"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "coc:2023",
-        "egtc:2026",
-        "evianjc:2024",
-        "eym:2026",
-        "faldomadeira:2026"
-      ]
-    },
-    {
       "name": "Atticus Tagami",
       "country": "US",
       "usa": true,
@@ -8457,28 +8487,6 @@
         "job:2026",
         "optimist:2026:3",
         "uaworlds:2025"
-      ]
-    },
-    {
-      "name": "Hajkova, Tereza",
-      "country": "Eslováquia",
-      "tournaments": 7,
-      "years": 4,
-      "seriesCount": 4,
-      "series": [
-        "bjgt",
-        "doral",
-        "egtc",
-        "evianjc"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "bjgt:2026",
-        "doral:2023",
-        "doral:2025",
-        "egtc:2026",
-        "evianjc:2025"
       ]
     },
     {
@@ -10831,6 +10839,27 @@
       ]
     },
     {
+      "name": "Jake Jeff-Johnston",
+      "country": "Inglaterra",
+      "tournaments": 6,
+      "years": 4,
+      "seriesCount": 4,
+      "series": [
+        "bjgt",
+        "eowagr",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "eowagr:2025",
+        "faldo:2026:6",
+        "reidtrophy:2023",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "Kristofers Ventinieks",
       "country": "LV",
       "tournaments": 6,
@@ -11762,6 +11791,26 @@
       ]
     },
     {
+      "name": "Shane Clayton",
+      "country": "GB",
+      "tournaments": 6,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "faldo:2026:3",
+        "faldo:2026:6",
+        "faldo:2026:7",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "Teddy Lucas",
       "country": "US",
       "usa": true,
@@ -11842,6 +11891,27 @@
         "uaworlds:2024",
         "uaworlds:2025",
         "uaworlds:2026"
+      ]
+    },
+    {
+      "name": "Chloé Lam",
+      "country": "BE",
+      "tournaments": 6,
+      "years": 2,
+      "seriesCount": 4,
+      "series": [
+        "egtc",
+        "evianjc",
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "egtc:2026",
+        "evianjc:2025",
+        "evianjc:2026",
+        "eym:2025",
+        "eym:2026",
+        "faldo:2026:10"
       ]
     },
     {
@@ -12158,6 +12228,25 @@
         "doral:2023",
         "jwgc:2026",
         "optimist:2025:1"
+      ]
+    },
+    {
+      "name": "Altruda, Lorenzo",
+      "country": "Italy",
+      "usa": true,
+      "tournaments": 5,
+      "years": 5,
+      "seriesCount": 2,
+      "series": [
+        "doral",
+        "faldo"
+      ],
+      "detail": [
+        "doral:2022",
+        "doral:2023",
+        "doral:2024",
+        "doral:2025",
+        "faldo:2026:1"
       ]
     },
     {
@@ -14130,6 +14219,25 @@
       ]
     },
     {
+      "name": "Kiril Engeli Poretti",
+      "country": "CH",
+      "tournaments": 5,
+      "years": 4,
+      "seriesCount": 3,
+      "series": [
+        "evianjc",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "evianjc:2025",
+        "faldo:2026:1",
+        "reidtrophy:2023",
+        "reidtrophy:2024",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "Kiss, Harper",
       "country": "United States",
       "usa": true,
@@ -15047,6 +15155,26 @@
       ]
     },
     {
+      "name": "Austin Eastwood",
+      "country": "Inglaterra",
+      "tournaments": 5,
+      "years": 3,
+      "seriesCount": 4,
+      "series": [
+        "bjgt",
+        "coc",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "coc:2024",
+        "faldo:2026:7",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "Barra Reingenheim, Mark",
       "country": "US",
       "usa": true,
@@ -15436,25 +15564,6 @@
       ]
     },
     {
-      "name": "Jake Jeff-Johnston",
-      "country": "Inglaterra",
-      "tournaments": 5,
-      "years": 3,
-      "seriesCount": 3,
-      "series": [
-        "bjgt",
-        "eowagr",
-        "reidtrophy"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "eowagr:2025",
-        "reidtrophy:2023",
-        "reidtrophy:2025"
-      ]
-    },
-    {
       "name": "Jake McGuire",
       "country": "US",
       "usa": true,
@@ -15649,6 +15758,26 @@
         "optimist:2026:1",
         "uaworlds:2024",
         "uaworlds:2025"
+      ]
+    },
+    {
+      "name": "Louis Dirickx",
+      "country": "BE",
+      "tournaments": 5,
+      "years": 3,
+      "seriesCount": 4,
+      "series": [
+        "bjgt",
+        "evianjc",
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "evianjc:2024",
+        "evianjc:2025",
+        "eym:2026",
+        "faldo:2026:10"
       ]
     },
     {
@@ -16401,25 +16530,6 @@
       ]
     },
     {
-      "name": "Chloé Lam",
-      "country": "BE",
-      "tournaments": 5,
-      "years": 2,
-      "seriesCount": 3,
-      "series": [
-        "egtc",
-        "evianjc",
-        "eym"
-      ],
-      "detail": [
-        "egtc:2026",
-        "evianjc:2025",
-        "evianjc:2026",
-        "eym:2025",
-        "eym:2026"
-      ]
-    },
-    {
       "name": "Girardi, Leonardo",
       "country": "IT",
       "tournaments": 5,
@@ -16488,6 +16598,24 @@
         "ejt:2021:4",
         "ejt:2021:5",
         "ejt:2022:7"
+      ]
+    },
+    {
+      "name": "Louis Rickett",
+      "country": "GB",
+      "tournaments": 5,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3",
+        "faldo:2026:6",
+        "faldo:2026:7",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -16789,23 +16917,6 @@
         "eym:2023",
         "eym:2024",
         "eym:2025"
-      ]
-    },
-    {
-      "name": "Altruda, Lorenzo",
-      "country": "Italy",
-      "usa": true,
-      "tournaments": 4,
-      "years": 4,
-      "seriesCount": 1,
-      "series": [
-        "doral"
-      ],
-      "detail": [
-        "doral:2022",
-        "doral:2023",
-        "doral:2024",
-        "doral:2025"
       ]
     },
     {
@@ -19506,6 +19617,24 @@
       ]
     },
     {
+      "name": "Raphael Aigner",
+      "country": "Áustria",
+      "tournaments": 4,
+      "years": 4,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "evianjc",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "evianjc:2022",
+        "faldo:2026:1"
+      ]
+    },
+    {
       "name": "Renner, Sophie",
       "country": "Germany",
       "tournaments": 4,
@@ -19746,6 +19875,24 @@
         "doral:2023",
         "optimist:2024:3",
         "optimist:2025:3"
+      ]
+    },
+    {
+      "name": "Sabrina Wong",
+      "country": "Hong Kong",
+      "tournaments": 4,
+      "years": 4,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "coc:2023",
+        "faldo:2026:8"
       ]
     },
     {
@@ -20382,6 +20529,24 @@
         "fm:2025",
         "fm:2026",
         "uaworlds:2024"
+      ]
+    },
+    {
+      "name": "Albert Lees",
+      "country": "GB",
+      "tournaments": 4,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "coc",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "coc:2023",
+        "coc:2024",
+        "faldo:2026:3",
+        "reidtrophy:2026"
       ]
     },
     {
@@ -21664,6 +21829,24 @@
       ]
     },
     {
+      "name": "James Matthews",
+      "country": "Inglaterra",
+      "tournaments": 4,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "faldo:2026:2",
+        "reidtrophy:2024"
+      ]
+    },
+    {
       "name": "Janda, Jakub",
       "country": "CZ",
       "tournaments": 4,
@@ -21737,6 +21920,25 @@
       ]
     },
     {
+      "name": "Jules Mahieu",
+      "country": "Bélgica",
+      "tournaments": 4,
+      "years": 3,
+      "seriesCount": 4,
+      "series": [
+        "avtrophy",
+        "coc",
+        "eowagr",
+        "faldo"
+      ],
+      "detail": [
+        "avtrophy:2026",
+        "coc:2023",
+        "eowagr:2025",
+        "faldo:2026:10"
+      ]
+    },
+    {
       "name": "Kayli Chang",
       "country": "US",
       "usa": true,
@@ -21752,23 +21954,6 @@
         "uajt:2025",
         "uaworlds:2025",
         "uaworlds:2026"
-      ]
-    },
-    {
-      "name": "Kiril Engeli Poretti",
-      "country": "CH",
-      "tournaments": 4,
-      "years": 3,
-      "seriesCount": 2,
-      "series": [
-        "evianjc",
-        "reidtrophy"
-      ],
-      "detail": [
-        "evianjc:2025",
-        "reidtrophy:2023",
-        "reidtrophy:2024",
-        "reidtrophy:2025"
       ]
     },
     {
@@ -21824,6 +22009,24 @@
         "evianjc:2024",
         "evianjc:2025",
         "eym:2026"
+      ]
+    },
+    {
+      "name": "Laura Czastka",
+      "country": "Áustria",
+      "tournaments": 4,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "eym:2024",
+        "faldo:2026:1"
       ]
     },
     {
@@ -21912,24 +22115,6 @@
         "fm:2022",
         "fm:2025",
         "fm:2026"
-      ]
-    },
-    {
-      "name": "Louis Dirickx",
-      "country": "BE",
-      "tournaments": 4,
-      "years": 3,
-      "seriesCount": 3,
-      "series": [
-        "bjgt",
-        "evianjc",
-        "eym"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "evianjc:2024",
-        "evianjc:2025",
-        "eym:2026"
       ]
     },
     {
@@ -22463,6 +22648,23 @@
         "coc:2024",
         "egtc:2026",
         "eym:2025"
+      ]
+    },
+    {
+      "name": "Oliver McEvoy",
+      "country": "GB-ENG",
+      "tournaments": 4,
+      "years": 3,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7",
+        "reidtrophy:2023",
+        "reidtrophy:2024"
       ]
     },
     {
@@ -23411,6 +23613,24 @@
       ]
     },
     {
+      "name": "Will Furness",
+      "country": "GB-ENG",
+      "tournaments": 4,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "coc",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "coc:2024",
+        "faldo:2026:3",
+        "reidtrophy:2024",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "Wolf, Joey",
       "country": "United States",
       "usa": true,
@@ -23645,24 +23865,6 @@
       ]
     },
     {
-      "name": "Austin Eastwood",
-      "country": "Inglaterra",
-      "tournaments": 4,
-      "years": 2,
-      "seriesCount": 3,
-      "series": [
-        "bjgt",
-        "coc",
-        "reidtrophy"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "coc:2024",
-        "reidtrophy:2025"
-      ]
-    },
-    {
       "name": "Betschart, Oliver",
       "country": "Bermuda",
       "usa": true,
@@ -23716,6 +23918,23 @@
         "doral:2024",
         "uaworlds:2023",
         "uaworlds:2024"
+      ]
+    },
+    {
+      "name": "Brodie Miller",
+      "country": "GB",
+      "tournaments": 4,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:6",
+        "faldo:2026:7",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -24047,6 +24266,25 @@
         "bjgt:2026",
         "eowagr:2025",
         "fcg:2025"
+      ]
+    },
+    {
+      "name": "Ischa Wichman",
+      "country": "NL",
+      "tournaments": 4,
+      "years": 2,
+      "seriesCount": 4,
+      "series": [
+        "bjgt",
+        "eym",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "eym:2026",
+        "faldo:2026:10",
+        "reidtrophy:2024"
       ]
     },
     {
@@ -24455,6 +24693,24 @@
       ]
     },
     {
+      "name": "Will Mulholland",
+      "country": "Inglaterra",
+      "tournaments": 4,
+      "years": 2,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "eowagr",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "eowagr:2025",
+        "faldo:2026:3",
+        "faldo:2026:7"
+      ]
+    },
+    {
       "name": "Wilson, Chaz",
       "country": "US",
       "usa": true,
@@ -24493,6 +24749,23 @@
       ]
     },
     {
+      "name": "Zak Sandle",
+      "country": "Inglaterra",
+      "tournaments": 4,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "faldo:2026:2",
+        "faldo:2026:3",
+        "faldo:2026:7"
+      ]
+    },
+    {
       "name": "Zianbeau Thurs Edoc",
       "country": "Philippines",
       "tournaments": 4,
@@ -24511,6 +24784,24 @@
       ]
     },
     {
+      "name": "Aditya Singh Sawhney",
+      "country": "United Kingdom",
+      "tournaments": 4,
+      "years": 1,
+      "seriesCount": 3,
+      "series": [
+        "faldo",
+        "fcg",
+        "jwgc"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:8",
+        "fcg:2026",
+        "jwgc:2026"
+      ]
+    },
+    {
       "name": "Alexandra Aljaste",
       "country": "EE",
       "tournaments": 4,
@@ -24524,6 +24815,22 @@
         "ejt:2023:4",
         "ejt:2023:5",
         "ejt:2023:7"
+      ]
+    },
+    {
+      "name": "Jeremy Ju",
+      "country": "GB",
+      "tournaments": 4,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3",
+        "faldo:2026:6",
+        "faldo:2026:8"
       ]
     },
     {
@@ -24670,22 +24977,6 @@
         "ejo:2020",
         "ejo:2021",
         "ejo:2022"
-      ]
-    },
-    {
-      "name": "Albert Lees",
-      "country": "GB",
-      "tournaments": 3,
-      "years": 3,
-      "seriesCount": 2,
-      "series": [
-        "coc",
-        "reidtrophy"
-      ],
-      "detail": [
-        "coc:2023",
-        "coc:2024",
-        "reidtrophy:2026"
       ]
     },
     {
@@ -26114,6 +26405,22 @@
       ]
     },
     {
+      "name": "Caelan Dhami",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2023",
+        "reidtrophy:2024"
+      ]
+    },
+    {
       "name": "Calderon, Mathiaz",
       "country": "Mexico",
       "tournaments": 3,
@@ -26908,6 +27215,22 @@
         "fm:2022",
         "fm:2023",
         "fm:2024"
+      ]
+    },
+    {
+      "name": "Daniel Hogg",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2023",
+        "coc:2024",
+        "faldo:2026:8"
       ]
     },
     {
@@ -27876,6 +28199,22 @@
       ]
     },
     {
+      "name": "Freddie Raven",
+      "country": "Inglaterra",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "bjgt:2025",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "Friederichs, Ian",
       "country": "United States",
       "usa": true,
@@ -28419,6 +28758,22 @@
         "uajt:2024",
         "uajt:2025",
         "uajt:2026"
+      ]
+    },
+    {
+      "name": "Harry Slater",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "reidtrophy:2023",
+        "reidtrophy:2024"
       ]
     },
     {
@@ -29238,6 +29593,23 @@
       ]
     },
     {
+      "name": "Jake Gunby",
+      "country": "Reino Unido",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "faldo:2026:2",
+        "reidtrophy:2023"
+      ]
+    },
+    {
       "name": "Jake Harden",
       "country": "US",
       "usa": true,
@@ -29655,23 +30027,6 @@
         "fm:2019",
         "fm:2021",
         "fm:2022"
-      ]
-    },
-    {
-      "name": "Jules Mahieu",
-      "country": "Bélgica",
-      "tournaments": 3,
-      "years": 3,
-      "seriesCount": 3,
-      "series": [
-        "avtrophy",
-        "coc",
-        "eowagr"
-      ],
-      "detail": [
-        "avtrophy:2026",
-        "coc:2023",
-        "eowagr:2025"
       ]
     },
     {
@@ -30205,6 +30560,22 @@
       ]
     },
     {
+      "name": "Laura Penzold",
+      "country": "DE",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2023",
+        "coc:2024",
+        "faldo:2026:4"
+      ]
+    },
+    {
       "name": "Laura Posova",
       "country": "SK",
       "tournaments": 3,
@@ -30286,6 +30657,38 @@
         "fm:2025",
         "uaworlds:2023",
         "uaworlds:2024"
+      ]
+    },
+    {
+      "name": "Lewis Forsyth",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2023",
+        "coc:2024",
+        "faldo:2026:8"
+      ]
+    },
+    {
+      "name": "Lewis Salthouse",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2024",
+        "reidtrophy:2025"
       ]
     },
     {
@@ -32578,22 +32981,6 @@
       ]
     },
     {
-      "name": "Raphael Aigner",
-      "country": "Áustria",
-      "tournaments": 3,
-      "years": 3,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "evianjc"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "evianjc:2022"
-      ]
-    },
-    {
       "name": "Rathjen, Maddie",
       "country": "United States",
       "usa": true,
@@ -32719,6 +33106,22 @@
         "uajt:2025",
         "uajt:2026",
         "uaworlds:2023"
+      ]
+    },
+    {
+      "name": "Rhian Morjaria",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2024",
+        "reidtrophy:2025"
       ]
     },
     {
@@ -33145,22 +33548,6 @@
       "name": "Sabrina Crisóstomo",
       "country": "Portugal",
       "pt": true,
-      "tournaments": 3,
-      "years": 3,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "coc"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "coc:2023"
-      ]
-    },
-    {
-      "name": "Sabrina Wong",
-      "country": "Hong Kong",
       "tournaments": 3,
       "years": 3,
       "seriesCount": 2,
@@ -33744,6 +34131,23 @@
       ]
     },
     {
+      "name": "Thomas James",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "coc",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "coc:2023",
+        "faldo:2026:7",
+        "reidtrophy:2024"
+      ]
+    },
+    {
       "name": "Thomas Lambert",
       "country": "US",
       "usa": true,
@@ -34030,6 +34434,23 @@
         "elg:2026",
         "eym:2022",
         "job:2025"
+      ]
+    },
+    {
+      "name": "Vaclav Svub",
+      "country": "CZ",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "evianjc",
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "evianjc:2022",
+        "eym:2024",
+        "faldo:2026:1"
       ]
     },
     {
@@ -34369,6 +34790,23 @@
         "fm:2019",
         "fm:2021",
         "fm:2022"
+      ]
+    },
+    {
+      "name": "William Paas",
+      "country": "Inglaterra",
+      "tournaments": 3,
+      "years": 3,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "faldo:2026:2",
+        "reidtrophy:2024"
       ]
     },
     {
@@ -34896,6 +35334,23 @@
       ]
     },
     {
+      "name": "Alfie Kitteridge",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 3,
+      "series": [
+        "faldo",
+        "faldomadeira",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldomadeira:2026",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "Allen Kong",
       "country": "Canada",
       "usa": true,
@@ -35117,6 +35572,22 @@
       ]
     },
     {
+      "name": "Archie Jones",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2025",
+        "reidtrophy:2026"
+      ]
+    },
+    {
       "name": "Artyom Becerra",
       "country": "FR",
       "tournaments": 3,
@@ -35318,6 +35789,22 @@
       ]
     },
     {
+      "name": "Ben Steventon",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7",
+        "reidtrophy:2023"
+      ]
+    },
+    {
       "name": "Bencomo, Nicolas",
       "country": "Venezuela",
       "usa": true,
@@ -35332,6 +35819,22 @@
         "doral:2018",
         "doral:2021",
         "fm:2021"
+      ]
+    },
+    {
+      "name": "Benjamin Champness",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:7",
+        "reidtrophy:2025",
+        "reidtrophy:2026"
       ]
     },
     {
@@ -36534,6 +37037,23 @@
       ]
     },
     {
+      "name": "Georgia Denega",
+      "country": "Inglaterra",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "eowagr",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "eowagr:2025",
+        "faldo:2026:3"
+      ]
+    },
+    {
       "name": "Georgs Millers",
       "country": "LV",
       "tournaments": 3,
@@ -36685,6 +37205,22 @@
       ]
     },
     {
+      "name": "Harry Barclay",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "Harvey Eastwood",
       "country": "Inglaterra",
       "tournaments": 3,
@@ -36698,6 +37234,22 @@
         "bjgt:2024",
         "bjgt:2025",
         "coc:2024"
+      ]
+    },
+    {
+      "name": "Hayden Norman",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:7",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -36839,20 +37391,20 @@
       ]
     },
     {
-      "name": "Ischa Wichman",
-      "country": "NL",
+      "name": "Isaac Khan",
+      "country": "GB-ENG",
       "tournaments": 3,
       "years": 2,
       "seriesCount": 3,
       "series": [
-        "bjgt",
-        "eym",
+        "coc",
+        "faldo",
         "reidtrophy"
       ],
       "detail": [
-        "bjgt:2024",
-        "eym:2026",
-        "reidtrophy:2024"
+        "coc:2026",
+        "faldo:2026:2",
+        "reidtrophy:2025"
       ]
     },
     {
@@ -36887,6 +37439,22 @@
         "uajt:2024",
         "uaworlds:2024",
         "uaworlds:2025"
+      ]
+    },
+    {
+      "name": "Jack Mahoney",
+      "country": "Inglaterra",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "bjgt:2026",
+        "faldo:2026:2"
       ]
     },
     {
@@ -37009,19 +37577,19 @@
       ]
     },
     {
-      "name": "James Matthews",
-      "country": "Inglaterra",
+      "name": "James Harris ",
+      "country": "GB",
       "tournaments": 3,
       "years": 2,
       "seriesCount": 2,
       "series": [
-        "bjgt",
-        "reidtrophy"
+        "coc",
+        "faldo"
       ],
       "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "reidtrophy:2024"
+        "coc:2025",
+        "coc:2026",
+        "faldo:2026:2"
       ]
     },
     {
@@ -37090,6 +37658,22 @@
         "bjgt:2024",
         "coc:2024",
         "uaworlds:2023"
+      ]
+    },
+    {
+      "name": "Jeeva Ashok",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2025",
+        "coc:2026",
+        "faldo:2026:6"
       ]
     },
     {
@@ -37191,6 +37775,22 @@
         "fcg:2025",
         "fcg:2026",
         "jwgc:2026"
+      ]
+    },
+    {
+      "name": "Jorja Newbold",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "faldo:2026:10",
+        "faldo:2026:2"
       ]
     },
     {
@@ -37363,6 +37963,23 @@
       ]
     },
     {
+      "name": "Laetitia Vandeplas",
+      "country": "BE",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 3,
+      "series": [
+        "egtc",
+        "evianjc",
+        "faldo"
+      ],
+      "detail": [
+        "egtc:2026",
+        "evianjc:2023",
+        "faldo:2026:10"
+      ]
+    },
+    {
       "name": "Landon Murray",
       "country": "US",
       "usa": true,
@@ -37411,22 +38028,6 @@
         "uajt:2026",
         "uaworlds:2025",
         "uaworlds:2026"
-      ]
-    },
-    {
-      "name": "Laura Czastka",
-      "country": "Áustria",
-      "tournaments": 3,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "eym"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "eym:2024"
       ]
     },
     {
@@ -37652,6 +38253,23 @@
       ]
     },
     {
+      "name": "Luca Lancaster",
+      "country": "Inglaterra",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "eowagr",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2026",
+        "eowagr:2025",
+        "faldo:2026:2"
+      ]
+    },
+    {
       "name": "Luke Zellers",
       "country": "US",
       "usa": true,
@@ -37872,6 +38490,23 @@
       ]
     },
     {
+      "name": "Maximus  Maddocks",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "coc:2024",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "Mia Ingham",
       "country": "Inglaterra",
       "tournaments": 3,
@@ -37919,6 +38554,23 @@
         "fsga:2026",
         "uaworlds:2025",
         "uaworlds:2026"
+      ]
+    },
+    {
+      "name": "Michał Cygan",
+      "country": "Polônia",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2026",
+        "coc:2023",
+        "faldo:2026:1"
       ]
     },
     {
@@ -38023,6 +38675,22 @@
       ]
     },
     {
+      "name": "Myles Young",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2025",
+        "reidtrophy:2026"
+      ]
+    },
+    {
       "name": "Nathan Wang",
       "country": "United States",
       "usa": true,
@@ -38110,6 +38778,22 @@
       ]
     },
     {
+      "name": "Noah  Williams",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2025",
+        "coc:2026",
+        "faldo:2026:2"
+      ]
+    },
+    {
       "name": "Noah Goeckeritz",
       "country": "US",
       "usa": true,
@@ -38124,6 +38808,38 @@
         "fcg:2025",
         "optimist:2024:3",
         "optimist:2025:3"
+      ]
+    },
+    {
+      "name": "Oliver Brightman",
+      "country": "Inglaterra",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "bjgt:2026",
+        "faldo:2026:2"
+      ]
+    },
+    {
+      "name": "Oliver Meyer",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2025",
+        "faldo:2026:3",
+        "faldo:2026:6"
       ]
     },
     {
@@ -38900,19 +39616,21 @@
       ]
     },
     {
-      "name": "Shane Clayton",
-      "country": "Inglaterra",
+      "name": "Sidhu, Darragh",
+      "country": "United Kingdom",
+      "usa": true,
       "tournaments": 3,
       "years": 2,
-      "seriesCount": 2,
+      "seriesCount": 3,
       "series": [
-        "bjgt",
-        "reidtrophy"
+        "coc",
+        "doral",
+        "faldo"
       ],
       "detail": [
-        "bjgt:2024",
-        "bjgt:2025",
-        "reidtrophy:2025"
+        "coc:2023",
+        "doral:2023",
+        "faldo:2026:2"
       ]
     },
     {
@@ -38964,6 +39682,22 @@
         "doral:2023",
         "jwgc:2026",
         "uaworlds:2023"
+      ]
+    },
+    {
+      "name": "Sofia Benitez",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "eym:2022",
+        "faldo:2026:2",
+        "faldo:2026:7"
       ]
     },
     {
@@ -39249,6 +39983,23 @@
       ]
     },
     {
+      "name": "Timon Svetek Zgonec",
+      "country": "SI",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 3,
+      "series": [
+        "eatc2",
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "eatc2:2026",
+        "eym:2022",
+        "faldo:2026:1"
+      ]
+    },
+    {
       "name": "Tom Doyle",
       "country": "Irlanda",
       "tournaments": 3,
@@ -39317,6 +40068,23 @@
       ]
     },
     {
+      "name": "Veer Zoravar Singh",
+      "country": "Reino Unido",
+      "tournaments": 3,
+      "years": 2,
+      "seriesCount": 3,
+      "series": [
+        "bjgt",
+        "eowagr",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "eowagr:2025",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "Veronika Kogan",
       "country": "Ucrânia",
       "tournaments": 3,
@@ -39379,22 +40147,6 @@
         "fcg:2025",
         "fcg:2026",
         "jwgc:2026"
-      ]
-    },
-    {
-      "name": "Will Furness",
-      "country": "GB-ENG",
-      "tournaments": 3,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "coc",
-        "reidtrophy"
-      ],
-      "detail": [
-        "coc:2024",
-        "reidtrophy:2024",
-        "reidtrophy:2025"
       ]
     },
     {
@@ -39682,6 +40434,133 @@
       ]
     },
     {
+      "name": "Arjun Singh Sawhney",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6",
+        "faldo:2026:8"
+      ]
+    },
+    {
+      "name": "Aryan Kapoor",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:8",
+        "reidtrophy:2026"
+      ]
+    },
+    {
+      "name": "Baptiste Lebrun",
+      "country": "BE",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 3,
+      "series": [
+        "avtrophy",
+        "evianjc",
+        "faldo"
+      ],
+      "detail": [
+        "avtrophy:2026",
+        "evianjc:2026",
+        "faldo:2026:10"
+      ]
+    },
+    {
+      "name": "Ben Davies",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:6",
+        "faldo:2026:7"
+      ]
+    },
+    {
+      "name": "Cameron Byrne",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3",
+        "faldo:2026:6"
+      ]
+    },
+    {
+      "name": "Charles Wright",
+      "country": "Guam",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "jwgc"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:6",
+        "jwgc:2026"
+      ]
+    },
+    {
+      "name": "Charlie Hamer",
+      "country": "Inglaterra",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2026",
+        "faldo:2026:2",
+        "faldo:2026:3"
+      ]
+    },
+    {
+      "name": "Daisy Lee",
+      "country": "GB-ENG",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 3,
+      "series": [
+        "egtc",
+        "faldo",
+        "faldomadeira"
+      ],
+      "detail": [
+        "egtc:2026",
+        "faldo:2026:8",
+        "faldomadeira:2026"
+      ]
+    },
+    {
       "name": "Elia Secomandi",
       "country": "IT",
       "tournaments": 3,
@@ -39731,6 +40610,21 @@
       ]
     },
     {
+      "name": "Hamish Carnegie",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6",
+        "faldo:2026:8"
+      ]
+    },
+    {
       "name": "Hayden Soohyun Lee",
       "country": "CA",
       "tournaments": 3,
@@ -39762,6 +40656,51 @@
         "avtrophy:2026",
         "evianjc:2026",
         "eym:2026"
+      ]
+    },
+    {
+      "name": "Jack Bunch",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3",
+        "faldo:2026:6"
+      ]
+    },
+    {
+      "name": "Jake Servan-Smalley",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "faldomadeira"
+      ],
+      "detail": [
+        "faldo:2026:10",
+        "faldo:2026:6",
+        "faldomadeira:2026"
+      ]
+    },
+    {
+      "name": "Jess Stofberg",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6",
+        "faldo:2026:8"
       ]
     },
     {
@@ -39813,6 +40752,22 @@
         "ejo:2021",
         "ejt:2021:2",
         "ejt:2021:3"
+      ]
+    },
+    {
+      "name": "Lenny Key",
+      "country": "Inglaterra",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2026",
+        "faldo:2026:2",
+        "faldo:2026:6"
       ]
     },
     {
@@ -39884,6 +40839,35 @@
       ]
     },
     {
+      "name": "Matteo Stampfer",
+      "country": "AT",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:4",
+        "faldo:2026:7",
+        "faldo:2026:8"
+      ]
+    },
+    {
+      "name": "Matthew Gough",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3",
+        "faldo:2026:7"
+      ]
+    },
+    {
       "name": "Maya Markovic",
       "country": "SK",
       "tournaments": 3,
@@ -39915,6 +40899,22 @@
         "avtrophy:2026",
         "evianjc:2026",
         "reidtrophy:2026"
+      ]
+    },
+    {
+      "name": "Oliver Newman",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2026",
+        "faldo:2026:2",
+        "faldo:2026:3"
       ]
     },
     {
@@ -39996,6 +40996,21 @@
         "avtrophy:2026",
         "evianjc:2026",
         "reidtrophy:2026"
+      ]
+    },
+    {
+      "name": "Will Bebbington",
+      "country": "GB",
+      "tournaments": 3,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3",
+        "faldo:2026:6"
       ]
     },
     {
@@ -41044,18 +42059,33 @@
       ]
     },
     {
-      "name": "Alfie Kitteridge",
+      "name": "Alfie Jakobsson",
       "country": "GB-ENG",
       "tournaments": 2,
       "years": 2,
       "seriesCount": 2,
       "series": [
-        "faldomadeira",
+        "faldo",
         "reidtrophy"
       ],
       "detail": [
-        "faldomadeira:2026",
-        "reidtrophy:2025"
+        "faldo:2026:2",
+        "reidtrophy:2024"
+      ]
+    },
+    {
+      "name": "Alfie Jools Akers",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "faldo:2026:2"
       ]
     },
     {
@@ -41310,6 +42340,21 @@
       ]
     },
     {
+      "name": "Amber Thorp",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2023",
+        "faldo:2026:2"
+      ]
+    },
+    {
       "name": "Amelia Chen",
       "country": "United States",
       "usa": true,
@@ -41322,6 +42367,21 @@
       "detail": [
         "fcg:2025",
         "fcg:2026"
+      ]
+    },
+    {
+      "name": "Amélie Jones",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "faldo:2026:6"
       ]
     },
     {
@@ -41875,20 +42935,6 @@
       "detail": [
         "doral:2018",
         "evianjc:2021"
-      ]
-    },
-    {
-      "name": "Archie Jones",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "reidtrophy"
-      ],
-      "detail": [
-        "reidtrophy:2025",
-        "reidtrophy:2026"
       ]
     },
     {
@@ -42860,6 +43906,21 @@
       ]
     },
     {
+      "name": "Ben Lovell",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "faldo:2026:2"
+      ]
+    },
+    {
       "name": "Ben Nelitz",
       "country": "DE",
       "tournaments": 2,
@@ -42871,6 +43932,21 @@
       "detail": [
         "reidtrophy:2024",
         "reidtrophy:2025"
+      ]
+    },
+    {
+      "name": "Ben Rehn",
+      "country": "DE",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "eym:2023",
+        "faldo:2026:1"
       ]
     },
     {
@@ -42959,20 +44035,6 @@
       "detail": [
         "fm:2019",
         "fm:2022"
-      ]
-    },
-    {
-      "name": "Benjamin Champness",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "reidtrophy"
-      ],
-      "detail": [
-        "reidtrophy:2025",
-        "reidtrophy:2026"
       ]
     },
     {
@@ -43183,6 +44245,21 @@
       "detail": [
         "evianjc:2022",
         "eym:2023"
+      ]
+    },
+    {
+      "name": "Bernhard Roittner",
+      "country": "AT",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "eym:2023",
+        "faldo:2026:1"
       ]
     },
     {
@@ -43913,6 +44990,21 @@
       ]
     },
     {
+      "name": "Brian Kim",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "Brianna Reyna",
       "country": "US",
       "usa": true,
@@ -44574,20 +45666,6 @@
       "detail": [
         "coc:2024",
         "coc:2025"
-      ]
-    },
-    {
-      "name": "Caelan Dhami",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "reidtrophy"
-      ],
-      "detail": [
-        "reidtrophy:2023",
-        "reidtrophy:2024"
       ]
     },
     {
@@ -46313,6 +47391,21 @@
       ]
     },
     {
+      "name": "Connor McCrae",
+      "country": "GB-SCT",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2024",
+        "faldo:2026:8"
+      ]
+    },
+    {
       "name": "Connor McNeely",
       "country": "US",
       "usa": true,
@@ -46778,20 +47871,6 @@
       "detail": [
         "bjgt:2025",
         "faldomadeira:2026"
-      ]
-    },
-    {
-      "name": "Daniel Hogg",
-      "country": "GB",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "coc"
-      ],
-      "detail": [
-        "coc:2023",
-        "coc:2024"
       ]
     },
     {
@@ -47803,6 +48882,21 @@
       ]
     },
     {
+      "name": "Edward Herman",
+      "country": "BE",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "evianjc",
+        "faldo"
+      ],
+      "detail": [
+        "evianjc:2023",
+        "faldo:2026:10"
+      ]
+    },
+    {
       "name": "Edward Perry",
       "country": "GB-ENG",
       "tournaments": 2,
@@ -48182,6 +49276,21 @@
       "detail": [
         "fm:2021",
         "fm:2022"
+      ]
+    },
+    {
+      "name": "Ellis Kerr",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -48900,6 +50009,21 @@
       ]
     },
     {
+      "name": "Evie Smith",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "faldo:2026:2"
+      ]
+    },
+    {
       "name": "Exposito, Veronika",
       "country": "United States",
       "usa": true,
@@ -49388,20 +50512,6 @@
       ]
     },
     {
-      "name": "Freddie Raven",
-      "country": "Inglaterra",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "bjgt"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "bjgt:2025"
-      ]
-    },
-    {
       "name": "Frederika Rychtarikova",
       "country": "Eslováquia",
       "tournaments": 2,
@@ -49876,6 +50986,36 @@
       "detail": [
         "eym:2024",
         "eym:2025"
+      ]
+    },
+    {
+      "name": "George Bull",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:7",
+        "reidtrophy:2025"
+      ]
+    },
+    {
+      "name": "George Lancaster",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2024"
       ]
     },
     {
@@ -50848,6 +51988,66 @@
       ]
     },
     {
+      "name": "Harry Dagger",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "faldo:2026:2"
+      ]
+    },
+    {
+      "name": "Harry Evans",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "reidtrophy:2023"
+      ]
+    },
+    {
+      "name": "Harry Fryer",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "reidtrophy:2024"
+      ]
+    },
+    {
+      "name": "Harry Howell",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "faldo:2026:2"
+      ]
+    },
+    {
       "name": "Harry O Hara",
       "country": "RI",
       "tournaments": 2,
@@ -50860,20 +52060,6 @@
       "detail": [
         "ebtc2:2026",
         "reidtrophy:2023"
-      ]
-    },
-    {
-      "name": "Harry Slater",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "reidtrophy"
-      ],
-      "detail": [
-        "reidtrophy:2023",
-        "reidtrophy:2024"
       ]
     },
     {
@@ -51638,21 +52824,6 @@
       ]
     },
     {
-      "name": "Isaac Khan",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "coc",
-        "reidtrophy"
-      ],
-      "detail": [
-        "coc:2026",
-        "reidtrophy:2025"
-      ]
-    },
-    {
       "name": "Isaac Oliver",
       "country": "IG",
       "tournaments": 2,
@@ -51950,6 +53121,21 @@
       ]
     },
     {
+      "name": "Jack Crampton",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2023",
+        "faldo:2026:3"
+      ]
+    },
+    {
       "name": "Jack Daly",
       "country": "IE",
       "tournaments": 2,
@@ -51976,6 +53162,21 @@
       "detail": [
         "fm:2024",
         "fm:2025"
+      ]
+    },
+    {
+      "name": "Jack Dirkin",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -52038,20 +53239,6 @@
       ]
     },
     {
-      "name": "Jack Mahoney",
-      "country": "Inglaterra",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "bjgt"
-      ],
-      "detail": [
-        "bjgt:2025",
-        "bjgt:2026"
-      ]
-    },
-    {
       "name": "Jack Mawer",
       "country": "GB-ENG",
       "tournaments": 2,
@@ -52092,6 +53279,21 @@
       "detail": [
         "optimist:2023:3",
         "optimist:2024:3"
+      ]
+    },
+    {
+      "name": "Jack Thorpe",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:7",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -52349,6 +53551,21 @@
       ]
     },
     {
+      "name": "Jacob Townsend",
+      "country": "JE",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "Jacob Ujiie",
       "country": "United States",
       "usa": true,
@@ -52361,21 +53578,6 @@
       "detail": [
         "fcg:2025",
         "fcg:2026"
-      ]
-    },
-    {
-      "name": "Jake Gunby",
-      "country": "Reino Unido",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "reidtrophy"
-      ],
-      "detail": [
-        "bjgt:2025",
-        "reidtrophy:2023"
       ]
     },
     {
@@ -52481,20 +53683,6 @@
       "detail": [
         "fm:2026",
         "uaworlds:2024"
-      ]
-    },
-    {
-      "name": "James Harris ",
-      "country": "GB",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "coc"
-      ],
-      "detail": [
-        "coc:2025",
-        "coc:2026"
       ]
     },
     {
@@ -52747,20 +53935,6 @@
       "detail": [
         "uaworlds:2025",
         "uaworlds:2026"
-      ]
-    },
-    {
-      "name": "Jeeva Ashok",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "coc"
-      ],
-      "detail": [
-        "coc:2025",
-        "coc:2026"
       ]
     },
     {
@@ -53729,6 +54903,21 @@
       ]
     },
     {
+      "name": "Joss Monachello",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2023"
+      ]
+    },
+    {
       "name": "Joziah Caldera",
       "country": "US",
       "usa": true,
@@ -54144,6 +55333,21 @@
       "detail": [
         "bjgt:2025",
         "fcg:2026"
+      ]
+    },
+    {
+      "name": "Kamraan Arastu",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -55097,21 +56301,6 @@
       ]
     },
     {
-      "name": "Laetitia Vandeplas",
-      "country": "BE",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "egtc",
-        "evianjc"
-      ],
-      "detail": [
-        "egtc:2026",
-        "evianjc:2023"
-      ]
-    },
-    {
       "name": "Lafeber, Guus",
       "country": "Netherlands",
       "tournaments": 2,
@@ -55354,20 +56543,6 @@
       ]
     },
     {
-      "name": "Laura Penzold",
-      "country": "DE",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "coc"
-      ],
-      "detail": [
-        "coc:2023",
-        "coc:2024"
-      ]
-    },
-    {
       "name": "Lawson Andress",
       "country": "US",
       "usa": true,
@@ -55596,6 +56771,21 @@
       ]
     },
     {
+      "name": "Leo Walton",
+      "country": "Reino Unido",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "eowagr",
+        "faldo"
+      ],
+      "detail": [
+        "eowagr:2025",
+        "faldo:2026:2"
+      ]
+    },
+    {
       "name": "León , Emmanuel",
       "country": "Colombia",
       "tournaments": 2,
@@ -55802,34 +56992,6 @@
       "detail": [
         "coc:2025",
         "coc:2026"
-      ]
-    },
-    {
-      "name": "Lewis Forsyth",
-      "country": "GB",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "coc"
-      ],
-      "detail": [
-        "coc:2023",
-        "coc:2024"
-      ]
-    },
-    {
-      "name": "Lewis Salthouse",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "reidtrophy"
-      ],
-      "detail": [
-        "reidtrophy:2024",
-        "reidtrophy:2025"
       ]
     },
     {
@@ -56459,6 +57621,21 @@
       ]
     },
     {
+      "name": "Louis Batrick-Wren",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2024"
+      ]
+    },
+    {
       "name": "Louis Harran",
       "country": "Suíça",
       "tournaments": 2,
@@ -56618,21 +57795,6 @@
       "detail": [
         "reidtrophy:2023",
         "reidtrophy:2024"
-      ]
-    },
-    {
-      "name": "Luca Lancaster",
-      "country": "Inglaterra",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "eowagr"
-      ],
-      "detail": [
-        "bjgt:2026",
-        "eowagr:2025"
       ]
     },
     {
@@ -57083,6 +58245,21 @@
       "detail": [
         "uajt:2025",
         "uaworlds:2026"
+      ]
+    },
+    {
+      "name": "Luke Jackson",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "faldo:2026:7"
       ]
     },
     {
@@ -57878,6 +59055,21 @@
       ]
     },
     {
+      "name": "Marie Witzmann",
+      "country": "AT",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "eym:2023",
+        "faldo:2026:10"
+      ]
+    },
+    {
       "name": "Mariliis Palm",
       "country": "EE",
       "tournaments": 2,
@@ -58065,6 +59257,21 @@
       ]
     },
     {
+      "name": "Martina Cerrillo Giral",
+      "country": "ES",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2025",
+        "faldo:2026:10"
+      ]
+    },
+    {
       "name": "Martine Sveum",
       "country": "NO",
       "tournaments": 2,
@@ -58194,6 +59401,21 @@
       "detail": [
         "optimist:2025:1",
         "optimist:2026:1"
+      ]
+    },
+    {
+      "name": "Massimo Vittorio Miano",
+      "country": "IT",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:1",
+        "reidtrophy:2025"
       ]
     },
     {
@@ -58327,6 +59549,21 @@
       "detail": [
         "optimist:2024:2",
         "optimist:2025:2"
+      ]
+    },
+    {
+      "name": "Matteo Trucco",
+      "country": "IT",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:1",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -59016,21 +60253,6 @@
       ]
     },
     {
-      "name": "Michał Cygan",
-      "country": "Polônia",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "coc"
-      ],
-      "detail": [
-        "bjgt:2026",
-        "coc:2023"
-      ]
-    },
-    {
       "name": "Michelle Tech",
       "country": "United States",
       "usa": true,
@@ -59430,6 +60652,21 @@
       ]
     },
     {
+      "name": "Monty Fincher",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "reidtrophy:2023"
+      ]
+    },
+    {
       "name": "Moreau, Pedro",
       "country": "Argentina",
       "tournaments": 2,
@@ -59622,20 +60859,6 @@
       "detail": [
         "doral:2019",
         "optimist:2023:1"
-      ]
-    },
-    {
-      "name": "Myles Young",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "reidtrophy"
-      ],
-      "detail": [
-        "reidtrophy:2025",
-        "reidtrophy:2026"
       ]
     },
     {
@@ -60249,17 +61472,18 @@
       ]
     },
     {
-      "name": "Noah  Williams",
-      "country": "GB",
+      "name": "Noah Alexander",
+      "country": "GB-ENG",
       "tournaments": 2,
       "years": 2,
-      "seriesCount": 1,
+      "seriesCount": 2,
       "series": [
-        "coc"
+        "faldo",
+        "reidtrophy"
       ],
       "detail": [
-        "coc:2025",
-        "coc:2026"
+        "faldo:2026:3",
+        "reidtrophy:2024"
       ]
     },
     {
@@ -60544,17 +61768,18 @@
       ]
     },
     {
-      "name": "Oliver Brightman",
-      "country": "Inglaterra",
+      "name": "Oliver Badger",
+      "country": "GB-ENG",
       "tournaments": 2,
       "years": 2,
-      "seriesCount": 1,
+      "seriesCount": 2,
       "series": [
-        "bjgt"
+        "faldo",
+        "reidtrophy"
       ],
       "detail": [
-        "bjgt:2025",
-        "bjgt:2026"
+        "faldo:2026:6",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -60625,20 +61850,6 @@
       "detail": [
         "coc:2024",
         "coc:2026"
-      ]
-    },
-    {
-      "name": "Oliver McEvoy",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "reidtrophy"
-      ],
-      "detail": [
-        "reidtrophy:2023",
-        "reidtrophy:2024"
       ]
     },
     {
@@ -60849,6 +62060,21 @@
       "detail": [
         "uaworlds:2023",
         "uaworlds:2024"
+      ]
+    },
+    {
+      "name": "Oscar Ford",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2025"
       ]
     },
     {
@@ -62753,20 +63979,6 @@
       ]
     },
     {
-      "name": "Rhian Morjaria",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 1,
-      "series": [
-        "reidtrophy"
-      ],
-      "detail": [
-        "reidtrophy:2024",
-        "reidtrophy:2025"
-      ]
-    },
-    {
       "name": "Ricardo Fu",
       "country": "Hong Kong",
       "tournaments": 2,
@@ -63096,6 +64308,21 @@
       ]
     },
     {
+      "name": "River Gardiner",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2023"
+      ]
+    },
+    {
       "name": "Rob Fruitticher",
       "country": "US",
       "usa": true,
@@ -63184,6 +64411,21 @@
       "detail": [
         "doral:2022",
         "doral:2024"
+      ]
+    },
+    {
+      "name": "Robin Lockrose",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2024"
       ]
     },
     {
@@ -63318,6 +64560,21 @@
       "detail": [
         "fm:2025",
         "fm:2026"
+      ]
+    },
+    {
+      "name": "Rohan Patel",
+      "country": "Reino Unido",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2025",
+        "faldo:2026:6"
       ]
     },
     {
@@ -64081,6 +65338,21 @@
       ]
     },
     {
+      "name": "Samuele Ferrario",
+      "country": "IT",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:1",
+        "reidtrophy:2025"
+      ]
+    },
+    {
       "name": "San Martin, Victoria",
       "country": "Peru",
       "usa": true,
@@ -64614,6 +65886,21 @@
       ]
     },
     {
+      "name": "Shiv Ahluwalia",
+      "country": "Reino Unido",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "eowagr",
+        "faldo"
+      ],
+      "detail": [
+        "eowagr:2025",
+        "faldo:2026:2"
+      ]
+    },
+    {
       "name": "Shutt, Keegan",
       "country": "Zimbabwe",
       "tournaments": 2,
@@ -64940,6 +66227,21 @@
       "detail": [
         "egtc:2026",
         "eym:2024"
+      ]
+    },
+    {
+      "name": "Sofia McGhie",
+      "country": "SQ",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "eym:2023",
+        "faldo:2026:7"
       ]
     },
     {
@@ -65422,6 +66724,21 @@
       ]
     },
     {
+      "name": "Tara Svetek Zgonec",
+      "country": "SI",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "evianjc",
+        "faldo"
+      ],
+      "detail": [
+        "evianjc:2025",
+        "faldo:2026:1"
+      ]
+    },
+    {
       "name": "Taracena, Juan",
       "country": "Guatemala",
       "tournaments": 2,
@@ -65627,6 +66944,21 @@
       ]
     },
     {
+      "name": "Thaleia Olympia Nikitaidis",
+      "country": "Grécia",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "faldo:2026:1"
+      ]
+    },
+    {
       "name": "Thanadon Kongsiri",
       "country": "US",
       "usa": true,
@@ -65684,6 +67016,21 @@
       "detail": [
         "fcg:2025",
         "fcg:2026"
+      ]
+    },
+    {
+      "name": "Theo Morris",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2024",
+        "faldo:2026:2"
       ]
     },
     {
@@ -65788,21 +67135,6 @@
       ]
     },
     {
-      "name": "Thomas James",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "coc",
-        "reidtrophy"
-      ],
-      "detail": [
-        "coc:2023",
-        "reidtrophy:2024"
-      ]
-    },
-    {
       "name": "Thomas Lawson",
       "country": "US",
       "usa": true,
@@ -65845,6 +67177,21 @@
       "detail": [
         "fm:2023",
         "fm:2024"
+      ]
+    },
+    {
+      "name": "Thomas McManus",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "reidtrophy:2023"
       ]
     },
     {
@@ -65949,21 +67296,6 @@
       "detail": [
         "ejo:2019",
         "ejo:2020"
-      ]
-    },
-    {
-      "name": "Timon Svetek Zgonec",
-      "country": "SI",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "eatc2",
-        "eym"
-      ],
-      "detail": [
-        "eatc2:2026",
-        "eym:2022"
       ]
     },
     {
@@ -66552,21 +67884,6 @@
       ]
     },
     {
-      "name": "Vaclav Svub",
-      "country": "CZ",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "evianjc",
-        "eym"
-      ],
-      "detail": [
-        "evianjc:2022",
-        "eym:2024"
-      ]
-    },
-    {
       "name": "Vairana Heck",
       "country": "FR",
       "tournaments": 2,
@@ -66579,6 +67896,21 @@
       "detail": [
         "elg:2026",
         "evianjc:2019"
+      ]
+    },
+    {
+      "name": "Valentin Fischer",
+      "country": "DE",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "eym",
+        "faldo"
+      ],
+      "detail": [
+        "eym:2023",
+        "faldo:2026:1"
       ]
     },
     {
@@ -67448,21 +68780,6 @@
       ]
     },
     {
-      "name": "William Paas",
-      "country": "Inglaterra",
-      "tournaments": 2,
-      "years": 2,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "reidtrophy"
-      ],
-      "detail": [
-        "bjgt:2025",
-        "reidtrophy:2024"
-      ]
-    },
-    {
       "name": "Williams, Aaron",
       "country": "United States",
       "usa": true,
@@ -67748,6 +69065,21 @@
       ]
     },
     {
+      "name": "Yash Patel",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "reidtrophy:2024"
+      ]
+    },
+    {
       "name": "Yelizaveta Kogan",
       "country": "Ucrânia",
       "tournaments": 2,
@@ -68010,6 +69342,21 @@
       "detail": [
         "uajt:2024",
         "uaworlds:2025"
+      ]
+    },
+    {
+      "name": "Zach Gammon",
+      "country": "FR",
+      "tournaments": 2,
+      "years": 2,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "reidtrophy"
+      ],
+      "detail": [
+        "faldo:2026:1",
+        "reidtrophy:2025"
       ]
     },
     {
@@ -68341,21 +69688,6 @@
       ]
     },
     {
-      "name": "Aditya Singh Sawhney",
-      "country": "United Kingdom",
-      "tournaments": 2,
-      "years": 1,
-      "seriesCount": 2,
-      "series": [
-        "fcg",
-        "jwgc"
-      ],
-      "detail": [
-        "fcg:2026",
-        "jwgc:2026"
-      ]
-    },
-    {
       "name": "Aizhuo Yang",
       "country": "China",
       "tournaments": 2,
@@ -68383,6 +69715,21 @@
       "detail": [
         "jwgc:2026",
         "mexnacional:2026"
+      ]
+    },
+    {
+      "name": "Alex Perry",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2026",
+        "faldo:2026:3"
       ]
     },
     {
@@ -68428,6 +69775,19 @@
       "detail": [
         "evianjc:2024",
         "reidtrophy:2024"
+      ]
+    },
+    {
+      "name": "Alice Chou",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7"
       ]
     },
     {
@@ -68615,6 +69975,21 @@
       ]
     },
     {
+      "name": "Ava McDaid",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2026",
+        "faldo:2026:3"
+      ]
+    },
+    {
       "name": "Baez, Carson",
       "tournaments": 2,
       "years": 1,
@@ -68658,21 +70033,6 @@
       "detail": [
         "uajt:2025",
         "uaworlds:2025"
-      ]
-    },
-    {
-      "name": "Baptiste Lebrun",
-      "country": "BE",
-      "tournaments": 2,
-      "years": 1,
-      "seriesCount": 2,
-      "series": [
-        "avtrophy",
-        "evianjc"
-      ],
-      "detail": [
-        "avtrophy:2026",
-        "evianjc:2026"
       ]
     },
     {
@@ -68912,6 +70272,20 @@
       ]
     },
     {
+      "name": "Cagil Akpınar",
+      "country": "CY",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:7",
+        "faldo:2026:8"
+      ]
+    },
+    {
       "name": "Callahan, Jack",
       "country": "United States",
       "usa": true,
@@ -68955,6 +70329,20 @@
       "detail": [
         "egtc:2026",
         "job:2026"
+      ]
+    },
+    {
+      "name": "Carl Daniel Agapito",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3"
       ]
     },
     {
@@ -69064,6 +70452,20 @@
       "detail": [
         "fm:2024",
         "optimist:2024:3"
+      ]
+    },
+    {
+      "name": "Charlie Mckinney",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:7"
       ]
     },
     {
@@ -69318,21 +70720,6 @@
       ]
     },
     {
-      "name": "Daisy Lee",
-      "country": "GB-ENG",
-      "tournaments": 2,
-      "years": 1,
-      "seriesCount": 2,
-      "series": [
-        "egtc",
-        "faldomadeira"
-      ],
-      "detail": [
-        "egtc:2026",
-        "faldomadeira:2026"
-      ]
-    },
-    {
       "name": "Daniel  Morgado Rebollar ",
       "country": "Mexico",
       "tournaments": 2,
@@ -69348,6 +70735,19 @@
       ]
     },
     {
+      "name": "Daniel Jarc",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "Daniel Morn",
       "country": "LU",
       "tournaments": 2,
@@ -69360,6 +70760,20 @@
       "detail": [
         "evianjc:2026",
         "eym:2026"
+      ]
+    },
+    {
+      "name": "Darci Lewis-Bradbury",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
       ]
     },
     {
@@ -69393,6 +70807,20 @@
       ]
     },
     {
+      "name": "Dec Goodfellow",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3"
+      ]
+    },
+    {
       "name": "Devin Tan",
       "country": "United States",
       "usa": true,
@@ -69406,6 +70834,19 @@
       "detail": [
         "fcg:2026",
         "jwgc:2026"
+      ]
+    },
+    {
+      "name": "Dexter Vass",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7"
       ]
     },
     {
@@ -69548,6 +70989,19 @@
       ]
     },
     {
+      "name": "Eisa Nawaz",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:8"
+      ]
+    },
+    {
       "name": "Eli McLean",
       "country": "US",
       "usa": true,
@@ -69595,6 +71049,19 @@
       ]
     },
     {
+      "name": "Elijah Bouchier",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "Ella Black",
       "country": "US",
       "usa": true,
@@ -69608,6 +71075,21 @@
       "detail": [
         "uajt:2026",
         "uaworlds:2026"
+      ]
+    },
+    {
+      "name": "Ellis Carpenter",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2026",
+        "faldo:2026:3"
       ]
     },
     {
@@ -69658,6 +71140,20 @@
       ]
     },
     {
+      "name": "Emily Pugh",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:7"
+      ]
+    },
+    {
       "name": "Emmiina Koivisto",
       "country": "FI",
       "tournaments": 2,
@@ -69670,6 +71166,19 @@
       "detail": [
         "ejo:2024",
         "evianjc:2024"
+      ]
+    },
+    {
+      "name": "Ethan Coetzer",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
       ]
     },
     {
@@ -69752,6 +71261,21 @@
       ]
     },
     {
+      "name": "Evie Stone",
+      "country": "Inglaterra",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "bjgt",
+        "faldo"
+      ],
+      "detail": [
+        "bjgt:2026",
+        "faldo:2026:2"
+      ]
+    },
+    {
       "name": "Ezra Lee",
       "country": "United States",
       "usa": true,
@@ -69796,6 +71320,49 @@
       "detail": [
         "uajt:2024",
         "uaworlds:2024"
+      ]
+    },
+    {
+      "name": "Frazer Fletcher",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3"
+      ]
+    },
+    {
+      "name": "Freddie Timmis",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7"
+      ]
+    },
+    {
+      "name": "Freya Pickford",
+      "country": "United Kingdom",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "fcg"
+      ],
+      "detail": [
+        "faldo:2026:7",
+        "fcg:2026"
       ]
     },
     {
@@ -69846,18 +71413,30 @@
       ]
     },
     {
-      "name": "Georgia Denega",
-      "country": "Inglaterra",
+      "name": "George Emmerson",
       "tournaments": 2,
       "years": 1,
-      "seriesCount": 2,
+      "seriesCount": 1,
       "series": [
-        "bjgt",
-        "eowagr"
+        "faldo"
       ],
       "detail": [
-        "bjgt:2025",
-        "eowagr:2025"
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
+      "name": "George Molloy",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
       ]
     },
     {
@@ -70059,6 +71638,33 @@
       "detail": [
         "jwgc:2026",
         "optimist:2026:3"
+      ]
+    },
+    {
+      "name": "Harry Fisher",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
+      "name": "Heath Dixon",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:7"
       ]
     },
     {
@@ -70388,6 +71994,34 @@
       ]
     },
     {
+      "name": "James Legg",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
+      "name": "James O'Donnell",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "James Padron",
       "country": "Canada",
       "tournaments": 2,
@@ -70415,6 +72049,21 @@
       "detail": [
         "fcg:2026",
         "jwgc:2026"
+      ]
+    },
+    {
+      "name": "Jamie De Bruycker",
+      "country": "BE",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "coc",
+        "faldo"
+      ],
+      "detail": [
+        "coc:2026",
+        "faldo:2026:10"
       ]
     },
     {
@@ -70511,6 +72160,33 @@
       ]
     },
     {
+      "name": "Joe Jones",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:7"
+      ]
+    },
+    {
+      "name": "Joel Bracegirdle",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7"
+      ]
+    },
+    {
       "name": "John Allred",
       "country": "US",
       "usa": true,
@@ -70524,6 +72200,19 @@
       "detail": [
         "uajt:2025",
         "uaworlds:2025"
+      ]
+    },
+    {
+      "name": "Johnathan Points",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
       ]
     },
     {
@@ -70637,6 +72326,21 @@
       ]
     },
     {
+      "name": "Joseph Thorne",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "faldomadeira"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldomadeira:2026"
+      ]
+    },
+    {
       "name": "Josh Harris",
       "country": "New Zealand",
       "tournaments": 2,
@@ -70649,6 +72353,20 @@
       "detail": [
         "fcg:2026",
         "jwgc:2026"
+      ]
+    },
+    {
+      "name": "Joshua Bashforth",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7"
       ]
     },
     {
@@ -70756,6 +72474,33 @@
       "detail": [
         "ejt:2023:2",
         "ejt:2023:5"
+      ]
+    },
+    {
+      "name": "Karolína Krippnerová",
+      "country": "CZ",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:1",
+        "faldo:2026:4"
+      ]
+    },
+    {
+      "name": "Kaspian Sansom",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3"
       ]
     },
     {
@@ -70929,6 +72674,34 @@
       ]
     },
     {
+      "name": "Laura-Mai McCarthy",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
+      "name": "Lawson Bailey",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3"
+      ]
+    },
+    {
       "name": "Leal, Santiago",
       "country": "Colombia",
       "tournaments": 2,
@@ -70974,6 +72747,34 @@
       ]
     },
     {
+      "name": "Leo Price",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:8"
+      ]
+    },
+    {
+      "name": "Leon Brooks",
+      "country": "GB-ENG",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "faldomadeira"
+      ],
+      "detail": [
+        "faldo:2026:8",
+        "faldomadeira:2026"
+      ]
+    },
+    {
       "name": "Leonardo Gonzalez Cantu",
       "country": "Mexico",
       "tournaments": 2,
@@ -70986,6 +72787,21 @@
       "detail": [
         "jwgc:2026",
         "optimist:2026:2"
+      ]
+    },
+    {
+      "name": "Leonardo Könemund",
+      "country": "DE",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 2,
+      "series": [
+        "faldo",
+        "faldomadeira"
+      ],
+      "detail": [
+        "faldo:2026:4",
+        "faldomadeira:2026"
       ]
     },
     {
@@ -71002,6 +72818,34 @@
       "detail": [
         "uajt:2024",
         "uaworlds:2024"
+      ]
+    },
+    {
+      "name": "Liam Stokes",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
+      "name": "Lily Hertz",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:10",
+        "faldo:2026:2"
       ]
     },
     {
@@ -71048,6 +72892,20 @@
       "detail": [
         "jwgc:2026",
         "mexnacional:2026"
+      ]
+    },
+    {
+      "name": "Louie Carroll",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7"
       ]
     },
     {
@@ -71113,6 +72971,20 @@
       ]
     },
     {
+      "name": "Lucas Weisberg",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "Luciana Urquiza Jurado",
       "country": "Mexico",
       "tournaments": 2,
@@ -71125,6 +72997,20 @@
       "detail": [
         "fcg:2026",
         "interzonas:2026"
+      ]
+    },
+    {
+      "name": "Luke Metcalf",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
       ]
     },
     {
@@ -71340,6 +73226,20 @@
       ]
     },
     {
+      "name": "Max Godley",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "Maxence Dennetiere",
       "country": "FR",
       "tournaments": 2,
@@ -71397,21 +73297,6 @@
       "detail": [
         "mexnacional:2026",
         "optimist:2026:1"
-      ]
-    },
-    {
-      "name": "Maximus  Maddocks",
-      "country": "Inglaterra",
-      "tournaments": 2,
-      "years": 1,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "coc"
-      ],
-      "detail": [
-        "bjgt:2024",
-        "coc:2024"
       ]
     },
     {
@@ -71848,6 +73733,20 @@
       ]
     },
     {
+      "name": "Nicholas Bradley",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:8"
+      ]
+    },
+    {
       "name": "Nick Horodesky",
       "country": "United States",
       "usa": true,
@@ -71941,6 +73840,19 @@
       ]
     },
     {
+      "name": "Oliver Ockelford",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:7"
+      ]
+    },
+    {
       "name": "Olivia Grachova",
       "country": "SK",
       "tournaments": 2,
@@ -71953,6 +73865,19 @@
       "detail": [
         "evianjc:2024",
         "eym:2024"
+      ]
+    },
+    {
+      "name": "Ollie Farmer",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:6"
       ]
     },
     {
@@ -71987,6 +73912,20 @@
       ]
     },
     {
+      "name": "Oscar Reeve",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "Owen Repass",
       "country": "US",
       "usa": true,
@@ -72000,6 +73939,20 @@
       "detail": [
         "uajt:2026",
         "uaworlds:2026"
+      ]
+    },
+    {
+      "name": "Owen Ridley",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:3",
+        "faldo:2026:6"
       ]
     },
     {
@@ -72077,6 +74030,19 @@
       "detail": [
         "uajt:2025",
         "uaworlds:2025"
+      ]
+    },
+    {
+      "name": "Quinn Jameson",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
       ]
     },
     {
@@ -72248,6 +74214,20 @@
       ]
     },
     {
+      "name": "Roberto Re",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
       "name": "Robin Lai",
       "country": "Canada",
       "tournaments": 2,
@@ -72389,6 +74369,20 @@
       ]
     },
     {
+      "name": "Sam Byrne",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:8"
+      ]
+    },
+    {
       "name": "Samantha Diamond",
       "country": "US",
       "usa": true,
@@ -72514,6 +74508,19 @@
       ]
     },
     {
+      "name": "Shaan Patel",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3"
+      ]
+    },
+    {
       "name": "Shah, Aariv",
       "country": "United States",
       "usa": true,
@@ -72558,21 +74565,6 @@
       "detail": [
         "fcg:2026",
         "jwgc:2026"
-      ]
-    },
-    {
-      "name": "Sidhu, Darragh",
-      "country": "United Kingdom",
-      "tournaments": 2,
-      "years": 1,
-      "seriesCount": 2,
-      "series": [
-        "coc",
-        "doral"
-      ],
-      "detail": [
-        "coc:2023",
-        "doral:2023"
       ]
     },
     {
@@ -72663,6 +74655,20 @@
       "detail": [
         "avtrophy:2026",
         "evianjc:2026"
+      ]
+    },
+    {
+      "name": "Sophie Stroyberg",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
       ]
     },
     {
@@ -72847,6 +74853,34 @@
       ]
     },
     {
+      "name": "Toby Hankins",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:6"
+      ]
+    },
+    {
+      "name": "Toby Knevett",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:8"
+      ]
+    },
+    {
       "name": "Tomas Benavides",
       "country": "Mexico",
       "tournaments": 2,
@@ -72936,21 +74970,6 @@
       "detail": [
         "coc:2026",
         "fcg:2026"
-      ]
-    },
-    {
-      "name": "Veer Zoravar Singh",
-      "country": "Reino Unido",
-      "tournaments": 2,
-      "years": 1,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "eowagr"
-      ],
-      "detail": [
-        "bjgt:2025",
-        "eowagr:2025"
       ]
     },
     {
@@ -73047,21 +75066,6 @@
       ]
     },
     {
-      "name": "Will Mulholland",
-      "country": "Inglaterra",
-      "tournaments": 2,
-      "years": 1,
-      "seriesCount": 2,
-      "series": [
-        "bjgt",
-        "eowagr"
-      ],
-      "detail": [
-        "bjgt:2025",
-        "eowagr:2025"
-      ]
-    },
-    {
       "name": "Will Reidy",
       "country": "United States",
       "usa": true,
@@ -73075,6 +75079,20 @@
       "detail": [
         "fcg:2026",
         "optimist:2026:3"
+      ]
+    },
+    {
+      "name": "William Ainsworth",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7"
       ]
     },
     {
@@ -73169,6 +75187,33 @@
       ]
     },
     {
+      "name": "Zac Pantony",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:8"
+      ]
+    },
+    {
+      "name": "Zach Davies",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:6",
+        "faldo:2026:7"
+      ]
+    },
+    {
       "name": "Zachary Witherall",
       "country": "United States",
       "usa": true,
@@ -73182,6 +75227,33 @@
       "detail": [
         "fcg:2026",
         "jwgc:2026"
+      ]
+    },
+    {
+      "name": "Zak Armstrong",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:2",
+        "faldo:2026:3"
+      ]
+    },
+    {
+      "name": "Zak Hobbs",
+      "country": "GB",
+      "tournaments": 2,
+      "years": 1,
+      "seriesCount": 1,
+      "series": [
+        "faldo"
+      ],
+      "detail": [
+        "faldo:2026:1",
+        "faldo:2026:2"
       ]
     },
     {

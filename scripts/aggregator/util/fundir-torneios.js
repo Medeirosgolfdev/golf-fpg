@@ -39,7 +39,7 @@ const PRIORIDADE_BAIXA = new Set(["egr", "wagr"]);
 const DEDICADAS = new Set([
   "evianjc", "wjgc", "eowagr", "doral", "eatc", "eatc2", "ebtc2", "egtc", "ejo", "eym",
   "uaworlds", "uajt", "avtrophy", "coc", "reidtrophy", "optimist", "icopa", "fm",
-  "faldomadeira", "mexnacional", "interzonas", "elg", "ejt", "job",
+  "faldomadeira", "faldo", "mexnacional", "interzonas", "elg", "ejt", "job",
 ]);
 
 const vazio = (v) => v == null || v === "" || (Array.isArray(v) && v.length === 0);

@@ -162,6 +162,9 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
   return def.sortByAge ? divisions.sort(majorDivCompare) : divisions;
 }
 
+/** Fontes com várias etapas/fases por ano (id `{src}:ano:n`). */
+const MULTI_ETAPA = new Set(["ejt", "optimist", "faldo"]);
+
 const MAJOR_CONFIG: CircuitConfig = {
   routeBase: "/major",
   title: "🎖️ MAJOR",
@@ -169,7 +172,7 @@ const MAJOR_CONFIG: CircuitConfig = {
   textColor: C.white,
   grouping: "year",
   sourceColors: C.majorSrc,
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy", optimist: "Optimist", evianjc: "Evian JC", faldomadeira: "Faldo Madeira" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy", optimist: "Optimist", evianjc: "Evian JC", faldomadeira: "Faldo Madeira", faldo: "Faldo Europa" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   // Identidade de torneio entre anos = a FONTE (coc, fsga, uajt, bjgt, doral…).
   // O shell constrói a tab "Edições anteriores" das entradas irmãs e entrega-a
@@ -178,10 +181,10 @@ const MAJOR_CONFIG: CircuitConfig = {
   // (Estonian Junior Tour, Optimist Phase 1-3) a "mesma prova" é a MESMA
   // etapa/fase (nº no id `{src}:ano:n`) — sem isto as etapas de um ano
   // contavam como N "edições".
-  editionKey: (entry) => (entry.source === "ejt" || entry.source === "optimist"
+  editionKey: (entry) => (entry.source && MULTI_ETAPA.has(entry.source)
     ? `${entry.source}:${entry.id.split(":")[2] ?? ""}` : entry.source || null),
   // Tab "Época": as etapas/fases do MESMO ANO do circuito.
-  seasonKey: (entry) => (entry.source === "ejt" || entry.source === "optimist" ? entry.source : null),
+  seasonKey: (entry) => (entry.source && MULTI_ETAPA.has(entry.source) ? entry.source : null),
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
   // Tab "✈️ Internacionalizações" (menu ⓘ Info): ranking de jogadores por nº de

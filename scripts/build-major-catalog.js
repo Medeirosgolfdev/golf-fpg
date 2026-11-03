@@ -306,10 +306,20 @@ const GG_SOURCES = [
   ...[1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ prefix: `ejt${n}_`, source: "ejt", stop: n, series: "EST Jr Tour", name: (f, y) => f.tournament || `Estonian Junior Tour ${y} — ${n}`, course: (f) => f.course || undefined, union: true })),
   // Optimist Intl Junior Championship (GolfGenius) — 3 fases/ano por escalões
   // (optimist{n}_{ano}.json, id `optimist:{ano}:{n}` via f.stop, como o ejt).
+  // Faldo Junior Tour Europa (GolfGenius) — as etapas com força WAGR ≥ 20
+  // (faldo{n}_{ano}.json, id `faldo:{ano}:{n}`, como o ejt/optimist).
+  ...Array.from({ length: 11 }, (_, i) => i + 1).map((n) => ({ prefix: `faldo${n}_`, source: "faldo", stop: n, series: "Faldo Europa", name: (f, y) => f.tournament || `Faldo Junior Tour ${y} — ${n}`, course: (f) => f.course || undefined, union: true, preField: true })),
   ...[1, 2, 3].map((n) => ({ prefix: `optimist${n}_`, source: "optimist", stop: n, series: "Optimist Intl", name: (f, y) => f.tournament || `Optimist Intl Junior Championship ${y} — Phase ${n}`, course: (f) => f.course || undefined, union: true })),
 ];
 
 const hasScores = (p) => Array.isArray(p.rounds) && p.rounds.some((r) => Array.isArray(r.scores) && r.scores.length > 0);
+
+/** Jogadores distintos de um JobFile: mesmo nome + mesmas pancadas por volta
+ *  = a mesma pessoa repetida noutra divisão. */
+function pessoas(players) {
+  const voltas = (p) => (p.roundGross && p.roundGross.length ? p.roundGross : (p.rounds || []).map((r) => r.gross)).join(",");
+  return new Set(players.map((p) => `${String(p.name || "").toLowerCase().replace(/\s+/g, " ").trim()}|${voltas(p) || p.total}`)).size;
+}
 
 function buildGgJob() {
   for (const src of GG_SOURCES) {
@@ -349,7 +359,9 @@ function buildGgJob() {
           : deriveDatesFromRounds(players, year)),
         sourceUrl: f.source || undefined,
         roundsCount: maxRounds(valid) || undefined,
-        playerCount: valid.length,
+        // Cada pessoa uma vez: o GG repete o jogador no escalão e nas gerais
+        // («Overall», «(WAGR)») — a Brocket Hall do Faldo dava 564 em vez de 244.
+        playerCount: pessoas(valid),
         divisionCount: f.divisions.length,
         hasManuel: players.some((p) => isManuelByName(p.name)),
         hasPt: players.some((p) => isPtCountry(p.country) || isManuelByName(p.name)),

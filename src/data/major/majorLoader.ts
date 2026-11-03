@@ -149,6 +149,9 @@ export const MAJOR_JOB_SOURCES: Record<string, MajorJobSource> = {
   // Optimist Intl Junior Championship — 3 fases por ano (Phase 1 = Boys 10-13 +
   // Girls 10-12, o escalão do Manuel), ficheiros optimist{1..3}_{ano}.json.
   optimist: { layout: "gg", files: stops(3, (n, y) => `/data/optimist${n}_${y}.json`), series: "Optimist Intl", linkLabel: "GolfGenius" },
+  // Faldo Junior Tour Europa — só as etapas com força WAGR ≥ 20 (scope do
+  // update-golfgenius), 1 ficheiro por etapa: faldo{1..11}_{ano}.json.
+  faldo: { layout: "gg", files: stops(11, (n, y) => `/data/faldo${n}_${y}.json`), series: "Faldo Europa", showAges: true },
 };
 
 /** Fontes GolfBox (ETC) que podem ter um ficheiro de MATCH PLAY irmão
