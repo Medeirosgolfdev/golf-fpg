@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T21:54:50.945Z",
+  "generatedAt": "2026-11-03T22:14:28.430Z",
   "listas": [
     {
       "id": "fpg-entry-list-girls-2026-10-01",
@@ -426,7 +426,13 @@
           "name": "Angelina Gao",
           "country": "Hong Kong",
           "hcp": 4.1,
-          "junior": null,
+          "junior": {
+            "id": "f51523",
+            "name": "Angelina Gao",
+            "dob": "2011-06-09",
+            "club": "Quinta do Peru",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": {
@@ -436,7 +442,11 @@
             "gross": 238,
             "hcp": 3.8
           },
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 2.9,
+            "fonte": "FPG",
+            "data": "2026-10-11"
+          }
         },
         {
           "ordem": 18,
@@ -468,11 +478,21 @@
           "name": "Rachel Strek",
           "country": "France",
           "hcp": 4.7,
-          "junior": null,
+          "junior": {
+            "id": "g042206335",
+            "name": "Rachel Strek-Deplechin",
+            "dob": null,
+            "club": "Fourqueux",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 4.4,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 20,
@@ -1046,11 +1066,21 @@
           "name": "Nathan Bonefant",
           "country": "France",
           "hcp": -2.9,
-          "junior": null,
+          "junior": {
+            "id": "g531001335",
+            "name": "Nathan Bonenfant",
+            "dob": "2013-04-14",
+            "club": "Ile D'Or",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": -3,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 6,
@@ -1476,14 +1506,21 @@
           "name": "Oliver Smith",
           "country": "United Kingdom",
           "hcp": 0,
-          "junior": null,
-          "ambiguo": [
-            "Oliver (K) Smith (GB)",
-            "Oliver (QdL) Smith (GB)"
-          ],
+          "junior": {
+            "id": "f51612",
+            "name": "Oliver Smith",
+            "dob": "2013-05-02",
+            "club": "Vila Sol",
+            "via": "ficha (manual)"
+          },
+          "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 0.4,
+            "fonte": "FPG",
+            "data": "2026-06-14"
+          }
         },
         {
           "ordem": 24,
@@ -2378,7 +2415,7 @@
             "name": "Raul Pazos (jr)",
             "dob": "2013-02-08",
             "club": "Miramar",
-            "via": "nome + idade"
+            "via": "nome"
           },
           "ambiguo": null,
           "duplicadoDe": null,
@@ -13592,11 +13629,21 @@
           "name": "Nathan Bonefant",
           "country": "France",
           "hcp": -2.9,
-          "junior": null,
+          "junior": {
+            "id": "g531001335",
+            "name": "Nathan Bonenfant",
+            "dob": "2013-04-14",
+            "club": "Ile D'Or",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": -3,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 9,
@@ -14167,7 +14214,7 @@
           "hcp": -0.7,
           "junior": null,
           "ambiguo": null,
-          "duplicadoDe": null,
+          "duplicadoDe": 2,
           "anterior": null,
           "hcpAtual": null
         },
@@ -14316,14 +14363,21 @@
           "name": "Oliver Smith",
           "country": "United Kingdom",
           "hcp": 0,
-          "junior": null,
-          "ambiguo": [
-            "Oliver (K) Smith (GB)",
-            "Oliver (QdL) Smith (GB)"
-          ],
+          "junior": {
+            "id": "f51612",
+            "name": "Oliver Smith",
+            "dob": "2013-05-02",
+            "club": "Vila Sol",
+            "via": "ficha (manual)"
+          },
+          "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 0.4,
+            "fonte": "FPG",
+            "data": "2026-06-14"
+          }
         },
         {
           "ordem": 39,
@@ -14678,7 +14732,7 @@
             "name": "Francisco Nunes",
             "dob": "2012-12-28",
             "club": "Miramar",
-            "via": "nome + idade"
+            "via": "nome"
           },
           "ambiguo": null,
           "duplicadoDe": null,
@@ -15353,7 +15407,13 @@
           "name": "Alfie Dunbar",
           "country": "Portugal",
           "hcp": 5.2,
-          "junior": null,
+          "junior": {
+            "id": "x98c21948d8",
+            "name": "Alfie Dunbar",
+            "dob": null,
+            "club": "Heswall",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
@@ -15413,7 +15473,7 @@
             "name": "Raul Pazos (jr)",
             "dob": "2013-02-08",
             "club": "Miramar",
-            "via": "nome + idade"
+            "via": "nome"
           },
           "ambiguo": null,
           "duplicadoDe": null,
@@ -15618,21 +15678,11 @@
           "name": "Miguel Ferreira",
           "country": "Portugal",
           "hcp": 16.4,
-          "junior": {
-            "id": "f41744",
-            "name": "Miguel Dinis Ferreira",
-            "dob": null,
-            "club": "Oporto B",
-            "via": "nome contido"
-          },
+          "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": {
-            "valor": 5.9,
-            "fonte": "FPG",
-            "data": null
-          }
+          "hcpAtual": null
         }
       ],
       "candidatosPt": [
@@ -16166,11 +16216,21 @@
           "name": "Nathan Bonefant",
           "country": "France",
           "hcp": -2.9,
-          "junior": null,
+          "junior": {
+            "id": "g531001335",
+            "name": "Nathan Bonenfant",
+            "dob": "2013-04-14",
+            "club": "Ile D'Or",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": -3,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 9,
@@ -16464,7 +16524,13 @@
           "name": "Aodhan Fitzgerald",
           "country": "United Arab Emirates",
           "hcp": -1.6,
-          "junior": null,
+          "junior": {
+            "id": "u558953",
+            "name": "Aodhan Fitzgerald",
+            "dob": null,
+            "club": "Galway",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
@@ -16754,7 +16820,7 @@
           "hcp": -0.7,
           "junior": null,
           "ambiguo": null,
-          "duplicadoDe": null,
+          "duplicadoDe": 3,
           "anterior": null,
           "hcpAtual": null
         },
@@ -17221,27 +17287,11 @@
           "name": "Léon Teyssier",
           "country": "France",
           "hcp": 0.9,
-          "junior": {
-            "id": "g526821325",
-            "name": "Leon Teyssier",
-            "dob": "2012-12-20",
-            "club": "Bondues",
-            "via": "nome"
-          },
+          "junior": null,
           "ambiguo": null,
-          "duplicadoDe": null,
-          "anterior": {
-            "pos": 50,
-            "empate": false,
-            "de": 50,
-            "gross": 263,
-            "hcp": 1.7
-          },
-          "hcpAtual": {
-            "valor": -0.8,
-            "fonte": "FFG",
-            "data": null
-          }
+          "duplicadoDe": 41,
+          "anterior": null,
+          "hcpAtual": null
         },
         {
           "ordem": 54,
@@ -17278,7 +17328,7 @@
             "name": "Francisco Nunes",
             "dob": "2012-12-28",
             "club": "Miramar",
-            "via": "nome + idade"
+            "via": "nome"
           },
           "ambiguo": null,
           "duplicadoDe": null,
@@ -17448,14 +17498,21 @@
           "name": "Oliver Smith",
           "country": "United Kingdom",
           "hcp": 1.8,
-          "junior": null,
-          "ambiguo": [
-            "Oliver (K) Smith (GB)",
-            "Oliver (QdL) Smith (GB)"
-          ],
+          "junior": {
+            "id": "f51612",
+            "name": "Oliver Smith",
+            "dob": "2013-05-02",
+            "club": "Vila Sol",
+            "via": "ficha (manual)"
+          },
+          "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 0.4,
+            "fonte": "FPG",
+            "data": "2026-06-14"
+          }
         },
         {
           "ordem": 63,
@@ -17940,7 +17997,13 @@
           "name": "Alfie Dunbar",
           "country": "Portugal",
           "hcp": 5.2,
-          "junior": null,
+          "junior": {
+            "id": "x98c21948d8",
+            "name": "Alfie Dunbar",
+            "dob": null,
+            "club": "Heswall",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
@@ -18000,7 +18063,7 @@
             "name": "Raul Pazos (jr)",
             "dob": "2013-02-08",
             "club": "Miramar",
-            "via": "nome + idade"
+            "via": "nome"
           },
           "ambiguo": null,
           "duplicadoDe": null,
@@ -18228,21 +18291,11 @@
           "name": "Miguel Ferreira",
           "country": "Portugal",
           "hcp": 16.4,
-          "junior": {
-            "id": "f41744",
-            "name": "Miguel Dinis Ferreira",
-            "dob": null,
-            "club": "Oporto B",
-            "via": "nome contido"
-          },
+          "junior": null,
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": {
-            "valor": 5.9,
-            "fonte": "FPG",
-            "data": null
-          }
+          "hcpAtual": null
         }
       ],
       "candidatosPt": [
@@ -19504,7 +19557,13 @@
           "name": "Angelina Gao",
           "country": "Hong Kong",
           "hcp": 4.1,
-          "junior": null,
+          "junior": {
+            "id": "f51523",
+            "name": "Angelina Gao",
+            "dob": "2011-06-09",
+            "club": "Quinta do Peru",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": {
@@ -19514,7 +19573,11 @@
             "gross": 238,
             "hcp": 3.8
           },
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 2.9,
+            "fonte": "FPG",
+            "data": "2026-10-11"
+          }
         },
         {
           "ordem": 39,
@@ -19542,11 +19605,21 @@
           "name": "Rachel Strek",
           "country": "France",
           "hcp": 4.7,
-          "junior": null,
+          "junior": {
+            "id": "g042206335",
+            "name": "Rachel Strek-Deplechin",
+            "dob": null,
+            "club": "Fourqueux",
+            "via": "ficha (manual)"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 4.4,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 41,
