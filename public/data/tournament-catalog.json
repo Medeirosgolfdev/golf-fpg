@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T21:00:09.171Z",
+  "generatedAt": "2026-11-03T00:24:01.148Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -2889,6 +2889,46 @@
       "editionsCount": 30
     },
     {
+      "id": "uskids-royal-kunia-country-club",
+      "label": "Royal Kunia Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-11443",
+        "uskids-5770",
+        "uskids-5769",
+        "uskids-7484",
+        "uskids-4071",
+        "uskids-4977",
+        "uskids-11442",
+        "uskids-8239",
+        "uskids-10493",
+        "uskids-15684",
+        "uskids-15686",
+        "uskids-15687",
+        "uskids-18243",
+        "uskids-18247",
+        "uskids-10491",
+        "uskids-16949",
+        "uskids-16953",
+        "uskids-18245",
+        "uskids-19454",
+        "uskids-23842",
+        "uskids-14499",
+        "uskids-19457",
+        "uskids-19458",
+        "uskids-20997",
+        "uskids-22407",
+        "uskids-16952",
+        "uskids-16951",
+        "uskids-20996",
+        "uskids-22404",
+        "uskids-22410"
+      ],
+      "firstDate": "2017-06-04",
+      "lastDate": "2026-11-01",
+      "editionsCount": 30
+    },
+    {
       "id": "uskids-debell-golf-course",
       "label": "DeBell Golf Course",
       "sourceId": "uskids",
@@ -3047,45 +3087,6 @@
       "firstDate": "2019-05-11",
       "lastDate": "2023-05-20",
       "editionsCount": 30
-    },
-    {
-      "id": "uskids-royal-kunia-country-club",
-      "label": "Royal Kunia Country Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-11443",
-        "uskids-5770",
-        "uskids-5769",
-        "uskids-7484",
-        "uskids-4071",
-        "uskids-4977",
-        "uskids-11442",
-        "uskids-8239",
-        "uskids-10493",
-        "uskids-15684",
-        "uskids-15686",
-        "uskids-15687",
-        "uskids-18243",
-        "uskids-18247",
-        "uskids-10491",
-        "uskids-16949",
-        "uskids-16953",
-        "uskids-18245",
-        "uskids-19454",
-        "uskids-14499",
-        "uskids-19457",
-        "uskids-19458",
-        "uskids-20997",
-        "uskids-22407",
-        "uskids-16952",
-        "uskids-16951",
-        "uskids-20996",
-        "uskids-22404",
-        "uskids-22410"
-      ],
-      "firstDate": "2017-06-04",
-      "lastDate": "2026-07-05",
-      "editionsCount": 29
     },
     {
       "id": "uskids-fairways-of-canton-golf-club",
@@ -4218,6 +4219,39 @@
       "editionsCount": 23
     },
     {
+      "id": "uskids-the-reserve-at-spanos-park",
+      "label": "The Reserve At Spanos Park",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-5498",
+        "uskids-6682",
+        "uskids-8252",
+        "uskids-3100",
+        "uskids-4324",
+        "uskids-4808",
+        "uskids-5492",
+        "uskids-8251",
+        "uskids-13925",
+        "uskids-8511",
+        "uskids-11660",
+        "uskids-6202",
+        "uskids-6204",
+        "uskids-5039",
+        "uskids-7111",
+        "uskids-12782",
+        "uskids-15062",
+        "uskids-16069",
+        "uskids-17699",
+        "uskids-18215",
+        "uskids-20945",
+        "uskids-22938",
+        "uskids-18625"
+      ],
+      "firstDate": "2016-11-20",
+      "lastDate": "2026-11-01",
+      "editionsCount": 23
+    },
+    {
       "id": "uskids-cranbury-golf-club",
       "label": "Cranbury Golf Club",
       "sourceId": "uskids",
@@ -4446,38 +4480,6 @@
       "editionsCount": 22
     },
     {
-      "id": "uskids-the-reserve-at-spanos-park",
-      "label": "The Reserve At Spanos Park",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-5498",
-        "uskids-6682",
-        "uskids-8252",
-        "uskids-3100",
-        "uskids-4324",
-        "uskids-4808",
-        "uskids-5492",
-        "uskids-8251",
-        "uskids-13925",
-        "uskids-8511",
-        "uskids-11660",
-        "uskids-6202",
-        "uskids-6204",
-        "uskids-5039",
-        "uskids-7111",
-        "uskids-12782",
-        "uskids-15062",
-        "uskids-16069",
-        "uskids-17699",
-        "uskids-18215",
-        "uskids-20945",
-        "uskids-18625"
-      ],
-      "firstDate": "2016-11-20",
-      "lastDate": "2025-11-30",
-      "editionsCount": 22
-    },
-    {
       "id": "uskids-olivas-links-golf-course",
       "label": "Olivas Links Golf Course",
       "sourceId": "uskids",
@@ -4539,6 +4541,38 @@
       ],
       "firstDate": "2014-06-07",
       "lastDate": "2026-08-22",
+      "editionsCount": 22
+    },
+    {
+      "id": "uskids-carolina-springs-golf-club",
+      "label": "Carolina Springs Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-1209",
+        "uskids-2247",
+        "uskids-3650",
+        "uskids-5313",
+        "uskids-6510",
+        "uskids-6866",
+        "uskids-8519",
+        "uskids-10887",
+        "uskids-11857",
+        "uskids-15040",
+        "uskids-4671",
+        "uskids-7998",
+        "uskids-9524",
+        "uskids-9922",
+        "uskids-2997",
+        "uskids-17852",
+        "uskids-18654",
+        "uskids-16039",
+        "uskids-12747",
+        "uskids-13819",
+        "uskids-22800",
+        "uskids-21266"
+      ],
+      "firstDate": "2015-04-18",
+      "lastDate": "2026-10-31",
       "editionsCount": 22
     },
     {
@@ -4975,37 +5009,6 @@
       ],
       "firstDate": "2016-03-20",
       "lastDate": "2025-12-07",
-      "editionsCount": 21
-    },
-    {
-      "id": "uskids-carolina-springs-golf-club",
-      "label": "Carolina Springs Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-1209",
-        "uskids-2247",
-        "uskids-3650",
-        "uskids-5313",
-        "uskids-6510",
-        "uskids-6866",
-        "uskids-8519",
-        "uskids-10887",
-        "uskids-11857",
-        "uskids-15040",
-        "uskids-4671",
-        "uskids-7998",
-        "uskids-9524",
-        "uskids-9922",
-        "uskids-2997",
-        "uskids-17852",
-        "uskids-18654",
-        "uskids-16039",
-        "uskids-12747",
-        "uskids-13819",
-        "uskids-21266"
-      ],
-      "firstDate": "2015-04-18",
-      "lastDate": "2026-04-04",
       "editionsCount": 21
     },
     {
@@ -5758,6 +5761,35 @@
       "editionsCount": 19
     },
     {
+      "id": "uskids-micke-grove-golf-links",
+      "label": "Micke Grove Golf Links",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-9268",
+        "uskids-10744",
+        "uskids-11341",
+        "uskids-15751",
+        "uskids-8514",
+        "uskids-9659",
+        "uskids-9909",
+        "uskids-16066",
+        "uskids-11666",
+        "uskids-12784",
+        "uskids-15066",
+        "uskids-13922",
+        "uskids-18624",
+        "uskids-20221",
+        "uskids-21596",
+        "uskids-22937",
+        "uskids-17698",
+        "uskids-20944",
+        "uskids-18214"
+      ],
+      "firstDate": "2020-06-13",
+      "lastDate": "2026-10-31",
+      "editionsCount": 19
+    },
+    {
       "id": "uskids-upland-hills-country-club",
       "label": "Upland Hills Country Club",
       "sourceId": "uskids",
@@ -6133,31 +6165,31 @@
       "editionsCount": 18
     },
     {
-      "id": "uskids-micke-grove-golf-links",
-      "label": "Micke Grove Golf Links",
+      "id": "uskids-farmstead-golf-country-club",
+      "label": "Farmstead Golf & Country Club",
       "sourceId": "uskids",
       "tournamentIds": [
-        "uskids-9268",
-        "uskids-10744",
-        "uskids-11341",
-        "uskids-15751",
-        "uskids-8514",
-        "uskids-9659",
-        "uskids-9909",
-        "uskids-16066",
-        "uskids-11666",
-        "uskids-12784",
-        "uskids-15066",
-        "uskids-13922",
-        "uskids-18624",
-        "uskids-20221",
-        "uskids-21596",
-        "uskids-17698",
-        "uskids-20944",
-        "uskids-18214"
+        "uskids-2481",
+        "uskids-7192",
+        "uskids-8711",
+        "uskids-3899",
+        "uskids-5604",
+        "uskids-9466",
+        "uskids-11147",
+        "uskids-12158",
+        "uskids-14264",
+        "uskids-15365",
+        "uskids-10194",
+        "uskids-16582",
+        "uskids-21911",
+        "uskids-18988",
+        "uskids-13221",
+        "uskids-20525",
+        "uskids-17885",
+        "uskids-23403"
       ],
-      "firstDate": "2020-06-13",
-      "lastDate": "2026-03-28",
+      "firstDate": "2016-05-01",
+      "lastDate": "2026-11-01",
       "editionsCount": 18
     },
     {
@@ -6540,33 +6572,6 @@
       ],
       "firstDate": "2021-08-09",
       "lastDate": "2026-08-16",
-      "editionsCount": 17
-    },
-    {
-      "id": "uskids-farmstead-golf-country-club",
-      "label": "Farmstead Golf & Country Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-2481",
-        "uskids-7192",
-        "uskids-8711",
-        "uskids-3899",
-        "uskids-5604",
-        "uskids-9466",
-        "uskids-11147",
-        "uskids-12158",
-        "uskids-14264",
-        "uskids-15365",
-        "uskids-10194",
-        "uskids-16582",
-        "uskids-21911",
-        "uskids-18988",
-        "uskids-13221",
-        "uskids-20525",
-        "uskids-17885"
-      ],
-      "firstDate": "2016-05-01",
-      "lastDate": "2026-03-29",
       "editionsCount": 17
     },
     {
@@ -7001,6 +7006,32 @@
       "editionsCount": 16
     },
     {
+      "id": "uskids-collins-hill-golf-club",
+      "label": "Collins Hill Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-196",
+        "uskids-1122",
+        "uskids-2175",
+        "uskids-4623",
+        "uskids-6774",
+        "uskids-9379",
+        "uskids-6436",
+        "uskids-9893",
+        "uskids-13900",
+        "uskids-16278",
+        "uskids-11701",
+        "uskids-15125",
+        "uskids-17623",
+        "uskids-19943",
+        "uskids-18553",
+        "uskids-22972"
+      ],
+      "firstDate": "2014-04-26",
+      "lastDate": "2026-10-31",
+      "editionsCount": 16
+    },
+    {
       "id": "uskids-west-orange-country-club",
       "label": "West Orange Country Club",
       "sourceId": "uskids",
@@ -7102,6 +7133,32 @@
       ],
       "firstDate": "2014-02-23",
       "lastDate": "2026-04-19",
+      "editionsCount": 16
+    },
+    {
+      "id": "uskids-mather-golf-course",
+      "label": "Mather Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-3724",
+        "uskids-5305",
+        "uskids-6365",
+        "uskids-6851",
+        "uskids-7815",
+        "uskids-9898",
+        "uskids-10894",
+        "uskids-11840",
+        "uskids-12941",
+        "uskids-15281",
+        "uskids-16153",
+        "uskids-4839",
+        "uskids-20274",
+        "uskids-17920",
+        "uskids-22763",
+        "uskids-21775"
+      ],
+      "firstDate": "2017-03-19",
+      "lastDate": "2026-11-01",
       "editionsCount": 16
     },
     {
@@ -7469,6 +7526,32 @@
       "editionsCount": 16
     },
     {
+      "id": "uskids-stallion-mountain-golf-club",
+      "label": "Stallion Mountain Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-2096",
+        "uskids-4614",
+        "uskids-6300",
+        "uskids-6726",
+        "uskids-7691",
+        "uskids-9246",
+        "uskids-11818",
+        "uskids-5102",
+        "uskids-3998",
+        "uskids-17410",
+        "uskids-18497",
+        "uskids-20979",
+        "uskids-21511",
+        "uskids-14999",
+        "uskids-22950",
+        "uskids-20974"
+      ],
+      "firstDate": "2016-04-10",
+      "lastDate": "2026-11-01",
+      "editionsCount": 16
+    },
+    {
       "id": "uskids-bayview-golf-club",
       "label": "Bayview Golf Club",
       "sourceId": "uskids",
@@ -7699,31 +7782,6 @@
       "editionsCount": 15
     },
     {
-      "id": "uskids-collins-hill-golf-club",
-      "label": "Collins Hill Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-196",
-        "uskids-1122",
-        "uskids-2175",
-        "uskids-4623",
-        "uskids-6774",
-        "uskids-9379",
-        "uskids-6436",
-        "uskids-9893",
-        "uskids-13900",
-        "uskids-16278",
-        "uskids-11701",
-        "uskids-15125",
-        "uskids-17623",
-        "uskids-19943",
-        "uskids-18553"
-      ],
-      "firstDate": "2014-04-26",
-      "lastDate": "2025-10-04",
-      "editionsCount": 15
-    },
-    {
       "id": "uskids-stone-mountain-golf-club",
       "label": "Stone Mountain Golf Club",
       "sourceId": "uskids",
@@ -7821,31 +7879,6 @@
       ],
       "firstDate": "2015-01-18",
       "lastDate": "2025-10-19",
-      "editionsCount": 15
-    },
-    {
-      "id": "uskids-mather-golf-course",
-      "label": "Mather Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-3724",
-        "uskids-5305",
-        "uskids-6365",
-        "uskids-6851",
-        "uskids-7815",
-        "uskids-9898",
-        "uskids-10894",
-        "uskids-11840",
-        "uskids-12941",
-        "uskids-15281",
-        "uskids-16153",
-        "uskids-4839",
-        "uskids-20274",
-        "uskids-17920",
-        "uskids-21775"
-      ],
-      "firstDate": "2017-03-19",
-      "lastDate": "2026-02-28",
       "editionsCount": 15
     },
     {
@@ -8171,31 +8204,6 @@
       ],
       "firstDate": "2020-08-05",
       "lastDate": "2024-02-04",
-      "editionsCount": 15
-    },
-    {
-      "id": "uskids-stallion-mountain-golf-club",
-      "label": "Stallion Mountain Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-2096",
-        "uskids-4614",
-        "uskids-6300",
-        "uskids-6726",
-        "uskids-7691",
-        "uskids-9246",
-        "uskids-11818",
-        "uskids-5102",
-        "uskids-3998",
-        "uskids-17410",
-        "uskids-18497",
-        "uskids-20979",
-        "uskids-21511",
-        "uskids-14999",
-        "uskids-20974"
-      ],
-      "firstDate": "2016-04-10",
-      "lastDate": "2026-03-29",
       "editionsCount": 15
     },
     {
@@ -10089,6 +10097,29 @@
       "editionsCount": 13
     },
     {
+      "id": "uskids-azalea-city-golf-course",
+      "label": "Azalea City Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-10565",
+        "uskids-8612",
+        "uskids-9555",
+        "uskids-10017",
+        "uskids-11336",
+        "uskids-12010",
+        "uskids-13332",
+        "uskids-14155",
+        "uskids-18430",
+        "uskids-20317",
+        "uskids-21100",
+        "uskids-23629",
+        "uskids-22473"
+      ],
+      "firstDate": "2020-03-08",
+      "lastDate": "2026-11-01",
+      "editionsCount": 13
+    },
+    {
       "id": "uskids-the-links-at-boynton-beach",
       "label": "The Links at Boynton Beach",
       "sourceId": "uskids",
@@ -10979,28 +11010,6 @@
       "editionsCount": 12
     },
     {
-      "id": "uskids-azalea-city-golf-course",
-      "label": "Azalea City Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-10565",
-        "uskids-8612",
-        "uskids-9555",
-        "uskids-10017",
-        "uskids-11336",
-        "uskids-12010",
-        "uskids-13332",
-        "uskids-14155",
-        "uskids-18430",
-        "uskids-20317",
-        "uskids-21100",
-        "uskids-22473"
-      ],
-      "firstDate": "2020-03-08",
-      "lastDate": "2026-05-10",
-      "editionsCount": 12
-    },
-    {
       "id": "uskids-canebrake-golf-club",
       "label": "Canebrake Golf Club",
       "sourceId": "uskids",
@@ -11086,6 +11095,28 @@
       ],
       "firstDate": "2016-10-23",
       "lastDate": "2024-04-07",
+      "editionsCount": 12
+    },
+    {
+      "id": "uskids-royal-blue-golf-club-at-baha-mar",
+      "label": "Royal Blue Golf Club at Baha Mar",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-10671",
+        "uskids-12459",
+        "uskids-12453",
+        "uskids-14337",
+        "uskids-15491",
+        "uskids-16697",
+        "uskids-20783",
+        "uskids-23726",
+        "uskids-23727",
+        "uskids-11238",
+        "uskids-12458",
+        "uskids-10674"
+      ],
+      "firstDate": "2021-06-22",
+      "lastDate": "2026-10-31",
       "editionsCount": 12
     },
     {
@@ -12339,27 +12370,6 @@
       "editionsCount": 11
     },
     {
-      "id": "uskids-royal-blue-golf-club-at-baha-mar",
-      "label": "Royal Blue Golf Club at Baha Mar",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-10671",
-        "uskids-12459",
-        "uskids-12453",
-        "uskids-14337",
-        "uskids-15491",
-        "uskids-16697",
-        "uskids-20783",
-        "uskids-23726",
-        "uskids-11238",
-        "uskids-12458",
-        "uskids-10674"
-      ],
-      "firstDate": "2021-06-22",
-      "lastDate": "2026-10-25",
-      "editionsCount": 11
-    },
-    {
       "id": "uskids-fall-river-country-club",
       "label": "Fall River Country Club",
       "sourceId": "uskids",
@@ -12567,6 +12577,27 @@
       ],
       "firstDate": "2022-08-21",
       "lastDate": "2026-04-12",
+      "editionsCount": 11
+    },
+    {
+      "id": "uskids-portland-or-local-parent-child",
+      "label": "Portland (OR) Local Parent/Child",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-10623",
+        "uskids-9832",
+        "uskids-10550",
+        "uskids-10630",
+        "uskids-13903",
+        "uskids-22875",
+        "uskids-21247",
+        "uskids-13902",
+        "uskids-15069",
+        "uskids-21240",
+        "uskids-22773"
+      ],
+      "firstDate": "2021-03-13",
+      "lastDate": "2026-10-31",
       "editionsCount": 11
     },
     {
@@ -13613,6 +13644,26 @@
       "editionsCount": 10
     },
     {
+      "id": "uskids-guataparo-country-club",
+      "label": "Guataparo Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-11427",
+        "uskids-11428",
+        "uskids-11647",
+        "uskids-11648",
+        "uskids-13117",
+        "uskids-13118",
+        "uskids-23731",
+        "uskids-23732",
+        "uskids-10867",
+        "uskids-10868"
+      ],
+      "firstDate": "2021-08-14",
+      "lastDate": "2026-11-01",
+      "editionsCount": 10
+    },
+    {
       "id": "uskids-antelope-valley-country-club",
       "label": "Antelope Valley Country Club",
       "sourceId": "uskids",
@@ -14150,26 +14201,6 @@
       ],
       "firstDate": "2022-07-03",
       "lastDate": "2026-08-16",
-      "editionsCount": 10
-    },
-    {
-      "id": "uskids-portland-or-local-parent-child",
-      "label": "Portland (OR) Local Parent/Child",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-10623",
-        "uskids-9832",
-        "uskids-10550",
-        "uskids-10630",
-        "uskids-13903",
-        "uskids-21247",
-        "uskids-13902",
-        "uskids-15069",
-        "uskids-21240",
-        "uskids-22773"
-      ],
-      "firstDate": "2021-03-13",
-      "lastDate": "2026-10-03",
       "editionsCount": 10
     },
     {
@@ -15423,8 +15454,8 @@
         "uskids-14395",
         "uskids-16661",
         "uskids-19276",
-        "uskids-22172",
-        "uskids-23645"
+        "uskids-23645",
+        "uskids-22172"
       ],
       "firstDate": "2016-11-05",
       "lastDate": "2026-10-31",
@@ -17558,24 +17589,6 @@
       "editionsCount": 8
     },
     {
-      "id": "uskids-guataparo-country-club",
-      "label": "Guataparo Country Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-11427",
-        "uskids-11428",
-        "uskids-11647",
-        "uskids-11648",
-        "uskids-13117",
-        "uskids-13118",
-        "uskids-10867",
-        "uskids-10868"
-      ],
-      "firstDate": "2021-08-14",
-      "lastDate": "2022-10-30",
-      "editionsCount": 8
-    },
-    {
       "id": "uskids-chesfield-downs",
       "label": "Chesfield Downs",
       "sourceId": "uskids",
@@ -18851,6 +18864,24 @@
       ],
       "firstDate": "2018-12-19",
       "lastDate": "2025-12-19",
+      "editionsCount": 8
+    },
+    {
+      "id": "faldo",
+      "label": "Faldo Junior Tour Europa",
+      "sourceId": "faldo",
+      "tournamentIds": [
+        "faldo-faldo10_2026",
+        "faldo-faldo1_2026",
+        "faldo-faldo2_2026",
+        "faldo-faldo3_2026",
+        "faldo-faldo4_2026",
+        "faldo-faldo6_2026",
+        "faldo-faldo7_2026",
+        "faldo-faldo8_2026"
+      ],
+      "firstDate": "2026-03-20",
+      "lastDate": "2026-09-12",
       "editionsCount": 8
     },
     {
@@ -20370,6 +20401,23 @@
       "editionsCount": 7
     },
     {
+      "id": "uskids-the-oaks-golf-course",
+      "label": "The Oaks Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-13855",
+        "uskids-16250",
+        "uskids-12990",
+        "uskids-20767",
+        "uskids-15182",
+        "uskids-21622",
+        "uskids-23359"
+      ],
+      "firstDate": "2022-10-15",
+      "lastDate": "2026-10-31",
+      "editionsCount": 7
+    },
+    {
       "id": "uskids-delaware-country-club",
       "label": "Delaware Country Club",
       "sourceId": "uskids",
@@ -20394,10 +20442,10 @@
         "uskids-11971",
         "uskids-20799",
         "uskids-18863",
+        "uskids-23016",
         "uskids-16300",
         "uskids-22287",
-        "uskids-14059",
-        "uskids-23016"
+        "uskids-14059"
       ],
       "firstDate": "2022-05-22",
       "lastDate": "2026-11-01",
@@ -20418,6 +20466,23 @@
       ],
       "firstDate": "2022-04-03",
       "lastDate": "2024-03-24",
+      "editionsCount": 7
+    },
+    {
+      "id": "uskids-fall-creek-falls-golf-course",
+      "label": "Fall Creek Falls Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-12964",
+        "uskids-17922",
+        "uskids-23205",
+        "uskids-9919",
+        "uskids-10821",
+        "uskids-11790",
+        "uskids-23200"
+      ],
+      "firstDate": "2021-05-02",
+      "lastDate": "2026-11-01",
       "editionsCount": 7
     },
     {
@@ -20588,6 +20653,23 @@
       ],
       "firstDate": "2018-09-16",
       "lastDate": "2023-05-14",
+      "editionsCount": 7
+    },
+    {
+      "id": "uskids-tulsa-local-parent-child",
+      "label": "Tulsa Local Parent/Child",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-11346",
+        "uskids-13518",
+        "uskids-15748",
+        "uskids-18179",
+        "uskids-20950",
+        "uskids-23783",
+        "uskids-13528"
+      ],
+      "firstDate": "2021-11-14",
+      "lastDate": "2026-11-01",
       "editionsCount": 7
     },
     {
@@ -21404,6 +21486,23 @@
       ],
       "firstDate": "2023-02-04",
       "lastDate": "2025-10-19",
+      "editionsCount": 7
+    },
+    {
+      "id": "uskids-golf-d-opio-valbonne",
+      "label": "Golf d'Opio Valbonne",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-15676",
+        "uskids-15677",
+        "uskids-13760",
+        "uskids-17367",
+        "uskids-18381",
+        "uskids-20867",
+        "uskids-23678"
+      ],
+      "firstDate": "2023-03-18",
+      "lastDate": "2026-10-31",
       "editionsCount": 7
     },
     {
@@ -23503,38 +23602,6 @@
       "editionsCount": 6
     },
     {
-      "id": "uskids-the-oaks-golf-course",
-      "label": "The Oaks Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-13855",
-        "uskids-16250",
-        "uskids-12990",
-        "uskids-20767",
-        "uskids-15182",
-        "uskids-21622"
-      ],
-      "firstDate": "2022-10-15",
-      "lastDate": "2026-03-21",
-      "editionsCount": 6
-    },
-    {
-      "id": "uskids-fall-creek-falls-golf-course",
-      "label": "Fall Creek Falls Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-12964",
-        "uskids-17922",
-        "uskids-9919",
-        "uskids-10821",
-        "uskids-11790",
-        "uskids-23200"
-      ],
-      "firstDate": "2021-05-02",
-      "lastDate": "2026-09-13",
-      "editionsCount": 6
-    },
-    {
       "id": "uskids-soldier-hollow-golf-course-silver-course",
       "label": "Soldier Hollow Golf Course - Silver Course",
       "sourceId": "uskids",
@@ -23724,22 +23791,6 @@
       ],
       "firstDate": "2018-09-23",
       "lastDate": "2026-09-06",
-      "editionsCount": 6
-    },
-    {
-      "id": "uskids-tulsa-local-parent-child",
-      "label": "Tulsa Local Parent/Child",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-11346",
-        "uskids-13518",
-        "uskids-15748",
-        "uskids-18179",
-        "uskids-20950",
-        "uskids-13528"
-      ],
-      "firstDate": "2021-11-14",
-      "lastDate": "2025-11-09",
       "editionsCount": 6
     },
     {
@@ -24092,6 +24143,22 @@
       ],
       "firstDate": "2017-08-12",
       "lastDate": "2022-04-03",
+      "editionsCount": 6
+    },
+    {
+      "id": "uskids-carter-plantation",
+      "label": "Carter Plantation",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-10016",
+        "uskids-10568",
+        "uskids-22498",
+        "uskids-21483",
+        "uskids-23426",
+        "uskids-19694"
+      ],
+      "firstDate": "2021-03-14",
+      "lastDate": "2026-11-01",
       "editionsCount": 6
     },
     {
@@ -24527,6 +24594,22 @@
       "editionsCount": 6
     },
     {
+      "id": "uskids-eisenhower-park-golf-course-white-course",
+      "label": "Eisenhower Park Golf Course - White Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-15599",
+        "uskids-16674",
+        "uskids-18084",
+        "uskids-19327",
+        "uskids-23662",
+        "uskids-22057"
+      ],
+      "firstDate": "2023-10-01",
+      "lastDate": "2026-11-01",
+      "editionsCount": 6
+    },
+    {
       "id": "uskids-golden-eagle-golf-club-south-course",
       "label": "Golden Eagle Golf Club - South Course",
       "sourceId": "uskids",
@@ -24879,22 +24962,6 @@
       "editionsCount": 6
     },
     {
-      "id": "uskids-golf-d-opio-valbonne",
-      "label": "Golf d'Opio Valbonne",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-15676",
-        "uskids-15677",
-        "uskids-13760",
-        "uskids-17367",
-        "uskids-18381",
-        "uskids-20867"
-      ],
-      "firstDate": "2023-03-18",
-      "lastDate": "2025-11-08",
-      "editionsCount": 6
-    },
-    {
       "id": "uskids-pumpkin-ridge-golf-club-ghost-creek",
       "label": "Pumpkin Ridge Golf Club - Ghost Creek",
       "sourceId": "uskids",
@@ -25079,8 +25146,8 @@
         "uskids-17226",
         "uskids-21086",
         "uskids-21831",
-        "uskids-18348",
-        "uskids-23232"
+        "uskids-23232",
+        "uskids-18348"
       ],
       "firstDate": "2024-06-02",
       "lastDate": "2026-11-01",
@@ -27755,21 +27822,6 @@
       "editionsCount": 5
     },
     {
-      "id": "uskids-carter-plantation",
-      "label": "Carter Plantation",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-10016",
-        "uskids-10568",
-        "uskids-22498",
-        "uskids-21483",
-        "uskids-19694"
-      ],
-      "firstDate": "2021-03-14",
-      "lastDate": "2026-07-19",
-      "editionsCount": 5
-    },
-    {
       "id": "uskids-gulf-coast-local-parent-child",
       "label": "Gulf Coast Local Parent/Child",
       "sourceId": "uskids",
@@ -28340,21 +28392,6 @@
       "editionsCount": 5
     },
     {
-      "id": "uskids-eisenhower-park-golf-course-white-course",
-      "label": "Eisenhower Park Golf Course - White Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-15599",
-        "uskids-16674",
-        "uskids-18084",
-        "uskids-19327",
-        "uskids-22057"
-      ],
-      "firstDate": "2023-10-01",
-      "lastDate": "2026-05-16",
-      "editionsCount": 5
-    },
-    {
       "id": "uskids-bergen-point-golf-course",
       "label": "Bergen Point Golf Course",
       "sourceId": "uskids",
@@ -28535,6 +28572,21 @@
       "editionsCount": 5
     },
     {
+      "id": "uskids-magalies-park-golf-resort",
+      "label": "Magalies Park Golf Resort",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-18511",
+        "uskids-17816",
+        "uskids-20513",
+        "uskids-22872",
+        "uskids-22873"
+      ],
+      "firstDate": "2024-10-20",
+      "lastDate": "2026-11-01",
+      "editionsCount": 5
+    },
+    {
       "id": "uskids-st-george-golf-club",
       "label": "St. George Golf Club",
       "sourceId": "uskids",
@@ -28625,6 +28677,21 @@
       "editionsCount": 5
     },
     {
+      "id": "uskids-cypress-landing-golf-club",
+      "label": "Cypress Landing Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-14991",
+        "uskids-17460",
+        "uskids-20276",
+        "uskids-23452",
+        "uskids-21873"
+      ],
+      "firstDate": "2023-08-19",
+      "lastDate": "2026-10-31",
+      "editionsCount": 5
+    },
+    {
       "id": "uskids-golf-club-aix-marseille",
       "label": "Golf Club Aix Marseille",
       "sourceId": "uskids",
@@ -28712,6 +28779,21 @@
       ],
       "firstDate": "2021-09-26",
       "lastDate": "2026-02-15",
+      "editionsCount": 5
+    },
+    {
+      "id": "uskids-mauna-lani-resort-golf-course",
+      "label": "Mauna Lani Resort Golf Course",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23751",
+        "uskids-20753",
+        "uskids-20756",
+        "uskids-21460",
+        "uskids-21461"
+      ],
+      "firstDate": "2025-09-20",
+      "lastDate": "2026-11-01",
       "editionsCount": 5
     },
     {
@@ -30347,6 +30429,21 @@
       ],
       "firstDate": "2022-04-29",
       "lastDate": "2026-05-01",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-4-austrian-juniors-golf-tour",
+      "label": "4 Austrian Juniors Golf Tour",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270210",
+        "wagr-258230",
+        "wagr-233939",
+        "wagr-224734",
+        "wagr-75532"
+      ],
+      "firstDate": "2022-07-22",
+      "lastDate": "2026-06-13",
       "editionsCount": 5
     },
     {
@@ -33321,9 +33418,9 @@
       "sourceId": "uskids",
       "tournamentIds": [
         "uskids-13107",
+        "uskids-23549",
         "uskids-15309",
-        "uskids-20548",
-        "uskids-23549"
+        "uskids-20548"
       ],
       "firstDate": "2022-10-30",
       "lastDate": "2026-10-31",
@@ -34660,6 +34757,20 @@
       "editionsCount": 4
     },
     {
+      "id": "uskids-painted-dunes-golf-club-east-west",
+      "label": "Painted Dunes Golf Club - East/West",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-18622",
+        "uskids-20672",
+        "uskids-21727",
+        "uskids-23285"
+      ],
+      "firstDate": "2025-04-27",
+      "lastDate": "2026-11-01",
+      "editionsCount": 4
+    },
+    {
       "id": "uskids-dunmurry-golf-club",
       "label": "Dunmurry Golf Club",
       "sourceId": "uskids",
@@ -34699,6 +34810,20 @@
       ],
       "firstDate": "2022-09-04",
       "lastDate": "2025-05-04",
+      "editionsCount": 4
+    },
+    {
+      "id": "uskids-golf-bluegreen-grand-lyon-chassieu",
+      "label": "Golf Bluegreen Grand Lyon Chassieu",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-13804",
+        "uskids-16064",
+        "uskids-20342",
+        "uskids-23007"
+      ],
+      "firstDate": "2023-03-19",
+      "lastDate": "2026-10-31",
       "editionsCount": 4
     },
     {
@@ -35066,20 +35191,6 @@
       "editionsCount": 4
     },
     {
-      "id": "uskids-cypress-landing-golf-club",
-      "label": "Cypress Landing Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-14991",
-        "uskids-17460",
-        "uskids-20276",
-        "uskids-21873"
-      ],
-      "firstDate": "2023-08-19",
-      "lastDate": "2026-03-14",
-      "editionsCount": 4
-    },
-    {
       "id": "uskids-golf-de-saint-donat",
       "label": "Golf De Saint Donat",
       "sourceId": "uskids",
@@ -35133,6 +35244,20 @@
       ],
       "firstDate": "2026-01-11",
       "lastDate": "2026-08-15",
+      "editionsCount": 4
+    },
+    {
+      "id": "uskids-salishan-golf-links",
+      "label": "Salishan Golf Links",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-13955",
+        "uskids-15215",
+        "uskids-21234",
+        "uskids-22851"
+      ],
+      "firstDate": "2023-05-07",
+      "lastDate": "2026-11-01",
       "editionsCount": 4
     },
     {
@@ -35609,20 +35734,6 @@
       ],
       "firstDate": "2026-08-23",
       "lastDate": "2026-10-04",
-      "editionsCount": 4
-    },
-    {
-      "id": "uskids-mauna-lani-resort-golf-course",
-      "label": "Mauna Lani Resort Golf Course",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-20753",
-        "uskids-20756",
-        "uskids-21460",
-        "uskids-21461"
-      ],
-      "firstDate": "2025-09-20",
-      "lastDate": "2026-05-03",
       "editionsCount": 4
     },
     {
@@ -37849,20 +37960,6 @@
       ],
       "firstDate": "2022-06-06",
       "lastDate": "2026-06-01",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-4-austrian-juniors-golf-tour",
-      "label": "4 Austrian Juniors Golf Tour",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258230",
-        "wagr-233939",
-        "wagr-224734",
-        "wagr-75532"
-      ],
-      "firstDate": "2022-07-22",
-      "lastDate": "2025-06-20",
       "editionsCount": 4
     },
     {
@@ -44054,19 +44151,6 @@
       "editionsCount": 3
     },
     {
-      "id": "uskids-painted-dunes-golf-club-east-west",
-      "label": "Painted Dunes Golf Club - East/West",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-18622",
-        "uskids-20672",
-        "uskids-21727"
-      ],
-      "firstDate": "2025-04-27",
-      "lastDate": "2026-04-26",
-      "editionsCount": 3
-    },
-    {
       "id": "uskids-virginia-golf-club",
       "label": "Virginia Golf Club",
       "sourceId": "uskids",
@@ -44103,19 +44187,6 @@
       ],
       "firstDate": "2023-03-12",
       "lastDate": "2025-04-13",
-      "editionsCount": 3
-    },
-    {
-      "id": "uskids-golf-bluegreen-grand-lyon-chassieu",
-      "label": "Golf Bluegreen Grand Lyon Chassieu",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-13804",
-        "uskids-16064",
-        "uskids-20342"
-      ],
-      "firstDate": "2023-03-19",
-      "lastDate": "2025-11-01",
       "editionsCount": 3
     },
     {
@@ -44207,19 +44278,6 @@
       ],
       "firstDate": "2024-09-15",
       "lastDate": "2025-03-02",
-      "editionsCount": 3
-    },
-    {
-      "id": "uskids-magalies-park-golf-resort",
-      "label": "Magalies Park Golf Resort",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-18511",
-        "uskids-17816",
-        "uskids-20513"
-      ],
-      "firstDate": "2024-10-20",
-      "lastDate": "2025-09-07",
       "editionsCount": 3
     },
     {
@@ -44652,19 +44710,6 @@
       "editionsCount": 3
     },
     {
-      "id": "uskids-salishan-golf-links",
-      "label": "Salishan Golf Links",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-13955",
-        "uskids-15215",
-        "uskids-21234"
-      ],
-      "firstDate": "2023-05-07",
-      "lastDate": "2026-04-19",
-      "editionsCount": 3
-    },
-    {
       "id": "uskids-berkleigh-country-club",
       "label": "Berkleigh Country Club",
       "sourceId": "uskids",
@@ -44831,6 +44876,19 @@
       ],
       "firstDate": "2023-12-15",
       "lastDate": "2025-12-20",
+      "editionsCount": 3
+    },
+    {
+      "id": "uskids-panorama-golf-club",
+      "label": "Panorama Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-18539",
+        "uskids-21323",
+        "uskids-22999"
+      ],
+      "firstDate": "2025-03-01",
+      "lastDate": "2026-11-01",
       "editionsCount": 3
     },
     {
@@ -45338,6 +45396,19 @@
       ],
       "firstDate": "2023-09-22",
       "lastDate": "2023-09-24",
+      "editionsCount": 3
+    },
+    {
+      "id": "uskids-golf-de-la-grande-bastide",
+      "label": "Golf de la Grande Bastide",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-21154",
+        "uskids-20868",
+        "uskids-23681"
+      ],
+      "firstDate": "2025-11-09",
+      "lastDate": "2026-11-01",
       "editionsCount": 3
     },
     {
@@ -46976,19 +47047,6 @@
       ],
       "firstDate": "2019-04-15",
       "lastDate": "2026-03-30",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-faldo-junior-tour-england",
-      "label": "Faldo Junior Tour (England)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10954",
-        "egr-egr12639",
-        "egr-egr10955"
-      ],
-      "firstDate": "2025-10-27",
-      "lastDate": "2026-04-14",
       "editionsCount": 3
     },
     {
@@ -58947,18 +59005,6 @@
       "editionsCount": 2
     },
     {
-      "id": "uskids-panorama-golf-club",
-      "label": "Panorama Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-18539",
-        "uskids-21323"
-      ],
-      "firstDate": "2025-03-01",
-      "lastDate": "2026-04-19",
-      "editionsCount": 2
-    },
-    {
       "id": "uskids-wildflower-at-fair-hills-resort-tour-championship",
       "label": "Wildflower at Fair Hills Resort (Tour Championship)",
       "sourceId": "uskids",
@@ -59967,18 +60013,6 @@
       "editionsCount": 2
     },
     {
-      "id": "uskids-golf-de-la-grande-bastide",
-      "label": "Golf de la Grande Bastide",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-21154",
-        "uskids-20868"
-      ],
-      "firstDate": "2025-11-09",
-      "lastDate": "2026-01-10",
-      "editionsCount": 2
-    },
-    {
       "id": "uskids-ocean-club-golf-course-tour-championship",
       "label": "Ocean Club Golf Course (Tour Championship)",
       "sourceId": "uskids",
@@ -60111,6 +60145,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-patriot-hills-golf-club",
+      "label": "Patriot Hills Golf Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23672",
+        "uskids-23675"
+      ],
+      "firstDate": "2026-09-26",
+      "lastDate": "2026-10-31",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-beaverstown-golf-club",
       "label": "Beaverstown Golf Club",
       "sourceId": "uskids",
@@ -60231,6 +60277,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-east-sea-golf-country-club-tour-championship",
+      "label": "East Sea Golf & Country Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23119",
+        "uskids-19586"
+      ],
+      "firstDate": "2025-06-15",
+      "lastDate": "2026-11-01",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-erewash-valley-golf-club",
       "label": "Erewash Valley Golf Club",
       "sourceId": "uskids",
@@ -60288,6 +60346,18 @@
       ],
       "firstDate": "2026-09-29",
       "lastDate": "2026-09-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-the-heaven-country-club",
+      "label": "The Heaven Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23104",
+        "uskids-23102"
+      ],
+      "firstDate": "2026-09-03",
+      "lastDate": "2026-10-29",
       "editionsCount": 2
     },
     {
@@ -60852,18 +60922,6 @@
       ],
       "firstDate": "2026-06-21",
       "lastDate": "2026-09-13",
-      "editionsCount": 2
-    },
-    {
-      "id": "uskids-east-sea-golf-country-club-tour-championship",
-      "label": "East Sea Golf & Country Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-19586",
-        "uskids-23119"
-      ],
-      "firstDate": "2025-06-15",
-      "lastDate": "2026-11-01",
       "editionsCount": 2
     },
     {
@@ -64827,18 +64885,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-faldo-junior-tour-wales",
-      "label": "Faldo Junior Tour (Wales)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10952",
-        "egr-egr12645"
-      ],
-      "firstDate": "2025-10-27",
-      "lastDate": "2026-08-10",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-trofeo-chiocciola-d-oro",
       "label": "Trofeo Chiocciola D'Oro",
       "sourceId": "egr",
@@ -65304,6 +65350,18 @@
       ],
       "firstDate": "2026-06-05",
       "lastDate": "2026-06-05",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-faldo-junior-tour-england",
+      "label": "Faldo Junior Tour (England)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr10954",
+        "egr-egr10955"
+      ],
+      "firstDate": "2025-10-27",
+      "lastDate": "2025-10-27",
       "editionsCount": 2
     },
     {
@@ -65832,18 +65890,6 @@
       ],
       "firstDate": "2026-06-05",
       "lastDate": "2026-06-05",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-faldo-series-masters-brocket-hall",
-      "label": "Faldo Series Masters (Brocket Hall)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12638",
-        "egr-egr12723"
-      ],
-      "firstDate": "2026-04-06",
-      "lastDate": "2026-04-06",
       "editionsCount": 2
     },
     {
@@ -67755,18 +67801,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-eljgl-54-hole-masters",
-      "label": "ELJGL 54 hole Masters",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-267169",
-        "wagr-253969"
-      ],
-      "firstDate": "2024-08-08",
-      "lastDate": "2026-06-29",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-vga-junior-tour-3rd-leg",
       "label": "VGA Junior Tour 3rd Leg",
       "sourceId": "wagr",
@@ -68907,6 +68941,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-junior-matchplay-series-round-3",
+      "label": "Junior Matchplay Series Round 3",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-225792",
+        "wagr-235822"
+      ],
+      "firstDate": "2023-09-11",
+      "lastDate": "2024-06-25",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-fjt-slovakia-championship",
       "label": "FJT - Slovakia Championship",
       "sourceId": "wagr",
@@ -69288,6 +69334,18 @@
       ],
       "firstDate": "2024-10-24",
       "lastDate": "2025-10-23",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-2-austrian-juniors-golf-tour",
+      "label": "2 Austrian Juniors Golf Tour",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272796",
+        "wagr-262662"
+      ],
+      "firstDate": "2025-05-02",
+      "lastDate": "2026-05-01",
       "editionsCount": 2
     },
     {
@@ -88483,6 +88541,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-bayside-resort-golf-club-tour-championship",
+      "label": "Bayside Resort Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23041"
+      ],
+      "firstDate": "2026-11-01",
+      "lastDate": "2026-11-01",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-teen-series-at-bandon-crossings-or",
       "label": "Teen Series at Bandon Crossings (OR)",
       "sourceId": "uskids",
@@ -90064,6 +90133,17 @@
       ],
       "firstDate": "2026-10-17",
       "lastDate": "2026-10-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-linfield-national-golf-club-tour-championship",
+      "label": "Linfield National Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23744"
+      ],
+      "firstDate": "2026-10-31",
+      "lastDate": "2026-10-31",
       "editionsCount": 1
     },
     {
@@ -92223,17 +92303,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-patriot-hills-golf-club",
-      "label": "Patriot Hills Golf Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-23672"
-      ],
-      "firstDate": "2026-09-26",
-      "lastDate": "2026-09-26",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-link-hills-country-club",
       "label": "Link Hills Country Club",
       "sourceId": "uskids",
@@ -92242,6 +92311,17 @@
       ],
       "firstDate": "2026-10-10",
       "lastDate": "2026-10-10",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-woodlake-golf-lodge",
+      "label": "Woodlake Golf & Lodge",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23677"
+      ],
+      "firstDate": "2026-11-01",
+      "lastDate": "2026-11-01",
       "editionsCount": 1
     },
     {
@@ -92605,6 +92685,17 @@
       ],
       "firstDate": "2026-05-10",
       "lastDate": "2026-05-10",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-east-sea-golf-country-club",
+      "label": "East Sea Golf & Country Club",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23118"
+      ],
+      "firstDate": "2026-10-31",
+      "lastDate": "2026-10-31",
       "editionsCount": 1
     },
     {
@@ -92979,6 +93070,17 @@
       ],
       "firstDate": "2026-05-20",
       "lastDate": "2026-05-20",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-the-heaven-country-club-tour-championship",
+      "label": "The Heaven Country Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23105"
+      ],
+      "firstDate": "2026-10-30",
+      "lastDate": "2026-10-30",
       "editionsCount": 1
     },
     {
@@ -94896,17 +94998,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-the-heaven-country-club",
-      "label": "The Heaven Country Club",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-23102"
-      ],
-      "firstDate": "2026-09-03",
-      "lastDate": "2026-09-03",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-acaya-golf-club",
       "label": "Acaya Golf Club",
       "sourceId": "uskids",
@@ -95146,39 +95237,6 @@
       ],
       "firstDate": "2026-11-01",
       "lastDate": "2026-11-01",
-      "editionsCount": 1
-    },
-    {
-      "id": "uskids-bayside-resort-golf-club-tour-championship",
-      "label": "Bayside Resort Golf Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-23041"
-      ],
-      "firstDate": "2026-11-01",
-      "lastDate": "2026-11-01",
-      "editionsCount": 1
-    },
-    {
-      "id": "uskids-linfield-national-golf-club-tour-championship",
-      "label": "Linfield National Golf Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-23744"
-      ],
-      "firstDate": "2026-10-31",
-      "lastDate": "2026-10-31",
-      "editionsCount": 1
-    },
-    {
-      "id": "uskids-the-heaven-country-club-tour-championship",
-      "label": "The Heaven Country Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-23105"
-      ],
-      "firstDate": "2026-10-30",
-      "lastDate": "2026-10-30",
       "editionsCount": 1
     },
     {
@@ -105159,6 +105217,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-faldo-junior-tour-wales",
+      "label": "Faldo Junior Tour (Wales)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr10952"
+      ],
+      "firstDate": "2025-10-27",
+      "lastDate": "2025-10-27",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-grand-prix-de-prunevelle",
       "label": "Grand Prix de Prunevelle",
       "sourceId": "egr",
@@ -105951,17 +106020,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-faldo-junior-tour-germany",
-      "label": "Faldo Junior Tour (Germany)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12640"
-      ],
-      "firstDate": "2026-05-23",
-      "lastDate": "2026-05-23",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-r-a-girls-amateur",
       "label": "R&A Girls' Amateur",
       "sourceId": "egr",
@@ -106124,17 +106182,6 @@
       ],
       "firstDate": "2026-07-27",
       "lastDate": "2026-07-27",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-faldo-italy",
-      "label": "Faldo (Italy)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12653"
-      ],
-      "firstDate": "2026-03-20",
-      "lastDate": "2026-03-20",
       "editionsCount": 1
     },
     {
@@ -107326,28 +107373,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-faldo-junior-tour-scotland",
-      "label": "Faldo Junior Tour (Scotland)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12647"
-      ],
-      "firstDate": "2026-08-17",
-      "lastDate": "2026-08-17",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-faldo-junior-tour-belgium",
-      "label": "Faldo Junior Tour (Belgium)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12917"
-      ],
-      "firstDate": "2026-09-12",
-      "lastDate": "2026-09-12",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-midland-u21-girls-closed-championship",
       "label": "Midland U21 Girls Closed Championship",
       "sourceId": "egr",
@@ -107411,17 +107436,6 @@
       ],
       "firstDate": "2026-05-07",
       "lastDate": "2026-05-07",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-faldo-junior-tour-england-astbury",
-      "label": "Faldo Junior Tour England (Astbury)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12644"
-      ],
-      "firstDate": "2026-08-03",
-      "lastDate": "2026-08-03",
       "editionsCount": 1
     },
     {
@@ -111176,6 +111190,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-faldo-junior-tour-slovakia-black-stork-golf-resort",
+      "label": "Faldo Junior Tour: Slovakia | Black Stork Golf Resort",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271605"
+      ],
+      "firstDate": "2026-08-18",
+      "lastDate": "2026-08-18",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-fjt-bulgaria-championship",
       "label": "FJT - Bulgaria Championship",
       "sourceId": "wagr",
@@ -111998,6 +112023,28 @@
       ],
       "firstDate": "2025-12-16",
       "lastDate": "2025-12-16",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-faldo-junior-tour-austria-golf-club-dilly",
+      "label": "Faldo Junior Tour: Austria - Golf Club Dilly",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272727"
+      ],
+      "firstDate": "2026-09-18",
+      "lastDate": "2026-09-18",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-austrian-stroke-play-u21-u18-and-u16",
+      "label": "Austrian Stroke Play U21,U18 and U16",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270843"
+      ],
+      "firstDate": "2026-07-17",
+      "lastDate": "2026-07-17",
       "editionsCount": 1
     },
     {
@@ -112944,17 +112991,6 @@
       ],
       "firstDate": "2024-07-23",
       "lastDate": "2024-07-23",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-us-kids-international-teen-series-at-the-national-be",
-      "label": "US Kids - International Teen Series at The National (BE)",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-275815"
-      ],
-      "firstDate": "2026-06-30",
-      "lastDate": "2026-06-30",
       "editionsCount": 1
     },
     {
@@ -114300,28 +114336,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-austrian-stroke-play-u21-u18-and-u16",
-      "label": "Austrian Stroke Play U21,U18 and U16",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270843"
-      ],
-      "firstDate": "2026-07-17",
-      "lastDate": "2026-07-17",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-2-austrian-juniors-golf-tour",
-      "label": "2 Austrian Juniors Golf Tour",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-262662"
-      ],
-      "firstDate": "2025-05-02",
-      "lastDate": "2025-05-02",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-ssgt-strokeplay-championship-26-hollinwell",
       "label": "SSGT Strokeplay Championship -26 Hollinwell",
       "sourceId": "wagr",
@@ -114385,6 +114399,17 @@
       ],
       "firstDate": "2026-08-10",
       "lastDate": "2026-08-10",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-us-kids-international-teen-series-at-the-national-be",
+      "label": "US Kids - International Teen Series at The National (BE)",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275815"
+      ],
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-06-30",
       "editionsCount": 1
     },
     {
@@ -114506,17 +114531,6 @@
       ],
       "firstDate": "2025-11-21",
       "lastDate": "2025-11-21",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-junior-matchplay-series-round-3",
-      "label": "Junior Matchplay Series Round 3",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235822"
-      ],
-      "firstDate": "2024-06-25",
-      "lastDate": "2024-06-25",
       "editionsCount": 1
     },
     {
@@ -116478,6 +116492,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-eljgl-54-hole-masters",
+      "label": "ELJGL 54 hole Masters",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-253969"
+      ],
+      "firstDate": "2024-08-08",
+      "lastDate": "2024-08-08",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-ssgt-scottish-classic",
       "label": "SSGT Scottish Classic",
       "sourceId": "wagr",
@@ -116841,17 +116866,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-faldo-junior-tour-italy-gardagolf-country-club",
-      "label": "Faldo Junior Tour - Italy (Gardagolf Country Club)",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274649"
-      ],
-      "firstDate": "2026-03-20",
-      "lastDate": "2026-03-20",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-bavarian-youth-open-boys",
       "label": "Bavarian Youth Open Boys",
       "sourceId": "wagr",
@@ -117146,6 +117160,17 @@
       ],
       "firstDate": "2024-08-23",
       "lastDate": "2024-08-23",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-faldo-junior-tour-italy-gardagolf-country-club",
+      "label": "Faldo Junior Tour - Italy (Gardagolf Country Club)",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-274649"
+      ],
+      "firstDate": "2026-03-20",
+      "lastDate": "2026-03-20",
       "editionsCount": 1
     },
     {
