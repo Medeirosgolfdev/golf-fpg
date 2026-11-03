@@ -1,28 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22858,
-      "name": "German Masters 2026",
-      "date_inicio": "10/3/2026",
-      "date_fim": "10/4/2026",
-      "rondas": 2,
-      "campo": "Golf Valley München",
-      "fee_18": "295.00",
-      "tour": "International Championships Tour",
-      "type": 8
-    },
-    {
-      "t": 23279,
-      "name": "Circolo Golf Venezia",
-      "date_inicio": "10/3/2026",
-      "date_fim": "10/3/2026",
-      "rondas": 1,
-      "campo": "Circolo Golf Venezia",
-      "fee_18": "45.00",
-      "tour": "Venice (IT) Tour",
-      "type": 5
-    },
-    {
       "t": 23299,
       "name": "Cariari Country Club (Tour Championship)",
       "date_inicio": "10/4/2026",
@@ -2135,19 +2113,19 @@
       "type": 13
     }
   ],
-  "gerado_em": "2026-11-02T16:55:19.194Z",
+  "gerado_em": "2026-11-03T14:56:13.506Z",
   "varredura_max_t": 23885,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 47,
-    "novos": 1,
+    "pedidos": 41,
+    "novos": 0,
     "buracos_revistos": 1,
     "catalogo": 1578,
     "backfill_falta": 0
   },
   "fronteira_max_t_visto": 23885,
   "fronteira_avancou_em": "2026-11-02",
-  "dias_sem_descoberta": 0,
-  "dias_sem_avanco": 0,
+  "dias_sem_descoberta": 1,
+  "dias_sem_avanco": 1,
   "ultima_descoberta": "2026-11-02"
 }
