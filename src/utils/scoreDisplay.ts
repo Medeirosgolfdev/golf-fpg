@@ -91,17 +91,19 @@ const C = {
   medalBronze: "var(--medal-bronze)",
 } as const;
 
-/** 2-level semantic color: good / danger
- *  asc:  val <= threshold → good, else danger  (lower is better)
- *  desc: val >= threshold → good, else danger  (higher is better) */
-export function sc2(val: number, threshold: number, dir: "asc" | "desc" = "asc"): string {
-  if (dir === "asc") return val <= threshold ? C.good : C.danger;
-  return val >= threshold ? C.good : C.danger;
-}
-
-/** 3-level with muted middle (good / neutral / danger) */
-export function sc3m(val: number, lo: number, hi: number): string {
-  return val < -lo ? C.good : val > hi ? C.danger : C.muted;
+/** Classe do tom «bom/mau» de um número — a regra das cores de sempre, mas em
+ *  CLASSE (`.tone-good`/`.tone-bad`/`.tone-muted`), não em `style` (03/11/2026).
+ *  Por defeito baixo = bom (±par, SD, diferenças de pancadas); `highIsGood` inverte
+ *  (pontos, vitórias). `lo`/`hi`: zona morta à volta do zero (|v| dentro dela →
+ *  neutro). `muted`: o neutro fica cinzento em vez de sem cor.
+ *    toneClass(-2) → "tone-good"   ≡ tpColor
+ *    toneClass(v, { lo: 0.5, hi: 0.5, muted: true }) → |v| ≤ 0.5 cinzento */
+export function toneClass(v: number | null | undefined, opts: { highIsGood?: boolean; lo?: number; hi?: number; muted?: boolean } = {}): string {
+  if (v == null || !Number.isFinite(v)) return "";
+  const x = opts.highIsGood ? -v : v;
+  if (x < -(opts.lo ?? 0)) return "tone-good";
+  if (x > (opts.hi ?? 0)) return "tone-bad";
+  return opts.muted ? "tone-muted" : "";
 }
 
 /** Export color constants for edge cases */

@@ -17,7 +17,7 @@ import type { CanonicalData, Junior, Tournament } from "../data";
 import { useSort, compareNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { fmtToPar, fmtMonthYear } from "../../../utils/format";
-import { tpColor } from "../../../ui/tournamentPrimitives";
+import { toneClass } from "../../../utils/scoreDisplay";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import ExtLink from "../../../ui/ExternalLink";
 import { MUTED } from "../../../ui/tableCells";
@@ -147,9 +147,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
                 <td className="u-c-text-3">{r.flight}</td>
                 <td className="u-ta-center"><TrophyPos pos={r.pos} small /></td>
                 <td className="u-ta-right">{r.total != null ? r.total : "—"}</td>
-                <td className={"u-ta-right " + (r.toPar != null && r.toPar !== 0 ? "u-fw-700" : "u-fw-400")} style={{
-                  color: r.toPar == null ? "var(--text-3)"
-                    : tpColor(r.toPar) ?? "var(--text-2)" }}>
+                <td className={"u-ta-right " + (r.toPar != null && r.toPar !== 0 ? "u-fw-700" : "u-fw-400") + " " + (r.toPar == null ? "tone-muted" : toneClass(r.toPar) || "u-c-text-2")}>
                   {fmtToPar(r.toPar)}
                 </td>
                 <td className="u-ta-right u-c-text-3">

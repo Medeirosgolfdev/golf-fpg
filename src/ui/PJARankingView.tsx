@@ -7,8 +7,9 @@ import SexBadge from "./SexBadge";
 import LoadingState from "./LoadingState";
 import FilterChip from "./FilterChip";
 import { CrossSeasonTable, SortTh as CSortTh } from "./CrossSeasonTable";
-import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
+import { isManuel, fmtTP, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import { shortDateSlash, medal, fmtHcp } from "../utils/format";
+import { toneClass } from "../utils/scoreDisplay";
 import { RankingTable, type RankingCol } from "./ranking/RankingPage";
 import { CircuitRankingView, type CircuitRanking, type CircuitRankingContext } from "./circuit/CircuitRanking";
 import type { Tournament } from "../data/fpgTypes";
@@ -126,7 +127,7 @@ function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: Play
       ? { key: "best", label: "Melhor SD", className: "num", sort: r => bestSd(r), firstDir: "asc",
           cell: r => { const v = bestSd(r); return <span className="mono fw-700 c-good-dark">{v != null ? v.toFixed(1) : "–"}</span>; } }
       : { key: "best", label: "Melhor", title: "Melhor volta (±par)", className: "num", sort: r => bestToPar(r), firstDir: "asc",
-          cell: r => { const v = bestToPar(r); return v == null ? MUTED : <span className="fw-700" style={{ color: tpColor(v) }}>{fmtTP(v)}</span>; } },
+          cell: r => { const v = bestToPar(r); return v == null ? MUTED : <span className={`fw-700 ${toneClass(v)}`}>{fmtTP(v)}</span>; } },
   ];
 }
 
@@ -153,7 +154,7 @@ function PlayerDetail({ row, cols, metric, showMeters, playersDB, onClose }: {
       );
     } },
     { key: "toPar", label: "±Par", className: "num", sort: r => r.res.toPar, firstDir: "asc",
-      cell: r => <span className="fw-700" style={{ color: tpColor(r.res.toPar), ...roundStyle(r.res) }}>{fmtTP(r.res.toPar)}</span> },
+      cell: r => <span className={`fw-700 ${toneClass(r.res.toPar)}`} style={roundStyle(r.res)}>{fmtTP(r.res.toPar)}</span> },
     isSd
       ? { key: "sd", label: "SD", className: "num", sort: r => r.res.sd, firstDir: "asc",
           cell: r => <span className="c-warn-dark" style={roundStyle(r.res)}>{r.res.sd != null ? r.res.sd.toFixed(1) : "–"}</span> }
@@ -577,7 +578,7 @@ export function PJARankingView({
                             </React.Fragment>
                           );
                           const tpStr = fmtTP(res.toPar);
-                          const tpCol = tpColor(res.toPar);
+                          const tpTone = toneClass(res.toPar);
                           // Tooltip nas TRÊS células da volta: numa coluna
                           // agregada ("3º Drive Challenge" = 5 regiões) saber
                           // QUE prova o miúdo jogou é essencial para ler o valor.
@@ -602,8 +603,8 @@ export function PJARankingView({
                               : {};
                           return (
                             <React.Fragment key={r.roundKey}>
-                              <td className="cs-t-topar cs-grp" style={{ color: tpCol, ...excludedStyle }} title={cellTitle}>{tpStr}</td>
-                              <td className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", ...excludedStyle }} title={cellTitle}>
+                              <td className={`cs-t-topar cs-grp ${tpTone}`} style={excludedStyle} title={cellTitle}>{tpStr}</td>
+                              <td className="cs-t-gross cs-col c-warn-dark" style={excludedStyle} title={cellTitle}>
                                 {metric === "sd" ? (res.sd != null ? res.sd.toFixed(1) : "–") : fmtPts(res.pts)}
                               </td>
                               {showMeters && (

@@ -15,7 +15,7 @@ import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import ResultMark from "../ResultMark";
 import { KidsLink } from "../KidsLink";
-import { fmtToPar } from "../../utils/format";
+import { fmtToPar, fmtOrd } from "../../utils/format";
 import { fmtPoints, type TeamPointsData, type TeamPointsPlayerRow, type TeamPointsResult } from "./teamPointsTypes";
 import TabRow from "../TabRow";
 import ExpandArrow from "../ExpandArrow";
@@ -195,7 +195,7 @@ export default function TeamPointsStandings({ data, defaultRound = "all" }: {
                         : <td key={c.key}>{fmtPoints(v)}</td>;
                     })}
                     <td className="tps-total">{fmtPoints(r.total)}</td>
-                    {showOfficial && <td>{r.official != null ? `${r.official}.º` : "—"}</td>}
+                    {showOfficial && <td>{r.official != null ? fmtOrd(r.official) : "—"}</td>}
                   </tr>
                   {isOpen && (
                     <tr className="row-expanded">

@@ -31,7 +31,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
-import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp, escalaoAtDate } from "../../utils/format";
+import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp, escalaoAtDate, fmtOrd } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
 import { isManuel as isManuelPlayer } from "../../constants/manuel";
 import { useFedBirthdates } from "../InscricoesComponents";
@@ -331,13 +331,13 @@ export default function Scout({
   const sepAno = { torn: tem.torn, vit: !tem.torn && tem.vit, pod: !tem.torn && !tem.vit && tem.pod,
     voltas: !tem.torn && !tem.vit && !tem.pod && tem.voltas, forma: !tem.torn && !tem.vit && !tem.pod && !tem.voltas };
   const lugar = (pos: number | null | undefined, title?: string, field?: number | null) => pos != null
-    ? <span className={"pos-medal pos-medal-sm " + medalClass(pos)} title={title}>{pos}.º{field ? <span className="scout-field">/{field}</span> : null}</span>
+    ? <span className={"pos-medal pos-medal-sm " + medalClass(pos)} title={title}>{fmtOrd(pos)}{field ? <span className="scout-field">/{field}</span> : null}</span>
     : <span className="scout-sem" title={title}>–</span>;
   // Um dos últimos torneios numa caixinha: o lugar quando há classificação, «WD»
   // quando não acabou, e nas provas de clube (sem classificação) o ±par.
   const caixaTorneio = (x: ScoutTorneio) => {
     const title = [shortDateSlash(x.data), x.nome,
-      x.lugar != null ? `${x.lugar}.º${x.field ? ` de ${x.field}` : ""}` : x.estado ?? "prova de clube (sem classificação)",
+      x.lugar != null ? `${fmtOrd(x.lugar)}${x.field ? ` de ${x.field}` : ""}` : x.estado ?? "prova de clube (sem classificação)",
       x.pancadas != null ? `${x.pancadas} pancadas${x.voltas > 1 ? ` em ${x.voltas} voltas` : ""}${x.toPar != null ? ` (${fmtToPar(x.toPar)})` : ""}` : null,
       x.sd != null ? `SD ${x.sd.toFixed(1)}` : null].filter(Boolean).join(" · ");
     if (x.lugar != null) return lugar(x.lugar, title, x.field);
@@ -477,8 +477,8 @@ export default function Scout({
                     {eds.map((e) => {
                       const c = l.rep?.byEd[e.id];
                       if (!c) return <td key={e.id}><span className="scout-sem">–</span></td>;
-                      const title = [c.pos != null ? `${c.pos}.º de ${c.field}` : null, c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ");
-                      return <td key={e.id}>{c.complete ? lugar(c.pos, title) : <span className="scout-wd" title={title}>{c.pos != null ? `${c.pos}.º` : "WD"}</span>}</td>;
+                      const title = [c.pos != null ? `${fmtOrd(c.pos)} de ${c.field}` : null, c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ");
+                      return <td key={e.id}>{c.complete ? lugar(c.pos, title) : <span className="scout-wd" title={title}>{c.pos != null ? fmtOrd(c.pos) : "WD"}</span>}</td>;
                     })}
                     {tem.vsm && (
                       <td className="scout-sep" title={nM ? `${nM} prova${nM > 1 ? "s" : ""} em comum${empates > 0 ? ` · ${empates} empate${empates > 1 ? "s" : ""}` : ""}` : undefined}>

@@ -18,19 +18,19 @@ const r2 = round(2, [pl("Manuel Medeiros", "52884", "a2", 72), pl("Ricardo Camac
 describe("shareOptions", () => {
   it("uma volta: ordenada pela classificação, Manuel por omissão", () => {
     const o = shareOptionsForRound(r1);
-    expect(o.options.map((x) => x.label)).toEqual(["1º · Ricardo Camacho — 74", "2º · Manuel Medeiros — 78"]);
+    expect(o.options.map((x) => x.label)).toEqual(["1.º · Ricardo Camacho — 74", "2.º · Manuel Medeiros — 78"]);
     expect(o.defaultKey).toBe("a1");
   });
 
   it("torneio completo: junta as voltas pelo federado e classifica pelo total", () => {
     const o = shareOptionsForTournament([r1, r2]);
     expect(o.options.map((x) => x.label)).toEqual([
-      "Torneio · 1º · Manuel Medeiros — 78+72 = 150",
-      "Torneio · 2º · Ricardo Camacho — 74+78 = 152",
+      "Torneio · 1.º · Manuel Medeiros — 78+72 = 150",
+      "Torneio · 2.º · Ricardo Camacho — 74+78 = 152",
     ]);
     const m = o.options.find((x) => x.key === o.defaultKey)!;
     expect(m.data.rounds?.map((r) => [r.round, r.gross, r.toPar])).toEqual([[1, 78, 6], [2, 72, 0]]);
-    expect(m.data.position).toBe("1º de 2");
+    expect(m.data.position).toBe("1.º de 2");
     expect(m.data.date).toBe("3 Out – 4 Out 2026");
   });
 });

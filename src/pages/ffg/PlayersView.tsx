@@ -24,7 +24,7 @@ import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName, fmtDatePt, fmtHcp, fmtSign } from "../../utils/format";
+import { displayName, fmtDatePt, fmtHcp, fmtSign, fmtOrd } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { isManuelByName } from "../../constants/manuel";
 import { kidsUrl, KidsArrow } from "../../ui/KidsLink";
@@ -369,8 +369,8 @@ export function FFGPlayersView() {
                       {has.birth && <td className="u-ta-right">{r.birthYear ?? MUTED}</td>}
                       {has.merite && (
                         <td className="u-ta-right"
-                          title={r.merite ? [`Mérite Jeunes ${r.merite.month.slice(4)}/${r.merite.month.slice(0, 4)}`, r.merite.rankAnn ? `${r.merite.rankAnn}.º do ano de nascimento` : null, `${r.merite.nbt} provas`, r.merite.moy != null ? `média ${fmtSign(r.merite.moy, 2)} vs SSS` : null, r.merite.idx != null ? `index ${r.merite.idx.toFixed(1)}` : null].filter(Boolean).join(" · ") : undefined}>
-                          {r.merite?.rank != null ? `${r.merite.rank}.º` : MUTED}
+                          title={r.merite ? [`Mérite Jeunes ${r.merite.month.slice(4)}/${r.merite.month.slice(0, 4)}`, r.merite.rankAnn ? `${fmtOrd(r.merite.rankAnn)} do ano de nascimento` : null, `${r.merite.nbt} provas`, r.merite.moy != null ? `média ${fmtSign(r.merite.moy, 2)} vs SSS` : null, r.merite.idx != null ? `index ${r.merite.idx.toFixed(1)}` : null].filter(Boolean).join(" · ") : undefined}>
+                          {r.merite?.rank != null ? fmtOrd(r.merite.rank) : MUTED}
                         </td>
                       )}
                       {has.tot && <td style={{ textAlign: "right", color: r._tot ? undefined : "var(--text-muted)" }}>{r._tot || "—"}</td>}

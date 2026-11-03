@@ -2,7 +2,7 @@
 import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLoader";
 import { norm, fmtToPar, fmtSign, fmtDateSpan } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
-import { scClass, toParClass, sc2 } from "../utils/scoreDisplay";
+import { scClass, toParClass } from "../utils/scoreDisplay";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
 import { GrossCell, CountPill, RoundNumericCells, MUTED } from "./tableCells";
 import { useSort, compareNullsLast } from "../hooks/useSort";
@@ -137,10 +137,12 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
 
+  // Cor e peso em utilitários (!important): a linha `.sc-table-ec .ec-ref-row td`
+  // é cinzenta e mais específica do que as classes de tom.
   const fmtDelta = (d: number | null) => {
-    if (d == null) return { text: "", color: "var(--text-muted)", weight: 400 as const };
-    if (d === 0) return { text: "=", color: "var(--text-muted)", weight: 400 as const };
-    return { text: fmtSign(d), color: sc2(d, 0), weight: 600 as const };
+    if (d == null) return { text: "", color: "u-c-text-muted", weight: "u-fw-400" };
+    if (d === 0) return { text: "=", color: "u-c-text-muted", weight: "u-fw-400" };
+    return { text: fmtSign(d), color: d <= 0 ? "u-c-color-good" : "u-c-color-danger", weight: "u-fw-600" };
   };
 
   return (
@@ -151,11 +153,11 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
         const f = fmtDelta(d);
         return (
           <React.Fragment key={i}>
-            <td style={{ color: f.color, fontWeight: f.weight }}>{f.text}</td>
+            <td className={`${f.color} ${f.weight}`}>{f.text}</td>
             {i === frontEnd - 1 && !is9 && (() => {
               const dOut = sumArr(last, 0, frontEnd) - sumArr(first, 0, frontEnd);
               const fo = fmtDelta(dOut);
-              return <td className="col-out" style={{ color: fo.color, fontWeight: fo.weight }}>{fo.text}</td>;
+              return <td className={`col-out ${fo.color} ${fo.weight}`}>{fo.text}</td>;
             })()}
           </React.Fragment>
         );
@@ -163,12 +165,12 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
       {(() => {
         const dIn = (is9 ? sumArr(last, 0, hc) : sumArr(last, backStart, hc)) - (is9 ? sumArr(first, 0, hc) : sumArr(first, backStart, hc));
         const fi = fmtDelta(dIn);
-        return <td className={is9 ? "col-total" : "col-in"} style={{ color: fi.color, fontWeight: fi.weight }}>{fi.text}</td>;
+        return <td className={`${is9 ? "col-total" : "col-in"} ${fi.color} ${fi.weight}`}>{fi.text}</td>;
       })()}
       {!is9 && (() => {
         const dTot = sumArr(last, 0, hc) - sumArr(first, 0, hc);
         const ft = fmtDelta(dTot);
-        return <td className="col-total" style={{ color: ft.color }}>{ft.text}</td>;
+        return <td className={`col-total ${ft.color}`}>{ft.text}</td>;
       })()}
     </tr>
   );

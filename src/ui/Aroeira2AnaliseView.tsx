@@ -20,8 +20,8 @@ import LoadingState from "./LoadingState";
 import UiKpiCard from "./KpiCard";
 import SortableHdr from "./SortableHdr";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
-import { fmtToPar, fmtHcp } from "../utils/format";
-import { scClass } from "../utils/scoreDisplay";
+import { fmtToPar, fmtHcp, fmtSign } from "../utils/format";
+import { scClass, toneClass } from "../utils/scoreDisplay";
 import PlayerLink from "./PlayerLink";
 import { MANUEL_FED } from "../constants/manuel";
 import ToPar from "./ToPar";
@@ -31,7 +31,6 @@ import ErrorState from "./ErrorState";
 import SectionTitle from "./SectionTitle";
 const fmtPct = (p: number) => p.toFixed(0) + "%";
 const fmtAvg = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : n.toFixed(d);
-const fmtDelta = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : (n === 0 ? "0" : (n > 0 ? "+" : "") + n.toFixed(d));
 
 const LABEL_INFO = {
   birdie: { emoji: "🟢", text: "Oportunidade", bg: "rgba(22, 163, 74, .15)", border: "var(--color-good)" },
@@ -884,7 +883,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                   <td className="lb-hole fw-600">{e.bestGross ?? "–"}</td>
                   <td className="lb-hole">{e.lastGross ?? "–"}</td>
                   <td className="lb-hole" style={{ color: e.lastVsBest != null && e.lastVsBest <= 2 ? "var(--color-good)" : e.lastVsBest != null && e.lastVsBest >= 8 ? "var(--color-danger)" : "var(--text-muted)" }}>{e.lastVsBest != null ? "+" + e.lastVsBest : "–"}</td>
-                  <td className="lb-hole fw-700" style={{ color: e.slope < -0.5 ? "var(--color-good)" : e.slope > 0.5 ? "var(--color-danger)" : "var(--text)" }}>{fmtDelta(e.slope, 2)}</td>
+                  <td className={"lb-hole fw-700 " + toneClass(e.slope, { lo: 0.5, hi: 0.5 })}>{e.slope == null || !isFinite(e.slope) ? "–" : fmtSign(e.slope, 2)}</td>
                   <td className="lb-hole"><ToPar v={e.firstToLast} kind="delta" digits={0} light /></td>
                   <td className="lb-hole"><ToPar v={e.trendDelta} kind="delta" digits={1} light /></td>
                   <td className="lb-name fw-600">{e.trendLabel}</td>

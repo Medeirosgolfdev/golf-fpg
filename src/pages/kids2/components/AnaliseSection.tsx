@@ -25,7 +25,7 @@ import {
   type ScoringDist,
 } from "../../../utils/analysisStats";
 import { fmtToPar } from "../../../utils/format";
-import { tpColor } from "../../../ui/tournamentPrimitives";
+import { toneClass } from "../../../utils/scoreDisplay";
 import ComparisonDonut from "../../../ui/ComparisonDonut";
 import TabRow from "../../../ui/TabRow";
 import Select from "../../../ui/Select";
@@ -319,13 +319,13 @@ function RoundBar({ entry }: { entry: { tornLabel: string; round: number; gross:
     { k: "bogeys", pct: p.bogeys, color: "var(--score-bogey-border)" },
     { k: "dbPlus", pct: p.dbPlus, color: "var(--score-double)" },
   ].filter((s) => s.pct > 0);
-  const tpCol = entry.toPar == null ? "var(--text-3)" : tpColor(entry.toPar) ?? "var(--text-2)";
+  const tpTone = entry.toPar == null ? "tone-muted" : toneClass(entry.toPar) || "u-c-text-2";
   return (
     <div className="u-d-grid u-grid-template-columns-17av9 u-ai-center u-gap-10px u-fs-fs-12">
       <div className="u-fw-600 u-c-text u-ov-hidden u-tov-ellipsis u-ws-nowrap">
         {entry.tornLabel} <span className="u-c-text-3 u-fw-400">· R{entry.round}</span>
       </div>
-      <div className="u-ta-center u-fw-700 u-fvn-tabular-nums" style={{ color: tpCol }}>
+      <div className={`u-ta-center u-fw-700 u-fvn-tabular-nums ${tpTone}`}>
         {entry.gross != null ? `${entry.gross}` : "—"}
         {entry.toPar != null && <span className="u-fs-fs-10 u-ml-4px">({fmtToPar(entry.toPar)})</span>}
       </div>
@@ -355,7 +355,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
       <div className="u-p-14px-16px u-bd-1px-solid-border-light u-br-radius u-bg-bg">
         <div className="u-fs-fs-11 u-c-text-3 u-ls-0_6px u-fw-700 u-mb-4px u-tt-uppercase">{label}</div>
         <div className="u-d-flex u-ai-baseline u-gap-8px u-mb-10px">
-          <span className="u-fs-fs-28 u-fw-800 u-fvn-tabular-nums" style={{ color: toPar == null ? "var(--text-3)" : tpColor(toPar) ?? "var(--text)" }}>
+          <span className={`u-fs-fs-28 u-fw-800 u-fvn-tabular-nums ${toPar == null ? "tone-muted" : toneClass(toPar) || "u-c-text"}`}>
             {toPar != null ? (toPar >= 0 ? `+${toPar.toFixed(1)}` : toPar.toFixed(1)) : "—"}
           </span>
           <span className="u-fs-fs-11 u-c-text-3">

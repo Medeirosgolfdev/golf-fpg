@@ -8,7 +8,7 @@
 
 import type { CanonicalData, Junior } from "../data";
 import { countWins, countTop3, computeRoundStats } from "../data";
-import { fmtToPar, MONTHS_PT } from "../../../utils/format";
+import { fmtToPar, MONTHS_PT, shortTournamentName } from "../../../utils/format";
 import KpiCard from "../../../ui/KpiCard";
 
 interface Props {
@@ -42,7 +42,7 @@ export default function MetricsGrid({ data, junior, filterTids }: Props) {
       const monthLabel = m ? MONTHS_PT[Number(m) - 1] : "";
       const fullName = t.name || t.shortName || "";
       const datePart = year ? (monthLabel ? `${monthLabel} ${year}` : year) : "";
-      bestSub = `${shortNameOf(fullName)} · R${stats.bestToPar.round}${datePart ? " · " + datePart : ""}`;
+      bestSub = `${shortTournamentName(fullName, { max: 32 })} · R${stats.bestToPar.round}${datePart ? " · " + datePart : ""}`;
     }
   }
 
@@ -88,27 +88,3 @@ function Card({ label, value, subtitle, accent }: {
 /** Abrevia o nome do torneio de forma inteligente, mantendo o escalão.
  *  Antes truncava a 24 chars cegamente — "Campeonato Nacional Sub 12 H"
  *  ficava "Campeonato Nacional Sub " (sem o número). */
-function shortNameOf(s: string): string {
-  if (!s) return "";
-  return s
-    .replace(/\s+/g, " ")
-    .trim()
-    // Abreviações longas → curtas (preservam escalão/divisão)
-    .replace(/Campeonato\s+Nacional\s+de\s+Jovens\s+/i, "CNJ ")
-    .replace(/Campeonato\s+Nacional\s+(?:de\s+)?/i, "Nacional ")
-    .replace(/Greatgolf\s+Junior\s+Open(?:\s+with\s+[^·-]+)?/i, "Greatgolf JO")
-    .replace(/Quinta\s+do\s+Lago\s+Junior\s+Open/i, "QdL JO")
-    .replace(/USKids?\s+European\s+Championship/i, "USKids Euro")
-    .replace(/USKids?\s+World\s+Championship/i, "USKids World")
-    .replace(/Marco\s+Simone\s+Invitational/i, "Marco Simone")
-    .replace(/Venice\s+Open/i, "Venice")
-    .replace(/Rome\s+Classic/i, "Rome")
-    .replace(/Real\s+Club\s+de\s+Golf\s+El\s+Prat/i, "El Prat")
-    .replace(/European\s+Open\s+WAGR/i, "EOWAGR")
-    .replace(/Daily\s+Mail\s+WJGC/i, "DM WJGC")
-    .replace(/First\s+Tee\s+Miami\s+Doral\s+Jr\.?\s+Classic/i, "Doral Jr Classic")
-    .replace(/\s+/g, " ")
-    .trim()
-    // Cap final para evitar overflow em casos não cobertos
-    .slice(0, 32);
-}

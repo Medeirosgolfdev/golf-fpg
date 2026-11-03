@@ -52,7 +52,7 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
   - Match play: `ui/circuit/MatchplayView` (formato `MatchplayFile`) — brackets ETC/FFG/Taça da Federação e o 3-way dos Clubes (`sides`, `playerRefs`, `pendingNote`, prop `roundPicker`; adaptador `data/clubesMatchplayAdapter.ts`). Classificação de equipas por pontos (categoria × dia): `ui/circuit/TeamPointsStandings` (21/10/2026).
 - Datas/idades/bandeiras em `utils/`: `dateParts`, `ageAtDate`, `birthYearOf`, `todayIso`, `fmtDateRangePt`, `shortDateSlash` (`format.ts`); `flagOrEmpty`, `clubFlagPrefix`, `isPtCountry` (`flagUtils.ts`); `normLoose`/`normName` (`normName.ts`).
 - `Toolbar.tsx` exporta `Toolbar`, `ToolbarTitle`, `ToolbarMeta`, `ToolbarSep`.
-- `scoreDisplay.ts`: `scClass()`, `toParClass()`, `sc3m()`, `tpColorDark()`, `SC` (cores semânticas em `var(--…)`, definidas no próprio `scoreDisplay.ts` — não é o `C` de colors.ts).
+- `scoreDisplay.ts`: `scClass()`, `toParClass()`, `toneClass()` (tom bom/mau em classe `.tone-*`), `tpColorDark()`, `SC` (cores semânticas em `var(--…)`, definidas no próprio `scoreDisplay.ts` — não é o `C` de colors.ts).
 - `mathUtils.ts`: `zTier()` (único sítio dos níveis por z-score; a Tabela global tinha limiares próprios até 21/10/2026), `getTrend()`, `getAvgZ()`, `linearSlope()`, `toggleArr()`.
 - `format.ts`: `fmtToPar()` (usar em vez de `fmtTp2`/`fmtTP2` locais), `sortArrow()`, `MONTHS_PT` (abrev.), `MONTHS_PT_FULL` (lowercase), `MONTHS_PT_LONG` (Title Case), `MONTH_MAP`.
 - `constants/manuel.ts`: `MANUEL_FED`, `MANUEL_BIRTH_YEAR`, `isManuel()`, `escalaoManuelParaData()`, `MANUEL_KNOWN_TIDS`.

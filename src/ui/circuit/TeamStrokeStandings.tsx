@@ -484,7 +484,7 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
         <span className="u-ml-auto u-fs-fs-13 u-c-text-muted u-mt-4px">
           {intro ?? model.rule}
           {model.nRounds > 1 && played > 0 && (
-            <span className="u-ml-8px u-fw-600" style={single ? { color: played >= model.nRounds ? "var(--color-good)" : "var(--color-warn)" } : undefined}>
+            <span className={`u-ml-8px u-fw-600${single ? (played >= model.nRounds ? " tone-good" : " u-c-var-color-warn-e07b00") : ""}`}>
               · R{played}/{model.nRounds}
             </span>
           )}

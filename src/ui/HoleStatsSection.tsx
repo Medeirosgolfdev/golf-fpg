@@ -1,7 +1,7 @@
 import React from "react";
 import type { HoleStatsData, HoleStatEntry } from "../data/playerDataLoader";
 import { fD, fD2, fmtSign } from "../utils/format";
-import { sc3m, sc2, SC, scClass } from "../utils/scoreDisplay";
+import { toneClass, scClass } from "../utils/scoreDisplay";
 import { sumArr } from "../utils/mathUtils";
 import KpiCard from "./KpiCard";
 import SectionTitle from "./SectionTitle";
@@ -83,14 +83,14 @@ function F9B9Comparison({ stats }: { stats: HoleStatsData }) {
     const s = side === "f9" ? stats.f9b9!.f9 : stats.f9b9!.b9;
     const d = side === "f9" ? fD9 : bD9;
     const isWorse = side === worseSide;
-    const slCol = sc3m(s.strokesLost, 2.5, 6);
+    const slTone = toneClass(s.strokesLost, { lo: 2.5, hi: 6, muted: true });
     return (
       <div className={`f9b9-card${isWorse ? " f9b9-worse" : ""}`}>
         <div className="f9b9-head">
           <span className="f9b9-label">{label}</span>
           <span className="muted fs-11">par {s.par}</span>
         </div>
-        <div className="f9b9-sl" style={{ color: slCol }}>{fD(s.strokesLost)}<span className="fs-10 c-text-3"> panc. perd./volta</span></div>
+        <div className={`f9b9-sl ${slTone}`}>{fD(s.strokesLost)}<span className="fs-10 c-text-3"> panc. perd./volta</span></div>
         <div className="f9b9-dbl">{s.dblPct.toFixed(0)}% <span className="fs-10 c-text-3">double bogey ou pior</span></div>
         {d.total > 0 && (
           <div className="haParDistBar mt-6">
@@ -108,7 +108,7 @@ function F9B9Comparison({ stats }: { stats: HoleStatsData }) {
         <div className="f9b9-diff" title={`Diferença de pancadas perdidas: ${fmtSign(diffSl, 2)}`}>
           {Math.abs(diffSl) < 0.2
             ? <><span className="f9b9-diff-icon">≈</span><span className="f9b9-diff-txt muted">equilibrado</span></>
-            : <><span className="f9b9-diff-icon">{diffSl > 0 ? "→" : "←"}</span><span className="f9b9-diff-txt" style={{ color: SC.danger }}>{diffSl > 0 ? "B9" : "F9"} custa +{Math.abs(diffSl).toFixed(1)}</span></>
+            : <><span className="f9b9-diff-icon">{diffSl > 0 ? "→" : "←"}</span><span className="f9b9-diff-txt tone-bad">{diffSl > 0 ? "B9" : "F9"} custa +{Math.abs(diffSl).toFixed(1)}</span></>
           }
         </div>
         <Side side="b9" label="Back 9" />
@@ -221,7 +221,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 const vp = g.avgVsPar ?? 0;
                 const isWorst = pt === worstPT && vp > 0.3;
                 const pct = Math.min(100, (Math.abs(vp) / maxAbs) * 100);
-                const vpCol = sc3m(vp, 0, 0.4);
+                const vpTone = toneClass(vp, { lo: 0, hi: 0.4, muted: true });
                 const distTotal = g.dist.eagle + g.dist.birdie + g.dist.par + g.dist.bogey + g.dist.double + g.dist.triple;
                 const segs = [
                   { n: g.dist.eagle + g.dist.birdie, cls: "seg-birdie", label: "Birdie+" },
@@ -238,10 +238,10 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     {/* Barra simétrica centrada no zero: negativo à esquerda (verde), positivo à direita (vermelho) */}
                     <div className="par-type-bar-track">
                       <div className="par-type-zero" />
-                      <div className={`par-type-bar ${vp < 0 ? "bar-neg" : "bar-pos"}`}
-                           style={{ width: `${pct / 2}%`, background: vpCol, [vp < 0 ? "right" : "left"]: "50%" } as React.CSSProperties} />
+                      <div className={`par-type-bar ${vp < 0 ? "bar-neg" : "bar-pos"} ${vpTone}`}
+                           style={{ width: `${pct / 2}%`, [vp < 0 ? "right" : "left"]: "50%" } as React.CSSProperties} />
                     </div>
-                    <div className="par-type-val" style={{ color: vpCol }}>{fD2(vp)}</div>
+                    <div className={`par-type-val ${vpTone}`}>{fD2(vp)}</div>
                     <div className="par-type-sl">{fD(g.strokesLostPerRound)} <span className="fs-10 c-text-3">p/volta</span></div>
                     {/* Distribuição mini */}
                     {distTotal > 0 && (
@@ -382,10 +382,10 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                   <td className="fw-700 row-label">Média</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const vp = h.avg != null && h.par != null ? h.avg - h.par : null;
-                    const col = vp == null ? SC.muted : vp <= -0.1 ? SC.good : vp <= 0.3 ? SC.muted : SC.danger;
+                    const tone = vp == null ? "tone-muted" : vp <= -0.1 ? "tone-good" : vp <= 0.3 ? "tone-muted" : "tone-bad";
                     return (
                       <React.Fragment key={i}>
-                        <td className="fw-700" style={{ color: col }}>{h.avg?.toFixed(1) ?? ""}</td>
+                        <td className={`fw-700 ${tone}`}>{h.avg?.toFixed(1) ?? ""}</td>
                         {i === fe - 1 && !is9 && <td className="fw-700 col-out">{(stats.holes.slice(0, fe).reduce((s, x) => s + (x.avg ?? 0), 0)).toFixed(1)}</td>}
                       </React.Fragment>
                     );
@@ -397,7 +397,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 </tr>
                 {/* Best row */}
                 <tr>
-                  <td className="fw-700 row-label" style={{ color: SC.good }}>Melhor</td>
+                  <td className="fw-700 row-label tone-good">Melhor</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const cls = h.best != null && h.par != null ? scClass(h.best, h.par) : "";
                     return (
@@ -412,7 +412,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 </tr>
                 {/* Worst row */}
                 <tr>
-                  <td className="fw-700 row-label" style={{ color: SC.danger }}>Pior</td>
+                  <td className="fw-700 row-label tone-bad">Pior</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const cls = h.worst != null && h.par != null ? scClass(h.worst, h.par) : "";
                     return (
@@ -436,22 +436,22 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     else if (sl <= 0.4) slBg = "var(--color-danger-alpha)";
                     else if (sl <= 0.7) slBg = "var(--color-danger-alpha)";
                     else slBg = "var(--color-danger)";
-                    const slCol = sl <= -0.3 ? SC.good : sl <= 0.15 ? SC.muted : SC.danger;
+                    const slTone = sl <= -0.3 ? "tone-good" : sl <= 0.15 ? "tone-muted" : "tone-bad";
                     return (
                       <React.Fragment key={i}>
-                        <td className="fw-700" style={{ background: slBg, color: slCol }}>{h.n > 0 ? fD(sl) : ""}</td>
+                        <td className={`fw-700 ${slTone}`} style={{ background: slBg }}>{h.n > 0 ? fD(sl) : ""}</td>
                         {i === fe - 1 && !is9 && (() => {
                           const outSL = stats.holes.slice(0, fe).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
-                          return <td className="fw-700 col-out" style={{ color: sc2(outSL, 0) }}>{fD(outSL)}</td>;
+                          return <td className={`fw-700 col-out ${outSL <= 0 ? "tone-good" : "tone-bad"}`}>{fD(outSL)}</td>;
                         })()}
                       </React.Fragment>
                     );
                   })}
                   {(() => {
                     const inSL = (is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
-                    return <td className={`fw-700 ${is9 ? "col-total" : "col-in"}`} style={{ color: sc2(inSL, 0) }}>{fD(inSL)}</td>;
+                    return <td className={`fw-700 ${is9 ? "col-total" : "col-in"} ${inSL <= 0 ? "tone-good" : "tone-bad"}`}>{fD(inSL)}</td>;
                   })()}
-                  {!is9 && <td className="fw-700 col-total" style={{ color: sc2(stats.totalStrokesLost, 0) }}>{fD(stats.totalStrokesLost)}</td>}
+                  {!is9 && <td className={`fw-700 col-total ${stats.totalStrokesLost <= 0 ? "tone-good" : "tone-bad"}`}>{fD(stats.totalStrokesLost)}</td>}
                 </tr>
               </tbody>
             </table>

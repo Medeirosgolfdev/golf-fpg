@@ -26,7 +26,9 @@ import {
   LT_FORET_PAR, LT_FORET_SI, LT_FORET_M,
 } from "../../data/rivalData";
 import type { Flight, Result } from "./data";
-import { stripAccents } from "../../utils/normName";
+import { normName as normNameStr } from "../../utils/normName";
+/** O normName único (utils/normName), tolerante a null/undefined. */
+const normName = (s: string | undefined | null) => normNameStr(s ?? "");
 
 // ═══════════════════════════════════════════════════════════════════════
 // Tipos
@@ -62,12 +64,6 @@ interface KnownTournamentEntry {
 // ═══════════════════════════════════════════════════════════════════════
 // Helpers de normalização
 // ═══════════════════════════════════════════════════════════════════════
-
-function normName(s: string | undefined | null): string {
-  return stripAccents((s || "").trim().toLowerCase()
-    .replace(/[-'’.·\/]+/g, " ")
-    .replace(/\s+/g, " "));
-}
 
 function buildPlayerCards(
   arr: readonly { n: string; rds: readonly (readonly number[])[] }[],

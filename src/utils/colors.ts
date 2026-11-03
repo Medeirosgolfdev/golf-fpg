@@ -52,8 +52,8 @@ export const C = {
   purple:       "#9c27b0",  // USKids — categoria especial
   orangeDeep:   "#e65100",  // USKids — não-euro
 
-  // Neutral/muted (scoreDisplay.ts sc3m, scDark)
-  muted:        "#888",      // cor neutra — meio termo em sc3m (C.muted)
+  // Neutral/muted (= .tone-muted de scoreDisplay.ts toneClass, scDark)
+  muted:        "#888",      // cor neutra — meio termo do tom bom/mau (C.muted)
   infoDark:     "#0369a1",   // azul escuro info — scDark("info")  (= --color-info-dark)
 
   // Greyscale

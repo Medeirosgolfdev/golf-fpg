@@ -12,7 +12,7 @@ import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import SortableHdr from "./SortableHdr";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
-import { fmtDatePt } from "../utils/format";
+import { fmtDatePt, fmtOrd } from "../utils/format";
 import { MUTED } from "./tableCells";
 
 export interface PlayerTournItem {
@@ -87,7 +87,7 @@ export default function PlayerTournamentsPanel({
     <div className="u-p-6px-0-10px">
       <div className="muted fs-11 u-mb-6px">
         <b>{resumo.n}</b> {resumo.n === 1 ? "torneio" : "torneios"} em {resumo.anos} {resumo.anos === 1 ? "época" : "épocas"}
-        {resumo.best != null && <> · melhor classificação <b>{resumo.best}.º</b></>}
+        {resumo.best != null && <> · melhor classificação <b>{fmtOrd(resumo.best)}</b></>}
         {resumo.semResultado > 0 && <> · {resumo.semResultado} sem resultado publicado</>}
         <span className="u-ml-8px u-fst-italic">clica no torneio para ver a leaderboard completa</span>
       </div>
@@ -126,7 +126,7 @@ export default function PlayerTournamentsPanel({
               <td className="num u-ws-nowrap">
                 {i.pos != null ? (
                   <>
-                    <b>{i.pos}.º</b>
+                    <b>{fmtOrd(i.pos)}</b>
                     {i.field ? <span className="muted fs-10"> de {i.field}</span> : null}
                   </>
                 ) : (

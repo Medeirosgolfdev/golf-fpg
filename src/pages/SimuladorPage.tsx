@@ -13,7 +13,6 @@ import {
   calcSD, calcScore, calcCourseHcp, calcPlayingHcp, expectedSD9, calcStrokesPerHole, get9hRatings,
   scoreDifferential, scoreForDifferential,
 } from "../utils/whsCalc";
-import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
 import { getNextCalendarEvent } from "../utils/calendarData";
@@ -33,6 +32,16 @@ import { cachedFetchJson } from "../data/fetchCache";
 import { courseMatchKey, resolvePlayedTee } from "../utils/playedDistance";
 import ClearButton from "../ui/ClearButton";
 import Select from "../ui/Select";
+
+/** ±par de um buraco no cartão do simulador: verde abaixo, cinzento no par, âmbar até +2,
+ *  vermelho acima. Utilitários (!important) porque a linha `.sc-table-modern .meta-row td`
+ *  é cinzenta e ganharia às classes de tom. */
+const vsParCls = (v: number | null) =>
+  v == null ? "u-c-border u-fw-400"
+    : `u-fw-600 ${v < 0 ? "u-c-color-good" : v === 0 ? "u-c-text-3" : v <= 2 ? "u-c-var-color-warn-e07b00" : "u-c-color-danger"}`;
+/** Score ajustado (AGS): cortado pelo Net Double Bogey a vermelho, o resto a verde. */
+const adjCls = (capped: boolean, adjusted: number | null) =>
+  `${capped ? "tone-bad" : adjusted != null ? "tone-good" : "u-c-border"} ${adjusted != null ? "u-fw-700" : "u-fw-400"}`;
 
 /* Jogadores do selector que não estão no players.json (Drive da Madeira e
  * escolhidos à mão) — gerado por scripts/build-simulador-players.js com o HI
@@ -611,18 +620,18 @@ function AgsSection({
               <td className="row-label c-muted fs-10 fw-400">±Par</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
-                  <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "var(--text-3)" : h.vsPar <= 2 ? SC.warn : SC.danger) : "var(--border)", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                  <td className={vsParCls(h.vsPar)}>
                     {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                   </td>
                   {is18 && i === 8 && (
- <td className="col-out fw-600" style={{ color: grossOut != null ? (grossOut - scSumPar(front) <= 0 ? SC.good : SC.warn) : "var(--border)" }}>
+ <td className={`col-out fw-600 ${grossOut != null ? (grossOut - scSumPar(front) <= 0 ? "u-c-color-good" : "u-c-var-color-warn-e07b00") : "u-c-border"}`}>
                       {scFmtVsPar(grossOut, scSumPar(front))}
                     </td>
                   )}
                 </React.Fragment>
               ))}
               {is18 && back.map((h) => (
-                <td key={h.hole} style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "var(--text-3)" : h.vsPar <= 2 ? SC.warn : SC.danger) : "var(--border)", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                <td key={h.hole} className={vsParCls(h.vsPar)}>
                   {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                 </td>
               ))}
@@ -678,7 +687,7 @@ function AgsSection({
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
                       <React.Fragment key={h.hole}>
-                        <td style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--border)", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                        <td className={adjCls(capped, h.adjusted)}>
                           {h.adjusted != null ? h.adjusted : ""}
                           {capped && <span className="fs-10">✂</span>}
                         </td>
@@ -691,7 +700,7 @@ function AgsSection({
                   {is18 && back.map((h) => {
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
-                      <td key={h.hole} style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--border)", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                      <td key={h.hole} className={adjCls(capped, h.adjusted)}>
                         {h.adjusted != null ? h.adjusted : ""}
                         {capped && <span className="fs-10">✂</span>}
                       </td>

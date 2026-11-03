@@ -12,10 +12,8 @@ import { fmtToPar } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
-import { SC, fmtStb, fmtSdVal } from "../utils/scoreDisplay";
+import { toneClass, fmtStb, fmtSdVal } from "../utils/scoreDisplay";
 import ExpandArrow from "./ExpandArrow";
-
-const tpColorOf = (d: number) => d > 0 ? SC.danger : d < 0 ? SC.good : SC.muted;
 
 export function EclecticSection({ ecList, ecDet, courseRounds, holesData, activeTee, onSelectTee }: {
   ecList: EclecticEntry[]; ecDet: Record<string, EclecticEntry>;
@@ -140,7 +138,7 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
     <td className={cls}>
       <div className="ec-sum-g">{gross || ""}</div>
       {gross > 0 && par > 0 && (
-        <div className="ec-sum-tp" style={{ color: tpColorOf(gross - par) }}>{fmtToPar(gross - par)}</div>
+        <div className={`ec-sum-tp ${toneClass(gross - par, { muted: true })}`}>{fmtToPar(gross - par)}</div>
       )}
     </td>
   );
@@ -155,7 +153,7 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
         <div className="fw-600 fs-12 ecPillHeader u-d-flex u-fwr-wrap u-gap-6px u-ai-center u-w-0 u-minw-100pc u-box-sizing-border-box">
           <span className="muted">Eclético</span>
           <span className="fw-700">{ecTotal || "–"}</span>
-          {ecTotal > 0 && <span className="fw-700" style={{ color: tpColorOf(ecTotal - ecTotalPar) }}>{fmtToPar(ecTotal - ecTotalPar)}</span>}
+          {ecTotal > 0 && <span className={`fw-700 ${toneClass(ecTotal - ecTotalPar, { muted: true })}`}>{fmtToPar(ecTotal - ecTotalPar)}</span>}
           <button type="button" className="btn-link fs-12 u-c-accent" onClick={() => setAberto(v => !v)}
 >
             <ExpandArrow open={aberto} /> {teeRounds.length} volta{teeRounds.length === 1 ? "" : "s"}

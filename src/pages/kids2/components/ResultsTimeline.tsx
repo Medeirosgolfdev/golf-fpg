@@ -13,7 +13,8 @@ import SortableHdr from "../../../ui/SortableHdr";
 import InlineScorecard from "./InlineScorecard";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import { RoundPill, NineHPill, ScoringTag } from "../../../ui/PillBadge";
-import { tpColor } from "../../../ui/tournamentPrimitives";
+import { toneClass } from "../../../utils/scoreDisplay";
+import ToPar from "../../../ui/ToPar";
 import { fmtToPar, fmtDayMonth } from "../../../utils/format";
 import ClearButton from "../../../ui/ClearButton";
 import ExpandArrow from "../../../ui/ExpandArrow";
@@ -422,15 +423,13 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           })
         ) : (total ?? "—")}
       </td>
-      <td className={"u-ta-right " + (toPar != null && toPar < 0 ? "u-fw-700" : "u-fw-400")} style={{ color: tpColor(toPar) ?? "var(--text-3)" }}>
+      <td className={"u-ta-right " + (toPar != null && toPar < 0 ? "u-fw-700" : "u-fw-400") + " " + (toneClass(toPar) || "tone-muted")}>
         {fmtToPar(toPar)}
       </td>
       <td className="u-ta-right">
         {r.vsManuelDiff != null && (
-          <span className="u-bg-bg-success-subtle u-c-color-good-dark u-fw-700 u-p-1px-4px u-br-radius-sm u-fs-fs-10 u-bd-ci9jy"
-            title={r.manuelPos != null ? `Manuel ficou em #${r.manuelPos}` : "Manuel também jogou"}>
-            {r.vsManuelDiff === 0 ? "0" : r.vsManuelDiff > 0 ? `+${r.vsManuelDiff}` : String(r.vsManuelDiff)}
-          </span>
+          <ToPar v={r.vsManuelDiff} tone="neutral" kind="delta" className="p p-sm p-muted"
+            title={r.manuelPos != null ? `Manuel ficou em #${r.manuelPos}` : "Manuel também jogou"} />
         )}
         {r.manuelPos != null && (
           <div className="u-fs-fs-9 u-c-color-good-dark u-mt-1px u-fw-600">

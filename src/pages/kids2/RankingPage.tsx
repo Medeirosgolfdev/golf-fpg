@@ -27,7 +27,7 @@ import EmptyState from "../../ui/EmptyState";
 import Kids2SubNav from "./Kids2SubNav";
 import { MANUEL_BIRTH_YEAR, isManuel } from "../../constants/manuel";
 import { useScoutRanking } from "./useScoutRanking";
-import { medal as medalOf } from "../../utils/format";
+import { medal as medalOf, fmtOrd, shortTournamentName } from "../../utils/format";
 import SearchInput from "../../ui/SearchInput";
 import TierBadge from "../../ui/TierBadge";
 import { TrophyCount } from "../../ui/PillBadge";
@@ -38,29 +38,6 @@ const YEARS = Array.from({ length: 12 }, (_, i) => 2019 - i); // 2019..2008
 type SexFilter = "M" | "F";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-
-function ordinal(n: number): string {
-  if (n === 1) return "1.º";
-  if (n === 2) return "2.º";
-  if (n === 3) return "3.º";
-  return `${n}.º`;
-}
-
-function shortName(name: string): string {
-  return name
-    .replace("European Championship", "EC")
-    .replace("World Championship", "WC")
-    .replace("Venice Open", "Venice")
-    .replace("Marco Simone Invitational", "Marco Simone")
-    .replace("Rome Classic", "Rome")
-    .replace("Red White & Blue Invitational", "RWB")
-    .replace("Sandestin Championship", "Sandestin")
-    .replace("Desert Shootout", "Desert")
-    .replace("Mississippi State Invitational", "MS State")
-    .replace("South Carolina State Invitational", "SC State")
-    .replace(/Real Club de Golf\s+/, "")
-    .replace(/20(\d{2})\b/, "'$1");
-}
 
 /** Classe do chip do percurso: pódio = cores da medalha; top 10 = azul. */
 function journeyClass(pos: number | null | undefined): string {
@@ -97,7 +74,7 @@ function buildJourney(j: Junior, tournamentById: Map<string, Tournament>): Journ
       items.push({
         tid,
         name: t.name || tid,
-        shortName: shortName(t.name || tid),
+        shortName: shortTournamentName(t.name || tid, { year: "short" }),
         date: t.date || t.startDate || "",
         stars,
         pos: typeof r.pos === "number" ? r.pos : null,
@@ -120,7 +97,7 @@ function JourneyChip({ item }: { item: JourneyItem }) {
       className={journeyClass(item.pos)}
     >
       <span className="u-op-0_65 u-fs-fs-10">{item.shortName}</span>
-      {item.pos != null && <span className="u-fw-700">{ordinal(item.pos)}</span>}
+      {item.pos != null && <span className="u-fw-700">{fmtOrd(item.pos)}</span>}
       {item.toPar != null && item.toPar < 0 && (
         <span className="u-fs-fs-10 u-op-0_8">{item.toPar}</span>
       )}

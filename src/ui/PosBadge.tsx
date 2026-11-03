@@ -1,5 +1,6 @@
 import { MUTED } from "./tableCells";
-
+
+import { fmtOrd } from "../utils/format";
 /** Classe de cor do selo de posição (.pos-medal-1/2/3; -n fora do pódio). */
 export function medalClass(pos: number): string {
   return pos >= 1 && pos <= 3 ? "pos-medal-" + pos : "pos-medal-n";
@@ -9,7 +10,7 @@ export function medalClass(pos: number): string {
  *  Partilhado por AtletaSearchPanel e SantoDaSerraPanel; o Kids 2 usa as
  *  mesmas classes (.pos-medal) com o rótulo «🏆 #N». */
 export default function PosBadge({ pos }: { pos: number }) {
-  const label = pos === 1 ? "🥇 1.º" : pos === 2 ? "🥈 2.º" : pos === 3 ? "🥉 3.º" : pos + ".º";
+  const label = (pos === 1 ? "🥇 " : pos === 2 ? "🥈 " : pos === 3 ? "🥉 " : "") + fmtOrd(pos);
   return <span className={"pos-medal " + medalClass(pos)}>{label}</span>;
 }
 

@@ -14,7 +14,7 @@
  */
 
 import { useMemo, useState } from "react";
-import { fmtToPar, fpgScoringUrl } from "../utils/format";
+import { fmtToPar, fpgScoringUrl, fmtOrd } from "../utils/format";
 import { normName } from "../utils/normName";
 import type { Tournament } from "../data/fpgTypes";
 import { RoundPill, EscPill } from "./PillBadge";
@@ -26,7 +26,7 @@ import KpiCard from "./KpiCard";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
 import CloseButton from "./CloseButton";
-
+
 import SectionTitle from "./SectionTitle";
 interface PlayerEntry {
   pos: number | string | null;
@@ -387,7 +387,7 @@ export default function AtletaSearchPanel({
             <Kpi label="Top-10" value={selected.top10 || "—"} />
             <Kpi
               label="Melhor"
-              value={selected.best < 999 ? `${selected.best}.º` : "—"}
+              value={selected.best < 999 ? fmtOrd(selected.best) : "—"}
               accent={selected.best === 1}
             />
           </div>

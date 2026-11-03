@@ -14,7 +14,7 @@
  * `PastEditionsTab` na MajorPage, que faz lazy-load dos `{slug}_{ano}.json`).
  */
 import { useMemo, useState } from "react";
-import { medal as medalOf } from "../../utils/format";
+import { medal as medalOf, fmtOrd } from "../../utils/format";
 import { clubFlagPrefix } from "../../utils/flagUtils";
 import ToPar from "../ToPar";
 import EmptyState from "../EmptyState";
@@ -196,7 +196,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                       <td key={`${e.id}_n`}
                           className={[p?.isManuel ? "cell-manuel fw-700" : p?.isPt ? "cell-portuguese" : ""].filter(Boolean).join(" ") || undefined}
                           style={{ textAlign: "left", borderLeft: bl(ei), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}
-                          title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${p.pos}.º oficial` : ""}` : undefined}>
+                          title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${fmtOrd(p.pos)} oficial` : ""}` : undefined}>
                         {p ? <>{clubFlagPrefix(p.club) }{p.name}</> : MUTED}
                       </td>,
                       // Total de quem NÃO completou (WD/DNF ou volta a decorrer)

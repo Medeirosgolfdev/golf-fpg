@@ -12,7 +12,7 @@ import { eclecticos9, type LoopEclectic, type LoopTee } from "../data/sserraLoop
 import { useCamposDe9 } from "../hooks/useCamposDe9";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
 import { fmtToPar, shortDateSlash } from "../utils/format";
-import { SC } from "../utils/scoreDisplay";
+import { toneClass } from "../utils/scoreDisplay";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
 import ExpandArrow from "./ExpandArrow";
@@ -20,7 +20,7 @@ import { MUTED } from "./tableCells";
 import SectionTitle from "./SectionTitle";
 
 const soma = (g: (number | null)[]) => g.reduce<number>((s, v) => s + (v ?? 0), 0);
-const corPar = (d: number) => (d > 0 ? SC.danger : d < 0 ? SC.good : SC.muted);
+const corPar = (d: number) => toneClass(d, { muted: true });
 /** Voltas (dias), não metades: uma volta de 18 num 9 jogado 2× conta uma vez. */
 const nVoltas = (t: LoopTee) => new Set(t.rounds.map(r => r.scoreId)).size;
 const semBorda = { background: "none", border: "none", padding: 0, cursor: "pointer" } as const;
@@ -30,7 +30,7 @@ function TotalCel({ g, pars }: { g: (number | null)[]; pars: readonly number[] }
   return (
     <td className="col-total fw-700">
       <div className="ec-sum-g">{gt || ""}</div>
-      {gt > 0 && <div className="ec-sum-tp" style={{ color: corPar(gt - pt) }}>{fmtToPar(gt - pt)}</div>}
+      {gt > 0 && <div className={`ec-sum-tp ${corPar(gt - pt)}`}>{fmtToPar(gt - pt)}</div>}
     </td>
   );
 }
@@ -51,7 +51,7 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
         <span className="fw-700">{l.nome}</span>
         <span className="muted">· Eclético</span>
         <span className="fw-700">{t.total ?? "–"}</span>
-        {t.total != null && <span className="fw-700" style={{ color: corPar(t.total - parTot) }}>{fmtToPar(t.total - parTot)}</span>}
+        {t.total != null && <span className={`fw-700 ${corPar(t.total - parTot)}`}>{fmtToPar(t.total - parTot)}</span>}
         <button type="button" className="fs-12" onClick={() => setAberto(v => !v)} style={{ ...semBorda, color: "var(--accent)" }}>
           <ExpandArrow open={aberto} /> {nVoltas(t)} volta{nVoltas(t) === 1 ? "" : "s"}
         </button>
@@ -93,7 +93,7 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
               {t.total != null ? (
                 <td className="col-total fw-700">
                   <div className="ec-sum-g">{t.total}</div>
-                  <div className="ec-sum-tp" style={{ color: corPar(t.total - parTot) }}>{fmtToPar(t.total - parTot)}</div>
+                  <div className={`ec-sum-tp ${corPar(t.total - parTot)}`}>{fmtToPar(t.total - parTot)}</div>
                 </td>
               ) : <TotalCel g={t.best} pars={pars} />}
               {aberto && <td className="ec-extra" />}

@@ -20,7 +20,7 @@ import SortableHdr from "./SortableHdr";
 import SexBadge from "./SexBadge";
 import { C } from "../utils/colors";
 import { HcpDelta, MUTED } from "./tableCells";
-import { tpColor } from "./tournamentPrimitives";
+import { toneClass } from "../utils/scoreDisplay";
 import ClearButton from "./ClearButton";
 import Select from "./Select";
 
@@ -270,7 +270,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                   <td className="r">{fmtHcp(r.m.best)}</td>
                   <td className="r">
                     {r.m.slopePerMonth == null ? MUTED
-                      : <span style={{ color: tpColor(r.m.slopePerMonth) }}>
+                      : <span className={toneClass(r.m.slopePerMonth)}>
                           {fmtSign(r.m.slopePerMonth, 2)}
                         </span>}
                   </td>

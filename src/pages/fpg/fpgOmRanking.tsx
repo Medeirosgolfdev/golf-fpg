@@ -26,7 +26,7 @@ import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/use
 import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
 import { C } from "../../utils/colors";
-import { norm, shortDateSlash, fmtDatePt, todayIso } from "../../utils/format";
+import { norm, shortDateSlash, fmtDatePt, todayIso, fmtOrd } from "../../utils/format";
 import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
 import termosJson from "../../data/omCgssTermos.json";
 import { ModalidadePill } from "../../ui/PillBadge";
@@ -122,8 +122,8 @@ export function OmCatBadge({ hit }: { hit: OmHit }) {
   }
   return (
     <span className="p p-sm" style={{ background: c.bg, color: c.fg, borderColor: "transparent" }}
-      title={`Ordem de Mérito · ${hit.label} — ${hit.pos}.º (${hit.pts} pts)`}>
-      {CAT_SHORT[hit.catKey] || hit.label} {hit.pos}.º
+      title={`Ordem de Mérito · ${hit.label} — ${fmtOrd(hit.pos)} (${hit.pts} pts)`}>
+      {CAT_SHORT[hit.catKey] || hit.label} {fmtOrd(hit.pos)}
     </span>
   );
 }
@@ -211,9 +211,9 @@ function pointsLadder(
   const pts = (data?.points?.[lv] || {}) as Record<string, number>;
   const bands = (data?.bands?.[lv] || {}) as Record<string, number>;
   const out: Array<{ pos: string; pts: number }> = [];
-  for (let p = 1; p <= 10; p++) if (pts[p] != null) out.push({ pos: `${p}.º`, pts: pts[p] });
-  if (bands["11-15"] != null) out.push({ pos: "11-15º", pts: bands["11-15"] });
-  if (bands["16-20"] != null) out.push({ pos: "16-20º", pts: bands["16-20"] });
+  for (let p = 1; p <= 10; p++) if (pts[p] != null) out.push({ pos: fmtOrd(p), pts: pts[p] });
+  if (bands["11-15"] != null) out.push({ pos: "11.º–15.º", pts: bands["11-15"] });
+  if (bands["16-20"] != null) out.push({ pos: "16.º–20.º", pts: bands["16-20"] });
   return out;
 }
 
@@ -490,9 +490,9 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                         return (
                           <td key={ev.tcode} className="fs-12"
                             style={{ textAlign: "center", whiteSpace: "nowrap", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, ...(isHere ? HERE_CELL : {}) }}
-                            title={e ? `${ev.name}: ${e.pos}.º · ${ev.juniorScoring ? `${ev.juniorScoring}: ${e.score ?? ""} · ` : ""}gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
+                            title={e ? `${ev.name}: ${fmtOrd(e.pos)} · ${ev.juniorScoring ? `${ev.juniorScoring}: ${e.score ?? ""} · ` : ""}gross ${e.gross} · +${e.pts} pts` : `${ev.name}: não jogou`}>
                             {e
-                              ? <><b>{e.pos}.º</b> <span className="fs-11 u-c-accent u-fw-700">{e.pts}</span></>
+                              ? <><b>{fmtOrd(e.pos)}</b> <span className="fs-11 u-c-accent u-fw-700">{e.pts}</span></>
                               : <span className="p-muted">—</span>}
                           </td>
                         );
@@ -612,7 +612,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                         <th>#</th><th>Jogador</th>
                         <th title="Pontos de hoje">Hoje</th>
                         <th title="Total se ganhasse todas as provas que faltam">Máximo</th>
-                        <th title="Pontos que lhe faltam para passar o líder de hoje">Para o 1º</th>
+                        <th title="Pontos que lhe faltam para passar o líder de hoje">Para o 1.º</th>
                         <th title="Quantas das provas que faltam teria de GANHAR para passar o líder de hoje (as mais valiosas primeiro)">Vitórias</th>
                       </tr>
                     </thead>
@@ -640,7 +640,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                   </table>
                 </div>
                 <div className="fs-11 p-muted u-mt-6pxx u-lh-1_5">
-                  Contas sobre o ranking de HOJE: «Para o 1º» é a diferença para o líder actual, e «Vitórias» conta as
+                  Contas sobre o ranking de HOJE: «Para o 1.º» é a diferença para o líder actual, e «Vitórias» conta as
                   provas mais valiosas primeiro — se o líder também pontuar, a conta sobe.
                   {semHipotese > 0 ? ` ${semHipotese} jogador(es) já não chega(m) nem ganhando tudo.` : ""}
                   {" "}⚠ Não entra aqui a <strong>regra 7.1</strong> — ver a nota por baixo da tabela acima.
@@ -654,7 +654,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
             dessa prova (tabela acima). Quando os Termos não dizem nada sobre juniores, conta a classificação da prova. O
             clube só publicou a classificação «OM JUNIORES» em 3 provas (NOS Empresas, Barbeito, Taça do Clube) e ainda não
             publicou o ranking júnior de 2026. Sem cartão não pontua.
-            Provisório — no fecho da época (14 Nov) 3 torneios ou 3 pontuações não contam (regra 7.1); desempate no 1º pelo
+            Provisório — no fecho da época (14 Nov) 3 torneios ou 3 pontuações não contam (regra 7.1); desempate no 1.º pelo
             melhor resultado na última prova, depois HCP WHS mais baixo (regra 4).
             Fonte: rankings oficiais CGSS + classificações por prova (auto-atualizado).
           </p>
@@ -768,7 +768,7 @@ const SHORT_EV: Array<[RegExp, string]> = [
 function shortEv(name: string): string {
   for (const [rx, s] of SHORT_EV) if (rx.test(name || "")) return s;
   const om = (name || "").match(/(\d+)\s*º.*\bom\s*\/?\s*nos\b/i);
-  if (om) return `${om[1]}.º OM NOS`;
+  if (om) return `${fmtOrd(om[1])} OM NOS`;
   return (name || "")
     .replace(/torneio\s+(d[ae]\s+)?/i, "")
     .replace(/\s*cgss.*$/i, "")

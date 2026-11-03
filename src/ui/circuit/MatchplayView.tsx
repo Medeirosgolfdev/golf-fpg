@@ -225,8 +225,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
             return (
               <Fragment key={id}>
                 <tr
-                  className="player-list-row"
-                  style={{ cursor: expandable ? "pointer" : "default" }}
+                  className={`player-list-row ${expandable ? "u-cur-pointer" : "u-cur-default"}`}
                   onClick={() => expandable && toggleGame(id)}
                   title={expandable ? "Clicar para ver o buraco-a-buraco" : undefined}
                 >
@@ -235,7 +234,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
                   <td className="tight"><span className="p p-sm p-muted">{fmtFormat(g.format)}</span></td>
                   {/* Sem 🏆/✗/½ aqui: o badge com seta + bold/esbatido já dizem quem venceu;
                       as marcas por cima disso eram ruído (½ dos dois lados, ✗ solto). */}
-                  <td style={{ textAlign: "right", whiteSpace: "normal", fontWeight: left?.won ? 700 : 400, color: settled && !left?.won ? "var(--text-3)" : undefined }}>
+                  <td className={`u-ta-right u-ws-normal${left?.won ? " mp-won" : settled ? " mp-lost" : ""}`}>
                     {names(left, "left")}
                   </td>
                   <td className="u-ta-center u-ws-nowrap u-p-4px-14px">
@@ -245,7 +244,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
                       MUTED
                     )}
                   </td>
-                  <td style={{ whiteSpace: "normal", fontWeight: right?.won ? 700 : 400, color: settled && !right?.won ? "var(--text-3)" : undefined }}>
+                  <td className={`u-ws-normal${right?.won ? " mp-won" : settled ? " mp-lost" : ""}`}>
                     {names(right, "right")}
                   </td>
                   <td className="tight u-c-text-muted u-ws-nowrap">
@@ -319,13 +318,13 @@ function RoundTable({ round }: { round: MatchplayRound }) {
     const name = (
       // Sem bandeira não há espaço a separar nada — o espaço literal empurrava o
       // nome e desequilibrava a folga face à seta do lado Fora.
-      <span style={{ fontWeight: won ? 700 : 400, color: !settled || won ? undefined : "var(--text-3)" }}>
+      <span className={won ? "mp-won" : settled ? "mp-lost" : undefined}>
         {fl ? `${fl} ` : ""}{s?.name ?? "?"}
         {s?.seed ? <span className="u-fw-400 u-c-text-muted"> ({s.seed})</span> : null}
       </span>
     );
     return (
-      <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: align === "right" ? "flex-end" : "flex-start" }}>
+      <span className={`u-d-flex u-ai-center u-gap-6px ${align === "right" ? "u-jc-flex-end" : "u-jc-flex-start"}`}>
         {align === "left" ? <>{mark}{link}{name}</> : <>{name}{link}{mark}</>}
       </span>
     );
@@ -360,8 +359,7 @@ function RoundTable({ round }: { round: MatchplayRound }) {
             return (
               <Fragment key={id}>
                 <tr
-                  className={`player-list-row${isPt ? " row-portuguese" : ""}`}
-                  style={{ cursor: m.games.length ? "pointer" : "default" }}
+                  className={`player-list-row${isPt ? " row-portuguese" : ""} ${m.games.length ? "u-cur-pointer" : "u-cur-default"}`}
                   onClick={() => m.games.length && toggle(id)}
                   title={m.games.length ? "Clicar para ver os jogos (foursomes/singles)" : undefined}
                 >
@@ -458,8 +456,7 @@ function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
             return (
               <Fragment key={id}>
                 <tr
-                  className={`player-list-row${matchHasManuel(m) ? " row-manuel" : ""}`}
-                  style={{ cursor: m.games.length ? "pointer" : "default" }}
+                  className={`player-list-row${matchHasManuel(m) ? " row-manuel" : ""} ${m.games.length ? "u-cur-pointer" : "u-cur-default"}`}
                   onClick={() => m.games.length && toggle(id)}
                   title={m.games.length ? "Clicar para ver os duelos de cada par" : undefined}
                 >
@@ -522,7 +519,7 @@ function StandingsTable({ rows }: { rows: { pos: number; name: string }[] }) {
           {sorted.map(r => (
             <tr key={`${r.pos}-${r.name}`} className={`player-list-row${sideIsPt({ teamId: null, name: r.name, iso: null, country: null, points: null, isLead: false }) ? " row-portuguese" : ""}`}>
               <td className="num">{r.pos}</td>
-              <td style={{ fontWeight: r.pos <= 3 ? 700 : 400 }}>{r.name}</td>
+              <td className={r.pos <= 3 ? "u-fw-700" : undefined}>{r.name}</td>
             </tr>
           ))}
         </tbody>

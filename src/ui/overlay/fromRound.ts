@@ -5,7 +5,7 @@
 import type { Player, Tournament } from "../../data/fpgTypes";
 import { fillBlankHoles } from "../../data/fpgUtils";
 import { calcCourseHcp } from "../../utils/whsCalc";
-import { MONTHS_PT, isoDate } from "../../utils/format";
+import { MONTHS_PT, isoDate, fmtOrd } from "../../utils/format";
 import type { OverlayData } from "./types";
 
 /** Data da fonte → Date (meio-dia, sem saltos de fuso). Segue o `isoDate` da
@@ -81,7 +81,7 @@ export function overlayFromRound(
     event: ctx.event || t.name || "",
     round,
     date: roundDate(t, p, round, ctx.date),
-    position: pos && pos < 9999 ? (field ? `${pos}º de ${field}` : `${pos}º`) : "",
+    position: pos && pos < 9999 ? (field ? `${fmtOrd(pos)} de ${field}` : fmtOrd(pos)) : "",
     division,
   };
 }

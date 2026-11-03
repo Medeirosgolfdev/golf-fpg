@@ -18,7 +18,7 @@ import AdmissionsTab, { type AdmissionsExtraCol } from "../../ui/AdmissionsTab";
 import Select from "../../ui/Select";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../../data/nacional2026Loader";
 import Kids2SubNav from "./Kids2SubNav";
-import { fmtHcp } from "../../utils/format";
+import { fmtHcp, fmtOrd } from "../../utils/format";
 import SectionTitle from "../../ui/SectionTitle";
 
 interface Inscrito {
@@ -49,8 +49,8 @@ interface Lista {
 function CelAnterior({ a, ano }: { a: Anterior | null | undefined; ano: string }) {
   if (!a) return <span className="p-muted">—</span>;
   if (a.pos == null) return <span className="fs-11 p-muted" title={`Jogou em ${ano} mas não acabou`}>não acabou</span>;
-  return <span title={`${ano}: ${a.empate ? "empatado em " : ""}${a.pos}.º de ${a.de}${a.hcp != null ? ` · handicap ${fmtHcp(a.hcp)}` : ""}`}>
-    <b>{a.empate ? "T" : ""}{a.pos}.º</b> <span className="fs-11 p-muted">/{a.de}</span>
+  return <span title={`${ano}: ${a.empate ? "empatado em " : ""}${fmtOrd(a.pos)} de ${a.de}${a.hcp != null ? ` · handicap ${fmtHcp(a.hcp)}` : ""}`}>
+    <b>{a.empate ? "T" : ""}{fmtOrd(a.pos)}</b> <span className="fs-11 p-muted">/{a.de}</span>
   </span>;
 }
 /** Ordenação pela edição anterior: lugar (0) · jogou sem lugar (1) · não jogou (2) —

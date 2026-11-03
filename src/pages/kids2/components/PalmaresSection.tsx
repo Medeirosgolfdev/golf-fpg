@@ -16,7 +16,7 @@
 import { useMemo, useState } from "react";
 import type { CanonicalData, Junior, Tournament, Flight, Result } from "../data";
 import { getTournWeight, formatStars } from "../tournWeight";
-import { tpColor } from "../../../ui/tournamentPrimitives";
+import { toneClass } from "../../../utils/scoreDisplay";
 import { fmtToPar, MONTHS_PT } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
 import ShowMoreButton from "../../../ui/ShowMoreButton";
@@ -121,10 +121,7 @@ function WinCard({ win }: { win: WinCard }) {
       </div>
       <div className="u-d-flex u-ai-center u-gap-6px u-fs-fs-11 u-fwr-wrap">
         {win.toPar != null && (
-          <span style={{
-            fontWeight: 700,
-            color: tpColor(win.toPar) ?? "var(--text-2)",
-          }} title="Total ±par">
+          <span className={`u-fw-700 ${toneClass(win.toPar) || "u-c-text-2"}`} title="Total ±par">
             {fmtToPar(win.toPar)}
           </span>
         )}

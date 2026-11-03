@@ -24,7 +24,7 @@ import {
   type Sex,
 } from "../data/jovensAnaliseData";
 import { cachedFetchJson } from "../data/fetchCache";
-import { fpgScoringUrl, tournamentUrl, abreviarNome, fmtToPar } from "../utils/format";
+import { fpgScoringUrl, tournamentUrl, abreviarNome, fmtToPar, fmtOrd } from "../utils/format";
 import { Link } from "react-router-dom";
 import SexBadge from "./SexBadge";
 import { EscPill, TrophyCount } from "./PillBadge";
@@ -107,10 +107,10 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
         )}
         {manuel && highlightManuel && <span title="Manuel" className="u-fs-fs-10">★</span>}
         {elevated && (
-          <span title={`Foi ${p.pos}.º na classificação geral. O pódio do escalão+sexo é específico — quem ficou à frente pode ter sido de outra categoria (outro sexo, outro escalão num torneio combinado) ou um jogador estrangeiro.`}
+          <span title={`Foi ${fmtOrd(p.pos)} na classificação geral. O pódio do escalão+sexo é específico — quem ficou à frente pode ter sido de outra categoria (outro sexo, outro escalão num torneio combinado) ou um jogador estrangeiro.`}
             className="fs-10 muted fw-600 u-p-0-4px u-br-radius-sm u-bg-bg-muted"
 >
-            {p.pos}.º
+            {fmtOrd(p.pos)}
           </span>
         )}
       </div>
@@ -793,7 +793,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               {titles.length === 0 && bestApp && bestApp.ccode && bestApp.tcode && (
                 <ExtLink
                   href={fpgScoringUrl(bestApp.ccode, bestApp.tcode.split("+")[0])}
-                  title={`${bestApp.pos}.º de ${bestApp.total} em ${bestApp.tournamentName} — abrir torneio na FPG ↗`}
+                  title={`${fmtOrd(bestApp.pos)} de ${bestApp.total} em ${bestApp.tournamentName} — abrir torneio na FPG ↗`}
                   className="u-fs-fs-10 u-fw-700 u-c-text-3 u-td-none u-bg-bg-muted u-p-1px-4px u-br-radius-sm"
                 >
                   {bestApp.pos}/{bestApp.total}
@@ -801,7 +801,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               )}
               {titles.length === 0 && bestApp && (!bestApp.ccode || !bestApp.tcode) && (
                 <span
-                  title={`${bestApp.pos}.º de ${bestApp.total} em ${bestApp.tournamentName}`}
+                  title={`${fmtOrd(bestApp.pos)} de ${bestApp.total} em ${bestApp.tournamentName}`}
                   className="u-fs-fs-10 u-fw-700 u-c-text-3 u-bg-bg-muted u-p-1px-4px u-br-radius-sm"
                 >
                   {bestApp.pos}/{bestApp.total}

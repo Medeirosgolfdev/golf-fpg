@@ -15,7 +15,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Tournament } from "../../data/fpgTypes";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import { TeeDot } from "../../ui/tournamentPrimitives";
-import { fmtToPar, fmtSign } from "../../utils/format";
+import { fmtToPar, fmtSign, fmtOrd } from "../../utils/format";
 import ToPar from "../../ui/ToPar";
 import { normName } from "../../utils/normName";
 import { loadMasterData } from "../../data/loader";
@@ -120,7 +120,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
       } });
       for (const y of anos) depois.push({ grupo: "Nesta prova", key: `ano${y}`, label: String(y), title: `Lugar na edição de ${y}`,
         sort: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e?.pos ?? null; },
-        cell: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e ? (e.pos ? `${e.pos}.º` : "jogou") : "–"; } });
+        cell: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e ? (e.pos ? fmtOrd(e.pos) : "jogou") : "–"; } });
       depois.push({ grupo: "Nesta prova", key: "fit", label: "vs Campo", title: "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio", sort: (n) => R(n)?.courseFit ?? null, cell: (n) => {
         const c = R(n)?.courseFit;
         return c == null ? "–" : `${fmtSign(c)}`;
@@ -152,7 +152,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
             {r.editions.map((e) => (
               <div key={e.id} className="u-c-text-muted">
                 <b className="u-c-text">{e.year}</b>
-                {e.pos ? ` · ${e.pos}.º` : ""}
+                {e.pos ? ` · ${fmtOrd(e.pos)}` : ""}
                 {e.total != null ? ` · ${e.total}` : ""}
                 {e.toPar != null ? <> <ToPar v={e.toPar} light /></> : null}
                 {e.hcpThen != null ? ` · índice ${e.hcpThen}` : ""}

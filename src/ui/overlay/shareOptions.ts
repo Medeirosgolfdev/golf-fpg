@@ -8,7 +8,8 @@ import { computeRoundSD, fillBlankHoles, numGross } from "../../data/fpgUtils";
 import { isManuel } from "../../constants/manuel";
 import { overlayFromRound, roundNumberOf } from "./fromRound";
 import type { ShareOption } from "../ShareRoundPanel";
-
+
+import { fmtOrd } from "../../utils/format";
 type Ctx = { event?: string; course?: string; date?: string };
 export type ShareOptions = { options: ShareOption[]; defaultKey?: string };
 
@@ -34,7 +35,7 @@ export function shareOptionsForRound(t: Tournament, ctx: Ctx = {}, prefix = ""):
     if (!data) return;
     const key = `${prefix}${p.scoreId || p.name}`;
     const pid = String(p.fed || p.fedCode || p.name).toLowerCase();
-    options.push({ key, label: `${prefix}${pos}º · ${p.name} — ${numGross(p)}`, data, pid });
+    options.push({ key, label: `${prefix}${fmtOrd(pos)} · ${p.name} — ${numGross(p)}`, data, pid });
     if (!defaultKey && isManuel(p)) defaultKey = key;
   });
   return { options, defaultKey };
@@ -91,8 +92,8 @@ export function shareOptionsForTournament(rounds: Tournament[], ctx: Ctx = {}): 
     const k = `T · ${key}`;
     options.push({
       key: k,
-      label: `Torneio · ${pos}º · ${a.name} — ${sums.map((x) => x.gross).join("+")} = ${total(a)}`,
-      data: { ...last, sd: null, position: `${pos}º de ${ranked.length}`, round: sums.length, rounds: sums,
+      label: `Torneio · ${fmtOrd(pos)} · ${a.name} — ${sums.map((x) => x.gross).join("+")} = ${total(a)}`,
+      data: { ...last, sd: null, position: `${fmtOrd(pos)} de ${ranked.length}`, round: sums.length, rounds: sums,
         date: d0 && d1 && d0 !== d1 ? `${d0.replace(/ \d{4}$/, "")} – ${d1}` : d1 },
     });
     if (!defaultKey && a.manuel) defaultKey = k;

@@ -4,7 +4,7 @@ import { norm } from "../utils/format";
 import { normKey } from "../utils/teeColors";
 import { fmtStb } from "../utils/scoreDisplay";
 import { GrossCell, SdCell, HoleBadge } from "./tableCells";
-import { OriginPill, effectivePill } from "./eventInfo";
+import { EventInfo, effectivePill } from "./eventInfo";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
@@ -14,22 +14,6 @@ import { CourseLink } from "./jogadoresHelpers";
 
 /** Sort keys for Last20 scorecard table */
 export type L20SortKey = "whs" | "date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd" | "rank";
-
-
-
-
-
-function EventInfo({ name, origin }: {
-  name?: string; origin?: string; pill?: string;
-}) {
-  return (
-    <>
-      <span className="muted">{name || ""}</span>
-      <OriginPill origin={origin} />
-    </>
-  );
-}
-
 
 export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
   data: PlayerPageData;
@@ -140,7 +124,8 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
                       )}
                     </td>
                     <td><CourseLink name={r.course} /></td>
-                    <td className="fs-11"><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} /></td>
+                    <td className="fs-11"><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links}
+                      fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} /></td>
                     <td className="r"><HoleBadge hc={r.holeCount} /></td>
                     <td className="r">{r.hi ?? ""}</td>
                     <td><TeePill name={r.tee || ""} /></td>

@@ -28,7 +28,7 @@ import { getTeeHex } from "../../utils/teeColors";
 import { shortCampo } from "../../data/drive/driveCircuitData";
 import { AnoEscalaoPill } from "../../ui/AnoEscalaoPill";
 import { MUTED } from "../../ui/tableCells";
-import { fmtHcp, medal, norm, shortDateSlash } from "../../utils/format";
+import { fmtHcp, medal, norm, shortDateSlash, fmtOrd } from "../../utils/format";
 import { flagOrEmpty, isPtCountry } from "../../utils/flagUtils";
 import { ESCALOES_DRIVE } from "../../constants/escaloes";
 import type { DriveCalEntry } from "../../data/drive/driveCalendar";
@@ -123,7 +123,7 @@ function EtapaCell({ r, modal, bySex }: { r: TournResult | undefined; modal: { t
       {rounds.map((g, i) => <span key={"g" + i} className="aq-volta" title={`${i + 1}.ª volta`}>{g}</span>)}
       <span className="aq-lugar">
         {r.wd ? <span className="aq-wd">desistiu</span>
-          : lugar != null ? <span className={"pos-medal pos-medal-sm " + medalClass(lugar)}>{lugar}.º</span> : MUTED}
+          : lugar != null ? <span className={"pos-medal pos-medal-sm " + medalClass(lugar)}>{fmtOrd(lugar)}</span> : MUTED}
         {outroTee && <TeeSwatch tee={r.tee!} />}
       </span>
       {rounds.map((_, i) => sds[i] != null

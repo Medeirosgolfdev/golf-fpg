@@ -9,7 +9,7 @@
 import React, { useMemo } from "react";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import { fmtToPar, fmtHcp, shortDateSlash, escalaoAtDate } from "../utils/format";
-import { SC, sdClassByHcp } from "../utils/scoreDisplay";
+import { sdClassByHcp } from "../utils/scoreDisplay";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
 import { useCompareSelection } from "./useCompareSelection";
 import EmptyState from "./EmptyState";
@@ -168,8 +168,8 @@ function TournamentGrid({
   // Constantes de layout da grelha
 
   /** Variante local intencional: lógica invertida (negativo=danger, positivo=neutro) — específica do CrossSeason DRIVE */
-  const tpColor2 = (v: number | null) =>
-    v == null ? undefined : v < 0 ? SC.danger : v === 0 ? SC.good : undefined;
+  const tpTone2 = (v: number | null) =>
+    v == null ? "" : v < 0 ? "tone-bad" : v === 0 ? "tone-good" : "";
 
   const shortDate = shortDateSlash;
 
@@ -390,7 +390,7 @@ function TournamentGrid({
                 <React.Fragment key={t.key}>
                   <td className="cs-t-pos cs-grp">{res.pos ?? "–"}</td>
                   <td className="cs-t-gross cs-col">{res.gross}</td>
-                  <td className="cs-t-topar cs-col" style={{ color: tpColor2(res.toPar) }}>
+                  <td className={`cs-t-topar cs-col ${tpTone2(res.toPar)}`}>
                     {fmtToPar(res.toPar)}
                   </td>
                   <td className="cs-t-sd cs-col u-bl-1px-solid-border-light">

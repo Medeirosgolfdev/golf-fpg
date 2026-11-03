@@ -8,7 +8,7 @@ import React, { useMemo, useState } from "react";
 import type { PlayerPageData, RoundData, HcpInfo } from "../../../data/playerDataLoader";
 import { shortDate, fmtSign, fmtHcp } from "../../../utils/format";
 import { numSafe, meanArr, stdevArr, linearSlope, median } from "../../../utils/mathUtils";
-import { sc3m, SC } from "../../../utils/scoreDisplay";
+import { toneClass } from "../../../utils/scoreDisplay";
 import UiKpiCard from "../../../ui/KpiCard";
 import CollapseCard from "../../../ui/CollapseCard";
 import EmptyState from "../../../ui/EmptyState";
@@ -297,14 +297,14 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 5</div>
             <div className="kpi-val">{stats.last5}</div>
- <div className="fw-600 fs-11" style={{ color: sc3m(stats.diff5, 1, 1) }}>
+ <div className={`fw-600 fs-11 ${toneClass(stats.diff5, { lo: 1, hi: 1, muted: true })}`}>
               {fmtSign(stats.diff5, 1)}
             </div>
           </div>
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 10</div>
             <div className="kpi-val">{stats.last10}</div>
- <div className="fw-600 fs-11" style={{ color: sc3m(stats.diff10, 1, 1) }}>
+ <div className={`fw-600 fs-11 ${toneClass(stats.diff10, { lo: 1, hi: 1, muted: true })}`}>
               {fmtSign(stats.diff10, 1)}
             </div>
           </div>
@@ -381,7 +381,7 @@ export function WHSDetail({ hcp, bare }: { hcp: HcpInfo; bare?: boolean }) {
         <UiKpiCard label="Actual" value={fmtHcp(hcp.current)}
           color="var(--chart-2)" accentBorder="var(--chart-2)"
           sub={hcp.lowHcp != null
-            ? <span style={{ color: SC.danger, fontWeight: 600 }}>+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</span>
+            ? <span className="tone-bad fw-600">+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</span>
             : undefined} />
         <UiKpiCard label={`Média ${hcp.qtyCalc || 8} melhores`} value={hcp.scoreAvg?.toFixed(1) ?? "–"} />
       </div>

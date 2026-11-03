@@ -26,22 +26,26 @@ const TABELAS_GLOBAIS = [
   "sc-lb", "sc-table", "sc-table-modern", "sc-table-ec", "scorecard-table", "mx-table",
 ];
 
+/** O código sem comentários (de bloco, os {/ * * /} do JSX e as linhas «//») nem
+ *  entidades HTML («&#123;») — senão um «#fff» num comentário ou o «&#123;» de um
+ *  texto contavam como cores (03/11/2026: eram ~15 dos 75 «coresHex»). */
+const semComentarios = (t) => t.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "").replace(/&#\d+;/g, "");
+
 const MEDIDAS = {
   /** `style={{…}}` escritos à mão. */
-  estilosInline: (t) => (t.match(/style=\{\{/g) || []).length,
+  estilosInline: (t) => (semComentarios(t).match(/style=\{\{/g) || []).length,
   /** Cores hex no código (as cores vivem em tokens.css). */
-  coresHex: (t) => (t.match(/#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/g) || []).length,
+  coresHex: (t) => (semComentarios(t).match(/#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/g) || []).length,
   /** Tamanhos de letra em número (há --fs-N para todos). */
-  letraNumero: (t) => (t.match(/fontSize:\s*[0-9.]+/g) || []).length,
+  letraNumero: (t) => (semComentarios(t).match(/fontSize:\s*[0-9.]+/g) || []).length,
   /** Cantos em número (há --radius-*). */
-  cantosNumero: (t) => (t.match(/borderRadius:\s*[0-9.]+/g) || []).length,
+  cantosNumero: (t) => (semComentarios(t).match(/borderRadius:\s*[0-9.]+/g) || []).length,
   /** <table> sem uma das classes globais. */
   tabelasSemClasse: (t) => {
     let n = 0;
     // Fora: comentários e documentos HTML exportados (`<!DOCTYPE…</html>`, ex. o
     // relatório do simulador) — levam o seu próprio CSS, o App.css não chega lá.
-    const codigo = t.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "")
-      .replace(/`<!DOCTYPE[\s\S]*?<\/html>`/gi, "");
+    const codigo = semComentarios(t).replace(/`<!DOCTYPE[\s\S]*?<\/html>`/gi, "");
     for (const m of codigo.matchAll(/<table\b([^>]*)>/g)) {
       const cls = (m[1].match(/className=\{?[`"']([^`"']*)/) || [])[1] || "";
       const nomes = cls.split(/[^a-zA-Z0-9_-]+/);

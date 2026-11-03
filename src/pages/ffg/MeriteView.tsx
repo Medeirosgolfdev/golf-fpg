@@ -21,18 +21,18 @@ import { useSort, compareNullsLast } from "../../hooks/useSort";
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { isPTByName } from "../../utils/ptPlayers";
 import { isManuelByName } from "../../constants/manuel";
-import { displayName, fmtDatePt, fmtSign } from "../../utils/format";
+import { displayName, fmtDatePt, fmtSign, fmtOrd, titleCase } from "../../utils/format";
 import Pager from "../../ui/Pager";
 import { RankChange, MUTED } from "../../ui/tableCells";
 import ExpandArrow from "../../ui/ExpandArrow";
 import ExtLink from "../../ui/ExternalLink";
-import { stripAccents } from "../../utils/normName";
 import SearchInput from "../../ui/SearchInput";
 import ErrorState from "../../ui/ErrorState";
 import { ToggleChip } from "../../ui/FilterField";
 import Select from "../../ui/Select";
 import { toggleSet } from "../../utils/mathUtils";
 
+import { norm } from "../../utils/courseAliases";
 /** [trnId|null, data ISO, nome, lugar, voltas, pontos, Moy.SSS] */
 type Prova = [string | null, string, string, string, number[], number | null, number | null];
 export interface MeriteFile {
@@ -53,11 +53,9 @@ interface Row {
 type SK = "rank" | "name" | "cat" | "by" | "golf" | "idx" | "moy" | "moy6" | "nbt" | "total" | "rankAnn";
 
 const PAGE_SIZE = 100;
-const norm = (s: string) => stripAccents(s).toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
 const fmtSigned = (v: number | null) => (v == null ? MUTED : <>{fmtSign(v, 2)}</>);
 /** «Ricardo» + «CASTRO FERREIRA» → «Ricardo Castro Ferreira». */
-const nomeProprio = (prenom: string, nom: string) =>
-  `${prenom} ${nom.toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (_, a: string, b: string) => a + b.toUpperCase())}`.trim();
+const nomeProprio = (prenom: string, nom: string) => `${prenom} ${titleCase(nom)}`.trim();
 
 
 /** Linhas da vista a partir do ficheiro (escalão Sub pelo ano de nascimento, PT pelo nome). */
@@ -71,7 +69,7 @@ export function meriteRows(data: MeriteFile): Row[] {
     const name = nomeProprio(prenom, nom);
     const canon = by ? ffgEscalaoCanonico(`U${season - by}`) : null;
     return {
-      key: `${s}|${norm(nom)}|${norm(prenom)}`, s, rank: g("rank"), rankPrev: g("rankPrev"), nom, prenom, name,
+      key: `${s}|${norm(nom).toUpperCase()}|${norm(prenom).toUpperCase()}` /* chaves do ficheiro em MAIÚSCULAS */, s, rank: g("rank"), rankPrev: g("rankPrev"), nom, prenom, name,
       cat: g("cat"), by, sub: canon ? canon.replace(/\s*\(.*\)$/, "").replace("-", " ") : null,
       golf: displayName(g<string>("golf") || ""), moy: g("moy"), moy6: g("moy6"), nbt: g<number>("nbt") ?? 0,
       div: g("div"), total: g("total"), rankAnn: g("rankAnn"), statut: g("statut"), idx: g("idx"),
@@ -207,7 +205,7 @@ export function FFGMeriteView() {
                     <Fragment key={id}>
                       <tr onClick={() => toggleOpen(id)} style={{ cursor: "pointer", background: destaque ? "var(--bg-success-subtle)" : undefined }}>
                         <td className="u-ta-right u-ws-nowrap u-fw-600">
-                          {r.rank != null ? `${r.rank}.º` : MUTED}<RankChange up={r.rank != null && r.rankPrev != null ? r.rankPrev - r.rank : null} className="fs-11 u-ml-4px" title={r.rankPrev != null ? `Mês anterior: ${r.rankPrev}.º` : undefined} />
+                          {r.rank != null ? fmtOrd(r.rank) : MUTED}<RankChange up={r.rank != null && r.rankPrev != null ? r.rankPrev - r.rank : null} className="fs-11 u-ml-4px" title={r.rankPrev != null ? `Mês anterior: ${fmtOrd(r.rankPrev)}` : undefined} />
                         </td>
                         <td className="u-fw-600 u-ws-nowrap">
                           <span className="muted fs-11 u-mr-4px"><ExpandArrow open={isOpen} /></span>
@@ -227,7 +225,7 @@ export function FFGMeriteView() {
                         <td className="u-ta-right">{r.nbt || MUTED}</td>
                         <td className="u-ta-right">{r.div ?? MUTED}</td>
                         <td className="u-ta-right u-fw-600">{r.total != null && r.total > 0 ? r.total.toFixed(2) : MUTED}</td>
-                        <td className="u-ta-right">{r.rankAnn ? `${r.rankAnn}.º` : MUTED}</td>
+                        <td className="u-ta-right">{r.rankAnn ? fmtOrd(r.rankAnn) : MUTED}</td>
                       </tr>
                       {isOpen && (
                         <tr className="player-list-row-detail">

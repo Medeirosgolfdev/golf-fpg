@@ -18,7 +18,7 @@ import { isManuelByName } from "../../constants/manuel";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
 import { normPaisDisplay } from "../../utils/flagUtils";
 import { fmtToPar, displayName, todayIso } from "../../utils/format";
-import { tpColor } from "../../ui/tournamentPrimitives";
+import { toneClass } from "../../utils/scoreDisplay";
 import { useCompareSelection } from "../../ui/useCompareSelection";
 import HistoricScorecardsTab, { MIN_GROSS_18H, MIN_GROSS_9H } from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
@@ -1928,7 +1928,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
             </SortableHdr>
             {data.editions.map((e, ei) => (
               <th key={e.tcode} colSpan={e.nRounds + 2 + (e.parPerRound ? 1 : 0)}
-                  style={{ padding: "10px 10px 8px", textAlign: "center", fontWeight: 700, borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)" }}>
+                  className={`mx-ed mx-ed-head u-ta-center u-fw-700${ei === 0 ? " mx-first" : ""}`}>
                 <div className="u-d-flex u-fd-column u-ai-center u-gap-3px">
                   {/* Linha 1: ANO + METROS (destaque) + link ↗ + field-size */}
                   <div className="u-d-flex u-ai-baseline u-gap-8px u-c-text">
@@ -1964,7 +1964,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
               // Nome
               cells.push(
                 <th key={`${e.year}_name`}
-                    style={{ padding: "3px 6px", textAlign: "left", fontWeight: 600, fontSize: "var(--fs-10)", borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)", width: 150, minWidth: 150 }}>
+                    className={`mx-ed mx-ed-name u-p-3px-6px u-ta-left u-fw-600 u-fs-fs-10${ei === 0 ? " mx-first" : ""}`}>
                   Nome
                 </th>
               );
@@ -2012,8 +2012,8 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
             const medal = medalPos === 1 ? "var(--medal-gold-bg)" : medalPos === 2 ? "var(--medal-silver-bg)" : medalPos === 3 ? "var(--medal-bronze-bg)" : undefined;
             const medalFg = medalPos === 1 ? "var(--medal-gold-fg)" : medalPos === 2 ? "var(--medal-silver-fg)" : medalPos === 3 ? "var(--medal-bronze-fg)" : "var(--text-2)";
             return (
-              <tr key={pos} style={{ borderBottom: "1px solid var(--border-light)", opacity: isIE ? 0.75 : 1 }}>
-                <td style={{ padding: "4px 8px", fontWeight: 700, color: medalFg, textAlign: "center", position: "sticky", left: 0, background: medal || "var(--bg)", zIndex: "var(--z-base)", whiteSpace: "nowrap" }}>
+              <tr key={pos} className={`u-bb-1px-solid-border-light${isIE ? " u-op-0_75" : ""}`}>
+                <td className="u-p-4px-8px u-fw-700 u-ta-center u-pos-sticky u-left-0 u-z-z-base u-ws-nowrap" style={{ color: medalFg, background: medal || "var(--bg)" }}>
                   {compareSel.checkbox(row.rank)}
                   {displayPos != null
                     ? `#${displayPos}`
@@ -2031,11 +2031,11 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                   const entry = e.ranked[row.idx];
                   const cells = [];
                   cells.push(
-                    <td key={e.tcode + "_name"} style={{ padding: "4px 6px", borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}>
+                    <td key={e.tcode + "_name"} className={`mx-ed mx-ed-name u-p-4px-6px u-ws-nowrap u-ov-hidden u-tov-ellipsis${ei === 0 ? " mx-first" : ""}`}>
                       {entry ? (
                         <span className="u-d-inline-flex u-ai-center u-gap-4px">
                           <ExtLink href={kidsUrl({ name: entry.name })}
-                             style={{ color: entry.officialPlace == null ? "var(--text-2)" : "var(--text)", textDecoration: "none", cursor: "pointer", opacity: entry.officialPlace == null ? 0.7 : 1 }}
+                             className={`u-td-none u-cur-pointer ${entry.officialPlace == null ? "u-c-text-2 u-op-0_7" : "u-c-text"}`}
                              title={entry.officialPlace == null ? `${entry.name} — IE/DSQ/WD (sem classificação oficial)` : `Abrir perfil de ${entry.name} em nova janela`}>
                             {entry.name}
                           </ExtLink>
@@ -2052,14 +2052,14 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                     </td>
                   );
                   cells.push(
-                    <td key={e.tcode + "_T"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-card)", color: entry ? "var(--text)" : "var(--text-3)" }}>
+                    <td key={e.tcode + "_T"} className={`u-p-4px-6px u-ta-center u-fw-700 u-bg-bg-card ${entry ? "u-c-text" : "u-c-text-3"}`}>
                       {entry ? entry.total : "—"}
                     </td>
                   );
                   if (e.parPerRound) {
                     const tp = entry ? entry.total - e.parPerRound * e.nRounds : null;
                     cells.push(
-                      <td key={e.tcode + "_TP"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 600, color: tpColor(tp) ?? "var(--text-3)" }}>
+                      <td key={e.tcode + "_TP"} className={`u-p-4px-6px u-ta-center u-fw-600 ${toneClass(tp) || "tone-muted"}`}>
                         {fmtToPar(tp)}
                       </td>
                     );
@@ -2067,7 +2067,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                   for (let ri = 0; ri < e.nRounds; ri++) {
                     const v = entry?.rounds[String(ri + 1)];
                     cells.push(
-                      <td key={e.tcode + "_r" + (ri + 1)} style={{ padding: "4px 6px", textAlign: "center", color: v ? "var(--text)" : "var(--text-3)" }}>
+                      <td key={e.tcode + "_r" + (ri + 1)} className={`u-p-4px-6px u-ta-center ${v ? "u-c-text" : "u-c-text-3"}`}>
                         {v || "—"}
                       </td>
                     );

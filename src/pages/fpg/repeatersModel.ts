@@ -17,7 +17,7 @@
 import type { Tournament, Player } from "../../data/fpgTypes";
 import { computeSD } from "../../data/fpgUtils";
 import { calcScore } from "../../utils/whsCalc";
-import { stripAccents } from "../../utils/normName";
+import { norm } from "../../utils/courseAliases"; // a limpeza única «sem acentos, só letras e dígitos»
 
 /** Uma volta jogada por um repetente numa edição anterior. */
 export interface RepeaterRound {
@@ -137,9 +137,6 @@ export interface FedInfo {
   sex: string | null;
 }
 
-const norm = (s: string | null | undefined): string =>
-  stripAccents(String(s || ""))
-    .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 
 /**
  * Chave de nome para casar jogadores entre edições quando não há federado.

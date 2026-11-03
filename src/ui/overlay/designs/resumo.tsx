@@ -152,9 +152,9 @@ export function V52({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
   );
 }
 
-/** «9º de 42» → { pos: "9º", of: "42" }. */
+/** «9.º de 42» → { pos: "9.º", of: "42" } (aceita também o antigo «9º»). */
 const splitPos = (s: string) => {
-  const m = /^(\d+º)(?:\s+de\s+(\d+))?/.exec(s || "");
+  const m = /^(\d+\.?º)(?:\s+de\s+(\d+))?/.exec(s || "");
   return m ? { pos: m[1], of: m[2] ?? "" } : null;
 };
 const subSum = (r: RoundSum, a: number, b: number) => r.scores.slice(a, b).reduce((x, y) => x + y, 0);

@@ -13,7 +13,8 @@ import { flag as flagOf } from "../../utils/flagUtils";
 import ExpandArrow from "../../ui/ExpandArrow";
 import SearchInput from "../../ui/SearchInput";
 import { toggleSet } from "../../utils/mathUtils";
-
+
+import SidebarSectionTitle from "../../ui/SidebarSectionTitle";
 const MAX_VISIBLE = 8000;
 
 type SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "faldo" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv" | "fig" | "ggcondados";
@@ -192,9 +193,9 @@ export default function Sidebar({
       <div className="u-fl-1 u-oy-auto">
         {directos.length > 0 && (
           <>
-            <SectionHeader color="var(--color-good-dark)" icon="⚔️">
+            <SidebarSectionTitle sticky textColor="var(--color-good-dark)" icon="⚔️">
               Cruzou com Manuel ({directos.length})
-            </SectionHeader>
+            </SidebarSectionTitle>
             {directos.map((j) => (
               <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} sharedCount={sharedCountByJunior.get(j.id) || 0} />
             ))}
@@ -205,8 +206,8 @@ export default function Sidebar({
           const flagE = flagOf(country);
           return (
             <React.Fragment key={country}>
-              <SectionHeader
-                color="var(--text-2)"
+              <SidebarSectionTitle
+                sticky
                 onClick={() => toggleCountry(country)}
                 icon={flagE || "🌐"}
               >
@@ -215,7 +216,7 @@ export default function Sidebar({
                   {juniors.length}{totalInCountry > juniors.length ? `/${totalInCountry}` : ""}
                 </span>
                 <span className="u-fs-fs-9 u-op-0_5"><ExpandArrow open={!collapsed} /></span>
-              </SectionHeader>
+              </SidebarSectionTitle>
               {!collapsed && juniors.map((j) => (
                 <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} sharedCount={sharedCountByJunior.get(j.id) || 0} />
               ))}
@@ -228,40 +229,6 @@ export default function Sidebar({
           </div>
         )}
       </div>
-    </div>
-  );
-}
-
-function SectionHeader({ children, color, icon, onClick }: {
-  children: React.ReactNode;
-  color: string;
-  icon?: string;
-  onClick?: () => void;
-}) {
-  return (
-    <div
-      onClick={onClick}
-      style={{
-        padding: "6px 12px",
-        fontSize: "var(--fs-11)",
-        fontWeight: 700,
-        background: "var(--bg-muted)",
-        color,
-        borderBottom: "1px solid var(--border-light)",
-        borderTop: "1px solid var(--border-light)",
-        position: "sticky",
-        top: 0,
-        zIndex: "var(--z-base)",
-        cursor: onClick ? "pointer" : "default",
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-        textTransform: "uppercase",
-        letterSpacing: 0.4,
-      }}
-    >
-      {icon && <span className="u-fs-fs-13 u-lh-1">{icon}</span>}
-      {children}
     </div>
   );
 }

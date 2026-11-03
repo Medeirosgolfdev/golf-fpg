@@ -8,6 +8,8 @@
  *   <SidebarSectionTitle>🏌️ Torneios</SidebarSectionTitle>
  *   <SidebarSectionTitle dark>📅 Janeiro 2025</SidebarSectionTitle>
  *   <SidebarSectionTitle dark color="var(--color-info-dark)">🎯 USKids</SidebarSectionTitle>
+ *   <SidebarSectionTitle sticky icon="⚔️" textColor="var(--color-good-dark)">Cruzou com Manuel (12)</SidebarSectionTitle>
+ *   <SidebarSectionTitle sticky icon="🇪🇸" onClick={toggle}>Espanha …</SidebarSectionTitle>
  *   <SidebarSectionTitle dark color="var(--color-doral-dark)" textColor="var(--color-doral-text)" borderColor="var(--color-doral-mid)" letterSpacing="0.08em">
  *     🇺🇸 Doral Jr. Classic
  *   </SidebarSectionTitle>
@@ -25,6 +27,12 @@ interface SidebarSectionTitleProps {
   borderColor?: string;
   /** Letter-spacing customizado */
   letterSpacing?: string;
+  /** Emoji/bandeira à esquerda. */
+  icon?: React.ReactNode;
+  /** Fica preso ao topo da lista ao fazer scroll (fundo cinzento). */
+  sticky?: boolean;
+  /** Cabeçalho clicável (abrir/fechar o grupo). */
+  onClick?: () => void;
   className?: string;
   children: React.ReactNode;
 }
@@ -35,6 +43,9 @@ export default function SidebarSectionTitle({
   textColor,
   borderColor,
   letterSpacing,
+  icon,
+  sticky,
+  onClick,
   className,
   children,
 }: SidebarSectionTitleProps) {
@@ -46,7 +57,11 @@ export default function SidebarSectionTitle({
   if (letterSpacing) style.letterSpacing = letterSpacing;
 
   return (
-    <div className={`${base}${className ? " " + className : ""}`} style={Object.keys(style).length ? style : undefined}>
+    <div className={`${base}${sticky ? " is-sticky" : ""}${onClick ? " is-clickable" : ""}${className ? " " + className : ""}`}
+      style={Object.keys(style).length ? style : undefined} onClick={onClick}
+      role={onClick ? "button" : undefined} tabIndex={onClick ? 0 : undefined}
+      onKeyDown={onClick ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } } : undefined}>
+      {icon && <span className="sidebar-section-icon">{icon}</span>}
       {children}
     </div>
   );

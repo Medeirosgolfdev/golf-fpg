@@ -18,7 +18,7 @@ import { TIER } from "../data/rivalData";
 import { TR_I } from "../constants/config";
 import TierLegend from "./TierLegend";
 import Select from "./Select";
-import { fmtSign } from "../utils/format";
+import { fmtSign, fmtOrd } from "../utils/format";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
 interface TGTournDef {
@@ -700,7 +700,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       {rankMap[p.n] != null ? (
                         <div>
                           <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
-                            {rankMap[p.n]}.º
+                            {fmtOrd(rankMap[p.n])}
                           </div>
                           <div className="fs-10 c-text-3">{tgNPlayed(p)}T · {tgNRounds(p)}R</div>
                         </div>

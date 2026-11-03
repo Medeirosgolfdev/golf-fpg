@@ -16,7 +16,7 @@ import { useSort, compareValuesNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { getTournWeight, formatStars } from "../tournWeight";
 import { categorizeTournamentLinks } from "../tournamentLinks";
-import { tpColor } from "../../../ui/tournamentPrimitives";
+import { toneClass } from "../../../utils/scoreDisplay";
 import { fmtToPar } from "../../../utils/format";
 import { ScoringTag, TrophyCount } from "../../../ui/PillBadge";
 import ExpandArrow from "../../../ui/ExpandArrow";
@@ -292,7 +292,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                       {grosses.length ? grosses.join("·") : total ?? "—"}
                       {total != null && grosses.length > 1 && <span className="u-c-text-3 u-ml-4px">({total})</span>}
                     </td>
-                    <td className={"u-ta-right " + (toPar != null && toPar !== 0 ? "u-fw-700" : "u-fw-400")} style={{ color: tpColor(toPar) ?? "var(--text-3)" }}>
+                    <td className={"u-ta-right " + (toPar != null && toPar !== 0 ? "u-fw-700" : "u-fw-400") + " " + (toneClass(toPar) || "tone-muted")}>
                       {fmtToPar(toPar)}
                     </td>
                     {manuel && manuel.id !== ed.result.juniorId && (

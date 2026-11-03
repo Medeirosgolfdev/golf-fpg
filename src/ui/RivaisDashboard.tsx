@@ -2,10 +2,10 @@
  * RivaisDashboard — International rivals analysis table
  */
 import React, { useMemo, useState } from "react";
-import { fmtSign, sortArrow } from "../utils/format";
+import { fmtSign, sortArrow, fmtOrd } from "../utils/format";
 import { flag as countryFlag } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ, meanArr } from "../utils/mathUtils";
-import { sc3m } from "../utils/scoreDisplay";
+import { toneClass } from "../utils/scoreDisplay";
 import KpiCard from "./KpiCard";
 import { compareNullsLast } from "../hooks/useSort";
 import WdBadge from "./WdBadge";
@@ -669,8 +669,7 @@ export default function RivaisDashboard({
                           <div className="fs-10 fw-600 c-text-3">#{res.p}</div>
                           {vsM != null && (
                             <div
-                              className="fs-10 fw-600"
-                              style={{ color: sc3m(vsM, 0, 0) }}
+                              className={`fs-10 fw-600 ${toneClass(vsM, { muted: true })}`}
                             >
                               {fmtSign(vsM)}
                             </div>
@@ -704,7 +703,7 @@ export default function RivaisDashboard({
                                       : "var(--text-3)",
                               }}
                             >
-                              {rankMap[p.n]}.º
+                              {fmtOrd(rankMap[p.n])}
                             </div>
                             <div className="fs-10 c-text-3">
                               {nPlayed(p)}T
@@ -756,8 +755,7 @@ export default function RivaisDashboard({
                           MUTED
                         ) : vsAvg != null ? (
                           <span
-                            className="fs-12 fw-700"
-                            style={{ color: sc3m(vsAvg, 0, 0) }}
+                            className={`fs-12 fw-700 ${toneClass(vsAvg, { muted: true })}`}
                           >
                             {fmtSign(vsAvg)}
                           </span>

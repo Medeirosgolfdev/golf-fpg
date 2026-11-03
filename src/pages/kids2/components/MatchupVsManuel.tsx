@@ -14,7 +14,7 @@ import { useSort, compareValuesNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import KpiCard from "../../../ui/KpiCard";
 import ToPar from "../../../ui/ToPar";
-import { fmtSign, fmtMonthYear } from "../../../utils/format";
+import { fmtSign, fmtMonthYear, fmtOrd } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
 import { TrophyPos } from "../../../ui/PosBadge";
 import SectionTitle from "../../../ui/SectionTitle";
@@ -123,7 +123,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
   return (
     <div className="u-bg-bg u-bd-1px-solid-border u-br-radius-lg u-p-12px-16px">
       <SectionTitle icon="⚔️" right={avgPosJ != null && avgPosM != null
-        ? <span>Avg: {firstName} {avgPosJ}.º · Manuel {avgPosM}.º</span>
+        ? <span>Avg: {firstName} {fmtOrd(avgPosJ)} · Manuel {fmtOrd(avgPosM)}</span>
         : undefined}>
         Confronto com Manuel
       </SectionTitle>

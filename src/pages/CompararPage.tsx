@@ -31,7 +31,7 @@ import LoadingState from "../ui/LoadingState";
 import { C } from "../utils/colors";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
-import { tpColor } from "../ui/tournamentPrimitives";
+import { toneClass } from "../utils/scoreDisplay";
 import SearchInput from "../ui/SearchInput";
 import CloseButton from "../ui/CloseButton";
 import Select from "../ui/Select";
@@ -520,10 +520,10 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
                   const diff = e?.avg != null && e?.par != null ? e.avg - e.par : null;
                   const sl = e?.strokesLost ?? null;
                   const isBest = diff != null && diff === bestAvg && avgs.filter(v => v === bestAvg).length === 1;
-                  const diffCol = diff == null ? undefined : diff <= 0 ? "var(--color-good)" : diff <= 0.3 ? "var(--color-warn)" : "var(--color-danger)";
+                  const diffTone = diff == null ? "" : diff <= 0 ? "tone-good" : diff <= 0.3 ? "u-c-var-color-warn-e07b00" : "tone-bad";
                   return (<React.Fragment key={i}>
-                    <td className="r" style={{ color: diffCol }}>{diff != null ? (isBest ? <b>{fD2(diff)}</b> : fD2(diff)) : "–"}</td>
-                    <td className="r" style={{ color: sl != null && sl > 0.2 ? "var(--color-danger)" : "var(--text-3)" }}>{sl != null ? fD2(sl) : "–"}</td>
+                    <td className={`r ${diffTone}`}>{diff != null ? (isBest ? <b>{fD2(diff)}</b> : fD2(diff)) : "–"}</td>
+                    <td className={`r ${sl != null && sl > 0.2 ? "tone-bad" : "tone-muted"}`}>{sl != null ? fD2(sl) : "–"}</td>
                   </React.Fragment>);
                 })}
               </tr>);
@@ -705,7 +705,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
               <div className="caKpiLbl">{shortName(s.name)}</div>
               {delta != null && (
-                <div className="u-fs-fs-10 u-fw-700 u-mt-2px" style={{ color: tpColor(delta) ?? "var(--text-3)" }}>
+                <div className={`u-fs-fs-10 u-fw-700 u-mt-2px ${toneClass(delta) || "tone-muted"}`}>
                   {fmtSign(delta, 1)} no período
                 </div>
               )}

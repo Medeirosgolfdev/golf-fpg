@@ -27,11 +27,10 @@
  *  – SD e estatísticas vêm APÓS o scorecard (postScorecardCells).
  */
 import React, { useMemo } from "react";
-import { scClass } from "../utils/scoreDisplay";
+import { scClass, toneClass } from "../utils/scoreDisplay";
 import { fmtToPar } from "../utils/format";
 import { useSort, compareNullsLast } from "../hooks/useSort";
 import { isNoCardGross } from "../data/intlCommon";
-import { tpColor } from "./tournamentPrimitives";
 import { useCompareSelection } from "./useCompareSelection";
 import TeeSwatch from "./TeeSwatch";
 
@@ -429,7 +428,7 @@ export function ScorecardLeaderboard({
                   {row.prefixCells}
                   {!hideTotals && (
                     <>
-                      <td className="lb-topar" style={{ color: tpColor(row.toPar), borderTop: row.borderTop }}>{fmtToPar(row.toPar)}</td>
+                      <td className={`lb-topar ${toneClass(row.toPar)}`} style={{ borderTop: row.borderTop }}>{fmtToPar(row.toPar)}</td>
                       <td className="lb-gross" style={{ borderTop: row.borderTop }}>{row.gross > 0 ? row.gross : "–"}</td>
                     </>
                   )}

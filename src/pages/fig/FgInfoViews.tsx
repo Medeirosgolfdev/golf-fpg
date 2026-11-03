@@ -16,7 +16,7 @@ import ErrorState from "../../ui/ErrorState";
 import { EscPill } from "../../ui/PillBadge";
 import { MUTED } from "../../ui/tableCells";
 import { RankingTable, RankingDetail, nameCell, type RankingCol } from "../../ui/ranking/RankingPage";
-import { todayIso, fmtDatePt } from "../../utils/format";
+import { todayIso, fmtDatePt, fmtOrd } from "../../utils/format";
 import { escalaoCanon } from "../../data/model/escalao";
 import type { FgIndice } from "../../data/federgolf/types";
 import { fgClube, fgNome, fgTitulo } from "../../data/federgolf/toTournament";
@@ -237,13 +237,13 @@ export function FgJogadorView({ id, ano }: { id: string; ano?: string | null }) 
         <span className="muted">{fgClube(e.clube)}</span>
       </>}
       stats={[
-        { label: `Ranking ${e.ano}`, value: `${e.pos ?? "—"}.º de ${e.de}`, title: `${e.categoria} ${e.sexo === "F" ? "femininas" : "masculinos"}` },
+        { label: `Ranking ${e.ano}`, value: `${fmtOrd(e.pos)} de ${e.de}`, title: `${e.categoria} ${e.sexo === "F" ? "femininas" : "masculinos"}` },
         { label: "Idade", value: e.idade ?? "—" },
         { label: "Média (gross − CR)", value: e.media != null ? e.media.toFixed(2) : "—" },
         { label: "Voltas", value: `${e.voltas ?? "—"}${e.minimo ? " ✓" : ""}`, title: e.minimo ? "Cumpriu o mínimo de voltas" : "Ainda sem o mínimo de voltas" },
         { label: "Qual.", value: e.qual || "—" },
         // Um jogador aparece em várias categorias do mesmo ano (joga acima da idade).
-        ...entradas.filter((x) => x !== e).map((x) => ({ label: `Ranking ${x.ano} · ${x.categoria}`, value: `${x.pos ?? "—"}.º de ${x.de}` })),
+        ...entradas.filter((x) => x !== e).map((x) => ({ label: `Ranking ${x.ano} · ${x.categoria}`, value: `${fmtOrd(x.pos)} de ${x.de}` })),
       ]}
       eventsTitle={`Voltas de ${e.ano}`}
       events={voltas}

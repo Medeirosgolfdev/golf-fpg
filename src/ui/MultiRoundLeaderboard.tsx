@@ -47,12 +47,12 @@ import SortableHdr from "../ui/SortableHdr";
 import React, { useState, useMemo } from "react";
 import {
   fmtTP,
-  tpColor,
   TeeDot,
   TournPName,
   SDPill,
   type PlayersDB,
 } from "./tournamentPrimitives";
+import { toneClass } from "../utils/scoreDisplay";
 import { EscPill } from "../ui/PillBadge";
 import { displayFed } from "../utils/fedKeys";
 import { MUTED } from "./tableCells";
@@ -476,7 +476,7 @@ export function MultiRoundLeaderboard({
               const isWD  = !!row.isWD;                     // desistiu
               const isCut = !!row.isCut && !row.isWD;       // eliminado no cut
               const dp = row._pos;
-              const tpCol = (!isInc && !isWD && !isCut) ? tpColor(tp) : undefined;
+              const tpTone = (!isInc && !isWD && !isCut) ? toneClass(tp) : "";
               const mdl = !isInc && !isWD && !isCut && dp != null ? medal(dp) : null;
               const showPos = !isInc && !isWD && !isCut && (
                 sortable && sortKey === "pos"
@@ -568,7 +568,7 @@ export function MultiRoundLeaderboard({
                   {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} /></td>}
 
                   {/* ±Par ANTES de Total */}
-                  {showToPar && <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{fmtTP(tp)}</td>}
+                  {showToPar && <td className={`lb-topar ${tpTone}${(isInc || isWD) ? " u-op-0_5" : isCut ? " u-op-0_85" : ""}`}>{fmtTP(tp)}</td>}
                   {showGross && <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>}
                   {rankBy && <td className="lb-modo" style={{ textAlign: "center", fontWeight: 700, color: "var(--accent)", opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{rankBy.value(row) ?? "–"}</td>}
 
@@ -601,7 +601,7 @@ export function MultiRoundLeaderboard({
                         return (
                           <React.Fragment key={r}>
                             <td className="lb-rnd">{rd.gross}</td>
-                            {showRoundToPar && <td className="lb-rnd-tp" style={{ color: tpColor(rtp) }}>{fmtTP(rtp)}</td>}
+                            {showRoundToPar && <td className={`lb-rnd-tp ${toneClass(rtp)}`}>{fmtTP(rtp)}</td>}
                             {showRoundStats && <>
                               {hasAnySD && <td className="lb-rnd-sd">
                                 {rd.sd != null

@@ -10,6 +10,7 @@
  */
 import { getTierLabel, type TierKey, type RankingRow } from "../../pages/kids2/juniorCalc";
 
+import { fmtOrd } from "../../utils/format";
 /** Um dos últimos torneios (`u` do juniors-scout.json, 02/11/2026 — Kids 2 +
  *  as provas de clube dos cartões FPG): [data, índice do nome em `tn`, lugar
  *  (ou "WD"/"DQ"/"DNS"; null nas provas de clube, sem classificação), field,
@@ -138,7 +139,7 @@ export function computeThreat(a: ThreatArgs): ThreatInfo {
     if (a.tier === "elite" || a.tier === "strong") reasons.push(`Nível ${getTierLabel(a.tier)}`);
   }
   if (a.recentPos != null) {
-    if (a.recentPos <= 3) { score += 5; reasons.push(`Forma recente forte (${a.recentPos}º)`); }
+    if (a.recentPos <= 3) { score += 5; reasons.push(`Forma recente forte (${fmtOrd(a.recentPos)})`); }
     else if (a.recentPos <= 10) score += 2;
   }
   if (a.wins > 0) {

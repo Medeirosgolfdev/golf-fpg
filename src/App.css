@@ -433,6 +433,11 @@ a.seg-btn, a.tab-under { text-decoration: none; }
 /* Sidebar items (shared between Campos and Jogadores) */
 .sidebar-section-title { padding: var(--space-6) var(--space-10); border-bottom: 1px solid var(--border-light); font-size: var(--fs-11); font-weight: 700; color: var(--text-2); }
 .sidebar-section-title-dark { padding: var(--space-6) var(--space-10); font-size: var(--fs-11); font-weight: 700; color: var(--text-on-color); background: var(--color-good-dark); letter-spacing: 0.04em; }
+/* SidebarSectionTitle: ícone, preso ao topo e clicável */
+.sidebar-section-title, .sidebar-section-title-dark { display: flex; align-items: center; gap: var(--space-6); }
+.sidebar-section-icon { font-size: var(--fs-13); line-height: 1; }
+.sidebar-section-title.is-sticky { position: sticky; top: 0; z-index: var(--z-base); background: var(--bg-muted); border-top: 1px solid var(--border-light); }
+.sidebar-section-title.is-clickable, .sidebar-section-title-dark.is-clickable { cursor: pointer; }
 
 .course-item {
  display: block;
@@ -3933,6 +3938,21 @@ table td.lb-col-divider {
   color: var(--text);
   box-sizing: border-box;
 }
+/* Tom «bom/mau» (utils/scoreDisplay toneClass) — as cores do sinal em classe */
+.tone-good { color: var(--color-good); }
+.tone-bad { color: var(--color-danger); }
+.tone-muted { color: var(--text-3); }
+/* Barra do tipo de par (HoleStatsSection): a cor vem da classe .tone-* */
+.par-type-bar { background: currentColor; }
+/* Grelha das edições (/kids FieldRivaisDashboard «Pancadas»): separador antes de cada edição */
+.mx-table .mx-ed { border-left: 2px solid var(--border); }
+.mx-table .mx-ed.mx-first { border-left-width: 1px; }
+.mx-table th.mx-ed-head { padding: var(--space-10) var(--space-10) var(--space-8); }
+.mx-table th.mx-ed-name { width: 150px; min-width: 150px; }
+.mx-table td.mx-ed-name { max-width: 160px; }
+/* Match play: quem ganhou a negrito, quem perdeu esbatido (ui/circuit/MatchplayView) */
+.mp-won { font-weight: 700; }
+.mp-lost { color: var(--text-3); }
 /* NumberInput (ui/NumberInput.tsx) */
 .num-input { font-variant-numeric: tabular-nums; }
 .input.num-input-big { font-size: var(--fs-14); font-weight: 700; }

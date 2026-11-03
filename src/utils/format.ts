@@ -95,6 +95,40 @@ export function shortName(name: string): string {
   return (name || "").split(" ").slice(0, 2).join(" ");
 }
 
+/** Nome curto de um torneio — a ÚNICA lista de abreviaturas do site (03/11/2026:
+ *  havia duas no Kids 2). «Campeonato Nacional de Jovens Sub 12» → «CNJ Sub 12»,
+ *  «USKids European Championship 2026» → «USKids Euro 2026», «Real Club de Golf El
+ *  Prat» → «El Prat». `year: "short"` troca «2026» por «'26»; `max` corta no fim. */
+const TOURN_ABBR: [RegExp, string][] = [
+  [/Campeonato\s+Nacional\s+de\s+Jovens\s+/i, "CNJ "],
+  [/Campeonato\s+Nacional\s+(?:de\s+)?/i, "Nacional "],
+  [/Greatgolf\s+Junior\s+Open(?:\s+with\s+[^·-]+)?/i, "Greatgolf JO"],
+  [/Quinta\s+do\s+Lago\s+Junior\s+Open/i, "QdL JO"],
+  [/USKids?\s+European\s+Championship/i, "USKids Euro"],
+  [/USKids?\s+World\s+Championship/i, "USKids World"],
+  [/European\s+Championship/i, "EC"],
+  [/World\s+Championship/i, "WC"],
+  [/Marco\s+Simone\s+Invitational/i, "Marco Simone"],
+  [/Venice\s+Open/i, "Venice"],
+  [/Rome\s+Classic/i, "Rome"],
+  [/Red\s+White\s+&\s+Blue\s+Invitational/i, "RWB"],
+  [/Sandestin\s+Championship/i, "Sandestin"],
+  [/Desert\s+Shootout/i, "Desert"],
+  [/Mississippi\s+State\s+Invitational/i, "MS State"],
+  [/South\s+Carolina\s+State\s+Invitational/i, "SC State"],
+  [/Real\s+Club\s+de\s+Golf\s+/i, ""],
+  [/European\s+Open\s+WAGR/i, "EOWAGR"],
+  [/Daily\s+Mail\s+WJGC/i, "DM WJGC"],
+  [/First\s+Tee\s+Miami\s+Doral\s+Jr\.?\s+Classic/i, "Doral Jr Classic"],
+];
+export function shortTournamentName(name: string | null | undefined, opts: { year?: "keep" | "short"; max?: number } = {}): string {
+  let s = String(name ?? "").replace(/\s+/g, " ").trim();
+  for (const [re, to] of TOURN_ABBR) s = s.replace(re, to);
+  if (opts.year === "short") s = s.replace(/\b20(\d{2})\b/, "'$1");
+  s = s.replace(/\s+/g, " ").trim();
+  return opts.max ? s.slice(0, opts.max) : s;
+}
+
 /** "Manuel Henrique Goulartt Medeiros" → "Manuel H. G. Medeiros" (se > maxLen) */
 export function abreviarNome(nome: string, maxLen = 25): string {
   if (!nome || nome.length <= maxLen) return nome;
@@ -187,6 +221,11 @@ export function fmtMonthShort(v: number | string): string {
   const d = typeof v === "number" ? new Date(v) : null;
   const p = d ? { y: d.getFullYear(), m: d.getMonth() + 1 } : dateParts(String(v));
   return p ? `${MONTHS_PT[p.m - 1]}/${String(p.y).slice(2)}` : "";
+}
+
+/** Ordinal «3.º» (com ponto, como manda o acordo — nunca «3º»); vazio → `placeholder`. */
+export function fmtOrd(n: number | string | null | undefined, placeholder = "—"): string {
+  return n == null || n === "" ? placeholder : `${n}.º`;
 }
 
 /** Mês e ano de uma data «Nov 2026» (ISO completa ou «YYYY-MM»); vazia → `placeholder`. */

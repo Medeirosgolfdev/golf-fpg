@@ -30,7 +30,7 @@ describe("overlayFromRound", () => {
     expect(d.round).toBe(2);
     // data da ronda em texto livre → data do torneio + (volta − 1)
     expect(d.date).toBe("17 Out 2026");
-    expect(d.position).toBe("10º");
+    expect(d.position).toBe("10.º");
   });
 
   it("sem CR/Slope há PNG na mesma, sem SD nem CH (USKids)", () => {

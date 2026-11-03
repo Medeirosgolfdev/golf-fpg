@@ -2009,8 +2009,7 @@ export function RoundSimulator({
                                 <>
                                   <span className="muted u-fs-fs-10 u-td-line-through">#{or}</span>
                                   <span
-                                    className="fs-10"
-                                    style={{ color: nr! > or! ? "var(--color-danger)" : "var(--color-good)" }}
+                                    className={`fs-10 ${nr! > or! ? "tone-bad" : "tone-good"}`}
                                   >
                                     {nr! > or! ? "↓" : "↑"}
                                   </span>
