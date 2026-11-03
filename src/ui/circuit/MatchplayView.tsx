@@ -36,7 +36,7 @@ import {
   type MatchplaySide, type MatchplayPlayerRef, sideIsPt,
 } from "./matchplayTypes";
 import { fmtPoints } from "./teamPointsTypes";
-import { fmtToPar } from "../../utils/format";
+import { fmtToPar, fmtDateShort } from "../../utils/format";
 import { isManuel } from "../../constants/manuel";
 import TabRow from "../TabRow";
 import ExpandArrow from "../ExpandArrow";
@@ -44,6 +44,7 @@ import EmptyState from "../EmptyState";
 import PlayerLink from "../PlayerLink";
 import { MUTED } from "../tableCells";
 import { toggleSet } from "../../utils/mathUtils";
+import SectionTitle from "../SectionTitle";
 
 /** Nome de um jogador: com federado liga à ficha /jogadores/:fed; ↗ kids2 se
  *  existir no roster; gross (±par) ao lado quando a fonte o dá. */
@@ -167,12 +168,6 @@ function GameHolesStrip({ g, flipped }: { g: MatchplayGame; flipped: boolean }) 
       </div>
     </div>
   );
-}
-
-/** "2026-07-09" → "09/07" (curto, o ano está no título do torneio). */
-function fmtRoundDate(d: string | null): string | null {
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d ?? "");
-  return m ? `${m[3]}/${m[2]}` : d;
 }
 
 type GameSortKey = "order" | "format" | "result";
@@ -553,10 +548,9 @@ function FlightSection({ fl, showTitle, roundFilter }: { fl: MatchplayFlight; sh
       )}
       {rounds.map(r => (
         <div key={r.number} className="u-mb-12px">
-          <div className="u-fs-fs-12 u-fw-700 u-c-text-2 u-m-12px-0-6px u-tt-uppercase u-ls-0_4px">
+          <SectionTitle as="div" size="sm" sub={r.date ? fmtDateShort(r.date) : undefined}>
             {r.name || `Ronda ${r.number}`}
-            {r.date && <span className="u-fw-400 u-c-text-muted"> · {fmtRoundDate(r.date)}</span>}
-          </div>
+          </SectionTitle>
           {!r.matches.length ? <EmptyState size="sm" message="Sem confrontos." />
             : r.matches.some(m => m.sides) ? <MultiWayRoundTable round={r} />
             : <RoundTable round={r} />}

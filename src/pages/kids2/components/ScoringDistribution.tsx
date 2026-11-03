@@ -13,6 +13,7 @@
 
 import { useMemo } from "react";
 import type { CanonicalData, Junior } from "../data";
+import SectionTitle from "../../../ui/SectionTitle";
 
 interface Props {
   data: CanonicalData;
@@ -56,12 +57,11 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
 
   return (
     <section className="u-mb-4px">
-      <div className="section-hdr">
-        <h3 className="section-hdr-title">Distribuição de scoring</h3>
-        <span className="u-fs-fs-11 u-c-text-3">
-          {total} {total === 1 ? "buraco jogado" : "buracos jogados"} · {stats.subParPct}% sub-par
-        </span>
-      </div>
+      <SectionTitle right={<span>
+        {total} {total === 1 ? "buraco jogado" : "buracos jogados"} · {stats.subParPct}% sub-par
+      </span>}>
+        Distribuição de scoring
+      </SectionTitle>
 
       {/* Barra stacked. Separadores subtis entre segmentos para distinguir o
           segmento Par (transparente, mostra fundo claro do contentor). */}

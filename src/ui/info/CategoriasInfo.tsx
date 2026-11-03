@@ -14,6 +14,7 @@ import ExtLink from "../ExternalLink";
 import SortableHdr from "../SortableHdr";
 import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
 
+import SectionTitle from "../SectionTitle";
 export interface InfoColuna {
   label: ReactNode;
   /** Classe da coluna (th e td): «ta-c», «r mono»… */
@@ -110,7 +111,7 @@ export default function CategoriasInfo({ titulo, subtitulo, links, aviso, tabela
 
       {seccoes?.map((s) => (
         <div key={s.titulo} className="mt-24">
-          <h3 className="mb-8">{s.titulo}</h3>
+          <SectionTitle size="lg">{s.titulo}</SectionTitle>
           {s.texto && <div className="fs-12 mb-8">{s.texto}</div>}
           {s.tabela && <InfoTable tabela={s.tabela} />}
           {s.pre && <pre className="info-pre info-pre-muted">{s.pre}</pre>}

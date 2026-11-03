@@ -34,16 +34,24 @@ export function KidsArrow({ to, title = "Ver em Kids" }: { to: string; title?: s
   return <ExtLink href={to} title={title} className="kids-arrow">↗</ExtLink>;
 }
 
+/** Mapa de recurso da seta ↗ (ver KidsLink): mesma chave `normName`. */
+export const KidsLinkFallbackCtx = React.createContext<ReadonlyMap<string, { n: string; memberId?: string | null }>>(new Map());
+
 /** Context para partilhar o mapa de juniores dentro de uma página */
 export const KidsLinkCtx = React.createContext<Map<string, KidsLinkEntry>>(new Map());
 
-/** Componente ↗ — só aparece se o jogador existir no mapa */
-export function KidsLink({ nome, fed }: { nome: string; /** Federado FPG da linha: com ele, um homónimo (o pai do Manuel) não liga à ficha errada. */ fed?: string | null }) {
+/** Componente ↗ — só aparece se o jogador existir no mapa (KidsLinkCtx).
+ *  `fed`: federado FPG da linha — com ele, um homónimo (o pai do Manuel) não liga à
+ *  ficha errada. Sem o jogador no roster, tenta o mapa de recurso
+ *  (KidsLinkFallbackCtx, mesma chave `normName`) — os rivais da /uskids, que
+ *  chegam antes do roster. */
+export function KidsLink({ nome, fed }: { nome: string; fed?: string | null }) {
   const map = React.useContext(KidsLinkCtx);
-  const entry = map.get(normName(nome));
-  if (!entry || (fed && entry.fed && entry.fed !== fed)) return null;
-  // Preferir o link canónico /kids2/{id} (inequívoco). Sem id, cair no hash
-  // retro-compatível (memberId ou nome), que o KIDS2Page resolve.
-  const to = kidsUrl({ id: entry.id, memberId: entry.memberId, name: entry.n });
-  return <KidsArrow to={to} />;
+  const fallback = React.useContext(KidsLinkFallbackCtx);
+  const key = normName(nome);
+  const entry = map.get(key);
+  if (entry && fed && entry.fed && entry.fed !== fed) return null;
+  if (entry) return <KidsArrow to={kidsUrl({ id: entry.id, memberId: entry.memberId, name: entry.n })} />;
+  const alt = fallback.get(key);
+  return alt ? <KidsArrow to={kidsUrl({ memberId: alt.memberId, name: alt.n })} /> : null;
 }

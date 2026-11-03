@@ -16,12 +16,13 @@ import type {} from "react";
 import type { CanonicalData, Junior, Tournament } from "../data";
 import { useSort, compareNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
-import { fmtToPar, monthLabel } from "../../../utils/format";
+import { fmtToPar, fmtMonthYear } from "../../../utils/format";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import ExtLink from "../../../ui/ExternalLink";
 import { MUTED } from "../../../ui/tableCells";
 import { TrophyPos } from "../../../ui/PosBadge";
+import SectionTitle from "../../../ui/SectionTitle";
 
 interface Props {
   data: CanonicalData;
@@ -102,11 +103,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
 
   return (
     <section className="u-mb-4px">
-      <div className="section-hdr">
-        <h3 className="section-hdr-title">
-          📊 Histórico USKids
-        </h3>
-        <div className="u-d-flex u-gap-6px u-ai-center u-fs-fs-11 u-c-text-3">
+      <SectionTitle icon="📊" right={<>
           <span>{rows.length} {rows.length === 1 ? "torneio" : "torneios"}</span>
           {memberId && (
             <span className="u-ff-font-mono u-fs-fs-10 u-p-1px-4px u-br-radius-sm u-bg-bg-muted u-bd-1px-solid-border-light" title="USKids memberId actual">
@@ -122,8 +119,9 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
               </span>
             );
           })}
-        </div>
-      </div>
+      </>}>
+        Histórico USKids
+      </SectionTitle>
 
       <div className="u-ox-auto">
         <table className="dtable dtable-sm">
@@ -144,7 +142,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
               const links = categorizeTournamentLinks(r.tournament);
               return (
               <tr key={r.tid}>
-                <td className="u-c-text-3">{fmtDate(r.date)}</td>
+                <td className="u-c-text-3">{fmtMonthYear(r.date)}</td>
                 <td className="u-fw-600">{r.name}</td>
                 <td className="u-c-text-3">{r.flight}</td>
                 <td className="u-ta-center"><TrophyPos pos={r.pos} small /></td>
@@ -177,6 +175,3 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
 }
 
 
-function fmtDate(iso: string): string {
-  return iso ? monthLabel(iso.slice(0, 7)) : "—";
-}

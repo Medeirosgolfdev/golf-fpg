@@ -25,6 +25,7 @@ import { MUTED } from "../../../ui/tableCells";
 import ShowMoreButton from "../../../ui/ShowMoreButton";
 import Sparkline from "../../../ui/Sparkline";
 import { TrophyPos } from "../../../ui/PosBadge";
+import SectionTitle from "../../../ui/SectionTitle";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -117,12 +118,11 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
 
   return (
     <section>
-      <div className="section-hdr">
-        <h3 className="section-hdr-title">Histórico por torneio</h3>
-        <span className="u-fs-fs-11 u-c-text-3">
-          {multiSeries.length} {multiSeries.length === 1 ? "série recorrente" : "séries recorrentes"} · {totalWins} vitórias totais
-        </span>
-      </div>
+      <SectionTitle right={<span>
+        {multiSeries.length} {multiSeries.length === 1 ? "série recorrente" : "séries recorrentes"} · {totalWins} vitórias totais
+      </span>}>
+        Histórico por torneio
+      </SectionTitle>
 
       <div className="u-d-flex u-fd-column u-gap-4px">
         {displayedSeries.map((s) => (

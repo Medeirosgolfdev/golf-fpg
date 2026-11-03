@@ -8,8 +8,7 @@ import { isoDate, fmtToPar, todayIso, medal as medalOf } from "../utils/format";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
 import TabRow from "../ui/TabRow";
-import { KidsLink } from "../ui/TabCampoDetalhe";
-import { KidsLinkCtx } from "../ui/KidsLink";
+import { KidsLink, KidsLinkCtx, KidsLinkFallbackCtx } from "../ui/KidsLink";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { loadUskidsResults } from "../data/uskidsResultsLoader";
 import {
@@ -818,6 +817,7 @@ export default function USKidsFieldPage() {
   return (
     <ArMapCtx.Provider value={arMapCtxValue}>
     <KidsLinkCtx.Provider value={kidsMap}>
+    <KidsLinkFallbackCtx.Provider value={arMapCtxValue}>
     <DataSourcesProvider tournaments={[]}>
     <div className="tourn-layout u-h-calc-100vh-52px">
 
@@ -854,6 +854,7 @@ export default function USKidsFieldPage() {
     {/* ← fecha tourn-layout */}
     </div>
     </DataSourcesProvider>
+    </KidsLinkFallbackCtx.Provider>
     </KidsLinkCtx.Provider>
     </ArMapCtx.Provider>
   );

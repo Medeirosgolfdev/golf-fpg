@@ -5,6 +5,7 @@
  * Tirado da RFEGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { SUB_TO_ES_TERM } from "../../ui/PillBadge";
+import { yearOfDate } from "../../utils/format";
 import { stripAccents } from "../../utils/normName";
 
 /* ── Helpers de conversão idade → Sub-N (escalão FPG/RFEG) ──────
@@ -62,12 +63,6 @@ export function escaloEsFromCategory(name: string | null | undefined): string | 
   return found.size === 1 ? [...found][0] : null;
 }
 
-/** Extrai o ano (4 dígitos) de uma data "DD/MM/YYYY" ou ISO "YYYY-MM-DD". */
-export function yearOf(s: string | null | undefined): number | null {
-  if (!s) return null;
-  const m = /(\d{4})/.exec(s);
-  return m ? parseInt(m[1], 10) : null;
-}
 /** Escalão RFEG canónico de um jogador.
  *  1) idade-no-ano = anoTorneio − anoNascimento (NÃO a idade exacta à data do
  *     torneio — senão o mesmo ano de nascimento parte-se em duas categorias
@@ -87,7 +82,7 @@ export function escaloEsForPlayer(
   dob: string | null | undefined,
   ref: string | null | undefined,
 ): string | null {
-  const by = yearOf(dob), ty = yearOf(ref);
+  const by = yearOfDate(dob), ty = yearOfDate(ref);
   if (by != null && ty != null) {
     const calc = ageToEscalaoEs(ty - by);
     if (calc) return calc;

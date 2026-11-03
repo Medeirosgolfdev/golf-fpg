@@ -14,7 +14,7 @@ import InlineScorecard from "./InlineScorecard";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import { RoundPill, NineHPill, ScoringTag } from "../../../ui/PillBadge";
 import { tpColor } from "../../../ui/tournamentPrimitives";
-import { fmtToPar, MONTHS_PT } from "../../../utils/format";
+import { fmtToPar, fmtDayMonth } from "../../../utils/format";
 import ClearButton from "../../../ui/ClearButton";
 import ExpandArrow from "../../../ui/ExpandArrow";
 import ExtLink from "../../../ui/ExternalLink";
@@ -22,6 +22,7 @@ import { SOURCE_LABELS } from "../../../constants/kids2Sources";
 import { MUTED } from "../../../ui/tableCells";
 import { TrophyPos } from "../../../ui/PosBadge";
 import { toggleSet } from "../../../utils/mathUtils";
+import SectionTitle from "../../../ui/SectionTitle";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -140,12 +141,11 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
 
   return (
     <section>
-      <div className="section-hdr">
-        <h3 className="section-hdr-title">Resultados</h3>
-        <span className="u-fs-fs-11 u-c-text-3">
-          {rows.length}{activeSources.size > 0 ? ` de ${allRows.length}` : ""} {rows.length === 1 ? "resultado" : "resultados"}
-        </span>
-      </div>
+      <SectionTitle right={<span>
+        {rows.length}{activeSources.size > 0 ? ` de ${allRows.length}` : ""} {rows.length === 1 ? "resultado" : "resultados"}
+      </span>}>
+        Resultados
+      </SectionTitle>
 
       {sourcesAvailable.length > 1 && (
         <div className="u-d-flex u-fwr-wrap u-gap-4px u-mb-10px u-p-8px-10px u-bg-bg-muted u-br-radius u-ai-center">
@@ -332,7 +332,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
   const roundsWithStrokes = new Set(rounds.filter((rd) => rd.strokes && rd.strokes.some((s) => s > 0)).map((rd) => rd.round));
   return (
     <tr style={{ background: bg }}>
-      <td className="u-c-text-3">{fmtDate(r.date)}</td>
+      <td className="u-c-text-3">{fmtDayMonth(r.date)}</td>
       <td>
         <span className="u-fs-fs-9 u-p-1px-4px u-br-radius-sm u-bg-bg u-bd-1px-solid-border-light">
           {SOURCE_LABELS[r.tournament.sourceId] || r.tournament.sourceId}
@@ -477,10 +477,3 @@ const DNF_LABEL: Record<string, string> = {
 };
 
 
-function fmtDate(iso: string): string {
-  if (!iso) return "—";
-  const [, m, d] = iso.split("-");
-  const mn = parseInt(m, 10);
-  if (!mn || !d) return iso;
-  return `${d.padStart(2, "0")} ${MONTHS_PT[mn - 1] || ""}`;
-}

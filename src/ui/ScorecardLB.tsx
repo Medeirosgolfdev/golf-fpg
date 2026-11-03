@@ -673,7 +673,7 @@ export function ScorecardLB({
                 const age = ageAtDate(dob, tournament.date);
                 if (age != null && age >= 0 && age < 100) {
                   return (
-                    <span className="p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent" title={dob ? `${dob} (${age} anos no torneio)` : ""}
+                    <span className="p p-sm p-muted" title={dob ? `${dob} (${age} anos no torneio)` : ""}
 >
                       {age}a
                     </span>
@@ -693,7 +693,7 @@ export function ScorecardLB({
                 if (cy == null) return MUTED;
                 const birth = cy - 18;
                 return (
-                  <span className="p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent" title={`Class of ${cy} · ≈ nascido ${birth}`}
+                  <span className="p p-sm p-muted" title={`Class of ${cy} · ≈ nascido ${birth}`}
 >~{birth}</span>
                 );
               })()}

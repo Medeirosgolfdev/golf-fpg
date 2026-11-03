@@ -19,6 +19,7 @@ import { ChartBox, ChartTooltipBox, CHART_AXIS, CHART_GRID, CHART_REF } from "..
 import { fmtDate } from "../../../utils/format";
 import { SOURCE_COLORS, SOURCE_LABELS } from "../../../constants/kids2Sources";
 import { ToggleChip } from "../../../ui/FilterField";
+import SectionTitle from "../../../ui/SectionTitle";
 
 interface Props {
   data: CanonicalData;
@@ -154,7 +155,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
   if (visiblePoints.length < 2) {
     return (
       <section className="u-mb-14px">
-        <h3 className="u-m-8px-0-10px u-fs-fs-14 u-fw-700 u-c-text">Evolução</h3>
+        <SectionTitle>Evolução</SectionTitle>
         <div className="u-fs-fs-12 u-c-text-3 u-p-10px-12px u-bg-bg-muted u-br-radius">
           Insuficiência de dados para representar evolução ({visiblePoints.length} {visiblePoints.length === 1 ? "ponto" : "pontos"}{hidden9HCount > 0 ? ` · ${hidden9HCount} de 9H escondidos` : ""}).
         </div>
@@ -177,20 +178,19 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
 
   return (
     <section className="u-mb-14px">
-      <div className="section-hdr">
-        <h3 className="section-hdr-title">Evolução</h3>
-        <div className="u-d-flex u-gap-4px u-ai-center">
-          <TabRow<typeof yMode> className="seg-sm" active={yMode} onChange={setYMode} tabs={[
-            { key: "toPar", label: "±par/ronda", title: "±par médio por ronda do torneio" },
-            { key: "toParNorm", label: "±par/18H", title: "±par/ronda normalizado para equivalente 18 buracos — útil para misturar 9H e 18H" },
-            { key: "pos", label: "Posição" },
-          ]} />
-          <ToggleChip checked={include9H} onChange={setInclude9H} label="9H"
-            title={include9H
-              ? "A mostrar torneios de 9 e 18 buracos juntos"
-              : `Mostrar também ${hidden9HCount} torneio(s) de 9 buracos`} />
-        </div>
-      </div>
+      <SectionTitle right={<>
+        <TabRow<typeof yMode> className="seg-sm" active={yMode} onChange={setYMode} tabs={[
+          { key: "toPar", label: "±par/ronda", title: "±par médio por ronda do torneio" },
+          { key: "toParNorm", label: "±par/18H", title: "±par/ronda normalizado para equivalente 18 buracos — útil para misturar 9H e 18H" },
+          { key: "pos", label: "Posição" },
+        ]} />
+        <ToggleChip checked={include9H} onChange={setInclude9H} label="9H"
+          title={include9H
+            ? "A mostrar torneios de 9 e 18 buracos juntos"
+            : `Mostrar também ${hidden9HCount} torneio(s) de 9 buracos`} />
+      </>}>
+        Evolução
+      </SectionTitle>
 
       <div className="u-bg-bg u-bd-1px-solid-border u-br-radius-lg u-p-10px-6px-6px u-minw-0">
         <ChartBox height={240}>

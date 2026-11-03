@@ -11,16 +11,16 @@ import type { PlayerPageData } from "../data/playerDataLoader";
 import { eclecticos9, type LoopEclectic, type LoopTee } from "../data/sserraLoops";
 import { useCamposDe9 } from "../hooks/useCamposDe9";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
-import { fmtToPar } from "../utils/format";
+import { fmtToPar, shortDateSlash } from "../utils/format";
 import { SC } from "../utils/scoreDisplay";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
 import ExpandArrow from "./ExpandArrow";
 import { MUTED } from "./tableCells";
+import SectionTitle from "./SectionTitle";
 
 const soma = (g: (number | null)[]) => g.reduce<number>((s, v) => s + (v ?? 0), 0);
 const corPar = (d: number) => (d > 0 ? SC.danger : d < 0 ? SC.good : SC.muted);
-const dataCurta = (d: string) => (d || "").replace(/^(\d\d)-(\d\d)-\d\d(\d\d)$/, "$1/$2/$3");
 /** Voltas (dias), não metades: uma volta de 18 num 9 jogado 2× conta uma vez. */
 const nVoltas = (t: LoopTee) => new Set(t.rounds.map(r => r.scoreId)).size;
 const semBorda = { background: "none", border: "none", padding: 0, cursor: "pointer" } as const;
@@ -101,7 +101,7 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
             {aberto && t.rounds.map(r => (
               <tr key={`${r.scoreId}|${r.g.join()}`} className="ec-round-row">
                 <td className="row-label">
-                  <span className="p p-sm" style={{ background: hx, color: fg }}>{dataCurta(r.date)}</span>
+                  <span className="p p-sm" style={{ background: hx, color: fg }}>{shortDateSlash(r.date, true)}</span>
                 </td>
                 {r.g.map((v, i) => <td key={i}><ScoreCircle gross={v} par={pars[i]} empty="dot" /></td>)}
                 <TotalCel g={r.g} pars={pars} />
@@ -123,7 +123,7 @@ export function LoopEclecticSection({ data }: { data: PlayerPageData }) {
   if (!grupos.length) return null;
   return (
     <div className="mb-16">
-      <div className="fs-12 fw-700 u-mb-6px">Ecléticos de 9 buracos</div>
+      <SectionTitle as="div" size="sm">Ecléticos de 9 buracos</SectionTitle>
       <div className="u-d-flex u-fwr-wrap u-gap-12px u-ai-flex-start">
         {grupos.flatMap(g => g.linhas.filter(l => l.tees.length).map(l => (
           <CartaoNove key={`${g.grupo}|${l.nome}`} grupo={g.grupo} l={l} />

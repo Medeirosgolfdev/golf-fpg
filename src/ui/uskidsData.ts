@@ -8,44 +8,21 @@
  * Functions and React helpers live in uskidsHelpers.ts.
  */
 
+import { compareEscalaoRaw } from "../data/model/escalao";
 import type { TeeInfo } from "./uskidsTypes";
 
 /* ═══════════════════════════════════════════════════════════════
    ESCALÃO ORDERING
    ═══════════════════════════════════════════════════════════════ */
 
-const ESCALAO_ORDER: Record<string, number> = {
-  "Boys 7 & Under": 1,
-  "Boys 7": 2,
-  "Boys 8": 3,
-  "Boys 9": 4,
-  "Boys 10": 5,
-  "Boys 11": 6,
-  "Boys 12": 7,
-  "Boys 13": 8,
-  "Boys 13-14": 9,
-  "Boys 14": 10,
-  "Boys 15-18": 11,
-  "Girls 7 & Under": 20,
-  "Girls 8 & Under": 21,
-  "Girls 8": 22,
-  "Girls 9": 23,
-  "Girls 9-10": 24,
-  "Girls 10": 25,
-  "Girls 11": 26,
-  "Girls 11-12": 27,
-  "Girls 12": 28,
-  "Girls 13": 29,
-  "Girls 13-14": 30,
-  "Girls 15-18": 31,
-};
 
 export const ESCALOES_DESTAQUE_USKIDS = new Set([
   "Boys 9", "Boys 10", "Boys 11", "Boys 12", "Boys 13", "Boys 13-14",
 ]);
 
 export function sortEscaloes<T extends { nome: string }>(arr: T[]): T[] {
-  return [...arr].sort((a, b) => (ESCALAO_ORDER[a.nome] ?? 99) - (ESCALAO_ORDER[b.nome] ?? 99));
+  // Ordem única dos escalões (data/model/escalao): rapazes e depois raparigas, cada um pela idade.
+  return [...arr].sort((a, b) => compareEscalaoRaw(a.nome, b.nome, { source: "uskids", sexFirst: true }));
 }
 
 /* ═══════════════════════════════════════════════════════════════

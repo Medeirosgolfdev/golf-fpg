@@ -20,7 +20,8 @@ import ExpandArrow from "./ExpandArrow";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
 import { toggleSet } from "../utils/mathUtils";
-
+
+import SectionTitle from "./SectionTitle";
 interface Player {
   pos: number | string | null;
   name: string;
@@ -177,9 +178,9 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
   return (
     <section className="u-m-16px-12px-24px u-bd-1px-solid-border u-br-radius-lg u-ov-hidden">
       <header className="u-p-10px-14px u-bg-bg-muted u-bb-1px-solid-border u-d-flex u-ai-center u-gap-12px u-fwr-wrap">
-        <h3 className="fs-15 fw-800 u-m-0">
+        <SectionTitle size="lg" className="u-m-0">
           🏌️ Santo da Serra · Top-5 em Nacionais
-        </h3>
+        </SectionTitle>
         <span className="muted fs-12">{athletes.length} atletas · {totalEntries} top-5 · {totalChamp} 🥇 · {totalPodium} pódios</span>
       </header>
       <div className="u-ox-auto">

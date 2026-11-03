@@ -12,6 +12,7 @@
 import { useMemo, useState } from "react";
 import type { Course, Tee } from "../data/types";
 import InfoIcon from "./InfoIcon";
+import SectionTitle from "./SectionTitle";
 
 interface HoleEntry { hole: number; distance: number | null }
 interface ParBreakdown {
@@ -143,15 +144,10 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
 
   return (
     <div className="card">
-      <div className="h-md u-d-flex u-ai-baseline u-gap-8px u-fwr-wrap">
-        <span className="u-fs-fs-18">⛳ {course.master.name}</span>
-        <span className="muted u-fs-fs-13 u-fw-500">· {tee.teeName}</span>
-        {course.master.country && (
-          <span className="p p-sm u-bg-bg-muted u-c-text-2">
-            {course.master.country}
-          </span>
-        )}
-      </div>
+      <SectionTitle as="div" size="lg" icon="⛳" className="u-m-0-0-8px">
+        {course.master.name} <span className="muted u-fw-500">· {tee.teeName}</span>
+        {course.master.country && <span className="p p-sm p-muted u-ml-6px">{course.master.country}</span>}
+      </SectionTitle>
 
       <div className="haDiag">
         <HeroStat icon="📏" tone="info" value={distance ?? "–"} unit="m" label="Distância total" />

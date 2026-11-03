@@ -31,7 +31,8 @@ import Pager from "../Pager";
 import { usePaged } from "../../hooks/usePaged";
 import ErrorState from "../ErrorState";
 import Select from "../Select";
-
+
+import SectionTitle from "../SectionTitle";
 const PAGE_SIZE = 100;
 
 /** Número com casas decimais, «—» sem valor. */
@@ -351,7 +352,7 @@ export function RankingDetail({ backTo, notFound, header, stats, eventsTitle, ev
       <div className="u-d-flex u-fwr-wrap u-gap-16px u-m-8px-0-16px u-fs-fs-13">
         {stats?.map((s) => <Stat key={s.label} {...s} />)}
       </div>
-      <h3 className="u-m-0-0-6px">{eventsTitle} {events ? `(${events.length})` : ""}</h3>
+      <SectionTitle size="md">{eventsTitle} {events ? `(${events.length})` : ""}</SectionTitle>
       {events == null ? <LoadingState message="A carregar histórico…" />
         : events.length === 0 ? <EmptyState icon="📭" message={emptyMessage || "Sem eventos registados."} />
         : children}

@@ -15,6 +15,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import ExpandArrow from "./ExpandArrow";
 import CloseButton from "./CloseButton";
+import SectionTitle from "./SectionTitle";
 
 type DataSourceStatus = "loaded" | "loading" | "error";
 
@@ -426,7 +427,7 @@ function DataSourcesPanel({
   return (
     <div style={style} onClick={(e) => e.stopPropagation()}>
       <div className="u-p-6px-10px-8px u-bb-1px-solid-border-light">
-        <div className="h-sm">📂 Ficheiros de dados lidos pela página</div>
+        <SectionTitle as="div" size="sm" icon="📂">Ficheiros de dados lidos pela página</SectionTitle>
         <div className="c-muted fs-10 mt-2">
           {sources.length} ficheiro{sources.length !== 1 ? "s" : ""} · {totalCount} registo{totalCount !== 1 ? "s" : ""} total
         </div>

@@ -507,14 +507,14 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
               NACIONAL, JUNIOR, SSerra, Clube, Manuel). */}
           <span className="gap-4 ml-8 u-d-inline-flex u-ai-center u-fwr-wrap">
             {tournament.playerCount != null && (
-              <span className="p p-sm u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border">
+              <span className="p p-sm p-muted">
                 {tournament.playerCount} jog
               </span>
             )}
             {nRounds > 1 && <RoundPill nR={nRounds} />}
             {nholes <= 9 && <NineHPill />}
             {parTotal > 0 && (
-              <span className="p p-sm u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border">
+              <span className="p p-sm p-muted">
                 Par {parTotal}
               </span>
             )}

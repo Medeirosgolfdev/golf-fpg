@@ -29,6 +29,7 @@ import { tpColor } from "../../../ui/tournamentPrimitives";
 import ComparisonDonut from "../../../ui/ComparisonDonut";
 import TabRow from "../../../ui/TabRow";
 import Select from "../../../ui/Select";
+import SectionTitle from "../../../ui/SectionTitle";
 
 type SubTab = "scoring" | "rounds" | "ninesplit" | "holes";
 
@@ -191,7 +192,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
   if (valid.length === 0) {
     return (
       <section>
-        <h3 className="u-m-8px-0-10px u-fs-fs-14 u-fw-700 u-c-text">Análise</h3>
+        <SectionTitle>Análise</SectionTitle>
         <div className="u-fs-fs-12 u-c-text-3 u-p-12px-16px u-bg-bg-muted u-br-radius">
           — sem scorecards hole-by-hole disponíveis para análise —
         </div>
@@ -201,13 +202,12 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
 
   return (
     <section>
-      <div className="section-hdr">
-        <h3 className="section-hdr-title">Análise</h3>
-        <span className="u-fs-fs-11 u-c-text-3">
-          {valid.length} {valid.length === 1 ? "torneio" : "torneios"} com scorecard
-          {fieldCards.length > 0 && <> · field {fieldCards.length}</>}
-        </span>
-      </div>
+      <SectionTitle right={<span>
+        {valid.length} {valid.length === 1 ? "torneio" : "torneios"} com scorecard
+        {fieldCards.length > 0 && <> · field {fieldCards.length}</>}
+      </span>}>
+        Análise
+      </SectionTitle>
 
       {/* Selector de torneio/escalão como dropdown (em vez de N pills) */}
       {flightOpts.length > 1 && (

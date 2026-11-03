@@ -16,6 +16,7 @@ import { IntlTournView } from "./IntlTournView";
 import type { Tournament as FPGTournament } from "../pages/FPGPage";
 import { intlScorecardOptions } from "../data/intlScorecard";
 import { buildFPGTournament, type IntlPlayerIn } from "../data/intlTournament";
+import SectionTitle from "./SectionTitle";
 
 interface ContestData {
   label: string;
@@ -83,7 +84,7 @@ function ManuelEvo({ evo }: { evo: EvoEntry[] }) {
   if (!m) return null;
   return (
     <div className="card u-bg-bg-success-subtle u-bd-1px-solid-good">
-      <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC</div>
+      <SectionTitle as="div" icon="🇵🇹">Manuel — Evolução WJGC</SectionTitle>
       <div className="d-flex u-gap-16px u-fwr-wrap u-ai-center">
         <div className="ta-c u-fl-1-1-100px">
           <div className="muted fs-10">2025</div>
@@ -120,7 +121,7 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
     <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className} style={style}>{label}</SortableHdr>;
   return (
     <div className="card">
-      <div className="h-md fs-14">📈 Evolução 2025 → 2026</div>
+      <SectionTitle as="div" icon="📈">Evolução 2025 → 2026</SectionTitle>
       <div className="muted fs-10 mb-8">{evo.length} jogadores em ambas as edições</div>
       <div className="tourn-scroll">
         <table className="dtable dtable-lg">

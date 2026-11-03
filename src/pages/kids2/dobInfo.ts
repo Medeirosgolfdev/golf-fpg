@@ -18,7 +18,7 @@
  */
 
 import type { Junior, Tournament } from "./data";
-import { MONTHS_PT } from "../../utils/format";
+import { MONTHS_PT, fmtDatePt } from "../../utils/format";
 
 type DobState = "known" | "range" | "inferred" | "unknown";
 
@@ -74,12 +74,6 @@ function ageAt(dob: Date, at: Date): number {
 }
 
 /** Formata DOB ISO como "DD/MM/YYYY". */
-function fmtDobPt(iso: string): string {
-  const [y, m, d] = iso.split("-");
-  if (!y || !m || !d) return iso;
-  return `${d}/${m}/${y}`;
-}
-
 // ═══════════════════════════════════════════════════════════════════════
 // Constraints from canonical tournaments
 // ═══════════════════════════════════════════════════════════════════════
@@ -147,7 +141,7 @@ export function computeDobInfo(junior: Junior, tournamentById: Map<string, Tourn
         rangeMax: junior.dob,
         age,
         ageLabel: `${age} anos`,
-        dobLabel: fmtDobPt(junior.dob),
+        dobLabel: fmtDatePt(junior.dob),
         nextBdayDays: showCountdown ? days : null,
         nextAge: showCountdown ? age + 1 : null,
       };

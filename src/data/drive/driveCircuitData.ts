@@ -19,7 +19,8 @@
 import type { Tournament as FPGTournament } from "../fpgTypes";
 import { ESCALOES_DRIVE as DRIVE_ESCALOES } from "../../constants/escaloes";
 import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../../ui/circuit/types";
-import { isManuelByName } from "../../constants/manuel";
+import { tournamentHasManuel } from "../fpgUtils";
+import { yearOfDate } from "../../utils/format";
 import { withDivisionModel } from "../model/division";
 import { stripAccents } from "../../utils/normName";
 import { DRIVE_REGION_LABEL } from "./driveRegions";
@@ -255,16 +256,6 @@ function mergeAquaporSexGroups(groups: DriveGroup[]): DriveGroup[] {
   return out;
 }
 
-/** Ano civil a partir da data "YYYY-MM-DD". */
-function yearOf(date: string | undefined): number | null {
-  const y = parseInt((date || "").slice(0, 4), 10);
-  return Number.isFinite(y) ? y : null;
-}
-
-function tournamentHasManuel(t: FPGTournament): boolean {
-  return (t.players || []).some(p => isManuelByName(p.name));
-}
-
 /** Constrói as divisões (tabs de escalão/ronda) de um grupo. */
 export function buildDriveDivisions(group: DriveGroup): CircuitDivision[] {
   // Modelo comum (src/data/model): formato, estado, buracos, cut, par.
@@ -326,7 +317,7 @@ export function buildDriveEntries(tournaments: FPGTournament[]): CircuitEntry[] 
     const seriesKey = g.entries[0]?.series || "tour";
     return {
       id: g.key,
-      year: yearOf(g.date),
+      year: yearOfDate(g.date),
       name: g.label || g.campo || "Torneio",
       tcode: g.tcode,
       series: DRIVE_SERIES_LABEL[seriesKey] || seriesKey,

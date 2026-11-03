@@ -1,8 +1,8 @@
 import { useContext, useMemo } from "react";
-import { isoDate, fmtDate, displayName, medal as medalOf } from "../utils/format";
+import { isoDate, fmtDate, displayName, medal as medalOf, fmtDateTime } from "../utils/format";
 import { flag, isPtCountry } from "../utils/flagUtils";
 import { normName as normNameAuto } from "../data/KIDSdataLoader";
-import { kidsUrl, KidsArrow, KidsLinkCtx } from "./KidsLink";
+import { KidsLink, KidsLinkCtx } from "./KidsLink";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import type { Torneio } from "./uskidsTypes";
 import { RoundPill } from "./PillBadge";
@@ -12,7 +12,8 @@ import {
   badgeVagas, diasAte, isTerminado, seriesBase, playerSeriesResult
 } from "./USKIDSPageHelpers";
 import ExtLink from "./ExternalLink";
-
+
+import SectionTitle from "./SectionTitle";
 /** Dias desde a inscrição de um jogador.
  *  Prefere `regDia` — o dia de inscrição vindo do `pid` do signupanytime (ver
  *  scripts/lib/uskids-reg-dates.js) — e só cai no `firstSeen` (dia em que o
@@ -27,37 +28,11 @@ function diasDesdeInscricao(j: { regDia?: string; firstSeen?: string }): number 
   return Math.max(0, Math.floor((Date.now() - ms) / 86400_000));
 }
 
-/** "11/09/2026, 13:19" — com ano: um aviso de dados antigos tem de dizer de quando são. */
-function fmtDataHora(iso?: string): string {
-  if (!iso) return "";
-  const d = new Date(iso);
-  return Number.isNaN(d.getTime()) ? ""
-    : d.toLocaleString("pt-PT", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" });
-}
-
 /** A mensagem crua da fonte ("rate limit (Too many requests)") em português. */
 function erroLegivel(erro: string): string {
   return /rate.?limit|too many/i.test(erro)
     ? "a USKids recusou os pedidos (demasiados pedidos seguidos)"
     : erro;
-}
-
-/** Devolve o elemento ↗ com link para a página Kids do jogador.
- *  1.º o roster canónico (juniors.json, via KidsLinkCtx): conhece aliases e
- *  nomes sem um nome do meio — a inscrição diz "Daniel Alejandro Rodríguez
- *  Stepanischev" e a ficha "Daniel Rodriguez Stepanischev". Depois os rivais
- *  (memberId; resolve antes de o roster chegar). */
-export function KidsLink({ nome }: { nome: string }) {
-  const arMap = useContext(ArMapCtx);
-  const kidsMap = useContext(KidsLinkCtx);
-  const k = normNameAuto(nome);
-  const kid = kidsMap.get(k);
-  const arEntry = arMap.get(k);
-  if (!kid && !arEntry) return null;
-  const to = kid
-    ? kidsUrl({ id: kid.id, memberId: kid.memberId, name: kid.n })
-    : kidsUrl({ memberId: (arEntry as any).memberId as string | undefined, name: arEntry!.n });
-  return <KidsArrow to={to} />;
 }
 
 /** Links oficiais de um torneio USKids (inscritos, resultados, página USKids e
@@ -132,7 +107,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
   // a data — nunca uma página vazia com a mensagem crua da fonte.
   const semDados  = t.escaloes.length === 0;
   const bloqueado = !!t.sem_flights || (!!t.erro && semDados);
-  const dataDados = fmtDataHora(t.stale_desde || t.ultima_atualizacao);
+  const dataDados = fmtDateTime(t.stale_desde || t.ultima_atualizacao);
 
   return (
     <div>
@@ -386,7 +361,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           {/* ── Portugueses inscritos ── */}
           {ptTotal.length > 0 && (
             <div className="card u-bg-accent-light u-bd-1_5px-solid-accent u-mb-12px">
-              <div className="h-sm u-c-accent u-mb-10px">🇵🇹 Portugueses inscritos</div>
+              <SectionTitle size="sm" as="div" icon="🇵🇹">Portugueses inscritos</SectionTitle>
               {t.escaloes.filter(e => e.jogadores?.some(j => isPtCountry(j.pais))).map(e => (
                 <div key={e.age_group} className="u-mb-8px">
                   <div className="h-xs u-c-accent-text u-mb-4px">{e.nome}</div>

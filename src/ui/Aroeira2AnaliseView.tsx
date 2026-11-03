@@ -27,7 +27,8 @@ import { MANUEL_FED } from "../constants/manuel";
 import ToPar from "./ToPar";
 import ExpandArrow from "./ExpandArrow";
 import ErrorState from "./ErrorState";
-
+
+import SectionTitle from "./SectionTitle";
 const fmtPct = (p: number) => p.toFixed(0) + "%";
 const fmtAvg = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : n.toFixed(d);
 const fmtDelta = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : (n === 0 ? "0" : (n > 0 ? "+" : "") + n.toFixed(d));
@@ -495,7 +496,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* KPIs */}
       <section>
-        <h3>Visão de relance</h3>
+        <SectionTitle size="lg">Visão de relance</SectionTitle>
         <div className="u-d-flex u-fwr-wrap u-gap-12px">
           {kpis.map((k, i) => <KpiCard key={i} {...k} />)}
         </div>
@@ -512,7 +513,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* 1. Mapa do campo */}
       <section>
-        <h3>1. Mapa do campo</h3>
+        <SectionTitle size="lg">1. Mapa do campo</SectionTitle>
         <div className="muted fs-12 u-mb-8px">
           Agregado das rondas com o routing actual (Nov 2025+). Rondas anteriores com tee de início diferente foram excluídas para garantir que cada buraco corresponde fisicamente ao que vai ser jogado no Nacional Sub-12.
         </div>
@@ -521,7 +522,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* 1b. Dials por buraco */}
       <section>
-        <h3>1b. 18 dials — média field, Sub-12, melhor e pior do Manuel</h3>
+        <SectionTitle size="lg">1b. 18 dials — média field, Sub-12, melhor e pior do Manuel</SectionTitle>
         <div className="muted fs-12 u-mb-10px">
           Para cada buraco, melhor (Best) e pior (Worst) score já registado em rondas com routing actual. <strong className="u-c-color-good-dark">⭐ Manuel</strong> (suas rondas), <strong className="u-c-color-info">Sub-12</strong> (Manuel + outros Sub-12 com histórico) e <strong>Field</strong> (todos no campo). Cores oficiais nas células: vermelho = birdie/eagle, azul = bogey/duplo.
         </div>
@@ -532,10 +533,10 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* 2. Top dificuldade */}
       <section>
-        <h3>2. Buracos chave — Top 5 difíceis vs Top 5 fáceis</h3>
+        <SectionTitle size="lg">2. Buracos chave — Top 5 difíceis vs Top 5 fáceis</SectionTitle>
         <div className="u-d-grid u-grid-template-columns-1fr-1fr u-gap-16px">
           <div className="u-bd-2px-solid-color-danger u-br-radius-lg u-p-12px u-bg-bg-danger">
-            <h4 className="u-m-0-0-8px u-c-color-danger-dark">🔴 Mais difíceis (vão preparados)</h4>
+            <SectionTitle size="md" as="h4" className="u-c-color-danger-dark">🔴 Mais difíceis (vão preparados)</SectionTitle>
             <table className="sc-lb">
               <thead>
                 <tr><th className="lb-name">B</th><th className="lb-hole">Par</th><th className="lb-hole">Avg</th><th className="lb-hole">Δ</th><th className="lb-hole">%Bog+</th><th className="lb-hole">⭐ M</th></tr>
@@ -555,7 +556,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
             </table>
           </div>
           <div className="u-bd-2px-solid-color-good u-br-radius-lg u-p-12px u-bg-bg-success">
-            <h4 className="u-m-0-0-8px u-c-color-good-dark">🟢 Mais fáceis (capitalizar)</h4>
+            <SectionTitle size="md" as="h4" className="u-c-color-good-dark">🟢 Mais fáceis (capitalizar)</SectionTitle>
             <table className="sc-lb">
               <thead>
                 <tr><th className="lb-name">B</th><th className="lb-hole">Par</th><th className="lb-hole">Avg</th><th className="lb-hole">Δ</th><th className="lb-hole">%Bird+</th><th className="lb-hole">⭐ M</th></tr>
@@ -580,7 +581,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 3. Splits Par-3/4/5 */}
       {parGroups.length > 0 && (
         <section>
-          <h3>3. Splits Par-3 / Par-4 / Par-5</h3>
+          <SectionTitle size="lg">3. Splits Par-3 / Par-4 / Par-5</SectionTitle>
           <table className="sc-lb">
             <thead>
               <tr>
@@ -617,13 +618,13 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       {/* 4. Manuel teórica + variabilidade */}
       {theoretical && (
         <section>
-          <h3>4. Manuel — ronda teórica vs realidade</h3>
+          <SectionTitle size="lg">4. Manuel — ronda teórica vs realidade</SectionTitle>
           <div className="u-d-grid u-grid-template-columns-68672 u-gap-12px u-mb-16px">
             <KpiCard label="Ronda teórica" value={String(theoretical.theoretical)} hint={`Soma do best score do Manuel em cada buraco (par 72, ${fmtToPar(theoretical.theoretical - 72)})`} tone="good" />
             <KpiCard label="Melhor ronda real" value={String(theoretical.bestReal)} hint={`Melhor ronda jogada (par 72, ${fmtToPar(theoretical.bestReal - 72)})`} tone="warn" />
             <KpiCard label="Potencial em cima da mesa" value={"-" + theoretical.diff} hint="Pancadas que o Manuel já fez em rondas separadas mas ainda não juntou na mesma ronda" tone="warn" />
           </div>
-          <h4 className="u-m-0-0-8px">Best/Worst do Manuel por buraco (ronda eclética)</h4>
+          <SectionTitle size="md" as="h4">Best/Worst do Manuel por buraco (ronda eclética)</SectionTitle>
           <div className="bjgt-chart-scroll">
             <table className="sc-lb">
               <thead>
@@ -669,7 +670,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* 5. Plano táctico */}
       <section>
-        <h3>5. Plano táctico buraco-a-buraco</h3>
+        <SectionTitle size="lg">5. Plano táctico buraco-a-buraco</SectionTitle>
         <ol className="u-m-0 u-pl-0 u-list-style-none u-d-grid u-grid-template-columns-d873z u-gap-8px">
           {holeRecs.map(r => (
             <li key={r.hole} className="aro-tip" style={{ borderColor: TONE_COLOR[r.type] }}>
@@ -681,7 +682,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* 6. Field ranking */}
       <section>
-        <h3>6. Ranking — quem joga melhor o Aroeira II</h3>
+        <SectionTitle size="lg">6. Ranking — quem joga melhor o Aroeira II</SectionTitle>
         <table className="sc-lb">
           <thead>
             <tr>
@@ -717,14 +718,14 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* 7. Top 21 scorecards */}
       <section>
-        <h3>7. Top 21 PJA — scorecards detalhados</h3>
+        <SectionTitle size="lg">7. Top 21 PJA — scorecards detalhados</SectionTitle>
         <div className="muted fs-12 u-mb-8px">Clica para expandir todas as rondas hole-by-hole. Manuel auto-aberto.</div>
         {top21Cards.map((c, i) => <PlayerCardBlock key={i} card={c} parRef={pkg.parReference} />)}
       </section>
 
       {/* 8. Sub-12 com histórico */}
       <section>
-        <h3>8. Sub-12 inscritos Nacional com histórico Aroeira II</h3>
+        <SectionTitle size="lg">8. Sub-12 inscritos Nacional com histórico Aroeira II</SectionTitle>
         {sub12CardsCom.length === 0
           ? <div className="muted fs-13">Nenhum (fora dos Top 21).</div>
           : sub12CardsCom.map((c, i) => <PlayerCardBlock key={i} card={c} parRef={pkg.parReference} />)}
@@ -732,7 +733,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* 8b. Tabela Sub-12 dedicada */}
       <section>
-        <h3>9. Sub-12 — performance no Aroeira II</h3>
+        <SectionTitle size="lg">9. Sub-12 — performance no Aroeira II</SectionTitle>
         <div className="muted fs-12 u-mb-8px">
           Cruzamento dos jogadores que estão inscritos no Campeonato Nacional de Jovens Sub-12 H 2026 (1-3 Maio, tcode 10941) com o histórico no campo. Inclui Manuel mesmo que não esteja na lista de inscritos.
         </div>
@@ -784,7 +785,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* 9. Cronologia + evolução */}
       <section>
-        <h3>10. Scorecards Sub-12 cronológicos — todos juntos</h3>
+        <SectionTitle size="lg">10. Scorecards Sub-12 cronológicos — todos juntos</SectionTitle>
         <div className="muted fs-12 u-mb-8px">{cronoRounds.length} rondas, ordenadas por data ascendente. Cada linha é uma ronda.</div>
         <div className="bjgt-chart-scroll">
           <table className="sc-lb sc-lb-with-sc">
@@ -851,7 +852,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
       {/* 11. Análise de evolução */}
       <section>
-        <h3>11. Evolução por jogador</h3>
+        <SectionTitle size="lg">11. Evolução por jogador</SectionTitle>
         <div className="muted fs-12 u-mb-8px">
           Slope = pancadas por ronda (negativo = a melhorar). Δ first→last = última ronda menos primeira. Δ trend = média da 2ª metade menos média da 1ª. Ordenado por melhor evolução.
         </div>

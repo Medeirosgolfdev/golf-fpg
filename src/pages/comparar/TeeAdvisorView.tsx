@@ -41,6 +41,7 @@ import ExtLink from "../../ui/ExternalLink";
 import SexSelect from "../../ui/SexSelect";
 import Select from "../../ui/Select";
 import NumberInput from "../../ui/NumberInput";
+import SectionTitle from "../../ui/SectionTitle";
 
 
 /** Coerção segura para número — alguns campos do JSON vêm como string (ex: sd "14"). */
@@ -807,7 +808,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
       ) : (
         <>
           <div className="card">
-            <div className="h-md">🟡 Tees de {course?.master.name}</div>
+            <SectionTitle as="div" icon="🟡">Tees de {course?.master.name}</SectionTitle>
             <div className="muted u-fs-fs-12 u-mt-6px u-mb-10px">
               Perdão = pancadas recebidas WHS (HI×Slope/113 + CR − Par) · Gross alvo = gross que joga ao handicap (SD = HI) · Clica no cabeçalho para ordenar
             </div>
@@ -816,8 +817,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
 
           {teeA && teeB && (
             <div className="card u-bl-4px-solid-accent">
-              <div className="h-md u-d-flex u-ai-center u-gap-10px u-fwr-wrap">
-                🆚 Confronto de tees
+              <SectionTitle as="div" icon="🆚" right={<>
                 <Select value={teeA.tee.teeId} onChange={setTeeAId} style={{ border: `2px solid ${getTeeHex(teeA.tee.teeName, teeA.tee.scorecardMeta?.teeColor)}` }}>
                   {metrics.map(m => <option key={m.tee.teeId} value={m.tee.teeId}>{m.tee.teeName}{m.dist != null ? ` (${m.dist} m)` : ""}</option>)}
                 </Select>
@@ -825,7 +825,9 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 <Select value={teeB.tee.teeId} onChange={setTeeBId} style={{ border: `2px solid ${getTeeHex(teeB.tee.teeName, teeB.tee.scorecardMeta?.teeColor)}` }}>
                   {metrics.map(m => <option key={m.tee.teeId} value={m.tee.teeId}>{m.tee.teeName}{m.dist != null ? ` (${m.dist} m)` : ""}</option>)}
                 </Select>
-              </div>
+              </>}>
+                Confronto de tees
+              </SectionTitle>
 
               <div className="u-d-flex u-fd-column u-gap-10px u-mt-12px">
                 {conclusions.map((c, i) => (
@@ -845,9 +847,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
               </div>
 
               <div className="u-mt-16px">
-                <div className="u-fw-700 u-fs-fs-13 u-mb-4px">
-                  📋 Diferença buraco a buraco — {teeA.tee.teeName} vs {teeB.tee.teeName}
-                </div>
+                <SectionTitle as="div" icon="📋">Diferença buraco a buraco — {teeA.tee.teeName} vs {teeB.tee.teeName}</SectionTitle>
                 <div className="muted u-fs-fs-12 u-mb-8px">
                   Linhas "após drive" = metros que faltam para o green depois da pancada do tee (0 = green alcançado; no par 3 a própria pancada do tee é a do green). Linhas "após 2ª pancada" = o que sobra depois da 2ª pancada grande (madeira/híbrido), só nos par 4/5 — num par 5 é o approach que entra no green. · ✗ = green fora de alcance em regulação
                 </div>
@@ -968,9 +968,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                 o drive de um jogador, conhece-se o alcance do jogo todo.
               </p>
               <div className="u-m-0-0-12px u-p-10px-12px u-br-radius u-bg-bg-muted u-bd-1px-solid-border-light">
-                <div className="u-fw-700 u-fs-fs-13 u-mb-2px">
-                  Distâncias estimadas do saco — drive de {driveM} m
-                </div>
+                <SectionTitle as="div">Distâncias estimadas do saco — drive de {driveM} m</SectionTitle>
                 <div className="muted u-fs-fs-12 u-mb-8px">
                   Cada taco como percentagem constante do drive. Atualiza automaticamente
                   quando mudas o <b>Drive (m)</b> no topo da página.

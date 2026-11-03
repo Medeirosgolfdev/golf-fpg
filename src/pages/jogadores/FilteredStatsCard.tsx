@@ -15,6 +15,7 @@ import KpiCard from "../../ui/KpiCard";
 import { fmt, todayIso } from "../../utils/format";
 import { ESC_IDX, type ViewMode } from "./filterPlayers";
 import { fmtHcp } from "../../utils/format";
+import SectionTitle from "../../ui/SectionTitle";
 
 export type FilteredPlayer = { name: string; fed: string; escalao: string; sex?: "M" | "F" | string; hcp: number | null; club: unknown; region?: string; _federadoRaw?: FederadoRaw; _source?: MergedPlayer["_source"]; tags?: string[] };
 
@@ -98,7 +99,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
       {/* Top 10 por HCP */}
       {topBest.length > 0 && (
         <div className="card u-p-12px u-mb-16px">
-          <div className="fw-700 fs-14 mb-8">🏆 Top 10 por HCP (melhores primeiro)</div>
+          <SectionTitle icon="🏆" sub="melhores primeiro">Top 10 por HCP</SectionTitle>
           <div className="u-d-grid u-grid-template-columns-120gf u-gap-4px">
             {topBest.map((p, i) => {
               const cp = p._federadoRaw?.country_prefix;
@@ -133,7 +134,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
       <div className="u-d-grid u-grid-template-columns-120gf u-gap-14px u-mb-16px">
         {sortedEsc.length > 1 && (
           <div className="card u-p-12px">
-            <div className="fw-700 fs-14 mb-8">Por escalão</div>
+            <SectionTitle>Por escalão</SectionTitle>
             {sortedEsc.map(([k, v]) => {
               const total = v.m + v.f;
               return (
@@ -151,7 +152,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
 
         {topClubs.length > 1 && (
           <div className="card u-p-12px">
-            <div className="fw-700 fs-14 mb-8">Top 12 clubes</div>
+            <SectionTitle>Top 12 clubes</SectionTitle>
             {topClubs.map(([code, c]) => (
               <div key={code} className="u-mb-4px">
                 <div className="u-d-flex u-jc-space-between u-fs-fs-12">
@@ -168,7 +169,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
 
         {topRegions.length > 1 && (
           <div className="card u-p-12px">
-            <div className="fw-700 fs-14 mb-8">Por região</div>
+            <SectionTitle>Por região</SectionTitle>
             {topRegions.map(([r, n]) => (
               <div key={r} className="u-mb-4px">
                 <div className="u-d-flex u-jc-space-between u-fs-fs-12">
@@ -187,10 +188,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
       {/* Distribuição de HCP */}
       {withHcp > 0 && (
         <div className="card u-p-12px">
-          <div className="u-d-flex u-jc-space-between u-ai-center u-mb-8px">
-            <div className="fw-700 fs-14">Distribuição de HCP · <span className="muted fs-10">{withHcp} jogadores</span></div>
-            <MFLegend />
-          </div>
+          <SectionTitle sub={`${withHcp} jogadores`} right={<MFLegend />}>Distribuição de HCP</SectionTitle>
           <div style={{ display: "grid", gridTemplateColumns: `repeat(${HCP_BINS.length}, 1fr)`, gap: 10, alignItems: "end", height: 220 }}>
             {HCP_BINS.map(bin => {
               const { m, f } = hcpBins[bin];

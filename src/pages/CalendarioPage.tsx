@@ -32,6 +32,7 @@ import Modal from "../ui/Modal";
 import CloseButton from "../ui/CloseButton";
 import ExpandArrow from "../ui/ExpandArrow";
 import { toggleSet } from "../utils/mathUtils";
+import SectionTitle from "../ui/SectionTitle";
 
 interface CalendarSource {
   id: string;
@@ -323,7 +324,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
           <CloseButton onClick={onClose} onColor={hl ? "light" : true} color={hl?.text} />
         </div>
         <div className="cal-sidebar">
-          <div className="h-lg">{event.title}</div>
+          <SectionTitle as="div" size="lg">{event.title}</SectionTitle>
           <div className="d-flex flex-col gap-8">
             <InfoRow icon="📅" label={fmtRange(event)} />
             {event.modalidade && <InfoRow icon="🏌️" label={event.modalidade} />}

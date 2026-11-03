@@ -31,7 +31,12 @@ html, body, #root {
 /* ─── Headings ─── */
 .h-xs { font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); margin-bottom: var(--space-6); }
 .h-sm { font-size: var(--fs-12); font-weight: 800; color: var(--text-dark); margin: var(--space-14) 0 var(--space-8); }
-.h-md { font-size: var(--fs-14); font-weight: 800; color: var(--text); margin-bottom: var(--space-10); }
+.h-md { font-size: var(--fs-14); font-weight: 700; color: var(--text); margin: 0 0 var(--space-8); }
+/* SectionTitle (ui/SectionTitle.tsx): ícone, nota pequena e encaixe à direita */
+.section-title-icon { margin-right: var(--space-6); }
+.section-title-sub { margin-left: var(--space-6); font-size: var(--fs-10); font-weight: 400; color: var(--text-3); }
+.section-hdr .section-title { margin: 0; }
+.section-hdr-right { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-8); font-size: var(--fs-11); color: var(--text-3); }
 .h-lg { font-size: var(--fs-16); font-weight: 800; color: var(--text); margin: var(--space-24) 0 var(--space-8); }
 
 /* ─── Cards ─── */
@@ -2225,9 +2230,8 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cor-dot.cor-dot-9 { width: 9px; height: 9px; }
 .cor-dot.cor-dot-10 { width: 10px; height: 10px; }
 /* Selo da posição no pódio (🏆 #1 / 🥇 1º). -sm: dentro de pills e tabelas compactas. */
-/* Cabeçalho de secção (título à esquerda, contagem/controlos à direita) — Kids 2 */
-.section-hdr { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-8); margin: var(--space-8) 0 var(--space-10); }
-.section-hdr-title { margin: 0; font-size: var(--fs-14); font-weight: 700; color: var(--text); }
+/* Cabeçalho de secção (título à esquerda, contagem/controlos à direita) — ui/SectionTitle com `right` */
+.section-hdr { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--space-8); margin: var(--space-8) 0 var(--space-10); }
 /* Seta ↗ para a ficha Kids (ui/KidsLink KidsArrow) */
 .kids-arrow { margin-left: var(--space-4); font-weight: 800; font-size: var(--fs-12); color: var(--color-good-dark); text-decoration: none; flex-shrink: 0; }
 .kids-arrow:hover { text-decoration: underline; }
@@ -3918,6 +3922,7 @@ table td.lb-col-divider {
   letter-spacing: 0.04em; color: var(--text-muted);
   padding-left: var(--space-2);
 }
+.filter-hint { font-size: var(--fs-10); color: var(--text-3); padding-left: var(--space-2); }
 .filter-input {
   width: 100%;
   padding: var(--space-4) var(--space-8);
@@ -4514,7 +4519,6 @@ table td.lb-col-divider {
 .u-grid-template-columns-10220 { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important; }
 .u-grid-template-columns-120gf { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important; }
 .u-grid-template-columns-17av9 { grid-template-columns: minmax(140px, 1.5fr) 90px 1fr 90px !important; }
-.u-grid-template-columns-1bho3 { grid-template-columns: repeat(4, 1fr) !important; }
 .u-grid-template-columns-1e70q { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important; }
 .u-grid-template-columns-1fr-1fr { grid-template-columns: 1fr 1fr !important; }
 .u-grid-template-columns-1jeby { grid-template-columns: auto auto minmax(0,1fr) !important; }

@@ -13,7 +13,7 @@ export default function BirthPill({ children, esc, dashed, title }: {
 }) {
   const cls = escClassOf(esc);
   return (
-    <span className={(cls ? `p p-sm ${cls}` : "p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent") + (dashed ? " u-border-style-dashed" : "")}
+    <span className={(cls ? `p p-sm ${cls}` : "p p-sm p-muted") + (dashed ? " u-border-style-dashed" : "")}
       title={title}>
       {children}
     </span>

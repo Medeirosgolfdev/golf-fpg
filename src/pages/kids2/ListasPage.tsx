@@ -19,6 +19,7 @@ import Select from "../../ui/Select";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../../data/nacional2026Loader";
 import Kids2SubNav from "./Kids2SubNav";
 import { fmtHcp } from "../../utils/format";
+import SectionTitle from "../../ui/SectionTitle";
 
 interface Inscrito {
   ordem: number; pos: number; lista: "entry" | "waiting" | null;
@@ -119,7 +120,7 @@ function TabelaLista({ lista }: { lista: Lista }) {
 
   return (
     <section className="u-mb-24px">
-      <h2 className="u-m-0-0-4px u-fs-fs-16 u-fw-600 u-c-text">{lista.torneio ?? lista.label}</h2>
+      <SectionTitle as="h2" size="lg">{lista.torneio ?? lista.label}</SectionTitle>
       <div className="u-fs-fs-12 u-c-text-3 u-mb-10px u-lh-1_5">
         {lista.label} · {nEntry} na lista{lista.wildcardsFpg ? ` (+ ${lista.wildcardsFpg} wild cards da FPG por nomear)` : ""}{nRep ? ` · ${nRep} nome(s) repetido(s) no PDF` : ""} · {nWait} em lista de espera
         {lista.nascidosDesde ? ` · nascidos em ${lista.nascidosDesde} ou depois` : ""} · {nFicha} com ficha no kids2
@@ -157,9 +158,9 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
   const ant = lista.edicaoAnterior ?? null;
   return (
     <section className="u-mb-24px">
-      <h2 className="u-m-0-0-4px u-fs-fs-16 u-fw-600 u-c-text">
-        🇵🇹 {lista.sexo === "F" ? "Portuguesas" : "Portugueses"} que podem ser wild card
-      </h2>
+      <SectionTitle as="h2" size="lg" icon="🇵🇹">
+        {lista.sexo === "F" ? "Portuguesas" : "Portugueses"} que podem ser wild card
+      </SectionTitle>
       <div className="u-fs-fs-12 u-c-text-3 u-mb-10px u-lh-1_5">
         A FPG nomeia {n} «at its own discretion», sem critério escrito. Aqui: federados de nacionalidade portuguesa,
         {lista.sexo === "F" ? " raparigas" : " rapazes"}, nascidos em {lista.nascidosDesde} ou depois, por handicap de hoje

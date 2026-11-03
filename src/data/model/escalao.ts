@@ -146,6 +146,21 @@ export function compareEscalao(x: string | null | undefined, y: string | null | 
   return a[0] - b[0] || a[1] - b[1] || a[2].localeCompare(b[2]);
 }
 
+/** Compara nomes de escalão tal como vêm das fontes («Boys 7 & Under», «Sub-14»,
+ *  «Benjamín»): pela ordem do canónico, depois rapazes antes de raparigas, depois
+ *  o texto. Para listas que não estão em canónico (USKids, separadores por fonte).
+ *  `sexFirst`: primeiro todos os rapazes, depois as raparigas (como a USKids lista). */
+export function compareEscalaoRaw(x: string | null | undefined, y: string | null | undefined,
+  opts: { source?: EscalaoSource; sexFirst?: boolean } = {}): number {
+  const sx = escalaoSex(x), sy = escalaoSex(y);
+  const bySex = (sx === "F" ? 1 : 0) - (sy === "F" ? 1 : 0);
+  if (opts.sexFirst && bySex) return bySex;
+  const c = compareEscalao(escalaoCanon(x, opts.source), escalaoCanon(y, opts.source));
+  if (c) return c;
+  if (bySex) return bySex;
+  return String(x ?? "").localeCompare(String(y ?? ""), "pt");
+}
+
 /** Ordena escalões canónicos (ver `escalaoOrder`). */
 export function sortEscaloes(list: string[]): string[] {
   return [...list].sort(compareEscalao);

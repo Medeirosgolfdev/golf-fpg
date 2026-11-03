@@ -22,6 +22,7 @@ import ExpandArrow from "./ExpandArrow";
 import CloseButton from "./CloseButton";
 import NumberInput from "./NumberInput";
 import Select from "./Select";
+import { FilterField } from "./FilterField";
 
 type PoolSortKey = "whs" | "date" | "course" | "hcp" | "tee" | "gross" | "sd" | "sdAdj" | "top";
 
@@ -1603,20 +1604,11 @@ export function RoundSimulator({
           <div
             className="u-p-12px-16px u-bg-bg-detail u-ta-center u-minw-80px u-d-flex u-fd-column u-jc-center"
           >
-            <div
-              className="u-fs-fs-10 u-c-text-3 u-fw-600 u-tt-uppercase u-ls-_05em u-mb-2px"
-            >
-              Actual
-            </div>
-            <div
-              className="fw-900 u-fs-fs-22 u-lh-1"
-
-            >
-              {fmtHcp(currentHI)}
-            </div>
-            <div className="u-fs-fs-10 u-c-text-3 u-mt-2px">
-              {qtyCalcCur} mel./{initialPool.length}
-            </div>
+            <FilterField label="Actual" hint={`${qtyCalcCur} mel./${initialPool.length}`}>
+              <div className="fw-900 u-fs-fs-22 u-lh-1">
+                {fmtHcp(currentHI)}
+              </div>
+            </FilterField>
           </div>
 
           {validResults.map((r, i) => (
@@ -1645,9 +1637,7 @@ export function RoundSimulator({
                   justifyContent: "center",
                 }}
               >
-                <div
-                  className="u-fs-fs-10 u-c-text-3 u-fw-600 u-tt-uppercase u-ls-_05em u-mb-2px"
-                >
+                <FilterField label={<>
                   Ronda {i + 1}
                   {is9hMode(r.holesMode)
                     ? r.holesMode === "front9"
@@ -1655,7 +1645,7 @@ export function RoundSimulator({
                       : " · B9"
                     : ""}
                   {r.exceptionalAdj !== 0 ? " ⚡" : ""}
-                </div>
+                </>}>
                 <div
                   style={{
                     fontSize: "var(--fs-20)",
@@ -1686,6 +1676,7 @@ export function RoundSimulator({
                 >
                   {fmtSign(r.delta, 1)}
                 </div>
+                </FilterField>
               </div>
             </React.Fragment>
           ))}
@@ -1710,11 +1701,7 @@ export function RoundSimulator({
                   justifyContent: "center",
                 }}
               >
-                <div
-                  className="u-fs-fs-10 u-c-text-3 u-fw-600 u-tt-uppercase u-ls-_05em u-mb-2px"
-                >
-                  Final
-                </div>
+                <FilterField label="Final">
                 <div
                   className="fw-900"
                   style={{
@@ -1731,6 +1718,7 @@ export function RoundSimulator({
                 >
                   {fmtSign(finalDelta, 1)} total
                 </div>
+                </FilterField>
               </div>
             </>
           )}

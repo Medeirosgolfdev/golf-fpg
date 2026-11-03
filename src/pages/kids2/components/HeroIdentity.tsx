@@ -197,7 +197,7 @@ export default function HeroIdentity({ data, junior }: Props) {
             {junior.nationality && junior.country && junior.nationality !== junior.country && (
               <>
                 <span className="u-op-0_4">·</span>
-                <span title="Nacionalidade distinta do país onde reside/joga" className="u-fs-fs-11 u-p-2px-8px u-br-radius-pill u-bg-bg-muted u-c-text-2 u-fw-600 u-bd-1px-solid-border-light">
+                <span title="Nacionalidade distinta do país onde reside/joga" className="p p-muted">
                   {flagOf(junior.nationality)} {junior.nationality}
                 </span>
               </>
@@ -212,7 +212,7 @@ export default function HeroIdentity({ data, junior }: Props) {
             {ageDiff && (
               <>
                 <span className="u-op-0_4">·</span>
-                <span className="u-fs-fs-11 u-p-2px-8px u-br-radius-pill u-bg-bg-muted u-c-text-2 u-fw-600">
+                <span className="p p-muted">
                   {ageDiff}
                 </span>
               </>
@@ -355,7 +355,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           {hcps.map((h, i) => (
             <span key={i} title={h.oficial
               ? `Handicap oficial da Federação Espanhola${h.date ? ` — actualizado a ${shortDateSlash(h.date, true)}` : ""}`
-              : `Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+              : `Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} className="p p-muted u-gap-4px">
               {SOURCE_FLAGS[h.source] && <span className="u-fs-fs-12 u-lh-1">{SOURCE_FLAGS[h.source]}</span>}
               🎯 HCP {fmtHcp(h.value)} <span className="u-c-text-3 u-ml-3px">· {h.source}{h.oficial && h.date ? ` · ${shortDateSlash(h.date, true)}` : ""}</span>
               {i === hcps.length - 1 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
@@ -364,25 +364,25 @@ export default function HeroIdentity({ data, junior }: Props) {
             </span>
           ))}
           {hcpLista && (
-            <span title={`Handicap na ${hcpLista.label ?? "lista de inscritos"} · ${hcpLista.date}`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+            <span title={`Handicap na ${hcpLista.label ?? "lista de inscritos"} · ${hcpLista.date}`} className="p p-muted u-gap-4px">
               🎯 HCP {fmtHcp(hcpLista.hcpExact)}
               <span className="u-c-text-3 u-ml-3px">· {mesLista} · {hcpLista.fonte ?? "Entry List"}</span>
             </span>
           )}
           {hcpJogo && (
-            <span title={`Handicap de jogo na ${hcpJogo.serie} a ${shortDateSlash(hcpJogo.date, true)} (Gross − Net). Não é o Handicap Index: depende do campo.`} className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+            <span title={`Handicap de jogo na ${hcpJogo.serie} a ${shortDateSlash(hcpJogo.date, true)} (Gross − Net). Não é o Handicap Index: depende do campo.`} className="p p-muted u-gap-4px">
               🎯 HCP de jogo {fmtHcp(hcpJogo.valor)}
               <span className="u-c-text-3 u-ml-3px">· {MONTHS_PT[Number(hcpJogo.date.slice(5, 7)) - 1]}/{hcpJogo.date.slice(2, 4)} · {hcpJogo.serie}</span>
             </span>
           )}
           {hcps.length === 0 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
-            <span className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light u-d-inline-flex u-ai-center u-gap-4px">
+            <span className="p p-muted u-gap-4px">
               🎯 HCP {fmtHcp(junior.hcpHistory[0].hcpExact)} <span className="u-c-text-3 u-ml-3px">· {junior.hcpHistory[0].source}</span>
               <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
             </span>
           )}
           {totalRounds > 0 && (
-            <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" className="u-bg-bg-muted u-fs-fs-11 u-p-3px-8px u-br-radius-pill u-fw-600 u-c-text-2 u-bd-1px-solid-border-light">
+            <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" className="p p-muted">
               ⛳ {totalRounds} {totalRounds === 1 ? "ronda" : "rondas"}
             </span>
           )}

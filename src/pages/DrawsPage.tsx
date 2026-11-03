@@ -44,6 +44,7 @@ import { compareEscalao } from "../data/model/escalao";
 import SearchInput from "../ui/SearchInput";
 import ErrorState from "../ui/ErrorState";
 import { MUTED } from "../ui/tableCells";
+import SectionTitle from "../ui/SectionTitle";
 
 // ── Tipos ─────────────────────────────────────────────────────────────
 
@@ -493,11 +494,11 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
             {/* Cabeçalho do torneio */}
             <div className="u-d-flex u-ai-baseline u-gap-8px u-fwr-wrap u-mb-4px">
               <CircuitBadge circuitos={new Set([t.circuito])} />
-              <h3 className="u-m-0 u-fs-fs-16 u-fw-700">
+              <SectionTitle size="lg" className="u-m-0">
                 {isFpg ? (
                   <Link to={linkTorneioFPG(t.torneioId, t.nome)} className="courseLink">{t.nome}</Link>
                 ) : t.nome}
-              </h3>
+              </SectionTitle>
             </div>
             <div className="muted u-fs-fs-12 u-mb-10px u-fvn-tabular-nums">
               {rangeData}

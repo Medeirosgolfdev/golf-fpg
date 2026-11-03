@@ -18,6 +18,7 @@ import KpiCard from "../../ui/KpiCard";
 import { fmt, todayIso } from "../../utils/format";
 import CloseButton from "../../ui/CloseButton";
 import { fmtHcp } from "../../utils/format";
+import SectionTitle from "../../ui/SectionTitle";
 
 export interface GlobalStats {
   total: number; male: number; female: number; withHcp: number; avgHcp: number;
@@ -129,12 +130,9 @@ function ClubsTable({ stats, onDrillDown, maxClub }: {
 
   return (
     <div className="card u-p-12px">
-      <div className="u-d-flex u-jc-space-between u-ai-center u-mb-8px">
-        <div className="fw-700 fs-14">
-          Todos os clubes · <span className="muted fs-10">{stats.allClubs.length} clubes · clica na linha para detalhe · clica no cabeçalho para ordenar</span>
-        </div>
-        <MFLegend long gap={12} />
-      </div>
+      <SectionTitle sub={`${stats.allClubs.length} clubes · clica na linha para detalhe · clica no cabeçalho para ordenar`} right={<MFLegend long gap={12} />}>
+        Todos os clubes
+      </SectionTitle>
       <div className="u-maxh-520px u-oy-auto u-pr-4px">
         <table className="dtable dt-compact">
           <thead>
@@ -231,10 +229,9 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
 
       {/* Distribuição de HCP — histograma vertical stacked M/F */}
       <div className="card u-p-12px u-mb-16px">
-        <div className="u-d-flex u-ai-center u-jc-space-between u-mb-8px">
-          <div className="fw-700 fs-14">Distribuição de HCP · <span className="muted fs-10">{stats.withHcp.toLocaleString("pt-PT")} jogadores com HCP válido</span></div>
-          <MFLegend long gap={12} />
-        </div>
+        <SectionTitle sub={`${stats.withHcp.toLocaleString("pt-PT")} jogadores com HCP válido`} right={<MFLegend long gap={12} />}>
+          Distribuição de HCP
+        </SectionTitle>
         <div style={{ display: "grid", gridTemplateColumns: `repeat(${stats.hcpBinOrder.length}, 1fr)`, gap: 12, alignItems: "end", height: 300 }}>
           {stats.hcpBinOrder.map(bin => {
             const { m, f } = stats.hcpBins[bin] || { m: 0, f: 0 };
@@ -279,7 +276,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
       <div className="u-d-grid u-grid-template-columns-p9a8d u-gap-16px u-mb-16px">
         {/* Top 15 melhores HCPs */}
         <div className="card u-p-12px">
-          <div className="fw-700 fs-14 mb-8">🏆 Top 15 melhores HCPs</div>
+          <SectionTitle icon="🏆">Top 15 melhores HCPs</SectionTitle>
           {stats.topBestHcp.map((p, i) => (
             <button
               key={p.federation_code}
@@ -302,7 +299,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
 
         {/* Novos federados por ano — stacked M/F */}
         <div className="card u-p-12px">
-          <div className="fw-700 fs-14 mb-8">Novos federados por ano · <span className="muted fs-10">stacked M/F</span></div>
+          <SectionTitle sub="stacked M/F">Novos federados por ano</SectionTitle>
           <div style={{ display: "grid", gridTemplateColumns: `repeat(${stats.admissionYears.length}, 1fr)`, gap: 2, alignItems: "end", height: 140 }}>
             {stats.admissionYears.map(([y, v]) => {
               const total = v.m + v.f;
@@ -323,7 +320,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
       <div className="u-d-grid u-grid-template-columns-120gf u-gap-16px u-mb-16px">
         {/* Por escalão (clicável) — stacked M/F */}
         <div className="card u-p-12px">
-          <div className="fw-700 fs-14 mb-8">Por escalão · <span className="muted fs-10">clica para detalhe</span></div>
+          <SectionTitle sub="clica para detalhe">Por escalão</SectionTitle>
           {sortedAges.map(([k, v]) => {
             const total = v.m + v.f;
             return (
@@ -349,10 +346,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
 
         {/* Por país — M/F split */}
         <div className="card u-p-12px">
-          <div className="u-d-flex u-jc-space-between u-ai-center u-mb-8px">
-            <div className="fw-700 fs-14">Top 25 países</div>
-            <MFLegend />
-          </div>
+          <SectionTitle right={<MFLegend />}>Top 25 países</SectionTitle>
           {stats.topCountries.map(c => (
             <div key={c.cp} className="u-mb-6px">
               <div className="u-d-flex u-jc-space-between u-fs-fs-12 u-ai-center u-gap-6px">
@@ -501,7 +495,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
       <div className="u-d-grid u-grid-template-columns-1e70q u-gap-12px">
         {/* Top HCPs */}
         <div>
-          <div className="fw-700 fs-14 mb-4">🏆 Top 10 HCPs</div>
+          <SectionTitle icon="🏆">Top 10 HCPs</SectionTitle>
           {best.map((p, i) => (
             <button
               key={p.federation_code}
@@ -521,7 +515,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
         {/* Só se for clube: distribuição por escalão */}
         {drillDown.type === "club" && sortedAges.length > 0 && (
           <div>
-            <div className="fw-700 fs-14 mb-4">Por escalão</div>
+            <SectionTitle>Por escalão</SectionTitle>
             {sortedAges.map(([k, v]) => (
               <div key={k} className="u-d-flex u-jc-space-between u-fs-fs-12 u-mb-2px">
                 <span>{k}</span><span className="fw-700">{v}</span>
@@ -533,7 +527,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
         {/* Só se for escalão: top clubes */}
         {drillDown.type === "age" && topClubsDrill.length > 0 && (
           <div>
-            <div className="fw-700 fs-14 mb-4">Top clubes</div>
+            <SectionTitle>Top clubes</SectionTitle>
             {topClubsDrill.map(([code, c]) => (
               <div key={code} className="u-d-flex u-jc-space-between u-fs-fs-12 u-mb-2px">
                 <span>{c.name}</span><span className="fw-700">{c.count}</span>
@@ -545,7 +539,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
         {/* Top países (sempre) */}
         {topCountriesDrill.length > 1 && (
           <div>
-            <div className="fw-700 fs-14 mb-4">Por país</div>
+            <SectionTitle>Por país</SectionTitle>
             {topCountriesDrill.map(([cp, n]) => (
               <div key={cp} className="u-d-flex u-jc-space-between u-fs-fs-12 u-mb-2px">
                 <span>{prefixFlag(cp)} {cp}</span><span className="fw-700">{n}</span>

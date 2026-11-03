@@ -36,6 +36,7 @@ import EmptyState from "./EmptyState";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
 import ShowMoreButton from "./ShowMoreButton";
+import SectionTitle from "./SectionTitle";
 
 const ESC_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 24"];
 
@@ -275,7 +276,7 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
   if (champions.length === 0) {
     return (
       <section className="u-m-16px-12px">
-        <h3 className="fs-14 fw-700 u-mb-8px">{title}</h3>
+        <SectionTitle>{title}</SectionTitle>
         <EmptyState size="sm" message="Sem dados disponíveis." />
       </section>
     );
@@ -415,9 +416,7 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
 
   return (
     <section className="u-m-16px-12px">
-      <h3 className="fs-14 fw-700 u-mb-8px">
-        {title}
-      </h3>
+      <SectionTitle>{title}</SectionTitle>
       {ESC_GROUPS.map((g) => renderGroup(g.label, g.set, g.key))}
     </section>
   );
@@ -628,9 +627,7 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
 
   return (
     <section className="u-m-16px-12px">
-      <h3 className="fs-14 fw-700 u-mb-8px">
-        📊 Jogadores mais frequentes <span className="fs-11 muted">(entre Regional + Nacional, últimos {years.length} anos)</span>
-      </h3>
+      <SectionTitle icon="📊" sub={`entre Regional + Nacional, últimos ${years.length} anos`}>Jogadores mais frequentes</SectionTitle>
       <div className="u-ox-auto">
         <table className="dtable">
           <thead>
@@ -833,9 +830,7 @@ function PlayerTimelines({ players, years, mode = "all" }: { players: PlayerStat
 
   return (
     <section className="u-m-16px-12px">
-      <h3 className="fs-14 fw-700 u-mb-8px">
-        📈 Evolução de jogadores (top {withDob.length})
-      </h3>
+      <SectionTitle icon="📈">Evolução de jogadores (top {withDob.length})</SectionTitle>
       <div className="u-bd-1px-solid-border u-br-radius u-bg-bg-card">
         {withDob.map((p, i) => (
           <PlayerTimeline key={(p.fed || p.name) + "_" + i} player={p} years={years} mode={mode} />

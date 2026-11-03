@@ -33,6 +33,8 @@
 const fs = require("fs");
 const path = require("path");
 const { writeJsonAtomic } = require("./lib/atomic-write");
+// Chave dos campos: o norm() da tabela única (src/utils/courseAliases.ts) — o site lê com o mesmo.
+const { norm } = require("./lib/course-aliases.cjs");
 
 const ROOT = path.resolve(__dirname, "..");
 const OUT = path.join(ROOT, "public", "data", "weather.json");
@@ -76,14 +78,6 @@ function parseArgs(argv) {
 /* ── util ── */
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-function normCourseKey(s) {
-  return (s || "")
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim()
-    .replace(/\s+/g, " ");
-}
 
 /** "YYYY-MM-DD", "DD/MM/YYYY" ou "M/D/YYYY" (americano, do slim) → "YYYY-MM-DD". */
 function toISO(s) {
@@ -264,7 +258,7 @@ function tasksFromFpg({ since, limit } = {}) {
       if (!rounds && Array.isArray(t.players)) {
         rounds = Math.max(1, ...t.players.map((p) => (p.roundScores ? p.roundScores.length : 1)));
       }
-      const key = `${normCourseKey(course)}|${iso}`;
+      const key = `${norm(course)}|${iso}`;
       if (seen.has(key)) continue;
       seen.add(key);
       out.push({ name: t.name || course, course, start: iso, rounds: rounds || 1 });
@@ -324,7 +318,7 @@ async function main() {
   for (const t of tasks) {
     const courseName = t.course || t.name;
     if (!courseName) continue;
-    const key = normCourseKey(courseName);
+    const key = norm(courseName);
 
     // Com --regeocode, descarta o place imprecioso já gravado para forçar refresh.
     if (a.regeocode && out.places[key] && out.places[key].precision !== "course") {

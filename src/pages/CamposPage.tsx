@@ -16,7 +16,8 @@ import { useCourses } from "../context/CoursesContext";
 import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex, teeBorder } from "../utils/teeColors";
-import { fmt, fmtCR, norm, sumRange, fmtToPar, titleCase, fmtDatePt, fmtDateShort, fmtSign } from "../utils/format";
+import { fmt, fmtCR, norm, sumRange, fmtToPar, titleCase, fmtDatePt, fmtDateShort, fmtSign, escalaoAtDate } from "../utils/format";
+import { sortEscaloes } from "../data/model/escalao";
 import { flag } from "../utils/flagUtils";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
@@ -805,20 +806,8 @@ function useTeeInfoMap(course: Course): Map<string, TeeInfo> {
   }, [course]);
 }
 
-/* ── Escalão (coorte FPG) à DATA da volta ─────────────────────────────────
- * Por ano de nascimento vs ano do evento (a idade que o jogador FAZ nesse ano
- * — é assim que a FPG define as coortes). "Sub 10..21" ou "Absoluto". */
-const ESC_KPI_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 21", "Absoluto"];
-const ESC_THRESHOLDS = [10, 12, 14, 16, 18, 21];
-function escalaoAtDate(dob: string | undefined, date: string | null): string | null {
-  if (!dob || !date) return null;
-  const by = parseInt(dob.slice(0, 4), 10);
-  const ey = parseInt(String(date).slice(0, 4), 10);
-  if (!by || !ey || ey < by) return null;
-  const yrs = ey - by;
-  for (const t of ESC_THRESHOLDS) if (yrs <= t) return `Sub ${t}`;
-  return "Absoluto";
-}
+/* ── Escalão (coorte FPG) à DATA da volta — `escalaoAtDate` global (utils/format):
+ * ano de nascimento vs ano do evento, como a FPG define as coortes. */
 
 type VoltaKind = "18" | "f9" | "b9";
 type EscRec = { val: number; tp: number | null; fed: string; name: string; date: string | null; sd: number | null };
@@ -1000,7 +989,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
             const stripe = teeBorder(hex) ? "var(--border)" : hex; // tees claros → risca neutra visível
             const rt = ratingFor(c.label);
             const dist = distFor(c.label);
-            const escs = ESC_KPI_ORDER.filter((e) => c.esc.has(e));
+            const escs = sortEscaloes([...c.esc.keys()]);
             return (
               <div key={c.label} className="tee-card tee-card-flex" style={{ borderTopColor: stripe }}>
                 {/* Header do tee (banda tingida) */}

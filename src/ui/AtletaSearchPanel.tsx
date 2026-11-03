@@ -26,7 +26,8 @@ import KpiCard from "./KpiCard";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
 import CloseButton from "./CloseButton";
-
+
+import SectionTitle from "./SectionTitle";
 interface PlayerEntry {
   pos: number | string | null;
   name: string;
@@ -282,9 +283,9 @@ export default function AtletaSearchPanel({
       <div
         className="u-p-12px-16px u-bg-bg-muted u-bd-1px-solid-border u-br-radius-lg u-mb-12px"
       >
-        <h3 className="fs-15 fw-800 u-m-0-0-8px">
+        <SectionTitle size="lg">
           🔍 Procurar atleta
-        </h3>
+        </SectionTitle>
         <input
           type="text"
           value={q}
@@ -359,13 +360,13 @@ export default function AtletaSearchPanel({
             className="u-p-12px-16px u-bg-bg-muted u-bb-1px-solid-border u-d-flex u-ai-center u-gap-12px u-fwr-wrap"
           >
             <div className="u-fl-1 u-minw-200px">
-              <h3 className="fs-15 fw-800 u-m-0">
+              <SectionTitle size="lg" className="u-m-0">
                 {selected.fed ? (
                   <PlayerLink fed={selected.fed} name={selected.name} query="?view=federado" title="Ver perfil federado (nova janela)" />
                 ) : (
                   selected.name
                 )}
-              </h3>
+              </SectionTitle>
               <div className="muted fs-11 u-mt-2px">
                 {selected.fed ? `Fed ${selected.fed}` : "Sem fed code"}
                 {selected.dob ? ` · Nasc. ${selected.dob.slice(0, 4)}` : ""}

@@ -39,6 +39,7 @@ import TabRow from "../ui/TabRow";
 import ExpandArrow from "../ui/ExpandArrow";
 import NumberInput from "../ui/NumberInput";
 import Select from "../ui/Select";
+import SectionTitle from "../ui/SectionTitle";
 
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
@@ -412,9 +413,7 @@ function CourseSideBySide({
   return (
     <div className="card u-bl-4px-solid-accent">
       {/* Header */}
-      <div className="h-md u-mb-14px">
-        🆚 Comparação directa
-      </div>
+      <SectionTitle as="div" icon="🆚">Comparação directa</SectionTitle>
 
       {/* KPI cards: [A] [Δ] [B] — 3 colunas, 2 linhas cada */}
       {(() => {
@@ -876,12 +875,9 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
 
           {/* Tabela de similitude */}
           <div className="card">
-            <div className="h-md u-d-flex u-ai-center u-gap-8px u-fwr-wrap">
-              🎯 Campos Similares
-              <span className="muted u-fw-500 u-fs-fs-12">
-                · {similarities.length} resultado{similarities.length === 1 ? "" : "s"} ≥ 40%
-              </span>
-            </div>
+            <SectionTitle as="div" icon="🎯" sub={`${similarities.length} resultado${similarities.length === 1 ? "" : "s"} ≥ 40%`}>
+              Campos Similares
+            </SectionTitle>
             <div className="muted u-fs-fs-12 u-mt-6px u-mb-12px">
               Pesos: 25% distância · 15% par · 60% min(slope, CR) · Clica no cabeçalho para ordenar · Clica numa linha para definir Campo B
             </div>

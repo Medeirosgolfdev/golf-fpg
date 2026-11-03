@@ -30,6 +30,7 @@ import LoadingState from "../../ui/LoadingState";
 import ErrorState from "../../ui/ErrorState";
 import Modal from "../../ui/Modal";
 import { isoToDmy } from "../../utils/format";
+import SectionTitle from "../../ui/SectionTitle";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
  *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
@@ -242,12 +243,9 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
 
         return (
           <div className="card u-mt-12px">
-            <div className="h-md fs-14 mb-8 u-d-flex u-ai-center u-gap-8px">
-              <span>Cadastro FPG</span>
-              <span className="muted fs-10 u-fw-400">
-                {visibleCount} campos visíveis{technicalCount > 0 ? ` · ${technicalCount} técnicos ocultos` : ""}
-              </span>
-            </div>
+            <SectionTitle as="div" sub={`${visibleCount} campos visíveis${technicalCount > 0 ? ` · ${technicalCount} técnicos ocultos` : ""}`}>
+              Cadastro FPG
+            </SectionTitle>
 
             {/* Secções principais */}
             {FEDERADO_SECTIONS.map(sec => {
@@ -325,7 +323,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
         );
         return (
           <div className="card u-mt-12px">
-            <div className="h-md fs-14 mb-8">Actividade</div>
+            <SectionTitle as="div">Actividade</SectionTitle>
             <div className="u-d-grid u-grid-template-columns-10220 u-gap-8px">
               {kpi(`Rondas ${currentYear}`, thisYearRounds.length, prevYearRounds.length > 0 ? `vs ${prevYearRounds.length} em ${prevYear}` : undefined)}
               {kpi(`Rondas ${prevYear}`, prevYearRounds.length)}
@@ -341,13 +339,10 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
 
       {/* Rondas em tempo real via /api/datagolf */}
       <div className="card u-mt-12px">
-        <div className="u-d-flex u-ai-center u-jc-space-between u-mb-8px">
-          <div className="h-md fs-14">Rondas WHS
-            {liveRounds && <span className="muted fs-10 ml-8">({liveRounds.length} rondas · via scoring.datagolf.pt)</span>}
-          </div>
+        <SectionTitle as="div" sub={liveRounds ? `${liveRounds.length} rondas · via scoring.datagolf.pt` : undefined} right={<>
           {loadingLive && <span className="muted fs-10">⏳ A carregar…</span>}
           {liveError && (
-            <div className="fs-10 u-c-color-warn-vivid u-ta-right u-maxw-70pc">
+            <div className="fs-10 u-c-color-warn-vivid u-ta-right">
               <div className="u-fw-600">⚠ Não foi possível carregar rondas em tempo real</div>
               <details className="u-mt-4px u-op-0_85">
                 <summary className="u-cur-pointer">Ver detalhes do erro</summary>
@@ -355,7 +350,9 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
               </details>
             </div>
           )}
-        </div>
+        </>}>
+          Rondas WHS
+        </SectionTitle>
         {liveError && !loadingLive && !liveRounds && (
           <div className="muted fs-11 u-p-8px-0">
             Dados de cadastro acima. As rondas WHS podem ser consultadas diretamente no site da FPG.

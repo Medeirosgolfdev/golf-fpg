@@ -27,11 +27,13 @@ export function norm(s: string): string {
     .trim();
 }
 
-/** Title case: capitaliza cada palavra */
+/** Maiúsculas Iniciais — a ÚNICA do site (03/11/2026: havia 3, cada uma à sua
+ *  maneira). Também depois de hífen e apóstrofo, com acentos: «JEAN-PIERRE O'NEIL»
+ *  → «Jean-Pierre O'Neil», «DE LOS RÍOS» → «De Los Ríos». */
 export function titleCase(s: string): string {
   const x = (s ?? "").trim();
   if (!x) return x;
-  return x.replace(/\S+/g, w => w[0].toUpperCase() + w.slice(1).toLowerCase());
+  return x.toLowerCase().replace(/(^|[\s\-'’])(\p{L})/gu, (_, sep: string, c: string) => sep + c.toUpperCase());
 }
 
 /** Soma um range de valores com getter */
@@ -151,11 +153,52 @@ export function fmtDateRangePt(d1?: string | null, d2?: string | null): string {
   return a || b || "";
 }
 
-/** Data "17 Mar 2026" (dia sem zero à esquerda, mês abreviado PT, ano) a partir de ISO. */
+/** Data "17 Mar 2026" (dia sem zero à esquerda, mês abreviado PT, ano) — aceita
+ *  ISO e «DD-MM-YYYY»/«DD/MM/YYYY» (fontes ES/FR); outra coisa volta como veio. */
 export function fmtDayMonthYear(iso: string): string {
   if (!iso) return "";
-  const [y, m, d] = iso.split("-");
-  return `${Number(d)} ${MONTHS_PT[Number(m) - 1] || m} ${y}`;
+  const p = dateParts(iso);
+  return p ? `${p.d} ${MONTHS_PT[p.m - 1] || p.m} ${p.y}` : iso;
+}
+
+/** Intervalo de datas legível (ISO ou «DD-MM-YYYY»): «13–14 Ago 2026» no mesmo mês,
+ *  «30 Ago – 2 Set 2026» entre meses, «30 Dez 2025 – 2 Jan 2026» entre anos, e
+ *  «13 Ago 2026» num só dia. Uma data que não se perceba volta como veio. */
+export function fmtDateSpan(start?: string | null, end?: string | null): string {
+  const a = dateParts(start ?? ""), b = dateParts(end ?? "");
+  if (!a && !b) return end || start || "";
+  const mo = (m: number) => MONTHS_PT[m - 1] || String(m);
+  if (!a || !b || (a.y === b.y && a.m === b.m && a.d === b.d)) { const x = (b || a)!; return `${x.d} ${mo(x.m)} ${x.y}`; }
+  if (a.y !== b.y) return `${a.d} ${mo(a.m)} ${a.y} – ${b.d} ${mo(b.m)} ${b.y}`;
+  if (a.m !== b.m) return `${a.d} ${mo(a.m)} – ${b.d} ${mo(b.m)} ${b.y}`;
+  return `${a.d}–${b.d} ${mo(b.m)} ${b.y}`;
+}
+
+/** Data e hora «11/09/2026, 13:19» (hora de Portugal) — avisos de «dados de quando». */
+export function fmtDateTime(iso?: string | null): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? ""
+    : d.toLocaleString("pt-PT", { timeZone: "Europe/Lisbon", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+}
+
+/** Mês curto «Mar/26» (eixos de gráficos) a partir de ms ou de uma data. */
+export function fmtMonthShort(v: number | string): string {
+  const d = typeof v === "number" ? new Date(v) : null;
+  const p = d ? { y: d.getFullYear(), m: d.getMonth() + 1 } : dateParts(String(v));
+  return p ? `${MONTHS_PT[p.m - 1]}/${String(p.y).slice(2)}` : "";
+}
+
+/** Mês e ano de uma data «Nov 2026» (ISO completa ou «YYYY-MM»); vazia → `placeholder`. */
+export function fmtMonthYear(iso: string | null | undefined, placeholder = "—"): string {
+  return iso ? monthLabel(iso.slice(0, 7)) : placeholder;
+}
+
+/** Dia e mês «03 Nov» (o ano está à vista noutro lado); vazia → `placeholder`. */
+export function fmtDayMonth(iso: string | null | undefined, placeholder = "—"): string {
+  if (!iso) return placeholder;
+  const p = dateParts(iso);
+  return p ? `${String(p.d).padStart(2, "0")} ${MONTHS_PT[p.m - 1]}` : iso;
 }
 
 /** Formata chave "YYYY-MM" → "Jan 2025". Aceita "?" e anos de 4 dígitos. */
@@ -275,7 +318,7 @@ export function anoEscalao(dob: string, escalao: string, dateOrYear?: string | n
  *  espanholas/francesas ("19/07/2008"). ⚠ `slice(0,4)` sozinho lia "19/0" como
  *  ano 19 num dob "DD/MM/YYYY" — um miúdo de 18 anos aparecia como "Super
  *  Sénior" na /rfeg (idade 2026−19). Devolve null se não encontrar 4 dígitos. */
-function yearOfDate(s: string | number | null | undefined): number | null {
+export function yearOfDate(s: string | number | null | undefined): number | null {
   if (s == null) return null;
   if (typeof s === "number") return Number.isFinite(s) ? s : null;
   const dmy = /^(\d{1,2})[/.](\d{1,2})[/.](\d{4})/.exec(s.trim());

@@ -9,6 +9,7 @@ import type { RoundData } from "../../../data/playerDataLoader";
 import { fmtSign } from "../../../utils/format";
 import { getTeeHex } from "../../../utils/teeColors";
 import { meanArr, minArr, maxArr, linearSlope } from "../../../utils/mathUtils";
+import SectionTitle from "../../../ui/SectionTitle";
 
 /* ─── Linha temporal das rondas neste campo ─── */
 export function RoundsTimeline({ rounds }: { rounds: RoundData[] }) {
@@ -63,7 +64,7 @@ export function RoundsTimeline({ rounds }: { rounds: RoundData[] }) {
 
   return (
     <div className="mt-10">
-      <div className="h-sm">Evolução dos gross <span className="muted fs-11">({pts.length} rondas de 18 buracos · linha tracejada = par)</span></div>
+      <SectionTitle as="div" size="sm" sub={`${pts.length} rondas de 18 buracos · linha tracejada = par`}>Evolução dos gross</SectionTitle>
       <div className="scroll-x">
         <svg viewBox={`0 0 ${W} ${H}`} width="100%" className="u-d-block" role="img" aria-label="Evolução do gross ao longo do tempo">
           {/* Eixo Y: linhas de grelha */}

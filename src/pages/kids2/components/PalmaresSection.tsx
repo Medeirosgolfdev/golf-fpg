@@ -20,6 +20,7 @@ import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar, MONTHS_PT } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
 import ShowMoreButton from "../../../ui/ShowMoreButton";
+import SectionTitle from "../../../ui/SectionTitle";
 
 const DEFAULT_LIMIT = 6;
 const RECENT_MONTHS = 24; // "recente" = últimos 24 meses
@@ -68,16 +69,13 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
 
   return (
     <section className="u-mb-4px">
-      <div className="section-hdr">
-        <h3 className="section-hdr-title">
-          🏆 Palmarès
-        </h3>
-        <span className="u-fs-fs-11 u-c-text-3">
-          {showAll
-            ? `${allWins.length} vitórias`
-            : `${visible.length} de ${allWins.length} vitórias · recentes + ★★★+`}
-        </span>
-      </div>
+      <SectionTitle icon="🏆" right={<span>
+        {showAll
+          ? `${allWins.length} vitórias`
+          : `${visible.length} de ${allWins.length} vitórias · recentes + ★★★+`}
+      </span>}>
+        Palmarès
+      </SectionTitle>
 
       <div className="u-d-grid u-grid-template-columns-u0vn1 u-gap-10px">
         {visible.map((w) => (

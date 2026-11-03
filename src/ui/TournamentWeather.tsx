@@ -17,10 +17,10 @@
  * Fonte: Open-Meteo Historical Weather API (https://open-meteo.com) — gratuita,
  * sem chave, dados desde 1940. Links de consulta no fim da strip.
  */
+import { norm } from "../utils/courseAliases";
 import { useEffect, useState } from "react";
 import { cachedFetchJson } from "../data/fetchCache";
 import ExtLink from "./ExternalLink";
-import { stripAccents } from "../utils/normName";
 
 const WEATHER_URL = "/data/weather.json";
 
@@ -31,14 +31,6 @@ interface WeatherFile {
   days?: Record<string, WxDay>;
 }
 
-/** Normalização de nome de campo — TEM de espelhar a do scripts/fetch-weather.js. */
-function normCourseKey(s: string): string {
-  return stripAccents(s || "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim()
-    .replace(/\s+/g, " ");
-}
 
 /** WMO weathercode → ícone + rótulo PT. */
 function wmo(code: number): { icon: string; label: string } {
@@ -108,7 +100,7 @@ export default function TournamentWeather({
 
   if (!loaded || !wx || !course || !startDate) return null;
 
-  const place = wx.places?.[normCourseKey(course)];
+  const place = wx.places?.[norm(course)] /* chave = norm() da tabela única de campos, a mesma do scripts/fetch-weather.js */;
   if (!place) return null;
 
   const dates = roundDates(startDate, endDate, rounds);
@@ -142,7 +134,7 @@ export default function TournamentWeather({
         return (
           <span
             key={date}
-            className="p p-sm u-d-inline-flex u-ai-center u-gap-4px u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border u-ws-nowrap"
+            className="p p-sm p-muted u-gap-4px"
 
             title={
               `${dowLabel(date)} ${date} — ${w.label}\n` +

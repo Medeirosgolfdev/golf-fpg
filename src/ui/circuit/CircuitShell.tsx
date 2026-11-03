@@ -787,16 +787,16 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                       {curDateStr && <span className="muted ml-8">{curDateStr}</span>}
                       {cur.federation && <span className="muted ml-8">🏛️ {cur.federation}</span>}
                       <LigaPills entry={cur} config={config} max={3}
-                        className="u-ml-8px u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border" />
+                        className="u-ml-8px" />
                       <span className="gap-4 ml-8 u-d-inline-flex u-ai-center u-fwr-wrap">
                         {headerStats.nPlayers > 0 && (
-                          <span className="p p-sm u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border">
+                          <span className="p p-sm p-muted">
                             {headerStats.nPlayers} jog
                           </span>
                         )}
                         {headerStats.nRounds > 1 && <RoundPill nR={headerStats.nRounds} />}
                         {headerStats.parTotal > 0 && (
-                          <span className="p p-sm u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border">
+                          <span className="p p-sm p-muted">
                             Par {headerStats.parTotal}
                           </span>
                         )}

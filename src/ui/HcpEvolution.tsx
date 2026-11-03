@@ -14,7 +14,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { HcpHistoryDb } from "../data/hcpHistoryLoader";
 import { computeEvoMetrics, pointsInWindow, type EvoMetrics } from "../utils/hcpEvolution";
-import { MONTHS_PT, fmtHcp, fmtSign } from "../utils/format";
+import { fmtHcp, fmtSign, fmtMonthShort } from "../utils/format";
 import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import SexBadge from "./SexBadge";
@@ -45,11 +45,6 @@ const PERIODS: { v: number; label: string }[] = [
 
 type Row = { p: EvoPlayer; m: EvoMetrics };
 type SortKey = "nome" | "pontos" | "inicio" | "actual" | "delta" | "best" | "slope";
-
-function fmtMonth(ms: number): string {
-  const d = new Date(ms);
-  return `${MONTHS_PT[d.getMonth()]}/${String(d.getFullYear()).slice(2)}`;
-}
 
 
 export default function HcpEvolution({ players, history, showChart = true }: {
@@ -183,7 +178,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
           {/* Rótulos X */}
           {xTicks.map((d, i) => (
             <text key={`x${i}`} x={sx(d)} y={H - 8} textAnchor={i === 0 ? "start" : i === xTicks.length - 1 ? "end" : "middle"}
-              fontSize={10} fill="var(--text-3)">{fmtMonth(d)}</text>
+              fontSize={10} fill="var(--text-3)">{fmtMonthShort(d)}</text>
           ))}
           <text x={PAD.left - 6} y={PAD.top - 4} textAnchor="end" fontSize={9} fill="var(--text-3)">melhor ↑</text>
 
@@ -205,7 +200,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                 <path d={d} stroke={color} strokeWidth={2.5} fill="none" strokeLinejoin="round" />
                 {pts.map((pt, i) => (
                   <circle key={i} cx={sx(pt.d)} cy={sy(pt.h)} r={2.4} fill={color}>
-                    <title>{`${name} · ${fmtMonth(pt.d)} · HCP ${pt.h.toFixed(1)}`}</title>
+                    <title>{`${name} · ${fmtMonthShort(pt.d)} · HCP ${pt.h.toFixed(1)}`}</title>
                   </circle>
                 ))}
               </g>

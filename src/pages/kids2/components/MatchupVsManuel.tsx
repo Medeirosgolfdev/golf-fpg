@@ -14,9 +14,10 @@ import { useSort, compareValuesNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import KpiCard from "../../../ui/KpiCard";
 import ToPar from "../../../ui/ToPar";
-import { fmtSign, monthLabel } from "../../../utils/format";
+import { fmtSign, fmtMonthYear } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
 import { TrophyPos } from "../../../ui/PosBadge";
+import SectionTitle from "../../../ui/SectionTitle";
 
 type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff" | "result";
 
@@ -121,17 +122,11 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
 
   return (
     <div className="u-bg-bg u-bd-1px-solid-border u-br-radius-lg u-p-12px-16px">
-      <div className="u-d-flex u-ai-center u-gap-8px u-mb-12px">
-        <span className="u-fs-fs-18">⚔️</span>
-        <h3 className="u-m-0 u-fs-fs-14 u-fw-700 u-c-text">
-          Confronto com Manuel
-        </h3>
-        {avgPosJ != null && avgPosM != null && (
-          <span className="u-fs-fs-11 u-c-text-3 u-ml-auto">
-            Avg: {firstName} {avgPosJ}.º · Manuel {avgPosM}.º
-          </span>
-        )}
-      </div>
+      <SectionTitle icon="⚔️" right={avgPosJ != null && avgPosM != null
+        ? <span>Avg: {firstName} {avgPosJ}.º · Manuel {avgPosM}.º</span>
+        : undefined}>
+        Confronto com Manuel
+      </SectionTitle>
 
       <div className="kpi-row u-m-0-0-12px">
         <KpiCard label="encontros" value={String(rows.length)} align="center" />
@@ -159,7 +154,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
             <tr key={i} style={{
               background: r.outcome === -1 ? "rgba(22,163,74,.04)" : r.outcome === 1 ? "rgba(220,38,38,.04)" : undefined,
             }}>
-              <td>{fmtDateShort(r.t.date)}</td>
+              <td>{fmtMonthYear(r.t.date)}</td>
               <td>
                 {r.t.name || r.t.id}
                 {r.t.links?.[0]?.url && (
@@ -227,6 +222,3 @@ function fmtDiff(n: number): string {
   return Number.isInteger(n) ? fmtSign(n) : fmtSign(Math.round(n * 10) / 10, 1);
 }
 
-function fmtDateShort(iso: string | undefined): string {
-  return iso ? monthLabel(iso.slice(0, 7)) : "—";
-}

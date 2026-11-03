@@ -43,6 +43,7 @@ import { MUTED } from "../../ui/tableCells";
 import { regionLabel } from "../../data/drive/driveRegions";
 import DriveSeason from "./DriveSeason";
 import type { DriveCalEntry } from "../../data/drive/driveCalendar";
+import SectionTitle from "../../ui/SectionTitle";
 
 export const SERIE_LABELS: Record<DriveSeries, string> = { tour: "Tour", challenge: "Challenge", aquapor: "AQUAPOR" };
 
@@ -236,7 +237,7 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
       return (
         <div className="drive-rank-head">
           {d.top?.(s)}
-          <div className="h-md mt-8">🏅 Ranking por pontos — {escLabel(d.esc)} {SERIE_LABELS[s]} {d.year ?? ""}</div>
+          <SectionTitle as="div" icon="🏅" className="mt-8">Ranking por pontos — {escLabel(d.esc)} {SERIE_LABELS[s]} {d.year ?? ""}</SectionTitle>
           <div className="muted fs-11 mb-8">
             {k.players} jogadores · {k.rounds} rondas
             {k.bestSD != null && <> · Best SD <span className={"drive-kpi" + (k.bestSD <= 25 ? " is-good" : "")}>{k.bestSD.toFixed(1)}</span></>}

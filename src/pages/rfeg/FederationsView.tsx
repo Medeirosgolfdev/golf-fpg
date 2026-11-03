@@ -13,6 +13,8 @@ import DetailHeader from "../../ui/DetailHeader";
 import ExtLink from "../../ui/ExternalLink";
 import SortableHdr from "../../ui/SortableHdr";
 import { useSort, compareTextNullsLast } from "../../hooks/useSort";
+import SectionTitle from "../../ui/SectionTitle";
+import KpiCard from "../../ui/KpiCard";
 
 interface RFEGFederation {
   /** Nome oficial RFEG */
@@ -336,33 +338,17 @@ export function RFEGFederationsView() {
         joga em Madrid com a mesma licença.
       </div>
 
-      <div className="u-mt-16px u-d-grid u-grid-template-columns-1bho3 u-gap-12px">
-        <div className="u-p-12px u-bg-bg-muted u-br-radius u-bd-1px-solid-border">
-          <div className="u-fs-fs-24 u-fw-700 u-c-color-good">{ncFeds.length}</div>
-          <div className="fs-11 muted">via NextCaddy (scrapadas)</div>
-          <div className="fs-10 u-mt-4px">{totalScraped} torneios indexados</div>
-        </div>
-        <div className="u-p-12px u-bg-bg-muted u-br-radius u-bd-1px-solid-border">
-          <div className="u-fs-fs-24 u-fw-700 u-c-color-good">{gdFeds.length}</div>
-          <div className="fs-11 muted">via GolfDirecto (scrapada)</div>
-          <div className="fs-10 u-mt-4px">{totalGdScraped} games descobertos</div>
-        </div>
-        <div className="u-p-12px u-bg-bg-muted u-br-radius u-bd-1px-solid-border">
-          <div className="u-fs-fs-24 u-fw-700 u-c-text-2">{ownFeds.length}</div>
-          <div className="fs-11 muted">com site próprio</div>
-          <div className="fs-10 u-mt-4px">sem dados scrapados</div>
-        </div>
-        <div className="u-p-12px u-bg-bg-muted u-br-radius u-bd-1px-solid-border">
-          <div className="u-fs-fs-24 u-fw-700 u-c-text-3">{emptyFeds.length}</div>
-          <div className="fs-11 muted">delegações</div>
-          <div className="fs-10 u-mt-4px">Ceuta + Melilla</div>
-        </div>
+      <div className="kpi-row">
+        <KpiCard size="lg" color="var(--color-good)" value={ncFeds.length} label="via NextCaddy (scrapadas)" sub={`${totalScraped} torneios indexados`} />
+        <KpiCard size="lg" color="var(--color-good)" value={gdFeds.length} label="via GolfDirecto (scrapada)" sub={`${totalGdScraped} games descobertos`} />
+        <KpiCard size="lg" color="var(--text-2)" value={ownFeds.length} label="com site próprio" sub="sem dados scrapados" />
+        <KpiCard size="lg" color="var(--text-3)" value={emptyFeds.length} label="delegações" sub="Ceuta + Melilla" />
       </div>
       <div className="fs-11 muted u-mt-8px">
         <strong>{trackedTotal}</strong> federações com plataforma rastreada (NextCaddy + GolfDirecto).
       </div>
 
-      <h3 className="u-mt-24px u-mb-8px">✅ Federações com NextCaddy (rastreadas)</h3>
+      <SectionTitle size="lg" icon="✅">Federações com NextCaddy (rastreadas)</SectionTitle>
       <FedTable
         rows={ncFeds}
         columns={[
@@ -405,7 +391,7 @@ export function RFEGFederationsView() {
         ]}
       />
 
-      <h3 className="u-mt-24px u-mb-8px">🟢 Federações com GolfDirecto (rastreadas)</h3>
+      <SectionTitle size="lg" icon="🟢">Federações com GolfDirecto (rastreadas)</SectionTitle>
       <p className="fs-11 muted u-mb-8px">
         Plataforma <code>golfdirecto.com</code> — SPA com API JSON pública (sem auth). Discovery via{" "}
         <code>catgolf.com</code> que linka aos game IDs em <code>/micro/game/&#123;id&#125;</code>.
@@ -459,7 +445,7 @@ export function RFEGFederationsView() {
         ]}
       />
 
-      <h3 className="u-mt-24px u-mb-8px">🔵 Federações com sistema próprio (não rastreadas)</h3>
+      <SectionTitle size="lg" icon="🔵">Federações com sistema próprio (não rastreadas)</SectionTitle>
       <p className="fs-11 muted u-mb-8px">
         Estas federações organizam os seus circuitos em sistemas internos (não NextCaddy
         nem GolfDirecto). Para apanhar dados delas seria preciso scraper específico por
@@ -496,7 +482,7 @@ export function RFEGFederationsView() {
         ]}
       />
 
-      <h3 className="u-mt-24px u-mb-8px">⚪ Delegações de cidades autónomas</h3>
+      <SectionTitle size="lg" icon="⚪">Delegações de cidades autónomas</SectionTitle>
       <FedTable
         rows={emptyFeds}
         columns={[
@@ -530,7 +516,7 @@ export function RFEGFederationsView() {
       />
 
       <div className="u-mt-24px">
-        <h3 className="u-mb-8px">🌐 Plataformas onde aparecem os resultados</h3>
+        <SectionTitle size="lg" icon="🌐">Plataformas onde aparecem os resultados</SectionTitle>
         <ul className="u-fs-fs-12 u-mt-8px">
           <li>
             <strong>RFEG nacional</strong> — campeonatos nacionais (juvenis, masc., fem.,

@@ -4,6 +4,7 @@ import { fD, fD2, fmtSign } from "../utils/format";
 import { sc3m, sc2, SC, scClass } from "../utils/scoreDisplay";
 import { sumArr } from "../utils/mathUtils";
 import KpiCard from "./KpiCard";
+import SectionTitle from "./SectionTitle";
 
 /* ─── Heatmap de buracos: grelha 1×9 (9H) ou 2×9 (18H) ─── */
 function HoleHeatmap({ holes, hc }: { holes: HoleStatEntry[]; hc: number }) {
@@ -184,7 +185,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
   return (
     <div className="card">
-      <div className="h-md">Análise de Performance <span className="muted fs-11">({stats.nRounds} rondas)</span></div>
+      <SectionTitle as="div" sub={`${stats.nRounds} rondas`}>Análise de Performance</SectionTitle>
 
       {/* Diagnosis cards */}
       <div className="haDiag">
@@ -265,7 +266,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
           <summary className="details-summary">Pontos fortes e onde perde mais</summary>
         <div className="haTopWrap mt-6">
           <div className="haTopCol haTopStrength">
-            <div className="h-sm"><span className="c-good">Pontos Fortes</span></div>
+            <SectionTitle as="div" size="sm"><span className="c-good">Pontos Fortes</span></SectionTitle>
             {strengths.length === 0
               ? <div className="haTopEmpty">Nenhum buraco consistentemente ao par ou melhor.</div>
               : strengths.map(bh => {
@@ -286,7 +287,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
             }
           </div>
           <div className="haTopCol haTopWeakness">
-            <div className="h-sm"><span className="c-birdie">Onde Perde Mais Pancadas</span></div>
+            <SectionTitle as="div" size="sm"><span className="c-birdie">Onde Perde Mais Pancadas</span></SectionTitle>
             {weaknesses.length === 0
               ? <div className="haTopEmpty">Sem buracos com perdas significativas.</div>
               : <>

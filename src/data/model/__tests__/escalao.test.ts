@@ -89,3 +89,12 @@ describe("escalaoSex, ordem e opções do filtro", () => {
       .toEqual(["Sub 10", "Sub 16", "Sub 18"]);
   });
 });
+
+describe("compareEscalaoRaw", () => {
+  it("ordena os escalões da USKids: rapazes e depois raparigas, cada um pela idade", async () => {
+    const { compareEscalaoRaw } = await import("../escalao");
+    const raw = ["Girls 12", "Boys 13-14", "Boys 13", "Boys 7", "Boys 10", "Girls 8 & Under", "Girls 7 & Under", "Girls 9-10", "Boys 7 & Under", "Boys 15-18"];
+    expect([...raw].sort((a, b) => compareEscalaoRaw(a, b, { source: "uskids", sexFirst: true }))).toEqual(
+      ["Boys 7 & Under", "Boys 7", "Boys 10", "Boys 13", "Boys 13-14", "Boys 15-18", "Girls 7 & Under", "Girls 8 & Under", "Girls 9-10", "Girls 12"]);
+  });
+});

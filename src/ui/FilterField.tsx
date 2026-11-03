@@ -4,17 +4,29 @@
  * Primitivas de filtros partilhadas (extraídas da JogadoresListPage em
  * 2026-08-15 para reutilização na toolbar da JogadoresPage):
  *
- *   - FilterField: rótulo pequeno por cima do controlo (.filter-field/.filter-label)
+ *   - FilterField: rótulo pequeno por cima do controlo (.filter-field/.filter-label),
+ *                  com nota por baixo (`hint`) e modo <label> (`asLabel`)
  *   - ToggleChip:  filtro liga/desliga com rótulo completo (pill global .tourn-tab-sm)
  */
 import type { ReactNode } from "react";
 
-export function FilterField({ label, children }: { label: string; children: ReactNode }) {
+/** Rótulo pequeno por cima de um controlo. `hint` = nota por baixo («em metros»,
+ *  «0 = sem limite»); `asLabel` envolve tudo num <label> (clicar no rótulo foca a
+ *  caixa — para formulários como a Previsão e o simulador). */
+export function FilterField({ label, children, hint, asLabel, className }: {
+  label: ReactNode;
+  children: ReactNode;
+  hint?: ReactNode;
+  asLabel?: boolean;
+  className?: string;
+}) {
+  const Tag = asLabel ? "label" : "div";
   return (
-    <div className="filter-field">
-      <div className="filter-label">{label}</div>
+    <Tag className={`filter-field${className ? " " + className : ""}`}>
+      <span className="filter-label">{label}</span>
       {children}
-    </div>
+      {hint && <span className="filter-hint">{hint}</span>}
+    </Tag>
   );
 }
 

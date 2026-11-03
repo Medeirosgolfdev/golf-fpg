@@ -9,6 +9,8 @@
  *   FL          — Record<nome EN ou PT, emoji>  (compatibilidade com páginas existentes)
  *   flag(p)     — converte qualquer formato para emoji (código, nome EN, nome PT)
  */
+import { titleCase } from "./format";
+
 
 export const FLAG: Record<string, string> = {
   PT:"🇵🇹",GB:"🇬🇧",IE:"🇮🇪",FR:"🇫🇷",ES:"🇪🇸",DE:"🇩🇪",IT:"🇮🇹",
@@ -241,19 +243,13 @@ export function flag(p: string): string {
   return "🏳️";
 }
 
-/** Title-case: "united states" → "United S
-tates" */
-function toTitleCase(s: string): string {
-  return s.replace(/\b\w/g, c => c.toUpperCase());
-}
-
 /** Mapa nome completo EN/PT → emoji (compatibilidade com páginas que usam FL[p.country]) */
 export const FL: Record<string, string> = Object.fromEntries(
   Object.entries({ ...COUNTRY_TO_CODE }).flatMap(([name, code]) => {
     const emoji = FLAG[code.toUpperCase()] ?? "🏳️";
-    const titleKey = toTitleCase(name);
+    const titleKey = titleCase(name);
     const firstCapKey = name.charAt(0).toUpperCase() + name.slice(1);
-    // Siglas em CAIXA ALTA ("USA", "UAE") — o toTitleCase transformava-as em
+    // Siglas em CAIXA ALTA ("USA", "UAE") — o titleCase transformava-as em
     // "Usa"/"Uae" e o lookup falhava justamente para o país mais comum nos
     // fields americanos. A chave crua em maiúsculas cobre esse caso.
     const upperKey = name.toUpperCase();

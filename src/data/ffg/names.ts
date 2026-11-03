@@ -7,6 +7,7 @@
  */
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { stripAccents } from "../../utils/normName";
+import { titleCase } from "../../utils/format";
 import { limparNomeFfg } from "./ffgJogador";
 
 /* ── Normalização de nome (FFGolf/GolfGenius usam "APELIDO(S) Nome") ────
@@ -22,17 +23,8 @@ export function normalizeName(raw: string): string {
   while (n < parts.length && isCaps(parts[n])) n++;
   if (n === 0 || n === parts.length) return trimmed; // sem run em CAPS, ou nome inteiro em CAPS
   if (!parts.slice(0, n).some((t) => t.length >= 3)) return trimmed; // só iniciais/partículas
-  const apelido = toTitleCase(parts.slice(0, n).join(" "));
+  const apelido = titleCase(parts.slice(0, n).join(" "));
   return `${parts.slice(n).join(" ")} ${apelido}`;
-}
-
-/* Normalize um apelido em CAPS para Title Case (ex: "MARCINIAK" → "Marciniak", "DE LOS RIOS" → "De Los Rios") */
-export function toTitleCase(s: string): string {
-  return s
-    .toLowerCase()
-    .split(/(\s+|-)/)
-    .map((part) => part.match(/^[a-zà-ÿ]/) ? part.charAt(0).toUpperCase() + part.slice(1) : part)
-    .join("");
 }
 
 /* Construir nome canónico "Nome Apelido" para um FFG player.
@@ -42,7 +34,7 @@ export function toTitleCase(s: string): string {
 export function ffgPlayerName(p: { name?: string; nameNom?: string | null; namePrenom?: string | null }): string {
   const prenom = limparNomeFfg(p.namePrenom);
   const nom = limparNomeFfg(p.nameNom);
-  if (prenom && nom) return `${prenom} ${toTitleCase(nom)}`;
+  if (prenom && nom) return `${prenom} ${titleCase(nom)}`;
   return normalizeName(limparNomeFfg(p.name));
 }
 

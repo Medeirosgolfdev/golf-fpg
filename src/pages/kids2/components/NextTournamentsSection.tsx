@@ -10,6 +10,7 @@ import type { CanonicalData, Junior } from "../data";
 import { useUpcomingByJunior, type UpcomingReg } from "../upcomingRegs";
 import { fmtDayMonthYear } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
+import SectionTitle from "../../../ui/SectionTitle";
 
 interface Props {
   data: CanonicalData;
@@ -30,14 +31,9 @@ export default function NextTournamentsSection({ data, junior }: Props) {
 
   return (
     <section className="u-mb-4px">
-      <div className="section-hdr">
-        <h3 className="section-hdr-title">
-          📅 Próximos torneios
-        </h3>
-        <span className="u-fs-fs-11 u-c-text-3">
-          {regs.length} {regs.length === 1 ? "inscrição" : "inscrições"}
-        </span>
-      </div>
+      <SectionTitle icon="📅" right={<span>{regs.length} {regs.length === 1 ? "inscrição" : "inscrições"}</span>}>
+        Próximos torneios
+      </SectionTitle>
 
       <div className="u-d-flex u-fd-column u-gap-6px">
         {regs.map((r) => (

@@ -26,7 +26,8 @@ import type { Champion } from "../data/jovensAnaliseData";
 import ExpandArrow from "./ExpandArrow";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
-
+
+import SectionTitle from "./SectionTitle";
 const MAX_CLUBS = 10;
 
 /** Normaliza nome de clube para agrupamento (lower-case, remove pontuação,
@@ -227,9 +228,9 @@ export default function TopClubesPanel({
       <header
         className="u-p-10px-14px u-bg-bg-muted u-bb-1px-solid-border u-d-flex u-ai-center u-gap-12px u-fwr-wrap"
       >
-        <h3 className="fs-15 fw-800 u-m-0">
+        <SectionTitle size="lg" className="u-m-0">
           🏛️ Top {MAX_CLUBS} Clubes · Títulos Nacional de Jovens
-        </h3>
+        </SectionTitle>
         <span className="muted fs-12">
           {top.length} clubes · {totalTitles} títulos · {totalAthletes} atletas distintos
         </span>

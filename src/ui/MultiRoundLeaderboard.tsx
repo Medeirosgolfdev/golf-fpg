@@ -530,7 +530,7 @@ export function MultiRoundLeaderboard({
                         const m = t.getMonth() - d.getMonth();
                         if (m < 0 || (m === 0 && t.getDate() < d.getDate())) age--;
                         if (age >= 0 && age < 100) {
-                          return <span className="p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent" title={`${dob} (${age} anos)`}
+                          return <span className="p p-sm p-muted" title={`${dob} (${age} anos)`}
 >{age}a</span>;
                         }
                       }

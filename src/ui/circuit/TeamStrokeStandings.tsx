@@ -23,6 +23,7 @@ import ExpandArrow from "../ExpandArrow";
 import PlayerLink from "../PlayerLink";
 import { MUTED } from "../tableCells";
 import Select from "../Select";
+import SectionTitle from "../SectionTitle";
 
 type View = "cartoes" | "lista" | "jogadores";
 /** Volta escolhida (uma categoria): grupo = ordem das letras + 🐦○■ de todas as voltas. */
@@ -295,7 +296,7 @@ function TeamList({ model, catKey, label, nLabel }: { model: TsModel; catKey: st
     <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={cls} title={title}>{l}</SortableHdr>;
   return (
     <div className="mb-16">
-      {label && <div className="fw-700 fs-13 mb-6">{label}{nLabel && <span className="muted fw-400 fs-12"> · {nLabel}</span>}</div>}
+      {label && <SectionTitle as="div" sub={nLabel}>{label}</SectionTitle>}
       <div className="sc-wrap">
         <table className="dtable tbl-compact u-w-auto u-minw-360px">
           <thead>

@@ -33,6 +33,7 @@ import { flagOrEmpty, isPtCountry } from "../../utils/flagUtils";
 import { ESCALOES_DRIVE } from "../../constants/escaloes";
 import type { DriveCalEntry } from "../../data/drive/driveCalendar";
 import { EVENTS } from "../../data/calendarEvents";
+import SectionTitle from "../../ui/SectionTitle";
 
 type Sex = "M" | "F";
 
@@ -228,7 +229,7 @@ export default function DriveSeason({ title, bySex, pointsNote, calId, rows, all
     <div className="circuit-ranking aq-season">
       <div className="aq-season-head">
         <div>
-          <div className="h-sm">🏅 {title} — a época</div>
+          <SectionTitle as="div" size="sm" icon="🏅">{title} — a época</SectionTitle>
           <div className="aq-season-sub">
             {escLabel} · {shown.length} jogadores · {bySex ? "lugar e pontos do ranking oficial (dentro do sexo)" : "lugar na prova e pontos do ranking oficial"} · por baixo de cada volta, o SD
           </div>

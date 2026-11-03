@@ -604,7 +604,7 @@ export default function DrawTab({
               highlight={manuel}
             />
             {p.otherDivision && (
-              <span className="p p-sm ml-4 u-bg-bg-muted u-c-text-3 u-border-color-transparent" title={`Joga noutro escalão (${p.otherDivision}) — está aqui por ser do mesmo grupo`}
+              <span className="p p-sm p-muted ml-4" title={`Joga noutro escalão (${p.otherDivision}) — está aqui por ser do mesmo grupo`}
 >{p.otherDivision}</span>
             )}
             {/* Seta ↗ kids2 via KidsLinkCtx (CircuitShell — MAJOR/England/…).

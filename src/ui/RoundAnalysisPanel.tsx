@@ -8,6 +8,7 @@ import { useMemo, useState } from "react";
 import type { ShareOption } from "./ShareRoundPanel";
 import { analyzeRounds, type Insight } from "../utils/roundAnalysis";
 import Select from "./Select";
+import SectionTitle from "./SectionTitle";
 
 const TONE_COLOR: Record<Insight["tone"], string> = {
   good: "var(--color-good)", bad: "var(--color-danger)", neutral: "var(--text-3)",
@@ -45,14 +46,14 @@ export default function RoundAnalysisPanel({ options, defaultKey, only }: { opti
         )}
         {an.rounds.filter((b) => !only || b.round === only).reverse().map((b) => (
           <div key={b.round} className="mb-8">
-            {!only && <div className="fw-700 fs-13 mb-4">R{b.round} vs R{b.prev}</div>}
+            {!only && <SectionTitle as="div">R{b.round} vs R{b.prev}</SectionTitle>}
             <ul className="u-list-style-none u-p-0 u-m-0 u-d-flex u-fd-column u-gap-3px">
               {b.insights.map((x, k) => <Line key={k} i={x} />)}
             </ul>
           </div>
         ))}
         {!only && <>
-          <div className="fw-700 fs-13 mb-4">No torneio</div>
+          <SectionTitle as="div">No torneio</SectionTitle>
           <ul className="u-list-style-none u-p-0 u-m-0 u-d-flex u-fd-column u-gap-3px">
             {an.tournament.map((x, k) => <Line key={k} i={x} />)}
           </ul>

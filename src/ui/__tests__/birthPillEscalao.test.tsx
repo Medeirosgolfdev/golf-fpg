@@ -18,7 +18,7 @@ describe("Nasc./Idade com a cor do escalão (02/11/2026)", () => {
     expect(escClassOf("Sénior")).toBe("p-senior");
     expect(escClassOf("TGF")).toBeNull();
     expect(renderToStaticMarkup(<BirthPill esc="Sub 14">2013</BirthPill>)).toContain("p-sub14");
-    expect(renderToStaticMarkup(<BirthPill>2013</BirthPill>)).toContain("u-bg-bg-muted");
+    expect(renderToStaticMarkup(<BirthPill>2013</BirthPill>)).toContain("p-muted");
   });
   it("birthCells: ano e idade lidos pintados; estimativa continua a vermelho", () => {
     const lido = birthCells({ birthYear: 2014 }, "2026-10-30");

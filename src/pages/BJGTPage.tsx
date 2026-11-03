@@ -21,6 +21,7 @@ import { EvoSummary, tagEvo, makeEvoCols } from "../ui/evo";
 import type { CircuitDivision } from "../ui/circuit/types";
 import { intlScorecardOptions } from "../data/intlScorecard";
 import { blueGolfToTournament, type TData, type TDef } from "../data/major/bluegolf";
+import SectionTitle from "../ui/SectionTitle";
 
 
 
@@ -103,7 +104,7 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
 
   return (
     <div className="card">
-      <div className="h-md">🇵🇹 Análise Manuel — R{ri + 1}</div>
+      <SectionTitle as="div" icon="🇵🇹">Análise Manuel — R{ri + 1}</SectionTitle>
       <div className="muted fs-10 mb-8">Gross: {r.gross} ({fmtToPar(r.gross-parTotal)}) · F9: {r.f9} {fmtSub(r.f9!-parF9)} · B9: {r.b9} {fmtSub(r.b9!-parB9)} · Média field: {fieldAvg.toFixed(1)}</div>
       <div className="grid-auto-fill mb-8 gap-6">
         {eagles.length > 0 && <div className="card-detail br p-4-8"><span className="fw-800 c-good">🦅 {eagles.length}</span><span className="fs-10 c-text-3"> {eagles.map(h => "H"+h.h).join(", ")}</span></div>}
@@ -210,7 +211,7 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
     accHeader: hasEvo ? <EvoSummary evo={evo!} what={`regressaram de ${evoYear}`} metric="±par" /> : undefined,
     accExtra: (
       <div className="card">
-        <div className="h-md">📊 Dificuldade por Buraco — Todas as rondas</div>
+        <SectionTitle as="div" icon="📊">Dificuldade por Buraco — Todas as rondas</SectionTitle>
         <FStats data={data} ri="all" />
         <HoleDiff data={data} ri="all" mn={manuelName} />
       </div>
@@ -218,7 +219,7 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
     roundExtra: (tab) => (
       <>
         <div className="card">
-          <div className="h-md">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+          <SectionTitle as="div" icon="📊">Dificuldade por Buraco — {rLabel(tab)}</SectionTitle>
           <FStats data={data} ri={tab} />
           <HoleDiff data={data} ri={tab} mn={manuelName} />
         </div>

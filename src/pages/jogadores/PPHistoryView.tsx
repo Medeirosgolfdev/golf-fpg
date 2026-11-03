@@ -27,7 +27,8 @@ import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import ExtLink from "../../ui/ExternalLink";
 import { isoToDmy } from "../../utils/format";
-
+
+import SectionTitle from "../../ui/SectionTitle";
 type SortKey = "date" | "tourn" | "course" | "holes" | "gross" | "stb" | "sd" | "index";
 
 /* toNum local removido 2026-08-15 — numSafe (utils/mathUtils) é idêntico. */
@@ -109,9 +110,9 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
   return (
     <div className="pa-content u-p-12px">
       <div className="jog-pills u-mb-10px u-d-flex u-gap-8px u-ai-center u-fwr-wrap">
-        <h3 className="u-m-0 u-d-flex u-ai-center u-gap-8px">
+        <SectionTitle size="lg" className="u-m-0">
           🏑 Pitch &amp; Putt — {name || hist.name || `#${fed}`}
-        </h3>
+        </SectionTitle>
         {hist.index != null && (
           <span className="p u-bg-badge-pp u-c-fff u-bd-1px-solid-badge-pp">
             Index P&amp;P {hist.index}

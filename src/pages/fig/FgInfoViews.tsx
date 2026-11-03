@@ -16,7 +16,7 @@ import ErrorState from "../../ui/ErrorState";
 import { EscPill } from "../../ui/PillBadge";
 import { MUTED } from "../../ui/tableCells";
 import { RankingTable, RankingDetail, nameCell, type RankingCol } from "../../ui/ranking/RankingPage";
-import { todayIso } from "../../utils/format";
+import { todayIso, fmtDatePt } from "../../utils/format";
 import { escalaoCanon } from "../../data/model/escalao";
 import type { FgIndice } from "../../data/federgolf/types";
 import { fgClube, fgNome, fgTitulo } from "../../data/federgolf/toTournament";
@@ -27,7 +27,6 @@ import {
 
 const RANKING_SITE = "https://www.federgolf.it/attivita-agonistica/attivita-giovanile/ranking/";
 const fmt1 = (n: number | null | undefined) => (n == null ? MUTED : n.toFixed(1));
-const fmtData = (iso: string | null) => (iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}` : MUTED);
 
 /* ── Categorias e legenda ──────────────────────────────────────────── */
 
@@ -219,7 +218,7 @@ export function FgJogadorView({ id, ano }: { id: string; ano?: string | null }) 
   if (!e) return <RankingDetail backTo="/fig/info/ranking" notFound="Este jogador não está no ranking juvenil da Federgolf." />;
 
   const cols: RankingCol<FgRankingVolta>[] = [
-    { key: "data", label: "Data", sort: (v) => v[1], firstDir: "desc", cell: (v) => fmtData(v[1]) },
+    { key: "data", label: "Data", sort: (v) => v[1], firstDir: "desc", cell: (v) => (v[1] ? fmtDatePt(v[1]) : MUTED) },
     { key: "prova", label: "Prova", sort: (v) => v[0], firstDir: "asc", cell: (v) => fgTitulo(v[0]) },
     { key: "clube", label: "Campo", sort: (v) => v[2], firstDir: "asc", cell: (v) => fgClube(v[2]) || MUTED },
     { key: "volta", label: "Volta", cell: (v) => (v[3] != null ? `R${v[3]}` : MUTED), className: "ta-c" },

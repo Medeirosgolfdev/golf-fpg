@@ -33,6 +33,8 @@ import EmptyState from "../../ui/EmptyState";
 import LoadingState from "../../ui/LoadingState";
 import { MUTED } from "../../ui/tableCells";
 import Select from "../../ui/Select";
+import SectionTitle from "../../ui/SectionTitle";
+import { FilterField } from "../../ui/FilterField";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -193,12 +195,12 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
 
       <div className="card u-d-flex u-fd-column u-gap-12px">
       {/* Campo + tee resolvido */}
-      <div className="u-fs-fs-15 u-c-text-1 u-fw-700">
-        <strong>{resolved.course.master.name}</strong>
+      <SectionTitle as="div" size="lg" className="u-m-0">
+        {resolved.course.master.name}
         {" · "}
         <span>{resolved.tee.teeName}</span>
         {resolved.tee.distances.total != null && <span className="muted">{" · "}{resolved.tee.distances.total} m</span>}
-      </div>
+      </SectionTitle>
 
       {resolved.ratingApprox && (
         <div className="muted fs-11 u-p-6px-10px u-bg-bg-muted u-bd-qpvg4 u-br-radius">
@@ -208,48 +210,41 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
 
       {/* Inputs */}
       <div className="u-d-flex u-gap-14px u-fwr-wrap u-ai-flex-end">
-        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
-          Handicap Index
+        <FilterField asLabel label="Handicap Index">
           <input className="select fs-13 u-w-84px" type="text" inputMode="decimal"
             value={hiTouched ? hiInput : (hi != null ? hi.toFixed(1) : "")}
             onChange={e => { setHiTouched(true); setHiInput(e.target.value); }}
             placeholder="9.4" />
-        </label>
-        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
-          Course Rating
+        </FilterField>
+        <FilterField asLabel label="Course Rating">
           <input className="select fs-13 u-w-84px" type="text" inputMode="decimal"
             value={mCR} onChange={e => setMCR(e.target.value)}
             placeholder={resCR != null ? fmtCR(resCR) : "—"} />
-        </label>
-        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
-          Slope
+        </FilterField>
+        <FilterField asLabel label="Slope">
           <input className="select fs-13 u-w-84px" type="text" inputMode="numeric"
             value={mSlope} onChange={e => setMSlope(e.target.value)}
             placeholder={resSlope != null ? String(resSlope) : "—"} />
-        </label>
-        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
-          Par
+        </FilterField>
+        <FilterField asLabel label="Par">
           <input className="select fs-13 u-w-70px" type="text" inputMode="numeric"
             value={mPar} onChange={e => setMPar(e.target.value)}
             placeholder={resPar != null ? String(resPar) : "—"} />
-        </label>
-        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
-          Allowance
+        </FilterField>
+        <FilterField asLabel label="Allowance">
           <Select className="fs-13 u-w-84px" value={allowance}
             onChange={v => setAllowance(parseInt(v, 10))}>
             {ALLOWANCES.map(a => <option key={a} value={a}>{a}%</option>)}
           </Select>
-        </label>
-        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
-          Drive (m)
+        </FilterField>
+        <FilterField asLabel label="Drive (m)">
           <input className="select fs-13 u-w-70px" type="text" inputMode="numeric"
             value={driveM} onChange={e => { const v = parseInt(e.target.value, 10); if (!isNaN(v)) setDriveM(v); }} />
-        </label>
-        <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
-          2ª pancada (m)
+        </FilterField>
+        <FilterField asLabel label="2ª pancada (m)">
           <input className="select fs-13 u-w-70px" type="text" inputMode="numeric"
             value={secondM} onChange={e => { const v = parseInt(e.target.value, 10); if (!isNaN(v)) setSecondM(v); }} />
-        </label>
+        </FilterField>
       </div>
 
       {holesCount !== 18 && (

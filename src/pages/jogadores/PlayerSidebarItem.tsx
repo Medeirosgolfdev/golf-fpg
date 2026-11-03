@@ -51,7 +51,7 @@ export function TagPill({ tag }: { tag: string }) {
   if (t === "no-scrape") {
     return (
       <span
-        className="p p-sm u-bg-bg-muted u-c-text-3 u-border-color-border"
+        className="p p-sm p-muted"
 
         title="Scraper salta este jogador (dados congelados)"
       >
@@ -62,7 +62,7 @@ export function TagPill({ tag }: { tag: string }) {
   if (t === "hidden") {
     return (
       <span
-        className="p p-sm u-bg-bg-muted u-c-text-3 u-border-color-border"
+        className="p p-sm p-muted"
 
         title="Escondido da sidebar"
       >

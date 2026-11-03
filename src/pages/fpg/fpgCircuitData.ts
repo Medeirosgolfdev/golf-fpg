@@ -22,7 +22,7 @@ import type { EventGroup, JovensGroup } from "../../ui/InscricoesComponents";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import { tournamentHasManuel } from "../../data/fpgUtils";
 import { clubesHasManuel, clubesIndividualTournament } from "../../data/clubesFormats";
-import { parseTournKey } from "../../utils/format";
+import { parseTournKey, yearOfDate } from "../../utils/format";
 import { withDivisionModel } from "../../data/model/division";
 
 /** Chave de membro = chave de URL do escalão (`parseTournKey` parte no 1º "-"). */
@@ -31,11 +31,6 @@ export function fpgMemberKey(t: FPGTournament): string {
 }
 
 /** Ano (número) de uma data "YYYY-MM-DD"; null se indeterminado. */
-function yearOf(date?: string): number | null {
-  const m = /^(\d{4})/.exec(date ?? "");
-  return m ? parseInt(m[1], 10) : null;
-}
-
 /** Sexo do escalão a partir do sufixo do label/escalão/nome (H→M, S→F). Só
  *  quando inequívoco — senão undefined (a FPG mistura escalões M+F por evento). */
 function divSex(t: FPGTournament): CircuitSex | undefined {
@@ -95,7 +90,7 @@ export function buildFpgEntries(groups: EventGroup[]): CircuitEntry[] {
     const sexes = [...new Set(divisions.map(d => d.sex).filter(Boolean) as CircuitSex[])];
     return {
       id: g.key,
-      year: yearOf(g.date),
+      year: yearOfDate(g.date),
       name: g.name || g.campo || "Torneio",
       tcode: g.entries[0]?.tcode,
       course: g.campo || undefined,
@@ -146,7 +141,7 @@ export function buildClubesEntries(clubes: FPGTournament[]): CircuitEntry[] {
     const hasManuel = clubesHasManuel(t);
     const escalao = t.escalao || undefined;
     const y = parseInt(t._clubesYear ?? "", 10);
-    const year = Number.isFinite(y) ? y : yearOf(t.date);
+    const year = Number.isFinite(y) ? y : yearOfDate(t.date);
     return {
       id: `clubes-${year ?? "?"}-${key}`,
       year,
