@@ -161,10 +161,9 @@ function tipoPeloNome(name: string): number | null {
   if (EUROPEU.test(n)) return 4;
   return null;
 }
-/** O European Championship conta como Mundial (pedido dela, 03/11/2026: é o
- *  campeonato do continente, ao nível do World) — passa por cima do `type` da
- *  inscrição, que o põe nos Internacionais. */
-const EUROPEU = /european championship/i;
+/** O European Championship e o Venice Open contam como Mundiais (pedido dela,
+ *  03/11/2026) — passa por cima do `type` da inscrição, que os põe nos Internacionais. */
+const EUROPEU = /european championship|venice open/i;
 const tipoDe = (name: string, type: number | null | undefined) =>
   EUROPEU.test(name) ? 4 : type ?? tipoPeloNome(name);
 const labelCategoria = (tipo: number) => CATEGORIAS.find(c => c.tipo === tipo)?.label ?? `Tipo ${tipo}`;

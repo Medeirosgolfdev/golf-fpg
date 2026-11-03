@@ -4184,7 +4184,7 @@ table td.lb-col-divider {
 .tps-pending { color: var(--text-4); }
 
 /* Valor estimado (sem fonte que o dê) — itálico vermelho. Draw do Faldo Madeira. */
-.est-value { font-style: italic; color: var(--color-danger); }
+.est-value { font-style: italic; color: var(--color-danger); font-size: var(--fs-10); } /* do tamanho das pílulas de nascimento (03/11/2026: «a fonte está enorme») */
 
 /* Vista "Simulador" dentro dos Campos — os controlos que antes viviam na toolbar */
 .sim-controls { display: flex; flex-wrap: wrap; gap: var(--space-8); align-items: center; margin: var(--space-4) 0 var(--space-12); }
