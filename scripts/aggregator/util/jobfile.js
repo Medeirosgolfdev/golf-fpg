@@ -254,12 +254,19 @@ function buildJobfileSource(opts) {
         // …que entra também no histórico de HCP com a data: é o melhor que há para
         // quem não tem HCP noutra fonte (03/11/2026: Emile Cuanalo, 3 nos condados
         // ingleses; a FPG só tinha um 12.5 antigo das inscrições). Não é o HI.
-        if (typeof pl.hcpJogo === "number" && /^\d{4}-\d{2}-\d{2}$/.test(dataEvento)) {
+        // O HCP (índice) do jogador na prova, quando a fonte o publica — GolfBox
+        // (EJO, EJT, EYM, EATC/EBTC/EGTC, ELG, Faldo Madeira), DGV, Evian, AV
+        // Trophy… — entra também, com a data (03/11/2026: era lido e deitado fora;
+        // 7 473 linhas só na DGV). Os «plus» vêm negativos, como no resto.
+        const hcpIndice = typeof pl.hcp === "number" && pl.hcp >= -10 && pl.hcp <= 54 ? pl.hcp : null;
+        if ((typeof pl.hcpJogo === "number" || hcpIndice != null) && /^\d{4}-\d{2}-\d{2}$/.test(dataEvento)) {
           const pm = playerMap.get(key);
           if (pm) {
             pm.hcpHistory = pm.hcpHistory || [];
             if (!pm.hcpHistory.some((h) => h.date === dataEvento)) {
-              pm.hcpHistory.push({ date: dataEvento, hcpExact: pl.hcpJogo, source: "hcp-jogo", label: `${seriesLabel} — HCP de jogo` });
+              pm.hcpHistory.push(hcpIndice != null
+                ? { date: dataEvento, hcpExact: hcpIndice, source: sourceId, label: data.tournament || seriesLabel }
+                : { date: dataEvento, hcpExact: pl.hcpJogo, source: "hcp-jogo", label: `${seriesLabel} — HCP de jogo` });
             }
           }
         }

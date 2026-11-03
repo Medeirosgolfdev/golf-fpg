@@ -16,6 +16,7 @@
 
 const { DATA, readJsonSafe } = require("../util/io");
 const { displayName, splitName, dobToIso, countryToIso2, normName } = require("../util/names");
+const { criarHistorico } = require("../util/hcp-historico");
 
 const SOURCE_ID = "fcg";
 const SOURCE_LABEL = "Federació Catalana de Golf";
@@ -63,6 +64,9 @@ function load() {
   const playerMap = new Map(); // sourceKey → RawPlayer
   const tournaments = [];
 
+  // HCP exacto de cada jogo, com a data → hcpHistory (antes só ficava o último).
+  const hcpHist = criarHistorico(SOURCE_ID);
+
   function resolveKey(pl) {
     if (pl.license) return String(pl.license);
     const nk = normName(splitName(pl.n || pl.name || ""));
@@ -106,6 +110,7 @@ function load() {
       }
       const key = resolveKey(pl);
       collectPlayer(key, pl);
+      hcpHist.registar(key, t.dateIso, pl.hcpExact, t.gameName || t.name);
       return {
         playerSourceKey: key,
         playerName: displayName(splitName(pl.n || pl.name || "")),
@@ -153,6 +158,7 @@ function load() {
   for (const p of playerMap.values()) {
     if (p.name) players.push(p);
   }
+  hcpHist.aplicar(players);
 
   return {
     sourceId: SOURCE_ID,

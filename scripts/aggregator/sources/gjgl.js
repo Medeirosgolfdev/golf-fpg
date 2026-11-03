@@ -14,6 +14,7 @@
 const path = require("path");
 const { DATA, readJsonSafe, listFiles } = require("../util/io");
 const { displayName, splitName, countryToIso2 } = require("../util/names");
+const { criarHistorico } = require("../util/hcp-historico");
 
 const SOURCE_ID = "gjgl";
 const SOURCE_LABEL = "Global Junior Golf Live";
@@ -30,6 +31,8 @@ function load() {
   const files = listFiles(DATA.gjglDir, DATA.gjglPattern);
   const players = [];
   const playerMap = new Map(); // sourceKey → RawPlayer
+  // HCP de cada prova, com a data → hcpHistory (antes só ficava o primeiro).
+  const hcpHist = criarHistorico(SOURCE_ID);
   const tournaments = [];
 
   for (const file of files) {
@@ -80,6 +83,7 @@ function load() {
           if (!existing.club && pl.club) existing.club = pl.club;
           if (existing.hcp == null && typeof pl.hcp === "number") existing.hcp = pl.hcp;
         }
+        hcpHist.registar(key, dateIso, pl.hcp, name);
         const rounds = (Array.isArray(pl.rounds) ? pl.rounds : []).map((r, i) => ({
           round: r.day || i + 1,
           gross: typeof r.gross === "number" ? r.gross : null,
@@ -132,6 +136,7 @@ function load() {
   }
 
   for (const p of playerMap.values()) players.push(p);
+  hcpHist.aplicar(players);
 
   return {
     sourceId: SOURCE_ID,

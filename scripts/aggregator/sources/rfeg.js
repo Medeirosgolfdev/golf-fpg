@@ -21,6 +21,7 @@ const { DATA, DATA_DIR, readJsonSafe } = require("../util/io");
 const { displayName, splitName, dobToIso, countryToIso2, normName } = require("../util/names");
 const { warn, sub } = require("../util/log");
 const { datasDoIntervalo } = require("../../lib/lgs-datas");
+const { criarHistorico } = require("../util/hcp-historico");
 
 const SOURCE_ID = "rfeg";
 const SOURCE_LABEL = "Real Federación Española de Golf";
@@ -173,13 +174,8 @@ function load(opts) {
   // HCP de cada prova, com a data → hcpHistory (03/11/2026: só ficava o último,
   // sem data — o Junes Chirband, sueco, tinha um só HCP no Kids 2). É o índice
   // WHS do jogador (o da federação dele) que a lista da prova publica.
-  const hcpPorChave = new Map(); // sourceKey → [{date, hcpExact, source, label}]
-  function registarHcp(key, date, hcp, label) {
-    if (!key || !/^\d{4}-\d{2}-\d{2}$/.test(date || "") || typeof hcp !== "number" || hcp < -10 || hcp > 54) return;
-    let arr = hcpPorChave.get(key);
-    if (!arr) hcpPorChave.set(key, (arr = []));
-    if (!arr.some((h) => h.date === date)) arr.push({ date, hcpExact: hcp, source: "rfeg", label: label || undefined });
-  }
+  const hcpHist = criarHistorico(SOURCE_ID);
+  const registarHcp = hcpHist.registar;
 
   // 5) Torneios — rfegolf-rivals.json
   // Formato: { generatedAt, source, torneios: { [tid]: { name, year, ageGroup, dateIso, par, parTotal, nholes, nRounds, source, players[] } }, total, dedupedPlayers }
@@ -246,13 +242,7 @@ function load(opts) {
     }
   }
   // Cada jogador recebe o histórico das suas chaves (também das licenças antigas).
-  let comHist = 0;
-  for (const p of players) {
-    const hist = [p.sourceKey, ...(p.extra?.historicalLicenses || [])].flatMap((k) => hcpPorChave.get(k) || []);
-    if (!hist.length) continue;
-    p.hcpHistory = hist.sort((a, b) => b.date.localeCompare(a.date));
-    comHist++;
-  }
+  const comHist = hcpHist.aplicar(players, (p) => [p.sourceKey, ...(p.extra?.historicalLicenses || [])]);
   sub(`HCP por prova (com data): ${comHist} jogadores`);
 
   return {

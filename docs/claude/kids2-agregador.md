@@ -307,6 +307,15 @@ condados ingleses entra no `hcpHistory` (source `hcp-jogo`, não é o HI).
 `kidsDob.hcpAt` dá o mais perto da data do torneio (≤183 dias) a quem não tem
 `hcpExact` — o `SDPill` pinta o SD com ele (Venice Open 2026: 20 de 31; antes só o Manuel).
 
+**HCP de cada prova em todas as fontes (03/11/2026):** peça comum
+`util/hcp-historico.js` (`criarHistorico(source)` → `registar(chave, data, hcp, prova)` e
+`aplicar(players, chavesDe)`) — rfeg, fcg (golfdirecto, `hcpExact`) e gjgl. O
+`util/jobfile.js` passa a guardar o `hcp` (índice) que as fontes JobFile publicam por
+jogador: DGV (7 287), EJT (3 200), EJO, EYM, Evian, AV Trophy, EATC/EBTC/EGTC, ELG,
+Faldo Madeira — antes só o `hcpJogo` dos condados. Juniores com HCP datado
+14 791 → 18 442 (61 872 pontos). Teste: `util/hcp-historico.test.js`. Fonte nova com HCP
+por prova → `criarHistorico`, nunca guardar só o último.
+
 **HCP de cada prova espanhola (03/11/2026):** o `sources/rfeg.js` guarda no
 `hcpHistory` (source `rfeg`, com a data e o nome da prova) o HCP que cada classificação
 traz (RFEG, Basco, Navarra, CLM, Rioja, NextCaddy — o NextCaddy deixa os «+N» de fora)
