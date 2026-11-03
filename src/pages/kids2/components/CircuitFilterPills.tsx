@@ -9,7 +9,7 @@
  * por circuito: sourceId + diferenciação USKids Euro/World/Regional.
  */
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import type { CanonicalData, Junior } from "../data";
 
 interface Props {
@@ -83,11 +83,11 @@ export default function CircuitFilterPills({ data, junior, active, onChange }: P
         Filtrar por circuito
       </div>
       <div className="u-d-flex u-fwr-wrap u-gap-4px">
-        <button onClick={() => onChange("all")} style={pillStyle(active === "all")}>
+        <button type="button" onClick={() => onChange("all")} className={pillClass(active === "all")}>
           Todos · {total}
         </button>
         {circuits.map((c) => (
-          <button key={c.id} onClick={() => onChange(c.id)} style={pillStyle(active === c.id)}>
+          <button type="button" key={c.id} onClick={() => onChange(c.id)} className={pillClass(active === c.id)}>
             {c.label} · {c.tournamentIds.size}
           </button>
         ))}
@@ -96,14 +96,7 @@ export default function CircuitFilterPills({ data, junior, active, onChange }: P
   );
 }
 
-function pillStyle(active: boolean): React.CSSProperties {
-  return {
-    fontSize: "var(--fs-11)", fontWeight: 600,
-    padding: "3px 9px", borderRadius: "var(--radius-pill)",
-    border: `1px solid ${active ? "var(--text)" : "var(--border)"}`,
-    background: active ? "var(--text)" : "var(--bg)",
-    color: active ? "var(--bg)" : "var(--text-2)",
-    cursor: "pointer",
-    lineHeight: 1.4,
-  };
+/** Pill de filtro global: ligada verde (`--accent`), desligada cinzenta. */
+function pillClass(active: boolean): string {
+  return "tourn-tab tourn-tab-sm" + (active ? " active" : "");
 }

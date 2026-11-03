@@ -5,7 +5,7 @@
  * Aqui só fica o que é deste ecrã — a evolução 2025 → 2026 (cartão do Manuel e
  * tabela), no fim do Resumo.
  */
-import { useMemo, type CSSProperties } from "react";
+import { useMemo } from "react";
 import { flag } from "../utils/flagUtils";
 import { isManuelByName } from "../constants/manuel";
 import EvoBadge from "./EvoBadge";
@@ -117,8 +117,8 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
       ? compareTextNullsLast(a[sortKey], b[sortKey], dir) // sem texto sempre no fim
       : (a[sortKey] - b[sortKey]) * dir;
   });
-  const hdr = (k: EvoSortKey, label: string, className: string, style?: CSSProperties) =>
-    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className} style={style}>{label}</SortableHdr>;
+  const hdr = (k: EvoSortKey, label: string, className: string) =>
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className}>{label}</SortableHdr>;
   return (
     <div className="card">
       <SectionTitle as="div" icon="📈">Evolução 2025 → 2026</SectionTitle>
@@ -127,7 +127,7 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
         <table className="dtable dtable-lg">
           <thead>
             <tr>
-              {hdr("n", "Jogador", "ta-left", { minWidth: 120 })}
+              {hdr("n", "Jogador", "ta-left u-minw-120px")}
               {hdr("y25", "2025", "r col-w55")}
               {hdr("y26", "2026", "r col-w55")}
               {hdr("delta", "Δ", "r col-w45")}
@@ -138,7 +138,7 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
             {rows.map((e, idx) => {
               const isM = isManuelByName(e.n);
               return (
-                <tr key={idx} style={{ background: isM ? "var(--bg-success-subtle)" : undefined }}>
+                <tr key={idx} className={isM ? "u-bg-bg-success-subtle" : undefined}>
                   <td className={`${isM ? "fw-800" : "fw-600"} u-ws-nowrap`}>{e.n}</td>
                   <td className="r mono">{e.y25}</td>
                   <td className="r mono">{e.y26}</td>

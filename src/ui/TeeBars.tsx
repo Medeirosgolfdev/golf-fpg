@@ -11,6 +11,7 @@
 import { useMemo } from "react";
 import type { Tee } from "../data/types";
 import SexBadge from "./SexBadge";
+import { Tint } from "./DataStyle";
 import { fmt, fmtCR } from "../utils/format";
 import { physicalTeeGroups, type SexKey } from "../utils/teeGroups";
 
@@ -59,17 +60,11 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
         return (
           <span
             key={g.key}
-            className="tee-badge-card"
+            className={"tee-badge-card tee-bar-card" + (groupSelectable ? " is-click" : "") + (groupActive ? " is-active" : "")}
             onClick={groupSelectable ? () => onSelectGroup!(g.key) : undefined}
             title={groupSelectable ? "Clicar para comparar este tee com os outros" : undefined}
-            style={{
-              flexDirection: "row", alignItems: "center", gap: 10, padding: "8px 12px", flexWrap: "wrap",
-              cursor: groupSelectable ? "pointer" : undefined,
-              border: groupActive ? "1.5px solid var(--accent)" : undefined,
-              background: groupActive ? "var(--accent-light)" : undefined,
-            }}
           >
-            <span className="tee-dot" style={{ background: g.colorHex }} title={g.label} />
+            <Tint className="tee-dot" bg={g.colorHex} title={g.label} />
             <span className="u-fw-700 u-ws-nowrap">
               {dist != null && dist > 0 ? `${fmt(dist)} m` : "– m"}
             </span>
@@ -78,11 +73,14 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
               const r = ratings[s];
               const tee = g.teeBySex[s];
               const name = sameName ? "" : teeLabel(tee);
+              // CR/Slope não publicados → «estimado», com a origem no title.
+              const est = r && !nine ? tee?.ratings?.holes18?.estimado : undefined;
               const rating = (
                 <>
                   {(s === "M" || s === "F") && <SexBadge sex={s} />}
                   {name && <span className="u-fw-600 u-c-text-1">{name}</span>}
                   {r ? <>CR {fmtCR(r.cr)} · Slope {r.sl}</> : <span className="muted">sem rating</span>}
+                  {est && <span className="muted u-fst-italic" title={`ESTIMADO — ${est}`}>estimado</span>}
                 </>
               );
               if (selectable && tee) {
@@ -92,14 +90,7 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
                     key={s}
                     onClick={() => onSelectTee!(tee)}
                     title="Seleccionar este rating para o cálculo"
-                    style={{
-                      display: "inline-flex", alignItems: "center", gap: 5,
-                      padding: "3px 8px", borderRadius: "var(--radius)", cursor: "pointer", fontSize: "var(--fs-12)",
-                      border: `1.5px solid ${active ? "var(--accent)" : "var(--border)"}`,
-                      background: active ? "var(--accent-light)" : "var(--bg-card)",
-                      color: active ? "var(--accent-text)" : "var(--text-2)",
-                      fontWeight: active ? 700 : 400,
-                    }}
+                    className={active ? "tee-bar-sexbtn is-active" : "tee-bar-sexbtn"}
                   >
                     {rating}
                   </button>
@@ -109,7 +100,6 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
                 <span
                   key={s}
                   className="fs-12 u-d-inline-flex u-ai-center u-gap-4px u-ws-nowrap u-c-text-2"
-
                 >
                   {rating}
                 </span>

@@ -17,7 +17,9 @@ const fs = require("fs");
 const path = require("path");
 
 const SRC = path.resolve(__dirname, "..", "..", "src");
-const EXCLUIR = [/[\\/]ui[\\/]overlay[\\/]/, /OverlayExport\.tsx$/, /[\\/]__tests__[\\/]/];
+const EXCLUIR = [/[\\/]ui[\\/]overlay[\\/]/, /OverlayExport\.tsx$/, /[\\/]__tests__[\\/]/,
+  // As peças dos valores dos dados (Tint · Fill · Cols · Place): o ÚNICO sítio com `style`.
+  /[\\/]ui[\\/]DataStyle\.tsx$/];
 
 /** Classes de tabela do «modelo único» (App.css) e as famílias com regras próprias
  *  (cartões de buracos e tabelas de torneio). Uma <table> tem de usar uma delas. */
@@ -32,8 +34,9 @@ const TABELAS_GLOBAIS = [
 const semComentarios = (t) => t.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "").replace(/&#\d+;/g, "");
 
 const MEDIDAS = {
-  /** `style={{…}}` escritos à mão. */
-  estilosInline: (t) => (semComentarios(t).match(/style=\{\{/g) || []).length,
+  /** `style={…}` escritos à mão — `style={{…}}` E `style={variavel}` (03/11/2026: chegou a 0;
+   *  os valores dos dados passam por ui/DataStyle — Tint · Fill · Cols · Place). */
+  estilosInline: (t) => (semComentarios(t).match(/(?:^|[^a-zA-Z])style=\{/g) || []).length,
   /** Cores hex no código (as cores vivem em tokens.css). */
   coresHex: (t) => (semComentarios(t).match(/#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/g) || []).length,
   /** Tamanhos de letra em número (há --fs-N para todos). */

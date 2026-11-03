@@ -18,6 +18,7 @@ import { fmtHcp } from "../../utils/format";
 import SectionTitle from "../../ui/SectionTitle";
 
 import { HcpText } from "../../ui/HcpPill";
+import { Cols, Fill } from "../../ui/DataStyle";
 export type FilteredPlayer = { name: string; fed: string; escalao: string; sex?: "M" | "F" | string; hcp: number | null; club: unknown; region?: string; _federadoRaw?: FederadoRaw; _source?: MergedPlayer["_source"]; tags?: string[] };
 
 export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCount }: {
@@ -159,7 +160,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                   <span className="fw-700">{c.count}</span>
                 </div>
                 <div className="u-h-4px u-bg-bg-subtle u-br-radius-xs u-ov-hidden">
-                  <div style={{ width: barPct(c.count, maxClub), height: "100%", background: "var(--color-good)" }} />
+                  <Fill pct={barPct(c.count, maxClub)} bg="var(--color-good)" className="u-h-100pc" />
                 </div>
               </div>
             ))}
@@ -176,7 +177,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                   <span className="fw-700">{n}</span>
                 </div>
                 <div className="u-h-4px u-bg-bg-subtle u-br-radius-xs u-ov-hidden">
-                  <div style={{ width: barPct(n, maxRegion), height: "100%", background: "var(--chart-2)" }} />
+                  <Fill pct={barPct(n, maxRegion)} bg="var(--chart-2)" className="u-h-100pc" />
                 </div>
               </div>
             ))}
@@ -188,7 +189,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
       {withHcp > 0 && (
         <div className="card u-p-12px">
           <SectionTitle sub={`${withHcp} jogadores`} right={<MFLegend />}>Distribuição de HCP</SectionTitle>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${HCP_BINS.length}, 1fr)`, gap: 10, alignItems: "end", height: 220 }}>
+          <Cols n={HCP_BINS.length} className="u-gap-10px u-ai-end u-h-220px">
             {HCP_BINS.map(bin => {
               const { m, f } = hcpBins[bin];
               const total = m + f;
@@ -203,7 +204,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                 </div>
               );
             })}
-          </div>
+          </Cols>
         </div>
       )}
     </div>

@@ -4,14 +4,15 @@
  */
 import { TIER } from "../data/rivalData";
 import { TIER_L } from "../constants/config";
+import { Tint } from "./DataStyle";
 
 export default function TierLegend({ className }: { className?: string }) {
   return (
     <div className={"legend-row" + (className ? " " + className : "")}>
       {(Object.keys(TIER) as Array<keyof typeof TIER>).map((k) => (
         <span key={k} className="legend-item">
-          <span className="legend-dot" style={{ background: TIER[k].bg }} />
-          <span className="fs-10" style={{ color: TIER[k].c }}>{TIER_L[k]}</span>
+          <Tint className="legend-dot" bg={TIER[k].bg} />
+          <Tint className="fs-10" fg={TIER[k].c}>{TIER_L[k]}</Tint>
         </span>
       ))}
     </div>

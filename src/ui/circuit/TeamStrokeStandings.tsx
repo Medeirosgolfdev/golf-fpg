@@ -24,6 +24,7 @@ import PlayerLink from "../PlayerLink";
 import { MUTED } from "../tableCells";
 import Select from "../Select";
 import SectionTitle from "../SectionTitle";
+import { Tint } from "../DataStyle";
 
 type View = "cartoes" | "lista" | "jogadores";
 /** Volta escolhida (uma categoria): grupo = ordem das letras + 🐦○■ de todas as voltas. */
@@ -62,16 +63,16 @@ function PName({ p }: { p: TsPlayer }) {
 function ScoreCell({ r, color }: { r: TsPlayer["rds"][number]; color: string }) {
   if (r.gross == null && r.toPar == null) return <td className="u-ta-center u-c-text-muted">{MUTED}</td>;
   return (
-    <td className={"ts-score " + (r.counts ? "u-fw-700" : "u-fw-400 u-c-text")} style={r.counts ? { color } : undefined}>
+    <Tint as="td" className={"ts-score " + (r.counts ? "u-fw-700" : "u-fw-400 u-c-text")} fg={r.counts ? color : null}>
       <div className="u-lh-1_2">
         <div>{r.gross ?? "—"}</div>
         {r.toPar != null && (
-          <div className={"ts-score-tp" + (r.counts ? " counts" : "")} style={r.counts ? { color } : undefined}>
+          <Tint as="div" className={"ts-score-tp" + (r.counts ? " counts" : "")} fg={r.counts ? color : null}>
             ({fmtToPar(r.toPar)})
-          </div>
+          </Tint>
         )}
       </div>
-    </td>
+    </Tint>
   );
 }
 
@@ -151,7 +152,7 @@ function PlayersTable({ cat, model, color, cols, bpbMode, showTotal }: {
       </tbody>
       {withFooter && (
         <tfoot>
-          <tr className={"ts-foot" + (model.footerAll ? " all" : "")} style={model.footerAll ? { background: color } : undefined}>
+          <Tint as="tr" className={"ts-foot" + (model.footerAll ? " all" : "")} bg={model.footerAll ? color : null}>
             <td colSpan={1 + (model.showHcp ? 1 : 0) + (model.showHoles ? 1 : 0)} className="ts-foot-lbl">
               {cat.footerLabel}
             </td>
@@ -179,7 +180,7 @@ function PlayersTable({ cat, model, color, cols, bpbMode, showTotal }: {
               )
             )}
             {model.showConta && <td />}
-          </tr>
+          </Tint>
         </tfoot>
       )}
     </table>
@@ -198,8 +199,8 @@ function TeamCard({ team, model, sel }: { team: TsTeam; model: TsModel; sel: Rou
   const dispTp = single && c0 ? (ri != null ? c0.rdToPar[ri] : c0.toPar) : null;
   const mdl = c0?.pos != null ? medal(c0.pos) : null;
   return (
-    <div className="ts-card" style={team.isMulti ? { borderColor: team.color + "80" } : undefined}>
-      <div className="ts-card-hdr" style={{ background: team.color }}>
+    <Tint as="div" className="ts-card" bd={team.isMulti ? team.color + "80" : null}>
+      <Tint as="div" className="ts-card-hdr" bg={team.color}>
         {model.showLetter && team.letter && (
           <div className="shrink-0 fw-900 u-w-34px u-h-34px u-bg-rgba-255-255-255-0_18 u-br-radius u-d-flex u-ai-center u-jc-center u-fs-fs-20 u-lh-1">
             {team.letter}
@@ -220,16 +221,16 @@ function TeamCard({ team, model, sel }: { team: TsTeam; model: TsModel; sel: Rou
             )}
           </div>
         )}
-      </div>
+      </Tint>
       {team.cats.map((cat, idx) => (
         <div key={cat.key} className={model.multiCat && idx > 0 ? "u-mt-10px" : undefined}>
           {model.multiCat && (
             <div className={"ts-cat-hdr" + (idx === 0 ? " first" : "") + (cat.pos === 1 ? " win" : "")}>
               <span>
                 {cat.pos != null && (
-                  <span className={"u-fw-900 u-mr-6px" + (cat.pos === 1 ? "" : " u-c-text-2")} style={cat.pos === 1 ? { color: team.color } : undefined}>
+                  <Tint className={"u-fw-900 u-mr-6px" + (cat.pos === 1 ? "" : " u-c-text-2")} fg={cat.pos === 1 ? team.color : null}>
                     {cat.pos === 1 ? "🏆 " : ""}#{cat.pos}{cat.fieldSize > 1 ? `/${cat.fieldSize}` : ""}
-                  </span>
+                  </Tint>
                 )}
                 {cat.label}
               </span>
@@ -262,7 +263,7 @@ function TeamCard({ team, model, sel }: { team: TsTeam; model: TsModel; sel: Rou
           )}
         </div>
       )}
-    </div>
+    </Tint>
   );
 }
 
@@ -318,7 +319,7 @@ function TeamList({ model, catKey, label, nLabel }: { model: TsModel; catKey: st
                     title="Clicar para ver os jogadores">
                     <td className="ta-c fw-700">{c.pos != null ? (medal(c.pos) ?? c.pos) : "–"}</td>
                     <td className="u-ta-left u-ws-nowrap">
-                      {t.isMulti && <span className="legend-dot shrink-0 u-mr-6px" style={{ background: t.color }} />}
+                      {t.isMulti && <Tint className="legend-dot shrink-0 u-mr-6px" bg={t.color} />}
                       {model.showLetter && t.letter && <b className="u-mr-6px">{t.letter}</b>}
                       {t.name}{t.sub && <span className="muted fs-11"> · {t.sub}</span>}
                       <span className="muted fs-11"> <ExpandArrow open={open} /></span>
@@ -496,17 +497,17 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
       {model.legend.length > 0 && view !== "jogadores" && (
         <div className="flex-wrap mb-12 u-d-flex u-gap-6px">
           {model.legend.map(l => (
-            <span key={l.clube} className="ts-legend" style={{ borderColor: l.color, background: `${l.color}12` }}>
-              <span className="legend-dot shrink-0" style={{ background: l.color }} />
-              <strong style={{ color: l.color }}>{l.teams}</strong>
+            <Tint key={l.clube} className="ts-legend" bd={l.color} bg={`${l.color}12`}>
+              <Tint className="legend-dot shrink-0" bg={l.color} />
+              <Tint as="strong" fg={l.color}>{l.teams}</Tint>
               <span className="u-c-text-muted">— {l.clube}</span>
-            </span>
+            </Tint>
           ))}
         </div>
       )}
 
       {view === "cartoes" && (
-        <div className={"u-d-grid " + (model.multiCat ? "u-gap-12px" : "u-gap-10px")} style={{ gridTemplateColumns: `repeat(auto-fill, minmax(${model.multiCat ? 340 : 310}px, 1fr))` }}>
+        <div className={"u-d-grid ts-cards " + (model.multiCat ? "multi u-gap-12px" : "u-gap-10px")}>
           {cards.map(t => <TeamCard key={t.key} team={t} model={model} sel={sel} />)}
         </div>
       )}

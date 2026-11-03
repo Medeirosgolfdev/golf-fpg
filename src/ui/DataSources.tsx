@@ -16,6 +16,7 @@ import React, { createContext, useContext, useEffect, useRef, useState } from "r
 import ExpandArrow from "./ExpandArrow";
 import CloseButton from "./CloseButton";
 import SectionTitle from "./SectionTitle";
+import { Place } from "./DataStyle";
 
 type DataSourceStatus = "loaded" | "loading" | "error";
 
@@ -187,21 +188,11 @@ export function FileBadge({
 
   return (
     <span ref={ref} className={`${className ?? ""} u-d-inline-flex u-pos-relative`}>
+      {/* Mesmo tamanho/cor do "data" e "N jog" ao lado — aparência mínima, sem pill */}
       <span
-        className="mono"
+        className={tournaments ? "mono ds-file ctx" : "mono ds-file"}
         title={`${path}${tournaments ? "  ·  Clique direito: ver torneios" : ""}`}
         onContextMenu={onContext}
-        style={{
-          // Mesmo tamanho/cor do "data" e "N jog" ao lado — aparência mínima, sem pill
-          fontSize: "var(--fs-10)",
-          fontWeight: 500,
-          color: "var(--text-muted)",
-          opacity: 0.75,
-          cursor: tournaments ? "context-menu" : "default",
-          whiteSpace: "nowrap",
-          letterSpacing: 0,
-          lineHeight: 1.3,
-        }}
       >
         {label}
       </span>
@@ -231,24 +222,11 @@ function FilePopover({
   const sorted = [...tournaments].sort((a, b) =>
     (b.date || "").localeCompare(a.date || "")
   );
-  // Limit initial render height; permitir scroll
-  const style: React.CSSProperties = {
-    position: "fixed",
-    left: Math.min(anchorPos.x, window.innerWidth - 340),
-    top: Math.min(anchorPos.y, window.innerHeight - 320),
-    zIndex: "var(--z-modal)",
-    width: 340,
-    maxHeight: 320,
-    overflow: "auto",
-    background: "var(--bg-card)",
-    border: "1px solid var(--border)",
-    borderRadius: "var(--radius)",
-    boxShadow: "0 6px 20px rgba(0,0,0,0.25)",
-    padding: "6px 0",
-    fontSize: "var(--fs-11)",
-  };
+  // Altura limitada, com scroll (.ds-pop); só a posição (do rato) vem daqui
+  const left = Math.min(anchorPos.x, window.innerWidth - 340);
+  const top = Math.min(anchorPos.y, window.innerHeight - 320);
   return (
-    <div style={style} onClick={(e) => e.stopPropagation()}>
+    <Place className="ds-panel ds-pop" left={left} top={top} onClick={(e) => e.stopPropagation()}>
       <div className="u-p-4px-10px-6px u-bb-1px-solid-border-light u-d-flex u-ai-center u-jc-space-between u-gap-6px">
         <div>
           <div className="fw-700 fs-11 u-ff-font-mono">
@@ -261,13 +239,7 @@ function FilePopover({
       </div>
       <div>
         {sorted.map((t, i) => (
-          <div key={i} style={{
-            padding: "3px 10px",
-            display: "flex",
-            gap: 6,
-            alignItems: "baseline",
-            borderBottom: i < sorted.length - 1 ? "1px solid var(--border-light)" : undefined,
-          }}>
+          <div key={i} className="ds-pop-row">
             <span className="c-muted fs-10 u-w-78px u-fsh-0 u-ff-font-mono">
               {t.date || ""}
             </span>
@@ -280,7 +252,7 @@ function FilePopover({
           </div>
         ))}
       </div>
-    </div>
+    </Place>
   );
 }
 
@@ -344,18 +316,7 @@ export function DataSourcesChip({
       <button
         ref={btnRef}
         onClick={() => setOpen(o => !o)}
-        className="chip fs-11"
-        style={{
-          cursor: "pointer",
-          background: errors > 0 ? "var(--bg-warn-subtle)" : "var(--bg-muted)",
-          border: `1px solid ${errors > 0 ? "var(--color-warn)" : "var(--border)"}`,
-          color: "var(--text-muted)",
-          padding: "3px 8px",
-          whiteSpace: "nowrap",
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 4,
-        }}
+        className={errors > 0 ? "chip fs-11 ds-chip warn" : "chip fs-11 ds-chip"}
         title={`${loaded} carregado(s)${loading ? `, ${loading} em curso` : ""}${errors ? `, ${errors} erro(s)` : ""} · ${totalCount} torneios`}
       >
         📂 {sources.length} {label}
@@ -407,25 +368,12 @@ function DataSourcesPanel({
   const top = Math.min(anchorRect.bottom + GAP, vh - 80);
   const maxHeight = Math.max(200, vh - top - 16);
 
-  const style: React.CSSProperties = {
-    position: "fixed",
-    top,
-    left,
-    zIndex: "var(--z-topmost)",
-    width: PANEL_WIDTH,
-    maxHeight,
-    overflow: "auto",
-    background: "var(--bg-card)",
-    border: "1px solid var(--border)",
-    borderRadius: "var(--radius)",
-    boxShadow: "0 6px 20px rgba(0,0,0,0.25)",
-    padding: "6px 0",
-  };
+  // O aspecto vive em .ds-panel/.ds-src-panel (largura = PANEL_WIDTH); daqui só a posição calculada (Place).
 
   const totalCount = sources.reduce((s, x) => s + (x.count || 0), 0);
 
   return (
-    <div style={style} onClick={(e) => e.stopPropagation()}>
+    <Place className="ds-panel ds-src-panel" left={left} top={top} maxH={maxHeight} onClick={(e) => e.stopPropagation()}>
       <div className="u-p-6px-10px-8px u-bb-1px-solid-border-light">
         <SectionTitle as="div" size="sm" icon="📂">Ficheiros de dados lidos pela página</SectionTitle>
         <div className="c-muted fs-10 mt-2">
@@ -444,7 +392,7 @@ function DataSourcesPanel({
           ))}
         </React.Fragment>
       ))}
-    </div>
+    </Place>
   );
 }
 
@@ -453,28 +401,16 @@ function SourceRow({ source }: { source: DataSource }) {
   const statusIcon = source.status === "loaded" ? "✓"
     : source.status === "loading" ? "…"
     : "⚠";
-  const statusColor = source.status === "loaded" ? "var(--color-good)"
-    : source.status === "loading" ? "var(--text-muted)"
-    : "var(--color-warn-dark)";
+  const statusColor = source.status === "loaded" ? "u-c-color-good"
+    : source.status === "loading" ? "u-c-text-muted"
+    : "u-c-color-warn-dark";
   return (
-    <div style={{
-      padding: "4px 10px",
-      display: "flex",
-      alignItems: "flex-start",
-      gap: 8,
-      borderBottom: "1px solid var(--border-light)",
-      background: isError ? "var(--bg-warn-subtle)" : undefined,
-    }}>
-      <span style={{ color: statusColor, fontSize: "var(--fs-13)", flexShrink: 0, lineHeight: 1.4 }} title={source.status}>
+    <div className={isError ? "ds-src-row err" : "ds-src-row"}>
+      <span className={"ds-src-icon " + statusColor} title={source.status}>
         {statusIcon}
       </span>
       <span className="u-fl-1 u-minw-0">
-        <div className="mono" style={{
-          fontSize: "var(--fs-11)",
-          wordBreak: "break-all",
-          color: isError ? "var(--color-warn-dark)" : undefined,
-          fontWeight: isError ? 600 : 400,
-        }}>
+        <div className="mono ds-src-path">
           {source.path}
         </div>
         <div className="c-muted u-fs-fs-10 u-mt-1px u-d-flex u-gap-8px u-fwr-wrap">

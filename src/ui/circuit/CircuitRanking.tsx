@@ -37,7 +37,6 @@ export interface CircuitRankingTable<R> {
   defaultSort: string;
   defaultDir: "asc" | "desc";
   tieBreak?: (a: R, b: R) => number;
-  rowStyle?: (r: R) => React.CSSProperties | undefined;
   rowClassName?: (r: R) => string | undefined;
   /** Páginas de 100. */
   paged?: boolean;
@@ -102,7 +101,7 @@ export function CircuitRankingView<R>({ ranking, ctx }: { ranking: CircuitRankin
         : view.table && table
           ? <RankingTable rows={rows} cols={table.cols} rowKey={table.rowKey}
               defaultSort={table.defaultSort} defaultDir={table.defaultDir} tieBreak={table.tieBreak}
-              rowStyle={table.rowStyle} rowClassName={table.rowClassName} paged={table.paged} onRowClick={onRowClick}
+              rowClassName={table.rowClassName} paged={table.paged} onRowClick={onRowClick}
               rowTitle={onRowClick ? "Ver os resultados deste jogador" : undefined} />
           : view.render?.(rows, ctx)}
     </div>

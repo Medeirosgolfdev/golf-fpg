@@ -20,6 +20,7 @@ import { fmtDate } from "../../../utils/format";
 import { SOURCE_COLORS, SOURCE_LABELS } from "../../../constants/kids2Sources";
 import { ToggleChip } from "../../../ui/FilterField";
 import SectionTitle from "../../../ui/SectionTitle";
+import { Tint } from "../../../ui/DataStyle";
 
 interface Props {
   data: CanonicalData;
@@ -272,7 +273,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
         <div className="u-d-flex u-fwr-wrap u-gap-8px u-p-6px-8px u-fs-fs-10 u-c-text-3">
           {sources.map((src) => (
             <span key={src} className="u-d-inline-flex u-ai-center u-gap-4px">
-              <span className="cor-dot cor-dot-9" style={{ background: SOURCE_COLORS[src] || "var(--text-3)" }} />
+              <Tint className="cor-dot cor-dot-9" bg={SOURCE_COLORS[src] || "var(--text-3)"} />
               {SOURCE_LABELS[src] || src}
             </span>
           ))}

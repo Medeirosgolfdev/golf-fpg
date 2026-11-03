@@ -302,17 +302,7 @@ export function KV({ label, value, description }: { label: string; value: React.
   return (
     <div className="u-fl-0-0-auto u-minw-104px u-maxw-240px">
       <div
-        className="muted fs-10"
-        style={{
-          marginBottom: 1,
-          lineHeight: 1.2,
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          cursor: hasDesc ? "help" : "default",
-          textDecoration: hasDesc ? "underline dotted var(--text-3)" : "none",
-          textUnderlineOffset: "2px",
-        }}
+        className={hasDesc ? "muted fs-10 kv-label kv-desc" : "muted fs-10 kv-label"}
         title={description ? `${label} — ${description}` : label}
       >
         {label}{hasDesc && <InfoIcon />}

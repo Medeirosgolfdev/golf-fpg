@@ -33,6 +33,7 @@ import { useSort, compareNullsLast } from "../hooks/useSort";
 import { isNoCardGross } from "../data/intlCommon";
 import { useCompareSelection } from "./useCompareSelection";
 import TeeSwatch from "./TeeSwatch";
+import { Tint } from "./DataStyle";
 
 export interface ScorecardRow {
   key: string | number;
@@ -61,8 +62,9 @@ export interface ScorecardRow {
   /** True quando o jogador é português — aplica .row-portuguese (highlight verde néon).
    *  Usado nas páginas internacionais (FFG, etc.) para destacar conterrâneos. */
   isPortuguese?: boolean;
-  /** Border-top style para linha (aplicado a pos, name, e scorecard cells) */
-  borderTop?: string;
+  /** Linha de separação por cima (pos, nome, totais e buracos): «strong» = 2px
+   *  --border (novo grupo/jogador), «light» = 1px --border-light. */
+  groupSep?: "strong" | "light";
   nameContent: React.ReactNode;
   /** <td> entre Jogador e ±Par — usar classes .lb-esc .lb-fed .lb-club .lb-hcp .lb-tee */
   prefixCells?: React.ReactNode;
@@ -397,6 +399,7 @@ export function ScorecardLeaderboard({
           <tbody>
             {visibleRows.map(row => {
               const sticky = row.stickyBg || "var(--bg-card)";
+              const bt = row.groupSep === "strong" ? " u-bt-2px-solid-border" : row.groupSep === "light" ? " u-bt-1px-solid-border-light" : "";
               // Manuel toma precedência sobre Portuguese (só uma classe é aplicada).
               const highlightCls = row.isManuel ? " row-manuel" : (row.isPortuguese ? " row-portuguese" : "");
               const scores = row.scores ?? [];
@@ -419,17 +422,17 @@ export function ScorecardLeaderboard({
               const nF9 = playedN(0, 9), nB9 = !is9 ? playedN(9, 18) : 0;
               const afterScorecard = row.postScorecardCells;
               return (
-                <tr key={row.key} className={highlightCls.trim() || undefined} style={row.rowBg && !row.isManuel && !row.isPortuguese ? { background: row.rowBg } : undefined} data-fed={row.fedCode}>
-                  <td className="lb-pos sticky-col-0" style={{ background: sticky, borderTop: row.borderTop, whiteSpace: "nowrap" }}>
+                <Tint as="tr" key={row.key} className={highlightCls.trim() || undefined} bg={row.rowBg && !row.isManuel && !row.isPortuguese ? row.rowBg : null} data-fed={row.fedCode}>
+                  <Tint as="td" className={"lb-pos sticky-col-0 u-ws-nowrap" + bt} bg={sticky}>
                     {cmp.checkbox(row.key)}
                     {row.pos}
-                  </td>
-                  <td className="lb-name sticky-col-1" style={{ background: sticky, borderTop: row.borderTop }}>{row.nameContent}</td>
+                  </Tint>
+                  <Tint as="td" className={"lb-name sticky-col-1" + bt} bg={sticky}>{row.nameContent}</Tint>
                   {row.prefixCells}
                   {!hideTotals && (
                     <>
-                      <td className={`lb-topar ${toneClass(row.toPar)}`} style={{ borderTop: row.borderTop }}>{fmtToPar(row.toPar)}</td>
-                      <td className="lb-gross" style={{ borderTop: row.borderTop }}>{row.gross > 0 ? row.gross : "–"}</td>
+                      <td className={`lb-topar ${toneClass(row.toPar)}${bt}`}>{fmtToPar(row.toPar)}</td>
+                      <td className={"lb-gross" + bt}>{row.gross > 0 ? row.gross : "–"}</td>
                     </>
                   )}
                   {showScorecard && <>
@@ -442,13 +445,13 @@ export function ScorecardLeaderboard({
                       // Só realçar saídas FORA do buraco padrão (1ª coluna): hole 10 etc.
                       const isStart = row.startHole != null && row.startHole !== startHole && (startHole + i) === row.startHole;
                       return (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (isStart ? " sc-start-hole" : "")} style={{ borderTop: row.borderTop }}
+                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (isStart ? " sc-start-hole" : "") + bt}
                         title={isStart ? `Saída no buraco ${row.startHole}` : undefined}>
                         <span className={"sc-score " + (inf[i] ? "sc-inferred" : scClass(sc, rp[i]))}
                           title={inf[i] ? "Buraco não terminado — valor estimado (Net Double Bogey)" : undefined}>{sc || ""}</span>
                       </td>
                     );})}
-                    <td className="lb-halftot" style={{ borderTop: row.borderTop }}
+                    <td className={"lb-halftot" + bt}
                       title={nF9 > 0 && nF9 < 9 ? `Parcial — ${nF9} de 9 buracos` : undefined}>
                       {f9 || "–"}{nF9 > 0 && rowHasPar && <span className="fs-10 c-text-3">
                         {" "}({fmtToPar(f9 - rpF9)}){nF9 < 9 && <span title={`${nF9} de 9 buracos`}> ·{nF9}b</span>}
@@ -458,14 +461,14 @@ export function ScorecardLeaderboard({
                       const sc = scores[9 + i] ?? null;
                       const isStart = row.startHole != null && row.startHole !== startHole && (startHole + 9 + i) === row.startHole;
                       return (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (isStart ? " sc-start-hole" : "")} style={{ borderTop: row.borderTop }}
+                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (isStart ? " sc-start-hole" : "") + bt}
                         title={isStart ? `Saída no buraco ${row.startHole}` : undefined}>
                         <span className={"sc-score " + (inf[9 + i] ? "sc-inferred" : scClass(sc, rp[9 + i]))}
                           title={inf[9 + i] ? "Buraco não terminado — valor estimado (Net Double Bogey)" : undefined}>{sc || ""}</span>
                       </td>
                     );})}
                     {!is9 && (
-                      <td className="lb-halftot" style={{ borderTop: row.borderTop }}
+                      <td className={"lb-halftot" + bt}
                         title={nB9 > 0 && nB9 < 9 ? `Parcial — ${nB9} de 9 buracos` : undefined}>
                         {b9 || "–"}{nB9 > 0 && rowHasPar && <span className="fs-10 c-text-3">
                           {" "}({fmtToPar(b9 - rpB9)}){nB9 < 9 && <span title={`${nB9} de 9 buracos`}> ·{nB9}b</span>}
@@ -474,7 +477,7 @@ export function ScorecardLeaderboard({
                     )}
                   </>}
                   {afterScorecard}
-                </tr>
+                </Tint>
               );
             })}
           </tbody>

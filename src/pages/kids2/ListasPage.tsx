@@ -187,10 +187,9 @@ function TabelaCandidatos({ lista }: { lista: Lista }) {
               const eu = isManuel({ name: c.name, fed: c.fed });
               const linha = porOrdem && c.rank === n;
               return (
-                <tr key={c.fed} className={eu ? "row-manuel" : undefined}
-                  style={linha ? { borderBottom: "3px solid var(--accent)" } : undefined}>
+                <tr key={c.fed} className={[eu ? "row-manuel" : "", linha ? "k2-row-cut" : ""].filter(Boolean).join(" ") || undefined}>
                   <td className="u-ta-center u-fw-700">{c.rank}</td>
-                  <td style={{ textAlign: "left", fontWeight: eu ? 700 : undefined }}>
+                  <td className={eu ? "u-ta-left u-fw-700" : "u-ta-left"}>
                     {c.juniorId ? <Link to={`/kids2/${c.juniorId}`}>{c.name}</Link> : c.name}
                   </td>
                   <td className="u-ta-center">{c.dob ? c.dob.slice(0, 4) : "—"}</td>

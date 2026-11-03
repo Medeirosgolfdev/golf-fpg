@@ -10,6 +10,7 @@
  */
 import React from "react";
 import SortableHdr from "./SortableHdr";
+import { Place } from "./DataStyle";
 
 export interface ListaColuna<T> {
   /** Chave de ordenação (e key React). */
@@ -17,7 +18,7 @@ export interface ListaColuna<T> {
   label: React.ReactNode;
   align?: "left" | "right";
   sortable?: boolean;
-  /** Largura CSS da <col> aplicada inline (ex: "64px"). Colunas sem largura
+  /** Largura CSS da <col> (ex: "64px", "17%"). Colunas sem largura
    *  partilham o espaço restante (sob table-layout: fixed). */
   width?: string;
   /** Classe extra no <th>/<td> desta coluna. */
@@ -32,7 +33,6 @@ interface ListaTabelaProps<T> {
   sortKey: string;
   sortDir: "asc" | "desc";
   onSort: (k: string) => void;
-  minWidth?: number;
   /** Key da linha expandida (ou null). */
   expandedKey?: string | null;
   onRowClick?: (row: T) => void;
@@ -50,19 +50,16 @@ interface ListaTabelaProps<T> {
 }
 
 export default function ListaTabela<T>({
-  columns, rows, rowKey, sortKey, sortDir, onSort, minWidth,
+  columns, rows, rowKey, sortKey, sortDir, onSort,
   expandedKey, onRowClick, rowClassName, renderExpanded, separatorBefore, footer, noCard, dense,
 }: ListaTabelaProps<T>) {
   const hasWidths = columns.some(c => c.width);
-  const tableStyle: React.CSSProperties = {};
-  if (minWidth) tableStyle.minWidth = minWidth;
-  if (hasWidths) tableStyle.tableLayout = "fixed";
   const inner = (
     <div className="scroll-x">
-        <table className={`dtable dtable-lg${dense ? " dtable-dense" : ""}`} style={tableStyle}>
+        <table className={`dtable dtable-lg${dense ? " dtable-dense" : ""}${hasWidths ? " u-table-layout-fixed" : ""}`}>
           {hasWidths && (
             <colgroup>
-              {columns.map(c => <col key={c.key} style={c.width ? { width: c.width } : undefined} />)}
+              {columns.map(c => <Place as="col" key={c.key} w={c.width} />)}
             </colgroup>
           )}
           <thead>
@@ -89,9 +86,8 @@ export default function ListaTabela<T>({
                     </tr>
                   )}
                   <tr
-                    className={rowClassName?.(row, open)}
+                    className={[rowClassName?.(row, open), onRowClick ? "u-cur-pointer" : ""].filter(Boolean).join(" ") || undefined}
                     onClick={onRowClick ? () => onRowClick(row) : undefined}
-                    style={onRowClick ? { cursor: "pointer" } : undefined}
                   >
                     {columns.map(c => {
                       const cls = [c.align === "right" ? "r" : "", c.cellClassName || ""].filter(Boolean).join(" ") || undefined;

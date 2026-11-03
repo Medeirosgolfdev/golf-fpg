@@ -25,7 +25,7 @@ import { EclecticSection } from "../../../ui/EclecticSection";
 import { findCourseKey } from "../../../ui/jogadoresHelpers";
 import { courseDisplayName } from "../../../utils/courseAliases";
 import { EventInfo, effectivePill } from "../../../ui/eventInfo";
-import { scHostStyle, type CourseSort } from "../shared";
+import { type CourseSort } from "../shared";
 import CoursePerformanceSection from "./CoursePerformanceSection";
 import ExtLink from "../../../ui/ExternalLink";
 
@@ -223,8 +223,7 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
   const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
   return (
     <>
-      <tr className="roundRow" onClick={r.hasCard ? onToggle : undefined}
-          style={{ cursor: r.hasCard ? "pointer" : "default" }}>
+      <tr className={r.hasCard ? "roundRow u-cur-pointer" : "roundRow u-cur-default"} onClick={r.hasCard ? onToggle : undefined}>
         <td title={`score #${r.scoreId}`}>
           {r.hasCard
             ? <a href="#" onClick={e => { e.preventDefault(); onToggle(); }}><TeeDate date={r.date} tee={r.tee || ""} /></a>
@@ -239,7 +238,7 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
       {isOpen && holes && (
         <tr>
           <td colSpan={9} className="bg-page p-0">
-            <div className="scroll-x" style={scHostStyle}>
+            <div className="scroll-x jg-sc-host">
               <ScorecardTable
                 holes={holes}
                 courseName={courseName}

@@ -21,6 +21,7 @@ import { fmtHcp } from "../../utils/format";
 import SectionTitle from "../../ui/SectionTitle";
 
 import { HcpText } from "../../ui/HcpPill";
+import { Cols } from "../../ui/DataStyle";
 export interface GlobalStats {
   total: number; male: number; female: number; withHcp: number; avgHcp: number;
   activeThisYear: number; pros: number;
@@ -233,7 +234,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
         <SectionTitle sub={`${stats.withHcp.toLocaleString("pt-PT")} jogadores com HCP válido`} right={<MFLegend long />}>
           Distribuição de HCP
         </SectionTitle>
-        <div style={{ display: "grid", gridTemplateColumns: `repeat(${stats.hcpBinOrder.length}, 1fr)`, gap: 12, alignItems: "end", height: 300 }}>
+        <Cols n={stats.hcpBinOrder.length} className="u-gap-12px u-ai-end u-h-300px">
           {stats.hcpBinOrder.map(bin => {
             const { m, f } = stats.hcpBins[bin] || { m: 0, f: 0 };
             const total = m + f;
@@ -244,7 +245,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
               <button
                 key={bin}
                 onClick={() => onHcpBinDrill(isActive ? null : bin)}
-                style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100%", justifyContent: "flex-end", background: isActive ? "var(--bg-hover)" : "transparent", border: isActive ? "1px solid var(--accent)" : "1px solid transparent", borderRadius: "var(--radius-sm)", padding: 2, cursor: "pointer", minWidth: 0 }}
+                className={isActive ? "jg-bin-btn active" : "jg-bin-btn"}
                 title={`Clica para ver top 15 (HCP ${label})`}
               >
                 <div className="fw-700 fs-12 u-mb-4px">
@@ -260,7 +261,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
               </button>
             );
           })}
-        </div>
+        </Cols>
       </div>
 
       {/* Drill-down de HCP bin — top 15 jogadores do bin seleccionado */}
@@ -299,7 +300,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
         {/* Novos federados por ano — stacked M/F */}
         <div className="card u-p-12px">
           <SectionTitle sub="stacked M/F">Novos federados por ano</SectionTitle>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${stats.admissionYears.length}, 1fr)`, gap: 2, alignItems: "end", height: 140 }}>
+          <Cols n={stats.admissionYears.length} className="u-gap-2px u-ai-end u-h-140px">
             {stats.admissionYears.map(([y, v]) => {
               const total = v.m + v.f;
               const barHeight = (total / Math.max(1, maxAdm)) * 110;
@@ -311,7 +312,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
                 </div>
               );
             })}
-          </div>
+          </Cols>
         </div>
       </div>
 

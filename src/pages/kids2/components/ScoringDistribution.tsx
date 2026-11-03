@@ -1,4 +1,4 @@
-﻿/**
+/**
  * kids2/components/ScoringDistribution.tsx
  *
  * Distribuição agregada de scores de carreira (todos os buracos jogados em
@@ -14,6 +14,7 @@
 import { useMemo } from "react";
 import type { CanonicalData, Junior } from "../data";
 import SectionTitle from "../../../ui/SectionTitle";
+import { Fill } from "../../../ui/DataStyle";
 
 interface Props {
   data: CanonicalData;
@@ -21,7 +22,8 @@ interface Props {
   filterTids?: Set<string> | null;
 }
 
-interface Bucket { label: string; count: number; bg: string; fg: string; }
+/** `cls`: cor do segmento/quadradinho (fundo + texto), em App.css (.k2-sd-*). */
+interface Bucket { label: string; count: number; cls: string; }
 
 interface ParBreakdown {
   parValue: 3 | 4 | 5;
@@ -48,11 +50,11 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
   //   Bogey    → --score-bogey + --score-bogey-fg + border --score-bogey-border
   //   Duplo+   → --score-double + #fff
   const buckets: Bucket[] = [
-    { label: "Eagle+",  count: stats.eaglesPlus,  bg: "var(--score-eagle)",   fg: "var(--text-on-color)" },
-    { label: "Birdie",  count: stats.birdies,     bg: "var(--score-birdie)",  fg: "var(--text-on-color)" },
-    { label: "Par",     count: stats.pars,        bg: "transparent",          fg: "var(--text)" },
-    { label: "Bogey",   count: stats.bogeys,      bg: "var(--score-bogey)",   fg: "var(--score-bogey-fg)" },
-    { label: "Duplo+",  count: stats.doublesPlus, bg: "var(--score-double)",  fg: "var(--text-on-color)" },
+    { label: "Eagle+",  count: stats.eaglesPlus,  cls: "k2-sd-eagle" },
+    { label: "Birdie",  count: stats.birdies,     cls: "k2-sd-birdie" },
+    { label: "Par",     count: stats.pars,        cls: "k2-sd-par" },
+    { label: "Bogey",   count: stats.bogeys,      cls: "k2-sd-bogey" },
+    { label: "Duplo+",  count: stats.doublesPlus, cls: "k2-sd-double" },
   ];
 
   return (
@@ -70,22 +72,14 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
           const pct = total > 0 ? (b.count / total) * 100 : 0;
           if (pct === 0) return null;
           return (
-            <div
+            <Fill
               key={b.label}
+              pct={pct}
               title={`${b.label}: ${b.count} (${pct.toFixed(1)}%)`}
-              style={{
-                width: `${pct}%`,
-                background: b.bg,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "var(--fs-10)", color: b.fg,
-                fontWeight: 700,
-                minWidth: pct < 4 ? 0 : undefined,
-                overflow: "hidden",
-                borderLeft: i > 0 ? "1px solid var(--border-light)" : undefined,
-              }}
+              className={`k2-sd-seg ${b.cls}${pct < 4 ? " u-minw-0" : ""}${i > 0 ? " k2-sd-sep" : ""}`}
             >
               {pct >= 6 ? `${pct.toFixed(0)}%` : ""}
-            </div>
+            </Fill>
           );
         })}
       </div>
@@ -93,18 +87,11 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
       {/* Legenda */}
       <div className="u-d-flex u-fwr-wrap u-gap-10px u-mt-6pxx u-fs-fs-10 u-c-text-3">
         {buckets.map((b) => {
-          // Para o Par (fundo transparente) damos uma borda no quadradinho da legenda
-          // para que continue legível contra o fundo da página.
-          const isTransparent = b.bg === "transparent";
+          // Para o Par (fundo transparente) o quadradinho da legenda tem borda
+          // (.k2-sd-key.k2-sd-par) para continuar legível contra o fundo da página.
           return (
             <span key={b.label} className="u-d-inline-flex u-ai-center u-gap-4px">
-              <span style={{
-                width: 9, height: 9,
-                borderRadius: b.label === "Bogey" || b.label === "Duplo+" ? 0 : 2,
-                background: b.bg,
-                border: isTransparent ? "1px solid var(--border)" : undefined,
-                display: "inline-block",
-              }} />
+              <span className={`k2-sd-key ${b.cls}`} />
               <strong className="u-c-text-2">{b.label}</strong> {b.count}
             </span>
           );
@@ -124,12 +111,12 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
 function ParCard({ pb }: { pb: ParBreakdown }) {
   const diff = pb.avgStrokes != null ? pb.avgStrokes - pb.parValue : null;
   const diffLabel = diff == null ? "—" : diff === 0 ? "= par" : diff > 0 ? `+${diff.toFixed(2)}` : diff.toFixed(2);
-  const diffColor =
-    diff == null ? "var(--text-3)" :
-    diff <= -0.2 ? "var(--medal-gold-strong)" :
-    diff <= 0.1 ? "var(--text-2)" :
-    diff <= 0.4 ? "var(--color-warn-dark)" :
-    "var(--color-danger-dark)";
+  const diffTone =
+    diff == null ? "u-c-text-3" :
+    diff <= -0.2 ? "u-c-medal-gold-strong" :
+    diff <= 0.1 ? "u-c-text-2" :
+    diff <= 0.4 ? "u-c-color-warn-dark" :
+    "u-c-color-danger-dark";
   return (
     <div className="u-bg-bg-muted u-br-radius u-p-8px-10px">
       <div className="u-d-flex u-ai-baseline u-jc-space-between">
@@ -140,7 +127,7 @@ function ParCard({ pb }: { pb: ParBreakdown }) {
         <span className="u-fs-fs-18 u-fw-700 u-c-text">
           {pb.avgStrokes != null ? pb.avgStrokes.toFixed(2) : "—"}
         </span>
-        <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: diffColor }}>
+        <span className={`u-fs-fs-11 u-fw-700 ${diffTone}`}>
           {diffLabel}
         </span>
       </div>

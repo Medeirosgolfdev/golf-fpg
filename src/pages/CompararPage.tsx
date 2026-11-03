@@ -35,6 +35,7 @@ import { toneClass } from "../utils/scoreDisplay";
 import SearchInput from "../ui/SearchInput";
 import CloseButton from "../ui/CloseButton";
 import Select from "../ui/Select";
+import { Tint, Fill } from "../ui/DataStyle";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
 const COLORS = [C.chartGreen, C.chartBlue, C.chartRed, C.chartAmber];
@@ -156,13 +157,13 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
       {slots.length > 0 && (
         <div className="u-d-flex u-gap-8px u-fwr-wrap">
           {slots.map((s, i) => (
-            <span key={s.fed} className="cmp-slot" style={{ background: COLORS_LIGHT[i] }}>
-              <span className="cor-dot cor-dot-10" style={{ background: COLORS[i] }} />
+            <Tint key={s.fed} bg={COLORS_LIGHT[i]} className="cmp-slot">
+              <Tint bg={COLORS[i]} className="cor-dot cor-dot-10" />
               <b>{shortName(s.player.name)}</b>
               <span className="muted u-fs-fs-11">HCP {fmtHcp(s.player.hcp)}</span>
               {s.loading && <span className="u-fs-fs-11">⏳</span>}
               <CloseButton onClick={() => onRemove(s.fed)} title="Remover" />
-            </span>
+            </Tint>
           ))}
         </div>
       )}
@@ -303,9 +304,9 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
             <tr>
               <SortableHdr k="label" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="u-minw-140px">Métrica</SortableHdr>
               {loaded.map(x => (
-                <th key={x.i} className="r u-minw-80px" style={{ color: COLORS[x.i] }}>
+                <Tint as="th" key={x.i} fg={COLORS[x.i]} className="r u-minw-80px">
                   {firstName(x.s.player.name)}
-                </th>
+                </Tint>
               ))}
             </tr>
           </thead>
@@ -319,10 +320,10 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
                   const v = r.values[ci];
                   const isBest = r.bi === ci;
                   return (
-                    <td key={ci} className={"r mono " + (isBest ? "u-fw-800" : "u-fw-400")}
-                      style={isBest ? { color: COLORS[x.i], background: COLORS_LIGHT[x.i] } : undefined}>
+                    <Tint as="td" key={ci} className={"r mono " + (isBest ? "u-fw-800" : "u-fw-400")}
+                      fg={isBest ? COLORS[x.i] : null} bg={isBest ? COLORS_LIGHT[x.i] : null}>
                       {v ?? "–"}
-                    </td>
+                    </Tint>
                   );
                 })}
               </tr>
@@ -373,11 +374,11 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                   const barW = Math.max(2, (v / maxVal) * 100);
                   return (
                     <div key={x.i} className="u-d-flex u-ai-center u-gap-8px">
-                      <span className="u-fs-fs-11 u-w-60px u-ta-right u-fw-600 u-fsh-0" style={{ color: COLORS[x.i] }}>
+                      <Tint fg={COLORS[x.i]} className="u-fs-fs-11 u-w-60px u-ta-right u-fw-600 u-fsh-0">
                         {firstName(x.s.player.name)}
-                      </span>
+                      </Tint>
                       <div className="u-fl-1 u-bg-bg-subtle u-br-radius-sm u-h-18px u-ov-hidden">
-                        <div className="bar-fill" style={{ width: `${barW}%`, background: COLORS[x.i] }} />
+                        <Fill pct={barW} bg={COLORS[x.i]} className="bar-fill" />
                       </div>
                       <span className="u-fs-fs-11 u-ff-font-mono u-fw-700 u-w-46px u-ta-right u-c-text-2">
                         {v.toFixed(1)}%
@@ -489,10 +490,10 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
         {loaded.map((s, i) => {
           const st = combo.stats[i];
           return (
-            <div key={i} className="caKpi" style={{ borderColor: COLORS[i] }}>
-              <div className="caKpiVal" style={{ color: COLORS[i] }}>{st ? st.avgGross?.toFixed(0) ?? "–" : "–"}</div>
+            <Tint as="div" key={i} bd={COLORS[i]} className="caKpi">
+              <Tint as="div" fg={COLORS[i]} className="caKpiVal">{st ? st.avgGross?.toFixed(0) ?? "–" : "–"}</Tint>
               <div className="caKpiLbl">{shortName(s.player.name)} · {st?.nRounds ?? 0} rondas</div>
-            </div>
+            </Tint>
           );
         })}
       </div>
@@ -503,8 +504,8 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
             <SortableHdr k="h" sortKey={hKey} sortDir={hDir} onSort={toggleHole} className="r">H</SortableHdr>
             <SortableHdr k="par" sortKey={hKey} sortDir={hDir} onSort={toggleHole} className="r">Par</SortableHdr>
             {loaded.map((s, i) => (<React.Fragment key={s.fed}>
-              <SortableHdr k={`avg${i}`} sortKey={hKey} sortDir={hDir} onSort={toggleHole} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)} Avg</SortableHdr>
-              <SortableHdr k={`sl${i}`} sortKey={hKey} sortDir={hDir} onSort={toggleHole} className="r" style={{ color: COLORS[i] }}>SL</SortableHdr>
+              <SortableHdr k={`avg${i}`} sortKey={hKey} sortDir={hDir} onSort={toggleHole} className="r">{firstName(s.player.name)} Avg</SortableHdr>
+              <SortableHdr k={`sl${i}`} sortKey={hKey} sortDir={hDir} onSort={toggleHole} className="r">SL</SortableHdr>
             </React.Fragment>))}
           </tr></thead>
           <tbody>
@@ -602,24 +603,24 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           const w = totalMatches > 0 ? (wins[i] / totalMatches * 100) : 0;
           if (w === 0) return null;
           return (
-            <div key={i} className="win-bar-seg" style={{ width: `${w}%`, background: COLORS[i] }}>
+            <Fill key={i} pct={w} bg={COLORS[i]} className="win-bar-seg">
               {wins[i] > 0 && `${firstName(s.player.name)} ${wins[i]}`}
-            </div>
+            </Fill>
           );
         })}
         {loaded.length === 2 && totalMatches - wins[0] - wins[1] > 0 && (
-          <div className="win-bar-seg draw" style={{ width: `${(totalMatches - wins[0] - wins[1]) / totalMatches * 100}%` }}>
+          <Fill pct={(totalMatches - wins[0] - wins[1]) / totalMatches * 100} className="win-bar-seg draw">
             {totalMatches - wins[0] - wins[1]}
-          </div>
+          </Fill>
         )}
       </div>
 
       <div className="caKpis">
         {loaded.map((s, i) => (
-          <div key={i} className="caKpi" style={{ borderColor: wins[i] === Math.max(...wins) ? COLORS[i] : undefined }}>
-            <div className="caKpiVal" style={{ color: COLORS[i] }}>{wins[i]}</div>
+          <Tint as="div" key={i} bd={wins[i] === Math.max(...wins) ? COLORS[i] : null} className="caKpi">
+            <Tint as="div" fg={COLORS[i]} className="caKpiVal">{wins[i]}</Tint>
             <div className="caKpiLbl">{firstName(s.player.name)} vitórias</div>
-          </div>
+          </Tint>
         ))}
         {loaded.length === 2 && (
           <div className="caKpi">
@@ -634,7 +635,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           <thead><tr>
             <SortableHdr k="date" sortKey={mKey} sortDir={mDir} onSort={toggleMatch}>Data</SortableHdr>
             <SortableHdr k="event" sortKey={mKey} sortDir={mDir} onSort={toggleMatch}>Torneio</SortableHdr>
-            {loaded.map((s, i) => <SortableHdr key={i} k={`g${i}`} sortKey={mKey} sortDir={mDir} onSort={toggleMatch} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</SortableHdr>)}
+            {loaded.map((s, i) => <SortableHdr key={i} k={`g${i}`} sortKey={mKey} sortDir={mDir} onSort={toggleMatch} className="r">{firstName(s.player.name)}</SortableHdr>)}
             {loaded.length === 2
               ? <SortableHdr k="delta" sortKey={mKey} sortDir={mDir} onSort={toggleMatch} className="r">Δ</SortableHdr>
               : <th className="r">Δ</th>}
@@ -648,7 +649,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
                 {loaded.map((_, i) => {
                   const r = m.results.find(r => r.idx === i);
                   if (!r) return <td key={i} className="r">–</td>;
-                  return <td key={i} className={"r " + (r.gross === bestGross ? "u-fw-800" : "u-fw-400")} style={r.gross === bestGross ? { color: COLORS[i] } : undefined}>{r.gross}</td>;
+                  return <Tint as="td" key={i} className={"r " + (r.gross === bestGross ? "u-fw-800" : "u-fw-400")} fg={r.gross === bestGross ? COLORS[i] : null}>{r.gross}</Tint>;
                 })}
                 <td className="r u-c-text-3">
                   {loaded.length === 2 ? (() => {
@@ -701,15 +702,15 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
           const first = s.pts.length > 0 ? s.pts[0].h : null;
           const delta = last != null && first != null ? last - first : null;
           return (
-            <div key={i} className="caKpi" style={{ borderColor: s.color }}>
-              <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
+            <Tint as="div" key={i} bd={s.color} className="caKpi">
+              <Tint as="div" fg={s.color} className="caKpiVal">{last != null ? last.toFixed(1) : "–"}</Tint>
               <div className="caKpiLbl">{shortName(s.name)}</div>
               {delta != null && (
                 <div className={`u-fs-fs-10 u-fw-700 u-mt-2px ${toneClass(delta) || "tone-muted"}`}>
                   {fmtSign(delta, 1)} no período
                 </div>
               )}
-            </div>
+            </Tint>
           );
         })}
       </div>

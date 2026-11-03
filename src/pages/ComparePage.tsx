@@ -40,6 +40,7 @@ import ExpandArrow from "../ui/ExpandArrow";
 import NumberInput from "../ui/NumberInput";
 import Select from "../ui/Select";
 import SectionTitle from "../ui/SectionTitle";
+import { Tint } from "../ui/DataStyle";
 
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
@@ -352,10 +353,10 @@ function TwoTeeSDTable({
                   const sd = r.sds[i];
                   const isHcp = r.delta === phcps[i];
                   return (
-                    <td key={i} className={"mono mt-sd" + (i === divIdx ? " mt-div" : "") + (isHcp ? " is-hcp" : isPar ? " is-par" : "")}
-                      style={isHcp ? { background: c.hex + "28", borderTop: "2px solid " + c.hex, borderBottomColor: c.hex } : undefined}>
+                    <Tint as="td" key={i} className={"mono mt-sd" + (i === divIdx ? " mt-div" : "") + (isHcp ? " is-hcp" : isPar ? " is-par" : "")}
+                      bg={isHcp ? c.hex + "28" : null} bd={isHcp ? c.hex : null}>
                       {fmtSD(sd)}
-                    </td>
+                    </Tint>
                   );
                 })}
               </tr>
@@ -409,6 +410,7 @@ function CourseSideBySide({
     4: `hsl(${PAR_HSL[4].h}deg, ${PAR_HSL[4].s}%, 45%)`,
     5: `hsl(${PAR_HSL[5].h}deg, ${PAR_HSL[5].s}%, 42%)`,
   };
+  const parCor = (p: number | null) => (p === 3 || p === 4 || p === 5 ? PAR_COLOR[p] : null);
 
   return (
     <div className="card u-bl-4px-solid-accent">
@@ -548,13 +550,13 @@ function CourseSideBySide({
         };
 
         // pill bg/fg: gradiente claro→escuro pelo rank original dentro do grupo
-        const pillStyle = (par: 3|4|5, rank: number, total: number) => {
+        const pillCores = (par: 3|4|5, rank: number, total: number) => {
           const t = total <= 1 ? 0.5 : rank / (total - 1);
           const ph = PAR_HSL[par];
           const l = Math.round(84 - t * 42);
           const bg = `hsl(${ph.h}deg, ${ph.s}%, ${l}%)`;
           const fg = l < 62 ? "var(--text-on-color)" : "var(--grey-900)";
-          return { background: bg, color: fg };
+          return { bg, fg };
         };
         return (
           <div>
@@ -567,13 +569,13 @@ function CourseSideBySide({
               const pairs = matchHoles(holesA, holesB);
               return (
                 <div key={par} className="u-mb-12px">
-                  <div className="par-group-hdr" style={{ color: parAccent }}>
+                  <Tint as="div" fg={parAccent} className="par-group-hdr">
                     Par {par} — A: {holesA.length} · B: {holesB.length}
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: sameCourse ? "1fr auto 1fr" : "1fr 1fr", gap: "4px 0" }}>
+                  </Tint>
+                  <div className={"cmpc-par-grid" + (sameCourse ? " is-same" : "")}>
                     {pairs.map(({a, b, rankA, rankB}, i) => {
-                      const psA = a ? pillStyle(par, rankA, holesA.length) : null;
-                      const psB = b ? pillStyle(par, rankB, holesB.length) : null;
+                      const psA = a ? pillCores(par, rankA, holesA.length) : null;
+                      const psB = b ? pillCores(par, rankB, holesB.length) : null;
                       const delta = a && b ? (a.distance ?? 0) - (b.distance ?? 0) : null;
                       return (
                         <Fragment key={i}>
@@ -581,7 +583,7 @@ function CourseSideBySide({
                             {a && psA ? (
                               <span className="u-d-flex u-ai-center u-gap-4px u-ws-nowrap">
                                 <span className="u-fs-fs-11 u-fw-600 u-c-text-2 u-ff-font-mono">B{a.hole}</span>
-                                <span className="dist-pill" style={psA}>{a.distance}m</span>
+                                <Tint bg={psA.bg} fg={psA.fg} className="dist-pill">{a.distance}m</Tint>
                               </span>
                             ) : (
                               <span className="muted u-fs-fs-12 u-p-3px-10px">–</span>
@@ -599,7 +601,7 @@ function CourseSideBySide({
                           <div key={`b${i}`} className="u-d-flex u-jc-flex-start u-pl-8px">
                             {b && psB ? (
                               <span className="u-d-flex u-ai-center u-gap-4px u-ws-nowrap">
-                                <span className="dist-pill" style={psB}>{b.distance}m</span>
+                                <Tint bg={psB.bg} fg={psB.fg} className="dist-pill">{b.distance}m</Tint>
                                 <span className="u-fs-fs-11 u-fw-600 u-c-text-2 u-ff-font-mono">B{b.hole}</span>
                               </span>
                             ) : (
@@ -656,9 +658,9 @@ function CourseSideBySide({
                     return (
                       <tr key={holeNum} className={"mono" + ((parA !== null && parB !== null && parA !== parB) ? " u-bg-bg-warn" : "")}>
                         <td className="u-fw-700">B{holeNum}</td>
-                        <td className="r u-fw-700" style={{ color: parA === 3 ? PAR_COLOR[3] : parA === 4 ? PAR_COLOR[4] : parA === 5 ? PAR_COLOR[5] : undefined }}>{parA ?? "–"}</td>
+                        <Tint as="td" fg={parCor(parA)} className="r u-fw-700">{parA ?? "–"}</Tint>
                         <td className="r">{dA != null && dA > 0 ? dA : "–"}</td>
-                        <td className="r u-fw-700" style={{ color: parB === 3 ? PAR_COLOR[3] : parB === 4 ? PAR_COLOR[4] : parB === 5 ? PAR_COLOR[5] : undefined }}>{parB ?? "–"}</td>
+                        <Tint as="td" fg={parCor(parB)} className="r u-fw-700">{parB ?? "–"}</Tint>
                         <td className="r">{dB != null && dB > 0 ? dB : "–"}</td>
                         <td className="r"><Delta a={dA} b={dB} unit="m" /></td>
                         <td className="r"><Delta a={parA} b={parB} /></td>

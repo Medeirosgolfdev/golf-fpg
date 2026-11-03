@@ -13,7 +13,7 @@ import { flag as flagOf } from "../../utils/flagUtils";
 import ExpandArrow from "../../ui/ExpandArrow";
 import SearchInput from "../../ui/SearchInput";
 import { toggleSet } from "../../utils/mathUtils";
-
+
 import SidebarSectionTitle from "../../ui/SidebarSectionTitle";
 const MAX_VISIBLE = 8000;
 
@@ -193,7 +193,7 @@ export default function Sidebar({
       <div className="u-fl-1 u-oy-auto">
         {directos.length > 0 && (
           <>
-            <SidebarSectionTitle sticky textColor="var(--color-good-dark)" icon="⚔️">
+            <SidebarSectionTitle sticky className="u-c-color-good-dark" icon="⚔️">
               Cruzou com Manuel ({directos.length})
             </SidebarSectionTitle>
             {directos.map((j) => (
@@ -252,22 +252,10 @@ function RivalRow({ junior, manuel, selected, onSelect, sharedCount }: {
     <button
       onClick={() => onSelect(junior.id)}
       className={`kids2-rival-row${selected ? " active" : ""}`}
-      style={{
-        display: "block",
-        width: "100%",
-        padding: "8px 12px",
-        border: 0,
-        borderLeft: `3px solid ${selected ? "var(--accent)" : "transparent"}`,
-        borderBottom: "1px solid var(--border-light)",
-        background: selected ? "var(--bg-active, rgba(0,0,0,0.04))" : "transparent",
-        textAlign: "left",
-        cursor: "pointer",
-        fontSize: "var(--fs-12)",
-      }}
     >
       <div className="u-d-flex u-ai-center u-gap-6px">
         <span className="u-fs-fs-13 u-fsh-0">{flagEmoji}</span>
-        <span style={{ flex: 1, fontWeight: selected ? 700 : 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <span className="kids2-rival-name">
           {junior.canonicalName}
           {isManuel && <span className="u-ml-4px u-fs-fs-9 u-p-1px-4px u-br-radius-sm u-bg-bg-success-subtle u-c-color-good-dark u-fw-700">REF</span>}
         </span>

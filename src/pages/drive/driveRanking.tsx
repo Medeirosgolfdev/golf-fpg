@@ -220,7 +220,7 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
       defaultSort: "pts",
       defaultDir: "desc",
       tieBreak: (a, b) => a.name.localeCompare(b.name, "pt"),
-      rowStyle: r => r.sex === "F" ? { background: "var(--bg-female)" } : undefined,
+      rowClassName: r => r.sex === "F" ? "u-bg-bg-female" : undefined,
     }),
     views: [
       { key: "grid", label: "📊 Tabela", render: rows => (

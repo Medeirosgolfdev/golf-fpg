@@ -24,14 +24,11 @@ export interface FilterPillItem<K extends string = string> {
   count?: number;
   disabled?: boolean;
   title?: string;
-  /** Cor de destaque quando activo (default: var(--accent)). */
-  activeBg?: string;
 }
 
 interface FilterPillsBaseProps<K extends string> {
   items: FilterPillItem<K>[];
   className?: string;
-  style?: React.CSSProperties;
   /** Ocultar pills com count === 0 (default: false). */
   hideZero?: boolean;
 }
@@ -58,13 +55,12 @@ function isActiveSet<K>(active: ReadonlySet<K> | readonly K[], key: K): boolean 
 }
 
 export function FilterPills<K extends string>(props: FilterPillsProps<K>) {
-  const { items, className, style, hideZero } = props;
+  const { items, className, hideZero } = props;
   return (
     <div
-      className={`escalao-pills${className ? " " + className : ""}`}
-      style={{ gap: 4, display: "inline-flex", flexWrap: "wrap", alignItems: "center", ...style }}
+      className={`escalao-pills fp-pills${className ? " " + className : ""}`}
     >
-      {items.map(({ key, label, count, disabled, title, activeBg }) => {
+      {items.map(({ key, label, count, disabled, title }) => {
         if (hideZero && count === 0) return null;
         const isActive = props.mode === "single"
           ? props.active === key
@@ -75,7 +71,7 @@ export function FilterPills<K extends string>(props: FilterPillsProps<K>) {
             type="button"
             disabled={disabled}
             title={title}
-            className={`tourn-tab tourn-tab-sm${isActive ? " active" : ""}`}
+            className={`tourn-tab tourn-tab-sm u-fsh-0${isActive ? " active" : disabled ? " fp-disabled" : ""}`}
             onClick={() => {
               if (disabled) return;
               if (props.mode === "single") {
@@ -85,9 +81,6 @@ export function FilterPills<K extends string>(props: FilterPillsProps<K>) {
               }
             }}
             // Desligada = cinzento da regra global .tourn-tab-sm:not(.active).
-            style={isActive
-              ? { flexShrink: 0, ...(activeBg ? { background: activeBg } : {}) }
-              : { flexShrink: 0, ...(disabled ? { color: "var(--text-3)", cursor: "not-allowed", opacity: 0.5 } : {}) }}
           >
             {label}
             {count != null && (

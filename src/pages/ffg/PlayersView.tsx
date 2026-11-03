@@ -322,9 +322,8 @@ export function FFGPlayersView() {
                   return (
                     <Fragment key={r.license}>
                     <tr
-                      className={"player-list-row" + (r._manuel ? " row-manuel" : "")}
+                      className={"player-list-row u-cur-pointer" + (r._manuel ? " row-manuel" : "") + (isOpen ? " u-bg-bg-detail" : "")}
                       onClick={() => toggleOpen(r.license)}
-                      style={{ cursor: "pointer", background: isOpen ? "var(--bg-detail)" : undefined }}
                       title="Ver os torneios e resultados deste jogador"
                     >
                       <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap"
@@ -367,8 +366,8 @@ export function FFGPlayersView() {
                           {r.merite?.rank != null ? fmtOrd(r.merite.rank) : MUTED}
                         </td>
                       )}
-                      {has.tot && <td style={{ textAlign: "right", color: r._tot ? undefined : "var(--text-muted)" }}>{r._tot || "—"}</td>}
-                      {has.tot && <td style={{ textAlign: "right", color: r._ano ? "var(--color-good-dark)" : "var(--text-muted)", fontWeight: r._ano ? 600 : undefined }}>{r._ano || "—"}</td>}
+                      {has.tot && <td className={"u-ta-right" + (r._tot ? "" : " u-c-text-muted")}>{r._tot || "—"}</td>}
+                      {has.tot && <td className={"u-ta-right " + (r._ano ? "u-c-color-good-dark u-fw-600" : "u-c-text-muted")}>{r._ano || "—"}</td>}
                       {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{r.hcpDate ? fmtDatePt(r.hcpDate) : MUTED}</td>}
                     </tr>
                     {isOpen && (

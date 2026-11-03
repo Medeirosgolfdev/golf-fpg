@@ -7,6 +7,7 @@ import { scClass, toParClass } from "../utils/scoreDisplay";
 import { PillBadge } from "./PillBadge";
 import { CourseLink } from "./jogadoresHelpers";
 import ExtLink from "./ExternalLink";
+import { Tint } from "./DataStyle";
 
 /** Props for ScorecardTable component */
 export interface ScorecardTableProps {
@@ -105,10 +106,9 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
           const gv = gross[h];
           const ev = ecArr[h];
           const diff = gv != null && gv > 0 && ev != null ? ev - gv : null;
-          const dc = { color: "var(--text-3)" } as const;
           return (
             <React.Fragment key={h}>
-              <td style={dc}>
+              <td className="u-c-text-3">
                 {diff != null ? (diff === 0 ? "=" : (diff > 0 ? "+" : "") + diff) : ""}
               </td>
               {h === frontEnd - 1 && !is9 && (() => {
@@ -165,10 +165,10 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
   const linkEntries = links ? Object.entries(links).filter(([, v]) => typeof v === "string" && v.startsWith("http")) : [];
 
   return (
-    <div className="sc-modern" style={{ "--tee-color": teeHex_, "--tee-fg": teeFg_ } as React.CSSProperties}>
+    <div className="sc-modern">
       {/* Header (omitido em modo bare) */}
       {!bare && (
-      <div className={`sc-header ${teeFg_ === "#fff" ? "c-white" : "sc-header-light"}`} style={{ background: teeHex_ }}>
+      <Tint as="div" className={`sc-header ${teeFg_ === "#fff" ? "c-white" : "sc-header-light"}`} bg={teeHex_}>
         <div className="sc-header-left">
           <div className="sc-title"><CourseLink name={courseName} /></div>
           <div className="sc-subtitle">
@@ -204,7 +204,7 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
             <div className="sc-stat-value">{toParStr}</div>
           </div>
         </div>
-      </div>
+      </Tint>
       )}
 
       {/* Table */}
@@ -277,7 +277,7 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
           {/* Gross row */}
           <tr>
             <td className="row-label">
-              <span className="p" style={{ background: teeHex_, color: teeFg_, border: teeBorder(teeHex_) }}>{datePill}</span>
+              <Tint className={teeBorder(teeHex_) ? "p tee-bd-claro" : "p"} bg={teeHex_} fg={teeFg_}>{datePill}</Tint>
             </td>
             {Array.from({ length: totalHoles }, (_, h) => {
               const g = gross[h];

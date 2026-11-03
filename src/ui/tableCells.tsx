@@ -11,6 +11,7 @@ import type { RoundData } from "../data/playerDataLoader";
 import { fmtGrossDelta, fmtSdVal, fmtStb } from "../utils/scoreDisplay";
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import TeePill from "./TeePill";
+import { Tint } from "./DataStyle";
 import { fmtSign } from "../utils/format";
 
 /** Traço esbatido para «sem valor» (o mesmo em todas as tabelas: «—» cinzento,
@@ -64,9 +65,9 @@ export function SdCell({ round }: { round: RoundData }) {
 export function CountPill({ count, tee }: { count: React.ReactNode; tee: string }) {
   const hex = getTeeHex(tee);
   return (
-    <span className="count" style={{ background: hex, color: textOnColor(hex), border: teeBorder(hex) }}>
+    <Tint className={teeBorder(hex) ? "count tee-bd-claro" : "count"} bg={hex} fg={textOnColor(hex)}>
       {count}
-    </span>
+    </Tint>
   );
 }
 

@@ -643,10 +643,10 @@ export default function JogadoresListPage() {
                     </td>
                     <td><SexBadge sex={r.sex as "M" | "F"} /></td>
                     <td><EscPill esc={r.escalao} /></td>
-                    <td style={{ textAlign: "right", color: r.roundsTotal ? undefined : "var(--text-muted)" }}>
+                    <td className={"u-ta-right" + (r.roundsTotal ? "" : " u-c-text-muted")}>
                       {r.roundsTotal ?? "—"}
                     </td>
-                    <td style={{ textAlign: "right", color: r.roundsYear && r.roundsYear > 0 ? "var(--color-good-dark)" : "var(--text-muted)", fontWeight: r.roundsYear ? 600 : undefined }}>
+                    <td className={"u-ta-right " + (r.roundsYear && r.roundsYear > 0 ? "u-c-color-good-dark" : "u-c-text-muted") + (r.roundsYear ? " u-fw-600" : "")}>
                       {r.roundsYear ?? "—"}
                     </td>
                     <td className="num">{fmtSD(r.lastSD)}</td>

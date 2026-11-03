@@ -12,7 +12,8 @@ import {
   badgeVagas, diasAte, isTerminado, seriesBase, playerSeriesResult
 } from "./USKIDSPageHelpers";
 import ExtLink from "./ExternalLink";
-
+import { Tint, Fill } from "./DataStyle";
+
 import SectionTitle from "./SectionTitle";
 /** Dias desde a inscrição de um jogador.
  *  Prefere `regDia` — o dia de inscrição vindo do `pid` do signupanytime (ver
@@ -158,14 +159,11 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             {b12 && (() => {
               const bd = badgeVagas(b12.vagas, b12.maximo);
               return bd ? (
-                <span className="chip fw-700 fs-13" style={{
-                  background: urgente ? bd.bg : "var(--bg-hover)",
-                  color: urgente ? bd.cor : "var(--text-2)",
-                  border:`1px solid ${bd.bg}`, padding:"3px 12px",
-                }}>
+                <Tint className="chip fw-700 fs-13 u-p-3px-12px u-bd-1px-solid"
+                  bg={urgente ? bd.bg : "var(--bg-hover)"} fg={urgente ? bd.cor : "var(--text-2)"} bd={bd.bg}>
                   ★ {b12.nome}: {b12.inscritos}/{b12.maximo}
                   <span className="u-ml-4px u-op-0_8">({bd.label})</span>
-                </span>
+                </Tint>
               ) : null;
             })()}
           </div>
@@ -209,12 +207,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
               const man = e.age_group === escalaoM && /boys/i.test(e.nome);
               const novos7d = (e.jogadores || []).filter(j => diasDesdeInscricao(j) !== null && diasDesdeInscricao(j)! < 7).length;
               return (
-                <div key={e.age_group} className="card" style={{
-                  background: man ? "var(--accent-light)" : dst ? "var(--bg-card)" : "var(--bg-card)",
-                  border: `1.5px solid ${man ? "var(--accent)" : dst ? "var(--border)" : "var(--border-light)"}`,
-                  padding:"12px 16px",
-                  boxShadow: man ? "0 0 0 2px var(--accent-alpha-10)" : undefined,
-                }}>
+                <div key={e.age_group} className={`card tcd-card${man ? " tcd-card-man" : dst ? " tcd-card-dst" : ""}`}>
                   {/* Cabeçalho do card */}
                   <div className="u-d-flex u-jc-space-between u-ai-flex-start u-mb-8px">
                     <div>
@@ -228,9 +221,9 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                         {e.inscritos}<span className="fs-11 fw-400 c-text-3">/{e.maximo}</span>
                       </div>
                       {bd && (
-                        <span className="fs-11 fw-700 u-p-1px-6px u-br-radius" style={{ background: bd.bg, color: bd.cor }}>
+                        <Tint className="fs-11 fw-700 u-p-1px-6px u-br-radius" bg={bd.bg} fg={bd.cor}>
                           {bd.label}
-                        </span>
+                        </Tint>
                       )}
                       {novos7d > 0 && (
                         <span className="fs-10 fw-700 u-bg-score-eagle u-c-fff u-p-1px-4px u-br-radius u-ml-3px"
@@ -242,8 +235,8 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   </div>
                   {/* Barra de preenchimento */}
                   {e.maximo > 0 && (
-                    <div style={{ height:4, borderRadius:"var(--radius-xs)", background:"var(--border)", overflow:"hidden", marginBottom: e.jogadores?.length ? 8 : 0 }}>
-                      <div style={{ height:"100%", borderRadius:"var(--radius-xs)", background: man ? "var(--accent)" : "var(--color-good)", width:`${Math.min(100, Math.round((e.inscritos/e.maximo)*100))}%`, transition:"width .3s" }} />
+                    <div className={e.jogadores?.length ? "tcd-bar u-mb-8px" : "tcd-bar"}>
+                      <Fill pct={Math.round((e.inscritos / e.maximo) * 100)} className={man ? "tcd-bar-fill" : "tcd-bar-fill u-bg-color-good"} />
                     </div>
                   )}
                   {/* Lista de jogadores */}
@@ -264,15 +257,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               .filter(x => x.res !== null)
                           : [];
                         return (
-                          <div key={i} style={{
-                            display:"flex", justifyContent:"space-between", alignItems:"center",
-                            fontSize: isM ? 13 : 12, fontWeight: isM ? 800 : 400,
-                            padding: isM ? "4px 8px" : "1px 0",
-                            margin: isM ? "2px -14px" : "0",
-                            borderRadius: isM ? 5 : 0,
-                            background: isM ? "var(--accent)" : "transparent",
-                            color: isM ? "var(--text-on-color)" : isPtCountry(j.pais) ? "var(--accent)" : "var(--text)",
-                          }}>
+                          <div key={i} className={`tcd-player${isM ? " tcd-player-me" : isPtCountry(j.pais) ? " tcd-player-pt" : ""}`}>
                             <span className="u-d-flex u-ai-center u-gap-2px">
                               {isM ? "★ " : ""}{displayName(j.nome)}
                               {showDaysPill && !isM && (() => {
@@ -282,15 +267,10 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                                 const label = `${est ? "~" : ""}${d === 0 ? "hoje" : `${d}d`}`;
                                 // Degradê: 0d=100%, 10d=60%, 25d=20%
                                 const pct = d <= 10 ? Math.round(100 - d * 4) : Math.round(60 - (d - 10) * 2.7);
-                                const bg = `color-mix(in srgb, var(--score-eagle) ${pct}%, transparent)`;
-                                const fg = pct >= 60 ? "var(--text-on-color)" : "var(--text-2)";
-                                return <span className="fs-10 fw-700" style={{
-                                  background: bg, color: fg,
-                                  border: pct < 60 ? "1px solid color-mix(in srgb, var(--score-eagle) 40%, transparent)" : "none",
-                                  padding: "0 4px", borderRadius: "var(--radius)", marginLeft: 3, lineHeight: "14px",
-                                }} title={j.regDia && j.regObs === false
+                                return <Tint className={pct >= 60 ? "fs-10 fw-700 tcd-days" : "fs-10 fw-700 tcd-days tcd-days-faint"}
+                                  bg={`color-mix(in srgb, var(--score-eagle) ${pct}%, transparent)`} title={j.regDia && j.regObs === false
                                   ? `Inscrição estimada: ~${j.regDia} (há ${d} dia${d !== 1 ? "s" : ""}) — data reconstruída pela ordem de inscrição, a USKids não a publica`
-                                  : `Inscrito há ${d} dia${d !== 1 ? "s" : ""} (${(j.regDia || j.firstSeen || "").slice(0,10)})`}>{label}</span>;
+                                  : `Inscrito há ${d} dia${d !== 1 ? "s" : ""} (${(j.regDia || j.firstSeen || "").slice(0,10)})`}>{label}</Tint>;
                               })()}
                               {!isM && <KidsLink nome={j.nome} />}
                             </span>
@@ -299,10 +279,10 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               {prevResults.map(({ y, res }) => {
                                 const p = res!.p;
                                 const medal = medalOf(p);
-                                const col = p <= 3 ? "var(--color-warn-dark)" : p <= 10 ? "var(--color-good-dark)" : "var(--text-3)";
+                                const col = p <= 3 ? "u-c-color-warn-dark" : p <= 10 ? "u-c-color-good-dark" : "u-c-text-3";
                                 return (
                                   <span key={y} title={`${y}: #${p}${res!.tp != null ? ` (${res!.tp > 0 ? "+" : ""}${res!.tp})` : ""}`}
-                                    className="fs-10 fw-700" style={{ color: col, opacity:.85 }}>
+                                    className={`fs-10 fw-700 u-op-0_85 ${col}`}>
                                     {medal ?? `#${p}`}
                                     <span className="fs-10 fw-400 u-op-0_7">'{String(y).slice(2)}</span>
                                   </span>

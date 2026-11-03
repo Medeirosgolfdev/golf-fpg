@@ -2456,7 +2456,7 @@ tr.scout-detalhe > td { padding: var(--space-6) var(--space-10) var(--space-12) 
 .sc-table .sc-tee-row.sel td.sc-sticky { background: var(--accent-light); }
 /* Nome de jogador nos cartões de recorde (corta com reticências). */
 .cp-pname { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; font-weight: 500; }
-/* Cartão por tee: risca de cima na cor do tee (style borderTopColor), banda do cabeçalho tingida (style background). */
+/* Cartão por tee: risca de cima na cor do tee (<Tint bd>, ver .tee-card.campos-tee-card.tint-bd), banda do cabeçalho tingida (<Tint bg>). */
 .tee-card { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); border-top: 3px solid var(--border);
   background: var(--bg-card); box-shadow: var(--shadow-sm); }
 .tee-card.tee-card-flex { flex: 1 1 300px; min-width: 282px; max-width: 460px; display: flex; flex-direction: column; }
@@ -2471,7 +2471,7 @@ tr.scout-detalhe > td { padding: var(--space-6) var(--space-10) var(--space-12) 
 .cal-day-cell.aulas { background-color: var(--cal-escola-bg); }
 .cal-day-cell.sel { background-color: var(--accent-light); color: var(--accent); font-weight: 600; }
 .cal-day-cell.today { background-color: var(--accent); color: var(--text-on-color); font-weight: 600; }
-/* Linha de evento na lista: --cal-hl = cor do destaque (style). */
+/* Linha de evento na lista: --cal-hl = cor do destaque (vem do <Tint bd>, ver .cal-list-item.tint-bd). */
 .cal-list-item { display: flex; align-items: center; gap: var(--space-10); padding: var(--space-8) var(--space-10); border-radius: var(--radius);
   cursor: pointer; transition: background 0.15s; border: 2px solid transparent; background: transparent; }
 .cal-list-item:hover { background: var(--bg-hover); }
@@ -2566,7 +2566,7 @@ tr.scout-detalhe > td { padding: var(--space-6) var(--space-10) var(--space-12) 
 .draws-grupo-hdr.open { border-bottom: 1px solid var(--border-light); }
 /* Linha de jogador da sidebar: barra de cor à esquerda (a cor vem do escalão: borderLeftColor). */
 /* Cartão de torneio na barra lateral (ui/SidebarCard) — barra de cor da série/fonte. */
-.course-item.side-card, .course-item.side-card.active { border-left: 4px solid var(--side-accent, var(--accent)); border-radius: 0 var(--radius) var(--radius) 0; }
+.course-item.side-card, .course-item.side-card.active { border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; }
 .side-card-name { display: flex; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-3); }
 .side-card-name .course-item-name { flex: 1; font-size: var(--fs-12); font-weight: 500; line-height: 1.3; }
 .side-card.active .side-card-name .course-item-name { font-weight: 700; }
@@ -5050,3 +5050,347 @@ table td.lb-col-divider {
 /* HCP em texto (ui/HcpPill HcpText): negrito; o plus a dourado */
 .hcp-text { font-weight: 900; font-variant-numeric: tabular-nums; color: var(--text-1); }
 .hcp-text.hcp-plus { color: var(--medal-gold); }
+
+/* Valores dos dados (ui/DataStyle): Tint · Fill · Cols — o único sítio com style */
+/* !important de propósito: são o antigo style={{…}} (um valor por elemento, vindo dos dados) e têm de ganhar às classes, como o style ganhava. */
+.tint-bg { background: var(--tint-bg) !important; }
+.tint-fg { color: var(--tint-fg) !important; }
+.tint-bd { border-color: var(--tint-bd) !important; }
+.fill { width: var(--fill, 0%); background: var(--accent); }
+.fill-bg { background: var(--fill-bg) !important; }
+.fill.fill-v { width: auto; height: var(--fill, 0%); }
+.cols { display: grid; grid-template-columns: repeat(var(--cols, 1), minmax(var(--col-min, 0), 1fr)); }
+.place-l { left: var(--pl) !important; } .place-t { top: var(--pt) !important; } .place-r { right: var(--pr) !important; }
+.place-w { width: var(--pw) !important; } .place-mw { max-width: var(--pmw) !important; } .place-mh { max-height: var(--pmh) !important; }
+
+/* ═══ Classes que substituem os estilos à mão (03/11/2026, «0 estilos à mão») ═══ */
+/* ── estilo-0 grupo A ── */
+/* Calendário (pages/CalendarioPage): linhas da grelha do mês (4–6 semanas). */
+.cal-rows-4 { grid-template-rows: repeat(4, 1fr); }
+.cal-rows-5 { grid-template-rows: repeat(5, 1fr); }
+.cal-rows-6 { grid-template-rows: repeat(6, 1fr); }
+/* Eventos que não são do Manuel (opacidadeDe): impossível de jogar · clube/federação · aniversários dos outros.
+   Na grelha, ao passar o rato sobem +0.25 (as do Manuel descem a 0.85); as que já passaram ficam a 0.4 → 0.55. */
+.cal-op-naopode { opacity: 0.45; }
+.cal-op-fundo { opacity: 0.3; }
+.cal-op-bday { opacity: 0.22; }
+.cal-ev-bar:hover { opacity: 0.85; }
+.cal-ev-bar.cal-op-naopode:hover { opacity: 0.7; }
+.cal-ev-bar.cal-op-fundo:hover { opacity: 0.55; }
+.cal-ev-bar.cal-op-bday:hover { opacity: 0.47; }
+.cal-ev-bar.cal-ev-past { opacity: 0.4; }
+.cal-ev-bar.cal-ev-past:hover { opacity: 0.55; }
+/* Barra de evento pela posição na semana: um dia · início · meio · fim (as do meio/fim encostam à célula vizinha). */
+.cal-ev-bar { --cal-ev-r: calc(var(--radius-xs) + var(--space-1)); }
+.cal-ev-single, .cal-ev-start { padding: var(--space-1) calc(var(--space-4) + var(--space-1)); }
+.cal-ev-mid, .cal-ev-end { padding: var(--space-1) 0; min-height: var(--space-16); }
+.cal-ev-single { border-radius: var(--cal-ev-r); }
+.cal-ev-start { margin-right: calc(var(--space-4) * -1); border-radius: var(--cal-ev-r) 0 0 var(--cal-ev-r); }
+.cal-ev-mid { margin-left: calc(var(--space-4) * -1); margin-right: calc(var(--space-4) * -1); border-radius: 0; }
+.cal-ev-end { margin-left: calc(var(--space-4) * -1); border-radius: 0 var(--cal-ev-r) var(--cal-ev-r) 0; }
+.cal-more:hover { background: var(--bg-hover); }
+/* Linha da lista com destaque: a cor vem do <Tint bd> e alimenta o --cal-hl do .cal-list-item.hl (borda a 40%). */
+.cal-list-item.tint-bd { --cal-hl: var(--tint-bd); border-color: color-mix(in srgb, var(--tint-bd) 40%, transparent) !important; }
+/* Campos (pages/CamposPage): bolinha da cor do tee, cabeçalho do Manuel e risca de cima do cartão (cor do <Tint bd>). */
+.campos-tee-dot { display: inline-block; flex: none; border-radius: 50%; border: 1px solid var(--overlay-black-15); }
+.campos-tee-dot.is-light { border-color: var(--border); }
+.campos-tee-dot.is-11 { width: 11px; height: 11px; }
+.campos-tee-dot.is-14 { width: 14px; height: 14px; }
+.campos-hdr-manuel { background: color-mix(in srgb, var(--accent) 12%, var(--bg-card)); }
+.tee-card.campos-tee-card.tint-bd { border-color: var(--border) !important; border-top-color: var(--tint-bd) !important; }
+/* Comparar campos (pages/ComparePage): grelha dos pares A | Δ | B e a célula do HCP de jogo (cor do tee no <Tint bd>). */
+.cmpc-par-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4) 0; }
+.cmpc-par-grid.is-same { grid-template-columns: 1fr auto 1fr; }
+.dtable .mt-sd.is-hcp.tint-bd { border-color: var(--border) !important; border-top: 2px solid var(--tint-bd) !important; border-bottom-color: var(--tint-bd) !important; }
+/* Conselheiro de tees (comparar/TeeAdvisorView): caixa de escolha com a borda na cor do tee (<Tint bd> à volta). */
+.taa-tee-sel > select { border: 2px solid var(--tint-bd) !important; }
+/* Internacionalizações (major/MajorVeteransView): ligação a cada torneio, borda na cor da fonte (<Tint bd> à volta). */
+.mvv-det > .mvv-det-link { text-decoration: none; padding: var(--space-1) var(--space-8); border-radius: var(--radius); border: 1px solid var(--tint-bd);
+  color: var(--text); white-space: nowrap; }
+.u-minw-22px { min-width: 22px !important; }
+/* ── estilo-0 grupo B ── */
+/* Tees muito claros (branco, amarelo): o contorno do teeBorder() — TeePill, TeeDate, pill de data do ScorecardTable. */
+.tee-bd-claro { border: 1px solid var(--border) !important; }
+/* TeeDots: bolinha-botão do tee (a cor vai no span de dentro, por Tint); a escolhida leva anel. */
+.tee-dot-btn { display: inline-block; padding: 0; cursor: pointer; width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--border); background: none; box-shadow: none; opacity: 0.55; overflow: hidden; }
+.tee-dot-btn.is-sel { box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 3.5px var(--text-2); opacity: 1; }
+.tee-dot-btn-cor { display: block; width: 100%; height: 100%; border-radius: 50%; }
+/* TeeBars: a barra de cada tee (em linha) e os botões M/F do Simulador. */
+.tee-badge-card.tee-bar-card { flex-direction: row; align-items: center; gap: var(--space-10); padding: var(--space-8) var(--space-12); flex-wrap: wrap; }
+.tee-bar-card.is-click { cursor: pointer; }
+.tee-bar-card.is-active { border: 1.5px solid var(--accent); background: var(--accent-light); }
+.tee-bar-sexbtn { display: inline-flex; align-items: center; gap: calc(var(--space-4) + var(--space-1)); padding: var(--space-3) var(--space-8); border-radius: var(--radius); cursor: pointer; font-size: var(--fs-12); border: 1.5px solid var(--border); background: var(--bg-card); color: var(--text-2); font-weight: 400; }
+.tee-bar-sexbtn.is-active { border-color: var(--accent); background: var(--accent-light); color: var(--accent-text); font-weight: 700; }
+/* ResultMark (match play): 🏆 · ✗ · ½ */
+.rm-mark { display: inline-block; }
+.rm-gap-0 { margin-right: 0; }
+.rm-gap-4 { margin-right: var(--space-4); }
+.rm-gap-6 { margin-right: var(--space-6); }
+.rm-loss { color: var(--color-danger-dark); font-weight: 700; }
+.rm-half { color: var(--text-2); font-weight: 700; }
+/* LoopEclecticSection: «▸ N voltas» (botão sem moldura). */
+.lec-toggle { background: none; border: none; padding: 0; cursor: pointer; color: var(--accent); }
+/* HoleStatsSection — heatmap por pancadas perdidas e linha «Panc. perd.» */
+.heatmap-cell.hs-heat-none { background: var(--bg-detail); color: var(--text-muted); }
+.heatmap-cell.hs-heat-good { background: var(--color-good-alpha); color: var(--text-1); border-color: var(--color-good); }
+.heatmap-cell.hs-heat-neutral { background: var(--bg-detail); color: var(--text-1); }
+.heatmap-cell.hs-heat-warn { background: var(--color-warn-alpha); color: var(--text-1); }
+.heatmap-cell.hs-heat-bad { background: var(--color-danger-alpha); color: var(--text-1); }
+.heatmap-cell.hs-heat-worst { background: var(--color-danger-alpha); color: var(--color-danger-dark); border-color: var(--color-danger); }
+td.hs-sl-good { background: var(--color-good-alpha) !important; }
+td.hs-sl-bad { background: var(--color-danger-alpha) !important; }
+td.hs-sl-worst { background: var(--color-danger) !important; }
+/* Barras de distribuição com <Fill>: a cor é a do .seg-* / do tom (o .fill traz --accent por defeito). */
+.fill.seg-eagle { background: var(--score-eagle); }
+.fill.seg-birdie { background: var(--score-birdie); }
+.fill.seg-par { background: var(--score-par-seg); }
+.fill.seg-bogey { background: var(--score-bogey-border); }
+.fill.seg-double { background: var(--score-double); }
+.fill.seg-triple { background: var(--score-triple); }
+.fill.fill-v.score-dist-bar { width: 100%; }
+.fill.par-type-bar { background: currentColor; }
+.par-type-bar.bar-neg { right: 50%; }
+.par-type-bar.bar-pos { left: 50%; }
+/* ScoreTable (Simulador, «Score por tee»): cabeçalhos fixos e células; a cor do tee vem por Tint. */
+.sim-multi-tee th.st-th-dp { position: sticky; top: 0; z-index: var(--z-float); vertical-align: bottom; min-width: 50px; background: var(--bg); border-bottom: 2px solid var(--border); padding: var(--space-6) var(--space-8); font-size: var(--fs-11); font-weight: 600; letter-spacing: 0.04em; color: var(--text-3); text-align: center; }
+.sim-multi-tee th.st-th-tee { position: sticky; top: 0; z-index: var(--z-float); text-align: center; padding: calc(var(--space-4) + var(--space-1)) var(--space-8); font-size: var(--fs-11); font-weight: 700; letter-spacing: 0.03em; border-bottom: none; }
+.sim-multi-tee th.st-th-sub { position: sticky; top: 30px; z-index: var(--z-raised); background: var(--bg); padding: var(--space-4) var(--space-8); font-size: var(--fs-10); font-weight: 600; letter-spacing: 0.04em; color: var(--text-3); text-align: right; border-bottom: 3px solid; }
+.sim-multi-tee th.st-sep-l { border-left: 2px solid var(--border); }
+.sim-multi-tee th.st-sep-l.tint-bd { border-left-color: var(--border) !important; }
+.sim-multi-tee tr.st-row { cursor: pointer; outline-offset: -1px; }
+.sim-multi-tee tr.st-row.is-sel { background: var(--accent-light); outline: 2px solid var(--accent); }
+.sim-multi-tee td.st-td { padding: calc(var(--space-4) + var(--space-1)) var(--space-8); border-bottom: 1px solid var(--border-light); }
+.sim-multi-tee td.st-td-dp { font-weight: 700; text-align: center; white-space: nowrap; font-size: var(--fs-12); }
+.sim-multi-tee td.st-td-dp.is-par { background: var(--accent-light); color: var(--accent); }
+.sim-multi-tee td.st-td-dp.is-sel { background: var(--accent); color: var(--bg-card); }
+.sim-multi-tee td.st-td-score { text-align: center; font-weight: 600; }
+.sim-multi-tee td.st-td-score.is-par { font-weight: 700; color: var(--accent); }
+.sim-multi-tee td.st-td-sd { text-align: right; font-size: var(--fs-12); font-weight: 600; }
+.sim-multi-tee td.st-td-net { text-align: right; color: var(--text-2); font-weight: 400; }
+.sim-multi-tee td.st-sep-l { border-left: 2px solid var(--border-light); }
+.sim-multi-tee td.st-sep-l.tint-bd { border-left-color: var(--border-light) !important; }
+.sim-multi-tee td.st-hcp { border-top: 2px solid; border-bottom: 2px solid; color: var(--grey-900); font-weight: 700; }
+.sim-multi-tee td.st-hcp.st-td-score { font-weight: 800; }
+/* RoundSimulator — cartão de cada ronda (borda e número na cor do resultado), aviso ⚡ e linha do tempo do HI. */
+.rs-card { border: 1px solid var(--border); border-left: 4px solid var(--border); border-radius: var(--radius-xl); background: var(--bg-card); padding: var(--space-10) var(--space-14); transition: border-color .15s; }
+.rs-card .rsim-num { background: var(--bg-detail); color: var(--text-2); }
+.rs-card.is-exc { border-left-color: var(--color-warn); }
+.rs-card.is-good { border-left-color: var(--color-good); }
+.rs-card.is-bad { border-left-color: var(--color-danger); }
+.rs-card.is-exc .rsim-num { background: var(--color-warn); color: var(--text-on-color); }
+.rs-card.is-good .rsim-num { background: var(--color-good); color: var(--text-on-color); }
+.rs-card.is-bad .rsim-num { background: var(--color-danger); color: var(--text-on-color); }
+.rs-exc-badge { font-size: var(--fs-10); font-weight: 700; color: var(--text-on-color); border-radius: var(--radius-sm); padding: var(--space-2) var(--space-6); background: var(--color-warn); }
+.rs-exc-badge.is-2 { background: var(--color-danger); }
+.rs-exc-note { margin-top: var(--space-8); padding: var(--space-6) var(--space-10); border-radius: var(--radius); font-size: var(--fs-11); line-height: 1.6; background: var(--bg-warn); border: 1px solid var(--color-warn); color: var(--color-warn); }
+.rs-exc-note.is-2 { border-color: var(--color-danger); color: var(--color-danger); }
+.rs-tl-round, .rs-tl-final { text-align: center; min-width: 90px; display: flex; flex-direction: column; justify-content: center; }
+.rs-tl-round { padding: var(--space-10) var(--space-14); background: var(--bg-card); border-left: 1px solid var(--border); }
+.rs-tl-round.is-good { background: color-mix(in srgb, var(--tier-good) 8%, transparent); }
+.rs-tl-round.is-bad { background: color-mix(in srgb, var(--tier-bad) 8%, transparent); }
+.rs-tl-final { padding: var(--space-10) var(--space-16); background: var(--bg-detail); border-left: 3px solid var(--text-2); }
+.rs-tl-final.is-good { border-left-color: var(--color-good); }
+.rs-tl-final.is-bad { border-left-color: var(--color-danger); }
+/* ── estilo-0 grupo C ── */
+/* Genéricos: só largura/estilo da borda (a cor vem de um Tint bd) · vermelho médio */
+.u-bd-1px-solid { border-width: 1px !important; border-style: solid !important; }
+.u-c-color-danger-vivid { color: var(--color-danger-vivid) !important; }
+/* Kids 2 — barras de média por buraco (Fill vertical): a .fill-v põe width:auto */
+.fill-v.hole-bar { width: 40%; }
+.hole-bar.hole-bar-min { min-height: var(--space-2); }
+/* Kids 2 — Distribuição de scoring: segmento da barra (Fill) e quadradinho da legenda */
+.k2-sd-seg { display: flex; align-items: center; justify-content: center; font-size: var(--fs-10); font-weight: 700; overflow: hidden; }
+.k2-sd-sep { border-left: 1px solid var(--border-light); }
+.k2-sd-eagle { background: var(--score-eagle); color: var(--text-on-color); }
+.k2-sd-birdie { background: var(--score-birdie); color: var(--text-on-color); }
+.k2-sd-par { background: transparent; color: var(--text); }
+.k2-sd-bogey { background: var(--score-bogey); color: var(--score-bogey-fg); }
+.k2-sd-double { background: var(--score-double); color: var(--text-on-color); }
+.k2-sd-key { display: inline-block; width: 9px; height: 9px; border-radius: var(--radius-xs); }
+.k2-sd-key:is(.k2-sd-bogey, .k2-sd-double) { border-radius: 0; }
+.k2-sd-key.k2-sd-par { border: 1px solid var(--border); }
+/* Kids 2 — pill de torneio único (Histórico por torneio); pódio = borda da medalha (Tint bd) */
+.k2-oneoff-pill { font-size: var(--fs-11); padding: var(--space-3) var(--space-8); border-radius: var(--radius-pill); background: var(--bg);
+  border: 1px solid var(--border-light); color: var(--text-2); display: inline-flex; align-items: center; gap: var(--space-4); }
+/* Kids 2 — linhas: com confronto com o Manuel («cor Manuel», a das colunas .col-manuel), aberta,
+   vitória/derrota no confronto, corte da lista. !important: eram style e ganhavam ao :hover. */
+.k2-row-vs-manuel { background: color-mix(in srgb, var(--bg-success-subtle) 35%, transparent) !important; }
+.k2-row-open { background: var(--bg-muted) !important; }
+.k2-row-won { background: color-mix(in srgb, var(--color-good) 4%, transparent) !important; }
+.k2-row-lost { background: color-mix(in srgb, var(--color-danger) 4%, transparent) !important; }
+.k2-row-cut { border-bottom: 3px solid var(--accent); }
+/* Kids 2 — linha de rival na barra lateral */
+.kids2-rival-row { display: block; width: 100%; padding: var(--space-8) var(--space-12); border: 0; border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--border-light); background: transparent; text-align: left; cursor: pointer; font-size: var(--fs-12); }
+.kids2-rival-row.active { border-left-color: var(--accent); background: var(--bg-active); }
+.kids2-rival-name { flex: 1; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kids2-rival-row.active .kids2-rival-name { font-weight: 700; }
+/* Matriz de rivais (ui/RivaisDashboard): cabeçalho de grupo, separador de série, célula do torneio */
+.riv-grp-th { text-align: center; font-size: var(--fs-12); font-weight: 600; color: var(--text-2); padding: var(--space-6) var(--space-8);
+  border-bottom: 1px solid var(--border); }
+.riv-sep { border-left: 1px solid var(--border); }
+.riv-grp-lbl { display: block; margin: 0 auto; white-space: normal; overflow-wrap: anywhere; line-height: 1.25; }
+.riv-cell { padding: var(--space-1) var(--space-4); line-height: 1.15; }
+/* Escalões de um torneio USKids (ui/TabCampoDetalhe): cartão, barra de inscritos, linha de jogador, pill «há N dias» */
+.tcd-card { border: 1.5px solid var(--border-light); padding: var(--space-12) var(--space-16); }
+.tcd-card.tcd-card-dst { border-color: var(--border); }
+.tcd-card.tcd-card-man { background: var(--accent-light); border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-alpha-10); }
+.tcd-bar { height: 4px; border-radius: var(--radius-xs); background: var(--border); overflow: hidden; }
+.tcd-bar-fill { height: 100%; border-radius: var(--radius-xs); transition: width .3s; }
+.tcd-player { display: flex; justify-content: space-between; align-items: center; font-size: var(--fs-12); font-weight: 400;
+  padding: var(--space-1) 0; color: var(--text); }
+.tcd-player.tcd-player-pt { color: var(--accent); }
+.tcd-player.tcd-player-me { font-size: var(--fs-13); font-weight: 800; padding: var(--space-4) var(--space-8); margin: var(--space-2) -14px;
+  border-radius: var(--radius-sm); background: var(--accent); color: var(--text-on-color); }
+.tcd-days { color: var(--text-on-color); border: none; padding: 0 var(--space-4); border-radius: var(--radius); margin-left: var(--space-3); line-height: 14px; }
+.tcd-days.tcd-days-faint { color: var(--text-2); border: 1px solid color-mix(in srgb, var(--score-eagle) 40%, transparent); }
+/* Campeões nacionais/regionais (ui/JovensAnaliseView) */
+.jav-yr { margin-right: var(--space-4); padding: var(--space-1) var(--space-4); border-radius: var(--radius); border: 1px solid transparent;
+  opacity: 0.75; white-space: nowrap; letter-spacing: 0.3px; }
+.jav-yr.jav-yr-1 { background: var(--bg-info-subtle); color: var(--accent); border-color: var(--accent); }
+.jav-yr.jav-yr-2 { background: var(--bg-success-subtle); color: var(--color-good-dark); border-color: var(--color-good); }
+.jav-cell-empty { padding: var(--space-8); text-align: center; vertical-align: middle; background: var(--bg-stripe); border-left: 1px solid var(--border-light); }
+.jav-cell { padding: var(--space-4) var(--space-8); vertical-align: middle; border-left: 1px solid var(--border-light); min-width: 200px; max-width: 280px; }
+.jav-cell.jav-cell-me { background: var(--bg-success-subtle); border-left: 3px solid var(--color-good); }
+.jav-cell.jav-cell-prov { background: var(--bg-info-subtle); border-left: 3px dashed var(--accent); }
+.jav-lbl { display: flex; flex-direction: column; align-items: flex-start; font-size: var(--fs-10); line-height: 1.2; font-weight: 700;
+  color: var(--text-2); text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; }
+.jav-lbl.jav-lbl-champ { color: var(--color-good-dark); }
+.jav-region-btn { margin-top: var(--space-12); margin-bottom: 0; padding: var(--space-4) var(--space-10); border-radius: var(--radius);
+  background: var(--bg-muted); border: 1px solid var(--border-light); display: inline-flex; align-items: center; gap: var(--space-8);
+  cursor: pointer; text-align: left; color: var(--text); }
+.jav-region-btn.open { margin-bottom: var(--space-6); }
+.jav-row { border-top: 1px solid var(--border-light); }
+.jav-row-esc { border-top: 2px solid var(--border); }
+.jav-yearchip { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: var(--space-3) var(--space-6); font-size: var(--fs-11);
+  display: inline-flex; align-items: center; gap: var(--space-3); white-space: nowrap; }
+.jav-yearchip.off { border-color: var(--border-light); background: var(--bg-muted); opacity: 0.6; }
+.jav-yearchip.won { background: var(--medal-gold-bg); }
+/* ── estilo-0 grupo D ── */
+/* Barra lateral do CircuitShell: rótulo do mês/ano (fundo/cor da config, pelo Tint). */
+.cs-year-lbl { padding: var(--space-2) var(--space-10) !important; font-size: var(--fs-10) !important; font-weight: 700 !important;
+  letter-spacing: 0.05em !important; text-transform: uppercase !important; margin-top: var(--space-4) !important; }
+.u-h-140px { height: 140px !important; }
+.u-h-220px { height: 220px !important; }
+.u-h-300px { height: 300px !important; }
+.u-minw-120px { min-width: 120px !important; }
+.u-minw-150px { min-width: 150px !important; }
+/* Cabeçalho ordenado (ui/SortableHdr): sem !important, como o antigo style — as utilidades .u-c-* continuam a ganhar. */
+table th.lb-sortable.is-sorted { color: var(--accent); font-weight: 700; }
+/* Aroeira2AnaliseView: etiquetas dos buracos (fundo; nas .aro-tag também a borda) e dicas por tom. */
+.aro-lbl-birdie { background: color-mix(in srgb, var(--color-good) 15%, transparent) !important; }
+.aro-lbl-par { background: color-mix(in srgb, var(--heat-par) 12%, transparent) !important; }
+.aro-lbl-bogey { background: color-mix(in srgb, var(--color-danger) 12%, transparent) !important; }
+.aro-lbl-danger { background: color-mix(in srgb, var(--heat-max) 15%, transparent) !important; }
+.aro-tag.aro-lbl-birdie { border-color: var(--color-good); } .aro-tag.aro-lbl-par { border-color: var(--heat-par); }
+.aro-tag.aro-lbl-bogey { border-color: var(--color-danger); } .aro-tag.aro-lbl-danger { border-color: var(--heat-max); }
+.aro-tip-good { border-color: var(--color-good); } .aro-tip-good > strong { color: var(--color-good); }
+.aro-tip-warn { border-color: var(--heat-warn); } .aro-tip-warn > strong { color: var(--heat-warn); }
+.aro-tip-danger { border-color: var(--color-danger); } .aro-tip-danger > strong { color: var(--color-danger); }
+.aro-tip-neutral { border-color: var(--text-muted); } .aro-tip-neutral > strong { color: var(--text-muted); }
+/* /jogadores: coluna-botão do histograma de HCP; rótulo do KV; cor do escalão na barra lateral (Tint bd = só a esquerda); scorecard aberto. */
+.jg-bin-btn { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; min-width: 0;
+  background: transparent; border: 1px solid transparent; border-radius: var(--radius-sm); padding: var(--space-2); cursor: pointer; }
+.jg-bin-btn.active { background: var(--bg-hover); border-color: var(--accent); }
+.kv-label { margin-bottom: var(--space-1); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  cursor: default; text-decoration: none; text-underline-offset: 2px; }
+.kv-label.kv-desc { cursor: help; text-decoration: underline dotted var(--text-3); }
+.course-item.sidebar-player.tint-bd { border-color: var(--border-light) !important; border-left-color: var(--tint-bd) !important; }
+.jg-sc-host { margin: var(--space-6) var(--space-8); width: fit-content; max-width: calc(100% - 16px); }
+/* Equipas (ui/circuit/TeamStrokeStandings): grelha dos cartões. */
+.ts-cards { grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); }
+.ts-cards.multi { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+/* CourseHeroCard: «Por par / Por buraco», cartões por par (borda-esquerda na cor do par), distâncias e amostras. */
+.ha-mode-btn { padding: var(--space-4) var(--space-12); font-size: var(--fs-11); font-weight: 700; border: none; border-radius: var(--radius);
+  cursor: pointer; background: transparent; color: var(--text-3); box-shadow: none; }
+.ha-mode-btn.active { background: var(--bg-card); color: var(--text); box-shadow: var(--shadow-sm); }
+.ha-par-card { padding: var(--space-12) var(--space-16) !important; }
+.ha-par-card.tint-bd { border-color: var(--border) !important; border-left: 3px solid var(--tint-bd) !important; }
+.ha-par-title { display: flex; align-items: baseline; gap: var(--space-8); flex-wrap: wrap; font-size: var(--fs-16); font-weight: 800; margin-bottom: var(--space-4); }
+.ha-dist-pill { border-width: 1px !important; border-style: solid !important; font-weight: 700 !important; font-size: var(--fs-13) !important;
+  padding: var(--space-3) calc(var(--space-8) + var(--space-1)) !important; min-width: 50px; justify-content: center; }
+.ha-swatch { width: 16px; height: 16px; border-radius: var(--radius-sm); border: 1px solid; }
+/* DataSources: nome do ficheiro, chip, painéis (a posição continua a vir do rato/botão) e linhas. */
+.ds-file { font-size: var(--fs-10) !important; font-weight: 500 !important; color: var(--text-muted) !important; opacity: 0.75;
+  cursor: default; white-space: nowrap; letter-spacing: 0 !important; line-height: 1.3 !important; }
+.ds-file.ctx { cursor: context-menu; }
+.ds-panel { position: fixed; overflow: auto; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: 0 6px 20px var(--overlay-black-25); padding: var(--space-6) 0; }
+.ds-pop { z-index: var(--z-modal); width: 340px; max-height: 320px; font-size: var(--fs-11); }
+.ds-src-panel { z-index: var(--z-topmost); width: 440px; }
+.ds-pop-row { padding: var(--space-3) var(--space-10); display: flex; gap: var(--space-6); align-items: baseline; }
+.ds-pop-row:not(:last-child) { border-bottom: 1px solid var(--border-light); }
+.ds-chip { cursor: pointer; background: var(--bg-muted) !important; border: 1px solid var(--border); color: var(--text-muted) !important;
+  padding: var(--space-3) var(--space-8) !important; white-space: nowrap; display: inline-flex; align-items: center; gap: var(--space-4); }
+.ds-chip.warn { background: var(--bg-warn-subtle) !important; border-color: var(--color-warn); }
+.ds-src-row { padding: var(--space-4) var(--space-10); display: flex; align-items: flex-start; gap: var(--space-8); border-bottom: 1px solid var(--border-light); }
+.ds-src-row.err { background: var(--bg-warn-subtle); }
+.ds-src-icon { font-size: var(--fs-13); flex-shrink: 0; line-height: 1.4; }
+.ds-src-path { font-size: var(--fs-11); word-break: break-all; font-weight: 400; }
+.ds-src-row.err .ds-src-path { color: var(--color-warn-dark); font-weight: 600; }
+/* Edições anteriores (ui/circuit/PastEditionsTable): separador entre edições, cabeçalho e nome. */
+.pe-bl { border-left: 1px solid var(--border) !important; }
+.pe-ed-hdr { padding: var(--space-10) var(--space-10) var(--space-8) !important; font-size: var(--fs-11) !important; }
+.pe-name { text-align: left !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+/* Ranking PJA: volta tirada pela regra (riscada) / fora das que contam (esbatida); linhas do cabeçalho do torneio. */
+.pja-rd-excl { opacity: 0.4 !important; text-decoration: line-through !important; }
+.pja-rd-out { opacity: 0.35 !important; }
+.pja-tc-line { font-size: var(--fs-10); font-weight: 600; line-height: 1.2; white-space: normal; text-align: center; }
+/* HcpEvolution: chips «Destacar» (cor do jogador pelo Tint) e bolinha na tabela. */
+.hcp-evo-chip { padding: var(--space-3) var(--space-8); font-size: var(--fs-11); border-radius: var(--radius-sm); cursor: pointer;
+  background: var(--bg-muted); border: 1px solid var(--border); color: var(--text-3); font-weight: 400; }
+.hcp-evo-chip.on { color: var(--text-1); font-weight: 700; }
+.hcp-evo-dot { display: inline-block; width: 8px; height: 8px; border-radius: var(--radius-xs); margin-right: var(--space-6); }
+/* PCC (ui/PillBadge PccPill): verde mais escuro quanto maior; −1 a vermelho. */
+.p.p-pcc { color: var(--text-on-color) !important; border-color: transparent !important; }
+.p-pcc-neg { background: var(--pill-pcc-neg-bg) !important; } .p-pcc-pos1 { background: var(--pill-pcc-pos1-bg) !important; }
+.p-pcc-pos2 { background: var(--pill-pcc-pos2-bg) !important; } .p-pcc-pos3 { background: var(--pill-pcc-pos3-bg) !important; }
+/* Ano de nascimento no tom do escalão (ui/AnoEscalaoPill): 1.º ano claro com contorno, 2.º ano (.ult) cheio. */
+.ano-esc-pill { --ae: var(--text-3); border-color: var(--ae) !important; background: color-mix(in srgb, var(--ae) 22%, transparent) !important;
+  color: color-mix(in srgb, var(--ae) 70%, var(--text)) !important; }
+.ano-esc-pill.ult { background: var(--ae) !important; color: var(--ae-fg, var(--text-on-color)) !important; }
+.ano-esc-pill.ae-sub10 { --ae: var(--esc-sub10-bg); --ae-fg: var(--esc-sub10-fg); }
+.ano-esc-pill.ae-sub12 { --ae: var(--esc-sub12-bg); --ae-fg: var(--esc-sub12-fg); }
+.ano-esc-pill.ae-sub14 { --ae: var(--esc-sub14-bg); --ae-fg: var(--esc-sub14-fg); }
+.ano-esc-pill.ae-sub16 { --ae: var(--esc-sub16-bg); --ae-fg: var(--esc-sub16-fg); }
+.ano-esc-pill.ae-sub18 { --ae: var(--esc-sub18-bg); --ae-fg: var(--esc-sub18-fg); }
+.ano-esc-pill.ae-sub21 { --ae: var(--esc-sub21-bg); --ae-fg: var(--esc-sub21-fg); }
+.ano-esc-pill.ae-sub24 { --ae: var(--esc-sub24-bg); --ae-fg: var(--esc-sub24-fg); }
+/* Inscrições nacionais (ui/InscricoesComponents): botões de clube e etiqueta «dados frescos / cache». */
+.insc-clube-btn { cursor: pointer; padding: var(--space-1) var(--space-8); border-radius: var(--radius-lg); border: 1px solid var(--border);
+  background: var(--bg-muted); color: var(--text-1); }
+.insc-clube-btn.active { background: var(--accent); color: var(--text-on-color); }
+.insc-fresh { padding: var(--space-2) calc(var(--space-6) + var(--space-1)); border-radius: var(--radius-lg); white-space: nowrap;
+  background: var(--bg-success-subtle); color: var(--color-good-dark); border: 1px solid var(--color-good); }
+.insc-fresh.cache { background: var(--bg-muted); color: var(--text-muted); border-color: var(--border); }
+/* FilterPills: caixa (o display cede ao .u-d-contents do FilterPillRow) e pill desactivada. */
+.fp-pills { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.fp-disabled { color: var(--text-3) !important; cursor: not-allowed !important; opacity: 0.5 !important; }
+/* KpiCard: preenchido (good/danger), borda-esquerda de realce (cor pelo Tint bd), centrado. */
+.kpi.kpi-center { align-items: center; text-align: center; }
+.kpi.kpi-accent.tint-bd { border-color: var(--border-light) !important; border-left: 4px solid var(--tint-bd) !important; }
+.kpi.kpi-fill-good { background: var(--color-good-alpha) !important; border-color: var(--color-good) !important; }
+.kpi.kpi-fill-danger { background: var(--color-danger-alpha) !important; border-color: var(--color-danger) !important; }
+.kpi.kpi-fill-good.kpi-accent.tint-bd { border-color: var(--color-good) !important; }
+.kpi.kpi-fill-danger.kpi-accent.tint-bd { border-color: var(--color-danger) !important; }
+.kpi.kpi-fill-good .kpi-val:not(.tint-fg) { color: var(--color-good) !important; }
+.kpi.kpi-fill-danger .kpi-val:not(.tint-fg) { color: var(--color-danger) !important; }
+/* LinksBar: cor de cada grupo de links. */
+.tourn-ext-link.lk-wagr { color: var(--accent) !important; border-color: var(--accent) !important; }
+.tourn-ext-link.lk-sub16 { color: var(--esc-sub16-bg) !important; border-color: var(--esc-sub16-bg) !important; }
+.tourn-ext-link.lk-sub14 { color: var(--esc-sub14-bg) !important; border-color: var(--esc-sub14-bg) !important; }
+.tourn-ext-link.lk-sub12 { color: var(--chart-2) !important; border-color: var(--chart-2) !important; }
+/* TabelaGlobal: célula de resultado (fundo/cor do nível pelo Tint). */
+.tg-res-cell { padding: calc(var(--space-4) + var(--space-1)) var(--space-4) !important; }
+
+/* ── estilo-0 últimos ── */
+/* /FPG, Ordem de Mérito: a prova aberta na escada de níveis (pill destacada). */
+.p.om-prova-esta { background: var(--accent-light) !important; border-color: var(--accent) !important; font-weight: 700 !important; }
+/* Linha feminina nos rankings (Drive). */
+.u-bg-bg-female { background: var(--bg-female) !important; }
+/* Separador desactivado (TabRow). */
+.seg-btn.is-disabled, .tab-under.is-disabled { cursor: not-allowed !important; opacity: 0.5 !important; }
+/* Cartão de torneio na barra lateral: a barra à esquerda na cor do circuito (<Tint bd>); o resto da borda fica a normal. */
+.course-item.side-card.tint-bd { border-color: var(--border-light) !important; border-left-color: var(--tint-bd) !important; }
+/* ★ Manuel ligado: a cor da linha dele nas tabelas (.row-manuel) — a única excepção ao verde dos filtros (pedido dela, 03/11/2026) */
+.tourn-tab.tourn-tab-sm.tt-manuel.active { background: var(--bg-success-subtle); border-color: var(--color-good); color: var(--color-good-dark); }

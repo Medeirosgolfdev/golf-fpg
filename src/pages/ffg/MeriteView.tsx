@@ -198,7 +198,7 @@ export function FFGMeriteView() {
                   const destaque = isManuelByName(r.name) || r.pt;
                   return (
                     <Fragment key={id}>
-                      <tr onClick={() => toggleOpen(id)} style={{ cursor: "pointer", background: destaque ? "var(--bg-success-subtle)" : undefined }}>
+                      <tr onClick={() => toggleOpen(id)} className={"u-cur-pointer" + (destaque ? " u-bg-bg-success-subtle" : "")}>
                         <td className="u-ta-right u-ws-nowrap u-fw-600">
                           {r.rank != null ? fmtOrd(r.rank) : MUTED}<RankChange up={r.rank != null && r.rankPrev != null ? r.rankPrev - r.rank : null} className="fs-11 u-ml-4px" title={r.rankPrev != null ? `Mês anterior: ${fmtOrd(r.rankPrev)}` : undefined} />
                         </td>

@@ -226,7 +226,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                       {a.dob ? a.dob.slice(0, 4) : "—"}
                     </td>
                     <td className="r u-fw-700">{a.totalTop5}</td>
-                    <td className="r" style={{ color: a.championships > 0 ? "var(--accent)" : "var(--text-3)" }}>
+                    <td className={a.championships > 0 ? "r u-c-accent" : "r u-c-text-3"}>
                       {a.championships > 0 ? a.championships : "—"}
                     </td>
                     <td className="r">{a.podiums}</td>

@@ -3,18 +3,12 @@
  * Extraída de FPGPage.tsx
  */
 import React from "react";
-import { C } from "../utils/colors";
 import ExtLink from "./ExternalLink";
 
-type LinkGroup = { label: string; color: string; items: { name: string; url: string }[] };
+/** `cls`: a cor do grupo (.lk-wagr · .lk-sub16 · .lk-sub14 · .lk-sub12 no App.css). */
+type LinkGroup = { label: string; cls: string; items: { name: string; url: string }[] };
 
 function buildLinkGroups(links: Record<string, string>, escalao?: string | null): LinkGroup[] {
-  const ESC_COLORS: Record<string, string> = {
-    wagr:  "var(--accent)",
-    sub16: C.esc.sub16.bg,
-    sub14: C.esc.sub14.bg,
-    sub12: C.chartBlue,
-  };
   const LABELS: Record<string, string> = {
     draw_wagr_r1: "Draw R1", draw_wagr_r2: "Draw R2", draw_wagr_r3: "Draw R3",
     results_wagr: "Classificação",
@@ -45,7 +39,7 @@ function buildLinkGroups(links: Record<string, string>, escalao?: string | null)
     .filter(g => grouped[g]?.length)
     .map(g => ({
       label: GROUPLABELS[g] || g,
-      color: ESC_COLORS[g] || "var(--text-muted)",
+      cls: "lk-" + g,
       items: grouped[g],
     }));
 }
@@ -62,8 +56,7 @@ export function LinksBar({ links, escalao }: { links?: Record<string, string>; e
           <span className="label-caps c-muted u-mr-2px">{g.label}</span>
           {g.items.map(item => (
             <ExtLink key={item.name} href={item.url}
-              className="tourn-ext-link"
-              style={{ color: g.color, borderColor: g.color }}>
+              className={"tourn-ext-link " + g.cls}>
               {item.name} ↗
             </ExtLink>
           ))}

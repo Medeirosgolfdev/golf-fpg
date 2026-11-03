@@ -8,6 +8,7 @@
  * abre noutra janela e o menu do rato deixa copiar o endereço.
  */
 import React from "react";
+import { Tint } from "./DataStyle";
 
 interface SidebarCardProps {
   active: boolean;
@@ -29,7 +30,6 @@ interface SidebarCardProps {
 
 export default function SidebarCard({ active, accent, onSelect, href, name, nameExtra, course, pills, footer, date, right }: SidebarCardProps) {
   const className = "course-item side-card" + (active ? " active" : "");
-  const style = { "--side-accent": accent } as React.CSSProperties;
   const body = (
     <>
       <div className="side-card-name">
@@ -48,19 +48,19 @@ export default function SidebarCard({ active, accent, onSelect, href, name, name
     </>
   );
   if (href) return (
-    <a href={href} className={className} style={style}
+    <Tint as="a" href={href} className={className} bd={accent}
       onClick={e => {
         if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
         e.preventDefault();
         onSelect();
       }}>
       {body}
-    </a>
+    </Tint>
   );
   return (
-    <div role="button" tabIndex={0} className={className} style={style} onClick={onSelect}
+    <Tint as="div" role="button" tabIndex={0} className={className} bd={accent} onClick={onSelect}
       onKeyDown={e => { if (e.key === "Enter" || e.key === " ") onSelect(); }}>
       {body}
-    </div>
+    </Tint>
   );
 }

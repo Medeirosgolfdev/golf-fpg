@@ -188,8 +188,8 @@ function dataCells(v: CellView, has: { club: boolean; dob: boolean; sex: boolean
       <td className="u-ta-right u-fw-600">{v.hcp != null ? fmtHcp(v.hcp) : MUTED}</td>
       {has.sex && <td>{v.sex === "M" || v.sex === "F" ? <SexBadge sex={v.sex} /> : MUTED}</td>}
       {has.cat && <td>{v.cat ? (v.young ? <EscPill esc={v.cat} /> : <span className="muted fs-11">{v.cat}</span>) : MUTED}</td>}
-      {has.tot && <td style={{ textAlign: "right", color: v.tot ? undefined : "var(--text-muted)" }}>{v.tot || "—"}</td>}
-      {has.tot && <td style={{ textAlign: "right", color: v.ano ? "var(--color-good-dark)" : "var(--text-muted)", fontWeight: v.ano ? 600 : undefined }}>{v.ano || "—"}</td>}
+      {has.tot && <td className={"u-ta-right" + (v.tot ? "" : " u-c-text-muted")}>{v.tot || "—"}</td>}
+      {has.tot && <td className={"u-ta-right " + (v.ano ? "u-c-color-good-dark u-fw-600" : "u-c-text-muted")}>{v.ano || "—"}</td>}
       {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{v.hcpDate ? fmtDatePt(v.hcpDate) : MUTED}</td>}
     </>
   );
@@ -401,9 +401,8 @@ export function RFEGPlayersView() {
                   return (
                   <Fragment key={r.licencia}>
                   <tr
-                    className={"player-list-row" + (r._manuel ? " row-manuel" : "") + (isOpen ? " is-open" : "")}
+                    className={"player-list-row u-cur-pointer" + (r._manuel ? " row-manuel" : "") + (isOpen ? " is-open u-bg-bg-detail" : "")}
                     onClick={() => toggleExp(r.licencia)}
-                    style={{ cursor: "pointer", background: isOpen ? "var(--bg-detail)" : undefined }}
                     title="Ver os torneios e resultados deste jogador"
                   >
                     <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap">

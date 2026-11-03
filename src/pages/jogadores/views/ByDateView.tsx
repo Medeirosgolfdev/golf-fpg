@@ -18,7 +18,6 @@ import EmptyState from "../../../ui/EmptyState";
 import { ScorecardTable } from "../../../ui/ScorecardTable";
 import { CourseLink } from "../../../ui/jogadoresHelpers";
 import { EventInfo, effectivePill } from "../../../ui/eventInfo";
-import { scHostStyle } from "../shared";
 
 export default function ByDateView({ data, search }: {
   data: PlayerPageData; search: string;
@@ -109,7 +108,7 @@ export default function ByDateView({ data, search }: {
           const teeKey = r.teeKey || normKey(r.tee || "");
           const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
           return (
-            <div className="scroll-x" style={scHostStyle}>
+            <div className="scroll-x jg-sc-host">
               <ScorecardTable holes={holes} courseName={r.course} date={r.date} tee={r.tee || ""}
                 hi={r.hi} links={r._links} pill={effectivePill(r)} eclecticEntry={ecEntry} />
             </div>

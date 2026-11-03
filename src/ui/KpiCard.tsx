@@ -24,6 +24,7 @@
 import React from "react";
 import InfoIcon from "./InfoIcon";
 import { fmtSign } from "../utils/format";
+import { Tint } from "./DataStyle";
 
 interface KpiCardProps {
   label: React.ReactNode;
@@ -48,10 +49,8 @@ interface KpiCardProps {
   align?: "left" | "center";
   /** Classe extra no elemento raiz */
   className?: string;
-  /** Style inline no elemento raiz */
-  style?: React.CSSProperties;
-  /** Style inline no kpi-lbl */
-  labelStyle?: React.CSSProperties;
+  /** Classe extra no kpi-lbl */
+  labelClassName?: string;
   /** Clique no cartão inteiro (ex: KPI P&P abre a vista P&P). */
   onClick?: () => void;
   /** Tooltip nativo no elemento raiz. */
@@ -67,44 +66,37 @@ const SIZE_CLASS: Record<string, string> = {
 
 export default function KpiCard({
   label, value, sub, color, tip, delta, deltaLabel, pct,
-  size = "md", accentBorder, align, className, style, labelStyle, fill,
+  size = "md", accentBorder, align, className, labelClassName, fill,
   onClick, title,
 }: KpiCardProps) {
   const valClass = SIZE_CLASS[size] || "kpi-val";
-  const dColor = delta == null ? undefined
-    : delta < -0.05 ? "var(--color-good)"
-    : delta > 0.05 ? "var(--color-danger)"
-    : "var(--text-3)";
-  const fillColor = fill === "good" ? "var(--color-good)"
-    : fill === "danger" ? "var(--color-danger)" : null;
-  const fillStyle: React.CSSProperties | null = fillColor ? {
-    background: fill === "good" ? "var(--color-good-alpha)" : "var(--color-danger-alpha)",
-    borderColor: fillColor,
-  } : null;
-  const rootStyle: React.CSSProperties = {
-    ...(accentBorder ? { borderLeft: `4px solid ${accentBorder}` } : null),
-    ...(align === "center" || size === "xs" ? { alignItems: "center", textAlign: "center" } : null),
-    ...fillStyle,
-    ...style,
-  };
-  // Quando o cartão é preenchido, o valor herda a cor do preenchimento
-  // (a menos que uma cor explícita seja passada).
-  const valColor = color ?? fillColor ?? undefined;
+  const dCls = delta == null ? ""
+    : delta < -0.05 ? " u-c-color-good"
+    : delta > 0.05 ? " u-c-color-danger"
+    : " u-c-text-3";
+  // Classes (App.css): .kpi-fill-good/-danger pinta o cartão e o valor (a menos
+  // que venha `color`); .kpi-accent + `accentBorder` = borda-esquerda de 4px;
+  // .kpi-center centra. As cores que vêm de fora passam pelo Tint.
+  const rootCls = "kpi"
+    + (size === "xs" ? " kpi-xs" : "")
+    + (fill ? " kpi-fill-" + fill : "")
+    + (accentBorder ? " kpi-accent" : "")
+    + (align === "center" || size === "xs" ? " kpi-center" : "")
+    + (onClick ? " u-cur-pointer" : "")
+    + (className ? " " + className : "");
   return (
-    <div className={`kpi${size === "xs" ? " kpi-xs" : ""}${className ? " " + className : ""}`}
-      style={onClick ? { ...rootStyle, cursor: "pointer" } : rootStyle}
-      onClick={onClick} title={title}>
-      <div className="kpi-lbl" style={labelStyle}>
+    <Tint as="div" className={rootCls} bd={accentBorder} onClick={onClick} title={title}>
+      <div className={labelClassName ? "kpi-lbl " + labelClassName : "kpi-lbl"}>
         {label}{tip && <InfoIcon title={tip} />}
       </div>
-      <div className={valClass} style={valColor ? { color: valColor } : undefined}>{value}</div>
+      <Tint as="div" className={valClass} fg={color}>{value}</Tint>
       {delta != null && (
-        <div className="kpi-delta" style={{ color: dColor }}>
+        <div className={"kpi-delta" + dCls}>
           {fmtSign(delta, 1)} {deltaLabel ?? "vs média"}
         </div>
       )}
       {pct != null && <div className="kpi-sub">{(pct * 100).toFixed(1)}%</div>}
       {sub != null && <div className="kpi-sub">{sub}</div>}
-    </div>
+    </Tint>
   );
 }

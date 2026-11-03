@@ -589,7 +589,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
                         </span>
                       )}
                       {admissionsDiff.saidos.length > 0 && (
-                        <span style={{ color: "var(--color-warn)", marginLeft: admissionsDiff.novos.length > 0 ? 8 : 0 }}>
+                        <span className={"u-c-var-color-warn-e07b00" + (admissionsDiff.novos.length > 0 ? " u-ml-8px" : "")}>
                           −{admissionsDiff.saidos.length} desinscreveram-se: {admissionsDiff.saidos.map(p => p.nome).join(", ")}
                         </span>
                       )}

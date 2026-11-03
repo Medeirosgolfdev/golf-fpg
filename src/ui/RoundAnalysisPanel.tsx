@@ -10,15 +10,15 @@ import { analyzeRounds, type Insight } from "../utils/roundAnalysis";
 import Select from "./Select";
 import SectionTitle from "./SectionTitle";
 
-const TONE_COLOR: Record<Insight["tone"], string> = {
-  good: "var(--color-good)", bad: "var(--color-danger)", neutral: "var(--text-3)",
+const TONE_CLS: Record<Insight["tone"], string> = {
+  good: "u-c-color-good", bad: "u-c-color-danger", neutral: "u-c-text-3",
 };
 const TONE_ICON: Record<Insight["tone"], string> = { good: "▲", bad: "▼", neutral: "•" };
 
 function Line({ i }: { i: Insight }) {
   return (
     <li className="fs-13 u-d-flex u-gap-8px u-ai-baseline u-lh-1_45">
-      <span style={{ color: TONE_COLOR[i.tone], fontSize: "var(--fs-10)", flexShrink: 0, width: 10 }}>{TONE_ICON[i.tone]}</span>
+      <span className={"u-fs-fs-10 u-fsh-0 u-w-10px " + TONE_CLS[i.tone]}>{TONE_ICON[i.tone]}</span>
       <span>{i.text}</span>
     </li>
   );

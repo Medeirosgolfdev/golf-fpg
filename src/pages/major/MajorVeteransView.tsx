@@ -30,6 +30,7 @@ import { MUTED } from "../../ui/tableCells";
 import ShowMoreButton from "../../ui/ShowMoreButton";
 import Select from "../../ui/Select";
 import { toggleSet } from "../../utils/mathUtils";
+import { Tint } from "../../ui/DataStyle";
 
 interface VetPlayer {
   name: string;
@@ -149,12 +150,12 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
     setExpanded((prev) => toggleSet(prev, name));
 
   const chip = (s: string) => (
-    <span
+    <Tint
       key={s}
-      className="src-tag fs-11"
+      bg={sourceColors[s] ?? "var(--bg-neutral)"}
+      className={"src-tag fs-11 " + (sourceColors[s] ? "u-c-fff" : "u-c-text")}
       title={srcLabel(s)}
-      style={{ background: sourceColors[s] ?? "var(--bg-neutral)", color: sourceColors[s] ? "var(--text-on-color)" : "var(--text)" }}
-    >{srcLabel(s)}</span>
+    >{srcLabel(s)}</Tint>
   );
 
   return (
@@ -232,18 +233,15 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
                               {p.detail.map((id) => {
                                 const { source, year } = splitEntry(id);
                                 return (
-                                  <Link
-                                    key={id} to={`/major/${source}/${year}`}
-                                    className="fs-12"
-                                    style={{
-                                      textDecoration: "none", padding: "1px 8px", borderRadius: "var(--radius)",
-                                      border: `1px solid ${sourceColors[source] ?? "var(--border)"}`,
-                                      color: "var(--text)", whiteSpace: "nowrap",
-                                    }}
-                                    title={`Abrir ${srcLabel(source)} ${year.replace(":", " — etapa ")}`}
-                                  >
-                                    {srcLabel(source)} <b>{year.replace(":", " #")}</b>
-                                  </Link>
+                                  <Tint key={id} bd={sourceColors[source] ?? "var(--border)"} className="u-d-contents mvv-det">
+                                    <Link
+                                      to={`/major/${source}/${year}`}
+                                      className="fs-12 mvv-det-link"
+                                      title={`Abrir ${srcLabel(source)} ${year.replace(":", " — etapa ")}`}
+                                    >
+                                      {srcLabel(source)} <b>{year.replace(":", " #")}</b>
+                                    </Link>
+                                  </Tint>
                                 );
                               })}
                             </div>

@@ -17,9 +17,10 @@
  * PillBadge.tsx e tournamentPrimitives.tsx devem re-exportar daqui.
  */
 
-import React, { type CSSProperties } from "react";
+import React from "react";
 import { C } from "../utils/colors";
 import { MUTED } from "./tableCells";
+import { Tint } from "./DataStyle";
 
 /* ════════════════════════════════════════════════════════════
    ESTILOS — cores por série/escalão (as das pílulas estão em classes no App.css)
@@ -101,16 +102,15 @@ function shortClubFromField(clube?: string | null, ccode?: string | null): strin
 
 /** Base — wrapper que garante sempre "p p-sm" */
 export function Pill({
-  children, className = "", style, tourn = false, title,
+  children, className = "", tourn = false, title,
 }: {
   children: React.ReactNode;
   className?: string;
-  style?: CSSProperties;
   tourn?: boolean;
   title?: string;
 }) {
   return (
-    <span className={`p p-sm${tourn ? " p-tourn" : ""}${className ? " " + className : ""}`} style={style} title={title}>
+    <span className={`p p-sm${tourn ? " p-tourn" : ""}${className ? " " + className : ""}`} title={title}>
       {children}
     </span>
   );
@@ -159,9 +159,9 @@ export function EscPill({ esc, label }: { esc: string; /** Texto a mostrar, se n
   // 1) Termos espanhois (Alevín, etc.), Sub-N directo ou escalão adulto
   const cls = escClassOf(esc);
   if (cls) return <span className={`p p-sm ${cls}`}>{label ?? esc}</span>;
-  // 3) Fallback inline style
+  // 3) Fallback: cores do ESC_STYLE (pelo Tint)
   const s = ESC_STYLE[key] ?? ESC_STYLE.default;
-  return <span className="p p-sm" style={{ background: s.bg, color: s.color, borderColor: "transparent" }}>{label ?? esc}</span>;
+  return <Tint className="p p-sm u-border-color-transparent" bg={s.bg} fg={s.color}>{label ?? esc}</Tint>;
 }
 
 /** Circuito de origem de um torneio/jogador (FPG · USKids · Internacional) — Draws. */
@@ -278,9 +278,7 @@ export function PccPill({ pcc, round }: { pcc: number; round?: number }) {
     ? "PCC oficial da FPG: dia mais fácil do que o normal — o SD desta volta sobe cerca de 1"
     : `PCC oficial da FPG: dia mais difícil do que o normal — o SD desta volta desce cerca de ${pcc}`;
   return (
-    <span className="p p-sm p-tourn" title={t}
-      style={{ background: pcc < 0 ? C.pillPccNegBg : pcc === 1 ? C.pillPccPos1Bg : pcc === 2 ? C.pillPccPos2Bg : C.pillPccPos3Bg,
-               color: C.white, borderColor: "transparent" }}>
+    <span className={"p p-sm p-tourn p-pcc " + (pcc < 0 ? "p-pcc-neg" : pcc === 1 ? "p-pcc-pos1" : pcc === 2 ? "p-pcc-pos2" : "p-pcc-pos3")} title={t}>
       {round ? `R${round} ` : ""}{txt}
     </span>
   );
@@ -327,11 +325,7 @@ export function YearPill({ year }: { year: number | string | null | undefined })
   const idx = ((y % YEAR_PALETTE.length) + YEAR_PALETTE.length) % YEAR_PALETTE.length;
   const c = YEAR_PALETTE[idx];
   return (
-    <span className="p p-sm" style={{
-      background: c.bg,
-      color: c.fg,
-      border: "none",
-    }}>{y}</span>
+    <Tint className="p p-sm u-bd-none" bg={c.bg} fg={c.fg}>{y}</Tint>
   );
 }
 

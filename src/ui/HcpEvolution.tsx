@@ -23,6 +23,7 @@ import { HcpDelta, MUTED } from "./tableCells";
 import { toneClass } from "../utils/scoreDisplay";
 import ClearButton from "./ClearButton";
 import Select from "./Select";
+import { Tint } from "./DataStyle";
 
 export interface EvoPlayer {
   fed: string;
@@ -216,17 +217,12 @@ export default function HcpEvolution({ players, history, showChart = true }: {
           const isOn = focusSet.has(r.p.fed);
           const color = isOn ? colorFor(r.p.fed) : undefined;
           return (
-            <button key={r.p.fed} onClick={() => toggleFocus(r.p.fed)}
+            <Tint as="button" key={r.p.fed} onClick={() => toggleFocus(r.p.fed)}
               title={`${fmtHcp(r.m.start)} → ${fmtHcp(r.m.end)} (Δ ${fmtSign(r.m.delta, 1)})`}
-              style={{
-                padding: "3px 8px", fontSize: "var(--fs-11)", borderRadius: "var(--radius-sm)", cursor: "pointer",
-                background: isOn ? color + "22" : "var(--bg-muted)",
-                border: `1px solid ${isOn ? color : "var(--border)"}`,
-                color: isOn ? "var(--text-1)" : "var(--text-3)",
-                fontWeight: isOn ? 700 : 400,
-              }}>
+              className={isOn ? "hcp-evo-chip on" : "hcp-evo-chip"}
+              bg={color ? color + "22" : null} bd={color}>
               {r.p.name}
-            </button>
+            </Tint>
           );
         })}
         {focused.length > 0 && (
@@ -255,11 +251,10 @@ export default function HcpEvolution({ players, history, showChart = true }: {
               const on = showChart && focusSet.has(r.p.fed);
               return (
                 <tr key={r.p.fed} onClick={showChart ? () => toggleFocus(r.p.fed) : undefined}
-                  style={showChart ? { cursor: "pointer" } : undefined}
-                  className={on ? "cross-current" : ""}>
+                  className={(on ? "cross-current" : "") + (showChart ? " u-cur-pointer" : "")}>
                   <td className="r u-c-text-3">{i + 1}</td>
-                  <td style={{ fontWeight: on ? 700 : 500, whiteSpace: "nowrap" }}>
-                    {on && <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "var(--radius-xs)", background: colorFor(r.p.fed), marginRight: 6 }} />}
+                  <td className={on ? "u-fw-700 u-ws-nowrap" : "u-fw-500 u-ws-nowrap"}>
+                    {on && <Tint className="hcp-evo-dot" bg={colorFor(r.p.fed)} />}
                     {r.p.name}
                   </td>
                   <td>{r.p.sex ? <SexBadge sex={r.p.sex} /> : MUTED}</td>

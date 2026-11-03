@@ -123,11 +123,11 @@ export interface RankingCol<T> {
   /** Sentido do 1º clique (default: o da tabela). */
   firstDir?: "asc" | "desc";
   cell: (r: T) => React.ReactNode;
+  /** Classe do <td> (substitui a `className` da coluna nas células). */
   tdClassName?: string;
-  tdStyle?: React.CSSProperties;
 }
 
-export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, tieBreak, onRowClick, rowStyle, rowClassName, rowTitle, paged }: {
+export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, tieBreak, onRowClick, rowClassName, rowTitle, paged }: {
   rows: T[];
   cols: RankingCol<T>[];
   rowKey: (r: T) => string;
@@ -136,7 +136,6 @@ export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, t
   /** Desempate quando o valor da coluna é igual. */
   tieBreak?: (a: T, b: T) => number;
   onRowClick?: (r: T) => void;
-  rowStyle?: (r: T) => React.CSSProperties | undefined;
   /** Classes extra da linha (ex.: `row-manuel`, `row-selected`). */
   rowClassName?: (r: T) => string | undefined;
   rowTitle?: string;
@@ -172,10 +171,9 @@ export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, t
           </thead>
           <tbody>
             {shown.map((r) => (
-              <tr key={rowKey(r)} className={"player-list-row" + (rowClassName?.(r) ? " " + rowClassName(r) : "")} title={rowTitle}
-                onClick={onRowClick ? () => onRowClick(r) : undefined}
-                style={{ cursor: onRowClick ? "pointer" : undefined, ...rowStyle?.(r) }}>
-                {cols.map((c) => <td key={c.key} className={c.tdClassName ?? c.className} style={c.tdStyle}>{c.cell(r)}</td>)}
+              <tr key={rowKey(r)} className={"player-list-row" + (onRowClick ? " u-cur-pointer" : "") + (rowClassName?.(r) ? " " + rowClassName(r) : "")} title={rowTitle}
+                onClick={onRowClick ? () => onRowClick(r) : undefined}>
+                {cols.map((c) => <td key={c.key} className={c.tdClassName ?? c.className}>{c.cell(r)}</td>)}
               </tr>
             ))}
           </tbody>
@@ -266,7 +264,7 @@ export function RankingList<P extends RankedPlayer>({ players, title, meta, cols
           : <RankingTable rows={filtered} cols={cols} rowKey={rowKey} defaultSort={defaultSort} defaultDir={defaultDir}
               tieBreak={tieBreak} paged rowTitle="Ver histórico e stats deste jogador"
               onRowClick={(p) => navigate(playerHref(p))}
-              rowStyle={(p) => isPt(p) ? { background: "var(--accent-light, rgba(0,120,0,.06))" } : undefined} />}
+              rowClassName={(p) => isPt(p) ? "u-bg-accent-light" : undefined} />}
       </div>
     </KidsLinkCtx.Provider>
   );

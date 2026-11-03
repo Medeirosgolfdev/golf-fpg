@@ -7,6 +7,7 @@
 
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import { shortDate } from "../utils/format";
+import { Tint } from "./DataStyle";
 
 type Props = {
   date: string;
@@ -19,11 +20,8 @@ export default function TeeDate({ date, tee, hex }: Props) {
   const hx = hex || getTeeHex(tee);
   const fg = textOnColor(hx);
   return (
-    <span
-      className="tee-date"
-      style={{ background: hx, color: fg, border: teeBorder(hx) }}
-    >
+    <Tint className={teeBorder(hx) ? "tee-date tee-bd-claro" : "tee-date"} bg={hx} fg={fg}>
       {shortDate(date)}
-    </span>
+    </Tint>
   );
 }

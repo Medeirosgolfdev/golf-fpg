@@ -8,6 +8,7 @@
  * 03/11/2026: os painéis usam o ui/KpiCard directamente).
  */
 import SexBadge from "../../ui/SexBadge";
+import { Fill } from "../../ui/DataStyle";
 
 /** Largura percentual de uma barra relativa ao máximo (mín. 2% para ser visível). */
 export function barPct(v: number, max: number): string {
@@ -15,8 +16,8 @@ export function barPct(v: number, max: number): string {
 }
 
 /** Barra horizontal stacked M/F sobre fundo subtle. `widthPct` = largura da
- *  parte preenchida relativa ao máximo da série (usar barPct). Cores M/F nas
- *  classes .bg-male/.bg-female (tokens --badge-male/--badge-female); `lg` = 8px. */
+ *  parte preenchida relativa ao máximo da série (usar barPct). Cores M/F dos
+ *  tokens --badge-male/--badge-female (pelo `Fill`); `lg` = 8px. */
 export function MFBar({ m, f, widthPct, lg }: {
   m: number; f: number; widthPct: string; lg?: boolean;
 }) {
@@ -24,10 +25,10 @@ export function MFBar({ m, f, widthPct, lg }: {
   const mPct = total > 0 ? (m / total) * 100 : 0;
   return (
     <div className={lg ? "mf-bar mf-bar-lg" : "mf-bar"}>
-      <div className="u-d-flex u-h-100pc" style={{ width: widthPct }}>
-        <div className="bg-male" style={{ width: `${mPct}%` }} />
-        <div className="bg-female" style={{ width: `${100 - mPct}%` }} />
-      </div>
+      <Fill pct={widthPct} bg="transparent" className="u-d-flex u-h-100pc">
+        <Fill pct={mPct} bg="var(--badge-male)" />
+        <Fill pct={100 - mPct} bg="var(--badge-female)" />
+      </Fill>
     </div>
   );
 }
@@ -43,8 +44,8 @@ export function MFColumn({ m, f, barHeight, className }: {
   const fHeight = barHeight - mHeight;
   return (
     <div className={className ? `mf-col ${className}` : "mf-col"}>
-      {f > 0 && <div title={`${f} Feminino`} className="mf-seg bg-female" style={{ height: fHeight }} />}
-      {m > 0 && <div title={`${m} Masculino`} className="mf-seg bg-male" style={{ height: mHeight }} />}
+      {f > 0 && <Fill vertical pct={`${fHeight}px`} bg="var(--badge-female)" title={`${f} Feminino`} className="mf-seg" />}
+      {m > 0 && <Fill vertical pct={`${mHeight}px`} bg="var(--badge-male)" title={`${m} Masculino`} className="mf-seg" />}
     </div>
   );
 }

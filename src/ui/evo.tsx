@@ -60,15 +60,15 @@ export function makeEvoCols(evo: Map<string, EvoEntry>, evoYear?: string): Extra
       // assim é uma linha vertical contínua da tabela, em vez de um traço curto
       // à altura do texto, colado ao número e diferente em cada linha.
       header: evoYear || "Ant.", className: "ta-c fs-11 fw-600 lb-col-divider",
-      headerStyle: { width: 44, textAlign: "center" as const, padding: "0 3px" },
+      headerClassName: "u-w-44px u-ta-center u-p-0-3px",
       cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); return ev ? <span>{fmtSign(ev.otherValue)}</span> : MUTED; },
     },
     {
-      header: "Δ", className: "ta-c fs-11 fw-700", headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },
+      header: "Δ", className: "ta-c fs-11 fw-700", headerClassName: "u-w-34px u-ta-center u-p-0-3px",
       cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); if (!ev) return MUTED; return <ToPar v={ev.delta} kind="delta" />; },
     },
     {
-      header: "Percurso", className: "ta-c", headerStyle: { width: 140, textAlign: "center" as const, padding: "0 4px" },
+      header: "Percurso", className: "ta-c", headerClassName: "u-w-140px u-ta-center u-p-0-4px",
       cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); return ev ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} /> : <EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} />; },
     },
   ];

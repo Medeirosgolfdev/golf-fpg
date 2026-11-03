@@ -72,8 +72,8 @@ export interface ExtraColumn<R = MultiRoundRow & { _pos?: number | null }> {
   header: React.ReactNode;
   /** Classe CSS do th/td */
   className?: string;
-  /** Style do th */
-  headerStyle?: React.CSSProperties;
+  /** Classe extra só do th (largura, alinhamento, padding do cabeçalho). */
+  headerClassName?: string;
   /** Renderizar célula para cada linha */
   cell: (row: R, idx: number) => React.ReactNode;
   /** Valor para ordenar pela coluna (clique no cabeçalho). Sem ele a coluna não ordena. */

@@ -42,6 +42,7 @@ import SexSelect from "../../ui/SexSelect";
 import Select from "../../ui/Select";
 import NumberInput from "../../ui/NumberInput";
 import SectionTitle from "../../ui/SectionTitle";
+import { Tint } from "../../ui/DataStyle";
 
 
 /** Coerção segura para número — alguns campos do JSON vêm como string (ex: sd "14"). */
@@ -550,7 +551,7 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
             <tr key={m.tee.teeId + "|" + (m.dist ?? "") + "|" + (m.cr ?? "")}>
               <td><TeePill tee={m.tee} /></td>
               <td className="r mono">{m.dist ?? "–"}</td>
-              <td className="r mono" style={{ color: m.deltaHab != null && Math.abs(m.deltaHab) <= 200 ? "var(--color-good-dark)" : undefined }}>
+              <td className={"r mono" + (m.deltaHab != null && Math.abs(m.deltaHab) <= 200 ? " u-c-color-good-dark" : "")}>
                 {m.deltaHab != null && habitual != null ? (m.deltaHab > 0 ? "+" : "") + m.deltaHab.toFixed(0) : "–"}
               </td>
               <td className="r mono">{m.par || "–"}</td>
@@ -818,13 +819,17 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
           {teeA && teeB && (
             <div className="card u-bl-4px-solid-accent">
               <SectionTitle as="div" icon="🆚" right={<>
-                <Select value={teeA.tee.teeId} onChange={setTeeAId} style={{ border: `2px solid ${getTeeHex(teeA.tee.teeName, teeA.tee.scorecardMeta?.teeColor)}` }}>
-                  {metrics.map(m => <option key={m.tee.teeId} value={m.tee.teeId}>{m.tee.teeName}{m.dist != null ? ` (${m.dist} m)` : ""}</option>)}
-                </Select>
+                <Tint bd={getTeeHex(teeA.tee.teeName, teeA.tee.scorecardMeta?.teeColor)} className="u-d-contents taa-tee-sel">
+                  <Select value={teeA.tee.teeId} onChange={setTeeAId}>
+                    {metrics.map(m => <option key={m.tee.teeId} value={m.tee.teeId}>{m.tee.teeName}{m.dist != null ? ` (${m.dist} m)` : ""}</option>)}
+                  </Select>
+                </Tint>
                 <span className="muted">vs</span>
-                <Select value={teeB.tee.teeId} onChange={setTeeBId} style={{ border: `2px solid ${getTeeHex(teeB.tee.teeName, teeB.tee.scorecardMeta?.teeColor)}` }}>
-                  {metrics.map(m => <option key={m.tee.teeId} value={m.tee.teeId}>{m.tee.teeName}{m.dist != null ? ` (${m.dist} m)` : ""}</option>)}
-                </Select>
+                <Tint bd={getTeeHex(teeB.tee.teeName, teeB.tee.scorecardMeta?.teeColor)} className="u-d-contents taa-tee-sel">
+                  <Select value={teeB.tee.teeId} onChange={setTeeBId}>
+                    {metrics.map(m => <option key={m.tee.teeId} value={m.tee.teeId}>{m.tee.teeName}{m.dist != null ? ` (${m.dist} m)` : ""}</option>)}
+                  </Select>
+                </Tint>
               </>}>
                 Confronto de tees
               </SectionTitle>

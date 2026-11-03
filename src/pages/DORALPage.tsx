@@ -121,7 +121,7 @@ export function doralMajorDivision(entry: DoralEntry, evo: Map<string, EvoEntryD
   const evoCols: ExtraColumn<RowWithPos>[] | undefined = hasEvo ? [
     {
       header: "Ant.", className: "ta-l fs-11 fw-600 lb-col-divider",
-      headerStyle: { width: 72, textAlign: "left" as const, padding: "0 6px" },
+      headerClassName: "u-w-72px u-ta-left u-p-0-6px",
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
         if (!ev) return MUTED;
@@ -136,7 +136,7 @@ export function doralMajorDivision(entry: DoralEntry, evo: Map<string, EvoEntryD
       },
     },
     {
-      header: "Δ", className: "ta-l fs-11 fw-700", headerStyle: { width: 60, textAlign: "left" as const, padding: "0 6px" },
+      header: "Δ", className: "ta-l fs-11 fw-700", headerClassName: "u-w-60px u-ta-left u-p-0-6px",
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
         if (!ev) return MUTED;
@@ -149,7 +149,7 @@ export function doralMajorDivision(entry: DoralEntry, evo: Map<string, EvoEntryD
       },
     },
     {
-      header: "Percurso", className: "ta-l", headerStyle: { width: 160, textAlign: "left" as const, padding: "0 6px" },
+      header: "Percurso", className: "ta-l", headerClassName: "u-w-160px u-ta-left u-p-0-6px",
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
         return ev ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} prevPos={ev.prevPos} fieldSize={ev.fieldSize} /> : <span className="c-muted">novo</span>;

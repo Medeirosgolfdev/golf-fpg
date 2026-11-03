@@ -521,8 +521,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                     {items.map(m => {
                       const isThis = !!tournament && m.rx.test(tournament.name || "");
                       return (
-                        <span key={m.name} className="p p-sm"
-                          style={isThis ? { background: "var(--accent-light)", borderColor: "var(--accent)", fontWeight: 700 } : undefined}
+                        <span key={m.name} className={isThis ? "p p-sm om-prova-esta" : "p p-sm"}
                           title={isThis ? "É esta prova (ainda sem resultados publicados)."
                             : m.estado === "a-aguardar" ? `Jogou-se a ${shortDateSlash(m.date ?? undefined)} — à espera dos resultados.`
                             : m.date ? `Joga-se a ${shortDateSlash(m.date ?? undefined)}.` : undefined}>

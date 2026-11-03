@@ -293,13 +293,7 @@ function PainelResumo({ torneios, nossosByFed }: {
           {clubes.map(([c, d]) => (
             <button key={c}
               onClick={() => setClubesSel(prev => prev === c ? null : c)}
-              className="fs-11 fw-600"
-              style={{
-                cursor: "pointer", padding: "1px 8px", borderRadius: "var(--radius-lg)",
-                border: "1px solid var(--border)",
-                background: clubeSel === c ? "var(--accent)" : "var(--bg-muted)",
-                color: clubeSel === c ? "var(--text-on-color)" : "var(--text-1)",
-              }}>
+              className={clubeSel === c ? "fs-11 fw-600 insc-clube-btn active" : "fs-11 fw-600 insc-clube-btn"}>
               {c} {d.n}
             </button>
           ))}
@@ -446,13 +440,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
         </span>
       )}
       {t.lastFetched && (
-        <span className="fs-10 fw-700"
-          style={{
-            padding: "2px 7px", borderRadius: "var(--radius-lg)", whiteSpace: "nowrap",
-            background: t.fromCache ? "var(--bg-muted)" : "var(--bg-success-subtle)",
-            color:      t.fromCache ? "var(--text-muted)" : "var(--color-good-dark)",
-            border:     t.fromCache ? "1px solid var(--border)" : "1px solid var(--color-good)",
-          }}
+        <span className={t.fromCache ? "fs-10 fw-700 insc-fresh cache" : "fs-10 fw-700 insc-fresh"}
           title={t.fromCache
             ? `Cache estática (public/data/inscricoes_nacionais.json) de ${t.lastFetched}${t.lastChanged && t.lastChanged !== t.lastFetched ? " · alterado " + t.lastChanged : ""}`
             : `Dados frescos da FPG (scoring.fpg.pt/lists) às ${t.lastFetched}`}>

@@ -323,9 +323,9 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
           <div className="u-d-flex u-gap-12px u-fwr-wrap u-ai-center u-m-8px-0">
             <span className="muted fs-11">Drive {driveM} m · 2ª {secondM} m (editável no topo)</span>
             <span className="muted fs-11 u-d-inline-flex u-gap-10px u-ai-center u-fwr-wrap">
-              <span><Dot c="var(--color-good)" /> atacar</span>
-              <span><Dot c="var(--text-3)" /> neutro</span>
-              <span><Dot c="var(--color-danger)" /> defender</span>
+              <span><Dot tone="attack" /> atacar</span>
+              <span><Dot tone="neutral" /> neutro</span>
+              <span><Dot tone="defend" /> defender</span>
               <span><span className="u-d-inline-block u-minw-18px u-p-0-6px u-br-999px u-bg-accent u-c-fff u-fw-800 u-fs-fs-10 u-ta-center">SI</span> = recebe pancada</span>
             </span>
           </div>
@@ -349,7 +349,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
             </thead>
             <tbody>
               {planSorted.map(h => {
-                const c = h.tag === "attack" ? "var(--color-good)" : h.tag === "defend" ? "var(--color-danger)" : "var(--text-3)";
+                const tone = h.tag === "attack" ? "attack" : h.tag === "defend" ? "defend" : "neutral";
                 const tagL = h.tag === "attack" ? "Atacar" : h.tag === "defend" ? "Defender" : "Neutro";
                 return (
                   <tr key={h.hole}>
@@ -364,10 +364,10 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
                         {h.si ?? "–"}
                       </span>
                     </td>
-                    <td className="r u-fw-600" style={{ color: vsParColor(h.expStrokes, h.par) }}>{h.expStrokes != null ? h.expStrokes.toFixed(1) : "–"}</td>
-                    <td className="r" style={{ color: vsParColor(h.expJa, h.par) }}>{h.expJa != null ? h.expJa.toFixed(1) : "–"}</td>
-                    <td className="r" style={{ color: vsParColor(h.expPode, h.par) }}>{h.expPode != null ? h.expPode.toFixed(1) : "–"}</td>
-                    <td className="u-fw-700 u-ws-nowrap" style={{ color: c }} title={h.fieldVsPar != null ? `Field (edição anterior): ${fmtSign(h.fieldVsPar, 1)} vs par` : "Sem dados do field — alcance/heurística"}><Dot c={c} /> {tagL}</td>
+                    <td className={`r u-fw-600 ${vsParTone(h.expStrokes, h.par)}`}>{h.expStrokes != null ? h.expStrokes.toFixed(1) : "–"}</td>
+                    <td className={`r ${vsParTone(h.expJa, h.par)}`}>{h.expJa != null ? h.expJa.toFixed(1) : "–"}</td>
+                    <td className={`r ${vsParTone(h.expPode, h.par)}`}>{h.expPode != null ? h.expPode.toFixed(1) : "–"}</td>
+                    <td className={`u-fw-700 u-ws-nowrap ${PLAN_TONE[tone].c}`} title={h.fieldVsPar != null ? `Field (edição anterior): ${fmtSign(h.fieldVsPar, 1)} vs par` : "Sem dados do field — alcance/heurística"}><Dot tone={tone} /> {tagL}</td>
                     <td className="muted u-ws-nowrap">{h.note}</td>
                     {topField && topField.roundKeys.map((rk, ri) => {
                       const cell = topField.holes[h.hole - 1]?.[ri];
@@ -523,12 +523,20 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
   );
 }
 
-function vsParColor(v: number | null, par: number | null): string {
-  if (v == null || par == null) return "var(--text)";
-  return v < par - 0.05 ? "var(--color-good)" : v > par + 0.05 ? "var(--color-danger)" : "var(--text)";
+/** Classe da cor do valor face ao par (abaixo = verde, acima = vermelho). */
+function vsParTone(v: number | null, par: number | null): string {
+  if (v == null || par == null) return "u-c-text";
+  return v < par - 0.05 ? "u-c-color-good" : v > par + 0.05 ? "u-c-color-danger" : "u-c-text";
 }
 
-function Dot({ c }: { c: string }) {
-  return <span className="cor-dot" style={{ background: c }} />;
+/** Cor do plano do buraco: texto (`c`) e bolinha (`bg`). */
+const PLAN_TONE = {
+  attack: { c: "u-c-color-good", bg: "u-bg-color-good" },
+  neutral: { c: "u-c-text-3", bg: "u-bg-text-3" },
+  defend: { c: "u-c-color-danger", bg: "u-bg-color-danger" },
+} as const;
+
+function Dot({ tone }: { tone: keyof typeof PLAN_TONE }) {
+  return <span className={`cor-dot ${PLAN_TONE[tone].bg}`} />;
 }
 

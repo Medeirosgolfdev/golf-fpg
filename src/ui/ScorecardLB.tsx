@@ -709,8 +709,7 @@ export function ScorecardLB({
                 if (age == null || age < 0) return birthOf(p).idade;
                 const dob = fmtDobPt((p as any).dob);
                 return (
-                  <span className="p p-sm" title={dob ? `Nascido a ${dob}` : undefined}
-                    style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent", cursor: dob ? "help" : undefined }}>{age}a</span>
+                  <span className={"p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent" + (dob ? " u-cur-help" : "")} title={dob ? `Nascido a ${dob}` : undefined}>{age}a</span>
                 );
               })()}
             </td>

@@ -32,6 +32,7 @@ import {
 import ExtLink from "../ui/ExternalLink";
 import ErrorState from "../ui/ErrorState";
 import { ToggleChip } from "../ui/FilterField";
+import { Fill } from "../ui/DataStyle";
 import { toggleSet } from "../utils/mathUtils";
 import { isPtCountry } from "../utils/flagUtils";
 
@@ -744,7 +745,7 @@ export default function USKidsFieldPage() {
               </span>
             </div>
             <div className="u-h-4px u-br-radius-xs u-bg-border u-ov-hidden">
-              <div style={{ height:"100%", borderRadius:"var(--radius-xs)", width:`${pct}%`, background:"var(--accent)" }} />
+              <Fill pct={pct} className="u-h-100pc u-br-radius-xs" />
             </div>
           </div>
         )}
@@ -757,7 +758,7 @@ export default function USKidsFieldPage() {
       </>
     ) : null;
     return (
-      <div style={{ opacity: temConteudo ? 1 : 0.45 }}>
+      <div className={temConteudo ? undefined : "u-op-0_45"}>
         <TournSidebarItem
           t={tData}
           isActive={active}
@@ -780,7 +781,7 @@ export default function USKidsFieldPage() {
     <TabRow active={tab} onChange={handleTabChange} className="u-fsh-0"
       tabs={TABS.map(tb => ({ key: tb.id, label: tb.label, count: tb.badge ?? undefined }))} />
     <ToolbarSep />
-    <ToggleChip checked={filterManuel} onChange={setFilterManuel} label="★ Manuel" />
+    <ToggleChip checked={filterManuel} onChange={setFilterManuel} label="★ Manuel" manuel />
       {/* Categorias: vigiam-se todas, a lista mostra só as ligadas. Azul, para
           não se confundirem com o ★ Manuel. */}
       {mostrarChips && (<>

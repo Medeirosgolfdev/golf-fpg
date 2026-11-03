@@ -4,6 +4,7 @@
  * ficam esbatidas. O nome do tee e os números vão no tooltip.
  */
 import { getTeeHex } from "../utils/teeColors";
+import { Tint } from "./DataStyle";
 
 export interface TeeDot { key: string; name: string; title: string }
 
@@ -17,10 +18,9 @@ export default function TeeDots({ tees, active, onSelect }: {
         return (
           <button key={x.key} type="button" onClick={() => onSelect(x.key)}
             title={x.title} aria-label={x.name} aria-pressed={sel}
-            style={{ padding: 0, cursor: "pointer", width: 14, height: 14, borderRadius: "50%",
-              background: getTeeHex(x.name), border: "1px solid var(--border)",
-              boxShadow: sel ? "0 0 0 2px var(--bg-card), 0 0 0 3.5px var(--text-2)" : "none",
-              opacity: sel ? 1 : 0.55 }} />
+            className={sel ? "tee-dot-btn is-sel" : "tee-dot-btn"}>
+            <Tint className="tee-dot-btn-cor" bg={getTeeHex(x.name)} />
+          </button>
         );
       })}
     </span>

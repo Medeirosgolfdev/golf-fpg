@@ -19,6 +19,7 @@ import { historicExceptionalAdj, topRanks } from "../../../utils/whsCalc";
 import { courseDisplayName } from "../../../utils/courseAliases";
 import { MUTED } from "../../../ui/tableCells";
 import Select from "../../../ui/Select";
+import { Fill } from "../../../ui/DataStyle";
 
 export default function AnalysisView({ data }: { data: PlayerPageData }) {
   const [histPeriod, setHistPeriod] = useState(12);
@@ -248,10 +249,8 @@ function HistogramCard({ rounds, period, setPeriod }: {
             <div key={b.label} className="an-hist-row">
               <div className="an-hist-label">{b.label}</div>
               <div className="flex-1">
-                <div className="an-hist-bar" style={{
-                  width: `${bins.maxCount > 0 ? Math.max(4, (b.count / bins.maxCount) * 100) : 4}%`,
-                  background: b.color
-                }}>{b.count > 0 ? b.count : ""}</div>
+                <Fill className="an-hist-bar" bg={b.color}
+                  pct={bins.maxCount > 0 ? Math.max(4, (b.count / bins.maxCount) * 100) : 4}>{b.count > 0 ? b.count : ""}</Fill>
               </div>
             </div>
           ))}

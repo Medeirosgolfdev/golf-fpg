@@ -282,10 +282,7 @@ export default function TopClubesPanel({
               return (
                 <Fragment key={c.key}>
                   <tr
-                    style={{
-                      cursor: "pointer",
-                      background: isOpen ? "var(--bg-info-subtle, rgba(59,130,246,0.04))" : undefined,
-                    }}
+                    className={isOpen ? "u-cur-pointer u-bg-bg-info-subtle" : "u-cur-pointer"}
                     onClick={() => toggle(c.key)}
                     title={isOpen ? "Fechar detalhes" : "Ver atletas e títulos"}
                   >

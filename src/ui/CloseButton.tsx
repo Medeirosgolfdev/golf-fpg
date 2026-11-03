@@ -4,6 +4,8 @@
  * Calendário) usa-se `onColor`: o ✕ assenta na cor (`"light"` = cabeçalho claro,
  * com a cor do texto em `color`, que vem do evento).
  */
+import { Tint } from "./DataStyle";
+
 interface CloseButtonProps {
   onClick: () => void;
   title?: string;
@@ -18,9 +20,9 @@ interface CloseButtonProps {
 export default function CloseButton({ onClick, title = "Fechar", className, onColor, color }: CloseButtonProps) {
   const base = onColor ? "btn-round btn-round-close" + (onColor === "light" ? " on-light" : "") : "btn-round btn-round-sm btn-close";
   return (
-    <button type="button" className={base + (className ? " " + className : "")}
-      onClick={onClick} title={title} aria-label="Fechar" style={color ? { color } : undefined}>
+    <Tint as="button" type="button" fg={color} className={base + (className ? " " + className : "")}
+      onClick={onClick} title={title} aria-label="Fechar">
       ✕
-    </button>
+    </Tint>
   );
 }

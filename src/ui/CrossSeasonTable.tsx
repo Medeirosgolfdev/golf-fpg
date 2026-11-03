@@ -58,15 +58,14 @@ export interface SortThProps {
   on: (k: string) => void;
   className?: string;
   colSpan?: number;
-  style?: React.CSSProperties;
   /** Tooltip do cabeçalho (ex: explicar a métrica da coluna). */
   title?: string;
   children: React.ReactNode;
 }
 
-export function SortTh({ k, s, d, on, className, colSpan, style, title, children }: SortThProps) {
+export function SortTh({ k, s, d, on, className, colSpan, title, children }: SortThProps) {
   return (
-    <SortableHdr k={k} sortKey={s} sortDir={d} onSort={on} colSpan={colSpan} title={title} style={style} className={className}>
+    <SortableHdr k={k} sortKey={s} sortDir={d} onSort={on} colSpan={colSpan} title={title} className={className}>
       {children}
     </SortableHdr>
   );

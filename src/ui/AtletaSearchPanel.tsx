@@ -338,7 +338,7 @@ export default function AtletaSearchPanel({
                       {a.club || "—"}
                     </td>
                     <td className="r">{a.results.length}</td>
-                    <td className="r" style={{ color: a.golds > 0 ? "var(--accent)" : "var(--text-3)", fontWeight: a.golds > 0 ? 700 : 400 }}>
+                    <td className={a.golds > 0 ? "r u-c-accent u-fw-700" : "r u-c-text-3 u-fw-400"}>
                       {a.golds || "—"}
                     </td>
                     <td className="r">{a.top5 || "—"}</td>

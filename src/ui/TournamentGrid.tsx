@@ -10,18 +10,13 @@ import React, { useMemo } from "react";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import { fmtToPar, fmtHcp, shortDateSlash, escalaoAtDate } from "../utils/format";
 import { sdClassByHcp } from "../utils/scoreDisplay";
-import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
+import { CrossSeasonTable, SortTh as CSortTh } from "./CrossSeasonTable";
 import { useCompareSelection } from "./useCompareSelection";
 import EmptyState from "./EmptyState";
 import { EscPill } from "./PillBadge";
 import { isManuel, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import type { Sub12Row, EscLookup } from "./driveTypes";
 import { MUTED } from "./tableCells";
-
-// Wrapper que aceita style (não incluído nos props originais de SortTh)
-const CSortTh = _CSortTh as React.ComponentType<
-  React.ComponentProps<typeof _CSortTh> & { style?: React.CSSProperties }
->;
 
 function TournamentGrid({
   rows,

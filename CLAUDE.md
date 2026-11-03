@@ -172,11 +172,16 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
 - **Sexo: sempre `<SexBadge sex="M|F" />`**, nunca os símbolos ♂/♀.
 - **Trava do aspecto global** (30/10/2026, pedido dela: «todas as páginas
   parecidas e alimentadas por módulos globais»): `scripts/estilo-global.test.js`
-  falha se um `.tsx` ganhar `style={{}}`, cores hex, letra/cantos em número ou
-  uma `<table>` sem classe global (baseline por ficheiro; ficheiro novo = zero).
-  Usar as peças/classes globais (valores fixos soltos → utilitários `.u-*` no
-  fim do `App.css`, com os valores dos tokens; `style={{}}` só para o que vem
-  dos dados — cor do score, largura de barras, cor do tee); depois de arrumar,
+  falha se um `.tsx` ganhar um `style={…}` (qualquer — `{{…}}` ou variável), cores
+  hex, letra/cantos em número ou uma `<table>` sem classe global (baseline por
+  ficheiro; ficheiro novo = zero). **Desde 03/11/2026 o site tem ZERO estilos à
+  mão** (pedido dela: «queria 0 estilos à mão»): valores fixos → classes/utilitários
+  `.u-*` no fim do `App.css` (com os tokens); escolhas entre valores fixos →
+  className condicional; valores que vêm dos DADOS (cor do tee, cor de uma série,
+  largura de barra, nº de colunas, posição de um popup) → as peças de
+  `src/ui/DataStyle.tsx` — `Tint` (bg/fg/bd), `Fill` (barra), `Cols` (grelha),
+  `Place` (left/top/largura/altura máx.) — o ÚNICO sítio com `style`. Só ficam de
+  fora as imagens de partilha (`ui/overlay/`, `OverlayExport.tsx`). Depois de arrumar,
   `node scripts/estilo-global-baseline.js` aperta a trava (`--force` só para
   casos legítimos, ex. eixos dos gráficos).
 - **Cores só via `src/tokens.css`**; `colors.ts` espelha-os para JS. Excepções de

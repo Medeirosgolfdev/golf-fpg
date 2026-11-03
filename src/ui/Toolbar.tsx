@@ -19,12 +19,11 @@ import React from "react";
 interface ToolbarProps {
   children: React.ReactNode;
   className?: string;
-  style?: React.CSSProperties;
 }
 
-export function Toolbar({ children, className, style }: ToolbarProps) {
+export function Toolbar({ children, className }: ToolbarProps) {
   return (
-    <div className={`toolbar${className ? " " + className : ""}`} style={style}>
+    <div className={`toolbar${className ? " " + className : ""}`}>
       {children}
     </div>
   );

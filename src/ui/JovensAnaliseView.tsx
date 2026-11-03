@@ -37,6 +37,7 @@ import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
 import ShowMoreButton from "./ShowMoreButton";
 import SectionTitle from "./SectionTitle";
+import { Tint } from "./DataStyle";
 
 const ESC_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 24"];
 
@@ -66,20 +67,14 @@ function YearInEscBadge({ year, escalao }: { year: 1 | 2 | null; escalao?: strin
   const is1 = year === 1;
   const escKey = (escalao || "").toLowerCase().replace(/[\s-]/g, "");
   const useEscColor = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24"].includes(escKey);
+  // Cor do escalão (tokens --esc-*) quando há; senão o tom genérico de A1/A2 (.jav-yr-1/-2).
   return (
-    <span title={is1 ? "Primeiro ano do escalão (idade menor dos dois)" : "Segundo ano do escalão (idade maior dos dois)"}
-      className="fs-10 fw-700" style={{
-        marginRight: 4,
-        padding: "1px 5px",
-        borderRadius: "var(--radius)",
-        background: useEscColor ? `var(--esc-${escKey}-bg)` : (is1 ? "var(--bg-info-subtle)" : "var(--bg-success-subtle)"),
-        color: useEscColor ? `var(--esc-${escKey}-fg)` : (is1 ? "var(--accent)" : "var(--color-good-dark)"),
-        border: `1px solid ${useEscColor ? "transparent" : (is1 ? "var(--accent)" : "var(--color-good)")}`,
-        opacity: 0.75,
-        whiteSpace: "nowrap", letterSpacing: 0.3,
-      }}>
+    <Tint title={is1 ? "Primeiro ano do escalão (idade menor dos dois)" : "Segundo ano do escalão (idade maior dos dois)"}
+      className={useEscColor ? "fs-10 fw-700 jav-yr" : `fs-10 fw-700 jav-yr ${is1 ? "jav-yr-1" : "jav-yr-2"}`}
+      bg={useEscColor ? `var(--esc-${escKey}-bg)` : null}
+      fg={useEscColor ? `var(--esc-${escKey}-fg)` : null}>
       {is1 ? "A1" : "A2"}
-    </span>
+    </Tint>
   );
 }
 
@@ -127,16 +122,10 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
  *  Usado em 2 sub-rows por escalão: a primeira com campeão, a segunda com sub-campeão.
  *  O link FPG é mostrado APENAS na linha do campeão (está associado ao torneio). */
 function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boolean }) {
-  const yearBorder = { borderLeft: "1px solid var(--border-light)" };
   // Célula vazia (ano sem dados): fundo muito claro + texto centrado vertical e horizontal
   if (!ch || (!isChampion && !ch.runnerUp)) {
     return (
-      <td style={{
-        padding: "8px",
-        textAlign: "center", verticalAlign: "middle",
-        background: "var(--bg-stripe)",
-        ...yearBorder,
-      }}>
+      <td className="jav-cell-empty">
         {isChampion && (
           <span className="fs-11 muted u-fst-italic u-d-block u-ta-center">
             Sem jogadores
@@ -155,20 +144,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
   const isProvisional = !!ch.provisional;
 
   return (
-    <td className="fs-12" style={{
-      padding: "4px 8px", verticalAlign: "middle",
-      background: manuel
-        ? "var(--bg-success-subtle)"
-        : isProvisional
-          ? "var(--bg-info-subtle)"
-          : undefined,
-      borderLeft: manuel
-        ? "3px solid var(--color-good)"
-        : isProvisional
-          ? "3px dashed var(--accent)"
-          : "1px solid var(--border-light)",
-      minWidth: 200, maxWidth: 280,
-    }}>
+    <td className={`fs-12 jav-cell${manuel ? " jav-cell-me" : isProvisional ? " jav-cell-prov" : ""}`}>
       <div className="u-d-flex u-ai-center u-gap-8px">
         <div className="u-fl-1 u-minw-0">
           <PodiumLine p={p} columnEsc={ch.escalao} expectedPos={expectedPos} />
@@ -221,12 +197,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
 function PodiumLabelCell({ label, isChampion }: { label: string; isChampion: boolean }) {
   return (
     <td className="u-p-4px-8px u-va-middle u-pos-sticky u-left-90px u-bg-bg-card u-brd-1px-solid-border-light u-z-z-base">
-      <div style={{
-        display: "flex", flexDirection: "column", alignItems: "flex-start",
-        fontSize: "var(--fs-10)", lineHeight: 1.2, fontWeight: 700,
-        color: isChampion ? "var(--color-good-dark)" : "var(--text-2)",
-        textTransform: "uppercase", letterSpacing: 0.3, whiteSpace: "nowrap",
-      }}>
+      <div className={isChampion ? "jav-lbl jav-lbl-champ" : "jav-lbl"}>
         <span>{isChampion ? "🏆 CAMP." : "VICE C."}</span>
         <span className="u-op-0_7">{label}</span>
       </div>
@@ -512,22 +483,13 @@ function RegionChampionsBlock({
   const filledCount = [...km.values()].length;
 
   return (
-    <div style={{ marginBottom: showRegion ? 20 : 8 }}>
+    <div className={showRegion ? "u-mb-20px" : "u-mb-8px"}>
       {showRegion && (
         <button
           type="button"
           onClick={() => setOpen(o => !o)}
           aria-expanded={open}
-          className="fs-13 fw-600"
-          style={{
-            marginTop: 12, marginBottom: open ? 6 : 0,
-            padding: "5px 10px", borderRadius: "var(--radius)",
-            background: "var(--bg-muted)",
-            border: "1px solid var(--border-light)",
-            display: "inline-flex", alignItems: "center", gap: 8,
-            cursor: "pointer", textAlign: "left",
-            color: "var(--text)",
-          }}
+          className={open ? "fs-13 fw-600 jav-region-btn open" : "fs-13 fw-600 jav-region-btn"}
           title={open ? "Colapsar" : "Expandir"}
         >
           <span className="u-ff-font-mono u-fs-fs-11 u-op-0_7">
@@ -573,7 +535,7 @@ function RegionChampionsBlock({
               return (
                 <React.Fragment key={escKey}>
                   {/* Linha 1: CAMPEÃO. Escalão+sexo na 1ª coluna com rowSpan=2 */}
-                  <tr style={{ borderTop: newEscGroup ? "2px solid var(--border)" : "1px solid var(--border-light)" }}>
+                  <tr className={newEscGroup ? "jav-row-esc" : "jav-row"}>
                     <td rowSpan={2} className="u-p-6px-8px u-pos-sticky u-left-0 u-bg-bg-card u-va-middle u-w-90px u-minw-90px u-z-z-raised">
                       <span className="u-d-inline-flex u-ai-center u-gap-4px">
                         <EscPill esc={esc} />
@@ -760,18 +722,8 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
             .filter(a => a.pos != null && a.pos > 1)  // não duplicar com 🏆
             .sort((a, b) => (a.pos as number) - (b.pos as number))[0] || null;
           return (
-            <div key={y} style={{
-              border: "1px solid " + (played ? "var(--border)" : "var(--border-light)"),
-              borderRadius: "var(--radius-sm)",
-              padding: "3px 6px",
-              background: titles.length > 0
-                ? "var(--medal-gold-bg)"  // amber/dourado para anos com título (🏆)
-                : (played ? undefined : "var(--bg-muted)"),
-              opacity: played ? 1 : 0.6,
-              fontSize: "var(--fs-11)",
-              display: "inline-flex", alignItems: "center", gap: 3,
-              whiteSpace: "nowrap",
-            }}>
+            // Ano com título → dourado (.jav-yearchip.won); ano sem jogar → esbatido.
+            <div key={y} className={`jav-yearchip${played ? "" : " off"}${titles.length > 0 ? " won" : ""}`}>
               <span className="fw-700">{y}</span>
               {esc && <EscPill esc={esc} />}
               {yrIn && <YearInEscBadge year={yrIn} />}

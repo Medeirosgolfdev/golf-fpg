@@ -15,6 +15,7 @@ import ExpandArrow from "./ExpandArrow";
 import ExtLink from "./ExternalLink";
 import { MUTED } from "./tableCells";
 import { TIER } from "../data/rivalData";
+import { Tint } from "./DataStyle";
 import TrendArrow from "./TrendArrow";
 import TierLegend from "./TierLegend";
 import Select from "./Select";
@@ -549,7 +550,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
         <div className="u-d-flex u-gap-6px u-fwr-nowrap u-ox-auto u-mb-12px u-ai-stretch u-scrollbar-width-none">
           <KpiCard
             label="MANUEL — TOTAL"
-            labelStyle={{ color:"var(--color-info-dark)", fontSize: "var(--fs-9)", marginBottom:3 }}
+            labelClassName="u-c-var-color-info-dark-1e3a8a u-fs-fs-9 u-mb-3px"
             value={
               <div className="u-d-flex u-gap-8px u-ai-baseline">
                 <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span className="u-fs-fs-9 u-c-text-3 u-ml-2px">T</span></span>
@@ -622,9 +623,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                   const stars = weight >= 1.3 ? "★★★★★" : weight >= 1.1 ? "★★★★" : weight >= 0.9 ? "★★★" : weight >= 0.6 ? "★★" : weight >= 0.4 ? "★" : "½";
                   return (
                     <SortableHdr key={tid} k={"t:" + tid} sortKey={sort} sortDir={dir} onSort={toggleSort}
-                      className="rivais-th ta-c"
-                      style={{ minWidth:56, opacity: isFixed ? 1 : 0.85,
-                        color: isFuture ? "var(--color-info)" : undefined }}>
+                      className={"rivais-th ta-c u-minw-56px" + (isFixed ? "" : " u-op-0_85")}>
                       {url ? <ExtLink href={url} className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</ExtLink> : info.short}
                       {!isFuture && <div className="fs-10 fw-500 op-6 mt-1">{stars} {info.date}</div>}
                       {isFuture && <div className="fs-10 fw-500 mt-1 u-c-color-info">inscrito</div>}
@@ -689,10 +688,10 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       const st = ti ? TIER[ti] : null;
                       const tpStr = res.tp != null ? tgFmtSign(res.tp) : "—";
                       return (
-                        <td key={tid} className="ta-c" style={{ background: st?.bg || "transparent", padding:"5px 4px" }}>
-                          <div className="fw-700 fs-13" style={{ color: st?.c || "var(--text-3)" }}>{tpStr}</div>
+                        <Tint as="td" key={tid} className="ta-c tg-res-cell" bg={st?.bg || "transparent"}>
+                          <Tint as="div" className="fw-700 fs-13" fg={st?.c || "var(--text-3)"}>{tpStr}</Tint>
                           {res.p != null && <div className="fs-10 fw-600 c-text-3">#{res.p}</div>}
-                        </td>
+                        </Tint>
                       );
                     })}
                     <td className="ta-c u-bl-3px-solid-border-light u-p-4px-6px">

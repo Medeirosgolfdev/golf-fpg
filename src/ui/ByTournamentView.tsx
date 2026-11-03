@@ -8,6 +8,7 @@ import { GrossCell, CountPill, RoundNumericCells, MUTED } from "./tableCells";
 import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
+import { Tint } from "./DataStyle";
 import { ScorecardTable } from "./ScorecardTable";
 import { CourseLink } from "./jogadoresHelpers";
 
@@ -21,8 +22,8 @@ function TournRoundRow({ r, idx: _idx, data }: {
 
   return (
     <>
-      <tr className="roundRow" onClick={r.hasCard && holes ? () => setScOpen(v => !v) : undefined}
-        style={{ cursor: r.hasCard && holes ? "pointer" : "default" }}>
+      <tr onClick={r.hasCard && holes ? () => setScOpen(v => !v) : undefined}
+        className={r.hasCard && holes ? "roundRow u-cur-pointer" : "roundRow u-cur-default"}>
         <td>
           <TeeDate date={r.date} tee={r.tee || ""} />
           <span className="muted fs-10 ml-4">#{r.scoreId}</span>
@@ -96,7 +97,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
 
   return (
     <tr className="ec-round-row">
-      <td className="row-label"><span className="p" style={{ background: labelBg, color: labelFg }}>{label}</span></td>
+      <td className="row-label"><Tint className="p" bg={labelBg} fg={labelFg}>{label}</Tint></td>
       {Array.from({ length: hc }, (_, i) => {
         const gv = gross[i];
         const pv = par ? par[i] : null;

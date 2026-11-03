@@ -11,6 +11,7 @@ import React, { useMemo } from "react";
 import type { Tee } from "../data/types";
 import { getTeeHex } from "../utils/teeColors";
 import { buildReach, type HoleReach } from "../utils/reach";
+import { Tint } from "./DataStyle";
 
 
 export interface ReachTee { tee: Tee; label?: React.ReactNode }
@@ -90,11 +91,11 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
 
           {/* Metros por tee */}
           {data.map((d, i) => (
-            <tr key={"m" + i} style={{ background: d.hex + "1f" }}>
+            <Tint as="tr" key={"m" + i} bg={d.hex + "1f"}>
               <td className="hdt-lbl">{d.label} <span className="u-fw-600">(m)</span></td>
               {holes.map(h => <td key={h} className="r mono">{distAt(i, h) ?? "–"}</td>)}
               <td className="r mono u-fw-800">{totals[i] || "–"}</td>
-            </tr>
+            </Tint>
           ))}
 
           {/* Delta (so com 2 tees) */}
@@ -119,16 +120,16 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
           {/* Blocos por tee: apos drive + apos 2a pancada */}
           {data.map((d, i) => (
             <React.Fragment key={"blk" + i}>
-              <tr style={{ background: d.hex + "1f", borderTop: "2px solid var(--border)" }}>
+              <Tint as="tr" className="u-bt-2px-solid-border" bg={d.hex + "1f"}>
                 <td className="hdt-lbl">{d.label} <span className="u-fw-600">· após drive faltam (m)</span></td>
                 {holes.map(h => <td key={h} className="r">{appCell(byHole[i].get(h)?.afterDrive ?? null)}</td>)}
                 <td />
-              </tr>
-              <tr style={{ background: d.hex + "1f" }}>
+              </Tint>
+              <Tint as="tr" bg={d.hex + "1f"}>
                 <td className="hdt-lbl">{d.label} <span className="u-fw-600">· após 2ª pancada faltam (m)</span></td>
                 {holes.map(h => <td key={h} className="r">{appCell(byHole[i].get(h)?.after2 ?? null)}</td>)}
                 <td />
-              </tr>
+              </Tint>
               {two && i === 0 && (
                 <tr aria-hidden="true"><td colSpan={holes.length + 2} className="u-h-12px u-p-0 u-bd-none u-bg-transparent" /></tr>
               )}

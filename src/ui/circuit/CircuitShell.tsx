@@ -67,6 +67,7 @@ import SexSelect from "../SexSelect";
 import Select from "../Select";
 import { ToggleChip } from "../FilterField";
 import { toggleSet } from "../../utils/mathUtils";
+import { Tint } from "../DataStyle";
 
 // ── Helpers ─────────────────────────────────────────────────────────── //
 
@@ -627,7 +628,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
               da página — no fim da barra ficavam fora do ecrã (20/10/2026). O
               campo do torneio já está no cabeçalho do detalhe, não se repete aqui. */}
           {enabledToggles.map(t => (
-            <ToggleChip key={t} checked={toggles.has(t)} onChange={() => toggle(t)} label={TOGGLE_DEF[t].label} title={TOGGLE_DEF[t].title} />
+            <ToggleChip key={t} checked={toggles.has(t)} onChange={() => toggle(t)} label={TOGGLE_DEF[t].label} title={TOGGLE_DEF[t].title} manuel={t === "manuel"} />
           ))}
 
           {flt.search && (
@@ -953,22 +954,22 @@ function CircuitSidebar({
   return (
     <>
       {l1Mode === "none" && (
-        <SidebarSectionTitle dark color={config.color} textColor={config.textColor} letterSpacing="0.08em">
+        <SidebarSectionTitle dark color={config.color} textColor={config.textColor} className="u-ls-0_08em">
           {config.title}
         </SidebarSectionTitle>
       )}
       {groups.map(g => (
         <React.Fragment key={g.key || "_"}>
           {l1Mode !== "none" && (
-            <SidebarSectionTitle dark color={config.color} textColor={config.textColor} letterSpacing="0.08em">
+            <SidebarSectionTitle dark color={config.color} textColor={config.textColor} className="u-ls-0_08em">
               {g.key}
             </SidebarSectionTitle>
           )}
           {g.buckets.map(({ bk, label, items }) => (
             <React.Fragment key={bk}>
-              <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color ?? "var(--color-good-dark)", color: config.textColor ?? "var(--text-on-color)" }}>
+              <Tint as="div" className="sidebar-year-label cs-year-lbl" bg={config.color ?? "var(--color-good-dark)"} fg={config.textColor ?? "var(--text-on-color)"}>
                 {label}
-              </div>
+              </Tint>
               {items.map(e => {
                 const active = e.id === curId;
                 // Render custom (FPG reutiliza o TournSidebarItem) — assume o item
@@ -1019,7 +1020,7 @@ function CircuitSidebarItem({ e, config, active, onSelect }: { e: CircuitEntry; 
       date={dateStr ? `📅 ${dateStr}` : "—"}
       right={<>
         {srcLabel && (
-          <span className="chip u-fs-fs-9 u-p-1px-6px u-br-radius-lg" title={`Fonte: ${srcLabel}`} style={{ background: srcColor, color: srcColor ? textOnColor(srcColor) : undefined }}>{srcLabel}</span>
+          <Tint className="chip u-fs-fs-9 u-p-1px-6px u-br-radius-lg" title={`Fonte: ${srcLabel}`} bg={srcColor} fg={srcColor ? textOnColor(srcColor) : null}>{srcLabel}</Tint>
         )}
         {nP > 0 && <span className="u-fs-fs-11 u-c-text-muted">{nP} jog</span>}
       </>}

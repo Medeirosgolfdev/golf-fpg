@@ -33,6 +33,7 @@ import TierBadge from "../../ui/TierBadge";
 import { TrophyCount } from "../../ui/PillBadge";
 
 import ExtLink from "../../ui/ExternalLink";
+import { Tint } from "../../ui/DataStyle";
 import { kidsUrl } from "../../ui/KidsLink";
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -270,9 +271,9 @@ export default function RankingPage() {
               if (count === 0) return null;
               const c = getTierColors(t);
               return (
-                <span key={t} className="tier-pill tier-pill-sm" style={{ background: c.bg, color: c.fg }}>
+                <Tint key={t} className="tier-pill tier-pill-sm" bg={c.bg} fg={c.fg}>
                   {getTierLabel(t)} {count}
-                </span>
+                </Tint>
               );
             })}
           </div>

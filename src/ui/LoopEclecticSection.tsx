@@ -15,6 +15,7 @@ import { fmtToPar, shortDateSlash } from "../utils/format";
 import { toneClass } from "../utils/scoreDisplay";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
+import { Tint } from "./DataStyle";
 import ExpandArrow from "./ExpandArrow";
 import { MUTED } from "./tableCells";
 import SectionTitle from "./SectionTitle";
@@ -23,7 +24,6 @@ const soma = (g: (number | null)[]) => g.reduce<number>((s, v) => s + (v ?? 0), 
 const corPar = (d: number) => toneClass(d, { muted: true });
 /** Voltas (dias), não metades: uma volta de 18 num 9 jogado 2× conta uma vez. */
 const nVoltas = (t: LoopTee) => new Set(t.rounds.map(r => r.scoreId)).size;
-const semBorda = { background: "none", border: "none", padding: 0, cursor: "pointer" } as const;
 
 function TotalCel({ g, pars }: { g: (number | null)[]; pars: readonly number[] }) {
   const gt = soma(g), pt = g.reduce<number>((s, v, i) => s + (v != null ? pars[i] : 0), 0);
@@ -52,7 +52,7 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
         <span className="muted">· Eclético</span>
         <span className="fw-700">{t.total ?? "–"}</span>
         {t.total != null && <span className={`fw-700 ${corPar(t.total - parTot)}`}>{fmtToPar(t.total - parTot)}</span>}
-        <button type="button" className="fs-12" onClick={() => setAberto(v => !v)} style={{ ...semBorda, color: "var(--accent)" }}>
+        <button type="button" className="fs-12 lec-toggle" onClick={() => setAberto(v => !v)}>
           <ExpandArrow open={aberto} /> {nVoltas(t)} volta{nVoltas(t) === 1 ? "" : "s"}
         </button>
         <TeeDots active={t.teeKey} onSelect={setTeeKey}
@@ -101,7 +101,7 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
             {aberto && t.rounds.map(r => (
               <tr key={`${r.scoreId}|${r.g.join()}`} className="ec-round-row">
                 <td className="row-label">
-                  <span className="p p-sm" style={{ background: hx, color: fg }}>{shortDateSlash(r.date, true)}</span>
+                  <Tint className="p p-sm" bg={hx} fg={fg}>{shortDateSlash(r.date, true)}</Tint>
                 </td>
                 {r.g.map((v, i) => <td key={i}><ScoreCircle gross={v} par={pars[i]} empty="dot" /></td>)}
                 <TotalCel g={r.g} pars={pars} />

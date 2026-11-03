@@ -45,6 +45,7 @@ import SearchInput from "../ui/SearchInput";
 import ErrorState from "../ui/ErrorState";
 import { MUTED } from "../ui/tableCells";
 import SectionTitle from "../ui/SectionTitle";
+import { Fill } from "../ui/DataStyle";
 
 // ── Tipos ─────────────────────────────────────────────────────────────
 
@@ -262,15 +263,15 @@ function RondaPill({ n }: { n: number }) {
 
 // Medalha para os 3 companheiros com mais rondas em conjunto
 
-// Resultado do Manuel face ao companheiro numa ronda (cor do ponto)
-function h2hDot(manuel: Score, comp: Score): { res: "W" | "D" | "L"; color: string; title: string } | null {
+// Resultado do Manuel face ao companheiro numa ronda (`cls` = cor do ponto)
+function h2hDot(manuel: Score, comp: Score): { res: "W" | "D" | "L"; cls: string; title: string } | null {
   if (!manuel || !comp) return null;
   const a = manuel.toPar ?? manuel.gross;
   const b = comp.toPar ?? comp.gross;
   if (a == null || b == null) return null;
-  if (a < b) return { res: "W", color: "var(--color-good)", title: "Manuel melhor nesta ronda" };
-  if (a > b) return { res: "L", color: "var(--color-danger)", title: "Companheiro melhor nesta ronda" };
-  return { res: "D", color: "var(--text-muted)", title: "Empate nesta ronda" };
+  if (a < b) return { res: "W", cls: "u-bg-color-good", title: "Manuel melhor nesta ronda" };
+  if (a > b) return { res: "L", cls: "u-bg-color-danger", title: "Companheiro melhor nesta ronda" };
+  return { res: "D", cls: "u-bg-text-muted", title: "Empate nesta ronda" };
 }
 
 // Registo do Manuel face a um companheiro (só rondas com ambos os scores)
@@ -394,13 +395,14 @@ function linkTorneioFPG(torneioId: string, nome?: string | null): string {
 // e "Excluídos". Cada item é clicável e abre a página do torneio na FPGPage.
 function TorneiosList({
   titulo,
-  cor,
+  corCls,
   items,
   emptyText,
   defaultOpen = true,
 }: {
   titulo: string;
-  cor: string;
+  /** Classe da cor do ponto (u-bg-*). */
+  corCls: string;
   items: TorneioEntry[];
   emptyText: string;
   defaultOpen?: boolean;
@@ -416,7 +418,7 @@ function TorneiosList({
         <span className="u-c-text-3 u-fs-fs-11">
           <ExpandArrow open={open} />
         </span>
-        <span className="cor-dot cor-dot-9" style={{ background: cor }} />
+        <span className={`cor-dot cor-dot-9 ${corCls}`} />
         <span className="u-tt-uppercase u-ls-0_03em">{titulo}</span>
         <span className="chip ml-auto u-fw-700">
           {items.length}
@@ -548,7 +550,7 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
                               )}
                             </span>
                             {dot && (
-                              <span title={dot.title} className="cor-dot" style={{ background: dot.color }} />
+                              <span title={dot.title} className={`cor-dot ${dot.cls}`} />
                             )}
                             <span className="muted u-fvn-tabular-nums u-fsh-0">
                               {fmtScore(g.score)}
@@ -1103,14 +1105,14 @@ export default function DrawsPage() {
                             {(() => {
                               const rec = h2hRecord(row.rondas);
                               if (rec.played === 0) return null;
-                              const seg = (n: number, color: string, label: string) =>
-                                n > 0 ? <span title={`${n} ${label}`} style={{ flex: n, background: color }} /> : null;
+                              const seg = (n: number, cls: string, label: string) =>
+                                n > 0 ? <Fill as="span" pct={n / rec.played * 100} title={`${n} ${label}`} className={cls} /> : null;
                               return (
                                 <div className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-mb-10px">
                                   <span className="u-d-flex u-h-8px u-w-160px u-br-radius-sm u-ov-hidden u-bg-bg-hover">
-                                    {seg(rec.w, "var(--color-good)", "vitórias do Manuel")}
-                                    {seg(rec.d, "var(--text-muted)", "empates")}
-                                    {seg(rec.l, "var(--color-danger)", "vitórias do companheiro")}
+                                    {seg(rec.w, "u-bg-color-good", "vitórias do Manuel")}
+                                    {seg(rec.d, "u-bg-text-muted", "empates")}
+                                    {seg(rec.l, "u-bg-color-danger", "vitórias do companheiro")}
                                   </span>
                                   <span className="u-fs-fs-12 u-fw-700 u-fvn-tabular-nums">
                                     <span className="u-c-color-good">{rec.w}V</span>
@@ -1132,9 +1134,9 @@ export default function DrawsPage() {
                                 // Só o score do Manuel leva cor (verde ganhou / vermelho
                                 // perdeu); o do companheiro fica neutro — a cor aparece
                                 // sempre na mesma posição, leitura consistente
-                                const manuelCor = dot?.res === "W" ? "var(--color-good)"
-                                  : dot?.res === "L" ? "var(--color-danger)"
-                                  : "var(--text)";
+                                const manuelCls = dot?.res === "W" ? "u-c-color-good"
+                                  : dot?.res === "L" ? "u-c-color-danger"
+                                  : "u-c-text";
                                 return (
                                   <div
                                     key={i}
@@ -1158,9 +1160,9 @@ export default function DrawsPage() {
                                     </span>
                                     <span className="u-d-inline-flex u-ai-center u-gap-8px u-fsh-0 u-fvn-tabular-nums">
                                       {dot && (
-                                        <span title={dot.title} className="cor-dot" style={{ background: dot.color }} />
+                                        <span title={dot.title} className={`cor-dot ${dot.cls}`} />
                                       )}
-                                      <span className="u-fw-700 u-minw-60px u-ta-right" style={{ color: manuelCor }}>
+                                      <span className={`u-fw-700 u-minw-60px u-ta-right ${manuelCls}`}>
                                         {fmtScore(r.manuelScore)}
                                       </span>
                                       <span className="muted u-fs-fs-11">vs</span>
@@ -1209,14 +1211,14 @@ export default function DrawsPage() {
               </div>
               <TorneiosList
                 titulo="Com draw scrapado"
-                cor="var(--color-good)"
+                corCls="u-bg-color-good"
                 items={listasFpgTorneios.com}
                 emptyText="Nenhum torneio com draw."
                 defaultOpen={false}
               />
               <TorneiosList
                 titulo="Sem draw — passíveis de scrapar"
-                cor="var(--color-warn)"
+                corCls="u-bg-color-warn"
                 items={listasFpgTorneios.sem}
                 emptyText="Todos os torneios têm draw."
                 defaultOpen={true}
@@ -1224,7 +1226,7 @@ export default function DrawsPage() {
               {listasFpgTorneios.skip.length > 0 && (
                 <TorneiosList
                   titulo={`Excluídos (ccode ${(listasFpgTorneios.skipCcodes || []).join(", ") || "?"})`}
-                  cor="var(--text-muted)"
+                  corCls="u-bg-text-muted"
                   items={listasFpgTorneios.skip}
                   emptyText="Nada excluído."
                   defaultOpen={false}

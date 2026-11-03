@@ -4,12 +4,13 @@
  * Kids 2 e o Scout dos circuitos.
  */
 import { getTierColors, getTierLabel, type TierKey } from "../pages/kids2/juniorCalc";
+import { Tint } from "./DataStyle";
 
 export default function TierBadge({ tier, title }: { tier: TierKey; title?: string }) {
   const c = getTierColors(tier);
   return (
-    <span className="tier-pill tier-pill-sm" style={{ background: c.bg, color: c.fg }} title={title}>
+    <Tint className="tier-pill tier-pill-sm" bg={c.bg} fg={c.fg} title={title}>
       {getTierLabel(tier)}
-    </span>
+    </Tint>
   );
 }

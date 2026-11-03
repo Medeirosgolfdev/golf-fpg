@@ -1095,22 +1095,19 @@ export function RoundSimulator({
   const validResults = simResults?.results.filter((r) => r.valid) ?? [];
   const finalHI = simResults?.finalHI ?? currentHI;
   const finalDelta = finalHI - currentHI;
-  const finalDColor =
-    finalDelta < -0.05
-      ? "var(--color-good)"
-      : finalDelta > 0.05
-        ? "var(--color-danger)"
-        : "var(--text-2)";
+  /** Cor de uma variação do HI: verde desce, vermelho sobe, `flat` (classe) se ~0. */
+  const deltaC = (d: number, flat: string) =>
+    d < -0.05 ? "u-c-color-good" : d > 0.05 ? "u-c-color-danger" : flat;
+  /** Tom (para as classes .is-good / .is-bad) de uma variação do HI. */
+  const deltaTone = (d: number) => (d < -0.05 ? " is-good" : d > 0.05 ? " is-bad" : "");
+  const finalTone = deltaTone(finalDelta);
   const qtyCalcCur = whsQtyCalc(initialPool.length);
 
   // Cor da borda esquerda do card de ronda
-  function roundBorderColor(result?: RoundResult): string {
-    if (!result?.valid) return "var(--border)";
-    if (result.exceptionalAdj !== 0)
-      return "var(--color-warn, #e07b00)";
-    if (result.delta < -0.05) return "var(--color-good)";
-    if (result.delta > 0.05) return "var(--color-danger)";
-    return "var(--border)";
+  function roundTone(result?: RoundResult): string {
+    if (!result?.valid) return "";
+    if (result.exceptionalAdj !== 0) return " is-exc";
+    return deltaTone(result.delta);
   }
 
   const inner = (
@@ -1198,39 +1195,12 @@ export function RoundSimulator({
           const computedSdRaw = preview ? (is9 ? preview.sd9 : preview.sd) : null;
           const exp9Preview = preview?.exp9 ?? null;
           const computedSd18 = preview?.sd ?? null;
-          const borderClr = roundBorderColor(result);
-
           return (
-            <div
-              key={round.id}
-              style={{
-                border: "1px solid var(--border)",
-                borderLeft: `4px solid ${borderClr}`,
-                borderRadius: "var(--radius-xl)",
-                background: "var(--bg-card)",
-                padding: "10px 14px",
-                transition: "border-color .15s",
-              }}
-            >
+            <div key={round.id} className={"rs-card" + roundTone(result)}>
               {/* Cabeçalho */}
-              <div
-                className="gap-8 mb-10 u-d-flex u-ai-center"
-
-              >
-                {/* Número */}
-                <span
-                  className="rsim-num"
-                  style={{
-                    background:
-                      borderClr === "var(--border)"
-                        ? "var(--bg-detail)"
-                        : borderClr,
-                    color:
-                      borderClr === "var(--border)"
-                        ? "var(--text-2)"
-                        : "#fff",
-                  }}
-                >
+              <div className="gap-8 mb-10 u-d-flex u-ai-center">
+                {/* Número (cor do cartão: .rs-card.is-*) */}
+                <span className="rsim-num">
                   {idx + 1}
                 </span>
 
@@ -1269,19 +1239,7 @@ export function RoundSimulator({
                     className="u-ml-auto u-d-flex u-ai-center u-gap-6px"
                   >
                     {result.exceptionalAdj !== 0 && (
-                      <span
-                        style={{
-                          fontSize: "var(--fs-10)",
-                          fontWeight: 700,
-                          color: "#fff",
-                          borderRadius: "var(--radius-sm)",
-                          padding: "2px 6px",
-                          background:
-                            result.exceptionalAdj === -2
-                              ? "var(--color-danger)"
-                              : "var(--color-warn, #e07b00)",
-                        }}
-                      >
+                      <span className={result.exceptionalAdj === -2 ? "rs-exc-badge is-2" : "rs-exc-badge"}>
                         ⚡{" "}
                         {result.exceptionalAdj === -2
                           ? "−2"
@@ -1301,33 +1259,10 @@ export function RoundSimulator({
                     <span className="u-fs-fs-11 u-c-text-3">
                       HCP
                     </span>
-                    <span
-                      style={{
-                        fontSize: "var(--fs-18)",
-                        fontWeight: 800,
-                        lineHeight: 1,
-                        color:
-                          result.delta < -0.05
-                            ? "var(--color-good)"
-                            : result.delta > 0.05
-                              ? "var(--color-danger)"
-                              : "var(--text-1)",
-                      }}
-                    >
+                    <span className={"u-fs-fs-18 u-fw-800 u-lh-1 " + deltaC(result.delta, "u-c-text-1")}>
                       {fmtHcp(result.hiAfterRound)}
                     </span>
-                    <span
-                      style={{
-                        fontSize: "var(--fs-12)",
-                        fontWeight: 700,
-                        color:
-                          result.delta < -0.05
-                            ? "var(--color-good)"
-                            : result.delta > 0.05
-                              ? "var(--color-danger)"
-                              : "var(--text-3)",
-                      }}
-                    >
+                    <span className={"u-fs-fs-12 u-fw-700 " + deltaC(result.delta, "u-c-text-3")}>
                       ({result.delta > 0 ? "+" : ""}
                       {result.delta.toFixed(1)})
                     </span>
@@ -1553,22 +1488,7 @@ export function RoundSimulator({
 
               {/* Exceptional score notice */}
               {result?.valid && result.exceptionalAdj !== 0 && (
-                <div
-                  style={{
-                    marginTop: 8,
-                    padding: "6px 10px",
-                    borderRadius: "var(--radius)",
-                    fontSize: "var(--fs-11)",
-                    lineHeight: 1.6,
-                    background:
-                      "var(--bg-warn, rgba(224,123,0,0.08))",
-                    border: `1px solid ${result.exceptionalAdj === -2 ? "var(--color-danger)" : "var(--color-warn, #e07b00)"}`,
-                    color:
-                      result.exceptionalAdj === -2
-                        ? "var(--color-danger)"
-                        : "var(--color-warn, #e07b00)",
-                  }}
-                >
+                <div className={result.exceptionalAdj === -2 ? "rs-exc-note is-2" : "rs-exc-note"}>
                   ⚡ <b>Exceptional Score:</b> SD{" "}
                   {result.sd!.toFixed(1)} é <b>
                     {result.exceptionalDiff.toFixed(1)} pancadas
@@ -1620,23 +1540,7 @@ export function RoundSimulator({
                 →
               </div>
               {/* Ronda */}
-              <div
-                style={{
-                  padding: "10px 14px",
-                  textAlign: "center",
-                  minWidth: 90,
-                  background:
-                    r.delta < -0.05
-                      ? "rgba(34,197,94,0.08)"
-                      : r.delta > 0.05
-                        ? "rgba(239,68,68,0.08)"
-                        : "var(--bg-card)",
-                  borderLeft: "1px solid var(--border)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
+              <div className={"rs-tl-round" + deltaTone(r.delta)}>
                 <FilterField label={<>
                   Ronda {i + 1}
                   {is9hMode(r.holesMode)
@@ -1646,34 +1550,10 @@ export function RoundSimulator({
                     : ""}
                   {r.exceptionalAdj !== 0 ? " ⚡" : ""}
                 </>}>
-                <div
-                  style={{
-                    fontSize: "var(--fs-20)",
-                    fontWeight: 900,
-                    lineHeight: 1,
-                    color:
-                      r.delta < -0.05
-                        ? "var(--color-good)"
-                        : r.delta > 0.05
-                          ? "var(--color-danger)"
-                          : "var(--text-1)",
-                  }}
-                >
+                <div className={"u-fs-fs-20 u-fw-900 u-lh-1 " + deltaC(r.delta, "u-c-text-1")}>
                   {fmtHcp(r.hiAfterRound)}
                 </div>
-                <div
-                  style={{
-                    fontSize: "var(--fs-11)",
-                    fontWeight: 700,
-                    color:
-                      r.delta < -0.05
-                        ? "var(--color-good)"
-                        : r.delta > 0.05
-                          ? "var(--color-danger)"
-                          : "var(--text-3)",
-                    marginTop: 2,
-                  }}
-                >
+                <div className={"u-fs-fs-11 u-fw-700 u-mt-2px " + deltaC(r.delta, "u-c-text-3")}>
                   {fmtSign(r.delta, 1)}
                 </div>
                 </FilterField>
@@ -1689,33 +1569,12 @@ export function RoundSimulator({
               >
                 ═
               </div>
-              <div
-                style={{
-                  padding: "10px 16px",
-                  textAlign: "center",
-                  minWidth: 90,
-                  background: "var(--bg-detail)",
-                  borderLeft: `3px solid ${finalDColor}`,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
+              <div className={"rs-tl-final" + finalTone}>
                 <FilterField label="Final">
-                <div
-                  className="fw-900"
-                  style={{
-                    fontSize: "var(--fs-24)",
-                    lineHeight: 1,
-                    color: finalDColor,
-                  }}
-                >
+                <div className={"fw-900 u-fs-fs-24 u-lh-1 " + deltaC(finalDelta, "u-c-text-2")}>
                   {fmtHcp(finalHI)}
                 </div>
-                <div
-                  className="fs-11 fw-700"
-                  style={{ color: finalDColor, marginTop: 2 }}
-                >
+                <div className={"fs-11 fw-700 u-mt-2px " + deltaC(finalDelta, "u-c-text-2")}>
                   {fmtSign(finalDelta, 1)} total
                 </div>
                 </FilterField>
@@ -1792,20 +1651,14 @@ export function RoundSimulator({
               </thead>
               <tbody>
                 {impactRows.map((row) => {
-                  const dc =
-                    row.delta < -0.05
-                      ? "var(--color-good)"
-                      : row.delta > 0.05
-                        ? "var(--color-danger)"
-                        : "var(--text-3)";
+                  const dc = deltaC(row.delta, "u-c-text-3");
                   const hiRef =
                     simResults!.results[grossTable.roundIdx]
                       ?.hiBeforeRound ?? currentHI;
                   return (
                     <tr
                       key={row.gross}
-                      className={row.isEntered ? "rsim-entered" : row.entersTop ? "rsim-toprow" : undefined}
-                      style={{ opacity: row.delta > 0.7 ? 0.55 : 1 }}
+                      className={[row.isEntered ? "rsim-entered" : row.entersTop ? "rsim-toprow" : "", row.delta > 0.7 ? "u-op-0_55" : ""].filter(Boolean).join(" ") || undefined}
                     >
                       <td className="r fw-700">
                         {row.gross}
@@ -1838,10 +1691,10 @@ export function RoundSimulator({
                           <SDPill sd={row.sd} hcp={hiRef} size="md" />
                         </span>
                       </td>
-                      <td className="r fw-700" style={{ color: dc }}>
+                      <td className={"r fw-700 " + dc}>
                         {fmtHcp(row.newHI)}
                       </td>
-                      <td className="r fw-700" style={{ color: dc }}>
+                      <td className={"r fw-700 " + dc}>
                         {fmtSign(row.delta, 1)}
                       </td>
                       <td className="fs-11">
@@ -1915,15 +1768,7 @@ export function RoundSimulator({
                   ? validResults.find((x) => x.roundId === entry.eid)
                   : null;
                 return (
-                  <tr
-                    key={entry.eid + i}
-                    style={{
-                      background: entry.isSimulated
-                        ? "var(--bg-success)"
-                        : undefined,
-                      fontWeight: entry.isSimulated ? 600 : undefined,
-                    }}
-                  >
+                  <tr key={entry.eid + i} className={entry.isSimulated ? "u-bg-bg-success u-fw-600" : undefined}>
                     <td
                       className="r u-fs-fs-11 u-fw-700 u-c-text-2"
 

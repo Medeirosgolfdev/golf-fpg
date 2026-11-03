@@ -16,6 +16,7 @@ import { FIELD_2025, VP_PAR, FIELD_CARDS } from "../data/rivalData";
 import type { RivalPlayer } from "./bjgtAnalysisTypes";
 import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
+import { Cols, Tint } from "./DataStyle";
 
 interface FieldPlayerDetailProps {
   playerName: string;
@@ -173,13 +174,13 @@ export default function FieldPlayerDetail({
         const diff = g - FH[i].fAvg;
         const col =
           diff <= -0.5
-            ? "var(--color-good)"
+            ? "u-c-color-good"
             : diff >= 0.5
-              ? "var(--color-danger)"
-              : "var(--text-muted)";
+              ? "u-c-color-danger"
+              : "u-c-text-muted";
         return (
           <React.Fragment key={i}>
-            <td className="fs-10 fw-600" style={{ color: col }}>
+            <td className={"fs-10 fw-600 " + col}>
               {fmtSign(diff, 1)}
             </td>
             {i === 8 && <td className="col-out" />}
@@ -199,13 +200,13 @@ export default function FieldPlayerDetail({
         const rank = FIELD_2025.diffRank.indexOf(i + 1) + 1;
         const col =
           rank <= 3
-            ? "var(--color-danger)"
+            ? "u-c-color-danger"
             : rank >= 16
-              ? "var(--color-good)"
-              : "var(--text-muted)";
+              ? "u-c-color-good"
+              : "u-c-text-muted";
         return (
           <React.Fragment key={i}>
-            <td className="fs-10 fw-600" style={{ color: col }}>
+            <td className={"fs-10 fw-600 " + col}>
               {rank}
             </td>
             {i === 8 && <td className="col-out" />}
@@ -385,13 +386,7 @@ export default function FieldPlayerDetail({
       </div>
 
       {/* KPIs */}
-      <div
-        className="kpis"
-        style={{
-          gridTemplateColumns: `repeat(${card ? 5 : 4}, 1fr)`,
-          marginBottom: 16,
-        }}
-      >
+      <Cols n={card ? 5 : 4} className="kpis u-mb-16px">
         {lbEntry && (
           <KpiCard
             label="BJGT Total"
@@ -424,7 +419,7 @@ export default function FieldPlayerDetail({
             color="var(--color-good-dark)"
           />
         )}
-      </div>
+      </Cols>
 
       {/* ── Scoring distribution ── */}
       {scoringStats && (
@@ -504,13 +499,14 @@ export default function FieldPlayerDetail({
                         const rdTp = rd - r.par;
                         const col = tpColorDark(rdTp, 5);
                         return (
-                          <td
+                          <Tint
+                            as="td"
                             key={j}
                             className="r mono fw-600"
-                            style={{ color: col }}
+                            fg={col}
                           >
                             {rd}
-                          </td>
+                          </Tint>
                         );
                       })}
                       <td className="r mono fw-800">{r.total ?? "–"}</td>
@@ -548,13 +544,13 @@ export default function FieldPlayerDetail({
                       const diff = avg - par[i];
                       const col =
                         diff <= -0.3
-                          ? "var(--color-good)"
+                          ? "u-c-color-good"
                           : diff >= 0.5
-                            ? "var(--color-danger)"
-                            : "var(--text-muted)";
+                            ? "u-c-color-danger"
+                            : "u-c-text-muted";
                       return (
                         <React.Fragment key={i}>
-                          <td className="fs-10 fw-600" style={{ color: col }}>
+                          <td className={"fs-10 fw-600 " + col}>
                             {avg.toFixed(1)}
                           </td>
                           {i === 8 && (

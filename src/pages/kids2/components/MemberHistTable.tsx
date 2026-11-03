@@ -20,6 +20,7 @@ import { fmtToPar, fmtMonthYear } from "../../../utils/format";
 import { toneClass } from "../../../utils/scoreDisplay";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import ExtLink from "../../../ui/ExternalLink";
+import { Tint } from "../../../ui/DataStyle";
 import { MUTED } from "../../../ui/tableCells";
 import { TrophyPos } from "../../../ui/PosBadge";
 import SectionTitle from "../../../ui/SectionTitle";
@@ -155,11 +156,9 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
                 </td>
                 <td className="u-ta-right">
                   {links.length > 0 ? (
-                    <ExtLink href={links[0].url}
-                      title={`Abrir em ${links[0].label}`}
-                      className="u-td-none u-fw-700 u-fs-fs-12"
-                      style={{ color: `var(${links[0].colorVar})` }}
-                    >↗</ExtLink>
+                    <Tint as={ExtLink} href={links[0].url} fg={`var(${links[0].colorVar})`}
+                      title={`Abrir em ${links[0].label}`} className="u-td-none u-fw-700 u-fs-fs-12"
+                    >↗</Tint>
                   ) : MUTED}
                 </td>
               </tr>

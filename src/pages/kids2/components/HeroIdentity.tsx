@@ -22,6 +22,7 @@ import { shortDateSlash, fmtHcp, MONTHS_PT } from "../../../utils/format";
 import { stripAccents } from "../../../utils/normName";
 
 import ExtLink from "../../../ui/ExternalLink";
+import { Tint } from "../../../ui/DataStyle";
 import { useJson } from "../../../hooks/useJson";
 /** Bandeira por federação — mostrada junto ao número de licença. */
 const SOURCE_FLAGS: Record<string, string> = {
@@ -183,9 +184,9 @@ export default function HeroIdentity({ data, junior }: Props) {
             {tier && (() => {
               const c = getTierColors(tier);
               return (
-                <span className="tier-pill" style={{ background: c.bg, color: c.fg, borderColor: c.fg }}>
+                <Tint className="tier-pill" bg={c.bg} fg={c.fg} bd={c.fg}>
                   {tier === "elite" ? "★ " : tier === "strong" ? "⚔️ " : ""}{getTierLabel(tier)}
-                </span>
+                </Tint>
               );
             })()}
           </div>

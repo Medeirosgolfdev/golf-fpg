@@ -649,14 +649,14 @@ function AgsSection({
                   <td className="row-label c-blue-2563-10">Panc.</td>
                   {front.map((h, i) => (
                     <React.Fragment key={h.hole}>
-                      <td style={{ color: h.strokes > 0 ? "var(--chart-2)" : "var(--border)", fontWeight: h.strokes > 0 ? 700 : 400 }}>
+                      <td className={h.strokes > 0 ? "u-c-chart-2 u-fw-700" : "u-c-border u-fw-400"}>
                         {h.strokes > 0 ? h.strokes : "·"}
                       </td>
                       {is18 && i === 8 && <td className="col-out" />}
                     </React.Fragment>
                   ))}
                   {is18 && back.map((h) => (
-                    <td key={h.hole} style={{ color: h.strokes > 0 ? "var(--chart-2)" : "var(--border)", fontWeight: h.strokes > 0 ? 700 : 400 }}>
+                    <td key={h.hole} className={h.strokes > 0 ? "u-c-chart-2 u-fw-700" : "u-c-border u-fw-400"}>
                       {h.strokes > 0 ? h.strokes : "·"}
                     </td>
                   ))}

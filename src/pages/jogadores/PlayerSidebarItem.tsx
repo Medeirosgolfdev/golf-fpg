@@ -12,6 +12,7 @@ import SexBadge from "../../ui/SexBadge";
 import { PillBadge, EscPill, SIDEBAR_ACCENT } from "../../ui/PillBadge";
 import type { EscHcpStats } from "./filterPlayers";
 import HcpPill from "../../ui/HcpPill";
+import { Tint } from "../../ui/DataStyle";
 
 import { fmtHcp } from "../../utils/format";
 export type PlayerSidebarPlayer = {
@@ -125,8 +126,10 @@ function PlayerSidebarItemInner({
   const clubText = typeof displayClub === "string" && displayClub.trim() ? displayClub : null;
 
   return (
-    <a
+    <Tint
+      as="a"
       href={`/jogadores/${p.fed}`}
+      bd={accent}
       className={`course-item sidebar-player${isActive ? " active" : ""}${isFedsOnly ? " fed-only" : ""}`}
       onClick={e => {
         // Click simples selecciona; Ctrl/Cmd/Shift/middle deixa o <a> abrir
@@ -136,7 +139,6 @@ function PlayerSidebarItemInner({
           onSelect(p.fed);
         }
       }}
-      style={{ borderLeftColor: accent }}
     >
       {/* Linha 1: rank (se rankingMode) + flag + nome + sexo + indicadores */}
       <div className="course-item-name flex-center u-mb-3px">
@@ -200,7 +202,7 @@ function PlayerSidebarItemInner({
           </span>
         )}
       </div>
-    </a>
+    </Tint>
   );
 }
 

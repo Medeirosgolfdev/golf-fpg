@@ -464,7 +464,7 @@ export function MultiRoundLeaderboard({
               {extraColumns?.map((col, ci) => (
                 col.sortValue && sortable
                   ? <SortableHdr key={ci} k={`x:${ci}` as MRSortKey} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className={col.className}>{col.header}</SortableHdr>
-                  : <th key={ci} className={col.className} style={col.headerStyle}>{col.header}</th>
+                  : <th key={ci} className={[col.className, col.headerClassName].filter(Boolean).join(" ") || undefined}>{col.header}</th>
               ))}
             </tr>
           </thead>
@@ -483,21 +483,22 @@ export function MultiRoundLeaderboard({
                   ? (idx === 0 || dp !== visibleSorted[idx - 1]._pos)
                   : true
               );
-              const rowBg = row.isHighlighted ? "var(--bg-success-subtle)"
-                : isWD  ? "var(--bg-hover)"
-                : isInc ? "var(--bg-hover)"
-                : undefined;
-              const stickyBg = row.isHighlighted ? "var(--bg-manuel-sticky)"
-                : (isInc || isWD) ? "var(--bg-hover)"
-                : "var(--bg-card)";
+              // Fundo/opacidade da linha e das colunas fixas (o Manuel fica com o da .row-manuel).
+              const rowBg = row.isHighlighted ? "u-bg-bg-success-subtle"
+                : (isWD || isInc) ? "u-bg-bg-hover"
+                : "";
+              const rowOp = isWD ? "u-op-0_55" : isCut ? "u-op-0_85" : isInc ? "u-op-0_7" : "";
+              const stickyBg = row.isHighlighted ? ""
+                : (isInc || isWD) ? " u-bg-bg-hover"
+                : " u-bg-bg-card";
+              const cellOp = (isInc || isWD) ? " u-op-0_5" : isCut ? " u-op-0_85" : "";
 
               // Manuel toma precedência sobre Portuguese (só uma classe é aplicada).
-              const rowCls = row.isHighlighted ? "row-manuel" : (row.isPortuguese ? "row-portuguese" : undefined);
+              const rowCls = row.isHighlighted ? "row-manuel" : (row.isPortuguese ? "row-portuguese" : "");
               return (
                 <tr key={row.key || row.name + idx}
-                  className={rowCls}
-                  style={(isInc || isWD || isCut) ? { background: rowBg, opacity: isWD ? 0.55 : isCut ? 0.85 : 0.7 } : row.isHighlighted ? { background: rowBg } : undefined}>
-                  <td className="lb-pos sticky-col-0" style={{ ...(row.isHighlighted ? {} : { background: stickyBg }), whiteSpace: "nowrap" }}>
+                  className={[rowCls, rowBg, rowOp].filter(Boolean).join(" ") || undefined}>
+                  <td className={"lb-pos sticky-col-0 u-ws-nowrap" + stickyBg}>
                     {compareSel.checkbox(compareKey(row))}
                     {isWD
                       ? <WdBadge />
@@ -507,7 +508,7 @@ export function MultiRoundLeaderboard({
                           ? ""
                           : showPos ? (mdl || dp) : ""}
                   </td>
-                  <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
+                  <td className={"lb-name sticky-col-1" + stickyBg}>
                     {clubesSaoPaises && row.club && !row.countryFlag && <span title={semBandeira(row.club)} className="u-mr-4px">{flagOf(semBandeira(row.club))}</span>}
                     {renderName
                       ? renderName(row)
@@ -569,8 +570,8 @@ export function MultiRoundLeaderboard({
 
                   {/* ±Par ANTES de Total */}
                   {showToPar && <td className={`lb-topar ${tpTone}${(isInc || isWD) ? " u-op-0_5" : isCut ? " u-op-0_85" : ""}`}>{fmtTP(tp)}</td>}
-                  {showGross && <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>}
-                  {rankBy && <td className="lb-modo" style={{ textAlign: "center", fontWeight: 700, color: "var(--accent)", opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{rankBy.value(row) ?? "–"}</td>}
+                  {showGross && <td className={"lb-gross" + cellOp}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>}
+                  {rankBy && <td className={"lb-modo u-ta-center u-fw-700 u-c-accent" + cellOp}>{rankBy.value(row) ?? "–"}</td>}
 
                   {/* Acumulados multi-ronda */}
                   {isMulti && showHoleStats && (() => {

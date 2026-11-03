@@ -44,7 +44,6 @@ interface TabRowProps<K> {
   onChange: (key: K) => void;
   children?: React.ReactNode;
   className?: string;
-  style?: React.CSSProperties;
   /** Nome do grupo para leitores de ecrã (ex.: «Ano», «Vista»). */
   ariaLabel?: string;
   /** "under" = separadores sublinhados (secções do detalhe de um torneio,
@@ -54,18 +53,17 @@ interface TabRowProps<K> {
 
 // Interruptor segmentado (o mesmo de Campos/Jogadores) — 13/10/2026: vistas e
 // filtros de escolha única com UM só aspecto em todo o site. A API mantém-se.
-function TabRow<K>({ tabs, active, onChange, children, className, style, ariaLabel, variant = "segmented" }: TabRowProps<K>) {
+function TabRow<K>({ tabs, active, onChange, children, className, ariaLabel, variant = "segmented" }: TabRowProps<K>) {
   const under = variant === "under";
   return (
     <div
       className={`${under ? "tab-bar" : "segmented-toggle"}${className ? " " + className : ""}`}
       role="tablist"
       aria-label={ariaLabel}
-      style={style}
     >
       {tabs?.map(({ key, label, count, disabled, title, href, className: tabClass }) => {
         const isActive = active === key;
-        const cls = `${under ? "tab-under" : "seg-btn"}${isActive ? " active" : ""}${tabClass ? " " + tabClass : ""}`;
+        const cls = `${under ? "tab-under" : "seg-btn"}${isActive ? " active" : ""}${disabled ? " is-disabled" : ""}${tabClass ? " " + tabClass : ""}`;
         const inner = (
           <>
             <span className="seg-label">{label}</span>
@@ -92,7 +90,6 @@ function TabRow<K>({ tabs, active, onChange, children, className, style, ariaLab
             onClick={() => !disabled && onChange(key)}
             disabled={disabled}
             title={title}
-            style={disabled ? { cursor: "not-allowed", opacity: 0.5 } : undefined}
           >
             {inner}
           </button>

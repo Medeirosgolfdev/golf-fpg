@@ -30,8 +30,10 @@ export function FilterField({ label, children, hint, asLabel, className }: {
   );
 }
 
-export function ToggleChip({ checked, onChange, label, title, disabled, className }: {
+export function ToggleChip({ checked, onChange, label, title, disabled, className, manuel }: {
   checked: boolean;
+  /** O filtro ★ Manuel: ligado, fica na cor da linha do Manuel nas tabelas (a única excepção ao verde). */
+  manuel?: boolean;
   onChange: (v: boolean) => void;
   label: ReactNode;
   title?: string;
@@ -43,7 +45,7 @@ export function ToggleChip({ checked, onChange, label, title, disabled, classNam
       type="button"
       onClick={() => onChange(!checked)}
       // Ligado verde, desligado cinzento — a pill global (Mariana, 31/10/2026).
-      className={"tourn-tab tourn-tab-sm shrink-0" + (checked ? " active" : "") + (className ? " " + className : "")}
+      className={"tourn-tab tourn-tab-sm shrink-0" + (checked ? " active" : "") + (manuel ? " tt-manuel" : "") + (className ? " " + className : "")}
       aria-pressed={checked}
       title={title}
       disabled={disabled}

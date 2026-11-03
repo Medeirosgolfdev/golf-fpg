@@ -151,9 +151,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
         </thead>
         <tbody>
           {sortedRows.map((r, i) => (
-            <tr key={i} style={{
-              background: r.outcome === -1 ? "rgba(22,163,74,.04)" : r.outcome === 1 ? "rgba(220,38,38,.04)" : undefined,
-            }}>
+            <tr key={i} className={r.outcome === -1 ? "k2-row-won" : r.outcome === 1 ? "k2-row-lost" : undefined}>
               <td>{fmtMonthYear(r.t.date)}</td>
               <td>
                 {r.t.name || r.t.id}
@@ -175,9 +173,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
               <td className="u-ta-right">
                 <ToPar v={r.diff} kind="delta" digits={r.diff != null && !Number.isInteger(r.diff) ? 1 : undefined} />
               </td>
-              <td className="u-ta-right u-fw-700 u-fs-fs-11" style={{
-                color: r.outcome === -1 ? "var(--color-good-dark)" : r.outcome === 1 ? "var(--color-danger-vivid)" : "var(--text-3)",
-              }}>
+              <td className={"u-ta-right u-fw-700 u-fs-fs-11 " + (r.outcome === -1 ? "u-c-color-good-dark" : r.outcome === 1 ? "u-c-color-danger-vivid" : "u-c-text-3")}>
                 {r.outcome === -1 ? `${firstName} venceu` : r.outcome === 1 ? "Manuel venceu" : r.outcome === 0 ? "empate" : "—"}
               </td>
             </tr>

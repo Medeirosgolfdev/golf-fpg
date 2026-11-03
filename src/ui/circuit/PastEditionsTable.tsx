@@ -103,9 +103,6 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
   );
   if (!cols.length || !maxRows) return <EmptyState size="md" message="Sem edições anteriores com resultados." />;
 
-  // Separador entre edições — a mesma linha fina das colunas do scorecard.
-  const bl = (_i: number) => "1px solid var(--border)";
-
   return (
     <div>
       {title && (
@@ -123,9 +120,9 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                   className="u-p-6px-8px u-fs-fs-11 u-pos-sticky u-left-0 u-z-z-raised u-w-50px u-minw-50px">
                 Pos
               </SortableHdr>
-              {cols.map((e, ei) => (
+              {cols.map((e) => (
                 <th key={e.id} colSpan={2 + (e.parPerRound ? 1 : 0) + e.nRounds}
-                    style={{ padding: "10px 10px 8px", fontSize: "var(--fs-11)", borderLeft: bl(ei) }}>
+                    className="pe-ed-hdr pe-bl">
                   <div className="u-d-flex u-fd-column u-ai-center u-gap-3px">
                     <div className="u-d-flex u-ai-baseline u-gap-8px u-c-text">
                       <span className="u-fs-fs-16 u-fw-700">{e.year}</span>
@@ -154,9 +151,9 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
               ))}
             </tr>
             <tr>
-              {cols.flatMap((e, ei) => {
+              {cols.flatMap((e) => {
                 const cells = [
-                  <th key={`${e.id}_n`} style={{ textAlign: "left", borderLeft: bl(ei), width: 150, minWidth: 150 }}>Jogador</th>,
+                  <th key={`${e.id}_n`} className="pe-bl u-ta-left u-w-150px u-minw-150px">Jogador</th>,
                   <SortableHdr key={`${e.id}_T`} k={`${e.id}_T`} sortKey={sortKey} sortDir={sortDir} onSort={onSort}
                       className="u-w-46px u-minw-46px">
                     Tot
@@ -187,15 +184,14 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                   <td className="lb-pos u-pos-sticky u-left-0 u-bg-bg-card u-z-z-base u-ws-nowrap">
                     {medal ?? ri + 1}
                   </td>
-                  {cols.flatMap((e, ei) => {
+                  {cols.flatMap((e) => {
                     const p = e.players[ri];
                     const cells = [
                       // Destaque com as classes GLOBAIS do projecto (versão por
                       // célula) — cada coluna é um torneio diferente, por isso
                       // não dá para usar .row-manuel/.row-portuguese na linha.
                       <td key={`${e.id}_n`}
-                          className={[p?.isManuel ? "cell-manuel fw-700" : p?.isPt ? "cell-portuguese" : ""].filter(Boolean).join(" ") || undefined}
-                          style={{ textAlign: "left", borderLeft: bl(ei), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}
+                          className={["pe-bl pe-name", p?.isManuel ? "cell-manuel fw-700" : p?.isPt ? "cell-portuguese" : ""].filter(Boolean).join(" ")}
                           title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${fmtOrd(p.pos)} oficial` : ""}` : undefined}>
                         {p ? <>{clubFlagPrefix(p.club) }{p.name}</> : MUTED}
                       </td>,
@@ -204,9 +200,9 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                       // baixo aí não é um bom resultado.
                       <td key={`${e.id}_T`}
                           title={p && p.fullRounds < (maxFull.get(e.id) ?? 0) ? "Não completou o torneio" : undefined}
-                          style={{ fontWeight: 700,
-                                   fontStyle: p && p.fullRounds < (maxFull.get(e.id) ?? 0) ? "italic" : undefined,
-                                   color: p?.total == null || (p && p.fullRounds < (maxFull.get(e.id) ?? 0)) ? "var(--text-3)" : "var(--text)" }}>
+                          className={"u-fw-700"
+                                   + (p && p.fullRounds < (maxFull.get(e.id) ?? 0) ? " u-fst-italic" : "")
+                                   + (p?.total == null || (p && p.fullRounds < (maxFull.get(e.id) ?? 0)) ? " u-c-text-3" : " u-c-text")}>
                         {p?.total ?? "–"}
                       </td>,
                     ];
@@ -216,7 +212,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                     for (let r = 0; r < e.nRounds; r++) {
                       const v = p?.rounds[r] ?? null;
                       cells.push(
-                        <td key={`${e.id}_R${r + 1}`} style={{ color: v ? "var(--text)" : "var(--text-3)" }}>
+                        <td key={`${e.id}_R${r + 1}`} className={v ? "u-c-text" : "u-c-text-3"}>
                           {v || "–"}
                         </td>,
                       );

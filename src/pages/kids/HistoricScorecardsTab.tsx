@@ -349,7 +349,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
             scores: r.strokes,
             ...rowPar(ed),
             rowBg: bg, stickyBg: bg,
-            borderTop: first ? "2px solid var(--border)" : undefined,
+            groupSep: first ? "strong" : undefined,
             nameContent: first
               ? <PlayerName name={pl.name} title={`Abrir ${pl.name} em Kids2`} />
               : <span className="muted fs-10 u-pl-8px">↳</span>,
@@ -421,7 +421,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         scores: r.strokes,
         ...rowPar(ed),
         rowBg: bg, stickyBg: bg,
-        borderTop: "1px solid var(--border-light)",
+        groupSep: "light",
         nameContent: <PlayerName name={pl.name} />,
         prefixCells: (
           <>
@@ -692,7 +692,7 @@ function EcleticTable({ editions, limit, hpr }: {
       scores: ecl.best,
       ...rowPar(ed),
       rowBg: bg, stickyBg: bg,
-      borderTop: "1px solid var(--border-light)",
+      groupSep: "light",
       nameContent: <PlayerName name={pl.name} />,
       prefixCells: (
         <>

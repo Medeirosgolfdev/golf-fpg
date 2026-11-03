@@ -31,7 +31,7 @@ export default function ShareRoundPanel({ options, defaultKey }: { options: Shar
       {open && (
         <div className="mt-8">
           {options.length > 1 && (
-            <label className="fs-12 mb-8" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <label className="fs-12 mb-8 u-d-flex u-ai-center u-gap-8px">
               Jogador
               <Select value={cur.key} onChange={setSel}>
                 {options.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}

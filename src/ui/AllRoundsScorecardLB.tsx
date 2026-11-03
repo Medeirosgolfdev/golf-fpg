@@ -98,8 +98,7 @@ export function AllRoundsScorecardLB({
     if (age == null || age < 0) return MUTED;
     const d = fmtDobPt(dob);
     return (
-      <span className="p p-sm" title={d ? `Nascido a ${d}` : undefined}
-        style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent", cursor: d ? "help" : undefined }}>{age}a</span>
+      <span className={"p p-sm u-bg-bg-muted u-c-text-2 u-border-color-transparent" + (d ? " u-cur-help" : "")} title={d ? `Nascido a ${d}` : undefined}>{age}a</span>
     );
   }
 
@@ -115,31 +114,33 @@ export function AllRoundsScorecardLB({
     const inner = r.fed ? <PlayerLink fed={r.fed} name={abreviarNome(r.name)} /> : abreviarNome(r.name);
     return <span className="fw-600">{nameDecorator ? nameDecorator(r.name, inner) : inner}</span>;
   };
+  /** Linha de separação (a mesma do ScorecardLeaderboard): classe a juntar às células. */
+  const sepCls = (sep?: "strong" | "light") => sep === "strong" ? " u-bt-2px-solid-border" : sep === "light" ? " u-bt-1px-solid-border-light" : "";
   /** Células entre o nome e o ±: IDADE · Tee · HCP · Rnd. Nas voltas seguintes
    *  do mesmo jogador (modo agrupado) só o HCP e a volta se repetem. */
-  const prefixCells = (r: Line, rdLabel: string, first: boolean, bTop?: string) => (
+  const prefixCells = (r: Line, rdLabel: string, first: boolean, sep?: "strong" | "light") => (
     <>
-      {showAge && <td className="lb-age" style={{ borderTop: bTop, textAlign: "center" }}>{first ? <AgePill age={r.age} dob={r.dob} /> : ""}</td>}
-      <td className="lb-club" style={{ borderTop: bTop }}>{first ? <TeeLabel tee={r.teeName} /> : ""}</td>
+      {showAge && <td className={"lb-age u-ta-center" + sepCls(sep)}>{first ? <AgePill age={r.age} dob={r.dob} /> : ""}</td>}
+      <td className={"lb-club" + sepCls(sep)}>{first ? <TeeLabel tee={r.teeName} /> : ""}</td>
       {!hideHCP && (
-        <td className="lb-hcp" style={{ borderTop: bTop, color: first ? undefined : "var(--text-muted)" }}>
+        <td className={"lb-hcp" + (first ? "" : " u-c-text-muted") + sepCls(sep)}>
           {r.hcpEst ? <span className="est-value">{fmtHcp(r.hcp)}</span> : fmtHcp(r.hcp)}
         </td>
       )}
-      <td className="lb-tee fw-600 fs-10 c-muted" style={{ borderTop: bTop }}>{rdLabel}</td>
+      <td className={"lb-tee fw-600 fs-10 c-muted" + sepCls(sep)}>{rdLabel}</td>
     </>
   );
-  const postCells = (rd: RdData, hcp: number | null, bTop?: string) => (
+  const postCells = (rd: RdData, hcp: number | null, sep?: "strong" | "light") => (
     <>
       {!hideSD && (
-        <td className="lb-sd" style={{ borderTop: bTop }}>
+        <td className={"lb-sd" + sepCls(sep)}>
           {rd.sd != null ? <SDPill sd={rd.sd} hcp={hcp} est={tournament._sdEstimate} /> : MUTED}
         </td>
       )}
-      <td className="lb-eag" style={{ borderTop: bTop }}>{rd.eags || ""}</td>
-      <td className="lb-bird" style={{ borderTop: bTop }}>{rd.birds || ""}</td>
-      <td className="lb-par-stat" style={{ borderTop: bTop }}>{rd.pars || ""}</td>
-      <td className="lb-bog" style={{ borderTop: bTop }}>{rd.bogs || ""}</td>
+      <td className={"lb-eag" + sepCls(sep)}>{rd.eags || ""}</td>
+      <td className={"lb-bird" + sepCls(sep)}>{rd.birds || ""}</td>
+      <td className={"lb-par-stat" + sepCls(sep)}>{rd.pars || ""}</td>
+      <td className={"lb-bog" + sepCls(sep)}>{rd.bogs || ""}</td>
     </>
   );
 
@@ -155,16 +156,16 @@ export function AllRoundsScorecardLB({
           const first = ri === firstRi;
           const bg = first ? playerBg
             : playerBg ? "color-mix(in srgb,var(--bg-muted) 60%,transparent)" : "var(--bg-stripe)";
-          const bTop = first && playerIdx > 0 ? "2px solid var(--border)" : undefined;
+          const sep = first && playerIdx > 0 ? "strong" as const : undefined;
           return [{
             key: `${row.key}:${ri}`, fedCode: row.fed,
             pos: first && showPos ? posStr(row) : "",
             gross: rd.gross, toPar: rd.toPar, scores: rd.scores,
             holePars: rd.holePars.length ? rd.holePars : par,
-            rowBg: bg, stickyBg: bg, borderTop: bTop,
+            rowBg: bg, stickyBg: bg, groupSep: sep,
             nameContent: first ? nameOf(row) : <span className="muted fs-10 u-pl-8px">↳</span>,
-            prefixCells: prefixCells(row, `R${ri + 1}`, first, bTop),
-            postScorecardCells: postCells(rd, row.hcp, bTop),
+            prefixCells: prefixCells(row, `R${ri + 1}`, first, sep),
+            postScorecardCells: postCells(rd, row.hcp, sep),
           }];
         });
       });
@@ -173,16 +174,16 @@ export function AllRoundsScorecardLB({
     return displayed.map((row, idx): ScorecardRow => {
       const showPos = idx === 0 || row.pos !== displayed[idx - 1].pos || row.isWD;
       const bg = idx % 2 === 0 ? undefined : "var(--bg-muted)";
-      const bTop = idx > 0 ? "1px solid var(--border-light)" : undefined;
+      const sep = idx > 0 ? "light" as const : undefined;
       return {
         key: row.key, fedCode: row.fed,
         pos: showPos ? posStr(row) : "",
         gross: row.rd.gross, toPar: row.rd.toPar, scores: row.rd.scores,
         holePars: row.rd.holePars.length ? row.rd.holePars : par,
-        rowBg: bg, stickyBg: bg, borderTop: bTop,
+        rowBg: bg, stickyBg: bg, groupSep: sep,
         nameContent: nameOf(row),
-        prefixCells: prefixCells(row, row.rdLabel, true, bTop),
-        postScorecardCells: postCells(row.rd, row.hcp, bTop),
+        prefixCells: prefixCells(row, row.rdLabel, true, sep),
+        postScorecardCells: postCells(row.rd, row.hcp, sep),
       };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

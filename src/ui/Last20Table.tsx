@@ -107,11 +107,8 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
 
               return (
                 <React.Fragment key={r.scoreId}>
-                  <tr style={{
-                    ...(isBest8 ? { background: "var(--bg-success)" } : {}),
-                    ...(isFading ? { opacity: 0.4 } : {}),
-                  }}>
-                    <td className="r" style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: whsPosMap.get(r.scoreId) != null ? "var(--text-2)" : "var(--text-4)" }}>
+                  <tr className={[isBest8 ? "u-bg-bg-success" : "", isFading ? "u-op-0_4" : ""].filter(Boolean).join(" ") || undefined}>
+                    <td className={"r u-fs-fs-11 u-fw-700 " + (whsPosMap.get(r.scoreId) != null ? "u-c-text-2" : "u-c-text-4")}>
                       {whsPosMap.get(r.scoreId) ?? "–"}
                     </td>
                     <td>

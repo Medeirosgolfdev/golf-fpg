@@ -263,7 +263,7 @@ function FedTable({ rows, columns }: { rows: RFEGFederation[]; columns: FedColum
         <thead>
           <tr>
             {columns.map(c => {
-              const align = c.align ?? "center";
+              const align = `u-ta-${c.align ?? "center"}`;
               if (c.sortVal) {
                 return (
                   <SortableHdr
@@ -272,14 +272,14 @@ function FedTable({ rows, columns }: { rows: RFEGFederation[]; columns: FedColum
                     sortKey={sortKey}
                     sortDir={sortDir}
                     onSort={toggleSort}
-                    style={{ textAlign: align }}
+                    className={align}
                   >
                     {c.label}
                   </SortableHdr>
                 );
               }
               return (
-                <th key={c.key} style={{ textAlign: align }}>{c.label}</th>
+                <th key={c.key} className={align}>{c.label}</th>
               );
             })}
           </tr>
@@ -288,7 +288,7 @@ function FedTable({ rows, columns }: { rows: RFEGFederation[]; columns: FedColum
           {sorted.map(f => (
             <tr key={f.name}>
               {columns.map(c => (
-                <td key={c.key} className={c.cellClass} style={{ textAlign: c.align ?? "center" }}>
+                <td key={c.key} className={`u-ta-${c.align ?? "center"}` + (c.cellClass ? ` ${c.cellClass}` : "")}>
                   {c.cell(f)}
                 </td>
               ))}

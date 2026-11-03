@@ -1,7 +1,7 @@
 ﻿/**
  * RivaisDashboard — International rivals analysis table
  */
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { fmtSign, sortArrow, fmtOrd } from "../utils/format";
 import { flag as countryFlag } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ, meanArr } from "../utils/mathUtils";
@@ -17,6 +17,7 @@ import type { RivalPlayer, TournDef, RoundAvg } from "./bjgtAnalysisTypes";
 import ExtLink from "./ExternalLink";
 import { MUTED } from "./tableCells";
 import Select from "./Select";
+import { Tint, Cols, Place } from "./DataStyle";
 
 // DOB formatter — aceita YYYY-MM-DD, DD/MM/YYYY, ou outro; devolve "DD/MM/YY"
 function fmtDob(dob?: string): string {
@@ -218,7 +219,7 @@ export default function RivaisDashboard({
     <div className="tourn-section">
       {/* Manuel KPIs (opcional) */}
       {showManuelKpis && (
-        <div className="kpis" style={{ gridTemplateColumns: `repeat(${T.length}, 1fr)` }}>
+        <Cols n={T.length} min="auto" className="kpis">
           {T.map(t => {
             const res = manuel.r[t.id];
             if (!res)
@@ -239,7 +240,7 @@ export default function RivaisDashboard({
               />
             );
           })}
-        </div>
+        </Cols>
       )}
 
       {/* Filters */}
@@ -365,37 +366,19 @@ export default function RivaisDashboard({
                       <th
                         key={gi}
                         colSpan={g.span}
-                        style={{
-                          textAlign: "center",
-                          fontSize: "var(--fs-12)",
-                          fontWeight: 600,
-                          color: "var(--text-2)",
-                          padding: "6px 8px",
-                          borderLeft: gi > 0 ? "1px solid var(--border)" : undefined,
-                          borderBottom: "1px solid var(--border)",
-                          // Grupos de uma só edição são estreitos demais para o
-                          // nome (quebrava em 8-10 linhas) — piso de 104px.
-                          minWidth: g.span === 1 ? 104 : undefined,
-                        }}
+                        // Grupos de uma só edição são estreitos demais para o
+                        // nome (quebrava em 8-10 linhas) — piso de 104px.
+                        className={`riv-grp-th${gi > 0 ? " riv-sep" : ""}${g.span === 1 ? " u-minw-104px" : ""}`}
                       >
                         {/* Título quebra em várias linhas dentro da largura natural
                             do grupo (span × ~78px) — sem isto, nomes longos tipo
                             "Under Armour Summer National 2026 (Boys 11-12)"
                             esticavam a coluna toda. */}
-                        <span
-                          style={{
-                            display: "block",
-                            maxWidth: `${Math.max(g.span * 78, 104)}px`,
-                            margin: "0 auto",
-                            whiteSpace: "normal",
-                            overflowWrap: "anywhere",
-                            lineHeight: 1.25,
-                          }}
-                        >
+                        <Place as="span" className="riv-grp-lbl" maxW={Math.max(g.span * 78, 104)}>
                         {g.url ? (
                           <ExtLink href={g.url} className="rivais-link" title={`Página oficial — ${g.label}`}>{g.label}</ExtLink>
                         ) : g.label}
-                        </span>
+                        </Place>
                       </th>
                     ))}
                   </tr>
@@ -423,8 +406,7 @@ export default function RivaisDashboard({
                   return (
                     <th
                       key={t.id}
-                      className="rivais-th pointer ta-c"
-                      style={{ minWidth: 56, borderLeft: isBoundary ? "1px solid var(--border)" : undefined }}
+                      className={`rivais-th pointer ta-c u-minw-56px${isBoundary ? " riv-sep" : ""}`}
                       onClick={() => doSort("t:" + t.id)}
                     >
                       {t.url ? (
@@ -518,12 +500,7 @@ export default function RivaisDashboard({
                               jogador abre no ↗ ao lado. */}
                           <span className="u-d-flex u-ai-center u-gap-4px">
                             <button
-                              className={`btn-link fs-12${isM ? " fw-700" : " fw-600"}`}
-                              style={{
-                                color: isM ? "var(--text)" : "var(--text-2)",
-                                padding: 0,
-                                textAlign: "left",
-                              }}
+                              className={`btn-link fs-12 u-p-0 u-ta-left${isM ? " fw-700 u-c-text" : " fw-600 u-c-text-2"}`}
                               title={isSel ? "Clicar para desmarcar" : "Clicar para marcar esta linha"}
                               onClick={() => setSelectedRow(isSel ? null : p.n)}
                             >
@@ -578,15 +555,13 @@ export default function RivaisDashboard({
                     {/* One cell per tournament: ±par colored + position */}
                     {T.map(t => {
                       const isBoundary = seriesBoundaries?.has(t.id);
-                      const boundaryStyle: React.CSSProperties = isBoundary
-                        ? { borderLeft: "1px solid var(--border)" }
-                        : {};
+                      const sepCls = isBoundary ? "riv-sep" : undefined;
                       const res = p.r[t.id];
                       if (!res || (res.tp == null && res.p !== "WD"))
-                        return <td key={t.id} style={boundaryStyle} />;
+                        return <td key={t.id} className={sepCls} />;
                       if (res.p === "WD")
                         return (
-                          <td key={t.id} style={boundaryStyle}>
+                          <td key={t.id} className={sepCls}>
                             <WdBadge muted />
                           </td>
                         );
@@ -646,26 +621,16 @@ export default function RivaisDashboard({
                       // tiers intermédios (strong/solid/developing) ficamos só
                       // com a cor do texto a marcar o ±par.
                       const showBg = !fieldMode || ti === "elite" || ti === "beginner";
-                      const cellBg = showBg ? (st?.bg || "transparent") : "transparent";
                       return (
-                        <td
+                        <Tint
+                          as="td"
                           key={t.id}
-                          className="ta-c"
-                          style={{
-                            background: cellBg,
-                            padding: "1px 4px",
-                            lineHeight: 1.15,
-                            ...boundaryStyle,
-                          }}
+                          className={sepCls ? `ta-c riv-cell ${sepCls}` : "ta-c riv-cell"}
+                          bg={showBg ? st?.bg : null}
                         >
-                          <div
-                            className="fw-700 fs-13"
-                            style={{
-                              color: st?.c || "var(--text-3)",
-                            }}
-                          >
+                          <Tint as="div" className="fw-700 fs-13" fg={st?.c || "var(--text-3)"}>
                             {tpStr}
-                          </div>
+                          </Tint>
                           <div className="fs-10 fw-600 c-text-3">#{res.p}</div>
                           {vsM != null && (
                             <div
@@ -674,7 +639,7 @@ export default function RivaisDashboard({
                               {fmtSign(vsM)}
                             </div>
                           )}
-                        </td>
+                        </Tint>
                       );
                     })}
 
@@ -693,15 +658,13 @@ export default function RivaisDashboard({
                             ).toFixed(2)} · ${nRounds(p)} rondas`}
                           >
                             <div
-                              className="fw-800 fs-13"
-                              style={{
-                                color:
-                                  rankMap[p.n] <= 10
-                                    ? "var(--color-good-dark)"
-                                    : rankMap[p.n] <= 30
-                                      ? "var(--text)"
-                                      : "var(--text-3)",
-                              }}
+                              className={`fw-800 fs-13 ${
+                                rankMap[p.n] <= 10
+                                  ? "u-c-color-good-dark"
+                                  : rankMap[p.n] <= 30
+                                    ? "u-c-text"
+                                    : "u-c-text-3"
+                              }`}
                             >
                               {fmtOrd(rankMap[p.n])}
                             </div>

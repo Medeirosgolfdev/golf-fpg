@@ -356,7 +356,7 @@ function DriveContent() {
               <TabRow ariaLabel="Ano" active={activeYear} tabs={availYears.map(y => ({ key: y, label: y }))}
                 onChange={y => go({ year: y === activeYear && availYears.length > 1 ? null : y })} />
               <ToolbarSep />
-              <ToggleChip checked={filterManuel} onChange={v => go({ manuel: v })} label="★ Manuel" className="u-ws-nowrap" />
+              <ToggleChip checked={filterManuel} onChange={v => go({ manuel: v })} label="★ Manuel" className="u-ws-nowrap" manuel />
             </>)}
   </>);
   const driveBelow = (<>

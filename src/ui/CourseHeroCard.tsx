@@ -13,6 +13,7 @@ import { useMemo, useState } from "react";
 import type { Course, Tee } from "../data/types";
 import InfoIcon from "./InfoIcon";
 import SectionTitle from "./SectionTitle";
+import { Tint } from "./DataStyle";
 
 interface HoleEntry { hole: number; distance: number | null }
 interface ParBreakdown {
@@ -119,9 +120,9 @@ export function HeroStat({ icon, tone, value, unit, label, valueColor }: {
     <div className="haDiagCard">
       <div className={"haDiagIcon is-" + tone}>{icon}</div>
       <div>
-        <div className="haDiagVal" style={valueColor ? { color: valueColor } : undefined}>
+        <Tint as="div" className="haDiagVal" fg={valueColor}>
           {value}{unit && value !== "–" && <span className="u-fs-fs-13 u-fw-600 u-c-text-3 u-ml-4px">{unit}</span>}
-        </div>
+        </Tint>
         <div className="haDiagLbl u-d-flex u-ai-center">{label}</div>
       </div>
     </div>
@@ -141,6 +142,10 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
 
   const SLOPE_INFO = "Slope Rating — dificuldade relativa do campo para um jogador amador. Escala 55-155 (média = 113). Maior = mais difícil para handicaps altos.";
   const CR_INFO = "Course Rating — nº de pancadas esperado para um jogador scratch (hcp 0). Compara com o par: CR > par significa campo abaixo do par esperado em dificuldade.";
+  // CR/Slope não publicados → rótulo «(estimado)» e a origem no ⓘ.
+  const estNota = cr != null ? tee.ratings?.holes18?.estimado : undefined;
+  const est = estNota ? " (estimado)" : "";
+  const estInfo = (info: string) => (estNota ? `${info}\n\nESTIMADO — ${estNota}` : info);
 
   return (
     <div className="card">
@@ -152,8 +157,8 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
       <div className="haDiag">
         <HeroStat icon="📏" tone="info" value={distance ?? "–"} unit="m" label="Distância total" />
         <HeroStat icon="⛳" tone="accent" value={parTotal || "–"} label={`Par total · ${totalParHoles} buracos`} />
-        <HeroStat icon="📐" tone="warn" value={slope != null ? slope.toFixed(0) : "–"} label={<>Slope rating<InfoIcon title={SLOPE_INFO} /></>} />
-        <HeroStat icon="🎯" tone="good" value={cr != null ? cr.toFixed(1) : "–"} label={<>Course rating<InfoIcon title={CR_INFO} /></>} />
+        <HeroStat icon="📐" tone="warn" value={slope != null ? slope.toFixed(0) : "–"} label={<>Slope rating{est}<InfoIcon title={estInfo(SLOPE_INFO)} /></>} />
+        <HeroStat icon="🎯" tone="good" value={cr != null ? cr.toFixed(1) : "–"} label={<>Course rating{est}<InfoIcon title={estInfo(CR_INFO)} /></>} />
       </div>
 
       {totalParHoles > 0 && (
@@ -166,13 +171,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   key={m}
                   type="button"
                   onClick={() => setViewMode(m)}
-                  style={{
-                    padding: "4px 12px", fontSize: "var(--fs-11)", fontWeight: 700,
-                    border: "none", borderRadius: "var(--radius)", cursor: "pointer",
-                    background: viewMode === m ? "var(--bg-card)" : "transparent",
-                    color: viewMode === m ? "var(--text)" : "var(--text-3)",
-                    boxShadow: viewMode === m ? "var(--shadow-sm)" : "none",
-                  }}
+                  className={viewMode === m ? "ha-mode-btn active" : "ha-mode-btn"}
                 >
                   {m === "par" ? "Por par" : "Por buraco"}
                 </button>
@@ -201,13 +200,13 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                 const tFor = (dist: number) => (range === 0 || !dist) ? 0.5 : (dist - minDist) / range;
 
                 return (
-                  <div key={p.par} className="haParCard" style={{ borderLeft: "3px solid " + accentColor, padding: "12px 16px" }}>
-                    <div style={{ color: accentColor, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: "var(--fs-16)", fontWeight: 800, marginBottom: 4 }}>
+                  <Tint as="div" key={p.par} className="haParCard ha-par-card" bd={accentColor}>
+                    <Tint as="div" className="ha-par-title" fg={accentColor}>
                       <span>Par {p.par}</span>
                       <span className="muted u-fw-500 u-fs-fs-13">
                         {p.count} buraco{p.count === 1 ? "" : "s"} · {pct}%
                       </span>
-                    </div>
+                    </Tint>
                     {p.avgDistance != null && (
                       <div className="u-fs-fs-11 u-c-text-3 u-mb-10px">
                         Média <span className="u-fw-700 u-c-text-2">{Math.round(p.avgDistance)}m</span>
@@ -224,26 +223,14 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                             title={`Buraco ${h.hole} · ${h.distance ?? "—"}m`}
                           >
                             <span className="u-fs-fs-11 u-fw-700 u-c-text-3">B{h.hole}</span>
-                            <span
-                              className="p"
-                              style={{
-                                background: col.bg,
-                                color: col.fg,
-                                border: `1px solid ${col.border}`,
-                                fontWeight: 700,
-                                fontSize: "var(--fs-13)",
-                                padding: "3px 9px",
-                                minWidth: 50,
-                                justifyContent: "center",
-                              }}
-                            >
+                            <Tint className="p ha-dist-pill" bg={col.bg} fg={col.fg} bd={col.border}>
                               {h.distance != null && h.distance > 0 ? `${h.distance}m` : "—"}
-                            </span>
+                            </Tint>
                           </span>
                         );
                       })}
                     </div>
-                  </div>
+                  </Tint>
                 );
               })}
             </div>
@@ -255,11 +242,12 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                 const renderHole = (h: typeof orderedHoles[0]) => {
                   const col = h.color;
                   return (
-                    <div
+                    <Tint
+                      as="div"
                       key={h.hole}
                       className="hole-chip mono"
                       title={`Buraco ${h.hole} · Par ${h.par ?? "?"} · ${h.distance ?? "—"}m`}
-                      style={{ background: col?.bg ?? "var(--bg-muted)", color: col?.fg ?? "var(--text-3)", borderColor: col?.border ?? "var(--border)" }}
+                      bg={col?.bg ?? "var(--bg-muted)"} fg={col?.fg ?? "var(--text-3)"} bd={col?.border ?? "var(--border)"}
                     >
                       <span className="u-fs-fs-10 u-fw-700 u-op-0_85">B{h.hole}</span>
                       <span className="u-fs-fs-15 u-fw-800 u-lh-1_1 u-mt-2px">
@@ -268,7 +256,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                       <span className="u-fs-fs-9 u-fw-600 u-op-0_75 u-mt-1px">
                         par {h.par ?? "?"}
                       </span>
-                    </div>
+                    </Tint>
                   );
                 };
                 const sumDist = (arr: typeof orderedHoles) =>
@@ -308,11 +296,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   const sample = holeColor(p, 0.6);
                   return (
                     <span key={p} className="u-d-inline-flex u-ai-center u-gap-6px">
-                      <span style={{
-                        width: 16, height: 16, borderRadius: "var(--radius-sm)",
-                        background: sample.bg,
-                        border: `1px solid ${sample.border}`,
-                      }} />
+                      <Tint className="ha-swatch" bg={sample.bg} bd={sample.border} />
                       <span>Par {p}</span>
                     </span>
                   );

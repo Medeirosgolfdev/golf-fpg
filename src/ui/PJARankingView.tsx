@@ -90,8 +90,8 @@ function bestSd(row: RankRow): number | null {
 }
 /** Duas maneiras de uma volta não somar: a regra tirou-a (riscada) ou ficou
  *  fora das que contam (esbatida). */
-const roundStyle = (res: RankRoundResult): React.CSSProperties =>
-  res.excluded ? { opacity: 0.4, textDecoration: "line-through" } : !res.inTop14 ? { opacity: 0.35 } : {};
+const roundClass = (res: RankRoundResult): string =>
+  res.excluded ? " pja-rd-excl" : !res.inTop14 ? " pja-rd-out" : "";
 
 /** As colunas da lista: # · Jogador · Esc. · Clube · HCP · T · Voltas · Total · Melhor. */
 function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: PlayersDB, totalLabel: string, medals = true): RankingCol<RankRow>[] {
@@ -154,12 +154,12 @@ function PlayerDetail({ row, cols, metric, showMeters, playersDB, onClose }: {
       );
     } },
     { key: "toPar", label: "±Par", className: "num", sort: r => r.res.toPar, firstDir: "asc",
-      cell: r => <span className={`fw-700 ${toneClass(r.res.toPar)}`} style={roundStyle(r.res)}>{fmtTP(r.res.toPar)}</span> },
+      cell: r => <span className={`fw-700 ${toneClass(r.res.toPar)}${roundClass(r.res)}`}>{fmtTP(r.res.toPar)}</span> },
     isSd
       ? { key: "sd", label: "SD", className: "num", sort: r => r.res.sd, firstDir: "asc",
-          cell: r => <span className="c-warn-dark" style={roundStyle(r.res)}>{r.res.sd != null ? r.res.sd.toFixed(1) : "–"}</span> }
+          cell: r => <span className={"c-warn-dark" + roundClass(r.res)}>{r.res.sd != null ? r.res.sd.toFixed(1) : "–"}</span> }
       : { key: "pts", label: "Pts", className: "num", sort: r => r.res.pts, firstDir: "desc",
-          cell: r => <span className="c-warn-dark" style={roundStyle(r.res)}>{fmtPts(r.res.pts)}</span> },
+          cell: r => <span className={"c-warn-dark" + roundClass(r.res)}>{fmtPts(r.res.pts)}</span> },
     ...(showMeters ? [{ key: "m", label: "m", title: "Metros jogados nesta volta", className: "num", sort: (r: RankPlayerRound) => r.res.meters || null, firstDir: "desc" as const,
       cell: (r: RankPlayerRound) => <span className="mono muted">{r.res.meters ? r.res.meters.toLocaleString("pt-PT") : "–"}</span> }] : []),
     { key: "conta", label: "Conta", sort: r => r.res.excluded ? 2 : r.res.inTop14 ? 0 : 1, firstDir: "asc",
@@ -445,13 +445,6 @@ export function PJARankingView({
                 const { circuito, local } = shortTournName(tc.name, tc.campo);
                 // Tipografia uniforme: mesma font-size e font-weight nas 3 linhas.
                 // Só a cor distingue hierarquia (título mais escuro; local+data mais muted).
-                const lineStyle: React.CSSProperties = {
-                  fontSize: "var(--fs-10)",
-                  fontWeight: 600,
-                  lineHeight: 1.2,
-                  whiteSpace: "normal",
-                  textAlign: "center",
-                };
                 // Link para o torneio — base URL depende do tipo:
                 //  - Drive Tour / Aquapor → /drive/torneio/... (estão na DrivePage)
                 //  - Greatgolf, PJA exclusivos, torneios manuais → /FPG/torneio/...
@@ -461,14 +454,14 @@ export function PJARankingView({
                 const href = tc.ccode && firstTcode ? `${base}/${tc.ccode}-${firstTcode}` : null;
                 const content = (
                   <>
-                    <div style={{ ...lineStyle, color: "var(--text-1)" }}>
+                    <div className="pja-tc-line u-c-text-1">
                       {circuito}
                       {tc.mult !== 1.0 && <span className="badge-gf u-ml-3px">★{tc.mult}</span>}
                     </div>
-                    <div style={{ ...lineStyle, color: "var(--text-2)" }}>
+                    <div className="pja-tc-line u-c-text-2">
                       {local || "\u00A0"}
                     </div>
-                    <div style={{ ...lineStyle, color: "var(--text-muted)" }}>
+                    <div className="pja-tc-line u-c-text-muted">
                       {shortDateSlash(tc.date)}
                       {!tc.agregado && (tc.totalRondas ?? tc.rounds.length) > 1 && <>
                         {" · "}
@@ -596,19 +589,15 @@ export function PJARankingView({
                           //    melhores: esbatida. Sem isto, a partir da 15ª
                           //    volta a linha deixava de somar para o total e
                           //    ninguém percebia porquê.
-                          const excludedStyle = res.excluded
-                            ? { opacity: 0.4, textDecoration: "line-through" as const }
-                            : !res.inTop14
-                              ? { opacity: 0.35 }
-                              : {};
+                          const excl = roundClass(res);
                           return (
                             <React.Fragment key={r.roundKey}>
-                              <td className={`cs-t-topar cs-grp ${tpTone}`} style={excludedStyle} title={cellTitle}>{tpStr}</td>
-                              <td className="cs-t-gross cs-col c-warn-dark" style={excludedStyle} title={cellTitle}>
+                              <td className={`cs-t-topar cs-grp ${tpTone}${excl}`} title={cellTitle}>{tpStr}</td>
+                              <td className={"cs-t-gross cs-col c-warn-dark" + excl} title={cellTitle}>
                                 {metric === "sd" ? (res.sd != null ? res.sd.toFixed(1) : "–") : fmtPts(res.pts)}
                               </td>
                               {showMeters && (
-                                <td className="cs-t-topar cs-col muted" style={{ fontVariantNumeric: "tabular-nums", ...excludedStyle }}
+                                <td className={"cs-t-topar cs-col muted u-fvn-tabular-nums" + excl}
                                     title={cellTitle}>
                                   {res.meters ? res.meters.toLocaleString("pt-PT") : "–"}
                                 </td>

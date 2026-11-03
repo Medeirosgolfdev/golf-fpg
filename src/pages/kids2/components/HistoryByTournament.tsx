@@ -26,6 +26,7 @@ import ShowMoreButton from "../../../ui/ShowMoreButton";
 import Sparkline from "../../../ui/Sparkline";
 import { TrophyPos } from "../../../ui/PosBadge";
 import SectionTitle from "../../../ui/SectionTitle";
+import { Tint } from "../../../ui/DataStyle";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -242,9 +243,9 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
           <div className="u-fs-fs-9 u-c-text-3 u-mt-1px">{fmtYear(last?.tournament.date)}</div>
         </div>
         {trend && (
-          <span className="trend-pill" style={{ background: trend.bg, color: trend.fg, borderColor: trend.fg }} title={trend.title}>
+          <Tint className="trend-pill" bg={trend.bg} fg={trend.fg} bd={trend.fg} title={trend.title}>
             {trend.icon} {trend.label}
-          </span>
+          </Tint>
         )}
       </div>
 
@@ -285,7 +286,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                     <td>{fmtYear(ed.tournament.date)}</td>
                     <td className="u-c-text-3">{ed.flight.label}</td>
                     <td className="u-ta-center"><TrophyPos pos={ed.result.pos} /></td>
-                    <td className="u-ta-center" style={{ color: topPct != null ? (topPct <= 10 ? "var(--medal-gold-strong)" : topPct <= 25 ? "var(--text-2)" : "var(--text-3)") : "var(--text-3)" }}>
+                    <td className={"u-ta-center " + (topPct != null && topPct <= 10 ? "u-c-medal-gold-strong" : topPct != null && topPct <= 25 ? "u-c-text-2" : "u-c-text-3")}>
                       {topPct != null ? `${topPct}%` : "—"}
                     </td>
                     <td className="u-ta-right">
@@ -305,11 +306,9 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                     <td className="u-ta-right">
                       <span className="u-d-inline-flex u-gap-3px u-fwr-nowrap">
                         {links.map((l) => (
-                          <ExtLink key={l.key + l.url} href={l.url}
-                            title={`Abrir em ${l.label}`}
-                            className="src-link-tag"
-                            style={{ color: `var(${l.colorVar})`, borderColor: `var(${l.colorVar})` }}
-                          >{l.label}</ExtLink>
+                          <Tint as={ExtLink} key={l.key + l.url} href={l.url} fg={`var(${l.colorVar})`} bd={`var(${l.colorVar})`}
+                            title={`Abrir em ${l.label}`} className="src-link-tag"
+                          >{l.label}</Tint>
                         ))}
                       </span>
                     </td>
@@ -343,21 +342,11 @@ function OneOffPill({ ed }: { ed: Edition }) {
   const pos = ed.result.pos;
   const isTop3 = typeof pos === "number" && pos <= 3;
   return (
-    <span style={{
-      fontSize: "var(--fs-11)",
-      padding: "3px 9px",
-      borderRadius: "var(--radius-pill)",
-      background: "var(--bg)",
-      border: `1px solid ${isTop3 ? trophyColor(pos) : "var(--border-light)"}`,
-      color: "var(--text-2)",
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 5,
-    }} title={`${ed.tournament.name || ""} · ${ed.flight.label}`}>
+    <Tint className="k2-oneoff-pill" bd={isTop3 ? trophyColor(pos) : null} title={`${ed.tournament.name || ""} · ${ed.flight.label}`}>
       <span className="u-c-text-3 u-fs-fs-10">{fmtYear(ed.tournament.date)}</span>
       <span className="u-fw-600">{shorten(ed.tournament.name || "")}</span>
       <TrophyPos pos={pos} small />
-    </span>
+    </Tint>
   );
 }
 

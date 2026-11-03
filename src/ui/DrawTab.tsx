@@ -561,11 +561,10 @@ export default function DrawTab({
     //
     // Linha fina (1px, um tom acima das linhas normais) — o mesmo aspecto do
     // scorecard, que não tem traços grossos (13/10/2026). A
-    // `ScorecardLeaderboard` aplica o `borderTop` nos <td> que controla
-    // (pos/nome/±Tot/buracos); aqui propagamos-o também aos <td> custom em
+    // `ScorecardLeaderboard` aplica o `groupSep` nos <td> que controla
+    // (pos/nome/±Tot/buracos); aqui propagamos a mesma classe aos <td> custom em
     // `prefixCells`/`postScorecardCells` para o traço atravessar a linha toda.
     const groupingActive = sortKey === "pos" || sortKey === "hora" || sortKey === "buraco";
-    const GROUP_BORDER = "2px solid var(--border)";
     return visibleSorted.map((p, i) => {
       // Por fed (FPG) OU por nome: nos draws MAJOR (fmDrawsToFpg) não há fed
       // nenhum (playersDB vazio) e o Manuel ficava sem .row-manuel/estrela.
@@ -574,8 +573,7 @@ export default function DrawTab({
       const age = ageAtDate(p.dob, effDate || undefined)
         ?? (p.dobYear != null && !p.dob && effDate ? Number(String(effDate).slice(0, 4)) - p.dobYear : null);
       const isFirstOfGroup = groupingActive && i > 0 && visibleSorted[i - 1].groupIdx !== p.groupIdx;
-      const borderTop = isFirstOfGroup ? GROUP_BORDER : undefined;
-      const bStyle = borderTop ? { borderTop } : undefined;
+      const bt = isFirstOfGroup ? " u-bt-2px-solid-border" : "";
       return {
         key: `${p.pos}-${p.fed ?? p.nome}`,
         pos: p.pos,
@@ -586,7 +584,7 @@ export default function DrawTab({
         isPortuguese: !manuel && p.isPortuguese,
         sortPos: p.pos,
         sortName: p.nome,
-        borderTop,
+        groupSep: isFirstOfGroup ? "strong" : undefined,
         // A bandeira é desenhada pelo próprio TournPName (resolve country por
         // fed/nome no playersDB). NÃO adicionar aqui uma CountryFlag por cima —
         // senão os estrangeiros ficam com a bandeira a dobrar.
@@ -621,12 +619,12 @@ export default function DrawTab({
           <>
             {showOm && (() => {
               const hit = lookupOm(omLookup, p.fed, p.nome);
-              return <td style={{ padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>
+              return <td className={"u-p-6px-8px u-ws-nowrap" + bt}>
                 {hit ? <OmCatBadge hit={hit} /> : MUTED}
               </td>;
             })()}
             {!hc.esc && (
-              <td className="lb-esc" style={bStyle}>
+              <td className={"lb-esc" + bt}>
                 {p.escHist ? <EscPill esc={p.escHist} /> : MUTED}
               </td>
             )}
@@ -638,28 +636,28 @@ export default function DrawTab({
                 birthYear: p.dobYear, birthYearEst: p.birthYearEst,
                 ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote }, effDate);
               return <>
-                <td className="lb-esc" title={bc.tip} style={bStyle}>{bc.nasc}</td>
-                <td className="lb-esc" title={bc.tip} style={bStyle}>{age != null && !p.dob && p.dobShown == null ? <BirthPill esc={escDoAno(p.dobYear, effDate)}>~{age}a</BirthPill> : bc.idade}</td>
+                <td className={"lb-esc" + bt} title={bc.tip}>{bc.nasc}</td>
+                <td className={"lb-esc" + bt} title={bc.tip}>{age != null && !p.dob && p.dobShown == null ? <BirthPill esc={escDoAno(p.dobYear, effDate)}>~{age}a</BirthPill> : bc.idade}</td>
               </>;
             })()}
-            {!hc.fed && <td className="lb-fed" style={bStyle}>{displayFed(p.fed) || "–"}</td>}
-            {!hc.clube && <td className="lb-club" title={p.countryEstimated ? `Estimativa — ${p.estNote || "país deduzido"}` : p.clube} style={bStyle}>{p.clube ? (p.countryEstimated ? <span className="est-value">{p.clube}</span> : p.clube) : "–"}</td>}
+            {!hc.fed && <td className={"lb-fed" + bt}>{displayFed(p.fed) || "–"}</td>}
+            {!hc.clube && <td className={"lb-club" + bt} title={p.countryEstimated ? `Estimativa — ${p.estNote || "país deduzido"}` : p.clube}>{p.clube ? (p.countryEstimated ? <span className="est-value">{p.clube}</span> : p.clube) : "–"}</td>}
             {!hc.hcp && (
-              <td className="lb-hcp" style={bStyle}
+              <td className={"lb-hcp" + bt}
                 title={p.hcpCurrent ? "HCP actual (federado) — snapshot do evento indisponível" : p.hcpEstimated ? `Estimativa — ${p.estNote || "sem fonte com o HCP"}` : undefined}>
                 {p.hcpCurrent ? <span className="u-c-color-danger u-fw-700">*</span> : null}{p.hcp != null ? (p.hcpEstimated ? <span className="est-value">{fmtHcp(p.hcp)}</span> : fmtHcp(p.hcp)) : "–"}
               </td>
             )}
-            {!hc.tee && <td className="lb-tee" style={bStyle}><TeeDot teeName={p.tee || teeName} /></td>}
+            {!hc.tee && <td className={"lb-tee" + bt}><TeeDot teeName={p.tee || teeName} /></td>}
           </>
         ),
         postScorecardCells: (
           <>
-            <td className="mono fs-10 fw-700" style={{ whiteSpace: "nowrap", textAlign: "center", ...bStyle }}>
+            <td className={"mono fs-10 fw-700 u-ws-nowrap u-ta-center" + bt}>
               {p.teeTime}
             </td>
             {showHole && (
-              <td className="fs-11" style={{ textAlign: "center", ...bStyle }}>
+              <td className={"fs-11 u-ta-center" + bt}>
                 {p.startHole != null ? `T${p.startHole}` : "–"}
               </td>
             )}

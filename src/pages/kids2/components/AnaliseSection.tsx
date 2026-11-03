@@ -30,6 +30,7 @@ import ComparisonDonut from "../../../ui/ComparisonDonut";
 import TabRow from "../../../ui/TabRow";
 import Select from "../../../ui/Select";
 import SectionTitle from "../../../ui/SectionTitle";
+import { Fill } from "../../../ui/DataStyle";
 
 type SubTab = "scoring" | "rounds" | "ninesplit" | "holes";
 
@@ -331,7 +332,7 @@ function RoundBar({ entry }: { entry: { tornLabel: string; round: number; gross:
       </div>
       <div className="u-d-flex u-h-14px u-br-radius-sm u-ov-hidden u-gap-1px u-bg-bg-muted">
         {segs.map((s) => (
-          <div key={s.k} style={{ flex: s.pct, background: s.color }} title={`${s.k}: ${s.pct.toFixed(0)}%`} />
+          <Fill key={s.k} pct={s.pct} bg={s.color} title={`${s.k}: ${s.pct.toFixed(0)}%`} />
         ))}
       </div>
       <div className="u-fs-fs-10 u-c-text-3 u-ta-right">
@@ -365,10 +366,9 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
         </div>
         <div className="u-d-flex u-h-10px u-br-radius-sm u-ov-hidden u-gap-1px u-bg-bg-muted">
           {(["eagles", "birdies", "pars", "bogeys", "dbPlus"] as const).map((k) => (
-            <div key={k} style={{
-              flex: (pp as Record<string, number>)[k],
-              background: k === "eagles" ? "var(--score-eagle)" : k === "birdies" ? "var(--score-birdie)" : k === "pars" ? "var(--score-par-seg)" : k === "bogeys" ? "var(--score-bogey-border)" : "var(--score-double)",
-            }} title={`${k}: ${(pp as Record<string, number>)[k].toFixed(0)}%`} />
+            <Fill key={k} pct={(pp as Record<string, number>)[k]}
+              bg={k === "eagles" ? "var(--score-eagle)" : k === "birdies" ? "var(--score-birdie)" : k === "pars" ? "var(--score-par-seg)" : k === "bogeys" ? "var(--score-bogey-border)" : "var(--score-double)"}
+              title={`${k}: ${(pp as Record<string, number>)[k].toFixed(0)}%`} />
           ))}
         </div>
         <div className="u-fs-fs-10 u-c-text-3 u-mt-4px">
@@ -454,10 +454,10 @@ function HolesPane({ player, field }: {
             return (
               <div key={r.hole} className="u-d-flex u-fd-column u-ai-center u-gap-2px u-h-100pc">
                 <div className="u-fl-1 u-d-flex u-ai-flex-end u-gap-1px u-w-100pc u-jc-center">
-                  <div title={`Jogador ${r.hole}: ${r.avg?.toFixed(2) ?? "—"}`}
-                    className="hole-bar u-bg-accent" style={{ height: `${pHeight}%`, minHeight: r.avg != null ? 2 : 0 }} />
-                  <div title={`Field ${r.hole}: ${r.fieldAvg?.toFixed(2) ?? "—"}`}
-                    className="hole-bar u-bg-text-3" style={{ height: `${fHeight}%`, minHeight: r.fieldAvg != null ? 2 : 0 }} />
+                  <Fill vertical pct={pHeight} title={`Jogador ${r.hole}: ${r.avg?.toFixed(2) ?? "—"}`}
+                    className={"hole-bar u-bg-accent" + (r.avg != null ? " hole-bar-min" : "")} />
+                  <Fill vertical pct={fHeight} title={`Field ${r.hole}: ${r.fieldAvg?.toFixed(2) ?? "—"}`}
+                    className={"hole-bar u-bg-text-3" + (r.fieldAvg != null ? " hole-bar-min" : "")} />
                 </div>
                 <div className="u-fs-fs-9 u-c-text-3">{r.hole}</div>
               </div>

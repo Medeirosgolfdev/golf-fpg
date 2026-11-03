@@ -12,6 +12,7 @@ import { fmtToPar } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
+import { Tint } from "./DataStyle";
 import { toneClass, fmtStb, fmtSdVal } from "../utils/scoreDisplay";
 import ExpandArrow from "./ExpandArrow";
 
@@ -242,7 +243,7 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
                 return (
                   <tr key={tr.scoreId} className="ec-round-row">
                     <td className="row-label fw-700">
-                      <span className="p p-sm" style={{ background: hx, color: fg }}>{trDate}</span>
+                      <Tint className="p p-sm" bg={hx} fg={fg}>{trDate}</Tint>
                     </td>
                     {Array.from({ length: Math.min(hc, 9) }, (_, i) => (
                       <td key={i}><ScoreCircle gross={trG[i]} par={parArr[i]} /></td>

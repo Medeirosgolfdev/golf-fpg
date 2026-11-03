@@ -144,9 +144,8 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
                 const hasCard = !!r.scorecard;
                 return (
                   <Fragment key={key}>
-                    <tr className={`roundRow${isOpen ? " pa-row-open" : ""}`}
-                      onClick={() => hasCard && toggle(key)}
-                      style={{ cursor: hasCard ? "pointer" : "default" }}>
+                    <tr className={`roundRow${isOpen ? " pa-row-open" : ""} ${hasCard ? "u-cur-pointer" : "u-cur-default"}`}
+                      onClick={() => hasCard && toggle(key)}>
                       <td>
                         <TeeDate date={r.date || ""} tee={r.scorecard?.teeName || ""} />
                         <div className="muted fs-10">#{r.scoreId}</div>

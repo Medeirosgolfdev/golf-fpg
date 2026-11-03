@@ -1,4 +1,4 @@
-﻿import { useMemo, useState, useEffect, Fragment, type ReactNode, type CSSProperties } from "react";
+﻿import { useMemo, useState, useEffect, Fragment, type ReactNode } from "react";
 import { SimuladorView } from "./SimuladorPage";
 import { CamposCompareView } from "./ComparePage";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -39,6 +39,7 @@ import { stripAccents } from "../utils/normName";
 import SearchInput from "../ui/SearchInput";
 import SexSelect from "../ui/SexSelect";
 import Select from "../ui/Select";
+import { Tint } from "../ui/DataStyle";
 import { MUTED } from "../ui/tableCells";
 import { toggleSet } from "../utils/mathUtils";
 
@@ -309,11 +310,15 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                 {sexes.flatMap((s) => {
                   const r = g.h18[s];
                   const teePar = teeParRange(g.teeHoles, 1, 18) ?? fallbackPar;
+                  // CR/Slope não publicados → em itálico, com a origem no title.
+                  const est = r ? g.teeBySex[s]?.ratings?.holes18?.estimado : undefined;
+                  const estCls = est ? " u-fst-italic" : "";
+                  const estTitle = est ? `ESTIMADO — ${est}` : undefined;
                   return [
-                    <td key={`r-${s}-cr`} className="ta-c u-fs-fs-12 sc-sep">
+                    <td key={`r-${s}-cr`} className={"ta-c u-fs-fs-12 sc-sep" + estCls} title={estTitle}>
                       {r ? fmtCR(r.cr) : ""}
                     </td>,
-                    <td key={`r-${s}-sl`} className="ta-c u-fs-fs-12 sc-sep-thin">
+                    <td key={`r-${s}-sl`} className={"ta-c u-fs-fs-12 sc-sep-thin" + estCls} title={estTitle}>
                       {r ? r.sl : ""}
                     </td>,
                     <td key={`r-${s}-sd`} className="ta-c sc-sep-thin sc-sdpar" title={SD_PAR_TITLE}>
@@ -735,7 +740,9 @@ const NO_TEE_LABEL = "Sem tee";
 
 /* ── Helpers de aspecto dos cartões por tee (partilhados KPIs + tabelas) ── */
 const teeTint = (c: string, pct: number) => `color-mix(in srgb, ${c} ${pct}%, var(--bg-card))`;
-const teeDot = (hex: string, sz = 12): CSSProperties => ({ width: sz, height: sz, borderRadius: "50%", background: hex, border: teeBorder(hex) || "1px solid rgba(0,0,0,0.15)", display: "inline-block", flex: "none" });
+/** Bolinha da cor do tee (11px no cartão do Manuel, 14px nos cartões por tee); os tees claros levam o contorno do `teeBorder`. */
+const TeeDot = ({ hex, sz }: { hex: string; sz: 11 | 14 }) =>
+  <Tint aria-hidden bg={hex} className={`campos-tee-dot is-${sz}` + (teeBorder(hex) ? " is-light" : "")} />;
 type TeeInfo = { dist: number; hex: string; group: PhysTeeGroup };
 /** Rótulo do tee de uma VOLTA: liga-a ao tee do campo (nome exacto, «Boys 12» ↔
  *  «USKids Boys 12», override do Manuel — resolvePlayedTee) e usa a cor real
@@ -899,8 +906,6 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
   const distFor = (label: string) => teeInfo.get(label)?.dist ?? 0;
   const voltaLabel = volta === "18" ? "18 buracos" : volta === "f9" ? "Front 9" : "Back 9";
 
-  const tint = teeTint;
-  const dotStyle = teeDot;
 
   const score = (val: number, tp: number | null) => (
     <span className="u-ta-right u-fw-600 u-fs-fs-13 u-ws-nowrap u-fvn-tabular-nums">
@@ -946,7 +951,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
       {/* Cartão do Manuel — recorde por tee */}
       {manuel.length > 0 && (
         <div className="u-br-radius-xl u-ov-hidden u-bd-1px-solid-accent u-bs-shadow-sm u-mb-12px">
-          <div className="tee-card-hdr manuel" style={{ background: tint("var(--accent)", 12) }}>
+          <div className="tee-card-hdr manuel campos-hdr-manuel">
             <span className="u-fs-fs-15">🧒 Manuel</span>
             <span className="muted u-fw-400 u-fs-fs-11">recorde por tee · {voltaLabel}</span>
           </div>
@@ -956,7 +961,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
               return (
                 <Fragment key={mr.label}>
                   <span className="u-d-inline-flex u-ai-center u-gap-8px u-fw-600 u-minw-0">
-                    <span aria-hidden style={dotStyle(hex, 11)} />
+                    <TeeDot hex={hex} sz={11} />
                     <span className="u-ov-hidden u-tov-ellipsis u-ws-nowrap">{mr.label}</span>
                     {distFor(mr.label) ? <span className="muted u-fw-400 u-fs-fs-10">{distFor(mr.label)}m</span> : null}
                   </span>
@@ -984,18 +989,18 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
             const dist = distFor(c.label);
             const escs = sortEscaloes([...c.esc.keys()]);
             return (
-              <div key={c.label} className="tee-card tee-card-flex" style={{ borderTopColor: stripe }}>
+              <Tint as="div" key={c.label} bd={stripe} className="tee-card tee-card-flex campos-tee-card">
                 {/* Header do tee (banda tingida) */}
-                <div className="tee-card-hdr" style={{ background: tint(hex, 13) }}>
+                <Tint as="div" bg={teeTint(hex, 13)} className="tee-card-hdr">
                   <div className="u-d-flex u-ai-center u-gap-8px">
-                    <span aria-hidden style={dotStyle(hex, 14)} />
+                    <TeeDot hex={hex} sz={14} />
                     <span className="u-fw-800 u-fs-fs-15">{c.label}</span>
                     <span className="muted u-fw-500 u-fs-fs-11 u-ml-auto u-ws-nowrap">{c.players.size} jog · {c.nRounds} voltas</span>
                   </div>
                   <div className="muted u-fs-fs-11 u-mt-2px u-pl-22px">
                     {dist ? <b className="u-fw-700">{dist} m</b> : null}{dist && rt ? " · " : ""}{rt ? `CR ${fmtCR(rt.cr)} · Slope ${rt.sl}` : ""}{!dist && !rt ? "—" : ""}
                   </div>
-                </div>
+                </Tint>
                 {/* Corpo: escalões — UMA grelha só (nomes alinhados verticalmente
                     entre todos os escalões). Escalão = pill na 1ª linha; 2º/3º com
                     nº; data+SD por baixo do nome (2ª linha, pequena). */}
@@ -1027,7 +1032,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
                     </div>
                   )}
                 </div>
-              </div>
+              </Tint>
             );
           })}
         </div>
@@ -1080,11 +1085,11 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
           const dist = info?.dist ?? 0;
           const rM = info?.group.h18.M, rF = info?.group.h18.F;
           return (
-            <div key={g.label} className="tee-card" style={{ borderTopColor: stripe }}>
+            <Tint as="div" key={g.label} bd={stripe} className="tee-card campos-tee-card">
               {/* Header do tee (banda tingida) — mesmo look dos KPIs */}
-              <div className="tee-card-hdr" style={{ background: teeTint(hex, 13) }}>
+              <Tint as="div" bg={teeTint(hex, 13)} className="tee-card-hdr">
                 <div className="u-d-flex u-ai-center u-gap-8px">
-                  <span aria-hidden style={teeDot(hex, 14)} />
+                  <TeeDot hex={hex} sz={14} />
                   <span className="u-fw-800 u-fs-fs-15">{g.label}</span>
                   <span className="muted u-fw-500 u-fs-fs-11 u-ml-auto u-ws-nowrap">{g.entries.length} jog.</span>
                 </div>
@@ -1095,12 +1100,12 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
                     {rF && <span className="u-d-inline-flex u-ai-center u-gap-4px"><SexBadge sex="F" /> CR {fmtCR(rF.cr)} · Slope {rF.sl}</span>}
                   </div>
                 )}
-              </div>
+              </Tint>
               {/* Tabela (sortável) sem o wrapper de secção */}
               <div className="u-p-6px-10px-8px">
                 <PlayersTable entries={g.entries} onSelectPlayer={onSelectPlayer} bare />
               </div>
-            </div>
+            </Tint>
           );
         })}
       </div>

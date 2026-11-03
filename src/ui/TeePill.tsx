@@ -9,6 +9,7 @@
  */
 
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
+import { Tint } from "./DataStyle";
 
 type Props = {
   /** Nome do tee (e.g. "Amarelas", "Whites") */
@@ -22,11 +23,8 @@ export default function TeePill({ name, hex }: Props) {
   const hx = hex || getTeeHex(name);
   const fg = textOnColor(hx);
   return (
-    <span
-      className="p p-tee"
-      style={{ background: hx, color: fg, border: teeBorder(hx) }}
-    >
+    <Tint className={teeBorder(hx) ? "p p-tee tee-bd-claro" : "p p-tee"} bg={hx} fg={fg}>
       {name}
-    </span>
+    </Tint>
   );
 }

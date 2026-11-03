@@ -2005,11 +2005,13 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
             const isIE = firstEntry && firstEntry.officialPlace == null;
             const displayPos = firstEntry?.officialPlace ?? null;
             const medalPos = displayPos ?? 99;
-            const medal = medalPos === 1 ? "var(--medal-gold-bg)" : medalPos === 2 ? "var(--medal-silver-bg)" : medalPos === 3 ? "var(--medal-bronze-bg)" : undefined;
-            const medalFg = medalPos === 1 ? "var(--medal-gold-fg)" : medalPos === 2 ? "var(--medal-silver-fg)" : medalPos === 3 ? "var(--medal-bronze-fg)" : "var(--text-2)";
+            const medalCls = medalPos === 1 ? "u-bg-medal-gold-bg u-c-medal-gold-fg"
+              : medalPos === 2 ? "u-bg-medal-silver-bg u-c-medal-silver-fg"
+              : medalPos === 3 ? "u-bg-medal-bronze-bg u-c-medal-bronze-fg"
+              : "u-bg-bg u-c-text-2";
             return (
               <tr key={pos} className={`u-bb-1px-solid-border-light${isIE ? " u-op-0_75" : ""}`}>
-                <td className="u-p-4px-8px u-fw-700 u-ta-center u-pos-sticky u-left-0 u-z-z-base u-ws-nowrap" style={{ color: medalFg, background: medal || "var(--bg)" }}>
+                <td className={`u-p-4px-8px u-fw-700 u-ta-center u-pos-sticky u-left-0 u-z-z-base u-ws-nowrap ${medalCls}`}>
                   {compareSel.checkbox(row.rank)}
                   {displayPos != null
                     ? `#${displayPos}`

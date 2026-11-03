@@ -6,14 +6,13 @@
  * do Campeonato Regional de Clubes (FPGPage), para o vocabulário visual ser o
  * MESMO em qualquer torneio de match play. `gap` é o espaço à direita (para a
  * marca respirar antes da bandeira/nome; 0 quando a marca está sozinha).
+ * Aspecto nas classes `.rm-*` (App.css).
  */
-import type { CSSProperties } from "react";
-
 export type ResultMarkKind = "win" | "loss" | "half";
 
-export default function ResultMark({ kind, gap = 6, style, className }: { kind: ResultMarkKind; gap?: number; style?: CSSProperties; className?: string }) {
-  const base: CSSProperties = { display: "inline-block", marginRight: gap, ...style };
-  if (kind === "win") return <span className={className} style={base} title="Ganhou">🏆</span>;
-  if (kind === "loss") return <span className={className} style={{ ...base, color: "var(--color-danger-dark)", fontWeight: 700 }} title="Perdeu">✗</span>;
-  return <span className={className} style={{ ...base, color: "var(--text-2)", fontWeight: 700 }} title="Empatado">½</span>;
+export default function ResultMark({ kind, gap = 6, className }: { kind: ResultMarkKind; gap?: 0 | 4 | 6; className?: string }) {
+  const cls = `rm-mark rm-gap-${gap}${className ? " " + className : ""}`;
+  if (kind === "win") return <span className={cls} title="Ganhou">🏆</span>;
+  if (kind === "loss") return <span className={cls + " rm-loss"} title="Perdeu">✗</span>;
+  return <span className={cls + " rm-half"} title="Empatado">½</span>;
 }

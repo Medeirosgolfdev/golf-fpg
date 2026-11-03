@@ -24,6 +24,7 @@ import { MUTED } from "../../../ui/tableCells";
 import { TrophyPos } from "../../../ui/PosBadge";
 import { toggleSet } from "../../../utils/mathUtils";
 import SectionTitle from "../../../ui/SectionTitle";
+import { Tint } from "../../../ui/DataStyle";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -314,16 +315,12 @@ function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
   );
 }
 
-// "Cor Manuel" — token oficial reservado no projecto. Partilhado com as 2
-// colunas Manuel em MatchupVsManuel. Definido em tokens.css como
-// --bg-success-subtle (comentário literal "highlight row Manuel"). Mesma
-// cor que .row-manuel em App.css.
-const MANUEL_TINT = "color-mix(in srgb, var(--bg-success-subtle) 35%, transparent)";
-
 function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: Row, round: number) => void; isExpanded?: boolean }) {
-  const bg = r.vsManuelDiff != null
-    ? MANUEL_TINT
-    : isExpanded ? "var(--bg-muted)" : undefined;
+  // Linha com confronto com o Manuel → "cor Manuel" (a das colunas Manuel em
+  // MatchupVsManuel, .k2-row-vs-manuel); aberta → fundo esbatido.
+  const rowCls = r.vsManuelDiff != null
+    ? "k2-row-vs-manuel"
+    : isExpanded ? "k2-row-open" : undefined;
   const parTotal = r.flight.par?.reduce((a, b) => a + (b || 0), 0) || r.tournament.parTotal;
   const rounds = r.result.rounds || [];
   const grosses = rounds.map((rd) => rd.gross).filter((g): g is number => typeof g === "number");
@@ -332,7 +329,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
   const categorizedLinks = categorizeTournamentLinks(r.tournament);
   const roundsWithStrokes = new Set(rounds.filter((rd) => rd.strokes && rd.strokes.some((s) => s > 0)).map((rd) => rd.round));
   return (
-    <tr style={{ background: bg }}>
+    <tr className={rowCls}>
       <td className="u-c-text-3">{fmtDayMonth(r.date)}</td>
       <td>
         <span className="u-fs-fs-9 u-p-1px-4px u-br-radius-sm u-bg-bg u-bd-1px-solid-border-light">
@@ -342,8 +339,8 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
       <td className="u-ta-center">
         <PosBadgeSmall pos={r.result.pos} status={r.result.status} />
         {r.topPct != null && (
-          <div className={"u-fs-fs-9 u-mt-1px " + (r.topPct <= 25 ? "u-fw-700" : "u-fw-400")}
-            style={{ color: r.topPct <= 10 ? "var(--medal-gold-strong)" : r.topPct <= 25 ? "var(--text-2)" : "var(--text-3)" }} title={`Posição como percentil do field (#${r.result.pos}/${r.flight.fieldSize})`}>
+          <div className={"u-fs-fs-9 u-mt-1px " + (r.topPct <= 10 ? "u-fw-700 u-c-medal-gold-strong" : r.topPct <= 25 ? "u-fw-700 u-c-text-2" : "u-fw-400 u-c-text-3")}
+            title={`Posição como percentil do field (#${r.result.pos}/${r.flight.fieldSize})`}>
             top {r.topPct}%
           </div>
         )}
@@ -375,15 +372,11 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
             return is9 ? <NineHPill /> : null;
           })()}
           {categorizedLinks.map((l) => (
-            <ExtLink
-              key={l.key + l.url}
-              href={l.url}
-              title={`Abrir em ${l.label}`}
-              className="src-link-tag"
-              style={{ color: `var(${l.colorVar})`, borderColor: `var(${l.colorVar})` }}
+            <Tint as={ExtLink} key={l.key + l.url} href={l.url} fg={`var(${l.colorVar})`} bd={`var(${l.colorVar})`}
+              title={`Abrir em ${l.label}`} className="src-link-tag"
             >
               {l.label} ↗
-            </ExtLink>
+            </Tint>
           ))}
         </div>
         {/* Field size REAL (do aggregator) — não confundir com results.length que

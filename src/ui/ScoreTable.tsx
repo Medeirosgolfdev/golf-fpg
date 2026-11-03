@@ -21,6 +21,7 @@ import {
   scoreDifferential,
 } from "../utils/whsCalc";
 import { textOnColor } from "../utils/teeColors";
+import { Tint } from "./DataStyle";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -257,102 +258,41 @@ export function MultiTeeSDTable({
 
   const hasNet = hi !== null;
   const colCount = hasNet ? 3 : 2; // Score, SD, [Net]
-  const ROW1_H = 30;
-  const stickyBase: React.CSSProperties = {
-    position: "sticky",
-    zIndex: "var(--z-float)" as React.CSSProperties["zIndex"],
-  };
-
+  // Aspecto nas classes .st-* (App.css); a cor de cada tee vem dos dados (Tint).
   return (
     <div className="sim-scroll-x scroll-x u-maxh-480px">
       <table className="dtable sim-multi-tee">
         <thead>
           {/* Row 1: tee color headers */}
           <tr>
-            <th
-              rowSpan={2}
-              className="uppercase"
-              style={{
-                ...stickyBase,
-                top: 0,
-                verticalAlign: "bottom",
-                minWidth: 50,
-                background: "var(--bg)",
-                borderBottom: "2px solid var(--border)",
-                padding: "6px 8px",
-                fontSize: "var(--fs-11)",
-                fontWeight: 600,
-                letterSpacing: "0.04em",
-                color: "var(--text-3)",
-                textAlign: "center",
-              }}
-            >
+            <th rowSpan={2} className="uppercase st-th-dp">
               ±Par
             </th>
             {cols.map((c, i) => (
-              <th
-                key={i}
-                colSpan={colCount}
-                style={{
-                  ...stickyBase,
-                  top: 0,
-                  background: c.hex,
-                  color: textOnColor(c.hex),
-                  textAlign: "center",
-                  padding: "5px 8px",
-                  fontSize: "var(--fs-11)",
-                  fontWeight: 700,
-                  letterSpacing: "0.03em",
-                  borderLeft: i > 0 ? "2px solid var(--border)" : undefined,
-                  borderBottom: "none",
-                }}
-              >
+              <Tint as="th" key={i} colSpan={colCount}
+                className={i > 0 ? "st-th-tee st-sep-l" : "st-th-tee"}
+                bg={c.hex} fg={textOnColor(c.hex)}>
                 {c.teeName}
-                <span
-                  className="op-7 fs-10 fw-400 u-ml-4px"
-
-                >
+                <span className="op-7 fs-10 fw-400 u-ml-4px">
                   {c.dist != null && <>{fmt(c.dist)}m · </>}CR {fmtCR(c.cr)} ·
                   SR {c.slope} · Par {c.par}
                 </span>
-              </th>
+              </Tint>
             ))}
           </tr>
-          {/* Row 2: sub-headers */}
+          {/* Row 2: sub-headers (linha de baixo na cor do tee) */}
           <tr>
-            {cols.map((c, i) => {
-              const base: React.CSSProperties = {
-                ...stickyBase,
-                top: ROW1_H,
-                zIndex: "var(--z-raised)" as React.CSSProperties["zIndex"],
-                background: "var(--bg)",
-                padding: "4px 8px",
-                fontSize: "var(--fs-10)",
-                fontWeight: 600,
-                letterSpacing: "0.04em",
-                color: "var(--text-3)",
-                textAlign: "right",
-                borderBottom: `3px solid ${c.hex}`,
-              };
-              return (
-                <React.Fragment key={i}>
-                  <th
-                    className="uppercase"
-                    style={{
-                      ...base,
-                      borderLeft:
-                        i > 0 ? "2px solid var(--border)" : undefined,
-                    }}
-                  >
-                    Score
-                  </th>
-                  <th className="uppercase" style={base}>
-                    {is9h ? (exp9 !== null ? "SD 18h" : "SD 9h") : "SD"}
-                  </th>
-                  {hasNet && <th style={base}>Net</th>}
-                </React.Fragment>
-              );
-            })}
+            {cols.map((c, i) => (
+              <React.Fragment key={i}>
+                <Tint as="th" className={i > 0 ? "uppercase st-th-sub st-sep-l" : "uppercase st-th-sub"} bd={c.hex}>
+                  Score
+                </Tint>
+                <Tint as="th" className="uppercase st-th-sub" bd={c.hex}>
+                  {is9h ? (exp9 !== null ? "SD 18h" : "SD 9h") : "SD"}
+                </Tint>
+                {hasNet && <Tint as="th" className="st-th-sub" bd={c.hex}>Net</Tint>}
+              </React.Fragment>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -367,35 +307,10 @@ export function MultiTeeSDTable({
                     prev === r.delta ? null : r.delta,
                   )
                 }
-                style={{
-                  cursor: "pointer",
-                  background: isSel ? "var(--accent-light)" : undefined,
-                  outline: isSel ? "2px solid var(--accent)" : undefined,
-                  outlineOffset: -1,
-                }}
-                className={["sim-row", isPar ? "sim-row-par" : ""].join(" ")}
+                className={["sim-row st-row", isPar ? "sim-row-par" : "", isSel ? "is-sel" : ""].filter(Boolean).join(" ")}
               >
                 {/* ±Par column */}
-                <td
-                  style={{
-                    fontWeight: 700,
-                    textAlign: "center",
-                    whiteSpace: "nowrap",
-                    padding: "5px 8px",
-                    fontSize: "var(--fs-12)",
-                    borderBottom: "1px solid var(--border-light)",
-                    background: isSel
-                      ? "var(--accent)"
-                      : isPar
-                        ? "var(--accent-light)"
-                        : undefined,
-                    color: isSel
-                      ? "var(--bg-card)"
-                      : isPar
-                        ? "var(--accent)"
-                        : undefined,
-                  }}
-                >
+                <td className={"st-td st-td-dp" + (isSel ? " is-sel" : isPar ? " is-par" : "")}>
                   {fmtToPar(r.delta)}
                 </td>
                 {r.cells.map((cell, i) => {
@@ -404,59 +319,23 @@ export function MultiTeeSDTable({
                   const isHcp =
                     col.playingHcp !== null &&
                     r.delta === Math.round(col.playingHcp);
-                  const hcpStyle: React.CSSProperties = isHcp
-                    ? {
-                        background: `${tHex}25`,
-                        borderTop: `2px solid ${tHex}`,
-                        borderBottom: `2px solid ${tHex}`,
-                      }
-                    : {};
-                  const tdBase: React.CSSProperties = {
-                    padding: "5px 8px",
-                    borderBottom: "1px solid var(--border-light)",
-                    ...hcpStyle,
-                  };
+                  // Linha do HCP de jogo: fundo e linhas na cor do tee.
+                  const hcpBg = isHcp ? `${tHex}25` : null;
+                  const hcpBd = isHcp ? tHex : null;
+                  const hcpCls = isHcp ? " st-hcp" : "";
                   return (
                     <React.Fragment key={i}>
-                      <td
-                        style={{
-                          ...tdBase,
-                          textAlign: "center",
-                          fontWeight: isHcp ? 800 : isPar ? 700 : 600,
-                          borderLeft:
-                            i > 0 ? "2px solid var(--border-light)" : undefined,
-                          color: isHcp
-                            ? "var(--grey-900)"
-                            : isPar
-                              ? "var(--accent)"
-                              : undefined,
-                        }}
-                      >
+                      <Tint as="td" bg={hcpBg} bd={hcpBd}
+                        className={"st-td st-td-score" + hcpCls + (!isHcp && isPar ? " is-par" : "") + (i > 0 ? " st-sep-l" : "")}>
                         {cell.score}
-                      </td>
-                      <td
-                        className="mono"
-                        style={{
-                          ...tdBase,
-                          textAlign: "right",
-                          fontSize: "var(--fs-12)",
-                          fontWeight: isHcp ? 700 : 600,
-                          color: isHcp ? "var(--grey-900)" : undefined,
-                        }}
-                      >
+                      </Tint>
+                      <Tint as="td" bg={hcpBg} bd={hcpBd} className={"mono st-td st-td-sd" + hcpCls}>
                         {fmtSD(cell.sd18)}
-                      </td>
+                      </Tint>
                       {hasNet && (
-                        <td
-                          style={{
-                            ...tdBase,
-                            textAlign: "right",
-                            color: isHcp ? "var(--grey-900)" : "var(--text-2)",
-                            fontWeight: isHcp ? 700 : 400,
-                          }}
-                        >
+                        <Tint as="td" bg={hcpBg} bd={hcpBd} className={"st-td st-td-net" + hcpCls}>
                           {cell.net ?? "–"}
-                        </td>
+                        </Tint>
                       )}
                     </React.Fragment>
                   );

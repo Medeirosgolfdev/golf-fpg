@@ -5,6 +5,7 @@ import { toneClass, scClass } from "../utils/scoreDisplay";
 import { sumArr } from "../utils/mathUtils";
 import KpiCard from "./KpiCard";
 import SectionTitle from "./SectionTitle";
+import { Fill } from "./DataStyle";
 
 /* ─── Heatmap de buracos: grelha 1×9 (9H) ou 2×9 (18H) ─── */
 function HoleHeatmap({ holes, hc }: { holes: HoleStatEntry[]; hc: number }) {
@@ -14,13 +15,14 @@ function HoleHeatmap({ holes, hc }: { holes: HoleStatEntry[]; hc: number }) {
 
   // Cor do fundo consoante strokesLost — gradiente suave (sem saturação cheia)
   // para dar leitura rápida sem ficar berrante.
-  const cellStyle = (sl: number, n: number): React.CSSProperties => {
-    if (n === 0) return { background: "var(--bg-detail)", color: "var(--text-muted)" };
-    if (sl <= -0.2) return { background: "var(--color-good-alpha)", color: "var(--text-1)", borderColor: "var(--color-good)" };
-    if (sl <= 0.15) return { background: "var(--bg-detail)", color: "var(--text-1)" };
-    if (sl <= 0.4) return { background: "var(--color-warn-alpha)", color: "var(--text-1)" };
-    if (sl <= 0.7) return { background: "var(--color-danger-alpha)", color: "var(--text-1)" };
-    return { background: "var(--color-danger-alpha)", color: "var(--color-danger-dark)", borderColor: "var(--color-danger)" };
+  // Cores nas classes .hs-heat-* (App.css).
+  const cellClass = (sl: number, n: number): string => {
+    if (n === 0) return "hs-heat-none";
+    if (sl <= -0.2) return "hs-heat-good";
+    if (sl <= 0.15) return "hs-heat-neutral";
+    if (sl <= 0.4) return "hs-heat-warn";
+    if (sl <= 0.7) return "hs-heat-bad";
+    return "hs-heat-worst";
   };
 
   return (
@@ -34,7 +36,7 @@ function HoleHeatmap({ holes, hc }: { holes: HoleStatEntry[]; hc: number }) {
                 const sl = h.strokesLost ?? 0;
                 const vp = h.avg != null && h.par != null ? h.avg - h.par : null;
                 return (
-                  <div key={h.h} className="heatmap-cell" style={cellStyle(sl, h.n)}
+                  <div key={h.h} className={`heatmap-cell ${cellClass(sl, h.n)}`}
                        title={h.n ? `Buraco ${h.h} · Par ${h.par} · média ${h.avg?.toFixed(1)} · ${fD(sl)} panc. perd./volta` : `Buraco ${h.h} — sem dados`}>
                     <div className="heatmap-hole">{h.h}</div>
                     <div className="heatmap-par">Par {h.par ?? "—"}</div>
@@ -94,7 +96,7 @@ function F9B9Comparison({ stats }: { stats: HoleStatsData }) {
         <div className="f9b9-dbl">{s.dblPct.toFixed(0)}% <span className="fs-10 c-text-3">double bogey ou pior</span></div>
         {d.total > 0 && (
           <div className="haParDistBar mt-6">
-            {segsOf(d).map(sg => sg.n > 0 ? <div key={sg.cls} className={`haDistSeg ${sg.cls}`} style={{ width: `${(sg.n / d.total * 100).toFixed(1)}%` }} title={`${sg.cls}: ${sg.n}`} /> : null)}
+            {segsOf(d).map(sg => sg.n > 0 ? <Fill key={sg.cls} className={`haDistSeg ${sg.cls}`} pct={`${(sg.n / d.total * 100).toFixed(1)}%`} title={`${sg.cls}: ${sg.n}`} /> : null)}
           </div>
         )}
       </div>
@@ -140,7 +142,7 @@ function ScoreDistributionChart({ td }: { td: HoleStatsData["totalDist"] }) {
             <div key={c.key} className="score-dist-col" title={`${c.label}: ${c.n} (${pct.toFixed(1)}%)`}>
               <div className="score-dist-val">{c.n > 0 ? c.n : ""}</div>
               <div className="score-dist-barwrap">
-                <div className={`score-dist-bar ${c.cls}`} style={{ height: `${barH}%` }} />
+                <Fill vertical className={`score-dist-bar ${c.cls}`} pct={barH} />
               </div>
               <div className="score-dist-pct">{pct.toFixed(1)}%</div>
               <div className="score-dist-lbl">{c.label}</div>
@@ -238,8 +240,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     {/* Barra simétrica centrada no zero: negativo à esquerda (verde), positivo à direita (vermelho) */}
                     <div className="par-type-bar-track">
                       <div className="par-type-zero" />
-                      <div className={`par-type-bar ${vp < 0 ? "bar-neg" : "bar-pos"} ${vpTone}`}
-                           style={{ width: `${pct / 2}%`, [vp < 0 ? "right" : "left"]: "50%" } as React.CSSProperties} />
+                      <Fill className={`par-type-bar ${vp < 0 ? "bar-neg" : "bar-pos"} ${vpTone}`} pct={pct / 2} />
                     </div>
                     <div className={`par-type-val ${vpTone}`}>{fD2(vp)}</div>
                     <div className="par-type-sl">{fD(g.strokesLostPerRound)} <span className="fs-10 c-text-3">p/volta</span></div>
@@ -247,7 +248,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     {distTotal > 0 && (
                       <div className="par-type-dist">
                         <div className="haParDistBar">
-                          {segs.map(sg => sg.n > 0 ? <div key={sg.cls} className={`haDistSeg ${sg.cls}`} style={{ width: `${(sg.n / distTotal * 100).toFixed(1)}%` }} title={`${sg.label}: ${sg.n}`} /> : null)}
+                          {segs.map(sg => sg.n > 0 ? <Fill key={sg.cls} className={`haDistSeg ${sg.cls}`} pct={`${(sg.n / distTotal * 100).toFixed(1)}%`} title={`${sg.label}: ${sg.n}`} /> : null)}
                         </div>
                         <div className="par-type-dist-nums">{pctF(g.dist.eagle + g.dist.birdie, distTotal)}% birdie+ · {pctF(g.dist.par, distTotal)}% par · {pctF(g.dist.bogey, distTotal)}% bogey · {pctF(g.dist.double + g.dist.triple, distTotal)}% double+</div>
                       </div>
@@ -430,16 +431,12 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                   <td className="fw-700 row-label c-text-3">Panc. perd.</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const sl = h.strokesLost ?? 0;
-                    let slBg = "";
-                    if (sl <= -0.3) slBg = "var(--color-good-alpha)";
-                    else if (sl <= 0.15) slBg = "";
-                    else if (sl <= 0.4) slBg = "var(--color-danger-alpha)";
-                    else if (sl <= 0.7) slBg = "var(--color-danger-alpha)";
-                    else slBg = "var(--color-danger)";
+                    // Fundo nas classes .hs-sl-* (App.css).
+                    const slBg = sl <= -0.3 ? " hs-sl-good" : sl <= 0.15 ? "" : sl <= 0.7 ? " hs-sl-bad" : " hs-sl-worst";
                     const slTone = sl <= -0.3 ? "tone-good" : sl <= 0.15 ? "tone-muted" : "tone-bad";
                     return (
                       <React.Fragment key={i}>
-                        <td className={`fw-700 ${slTone}`} style={{ background: slBg }}>{h.n > 0 ? fD(sl) : ""}</td>
+                        <td className={`fw-700 ${slTone}${slBg}`}>{h.n > 0 ? fD(sl) : ""}</td>
                         {i === fe - 1 && !is9 && (() => {
                           const outSL = stats.holes.slice(0, fe).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
                           return <td className={`fw-700 col-out ${outSL <= 0 ? "tone-good" : "tone-bad"}`}>{fD(outSL)}</td>;

@@ -12,13 +12,10 @@ export function AnoEscalaoPill({ dob, escalao }: { dob: string; escalao: string 
   const isUltimo = anoEscalao(dob, escalao) === "2A";
   const k = escCls(escalao || "");
   const cor = ESC_COM_COR.has(k);
-  const bg = cor ? `var(--esc-${k}-bg)` : "var(--text-3)";
+  // Cores em .ano-esc-pill (+ .ae-subNN · .ult) no App.css; sem escalão com cor → cinzento.
   return (
     <span title={isUltimo ? `${anoNasc} — 2.º ano do escalão` : `${anoNasc} — 1.º ano do escalão`}
-      className="ano-esc-pill"
-      style={{ borderColor: bg,
-        background: isUltimo ? bg : `color-mix(in srgb, ${bg} 22%, transparent)`,
-        color: isUltimo ? (cor ? `var(--esc-${k}-fg)` : "var(--text-on-color)") : `color-mix(in srgb, ${bg} 70%, var(--text))` }}>
+      className={"ano-esc-pill" + (cor ? " ae-" + k : "") + (isUltimo ? " ult" : "")}>
       {anoNasc}
     </span>
   );
