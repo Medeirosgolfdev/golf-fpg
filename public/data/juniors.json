@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T20:57:19.876Z",
+  "generatedAt": "2026-11-03T21:05:39.842Z",
   "juniors": [
     {
       "id": "u391389",
@@ -343521,7 +343521,7 @@
       "nationality": "SE",
       "country": "SE",
       "region": null,
-      "club": null,
+      "club": "Karlstads Golfklubb",
       "sources": {
         "uskids": {
           "memberId": "578672",
@@ -343531,6 +343531,10 @@
           {
             "sourceId": "coc",
             "key": "coc-9747601616172761375"
+          },
+          {
+            "sourceId": "manual",
+            "key": "golfing-222875"
           }
         ]
       },
@@ -343563,11 +343567,13 @@
         "confidence": "strong",
         "evidence": [
           "uskids:578672",
-          "coc:coc-9747601616172761375"
+          "coc:coc-9747601616172761375",
+          "manual:golfing-222875"
         ],
         "mergedFromSources": [
           "uskids",
-          "coc"
+          "coc",
+          "manual"
         ]
       }
     },
@@ -395531,11 +395537,11 @@
       "canonicalName": "Sander Lamooi",
       "aliases": [],
       "dob": null,
-      "sex": null,
+      "sex": "M",
       "nationality": "SE",
       "country": "SE",
       "region": null,
-      "club": null,
+      "club": "Ågesta Golfklubb",
       "sources": {
         "uskids": {
           "memberId": "592334",
@@ -395545,6 +395551,10 @@
           {
             "sourceId": "wjgc",
             "key": "sander lamooi|"
+          },
+          {
+            "sourceId": "manual",
+            "key": "golfing-264248"
           }
         ]
       },
@@ -395580,11 +395590,13 @@
         "confidence": "strong",
         "evidence": [
           "uskids:592334",
-          "wjgc:sander lamooi|"
+          "wjgc:sander lamooi|",
+          "manual:golfing-264248"
         ],
         "mergedFromSources": [
           "uskids",
-          "wjgc"
+          "wjgc",
+          "manual"
         ]
       }
     },
@@ -395783,7 +395795,7 @@
       "nationality": "SE",
       "country": "SE",
       "region": null,
-      "club": null,
+      "club": "Ingarö Golfklubb",
       "sources": {
         "uskids": {
           "memberId": "592380",
@@ -395797,6 +395809,10 @@
           {
             "sourceId": "coc",
             "key": "coc-12918237090709258346"
+          },
+          {
+            "sourceId": "manual",
+            "key": "golfing-202843"
           }
         ]
       },
@@ -395831,11 +395847,13 @@
         "evidence": [
           "uskids:592380",
           "coc:coc-10805239291249180672",
-          "coc:coc-12918237090709258346"
+          "coc:coc-12918237090709258346",
+          "manual:golfing-202843"
         ],
         "mergedFromSources": [
           "uskids",
-          "coc"
+          "coc",
+          "manual"
         ]
       }
     },
@@ -479135,16 +479153,22 @@
       "canonicalName": "Dante Nyman",
       "aliases": [],
       "dob": null,
-      "sex": null,
+      "sex": "M",
       "nationality": "SE",
       "country": "SE",
       "region": null,
-      "club": null,
+      "club": "Lidingö Golfklubb",
       "sources": {
         "uskids": {
           "memberId": "628923",
           "ageGroupCurrent": "Boys 12"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "manual",
+            "key": "golfing-248602"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-21131",
@@ -479167,10 +479191,12 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:628923"
+          "uskids:628923",
+          "manual:golfing-248602"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "manual"
         ]
       }
     },
@@ -485460,16 +485486,22 @@
       "canonicalName": "Wille Reis",
       "aliases": [],
       "dob": null,
-      "sex": null,
+      "sex": "M",
       "nationality": "SE",
       "country": "SE",
       "region": null,
-      "club": null,
+      "club": "Åkagårdens Golfklubb",
       "sources": {
         "uskids": {
           "memberId": "634322",
           "ageGroupCurrent": "Boys 12"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "manual",
+            "key": "golfing-204330"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-21080",
@@ -485493,10 +485525,12 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:634322"
+          "uskids:634322",
+          "manual:golfing-204330"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "manual"
         ]
       }
     },
@@ -2499046,7 +2499080,7 @@
     "probable": 4916,
     "manual": 0,
     "strongMerges": 10005,
-    "probableMerges": 20038,
+    "probableMerges": 20043,
     "manualMerges": 849,
     "collisionMerges": 189,
     "collisionSplits": 88,
