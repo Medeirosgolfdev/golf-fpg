@@ -37,6 +37,7 @@ import PlayerLink from "../ui/PlayerLink";
 import { stripAccents } from "../utils/normName";
 import SearchInput from "../ui/SearchInput";
 import SexSelect from "../ui/SexSelect";
+import Select from "../ui/Select";
 import { MUTED } from "../ui/tableCells";
 import { toggleSet } from "../utils/mathUtils";
 
@@ -1394,47 +1395,44 @@ export default function CamposPage() {
           title="Mostra os campos onde este jogador já jogou"
         />
         {playerMatches.length > 1 && (
-          <select className="select" value={playerPick || playerMatches[0].nfed} aria-label="Qual jogador"
+          <Select value={playerPick || playerMatches[0].nfed} aria-label="Qual jogador"
             title={`${playerMatches.length} jogadores com este nome`}
-            onChange={(e) => { setPlayerPick(e.target.value); selectCourse(null); }}>
+            onChange={(v) => { setPlayerPick(v); selectCourse(null); }}>
             {playerMatches.slice(0, 40).map((m) => <option key={m.nfed} value={m.nfed}>{m.name} ({m.nfed})</option>)}
             <option value="ALL">Todos ({playerMatches.length})</option>
-          </select>
+          </Select>
         )}
-        <select
-          className="select"
+        <Select
           value={originFilter}
-          onChange={(e) => { setOriginFilter(e.target.value as OriginFilter); setCountryFilter("ALL"); selectCourse(null); }}
+          onChange={(v) => { setOriginFilter(v as OriginFilter); setCountryFilter("ALL"); selectCourse(null); }}
         >
           <option value="ALL">Origem</option>
           <option value="PT">{"\ud83c\uddf5\ud83c\uddf9"} Portugal</option>
           <option value="INTL">{"\ud83c\udf0d"} Internacional</option>
           <option value="TOURN">{"\ud83c\udfc6"} Torneios</option>
           <option value="USKIDS">{"\u26f3"} USKids</option>
-        </select>
+        </Select>
         {originFilter !== "PT" && (
-          <select
-            className="select"
+          <Select
             value={countryFilter}
-            onChange={(e) => { setCountryFilter(e.target.value); selectCourse(null); }}
+            onChange={(v) => { setCountryFilter(v); selectCourse(null); }}
           >
             <option value="ALL">País</option>
             {intlCountries.map(({ key, label, flag }) => (
               <option key={key} value={key}>{flag} {label}</option>
             ))}
-          </select>
+          </Select>
         )}
         <SexSelect value={sexFilter} onChange={setSexFilter} allValue="ALL" />
-        <select
-          className="select"
+        <Select
           value={teeFilter}
-          onChange={(e) => setTeeFilter(e.target.value)}
+          onChange={setTeeFilter}
         >
           <option value="ALL">Todos os tees</option>
           {uniqueTees.map((t) => (
             <option key={t.hex} value={t.hex}>{t.label}</option>
           ))}
-        </select>
+        </Select>
         <Counter ml="auto">{filtered.length} campos</Counter>
         <Counter>{totalTees} tees</Counter>
         {intlCount > 0 && <Counter icon={"\ud83c\udf0d"}>{intlCount} intl</Counter>}

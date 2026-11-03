@@ -17,6 +17,7 @@ import { MUTED } from "./tableCells";
 import { TIER } from "../data/rivalData";
 import { TR_I } from "../constants/config";
 import TierLegend from "./TierLegend";
+import Select from "./Select";
 import { fmtSign } from "../utils/format";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
@@ -571,14 +572,14 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
       <div className="u-mb-8px">
         <div className="detail-toolbar u-fwr-wrap">
           <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input u-maxw-140px" />
-          <select value={fTour} onChange={e => setFTour(e.target.value)} className="select">
+          <Select value={fTour} onChange={setFTour}>
             <option value="all">Todos Torneios</option>
             {allTournCols.map(({ tid, info }) => <option key={tid} value={tid}>{info.short} {info.date}</option>)}
-          </select>
-          <select value={fCo} onChange={e => setFCo(e.target.value)} className="select">
+          </Select>
+          <Select value={fCo} onChange={setFCo}>
             <option value="all">🌍 País</option>
             {allCountries.map(c => <option key={c} value={c}>{flag(c)} {c}</option>)}
-          </select>
+          </Select>
           <button
             className={`p p-filter p-sm${showFilters ? " active" : ""} u-pos-relative`}
             onClick={() => setShowFilters(s => !s)}

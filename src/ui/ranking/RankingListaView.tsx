@@ -16,6 +16,7 @@ import { norm } from "../../utils/format";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { KidsLinkCtx } from "../KidsLink";
 import { RankingTable, type RankingCol } from "./RankingPage";
+import Select from "../Select";
 
 export interface RankingListaOpcao { key: string; label: ReactNode; count?: number }
 
@@ -72,9 +73,9 @@ export default function RankingListaView<T>({
           {listas.length <= MAX_BOTOES
             ? <TabRow ariaLabel="Lista" active={lista} onChange={onLista} tabs={listas} />
             : (
-              <select className="select" value={lista} onChange={(e) => onLista(e.target.value)} aria-label="Lista">
+              <Select value={lista} onChange={onLista} aria-label="Lista">
                 {listas.map((l) => <option key={l.key} value={l.key}>{l.label}{l.count != null ? ` (${l.count})` : ""}</option>)}
-              </select>
+              </Select>
             )}
           {onSexo && sexo && <SexSelect value={sexo} onChange={onSexo} />}
           <SearchInput value={q} onChange={setQ} placeholder="Jogador ou clube…" size="sm" />

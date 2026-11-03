@@ -19,7 +19,7 @@ import { MANUEL_DOB } from "../../../constants/manuel";
 import { cachedFetchJson } from "../../../data/fetchCache";
 import HcpSparkline from "./HcpSparkline";
 import BirthPill from "../../../ui/BirthPill";
-import { EscPill } from "../../../ui/PillBadge";
+import { EscPill, RankPill } from "../../../ui/PillBadge";
 import { shortDateSlash, fmtHcp, MONTHS_PT } from "../../../utils/format";
 import { stripAccents } from "../../../utils/normName";
 
@@ -472,14 +472,6 @@ function DobPill({ info, esc }: { info: DobInfo; esc?: string | null }) {
         </span>
       )}
     </BirthPill>
-  );
-}
-
-function RankPill({ label, value }: { label: string; value: number | string }) {
-  return (
-    <span className="u-bg-var-bg-warn-subtle-fef3c7 u-c-color-warn-dark u-fs-fs-11 u-p-3px-8px u-br-radius u-fw-700 u-bd-nmb3o">
-      🏆 {label} #{value}
-    </span>
   );
 }
 

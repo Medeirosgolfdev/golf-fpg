@@ -32,6 +32,7 @@ import { SIM_NAMED_PLAYERS, SIM_REGION, PERCURSO_COHORT_FEDS } from "../constant
 import { cachedFetchJson } from "../data/fetchCache";
 import { courseMatchKey, resolvePlayedTee } from "../utils/playedDistance";
 import ClearButton from "../ui/ClearButton";
+import Select from "../ui/Select";
 
 /* Jogadores do selector que não estão no players.json (Drive da Madeira e
  * escolhidos à mão) — gerado por scripts/build-simulador-players.js com o HI
@@ -1380,15 +1381,14 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
     <div className="sim-view">
       {/* Controlos do simulador (o campo e o sexo vêm da barra dos Campos) */}
       <div className="sim-controls">
-        <select className="select" value={holesMode} onChange={(e) => { setHolesMode(e.target.value as HolesMode); setSelectedTeeIdx(null); }}>
+        <Select value={holesMode} onChange={(v) => { setHolesMode(v as HolesMode); setSelectedTeeIdx(null); }}>
           <option value="18">18 buracos</option>
           <option value="front9">Front 9</option>
           <option value="back9">Back 9</option>
-        </select>
-        <select
-          className="select"
+        </Select>
+        <Select
           value={playerFed}
-          onChange={(e) => selectPlayer(e.target.value)}
+          onChange={selectPlayer}
           title="Escolhe um jogador para usar o HI real e simular o impacto de uma volta no handicap"
         >
           <option value="">Jogador (HI manual)</option>
@@ -1401,7 +1401,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
               ))}
             </optgroup>
           ))}
-        </select>
+        </Select>
         <input
           className="input col-w100"
           value={playerFed ? (playerHI != null ? String(playerHI) : "") : hiInput}
@@ -1413,19 +1413,19 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
           placeholder="HI (ex: 15,4)"
           title={playerFed ? "HI do jogador escolhido — escrever aqui passa para HI manual" : "HI escrito à mão"}
         />
-        <select className="select" value={pcc} onChange={(e) => setPcc(Number(e.target.value))}>
+        <Select value={pcc} onChange={(v) => setPcc(Number(v))}>
           {[-3, -2, -1, 0, 1, 2, 3].map((v) => (
             <option key={v} value={v}>{v === 0 ? "PCC 0" : v > 0 ? `PCC +${v}` : `PCC ${v}`}</option>
           ))}
-        </select>
-        <select className="select" value={allowance} onChange={(e) => setAllowance(Number(e.target.value))}>
+        </Select>
+        <Select value={allowance} onChange={(v) => setAllowance(Number(v))}>
           <option value={100}>100%</option>
           <option value={95}>95%</option>
           <option value={90}>90%</option>
           <option value={85}>85%</option>
           <option value={75}>75%</option>
           <option value={50}>50%</option>
-        </select>
+        </Select>
         <button
           type="button"
           className={`btn${manualMode ? " active" : ""}`}

@@ -20,6 +20,7 @@ import { CLUBES_GRUPOS_BY_YEAR } from "../../data/clubesGruposData";
 import TeamStrokeStandings from "../../ui/circuit/TeamStrokeStandings";
 import { buildClubesGrupos, buildClubesCategorias } from "../../data/teamStroke";
 import MatchplayView from "../../ui/circuit/MatchplayView";
+import EmptyState from "../../ui/EmptyState";
 import TeamPointsStandings from "../../ui/circuit/TeamPointsStandings";
 
 /** Aba com que um torneio de clubes abre (como na vista antiga). */
@@ -53,17 +54,6 @@ function MatchPlayBanner({ children }: { children: React.ReactNode }) {
     <div className="mp-banner">
       <span className="mp-banner-icon">🆚</span>
       <span>{children}</span>
-    </div>
-  );
-}
-
-/** Aviso centrado quando a aba Grupos não tem o que mostrar. */
-function GruposEmpty({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) {
-  return (
-    <div className="empty-state fs-13 c-muted">
-      <div className="mb-12 fs-24">{icon}</div>
-      <div className="fw-600 mb-6">{title}</div>
-      <div className="fs-12">{children}</div>
     </div>
   );
 }
@@ -107,9 +97,9 @@ function ClubesGruposTab({ t, playersDB }: { t: Tournament; playersDB: PlayersDB
       );
     }
     return (
-      <GruposEmpty icon="🆚" title="Match Play — classificação por pontos">
+      <EmptyState icon="🆚" title="Match Play — classificação por pontos"><div className="empty-body">
         {fmt.note}<br />A classificação por equipa (pontos) será apresentada quando os resultados forem publicados.<br />Vê as abas de resultados e o <strong>Draw</strong> para os emparelhamentos 3-way.
-      </GruposEmpty>
+      </div></EmptyState>
     );
   }
   // Torneios com categorias (ex: Regional Absoluto — Homens/Senhoras/Juniores)
@@ -132,15 +122,15 @@ function ClubesGruposTab({ t, playersDB }: { t: Tournament; playersDB: PlayersDB
     );
   }
   return (
-    <GruposEmpty icon="📋" title={`Vista de grupos não disponível para ${year}`}>
+    <EmptyState icon="📋" title={`Vista de grupos não disponível para ${year}`}><div className="empty-body">
       Os dados de composição de grupos desta edição não estão carregados.<br />Vê os resultados nas outras abas.
-    </GruposEmpty>
+    </div></EmptyState>
   );
 }
 
 function ClubesMatchplayTab({ t }: { t: Tournament }) {
   const mpData = useClubesMatchplay(t);
-  if (!mpData) return <GruposEmpty icon="🆚" title="Sem confrontos publicados">Os confrontos aparecem quando houver resultados.</GruposEmpty>;
+  if (!mpData) return <EmptyState icon="🆚" title="Sem confrontos publicados"><div className="empty-body">Os confrontos aparecem quando houver resultados.</div></EmptyState>;
   return (
     <>
       <MatchPlayBanner>Confrontos 3-way: uma coluna por clube, com o jogador e os pontos. Clica num confronto para ver os duelos e o buraco a buraco.</MatchPlayBanner>

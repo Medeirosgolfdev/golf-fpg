@@ -12,7 +12,7 @@
  *   tip                  — tooltip ℹ ao lado do label
  *   delta + deltaLabel   — linha de variação com cor automática (verde=desce)
  *   pct                  — mostra percentagem (0–1) como sub-linha
- *   size                 — "sm" (16px) | "md" (22px, padrão) | "lg" (28px)
+ *   size                 — "xs" (16px, cartão estreito e centrado, para cabeçalhos) | "sm" (16px) | "md" (22px, padrão) | "lg" (28px)
  *   accentBorder         — borda-esquerda colorida (estilo Aroeira2/ScoutView)
  *   align                — "center" para centrar (stats dos federados)
  *
@@ -40,8 +40,8 @@ interface KpiCardProps {
   fill?: "good" | "danger" | null;
   /** Percentagem 0–1 mostrada como sub-linha. */
   pct?: number;
-  /** Tamanho do valor: "sm" (16px) | "md" (22px, padrão) | "lg" (28px). */
-  size?: "sm" | "md" | "lg";
+  /** Tamanho do valor: "xs" (16px, cartão estreito e centrado) | "sm" (16px) | "md" (22px, padrão) | "lg" (28px). */
+  size?: "xs" | "sm" | "md" | "lg";
   /** Borda-esquerda colorida (realce por tom). */
   accentBorder?: string;
   /** Centrar conteúdo (cards de estatística). */
@@ -59,6 +59,7 @@ interface KpiCardProps {
 }
 
 const SIZE_CLASS: Record<string, string> = {
+  xs: "kpi-val fs-16",
   sm: "kpi-val fs-16",
   md: "kpi-val",
   lg: "kpi-val kpi-val-lg",
@@ -82,7 +83,7 @@ export default function KpiCard({
   } : null;
   const rootStyle: React.CSSProperties = {
     ...(accentBorder ? { borderLeft: `4px solid ${accentBorder}` } : null),
-    ...(align === "center" ? { alignItems: "center", textAlign: "center" } : null),
+    ...(align === "center" || size === "xs" ? { alignItems: "center", textAlign: "center" } : null),
     ...fillStyle,
     ...style,
   };
@@ -90,7 +91,7 @@ export default function KpiCard({
   // (a menos que uma cor explícita seja passada).
   const valColor = color ?? fillColor ?? undefined;
   return (
-    <div className={`kpi${className ? " " + className : ""}`}
+    <div className={`kpi${size === "xs" ? " kpi-xs" : ""}${className ? " " + className : ""}`}
       style={onClick ? { ...rootStyle, cursor: "pointer" } : rootStyle}
       onClick={onClick} title={title}>
       <div className="kpi-lbl" style={labelStyle}>

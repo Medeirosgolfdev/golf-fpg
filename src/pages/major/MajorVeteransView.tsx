@@ -28,6 +28,7 @@ import SearchInput from "../../ui/SearchInput";
 import { ToggleChip } from "../../ui/FilterField";
 import { MUTED } from "../../ui/tableCells";
 import ShowMoreButton from "../../ui/ShowMoreButton";
+import Select from "../../ui/Select";
 import { toggleSet } from "../../utils/mathUtils";
 
 interface VetPlayer {
@@ -166,15 +167,15 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
       {/* Toolbar de filtros */}
       <div className="u-d-flex u-gap-8px u-fwr-wrap u-ai-center u-m-8px-0-10px">
         <SearchInput value={q} onChange={setQ} placeholder="Nome ou país…" />
-        <select className="input" value={circuito} onChange={(e) => setCircuito(e.target.value)} title="Filtrar por circuito">
+        <Select value={circuito} onChange={setCircuito} title="Filtrar por circuito">
           <option value="">Todos os circuitos</option>
           {circuitos.map((s) => <option key={s} value={s}>{srcLabel(s)}</option>)}
-        </select>
+        </Select>
         <label className="fs-12 u-d-flex u-ai-center u-gap-4px">
           mín. torneios
-          <select className="input" value={minT} onChange={(e) => setMinT(Number(e.target.value))}>
+          <Select value={minT} onChange={(v) => setMinT(Number(v))}>
             {[2, 3, 4, 5, 6, 7, 8].map((n) => <option key={n} value={n}>{n}</option>)}
-          </select>
+          </Select>
         </label>
         <ToggleChip checked={onlyPt} onChange={setOnlyPt} label="🇵🇹 Só PT" title="Só jogadores portugueses / Manuel" />
         <ToggleChip checked={hideUsa} onChange={setHideUsa} label="🚫🇺🇸 Esconder EUA" title="Esconder jogadores dos EUA (destaca europeus)" />

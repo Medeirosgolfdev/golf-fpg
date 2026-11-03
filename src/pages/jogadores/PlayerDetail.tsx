@@ -37,6 +37,7 @@ import { MANUEL_FED } from "../../constants/manuel";
 import TabRow from "../../ui/TabRow";
 import SearchInput from "../../ui/SearchInput";
 import ErrorState from "../../ui/ErrorState";
+import Select from "../../ui/Select";
 // Draws (companheiros de jogo) — só na ficha do Manuel; saiu da barra (13/10/2026).
 const DrawsPage = lazy(() => import("../DrawsPage"));
 
@@ -329,14 +330,14 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                     absorve a "Análise por campo" (o detalhe expandido mostra
                     sempre a análise rica). Deep-links legados (?view=
                     by_tournament / by_course_analysis) continuam válidos. */}
-                <select className="select" value={viewBucket}
-                  onChange={e => setView(e.target.value as ViewKey)}>
+                <Select value={viewBucket}
+                  onChange={v => setView(v as ViewKey)}>
                   <option value="by_date">🗓 Rondas</option>
                   <option value="by_course">⛳ Campos</option>
                   <option value="analysis">📊 Análises</option>
                   {(temEclecticoSds || view === "eclectic_sds") && <option value="eclectic_sds">🏌️ Ecléticos</option>}
                   {fedId === MANUEL_FED && <option value="draws">🤝 Draws (companheiros)</option>}
-                </select>
+                </Select>
                 {viewBucket === "by_date" && (
                   <TabRow ariaLabel="Agrupamento das rondas" active={view === "by_tournament" ? "by_tournament" : "by_date"} onChange={setView}
                     tabs={[
@@ -345,12 +346,12 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                     ]} />
                 )}
                 {viewBucket === "by_course" && (
-                  <select className="select" value={courseSort}
-                    onChange={e => setCourseSort(e.target.value as CourseSort)}>
+                  <Select value={courseSort}
+                    onChange={v => setCourseSort(v as CourseSort)}>
                     <option value="last_desc">Mais recente</option>
                     <option value="count_desc">Mais jogados</option>
                     <option value="name_asc">Nome A–Z</option>
-                  </select>
+                  </Select>
                 )}
               </div>
             )}

@@ -136,10 +136,10 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
       </div>
 
       <div className="kpi-row u-m-0-0-12px">
-        <Stat value={String(rows.length)} label="encontros" />
-        <Stat value={draws > 0 ? `${wins}–${losses}–${draws}` : `${wins}–${losses}`} label={draws > 0 ? "V / D / E" : "vitórias / derrotas"} />
-        <Stat value={avgDiff != null ? fmtDiff(avgDiff) : "—"} label="dif. média (±par)" />
-        <Stat value={worst != null ? fmtDiff(worst) : "—"} label="pior margem" />
+        <KpiCard label="encontros" value={String(rows.length)} align="center" />
+        <KpiCard label={draws > 0 ? "V / D / E" : "vitórias / derrotas"} value={draws > 0 ? `${wins}–${losses}–${draws}` : `${wins}–${losses}`} align="center" />
+        <KpiCard label="dif. média (±par)" value={avgDiff != null ? fmtDiff(avgDiff) : "—"} align="center" />
+        <KpiCard label="pior margem" value={worst != null ? fmtDiff(worst) : "—"} align="center" />
       </div>
 
       <table className="dtable">
@@ -201,11 +201,6 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
 // (#c3f5dc, ligeiramente mais escuro para colunas).
 // Mesma cor usada nas linhas vs-Manuel do ResultsTimeline.
 // → classes .col-manuel-th / .col-manuel (App.css).
-
-/** Adaptador fino → definição única KpiCard. */
-function Stat({ value, label }: { value: string; label: string }) {
-  return <KpiCard label={label} value={value} align="center" />;
-}
 
 function ToParTag({ tp }: { tp: number | null | undefined }) {
   if (tp == null) return null;

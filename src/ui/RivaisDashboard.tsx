@@ -15,6 +15,7 @@ import TierLegend from "./TierLegend";
 import type { RivalPlayer, TournDef, RoundAvg } from "./bjgtAnalysisTypes";
 import ExtLink from "./ExternalLink";
 import { MUTED } from "./tableCells";
+import Select from "./Select";
 
 // DOB formatter — aceita YYYY-MM-DD, DD/MM/YYYY, ou outro; devolve "DD/MM/YY"
 function fmtDob(dob?: string): string {
@@ -247,10 +248,9 @@ export default function RivaisDashboard({
           className="input u-maxw-140px"
 
         />
-        <select
+        <Select
           value={fTour}
-          onChange={e => setFTour(e.target.value)}
-          className="select"
+          onChange={setFTour}
         >
           <option value="all">Todos Torneios</option>
           {T.map(t => (
@@ -258,11 +258,10 @@ export default function RivaisDashboard({
               {t.short}
             </option>
           ))}
-        </select>
-        <select
+        </Select>
+        <Select
           value={fUp}
-          onChange={e => setFUp(e.target.value)}
-          className="select"
+          onChange={setFUp}
         >
           <option value="all">Próximos: Todos</option>
           {UP.map(u => (
@@ -270,11 +269,10 @@ export default function RivaisDashboard({
               {u.name}
             </option>
           ))}
-        </select>
-        <select
+        </Select>
+        <Select
           value={fCo}
-          onChange={e => setFCo(e.target.value)}
-          className="select"
+          onChange={setFCo}
         >
           <option value="all">🌍 País</option>
           {allCountries.map(c => (
@@ -282,7 +280,7 @@ export default function RivaisDashboard({
               {countryFlag(c)} {c}
             </option>
           ))}
-        </select>
+        </Select>
         <label className="filter-checkbox">
           <input
             type="checkbox"

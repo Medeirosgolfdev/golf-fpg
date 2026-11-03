@@ -10,7 +10,9 @@ import { gf, isForeignPrefix } from "../../utils/flagUtils";
 import SexBadge from "../../ui/SexBadge";
 import EmptyState from "../../ui/EmptyState";
 import { HCP_BINS, emptyHcpBins, hcpBinKey, isCountableHcp } from "./hcpBins";
-import { barPct, KpiCard, MFBar, MFColumn, MFLegend } from "./statsWidgets";
+import { barPct, MFBar, MFColumn, MFLegend } from "./statsWidgets";
+import KpiCard from "../../ui/KpiCard";
+import { fmt } from "../../utils/format";
 import { ESC_IDX, type ViewMode } from "./filterPlayers";
 import { fmtHcp } from "../../utils/format";
 
@@ -83,13 +85,13 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
 
       {/* KPIs */}
       <div className="kpi-row">
-        <KpiCard label="Total" value={filtered.length} />
-        <KpiCard label={<><SexBadge sex="M" /> Masculino</>} value={male} pct={male / filtered.length} />
-        <KpiCard label={<><SexBadge sex="F" /> Feminino</>} value={female} pct={female / filtered.length} />
-        {withHcp > 0 && <KpiCard label="Com HCP" value={withHcp} sub={`média ${avgHcp.toFixed(1)}`} />}
-        {viewMode === "todos" && active2026 > 0 && <KpiCard label="Activos 2026" value={active2026} pct={active2026 / filtered.length} sub="com rondas" />}
+        <KpiCard label="Total" value={fmt(filtered.length)} />
+        <KpiCard label={<><SexBadge sex="M" /> Masculino</>} value={fmt(male)} pct={male / filtered.length} />
+        <KpiCard label={<><SexBadge sex="F" /> Feminino</>} value={fmt(female)} pct={female / filtered.length} />
+        {withHcp > 0 && <KpiCard label="Com HCP" value={fmt(withHcp)} sub={`média ${avgHcp.toFixed(1)}`} />}
+        {viewMode === "todos" && active2026 > 0 && <KpiCard label="Activos 2026" value={fmt(active2026)} pct={active2026 / filtered.length} sub="com rondas" />}
         {viewMode === "todos" && withAnalysis > 0 && cadastroOnly > 0 && (
-          <KpiCard label="🔍 Com análise" value={withAnalysis} sub={`+ ${cadastroOnly} cadastro`} />
+          <KpiCard label="🔍 Com análise" value={fmt(withAnalysis)} sub={`+ ${cadastroOnly} cadastro`} />
         )}
       </div>
 

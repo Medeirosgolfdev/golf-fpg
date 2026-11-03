@@ -64,6 +64,7 @@ import ClearButton from "../ClearButton";
 import TabRow from "../TabRow";
 import SearchInput from "../SearchInput";
 import SexSelect from "../SexSelect";
+import Select from "../Select";
 import { ToggleChip } from "../FilterField";
 import { toggleSet } from "../../utils/mathUtils";
 
@@ -645,25 +646,25 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
             </>
           )}
           {flt.escalao && (
-            <select className="input u-fs-fs-12 u-p-3px-6px" value={fEsc} onChange={e => setFEsc(e.target.value)}>
+            <Select variant="compact" value={fEsc} onChange={setFEsc}>
               <option value="all">🏆 Escalão</option>
               {escaloes.map(es => <option key={es} value={es}>{es}</option>)}
-            </select>
+            </Select>
           )}
           {flt.sex && (
-            <SexSelect className="input u-fs-fs-12 u-p-3px-6px" value={fSex} onChange={setFSex} allValue="all" />
+            <SexSelect variant="compact" value={fSex} onChange={setFSex} allValue="all" />
           )}
           {flt.source && sources.length > 1 && (
-            <select className="input u-fs-fs-12 u-p-3px-6px" value={fSource} onChange={e => setFSource(e.target.value)}>
+            <Select variant="compact" value={fSource} onChange={setFSource}>
               <option value="all">Fonte</option>
               {sources.map(s => <option key={s} value={s}>{config.sourceLabels?.[s] ?? s}</option>)}
-            </select>
+            </Select>
           )}
           {flt.liga && ligas.length > 1 && (
-            <select className="input u-fs-fs-12 u-p-3px-6px" value={fLiga} onChange={e => setFLiga(e.target.value)}>
+            <Select variant="compact" value={fLiga} onChange={setFLiga}>
               <option value="all">🇫🇷 Liga</option>
               {ligas.map(l => <option key={l} value={l}>{config.ligaLabels?.[l] ?? l}</option>)}
-            </select>
+            </Select>
           )}
           {flt.intl && (
             <button
@@ -684,17 +685,16 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
             </button>
           )}
           {(!!config.specialItems?.length || !!ranking?.inInfoMenu) && (
-            <select
-              className="input u-fs-fs-12 u-p-3px-6px"
+            <Select
+              variant="compact"
               value={infoView ?? ""}
-              onChange={e => setInfo(e.target.value || null)}
-
+              onChange={v => setInfo(v || null)}
               title="Páginas informativas"
             >
               <option value="">ⓘ Info</option>
               {(config.specialItems ?? []).map(si => <option key={si.key} value={si.key}>{si.label}</option>)}
               {ranking?.inInfoMenu && <option value={ranking.key}>{ranking.label}</option>}
-            </select>
+            </Select>
           )}
 
           {hasActiveFilters && (

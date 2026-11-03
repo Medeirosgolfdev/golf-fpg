@@ -4,10 +4,9 @@
  * Micro-widgets partilhados pelos painéis de estatísticas da JogadoresPage
  * (FederadosStatsPanel, FilteredStatsCard, DrillDownCard, HcpBinDrillCard).
  * Consolidação 2026-08-15: as barras stacked M/F horizontais/verticais e o
- * adaptador KpiCard numérico estavam duplicados por painel.
+ * adaptador KpiCard numérico estavam duplicados por painel (o adaptador saiu a
+ * 03/11/2026: os painéis usam o ui/KpiCard directamente).
  */
-import React from "react";
-import UiKpiCard from "../../ui/KpiCard";
 import SexBadge from "../../ui/SexBadge";
 
 /** Cores oficiais M/F (tokens.css). */
@@ -17,15 +16,6 @@ export const COL_F = "var(--badge-female)";
 /** Largura percentual de uma barra relativa ao máximo (mín. 2% para ser visível). */
 export function barPct(v: number, max: number): string {
   return `${Math.max(2, (v / Math.max(1, max)) * 100)}%`;
-}
-
-/* Adaptador fino (stats) → delega na definição única ui/KpiCard, com o mesmo
-   tamanho e alinhamento dos KPIs das outras vistas (30/10/2026: eram maiores e
-   centrados só aqui). Valor numérico formatado pt-PT, percentagem opcional. */
-export function KpiCard({ label, value, pct, sub }: {
-  label: React.ReactNode; value: number; pct?: number; sub?: string;
-}) {
-  return <UiKpiCard label={label} value={value.toLocaleString("pt-PT")} pct={pct} sub={sub} />;
 }
 
 /** Barra horizontal stacked M/F sobre fundo subtle. `widthPct` = largura da

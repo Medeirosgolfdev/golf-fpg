@@ -38,6 +38,7 @@ import ExpandArrow from "../../ui/ExpandArrow";
 import SearchInput from "../../ui/SearchInput";
 import ErrorState from "../../ui/ErrorState";
 import SexSelect from "../../ui/SexSelect";
+import Select from "../../ui/Select";
 import { ToggleChip } from "../../ui/FilterField";
 import { toggleSet } from "../../utils/mathUtils";
 
@@ -282,14 +283,14 @@ export function FFGPlayersView() {
       <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-12px-0">
         <SearchInput value={q} onChange={setQ} placeholder="Nome, licença ou clube…" size="full" className="u-maxw-360px" />
         <SexSelect value={sex} onChange={setSex} allValue="" />
-        <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input u-w-170px">
+        <Select variant="filter" value={cat} onChange={setCat} className="u-w-170px">
           <option value="ALL">Todas as categorias</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
-        <select value={region} onChange={(e) => setRegion(e.target.value)} className="filter-input u-w-190px">
+        </Select>
+        <Select variant="filter" value={region} onChange={setRegion} className="u-w-190px">
           <option value="ALL">Todas as ligues</option>
           {regionOptions.map((r) => <option key={r} value={r}>{r}</option>)}
-        </select>
+        </Select>
         <ToggleChip checked={jovens} onChange={setJovens} label="🧒 Só Jovens"
           title="Só séries juvenis (Poucet, Poussin, Benjamin, Minime, Cadet, Junior / U8-U21)" />
         <span className="muted fs-12 u-ml-auto">

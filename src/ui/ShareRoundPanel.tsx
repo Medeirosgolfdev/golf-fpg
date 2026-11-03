@@ -12,6 +12,7 @@ import type { OverlayData } from "./overlay/types";
 import type { Tournament } from "../data/fpgTypes";
 import { shareOptionsForRounds, shareOptionsForTournament } from "./overlay/shareOptions";
 import LoadingState from "./LoadingState";
+import Select from "./Select";
 
 const OverlayExport = lazy(() => import("./OverlayExport"));
 const RoundAnalysisPanel = lazy(() => import("./RoundAnalysisPanel"));
@@ -32,9 +33,9 @@ export default function ShareRoundPanel({ options, defaultKey }: { options: Shar
           {options.length > 1 && (
             <label className="fs-12 mb-8" style={{ display: "flex", alignItems: "center", gap: 8 }}>
               Jogador
-              <select className="input" value={cur.key} onChange={(e) => setSel(e.target.value)}>
+              <Select value={cur.key} onChange={setSel}>
                 {options.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}
-              </select>
+              </Select>
             </label>
           )}
           <Suspense fallback={<LoadingState size="sm" message="A carregar…" />}>

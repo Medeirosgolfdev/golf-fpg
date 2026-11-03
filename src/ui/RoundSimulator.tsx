@@ -21,6 +21,7 @@ import { SDPill } from "./tournamentPrimitives";
 import ExpandArrow from "./ExpandArrow";
 import CloseButton from "./CloseButton";
 import NumberInput from "./NumberInput";
+import Select from "./Select";
 
 type PoolSortKey = "whs" | "date" | "course" | "hcp" | "tee" | "gross" | "sd" | "sdAdj" | "top";
 
@@ -1248,10 +1249,9 @@ export function RoundSimulator({
 
                 {/* PCC do dia — só quando o SD sai de um gross */}
                 {round.mode !== "sd" && (
-                  <select
-                    className="select fs-12"
+                  <Select
                     value={round.pccInput || "0"}
-                    onChange={(e) => updateRound(round.id, { pccInput: e.target.value })}
+                    onChange={(v) => updateRound(round.id, { pccInput: v })}
                     title="PCC (Playing Conditions Calculation) do dia"
                   >
                     {[-1, 0, 1, 2, 3].map((v) => (
@@ -1259,7 +1259,7 @@ export function RoundSimulator({
                         {v === 0 ? "PCC 0" : v > 0 ? `PCC +${v}` : `PCC ${v}`}
                       </option>
                     ))}
-                  </select>
+                  </Select>
                 )}
 
                 {/* Resultado inline */}
@@ -1420,15 +1420,14 @@ export function RoundSimulator({
                   </>
                 ) : (
                   <>
-                    <select
-                      className="select u-minw-180px u-maxw-320px"
+                    <Select
+                      className="u-minw-180px u-maxw-320px"
                       value={round.courseKey}
-                      onChange={(e) =>
+                      onChange={(v) =>
                         updateRound(round.id, {
-                          courseKey: e.target.value,
+                          courseKey: v,
                         })
                       }
-
                     >
                       {allRatedCourses.map((c) => (
                         <option key={c.courseKey} value={c.courseKey}>
@@ -1438,19 +1437,18 @@ export function RoundSimulator({
                           {c.master.name}
                         </option>
                       ))}
-                    </select>
+                    </Select>
                     {playerSex && (
                       <SexBadge
                         sex={playerSex}
                         className="fs-11"
                       />
                     )}
-                    <select
-                      className="select"
+                    <Select
                       value={teeId}
-                      onChange={(e) =>
+                      onChange={(v) =>
                         updateRound(round.id, {
-                          teeId: e.target.value,
+                          teeId: v,
                         })
                       }
                       disabled={validTees.length === 0}
@@ -1485,7 +1483,7 @@ export function RoundSimulator({
                           </option>
                         );
                       })}
-                    </select>
+                    </Select>
                     <label
                       className="fs-13 fw-600 u-d-flex u-ai-center u-gap-6px"
 

@@ -30,6 +30,7 @@ import { stripAccents } from "../../utils/normName";
 import SearchInput from "../../ui/SearchInput";
 import ErrorState from "../../ui/ErrorState";
 import { ToggleChip } from "../../ui/FilterField";
+import Select from "../../ui/Select";
 import { toggleSet } from "../../utils/mathUtils";
 
 /** [trnId|null, data ISO, nome, lugar, voltas, pontos, Moy.SSS] */
@@ -164,10 +165,10 @@ export function FFGMeriteView() {
         <TabRow active={sex} onChange={(s) => { setSex(s); setCat("ALL"); }} tabs={[
           { key: "M" as const, label: "Garçons" }, { key: "F" as const, label: "Filles" },
         ]} />
-        <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input u-w-170px">
+        <Select variant="filter" value={cat} onChange={setCat} className="u-w-170px">
           <option value="ALL">Todos os escalões</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
+        </Select>
         <SearchInput value={q} onChange={setQ} placeholder="Nome ou clube…" size="full" className="u-maxw-320px" />
         <ToggleChip checked={soClass} onChange={setSoClass} label="Só classificados"
           title="O Mérite só classifica quem tem provas suficientes; os outros aparecem sem lugar" />

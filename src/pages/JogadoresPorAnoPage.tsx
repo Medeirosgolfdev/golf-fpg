@@ -52,6 +52,7 @@ import ErrorState from "../ui/ErrorState";
 import SexSelect from "../ui/SexSelect";
 import { ToggleChip } from "../ui/FilterField";
 import NumberInput from "../ui/NumberInput";
+import Select from "../ui/Select";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -92,11 +93,6 @@ function FormBadge({ ps }: { ps: PlayerStats | undefined }) {
       {ps.formAlert === "hot" ? "🔥" : "🧊"}
     </span>
   );
-}
-
-/** Adaptador fino → definição única KpiCard (compacto, centrado). */
-function Kpi({ label, value, sub, title }: { label: string; value: React.ReactNode; sub?: string; title?: string }) {
-  return <KpiCard label={label} value={value} sub={sub} title={title} size="sm" align="center" className="u-minw-86px u-p-8px-10px" />;
 }
 
 /* ─────────────────────────────────────────────────────────────── */
@@ -299,11 +295,11 @@ export default function JogadoresPorAnoPage() {
     const m = metricsOf(rows);
     return (
       <span className="u-d-inline-flex u-ai-center u-gap-6px u-ml-auto u-fwr-wrap">
-        <Kpi label="Sexo" value={<span className="u-d-inline-flex u-gap-4px u-fs-fs-14 u-ai-center"><SexBadge sex="M" />{m.nM} <SexBadge sex="F" />{m.nF}</span>} />
-        <Kpi label="HCP médio" value={fmtHcp(m.avgHcp)} />
-        <Kpi label="Melhor HCP" value={fmtHcp(m.bestHcp)} />
-        <Kpi label="Rondas 12m" value={m.avgR12 == null ? "—" : m.avgR12.toFixed(1)} sub="média" />
-        <Kpi label="Activos 12m" value={m.nActive} sub={`de ${rows.length}`}
+        <KpiCard size="xs" label="Sexo" value={<span className="u-d-inline-flex u-gap-4px u-fs-fs-14 u-ai-center"><SexBadge sex="M" />{m.nM} <SexBadge sex="F" />{m.nF}</span>} />
+        <KpiCard size="xs" label="HCP médio" value={fmtHcp(m.avgHcp)} />
+        <KpiCard size="xs" label="Melhor HCP" value={fmtHcp(m.bestHcp)} />
+        <KpiCard size="xs" label="Rondas 12m" value={m.avgR12 == null ? "—" : m.avgR12.toFixed(1)} sub="média" />
+        <KpiCard size="xs" label="Activos 12m" value={m.nActive} sub={`de ${rows.length}`}
           title="Jogadores que fizeram pelo menos 1 ronda nos últimos 12 meses" />
       </span>
     );
@@ -387,10 +383,10 @@ export default function JogadoresPorAnoPage() {
 
         <SexSelect value={sexFilter} onChange={setSexFilter} allValue="ALL" />
 
-        <select className="select" value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
+        <Select value={regionFilter} onChange={setRegionFilter}>
           <option value="ALL">Região (todas)</option>
           {regions.map(r => <option key={r} value={r}>{r}</option>)}
-        </select>
+        </Select>
 
         <NumberInput variant="select" className="u-w-92px" placeholder="HCP máx"
           value={hcpMax} onChange={setHcpMax}

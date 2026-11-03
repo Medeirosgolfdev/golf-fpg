@@ -30,6 +30,7 @@ import { useScoutRanking } from "./useScoutRanking";
 import { medal as medalOf } from "../../utils/format";
 import SearchInput from "../../ui/SearchInput";
 import TierBadge from "../../ui/TierBadge";
+import { TrophyCount } from "../../ui/PillBadge";
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -151,7 +152,7 @@ function NameCell({ row }: { row: CohortRow }) {
         </Link>
         <TierBadge tier={entry.tier} />
         {wins > 0 && (
-          <span className="u-fs-fs-11 u-c-medal-gold-strong u-fw-600">{wins}× 🏆</span>
+          <TrophyCount n={wins} />
         )}
         {top3 > wins && (
           <span className="u-fs-fs-11 u-c-text-3">Top3: {top3}</span>

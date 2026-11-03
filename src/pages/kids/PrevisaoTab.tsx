@@ -32,6 +32,7 @@ import { buildReach, notReachableHoles } from "../../utils/reach";
 import EmptyState from "../../ui/EmptyState";
 import LoadingState from "../../ui/LoadingState";
 import { MUTED } from "../../ui/tableCells";
+import Select from "../../ui/Select";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -234,10 +235,10 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
         </label>
         <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
           Allowance
-          <select className="select fs-13 u-w-84px" value={allowance}
-            onChange={e => setAllowance(parseInt(e.target.value, 10))}>
+          <Select className="fs-13 u-w-84px" value={allowance}
+            onChange={v => setAllowance(parseInt(v, 10))}>
             {ALLOWANCES.map(a => <option key={a} value={a}>{a}%</option>)}
-          </select>
+          </Select>
         </label>
         <label className="u-d-flex u-fd-column u-gap-3px u-fs-fs-11 u-c-text-3">
           Drive (m)

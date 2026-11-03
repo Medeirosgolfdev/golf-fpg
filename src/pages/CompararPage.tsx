@@ -34,6 +34,7 @@ import SortableHdr from "../ui/SortableHdr";
 import { tpColor } from "../ui/tournamentPrimitives";
 import SearchInput from "../ui/SearchInput";
 import CloseButton from "../ui/CloseButton";
+import Select from "../ui/Select";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
 const COLORS = [C.chartGreen, C.chartBlue, C.chartRed, C.chartAmber];
@@ -455,9 +456,9 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
     <div className="courseAnalysis">
       <div className="caTitle u-d-flex u-ai-center u-gap-10px u-fwr-wrap">
         Buraco a Buraco
-        <select className="select" value={sel} onChange={e => setSel(Number(e.target.value))}>
+        <Select value={sel} onChange={v => setSel(Number(v))}>
           {combos.map((c, i) => <option key={i} value={i}>{c.label} ({c.nRounds.filter(n => n > 0).join("/")} rondas)</option>)}
-        </select>
+        </Select>
       </div>
 
       <svg viewBox={`0 0 ${W} ${H}`} className="u-w-100pc u-maxh-230px u-mt-8px">
@@ -686,9 +687,9 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
     <div className="courseAnalysis">
       <div className="caTitle u-d-flex u-ai-center u-gap-10px">
         Evolução HCP
-        <select className="select" value={period} onChange={e => setPeriod(Number(e.target.value))}>
+        <Select value={period} onChange={v => setPeriod(Number(v))}>
           <option value={0}>Total</option><option value={36}>3 anos</option><option value={24}>2 anos</option><option value={12}>1 ano</option><option value={6}>6 meses</option>
-        </select>
+        </Select>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} className="u-w-100pc u-maxh-280px u-bg-bg-subtle u-br-radius-lg u-bd-1px-solid-border-light">
         {Array.from({ length: 5 }, (_, i) => { const val = minH - padH + (rangeH + 2 * padH) * (i / 4); return (<g key={i}><line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="var(--border)" strokeWidth={0.5} /><text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{val.toFixed(1)}</text></g>); })}

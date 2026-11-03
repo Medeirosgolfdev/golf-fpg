@@ -23,6 +23,7 @@ import type { PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import SearchInput from "./SearchInput";
 import TeeSwatch from "./TeeSwatch";
+import Select from "./Select";
 
 /* ── Sexo por nome (entradas kids:* do playersDB com sex) ── */
 
@@ -144,11 +145,10 @@ function FilterBarView({ filter, onChange, total, shown, escs, tees, clubs, sexe
         );
       })}
       {clubs.length > 2 && (
-        <select value={filter.club} onChange={(e) => onChange({ ...filter, club: e.target.value })} className="select-compact"
-          style={{ border: `1px solid ${filter.club ? "var(--accent)" : "var(--border)"}`, fontWeight: filter.club ? 700 : 400 }}>
+        <Select variant="compact" active={!!filter.club} value={filter.club} onChange={(v) => onChange({ ...filter, club: v })}>
           <option value="">Todos os clubes</option>
           {clubs.map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
+        </Select>
       )}
       {sexes.length === 2 && (
         <>

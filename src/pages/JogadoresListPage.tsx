@@ -60,6 +60,7 @@ import { ESC_ORDER_FULL as ESC_ORDER } from "../constants/escaloes";
 import SearchInput from "../ui/SearchInput";
 import ErrorState from "../ui/ErrorState";
 import SexSelect from "../ui/SexSelect";
+import Select from "../ui/Select";
 import { MUTED } from "../ui/tableCells";
 import NumberInput from "../ui/NumberInput";
 
@@ -493,26 +494,26 @@ export default function JogadoresListPage() {
         </FilterField>
 
         <FilterField label="ESCALÃO">
-          <select value={escalao} onChange={e => setEscalao(e.target.value)} className="filter-input">
+          <Select variant="filter" value={escalao} onChange={setEscalao}>
             <option value="ALL">Todos</option>
             {escaloesPresentes.map(esc => (
               <option key={esc} value={esc}>{esc}</option>
             ))}
-          </select>
+          </Select>
         </FilterField>
 
         <FilterField label="CLUBE">
-          <select
+          <Select
+            variant="filter"
             value={clubFilter}
-            onChange={e => setClubFilter(e.target.value)}
-            className="filter-input"
+            onChange={setClubFilter}
             title="Filtrar por clube (ordenado por nº de jogadores)"
           >
             <option value="ALL">Todos</option>
             {clubOptions.map(c => (
               <option key={c.code} value={c.code}>{c.label}</option>
             ))}
-          </select>
+          </Select>
         </FilterField>
 
         <FilterField label="ANO NASCIMENTO (DE / A)">
@@ -530,32 +531,32 @@ export default function JogadoresListPage() {
         </FilterField>
 
         <FilterField label="ESTADO HCP">
-          <select value={hcpStatus} onChange={e => setHcpStatus(e.target.value)} className="filter-input">
+          <Select variant="filter" value={hcpStatus} onChange={setHcpStatus}>
             <option value="ALL">Todos</option>
             {hcpStatusOptions.map(([id, label]) => (
               <option key={id} value={id}>{label}</option>
             ))}
-          </select>
+          </Select>
         </FilterField>
 
         <FilterField label="SEXO">
-          <SexSelect className="filter-input" value={sex} onChange={setSex} allValue="ALL" />
+          <SexSelect variant="filter" value={sex} onChange={setSex} allValue="ALL" />
         </FilterField>
 
         <FilterField label="AM / PRO">
-          <select value={tipo} onChange={e => setTipo(e.target.value as typeof tipo)} className="filter-input">
+          <Select variant="filter" value={tipo} onChange={v => setTipo(v as typeof tipo)}>
             <option value="ALL">Todos</option>
             <option value="1">Amador</option>
             <option value="2">Profissional</option>
-          </select>
+          </Select>
         </FilterField>
 
         <FilterField label="ESTADO FEDERATIVO">
-          <select value={fedStatus} onChange={e => setFedStatus(e.target.value as typeof fedStatus)} className="filter-input">
+          <Select variant="filter" value={fedStatus} onChange={v => setFedStatus(v as typeof fedStatus)}>
             <option value="ALL">Todos</option>
             <option value="9">Activo</option>
             <option value="7">Inactivo</option>
-          </select>
+          </Select>
         </FilterField>
       </div>
 

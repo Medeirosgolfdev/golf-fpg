@@ -38,6 +38,7 @@ import TabRow from "../../ui/TabRow";
 import CloseButton from "../../ui/CloseButton";
 import SearchInput from "../../ui/SearchInput";
 import SexSelect from "../../ui/SexSelect";
+import Select from "../../ui/Select";
 import { MUTED } from "../../ui/tableCells";
 import { regionLabel } from "../../data/drive/driveRegions";
 import DriveSeason from "./DriveSeason";
@@ -246,10 +247,10 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
               <TabRow<DriveSeries> ariaLabel="Série" active={d.seriesAll} onChange={x => d.set({ s12s: x })}
                 tabs={(["tour", "challenge", "aquapor"] as DriveSeries[]).map(x => ({ key: x, label: SERIE_LABELS[x] }))} />
             )}
-            <select className="select fs-11" value={d.esc} onChange={e => { d.set({ s12e: e.target.value }); d.setSelected(null); }} aria-label="Escalão">
+            <Select className="fs-11" value={d.esc} onChange={v => { d.set({ s12e: v }); d.setSelected(null); }} aria-label="Escalão">
               <option value="all">Todos os escalões</option>
               {ESCALOES_DRIVE.map(esc => <option key={esc} value={esc}>{esc}</option>)}
-            </select>
+            </Select>
             <SexSelect value={d.sex} onChange={v => d.set({ s12x: v })} allValue="all" />
             <SearchInput value={d.search} onChange={d.setSearch} placeholder="Nome, clube…" />
           </div>

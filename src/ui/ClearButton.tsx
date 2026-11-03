@@ -13,7 +13,7 @@ export default function ClearButton({ onClick, title = "Limpar filtros", label =
   count?: number;
 }) {
   return (
-    <button type="button" className="btn btn-clear" onClick={onClick} title={title}>
+    <button type="button" className="btn-clear" onClick={onClick} title={title}>
       ✕ {label}{count ? <span className="p-filter-count">{count}</span> : null}
     </button>
   );

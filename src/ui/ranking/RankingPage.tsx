@@ -30,6 +30,7 @@ import ExtLink from "../ExternalLink";
 import Pager from "../Pager";
 import { usePaged } from "../../hooks/usePaged";
 import ErrorState from "../ErrorState";
+import Select from "../Select";
 
 const PAGE_SIZE = 100;
 
@@ -240,7 +241,6 @@ export function RankingList<P extends RankedPlayer>({ players, title, meta, cols
       && (!nq || norm(p.name).includes(nq)));
   }, [players, q, country, ageGroup, sex, ptOnly, ageGroupOf, isPt]);
 
-  const sel = { padding: "5px", fontSize: "var(--fs-13)" } as const;
   return (
     <KidsLinkCtx.Provider value={kidsMap}>
       <div className="u-p-8px-12px-24px">
@@ -252,19 +252,19 @@ export function RankingList<P extends RankedPlayer>({ players, title, meta, cols
         <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-8px-0-12px">
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Pesquisar nome…"
             className="u-p-4px-8px u-minw-180px u-fs-fs-13" />
-          <select value={country} onChange={(e) => setCountry(e.target.value)} style={sel}>
+          <Select value={country} onChange={setCountry}>
             <option value="">Todos os países</option>
             {countries.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
+          </Select>
           {ageGroupOf && (
-            <select value={ageGroup} onChange={(e) => setAgeGroup(e.target.value)} style={sel}>
+            <Select value={ageGroup} onChange={setAgeGroup}>
               <option value="">Todos os escalões</option>
               {ageGroups.map((a) => <option key={a} value={a}>{a}</option>)}
-            </select>
+            </Select>
           )}
-          <select value={sex} onChange={(e) => setSex(e.target.value as "" | "M" | "F")} style={sel}>
+          <Select value={sex} onChange={(v) => setSex(v as "" | "M" | "F")}>
             {sexOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
-          </select>
+          </Select>
           <label className="u-d-flex u-ai-center u-gap-4px u-fs-fs-13 u-cur-pointer">
             <input type="checkbox" checked={ptOnly} onChange={(e) => setPtOnly(e.target.checked)} />
             {gf("Portugal")} só Portugal

@@ -30,7 +30,7 @@ import EmptyState from "../ui/EmptyState";
 import KpiCard from "../ui/KpiCard";
 import TabRow from "../ui/TabRow";
 import FilterPillRow from "../ui/FilterPillRow";
-import { EscPill, PILL_ROUND, CircuitPill, type Circuito } from "../ui/PillBadge";
+import { EscPill, roundPillClass, CircuitPill, type Circuito } from "../ui/PillBadge";
 import { kidsUrl } from "../ui/KidsLink";
 import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName, fmtToPar, medal as medalOf, fmtDatePt } from "../utils/format";
@@ -244,17 +244,15 @@ const MANUAL_ESCALAO: Record<string, string> = {
 };
 
 
-// Pill de ronda — usa as cores globais do projecto (PILL_ROUND: 2R cyan, 3R
+// Pill de ronda — usa as cores globais do projecto (roundPillClass: 2R cyan, 3R
 // vermelho, 4R violeta). Rondas sem cor global (R1) ficam neutras.
 // Ronda 0 = practice round (overrides manuais) → "PR".
 // Ronda -1 = conhecido sem ronda jogada (entrada "Unknown" dos overrides) → "—".
 function RondaPill({ n }: { n: number }) {
-  const style = PILL_ROUND[n];
   return (
     <span
-      className="p p-sm p-tourn"
+      className={roundPillClass(n)}
       title={n < 0 ? "Conhecido — nunca jogaram juntos (sem ronda registada)" : undefined}
-      style={style ?? { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}
     >
       {n < 0 ? "—" : n === 0 ? "PR" : `R${n}`}
     </span>

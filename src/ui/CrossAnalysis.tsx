@@ -7,6 +7,7 @@ import { ESC_ORDER_FULL } from "../constants/escaloes";
 import { fmtHcp } from "../utils/format";
 import TabRow from "./TabRow";
 import SexSelect from "./SexSelect";
+import Select from "./Select";
 import { SDPill } from "./tournamentPrimitives";
 
 // Common Courses
@@ -119,14 +120,14 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
         tabs={escalaos.map(esc => ({ key: esc, label: esc, count: byEscalao[esc].length }))} />
       {/* Filters */}
       <div className="jog-cross-filter">
-        <SexSelect className="mini-badge" value={sexFilter} onChange={setSexFilter} allValue="all" />
-        <select className="mini-badge"
-          value={hcpMax} onChange={e => setHcpMax(e.target.value)}>
+        <SexSelect variant="compact" value={sexFilter} onChange={setSexFilter} allValue="all" />
+        <Select variant="compact"
+          value={hcpMax} onChange={setHcpMax}>
           <option value="all">HCP máx</option>
           {[0, 3, 6, 9, 12, 15, 18, 21, 25, 28, 31, 38, 45].map(v => (
             <option key={v} value={v}>{v === 0 ? "Scratch (≤0)" : `≤ ${v}`}</option>
           ))}
-        </select>
+        </Select>
         <span className="muted fw-600 fs-11">{players.length} jogadores</span>
       </div>
       {/* Ranking table */}

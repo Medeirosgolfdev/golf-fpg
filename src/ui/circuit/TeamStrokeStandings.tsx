@@ -22,6 +22,7 @@ import TabRow from "../TabRow";
 import ExpandArrow from "../ExpandArrow";
 import PlayerLink from "../PlayerLink";
 import { MUTED } from "../tableCells";
+import Select from "../Select";
 
 type View = "cartoes" | "lista" | "jogadores";
 /** Volta escolhida (uma categoria): grupo = ordem das letras + 🐦○■ de todas as voltas. */
@@ -382,10 +383,10 @@ function AllPlayers({ model }: { model: TsModel }) {
   return (
     <div>
       <div className="mb-8 u-d-flex u-ai-center u-gap-8px u-fwr-wrap">
-        <select className="input fs-12 u-p-3px-6px" value={equipa} onChange={e => setEquipa(e.target.value)}>
+        <Select variant="compact" value={equipa} onChange={setEquipa}>
           <option value="">{model.rankBy === "toPar" ? "Todas as regiões" : "Todas as equipas"}</option>
           {model.teams.map(t => <option key={t.key} value={t.key}>{t.letter && model.showLetter ? `${t.letter} · ` : ""}{t.name}{t.sub ? ` (${t.sub})` : ""}</option>)}
-        </select>
+        </Select>
         <span className="muted fs-12">{rows.length} jogadores{model.showConta ? " · ✓ = resultado que conta para a equipa" : " · a negrito, os resultados que contam para a equipa"}</span>
       </div>
       <div className="sc-wrap">

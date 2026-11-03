@@ -3,7 +3,7 @@
  * PillBadge.tsx — FONTE ÚNICA de todos os pills da aplicação
  *
  * Exporta:
- *   Estilos:    PILL_ROUND, PILL_TCODE, PILL_9H, PILL_SSERRA,
+ *   Estilos:    PILL_TCODE, PILL_9H, PILL_SSERRA,
  *               PILL_JUNIOR, PILL_MANUEL, SIDEBAR_ACCENT, ESC_STYLE
  *   Dados:      CCODE_SHORT
  *   Funções:    clubeFromCcode, shortClubFromField
@@ -24,13 +24,6 @@ import { MUTED } from "./tableCells";
 /* ════════════════════════════════════════════════════════════
    ESTILOS — usados como style={PILL_XXX} em className="p p-sm [p-tourn]"
    ════════════════════════════════════════════════════════════ */
-
-/** Rondas — só mostrar se nR > 1. Cores chamativas para chamar atenção. */
-export const PILL_ROUND: Record<number, CSSProperties> = {
-  2: { background: C.chartCyan,   color: "var(--text-on-color)", borderColor: "transparent" }, // cyan
-  3: { background: C.chartRed,    color: "var(--text-on-color)", borderColor: "transparent" }, // vermelho
-  4: { background: C.chartPurple, color: "var(--text-on-color)", borderColor: "transparent" }, // violeta
-};
 
 /** IDs de torneio (tcode) */
 export const PILL_TCODE: CSSProperties = {
@@ -236,11 +229,25 @@ export function PillBadge({ pill }: { pill?: string }) {
   return <span className={cls}>{label}</span>;
 }
 
-/** Ronda — só renderiza se nR > 1 */
+/** Posição num ranking — «🏆 WAGR #N». */
+export function RankPill({ label, value }: { label: string; value: number | string }) {
+  return <span className="p p-rank">🏆 {label} #{value}</span>;
+}
+
+/** Contagem de vitórias — «🏆 3» (a mesma em todas as listas). */
+export function TrophyCount({ n, title }: { n: number; title?: string }) {
+  return <span className="trophy-count" title={title}>🏆 {n}</span>;
+}
+
+/** Classes da pílula de ronda: 2R/3R/4R com cor própria, as outras neutras. */
+export function roundPillClass(n: number): string {
+  return `p p-sm p-tourn p-round${n >= 2 && n <= 4 ? ` p-round-${n}` : ""}`;
+}
+
+/** Ronda — só renderiza se nR > 1 (2R, 3R, 4R) */
 export function RoundPill({ nR }: { nR: number }) {
-  const style = PILL_ROUND[nR];
-  if (nR <= 1 || !style) return null;
-  return <span className="p p-sm p-tourn" style={style}>{nR}R</span>;
+  if (nR <= 1 || nR > 4) return null;
+  return <span className={roundPillClass(nR)}>{nR}R</span>;
 }
 
 /** Tcode — um pill por tcode (dividir "10370+10371" externamente) */

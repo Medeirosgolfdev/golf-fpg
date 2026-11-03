@@ -33,6 +33,7 @@ import ExpandArrow from "../../ui/ExpandArrow";
 import SearchInput from "../../ui/SearchInput";
 import ErrorState from "../../ui/ErrorState";
 import SexSelect from "../../ui/SexSelect";
+import Select from "../../ui/Select";
 import { ToggleChip } from "../../ui/FilterField";
 import { toggleSet } from "../../utils/mathUtils";
 
@@ -352,10 +353,10 @@ export function RFEGPlayersView() {
       <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-12px-0">
         <SearchInput value={q} onChange={setQ} placeholder="Nome, licença ou clube…" size="full" className="u-maxw-360px" />
         <SexSelect value={sex} onChange={setSex} allValue="" />
-        <select value={cat} onChange={(e) => setCat(e.target.value)} className="filter-input u-w-150px">
+        <Select variant="filter" value={cat} onChange={setCat} className="u-w-150px">
           <option value="ALL">Todas as categorias</option>
           {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
+        </Select>
         <ToggleChip checked={jovens} onChange={setJovens} label="🧒 Só Jovens"
           title="Só escalões juvenis (Benjamín, Alevín, Infantil, Cadete, Juvenil)" />
         <span className="muted fs-12 u-ml-auto">

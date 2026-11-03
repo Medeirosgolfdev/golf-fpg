@@ -37,6 +37,7 @@ import ToPar from "../ui/ToPar";
 import TabRow from "../ui/TabRow";
 import ExpandArrow from "../ui/ExpandArrow";
 import NumberInput from "../ui/NumberInput";
+import Select from "../ui/Select";
 
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
@@ -765,28 +766,26 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
       {/* Toolbar Campo A */}
       <Toolbar>
         <ToolbarTitle>⛳ Campo A</ToolbarTitle>
-        <select
-          className="select"
+        <Select
           value={selectedCourseKey}
-          onChange={e => { setSelectedCourseKey(e.target.value); setSelectedTeeId(""); }}
+          onChange={v => { setSelectedCourseKey(v); setSelectedTeeId(""); }}
         >
           {sortedCourses.map(c => (
             <option key={c.courseKey} value={c.courseKey}>{c.master.name}</option>
           ))}
-        </select>
+        </Select>
         {selectedCourse && selectedCourse.master.tees.length > 0 && (
           <>
             <ToolbarSep />
             <ToolbarMeta>Tee</ToolbarMeta>
-            <select
-              className="select"
+            <Select
               value={selectedTee?.teeId ?? ""}
-              onChange={e => setSelectedTeeId(e.target.value)}
+              onChange={setSelectedTeeId}
             >
               {teeSelectOptions(selectedCourse.master.tees).map(o => (
                 <option key={o.teeId} value={o.teeId}>{o.label}</option>
               ))}
-            </select>
+            </Select>
           </>
         )}
       </Toolbar>
@@ -794,29 +793,27 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
       {/* Toolbar Campo B */}
       <Toolbar>
         <ToolbarTitle>⛳ Campo B</ToolbarTitle>
-        <select
-          className="select"
+        <Select
           value={selectedCourseBKey}
-          onChange={e => { setSelectedCourseBKey(e.target.value); setSelectedTeeBId(""); }}
+          onChange={v => { setSelectedCourseBKey(v); setSelectedTeeBId(""); }}
         >
           <option value="">— nenhum —</option>
           {sortedCourses.map(c => (
             <option key={c.courseKey} value={c.courseKey}>{c.master.name}</option>
           ))}
-        </select>
+        </Select>
         {selectedCourseB && selectedCourseB.master.tees.length > 0 && (
           <>
             <ToolbarSep />
             <ToolbarMeta>Tee</ToolbarMeta>
-            <select
-              className="select"
+            <Select
               value={selectedTeeB?.teeId ?? ""}
-              onChange={e => setSelectedTeeBId(e.target.value)}
+              onChange={setSelectedTeeBId}
             >
               {teeSelectOptions(selectedCourseB.master.tees).map(o => (
                 <option key={o.teeId} value={o.teeId}>{o.label}</option>
               ))}
-            </select>
+            </Select>
           </>
         )}
       </Toolbar>
@@ -851,15 +848,14 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
               </div>
               <div className="u-d-flex u-ai-center u-gap-8px">
                 <label className="u-fs-fs-12 u-fw-600 u-c-text-2">PCC</label>
-                <select
-                  className="select u-minw-60px" value={pcc}
-                  onChange={e => setPcc(Number(e.target.value))}
-
+                <Select
+                  className="u-minw-60px" value={pcc}
+                  onChange={v => setPcc(Number(v))}
                 >
                   {[-3, -2, -1, 0, 1, 2, 3].map(v => (
                     <option key={v} value={v}>{v > 0 ? `+${v}` : v}</option>
                   ))}
-                </select>
+                </Select>
               </div>
               {!hiValid && (
                 <span className="muted u-fs-fs-11">Insere o HI para ver a tabela</span>

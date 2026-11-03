@@ -27,7 +27,7 @@ import { cachedFetchJson } from "../data/fetchCache";
 import { fpgScoringUrl, tournamentUrl, abreviarNome, fmtToPar } from "../utils/format";
 import { Link } from "react-router-dom";
 import SexBadge from "./SexBadge";
-import { EscPill } from "./PillBadge";
+import { EscPill, TrophyCount } from "./PillBadge";
 import { isManuel } from "../constants/manuel";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
@@ -666,10 +666,7 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
                   <td className="r">{p.regionalAppearances || "—"}</td>
                   <td className="fw-700 r">
                     {p.titles.length > 0 ? (
-                      <span title={p.titles.map(t => `${t.year} ${t.type} ${t.escalao} ${t.sex}`).join("\n")}
-                        className="u-c-color-good-dark">
-                        🏆 {p.titles.length}
-                      </span>
+                      <TrophyCount n={p.titles.length} title={p.titles.map(t => `${t.year} ${t.type} ${t.escalao} ${t.sex}`).join("\n")} />
                     ) : "—"}
                   </td>
                   <td className="fs-11">

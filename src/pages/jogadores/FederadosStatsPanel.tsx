@@ -13,7 +13,9 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
 import { HCP_BINS, emptyHcpBins, hcpBinKey, hcpBinRange, isCountableHcp } from "./hcpBins";
-import { COL_M, COL_F, barPct, KpiCard, MFBar, MFColumn, MFLegend } from "./statsWidgets";
+import { COL_M, COL_F, barPct, MFBar, MFColumn, MFLegend } from "./statsWidgets";
+import KpiCard from "../../ui/KpiCard";
+import { fmt } from "../../utils/format";
 import CloseButton from "../../ui/CloseButton";
 import { fmtHcp } from "../../utils/format";
 
@@ -207,14 +209,14 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
 
       {/* KPIs — 6 cards */}
       <div className="kpi-row">
-        <KpiCard label="Total" value={stats.total} />
-        <KpiCard label={<><SexBadge sex="M" /> Masculino</>} value={stats.male} pct={stats.male / stats.total} />
-        <KpiCard label={<><SexBadge sex="F" /> Feminino</>} value={stats.female} pct={stats.female / stats.total} />
-        <KpiCard label="🇵🇹 Portugueses" value={ptCount} pct={ptCount / stats.total} />
-        <KpiCard label="🌍 Estrangeiros" value={foreignCount} pct={foreignCount / stats.total} />
-        <KpiCard label="Activos 2026" value={stats.activeThisYear} pct={stats.activeThisYear / stats.total} sub="com rondas este ano" />
-        <KpiCard label="Com HCP válido" value={stats.withHcp} pct={stats.withHcp / stats.total} sub={`média ${stats.avgHcp.toFixed(1)}`} />
-        <KpiCard label="Profissionais" value={stats.pros} pct={stats.pros / stats.total} />
+        <KpiCard label="Total" value={fmt(stats.total)} />
+        <KpiCard label={<><SexBadge sex="M" /> Masculino</>} value={fmt(stats.male)} pct={stats.male / stats.total} />
+        <KpiCard label={<><SexBadge sex="F" /> Feminino</>} value={fmt(stats.female)} pct={stats.female / stats.total} />
+        <KpiCard label="🇵🇹 Portugueses" value={fmt(ptCount)} pct={ptCount / stats.total} />
+        <KpiCard label="🌍 Estrangeiros" value={fmt(foreignCount)} pct={foreignCount / stats.total} />
+        <KpiCard label="Activos 2026" value={fmt(stats.activeThisYear)} pct={stats.activeThisYear / stats.total} sub="com rondas este ano" />
+        <KpiCard label="Com HCP válido" value={fmt(stats.withHcp)} pct={stats.withHcp / stats.total} sub={`média ${stats.avgHcp.toFixed(1)}`} />
+        <KpiCard label="Profissionais" value={fmt(stats.pros)} pct={stats.pros / stats.total} />
       </div>
 
       {/* Drill-down inline (aparece no topo quando activo) */}
@@ -488,12 +490,12 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
 
       {/* KPIs do drill */}
       <div className="kpi-row">
-        <KpiCard label="Total" value={members.length} />
-        <KpiCard label={<SexBadge sex="M" />} value={male} pct={male / members.length} />
-        <KpiCard label={<SexBadge sex="F" />} value={female} pct={female / members.length} />
-        <KpiCard label="Com HCP" value={withHcp} sub={`média ${avgHcp.toFixed(1)}`} />
-        <KpiCard label="Activos 2026" value={active} pct={active / members.length} />
-        {pros > 0 && <KpiCard label="Pros" value={pros} />}
+        <KpiCard label="Total" value={fmt(members.length)} />
+        <KpiCard label={<SexBadge sex="M" />} value={fmt(male)} pct={male / members.length} />
+        <KpiCard label={<SexBadge sex="F" />} value={fmt(female)} pct={female / members.length} />
+        <KpiCard label="Com HCP" value={fmt(withHcp)} sub={`média ${avgHcp.toFixed(1)}`} />
+        <KpiCard label="Activos 2026" value={fmt(active)} pct={active / members.length} />
+        {pros > 0 && <KpiCard label="Pros" value={fmt(pros)} />}
       </div>
 
       <div className="u-d-grid u-grid-template-columns-1e70q u-gap-12px">

@@ -29,6 +29,7 @@ import ClearButton from "../../ui/ClearButton";
 import TabRow from "../../ui/TabRow";
 import SearchInput from "../../ui/SearchInput";
 import SexSelect from "../../ui/SexSelect";
+import Select from "../../ui/Select";
 import { MUTED } from "../../ui/tableCells";
 import NumberInput from "../../ui/NumberInput";
 
@@ -190,17 +191,16 @@ export default function JogadoresToolbar({
             navegam na SPA; só a página estática abre em novo tab. Vive ANTES
             do contador para o elemento na borda direita (scroll) ser o chip
             compacto e não um select meio-cortado. */}
-        <select
-          className="input u-fs-fs-12 u-p-3px-6px u-fsh-0"
+        {/* value="" controlado: o React repõe «ⓘ Info» depois de cada escolha. */}
+        <Select
+          variant="compact"
+          className="u-fsh-0"
           value=""
-          onChange={e => {
-            const v = e.target.value;
+          onChange={v => {
             if (!v) return;
             if (v.endsWith(".html")) window.open(v, "_blank", "noopener");
             else navigate(v);
-            e.currentTarget.value = "";
           }}
-
           title="Páginas relacionadas"
           aria-label="Páginas relacionadas"
         >
@@ -208,7 +208,7 @@ export default function JogadoresToolbar({
           <option value="/analise-percurso-juniores.html">📈 Percurso de juniores ↗</option>
           <option value="/jogadores-por-ano">📅 Jogadores por ano</option>
           <option value="/torneios-recentes">🏆 Torneios recentes</option>
-        </select>
+        </Select>
         {/* Contador compacto (só o número + 🏌️) — é o elemento na borda do
             scroll horizontal; a versão longa "N jogadores" cortava a meio. */}
         <Counter ml="auto" title={`${filteredCount.toLocaleString("pt-PT")} jogadores na lista`}>
@@ -221,30 +221,30 @@ export default function JogadoresToolbar({
         <div className="u-bb-1px-solid-border u-bg-bg-card u-p-8px-12px">
           <div className="filter-grid">
             <FilterField label="SEXO">
-              <SexSelect className="filter-input" value={filters.sexFilter} onChange={v => update({ sexFilter: v })} allValue="ALL" />
+              <SexSelect variant="filter" value={filters.sexFilter} onChange={v => update({ sexFilter: v })} allValue="ALL" />
             </FilterField>
             {viewMode === "todos" && (
               <FilterField label="NACIONALIDADE">
-                <select className="filter-input" value={filters.natFilter} onChange={e => update({ natFilter: e.target.value as typeof filters.natFilter })}>
+                <Select variant="filter" value={filters.natFilter} onChange={v => update({ natFilter: v as typeof filters.natFilter })}>
                   <option value="ALL">Todas</option>
                   <option value="PT">🇵🇹 Portugueses</option>
                   <option value="FOREIGN">🌍 Estrangeiros</option>
-                </select>
+                </Select>
               </FilterField>
             )}
             <FilterField label="REGIÃO">
-              <select className="filter-input" value={filters.regionFilter} onChange={e => update({ regionFilter: e.target.value })}>
+              <Select variant="filter" value={filters.regionFilter} onChange={v => update({ regionFilter: v })}>
                 <option value="ALL">Todas</option>
                 {regions.map(r => <option key={r} value={r}>{r}</option>)}
-              </select>
+              </Select>
             </FilterField>
             <FilterField label="CLUBE">
-              <select className="filter-input" value={filters.clubFilter} onChange={e => update({ clubFilter: e.target.value })}>
+              <Select variant="filter" value={filters.clubFilter} onChange={v => update({ clubFilter: v })}>
                 <option value="ALL">Todos</option>
                 {clubOptions.map(c => (
                   <option key={c.code} value={c.code}>{c.label}</option>
                 ))}
-              </select>
+              </Select>
             </FilterField>
             <FilterField label="HCP (DO / AO)">
               <div className="u-d-flex u-gap-4px u-ai-center">
@@ -259,20 +259,20 @@ export default function JogadoresToolbar({
             </FilterField>
             {viewMode === "todos" && (
               <FilterField label="FONTE DOS DADOS">
-                <select className="filter-input" value={filters.sourceFilter} onChange={e => update({ sourceFilter: e.target.value as typeof filters.sourceFilter })}>
+                <Select variant="filter" value={filters.sourceFilter} onChange={v => update({ sourceFilter: v as typeof filters.sourceFilter })}>
                   <option value="ALL">Todas</option>
                   <option value="WITH_ANALYSIS">🔍 Com análise</option>
                   <option value="CADASTRO">ø Só cadastro</option>
-                </select>
+                </Select>
               </FilterField>
             )}
             <FilterField label="ORDENAR">
               <div className="u-d-flex u-gap-4px u-ai-center">
-                <select
-                  className="filter-input"
+                <Select
+                  variant="filter"
                   value={filters.sortKey}
-                  onChange={e => {
-                    const k = e.target.value as SortKey;
+                  onChange={v => {
+                    const k = v as SortKey;
                     updateSort(k, k === "rounds" || k === "aces" ? "desc" : "asc");
                   }}
                 >
@@ -283,7 +283,7 @@ export default function JogadoresToolbar({
                   <option value="escalao">Escalão</option>
                   <option value="ranking">🏆 Ranking</option>
                   <option value="aces">🕳️ Hole-in-one</option>
-                </select>
+                </Select>
                 <button
                   className="tourn-tab tourn-tab-sm u-ws-nowrap u-fsh-0"
                   onClick={toggleSortDir}

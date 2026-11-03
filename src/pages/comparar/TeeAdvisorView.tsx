@@ -39,6 +39,7 @@ import { MANUEL_FED } from "../../constants/manuel";
 import { resolvePlayedMeters, resolvePlayedTee, courseKeyName } from "../../utils/playedDistance";
 import ExtLink from "../../ui/ExternalLink";
 import SexSelect from "../../ui/SexSelect";
+import Select from "../../ui/Select";
 import NumberInput from "../../ui/NumberInput";
 
 
@@ -763,9 +764,9 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
     <>
       <Toolbar>
         <ToolbarTitle>⛳ Campo</ToolbarTitle>
-        <select className="select" value={course?.courseKey ?? ""} onChange={e => { setCourseKey(e.target.value); setTeeAId(""); setTeeBId(""); }}>
+        <Select value={course?.courseKey ?? ""} onChange={v => { setCourseKey(v); setTeeAId(""); setTeeBId(""); }}>
           {sortedCourses.map(c => <option key={c.courseKey} value={c.courseKey}>{c.master.name}</option>)}
-        </select>
+        </Select>
         <ToolbarSep />
         <ToolbarMeta>Tees</ToolbarMeta>
         <SexSelect value={sexFilter} onChange={v => { setSexFilter(v); setTeeAId(""); setTeeBId(""); }} />
@@ -819,13 +820,13 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
             <div className="card u-bl-4px-solid-accent">
               <div className="h-md u-d-flex u-ai-center u-gap-10px u-fwr-wrap">
                 🆚 Confronto de tees
-                <select className="select" value={teeA.tee.teeId} onChange={e => setTeeAId(e.target.value)} style={{ border: `2px solid ${getTeeHex(teeA.tee.teeName, teeA.tee.scorecardMeta?.teeColor)}` }}>
+                <Select value={teeA.tee.teeId} onChange={setTeeAId} style={{ border: `2px solid ${getTeeHex(teeA.tee.teeName, teeA.tee.scorecardMeta?.teeColor)}` }}>
                   {metrics.map(m => <option key={m.tee.teeId} value={m.tee.teeId}>{m.tee.teeName}{m.dist != null ? ` (${m.dist} m)` : ""}</option>)}
-                </select>
+                </Select>
                 <span className="muted">vs</span>
-                <select className="select" value={teeB.tee.teeId} onChange={e => setTeeBId(e.target.value)} style={{ border: `2px solid ${getTeeHex(teeB.tee.teeName, teeB.tee.scorecardMeta?.teeColor)}` }}>
+                <Select value={teeB.tee.teeId} onChange={setTeeBId} style={{ border: `2px solid ${getTeeHex(teeB.tee.teeName, teeB.tee.scorecardMeta?.teeColor)}` }}>
                   {metrics.map(m => <option key={m.tee.teeId} value={m.tee.teeId}>{m.tee.teeName}{m.dist != null ? ` (${m.dist} m)` : ""}</option>)}
-                </select>
+                </Select>
               </div>
 
               <div className="u-d-flex u-fd-column u-gap-10px u-mt-12px">

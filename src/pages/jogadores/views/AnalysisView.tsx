@@ -18,6 +18,7 @@ import { CrossAnalysis } from "../../../ui/CrossAnalysis";
 import { historicExceptionalAdj, topRanks } from "../../../utils/whsCalc";
 import { courseDisplayName } from "../../../utils/courseAliases";
 import { MUTED } from "../../../ui/tableCells";
+import Select from "../../../ui/Select";
 
 export default function AnalysisView({ data }: { data: PlayerPageData }) {
   const [histPeriod, setHistPeriod] = useState(12);
@@ -135,30 +136,30 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
       {/* ── 3+. Indicadores derivados — recolhidos ── */}
       <CollapseCard title="Indicadores de forma" icon="📊" defaultOpen={false}>
         <div className="flex-wrap u-d-flex u-gap-10px">
-          <KPICard title="SD Médio · Últ. 5" val={sdLast5?.toFixed(1) ?? null}
+          <UiKpiCard label="SD Médio · Últ. 5" value={sdLast5?.toFixed(1) ?? MUTED}
             delta={sdLast5 != null && sdLast20 != null ? sdLast5 - sdLast20 : null}
             deltaLabel="vs últ. 20"
             sub={`${Math.min(5, rounds18sd.length)} rondas com SD`}
             tip="Média do Score Diferencial das últimas 5 rondas de 18B. Negativo = a melhorar vs média longa." />
-          <KPICard title="SD Médio · Últ. 20" val={sdLast20?.toFixed(1) ?? null}
+          <UiKpiCard label="SD Médio · Últ. 20" value={sdLast20?.toFixed(1) ?? MUTED}
             sub={`${rounds18sd.length} rondas com SD`}
             tip="Média dos Score Diferenciais das últimas 20 rondas de 18 buracos." />
-          <KPICard title="Consistência (σ SD)" val={sdSigma?.toFixed(1) ?? null}
+          <UiKpiCard label="Consistência (σ SD)" value={sdSigma?.toFixed(1) ?? MUTED}
             sub="Desvio padrão do SD"
             tip="Desvio padrão do Score Diferencial. Menor = mais consistente." />
-          <KPICard title="Melhor SD (carreira)"
-            val={bestSdRound ? Number(bestSdRound.sd).toFixed(1) : null}
+          <UiKpiCard label="Melhor SD (carreira)"
+            value={bestSdRound ? Number(bestSdRound.sd).toFixed(1) : MUTED}
             sub={bestSdRound ? `${shortDate(bestSdRound.date)} · ${(bestSdRound as RoundData & { course?: string }).course ?? ""}` : undefined}
-            accent="var(--color-good)"
+            color="var(--color-good)"
             tip="Melhor Score Diferencial de sempre." />
-          <KPICard title="Gross Médio · Últ. 5" val={kpiGross5?.toFixed(1) ?? null}
+          <UiKpiCard label="Gross Médio · Últ. 5" value={kpiGross5?.toFixed(1) ?? MUTED}
             delta={kpiGross5 != null && kpiGross20 != null ? kpiGross5 - kpiGross20 : null}
             deltaLabel="vs últ. 20"
             sub={`${last5.length} rondas 18B`} />
-          <KPICard title="Tendência SD (últ. 10)"
-            val={sdTrend != null ? `${fmtSign(sdTrend.slope, 2)}` : null}
+          <UiKpiCard label="Tendência SD (últ. 10)"
+            value={sdTrend != null ? `${fmtSign(sdTrend.slope, 2)}` : MUTED}
             sub={sdTrend ? `por ronda · ${sdTrend.n} rondas analisadas` : "mín. 3 rondas necessárias"}
-            accent={sdTrend != null
+            color={sdTrend != null
               ? sdTrend.slope < -0.1 ? "var(--color-good)"
               : sdTrend.slope > 0.1  ? "var(--color-danger)"
               : "var(--text-3)" : undefined}
@@ -187,31 +188,11 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
   );
 }
 
-/* Adaptador fino → delega na definição única ui/KpiCard (UiKpiCard).
-   Mantém a assinatura title/val/accent usada na AnalysisView. */
-function KPICard({ title, val, sub, delta, deltaLabel, tip, accent }: {
-  title: string; val: string | null; sub?: string;
-  delta?: number | null; deltaLabel?: string;
-  tip?: string; accent?: string;
-}) {
-  return (
-    <UiKpiCard
-      label={title}
-      value={val ?? MUTED}
-      sub={sub}
-      delta={delta}
-      deltaLabel={deltaLabel}
-      tip={tip}
-      color={accent}
-    />
-  );
-}
-
 /* ─── Period selector (3m/6m/1a/…/total) ─── */
 function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   return (
-    <select className="br c-text-2 fs-11 u-p-2px-6px u-bd-1px-solid-border u-bg-bg-card"
-      value={value} onChange={e => onChange(Number(e.target.value))}>
+    <Select variant="compact"
+      value={value} onChange={v => onChange(Number(v))}>
       <option value={3}>3 meses</option>
       <option value={6}>6 meses</option>
       <option value={9}>9 meses</option>
@@ -219,7 +200,7 @@ function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number
       <option value={24}>2 anos</option>
       <option value={36}>3 anos</option>
       <option value={0}>Total</option>
-    </select>
+    </Select>
   );
 }
 

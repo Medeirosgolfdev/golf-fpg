@@ -15,6 +15,7 @@ import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import { isManuel, MANUEL_FED } from "../../constants/manuel";
 import AdmissionsTab, { type AdmissionsExtraCol } from "../../ui/AdmissionsTab";
+import Select from "../../ui/Select";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../../data/nacional2026Loader";
 import Kids2SubNav from "./Kids2SubNav";
 import { fmtHcp } from "../../utils/format";
@@ -253,11 +254,10 @@ export default function ListasPage() {
         <div className="u-d-flex u-ai-center u-gap-12px u-fwr-wrap u-mb-12px">
           <h1 className="u-m-0 u-fs-fs-18 u-fw-600 u-c-text">📝 Listas de inscritos</h1>
           {grupos.length > 1 && (
-            <select className="select u-maxw-520px" value={grupoAtual?.torneio ?? ""} aria-label="Torneio"
-              onChange={(e) => setSel(grupos.find(g => g.torneio === e.target.value)?.listas[0]?.id ?? null)}
->
+            <Select className="u-maxw-520px" value={grupoAtual?.torneio ?? ""} aria-label="Torneio"
+              onChange={(v) => setSel(grupos.find(g => g.torneio === v)?.listas[0]?.id ?? null)}>
               {grupos.map(g => <option key={g.torneio} value={g.torneio}>{g.torneio}</option>)}
-            </select>
+            </Select>
           )}
           {grupoAtual && grupoAtual.listas.length > 1 && (
             <TabRow active={atual?.id ?? ""} onChange={(k) => setSel(k)}

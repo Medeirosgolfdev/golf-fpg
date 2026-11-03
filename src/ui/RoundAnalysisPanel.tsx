@@ -7,6 +7,7 @@
 import { useMemo, useState } from "react";
 import type { ShareOption } from "./ShareRoundPanel";
 import { analyzeRounds, type Insight } from "../utils/roundAnalysis";
+import Select from "./Select";
 
 const TONE_COLOR: Record<Insight["tone"], string> = {
   good: "var(--color-good)", bad: "var(--color-danger)", neutral: "var(--text-3)",
@@ -37,9 +38,9 @@ export default function RoundAnalysisPanel({ options, defaultKey, only }: { opti
         {options.length > 1 && (
           <label className="fs-12 mb-8 u-d-flex u-ai-center u-gap-8px">
             Jogador
-            <select className="input u-minw-280px" value={cur.key} onChange={(e) => setSel(e.target.value)}>
+            <Select className="u-minw-280px" value={cur.key} onChange={setSel}>
               {options.map((o) => <option key={o.key} value={o.key}>{o.label.replace(/^Torneio · /, "")}</option>)}
-            </select>
+            </Select>
           </label>
         )}
         {an.rounds.filter((b) => !only || b.round === only).reverse().map((b) => (

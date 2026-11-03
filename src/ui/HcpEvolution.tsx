@@ -22,6 +22,7 @@ import { C } from "../utils/colors";
 import { HcpDelta, MUTED } from "./tableCells";
 import { tpColor } from "./tournamentPrimitives";
 import ClearButton from "./ClearButton";
+import Select from "./Select";
 
 export interface EvoPlayer {
   fed: string;
@@ -160,9 +161,9 @@ export default function HcpEvolution({ players, history, showChart = true }: {
         <div className="h-xs fs-14">📈 Evolução de HCP <span className="muted fs-11">({rows.length} jogadores com histórico)</span></div>
         <label className="fs-12 u-ml-auto">
           Período:{" "}
-          <select value={period} onChange={e => setPeriod(Number(e.target.value))} className="u-p-4px-8px">
+          <Select value={period} onChange={v => setPeriod(Number(v))}>
             {PERIODS.map(p => <option key={p.v} value={p.v}>{p.label}</option>)}
-          </select>
+          </Select>
         </label>
       </div>
 

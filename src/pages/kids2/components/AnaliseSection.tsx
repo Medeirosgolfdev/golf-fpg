@@ -28,6 +28,7 @@ import { fmtToPar } from "../../../utils/format";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import ComparisonDonut from "../../../ui/ComparisonDonut";
 import TabRow from "../../../ui/TabRow";
+import Select from "../../../ui/Select";
 
 type SubTab = "scoring" | "rounds" | "ninesplit" | "holes";
 
@@ -214,16 +215,16 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
           <label className="u-fs-fs-11 u-c-text-3 u-fw-600">
             Torneio / escalão
           </label>
-          <select
+          <Select
             value={selectedFlight}
-            onChange={(e) => setSelectedFlight(e.target.value)}
-            className="u-fl-1 u-maxw-460px u-p-4px-8px u-fs-fs-12 u-fw-500 u-bd-1px-solid-border u-br-radius u-bg-bg u-c-text u-cur-pointer"
+            onChange={setSelectedFlight}
+            className="u-fl-1 u-maxw-460px"
           >
             <option value="ALL">Todos os {valid.length} torneios</option>
             {flightOpts.map((o) => (
               <option key={o.key} value={o.key}>{o.label}</option>
             ))}
-          </select>
+          </Select>
         </div>
       )}
 

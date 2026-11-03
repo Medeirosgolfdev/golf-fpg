@@ -18,7 +18,7 @@ import { getTournWeight, formatStars } from "../tournWeight";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtToPar } from "../../../utils/format";
-import { ScoringTag } from "../../../ui/PillBadge";
+import { ScoringTag, TrophyCount } from "../../../ui/PillBadge";
 import ExpandArrow from "../../../ui/ExpandArrow";
 import ExtLink from "../../../ui/ExternalLink";
 import { MUTED } from "../../../ui/tableCells";
@@ -233,7 +233,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
           </div>
           <div className="u-fs-fs-10 u-c-text-3 u-mt-1px">
             {editions.length} {editions.length === 1 ? "edição" : "edições"}
-            {wins > 0 && <> · <span className="u-c-color-warn-dark u-fw-700">🏆 {wins}</span></>}
+            {wins > 0 && <> · <TrophyCount n={wins} /></>}
             {podiums > wins && <> · {podiums} pódios</>}
             {fmtYearRange(editions)}
           </div>
