@@ -164,6 +164,9 @@ function buildJobfileSource(opts) {
   function normalize(data, fileName, playerMap) {
     const year = data.year || (fileName.match(/(\d{4})/) ? +fileName.match(/(\d{4})/)[1] : null);
     const sourceKey = fileName.replace(/\.json$/, "");
+    // Data do evento para o histórico de HCP (o mesmo critério do `date` do torneio
+    // abaixo, sem os recursos aproximados): a da fonte ou a do nome do ficheiro.
+    const dataEvento = String(data.startDate || data.date || (fileName.match(/_(\d{4}-\d{2}-\d{2})/) || [])[1] || "").slice(0, 10);
     const divisions = Array.isArray(data.divisions) ? data.divisions : [];
     const flights = [];
 
@@ -211,6 +214,7 @@ function buildJobfileSource(opts) {
             dobRange: dobRange || prev?.dobRange || null,
             sex: sex || prev?.sex || null,
             club: pl.club || prev?.club || null,
+            ...(prev?.hcpHistory ? { hcpHistory: prev.hcpHistory } : {}),
             extra: {
               countryName: iso ? null : (pl.country || null),
               location: cleanLocation(pl.location),
@@ -247,6 +251,18 @@ function buildJobfileSource(opts) {
           // Handicap de jogo do dia (Gross − Net, circuitos dos condados ingleses).
           ...(typeof pl.hcpJogo === "number" ? { hcpJogo: pl.hcpJogo } : {}),
         });
+        // …que entra também no histórico de HCP com a data: é o melhor que há para
+        // quem não tem HCP noutra fonte (03/11/2026: Emile Cuanalo, 3 nos condados
+        // ingleses; a FPG só tinha um 12.5 antigo das inscrições). Não é o HI.
+        if (typeof pl.hcpJogo === "number" && /^\d{4}-\d{2}-\d{2}$/.test(dataEvento)) {
+          const pm = playerMap.get(key);
+          if (pm) {
+            pm.hcpHistory = pm.hcpHistory || [];
+            if (!pm.hcpHistory.some((h) => h.date === dataEvento)) {
+              pm.hcpHistory.push({ date: dataEvento, hcpExact: pl.hcpJogo, source: "hcp-jogo", label: `${seriesLabel} — HCP de jogo` });
+            }
+          }
+        }
       }
 
       inferMissingPositions(results);
