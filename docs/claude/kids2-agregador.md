@@ -299,6 +299,15 @@ condados ingleses entra no `hcpHistory` (source `hcp-jogo`, não é o HI).
 `kidsDob.hcpAt` dá o mais perto da data do torneio (≤183 dias) a quem não tem
 `hcpExact` — o `SDPill` pinta o SD com ele (Venice Open 2026: 20 de 31; antes só o Manuel).
 
+**HCP de cada prova espanhola (03/11/2026):** o `sources/rfeg.js` guarda no
+`hcpHistory` (source `rfeg`, com a data e o nome da prova) o HCP que cada classificação
+traz (RFEG, Basco, Navarra, CLM, Rioja, NextCaddy — o NextCaddy deixa os «+N» de fora)
+e o das listas de inscritos `rfegolf-resultats/*.json` (admitidos e convidados), que
+cobrem as provas que ficam no Kids 2 pela gémea do LiveGolfScoring, sem HCP. É o índice
+WHS do jogador — também dos estrangeiros (licença «XXXXX…» → chave pelo nome). Antes só
+ficava o último, sem data (Junes Chirband: 1 HCP → 3). 4021 jogadores; 14 791 juniores
+com HCP datado no scout. Teste: `sources/rfeg-hcp-historico.test.js`.
+
 **Só no ranking juvenil da Federgolf** (sem prova nos `federgolf/*.json`): o `fig.js`
 acrescenta-os sem provas (`extra.soRanking`, com ano e clube). O passo 5b junta-os
 à ÚNICA ficha italiana (alguma entidade com país IT) com esse nome, mesmo sexo e

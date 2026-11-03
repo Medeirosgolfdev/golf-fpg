@@ -15,7 +15,9 @@
  * e AM84955303 (La Hacienda, Alevín) — mesma DOB 2014-05-13.
  */
 
-const { DATA, readJsonSafe } = require("../util/io");
+const fs = require("fs");
+const path = require("path");
+const { DATA, DATA_DIR, readJsonSafe } = require("../util/io");
 const { displayName, splitName, dobToIso, countryToIso2, normName } = require("../util/names");
 const { warn, sub } = require("../util/log");
 const { datasDoIntervalo } = require("../../lib/lgs-datas");
@@ -126,6 +128,17 @@ function load(opts) {
     return licByNorm.get(nk) || `anon|${nk}`;
   }
 
+  // HCP de cada prova, com a data → hcpHistory (03/11/2026: só ficava o último,
+  // sem data — o Junes Chirband, sueco, tinha um só HCP no Kids 2). É o índice
+  // WHS do jogador (o da federação dele) que a lista da prova publica.
+  const hcpPorChave = new Map(); // sourceKey → [{date, hcpExact, source, label}]
+  function registarHcp(key, date, hcp, label) {
+    if (!key || !/^\d{4}-\d{2}-\d{2}$/.test(date || "") || typeof hcp !== "number" || hcp < -10 || hcp > 54) return;
+    let arr = hcpPorChave.get(key);
+    if (!arr) hcpPorChave.set(key, (arr = []));
+    if (!arr.some((h) => h.date === date)) arr.push({ date, hcpExact: hcp, source: "rfeg", label: label || undefined });
+  }
+
   // 5) Torneios — rfegolf-rivals.json
   // Formato: { generatedAt, source, torneios: { [tid]: { name, year, ageGroup, dateIso, par, parTotal, nholes, nRounds, source, players[] } }, total, dedupedPlayers }
   // Players: { n, p, t, tp, hcp, lic, rd, sc } (+ dob/club/sex/catEdad/region nos rfeg/mitarjeta)
@@ -138,7 +151,8 @@ function load(opts) {
   const extraPlayers = new Map(); // sourceKey → RawPlayer draft
   const rosterLics = new Set(players.map((p) => p.sourceKey));
   for (const p of players) for (const h of p.extra?.historicalLicenses || []) rosterLics.add(h);
-  function collectExtraPlayer(key, pl) {
+  function collectExtraPlayer(key, pl, prova) {
+    if (prova) registarHcp(key, prova.date, pl.hcp, prova.label);
     if (!key || rosterLics.has(key)) return;
     const prev = extraPlayers.get(key);
     const dob = dobToIso(pl.dob) || prev?.dob || null;
@@ -174,6 +188,31 @@ function load(opts) {
     if (p.name) players.push(p);
   }
 
+  // As listas de inscritos das provas da RFEG (rfegolf-resultats/*.json) também
+  // dão o HCP de cada um à data da prova — incluindo as provas que ficam no Kids 2
+  // pela gémea do LiveGolfScoring, que não tem HCP (Internacional de España Sub-18).
+  // Estrangeiros vêm com licença «XXXXXSWE00» → chave pelo nome, como nos resultados.
+  const dirResultats = path.join(DATA_DIR, "rfegolf-resultats");
+  for (const f of fs.existsSync(dirResultats) ? fs.readdirSync(dirResultats).filter((x) => x.endsWith(".json")) : []) {
+    const r = readJsonSafe(path.join(dirResultats, f), null);
+    const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(r?.meta?.dateStart || "");
+    if (!m) continue;
+    const date = `${m[3]}-${m[2]}-${m[1]}`;
+    for (const pl of [...(r.inscritos?.admitidos || []), ...(r.inscritos?.invitados || [])]) {
+      const lic = pl.licencia && !/^X{3,}/i.test(pl.licencia) ? String(pl.licencia) : null;
+      registarHcp(resolvePlayerKey({ lic, n: pl.name }), date, pl.hcp, r.meta.name);
+    }
+  }
+  // Cada jogador recebe o histórico das suas chaves (também das licenças antigas).
+  let comHist = 0;
+  for (const p of players) {
+    const hist = [p.sourceKey, ...(p.extra?.historicalLicenses || [])].flatMap((k) => hcpPorChave.get(k) || []);
+    if (!hist.length) continue;
+    p.hcpHistory = hist.sort((a, b) => b.date.localeCompare(a.date));
+    comHist++;
+  }
+  sub(`HCP por prova (com data): ${comHist} jogadores`);
+
   return {
     sourceId: SOURCE_ID,
     sourceLabel: SOURCE_LABEL,
@@ -193,6 +232,7 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
   if (!t) return null;
   const flightLabel = t.ageGroup || "Geral";
   const players = Array.isArray(t.players) ? t.players : [];
+  const { inicio, fim } = datasDoIntervalo(t.dateIso, t.dateRange);
   const results = players.map((pl) => {
     const rd = Array.isArray(pl.rd) ? pl.rd : [];
     const sc = Array.isArray(pl.sc) ? pl.sc : [];
@@ -206,7 +246,7 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
       });
     }
     const key = resolvePlayerKey ? resolvePlayerKey(pl) : (pl.lic || null);
-    if (collectExtraPlayer) collectExtraPlayer(key, pl);
+    if (collectExtraPlayer) collectExtraPlayer(key, pl, { date: inicio, label: t.name });
     return {
       playerSourceKey: key,
       playerName: displayName(splitName(pl.n || pl.name || "")),
@@ -252,7 +292,6 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
   }
   // Links: derivar do prefix do tid (lgs = LiveGolfScoring, nc = NextCaddy)
   const links = buildRfegLinks(String(tid), t);
-  const { inicio, fim } = datasDoIntervalo(t.dateIso, t.dateRange);
 
   return {
     sourceKey: String(tid),
