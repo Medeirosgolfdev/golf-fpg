@@ -253,7 +253,8 @@ const SCHEMA_VERSION = 1;
  * @property {string} canonicalName
  * @property {"M"|"F"} [sex]
  * @property {string} [country]
- * @property {string} [club]
+ * @property {string} [dob]  YYYY-MM-DD de um registo oficial (ex. golfdata.se).
+ * @property {string} [club]  Clube actual — passa à frente do das outras fontes.
  * @property {{ rfeg?: { lic: string } }} [sources]  Licença RFEG → hándicap oficial.
  * @property {string} [reason]
  */

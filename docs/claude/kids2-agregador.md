@@ -314,6 +314,12 @@ mesmo com 0 provas. Com licença RFEG: id `r<licença>`, `sources.rfeg.manual` e
 `scrape-federados-es.js` inclui-as sempre no âmbito → hándicap oficial actualizado
 sozinho (para uma licença nova já: `--lics A,B --max-dias 0`). Quando os resultados
 chegarem, junta-as um `forceMerge` (`manual:<key>` + `uskids:<id>`) ou o nome + país.
+Também levam `dob` e `club` de um registo oficial que não é fonte — com um
+`forceMerge` para a ficha existente, a data entra e o clube passa à frente (`primary`).
+Suecos: o golfdata.se (ranking da federação, `sgfranking/Players_searchpage`, fichas
+`players_startpage?PlayerID=N`) dá data e clube de quem joga provas do ranking (≈13+);
+HCP sueco só no Min Golf, com login. Feito para Erik Groth, Henri Sandqvist Lidholm e
+Junes Chirband (European Championship 2026).
 
 **Raparigas e quem não está no member-history USKids:** sem memberId os resultados
 caem no matcher e não há ficha (as raparigas do Venice ficaram sem seta). Testado a

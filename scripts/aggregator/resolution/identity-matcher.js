@@ -852,7 +852,10 @@ const SOURCE_MANUAL = "manual";
  * interessa e ainda não jogou nada que as fontes tragam (03/11/2026: os irmãos
  * Pérez Granell, inscritos no Spanish Open). Entram como uma fonte sem provas;
  * quando os resultados chegarem, o nome + país ou um forceMerge juntam-nas.
- * Cada uma: { key, canonicalName, sex, country, club?, sources?: { rfeg?: { lic } }, reason }.
+ * Também servem para dar a uma ficha a data e o clube de um registo oficial que
+ * não é uma fonte (golfdata.se — ranking da federação sueca; 03/11/2026), com um
+ * forceMerge para a ficha: o clube dela passa à frente (é o actual).
+ * Cada uma: { key, canonicalName, sex, country, dob?, club?, sources?: { rfeg?: { lic } }, reason }.
  */
 function fonteManual(overrides) {
   const players = (overrides?.manualPlayers || []).filter((m) => m && m.key && m.canonicalName).map((m) => ({
@@ -861,7 +864,8 @@ function fonteManual(overrides) {
     sex: m.sex || undefined,
     country: m.country || undefined,
     club: m.club || undefined,
-    extra: { manual: true, rfegLic: m.sources?.rfeg?.lic || undefined },
+    dob: /^\d{4}-\d{2}-\d{2}$/.test(m.dob || "") ? m.dob : undefined,
+    extra: { manual: true, rfegLic: m.sources?.rfeg?.lic || undefined, ...(m.club ? { primary: true } : {}) },
   }));
   return players.length ? [{ sourceId: SOURCE_MANUAL, sourceLabel: "Ficha manual", players, tournaments: [] }] : [];
 }
