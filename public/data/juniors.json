@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T20:19:10.197Z",
+  "generatedAt": "2026-11-03T20:31:15.393Z",
   "juniors": [
     {
       "id": "u391389",
@@ -2498929,12 +2498929,96 @@
           "ggcondados"
         ]
       }
+    },
+    {
+      "id": "rLV06954934",
+      "canonicalName": "Luis Perez Granell",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": "Club de Golf Escorpión",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "manual",
+            "key": "rfeg-LV06954934"
+          }
+        ],
+        "rfeg": {
+          "lic": "LV06954934",
+          "club": "Club de Golf Escorpión",
+          "sex": "M",
+          "manual": true
+        }
+      },
+      "tournamentIds": [],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "manual:rfeg-LV06954934"
+        ],
+        "mergedFromSources": [
+          "manual"
+        ]
+      },
+      "rfegOficial": {
+        "lic": "LV06954934",
+        "hcp": 36.5,
+        "hcpData": "2026-11-01",
+        "hcpClube": "CLUB DE GOLF ESCORPION",
+        "hcpVia": "licenca"
+      }
+    },
+    {
+      "id": "rLV06954936",
+      "canonicalName": "Carlos Perez Granell",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": "Club de Golf Escorpión",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "manual",
+            "key": "rfeg-LV06954936"
+          }
+        ],
+        "rfeg": {
+          "lic": "LV06954936",
+          "club": "Club de Golf Escorpión",
+          "sex": "M",
+          "manual": true
+        }
+      },
+      "tournamentIds": [],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "manual:rfeg-LV06954936"
+        ],
+        "mergedFromSources": [
+          "manual"
+        ]
+      },
+      "rfegOficial": {
+        "lic": "LV06954936",
+        "hcp": 47.9,
+        "hcpData": "2026-11-01",
+        "hcpClube": "CLUB DE GOLF ESCORPION",
+        "hcpVia": "licenca"
+      }
     }
   ],
   "stats": {
-    "total": 42208,
+    "total": 42210,
     "droppedNoTourn": 34484,
-    "strong": 37292,
+    "strong": 37294,
     "probable": 4916,
     "manual": 0,
     "strongMerges": 10004,

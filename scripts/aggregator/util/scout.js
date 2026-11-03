@@ -155,7 +155,8 @@ function buildScout(juniors, tournaments, generatedAt) {
   const desdeAno = new Date(new Date(generatedAt || Date.now()).getTime() - 365 * 864e5).toISOString().slice(0, 10);
   const players = {};
   for (const j of juniors) {
-    if (!j.tournamentIds?.length) continue;
+    // Sem provas só as fichas manuais (juniors-overrides.json → manualPlayers): HCP e clube.
+    if (!j.tournamentIds?.length && !j._match?.mergedFromSources?.includes("manual")) continue;
     // n = torneios na carreira (era a coluna «torn.» dos Rivais da /uskids, 20/10/2026).
     const o = { n: j.tournamentIds.length };
     const tier = computeTier(j, tById, ranking);

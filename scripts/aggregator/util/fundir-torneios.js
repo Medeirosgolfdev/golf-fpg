@@ -338,8 +338,8 @@ function fundirTorneiosRepetidos(matchResult) {
   // a outra ficha da mesma pessoa junta-se antes de sair por ficar sem provas
   // (as chaves e o que só ela tinha passam para a que fica)
   stats.fichas = juntarFichas(matchResult, stats.fichasDuplas);
-  // quem ficou sem provas sai, como no matcher
-  matchResult.juniors = matchResult.juniors.filter((j) => j.tournamentIds.length > 0);
+  // quem ficou sem provas sai, como no matcher (menos as fichas manuais)
+  matchResult.juniors = matchResult.juniors.filter((j) => j.tournamentIds.length > 0 || j._match?.mergedFromSources?.includes("manual"));
   stats.removidas = removidas.size;
   return stats;
 }

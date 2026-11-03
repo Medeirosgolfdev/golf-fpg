@@ -38,6 +38,7 @@
  *   node scripts/scrape-federados-es.js                    # âmbito acima; salta as consultadas há < 6 dias
  *   node scripts/scrape-federados-es.js --max-dias 0       # reconsulta tudo
  *   node scripts/scrape-federados-es.js --lic AM84955303   # uma licença (mostra, não grava)
+ *   node scripts/scrape-federados-es.js --lics LV06954934,LV06954936 --max-dias 0   # só estas, grava
  *   node scripts/scrape-federados-es.js --limit 50 --delay 2000
  * Exit: 0 = gravou · 2 = nada de novo · 1 = erro.
  */
@@ -110,7 +111,8 @@ function ambito() {
     const ano = Number(String(j.dob || "").slice(0, 4)) || null;
     const jogouComManuel = !!scout[j.id]?.m?.length;
     const perto = ano ? ano >= MANUEL_ANO - 4 && ano <= MANUEL_ANO + 4 : ESCALOES_JOVENS.test(j.sources?.rfeg?.catEdad || "");
-    if (lic && !(perto || jogouComManuel)) continue;
+    // Fichas manuais (juniors-overrides.json → manualPlayers) entram sempre.
+    if (lic && !(perto || jogouComManuel || j.sources?.rfeg?.manual)) continue;
     if (lic) add(lic, j.canonicalName);
     for (const l of rankingsDoJunior(j, idx).linhas) if (l.lic) add(l.lic, j.canonicalName);
   }
@@ -152,7 +154,8 @@ if (require.main === module) {
     if (fs.existsSync(OUT)) anterior = lerJson(OUT).byLicencia || {};
     const store = { ...anterior };
     const limite = new Date(Date.now() - MAX_DIAS * 864e5).toISOString().slice(0, 10);
-    const todos = ambito();
+    // --lics A,B: só estas licenças (ex. fichas manuais novas), gravando como as outras.
+    const todos = arg("lics", null) ? arg("lics").split(",").map((l) => ({ lic: normLic(l), nome: "" })).filter((x) => x.lic) : ambito();
     const fila = todos.filter((x) => !(store[x.lic]?.consultado && MAX_DIAS > 0 && store[x.lic].consultado > limite)).slice(0, LIMIT);
     console.log(`RFEG hándicap — âmbito ${todos.length} licenças, ${fila.length} a consultar (pausa ${DELAY} ms)`);
 

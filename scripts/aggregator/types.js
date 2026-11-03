@@ -248,12 +248,14 @@ const SCHEMA_VERSION = 1;
  */
 
 /**
- * @typedef {Object} ManualPlayer
+ * @typedef {Object} ManualPlayer  Ficha sem provas (identity-matcher → fonteManual).
+ * @property {string} key  Chave estável da entidade «manual:<key>».
  * @property {string} canonicalName
- * @property {string} [dob]
  * @property {"M"|"F"} [sex]
  * @property {string} [country]
- * @property {Partial<JuniorSources>} sources
+ * @property {string} [club]
+ * @property {{ rfeg?: { lic: string } }} [sources]  Licença RFEG → hándicap oficial.
+ * @property {string} [reason]
  */
 
 

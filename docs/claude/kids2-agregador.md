@@ -305,6 +305,16 @@ acrescenta-os sem provas (`extra.soRanking`, com ano e clube). O passo 5b junta-
 ano compatível; sem ela não fazem ficha (fichas sem provas caem no passo 8).
 Venice 2026: Orlando Borghi, Francesco Monosi e Michael Spivak ganharam ano e clube.
 
+**Fichas manuais (`juniors-overrides.json` → `manualPlayers`, 03/11/2026):** para
+quem interessa e ainda não jogou nada que as fontes tragam (os irmãos Pérez Granell,
+inscritos no Spanish Open). Cada uma: `{ key, canonicalName, sex, country, club,
+sources: { rfeg: { lic } }, reason }`. O `identity-matcher` (`fonteManual`) põe-nas
+como fonte `manual` sem provas; o matcher, o `fundir-torneios` e o scout mantêm-nas
+mesmo com 0 provas. Com licença RFEG: id `r<licença>`, `sources.rfeg.manual` e o
+`scrape-federados-es.js` inclui-as sempre no âmbito → hándicap oficial actualizado
+sozinho (para uma licença nova já: `--lics A,B --max-dias 0`). Quando os resultados
+chegarem, junta-as um `forceMerge` (`manual:<key>` + `uskids:<id>`) ou o nome + país.
+
 **Raparigas e quem não está no member-history USKids:** sem memberId os resultados
 caem no matcher e não há ficha (as raparigas do Venice ficaram sem seta). Testado a
 03/11/2026 dar ficha a todos pelo nome + país (5,4 mil novas) e desfeito — ela não

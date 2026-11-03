@@ -8032,6 +8032,13 @@
     "ggcondados:ggcondados-surrey-85836"
    ],
    "reason": "[2026-11-03] Massimo Vettori Korolev (GB, Londres, USKids 626943) = o «Massimo Vettori» de Roehampton (Londres SW15) no Surrey U12 County Championship de 10/08/2026 (82, HCP de jogo 18): nome raro, a mesma cidade, e a prova não choca com as dele (Venice a 13/08, USKids a 24/07)."
+  },
+  {
+   "sourceKeys": [
+    "manual:rfeg-LV06954934",
+    "uskids:666934"
+   ],
+   "reason": "[2026-11-03] Luis Perez Granell: a ficha manual (licença RFEG LV06954934) é a conta USKids 666934 — junta-se quando os resultados do Spanish Open 2026 chegarem."
   }
  ],
  "forceSplit": [],
@@ -8171,5 +8178,32 @@
    "reason": "[2026-11-01] Paul-Antoine Martin (FFG 514734273, Monte Carlo, Minime em 2019, hcp 30,5) não é o Paul Martin n. 2009 das provas internacionais — o matcher juntava-o pelo nome contido."
   }
  ],
- "manualPlayers": []
+ "manualPlayers": [
+  {
+   "key": "rfeg-LV06954934",
+   "canonicalName": "Luis Perez Granell",
+   "sex": "M",
+   "country": "ES",
+   "club": "Club de Golf Escorpión",
+   "sources": {
+    "rfeg": {
+     "lic": "LV06954934"
+    }
+   },
+   "reason": "[2026-11-03] Inscrito no Spanish Open 2026 (USKids Boys 11, Valência; USKids 666934) sem provas em fonte nenhuma. A pesquisa de hándicap da RFEG dá-o com o irmão Carlos (licenças seguidas, CG Escorpión, Federación Valenciana): hándicap oficial pela licença."
+  },
+  {
+   "key": "rfeg-LV06954936",
+   "canonicalName": "Carlos Perez Granell",
+   "sex": "M",
+   "country": "ES",
+   "club": "Club de Golf Escorpión",
+   "sources": {
+    "rfeg": {
+     "lic": "LV06954936"
+    }
+   },
+   "reason": "[2026-11-03] Inscrito no Spanish Open 2026 (USKids Boys 9, Valência) sem provas em fonte nenhuma; irmão do Luis (licenças seguidas, CG Escorpión). Hándicap oficial pela licença."
+  }
+ ]
 }

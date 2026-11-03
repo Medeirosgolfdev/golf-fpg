@@ -19,6 +19,7 @@ const { sub, warn } = require("../util/log");
 const { mesmasPancadas } = require("../util/fundir-torneios");
 
 function resolve(rawSources, overrides) {
+  rawSources = [...rawSources, ...fonteManual(overrides)];
   // ────────────────────────────────────────────────────────────────────
   // 1. Build entity list
   // Each raw player gets a unique entity id (entityKey = "sourceId:sourceKey")
@@ -675,7 +676,8 @@ function resolve(rawSources, overrides) {
   // participações tracked). Reduz canónico de ~30k para ~8k de juniores
   // efectivamente jogadores.
   const beforeFilter = juniors.length;
-  juniors = juniors.filter((j) => j.tournamentIds.length > 0);
+  // As fichas manuais (overrides.manualPlayers) ficam mesmo sem provas.
+  juniors = juniors.filter((j) => j.tournamentIds.length > 0 || j._match.mergedFromSources.includes(SOURCE_MANUAL));
   const droppedNoTourn = beforeFilter - juniors.length;
 
   const stats = {
@@ -788,6 +790,14 @@ function buildJunior(entities) {
     }
   }
 
+  // Ficha manual com licença RFEG (overrides.manualPlayers): a licença entra como
+  // a de uma ficha da RFEG — dá o id «r…» e põe-na no âmbito do hándicap oficial
+  // (scrape-federados-es.js → rfegOficial), que assim se actualiza sozinho.
+  for (const e of entities) {
+    const lic = e.sourceId === SOURCE_MANUAL && e.raw.extra?.rfegLic;
+    if (lic && !sources.rfeg) sources.rfeg = { lic, club: e.raw.club || undefined, sex: e.raw.sex, manual: true };
+  }
+
   // ID estável
   const id = juniorId({
     uskidsMemberId: sources.uskids?.memberId,
@@ -833,6 +843,27 @@ function buildJunior(entities) {
     hcpHistory: hcpHistory.length ? hcpHistory : undefined,
     _match: { confidence, evidence, mergedFromSources: uniqueSourceIds },
   };
+}
+
+const SOURCE_MANUAL = "manual";
+
+/**
+ * Fichas acrescentadas à mão (juniors-overrides.json → manualPlayers): quem nos
+ * interessa e ainda não jogou nada que as fontes tragam (03/11/2026: os irmãos
+ * Pérez Granell, inscritos no Spanish Open). Entram como uma fonte sem provas;
+ * quando os resultados chegarem, o nome + país ou um forceMerge juntam-nas.
+ * Cada uma: { key, canonicalName, sex, country, club?, sources?: { rfeg?: { lic } }, reason }.
+ */
+function fonteManual(overrides) {
+  const players = (overrides?.manualPlayers || []).filter((m) => m && m.key && m.canonicalName).map((m) => ({
+    sourceKey: m.key,
+    name: m.canonicalName,
+    sex: m.sex || undefined,
+    country: m.country || undefined,
+    club: m.club || undefined,
+    extra: { manual: true, rfegLic: m.sources?.rfeg?.lic || undefined },
+  }));
+  return players.length ? [{ sourceId: SOURCE_MANUAL, sourceLabel: "Ficha manual", players, tournaments: [] }] : [];
 }
 
 /**
