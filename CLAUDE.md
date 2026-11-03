@@ -165,6 +165,10 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   (`src/hooks/useSort.ts`) + `SortableHdr` (`src/ui/SortableHdr.tsx`). No
   `ScorecardLeaderboard`, as colunas extra (`prefixHeaderCells`/
   `postScorecardHeaderCells`) ordenam-se à mão (ver `AdmissionsTab.tsx`, `DrawTab.tsx`).
+  **Vazios («—», sem cartão) SEMPRE no fim, nas duas direcções** (03/11/2026):
+  comparar com `compareNullsLast`/`compareTextNullsLast`/`compareValuesNullsLast`
+  (`src/hooks/useSort.ts`), nunca trocar o vazio por 999/0/-1/Infinity e multiplicar
+  pela direcção (os «—» saltavam para o topo ao inverter).
 - **Sexo: sempre `<SexBadge sex="M|F" />`**, nunca os símbolos ♂/♀.
 - **Trava do aspecto global** (30/10/2026, pedido dela: «todas as páginas
   parecidas e alimentadas por módulos globais»): `scripts/estilo-global.test.js`
