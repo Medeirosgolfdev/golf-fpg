@@ -1397,6 +1397,9 @@ tr.cross-current { background: var(--bg-success); }
 .tp-zero { color: inherit; }
 .tp-up { color: var(--color-info); }
 .tp-down { color: var(--color-warn-dark); }
+/* Caixa dos tooltips próprios dos gráficos (ChartTooltipBox, ui/chartParts.tsx) */
+.chart-tooltip { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: var(--space-6) var(--space-10); font-size: var(--fs-11); box-shadow: var(--shadow); }
 
 /* FRAG scorecard score circles — note: class name is .eagle not .sc-eagle
    Tamanho unificado: 26×26 / 13px em modern, lb e scHost */
@@ -3905,6 +3908,9 @@ table td.lb-col-divider {
   color: var(--text);
   box-sizing: border-box;
 }
+/* NumberInput (ui/NumberInput.tsx) */
+.num-input { font-variant-numeric: tabular-nums; }
+.input.num-input-big { font-size: var(--fs-14); font-weight: 700; }
 .filter-input:focus {
   outline: none;
   border-color: var(--accent);
@@ -4182,7 +4188,6 @@ table td.lb-col-divider {
 .circuit-ranking-views { align-self: flex-start; }
 .drive-rank-filters { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: center; }
 .drive-pts { color: var(--color-warn-dark); }
-.drive-evo-chart { height: 340px; }
 .card.drive-player-card { border: 2px solid var(--accent); position: relative; }
 .drive-player-card .drive-player-close { position: absolute; top: var(--space-8); right: var(--space-10); }
 .drive-player-head { display: flex; align-items: baseline; gap: var(--space-10); }

@@ -45,6 +45,9 @@ export interface ScorecardRow {
    *  dividido por vários percursos (ex: FSGA joga R1 Roost / R2 Karoo em ondas
    *  — cada jogador tem o par do SEU campo). Fallback: o `par` partilhado. */
   holePars?: number[];
+  /** Linha SEM PAR (a sua edição/campo não tem par oficial): sem cores por
+   *  buraco nem ±par por nine, mesmo que a tabela tenha um `par` partilhado. */
+  noPar?: boolean;
   /** Máscara de buracos inferidos (preenchimento posterior de cartão incompleto).
    *  Quando inferredHoles[i] é true, o buraco i é pintado a cinzento. */
   inferredHoles?: boolean[];
@@ -404,7 +407,7 @@ export function ScorecardLeaderboard({
               const b9 = !is9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
               // Par por buraco do jogador (campo que ele jogou nesta ronda) —
               // cai para o par partilhado quando a linha não traz o seu próprio.
-              const rp = row.holePars && row.holePars.length >= nh ? row.holePars : par;
+              const rp = row.noPar ? [] : row.holePars && row.holePars.length >= nh ? row.holePars : par;
               const rowHasPar = rp.length >= nh && nh > 0;
               // ⚠ O ±par de cada nine soma o par SÓ DOS BURACOS JOGADOS. Com um
               // scorecard incompleto (cartão por entregar, jogo interrompido), o

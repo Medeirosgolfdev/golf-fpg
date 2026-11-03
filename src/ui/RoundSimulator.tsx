@@ -20,6 +20,7 @@ import ClearButton from "./ClearButton";
 import { SDPill } from "./tournamentPrimitives";
 import ExpandArrow from "./ExpandArrow";
 import CloseButton from "./CloseButton";
+import NumberInput from "./NumberInput";
 
 type PoolSortKey = "whs" | "date" | "course" | "hcp" | "tee" | "gross" | "sd" | "sdAdj" | "top";
 
@@ -1349,18 +1350,10 @@ export function RoundSimulator({
 
                     >
                       {is9 ? "SD 9h:" : "SD:"}
-                      <input
-                        type="number"
-                        step="0.1"
+                      <NumberInput variant="big" className="u-w-90px" step="0.1"
                         placeholder={is9 ? "ex: 14.2" : "ex: 28.5"}
                         value={round.sdInput}
-                        onChange={(e) =>
-                          updateRound(round.id, {
-                            sdInput: e.target.value,
-                          })
-                        }
-                        className="u-w-90px u-p-4px-8px u-br-radius u-bd-1px-solid-border u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
-                      />
+                        onChange={(t) => updateRound(round.id, { sdInput: t })} />
                     </label>
                     {is9 && (() => {
                       const v = parseFloat(round.sdInput.replace(",", "."));
@@ -1384,32 +1377,17 @@ export function RoundSimulator({
 
                       >
                         {f === "cr" ? "CR:" : f === "slope" ? "Slope:" : "Par:"}
-                        <input
-                          type="number"
+                        <NumberInput variant="big" className={f === "par" ? "u-w-56px" : "u-w-74px"}
                           step={f === "cr" ? "0.1" : "1"}
                           placeholder={
                             f === "cr" ? "ex: 67.8" : f === "slope" ? "ex: 120" : is9 ? "36" : "72"
                           }
                           value={manualFieldValue(round, f)}
-                          onChange={(e) =>
+                          onChange={(t) =>
                             updateRound(round.id, {
-                              [f === "cr" ? "crInput" : f === "slope" ? "slopeInput" : "parInput"]:
-                                e.target.value,
+                              [f === "cr" ? "crInput" : f === "slope" ? "slopeInput" : "parInput"]: t,
                             })
-                          }
-                          style={{
-                            width: f === "par" ? 56 : 74,
-                            padding: "4px 8px",
-                            borderRadius: "var(--radius)",
-                            border: "1px solid var(--border)",
-                            background: "var(--bg-card)",
-                            color: "var(--text-1)",
-                            fontFamily: "inherit",
-                            fontSize: "var(--fs-14)",
-                            fontWeight: 700,
-                            fontVariantNumeric: "tabular-nums",
-                          }}
-                        />
+                          } />
                       </label>
                     ))}
                     <label
@@ -1417,16 +1395,10 @@ export function RoundSimulator({
 
                     >
                       {is9 ? "Gross (9h):" : "Gross:"}
-                      <input
-                        type="number"
-                        step="1"
+                      <NumberInput variant="big" className="u-w-80px" step="1"
                         placeholder={is9 ? "ex: 42" : "ex: 85"}
                         value={round.grossInput}
-                        onChange={(e) =>
-                          updateRound(round.id, { grossInput: e.target.value })
-                        }
-                        className="u-w-80px u-p-4px-8px u-br-radius u-bd-1px-solid-border u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
-                      />
+                        onChange={(t) => updateRound(round.id, { grossInput: t })} />
                     </label>
                     {computedSdRaw != null && !is9 && (
                       <SDPill sd={computedSdRaw} hcp={hiRef} size="lg" prefix="SD" />
@@ -1519,18 +1491,10 @@ export function RoundSimulator({
 
                     >
                       {is9 ? "Gross (9h):" : "Gross:"}
-                      <input
-                        type="number"
-                        step="1"
+                      <NumberInput variant="big" className="u-w-80px" step="1"
                         placeholder={is9 ? "ex: 42" : "ex: 85"}
                         value={round.grossInput}
-                        onChange={(e) =>
-                          updateRound(round.id, {
-                            grossInput: e.target.value,
-                          })
-                        }
-                        className="u-w-80px u-p-4px-8px u-br-radius u-bd-1px-solid-border u-bg-bg-card u-c-text-1 u-ff-inherit u-fs-fs-14 u-fw-700 u-fvn-tabular-nums"
-                      />
+                        onChange={(t) => updateRound(round.id, { grossInput: t })} />
                     </label>
                     {computedSdRaw != null && !is9 && (
                       <SDPill sd={computedSdRaw} hcp={hiRef} size="lg" prefix="SD" />

@@ -11,10 +11,11 @@
 
 import { useMemo, useState } from "react";
 import {
-  ResponsiveContainer, Line, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceLine, Scatter, ComposedChart,
+  Line, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceLine, Scatter, ComposedChart,
 } from "recharts";
 import type { CanonicalData, Junior } from "../data";
 import TabRow from "../../../ui/TabRow";
+import { ChartBox, ChartTooltipBox, CHART_AXIS, CHART_GRID, CHART_REF } from "../../../ui/chartParts";
 import { fmtDate } from "../../../utils/format";
 import { SOURCE_COLORS, SOURCE_LABELS } from "../../../constants/kids2Sources";
 import { ToggleChip } from "../../../ui/FilterField";
@@ -192,14 +193,9 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
       </div>
 
       <div className="u-bg-bg u-bd-1px-solid-border u-br-radius-lg u-p-10px-6px-6px u-minw-0">
-        {/* Evita o erro "width(-1) height(-1)" do Recharts: o ResponsiveContainer
-            recebe height numérica fixa (não "100%") + minWidth/minHeight para que
-            tenha sempre dimensões válidas mesmo antes do pai ter layout calculado
-            (ex: tab escondida, sidebar fechada, mount inicial). */}
-        <div className="u-w-100pc u-h-240px u-minw-0">
-          <ResponsiveContainer width="100%" height={240} minWidth={1} minHeight={1}>
+        <ChartBox height={240}>
             <ComposedChart data={visiblePoints} margin={{ top: 6, right: 12, left: 0, bottom: 16 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
+              <CartesianGrid {...CHART_GRID} />
               <XAxis
                 dataKey="ts"
                 type="number"
@@ -208,12 +204,10 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
                   const d = new Date(ts);
                   return `${String(d.getMonth() + 1).padStart(2, "0")}/${String(d.getFullYear()).slice(2)}`;
                 }}
-                tick={{ fontSize: 10, fill: "var(--text-3)" }}
-                stroke="var(--border)"
+                {...CHART_AXIS}
               />
               <YAxis
-                tick={{ fontSize: 10, fill: "var(--text-3)" }}
-                stroke="var(--border)"
+                {...CHART_AXIS}
                 reversed={yReversed}
                 allowDecimals={yMode !== "pos"}
                 width={40}
@@ -223,8 +217,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
               />
               <ReferenceLine
                 y={refY}
-                stroke="var(--text-3)"
-                strokeDasharray="4 4"
+                {...CHART_REF}
                 label={{ value: refLabel, fontSize: 9, fill: "var(--text-3)", position: "right" }}
               />
               {/* Linha-base do rival (todos os pontos) */}
@@ -273,8 +266,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
                 />
               ))}
             </ComposedChart>
-          </ResponsiveContainer>
-        </div>
+        </ChartBox>
 
         {/* Legenda */}
         <div className="u-d-flex u-fwr-wrap u-gap-8px u-p-6px-8px u-fs-fs-10 u-c-text-3">
@@ -320,7 +312,7 @@ function CustomTooltip({ active, payload, yMode }: any) {
   };
   const metricLabel = yMode === "toPar" ? "±par" : yMode === "toParNorm" ? "±par/18H" : "Posição";
   return (
-    <div className="u-bg-bg u-bd-1px-solid-border u-br-radius u-p-6px-10px u-fs-fs-11 u-bs-shadow">
+    <ChartTooltipBox>
       <div className="u-fw-700 u-c-text">{p.tName}</div>
       <div className="u-c-text-3 u-fs-fs-10">
         {p.flight} · {fmtDate(p.date)}{p.nholes === 9 ? " · 9H" : ""}
@@ -336,7 +328,7 @@ function CustomTooltip({ active, payload, yMode }: any) {
           </span>
         )}
       </div>
-    </div>
+    </ChartTooltipBox>
   );
 }
 

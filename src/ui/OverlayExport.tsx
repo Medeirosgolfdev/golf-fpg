@@ -21,6 +21,7 @@ import { FONT_LINK, getFontEmbedCSS, hexToRgba, calcStats, isLightText } from ".
 import { CellInfoCtx, AccentCtx, Info } from "./overlay/badges";
 import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, ACCENTS, CAT_ORDER, CAT_COLS, MIX_BG, MIX_BG_LIGHT, MIX_ACC, BG_ACC, defaultVis, type DesignDef } from "./overlay/registry";
 import { OVERLAY_LOGOS, LOGO_HEIGHTS, defaultLogoFor, type LogoSize, type OverlayLogo } from "./overlay/logos";
+import NumberInput from "./NumberInput";
 
 /* Re-export OverlayData para consumidores externos (SimuladorPage, etc). */
 export type { OverlayData } from "./overlay/types";
@@ -378,7 +379,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
           <div style={{ display:"flex", gap:6 }}>
             <div className="ov-field" style={{ flex:1 }}>
               <label style={{ fontSize:11, fontWeight:700, color:"#888" }}>Round</label>
-              <input type="number" value={round} min={1} max={9} onChange={e=>setRound(Number(e.target.value))} className="input" style={{ width:"100%" }} />
+              <NumberInput value={round} min={1} max={9} onChange={t => setRound(Number(t))} className="u-w-100pc" />
             </div>
             <div className="ov-field" style={{ flex:1 }}>
               <label style={{ fontSize:11, fontWeight:700, color:"#888" }}>Pos.</label>

@@ -61,6 +61,7 @@ import SearchInput from "../ui/SearchInput";
 import ErrorState from "../ui/ErrorState";
 import SexSelect from "../ui/SexSelect";
 import { MUTED } from "../ui/tableCells";
+import NumberInput from "../ui/NumberInput";
 
 /* ── URL FPG (referência exacta pedida pelo user) ─────────────── */
 const FPG_LIST_URL =
@@ -516,31 +517,15 @@ export default function JogadoresListPage() {
 
         <FilterField label="ANO NASCIMENTO (DE / A)">
           <div className="u-d-flex u-gap-4px">
-            <input
-              type="number"
-              value={anoMin}
-              onChange={e => setAnoMin(e.target.value)}
-              placeholder="2010"
-              min="1900" max="2030"
-              className="filter-input u-fl-1"
-
-            />
-            <input
-              type="number"
-              value={anoMax}
-              onChange={e => setAnoMax(e.target.value)}
-              placeholder="2015"
-              min="1900" max="2030"
-              className="filter-input u-fl-1"
-
-            />
+            <NumberInput variant="filter" className="u-fl-1" value={anoMin} onChange={setAnoMin} placeholder="2010" min="1900" max="2030" />
+            <NumberInput variant="filter" className="u-fl-1" value={anoMax} onChange={setAnoMax} placeholder="2015" min="1900" max="2030" />
           </div>
         </FilterField>
 
         <FilterField label="HCP (DO / AO)">
           <div className="u-d-flex u-gap-4px">
-            <input type="number" step="0.1" value={hcpMin} onChange={e => setHcpMin(e.target.value)} placeholder="-8" className="filter-input u-fl-1" />
-            <input type="number" step="0.1" value={hcpMax} onChange={e => setHcpMax(e.target.value)} placeholder="54" className="filter-input u-fl-1" />
+            <NumberInput variant="filter" className="u-fl-1" step="0.1" value={hcpMin} onChange={setHcpMin} placeholder="-8" />
+            <NumberInput variant="filter" className="u-fl-1" step="0.1" value={hcpMax} onChange={setHcpMax} placeholder="54" />
           </div>
         </FilterField>
 

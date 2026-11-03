@@ -51,6 +51,7 @@ import SearchInput from "../ui/SearchInput";
 import ErrorState from "../ui/ErrorState";
 import SexSelect from "../ui/SexSelect";
 import { ToggleChip } from "../ui/FilterField";
+import NumberInput from "../ui/NumberInput";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -391,11 +392,9 @@ export default function JogadoresPorAnoPage() {
           {regions.map(r => <option key={r} value={r}>{r}</option>)}
         </select>
 
-        <input
-          className="select u-w-92px" type="number" inputMode="decimal" placeholder="HCP máx"
-          value={hcpMax} onChange={e => setHcpMax(e.target.value)}
-          title="Mostrar só jogadores com HCP igual ou inferior a este valor"
-        />
+        <NumberInput variant="select" className="u-w-92px" placeholder="HCP máx"
+          value={hcpMax} onChange={setHcpMax}
+          title="Mostrar só jogadores com HCP igual ou inferior a este valor" />
 
         <ToggleChip checked={activeOnly} onChange={setActiveOnly} label="Só activos (12m)" />
         <ToggleChip checked={withStatsOnly} onChange={setWithStatsOnly} label="Só com estatísticas" />

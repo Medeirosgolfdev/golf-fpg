@@ -36,6 +36,7 @@ import { MUTED } from "../ui/tableCells";
 import ToPar from "../ui/ToPar";
 import TabRow from "../ui/TabRow";
 import ExpandArrow from "../ui/ExpandArrow";
+import NumberInput from "../ui/NumberInput";
 
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
@@ -845,12 +846,8 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
               <span className="u-fw-700 u-fs-fs-13">📊 Score → SD</span>
               <div className="u-d-flex u-ai-center u-gap-8px u-ml-4px">
                 <label className="u-fs-fs-12 u-fw-600 u-c-text-2">HI</label>
-                <input
-                  type="number" value={hiInput}
-                  onChange={e => setHiInput(e.target.value)}
-                  placeholder="ex: 9.5" step="0.1" min="-4" max="54"
-                  className="u-w-70px u-p-3px-8px u-fs-fs-12 u-br-radius-sm u-bd-1px-solid-border u-bg-bg u-c-text"
-                />
+                <NumberInput value={hiInput} onChange={setHiInput}
+                  placeholder="ex: 9.5" step="0.1" min="-4" max="54" className="u-w-70px" />
               </div>
               <div className="u-d-flex u-ai-center u-gap-8px">
                 <label className="u-fs-fs-12 u-fw-600 u-c-text-2">PCC</label>

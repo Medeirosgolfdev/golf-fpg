@@ -39,6 +39,7 @@ import { MANUEL_FED } from "../../constants/manuel";
 import { resolvePlayedMeters, resolvePlayedTee, courseKeyName } from "../../utils/playedDistance";
 import ExtLink from "../../ui/ExternalLink";
 import SexSelect from "../../ui/SexSelect";
+import NumberInput from "../../ui/NumberInput";
 
 
 /** Coerção segura para número — alguns campos do JSON vêm como string (ex: sd "14"). */
@@ -485,15 +486,12 @@ function TeeNameSpan({ tee }: { tee: Tee }) {
   );
 }
 
-function NumInput({ value, onChange, step = 1, width = 70, title }: {
-  value: number; onChange: (v: number) => void; step?: number; width?: number; title?: string;
+function NumInput({ value, onChange, step = 1, title }: {
+  value: number; onChange: (v: number) => void; step?: number; title?: string;
 }) {
   return (
-    <input
-      className="input mono u-p-4px-8px u-fs-fs-13" type="number" value={value} step={step} title={title}
-      onChange={e => { const v = parseFloat(e.target.value); if (Number.isFinite(v)) onChange(v); }}
-      style={{ width }}
-    />
+    <NumberInput className="u-w-70px" value={value} step={step} title={title}
+      onChange={t => { const v = parseFloat(t); if (Number.isFinite(v)) onChange(v); }} />
   );
 }
 
@@ -784,10 +782,9 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
       <div className="card u-d-flex u-ai-center u-gap-10px u-fwr-wrap">
         <span className="u-fs-fs-22">📏</span>
         <span className="u-fw-800 u-fs-fs-15">Distância habitual</span>
-        <input
-          className="input mono u-w-110px u-p-6px-10px u-fs-fs-17 u-fw-700" type="number" step={50}
+        <NumberInput variant="big" className="u-w-110px" step={50}
           value={habEff != null ? Math.round(habEff) : ""}
-          onChange={e => { const v = parseFloat(e.target.value); setHabOverride(Number.isFinite(v) ? v : null); }}
+          onChange={t => { const v = parseFloat(t); setHabOverride(Number.isFinite(v) ? v : null); }}
           title="Distância de referência a que o jogador está habituado — edita para simular outro cenário"
         />
         <span className="u-fw-700 u-fs-fs-15">m</span>

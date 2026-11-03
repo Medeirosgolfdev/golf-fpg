@@ -11,7 +11,7 @@
  * vivem em src/data/major/bluegolf.ts desde 21/10/2026.
  */
 import React from "react";
-import { scClass } from "../utils/scoreDisplay";
+import { scClass, toParClass } from "../utils/scoreDisplay";
 import { isManuelByName as isM } from "../constants/manuel";
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub } from "../utils/format";
 import type { ScorecardOptions } from "./FPGPage";
@@ -67,10 +67,10 @@ function HoleDiff({ data, ri, mn }: { data: TData; ri: number | "all"; mn?: stri
             <td className="col-in"></td><td className="col-total"></td></tr>
           {mr?.scores && <tr className="bg-success-subtle"><td className="row-label fw-700">🇵🇹 Manuel</td>
             {mr.scores.slice(0,9).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, par[i])}`}>{sc}</span></td>)}
-            <td className="col-out fw-700">{mr.f9}<span className={`sc-topar ${(mr.f9!-parF9)<0?"sc-under":(mr.f9!-parF9)>0?"sc-over":""}`}>{fmtSign(mr.f9!-parF9)}</span></td>
+            <td className="col-out fw-700">{mr.f9}<span className={`sc-topar ${toParClass(mr.f9!-parF9)}`}>{fmtSign(mr.f9!-parF9)}</span></td>
             {mr.scores.slice(9).map((sc,i) => <td key={i+9}><span className={`sc-score ${scClass(sc, par[9+i])}`}>{sc}</span></td>)}
-            <td className="col-in fw-700">{mr.b9}<span className={`sc-topar ${(mr.b9!-parB9)<0?"sc-under":(mr.b9!-parB9)>0?"sc-over":""}`}>{fmtSign(mr.b9!-parB9)}</span></td>
-            <td className="col-total fw-700">{mr.gross}<span className={`sc-topar ${(mr.gross-parTotal)<0?"sc-under":(mr.gross-parTotal)>0?"sc-over":""}`}>{fmtSign(mr.gross-parTotal)}</span></td>
+            <td className="col-in fw-700">{mr.b9}<span className={`sc-topar ${toParClass(mr.b9!-parB9)}`}>{fmtSign(mr.b9!-parB9)}</span></td>
+            <td className="col-total fw-700">{mr.gross}<span className={`sc-topar ${toParClass(mr.gross-parTotal)}`}>{fmtSign(mr.gross-parTotal)}</span></td>
           </tr>}
         </tbody>
       </table>

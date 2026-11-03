@@ -35,6 +35,7 @@ import {
 } from "../data/recentTournaments";
 import ExtLink from "../ui/ExternalLink";
 import ErrorState from "../ui/ErrorState";
+import NumberInput from "../ui/NumberInput";
 
 const CONFIG: CircuitConfig = {
   routeBase: "/torneios-recentes",
@@ -119,9 +120,8 @@ export default function RecentTournamentsPage() {
 
   const lead = (<>
     <ToolbarTitle>🏌️ Torneios recentes</ToolbarTitle>
-    <input type="number" min="1" className="input u-w-110px u-fs-fs-12 u-p-3px-8px" value={minOurs} onChange={(e) => setMinOurs(e.target.value)}
-      placeholder="mín. nossos" title="Só torneios com pelo menos N dos nossos"
- />
+    <NumberInput min="1" className="u-w-110px" value={minOurs} onChange={setMinOurs}
+      placeholder="mín. nossos" title="Só torneios com pelo menos N dos nossos" />
   </>);
   const trail = (
     <span className="fs-11 u-c-text-muted u-ws-nowrap"

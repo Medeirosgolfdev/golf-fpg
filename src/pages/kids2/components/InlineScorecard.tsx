@@ -8,13 +8,11 @@
  * focada (origem do clique) destacada visualmente.
  */
 
-import React from "react";
 import type { Tournament, Flight, Result, Junior } from "../data";
-import { scClass, toParClass } from "../../../utils/scoreDisplay";
-import { fmtSign } from "../../../utils/format";
 import { getKnownScorecard, mergeFlightWithKnown } from "../knownScorecards";
 import CloseButton from "../../../ui/CloseButton";
-import { MUTED } from "../../../ui/tableCells";
+import ToPar from "../../../ui/ToPar";
+import { ScorecardLeaderboard, type ScorecardRow } from "../../../ui/ScorecardLeaderboard";
 
 interface Props {
   tournament: Tournament;
@@ -96,16 +94,17 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
       ? totalGross - totalPar * roundRows.length
       : null);
 
-  const Sub = ({ gross, base, cls, focused }: { gross: number; base: number; cls: string; focused?: boolean }) => {
-    if (base === 0) return <td className={cls + (focused ? " sc-focused" : "")}>{gross > 0 ? gross : "—"}</td>;
-    const tp = gross - base;
-    return (
-      <td className={`${cls} fw-700${focused ? " sc-focused" : ""}`}>
-        {gross > 0 ? gross : "—"}
-        {gross > 0 && <span className={`sc-topar ${toParClass(tp)}`}>{fmtSign(tp)}</span>}
-      </td>
-    );
-  };
+  // O cartão é o ScorecardLeaderboard global, com uma linha por ronda.
+  const parForLb = parEff.some((p) => p > 0) ? parEff : [];
+  const lbRows: ScorecardRow[] = roundRows.map((rr) => ({
+    key: rr.round,
+    pos: "",
+    gross: rr.gross,
+    toPar: rr.gross > 0 && totalPar > 0 ? rr.gross - totalPar : null,
+    scores: rr.strokesEff,
+    nameContent: <span className="fw-700">R{rr.round}</span>,
+    rowBg: rr.isFocused ? "var(--bg-muted)" : undefined,
+  }));
 
   return (
     <div className="u-bg-bg-card u-bd-1px-solid-border u-br-radius-lg u-p-12px-16px u-mt-6pxx">
@@ -131,9 +130,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
           </div>
           <div>
             <span className="u-fs-fs-10 u-c-text-3 u-ls-0_3px u-tt-uppercase">±par</span>
-            <span className={`sc-topar ${toParClass(totalToPar)} u-fs-fs-14 u-fw-700 u-ml-6px u-d-inline`}>
-              {fmtSign(totalToPar)}
-            </span>
+            <ToPar v={totalToPar} className="u-fs-fs-14 u-ml-6px" />
           </div>
           <div className="u-ml-auto u-fs-fs-10 u-c-text-3">
             Par {totalPar}{totalM > 0 && ` · ${totalM}m`}{is9 && " · 9 buracos"}
@@ -141,81 +138,14 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
         </div>
       )}
 
-      <div className="scroll-x">
-        <table className="sc-table-modern" data-sc-table="1">
-          <thead>
-            <tr>
-              <th className="hole-header ta-left">Buraco</th>
-              {(is9 ? effIndices : effIndices.slice(0, 9)).map((origIdx, i) => (
-                <th key={i} className="hole-header">{is9 ? (origIdx + 1) : (i + 1)}</th>
-              ))}
-              {!is9 && <th className="hole-header col-out fs-10">Out</th>}
-              {!is9 && effIndices.slice(9).map((origIdx, i) => (
-                <th key={`b${i}`} className="hole-header">{origIdx + 1}</th>
-              ))}
-              {!is9 && <th className="hole-header col-in fs-10">In</th>}
-              <th className="hole-header col-total">TOT</th>
-            </tr>
-          </thead>
-          <tbody>
-            {metersEff.some((m) => m > 0) && (
-              <tr className="meta-row">
-                <td className="row-label fs-10 c-text-3">m</td>
-                {(is9 ? metersEff : metersEff.slice(0, 9)).map((m, i) => (
-                  <td key={i} className="fs-10 c-text-3">{m > 0 ? m : "—"}</td>
-                ))}
-                {!is9 && <td className="col-out c-text-3">{frontM}</td>}
-                {!is9 && metersEff.slice(9).map((m, i) => (
-                  <td key={`b${i}`} className="fs-10 c-text-3">{m > 0 ? m : "—"}</td>
-                ))}
-                {!is9 && <td className="col-in c-text-3">{backM}</td>}
-                <td className="col-total fs-10 c-text-3">{totalM}</td>
-              </tr>
-            )}
-            <tr className="sep-row">
-              <td className="row-label par-label">Par</td>
-              {(is9 ? parEff : parEff.slice(0, 9)).map((p, i) => (
-                <td key={i}>{p > 0 ? p : "—"}</td>
-              ))}
-              {!is9 && <td className="col-out fw-600">{frontPar}</td>}
-              {!is9 && parEff.slice(9).map((p, i) => (
-                <td key={`b${i}`}>{p > 0 ? p : "—"}</td>
-              ))}
-              {!is9 && <td className="col-in fw-600">{backPar}</td>}
-              <td className="col-total">{totalPar}</td>
-            </tr>
-            {roundRows.map((rr) => {
-              const rowStyle: React.CSSProperties | undefined = rr.isFocused
-                ? { background: "var(--bg-muted)" }
-                : undefined;
-              return (
-                <tr key={rr.round} style={rowStyle}>
-                  <td className="row-label fw-700">R{rr.round}</td>
-                  {(is9 ? rr.strokesEff : rr.strokesEff.slice(0, 9)).map((g, i) => {
-                    const p = parEff[i];
-                    return (
-                      <td key={i}>
-                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : MUTED}
-                      </td>
-                    );
-                  })}
-                  {!is9 && <Sub gross={rr.front} base={frontPar} cls="col-out" focused={rr.isFocused} />}
-                  {!is9 && rr.strokesEff.slice(9).map((g, i) => {
-                    const p = parEff[i + 9];
-                    return (
-                      <td key={`b${i}`}>
-                        {g > 0 ? <span className={`sc-score ${scClass(g, p || null)}`}>{g}</span> : MUTED}
-                      </td>
-                    );
-                  })}
-                  {!is9 && <Sub gross={rr.back} base={backPar} cls="col-in" focused={rr.isFocused} />}
-                  <Sub gross={rr.gross} base={totalPar} cls="col-total" focused={rr.isFocused} />
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <ScorecardLeaderboard
+        par={parForLb}
+        holes={effIndices.length}
+        startHole={is9 ? effIndices[0] + 1 : 1}
+        teeMeters={metersEff.some((m) => m > 0) ? [{ teeName: "", meters: metersEff }] : undefined}
+        rows={lbRows}
+        showScorecard
+      />
 
       {merged.fallbackSource && (
         <div className="u-mt-8px u-p-4px-8px u-fs-fs-10 u-c-text-3 u-fst-italic u-bt-1px-dashed-border-light">

@@ -23,6 +23,7 @@ import ExpandArrow from "../../../ui/ExpandArrow";
 import ExtLink from "../../../ui/ExternalLink";
 import { MUTED } from "../../../ui/tableCells";
 import ShowMoreButton from "../../../ui/ShowMoreButton";
+import Sparkline from "../../../ui/Sparkline";
 import { TrophyPos } from "../../../ui/PosBadge";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
@@ -237,7 +238,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
             {fmtYearRange(editions)}
           </div>
         </div>
-        <Sparkline editions={editions} />
+        <PosSparkline editions={editions} />
         <div className="u-fsh-0 u-minw-50px u-ta-right">
           <TrophyPos pos={lastPos} />
           <div className="u-fs-fs-9 u-c-text-3 u-mt-1px">{fmtYear(last?.tournament.date)}</div>
@@ -325,52 +326,18 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
   );
 }
 
-function Sparkline({ editions }: { editions: Edition[] }) {
+function PosSparkline({ editions }: { editions: Edition[] }) {
   const positions = editions.map((e) => (typeof e.result.pos === "number" ? e.result.pos : null));
   const validPositions = positions.filter((p): p is number => p !== null);
   if (validPositions.length === 0) {
     return <div className="u-w-120px u-fs-fs-10 u-c-text-3 u-ta-center">—</div>;
   }
-  const maxPos = Math.max(...validPositions, 10);
-  const w = 140;
-  const h = 22;
-  const padX = 4;
-  const padY = 3;
-  const usableW = w - padX * 2;
-  const usableH = h - padY * 2;
-
-  const pts = positions.map((p, i) => {
-    const x = padX + (positions.length === 1 ? usableW / 2 : (i / (positions.length - 1)) * usableW);
-    const y = p == null ? null : padY + Math.min(usableH, ((p - 1) / Math.max(1, maxPos - 1)) * usableH);
-    return { x, y, pos: p, ed: editions[i] };
-  });
-
-  let path = "";
-  let pathStarted = false;
-  for (const pt of pts) {
-    if (pt.y === null) continue;
-    if (!pathStarted) {
-      path += `M ${pt.x} ${pt.y}`;
-      pathStarted = true;
-    } else {
-      path += ` L ${pt.x} ${pt.y}`;
-    }
-  }
-
+  const medal = (p: number | null) => p === 1 ? "var(--medal-gold-strong)" : p === 2 ? "var(--medal-silver-strong)" : p === 3 ? "var(--medal-bronze-strong)" : "var(--text-2)";
   return (
-    <svg width={w} height={h} className="u-fsh-0">
-      <line x1={padX} y1={h - padY} x2={w - padX} y2={h - padY} stroke="var(--border-light)" strokeWidth={1} />
-      {path && <path d={path} stroke="var(--text-3)" strokeWidth={1.5} fill="none" opacity={0.6} />}
-      {pts.map((pt, i) => {
-        if (pt.y === null) return null;
-        const color = pt.pos === 1 ? "var(--medal-gold-strong)" : pt.pos === 2 ? "var(--medal-silver-strong)" : pt.pos === 3 ? "var(--medal-bronze-strong)" : "var(--text-2)";
-        return (
-          <circle key={i} cx={pt.x} cy={pt.y} r={pt.pos && pt.pos <= 3 ? 4 : 3} fill={color}>
-            <title>{fmtYear(pt.ed.tournament.date)}: #{pt.pos}</title>
-          </circle>
-        );
-      })}
-    </svg>
+    <Sparkline values={positions} width={140} height={22} padX={4} padY={3} className="u-fsh-0"
+      domain={[1, Math.max(...validPositions, 10)]} lowAtTop baseline strokeOpacity={0.6} dots="all"
+      dotColor={(i) => medal(positions[i])} dotRadius={(i) => (positions[i] ?? 99) <= 3 ? 4 : 3}
+      dotTitle={(i) => `${fmtYear(editions[i].tournament.date)}: #${positions[i]}`} />
   );
 }
 

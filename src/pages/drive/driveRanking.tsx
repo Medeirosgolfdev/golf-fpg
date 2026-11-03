@@ -10,7 +10,8 @@
  * é a grelha jogador × torneio das etapas da época (série/zona/ano) — `DriveSeason`.
  */
 import type React from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine } from "recharts";
+import { ChartBox, CHART_AXIS, CHART_GRID, CHART_TOOLTIP_STYLE } from "../../ui/chartParts";
 import type { Tournament } from "../../data/fpgTypes";
 import type { CircuitEntry } from "../../ui/circuit/types";
 import type { CircuitRanking, CircuitRankingContext } from "../../ui/circuit/CircuitRanking";
@@ -80,13 +81,13 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
   return (
     <div className="card">
       <div className="h-xs">Evolução SD ao longo da época</div>
-      <div className="w-full mt-8 drive-evo-chart">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="mt-8">
+        <ChartBox height={340}>
           <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
-            <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-            <YAxis tick={{ fontSize: 10 }} domain={["dataMin - 2", "dataMax + 2"]} />
-            <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", fontSize: "var(--fs-11)" }}
+            <CartesianGrid {...CHART_GRID} />
+            <XAxis dataKey="date" {...CHART_AXIS} />
+            <YAxis {...CHART_AXIS} domain={["dataMin - 2", "dataMax + 2"]} />
+            <Tooltip contentStyle={CHART_TOOLTIP_STYLE}
               formatter={(value, name) => { const p = top.find(x => x.fed === name); return [value != null ? (value as number).toFixed(1) : "", p?.name || name]; }} />
             <Legend formatter={(value: string) => { const p = top.find(x => x.fed === value); return <span className="fs-10">{p?.name || value}</span>; }} />
             <ReferenceLine y={36} stroke="var(--color-danger)" strokeDasharray="4 4" strokeWidth={1} />
@@ -94,7 +95,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
               <Line key={p.fed} type="monotone" dataKey={p.fed} stroke={C.charts[i % C.charts.length]} strokeWidth={2} dot={{ r: 3 }} connectNulls />
             ))}
           </LineChart>
-        </ResponsiveContainer>
+        </ChartBox>
       </div>
     </div>
   );

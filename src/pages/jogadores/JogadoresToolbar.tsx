@@ -30,6 +30,7 @@ import TabRow from "../../ui/TabRow";
 import SearchInput from "../../ui/SearchInput";
 import SexSelect from "../../ui/SexSelect";
 import { MUTED } from "../../ui/tableCells";
+import NumberInput from "../../ui/NumberInput";
 
 /** Contagens calculadas (memoizadas) no shell — a toolbar não varre listas. */
 export interface ToolbarCounts {
@@ -247,17 +248,13 @@ export default function JogadoresToolbar({
             </FilterField>
             <FilterField label="HCP (DO / AO)">
               <div className="u-d-flex u-gap-4px u-ai-center">
-                <input
-                  className="filter-input u-w-68px" type="number" step="0.1" min="-10" max="54"
-                  value={filters.hcpMin} onChange={e => update({ hcpMin: e.target.value })}
-                  placeholder="mín" aria-label="HCP mínimo"
-                />
+                <NumberInput variant="filter" className="u-w-68px" step="0.1" min="-10" max="54"
+                  value={filters.hcpMin} onChange={t => update({ hcpMin: t })}
+                  placeholder="mín" aria-label="HCP mínimo" />
                 {MUTED}
-                <input
-                  className="filter-input u-w-68px" type="number" step="0.1" min="-10" max="54"
-                  value={filters.hcpMax} onChange={e => update({ hcpMax: e.target.value })}
-                  placeholder="máx" aria-label="HCP máximo"
-                />
+                <NumberInput variant="filter" className="u-w-68px" step="0.1" min="-10" max="54"
+                  value={filters.hcpMax} onChange={t => update({ hcpMax: t })}
+                  placeholder="máx" aria-label="HCP máximo" />
               </div>
             </FilterField>
             {viewMode === "todos" && (

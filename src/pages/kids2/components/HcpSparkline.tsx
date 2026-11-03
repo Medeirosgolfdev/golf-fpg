@@ -17,6 +17,7 @@ import SortableHdr from "../../../ui/SortableHdr";
 import { tpColor } from "../../../ui/tournamentPrimitives";
 import { fmtHcp } from "../../../utils/format";
 import Modal from "../../../ui/Modal";
+import Sparkline from "../../../ui/Sparkline";
 
 interface Props {
   points: HcpPoint[];
@@ -35,25 +36,6 @@ export default function HcpSparkline({ points, width = 80, height = 20, playerNa
 
   if (sorted.length < 2) return null;
 
-  const values = sorted.map((p) => p.hcpExact);
-  const minV = Math.min(...values);
-  const maxV = Math.max(...values);
-  const range = maxV - minV || 1;
-  const xStep = (width - 4) / (sorted.length - 1);
-  const padding = 2;
-
-  // HCP alto em cima, HCP baixo em baixo (orientação natural do valor numérico).
-  // Como no golfe HCP menor = melhor, uma linha a descer visualmente = melhoria.
-  const points2d = sorted.map((p, i) => {
-    const x = padding + i * xStep;
-    const y = padding + ((maxV - p.hcpExact) / range) * (height - 2 * padding);
-    return { x, y, p };
-  });
-
-  const path = points2d
-    .map((pt, i) => `${i === 0 ? "M" : "L"} ${pt.x.toFixed(1)} ${pt.y.toFixed(1)}`)
-    .join(" ");
-
   const last = sorted[sorted.length - 1];
   const first = sorted[0];
   const delta = last.hcpExact - first.hcpExact;
@@ -71,11 +53,8 @@ export default function HcpSparkline({ points, width = 80, height = 20, playerNa
         className="u-d-inline-flex u-ai-center u-bg-transparent u-bd-none u-p-0 u-ml-4px u-cur-pointer u-va-middle"
         aria-label={`Série de HCP (${sorted.length} snapshots)`}
       >
-        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="u-d-block">
-          <path d={path} fill="none" stroke={trendColor} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
-          {/* Último ponto destacado */}
-          <circle cx={points2d[points2d.length - 1].x} cy={points2d[points2d.length - 1].y} r={2} fill={trendColor} />
-        </svg>
+        {/* HCP alto em cima: uma linha a descer = melhoria. */}
+        <Sparkline values={sorted.map((p) => p.hcpExact)} width={width} height={height} stroke={trendColor} />
       </button>
 
       {showModal && (
