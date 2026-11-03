@@ -22,6 +22,23 @@ describe("rfeg — HCP por prova", () => {
     ]));
   }, 120000);
 
+  it("licenças com os mesmos 6 dígitos finais e o mesmo nome = um jogador, mesmo se só uma tem data", () => {
+    const ps = de(/caffrey maud/i).filter((p) => !String(p.sourceKey).startsWith("anon|"));
+    expect(ps).toHaveLength(1);
+    expect([ps[0].sourceKey, ...ps[0].extra.historicalLicenses].sort()).toEqual(["CB05805767", "CB44805767"]);
+    expect(ps[0].dob).toBe("2007-02-22");
+  });
+
+  it("prova gémea LGS↔RFEG fundida: o buraco a buraco do LGS e o HCP/licença da RFEG na mesma linha", () => {
+    const t = require("../../../public/data/rfegolf-rivals.json").torneios.lgs388;
+    expect(t.compId).toBe("15923");
+    const j = t.players.find((p) => /chirband/i.test(p.n));
+    expect(j.sc).toHaveLength(4);
+    expect(j.hcp).toBe(-4.6);
+    expect(j.lic).toBeUndefined(); // estrangeiro: «XXXXXSWE02» não é licença
+    expect(t.players.filter((p) => p.lic).length).toBeGreaterThan(30); // os espanhóis (42 de 120)
+  });
+
   it("com licença: uma entrada por prova, a mais recente primeiro", () => {
     const [d] = de(/elchaninov/i);
     expect(d.hcpHistory.length).toBeGreaterThanOrEqual(3);

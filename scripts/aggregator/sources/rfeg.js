@@ -59,6 +59,25 @@ function load(opts) {
     if (!arr) { arr = []; byDedup.set(k, arr); }
     arr.push({ ...p, licencia: lic });
   }
+  // 2b) Mesmos 6 dígitos finais + mesmo nome = a mesma pessoa (memória
+  // rfeg-licencia-sufixo-estavel), também quando só uma das licenças tem a data
+  // de nascimento (o cadastro traz «CAFFREY MAUD, Maximilian-tomas» CB44805767 com
+  // data e CB05805767 sem). Datas diferentes não se juntam.
+  const dobDe = (g) => g.map((p) => p.dobIso || dobToIso(p.dob)).find(Boolean) || null;
+  const grupoPorSufixo = new Map(); // «nome|sufixo» → chave do byDedup
+  for (const [k, group] of [...byDedup]) {
+    if (!byDedup.has(k)) continue;
+    const chaves = group.map((p) => `${normName(splitName(p.name || ""))}|${String(p.licencia).slice(-6)}`);
+    const alvo = chaves.map((c) => grupoPorSufixo.get(c)).find((a) => a && a !== k && byDedup.has(a));
+    const d1 = dobDe(group), d2 = alvo ? dobDe(byDedup.get(alvo)) : null;
+    if (alvo && (!d1 || !d2 || d1 === d2)) {
+      byDedup.get(alvo).push(...group);
+      byDedup.delete(k);
+      for (const c of chaves) grupoPorSufixo.set(c, alvo);
+    } else {
+      for (const c of chaves) if (!grupoPorSufixo.has(c)) grupoPorSufixo.set(c, k);
+    }
+  }
 
   // 3) Construir RawPlayer[]
   const players = [];
@@ -73,7 +92,7 @@ function load(opts) {
     });
     const active = sorted[0];
     const historical = sorted.slice(1).map((p) => p.licencia);
-    const dob = dobToIso(active.dobIso || active.dob);
+    const dob = dobToIso(active.dobIso || active.dob) || dobDe(sorted);
     const country = countryToIso2(active.nat) || "ES";
     const cleanName = displayName(splitName(active.name || ""));
     if (!cleanName) continue;
@@ -104,6 +123,21 @@ function load(opts) {
     });
   }
 
+  // licença do cadastro (activa ou antiga) e «6 dígitos finais|nome» → licença activa
+  // (a chave do RawPlayer — com uma antiga, o resultado não teria a quem pertencer)
+  const licCadastro = new Map();
+  const licPorSufixo = new Map();
+  for (const p of players) {
+    const nk = normName(splitName(p.name || ""));
+    for (const l of [p.sourceKey, ...(p.extra?.historicalLicenses || [])]) {
+      licCadastro.set(String(l), p.sourceKey);
+      const k = `${String(l).slice(-6)}|${nk}`;
+      if (licPorSufixo.has(k) && licPorSufixo.get(k) !== p.sourceKey) licPorSufixo.set(k, null); // ambíguo
+      else licPorSufixo.set(k, p.sourceKey);
+    }
+  }
+  for (const [k, v] of licPorSufixo) if (v == null) licPorSufixo.delete(k);
+
   // 4) Lookup nome→licença (para resultados sem lic — LGS e blocos nativos do
   // microsite). As chaves de byName já vêm normalizadas ("first last" e
   // "last, first"); normalizamos outra vez para garantir. Nomes ambíguos
@@ -113,21 +147,29 @@ function load(opts) {
     if (!p?.licencia) continue;
     const nk = normName(splitName(key));
     if (!nk) continue;
+    // licenças da mesma pessoa (2b) contam como uma — a activa
+    const lic = licCadastro.get(String(p.licencia)) || String(p.licencia);
     const existing = licByNorm.get(nk);
-    if (existing === undefined) licByNorm.set(nk, String(p.licencia));
-    else if (existing !== String(p.licencia)) licByNorm.set(nk, "__AMBIG__");
+    if (existing === undefined) licByNorm.set(nk, lic);
+    else if (existing !== lic) licByNorm.set(nk, "__AMBIG__");
   }
   for (const [k, v] of licByNorm) if (v === "__AMBIG__") licByNorm.delete(k);
 
   /** Resolve a sourceKey de um resultado: lic explícita → lookup por nome →
    *  chave anónima (o identity-matcher trata `anon|` como fonte fraca). */
   function resolvePlayerKey(pl) {
-    if (pl.lic) return String(pl.lic);
     const nk = normName(splitName(pl.n || pl.name || ""));
+    if (pl.lic) {
+      // Licença fora do cadastro com os mesmos 6 dígitos finais e o mesmo nome de
+      // uma do cadastro = a mesma pessoa depois de mudar de clube (memória
+      // rfeg-licencia-sufixo-estavel) → a chave do cadastro, senão a ficha partia-se
+      // em duas (03/11/2026: as provas gémeas LGS↔RFEG passaram a trazer a licença).
+      const lic = String(pl.lic);
+      return licCadastro.get(lic) || licPorSufixo.get(`${lic.slice(-6)}|${nk}`) || lic;
+    }
     if (!nk) return null;
     return licByNorm.get(nk) || `anon|${nk}`;
   }
-
   // HCP de cada prova, com a data → hcpHistory (03/11/2026: só ficava o último,
   // sem data — o Junes Chirband, sueco, tinha um só HCP no Kids 2). É o índice
   // WHS do jogador (o da federação dele) que a lista da prova publica.

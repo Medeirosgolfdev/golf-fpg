@@ -190,6 +190,29 @@ par fica «–». As fichas por nome (`loadFedByName`, `loadGolfboxPlayers`)
 passaram para `src/data/playerLookups.ts`. Testes:
 `src/data/__tests__/rfegConverters.test.ts`.
 
+## Espanha — provas gémeas LGS↔RFEG fundidas e licenças pelo sufixo (2026-11-03)
+
+Regra dela: das provas repetidas fica uma linha com o MÁXIMO de informação. O
+`build-rfegolf-rivals.js` saltava a gémea inteira (compId em `twins` → só o LGS;
+lgsId em `lgsSuppressed` → só a RFEG). Agora funde os jogadores pelo nome (palavras
+ordenadas, só nomes únicos dos dois lados):
+- **fica o LGS** → ganha da RFEG (resultados + listas de inscritos admitidos/convidados)
+  licença, HCP, data de nascimento, clube, sexo e escalão; e na prova `compId`, CR, slope;
+- **fica a RFEG** → ganha do LGS o buraco a buraco (quando o nº de voltas bate) e o país.
+Licenças «XXXXX…» (estrangeiros) não contam. Efeito no rivals: HCP 10 910 → 15 285
+jogadores-prova, licença 12 756 → 17 014, data 416 → 4 138. Junes Chirband no
+Internacional 2026 (lgs388): cartões do LGS + HCP −4.6 da RFEG.
+
+A licença nova trazia um problema: o cadastro tem a mesma pessoa com duas licenças do
+mesmo sufixo (uma com data, outra sem) e passavam a ser duas fichas. No `sources/rfeg.js`:
+- **2b)** licenças com os mesmos 6 dígitos finais e o mesmo nome juntam-se num jogador
+  (`historicalLicenses`), salvo datas diferentes; a data vem de qualquer uma;
+- um resultado com licença antiga, nova (mesmo sufixo + nome) ou histórica vai sempre para
+  a licença ACTIVA (`licCadastro`, `licPorSufixo`) — com a antiga ficava sem dono;
+- no índice pelo nome, as licenças da mesma pessoa contam como uma (senão era «ambíguo»).
+Kids 2: 42 319 → 42 249 fichas (70 duplicados juntados, nenhuma perdida; +24
+participações). Manuel × Dmitrii = 7. Teste: `sources/rfeg-hcp-historico.test.js`.
+
 ## Espanha — filtros 🇵🇹 PT e ★ Manuel (2026-11-02)
 
 `build-rfegolf-index.js` marca `hasPt`/`hasManuel` em **todas** as fontes

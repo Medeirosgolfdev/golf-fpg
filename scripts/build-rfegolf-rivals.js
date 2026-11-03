@@ -12,9 +12,13 @@
  *   nc{id}_{ageKey}      — NextCaddy (uma entrada por categoria juvenil)
  *   rfeg{compId}_{key}   — microsite rfegolf.es (blocos de results, incl. mitarjeta)
  *
- * Dedup de gémeos (rfegolf-lgs-twins.json, gerado por build-lgs-twins.js):
- *   - compId em `twins`         → versão LGS já cobre o torneio; skip rfegolf
- *   - lgsId em `lgsSuppressed`  → versão rfegolf/mitarjeta é mais rica; remove lgs{id}
+ * Gémeos (rfegolf-lgs-twins.json, gerado por build-lgs-twins.js) — uma linha por
+ * prova, mas FUNDIDA (03/11/2026, regra dela: das repetidas fica o máximo):
+ *   - compId em `twins`         → fica lgs{id}; os jogadores ganham da RFEG (resultados
+ *                                 e listas de inscritos) a licença, o HCP, o clube, a
+ *                                 data de nascimento, o sexo e o escalão
+ *   - lgsId em `lgsSuppressed`  → fica rfeg{compId}_…; os jogadores ganham do LGS o
+ *                                 buraco a buraco e o país
  */
 const fs = require("fs");
 const { writeJsonGuarded } = require("./lib/shrink-guard");
@@ -336,7 +340,67 @@ function ddmmyyyyToIso(s) {
   return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
 }
 
-let rfKept = 0, rfSkipped = 0, rfTwinned = 0;
+let rfKept = 0, rfSkipped = 0, rfTwinned = 0, gemeosFundidos = 0;
+
+// ─── Fundir gémeos LGS ↔ RFEG pelo nome, dentro da mesma prova ───
+// «CHIRBAND, Junes» (LGS) = «CHIRBAND , JUNES» (RFEG): palavras ordenadas, sem
+// acentos. Nomes repetidos num dos lados não se fundem (não se sabe qual é qual).
+const chaveJog = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+  .replace(/[^a-z ]+/g, " ").split(/\s+/).filter(Boolean).sort().join(" ");
+function porNomeUnico(lista) {
+  const m = new Map(), rep = new Set();
+  for (const p of lista) {
+    const k = chaveJog(p.n || p.name);
+    if (!k) continue;
+    if (m.has(k) && m.get(k) !== p) rep.add(k); else m.set(k, p);
+  }
+  for (const k of rep) m.delete(k);
+  return m;
+}
+/** Licença verdadeira (os estrangeiros vêm como «XXXXXSWE00»). */
+const licReal = (l) => (l && !/^X{3,}/i.test(String(l)) ? String(l) : null);
+const vazio = (v) => v == null || v === "" || (Array.isArray(v) && v.length === 0);
+/** Junta a `alvo` o que só `fonte` tem (nunca sobrepõe). */
+function completar(alvo, fonte) {
+  let n = 0;
+  for (const [k, v] of Object.entries(fonte)) if (!vazio(v) && vazio(alvo[k])) { alvo[k] = v; n++; }
+  return n;
+}
+/** Twins: a prova fica pelo LGS; os jogadores ganham o que a RFEG publica deles. */
+function fundirRfegNoLgs(d, lgsId) {
+  const t = out.torneios[`lgs${lgsId}`];
+  if (!t) return false;
+  const rfeg = [
+    ...(d.results || []).flatMap((b) => b.players || []),
+    ...["admitidos", "invitados"].flatMap((k) => d.inscritos?.[k] || []),
+  ].map((p) => ({
+    n: p.name,
+    lic: licReal(p.licencia),
+    hcp: typeof p.hcp === "number" ? p.hcp : null,
+    dob: ddmmyyyyToIso(p.dob),
+    club: p.club || null,
+    sex: p.sexo || null,
+    catEdad: p.catEdad || null,
+    region: p.region || null,
+  }));
+  // Os dois registos do mesmo jogador (resultado + inscrição) juntam-se primeiro.
+  const porNome = new Map();
+  for (const p of rfeg) {
+    const k = chaveJog(p.n);
+    if (!k) continue;
+    if (porNome.has(k)) completar(porNome.get(k), p); else porNome.set(k, { ...p });
+  }
+  const lgs = porNomeUnico(t.players);
+  let mudou = 0;
+  for (const [k, p] of lgs) {
+    const r = porNome.get(k);
+    if (r) { const { n, ...resto } = r; mudou += completar(p, resto); }
+  }
+  completar(t, { compId: String(d.compId), courseRating: (d.results || []).find((b) => b.courseRating)?.courseRating ?? null,
+    slope: (d.results || []).find((b) => b.slope)?.slope ?? null });
+  if (mudou) gemeosFundidos++;
+  return true;
+}
 // A Federação Valenciana (scrape-fgcv.js, 30/10/2026) grava no MESMO formato
 // (results por categoria) — entra pelo mesmo ciclo, com prefixo e fonte próprios.
 const FGCV_DIR = path.resolve(__dirname, "../public/data/fgcv");
@@ -368,7 +432,11 @@ for (const { dir, f, src } of rfFiles) {
     }
     const compId = String(d.compId);
     // Gémeo com versão LGS já incluída → skip (a página /rfeg faz o mesmo)
-    if (src === "rfegolf" && twinsData.twins && twinsData.twins[compId] != null) { rfTwinned++; continue; }
+    if (src === "rfegolf" && twinsData.twins && twinsData.twins[compId] != null) {
+      fundirRfegNoLgs(d, twinsData.twins[compId]);
+      rfTwinned++;
+      continue;
+    }
     const metaName = d.meta?.name || "";
     const metaCat = d.meta?.category || null;
     const dateIso = ddmmyyyyToIso(d.meta?.dateStart) || null;
@@ -443,8 +511,22 @@ for (const { dir, f, src } of rfFiles) {
 
 // lgsSuppressed: a versão rfegolf/mitarjeta é preferida — remover a entrada LGS
 let lgsSuppressedRemoved = 0;
-for (const lgsId of Object.keys(twinsData.lgsSuppressed || {})) {
-  if (out.torneios[`lgs${lgsId}`]) {
+for (const [lgsId, compId] of Object.entries(twinsData.lgsSuppressed || {})) {
+  const lgs = out.torneios[`lgs${lgsId}`];
+  if (lgs) {
+    // Antes de sair, o LGS passa à versão RFEG o buraco a buraco e o país.
+    const doLgs = porNomeUnico(lgs.players);
+    let mudou = 0;
+    for (const t of Object.values(out.torneios)) {
+      if (t.source !== "rfegolf" || String(t.compId) !== String(compId)) continue;
+      for (const [k, p] of porNomeUnico(t.players)) {
+        const l = doLgs.get(k);
+        if (!l) continue;
+        if (vazio(p.sc) && !vazio(l.sc) && l.sc.length === (p.rd || []).length) { p.sc = l.sc; mudou++; }
+        mudou += completar(p, { co: l.co });
+      }
+    }
+    if (mudou) gemeosFundidos++;
     delete out.torneios[`lgs${lgsId}`];
     lgsSuppressedRemoved++;
   }
@@ -454,4 +536,4 @@ out.total = Object.keys(out.torneios).length;
 out.dedupedPlayers = ncRepetidos;
 writeJsonGuarded(OUT, out, { spaces: 0, failOnRefuse: true });
 const size = (fs.statSync(OUT).size / 1024 / 1024).toFixed(2);
-console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) + " (-" + lgsSuppressedRemoved + " suppressed), NC " + ncKept + " files (" + ncEntriesAdded + " cats), RFEG " + rfKept + " files (" + rfTwinned + " twins skipped), " + ncRepetidos + " linhas repetidas fora -> " + out.total + " torneios -> " + OUT + " (" + size + " MB)");
+console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) + " (-" + lgsSuppressedRemoved + " suppressed), NC " + ncKept + " files (" + ncEntriesAdded + " cats), RFEG " + rfKept + " files (" + rfTwinned + " gémeos LGS, " + gemeosFundidos + " fundidos), " + ncRepetidos + " linhas repetidas fora -> " + out.total + " torneios -> " + OUT + " (" + size + " MB)");
