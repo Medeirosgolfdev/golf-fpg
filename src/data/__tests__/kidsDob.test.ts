@@ -44,6 +44,15 @@ describe("withKidsDob — regras", () => {
     expect(kidsDobLida(look("Matteo Durando"))).toBeUndefined();
   });
 
+  it("o HCP do Kids 2 mais perto da data do torneio pinta o SD de quem não tem HCP (03/11/2026)", () => {
+    const m = new Map<string, KidsLinkEntry>([["matteo durando", { n: "Matteo Durando", id: "it1" }]]);
+    const look = makeKidsDobLookup(m, { players: { it1: { y: 2014, hh: [["2026-11-02", 1.4], ["2026-07-15", 4.5], ["2025-01-10", 9.9]] } } });
+    expect(look.hcpAt?.("Matteo Durando", null, "8/13/2026")).toEqual({ hcp: 4.5, date: "2026-07-15" });
+    expect(look.hcpAt?.("Matteo Durando", null, "2027-12-01")).toBeUndefined();   // longe demais
+    const out = withKidsDob({ date: "8/13/2026", players: [{ name: "Matteo Durando" }, { name: "Matteo Durando", hcpExact: 2 }] }, look);
+    expect(out.players.map(p => p.hcpExact)).toEqual([4.5, 2]);
+  });
+
   it("um homónimo com outro federado não herda a data (o pai do Manuel)", () => {
     expect(lookup("Manuel Medeiros", "54907")).toBeUndefined();
     expect(kidsDobLida(lookup("Manuel Medeiros", "52884"))).toBe("2014-04-29");

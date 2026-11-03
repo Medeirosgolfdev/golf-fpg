@@ -14,9 +14,10 @@
  */
 import type { KidsLinkEntry } from "../ui/KidsLink";
 import { normName } from "../utils/normName";
+import { isoDate } from "../utils/format";
 
 /** O que interessa do juniors-scout.json. */
-export interface ScoutDobFile { players: Record<string, { d?: string; y?: number; ne?: [number, number] }> }
+export interface ScoutDobFile { players: Record<string, { d?: string; y?: number; ne?: [number, number]; hh?: [string, number][] }> }
 
 /** Nascimento do Kids 2: a data lida, ou o ano estimado (um ou dois anos). */
 export type KidsNasc =
@@ -25,26 +26,53 @@ export type KidsNasc =
   | { birthYear: number }
   | { birthYearEst: number; birthYearEstMax: number; estNote: string };
 
-/** Nome (e federado, se houver) → nascimento do Kids 2. */
-export type KidsDobLookup = (nome: string | null | undefined, fed?: string | null) => KidsNasc | undefined;
+/** HCP do Kids 2 perto de uma data: o valor e a data em que foi visto. */
+export interface KidsHcp { hcp: number; date: string }
+
+/** Nome (e federado, se houver) → nascimento do Kids 2; `hcpAt` → o HCP mais perto
+ *  de uma data (para pintar o SD de quem não tem HCP na linha — 03/11/2026). */
+export type KidsDobLookup = ((nome: string | null | undefined, fed?: string | null) => KidsNasc | undefined) & {
+  hcpAt?: (nome: string | null | undefined, fed: string | null | undefined, date: string | null | undefined) => KidsHcp | undefined;
+};
+
+/** Até quantos dias de distância um HCP do Kids 2 ainda serve para a data do torneio. */
+export const KIDS_HCP_JANELA_DIAS = 183;
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}/;
 export const KIDS_EST_NOTE = "ano deduzido dos escalões USKids em que jogou (Kids 2)";
 
 export function makeKidsDobLookup(kidsMap: Map<string, KidsLinkEntry>, scout: ScoutDobFile | null | undefined): KidsDobLookup {
-  return (nome, fed) => {
+  const fichaDe = (nome: string | null | undefined, fed?: string | null) => {
     if (!scout || !nome) return undefined;
     const kid = kidsMap.get(normName(nome));
     if (!kid?.id || (fed && kid.fed && kid.fed !== fed)) return undefined;
-    const s = scout.players[kid.id];
+    return scout.players[kid.id];
+  };
+  const lookup: KidsDobLookup = (nome, fed) => {
+    const s = fichaDe(nome, fed);
     if (s?.d && ISO_DATE.test(s.d)) return { dob: s.d.slice(0, 10) };
     if (typeof s?.y === "number") return { birthYear: s.y };
     if (s?.ne) return { birthYearEst: s.ne[0], birthYearEstMax: s.ne[1], estNote: KIDS_EST_NOTE };
     return undefined;
   };
+  // O HCP com a data mais perto da do torneio (no máximo KIDS_HCP_JANELA_DIAS de
+  // distância; em empate, o de antes). Sem data do torneio ou longe demais → nada.
+  lookup.hcpAt = (nome, fed, date) => {
+    const hh = fichaDe(nome, fed)?.hh;
+    const iso = date ? isoDate(date) : "";   // aceita «8/13/2026» (USKids) e «2026-08-13»
+    const ref = iso ? Date.parse(iso) : NaN;
+    if (!hh?.length || Number.isNaN(ref)) return undefined;
+    let best: KidsHcp | undefined, bestD = Infinity;
+    for (const [d, hcp] of hh) {
+      const dist = Math.abs(Date.parse(d) - ref) / 864e5;
+      if (dist < bestD || (dist === bestD && d <= iso)) { best = { hcp, date: d }; bestD = dist; }
+    }
+    return bestD <= KIDS_HCP_JANELA_DIAS ? best : undefined;
+  };
+  return lookup;
 }
 
-interface DobPlayer { name: string; fed?: string; fedCode?: string; dob?: string | null; birthYear?: number | null; birthYearEst?: number | null }
+interface DobPlayer { name: string; fed?: string; fedCode?: string; dob?: string | null; birthYear?: number | null; birthYearEst?: number | null; hcpExact?: number | null }
 
 /** Há alguém sem data nem federado (o federado tem-na pelo playersDB)? */
 export function precisaKidsDob(players: readonly DobPlayer[]): boolean {
@@ -62,18 +90,25 @@ export function kidsAcrescento(p: Omit<DobPlayer, "name">, n: KidsNasc): KidsNas
   return p.birthYear == null || +n.dob.slice(0, 4) === p.birthYear ? n : null;
 }
 
-/** Cópia do torneio com o nascimento do Kids 2 em quem não tem data.
+/** Cópia do torneio com o nascimento do Kids 2 em quem não tem data e o HCP do
+ *  Kids 2 (perto da data do torneio) em quem não tem HCP — o SD pinta-se com ele.
  *  Devolve o MESMO objecto quando não há nada a acrescentar. */
-export function withKidsDob<P extends DobPlayer, T extends { players: P[] }>(t: T, lookup: KidsDobLookup | null): T {
+export function withKidsDob<P extends DobPlayer, T extends { players: P[]; date?: string | null }>(t: T, lookup: KidsDobLookup | null): T {
   if (!lookup) return t;
   let mudou = false;
   const players = t.players.map((p): P => {
-    if (p.dob) return p;
-    const n = lookup(p.name, p.fed || p.fedCode);
-    const a = n ? kidsAcrescento(p, n) : null;
-    if (!a) return p;
-    mudou = true;
-    return { ...p, ...a };
+    let q = p;
+    if (!p.dob) {
+      const n = lookup(p.name, p.fed || p.fedCode);
+      const a = n ? kidsAcrescento(p, n) : null;
+      if (a) q = { ...q, ...a };
+    }
+    if (q.hcpExact == null && lookup.hcpAt) {
+      const h = lookup.hcpAt(p.name, p.fed || p.fedCode, t.date);
+      if (h) q = { ...q, hcpExact: h.hcp, hcpKidsDate: h.date };
+    }
+    if (q !== p) mudou = true;
+    return q;
   });
   return mudou ? { ...t, players } : t;
 }

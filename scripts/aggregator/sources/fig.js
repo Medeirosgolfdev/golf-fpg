@@ -74,6 +74,15 @@ function load() {
             extra: { anosNascimento: ano ? [ano] : [] },
           });
         }
+        // HCP desta prova (o «indice» da Federgolf à data) → histórico datado, que o
+        // Kids 2 usa para pintar o SD de quem não tem HCP noutra fonte (03/11/2026).
+        if (typeof j.indice === "number" && t.data) {
+          const pl = players.get(j.id);
+          if (!pl.hcpHistory) pl.hcpHistory = [];
+          if (!pl.hcpHistory.some((h) => h.date === t.data)) {
+            pl.hcpHistory.push({ date: String(t.data).slice(0, 10), hcpExact: j.indice, source: "fig", label: FG.fgTitulo(FG.fgNomeBase(t.nome)) });
+          }
+        }
         const voltas = j.voltas || [];
         const rounds = voltas.map((g, i) => {
           const c = (j.cartoes || [])[i];

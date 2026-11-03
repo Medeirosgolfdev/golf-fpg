@@ -24,6 +24,7 @@
  *                         ±par médio, ±par da melhor] (os ±par só com o par oficial do escalão, senão null),
  *                     mf?: confrontos no mesmo flight,
  *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição],
+ *                     hh?: [[data, hcp], …] — HCP com data (até 6, o mais recente primeiro; util/scout.js),
  *                     y?: ano de nascimento CERTO sem data (Federgolf, GolfBox — junior.birthYear; sem `d`),
  *                     ne?: [ano, ano] — nascimento ESTIMADO pelos escalões USKids (sem `d` nem `y`; util/nascimento-uskids.js),
  *                     hr?: [hcp, "AAAA-MM-DD"] — o «h» é o hándicap OFICIAL actual da RFEG, com a data,
@@ -180,6 +181,20 @@ function buildScout(juniors, tournaments, generatedAt) {
     const h = src.fpg?.hcpExact ?? hOficial ?? src.rfeg?.hcp ?? src.ffgolf?.hcp ?? null;
     if (typeof h === "number") o.h = h;
     if (hOficial != null) o.hr = [hOficial, rfo.hcpData || null];
+    // Histórico curto de HCP com data (FPG, FFG, Federgolf, listas de inscritos):
+    // as tabelas pintam o SD de quem não tem HCP na linha com o HCP mais perto da
+    // data do torneio (03/11/2026). Os 6 mais recentes, um por data.
+    const hh = [];
+    const hist = [...(j.hcpHistory || [])];
+    // O HCP oficial da RFEG (com data) também conta.
+    if (hOficial != null && rfo.hcpData) hist.push({ date: rfo.hcpData, hcpExact: hOficial });
+    for (const x of hist.sort((a, b) => String(b.date).localeCompare(String(a.date)))) {
+      const d = String(x.date || "").slice(0, 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || typeof x.hcpExact !== "number" || hh.some((e) => e[0] === d)) continue;
+      hh.push([d, x.hcpExact]);
+      if (hh.length === 6) break;
+    }
+    if (hh.length) o.hh = hh;
     if (j.dob) o.d = j.dob;
     else if (j.birthYear) o.y = j.birthYear;
     else {
