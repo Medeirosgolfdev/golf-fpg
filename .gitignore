@@ -184,3 +184,6 @@ data-archive/uskids-member-diario.jsonl
 # (scripts/build-federados-lite.js, scripts/build-drive-admissions.js).
 /public/data/federados-lite.json
 /public/data/fpg-admissions-draws-drive.json
+
+# cache do tsc (gerada pela build)
+tsconfig.tsbuildinfo
