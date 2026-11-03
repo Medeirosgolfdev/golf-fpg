@@ -35,6 +35,15 @@ describe("withKidsDob — regras", () => {
     expect(out.players.map(p => (p as { dob?: string }).dob ?? null)).toEqual(["2013-02-03", "2013-02-03"]);
   });
 
+  it("o ano CERTO da Federgolf (`y`) passa por cima da estimativa e não de um ano lido (03/11/2026)", () => {
+    const m = new Map<string, KidsLinkEntry>([["matteo durando", { n: "Matteo Durando", id: "it1" }]]);
+    const look = makeKidsDobLookup(m, { players: { it1: { y: 2014 } } });
+    expect(look("Matteo Durando")).toEqual({ birthYear: 2014 });
+    const out = withKidsDob({ players: [{ name: "Matteo Durando" }, { name: "Matteo Durando", birthYearEst: 2013 }, { name: "Matteo Durando", birthYear: 2015 }] }, look);
+    expect(out.players.map(p => p.birthYear ?? null)).toEqual([2014, 2014, 2015]);
+    expect(kidsDobLida(look("Matteo Durando"))).toBeUndefined();
+  });
+
   it("um homónimo com outro federado não herda a data (o pai do Manuel)", () => {
     expect(lookup("Manuel Medeiros", "54907")).toBeUndefined();
     expect(kidsDobLida(lookup("Manuel Medeiros", "52884"))).toBe("2014-04-29");
@@ -71,20 +80,23 @@ describe("Venice Open 2026 · Boys 12 (USKids t=22243) — dados reais", () => {
     expect(torneio && escalao).toBeTruthy();
     const base = escalaoToTournament(escalao!, torneio!);
     expect(precisaKidsDob(base.players)).toBe(true);
-    const t = withKidsDob(base, lookup) as unknown as { players: { name: string; dob?: string; birthYearEst?: number; birthYearEstMax?: number }[] };
+    const t = withKidsDob(base, lookup) as unknown as { players: { name: string; dob?: string; birthYear?: number; birthYearEst?: number; birthYearEstMax?: number }[] };
     const dobDe = (n: string) => t.players.find(p => p.name.toLowerCase().includes(n))?.dob;
     expect(dobDe("elchaninov")).toBe("2014-05-13");
     expect(dobDe("ormaechea")).toBe("2013-10-16");
     expect(dobDe("medeiros")).toBe("2014-04-29");
-    // Sem data lida, o ano estimado pelos escalões USKids (02/11/2026: «a maioria
-    // continua sem ter os dados»): Matteo 2014, Luis Maier 2013.
+    // Sem data lida: o ano CERTO da Federgolf para os italianos (03/11/2026 — Matteo
+    // Durando 2014, Federico Bertolino 2013) e, sem ele, o estimado pelos escalões
+    // USKids (Luis Maier 2013).
+    const ano = (n: string) => t.players.find(x => x.name.toLowerCase().includes(n))?.birthYear;
+    expect(ano("durando")).toBe(2014);
+    expect(ano("bertolino")).toBe(2013);
     const est = (n: string) => { const p = t.players.find(x => x.name.toLowerCase().includes(n)); return p && [p.birthYearEst, p.birthYearEstMax]; };
-    expect(est("durando")).toEqual([2014, 2014]);
     expect(est("luis maier")).toEqual([2013, 2013]);
     // Regra geral: todos os que o Kids 2 conhece ficam com nascimento, e são quase todos.
     const esperados = base.players.filter(p => lookup(p.name)).length;
     expect(esperados).toBeGreaterThanOrEqual(28);
-    expect(t.players.filter(p => p.dob || p.birthYearEst != null).length).toBe(esperados);
+    expect(t.players.filter(p => p.dob || p.birthYear != null || p.birthYearEst != null).length).toBe(esperados);
   });
 
   it("o TournamentDetail e o DrawTab passam pela regra (senão a tabela volta a sair vazia)", () => {

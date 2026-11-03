@@ -24,7 +24,8 @@
  *                         ±par médio, ±par da melhor] (os ±par só com o par oficial do escalão, senão null),
  *                     mf?: confrontos no mesmo flight,
  *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição],
- *                     ne?: [ano, ano] — nascimento ESTIMADO pelos escalões USKids (sem `d`; util/nascimento-uskids.js),
+ *                     y?: ano de nascimento CERTO sem data (Federgolf, GolfBox — junior.birthYear; sem `d`),
+ *                     ne?: [ano, ano] — nascimento ESTIMADO pelos escalões USKids (sem `d` nem `y`; util/nascimento-uskids.js),
  *                     hr?: [hcp, "AAAA-MM-DD"] — o «h» é o hándicap OFICIAL actual da RFEG, com a data,
  * *                     u?: últimos torneios — [[data, iNome, lugar | "WD" | "DQ" | "DNS" | null, field | null, voltas,
                          pancadas | null, ±par | null, buracos, SD médio | null], …] (iNome → `tn`),
@@ -180,6 +181,7 @@ function buildScout(juniors, tournaments, generatedAt) {
     if (typeof h === "number") o.h = h;
     if (hOficial != null) o.hr = [hOficial, rfo.hcpData || null];
     if (j.dob) o.d = j.dob;
+    else if (j.birthYear) o.y = j.birthYear;
     else {
       const ne = anosPelosEscaloesUskids(j, tById);
       if (ne) o.ne = ne;

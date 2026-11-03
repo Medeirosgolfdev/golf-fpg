@@ -32,8 +32,8 @@ import {
 import ExtLink from "../ui/ExternalLink";
 import ErrorState from "../ui/ErrorState";
 import { ToggleChip } from "../ui/FilterField";
+import FilterPillRow from "../ui/FilterPillRow";
 import { Fill } from "../ui/DataStyle";
-import { toggleSet } from "../utils/mathUtils";
 import { isPtCountry } from "../utils/flagUtils";
 
 
@@ -132,16 +132,18 @@ const CATEGORIAS: { tipo: number; label: string }[] = [
   { tipo: 6,  label: "Tour Champ." },
   { tipo: 9,  label: "Pais/Filhos" },
 ];
-// Guarda-se o que está VISÍVEL (e não o escondido): um tipo novo que a USKids
-// venha a usar entra riscado, em vez de encher a lista sem ser pedido.
-const CAT_VISIVEIS_DEFAULT = [8, 4, 3];   // Internacionais + Mundiais
-const CAT_LS_KEY = "uskids_categorias_visiveis_v1";
-function lerCatVisiveis(): Set<number> {
+// Filtro «Tipo: Todos · Mundiais · …» (FilterPillRow, a linha global): nada
+// escolhido = todos os tipos; um clique num tipo mostra SÓ esse; mais cliques juntam
+// outros; «Todos» volta a tudo (pedido dela, 03/11/2026 — substitui o «só Internacionais
+// + Mundiais por omissão» de 14/09, que não deixava isolar um tipo). Guarda-se a escolha
+// neste browser.
+const CAT_LS_KEY = "uskids_categorias_escolhidas_v2";
+function lerCatEscolhidas(): string[] {
   try {
     const v = JSON.parse(localStorage.getItem(CAT_LS_KEY) ?? "null");
-    if (Array.isArray(v)) return new Set(v.filter((x: unknown): x is number => typeof x === "number"));
-  } catch { /* sem storage: fica o default */ }
-  return new Set(CAT_VISIVEIS_DEFAULT);
+    if (Array.isArray(v)) return v.filter((x: unknown): x is string => typeof x === "string");
+  } catch { /* sem storage: todos */ }
+  return [];
 }
 /** Categoria pelo NOME, só nos padrões sem ambiguidade (validados a 13/10/2026
  *  contra os 45 torneios com tipo conhecido — zero desacordos). Os resultados
@@ -156,8 +158,15 @@ function tipoPeloNome(name: string): number | null {
   if (/teen series/.test(n)) return 2;
   if (/^world teen championship/.test(n)) return 3;
   if (/^world championship/.test(n)) return 4;
+  if (EUROPEU.test(n)) return 4;
   return null;
 }
+/** O European Championship conta como Mundial (pedido dela, 03/11/2026: é o
+ *  campeonato do continente, ao nível do World) — passa por cima do `type` da
+ *  inscrição, que o põe nos Internacionais. */
+const EUROPEU = /european championship/i;
+const tipoDe = (name: string, type: number | null | undefined) =>
+  EUROPEU.test(name) ? 4 : type ?? tipoPeloNome(name);
 const labelCategoria = (tipo: number) => CATEGORIAS.find(c => c.tipo === tipo)?.label ?? `Tipo ${tipo}`;
 
 // Tipo explícito para entradas do mapa allTorneios — elimina os (as any) casts
@@ -223,12 +232,11 @@ export default function USKidsFieldPage() {
     const p = searchParams.get("t");  // (o paramT só é declarado mais abaixo)
     return p ? parseInt(p) || null : null;
   });
-  // Categorias escondidas na lista — preferência deste browser.
-  const [catVisiveis, setCatVisiveis] = useState<Set<number>>(lerCatVisiveis);
+  // Tipos escolhidos na linha «Tipo:» (vazio = todos) — preferência deste browser.
+  const [catEscolhidas, setCatEscolhidas] = useState<string[]>(lerCatEscolhidas);
   useEffect(() => {
-    try { localStorage.setItem(CAT_LS_KEY, JSON.stringify([...catVisiveis])); } catch { /* sem storage */ }
-  }, [catVisiveis]);
-  const alternarCategoria = (tipo: number) => setCatVisiveis((prev) => toggleSet(prev, tipo));
+    try { localStorage.setItem(CAT_LS_KEY, JSON.stringify(catEscolhidas)); } catch { /* sem storage */ }
+  }, [catEscolhidas]);
 
   // selectedT sincronizado com URL params (?t=)
   const paramT = searchParams.get("t");
@@ -364,7 +372,7 @@ export default function USKidsFieldPage() {
         totalMaximo: t.total_maximo ?? undefined,
         terminado: ended,
         manuelJogou: manuelInscrito,
-        tipo: t.type ?? null,
+        tipo: tipoDe(t.name ?? "", t.type),
         seguido: t.seguido,
       });
     }
@@ -413,7 +421,7 @@ export default function USKidsFieldPage() {
         if (ended) entry.terminado = true;
         if (!entry.rondas) entry.rondas = rondasTotal;
         if (!entry.campo && t.campo) entry.campo = t.campo;
-        if (entry.tipo == null) entry.tipo = tipoPeloNome(t.name);
+        if (entry.tipo == null || EUROPEU.test(t.name)) entry.tipo = tipoDe(t.name, entry.tipo);
         if (totalJogadores > 0) entry.totalInscritos = totalJogadores;
         entry.nPaises = paises.size;
       } else {
@@ -426,7 +434,7 @@ export default function USKidsFieldPage() {
           manuelPos: manuelJogou ? manuelPos : undefined,
           manuelScore: manuelJogou ? manuelScore : undefined,
           nPaises: paises.size,
-          tipo: tipoPeloNome(t.name),
+          tipo: tipoDe(t.name, null),
         });
       }
     }
@@ -536,21 +544,24 @@ export default function USKidsFieldPage() {
       : allTorneios.filter(t => jaJogado(t) && manuelFilter(t) && fieldFilter(t));
   }, [allTorneios, tab, filterManuel, filterSmallField]);
   // Torneios e Resultados (os mesmos filtros nas duas — 13/10/2026; sem tipo
-  // conhecido nunca se esconde) e só com o ★ Manuel DESLIGADO: ligado, a lista é
+  // conhecido só aparece com «Todos») e só com o ★ Manuel DESLIGADO: ligado, a lista é
   // "os torneios do Manuel" e nenhuma categoria os pode esconder (uma escolha
   // antiga de chips escondia o Spanish Open). Sem tipo conhecido, pedido por
   // link ou seguido (uskids-seguir-diario.json) nunca se esconde.
   const listaVisivel = useMemo(() => listaSemCategoria.filter(t =>
-    filterManuel || t.tipo == null || t.t === tLigado || !!t.seguido || catVisiveis.has(t.tipo)),
-  [listaSemCategoria, filterManuel, tLigado, catVisiveis]);
+    // Com um tipo escolhido vê-se SÓ esse tipo (nem o torneio aberto pelo link fica:
+    // confundia — o Venice Open aparecia nos «Mundiais», 03/11/2026); com «Todos»,
+    // tudo — também os sem tipo conhecido e os seguidos.
+    filterManuel || catEscolhidas.length === 0
+      || (t.tipo != null && catEscolhidas.includes(String(t.tipo)))),
+  [listaSemCategoria, filterManuel, catEscolhidas]);
   // Os chips saem dos DADOS, não da lista fixa: um tipo que a USKids venha a
   // usar e que não está em CATEGORIAS aparece sozinho, como "Tipo N".
   const ordemCat = (tipo: number) => { const i = CATEGORIAS.findIndex(c => c.tipo === tipo); return i < 0 ? 99 : i; };
   const contagemCat = [...new Set(listaSemCategoria.map(t => t.tipo).filter((x): x is number => x != null))]
     .sort((a, b) => ordemCat(a) - ordemCat(b) || a - b)
     .map(tipo => ({ tipo, label: labelCategoria(tipo), n: listaSemCategoria.filter(t => t.tipo === tipo).length }));
-  const mostrarChips = !filterManuel
-    && (contagemCat.length > 1 || contagemCat.some(c => !catVisiveis.has(c.tipo)));
+  const mostrarChips = !filterManuel && (contagemCat.length > 1 || catEscolhidas.length > 0);
 
   // ── CircuitShell: entradas e divisões ──────────────────────────────────
   // Um carregador por torneio, refeito só quando os dados mudam (o shell guarda
@@ -782,18 +793,11 @@ export default function USKidsFieldPage() {
       tabs={TABS.map(tb => ({ key: tb.id, label: tb.label, count: tb.badge ?? undefined }))} />
     <ToolbarSep />
     <ToggleChip checked={filterManuel} onChange={setFilterManuel} label="★ Manuel" manuel />
-      {/* Categorias: vigiam-se todas, a lista mostra só as ligadas. Azul, para
-          não se confundirem com o ★ Manuel. */}
+      {/* Tipo de torneio: «Todos» ou só os escolhidos (FilterPillRow global). */}
       {mostrarChips && (<>
         <ToolbarSep />
-        {contagemCat.map(c => {
-          const on = catVisiveis.has(c.tipo);
-          return (
-            <ToggleChip key={c.tipo} checked={on} onChange={() => alternarCategoria(c.tipo)}
-              title={on ? "Clicar para esconder" : `${c.n} escondidos — clicar para mostrar`}
-              label={<>{c.label} <span className="fs-10 u-op-0_7">{c.n}</span></>} />
-          );
-        })}
+        <FilterPillRow inline label="Tipo:" active={catEscolhidas} onChange={setCatEscolhidas}
+          items={contagemCat.map(c => ({ key: String(c.tipo), label: c.label, count: c.n }))} />
       </>)}
     {tab === "resultados" && (
       <ToggleChip checked={filterSmallField} onChange={setFilterSmallField} label={`Campo ≥${MIN_FIELD}`}

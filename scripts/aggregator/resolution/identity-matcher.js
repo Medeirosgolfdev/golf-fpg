@@ -701,6 +701,15 @@ function buildJunior(entities) {
   // DOB: priorizar o que tem maior consenso. Se discordam, é problema.
   const dobs = entities.map((e) => e.raw.dob).filter(Boolean);
   const dob = mostFrequent(dobs);
+  // Sem data: o ANO certo de uma fonte que o publica (Federgolf — ranking juvenil;
+  // GolfBox — ano de nascimento), que vem como dobRange de um ano inteiro. Não é
+  // estimativa (03/11/2026: os italianos tinham o ano da FIG e a /uskids mostrava
+  // a estimativa dos escalões a vermelho).
+  const anoCerto = (r) => (r && r.lo && r.hi && r.lo.slice(0, 4) === r.hi.slice(0, 4)
+    && r.lo.endsWith("-01-01") && r.hi.endsWith("-12-31") ? +r.lo.slice(0, 4) : null);
+  const comAno = dob ? [] : entities.filter((e) => anoCerto(e.raw.dobRange) != null);
+  const birthYear = comAno.length ? mostFrequent(comAno.map((e) => anoCerto(e.raw.dobRange))) : null;
+  const birthYearSource = birthYear != null ? comAno.find((e) => anoCerto(e.raw.dobRange) === birthYear).sourceId : null;
 
   // Sex: idem
   const sex = mostFrequent(entities.map((e) => e.raw.sex).filter(Boolean));
@@ -805,6 +814,7 @@ function buildJunior(entities) {
     canonicalName,
     aliases,
     dob,
+    ...(birthYear != null ? { birthYear, birthYearSource } : {}),
     sex,
     nationality: country,
     country,
