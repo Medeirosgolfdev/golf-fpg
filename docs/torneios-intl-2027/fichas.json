@@ -8323,11 +8323,87 @@
     "url": "https://www.ega-golf.ch/events/calendar/planner/2027/list/pdf"
    }
   ],
-  "distancias": [],
-  "historico": [],
+  "distancias": [
+   {
+    "ano": 2025,
+    "campo": "Golf Club Biella «Le Betulle»",
+    "escalao": "Boys U16 (quadro único)",
+    "tee": null,
+    "metros": 6534,
+    "par": 73,
+    "cr": 75,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_10237.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Golf Club Biella «Le Betulle»",
+    "escalao": "Boys U16 (quadro único)",
+    "tee": null,
+    "metros": 6534,
+    "par": 73,
+    "cr": 75,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_9461.json"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Golf Club Biella «Le Betulle»",
+    "escalao": "Boys U16",
+    "vencedor": "Kiril Engeli Poretti",
+    "pais": "Itália",
+    "score": 205,
+    "toPar": -14,
+    "voltas": "67-70-68",
+    "corte": null,
+    "notas": "2.º Kalle Stenson (SWE) 209; 3.º Dean Janssens (NED) 210. toPar calculado com par 73 (par EGR de 2024/25). Resultados completos da EGR de 2026 ainda não estão no repo (só o top WAGR)",
+    "fonte": "repo public/data/wagr/events/wagr_271764.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Golf Club Biella «Le Betulle»",
+    "escalao": "Boys U16",
+    "vencedor": "Youp Orsel",
+    "pais": "Países Baixos",
+    "score": 135,
+    "toPar": -11,
+    "voltas": "68-67 (só 2 voltas registadas)",
+    "corte": null,
+    "notas": "2.º Mathias Aase (NOR) 139; 3.º Pieter Werner (NED) 142. 146 jogadores. Melhor sub-14 do campo: Sebastian Duffield (ENG), T21 com 149 (72-77)",
+    "fonte": "repo public/data/egr/events/egr_10237.json; repo public/data/wagr/events/wagr_260242.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Golf Club Biella «Le Betulle»",
+    "escalao": "Boys U16",
+    "vencedor": "Paolo Perrino",
+    "pais": "Itália",
+    "score": 214,
+    "toPar": -5,
+    "voltas": "68-73-73",
+    "corte": "Após 36 buracos (98 de 145 não passaram)",
+    "notas": "2.º Stepan Plasek (CZE) 215; 3.º Vaclav Svub (CZE) 218",
+    "fonte": "repo public/data/egr/events/egr_9461.json; repo public/data/wagr/events/wagr_235618.json"
+   },
+   {
+    "ano": 2023,
+    "campo": "Golf Club Biella «Le Betulle»",
+    "escalao": "Boys U16",
+    "vencedor": "Enzo Persson",
+    "pais": "Suécia",
+    "score": 286,
+    "toPar": -6,
+    "voltas": "74-70-74-68",
+    "corte": "Após 36 buracos",
+    "notas": "72 buracos em 2023; 144 jogadores",
+    "fonte": "repo public/data/egr/events/egr_7582.json"
+   }
+  ],
   "portugueses": [],
   "elegibilidade": "Até 16 anos; HCP ≤ 4,4; 76 lugares para estrangeiros em 144; €60 em 2024.",
-  "notas": "A U16 mais forte do continente a seguir às britânicas (20 nações; EGR 9 033 em 2026). Para o Manuel é subir de escalão; o Junes Chirband jogou-a em 2025 (+3,3 de HCP)."
+  "notas": "Sem portugueses nos resultados EGR de 2023–2025 nem no top WAGR de 2026. O formato tem variado: 72 buracos com corte (2023), 54 (2024 e 2026) e só 36 registados (2025). Biella mede 6534 m (CR 75, par 73) em todas as edições EGR desde 2021: é um campo duro para um sub-14. O nome oficial na WAGR é «Teodoro Soldati Trophy»."
  },
  {
   "nome": "Hungarian Junior Open",
@@ -8336,8 +8412,16 @@
   "pais": "Hungria",
   "links": [
    {
+    "rotulo": "Regulamento 2026 (HGF, PDF)",
+    "url": "https://hungolf.hu/wp-content/uploads/2022/01/HGF-Hungarian-Junior-Open-2026_Terms-of-Competition-4.pdf"
+   },
+   {
     "rotulo": "Federação húngara (Golfigo)",
     "url": "https://mgsz.golfigo.com"
+   },
+   {
+    "rotulo": "WAGR 2026",
+    "url": "https://www.wagr.com/events/x-271591"
    },
    {
     "rotulo": "Calendário EGA 2027 (PDF)",
@@ -8345,10 +8429,50 @@
    }
   ],
   "distancias": [],
-  "historico": [],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Zala Springs Golf Resort",
+    "escalao": "Geral rapazes (WAGR: categorias Young Adult + A)",
+    "vencedor": "Nico Muellner",
+    "pais": "Áustria",
+    "score": 219,
+    "toPar": null,
+    "voltas": "74-76-69",
+    "corte": "Após 36 buracos (máx. 72 jogadores)",
+    "notas": "T3 Leon Car (SLO) e Florens Vukusic (AUT) 223. O vencedor da categoria B (U12+U14) não está nas nossas fontes",
+    "fonte": "repo public/data/wagr/events/wagr_271591.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Pannonia G&CC",
+    "escalao": "Geral rapazes (WAGR)",
+    "vencedor": "Armin Nagy",
+    "pais": "Hungria",
+    "score": 228,
+    "toPar": null,
+    "voltas": "76-70-82",
+    "corte": null,
+    "notas": "3.º Sebastian Aigner (AUT) 233",
+    "fonte": "repo public/data/wagr/events/wagr_259985.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Pannonia G&CC",
+    "escalao": "Geral rapazes (WAGR)",
+    "vencedor": "Richard Ifj Sarkozi",
+    "pais": "Hungria",
+    "score": 213,
+    "toPar": null,
+    "voltas": "70-70-73",
+    "corte": null,
+    "notas": "Empatado com Jakob Lehner (AUT) 213; ganhou o desempate",
+    "fonte": "repo public/data/wagr/events/wagr_235454.json"
+   }
+  ],
   "portugueses": [],
-  "elegibilidade": "Aberto a estrangeiros; escalão U14 com HCP ≤ 13; ~€150; 54 buracos; máx. 144 jogadores.",
-  "notas": "WAGR/EGA. Coincide com o Scottish U14 (9–10 Ago): é escolher um dos dois."
+  "elegibilidade": "2026 (37.ª edição, regulamento da HGF): até 25 anos; estrangeiros com HCP certificado. Categoria «B» = U12+U14 juntos, com prémios só gross (1.º a 3.º rapazes e raparigas). Os rapazes B jogam das azuis (Competition Tees); os A e Young Adult das brancas. HCP máximo no Open para U14: 13,0 rapazes / 15,0 raparigas. 3 voltas (54 buracos), corte aos 36 (máx. 72, proporcional por categoria, mínimo de 16 rapazes por categoria). Máx. 144 inscritos e 6 wildcards (HCP ≤ 36). Taxa 60 000 HUF (~€150), com 4 green fees. Inscrição só pela GOLFiGO; prazo 9 Ago 2026, 12h. Um U14 pode inscrever-se num escalão acima se cumprir o HCP.",
+  "notas": "WAGR/EGA. A sede muda: Pannonia G&CC em 2022–2025 e Zala Springs em 2026. Não há distâncias publicadas nas fontes consultadas (as das azuis de Zala Springs ficam por obter). A EGR não tem esta prova. Coincide com o Scottish U14 (9–10 Ago): é escolher um dos dois."
  },
  {
   "nome": "Grand Prix Jeunes Majeur U14 (FFG)",
@@ -8361,11 +8485,247 @@
     "url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier"
    }
   ],
-  "distancias": [],
-  "historico": [],
+  "distancias": [
+   {
+    "ano": 2026,
+    "campo": "Golf de Chiberta (GP #1)",
+    "escalao": "Garçons U14",
+    "tee": "Blanc",
+    "metros": 5390,
+    "par": 70,
+    "cr": 70,
+    "slope": null,
+    "fonte": "repo public/data/ffgolf/2026_grand-prix-jeunes-majeur-garcons-u14.json (GolfGenius); CR da EGR 12054"
+   },
+   {
+    "ano": 2026,
+    "campo": "Golf de Bondues (GP #2)",
+    "escalao": "Garçons U14",
+    "tee": "Blanc",
+    "metros": 5835,
+    "par": 72,
+    "cr": 71,
+    "slope": null,
+    "fonte": "repo public/data/ffgolf/2026_grand-prix-jeunes-majeur-garcons-u142.json; EGR 12112"
+   },
+   {
+    "ano": 2026,
+    "campo": "Golf Club de Besançon (GP #3)",
+    "escalao": "Garçons U14",
+    "tee": null,
+    "metros": 5658,
+    "par": 72,
+    "cr": 70.1,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_12116.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Golf de Mont de Marsan (GP #1)",
+    "escalao": "Garçons U14",
+    "tee": null,
+    "metros": 5915,
+    "par": 71,
+    "cr": 72,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_10582.json (o GolfGenius do repo dá 5032 m de um tee «arquivado», que não bate com o CR 72)"
+   },
+   {
+    "ano": 2025,
+    "campo": "Golf des 24 Heures, Le Mans (GP #2)",
+    "escalao": "Garçons U14",
+    "tee": null,
+    "metros": 5531,
+    "par": 71,
+    "cr": 71,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_10703.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Golf International du Cap d'Agde (GP #3)",
+    "escalao": "Garçons U14",
+    "tee": null,
+    "metros": 6330,
+    "par": 72,
+    "cr": 74.3,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_10705.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Evian Resort (GP #4)",
+    "escalao": "Garçons U14",
+    "tee": null,
+    "metros": 5805,
+    "par": 71,
+    "cr": 72,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_10707.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Golf de Chiberta (GP #1)",
+    "escalao": "Garçons U14",
+    "tee": null,
+    "metros": 5600,
+    "par": 70,
+    "cr": 71.2,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_9204.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Golf International Soufflenheim (GP #3)",
+    "escalao": "Garçons U14",
+    "tee": null,
+    "metros": 6000,
+    "par": 72,
+    "cr": 71.6,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_9206.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Evian Resort (GP #4)",
+    "escalao": "Garçons U14",
+    "tee": null,
+    "metros": null,
+    "par": 71,
+    "cr": 72.4,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_9207.json"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Golf Club de Besançon (GP #3, 20–21 Jun)",
+    "escalao": "Garçons U14",
+    "vencedor": "Télo Larvor",
+    "pais": "França",
+    "score": 141,
+    "toPar": -3,
+    "voltas": "72-69",
+    "corte": null,
+    "notas": "2.º Harry Poillerat 143; 48 jogadores",
+    "fonte": "repo public/data/egr/events/egr_12116.json"
+   },
+   {
+    "ano": 2026,
+    "campo": "Golf de Bondues (GP #2, 9–10 Mai)",
+    "escalao": "Garçons U14",
+    "vencedor": "Alexander Mawene",
+    "pais": "França",
+    "score": 146,
+    "toPar": 2,
+    "voltas": "75-71",
+    "corte": null,
+    "notas": "Empatado com Nolan Yu Chip Lin (146); 3.º Sunil Ramsamy 147",
+    "fonte": "repo public/data/egr/events/egr_12112.json"
+   },
+   {
+    "ano": 2026,
+    "campo": "Golf de Chiberta (GP #1, 28–29 Mar)",
+    "escalao": "Garçons U14",
+    "vencedor": "Sunil Ramsamy",
+    "pais": "França",
+    "score": 141,
+    "toPar": 1,
+    "voltas": "70-71",
+    "corte": null,
+    "notas": "2.º Alexander Mawene 142; 3.º Alan Rode 143",
+    "fonte": "repo public/data/egr/events/egr_12054.json; repo ffgolf"
+   },
+   {
+    "ano": 2025,
+    "campo": "Evian Resort (GP #4, 26–27 Ago)",
+    "escalao": "Garçons U14",
+    "vencedor": "Rafael Amiel",
+    "pais": "França",
+    "score": 141,
+    "toPar": -1,
+    "voltas": "70-71",
+    "corte": null,
+    "fonte": "repo public/data/egr/events/egr_10707.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Cap d'Agde (GP #3, 21–22 Jun)",
+    "escalao": "Garçons U14",
+    "vencedor": "Candide Remoleur",
+    "pais": "França",
+    "score": 146,
+    "toPar": 2,
+    "voltas": "67-79",
+    "corte": null,
+    "fonte": "repo public/data/egr/events/egr_10705.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Le Mans (GP #2, 3–4 Mai)",
+    "escalao": "Garçons U14",
+    "vencedor": "Ethan Lestienne Thieullen",
+    "pais": "França",
+    "score": 149,
+    "toPar": 7,
+    "voltas": "77-72",
+    "corte": null,
+    "fonte": "repo public/data/egr/events/egr_10703.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Mont de Marsan (GP #1, 22–23 Mar)",
+    "escalao": "Garçons U14",
+    "vencedor": "Alan Rode",
+    "pais": "França",
+    "score": 141,
+    "toPar": -1,
+    "voltas": "70-71",
+    "corte": null,
+    "fonte": "repo public/data/egr/events/egr_10582.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Evian Resort (GP #4)",
+    "escalao": "Garçons U14",
+    "vencedor": "Tao Pemerika",
+    "pais": "França",
+    "score": 143,
+    "toPar": 1,
+    "voltas": "71-72",
+    "corte": null,
+    "fonte": "repo public/data/egr/events/egr_9207.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Soufflenheim (GP #3)",
+    "escalao": "Garçons U14",
+    "vencedor": "Tao Pemerika",
+    "pais": "França",
+    "score": 133,
+    "toPar": -11,
+    "voltas": "70-63",
+    "corte": null,
+    "fonte": "repo public/data/egr/events/egr_9206.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Chiberta (GP #1)",
+    "escalao": "Garçons U14",
+    "vencedor": "Matteo Da Eira",
+    "pais": "França",
+    "score": 144,
+    "toPar": 4,
+    "voltas": "73-71",
+    "corte": null,
+    "notas": "Empatado com Quentin Leon (144)",
+    "fonte": "repo public/data/egr/events/egr_9204.json"
+   }
+  ],
   "portugueses": [],
   "elegibilidade": "Estrangeiros com licença de uma federação reconhecida, certificado de HCP e atestado médico.",
-  "notas": "EGR 1 000–1 250 cada. Em 2027 substituem os GPN U12 (onde jogam o William Harran e o Jean Imperiali)."
+  "notas": "36 buracos (2 voltas), sem corte, quadro fixo de 48 rapazes, todos franceses nos resultados EGR de 2024–2026: nenhum estrangeiro nem português. O GP #4 de 2026 (Evian, Ago) e o GP #2 de 2024 não estão no repo. A distância varia muito (5390–6330 m) com o campo."
  },
  {
   "nome": "JGT — Junior Golf Tour (Tunísia, Alemanha, Áustria, Chéquia, Suíça)",
@@ -8376,13 +8736,35 @@
    {
     "rotulo": "JGT — livescoring",
     "url": "https://jgt24.de/en/livescoring"
+   },
+   {
+    "rotulo": "JGT — calendário de torneios",
+    "url": "https://www.jgt24.de/en/turniere"
+   },
+   {
+    "rotulo": "WAGR — Port El Kantaoui Junior Open (Dez 2025)",
+    "url": "https://www.wagr.com/events/x-274088"
    }
   ],
   "distancias": [],
-  "historico": [],
+  "historico": [
+   {
+    "ano": 2025,
+    "campo": "Port El Kantaoui Golf Club (27–30 Dez)",
+    "escalao": "Geral rapazes (WAGR)",
+    "vencedor": "Jules De Langhe",
+    "pais": "Bélgica",
+    "score": 229,
+    "toPar": null,
+    "voltas": "74-82-73",
+    "corte": null,
+    "notas": "Único jogador com pontos WAGR registado; não há resultados por escalão nas nossas fontes",
+    "fonte": "repo public/data/wagr/events/wagr_274088.json"
+   }
+  ],
   "portugueses": [],
   "elegibilidade": "Federação reconhecida; ~€205; idades 9–23 (escalões em cada convocatória).",
-  "notas": "WAGR/EGR, mas o campo U14 é fraco. Útil para competir no Inverno."
+  "notas": "Na EGR aparece como «(JTG)», sempre com o escalão U23, e nenhuma edição foi raspada (sem resultados nem CR). Provas de 2026 no calendário EGR: Port El Kantaoui (22–24 Mar e 28–30 Dez), Pischelsdorf (AUT), Hetzenhof, Niep, Leipzig, Am Alten Fliess, Bad Saarow, Katharinenhof, Clostermanns Hof, Liebenstein, Fürth e Pfaffing (DEU), Kaiserwinkl (AUT) e Neuenhof (DEU). A página de livescoring não lista resultados sem navegar por prova. Faltam distâncias e vencedores U14."
  },
  {
   "nome": "Austrian Girls & Boys Championship U10–U21",
@@ -8392,31 +8774,376 @@
   "links": [
    {
     "rotulo": "golf.at — torneio 17003012 (2026)",
-    "url": "https://www.golf.at"
+    "url": "https://www.golf.at/golfclubs/turniersuche/gc-zell-am-see-kaprun-saalbach/504/austrian-girls-and-boys-girls-u12-u14-u16-u18-u21-boys-u12-u14/17003012"
+   },
+   {
+    "rotulo": "golf.at — torneio 17002500 (2025)",
+    "url": "https://www.golf.at/golfclubs/turniersuche/colony-club-gutenhof/314/austrian-girls-boys-girls-u12-u14-u18-u21-und-boys-u12-u14-/17002500"
    }
   ],
-  "distancias": [],
-  "historico": [],
+  "distancias": [
+   {
+    "ano": 2026,
+    "campo": "GC Zell am See-Kaprun-Saalbach (Kitzsteinhorn)",
+    "escalao": "Boys U14",
+    "tee": null,
+    "metros": 5953,
+    "par": 72,
+    "cr": 71.3,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_12509.json"
+   },
+   {
+    "ano": 2026,
+    "campo": "GC Zell am See-Kaprun-Saalbach (Kitzsteinhorn)",
+    "escalao": "Boys U12",
+    "tee": null,
+    "metros": 5592,
+    "par": 72,
+    "cr": 69.3,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_12510.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Colony Club Gutenhof",
+    "escalao": "Boys U14",
+    "tee": null,
+    "metros": 6178,
+    "par": 73,
+    "cr": 72.9,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_11185.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Colony Club Gutenhof (Ost)",
+    "escalao": "Boys U14",
+    "tee": null,
+    "metros": 6178,
+    "par": 73,
+    "cr": 72.9,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_9874.json"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "GC Zell am See (Kitzsteinhorn)",
+    "escalao": "Boys U14",
+    "vencedor": "Benjamin Al-Khaffaf",
+    "pais": "Áustria",
+    "score": 221,
+    "toPar": 5,
+    "voltas": "74-73-74",
+    "corte": "Após 36 buracos (22 de 48 não passaram)",
+    "notas": "T2 Simon Süntzenich (GER) e Matteo Kaipel (AUT) 222",
+    "fonte": "repo public/data/egr/events/egr_12509.json"
+   },
+   {
+    "ano": 2026,
+    "campo": "GC Zell am See (Kitzsteinhorn)",
+    "escalao": "Boys U12",
+    "vencedor": "Paul Berger",
+    "pais": "Alemanha",
+    "score": 222,
+    "toPar": 6,
+    "voltas": "72-72-78",
+    "corte": "Após 36 buracos",
+    "fonte": "repo public/data/egr/events/egr_12510.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Colony Club Gutenhof",
+    "escalao": "Boys U14",
+    "vencedor": "Ben Nelitz",
+    "pais": "Alemanha",
+    "score": 217,
+    "toPar": -2,
+    "voltas": "74-76-67",
+    "corte": "Após 36 buracos (21 de 45 não passaram)",
+    "notas": "2.º Timo Issler (GER) 223; 3.º Nico Trieb (AUT) 225",
+    "fonte": "repo public/data/egr/events/egr_11185.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Colony Club Gutenhof (Ost)",
+    "escalao": "Boys U14",
+    "vencedor": "Sebastian Aigner",
+    "pais": "Áustria",
+    "score": 213,
+    "toPar": -6,
+    "voltas": "71-66-76",
+    "corte": "Após 36 buracos (22 de 46 não passaram)",
+    "notas": "2.º Tobias Angkawidjaja (AUT) 219; 3.º Maximilian Auer (AUT) 220",
+    "fonte": "repo public/data/egr/events/egr_9874.json"
+   }
+  ],
   "portugueses": [],
   "elegibilidade": "Aberto; tem escalão U14.",
-  "notas": "2026: 48 jogadores (29 austríacos, 19 alemães), EGR 634. Coincide com o BJGT Itália (27–29 Jul) por perto."
+  "notas": "54 buracos com corte aos 36 no U14 (cerca de metade passa). A sede muda todos os anos: Gutenhof em 2024–25, Zell am See em 2026 e Diamond CC em 2027. Os U14 jogam um tee de cerca de 6000 m. Sem portugueses. O ficheiro EGR de 2026 dá 48 jogadores no Boys U14."
  },
  {
   "nome": "Quinta do Lago Junior Open",
-  "datas2027": "~27–29 Dez 2026 (edição de Inverno)",
+  "datas2027": "27–29 Dez 2026 (WAGR); edição de Inverno",
   "campo": "Quinta do Lago — Laranjal",
   "pais": "Portugal",
   "links": [
    {
     "rotulo": "Inscrições (loja Quinta do Lago)",
     "url": "https://shop.quintadolago.com"
+   },
+   {
+    "rotulo": "WAGR 2026 (27–29 Dez)",
+    "url": "https://www.wagr.com/events/x-255165"
+   },
+   {
+    "rotulo": "WAGR 2025",
+    "url": "https://www.wagr.com/events/x-274103"
    }
   ],
-  "distancias": [],
-  "historico": [],
-  "portugueses": [],
+  "distancias": [
+   {
+    "ano": 2025,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U14 rapazes",
+    "tee": "Douradas",
+    "metros": 5834,
+    "par": 72,
+    "cr": 71.1,
+    "slope": 130,
+    "fonte": "repo public/data/pull-torneios002.json (FPG, tcode 10079)"
+   },
+   {
+    "ano": 2025,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U14 raparigas",
+    "tee": "Brancas",
+    "metros": 4977,
+    "par": 72,
+    "cr": 72.4,
+    "slope": 132,
+    "fonte": "repo pull-torneios002.json (FPG, tcode 10079)"
+   },
+   {
+    "ano": 2025,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U12 rapazes",
+    "tee": "Brancas",
+    "metros": 4977,
+    "par": 72,
+    "cr": 67.1,
+    "slope": 122,
+    "fonte": "repo pull-torneios000.json (FPG, tcode 10080)"
+   },
+   {
+    "ano": 2025,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U16 & U21 rapazes",
+    "tee": "Pretas",
+    "metros": 6477,
+    "par": 72,
+    "cr": 74.3,
+    "slope": 136,
+    "fonte": "repo pull-torneios002.json (FPG, tcode 10078)"
+   },
+   {
+    "ano": 2024,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U14 rapazes",
+    "tee": "Douradas",
+    "metros": 5834,
+    "par": 72,
+    "cr": 71.1,
+    "slope": 130,
+    "fonte": "repo pull-torneios004.json (FPG, tcode 10068)"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2025,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U14 (misto)",
+    "vencedor": "Ralph Barnett",
+    "pais": "Inglaterra",
+    "score": 74,
+    "toPar": 2,
+    "voltas": "74 (só 1 volta)",
+    "corte": null,
+    "notas": "Empatado com Ernie Elford (ENG) 74; o desempate não está nos dados FPG (Barnett vem em 1.º na lista). Em 2025 só se registou 1 volta, também na WAGR",
+    "fonte": "repo pull-torneios002.json (FPG 10079); repo public/data/wagr/events/wagr_274103.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U12",
+    "vencedor": "Dmitrii Elchaninov",
+    "pais": "Rússia",
+    "score": 71,
+    "toPar": -1,
+    "voltas": "71 (só 1 volta)",
+    "corte": null,
+    "notas": "T2 Oliver Smith (ENG) e Marcus Karim (ENG) 72",
+    "fonte": "repo pull-torneios000.json (FPG 10080)"
+   },
+   {
+    "ano": 2025,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U16 & U21 (WAGR)",
+    "vencedor": "Oscar Lent",
+    "pais": "Inglaterra",
+    "score": 70,
+    "toPar": -2,
+    "voltas": "70 (só 1 volta)",
+    "corte": null,
+    "fonte": "repo public/data/wagr/events/wagr_274103.json; FPG 10078"
+   },
+   {
+    "ano": 2024,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U14 rapazes (Douradas)",
+    "vencedor": "Ischa Wichman",
+    "pais": "Países Baixos",
+    "score": 224,
+    "toPar": 8,
+    "voltas": "79-71-74",
+    "corte": null,
+    "notas": "Ordem pelo total gross dos dados FPG: a ordem gravada pela FPG não é a classificação final. 2.º Rodrigo Sousa Correia (POR) 225. No U14 misto, a melhor foi Francisca Ferreira da Costa (POR, Brancas) com 223",
+    "fonte": "repo pull-torneios004.json (FPG 10068)"
+   },
+   {
+    "ano": 2024,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U12",
+    "vencedor": "Marcus Karim",
+    "pais": "Inglaterra",
+    "score": 215,
+    "toPar": -1,
+    "voltas": "74-66-75",
+    "corte": null,
+    "notas": "2.º Martim Moreira (POR) 226",
+    "fonte": "repo pull-torneios004.json (FPG 10069)"
+   },
+   {
+    "ano": 2024,
+    "campo": "Quinta do Lago — Laranjal",
+    "escalao": "U16 & U21 (WAGR)",
+    "vencedor": "João Crasi Alves",
+    "pais": "Portugal",
+    "score": 207,
+    "toPar": -9,
+    "voltas": "68-70-69",
+    "corte": null,
+    "fonte": "repo public/data/wagr/events/wagr_231057.json; FPG 10067"
+   },
+   {
+    "ano": 2023,
+    "campo": "Quinta do Lago",
+    "escalao": "U16 & U21 (WAGR)",
+    "vencedor": "Teddy Hall",
+    "pais": "Inglaterra",
+    "score": 205,
+    "toPar": null,
+    "voltas": "72-65-68",
+    "corte": null,
+    "fonte": "repo public/data/wagr/events/wagr_221495.json"
+   }
+  ],
+  "portugueses": [
+   {
+    "ano": 2025,
+    "nome": "João Rocha",
+    "posicao": "T3 (U14)",
+    "score": 75
+   },
+   {
+    "ano": 2025,
+    "nome": "Rodrigo Sousa Correia",
+    "posicao": "T7 (U14)",
+    "score": 77
+   },
+   {
+    "ano": 2025,
+    "nome": "Ethan Prybys Orton",
+    "posicao": "T7 (U14)",
+    "score": 77
+   },
+   {
+    "ano": 2025,
+    "nome": "Nuno Palmares Jr.",
+    "posicao": "9 (U14)",
+    "score": 80
+   },
+   {
+    "ano": 2025,
+    "nome": "Pedro Costa Alemão",
+    "posicao": "T13 (U14)",
+    "score": 83
+   },
+   {
+    "ano": 2025,
+    "nome": "Tomás Lima Pinto",
+    "posicao": "15 (U14)",
+    "score": 84
+   },
+   {
+    "ano": 2025,
+    "nome": "Afonso de Sousa Pinto",
+    "posicao": "T6 (U12)",
+    "score": 78
+   },
+   {
+    "ano": 2025,
+    "nome": "Manuel Goulartt Medeiros",
+    "posicao": "11 (U12)",
+    "score": 90
+   },
+   {
+    "ano": 2025,
+    "nome": "Afonso Rui Oliveira",
+    "posicao": "T5 (U16/U21)",
+    "score": 72
+   },
+   {
+    "ano": 2024,
+    "nome": "Francisca Ferreira da Costa",
+    "posicao": "1.ª no U14 misto (Brancas)",
+    "score": 223
+   },
+   {
+    "ano": 2024,
+    "nome": "Rodrigo Sousa Correia",
+    "posicao": "2 (U14 rapazes)",
+    "score": 225
+   },
+   {
+    "ano": 2024,
+    "nome": "Pedro Costa Alemão",
+    "posicao": "6 (U14 rapazes)",
+    "score": 238
+   },
+   {
+    "ano": 2024,
+    "nome": "Martim Moreira",
+    "posicao": "2 (U12)",
+    "score": 226
+   },
+   {
+    "ano": 2024,
+    "nome": "Nuno Palmares Jr.",
+    "posicao": "T4 (U12)",
+    "score": 235
+   },
+   {
+    "ano": 2024,
+    "nome": "João Crasi Alves",
+    "posicao": "1 (U16/U21)",
+    "score": 207
+   }
+  ],
   "elegibilidade": "Aberto; escalão U14 (WAGR só no U16/U21).",
-  "notas": "Os nossos dados mostram 11 rivais estrangeiros do Manuel lá em 2025–26 (Marcus Karim, Dmitrii Elchaninov, Harrison Barnett, Marcos Ledesma). Datas de 2027 por confirmar."
+  "notas": "Os resultados FPG estão no repo (ccode 962, tcodes 10067–10070 em 2024 e 10078–10081 em 2025). O U14 é misto: rapazes nas Douradas (5834 m, CR 71,1/130) e raparigas nas Brancas. Em 2025 só se registou 1 das 3 voltas (FPG e WAGR). O Manuel jogou o U12 de 2025 (90, 11.º de 12). A edição de 2026 está na WAGR para 27–29 Dez 2026."
  },
  {
   "nome": "BJGT European Open Italy",
@@ -8429,11 +9156,50 @@
     "url": "https://brjgt.bluegolf.com"
    }
   ],
-  "distancias": [],
-  "historico": [],
+  "distancias": [
+   {
+    "ano": 2024,
+    "campo": "Bogogno Golf Resort (Bonora)",
+    "escalao": "Referência: tee U14 rapazes do GJG Italian Junior Classics (outra prova, mesmo campo)",
+    "tee": null,
+    "metros": 5776,
+    "par": 72,
+    "cr": 71,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_9998.json — NÃO é o tee do BJGT, que fica por confirmar"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Bogogno Golf Resort (28–30 Jul)",
+    "escalao": "Geral rapazes (WAGR, escalão mais velho)",
+    "vencedor": "Levi Arlbrandt",
+    "pais": "Suécia",
+    "score": 212,
+    "toPar": null,
+    "voltas": "70-70-72",
+    "corte": null,
+    "notas": "Vencedor dos Boys 12-13 não disponível: a BlueGolf recusa o acesso (403) e a EGR 11697 está vazia",
+    "fonte": "repo public/data/wagr/events/wagr_271261.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Le Touquet (França, 11–13 Ago)",
+    "escalao": "Geral rapazes (WAGR)",
+    "vencedor": "Leo Burton",
+    "pais": "Inglaterra",
+    "score": 233,
+    "toPar": null,
+    "voltas": "79-80-74",
+    "corte": null,
+    "notas": "Em 2025 o European Open foi em França, não em Itália",
+    "fonte": "repo public/data/wagr/events/wagr_259521.json"
+   }
+  ],
   "portugueses": [],
   "elegibilidade": "Escalão 12–13 (idade a 24/06 — o Manuel cabe); máx. 18 jogadores por escalão; £395.",
-  "notas": "Mesmo organizador do WJGC (British Junior Golf Tour). Resultados na BlueGolf (não fazemos scrape lá)."
+  "notas": "Os resultados vivem na BlueGolf (brjgt26), que deu 403 à leitura; não há ficheiros desta prova no repo (só o WJGC). 3 voltas stroke play. O site amateurgolf.com indica Bogogno (Bonora) e 144 jogadores em 2026. Faltam os vencedores e o tee dos Boys 12-13."
  },
  {
   "nome": "Srixon Winter Open (federação norueguesa, Espanha)",
@@ -8447,10 +9213,49 @@
    }
   ],
   "distancias": [],
-  "historico": [],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Condado de Alhama — Signature",
+    "escalao": "Boys (nascidos 2007–2013, quadro único)",
+    "vencedor": "Knut Magnus Erlandsen",
+    "pais": "Noruega",
+    "score": 215,
+    "toPar": null,
+    "voltas": "73-69-73",
+    "corte": null,
+    "fonte": "repo public/data/wagr/events/wagr_268733.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Condado de Alhama — Signature",
+    "escalao": "Men (quadro único)",
+    "vencedor": "Mathias Aase",
+    "pais": "Noruega",
+    "score": 218,
+    "toPar": null,
+    "voltas": "76-73-69",
+    "corte": null,
+    "notas": "Empatado com Lukas Nilsson (SWE) 218",
+    "fonte": "repo public/data/wagr/events/wagr_256215.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Saurines de la Torre + Mar Menor",
+    "escalao": "Men (quadro único)",
+    "vencedor": "Benjamin Killingstad",
+    "pais": "Noruega",
+    "score": 289,
+    "toPar": null,
+    "voltas": "74-75-72-68",
+    "corte": null,
+    "notas": "72 buracos em 2024",
+    "fonte": "repo public/data/wagr/events/wagr_231689.json"
+   }
+  ],
   "portugueses": [],
-  "elegibilidade": "Em 2026: nascidos 2007–13, HCP rapazes ≤ 3,0. Se a janela avançar um ano, o Manuel cabe — confirmar.",
-  "notas": "EGR 2 685, mas com campo até U19."
+  "elegibilidade": "2026: quadro único Boys (nascidos 2007–2013, HCP ≤ 3,0) e Girls (2007–2013, HCP ≤ 6,0); 54 buracos sem corte. Não há escalão U14. Se em 2027 a janela passar a 2008–2014, o Manuel cabe pela idade, mas precisa de HCP ≤ 3,0.",
+  "notas": "Vencedores tirados da WAGR (só o topo). A EGR lista a prova (2685 pontos em 2026), mas sem resultados raspados. Faltam distâncias e CR de Alhama Signature."
  },
  {
   "nome": "Latvian Junior Open e Lithuanian Junior Open",
@@ -8461,13 +9266,118 @@
    {
     "rotulo": "Calendário EGA 2027 (PDF)",
     "url": "https://www.ega-golf.ch/events/calendar/planner/2027/list/pdf"
+   },
+   {
+    "rotulo": "Letónia 2026 (GolfBox 5387071)",
+    "url": "https://www.golfbox.dk/livescoring/tour/?language=2057#/competition/5387071/leaderboard"
+   },
+   {
+    "rotulo": "Lituânia 2026 (GolfBox 5374173)",
+    "url": "https://www.golfbox.dk/app_livescoring/tour/?language=2057#/competition/5374173/leaderboard"
    }
   ],
-  "distancias": [],
-  "historico": [],
+  "distancias": [
+   {
+    "ano": 2026,
+    "campo": "Jurmala Golf Club (Letónia)",
+    "escalao": "Boys U16",
+    "tee": null,
+    "metros": 5769,
+    "par": 72,
+    "cr": 71.1,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_12414.json"
+   },
+   {
+    "ano": 2026,
+    "campo": "Jurmala Golf Club (Letónia)",
+    "escalao": "Boys U18",
+    "tee": null,
+    "metros": 6384,
+    "par": 72,
+    "cr": 74.2,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_12417.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Ozo Golf Club (Letónia)",
+    "escalao": "Boys U16",
+    "tee": null,
+    "metros": 5649,
+    "par": 72,
+    "cr": 70.4,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_10881.json"
+   },
+   {
+    "ano": 2026,
+    "campo": "European Centre Golf Club (Lituânia)",
+    "escalao": "Boys U16",
+    "tee": null,
+    "metros": 5472,
+    "par": 71,
+    "cr": 70.6,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_12801.json"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Jurmala GC (Letónia)",
+    "escalao": "Boys U16",
+    "vencedor": "Karl Konrad Ranna",
+    "pais": "Estónia",
+    "score": 220,
+    "toPar": 4,
+    "voltas": "72-74-74",
+    "corte": null,
+    "notas": "19 jogadores; 4.º Kris Kuusk (EST, U14) 228",
+    "fonte": "repo public/data/egr/events/egr_12414.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Ozo GC (Letónia)",
+    "escalao": "Boys U16",
+    "vencedor": "Oskari Rantala",
+    "pais": "Finlândia",
+    "score": 144,
+    "toPar": 0,
+    "voltas": "70-74 (2 voltas)",
+    "corte": null,
+    "notas": "Empatado com Lionel Mutikainen (FIN, sub-14) 144; 34 jogadores",
+    "fonte": "repo public/data/egr/events/egr_10881.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Jurmala GC (Letónia)",
+    "escalao": "Geral rapazes (WAGR)",
+    "vencedor": "Hart Oskar Aoveer",
+    "pais": "Estónia",
+    "score": 213,
+    "toPar": null,
+    "voltas": "74-72-67",
+    "corte": null,
+    "fonte": "repo public/data/wagr/events/wagr_235065.json"
+   },
+   {
+    "ano": 2026,
+    "campo": "European Centre GC (Lituânia)",
+    "escalao": "Boys U16",
+    "vencedor": "Dominykas Petkevicius",
+    "pais": "Lituânia",
+    "score": 217,
+    "toPar": 4,
+    "voltas": "71-70-76",
+    "corte": null,
+    "notas": "2.º Karol Gil (POL, sub-14) 222; 27 jogadores",
+    "fonte": "repo public/data/egr/events/egr_12801.json"
+   }
+  ],
   "portugueses": [],
   "elegibilidade": "Abertos; a Letónia tem U14 com HCP ≤ 36.",
-  "notas": "EGR 680–850 (U16). Resultados na GolfBox."
+  "notas": "Na EGR só há quadros U16 e U18, sem U14 próprio. A Lituânia de 2025 e a de 2024 (U21) não estão raspadas. Em 2026 os sub-14 ficaram em 2.º (Lituânia) e 4.º (Letónia) no U16: o nível é acessível. A sede da Letónia alterna entre Ozo e Jurmala. Sem portugueses."
  },
  {
   "nome": "Czech International Boys & Girls Championship",
@@ -8476,14 +9386,91 @@
   "pais": "Chéquia",
   "links": [
    {
+    "rotulo": "CGF — CIBGC 2026",
+    "url": "https://www.cgf.cz/cz/sportovni-golf/souteze/souteze-jednotlivcu/souteze-jednotlivcu-2026/cibgc2026"
+   },
+   {
     "rotulo": "Calendário EGA 2027 (PDF)",
     "url": "https://www.ega-golf.ch/events/calendar/planner/2027/list/pdf"
    }
   ],
-  "distancias": [],
-  "historico": [],
+  "distancias": [
+   {
+    "ano": 2026,
+    "campo": "Golf Resort Brno Kaskáda (Stone & Wood)",
+    "escalao": "Boys (U18, quadro único)",
+    "tee": "Pretas",
+    "metros": 6495,
+    "par": 72,
+    "cr": 74.3,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_12844.json; tee do regulamento CGF 2026"
+   },
+   {
+    "ano": 2025,
+    "campo": "Golf Club Black Bridge (Praga)",
+    "escalao": "Boys (U18)",
+    "tee": null,
+    "metros": 6302,
+    "par": 72,
+    "cr": 75,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_11253.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Greensgate Golf & Leisure Resort (Dýšina)",
+    "escalao": "Boys (U18)",
+    "tee": null,
+    "metros": 6244,
+    "par": 72,
+    "cr": 74.4,
+    "slope": null,
+    "fonte": "repo public/data/egr/events/egr_9869.json"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Kaskáda (Brno)",
+    "escalao": "Boys U18",
+    "vencedor": "Alex Zavrel",
+    "pais": "Chéquia",
+    "score": 206,
+    "toPar": -10,
+    "voltas": "65-73-68",
+    "corte": "Após 36 buracos (35 de 83 não passaram)",
+    "notas": "2.º Stepan Plasek (CZE) 207. Melhor sub-14 do campo: Lukas Hlozanek (CZE), 21.º com 225",
+    "fonte": "repo public/data/egr/events/egr_12844.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Black Bridge (Praga)",
+    "escalao": "Boys U18",
+    "vencedor": "Hugo Mikl",
+    "pais": "Chéquia",
+    "score": 212,
+    "toPar": -4,
+    "voltas": "68-69-75",
+    "corte": "Após 36 buracos",
+    "notas": "Melhor sub-14: Felix Dietz (GER), 23.º com 228",
+    "fonte": "repo public/data/egr/events/egr_11253.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Greensgate (Dýšina)",
+    "escalao": "Boys U18",
+    "vencedor": "Michael Mayer",
+    "pais": "Alemanha",
+    "score": 213,
+    "toPar": -3,
+    "voltas": "72-72-69",
+    "corte": "Após 36 buracos",
+    "fonte": "repo public/data/egr/events/egr_9869.json"
+   }
+  ],
   "portugueses": [],
-  "elegibilidade": "HCP ≤ 6,0; escalão U14 por confirmar.",
-  "notas": "Por confirmar se há quadro U14."
+  "elegibilidade": "Regulamento CGF 2026: quadro único Boys e quadro único Girls (nascidos em 2008 ou depois), sem escalão nem prémio U14. HCP ≤ 6,0 (rapazes das pretas, raparigas das azuis); acima de 156 inscritos saem os HCP mais altos. 54 buracos com corte após a 2.ª volta. Taxa €90, com a volta de treino. WAGR.",
+  "notas": "Confirmado que não há quadro U14: é um U18 com campo de cerca de 6300–6500 m e CR de 74–75. Os melhores sub-14 ficaram a meio da tabela (21.º–30.º). A sede muda (Greensgate em 2024 e 2027). Sem portugueses em 2024–2026."
  }
 ]

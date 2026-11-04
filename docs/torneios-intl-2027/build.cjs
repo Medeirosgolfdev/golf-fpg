@@ -56,15 +56,15 @@ const META = [
   [/^Finnish International Junior/, "eu14", "2027-06-23", false, "Finnish International U14", "U14", "Aceita estrangeiros por ordem de inscrição (até 60), HCP ≤ 14, 120 €. Datas de 2027 por publicar (última semana de Jun)."],
   [/^North of England U14/, "eu14", "2027-07-28", true, "North of England U14", "U14 (idade a 1 Jan)", "Aberta a todas as nacionalidades, HCP ≤ 15, £45. Coincide com o US Kids World Teen e com o Irish U14."],
   [/^Reply Italian International U16/, "u16", "2027-09-01", true, "Italian Int. U16 — Trofeo Soldati", "U16 (sobe de escalão)"],
-  [/^Hungarian Junior Open/, "eu14", "2027-08-10", true, "Hungarian Junior Open", "U14 (HCP ≤ 13)", "Coincide com o Scottish U14 (9–10 Ago)."],
+  [/^Hungarian Junior Open/, "eu14", "2027-08-10", true, "Hungarian Junior Open", "Categoria B (U12+U14, HCP ≤ 13)", "U12 e U14 jogam juntos na categoria B (azuis). Coincide com o Scottish U14 (9–10 Ago)."],
   [/^Grand Prix Jeunes Majeur U14/, "eu14", "2027-03-20", false, "FFG Grand Prix Jeunes Majeur U14 (4/ano)", "U14", "Estrangeiros com licença reconhecida + certificado de HCP + atestado médico. Datas de 2027 por publicar."],
   [/^JGT — Junior Golf Tour/, "eu14", "2027-01-02", true, "JGT — Junior Golf Tour (Tunísia e Europa)", "U14 (campo fraco)"],
   [/^Austrian Girls & Boys/, "eu14", "2027-07-23", true, "Austrian Girls & Boys U10–U21", "U14"],
   [/^Quinta do Lago Junior Open/, "pt", "2026-12-27", false, "Quinta do Lago Junior Open", "U14", "Datas por confirmar. 11 rivais estrangeiros do Manuel jogaram-no em 2025–26."],
   [/^BJGT European Open Italy/, "eu14", "2027-07-27", true, "BJGT European Open Italy", "Boys 12-13 (idade a 24/06)"],
-  [/^Srixon Winter Open/, "eu14", "2027-03-15", false, "Srixon Winter Open (Múrcia)", "Por confirmar", "Em 2026 era para nascidos 2007–13 com HCP ≤ 3,0 — confirmar se 2014 entra em 2027."],
-  [/^Latvian Junior Open/, "eu14", "2027-06-28", true, "Latvian / Lithuanian Junior Open", "U14 (Letónia)"],
-  [/^Czech International Boys/, "u16", "2027-07-15", true, "Czech International Boys & Girls", "Por confirmar (HCP ≤ 6,0)"],
+  [/^Srixon Winter Open/, "eu14", "2027-03-15", false, "Srixon Winter Open (Múrcia)", "Sem U14 (quadro único)", "Quadro único para nascidos 2007–13 com HCP ≤ 3,0 — não tem U14; confirmar se 2014 entra em 2027."],
+  [/^Latvian Junior Open/, "eu14", "2027-06-28", true, "Latvian / Lithuanian Junior Open", "U16 (sem quadro U14)", "Não há quadro U14: o Manuel jogaria U16."],
+  [/^Czech International Boys/, "u16", "2027-07-15", true, "Czech International Boys & Girls", "U18 (sem U14; HCP ≤ 6,0)", "O regulamento confirma que não há quadro U14."],
 ];
 
 const out = all.map((t) => {
