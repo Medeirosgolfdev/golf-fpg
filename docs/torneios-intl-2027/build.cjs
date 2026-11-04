@@ -77,6 +77,7 @@ const META = [
   [/^Global Junior Golf — provas na Alemanha/, "eu14", "2027-03-21", true, "GJG Alemanha, Itália e Suíça (10 provas)", "U14 (campo pequeno)", "Quadros U14 de 4–11 jogadores. Em Bogogno os U14 jogam as amarelas e, pela regra da GJG, ficam fora do WAGR."],
   [/^Bavarian Youth Open/, "u16", "2027-08-03", true, "Bavarian Youth Open (Holledau)", "U18 (sem U14; HCP ≤ 7,4)", "Quadro único de ~6,3 km com corte; só há classificação «AK 16 e mais novos». Coincide com o Reid Trophy e o Estonian."],
   [/^Troféus juvenis WAGR em Itália/, "u16", "2027-06-03", false, "Lucio Visonà e PGAI Junior Trophy (Itália)", "U18 (sem U14)", "Quase só italianos; não confirmado se aceitam estrangeiros sem filiação na FIG. O melhor U14 de 2026 foi 3.º e 4.º."],
+  [/^GJG UAE Junior Championship/, "gjg", "2027-02-05", false, "GJG UAE Junior Championship (Al Ain)", "U14 (HCP ≤ 15; pretas, conta WAGR)", "Datas de 2027 por publicar (2026: 5–8 Fev). 390 €. Campo de 6185 m para todos os rapazes; quadro U14 de 8 em 2026."],
   [/^Czech International Boys/, "u16", "2027-07-15", true, "Czech International Boys & Girls", "U18 (sem U14; HCP ≤ 6,0)", "O regulamento confirma que não há quadro U14."],
 ];
 
