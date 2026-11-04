@@ -1,6 +1,6 @@
 {
   "fonte": "federgolf.it",
-  "geradoEm": "2026-11-03T13:18:54.148Z",
+  "geradoEm": "2026-11-04T10:20:28.041Z",
   "provas": [
     {
       "id": "a0ea0a07-347c-f111-ab0e-000d3a4cc789",
@@ -106,8 +106,8 @@
       "tees": [
         "Giallo"
       ],
-      "completo": false,
-      "cartoes": false,
+      "completo": true,
+      "cartoes": true,
       "inscritos": 100
     },
     {
@@ -428,12 +428,12 @@
       "sexo": "M",
       "voltas": 3,
       "jogadores": 59,
-      "parTotal": 72,
+      "parTotal": 0,
       "tees": [
         "Giallo"
       ],
       "completo": false,
-      "cartoes": false,
+      "cartoes": true,
       "inscritos": 78
     },
     {
@@ -2923,6 +2923,42 @@
       "inscritos": 90
     },
     {
+      "id": "2d4c1142-8e91-ed11-aad1-000d3a2e4778",
+      "nome": "CAMPIONATO INTERNAZIONALE D'ITALIA FEMMINILE UNDER 18",
+      "data": "2023-08-29",
+      "clube": "VILLA CONDULMER",
+      "tipo": "Campionati Internazionali",
+      "categoria": "U18",
+      "sexo": "F",
+      "voltas": 3,
+      "jogadores": 121,
+      "parTotal": 71,
+      "tees": [
+        "Blu"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 136
+    },
+    {
+      "id": "64f91537-9291-ed11-aad1-000d3a2e4778",
+      "nome": "REPLY-ITALIAN INTERNATIONAL U 16 CHAMPIONSHIP-T.SOLDATI TROPHY",
+      "data": "2023-08-29",
+      "clube": "BIELLA BETULLE",
+      "tipo": "Campionati Internazionali",
+      "categoria": "U16",
+      "sexo": null,
+      "voltas": 4,
+      "jogadores": 144,
+      "parTotal": 73,
+      "tees": [
+        "Bianco"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 174
+    },
+    {
       "id": "d226df40-6092-ed11-aad1-000d3a2e48af",
       "nome": "TROFEO GIOVANILE FEDERALE BANCA DI BOLOGNA-FEMMINILE",
       "data": "2023-08-29",
@@ -3013,6 +3049,60 @@
       "inscritos": 30
     },
     {
+      "id": "11cfd5d4-ad95-ed11-aad1-000d3a2e4778",
+      "nome": "TROFEO ARZAGA - MASCHILE",
+      "data": "2023-07-26",
+      "clube": "ARZAGA",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 78,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 110
+    },
+    {
+      "id": "b4e5780b-c890-ed11-aad1-000d3a2e48af",
+      "nome": "CAMPIONATO NAZIONALE PULCINE",
+      "data": "2023-07-11",
+      "clube": "CERVINO",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Pulcini",
+      "sexo": "F",
+      "voltas": 3,
+      "jogadores": 48,
+      "parTotal": 69,
+      "tees": [
+        "Rosso"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 63
+    },
+    {
+      "id": "2fad4596-c790-ed11-aad1-000d3a2e48af",
+      "nome": "CAMPIONATO NAZIONALE PULCINI",
+      "data": "2023-07-11",
+      "clube": "CERVINO",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Pulcini",
+      "sexo": "M",
+      "voltas": 3,
+      "jogadores": 96,
+      "parTotal": 69,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 104
+    },
+    {
       "id": "dfa01c3c-5e92-ed11-aad1-000d3a2e48af",
       "nome": "PGAI JUNIOR TROPHY - FEMMINILE",
       "data": "2023-07-05",
@@ -3029,6 +3119,24 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 45
+    },
+    {
+      "id": "7b7ada0a-5e92-ed11-aad1-000d3a2e48af",
+      "nome": "PGAI JUNIOR TROPHY - MASCHILE",
+      "data": "2023-07-05",
+      "clube": "MARGARA",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 85,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 100
     },
     {
       "id": "325c79be-5d92-ed11-aad1-000d3a2e48af",
@@ -3085,6 +3193,24 @@
       "inscritos": 40
     },
     {
+      "id": "5d6563ae-4090-ed11-aad1-000d3a2e48af",
+      "nome": "CAMPIONATO NAZIONALE BABY - MASCHILE",
+      "data": "2023-07-01",
+      "clube": "CAVAGLIA'",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Baby",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 103,
+      "parTotal": 68,
+      "tees": [
+        "Verde"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 112
+    },
+    {
       "id": "ef81b52f-5d92-ed11-aad1-000d3a2e48af",
       "nome": "TROFEO ROVERE D'ORO MEMORIAL R. PIRAGINO-FEMMINILE",
       "data": "2023-06-21",
@@ -3101,6 +3227,24 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 40
+    },
+    {
+      "id": "c90549f8-5c92-ed11-aad1-000d3a2e48af",
+      "nome": "TROFEO ROVERE D'ORO MEMORIAL R. PIRAGINO-MASCHILE",
+      "data": "2023-06-21",
+      "clube": "ROYAL PARK ROVERI",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 61,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 82
     },
     {
       "id": "3680b7dd-5e92-ed11-aad1-000d3a2e48af",
@@ -3157,6 +3301,42 @@
       "inscritos": 26
     },
     {
+      "id": "d804f200-ad95-ed11-aad1-000d3a2e4778",
+      "nome": "TROFEO MICHELE - MASCHILE",
+      "data": "2023-06-13",
+      "clube": "MONTICELLO",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 61,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 79
+    },
+    {
+      "id": "5b7465de-2f90-ed11-aad1-000d3a2e48af",
+      "nome": "CAMPIONATO NAZIONALE RAGAZZI MEDAL - TROFEO SILVIO MARAZZA",
+      "data": "2023-06-10",
+      "clube": "TERRE CONSOLI",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Ragazzi",
+      "sexo": "M",
+      "voltas": 4,
+      "jogadores": 123,
+      "parTotal": 73,
+      "tees": [
+        "Bianco"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 133
+    },
+    {
       "id": "c522aeac-5c92-ed11-aad1-000d3a2e48af",
       "nome": "MEMORIAL ATTILIO BALDASSO CALVI - FEMMINILE",
       "data": "2023-06-04",
@@ -3193,6 +3373,24 @@
       "inscritos": 52
     },
     {
+      "id": "29c494fa-2c90-ed11-aad1-000d3a2e48af",
+      "nome": "CAMPIONATO NAZIONALE RAGAZZE MEDAL - TROFEO SILVIO MARAZZA",
+      "data": "2023-05-13",
+      "clube": "VILLA D'ESTE",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Ragazzi",
+      "sexo": "F",
+      "voltas": 4,
+      "jogadores": 74,
+      "parTotal": 69,
+      "tees": [
+        "Blu"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 83
+    },
+    {
       "id": "78c091e6-02b9-ed11-83ff-000d3a2e48af",
       "nome": "I TROFEO MEMORIAL VINCENZO DE BENEDICTIS - MASCHILE",
       "data": "2023-05-13",
@@ -3227,6 +3425,24 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 53
+    },
+    {
+      "id": "c93f1fed-5b92-ed11-aad1-000d3a2e48af",
+      "nome": "XXXVIII TROFEO LEONCINO D'ORO - MASCHILE",
+      "data": "2023-04-30",
+      "clube": "VENEZIA",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 82,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 109
     },
     {
       "id": "5897e38b-5b92-ed11-aad1-000d3a2e48af",
@@ -3283,6 +3499,60 @@
       "inscritos": 50
     },
     {
+      "id": "3091c067-599d-ed11-aad1-000d3a2e48af",
+      "nome": "TROFEO ANGELO CORVINI - MASCHILE",
+      "data": "2023-04-10",
+      "clube": "ZOATE",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 86,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 116
+    },
+    {
+      "id": "39b070b7-bf91-ed11-aad1-000d3a2e4778",
+      "nome": "TROFEO GIANLUCA - FEMMINILE",
+      "data": "2023-04-07",
+      "clube": "TORINO",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "F",
+      "voltas": 2,
+      "jogadores": 42,
+      "parTotal": 72,
+      "tees": [
+        "Rosso"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 60
+    },
+    {
+      "id": "f061b868-bf91-ed11-aad1-000d3a2e4778",
+      "nome": "TROFEO GIANLUCA - MASCHILE",
+      "data": "2023-04-07",
+      "clube": "TORINO",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 90,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 115
+    },
+    {
       "id": "fa59e5fe-be91-ed11-aad1-000d3a2e4778",
       "nome": "XXVI MEMORIAL CARLO DELLA VIDA - FEMMINILE",
       "data": "2023-02-25",
@@ -3301,6 +3571,24 @@
       "inscritos": 49
     },
     {
+      "id": "89950eb7-be91-ed11-aad1-000d3a2e4778",
+      "nome": "XXVI MEMORIAL CARLO DELLA VIDA - MASCHILE",
+      "data": "2023-02-25",
+      "clube": "OLGIATA",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 78,
+      "parTotal": 73,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 98
+    },
+    {
       "id": "3d89c75e-77a4-ec11-983f-000d3a4bd27e",
       "nome": "ROCCA DI ASOLO - FEMMINILE",
       "data": "2022-10-31",
@@ -3317,6 +3605,24 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 41
+    },
+    {
+      "id": "2ab8f9f6-76a4-ec11-983f-000d3a4bd27e",
+      "nome": "ROCCA DI ASOLO - MASCHILE",
+      "data": "2022-10-31",
+      "clube": "ASOLO",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 66,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 0
     },
     {
       "id": "ca555529-7f74-ec11-8943-000d3a2d6a9d",
@@ -3355,6 +3661,42 @@
       "inscritos": 66
     },
     {
+      "id": "b38cfe73-f37d-ec11-8d21-00224881b0a4",
+      "nome": "15th REPLY ITALIAN INTERNATIONAL CHAMPIONSHIP U 16 - TEODORO SOLDATI TROPHY",
+      "data": "2022-08-31",
+      "clube": "BIELLA BETULLE",
+      "tipo": "Campionati Internazionali",
+      "categoria": "U16",
+      "sexo": null,
+      "voltas": 4,
+      "jogadores": 144,
+      "parTotal": 73,
+      "tees": [
+        "Bianco"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 0
+    },
+    {
+      "id": "4275e80d-f47d-ec11-8d21-00224881b0a4",
+      "nome": "CAMPIONATO INTERNAZIONALE D'ITALIA FEMMINILE UNDER 18",
+      "data": "2022-08-31",
+      "clube": "VILLA CONDULMER",
+      "tipo": "Campionati Internazionali",
+      "categoria": "U18",
+      "sexo": "F",
+      "voltas": 4,
+      "jogadores": 119,
+      "parTotal": 71,
+      "tees": [
+        "Blu"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 144
+    },
+    {
       "id": "99b9ec9a-76a4-ec11-983f-000d3a4bd27e",
       "nome": "TROFEO LE FONTI - FEMMINILE",
       "data": "2022-08-30",
@@ -3371,6 +3713,24 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 35
+    },
+    {
+      "id": "dd0c71ef-75a4-ec11-983f-000d3a4bd27e",
+      "nome": "TROFEO LE FONTI - MASCHILE",
+      "data": "2022-08-30",
+      "clube": "FONTI",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 69,
+      "parTotal": 71,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 79
     },
     {
       "id": "dff0aa4f-75a4-ec11-983f-000d3a4bd27e",
@@ -3427,6 +3787,24 @@
       "inscritos": 42
     },
     {
+      "id": "0fcfeeec-73a4-ec11-983f-000d3a4bd27e",
+      "nome": "TROFEO ARZAGA - MASCHILE",
+      "data": "2022-07-27",
+      "clube": "ARZAGA",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 91,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 119
+    },
+    {
       "id": "2b5d690c-54a4-ec11-983f-000d3a4bd27e",
       "nome": "TROFEO GIOVANILE FEDERALE METAPONTO - MASCHILE",
       "data": "2022-07-21",
@@ -3463,6 +3841,60 @@
       "inscritos": 33
     },
     {
+      "id": "a0699c32-73a4-ec11-983f-000d3a4bd27e",
+      "nome": "TROFEO MICHELE - MASCHILE",
+      "data": "2022-07-21",
+      "clube": "MONTICELLO",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 73,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 101
+    },
+    {
+      "id": "a02be54e-b073-ec11-8943-000d3a2d6a9d",
+      "nome": "CAMPIONATO NAZIONALE PULCINE",
+      "data": "2022-07-13",
+      "clube": "CERVINO",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Pulcini",
+      "sexo": "F",
+      "voltas": 3,
+      "jogadores": 52,
+      "parTotal": 69,
+      "tees": [
+        "Rosso"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 59
+    },
+    {
+      "id": "61fd9115-af73-ec11-8943-000d3a2d6a9d",
+      "nome": "CAMPIONATO NAZIONALE PULCINI",
+      "data": "2022-07-13",
+      "clube": "CERVINO",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Pulcini",
+      "sexo": "M",
+      "voltas": 3,
+      "jogadores": 92,
+      "parTotal": 69,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 96
+    },
+    {
       "id": "484a62b4-ae73-ec11-8943-000d3a2d6a9d",
       "nome": "CAMPIONATO NAZIONALE CADETTE",
       "data": "2022-07-04",
@@ -3479,6 +3911,24 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 0
+    },
+    {
+      "id": "d066b64d-ae73-ec11-8943-000d3a2d6a9d",
+      "nome": "CAMPIONATO NAZIONALE CADETTI - TROFEO GIOVANNI ALBERTO AGNELLI",
+      "data": "2022-07-04",
+      "clube": "MODENA",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Cadetti",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 100,
+      "parTotal": 72,
+      "tees": [
+        "Bianco"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 105
     },
     {
       "id": "9c2e0976-ad73-ec11-8943-000d3a2d6a9d",
@@ -3499,6 +3949,24 @@
       "inscritos": 47
     },
     {
+      "id": "886de0ab-ad73-ec11-8943-000d3a2d6a9d",
+      "nome": "CAMPIONATO NAZIONALE MASCHILE BABY",
+      "data": "2022-07-02",
+      "clube": "ASIAGO",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Baby",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 97,
+      "parTotal": 71,
+      "tees": [
+        "Verde"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 0
+    },
+    {
       "id": "2accb461-8474-ec11-8943-000d3a2d6a9d",
       "nome": "PGAI JUNIOR TROPHY - FEMMINILE",
       "data": "2022-06-28",
@@ -3515,6 +3983,24 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 50
+    },
+    {
+      "id": "0027da24-8474-ec11-8943-000d3a2d6a9d",
+      "nome": "PGAI JUNIOR TROPHY - MASCHILE",
+      "data": "2022-06-28",
+      "clube": "MARGARA",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 87,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 120
     },
     {
       "id": "c7e404e8-4aa4-ec11-983f-000d3a4bd27e",
@@ -3569,6 +4055,24 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 45
+    },
+    {
+      "id": "37405d3b-8274-ec11-8943-000d3a2d6a9d",
+      "nome": "TROFEO MEMORIAL RENATO PIRAGINO - MASCHILE",
+      "data": "2022-06-22",
+      "clube": "ROYAL PARK ROVERI",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 68,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 96
     },
     {
       "id": "4fc9d9df-8274-ec11-8943-000d3a2d6a9d",
@@ -3643,6 +4147,42 @@
       "inscritos": 64
     },
     {
+      "id": "dbf97f55-ac73-ec11-8943-000d3a2d6a9d",
+      "nome": "CAMPIONATO NAZIONALE RAGAZZE MEDAL - TROFEO SILVIO MARAZZA",
+      "data": "2022-05-13",
+      "clube": "PADOVA",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Ragazzi",
+      "sexo": "F",
+      "voltas": 4,
+      "jogadores": 90,
+      "parTotal": 72,
+      "tees": [
+        "Blu"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 97
+    },
+    {
+      "id": "eba7b803-ad73-ec11-8943-000d3a2d6a9d",
+      "nome": "CAMPIONATO NAZIONALE RAGAZZI MEDAL - TROFEO SILVIO MARAZZA",
+      "data": "2022-05-13",
+      "clube": "ASOLO",
+      "tipo": "Campionati Nazionali",
+      "categoria": "Ragazzi",
+      "sexo": "M",
+      "voltas": 4,
+      "jogadores": 127,
+      "parTotal": 72,
+      "tees": [
+        "Bianco"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 137
+    },
+    {
       "id": "a6a7aa1d-8074-ec11-8943-000d3a2d6a9d",
       "nome": "XXXVII TROFEO LEONCINO D'ORO - FEMMINILE",
       "data": "2022-04-30",
@@ -3659,6 +4199,60 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 66
+    },
+    {
+      "id": "1f4a90a3-7f74-ec11-8943-000d3a2d6a9d",
+      "nome": "XXXVII TROFEO LEONCINO D'ORO - MASCHILE",
+      "data": "2022-04-30",
+      "clube": "VENEZIA",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 102,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 157
+    },
+    {
+      "id": "22860a91-7e74-ec11-8943-000d3a2d6a9d",
+      "nome": "TROFEO ANGELO CORVINI - FEMMINILE",
+      "data": "2022-04-14",
+      "clube": "ZOATE",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "F",
+      "voltas": 2,
+      "jogadores": 42,
+      "parTotal": 72,
+      "tees": [
+        "Rosso"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 62
+    },
+    {
+      "id": "0fdaf05f-7e74-ec11-8943-000d3a2d6a9d",
+      "nome": "TROFEO ANGELO CORVINI - MASCHILE",
+      "data": "2022-04-14",
+      "clube": "ZOATE",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 83,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 110
     },
     {
       "id": "85c05b1d-7e74-ec11-8943-000d3a2d6a9d",
@@ -3679,6 +4273,24 @@
       "inscritos": 42
     },
     {
+      "id": "15bcd4da-7d74-ec11-8943-000d3a2d6a9d",
+      "nome": "TROFEO FONDAZIONE MONTELATICI- MASCHILE",
+      "data": "2022-04-09",
+      "clube": "COSMOPOLITAN",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 43,
+      "parTotal": 72,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 67
+    },
+    {
       "id": "3e4ae097-7d74-ec11-8943-000d3a2d6a9d",
       "nome": "XXIV TROFEO CARLO DELLA VIDA - FEMMINILE",
       "data": "2022-03-19",
@@ -3695,6 +4307,24 @@
       "completo": true,
       "cartoes": true,
       "inscritos": 31
+    },
+    {
+      "id": "36fad55a-7d74-ec11-8943-000d3a2d6a9d",
+      "nome": "XXIV TROFEO CARLO DELLA VIDA - MASCHILE",
+      "data": "2022-03-19",
+      "clube": "OLGIATA",
+      "tipo": "Trofei Giovanili Federali",
+      "categoria": "TGF",
+      "sexo": "M",
+      "voltas": 2,
+      "jogadores": 66,
+      "parTotal": 73,
+      "tees": [
+        "Giallo"
+      ],
+      "completo": false,
+      "cartoes": false,
+      "inscritos": 95
     }
   ]
 }
