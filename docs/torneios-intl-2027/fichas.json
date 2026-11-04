@@ -12068,5 +12068,759 @@
    "preco": "205 € (2026; o Fream também 205 €)"
   },
   "notas": "Combina com o Finnish International Junior Championship U14 (Mikko Ilonen, fim de Junho — já tem ficha): em 2026 esta prova GJG foi a 1–4 Jun e o FIJC a 24–26 Jun. Quadro U14 pequeno e quase só finlandês. O Junior Fream Challenge (semana seguinte) já não serve ao Manuel: é «Major» GJG sem classe U14 e com HCP ≤ 2. WAGR/EGR/JGR."
+ },
+ {
+  "nome": "GJG Season Kickoff 2027 Number 2 (Espanha)",
+  "datas2027": "2–5 Jan 2027 (treino 2 Jan; voltas 3–5 Jan)",
+  "campo": "Villa Padierna — Alferini Golf Course (Benahavís, Marbella)",
+  "pais": "Espanha",
+  "links": [
+   {
+    "rotulo": "Página da prova 2027",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-season-kickoff-2027-number-2-spain/"
+   },
+   {
+    "rotulo": "Info sheet 2027 (PDF)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/Info-sheet-_GJG_Season_Kickoff_number2_2027.pdf"
+   },
+   {
+    "rotulo": "Scorecard Alferini (PDF)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/vp_alferini_scorecard.pdf"
+   },
+   {
+    "rotulo": "Campo Alferini (Villa Padierna)",
+    "url": "https://www.villapadierna.es/en/alferini/"
+   },
+   {
+    "rotulo": "Edição 2026",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-season-kickoff-2026-number-2-spain/"
+   },
+   {
+    "rotulo": "Resultados 2026 (tid 386)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=386"
+   },
+   {
+    "rotulo": "Season Kickoff 2027 (Flamingos, mesmas datas)",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-season-kickoff-2027-spain/"
+   },
+   {
+    "rotulo": "Inscrição (conta de jogador GJG)",
+    "url": "https://ssl.globaljuniorgolf.com/frames/player_add.php?header=1&lang=en"
+   },
+   {
+    "rotulo": "GJG Tour Rules (regras gerais)",
+    "url": "https://globaljuniorgolflive.com/tournaments/tour-rules/"
+   }
+  ],
+  "distancias": [
+   {
+    "ano": 2027,
+    "campo": "Alferini",
+    "escalao": "Rapazes U14 (= rapazes)",
+    "tee": "Ivory (= Tees 62 do scorecard)",
+    "metros": 6217,
+    "par": 73,
+    "cr": 73.6,
+    "slope": 137,
+    "fonte": "página 2027 (\"Boys U14: Ivory\", LENGTH 6221 m, Slope/CR 137/73,6) + info sheet 2027 (Boys Ivory) + scorecard Alferini (Tees 62 = 6217 m, par 73)"
+   },
+   {
+    "ano": 2027,
+    "campo": "Alferini",
+    "escalao": "Raparigas (incl. U14)",
+    "tee": "Pink",
+    "metros": null,
+    "par": 73,
+    "cr": 73.9,
+    "slope": 132,
+    "fonte": "página 2027 (Girls/Girls U14 Pink; 132/73,9) — o scorecard só tem tees numerados (66/62/58/52), sem cor"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Alferini",
+    "escalao": "Rapazes U14",
+    "vencedor": "Jonas Parchow",
+    "pais": "Alemanha",
+    "score": 181,
+    "toPar": 35,
+    "voltas": 2,
+    "corte": null,
+    "notas": "Só 3 rapazes U14 (2.º Julian Klocke GER 194, 3.º Mass Kristian Kjelland Halle NOR 198); 1.ª edição; 2–5 Jan 2026",
+    "fonte": "repo public/data/gjgl/ (scrape do live scoring GJG) (97-84), tid 386"
+   },
+   {
+    "ano": 2026,
+    "campo": "Alferini",
+    "escalao": "Raparigas U14",
+    "vencedor": "Emily Tuck",
+    "pais": "Inglaterra",
+    "score": 185,
+    "toPar": 39,
+    "voltas": 2,
+    "corte": null,
+    "notas": "Única rapariga U14",
+    "fonte": "repo public/data/gjgl/ (scrape do live scoring GJG) (94-91), tid 386"
+   }
+  ],
+  "portugueses": [
+   {
+    "ano": 2026,
+    "nome": "Francisco Anahory Assis — U18",
+    "posicao": 3,
+    "score": 154
+   }
+  ],
+  "elegibilidade": "Circuito GJG: escalões 14 (U14 = 12–14 anos, máx. 14 no início da prova), 15–18 (GJG Tour) e 19–23; obrigatório ser membro GJG e de um clube registado; amadores; aceitação por ordem de inscrição (\"first come, first served\") dentro dos critérios; confirmar participação na conta GJG até 3 dias antes. 54 buracos stroke play (18/dia), sem corte indicado na ficha. Prazo 02/12/2026. Taxa 389 € (só inscrição, paga ao Villa Padierna; 3 dias de prova + treino, água/fruta, bolas de treino). Campo máx. 60. HCP: rapazes 15–23 = 7, U14 = 14; raparigas 9 / U14 17. Jantar de boas-vindas obrigatório a 2 Jan. WAGR + JGR + pontos GJG OoM.",
+  "notas": "1.ª edição foi em 2026 (página 2027: \"first edition at Alferini\"); o JSON-LD da página 2026 diz Flamingos, mas o par 73 dos resultados é o do Alferini (Flamingos é par 71). Em 2026 só houve 2 voltas e os scores U14 foram muito altos (97-84 a ganhar). Para 2027 os U14 jogam o mesmo tee Ivory dos rapazes (ao contrário do Spanish Junior Classics da semana seguinte). Página 6221 m vs scorecard 6217 m. O CR/slope impresso no scorecard (76,0/76,3/71,4/68,5; 137/137/134/126) não bate com o da página — usei o da página. Corre nas mesmas datas do Season Kickoff (Flamingos) e do Algarve Season Opener."
+ },
+ {
+  "nome": "GJG Spanish Junior Classics 2027 (Espanha)",
+  "datas2027": "7–10 Jan 2027 (treino 7 Jan; voltas 8–10 Jan)",
+  "campo": "Villa Padierna — Alferini Golf Course (Benahavís, Marbella)",
+  "pais": "Espanha",
+  "links": [
+   {
+    "rotulo": "Página da prova 2027",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-spanish-junior-classics-2027-spain/"
+   },
+   {
+    "rotulo": "Info sheet 2027 (PDF)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/Tournament-_Info_GJG_Spanish_Junior_Classics_2027.pdf"
+   },
+   {
+    "rotulo": "Scorecard Alferini (PDF)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/vp_alferini_scorecard.pdf"
+   },
+   {
+    "rotulo": "Edição 2026",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-spanish-junior-classics-2026-spain/"
+   },
+   {
+    "rotulo": "Resultados 2026 (tid 359)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=359"
+   },
+   {
+    "rotulo": "Inscrição (conta de jogador GJG)",
+    "url": "https://ssl.globaljuniorgolf.com/frames/player_add.php?header=1&lang=en"
+   },
+   {
+    "rotulo": "GJG Tour Rules (regras gerais)",
+    "url": "https://globaljuniorgolflive.com/tournaments/tour-rules/"
+   }
+  ],
+  "distancias": [
+   {
+    "ano": 2027,
+    "campo": "Alferini",
+    "escalao": "Rapazes U14",
+    "tee": "Green",
+    "metros": null,
+    "par": 73,
+    "cr": null,
+    "slope": null,
+    "fonte": "página 2027 + info sheet 2027 (\"Boys U14: Green\", \"Not eligible for WAGR ranking\") — o scorecard só tem tees numerados (66/62/58/52) e a página só dá CR/slope de Ivory e Pink"
+   },
+   {
+    "ano": 2027,
+    "campo": "Alferini",
+    "escalao": "Rapazes (15–23)",
+    "tee": "Ivory (= Tees 62 do scorecard)",
+    "metros": 6217,
+    "par": 73,
+    "cr": 73.6,
+    "slope": 137,
+    "fonte": "página 2027 (Boys Ivory, LENGTH 6221 m, 137/73,6) + scorecard Alferini (Tees 62 = 6217 m)"
+   },
+   {
+    "ano": 2027,
+    "campo": "Alferini",
+    "escalao": "Raparigas (incl. U14)",
+    "tee": "Pink",
+    "metros": null,
+    "par": 73,
+    "cr": 73.9,
+    "slope": 132,
+    "fonte": "página 2027 (Girls/Girls U14 Pink; 132/73,9)"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Alferini",
+    "escalao": "Rapazes U14",
+    "vencedor": "Peetu Laasala",
+    "pais": "Finlândia",
+    "score": 246,
+    "toPar": 27,
+    "voltas": 3,
+    "corte": null,
+    "notas": "2.º Lauri Ahti FIN 249; 3.º Thomas Vervaet BEL 250; 8 rapazes U14; 7–10 Jan 2026",
+    "fonte": "repo public/data/gjgl/ (scrape do live scoring GJG) (84-85-77), tid 359"
+   },
+   {
+    "ano": 2026,
+    "campo": "Alferini",
+    "escalao": "Raparigas U14",
+    "vencedor": "Maybel Brooks",
+    "pais": "Inglaterra",
+    "score": 227,
+    "toPar": 8,
+    "voltas": 3,
+    "corte": null,
+    "fonte": "repo public/data/gjgl/ (scrape do live scoring GJG) (70-82-75), tid 359"
+   }
+  ],
+  "portugueses": [],
+  "elegibilidade": "Circuito GJG: escalões 14 (U14 = 12–14 anos, máx. 14 no início da prova), 15–18 (GJG Tour) e 19–23; obrigatório ser membro GJG e de um clube registado; amadores; aceitação por ordem de inscrição (\"first come, first served\") dentro dos critérios; confirmar participação na conta GJG até 3 dias antes. 54 buracos stroke play (18/dia), sem corte indicado na ficha. Prazo 07/12/2026. Taxa 379 € (só inscrição, paga ao Villa Padierna; 3 voltas + treino, água/fruta, bolas). Campo máx. 72. HCP: rapazes 15–23 = 7, U14 = 14; raparigas 9 / U14 20 (para a categoria WAGR: rapazes HCP 7, raparigas 9). Jantar de boas-vindas obrigatório a 7 Jan. WAGR + JGR + GJG OoM, mas os U14 rapazes (tee Green) ficam fora do WAGR e do OoM.",
+  "notas": "Atenção: aqui os U14 rapazes jogam um tee mais curto (Green) e ficam fora do WAGR e do OoM. Comprimento e CR/slope do tee Green não encontrados. Não há edição 2025 com este nome (a página 2025 dá 404); a página 2026 mostra \"Former winners\" só em imagem. Nenhum português em 2026. Mesmo campo do Season Kickoff Nº2 da semana anterior."
+ },
+ {
+  "nome": "The Valle del Este Challenge by GJG 2027 (Espanha)",
+  "datas2027": "17–20 Jan 2027 (treino 17 Jan; voltas 18–20 Jan)",
+  "campo": "Valle del Este Golf Resort (Vera, Almería)",
+  "pais": "Espanha",
+  "links": [
+   {
+    "rotulo": "Página da prova 2027",
+    "url": "https://globaljuniorgolflive.com/tournament/the-valle-del-este-challenge-by-gjg-2027-spain/"
+   },
+   {
+    "rotulo": "Info sheet 2027 (PDF)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/The-Valle-del-Este-Challenge-By-GJG-iNFO-SHEET.pdf"
+   },
+   {
+    "rotulo": "Scorecard Valle del Este (imagem)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/ScoreCard-Valle-del-Este.png"
+   },
+   {
+    "rotulo": "Course rating rapazes (imagem, RFEG)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/Course-Rating-Boys-Valle-Del-Este-scaled.png"
+   },
+   {
+    "rotulo": "Course rating raparigas (imagem)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/Course-Rating-Girls-Valle-Del-Este-scaled.png"
+   },
+   {
+    "rotulo": "Pacotes de alojamento (PDF)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/GJG-Accommodation-Packages.pdf"
+   },
+   {
+    "rotulo": "Inscrição (conta de jogador GJG)",
+    "url": "https://ssl.globaljuniorgolf.com/frames/player_add.php?header=1&lang=en"
+   },
+   {
+    "rotulo": "GJG Tour Rules (regras gerais)",
+    "url": "https://globaljuniorgolflive.com/tournaments/tour-rules/"
+   }
+  ],
+  "distancias": [
+   {
+    "ano": 2027,
+    "campo": "Valle del Este",
+    "escalao": "Rapazes (incl. U14)",
+    "tee": "Caimán",
+    "metros": 5693,
+    "par": 71,
+    "cr": null,
+    "slope": null,
+    "fonte": "página 2027 (Boys: Caimán, LENGTH 5693 m) + info sheet 2027 (\"ALL BOYS Caimán\") + scorecard Valle del Este (Caimán 5693, par 71)"
+   },
+   {
+    "ano": 2027,
+    "campo": "Valle del Este",
+    "escalao": "Raparigas (incl. U14)",
+    "tee": "Salamandra",
+    "metros": 5023,
+    "par": 71,
+    "cr": null,
+    "slope": null,
+    "fonte": "página 2027 + info sheet 2027 (\"ALL GIRLS Salamandra\") + scorecard Valle del Este (Salamandra 5023)"
+   }
+  ],
+  "historico": [],
+  "portugueses": [],
+  "elegibilidade": "Circuito GJG: escalões 14 (U14 = 12–14 anos, máx. 14 no início da prova), 15–18 (GJG Tour) e 19–23; obrigatório ser membro GJG e de um clube registado; amadores; aceitação por ordem de inscrição (\"first come, first served\") dentro dos critérios; confirmar participação na conta GJG até 3 dias antes. 54 buracos stroke play (18/dia), sem corte indicado na ficha. Prazo 17/12/2026. Taxa 375 € (treino + 3 voltas + fruta/água); pacotes de jogador no resort desde 580 € (3 noites, quarto duplo, meia pensão). Campo máx. 54. A info sheet não indica limites de HCP. WAGR + JGR + GJG OoM.",
+  "notas": "1.ª edição (página: \"the very first edition\") — sem histórico. Todos os rapazes, U14 incluídos, no Caimán (o tee mais comprido do scorecard). A tabela de CR ligada como \"Boys\" é a da RFEG (válida desde 23/09/2023), com tees Blancas 70,5/135, Amarillas 69,3/132, Azules 67,0/125, Rojas 65,4/116 (par 71) — não diz qual corresponde ao Caimán, por isso CR/slope ficam null (provavelmente Blancas, por ser o mais comprido; não confirmado)."
+ },
+ {
+  "nome": "GJG Spring Junior Games 2027 (Portugal)",
+  "datas2027": "25–28 Mar 2027 (treino 25 Mar; voltas 26–28 Mar)",
+  "campo": "PGA Aroeira 2 (Charneca da Caparica, Lisboa)",
+  "pais": "Portugal",
+  "links": [
+   {
+    "rotulo": "Página da prova 2027",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-spring-junior-games-2027-portugal/"
+   },
+   {
+    "rotulo": "Info sheet 2027 (PDF)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/GJG-Sping-Junior-Games-2027-Info-sheet.pdf"
+   },
+   {
+    "rotulo": "Scorecard Aroeira 2 (imagem)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/ScoreCard_Aroeira_Challenge_pln2-scaled.jpg"
+   },
+   {
+    "rotulo": "Course rating homens (PDF FPG)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/004-2-Aroeira-II_18-BURACOS_BAAV_MMMM_20221205.pdf"
+   },
+   {
+    "rotulo": "Course rating senhoras (PDF FPG)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/004-2-Aroeira-II_18-BURACOS_AV_FF_20221205.pdf"
+   },
+   {
+    "rotulo": "Edição 2026",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-spring-junior-games-2026-portugal/"
+   },
+   {
+    "rotulo": "Resultados 2026 (tid 366)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=366"
+   },
+   {
+    "rotulo": "Edição 2025",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-spring-junior-games-2025-portugal/"
+   },
+   {
+    "rotulo": "Resultados 2025 (tid 302)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=302"
+   },
+   {
+    "rotulo": "Edição 2024",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-spring-junior-games-portugal/"
+   },
+   {
+    "rotulo": "Resultados 2024 (tid 243)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=243"
+   },
+   {
+    "rotulo": "GJG Juniors International 2027 (Aroeira 1, semana seguinte)",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-juniors-international-2027-portugal/"
+   },
+   {
+    "rotulo": "Inscrição (conta de jogador GJG)",
+    "url": "https://ssl.globaljuniorgolf.com/frames/player_add.php?header=1&lang=en"
+   },
+   {
+    "rotulo": "GJG Tour Rules (regras gerais)",
+    "url": "https://globaljuniorgolflive.com/tournaments/tour-rules/"
+   }
+  ],
+  "distancias": [
+   {
+    "ano": 2027,
+    "campo": "PGA Aroeira 2",
+    "escalao": "Rapazes (incl. U14)",
+    "tee": "Brancas (White)",
+    "metros": 6367,
+    "par": 72,
+    "cr": 73,
+    "slope": 133,
+    "fonte": "página 2027 (Boys White, LENGTH 6367 m) + info sheet 2027 (\"ALL BOYS White tees\") + repo public/data/master-courses.json (FPG, Aroeira No.2 Brancas M: 6367 m, CR 73,0, slope 133); em 2026 cartões WHS = BRANCAS (gjgl-course-overrides.json)"
+   },
+   {
+    "ano": 2027,
+    "campo": "PGA Aroeira 2",
+    "escalao": "Raparigas (incl. U14)",
+    "tee": "Azuis (Blue)",
+    "metros": 5339,
+    "par": 72,
+    "cr": 73.1,
+    "slope": 127,
+    "fonte": "página/info sheet 2027 (Girls Blue) + repo public/data/master-courses.json (FPG, Aroeira No.2 Azuis F: 5339 m, CR 73,1, slope 127)"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "PGA Aroeira 2",
+    "escalao": "Rapazes U14",
+    "vencedor": "Guillaume Juthier",
+    "pais": "França",
+    "score": 238,
+    "toPar": 22,
+    "voltas": 3,
+    "corte": null,
+    "notas": "2.º Maximilian Lauesen DEN 239; 3.º Sean Widor AUT 254; 8 rapazes U14; 29 Mar–1 Abr 2026",
+    "fonte": "repo public/data/gjgl/ (scrape do live scoring GJG) (79-80-79), tid 366"
+   },
+   {
+    "ano": 2025,
+    "campo": "PGA Aroeira 2",
+    "escalao": "Rapazes U14",
+    "vencedor": "Björn Breki Halldórsson",
+    "pais": "Islândia",
+    "score": 246,
+    "toPar": 30,
+    "voltas": 3,
+    "corte": null,
+    "notas": "Empatado a 246 com Halldór Jóhannsson ISL (80-82-84); o live scoring põe Halldórsson em 1.º e Jóhannsson com \"*\". 5 rapazes U14; 12–15 Abr 2025",
+    "fonte": "live scoring GJG tournamentid=302 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=302&gender=0&dak=0&ak=14) (81-86-79)"
+   },
+   {
+    "ano": 2025,
+    "campo": "PGA Aroeira 2",
+    "escalao": "Raparigas U14",
+    "vencedor": "Maybel Brooks",
+    "pais": "Inglaterra",
+    "score": 242,
+    "toPar": 26,
+    "voltas": 3,
+    "corte": null,
+    "fonte": "live scoring GJG tournamentid=302 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=302&gender=0&dak=0&ak=14) (78-83-81)"
+   },
+   {
+    "ano": 2024,
+    "campo": "PGA Aroeira 2",
+    "escalao": "Rapazes U14",
+    "vencedor": "Sebastian Aigner",
+    "pais": "Áustria",
+    "score": 241,
+    "toPar": 25,
+    "voltas": 3,
+    "corte": null,
+    "notas": "1.ª edição, 27–30 Mar 2024; 2.º Migel Mutikainen FIN 245",
+    "fonte": "live scoring GJG tournamentid=243 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=243&gender=0&dak=0&ak=14) (80-82-79)"
+   },
+   {
+    "ano": 2024,
+    "campo": "PGA Aroeira 2",
+    "escalao": "Raparigas U14",
+    "vencedor": "Emma Mesini",
+    "pais": "Áustria",
+    "score": 258,
+    "toPar": 42,
+    "voltas": 3,
+    "corte": null,
+    "fonte": "live scoring GJG tournamentid=243 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=243&gender=0&dak=0&ak=14) (86-87-85)"
+   }
+  ],
+  "portugueses": [
+   {
+    "ano": 2026,
+    "nome": "José Miguel Franco de Sousa — U23 (vencedor geral)",
+    "posicao": 1,
+    "score": 226
+   },
+   {
+    "ano": 2026,
+    "nome": "HongBo Ren — U18",
+    "posicao": 32,
+    "score": 303
+   },
+   {
+    "ano": 2024,
+    "nome": "HongBo Ren — U14",
+    "posicao": 6,
+    "score": 255
+   }
+  ],
+  "elegibilidade": "Circuito GJG: escalões 14 (U14 = 12–14 anos, máx. 14 no início da prova), 15–18 (GJG Tour) e 19–23; obrigatório ser membro GJG e de um clube registado; amadores; aceitação por ordem de inscrição (\"first come, first served\") dentro dos critérios; confirmar participação na conta GJG até 3 dias antes. 54 buracos stroke play (18/dia), sem corte indicado na ficha. Prazo 26/02/2027. Taxa 385 € paga ao Aroeira (4 green fees: treino + 3 voltas). Pacotes no Aroeira Lisbon Hotel (4 noites desde 660 €; 8 noites desde 1320 €, juntando o Juniors International). Campo: o quadro diz máx. 84, o texto diz 60. HCP: rapazes 15–23 = 5, U14 = 15; raparigas 7 / U14 20. Os U14 podem sair de outro tee e então não contam para o WAGR (Tour Rule 19.4) — a ficha 2027 põe todos os rapazes nas brancas.",
+  "notas": "Faz par com o GJG Juniors International (Aroeira 1) logo a seguir — duas provas seguidas no mesmo resort. Página 2027: campeões gerais 2025 Luis Reina (GER) e Sara Pihlajamäki (FIN); 2026 José Miguel Franco de Sousa (POR) e Embla Hrönn Hallsdóttir (ISL). Em 2026 não houve raparigas U14. 2024 em Aroeira 2 pelo logótipo da página. Portugueses de 2024/2025 só verificados no escalão U14."
+ },
+ {
+  "nome": "GJG Juniors International 2027 (Portugal)",
+  "datas2027": "29 Mar–1 Abr 2027 (treino 29 Mar; voltas 30 Mar–1 Abr)",
+  "campo": "PGA Aroeira 1 (Charneca da Caparica, Lisboa)",
+  "pais": "Portugal",
+  "links": [
+   {
+    "rotulo": "Página da prova 2027",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-juniors-international-2027-portugal/"
+   },
+   {
+    "rotulo": "Info sheet 2027 (PDF)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/GJG-Juniors-International-2027-Info-sheet.pdf"
+   },
+   {
+    "rotulo": "Scorecard Aroeira 1 (imagem)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/ScoreCard_Aroeira_Pines_Classic_pln2-scaled.jpg"
+   },
+   {
+    "rotulo": "Course rating homens (PDF FPG)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/004-1-Aroeira-I_18-BURACOS_BAAV_MMMM_20200805.pdf"
+   },
+   {
+    "rotulo": "Course rating senhoras (PDF FPG)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/004-1-Aroeira-I_18-BURACOS_AV_FF_20200805.pdf"
+   },
+   {
+    "rotulo": "Edição 2026",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-juniors-international-2026-portugal/"
+   },
+   {
+    "rotulo": "Resultados 2026 (tid 367)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=367"
+   },
+   {
+    "rotulo": "Edição 2025",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-juniors-international-2025-portugal/"
+   },
+   {
+    "rotulo": "Resultados 2025 (tid 303)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=303"
+   },
+   {
+    "rotulo": "Edição 2024",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-juniors-international-portugal/"
+   },
+   {
+    "rotulo": "Resultados 2024 (tid 242)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=242"
+   },
+   {
+    "rotulo": "GJG Spring Junior Games 2027 (Aroeira 2, semana anterior)",
+    "url": "https://globaljuniorgolflive.com/tournament/gjg-spring-junior-games-2027-portugal/"
+   },
+   {
+    "rotulo": "Inscrição (conta de jogador GJG)",
+    "url": "https://ssl.globaljuniorgolf.com/frames/player_add.php?header=1&lang=en"
+   },
+   {
+    "rotulo": "GJG Tour Rules (regras gerais)",
+    "url": "https://globaljuniorgolflive.com/tournaments/tour-rules/"
+   }
+  ],
+  "distancias": [
+   {
+    "ano": 2027,
+    "campo": "PGA Aroeira 1",
+    "escalao": "Rapazes (incl. U14)",
+    "tee": "Brancas (White)",
+    "metros": 6044,
+    "par": 72,
+    "cr": 72.1,
+    "slope": 128,
+    "fonte": "página 2027 (Boys White, LENGTH 6044 m) + info sheet 2027 (\"ALL BOYS White tees\") + repo public/data/master-courses.json (FPG, Aroeira No.1 Brancas M: 6044 m, CR 72,1, slope 128)"
+   },
+   {
+    "ano": 2027,
+    "campo": "PGA Aroeira 1",
+    "escalao": "Raparigas (incl. U14)",
+    "tee": "Azuis (Blue)",
+    "metros": 5503,
+    "par": 72,
+    "cr": 75.1,
+    "slope": 125,
+    "fonte": "página/info sheet 2027 (Girls Blue) + repo public/data/master-courses.json (FPG, Aroeira No.1 Azuis F: 5503 m, CR 75,1, slope 125)"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "PGA Aroeira 1",
+    "escalao": "Rapazes U14",
+    "vencedor": "Ernie Elford",
+    "pais": "Inglaterra",
+    "score": 233,
+    "toPar": 17,
+    "voltas": 3,
+    "corte": null,
+    "notas": "2.º Halldór Jóhannsson ISL 237; 3.º Laurenz Phil Goercke GER e Sean Widor AUT 238; 13 rapazes U14; 2–5 Abr 2026",
+    "fonte": "repo public/data/gjgl/ (scrape do live scoring GJG) (80-75-78), tid 367"
+   },
+   {
+    "ano": 2025,
+    "campo": "PGA Aroeira 1",
+    "escalao": "Rapazes U14",
+    "vencedor": "Skarphéðinn Egill Þórisson",
+    "pais": "Islândia",
+    "score": 224,
+    "toPar": 8,
+    "voltas": 3,
+    "corte": null,
+    "notas": "2.º Halldór Jóhannsson ISL 225; 3.º Lukas Sovijärvi FIN 226; 13 rapazes U14; 16–19 Abr 2025",
+    "fonte": "live scoring GJG tournamentid=303 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=303&gender=0&dak=0&ak=14) (73-77-74)"
+   },
+   {
+    "ano": 2025,
+    "campo": "PGA Aroeira 1",
+    "escalao": "Raparigas U14",
+    "vencedor": "Julia Swoboda",
+    "pais": "Alemanha",
+    "score": 233,
+    "toPar": 17,
+    "voltas": 3,
+    "corte": null,
+    "fonte": "live scoring GJG tournamentid=303 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=303&gender=0&dak=0&ak=14) (78-77-78)"
+   },
+   {
+    "ano": 2024,
+    "campo": "PGA Aroeira 1",
+    "escalao": "Rapazes U14",
+    "vencedor": "Moritz Schwahn",
+    "pais": "Alemanha",
+    "score": 229,
+    "toPar": 13,
+    "voltas": 3,
+    "corte": null,
+    "notas": "1.ª edição, 23–26 Mar 2024; 2.º Sebastian Aigner AUT 234",
+    "fonte": "live scoring GJG tournamentid=242 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=242&gender=0&dak=0&ak=14) (82-72-75)"
+   },
+   {
+    "ano": 2024,
+    "campo": "PGA Aroeira 1",
+    "escalao": "Raparigas U14",
+    "vencedor": "Carlotta Josephine Müller",
+    "pais": "Alemanha",
+    "score": 253,
+    "toPar": 37,
+    "voltas": 3,
+    "corte": null,
+    "fonte": "live scoring GJG tournamentid=242 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=242&gender=0&dak=0&ak=14) (96-78-79)"
+   }
+  ],
+  "portugueses": [
+   {
+    "ano": 2024,
+    "nome": "HongBo Ren — U14",
+    "posicao": 4,
+    "score": 241
+   },
+   {
+    "ano": 2024,
+    "nome": "Martim Moreira — U14",
+    "posicao": 8,
+    "score": 265
+   }
+  ],
+  "elegibilidade": "Circuito GJG: escalões 14 (U14 = 12–14 anos, máx. 14 no início da prova), 15–18 (GJG Tour) e 19–23; obrigatório ser membro GJG e de um clube registado; amadores; aceitação por ordem de inscrição (\"first come, first served\") dentro dos critérios; confirmar participação na conta GJG até 3 dias antes. 54 buracos stroke play (18/dia), sem corte indicado na ficha. Prazo 01/03/2027. Taxa 385 € paga ao Aroeira (treino + 3 voltas). Pacotes no Aroeira Lisbon Hotel (4 ou 8 noites, juntando o Spring Junior Games). Campo: o quadro diz máx. 84, o texto diz 60. HCP: rapazes 15–23 = 5, U14 = 15; raparigas 7 / U14 20. Os U14 podem sair de outro tee e então não contam para o WAGR (Tour Rule 19.4) — a ficha 2027 põe todos os rapazes nas brancas.",
+  "notas": "3.ª edição no Aroeira em 2026 (página 2027). Campeões gerais 2026: Piet-Constantin Folkerts (GER) e Eva Kristinsdóttir (ISL). Em 2026 não houve raparigas U14. O link de live scoring da página 2027 ainda aponta para o tid 366 (Spring Junior Games 2026). Nenhum português em 2026; em 2025 nenhum no U14 (só esse escalão verificado)."
+ },
+ {
+  "nome": "SA Juniors International 2027 (África do Sul)",
+  "datas2027": "1–4 Mar 2027 (treino 1 Mar; voltas 2–4 Mar)",
+  "campo": "Rondebosch Golf Club (Cidade do Cabo)",
+  "pais": "África do Sul",
+  "links": [
+   {
+    "rotulo": "Página da prova 2027",
+    "url": "https://globaljuniorgolflive.com/tournament/sa-juniors-international-2027-south-africa/"
+   },
+   {
+    "rotulo": "Info sheet 2027 (PDF)",
+    "url": "https://globaljuniorgolflive.com/wp-content/uploads/Tournament_Info-sheet-_SA_Juniors_International_2027_.pdf"
+   },
+   {
+    "rotulo": "Tabela de handicap Rondebosch 2026 (PDF, CR/slope)",
+    "url": "https://rondeboschgolfclub.com/wp-content/uploads/2026/04/2026-CHCT-Rondebosch-GC-Handicap-Conversion-Table.pdf"
+   },
+   {
+    "rotulo": "Tabela de handicap Rondebosch (ligada pela GJG, rev. 2022)",
+    "url": "https://rondeboschgolfclub.com/wp-content/uploads/2024/01/2024-CHCT-Rondebosch-GC-Handicap-Conversion-Table.pdf"
+   },
+   {
+    "rotulo": "Edição 2026",
+    "url": "https://globaljuniorgolflive.com/tournament/sa-juniors-international-2026-south-africa/"
+   },
+   {
+    "rotulo": "Resultados 2026 (tid 395)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=395"
+   },
+   {
+    "rotulo": "Edição 2025",
+    "url": "https://globaljuniorgolflive.com/tournament/sa-juniors-international-2025-south-africa/"
+   },
+   {
+    "rotulo": "Resultados 2025 (tid 310)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=310"
+   },
+   {
+    "rotulo": "Edição 2024",
+    "url": "https://globaljuniorgolflive.com/tournament/sa-juniors-international-south-africa/"
+   },
+   {
+    "rotulo": "Resultados 2024 (tid 260)",
+    "url": "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=260"
+   },
+   {
+    "rotulo": "Inscrição (conta de jogador GJG)",
+    "url": "https://ssl.globaljuniorgolf.com/frames/player_add.php?header=1&lang=en"
+   },
+   {
+    "rotulo": "GJG Tour Rules (regras gerais)",
+    "url": "https://globaljuniorgolflive.com/tournaments/tour-rules/"
+   }
+  ],
+  "distancias": [
+   {
+    "ano": 2027,
+    "campo": "Rondebosch",
+    "escalao": "Rapazes (incl. U14)",
+    "tee": "Amarelas (Yellow)",
+    "metros": null,
+    "par": 72,
+    "cr": 72,
+    "slope": 129,
+    "fonte": "página 2027 (\"Boys CR/Slope: 72.0/129\") + info sheet 2027 (\"ALL BOYS Yellow tees\"); par 72 da tabela do clube (Yellow 72,0/127, rev. 09/12/2022) — comprimento não encontrado"
+   },
+   {
+    "ano": 2027,
+    "campo": "Rondebosch",
+    "escalao": "Raparigas (incl. U14)",
+    "tee": "Vermelhas (Red)",
+    "metros": null,
+    "par": 72,
+    "cr": 72.9,
+    "slope": 127,
+    "fonte": "página 2027 (Girls 72.9/127) + tabela Rondebosch 2026 (Women's Red 72,9 / 127, par 72)"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Rondebosch",
+    "escalao": "Rapazes U14",
+    "vencedor": "Lex Foxcroft",
+    "pais": "África do Sul",
+    "score": 219,
+    "toPar": 3,
+    "voltas": 3,
+    "corte": null,
+    "notas": "2.º empatados a 220: Aiden Combrinck, Nathan Kok e Tiaan Louw (RSA); 13 rapazes U14, todos sul-africanos; 2–5 Mar 2026",
+    "fonte": "repo public/data/gjgl/ (scrape do live scoring GJG) (75-70-74), tid 395"
+   },
+   {
+    "ano": 2026,
+    "campo": "Rondebosch",
+    "escalao": "Raparigas U14",
+    "vencedor": "Amy Stanton",
+    "pais": "África do Sul",
+    "score": 221,
+    "toPar": 5,
+    "voltas": 3,
+    "corte": null,
+    "fonte": "repo public/data/gjgl/ (scrape do live scoring GJG) (72-72-77), tid 395"
+   },
+   {
+    "ano": 2025,
+    "campo": "Rondebosch",
+    "escalao": "Rapazes U14",
+    "vencedor": "Aiden Combrinck",
+    "pais": "África do Sul",
+    "score": 216,
+    "toPar": 0,
+    "voltas": 3,
+    "corte": null,
+    "notas": "2.º Codi Ruiters RSA 232; 10 rapazes U14; 3–6 Mar 2025",
+    "fonte": "live scoring GJG tournamentid=310 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=310&gender=0&dak=0&ak=14) (75-70-71)"
+   },
+   {
+    "ano": 2025,
+    "campo": "Rondebosch",
+    "escalao": "Raparigas U14",
+    "vencedor": "Mia Brewer",
+    "pais": "África do Sul",
+    "score": 256,
+    "toPar": 40,
+    "voltas": 3,
+    "corte": null,
+    "fonte": "live scoring GJG tournamentid=310 (https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid=310&gender=0&dak=0&ak=14) (88-82-86)"
+   }
+  ],
+  "portugueses": [],
+  "elegibilidade": "Circuito GJG: escalões 14 (U14 = 12–14 anos, máx. 14 no início da prova), 15–18 (GJG Tour) e 19–23; obrigatório ser membro GJG e de um clube registado; amadores; aceitação por ordem de inscrição (\"first come, first served\") dentro dos critérios; confirmar participação na conta GJG até 3 dias antes. 54 buracos stroke play (18/dia), sem corte indicado na ficha. Prazo 01/02/2027. Taxa 2000 ZAR paga ao Rondebosch GC (inclui treino). Campo máx. 84. HCP: rapazes 15–23 = 7, U14 = 14; raparigas 9 / U14 20. WAGR + JGR.",
+  "notas": "Em 2024 (4–7 Mar, tid 260) não houve escalão U14 — só 18 e 23 (65 rapazes). Prova quase só de sul-africanos: em 2025 e 2026 todos os U14 rapazes eram RSA (Lex Foxcroft jogou o Spring Junior Games e o Juniors International de 2024 em Lisboa). A GJG dá slope 129 para as amarelas; a tabela do clube (rev. 2022) dá 127 e a de 2026 não traz as amarelas masculinas. Comprimento das amarelas não encontrado (o link \"Scorecard\" do clube aponta para \"#\"). Nenhum português em 2025 (U14) nem em 2026."
  }
 ]
