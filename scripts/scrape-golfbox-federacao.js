@@ -31,7 +31,7 @@
  * deixa cada miúdo só no escalão mais específico (`umaDivisaoPorJogador`).
  *
  * Saída: public/data/{fed}/{competitionId}.json — JobFile, 1 ficheiro por prova;
- * adaptadores sources/swissgolf.js, sources/rbgf.js, sources/baltico.js, sources/sgf.js e sources/dgu.js. Só kids2 (não vai à /major).
+ * adaptadores sources/{swissgolf,rbgf,baltico,sgf,dgu,ngf,sgl,stars5}.js. Só kids2 (não vai à /major).
  *
  * Uso:
  *   node scripts/scrape-golfbox-federacao.js --fed swissgolf          # época corrente e a anterior
@@ -78,6 +78,34 @@ const FEDERACOES = {
     fora: /AFLYST|Hulspil|Senior|Para|Oprykning/i,
     // «Damer» = senhoras; GOT A/B = filas de iniciação; «WAGR-rækken» = outra vista
     classesFora: /^Damer$|\bA-r(æ|ae)kke|\bB-r(æ|ae)kke|^WAGR/i,
+  },
+  // Noruega (Norges Golfforbund, customer 18): o Srixon Tour (juvenil, U19) e o
+  // Junior NM por pancadas. Fora o match play (Jr NM Match), Future Camps e Winter Open.
+  ngf: {
+    nome: "Norges Golfforbund",
+    customer: 18,
+    juvenil: /Srixon Tour/i,
+    fora: /Match|Future Camp|Winter/i,
+  },
+  // Finlândia (Suomen Golfliitto, customer 332): FootJoy Finnish Junior Tour,
+  // Junior SM por pancadas, Finnish International Junior (U14/U16) e a
+  // qualificação do JR SM. Fora match play (reikäpeli), Challenge/Haastaja
+  // (regionais), simulador, short course e o GJG (já vem pela fonte gjgl).
+  sgl: {
+    nome: "Suomen Golfliitto",
+    customer: 332,
+    juvenil: /Finnish Junior Tour|Finnish International Junior|Junioreiden lyöntipeli SM|JR SM rp karsinta/i,
+    fora: /Reikäpeli|Challenge|Haastaja|Joukkue|Simulaattori|Short Course|GJG/i,
+  },
+  // Polónia: o 5 Stars Junior Cup by Adrian Meronk (customer 2299), o circuito
+  // juvenil polaco no GolfBox.
+  stars5: {
+    nome: "5 Stars Junior Cup (Polónia)",
+    customer: 2299,
+    juvenil: /5 Stars/i,
+    fora: /^$/,
+    // «HCP klasa» = classificação por handicap (outra vista, net)
+    classesFora: /HCP klasa/i,
   },
   // Letónia (federação, customer 911): Junior Tour e Latvian Junior Open;
   // Lituânia: só o Lithuanian Junior Open, no calendário do clube que o organiza

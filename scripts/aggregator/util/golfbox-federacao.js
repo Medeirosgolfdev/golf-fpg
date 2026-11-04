@@ -16,12 +16,20 @@ const { buildJobfileSource } = require("./jobfile");
 
 function parseDivGolfbox(divKey) {
   const s = String(divKey || "");
-  // inglês (também Male/Female), alemão, francês, neerlandês, sueco (Pojkar/Flickor)
-  // e dinamarquês (Drenge/Piger)
-  const sex = /boys|knaben|gar[cç]ons|jongens|pojkar|drenge|\bmale\b/i.test(s) ? "M" : /girls|m(ä|ae)dchen|filles|meisjes|flickor|piger|female/i.test(s) ? "F" : null;
-  // «U18-U16» → a maior; «U12/U10» idem
-  const us = [...s.matchAll(/\bU\s?(\d{1,2})\b/gi)].map((m) => +m[1]);
-  return { ageMin: null, ageMax: us.length ? Math.max(...us) : null, sex };
+  // inglês (também Male/Female, Man/Woman), alemão (Burschen/Mädchen), francês,
+  // neerlandês, sueco (Pojkar/Flickor), dinamarquês (Drenge/Piger), norueguês
+  // (Gutter/Jenter, «GU19»/«JU19», «G19-klassen»), finlandês (Pojat/Tytöt) e polaco
+  const sex = /boys|knaben|burschen|gar[cç]ons|jongens|pojkar|drenge|gutter|pojat|ch[łl]opcy|\bmale\b|\bman\b|\bGU\d|\bG\d{2}-klass/i.test(s) ? "M"
+    : /girls|m(ä|ae)dchen|filles|meisjes|flickor|piger|jenter|tyt[öo]t|dziewcz|female|wom[ae]n|\bJU\d|\bJ\d{2}-klass/i.test(s) ? "F" : null;
+  // a idade máxima: «U18-U16» / «U12/U10» → a maior; «16-19 år» → 19;
+  // «Tytöt-18» / «Girls-16» → 18 / 16; «G19-klassen» → 19
+  const idades = [
+    ...[...s.matchAll(/\bU\s?(\d{1,2})\b/gi)].map((m) => +m[1]),
+    ...[...s.matchAll(/\b\d{1,2}\s*-\s*(\d{1,2})\s*år\b/gi)].map((m) => +m[1]),
+    ...[...s.matchAll(/[a-zäöå]-(\d{2})\b/gi)].map((m) => +m[1]),
+    ...[...s.matchAll(/\b[GJ](\d{2})-klass/gi)].map((m) => +m[1]),
+  ];
+  return { ageMin: null, ageMax: idades.length ? Math.max(...idades) : null, sex };
 }
 
 /** @param {{sourceId:string, sourceLabel:string, seriesLabel:string, country:string, linkSite:string}} o */

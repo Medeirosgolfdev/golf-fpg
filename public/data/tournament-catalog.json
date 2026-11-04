@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-04T12:27:33.775Z",
+  "generatedAt": "2026-11-04T12:43:06.703Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -4905,6 +4905,38 @@
       "editionsCount": 22
     },
     {
+      "id": "sgl-junior",
+      "label": "Golfliitto Finlândia",
+      "sourceId": "sgl",
+      "tournamentIds": [
+        "sgl-4758450",
+        "sgl-4771215",
+        "sgl-4771538",
+        "sgl-4771849",
+        "sgl-4771881",
+        "sgl-4772055",
+        "sgl-4772103",
+        "sgl-4772117",
+        "sgl-5325089",
+        "sgl-5325138",
+        "sgl-5325168",
+        "sgl-5325213",
+        "sgl-5325262",
+        "sgl-5325364",
+        "sgl-5325389",
+        "sgl-5325452",
+        "sgl-5325548",
+        "sgl-5325620",
+        "sgl-5325624",
+        "sgl-5325649",
+        "sgl-5325662",
+        "sgl-5325684"
+      ],
+      "firstDate": "2025-05-02",
+      "lastDate": "2026-09-25",
+      "editionsCount": 22
+    },
+    {
       "id": "uskids-fernandina-beach-golf-course",
       "label": "Fernandina Beach Golf Course",
       "sourceId": "uskids",
@@ -7302,33 +7334,6 @@
       "editionsCount": 17
     },
     {
-      "id": "egr-5-stars-junior-cup-by-adrian-meronk",
-      "label": "5 Stars Junior Cup by Adrian Meronk",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11463",
-        "egr-egr11464",
-        "egr-egr11459",
-        "egr-egr11460",
-        "egr-egr11456",
-        "egr-egr11455",
-        "egr-egr11461",
-        "egr-egr11318",
-        "egr-egr11465",
-        "egr-egr11319",
-        "egr-egr11453",
-        "egr-egr11457",
-        "egr-egr11454",
-        "egr-egr11462",
-        "egr-egr11458",
-        "egr-egr11466",
-        "egr-egr11468"
-      ],
-      "firstDate": "2025-09-26",
-      "lastDate": "2026-08-26",
-      "editionsCount": 17
-    },
-    {
       "id": "uskids-jacksonville-beach-golf-course",
       "label": "Jacksonville Beach Golf Course",
       "sourceId": "uskids",
@@ -8727,6 +8732,56 @@
       ],
       "firstDate": "2026-03-01",
       "lastDate": "2026-09-13",
+      "editionsCount": 15
+    },
+    {
+      "id": "ngf-junior",
+      "label": "NGF Noruega",
+      "sourceId": "ngf",
+      "tournamentIds": [
+        "ngf-4759945",
+        "ngf-4817097",
+        "ngf-4817186",
+        "ngf-4817196",
+        "ngf-4817238",
+        "ngf-4817268",
+        "ngf-4817285",
+        "ngf-5116801",
+        "ngf-5329323",
+        "ngf-5329335",
+        "ngf-5329343",
+        "ngf-5329346",
+        "ngf-5329350",
+        "ngf-5329353",
+        "ngf-5329354"
+      ],
+      "firstDate": "2025-05-03",
+      "lastDate": "2026-09-26",
+      "editionsCount": 15
+    },
+    {
+      "id": "oegv-junior",
+      "label": "ÖGV Áustria",
+      "sourceId": "oegv",
+      "tournamentIds": [
+        "oegv-17002098",
+        "oegv-17002476",
+        "oegv-17002486",
+        "oegv-17002493",
+        "oegv-17002496",
+        "oegv-17002500",
+        "oegv-17002511",
+        "oegv-17002639",
+        "oegv-17002838",
+        "oegv-17002873",
+        "oegv-17002880",
+        "oegv-17002881",
+        "oegv-17002885",
+        "oegv-17002889",
+        "oegv-17003012"
+      ],
+      "firstDate": "2024-05-04",
+      "lastDate": "2026-10-10",
       "editionsCount": 15
     },
     {
@@ -11705,6 +11760,28 @@
       ],
       "firstDate": "2023-07-16",
       "lastDate": "2026-07-27",
+      "editionsCount": 12
+    },
+    {
+      "id": "stars5-junior",
+      "label": "5 Stars Junior Cup",
+      "sourceId": "stars5",
+      "tournamentIds": [
+        "stars5-4804682",
+        "stars5-4804724",
+        "stars5-4804733",
+        "stars5-4804744",
+        "stars5-4805237",
+        "stars5-5171386",
+        "stars5-5351802",
+        "stars5-5351827",
+        "stars5-5351831",
+        "stars5-5351844",
+        "stars5-5351847",
+        "stars5-5736210"
+      ],
+      "firstDate": "2025-01-29",
+      "lastDate": "2026-09-28",
       "editionsCount": 12
     },
     {
@@ -19309,24 +19386,6 @@
       "editionsCount": 8
     },
     {
-      "id": "egr-srixon-tour-6-u15",
-      "label": "Srixon Tour 6 (U15)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10862",
-        "egr-egr10861",
-        "egr-egr8916",
-        "egr-egr8917",
-        "egr-egr8428",
-        "egr-egr8429",
-        "egr-egr12320",
-        "egr-egr12322"
-      ],
-      "firstDate": "2023-08-26",
-      "lastDate": "2026-08-13",
-      "editionsCount": 8
-    },
-    {
       "id": "igc-staffs",
       "label": "Staffordshire",
       "sourceId": "ggcondados",
@@ -19350,16 +19409,16 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-229490",
-        "wagr-271638",
         "wagr-224656",
         "wagr-270714",
         "wagr-234070",
         "wagr-224232",
+        "wagr-269885",
         "wagr-233228",
         "wagr-223319"
       ],
       "firstDate": "2023-05-26",
-      "lastDate": "2026-08-26",
+      "lastDate": "2026-07-20",
       "editionsCount": 8
     },
     {
@@ -22112,8 +22171,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -29522,21 +29581,6 @@
       "editionsCount": 5
     },
     {
-      "id": "egr-srixon-tour-2-u15",
-      "label": "Srixon Tour 2 (U15)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12769",
-        "egr-egr12295",
-        "egr-egr10840",
-        "egr-egr10841",
-        "egr-egr8892"
-      ],
-      "firstDate": "2024-05-25",
-      "lastDate": "2026-05-09",
-      "editionsCount": 5
-    },
-    {
       "id": "egr-nationaal-strokeplay-kampioenschap-meisjes",
       "label": "Nationaal Strokeplay Kampioenschap Meisjes",
       "sourceId": "egr",
@@ -29624,21 +29668,6 @@
       ],
       "firstDate": "2019-07-09",
       "lastDate": "2025-07-08",
-      "editionsCount": 5
-    },
-    {
-      "id": "egr-3-ajgt-powered-by-bernd-wiesberger-u16-18",
-      "label": "3. AJGT powered by Bernd Wiesberger U16/18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11175",
-        "egr-egr11172",
-        "egr-egr9649",
-        "egr-egr9648",
-        "egr-egr8194"
-      ],
-      "firstDate": "2023-05-27",
-      "lastDate": "2025-05-24",
       "editionsCount": 5
     },
     {
@@ -29857,9 +29886,9 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-271900",
-        "wagr-235865",
         "wagr-260403",
         "wagr-225888",
+        "wagr-235865",
         "wagr-219502"
       ],
       "firstDate": "2022-09-17",
@@ -30757,8 +30786,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-270475",
-        "wagr-258576",
         "wagr-233824",
+        "wagr-258576",
         "wagr-223755",
         "wagr-74975"
       ],
@@ -30772,10 +30801,10 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-269508",
-        "wagr-257298",
         "wagr-232957",
         "wagr-222996",
-        "wagr-78202"
+        "wagr-78202",
+        "wagr-257298"
       ],
       "firstDate": "2022-04-23",
       "lastDate": "2026-04-25",
@@ -30917,21 +30946,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-hope-valley-junior-invitational",
-      "label": "Hope Valley Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259604",
-        "wagr-235031",
-        "wagr-271309",
-        "wagr-225120",
-        "wagr-75920"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2026-08-04",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-korea-junior-championship-blue-one-cup",
       "label": "Korea Junior Championship - Blue One Cup",
       "sourceId": "wagr",
@@ -31067,6 +31081,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-georgia-junior-championship",
+      "label": "Georgia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270174",
+        "wagr-258188",
+        "wagr-233854",
+        "wagr-223986",
+        "wagr-74879"
+      ],
+      "firstDate": "2022-06-20",
+      "lastDate": "2026-07-06",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-georgia-pga-junior-championship",
       "label": "Georgia PGA Junior Championship",
       "sourceId": "wagr",
@@ -31094,6 +31123,21 @@
       ],
       "firstDate": "2022-08-01",
       "lastDate": "2026-07-27",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-hope-valley-junior-invitational",
+      "label": "Hope Valley Junior Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271309",
+        "wagr-259604",
+        "wagr-235031",
+        "wagr-225120",
+        "wagr-75920"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2026-08-04",
       "editionsCount": 5
     },
     {
@@ -36476,20 +36520,6 @@
       "editionsCount": 4
     },
     {
-      "id": "egr-finnish-international-junior-championship-u16",
-      "label": "Finnish International Junior Championship (U16)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12348",
-        "egr-egr12350",
-        "egr-egr10507",
-        "egr-egr10508"
-      ],
-      "firstDate": "2025-06-25",
-      "lastDate": "2026-06-24",
-      "editionsCount": 4
-    },
-    {
       "id": "egr-sgf-trophy",
       "label": "SGF Trophy",
       "sourceId": "egr",
@@ -36714,20 +36744,6 @@
       "editionsCount": 4
     },
     {
-      "id": "egr-2-ajgt-powered-by-bernd-wiesberger-u14",
-      "label": "2. AJGT powered by Bernd Wiesberger U14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10923",
-        "egr-egr10925",
-        "egr-egr9647",
-        "egr-egr9645"
-      ],
-      "firstDate": "2024-05-04",
-      "lastDate": "2025-05-04",
-      "editionsCount": 4
-    },
-    {
       "id": "egr-prodreamusa-english-open",
       "label": "ProDreamUSA English Open",
       "sourceId": "egr",
@@ -36753,6 +36769,20 @@
       ],
       "firstDate": "2022-10-15",
       "lastDate": "2024-10-12",
+      "editionsCount": 4
+    },
+    {
+      "id": "egr-srixon-tour-6-u15",
+      "label": "Srixon Tour 6 (U15)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8916",
+        "egr-egr8917",
+        "egr-egr8428",
+        "egr-egr8429"
+      ],
+      "firstDate": "2023-08-26",
+      "lastDate": "2024-08-31",
       "editionsCount": 4
     },
     {
@@ -37848,41 +37878,13 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-srixon-tour-7",
-      "label": "Srixon Tour 7",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260350",
-        "wagr-271689",
-        "wagr-235680",
-        "wagr-225316"
-      ],
-      "firstDate": "2023-09-09",
-      "lastDate": "2026-08-29",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-srixon-tour-6",
-      "label": "Srixon Tour 6",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271390",
-        "wagr-260121",
-        "wagr-235554",
-        "wagr-229721"
-      ],
-      "firstDate": "2023-08-26",
-      "lastDate": "2026-08-13",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-srixon-tour-2",
       "label": "Srixon Tour 2",
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-269735",
-        "wagr-257620",
         "wagr-236956",
+        "wagr-257620",
         "wagr-77568"
       ],
       "firstDate": "2022-05-07",
@@ -37946,6 +37948,20 @@
       "editionsCount": 4
     },
     {
+      "id": "wagr-finnish-junior-tour-final",
+      "label": "Finnish Junior Tour Final",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-225822",
+        "wagr-260547",
+        "wagr-235963",
+        "wagr-76602"
+      ],
+      "firstDate": "2022-09-17",
+      "lastDate": "2025-09-20",
+      "editionsCount": 4
+    },
+    {
       "id": "wagr-finnish-stroke-play-championship-u21-u18",
       "label": "Finnish Stroke Play Championship U21 & U18",
       "sourceId": "wagr",
@@ -37999,20 +38015,6 @@
       ],
       "firstDate": "2022-06-06",
       "lastDate": "2026-08-04",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-cga-dogwood-state-junior-boys-championship",
-      "label": "CGA Dogwood State Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259377",
-        "wagr-234649",
-        "wagr-271132",
-        "wagr-224807"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-27",
       "editionsCount": 4
     },
     {
@@ -38237,20 +38239,6 @@
       ],
       "firstDate": "2022-07-25",
       "lastDate": "2026-07-07",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-georgia-junior-championship",
-      "label": "Georgia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270174",
-        "wagr-258188",
-        "wagr-233854",
-        "wagr-223986"
-      ],
-      "firstDate": "2023-06-19",
-      "lastDate": "2026-07-06",
       "editionsCount": 4
     },
     {
@@ -46437,19 +46425,6 @@
       "editionsCount": 3
     },
     {
-      "id": "egr-srixon-tour-8-finale-u15",
-      "label": "Srixon Tour 8 Finale (U15)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12336",
-        "egr-egr8928",
-        "egr-egr8485"
-      ],
-      "firstDate": "2023-09-23",
-      "lastDate": "2026-09-26",
-      "editionsCount": 3
-    },
-    {
       "id": "egr-welsh-boys-closed-championship",
       "label": "Welsh Boys' Closed Championship",
       "sourceId": "egr",
@@ -46460,19 +46435,6 @@
       ],
       "firstDate": "2024-07-23",
       "lastDate": "2026-07-20",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-austrian-boys-u14",
-      "label": "Austrian Boys U14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12509",
-        "egr-egr11185",
-        "egr-egr9874"
-      ],
-      "firstDate": "2024-07-19",
-      "lastDate": "2026-07-17",
       "editionsCount": 3
     },
     {
@@ -46775,32 +46737,6 @@
       "editionsCount": 3
     },
     {
-      "id": "egr-srixon-tour-8-finale-u19",
-      "label": "Srixon Tour 8 Finale (U19)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10873",
-        "egr-egr10872",
-        "egr-egr12335"
-      ],
-      "firstDate": "2025-09-27",
-      "lastDate": "2026-09-26",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-srixon-tour-8-u15-finale",
-      "label": "Srixon Tour 8 (U15 Finale)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10874",
-        "egr-egr8489",
-        "egr-egr12334"
-      ],
-      "firstDate": "2023-09-23",
-      "lastDate": "2026-09-26",
-      "editionsCount": 3
-    },
-    {
       "id": "egr-nationaal-strokeplay-kampioenschap-meisjes-u12",
       "label": "Nationaal Strokeplay Kampioenschap Meisjes U12",
       "sourceId": "egr",
@@ -46853,19 +46789,6 @@
       "editionsCount": 3
     },
     {
-      "id": "egr-srixon-tour-5-u15",
-      "label": "Srixon Tour 5 (U15)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10858",
-        "egr-egr10857",
-        "egr-egr8404"
-      ],
-      "firstDate": "2023-08-12",
-      "lastDate": "2025-08-14",
-      "editionsCount": 3
-    },
-    {
       "id": "egr-welsh-girls-closed-championship",
       "label": "Welsh Girls Closed Championship",
       "sourceId": "egr",
@@ -46876,58 +46799,6 @@
       ],
       "firstDate": "2024-07-23",
       "lastDate": "2026-07-20",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-5-ajgt-powered-by-bernd-wiesberger-u14-16-18",
-      "label": "5. AJGT powered by Bernd Wiesberger U14/16/18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11181",
-        "egr-egr11179",
-        "egr-egr9653"
-      ],
-      "firstDate": "2024-07-06",
-      "lastDate": "2025-07-05",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-4-ajgt-powered-by-bernd-wiesberger-u16-18",
-      "label": "4. AJGT powered by Bernd Wiesberger U16/18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11178",
-        "egr-egr11177",
-        "egr-egr8322"
-      ],
-      "firstDate": "2023-06-23",
-      "lastDate": "2025-06-20",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-4-ajgt-powered-by-bernd-wiesberger-u14",
-      "label": "4. AJGT powered by Bernd Wiesberger U14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11176",
-        "egr-egr9815",
-        "egr-egr8327"
-      ],
-      "firstDate": "2023-06-23",
-      "lastDate": "2025-06-20",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-2-ajgt-powered-by-bernd-wiesberger-u16-18",
-      "label": "2. AJGT powered by Bernd Wiesberger U16/18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10922",
-        "egr-egr10924",
-        "egr-egr9644"
-      ],
-      "firstDate": "2024-05-04",
-      "lastDate": "2025-05-04",
       "editionsCount": 3
     },
     {
@@ -46980,19 +46851,6 @@
       ],
       "firstDate": "2023-09-09",
       "lastDate": "2024-09-15",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-srixon-tour-7-u19",
-      "label": "Srixon Tour 7 (U19)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8927",
-        "egr-egr12323",
-        "egr-egr12324"
-      ],
-      "firstDate": "2024-09-14",
-      "lastDate": "2026-08-29",
       "editionsCount": 3
     },
     {
@@ -47058,6 +46916,19 @@
       ],
       "firstDate": "2022-06-14",
       "lastDate": "2024-06-11",
+      "editionsCount": 3
+    },
+    {
+      "id": "egr-3-ajgt-powered-by-bernd-wiesberger-u16-18",
+      "label": "3. AJGT powered by Bernd Wiesberger U16/18",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9649",
+        "egr-egr9648",
+        "egr-egr8194"
+      ],
+      "firstDate": "2023-05-27",
+      "lastDate": "2024-05-31",
       "editionsCount": 3
     },
     {
@@ -48608,6 +48479,32 @@
       "editionsCount": 3
     },
     {
+      "id": "wagr-srixon-tour-7",
+      "label": "Srixon Tour 7",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271689",
+        "wagr-235680",
+        "wagr-225316"
+      ],
+      "firstDate": "2023-09-09",
+      "lastDate": "2026-08-29",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-srixon-tour-6",
+      "label": "Srixon Tour 6",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271390",
+        "wagr-235554",
+        "wagr-229721"
+      ],
+      "firstDate": "2023-08-26",
+      "lastDate": "2026-08-13",
+      "editionsCount": 3
+    },
+    {
       "id": "wagr-srixon-tour-3-match",
       "label": "Srixon Tour 3 Match",
       "sourceId": "wagr",
@@ -48617,6 +48514,19 @@
         "wagr-233512"
       ],
       "firstDate": "2024-06-08",
+      "lastDate": "2026-05-23",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-3-austrian-juniors-golf-tour",
+      "label": "3 Austrian Juniors Golf Tour",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269822",
+        "wagr-257736",
+        "wagr-78254"
+      ],
+      "firstDate": "2022-06-04",
       "lastDate": "2026-05-23",
       "editionsCount": 3
     },
@@ -48670,19 +48580,6 @@
       ],
       "firstDate": "2022-05-21",
       "lastDate": "2024-05-25",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-finnish-junior-tour-final",
-      "label": "Finnish Junior Tour Final",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-225822",
-        "wagr-235963",
-        "wagr-76602"
-      ],
-      "firstDate": "2022-09-17",
-      "lastDate": "2024-09-21",
       "editionsCount": 3
     },
     {
@@ -48795,8 +48692,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-258636",
-        "wagr-234217",
-        "wagr-270533"
+        "wagr-270533",
+        "wagr-234217"
       ],
       "firstDate": "2024-07-01",
       "lastDate": "2026-06-22",
@@ -48829,19 +48726,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-visit-owensboro-junior-championship",
-      "label": "Visit Owensboro Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269461",
-        "wagr-257236",
-        "wagr-251444"
-      ],
-      "firstDate": "2024-05-03",
-      "lastDate": "2026-04-30",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-visit-goldsboro-nc-junior-championship",
       "label": "Visit Goldsboro NC Junior Championship",
       "sourceId": "wagr",
@@ -48852,19 +48736,6 @@
       ],
       "firstDate": "2024-04-11",
       "lastDate": "2026-04-16",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-north-carolina-junior-boys-championship",
-      "label": "North Carolina Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-233861",
-        "wagr-258192",
-        "wagr-270178"
-      ],
-      "firstDate": "2024-06-19",
-      "lastDate": "2026-06-23",
       "editionsCount": 3
     },
     {
@@ -49427,16 +49298,16 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
-      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "id": "wagr-cga-dogwood-state-junior-boys-championship",
+      "label": "CGA Dogwood State Junior Boys Championship",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-269997",
-        "wagr-257942",
-        "wagr-251448"
+        "wagr-271132",
+        "wagr-234649",
+        "wagr-224807"
       ],
-      "firstDate": "2024-06-04",
-      "lastDate": "2026-05-26",
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-27",
       "editionsCount": 3
     },
     {
@@ -49762,6 +49633,19 @@
       ],
       "firstDate": "2024-06-21",
       "lastDate": "2026-06-19",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
+      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269997",
+        "wagr-257942",
+        "wagr-251448"
+      ],
+      "firstDate": "2024-06-04",
+      "lastDate": "2026-05-26",
       "editionsCount": 3
     },
     {
@@ -62093,18 +61977,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-footjoy-finnish-junior-tour-8-u18",
-      "label": "FootJoy Finnish Junior Tour 8 (U18)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12905",
-        "egr-egr12369"
-      ],
-      "firstDate": "2026-08-29",
-      "lastDate": "2026-08-29",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-r-a-boys-amateur",
       "label": "R&A Boys Amateur",
       "sourceId": "egr",
@@ -62114,42 +61986,6 @@
       ],
       "firstDate": "2024-08-12",
       "lastDate": "2026-08-09",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-austrian-girls-u18",
-      "label": "Austrian Girls U18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12511",
-        "egr-egr11184"
-      ],
-      "firstDate": "2025-07-18",
-      "lastDate": "2026-07-17",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-austrian-boys-u12",
-      "label": "Austrian Boys U12",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12510",
-        "egr-egr9660"
-      ],
-      "firstDate": "2024-07-19",
-      "lastDate": "2026-07-17",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-austrian-girls-u12",
-      "label": "Austrian Girls U12",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12512",
-        "egr-egr4861"
-      ],
-      "firstDate": "2020-07-17",
-      "lastDate": "2026-07-17",
       "editionsCount": 2
     },
     {
@@ -62309,30 +62145,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-footjoy-fjt-5-national-match-play-championship-u18",
-      "label": "Footjoy FJT 5 National Match Play Championship (U18)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12359",
-        "egr-egr12362"
-      ],
-      "firstDate": "2026-07-01",
-      "lastDate": "2026-07-01",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-fjt-5-national-match-play-championship-u16",
-      "label": "Footjoy FJT 5 National Match Play Championship (U16)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12360",
-        "egr-egr12361"
-      ],
-      "firstDate": "2026-07-01",
-      "lastDate": "2026-07-01",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-dgv-nrw-2-ak14-jungen",
       "label": "DGV-NRW 2. AK14 Jungen",
       "sourceId": "egr",
@@ -62342,30 +62154,6 @@
       ],
       "firstDate": "2024-06-08",
       "lastDate": "2026-06-27",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-finnish-international-junior-championship-u14",
-      "label": "Finnish International Junior Championship (U14)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12347",
-        "egr-egr12349"
-      ],
-      "firstDate": "2026-06-24",
-      "lastDate": "2026-06-24",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-3-u18",
-      "label": "FootJoy Finnish Junior Tour 3 (U18)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12343",
-        "egr-egr12344"
-      ],
-      "firstDate": "2026-06-11",
-      "lastDate": "2026-06-11",
       "editionsCount": 2
     },
     {
@@ -62453,18 +62241,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-footjoy-finnish-junior-tour-2-u18",
-      "label": "FootJoy Finnish Junior Tour 2 (U18)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12342",
-        "egr-egr12341"
-      ],
-      "firstDate": "2026-05-23",
-      "lastDate": "2026-05-23",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-dgv-bayern-meisterschaft-ak14-jungen",
       "label": "DGV-Bayern Meisterschaft AK14 Jungen",
       "sourceId": "egr",
@@ -62513,36 +62289,12 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-2-ajgt-u14-u18-presented-by-bernd-wiesberger",
-      "label": "2. AJGT U14-U18 presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12495",
-        "egr-egr12497"
-      ],
-      "firstDate": "2026-05-01",
-      "lastDate": "2026-05-01",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-the-foundatons-trophy",
       "label": "The Foundatons Trophy",
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr12763",
         "egr-egr11479"
-      ],
-      "firstDate": "2026-05-01",
-      "lastDate": "2026-05-01",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-1-u18-u21",
-      "label": "FootJoy Finnish Junior Tour 1 (U18 & U21)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12337",
-        "egr-egr12338"
       ],
       "firstDate": "2026-05-01",
       "lastDate": "2026-05-01",
@@ -62642,30 +62394,6 @@
       ],
       "firstDate": "2026-04-13",
       "lastDate": "2026-04-13",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-1-ajgt-u16-u18-presented-by-bernd-wiesberger",
-      "label": "1. AJGT U16-U18 presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12494",
-        "egr-egr12496"
-      ],
-      "firstDate": "2026-04-11",
-      "lastDate": "2026-04-11",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-1-ajgt-u14-presented-by-bernd-wiesberger",
-      "label": "1. AJGT U14 presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12493",
-        "egr-egr12725"
-      ],
-      "firstDate": "2026-04-11",
-      "lastDate": "2026-04-11",
       "editionsCount": 2
     },
     {
@@ -62789,30 +62517,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-finale-ajgt-presented-by-bernd-wiesberger-u14",
-      "label": "Finale AJGT Presented by Bernd Wiesberger U14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11356",
-        "egr-egr11355"
-      ],
-      "firstDate": "2025-10-11",
-      "lastDate": "2025-10-11",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-finale-ajgt-presented-by-bernd-wiesberger-u16-18",
-      "label": "Finale AJGT presented by Bernd Wiesberger U16/18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11187",
-        "egr-egr11188"
-      ],
-      "firstDate": "2025-10-11",
-      "lastDate": "2025-10-11",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-loretto-junior-golf-tour-2",
       "label": "Loretto Junior Golf Tour 2",
       "sourceId": "egr",
@@ -62867,18 +62571,6 @@
       "tournamentIds": [
         "egr-egr10608",
         "egr-egr10609"
-      ],
-      "firstDate": "2025-09-20",
-      "lastDate": "2025-09-20",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-finaali",
-      "label": "FootJoy Finnish Junior Tour Finaali",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10517",
-        "egr-egr10518"
       ],
       "firstDate": "2025-09-20",
       "lastDate": "2025-09-20",
@@ -63005,30 +62697,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-footjoy-finnish-junior-tour-4-u16-match-play",
-      "label": "FootJoy Finnish Junior Tour 4 U16 Match Play",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10596",
-        "egr-egr10597"
-      ],
-      "firstDate": "2025-07-28",
-      "lastDate": "2025-07-28",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-4-u18-match-play",
-      "label": "FootJoy Finnish Junior Tour 4 U18 Match Play",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10598",
-        "egr-egr10599"
-      ],
-      "firstDate": "2025-07-28",
-      "lastDate": "2025-07-28",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-royal-copenhagen-junior-ynglinge-cup",
       "label": "Royal Copenhagen Junior/Ynglinge Cup",
       "sourceId": "egr",
@@ -63053,18 +62721,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-finnish-international-junior-championship-u14-major",
-      "label": "Finnish International Junior Championship U14 (MAJOR)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10505",
-        "egr-egr10506"
-      ],
-      "firstDate": "2025-06-25",
-      "lastDate": "2025-06-25",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-srixon-tour-3-u15-match",
       "label": "Srixon Tour 3 (U15 Match)",
       "sourceId": "egr",
@@ -63077,27 +62733,27 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-footjoy-finnish-junior-tour-2",
-      "label": "FootJoy Finnish Junior Tour 2",
+      "id": "egr-2-ajgt-powered-by-bernd-wiesberger-u16-18",
+      "label": "2. AJGT powered by Bernd Wiesberger U16/18",
       "sourceId": "egr",
       "tournamentIds": [
-        "egr-egr10503",
-        "egr-egr10504"
+        "egr-egr10922",
+        "egr-egr10924"
       ],
-      "firstDate": "2025-05-24",
-      "lastDate": "2025-05-24",
+      "firstDate": "2025-05-04",
+      "lastDate": "2025-05-04",
       "editionsCount": 2
     },
     {
-      "id": "egr-footjoy-finnish-junior-tour-1",
-      "label": "FootJoy Finnish Junior Tour 1",
+      "id": "egr-2-ajgt-powered-by-bernd-wiesberger-u14",
+      "label": "2. AJGT powered by Bernd Wiesberger U14",
       "sourceId": "egr",
       "tournamentIds": [
-        "egr-egr10501",
-        "egr-egr10502"
+        "egr-egr10923",
+        "egr-egr10925"
       ],
-      "firstDate": "2025-05-02",
-      "lastDate": "2025-05-02",
+      "firstDate": "2025-05-04",
+      "lastDate": "2025-05-04",
       "editionsCount": 2
     },
     {
@@ -63110,30 +62766,6 @@
       ],
       "firstDate": "2024-04-01",
       "lastDate": "2025-04-14",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-1-austrian-juniors-golf-tour-powered-by-bernd-wiesberger-u16-18",
-      "label": "1. Austrian Juniors Golf Tour powered by Bernd Wiesberger U16/18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10663",
-        "egr-egr9642"
-      ],
-      "firstDate": "2024-04-06",
-      "lastDate": "2025-04-05",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-1-ajgt-powered-by-bernd-wiesberger-u14",
-      "label": "1. AJGT powered by Bernd Wiesberger U14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10664",
-        "egr-egr9641"
-      ],
-      "firstDate": "2024-04-06",
-      "lastDate": "2025-04-05",
       "editionsCount": 2
     },
     {
@@ -63170,6 +62802,18 @@
       ],
       "firstDate": "2024-10-04",
       "lastDate": "2024-10-04",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-srixon-tour-8-finale-u15",
+      "label": "Srixon Tour 8 Finale (U15)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8928",
+        "egr-egr8485"
+      ],
+      "firstDate": "2023-09-23",
+      "lastDate": "2024-09-28",
       "editionsCount": 2
     },
     {
@@ -63314,6 +62958,18 @@
       ],
       "firstDate": "2024-06-29",
       "lastDate": "2024-06-29",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-4-ajgt-powered-by-bernd-wiesberger-u14",
+      "label": "4. AJGT powered by Bernd Wiesberger U14",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9815",
+        "egr-egr8327"
+      ],
+      "firstDate": "2023-06-23",
+      "lastDate": "2024-06-21",
       "editionsCount": 2
     },
     {
@@ -65309,18 +64965,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-srixon-tour-6-u19",
-      "label": "Srixon Tour #6 (U19)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12319",
-        "egr-egr12321"
-      ],
-      "firstDate": "2026-08-13",
-      "lastDate": "2026-08-13",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-sgf-central-masters",
       "label": "SGF Central Masters",
       "sourceId": "egr",
@@ -66005,42 +65649,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-footjoy-finnish-junior-tour-finaali-u21",
-      "label": "FootJoy Finnish Junior Tour Finaali (U21)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12374",
-        "egr-egr12375"
-      ],
-      "firstDate": "2026-09-25",
-      "lastDate": "2026-09-25",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-8-u21",
-      "label": "FootJoy Finnish Junior Tour 8 (U21)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12914",
-        "egr-egr12370"
-      ],
-      "firstDate": "2026-09-05",
-      "lastDate": "2026-09-05",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-6-u18-u21",
-      "label": "FootJoy Finnish Junior Tour 6 (U18 & U21)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12353",
-        "egr-egr12354"
-      ],
-      "firstDate": "2026-07-09",
-      "lastDate": "2026-07-09",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-footjoy-fjt-5-national-match-play-championship-u21",
       "label": "Footjoy FJT 5 National Match Play Championship (U21)",
       "sourceId": "egr",
@@ -66050,42 +65658,6 @@
       ],
       "firstDate": "2026-07-01",
       "lastDate": "2026-07-01",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-4-u18-u21",
-      "label": "FootJoy Finnish Junior Tour 4 (U18 & U21)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12351",
-        "egr-egr12352"
-      ],
-      "firstDate": "2026-06-24",
-      "lastDate": "2026-06-24",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-3-u21",
-      "label": "FootJoy Finnish Junior Tour 3 (U21)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12345",
-        "egr-egr12346"
-      ],
-      "firstDate": "2026-06-11",
-      "lastDate": "2026-06-11",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-footjoy-finnish-junior-tour-2-u21",
-      "label": "FootJoy Finnish Junior Tour 2 (U21)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12339",
-        "egr-egr12340"
-      ],
-      "firstDate": "2026-05-21",
-      "lastDate": "2026-05-21",
       "editionsCount": 2
     },
     {
@@ -66713,30 +66285,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-footjoy-finnish-junior-tour-finaali-u18",
-      "label": "FootJoy Finnish Junior Tour Finaali (U18)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12372",
-        "egr-egr12373"
-      ],
-      "firstDate": "2026-09-12",
-      "lastDate": "2026-09-12",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-srixon-tour-5-jr-nm",
-      "label": "Srixon Tour #5 Jr NM",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12312",
-        "egr-egr12311"
-      ],
-      "firstDate": "2026-06-23",
-      "lastDate": "2026-06-23",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-srixon-tour-3-match-u19",
       "label": "Srixon Tour 3 Match (U19)",
       "sourceId": "egr",
@@ -66746,54 +66294,6 @@
       ],
       "firstDate": "2026-05-23",
       "lastDate": "2026-05-23",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-srixon-tour-2-u19",
-      "label": "Srixon Tour 2 (U19)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12292",
-        "egr-egr12294"
-      ],
-      "firstDate": "2026-05-09",
-      "lastDate": "2026-05-09",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-srixon-tour-1-u19",
-      "label": "Srixon Tour 1 (U19)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12289",
-        "egr-egr12288"
-      ],
-      "firstDate": "2026-04-25",
-      "lastDate": "2026-04-25",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-srixon-tour-4-u19",
-      "label": "Srixon Tour #4 (U19)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12305",
-        "egr-egr12304"
-      ],
-      "firstDate": "2026-06-06",
-      "lastDate": "2026-06-06",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-ajgt-u16-u18-finale-presented-by-bernd-wiesberger",
-      "label": "AJGT U16-U18 Finale presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12517",
-        "egr-egr12516"
-      ],
-      "firstDate": "2026-10-10",
-      "lastDate": "2026-10-10",
       "editionsCount": 2
     },
     {
@@ -67049,30 +66549,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-srixon-tour-8-u19-finale",
-      "label": "Srixon Tour 8 (U19 Finale)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10871",
-        "egr-egr12333"
-      ],
-      "firstDate": "2025-09-27",
-      "lastDate": "2026-09-26",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-srixon-tour-8-u19",
-      "label": "Srixon Tour #8 (U19)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12330",
-        "egr-egr12329"
-      ],
-      "firstDate": "2026-09-12",
-      "lastDate": "2026-09-12",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-grand-prix-de-la-loire-forez",
       "label": "Grand Prix de la Loire Forez",
       "sourceId": "egr",
@@ -67106,18 +66582,6 @@
       ],
       "firstDate": "2026-07-30",
       "lastDate": "2026-07-30",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-srixon-tour-8-u15",
-      "label": "Srixon Tour #8 (U15)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12331",
-        "egr-egr12332"
-      ],
-      "firstDate": "2026-09-12",
-      "lastDate": "2026-09-12",
       "editionsCount": 2
     },
     {
@@ -67778,6 +67242,18 @@
       ],
       "firstDate": "2025-08-19",
       "lastDate": "2026-08-18",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071",
+        "wagr-77024"
+      ],
+      "firstDate": "2022-06-14",
+      "lastDate": "2026-06-15",
       "editionsCount": 2
     },
     {
@@ -68513,18 +67989,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-srixon-tour-5",
-      "label": "Srixon Tour 5",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259698",
-        "wagr-229719"
-      ],
-      "firstDate": "2023-08-12",
-      "lastDate": "2025-08-14",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-croatian-international-boys-championship",
       "label": "Croatian International Boys Championship",
       "sourceId": "wagr",
@@ -68882,18 +68346,6 @@
       ],
       "firstDate": "2023-06-13",
       "lastDate": "2024-06-11",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-jimmy-anderson-junior-boys",
-      "label": "Jimmy Anderson Junior Boys",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-236605",
-        "wagr-261130"
-      ],
-      "firstDate": "2024-10-19",
-      "lastDate": "2025-10-25",
       "editionsCount": 2
     },
     {
@@ -69449,6 +68901,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-north-carolina-junior-boys-championship",
+      "label": "North Carolina Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258192",
+        "wagr-270178"
+      ],
+      "firstDate": "2025-06-17",
+      "lastDate": "2026-06-23",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-wjga-state-championship",
       "label": "WJGA State Championship",
       "sourceId": "wagr",
@@ -69710,18 +69174,6 @@
       ],
       "firstDate": "2025-06-24",
       "lastDate": "2026-06-23",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-3-austrian-juniors-golf-tour",
-      "label": "3 Austrian Juniors Golf Tour",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-257736",
-        "wagr-78254"
-      ],
-      "firstDate": "2022-06-04",
-      "lastDate": "2025-05-24",
       "editionsCount": 2
     },
     {
@@ -71174,6 +70626,18 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2023-07-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-tennessee-junior-amateur",
+      "label": "Tennessee Junior Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234076",
+        "wagr-224241"
+      ],
+      "firstDate": "2023-06-27",
+      "lastDate": "2024-06-24",
       "editionsCount": 2
     },
     {
@@ -97260,17 +96724,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-ajgt-u12-finale-presented-by-bernd-wiesberger",
-      "label": "AJGT U12 Finale presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12958"
-      ],
-      "firstDate": "2026-10-10",
-      "lastDate": "2026-10-10",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dgv-hessen-meisterschaft-jungen",
       "label": "DGV-Hessen Meisterschaft Jungen",
       "sourceId": "egr",
@@ -97535,39 +96988,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-5-ajgt-u14-u18-presented-by-bernd-wiesberger",
-      "label": "5. AJGT U14-U18 presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12506"
-      ],
-      "firstDate": "2026-07-11",
-      "lastDate": "2026-07-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-5-ajgt-u16-u18-presented-by-bernd-wiesberger",
-      "label": "5. AJGT U16-U18 presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12505"
-      ],
-      "firstDate": "2026-07-11",
-      "lastDate": "2026-07-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-5-ajgt-u14-presented-by-bernd-wiesberger",
-      "label": "5. AJGT U14 presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12504"
-      ],
-      "firstDate": "2026-07-11",
-      "lastDate": "2026-07-11",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dgv-bwgv-meisterschaft-ak14-jungen",
       "label": "DGV-BWGV Meisterschaft AK14 Jungen",
       "sourceId": "egr",
@@ -97810,39 +97230,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-4-ajgt-u16-u18-presented-by-bernd-wiesberger",
-      "label": "4. AJGT U16-U18 presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12503"
-      ],
-      "firstDate": "2026-06-13",
-      "lastDate": "2026-06-13",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-4-ajgt-u14-presented-by-bernd-wiesberger",
-      "label": "4. AJGT U14 presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12502"
-      ],
-      "firstDate": "2026-06-13",
-      "lastDate": "2026-06-13",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-4-ajgt-presented-by-bernd-wiesberger-u14-u18",
-      "label": "4. AJGT presented by Bernd Wiesberger U14-U18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12501"
-      ],
-      "firstDate": "2026-06-13",
-      "lastDate": "2026-06-13",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dgv-hamburg-meisterschaft-ak16-18-madchen",
       "label": "DGV-Hamburg Meisterschaft AK16/18 Mädchen",
       "sourceId": "egr",
@@ -97939,28 +97326,6 @@
       ],
       "firstDate": "2026-05-24",
       "lastDate": "2026-05-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-3-ajgt-u14-u18-presented-by-bernd-wiesberger",
-      "label": "3. AJGT U14-U18 presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12499"
-      ],
-      "firstDate": "2026-05-23",
-      "lastDate": "2026-05-23",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-3-ajgt-presented-by-bernd-wiesberger-u14-u18",
-      "label": "3. AJGT presented by Bernd Wiesberger U14-U18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12500"
-      ],
-      "firstDate": "2026-05-23",
-      "lastDate": "2026-05-23",
       "editionsCount": 1
     },
     {
@@ -98448,11 +97813,11 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-austrian-girls-u14",
-      "label": "Austrian Girls U14",
+      "id": "egr-austrian-girls-u18",
+      "label": "Austrian Girls U18",
       "sourceId": "egr",
       "tournamentIds": [
-        "egr-egr11182"
+        "egr-egr11184"
       ],
       "firstDate": "2025-07-18",
       "lastDate": "2025-07-18",
@@ -98467,17 +97832,6 @@
       ],
       "firstDate": "2025-07-18",
       "lastDate": "2025-07-18",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-austrian-u12",
-      "label": "Austrian U12",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11233"
-      ],
-      "firstDate": "2025-07-16",
-      "lastDate": "2025-07-16",
       "editionsCount": 1
     },
     {
@@ -99097,17 +98451,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-wiener-meisterschaften-jungen-u14",
-      "label": "Wiener Meisterschaften Jungen U14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11193"
-      ],
-      "firstDate": "2025-05-29",
-      "lastDate": "2025-05-29",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-eg-boys-county-championship-midlands",
       "label": "EG Boys County Championship (Midlands)",
       "sourceId": "egr",
@@ -99174,33 +98517,11 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-1-austrian-juniors-golf-tour-powered-by-bernd-wiesberger-u14",
-      "label": "1. Austrian Juniors Golf Tour powered by Bernd Wiesberger U14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10665"
-      ],
-      "firstDate": "2025-04-05",
-      "lastDate": "2025-04-05",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-junior-tour-scotland-tain-royal-dornoch",
       "label": "Junior Tour Scotland (Tain & Royal Dornoch)",
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr10669"
-      ],
-      "firstDate": "2025-04-05",
-      "lastDate": "2025-04-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-1-ajgt-powered-by-bernd-wiesberger-u16-18",
-      "label": "1. AJGT powered by Bernd Wiesberger U16/18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10662"
       ],
       "firstDate": "2025-04-05",
       "lastDate": "2025-04-05",
@@ -99355,6 +98676,17 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr8839"
+      ],
+      "firstDate": "2024-09-14",
+      "lastDate": "2024-09-14",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-srixon-tour-7-u19",
+      "label": "Srixon Tour 7 (U19)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8927"
       ],
       "firstDate": "2024-09-14",
       "lastDate": "2024-09-14",
@@ -99603,6 +98935,28 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-austrian-boys-u14",
+      "label": "Austrian Boys U14",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9874"
+      ],
+      "firstDate": "2024-07-19",
+      "lastDate": "2024-07-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-austrian-boys-u12",
+      "label": "Austrian Boys U12",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9660"
+      ],
+      "firstDate": "2024-07-19",
+      "lastDate": "2024-07-19",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-czech-international-boys",
       "label": "Czech International Boys",
       "sourceId": "egr",
@@ -99707,6 +99061,17 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr9125"
+      ],
+      "firstDate": "2024-07-06",
+      "lastDate": "2024-07-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-5-ajgt-powered-by-bernd-wiesberger-u14-16-18",
+      "label": "5. AJGT powered by Bernd Wiesberger U14/16/18",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9653"
       ],
       "firstDate": "2024-07-06",
       "lastDate": "2024-07-06",
@@ -100032,6 +99397,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-srixon-tour-2-u15",
+      "label": "Srixon Tour 2 (U15)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8892"
+      ],
+      "firstDate": "2024-05-25",
+      "lastDate": "2024-05-25",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-dgv-gvbb-2-ak14-madchen",
       "label": "DGV-GVBB 2. AK14 Mädchen",
       "sourceId": "egr",
@@ -100136,6 +99512,28 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr9402"
+      ],
+      "firstDate": "2024-04-06",
+      "lastDate": "2024-04-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-1-ajgt-powered-by-bernd-wiesberger-u14",
+      "label": "1. AJGT powered by Bernd Wiesberger U14",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9641"
+      ],
+      "firstDate": "2024-04-06",
+      "lastDate": "2024-04-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-1-austrian-juniors-golf-tour-powered-by-bernd-wiesberger-u16-18",
+      "label": "1. Austrian Juniors Golf Tour powered by Bernd Wiesberger U16/18",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9642"
       ],
       "firstDate": "2024-04-06",
       "lastDate": "2024-04-06",
@@ -100290,6 +99688,17 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr7489"
+      ],
+      "firstDate": "2023-09-23",
+      "lastDate": "2023-09-23",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-srixon-tour-8-u15-finale",
+      "label": "Srixon Tour 8 (U15) Finale",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8489"
       ],
       "firstDate": "2023-09-23",
       "lastDate": "2023-09-23",
@@ -100477,6 +99886,17 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr8431"
+      ],
+      "firstDate": "2023-08-12",
+      "lastDate": "2023-08-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-srixon-tour-5-u15",
+      "label": "Srixon Tour 5 (U15)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8404"
       ],
       "firstDate": "2023-08-12",
       "lastDate": "2023-08-12",
@@ -100711,6 +100131,17 @@
       ],
       "firstDate": "2023-06-28",
       "lastDate": "2023-06-28",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-4-ajgt-powered-by-bernd-wiesberger-u16-18",
+      "label": "4. AJGT powered by Bernd Wiesberger U16-18",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8322"
+      ],
+      "firstDate": "2023-06-23",
+      "lastDate": "2023-06-23",
       "editionsCount": 1
     },
     {
@@ -103794,6 +103225,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-austrian-girls-u12",
+      "label": "Austrian Girls U12",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr4861"
+      ],
+      "firstDate": "2020-07-17",
+      "lastDate": "2020-07-17",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-kronborg-masters-u14",
       "label": "Kronborg Masters (U14)",
       "sourceId": "egr",
@@ -105554,17 +104996,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-5-stars-international-cup",
-      "label": "5 Stars International Cup",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11450"
-      ],
-      "firstDate": "2026-01-27",
-      "lastDate": "2026-01-27",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-djga-spring-open",
       "label": "DJGA Spring Open",
       "sourceId": "egr",
@@ -106500,17 +105931,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-footjoy-finnish-junior-tour-7-u18-u21",
-      "label": "FootJoy Finnish Junior Tour 7 (U18 & U21)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12364"
-      ],
-      "firstDate": "2026-08-08",
-      "lastDate": "2026-08-08",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dgv-rp-s-meisterschaft-akoffen-damen",
       "label": "DGV-RP/S Meisterschaft AKOffen Damen",
       "sourceId": "egr",
@@ -106805,6 +106225,17 @@
       ],
       "firstDate": "2026-07-07",
       "lastDate": "2026-07-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-footjoy-finnish-junior-tour-3-u21",
+      "label": "FootJoy Finnish Junior Tour 3 (U21)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12346"
+      ],
+      "firstDate": "2026-06-11",
+      "lastDate": "2026-06-11",
       "editionsCount": 1
     },
     {
@@ -107369,17 +106800,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-ajgt-u14-u12-finale-presented-by-bernd-wiesberger",
-      "label": "AJGT U14/U12 Finale presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12518"
-      ],
-      "firstDate": "2026-10-10",
-      "lastDate": "2026-10-10",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-irish-junior-tour-1",
       "label": "Irish Junior Tour #1",
       "sourceId": "egr",
@@ -107399,17 +106819,6 @@
       ],
       "firstDate": "2026-08-18",
       "lastDate": "2026-08-18",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-ajgt-u14-finale-presented-by-bernd-wiesberger",
-      "label": "AJGT U14 Finale presented by Bernd Wiesberger",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12515"
-      ],
-      "firstDate": "2026-10-10",
-      "lastDate": "2026-10-10",
       "editionsCount": 1
     },
     {
@@ -107498,17 +106907,6 @@
       ],
       "firstDate": "2026-05-03",
       "lastDate": "2026-05-03",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-5-stars-junior-cup-u14-by-adrian-meronk",
-      "label": "5 Stars Junior Cup U14 by Adrian Meronk",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11467"
-      ],
-      "firstDate": "2026-08-26",
-      "lastDate": "2026-08-26",
       "editionsCount": 1
     },
     {
@@ -108799,6 +108197,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-footjoy-finnish-junior-tour-7-u21",
+      "label": "FootJoy Finnish Junior Tour 7 U21",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271588"
+      ],
+      "firstDate": "2026-08-08",
+      "lastDate": "2026-08-08",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-ketengah-international-junior-golf-masters",
       "label": "KETENGAH International Junior Golf Masters",
       "sourceId": "wagr",
@@ -109126,17 +108535,6 @@
       ],
       "firstDate": "2025-09-26",
       "lastDate": "2025-09-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071"
-      ],
-      "firstDate": "2026-06-15",
-      "lastDate": "2026-06-15",
       "editionsCount": 1
     },
     {
@@ -110625,17 +110023,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-5-stars-international-cup",
-      "label": "5 Stars International Cup",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-262594"
-      ],
-      "firstDate": "2025-01-29",
-      "lastDate": "2025-01-29",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-aeg-thailand-jr-golf-open",
       "label": "AEG THAILAND JR GOLF OPEN",
       "sourceId": "wagr",
@@ -110977,17 +110364,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-footjoy-finnish-junior-tour-6",
-      "label": "FootJoy Finnish Junior Tour 6",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260352"
-      ],
-      "firstDate": "2025-09-05",
-      "lastDate": "2025-09-05",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-footjoy-finnish-junior-tour-5",
       "label": "FootJoy Finnish Junior Tour 5",
       "sourceId": "wagr",
@@ -111007,17 +110383,6 @@
       ],
       "firstDate": "2024-06-17",
       "lastDate": "2024-06-17",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-footjoy-finnish-junior-tour-6-u21-u18",
-      "label": "FootJoy Finnish Junior Tour 6 U21 & U18",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274339"
-      ],
-      "firstDate": "2026-07-09",
-      "lastDate": "2026-07-09",
       "editionsCount": 1
     },
     {
@@ -111194,6 +110559,17 @@
       ],
       "firstDate": "2023-08-07",
       "lastDate": "2023-08-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-visit-owensboro-junior-championship",
+      "label": "Visit Owensboro Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269461"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
       "editionsCount": 1
     },
     {
@@ -111381,17 +110757,6 @@
       ],
       "firstDate": "2026-09-19",
       "lastDate": "2026-09-19",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-faldo-junior-tour-japan",
-      "label": "Faldo Junior Tour Japan",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-265563"
-      ],
-      "firstDate": "2025-12-16",
-      "lastDate": "2025-12-16",
       "editionsCount": 1
     },
     {
@@ -113111,6 +112476,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-jimmy-anderson-junior-boys",
+      "label": "Jimmy Anderson Junior Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261130"
+      ],
+      "firstDate": "2025-10-25",
+      "lastDate": "2025-10-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-tyga-bojangles-junior-open",
       "label": "TYGA Bojangles Junior Open",
       "sourceId": "wagr",
@@ -113848,17 +113224,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-haskins-junior-invitational",
-      "label": "Haskins Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259106"
-      ],
-      "firstDate": "2025-07-15",
-      "lastDate": "2025-07-15",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-jr-event-4-at-grand-reserve-qualifier-ajga",
       "label": "JR Event #4 at Grand Reserve Qualifier AJGA",
       "sourceId": "wagr",
@@ -113900,6 +113265,17 @@
       ],
       "firstDate": "2026-02-14",
       "lastDate": "2026-02-14",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-2-4-skane",
+      "label": "Svenska Juniortouren Div 2 #4 Skane",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271075"
+      ],
+      "firstDate": "2026-07-30",
+      "lastDate": "2026-07-30",
       "editionsCount": 1
     },
     {
@@ -114054,6 +113430,17 @@
       ],
       "firstDate": "2026-07-22",
       "lastDate": "2026-07-22",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-faldo-junior-tour-japan",
+      "label": "Faldo Junior Tour Japan",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-265563"
+      ],
+      "firstDate": "2025-12-16",
+      "lastDate": "2025-12-16",
       "editionsCount": 1
     },
     {
@@ -114475,6 +113862,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-5-stars-international-cup",
+      "label": "5 Stars International Cup",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-262594"
+      ],
+      "firstDate": "2025-01-29",
+      "lastDate": "2025-01-29",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-bad-saarow-junior-trophy",
       "label": "Bad Saarow Junior Trophy",
       "sourceId": "wagr",
@@ -114868,6 +114266,17 @@
       ],
       "firstDate": "2025-06-30",
       "lastDate": "2025-06-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-footjoy-finnish-junior-tour-6-u21-u18",
+      "label": "FootJoy Finnish Junior Tour 6 U21 & U18",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-274339"
+      ],
+      "firstDate": "2026-07-09",
+      "lastDate": "2026-07-09",
       "editionsCount": 1
     },
     {
@@ -116386,6 +115795,17 @@
       ],
       "firstDate": "2023-02-26",
       "lastDate": "2023-02-26",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-footjoy-finnish-junior-tour-6",
+      "label": "FootJoy Finnish Junior Tour 6",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260352"
+      ],
+      "firstDate": "2025-09-05",
+      "lastDate": "2025-09-05",
       "editionsCount": 1
     },
     {
@@ -119238,6 +118658,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-srixon-tour-5",
+      "label": "Srixon Tour 5",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-229719"
+      ],
+      "firstDate": "2023-08-12",
+      "lastDate": "2023-08-12",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-sbof-scholarbook-open-fleesensee",
       "label": "SBOF - Scholarbook Open Fleesensee",
       "sourceId": "wagr",
@@ -119642,17 +119073,6 @@
       ],
       "firstDate": "2022-05-14",
       "lastDate": "2022-05-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-tennessee-junior-amateur",
-      "label": "Tennessee Junior Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234076"
-      ],
-      "firstDate": "2024-06-24",
-      "lastDate": "2024-06-24",
       "editionsCount": 1
     },
     {

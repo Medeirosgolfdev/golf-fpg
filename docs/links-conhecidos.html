@@ -434,6 +434,14 @@ const S = [
     ex: [["National Championship U14-U12 2026 (Erlen)", "https://www.golfbox.dk/livescoring/tour/?language=2057#/competition/5359031/players/0/all"]],
     w: "No Junior Tour o U16 repete miúdos do U18 e nos Nacionais o U12 repete o U14 — o agregador deixa cada um no escalão mais específico. O Golf4Girls Championship não publica classificação.", where: "scrape-golfbox-federacao.js" },
  ]},
+ { grp: "Circuitos", id: "oegv", title: "ÖGV — Áustria", sub: "Provas juvenis austríacas (Austrian Juniors Golf Tour, Austrian Girls & Boys…): página pública no golf.at + classificação do nexxchange embutida. Norte da Europa no GolfBox: Noruega (customer 18), Finlândia (332), Polónia — 5 Stars Junior Cup (2299), Dinamarca (15).", items: [
+  { n: "Torneio no golf.at", a: "ok", u: "https://www.golf.at/golfclubs/turniersuche/{clube}/{id}/{slug}/{torneioId}",
+    d: "Data, campo, nº de voltas, par e SI por buraco; os atributos nt-club-nr / nt-year / nt-tournament-id dão o endereço do nexxchange.",
+    ex: [["AJGT Finale 2026", "https://www.golf.at/golfclubs/turniersuche/golfclub-schloss-sch-nborn/307/austrian-juniors-golf-tour-finale-presented-by-bernd-wiesberger/17002889"]], where: "scrape-oegv-nexxchange.js" },
+  { n: "Classificação nexxchange", a: "ok", u: "https://tournament.nexxchange.com/de/at/{ano}/{clube}/{torneio}/live-score?iframe=true",
+    d: "Por classe (separadores): posição, bandeira, jogador com o HCP entre parênteses, clube, voltas e total. …/live-score-hole-by-hole = só a última volta buraco a buraco.",
+    ex: [["AJGT Finale 2026", "https://tournament.nexxchange.com/de/at/2026/170/17002889/live-score?iframe=true"]], where: "scrape-oegv-nexxchange.js" },
+ ]},
  { grp: "Circuitos", id: "golfireland", title: "Golf Ireland — Irlanda", sub: "Campeonatos juvenis (Irish Boys/Girls, Irish U14/U16, Opens provinciais U14–U18) no GolfGenius — uma página por campeonato, sem directório público; a lista sai da EGR. Desde 2026 parte está na plataforma GolfHub.", items: [
   { n: "Página de campeonato (GolfGenius)", a: "ok", u: "https://www.golfgenius.com/pages/{pageId}",
     d: "Leaderboard por classe e cartões buraco a buraco (Node puro). Só mostra o clube do jogador — o país vem da EGR.",
