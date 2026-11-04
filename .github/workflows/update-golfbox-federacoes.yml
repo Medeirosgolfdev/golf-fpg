@@ -1,4 +1,4 @@
-name: Actualizar federações (GolfBox + Golf Ireland)
+name: Actualizar federações (GolfBox + Áustria + Escócia + Golf Ireland)
 
 # Provas juvenis das federações que publicam tudo no GolfBox: Swiss Golf
 # (customer 1085), Royal Belgian Golf Federation (customer 22) e Bálticos
@@ -7,6 +7,8 @@ name: Actualizar federações (GolfBox + Golf Ireland)
 # Dinamarca (DGU, customer 15: Dormy Elite Tour, DM Juniorer, Girls Only Tour),
 # Noruega (NGF 18: Srixon Tour), Finlândia (Golfliitto 332: Finnish Junior Tour)
 # e Polónia (5 Stars Junior Cup, 2299). Áustria: scrape-oegv-nexxchange.js.
+# Escócia: scrape-scottishgolf.js (API pública do scottishgolf.org; os 7
+# campeonatos juvenis em stroke play, só os do ano que ainda não acabaram).
 # E a Golf Ireland (GolfGenius): scripts/scrape-golf-ireland.js → public/data/irlanda/.
 # scripts/scrape-golfbox-federacao.js --fed {swissgolf|rbgf|baltico|sgf} lê o calendário da
 # época corrente e da anterior e grava public/data/{fed}/{competitionId}.json;
@@ -27,7 +29,7 @@ on:
   workflow_dispatch:
     inputs:
       fed:
-        description: 'federação (swissgolf, rbgf, baltico, sgf, dgu, ngf, sgl, stars5, irlanda ou oegv; vazio = todas)'
+        description: 'federação (swissgolf, rbgf, baltico, sgf, dgu, ngf, sgl, stars5, irlanda, oegv ou scottishgolf; vazio = todas)'
         required: false
         default: ''
         type: string
@@ -80,7 +82,7 @@ jobs:
           FEDS="${FED:-swissgolf rbgf baltico sgf dgu ngf sgl stars5}"
           GRAVOU=0; ERRO=0
           for F in $FEDS; do
-            [ "$F" = "irlanda" ] || [ "$F" = "oegv" ] && continue
+            [ "$F" = "irlanda" ] || [ "$F" = "oegv" ] || [ "$F" = "scottishgolf" ] && continue
             if [ -n "$IDS" ]; then
               node scripts/scrape-golfbox-federacao.js --fed "$F" --ids "$IDS"
             elif [ -n "$ANOS" ]; then
@@ -96,6 +98,13 @@ jobs:
           # Áustria (golf.at + nexxchange; a lista vem da EGR) — só sem fed/ids
           if [ -z "$FED$IDS" ] || [ "$FED" = "oegv" ]; then
             node scripts/scrape-oegv-nexxchange.js --desde $(( $(date +%Y) - 1 ))
+            RC=$?
+            [ "$RC" = "0" ] && GRAVOU=1
+            [ "$RC" = "1" ] && ERRO=1
+          fi
+          # Escócia (API do scottishgolf.org; as provas acabadas já gravadas não se repedem) — só sem fed/ids
+          if [ -z "$FED$IDS" ] || [ "$FED" = "scottishgolf" ]; then
+            node scripts/scrape-scottishgolf.js --desde $(( $(date +%Y) - 1 ))
             RC=$?
             [ "$RC" = "0" ] && GRAVOU=1
             [ "$RC" = "1" ] && ERRO=1
@@ -126,5 +135,5 @@ jobs:
         if: steps.scrape.outputs.exit_code == '0'
         # -f agregador: juniors*.json & c.ª regenerados (nunca fundidos) se o main avançar.
         run: |
-          bash scripts/ci/push-generated.sh -m "data: federações (Suíça, Bélgica, Bálticos, Suécia, Irlanda) + rebuild juniors $(date +'%Y-%m-%d %H:%M')" \
+          bash scripts/ci/push-generated.sh -m "data: federações (GolfBox, Áustria, Escócia, Irlanda) + rebuild juniors $(date +'%Y-%m-%d %H:%M')" \
             -f agregador -- public/data

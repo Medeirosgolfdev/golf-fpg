@@ -75,6 +75,7 @@ const SOURCES = [
   { id: "sgl", label: "Golfliitto Finlândia (provas juvenis)", load: () => require("./sources/sgl") },
   { id: "stars5", label: "5 Stars Junior Cup (Polónia)", load: () => require("./sources/stars5") },
   { id: "oegv", label: "ÖGV Áustria (provas juvenis)", load: () => require("./sources/oegv") },
+  { id: "scottishgolf", label: "Scottish Golf (campeonatos juvenis)", load: () => require("./sources/scottishgolf") },
   { id: "irlanda", label: "Golf Ireland (campeonatos juvenis)", load: () => require("./sources/irlanda") },
   { id: "ggcondados", label: "Condados ingleses (GolfGenius + intelligentgolf)", load: () => require("./sources/ggcondados") },
 ];

@@ -442,6 +442,18 @@ const S = [
     d: "Por classe (separadores): posição, bandeira, jogador com o HCP entre parênteses, clube, voltas e total. …/live-score-hole-by-hole = só a última volta buraco a buraco.",
     ex: [["AJGT Finale 2026", "https://tournament.nexxchange.com/de/at/2026/170/17002889/live-score?iframe=true"]], where: "scrape-oegv-nexxchange.js" },
  ]},
+ { grp: "Circuitos", id: "scottishgolf", title: "Scottish Golf — Escócia", sub: "Os 7 campeonatos juvenis em stroke play (Boys'/Girls' Open, Under 16 Open, Boys'/Girls' Amateur, Under 14 Open — misto desde 2024), abertos a estrangeiros. API pública do scottishgolf.org (a das páginas tournament-leaderboard); resultados desde 2023. A Junior Tour Scotland é outra coisa e continua fora.", items: [
+  { n: "Calendário do ano", a: "ok", u: "https://www.scottishgolf.org/api/Tournament/GetPastTournaments?clubWebsiteId=1002&date={ano}-12-31&pageNumber=1&pageSize=200&memberId=&regionId=&tournamentCategoryId=&subAssociationId=&excludeInterclubTournaments=false",
+    d: "Todas as provas nacionais do ano: TournamentId (fixo por campeonato: 5, 7, 12, 13, 14, 15, 16 = juvenis), CompetitionId, datas, clube, sexo (A = misto), nº de buracos. ⚠ Os parâmetros vazios têm de ir na query, senão dá «No HTTP resource».",
+    ex: [["2026", "https://www.scottishgolf.org/api/Tournament/GetPastTournaments?clubWebsiteId=1002&date=2026-12-31&pageNumber=1&pageSize=200&memberId=&regionId=&tournamentCategoryId=&subAssociationId=&excludeInterclubTournaments=false"]], where: "scrape-scottishgolf.js" },
+  { n: "Classificação", a: "ok", u: "https://www.scottishgolf.org/api/Tournament/GetTournamentLeaderboard?competitionId={id}&competitionTypeId=&divisionId=&competitionRoundId=&showOnlyCountryName=false&pageNumber=1&pageSize=500&includeFavouritePlayers=false",
+    d: "Posição (MC/WD), «Apelido, Nome», ClubCountry = CLUBE dos escoceses e PAÍS dos estrangeiros, bandeira, voltas, campo de cada volta. Divisões por idade quando as há (divisionId).",
+    ex: [["Boys U16 2026", "https://www.scottishgolf.org/tournament-leaderboard?tournamentid=12&competitionid=57806"]], where: "scrape-scottishgolf.js" },
+  { n: "Cartão de uma volta", a: "ok", u: "https://www.scottishgolf.org/api/Score/GetRsScoreV2?competitionId={id}&rsEntryId={entrada}&roundNo={n}&competitionTypeId=1",
+    d: "Pancadas, par e distância por buraco (JARDAS; DistUnit vazio), tee de saída. Sem SI nem CR/Slope.", where: "scrape-scottishgolf.js" },
+  { n: "Overview da prova", a: "ok", u: "https://www.scottishgolf.org/api/Tournament/GetTournamentOverview?competitionid={id}&memberUid=",
+    d: "Datas, nº de buracos, volta do cut, inscrições." },
+ ]},
  { grp: "Circuitos", id: "golfireland", title: "Golf Ireland — Irlanda", sub: "Campeonatos juvenis (Irish Boys/Girls, Irish U14/U16, Opens provinciais U14–U18) no GolfGenius — uma página por campeonato, sem directório público; a lista sai da EGR. Desde 2026 parte está na plataforma GolfHub.", items: [
   { n: "Página de campeonato (GolfGenius)", a: "ok", u: "https://www.golfgenius.com/pages/{pageId}",
     d: "Leaderboard por classe e cartões buraco a buraco (Node puro). Só mostra o clube do jogador — o país vem da EGR.",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-04T13:48:56.867Z",
+  "generatedAt": "2026-11-04T14:04:05.750Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -3401,6 +3401,44 @@
       ],
       "firstDate": "2026-02-21",
       "lastDate": "2026-11-01",
+      "editionsCount": 28
+    },
+    {
+      "id": "scottishgolf-junior",
+      "label": "Scottish Golf",
+      "sourceId": "scottishgolf",
+      "tournamentIds": [
+        "scottishgolf-19011",
+        "scottishgolf-19012",
+        "scottishgolf-19027",
+        "scottishgolf-19029",
+        "scottishgolf-19030",
+        "scottishgolf-19032",
+        "scottishgolf-19034",
+        "scottishgolf-37875",
+        "scottishgolf-37878",
+        "scottishgolf-37886",
+        "scottishgolf-37887",
+        "scottishgolf-37888",
+        "scottishgolf-37889",
+        "scottishgolf-37891",
+        "scottishgolf-5152",
+        "scottishgolf-5157",
+        "scottishgolf-5158",
+        "scottishgolf-5170",
+        "scottishgolf-5172",
+        "scottishgolf-5176",
+        "scottishgolf-57795",
+        "scottishgolf-57796",
+        "scottishgolf-57806",
+        "scottishgolf-57808",
+        "scottishgolf-57810",
+        "scottishgolf-57811",
+        "scottishgolf-57816",
+        "scottishgolf-85"
+      ],
+      "firstDate": "2023-04-12",
+      "lastDate": "2026-08-10",
       "editionsCount": 28
     },
     {
@@ -22171,8 +22209,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -25730,22 +25768,6 @@
       ],
       "firstDate": "2022-06-17",
       "lastDate": "2026-06-19",
-      "editionsCount": 6
-    },
-    {
-      "id": "egr-scottish-girls-open-championship",
-      "label": "Scottish Girls' Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12037",
-        "egr-egr10423",
-        "egr-egr8845",
-        "egr-egr7330",
-        "egr-egr6529",
-        "egr-egr3636"
-      ],
-      "firstDate": "2019-04-10",
-      "lastDate": "2026-04-08",
       "editionsCount": 6
     },
     {
@@ -29886,9 +29908,9 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-271900",
-        "wagr-235865",
         "wagr-260403",
         "wagr-225888",
+        "wagr-235865",
         "wagr-219502"
       ],
       "firstDate": "2022-09-17",
@@ -29938,6 +29960,21 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2026-07-15",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-scottish-boys-open-championship",
+      "label": "Scottish Boys Open Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-256697",
+        "wagr-232420",
+        "wagr-269088",
+        "wagr-222716",
+        "wagr-77509"
+      ],
+      "firstDate": "2022-04-06",
+      "lastDate": "2026-04-08",
       "editionsCount": 5
     },
     {
@@ -30751,21 +30788,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-scottish-boys-open-championship",
-      "label": "Scottish Boys Open Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269088",
-        "wagr-256697",
-        "wagr-232420",
-        "wagr-222716",
-        "wagr-77509"
-      ],
-      "firstDate": "2022-04-06",
-      "lastDate": "2026-04-08",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-kaohsiung-junior-tour",
       "label": "Kaohsiung Junior Tour",
       "sourceId": "wagr",
@@ -30946,21 +30968,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-hope-valley-junior-invitational",
-      "label": "Hope Valley Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259604",
-        "wagr-235031",
-        "wagr-271309",
-        "wagr-225120",
-        "wagr-75920"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2026-08-04",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-korea-junior-championship-blue-one-cup",
       "label": "Korea Junior Championship - Blue One Cup",
       "sourceId": "wagr",
@@ -31096,6 +31103,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-georgia-junior-championship",
+      "label": "Georgia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270174",
+        "wagr-258188",
+        "wagr-233854",
+        "wagr-223986",
+        "wagr-74879"
+      ],
+      "firstDate": "2022-06-20",
+      "lastDate": "2026-07-06",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-georgia-pga-junior-championship",
       "label": "Georgia PGA Junior Championship",
       "sourceId": "wagr",
@@ -31123,6 +31145,21 @@
       ],
       "firstDate": "2022-08-01",
       "lastDate": "2026-07-27",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-hope-valley-junior-invitational",
+      "label": "Hope Valley Junior Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271309",
+        "wagr-259604",
+        "wagr-235031",
+        "wagr-225120",
+        "wagr-75920"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2026-08-04",
       "editionsCount": 5
     },
     {
@@ -36631,20 +36668,6 @@
       "editionsCount": 4
     },
     {
-      "id": "egr-scottish-boys-open-championship",
-      "label": "Scottish Boys' Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12038",
-        "egr-egr10412",
-        "egr-egr8844",
-        "egr-egr6528"
-      ],
-      "firstDate": "2022-04-06",
-      "lastDate": "2026-04-08",
-      "editionsCount": 4
-    },
-    {
       "id": "egr-sgf-fairmont-open",
       "label": "SGF Fairmont Open",
       "sourceId": "egr",
@@ -37835,20 +37858,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-scottish-boys-amateur-championship",
-      "label": "Scottish Boys' Amateur Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270849",
-        "wagr-259024",
-        "wagr-234586",
-        "wagr-224591"
-      ],
-      "firstDate": "2023-07-19",
-      "lastDate": "2026-07-15",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-future-challenge-4",
       "label": "Future Challenge #4",
       "sourceId": "wagr",
@@ -38000,20 +38009,6 @@
       ],
       "firstDate": "2022-06-06",
       "lastDate": "2026-08-04",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-cga-dogwood-state-junior-boys-championship",
-      "label": "CGA Dogwood State Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259377",
-        "wagr-234649",
-        "wagr-271132",
-        "wagr-224807"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-27",
       "editionsCount": 4
     },
     {
@@ -38238,20 +38233,6 @@
       ],
       "firstDate": "2022-07-25",
       "lastDate": "2026-07-07",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-georgia-junior-championship",
-      "label": "Georgia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270174",
-        "wagr-258188",
-        "wagr-233854",
-        "wagr-223986"
-      ],
-      "firstDate": "2023-06-19",
-      "lastDate": "2026-07-06",
       "editionsCount": 4
     },
     {
@@ -48705,8 +48686,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-258636",
-        "wagr-234217",
-        "wagr-270533"
+        "wagr-270533",
+        "wagr-234217"
       ],
       "firstDate": "2024-07-01",
       "lastDate": "2026-06-22",
@@ -48739,19 +48720,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-visit-owensboro-junior-championship",
-      "label": "Visit Owensboro Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269461",
-        "wagr-257236",
-        "wagr-251444"
-      ],
-      "firstDate": "2024-05-03",
-      "lastDate": "2026-04-30",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-visit-goldsboro-nc-junior-championship",
       "label": "Visit Goldsboro NC Junior Championship",
       "sourceId": "wagr",
@@ -48762,19 +48730,6 @@
       ],
       "firstDate": "2024-04-11",
       "lastDate": "2026-04-16",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-north-carolina-junior-boys-championship",
-      "label": "North Carolina Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-233861",
-        "wagr-258192",
-        "wagr-270178"
-      ],
-      "firstDate": "2024-06-19",
-      "lastDate": "2026-06-23",
       "editionsCount": 3
     },
     {
@@ -49337,16 +49292,16 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
-      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "id": "wagr-cga-dogwood-state-junior-boys-championship",
+      "label": "CGA Dogwood State Junior Boys Championship",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-269997",
-        "wagr-257942",
-        "wagr-251448"
+        "wagr-271132",
+        "wagr-234649",
+        "wagr-224807"
       ],
-      "firstDate": "2024-06-04",
-      "lastDate": "2026-05-26",
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-27",
       "editionsCount": 3
     },
     {
@@ -49672,6 +49627,19 @@
       ],
       "firstDate": "2024-06-21",
       "lastDate": "2026-06-19",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
+      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269997",
+        "wagr-257942",
+        "wagr-251448"
+      ],
+      "firstDate": "2024-06-04",
+      "lastDate": "2026-05-26",
       "editionsCount": 3
     },
     {
@@ -62039,18 +62007,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-scottish-boys-amateur-championship-closed",
-      "label": "Scottish Boys' Amateur Championship (Closed)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12281",
-        "egr-egr10415"
-      ],
-      "firstDate": "2025-07-16",
-      "lastDate": "2026-07-15",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-dgv-bwgv-meisterschaft-ak14-madchen",
       "label": "DGV-BWGV Meisterschaft AK14 Mädchen",
       "sourceId": "egr",
@@ -62075,36 +62031,12 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-scottish-boys-under-16-open-championship",
-      "label": "Scottish Boys' Under 16 Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12280",
-        "egr-egr10414"
-      ],
-      "firstDate": "2025-07-08",
-      "lastDate": "2026-07-07",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-european-boys-team-championship-jean-louis-dupont-trophy",
       "label": "European Boys' Team Championship (Jean-Louis Dupont Trophy)",
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr12630",
         "egr-egr10396"
-      ],
-      "firstDate": "2025-07-08",
-      "lastDate": "2026-07-07",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-scottish-girls-under-16-open-championship",
-      "label": "Scottish Girls' Under 16 Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12284",
-        "egr-egr10426"
       ],
       "firstDate": "2025-07-08",
       "lastDate": "2026-07-07",
@@ -62927,18 +62859,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-scottish-girls-amateur-championship",
-      "label": "Scottish Girls' Amateur Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8852",
-        "egr-egr3869"
-      ],
-      "firstDate": "2019-07-19",
-      "lastDate": "2024-07-17",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-junior-14-no-4",
       "label": "Junior 14 (No. 4)",
       "sourceId": "egr",
@@ -63680,6 +63600,18 @@
       ],
       "firstDate": "2021-10-06",
       "lastDate": "2022-04-14",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-scottish-girls-open-championship",
+      "label": "Scottish Girls' Open Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr6529",
+        "egr-egr3636"
+      ],
+      "firstDate": "2019-04-10",
+      "lastDate": "2022-04-06",
       "editionsCount": 2
     },
     {
@@ -67271,6 +67203,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071",
+        "wagr-77024"
+      ],
+      "firstDate": "2022-06-14",
+      "lastDate": "2026-06-15",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-ajga-junior-at-rayburn-resort-presented-by-city-of-jasper",
       "label": "AJGA Junior at Rayburn Resort presented by City of Jasper",
       "sourceId": "wagr",
@@ -67907,6 +67851,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-scottish-boys-u16-open-championship",
+      "label": "Scottish Boys U16 Open Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258807",
+        "wagr-234369"
+      ],
+      "firstDate": "2024-07-09",
+      "lastDate": "2025-07-08",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-junior-tour-rowallan-castle",
       "label": "Junior Tour Rowallan Castle",
       "sourceId": "wagr",
@@ -67916,18 +67872,6 @@
       ],
       "firstDate": "2022-06-25",
       "lastDate": "2024-09-07",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-scottish-boys-u16-open-championship",
-      "label": "Scottish Boys U16 Open Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258807",
-        "wagr-224391"
-      ],
-      "firstDate": "2023-07-11",
-      "lastDate": "2025-07-08",
       "editionsCount": 2
     },
     {
@@ -68360,18 +68304,6 @@
       ],
       "firstDate": "2023-06-13",
       "lastDate": "2024-06-11",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-jimmy-anderson-junior-boys",
-      "label": "Jimmy Anderson Junior Boys",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-236605",
-        "wagr-261130"
-      ],
-      "firstDate": "2024-10-19",
-      "lastDate": "2025-10-25",
       "editionsCount": 2
     },
     {
@@ -68924,6 +68856,18 @@
       ],
       "firstDate": "2025-05-18",
       "lastDate": "2026-05-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-north-carolina-junior-boys-championship",
+      "label": "North Carolina Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258192",
+        "wagr-270178"
+      ],
+      "firstDate": "2025-06-17",
+      "lastDate": "2026-06-23",
       "editionsCount": 2
     },
     {
@@ -70640,6 +70584,18 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2023-07-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-tennessee-junior-amateur",
+      "label": "Tennessee Junior Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234076",
+        "wagr-224241"
+      ],
+      "firstDate": "2023-06-27",
+      "lastDate": "2024-06-24",
       "editionsCount": 2
     },
     {
@@ -96979,17 +96935,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-scottish-girls-amateur-championship-closed",
-      "label": "Scottish Girls' Amateur Championship (Closed)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12841"
-      ],
-      "firstDate": "2026-07-17",
-      "lastDate": "2026-07-17",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dgv-bwgv-meisterschaft-ak14-jungen",
       "label": "DGV-BWGV Meisterschaft AK14 Jungen",
       "sourceId": "egr",
@@ -97694,17 +97639,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-scottish-u14-mixed-open-championship-major",
-      "label": "Scottish U14 Mixed Open Championship (MAJOR)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10417"
-      ],
-      "firstDate": "2025-08-11",
-      "lastDate": "2025-08-11",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-cheshire-boys-championships",
       "label": "Cheshire Boys' Championships",
       "sourceId": "egr",
@@ -97820,17 +97754,6 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr11184"
-      ],
-      "firstDate": "2025-07-18",
-      "lastDate": "2025-07-18",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-scottish-girls-amateur-closed-championship",
-      "label": "Scottish Girls' Amateur Closed Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10427"
       ],
       "firstDate": "2025-07-18",
       "lastDate": "2025-07-18",
@@ -98805,17 +98728,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-scottish-u14-mixed-open-championship",
-      "label": "Scottish U14 Mixed Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8854"
-      ],
-      "firstDate": "2024-08-11",
-      "lastDate": "2024-08-11",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-t-g-f-wagr-memorial-attilio-baldasso-calvi",
       "label": "T.G.F. WAGR Memorial Attilio Baldasso Calvi",
       "sourceId": "egr",
@@ -99008,17 +98920,6 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr9744"
-      ],
-      "firstDate": "2024-07-09",
-      "lastDate": "2024-07-09",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-scottish-boys-u16-open-championship",
-      "label": "Scottish Boys' U16 Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8849"
       ],
       "firstDate": "2024-07-09",
       "lastDate": "2024-07-09",
@@ -99861,28 +99762,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-scottish-boys-under-14-championship",
-      "label": "Scottish Boys Under 14 Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8419"
-      ],
-      "firstDate": "2023-08-13",
-      "lastDate": "2023-08-13",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-scottish-girls-under-16-14-open-championship",
-      "label": "Scottish Girls' Under 16/14 Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8421"
-      ],
-      "firstDate": "2023-08-13",
-      "lastDate": "2023-08-13",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-north-wales-counties-boys",
       "label": "North Wales Counties Boys",
       "sourceId": "egr",
@@ -99965,17 +99844,6 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr8336"
-      ],
-      "firstDate": "2023-07-21",
-      "lastDate": "2023-07-21",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-scottish-girls-closed-amateur-championship",
-      "label": "Scottish Girls' Closed Amateur Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8364"
       ],
       "firstDate": "2023-07-21",
       "lastDate": "2023-07-21",
@@ -101299,6 +101167,17 @@
       ],
       "firstDate": "2022-04-13",
       "lastDate": "2022-04-13",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-scottish-boys-open-championship",
+      "label": "Scottish Boys' Open Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr6528"
+      ],
+      "firstDate": "2022-04-06",
+      "lastDate": "2022-04-06",
       "editionsCount": 1
     },
     {
@@ -103573,6 +103452,17 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr3712"
+      ],
+      "firstDate": "2019-07-19",
+      "lastDate": "2019-07-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-scottish-girls-amateur-championship",
+      "label": "Scottish Girls Amateur Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr3869"
       ],
       "firstDate": "2019-07-19",
       "lastDate": "2019-07-19",
@@ -106747,17 +106637,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-scottish-under-14-open-championship-mixed",
-      "label": "Scottish Under 14 Open Championship (Mixed)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12285"
-      ],
-      "firstDate": "2026-08-10",
-      "lastDate": "2026-08-10",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-european-open-bjgt",
       "label": "European Open (BJGT)",
       "sourceId": "egr",
@@ -108537,17 +108416,6 @@
       ],
       "firstDate": "2025-09-26",
       "lastDate": "2025-09-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071"
-      ],
-      "firstDate": "2026-06-15",
-      "lastDate": "2026-06-15",
       "editionsCount": 1
     },
     {
@@ -110575,6 +110443,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-visit-owensboro-junior-championship",
+      "label": "Visit Owensboro Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269461"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-gba-junior-golf-tour-leg-2",
       "label": "GBA Junior Golf Tour Leg 2",
       "sourceId": "wagr",
@@ -112478,6 +112357,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-jimmy-anderson-junior-boys",
+      "label": "Jimmy Anderson Junior Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261130"
+      ],
+      "firstDate": "2025-10-25",
+      "lastDate": "2025-10-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-tyga-bojangles-junior-open",
       "label": "TYGA Bojangles Junior Open",
       "sourceId": "wagr",
@@ -113212,17 +113102,6 @@
       ],
       "firstDate": "2024-08-30",
       "lastDate": "2024-08-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-haskins-junior-invitational",
-      "label": "Haskins Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259106"
-      ],
-      "firstDate": "2025-07-15",
-      "lastDate": "2025-07-15",
       "editionsCount": 1
     },
     {
@@ -115976,6 +115855,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-faldo-series-england-championship-south-iii",
+      "label": "Faldo Series England Championship (South III)",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258697"
+      ],
+      "firstDate": "2025-08-25",
+      "lastDate": "2025-08-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-harvey-norman-a-c-t-week-of-golf",
       "label": "Harvey Norman A.C.T Week of Golf",
       "sourceId": "wagr",
@@ -116303,17 +116193,6 @@
       ],
       "firstDate": "2023-03-03",
       "lastDate": "2023-03-03",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-faldo-series-england-championship-south-iii",
-      "label": "Faldo Series England Championship (South III)",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258697"
-      ],
-      "firstDate": "2025-08-25",
-      "lastDate": "2025-08-25",
       "editionsCount": 1
     },
     {
@@ -119075,17 +118954,6 @@
       ],
       "firstDate": "2022-05-14",
       "lastDate": "2022-05-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-tennessee-junior-amateur",
-      "label": "Tennessee Junior Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234076"
-      ],
-      "firstDate": "2024-06-24",
-      "lastDate": "2024-06-24",
       "editionsCount": 1
     },
     {
