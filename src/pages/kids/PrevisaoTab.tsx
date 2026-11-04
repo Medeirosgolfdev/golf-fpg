@@ -49,15 +49,18 @@ function parseNum(s: string): number | null {
 
 type RowKey = "gross" | "toPar" | "sd";
 
-export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
-  torneio: FieldTorneio | null;
-  escalaoNome: string;
-  mh: MHSlim | null;
+export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = null, resolved: resolvedIn }: {
+  torneio?: FieldTorneio | null;
+  escalaoNome?: string;
+  mh?: MHSlim | null;
+  /** Campo + tee já conhecidos (aba «🔮 Previsão» do TournamentDetail — provas
+   *  FPG/Drive/…, 04/11/2026). Sem isto resolve-se pelo torneio USKids. */
+  resolved?: ResolvedCourse | null;
 }) {
   const { simCourses } = useCourses();
   const resolved = useMemo<ResolvedCourse | null>(
-    () => resolveCourseTee(torneio as never, escalaoNome, mh as never, simCourses),
-    [torneio, escalaoNome, mh, simCourses],
+    () => resolvedIn !== undefined ? resolvedIn : resolveCourseTee(torneio as never, escalaoNome, mh as never, simCourses),
+    [resolvedIn, torneio, escalaoNome, mh, simCourses],
   );
 
   // HI + dados completos do Manuel (default 9.4 até carregar). Editável.
@@ -165,7 +168,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
   const reach = useMemo(() => resolved ? buildReach(resolved.tee, driveM, secondM) : [], [resolved, driveM, secondM]);
   const notReach = useMemo(() => notReachableHoles(reach), [reach]);
 
-  if (!torneio) return <EmptyState size="sm" message="Sem torneio seleccionado." />;
+  if (!torneio && resolvedIn === undefined) return <EmptyState size="sm" message="Sem torneio seleccionado." />;
   if (!resolved) {
     return (
       <div className="muted p-16">

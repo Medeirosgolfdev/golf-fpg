@@ -17,13 +17,19 @@
  */
 import { createContext, lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Course } from "../../data/types";
+import type { Course, Tee } from "../../data/types";
+import type { Tournament } from "../../data/fpgTypes";
+import type { ResolvedCourse } from "../kids/CourseTab";
 import { CoursesGate, useCourses } from "../../context/CoursesContext";
 import { canonicalCourseName, resolveCourseKeyByName } from "../../utils/courseAliases";
-import { norm } from "../../utils/format";
+import { norm, escalaoAtDate, todayIso } from "../../utils/format";
+import { isManuel, MANUEL_DOB } from "../../constants/manuel";
+import { tournamentHasManuel } from "../../data/fpgUtils";
+import { teeRuleFor, teeNameFor, parseSubNumber } from "../../utils/teeRegulation";
 import LoadingState from "../../ui/LoadingState";
 
 const CourseComoJogou = lazy(() => import("../CamposPage").then((m) => ({ default: m.CourseComoJogou })));
+const PrevisaoTab = lazy(() => import("../kids/PrevisaoTab"));
 
 const ckey = (s: string) => norm(canonicalCourseName(s) || s);
 
@@ -73,24 +79,90 @@ function CampoDaProva({ courseKey }: { courseKey: string }) {
   );
 }
 
-/** A aba «⛳ O campo» da prova, quando o campo é conhecido (null enquanto se
- *  procura e quando não se encontra). `campo` vazio/null → não procura nada. */
-export function useCampoTab(campo: string | null | undefined): { key: string; label: string; content: React.ReactNode } | null {
+/** O tee do campo com este nome — o de homens primeiro (o Manuel). */
+function findTee(course: Course, teeName: string): Tee | null {
+  const k = norm(teeName);
+  const tees = course.master.tees.filter((t) => norm(t.teeName) === k);
+  return tees.find((t) => t.sex === "M") ?? tees.find((t) => t.sex !== "F") ?? tees[0] ?? null;
+}
+
+type DrawLite = Record<string, { groups?: { tee?: string | null; players?: { nome?: string; fed?: string | null; tee?: string | null }[] }[] }>;
+
+/** De que tee joga o Manuel nesta prova: o do draw → o das voltas jogadas → o
+ *  regulamento da prova / a tabela FPG pelo escalão dele à data. null = não está
+ *  na prova (ou não se sabe). */
+export function manuelTeeNaProva(t: Tournament | null | undefined): string | null {
+  if (!t) return null;
+  for (const d of Object.values((t as { _draws?: DrawLite })._draws ?? {})) {
+    for (const g of d?.groups ?? []) {
+      const p = (g.players ?? []).find((x) => isManuel({ name: x.nome, fed: x.fed ?? undefined }));
+      const tee = p && (p.tee || g.tee);
+      if (tee) return tee;
+    }
+  }
+  const jogou = (t.players ?? []).find((p) => isManuel(p as never));
+  const teeJogado = jogou && ((jogou.roundScores ?? []).map((r) => r.teeName).find(Boolean) || jogou.teeName);
+  if (teeJogado) return teeJogado;
+  if (!tournamentHasManuel(t)) return null;
+  const dob = `${MANUEL_DOB.year}-${String(MANUEL_DOB.month + 1).padStart(2, "0")}-${String(MANUEL_DOB.day).padStart(2, "0")}`;
+  const esc = escalaoAtDate(dob, t.date || todayIso());
+  const regra = teeRuleFor(t.ccode, String(t.tcode ?? ""));
+  return (regra ? regra(parseSubNumber(esc), "M") : teeNameFor(esc ?? undefined, "M")) ?? null;
+}
+
+function PrevisaoDaProva({ courseKey, teeId }: { courseKey: string; teeId: string }) {
+  const { simCourses } = useCourses();
+  const resolved = useMemo<ResolvedCourse | null>(() => {
+    const course = simCourses.find((c) => c.courseKey === courseKey);
+    const tee = course?.master.tees.find((t) => t.teeId === teeId);
+    return course && tee ? { course, tee } : null;
+  }, [simCourses, courseKey, teeId]);
+  return (
+    <Suspense fallback={<LoadingState size="sm" message="A preparar a previsão…" />}>
+      <div className="mt-8"><PrevisaoTab resolved={resolved} /></div>
+    </Suspense>
+  );
+}
+
+type Aba = { key: string; label: string; content: React.ReactNode };
+
+/** As abas «⛳ O campo» e «🔮 Previsão» da prova (a do Kids 2: o Manuel no tee
+ *  dele neste campo — régua WHS, plano por buraco, alcance). O campo, quando é
+ *  conhecido; a previsão, quando também se sabe o tee do Manuel e ele existe no
+ *  campo. Vazio enquanto se procura. `campo` vazio/null → não procura nada. */
+export function useCampoTabs(campo: string | null | undefined, manuelTee?: string | null): Aba[] {
   const nome = campo?.trim() || "";
-  const [found, setFound] = useState<{ nome: string; key: string | null } | null>(null);
+  const tee = manuelTee?.trim() || "";
+  const [found, setFound] = useState<{ q: string; key: string | null; teeId: string | null } | null>(null);
+  const q = `${nome}|${tee}`;
   useEffect(() => {
     if (!nome) return;
     let alive = true;
     import("../../data/courses")
       .then((m) => m.loadCourses())
-      .then(({ simCourses }) => { if (alive) setFound({ nome, key: findCourseByName(simCourses, nome)?.courseKey ?? null }); })
-      .catch(() => { if (alive) setFound({ nome, key: null }); });
+      .then(({ simCourses }) => {
+        if (!alive) return;
+        const c = findCourseByName(simCourses, nome);
+        setFound({ q, key: c?.courseKey ?? null, teeId: (c && tee && findTee(c, tee)?.teeId) || null });
+      })
+      .catch(() => { if (alive) setFound({ q, key: null, teeId: null }); });
     return () => { alive = false; };
-  }, [nome]);
-  const key = found && found.nome === nome ? found.key : null;
-  return useMemo(() => key ? {
-    key: "campo",
-    label: "⛳ O campo",
-    content: <CoursesGate withPlayers><CampoDaProva courseKey={key} /></CoursesGate>,
-  } : null, [key]);
+  }, [nome, tee, q]);
+  const cur = found && found.q === q ? found : null;
+  const key = cur?.key ?? null;
+  const teeId = cur?.teeId ?? null;
+  return useMemo(() => {
+    if (!key) return [];
+    const abas: Aba[] = [{
+      key: "campo",
+      label: "⛳ O campo",
+      content: <CoursesGate withPlayers><CampoDaProva courseKey={key} /></CoursesGate>,
+    }];
+    if (teeId) abas.push({
+      key: "previsao",
+      label: "🔮 Previsão",
+      content: <CoursesGate><PrevisaoDaProva courseKey={key} teeId={teeId} /></CoursesGate>,
+    });
+    return abas;
+  }, [key, teeId]);
 }
