@@ -434,6 +434,13 @@ const S = [
     ex: [["National Championship U14-U12 2026 (Erlen)", "https://www.golfbox.dk/livescoring/tour/?language=2057#/competition/5359031/players/0/all"]],
     w: "No Junior Tour o U16 repete miúdos do U18 e nos Nacionais o U12 repete o U14 — o agregador deixa cada um no escalão mais específico. O Golf4Girls Championship não publica classificação.", where: "scrape-golfbox-federacao.js" },
  ]},
+ { grp: "Circuitos", id: "golfireland", title: "Golf Ireland — Irlanda", sub: "Campeonatos juvenis (Irish Boys/Girls, Irish U14/U16, Opens provinciais U14–U18) no GolfGenius — uma página por campeonato, sem directório público; a lista sai da EGR. Desde 2026 parte está na plataforma GolfHub.", items: [
+  { n: "Página de campeonato (GolfGenius)", a: "ok", u: "https://www.golfgenius.com/pages/{pageId}",
+    d: "Leaderboard por classe e cartões buraco a buraco (Node puro). Só mostra o clube do jogador — o país vem da EGR.",
+    ex: [["Irish U14 & U16 Boys 2025 (Ballinasloe)", "https://www.golfgenius.com/pages/10676473230400714827"]], where: "scrape-golf-ireland.js" },
+  { n: "GolfHub (2026)", a: "?", u: "https://golfhub.golfgenius.com/events/{uuid}",
+    d: "Plataforma nova onde estão os Opens provinciais e os Irish Boys/Girls de 2026 — formato por estudar.", where: "—" },
+ ]},
  { grp: "Circuitos", id: "rbgf", title: "RBGF — Bélgica", sub: "Royal Belgian Golf Federation: Junior U12 & U14, Junior Opens, National Juniors, Junior Masters e finais, no GolfBox (customer 22). Os mesmos handlers JSONP públicos da Suíça.", items: [
   { n: "Calendário RBGF (GolfBox)", a: "ok", u: "https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/22/Season/{ano}/?callback=x",
     d: "~50 provas por época, 13 juvenis. O Albert Vermeiren Trophy também está aqui (lido à parte pelo scrape-golfbox.js).",

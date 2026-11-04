@@ -16,8 +16,8 @@ const { buildJobfileSource } = require("./jobfile");
 
 function parseDivGolfbox(divKey) {
   const s = String(divKey || "");
-  // inglês, alemão, francês, neerlandês e sueco (Pojkar/Flickor)
-  const sex = /boys|knaben|gar[cç]ons|jongens|pojkar/i.test(s) ? "M" : /girls|m(ä|ae)dchen|filles|meisjes|flickor/i.test(s) ? "F" : null;
+  // inglês (também Male/Female), alemão, francês, neerlandês e sueco (Pojkar/Flickor)
+  const sex = /boys|knaben|gar[cç]ons|jongens|pojkar|\bmale\b/i.test(s) ? "M" : /girls|m(ä|ae)dchen|filles|meisjes|flickor|female/i.test(s) ? "F" : null;
   // «U18-U16» → a maior; «U12/U10» idem
   const us = [...s.matchAll(/\bU\s?(\d{1,2})\b/gi)].map((m) => +m[1]);
   return { ageMin: null, ageMax: us.length ? Math.max(...us) : null, sex };

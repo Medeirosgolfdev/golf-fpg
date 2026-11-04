@@ -1142,8 +1142,14 @@ async function runOne(opts) {
   if (opts.fpgFederados) applyFpgFederados(out, { overrides: opts.fpgFed || {} });
   if (opts.players) applyPlayerOverrides(out, opts.players);
 
+  // `transform` (opcional): a fonte acerta o resultado antes da comparação com o
+  // disco e da gravação (Irlanda: país pela EGR, classes vazias fora).
+  if (typeof opts.transform === 'function') opts.transform(out);
+
   const yearKey = out.year || 'x';
-  const file = path.join(OUT, `${slug}_${yearKey}.json`);
+  // `outDir` (opcional): fontes só do kids2 gravam numa pasta própria (Irlanda)
+  // em vez de public/data, de onde a /major lê.
+  const file = path.join(opts.outDir || OUT, `${slug}_${yearKey}.json`);
   if (!noMerge) {
     const m = mergeWithDisk(file, out);
     if (m.kept || m.restored) console.log(`   ↩ merge aditivo: ${m.kept} volta(s) mais completa(s) preservada(s), ${m.restored} volta(s) só em disco mantida(s)`);
