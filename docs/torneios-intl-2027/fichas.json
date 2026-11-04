@@ -11024,5 +11024,374 @@
    "preco": "390 € (treino, 3 voltas, bolas de treino, trolley, jantar de boas-vindas); sem reembolso depois de 5 Jan"
   },
   "notas": "Como todos os rapazes jogam das pretas, os U14 contam para o WAGR (regra 19.4 da GJG: só não contam quando o U14 sai de outro tee). Campo comprido para um U14 (6185 m, CR 72.7) e quadro U14 pequeno (8 rapazes em 2026), mas o nível do vencedor é alto (+1 em 3 voltas). Na mesma janela de Inverno há mais duas provas no Médio Oriente, sem ficha própria por falta de dados: o Junior Dubai Desert Classic (Emirates GC, 3 voltas com corte, U18 com HCP ≤ 14.4, WAGR, sem quadro U14; 2025 ganho por Louis Klein, CZE, 69-63-69; a página aponta 21–24 Jan 2027) e o Infinity Juniors International Masters (Sharjah, 17–19 Mar 2026, WAGR, classe 12–14 ganha por Liu Ye; scores não publicados)."
+ },
+ {
+  "nome": "Paul McGinley Junior Cup (Quinta do Lago) — com quadro U14",
+  "datas2027": "Por publicar. Aproximação: 3.ª/4.ª semana de Agosto 2027 (2026: 20–22 Ago — treino opcional 20, voltas 21–22, Campo Norte; 2025: voltas 22–23 Ago, Campo Sul; 2024: voltas 23–24 Ago, Campo Sul)",
+  "escalaoJogador": "U14 (em Ago 2027 o Manuel tem 13 anos). Regra de idade (data de corte) não publicada nas fontes lidas",
+  "campo": "Quinta do Lago — Norte (2026); Sul (2024 e 2025)",
+  "pais": "Portugal",
+  "links": [
+   {
+    "rotulo": "Página da prova (Quinta do Lago)",
+    "url": "https://www.quintadolago.com/en/events/paul-mcginley-junior-cup"
+   },
+   {
+    "rotulo": "Inscrição 2026 (loja Quinta do Lago)",
+    "url": "https://shop.quintadolago.com/products/paul-mcginley-junior-cup-2026"
+   },
+   {
+    "rotulo": "Calendário júnior 2026 da Quinta do Lago (Golf Today)",
+    "url": "https://golftoday.co.uk/quinta-do-lago-junior-golf-tournaments-2026/"
+   }
+  ],
+  "distancias": [
+   {
+    "ano": 2026,
+    "campo": "Quinta do Lago — Norte",
+    "escalao": "U14 rapazes",
+    "tee": "Douradas",
+    "metros": 5661,
+    "par": 72,
+    "cr": 70.1,
+    "slope": 128,
+    "fonte": "repo public/data/pull-torneios006.json (FPG 962:10083)"
+   },
+   {
+    "ano": 2025,
+    "campo": "Quinta do Lago — Sul",
+    "escalao": "U14 rapazes",
+    "tee": "Douradas",
+    "metros": 5848,
+    "par": 72,
+    "cr": 71.1,
+    "slope": 134,
+    "fonte": "repo public/data/pull-torneios005.json (FPG 962:10075)"
+   },
+   {
+    "ano": 2024,
+    "campo": "Quinta do Lago — Sul",
+    "escalao": "U14 rapazes",
+    "tee": "Douradas",
+    "metros": 5848,
+    "par": 72,
+    "cr": 71.1,
+    "slope": 134,
+    "fonte": "repo public/data/pull-torneios004.json (FPG 962:10064)"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Quinta do Lago — Norte",
+    "escalao": "U14 (misto; rapazes nas Douradas)",
+    "vencedor": "Nuno Palmares Jr.",
+    "pais": "Portugal",
+    "score": 145,
+    "toPar": 1,
+    "voltas": "73-72",
+    "corte": null,
+    "notas": "2.º Martim Moreira (POR) 151; 3.º Emile Cuanalo (ENG) 153; 24 inscritos (UK, IRL, ENG, USA, SCO, POR)",
+    "fonte": "repo pull-torneios006.json (FPG 962:10083)"
+   },
+   {
+    "ano": 2025,
+    "campo": "Quinta do Lago — Sul",
+    "escalao": "U14 (misto; rapazes nas Douradas)",
+    "vencedor": "Freddie Buck",
+    "pais": "Reino Unido",
+    "score": 141,
+    "toPar": -3,
+    "voltas": "70-71",
+    "corte": null,
+    "notas": "2.º Ethan Prybys Orton (POR) 150; T3 Grace Gordon (NED, Brancas) e Nuno Palmares Jr. (POR) 155; 24 jogadores",
+    "fonte": "repo pull-torneios005.json (FPG 962:10075)"
+   },
+   {
+    "ano": 2024,
+    "campo": "Quinta do Lago — Sul",
+    "escalao": "U14 (misto; rapazes nas Douradas)",
+    "vencedor": "Alfie Warke",
+    "pais": "Reino Unido",
+    "score": 142,
+    "toPar": -2,
+    "voltas": "73-69",
+    "corte": null,
+    "notas": "2.º James Matthews (UK) 151; 3.º Esteban Ledesma Orozco (ESP) 156. Ordem pelo total gross: a ordem gravada pela FPG em 2024 não é a classificação final",
+    "fonte": "repo pull-torneios004.json (FPG 962:10064)"
+   }
+  ],
+  "portugueses": [
+   {
+    "ano": 2026,
+    "nome": "Nuno Palmares Jr.",
+    "posicao": "1 (U14)",
+    "score": 145
+   },
+   {
+    "ano": 2026,
+    "nome": "Martim Moreira",
+    "posicao": "2 (U14)",
+    "score": 151
+   },
+   {
+    "ano": 2026,
+    "nome": "Salvador Ivo de Carvalho",
+    "posicao": "T4 (U14)",
+    "score": 156
+   },
+   {
+    "ano": 2026,
+    "nome": "Miguel Maria Neves Ferreira",
+    "posicao": "17 (U14)",
+    "score": 181
+   },
+   {
+    "ano": 2025,
+    "nome": "Ethan Prybys Orton",
+    "posicao": "2 (U14)",
+    "score": 150
+   },
+   {
+    "ano": 2025,
+    "nome": "Nuno Palmares Jr.",
+    "posicao": "T3 (U14)",
+    "score": 155
+   },
+   {
+    "ano": 2025,
+    "nome": "Duarte Soares Franco",
+    "posicao": "T6 (U14)",
+    "score": 159
+   },
+   {
+    "ano": 2025,
+    "nome": "Filipe Pinheiro",
+    "posicao": "8 (U14)",
+    "score": 160
+   },
+   {
+    "ano": 2025,
+    "nome": "Salvador Ivo de Carvalho",
+    "posicao": "T12 (U14)",
+    "score": 168
+   },
+   {
+    "ano": 2025,
+    "nome": "Diogo Sequeira",
+    "posicao": "T12 (U14)",
+    "score": 168
+   },
+   {
+    "ano": 2024,
+    "nome": "Ethan Prybys Orton",
+    "posicao": "6 (U14)",
+    "score": 172
+   },
+   {
+    "ano": 2024,
+    "nome": "Dinis Seabra",
+    "posicao": "14 (U14)",
+    "score": 185
+   },
+   {
+    "ano": 2024,
+    "nome": "Nicholas Cordeiro",
+    "posicao": "15 (U14)",
+    "score": 186
+   },
+   {
+    "ano": 2024,
+    "nome": "Bernardo Pereira",
+    "posicao": "T18 (U14)",
+    "score": 200
+   },
+   {
+    "ano": 2024,
+    "nome": "Diogo Paulo Lourenço",
+    "posicao": "23 (U14)",
+    "score": 232
+   }
+  ],
+  "elegibilidade": {
+   "idade": "Escalões U18, U16, U14, U12 e U10, rapazes e raparigas (U18 e U16 jogam juntos na FPG). Data de corte da idade não publicada nas fontes lidas",
+   "hcp": "Exige handicap oficial: federados FPG verificados no servidor da FPG; os de outras federações apresentam certificado. Limite de HCP não indicado",
+   "voltas": "36 buracos stroke play (2 voltas), sem corte",
+   "entrada": "Aberta a jogadores de qualquer federação (campos de 2024–2026 com UK, Irlanda, Países Baixos, EUA, África do Sul, Espanha, Rússia, Brasil e Portugal)",
+   "preco": "2026: 150 € + 30 € pela volta de treino (Golf Today)"
+  },
+  "notas": "Prova anual da Quinta do Lago com Paul McGinley como anfitrião. Os resultados vão para a FPG (ccode 962): U14 = tcodes 10064 (2024), 10075 (2025) e 10083 (2026). O U14 é misto: rapazes nas Douradas, raparigas nas Brancas (2026: 4873 m, CR 71,1/125). O Manuel não jogou nenhuma edição. A data de 2027 não está publicada (consultado a 04/11/2026)."
+ },
+ {
+  "nome": "Campeonato Internacional Individual Infantil de Andalucía (RFGA)",
+  "datas2027": "Por publicar. Aproximação: início de Julho 2027 (2026: 4–5 Jul, Golf Almerimar, treino 3 Jul; inscrições até 29 Jun)",
+  "escalaoJogador": "Infantil — 14 anos ou menos a 31 Dez do ano da prova. Em 2027 o Manuel tem 13 → grupo «13 años masculinos»",
+  "campo": "2026: Golf Almerimar (El Ejido, Almería). Muda de campo todos os anos",
+  "pais": "Espanha",
+  "links": [
+   {
+    "rotulo": "Circular 36/26 da RFGA (regulamento 2026)",
+    "url": "https://portal.golfandalucia.com/uploads/circular/2026/88a6793fd8cbc0ed31f32f7ac39281d6.pdf"
+   },
+   {
+    "rotulo": "Inscrições e resultados 2026 (NextCaddy 61181)",
+    "url": "https://www.nextcaddy.com/tour/61181"
+   },
+   {
+    "rotulo": "RFGA",
+    "url": "https://www.rfga.org"
+   }
+  ],
+  "distancias": [
+   {
+    "ano": 2026,
+    "campo": "Golf Almerimar",
+    "escalao": "Infantil rapazes",
+    "tee": null,
+    "metros": 6118,
+    "par": 72,
+    "cr": null,
+    "slope": null,
+    "fonte": "repo public/data/nextcaddy/61181.json (metros dos cartões; o regulamento aconselha barras amarelas para rapazes)"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Golf Almerimar",
+    "escalao": "Infantil rapazes (scratch)",
+    "vencedor": "Lucas Martin Alvarez",
+    "pais": "Espanha",
+    "score": 148,
+    "toPar": 4,
+    "voltas": "72-76",
+    "corte": null,
+    "notas": "2.º Pedro Tineo Velazquez 150; 3.º Alvaro Codes Martin 152; 38 rapazes, nenhum estrangeiro (só licenças andaluzas e 2 madrilenas)",
+    "fonte": "repo public/data/nextcaddy/61181.json"
+   }
+  ],
+  "portugueses": [],
+  "elegibilidade": {
+   "idade": "14 anos ou menos a 31 de Dezembro do ano da prova",
+   "hcp": "Máximo 36 (SMH) no fecho das inscrições",
+   "voltas": "36 buracos stroke play scratch, 2 dias, sem corte",
+   "entrada": "Espanhóis e estrangeiros com licença RFEG, ou estrangeiros não residentes com certificado de handicap. 60 lugares: os 8 primeiros por HCP qualquer que seja a licença (3 rapazes de 14 anos, 3 de 13, 1 rapariga de 14, 1 de 13); os outros 50 só para licenças andaluzas (34 rapazes, 16 raparigas). Para entrar de fora, o Manuel teria de estar entre os 3 rapazes de 13 anos com HCP mais baixo de todos os inscritos. O clube pode convidar até 2 jogadores",
+   "preco": "2026: 20 € (pagos no clube); treino 10 €"
+  },
+  "notas": "É o «Internacional» do calendário infantil da Federação Andaluza. Só há dados no repo da edição de 2026; vencedores e distâncias de 2024 e 2025 não encontrados (o NextCaddy dessas edições não está no repo e a RFGA não publica o arquivo). CR/slope não publicados. Nenhum português em 2026."
+ },
+ {
+  "nome": "Campeonato de Canarias Juvenil (RFCG) — classificação Infantil",
+  "datas2027": "Por publicar. Aproximação: Set–Out 2027 (2026: 23–25 Out, Meloneras Golf; 2025: 19–21 Set, Tecina Golf; 2024: 24–26 Mai, RCG Tenerife)",
+  "escalaoJogador": "Infantil (13–14 anos no ano). Em 2027 o Manuel faz 13 → Infantil",
+  "campo": "Muda todos os anos: 2026 Meloneras Golf (Maspalomas, Gran Canaria); 2025 Tecina Golf (La Gomera); 2024 Real Club de Golf de Tenerife",
+  "pais": "Espanha (Canárias)",
+  "links": [
+   {
+    "rotulo": "Circular 104/2026 BIS (regulamento 2026)",
+    "url": "https://federacioncanariagolf.com/cmsAdmin/uploads/o_1k59tf8a11uobr3dns72m514jia.pdf"
+   },
+   {
+    "rotulo": "Inscrições e resultados 2026 — Infantil/Alevín (NextCaddy 69116)",
+    "url": "https://www.nextcaddy.com/tour/69116"
+   },
+   {
+    "rotulo": "Resultados 2026 — Sub18/Cadetes WAGR (NextCaddy 74692)",
+    "url": "https://www.nextcaddy.com/tour/74692"
+   },
+   {
+    "rotulo": "Resultados 2025 — 18 buracos (NextCaddy 60180)",
+    "url": "https://www.nextcaddy.com/tour/60180"
+   },
+   {
+    "rotulo": "Resultados 2024 (NextCaddy 53913)",
+    "url": "https://www.nextcaddy.com/tour/53913"
+   }
+  ],
+  "distancias": [
+   {
+    "ano": 2026,
+    "campo": "Meloneras Golf",
+    "escalao": "Infantil e Alevín rapazes",
+    "tee": "Amarelas (regulamento)",
+    "metros": 5274,
+    "par": 71,
+    "cr": null,
+    "slope": null,
+    "fonte": "repo public/data/nextcaddy/69116.json (metros dos cartões); barras no Circular 104/2026 BIS"
+   },
+   {
+    "ano": 2025,
+    "campo": "Tecina Golf",
+    "escalao": "Infantil e Alevín rapazes",
+    "tee": null,
+    "metros": 5840,
+    "par": 71,
+    "cr": null,
+    "slope": null,
+    "fonte": "repo public/data/nextcaddy/60180.json (metros dos cartões)"
+   },
+   {
+    "ano": 2024,
+    "campo": "Real Club de Golf de Tenerife",
+    "escalao": "Infantil rapazes (mesmo tee dos Cadetes)",
+    "tee": null,
+    "metros": 5498,
+    "par": 71,
+    "cr": null,
+    "slope": null,
+    "fonte": "repo public/data/nextcaddy/53913.json (metros dos cartões)"
+   }
+  ],
+  "historico": [
+   {
+    "ano": 2026,
+    "campo": "Meloneras Golf",
+    "escalao": "Infantil (classificação mista)",
+    "vencedor": "Vincent Hugo Helmer",
+    "pais": "Espanha",
+    "score": 223,
+    "toPar": 10,
+    "voltas": "74-70-79",
+    "corte": null,
+    "notas": "2.º Oskar Herwig e Massimo Amoni Gamardo 225 (T2); 17 infantis, todos com licença espanhola",
+    "fonte": "repo public/data/nextcaddy/69116.json"
+   },
+   {
+    "ano": 2025,
+    "campo": "Tecina Golf",
+    "escalao": "Infantil-Alevín (classificação mista)",
+    "vencedor": "Massimo Amoni Gamardo (Alevín)",
+    "pais": "Espanha",
+    "score": 227,
+    "toPar": 14,
+    "voltas": "76-79-72",
+    "corte": null,
+    "notas": "Sem classificação só de infantis. Melhor rapaz infantil: Francisco Delgado Castro, T3 com 238 (80-80-78, +25)",
+    "fonte": "repo public/data/nextcaddy/60180.json"
+   },
+   {
+    "ano": 2024,
+    "campo": "Real Club de Golf de Tenerife",
+    "escalao": "Infantil masculino",
+    "vencedor": "Luis Abeledo Miranda",
+    "pais": "Espanha",
+    "score": 224,
+    "toPar": 11,
+    "voltas": "74-69-81",
+    "corte": null,
+    "notas": "2.º Gustavo Brandstetter Altamirano 225; só 8 infantis. Em 2024 a prova era fechada (nacionalidade espanhola e licença canária)",
+    "fonte": "repo public/data/nextcaddy/53913.json; nextcaddy.com/tour/53913"
+   }
+  ],
+  "portugueses": [],
+  "elegibilidade": {
+   "idade": "18 anos ou menos no ano (Sub-18, Cadete, Infantil, Alevín; Benjamín em 9 buracos)",
+   "hcp": "Máximo 35,5 (exacto) na prova de 18 buracos. Para estrangeiros sem licença espanhola conta o HCP certificado pela federação nacional antes do fecho",
+   "voltas": "54 buracos stroke play scratch, 18 por dia, sem corte",
+   "entrada": "Desde 2025, aberta a licenças de qualquer federação nacional (em 2024 só nacionalidade espanhola com licença canária). Máximo 90 jogadores, 75 na prova de 18 buracos: primeiro as licenças canárias por ordem de inscrição, depois RFEG ou outra federação nacional pelo HCP mais baixo. Sujeita a aprovação do Comité Juvenil da RFCG. Em 2026 jogaram 57 na prova de 18 buracos (32 Infantil/Alevín e 25 Sub-18/Cadetes), por isso houve lugar para os de fora",
+   "preco": "2026: 60 € (18 buracos); treino oficial 16 €"
+  },
+  "notas": "É a prova juvenil espanhola aberta mais perto da Madeira. É valedoura para o acesso aos Campeonatos de Espanha Infantil/Alevín/Benjamín do ano seguinte e WAGR nos Sub-18/Cadetes (barras brancas). Infantis e alevins rapazes jogam das amarelas e são classificados juntos (em 2026 havia também classificação só de infantis). Nível baixo: o vencedor infantil de 2026 fez +10 em 3 voltas. Não há estrangeiros nos resultados de 2025–2026 (só jogadores de outras regiões espanholas, com licença AM, MM ou CM). CR/slope não publicados."
  }
 ]
