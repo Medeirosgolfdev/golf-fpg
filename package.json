@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/build-logos-gallery.js && node scripts/build-fpg-files-index.js && node scripts/build-ffg-list-index.js && node scripts/build-federados-lite.js && node scripts/build-drive-admissions.js",
+    "predev": "node scripts/build-logos-gallery.js && node scripts/build-fpg-files-index.js && node scripts/build-ffg-list-index.js && node scripts/build-federados-lite.js && node scripts/build-drive-admissions.js && node scripts/build-egr-golfbox-links.js",
     "dev": "vite",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",

@@ -397,6 +397,7 @@ país; chave `gb{RefID}`). Só kids2 — não vai à `/major`. Federação nova 
 - No Junior Tour o U16 repete os miúdos do U18 e nos Nacionais o U12 repete o U14: os
   ficheiros guardam as classes como vêm; o `umaDivisaoPorJogador` do `jobfile.js` deixa
   cada miúdo no escalão mais específico.
+- **EGR: juntar, não apagar (04/11/2026, pedido dela).** Quando o dedup do EGR tira um evento porque outra fonte já o traz, a prova que fica guarda-o em `extra.egr` (sourceKey, nome, link) e ganha o link «European Golf Rankings»; o filtro «EGR» do Kids 2 conta-a. Na página `/egr`, os eventos que a EGR foi buscar ao GolfBox e que nós lemos inteiros (Suíça, Bélgica, Albert Vermeiren, Estonian Junior Open…) mostram o ficheiro completo (cartões, clube, HCP, draw): `scripts/build-egr-golfbox-links.js` (prebuild, gitignored) → `egr/egr-golfbox-links.json` {id EGR → ficheiro + classes}, lido em `src/pages/egr/egrCircuit.tsx`. A classe escolhe-se pelos JOGADORES em comum (o «U18» da EGR é muitas vezes o campo todo; o «U16/U14» junta duas classes); menos de metade em comum → fica com os totais. 94 eventos ligados; 3 suíços de 2025 em que a EGR aponta para a competição errada ficam com os totais.
 - Workflow `update-golfbox-federacoes.yml` (as duas federações; segunda 06:30 UTC, só de Abril a Novembro — 1× por semana chega, decisão dela). Pedidos um a um, pausa de 2 s.
 
 ## Fonte DGV — Alemanha (2026-10-10)

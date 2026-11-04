@@ -19,7 +19,7 @@ const MAX_VISIBLE = 8000;
 
 type SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "faldo" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv" | "swissgolf" | "rbgf" | "fig" | "ggcondados";
 
-function juniorHasSource(j: Junior, src: SourceKey, tournamentById: Map<string, { sourceId: string }>): boolean {
+function juniorHasSource(j: Junior, src: SourceKey, tournamentById: Map<string, { sourceId: string; extra?: Record<string, unknown> }>): boolean {
   if (src === "uskids") return !!j.sources.uskids?.memberId;
   if (src === "fpg") return !!j.sources.fpg?.fed;
   if (src === "rfeg") return !!j.sources.rfeg?.lic;
@@ -27,6 +27,8 @@ function juniorHasSource(j: Junior, src: SourceKey, tournamentById: Map<string, 
   for (const tid of j.tournamentIds) {
     const t = tournamentById.get(tid);
     if (t && t.sourceId === src) return true;
+    // prova de outra fonte que também está na EGR (juntas no agregador: extra.egr)
+    if (t && src === "egr" && Array.isArray(t.extra?.egr) && t.extra.egr.length) return true;
   }
   return false;
 }

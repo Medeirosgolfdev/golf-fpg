@@ -7,11 +7,18 @@
  * `totals` (dados) — o shell passa-os ao TournamentDetail como prova sem
  * buraco a buraco (o mesmo Resumo de todas as provas). Sem React: o loader
  * serve também o Kids 2.
+ *
+ * Provas que a EGR foi buscar ao GolfBox e que nós lemos inteiras (Suíça,
+ * Bélgica, Albert Vermeiren…) — `egr-golfbox-links.json`, gerado no prebuild —
+ * mostram o ficheiro completo (cartões, clube, handicap, draw) dentro do evento
+ * EGR, em vez de só os totais (Mariana, 04/11/2026: «fazer um merge da
+ * informação e colocar lá também»).
  */
 import { withDivisionModel } from "../../data/model/division";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { normLoose } from "../../utils/normName";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
+import { jobFileDivisions, jobScorecardOptions, type JobFile } from "../../data/major/jobFile";
 
 /* ── Tipos dos dados EGR ────────────────────────────────────────── */
 export interface EgrEventListItem {
@@ -69,8 +76,44 @@ interface EgrEventFull {
   startDateRaw?: string; endDateRaw?: string; sourceUrl?: string; players: EgrEventPlayer[];
 }
 
+/* ── Ficheiro GolfBox completo do mesmo evento (quando o temos) ───── */
+interface EgrGolfboxLinks { links: Record<string, { file: string; divs: number[] }> }
+let _linksPromise: Promise<EgrGolfboxLinks["links"]> | null = null;
+function loadGolfboxLinks(): Promise<EgrGolfboxLinks["links"]> {
+  if (!_linksPromise) {
+    _linksPromise = cachedFetchJson<EgrGolfboxLinks>("/data/egr/egr-golfbox-links.json")
+      .then((r) => r?.links || {})
+      .catch(() => ({}));
+  }
+  return _linksPromise;
+}
+
+/** As divisões do JobFile que correspondem ao evento EGR, com cartões. */
+async function golfboxDivisions(e: EgrEventListItem, link: { file: string; divs: number[] }): Promise<CircuitDivision[] | null> {
+  const f = await cachedFetchJson<JobFile>(link.file).catch(() => null);
+  if (!f?.divisions?.length) return null;
+  const todas = jobFileDivisions(f, [f], (dv) => dv.division, true);
+  const escolhidas = link.divs.map((i) => todas[i]).filter((d): d is NonNullable<typeof d> => !!d && d.division.players.length > 0);
+  if (!escolhidas.length) return null;
+  return escolhidas.map((d) => withDivisionModel({
+    key: d.key,
+    escalao: e.ageGroup || d.label,
+    tabLabel: d.label,
+    sex: (e.sex || undefined) as CircuitSex | undefined,
+    hasManuel: d.hasManuel,
+    results: d.results,
+    scOptions: jobScorecardOptions({ showRatings: true }),
+    links: d.division.source ? [{ label: "Livescoring GolfBox", icon: "🔗", url: d.division.source }] : undefined,
+  }));
+}
+
 /* ── Adapter: evento → divisão (lazy) ───────────────────────────── */
 async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]> {
+  const link = (await loadGolfboxLinks())[e.id];
+  if (link) {
+    const rico = await golfboxDivisions(e, link);
+    if (rico) return rico;
+  }
   const [ev, hcpMap] = await Promise.all([
     cachedFetchJson<EgrEventFull>(`/data/egr/events/egr_${e.id}.json`),
     loadHcpMap(),

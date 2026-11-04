@@ -37,6 +37,10 @@ describe("dedupeEgrTournaments", () => {
     expect(dropped).toHaveLength(1);
     expect(dropped[0].coveredBy).toBe("rfeg");
     expect(egr.tournaments).toHaveLength(0);
+    // juntar, não apagar: a prova que fica guarda o evento EGR (filtro «EGR» do Kids 2)
+    const rf = raw.find((s) => s.sourceId === "rfeg").tournaments[0];
+    expect(rf.extra.egr).toEqual([{ sourceKey: "egr1", name: "Spanish U16 Champs 2025", url: "https://www.europeangolfrankings.com/events/1" }]);
+    expect(dropped[0]._t).toBeUndefined();
   });
 
   it("remove EGR subset (egr% >= 0.7) mesmo com datas desfasadas 2 dias", () => {

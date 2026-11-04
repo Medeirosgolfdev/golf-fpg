@@ -20,7 +20,12 @@
  *     pool de jogadores de topo): todos ≤ 0.5 em ambas as métricas.
  * Regra (margem 0.5 → 0.82): shared ≥ 5 E (shared/|egr| ≥ 0.7 OU
  * (shared/min ≥ 0.85 E shared ≥ 15)). A fonte dedicada ganha SEMPRE
- * (tem scorecards/licenças/DOB); o evento EGR é removido por inteiro.
+ * (tem scorecards/licenças/DOB); o evento EGR sai como linha à parte.
+ *
+ * JUNTAR, não apagar (Mariana, 04/11/2026: «em vez de tirar estas provas do EGR,
+ * fazer um merge da informação»): a prova que fica guarda em `extra.egr` o
+ * evento EGR que cobre (sourceKey, nome, link) — o Kids 2 conta-a também como
+ * EGR (filtro «EGR») e mostra o link para o evento na EGR.
  */
 
 const { normName } = require("./names");
@@ -97,12 +102,25 @@ function dedupeEgrTournaments(rawSources) {
         const ovEgr = shared / es.size;
         const ovMin = shared / Math.min(es.size, o.roster.size);
         if (ovEgr >= 0.7 || (ovMin >= 0.85 && shared >= 15)) {
-          hit = { egrKey: e.sourceKey, egrName: e.name, coveredBy: o.sourceId, coveredByName: o.t.name, shared, ovEgr: +ovEgr.toFixed(2), ovMin: +ovMin.toFixed(2) };
+          hit = { egrKey: e.sourceKey, egrName: e.name, coveredBy: o.sourceId, coveredByName: o.t.name, shared, ovEgr: +ovEgr.toFixed(2), ovMin: +ovMin.toFixed(2), _t: o.t };
           break;
         }
       }
     }
-    if (hit) { dropped.push(hit); removidos.push(e); } else keep.push(e);
+    if (hit) {
+      dropped.push(hit);
+      removidos.push(e);
+      const t = hit._t;
+      // a página do evento na EGR (o link do torneio EGR é o da fonte, ex. GolfBox)
+      const egrId = (/^egr(\d+)$/.exec(e.sourceKey || "") || [])[1];
+      const url = egrId ? `https://www.europeangolfrankings.com/events/${egrId}` : (e.links || [])[0]?.url || null;
+      const ja = Array.isArray(t.extra?.egr) ? t.extra.egr : [];
+      if (!ja.some((x) => x.sourceKey === e.sourceKey)) {
+        t.extra = { ...(t.extra || {}), egr: [...ja, { sourceKey: e.sourceKey, name: e.name, ...(url ? { url } : {}) }] };
+      }
+      if (url && !(t.links || []).some((l) => l.url === url)) t.links = [...(t.links || []), { label: "European Golf Rankings", url }];
+      delete hit._t;
+    } else keep.push(e);
   }
   egr.tournaments = keep;
   // Saem do Kids 2 mas continuam a servir de PROVA de identidade (mesmas
