@@ -81,6 +81,11 @@ const META = [
   [/^Paul McGinley Junior Cup/, "pt", "2027-08-20", false, "Paul McGinley Junior Cup (Quinta do Lago)", "U14 (Douradas)", "Datas de 2027 por publicar (fim de Agosto). 2 voltas; 150 €. Muitos portugueses: Nuno Palmares Jr. ganhou o U14 em 2026."],
   [/^Campeonato Internacional Individual Infantil de Andaluc/, "eu14", "2027-07-03", false, "Internacional Infantil de Andalucía", "Infantil (≤ 14 a 31 Dez)", "Estrangeiros só pelas 8 vagas por HCP (3 para rapazes de 13 anos). Datas de 2027 por publicar (2026: 4–5 Jul)."],
   [/^Campeonato de Canarias Juvenil/, "eu14", "2027-09-24", false, "Campeonato de Canarias Juvenil (Infantil)", "Infantil (amarelas)", "A mais perto da Madeira; aceita licenças de outras federações desde 2025. Nível baixo e sem estrangeiros até agora. 3 voltas, 60 €."],
+  [/^Berlin Juniors International/, "gjg", "2027-07-28", false, "GJG Berlin Juniors International", "U14 (HCP ≤ 17)", "Datas de 2027 por publicar (2026: 28–31 Jul). 18–21 rapazes U14; 200 €."],
+  [/^European Juniors International/, "gjg", "2027-08-08", false, "GJG European Juniors International (Alemanha)", "U14 (quadro a encolher)", "Clube e datas mudam todos os anos; o quadro U14 caiu de 19 (2024) para 1 rapaz (2026)."],
+  [/^Ljunghusen Junior Games/, "gjg", "2027-04-06", false, "GJG Ljunghusen Junior Games (Suécia)", "U14 (exige 13 anos feitos)", "A classe U14 exige 13 anos feitos: o Manuel só os faz a 29/04/2027, e a prova costuma ser em Abril. HCP U14 ≤ 10."],
+  [/^Lübker Junior Open/, "gjg", "2027-10-08", false, "GJG Lübker Junior Open (Dinamarca)", "U14 (HCP ≤ 15)", "Datas de 2027 por publicar (início de Out). Quadro U14 pequeno (5–13) e scores altos; 210 €."],
+  [/^GJG Finnish Juniors International/, "gjg", "2027-06-01", false, "GJG Finnish Juniors International (+ Fream)", "U14 (HCP ≤ 14)", "Datas de 2027 por publicar (Jun/Jul). Dá para juntar ao Finnish International U14 (FIJC) e ao Junior Fream Challenge da semana seguinte."],
   [/^Czech International Boys/, "u16", "2027-07-15", true, "Czech International Boys & Girls", "U18 (sem U14; HCP ≤ 6,0)", "O regulamento confirma que não há quadro U14."],
 ];
 
