@@ -379,16 +379,17 @@ Correcções na fonte do mesmo dia: UA Worlds com país da `location`; FFG com l
 
 As classificações dos eventos EGR continuam publicadas depois dos 2 anos (só os pontos caducam). Calendário por ano: `/events/search?date[year]=Y` (o de 2018 dá HTTP 500 — o `scrape-egr.js` agora salta o ano e continua). `--events --year 2019 … --year 2024 --skip-existing`: +1.864 eventos juvenis (934 → 2.798); 37.859 fichas; 5.759 fichas existentes ganharam 27.857 participações; 892 órfãs resolvidas; 0 junções perdidas.
 
-## Fonte Swiss Golf — Suíça (2026-11-04)
+## Fontes Swiss Golf (Suíça) e RBGF (Bélgica) — federações no GolfBox (2026-11-04)
 
 Pedido dela: «traz as provas suíças de 2025 e 2026 para enriquecer os dados do EGR».
-`scripts/scrape-swissgolf.js` lê o calendário GolfBox da Swiss Golf (customer 1085,
-época corrente e anterior), escolhe as provas juvenis individuais já jogadas (Junior
+`scripts/scrape-golfbox-federacao.js --fed swissgolf|rbgf` lê o calendário GolfBox da federação (Swiss Golf customer 1085,
+RBGF customer 22; época corrente e anterior), escolhe as provas juvenis individuais já jogadas (Junior
 Tour, National Events U14, National Championships U10–U18, finais U10–U18; fora os
 jogos por equipas contra regiões, acompanhantes, camps, indoor e U25) e reaproveita o
-`scrapeOne` do `scrape-golfbox.js` → `public/data/swissgolf/{competitionId}.json`
-(JobFile) → adapter `sources/swissgolf.js` (sourceId `swissgolf`, fonte FRACA: nome +
-país CH; chave `gb{RefID}`). Só kids2 — não vai à `/major`.
+`scrapeOne` do `scrape-golfbox.js` → `public/data/{swissgolf|rbgf}/{competitionId}.json`
+(JobFile) → adapters `sources/swissgolf.js` e `sources/rbgf.js`, os dois pelo `util/golfbox-federacao.js` (fonte FRACA: nome +
+país; chave `gb{RefID}`). Só kids2 — não vai à `/major`. Federação nova no GolfBox = uma entrada em `FEDERACOES` + um adapter de 5 linhas.
+- **Bélgica (RBGF):** Junior U12 & U14, Junior Opens (54 buracos, 3 voltas de 18), National Juniors, Junior Masters, finais U12/U14. Fora: Interclubs (equipas), Bélgica × Países Baixos, Kids Tour (iniciação), canceladas e o Albert Vermeiren (fica na fonte `avtrophy`: o leitor salta tudo o que já está no `golfbox-scope.json`). Classes «Boys»/«Girls» = overall: sem idade, perdem para o escalão.
 
 - O EGR já tinha ~140 provas suíças, só com o total de cada volta e quase sem U10/U12/U16.
   Esta fonte traz ano de nascimento, clube, HCP do dia (→ `hcpHistory`), cartões buraco a
@@ -396,7 +397,7 @@ país CH; chave `gb{RefID}`). Só kids2 — não vai à `/major`.
 - No Junior Tour o U16 repete os miúdos do U18 e nos Nacionais o U12 repete o U14: os
   ficheiros guardam as classes como vêm; o `umaDivisaoPorJogador` do `jobfile.js` deixa
   cada miúdo no escalão mais específico.
-- Workflow `update-swissgolf.yml` (segunda 06:30 UTC, só de Abril a Novembro — 1× por semana chega, decisão dela). Pedidos um a um, pausa de 2 s.
+- Workflow `update-golfbox-federacoes.yml` (as duas federações; segunda 06:30 UTC, só de Abril a Novembro — 1× por semana chega, decisão dela). Pedidos um a um, pausa de 2 s.
 
 ## Fonte DGV — Alemanha (2026-10-10)
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-04T01:00:59.940Z",
+  "generatedAt": "2026-11-04T01:09:03.598Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -3760,6 +3760,42 @@
       ],
       "firstDate": "2025-01-18",
       "lastDate": "2026-05-31",
+      "editionsCount": 26
+    },
+    {
+      "id": "rbgf-junior",
+      "label": "RBGF Bélgica",
+      "sourceId": "rbgf",
+      "tournamentIds": [
+        "rbgf-4840897",
+        "rbgf-4841026",
+        "rbgf-4841029",
+        "rbgf-4841032",
+        "rbgf-4841036",
+        "rbgf-4841040",
+        "rbgf-4841160",
+        "rbgf-4841165",
+        "rbgf-4841323",
+        "rbgf-4841330",
+        "rbgf-4841337",
+        "rbgf-4841426",
+        "rbgf-5256741",
+        "rbgf-5354628",
+        "rbgf-5354672",
+        "rbgf-5355079",
+        "rbgf-5355087",
+        "rbgf-5355812",
+        "rbgf-5355829",
+        "rbgf-5356072",
+        "rbgf-5387007",
+        "rbgf-5387076",
+        "rbgf-5388308",
+        "rbgf-5741339",
+        "rbgf-5765319",
+        "rbgf-5766682"
+      ],
+      "firstDate": "2025-04-05",
+      "lastDate": "2026-09-20",
       "editionsCount": 26
     },
     {
@@ -19148,24 +19184,6 @@
       "editionsCount": 8
     },
     {
-      "id": "egr-rigenee-junior-open",
-      "label": "Rigenée Junior Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10463",
-        "egr-egr10464",
-        "egr-egr8812",
-        "egr-egr8813",
-        "egr-egr7962",
-        "egr-egr7963",
-        "egr-egr6400",
-        "egr-egr4852"
-      ],
-      "firstDate": "2020-07-06",
-      "lastDate": "2025-07-07",
-      "editionsCount": 8
-    },
-    {
       "id": "igc-staffs",
       "label": "Staffordshire",
       "sourceId": "ggcondados",
@@ -21933,8 +21951,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -25528,22 +25546,6 @@
       "editionsCount": 6
     },
     {
-      "id": "egr-junior-open-vlaanderen",
-      "label": "Junior Open Vlaanderen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11727",
-        "egr-egr11728",
-        "egr-egr10453",
-        "egr-egr10454",
-        "egr-egr8567",
-        "egr-egr8568"
-      ],
-      "firstDate": "2024-04-03",
-      "lastDate": "2026-04-08",
-      "editionsCount": 6
-    },
-    {
       "id": "egr-falkenstein-international-junior-open",
       "label": "Falkenstein International Junior Open",
       "sourceId": "egr",
@@ -25573,6 +25575,22 @@
       ],
       "firstDate": "2022-06-18",
       "lastDate": "2024-08-05",
+      "editionsCount": 6
+    },
+    {
+      "id": "egr-rigenee-junior-open",
+      "label": "Rigenée Junior Open",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8812",
+        "egr-egr8813",
+        "egr-egr7962",
+        "egr-egr7963",
+        "egr-egr6400",
+        "egr-egr4852"
+      ],
+      "firstDate": "2020-07-06",
+      "lastDate": "2024-07-08",
       "editionsCount": 6
     },
     {
@@ -29710,9 +29728,9 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-271900",
-        "wagr-235865",
         "wagr-260403",
         "wagr-225888",
+        "wagr-235865",
         "wagr-219502"
       ],
       "firstDate": "2022-09-17",
@@ -30740,21 +30758,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-hope-valley-junior-invitational",
-      "label": "Hope Valley Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259604",
-        "wagr-235031",
-        "wagr-271309",
-        "wagr-225120",
-        "wagr-75920"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2026-08-04",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-korea-junior-championship-blue-one-cup",
       "label": "Korea Junior Championship - Blue One Cup",
       "sourceId": "wagr",
@@ -30890,6 +30893,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-georgia-junior-championship",
+      "label": "Georgia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270174",
+        "wagr-258188",
+        "wagr-233854",
+        "wagr-223986",
+        "wagr-74879"
+      ],
+      "firstDate": "2022-06-20",
+      "lastDate": "2026-07-06",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-georgia-pga-junior-championship",
       "label": "Georgia PGA Junior Championship",
       "sourceId": "wagr",
@@ -30917,6 +30935,21 @@
       ],
       "firstDate": "2022-08-01",
       "lastDate": "2026-07-27",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-hope-valley-junior-invitational",
+      "label": "Hope Valley Junior Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271309",
+        "wagr-259604",
+        "wagr-235031",
+        "wagr-225120",
+        "wagr-75920"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2026-08-04",
       "editionsCount": 5
     },
     {
@@ -36299,20 +36332,6 @@
       "editionsCount": 4
     },
     {
-      "id": "egr-junior-u14-no-5",
-      "label": "Junior U14 (No.5)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11749",
-        "egr-egr10469",
-        "egr-egr10470",
-        "egr-egr11750"
-      ],
-      "firstDate": "2025-07-24",
-      "lastDate": "2026-07-23",
-      "editionsCount": 4
-    },
-    {
       "id": "egr-finnish-international-junior-championship-u16",
       "label": "Finnish International Junior Championship (U16)",
       "sourceId": "egr",
@@ -36467,34 +36486,6 @@
       "editionsCount": 4
     },
     {
-      "id": "egr-junior-u14-no-1",
-      "label": "Junior U14 (No.1)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11785",
-        "egr-egr11725",
-        "egr-egr10450",
-        "egr-egr10451"
-      ],
-      "firstDate": "2025-04-05",
-      "lastDate": "2026-04-04",
-      "editionsCount": 4
-    },
-    {
-      "id": "egr-junior-u12-no-1",
-      "label": "Junior U12 (No.1)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12720",
-        "egr-egr11726",
-        "egr-egr10661",
-        "egr-egr10660"
-      ],
-      "firstDate": "2025-04-05",
-      "lastDate": "2026-04-04",
-      "editionsCount": 4
-    },
-    {
       "id": "egr-sgf-fairmont-open",
       "label": "SGF Fairmont Open",
       "sourceId": "egr",
@@ -36548,20 +36539,6 @@
       ],
       "firstDate": "2019-08-13",
       "lastDate": "2025-08-11",
-      "editionsCount": 4
-    },
-    {
-      "id": "egr-national-juniors-championship",
-      "label": "National Juniors Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10475",
-        "egr-egr10476",
-        "egr-egr8830",
-        "egr-egr8831"
-      ],
-      "firstDate": "2024-08-13",
-      "lastDate": "2025-08-05",
       "editionsCount": 4
     },
     {
@@ -37909,20 +37886,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-cga-dogwood-state-junior-boys-championship",
-      "label": "CGA Dogwood State Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259377",
-        "wagr-234649",
-        "wagr-271132",
-        "wagr-224807"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-27",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-campeonato-de-espana-u18",
       "label": "Campeonato de Espana U18",
       "sourceId": "wagr",
@@ -38144,20 +38107,6 @@
       ],
       "firstDate": "2022-07-25",
       "lastDate": "2026-07-07",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-georgia-junior-championship",
-      "label": "Georgia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270174",
-        "wagr-258188",
-        "wagr-233854",
-        "wagr-223986"
-      ],
-      "firstDate": "2023-06-19",
-      "lastDate": "2026-07-06",
       "editionsCount": 4
     },
     {
@@ -46500,32 +46449,6 @@
       "editionsCount": 3
     },
     {
-      "id": "egr-junior-u12-no-2",
-      "label": "Junior U12 (No.2)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12775",
-        "egr-egr11733",
-        "egr-egr11126"
-      ],
-      "firstDate": "2025-05-17",
-      "lastDate": "2026-05-09",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-junior-u14-no-2",
-      "label": "Junior U14 (No.2)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11734",
-        "egr-egr11786",
-        "egr-egr10457"
-      ],
-      "firstDate": "2025-05-17",
-      "lastDate": "2026-05-09",
-      "editionsCount": 3
-    },
-    {
       "id": "egr-dgv-gvnb-1-ak14-jungen",
       "label": "DGV-GVNB 1. AK14 Jungen",
       "sourceId": "egr",
@@ -46861,19 +46784,6 @@
       ],
       "firstDate": "2023-06-23",
       "lastDate": "2025-06-20",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-junior-open-wallonie",
-      "label": "Junior Open Wallonie",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10448",
-        "egr-egr10449",
-        "egr-egr8569"
-      ],
-      "firstDate": "2024-04-29",
-      "lastDate": "2025-05-05",
       "editionsCount": 3
     },
     {
@@ -48754,8 +48664,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-258636",
-        "wagr-234217",
-        "wagr-270533"
+        "wagr-270533",
+        "wagr-234217"
       ],
       "firstDate": "2024-07-01",
       "lastDate": "2026-06-22",
@@ -48788,19 +48698,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-visit-owensboro-junior-championship",
-      "label": "Visit Owensboro Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269461",
-        "wagr-257236",
-        "wagr-251444"
-      ],
-      "firstDate": "2024-05-03",
-      "lastDate": "2026-04-30",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-visit-goldsboro-nc-junior-championship",
       "label": "Visit Goldsboro NC Junior Championship",
       "sourceId": "wagr",
@@ -48811,19 +48708,6 @@
       ],
       "firstDate": "2024-04-11",
       "lastDate": "2026-04-16",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-north-carolina-junior-boys-championship",
-      "label": "North Carolina Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-233861",
-        "wagr-258192",
-        "wagr-270178"
-      ],
-      "firstDate": "2024-06-19",
-      "lastDate": "2026-06-23",
       "editionsCount": 3
     },
     {
@@ -49386,16 +49270,16 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
-      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "id": "wagr-cga-dogwood-state-junior-boys-championship",
+      "label": "CGA Dogwood State Junior Boys Championship",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-269997",
-        "wagr-257942",
-        "wagr-251448"
+        "wagr-271132",
+        "wagr-234649",
+        "wagr-224807"
       ],
-      "firstDate": "2024-06-04",
-      "lastDate": "2026-05-26",
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-27",
       "editionsCount": 3
     },
     {
@@ -49721,6 +49605,19 @@
       ],
       "firstDate": "2024-06-21",
       "lastDate": "2026-06-19",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
+      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269997",
+        "wagr-257942",
+        "wagr-251448"
+      ],
+      "firstDate": "2024-06-04",
+      "lastDate": "2026-05-26",
       "editionsCount": 3
     },
     {
@@ -62027,18 +61924,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-finals-junior-u12",
-      "label": "Finals Junior U12",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12928",
-        "egr-egr12929"
-      ],
-      "firstDate": "2026-09-20",
-      "lastDate": "2026-09-20",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-footjoy-finnish-junior-tour-8-u18",
       "label": "FootJoy Finnish Junior Tour 8 (U18)",
       "sourceId": "egr",
@@ -62060,54 +61945,6 @@
       ],
       "firstDate": "2024-08-12",
       "lastDate": "2026-08-09",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-14-no-6",
-      "label": "Junior 14 (No.6)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12860",
-        "egr-egr12863"
-      ],
-      "firstDate": "2026-07-31",
-      "lastDate": "2026-07-31",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-12-no-6",
-      "label": "Junior 12 (No.6)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12862",
-        "egr-egr12861"
-      ],
-      "firstDate": "2026-07-31",
-      "lastDate": "2026-07-31",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-u12-no-5",
-      "label": "Junior U12 (No.5)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11789",
-        "egr-egr12859"
-      ],
-      "firstDate": "2026-07-23",
-      "lastDate": "2026-07-23",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-open-arlon",
-      "label": "Junior Open Arlon",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11743",
-        "egr-egr11744"
-      ],
-      "firstDate": "2026-07-20",
-      "lastDate": "2026-07-20",
       "editionsCount": 2
     },
     {
@@ -62195,18 +62032,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-junior-u14-no-4",
-      "label": "Junior U14 (No.4)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11788",
-        "egr-egr12831"
-      ],
-      "firstDate": "2026-07-10",
-      "lastDate": "2026-07-10",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-dgv-bwgv-meisterschaft-ak16-18-jungen",
       "label": "DGV-BWGV Meisterschaft AK16-18 Jungen",
       "sourceId": "egr",
@@ -62215,18 +62040,6 @@
         "egr-egr11026"
       ],
       "firstDate": "2025-06-10",
-      "lastDate": "2026-07-10",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-u12-no-4",
-      "label": "Junior U12 (No.4)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12832",
-        "egr-egr11745"
-      ],
-      "firstDate": "2026-07-10",
       "lastDate": "2026-07-10",
       "editionsCount": 2
     },
@@ -62276,18 +62089,6 @@
       ],
       "firstDate": "2026-07-07",
       "lastDate": "2026-07-07",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-open-hainaut",
-      "label": "Junior Open Hainaut",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11739",
-        "egr-egr11740"
-      ],
-      "firstDate": "2026-07-06",
-      "lastDate": "2026-07-06",
       "editionsCount": 2
     },
     {
@@ -62663,18 +62464,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-junior-open-wallonie-vlaandere",
-      "label": "Junior Open Wallonie - Vlaandere",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11729",
-        "egr-egr11730"
-      ],
-      "firstDate": "2026-04-28",
-      "lastDate": "2026-04-28",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-nationaal-strokeplay-kampioenschap-jongens-u18",
       "label": "Nationaal Strokeplay Kampioenschap Jongens U18",
       "sourceId": "egr",
@@ -62999,30 +62788,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-junior-u14-no-6",
-      "label": "Junior U14 (No. 6)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10483",
-        "egr-egr10484"
-      ],
-      "firstDate": "2025-09-13",
-      "lastDate": "2025-09-13",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-u12-no-6",
-      "label": "Junior U12 (No. 6)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11323",
-        "egr-egr11322"
-      ],
-      "firstDate": "2025-09-13",
-      "lastDate": "2025-09-13",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-loretto-junior-golf-tour-1",
       "label": "Loretto Junior Golf Tour 1",
       "sourceId": "egr",
@@ -63131,18 +62896,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-oudenaarde-junior-open",
-      "label": "Oudenaarde Junior Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10473",
-        "egr-egr10474"
-      ],
-      "firstDate": "2025-07-28",
-      "lastDate": "2025-07-28",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-footjoy-finnish-junior-tour-4-u16-match-play",
       "label": "FootJoy Finnish Junior Tour 4 U16 Match Play",
       "sourceId": "egr",
@@ -63191,18 +62944,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-durbuy-junior-open",
-      "label": "Durbuy Junior Open",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10467",
-        "egr-egr10468"
-      ],
-      "firstDate": "2025-07-22",
-      "lastDate": "2025-07-22",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-leinster-u18-open-amateur-championship",
       "label": "Leinster U18 Open Amateur Championship",
       "sourceId": "egr",
@@ -63212,18 +62953,6 @@
       ],
       "firstDate": "2025-07-16",
       "lastDate": "2025-07-16",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-u12-14-no-4",
-      "label": "Junior U12/14 (No.4)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10465",
-        "egr-egr10466"
-      ],
-      "firstDate": "2025-07-11",
-      "lastDate": "2025-07-11",
       "editionsCount": 2
     },
     {
@@ -63260,18 +62989,6 @@
       ],
       "firstDate": "2025-07-01",
       "lastDate": "2025-07-01",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-junior-u12-14-no-3",
-      "label": "Junior U12/14 (No.3)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10459",
-        "egr-egr10460"
-      ],
-      "firstDate": "2025-06-29",
-      "lastDate": "2025-06-29",
       "editionsCount": 2
     },
     {
@@ -63515,6 +63232,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-national-juniors-championship",
+      "label": "National Juniors Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8830",
+        "egr-egr8831"
+      ],
+      "firstDate": "2024-08-13",
+      "lastDate": "2024-08-13",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-footjoy-junior-tour-4",
       "label": "Footjoy Junior Tour 4",
       "sourceId": "egr",
@@ -63656,6 +63385,18 @@
       ],
       "firstDate": "2023-05-13",
       "lastDate": "2024-05-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "egr-junior-open-vlaanderen",
+      "label": "Junior Open Vlaanderen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8567",
+        "egr-egr8568"
+      ],
+      "firstDate": "2024-04-03",
+      "lastDate": "2024-04-03",
       "editionsCount": 2
     },
     {
@@ -67499,18 +67240,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-junior-open-oudenaarde",
-      "label": "Junior Open Oudenaarde",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11752",
-        "egr-egr11751"
-      ],
-      "firstDate": "2026-07-28",
-      "lastDate": "2026-07-28",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-hammamet-open-jtg",
       "label": "Hammamet Open (JTG)",
       "sourceId": "egr",
@@ -67556,18 +67285,6 @@
       ],
       "firstDate": "2026-08-29",
       "lastDate": "2026-08-29",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-finals-junior-u14",
-      "label": "Finals Junior U14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11790",
-        "egr-egr11760"
-      ],
-      "firstDate": "2026-09-20",
-      "lastDate": "2026-09-20",
       "editionsCount": 2
     },
     {
@@ -68204,6 +67921,18 @@
       ],
       "firstDate": "2025-08-19",
       "lastDate": "2026-08-18",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071",
+        "wagr-77024"
+      ],
+      "firstDate": "2022-06-14",
+      "lastDate": "2026-06-15",
       "editionsCount": 2
     },
     {
@@ -69359,18 +69088,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-jimmy-anderson-junior-boys",
-      "label": "Jimmy Anderson Junior Boys",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-236605",
-        "wagr-261130"
-      ],
-      "firstDate": "2024-10-19",
-      "lastDate": "2025-10-25",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-north-and-south-junior-amateur",
       "label": "North and South Junior Amateur",
       "sourceId": "wagr",
@@ -69932,6 +69649,18 @@
       ],
       "firstDate": "2025-05-18",
       "lastDate": "2026-05-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-north-carolina-junior-boys-championship",
+      "label": "North Carolina Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258192",
+        "wagr-270178"
+      ],
+      "firstDate": "2025-06-17",
+      "lastDate": "2026-06-23",
       "editionsCount": 2
     },
     {
@@ -71636,6 +71365,18 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2023-07-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-tennessee-junior-amateur",
+      "label": "Tennessee Junior Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234076",
+        "wagr-224241"
+      ],
+      "firstDate": "2023-06-27",
+      "lastDate": "2024-06-24",
       "editionsCount": 2
     },
     {
@@ -97975,50 +97716,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-belgian-national-championship-u14",
-      "label": "Belgian National Championship (U14)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12866"
-      ],
-      "firstDate": "2026-08-04",
-      "lastDate": "2026-08-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-national-juniors-championship-u12",
-      "label": "National Juniors Championship (U12)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12865"
-      ],
-      "firstDate": "2026-08-04",
-      "lastDate": "2026-08-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-national-juniors-championship-u14",
-      "label": "National Juniors Championship (U14)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12864"
-      ],
-      "firstDate": "2026-08-04",
-      "lastDate": "2026-08-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-belgian-national-championship-u12",
-      "label": "Belgian National Championship (U12)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12867"
-      ],
-      "firstDate": "2026-08-04",
-      "lastDate": "2026-08-04",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-polish-international-junior",
       "label": "Polish International Junior",
       "sourceId": "egr",
@@ -99812,28 +99509,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-junior-14-no-2",
-      "label": "Junior 14 (No.2)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10458"
-      ],
-      "firstDate": "2025-05-17",
-      "lastDate": "2025-05-17",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-junior-12-no-2",
-      "label": "Junior 12 (No.2)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11130"
-      ],
-      "firstDate": "2025-05-17",
-      "lastDate": "2025-05-17",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-the-3-foundation-trophy-sgf",
       "label": "The 3 Foundation Trophy (SGF)",
       "sourceId": "egr",
@@ -100788,6 +100463,17 @@
       ],
       "firstDate": "2024-05-05",
       "lastDate": "2024-05-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-junior-open-wallonie",
+      "label": "Junior Open Wallonie",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr8569"
+      ],
+      "firstDate": "2024-04-29",
+      "lastDate": "2024-04-29",
       "editionsCount": 1
     },
     {
@@ -107798,17 +107484,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-belgian-national-championship-u16-18",
-      "label": "Belgian National Championship (U16/18)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11753"
-      ],
-      "firstDate": "2026-08-04",
-      "lastDate": "2026-08-04",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dormy-elite-tour-ii-drenge-u22",
       "label": "Dormy Elite Tour II Drenge U22",
       "sourceId": "egr",
@@ -107960,17 +107635,6 @@
       ],
       "firstDate": "2026-03-20",
       "lastDate": "2026-03-20",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-national-juniors-championship-u16-18",
-      "label": "National Juniors Championship (U16/18)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11754"
-      ],
-      "firstDate": "2026-08-04",
-      "lastDate": "2026-08-04",
       "editionsCount": 1
     },
     {
@@ -109896,17 +109560,6 @@
       ],
       "firstDate": "2025-09-26",
       "lastDate": "2025-09-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071"
-      ],
-      "firstDate": "2026-06-15",
-      "lastDate": "2026-06-15",
       "editionsCount": 1
     },
     {
@@ -112000,6 +111653,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-visit-owensboro-junior-championship",
+      "label": "Visit Owensboro Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269461"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-gba-junior-golf-tour-leg-2",
       "label": "GBA Junior Golf Tour Leg 2",
       "sourceId": "wagr",
@@ -113903,6 +113567,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-jimmy-anderson-junior-boys",
+      "label": "Jimmy Anderson Junior Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261130"
+      ],
+      "firstDate": "2025-10-25",
+      "lastDate": "2025-10-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-tyga-bojangles-junior-open",
       "label": "TYGA Bojangles Junior Open",
       "sourceId": "wagr",
@@ -114648,17 +114323,6 @@
       ],
       "firstDate": "2024-08-30",
       "lastDate": "2024-08-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-haskins-junior-invitational",
-      "label": "Haskins Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259106"
-      ],
-      "firstDate": "2025-07-15",
-      "lastDate": "2025-07-15",
       "editionsCount": 1
     },
     {
@@ -120313,17 +119977,6 @@
       ],
       "firstDate": "2022-05-14",
       "lastDate": "2022-05-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-tennessee-junior-amateur",
-      "label": "Tennessee Junior Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234076"
-      ],
-      "firstDate": "2024-06-24",
-      "lastDate": "2024-06-24",
       "editionsCount": 1
     },
     {

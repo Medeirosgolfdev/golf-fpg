@@ -1,0 +1,133 @@
+#!/usr/bin/env node
+/**
+ * scripts/scrape-golfbox-federacao.js
+ *
+ * Provas JUVENIS de uma federação que publica tudo no GolfBox Livescoring → kids2.
+ * API pública, sem conta, a mesma do scrape-golfbox.js, de quem se reaproveita o
+ * `scrapeOne` (classificação, voltas buraco a buraco, ano de nascimento, clube,
+ * handicap do dia, campo). Uma entrada por federação em FEDERACOES:
+ *
+ *   swissgolf — Swiss Golf (customer 1085, 04/11/2026): Junior Tour (U16/U18),
+ *     National Events U14, National Championships U10–U18, finais U10–U18.
+ *     Fora: jogos por equipas contra regiões, acompanhantes, camps, family days,
+ *     indoor, U25. (O Golf4Girls Championship não publica classificação.)
+ *   rbgf — Royal Belgian Golf Federation (customer 22, 04/11/2026): Junior
+ *     U12 & U14, Junior Opens, National Juniors Championship, Junior Masters,
+ *     finais U12/U14. Fora: Interclubs (equipas), Bélgica × Países Baixos, Kids
+ *     Tour (iniciação), provas canceladas.
+ *
+ *   calendário: scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/{c}/Season/{ano}/
+ *
+ * As competições que já estão no scripts/golfbox-scope.json (ex.: o Albert
+ * Vermeiren Trophy, fonte `avtrophy`) não se repetem aqui.
+ *
+ * Porquê (Mariana, 04/11/2026): o EGR já trazia muitas destas provas, mas só com
+ * o total de cada volta. O dedup genérico do EGR (util/egr-dedup.js) tira a
+ * versão EGR quando esta cobre a mesma prova. Classes repetidas (U16 dentro do
+ * U18, U12 dentro do U14, «Overall») ficam como a fonte as dá: o jobfile.js
+ * deixa cada miúdo só no escalão mais específico (`umaDivisaoPorJogador`).
+ *
+ * Saída: public/data/{fed}/{competitionId}.json — JobFile, 1 ficheiro por prova;
+ * adaptadores sources/swissgolf.js e sources/rbgf.js. Só kids2 (não vai à /major).
+ *
+ * Uso:
+ *   node scripts/scrape-golfbox-federacao.js --fed swissgolf          # época corrente e a anterior
+ *   node scripts/scrape-golfbox-federacao.js --fed rbgf --anos 2025,2026
+ *   node scripts/scrape-golfbox-federacao.js --fed swissgolf --ids 5359031,5358001
+ *
+ * Pedidos um a um, com pausa. Exit: 0 gravou · 2 nada de novo · 1 erro.
+ */
+"use strict";
+const fs = require("fs");
+const path = require("path");
+const { fetchJsonp, scrapeOne } = require("./scrape-golfbox");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
+
+const FEDERACOES = {
+  swissgolf: {
+    nome: "Swiss Golf",
+    customer: 1085,
+    juvenil: /Junior Tour|National Event U\d|National Championship (?:Boys |Girls )?U1\d|National Championship U\d|Final\s+U\d|Golf4Girls Championship/i,
+    fora: /Accompagn|Begleit|Captains|Camp|Family|Indoor|beat the Pro|Match ?Play|U25|ANNUL|ABGESAGT/i,
+  },
+  rbgf: {
+    nome: "Royal Belgian Golf Federation",
+    customer: 22,
+    juvenil: /Junior U1\d|Junior Open|National Juniors? Championship|Junior Masters|Finals? Junior/i,
+    fora: /Cancel|Interclubs|Kids Tour|Match|Albert Vermeiren/i,
+  },
+};
+const PAUSA_MS = 2000;
+const SCOPE_GOLFBOX = path.join(__dirname, "golfbox-scope.json");
+
+const arg = (n) => { const i = process.argv.indexOf(n); return i >= 0 ? process.argv[i + 1] : null; };
+const dorme = (ms) => new Promise((r) => setTimeout(r, ms));
+const hojeLisboa = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Lisbon" }).format(new Date());
+
+/** Competições já lidas pelo scrape-golfbox.js (scope) — não se repetem. */
+function jaNoScope() {
+  const raw = JSON.parse(fs.readFileSync(SCOPE_GOLFBOX, "utf8"));
+  return new Set((raw.competitions || raw).map((e) => String(e.competitionId || e)));
+}
+
+async function provasDoCalendario(fed, anos) {
+  const hoje = hojeLisboa().replace(/-/g, "");
+  const scope = jaNoScope();
+  const lista = [];
+  for (const ano of anos) {
+    const sc = await fetchJsonp(`https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/${fed.customer}/Season/${ano}/?callback=x`);
+    for (const se of Object.values(sc?.CompetitionData || {})) {
+      for (const m of Object.values(se.Months || {})) {
+        for (const e of Object.values(m.Entries || {})) {
+          const nome = String(e.Name || "");
+          const inicio = String(e.StartDate || "").slice(0, 8);
+          if (!fed.juvenil.test(nome) || fed.fora.test(nome) || scope.has(String(e.ID))) continue;
+          if (inicio && inicio > hoje) continue; // ainda não jogada
+          lista.push({ id: String(e.ID), nome, inicio });
+        }
+      }
+    }
+    await dorme(PAUSA_MS);
+  }
+  return [...new Map(lista.map((p) => [p.id, p])).values()].sort((a, b) => a.inicio.localeCompare(b.inicio));
+}
+
+/** Jogadores com pelo menos uma volta — o que a guarda conta. */
+const comVoltas = (d) => (d.divisions || []).reduce((n, dv) => n + (dv.players || []).filter((p) => (p.rounds || []).length || (p.roundGross || []).length).length, 0);
+
+(async () => {
+  const chave = arg("--fed");
+  const fed = FEDERACOES[chave];
+  if (!fed) { console.error(`Uso: --fed ${Object.keys(FEDERACOES).join("|")} [--anos 2025,2026] [--ids a,b]`); process.exit(1); }
+  const outDir = path.join(__dirname, "..", "public", "data", chave);
+  const ids = arg("--ids");
+  const anoAtual = Number(hojeLisboa().slice(0, 4));
+  const anos = arg("--anos") ? arg("--anos").split(",").map((s) => Number(s.trim())) : [anoAtual - 1, anoAtual];
+  const provas = ids ? ids.split(",").map((id) => ({ id: id.trim(), nome: "" })) : await provasDoCalendario(fed, anos);
+  console.log(`${fed.nome}: ${provas.length} prova(s) juvenis ${ids ? "(--ids)" : `de ${anos.join(", ")}`}`);
+  fs.mkdirSync(outDir, { recursive: true });
+
+  let gravados = 0, iguais = 0, vazios = 0, erros = 0;
+  for (const p of provas) {
+    try {
+      const { out } = await scrapeOne(p.id, {});
+      const file = path.join(outDir, `${p.id}.json`);
+      const n = comVoltas(out);
+      if (!n) { vazios++; console.log("   ⏭️  sem resultados — não gravado"); continue; }
+      // classes sem ninguém (ex.: «Girls U18» sem inscritas) não entram
+      const data = { ...out, divisions: (out.divisions || []).filter((dv) => (dv.players || []).length), competitionId: p.id, customer: fed.nome };
+      let anterior = null;
+      try { anterior = JSON.parse(fs.readFileSync(file, "utf8")); } catch { /* ficheiro novo */ }
+      const sem = (o) => { const c = { ...o }; delete c.scrapedAt; return JSON.stringify(c); };
+      if (anterior && sem(anterior) === sem(data)) { iguais++; console.log("   ⏭️  sem alterações"); }
+      else if (writeJsonGuarded(file, data, { count: comVoltas }).written) { gravados++; console.log(`   ✅ ${n} jogadores → ${chave}/${path.basename(file)}`); }
+      else { erros++; }
+    } catch (e) {
+      erros++;
+      console.error(`   ❌ ${p.id} ${p.nome}: ${e.message}`);
+    }
+    await dorme(PAUSA_MS);
+  }
+  console.log(`\n🏁 ${gravados} gravada(s) · ${iguais} sem alterações · ${vazios} sem resultados · ${erros} erro(s)`);
+  process.exitCode = erros && !gravados ? 1 : gravados ? 0 : 2;
+})().catch((e) => { console.error("❌", e.message); process.exit(1); });

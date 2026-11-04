@@ -428,11 +428,18 @@ const S = [
  { grp: "Circuitos", id: "swissgolf", title: "Swiss Golf — Suíça", sub: "Federação suíça: Junior Tour, National Events U14, National Championships U10–U18 e finais, tudo no GolfBox (customer 1085). Handlers JSONP públicos — sem cookies.", items: [
   { n: "Calendário Swiss Golf (GolfBox)", a: "ok", u: "https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/1085/Season/{ano}/?callback=x",
     d: "Todas as provas da época (só a pedida — cada ano à parte). Dá ID, nome e data; ~21 provas juvenis por época.",
-    ex: [["2026", "https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/1085/Season/2026/?callback=x"]], where: "scrape-swissgolf.js" },
+    ex: [["2026", "https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/1085/Season/2026/?callback=x"]], where: "scrape-golfbox-federacao.js" },
   { n: "Classificação + cartões", a: "ok", u: "https://scores.golfbox.dk/Handlers/LeaderboardHandler/GetLeaderboard/CompetitionId/{id}/ClassId/{classId}/RoundNumber/0/language/2057/?callback=x",
     d: "Por classe (Boys/Girls U10–U18): ano de nascimento, clube, MemberID suíço, HCP do dia (×10000), voltas buraco a buraco; o campo com par/SI/metros.",
     ex: [["National Championship U14-U12 2026 (Erlen)", "https://www.golfbox.dk/livescoring/tour/?language=2057#/competition/5359031/players/0/all"]],
-    w: "No Junior Tour o U16 repete miúdos do U18 e nos Nacionais o U12 repete o U14 — o agregador deixa cada um no escalão mais específico. O Golf4Girls Championship não publica classificação.", where: "scrape-swissgolf.js" },
+    w: "No Junior Tour o U16 repete miúdos do U18 e nos Nacionais o U12 repete o U14 — o agregador deixa cada um no escalão mais específico. O Golf4Girls Championship não publica classificação.", where: "scrape-golfbox-federacao.js" },
+ ]},
+ { grp: "Circuitos", id: "rbgf", title: "RBGF — Bélgica", sub: "Royal Belgian Golf Federation: Junior U12 & U14, Junior Opens, National Juniors, Junior Masters e finais, no GolfBox (customer 22). Os mesmos handlers JSONP públicos da Suíça.", items: [
+  { n: "Calendário RBGF (GolfBox)", a: "ok", u: "https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/22/Season/{ano}/?callback=x",
+    d: "~50 provas por época, 13 juvenis. O Albert Vermeiren Trophy também está aqui (lido à parte pelo scrape-golfbox.js).",
+    ex: [["2026", "https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/22/Season/2026/?callback=x"]], where: "scrape-golfbox-federacao.js" },
+  { n: "Junior Open Vlaanderen–Wallonie 2026 (exemplo)", a: "ok", u: "https://www.golfbox.dk/livescoring/tour/?language=2057#/competition/5387007/players/0/all",
+    d: "54 buracos em 3 voltas de 18; classes Boys/Girls (overall), U18 e U16.", where: "scrape-golfbox-federacao.js" },
  ]},
  { grp: "Circuitos", id: "espanha", title: "Espanha", sub: "RFEG (site novo + GolfBox + LiveGolfScoring/mitarjeta), NextCaddy (Andaluzia, Madrid) e Catalunha.", items: [
   { n: "RFEG — calendário (site novo)", a: "ok", u: "https://rfegolf.es/competiciones/calendario-torneos?wpe_anyo={ano}",

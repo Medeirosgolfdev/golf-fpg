@@ -1,16 +1,18 @@
-name: Actualizar Swiss Golf (Suíça)
+name: Actualizar federações no GolfBox (Suíça, Bélgica)
 
-# Provas juvenis da Swiss Golf no GolfBox (customer 1085): Junior Tour, National
-# Events U14, National Championships U10–U18 e finais. scripts/scrape-swissgolf.js
-# lê o calendário da época corrente e da anterior e grava
-# public/data/swissgolf/{competitionId}.json; se algum mudou, regenera o kids2.
+# Provas juvenis das federações que publicam tudo no GolfBox: Swiss Golf
+# (customer 1085) e Royal Belgian Golf Federation (customer 22).
+# scripts/scrape-golfbox-federacao.js --fed {swissgolf|rbgf} lê o calendário da
+# época corrente e da anterior e grava public/data/{fed}/{competitionId}.json;
+# se algum mudou, regenera o kids2.
 #
 # API PÚBLICA → SEM secrets/cookies.
 #
 # Corre:
 #  - Uma vez por semana, segunda às 06:30 UTC, de Abril a Novembro — as provas
-#    juvenis suíças são ao fim-de-semana e a época vai de Abril a Outubro (a de
-#    Novembro apanha o último fim-de-semana de Outubro). Mariana, 04/11/2026.
+#    juvenis são ao fim-de-semana e as épocas vão de Abril a Outubro (a de
+#    Novembro apanha o último fim-de-semana de Outubro). Mariana, 04/11/2026:
+#    «1x por semana chega».
 #  - A pedido, com números de competição GolfBox ad-hoc ou outras épocas.
 #
 # Nota: o commit é self-contained (scrape + agregador) porque um push feito com
@@ -18,8 +20,13 @@ name: Actualizar Swiss Golf (Suíça)
 on:
   workflow_dispatch:
     inputs:
+      fed:
+        description: 'federação (swissgolf ou rbgf; vazio = todas)'
+        required: false
+        default: ''
+        type: string
       ids:
-        description: 'competitionId(s) GolfBox separados por vírgula (vazio = calendário)'
+        description: 'competitionId(s) GolfBox separados por vírgula (vazio = calendário; exige fed)'
         required: false
         default: ''
         type: string
@@ -35,11 +42,11 @@ permissions:
   contents: write
 
 jobs:
-  update-swissgolf:
+  update-golfbox-federacoes:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     concurrency:
-      group: update-swissgolf
+      group: update-golfbox-federacoes
       cancel-in-progress: false
 
     steps:
@@ -57,28 +64,34 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Correr scrape-swissgolf.js
+      - name: Correr scrape-golfbox-federacao.js
         id: scrape
         run: |
           set +e
+          FED="${{ github.event.inputs.fed }}"
           IDS="${{ github.event.inputs.ids }}"
           ANOS="${{ github.event.inputs.anos }}"
-          if [ -n "$IDS" ]; then
-            node scripts/scrape-swissgolf.js --ids "$IDS"
-          elif [ -n "$ANOS" ]; then
-            node scripts/scrape-swissgolf.js --anos "$ANOS"
-          else
-            node scripts/scrape-swissgolf.js
-          fi
-          EXIT_CODE=$?
+          FEDS="${FED:-swissgolf rbgf}"
+          GRAVOU=0; ERRO=0
+          for F in $FEDS; do
+            if [ -n "$IDS" ]; then
+              node scripts/scrape-golfbox-federacao.js --fed "$F" --ids "$IDS"
+            elif [ -n "$ANOS" ]; then
+              node scripts/scrape-golfbox-federacao.js --fed "$F" --anos "$ANOS"
+            else
+              node scripts/scrape-golfbox-federacao.js --fed "$F"
+            fi
+            RC=$?
+            # 0 = houve novidades · 2 = sem alterações (NÃO é erro) · 1 = erro real
+            [ "$RC" = "0" ] && GRAVOU=1
+            [ "$RC" = "1" ] && ERRO=1
+          done
+          if [ "$GRAVOU" = "1" ]; then EXIT_CODE=0; elif [ "$ERRO" = "1" ]; then EXIT_CODE=1; else EXIT_CODE=2; fi
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
-          # 0 = houve novidades → regenerar canónico + commit
-          # 2 = sem alterações → no-op (NÃO é erro)
-          # 1 = erro real
-          if [ "$EXIT_CODE" = "1" ]; then
-            echo "❌ Scraper Swiss Golf falhou — ver logs acima"
-            exit 1
+          if [ "$ERRO" = "1" ]; then
+            echo "❌ Uma das federações falhou — ver logs acima"
           fi
+          if [ "$EXIT_CODE" = "1" ]; then exit 1; fi
           if [ "$EXIT_CODE" = "2" ]; then
             echo "ℹ️  Sem alterações — a saltar regeneração e commit"
           fi
@@ -92,5 +105,5 @@ jobs:
         if: steps.scrape.outputs.exit_code == '0'
         # -f agregador: juniors*.json & c.ª regenerados (nunca fundidos) se o main avançar.
         run: |
-          bash scripts/ci/push-generated.sh -m "data: Swiss Golf scrape + rebuild juniors $(date +'%Y-%m-%d %H:%M')" \
+          bash scripts/ci/push-generated.sh -m "data: federações GolfBox (Suíça, Bélgica) + rebuild juniors $(date +'%Y-%m-%d %H:%M')" \
             -f agregador -- public/data
