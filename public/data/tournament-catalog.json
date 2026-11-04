@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-04T02:43:50.713Z",
+  "generatedAt": "2026-11-04T02:50:36.583Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -10601,6 +10601,29 @@
       "editionsCount": 13
     },
     {
+      "id": "sgf-junior",
+      "label": "SGF Suécia",
+      "sourceId": "sgf",
+      "tournamentIds": [
+        "sgf-5008593",
+        "sgf-5042063",
+        "sgf-5156386",
+        "sgf-5180889",
+        "sgf-5181139",
+        "sgf-5261859",
+        "sgf-5400123",
+        "sgf-5403943",
+        "sgf-5403948",
+        "sgf-5403950",
+        "sgf-5403951",
+        "sgf-5406483",
+        "sgf-5704142"
+      ],
+      "firstDate": "2025-05-17",
+      "lastDate": "2026-09-25",
+      "editionsCount": 13
+    },
+    {
       "id": "uskids-european-championship",
       "label": "European Championship",
       "sourceId": "uskids",
@@ -19230,6 +19253,24 @@
       "editionsCount": 8
     },
     {
+      "id": "wagr-5-stars-junior-cup-by-adrian-meronk",
+      "label": "5 Stars Junior Cup by Adrian Meronk",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-229490",
+        "wagr-271638",
+        "wagr-224656",
+        "wagr-270714",
+        "wagr-234070",
+        "wagr-224232",
+        "wagr-233228",
+        "wagr-223319"
+      ],
+      "firstDate": "2023-05-26",
+      "lastDate": "2026-08-26",
+      "editionsCount": 8
+    },
+    {
       "id": "uskids-falcon-s-lair-golf-club",
       "label": "Falcon's Lair Golf Club",
       "sourceId": "uskids",
@@ -22066,23 +22107,6 @@
       ],
       "firstDate": "2022-05-01",
       "lastDate": "2025-04-25",
-      "editionsCount": 7
-    },
-    {
-      "id": "wagr-5-stars-junior-cup-by-adrian-meronk",
-      "label": "5 Stars Junior Cup by Adrian Meronk",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-229490",
-        "wagr-271638",
-        "wagr-224656",
-        "wagr-234070",
-        "wagr-224232",
-        "wagr-233228",
-        "wagr-223319"
-      ],
-      "firstDate": "2023-05-26",
-      "lastDate": "2026-08-26",
       "editionsCount": 7
     },
     {
@@ -29406,21 +29430,6 @@
       "editionsCount": 5
     },
     {
-      "id": "egr-annika-invitational-europe",
-      "label": "Annika Invitational Europe",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12388",
-        "egr-egr10876",
-        "egr-egr9046",
-        "egr-egr7773",
-        "egr-egr6775"
-      ],
-      "firstDate": "2022-06-14",
-      "lastDate": "2026-06-16",
-      "editionsCount": 5
-    },
-    {
       "id": "egr-srixon-tour-2-u15",
       "label": "Srixon Tour 2 (U15)",
       "sourceId": "egr",
@@ -30486,6 +30495,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-junior-masters-invitational-final",
+      "label": "Junior Masters Invitational - Final",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-225839",
+        "wagr-235969",
+        "wagr-260550",
+        "wagr-271998",
+        "wagr-76635"
+      ],
+      "firstDate": "2022-09-16",
+      "lastDate": "2026-09-18",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-delsjo-junior-open",
       "label": "Delsjo Junior Open",
       "sourceId": "wagr",
@@ -30738,6 +30762,21 @@
       ],
       "firstDate": "2022-07-04",
       "lastDate": "2026-06-29",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-angso-international-junior-masters-invitational",
+      "label": "Angso International Junior Masters Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234228",
+        "wagr-259370",
+        "wagr-271125",
+        "wagr-224362",
+        "wagr-75214"
+      ],
+      "firstDate": "2022-07-03",
+      "lastDate": "2026-06-28",
       "editionsCount": 5
     },
     {
@@ -37213,31 +37252,17 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-svenska-juniortouren-final",
-      "label": "Svenska Juniortouren Final",
+      "id": "wagr-jsm-match-svenska-juniortouren-elit-3",
+      "label": "JSM Match, Svenska Juniortouren Elit #3",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-260683",
-        "wagr-236122",
-        "wagr-226051",
-        "wagr-272091"
+        "wagr-258384",
+        "wagr-270323",
+        "wagr-233879",
+        "wagr-224029"
       ],
-      "firstDate": "2023-09-29",
-      "lastDate": "2026-09-25",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-svenska-juniortouren-elit-2",
-      "label": "Svenska Juniortouren Elit #2",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-257674",
-        "wagr-269763",
-        "wagr-233277",
-        "wagr-223644"
-      ],
-      "firstDate": "2023-05-26",
-      "lastDate": "2026-05-30",
+      "firstDate": "2023-06-17",
+      "lastDate": "2026-06-23",
       "editionsCount": 4
     },
     {
@@ -37246,12 +37271,68 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-256997",
+        "wagr-269291",
         "wagr-232640",
-        "wagr-223123",
-        "wagr-269291"
+        "wagr-223123"
       ],
       "firstDate": "2023-04-21",
       "lastDate": "2026-04-18",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-svenska-juniortouren-final",
+      "label": "Svenska Juniortouren Final",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-236122",
+        "wagr-226051",
+        "wagr-272091",
+        "wagr-260683"
+      ],
+      "firstDate": "2023-09-29",
+      "lastDate": "2026-09-25",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-svenska-juniortouren-elit-5",
+      "label": "Svenska Juniortouren Elit #5",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271517",
+        "wagr-235459",
+        "wagr-225407",
+        "wagr-259866"
+      ],
+      "firstDate": "2023-08-25",
+      "lastDate": "2026-08-14",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-svenska-juniortouren-elit-2",
+      "label": "Svenska Juniortouren Elit #2",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269763",
+        "wagr-257674",
+        "wagr-233277",
+        "wagr-223644"
+      ],
+      "firstDate": "2023-05-26",
+      "lastDate": "2026-05-30",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-svenska-juniortouren-elit-1",
+      "label": "Svenska Juniortouren Elit #1",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269578",
+        "wagr-233007",
+        "wagr-223417",
+        "wagr-257412"
+      ],
+      "firstDate": "2023-05-13",
+      "lastDate": "2026-05-09",
       "editionsCount": 4
     },
     {
@@ -37535,20 +37616,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-junior-masters-invitational-final",
-      "label": "Junior Masters Invitational - Final",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-225839",
-        "wagr-235969",
-        "wagr-260550",
-        "wagr-76635"
-      ],
-      "firstDate": "2022-09-16",
-      "lastDate": "2025-09-19",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-svenska-juniortouren-div-1-3-stockholm",
       "label": "Svenska Juniortouren Div 1 #3 Stockholm",
       "sourceId": "wagr",
@@ -37563,31 +37630,17 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-svenska-juniortouren-elit-1",
-      "label": "Svenska Juniortouren Elit #1",
+      "id": "wagr-vikingaskeppet",
+      "label": "Vikingaskeppet",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-257412",
-        "wagr-233007",
-        "wagr-223417",
-        "wagr-269578"
+        "wagr-270498",
+        "wagr-234140",
+        "wagr-258600",
+        "wagr-228891"
       ],
-      "firstDate": "2023-05-13",
-      "lastDate": "2026-05-09",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-svenska-juniortouren-elit-5",
-      "label": "Svenska Juniortouren Elit #5",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235459",
-        "wagr-225407",
-        "wagr-259866",
-        "wagr-271517"
-      ],
-      "firstDate": "2023-08-25",
-      "lastDate": "2026-08-14",
+      "firstDate": "2023-07-01",
+      "lastDate": "2026-07-04",
       "editionsCount": 4
     },
     {
@@ -37854,20 +37907,6 @@
       ],
       "firstDate": "2022-04-09",
       "lastDate": "2025-04-14",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-angso-international-junior-masters-invitational",
-      "label": "Angso International Junior Masters Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234228",
-        "wagr-259370",
-        "wagr-224362",
-        "wagr-75214"
-      ],
-      "firstDate": "2022-07-03",
-      "lastDate": "2025-06-29",
       "editionsCount": 4
     },
     {
@@ -46958,6 +46997,19 @@
       "editionsCount": 3
     },
     {
+      "id": "egr-annika-invitational-europe",
+      "label": "ANNIKA Invitational Europe",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr9046",
+        "egr-egr7773",
+        "egr-egr6775"
+      ],
+      "firstDate": "2022-06-14",
+      "lastDate": "2024-06-11",
+      "editionsCount": 3
+    },
+    {
       "id": "egr-dgv-gvbb-2-ak16-18-jungen",
       "label": "DGV-GVBB 2. AK16/18 Jungen",
       "sourceId": "egr",
@@ -47894,29 +47946,16 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-svenska-juniortouren-elit-6",
-      "label": "Svenska Juniortouren Elit #6",
+      "id": "wagr-jsm-slag-svenska-juniortouren-elit-4",
+      "label": "JSM Slag, Svenska Juniortouren Elit #4",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-260428",
-        "wagr-225821",
-        "wagr-271920"
+        "wagr-259293",
+        "wagr-271076",
+        "wagr-224909"
       ],
-      "firstDate": "2023-09-16",
-      "lastDate": "2026-09-04",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-jsm-match-svenska-juniortouren-elit-3",
-      "label": "JSM Match, Svenska Juniortouren Elit #3",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258384",
-        "wagr-233879",
-        "wagr-224029"
-      ],
-      "firstDate": "2023-06-17",
-      "lastDate": "2025-06-24",
+      "firstDate": "2023-08-03",
+      "lastDate": "2026-07-28",
       "editionsCount": 3
     },
     {
@@ -47930,6 +47969,32 @@
       ],
       "firstDate": "2024-08-17",
       "lastDate": "2026-08-15",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-2-4-sm-land",
+      "label": "Svenska Juniortouren Div 2 #4 Småland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234957",
+        "wagr-259294",
+        "wagr-224907"
+      ],
+      "firstDate": "2023-08-05",
+      "lastDate": "2025-07-24",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-svenska-juniortouren-elit-6",
+      "label": "Svenska Juniortouren Elit #6",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271920",
+        "wagr-225821",
+        "wagr-260428"
+      ],
+      "firstDate": "2023-09-16",
+      "lastDate": "2026-09-04",
       "editionsCount": 3
     },
     {
@@ -48632,19 +48697,6 @@
       ],
       "firstDate": "2024-01-03",
       "lastDate": "2026-01-03",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-vikingaskeppet",
-      "label": "Vikingaskeppet",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234140",
-        "wagr-258600",
-        "wagr-228891"
-      ],
-      "firstDate": "2023-07-01",
-      "lastDate": "2025-07-05",
       "editionsCount": 3
     },
     {
@@ -65938,30 +65990,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-swedish-junior-elite-tour-2",
-      "label": "Swedish Junior Elite Tour #2",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12385",
-        "egr-egr12384"
-      ],
-      "firstDate": "2026-05-30",
-      "lastDate": "2026-05-30",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-swedish-junior-tour-elite-1",
-      "label": "Swedish Junior Tour Elite #1",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12382",
-        "egr-egr12383"
-      ],
-      "firstDate": "2026-05-09",
-      "lastDate": "2026-05-09",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-grand-opening",
       "label": "Grand Opening",
       "sourceId": "egr",
@@ -66286,18 +66314,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-swedish-junior-tour-elite-4-jsm-slag",
-      "label": "Swedish Junior Tour Elite #4 (JSM Slag)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12390",
-        "egr-egr12389"
-      ],
-      "firstDate": "2026-07-28",
-      "lastDate": "2026-07-28",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-vikingaskeppet",
       "label": "Vikingaskeppet",
       "sourceId": "egr",
@@ -66559,18 +66575,6 @@
       ],
       "firstDate": "2026-09-04",
       "lastDate": "2026-09-04",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-swedish-junior-tour-elite-5",
-      "label": "Swedish Junior Tour Elite #5",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12391",
-        "egr-egr12393"
-      ],
-      "firstDate": "2026-08-14",
-      "lastDate": "2026-08-14",
       "editionsCount": 2
     },
     {
@@ -66931,30 +66935,6 @@
       ],
       "firstDate": "2026-04-17",
       "lastDate": "2026-04-17",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-swedish-junior-tour-elite-final",
-      "label": "Swedish Junior Tour Elite (Final)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12397",
-        "egr-egr12396"
-      ],
-      "firstDate": "2026-09-25",
-      "lastDate": "2026-09-25",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-swedish-junior-tour-elite-6",
-      "label": "Swedish Junior Tour Elite #6",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12395",
-        "egr-egr12394"
-      ],
-      "firstDate": "2026-09-04",
-      "lastDate": "2026-09-04",
       "editionsCount": 2
     },
     {
@@ -67978,15 +67958,15 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-jsm-slag-svenska-juniortouren-elit-4",
-      "label": "JSM Slag, Svenska Juniortouren Elit #4",
+      "id": "wagr-pga-junior-championship",
+      "label": "PGA Junior Championship",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-259293",
-        "wagr-224909"
+        "wagr-263850",
+        "wagr-273400"
       ],
-      "firstDate": "2023-08-03",
-      "lastDate": "2025-07-22",
+      "firstDate": "2025-08-04",
+      "lastDate": "2026-08-03",
       "editionsCount": 2
     },
     {
@@ -68026,15 +68006,15 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-svenska-juniortouren-div-2-4-sm-land",
-      "label": "Svenska Juniortouren Div 2 #4 Småland",
+      "id": "wagr-54-junior-tour-by-visit-trelleborg-1",
+      "label": "54 Junior Tour by Visit Trelleborg #1",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-234957",
-        "wagr-224907"
+        "wagr-273390",
+        "wagr-263839"
       ],
-      "firstDate": "2023-08-05",
-      "lastDate": "2024-07-25",
+      "firstDate": "2025-04-12",
+      "lastDate": "2026-03-30",
       "editionsCount": 2
     },
     {
@@ -68335,18 +68315,6 @@
       ],
       "firstDate": "2022-07-05",
       "lastDate": "2023-06-27",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-54-junior-tour-by-visit-trelleborg-1",
-      "label": "54 Junior Tour by Visit Trelleborg #1",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-273390",
-        "wagr-263839"
-      ],
-      "firstDate": "2025-04-12",
-      "lastDate": "2026-03-30",
       "editionsCount": 2
     },
     {
@@ -109620,17 +109588,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-pga-junior-championship",
-      "label": "PGA Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-263850"
-      ],
-      "firstDate": "2025-08-04",
-      "lastDate": "2025-08-04",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-svenska-juniortouren-div-1-4-goteborg",
       "label": "Svenska Juniortouren Div 1 #4 Goteborg",
       "sourceId": "wagr",
@@ -109738,6 +109695,28 @@
       ],
       "firstDate": "2026-04-10",
       "lastDate": "2026-04-10",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-stockholm-wagr",
+      "label": "Stockholm WAGR",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275598"
+      ],
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-06-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-54-junior-tour-by-visit-trelleborg-final",
+      "label": "54 Junior Tour by Visit Trelleborg Final",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-263848"
+      ],
+      "firstDate": "2025-10-27",
+      "lastDate": "2025-10-27",
       "editionsCount": 1
     },
     {
@@ -110379,17 +110358,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-54-junior-tour-by-visit-trelleborg-final",
-      "label": "54 Junior Tour by Visit Trelleborg Final",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-263848"
-      ],
-      "firstDate": "2025-10-27",
-      "lastDate": "2025-10-27",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-bjgt-european-open",
       "label": "BJGT European Open",
       "sourceId": "wagr",
@@ -110420,6 +110388,17 @@
       ],
       "firstDate": "2025-07-24",
       "lastDate": "2025-07-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-2-stockholm",
+      "label": "Svenska Juniortouren Div 1 #2 Stockholm",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269768"
+      ],
+      "firstDate": "2026-05-30",
+      "lastDate": "2026-05-30",
       "editionsCount": 1
     },
     {
@@ -111435,17 +111414,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-stockholm-wagr",
-      "label": "Stockholm WAGR",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-275598"
-      ],
-      "firstDate": "2026-06-30",
-      "lastDate": "2026-06-30",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-svenska-juniortouren-div-1-4-g-strike-h-lsinge",
       "label": "Svenska Juniortouren Div 1 #4 Gästrike-Hälsinge",
       "sourceId": "wagr",
@@ -111993,6 +111961,28 @@
       ],
       "firstDate": "2023-08-26",
       "lastDate": "2023-08-26",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-6-dalarna",
+      "label": "Svenska Juniortouren Div 1 #6 Dalarna",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260412"
+      ],
+      "firstDate": "2025-09-06",
+      "lastDate": "2025-09-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-2-4-goteborg",
+      "label": "Svenska Juniortouren Div 2 #4 Goteborg",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271074"
+      ],
+      "firstDate": "2026-07-30",
+      "lastDate": "2026-07-30",
       "editionsCount": 1
     },
     {
@@ -113580,14 +113570,25 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-svenska-juniortouren-div-1-6-dalarna",
-      "label": "Svenska Juniortouren Div 1 #6 Dalarna",
+      "id": "wagr-svenska-juniortouren-div-2-3-dalarna",
+      "label": "Svenska Juniortouren Div 2 #3 Dalarna",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-260412"
+        "wagr-270296"
       ],
-      "firstDate": "2025-09-06",
-      "lastDate": "2025-09-06",
+      "firstDate": "2026-06-25",
+      "lastDate": "2026-06-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-6-vastmanland",
+      "label": "Svenska Juniortouren Div 1 #6 Vastmanland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271909"
+      ],
+      "firstDate": "2026-09-05",
+      "lastDate": "2026-09-05",
       "editionsCount": 1
     },
     {
@@ -113987,14 +113988,14 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-svenska-juniortouren-div-1-2-stockholm",
-      "label": "Svenska Juniortouren Div 1 #2 Stockholm",
+      "id": "wagr-svenska-juniortouren-div-2-4-gastrike-halsinge",
+      "label": "Svenska Juniortouren Div.2 #4 Gastrike-Halsinge",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-269768"
+        "wagr-271079"
       ],
-      "firstDate": "2026-05-30",
-      "lastDate": "2026-05-30",
+      "firstDate": "2026-07-30",
+      "lastDate": "2026-07-30",
       "editionsCount": 1
     },
     {
@@ -116767,6 +116768,17 @@
       ],
       "firstDate": "2026-04-02",
       "lastDate": "2026-04-02",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-2-4-uppland",
+      "label": "Svenska Juniortouren Div 2 #4 Uppland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-259297"
+      ],
+      "firstDate": "2025-07-24",
+      "lastDate": "2025-07-24",
       "editionsCount": 1
     },
     {
