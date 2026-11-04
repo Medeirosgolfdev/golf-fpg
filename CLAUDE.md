@@ -239,7 +239,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   escalões → `compareEscalao`/`ESC_ORDER_FULL`; ordinais «1.º»;
   paginação → `ui/Pager` + `usePaged`; espaçamento, letra e cantos no `App.css` sempre com `var(--space-*)`/`--fs-*`/`--radius-*` (só ficam em px os redondos, os negativos e o bloco de impressão); KPIs → `KpiCard` numa `.kpi-row`;
   cartão de buracos → `ScorecardTable` ou a grelha `.sc-table-modern`/`.sc-table-ec`
-  + `.sc-grid`; tabela simples → `.dtable` (variantes `-sm`/`-lg`/`dt-compact`/
+  + `.sc-grid`; tabela simples → `.dtable`, SEMPRE à largura toda — nunca `u-w-auto` (04/11/2026, «tabelas que se adaptam à janela e outras que não… não gosto»; trava `scripts/tabelas-largura.test.js`; larga demais → dentro de `.u-ox-auto`) (variantes `-sm`/`-lg`/`dt-compact`/
   `player-list-table` só JUNTO com `.dtable`; o aspecto vive no «MODELO ÚNICO DAS
   TABELAS», fim do `App.css`); só totais → dados `totals` da divisão, que o CircuitShell passa ao `TournamentDetail` como prova sem buraco a buraco (`totalsDivisionView`, um só caminho); lista +
   detalhe → `MasterDetail`; **rankings → capacidade `ranking` do CircuitShell**

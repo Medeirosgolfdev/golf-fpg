@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { estimateField } from "./previsaoModel";
+import { estimateField, ultimas20, buildHoleProfile, porComprimento } from "./previsaoModel";
+import type { PlayerPageData } from "../../data/playerDataLoader";
 
 // Mocks mínimos do formato uskids-member-history-slim consumido por estimateField.
 type Rounds = Record<string, { gross: number; strokes?: number[] }>;
@@ -94,5 +95,54 @@ describe("estimateField — fallback quando nenhuma edição chega ao field mín
     expect(est.nExcluded).toBe(0);
     expect(est.nCounted).toBe(2);
     expect(est.editions.every(e => e.counted)).toBe(true);
+  });
+});
+
+// «Bom dia» (04/11/2026): as 8 voltas de SD mais baixo das ÚLTIMAS 20 — nunca
+// a melhor de sempre (num júnior, a volta antiga não diz como joga hoje).
+describe("ultimas20 — as voltas do «Bom dia»", () => {
+  const rounds = Array.from({ length: 25 }, (_, i) => ({
+    scoreId: String(i), holeCount: 18,
+    date: `${String((i % 28) + 1).padStart(2, "0")}-01-${2024 + Math.floor(i / 12)}`,
+    sd: i === 0 ? 1 : 30 - i, // a volta 0 (a mais antiga) é a melhor de sempre
+  }));
+  const HOLES: Record<string, { g: number[]; p: number[]; m: number[] }> = {};
+  for (const r of rounds) HOLES[r.scoreId] = { g: Array(18).fill(Number(r.scoreId) >= 17 ? 4 : 6), p: Array(18).fill(4), m: Array(18).fill(300) };
+  const pd = { DATA: [{ rounds }], HOLES } as unknown as PlayerPageData;
+
+  it("fica com as 20 mais recentes e as 8 melhores delas", () => {
+    const u = ultimas20(pd);
+    expect(u.sds.length).toBe(20);
+    expect(u.bomIds.has("0")).toBe(false); // a melhor de sempre é antiga demais
+    expect([...u.bomIds].sort((a, b) => +a - +b)).toEqual(["17", "18", "19", "20", "21", "22", "23", "24"]);
+  });
+
+  it("o perfil do Bom dia usa só essas voltas", () => {
+    const bom = buildHoleProfile(pd, ultimas20(pd).bomIds);
+    expect(bom.nHoles).toBe(8 * 18);
+    expect(bom.expectedVsPar(4, 300)).toBe(0); // nessas 8 fez par em todos
+  });
+});
+
+// «📏 O comprimento do tee» (04/11/2026): voltas de 18 dos últimos 6 meses em
+// curtos / parecidos (±250 m) / compridos, comparados com o tee da prova.
+describe("porComprimento — grupos pelo comprimento do tee", () => {
+  const hoje = new Date(Date.now() - 30 * 864e5);
+  const data = `${String(hoje.getDate()).padStart(2, "0")}-${String(hoje.getMonth() + 1).padStart(2, "0")}-${hoje.getFullYear()}`;
+  const volta = (id: string, metros: number, sd: number, gross: number) =>
+    ({ scoreId: id, holeCount: 18, date: data, sd, gross, par: 72, meters: metros });
+  const pd = { DATA: [{ rounds: [
+    volta("a", 4500, 12, 80), volta("b", 5000, 10, 82), volta("c", 5100, 8, 80), volta("d", 5600, 14, 88),
+    { scoreId: "e", holeCount: 18, date: "01-01-2020", sd: 1, gross: 70, par: 72, meters: 5000 }, // antiga: fora
+  ] }], HOLES: {} } as unknown as PlayerPageData;
+
+  it("separa por ±250 m do tee e faz as médias", () => {
+    const g = porComprimento(pd, 5060);
+    expect(g.map(x => [x.key, x.n])).toEqual([["curtos", 1], ["parecidos", 2], ["compridos", 1]]);
+    const par = g[1];
+    expect(par.sdMedio).toBe(9);
+    expect(par.sdMelhor).toBe(8);
+    expect(par.vsParMedio).toBe(9);
+    expect(par.metros).toBe(5050);
   });
 });

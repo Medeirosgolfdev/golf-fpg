@@ -311,7 +311,7 @@ function TwoTeeSDTable({
 
   return (
     <div className="sim-scroll-x scroll-x u-maxh-520px">
-      <table className="dtable sim-multi-tee u-fs-fs-12 u-table-layout-auto u-w-auto">
+      <table className="dtable sim-multi-tee u-fs-fs-12 u-table-layout-auto">
         <thead>
           {/* Fila 1: nome do campo */}
           <tr>

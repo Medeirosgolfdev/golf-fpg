@@ -2323,6 +2323,9 @@ a.fed-card:hover { border-color: var(--color-info-dark); box-shadow: 0 0 0 1px v
 .si-pill { display: inline-block; min-width: 22px; padding: var(--space-1) var(--space-8); border-radius: 999px; font-size: var(--fs-11);
   font-weight: 600; background: var(--accent-light); color: var(--text-2); }
 .si-pill.on { background: var(--accent); color: var(--text-on-color); font-weight: 800; }
+/* SI da 2.ª passagem num campo de 9 jogado 2× — só o número, apagadinho. */
+.si-twin { margin-left: var(--space-4); font-size: var(--fs-10); color: var(--text-muted); }
+.si-twin.on { color: var(--accent); font-weight: 800; }
 /* Barras por buraco (jogador vs field) na Análise do Kids 2 — a altura vem dos dados. */
 .hole-bar { width: 40%; border-radius: var(--radius-xs) var(--radius-xs) 0 0; }
 /* ── /comparar ── */
@@ -3404,6 +3407,37 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 /* Linha de KPI cards (hero de Campos, topo de Draws) — substitui o
    style inline repetido `display:flex; flex-wrap:wrap; gap:10; margin:12px 0`. */
 .kpi-row { display: flex; flex-wrap: wrap; gap: var(--space-10); margin: var(--space-12) 0; }
+/* 4 KPIs sempre numa fila (Previsão); 2 por fila em ecrã estreito. */
+.kpi-row.kpi-row-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; }
+.kpi-row.kpi-row-4 > .kpi { min-width: 0; }
+@media (max-width: 600px) { .kpi-row.kpi-row-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Parâmetros da Previsão numa linha (HI · CR · Slope · Par · …), «✎ editar» abre as caixas. */
+.prev-params { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-4) var(--space-14); font-size: var(--fs-12); color: var(--text-2); }
+.prev-params strong { color: var(--text-1); }
+/* Régua da Previsão (gross → ±par → SD → das últimas 20): barra das voltas e
+   marcas da média / do handicap / da melhor (04/11/2026). */
+.prev-regua-n20 { display: inline-flex; align-items: center; gap: var(--space-8); }
+.prev-bar { display: inline-block; width: 90px; height: 8px; background: var(--bg-subtle); border-radius: var(--radius-sm); overflow: hidden; }
+.prev-bar > .fill { height: 100%; }
+.p-ref-hcp { background: var(--accent); color: var(--text-on-color); border-color: transparent; }
+.p-ref-media { background: var(--color-warn); color: var(--text-on-color); border-color: transparent; }
+.p-ref-best { background: var(--color-good-dark); color: var(--text-on-color); border-color: transparent; }
+/* Plano de jogo da Previsão: linhas verticais clarinhas entre colunas e
+   cabeçalhos (alguns em 2 linhas) centrados na vertical; o Par pintado
+   com a cor da «Vista do campo» (parHoleColors, caixinha global .par-chip). */
+.prev-plano :is(th, td) + :is(th, td) { border-left: 1px solid var(--border-light); }
+.prev-plano thead th { vertical-align: middle; line-height: 1.2; }
+/* Alcance (HoleDiffTable): linhas verticais clarinhas; o taco da 1.ª pancada. */
+.hdt :is(th, td) + :is(th, td) { border-left: 1px solid var(--border-light); }
+.hdt-club { font-weight: 800; font-size: var(--fs-13); color: var(--accent); }
+.hdt-club-m { display: block; font-size: var(--fs-10); color: var(--text-muted); }
+/* Cada pancada é um bloco (linha forte por cima, nome a negrito); o «faltam»
+   mais leve; ⛳ = já no green (sem fundo: o destaque é o taco); linha a fechar. */
+.dtable.hdt { border-bottom: 1px solid var(--border); }
+.hdt tr.hdt-shot > td { border-top: 1px solid var(--border); background: var(--bg-header); }
+.hdt tr.hdt-left > td.hdt-lbl { font-weight: 400; color: var(--text-2); }
+.hdt td.hdt-green { border-top: 1px solid var(--border); vertical-align: top; }
+.par-chip { display: inline-block; min-width: 22px; padding: var(--space-1) var(--space-4); border: 1px solid transparent; border-radius: var(--radius-sm); text-align: center; font-weight: 800; }
 
 /* ── Search input + compact select (DrivePage, FPGPage) ── */
 .select-compact { font-size: var(--fs-11); padding: var(--space-3) var(--space-6); border-radius: var(--radius);

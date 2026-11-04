@@ -508,7 +508,7 @@ function StandingsTable({ rows }: { rows: { pos: number; name: string }[] }) {
   return (
     <div className="u-mb-20px">
       <div className="fw-700 u-mb-4px">Classificação final</div>
-      <table className="dtable player-list-table u-fs-fs-12 u-w-auto u-minw-260px">
+      <table className="dtable player-list-table u-fs-fs-12">
         <thead>
           <tr>
             <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>

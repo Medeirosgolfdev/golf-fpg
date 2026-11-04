@@ -185,6 +185,10 @@ data-archive/uskids-member-diario.jsonl
 /public/data/federados-lite.json
 /public/data/fpg-admissions-draws-drive.json
 
+# Buraco a buraco de quem jogou cada campo/tee (scripts/build-course-hole-field.js),
+# para a Previsão; gerado no predev/prebuild a partir das fichas em output/{fed}/.
+/public/data/course-hole-field.json
+
 # cache do tsc (gerada pela build)
 tsconfig.tsbuildinfo
 

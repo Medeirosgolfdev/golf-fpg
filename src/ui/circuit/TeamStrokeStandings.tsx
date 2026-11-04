@@ -299,7 +299,7 @@ function TeamList({ model, catKey, label, nLabel }: { model: TsModel; catKey: st
     <div className="mb-16">
       {label && <SectionTitle as="div" sub={nLabel}>{label}</SectionTitle>}
       <div className="sc-wrap">
-        <table className="dtable tbl-compact u-w-auto u-minw-360px">
+        <table className="dtable tbl-compact">
           <thead>
             <tr>
               {hdr("pos", "Pos.")}
@@ -392,7 +392,7 @@ function AllPlayers({ model }: { model: TsModel }) {
         <span className="muted fs-12">{rows.length} jogadores{model.showConta ? " · ✓ = resultado que conta para a equipa" : " · a negrito, os resultados que contam para a equipa"}</span>
       </div>
       <div className="sc-wrap">
-        <table className="dtable tbl-compact u-w-auto u-minw-420px">
+        <table className="dtable tbl-compact">
           <thead>
             <tr>
               {hdr("equipa", model.rankBy === "toPar" ? "Região" : "Equipa", "u-ta-left")}

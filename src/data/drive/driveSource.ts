@@ -6,7 +6,7 @@
 import type { Tournament } from "../fpgTypes";
 import type { FpgTournamentData } from "../nacional2026Loader";
 import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic } from "../featuredTournaments";
-import { isAquaporSenhoras, mergeDrivePlaceholders } from "./driveCircuitData";
+import { isAquaporSenhoras, mergeDrivePlaceholders, stripEscalaoFromName } from "./driveCircuitData";
 import { todayIso } from "../../utils/format";
 
 export type DriveSeries = "tour" | "challenge" | "aquapor";
@@ -77,7 +77,30 @@ export function buildDriveSource(raw: Tournament[], idx: DriveAdmissionsIndex): 
       have.add(key);
     }
   }
-  return mergeDrivePlaceholders(preencherSenhorasAquapor(src));
+  return mergeDrivePlaceholders(herdarCampoDoDia(preencherSenhorasAquapor(src)));
+}
+
+/** Campo herdado (04/11/2026, Mariana: «Sim, herda o campo»): a FPG publica
+ *  algumas provas partidas por escalão (985-10248/49/50 «… Sub 14/12/10») e só
+ *  a entrada principal (985-10247) traz o campo. Quem não tem campo herda-o
+ *  das entradas da MESMA prova — mesmo clube (ccode), dia, série e nome sem o
+ *  escalão — quando essas têm um só campo. Nunca só pelo tcode (a FPG
+ *  reutiliza-os); sem campo em nenhuma, fica sem. */
+export function herdarCampoDoDia(src: Tournament[]): Tournament[] {
+  const base = (t: Tournament) => `${t.ccode}|${t.date}|${t.series || "tour"}|${stripEscalaoFromName(t.name).toLowerCase()}`;
+  const campos = new Map<string, Set<string>>();
+  for (const t of src) {
+    const c = t.campo?.trim();
+    if (!c) continue;
+    const k = base(t);
+    if (!campos.has(k)) campos.set(k, new Set());
+    campos.get(k)!.add(c);
+  }
+  return src.map(t => {
+    if (t.campo?.trim()) return t;
+    const cs = campos.get(base(t));
+    return cs && cs.size === 1 ? { ...t, campo: [...cs][0] } : t;
+  });
 }
 
 /** AQUAPOR — Senhoras (02/11/2026): a FPG põe a classificação feminina num 2.º

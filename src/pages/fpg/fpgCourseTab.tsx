@@ -20,6 +20,10 @@ import { useNavigate } from "react-router-dom";
 import type { Course, Tee } from "../../data/types";
 import type { Tournament } from "../../data/fpgTypes";
 import type { ResolvedCourse } from "../kids/CourseTab";
+import type { JogadorNoTee } from "../kids/PrevisaoTab";
+import { useFedBirthdates, useFedGenders, useFedHcp } from "../../ui/InscricoesComponents";
+import { formatPlayerName } from "../../utils/playerUtils";
+import { normName } from "../../utils/normName";
 import { CoursesGate, useCourses } from "../../context/CoursesContext";
 import { canonicalCourseName, resolveCourseKeyByName } from "../../utils/courseAliases";
 import { norm, escalaoAtDate, todayIso } from "../../utils/format";
@@ -27,6 +31,8 @@ import { isManuel, MANUEL_DOB } from "../../constants/manuel";
 import { tournamentHasManuel } from "../../data/fpgUtils";
 import { teeRuleFor, teeNameFor, parseSubNumber } from "../../utils/teeRegulation";
 import LoadingState from "../../ui/LoadingState";
+import Select from "../../ui/Select";
+import { FilterField } from "../../ui/FilterField";
 
 const CourseComoJogou = lazy(() => import("../CamposPage").then((m) => ({ default: m.CourseComoJogou })));
 const PrevisaoTab = lazy(() => import("../kids/PrevisaoTab"));
@@ -104,22 +110,122 @@ export function manuelTeeNaProva(t: Tournament | null | undefined): string | nul
   const teeJogado = jogou && ((jogou.roundScores ?? []).map((r) => r.teeName).find(Boolean) || jogou.teeName);
   if (teeJogado) return teeJogado;
   if (!tournamentHasManuel(t)) return null;
+  return teePeloEscalao(t);
+}
+
+/** O tee que caberia ao Manuel pelo escalão dele à data da prova (regulamento
+ *  da prova / tabela FPG) — também quando ele NÃO está na prova: a Previsão
+ *  aparece sempre que o campo é conhecido, com o tee à escolha (04/11/2026). */
+export function teePeloEscalao(t: Tournament): string | null {
   const dob = `${MANUEL_DOB.year}-${String(MANUEL_DOB.month + 1).padStart(2, "0")}-${String(MANUEL_DOB.day).padStart(2, "0")}`;
   const esc = escalaoAtDate(dob, t.date || todayIso());
   const regra = teeRuleFor(t.ccode, String(t.tcode ?? ""));
   return (regra ? regra(parseSubNumber(esc), "M") : teeNameFor(esc ?? undefined, "M")) ?? null;
 }
 
-function PrevisaoDaProva({ courseKey, teeId }: { courseKey: string; teeId: string }) {
+type DrawPlayers = Record<string, { groups?: { tee?: string | null; players?: { nome?: string; fed?: string | null; tee?: string | null }[] }[] }>;
+
+/** Os jogadores da prova que saem do MESMO tee que o Manuel, com o índice de
+ *  cada um (para a «🔮 Previsão» os pôr em gross «ao handicap» neste tee).
+ *  Tee de cada um: o das voltas jogadas → o do draw → o do regulamento da
+ *  prova / tabela FPG pelo escalão (nascimento à data) e sexo. Índice: o de
+ *  hoje (federados) → o da inscrição / da prova. Antes dos resultados, só os
+ *  inscritos confirmados (nem reservas nem desistentes). */
+export function jogadoresNoTee(
+  t: Tournament, tee: string,
+  m: { dob: Map<string, string>; sex: Map<string, "M" | "F">; hcp: Map<string, number> },
+): JogadorNoTee[] {
+  const alvo = norm(tee);
+  const regra = teeRuleFor(t.ccode, String(t.tcode ?? ""));
+  const doDraw = new Map<string, string>();
+  for (const d of Object.values((t as { _draws?: DrawPlayers })._draws ?? {})) {
+    for (const g of d?.groups ?? []) {
+      for (const p of g.players ?? []) {
+        const tt = p.tee || g.tee;
+        if (tt) doDraw.set(p.fed || normName(p.nome || ""), tt);
+      }
+    }
+  }
+  const teeDe = (fed: string | null, nome: string, escalao?: string | null): string | null => {
+    const d = doDraw.get(fed || normName(nome));
+    if (d) return d;
+    const esc = escalao || (fed ? escalaoAtDate(m.dob.get(fed), t.date || todayIso()) : null);
+    const sex = fed ? m.sex.get(fed) : undefined;
+    if (!esc) return null;
+    return (regra ? regra(parseSubNumber(esc), sex) : teeNameFor(esc, sex)) ?? null;
+  };
+  const out: JogadorNoTee[] = [];
+  const vistos = new Set<string>();
+  const junta = (nome: string, fed: string | null, club: string | null, hi: number | null, teeJogador: string | null) => {
+    const manuel = isManuel({ name: nome, fed: fed ?? undefined });
+    const key = fed || normName(nome);
+    if (vistos.has(key)) return;
+    if (!manuel && norm(teeJogador || "") !== alvo) return;
+    vistos.add(key);
+    out.push({ key, name: formatPlayerName(nome), fed, club, hi, isManuel: manuel, sex: manuel ? "M" : (fed ? m.sex.get(fed) ?? null : null) });
+  };
+  if ((t.players ?? []).length > 0) {
+    for (const p of t.players) {
+      const fed = p.fed || p.fedCode || null;
+      const jogado = (p.roundScores ?? []).map((r) => r.teeName).find(Boolean) || p.teeName || null;
+      junta(p.name, fed, p.club || null, (fed ? m.hcp.get(fed) : undefined) ?? p.hcpExact ?? null, jogado || teeDe(fed, p.name, p.escalao));
+    }
+  } else {
+    for (const p of t._admissions?.players ?? []) {
+      // Só quem joga: fora os desistentes e as «reservas» (lista de espera, ou
+      // apurados da Final ainda por inscrever — crossApuradosInscritos). O
+      // Manuel fica sempre (a previsão é dele).
+      if ((p.status === "desistente" || p.status === "reserva") && !isManuel({ name: p.nome, fed: p.fed ?? undefined })) continue;
+      const teeTexto = p.teeName && !/\d\s*m$/i.test(p.teeName) ? p.teeName : null;
+      junta(p.nome, p.fed, p.clube, (p.fed ? m.hcp.get(p.fed) : undefined) ?? p.hcp ?? null, teeTexto || teeDe(p.fed, p.nome, p.escalao));
+    }
+  }
+  return out;
+}
+
+/** De onde veio o tee inicial da Previsão. */
+type TeeFonte = "prova" | "escalao" | "nenhum";
+
+function PrevisaoDaProva({ courseKey, teeId, tournament, fonte, teeSugerido }: {
+  courseKey: string; teeId: string; tournament: Tournament; fonte: TeeFonte; teeSugerido: string;
+}) {
   const { simCourses } = useCourses();
+  const dob = useFedBirthdates();
+  const sex = useFedGenders();
+  const hcp = useFedHcp();
+  const course = useMemo(() => simCourses.find((c) => c.courseKey === courseKey) ?? null, [simCourses, courseKey]);
+  // O tee escolhido (04/11/2026: «opção de um dos tees e opção para mudar de
+  // tee») — começa no do Manuel / no do escalão dele; muda-se na caixa.
+  const [teeSel, setTeeSel] = useState(teeId);
+  useEffect(() => { setTeeSel(teeId); }, [teeId]);
   const resolved = useMemo<ResolvedCourse | null>(() => {
-    const course = simCourses.find((c) => c.courseKey === courseKey);
-    const tee = course?.master.tees.find((t) => t.teeId === teeId);
+    const tee = course?.master.tees.find((t) => t.teeId === teeSel);
     return course && tee ? { course, tee } : null;
-  }, [simCourses, courseKey, teeId]);
+  }, [course, teeSel]);
+  const teeNome = resolved?.tee.teeName ?? "";
+  const field = useMemo(() => jogadoresNoTee(tournament, teeNome, { dob, sex, hcp }), [tournament, teeNome, dob, sex, hcp]);
+  const tees = course?.master.tees ?? [];
+  const mudou = teeSel !== teeId;
   return (
     <Suspense fallback={<LoadingState size="sm" message="A preparar a previsão…" />}>
-      <div className="mt-8"><PrevisaoTab resolved={resolved} /></div>
+      <div className="mt-8 u-d-flex u-gap-12px u-fwr-wrap u-ai-center">
+        <FilterField asLabel label="Tee">
+          <Select value={teeSel} onChange={setTeeSel} active={mudou}>
+            {tees.map((t) => (
+              <option key={t.teeId} value={t.teeId}>
+                {t.teeName}{t.sex === "F" ? " (senhoras)" : t.sex === "M" ? " (homens)" : ""}{t.distances?.total ? ` · ${t.distances.total} m` : ""}
+              </option>
+            ))}
+          </Select>
+        </FilterField>
+        <span className="muted fs-12">
+          {mudou ? "Tee escolhido à mão."
+            : fonte === "prova" ? "O tee do Manuel nesta prova (draw, voltas jogadas ou regulamento)."
+            : fonte === "escalao" ? `O Manuel não está nesta prova — o tee que lhe caberia pelo escalão (${teeSugerido}).`
+            : "Não se sabe o tee do Manuel aqui — escolha um."}
+        </span>
+      </div>
+      <div className="mt-8"><PrevisaoTab resolved={resolved} field={field.length > 1 ? field : undefined} /></div>
     </Suspense>
   );
 }
@@ -127,13 +233,19 @@ function PrevisaoDaProva({ courseKey, teeId }: { courseKey: string; teeId: strin
 type Aba = { key: string; label: string; content: React.ReactNode };
 
 /** As abas «⛳ O campo» e «🔮 Previsão» da prova (a do Kids 2: o Manuel no tee
- *  dele neste campo — régua WHS, plano por buraco, alcance). O campo, quando é
- *  conhecido; a previsão, quando também se sabe o tee do Manuel e ele existe no
- *  campo. Vazio enquanto se procura. `campo` vazio/null → não procura nada. */
-export function useCampoTabs(campo: string | null | undefined, manuelTee?: string | null): Aba[] {
+ *  dele neste campo — régua WHS, plano por buraco, alcance). As duas sempre que
+ *  o campo é conhecido (04/11/2026); a Previsão começa no tee do Manuel na prova
+ *  → o do escalão dele (quando não está na prova) → o 1.º tee de homens, e
+ *  muda-se de tee numa caixa. Vazio enquanto se procura. `campo` vazio/null →
+ *  não procura nada. */
+export function useCampoTabs(campo: string | null | undefined, manuelTee: string | null | undefined, tournament: Tournament): Aba[] {
   const nome = campo?.trim() || "";
-  const tee = manuelTee?.trim() || "";
-  const [found, setFound] = useState<{ q: string; key: string | null; teeId: string | null } | null>(null);
+  // Sem o tee do Manuel na prova, o do escalão dele (ele não está na prova).
+  const teeProva = manuelTee?.trim() || "";
+  const teeEsc = teeProva ? "" : (teePeloEscalao(tournament) ?? "");
+  const tee = teeProva || teeEsc;
+  const fonte: TeeFonte = teeProva ? "prova" : teeEsc ? "escalao" : "nenhum";
+  const [found, setFound] = useState<{ q: string; key: string | null; teeId: string | null; exacto?: boolean } | null>(null);
   const q = `${nome}|${tee}`;
   useEffect(() => {
     if (!nome) return;
@@ -143,14 +255,17 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee?: strin
       .then(({ simCourses }) => {
         if (!alive) return;
         const c = findCourseByName(simCourses, nome);
-        setFound({ q, key: c?.courseKey ?? null, teeId: (c && tee && findTee(c, tee)?.teeId) || null });
+        // O tee pedido; sem ele no campo, o 1.º tee de homens (escolhe-se na caixa).
+        const t0 = (c && tee && findTee(c, tee)) || c?.master.tees.find((x) => x.sex !== "F") || c?.master.tees[0] || null;
+        setFound({ q, key: c?.courseKey ?? null, teeId: t0?.teeId ?? null, exacto: !!(c && tee && findTee(c, tee)) });
       })
-      .catch(() => { if (alive) setFound({ q, key: null, teeId: null }); });
+      .catch(() => { if (alive) setFound({ q, key: null, teeId: null, exacto: false }); });
     return () => { alive = false; };
   }, [nome, tee, q]);
   const cur = found && found.q === q ? found : null;
   const key = cur?.key ?? null;
   const teeId = cur?.teeId ?? null;
+  const fonteFinal: TeeFonte = cur?.exacto ? fonte : "nenhum";
   return useMemo(() => {
     if (!key) return [];
     const abas: Aba[] = [{
@@ -161,8 +276,8 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee?: strin
     if (teeId) abas.push({
       key: "previsao",
       label: "🔮 Previsão",
-      content: <CoursesGate><PrevisaoDaProva courseKey={key} teeId={teeId} /></CoursesGate>,
+      content: <CoursesGate><PrevisaoDaProva courseKey={key} teeId={teeId} tournament={tournament} fonte={fonteFinal} teeSugerido={tee} /></CoursesGate>,
     });
     return abas;
-  }, [key, teeId]);
+  }, [key, teeId, tournament, tee, fonteFinal]);
 }

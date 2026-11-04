@@ -112,7 +112,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
   const campoProprio = abaPropria("campo") || abaPropria("previsao");
   const campoDoCircuito = useContext(CampoDoCircuito);
   const manuelTee = useMemo(() => manuelTeeNaProva(tournament), [tournament]);
-  const campoTabs = useCampoTabs(campoProprio ? null : (tournament.campo?.trim() || campoDoCircuito), manuelTee);
+  const campoTabs = useCampoTabs(campoProprio ? null : (tournament.campo?.trim() || campoDoCircuito), manuelTee, tournament);
   const extraTabs = useMemo(() => campoTabs.length ? [...(extraTabsIn ?? []), ...campoTabs] : extraTabsIn, [extraTabsIn, campoTabs]);
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;

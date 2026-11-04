@@ -43,6 +43,7 @@ import Select from "../../ui/Select";
 import NumberInput from "../../ui/NumberInput";
 import SectionTitle from "../../ui/SectionTitle";
 import { Tint } from "../../ui/DataStyle";
+import { CLUB_SCALE } from "../../utils/clubScale";
 
 
 /** Coerção segura para número — alguns campos do JSON vêm como string (ex: sd "14"). */
@@ -52,28 +53,7 @@ const toNum = (v: unknown): number | null => {
 };
 
 /* ═══════════════════ Escala de distâncias do saco ═══════════════════ */
-/**
- * Distância de cada taco como percentagem CONSTANTE do drive — a base do
- * princípio 24-28× (medições Trackman da US Kids Golf Foundation + ASGCA).
- * Os valores respeitam as âncoras citadas no bloco explicativo: ferro 7 ≈
- * 65-70% do drive, wedges ≈ 40-50%. Monotónicas decrescentes.
- */
-const CLUB_SCALE: { club: string; abbr: string; pct: number }[] = [
-  { club: "Driver", abbr: "D", pct: 100 },
-  { club: "Madeira 3", abbr: "M3", pct: 93 },
-  { club: "Madeira 5", abbr: "M5", pct: 87 },
-  { club: "Híbrido", abbr: "Hb", pct: 81 },
-  { club: "Ferro 4", abbr: "F4", pct: 77 },
-  { club: "Ferro 5", abbr: "F5", pct: 73 },
-  { club: "Ferro 6", abbr: "F6", pct: 69 },
-  { club: "Ferro 7", abbr: "F7", pct: 65 },
-  { club: "Ferro 8", abbr: "F8", pct: 60 },
-  { club: "Ferro 9", abbr: "F9", pct: 55 },
-  { club: "Pitching wedge", abbr: "PW", pct: 50 },
-  { club: "Gap wedge", abbr: "GW", pct: 45 },
-  { club: "Sand wedge", abbr: "SW", pct: 40 },
-  { club: "Lob wedge", abbr: "LW", pct: 35 },
-];
+// A escala vive em utils/clubScale (também escolhe o taco de saída do Alcance).
 
 type ClubSortKey = "club" | "pct" | "dist";
 

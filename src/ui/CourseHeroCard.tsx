@@ -56,9 +56,11 @@ export function getParTotal(tee: Tee | null | undefined): number {
 
 // Cor por buraco: gradiente HSL forte dentro do par (curto=claro → longo=escuro)
 export const PAR_HSL: Record<3 | 4 | 5, { h: number; s: number }> = {
-  3: { h: 142, s: 65 },  // verde
+  // 04/11/2026 (Mariana): o verde e o vermelho confundiam-se com os outros
+  // verdes/vermelhos do site (atacar/defender, birdie, ±par) → teal e terracota.
+  3: { h: 180, s: 60 },  // teal
   4: { h: 270, s: 55 },  // roxo
-  5: { h: 355, s: 72 },  // vermelho
+  5: { h: 25, s: 75 },   // terracota
 };
 
 function holeColor(par: 3 | 4 | 5, t: number): { bg: string; fg: string; border: string } {
@@ -71,6 +73,15 @@ function holeColor(par: 3 | 4 | 5, t: number): { bg: string; fg: string; border:
     fg: "var(--text)",
     border: `hsl(${h}deg, ${sMax}%, ${borderL}%)`,
   };
+}
+
+/** A cor de cada buraco pelo par e pelo comprimento dentro do par (a mesma da
+ *  «Vista do campo») — para outras tabelas pintarem a coluna Par igual
+ *  (04/11/2026, Previsão: «temos uma fórmula para colorir os par 3, 4 e 5»). */
+export function parHoleColors(tee: Tee): Map<number, { bg: string; fg: string; border: string }> {
+  const out = new Map<number, { bg: string; fg: string; border: string }>();
+  for (const h of holesByNumber(tee)) if (h.color) out.set(h.hole, h.color);
+  return out;
 }
 
 function holesByNumber(tee: Tee): Array<{ hole: number; par: 3|4|5|null; distance: number | null; color: ReturnType<typeof holeColor> | null }> {
