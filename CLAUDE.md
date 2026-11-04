@@ -210,7 +210,9 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   Global Junior, USKids (cada escalão) e a análise BJGT. Tem tudo (Inscrições,
   Draws, voltas, Pré-Cut, Resumo, Scorecards, análise, partilhar volta, tabs
   extra, encaixes por volta/Resumo) e cada página esconde o que não precisa por
-  props. O `IntlTournView` é só um adaptador da interface antiga — funcionalidade
+  props. A aba «⛳ O campo» junta-a ele sozinho sempre que o campo da prova é
+  conhecido (`useCampoTab`, `pages/fpg/fpgCourseTab.tsx`; reserva: o `course` do
+  CircuitShell) — as páginas não a acrescentam. O `IntlTournView` é só um adaptador da interface antiga — funcionalidade
   nova entra no TournamentDetail. A aba vive no URL (`?tab=`; `tabParam` muda o
   nome — a `/uskids` usa `rt`).
 - **Peças únicas, nunca uma tabela própria por página:** inscrições →

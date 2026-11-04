@@ -1,18 +1,23 @@
 /**
- * src/pages/fpg/fpgCourseTab.tsx — a aba «⛳ O campo» das provas da /FPG
+ * src/pages/fpg/fpgCourseTab.tsx — a aba «⛳ O campo» do detalhe de torneio
  * (26/10/2026, pedido da Mariana na Taça Presidente: «não dizes qual é o campo
  * nem temos um tab com os resultados do Manuel neste campo… no fundo o que já
  * temos em /campos»).
  *
+ * Desde 04/11/2026 vive no `TournamentDetail` — aparece em TODAS as páginas de
+ * torneio (FPG, Drive, MAJOR, França, Espanha, USKids…) sempre que o campo da
+ * prova é conhecido na lista de campos («quero que o campo exista sempre que
+ * for conhecido»). Campo desconhecido = sem aba.
+ *
  * Mostra o MESMO «Como jogou» da /campos (`CourseComoJogou`: recordes por tee,
- * quem jogou por tee e a média por buraco do Manuel) para o campo da prova —
- * carregado só ao abrir a aba (a /campos é um módulo à parte e os campos
- * ~13 MB + course-players ~10 MB vêm pelo `CoursesGate`). Também para provas
- * que ainda não se jogaram: o campo resolve-se pelo nome.
+ * quem jogou por tee e a média por buraco do Manuel). Para decidir se a aba
+ * existe carregam-se só os campos (master + away, sem o course-players); o
+ * «quem jogou» (~10 MB) vem pelo `CoursesGate withPlayers` só ao abrir a aba.
+ * Também para provas que ainda não se jogaram: o campo resolve-se pelo nome.
  */
-import { lazy, Suspense, useMemo } from "react";
+import { createContext, lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Tournament } from "../../data/fpgTypes";
+import type { Course } from "../../data/types";
 import { CoursesGate, useCourses } from "../../context/CoursesContext";
 import { canonicalCourseName, resolveCourseKeyByName } from "../../utils/courseAliases";
 import { norm } from "../../utils/format";
@@ -22,18 +27,36 @@ const CourseComoJogou = lazy(() => import("../CamposPage").then((m) => ({ defaul
 
 const ckey = (s: string) => norm(canonicalCourseName(s) || s);
 
-function CampoDaProva({ campo }: { campo: string }) {
+/** O campo do torneio no cabeçalho do circuito (`CircuitEntry.course`), para
+ *  quando o torneio de um escalão não traz `campo` (MAJOR, fontes de fora). */
+export const CampoDoCircuito = createContext<string | undefined>(undefined);
+
+/** O nome inteiro e cada parte dele: as provas juntam muitas vezes o clube ao
+ *  campo («Oeiras Green Valley / Academia Municipal de Golfe»). E «clube - nine-nine»,
+ *  a forma que os combos (Santo da Serra «… | Machico Serras») resolvem pelo nome. */
+function nomesCandidatos(campo: string): string[] {
+  const nome = campo.trim();
+  const partes = nome.split(/\s+[/|–—-]\s+|\s*\(|\)\s*/).map((s) => s.trim()).filter(Boolean);
+  const combo = partes.length === 2 ? [`${partes[0]} - ${partes[1].replace(/\s+/g, "-")}`] : [];
+  return [...new Set([nome, ...combo, ...partes])];
+}
+
+/** O campo da lista com este nome (aliases, nome do master, ou uma das partes). */
+export function findCourseByName(courses: readonly Course[], campo: string): Course | null {
+  for (const nome of nomesCandidatos(campo)) {
+    const key = resolveCourseKeyByName(nome);
+    const c = (key && courses.find((x) => x.courseKey === key))
+      || courses.find((x) => ckey(x.master.name) === ckey(nome));
+    if (c) return c;
+  }
+  return null;
+}
+
+function CampoDaProva({ courseKey }: { courseKey: string }) {
   const { simCourses } = useCourses();
   const navigate = useNavigate();
-  const course = useMemo(() => {
-    const key = resolveCourseKeyByName(campo);
-    return (key && simCourses.find((c) => c.courseKey === key))
-      || simCourses.find((c) => ckey(c.master.name) === ckey(campo))
-      || null;
-  }, [simCourses, campo]);
-  if (!course) {
-    return <div className="notice notice-info mt-8">Não encontrei o campo «{campo}» na lista de campos.</div>;
-  }
+  const course = useMemo(() => simCourses.find((c) => c.courseKey === courseKey) ?? null, [simCourses, courseKey]);
+  if (!course) return null;
   return (
     <div className="mt-8">
       <div className="muted fs-11 mb-8">
@@ -50,13 +73,24 @@ function CampoDaProva({ campo }: { campo: string }) {
   );
 }
 
-/** A aba, quando a prova tem campo conhecido. */
-export function fpgCourseTabs(t: Tournament | null | undefined): { key: string; label: string; content: React.ReactNode }[] | undefined {
-  const campo = t?.campo?.trim();
-  if (!campo) return undefined;
-  return [{
+/** A aba «⛳ O campo» da prova, quando o campo é conhecido (null enquanto se
+ *  procura e quando não se encontra). `campo` vazio/null → não procura nada. */
+export function useCampoTab(campo: string | null | undefined): { key: string; label: string; content: React.ReactNode } | null {
+  const nome = campo?.trim() || "";
+  const [found, setFound] = useState<{ nome: string; key: string | null } | null>(null);
+  useEffect(() => {
+    if (!nome) return;
+    let alive = true;
+    import("../../data/courses")
+      .then((m) => m.loadCourses())
+      .then(({ simCourses }) => { if (alive) setFound({ nome, key: findCourseByName(simCourses, nome)?.courseKey ?? null }); })
+      .catch(() => { if (alive) setFound({ nome, key: null }); });
+    return () => { alive = false; };
+  }, [nome]);
+  const key = found && found.nome === nome ? found.key : null;
+  return useMemo(() => key ? {
     key: "campo",
     label: "⛳ O campo",
-    content: <CoursesGate withPlayers><CampoDaProva campo={campo} /></CoursesGate>,
-  }];
+    content: <CoursesGate withPlayers><CampoDaProva courseKey={key} /></CoursesGate>,
+  } : null, [key]);
 }

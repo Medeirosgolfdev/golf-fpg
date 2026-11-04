@@ -13,7 +13,7 @@ import type { CircuitRoundDraw } from "../../ui/circuit/types";
 import { roundDrawNode } from "../../ui/circuit/divisionPieces";
 import { ShareRoundsPanel, RoundAnalysisFor } from "../../ui/ShareRoundPanel";
 import ManuelResultPills from "../../ui/ManuelResultPills";
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Tournament, ScorecardOptions } from "../../data/fpgTypes";
 import type { EscLookup } from "../../utils/playerUtils";
@@ -46,6 +46,7 @@ import { crossApuradosInscritos } from "../../data/drive/driveCircuitData";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import ExtLink from "../../ui/ExternalLink";
 import TabRow from "../../ui/TabRow";
+import { useCampoTab, CampoDoCircuito } from "./fpgCourseTab";
 
 /** Junta listas de links extra removendo repetidos pelo URL (a mesma página do
  *  clube pode vir do synthetic FEATURED e da config ao mesmo tempo). */
@@ -99,11 +100,17 @@ export interface TournamentDetailProps {
   defaultTab?: string;
 }
 
-function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extraTabs, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab", defaultTab }: TournamentDetailProps) {
+function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extraTabs: extraTabsIn, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab", defaultTab }: TournamentDetailProps) {
   // Nascimento do Kids 2 para quem a fonte não o traz (USKids, MAJOR, FFG…) —
   // nas voltas, no Resumo e nos Scorecards (02/11/2026).
   const kidsDob = useKidsDob(precisaKidsDob(tournamentIn.players));
   const tournament = useMemo(() => withKidsDob(tournamentIn, kidsDob), [tournamentIn, kidsDob]);
+  // «⛳ O campo» em todas as páginas, sempre que o campo da prova é conhecido
+  // (04/11/2026). Uma página que já traga a sua aba «campo» fica com a dela.
+  const campoProprio = extraTabsIn?.some(et => et.key === "campo") || leadingTabs?.some(et => et.key === "campo");
+  const campoDoCircuito = useContext(CampoDoCircuito);
+  const campoTab = useCampoTab(campoProprio ? null : (tournament.campo?.trim() || campoDoCircuito));
+  const extraTabs = useMemo(() => campoTab ? [...(extraTabsIn ?? []), campoTab] : extraTabsIn, [extraTabsIn, campoTab]);
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;

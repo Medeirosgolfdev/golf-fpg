@@ -43,6 +43,7 @@ import SexBadge from "../SexBadge";
 import ExtLink from "../ExternalLink";
 import { EscPill, RoundPill, ManuelPill } from "../PillBadge";
 import { IntlTournView } from "../IntlTournView";
+import { CampoDoCircuito } from "../../pages/fpg/fpgCourseTab";
 import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { isManuelByName } from "../../constants/manuel";
@@ -844,6 +845,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                 {/* Conteúdo do torneio: barra ÚNICA estilo FPG (IntlTournView →
                     TournamentDetail), com ou sem cartões — Inscrições → Draw →
                     R1 → … → Resumo → 📋 Scorecards → Época → Edições → Scout. */}
+                {/* O campo do cabeçalho vai como reserva para a aba «⛳ O campo»
+                    (o torneio do escalão nem sempre traz `campo`). */}
+                <CampoDoCircuito.Provider value={cur.course || undefined}>
                 {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined, repeatersTab: repeatersTabNode ?? undefined })}
                 {!curDiv.renderFull && detailTourn && (
                   <IntlTournView
@@ -867,6 +871,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     defaultTab={temResumoSemVoltas ? "resumo" : undefined}
                   />
                 )}
+                </CampoDoCircuito.Provider>
               </>
             ) : (
               <EmptyState message="Sem dados para este torneio." />
