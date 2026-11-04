@@ -430,6 +430,37 @@ Masters, Race to Dunas G. Final — vão pelo `PJA_TCODES` de `ranking-pja/pja-r
 - No mesmo dia: o European Open WAGR 2025 («LTQ» = Le Touquet) tinha a data de 1 de Julho por
   omissão; `EDICAO` em `sources/eowagr.js` dá 11/08/2025 e o campo (voltas WHS do Manuel).
 
+## Listas de inscritos sem números — ligar sem errar de pessoa (03/11/2026)
+
+Pergunta dela: «como é que podemos fazer para isso de cruzar uma lista de inscritos que ainda
+não tem números de federado com o jogador errado?». Medido antes (1130 ligações automáticas
+nas 18 listas, 1129 só pelo nome) e aplicado com o «sim» dela, em `util/hcp-listas.js`:
+
+1. **O número primeiro.** A licença FFG que a lista traz (`licFFG`, GP Jeunes) liga à ficha
+   dessa licença; o federado que a PRÓPRIA prova dá ao inscrito (`lista.prova` = {ccode, tcode}
+   → inscrições/draw, `util/feds-das-provas.js`, partilhado com a fonte `fpg`) liga à ficha
+   desse federado — e só a essa. As 5 listas de Castro Marim têm `prova` 000/90872 (rapazes)
+   e 000/90873 (raparigas). Apanhou logo um erro: o «Ricardo Ferreira» da lista (11.3) é o
+   Ricardo ROCHA Ferreira (51180, Miramar, n. 2015), não o 45366 do Oporto (2012).
+2. **Homónimos na federação inteira**, não só no Kids 2: PT (federados.json), ES (licenças
+   RFEG, uma pessoa = data de nascimento ou 6 dígitos finais), FR (licenças FFG) — pelo nome
+   exacto e pelos nomes contidos (mesmo 1.º e último). Dois compatíveis em sexo e idade → não
+   liga.
+3. **Contradições = não liga:** outra licença FFG na ficha; handicap recente (FPG oficial de
+   hoje; RFEG/FFG com data a ≤ 6 meses; da FFG conta o índice do Mérite, `merite.idx` — o
+   `hcp` da ficha é o de uma prova: a Zélie Guilloux tinha 3.9 e o índice +2.6) a mais de 5.
+4. **Confirmação:** único na federação, clube igual (pela raiz: Münchener GC ~ München),
+   handicap recente a ≤ 3, ou ano de nascimento conhecido dentro do escalão. Sem nada →
+   `porConfirmar`: aparece na página com a etiqueta «ficha por confirmar», mas NÃO escreve
+   o handicap na ficha.
+5. **A mesma ficha para duas pessoas da lista** (handicaps a mais de 3) não fica ligada a
+   nenhuma: Ben Smith (5.4 / 17), George Naylor (7.9 / 22.5), Harry Burgess (1.5 / 8.1).
+
+Resultado (03/11): 1017 ligadas e confirmadas, 115 por confirmar (quase todas inglesas e
+alemãs — sem lista completa da federação), 3 fichas desligadas por servirem duas pessoas.
+Testes com os casos reais em `util/hcp-listas.test.js`. O campo `ficha` (ligação à mão)
+continua a passar por cima de tudo.
+
 ## Fonte FIG — Itália (02/11/2026)
 
 `public/data/federgolf/{id}.json` (a /fig, `scrape-federgolf.js`) + `federgolf-ranking.json` →

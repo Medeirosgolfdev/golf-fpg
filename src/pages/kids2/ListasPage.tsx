@@ -24,7 +24,8 @@ import SectionTitle from "../../ui/SectionTitle";
 interface Inscrito {
   ordem: number; pos: number; lista: "entry" | "waiting" | null;
   name: string; country: string; hcp: number;
-  junior: { id: string; name: string; dob: string | null; club: string | null; via: string } | null;
+  /** `porConfirmar`: ligada só pelo nome, sem nada que o confirme — o handicap não entra na ficha. */
+  junior: { id: string; name: string; dob: string | null; club: string | null; via: string; porConfirmar?: boolean; confirmadoPor?: string } | null;
   ambiguo: string[] | null;
   duplicadoDe?: number | null;
   hcpAtual: { valor: number; fonte: string; data: string | null } | null;
@@ -73,7 +74,9 @@ function TabelaLista({ lista }: { lista: Lista }) {
     const porJog = new Map<string, Inscrito>();
     const players = [...lista.players].sort((a, b) => a.ordem - b.ordem).map((p): FpgAdmissionPlayer => {
       const eu = isManuel({ name: p.name, memberId: p.junior?.id?.replace(/^u/, "") });
-      const nota = p.duplicadoDe ? `repetida no PDF (igual à ${p.duplicadoDe})` : p.junior ? null : p.ambiguo ? "ficha ambígua" : "sem ficha";
+      const nota = p.duplicadoDe ? `repetida no PDF (igual à ${p.duplicadoDe})`
+        : p.junior ? (p.junior.porConfirmar ? "ficha por confirmar" : null)
+          : p.ambiguo ? "ficha ambígua" : "sem ficha";
       const a: FpgAdmissionPlayer = {
         pos: p.pos, fed: eu ? MANUEL_FED : null, nome: p.name, clube: p.junior?.club ?? null,
         hcp: p.hcp, vac: null, dataInscricao: null,
@@ -116,6 +119,7 @@ function TabelaLista({ lista }: { lista: Lista }) {
   const nWait = lista.players.filter(p => p.lista === "waiting" && !p.duplicadoDe).length;
   const nRep = lista.players.filter(p => p.duplicadoDe).length;
   const nFicha = lista.players.filter(p => p.junior).length;
+  const nPorConfirmar = lista.players.filter(p => p.junior?.porConfirmar).length;
   const nRepet = lista.players.filter(p => p.anterior).length;
 
   return (
@@ -124,6 +128,7 @@ function TabelaLista({ lista }: { lista: Lista }) {
       <div className="u-fs-fs-12 u-c-text-3 u-mb-10px u-lh-1_5">
         {lista.label} · {nEntry} na lista{lista.wildcardsFpg ? ` (+ ${lista.wildcardsFpg} wild cards da FPG por nomear)` : ""}{nRep ? ` · ${nRep} nome(s) repetido(s) no PDF` : ""} · {nWait} em lista de espera
         {lista.nascidosDesde ? ` · nascidos em ${lista.nascidosDesde} ou depois` : ""} · {nFicha} com ficha no kids2
+        {nPorConfirmar ? ` (${nPorConfirmar} só pelo nome, por confirmar)` : ""}
         {ant ? ` · ${nRepet} já jogaram em ${ant.label} (venceu ${ant.vencedor.name}, ${ant.vencedor.gross})` : ""}
         {" · "}HCP = handicap na lista ({ddmmaa(lista.data)})
       </div>

@@ -17,7 +17,8 @@
 const path = require("path");
 const { pathToFileURL } = require("url");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
-const { displayName, normName, countryToIso2, dobToIso } = require("../util/names");
+const { lerFedsDasProvas, fedDoJogador } = require("../util/feds-das-provas");
+const { displayName, countryToIso2, dobToIso } = require("../util/names");
 const { seriesId } = require("../util/id");
 const { warn, sub } = require("../util/log");
 
@@ -77,36 +78,6 @@ function lerNascimentos() {
   return nascimento;
 }
 
-/**
- * Federado de cada inscrito, pelas abas da PRÓPRIA prova (inscrições e draws,
- * `fpg-admissions-draws*.json`): «ccode|tcode|ano» → (nome → fed). A
- * classificação traz às vezes um jogador sem número (Ryan Dantas no Nacional
- * Sub 16 2026); a prova sabe quem ele é. Nunca se procura o número noutras listas
- * por nome + clube — isso é adivinhar.
- */
-function lerFedsDasProvas() {
-  const porProva = new Map();
-  for (const file of [DATA.fpgAdmissionsDraws, DATA.fpgAdmissionsDrawsDrive]) {
-    const data = readJsonSafe(file, { tournaments: [] });
-    for (const t of Array.isArray(data?.tournaments) ? data.tournaments : []) {
-      if (!t?.tcode || !t.date) continue;
-      const k = `${t.ccode || "000"}|${t.tcode}|${String(t.date).slice(0, 4)}`;
-      const nomes = porProva.get(k) || new Map();
-      const juntar = (p) => { if (p?.fed && p.nome) nomes.set(normName(p.nome), String(Number(p.fed))); };
-      for (const p of t.admissions?.players || []) juntar(p);
-      for (const ronda of Object.values(t.draws || {})) for (const g of ronda?.groups || []) for (const p of g.players || []) juntar(p);
-      if (nomes.size) porProva.set(k, nomes);
-    }
-  }
-  return porProva;
-}
-
-/** O federado do jogador: o da classificação; sem ele, o das inscrições/draws da mesma prova. */
-function fedDoJogador(t, pl, fedsDasProvas = new Map()) {
-  if (pl?.fedCode) return String(pl.fedCode);
-  const k = `${t.ccode || "000"}|${t.tcode}|${String(t.date || "").slice(0, 4)}`;
-  return fedsDasProvas.get(k)?.get(normName(pl?.name)) || null;
-}
 
 /** Mapeia escalão FPG → ageMin/ageMax aproximados. */
 function escalaoToAges(esc) {

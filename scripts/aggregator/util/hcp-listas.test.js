@@ -39,3 +39,42 @@ describe("enrichWithHcpListas", () => {
     expect(juniors[2].hcpHistory).toBeUndefined();
   });
 });
+
+// O número manda sobre o nome, e só pelo nome a ligação é verificada (03/11/2026).
+describe("enrichWithHcpListas — o número e a verificação", () => {
+  const juniors = [
+    // dois Ricardo Ferreira: a prova (000/90872) diz que o da lista é o 51180
+    ficha("f45366", "Ricardo Ferreira", "PT", "2012-04-12", { fpg: { fed: "45366", club: "Oporto B" } }),
+    ficha("f51180", "Ricardo Rocha Ferreira", "PT", "2015-09-24", { fpg: { fed: "51180", club: "Miramar" } }),
+    // dois Ben Smith na lista inglesa (Clitheroe 5.4, Tiverton 17) e uma só ficha
+    ficha("xbensmith", "Ben Smith", "GB", null, {}),
+    // só o nome, sem clube, handicap nem data: fica por confirmar
+    ficha("xkrishan", "Krishan Siani", "GB", null, {}),
+    // a licença FFG da lista liga mesmo com o nome escrito de outra maneira
+    ficha("g041033333", "Gabin Tosato", "FR", null, { ffgolf: { lic: "041033333" } }),
+  ];
+  const r = enrichWithHcpListas({ juniors }, { aplicar: true });
+  const linha = (lista, name) => r.relatorio.find((l) => l.lista === lista && l.name === name);
+
+  it("o federado da própria prova manda: o Ricardo Ferreira da lista é o 51180, não o homónimo de 2012", () => {
+    expect(linha("fpg-entry-list-boys-2026-11-02", "Ricardo Ferreira").junior).toMatchObject({ id: "f51180", via: "federado da prova" });
+    expect(juniors[0].hcpHistory).toBeUndefined();
+  });
+
+  it("a mesma ficha para duas pessoas da lista (handicaps 5.4 e 17) não fica ligada a nenhuma", () => {
+    const bens = r.relatorio.filter((l) => l.lista === "intelligentgolf-2026-11" && l.name === "Ben Smith");
+    expect(bens).toHaveLength(2);
+    for (const b of bens) { expect(b.junior).toBeUndefined(); expect(b.ambiguo[0]).toMatch(/mesma ficha para 2 pessoas/); }
+    expect(juniors[2].hcpHistory).toBeUndefined();
+  });
+
+  it("só pelo nome, sem nada que confirme: aparece «por confirmar» e não escreve na ficha", () => {
+    expect(linha("intelligentgolf-2026-11", "Krishan Siani").junior).toMatchObject({ id: "xkrishan", porConfirmar: true });
+    expect(juniors[3].hcpHistory).toBeUndefined();
+  });
+
+  it("a licença FFG da lista liga e confirma", () => {
+    expect(linha("ffg-gpj-rennes-u12-garcons-2026-10-10", "Gabin Tosatto").junior).toMatchObject({ id: "g041033333", via: "licença FFG" });
+    expect(juniors[4].hcpHistory.some((h) => h.hcpExact === -0.2)).toBe(true);
+  });
+});

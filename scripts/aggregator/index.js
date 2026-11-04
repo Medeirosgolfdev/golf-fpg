@@ -255,7 +255,7 @@ async function main() {
     hcpListas = r.disponivel ? r : null;
     if (r.disponivel) {
       step("Listas de inscritos com handicap (só enriquecer)");
-      sub(`${r.ligados}/${r.total} jogadores ligados a uma ficha em ${r.listas} lista(s)`);
+      sub(`${r.ligados}/${r.total} jogadores ligados a uma ficha em ${r.listas} lista(s) · ${r.porConfirmar} só pelo nome, por confirmar (não escrevem na ficha)`);
       const fora = r.relatorio.filter((l) => !l.junior);
       if (fora.length) sub(`sem ficha ou ambíguos: ${fora.map((l) => l.name + (l.ambiguo ? " (ambíguo)" : "")).join(" · ")}`);
       console.log("");

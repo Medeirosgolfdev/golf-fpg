@@ -25,6 +25,18 @@
  *      da lista; 2.º o único com handicap conhecido a ≤2 do da lista.
  * Só liga quando sobra UM candidato; os outros ficam no relatório.
  *
+ * O NÚMERO manda sobre o nome (Mariana, 03/11/2026: «nos torneios há sempre o
+ * draw e os outros tabs… tens o número também de federado dele»): a licença FFG
+ * da lista (`licFFG`) e o federado que a própria prova dá ao inscrito
+ * (`lista.prova` = {ccode, tcode} → inscrições/draw, `util/feds-das-provas.js`).
+ * Só pelo nome, a ligação é verificada (`verificar`): não se faz se houver um
+ * homónimo compatível na federação inteira (PT/ES/FR), outra licença FFG ou um
+ * handicap recente a mais de 5; é «confirmada» se o nome for único na
+ * federação, o clube bater, o handicap recente estiver a ≤ 3 ou o ano de
+ * nascimento conhecido couber no escalão; senão fica «por confirmar» — aparece
+ * na página mas NÃO escreve na ficha. A mesma ficha para duas pessoas da lista
+ * (handicaps a mais de 3) não fica ligada a nenhuma.
+ *
  * `ficha` numa linha (id da ficha, ex. "g531001335") liga-a à mão e salta os
  * passos acima — nomes mal escritos no PDF («Nathan Bonefant») ou país da
  * lista diferente do da ficha (Mariana, 03/11/2026). Ficha sem data de
@@ -34,6 +46,7 @@ const fs = require("fs");
 const path = require("path");
 const { DATA_DIR, readJsonSafe } = require("./io");
 const { normName, countryToIso2 } = require("./names");
+const { lerFedsDasProvas, fedDoJogador } = require("./feds-das-provas");
 
 const LISTAS_DIR = path.join(DATA_DIR, "hcp-listas");
 
@@ -52,6 +65,65 @@ const paisOk = (iso, j, exigir) => {
   if (!iso) return !exigir;
   return da.some((c) => c === iso || c.startsWith(iso + "-"));
 };
+
+const semZeros = (s) => String(s || "").trim().replace(/^0+/, "");
+const fmtH = (h) => (h < 0 ? `+${-h}` : String(h));
+
+/**
+ * As federações inteiras, não só as fichas do Kids 2: PT (federados.json), ES
+ * (licenças RFEG; a mesma pessoa tem várias licenças — junta-se pela data de
+ * nascimento ou pelos 6 dígitos finais) e FR (licenças FFG). Um homónimo fora
+ * do Kids 2 também conta: sem isto, quando o miúdo certo ainda não tem ficha, a
+ * lista liga-se ao único homónimo que tem.
+ */
+let univCache = null;
+function universos() {
+  if (univCache) return univCache;
+  const novo = () => ({ porNome: new Map(), porPontas: new Map(), porFed: new Map() });
+  const PT = novo(), ES = novo(), FR = novo();
+  const juntar = (U, nome, x) => {
+    const k = normName(nome);
+    if (!k) return;
+    U.porNome.set(k, [...(U.porNome.get(k) || []), x]);
+    // pelo 1.º e último nome, para os nomes contidos: o «Ricardo Ferreira» da
+    // lista de Castro Marim era o Ricardo ROCHA Ferreira (51180), não o 45366
+    const t = k.split(" ");
+    if (t.length >= 2) { const p = `${t[0]}|${t[t.length - 1]}`; U.porPontas.set(p, [...(U.porPontas.get(p) || []), { ...x, toks: t }]); }
+  };
+  for (const f of federados()) {
+    const fed = String(Number(f.federation_code));
+    const x = { chave: fed, sexo: f.gender || null, ano: Number(String(f.birthdate || "").slice(0, 4)) || 0, hcp: typeof f.hcp_exact === "number" ? f.hcp_exact : null };
+    juntar(PT, f.name, x);
+    PT.porFed.set(fed, x);
+  }
+  const es = readJsonSafe(path.join(DATA_DIR, "spain-players.json"), null);
+  for (const p of Object.values(es?.byLicencia || {})) {
+    const [ap, ...nm] = String(p.name || "").split(",");
+    juntar(ES, nm.length ? `${nm.join(" ")} ${ap}` : ap, { chave: p.dobIso || String(p.licencia).slice(-6), sexo: p.sex || null,
+      ano: Number(String(p.dobIso || "").slice(0, 4)) || 0, hcp: typeof p.hcp === "number" ? p.hcp : null, hcpData: p.hcpDate || null });
+  }
+  const fr = readJsonSafe(path.join(DATA_DIR, "france-players.json"), null);
+  for (const p of Object.values(fr?.byLicense || {})) {
+    // O índice actual é o do Mérite (`merite.idx`, plus em negativo, mês AAAAMM); o
+    // `hcp` da ficha é o de uma prova — a Zélie Guilloux tinha 3.9 e o índice +2.6.
+    const m = p.merite && typeof p.merite.idx === "number" && /^\d{6}$/.test(String(p.merite.month || "")) ? p.merite : null;
+    const x = { chave: semZeros(p.license), sexo: p.sex || null, ano: Number(p.birthYear) || 0,
+      hcp: m ? m.idx : typeof p.hcp === "number" ? p.hcp : null,
+      hcpData: m ? `${String(m.month).slice(0, 4)}-${String(m.month).slice(4, 6)}-01` : p.hcpDate || null };
+    juntar(FR, p.name, x);
+    FR.porFed.set(x.chave, x); // pela licença (também as «E…» dos estrangeiros)
+  }
+  univCache = { PT, ES, FR };
+  return univCache;
+}
+
+/** Clube da lista e da ficha com uma palavra em comum, pela raiz (Münchener GC ~ München). */
+const PALAVRAS_CLUBE = new Set(["golf", "golfe", "club", "clube", "the", "and", "country", "gcc", "lgc", "golfclub", "park"]);
+function clubeBate(a, b) {
+  const palavras = (s) => normName(s).split(" ").filter((w) => w.length > 2 && !PALAVRAS_CLUBE.has(w)).map((w) => w.replace(/(er|es|s)$/, ""));
+  const A = palavras(a), B = palavras(b);
+  return A.some((x) => B.some((y) => x === y || (x.length >= 4 && y.length >= 4 && (x.startsWith(y) || y.startsWith(x)))));
+}
 
 /**
  * @param {{juniors: object[]}} res  resultado do matcher (é alterado se aplicar)
@@ -82,11 +154,23 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
     return Number(String(d || "").slice(0, 4)) || 0;
   };
 
+  // Números: licença FFG da ficha (ou o id «g<licença>») e federado FPG.
+  const porLicFFG = new Map();
+  const porFed = new Map();
+  for (const j of res.juniors) {
+    const lic = semZeros(j.sources?.ffgolf?.lic) || (/^g\d+$/.test(j.id) ? semZeros(j.id.slice(1)) : "");
+    if (lic) porLicFFG.set(lic, j);
+    if (j.sources?.fpg?.fed) porFed.set(String(Number(j.sources.fpg.fed)), j);
+  }
+  let fedsDasProvas = null; // só se alguma lista tiver `prova`
+
   const relatorio = [];
   let ligados = 0;
+  let porConfirmar = 0;
   for (const f of ficheiros) {
     const lista = readJsonSafe(path.join(LISTAS_DIR, f), null);
     if (!lista || !Array.isArray(lista.players) || !lista.data) continue;
+    const linhasLista = [];
     for (const p of lista.players) {
       if (typeof p.hcp !== "number" || !p.name) continue;
       if (p.duplicadoDe) { relatorio.push({ lista: lista.id, name: p.name, country: p.country, hcp: p.hcp, estado: p.lista || null, duplicadoDe: p.duplicadoDe }); continue; }
@@ -138,27 +222,120 @@ function enrichWithHcpListas(res, { aplicar = true } = {}) {
         });
         if (perto.length === 1) { cands = new Set(perto); via += " + handicap"; }
       }
+      // O NÚMERO manda sobre o nome (Mariana, 03/11/2026): a licença FFG que a
+      // lista traz, ou o federado que a própria prova (`lista.prova`) dá ao inscrito.
+      let porNumero = false;
+      if (!p.ficha && p.licFFG) {
+        const j = porLicFFG.get(semZeros(p.licFFG));
+        if (j) { cands = new Set([j]); via = "licença FFG"; porNumero = true; }
+      }
+      if (!p.ficha && !porNumero && lista.prova?.tcode) {
+        if (!fedsDasProvas) fedsDasProvas = lerFedsDasProvas();
+        const fed = fedDoJogador({ ccode: lista.prova.ccode, tcode: lista.prova.tcode, date: lista.prova.data || lista.data }, { name: p.name }, fedsDasProvas);
+        if (fed) { const j = porFed.get(String(Number(fed))); cands = new Set(j ? [j] : []); via = "federado da prova"; porNumero = true; }
+      }
+
       const linha = { lista: lista.id, name: p.name, country: p.country, hcp: p.hcp, estado: p.lista || null };
       if (cands.size === 1) {
         const j = [...cands][0];
-        linha.junior = { id: j.id, name: j.canonicalName, via };
-        if (aplicar) {
-          const h = { date: lista.data, hcpExact: p.hcp, source: "entry-list", label: lista.label || lista.id, ...(lista.fonteCurta ? { fonte: lista.fonteCurta } : {}) };
-          j.hcpHistory = Array.isArray(j.hcpHistory) ? j.hcpHistory : [];
-          if (!j.hcpHistory.some((x) => x.date === h.date && x.source === h.source && x.hcpExact === h.hcpExact)) {
-            j.hcpHistory.push(h);
-            j.hcpHistory.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
-          }
+        const v = p.ficha || porNumero ? { confirma: via } : verificar(lista, p, j, iso, [n, invertido]);
+        if (v.contradiz) {
+          linha.semFicha = false;
+          linha.ambiguo = [`${j.canonicalName}: ${v.contradiz}`];
+        } else {
+          linha.junior = { id: j.id, name: j.canonicalName, via, ...(v.confirma ? { confirmadoPor: v.confirma } : { porConfirmar: true }) };
+          linhasLista.push({ linha, j });
         }
-        ligados++;
       } else {
         linha.semFicha = cands.size === 0;
         linha.ambiguo = cands.size > 1 ? [...cands].map((j) => `${j.canonicalName} (${j.country || "?"})`) : undefined;
       }
       relatorio.push(linha);
     }
+
+    // A mesma ficha para duas pessoas da lista (handicaps a mais de 3 — dois Ben
+    // Smith, 5.4 e 17): não se sabe qual é, nenhuma fica ligada.
+    const porFicha = new Map();
+    for (const x of linhasLista) if (!/manual/.test(x.linha.junior.via)) porFicha.set(x.j.id, [...(porFicha.get(x.j.id) || []), x]);
+    for (const xs of porFicha.values()) {
+      const hs = xs.map((x) => x.linha.hcp);
+      if (xs.length < 2 || Math.max(...hs) - Math.min(...hs) <= 3) continue;
+      for (const x of xs) {
+        x.linha.ambiguo = [`${x.j.canonicalName}: a mesma ficha para ${xs.length} pessoas da lista (handicaps ${hs.map(fmtH).join(" e ")})`];
+        delete x.linha.junior;
+      }
+    }
+
+    // Só o que está confirmado escreve na ficha; o resto fica «por confirmar».
+    for (const { linha, j } of linhasLista) {
+      if (!linha.junior) continue;
+      if (linha.junior.porConfirmar) { porConfirmar++; continue; }
+      if (aplicar) {
+        const h = { date: lista.data, hcpExact: linha.hcp, source: "entry-list", label: lista.label || lista.id, ...(lista.fonteCurta ? { fonte: lista.fonteCurta } : {}) };
+        j.hcpHistory = Array.isArray(j.hcpHistory) ? j.hcpHistory : [];
+        if (!j.hcpHistory.some((x) => x.date === h.date && x.source === h.source && x.hcpExact === h.hcpExact)) {
+          j.hcpHistory.push(h);
+          j.hcpHistory.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+        }
+      }
+      ligados++;
+    }
   }
-  return { disponivel: true, listas: ficheiros.length, total: relatorio.length, ligados, relatorio };
+  return { disponivel: true, listas: ficheiros.length, total: relatorio.length, ligados, porConfirmar, relatorio };
+
+  /**
+   * Ligação só pelo nome a UMA ficha: o que a contradiz e o que a confirma.
+   *   contradiz — homónimo compatível na federação inteira (PT/ES/FR), licença
+   *     FFG diferente, ou handicap recente a mais de 5 do da lista;
+   *   confirma — único na federação, clube igual, handicap recente a ≤ 3, ou
+   *     ano de nascimento conhecido dentro do escalão.
+   * Sem contradição nem confirmação fica «por confirmar».
+   */
+  function verificar(lista, p, j, iso, nomesLinha) {
+    const U = universos()[iso];
+    let pessoas = [];
+    if (U) {
+      const vistas = new Map();
+      for (const nm of new Set([...nomesLinha, normName(j.canonicalName)].filter(Boolean))) {
+        for (const x of U.porNome.get(nm) || []) vistas.set(x.chave, x);
+        const t = nm.split(" ");
+        if (t.length < 2) continue;
+        for (const x of U.porPontas.get(`${t[0]}|${t[t.length - 1]}`) || []) if (t.every((w) => x.toks.includes(w))) vistas.set(x.chave, x);
+      }
+      pessoas = [...vistas.values()].filter((x) => (!lista.sexo || !x.sexo || x.sexo === lista.sexo)
+        && (!lista.nascidosDesde || !x.ano || x.ano >= lista.nascidosDesde));
+      if (pessoas.length >= 2) return { contradiz: `${pessoas.length} com este nome na federação (${iso})` };
+    }
+    const licFicha = semZeros(j.sources?.ffgolf?.lic);
+    if (p.licFFG && licFicha && !/^E/i.test(j.sources.ffgolf.lic) && licFicha !== semZeros(p.licFFG)) {
+      return { contradiz: `licença FFG ${p.licFFG} na lista, ${j.sources.ffgolf.lic} na ficha` };
+    }
+    const h = hcpRecente(j, iso, pessoas, lista.data);
+    if (h != null && Math.abs(h - p.hcp) > 5) return { contradiz: `handicap ${fmtH(p.hcp)} na lista, ${fmtH(h)} hoje` };
+    if (U && pessoas.length === 1) return { confirma: "único na federação" };
+    if (clubeBate(p.clube, j.sources?.fpg?.club || j.sources?.rfeg?.club || j.sources?.ffgolf?.club || j.club)) return { confirma: "clube" };
+    if (h != null && Math.abs(h - p.hcp) <= 3) return { confirma: "handicap" };
+    const ano = anoNasc(j);
+    if (lista.nascidosDesde && ano >= lista.nascidosDesde) return { confirma: "idade" };
+    return {};
+  }
+
+  /** Handicap da ficha com data a ≤ 6 meses da lista (o FPG oficial de hoje para federados). */
+  function hcpRecente(j, iso, pessoas, data) {
+    const fed = j.sources?.fpg?.fed;
+    if (fed) {
+      const x = universos().PT.porFed.get(String(Number(fed)));
+      if (typeof x?.hcp === "number") return x.hcp;
+    }
+    const perto = (d) => d && Math.abs(Date.parse(d) - Date.parse(data)) <= 183 * 864e5;
+    const s = j.sources || {};
+    const daLicenca = s.ffgolf?.lic ? universos().FR.porFed.get(semZeros(s.ffgolf.lic)) : null;
+    if (typeof daLicenca?.hcp === "number" && perto(daLicenca.hcpData)) return daLicenca.hcp;
+    if ((iso === "ES" || iso === "FR") && pessoas.length === 1 && typeof pessoas[0].hcp === "number" && perto(pessoas[0].hcpData)) return pessoas[0].hcp;
+    if (typeof s.rfeg?.hcp === "number" && perto(s.rfeg.hcpDate)) return s.rfeg.hcp;
+    if (typeof s.fpg?.hcpExact === "number" && perto(s.fpg.hcpDate)) return s.fpg.hcpExact;
+    return null;
+  }
 }
 
 /**
@@ -200,7 +377,8 @@ function ligacoesParaPagina(r, res) {
           : s.ffgolf?.hcp != null ? { valor: s.ffgolf.hcp, fonte: "FFG", data: null } : null;
       return {
         ordem: i + 1, pos: p.pos, lista: p.lista || null, name: p.name, country: p.country, hcp: p.hcp,
-        junior: j ? { id: j.id, name: j.canonicalName, dob: j.dob || null, club: s.fpg?.club || s.rfeg?.club || s.ffgolf?.club || j.club || null, via: l.junior.via } : null,
+        junior: j ? { id: j.id, name: j.canonicalName, dob: j.dob || null, club: s.fpg?.club || s.rfeg?.club || s.ffgolf?.club || j.club || null, via: l.junior.via,
+          ...(l.junior.porConfirmar ? { porConfirmar: true } : { confirmadoPor: l.junior.confirmadoPor || l.junior.via }) } : null,
         ambiguo: l.ambiguo || null,
         duplicadoDe: p.duplicadoDe || null,
         // com ficha, compara-se com o nome completo da ficha: o «Afonso Pinto» de 2026

@@ -305,7 +305,11 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   `scripts/aggregator/sources/fpg.js`). **Nunca** adivinhar por nome + clube noutras
   listas, nem dar a um federado a data de nascimento de um homónimo (roster GolfBox,
   outra fonte), nem juntar pessoas cujo federado ou escalão o contradiz. Num escalão
-  Sub-N nunca entra alguém mais velho (regra já antiga do `pickBestFed`).
+  Sub-N nunca entra alguém mais velho (regra já antiga do `pickBestFed`). Listas de
+  inscritos sem números (`util/hcp-listas.js`): o número primeiro (licença da lista,
+  federado da prova em `lista.prova`); só pelo nome, a ligação fica «por confirmar»
+  e não escreve na ficha até algo a confirmar (único na federação, clube, handicap
+  recente, idade) — e não se faz se a federação inteira tiver um homónimo.
 - **Gross ≥ 900 (998/999…) é "sem cartão"** — não pontua nem entra em médias,
   posições ou ±par. `grossTotal` pode vir como texto ("WD"). Nas fontes de fora
   e nos draws a regra é uma só: `isNoCardGross` (`src/data/intlCommon.ts`),
