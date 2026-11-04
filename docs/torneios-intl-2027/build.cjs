@@ -70,6 +70,13 @@ const META = [
   [/^Connacht U14/, "eu14", "2027-07-06", false, "Connacht U14 Open (Irlanda)", "Rapazes U14", "Datas de 2027 por publicar. Jogou-se em 2024 e 2026; pela rotação, 2027 pode não ter."],
   [/^Douglas Johns Trophy/, "eu14", "2027-07-29", false, "Douglas Johns Trophy (Inglaterra)", "U15 (sem prémio U14)", "Quadro U15: o Manuel jogaria com rapazes até um ano mais velhos. Não confirmado se aceita estrangeiros."],
   [/^Fairhaven Trophies/, "u16", "2027-04-30", true, "Fairhaven Trophies (Inglaterra)", "U18 (sem U14)", "Quadro único U18 de ~6400 m. Um português jogou em 2026 (Francisco Anahory Assis, não passou o corte)."],
+  [/^Danish Juniors International 2027/, "eu14", "2027-03-21", true, "Danish Junior Games + Juniors International (GJG)", "U14 (HCP ≤ 19)", "Duas provas seguidas em Esbjerg (21–24 e 25–28 Mar). Em 2027 todos os rapazes jogam o mesmo tee (~5,9–6,0 km); em 2026 o U14 jogou 5231 m. Campo U14 pequeno (13 em 2026)."],
+  [/^Falkenstein International Junior Open/, "eu14", "2027-08-11", false, "Falkenstein Int. Junior Open (Hamburgo)", "AK14 (HCPI ≤ 18,4)", "Datas de 2027 por publicar (Agosto). Campo U14 pequeno (8–9 rapazes); 219 €."],
+  [/^Slovenian International Boys/, "eu14", "2027-06-24", true, "Slovenian International Boys & Girls", "U14 (HI ≤ 11,4)", "Local de 2027 por anunciar. Vencedor U14 de 2026 não encontrado."],
+  [/^Estonian Junior Open/, "eu14", "2027-08-03", true, "Estonian Junior Open (WAGR)", "Boys U14", "Coincide com o Reid Trophy (3 Ago)."],
+  [/^Global Junior Golf — provas na Alemanha/, "eu14", "2027-03-21", true, "GJG Alemanha, Itália e Suíça (10 provas)", "U14 (campo pequeno)", "Quadros U14 de 4–11 jogadores. Em Bogogno os U14 jogam as amarelas e, pela regra da GJG, ficam fora do WAGR."],
+  [/^Bavarian Youth Open/, "u16", "2027-08-03", true, "Bavarian Youth Open (Holledau)", "U18 (sem U14; HCP ≤ 7,4)", "Quadro único de ~6,3 km com corte; só há classificação «AK 16 e mais novos». Coincide com o Reid Trophy e o Estonian."],
+  [/^Troféus juvenis WAGR em Itália/, "u16", "2027-06-03", false, "Lucio Visonà e PGAI Junior Trophy (Itália)", "U18 (sem U14)", "Quase só italianos; não confirmado se aceitam estrangeiros sem filiação na FIG. O melhor U14 de 2026 foi 3.º e 4.º."],
   [/^Czech International Boys/, "u16", "2027-07-15", true, "Czech International Boys & Girls", "U18 (sem U14; HCP ≤ 6,0)", "O regulamento confirma que não há quadro U14."],
 ];
 
