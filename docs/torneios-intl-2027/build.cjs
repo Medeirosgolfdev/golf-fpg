@@ -64,6 +64,12 @@ const META = [
   [/^BJGT European Open Italy/, "eu14", "2027-07-27", true, "BJGT European Open Italy", "Boys 12-13 (idade a 24/06)"],
   [/^Srixon Winter Open/, "eu14", "2027-03-15", false, "Srixon Winter Open (Múrcia)", "Sem U14 (quadro único)", "Quadro único para nascidos 2007–13 com HCP ≤ 3,0 — não tem U14; confirmar se 2014 entra em 2027."],
   [/^Latvian Junior Open/, "eu14", "2027-06-28", true, "Latvian / Lithuanian Junior Open", "U16 (sem quadro U14)", "Não há quadro U14: o Manuel jogaria U16."],
+  [/^Leinster U14/, "eu14", "2027-07-07", false, "Leinster U14 Open (Irlanda)", "Rapazes U14", "Datas de 2027 por publicar. Os U14 provinciais rodam: 2025 Leinster e Munster, 2024 e 2026 Ulster e Connacht — é provável que 2027 traga este, mas não está confirmado."],
+  [/^Munster U14/, "eu14", "2027-07-03", false, "Munster U14 Open (Irlanda)", "Rapazes U14", "Datas de 2027 por publicar; provável em 2027 pela rotação (2025 sim, 2024 e 2026 não). Em 2025 GolfGenius e EGR divergem no vencedor (empate) e na sede."],
+  [/^Ulster U14/, "eu14", "2027-07-01", false, "Ulster U14 Open (Irlanda do Norte)", "Rapazes U14", "Datas de 2027 por publicar. Jogou-se em 2024 e 2026; pela rotação, 2027 pode não ter."],
+  [/^Connacht U14/, "eu14", "2027-07-06", false, "Connacht U14 Open (Irlanda)", "Rapazes U14", "Datas de 2027 por publicar. Jogou-se em 2024 e 2026; pela rotação, 2027 pode não ter."],
+  [/^Douglas Johns Trophy/, "eu14", "2027-07-29", false, "Douglas Johns Trophy (Inglaterra)", "U15 (sem prémio U14)", "Quadro U15: o Manuel jogaria com rapazes até um ano mais velhos. Não confirmado se aceita estrangeiros."],
+  [/^Fairhaven Trophies/, "u16", "2027-04-30", true, "Fairhaven Trophies (Inglaterra)", "U18 (sem U14)", "Quadro único U18 de ~6400 m. Um português jogou em 2026 (Francisco Anahory Assis, não passou o corte)."],
   [/^Czech International Boys/, "u16", "2027-07-15", true, "Czech International Boys & Girls", "U18 (sem U14; HCP ≤ 6,0)", "O regulamento confirma que não há quadro U14."],
 ];
 
