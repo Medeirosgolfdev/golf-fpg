@@ -8,8 +8,9 @@ name: Actualizar Swiss Golf (Suíça)
 # API PÚBLICA → SEM secrets/cookies.
 #
 # Corre:
-#  - Domingo às 19:30 UTC — as provas juvenis suíças são ao fim-de-semana.
-#  - Segunda às 06:30 UTC — apanha o fecho de domingo.
+#  - Uma vez por semana, segunda às 06:30 UTC, de Abril a Novembro — as provas
+#    juvenis suíças são ao fim-de-semana e a época vai de Abril a Outubro (a de
+#    Novembro apanha o último fim-de-semana de Outubro). Mariana, 04/11/2026.
 #  - A pedido, com números de competição GolfBox ad-hoc ou outras épocas.
 #
 # Nota: o commit é self-contained (scrape + agregador) porque um push feito com
@@ -28,8 +29,7 @@ on:
         default: ''
         type: string
   schedule:
-    - cron: '30 19 * * 0'
-    - cron: '30 6 * * 1'
+    - cron: '30 6 * 4-11 1'
 
 permissions:
   contents: write

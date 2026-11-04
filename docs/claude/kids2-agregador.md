@@ -396,7 +396,7 @@ país CH; chave `gb{RefID}`). Só kids2 — não vai à `/major`.
 - No Junior Tour o U16 repete os miúdos do U18 e nos Nacionais o U12 repete o U14: os
   ficheiros guardam as classes como vêm; o `umaDivisaoPorJogador` do `jobfile.js` deixa
   cada miúdo no escalão mais específico.
-- Workflow `update-swissgolf.yml` (Dom 19:30 + Seg 06:30 UTC). Pedidos um a um, pausa de 2 s.
+- Workflow `update-swissgolf.yml` (segunda 06:30 UTC, só de Abril a Novembro — 1× por semana chega, decisão dela). Pedidos um a um, pausa de 2 s.
 
 ## Fonte DGV — Alemanha (2026-10-10)
 
@@ -406,7 +406,7 @@ país CH; chave `gb{RefID}`). Só kids2 — não vai à `/major`.
 - **Handicap:** o «plus» da DGV vem com sinal menos — é a nossa convenção, guarda-se tal como vem. Vem com vírgula ou ponto conforme a prova.
 - **Estrangeiros:** clube 8 e o nome do clube é o país em alemão → ISO2 (tabela `COUNTRY_DE` no scraper).
 - **Cartões:** o buraco a buraco é uma imagem PNG; do cartão só se lê par, CR, Slope, percurso e tee (`membership-card-api.golf.de/…/details`).
-- **Workflow** `update-dgv.yml` (Sex/Sáb/Dom 19:30 UTC + Seg 06:00): janela de −21 a +7 dias; a pedido com `ids` ou `from_days`. Guarda anti-encolhimento por nº de jogadores com voltas; exit 2 = nada mudou.
+- **Workflow** `update-dgv.yml` (segunda 06:00 UTC, 1× por semana — decisão dela, 04/11/2026): janela de −21 a +7 dias; a pedido com `ids` ou `from_days`. Guarda anti-encolhimento por nº de jogadores com voltas; exit 2 = nada mudou.
 - Ainda **não** está na `/major` (só kids2). Mapa de links: secção «DGV — Alemanha» em `docs/links-conhecidos.html`.
 
 ## Fonte «Condados ENG» — `ggcondados` (03/11/2026)
