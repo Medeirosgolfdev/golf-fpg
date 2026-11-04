@@ -115,7 +115,12 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
   }, [resolved, onTee, teeSel]);
   const baseKey = base ? `${base.course.courseKey}|${base.tee.teeId}` : "";
   const baseNaLista = campos.some((c) => c.courseKey === base?.course.courseKey && c.master.tees.some((t) => t.teeId === base?.tee.teeId));
-  const nTees = campos.reduce((a, c) => a + c.master.tees.length, 0);
+  // Só tees de homens: a Previsão é do Manuel, e o rating de senhoras de um
+  // tee dá-lhe pancadas que não são as dele (04/11/2026: Rojas de senhoras,
+  // CR 71.3 contra 66.4 — «a melhor», «ao handicap» e «a média» seguidas).
+  // O tee resolvido fica sempre na lista, seja qual for.
+  const teesDe = (c: (typeof campos)[number]) => c.master.tees.filter((t) => t.sex !== "F" || (c.courseKey === base?.course.courseKey && t.teeId === base?.tee.teeId));
+  const nTees = campos.reduce((a, c) => a + teesDe(c).length, 0);
   const opcaoTee = (c: { courseKey: string }, t: { teeId: string; teeName: string; sex?: string; distances?: { total?: number | null } }) => (
     <option key={c.courseKey + t.teeId} value={`${c.courseKey}|${t.teeId}`}>
       {t.teeName}{t.sex === "F" ? " (senhoras)" : t.sex === "M" ? " (homens)" : ""}{t.distances?.total ? ` · ${t.distances.total} m` : ""}
@@ -213,7 +218,9 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
     if (!calc || cr == null || slope == null || par == null) return null;
     const alvo = Math.round(calc.playsToIndex);
     const media = expPerRound != null ? Math.round(expPerRound) : alvo;
-    const lo = Math.min(vinte?.melhor ?? alvo, alvo) - 2;
+    // Começa SEMPRE, no mínimo, no par (04/11/2026, «deveria começar sempre
+    // pelo menos no par») e acaba 2 acima da média.
+    const lo = Math.min(vinte?.melhor ?? alvo, alvo, par + 2) - 2;
     const top = Math.max(media, alvo) + 2;
     const rows: { gross: number; toPar: number; sd: number; n20: number | null }[] = [];
     for (let g = lo; g <= top; g++) {
@@ -371,8 +378,8 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
             <Select value={teeSel ?? (baseNaLista ? baseKey : "")} onChange={(v) => setTeeSel(v && v !== baseKey ? v : null)} active={teeSel != null}>
               {!baseNaLista && <option value="">{base?.tee.teeName} (do torneio)</option>}
               {campos.length > 1
-                ? campos.map((c) => <optgroup key={c.courseKey} label={c.master.name}>{c.master.tees.map((t) => opcaoTee(c, t))}</optgroup>)
-                : campos[0]?.master.tees.map((t) => opcaoTee(campos[0], t))}
+                ? campos.map((c) => <optgroup key={c.courseKey} label={c.master.name}>{teesDe(c).map((t) => opcaoTee(c, t))}</optgroup>)
+                : campos[0] && teesDe(campos[0]).map((t) => opcaoTee(campos[0], t))}
             </Select>
           </FilterField>
         ) : undefined}>

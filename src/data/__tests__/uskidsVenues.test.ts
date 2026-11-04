@@ -20,6 +20,8 @@ describe("uskidsIntlYardage", () => {
     expect(sede.courseKeys).toEqual(["away-the-san-roque-club-old", "away-san-roque"]);
     expect(camposDoEscalao(sede, "Boys 12")).toEqual(["away-the-san-roque-club-old"]);
     expect(camposDoEscalao(sede, "Boys 11")).toEqual(["away-san-roque"]);
-    expect(camposDoEscalao(sede, "Girls 13-14")).toEqual(["away-san-roque"]);
+    expect(camposDoEscalao(sede, "Girls 13-14")).toEqual(["away-the-san-roque-club-old"]);
+    expect(camposDoEscalao(sede, "Girls 15-18")).toEqual(["away-the-san-roque-club-old"]);
+    expect(camposDoEscalao(sede, "Girls 11-12")).toEqual(["away-san-roque"]);
   });
 });

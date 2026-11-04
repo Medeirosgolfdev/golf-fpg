@@ -51,9 +51,17 @@ export const USKIDS_SEDES: Record<number, {
   // («Boys 12 · The San Roque Club»; «os outros é no San Roque Golf & Resort»).
   23132: {
     courseKeys: ["away-the-san-roque-club-old", "away-san-roque"],
-    porEscalao: { "Boys 12": "away-the-san-roque-club-old" },
+    // Tabela «Course Assignment» da página da USKids (Mariana, 04/11/2026):
+    // Boys 12, Girls 13-14 e Girls 15-18 no The San Roque Club (Old Course);
+    // todos os outros no San Roque Golf & Resort (New Course) — os de 9 buracos
+    // (Boys 6–8, Girls 8 e 9-10) nos 9 de trás («Back»).
+    porEscalao: {
+      "Boys 12": "away-the-san-roque-club-old",
+      "Girls 13-14": "away-the-san-roque-club-old",
+      "Girls 15-18": "away-the-san-roque-club-old",
+    },
     resto: "away-san-roque",
-    nota: "Spanish Open 2026: Boys 12 no The San Roque Club (Old Course); os outros escalões no San Roque Golf & Resort (New Course)",
+    nota: "Spanish Open 2026: Boys 12, Girls 13-14 e Girls 15-18 no The San Roque Club (Old Course); os outros escalões no San Roque Golf & Resort (New Course)",
   },
 };
 
