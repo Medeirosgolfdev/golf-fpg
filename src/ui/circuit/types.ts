@@ -36,6 +36,9 @@ export type CircuitSex = "M" | "F" | "Mixed";
  *  que delegam no TournamentDetail a intercalarem via `extraTabs`. */
 export interface CircuitRenderFullExtras {
   pastEditionsTab?: { key: string; label: string; content: React.ReactNode };
+  /** «Scorecards anteriores» (04/11/2026): os cartões buraco a buraco das
+   *  edições anteriores — as mesmas irmãs das «Edições anteriores». */
+  pastScorecardsTab?: { key: string; label: string; content: React.ReactNode };
   seasonTab?: { key: string; label: string; content: React.ReactNode };
   repeatersTab?: { key: string; label: string; content: React.ReactNode };
 }

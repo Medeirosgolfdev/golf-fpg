@@ -49,7 +49,7 @@ interface MHSlim {
   jogadores: Record<string, MHPlr>;
 }
 
-interface PlayerRound {
+export interface PlayerRound {
   rn: number;
   gross: number;
   strokes: number[];
@@ -61,7 +61,7 @@ interface PlayerRound {
   out: number;       // soma front 9
   inn: number;       // soma back 9 (0 se torneio 9H)
 }
-interface PlayerCard {
+export interface PlayerCard {
   memberId: string;
   name: string;
   country: string;
@@ -69,7 +69,7 @@ interface PlayerCard {
   total: number;
   rounds: PlayerRound[];
 }
-interface Edition {
+export interface Edition {
   tcode: string;
   name: string;
   year: string;
@@ -97,7 +97,7 @@ export const MIN_GROSS_9H = 28;
 type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" | "birds" | "pars" | "bogeys" | `h${number}`;
 
 /** Conta birdies/pars/bogeys/worse num scorecard. */
-function tallyHoles(strokes: number[], par: number[] | null): { birds: number; pars: number; bogeys: number; worse: number } {
+export function tallyHoles(strokes: number[], par: number[] | null): { birds: number; pars: number; bogeys: number; worse: number } {
   let birds = 0, pars = 0, bogeys = 0, worse = 0;
   if (!par) return { birds, pars, bogeys, worse };
   for (let i = 0; i < strokes.length; i++) {
@@ -118,23 +118,6 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
   torneio: FieldTorneio | null;
   escalaoNome: string;
 }) {
-  const [topN, setTopN] = useState<5 | 10 | 20 | 0>(10); // 0 = todos
-  const [groupMode, setGroupMode] = useState<boolean>(true); // true = Agrupado
-  // Sort state — default por posição oficial (pos) ASC. Em modo Agrupado,
-  // agrega por jogador (best/min para buracos e para gross/toPar; total
-  // para birds/pars/bogeys). Em modo Independente actua sobre a ronda individual.
-  const [sortKey, setSortKey] = useState<SortKey>("pos");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
-  function toggleSort(k: SortKey) {
-    if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else {
-      setSortKey(k);
-      // Defaults sensatos: jogador/país/ano DESC para anos primeiro, gross/topar ASC
-      const ascByDefault = new Set(["topar", "gross", "name", "country", "rnd"]);
-      if (k.startsWith("h")) { setSortDir("asc"); return; }
-      setSortDir(ascByDefault.has(k) ? "asc" : "desc");
-    }
-  }
 
   const editions: Edition[] | null = useMemo(() => {
     if (!mh || !torneio) return null;
@@ -263,6 +246,35 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         (≥ {MIN_FIELD_SIZE} finishers, ≥ 80% de cobertura do field oficial).
       </div>
     );
+  }
+
+  return <HistoricScorecardsView editions={editions} />;
+}
+
+/**
+ * A tabela dos «Scorecards anteriores» (top-N por edição, Agrupado ou
+ * Independente, ecléctica) a partir de edições já montadas — a mesma no Kids 2
+ * (histórico USKids) e em todos os torneios do CircuitShell e da /FPG
+ * (`CircuitPastScorecardsTab`, 04/11/2026: «este tab… também podia aparecer
+ * sempre»).
+ */
+export function HistoricScorecardsView({ editions }: { editions: Edition[] }) {
+  const [topN, setTopN] = useState<5 | 10 | 20 | 0>(10); // 0 = todos
+  const [groupMode, setGroupMode] = useState<boolean>(true); // true = Agrupado
+  // Sort state — default por posição oficial (pos) ASC. Em modo Agrupado,
+  // agrega por jogador (best/min para buracos e para gross/toPar; total
+  // para birds/pars/bogeys). Em modo Independente actua sobre a ronda individual.
+  const [sortKey, setSortKey] = useState<SortKey>("pos");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  function toggleSort(k: SortKey) {
+    if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else {
+      setSortKey(k);
+      // Defaults sensatos: jogador/país/ano DESC para anos primeiro, gross/topar ASC
+      const ascByDefault = new Set(["topar", "gross", "name", "country", "rnd"]);
+      if (k.startsWith("h")) { setSortDir("asc"); return; }
+      setSortDir(ascByDefault.has(k) ? "asc" : "desc");
+    }
   }
 
   // Nº de buracos da edição mais recente (misturar 9H+18H não acontece neste

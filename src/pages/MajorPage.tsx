@@ -154,7 +154,7 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
             ...(dv.players.some((p) => p.dob || p.birthYear || p.birthYearEst) ? { nasc: false } : {}),
           }}
           hideHeader
-          extraTabs={[...mpBase, ...[extras?.pastEditionsTab, extras?.repeatersTab].filter((x): x is NonNullable<typeof x> => !!x)]}
+          extraTabs={[...mpBase, ...[extras?.pastEditionsTab, extras?.pastScorecardsTab, extras?.repeatersTab].filter((x): x is NonNullable<typeof x> => !!x)]}
         />
       ),
     };

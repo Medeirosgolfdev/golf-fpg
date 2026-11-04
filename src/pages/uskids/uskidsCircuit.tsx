@@ -54,11 +54,14 @@ function UskidsEscalaoDetail({ escalao: e, torneio: t, drawsData, extras, moreTa
   const campo = tournament.campo || "";
   const campoProprio = !!campo && campo.trim() !== (t.campo || "").trim();
   const options = useMemo(() => ({ noInferBlanks: true, showCourse: campoProprio }), [campoProprio]);
-  // «Edições anteriores» e «Scout» vêm do shell.
+  // «Edições anteriores», «Scorecards anteriores» e «Scout» vêm do shell; os
+  // «Scorecards anteriores» do Kids 2 (histórico USKids, mais completo) ganham
+  // aos do shell quando a página já os traz (`moreTabs` com «sc-edicoes»).
   const extraTabs = useMemo(() => {
-    const tabs = [extras?.pastEditionsTab, extras?.repeatersTab, ...(moreTabs ?? [])].filter((x): x is NonNullable<typeof x> => !!x);
+    const temProprio = (moreTabs ?? []).some((x) => x.key === "sc-edicoes");
+    const tabs = [extras?.pastEditionsTab, temProprio ? null : extras?.pastScorecardsTab, extras?.repeatersTab, ...(moreTabs ?? [])].filter((x): x is NonNullable<typeof x> => !!x);
     return tabs.length ? tabs : undefined;
-  }, [extras?.pastEditionsTab, extras?.repeatersTab, moreTabs]);
+  }, [extras?.pastEditionsTab, extras?.pastScorecardsTab, extras?.repeatersTab, moreTabs]);
 
   // playersDB com kidsHash para todos os jogadores deste escalão
   const kidsDB = useMemo(() => {

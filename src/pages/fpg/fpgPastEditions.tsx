@@ -19,6 +19,7 @@ import type { CircuitEntry, CircuitDivision } from "../../ui/circuit/types";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import SectionErrorBoundary from "../../ui/SectionErrorBoundary";
 import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pastEditions";
+import { CircuitPastScorecardsTab } from "../../ui/circuit/PastScorecardsTab";
 import FpgScout from "./FpgScout";
 import { currentField } from "./repeatersModel";
 import { MANUEL_FED } from "../../constants/manuel";
@@ -240,6 +241,15 @@ export function fpgPastEditionsTabs(
     content: (
       <SectionErrorBoundary label="Edições anteriores">
         <CircuitPastEditionsTab editions={entries} division={division} />
+      </SectionErrorBoundary>
+    ),
+  });
+  if (entries.length >= 2) tabs.push({
+    key: "sc-edicoes",
+    label: "Scorecards anteriores",
+    content: (
+      <SectionErrorBoundary label="Scorecards anteriores">
+        <CircuitPastScorecardsTab editions={entries} division={division} currentId={curId} />
       </SectionErrorBoundary>
     ),
   });

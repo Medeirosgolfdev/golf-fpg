@@ -29,6 +29,7 @@ import React, { useMemo, useState, useEffect, useCallback, useContext } from "re
 import { useSearchParams } from "react-router-dom";
 import Scout from "./Scout";
 import { CircuitPastEditionsTab, divisionField } from "./pastEditions";
+import { CircuitPastScorecardsTab } from "./PastScorecardsTab";
 import { CircuitRankingView } from "./CircuitRanking";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
 import SidebarToggle from "../SidebarToggle";
@@ -540,6 +541,12 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     }
     return null;
   })();
+  // ── Tab «Scorecards anteriores» (04/11/2026, «também podia aparecer sempre»):
+  // os cartões buraco a buraco das mesmas edições irmãs, menos a de hoje.
+  const pastScorecardsTabNode = curDiv && cur && pastEditionsSiblings
+    ? { key: "sc-edicoes", label: "Scorecards anteriores",
+        content: <CircuitPastScorecardsTab editions={pastEditionsSiblings} division={curDivLabel} currentId={cur.id} match={matchDiv} /> }
+    : null;
   // ── Tab "Época" (embutida, keyed por config.seasonKey) ────────────────────
   // Toda a série/região do MESMO ANO do torneio aberto (as etapas da época em
   // curso), em contraste com "Edições anteriores" (a mesma prova/campo ao longo
@@ -567,6 +574,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // Ordem na barra: … Resumo · 📋 Scorecards · Época · Edições anteriores.
   if (seasonTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(seasonTabNode);
   if (pastEditionsTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(pastEditionsTabNode);
+  if (pastScorecardsTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(pastScorecardsTabNode);
   // ── Tab «Scout» (20/10/2026; era «Quem repete», 13/10): o field de hoje com
   // as edições anteriores desta prova E a carreira de cada um (nível, forma,
   // confrontos com o Manuel, próximas inscrições). Basta haver field — sem
@@ -848,7 +856,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                 {/* O campo do cabeçalho vai como reserva para a aba «⛳ O campo»
                     (o torneio do escalão nem sempre traz `campo`). */}
                 <CampoDoCircuito.Provider value={cur.course || undefined}>
-                {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined, repeatersTab: repeatersTabNode ?? undefined })}
+                {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, pastScorecardsTab: pastScorecardsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined, repeatersTab: repeatersTabNode ?? undefined })}
                 {!curDiv.renderFull && detailTourn && (
                   <IntlTournView
                     tournament={detailTourn}

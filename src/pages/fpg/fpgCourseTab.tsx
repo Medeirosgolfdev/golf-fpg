@@ -15,7 +15,7 @@
  * «quem jogou» (~10 MB) vem pelo `CoursesGate withPlayers` só ao abrir a aba.
  * Também para provas que ainda não se jogaram: o campo resolve-se pelo nome.
  */
-import { createContext, lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { createContext, lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Course, Tee } from "../../data/types";
 import type { Tournament } from "../../data/fpgTypes";
@@ -31,8 +31,6 @@ import { isManuel, MANUEL_DOB } from "../../constants/manuel";
 import { tournamentHasManuel } from "../../data/fpgUtils";
 import { teeRuleFor, teeNameFor, parseSubNumber } from "../../utils/teeRegulation";
 import LoadingState from "../../ui/LoadingState";
-import Select from "../../ui/Select";
-import { FilterField } from "../../ui/FilterField";
 
 const CourseComoJogou = lazy(() => import("../CamposPage").then((m) => ({ default: m.CourseComoJogou })));
 const PrevisaoTab = lazy(() => import("../kids/PrevisaoTab"));
@@ -193,39 +191,25 @@ function PrevisaoDaProva({ courseKey, teeId, tournament, fonte, teeSugerido }: {
   const dob = useFedBirthdates();
   const sex = useFedGenders();
   const hcp = useFedHcp();
-  const course = useMemo(() => simCourses.find((c) => c.courseKey === courseKey) ?? null, [simCourses, courseKey]);
-  // O tee escolhido (04/11/2026: «opção de um dos tees e opção para mudar de
-  // tee») — começa no do Manuel / no do escalão dele; muda-se na caixa.
-  const [teeSel, setTeeSel] = useState(teeId);
-  useEffect(() => { setTeeSel(teeId); }, [teeId]);
+  // O tee inicial (o do Manuel / o do escalão dele) e a nota de onde veio; a
+  // caixa para mudar de tee é da própria PrevisaoTab (a mesma no Kids 2 —
+  // 04/11/2026, «porque é que não são o mesmo módulo»).
   const resolved = useMemo<ResolvedCourse | null>(() => {
-    const tee = course?.master.tees.find((t) => t.teeId === teeSel);
-    return course && tee ? { course, tee } : null;
-  }, [course, teeSel]);
-  const teeNome = resolved?.tee.teeName ?? "";
-  const field = useMemo(() => jogadoresNoTee(tournament, teeNome, { dob, sex, hcp }), [tournament, teeNome, dob, sex, hcp]);
-  const tees = course?.master.tees ?? [];
-  const mudou = teeSel !== teeId;
+    const course = simCourses.find((c) => c.courseKey === courseKey);
+    const tee = course?.master.tees.find((t) => t.teeId === teeId);
+    if (!course || !tee) return null;
+    const note = fonte === "escalao" ? `O Manuel não está nesta prova — o tee que lhe caberia pelo escalão (${teeSugerido}). Muda-se na caixa «Tee».`
+      : fonte === "nenhum" ? "Não se sabe o tee do Manuel aqui — escolhe-se na caixa «Tee»."
+      : undefined;
+    return { course, tee, note };
+  }, [simCourses, courseKey, teeId, fonte, teeSugerido]);
+  // O field é o do tee à vista (o escolhido na caixa).
+  const [teeNome, setTeeNome] = useState("");
+  const onTee = useCallback((t: { teeName: string }) => setTeeNome(t.teeName), []);
+  const field = useMemo(() => jogadoresNoTee(tournament, teeNome || resolved?.tee.teeName || "", { dob, sex, hcp }), [tournament, teeNome, resolved, dob, sex, hcp]);
   return (
     <Suspense fallback={<LoadingState size="sm" message="A preparar a previsão…" />}>
-      <div className="mt-8 u-d-flex u-gap-12px u-fwr-wrap u-ai-center">
-        <FilterField asLabel label="Tee">
-          <Select value={teeSel} onChange={setTeeSel} active={mudou}>
-            {tees.map((t) => (
-              <option key={t.teeId} value={t.teeId}>
-                {t.teeName}{t.sex === "F" ? " (senhoras)" : t.sex === "M" ? " (homens)" : ""}{t.distances?.total ? ` · ${t.distances.total} m` : ""}
-              </option>
-            ))}
-          </Select>
-        </FilterField>
-        <span className="muted fs-12">
-          {mudou ? "Tee escolhido à mão."
-            : fonte === "prova" ? "O tee do Manuel nesta prova (draw, voltas jogadas ou regulamento)."
-            : fonte === "escalao" ? `O Manuel não está nesta prova — o tee que lhe caberia pelo escalão (${teeSugerido}).`
-            : "Não se sabe o tee do Manuel aqui — escolha um."}
-        </span>
-      </div>
-      <div className="mt-8"><PrevisaoTab resolved={resolved} field={field.length > 1 ? field : undefined} /></div>
+      <div className="mt-8"><PrevisaoTab resolved={resolved} field={field.length > 1 ? field : undefined} onTee={onTee} /></div>
     </Suspense>
   );
 }

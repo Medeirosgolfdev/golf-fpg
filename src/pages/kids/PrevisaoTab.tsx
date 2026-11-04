@@ -40,6 +40,7 @@ import { SDPill } from "../../ui/tournamentPrimitives";
 import { Fill, Tint } from "../../ui/DataStyle";
 import { parHoleColors } from "../../ui/CourseHeroCard";
 import { useJson } from "../../hooks/useJson";
+import { USKIDS_SEDES } from "../../data/uskidsVenues";
 import { stripAccents } from "../../utils/normName";
 import Select from "../../ui/Select";
 import SectionTitle from "../../ui/SectionTitle";
@@ -69,7 +70,7 @@ function parseNum(s: string): number | null {
 
 type RowKey = "gross" | "toPar" | "sd";
 
-export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = null, resolved: resolvedIn, field: fieldNoTee }: {
+export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = null, resolved: resolvedIn, field: fieldNoTee, onTee }: {
   torneio?: FieldTorneio | null;
   escalaoNome?: string;
   mh?: MHSlim | null;
@@ -78,11 +79,47 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
   resolved?: ResolvedCourse | null;
   /** Os jogadores da prova no mesmo tee, com índice (sem isto, sem a secção). */
   field?: JogadorNoTee[];
+  /** Avisa quem chama quando se muda de tee na caixa (o field depende do tee). */
+  onTee?: (tee: { teeId: string; teeName: string; escolhido: boolean }) => void;
 }) {
   const { simCourses } = useCourses();
-  const resolved = useMemo<ResolvedCourse | null>(
+  const base = useMemo<ResolvedCourse | null>(
     () => resolvedIn !== undefined ? resolvedIn : resolveCourseTee(torneio as never, escalaoNome, mh as never, simCourses),
     [resolvedIn, torneio, escalaoNome, mh, simCourses],
+  );
+  // Escolher o tee (04/11/2026: «tens que permitir que se mude o tee na
+  // previsão») — todos os tees do campo; começa no resolvido.
+  const cursoCompleto = useMemo(
+    () => (base ? simCourses.find((c) => c.courseKey === base.course.courseKey) ?? base.course : null),
+    [base, simCourses],
+  );
+  // Prova com mais de um campo (USKIDS_SEDES — Spanish Open 2026: Old e New):
+  // os tees de todos, agrupados por campo.
+  const campos = useMemo(() => {
+    const sede = torneio ? USKIDS_SEDES[(torneio as { t: number }).t] : undefined;
+    const daSede = (sede?.courseKeys ?? []).map((k) => simCourses.find((c) => c.courseKey === k)).filter((c): c is NonNullable<typeof c> => !!c);
+    return daSede.length ? daSede : cursoCompleto ? [cursoCompleto] : [];
+  }, [torneio, simCourses, cursoCompleto]);
+  // Valor da caixa = «courseKey|teeId».
+  const [teeSel, setTeeSel] = useState<string | null>(null);
+  useEffect(() => { setTeeSel(null); }, [base?.tee.teeId, base?.course.courseKey]);
+  const resolved = useMemo<ResolvedCourse | null>(() => {
+    if (!base || !teeSel) return base;
+    const [ck, tid] = teeSel.split("|");
+    const course = campos.find((c) => c.courseKey === ck);
+    const tee = course?.master.tees.find((t) => t.teeId === tid);
+    return course && tee ? { course, tee } : base;
+  }, [base, teeSel, campos]);
+  useEffect(() => {
+    if (resolved && onTee) onTee({ teeId: resolved.tee.teeId, teeName: resolved.tee.teeName, escolhido: teeSel != null });
+  }, [resolved, onTee, teeSel]);
+  const baseKey = base ? `${base.course.courseKey}|${base.tee.teeId}` : "";
+  const baseNaLista = campos.some((c) => c.courseKey === base?.course.courseKey && c.master.tees.some((t) => t.teeId === base?.tee.teeId));
+  const nTees = campos.reduce((a, c) => a + c.master.tees.length, 0);
+  const opcaoTee = (c: { courseKey: string }, t: { teeId: string; teeName: string; sex?: string; distances?: { total?: number | null } }) => (
+    <option key={c.courseKey + t.teeId} value={`${c.courseKey}|${t.teeId}`}>
+      {t.teeName}{t.sex === "F" ? " (senhoras)" : t.sex === "M" ? " (homens)" : ""}{t.distances?.total ? ` · ${t.distances.total} m` : ""}
+    </option>
   );
 
   // HI + dados completos do Manuel (default 9.4 até carregar). Editável.
@@ -320,7 +357,7 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
 
   return (
     <div className="u-d-flex u-fd-column u-gap-14px">
-      {resolved.note && (
+      {resolved.note && !teeSel && (
         <div className="muted fs-11 u-p-6px-10px u-bg-bg-muted u-bd-qpvg4 u-br-radius">
           ⚠ {resolved.note}
         </div>
@@ -328,7 +365,17 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
 
       <div className="card u-d-flex u-fd-column u-gap-12px">
       {/* Campo + tee resolvido */}
-      <SectionTitle as="div" size="lg" className="u-m-0">
+      <SectionTitle as="div" size="lg" className="u-m-0"
+        right={nTees > 1 ? (
+          <FilterField asLabel label="Tee">
+            <Select value={teeSel ?? (baseNaLista ? baseKey : "")} onChange={(v) => setTeeSel(v && v !== baseKey ? v : null)} active={teeSel != null}>
+              {!baseNaLista && <option value="">{base?.tee.teeName} (do torneio)</option>}
+              {campos.length > 1
+                ? campos.map((c) => <optgroup key={c.courseKey} label={c.master.name}>{c.master.tees.map((t) => opcaoTee(c, t))}</optgroup>)
+                : campos[0]?.master.tees.map((t) => opcaoTee(campos[0], t))}
+            </Select>
+          </FilterField>
+        ) : undefined}>
         {resolved.course.master.name}
         {" · "}
         <span>{resolved.tee.teeName}</span>

@@ -20,6 +20,7 @@ import { useCourses } from "../../context/CoursesContext";
 import type { Course, Tee } from "../../data/types";
 import EmptyState from "../../ui/EmptyState";
 import { stripAccents } from "../../utils/normName";
+import { USKIDS_SEDES, uskidsIntlYardage, camposDoEscalao } from "../../data/uskidsVenues";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -304,6 +305,33 @@ function buildCourseTee(
   return { course, tee, ratingApprox };
 }
 
+/** O campo deste ano de uma prova por disputar (`USKIDS_SEDES`) e o tee do
+ *  escalão: dos campos da sede, o tee do sexo do escalão cujo comprimento (em
+ *  jardas) fica mais perto do meio da faixa da grelha USKids. Só escalões de
+ *  18 buracos (os de 9 jogam tees próprios). Null sem sede / sem faixa. */
+function sedeDoAno(torneio: FieldTorneio, escalaoNome: string, simCourses: Course[]): ResolvedCourse | null {
+  const sede = USKIDS_SEDES[torneio.t];
+  const faixa = uskidsIntlYardage(escalaoNome);
+  if (!sede || !faixa || faixa.holes !== 18) return null;
+  const alvo = (faixa.min + faixa.max) / 2;
+  let best: { course: Course; tee: Tee; d: number } | null = null;
+  for (const key of camposDoEscalao(sede, escalaoNome)) {
+    const course = simCourses.find((c) => c.courseKey === key);
+    for (const tee of course?.master.tees ?? []) {
+      if (tee.sex !== faixa.sex || !tee.distances?.total) continue;
+      const d = Math.abs(tee.distances.total / 0.9144 - alvo);
+      if (!best || d < best.d) best = { course: course!, tee, d };
+    }
+  }
+  if (!best) return null;
+  const jardas = Math.round((best.tee.distances.total ?? 0) / 0.9144);
+  return {
+    course: best.course,
+    tee: best.tee,
+    note: `${sede.nota}. Tee estimado pela grelha da USKids, enquanto não saem as distâncias oficiais (${escalaoNome}: ${faixa.min}–${faixa.max} jardas): ${best.course.master.name} · ${best.tee.teeName}, ${best.tee.distances.total} m (${jardas} jardas).`,
+  };
+}
+
 /** Resolve {course, tee, note} para um torneio+escalao (cascata de fontes).
  *  Exportado para a tab "Previsao" reutilizar. */
 export function resolveCourseTee(
@@ -330,6 +358,12 @@ export function resolveCourseTee(
     const r = buildCourseTee("Campo (a confirmar)", escMeta.par, escMeta.yards, hpr, escalaoNome, simCourses);
     return { ...r, note: "Aguarda confirmação oficial do campo" };
   }
+
+  // Prova por disputar noutro campo (USKIDS_SEDES): o campo DESTE ano, com o
+  // tee do escalão pela grelha de distâncias da USKids — antes de cair no
+  // campo da edição anterior (04/11/2026: Spanish Open 2026 no San Roque).
+  const sede = sedeDoAno(torneio, escalaoNome, simCourses);
+  if (sede) return sede;
 
   const prev = findPrevEdition(mh, torneio, escalaoNome);
   if (prev?.par && prev?.yards && prev?.course) {

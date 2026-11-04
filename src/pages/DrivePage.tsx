@@ -215,7 +215,7 @@ function DriveContent() {
         const equipasTab = eqData ? { key: "equipas", label: "Equipas", content: <TeamStrokeStandings model={buildDriveEquipas(eqData)}
           footnote={<>Fonte: <ExtLink href={eqData.fonte}>PDF «Resultados» da FPG</ExtLink>.</>} /> } : null;
         d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup} playersDB={pdb}
-          extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab, extras?.repeatersTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
+          extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab, extras?.pastScorecardsTab, extras?.repeatersTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
       }
     }
     return ents;
