@@ -14,7 +14,7 @@
  * Tirado da MajorPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { isManuelByName as isM } from "../../constants/manuel";
-import { isPtCountry } from "../../utils/flagUtils";
+import { isPtCountry, normPaisDisplay } from "../../utils/flagUtils";
 import { intlCountryCell } from "../intlCommon";
 import { ageAtDate } from "../../utils/format";
 import { normName } from "../../utils/normName";
@@ -48,6 +48,18 @@ export const JOB_DIV_LABELS = ["Rapazes", "Raparigas"];
 // as colunas HCP e SD; as GolfGenius (sem esses dados) mantêm-nas escondidas para
 // não exibir colunas vazias. showAges: coluna IDADE (idade À DATA do torneio via
 // dob+startDate; fallback ano − birthYear) — ligar só em fontes com birthYear.
+
+/** O clube do jogador quando a fonte o dá — nunca a equipa nacional que os
+ *  campeonatos por equipas põem no mesmo campo («Germany», «SLOVENIA», «Great
+ *  Britain and Ireland»), nem a cidade (`location`, USKids/BJGT). */
+const EQUIPA_NAO_CLUBE = /^(great britain|gb ?& ?i|continental europe|europe|team\b)/i;
+function clubeDaFonte(p: Pick<JobPlayer, "club" | "country">): string | null {
+  const c = String(p.club ?? "").trim();
+  if (!c || EQUIPA_NAO_CLUBE.test(c)) return null;
+  if (p.country && c.toLowerCase() === normPaisDisplay(p.country).toLowerCase()) return null;
+  return c;
+}
+
 export function jobScorecardOptions(opts?: { showRatings?: boolean; showAges?: boolean }): ScorecardOptions {
   return intlScorecardOptions({ hideHCP: !opts?.showRatings, showAge: !!opts?.showAges });
 }
@@ -179,7 +191,9 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       id: p.detailId || p.name,
       pos: parseInt(String(p.pos).replace(/^T/i, ""), 10) || null,
       name: p.name,
-      club: p.country ? intlCountryCell(p.country) : "",
+      // Coluna «Clube»: a bandeira do país e o CLUBE quando a fonte o dá (Faldo
+      // Madeira: «🏴 Prestbury», «🇵🇹 Oporto Golf Clube»); sem clube, o país.
+      club: p.country ? intlCountryCell(p.country, ...(clubeDaFonte(p) ? [clubeDaFonte(p)!] : [])) : (p.club || ""),
       country: p.country,
       // HCP exacto (ex: GolfBox) → SD por Adjusted Gross Score (Net Double
       // Bogey) em vez de gross cru. Sem HCP, o computeSD cai no gross cru.

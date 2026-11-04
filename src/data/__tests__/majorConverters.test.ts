@@ -120,9 +120,9 @@ describe("JobFile (GolfGenius/GolfBox) — jobFileDivisions / jobDivisionToTourn
     expect(t.players.slice(0, 3).map((p) => `${row(p)} | idade ${(p as Player & { _age?: number | null })._age} | hcp ${p.hcpExact ?? "–"}`))
       .toMatchInlineSnapshot(`
         [
-          "1 | Arthur Marti Animägi | 🇪🇪 Estonia | 73 | 1 | null | 18 | 72 | 72 | Tee 6210m | 1 | idade 17 | hcp 3.2",
-          "2 | Kris Kenzap | 🇪🇪 Estonia | 78 | 6 | null | 18 | 72 | 72 | Tee 6210m | 1 | idade 16 | hcp 7.4",
-          "2 | Aivar Paalberg jr | 🇪🇪 Estonia | 78 | 6 | null | 18 | 72 | 72 | Tee 6210m | 1 | idade 19 | hcp -1",
+          "1 | Arthur Marti Animägi | 🇪🇪 Estonian Golf & Country Club | 73 | 1 | null | 18 | 72 | 72 | Tee 6210m | 1 | idade 17 | hcp 3.2",
+          "2 | Kris Kenzap | 🇪🇪 Niitvälja Golf | 78 | 6 | null | 18 | 72 | 72 | Tee 6210m | 1 | idade 16 | hcp 7.4",
+          "2 | Aivar Paalberg jr | 🇪🇪 Rae Golfiklubi | 78 | 6 | null | 18 | 72 | 72 | Tee 6210m | 1 | idade 19 | hcp -1",
         ]
       `);
   });

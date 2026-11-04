@@ -101,7 +101,13 @@ export function withKidsDob<P extends DobPlayer, T extends { players: P[]; date?
     if (!p.dob) {
       const n = lookup(p.name, p.fed || p.fedCode);
       const a = n ? kidsAcrescento(p, n) : null;
-      if (a) q = { ...q, ...a };
+      if (a) {
+        q = { ...q, ...a };
+        // Dado CERTO do Kids 2 (data lida ou ano de uma federação): a estimativa da
+        // fonte sai — senão a tabela continua a pintá-la a vermelho (Faldo Madeira
+        // 2026: Könemund e Groß com o ano da DGV e a mostrar «2011»/«2012–13» estimados).
+        if ("dob" in a || "birthYear" in a) q = { ...q, birthYearEst: undefined, birthYearEstMax: undefined, estNote: undefined };
+      }
     }
     if (q.hcpExact == null && lookup.hcpAt) {
       const h = lookup.hcpAt(p.name, p.fed || p.fedCode, t.date);
