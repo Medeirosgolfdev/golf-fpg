@@ -593,7 +593,10 @@ a.seg-btn, a.tab-under { text-decoration: none; }
 .p-extra { background: var(--color-amber); color: var(--text-on-color); }
 
 /* ── Tee (12px radius — arredondado, cores inline via TeePill) ── */
-.p-tee { border-radius: var(--radius-lg); font-weight: 700; }
+.p-tee { border-radius: var(--radius-lg); font-weight: 700; max-width: 10em; }
+/* Nomes de tee compridos: o TeePill mostra só a 1.ª palavra (nome inteiro no title);
+   o «…» é a rede de segurança para não tapar as colunas ao lado. */
+.p-tee-txt { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 
 /* ── Semânticos ── */
 
