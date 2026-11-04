@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-04T08:56:47.038Z",
+  "generatedAt": "2026-11-04T09:22:58.566Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -4575,6 +4575,39 @@
       "editionsCount": 23
     },
     {
+      "id": "golf-ireland",
+      "label": "Golf Ireland",
+      "sourceId": "irlanda",
+      "tournamentIds": [
+        "irlanda-irl-10676327132323412448_2025",
+        "irlanda-irl-10676473230400714827_2025",
+        "irlanda-irl-10819079376885283237_2025",
+        "irlanda-irl-11097208703726680550_2025",
+        "irlanda-irl-11120228034437740798_2025",
+        "irlanda-irl-11123095542811359568_2025",
+        "irlanda-irl-11123152246714431830_2025",
+        "irlanda-irl-11126151841706965433_2025",
+        "irlanda-irl-11137655570226510043_2025",
+        "irlanda-irl-11137877364686485735_2025",
+        "irlanda-irl-11137983426286614770_2025",
+        "irlanda-irl-11143769019092334642_2025",
+        "irlanda-irl-11143824188081469503_2025",
+        "irlanda-irl-11143862761618962501_2025",
+        "irlanda-irl-11158217067717491087_2025",
+        "irlanda-irl-12355382751883458947_2026",
+        "irlanda-irl-12363762125670218006_2026",
+        "irlanda-irl-12375951414923393429_2026",
+        "irlanda-irl-12407431654509935076_2026",
+        "irlanda-irl-12407469247922469354_2026",
+        "irlanda-irl-12746366906689157431_2026",
+        "irlanda-irl-12972798590777850142_2026",
+        "irlanda-irl-12992880030043371756_2026"
+      ],
+      "firstDate": "2025-01-01",
+      "lastDate": "2026-07-15",
+      "editionsCount": 23
+    },
+    {
       "id": "uskids-cedar-crest-golf-course",
       "label": "Cedar Crest Golf Course",
       "sourceId": "uskids",
@@ -7254,33 +7287,6 @@
       ],
       "firstDate": "2025-09-26",
       "lastDate": "2026-08-26",
-      "editionsCount": 17
-    },
-    {
-      "id": "golf-ireland",
-      "label": "Golf Ireland",
-      "sourceId": "irlanda",
-      "tournamentIds": [
-        "irlanda-irl-10676327132323412448_2025",
-        "irlanda-irl-10676473230400714827_2025",
-        "irlanda-irl-10819079376885283237_2025",
-        "irlanda-irl-11097208703726680550_2025",
-        "irlanda-irl-11120228034437740798_2025",
-        "irlanda-irl-11123095542811359568_2025",
-        "irlanda-irl-11123152246714431830_2025",
-        "irlanda-irl-11126151841706965433_2025",
-        "irlanda-irl-11137655570226510043_2025",
-        "irlanda-irl-11137877364686485735_2025",
-        "irlanda-irl-11137983426286614770_2025",
-        "irlanda-irl-11143769019092334642_2025",
-        "irlanda-irl-11143824188081469503_2025",
-        "irlanda-irl-11143862761618962501_2025",
-        "irlanda-irl-11158217067717491087_2025",
-        "irlanda-irl-12363762125670218006_2026",
-        "irlanda-irl-12746366906689157431_2026"
-      ],
-      "firstDate": "2025-01-01",
-      "lastDate": "2026-07-15",
       "editionsCount": 17
     },
     {
@@ -70172,6 +70178,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-irish-boys-amateur-open-championship",
+      "label": "Irish Boys' Amateur Open Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269048",
+        "wagr-256633"
+      ],
+      "firstDate": "2025-04-23",
+      "lastDate": "2026-04-17",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-faldo-series-latvia-championship",
       "label": "Faldo Series Latvia Championship",
       "sourceId": "wagr",
@@ -97653,17 +97671,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-connacht-u18-girls-open-championship",
-      "label": "Connacht U18 Girls' Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11884"
-      ],
-      "firstDate": "2026-07-09",
-      "lastDate": "2026-07-09",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-royal-copenhagen-junior",
       "label": "Royal Copenhagen Junior",
       "sourceId": "egr",
@@ -97672,17 +97679,6 @@
       ],
       "firstDate": "2026-07-09",
       "lastDate": "2026-07-09",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-connacht-u18-boys-open-championship",
-      "label": "Connacht U18 Boys' Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11863"
-      ],
-      "firstDate": "2026-07-08",
-      "lastDate": "2026-07-08",
       "editionsCount": 1
     },
     {
@@ -97826,28 +97822,6 @@
       ],
       "firstDate": "2026-07-04",
       "lastDate": "2026-07-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-leinster-u18-girls-amateur-open-championship",
-      "label": "Leinster U18 Girls' Amateur Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11883"
-      ],
-      "firstDate": "2026-07-01",
-      "lastDate": "2026-07-01",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-leinster-boys-u18-amateur-open-championship",
-      "label": "Leinster Boys' U18 Amateur Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11864"
-      ],
-      "firstDate": "2026-06-29",
-      "lastDate": "2026-06-29",
       "editionsCount": 1
     },
     {
@@ -98159,17 +98133,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-flogas-irish-girls-amateur-open-championship",
-      "label": "Flogas Irish Girls' Amateur Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11878"
-      ],
-      "firstDate": "2026-05-01",
-      "lastDate": "2026-05-01",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-dgv-nrw-1-ak16-18-madchen",
       "label": "DGV-NRW 1. AK16/18 Mädchen",
       "sourceId": "egr",
@@ -98211,17 +98174,6 @@
       ],
       "firstDate": "2026-04-18",
       "lastDate": "2026-04-18",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-flogas-irish-boys-amateur-open-championship",
-      "label": "Flogas Irish Boys' Amateur Open Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11866"
-      ],
-      "firstDate": "2026-04-17",
-      "lastDate": "2026-04-17",
       "editionsCount": 1
     },
     {
@@ -114736,6 +114688,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-leinster-boys-u18-amateur-open-championship",
+      "label": "Leinster Boys' U18 Amateur Open Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275111"
+      ],
+      "firstDate": "2026-06-29",
+      "lastDate": "2026-06-29",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-gjg-mauritius-juniors-international",
       "label": "GJG Mauritius Juniors International",
       "sourceId": "wagr",
@@ -118176,17 +118139,6 @@
       ],
       "firstDate": "2023-07-19",
       "lastDate": "2023-07-19",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-irish-boys-amateur-open-championship",
-      "label": "Irish Boys' Amateur Open Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-256633"
-      ],
-      "firstDate": "2025-04-23",
-      "lastDate": "2025-04-23",
       "editionsCount": 1
     },
     {
