@@ -414,7 +414,13 @@ O `scrape-ffgolf-merite.js` só abria a ficha (com o «Index») dos classificado
 de 5 342 com índice. Agora abre também a dos **rapazes não classificados nascidos em
 2010–2018** (~1 770 pedidos a mais por mês, no workflow mensal): Jean Imperiali, RANK
 «-», tem 11.7. Raparigas não (decisão dela). O índice chega à ficha pelo
-`france-players.json` (`merite.idx`, `month`) e pelo `util/hcp-listas.js`. Quadro de
+`france-players.json` (`merite.idx`, `month`) e pelo `util/hcp-listas.js`.
+**No Kids 2 (04/11/2026):** o `sources/ffgolf.js` passa a ler do `france-players.json` o
+`birthYear` da categoria do Mérite (`catSrc: "merite"`) como ano CERTO (`dobRange` do
+ano + `extra.birthYear`) e o Index do Mérite no `hcpHistory` (source `ffg-merite`, dia 1
+do mês). Antes não lia nenhum dos dois: os franceses do Venice/European tinham HCP e
+nenhum ano. Anos certos no scout 1 713 → 5 679; 14 fichas duplas juntas pelo ano
+(Arthur Malenfant tinha duas contas USKids). Teste: `sources/ffgolf-merite.test.js`. Quadro de
 todas as fontes europeias de nascimento/HCP: [nascimento-hcp-europa.md](nascimento-hcp-europa.md).
 
 ### Mérite Jeunes e Guide des golfs (pesquisa de 30/10/2026)

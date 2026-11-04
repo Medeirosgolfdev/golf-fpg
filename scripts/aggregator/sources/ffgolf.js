@@ -59,6 +59,12 @@ function load(opts) {
     const country = countryToIso2(p.country) || (/^E\d/.test(lic) ? null : "FR");
     const cleanName = nomeFfg(p.name);
     if (!cleanName) continue;
+    // Ano de nascimento EXACTO pela categoria do Mérite Jeunes (Poucet 1 … Minime 2
+    // = um ano cada; build-france-players.js → `birthYear`, `catSrc: "merite"`) —
+    // não é estimativa (04/11/2026: os franceses do Venice/European tinham HCP mas
+    // nenhum ano). E o «Index» da ficha do Mérite entra no histórico com o mês.
+    const anoMerite = p.catSrc === "merite" && Number.isInteger(p.birthYear) ? p.birthYear : null;
+    const m = p.merite && typeof p.merite.idx === "number" && /^\d{6}$/.test(String(p.merite.month || "")) ? p.merite : null;
     players.push({
       sourceKey: lic,
       name: cleanName,
@@ -67,8 +73,11 @@ function load(opts) {
       region: p.region || null,
       club: p.club ? String(p.club).trim() : null,
       hcp: typeof p.hcp === "number" ? p.hcp : null,
+      ...(anoMerite ? { dobRange: { lo: `${anoMerite}-01-01`, hi: `${anoMerite}-12-31` } } : {}),
+      ...(m ? { hcpHistory: [{ date: `${String(m.month).slice(0, 4)}-${String(m.month).slice(4, 6)}-01`, hcpExact: m.idx, source: "ffg-merite", label: `Mérite Jeunes ${String(m.month).slice(4, 6)}/${String(m.month).slice(0, 4)}` }] } : {}),
       extra: {
         glfLic: p.glfLic || null,
+        ...(anoMerite ? { birthYear: anoMerite } : {}),
       },
     });
   }

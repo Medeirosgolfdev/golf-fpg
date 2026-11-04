@@ -13,7 +13,7 @@ de público por país, o que entrou no Kids 2 e o que não vale a pena.
 | Alemanha | provas DGV (JobFile `dgv_*.json`) | HCP por prova | `util/jobfile.js` → hcpHistory |
 | Suíça | GolfBox customer 1085 (Swiss Golf) | data, clube, federado | `build-golfbox-players.js` (+1 004 jogadores) |
 | Dinamarca / Noruega | GolfBox OoM (DGU 264173; NGF Srixon U15 275583 / U19 275581) | data, clube, HCP actual | não feito — os mesmos miúdos já vêm das provas (customers 15 e 18) |
-| França | Mérite Jeunes (ficha) | Index | `scrape-ffgolf-merite.js` passa a abrir também a ficha dos rapazes não classificados de 2010–2018 |
+| França | Mérite Jeunes (lista + ficha) | ano exacto (categoria), Index | `scrape-ffgolf-merite.js` abre também a ficha dos rapazes não classificados de 2010–2018; `sources/ffgolf.js` lê o ano e o Index (04/11/2026) |
 | Itália | Federgolf (inscritos, classificação) | índice por prova | já estava (`fig.js`, campo `indice`; `hcp` é o de jogo) |
 | Áustria, Finlândia, Países Baixos | — | — | ✗ atrás de login ou sem lista pública |
 | Inglaterra | intelligentgolf (listas de inscritos) | HI de parte dos inscritos | já estava (`hcp-listas`) |
