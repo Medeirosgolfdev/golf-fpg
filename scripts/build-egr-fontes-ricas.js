@@ -40,7 +40,7 @@ const OUT = path.join(DATA_DIR, "egr", "egr-fontes-ricas.json");
 const COBERTOS = path.join(DATA_DIR, "egr", "egr-cobertos.json");
 /** Pastas onde pode estar o ficheiro de uma fonte (chave = nome sem .json). */
 const PASTAS_EXTRA = ["gg-condados", "ig-condados"];
-const FEDERACOES = ["swissgolf", "rbgf", "baltico"];
+const FEDERACOES = ["swissgolf", "rbgf", "baltico", "sgf"];
 const SCOPE = path.join(__dirname, "golfbox-scope.json");
 
 const compIdDe = (url) => (/#\/competition\/(\d+)/.exec(String(url || "")) || [])[1] || null;
