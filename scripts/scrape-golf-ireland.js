@@ -10,8 +10,8 @@
  * Cada página lê-se com o `runOne` do scrape-golfgenius-node.js (Node puro —
  * o GolfGenius dá 403 a browsers automatizados).
  *
- * Fora, por agora: as provas de 2026 na plataforma nova «GolfHub»
- * (golfhub.golfgenius.com/events/{uuid}) — outro formato, por estudar.
+ * Provas de 2026 na plataforma nova «GolfHub» (golfhub.golfgenius.com/events/{uuid}):
+ * a API pública dá o portal GolfGenius, que leva à página clássica /pages/{id}.
  *
  * Saída: public/data/irlanda/irl-{pageId}_{ano}.json — JobFile; adapter
  * sources/irlanda.js. Só kids2 (não vai à /major).
@@ -36,18 +36,39 @@ const PAUSA_MS = 3000;
 const arg = (n) => { const i = process.argv.indexOf(n); return i >= 0 ? process.argv[i + 1] : null; };
 const dorme = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/** GolfHub (desde 2026): o evento `golfhub.golfgenius.com/events/{uuid}` tem na API
+ *  pública (api.golfhub.golfgenius.com/api/v1/events/{uuid}) o `gg_portal_url`,
+ *  que redirecciona para a página clássica `/pages/{id}` do campeonato. */
+async function paginaDoGolfhub(uuid) {
+  try {
+    const r = await fetch(`https://api.golfhub.golfgenius.com/api/v1/events/${uuid}`, { headers: { Accept: "application/json", "User-Agent": "Mozilla/5.0" } });
+    if (!r.ok) return null;
+    const portal = (await r.json())?.data?.attributes?.gg_portal_url;
+    if (!portal) return null;
+    const p = await fetch(portal, { redirect: "follow", headers: { "User-Agent": "Mozilla/5.0" } });
+    return (/\/pages\/(\d+)/.exec(p.url || "") || [])[1] || null;
+  } catch { return null; }
+}
+
 /** Páginas GolfGenius dos campeonatos irlandeses juvenis (pela EGR), sem repetir;
  *  cada uma com os eventos EGR que apontam para ela (para o país dos jogadores). */
-function paginasDaEgr(desde) {
+async function paginasDaEgr(desde) {
   const list = JSON.parse(fs.readFileSync(LIST, "utf8"));
   const m = new Map();
+  const hub = new Map(); // uuid GolfHub → página (um pedido por evento)
   for (const e of list.events || []) {
     if (!/ireland/i.test(e.country || "") || !(e.year >= desde)) continue;
-    const id = (/golfgenius\.com\/pages\/(\d+)/.exec(e.sourceUrl || "") || [])[1];
-    if (!id) continue; // GolfHub (2026), leagues/… e outros: fora por agora
+    let id = (/golfgenius\.com\/pages\/(\d+)/.exec(e.sourceUrl || "") || [])[1];
+    const uuid = (/golfhub\.golfgenius\.com\/events\/([0-9a-f-]{36})/i.exec(e.sourceUrl || "") || [])[1];
+    if (!id && uuid) {
+      if (!hub.has(uuid)) { hub.set(uuid, await paginaDoGolfhub(uuid)); await dorme(PAUSA_MS); }
+      id = hub.get(uuid);
+    }
+    if (!id) continue; // leagues/…, subdomínio sem página e outros: fora
     if (!m.has(id)) m.set(id, { id, ano: e.year, nome: e.name.replace(/\s*\d{4}$/, ""), egr: [] });
     m.get(id).egr.push(e.id);
   }
+  if (hub.size) console.log(`   GolfHub: ${[...hub.values()].filter(Boolean).length} de ${hub.size} evento(s) com a página clássica`);
   return [...m.values()].sort((a, b) => a.ano - b.ano || a.id.localeCompare(b.id));
 }
 
@@ -64,8 +85,26 @@ function corrigir(d, egrIds) {
     for (const p of (ev && ev.players) || []) { const iso = countryToIso2(p.country); if (iso) pais.set(rosterKey(p.name), iso); }
   }
   let corrigidos = 0;
+  // HCP de jogo pelas classes «Best Net»/«Nett» (o mesmo dos condados ingleses:
+  // Gross − Net = handicap de jogo). Em várias voltas, a diferença dividida pelo
+  // nº de voltas — só fica quando dá um inteiro plausível (nunca se inventa).
+  const ehNet = (dv) => /\bnett?\b/i.test(dv.division || "");
+  const grossPorNome = new Map();
+  for (const dv of d.divisions || []) if (!ehNet(dv)) for (const p of dv.players || []) grossPorNome.set(rosterKey(p.name), p);
+  let comHcp = 0;
+  for (const dv of (d.divisions || []).filter(ehNet)) {
+    for (const pn of dv.players || []) {
+      const pg = grossPorNome.get(rosterKey(pn.name));
+      const voltas = (pg?.roundGross || []).filter((x) => Number.isFinite(x)).length;
+      if (!pg || pg.hcpJogo != null || !Number.isFinite(pg.total) || !Number.isFinite(pn.total) || !voltas) continue;
+      if ((pn.roundGross || []).filter((x) => Number.isFinite(x)).length !== voltas) continue;
+      const h = (pg.total - pn.total) / voltas;
+      if (Math.abs(h - Math.round(h)) < 0.01 && h >= -10 && h <= 54) { pg.hcpJogo = Math.round(h); comHcp++; }
+    }
+  }
+  if (comHcp) console.log(`   🎯 HCP de jogo (gross − net) em ${comHcp} jogador(es)`);
   // fora as classes vazias e as «Best Net»/«Nett» (a mesma volta em pancadas net)
-  d.divisions = (d.divisions || []).filter((dv) => (dv.players || []).length && !/\bnett?\b/i.test(dv.division || ""));
+  d.divisions = (d.divisions || []).filter((dv) => (dv.players || []).length && !ehNet(dv));
   // a classe nem sempre diz o sexo («Under 16 Championship»): vem do nome do campeonato
   const sexoProva = /\bboy'?s|\bmen'?s/i.test(d.tournament || "") && !/girl|ladies|women/i.test(d.tournament || "") ? "Boys"
     : /girl'?s|ladies/i.test(d.tournament || "") && !/\bboy/i.test(d.tournament || "") ? "Girls" : null;
@@ -84,7 +123,7 @@ function corrigir(d, egrIds) {
   const desde = Number(arg("--desde") || 2024);
   const pages = arg("--pages")
     ? arg("--pages").split(",").map((id) => ({ id: id.trim(), ano: null, nome: "" }))
-    : paginasDaEgr(desde);
+    : await paginasDaEgr(desde);
   console.log(`Golf Ireland: ${pages.length} página(s) GolfGenius`);
   fs.mkdirSync(OUT_DIR, { recursive: true });
   let gravados = 0, iguais = 0, erros = 0;
