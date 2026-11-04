@@ -31,7 +31,7 @@
  * deixa cada miúdo só no escalão mais específico (`umaDivisaoPorJogador`).
  *
  * Saída: public/data/{fed}/{competitionId}.json — JobFile, 1 ficheiro por prova;
- * adaptadores sources/swissgolf.js, sources/rbgf.js e sources/baltico.js. Só kids2 (não vai à /major).
+ * adaptadores sources/swissgolf.js, sources/rbgf.js, sources/baltico.js e sources/sgf.js. Só kids2 (não vai à /major).
  *
  * Uso:
  *   node scripts/scrape-golfbox-federacao.js --fed swissgolf          # época corrente e a anterior
@@ -58,6 +58,15 @@ const FEDERACOES = {
     customer: 22,
     juvenil: /Junior U1\d|Junior Open|National Juniors? Championship|Junior Masters|Finals? Junior/i,
     fora: /Cancel|Interclubs|Kids Tour|Match|Albert Vermeiren/i,
+  },
+  // Suécia (SGF Juniortävlingar, customer 4): só o nível nacional — Svenska
+  // Juniortouren Elit, a Final e o ANNIKA Invitational Europe (WAGR). Ficam fora as
+  // ~350 regionais (Juniortouren Div./Vinter), os clubes e o match play.
+  sgf: {
+    nome: "Svenska Golfförbundet",
+    customer: 4,
+    juvenil: /Juniortouren Elit|Juniortouren Final|ANNIKA Invitational/i,
+    fora: /Match|Vinter|Div\b|Div\.|Simulator|Klubblag/i,
   },
   // Letónia (federação, customer 911): Junior Tour e Latvian Junior Open;
   // Lituânia: só o Lithuanian Junior Open, no calendário do clube que o organiza

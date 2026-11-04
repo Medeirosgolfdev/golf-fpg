@@ -16,7 +16,8 @@ const { buildJobfileSource } = require("./jobfile");
 
 function parseDivGolfbox(divKey) {
   const s = String(divKey || "");
-  const sex = /boys|knaben|gar[cç]ons|jongens/i.test(s) ? "M" : /girls|m(ä|ae)dchen|filles|meisjes/i.test(s) ? "F" : null;
+  // inglês, alemão, francês, neerlandês e sueco (Pojkar/Flickor)
+  const sex = /boys|knaben|gar[cç]ons|jongens|pojkar/i.test(s) ? "M" : /girls|m(ä|ae)dchen|filles|meisjes|flickor/i.test(s) ? "F" : null;
   // «U18-U16» → a maior; «U12/U10» idem
   const us = [...s.matchAll(/\bU\s?(\d{1,2})\b/gi)].map((m) => +m[1]);
   return { ageMin: null, ageMax: us.length ? Math.max(...us) : null, sex };
@@ -33,7 +34,8 @@ function fonteGolfboxFederacao(o) {
     seriesLabel: o.seriesLabel,
     defaultCountry: o.country,
     maxAgeInYear: 18,
-    parseDiv: parseDivGolfbox,
+    // `parseDiv` da fonte por cima do genérico (ex.: provas só de raparigas)
+    parseDiv: o.parseDiv || parseDivGolfbox,
     // o link de cada classe diz a federação, não «golfbox.dk»
     linkSite: o.linkSite,
   });
