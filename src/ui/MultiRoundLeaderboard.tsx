@@ -2,7 +2,7 @@
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { useCompareSelection } from "./useCompareSelection";
 import { fmtHcp, medal, birthYearOf, ageAtDate, todayIso } from "../utils/format";
-import { birthCells, birthFieldsOf, escDoAno } from "./BirthCells";
+import { birthCells, birthFieldsOf, pillDoAno } from "./BirthCells";
 import BirthPill from "./BirthPill";
 import { RowsFilterBar, filterRows, buildSexByName } from "./PlayerFilterBar";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
@@ -543,7 +543,7 @@ export function MultiRoundLeaderboard({
                     // Nas colunas só o ano; a data completa fica no tooltip.
                     const bc = birthCells({ dob: dobOf(row), ...birthFieldsOf(row), showDate: false }, refIso);
                     // Idade pré-calculada pelo adapter (row.age) → CONSISTENTE com as tabs R1/R2/R3.
-                    const idade = row.age != null ? <BirthPill esc={escDoAno(anoOf(row), refIso)}>{row.age}a</BirthPill> : bc.idade;
+                    const idade = row.age != null ? <BirthPill {...pillDoAno(anoOf(row), refIso)}>{row.age}a</BirthPill> : bc.idade;
                     const tip = bc.tip || undefined;
                     return <>
                       {showBirthYear && <td className="lb-esc" title={tip}>{bc.nasc}</td>}

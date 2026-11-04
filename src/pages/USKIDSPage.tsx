@@ -6,7 +6,7 @@ import LoadingState from "../ui/LoadingState";
 import { useSearchParams, Link } from "react-router-dom";
 import { isoDate, fmtToPar, todayIso, medal as medalOf } from "../utils/format";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
-import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
+import { SIDEBAR_ACCENT, ManuelPill, EscPill } from "../ui/PillBadge";
 import TabRow from "../ui/TabRow";
 import { KidsLink, KidsLinkCtx, KidsLinkFallbackCtx } from "../ui/KidsLink";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
@@ -704,7 +704,7 @@ export default function USKidsFieldPage() {
         {t.tipo != null && t.tipo !== 8 && (
           <span className="p p-sm p-muted" title="Categoria USKids">{labelCategoria(t.tipo)}</span>
         )}
-        {t.escalaoManuel && <span className="p p-sm p-muted">{t.escalaoManuel}</span>}
+        {t.escalaoManuel && <EscPill esc={t.escalaoManuel} />}
         {nPaises > 1 && <span className="p p-sm p-muted">{nPaises} países</span>}
         {t.manuelJogou && <ManuelPill />}
         {t.manuelJogou && manuelPos != null && (

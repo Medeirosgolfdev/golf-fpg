@@ -21,6 +21,7 @@ import React from "react";
 import { C } from "../utils/colors";
 import { MUTED } from "./tableCells";
 import { Tint } from "./DataStyle";
+import { escalaoCanon } from "../data/model/escalao";
 
 /* ════════════════════════════════════════════════════════════
    ESTILOS — cores por série/escalão (as das pílulas estão em classes no App.css)
@@ -146,9 +147,24 @@ export function escClassOf(esc: string | null | undefined): string | null {
   if (!esc) return null;
   const key = esc.toLowerCase().replace(/[\s-]/g, "").replace("é", "e");
   const sub = ES_TERM_TO_SUB[key] ?? key;
-  return ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","midamateur","senior","supersenior"].includes(sub)
-    ? `p-${sub}` : null;
+  if (ESC_CLASSES.includes(sub)) return `p-${sub}`;
+  // As outras grafias pela TABELA ÚNICA de escalões (04/11/2026: no EGR «U12»,
+  // «U15», «U18» saíam cinzentos): «U12», «Under 14», «Boys U16», «12 & Under»,
+  // «Sub-15»… → Sub N; idades da USKids («Boys 12» → 12 anos, «Boys 13-14» →
+  // pela mais velha). Idades sem cor própria (ímpares) ficam com a do escalão
+  // de cima, que as contém: Sub 15 ⊂ Sub 16, «Boys 11» → Sub 12.
+  const canon = escalaoCanon(esc);
+  const m = canon ? (/^Sub (\d+)$/.exec(canon) ?? /^(?:\d+-)?(\d+) anos$/.exec(canon)) : null;
+  if (m) {
+    const teto = SUB_TETOS.find(([t]) => +m[1] <= t);
+    return teto ? teto[1] : null;
+  }
+  return canon ? ADULTO_CLASS[canon] ?? null : null;
 }
+const ESC_CLASSES = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","midamateur","senior","supersenior"];
+/** Escalões Sub N com cor própria (o Sub 25 da FPG tem a do Sub 24). */
+const SUB_TETOS: [number, string][] = [[10, "p-sub10"], [12, "p-sub12"], [14, "p-sub14"], [16, "p-sub16"], [18, "p-sub18"], [21, "p-sub21"], [25, "p-sub24"]];
+const ADULTO_CLASS: Record<string, string> = { Absoluto: "p-absoluto", Seniores: "p-senior", "Mid-Amateur": "p-midamateur" };
 
 /** Escalão — usa classes CSS globais (.p-sub14, etc.).
  *  Aceita também termos da RFEG (Alevín, Benjamín, etc.) → mapeados ao Sub-N

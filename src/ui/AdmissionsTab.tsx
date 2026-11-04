@@ -21,7 +21,7 @@ import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, Pill } from "./PillBadge";
 import BirthPill from "./BirthPill";
-import { escDoAno } from "./BirthCells";
+import { pillDoAno } from "./BirthCells";
 import { useFedCountries, useFedBirthdates, useFedGenders, useFedHcp } from "./InscricoesComponents";
 import { parseSubNumber, teeNameFor, type TeeRule } from "../utils/teeRegulation";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -356,11 +356,11 @@ export default function AdmissionsTab({
             {/* Nasc. + Idade como no Resumo (pílulas com a cor do escalão, colunas próprias). */}
             {!hide.nasc && <>
             <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
-              {p._dobYear != null ? <BirthPill esc={escDoAno(p._dobYear, date)}>{p._dobYear}</BirthPill> : MUTED}
+              {p._dobYear != null ? <BirthPill {...pillDoAno(p._dobYear, date)}>{p._dobYear}</BirthPill> : MUTED}
             </td>
             <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
-              {age != null ? <BirthPill esc={escDoAno(p._dobYear, date)}>{age}a</BirthPill>
-                : ageAprox != null ? <BirthPill esc={escDoAno(p._dobYear, date)}>~{ageAprox}a</BirthPill> : MUTED}
+              {age != null ? <BirthPill {...pillDoAno(p._dobYear, date)}>{age}a</BirthPill>
+                : ageAprox != null ? <BirthPill {...pillDoAno(p._dobYear, date)}>~{ageAprox}a</BirthPill> : MUTED}
             </td>
             </>}
             {/* Chaves virtuais (`kids:`/`intl:`) sao ids internos derivados do

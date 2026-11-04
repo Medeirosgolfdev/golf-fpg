@@ -9,7 +9,7 @@
  */
 import type { ReactNode } from "react";
 import BirthPill from "./BirthPill";
-import { ageAtDate, dateParts, escalaoAtDate, fmtDatePt } from "../utils/format";
+import { ageAtDate, anoEscalao, dateParts, escalaoAtDate, fmtDatePt } from "../utils/format";
 import { MUTED } from "./tableCells";
 
 export interface BirthInfo {
@@ -43,11 +43,11 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
   const shown = b.showDate !== false && dob && /^\d{4}-\d{2}-\d{2}$/.test(dob) ? fmtDatePt(dob) : dobYear;
   // Ano e idade lidos pintam-se com a cor do escalão (pelo ano, como a FPG);
   // as estimativas ficam a vermelho, como sempre.
-  const esc = escDoAno(dobYear, refDate);
+  const pill = pillDoAno(dobYear, refDate);
   return {
-    nasc: dobYear != null ? <BirthPill esc={esc}>{shown}</BirthPill>
+    nasc: dobYear != null ? <BirthPill {...pill}>{shown}</BirthPill>
       : est ? <span className="est-value">{estYear}</span> : MUTED,
-    idade: age != null ? <BirthPill esc={esc}>{!dob ? "~" : ""}{age}a</BirthPill>
+    idade: age != null ? <BirthPill {...pill}>{!dob ? "~" : ""}{age}a</BirthPill>
       : estAge ? <span className="est-value">{estAge}a</span> : MUTED,
     tip,
   };
@@ -57,6 +57,14 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
  *  FPG — `escalaoAtDate`): a cor da pílula de nascimento/idade. */
 export function escDoAno(ano: number | null | undefined, refDate?: string | null): string | null {
   return ano != null && refDate ? escalaoAtDate(`${ano}-01-01`, refDate) : null;
+}
+
+/** Cor da pílula de nascimento/idade de quem nasceu em `ano`: o escalão à data
+ *  e se é o 1.º ano dele (claro com contorno; o 2.º ano fica cheio — a regra do
+ *  AnoEscalaoPill). Só os Sub N têm dois anos. */
+export function pillDoAno(ano: number | null | undefined, refDate?: string | null): { esc: string | null; ano1: boolean } {
+  const esc = escDoAno(ano, refDate);
+  return { esc, ano1: !!esc && /^Sub/i.test(esc) && anoEscalao(`${ano}`, esc, refDate) === "1A" };
 }
 
 /** Os campos de nascimento além da data (ano solto, estimativa e nota) de um

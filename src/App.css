@@ -5352,6 +5352,13 @@ table th.lb-sortable.is-sorted { color: var(--accent); font-weight: 700; }
 .ano-esc-pill.ae-sub18 { --ae: var(--esc-sub18-bg); --ae-fg: var(--esc-sub18-fg); }
 .ano-esc-pill.ae-sub21 { --ae: var(--esc-sub21-bg); --ae-fg: var(--esc-sub21-fg); }
 .ano-esc-pill.ae-sub24 { --ae: var(--esc-sub24-bg); --ae-fg: var(--esc-sub24-fg); }
+/* Pílulas Nasc./Idade (ui/BirthPill): a mesma regra — 1.º ano do escalão (.p-ano1) claro com contorno, 2.º ano cheio (a .p-subNN). */
+.p.p-ano1 { --ae: var(--text-3); border-color: var(--ae); background: color-mix(in srgb, var(--ae) 22%, transparent);
+  color: color-mix(in srgb, var(--ae) 70%, var(--text)); }
+.p.p-ano1.p-sub10 { --ae: var(--esc-sub10-bg); } .p.p-ano1.p-sub12 { --ae: var(--esc-sub12-bg); }
+.p.p-ano1.p-sub14 { --ae: var(--esc-sub14-bg); } .p.p-ano1.p-sub16 { --ae: var(--esc-sub16-bg); }
+.p.p-ano1.p-sub18 { --ae: var(--esc-sub18-bg); } .p.p-ano1.p-sub21 { --ae: var(--esc-sub21-bg); }
+.p.p-ano1.p-sub24 { --ae: var(--esc-sub24-bg); }
 /* Inscrições nacionais (ui/InscricoesComponents): botões de clube e etiqueta «dados frescos / cache». */
 .insc-clube-btn { cursor: pointer; padding: var(--space-1) var(--space-8); border-radius: var(--radius-lg); border: 1px solid var(--border);
   background: var(--bg-muted); color: var(--text-1); }

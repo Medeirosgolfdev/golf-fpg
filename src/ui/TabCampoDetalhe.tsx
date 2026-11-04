@@ -5,7 +5,7 @@ import { normName as normNameAuto } from "../data/KIDSdataLoader";
 import { KidsLink, KidsLinkCtx } from "./KidsLink";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import type { Torneio } from "./uskidsTypes";
-import { RoundPill } from "./PillBadge";
+import { RoundPill, EscPill } from "./PillBadge";
 import { sortEscaloes, ESCALOES_DESTAQUE_USKIDS } from "./uskidsTypes";
 import {
   LINKS_EXTRA, REGIONAL_CHAMPIONSHIPS, ArMapCtx,
@@ -174,8 +174,8 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           <div className="u-d-flex u-gap-4px u-fwr-wrap u-mt-8px u-ai-center">
             <span className="muted fs-11">Flights:</span>
             {t.escaloes.filter(e => e.flight_id).map(e => (
-              <span key={e.flight_id} className="p p-sm p-muted" title={`${e.nome} — flight ${e.flight_id}`}>
-                {e.nome}: {e.flight_id}
+              <span key={e.flight_id} title={`${e.nome} — flight ${e.flight_id}`}>
+                <EscPill esc={e.nome} label={`${e.nome}: ${e.flight_id}`} />
               </span>
             ))}
           </div>
