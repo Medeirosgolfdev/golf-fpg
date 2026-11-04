@@ -26,7 +26,7 @@ import MasterDetail from "../ui/MasterDetail";
 import ClearButton from "../ui/ClearButton";
 import { toggleSet } from "../utils/mathUtils";
 
-export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "faldo" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv" | "swissgolf" | "rbgf" | "baltico" | "sgf" | "irlanda" | "fig" | "ggcondados";
+export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "faldo" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv" | "swissgolf" | "rbgf" | "baltico" | "sgf" | "dgu" | "irlanda" | "fig" | "ggcondados";
 
 const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "uskids", label: "USKids" },
@@ -55,6 +55,7 @@ const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "rbgf", label: "RBGF Bélgica" },
   { key: "baltico", label: "Bálticos" },
   { key: "sgf", label: "SGF Suécia" },
+  { key: "dgu", label: "DGU Dinamarca" },
   { key: "irlanda", label: "Golf Ireland" },
   { key: "fig", label: "FIG" },
   { key: "ggcondados", label: "Condados ENG" },

@@ -31,7 +31,7 @@
  * deixa cada miúdo só no escalão mais específico (`umaDivisaoPorJogador`).
  *
  * Saída: public/data/{fed}/{competitionId}.json — JobFile, 1 ficheiro por prova;
- * adaptadores sources/swissgolf.js, sources/rbgf.js, sources/baltico.js e sources/sgf.js. Só kids2 (não vai à /major).
+ * adaptadores sources/swissgolf.js, sources/rbgf.js, sources/baltico.js, sources/sgf.js e sources/dgu.js. Só kids2 (não vai à /major).
  *
  * Uso:
  *   node scripts/scrape-golfbox-federacao.js --fed swissgolf          # época corrente e a anterior
@@ -67,6 +67,17 @@ const FEDERACOES = {
     customer: 4,
     juvenil: /Juniortouren Elit|Juniortouren Final|ANNIKA Invitational/i,
     fora: /Match|Vinter|Div\b|Div\.|Simulator|Klubblag/i,
+  },
+  // Dinamarca (Dansk Golf Union, customer 15): Dormy Elite Tour (Drenge U22 /
+  // Piger), a Finale, o DM Juniorer (slagspil) e o Girls Only Tour. Fora o match
+  // play (hulspil), seniores, para-golf e as filas de iniciação do Girls Only.
+  dgu: {
+    nome: "Dansk Golf Union",
+    customer: 15,
+    juvenil: /Dormy Elite Tour.*(Drenge|Piger)|Elite Tour Finale|DM Juniorer|Girls Only Tour/i,
+    fora: /AFLYST|Hulspil|Senior|Para|Oprykning/i,
+    // «Damer» = senhoras; GOT A/B = filas de iniciação; «WAGR-rækken» = outra vista
+    classesFora: /^Damer$|\bA-r(æ|ae)kke|\bB-r(æ|ae)kke|^WAGR/i,
   },
   // Letónia (federação, customer 911): Junior Tour e Latvian Junior Open;
   // Lituânia: só o Lithuanian Junior Open, no calendário do clube que o organiza

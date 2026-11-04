@@ -70,6 +70,7 @@ const SOURCES = [
   { id: "rbgf", label: "RBGF Bélgica (provas juvenis)", load: () => require("./sources/rbgf") },
   { id: "baltico", label: "Bálticos — Letónia e Lituânia (provas juvenis)", load: () => require("./sources/baltico") },
   { id: "sgf", label: "SGF Suécia (provas juvenis)", load: () => require("./sources/sgf") },
+  { id: "dgu", label: "DGU Dinamarca (provas juvenis)", load: () => require("./sources/dgu") },
   { id: "irlanda", label: "Golf Ireland (campeonatos juvenis)", load: () => require("./sources/irlanda") },
   { id: "ggcondados", label: "Condados ingleses (GolfGenius + intelligentgolf)", load: () => require("./sources/ggcondados") },
 ];

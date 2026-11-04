@@ -3,7 +3,8 @@ name: Actualizar federações (GolfBox + Golf Ireland)
 # Provas juvenis das federações que publicam tudo no GolfBox: Swiss Golf
 # (customer 1085), Royal Belgian Golf Federation (customer 22) e Bálticos
 # (federação letã, customer 911; Lithuanian Junior Open, customer 884) e
-# Suécia (SGF, customer 4: Juniortouren Elit, Final e ANNIKA Invitational).
+# Suécia (SGF, customer 4: Juniortouren Elit, Final e ANNIKA Invitational) e
+# Dinamarca (DGU, customer 15: Dormy Elite Tour, DM Juniorer, Girls Only Tour).
 # E a Golf Ireland (GolfGenius): scripts/scrape-golf-ireland.js → public/data/irlanda/.
 # scripts/scrape-golfbox-federacao.js --fed {swissgolf|rbgf|baltico|sgf} lê o calendário da
 # época corrente e da anterior e grava public/data/{fed}/{competitionId}.json;
@@ -24,7 +25,7 @@ on:
   workflow_dispatch:
     inputs:
       fed:
-        description: 'federação (swissgolf, rbgf, baltico, sgf ou irlanda; vazio = todas)'
+        description: 'federação (swissgolf, rbgf, baltico, sgf, dgu ou irlanda; vazio = todas)'
         required: false
         default: ''
         type: string
@@ -74,7 +75,7 @@ jobs:
           FED="${{ github.event.inputs.fed }}"
           IDS="${{ github.event.inputs.ids }}"
           ANOS="${{ github.event.inputs.anos }}"
-          FEDS="${FED:-swissgolf rbgf baltico sgf}"
+          FEDS="${FED:-swissgolf rbgf baltico sgf dgu}"
           GRAVOU=0; ERRO=0
           for F in $FEDS; do
             [ "$F" = "irlanda" ] && continue
