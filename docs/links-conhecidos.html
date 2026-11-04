@@ -425,6 +425,15 @@ const S = [
   { n: "Cartão — dados do campo", a: "ok", u: "https://membership-card-api.golf.de/tournaments/{n}/rounds/{volta}/scorecards/{resultGuid}/details",
     d: "Par, Course Rating, Slope, percurso e cor do tee. O cartão buraco a buraco (…/scorecards/{guid}?language=de) é uma IMAGEM PNG — sem strokes.", where: "scrape-dgv.js" },
  ]},
+ { grp: "Circuitos", id: "swissgolf", title: "Swiss Golf — Suíça", sub: "Federação suíça: Junior Tour, National Events U14, National Championships U10–U18 e finais, tudo no GolfBox (customer 1085). Handlers JSONP públicos — sem cookies.", items: [
+  { n: "Calendário Swiss Golf (GolfBox)", a: "ok", u: "https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/1085/Season/{ano}/?callback=x",
+    d: "Todas as provas da época (só a pedida — cada ano à parte). Dá ID, nome e data; ~21 provas juvenis por época.",
+    ex: [["2026", "https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/1085/Season/2026/?callback=x"]], where: "scrape-swissgolf.js" },
+  { n: "Classificação + cartões", a: "ok", u: "https://scores.golfbox.dk/Handlers/LeaderboardHandler/GetLeaderboard/CompetitionId/{id}/ClassId/{classId}/RoundNumber/0/language/2057/?callback=x",
+    d: "Por classe (Boys/Girls U10–U18): ano de nascimento, clube, MemberID suíço, HCP do dia (×10000), voltas buraco a buraco; o campo com par/SI/metros.",
+    ex: [["National Championship U14-U12 2026 (Erlen)", "https://www.golfbox.dk/livescoring/tour/?language=2057#/competition/5359031/players/0/all"]],
+    w: "No Junior Tour o U16 repete miúdos do U18 e nos Nacionais o U12 repete o U14 — o agregador deixa cada um no escalão mais específico. O Golf4Girls Championship não publica classificação.", where: "scrape-swissgolf.js" },
+ ]},
  { grp: "Circuitos", id: "espanha", title: "Espanha", sub: "RFEG (site novo + GolfBox + LiveGolfScoring/mitarjeta), NextCaddy (Andaluzia, Madrid) e Catalunha.", items: [
   { n: "RFEG — calendário (site novo)", a: "ok", u: "https://rfegolf.es/competiciones/calendario-torneos?wpe_anyo={ano}",
     d: "Todas as provas do ano; cada linha (a.wpe-fila-evento) traz data-id (post WordPress), data-titulo, data-sede, data-estado, data-inicio e data-comite («comité juvenil»). Só lista o ano corrente e o seguinte.",

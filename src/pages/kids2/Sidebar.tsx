@@ -17,7 +17,7 @@ import { toggleSet } from "../../utils/mathUtils";
 import SidebarSectionTitle from "../../ui/SidebarSectionTitle";
 const MAX_VISIBLE = 8000;
 
-type SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "faldo" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv" | "fig" | "ggcondados";
+type SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "faldo" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv" | "swissgolf" | "fig" | "ggcondados";
 
 function juniorHasSource(j: Junior, src: SourceKey, tournamentById: Map<string, { sourceId: string }>): boolean {
   if (src === "uskids") return !!j.sources.uskids?.memberId;
