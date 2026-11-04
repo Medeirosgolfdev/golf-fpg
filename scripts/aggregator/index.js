@@ -67,6 +67,7 @@ const SOURCES = [
   { id: "dgv", label: "Deutscher Golf Verband (DM/DMM juvenis)", load: () => require("./sources/dgv") },
   { id: "swissgolf", label: "Swiss Golf (provas juvenis)", load: () => require("./sources/swissgolf") },
   { id: "rbgf", label: "RBGF Bélgica (provas juvenis)", load: () => require("./sources/rbgf") },
+  { id: "baltico", label: "Bálticos — Letónia e Lituânia (provas juvenis)", load: () => require("./sources/baltico") },
   { id: "ggcondados", label: "Condados ingleses (GolfGenius + intelligentgolf)", load: () => require("./sources/ggcondados") },
 ];
 

@@ -1,8 +1,9 @@
-name: Actualizar federações no GolfBox (Suíça, Bélgica)
+name: Actualizar federações no GolfBox (Suíça, Bélgica, Bálticos)
 
 # Provas juvenis das federações que publicam tudo no GolfBox: Swiss Golf
-# (customer 1085) e Royal Belgian Golf Federation (customer 22).
-# scripts/scrape-golfbox-federacao.js --fed {swissgolf|rbgf} lê o calendário da
+# (customer 1085), Royal Belgian Golf Federation (customer 22) e Bálticos
+# (federação letã, customer 911; Lithuanian Junior Open, customer 884).
+# scripts/scrape-golfbox-federacao.js --fed {swissgolf|rbgf|baltico} lê o calendário da
 # época corrente e da anterior e grava public/data/{fed}/{competitionId}.json;
 # se algum mudou, regenera o kids2.
 #
@@ -21,7 +22,7 @@ on:
   workflow_dispatch:
     inputs:
       fed:
-        description: 'federação (swissgolf ou rbgf; vazio = todas)'
+        description: 'federação (swissgolf, rbgf ou baltico; vazio = todas)'
         required: false
         default: ''
         type: string
@@ -71,7 +72,7 @@ jobs:
           FED="${{ github.event.inputs.fed }}"
           IDS="${{ github.event.inputs.ids }}"
           ANOS="${{ github.event.inputs.anos }}"
-          FEDS="${FED:-swissgolf rbgf}"
+          FEDS="${FED:-swissgolf rbgf baltico}"
           GRAVOU=0; ERRO=0
           for F in $FEDS; do
             if [ -n "$IDS" ]; then
@@ -105,5 +106,5 @@ jobs:
         if: steps.scrape.outputs.exit_code == '0'
         # -f agregador: juniors*.json & c.ª regenerados (nunca fundidos) se o main avançar.
         run: |
-          bash scripts/ci/push-generated.sh -m "data: federações GolfBox (Suíça, Bélgica) + rebuild juniors $(date +'%Y-%m-%d %H:%M')" \
+          bash scripts/ci/push-generated.sh -m "data: federações GolfBox (Suíça, Bélgica, Bálticos) + rebuild juniors $(date +'%Y-%m-%d %H:%M')" \
             -f agregador -- public/data

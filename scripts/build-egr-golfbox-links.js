@@ -4,7 +4,7 @@
  *
  * Gera `public/data/egr/egr-golfbox-links.json` — para cada evento da /egr que
  * a EGR foi buscar ao GolfBox (o `sourceUrl` traz `#/competition/{id}`) e que
- * nós já lemos inteiro (federações: public/data/{swissgolf,rbgf}/{id}.json;
+ * nós já lemos inteiro (federações: public/data/{swissgolf,rbgf,baltico}/{id}.json;
  * provas do scripts/golfbox-scope.json: public/data/{slug}_{ano}.json), o
  * ficheiro rico e as divisões que correspondem ao escalão do evento.
  *
@@ -31,7 +31,7 @@ const { rosterKey } = require("./aggregator/util/egr-dedup");
 const DATA_DIR = path.resolve(__dirname, "..", "public", "data");
 const LIST = path.join(DATA_DIR, "egr", "egr-events-list.json");
 const OUT = path.join(DATA_DIR, "egr", "egr-golfbox-links.json");
-const FEDERACOES = ["swissgolf", "rbgf"];
+const FEDERACOES = ["swissgolf", "rbgf", "baltico"];
 const SCOPE = path.join(__dirname, "golfbox-scope.json");
 
 const compIdDe = (url) => (/#\/competition\/(\d+)/.exec(String(url || "")) || [])[1] || null;

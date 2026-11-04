@@ -15,6 +15,9 @@
  *     U12 & U14, Junior Opens, National Juniors Championship, Junior Masters,
  *     finais U12/U14. Fora: Interclubs (equipas), Bélgica × Países Baixos, Kids
  *     Tour (iniciação), provas canceladas.
+ *   baltico — Letónia (federação, customer 911: BTA Junior Tour e Latvian Junior
+ *     Open) e o Lithuanian Junior Open (customer 884, o clube que o organiza),
+ *     04/11/2026. Fora as classes «Neto» (net), «LGF Dāmas/Kungi» (adultos).
  *
  *   calendário: scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/{c}/Season/{ano}/
  *
@@ -28,7 +31,7 @@
  * deixa cada miúdo só no escalão mais específico (`umaDivisaoPorJogador`).
  *
  * Saída: public/data/{fed}/{competitionId}.json — JobFile, 1 ficheiro por prova;
- * adaptadores sources/swissgolf.js e sources/rbgf.js. Só kids2 (não vai à /major).
+ * adaptadores sources/swissgolf.js, sources/rbgf.js e sources/baltico.js. Só kids2 (não vai à /major).
  *
  * Uso:
  *   node scripts/scrape-golfbox-federacao.js --fed swissgolf          # época corrente e a anterior
@@ -56,6 +59,19 @@ const FEDERACOES = {
     juvenil: /Junior U1\d|Junior Open|National Juniors? Championship|Junior Masters|Finals? Junior/i,
     fora: /Cancel|Interclubs|Kids Tour|Match|Albert Vermeiren/i,
   },
+  // Letónia (federação, customer 911): Junior Tour e Latvian Junior Open;
+  // Lituânia: só o Lithuanian Junior Open, no calendário do clube que o organiza
+  // (European Centre Golf Club, customer 884 — a federação não está no GolfBox).
+  baltico: {
+    nome: "Bálticos (Letónia, Lituânia)",
+    // «Neto Class» = a mesma volta em net; «LGF Dāmas/Kungi» = senhoras/homens
+    // adultos; «Autobuss» = classe de convidados
+    classesFora: /Neto|LGF D[aā]mas|LGF Kungi|Autobuss/i,
+    calendarios: [
+      { customer: 911, juvenil: /Junioru golfa t[uū]re|Junior Open/i, fora: /Chip|Short Game|Olimpi/i },
+      { customer: 884, juvenil: /Lithuanian Junior Open/i, fora: /^$/ },
+    ],
+  },
 };
 const PAUSA_MS = 2000;
 const SCOPE_GOLFBOX = path.join(__dirname, "golfbox-scope.json");
@@ -74,20 +90,24 @@ async function provasDoCalendario(fed, anos) {
   const hoje = hojeLisboa().replace(/-/g, "");
   const scope = jaNoScope();
   const lista = [];
-  for (const ano of anos) {
-    const sc = await fetchJsonp(`https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/${fed.customer}/Season/${ano}/?callback=x`);
-    for (const se of Object.values(sc?.CompetitionData || {})) {
-      for (const m of Object.values(se.Months || {})) {
-        for (const e of Object.values(m.Entries || {})) {
-          const nome = String(e.Name || "");
-          const inicio = String(e.StartDate || "").slice(0, 8);
-          if (!fed.juvenil.test(nome) || fed.fora.test(nome) || scope.has(String(e.ID))) continue;
-          if (inicio && inicio > hoje) continue; // ainda não jogada
-          lista.push({ id: String(e.ID), nome, inicio });
+  // uma fonte pode ler vários calendários (Bálticos: federação letã + o clube lituano)
+  const calendarios = fed.calendarios || [{ customer: fed.customer, juvenil: fed.juvenil, fora: fed.fora }];
+  for (const cal of calendarios) {
+    for (const ano of anos) {
+      const sc = await fetchJsonp(`https://scores.golfbox.dk/Handlers/ScheduleHandler/GetSchedule/CustomerId/${cal.customer}/Season/${ano}/?callback=x`);
+      for (const se of Object.values(sc?.CompetitionData || {})) {
+        for (const m of Object.values(se.Months || {})) {
+          for (const e of Object.values(m.Entries || {})) {
+            const nome = String(e.Name || "");
+            const inicio = String(e.StartDate || "").slice(0, 8);
+            if (!cal.juvenil.test(nome) || cal.fora.test(nome) || scope.has(String(e.ID))) continue;
+            if (inicio && inicio > hoje) continue; // ainda não jogada
+            lista.push({ id: String(e.ID), nome, inicio });
+          }
         }
       }
+      await dorme(PAUSA_MS);
     }
-    await dorme(PAUSA_MS);
   }
   return [...new Map(lista.map((p) => [p.id, p])).values()].sort((a, b) => a.inicio.localeCompare(b.inicio));
 }
@@ -115,7 +135,8 @@ const comVoltas = (d) => (d.divisions || []).reduce((n, dv) => n + (dv.players |
       const n = comVoltas(out);
       if (!n) { vazios++; console.log("   ⏭️  sem resultados — não gravado"); continue; }
       // classes sem ninguém (ex.: «Girls U18» sem inscritas) não entram
-      const data = { ...out, divisions: (out.divisions || []).filter((dv) => (dv.players || []).length), competitionId: p.id, customer: fed.nome };
+      // e as classes que não são juvenis nem individuais por pancadas (`classesFora`)
+      const data = { ...out, divisions: (out.divisions || []).filter((dv) => (dv.players || []).length && !(fed.classesFora && fed.classesFora.test(dv.division || ""))), competitionId: p.id, customer: fed.nome };
       let anterior = null;
       try { anterior = JSON.parse(fs.readFileSync(file, "utf8")); } catch { /* ficheiro novo */ }
       const sem = (o) => { const c = { ...o }; delete c.scrapedAt; return JSON.stringify(c); };

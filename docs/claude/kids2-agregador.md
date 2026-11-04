@@ -389,6 +389,7 @@ jogos por equipas contra regiões, acompanhantes, camps, indoor e U25) e reaprov
 `scrapeOne` do `scrape-golfbox.js` → `public/data/{swissgolf|rbgf}/{competitionId}.json`
 (JobFile) → adapters `sources/swissgolf.js` e `sources/rbgf.js`, os dois pelo `util/golfbox-federacao.js` (fonte FRACA: nome +
 país; chave `gb{RefID}`). Só kids2 — não vai à `/major`. Federação nova no GolfBox = uma entrada em `FEDERACOES` + um adapter de 5 linhas.
+- **Bálticos (\`baltico\`, 04/11/2026):** Letónia (federação, customer 911: BTA Latvijas Junioru golfa tūre e Latvian Junior Open) + Lithuanian Junior Open (a federação lituana não está no GolfBox; está no calendário do clube organizador, customer 884). Uma fonte pode ler vários calendários (\`calendarios\` em \`FEDERACOES\`) e tirar classes (\`classesFora\`: «Neto» = net, «LGF Dāmas/Kungi» = adultos, «Autobuss»). 19 provas de 2025–26.
 - **Bélgica (RBGF):** Junior U12 & U14, Junior Opens (54 buracos, 3 voltas de 18), National Juniors, Junior Masters, finais U12/U14. Fora: Interclubs (equipas), Bélgica × Países Baixos, Kids Tour (iniciação), canceladas e o Albert Vermeiren (fica na fonte `avtrophy`: o leitor salta tudo o que já está no `golfbox-scope.json`). Classes «Boys»/«Girls» = overall: sem idade, perdem para o escalão.
 
 - O EGR já tinha ~140 provas suíças, só com o total de cada volta e quase sem U10/U12/U16.
