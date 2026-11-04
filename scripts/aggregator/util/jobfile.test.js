@@ -7,7 +7,27 @@ import { describe, it, expect } from "vitest";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const { umaDivisaoPorJogador } = require("./jobfile.js");
+const { umaDivisaoPorJogador, collectLinks } = require("./jobfile.js");
+
+describe("collectLinks — link do evento na federação/organizador", () => {
+  it("um link por classe, com o nome da federação quando a fonte o dá", () => {
+    const l = collectLinks([{ division: "Boys U14", source: "https://www.golfbox.dk/x#/competition/1" }], "S", {}, "Swiss Golf");
+    expect(l).toEqual([{ label: "Swiss Golf — Boys U14", url: "https://www.golfbox.dk/x#/competition/1" }]);
+  });
+  it("o mesmo link em várias classes (a prova toda) leva só o nome da federação", () => {
+    const u = "https://www.golfbox.dk/x#/competition/2";
+    expect(collectLinks([{ division: "Girls U14", source: u }, { division: "Boys U14", source: u }], "S", {}, "Swiss Golf"))
+      .toEqual([{ label: "Swiss Golf", url: u }]);
+  });
+  it("sem link por classe usa o do evento (Faldo, Evian no GolfGenius)", () => {
+    expect(collectLinks([{ division: "Boys" }], "Faldo", { source: "https://www.golfgenius.com/pages/123" }))
+      .toEqual([{ label: "GolfGenius", url: "https://www.golfgenius.com/pages/123" }]);
+  });
+  it("o Evian antigo da FFG («(trnId N)») vira a página FFG real, pelo índice", () => {
+    const l = collectLinks([{ division: "Girls" }], "Evian", { source: "https://pages.ffgolf.org/resultats/ (trnId 1900544646)" });
+    expect(l).toEqual([{ label: "FFG", url: "https://pages.ffgolf.org/resultats/resultats-details/572da5febaee10b7e85bab9c6205c587/1900544646" }]);
+  });
+});
 
 const linha = (key, name, gross) => ({
   playerSourceKey: key, playerName: name, pos: 1, status: "OK",

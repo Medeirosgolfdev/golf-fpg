@@ -22,7 +22,7 @@ function parseDivGolfbox(divKey) {
   return { ageMin: null, ageMax: us.length ? Math.max(...us) : null, sex };
 }
 
-/** @param {{sourceId:string, sourceLabel:string, seriesLabel:string, country:string}} o */
+/** @param {{sourceId:string, sourceLabel:string, seriesLabel:string, country:string, linkSite:string}} o */
 function fonteGolfboxFederacao(o) {
   return buildJobfileSource({
     sourceId: o.sourceId,
@@ -34,6 +34,8 @@ function fonteGolfboxFederacao(o) {
     defaultCountry: o.country,
     maxAgeInYear: 18,
     parseDiv: parseDivGolfbox,
+    // o link de cada classe diz a federação, não «golfbox.dk»
+    linkSite: o.linkSite,
   });
 }
 

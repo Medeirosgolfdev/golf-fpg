@@ -14,4 +14,5 @@ module.exports = fonteGolfboxFederacao({
   sourceLabel: "RBGF Bélgica (provas juvenis)",
   seriesLabel: "RBGF Bélgica",
   country: "BE",
+  linkSite: "RBGF Bélgica",
 });

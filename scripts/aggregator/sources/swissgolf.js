@@ -16,4 +16,5 @@ module.exports = fonteGolfboxFederacao({
   sourceLabel: "Swiss Golf (provas juvenis)",
   seriesLabel: "Swiss Golf",
   country: "CH",
+  linkSite: "Swiss Golf",
 });

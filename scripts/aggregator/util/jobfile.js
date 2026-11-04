@@ -130,13 +130,45 @@ function nameWithYear(base, year) {
   return b.includes(String(year)) ? b : `${b} ${year}`;
 }
 
-function collectLinks(divisions, seriesLabel) {
+/** Página FFG de uma prova pelo trnId (o partKey está no ffgolf-resultats-index). */
+let ffgPartKeys = null;
+function urlFfg(trnId) {
+  if (!ffgPartKeys) {
+    const idx = readJsonSafe(path.join(DATA_DIR, "ffgolf-resultats-index.json"), null);
+    ffgPartKeys = new Map(((idx && idx.tournaments) || []).filter((t) => t.partKey).map((t) => [String(t.trnId), t.partKey]));
+  }
+  const pk = ffgPartKeys.get(String(trnId));
+  return pk ? `https://pages.ffgolf.org/resultats/resultats-details/${pk}/${trnId}` : null;
+}
+
+/** Nome do site pelo endereço (os condados ingleses também vêm do intelligentgolf). */
+function nomeDoSite(url) {
+  if (/golfgenius\.com/i.test(url || "")) return "GolfGenius";
+  if (/ffgolf\.org/i.test(url || "")) return "FFG";
+  try { return new URL(url).host.replace(/^www\./, ""); } catch { return "GolfGenius"; }
+}
+
+/** Link do evento na fonte (federação/organizador), por classe. Sem link por
+ *  classe, o do evento (`data.source`) — ex.: Faldo e Evian no GolfGenius; o
+ *  Evian antigo («pages.ffgolf.org/resultats/ (trnId N)») vira a página FFG
+ *  real (Mariana, 04/11/2026: as provas também ligam à federação de onde são).
+ *  `linkSite` (opts da fonte) troca o nome do site («Swiss Golf» por «golfbox.dk»). */
+function collectLinks(divisions, seriesLabel, data = {}, linkSite = null) {
   const seen = new Set(); const links = [];
+  // o mesmo link em várias classes (GolfBox: a prova toda) leva só o nome do site
+  const usos = new Map();
+  for (const div of divisions) if (div.source) usos.set(div.source, (usos.get(div.source) || 0) + 1);
   for (const div of divisions) {
     const url = div.source;
-    // o nome do site sai do endereço (os condados ingleses também vêm do intelligentgolf)
-    const site = /golfgenius\.com/i.test(url || "") ? "GolfGenius" : (() => { try { return new URL(url).host.replace(/^www\./, ""); } catch { return "GolfGenius"; } })();
-    if (url && !seen.has(url)) { seen.add(url); links.push({ label: `${site} — ${div.division || seriesLabel}`.trim(), url }); }
+    if (!url || seen.has(url)) continue;
+    seen.add(url);
+    const site = linkSite || nomeDoSite(url);
+    links.push({ label: usos.get(url) > 1 ? site : `${site} — ${div.division || seriesLabel}`.trim(), url });
+  }
+  if (!links.length && data.source) {
+    const trn = /pages\.ffgolf\.org\/resultats\/?\s*\(trnId\s*(\d+)\)/i.exec(data.source);
+    const url = trn ? urlFfg(trn[1]) : (/^https?:\/\/\S+$/.test(data.source) ? data.source : null);
+    if (url) links.push({ label: linkSite || nomeDoSite(url), url });
   }
   return links;
 }
@@ -295,7 +327,7 @@ function buildJobfileSource(opts) {
       seriesLabel: data.seriesLabel || seriesLabel,
       course: data.course || null,
       flights,
-      links: collectLinks(divisions, seriesLabel),
+      links: collectLinks(divisions, seriesLabel, data, opts.linkSite),
     };
   }
 
@@ -377,4 +409,4 @@ function parseSexAge(divKey) {
   return { ageMin: null, ageMax: null, sex };
 }
 
-module.exports = { buildJobfileSource, parseSexAge, umaDivisaoPorJogador };
+module.exports = { buildJobfileSource, parseSexAge, umaDivisaoPorJogador, collectLinks };
