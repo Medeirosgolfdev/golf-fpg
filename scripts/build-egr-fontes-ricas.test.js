@@ -1,5 +1,5 @@
 /**
- * scripts/build-egr-golfbox-links.js — que classe do ficheiro GolfBox mostra um
+ * scripts/build-egr-fontes-ricas.js — que classe do ficheiro GolfBox mostra um
  * evento da /egr: a do mesmo sexo com os jogadores do evento (nomes), juntando
  * classes quando a EGR junta escalões.
  */
@@ -7,7 +7,7 @@ import { describe, it, expect } from "vitest";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const { divisoesDoEvento, compIdDe } = require("./build-egr-golfbox-links.js");
+const { divisoesDoEvento, compIdDe } = require("./build-egr-fontes-ricas.js");
 
 const nomes = (p, n) => Array.from({ length: n }, (_, i) => `${p} Jogador${i}`);
 const div = (division, ns) => ({ division, players: ns.map((name) => ({ name })) });

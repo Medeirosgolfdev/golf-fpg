@@ -188,6 +188,6 @@ data-archive/uskids-member-diario.jsonl
 # cache do tsc (gerada pela build)
 tsconfig.tsbuildinfo
 
-# Ligações EGR → ficheiro GolfBox completo (scripts/build-egr-golfbox-links.js);
+# Ligações EGR → prova completa noutra fonte (scripts/build-egr-fontes-ricas.js);
 # o Vercel gera-as em cada deploy (prebuild).
-/public/data/egr/egr-golfbox-links.json
+/public/data/egr/egr-fontes-ricas.json

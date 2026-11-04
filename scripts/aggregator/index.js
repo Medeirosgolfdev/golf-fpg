@@ -147,9 +147,11 @@ async function main() {
   // 2b. Dedup genérico EGR: eventos que já vêm de uma fonte dedicada (roster
   //     overlap + janela de datas) saem ANTES do matcher — a fonte rica ganha.
   //     Complementa a whitelist regex do próprio adapter egr.js.
+  let egrCobertos = [];
   {
     const { dedupeEgrTournaments } = require("./util/egr-dedup");
     const { dropped } = dedupeEgrTournaments(rawSources);
+    egrCobertos = dropped;
     if (dropped.length) {
       step("Dedup EGR vs fontes dedicadas");
       const bySrc = {};
@@ -337,6 +339,15 @@ async function main() {
   } else {
     writeJson(DATA.outJuniors, juniorsOut);
     sub(`${path.relative(process.cwd(), DATA.outJuniors)}: ${juniorsOut.juniors.length} juniores`);
+    // Evento EGR → prova da fonte que o cobre (fonte + chave = nome do ficheiro):
+    // a /egr mostra essas provas completas (scripts/build-egr-fontes-ricas.js).
+    {
+      const cobertos = egrCobertos
+        .map((d) => ({ egr: String(d.egrKey || "").replace(/^egr/, ""), fonte: d.coveredBy, chave: d.coveredKey }))
+        .filter((d) => /^\d+$/.test(d.egr) && d.chave);
+      writeJson(path.join(DATA_DIR, "egr", "egr-cobertos.json"), { generatedAt, total: cobertos.length, cobertos });
+      sub(`egr/egr-cobertos.json: ${cobertos.length} evento(s) EGR cobertos por outra fonte`);
+    }
     if (hcpListas) {
       const { ligacoesParaPagina } = require("./util/hcp-listas");
       const out = ligacoesParaPagina(hcpListas, matchResult);

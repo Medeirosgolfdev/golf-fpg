@@ -68,7 +68,7 @@ family() {
       GEN+=('public/data/juniors.json' 'public/data/juniors-tournaments*.json'
             'public/data/tournament-catalog.json' 'public/data/hcp-listas-ligacoes.json'
             'public/data/juniors-scout.json'
-            'public/data/juniors-links.json')
+            'public/data/juniors-links.json' 'public/data/egr/egr-cobertos.json')
       REGEN+=('node scripts/aggregator/index.js') ;;
     major)
       GEN+=('public/data/major-catalog.json' 'public/data/major-veterans.json')

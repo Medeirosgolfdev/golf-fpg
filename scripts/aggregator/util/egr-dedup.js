@@ -102,7 +102,7 @@ function dedupeEgrTournaments(rawSources) {
         const ovEgr = shared / es.size;
         const ovMin = shared / Math.min(es.size, o.roster.size);
         if (ovEgr >= 0.7 || (ovMin >= 0.85 && shared >= 15)) {
-          hit = { egrKey: e.sourceKey, egrName: e.name, coveredBy: o.sourceId, coveredByName: o.t.name, shared, ovEgr: +ovEgr.toFixed(2), ovMin: +ovMin.toFixed(2), _t: o.t };
+          hit = { egrKey: e.sourceKey, egrName: e.name, coveredBy: o.sourceId, coveredByName: o.t.name, coveredKey: o.t.sourceKey, shared, ovEgr: +ovEgr.toFixed(2), ovMin: +ovMin.toFixed(2), _t: o.t };
           break;
         }
       }

@@ -1,12 +1,18 @@
 #!/usr/bin/env node
 /**
- * scripts/build-egr-golfbox-links.js
+ * scripts/build-egr-fontes-ricas.js
  *
- * Gera `public/data/egr/egr-golfbox-links.json` — para cada evento da /egr que
- * a EGR foi buscar ao GolfBox (o `sourceUrl` traz `#/competition/{id}`) e que
- * nós já lemos inteiro (federações: public/data/{swissgolf,rbgf,baltico}/{id}.json;
- * provas do scripts/golfbox-scope.json: public/data/{slug}_{ano}.json), o
- * ficheiro rico e as divisões que correspondem ao escalão do evento.
+ * Gera `public/data/egr/egr-fontes-ricas.json` — para cada evento da /egr que
+ * nós temos inteiro noutra fonte, o ficheiro rico (JobFile) e as divisões que
+ * correspondem ao escalão do evento. Dois caminhos:
+ *   1. GolfBox: o `sourceUrl` da EGR traz `#/competition/{id}` (federações:
+ *      public/data/{swissgolf,rbgf,baltico}/{id}.json; provas do
+ *      scripts/golfbox-scope.json: public/data/{slug}_{ano}.json);
+ *   2. as provas que o agregador juntou ao evento EGR (`egr/egr-cobertos.json`:
+ *      fonte + chave = nome do ficheiro) — DGV, Faldo, Evian, condados
+ *      ingleses, JOB… — desde que o ficheiro seja um JobFile (divisions[]).
+ *      FFG, FIG e RFEG têm formatos próprios: ficam com os totais e um botão
+ *      para a página da prova no site (\`paginas\`); England fica só com os totais.
  *
  * A EGRPage usa-o para mostrar essas provas com cartões buraco a buraco, clube,
  * handicap e draw em vez de só os totais — mantendo o evento EGR (Mariana,
@@ -19,7 +25,7 @@
  * do evento EGR tem de estar lá; senão fica só com os totais.
  *
  * Gerado no prebuild (gitignored), como o fpg-files-index.json.
- * Correr:  node scripts/build-egr-golfbox-links.js
+ * Correr:  node scripts/build-egr-fontes-ricas.js (depois do agregador)
  */
 "use strict";
 const fs = require("fs");
@@ -30,7 +36,10 @@ const { rosterKey } = require("./aggregator/util/egr-dedup");
 
 const DATA_DIR = path.resolve(__dirname, "..", "public", "data");
 const LIST = path.join(DATA_DIR, "egr", "egr-events-list.json");
-const OUT = path.join(DATA_DIR, "egr", "egr-golfbox-links.json");
+const OUT = path.join(DATA_DIR, "egr", "egr-fontes-ricas.json");
+const COBERTOS = path.join(DATA_DIR, "egr", "egr-cobertos.json");
+/** Pastas onde pode estar o ficheiro de uma fonte (chave = nome sem .json). */
+const PASTAS_EXTRA = ["gg-condados", "ig-condados"];
 const FEDERACOES = ["swissgolf", "rbgf", "baltico"];
 const SCOPE = path.join(__dirname, "golfbox-scope.json");
 
@@ -89,26 +98,59 @@ function divisoesDoEvento(job, ev, nomesEgr) {
   return coberto.size >= alvo.size / 2 ? escolhidas.sort((a, b) => a - b) : [];
 }
 
+/** URL público do JobFile de uma prova coberta (fonte + chave), ou null. */
+function ficheiroCoberto(c) {
+  if (!/^[\w.-]+$/.test(c.chave || "")) return null;
+  for (const rel of [`${c.chave}.json`, `${c.fonte}/${c.chave}.json`, ...PASTAS_EXTRA.map((p) => `${p}/${c.chave}.json`)]) {
+    if (fs.existsSync(path.join(DATA_DIR, rel))) return `/data/${rel}`;
+  }
+  return null;
+}
+
+/** Página da prova AQUI no site, para as fontes com formato próprio (FFG, FIG,
+ *  RFEG): a /egr mostra os totais e um botão para a prova completa. */
+function paginaDoSite(c) {
+  const k = String(c.chave || "");
+  if (c.fonte === "ffgolf" && /^\d+$/.test(k)) return `/ffg/t/${encodeURIComponent(`ffgres:${k}`)}`;
+  if (c.fonte === "fig" && /^[\w-]+$/.test(k)) return `/fig/${k}`;
+  if (c.fonte === "rfeg") {
+    const m = /^(lgs|nc|rfeg)(\d+)(?:_|$)/i.exec(k);
+    const src = m && { lgs: "livegolfscoring", nc: "nextcaddy", rfeg: "rfegolf" }[m[1].toLowerCase()];
+    if (src) return `/rfeg/${src}/${m[2]}`;
+  }
+  return null;
+}
+
 function main() {
   const list = lerJson(LIST);
   if (!list) { console.log("egr-events-list.json em falta — nada a ligar"); return; }
   const ficheiros = ficheirosGolfbox();
+  const cobertos = new Map(((lerJson(COBERTOS) || {}).cobertos || []).map((c) => [String(c.egr), c]));
   const cache = new Map();
   const links = {};
+  const paginas = {};
+  const porFonte = {};
   for (const ev of list.events || []) {
     const id = compIdDe(ev.sourceUrl);
-    const url = id && ficheiros.get(id);
-    if (!url) continue;
+    const cob = cobertos.get(String(ev.id));
+    const url = (id && ficheiros.get(id)) || (cob && ficheiroCoberto(cob));
+    const pagina = cob && paginaDoSite(cob);
+    if (!url) { if (pagina) paginas[ev.id] = pagina; continue; }
     if (!cache.has(url)) cache.set(url, lerJson(path.join(DATA_DIR, url.replace(/^\/data\//, ""))));
     const job = cache.get(url);
-    if (!job) continue;
+    // só JobFiles (divisions[] com players[]) — os outros formatos ficam com os totais
+    if (!job || !Array.isArray(job.divisions) || !job.divisions.some((d) => Array.isArray(d.players))) continue;
     const evento = lerJson(path.join(DATA_DIR, "egr", "events", `egr_${ev.id}.json`));
     const divs = divisoesDoEvento(job, ev, (evento?.players || []).map((p) => p.name));
-    if (divs.length) links[ev.id] = { file: url, divs };
+    if (divs.length) {
+      links[ev.id] = { file: url, divs };
+      const fonte = (id && ficheiros.get(id)) ? "golfbox" : cob.fonte;
+      porFonte[fonte] = (porFonte[fonte] || 0) + 1;
+    }
   }
-  writeJsonAtomic(OUT, { generatedAt: new Date().toISOString(), total: Object.keys(links).length, links });
-  console.log(`egr-golfbox-links.json: ${Object.keys(links).length} evento(s) EGR com o ficheiro GolfBox completo`);
+  writeJsonAtomic(OUT, { generatedAt: new Date().toISOString(), total: Object.keys(links).length, links, paginas });
+  console.log(`egr-fontes-ricas.json: ${Object.keys(links).length} evento(s) EGR com a prova completa — ${Object.entries(porFonte).map(([k, v]) => `${k}×${v}`).join(" · ")}; ${Object.keys(paginas).length} com botão para a página do site (FFG/FIG/RFEG)`);
 }
 
 if (require.main === module) main();
-module.exports = { divisoesDoEvento, compIdDe };
+module.exports = { divisoesDoEvento, compIdDe, paginaDoSite };

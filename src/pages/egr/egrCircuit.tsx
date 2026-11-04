@@ -8,8 +8,8 @@
  * buraco a buraco (o mesmo Resumo de todas as provas). Sem React: o loader
  * serve também o Kids 2.
  *
- * Provas que a EGR foi buscar ao GolfBox e que nós lemos inteiras (Suíça,
- * Bélgica, Albert Vermeiren…) — `egr-golfbox-links.json`, gerado no prebuild —
+ * Provas que nós temos inteiras noutra fonte (GolfBox: Suíça, Bélgica,
+ * Bálticos, Albert Vermeiren; DGV, Faldo, Evian, condados ingleses…) — `egr-fontes-ricas.json`, gerado no prebuild —
  * mostram o ficheiro completo (cartões, clube, handicap, draw) dentro do evento
  * EGR, em vez de só os totais (Mariana, 04/11/2026: «fazer um merge da
  * informação e colocar lá também»).
@@ -76,20 +76,30 @@ interface EgrEventFull {
   startDateRaw?: string; endDateRaw?: string; sourceUrl?: string; players: EgrEventPlayer[];
 }
 
-/* ── Ficheiro GolfBox completo do mesmo evento (quando o temos) ───── */
-interface EgrGolfboxLinks { links: Record<string, { file: string; divs: number[] }> }
-let _linksPromise: Promise<EgrGolfboxLinks["links"]> | null = null;
-function loadGolfboxLinks(): Promise<EgrGolfboxLinks["links"]> {
+/* ── A prova completa noutra fonte (quando a temos) ─────────────── */
+/** Nome do link da prova na fonte, pelo endereço. */
+function rotuloFonte(url: string): string {
+  if (/golfbox\./i.test(url)) return "Livescoring GolfBox";
+  if (/golf\.de/i.test(url)) return "golf.de (DGV)";
+  if (/golfgenius\.com/i.test(url)) return "GolfGenius";
+  if (/intelligentgolf/i.test(url)) return "intelligentgolf";
+  return "Resultados na fonte";
+}
+/** `links`: o ficheiro completo e as classes; `paginas`: a página da prova aqui
+ *  no site para as fontes com formato próprio (FFG, FIG, RFEG). */
+interface EgrFontesRicas { links: Record<string, { file: string; divs: number[] }>; paginas?: Record<string, string> }
+let _linksPromise: Promise<EgrFontesRicas> | null = null;
+function loadFontesRicas(): Promise<EgrFontesRicas> {
   if (!_linksPromise) {
-    _linksPromise = cachedFetchJson<EgrGolfboxLinks>("/data/egr/egr-golfbox-links.json")
-      .then((r) => r?.links || {})
-      .catch(() => ({}));
+    _linksPromise = cachedFetchJson<EgrFontesRicas>("/data/egr/egr-fontes-ricas.json")
+      .then((r) => ({ links: r?.links || {}, paginas: r?.paginas || {} }))
+      .catch(() => ({ links: {}, paginas: {} }));
   }
   return _linksPromise;
 }
 
 /** As divisões do JobFile que correspondem ao evento EGR, com cartões. */
-async function golfboxDivisions(e: EgrEventListItem, link: { file: string; divs: number[] }): Promise<CircuitDivision[] | null> {
+async function divisoesRicas(e: EgrEventListItem, link: { file: string; divs: number[] }): Promise<CircuitDivision[] | null> {
   const f = await cachedFetchJson<JobFile>(link.file).catch(() => null);
   if (!f?.divisions?.length) return null;
   const todas = jobFileDivisions(f, [f], (dv) => dv.division, true);
@@ -103,15 +113,17 @@ async function golfboxDivisions(e: EgrEventListItem, link: { file: string; divs:
     hasManuel: d.hasManuel,
     results: d.results,
     scOptions: jobScorecardOptions({ showRatings: true }),
-    links: d.division.source ? [{ label: "Livescoring GolfBox", icon: "🔗", url: d.division.source }] : undefined,
+    links: d.division.source ? [{ label: rotuloFonte(d.division.source), icon: "🔗", url: d.division.source }] : undefined,
   }));
 }
 
 /* ── Adapter: evento → divisão (lazy) ───────────────────────────── */
 async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]> {
-  const link = (await loadGolfboxLinks())[e.id];
+  const ricas = await loadFontesRicas();
+  const link = ricas.links[e.id];
+  const pagina = ricas.paginas?.[e.id];
   if (link) {
-    const rico = await golfboxDivisions(e, link);
+    const rico = await divisoesRicas(e, link);
     if (rico) return rico;
   }
   const [ev, hcpMap] = await Promise.all([
@@ -129,6 +141,8 @@ async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]>
     hasManuel: e.hasManuel,
     // Só totais → prova sem buraco a buraco no Resumo comum (totalsDivisionView).
     totals: { players: totais, parPerRound: par, tournamentDate: e.startDate || undefined },
+    // a mesma prova completa noutra página do site (FFG, FIG, RFEG)
+    links: pagina ? [{ label: "Prova completa no site", icon: "📋", url: pagina, title: "Cartões, clubes e handicaps na página da federação, aqui no site" }] : undefined,
   })];
 }
 
