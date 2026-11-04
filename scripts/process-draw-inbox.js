@@ -17,7 +17,8 @@
  *      (tarefa "GolfFPG-DrawsEmail", que os tira do Outlook).
  *   3. `npx vitest run` (sanidade) e commit+push dos 2 JSON.
  *   4. Move o PDF para draws-inbox/processados/. Em erro: move para
- *      draws-inbox/erros/ + escreve <nome>.log com o output completo.
+ *      draws-inbox/erros/ + escreve <nome>.log com o output completo e avisa
+ *      por email (issue no GitHub, aberta até se resolver — avisarFalha).
  *
  * A partir daí a GitHub Action update-cgss-draw.yml (auto-descobridora) trata
  * dos resultados no dia do torneio, do re-chaveamento placeholder→real e da
@@ -64,6 +65,26 @@ try {
   } catch { process.exit(0); }
 }
 const unlock = () => { try { fs.rmdirSync(LOCK); } catch { /* já removido */ } };
+
+/** Aviso por email quando um PDF vai para erros/ (pendente de 25/10: «um PDF em
+ *  erros\ não avisa ninguém»). Pelo mesmo canal do resumo diário: uma issue no
+ *  GitHub, que o GitHub manda por email à dona do repo; fica aberta até se
+ *  resolver. Usa o `gh` autenticado neste PC; se falhar, fica só o registo. */
+function avisarFalha(base, motivo) {
+  const corpo = [
+    `O PDF **${base}** não foi lido e ficou em \`draws-inbox/erros/\` (${ts()}).`,
+    "",
+    `Motivo: \`${String(motivo || "?").slice(0, 300)}\``,
+    "",
+    `O registo completo está em \`draws-inbox/erros/${base}.log\`. Depois de corrigir o leitor, voltar a pôr o PDF em \`draws-inbox/\` (ou \`node scripts/process-draw-inbox.js --once <pdf>\`).`,
+  ].join("\n");
+  try {
+    execFileSync("gh", ["issue", "create", "--repo", "Medeirosgolfdev/golf-fpg", "--title", `⚠ Draw do CGSS não lido: ${base}`, "--body", corpo], { cwd: REPO, stdio: "pipe", timeout: 60000 });
+    log(`✉ ${base}: aviso enviado (issue no GitHub → email).`);
+  } catch (e) {
+    log(`⚠ ${base}: o aviso por email falhou (${String(e.message || e).split("\n")[0]}) — fica só este registo.`);
+  }
+}
 process.on("exit", unlock);
 
 /* ── PDFs a processar ───────────────────────────────────────────────────── */
@@ -148,7 +169,9 @@ for (const pdf of pdfs) {
     const detail = [output, e.stdout || "", e.stderr || "", e.message].filter(Boolean).join("\n");
     try { fs.renameSync(pdf, path.join(ERR, base)); } catch { /* --once fora do inbox */ }
     fs.writeFileSync(path.join(ERR, base + ".log"), `[${ts()}] ${base} FALHOU\n\n${detail}\n`);
-    log(`✗ ${base}: FALHOU → erros/${base} (+ .log). Motivo (1ª linha): ${String(detail).trim().split("\n").pop()}`);
+    const motivo = String(detail).trim().split("\n").pop();
+    log(`✗ ${base}: FALHOU → erros/${base} (+ .log). Motivo (1ª linha): ${motivo}`);
+    avisarFalha(base, motivo);
   }
 }
 log("inbox: ciclo terminado.");

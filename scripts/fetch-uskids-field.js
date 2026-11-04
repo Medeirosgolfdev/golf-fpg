@@ -168,9 +168,20 @@ function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao, prevRemoved
           j.firstSeen = firstSeenMap.get(key) || agora;
         }
       }
-      if (!e.jogadores) continue; // sem lista de nomes → não há tracking de saídas
-
       const escKey = `${t.t}:${e.nome}`;
+      if (!e.jogadores) {
+        // Sem lista de nomes nesta recolha → não há saídas novas a calcular, mas
+        // as já registadas (dentro da janela) mantêm-se: sem isto, um escalão que
+        // vinha vazio uma vez perdia o histórico de quem saiu (pendente de 01/10).
+        const prevRem = prevRemoved.get(escKey);
+        const ficam = prevRem ? [...prevRem.values()].filter((obj) => {
+          const ageMs = obj.removedAt ? (agoraMs - new Date(obj.removedAt).getTime()) : 0;
+          return ageMs / 86400_000 <= REMOVED_WINDOW_DAYS;
+        }) : [];
+        if (ficam.length) e.removed = ficam.sort((a, b) => String(b.removedAt || '').localeCompare(String(a.removedAt || '')));
+        continue;
+      }
+
       const curSet = new Set(e.jogadores.map(j => normNome(j.nome)));
 
       // Acumulador de desinscrições: começa com as preservadas (ainda na janela)
@@ -802,6 +813,6 @@ if (require.main === module) {
 
 // Exportado para os testes exercitarem o código REAL (não uma cópia).
 module.exports = {
-  consultar, metaTournament, preservarAnterior, descobrirTorneios,
+  consultar, metaTournament, preservarAnterior, descobrirTorneios, aplicarFirstSeen,
   get rateLimitHits() { return rateLimitHits; },
 };

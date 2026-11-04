@@ -893,6 +893,22 @@ function applyTeeRatings(out, teeRatings) {
   if (n) console.log(`   🎯 ${n} volta(s) em divisões mistas com o cartão do tee corrigido`);
 }
 
+/** Jardas → metros num JobFile (divisões, campos por tee, metros por volta).
+ *  Marca cada divisão com `distancias: "convertidas de jardas"` e não volta a
+ *  converter o que já está marcado. Também o usa o fix-jardas-golfgenius.js. */
+function jardasParaMetrosJob(out) {
+  const m = (a) => (Array.isArray(a) ? a.map((y) => (Number.isFinite(y) && y > 0 ? Math.round(y * 0.9144) : y)) : a);
+  const soma = (a) => a.reduce((s, v) => s + (Number.isFinite(v) ? v : 0), 0);
+  for (const dv of out.divisions || []) {
+    if (dv.distancias === 'convertidas de jardas') continue;
+    if (Array.isArray(dv.meters)) { dv.meters = m(dv.meters); dv.metersTotal = soma(dv.meters); }
+    for (const c of dv.courses || []) if (Array.isArray(c.meters)) { c.meters = m(c.meters); c.metersTotal = soma(c.meters); }
+    for (const p of dv.players || []) for (const r of p.rounds || []) if (Array.isArray(r.meters)) r.meters = m(r.meters);
+    dv.distancias = 'convertidas de jardas';
+  }
+  return out;
+}
+
 async function runOne(opts) {
   const {
     pageUrl = null, v2Arg = null, leagueOverride = null, nameOverride = null,
@@ -1142,6 +1158,10 @@ async function runOne(opts) {
   if (opts.fpgFederados) applyFpgFederados(out, { overrides: opts.fpgFed || {} });
   if (opts.players) applyPlayerOverrides(out, opts.players);
 
+  // `jardas: true` no scope: as distâncias do cartão são JARDAS (o rótulo do
+  // GolfGenius não o diz — ver fetchTeeCards). Converte-se aqui, uma vez, e marca-se.
+  if (opts.jardas) jardasParaMetrosJob(out);
+
   // `transform` (opcional): a fonte acerta o resultado antes da comparação com o
   // disco e da gravação (Irlanda: país pela EGR, classes vazias fora).
   if (typeof opts.transform === 'function') opts.transform(out);
@@ -1211,6 +1231,7 @@ async function main() {
         teeDivisions: e.teeDivisions || null, teeRatings: e.teeRatings || null,
         fpgFederados: !!e.fpgFederados, fpgFed: e.fpgFed || null,
         players: e.players || null,
+        jardas: !!e.jardas,
       }));
     if (!jobs.length) { console.error(`Scope sem eventos a correr: ${scopeFile}`); process.exit(1); }
   } else if (pageUrl || v2Arg) {
@@ -1248,4 +1269,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { applyFpgFederados, applyPlayerOverrides, discoverDivisions, isRoundOnlyLabel, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };
+module.exports = { applyFpgFederados, applyPlayerOverrides, discoverDivisions, isRoundOnlyLabel, runOne, jardasParaMetrosJob, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };

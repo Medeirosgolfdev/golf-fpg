@@ -614,3 +614,20 @@ Tour, UA Worlds, Nacional do México, Copa Internacional) já não levam um par
 continuam a usá-los). O par TOTAL de uma volta é o real (total − toPar de quem
 os tem) e dá o ±par; sem ninguém com toPar não há par nenhum. Regra geral em
 [convencoes-e-armadilhas.md](convencoes-e-armadilhas.md).
+
+## Jardas e metros no GolfGenius (04/11/2026)
+
+O rótulo do cartão GolfGenius NÃO diz a unidade («Yardage» aparece também em provas em
+metros — Faldo Madeira — e o course_statistics chama «Meters» a jardas). Campos britânicos e
+americanos estão em JARDAS: confirmado no cartão dos clubes (Conwy, Faldo 2026: GG 6667 =
+6667 jd; Porters Park, Reid Trophy 2026: GG 6198, tees do clube 6066–6520 jd).
+
+- `scrape-golfgenius-node.js`: `jardas: true` + `jardasConfirmado` (porquê) na entrada do
+  `golfgenius-scope.json` → `jardasParaMetrosJob` converte e marca cada divisão
+  `distancias: "convertidas de jardas"`. Marcadas: reidtrophy, faldo2/3/6/7 (RU), uaworlds,
+  uajt, optimist1–3 (EUA). Evento novo num campo britânico/americano → marcar.
+- `scrape-england-golf.js` (England Golf): converte sempre (`jardasParaMetrosCurso`).
+- Os ficheiros já gravados foram corrigidos uma vez com `scripts/fix-jardas-golfgenius.js`
+  (61 ficheiros; idempotente pela marca). Ficam em metros: Faldo Itália/Bélgica, Faldo
+  Madeira, Evian, GolfBox; os condados ingleses já convertiam (`gg-condados-scope.json`).
+  Por confirmar: Irlanda e Rock League.

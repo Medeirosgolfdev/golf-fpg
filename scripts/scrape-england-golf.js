@@ -377,10 +377,23 @@ async function fetchAllCourseStats(page, statsPageIdOrLeagueId, mode = "statsPag
   const seen = new Map();
   for (const r of allResults) {
     if (!r || !isFinite(r.metersTotal) || r.metersTotal === 0) continue;
+    jardasParaMetrosCurso(r);
     const key = `${r.parTotal}-${r.metersTotal}`;
     if (!seen.has(key)) seen.set(key, r);
   }
   return [...seen.values()];
+}
+
+/** A coluna do course_statistics diz «Meters» mas, na England Golf, os valores são
+ *  JARDAS (confirmado no cartão: Reid Trophy 2026, Porters Park — 6198 «m», e os
+ *  tees do clube vão de 6066 a 6520 jd; Carris Trophy 2023 com 6883 «m» seria um
+ *  campo de 7527 jd). Converte uma vez e marca (Mariana, 04/11/2026). */
+function jardasParaMetrosCurso(r) {
+  if (!r || r.distancias === "convertidas de jardas" || !Array.isArray(r.meters)) return r;
+  r.meters = r.meters.map((y) => (Number.isFinite(y) && y > 0 ? Math.round(y * 0.9144) : y));
+  r.metersTotal = r.meters.reduce((s, v) => s + (Number.isFinite(v) ? v : 0), 0);
+  r.distancias = "convertidas de jardas";
+  return r;
 }
 
 /* Wrapper compatibility: devolve só o 1º course (para chamadas legadas) */
@@ -396,7 +409,7 @@ async function fetchCourseStats(page, statsPageId, eventId) {
     if (ready > 0) break;
     await sleep(800);
   }
-  return fetchOneCourseStats(page, eventId);
+  return jardasParaMetrosCurso(await fetchOneCourseStats(page, eventId));
 }
 
 /* ─────────────────────────────────────────────────────────────────
