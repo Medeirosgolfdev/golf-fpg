@@ -152,6 +152,9 @@ export const MAJOR_JOB_SOURCES: Record<string, MajorJobSource> = {
   // Faldo Junior Tour Europa — só as etapas com força WAGR ≥ 20 (scope do
   // update-golfgenius), 1 ficheiro por etapa: faldo{1..11}_{ano}.json.
   faldo: { layout: "gg", files: stops(11, (n, y) => `/data/faldo${n}_${y}.json`), series: "Faldo Europa", showAges: true },
+  // Rock Golf League (ex-Robert Rock JGT) — provas WAGR U12/U14/U16/U21 em La
+  // Manga, Al Hamra e St Andrews; 1 ficheiro por etapa: rockleague{1..4}_{ano}.json.
+  rockleague: { layout: "gg", files: stops(4, (n, y) => `/data/rockleague${n}_${y}.json`), series: "Rock Golf League", linkLabel: "GolfGenius" },
 };
 
 /** Fontes GolfBox (ETC) que podem ter um ficheiro de MATCH PLAY irmão

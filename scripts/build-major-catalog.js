@@ -309,6 +309,9 @@ const GG_SOURCES = [
   // Faldo Junior Tour Europa (GolfGenius) — as etapas com força WAGR ≥ 20
   // (faldo{n}_{ano}.json, id `faldo:{ano}:{n}`, como o ejt/optimist).
   ...Array.from({ length: 11 }, (_, i) => i + 1).map((n) => ({ prefix: `faldo${n}_`, source: "faldo", stop: n, series: "Faldo Europa", name: (f, y) => f.tournament || `Faldo Junior Tour ${y} — ${n}`, course: (f) => f.course || undefined, union: true, preField: true })),
+  // Rock Golf League (ex-Robert Rock JGT, GolfGenius) — provas WAGR U12–U21 em La
+  // Manga, Al Hamra e St Andrews (rockleague{n}_{ano}.json, id `rockleague:{ano}:{n}`).
+  ...[1, 2, 3, 4].map((n) => ({ prefix: `rockleague${n}_`, source: "rockleague", stop: n, series: "Rock Golf League", name: (f, y) => f.tournament || `Rock Golf League ${y} — ${n}`, course: (f) => f.course || undefined, union: true })),
   ...[1, 2, 3].map((n) => ({ prefix: `optimist${n}_`, source: "optimist", stop: n, series: "Optimist Intl", name: (f, y) => f.tournament || `Optimist Intl Junior Championship ${y} — Phase ${n}`, course: (f) => f.course || undefined, union: true })),
 ];
 

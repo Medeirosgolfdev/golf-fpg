@@ -198,6 +198,6 @@ describe("catálogo: cada fonte tem quem a carregue, ids iguais aos do build-maj
     expect(semLoader).toEqual([]);
     // As fontes JobFile com etapa no id são as que lêem vários ficheiros por ano.
     const comEtapa = [...new Set(cat.entries.filter((e) => e.id.split(":").length === 3).map((e) => e.source))].sort();
-    expect(comEtapa).toEqual(["ejt", "faldo", "optimist"]);
+    expect(comEtapa).toEqual(["ejt", "faldo", "optimist", "rockleague"]);
   });
 });

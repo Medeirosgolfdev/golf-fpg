@@ -50,6 +50,7 @@ const SOURCES = [
   { id: "evianjc", label: "The Amundi Evian Juniors Cup (Sub-14)", load: () => require("./sources/evianjc") },
   { id: "faldomadeira", label: "Faldo Junior Tour Madeira", load: () => require("./sources/faldomadeira") },
   { id: "faldo", label: "Faldo Junior Tour Europa", load: () => require("./sources/faldo") },
+  { id: "rockleague", label: "Rock Golf League (Robert Rock)", load: () => require("./sources/rockleague") },
   { id: "icopa", label: "Copa Bobby Díaz (México)", load: () => require("./sources/icopa") },
   { id: "interzonas", label: "Nacional Interzonas (México)", load: () => require("./sources/interzonas") },
   { id: "avtrophy", label: "Belgian Intl U14 (Albert Vermeiren)", load: () => require("./sources/avtrophy") },

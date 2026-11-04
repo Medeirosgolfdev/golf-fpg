@@ -163,7 +163,7 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
 }
 
 /** Fontes com várias etapas/fases por ano (id `{src}:ano:n`). */
-const MULTI_ETAPA = new Set(["ejt", "optimist", "faldo"]);
+const MULTI_ETAPA = new Set(["ejt", "optimist", "faldo", "rockleague"]);
 
 const MAJOR_CONFIG: CircuitConfig = {
   routeBase: "/major",
@@ -172,7 +172,7 @@ const MAJOR_CONFIG: CircuitConfig = {
   textColor: C.white,
   grouping: "year",
   sourceColors: C.majorSrc,
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy", optimist: "Optimist", evianjc: "Evian JC", faldomadeira: "Faldo Madeira", faldo: "Faldo Europa" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy", optimist: "Optimist", evianjc: "Evian JC", faldomadeira: "Faldo Madeira", faldo: "Faldo Europa", rockleague: "Rock League" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   // Identidade de torneio entre anos = a FONTE (coc, fsga, uajt, bjgt, doral…).
   // O shell constrói a tab "Edições anteriores" das entradas irmãs e entrega-a
