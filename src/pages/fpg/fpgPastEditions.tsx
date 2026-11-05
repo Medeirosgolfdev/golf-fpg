@@ -20,7 +20,7 @@ import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import SectionErrorBoundary from "../../ui/SectionErrorBoundary";
 import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pastEditions";
 import { CircuitPastScorecardsTab } from "../../ui/circuit/PastScorecardsTab";
-import FpgScout from "./FpgScout";
+import ScoutProva from "../../ui/circuit/ScoutProva";
 import { currentField } from "./repeatersModel";
 import { MANUEL_FED } from "../../constants/manuel";
 import type { ScoutComManuel } from "../../ui/circuit/scoutModel";
@@ -253,12 +253,12 @@ export function fpgPastEditionsTabs(
       </SectionErrorBoundary>
     ),
   });
-  if (playersDB && currentField(current).length) tabs.push({
+  if (currentField(current).length) tabs.push({
     key: "scout",
     label: "Scout",
     content: (
       <SectionErrorBoundary label="Scout">
-        <FpgScout current={current} previous={previous} playersDB={playersDB} h2hManuel={H2H_DO_INDICE.get(index)} />
+        <ScoutProva current={current} previous={previous} h2hManuel={H2H_DO_INDICE.get(index)} escalaoProva={current.escalao ?? null} playersDB={playersDB} />
       </SectionErrorBoundary>
     ),
   });

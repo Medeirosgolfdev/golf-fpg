@@ -27,8 +27,8 @@ import AdmissionsTab, { type AdmissionsExtraCol } from "../AdmissionsTab";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import React, { useMemo, useState, useEffect, useCallback, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
-import Scout from "./Scout";
-import { CircuitPastEditionsTab, divisionField } from "./pastEditions";
+import { CircuitPastEditionsTab, divisionTournament } from "./pastEditions";
+import { ScoutDoCircuito } from "./ScoutProva";
 import { CircuitPastScorecardsTab } from "./PastScorecardsTab";
 import { CircuitRankingView } from "./CircuitRanking";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
@@ -116,6 +116,9 @@ function LigaPills({ entry, config, max, className }: {
     </>
   );
 }
+/** Sem edições irmãs (referência estável para o Scout). */
+const SEM_IRMAS: CircuitEntry[] = [];
+
 const TOGGLE_DEF: Record<CircuitToggle, { label: string; title: string }> = {
   manuel:      { label: "★ Manuel",      title: "Só o Manuel" },
   pt:          { label: "🇵🇹 PT",        title: "Só jogadores portugueses" },
@@ -526,7 +529,8 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     if (!sib.some((e) => e.id === cur.id)) sib.unshift(cur);
     return sib.length >= 2 ? sib : null;
   }, [cur, editionsSource, editionKey]);
-  const curField = useMemo(() => divisionField(curDiv), [curDiv]);
+  // O torneio de hoje como o Scout o lê (resultados/totais + inscrições + draws).
+  const scoutTourn = useMemo(() => (cur ? divisionTournament(curDiv, { name: cur.name, date: cur.dateStart, campo: cur.course }) : null), [curDiv, cur]);
   const pastEditionsTabNode = (() => {
     if (!curDiv || !cur) return null;
     if (pastEditionsSiblings) {
@@ -583,12 +587,10 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     ? (ed: CircuitEntry, divs: CircuitDivision[]) => scoutDivisions(cur, curDivLabel, ed, divs)
     : undefined), [cur, curDivLabel, scoutDivisions]);
   const tCodeScout = cur && scoutTCode ? scoutTCode(cur) : null;
-  const repeatersTabNode = curField.length && cur && curDiv ? {
+  const repeatersTabNode = scoutTourn && cur && curDiv ? {
     key: "scout", label: "Scout",
-    content: pastEditionsSiblings
-      ? <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} field={curField} currentId={cur.id} mode="repeaters"
-          match={matchDiv} scoutMatch={scoutMatch} tCode={tCodeScout} />
-      : <Scout field={curField} tCode={tCodeScout} />,
+    content: <ScoutDoCircuito current={scoutTourn} editions={pastEditionsSiblings ?? SEM_IRMAS} division={curDivLabel} currentId={cur.id}
+      match={matchDiv} scoutMatch={scoutMatch} tCode={tCodeScout} />,
   } : null;
   if (repeatersTabNode && !curDiv?.renderFull) trailingTabs.push(repeatersTabNode);
   // Sem resultados (só inscritos, ou o desenho próprio da página), o

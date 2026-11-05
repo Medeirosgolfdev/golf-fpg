@@ -213,7 +213,13 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   props. As abas «⛳ O campo» e «🔮 Previsão» (a do Kids 2, no tee do Manuel:
   draw → voltas → regulamento/escalão) junta-as ele sozinho sempre que o campo
   da prova é conhecido (`useCampoTabs`, `pages/fpg/fpgCourseTab.tsx`; reserva: o
-  `course` do CircuitShell) — as páginas não as acrescentam. O `IntlTournView` é só um adaptador da interface antiga — funcionalidade
+  `course` do CircuitShell) — as páginas não as acrescentam. **O «Scout» é UM só
+  e igual em todas as páginas** (05/11/2026, «EU QUERO QUE EM TODAS AS PÁGINAS
+  APAREÇA O MESMO»): `ui/circuit/ScoutProva.tsx` — field por `currentField`
+  (draw → resultados → inscrições), edições anteriores no bloco «Nesta prova»,
+  WHS e Previsão WHS para quem tem federado (o da prova, senão o da ficha do Kids 2).
+  A FPG e o CircuitShell (`ScoutDoCircuito`) dão-lhe as edições; nas outras
+  páginas junta-o o TournamentDetail. Nada de Scouts próprios por página. O `IntlTournView` é só um adaptador da interface antiga — funcionalidade
   nova entra no TournamentDetail. A aba vive no URL (`?tab=`; `tabParam` muda o
   nome — a `/uskids` usa `rt`).
 - **Peças únicas, nunca uma tabela própria por página:** inscrições →

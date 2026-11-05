@@ -1,34 +1,48 @@
 /**
- * FpgScout.tsx — aba «Scout» da FPGPage (20/10/2026; era o painel «Quem repete»
- * no topo das «Edições anteriores»).
+ * ScoutProva.tsx — a aba «Scout» de TODOS os torneios (05/11/2026, Mariana: «EU
+ * QUERO QUE EM TODAS AS PÁGINAS APAREÇA O MESMO»). Era o FpgScout (20/10/2026),
+ * o mais completo; agora é o único — FPG, Drive, MAJOR, USKids, França, Espanha,
+ * Kids 2… Quem o monta: a FPG (fpgPastEditions), o CircuitShell (ScoutDoCircuito,
+ * pastEditions.tsx) e, para o resto, o próprio TournamentDetail.
  *
- * É o Scout de todos os circuitos (src/ui/circuit/Scout.tsx — nível, forma,
- * confrontos com o Manuel, próximas inscrições) com as colunas que só a FPG tem,
- * calculadas por `repeatersModel.ts` (puro, testado) para o field TODO:
- * saída e tee do draw, índice de hoje e a variação a 3 meses, forma WHS
- * (differentials), o lugar em cada edição anterior, «vs Campo» e a previsão.
+ * É o Scout partilhado (Scout.tsx — nível, previsão, forma, confrontos com o
+ * Manuel, próximas inscrições) com as colunas calculadas por
+ * `pages/fpg/repeatersModel.ts` (puro, testado) para o field todo: saída e tee do
+ * draw, índice WHS de hoje e a variação a 3 meses, forma WHS (differentials), o
+ * lugar em cada edição anterior, «vs Campo» e a previsão em gross. Cada coluna só
+ * aparece se houver dados (o WHS só existe para quem tem número de federado).
  *
- * Fontes, todas já servidas ao browser: `playersDB` (índice, escalão, clube,
- * sexo), `player-stats.json` (forma WHS) e `master-courses.json` (CR/Slope).
+ * Fontes, todas já servidas ao browser: `players.json` (AppContext: índice,
+ * escalão, clube, sexo), `player-stats.json` (forma WHS) e `master-courses.json`
+ * (CR/Slope).
  */
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { KidsLinkCtx } from "../KidsLink";
 import type { Tournament } from "../../data/fpgTypes";
-import type { PlayersDB } from "../../ui/tournamentPrimitives";
-import { TeeDot } from "../../ui/tournamentPrimitives";
+import { TeeDot, type PlayersDB } from "../tournamentPrimitives";
 import { fmtToPar, fmtSign, fmtOrd } from "../../utils/format";
-import ToPar from "../../ui/ToPar";
+import ToPar from "../ToPar";
 import { normName } from "../../utils/normName";
 import { loadMasterData } from "../../data/loader";
 import { loadPlayerStats, type PlayerStatsDb } from "../../data/playerStatsTypes";
-import LoadingState from "../../ui/LoadingState";
-import { MUTED } from "../../ui/tableCells";
-import Scout, { type ScoutExtraCol } from "../../ui/circuit/Scout";
-import type { ScoutComManuel } from "../../ui/circuit/scoutModel";
-import type { FieldPlayer } from "../../ui/circuit/repeaters";
+import LoadingState from "../LoadingState";
+import { MUTED } from "../tableCells";
+import Scout, { type ScoutExtraCol } from "./Scout";
+import type { ScoutComManuel } from "./scoutModel";
+import type { FieldPlayer } from "./repeaters";
+import { useAppContext } from "../../context/AppContext";
+import type { CircuitEntry, CircuitDivision } from "./types";
+import { buildPastEditionFromTournament, entryDivisions, matchDivision } from "./pastEditions";
+import { totalsDivisionView } from "./divisionPieces";
+import type { PastEdition } from "./PastEditionsTable";
 import {
   buildRepeaters, currentField, masterTeeRatings,
   type Repeater, type FedInfo, type PlayerForm,
-} from "./repeatersModel";
+} from "../../pages/fpg/repeatersModel";
+
+/** Uma edição anterior desta prova (o `label` distingue duas no mesmo ano:
+ *  etapas do Drive, escalões do USKids). */
+export interface EdicaoScout { id: string; year: number; t: Tournament; label?: string | null }
 
 const n1 = (v: number | null | undefined) => (v == null ? "—" : v.toFixed(1));
 
@@ -45,13 +59,27 @@ function FormaCell({ f }: { f: PlayerForm | null }) {
   );
 }
 
-export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
+const SEM_EDICOES: EdicaoScout[] = [];
+
+export default function ScoutProva({ current, previous = SEM_EDICOES, h2hManuel, tCode, escalaoProva, playersDB: pdbPagina }: {
+  /** O torneio de hoje: o field sai dele (draw → resultados → inscrições). */
   current: Tournament;
-  previous: { id: string; year: number; t: Tournament }[];
-  playersDB: PlayersDB;
+  /** Edições anteriores desta prova, mais recente primeiro. */
+  previous?: EdicaoScout[];
   /** Provas FPG em comum com o Manuel, por federado (`buildFpgManuelH2H`). */
   h2hManuel?: Map<string, ScoutComManuel[]>;
+  /** tcode USKids da prova de hoje — sai dos «Próximos». */
+  tCode?: number | null;
+  /** Escalão da prova («Boys 12»…): o escalão de quem não tem nascimento conhecido. */
+  escalaoProva?: string | null;
+  /** Base de jogadores da página (a da FPG junta país e nascimento); sem ela, a da app. */
+  playersDB?: PlayersDB;
 }) {
+  const { players: pdbApp } = useAppContext();
+  const playersDB = (pdbPagina && Object.keys(pdbPagina).length ? pdbPagina : pdbApp) as PlayersDB;
+  // Provas de fora sem federado: o da ficha do Kids 2 ligada pelo nome (a seta ↗).
+  const kidsMap = useContext(KidsLinkCtx);
+  const fedPorNome = useCallback((name: string) => kidsMap.get(normName(name))?.fed ?? null, [kidsMap]);
   // CR/Slope oficiais de todos os tees do campo + forma de cada jogador.
   // Lazy (só ao abrir a tab) e por cache — se a app já os carregou, é grátis.
   const [masterRatings, setMasterRatings] = useState<Map<string, { cr: number; slope: number }> | null>(null);
@@ -83,16 +111,19 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
       const s = fed ? stats?.[fed] : null;
       return s ? { ...s, roundsLast3m: s.roundsLast3m ?? 0, roundsLast12m: s.roundsLast12m ?? 0 } : null;
     };
-    return buildRepeaters({ current, previous, fedInfo, form, masterRatings: masterRatings ?? undefined, todos: true });
-  }, [current, previous, playersDB, masterRatings, stats]);
+    return buildRepeaters({ current, previous, fedInfo, form, masterRatings: masterRatings ?? undefined, todos: true, fedPorNome });
+  }, [current, previous, playersDB, masterRatings, stats, fedPorNome]);
 
   const porNome = useMemo(() => new Map(rows.map((r) => [normName(r.name), r])), [rows]);
+  // As edições anteriores no bloco «Nesta prova» do Scout (igual em todas as páginas).
+  const edicoes = useMemo(() => previous
+    .map((p) => buildPastEditionFromTournament(p.t, { id: p.id, year: p.year, label: p.label ?? null, division: p.label || escalaoProva || "", course: p.t.campo || null }))
+    .filter((e): e is PastEdition => !!e), [previous, escalaoProva]);
   const field = useMemo(() => currentField(current).map((f) => ({ name: f.name, fed: f.fed, club: porNome.get(normName(f.name))?.club ?? null })), [current, porNome]);
   const provasComManuel = useCallback((p: FieldPlayer) => (p.fed ? h2hManuel?.get(p.fed) : null), [h2hManuel]);
 
   const extras = useMemo(() => {
     const R = (name: string): Repeater | undefined => porNome.get(normName(name));
-    const anos = [...new Set(previous.map((p) => p.year))].sort((a, b) => b - a);
     const tem = {
       hora: rows.some((r) => r.teeTime), tee: rows.some((r) => r.teeNow),
       hcp: rows.some((r) => r.hcpNow != null), forma: rows.some((r) => r.form?.avgSD5 != null),
@@ -114,31 +145,28 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
       depois.push({ grupo: "WHS", key: "whs20", label: "Média", title: "Differential médio das últimas 20 voltas", cell: (n) => n1(R(n)?.form?.avgSD20) });
     }
     if (tem.aqui) {
-      depois.push({ grupo: "Nesta prova", key: "aquiTp", label: "Melhor ±", title: "Melhor ±par que fez nesta prova", sort: (n) => R(n)?.bestToPar ?? null, cell: (n) => {
+      depois.push({ grupo: "Nesta prova (±par e SD)", key: "aquiTp", label: "Melhor ±", title: "Melhor ±par que fez nesta prova", sort: (n) => R(n)?.bestToPar ?? null, cell: (n) => {
         const b = R(n)?.bestToPar;
         return b != null ? fmtToPar(b) : "–";
       } });
-      for (const y of anos) depois.push({ grupo: "Nesta prova", key: `ano${y}`, label: String(y), title: `Lugar na edição de ${y}`,
-        sort: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e?.pos ?? null; },
-        cell: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e ? (e.pos ? fmtOrd(e.pos) : "jogou") : "–"; } });
-      depois.push({ grupo: "Nesta prova", key: "fit", label: "vs Campo", title: "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio", sort: (n) => R(n)?.courseFit ?? null, cell: (n) => {
+      depois.push({ grupo: "Nesta prova (±par e SD)", key: "fit", label: "vs Campo", title: "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio", sort: (n) => R(n)?.courseFit ?? null, cell: (n) => {
         const c = R(n)?.courseFit;
         return c == null ? "–" : `${fmtSign(c)}`;
       } });
     }
     if (tem.prev) {
-      depois.push({ grupo: "Previsão", key: "prev", label: "Gross", title: "Gross esperado no torneio", sort: (n) => R(n)?.forecast?.total ?? null, cell: (n) => R(n)?.forecast?.total ?? "–" });
-      depois.push({ grupo: "Previsão", key: "prevTp", label: "±", cell: (n) => {
+      depois.push({ grupo: "Previsão WHS", key: "prevWhs", label: "Gross", title: "Gross esperado no torneio", sort: (n) => R(n)?.forecast?.total ?? null, cell: (n) => R(n)?.forecast?.total ?? "–" });
+      depois.push({ grupo: "Previsão WHS", key: "prevWhsTp", label: "±", cell: (n) => {
         const tp = R(n)?.forecast?.toPar;
         return tp != null ? fmtToPar(tp) : "–";
       } });
-      depois.push({ grupo: "Previsão", key: "prevInt", label: "Intervalo", title: "Intervalo plausível (bom e mau dia)", cell: (n) => {
+      depois.push({ grupo: "Previsão WHS", key: "prevWhsInt", label: "Intervalo", title: "Intervalo plausível (bom e mau dia)", cell: (n) => {
         const f = R(n)?.forecast;
         return f ? `${f.low}–${f.high}` : "–";
       } });
     }
-    return { antes, depois, temPrev: tem.prev };
-  }, [rows, porNome, previous]);
+    return { antes, depois };
+  }, [rows, porNome]);
 
   const detalhe = (name: string) => {
     const r = porNome.get(normName(name));
@@ -205,19 +233,21 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
   return (
     <Scout
       field={field}
+      editions={edicoes}
       provasComManuel={provasComManuel}
+      tCode={tCode}
+      escalaoProva={escalaoProva}
       colsAntes={extras.antes}
       colsDepois={extras.depois}
       detalheExtra={detalhe}
       semHcp
-      ordemInicial={extras.temPrev ? { key: "prev", dir: "asc" } : undefined}
       resumoExtra={<>
         {favorito?.forecast ? <span className="muted u-ml-8px">· Melhor previsão: <b className="u-c-text">{favorito.name}</b> ({favorito.forecast.total})</span> : null}
         {emAlta ? <span className="muted"> · Em alta: <b className="u-c-text">{emAlta.name}</b> ({n1(emAlta.form!.avgSD5)} nas últimas 5, contra {n1(emAlta.form!.avgSD20)} de média)</span> : null}
       </>}
       rodape={
         <details className="u-mt-8px u-fs-fs-12 u-c-text-muted">
-          <summary className="u-cur-pointer">Como são feitas a «Forma WHS», o «vs Campo» e a «Previsão»</summary>
+          <summary className="u-cur-pointer">Como são feitas a «Forma WHS», o «vs Campo» e a «Previsão WHS»</summary>
           <p className="u-m-6px-0">
             Tudo em <b>score differential</b> — <code>(113/Slope) × (gross − CR − PCC)</code> — que
             é o que permite comparar voltas em campos e tees diferentes. Menos é melhor.
@@ -233,7 +263,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
             absorve o vento e o estado do campo. É informação — <b>não entra na previsão</b>.
           </p>
           <p className="u-m-6px-0">
-            <b>Previsão</b>: o meio entre o bom dia (as 8 melhores de 20) e o dia qualquer (a média
+            <b>Previsão WHS</b> (gross): o meio entre o bom dia (as 8 melhores de 20) e o dia qualquer (a média
             de 20), convertido em gross com o CR e o Slope do tee que ele vai jogar hoje, lidos da
             ficha do campo. Quem nunca jogou esta prova também tem previsão, pela forma (ou pelo
             índice, contando-o mais ~3,5 golpes). O intervalo abre desse meio para os dois lados.
@@ -242,4 +272,49 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
       }
     />
   );
+}
+
+/**
+ * Aba «Scout» do CircuitShell: o MESMO Scout de todas as páginas (`ScoutProva`),
+ * com as edições anteriores desta prova — as entradas irmãs, menos a de hoje,
+ * cada uma no escalão que casa (`match`) ou, no USKids, nos escalões por onde os
+ * miúdos passaram (`scoutMatch`: um por coluna).
+ */
+export function ScoutDoCircuito({ current, editions, division, currentId, match = matchDivision, scoutMatch, tCode }: {
+  /** O torneio de hoje (`divisionTournament`). */
+  current: Tournament;
+  editions: CircuitEntry[]; division: string; currentId: string;
+  match?: (divisions: CircuitDivision[], label: string) => CircuitDivision | null;
+  /** Os escalões de cada edição que entram — ver `CircuitConfig.scoutDivisions`. */
+  scoutMatch?: (edition: CircuitEntry, divisions: CircuitDivision[]) => CircuitDivision[];
+  /** Código USKids do torneio de hoje (sai das próximas inscrições). */
+  tCode?: number | null;
+}) {
+  const [prev, setPrev] = useState<EdicaoScout[] | null>(null);
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const outras = editions.filter((e) => e.id !== currentId);
+      const loaded = await Promise.all(outras.map(async (e) => {
+        try { return { e, divs: await entryDivisions(e) }; } catch { return { e, divs: [] as CircuitDivision[] }; }
+      }));
+      const out: { ed: EdicaoScout; stamp: string }[] = [];
+      for (const { e, divs } of loaded) {
+        const escolhidas = scoutMatch ? scoutMatch(e, divs) : [match(divs, division)].filter((d): d is CircuitDivision => !!d);
+        for (const dv of escolhidas) {
+          const t = dv.results ?? totalsDivisionView(dv, { name: e.name, date: e.dateStart ?? undefined, campo: e.course ?? undefined })?.tournament;
+          if (!t?.players?.length) continue;
+          out.push({
+            ed: { id: scoutMatch ? `${e.id}:${dv.key}` : e.id, year: e.year ?? 0, t, label: scoutMatch ? (dv.tabLabel || dv.escalao || null) : (e.name || null) },
+            stamp: e.dateStart || String(e.year ?? 0),
+          });
+        }
+      }
+      out.sort((a, b) => (b.stamp < a.stamp ? -1 : b.stamp > a.stamp ? 1 : 0));
+      if (alive) setPrev(out.map((x) => x.ed));
+    })().catch(() => { if (alive) setPrev([]); });
+    return () => { alive = false; };
+  }, [editions, currentId, division, match, scoutMatch]);
+  if (!prev) return <LoadingState />;
+  return <ScoutProva current={current} previous={prev} tCode={tCode} escalaoProva={division} />;
 }

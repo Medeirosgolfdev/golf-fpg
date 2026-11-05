@@ -16,6 +16,7 @@
  */
 import type { Tournament, Player } from "../../data/fpgTypes";
 import { computeSD } from "../../data/fpgUtils";
+import { isManuel } from "../../constants/manuel";
 import { calcScore } from "../../utils/whsCalc";
 import { norm } from "../../utils/courseAliases"; // a limpeza única «sem acentos, só letras e dígitos»
 
@@ -158,12 +159,17 @@ export function currentField(t: Tournament | null | undefined): FieldEntry[] {
   if (!t) return [];
   const draws = (t as unknown as { _draws?: Record<string, { groups?: { tee?: string | null; teeTime?: string | null; startHole?: number | null; players?: { nome?: string; fed?: string | null; tee?: string | null }[] }[] }> })._draws;
   const r1 = draws && (draws["1"] || Object.values(draws)[0]);
+  // O draw de fora (MAJOR, USKids…) não traz o federado: o da MESMA prova —
+  // resultados ou inscrições —, pelo nome (dados-da-propria-prova, 05/11/2026).
+  const fedDaProva = new Map<string, string>();
+  for (const p of t.players || []) { const f = (p as Player).fedCode; if (f && p.name) fedDaProva.set(nameKey(p.name), f); }
+  for (const p of t._admissions?.players || []) if (p?.fed && p.nome && !fedDaProva.has(nameKey(p.nome))) fedDaProva.set(nameKey(p.nome), p.fed);
   const out: FieldEntry[] = [];
   for (const g of r1?.groups || []) {
     for (const p of g.players || []) {
       if (!p?.nome) continue;
       out.push({
-        fed: p.fed || null, name: p.nome, tee: p.tee ?? g.tee ?? null,
+        fed: p.fed || fedDaProva.get(nameKey(p.nome)) || null, name: p.nome, tee: p.tee ?? g.tee ?? null,
         teeTime: g.teeTime ?? null, startHole: g.startHole ?? null,
       });
     }
@@ -172,6 +178,14 @@ export function currentField(t: Tournament | null | undefined): FieldEntry[] {
   for (const p of t.players || []) {
     if (!p?.name) continue;
     out.push({ fed: (p as Player).fedCode || null, name: p.name, tee: (p as Player).teeName || null });
+  }
+  if (out.length) return out;
+  // Só inscrições (prova por jogar, ainda sem draw — 05/11/2026, Castro Marim U14):
+  // quem joga, fora desistentes e reservas; o Manuel fica sempre.
+  for (const p of t._admissions?.players || []) {
+    if (!p?.nome) continue;
+    if ((p.status === "desistente" || p.status === "reserva") && !isManuel({ name: p.nome, fed: p.fed ?? undefined })) continue;
+    out.push({ fed: p.fed || null, name: p.nome, tee: null });
   }
   return out;
 }
@@ -295,6 +309,9 @@ export interface BuildRepeatersInput {
   /** Também quem nunca jogou esta prova (aba «Scout», 20/10/2026): sem
    *  edições, a previsão sai da forma ou do índice. Default: só repetentes. */
   todos?: boolean;
+  /** Federado de quem a prova não o traz (provas de fora): o da ficha do Kids 2
+   *  ligada pelo nome — a mesma ligação da seta ↗ (05/11/2026). */
+  fedPorNome?: (name: string) => string | null | undefined;
 }
 
 /**
@@ -363,8 +380,10 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
     const editions = hist.get(keyOf(f.fed, f.name)) ?? [];
     if (!editions.length && !input.todos) continue;
     editions.sort((a, b) => b.year - a.year);
+    // O federado para o índice e a forma WHS (o histórico desta prova já casou acima).
+    const fed = f.fed || input.fedPorNome?.(f.name) || null;
 
-    const info = fedInfo(f.fed);
+    const info = fedInfo(fed);
     const sds = editions.flatMap((e) => e.rounds.map((r) => r.sd)).filter((x): x is number => x != null);
     const sdAvg = sds.length ? media(sds) : null;
     const sdBest = sds.length ? Math.min(...sds) : null;
@@ -393,7 +412,7 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
     // potencial) nem à média de 20 (que inclui as más): fica no MEIO. Prever
     // pelo avgSD8 dava disparates — 132 (−12) ao Nuno Palmares, ou seja 66+66,
     // quando a melhor volta da vida dele é um único 66.
-    const form = input.form?.(f.fed) ?? null;
+    const form = input.form?.(fed) ?? null;
     const sdBom = form?.avgSD8 ?? form?.avgSD5 ?? null;         // bom dia
     const sdNormal = form?.avgSD20 ?? form?.avgSD5 ?? null;     // dia qualquer
     const formaSD = sdBom != null && sdNormal != null ? (sdBom + sdNormal) / 2
@@ -443,7 +462,7 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
     }
 
     out.push({
-      fed: f.fed, name: f.name,
+      fed, name: f.name,
       club: info?.club ?? null,
       escalao: info?.escalao ?? null,
       sex: info?.sex ?? null,

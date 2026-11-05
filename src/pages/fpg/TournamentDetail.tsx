@@ -47,6 +47,8 @@ import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import ExtLink from "../../ui/ExternalLink";
 import TabRow from "../../ui/TabRow";
 import { useCampoTabs, manuelTeeNaProva, CampoDoCircuito } from "./fpgCourseTab";
+import ScoutProva from "../../ui/circuit/ScoutProva";
+import { currentField } from "./repeatersModel";
 
 /** Junta listas de links extra removendo repetidos pelo URL (a mesma página do
  *  clube pode vir do synthetic FEATURED e da config ao mesmo tempo). */
@@ -113,7 +115,6 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
   const campoDoCircuito = useContext(CampoDoCircuito);
   const manuelTee = useMemo(() => manuelTeeNaProva(tournament), [tournament]);
   const campoTabs = useCampoTabs(campoProprio ? null : (tournament.campo?.trim() || campoDoCircuito), manuelTee, tournament);
-  const extraTabs = useMemo(() => campoTabs.length ? [...(extraTabsIn ?? []), ...campoTabs] : extraTabsIn, [extraTabsIn, campoTabs]);
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
@@ -203,6 +204,27 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
   const customDraw = useMemo(() => new Map((roundDraws ?? []).map((d) => [d.round, () => roundDrawNode(d)] as const)), [roundDraws]);
   const hasDraw = (r: number) => drawsByRound.has(r) || customDraw.has(r);
   const allDrawRounds = useMemo(() => [...new Set([...drawsByRound.keys(), ...customDraw.keys()])].sort((a, b) => a - b), [drawsByRound, customDraw]);
+
+  // «Scout» em TODOS os torneios, e sempre O MESMO (05/11/2026, Mariana: «QUERO
+  // QUE APAREÇA SEMPRE, seja qual for o tipo de torneio»; «EU QUERO QUE EM TODAS AS
+  // PÁGINAS APAREÇA O MESMO»): o ScoutProva. A FPG e o CircuitShell trazem-no com as
+  // edições anteriores; nas outras páginas junta-o o detalhe, com o field que ele
+  // próprio mostra — o draw (também o desenhado pela página), os resultados e as
+  // inscrições (a lista live, quando a há).
+  const scoutTourn = useMemo<Tournament | null>(() => {
+    if (abaPropria("scout")) return null;
+    const drawsPagina = Object.fromEntries((roundDraws ?? []).filter((d) => d.draw?.groups?.length).map((d) => [String(d.round), d.draw!]));
+    const t = { ...tournament, _admissions: effAdmissions ?? undefined, _draws: { ...drawsPagina, ...Object.fromEntries(drawsByRound) } } as Tournament;
+    return currentField(t).length ? t : null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- abaPropria lê extraTabsIn/leadingTabs
+  }, [tournament, drawsByRound, roundDraws, effAdmissions, extraTabsIn, leadingTabs]);
+  const extraTabs = useMemo(() => {
+    const scoutTab = scoutTourn
+      ? [{ key: "scout", label: "Scout", content: <ScoutProva current={scoutTourn} playersDB={playersDB} escalaoProva={tournament.escalao ?? null} /> }]
+      : [];
+    const out = [...(extraTabsIn ?? []), ...scoutTab, ...campoTabs];
+    return out.length ? out : extraTabsIn;
+  }, [extraTabsIn, scoutTourn, campoTabs, tournament.escalao, playersDB]);
 
   // Expanded list: R1, R2, ..., Resumo
   const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);

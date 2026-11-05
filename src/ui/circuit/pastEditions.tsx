@@ -22,26 +22,31 @@ import { isRoundInProgress } from "../../data/fpgUtils";
 import LoadingState from "../LoadingState";
 import EmptyState from "../EmptyState";
 import PastEditionsTable, { type PastEdition } from "./PastEditionsTable";
-import Scout from "./Scout";
-import type { FieldPlayer } from "./repeaters";
+import { totalsDivisionView } from "./divisionPieces";
+import { currentField } from "../../pages/fpg/repeatersModel";
 import { stripAccents } from "../../utils/normName";
 
-/** Field de hoje de uma divisão: resultados → inscritos (o 1º que houver). */
-export function divisionField(d: CircuitDivision | null | undefined): FieldPlayer[] {
-  if (!d) return [];
-  const res = d.results?.players?.filter((p) => p.name);
-  // O federado e o nascimento seguem para o Scout (idade/escalão pela base de federados).
-  if (res?.length) return res.map((p) => {
-    const x = p as typeof p & { dob?: string | null; birthYear?: number | null };
-    return { name: p.name, club: p.club || null, fed: p.fed || p.fedCode || null,
-      dob: x.dob || (x.birthYear ? String(x.birthYear) : null) };
-  });
-  const tot = d.totals?.players?.filter((p) => p.name);
-  if (tot?.length) return tot.map((p) => ({ name: p.name, club: p.club || null, country: p.country || null }));
-  // Por disputar: as inscrições da divisão ou as que vêm penduradas no torneio (/drive).
-  const ins = (d.admissions ?? d.results?._admissions)?.players?.filter((p) => p.status !== "desistente");
-  if (ins?.length) return ins.map((p) => ({ name: p.nome, club: p.clube || p.country || null, fed: p.fed || null }));
-  return [];
+/**
+ * O torneio de hoje de uma divisão, como o Scout o lê (`currentField`: draw →
+ * resultados → inscrições): os resultados — ou só os totais — com as inscrições e
+ * os draws da divisão por cima. Sem nada disto, null.
+ */
+export function divisionTournament(
+  d: CircuitDivision | null | undefined,
+  meta: { name: string; date?: string | null; campo?: string | null },
+): FPGTournament | null {
+  if (!d) return null;
+  const base = d.results
+    ?? totalsDivisionView(d, { name: meta.name, date: meta.date ?? undefined, campo: meta.campo ?? undefined })?.tournament
+    ?? ({ name: meta.name, tcode: d.key, date: meta.date ?? "", campo: meta.campo ?? "", rounds: 0, playerCount: 0, players: [] } as unknown as FPGTournament);
+  const drawsDiv = Object.fromEntries((d.roundDraws ?? []).filter((r) => r.draw?.groups?.length).map((r) => [String(r.round), r.draw!]));
+  const t = {
+    ...base,
+    escalao: base.escalao ?? d.escalao ?? null,
+    _admissions: base._admissions ?? d.admissions ?? undefined,
+    _draws: base._draws ?? (Object.keys(drawsDiv).length ? drawsDiv : undefined),
+  } as FPGTournament;
+  return currentField(t).length ? t : null;
 }
 
 /**
@@ -219,7 +224,7 @@ export function buildPastEditionFromTotals(
 }
 
 /** Carrega as divisões de uma entrada (eager `divisions` ou lazy `loadDivisions`). */
-async function entryDivisions(e: CircuitEntry): Promise<CircuitDivision[]> {
+export async function entryDivisions(e: CircuitEntry): Promise<CircuitDivision[]> {
   if (e.divisions) return e.divisions;
   if (e.loadDivisions) return e.loadDivisions();
   return [];
@@ -231,19 +236,10 @@ async function entryDivisions(e: CircuitEntry): Promise<CircuitDivision[]> {
  * shell, e o escalão aberto. Carrega cada edição (lazy + cacheado pelo próprio
  * `loadDivisions`), casa a divisão e desenha a tabela.
  */
-export function CircuitPastEditionsTab({ editions, division, field, currentId, mode = "editions", match = matchDivision, scoutMatch, tCode }: {
+export function CircuitPastEditionsTab({ editions, division, match = matchDivision }: {
   editions: CircuitEntry[]; division: string;
-  /** Só para `mode="repeaters"`: field de hoje (ver `divisionField`) e a edição de hoje. */
-  field?: FieldPlayer[]; currentId?: string | null;
-  /** "editions" = uma coluna por edição; "repeaters" = aba «Quem repete». */
-  mode?: "editions" | "repeaters";
   /** Escalão correspondente noutra edição (default `matchDivision`). */
   match?: (divisions: CircuitDivision[], label: string) => CircuitDivision | null;
-  /** Só no Scout: os escalões de cada edição que entram (um por coluna, com o
-   *  nome do escalão) — ver `CircuitConfig.scoutDivisions`. */
-  scoutMatch?: (edition: CircuitEntry, divisions: CircuitDivision[]) => CircuitDivision[];
-  /** Só no Scout: código USKids do torneio de hoje (sai das próximas inscrições). */
-  tCode?: number | null;
 }) {
   const [state, setState] = useState<{ loading: boolean; rows: PastEdition[]; err?: string }>({ loading: true, rows: [] });
 
@@ -257,18 +253,6 @@ export function CircuitPastEditionsTab({ editions, division, field, currentId, m
         }));
         const rows: { ed: PastEdition; stamp: string }[] = [];
         for (const { e, divs } of loaded) {
-          if (mode === "repeaters" && scoutMatch) {
-            for (const dv of scoutMatch(e, divs)) {
-              if (!dv.results) continue;
-              const lab = dv.tabLabel || dv.escalao || division;
-              const ed = buildPastEditionFromTournament(dv.results, {
-                id: `${e.id}:${dv.key}`, year: e.year ?? 0, label: lab,
-                division: lab, course: dv.results.campo || e.course || null, url: e.sourceUrl || null,
-              });
-              if (ed) rows.push({ ed, stamp: e.dateStart || String(e.year ?? 0) });
-            }
-            continue;
-          }
           const dv = match(divs, division);
           if (!dv?.results && dv?.totals) {
             const edT = buildPastEditionFromTotals(dv.totals, {
@@ -300,13 +284,13 @@ export function CircuitPastEditionsTab({ editions, division, field, currentId, m
       }
     })();
     return () => { alive = false; };
-  }, [editions, division, mode, match, scoutMatch]);
+  }, [editions, division, match]);
 
   if (state.loading) return <LoadingState />;
   if (state.err) return <EmptyState size="md" message={"Falhou: " + state.err} />;
-  if (mode === "repeaters") return <Scout field={field ?? []} editions={state.rows} currentId={currentId} tCode={tCode} escalaoProva={division} />;
   if (!state.rows.length) return <EmptyState size="md" message="Sem edições anteriores com dados." />;
   // "—" é o escalão placeholder das provas Drive sem escalões (Tour/Aquapor) —
   // não faz sentido como título da tabela.
   return <PastEditionsTable editions={state.rows} title={division && division !== "—" ? division : undefined} />;
 }
+

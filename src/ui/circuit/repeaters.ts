@@ -5,7 +5,7 @@
  * inscritos ou draw da divisão aberta), quem já jogou edições anteriores da mesma
  * prova e onde ficou em cada uma. Cálculo puro — a tabela é o
  * `Scout.tsx` (aba «Scout», ex-«Quem repete»). A FPG junta-lhe colunas próprias — HCP, forma
- * WHS e previsão (`pages/fpg/FpgScout.tsx`, modelo em `repeatersModel.ts`); aqui só se usa o que
+ * WHS e previsão (`ui/circuit/ScoutProva.tsx`, modelo em `pages/fpg/repeatersModel.ts`); aqui só se usa o que
  * todas as fontes têm: posição, total e ±par de cada edição.
  */
 import { vetKey } from "../../utils/normName";
