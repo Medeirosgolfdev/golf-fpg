@@ -61,6 +61,16 @@ export const MIRAMAR_U25_TEE_RULE: TeeRule = (n, sex) => {
 };
 
 /**
+ * 2nd Castro Marim Portuguese International U14 Championship (Quinta do Vale,
+ * 3-6/12/2026) — Termos de Competição da FPG, ponto c): «played from the
+ * Tee 54 (Boys) and Tee 47 (Girls)», com Course Rating M 70,6 / L 72,4 e
+ * Slope M 127 / L 128 (5500 m / 5000 m arredondados). No campo são:
+ *   Rapazes (todos os escalões, também os Sub12) → Amarelas (5487 m, CR 70,6, Slope 127)
+ *   Raparigas → Vermelhas (4789 m, CR 72,4, Slope 128 — rating de senhoras)
+ */
+export const CASTRO_MARIM_U14_TEE_RULE: TeeRule = (_n, sex) => (sex === "F" ? "Vermelhas" : "Amarelas");
+
+/**
  * Registo de regras por torneio, chaveado por `{ccode}-{tcode}`.
  *
  * O Miramar 2026 já usa os tcodes REAIS descobertos nas Classifications da FPG
@@ -69,6 +79,10 @@ export const MIRAMAR_U25_TEE_RULE: TeeRule = (n, sex) => {
 const TEE_RULES_BY_TOURNAMENT: Record<string, TeeRule> = {
   "003-10652": MIRAMAR_U25_TEE_RULE, // U25 (Sub12→Sub25) — tcode real
   "003-10653": MIRAMAR_U25_TEE_RULE, // Sub-10 (competição separada, 9 buracos/dia) → Roxas — tcode real
+  // Castro Marim U14 2026 — tcodes PROVISÓRIOS (featuredTournaments.ts); trocar
+  // aqui também quando a FPG publicar os reais.
+  "000-90872": CASTRO_MARIM_U14_TEE_RULE, // Rapazes
+  "000-90873": CASTRO_MARIM_U14_TEE_RULE, // Raparigas
 };
 
 /** Resolve a regra de tees de um torneio (undefined = usar tabela genérica). */

@@ -35,6 +35,7 @@ export interface FpgAdmissionPlayer {
   escalao?: string | null;   // escalão já resolvido (ex.: "Alevín")
   teeName?: string | null;   // tee do jogador (ex.: "5498 m") — texto, não cor
   tags?: string[];           // marcas da fonte ao lado do nome (ex.: LGPIDF "WC", "SCR")
+  sex?: "M" | "F";           // sexo dado pela própria lista (sem federado nosso)
   // Listas de apurados (finais Drive): pontos do ranking que o apurou, a posição
   // nesse ranking ("1º Madeira", "Net 2º") e o detalhe para o tooltip.
   regiao?: string | null;
@@ -188,6 +189,9 @@ function normalizePlayer(p: any): FpgAdmissionPlayer {
     ...(p.ptsRank ? { ptsRank: p.ptsRank } : {}),
     ...(p.ptsInfo ? { ptsInfo: p.ptsInfo } : {}),
     ...(Array.isArray(p.tags) && p.tags.length ? { tags: p.tags } : {}),
+    // Sexo da própria lista (ex.: Entry List «Girls» de Castro Marim) — sem ele as
+    // estrangeiras sem federado caíam no tee dos rapazes.
+    ...(p.sex === "M" || p.sex === "F" ? { sex: p.sex } : {}),
   };
 }
 

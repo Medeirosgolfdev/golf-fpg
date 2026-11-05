@@ -235,7 +235,8 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   // de 04/11/2026 («Final Entry List – Pending Handicap Verification»),
   // curados à mão (`_manual` em fpg-admissions-draws.json).
   // A 1.ª edição é 000/10872 (rapazes e raparigas no mesmo tcode).
-  // Quando a FPG publicar o tcode real, trocar aqui e no JSON.
+  // Quando a FPG publicar o tcode real, trocar aqui, no JSON e na regra de tees
+  // (`CASTRO_MARIM_U14_TEE_RULE` em utils/teeRegulation.ts: Amarelas/Vermelhas).
   {
     ccode: "000",
     tcode: "90872",
