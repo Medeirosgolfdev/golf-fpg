@@ -187,6 +187,7 @@ function normalizePlayer(p: any): FpgAdmissionPlayer {
     ...(p.pts != null ? { pts: p.pts } : {}),
     ...(p.ptsRank ? { ptsRank: p.ptsRank } : {}),
     ...(p.ptsInfo ? { ptsInfo: p.ptsInfo } : {}),
+    ...(Array.isArray(p.tags) && p.tags.length ? { tags: p.tags } : {}),
   };
 }
 

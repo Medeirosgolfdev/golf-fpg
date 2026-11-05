@@ -102,6 +102,16 @@ function fmtRegisto(s: string | null | undefined): string {
 
 type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "pts" | "vac" | "registo" | "status" | `x:${string}`;
 
+/** Último lugar ocupado pelos confirmados — a lista de espera numera-se a seguir.
+ *  Normalmente é o nº de confirmados; numa lista com lugares por atribuir (ex.:
+ *  wild cards 1-12 com só alguns nomeados e os outros em 13-42) é a maior posição,
+ *  para a espera não repetir números dos confirmados. */
+function ultimoLugar(ps: readonly FpgAdmissionPlayer[]): number {
+  let n = 0, max = 0;
+  for (const p of ps) if (p.status === "confirmed") { n++; if (p.pos != null && p.pos > max) max = p.pos; }
+  return Math.max(n, max);
+}
+
 
 /** Chave da ficha do Kids 2 — as colunas recebem a cópia enriquecida do jogador. */
 const scoutKey = (p: FpgAdmissionPlayer) => `${p.fed ?? ""}|${p.nome ?? ""}`;
@@ -264,7 +274,7 @@ export default function AdmissionsTab({
     const INF = 9999;
     const mult = sortDir === "asc" ? 1 : -1;
     // Posição absoluta: confirmed 1..N, reservas N+1.., desistentes por último.
-    const nConf = filtered.filter(p => p.status === "confirmed").length;
+    const nConf = ultimoLugar(filtered);
     const nRes = filtered.filter(p => p.status === "reserva").length;
     const absPos = (p: typeof filtered[number]) =>
       p.status === "confirmed" ? (p.pos ?? INF)
@@ -297,12 +307,14 @@ export default function AdmissionsTab({
   const rows: ScorecardRow[] = useMemo(() => {
     // Posição contínua: confirmed 1..N, reservas N+1..N+M. Mostra números únicos
     // mesmo quando confirmed e reservas aparecem misturadas por sort custom.
-    const nConf = sorted.filter(p => p.status === "confirmed").length;
+    const nConf = ultimoLugar(sorted);
     const nRes = sorted.filter(p => p.status === "reserva").length;
     return sorted.map((p, i) => {
       const manuel = p.fed === MANUEL_FED;
       const isReserva = p.status === "reserva";
       const isDesist = p.status === "desistente";
+      // Wild card (tag da fonte: «Wild card» das listas FPG, «Wildcard» da Federgolf).
+      const wildCard = p.status === "confirmed" && !!p.tags?.some(t => /^wild ?card$/i.test(t));
       const desinscritoEm = (p as any).desinscritoEm as string | undefined;
       const age = ageAtDate(p._dob, date || undefined);
       // Só o ano: idade no ano do torneio, aproximada («~12a»).
@@ -404,6 +416,8 @@ export default function AdmissionsTab({
                     title={desinscritoEm ? `Desinscreveu-se (já não estava na lista a ${fmtDatePt(desinscritoEm)})` : "Desinscreveu-se"}>desinscreveu-se</Pill>
                 : isReserva
                 ? <Pill className="p-estado p-muted">{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</Pill>
+                : wildCard
+                ? <Pill className="p-estado p-good" title="Entra por wild card da organização">wild card</Pill>
                 : novo
                 ? <Pill className="p-estado p-novo" title={`Inscrito nas últimas ${recentHours} h`}>novo</Pill>
                 : <span className="muted fs-10">✓</span>}
