@@ -7,7 +7,8 @@
  *   - uskids-member-history-slim.json (roster + resultados)
  *   - uskids-results.json (resultados por torneio)
  *   - uskids_torneios_completos(N).json (par/yards detalhados, scorecards)
- *   - uskids-field-sizes.json (field counts)
+ *   - uskids-field-sizes.json (inscritos por escalão, lidos UMA vez — ver tamanhoDoField)
+ *   - uskids-field.json (inscritos actuais das provas futuras seguidas)
  *   - t_de_tournaments_do_uskids.json (lookup de nomes por t=)
  *
  * USKids NÃO expõe dob/sex/club/hcp. Esses campos vêm por cross-ref noutras fontes.
@@ -36,6 +37,22 @@ function escDoSlim(t, ...chaves) {
 
 const SOURCE_ID = "uskids";
 const SOURCE_LABEL = "USKids Golf";
+
+/**
+ * Tamanho do field de um escalão (05/11/2026). O `uskids-field-sizes.json` guarda os
+ * inscritos NO DIA em que o script leu a prova e nunca os actualiza: no Venice Open 2026
+ * leu-se o Boys 12 com 6 inscritos e jogaram 31 (Boys 10: 1 → 27). Em 137 flights o
+ * «field» era menor do que os resultados e o Nível tratava-os como provas minúsculas.
+ * Regra: o MAIOR entre os inscritos guardados, os do ficheiro diário (`uskids-field.json`,
+ * provas futuras) e os jogadores distintos nos resultados. Os resultados podem ser só os
+ * dos jogadores seguidos — por isso os inscritos continuam a contar quando são mais.
+ */
+function tamanhoDoField(inscritos, results) {
+  // No adapter o jogador é o `playerSourceKey` (o juniorId só aparece depois do identity-matcher)
+  const ids = new Set((results || []).map((r) => r.playerSourceKey ?? r.juniorId ?? r.playerName).filter(Boolean));
+  const n = Math.max(0, ...inscritos.filter((x) => Number.isFinite(x)), ids.size);
+  return n > 0 ? n : null;
+}
 
 /** Extracts series ID from tournament name (strips year, normalizes). */
 /**
@@ -147,6 +164,24 @@ async function load(opts) {
   const slim = readJsonSafe(DATA.uskidsMemberHistorySlim, { torneios: {}, jogadores: {} });
   const tournNamesArr = readJsonSafe(DATA.uskidsTournNames, []);
   const fieldSizes = readJsonSafe(DATA.uskidsFieldSizes, {});
+  // Inscritos actuais das provas que o field diário segue (tcode → nome do escalão → inscritos)
+  const fieldDiario = new Map();
+  for (const t of readJsonSafe(DATA.uskidsField, { torneios: [] }).torneios || []) {
+    const m = new Map();
+    for (const e of t.escaloes || []) if (e?.nome && Number.isFinite(e.inscritos)) m.set(e.nome, e.inscritos);
+    fieldDiario.set(String(t.t), m);
+  }
+  const inscritosDe = (tcode, ...chaves) => {
+    const out = [];
+    for (const k of chaves) {
+      if (k == null) continue;
+      const fs1 = fieldSizes[tcode]?.escaloes?.[k]?.inscritos;
+      if (Number.isFinite(fs1)) out.push(fs1);
+      const fd = fieldDiario.get(String(tcode))?.get(k);
+      if (Number.isFinite(fd)) out.push(fd);
+    }
+    return out;
+  };
   const results = readJsonSafe(DATA.uskidsResults, { resultados: [] });
   const completosMap = loadCompletos();
 
@@ -265,7 +300,6 @@ async function load(opts) {
       if (!flight) {
         // Tentar primeiro o completosMap (par/yards por flight); fallback ao slim (per-torneio)
         const cm = completosMap.get(`${tcode}|${tres.ageGroup}`);
-        const fsEntry = fieldSizes[tcode]?.escaloes?.[tres.ageGroup];
         flight = {
           flightKey: flightInfo.flightKey,
           label: flightInfo.label,
@@ -276,7 +310,7 @@ async function load(opts) {
           yards: cm?.yards || escDoSlim(t, tres.ageGroup)?.yards || t._yards || undefined,
           numHoles: cm?.numHoles || t.holesPerRound,
           totalPar: cm?.totalPar,
-          fieldSize: fsEntry?.inscritos || null,
+          inscritos: inscritosDe(tcode, tres.ageGroup),
           results: [],
         };
         t.flights.set(flightInfo.flightKey, flight);
@@ -363,7 +397,6 @@ async function load(opts) {
       let flight = t.flights.get(flightInfo.flightKey);
       if (!flight) {
         const cm = completosMap.get(`${tcode}|${escLabel}`) || completosMap.get(`${tcode}|${esc.age_group}`);
-        const fsEntry = fieldSizes[tcode]?.escaloes?.[escLabel] || fieldSizes[tcode]?.escaloes?.[esc.age_group];
         flight = {
           flightKey: flightInfo.flightKey,
           label: flightInfo.label,
@@ -374,7 +407,7 @@ async function load(opts) {
           yards: cm?.yards || escDoSlim(t, escLabel, esc.age_group)?.yards || t._yards || undefined,
           numHoles: cm?.numHoles || t.holesPerRound,
           totalPar: cm?.totalPar,
-          fieldSize: fsEntry?.inscritos || null,
+          inscritos: inscritosDe(tcode, escLabel, esc.age_group),
           results: [],
         };
         t.flights.set(flightInfo.flightKey, flight);
@@ -465,7 +498,7 @@ async function load(opts) {
       par: f.par,
       yards: f.yards,
       metros: metrosDeJardas(f.yards),
-      fieldSize: f.fieldSize,
+      fieldSize: tamanhoDoField(f.inscritos || [], f.results),
       results: f.results,
     }));
     tournaments.push({
@@ -493,4 +526,4 @@ async function load(opts) {
   };
 }
 
-module.exports = { load, SOURCE_ID, SOURCE_LABEL, computeToPar };
+module.exports = { load, SOURCE_ID, SOURCE_LABEL, computeToPar, tamanhoDoField };
