@@ -34,7 +34,7 @@ import { KidsLinkCtx } from "./KidsLink";
 import { normName } from "../data/KIDSdataLoader";
 import { useJson } from "../hooks/useJson";
 import { makeKidsDobLookup, kidsDobLida } from "../data/kidsDob";
-import { formaMedia, type ScoutFile, type JuniorScout } from "./circuit/scoutModel";
+import { formaMedia, nivelPoucoSeguro, type ScoutFile, type JuniorScout } from "./circuit/scoutModel";
 import { getTierLabel, type TierKey } from "../pages/kids2/juniorCalc";
 import ExtLink from "./ExternalLink";
 import { MUTED } from "./tableCells";
@@ -156,8 +156,8 @@ export default function AdmissionsTab({
       const sc = (p: FpgAdmissionPlayer) => scoutOf.get(scoutKey(p));
       const sem = MUTED;
       cols.push(
-        { key: "k2nivel", label: "Nível", title: "Nível no Kids 2 (pela carreira)",
-          sort: (p) => { const t = sc(p)?.t; return t ? TIER_ORDEM.indexOf(t) : null; }, cell: (p) => { const t = sc(p)?.t; return t ? getTierLabel(t) : sem; } },
+        { key: "k2nivel", label: "Nível", title: "Nível no Kids 2 (pancadas no último ano, na geração; «?» = poucas voltas)",
+          sort: (p) => { const t = sc(p)?.t; return t ? TIER_ORDEM.indexOf(t) : null; }, cell: (p) => { const s = sc(p); return s?.t ? getTierLabel(s.t) + (nivelPoucoSeguro(s) ? " ?" : "") : sem; } },
         { key: "k2n", label: "Torn.", title: "Torneios na carreira (Kids 2)", dir: "desc",
           sort: (p) => sc(p)?.n ?? null, cell: (p) => sc(p)?.n ?? sem },
         { key: "k2w", label: "Vit.", title: "Vitórias na carreira (Kids 2)", dir: "desc",

@@ -5,7 +5,7 @@
  *
  * Cobertura minima apos a migracao KIDS -> KIDS2 (2026-05):
  *   - normName: normalizacao de nomes (acentos, hifens, apostrofes)
- *   - computeTier: classificacao Elite/Forte/Solido/etc com base em pos
+ *   - computeRanking/computeTier: geração pelo nível em pancadas (nivelPancadas.ts)
  *   - getSharedFlightTids + hasRealConfrontWithManuel: confronto real
  *   - countWins, countTop3: contagens triviais
  *   - computeRoundStats: filtro 9H, sanity de gross, media/desvio
@@ -19,8 +19,8 @@ import { describe, it, expect } from "vitest";
 import {
   normName,
   computeTier,
-  computeCareerScore,
   computeRanking,
+  nivelIncerto,
   encodeRankingEntry,
   decodeRanking,
   getSharedFlightTids,
@@ -188,203 +188,52 @@ describe("countWins / countTop3", () => {
 });
 
 /* ------------------------------------------------------------------
-   computeTier
-   ------------------------------------------------------------------ */
-describe("computeTier", () => {
-  it("devolve null sem nenhuma posicao conhecida", () => {
-    const r = mkRival("u1", "X", ["t1"]);
-    // torneio existe mas o jogador não tem pos (null) → posCount=0 → null
-    const ti = mkTournamentByMap([
-      mkTournament("t1", "Boys 11", [{ juniorId: "u1", pos: null }]),
-    ]);
-    expect(computeTier(r, ti)).toBeNull();
-  });
-
-  it("1 resultado num torneio local da tier developing", () => {
-    const r = mkRival("u1", "Solo", ["t1"]);
-    const ti = mkTournamentByMap([
-      mkTournament("t1", "Boys 11", [{ juniorId: "u1", pos: 1 }]),
-    ]);
-    // Sem fieldSize → stars=1.5, fMult=0.50; 1.5×0.50×10 = 7.5 → developing (≥2, <10)
-    expect(computeTier(r, ti)).toBe("developing");
-  });
-
-  it("Elite: vitoria num torneio 5 estrelas (4 rondas, campo grande)", () => {
-    const r = mkRival("u1", "Champ", ["t1", "t2"]);
-    const ti = mkTournamentByMap([
-      mkTournament("t1", "B11", [{ juniorId: "u1", pos: 1 }], 72, { rounds: 4, fieldSize: 300 }),
-      mkTournament("t2", "B11", [{ juniorId: "u1", pos: 5 }], 72, { rounds: 4, fieldSize: 300 }),
-    ]);
-    expect(computeTier(r, ti)).toBe("elite");
-    expect(getTierLabel("elite")).toBe("Elite");
-  });
-
-  it("Strong: 5 vitorias em local tours -- nao chega a Elite", () => {
-    const r = mkRival("u1", "LocalKing", ["t1", "t2", "t3", "t4", "t5", "t6"]);
-    const ti = mkTournamentByMap([
-      mkTournament("t1", "B11", [{ juniorId: "u1", pos: 1 }]),
-      mkTournament("t2", "B11", [{ juniorId: "u1", pos: 1 }]),
-      mkTournament("t3", "B11", [{ juniorId: "u1", pos: 1 }]),
-      mkTournament("t4", "B11", [{ juniorId: "u1", pos: 1 }]),
-      mkTournament("t5", "B11", [{ juniorId: "u1", pos: 1 }]),
-      mkTournament("t6", "B11", [{ juniorId: "u1", pos: 1 }]),
-    ]);
-    expect(computeTier(r, ti)).toBe("strong");
-  });
-
-  it("top-5 cap: 10 vitorias locais iguais a 5 -- nao avanca o tier", () => {
-    const tids = Array.from({ length: 10 }, (_, i) => `t${i + 1}`);
-    const r = mkRival("u1", "Grinder", tids);
-    const t5 = mkTournamentByMap(
-      tids.map((id) => mkTournament(id, "B11", [{ juniorId: "u1", pos: 1 }])),
-    );
-    const t6 = mkTournamentByMap(
-      tids.slice(0, 6).map((id) => mkTournament(id, "B11", [{ juniorId: "u1", pos: 1 }])),
-    );
-    expect(computeTier(r, t5)).toBe(computeTier(mkRival("u1", "G2", tids.slice(0, 6)), t6));
-  });
-
-  it("Beginner quando so finishes fracos", () => {
-    const r = mkRival("u1", "Newbie", ["t1", "t2"]);
-    const ti = mkTournamentByMap([
-      mkTournament("t1", "B11", [{ juniorId: "u1", pos: 25 }]),
-      mkTournament("t2", "B11", [{ juniorId: "u1", pos: 30 }]),
-    ]);
-    expect(computeTier(r, ti)).toBe("beginner");
-  });
-});
-
-/* ------------------------------------------------------------------
-   computeCareerScore -- bonus sub-par
-   ------------------------------------------------------------------ */
-describe("computeCareerScore -- bonus sub-par", () => {
-  it("sem bonus quando toPar e positivo", () => {
-    const r = mkRival("u1", "X", ["t1", "t2"]);
-    const ti = mkTournamentByMap([
-      mkTournament("t1", "B11", [{ juniorId: "u1", pos: 1 }]),
-      mkTournament("t2", "B11", [{ juniorId: "u1", pos: 2 }]),
-    ]);
-    const score = computeCareerScore(r, ti)!;
-    // Sem fieldSize → stars=1.5, fMult=0.50; posScore(1)=10, posScore(2)=8
-    // t1: 1.5×0.50×10 = 7.5 | t2: 1.5×0.50×8 = 6.0 | total = 13.5
-    expect(score).toBeCloseTo(13.5, 3);
-  });
-
-  it("bonus x1.3 quando toPar=-3", () => {
-    const r = mkRival("u1", "SubPar", ["t1", "t2"]);
-    const t1: Tournament = {
-      id: "t1", sourceId: "uskids", sourceKey: "1",
-      name: "T1", date: "2026-06-01", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
-        { flightKey: "b11", label: "B11", ageMin: 11, ageMax: 11, sex: "M",
-          results: [{ juniorId: "u1", pos: 1, toPar: -3, status: "OK" }] },
-      ], links: [],
-    };
-    const t2: Tournament = {
-      id: "t2", sourceId: "uskids", sourceKey: "2",
-      name: "T2", date: "2026-06-08", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
-        { flightKey: "b11", label: "B11", ageMin: 11, ageMax: 11, sex: "M",
-          results: [{ juniorId: "u1", pos: 2, toPar: 0, status: "OK" }] },
-      ], links: [],
-    };
-    const ti = new Map([["t1", t1], ["t2", t2]]);
-    const score = computeCareerScore(r, ti)!;
-    // Sem fieldSize → stars=1.5, fMult=0.50
-    // t1: 1.5×0.50×10×1.3(toPar=-3) = 9.75 | t2: 1.5×0.50×8 = 6.0 | total = 15.75
-    expect(score).toBeCloseTo(9.75 + 6.0, 3);
-  });
-
-  it("bonus capped a x1.5 quando toPar <= -5", () => {
-    const r = mkRival("u1", "Eagle", ["t1", "t2"]);
-    const t1: Tournament = {
-      id: "t1", sourceId: "uskids", sourceKey: "1",
-      name: "T1", date: "2026-06-01", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
-        { flightKey: "b11", label: "B11", ageMin: 11, ageMax: 11, sex: "M",
-          results: [{ juniorId: "u1", pos: 1, toPar: -10, status: "OK" }] },
-      ], links: [],
-    };
-    const t2 = mkTournament("t2", "B11", [{ juniorId: "u1", pos: 3 }]);
-    const ti = new Map([["t1", t1], ["t2", t2]]);
-    const score = computeCareerScore(r, ti)!;
-    // Sem fieldSize → stars=1.5, fMult=0.50; posScore(3)=6
-    // t1: 1.5×0.50×10×1.5(cap) = 11.25 | t2: 1.5×0.50×6 = 4.5 | total = 15.75
-    expect(score).toBeCloseTo(11.25 + 4.5, 3);
-  });
-});
-
-/* ------------------------------------------------------------------
-   computeRanking -- ranking percentil por coorte
+   computeRanking -- ranking percentil por geração, pelo nível em pancadas
    ------------------------------------------------------------------ */
 describe("computeRanking", () => {
-  it("melhor da coorte tem percentil 100", () => {
-    const j1: Junior = { ...mkRival("j1", "Alpha", ["t1", "t2"]), dob: "2013-01-01" };
-    const j2: Junior = { ...mkRival("j2", "Beta",  ["t3", "t4"]), dob: "2013-05-10" };
-    const j3: Junior = { ...mkRival("j3", "Gamma", ["t5", "t6"]), dob: "2013-09-20" };
-    const ti = mkTournamentByMap([
-      mkTournament("t1", "B12", [{ juniorId: "j1", pos: 1 }], 72, { rounds: 4, fieldSize: 300 }),
-      mkTournament("t2", "B12", [{ juniorId: "j1", pos: 2 }], 72, { rounds: 4, fieldSize: 300 }),
-      mkTournament("t3", "B12", [{ juniorId: "j2", pos: 1 }]),
-      mkTournament("t4", "B12", [{ juniorId: "j2", pos: 1 }]),
-      mkTournament("t5", "B12", [{ juniorId: "j3", pos: 25 }]),
-      mkTournament("t6", "B12", [{ juniorId: "j3", pos: 30 }]),
-    ]);
-    const ranking = computeRanking([j1, j2, j3], ti);
-    expect(ranking.get("j1")?.percentile).toBe(100);
-    expect(ranking.get("j1")?.rank).toBe(1);
-    expect(ranking.get("j3")?.rank).toBe(3);
+  const nv = (nivel: number, peso = 10, voltas = 10) => ({ nivel, peso, voltas });
+  const j1: Junior = { ...mkRival("j1", "Alpha", []), dob: "2013-01-01" };
+  const j2: Junior = { ...mkRival("j2", "Beta", []), dob: "2013-05-10" };
+  const j3: Junior = { ...mkRival("j3", "Gamma", []), dob: "2013-09-20" };
+  const j4: Junior = { ...mkRival("j4", "Girl", []), dob: "2013-02-02", sex: "F" };
+
+  it("menos pancadas = melhor; percentil 100 para o melhor da geração", () => {
+    const ranking = computeRanking([j1, j2, j3], new Map(), new Map([["j1", nv(12)], ["j2", nv(3)], ["j3", nv(20)]]));
+    expect(ranking.get("j2")?.rank).toBe(1);
+    expect(ranking.get("j2")?.percentile).toBe(100);
     expect(ranking.get("j3")?.percentile).toBe(0);
+    expect(ranking.get("j2")?.nivel).toBe(3);
   });
 
-  it("jogador sem birthYear inferivel nao entra no ranking", () => {
-    const j4: Junior = { ...mkRival("j4", "Mystery", ["t7", "t8"]) };
-    const t7: Tournament = {
-      id: "t7", sourceId: "uskids", sourceKey: "7",
-      name: "T7", date: "2025-01-01", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
-        { flightKey: "open", label: "Open", results: [{ juniorId: "j4", pos: 1 }] },
-      ], links: [],
-    };
-    const t8: Tournament = {
-      id: "t8", sourceId: "uskids", sourceKey: "8",
-      name: "T8", date: "2025-02-01", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
-        { flightKey: "open", label: "Open", results: [{ juniorId: "j4", pos: 2 }] },
-      ], links: [],
-    };
-    const ranking = computeRanking([j4], new Map([["t7", t7], ["t8", t8]]));
-    expect(ranking.has("j4")).toBe(false);
+  it("rapazes e raparigas em gerações separadas; sem ano não entra", () => {
+    const semAno: Junior = { ...mkRival("j5", "Mystery", []) };
+    const ranking = computeRanking([j1, j4, semAno], new Map(), new Map([["j1", nv(12)], ["j4", nv(30)], ["j5", nv(1)]]));
+    expect(ranking.get("j4")?.sex).toBe("F");
+    expect(ranking.get("j4")?.rank).toBe(1);
+    expect(ranking.has("j5")).toBe(false);
   });
 
-  it("computeTier com ranking usa o tier percentil", () => {
-    const j1: Junior = { ...mkRival("j1", "Top", ["t1", "t2"]), dob: "2013-01-01" };
-    const j2: Junior = { ...mkRival("j2", "Low", ["t3", "t4"]), dob: "2013-06-01" };
-    const ti = mkTournamentByMap([
-      mkTournament("t1", "B12", [{ juniorId: "j1", pos: 1 }], 72, { rounds: 4, fieldSize: 300 }),
-      mkTournament("t2", "B12", [{ juniorId: "j1", pos: 2 }], 72, { rounds: 4, fieldSize: 300 }),
-      mkTournament("t3", "B12", [{ juniorId: "j2", pos: 25 }]),
-      mkTournament("t4", "B12", [{ juniorId: "j2", pos: 30 }]),
-    ]);
-    const ranking = computeRanking([j1, j2], ti);
-    expect(computeTier(j1, ti, ranking)).toBe("elite");
-    expect(computeTier(j2, ti, ranking)).toBe("beginner");
+  it("com menos de 3 voltas no último ano fica de fora", () => {
+    const ranking = computeRanking([j1, j2], new Map(), new Map([["j1", nv(5, 1, 2)], ["j2", nv(9)]]));
+    expect(ranking.has("j1")).toBe(false);
+    expect(ranking.get("j2")?.rank).toBe(1);
   });
 
-  it("encode/decode (juniors-scout.json, campo r) reconstrói o ranking", () => {
-    const j1: Junior = { ...mkRival("j1", "Alpha", ["t1", "t2"]), dob: "2013-01-01" };
-    const j2: Junior = { ...mkRival("j2", "Beta",  ["t3", "t4"]), dob: "2013-05-10" };
-    const j3: Junior = { ...mkRival("j3", "Gamma", ["t5", "t6"]), dob: "2013-09-20", sex: "F" };
-    const ti = mkTournamentByMap([
-      mkTournament("t1", "B12", [{ juniorId: "j1", pos: 1 }], 72, { rounds: 4, fieldSize: 300 }),
-      mkTournament("t2", "B12", [{ juniorId: "j1", pos: 2 }], 72, { rounds: 4, fieldSize: 300 }),
-      mkTournament("t3", "B12", [{ juniorId: "j2", pos: 1 }]),
-      mkTournament("t4", "B12", [{ juniorId: "j2", pos: 1 }]),
-      mkTournament("t5", "G12", [{ juniorId: "j3", pos: 25 }]),
-      mkTournament("t6", "G12", [{ juniorId: "j3", pos: 30 }]),
-    ]);
-    const ranking = computeRanking([j1, j2, j3], ti);
+  it("computeTier usa o tier do ranking; poucas voltas abaixo do peso 6", () => {
+    const ranking = computeRanking([j1, j2], new Map(), new Map([["j1", nv(2, 4)], ["j2", nv(15)]]));
+    expect(computeTier(j1, ranking)).toBe("elite");
+    expect(getTierLabel("elite")).toBe("Elite");
+    expect(computeTier(j2, ranking)).toBe("beginner");
+    expect(computeTier(j3, ranking)).toBeNull();
+    expect(nivelIncerto(ranking.get("j1"))).toBe(true);
+    expect(nivelIncerto(ranking.get("j2"))).toBe(false);
+  });
+
+  it("encode/decode (juniors-scout.json, campo r) reconstrói o ranking com nível e peso", () => {
+    const ranking = computeRanking([j1, j2, j4], new Map(), new Map([["j1", nv(12, 8.5)], ["j2", nv(3)], ["j4", nv(9)]]));
     const decoded = decodeRanking([...ranking].map(([id, e]): [string, RankingRow] => [id, encodeRankingEntry(e)]));
     expect(decoded.size).toBe(ranking.size);
-    for (const [id, e] of ranking) {
-      const { score: _score, ...semScore } = e;
-      expect(decoded.get(id)).toEqual(semScore);
-    }
+    for (const [id, e] of ranking) expect(decoded.get(id)).toEqual(e);
   });
 });
 
@@ -513,61 +362,6 @@ describe("categorizeTournamentLinks", () => {
     };
     const out = categorizeTournamentLinks(t);
     expect(out.length).toBe(1);
-  });
-});
-
-/* ------------------------------------------------------------------
-   computeCareerScore -- bonus de distância
-   ------------------------------------------------------------------ */
-describe("computeCareerScore -- bonus distancia", () => {
-  /** Cria torneio com yards[] e par[] definidos para simular campo de N metros. */
-  function mkTournWithYards(id: string, totalYards: number, pos: number): Tournament {
-    // 18 buracos de par 4, yards iguais
-    const yardsPerHole = Math.round(totalYards / 18);
-    return {
-      id, sourceId: "uskids", sourceKey: id,
-      name: `Test ${id}`, date: "2026-06-01",
-      parTotal: 72, holesPerRound: 18, rounds: 1,
-      flights: [{
-        flightKey: "b12", label: "Boys 12", ageMin: 12, ageMax: 12, sex: "M",
-        par: Array(18).fill(4),
-        yards: Array(18).fill(yardsPerHole),
-        results: [{ juniorId: "u1", pos, status: "OK" }],
-      }],
-      links: [],
-    };
-  }
-
-  it("sem yards definidos usa dMult=1.0 (sem bonus)", () => {
-    const r = mkRival("u1", "X", ["t1"]);
-    const ti = mkTournamentByMap([mkTournament("t1", "B12", [{ juniorId: "u1", pos: 1 }])]);
-    const score = computeCareerScore(r, ti)!;
-    // stars=1.5, fMult=0.50, posScore=10, recency=1.0, dMult=1.0
-    expect(score).toBeCloseTo(1.5 * 0.50 * 10 * 1.0, 2);
-  });
-
-  it("campo curto (<4400m = ~4812yds) tem dMult=1.0", () => {
-    // 4200 yards × 0.9144 ≈ 3841m → <4400 → dMult=1.00
-    const r = mkRival("u1", "X", ["t1"]);
-    const ti = mkTournamentByMap([mkTournWithYards("t1", 4200, 1)]);
-    const score = computeCareerScore(r, ti)!;
-    expect(score).toBeCloseTo(1.5 * 0.50 * 10 * 1.00, 2);
-  });
-
-  it("campo medio (5000-5100m = ~5468-5578yds) tem dMult=1.13", () => {
-    // 5500 yards × 0.9144 ≈ 5029m → 5000-5100 → dMult=1.13
-    const r = mkRival("u1", "X", ["t1"]);
-    const ti = mkTournamentByMap([mkTournWithYards("t1", 5500, 1)]);
-    const score = computeCareerScore(r, ti)!;
-    expect(score).toBeCloseTo(1.5 * 0.50 * 10 * 1.13, 2);
-  });
-
-  it("campo longo (+5500m = ~6015yds+) tem dMult=1.60", () => {
-    // 6200 yards × 0.9144 ≈ 5669m → ≥5500 → dMult=1.60
-    const r = mkRival("u1", "X", ["t1"]);
-    const ti = mkTournamentByMap([mkTournWithYards("t1", 6200, 1)]);
-    const score = computeCareerScore(r, ti)!;
-    expect(score).toBeCloseTo(1.5 * 0.50 * 10 * 1.60, 2);
   });
 });
 

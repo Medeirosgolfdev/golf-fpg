@@ -9,6 +9,7 @@
 
 const path = require("path");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
+const { metrosDeJardas } = require("../util/metros");
 const { displayName, countryToIso2 } = require("../util/names");
 
 const SOURCE_ID = "eowagr";
@@ -99,6 +100,8 @@ function normalize(data, fileName, playerMap) {
     flights: [{
       flightKey: category.toLowerCase().replace(/[^a-z0-9]+/g, "_"),
       label: category, ageMin, ageMax, sex, par,
+      // BlueGolf: jardas por buraco
+      ...(metrosDeJardas(data.yards) ? { metros: metrosDeJardas(data.yards) } : {}),
       fieldSize: results.length,
       results,
     }],

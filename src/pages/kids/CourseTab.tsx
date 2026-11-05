@@ -20,7 +20,7 @@ import { useCourses } from "../../context/CoursesContext";
 import type { Course, Tee } from "../../data/types";
 import EmptyState from "../../ui/EmptyState";
 import { stripAccents } from "../../utils/normName";
-import { USKIDS_SEDES, uskidsIntlYardage, camposDoEscalao } from "../../data/uskidsVenues";
+import { teeDaSede } from "../../data/uskidsVenues";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -310,26 +310,8 @@ function buildCourseTee(
  *  jardas) fica mais perto do meio da faixa da grelha USKids. Só escalões de
  *  18 buracos (os de 9 jogam tees próprios). Null sem sede / sem faixa. */
 function sedeDoAno(torneio: FieldTorneio, escalaoNome: string, simCourses: Course[]): ResolvedCourse | null {
-  const sede = USKIDS_SEDES[torneio.t];
-  const faixa = uskidsIntlYardage(escalaoNome);
-  if (!sede || !faixa || faixa.holes !== 18) return null;
-  const alvo = (faixa.min + faixa.max) / 2;
-  let best: { course: Course; tee: Tee; d: number } | null = null;
-  for (const key of camposDoEscalao(sede, escalaoNome)) {
-    const course = simCourses.find((c) => c.courseKey === key);
-    for (const tee of course?.master.tees ?? []) {
-      if (tee.sex !== faixa.sex || !tee.distances?.total) continue;
-      const d = Math.abs(tee.distances.total / 0.9144 - alvo);
-      if (!best || d < best.d) best = { course: course!, tee, d };
-    }
-  }
-  if (!best) return null;
-  const jardas = Math.round((best.tee.distances.total ?? 0) / 0.9144);
-  return {
-    course: best.course,
-    tee: best.tee,
-    note: `${sede.nota}. Tee estimado pela grelha da USKids, enquanto não saem as distâncias oficiais (${escalaoNome}: ${faixa.min}–${faixa.max} jardas): ${best.course.master.name} · ${best.tee.teeName}, ${best.tee.distances.total} m (${jardas} jardas).`,
-  };
+  const r = teeDaSede(torneio.t, escalaoNome, simCourses);
+  return r ? { course: r.course, tee: r.tee as Tee, note: r.nota } : null;
 }
 
 /** Resolve {course, tee, note} para um torneio+escalao (cascata de fontes).

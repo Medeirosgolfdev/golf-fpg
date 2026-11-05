@@ -67,6 +67,7 @@ const SCHEMA_VERSION = 1;
  * @property {"M"|"F"|"mixed"} [sex]
  * @property {number[]} [par]
  * @property {number[]} [yards]
+ * @property {number} [metros]  Comprimento do tee do escalão numa volta, em metros (util/metros.js).
  * @property {RawResult[]} results
  * @property {number} [fieldSize]  Nº de jogadores neste flight.
  */
@@ -87,6 +88,7 @@ const SCHEMA_VERSION = 1;
  * @property {number} round  1-indexed.
  * @property {number|null} [gross]
  * @property {number[]} [strokes]  18 ou 9 entradas. 0 = não jogado.
+ * @property {number} [metros]  Metros do tee que este jogador jogou nesta volta (quando a fonte o dá).
  */
 
 
@@ -177,6 +179,7 @@ const SCHEMA_VERSION = 1;
  * @property {"M"|"F"|"mixed"} [sex]
  * @property {number[]} [par]
  * @property {number[]} [yards]
+ * @property {number} [metros]  Comprimento do tee do escalão numa volta, em metros.
  * @property {number} [fieldSize]
  * @property {Result[]} results
  */

@@ -30,7 +30,9 @@ import { norm, escalaoAtDate, todayIso } from "../../utils/format";
 import { isManuel, MANUEL_DOB } from "../../constants/manuel";
 import { tournamentHasManuel } from "../../data/fpgUtils";
 import { teeRuleFor, teeNameFor, parseSubNumber } from "../../utils/teeRegulation";
+import { teeDaSede } from "../../data/uskidsVenues";
 import LoadingState from "../../ui/LoadingState";
+import CourseHeroCard from "../../ui/CourseHeroCard";
 
 const CourseComoJogou = lazy(() => import("../CamposPage").then((m) => ({ default: m.CourseComoJogou })));
 const PrevisaoTab = lazy(() => import("../kids/PrevisaoTab"));
@@ -46,7 +48,7 @@ export const CampoDoCircuito = createContext<string | undefined>(undefined);
  *  a forma que os combos (Santo da Serra «… | Machico Serras») resolvem pelo nome. */
 function nomesCandidatos(campo: string): string[] {
   const nome = campo.trim();
-  const partes = nome.split(/\s+[/|–—-]\s+|\s*\(|\)\s*/).map((s) => s.trim()).filter(Boolean);
+  const partes = nome.split(/\s+[/|–—-]\s+|\s*\(|\)\s*|\s*,\s*/).map((s) => s.trim()).filter(Boolean);
   const combo = partes.length === 2 ? [`${partes[0]} - ${partes[1].replace(/\s+/g, "-")}`] : [];
   return [...new Set([nome, ...combo, ...partes])];
 }
@@ -62,13 +64,19 @@ export function findCourseByName(courses: readonly Course[], campo: string): Cou
   return null;
 }
 
-function CampoDaProva({ courseKey }: { courseKey: string }) {
+function CampoDaProva({ courseKey, teeId }: { courseKey: string; teeId?: string | null }) {
   const { simCourses } = useCourses();
   const navigate = useNavigate();
   const course = useMemo(() => simCourses.find((c) => c.courseKey === courseKey) ?? null, [simCourses, courseKey]);
+  // A ficha do campo no tee da prova (o mesmo da Previsão) — sempre, mesmo
+  // quando nenhum dos nossos jogou lá e o «Como jogou» fica vazio
+  // (04/11/2026, Spanish Open no San Roque: «este fica vazio»).
+  const tee = useMemo(() => course?.master.tees.find((t) => t.teeId === teeId)
+    ?? course?.master.tees.find((t) => t.sex !== "F") ?? course?.master.tees[0] ?? null, [course, teeId]);
   if (!course) return null;
   return (
     <div className="mt-8">
+      {tee && <div className="mb-8"><CourseHeroCard course={course} tee={tee} /></div>}
       <div className="muted fs-11 mb-8">
         <a href={`/campos/${course.courseKey}?view=manuel`} className="tourn-ext-link" title="Abrir a página do campo"
           onClick={(e) => { e.preventDefault(); navigate(`/campos/${course.courseKey}?view=manuel`); }}>
@@ -184,8 +192,10 @@ export function jogadoresNoTee(
 /** De onde veio o tee inicial da Previsão. */
 type TeeFonte = "prova" | "escalao" | "nenhum";
 
-function PrevisaoDaProva({ courseKey, teeId, tournament, fonte, teeSugerido }: {
+function PrevisaoDaProva({ courseKey, teeId, tournament, fonte, teeSugerido, notaSede }: {
   courseKey: string; teeId: string; tournament: Tournament; fonte: TeeFonte; teeSugerido: string;
+  /** Prova com sede (USKIDS_SEDES): a nota do campo/tee estimado. */
+  notaSede?: string;
 }) {
   const { simCourses } = useCourses();
   const dob = useFedBirthdates();
@@ -198,11 +208,12 @@ function PrevisaoDaProva({ courseKey, teeId, tournament, fonte, teeSugerido }: {
     const course = simCourses.find((c) => c.courseKey === courseKey);
     const tee = course?.master.tees.find((t) => t.teeId === teeId);
     if (!course || !tee) return null;
-    const note = fonte === "escalao" ? `O Manuel não está nesta prova — o tee que lhe caberia pelo escalão (${teeSugerido}). Muda-se na caixa «Tee».`
+    const note = notaSede ? notaSede
+      : fonte === "escalao" ? `O Manuel não está nesta prova — o tee que lhe caberia pelo escalão (${teeSugerido}). Muda-se na caixa «Tee».`
       : fonte === "nenhum" ? "Não se sabe o tee do Manuel aqui — escolhe-se na caixa «Tee»."
       : undefined;
     return { course, tee, note };
-  }, [simCourses, courseKey, teeId, fonte, teeSugerido]);
+  }, [simCourses, courseKey, teeId, fonte, teeSugerido, notaSede]);
   // O field é o do tee à vista (o escolhido na caixa).
   const [teeNome, setTeeNome] = useState("");
   const onTee = useCallback((t: { teeName: string }) => setTeeNome(t.teeName), []);
@@ -229,8 +240,12 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
   const teeEsc = teeProva ? "" : (teePeloEscalao(tournament) ?? "");
   const tee = teeProva || teeEsc;
   const fonte: TeeFonte = teeProva ? "prova" : teeEsc ? "escalao" : "nenhum";
-  const [found, setFound] = useState<{ q: string; key: string | null; teeId: string | null; exacto?: boolean } | null>(null);
-  const q = `${nome}|${tee}`;
+  const [found, setFound] = useState<{ q: string; key: string | null; teeId: string | null; exacto?: boolean; notaSede?: string } | null>(null);
+  // Prova USKids com sede conhecida (USKIDS_SEDES — Spanish Open 2026 no San
+  // Roque): o campo e o tee do escalão saem dela, não do nome (04/11/2026).
+  const tcodeN = Number(tournament.tcode) || 0;
+  const escalaoProva = (tournament as { escalao?: string | null }).escalao ?? "";
+  const q = `${nome}|${tee}|${tcodeN}|${escalaoProva}`;
   useEffect(() => {
     if (!nome) return;
     let alive = true;
@@ -238,6 +253,11 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
       .then((m) => m.loadCourses())
       .then(({ simCourses }) => {
         if (!alive) return;
+        const sede = tcodeN && escalaoProva ? teeDaSede(tcodeN, escalaoProva, simCourses) : null;
+        if (sede) {
+          setFound({ q, key: sede.course.courseKey, teeId: (sede.tee as Tee).teeId, exacto: true, notaSede: sede.nota });
+          return;
+        }
         const c = findCourseByName(simCourses, nome);
         // O tee pedido; sem ele no campo, o 1.º tee de homens (escolhe-se na caixa).
         const t0 = (c && tee && findTee(c, tee)) || c?.master.tees.find((x) => x.sex !== "F") || c?.master.tees[0] || null;
@@ -245,23 +265,24 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
       })
       .catch(() => { if (alive) setFound({ q, key: null, teeId: null, exacto: false }); });
     return () => { alive = false; };
-  }, [nome, tee, q]);
+  }, [nome, tee, q, tcodeN, escalaoProva]);
   const cur = found && found.q === q ? found : null;
   const key = cur?.key ?? null;
   const teeId = cur?.teeId ?? null;
   const fonteFinal: TeeFonte = cur?.exacto ? fonte : "nenhum";
+  const notaSede = cur?.notaSede;
   return useMemo(() => {
     if (!key) return [];
     const abas: Aba[] = [{
       key: "campo",
       label: "⛳ O campo",
-      content: <CoursesGate withPlayers><CampoDaProva courseKey={key} /></CoursesGate>,
+      content: <CoursesGate withPlayers><CampoDaProva courseKey={key} teeId={teeId} /></CoursesGate>,
     }];
     if (teeId) abas.push({
       key: "previsao",
       label: "🔮 Previsão",
-      content: <CoursesGate><PrevisaoDaProva courseKey={key} teeId={teeId} tournament={tournament} fonte={fonteFinal} teeSugerido={tee} /></CoursesGate>,
+      content: <CoursesGate><PrevisaoDaProva courseKey={key} teeId={teeId} tournament={tournament} fonte={fonteFinal} teeSugerido={tee} notaSede={notaSede} /></CoursesGate>,
     });
     return abas;
-  }, [key, teeId, tournament, tee, fonteFinal]);
+  }, [key, teeId, tournament, tee, fonteFinal, notaSede]);
 }

@@ -9,7 +9,8 @@
 
 import React, { useMemo } from "react";
 import type { CanonicalData, Junior, Tournament } from "../data";
-import { computeTier, getTierLabel, getTierColors, hasRealConfrontWithManuel } from "../data";
+import { computeTier, getTierLabel, getTierColors, hasRealConfrontWithManuel, nivelIncerto } from "../data";
+import { POUCAS_VOLTAS_TITULO } from "../../../ui/TierBadge";
 import { useScoutRanking } from "../useScoutRanking";
 import { computeDobInfo, escalaoIntl, type DobInfo } from "../dobInfo";
 import { getTournWeight } from "../tournWeight";
@@ -18,7 +19,7 @@ import { MANUEL_DOB } from "../../../constants/manuel";
 import HcpSparkline from "./HcpSparkline";
 import BirthPill from "../../../ui/BirthPill";
 import { EscPill, RankPill } from "../../../ui/PillBadge";
-import { shortDateSlash, fmtHcp, MONTHS_PT } from "../../../utils/format";
+import { shortDateSlash, fmtHcp, MONTHS_PT, fmtSign } from "../../../utils/format";
 import { stripAccents } from "../../../utils/normName";
 
 import ExtLink from "../../../ui/ExternalLink";
@@ -137,8 +138,9 @@ export default function HeroIdentity({ data, junior }: Props) {
   // partilham só torneios em escalões diferentes (ex: Manuel B11 vs Rafael B12
   // no mesmo Venice Open), o tier seria enganador — escondemos.
   const tier = (ranking && !isManuel && hasRealConfrontWithManuel(junior, data.manuel, data.tournamentById))
-    ? computeTier(junior, data.tournamentById, ranking)
+    ? computeTier(junior, ranking)
     : null;
+  const nivelEntry = tier ? ranking?.get(junior.id) ?? null : null;
 
   const mainClub = junior.sources.fpg?.club || junior.sources.rfeg?.club || junior.sources.ffgolf?.club || junior.club || null;
   const mainClubSource = junior.sources.fpg?.club ? "FPG" : junior.sources.rfeg?.club ? "RFEG" : junior.sources.ffgolf?.club ? "FFG" : null;
@@ -184,8 +186,13 @@ export default function HeroIdentity({ data, junior }: Props) {
             {tier && (() => {
               const c = getTierColors(tier);
               return (
-                <Tint className="tier-pill" bg={c.bg} fg={c.fg} bd={c.fg}>
+                <Tint className="tier-pill" bg={c.bg} fg={c.fg} bd={c.fg}
+                  title={nivelEntry?.nivel != null
+                    ? `Nível ${fmtSign(nivelEntry.nivel, 1)} pancadas por volta (último ano) · percentil ${nivelEntry.percentile} da geração ${nivelEntry.birthYear}${nivelIncerto(nivelEntry) ? ` · ${POUCAS_VOLTAS_TITULO}` : ""}`
+                    : undefined}>
                   {tier === "elite" ? "★ " : tier === "strong" ? "⚔️ " : ""}{getTierLabel(tier)}
+                  {nivelEntry?.nivel != null && <span className="u-fw-400"> · {fmtSign(nivelEntry.nivel, 1)}</span>}
+                  {nivelIncerto(nivelEntry) && <span className="u-fw-400"> · poucas voltas</span>}
                 </Tint>
               );
             })()}

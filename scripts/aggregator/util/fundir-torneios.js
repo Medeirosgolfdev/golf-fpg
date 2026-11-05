@@ -124,7 +124,7 @@ function fundirLinha(p, s) {
 }
 
 function fundirFlight(fp, fs) {
-  for (const k of ["par", "yards", "ageMin", "ageMax", "sex"]) if (vazio(fp[k]) && !vazio(fs[k])) fp[k] = fs[k];
+  for (const k of ["par", "yards", "metros", "ageMin", "ageMax", "sex"]) if (vazio(fp[k]) && !vazio(fs[k])) fp[k] = fs[k];
 }
 
 function fundirCabecalho(p, s) {

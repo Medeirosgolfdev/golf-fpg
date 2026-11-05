@@ -15,6 +15,7 @@
  */
 
 const { DATA, readJsonSafe } = require("../util/io");
+const { validar } = require("../util/metros");
 const { displayName, splitName, dobToIso, countryToIso2, normName } = require("../util/names");
 const { criarHistorico } = require("../util/hcp-historico");
 
@@ -106,6 +107,8 @@ function load() {
           round: i + 1,
           gross: typeof rd[i] === "number" ? rd[i] : null,
           strokes: Array.isArray(sc[i]) ? sc[i] : undefined,
+          // metros do tee que o jogador jogou (build-fcg-rivals: gameTee.meters1_18)
+          ...(validar(pl.mt, Array.isArray(sc[i]) ? sc[i].filter((x) => x > 0).length || 18 : 18) ? { metros: validar(pl.mt, Array.isArray(sc[i]) ? sc[i].filter((x) => x > 0).length || 18 : 18) } : {}),
         });
       }
       const key = resolveKey(pl);

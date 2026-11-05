@@ -3438,6 +3438,18 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 .hdt tr.hdt-left > td.hdt-lbl { font-weight: 400; color: var(--text-2); }
 .hdt td.hdt-green { border-top: 1px solid var(--border); vertical-align: top; }
 .par-chip { display: inline-block; min-width: 22px; padding: var(--space-1) var(--space-4); border: 1px solid transparent; border-radius: var(--radius-sm); text-align: center; font-weight: 800; }
+/* Scout: os 5 a vigiar (KpiCards numa fila; 2 por fila em ecrã estreito). */
+.scout-vigiar { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-10); margin: var(--space-10) 0; }
+.scout-vigiar > .kpi { min-width: 0; }
+@media (max-width: 900px) { .scout-vigiar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Cartões pequenos dos 5 a vigiar e a pílula do World Championship. */
+.scout-vig { border: 1px solid var(--border-light); border-radius: var(--radius); background: var(--bg-card); padding: var(--space-8) var(--space-10); display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+.scout-vig-top { display: flex; align-items: center; gap: var(--space-6); min-width: 0; }
+.scout-vig-n { font-weight: 800; color: var(--text-muted); }
+.scout-vig-nome { font-weight: 700; font-size: var(--fs-13); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+.scout-vig-prev b { font-size: var(--fs-18); font-weight: 800; }
+.scout-vig-factos { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.p-world { background: var(--bg-warn-strong); color: var(--color-warn-dark); border-color: transparent; font-weight: 700; }
 
 /* ── Search input + compact select (DrivePage, FPGPage) ── */
 .select-compact { font-size: var(--fs-11); padding: var(--space-3) var(--space-6); border-radius: var(--radius);

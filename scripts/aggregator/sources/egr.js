@@ -16,6 +16,7 @@
 const fs = require("fs");
 const path = require("path");
 const { DATA_DIR, readJsonSafe } = require("../util/io");
+const { validar } = require("../util/metros");
 const { displayName, countryToIso2 } = require("../util/names");
 
 const SOURCE_ID = "egr";
@@ -209,6 +210,8 @@ function load() {
         ageMax,
         sex,
         par: par ? Array.from({ length: 18 }, () => Math.round(par / 18)) : undefined,
+        // comprimento do campo publicado pelo EGR (18 buracos; valores absurdos ficam de fora)
+        ...(validar(ev.lengthMeters, 18) ? { metros: validar(ev.lengthMeters, 18) } : {}),
         fieldSize: results.length,
         results,
       }],

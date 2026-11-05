@@ -9,6 +9,7 @@
 
 const path = require("path");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
+const { metrosDeJardas } = require("../util/metros");
 const { displayName, countryToIso2 } = require("../util/names");
 // Partilhado com o adapter england (ver util/rank.js).
 const { rankResults } = require("../util/rank");
@@ -84,6 +85,8 @@ function normalize(data, fileName, playerMap) {
       round: r.day || i + 1,
       gross: typeof r.gross === "number" ? r.gross : null,
       strokes: Array.isArray(r.scores) ? r.scores : undefined,
+      // FCG World joga-se em vários campos: jardas da volta do próprio jogador
+      ...(metrosDeJardas(r.yards) ? { metros: metrosDeJardas(r.yards) } : {}),
     }));
     results.push({
       playerSourceKey: key,
@@ -148,6 +151,8 @@ function normalize(data, fileName, playerMap) {
       ageMax,
       sex,
       par,
+      // as fontes BlueGolf (BJGT, FCG, JWGC) publicam JARDAS por buraco
+      ...(metrosDeJardas(data.yards) ? { metros: metrosDeJardas(data.yards) } : {}),
       fieldSize: results.length,
       results,
     }],

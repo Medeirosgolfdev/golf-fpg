@@ -15,6 +15,14 @@
  */
 
 const path = require("path");
+const { somaMetros } = require("../util/metros");
+
+/** Metros comuns a todas as voltas do flight (um só tee), senão undefined. */
+function metrosComuns(results) {
+  const v = new Set();
+  for (const r of results) for (const rd of r.rounds || []) if (rd.metros) v.add(rd.metros);
+  return v.size === 1 ? [...v][0] : undefined;
+}
 const { pathToFileURL } = require("url");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
 const { lerFedsDasProvas, fedDoJogador } = require("../util/feds-das-provas");
@@ -403,6 +411,8 @@ function normalizeTournament(t, kind, playerMap, { nascimento = new Map(), fedsD
         round: r.round || rounds.length + 1,
         gross: typeof r.gross === "number" ? r.gross : null,
         strokes: Array.isArray(r.scores) ? r.scores : undefined,
+        // metros do tee que ESTE jogador jogou (as provas «Geral» misturam tees)
+        ...(somaMetros(r.meters) ? { metros: somaMetros(r.meters) } : {}),
       });
     }
     // Compatibilidade com formato antigo "flat" (scores no top-level do player)
@@ -439,6 +449,8 @@ function normalizeTournament(t, kind, playerMap, { nascimento = new Map(), fedsD
     sex: escSex,
     par: par || undefined,
     yards: meters || undefined, // metros, não jardas
+    // metros do flight só se todos jogaram o mesmo tee; senão vale o de cada volta
+    metros: metrosComuns(results),
     fieldSize: typeof t.playerCount === "number" ? t.playerCount : fpgPlayers.length,
     results,
   };

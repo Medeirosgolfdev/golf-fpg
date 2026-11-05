@@ -11,7 +11,23 @@
  * FFG NÃO expõe DOB no portal. Cross-source pode preencher via USKids/RFEG.
  */
 
-const { DATA, readJsonSafe } = require("../util/io");
+const path = require("path");
+const { DATA, DATA_DIR, readJsonSafe } = require("../util/io");
+const { somaMetros, validar } = require("../util/metros");
+
+/** «U12G»/«U12 G»/«BG»/«MF» → U12G/U14G/U16F… (igual a serieCourseKey em src/data/ffg/toTournament.ts) */
+const serieCourseKey = (label) => {
+  const k = String(label || "").toUpperCase().replace(/\s+/g, "");
+  const alias = { BG: "U14G", BF: "U14F", MG: "U16G", MF: "U16F" };
+  return alias[k] || k;
+};
+/** Metros do tee da série no ficheiro RMS9 do organizador (ffgolf-rms9-tees.json). */
+function metrosDaSerie(tees, t) {
+  const s = tees?.tournaments?.[String(t.trnId)]?.series?.[serieCourseKey(t.serieLabel)];
+  if (!s) return null;
+  const nb = Array.isArray(s.meters) ? s.meters.filter((x) => x > 0).length : 18;
+  return validar(s.metersTotal, nb || 18) || somaMetros(s.meters);
+}
 const { displayName, dobToIso, countryToIso2, normName } = require("../util/names");
 const { seriesId } = require("../util/id");
 
@@ -24,6 +40,8 @@ const nomeFfg = (n) => displayName(String(n || "").replace(/\s*\((?:U|Sub-?)\d{1
 function load(opts) {
   const france = readJsonSafe(DATA.ffgFrancePlayers, { byName: {} });
   const slim = readJsonSafe(DATA.ffgJuniorsSlim, { tournaments: [] });
+  // Tees por série (metros/CR/slope do organizador) — só parte dos torneios
+  const tees = readJsonSafe(path.join(DATA_DIR, "ffgolf-rms9-tees.json"), { tournaments: {} });
 
   // 1) Roster — agrupar por licença (france-players.json tem byName com várias entries por jogador)
   const byLic = new Map();
@@ -90,7 +108,7 @@ function load(opts) {
   const byTrn = new Map(); // trnId → tournament normalizado (flights acumulados)
   const playersByLic = new Map(players.map((p) => [p.sourceKey, p]));
   for (const t of slim.tournaments || []) {
-    const tt = normalizeFfgTournament(t, licCanonica);
+    const tt = normalizeFfgTournament(t, licCanonica, tees);
     if (tt) {
       const prev = byTrn.get(tt.sourceKey);
       if (!prev) {
@@ -156,7 +174,8 @@ function isBetterName(candidate, current) {
   return candRatio < curRatio;
 }
 
-function normalizeFfgTournament(t, licCanonica = (lic) => lic) {
+function normalizeFfgTournament(t, licCanonica = (lic) => lic, tees = null) {
+  const metros = metrosDaSerie(tees, t);
   if (!t || !t.trnId) return null;
   const series = ffgSeries(t);
   const flightLabel = t.serieLabel || t.ageGroup || "Geral";
@@ -197,6 +216,7 @@ function normalizeFfgTournament(t, licCanonica = (lic) => lic) {
       ageMax: typeof t.ageMax === "number" ? t.ageMax : null,
       sex,
       par: Array.isArray(t.parPerHole) ? t.parPerHole : undefined,
+      ...(metros ? { metros } : {}),
       fieldSize: flightPlayers.length,
       results,
     }],

@@ -11,6 +11,7 @@
 const { buildJobfileSource, parseSexAge } = require("../util/jobfile");
 
 module.exports = buildJobfileSource({
+  metrosPorConfirmar: true, // «meters» do GolfGenius sem marca de conversão — podem ser jardas
   sourceId: "coc",
   sourceLabel: "Champion of Champions World Championship",
   pattern: /^coc_\d{4}\.json$/,

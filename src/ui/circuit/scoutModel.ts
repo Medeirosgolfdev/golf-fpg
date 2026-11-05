@@ -8,7 +8,7 @@
  * agregador (juniors-scout.json, que traz também a forma), nunca dos ~180 MB do kids2.
  * O modelo de ameaça veio do kids2/ScoutView.tsx sem mudar a lógica.
  */
-import { getTierLabel, type TierKey, type RankingRow } from "../../pages/kids2/juniorCalc";
+import { getTierLabel, getTournWeight, nivelIncerto, type TierKey, type RankingRow } from "../../pages/kids2/juniorCalc";
 
 import { fmtOrd } from "../../utils/format";
 /** Um dos últimos torneios (`u` do juniors-scout.json, 02/11/2026 — Kids 2 +
@@ -53,7 +53,8 @@ export interface JuniorScout {
   m?: ScoutComManuel[];
   /** Confrontos no mesmo flight. */
   mf?: number;
-  /** Ranking da coorte (ano × sexo), compacto — `decodeRanking` do juniorCalc. */
+  /** Ranking da geração (ano × sexo) pelo nível em pancadas, compacto — `decodeRanking` do juniorCalc:
+   *  [ano, sexo, posição, nível, peso das voltas]. */
   r?: RankingRow;
   /** Os últimos torneios (os nomes em `ScoutFile.tn`). */
   u?: ScoutTorneioRaw[];
@@ -61,6 +62,11 @@ export interface JuniorScout {
   hr?: [number, string | null];
 }
 export interface ScoutFile { players: Record<string, JuniorScout>; tn?: string[] }
+
+/** O Nível deste jogador assenta em poucas voltas do último ano? (aviso «poucas voltas») */
+export function nivelPoucoSeguro(sc: JuniorScout | null | undefined): boolean {
+  return nivelIncerto({ peso: sc?.r?.[4] });
+}
 
 export const N_FORMA = 5;
 /** ±par médio por 18 buracos nos últimos torneios acabados (9 buracos contam
@@ -154,4 +160,184 @@ export function computeThreat(a: ThreatArgs): ThreatInfo {
   else if (h2hBeatsManuel || score >= 5) level = "med";
   else level = "low";
   return { score, level, reasons };
+}
+
+// ── Previsão (04/11/2026, «melhora o scout»: quanto deve fazer cada um e quem
+//    deve ficar à frente do Manuel) ──────────────────────────────────────────
+export type FontePrevisao = "confrontos" | "comparacoes" | "nivel" | "media" | "hcp";
+export const FONTE_PREVISAO_LABEL: Record<FontePrevisao, string> = {
+  confrontos: "pelos confrontos com o Manuel",
+  comparacoes: "pelas provas em comum (com o Manuel e entre eles), pesadas pela força da prova",
+  nivel: "pelo Nível em pancadas (último ano), em relação ao do Manuel",
+  media: "pela média ao par do último ano",
+  hcp: "pelo handicap",
+};
+export interface Previsao {
+  /** ±par por volta de 18 buracos, num dia normal. */
+  toPar: number;
+  /** Pancadas por volta a mais (+) ou a menos (−) que o Manuel (null sem a média dele). */
+  vsManuel: number | null;
+  fonte: FontePrevisao;
+}
+
+/**
+ * Previsão de um rival, sempre em relação ao Manuel (a referência é o ±par
+ * médio do Manuel no último ano, `manuelToPar`):
+ *  1. confrontos — as pancadas por volta nas voltas que jogaram os dois (o
+ *     sinal mais directo: mesmo campo, mesmo dia);
+ *  2. média — o ±par médio dele no último ano (outros campos, mas da mesma época);
+ *  3. hcp — a diferença de handicap (dele − do Manuel).
+ * Null sem nenhuma destas.
+ */
+export function previsaoRival(
+  a: { vsMMedia: number | null; nConfrontos: number; toParAno: number | null; hcp: number | null },
+  manuel: { toParAno: number | null; hcp: number | null },
+): Previsao | null {
+  const r1 = (x: number) => Math.round(x * 10) / 10;
+  if (manuel.toParAno != null && a.vsMMedia != null && a.nConfrontos > 0) {
+    return { toPar: r1(manuel.toParAno + a.vsMMedia), vsManuel: r1(a.vsMMedia), fonte: "confrontos" };
+  }
+  if (a.toParAno != null) {
+    return { toPar: r1(a.toParAno), vsManuel: manuel.toParAno != null ? r1(a.toParAno - manuel.toParAno) : null, fonte: "media" };
+  }
+  if (a.hcp != null && manuel.hcp != null && manuel.toParAno != null) {
+    const d = a.hcp - manuel.hcp;
+    return { toPar: r1(manuel.toParAno + d), vsManuel: r1(d), fonte: "hcp" };
+  }
+  return null;
+}
+
+/** Os confrontos com o Manuel numa frase («Ganhou 7 de 7 · 10.8 por volta à
+ *  frente» / «O Manuel ganhou 3 de 4 · 2.1 por volta»). */
+export function fraseConfrontos(frente: number, atras: number, n: number, vsMMedia: number | null): string {
+  if (!n) return "";
+  const empates = n - frente - atras;
+  const quem = atras > frente ? `Ganhou ${atras} de ${n}` : frente > atras ? `O Manuel ganhou ${frente} de ${n}` : `Empatados: ${frente} cada${empates ? ` (${empates} empate${empates > 1 ? "s" : ""})` : ""}`;
+  if (vsMMedia == null || Math.abs(vsMMedia) < 0.05) return quem;
+  const pv = Math.abs(vsMMedia).toFixed(1);
+  return `${quem} · ${pv} por volta ${vsMMedia < 0 ? "à frente" : "atrás"}`;
+}
+
+/** Escalão pelo nome do escalão USKids da prova («Boys 12» → «Sub 12»,
+ *  «Girls 13-14» → «Sub 14»): todos têm essa idade na data de referência. */
+export function escalaoDaProva(nome: string | null | undefined): string | null {
+  const m = /\b(boys|girls)\b\s*(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?/i.exec(nome || "");
+  if (!m) return null;
+  return `Sub ${m[3] ?? m[2]}`;
+}
+
+// ── Escala por comparações (04/11/2026, Mariana: «o Dmitrii ficou SEMPRE à
+//    frente do Antonio… o Antonio só tem vitoriazinhas em local tours
+//    brasileiros, com fields pequenos»; «já definimos regras para o power das
+//    provas a contar para o índice de jogador») ─────────────────────────────
+// A média ao par trata todos os campos por igual; o que conta é como cada um
+// se saiu CONTRA os outros nas mesmas provas. Cada prova em comum dá uma
+// diferença em pancadas por volta de 18 buracos:
+//   - com o Manuel: os confrontos (`m`, só as voltas que jogaram os dois);
+//   - entre dois do field: o mesmo torneio, no mesmo dia, com o mesmo field e
+//     as mesmas voltas e buracos (dos últimos torneios de cada um, `u`).
+// O peso de cada prova = as voltas × a força da prova pela regra do índice do
+// jogador (`getTournWeight`, juniorCalc: voltas, field e países → estrelas):
+// um World Championship com 159 pesa muito mais do que um local tour de 4.
+// Junta-se tudo numa escala (o Manuel = 0) pelos mínimos quadrados — se o A
+// perde por muito para o B e o B ganha ao Manuel, o A fica atrás do B mesmo
+// sem nunca ter jogado com o Manuel. Só entram os ligados ao Manuel por
+// provas em comum (os outros ficam sem posição — vale o Nível em pancadas).
+export interface NoEscala {
+  key: string; isManuel: boolean;
+  u?: readonly ScoutTorneioRaw[]; m?: readonly ScoutComManuel[];
+}
+export interface PosEscala {
+  /** Pancadas por volta a mais (+) ou a menos (−) que o Manuel. */
+  vsManuel: number;
+  /** Provas em comum que entraram (com o Manuel ou com outros do field). */
+  provas: number;
+}
+
+/** Estrelas da prova (1 a 5½) pela regra do índice do jogador. */
+function forcaDaProva(voltas: number, field: number | null): number {
+  return getTournWeight({ rounds: voltas, flights: [{ fieldSize: field ?? 0, results: [] }], sourceId: "" } as never, field ?? 0).stars;
+}
+
+export function escalaPorComparacoes(nos: readonly NoEscala[], desde: string): Map<string, PosEscala> {
+  const man = nos.find((n) => n.isManuel);
+  const MANUEL = man?.key ?? "__manuel__";
+  type Aresta = { j: string; d: number; w: number };
+  const arestas = new Map<string, Aresta[]>();
+  const add = (i: string, j: string, d: number, w: number) => {
+    if (!Number.isFinite(d) || !(w > 0)) return;
+    (arestas.get(i) ?? arestas.set(i, []).get(i)!).push({ j, d, w });
+    (arestas.get(j) ?? arestas.set(j, []).get(j)!).push({ j: i, d: -d, w });
+  };
+  // Com o Manuel (sem o field da prova: a força pelas voltas).
+  for (const n of nos) {
+    if (n.isManuel) continue;
+    for (const x of n.m ?? []) {
+      if (!x[0] || x[0] < desde) continue;
+      const voltas = x[5] || 1;
+      add(n.key, MANUEL, (x[4] * 18) / (x[6] || 18) / voltas, voltas * forcaDaProva(voltas, null) / 3);
+    }
+  }
+  // Entre dois do field (o Manuel fica de fora: os confrontos dele já entraram).
+  const porProva = new Map<string, { key: string; p: number; buracos: number; voltas: number; field: number }[]>();
+  for (const n of nos) {
+    if (n.isManuel) continue;
+    for (const x of n.u ?? []) {
+      const [data, nome, , field, voltas, pancadas, , buracos] = x;
+      if (!data || data < desde || pancadas == null || !(voltas > 0) || !(buracos >= 9) || field == null) continue;
+      const k = `${nome}|${data}|${field}|${voltas}|${buracos}`;
+      (porProva.get(k) ?? porProva.set(k, []).get(k)!).push({ key: n.key, p: pancadas, buracos, voltas, field });
+    }
+  }
+  for (const lista of porProva.values()) {
+    for (let a = 0; a < lista.length; a++) for (let b = a + 1; b < lista.length; b++) {
+      const A = lista[a], B = lista[b];
+      if (A.key === B.key) continue;
+      add(A.key, B.key, ((A.p - B.p) * 18) / A.buracos, (A.buracos / 18) * forcaDaProva(A.voltas, A.field) / 3);
+    }
+  }
+  // Só os ligados ao Manuel por provas em comum (directa ou indirectamente).
+  const ligados = new Set<string>([MANUEL]);
+  const fila = [MANUEL];
+  while (fila.length) {
+    const k = fila.pop()!;
+    for (const e of arestas.get(k) ?? []) if (!ligados.has(e.j)) { ligados.add(e.j); fila.push(e.j); }
+  }
+  // Mínimos quadrados (Gauss-Seidel), o Manuel fixo em 0.
+  const r = new Map<string, number>([[MANUEL, 0]]);
+  for (const k of ligados) if (k !== MANUEL) r.set(k, 0);
+  for (let it = 0; it < 400; it++) {
+    for (const k of ligados) {
+      if (k === MANUEL) continue;
+      let num = 0, den = 0;
+      for (const e of arestas.get(k) ?? []) { num += e.w * ((r.get(e.j) ?? 0) + e.d); den += e.w; }
+      if (den > 0) r.set(k, num / den);
+    }
+  }
+  const out = new Map<string, PosEscala>();
+  for (const n of nos) {
+    if (n.isManuel) { out.set(n.key, { vsManuel: 0, provas: 0 }); continue; }
+    if (!ligados.has(n.key)) continue;
+    out.set(n.key, { vsManuel: Math.round((r.get(n.key) ?? 0) * 10) / 10, provas: (arestas.get(n.key) ?? []).length });
+  }
+  return out;
+}
+
+// ── Destaques do jogador (04/11/2026: «se conseguiram ir ao world devem
+//    receber um destaque… é difícil conseguir lugar») ────────────────────────
+/** O World Championship USKids (Pinehurst) nos últimos torneios: o lugar e o
+ *  field. Só o principal — sem o Parent/Child nem os outros «world». */
+export function worldChampionship(ult: readonly ScoutTorneio[]): { ano: string; lugar: number | null; field: number | null; estado: string | null } | null {
+  const w = ult.find((x) => /^World Championship \d{4}$/.test(x.nome.trim()));
+  return w ? { ano: w.data.slice(0, 4), lugar: w.lugar, field: w.field, estado: w.estado } : null;
+}
+
+/** O resultado mais notável dos últimos torneios (fora o World): o do maior
+ *  field com lugar no top-3; senão o melhor lugar no maior field. */
+export function resultadoNotavel(ult: readonly ScoutTorneio[]): ScoutTorneio | null {
+  const com = ult.filter((x) => x.lugar != null && x.field != null && !/^World Championship \d{4}$/.test(x.nome.trim()) && !/parent\s*\/\s*child/i.test(x.nome));
+  if (!com.length) return null;
+  const podio = com.filter((x) => x.lugar! <= 3).sort((a, b) => b.field! - a.field! || a.lugar! - b.lugar!);
+  if (podio.length && podio[0].field! >= 8) return podio[0];
+  return [...com].sort((a, b) => b.field! - a.field! || a.lugar! - b.lugar!)[0];
 }

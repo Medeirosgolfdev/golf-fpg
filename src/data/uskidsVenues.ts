@@ -70,3 +70,33 @@ export function camposDoEscalao(sede: (typeof USKIDS_SEDES)[number], escalao: st
   const k = sede.porEscalao?.[escalao] ?? sede.resto;
   return k ? [k] : sede.courseKeys;
 }
+
+/** O campo e o tee de um escalão numa prova com sede (`USKIDS_SEDES`): dos
+ *  campos do escalão, o tee do sexo do escalão cujo comprimento (em jardas)
+ *  fica mais perto do meio da faixa da grelha USKids. Só escalões de 18
+ *  buracos. Fonte única — Kids 2 (`resolveCourseTee`) e o CircuitShell
+ *  (`useCampoTabs`, /uskids). */
+export function teeDaSede<C extends { courseKey: string; master: { name: string; tees: { sex: string; teeName: string; distances: { total?: number | null } }[] } }>(
+  t: number, escalao: string, courses: readonly C[],
+): { course: C; tee: C["master"]["tees"][number]; nota: string } | null {
+  const sede = USKIDS_SEDES[t];
+  const faixa = uskidsIntlYardage(escalao);
+  if (!sede || !faixa || faixa.holes !== 18) return null;
+  const alvo = (faixa.min + faixa.max) / 2;
+  let best: { course: C; tee: C["master"]["tees"][number]; d: number } | null = null;
+  for (const key of camposDoEscalao(sede, escalao)) {
+    const course = courses.find((c) => c.courseKey === key);
+    for (const tee of course?.master.tees ?? []) {
+      if (tee.sex !== faixa.sex || !tee.distances?.total) continue;
+      const d = Math.abs(tee.distances.total / 0.9144 - alvo);
+      if (!best || d < best.d) best = { course: course!, tee, d };
+    }
+  }
+  if (!best) return null;
+  const total = best.tee.distances.total ?? 0;
+  return {
+    course: best.course,
+    tee: best.tee,
+    nota: `${sede.nota}. Tee estimado pela grelha da USKids, enquanto não saem as distâncias oficiais (${escalao}: ${faixa.min}–${faixa.max} jardas): ${best.course.master.name} · ${best.tee.teeName}, ${total} m (${Math.round(total / 0.9144)} jardas).`,
+  };
+}

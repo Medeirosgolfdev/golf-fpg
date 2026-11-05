@@ -232,6 +232,8 @@ for (const f of ncFiles) {
           (r.scores.filter(x => x > 0).reduce((a, b) => a + b, 0) || 0)
         );
         const scoresByRound = valid.map(r => r.scores);
+        // metros do tee que o jogador jogou em cada volta (roundScores[].meters, por jogador)
+        const metersByRound = valid.map(r => Array.isArray(r.meters) ? r.meters.reduce((a, b) => a + (b > 0 ? b : 0), 0) || null : null);
         const totalFromRounds = totalsByRound.reduce((a, b) => a + b, 0);
         const total = (typeof p.total === "number") ? p.total : (totalFromRounds || null);
         // INCLUIR mesmo sem scorecards: usa só pos+total+toPar para ranking
@@ -246,6 +248,7 @@ for (const f of ncFiles) {
           lic: p.licencia || null,
           rd: totalsByRound,
           sc: scoresByRound,
+          ...(metersByRound.some(Boolean) ? { mt: metersByRound } : {}),
         });
       }
 

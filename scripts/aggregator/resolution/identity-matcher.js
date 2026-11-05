@@ -592,6 +592,7 @@ function resolve(rawSources, overrides) {
           sex: f.sex,
           par: f.par,
           yards: f.yards,
+          ...(f.metros ? { metros: f.metros } : {}),
           fieldSize: f.fieldSize,
           results: resolvedResults,
         });

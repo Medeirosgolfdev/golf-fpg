@@ -23,7 +23,8 @@
  *                     v?: voltas de 18 buracos no último ano — [voltas, média de pancadas, melhor volta,
  *                         ±par médio, ±par da melhor] (os ±par só com o par oficial do escalão, senão null),
  *                     mf?: confrontos no mesmo flight,
- *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição],
+ *                     r?: ranking da geração pelo NÍVEL EM PANCADAS (nivelPancadas.ts, só o último ano) — RankingRow:
+ *                         [ano de nascimento, sexo, posição, nível (pancadas acima do par), peso das voltas],
  *                     hh?: [[data, hcp], …] — HCP com data (até 6, o mais recente primeiro; util/scout.js),
  *                     y?: ano de nascimento CERTO sem data (Federgolf, GolfBox — junior.birthYear; sem `d`),
  *                     ne?: [ano, ano] — nascimento ESTIMADO pelos escalões USKids (sem `d` nem `y`; util/nascimento-uskids.js),
@@ -63,6 +64,11 @@ function loadCalc() {
       `(precisa de Node ≥ 22.18, que corre TypeScript). Erro original: ${e.message}`);
   }
   return calc;
+}
+let nivelLib;
+function loadNivel() {
+  if (!nivelLib) nivelLib = require(path.join(__dirname, "..", "..", "..", "src", "pages", "kids2", "nivelPancadas.ts"));
+  return nivelLib;
 }
 
 /** Os resultados WJGC/Doral/EOWAGR de cada junior (tid → resultado compacto) e
@@ -150,7 +156,13 @@ function buildScout(juniors, tournaments, generatedAt) {
   const tById = new Map(tournaments.map((t) => [t.id, t]));
   const extra = buildExtra(tournaments);
   const ultimos = buildUltimos(juniors, tournaments, generatedAt);
-  const ranking = computeRanking(juniors, tById);
+  // Nível em pancadas (só o último ano) → ranking percentil por geração (05/11/2026)
+  const { geracaoDoJunior } = loadCalc();
+  const jById = new Map(juniors.map((j) => [j.id, j]));
+  const geracao = (id) => { const j = jById.get(id); return j ? geracaoDoJunior(j, tById) : null; };
+  const hoje = String(generatedAt || new Date().toISOString()).slice(0, 10);
+  const niveis = loadNivel().calcularNiveis(tournaments, geracao, hoje);
+  const ranking = computeRanking(juniors, tById, niveis);
   const manuel = juniors.find((j) => j.id === MANUEL_ID) || null;
   const desdeAno = new Date(new Date(generatedAt || Date.now()).getTime() - 365 * 864e5).toISOString().slice(0, 10);
   const players = {};
@@ -159,7 +171,7 @@ function buildScout(juniors, tournaments, generatedAt) {
     if (!j.tournamentIds?.length && !j._match?.mergedFromSources?.includes("manual")) continue;
     // n = torneios na carreira (era a coluna «torn.» dos Rivais da /uskids, 20/10/2026).
     const o = { n: j.tournamentIds.length };
-    const tier = computeTier(j, tById, ranking);
+    const tier = computeTier(j, ranking);
     if (tier) o.t = tier;
     const rk = ranking.get(j.id);
     if (rk) o.r = encodeRankingEntry(rk);

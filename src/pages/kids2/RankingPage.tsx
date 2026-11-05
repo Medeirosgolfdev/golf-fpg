@@ -9,11 +9,11 @@ import React, { useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   useJuniorsCanonical,
-  computeCareerScore,
   getTierLabel,
   getTierColors,
   countWins,
   countTop3,
+  nivelIncerto,
   type Junior,
   type Tournament,
   type RankingEntry,
@@ -27,7 +27,7 @@ import EmptyState from "../../ui/EmptyState";
 import Kids2SubNav from "./Kids2SubNav";
 import { MANUEL_BIRTH_YEAR, isManuel } from "../../constants/manuel";
 import { useScoutRanking } from "./useScoutRanking";
-import { medal as medalOf, fmtOrd, shortTournamentName } from "../../utils/format";
+import { medal as medalOf, fmtOrd, shortTournamentName, fmtSign } from "../../utils/format";
 import SearchInput from "../../ui/SearchInput";
 import TierBadge from "../../ui/TierBadge";
 import { TrophyCount } from "../../ui/PillBadge";
@@ -128,7 +128,7 @@ function NameCell({ row }: { row: CohortRow }) {
             <span className="u-ml-4px u-fs-fs-10 u-fw-600 u-c-color-good-dark">← tu</span>
           )}
         </ExtLink>
-        <TierBadge tier={entry.tier} />
+        <TierBadge tier={entry.tier} incerto={nivelIncerto(entry)} />
         {wins > 0 && (
           <TrophyCount n={wins} />
         )}
@@ -160,17 +160,21 @@ const COLS: RankingCol<CohortRow>[] = [
   { key: "name", label: "Nome", sort: (r) => (r.junior.canonicalName || "").toLowerCase(), firstDir: "asc", cell: (r) => <NameCell row={r} /> },
   { key: "tourneys", label: "Torn.", className: "num", sort: (r) => r.journey.length, firstDir: "desc", cell: (r) => r.journey.length },
   { key: "wins", label: "Vit.", className: "num", sort: (r) => r.wins, firstDir: "desc", cell: (r) => r.wins > 0 ? r.wins : "—" },
-  { key: "score", label: "Score", className: "num", sort: (r) => r.score, firstDir: "desc",
+  { key: "nivel", label: "Nível", className: "num", title: "Pancadas acima do par numa volta média do escalão, no último ano (mais baixo = melhor)",
+    sort: (r) => r.entry.nivel ?? null, firstDir: "asc",
     cell: (r) => <span className="u-fw-700 u-fvn-tabular-nums u-ws-nowrap">
-      {r.score.toFixed(1)}
+      {r.entry.nivel != null ? fmtSign(r.entry.nivel, 1) : "—"}
       <div className="u-fs-fs-10 u-c-text-3 u-fw-400">p{r.entry.percentile}</div>
     </span> },
+  { key: "peso", label: "Voltas", className: "num", title: "Peso das voltas do último ano (as recentes pesam mais); «?» = poucas voltas, nível pouco seguro",
+    sort: (r) => r.entry.peso ?? null, firstDir: "desc",
+    cell: (r) => r.entry.peso != null ? `${r.entry.peso.toFixed(1)}${nivelIncerto(r.entry) ? " ?" : ""}` : "—" },
 ];
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 
 type CohortRow = {
-  junior: Junior; entry: RankingEntry; score: number;
+  junior: Junior; entry: RankingEntry;
   wins: number; top3: number; journey: JourneyItem[]; isManuel: boolean;
 };
 
@@ -201,11 +205,9 @@ export default function RankingPage() {
       const nameKey = (j.canonicalName || j.id).toLowerCase().trim();
       if (seenNames.has(nameKey)) continue;
       seenNames.add(nameKey);
-      const score = computeCareerScore(j, tournamentById) ?? 0;
       rows.push({
         junior: j,
         entry,
-        score,
         wins: countWins(j, tournamentById),
         top3: countTop3(j, tournamentById),
         journey: buildJourney(j, tournamentById),
@@ -293,13 +295,14 @@ export default function RankingPage() {
         {status.kind === "ready" && sorted.length > 0 && (
           <>
             <RankingTable rows={sorted} cols={COLS} rowKey={(r) => r.junior.id}
-              defaultSort="score" defaultDir="desc"
+              defaultSort="nivel" defaultDir="asc"
               rowClassName={(r) => r.isManuel ? "row-manuel" : undefined} />
 
             <p className="u-fs-fs-11 u-c-text-3 u-mt-8px u-lh-1_5">
-              Score = top-5 resultados ponderados por qualidade do torneio (★1–5 × campo × posição × distância).
-              Bónus de até ×1.5 quando score abaixo do par. Tier por percentil na coorte.
-              Hover nos chips para ver nome completo + estrelas do torneio.
+              Nível = pancadas acima do par numa volta média do escalão, só com as voltas do último ano
+              (as recentes pesam mais). Cada volta compara-se com quem jogou a mesma volta — o tamanho e a
+              força do field, o campo e a distância entram sozinhos. Formatos de equipa não contam.
+              Tier por percentil na geração. «?» = poucas voltas, nível pouco seguro.
             </p>
           </>
         )}

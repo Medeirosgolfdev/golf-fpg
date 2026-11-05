@@ -25,6 +25,7 @@
 const fs = require("fs");
 const path = require("path");
 const { DATA_DIR, readJsonSafe } = require("../util/io");
+const { somaMetros } = require("../util/metros");
 
 const SOURCE_ID = "fig";
 const SOURCE_LABEL = "Federazione Italiana Golf";
@@ -107,6 +108,8 @@ function load() {
         ageMax: idadeMax(t.categoria),
         sex: t.sexo === "F" ? "F" : "M",
         par,
+        // metros do tee da prova (um ficheiro = um sexo = um tee)
+        ...(somaMetros(t.campo?.metros) ? { metros: somaMetros(t.campo.metros) } : {}),
         fieldSize: results.length,
         results,
       };

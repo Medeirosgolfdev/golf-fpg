@@ -7,7 +7,9 @@
  * Partilhado entre o build-uskids-edicoes-anteriores.js (monta-as da cache, sem
  * pedidos) e o fetch-uskids-edicoes-anteriores.js (vai buscar o que a cache não tem).
  *
- *   - provas = os torneios do uskids-results.json + uskids_torneios_completos(N);
+ *   - provas = os torneios do uskids-results.json + uskids_torneios_completos(N)
+ *     + os POR JOGAR do uskids-field.json (04/11/2026: o Spanish Open 2026 ainda
+ *     não tinha resultados e a /uskids ficava sem as edições anteriores dele);
  *   - edições = os torneios do uskids-member-history-slim (catálogo de ~21 mil,
  *     com nome e data) da mesma família, de ANO_MIN em diante, já jogados;
  *   - família = `familyKey`, a MESMA regra do `tournamentFamilyKey` da página
@@ -59,10 +61,19 @@ function provasQueTemos() {
   return out;
 }
 
+/** As provas por jogar (uskids-field.json) — só contam para as famílias. */
+function provasPorJogar() {
+  const f = path.join(DATA, 'uskids-field.json');
+  if (!fs.existsSync(f)) return [];
+  return (JSON.parse(fs.readFileSync(f, 'utf8')).torneios || [])
+    .map(t => ({ t: Number(t.t), name: t.name, date: t.date_inicio }))
+    .filter(p => p.t && p.name);
+}
+
 /** Edições anteriores (ANO_MIN em diante, já jogadas) que não temos. */
 function edicoesEmFalta({ hoje = new Date() } = {}) {
   const temos = provasQueTemos();
-  const familias = new Set([...temos.values()].map(p => familyKey(p.name)).filter(Boolean));
+  const familias = new Set([...temos.values(), ...provasPorJogar()].map(p => familyKey(p.name)).filter(Boolean));
   const slim = JSON.parse(fs.readFileSync(path.join(DATA, 'uskids-member-history-slim.json'), 'utf8'));
   const out = [];
   for (const [k, v] of Object.entries(slim.torneios || {})) {
@@ -77,4 +88,4 @@ function edicoesEmFalta({ hoje = new Date() } = {}) {
   return out.sort((a, b) => dataUS(b.date) - dataUS(a.date));
 }
 
-module.exports = { ANO_MIN, familyKey, dataUS, provasQueTemos, edicoesEmFalta };
+module.exports = { ANO_MIN, familyKey, dataUS, provasQueTemos, provasPorJogar, edicoesEmFalta };

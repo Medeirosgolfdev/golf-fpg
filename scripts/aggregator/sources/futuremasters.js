@@ -18,6 +18,7 @@
 
 const path = require("path");
 const { DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
+const { somaMetros } = require("../util/metros");
 const { displayName, splitName, countryToIso2 } = require("../util/names");
 
 const SOURCE_ID = "fm";
@@ -145,6 +146,8 @@ function normalize(data, fileName, playerMap) {
       label: divKey,
       ageMin, ageMax, sex: null, // divisões FM são mistas (M+F por idade)
       par,
+      // metros por buraco (o scraper converte de jardas)
+      ...(somaMetros(div.meters) ? { metros: somaMetros(div.meters) } : {}),
       fieldSize: results.length,
       results,
     });

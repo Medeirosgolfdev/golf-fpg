@@ -595,7 +595,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // TournamentDetail recebe um torneio sem voltas (só para a barra): os
   // separadores vêm todos de fora e abre no «Resumo» quando o há.
   const semVoltasTourn = useMemo<FPGTournament | null>(() => (curDiv && !curDiv.renderFull && !baseTourn && cur
-    ? { name: cur.name, tcode: cur.id, date: cur.dateStart ?? "", campo: cur.course ?? "", rounds: 0, playerCount: 0, players: [] } as unknown as FPGTournament
+    ? { name: cur.name, tcode: cur.id, date: cur.dateStart ?? "", campo: cur.course ?? "", escalao: curDiv.escalao ?? null, rounds: 0, playerCount: 0, players: [] } as unknown as FPGTournament
     : null), [curDiv, cur, baseTourn]);
   const detailTourn = resultsTourn ?? semVoltasTourn;
   const temResumoSemVoltas = !resultsTourn && leadingTabs.some((t) => t.key === "resumo");

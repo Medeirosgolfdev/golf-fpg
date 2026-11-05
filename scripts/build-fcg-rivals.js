@@ -190,6 +190,9 @@ function build() {
         const acc = view.acc || {};
 
         const { rd, sc } = ronda(p);
+        // metros do tee do jogador (scorecard.gameTee.meters1_18) — as categorias SCRATCH misturam tees
+        const m118 = p.scorecard?.gameTee?.meters1_18;
+        const mt = Array.isArray(m118) ? m118.reduce((a, b) => a + (typeof b === "number" && b > 0 ? b : 0), 0) || null : null;
 
         return {
           n: name,
@@ -208,6 +211,7 @@ function build() {
           club: dobEntry && dobEntry.club || null,
           status: p.isCardFinished ? "finished" : (p.isCardClosed ? "closed" : "in-progress"),
           teeColor: p.gameTeeColor,
+          ...(mt ? { mt } : {}),
           teeNumber: p.teeNumber,
           teeTime: p.teeTimeHour,
         };

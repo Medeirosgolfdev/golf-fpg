@@ -18,6 +18,7 @@
 const fs = require("fs");
 const path = require("path");
 const { DATA, DATA_DIR, readJsonSafe } = require("../util/io");
+const { somaMetros, validar } = require("../util/metros");
 const { displayName, splitName, dobToIso, countryToIso2, normName } = require("../util/names");
 const { warn, sub } = require("../util/log");
 const { datasDoIntervalo } = require("../../lib/lgs-datas");
@@ -265,6 +266,7 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
   const flightLabel = t.ageGroup || "Geral";
   const players = Array.isArray(t.players) ? t.players : [];
   const { inicio, fim } = datasDoIntervalo(t.dateIso, t.dateRange);
+  const holesRfeg = typeof t.nholes === "number" ? t.nholes : 18;
   const results = players.map((pl) => {
     const rd = Array.isArray(pl.rd) ? pl.rd : [];
     const sc = Array.isArray(pl.sc) ? pl.sc : [];
@@ -275,6 +277,8 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
         round: i + 1,
         gross: typeof rd[i] === "number" ? rd[i] : null,
         strokes: Array.isArray(sc[i]) ? sc[i] : undefined,
+        // metros do tee do jogador nesta volta (NextCaddy roundScores[].meters → mt)
+        ...(validar(pl.mt?.[i], holesRfeg) ? { metros: validar(pl.mt[i], holesRfeg) } : {}),
       });
     }
     const key = resolvePlayerKey ? resolvePlayerKey(pl) : (pl.lic || null);
@@ -345,6 +349,9 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
       sex: (t.sex === "F" || t.sex === "M") ? t.sex
         : /femenino|female|girls/i.test(tname) ? "F" : (/masculino|male|boys/i.test(tname) ? "M" : null),
       par: Array.isArray(t.par) ? t.par : undefined,
+      // metros do bloco só fora do NextCaddy: lá o course.meters é UM tee para todas as
+      // categorias (errado para raparigas e mais novos) — vale o de cada jogador (round.metros)
+      ...(t.source !== "nextcaddy" && somaMetros(t.meters) ? { metros: somaMetros(t.meters) } : {}),
       fieldSize: players.length,
       results,
     }],

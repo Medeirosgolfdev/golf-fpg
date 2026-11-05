@@ -12,6 +12,7 @@
  * SOURCE_LABEL}.
  */
 const path = require("path");
+const { somaMetros, validar } = require("./metros");
 const { DATA_DIR, readJsonSafe, listFiles } = require("./io");
 const { displayName, splitName, countryToIso2, dobToIso } = require("./names");
 
@@ -184,11 +185,15 @@ function collectLinks(divisions, seriesLabel, data = {}, linkSite = null) {
  * @param {string} [opts.defaultCountry]  país por defeito (ISO2) quando o jogador não tem
  * @param {(divKey:string)=>{ageMin:?number,ageMax:?number,sex:?string}} opts.parseDiv
  * @param {(data:object)=>string} [opts.nameFn]  nome do torneio (default: data.tournament + ano)
+ * @param {boolean} [opts.metrosPorConfirmar]  não gravar metros (unidade por confirmar)
  * @param {number} [opts.maxAgeInYear]  se definido, exclui jogadores cujo birthYear
  *   implica idade > maxAgeInYear no ano do torneio (protege a base de juniores de
  *   adultos em torneios "open"/seniores; jogadores sem birthYear passam sempre).
  */
 function buildJobfileSource(opts) {
+  // Fontes cujos «meters» podem ser jardas (GolfGenius do Reino Unido/Irlanda sem marca de
+  // conversão) passam metrosPorConfirmar: true — não gravam distância até se confirmar a unidade.
+  const comMetros = !opts.metrosPorConfirmar;
   const { sourceId, sourceLabel, pattern, seriesId, seriesLabel, defaultCountry = null, parseDiv, maxAgeInYear = null, dobRangeFromGrad = false, countryFromLocation = false, dir = DATA_DIR } = opts;
   // Uma fonte pode ler várias pastas (condados ingleses: GolfGenius + intelligentgolf).
   const dirs = Array.isArray(opts.dirs) && opts.dirs.length ? opts.dirs : [dir];
@@ -206,6 +211,9 @@ function buildJobfileSource(opts) {
       const divKey = div.division || div.key || div.name || "";
       const { ageMin, ageMax, sex } = parseDiv(divKey);
       const par = Array.isArray(div.par) ? div.par : null;
+      // Metros do tee da divisão: o total da fonte ou a soma por buraco (util/metros.js)
+      const nbDiv = Array.isArray(div.meters) ? div.meters.filter((x) => x > 0).length : (par ? par.filter((x) => x > 0).length : 18);
+      const metrosDiv = comMetros ? (validar(div.metersTotal, nbDiv || 18) || somaMetros(div.meters)) : null;
       const divPlayers = Array.isArray(div.players) ? div.players : [];
       const results = [];
 
@@ -257,11 +265,16 @@ function buildJobfileSource(opts) {
           });
         }
 
-        let rounds = (Array.isArray(pl.rounds) ? pl.rounds : []).map((r, i) => ({
-          round: i + 1,
-          gross: typeof r.gross === "number" ? r.gross : null,
-          strokes: Array.isArray(r.scores) ? r.scores : undefined,
-        }));
+        let rounds = (Array.isArray(pl.rounds) ? pl.rounds : []).map((r, i) => {
+          // metros do tee que o jogador jogou nesta volta (UAJT, COC, Rock League…)
+          const m = comMetros ? somaMetros(r.meters) : null;
+          return {
+            round: i + 1,
+            gross: typeof r.gross === "number" ? r.gross : null,
+            strokes: Array.isArray(r.scores) ? r.scores : undefined,
+            ...(m ? { metros: m } : {}),
+          };
+        });
         if (rounds.length === 0 && Array.isArray(pl.roundGross)) {
           rounds = pl.roundGross.filter((g) => typeof g === "number").map((g, i) => ({ round: i + 1, gross: g }));
         }
@@ -310,6 +323,7 @@ function buildJobfileSource(opts) {
         label: divKey,
         ageMin, ageMax, sex,
         par,
+        ...(metrosDiv ? { metros: metrosDiv } : {}),
         fieldSize: results.length,
         results,
       });

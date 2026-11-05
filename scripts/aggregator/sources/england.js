@@ -12,6 +12,8 @@
 
 const path = require("path");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
+const { somaMetros, validar } = require("../util/metros");
+const metrosEng = (d) => somaMetros(d.meters) || validar(d.metersTotal, Array.isArray(d.par) ? d.par.filter((p) => p > 0).length || 18 : 18);
 const { displayName } = require("../util/names");
 const { rankResults } = require("../util/rank");
 
@@ -143,6 +145,8 @@ function load() {
         ageMax,
         sex,
         par: par || undefined,
+        // metros (o scraper já converteu de jardas — marca «distancias»)
+        ...(metrosEng(data) ? { metros: metrosEng(data) } : {}),
         fieldSize: results.length,
         results,
       }],

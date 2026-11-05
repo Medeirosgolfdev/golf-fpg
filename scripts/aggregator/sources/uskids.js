@@ -18,6 +18,21 @@ const fs = require("fs");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
 const { displayName, countryToIso2, countryName, usDateToIso } = require("../util/names");
 const { warn, sub } = require("../util/log");
+const { metrosDeJardas } = require("../util/metros");
+
+/** Par/jardas do escalão no slim (byEscalao) — só arrays com valores. */
+function escDoSlim(t, ...chaves) {
+  const by = t._byEsc;
+  if (!by) return null;
+  for (const k of chaves) {
+    const e = k != null ? by[k] : null;
+    if (!e) continue;
+    const ok = (a) => (Array.isArray(a) && a.some((x) => x > 0) ? a : undefined);
+    const par = ok(e.par), yards = ok(e.yards);
+    if (par || yards) return { par, yards };
+  }
+  return null;
+}
 
 const SOURCE_ID = "uskids";
 const SOURCE_LABEL = "USKids Golf";
@@ -172,6 +187,8 @@ async function load(opts) {
         flights: new Map(),
         _par: par,
         _yards: yards,
+        // Par/jardas por escalão (o slim traz byEscalao: cada escalão joga o seu tee)
+        _byEsc: meta?.byEscalao || null,
       });
     }
     return tournMap.get(tcode);
@@ -255,8 +272,8 @@ async function load(opts) {
           ageMin: flightInfo.ageMin,
           ageMax: flightInfo.ageMax,
           sex: flightInfo.sex,
-          par: cm?.par || t._par || undefined,
-          yards: cm?.yards || t._yards || undefined,
+          par: cm?.par || escDoSlim(t, tres.ageGroup)?.par || t._par || undefined,
+          yards: cm?.yards || escDoSlim(t, tres.ageGroup)?.yards || t._yards || undefined,
           numHoles: cm?.numHoles || t.holesPerRound,
           totalPar: cm?.totalPar,
           fieldSize: fsEntry?.inscritos || null,
@@ -353,8 +370,8 @@ async function load(opts) {
           ageMin: flightInfo.ageMin,
           ageMax: flightInfo.ageMax,
           sex: flightInfo.sex,
-          par: cm?.par || t._par || undefined,
-          yards: cm?.yards || t._yards || undefined,
+          par: cm?.par || escDoSlim(t, escLabel, esc.age_group)?.par || t._par || undefined,
+          yards: cm?.yards || escDoSlim(t, escLabel, esc.age_group)?.yards || t._yards || undefined,
           numHoles: cm?.numHoles || t.holesPerRound,
           totalPar: cm?.totalPar,
           fieldSize: fsEntry?.inscritos || null,
@@ -447,6 +464,7 @@ async function load(opts) {
       sex: f.sex,
       par: f.par,
       yards: f.yards,
+      metros: metrosDeJardas(f.yards),
       fieldSize: f.fieldSize,
       results: f.results,
     }));

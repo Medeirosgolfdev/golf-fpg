@@ -14,6 +14,7 @@ const { buildJobfileSource } = require("../util/jobfile");
 const { parseDivGolfbox } = require("../util/golfbox-federacao");
 
 module.exports = buildJobfileSource({
+  metrosPorConfirmar: true, // «meters» do GolfGenius sem marca de conversão — podem ser jardas
   sourceId: "irlanda",
   sourceLabel: "Golf Ireland (campeonatos juvenis)",
   dirs: [path.join(DATA_DIR, "irlanda")],

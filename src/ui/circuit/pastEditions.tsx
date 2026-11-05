@@ -304,7 +304,7 @@ export function CircuitPastEditionsTab({ editions, division, field, currentId, m
 
   if (state.loading) return <LoadingState />;
   if (state.err) return <EmptyState size="md" message={"Falhou: " + state.err} />;
-  if (mode === "repeaters") return <Scout field={field ?? []} editions={state.rows} currentId={currentId} tCode={tCode} />;
+  if (mode === "repeaters") return <Scout field={field ?? []} editions={state.rows} currentId={currentId} tCode={tCode} escalaoProva={division} />;
   if (!state.rows.length) return <EmptyState size="md" message="Sem edições anteriores com dados." />;
   // "—" é o escalão placeholder das provas Drive sem escalões (Tour/Aquapor) —
   // não faz sentido como título da tabela.

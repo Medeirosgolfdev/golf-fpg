@@ -92,6 +92,47 @@ juniores que já eram entidades canónicas. **Regra:** se o jogador já existe n
 corpus, todos os resultados dele devem entrar — filtra-se pela idade do miúdo,
 nunca pelo nome do escalão da prova.
 
+### O Nível — em pancadas, só o último ano (05/11/2026)
+
+O Nível (Elite · Forte · Sólido · Em Dev. · Iniciante) é o percentil na geração (ano de
+nascimento × sexo) do **nível em pancadas** — `src/pages/kids2/nivelPancadas.ts`
+(`calcularNiveis`), corrido pelo agregador em `util/scout.js` e gravado no `r` do
+`juniors-scout.json` como `[ano, sexo, posição, nível, peso]`.
+
+- Cada volta: ±par = nível do jogador + dificuldade da volta (+ efeito do tee quando há tees
+  diferentes na mesma volta). A dificuldade mede-se por quem jogou a volta — field, força do
+  field, campo e distância entram sozinhos. Formatos de equipa (Parent/Child…) não contam.
+- **Só o último ano conta para o jogador** (pedido dela: «a evolução dos juniores é muito
+  rápida»), meia-vida de 6 meses; as voltas até 3 anos só medem a dificuldade das voltas.
+  Testado: 6 meses é pior (poucas voltas, o nível oscila).
+- Entra no ranking quem tem ≥ 3 voltas no último ano (`MIN_VOLTAS_RANKING`). Peso < 6
+  (`PESO_POUCAS_VOLTAS`) → «?»/«poucas voltas» (`nivelIncerto`, `nivelPoucoSeguro`, `TierBadge incerto`).
+- Substituiu o índice antigo (top-5 de posições × estrelas × field × distância, com o tecto
+  pelo ±par): acerta quem faz menos pancadas numa volta futura em 70% dos pares, contra 64%.
+- O Scout prevê quem não tem provas em comum pela diferença de nível para o Manuel.
+
+### Distância do tee — `metros` (05/11/2026)
+
+Um só formato, em METROS, para todas as fontes (`scripts/aggregator/util/metros.js`:
+`somaMetros`, `metrosDeJardas`, `validar` — média por buraco fora de 30–650 m = lixo → null):
+
+- `flight.metros` — comprimento do tee do escalão numa volta (só os buracos jogados).
+- `round.metros` — o tee que ESTE jogador jogou nesta volta, quando a fonte o dá. Ganha ao do
+  flight (provas «Geral»/«Overall» e categorias SCRATCH misturam tees).
+- `flight.yards` fica como estava (compatibilidade): USKids em jardas, FPG em metros.
+
+De onde vem: USKids → `byEscalao` do `uskids-member-history-slim.json` (por escalão; antes todos
+os escalões ficavam com o tee mais comprido); FPG → `roundScores[].meters` por jogador; RFEG →
+`roundScores[].meters` do NextCaddy (passa pelo `build-rfegolf-rivals.js` como `mt`; o
+`course.meters` do NC é UM tee para todas as categorias e não se usa); FCG → `gameTee.meters1_18`
+(via `build-fcg-rivals.js`, `mt`); França → `ffgolf-rms9-tees.json` por série; Itália →
+`campo.metros`; EGR → `lengthMeters` do ficheiro da prova; BlueGolf (WJGC/BJGT/FCG World/JWGC,
+EOWAGR) → `yards` convertidas; England, Future Masters e as ~20 fontes do `jobfile.js` →
+`divisions[].meters`/`metersTotal` e `rounds[].meters`.
+Sem distância: WAGR, GJGL, DGV, OEGV, Doral, e as provas EGR «parciais» (só das fichas).
+Irlanda, Rock League e COC têm `metrosPorConfirmar: true` (GolfGenius sem marca de conversão —
+podem ser jardas). Cobertura no último ano: 51% das voltas (eram 17%).
+
 ### Regras do identity-matcher que os adapters têm de respeitar
 
 - **Resultados só contam se o adapter também declarar o jogador em `players[]`**
