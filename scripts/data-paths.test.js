@@ -36,6 +36,8 @@ const GERADOS_NO_BUILD = {
   "/data/ffg-list-index.json": "build-ffg-list-index.js",
   "/data/federados-lite.json": "build-federados-lite.js",
   "/data/fpg-admissions-draws-drive.json": "build-drive-admissions.js",
+  "/data/course-hole-field.json": "build-course-hole-field.js",
+  "/data/egr/egr-fontes-ricas.json": "build-egr-fontes-ricas.js",
 };
 
 describe("caminhos /data/ do site", () => {
