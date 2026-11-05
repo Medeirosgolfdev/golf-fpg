@@ -160,4 +160,28 @@ describe("fundirTorneiosRepetidos", () => {
     expect(fl.map((f) => f.label)).toEqual(["U14", "U18", "Geral (EGR)"]);
     expect(fl[2].results.map((r) => r.juniorId)).toEqual(["x"]);
   });
+
+  it("a mesma final vista por dois tours locais: os lugares juntam-se sem perder os desempates (Great Northern 2026, USKids 22097 + 21594)", () => {
+    const a = torneio("uskids-22097", "uskids", "Great Northern (Tour Championship)", "2026-05-10", [
+      flight("b9", "Boys 9", [linha("sander", 1, [45]), linha("louis", 2, [48]), linha("malthe", 5, [55])]),
+      flight("b12", "Boys 12", [linha("noah", 1, [79])]),
+      flight("b11", "Boys 11", [linha("drona", 1, [78]), linha("aksel", 2, [78]), linha("noahb", 3, [81])]),
+      flight("b10", "Boys 10", [linha("felix", 2, [42]), linha("haakon", 6, [45])]),
+    ]);
+    const b = torneio("uskids-21594", "uskids", "Great Northern (Tour Championship)", "2026-05-10", [
+      flight("b9", "Boys 9", [linha("peter", 1, [41]), linha("malthe", 3, [55])]),
+      flight("b12", "Boys 12", [linha("wille", 1, [80])]),
+      flight("b11", "Boys 11", [linha("noahb", 1, [81]), linha("malthe2", 2, [90])]),
+      flight("b10", "Boys 10", [linha("haakon", 2, [45])]),
+    ]);
+    const mr = montar([a, b]);
+    fundirTorneiosRepetidos(mr);
+    expect(mr.tournaments).toHaveLength(1);
+    const pos = (label) => Object.fromEntries(mr.tournaments[0].flights.find((x) => x.label === label).results.map((r) => [r.juniorId, r.pos]));
+    expect(pos("Boys 12")).toEqual({ noah: 1, wille: 2 });
+    // o 5.º oficial do Malthe tinha 2 jogadores à frente que não temos: fica 6.º (5 + o Peter)
+    expect(pos("Boys 9")).toEqual({ peter: 1, sander: 2, louis: 3, malthe: 6 });
+    // empate oficial a 78 desempatado (1.º e 2.º) fica; quem chega com 90 vai para o fim
+    expect(pos("Boys 11")).toEqual({ drona: 1, aksel: 2, noahb: 3, malthe2: 4 });
+  });
 });

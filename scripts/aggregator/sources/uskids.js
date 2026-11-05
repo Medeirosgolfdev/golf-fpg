@@ -20,6 +20,7 @@ const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
 const { displayName, countryToIso2, countryName, usDateToIso } = require("../util/names");
 const { warn, sub } = require("../util/log");
 const { metrosDeJardas } = require("../util/metros");
+const { separarLeaderboards, refazerPosicoes, nVoltas, oficial } = require("../util/uskids-posicoes");
 
 /** Par/jardas do escalão no slim (byEscalao) — só arrays com valores. */
 function escDoSlim(t, ...chaves) {
@@ -47,6 +48,24 @@ const SOURCE_LABEL = "USKids Golf";
  * provas futuras) e os jogadores distintos nos resultados. Os resultados podem ser só os
  * dos jogadores seguidos — por isso os inscritos continuam a contar quando são mais.
  */
+/** Quanto os cartões (média por buraco) seguem este par — para saber de que campo é o par. */
+function correlacaoComPar(results, par) {
+  if (!Array.isArray(par) || par.filter((p) => p > 0).length !== 18) return 0;
+  const soma = new Array(18).fill(0);
+  let n = 0;
+  for (const r of results) for (const x of r.rounds || []) {
+    if (!Array.isArray(x.strokes) || x.strokes.filter((v) => v > 0).length !== 18) continue;
+    x.strokes.forEach((v, i) => (soma[i] += v));
+    n++;
+  }
+  if (!n) return 0;
+  const a = soma.map((v) => v / n);
+  const ma = a.reduce((p, q) => p + q, 0) / 18, mp = par.reduce((p, q) => p + q, 0) / 18;
+  let sxy = 0, sxx = 0, syy = 0;
+  for (let i = 0; i < 18; i++) { sxy += (a[i] - ma) * (par[i] - mp); sxx += (a[i] - ma) ** 2; syy += (par[i] - mp) ** 2; }
+  return sxx && syy ? sxy / Math.sqrt(sxx * syy) : 0;
+}
+
 function tamanhoDoField(inscritos, results) {
   // No adapter o jogador é o `playerSourceKey` (o juniorId só aparece depois do identity-matcher)
   const ids = new Set((results || []).map((r) => r.playerSourceKey ?? r.juniorId ?? r.playerName).filter(Boolean));
@@ -127,7 +146,10 @@ function parseFlight(ageGroup) {
   else if (singleMatch) { ageMin = ageMax = +singleMatch[1]; }
   const isUnder = /&\s*Under/i.test(s);
   if (isUnder && ageMax != null) ageMin = null;
-  const flightKey = (sex || "x").toLowerCase() + "_" + (ageMin ?? "") + "_" + (ageMax ?? "");
+  // Divisão com letra («Boys B 12», «Boys B 15-18» do World 2018) é OUTRO leaderboard do
+  // mesmo escalão — sem a letra no flightKey juntava-se ao «Boys 12» (dois vencedores).
+  const divisao = s.match(/^(?:Boys|Girls)\s+([A-Z])\s+\d/i);
+  const flightKey = (sex || "x").toLowerCase() + "_" + (ageMin ?? "") + "_" + (ageMax ?? "") + (divisao ? "_" + divisao[1].toLowerCase() : "");
   return { flightKey, label: s, ageMin, ageMax, sex };
 }
 
@@ -320,6 +342,8 @@ async function load(opts) {
       for (const [rnum, rdata] of Object.entries(tres.rounds || {})) {
         const round = parseInt(rnum, 10);
         if (!Number.isFinite(round)) continue;
+        // gross ≤ 0 (−18) = volta que não jogou (falhou o cut) — não é volta
+        if (typeof rdata.gross === "number" && rdata.gross <= 0) continue;
         rounds.push({
           round,
           gross: rdata.gross ?? null,
@@ -335,6 +359,7 @@ async function load(opts) {
         playerSourceKey: String(memberId),
         playerName: displayName(p.name || ""),
         pos: typeof tres.place === "number" ? tres.place : null,
+        _slim: true, // lugar oficial do histórico de membros (ver util/uskids-posicoes.js)
         status: typeof tres.place === "number" ? "OK" : (tres.status === 2 ? "WD" : "OK"),
         totalGross,
         toPar: toParCalc,
@@ -420,6 +445,7 @@ async function load(opts) {
           if (!name) continue;
           let acc = perPlayer.get(name);
           if (!acc) { acc = { name, rounds: [] }; perPlayer.set(name, acc); }
+          if (typeof lp.score === "number" && lp.score <= 0) continue; // volta não jogada
           acc.rounds.push({
             round: ronda.ronda || acc.rounds.length + 1,
             gross: typeof lp.score === "number" ? lp.score : null,
@@ -486,9 +512,40 @@ async function load(opts) {
     }
   }
 
+  // 4b) Posições: escalões divididos por dois campos, cut e resultados de dois ficheiros
+  //     (ver util/uskids-posicoes.js). 19 escalões tinham dois «vencedores».
+  let nSeparados = 0, nRefeitos = 0;
+  for (const [, t] of tournMap) {
+    for (const f of [...t.flights.values()]) {
+      const comTotal = f.results.filter((r) => typeof r.totalGross === "number" && r.totalGross > 0);
+      const max = comTotal.length ? Math.max(...comTotal.map(nVoltas)) : 0;
+      // lugares oficiais repetidos com totais diferentes = dois leaderboards no mesmo escalão
+      const oficiais = comTotal.filter((r) => nVoltas(r) === max && oficial(r));
+      const dobrados = oficiais.some((a) => oficiais.some((b) => a !== b && a.pos === b.pos && a.totalGross !== b.totalGross));
+      const partes = dobrados ? separarLeaderboards(oficiais) : null;
+      if (dobrados && !partes) warn(`uskids ${t.sourceKey} ${f.label}: lugares repetidos sem partição em dois leaderboards — ficam como vêm`);
+      if (partes) {
+        // o par/jardas do escalão são de UM dos campos: fica com o leaderboard cujos cartões
+        // seguem esse par; o outro fica sem par (nunca inventar)
+        const [A, B] = partes;
+        const segue = (lista) => correlacaoComPar(lista, f.par);
+        const semPar = segue(A) >= segue(B) ? B : A;
+        const fora = new Set(semPar);
+        f.results = f.results.filter((r) => !fora.has(r));
+        const f2 = { ...f, flightKey: `${f.flightKey}-2`, label: `${f.label} (2.º leaderboard)`, par: undefined, yards: undefined, totalPar: undefined, inscritos: [], results: semPar };
+        for (const r of semPar) r.toPar = null;
+        t.flights.set(f2.flightKey, f2);
+        nSeparados++;
+      }
+      for (const g of partes ? [f, t.flights.get(`${f.flightKey}-2`)] : [f]) if (refazerPosicoes(g.results)) nRefeitos++;
+    }
+  }
+  if (nSeparados || nRefeitos) sub(`posições: ${nSeparados} escalão(ões) com dois leaderboards separados · ${nRefeitos} com lugares refeitos`);
+
   // 5) Convert tournMap to array, strip internal _par/_yards
   const tournaments = [];
   for (const [, t] of tournMap) {
+    for (const f of t.flights.values()) for (const r of f.results) delete r._slim;
     const flights = Array.from(t.flights.values()).map((f) => ({
       flightKey: f.flightKey,
       label: f.label,
@@ -526,4 +583,4 @@ async function load(opts) {
   };
 }
 
-module.exports = { load, SOURCE_ID, SOURCE_LABEL, computeToPar, tamanhoDoField };
+module.exports = { load, SOURCE_ID, SOURCE_LABEL, computeToPar, tamanhoDoField, parseFlight };

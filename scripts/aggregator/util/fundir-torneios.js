@@ -53,6 +53,47 @@ const DEDICADAS = new Set([
 ]);
 
 const vazio = (v) => v == null || v === "" || (Array.isArray(v) && v.length === 0);
+
+/**
+ * Lugares de DOIS leaderboards no mesmo escalão depois de fundir (05/11/2026): o mesmo lugar
+ * com totais diferentes. Caso Great Northern 2026 (USKids 22097 e 21594): a mesma final vista
+ * por dois tours locais, cada um com os lugares só entre os seus membros.
+ */
+function lugaresDeDoisLeaderboards(results) {
+  const porLugar = new Map();
+  for (const r of results) {
+    if (typeof r.pos !== "number" || !grossOk(r.totalGross)) continue;
+    const k = `${r.pos}|${voltasJogadas(r)}`;
+    if (!porLugar.has(k)) porLugar.set(k, new Set());
+    porLugar.get(k).add(r.totalGross);
+  }
+  return [...porLugar.values()].some((s) => s.size > 1);
+}
+const voltasJogadas = (r) => (r.rounds || []).filter((x) => grossOk(x.gross)).length;
+/**
+ * Junta os lugares dos dois leaderboards sem perder os desempates oficiais: quem já estava
+ * no escalão fica com o seu lugar + 1 por cada recém-chegado com total menor; o recém-chegado
+ * fica com 1 + nº de jogadores com total menor. Só entre quem jogou as mesmas voltas; quem
+ * jogou menos fica depois. Sem lugar continua sem lugar.
+ */
+function juntarLugares(results, chegados) {
+  const conta = results.filter((r) => grossOk(r.totalGross) && typeof r.pos === "number");
+  if (!conta.length) return;
+  const max = Math.max(...conta.map(voltasJogadas));
+  const cheios = conta.filter((r) => voltasJogadas(r) === max);
+  const antes = new Map(cheios.map((r) => [r, r.pos]));
+  for (const r of cheios) {
+    const menores = (lista) => lista.filter((o) => o.totalGross < r.totalGross).length;
+    r.pos = chegados.has(r) ? 1 + menores(cheios) : antes.get(r) + menores(cheios.filter((o) => chegados.has(o)));
+  }
+  const fim = Math.max(...cheios.map((r) => r.pos));
+  const resto = conta.filter((r) => voltasJogadas(r) < max)
+    .sort((a, b) => voltasJogadas(b) - voltasJogadas(a) || a.totalGross - b.totalGross);
+  resto.forEach((r, i) => {
+    const prev = resto[i - 1];
+    r.pos = prev && voltasJogadas(prev) === voltasJogadas(r) && prev.totalGross === r.totalGross ? prev.pos : fim + 1 + i;
+  });
+}
 const grossOk = (g) => typeof g === "number" && g > 0 && g < 900;
 
 function intervalo(t) {
@@ -247,6 +288,7 @@ function fundirTorneiosRepetidos(matchResult) {
         ? `${fs.label}${sexo === "F" ? " Raparigas" : sexo === "M" ? " Rapazes" : ""} (${String(s.sourceId || "").toUpperCase()})`
         : fs.label;
       if (fp) fundirFlight(fp, fs);
+      const chegados = new Set(); // linhas que vêm do outro leaderboard (ver juntarLugares)
       for (const r of fs.results) {
         const x = lp.get(r.juniorId);
         // a mesma pessoa com duas fichas: mesmo nome E as mesmas pancadas
@@ -269,12 +311,14 @@ function fundirTorneiosRepetidos(matchResult) {
         }
         const nova = { ...r };
         fp.results.push(nova);
+        chegados.add(nova);
         lp.set(r.juniorId, { f: fp, r: nova });
         stats.linhasMovidas++;
         const j = juniorById.get(r.juniorId);
         if (j) j.tournamentIds = [...j.tournamentIds.filter((t) => t !== s.id), ...(j.tournamentIds.includes(p.id) ? [] : [p.id])];
       }
       if (fp && typeof fp.fieldSize === "number" && fp.fieldSize < fp.results.length) fp.fieldSize = fp.results.length;
+      if (fp && chegados.size && lugaresDeDoisLeaderboards(fp.results)) { juntarLugares(fp.results, chegados); stats.lugaresRefeitos = (stats.lugaresRefeitos || 0) + 1; }
     }
     for (const jid of linhas.get(s.id).keys()) tirarDoJunior(jid, s.id);
     fundirCabecalho(p, s);
