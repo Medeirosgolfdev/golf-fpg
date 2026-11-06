@@ -57,7 +57,9 @@ jobs:
       - name: Commit e push (se houve alterações)
         if: steps.fetch.outputs.exit_code == '0'
         # Ficheiros inteiramente deste job e da mesma fila (-o: a versão nossa ganha).
+        # A cache mudou: os escalões partidos em flights A/B (para o agregador) saem dela.
         run: |
+          node scripts/build-uskids-flights-divididos.js || [ $? -eq 2 ]
           bash scripts/ci/push-generated.sh -m "data: edições anteriores USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" \
-            -o data-archive/uskids-rich-flight-cache.json.gz -o public/data/uskids-edicoes \
-            -- data-archive/uskids-rich-flight-cache.json.gz public/data/uskids-edicoes
+            -o data-archive/uskids-rich-flight-cache.json.gz -o public/data/uskids-edicoes -o public/data/uskids-flights-divididos.json \
+            -- data-archive/uskids-rich-flight-cache.json.gz public/data/uskids-edicoes public/data/uskids-flights-divididos.json

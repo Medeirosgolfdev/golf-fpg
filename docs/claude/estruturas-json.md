@@ -180,7 +180,7 @@ Gerado por `scripts/fetch-uskids-field-sizes.js` (manual, sem workflow); lido pe
 ```
 Escalões que a USKids partiu em flights «A»/«B» (World Championship, World Teen), tirados da
 `data-archive/uskids-rich-flight-cache.json.gz` por `scripts/build-uskids-flights-divididos.js`
-(corre no `update-uskids-rich-players.yml`). `cartoes` = pancadas de cada jogador do flight (só
+(corre no `update-uskids-rich-players.yml` e no `update-uskids-edicoes.yml`, que mexem na cache). `cartoes` = pancadas de cada jogador do flight (só
 nos flights que a cache tem) — é por elas que o agregador (`sources/uskids.js` →
 `dividirPorFlights`) põe cada jogador no seu flight; `par` só quando o flight jogou tudo num campo.
 Flights com nº de voltas diferente = cut (World 2024), não se partem.

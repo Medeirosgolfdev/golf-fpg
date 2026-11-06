@@ -17,7 +17,8 @@
  * só nos flights que a cache tem; `par`/`jardas` só quando o flight jogou tudo num campo.
  * (A cache inteira ocupa ~1,6 GB em memória — o agregador não a pode ler.)
  *
- * Exit: 0 gravou · 2 nada de novo · 1 erro. Corre no update-uskids-rich-players.yml.
+ * Exit: 0 gravou · 2 nada de novo · 1 erro. Corre nos workflows que mexem na cache
+ * (update-uskids-rich-players.yml e update-uskids-edicoes.yml).
  */
 const fs = require("fs");
 const path = require("path");
