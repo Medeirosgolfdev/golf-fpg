@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-11-01T23:15:41.249Z",
+  "geradoEm": "2026-11-06T14:45:27.637Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 162,
-  "totalCompanheirosUnicos": 193,
+  "totalRondas": 163,
+  "totalCompanheirosUnicos": 194,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 141,
-      "rondasComDraw": 127,
+      "rondasComDraw": 128,
       "torneiosJogados": 105,
-      "torneiosComDraw": 99,
+      "torneiosComDraw": 100,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "007-11084",
@@ -683,6 +683,33 @@
   "rondas": [
     {
       "circuito": "FPG",
+      "torneioId": "985-10246",
+      "torneioNome": "Final Drive Tour – Oeiras Green Valley",
+      "data": "2026-11-07",
+      "ronda": 1,
+      "teeTime": "09:30",
+      "startHole": 1,
+      "campo": "Oeiras",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "David Filip",
+          "fed": "51949",
+          "clube": "Quinta do Peru",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Miguel Silva",
+          "fed": "48791",
+          "clube": "Amendoeira",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "007-11084",
       "torneioNome": "TAÇA PRESIDENTE CGSS 2026",
       "data": "2026-10-31",
@@ -768,8 +795,8 @@
         {
           "nome": "Tommy Gorman",
           "fed": null,
-          "clube": null,
-          "pais": "GB",
+          "clube": "Aspley Guise and Woburn Sands",
+          "pais": "GB-ENG",
           "score": null
         },
         {
