@@ -20,7 +20,7 @@ const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
 const { displayName, countryToIso2, countryName, usDateToIso } = require("../util/names");
 const { warn, sub } = require("../util/log");
 const { metrosDeJardas } = require("../util/metros");
-const { separarLeaderboards, refazerPosicoes, nVoltas, oficial } = require("../util/uskids-posicoes");
+const { separarLeaderboards, refazerPosicoes, nVoltas, oficial, dividirPorFlights } = require("../util/uskids-posicoes");
 
 /** Par/jardas do escalão no slim (byEscalao) — só arrays com valores. */
 function escDoSlim(t, ...chaves) {
@@ -514,9 +514,34 @@ async function load(opts) {
 
   // 4b) Posições: escalões divididos por dois campos, cut e resultados de dois ficheiros
   //     (ver util/uskids-posicoes.js). 19 escalões tinham dois «vencedores».
-  let nSeparados = 0, nRefeitos = 0;
+  //     Primeiro os flights A/B da própria USKids (uskids-flights-divididos.json); só sem
+  //     eles se tenta separar pelos lugares.
+  const divididos = readJsonSafe(DATA.uskidsFlightsDivididos, { torneios: {} }).torneios || {};
+  let nSeparados = 0, nRefeitos = 0, nPorFlights = 0;
   for (const [, t] of tournMap) {
     for (const f of [...t.flights.values()]) {
+      const porFlights = dividirPorFlights(f.results, divididos[t.sourceKey]?.[f.label]);
+      if (porFlights) {
+        const [base, ...outros] = porFlights.flights;
+        f.results = [...base.results, ...porFlights.semCartao];
+        f.inscritos = [base.flight.inscritos];
+        for (const { flight: fl, results: rs } of outros) {
+          const nome = fl.nome || fl.fid;
+          // par/jardas do flight só quando jogou tudo num campo (senão fica sem par)
+          const par = Array.isArray(fl.par) ? fl.par : undefined;
+          const totalPar = par ? par.reduce((a, b) => a + (b > 0 ? b : 0), 0) : undefined;
+          const f2 = {
+            ...f, flightKey: `${f.flightKey}-${String(nome).toLowerCase()}`, label: `${f.label} (flight ${nome})`,
+            par, yards: Array.isArray(fl.jardas) ? fl.jardas : undefined, totalPar, inscritos: [fl.inscritos], results: rs,
+          };
+          for (const r of rs) r.toPar = par ? computeToPar(r.rounds || [], par, totalPar, r.totalGross) : null;
+          t.flights.set(f2.flightKey, f2);
+          if (refazerPosicoes(f2.results)) nRefeitos++;
+        }
+        if (refazerPosicoes(f.results)) nRefeitos++;
+        nPorFlights++;
+        continue;
+      }
       const comTotal = f.results.filter((r) => typeof r.totalGross === "number" && r.totalGross > 0);
       const max = comTotal.length ? Math.max(...comTotal.map(nVoltas)) : 0;
       // lugares oficiais repetidos com totais diferentes = dois leaderboards no mesmo escalão
@@ -540,7 +565,7 @@ async function load(opts) {
       for (const g of partes ? [f, t.flights.get(`${f.flightKey}-2`)] : [f]) if (refazerPosicoes(g.results)) nRefeitos++;
     }
   }
-  if (nSeparados || nRefeitos) sub(`posições: ${nSeparados} escalão(ões) com dois leaderboards separados · ${nRefeitos} com lugares refeitos`);
+  if (nPorFlights || nSeparados || nRefeitos) sub(`posições: ${nPorFlights} escalão(ões) repartidos pelos flights A/B da USKids · ${nSeparados} separados pelos lugares · ${nRefeitos} com lugares refeitos`);
 
   // 5) Convert tournMap to array, strip internal _par/_yards
   const tournaments = [];

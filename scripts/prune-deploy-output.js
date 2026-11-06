@@ -40,6 +40,7 @@ const LIXO_RAIZ = ["extract-courses-cache.json", "cross-stats-cache.json"];
 const LIXO_DATA = [
   "ffgolf-juniors-slim.json",          // 12,5 MB — entrada do agregador (sources/ffgolf.js)
   "uskids-field-sizes.json",           // 6,8 MB — agregador (sources/uskids.js)
+  "uskids-flights-divididos.json",     // ~90 KB — agregador (sources/uskids.js)
   /^england_.*\.json$/,                // ~11 MB, 36 ficheiros — agregador; a /england foi arquivada a 13/10
   "england-golf-catalog.json",         // catálogo do scrape-england-golf
   "gg_ffgolf_all.json",                // scrape-golfgenius-generic

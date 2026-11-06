@@ -95,6 +95,8 @@ const DATA = {
   uskidsResults: path.join(DATA_DIR, "uskids-results.json"),
   uskidsField: path.join(DATA_DIR, "uskids-field.json"),
   uskidsFieldSizes: path.join(DATA_DIR, "uskids-field-sizes.json"),
+  // escalões partidos em flights A/B (scripts/build-uskids-flights-divididos.js)
+  uskidsFlightsDivididos: path.join(DATA_DIR, "uskids-flights-divididos.json"),
   uskidsCompletosPattern: /^uskids_torneios_completos\(\d+\)\.json$/,
   uskidsTournNames: path.join(DATA_DIR, "t_de_tournaments_do_uskids.json"),
   rfegSpainPlayers: path.join(DATA_DIR, "spain-players.json"),

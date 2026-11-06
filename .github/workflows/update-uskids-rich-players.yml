@@ -114,4 +114,10 @@ jobs:
           bash scripts/ci/push-generated.sh -m "data: USKids rich flight cache [$STAMP]" \
             -o data-archive/uskids-rich-flight-cache.json.gz \
             -- data-archive/uskids-rich-flight-cache.json.gz data-archive/uskids-rich-flight-cache.json || FAILED=1
+          # Escalões partidos em flights A/B (World Championship / World Teen), tirados da
+          # cache para o agregador (a cache inteira não cabe na memória dele). Exit 2 = igual.
+          node scripts/build-uskids-flights-divididos.js || [ $? -eq 2 ] || FAILED=1
+          bash scripts/ci/push-generated.sh -m "data: USKids flights divididos [$STAMP]" \
+            -o public/data/uskids-flights-divididos.json \
+            -- public/data/uskids-flights-divididos.json || FAILED=1
           exit $FAILED

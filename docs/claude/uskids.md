@@ -611,6 +611,13 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
 - **Paginação do GetPlayerTeeTimes corrigida** (rich-players): com `t=1` a 1ª página já traz o flight todo — o ciclo seguia pelas páginas vazias com 2 pedidos cada (32 pedidos num flight de 37; agora 2). Pára na página vazia, sem novos, ou com tantos como os `registered` do meta.
 - **Página:** a `USKIDSPage` lê o `index.json` e põe cada edição no `pastEditionsPool` do CircuitShell (`edicaoEntry`); o ficheiro só carrega quando a prova dela está aberta e pede as edições; não entram na barra lateral.
 
+### Escalões com dois flights e lugares (2026-11-05)
+
+- **Flights A/B:** nas provas grandes a USKids parte um escalão em dois flights com leaderboard próprio (World 2017 Boys 12, World 2023 Boys 10 — A em Legacy, B em Quail Ridge —, World Teen 2022/2023 Boys 15-18). O histórico de membros só diz o escalão. `build-uskids-flights-divididos.js` tira-os da flight-cache para `public/data/uskids-flights-divididos.json`; o agregador põe cada jogador no flight pelos cartões (o `pid` dos flights é local, os `memberIds` são da prova inteira) e cria «Boys 10 (flight B)», com o par do B quando jogou tudo num campo.
+- **World 2024:** o «B» é quem falhou o cut (2 voltas) — não se parte; ficam depois dos que acabaram.
+- **Sem flights na cache:** separa-se pelos lugares oficiais (`separarLeaderboards`, só com o leaderboard completo).
+- Erros soltos da própria fonte que ficam como vêm: Parent/Child 2022 (um lugar 21 impossível — é 41), Page Belcher 2025 (cartão de 17 buracos, gross 78 em vez de 79), Stevenage 2025 Boys 9.
+
 ### CR/Slope dos escalões e SD (2026-11-03)
 
 - A coluna SD da /uskids só existe com CR/Slope no `TEES_LOOKUP[tcode][age_group]` (`src/ui/uskidsData.ts`). Primeiro, sempre, o **PDF oficial da USKids** do evento (lista de nomes conhecidos no doc 04 da base de conhecimento).

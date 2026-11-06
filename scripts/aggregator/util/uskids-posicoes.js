@@ -116,4 +116,55 @@ function refazerPosicoes(results) {
   return mudou;
 }
 
-module.exports = { separarLeaderboards, refazerPosicoes, coerente, nVoltas, oficial };
+/**
+ * Impressão digital de um jogador numa prova: as pancadas das voltas jogadas, por ordem.
+ * É igual no histórico de membros e nos flights da USKids (o `pid` dos flights é local,
+ * não é o memberID — os cartões são a única ligação segura). null sem cartões.
+ */
+function cartaoDe(rounds) {
+  const vs = (rounds || [])
+    .filter((r) => Array.isArray(r.strokes) && r.strokes.some((v) => v > 0) && !(typeof r.gross === 'number' && r.gross <= 0))
+    .sort((a, b) => a.round - b.round)
+    .map((r) => r.strokes.filter((v) => v > 0).join('.'));
+  return vs.length ? vs.join('|') : null;
+}
+
+/**
+ * Reparte um escalão pelos flights da USKids (World Championship 2017/2023, World Teen
+ * 2022/2023: flights «A» e «B» com leaderboards próprios). `div` vem do
+ * `uskids-flights-divididos.json` (build-uskids-flights-divididos.js).
+ * Cada jogador vai para o flight cujos cartões têm o dele; sem cartão nesse flight (a cache
+ * só tem um dos dois) → o outro. Devolve null quando não dá para decidir com certeza:
+ *  - não são exactamente 2 flights com inscritos, ou nenhum tem cartões;
+ *  - um cartão que não está em nenhum dos dois flights com cartões;
+ *  - flights com nº de voltas diferente: é o cut (World 2024 — o «B» é quem não passou),
+ *    não outro leaderboard; aí vale o `refazerPosicoes`.
+ * Quem não tem cartão nenhum (não jogou) fica em `semCartao`.
+ */
+function dividirPorFlights(results, div) {
+  const fls = (div?.flights || []).filter((f) => f.inscritos > 0);
+  if (fls.length !== 2) return null;
+  const cartoes = new Map(fls.filter((f) => Array.isArray(f.cartoes) && f.cartoes.length).map((f) => [f, new Set(f.cartoes)]));
+  if (!cartoes.size) return null;
+  const semCache = fls.filter((f) => !cartoes.has(f));
+  const grupos = new Map(fls.map((f) => [f, []]));
+  const semCartao = [];
+  for (const r of results) {
+    const c = cartaoDe(r.rounds);
+    if (!c) { semCartao.push(r); continue; }
+    let alvo = [...cartoes].find(([, s]) => s.has(c))?.[0];
+    if (!alvo) {
+      if (semCache.length !== 1) return null;
+      alvo = semCache[0];
+    }
+    grupos.get(alvo).push(r);
+  }
+  const voltas = (l) => Math.max(0, ...l.map(nVoltas));
+  const [va, vb] = fls.map((f) => voltas(grupos.get(f)));
+  if (!va || !vb || va !== vb) return null;
+  // o flight base é o «A» (o par do escalão é o dele); o outro ganha um flight próprio
+  const ordem = [...fls].sort((a, b) => (a.nome === 'A' ? -1 : b.nome === 'A' ? 1 : 0));
+  return { flights: ordem.map((f) => ({ flight: f, results: grupos.get(f) })), semCartao };
+}
+
+module.exports = { separarLeaderboards, refazerPosicoes, coerente, nVoltas, oficial, cartaoDe, dividirPorFlights };

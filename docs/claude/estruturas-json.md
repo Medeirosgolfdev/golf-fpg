@@ -172,6 +172,19 @@ Schema deliberadamente fala SI/par/yards a partir do `GetMemberTournamentResults
 ```
 Gerado por `scripts/fetch-uskids-field-sizes.js` (manual, sem workflow); lido pelo agregador (`sources/uskids.js`).
 
+### uskids-flights-divididos.json
+
+```
+{ gerado_em, torneios: { [tcode]: { [escalão]: { flights: [
+  { fid, nome, inscritos, voltas, cursos[], par[]|null, jardas[]|null, cartoes[]|null } ] } } } }
+```
+Escalões que a USKids partiu em flights «A»/«B» (World Championship, World Teen), tirados da
+`data-archive/uskids-rich-flight-cache.json.gz` por `scripts/build-uskids-flights-divididos.js`
+(corre no `update-uskids-rich-players.yml`). `cartoes` = pancadas de cada jogador do flight (só
+nos flights que a cache tem) — é por elas que o agregador (`sources/uskids.js` →
+`dividirPorFlights`) põe cada jogador no seu flight; `par` só quando o flight jogou tudo num campo.
+Flights com nº de voltas diferente = cut (World 2024), não se partem.
+
 ### t_de_tournaments_do_uskids.json
 
 ```
@@ -242,6 +255,7 @@ Lido pelo agregador (`scripts/aggregator/sources/uskids.js`) como lookup de nome
 | uskids-rich-run-summary.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — sumário do último run (debug) |
 | uskids-field.json | USKids | fetch-uskids-field.js | ✗ | USKIDSPage |
 | uskids-field-sizes.json | USKids | fetch-uskids-field-sizes.js (manual, sem workflow) | ✗ | agregador (`sources/uskids.js`) |
+| uskids-flights-divididos.json | USKids | build-uskids-flights-divididos.js (update-uskids-rich-players) | ✗ | agregador (`sources/uskids.js`) |
 | uskids-discovery-cache.json | USKids | fetch-uskids-field.js (Fase 1) | ✗ | fetch-uskids-results.js |
 | t_de_tournaments_do_uskids.json | USKids | (automação, 6448 entries) | ✗ | agregador (lookup de nomes por t=) |
 | brjgt*_*.json, wjgc_*.json | BJGT/WJGC | scraper antigo (⛔ não correr; ficheiros históricos) | ✓ | MajorPage (via `src/data/major/bluegolf.ts`), FieldRivaisDashboard, agregador |
