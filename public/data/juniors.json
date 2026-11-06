@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-05T18:11:03.480Z",
+  "generatedAt": "2026-11-06T13:39:39.850Z",
   "juniors": [
     {
       "id": "u391389",
@@ -466254,7 +466254,7 @@
       "sources": {
         "uskids": {
           "memberId": "608540",
-          "ageGroupCurrent": "Boys 13-14"
+          "ageGroupCurrent": "Boys 13-18"
         }
       },
       "tournamentIds": [
@@ -531356,6 +531356,93 @@
         "confidence": "strong",
         "evidence": [
           "uskids:669429"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
+      "id": "u671472",
+      "canonicalName": "Hatim Imrane",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "MA",
+      "country": "MA",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "671472",
+          "ageGroupCurrent": "Boys 13-14"
+        }
+      },
+      "tournamentIds": [
+        "uskids-23819"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:671472"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
+      "id": "u671479",
+      "canonicalName": "Omar Diab",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "MA",
+      "country": "MA",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "671479",
+          "ageGroupCurrent": "Boys 12"
+        }
+      },
+      "tournamentIds": [
+        "uskids-23819"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:671479"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
+      "id": "u671480",
+      "canonicalName": "Mohamed Elbarae",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "MA",
+      "country": "MA",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "671480",
+          "ageGroupCurrent": "Boys 12"
+        }
+      },
+      "tournamentIds": [
+        "uskids-23819"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:671480"
         ],
         "mergedFromSources": [
           "uskids"
@@ -3016772,9 +3016859,9 @@
     }
   ],
   "stats": {
-    "total": 43033,
+    "total": 43036,
     "droppedNoTourn": 34448,
-    "strong": 36692,
+    "strong": 36695,
     "probable": 6341,
     "manual": 0,
     "strongMerges": 20049,
