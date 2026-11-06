@@ -232,7 +232,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   // A FPG ainda não abriu o torneio no scoring (as inscrições são pelo
   // formulário do fpg.pt), por isso os tcodes 90872 (rapazes) e 90873
   // (raparigas) são PROVISÓRIOS e os inscritos são os das Entry Lists em PDF
-  // de 04/11/2026 («Final Entry List – Pending Handicap Verification»),
+  // de 05/11/2026 («Final Entry List – Pending Handicap Verification»),
   // curados à mão (`_manual` em fpg-admissions-draws.json).
   // A 1.ª edição é 000/10872 (rapazes e raparigas no mesmo tcode).
   // Quando a FPG publicar o tcode real, trocar aqui, no JSON e na regra de tees
@@ -251,7 +251,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     extraLinks: [
       { label: "página oficial FPG", url: "https://competicoes.fpg.pt/evento/2nd-portuguese-international-u14-championship/", icon: "🏆" },
       { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Term-Of-Competition-2nd-Castro-Marim-2026.pdf", icon: "📋" },
-      { label: "Entry List Boys 04/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Boys-04_11_II.pdf", icon: "📝" },
+      { label: "Entry List Boys 05/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Boys-05_11.pdf", icon: "📝" },
     ],
     live: false,
     semLinksFpg: true,
@@ -270,7 +270,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     extraLinks: [
       { label: "página oficial FPG", url: "https://competicoes.fpg.pt/evento/2nd-portuguese-international-u14-championship/", icon: "🏆" },
       { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Term-Of-Competition-2nd-Castro-Marim-2026.pdf", icon: "📋" },
-      { label: "Entry List Girls 04/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Girls-04_11_II.pdf", icon: "📝" },
+      { label: "Entry List Girls 05/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Girls-05_11.pdf", icon: "📝" },
     ],
     live: false,
     semLinksFpg: true,
