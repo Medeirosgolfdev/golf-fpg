@@ -128,6 +128,9 @@ export interface Tournament extends BaseTournament, TournamentModel {
   _origin?: string;
   /** O mesmo torneio com outro ccode-tcode, fundido nesta entrada pelo displayList. */
   _mergedFrom?: string;
+  /** Todos os ccode-tcode fundidos nesta entrada (a /drive junta até três: provisório,
+   *  inscrições e resultados) — os endereços antigos continuam a abrir a prova. */
+  _mergedKeys?: string[];
 }
 
 export interface GrupoJogador { nome: string; fed: string | null; hcp: number | string; }

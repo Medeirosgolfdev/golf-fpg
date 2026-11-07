@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-11-06T23:55:46.729Z",
+  "geradoEm": "2026-11-07T15:57:17.261Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 163,
-  "totalCompanheirosUnicos": 194,
+  "totalRondas": 165,
+  "totalCompanheirosUnicos": 195,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 141,
-      "rondasComDraw": 128,
+      "rondasComDraw": 130,
       "torneiosJogados": 105,
-      "torneiosComDraw": 100,
+      "torneiosComDraw": 101,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "007-11084",
@@ -705,6 +705,78 @@
           "clube": "Amendoeira",
           "pais": null,
           "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "000-10947",
+      "torneioNome": "Final Drive Tour – Oeiras Green Valley / Academia",
+      "data": "2026-11-07",
+      "ronda": 1,
+      "teeTime": "09:30",
+      "startHole": 1,
+      "campo": "Oeiras",
+      "manuelScore": {
+        "gross": 74,
+        "toPar": 0
+      },
+      "companheiros": [
+        {
+          "nome": "Miguel Silva",
+          "fed": "48791",
+          "clube": "Amendoeira",
+          "pais": null,
+          "score": {
+            "gross": 81,
+            "toPar": 7
+          }
+        },
+        {
+          "nome": "David Filip Jr",
+          "fed": null,
+          "clube": "Quinta do Peru",
+          "pais": null,
+          "score": {
+            "gross": 83,
+            "toPar": 9
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "000-10947",
+      "torneioNome": "Final Drive Tour – Oeiras Green Valley / Academia",
+      "data": "2026-11-07",
+      "ronda": 2,
+      "teeTime": "09:35",
+      "startHole": 1,
+      "campo": "Oeiras",
+      "manuelScore": {
+        "gross": 74,
+        "toPar": 0
+      },
+      "companheiros": [
+        {
+          "nome": "Nuno Palmares Jr.",
+          "fed": "49124",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 74,
+            "toPar": 0
+          }
+        },
+        {
+          "nome": "Ricardo Castro Ferreira",
+          "fed": "49085",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 73,
+            "toPar": -1
+          }
         }
       ]
     },

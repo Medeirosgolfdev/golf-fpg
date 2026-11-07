@@ -448,8 +448,9 @@ export function crossApuradosInscritos<A extends Record<string, any>>(apur: A, i
  * provisório entram quando o real ainda não tem inscritos; quando já tem, as duas
  * cruzam-se (`crossApuradosInscritos`); rondas e nº de jogadores = o máximo dos dois.
  */
-export function mergeDrivePlaceholders<T extends Record<string, any>>(src: T[]): T[] {
+export function mergeDrivePlaceholders<T extends Record<string, any>>(srcIn: T[]): T[] {
   const isPlaceholder = (t: T) => !!(t._admissions?._placeholder || t._admissions?._manual || t._manual);
+  const src = mergeDriveSplitCodes(srcIn, isPlaceholder);
   const out = [...src];
   const removed = new Set<T>();
   for (const ph of src.filter(isPlaceholder)) {
@@ -478,10 +479,51 @@ export function mergeDrivePlaceholders<T extends Record<string, any>>(src: T[]):
       playerCount: Math.max(Number(real.playerCount) || 0, Number(ph.playerCount) || 0),
       extraLinks: [...(real.extraLinks || []), ...(ph.extraLinks || [])],
       _mergedFrom: `${ph.ccode}-${ph.tcode}`,
+      _mergedKeys: [...(real._mergedKeys ?? []), `${ph.ccode}-${ph.tcode}`],
     } as T;
     out[out.indexOf(real)] = merged;
     out.splice(out.indexOf(ph), 1);
     removed.add(ph);
+  }
+  return out;
+}
+
+/**
+ * A mesma prova publicada pela FPG com DOIS códigos reais — 07/11/2026, Final
+ * Drive Tour: as inscrições e o 1.º draw saíram no 985/10246 (clube Tejo) e os
+ * resultados, o live e o draw da 2.ª volta no 000/10947 (a federação). Ficam numa
+ * só entrada: a que tem resultados, com as inscrições e as voltas de draw que só
+ * a outra tem. Regra (nunca só pelo tcode): nenhum dos dois provisório, mesma
+ * data e série, nome-base igual, campo compatível, exactamente UM com resultados
+ * e o outro sem nenhum; com mais candidatos não se junta.
+ */
+function mergeDriveSplitCodes<T extends Record<string, any>>(src: T[], isPlaceholder: (t: T) => boolean): T[] {
+  const temResultados = (t: T) => (t.players?.length ?? 0) > 0;
+  const campoOk = (a: T, b: T) => {
+    const ca = campoKey(a.campo || campoDoNome(a.name)), cb = campoKey(b.campo || campoDoNome(b.name));
+    return !ca || !cb || ca.includes(cb) || cb.includes(ca);
+  };
+  const out = [...src];
+  for (const comRes of src.filter(t => !isPlaceholder(t) && temResultados(t))) {
+    const irmas = src.filter(t => t !== comRes && !isPlaceholder(t) && t.date === comRes.date
+      && (t.series || "tour") === (comRes.series || "tour")
+      && driveBaseName(t.name) === driveBaseName(comRes.name) && campoOk(t, comRes));
+    if (irmas.length !== 1 || temResultados(irmas[0])) continue;
+    const sem = irmas[0];
+    if (!out.includes(sem) || !out.includes(comRes)) continue;
+    const draws = { ...(sem._draws || {}), ...(comRes._draws || {}) };
+    const merged = {
+      ...comRes,
+      campo: comRes.campo || sem.campo || null,
+      _admissions: comRes._admissions?.players?.length ? comRes._admissions : (sem._admissions ?? comRes._admissions),
+      _draws: Object.keys(draws).length ? draws : comRes._draws,
+      rounds: Math.max(Number(comRes.rounds) || 0, Number(sem.rounds) || 0) || comRes.rounds,
+      extraLinks: [...(comRes.extraLinks || []), ...(sem.extraLinks || [])],
+      _mergedFrom: `${sem.ccode}-${sem.tcode}`,
+      _mergedKeys: [`${sem.ccode}-${sem.tcode}`],
+    } as T;
+    out[out.indexOf(comRes)] = merged;
+    out.splice(out.indexOf(sem), 1);
   }
   return out;
 }

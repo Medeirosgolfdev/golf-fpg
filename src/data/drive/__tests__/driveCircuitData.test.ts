@@ -218,6 +218,23 @@ describe("mergeDrivePlaceholders", () => {
   });
   it("não junta quando há dois candidatos (ambíguo)", () => {
     expect(mergeDrivePlaceholders([ph, real, { ...real, tcode: "10247" }])).toHaveLength(3);
+  });
+  it("a prova com dois códigos reais (inscrições num, resultados noutro) + o provisório → UMA entrada", () => {
+    // 07/11/2026: inscrições e draw R1 no 985/10246; resultados e draw R2 no 000/10947.
+    const insc = { ...real, _admissions: { players: [{ fed: "52884", nome: "M" }] }, _draws: { 1: { groups: ["r1-985"] } } };
+    const res = { name: "Final Drive Tour – Oeiras Green Valley / Academia", ccode: "000", tcode: "10947", date: "2026-11-07",
+      series: "tour", rounds: 2, playerCount: 36, campo: "Oeiras", players: [{ name: "M", grossTotal: 74 }],
+      _admissions: { players: [] }, _draws: { 1: { groups: ["r1-000"] }, 2: { groups: ["r2"] } } };
+    const out = mergeDrivePlaceholders<Record<string, any>>([ph, insc, res]);
+    expect(out).toHaveLength(1);
+    expect(out[0].tcode).toBe("10947");
+    expect(out[0].players).toHaveLength(1);
+    expect(out[0]._admissions.players.map((p: any) => p.fed)).toContain("52884");
+    expect(Object.keys(out[0]._draws).sort()).toEqual(["1", "2"]);
+    expect(out[0]._draws[1].groups).toEqual(["r1-000"]);
+    expect(out[0]._mergedKeys).toEqual(["985-10246", "988-90800"]);
+    // dois códigos sem resultados nenhum não se juntam (pode ser outra prova)
+    expect(mergeDrivePlaceholders([insc, { ...insc, ccode: "000", tcode: "10947" }])).toHaveLength(2);
   });  it("com inscritos na FPG, cruza-os com os apurados (confirmados vs pendentes)", () => {
     const phA = { ...ph, _admissions: { _manual: true, players: [
       { fed: "1", nome: "A", status: "confirmed", pts: 674, ptsRank: "1º Madeira", escalao: "Sub 16" },

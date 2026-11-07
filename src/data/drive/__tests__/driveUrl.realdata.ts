@@ -77,12 +77,14 @@ describe("deep-links com os dados reais (decisão A)", () => {
     expect(driveFiltersForTkey(src, "999-1", DRIVE_URL_DEFAULTS, false)).toBeNull();
   });
 
-  it("a Final por jogar (só nas inscrições) e o provisório que lhe foi fundido", () => {
-    const fin = src.find(t => t.date === "2026-11-07" && /Final Drive Tour/i.test(t.name))!;
+  it("a Final: UMA entrada, e os três códigos (resultados, inscrições, provisório) abrem-na", () => {
+    const finais = src.filter(t => t.date === "2026-11-07" && /Final Drive Tour/i.test(t.name));
+    expect(finais).toHaveLength(1);
+    const fin = finais[0];
     const ents = buildDriveEntries(filterDriveSource(src, { series: "tour", year: null, region: null }));
-    expect(resolveDriveTkey(ents, `${fin.ccode}-${fin.tcode}`).id).toBeDefined();
-    const merged = (fin as Tournament & { _mergedFrom?: string })._mergedFrom;
-    if (merged) expect(resolveDriveTkey(ents, merged).id).toBe(resolveDriveTkey(ents, `${fin.ccode}-${fin.tcode}`).id);
+    const id = resolveDriveTkey(ents, `${fin.ccode}-${fin.tcode}`).id;
+    expect(id).toBeDefined();
+    for (const k of ["000-10947", "985-10246", "988-90800"]) expect(resolveDriveTkey(ents, k).id).toBe(id);
   });
 
   it("?t={id} antigo → o caminho do torneio", () => {

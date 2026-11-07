@@ -398,7 +398,12 @@ function writeIfChanged(filepath, newObj) {
   // Fase 1 — descoberta
   log("FASE 1: descobrir torneios");
   const driveAll = await tournSearchAll("drive");
-  const drive = driveAll.filter(isInScope).filter(r => (r.acronym || "").startsWith("FPG_D"));
+  // As provas regionais vêm com sigla «FPG_D…»; a FINAL é organizada pela própria
+  // federação (clube 000, sigla «FPG» — 07/11/2026: 000/10947 «Final Drive Tour –
+  // Oeiras Green Valley / Academia») e ficava de fora. Entra pelo nome.
+  const isDrive = r => (r.acronym || "").startsWith("FPG_D")
+    || ((r.acronym || "") === "FPG" && /\bdrive\s+(tour\b|chall)/i.test(r.description || ""));
+  const drive = driveAll.filter(isInScope).filter(isDrive);
   ok(`DRIVE: ${drive.length} torneios no scope (de ${driveAll.length} total)`);
 
   const aquaporAll = await tournSearchAll("aquapor");

@@ -93,13 +93,14 @@ export function driveQueryString(st: DriveUrlState, tab?: string | null): string
 const tcodeParts = (tc: unknown) => String(tc ?? "").replace(/_R\d+$|_Total$/, "").split("+");
 
 /** O torneio (ccode/tcode, ou o provisório que lhe foi fundido) é o do tkey? */
-export function driveTournamentMatches(t: Pick<Tournament, "ccode" | "tcode"> & { _mergedFrom?: string } | undefined | null, tkey: string | null | undefined): boolean {
+export function driveTournamentMatches(t: Pick<Tournament, "ccode" | "tcode"> & { _mergedFrom?: string; _mergedKeys?: string[] } | undefined | null, tkey: string | null | undefined): boolean {
   const p = parseTournKey(tkey);
   if (!p || !t) return false;
   // `…_R1`/`…_Total` (links antigos) abrem o torneio.
   const tc = tcodeParts(p.tcode)[0];
   if (String(t.ccode) === p.ccode && tcodeParts(t.tcode).includes(tc)) return true;
-  return !!t._mergedFrom && t._mergedFrom === `${p.ccode}-${p.tcode}`;
+  const k = `${p.ccode}-${p.tcode}`;
+  return t._mergedFrom === k || !!t._mergedKeys?.includes(k);
 }
 
 /** Deep-link → (entrada, escalão) do CircuitShell. */
