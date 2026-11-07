@@ -123,6 +123,16 @@ fingerprint TLS e headers/body (interceptados no XHR e replicados à letra).
 ⇒ **Para automatizar, é preciso navegar mesmo a página num browser** e ler o
 DOM. Detalhe completo no cabeçalho de `scripts/scrape-fpg-livescoring.js`.
 
+**Captura que funciona (07/11/2026, Final Drive Tour 000-10947):**
+`node scripts/scrape-fpg-livescoring-browser.js --tcodes ccode:tcode` — Playwright
+navega o gate, lê a tabela e abre o cartão de cada jogador em jogo, um de cada
+vez (~45 s para 23 cartões; a página recarrega-se sozinha a cada 120 s).
+Grava em `fpg-livescoring.json` com `par/si/metros/gross` por jogador; cartão
+que não bate com o resultado da tabela (o jogador avançou entretanto) fica com
+`_cartaoDiverge`. Para repetir durante uma prova: tarefa do Agendador do Windows
+(scrape → commit só desse ficheiro → pull → push). Ainda nenhuma página lê este
+ficheiro.
+
 **O `ack` é universal cross-domain** (mesma infra ASP.NET partilhada) — `XH256YF450` para admissions, `8428ACK987` para draw/classif, iguais em ambos os domínios.
 
 ⚠ **Excepção (02/11/2026):** o 985/10246 (Final Drive Tour 2026) recusa o `XH256YF450` (`Param_Errors.aspx?Err=400`) e só abre com o ack do link da FPG, `K4KLCDCAAB`. Acks destes guardam-se no campo `ack` da entrada em `scripts/fpg-admissions-scope.json`; o `scrape-fpg-admissions-draws-node.js` usa-o nas inscrições (os draws continuam com o `8428ACK987`). Sem ele o scraper cai no fallback directo, que traz os inscritos mas não o estado («Inscrições fechadas»). A API live (`api/inscricoes.js`) não precisa: entra pela sessão pública (`1PreparePage`).
