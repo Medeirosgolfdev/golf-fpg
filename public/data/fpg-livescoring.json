@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-07T12:13:16.495Z",
+  "gerado_em": "2026-11-07T12:16:50.218Z",
   "source": "captura DOM via browser (scoring.fpg.pt/live-scoring) — ver _nota",
   "_nota": "Snapshot tirado da TABELA RENDERIDA da página, não do PageMethod lsClassifLST (que devolve 500 a partir de Node — ver cabeçalho de scripts/scrape-fpg-livescoring.js). Por isso só tem as colunas visíveis (pos, jogador, clube, buraco, resultado): faltam scoreId, to-par do dia e totais por ronda, que só vêm no JSON do PageMethod. Guardado porque o live scoring é EFÉMERO — desaparece quando a prova fecha e não há backfill possível. Serve também de fixture real para acabar de validar o scraper.",
   "tournaments": {
@@ -684,7 +684,7 @@
       "campo": "Oeiras Green Valley / Academia",
       "classi": "1",
       "classiLabel": "Gross",
-      "capturedAt": "2026-11-07T12:13:16.440Z",
+      "capturedAt": "2026-11-07T12:16:50.139Z",
       "_via": "playwright",
       "totalJogadores": 36,
       "emJogo": 23,
@@ -946,13 +946,17 @@
             4,
             5,
             5,
-            null,
+            4,
             null,
             null,
             null,
             null,
             null
-          ]
+          ],
+          "_cartaoDiverge": {
+            "cartao": "PAR",
+            "buracos": 13
+          }
         },
         {
           "pos": 4,
@@ -1207,16 +1211,20 @@
             5,
             3,
             4,
-            null,
-            null,
-            null,
+            4,
+            5,
+            5,
             null,
             null,
             null,
             null,
             null,
             null
-          ]
+          ],
+          "_cartaoDiverge": {
+            "cartao": "+1",
+            "buracos": 12
+          }
         },
         {
           "pos": 7,
@@ -1659,99 +1667,7 @@
           ]
         },
         {
-          "pos": 9,
-          "nome": "André Von Hafe",
-          "clube": "Estela",
-          "buracos": 8,
-          "teeTime": null,
-          "resultado": "+3",
-          "par": [
-            4,
-            5,
-            5,
-            4,
-            4,
-            3,
-            5,
-            3,
-            4,
-            4,
-            5,
-            5,
-            4,
-            4,
-            3,
-            5,
-            3,
-            4
-          ],
-          "si": [
-            17,
-            13,
-            1,
-            11,
-            5,
-            15,
-            7,
-            9,
-            3,
-            18,
-            14,
-            2,
-            12,
-            6,
-            16,
-            8,
-            10,
-            4
-          ],
-          "metros": [
-            310,
-            420,
-            470,
-            290,
-            350,
-            140,
-            490,
-            175,
-            345,
-            310,
-            420,
-            470,
-            290,
-            350,
-            140,
-            490,
-            175,
-            345
-          ],
-          "gross": [
-            6,
-            6,
-            4,
-            4,
-            4,
-            4,
-            5,
-            3,
-            5,
-            5,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "_cartaoDiverge": {
-            "cartao": "+5",
-            "buracos": 10
-          }
-        },
-        {
-          "pos": 13,
+          "pos": 12,
           "nome": "Francisco Nunes (jr)",
           "clube": "Miramar",
           "buracos": 14,
@@ -1839,7 +1755,7 @@
           ]
         },
         {
-          "pos": 13,
+          "pos": 12,
           "nome": "William Gao",
           "clube": "Quinta do Peru",
           "buracos": 9,
@@ -1927,7 +1843,7 @@
           ]
         },
         {
-          "pos": 13,
+          "pos": 12,
           "nome": "David Filip Jr",
           "clube": "Quinta do Peru",
           "buracos": 9,
@@ -2015,7 +1931,7 @@
           ]
         },
         {
-          "pos": 16,
+          "pos": 15,
           "nome": "Santiago Dias",
           "clube": "Oporto",
           "buracos": 15,
@@ -2103,7 +2019,7 @@
           ]
         },
         {
-          "pos": 16,
+          "pos": 15,
           "nome": "Madalena Figueiredo",
           "clube": "Belas",
           "buracos": 11,
@@ -2181,6 +2097,94 @@
             6,
             5,
             5,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "pos": 15,
+          "nome": "André Von Hafe",
+          "clube": "Estela",
+          "buracos": 10,
+          "teeTime": null,
+          "resultado": "+5",
+          "par": [
+            4,
+            5,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            5,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4
+          ],
+          "si": [
+            17,
+            13,
+            1,
+            11,
+            5,
+            15,
+            7,
+            9,
+            3,
+            18,
+            14,
+            2,
+            12,
+            6,
+            16,
+            8,
+            10,
+            4
+          ],
+          "metros": [
+            310,
+            420,
+            470,
+            290,
+            350,
+            140,
+            490,
+            175,
+            345,
+            310,
+            420,
+            470,
+            290,
+            350,
+            140,
+            490,
+            175,
+            345
+          ],
+          "gross": [
+            6,
+            6,
+            4,
+            4,
+            4,
+            4,
+            5,
+            3,
+            5,
+            5,
+            null,
             null,
             null,
             null,
@@ -2617,7 +2621,7 @@
             3,
             4,
             5,
-            3,
+            4,
             5,
             null,
             null,
@@ -2628,7 +2632,11 @@
             null,
             null,
             null
-          ]
+          ],
+          "_cartaoDiverge": {
+            "cartao": "+8",
+            "buracos": 9
+          }
         },
         {
           "pos": 23,
@@ -2710,13 +2718,17 @@
             4,
             6,
             6,
-            null,
+            4,
             null,
             null,
             null,
             null,
             null
-          ]
+          ],
+          "_cartaoDiverge": {
+            "cartao": "+8",
+            "buracos": 13
+          }
         },
         {
           "pos": null,
@@ -2826,6 +2838,12 @@
       "history": [
         {
           "capturedAt": "2026-11-07T12:04:10.708Z",
+          "emJogo": 23,
+          "lider": "Manuel Goulartt Medeiros",
+          "liderResultado": "-3"
+        },
+        {
+          "capturedAt": "2026-11-07T12:13:16.440Z",
           "emJogo": 23,
           "lider": "Manuel Goulartt Medeiros",
           "liderResultado": "-3"
