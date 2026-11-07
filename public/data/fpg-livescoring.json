@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-07T15:15:57.668Z",
+  "gerado_em": "2026-11-07T15:25:59.172Z",
   "source": "captura DOM via browser (scoring.fpg.pt/live-scoring) — ver _nota",
   "_nota": "Snapshot tirado da TABELA RENDERIDA da página, não do PageMethod lsClassifLST (que devolve 500 a partir de Node — ver cabeçalho de scripts/scrape-fpg-livescoring.js). Por isso só tem as colunas visíveis (pos, jogador, clube, buraco, resultado): faltam scoreId, to-par do dia e totais por ronda, que só vêm no JSON do PageMethod. Guardado porque o live scoring é EFÉMERO — desaparece quando a prova fecha e não há backfill possível. Serve também de fixture real para acabar de validar o scraper.",
   "tournaments": {
@@ -684,7 +684,7 @@
       "campo": "Oeiras Green Valley / Academia",
       "classi": "1",
       "classiLabel": "Gross",
-      "capturedAt": "2026-11-07T15:15:57.598Z",
+      "capturedAt": "2026-11-07T15:25:59.131Z",
       "_via": "playwright",
       "totalJogadores": 36,
       "emJogo": 36,
@@ -3905,6 +3905,12 @@
         {
           "capturedAt": "2026-11-07T14:45:35.867Z",
           "emJogo": 33,
+          "lider": "Ricardo Castro Ferreira",
+          "liderResultado": "-1"
+        },
+        {
+          "capturedAt": "2026-11-07T15:15:57.598Z",
+          "emJogo": 36,
           "lider": "Ricardo Castro Ferreira",
           "liderResultado": "-1"
         }
