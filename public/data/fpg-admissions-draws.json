@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-11-07T15:56:58.109Z",
-  "total": 1265,
+  "scrapedAt": "2026-11-07T21:04:05.631Z",
+  "total": 1266,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -404535,34 +404535,35 @@
       "name": "Torneio Drive Challenge_Preparação 2027 Sub 18",
       "date": "2026-11-07",
       "expectedYear": "2026",
+      "campo": "Montado",
       "admissions": {
         "name": "Torneio Drive Challenge_Preparação 2027 Sub 18",
         "date": "2026-11-07",
-        "totalInscritos": 3,
+        "totalInscritos": 6,
         "reservas": 0,
-        "status": "Inscrições em curso",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10251",
         "ccode": "985",
         "players": [
           {
             "pos": 1,
-            "fed": "35019",
-            "nome": "Lucas Lemos Guerreiro",
-            "clube": "Clube Benfica",
-            "hcp": 32.8,
-            "vacf": null,
-            "registo": "2026/10/07 14:44",
+            "fed": "43918",
+            "nome": "Henrique Rodrigues Pereira",
+            "clube": "Lisbon SC",
+            "hcp": 16.8,
+            "vacf": 89.7,
+            "registo": "2026/10/26 12:40",
             "status": "confirmed"
           },
           {
             "pos": 2,
-            "fed": "51081",
-            "nome": "Andres Pava",
-            "clube": "ACP Golfe",
-            "hcp": 29.3,
-            "vacf": null,
-            "registo": "2026/10/07 18:08",
+            "fed": "45869",
+            "nome": "Francisco Rodrigues",
+            "clube": "Belas",
+            "hcp": 23.8,
+            "vacf": 96.8,
+            "registo": "2026/10/23 08:26",
             "status": "confirmed"
           },
           {
@@ -404571,13 +404572,108 @@
             "nome": "Ario Kiani",
             "clube": "Qta. Marinha",
             "hcp": 20.5,
-            "vacf": null,
+            "vacf": 100.3,
             "registo": "2026/10/09 21:10",
             "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "44032",
+            "nome": "Lourenço Cid",
+            "clube": "Lisbon SC",
+            "hcp": 26.6,
+            "vacf": 100.5,
+            "registo": "2026/11/01 11:55",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "51081",
+            "nome": "Andres Pava",
+            "clube": "ACP Golfe",
+            "hcp": 29.3,
+            "vacf": 100.7,
+            "registo": "2026/10/07 18:08",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "50138",
+            "nome": "Afonso Rocha",
+            "clube": "Belas",
+            "hcp": 37.9,
+            "vacf": 115.4,
+            "registo": "2026/11/01 20:50",
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
+            "fed": "35019",
+            "nome": "Lucas Lemos Guerreiro",
+            "clube": "Clube Benfica",
+            "hcp": 32.8,
+            "vacf": null,
+            "registo": "2026/10/07 14:44",
+            "status": "desistente",
+            "desinscritoEm": "2026-11-07"
           }
         ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Torneio Drive Challenge_Preparação 2027 Sub 18",
+          "date": "2026-11-07",
+          "campo": "Montado",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 6,
+          "groups": [
+            {
+              "teeTime": "11:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Henrique Rodrigues Pereira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Ario Kiani",
+                  "fed": null,
+                  "clube": "Qta. Marinha"
+                },
+                {
+                  "nome": "Francisco Rodrigues",
+                  "fed": null,
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Lourenço Cid",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Andres Pava",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Afonso Rocha",
+                  "fed": null,
+                  "clube": "Belas"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -404585,40 +404681,106 @@
       "name": "Torneio Drive Challenge_Preparação 2027 Sub 14",
       "date": "2026-11-07",
       "expectedYear": "2026",
+      "campo": "Montado",
       "admissions": {
         "name": "Torneio Drive Challenge_Preparação 2027 Sub 14",
         "date": "2026-11-07",
-        "totalInscritos": 2,
+        "totalInscritos": 4,
         "reservas": 0,
-        "status": "Inscrições em curso",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10252",
         "ccode": "985",
         "players": [
           {
             "pos": 1,
-            "fed": "48529",
-            "nome": "Matilde Bandeira",
-            "clube": "Vale de Janelas",
-            "hcp": 39.7,
-            "vac": null,
-            "dataInscricao": "2026/10/10 08:56",
+            "fed": "49087",
+            "nome": "Tomás Pinto Barbosa",
+            "clube": "Quinta do Peru",
+            "hcp": 22.3,
+            "vacf": 93.5,
+            "registo": "2026/10/13 09:11",
             "status": "confirmed"
           },
           {
             "pos": 2,
-            "fed": "49087",
-            "nome": "Tomás Pinto Barbosa",
-            "clube": "Quinta do Peru",
-            "hcp": 23,
-            "vac": null,
-            "dataInscricao": "2026/10/13 09:11",
+            "fed": "48164",
+            "nome": "David Stocksreiter Ferreira",
+            "clube": "Lisbon SC",
+            "hcp": 25,
+            "vacf": 95.6,
+            "registo": "2026/10/31 11:56",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "48113",
+            "nome": "Maria Luz",
+            "clube": "Belas",
+            "hcp": 25.9,
+            "vacf": 97.9,
+            "registo": "2026/10/23 08:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "48529",
+            "nome": "Matilde Bandeira",
+            "clube": "Vale de Janelas",
+            "hcp": 39.7,
+            "vacf": 111,
+            "registo": "2026/10/10 08:56",
             "status": "confirmed"
           }
-        ],
-        "_liveUpdatedAt": "2026-10-22T17:43:02.377Z"
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Torneio Drive Challenge_Preparação 2027 Sub 14",
+          "date": "2026-11-07",
+          "campo": "Montado",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "11:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Tomás Pinto Barbosa",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Maria Luz",
+                  "fed": null,
+                  "clube": "Belas",
+                  "tee": "Verdes"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:30",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "David Stocksreiter Ferreira",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Matilde Bandeira",
+                  "fed": null,
+                  "clube": "Vale de Janelas",
+                  "tee": "Verdes"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -404626,44 +404788,45 @@
       "name": "Torneio Drive Challenge_Preparação 2027 Sub 12",
       "date": "2026-11-07",
       "expectedYear": "2026",
+      "campo": "Montado",
       "admissions": {
         "name": "Torneio Drive Challenge_Preparação 2027 Sub 12",
         "date": "2026-11-07",
-        "totalInscritos": 6,
+        "totalInscritos": 7,
         "reservas": 0,
-        "status": "Inscrições em curso",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10253",
         "ccode": "985",
         "players": [
           {
             "pos": 1,
-            "fed": "47318",
-            "nome": "Tiago Borges Oliveira",
-            "clube": "Belas",
-            "hcp": 27,
-            "vac": 105,
-            "dataInscricao": "2026/10/18 09:45",
+            "fed": "48946",
+            "nome": "Miguel Santos Pereira",
+            "clube": "Vilamoura, C. G",
+            "hcp": 13.7,
+            "vacf": 85.5,
+            "registo": "2026/10/08 16:42",
             "status": "confirmed"
           },
           {
             "pos": 2,
-            "fed": "48946",
-            "nome": "Miguel Santos Pereira",
-            "clube": "Vilamoura, C. G",
-            "hcp": 13.8,
-            "vac": null,
-            "dataInscricao": "2026/10/08 16:42",
-            "status": "confirmed"
-          },
-          {
-            "pos": 3,
             "fed": "51650",
             "nome": "William Palmqvist",
             "clube": "Estoril",
             "hcp": 24.3,
-            "vac": null,
-            "dataInscricao": "2026/10/10 16:32",
+            "vacf": 98.6,
+            "registo": "2026/10/10 16:32",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "47318",
+            "nome": "Tiago Borges Oliveira",
+            "clube": "Belas",
+            "hcp": 27,
+            "vacf": 103.5,
+            "registo": "2026/10/18 09:45",
             "status": "confirmed"
           },
           {
@@ -404672,34 +404835,131 @@
             "nome": "Diogo Cajus",
             "clube": "Belas",
             "hcp": 32.2,
-            "vac": null,
-            "dataInscricao": "2026/10/10 18:55",
+            "vacf": 104.1,
+            "registo": "2026/10/10 18:55",
             "status": "confirmed"
           },
           {
             "pos": 5,
+            "fed": "59274",
+            "nome": "Afonso Martins Bruno",
+            "clube": "Quinta do Peru",
+            "hcp": 41.1,
+            "vacf": 115.4,
+            "registo": "2026/11/01 17:14",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "59275",
+            "nome": "Tomás Martins Bruno",
+            "clube": "Quinta do Peru",
+            "hcp": 43.5,
+            "vacf": 120.5,
+            "registo": "2026/11/01 17:06",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "54204",
+            "nome": "Daniel David Roque",
+            "clube": "ACP Golfe",
+            "hcp": 54,
+            "vacf": null,
+            "registo": "2026/10/25 18:41",
+            "status": "confirmed"
+          },
+          {
+            "pos": null,
             "fed": "44649",
             "nome": "Artur Santos",
             "clube": "Lisbon SC",
             "hcp": 35.8,
             "vac": null,
             "dataInscricao": "2026/10/12 10:31",
-            "status": "confirmed"
+            "status": "desistente",
+            "desinscritoEm": "2026-11-07"
           },
           {
-            "pos": 6,
+            "pos": null,
             "fed": "56026",
             "nome": "Afonso Aniceto",
             "clube": "Santo da Serra",
             "hcp": 34.7,
             "vac": null,
             "dataInscricao": "2026/10/12 20:02",
-            "status": "confirmed"
+            "status": "desistente",
+            "desinscritoEm": "2026-11-07"
           }
-        ],
-        "_liveUpdatedAt": "2026-10-22T17:42:47.082Z"
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Torneio Drive Challenge_Preparação 2027 Sub 12",
+          "date": "2026-11-07",
+          "campo": "Montado",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 7,
+          "groups": [
+            {
+              "teeTime": "11:40",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Miguel Santos Pereira",
+                  "fed": null,
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "William Palmqvist",
+                  "fed": null,
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Tiago Borges Oliveira",
+                  "fed": null,
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:50",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Diogo Cajus",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Afonso Martins Bruno",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Tomás Martins Bruno",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:00",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Daniel David Roque",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "985",
@@ -404707,6 +404967,7 @@
       "name": "Torneio Drive Challenge_Preparação 2027 Sub 10",
       "date": "2026-11-07",
       "expectedYear": "2026",
+      "campo": "Montado",
       "admissions": {
         "name": "Torneio Drive Challenge_Preparação 2027 Sub 10",
         "date": "2026-11-07",
@@ -404722,22 +404983,43 @@
             "fed": "58864",
             "nome": "Mikhail Khontulev",
             "clube": "Estoril",
-            "hcp": 21.9,
-            "vac": null,
-            "dataInscricao": "2026/10/10 18:57",
+            "hcp": 19.2,
+            "vacf": 90.9,
+            "registo": "2026/10/10 18:57",
             "status": "confirmed"
           }
-        ],
-        "_liveUpdatedAt": "2026-11-02T13:59:48.183Z"
+        ]
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Torneio Drive Challenge_Preparação 2027 Sub 10",
+          "date": "2026-11-07",
+          "campo": "Montado",
+          "clube": "Federação Portuguesa de Golfe - DRIVE TEJO",
+          "totalJogadores": 1,
+          "groups": [
+            {
+              "teeTime": "12:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Mikhail Khontulev",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "000",
       "tcode": "10947",
       "name": "Final Drive Tour – Oeiras Green Valley / Academia",
       "date": "2026-11-07",
-      "expectedYear": 2026,
+      "expectedYear": "2026",
       "campo": "Oeiras",
       "admissions": {
         "error": "param-errors",
@@ -407681,6 +407963,146 @@
             "country": "Portugal",
             "dob": "2014-10-16",
             "sex": "F"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "000",
+      "tcode": "10946",
+      "name": "2nd Castro Marim Portuguese Int. U14 Championship",
+      "date": "2026-12-04",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "2nd Castro Marim Portuguese Int. U14 Championship",
+        "date": "2026-12-04",
+        "totalInscritos": 12,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10946",
+        "ccode": "000",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "49124",
+            "nome": "Nuno Palmares Jr.",
+            "clube": "Estoril",
+            "hcp": 1.3,
+            "vacf": null,
+            "registo": "2026/11/06 11:17",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "48297",
+            "nome": "João Rocha",
+            "clube": "Estoril",
+            "hcp": 3.5,
+            "vacf": null,
+            "registo": "2026/11/06 11:18",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "43968",
+            "nome": "Salvador Ivo de Carvalho",
+            "clube": "Estoril",
+            "hcp": 3.4,
+            "vacf": null,
+            "registo": "2026/11/06 11:18",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "46299",
+            "nome": "Francisco Nunes (jr)",
+            "clube": "Miramar",
+            "hcp": 1.2,
+            "vacf": null,
+            "registo": "2026/11/06 11:18",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "49085",
+            "nome": "Ricardo Castro Ferreira",
+            "clube": "Estoril",
+            "hcp": 3.9,
+            "vacf": null,
+            "registo": "2026/11/06 11:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "46038",
+            "nome": "João Balixa",
+            "clube": "Miramar",
+            "hcp": 3.3,
+            "vacf": null,
+            "registo": "2026/11/06 11:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "46311",
+            "nome": "Tomás Rente",
+            "clube": "Miramar",
+            "hcp": 4,
+            "vacf": null,
+            "registo": "2026/11/06 11:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "42908",
+            "nome": "Santiago Dias",
+            "clube": "Oporto",
+            "hcp": -2,
+            "vacf": null,
+            "registo": "2026/11/06 11:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "48971",
+            "nome": "Sabrina Ribeiro Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 4.2,
+            "vacf": null,
+            "registo": "2026/11/06 11:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "46310",
+            "nome": "Margarida Silva Pinto",
+            "clube": "Miramar",
+            "hcp": 4.9,
+            "vacf": null,
+            "registo": "2026/11/06 11:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "48794",
+            "nome": "Catarina Sousa Conceição",
+            "clube": "Vilamoura, C. G",
+            "hcp": 5,
+            "vacf": null,
+            "registo": "2026/11/06 11:27",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "45393",
+            "nome": "Laura Santos",
+            "clube": "PXO Clube",
+            "hcp": -1.1,
+            "vacf": null,
+            "registo": "2026/11/06 11:28",
+            "status": "confirmed"
           }
         ]
       },
