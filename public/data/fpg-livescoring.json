@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-07T12:04:49.998Z",
+  "gerado_em": "2026-11-07T12:13:16.495Z",
   "source": "captura DOM via browser (scoring.fpg.pt/live-scoring) — ver _nota",
   "_nota": "Snapshot tirado da TABELA RENDERIDA da página, não do PageMethod lsClassifLST (que devolve 500 a partir de Node — ver cabeçalho de scripts/scrape-fpg-livescoring.js). Por isso só tem as colunas visíveis (pos, jogador, clube, buraco, resultado): faltam scoreId, to-par do dia e totais por ronda, que só vêm no JSON do PageMethod. Guardado porque o live scoring é EFÉMERO — desaparece quando a prova fecha e não há backfill possível. Serve também de fixture real para acabar de validar o scraper.",
   "tournaments": {
@@ -684,8 +684,8 @@
       "campo": "Oeiras Green Valley / Academia",
       "classi": "1",
       "classiLabel": "Gross",
-      "capturedAt": "2026-11-07T12:04:10.708Z",
-      "_via": "dom-browser",
+      "capturedAt": "2026-11-07T12:13:16.440Z",
+      "_via": "playwright",
       "totalJogadores": 36,
       "emJogo": 23,
       "porSair": 13,
@@ -776,14 +776,13 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 34
+          ]
         },
         {
           "pos": 2,
           "nome": "José Silva",
           "clube": "Amendoeira",
-          "buracos": 9,
+          "buracos": 10,
           "teeTime": null,
           "resultado": "-2",
           "par": [
@@ -856,7 +855,7 @@
             5,
             3,
             3,
-            null,
+            4,
             null,
             null,
             null,
@@ -865,14 +864,13 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 35
+          ]
         },
         {
           "pos": 3,
           "nome": "João Rocha",
           "clube": "Estoril",
-          "buracos": 11,
+          "buracos": 12,
           "teeTime": null,
           "resultado": "PAR",
           "par": [
@@ -947,15 +945,14 @@
             4,
             4,
             5,
-            null,
+            5,
             null,
             null,
             null,
             null,
             null,
             null
-          ],
-          "grossParcial": 46
+          ]
         },
         {
           "pos": 4,
@@ -1043,8 +1040,7 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 38
+          ]
         },
         {
           "pos": 4,
@@ -1132,8 +1128,7 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 38
+          ]
         },
         {
           "pos": 4,
@@ -1221,97 +1216,7 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 38
-        },
-        {
-          "pos": 7,
-          "nome": "Pedro Costa Alemão",
-          "clube": "Estoril",
-          "buracos": 9,
-          "teeTime": null,
-          "resultado": "+2",
-          "par": [
-            4,
-            5,
-            5,
-            4,
-            4,
-            3,
-            5,
-            3,
-            4,
-            4,
-            5,
-            5,
-            4,
-            4,
-            3,
-            5,
-            3,
-            4
-          ],
-          "si": [
-            17,
-            13,
-            1,
-            11,
-            5,
-            15,
-            7,
-            9,
-            3,
-            18,
-            14,
-            2,
-            12,
-            6,
-            16,
-            8,
-            10,
-            4
-          ],
-          "metros": [
-            335,
-            485,
-            490,
-            322,
-            380,
-            159,
-            515,
-            195,
-            370,
-            335,
-            485,
-            490,
-            322,
-            380,
-            159,
-            515,
-            195,
-            370
-          ],
-          "gross": [
-            3,
-            6,
-            6,
-            4,
-            5,
-            4,
-            4,
-            4,
-            3,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "grossParcial": 39
+          ]
         },
         {
           "pos": 7,
@@ -1399,8 +1304,7 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 39
+          ]
         },
         {
           "pos": 7,
@@ -1488,14 +1392,13 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 39
+          ]
         },
         {
-          "pos": 10,
-          "nome": "Santiago Dias",
-          "clube": "Oporto",
-          "buracos": 13,
+          "pos": 9,
+          "nome": "Pedro Costa Alemão",
+          "clube": "Estoril",
+          "buracos": 14,
           "teeTime": null,
           "resultado": "+3",
           "par": [
@@ -1539,49 +1442,48 @@
             4
           ],
           "metros": [
-            310,
-            420,
-            470,
-            290,
-            350,
-            140,
+            335,
+            485,
             490,
-            175,
-            345,
-            310,
-            420,
-            470,
-            290,
-            350,
-            140,
+            322,
+            380,
+            159,
+            515,
+            195,
+            370,
+            335,
+            485,
             490,
-            175,
-            345
+            322,
+            380,
+            159,
+            515,
+            195,
+            370
           ],
           "gross": [
-            4,
-            7,
-            4,
-            4,
-            4,
             3,
-            3,
-            3,
-            5,
-            3,
+            6,
+            6,
             4,
             5,
-            9,
-            null,
+            4,
+            4,
+            4,
+            3,
+            5,
+            5,
+            5,
+            4,
+            4,
             null,
             null,
             null,
             null
-          ],
-          "grossParcial": 58
+          ]
         },
         {
-          "pos": 10,
+          "pos": 9,
           "nome": "Sabrina Ribeiro Crisóstomo",
           "clube": "Vilamoura, C. G",
           "buracos": 9,
@@ -1666,11 +1568,10 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 40
+          ]
         },
         {
-          "pos": 10,
+          "pos": 9,
           "nome": "Miguel Silva",
           "clube": "Amendoeira",
           "buracos": 9,
@@ -1755,11 +1656,10 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 40
+          ]
         },
         {
-          "pos": 10,
+          "pos": 9,
           "nome": "André Von Hafe",
           "clube": "Estela",
           "buracos": 8,
@@ -1834,8 +1734,8 @@
             4,
             5,
             3,
-            null,
-            null,
+            5,
+            5,
             null,
             null,
             null,
@@ -1845,10 +1745,13 @@
             null,
             null
           ],
-          "grossParcial": 36
+          "_cartaoDiverge": {
+            "cartao": "+5",
+            "buracos": 10
+          }
         },
         {
-          "pos": 14,
+          "pos": 13,
           "nome": "Francisco Nunes (jr)",
           "clube": "Miramar",
           "buracos": 14,
@@ -1933,11 +1836,10 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 63
+          ]
         },
         {
-          "pos": 14,
+          "pos": 13,
           "nome": "William Gao",
           "clube": "Quinta do Peru",
           "buracos": 9,
@@ -2022,100 +1924,10 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 41
+          ]
         },
         {
-          "pos": 14,
-          "nome": "Madalena Figueiredo",
-          "clube": "Belas",
-          "buracos": 9,
-          "teeTime": null,
-          "resultado": "+4",
-          "par": [
-            4,
-            5,
-            5,
-            4,
-            4,
-            3,
-            5,
-            3,
-            4,
-            4,
-            5,
-            5,
-            4,
-            4,
-            3,
-            5,
-            3,
-            4
-          ],
-          "si": [
-            17,
-            13,
-            1,
-            11,
-            5,
-            15,
-            7,
-            9,
-            3,
-            18,
-            14,
-            2,
-            12,
-            6,
-            16,
-            8,
-            10,
-            4
-          ],
-          "metros": [
-            290,
-            395,
-            450,
-            270,
-            330,
-            120,
-            465,
-            150,
-            325,
-            290,
-            395,
-            450,
-            270,
-            330,
-            120,
-            465,
-            150,
-            325
-          ],
-          "gross": [
-            5,
-            6,
-            4,
-            3,
-            5,
-            4,
-            5,
-            3,
-            6,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "grossParcial": 41
-        },
-        {
-          "pos": 14,
+          "pos": 13,
           "nome": "David Filip Jr",
           "clube": "Quinta do Peru",
           "buracos": 9,
@@ -2200,16 +2012,15 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 41
+          ]
         },
         {
-          "pos": 18,
-          "nome": "Martim Sousa de Morais",
-          "clube": "Belas",
-          "buracos": 10,
+          "pos": 16,
+          "nome": "Santiago Dias",
+          "clube": "Oporto",
+          "buracos": 15,
           "teeTime": null,
-          "resultado": "+6",
+          "resultado": "+5",
           "par": [
             4,
             5,
@@ -2251,37 +2062,125 @@
             4
           ],
           "metros": [
-            335,
-            485,
+            310,
+            420,
+            470,
+            290,
+            350,
+            140,
             490,
-            322,
-            380,
-            159,
-            515,
-            195,
-            370,
-            335,
-            485,
+            175,
+            345,
+            310,
+            420,
+            470,
+            290,
+            350,
+            140,
             490,
-            322,
-            380,
-            159,
-            515,
-            195,
-            370
+            175,
+            345
           ],
           "gross": [
+            4,
+            7,
+            4,
+            4,
+            4,
+            3,
+            3,
             3,
             5,
-            7,
-            5,
+            3,
             4,
             5,
+            4,
+            9,
+            5,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "pos": 16,
+          "nome": "Madalena Figueiredo",
+          "clube": "Belas",
+          "buracos": 11,
+          "teeTime": null,
+          "resultado": "+5",
+          "par": [
+            4,
+            5,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            5,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4
+          ],
+          "si": [
+            17,
+            13,
+            1,
+            11,
+            5,
+            15,
+            7,
+            9,
+            3,
+            18,
+            14,
+            2,
+            12,
+            6,
+            16,
+            8,
+            10,
+            4
+          ],
+          "metros": [
+            290,
+            395,
+            450,
+            270,
+            330,
+            120,
+            465,
+            150,
+            325,
+            290,
+            395,
+            450,
+            270,
+            330,
+            120,
+            465,
+            150,
+            325
+          ],
+          "gross": [
+            5,
+            6,
+            4,
+            3,
+            5,
+            4,
             5,
             3,
             6,
-            4,
-            null,
+            5,
+            5,
             null,
             null,
             null,
@@ -2289,8 +2188,7 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 47
+          ]
         },
         {
           "pos": 18,
@@ -2378,8 +2276,7 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 43
+          ]
         },
         {
           "pos": 18,
@@ -2467,8 +2364,7 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 43
+          ]
         },
         {
           "pos": 18,
@@ -2556,11 +2452,10 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 43
+          ]
         },
         {
-          "pos": 22,
+          "pos": 21,
           "nome": "Angelina Gao",
           "clube": "Quinta do Peru",
           "buracos": 9,
@@ -2645,11 +2540,10 @@
             null,
             null,
             null
-          ],
-          "grossParcial": 44
+          ]
         },
         {
-          "pos": 22,
+          "pos": 21,
           "nome": "Ethan Sutherland",
           "clube": "Vila Sol",
           "buracos": 9,
@@ -2734,8 +2628,95 @@
             null,
             null,
             null
+          ]
+        },
+        {
+          "pos": 23,
+          "nome": "Martim Sousa de Morais",
+          "clube": "Belas",
+          "buracos": 12,
+          "teeTime": null,
+          "resultado": "+8",
+          "par": [
+            4,
+            5,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            5,
+            5,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4
           ],
-          "grossParcial": 44
+          "si": [
+            17,
+            13,
+            1,
+            11,
+            5,
+            15,
+            7,
+            9,
+            3,
+            18,
+            14,
+            2,
+            12,
+            6,
+            16,
+            8,
+            10,
+            4
+          ],
+          "metros": [
+            335,
+            485,
+            490,
+            322,
+            380,
+            159,
+            515,
+            195,
+            370,
+            335,
+            485,
+            490,
+            322,
+            380,
+            159,
+            515,
+            195,
+            370
+          ],
+          "gross": [
+            3,
+            5,
+            7,
+            5,
+            4,
+            5,
+            5,
+            3,
+            6,
+            4,
+            6,
+            6,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
         },
         {
           "pos": null,
@@ -2842,7 +2823,14 @@
           "resultado": null
         }
       ],
-      "history": []
+      "history": [
+        {
+          "capturedAt": "2026-11-07T12:04:10.708Z",
+          "emJogo": 23,
+          "lider": "Manuel Goulartt Medeiros",
+          "liderResultado": "-3"
+        }
+      ]
     }
   }
 }
