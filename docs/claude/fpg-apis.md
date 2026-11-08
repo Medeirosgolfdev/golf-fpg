@@ -129,7 +129,11 @@ navega o gate, lê a tabela e abre o cartão de cada jogador em jogo, um de cada
 vez (~45 s para 23 cartões; a página recarrega-se sozinha a cada 120 s).
 Grava em `fpg-livescoring.json` com `par/si/metros/gross` por jogador; cartão
 que não bate com o resultado da tabela (o jogador avançou entretanto) fica com
-`_cartaoDiverge`. Para repetir durante uma prova: tarefa do Agendador do Windows
+`_cartaoDiverge`. As colunas lêem-se pelo cabeçalho: da 2.ª volta em diante a
+FPG acrescenta «Hoje» (±par da volta, gravado em `hoje`; é com ele que o cartão
+se confere) e «V1», «V2»… (gross das voltas anteriores, em `voltas`). Com `r=0`
+a chave é a mesma todos os dias: ao mudar de volta (`volta`, lida do «(Round N)»
+do título), a última captura da anterior fica em `voltasAnteriores`. Para repetir durante uma prova: tarefa do Agendador do Windows
 (scrape → commit só desse ficheiro → pull → push). Ainda nenhuma página lê este
 ficheiro.
 

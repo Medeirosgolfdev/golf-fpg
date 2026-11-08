@@ -39,16 +39,34 @@ async function lerProva(page, ccode, tcode) {
   catch { console.warn(`[live] ${ccode}/${tcode}: sem tabela (prova não está live?)`); return null; }
 
   const nome = (await page.locator("h1, h2, h3, h4").first().innerText().catch(() => "")).trim();
-  const ler = () => page.$$eval("tr.jtable-data-row", trs => trs.map(tr => {
-    const td = [...tr.children].map(x => x.innerText.trim());
-    return {
-      pos: td[0] === "-" ? null : Number(td[0]), nome: td[1], clube: td[2],
-      buracos: /^\d+$/.test(td[3]) ? Number(td[3]) : 0,
-      teeTime: /:/.test(td[3]) ? td[3] : null,
-      resultado: td[4] === "-" ? null : td[4],
-    };
-  }));
+  // As colunas lêem-se pelo NOME do cabeçalho: na 1.ª volta são «Pos. | Jogador |
+  // Equipa/Clube | Buraco | Result.»; da 2.ª em diante a FPG mete «Hoje» (±par da
+  // volta de hoje) antes de «Buraco» e «V1», «V2»… (gross das voltas anteriores) no fim.
+  const ler = () => page.$$eval("tr.jtable-data-row", trs => {
+    const hdr = [...(trs[0]?.closest("table")?.querySelectorAll("thead th") ?? [])].map(th => th.innerText.trim());
+    const col = re => hdr.findIndex(h => re.test(h));
+    const iPos = col(/^Pos/i), iNome = col(/^Jogador/i), iClube = col(/Clube|Equipa/i);
+    const iHoje = col(/^Hoje/i), iBur = col(/^Buraco/i), iRes = col(/^Result/i);
+    const iVs = hdr.map((h, i) => [h, i]).filter(([h]) => /^V\d+$/.test(h));
+    const nada = v => v == null || v === "" || v === "-";
+    return trs.map(tr => {
+      const td = [...tr.children].map(x => x.innerText.trim());
+      const at = i => (i >= 0 ? td[i] : undefined);
+      const bur = at(iBur);
+      const j = {
+        pos: nada(at(iPos)) ? null : Number(at(iPos)), nome: at(iNome), clube: at(iClube),
+        buracos: /^\d+$/.test(bur ?? "") ? Number(bur) : 0,
+        teeTime: /:/.test(bur ?? "") ? bur : null,
+        resultado: nada(at(iRes)) ? null : at(iRes),
+      };
+      if (iHoje >= 0) j.hoje = nada(at(iHoje)) ? null : at(iHoje);
+      if (iVs.length) j.voltas = Object.fromEntries(iVs.map(([h, i]) => [h.slice(1), nada(td[i]) ? null : Number(td[i])]));
+      return j;
+    });
+  });
   const jogadores = await ler();
+  if (jogadores.some(j => !j.nome)) throw new Error(`${ccode}/${tcode}: cabeçalho da tabela inesperado (sem «Jogador»)`);
+  const volta = Number((nome.match(/\(Round (\d+)\)/i) || [])[1]) || null;
 
   if (!SEM_CARTOES) {
     for (const j of jogadores) {
@@ -65,11 +83,14 @@ async function lerProva(page, ccode, tcode) {
           sc[c[0]] = [...v.slice(0, 9), ...v.slice(10, 19)].map(x => (x === "" ? null : Number(x)));
         }
         Object.assign(j, { par: sc.PAR, si: sc.Stroke, metros: sc.Metros, gross: sc.Gross });
-        // confere com o resultado do live
+        // confere com o live: o cartão é o da volta de HOJE («Hoje» na 2.ª volta
+        // em diante; na 1.ª o «Result.» é o mesmo)
         const jog = (sc.Gross || []).map((g, i) => [g, sc.PAR[i]]).filter(([g]) => g != null);
         const tp = jog.reduce((s, [g, p]) => s + g - p, 0);
         const tpStr = tp === 0 ? "PAR" : tp > 0 ? `+${tp}` : String(tp);
-        if (tpStr !== j.resultado || jog.length !== j.buracos) j._cartaoDiverge = { cartao: tpStr, buracos: jog.length };
+        const norm = v => (v === "0" || v === "E" ? "PAR" : v);
+        const live = norm("hoje" in j ? j.hoje : j.resultado);
+        if (tpStr !== live || jog.length !== j.buracos) j._cartaoDiverge = { cartao: tpStr, buracos: jog.length };
         await linha.locator("h6.child-opener-image").click();
       } catch { j._semCartao = true; }
       await page.waitForTimeout(PAUSA_MS);
@@ -77,7 +98,7 @@ async function lerProva(page, ccode, tcode) {
   }
 
   return {
-    ccode, tcode, round: ROUND, nome, campo: nome.split("–").slice(1).join("–").trim() || null,
+    ccode, tcode, round: ROUND, volta, nome, campo: nome.split("–").slice(1).join("–").trim() || null,
     classi: "1", classiLabel: "Gross", capturedAt: new Date().toISOString(), _via: "playwright",
     totalJogadores: jogadores.length,
     emJogo: jogadores.filter(j => j.buracos > 0).length,
@@ -111,7 +132,15 @@ async function lerProva(page, ccode, tcode) {
       capturedAt: prev.capturedAt, emJogo: prev.emJogo, lider: prev.jogadores?.[0]?.nome ?? null,
       liderResultado: prev.jogadores?.[0]?.resultado ?? null,
     }].slice(-200) : [];
-    base.tournaments[key] = { ...s, history };
+    // Com `r=0` a chave é a mesma todos os dias: quando a volta muda, a última
+    // captura da volta anterior (com os cartões) fica guardada em `voltasAnteriores`.
+    const voltasAnteriores = { ...(prev?.voltasAnteriores || {}) };
+    const prevVolta = prev ? (prev.volta ?? (/\(Round (\d+)\)/i.exec(prev.nome || "")?.[1] ?? "1")) : null;
+    if (prev && String(prevVolta) !== String(s.volta ?? 1)) {
+      const { history: _h, voltasAnteriores: _v, ...snap } = prev;
+      voltasAnteriores[String(prevVolta)] = snap;
+    }
+    base.tournaments[key] = { ...s, history, ...(Object.keys(voltasAnteriores).length ? { voltasAnteriores } : {}) };
     const div = s.jogadores.filter(j => j._cartaoDiverge || j._semCartao).length;
     console.log(`[live] ${key} ${s.nome}: ${s.emJogo} em jogo, ${s.porSair} por sair; líder ${s.jogadores[0]?.nome} ${s.jogadores[0]?.resultado}${div ? ` · ${div} cartão(ões) por confirmar` : ""}`);
   }
