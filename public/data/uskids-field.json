@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-07T13:49:01.635Z",
+  "gerado_em": "2026-11-08T14:08:59.883Z",
   "rate_limit_hits": 0,
   "torneios": [
     {
@@ -12,7 +12,7 @@
       "fee_18": "475.00",
       "tour": "International Championships Tour",
       "type": 8,
-      "total_inscritos": 163,
+      "total_inscritos": 164,
       "total_maximo": 167,
       "escaloes": [
         {
@@ -47,10 +47,10 @@
           "genero": "Boys",
           "holes": 9,
           "flight_id": 300224,
-          "inscritos": 12,
+          "inscritos": 13,
           "maximo": 12,
-          "vagas": 0,
-          "pct_cheio": 100,
+          "vagas": -1,
+          "pct_cheio": 108,
           "jogadores": null,
           "paises": null
         },
@@ -1182,7 +1182,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-07T13:48:15.511Z",
+      "ultima_atualizacao": "2026-11-08T14:08:13.287Z",
       "seguido": true
     },
     {
@@ -5600,11 +5600,6 @@
               "nome": "Donnie Zheng",
               "removedAt": "2026-09-18T12:14:43.840Z",
               "pais": "CA"
-            },
-            {
-              "nome": "Kipton Gibney",
-              "removedAt": "2026-09-09T12:21:35.065Z",
-              "pais": "US"
             }
           ]
         },
@@ -5835,11 +5830,6 @@
             {
               "nome": "Eduard Tervooren",
               "removedAt": "2026-09-16T12:36:59.888Z",
-              "pais": "US"
-            },
-            {
-              "nome": "Theodore Sroka",
-              "removedAt": "2026-09-09T12:21:35.065Z",
               "pais": "US"
             }
           ]
@@ -10999,11 +10989,6 @@
             {
               "nome": "Lucca Rodriguez",
               "removedAt": "2026-11-03T14:57:53.361Z",
-              "pais": "GT"
-            },
-            {
-              "nome": "Andreas Torres Batsakis",
-              "removedAt": "2026-09-09T12:21:35.065Z",
               "pais": "GT"
             }
           ]
