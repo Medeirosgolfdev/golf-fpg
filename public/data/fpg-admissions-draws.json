@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-11-07T21:04:05.631Z",
-  "total": 1266,
+  "scrapedAt": "2026-11-08T21:04:20.750Z",
+  "total": 1268,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -405606,6 +405606,220 @@
                   "fed": null,
                   "clube": "Estoril",
                   "tee": "Vermelhas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "003",
+      "tcode": "10691",
+      "name": "Circuito Junior 18b",
+      "date": "2026-11-08",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "003",
+      "tcode": "10690",
+      "name": "Circuito Junior Challenge",
+      "date": "2026-11-08",
+      "expectedYear": "2026",
+      "campo": "Miramar",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "Circuito Junior Challenge",
+          "date": "2026-11-08",
+          "campo": "Miramar",
+          "clube": "Club de Golf de Miramar",
+          "totalJogadores": 24,
+          "groups": [
+            {
+              "teeTime": "13:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Rente",
+                  "fed": "46311",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Tom Georges",
+                  "fed": "58549",
+                  "clube": "Miramar",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Tiago Costa",
+                  "fed": "47934",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:10",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Bruno Neto Lichuck",
+                  "fed": "53685",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Henrique Monção",
+                  "fed": "51176",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Diego Braga",
+                  "fed": "51980",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "José Diogo Pinho",
+                  "fed": "60111",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Alexandre Oliveira Fontes",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Edwin Mallory",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Roxas"
+                },
+                {
+                  "nome": "Tomás Matos Sousa",
+                  "fed": "60053",
+                  "clube": "Miramar",
+                  "tee": "Roxas"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Mateus Monção",
+                  "fed": null,
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Rafael Oliveira",
+                  "fed": null,
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Manuel Almeida Jr",
+                  "fed": "60682",
+                  "clube": "Miramar",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:40",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Mariana Costa",
+                  "fed": "56944",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Gonçalo Félix",
+                  "fed": "58908",
+                  "clube": "Miramar",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Rodrigo Marques",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Matilde Cirne",
+                  "fed": "56945",
+                  "clube": "Miramar",
+                  "tee": "Roxas"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:50",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Rodrigo Neto Lichuck",
+                  "fed": null,
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Jaime Almeida Duarte",
+                  "fed": "52559",
+                  "clube": "Miramar",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Manuel Pedro Sousa",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Jose Bernardo Costa Leite",
+                  "fed": null,
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Miguel Rente",
+                  "fed": null,
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Frederico Costa Leite Jr.",
+                  "fed": null,
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Lara Vaz",
+                  "fed": null,
+                  "clube": "Internacional"
                 }
               ]
             }
