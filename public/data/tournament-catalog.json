@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-07T16:09:22.398Z",
+  "generatedAt": "2026-11-08T16:17:11.625Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -6445,6 +6445,35 @@
       "editionsCount": 19
     },
     {
+      "id": "fpg-drive-tour",
+      "label": "Drive Tour",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10947-20261107-all",
+        "fpg-985-10246-20261107-all",
+        "fpg-000-10579-20221112-sub_18",
+        "fpg-000-10578-20221112-sub_18",
+        "fpg-000-10577-20221112-sub_16",
+        "fpg-000-10576-20221112-sub_16",
+        "fpg-000-10575-20221112-sub_14",
+        "fpg-000-10574-20221112-sub_14",
+        "fpg-000-10573-20221112-sub_12",
+        "fpg-000-10572-20221112-sub_12",
+        "fpg-000-10689-20231104-sub_18",
+        "fpg-000-10688-20231104-sub_18",
+        "fpg-000-10687-20231104-sub_16",
+        "fpg-000-10686-20231104-sub_16",
+        "fpg-000-10685-20231104-sub_14",
+        "fpg-000-10684-20231104-sub_14",
+        "fpg-000-10683-20231104-sub_12",
+        "fpg-000-10682-20231104-sub_12",
+        "fpg-987-10204-20250523-all"
+      ],
+      "firstDate": "2022-11-12",
+      "lastDate": "2026-11-07",
+      "editionsCount": 19
+    },
+    {
       "id": "uskids-firewheel-golf-park-bridges-course",
       "label": "Firewheel Golf Park - Bridges Course",
       "sourceId": "uskids",
@@ -6638,34 +6667,6 @@
       ],
       "firstDate": "2018-09-23",
       "lastDate": "2026-10-18",
-      "editionsCount": 18
-    },
-    {
-      "id": "fpg-drive-tour",
-      "label": "Drive Tour",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-000-10947-20261107-all",
-        "fpg-000-10579-20221112-sub_18",
-        "fpg-000-10578-20221112-sub_18",
-        "fpg-000-10577-20221112-sub_16",
-        "fpg-000-10576-20221112-sub_16",
-        "fpg-000-10575-20221112-sub_14",
-        "fpg-000-10574-20221112-sub_14",
-        "fpg-000-10573-20221112-sub_12",
-        "fpg-000-10572-20221112-sub_12",
-        "fpg-000-10689-20231104-sub_18",
-        "fpg-000-10688-20231104-sub_18",
-        "fpg-000-10687-20231104-sub_16",
-        "fpg-000-10686-20231104-sub_16",
-        "fpg-000-10685-20231104-sub_14",
-        "fpg-000-10684-20231104-sub_14",
-        "fpg-000-10683-20231104-sub_12",
-        "fpg-000-10682-20231104-sub_12",
-        "fpg-987-10204-20250523-all"
-      ],
-      "firstDate": "2022-11-12",
-      "lastDate": "2026-11-07",
       "editionsCount": 18
     },
     {
