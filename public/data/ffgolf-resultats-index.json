@@ -1,8 +1,46 @@
 {
-  "generatedAt": "2026-11-08T00:56:41.202Z",
+  "generatedAt": "2026-11-09T01:13:15.631Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1282,
+  "total": 1283,
   "tournaments": [
+    {
+      "file": "03-02-2601488808.json",
+      "trnId": "2601488808",
+      "partKey": "4ba130f9d65d8c3f11c930a8882f8c0a",
+      "name": "Grand Prix Jeunes Valdaine",
+      "formule": "Simple",
+      "date": "07/11/2026",
+      "dateIso": "2026-11-07",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "02",
+      "seriesCount": 2,
+      "totalPlayers": 67,
+      "course": "Valdaine",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 48
+        },
+        {
+          "serieId": "22",
+          "label": "Dames",
+          "players": 19
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "rms9": null,
+      "ligues": [
+        "02"
+      ]
+    },
     {
       "file": "03-03-2601471990.json",
       "trnId": "2601471990",
