@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-11-08T23:19:29.907Z",
+  "lastUpdated": "2026-11-09T07:52:31.996Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-11-08",
+  "today": "2026-11-09",
   "summary": {
     "total": 1830,
-    "complete": 833,
-    "in_progress": 3,
+    "complete": 836,
+    "in_progress": 0,
     "future": 3,
     "stale": 10,
     "excluded": 980,
@@ -662,15 +662,15 @@
       "has_draws": false,
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
-      "has_classif": false,
-      "player_count": 0,
-      "players_with_scorecards": 0,
-      "players_with_full_scorecards": 0,
-      "scorecards_source": null,
-      "scorecards_ratio": 0,
-      "full_scorecards_ratio": 0,
+      "has_classif": true,
+      "player_count": 3,
+      "players_with_scorecards": 3,
+      "players_with_full_scorecards": 3,
+      "scorecards_source": "pull-torneios002.json",
+      "scorecards_ratio": 1,
+      "full_scorecards_ratio": 1,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "003",
@@ -683,15 +683,15 @@
       "has_draws": true,
       "draws_rounds_with_data": 1,
       "draws_players_total": 24,
-      "has_classif": false,
-      "player_count": 0,
-      "players_with_scorecards": 0,
-      "players_with_full_scorecards": 0,
-      "scorecards_source": null,
-      "scorecards_ratio": 0,
-      "full_scorecards_ratio": 0,
+      "has_classif": true,
+      "player_count": 24,
+      "players_with_scorecards": 24,
+      "players_with_full_scorecards": 24,
+      "scorecards_source": "pull-torneios002.json",
+      "scorecards_ratio": 1,
+      "full_scorecards_ratio": 1,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "988",
@@ -843,7 +843,7 @@
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 1,
       "has_manuel": true,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "007",
