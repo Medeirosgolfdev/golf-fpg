@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T13:54:01.671Z",
+  "generatedAt": "2026-11-09T14:19:21.997Z",
   "listas": [
     {
       "id": "fpg-entry-list-girls-2026-10-01",
@@ -697,7 +697,7 @@
           "name": "Sabrina Ribeiro Crisóstomo",
           "club": "Vilamoura, C. G",
           "dob": "2014-02-27",
-          "hcp": 4.2,
+          "hcp": 3.8,
           "juniorId": "f48971",
           "inscrito": {
             "lista": "entry",
@@ -756,7 +756,7 @@
           "name": "Madalena Miguel Araujo",
           "club": "Ponte de Lima",
           "dob": "2013-08-07",
-          "hcp": 8.2,
+          "hcp": 7.4,
           "juniorId": "f53847",
           "inscrito": {
             "lista": "entry",
@@ -918,23 +918,23 @@
         },
         {
           "rank": 19,
+          "fed": "48113",
+          "name": "Maria Luz",
+          "club": "Belas",
+          "dob": "2014-04-10",
+          "hcp": 25.1,
+          "juniorId": "f48113",
+          "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 20,
           "fed": "48045",
           "name": "Marta Mendes",
           "club": "Citynorte",
           "dob": "2014-02-25",
           "hcp": 25.9,
           "juniorId": "f48045",
-          "inscrito": null,
-          "anterior": null
-        },
-        {
-          "rank": 20,
-          "fed": "48113",
-          "name": "Maria Luz",
-          "club": "Belas",
-          "dob": "2014-04-10",
-          "hcp": 25.9,
-          "juniorId": "f48113",
           "inscrito": null,
           "anterior": null
         }
@@ -2622,6 +2622,23 @@
         },
         {
           "rank": 2,
+          "fed": "49124",
+          "name": "Nuno Palmares Jr.",
+          "club": "Estoril",
+          "dob": "2012-04-28",
+          "hcp": 0.8,
+          "juniorId": "u591234",
+          "inscrito": null,
+          "anterior": {
+            "pos": null,
+            "empate": false,
+            "de": 50,
+            "gross": null,
+            "hcp": 4.3
+          }
+        },
+        {
+          "rank": 3,
           "fed": "46299",
           "name": "Francisco Nunes (jr)",
           "club": "Miramar",
@@ -2638,59 +2655,23 @@
           }
         },
         {
-          "rank": 3,
-          "fed": "49124",
-          "name": "Nuno Palmares Jr.",
-          "club": "Estoril",
-          "dob": "2012-04-28",
-          "hcp": 1.3,
-          "juniorId": "u591234",
-          "inscrito": null,
-          "anterior": {
-            "pos": null,
-            "empate": false,
-            "de": 50,
-            "gross": null,
-            "hcp": 4.3
-          }
-        },
-        {
           "rank": 4,
-          "fed": "46038",
-          "name": "João Balixa",
-          "club": "Miramar",
-          "dob": "2012-08-10",
-          "hcp": 3.3,
-          "juniorId": "f46038",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 30,
-            "hcp": 4.3
-          },
+          "fed": "49085",
+          "name": "Ricardo Castro Ferreira",
+          "club": "Estoril",
+          "dob": "2015-07-02",
+          "hcp": 2.9,
+          "juniorId": "u576306",
+          "inscrito": null,
           "anterior": null
         },
         {
           "rank": 5,
-          "fed": "43968",
-          "name": "Salvador Ivo de Carvalho",
-          "club": "Estoril",
-          "dob": "2012-01-23",
-          "hcp": 3.4,
-          "juniorId": "f43968",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 28,
-            "hcp": 4
-          },
-          "anterior": null
-        },
-        {
-          "rank": 6,
           "fed": "48297",
           "name": "João Rocha",
           "club": "Estoril",
           "dob": "2012-09-02",
-          "hcp": 3.5,
+          "hcp": 3.2,
           "juniorId": "u577982",
           "inscrito": {
             "lista": "waiting",
@@ -2706,14 +2687,33 @@
           }
         },
         {
+          "rank": 6,
+          "fed": "46038",
+          "name": "João Balixa",
+          "club": "Miramar",
+          "dob": "2012-08-10",
+          "hcp": 3.3,
+          "juniorId": "f46038",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 30,
+            "hcp": 4.3
+          },
+          "anterior": null
+        },
+        {
           "rank": 7,
-          "fed": "49085",
-          "name": "Ricardo Castro Ferreira",
+          "fed": "43968",
+          "name": "Salvador Ivo de Carvalho",
           "club": "Estoril",
-          "dob": "2015-07-02",
+          "dob": "2012-01-23",
           "hcp": 3.9,
-          "juniorId": "u576306",
-          "inscrito": null,
+          "juniorId": "f43968",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 28,
+            "hcp": 4
+          },
           "anterior": null
         },
         {
@@ -2746,21 +2746,6 @@
         },
         {
           "rank": 10,
-          "fed": "46296",
-          "name": "Raul Pazos (jr)",
-          "club": "Miramar",
-          "dob": "2013-02-08",
-          "hcp": 5.1,
-          "juniorId": "f46296",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 33,
-            "hcp": 6
-          },
-          "anterior": null
-        },
-        {
-          "rank": 11,
           "fed": "39097",
           "name": "Francisco Saraiva",
           "club": "Oporto",
@@ -2771,6 +2756,21 @@
             "lista": "waiting",
             "pos": 29,
             "hcp": 4.1
+          },
+          "anterior": null
+        },
+        {
+          "rank": 11,
+          "fed": "46296",
+          "name": "Raul Pazos (jr)",
+          "club": "Miramar",
+          "dob": "2013-02-08",
+          "hcp": 5.8,
+          "juniorId": "f46296",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 33,
+            "hcp": 6
           },
           "anterior": null
         },
@@ -2836,7 +2836,7 @@
           "name": "Henrique Pereira",
           "club": "Miramar",
           "dob": "2012-02-21",
-          "hcp": 6.7,
+          "hcp": 6.9,
           "juniorId": "f53646",
           "inscrito": null,
           "anterior": null
@@ -2854,6 +2854,17 @@
         },
         {
           "rank": 18,
+          "fed": "54845",
+          "name": "José Silva",
+          "club": "Amendoeira",
+          "dob": "2012-04-03",
+          "hcp": 7.7,
+          "juniorId": "f54845",
+          "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 19,
           "fed": "40473",
           "name": "André Von Hafe",
           "club": "Estela",
@@ -2864,24 +2875,13 @@
           "anterior": null
         },
         {
-          "rank": 19,
-          "fed": "54845",
-          "name": "José Silva",
-          "club": "Amendoeira",
-          "dob": "2012-04-03",
-          "hcp": 8.3,
-          "juniorId": "f54845",
-          "inscrito": null,
-          "anterior": null
-        },
-        {
           "rank": 20,
-          "fed": "42985",
-          "name": "Martim Moreira",
-          "club": "Belas",
-          "dob": "2012-02-16",
-          "hcp": 8.4,
-          "juniorId": "u521022",
+          "fed": "46308",
+          "name": "Marc Costa",
+          "club": "Citynorte",
+          "dob": "2013-02-20",
+          "hcp": 8.3,
+          "juniorId": "f46308",
           "inscrito": null,
           "anterior": null
         }
@@ -16391,6 +16391,27 @@
         },
         {
           "rank": 2,
+          "fed": "49124",
+          "name": "Nuno Palmares Jr.",
+          "club": "Estoril",
+          "dob": "2012-04-28",
+          "hcp": 0.8,
+          "juniorId": "u591234",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 28,
+            "hcp": 1.4
+          },
+          "anterior": {
+            "pos": null,
+            "empate": false,
+            "de": 50,
+            "gross": null,
+            "hcp": 4.3
+          }
+        },
+        {
+          "rank": 3,
           "fed": "46299",
           "name": "Francisco Nunes (jr)",
           "club": "Miramar",
@@ -16411,63 +16432,27 @@
           }
         },
         {
-          "rank": 3,
-          "fed": "49124",
-          "name": "Nuno Palmares Jr.",
-          "club": "Estoril",
-          "dob": "2012-04-28",
-          "hcp": 1.3,
-          "juniorId": "u591234",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 28,
-            "hcp": 1.4
-          },
-          "anterior": {
-            "pos": null,
-            "empate": false,
-            "de": 50,
-            "gross": null,
-            "hcp": 4.3
-          }
-        },
-        {
           "rank": 4,
-          "fed": "46038",
-          "name": "João Balixa",
-          "club": "Miramar",
-          "dob": "2012-08-10",
-          "hcp": 3.3,
-          "juniorId": "f46038",
+          "fed": "49085",
+          "name": "Ricardo Castro Ferreira",
+          "club": "Estoril",
+          "dob": "2015-07-02",
+          "hcp": 2.9,
+          "juniorId": "u576306",
           "inscrito": {
             "lista": "waiting",
-            "pos": 42,
-            "hcp": 3.3
+            "pos": 36,
+            "hcp": 2.7
           },
           "anterior": null
         },
         {
           "rank": 5,
-          "fed": "43968",
-          "name": "Salvador Ivo de Carvalho",
-          "club": "Estoril",
-          "dob": "2012-01-23",
-          "hcp": 3.4,
-          "juniorId": "f43968",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 50,
-            "hcp": 4
-          },
-          "anterior": null
-        },
-        {
-          "rank": 6,
           "fed": "48297",
           "name": "João Rocha",
           "club": "Estoril",
           "dob": "2012-09-02",
-          "hcp": 3.5,
+          "hcp": 3.2,
           "juniorId": "u577982",
           "inscrito": {
             "lista": "waiting",
@@ -16483,17 +16468,32 @@
           }
         },
         {
-          "rank": 7,
-          "fed": "49085",
-          "name": "Ricardo Castro Ferreira",
-          "club": "Estoril",
-          "dob": "2015-07-02",
-          "hcp": 3.9,
-          "juniorId": "u576306",
+          "rank": 6,
+          "fed": "46038",
+          "name": "João Balixa",
+          "club": "Miramar",
+          "dob": "2012-08-10",
+          "hcp": 3.3,
+          "juniorId": "f46038",
           "inscrito": {
             "lista": "waiting",
-            "pos": 36,
-            "hcp": 2.7
+            "pos": 42,
+            "hcp": 3.3
+          },
+          "anterior": null
+        },
+        {
+          "rank": 7,
+          "fed": "43968",
+          "name": "Salvador Ivo de Carvalho",
+          "club": "Estoril",
+          "dob": "2012-01-23",
+          "hcp": 3.9,
+          "juniorId": "f43968",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 50,
+            "hcp": 4
           },
           "anterior": null
         },
@@ -16531,21 +16531,6 @@
         },
         {
           "rank": 10,
-          "fed": "46296",
-          "name": "Raul Pazos (jr)",
-          "club": "Miramar",
-          "dob": "2013-02-08",
-          "hcp": 5.1,
-          "juniorId": "f46296",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 57,
-            "hcp": 6
-          },
-          "anterior": null
-        },
-        {
-          "rank": 11,
           "fed": "39097",
           "name": "Francisco Saraiva",
           "club": "Oporto",
@@ -16556,6 +16541,21 @@
             "lista": "waiting",
             "pos": 52,
             "hcp": 4.1
+          },
+          "anterior": null
+        },
+        {
+          "rank": 11,
+          "fed": "46296",
+          "name": "Raul Pazos (jr)",
+          "club": "Miramar",
+          "dob": "2013-02-08",
+          "hcp": 5.8,
+          "juniorId": "f46296",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 57,
+            "hcp": 6
           },
           "anterior": null
         },
@@ -16625,7 +16625,7 @@
           "name": "Henrique Pereira",
           "club": "Miramar",
           "dob": "2012-02-21",
-          "hcp": 6.7,
+          "hcp": 6.9,
           "juniorId": "f53646",
           "inscrito": null,
           "anterior": null
@@ -16643,6 +16643,17 @@
         },
         {
           "rank": 18,
+          "fed": "54845",
+          "name": "José Silva",
+          "club": "Amendoeira",
+          "dob": "2012-04-03",
+          "hcp": 7.7,
+          "juniorId": "f54845",
+          "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 19,
           "fed": "40473",
           "name": "André Von Hafe",
           "club": "Estela",
@@ -16653,24 +16664,13 @@
           "anterior": null
         },
         {
-          "rank": 19,
-          "fed": "54845",
-          "name": "José Silva",
-          "club": "Amendoeira",
-          "dob": "2012-04-03",
-          "hcp": 8.3,
-          "juniorId": "f54845",
-          "inscrito": null,
-          "anterior": null
-        },
-        {
           "rank": 20,
-          "fed": "42985",
-          "name": "Martim Moreira",
-          "club": "Belas",
-          "dob": "2012-02-16",
-          "hcp": 8.4,
-          "juniorId": "u521022",
+          "fed": "46308",
+          "name": "Marc Costa",
+          "club": "Citynorte",
+          "dob": "2013-02-20",
+          "hcp": 8.3,
+          "juniorId": "f46308",
           "inscrito": null,
           "anterior": null
         }
@@ -19096,6 +19096,27 @@
         },
         {
           "rank": 2,
+          "fed": "49124",
+          "name": "Nuno Palmares Jr.",
+          "club": "Estoril",
+          "dob": "2012-04-28",
+          "hcp": 0.8,
+          "juniorId": "u591234",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 29,
+            "hcp": 1.4
+          },
+          "anterior": {
+            "pos": null,
+            "empate": false,
+            "de": 50,
+            "gross": null,
+            "hcp": 4.3
+          }
+        },
+        {
+          "rank": 3,
           "fed": "46299",
           "name": "Francisco Nunes (jr)",
           "club": "Miramar",
@@ -19116,63 +19137,27 @@
           }
         },
         {
-          "rank": 3,
-          "fed": "49124",
-          "name": "Nuno Palmares Jr.",
-          "club": "Estoril",
-          "dob": "2012-04-28",
-          "hcp": 1.3,
-          "juniorId": "u591234",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 29,
-            "hcp": 1.4
-          },
-          "anterior": {
-            "pos": null,
-            "empate": false,
-            "de": 50,
-            "gross": null,
-            "hcp": 4.3
-          }
-        },
-        {
           "rank": 4,
-          "fed": "46038",
-          "name": "João Balixa",
-          "club": "Miramar",
-          "dob": "2012-08-10",
-          "hcp": 3.3,
-          "juniorId": "f46038",
+          "fed": "49085",
+          "name": "Ricardo Castro Ferreira",
+          "club": "Estoril",
+          "dob": "2015-07-02",
+          "hcp": 2.9,
+          "juniorId": "u576306",
           "inscrito": {
             "lista": "waiting",
-            "pos": 42,
-            "hcp": 3.3
+            "pos": 36,
+            "hcp": 2.7
           },
           "anterior": null
         },
         {
           "rank": 5,
-          "fed": "43968",
-          "name": "Salvador Ivo de Carvalho",
-          "club": "Estoril",
-          "dob": "2012-01-23",
-          "hcp": 3.4,
-          "juniorId": "f43968",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 50,
-            "hcp": 4
-          },
-          "anterior": null
-        },
-        {
-          "rank": 6,
           "fed": "48297",
           "name": "João Rocha",
           "club": "Estoril",
           "dob": "2012-09-02",
-          "hcp": 3.5,
+          "hcp": 3.2,
           "juniorId": "u577982",
           "inscrito": {
             "lista": "waiting",
@@ -19188,17 +19173,32 @@
           }
         },
         {
-          "rank": 7,
-          "fed": "49085",
-          "name": "Ricardo Castro Ferreira",
-          "club": "Estoril",
-          "dob": "2015-07-02",
-          "hcp": 3.9,
-          "juniorId": "u576306",
+          "rank": 6,
+          "fed": "46038",
+          "name": "João Balixa",
+          "club": "Miramar",
+          "dob": "2012-08-10",
+          "hcp": 3.3,
+          "juniorId": "f46038",
           "inscrito": {
             "lista": "waiting",
-            "pos": 36,
-            "hcp": 2.7
+            "pos": 42,
+            "hcp": 3.3
+          },
+          "anterior": null
+        },
+        {
+          "rank": 7,
+          "fed": "43968",
+          "name": "Salvador Ivo de Carvalho",
+          "club": "Estoril",
+          "dob": "2012-01-23",
+          "hcp": 3.9,
+          "juniorId": "f43968",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 50,
+            "hcp": 4
           },
           "anterior": null
         },
@@ -19236,21 +19236,6 @@
         },
         {
           "rank": 10,
-          "fed": "46296",
-          "name": "Raul Pazos (jr)",
-          "club": "Miramar",
-          "dob": "2013-02-08",
-          "hcp": 5.1,
-          "juniorId": "f46296",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 56,
-            "hcp": 6
-          },
-          "anterior": null
-        },
-        {
-          "rank": 11,
           "fed": "39097",
           "name": "Francisco Saraiva",
           "club": "Oporto",
@@ -19261,6 +19246,21 @@
             "lista": "waiting",
             "pos": 52,
             "hcp": 4.1
+          },
+          "anterior": null
+        },
+        {
+          "rank": 11,
+          "fed": "46296",
+          "name": "Raul Pazos (jr)",
+          "club": "Miramar",
+          "dob": "2013-02-08",
+          "hcp": 5.8,
+          "juniorId": "f46296",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 56,
+            "hcp": 6
           },
           "anterior": null
         },
@@ -19330,7 +19330,7 @@
           "name": "Henrique Pereira",
           "club": "Miramar",
           "dob": "2012-02-21",
-          "hcp": 6.7,
+          "hcp": 6.9,
           "juniorId": "f53646",
           "inscrito": null,
           "anterior": null
@@ -19348,6 +19348,17 @@
         },
         {
           "rank": 18,
+          "fed": "54845",
+          "name": "José Silva",
+          "club": "Amendoeira",
+          "dob": "2012-04-03",
+          "hcp": 7.7,
+          "juniorId": "f54845",
+          "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 19,
           "fed": "40473",
           "name": "André Von Hafe",
           "club": "Estela",
@@ -19358,24 +19369,13 @@
           "anterior": null
         },
         {
-          "rank": 19,
-          "fed": "54845",
-          "name": "José Silva",
-          "club": "Amendoeira",
-          "dob": "2012-04-03",
-          "hcp": 8.3,
-          "juniorId": "f54845",
-          "inscrito": null,
-          "anterior": null
-        },
-        {
           "rank": 20,
-          "fed": "42985",
-          "name": "Martim Moreira",
-          "club": "Belas",
-          "dob": "2012-02-16",
-          "hcp": 8.4,
-          "juniorId": "u521022",
+          "fed": "46308",
+          "name": "Marc Costa",
+          "club": "Citynorte",
+          "dob": "2013-02-20",
+          "hcp": 8.3,
+          "juniorId": "f46308",
           "inscrito": null,
           "anterior": null
         }
@@ -20637,7 +20637,7 @@
           "name": "Sabrina Ribeiro Crisóstomo",
           "club": "Vilamoura, C. G",
           "dob": "2014-02-27",
-          "hcp": 4.2,
+          "hcp": 3.8,
           "juniorId": "f48971",
           "inscrito": {
             "lista": "waiting",
@@ -20700,7 +20700,7 @@
           "name": "Madalena Miguel Araujo",
           "club": "Ponte de Lima",
           "dob": "2013-08-07",
-          "hcp": 8.2,
+          "hcp": 7.4,
           "juniorId": "f53847",
           "inscrito": {
             "lista": "waiting",
@@ -20862,23 +20862,23 @@
         },
         {
           "rank": 19,
+          "fed": "48113",
+          "name": "Maria Luz",
+          "club": "Belas",
+          "dob": "2014-04-10",
+          "hcp": 25.1,
+          "juniorId": "f48113",
+          "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 20,
           "fed": "48045",
           "name": "Marta Mendes",
           "club": "Citynorte",
           "dob": "2014-02-25",
           "hcp": 25.9,
           "juniorId": "f48045",
-          "inscrito": null,
-          "anterior": null
-        },
-        {
-          "rank": 20,
-          "fed": "48113",
-          "name": "Maria Luz",
-          "club": "Belas",
-          "dob": "2014-04-10",
-          "hcp": 25.9,
-          "juniorId": "f48113",
           "inscrito": null,
           "anterior": null
         }
@@ -23348,6 +23348,27 @@
         },
         {
           "rank": 2,
+          "fed": "49124",
+          "name": "Nuno Palmares Jr.",
+          "club": "Estoril",
+          "dob": "2012-04-28",
+          "hcp": 0.8,
+          "juniorId": "u591234",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 29,
+            "hcp": 1.3
+          },
+          "anterior": {
+            "pos": null,
+            "empate": false,
+            "de": 50,
+            "gross": null,
+            "hcp": 4.3
+          }
+        },
+        {
+          "rank": 3,
           "fed": "46299",
           "name": "Francisco Nunes (jr)",
           "club": "Miramar",
@@ -23368,63 +23389,27 @@
           }
         },
         {
-          "rank": 3,
-          "fed": "49124",
-          "name": "Nuno Palmares Jr.",
-          "club": "Estoril",
-          "dob": "2012-04-28",
-          "hcp": 1.3,
-          "juniorId": "u591234",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 29,
-            "hcp": 1.3
-          },
-          "anterior": {
-            "pos": null,
-            "empate": false,
-            "de": 50,
-            "gross": null,
-            "hcp": 4.3
-          }
-        },
-        {
           "rank": 4,
-          "fed": "46038",
-          "name": "João Balixa",
-          "club": "Miramar",
-          "dob": "2012-08-10",
-          "hcp": 3.3,
-          "juniorId": "f46038",
+          "fed": "49085",
+          "name": "Ricardo Castro Ferreira",
+          "club": "Estoril",
+          "dob": "2015-07-02",
+          "hcp": 2.9,
+          "juniorId": "u576306",
           "inscrito": {
             "lista": "waiting",
-            "pos": 42,
-            "hcp": 3.3
+            "pos": 50,
+            "hcp": 3.9
           },
           "anterior": null
         },
         {
           "rank": 5,
-          "fed": "43968",
-          "name": "Salvador Ivo de Carvalho",
-          "club": "Estoril",
-          "dob": "2012-01-23",
-          "hcp": 3.4,
-          "juniorId": "f43968",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 44,
-            "hcp": 3.4
-          },
-          "anterior": null
-        },
-        {
-          "rank": 6,
           "fed": "48297",
           "name": "João Rocha",
           "club": "Estoril",
           "dob": "2012-09-02",
-          "hcp": 3.5,
+          "hcp": 3.2,
           "juniorId": "u577982",
           "inscrito": {
             "lista": "waiting",
@@ -23440,17 +23425,32 @@
           }
         },
         {
-          "rank": 7,
-          "fed": "49085",
-          "name": "Ricardo Castro Ferreira",
-          "club": "Estoril",
-          "dob": "2015-07-02",
-          "hcp": 3.9,
-          "juniorId": "u576306",
+          "rank": 6,
+          "fed": "46038",
+          "name": "João Balixa",
+          "club": "Miramar",
+          "dob": "2012-08-10",
+          "hcp": 3.3,
+          "juniorId": "f46038",
           "inscrito": {
             "lista": "waiting",
-            "pos": 50,
-            "hcp": 3.9
+            "pos": 42,
+            "hcp": 3.3
+          },
+          "anterior": null
+        },
+        {
+          "rank": 7,
+          "fed": "43968",
+          "name": "Salvador Ivo de Carvalho",
+          "club": "Estoril",
+          "dob": "2012-01-23",
+          "hcp": 3.9,
+          "juniorId": "f43968",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 44,
+            "hcp": 3.4
           },
           "anterior": null
         },
@@ -23488,21 +23488,6 @@
         },
         {
           "rank": 10,
-          "fed": "46296",
-          "name": "Raul Pazos (jr)",
-          "club": "Miramar",
-          "dob": "2013-02-08",
-          "hcp": 5.1,
-          "juniorId": "f46296",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 53,
-            "hcp": 5.1
-          },
-          "anterior": null
-        },
-        {
-          "rank": 11,
           "fed": "39097",
           "name": "Francisco Saraiva",
           "club": "Oporto",
@@ -23513,6 +23498,21 @@
             "lista": "waiting",
             "pos": 55,
             "hcp": 5.3
+          },
+          "anterior": null
+        },
+        {
+          "rank": 11,
+          "fed": "46296",
+          "name": "Raul Pazos (jr)",
+          "club": "Miramar",
+          "dob": "2013-02-08",
+          "hcp": 5.8,
+          "juniorId": "f46296",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 53,
+            "hcp": 5.1
           },
           "anterior": null
         },
@@ -23582,7 +23582,7 @@
           "name": "Henrique Pereira",
           "club": "Miramar",
           "dob": "2012-02-21",
-          "hcp": 6.7,
+          "hcp": 6.9,
           "juniorId": "f53646",
           "inscrito": null,
           "anterior": null
@@ -23600,6 +23600,17 @@
         },
         {
           "rank": 18,
+          "fed": "54845",
+          "name": "José Silva",
+          "club": "Amendoeira",
+          "dob": "2012-04-03",
+          "hcp": 7.7,
+          "juniorId": "f54845",
+          "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 19,
           "fed": "40473",
           "name": "André Von Hafe",
           "club": "Estela",
@@ -23610,24 +23621,13 @@
           "anterior": null
         },
         {
-          "rank": 19,
-          "fed": "54845",
-          "name": "José Silva",
-          "club": "Amendoeira",
-          "dob": "2012-04-03",
-          "hcp": 8.3,
-          "juniorId": "f54845",
-          "inscrito": null,
-          "anterior": null
-        },
-        {
           "rank": 20,
-          "fed": "42985",
-          "name": "Martim Moreira",
-          "club": "Belas",
-          "dob": "2012-02-16",
-          "hcp": 8.4,
-          "juniorId": "u521022",
+          "fed": "46308",
+          "name": "Marc Costa",
+          "club": "Citynorte",
+          "dob": "2013-02-20",
+          "hcp": 8.3,
+          "juniorId": "f46308",
           "inscrito": null,
           "anterior": null
         }
@@ -24889,7 +24889,7 @@
           "name": "Sabrina Ribeiro Crisóstomo",
           "club": "Vilamoura, C. G",
           "dob": "2014-02-27",
-          "hcp": 4.2,
+          "hcp": 3.8,
           "juniorId": "f48971",
           "inscrito": {
             "lista": "waiting",
@@ -24952,7 +24952,7 @@
           "name": "Madalena Miguel Araujo",
           "club": "Ponte de Lima",
           "dob": "2013-08-07",
-          "hcp": 8.2,
+          "hcp": 7.4,
           "juniorId": "f53847",
           "inscrito": {
             "lista": "waiting",
@@ -25114,23 +25114,23 @@
         },
         {
           "rank": 19,
+          "fed": "48113",
+          "name": "Maria Luz",
+          "club": "Belas",
+          "dob": "2014-04-10",
+          "hcp": 25.1,
+          "juniorId": "f48113",
+          "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 20,
           "fed": "48045",
           "name": "Marta Mendes",
           "club": "Citynorte",
           "dob": "2014-02-25",
           "hcp": 25.9,
           "juniorId": "f48045",
-          "inscrito": null,
-          "anterior": null
-        },
-        {
-          "rank": 20,
-          "fed": "48113",
-          "name": "Maria Luz",
-          "club": "Belas",
-          "dob": "2014-04-10",
-          "hcp": 25.9,
-          "juniorId": "f48113",
           "inscrito": null,
           "anterior": null
         }
@@ -27574,6 +27574,27 @@
         },
         {
           "rank": 2,
+          "fed": "49124",
+          "name": "Nuno Palmares Jr.",
+          "club": "Estoril",
+          "dob": "2012-04-28",
+          "hcp": 0.8,
+          "juniorId": "u591234",
+          "inscrito": {
+            "lista": "entry",
+            "pos": 4,
+            "hcp": 1.3
+          },
+          "anterior": {
+            "pos": null,
+            "empate": false,
+            "de": 50,
+            "gross": null,
+            "hcp": 4.3
+          }
+        },
+        {
+          "rank": 3,
           "fed": "46299",
           "name": "Francisco Nunes (jr)",
           "club": "Miramar",
@@ -27594,63 +27615,27 @@
           }
         },
         {
-          "rank": 3,
-          "fed": "49124",
-          "name": "Nuno Palmares Jr.",
-          "club": "Estoril",
-          "dob": "2012-04-28",
-          "hcp": 1.3,
-          "juniorId": "u591234",
-          "inscrito": {
-            "lista": "entry",
-            "pos": 4,
-            "hcp": 1.3
-          },
-          "anterior": {
-            "pos": null,
-            "empate": false,
-            "de": 50,
-            "gross": null,
-            "hcp": 4.3
-          }
-        },
-        {
           "rank": 4,
-          "fed": "46038",
-          "name": "João Balixa",
-          "club": "Miramar",
-          "dob": "2012-08-10",
-          "hcp": 3.3,
-          "juniorId": "f46038",
+          "fed": "49085",
+          "name": "Ricardo Castro Ferreira",
+          "club": "Estoril",
+          "dob": "2015-07-02",
+          "hcp": 2.9,
+          "juniorId": "u576306",
           "inscrito": {
             "lista": "entry",
-            "pos": 9,
-            "hcp": 3.3
+            "pos": 8,
+            "hcp": 3.9
           },
           "anterior": null
         },
         {
           "rank": 5,
-          "fed": "43968",
-          "name": "Salvador Ivo de Carvalho",
-          "club": "Estoril",
-          "dob": "2012-01-23",
-          "hcp": 3.4,
-          "juniorId": "f43968",
-          "inscrito": {
-            "lista": "entry",
-            "pos": 6,
-            "hcp": 3.4
-          },
-          "anterior": null
-        },
-        {
-          "rank": 6,
           "fed": "48297",
           "name": "João Rocha",
           "club": "Estoril",
           "dob": "2012-09-02",
-          "hcp": 3.5,
+          "hcp": 3.2,
           "juniorId": "u577982",
           "inscrito": {
             "lista": "entry",
@@ -27666,17 +27651,32 @@
           }
         },
         {
-          "rank": 7,
-          "fed": "49085",
-          "name": "Ricardo Castro Ferreira",
-          "club": "Estoril",
-          "dob": "2015-07-02",
-          "hcp": 3.9,
-          "juniorId": "u576306",
+          "rank": 6,
+          "fed": "46038",
+          "name": "João Balixa",
+          "club": "Miramar",
+          "dob": "2012-08-10",
+          "hcp": 3.3,
+          "juniorId": "f46038",
           "inscrito": {
             "lista": "entry",
-            "pos": 8,
-            "hcp": 3.9
+            "pos": 9,
+            "hcp": 3.3
+          },
+          "anterior": null
+        },
+        {
+          "rank": 7,
+          "fed": "43968",
+          "name": "Salvador Ivo de Carvalho",
+          "club": "Estoril",
+          "dob": "2012-01-23",
+          "hcp": 3.9,
+          "juniorId": "f43968",
+          "inscrito": {
+            "lista": "entry",
+            "pos": 6,
+            "hcp": 3.4
           },
           "anterior": null
         },
@@ -27714,21 +27714,6 @@
         },
         {
           "rank": 10,
-          "fed": "46296",
-          "name": "Raul Pazos (jr)",
-          "club": "Miramar",
-          "dob": "2013-02-08",
-          "hcp": 5.1,
-          "juniorId": "f46296",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 41,
-            "hcp": 5.1
-          },
-          "anterior": null
-        },
-        {
-          "rank": 11,
           "fed": "39097",
           "name": "Francisco Saraiva",
           "club": "Oporto",
@@ -27739,6 +27724,21 @@
             "lista": "waiting",
             "pos": 43,
             "hcp": 5.3
+          },
+          "anterior": null
+        },
+        {
+          "rank": 11,
+          "fed": "46296",
+          "name": "Raul Pazos (jr)",
+          "club": "Miramar",
+          "dob": "2013-02-08",
+          "hcp": 5.8,
+          "juniorId": "f46296",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 41,
+            "hcp": 5.1
           },
           "anterior": null
         },
@@ -27808,7 +27808,7 @@
           "name": "Henrique Pereira",
           "club": "Miramar",
           "dob": "2012-02-21",
-          "hcp": 6.7,
+          "hcp": 6.9,
           "juniorId": "f53646",
           "inscrito": null,
           "anterior": null
@@ -27826,6 +27826,17 @@
         },
         {
           "rank": 18,
+          "fed": "54845",
+          "name": "José Silva",
+          "club": "Amendoeira",
+          "dob": "2012-04-03",
+          "hcp": 7.7,
+          "juniorId": "f54845",
+          "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 19,
           "fed": "40473",
           "name": "André Von Hafe",
           "club": "Estela",
@@ -27836,24 +27847,13 @@
           "anterior": null
         },
         {
-          "rank": 19,
-          "fed": "54845",
-          "name": "José Silva",
-          "club": "Amendoeira",
-          "dob": "2012-04-03",
-          "hcp": 8.3,
-          "juniorId": "f54845",
-          "inscrito": null,
-          "anterior": null
-        },
-        {
           "rank": 20,
-          "fed": "42985",
-          "name": "Martim Moreira",
-          "club": "Belas",
-          "dob": "2012-02-16",
-          "hcp": 8.4,
-          "juniorId": "u521022",
+          "fed": "46308",
+          "name": "Marc Costa",
+          "club": "Citynorte",
+          "dob": "2013-02-20",
+          "hcp": 8.3,
+          "juniorId": "f46308",
           "inscrito": null,
           "anterior": null
         }
