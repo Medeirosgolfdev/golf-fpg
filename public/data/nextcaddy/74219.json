@@ -1,7 +1,7 @@
 {
   "tourId": 74219,
   "url": "https://www.nextcaddy.com/tour/74219",
-  "scrapedAt": "2026-11-02T12:09:19.522Z",
+  "scrapedAt": "2026-11-09T12:43:09.613Z",
   "meta": {
     "name": "Campeonato de Profesionales de Golf Costa Teguise",
     "organizer": null,
@@ -21,10 +21,352 @@
     "dateIso": "2026-11-08",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 26,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alvaro Hernandez Cabezuela",
+          "licencia": "CP143545-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -3,
+          "inscribedId": 2439060
+        },
+        {
+          "pos": null,
+          "name": "Luis Claverie Beautell",
+          "licencia": "CP020715-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -3,
+          "inscribedId": 2430133
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Jose Suneson",
+          "licencia": "CP010627-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2426585
+        },
+        {
+          "pos": 4,
+          "name": "Juan Angel Gonzalez Romero",
+          "licencia": "CMA83899-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2436986
+        },
+        {
+          "pos": 5,
+          "name": "James Anthony Ferraby",
+          "licencia": "CP001852-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2440564
+        },
+        {
+          "pos": null,
+          "name": "Ignacio Urriza Fuentes",
+          "licencia": "CP013212-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2429380
+        },
+        {
+          "pos": 7,
+          "name": "Francisco Cea Bermudez",
+          "licencia": "CP050677-P",
+          "hcp": 1,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2424875
+        },
+        {
+          "pos": null,
+          "name": "Samuel Santana Garcia",
+          "licencia": "CP313008-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2440442
+        },
+        {
+          "pos": 9,
+          "name": "Rafael Fajardo Monzon",
+          "licencia": "CP03367907",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2440578
+        },
+        {
+          "pos": 10,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 4.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2439324
+        },
+        {
+          "pos": null,
+          "name": "Christian Espino Bohm",
+          "licencia": "CP013755-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2431768
+        },
+        {
+          "pos": 12,
+          "name": "Francisco Javier Amatriain Perallon",
+          "licencia": "CP200493-P",
+          "hcp": 2.1,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2427743
+        },
+        {
+          "pos": null,
+          "name": "Javier Poladura Lopez",
+          "licencia": "CP043204-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2429392
+        },
+        {
+          "pos": null,
+          "name": "Nicolas Garcia Perez",
+          "licencia": "CP000227-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2429721
+        },
+        {
+          "pos": 15,
+          "name": "Raul Moreno Soler",
+          "licencia": "CP04081818",
+          "hcp": 6.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2431689
+        },
+        {
+          "pos": 16,
+          "name": "Felix Melian Sosa",
+          "licencia": "CP350704-P",
+          "hcp": 2,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2435267
+        },
+        {
+          "pos": 17,
+          "name": "Paul Michael Hirst",
+          "licencia": "CP04973030",
+          "hcp": 6.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2434244
+        },
+        {
+          "pos": null,
+          "name": "Adam Felli",
+          "licencia": "CP04972436",
+          "hcp": 4.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2438527
+        },
+        {
+          "pos": 19,
+          "name": "Pedro Urriza Fuentes",
+          "licencia": "CP013247-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2426370
+        },
+        {
+          "pos": 20,
+          "name": "Andrew Quinn",
+          "licencia": "CP04350266",
+          "hcp": 6.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2437786
+        },
+        {
+          "pos": null,
+          "name": "Jose Antonio Monzon Moreno",
+          "licencia": "CP311149-P",
+          "hcp": 8.6,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2430645
+        },
+        {
+          "pos": 22,
+          "name": "Antonio Macias Torres",
+          "licencia": "CP39151571",
+          "hcp": 5.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 18,
+          "inscribedId": 2440583
+        },
+        {
+          "pos": 23,
+          "name": "Juan Adolfo De La Rua Galan",
+          "licencia": "CP04699190",
+          "hcp": 8.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 19,
+          "inscribedId": 2434124
+        },
+        {
+          "pos": 24,
+          "name": "Alvaro Peñafiel Martinez",
+          "licencia": "CP31001002",
+          "hcp": 8.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 94,
+          "toPar": 22,
+          "inscribedId": 2440089
+        },
+        {
+          "pos": 25,
+          "name": "Adela Garcia Luis",
+          "licencia": "CP22927512",
+          "hcp": 8.9,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 98,
+          "toPar": 26,
+          "inscribedId": 2435645
+        },
+        {
+          "pos": null,
+          "name": "Raul Santos Cascallana Hernandez",
+          "licencia": "CP043425-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2437850
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 26
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -49,71 +391,78 @@
     },
     {
       "orden": 4,
-      "name": "Samuel Santana Garcia",
-      "licencia": "CP313008-P",
-      "hcp": 0,
-      "nivel": "P+"
-    },
-    {
-      "orden": 5,
       "name": "Francisco Javier Amatriain Perallon",
       "licencia": "CP200493-P",
       "hcp": 2.1,
       "nivel": "P+"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Ignacio Urriza Fuentes",
       "licencia": "CP013212-P",
       "hcp": 0,
       "nivel": "P+"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Javier Poladura Lopez",
       "licencia": "CP043204-P",
       "hcp": 0,
       "nivel": "P+"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Luis Claverie Beautell",
       "licencia": "CP020715-P",
       "hcp": 0,
       "nivel": "P+"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Christian Espino Bohm",
       "licencia": "CP013755-P",
       "hcp": 0,
       "nivel": "P+"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Felix Melian Sosa",
       "licencia": "CP350704-P",
       "hcp": 2,
       "nivel": "P+"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Juan Angel Gonzalez Romero",
       "licencia": "CMA83899-P",
       "hcp": 0,
       "nivel": "P+"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Raul Santos Cascallana Hernandez",
       "licencia": "CP043425-P",
       "hcp": 0,
       "nivel": "P+"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Alvaro Hernandez Cabezuela",
       "licencia": "CP143545-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 13,
+      "name": "Samuel Santana Garcia",
+      "licencia": "CP313008-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 14,
+      "name": "James Anthony Ferraby",
+      "licencia": "CP001852-P",
       "hcp": 0,
       "nivel": "P+"
     },
@@ -174,6 +523,27 @@
       "nivel": "I"
     },
     {
+      "orden": 7,
+      "name": "Alvaro Peñafiel Martinez",
+      "licencia": "CP31001002",
+      "hcp": 8.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Rafael Fajardo Monzon",
+      "licencia": "CP03367907",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Antonio Macias Torres",
+      "licencia": "CP39151571",
+      "hcp": 5.9,
+      "nivel": "Mid"
+    },
+    {
       "orden": 1,
       "name": "Adela Garcia Luis",
       "licencia": "CP22927512",
@@ -181,7 +551,247 @@
       "nivel": "J"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:10",
+          "tee": 1,
+          "name": "Ignacio Urriza Fuentes",
+          "hcp": 0,
+          "ins": "2429380",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:10",
+          "tee": 1,
+          "name": "Luis Claverie Beautell",
+          "hcp": 0,
+          "ins": "2430133",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:10",
+          "tee": 1,
+          "name": "Francisco Cea Bermudez",
+          "hcp": 1,
+          "ins": "2424875",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:20",
+          "tee": 1,
+          "name": "Christian Espino Bohm",
+          "hcp": 0,
+          "ins": "2431768",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:20",
+          "tee": 1,
+          "name": "Felix Melian Sosa",
+          "hcp": 2,
+          "ins": "2435267",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:20",
+          "tee": 1,
+          "name": "Raul Santos Cascallana Hernandez",
+          "hcp": 0,
+          "ins": "2437850",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Jose Antonio Monzon Moreno",
+          "hcp": 8.6,
+          "ins": "2430645",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Nicolas Garcia Perez",
+          "hcp": 0,
+          "ins": "2429721",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Pedro Urriza Fuentes",
+          "hcp": 0,
+          "ins": "2426370",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Javier Poladura Lopez",
+          "hcp": 0,
+          "ins": "2429392",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Samuel Santana Garcia",
+          "hcp": 0,
+          "ins": "2440442",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Carlos Jose Suneson",
+          "hcp": 0,
+          "ins": "2426585",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "James Anthony Ferraby",
+          "hcp": 0,
+          "ins": "2440564",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Alvaro Hernandez Cabezuela",
+          "hcp": 0,
+          "ins": "2439060",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Francisco Javier Amatriain Perallon",
+          "hcp": 2.1,
+          "ins": "2427743",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Juan Angel Gonzalez Romero",
+          "hcp": 0,
+          "ins": "2436986",
+          "jid": "79491",
+          "nivel": "P"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Rafael Fajardo Monzon",
+          "hcp": 0.2,
+          "ins": "2440578",
+          "jid": "79491",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Massimo Amoni Gamardo",
+          "hcp": 4.5,
+          "ins": "2439324",
+          "jid": "79491",
+          "nivel": "I"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Adam Felli",
+          "hcp": 4.5,
+          "ins": "2438527",
+          "jid": "79491",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Antonio Macias Torres",
+          "hcp": 5.9,
+          "ins": "2440583",
+          "jid": "79491",
+          "nivel": "M"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Andrew Quinn",
+          "hcp": 6.3,
+          "ins": "2437786",
+          "jid": "79491",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Raul Moreno Soler",
+          "hcp": 6.5,
+          "ins": "2431689",
+          "jid": "79491",
+          "nivel": "M"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Paul Michael Hirst",
+          "hcp": 6.6,
+          "ins": "2434244",
+          "jid": "79491",
+          "nivel": "M"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Juan Adolfo De La Rua Galan",
+          "hcp": 8.5,
+          "ins": "2434124",
+          "jid": "79491",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Alvaro Peñafiel Martinez",
+          "hcp": 8.8,
+          "ins": "2440089",
+          "jid": "79491",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Adela Garcia Luis",
+          "hcp": 8.9,
+          "ins": "2435645",
+          "jid": "79491",
+          "nivel": "J"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -200,6 +810,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-11-02T12:10:22.866Z"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 61247,
   "url": "https://www.nextcaddy.com/tour/61247",
-  "scrapedAt": "2026-11-02T12:09:35.739Z",
+  "scrapedAt": "2026-11-09T12:43:43.876Z",
   "meta": {
-    "name": "Campeonato Andalucía MASC Categoría MId Amateur",
+    "name": "Campeonato Andalucía MASC Categoría Mid Amateur",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
@@ -24,7 +24,71 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Fernando Moreno Onieva",
+      "licencia": "AM15080633",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Nicholas Wardell",
+      "licencia": "AM53355429",
+      "hcp": 4.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Enrique Sanchez-Real Barbero",
+      "licencia": "AM11995717",
+      "hcp": 4.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Fernando Ruiz Blanco",
+      "licencia": "AMB2616893",
+      "hcp": 9.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Jorge Marturel Adell",
+      "licencia": "AM00187537",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Israel Rodriguez Infantes",
+      "licencia": "AM11357130",
+      "hcp": 7.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco De Borja Ojeda Becerra",
+      "licencia": "AMC3416361",
+      "hcp": 8.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Miguel Diaz Del Moral Berdun",
+      "licencia": "AM07096812",
+      "hcp": 0,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Antonio Pimentel Jimenez",
+      "licencia": "AM15963334",
+      "hcp": 0.6,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -47,7 +111,8 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circular/2026/299f250e442eae42637f67fc79422659.pdf"
   ],
-  "horariosScrapedAt": "2026-11-02T12:09:53.660Z"
+  "horariosScrapedAt": "2026-11-09T12:44:07.452Z"
 }

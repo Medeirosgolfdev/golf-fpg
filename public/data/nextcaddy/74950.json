@@ -1,13 +1,13 @@
 {
   "tourId": 74950,
   "url": "https://www.nextcaddy.com/tour/74950",
-  "scrapedAt": "2026-11-02T12:09:33.896Z",
+  "scrapedAt": "2026-11-09T12:43:38.399Z",
   "meta": {
     "name": "Torneo Golf Divino by LeClub",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "2026-11-22",
+    "dateStart": "2026-11-21",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -18,14 +18,36 @@
       "Senior",
       "Juvenil"
     ],
-    "dateIso": "2026-11-22",
+    "dateIso": "2026-11-21",
     "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Cristobal Lopez Porta",
+      "licencia": "AM02808601",
+      "hcp": 16.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Alejandro Lopez Carmona",
+      "licencia": "AM02980485",
+      "hcp": 25,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Javier Cañas Bartivas",
+      "licencia": "AM00262856",
+      "hcp": 0.6,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -57,5 +79,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-02T12:10:25.666Z"
+  "horariosScrapedAt": "2026-11-09T12:44:46.991Z"
 }

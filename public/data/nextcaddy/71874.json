@@ -1,7 +1,7 @@
 {
   "tourId": 71874,
   "url": "https://www.nextcaddy.com/tour/71874",
-  "scrapedAt": "2026-11-02T12:09:36.278Z",
+  "scrapedAt": "2026-11-09T12:43:44.623Z",
   "meta": {
     "name": "IV Torneo Jésica Reyes",
     "organizer": null,
@@ -9,10 +9,11 @@
     "courseCode": "AM60",
     "dateStart": "2026-11-28",
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Especial Amarilla",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
       "Señoras",
+      "caballeros",
       "Infantil",
       "Profesional",
       "Senior",
@@ -25,7 +26,134 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Marie Louis Vos",
+      "licencia": "AM81467711",
+      "hcp": 13.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Patrick Vos",
+      "licencia": "AM81467713",
+      "hcp": 17.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jesus Maria Pozas Leon",
+      "licencia": "AM15415992",
+      "hcp": 26.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Manuel Nuñez De Castro Martin",
+      "licencia": "AM00056634",
+      "hcp": 29.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Kripaytite Svetlana Valentinouna",
+      "licencia": "AM43904018",
+      "hcp": 13.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Buchnev Yury Alexandrovich",
+      "licencia": "AM43904984",
+      "hcp": 14.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Alonso Jesus Luque Luque",
+      "licencia": "AM61672700",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Aguilera Ruiz",
+      "licencia": "AM60615943",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Erwin Blokker",
+      "licencia": "AM01898221",
+      "hcp": 2.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Oscar Blokker Diaz",
+      "licencia": "AM01517110",
+      "hcp": 10.8,
+      "nivel": "J"
+    },
+    {
+      "orden": 6,
+      "name": "Paloma Garcia Galvez",
+      "licencia": "AM60201762",
+      "hcp": 25.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Sagrario Montero Martin",
+      "licencia": "AM01609175",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Gabriella Watz",
+      "licencia": "AM24372729",
+      "hcp": 24.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Pascale Hall",
+      "licencia": "EXX1912798",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Josefa Perez Palomo",
+      "licencia": "AM01250033",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Luz Maria Robledo De Antonio",
+      "licencia": "AM01052704",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Sergey Kuznetsov",
+      "licencia": "AM49471680",
+      "hcp": 19.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Oleg Andreev",
+      "licencia": "AM49374395",
+      "hcp": 20.4,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -150,7 +278,8 @@
     }
   },
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/2673844945_iv_torneo_golf_jesica_reyes_2026_compressed.pdf"
   ],
-  "horariosScrapedAt": "2026-11-02T12:10:15.223Z"
+  "horariosScrapedAt": "2026-11-09T12:44:34.290Z"
 }

@@ -1,13 +1,13 @@
 {
   "tourId": 74961,
   "url": "https://www.nextcaddy.com/tour/74961",
-  "scrapedAt": "2026-11-02T12:09:09.191Z",
+  "scrapedAt": "2026-11-09T12:42:50.698Z",
   "meta": {
     "name": "AMIGOS VILLANUEVA",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "2026-11-02",
+    "dateStart": "2026-11-04",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -18,13 +18,163 @@
       "Senior",
       "Juvenil"
     ],
-    "dateIso": "2026-11-02",
+    "dateIso": "2026-11-04",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Manuel Zulueta Castañeda",
+          "licencia": "AMC9819581",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2437549
+        },
+        {
+          "pos": 2,
+          "name": "Andres Lista Rivero",
+          "licencia": "AMC9604001",
+          "hcp": 12.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2437547
+        },
+        {
+          "pos": 3,
+          "name": "Jose Manuel Betanzos Bernal",
+          "licencia": "AMC9056772",
+          "hcp": 14.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2437538
+        },
+        {
+          "pos": 4,
+          "name": "Fernando Muñoz Rodriguez",
+          "licencia": "AMD5749518",
+          "hcp": 7.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2437543
+        },
+        {
+          "pos": 5,
+          "name": "Carlos Caucelo Gonzalez",
+          "licencia": "AMD5611944",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2437544
+        },
+        {
+          "pos": 6,
+          "name": "Manuel Barnes Franco",
+          "licencia": "AMD5165008",
+          "hcp": 7.8,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2437545
+        },
+        {
+          "pos": 7,
+          "name": "Ignacio Liberal Gonzalez De Lara",
+          "licencia": "AME7352203",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2437546
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Javier Cuadros Rodriguez",
+          "licencia": "AMC9281546",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2437541
+        },
+        {
+          "pos": 9,
+          "name": "Manuel Barnes Fiscer",
+          "licencia": "AMC9600166",
+          "hcp": 13.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2437548
+        },
+        {
+          "pos": null,
+          "name": "Jose Manuel Sanchez Luna",
+          "licencia": "AMD5611945",
+          "hcp": 18.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2437540
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,

@@ -1,13 +1,13 @@
 {
   "tourId": 68339,
   "url": "https://www.nextcaddy.com/tour/68339",
-  "scrapedAt": "2026-06-24T14:58:56.834Z",
+  "scrapedAt": "2026-11-09T12:42:59.422Z",
   "meta": {
-    "name": "Match Heptagonal Senior Masculino",
+    "name": "Match Hexagonal Senior Masculino",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": null,
+    "dateStart": "2026-11-07",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros C. Amat",
     "categories": [
@@ -17,14 +17,646 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-11-07",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
-  "horarios": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Por Equipos 1ª Jornada",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": null,
+      "name": "FEDERACIÓN BALEAR DE GOLF",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Bartolome Florit Vicens",
+      "licencia": "BP15436894",
+      "hcp": 3.2,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Ricardo Andreu Mulet",
+      "licencia": "BP15058153",
+      "hcp": 5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Nicasio Dominguez",
+      "licencia": "BP07979483",
+      "hcp": 0.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Lars Engstrom",
+      "licencia": "BP10920950",
+      "hcp": 0.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Juan Pedro Manjon Vellisco",
+      "licencia": "BP12424614",
+      "hcp": 0.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Borja Azpilicueta Rodriguez-Valdes",
+      "licencia": "BP57050314",
+      "hcp": 4.7,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Federación de Golf de la Comunitat Valenciana",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Luis Garcia Gutierrez",
+      "licencia": "LV01024004",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jorge Garcia Comin",
+      "licencia": "LV06012396",
+      "hcp": 0.6,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jose Carlos Rastoll Suria",
+      "licencia": "LV73340177",
+      "hcp": 2.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Juan Francisco Escuriola Beltran",
+      "licencia": "LV01126865",
+      "hcp": 4.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Rafael Serrano Beneyto",
+      "licencia": "LV05193625",
+      "hcp": 0.6,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Miguel Angel Bonet Dean",
+      "licencia": "LV01983579",
+      "hcp": 1.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "FEDERACIÓN ANDALUZA DE GOLF",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Jacobo Cestino Castilla",
+      "licencia": "AM20038515",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jorge Gross Davila",
+      "licencia": "AM02408924",
+      "hcp": 0.2,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Ortega Amezaga",
+      "licencia": "AM07027058",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Javier Pintos",
+      "licencia": "AM53980517",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jose Francisco Lamas Oliva",
+      "licencia": "AM55487617",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Cristobal Guerrero Vidarte",
+      "licencia": "AM07029185",
+      "hcp": 0.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "FEDERACIÓN VASCA GOLF",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Jose Ignacio Mendez De Cruz",
+      "licencia": "VB03060162",
+      "hcp": 2.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Diego Gutierrez Zarza",
+      "licencia": "VB03034981",
+      "hcp": 3.8,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Aitor Gorriti Martinez",
+      "licencia": "VB09140856",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Gonzalo Lilly Martinez",
+      "licencia": "VB01028152",
+      "hcp": 1.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Garcia Garcia",
+      "licencia": "VB08200715",
+      "hcp": 2,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Raul Peral Otaola",
+      "licencia": "VB08220861",
+      "hcp": 2.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "FEDERACIO CATALANA DE GOLF",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Francisco De Pablo Andreu",
+      "licencia": "CB05169289",
+      "hcp": 0.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Philippe Bach",
+      "licencia": "CB02172800",
+      "hcp": 3.5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Juan Leach Cucurella",
+      "licencia": "CB02025317",
+      "hcp": 0.6,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Juan Jose Martinez Campos",
+      "licencia": "CB05066829",
+      "hcp": 2.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jordi Serrano Santafe",
+      "licencia": "CB05118894",
+      "hcp": 0.8,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Mick Walsh",
+      "licencia": "CB00803050",
+      "hcp": 2.2,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "REAL FEDERACIÓN DE GOLF DE MADRID",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Ramon Luengo Martinez",
+      "licencia": "CM11033447",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Raul Velasco Rodriguez",
+      "licencia": "CM52051137",
+      "hcp": 1.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Cendra Armijo",
+      "licencia": "CM01026751",
+      "hcp": 0.5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Alejandro Lafarga Ibran",
+      "licencia": "CM02019827",
+      "hcp": 0.5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Rafael Burgos Riestra",
+      "licencia": "CM61765285",
+      "hcp": 1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Ignacio Gonzalez Martinez",
+      "licencia": "CM02036051",
+      "hcp": 1.6,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Jacobo Cestino Castilla",
+          "hcp": 3.9,
+          "ins": "2429773",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Carlos Ortega Amezaga",
+          "hcp": 1.9,
+          "ins": "2429775",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Ramon Luengo Martinez",
+          "hcp": 0.6,
+          "ins": "2437755",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Alejandro Lafarga Ibran",
+          "hcp": 0.5,
+          "ins": "2437757",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 15,
+          "name": "Jose Carlos Rastoll Suria",
+          "hcp": 2.4,
+          "ins": "2425696",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 15,
+          "name": "Juan Francisco Escuriola Beltran",
+          "hcp": 4.4,
+          "ins": "2440658",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 15,
+          "name": "Juan Jose Martinez Campos",
+          "hcp": 2.3,
+          "ins": "2436036",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 15,
+          "name": "Philippe Bach",
+          "hcp": 3.5,
+          "ins": "2440381",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 16,
+          "name": "Carlos Garcia Garcia",
+          "hcp": 2,
+          "ins": "2433808",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 16,
+          "name": "Jose Ignacio Mendez De Cruz",
+          "hcp": 2.4,
+          "ins": "2433803",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 16,
+          "name": "Juan Pedro Manjon Vellisco",
+          "hcp": 0.1,
+          "ins": "2425446",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 16,
+          "name": "Bartolome Florit Vicens",
+          "hcp": 3.2,
+          "ins": "2425443",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 17,
+          "name": "Rafael Serrano Beneyto",
+          "hcp": 0.6,
+          "ins": "2425698",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 17,
+          "name": "Miguel Angel Bonet Dean",
+          "hcp": 1.9,
+          "ins": "2425697",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 17,
+          "name": "Jordi Serrano Santafe",
+          "hcp": 0.8,
+          "ins": "2436038",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 17,
+          "name": "Mick Walsh",
+          "hcp": 2.2,
+          "ins": "2436037",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 18,
+          "name": "Aitor Gorriti Martinez",
+          "hcp": 1.6,
+          "ins": "2433805",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 18,
+          "name": "Gonzalo Lilly Martinez",
+          "hcp": 1.1,
+          "ins": "2433806",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 18,
+          "name": "Nicasio Dominguez",
+          "hcp": 0.1,
+          "ins": "2425444",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 18,
+          "name": "Lars Engstrom",
+          "hcp": 0.1,
+          "ins": "2425445",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 1,
+          "name": "Luis Garcia Gutierrez",
+          "hcp": 0.3,
+          "ins": "2425694",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 1,
+          "name": "Jorge Garcia Comin",
+          "hcp": 0.6,
+          "ins": "2425693",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 1,
+          "name": "Francisco De Pablo Andreu",
+          "hcp": 0.3,
+          "ins": "2436033",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 1,
+          "name": "Juan Leach Cucurella",
+          "hcp": 0.6,
+          "ins": "2436035",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 15,
+          "name": "Raul Peral Otaola",
+          "hcp": 2.4,
+          "ins": "2433807",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 15,
+          "name": "Diego Gutierrez Zarza",
+          "hcp": 3.8,
+          "ins": "2433804",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 15,
+          "name": "Borja Azpilicueta Rodriguez-Valdes",
+          "hcp": 4.7,
+          "ins": "2425447",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 15,
+          "name": "Ricardo Andreu Mulet",
+          "hcp": 5,
+          "ins": "2425442",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 16,
+          "name": "Cristobal Guerrero Vidarte",
+          "hcp": 0.1,
+          "ins": "2429777",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 16,
+          "name": "Jorge Gross Davila",
+          "hcp": 0.2,
+          "ins": "2429774",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 16,
+          "name": "Raul Velasco Rodriguez",
+          "hcp": 1.4,
+          "ins": "2442546",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 16,
+          "name": "Ignacio Gonzalez Martinez",
+          "hcp": 1.6,
+          "ins": "2437759",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 18,
+          "name": "Javier Pintos",
+          "hcp": 0.8,
+          "ins": "2429776",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 18,
+          "name": "Jose Francisco Lamas Oliva",
+          "hcp": 0.4,
+          "ins": "2429778",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 18,
+          "name": "Carlos Cendra Armijo",
+          "hcp": 0.5,
+          "ins": "2437756",
+          "jid": "72925",
+          "nivel": "S"
+        },
+        {
+          "time": "09:39",
+          "tee": 18,
+          "name": "Rafael Burgos Riestra",
+          "hcp": 1,
+          "ins": "2437758",
+          "jid": "72925",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -380,6 +1012,9 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-11-02T12:10:01.299Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2312638004_clasificacion_final.pdf",
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/2312638004_clasificacion_final.pdf",
+    "/uploads/competiciones/pdf/3435838346_rrll_dobles_femenino.pdf"
+  ]
 }

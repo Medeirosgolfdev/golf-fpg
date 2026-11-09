@@ -1,7 +1,7 @@
 {
   "tourId": 74977,
   "url": "https://www.nextcaddy.com/tour/74977",
-  "scrapedAt": "2026-11-02T12:09:12.757Z",
+  "scrapedAt": "2026-11-09T12:42:51.306Z",
   "meta": {
     "name": "SUECOS MIERCOLES SUR",
     "organizer": null,
@@ -20,62 +20,294 @@
     "dateIso": "2026-11-04",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Anders Lindquist",
+          "licencia": "AM51062921",
+          "hcp": 11,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2437848
+        },
+        {
+          "pos": 2,
+          "name": "Anders Nordstrom",
+          "licencia": "AM51064636",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2437847
+        },
+        {
+          "pos": 3,
+          "name": "Billy Hoglund Lars",
+          "licencia": "AM51345824",
+          "hcp": 27.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2437842
+        },
+        {
+          "pos": 4,
+          "name": "Sten Olsson",
+          "licencia": "AM51281489",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2437829
+        },
+        {
+          "pos": 5,
+          "name": "Claes Forsgardh",
+          "licencia": "AM51284315",
+          "hcp": 22.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2437838
+        },
+        {
+          "pos": 6,
+          "name": "Peder Bjornander",
+          "licencia": "AM51886621",
+          "hcp": 22.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2437830
+        },
+        {
+          "pos": 7,
+          "name": "Ulf Svensson",
+          "licencia": "AM51305588",
+          "hcp": 6.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2437843
+        },
+        {
+          "pos": 8,
+          "name": "Per Zachrisson",
+          "licencia": "AM51792660",
+          "hcp": 15.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2437840
+        },
+        {
+          "pos": 9,
+          "name": "Hans Osterberg",
+          "licencia": "AM51986381",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2437844
+        },
+        {
+          "pos": 10,
+          "name": "Kaj Hed",
+          "licencia": "AM51948774",
+          "hcp": 15.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2437832
+        },
+        {
+          "pos": 11,
+          "name": "Peter Gavrell",
+          "licencia": "AM51603867",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2437846
+        },
+        {
+          "pos": 12,
+          "name": "Arne Lindstrom",
+          "licencia": "AM51072462",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2437839
+        },
+        {
+          "pos": 13,
+          "name": "Hakan Eklund",
+          "licencia": "AM51953560",
+          "hcp": 19.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2437841
+        },
+        {
+          "pos": 14,
+          "name": "Claes Wretlind",
+          "licencia": "AM51280129",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2437845
+        },
+        {
+          "pos": 15,
+          "name": "Hakan Gershagen",
+          "licencia": "AM51932134",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2437837
+        },
+        {
+          "pos": 16,
+          "name": "Jan Iwarsson",
+          "licencia": "AM51950961",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2437835
+        },
+        {
+          "pos": 17,
+          "name": "Torbjorn Skold",
+          "licencia": "AM51789634",
+          "hcp": 26.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2437849
+        },
+        {
+          "pos": 18,
+          "name": "Fabian Carlsson",
+          "licencia": "AM51236689",
+          "hcp": 30.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2437834
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Sten Olsson",
       "licencia": "AM51281489",
-      "hcp": 26.2,
+      "hcp": 26.1,
       "nivel": "S"
     },
     {
       "orden": 2,
-      "name": "Per Stefan Lundgren",
-      "licencia": "AM51612195",
-      "hcp": 34.7,
-      "nivel": "S"
-    },
-    {
-      "orden": 3,
       "name": "Fabian Carlsson",
       "licencia": "AM51236689",
       "hcp": 30.8,
       "nivel": "S"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Hakan Gershagen",
       "licencia": "AM51932134",
-      "hcp": 25.8,
+      "hcp": 25.7,
       "nivel": "S"
     },
     {
-      "orden": 5,
-      "name": "Arne Lindstrom",
-      "licencia": "AM51072462",
-      "hcp": 27.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 6,
+      "orden": 4,
       "name": "Billy Hoglund Lars",
       "licencia": "AM51345824",
       "hcp": 27.2,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 5,
       "name": "Anders Nordstrom",
       "licencia": "AM51064636",
       "hcp": 28,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 6,
       "name": "Torbjorn Skold",
       "licencia": "AM51789634",
       "hcp": 26.2,
@@ -85,14 +317,14 @@
       "orden": 1,
       "name": "Peder Bjornander",
       "licencia": "AM51886621",
-      "hcp": 21.9,
+      "hcp": 22.1,
       "nivel": "S"
     },
     {
       "orden": 2,
       "name": "Kaj Hed",
       "licencia": "AM51948774",
-      "hcp": 16,
+      "hcp": 15.4,
       "nivel": "S"
     },
     {
@@ -104,16 +336,16 @@
     },
     {
       "orden": 4,
-      "name": "Leif Svensson",
-      "licencia": "AM51967919",
-      "hcp": 8,
+      "name": "Claes Forsgardh",
+      "licencia": "AM51284315",
+      "hcp": 22.1,
       "nivel": "S"
     },
     {
       "orden": 5,
-      "name": "Claes Forsgardh",
-      "licencia": "AM51284315",
-      "hcp": 22.3,
+      "name": "Arne Lindstrom",
+      "licencia": "AM51072462",
+      "hcp": 27.6,
       "nivel": "S"
     },
     {
@@ -148,7 +380,7 @@
       "orden": 10,
       "name": "Claes Wretlind",
       "licencia": "AM51280129",
-      "hcp": 21.3,
+      "hcp": 21.7,
       "nivel": "S"
     },
     {
@@ -162,7 +394,7 @@
       "orden": 12,
       "name": "Anders Lindquist",
       "licencia": "AM51062921",
-      "hcp": 11.4,
+      "hcp": 11,
       "nivel": "S"
     }
   ],
@@ -198,15 +430,6 @@
           "nivel": "S"
         },
         {
-          "time": "12:00",
-          "tee": 1,
-          "name": "Per Stefan Lundgren",
-          "hcp": 34.5,
-          "ins": "2437833",
-          "jid": "80343",
-          "nivel": "S"
-        },
-        {
           "time": "12:10",
           "tee": 1,
           "name": "Fabian Carlsson",
@@ -221,15 +444,6 @@
           "name": "Jan Iwarsson",
           "hcp": 22,
           "ins": "2437835",
-          "jid": "80343",
-          "nivel": "S"
-        },
-        {
-          "time": "12:10",
-          "tee": 1,
-          "name": "Leif Svensson",
-          "hcp": 6.4,
-          "ins": "2437836",
           "jid": "80343",
           "nivel": "S"
         },

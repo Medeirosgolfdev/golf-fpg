@@ -1,0 +1,215 @@
+{
+  "gameId": "6aece3d99dfa5416307d6f26",
+  "fetchedAt": "2026-11-09T12:47:59.157Z",
+  "game": {
+    "_id": "6aece3d99dfa5416307d6f26",
+    "name": "VIII TORNEO JUVENIL DE GOLF \"JORGE CAMPILLO\"",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-11-22T08:00:01.631Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6aece3d99dfa5416307d6f50",
+      "name": "VIII TORNEO JUVENIL DE GOLF \"JORGE CAMPILLO\"",
+      "clientName": "Federación Extremeña de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a694d36dfe90dea2d55",
+      "name": "NORBA CLUB DE GOLF",
+      "city": "CÁCERES",
+      "state": "CÁCERES",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a694d36dfe90dea2d56",
+      "name": "NORBA GOLF - Norba Golf",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 68,
+        "slope": 134,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d7009"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 69.8,
+        "slope": 139,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d7053"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 73,
+        "slope": 143,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d7041"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 74.9,
+        "slope": 144,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d702e"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 61.8,
+        "slope": 109,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d708c"
+      },
+      {
+        "gender": "M",
+        "color": "pink",
+        "lap": "lap18",
+        "rating": 57.2,
+        "slope": 100,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d70b4"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 75.2,
+        "slope": 142,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d701b"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 73,
+        "slope": 136,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d7066"
+      },
+      {
+        "gender": "F",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 66.3,
+        "slope": 107,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d7078"
+      },
+      {
+        "gender": "F",
+        "color": "pink",
+        "lap": "lap18",
+        "rating": 60.1,
+        "slope": 103,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d70a0"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 81,
+        "slope": 152,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d70c8"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 79.2,
+        "slope": 151,
+        "par": 72,
+        "_id": "6aece3d99dfa5416307d70dc"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6aece629d976c8c7a4551e67",
+      "name": "1 CATEGORIA - Cadetes y Sub-21",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6aece629d976c8c7a4551e6a",
+      "name": "2 CATEGORIA - Infantiles y Alvenines",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6aece629d976c8c7a4551e6d",
+      "name": "BENJAMIN",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6aece629d976c8c7a4551e70",
+      "name": "INICIACION",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6aece7b2d976c8c7a4a3d360",
+      "name": "PRE-BENJAMIN",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

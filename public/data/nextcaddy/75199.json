@@ -1,0 +1,753 @@
+{
+  "tourId": 75199,
+  "url": "https://www.nextcaddy.com/tour/75199",
+  "scrapedAt": "2026-11-09T12:46:52.199Z",
+  "meta": {
+    "name": "2º TORNEO INFANTIL (9 Hoyos P&P)",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-11-08",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-11-08",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      8,
+      4,
+      14,
+      10,
+      12,
+      18,
+      2,
+      6,
+      16
+    ],
+    "meters": [
+      113,
+      112,
+      64,
+      62,
+      92,
+      64,
+      114,
+      65,
+      82
+    ],
+    "parTotal": 27
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ignacio Valdenebro Olavarria",
+          "licencia": "AM02466882",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2443498,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                5,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "total": 35,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Alfonso Marin Cruz",
+          "licencia": "AM02517964",
+          "hcp": 52,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2443489,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                7,
+                4,
+                3,
+                4,
+                5
+              ],
+              "total": 40,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Maria Ruiz-Cabello Galobart",
+          "licencia": "AM02467957",
+          "hcp": 51,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2443483,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                4,
+                4,
+                9,
+                3,
+                5,
+                4,
+                4
+              ],
+              "total": 43,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Jose Luis Mora-Figueroa Perez De Herrasti",
+          "licencia": "AM05516033",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2443497,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                5,
+                5,
+                4,
+                6,
+                5,
+                5,
+                4
+              ],
+              "total": 42,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Angel Osborne Duque",
+          "licencia": "AM02517852",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2443493,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                6,
+                5,
+                5,
+                3,
+                3,
+                6,
+                5,
+                4
+              ],
+              "total": 45,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Jose Carranza Cruz",
+          "licencia": "AM02517965",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2443492,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                3,
+                5,
+                4,
+                4,
+                7,
+                4,
+                6
+              ],
+              "total": 43,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Jaime Osta Ortega",
+          "licencia": "AM02486650",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2443494,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                5,
+                7,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "total": 46,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Gonzalo Osborne Duque",
+          "licencia": "AM02517851",
+          "hcp": 51.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2443485,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                5,
+                5,
+                6,
+                7,
+                6,
+                4,
+                4,
+                3
+              ],
+              "total": 50,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Gonzaga Valcarcel Vorcy",
+          "licencia": "AM02488169",
+          "hcp": 52.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2443491,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                4,
+                5,
+                6,
+                9,
+                3,
+                7,
+                7
+              ],
+              "total": 52,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 10,
+          "name": "Luis Criado Montoto",
+          "licencia": "AM02490724",
+          "hcp": 51.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2443486,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                9,
+                6,
+                5,
+                6,
+                4,
+                5,
+                6,
+                5
+              ],
+              "total": 50,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 11,
+          "name": "Fernando Criado Montoto",
+          "licencia": "AM02490722",
+          "hcp": 51,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2443484,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                6,
+                7,
+                6,
+                5,
+                7,
+                5
+              ],
+              "total": 50,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Maria Ruiz-Cabello Galobart",
+      "licencia": "AM02467957",
+      "hcp": 51,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Fernando Criado Montoto",
+      "licencia": "AM02490722",
+      "hcp": 51,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Gonzalo Osborne Duque",
+      "licencia": "AM02517851",
+      "hcp": 51.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Luis Criado Montoto",
+      "licencia": "AM02490724",
+      "hcp": 51.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Alfonso Marin Cruz",
+      "licencia": "AM02517964",
+      "hcp": 52,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Gonzaga Valcarcel Vorcy",
+      "licencia": "AM02488169",
+      "hcp": 52.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Carranza Cruz",
+      "licencia": "AM02517965",
+      "hcp": 53.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Angel Osborne Duque",
+      "licencia": "AM02517852",
+      "hcp": 53.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Jaime Osta Ortega",
+      "licencia": "AM02486650",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Luis Mora-Figueroa Perez De Herrasti",
+      "licencia": "AM05516033",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Ignacio Valdenebro Olavarria",
+      "licencia": "AM02466882",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Maria Ruiz-Cabello Galobart",
+          "hcp": 51,
+          "ins": "2443483",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Fernando Criado Montoto",
+          "hcp": 51,
+          "ins": "2443484",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Gonzalo Osborne Duque",
+          "hcp": 51.5,
+          "ins": "2443485",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:20",
+          "tee": 1,
+          "name": "Luis Criado Montoto",
+          "hcp": 51.5,
+          "ins": "2443486",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Alfonso Marin Cruz",
+          "hcp": 52,
+          "ins": "2443489",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Gonzaga Valcarcel Vorcy",
+          "hcp": 52.5,
+          "ins": "2443491",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Jose Carranza Cruz",
+          "hcp": 53.5,
+          "ins": "2443492",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:30",
+          "tee": 1,
+          "name": "Angel Osborne Duque",
+          "hcp": 53.5,
+          "ins": "2443493",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:40",
+          "tee": 1,
+          "name": "Jaime Osta Ortega",
+          "hcp": 54,
+          "ins": "2443494",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:40",
+          "tee": 1,
+          "name": "Jose Luis Mora-Figueroa Perez De Herrasti",
+          "hcp": 54,
+          "ins": "2443497",
+          "jid": "80608",
+          "nivel": "B"
+        },
+        {
+          "time": "15:40",
+          "tee": 1,
+          "name": "Ignacio Valdenebro Olavarria",
+          "hcp": 54,
+          "ins": "2443498",
+          "jid": "80608",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 80608
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Almansa Recasens, Juan",
+          "holeNumber": 2,
+          "createdAt": "23/04/26 14:01:31"
+        },
+        {
+          "playerName": "Almansa Recasens, Juan",
+          "holeNumber": 3,
+          "createdAt": "23/04/26 14:13:36"
+        },
+        {
+          "playerName": "Almansa Recasens, Juan",
+          "holeNumber": 15,
+          "createdAt": "23/04/26 17:18:45"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

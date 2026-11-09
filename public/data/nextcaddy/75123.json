@@ -1,0 +1,252 @@
+{
+  "tourId": 75123,
+  "url": "https://www.nextcaddy.com/tour/75123",
+  "scrapedAt": "2026-11-09T12:42:53.181Z",
+  "meta": {
+    "name": "TORNEO TOVE",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-11-04",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-11-04",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marianne Agger Nielsen",
+          "licencia": "AM83979696",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2441218
+        },
+        {
+          "pos": 2,
+          "name": "Rudi Brustis Landsdorf",
+          "licencia": "AM83072650",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2441209
+        },
+        {
+          "pos": 3,
+          "name": "Francoise Landsdorf",
+          "licencia": "AM83072649",
+          "hcp": 30.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2441207
+        },
+        {
+          "pos": 4,
+          "name": "Ingeborg Koll",
+          "licencia": "AM83820787",
+          "hcp": 30.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2441215
+        },
+        {
+          "pos": 5,
+          "name": "Tove Maria Pedersen",
+          "licencia": "AM83125631",
+          "hcp": 15.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2441216
+        },
+        {
+          "pos": 6,
+          "name": "Brian Lougreen",
+          "licencia": "AM22156531",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2441217
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Francoise Landsdorf",
+      "licencia": "AM83072649",
+      "hcp": 30.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Ingeborg Koll",
+      "licencia": "AM83820787",
+      "hcp": 30.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Tove Maria Pedersen",
+      "licencia": "AM83125631",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Marianne Agger Nielsen",
+      "licencia": "AM83979696",
+      "hcp": 18.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Rudi Brustis Landsdorf",
+      "licencia": "AM83072650",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Brian Lougreen",
+      "licencia": "AM22156531",
+      "hcp": 20.6,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 80507
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Colmenares Planas, Maria Carmen",
+          "holeNumber": 3,
+          "createdAt": "22/04/26 10:57:02"
+        },
+        {
+          "playerName": "Fernandez-Duran Soto, Maria",
+          "holeNumber": 9,
+          "createdAt": "22/04/26 11:59:33"
+        },
+        {
+          "playerName": "Fernandez-Duran Soto, Maria",
+          "holeNumber": 17,
+          "createdAt": "22/04/26 13:40:17"
+        },
+        {
+          "playerName": "Garate De Las Heras, Cristina",
+          "holeNumber": 8,
+          "createdAt": "22/04/26 12:01:20"
+        },
+        {
+          "playerName": "Garate De Las Heras, Cristina",
+          "holeNumber": 13,
+          "createdAt": "22/04/26 13:09:54"
+        },
+        {
+          "playerName": "Heras Gil, Maria Luisa De Las",
+          "holeNumber": 13,
+          "createdAt": "22/04/26 13:17:08"
+        },
+        {
+          "playerName": "Mir Sorigue, Ana",
+          "holeNumber": 7,
+          "createdAt": "22/04/26 11:35:41"
+        },
+        {
+          "playerName": "Palacios Rafoso, Isabel",
+          "holeNumber": 8,
+          "createdAt": "22/04/26 12:00:15"
+        },
+        {
+          "playerName": "Palacios Rafoso, Isabel",
+          "holeNumber": 15,
+          "createdAt": "22/04/26 13:36:01"
+        },
+        {
+          "playerName": "Yrayzoz Aranda, Teresa",
+          "holeNumber": 8,
+          "createdAt": "22/04/26 12:09:22"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/2064901311_75123-torneo-tove.pdf"
+  ],
+  "horariosScrapedAt": "2026-11-09T12:44:47.600Z"
+}
