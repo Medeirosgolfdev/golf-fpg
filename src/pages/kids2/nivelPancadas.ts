@@ -50,6 +50,11 @@ export interface NivelOpcoes {
   diasNivel?: number;
   /** Meia-vida do peso das voltas do jogador (dias). */
   meiaVidaNivel?: number;
+  /** Ligação da volta: o peso de cada volta = outros/(outros + ligacao), com «outros» = os
+   *  adversários dessa volta que têm voltas suficientes para a medir. 0 = desligado. */
+  ligacao?: number;
+  /** Uma volta não puxa mais do que isto (pancadas) para fora do esperado. */
+  corte?: number;
 }
 
 const DIA = 864e5;
@@ -60,11 +65,17 @@ const LAMBDA_VOLTA = 1.5;
 /** Uma volta não puxa mais do que 10 pancadas para fora do esperado (robustez). */
 const CORTE = 10;
 const ITERACOES = 50;
+/** Ver `NivelOpcoes.ligacao`. */
+const LIGACAO = 5;
 
 /** Formatos de equipa — não são voltas individuais. */
 export const FORMATO_EQUIPA_RE = /parent|child|scramble|foursome|pairs|greensome|equipa|team|par(e|ej)as|fourball|four-ball|texas/i;
+/** Pitch & putt — não é golfe de campo (buracos de 40–90 m). */
+export const PITCH_PUTT_RE = /\bp\s*&\s*p\b|pitch\s*(&|and|n|y)\s*putt/i;
+/** Abaixo disto por buraco (metros) a volta é pitch & putt, mesmo sem o nome dizer. */
+const MIN_METROS_POR_BURACO = 100;
 
-interface Obs { p: string; u: number; y: number; idade: number; w9: number; dm: number; w: number }
+interface Obs { p: string; u: number; y: number; idade: number; w9: number; dm: number; w: number; lig: number }
 interface Volta { lab: string; src: string; fs: number; metros: number | null }
 
 /** Faixa do tamanho do field para o «esperado» da volta. */
@@ -81,7 +92,7 @@ function observacoes(torneios: Iterable<NivelTorneio>, hoje: number, dias: numbe
     const idade = (hoje - Date.parse(data)) / DIA;
     if (!(idade >= 0 && idade <= dias)) continue;
     for (const f of t.flights) {
-      if (FORMATO_EQUIPA_RE.test(`${t.name} ${f.label}`)) continue;
+      if (FORMATO_EQUIPA_RE.test(`${t.name} ${f.label}`) || PITCH_PUTT_RE.test(`${t.name} ${f.label}`)) continue;
       const par = f.par || [];
       const np = par.filter((p) => p > 0).length;
       const parTot = par.reduce((a, b) => a + (b || 0), 0);
@@ -111,8 +122,9 @@ function observacoes(torneios: Iterable<NivelTorneio>, hoje: number, dias: numbe
             voltas.push({ lab: (f.label || "").replace(/\s+/g, " ").trim(), src: t.sourceId || "", fs: f.fieldSize || f.results.length, metros: null });
           }
           const m = rd.metros ? (buracos === 9 ? rd.metros * 2 : rd.metros) : metrosFlight;
+          if (m && m / 18 < MIN_METROS_POR_BURACO) continue;
           // dm guarda temporariamente os metros do jogador; passa a Δ (por 100 m) abaixo
-          obs.push({ p: r.juniorId, u, y, idade, w9: buracos === 9 ? 0.5 : 1, dm: m || 0, w: 0 });
+          obs.push({ p: r.juniorId, u, y, idade, w9: buracos === 9 ? 0.5 : 1, dm: m || 0, w: 0, lig: 1 });
         }
       }
     }
@@ -139,6 +151,8 @@ export function calcularNiveis(
   const diasD = op.diasDificuldade ?? 3 * 365, meiaD = op.meiaVidaDificuldade ?? 365;
   const diasN = op.diasNivel ?? 365, meiaN = op.meiaVidaNivel ?? 182;
   const hoje = Date.parse(hojeIso);
+  const ligacao = op.ligacao ?? LIGACAO;
+  const corteV = op.corte ?? CORTE;
   const { obs, voltas } = observacoes(torneios, hoje, diasD);
   for (const x of obs) x.w = Math.pow(0.5, x.idade / meiaD) * x.w9;
 
@@ -153,6 +167,18 @@ export function calcularNiveis(
   for (const [p, xs] of porJ) a.set(p, xs.reduce((s, x) => s + x.y, 0) / xs.length);
   const pesoJ = new Map<string, number>();
   for (const [p, xs] of porJ) pesoJ.set(p, xs.reduce((s, x) => s + x.w, 0));
+  // Ligação: uma volta só diz quanto vale o jogador se OUTROS a mediram. Num field de 1–3
+  // a dificuldade é quase só o «esperado» (adivinhado); num World com 120 é medida a sério.
+  if (ligacao > 0) {
+    for (const xs of porV.values()) {
+      const tot = xs.reduce((s, x) => s + Math.min(1, (pesoJ.get(x.p) || 0) / 5), 0);
+      for (const x of xs) {
+        const outros = tot - Math.min(1, (pesoJ.get(x.p) || 0) / 5);
+        x.lig = outros / (outros + ligacao);
+        x.w *= x.lig;
+      }
+    }
+  }
   const ger = (p: string) => geracao(p) || "?";
 
   // «Esperado» de uma volta: grupo (escalão se há metros, senão a fonte) + metros + field
@@ -193,7 +219,7 @@ export function calcularNiveis(
     for (const [p, v] of a) { const k = ger(p); const c = cs.get(k) || [0, 0]; c[0] += v; c[1]++; cs.set(k, c); }
     return cs;
   };
-  const corta = (r: number, cur: number) => (r - cur > CORTE ? cur + CORTE : r - cur < -CORTE ? cur - CORTE : r);
+  const corta = (r: number, cur: number) => (r - cur > corteV ? cur + corteV : r - cur < -corteV ? cur - corteV : r);
   const ajustarJogadores = (lista: Map<string, Obs[]>) => {
     const cs = mediaGeracao();
     for (const [p, xs] of lista) {
@@ -227,7 +253,7 @@ export function calcularNiveis(
   // 2.ª fase: a dificuldade das voltas fica; o nível de cada um refaz-se só com o último ano
   const recentes = new Map<string, Obs[]>();
   for (const [p, xs] of porJ) {
-    const rec = xs.filter((x) => x.idade <= diasN).map((x) => ({ ...x, w: Math.pow(0.5, x.idade / meiaN) * x.w9 }));
+    const rec = xs.filter((x) => x.idade <= diasN).map((x) => ({ ...x, w: Math.pow(0.5, x.idade / meiaN) * x.w9 * x.lig }));
     if (rec.length) recentes.set(p, rec); else a.delete(p);
   }
   for (let it = 0; it < 10; it++) ajustarJogadores(recentes);

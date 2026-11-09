@@ -108,7 +108,7 @@ interface Linha {
   /** Nascimento (ISO, ou só o ano) e o escalão deste ano (`escProva`: tirado
    *  do escalão USKids da prova, sem nascimento conhecido). */
   nasc: string | null; escalao: string | null; escProva?: boolean;
-  /** Previsão em relação ao Manuel (escala por comparações → índice → média). */
+  /** Previsão em relação ao Manuel (Nível em pancadas → provas em comum → média → handicap). */
   prev: Previsao | null;
   /** Ficha do Kids 2, percentil na geração e nº de provas em comum que entraram. */
   kidId?: string; pct?: number | null; provasComuns?: number;
@@ -225,12 +225,13 @@ export default function Scout({
         kidId: id,
       });
     }
-    // Previsão de cada um em relação ao Manuel (04/11/2026):
-    //  1. a escala pelas provas em comum (com o Manuel e entre eles), cada uma
-    //     pesada pela força da prova — a regra do índice do jogador;
-    //  2. sem provas em comum: o Nível em pancadas (nivelPancadas.ts, último ano) —
-    //     a diferença para o do Manuel já está em pancadas (05/11/2026);
-    //  3. sem índice: a média ao par do ano, e por fim o handicap.
+    // Previsão de cada um em relação ao Manuel:
+    //  1. o Nível em pancadas (nivelPancadas.ts, último ano) — a diferença para o do
+    //     Manuel já está em pancadas. Usa TODAS as provas de toda a gente e pesa cada
+    //     volta pelos adversários que a mediram (05/11/2026: o Karim ficava em 5.º só
+    //     por provas de 3–4 jogadores em Azata; o Nível manda sempre que existe);
+    //  2. sem Nível: a escala pelas provas em comum dentro deste field (04/11/2026);
+    //  3. sem nada disso: a média ao par do ano, e por fim o handicap.
     // O ±par de referência é o do Manuel no último ano.
     const man = out.find((l) => l.isManuel);
     const ref = { toParAno: man?.sc?.v?.[3] ?? null, hcp: man?.sc?.h ?? null };
@@ -247,12 +248,12 @@ export default function Scout({
       }
       const e2 = esc.get(l.key);
       const p = pct(l);
-      if (e2 && e2.provas > 0) {
-        l.prev = { toPar: r1((ref.toParAno ?? 0) + e2.vsManuel), vsManuel: e2.vsManuel, fonte: "comparacoes" };
-        l.provasComuns = e2.provas;
-      } else if (nivel(l) != null && nivelManuel != null) {
+      if (nivel(l) != null && nivelManuel != null) {
         const v = r1(nivel(l)! - nivelManuel);
         l.prev = { toPar: r1((ref.toParAno ?? 0) + v), vsManuel: v, fonte: "nivel" };
+      } else if (e2 && e2.provas > 0) {
+        l.prev = { toPar: r1((ref.toParAno ?? 0) + e2.vsManuel), vsManuel: e2.vsManuel, fonte: "comparacoes" };
+        l.provasComuns = e2.provas;
       } else {
         l.prev = previsaoRival({ vsMMedia: null, nConfrontos: 0, toParAno: l.sc?.v?.[3] ?? null, hcp: l.sc?.h ?? null }, ref);
       }
@@ -423,7 +424,7 @@ export default function Scout({
         <KpiCard label={manuelNoField ? "Adversários" : "Jogadores"} value={rivais.length}
           sub={[paises > 1 ? `${paises} países` : null, `${altos} de nível alto`].filter(Boolean).join(" · ")} />
         {manuelNoField && <KpiCard label="À frente do Manuel (previsto)" value={comPrev ? `${aFrente} de ${comPrev}` : "–"} color="var(--color-danger)"
-          sub="pelas provas em comum, pesadas pela força da prova, ou pelo Nível em pancadas" />}
+          sub="pelo Nível em pancadas do último ano (cada volta pesa pelos adversários que a mediram)" />}
         <KpiCard label="Já jogaram com o Manuel" value={comManuel}
           sub={manuelNoField && comManuel ? `${ganhouAoManuel} ganharam-lhe mais vezes do que perderam` : undefined} />
         <KpiCard label="Já jogaram esta prova" value={edsTodas.length ? repetem : "–"}
