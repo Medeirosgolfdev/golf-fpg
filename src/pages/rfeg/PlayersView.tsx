@@ -12,31 +12,22 @@
  * ocultas — por isso não aparece nenhuma coluna 100% vazia.
  *
  * Renderizada como item especial ("👥 Jugadores") no menu ⓘ Info da página España.
+ *
+ * A lista em si (pesquisa, filtros, colunas vazias escondidas, ordenação,
+ * paginação, linha que abre os torneios) é o esqueleto comum
+ * `ui/info/JogadoresFederacao` — aqui fica só o que é da RFEG: os dados, as
+ * colunas DOB/Idade/Categoría, a pílula 🔄 e o histórico de licenças.
  */
-import { Fragment, useMemo, useState } from "react";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useMemo, type ReactNode } from "react";
 import { useJson } from "../../hooks/useJson";
-import DetailHeader from "../../ui/DetailHeader";
-import LoadingState from "../../ui/LoadingState";
-import EmptyState from "../../ui/EmptyState";
-import SortableHdr from "../../ui/SortableHdr";
-import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
-import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
+import { compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName, fmtDatePt, fmtHcp, fmtDeTotal } from "../../utils/format";
+import { displayName, fmtDatePt } from "../../utils/format";
 import { isManuelByName } from "../../constants/manuel";
 import { PlayerTournaments, type EsPlayerTournamentsFile } from "./PlayerTournaments";
-import Pager from "../../ui/Pager";
 import { MUTED } from "../../ui/tableCells";
-import { usePaged } from "../../hooks/usePaged";
-import ExpandArrow from "../../ui/ExpandArrow";
-import SearchInput from "../../ui/SearchInput";
-import ErrorState from "../../ui/ErrorState";
-import SexSelect from "../../ui/SexSelect";
-import Select from "../../ui/Select";
-import { ToggleChip } from "../../ui/FilterField";
-import { toggleSet } from "../../utils/mathUtils";
+import JogadoresFederacao, { colunasComuns, ANO_CORRENTE, type ColunaJogadorFed, type JogadorFedRow } from "../../ui/info/JogadoresFederacao";
 
 interface SpainPlayer {
   licencia: string;
@@ -100,13 +91,13 @@ function normCat(c: string | null): string | null {
 /** Categorias juvenis (para o flag `_young` e o filtro "Só Jovens"). */
 const YOUNG = new Set(["Benjamín", "Alevín", "Infantil", "Cadete", "Junior", "Juvenil"]);
 /** Categoria RFEG ACTUAL a partir do ano de nascimento (millésime), ano de
- *  referência = CUR_YEAR. A RFEG usa idade civil (ano-corrente − ano-nascimento),
+ *  referência = o ano corrente. A RFEG usa idade civil (ano-corrente − ano-nascimento),
  *  não a idade exacta. Tabela igual à vista "Categorías de edad RFEG":
  *  ≤10 Benjamín · 11-12 Alevín · 13-14 Infantil · 15-16 Cadete · 17-18 Junior ·
  *  19-21 Juvenil · 22-25 Sub-25 · >25 adulto (null → cai no catEdad do ficheiro). */
 function catFromBirthYear(year: number | null): string | null {
   if (year == null || !Number.isFinite(year)) return null;
-  const a = CUR_YEAR - year;
+  const a = ANO_CORRENTE - year;
   if (a < 0) return null;
   if (a <= 10) return "Benjamín";
   if (a <= 12) return "Alevín";
@@ -127,7 +118,6 @@ function ageFromIso(iso: string | null): number | null {
   if (m < 0 || (m === 0 && t.getDate() < d.getDate())) a--;
   return a >= 0 && a < 120 ? a : null;
 }
-/** ISO "2026-03-29" → "29/03/2026". Outros formatos passam tal-qual. */
 /** Período em que a licença foi vista em competição — "06/07/2021 → 28/06/2022"
  *  (ou uma só data se apareceu só uma vez) a partir de firstSeen/lastSeen ISO.
  *  É o melhor proxy de "de quando a quando a licença existiu" — a RFEG não expõe
@@ -140,57 +130,91 @@ function activePeriod(first: string | null, last: string | null): string {
   return a === b ? a : `${a} → ${b}`;
 }
 
-type SK = "name" | "licencia" | "cat" | "sex" | "hcp" | "club" | "dob" | "age" | "tot" | "ano" | "hcpDate";
-
-const CUR_YEAR = new Date().getFullYear();
-
-interface Row extends SpainPlayer {
-  _name: string;
-  _club: string;
-  _cat: string | null;
-  _young: boolean;
-  _year: number | null;
+type Row = SpainPlayer & JogadorFedRow & {
   _age: number | null;
-  _tot: number;
-  _ano: number;
-  _hcp: number | null;
-  _hcpDate: string | null;
-  /** Texto de licenças/clubes antigos — para a procura encontrar por licença antiga. */
-  _alt: string;
-  _manuel: boolean;
+};
+
+// ── Colunas (a lista, os filtros e a paginação são do esqueleto comum) ──────────
+const C = colunasComuns<Row>("es", {
+  tot: "Total de torneios em que apareceu (RFEGolf + FCG)",
+  hcpDate: "Última actualização de HCP",
+});
+
+const COLUNAS: ColunaJogadorFed<Row>[] = [
+  C.nome(),
+  C.club,
+  {
+    k: "dob", label: "DOB", hdrClass: "tight", tem: (r) => !!r.dob,
+    cmp: (a, b, m) => compareTextNullsLast(a.dobIso, b.dobIso, m),
+    td: (r) => <td className="u-ws-nowrap">{r.dob || MUTED}</td>,
+  },
+  {
+    // (aparece com a «DOB»: as duas ou nenhuma)
+    k: "age", label: "Idade", hdrClass: "num", tem: (r) => !!r.dob,
+    cmp: (a, b, m) => compareNullsLast(a._age, b._age, m),
+    td: (r) => <td className="u-ta-right">{r._age != null ? r._age : MUTED}</td>,
+  },
+  C.hcp,
+  C.sex,
+  {
+    k: "cat", label: "Categoría", hdrClass: "tight", tem: (r) => !!r._cat,
+    cmp: (a, b, m) => compareTextNullsLast(a._cat, b._cat, m, "es"),
+    td: (r) => <td>{r._cat ? (r._young ? <EscPill esc={r._cat} /> : <span className="muted fs-11">{r._cat}</span>) : MUTED}</td>,
+  },
+  C.tot,
+  C.ano,
+  C.hcpDate,
+];
+
+/** Todas as licenças do jogador — a actual e as dos clubes anteriores. */
+function licencas(r: Row): string[] {
+  return [r.licencia, ...(r.aliases || []).map((a) => a.licencia)];
 }
 
-/** Dados de uma licença para render como linha de tabela (igual às colunas da
- *  lista principal). Usado tanto na linha do jogador como nas sub-linhas do
- *  histórico (vista "como se não houvesse dedup"). */
-interface CellView {
-  name: string;
-  club: string;
-  dob: string | null;
-  age: number | null;
-  hcp: number | null;
-  sex: string | null;
-  cat: string | null;
-  young: boolean;
-  tot: number;
-  ano: number;
-  hcpDate: string | null;
-}
-/** As células de dados (tudo DEPOIS da coluna Licencia), nas mesmas colunas e
- *  estilos da tabela principal, respeitando as colunas escondidas (`has`). */
-function dataCells(v: CellView, has: { club: boolean; dob: boolean; sex: boolean; cat: boolean; tot: boolean; hcpDate: boolean }) {
+/** Torneios por jogador — ficheiro pesado (~2,5 MB), só se pede ao abrir a 1.ª linha. */
+const TORNEIOS = {
+  url: "/data/spain-player-tournaments.json",
+  ok: (d: EsPlayerTournamentsFile) => !!d.byLicencia,
+  render: (file: EsPlayerTournamentsFile, r: Row) => <PlayerTournaments file={file} licencias={licencas(r)} />,
+  erro: (
+    <>
+      Não foi possível carregar <code>spain-player-tournaments.json</code> — corre <code>node scripts/build-spain-player-tournaments.js</code>.
+    </>
+  ),
+};
+
+/** Histórico de licenças de quem mudou de clube/região: as linhas «como apareceriam
+ *  sem o agrupamento» — a actual e as anteriores, cada uma com os SEUS valores
+ *  (clube, HCP, torneios), não os agregados da linha principal. */
+function historicoDeLicencas(r: Row, { colCount, celulas }: { colCount: number; celulas: (row: Row) => ReactNode }) {
+  if (!r.aliases) return null;
+  const subLics = [
+    { lic: r.licencia, cur: true, club: r._club, hcp: r.hcp ?? null, tot: r.tot ?? 0, ano: r.ano ?? 0, hcpDate: r.hcpDate ?? null, first: r.firstSeenIso ?? null, last: r.lastSeenIso ?? null },
+    ...r.aliases.map((a) => ({ lic: a.licencia, cur: false, club: a.club ? displayName(a.club) : "", hcp: a.hcp, tot: a.tot, ano: a.ano, hcpDate: a.hcpDate, first: a.firstSeenIso, last: a.lastSeenIso })),
+  ];
   return (
     <>
-      <td className="u-fw-600">{v.name || "—"}</td>
-      {has.club && <td title={v.club}>{v.club || MUTED}</td>}
-      {has.dob && <td className="u-ws-nowrap">{v.dob || MUTED}</td>}
-      {has.dob && <td className="u-ta-right">{v.age != null ? v.age : MUTED}</td>}
-      <td className="u-ta-right u-fw-600">{v.hcp != null ? fmtHcp(v.hcp) : MUTED}</td>
-      {has.sex && <td>{v.sex === "M" || v.sex === "F" ? <SexBadge sex={v.sex} /> : MUTED}</td>}
-      {has.cat && <td>{v.cat ? (v.young ? <EscPill esc={v.cat} /> : <span className="muted fs-11">{v.cat}</span>) : MUTED}</td>}
-      {has.tot && <td className={"u-ta-right" + (v.tot ? "" : " u-c-text-muted")}>{v.tot || "—"}</td>}
-      {has.tot && <td className={"u-ta-right " + (v.ano ? "u-c-color-good-dark u-fw-600" : "u-c-text-muted")}>{v.ano || "—"}</td>}
-      {has.hcpDate && <td className="u-ta-right u-ws-nowrap">{v.hcpDate ? fmtDatePt(v.hcpDate) : MUTED}</td>}
+      <tr className="player-list-row-detail">
+        <td colSpan={colCount} className="u-bg-bg-detail u-p-6px-12px-3px">
+          <span className="muted fs-11 u-fw-600">Histórico de licenças — mudança de clube / região</span>
+          <span className="muted fs-10 u-fst-italic u-ml-8px">
+            as linhas abaixo são as que existiriam na tabela sem o agrupamento · período = 1ª → última inscrição (a RFEG não publica a data de emissão)
+          </span>
+        </td>
+      </tr>
+      {subLics.map((s) => (
+        <tr key={s.lic} className="player-list-row u-bg-bg-detail">
+          <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap u-pl-16px">
+            <span aria-hidden className="u-mr-4px">{s.cur ? "🟢" : "⚪"}</span>{s.lic}
+            {s.cur && <span className="u-ml-6px u-c-accent u-fw-700 u-fs-fs-10">ACTUAL</span>}
+            <div className="muted u-fs-fs-10 u-mt-1px u-pl-18px" title="Período em que esta licença apareceu em competição (1ª → última inscrição)">
+              {activePeriod(s.first, s.last)}
+            </div>
+          </td>
+          {/* nome, DOB, sexo e categoria são do jogador; o resto é desta licença */}
+          {celulas({ ...r, _club: s.club, _hcp: s.hcp, _tot: s.tot, _ano: s.ano, _hcpDate: s.hcpDate })}
+        </tr>
+      ))}
     </>
   );
 }
@@ -200,30 +224,6 @@ export function RFEGPlayersView() {
   const data = raw?.byLicencia ? raw : null;
   const err = error ?? (!loading && !data
     ? "spain-players.json não encontrado. Corre `node scripts/build-spain-players-export.js`." : null);
-  const [q, setQ] = useState("");
-  const [sex, setSex] = useState<"" | "M" | "F">("");
-  const [cat, setCat] = useState<string>("ALL");
-  const [jovens, setJovens] = useState(false);
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const { sortKey, sortDir, toggleSort } = useSort<SK>("name");
-  // Torneios por jogador — ficheiro pesado (~2,5 MB), só carrega quando o
-  // utilizador expande a PRIMEIRA linha. Depois serve todas.
-  const [tourns, setTourns] = useState<EsPlayerTournamentsFile | null>(null);
-  const [tournsState, setTournsState] = useState<"idle" | "loading" | "error">("idle");
-
-  const toggleExp = (lic: string) => {
-    setExpanded((s) => toggleSet(s, lic));
-    if (!tourns && tournsState === "idle") {
-      setTournsState("loading");
-      cachedFetchJson<EsPlayerTournamentsFile>("/data/spain-player-tournaments.json")
-        .then((d) => {
-          if (!d || !d.byLicencia) { setTournsState("error"); return; }
-          setTourns(d);
-          setTournsState("idle");
-        })
-        .catch(() => setTournsState("error"));
-    }
-  };
 
   const all = useMemo<Row[]>(() => {
     if (!data) return [];
@@ -235,52 +235,38 @@ export function RFEGPlayersView() {
       // entrada primária (campo `aliases`). Uma linha por jogador físico.
       .filter((p) => !p.aliasOf)
       .map((p) => {
-      const _name = formatPlayerName(p.name || "");
-      const _year = p.dobIso ? parseInt(p.dobIso.slice(0, 4), 10) : null;
-      // Categoria ACTUAL pelo ano de nascimento (millésime). O catEdad do ficheiro
-      // ficou congelado quando o jogador foi scrapado e desatualiza com a idade —
-      // só o usamos como fallback quando não há DOB.
-      const derived = catFromBirthYear(_year);
-      const _cat = derived ?? normCat(p.catEdad);
-      const _young = _cat ? YOUNG.has(_cat) : false;
-      // Licenças/clubes antigos → texto pesquisável (encontrar por licença antiga).
-      const _alt = (p.aliases || [])
-        .map((a) => `${a.licencia} ${a.club ? displayName(a.club) : ""}`)
-        .join(" ");
-      return {
-        ...p,
-        _name,
-        _club: p.club ? displayName(p.club) : "",
-        _cat,
-        _young,
-        _year,
-        _age: ageFromIso(p.dobIso),
-        // Contagens e HCP agregados por todas as licenças do jogador (fallback à própria).
-        _tot: p.totAll ?? p.tot ?? 0,
-        _ano: p.anoAll ?? p.ano ?? 0,
-        _hcp: p.curHcp ?? p.hcp,
-        _hcpDate: p.curHcpDate ?? p.hcpDate ?? null,
-        _alt,
-        _manuel: isManuelByName(_name),
-      };
-    });
+        const _name = formatPlayerName(p.name || "");
+        const _club = p.club ? displayName(p.club) : "";
+        const year = p.dobIso ? parseInt(p.dobIso.slice(0, 4), 10) : null;
+        // Categoria ACTUAL pelo ano de nascimento (millésime). O catEdad do ficheiro
+        // ficou congelado quando o jogador foi scrapado e desatualiza com a idade —
+        // só o usamos como fallback quando não há DOB.
+        const _cat = catFromBirthYear(year) ?? normCat(p.catEdad);
+        // Licenças/clubes antigos → texto pesquisável (encontrar por licença antiga).
+        const alt = (p.aliases || [])
+          .map((a) => `${a.licencia} ${a.club ? displayName(a.club) : ""}`)
+          .join(" ");
+        return {
+          ...p,
+          _key: p.licencia,
+          _name,
+          _club,
+          _cat,
+          _young: _cat ? YOUNG.has(_cat) : false,
+          _age: ageFromIso(p.dobIso),
+          // Contagens e HCP agregados por todas as licenças do jogador (fallback à própria).
+          _tot: p.totAll ?? p.tot ?? 0,
+          _ano: p.anoAll ?? p.ano ?? 0,
+          _hcp: p.curHcp ?? p.hcp,
+          _hcpDate: p.curHcpDate ?? p.hcpDate ?? null,
+          _manuel: isManuelByName(_name),
+          _hay: `${_name} ${p.licencia} ${_club} ${alt}`.toLowerCase(),
+        };
+      });
   }, [data]);
-
-  // Que colunas têm dados? (igual ao princípio "esconder coluna vazia").
-  const has = useMemo(() => ({
-    club: all.some((p) => !!p._club),
-    dob: all.some((p) => !!p.dob),
-    sex: all.some((p) => p.sex === "M" || p.sex === "F"),
-    cat: all.some((p) => !!p._cat),
-    tot: all.some((p) => p._tot > 0),
-    hcpDate: all.some((p) => !!p._hcpDate),
-  }), [all]);
 
   // Quantos jogadores têm mais do que uma licença (mudaram de clube/região).
   const dupCount = useMemo(() => all.reduce((n, p) => n + (p.aliases && p.aliases.length ? 1 : 0), 0), [all]);
-
-  // Nº de colunas visíveis (para o colSpan da linha de histórico expandida).
-  const colCount = 2 + (has.club ? 1 : 0) + (has.dob ? 2 : 0) + 1 + (has.sex ? 1 : 0) + (has.cat ? 1 : 0) + (has.tot ? 2 : 0) + (has.hcpDate ? 1 : 0);
 
   const catOptions = useMemo(() => {
     const s = new Set<string>();
@@ -288,193 +274,44 @@ export function RFEGPlayersView() {
     return Array.from(s).sort((a, b) => a.localeCompare(b, "es"));
   }, [all]);
 
-  const filtered = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    return all.filter((p) => {
-      if (jovens && !p._young) return false;
-      if (sex && p.sex !== sex) return false;
-      if (cat !== "ALL" && p._cat !== cat) return false;
-      if (needle) {
-        const hay = `${p._name} ${p.licencia} ${p._club} ${p._alt}`.toLowerCase();
-        if (!hay.includes(needle)) return false;
-      }
-      return true;
-    });
-  }, [all, q, sex, cat, jovens]);
-
-  const sorted = useMemo(() => {
-    const mult = sortDir === "asc" ? 1 : -1;
-    return [...filtered].sort((a, b) => {
-      let v = 0;
-      switch (sortKey) {
-        case "name":     v = a._name.localeCompare(b._name, "es"); break;
-        case "licencia": v = a.licencia.localeCompare(b.licencia); break;
-        // Vazios sempre no fim, nas duas direcções.
-        case "cat":      return compareTextNullsLast(a._cat, b._cat, mult, "es");
-        case "sex":      return compareTextNullsLast(a.sex, b.sex, mult);
-        case "hcp":      return compareNullsLast(a._hcp, b._hcp, mult);
-        case "club":     return compareTextNullsLast(a._club, b._club, mult, "es");
-        case "dob":      return compareTextNullsLast(a.dobIso, b.dobIso, mult);
-        case "age":      return compareNullsLast(a._age, b._age, mult);
-        case "tot":      v = a._tot - b._tot; break;
-        case "ano":      v = a._ano - b._ano; break;
-        case "hcpDate":  return compareTextNullsLast(a._hcpDate, b._hcpDate, mult);
-      }
-      return mult * v;
-    });
-  }, [filtered, sortKey, sortDir]);
-
-  // Reset de página quando filtros/ordenação mudam
-  const filterSig = `${q}|${sex}|${cat}|${jovens}|${sortKey}|${sortDir}`;
-  const { page, setPage, totalPages, pageRows } = usePaged(sorted, filterSig);
-
-  if (err) return <ErrorState message="Erro ao carregar os jogadores" detail={err} />;
-  if (!data) return <LoadingState message="A carregar jogadores espanhóis..." />;
-
   return (
-    <div className="p-12-16">
-      <DetailHeader
-        title="👥 Jugadores de España"
-        sub={
-          <span className="muted">
-            {all.length.toLocaleString("pt")} jogadores (de {data.total.toLocaleString("pt")} licenças RFEG + autonómicas)
-            {dupCount > 0 && <> — <b>{dupCount.toLocaleString("pt")}</b> mudaram de clube (🔄 várias licenças)</>}
-          </span>
-        }
-      />
-
-      {/* ── Filtros ─────────────────────────────────────────── */}
-      <div className="u-d-flex u-fwr-wrap u-gap-8px u-ai-center u-m-12px-0">
-        <SearchInput value={q} onChange={setQ} placeholder="Nome, licença ou clube…" size="full" className="u-maxw-360px" />
-        <SexSelect value={sex} onChange={setSex} allValue="" />
-        <Select variant="filter" value={cat} onChange={setCat} className="u-w-150px">
-          <option value="ALL">Todas as categorias</option>
-          {catOptions.map((c) => <option key={c} value={c}>{c}</option>)}
-        </Select>
-        <ToggleChip checked={jovens} onChange={setJovens} label="🧒 Só Jovens"
-          title="Só escalões juvenis (Benjamín, Alevín, Infantil, Cadete, Juvenil)" />
-        <span className="muted fs-12 u-ml-auto">
-          {fmtDeTotal(filtered.length, all.length)}
+    <JogadoresFederacao<Row, EsPlayerTournamentsFile>
+      rows={data ? all : null}
+      error={err}
+      loadingMessage="A carregar jogadores espanhóis..."
+      title="👥 Jugadores de España"
+      sub={
+        <span className="muted">
+          {all.length.toLocaleString("pt")} jogadores (de {(data?.total ?? 0).toLocaleString("pt")} licenças RFEG + autonómicas)
+          {dupCount > 0 && <> — <b>{dupCount.toLocaleString("pt")}</b> mudaram de clube (🔄 várias licenças)</>}
         </span>
-      </div>
-
-      {/* ── Tabela ──────────────────────────────────────────── */}
-      {sorted.length === 0 ? (
-        <EmptyState size="md" message="Nenhum jogador corresponde aos filtros." />
-      ) : (
+      }
+      licLabel="Licencia"
+      licExtra={(r, isOpen, toggle) => {
+        const nLic = r.aliases ? r.aliases.length + 1 : 1;
+        return nLic > 1 ? (
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); toggle(); }}
+            title={`Mudou de clube — ${nLic} licenças. Clica para ver o histórico.`}
+            className={"lic-pill" + (isOpen ? " open" : "")}
+          >
+            🔄 {nLic}
+          </button>
+        ) : null;
+      }}
+      colunas={COLUNAS}
+      catOptions={catOptions}
+      catClass="u-w-150px"
+      jovensTitle="Só escalões juvenis (Benjamín, Alevín, Infantil, Cadete, Juvenil)"
+      torneios={TORNEIOS}
+      linhasExtra={historicoDeLicencas}
+      footer={
         <>
-          <div className="u-ox-auto">
-            <table className="dtable player-list-table u-w-100pc u-fs-fs-12">
-              <thead>
-                <tr>
-                  <SortableHdr k="licencia" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Licencia</SortableHdr>
-                  <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nome</SortableHdr>
-                  {has.club && <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Clube</SortableHdr>}
-                  {has.dob && <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">DOB</SortableHdr>}
-                  {has.dob && <SortableHdr k="age" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">Idade</SortableHdr>}
-                  <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">HCP</SortableHdr>
-                  {has.sex && <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Sexo</SortableHdr>}
-                  {has.cat && <SortableHdr k="cat" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Categoría</SortableHdr>}
-                  {has.tot && <SortableHdr k="tot" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Total de torneios em que apareceu (RFEGolf + FCG)">📊 Tot</SortableHdr>}
-                  {has.tot && <SortableHdr k="ano" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title={`Torneios em ${CUR_YEAR}`}>🗓 {CUR_YEAR}</SortableHdr>}
-                  {has.hcpDate && <SortableHdr k="hcpDate" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Última actualização de HCP">Últ. HCP</SortableHdr>}
-                </tr>
-              </thead>
-              <tbody>
-                {pageRows.map((r) => {
-                  const nLic = r.aliases ? r.aliases.length + 1 : 1;
-                  const isOpen = expanded.has(r.licencia);
-                  // Linha principal: vista AGREGADA (deduped) — HCP/torneios actuais.
-                  const mainView: CellView = {
-                    name: r._name, club: r._club, dob: r.dob ?? null, age: r._age,
-                    hcp: r._hcp, sex: r.sex, cat: r._cat, young: r._young,
-                    tot: r._tot, ano: r._ano, hcpDate: r._hcpDate,
-                  };
-                  // Campos ao nível do jogador (iguais em todas as licenças) p/ as sub-linhas.
-                  const shared = { name: r._name, dob: r.dob ?? null, age: r._age, sex: r.sex, cat: r._cat, young: r._young };
-                  // As licenças "como apareceriam sem dedup": actual + anteriores (cada
-                  // uma com os SEUS próprios valores por-licença, não os agregados).
-                  const subLics = [
-                    { lic: r.licencia, cur: true, club: r._club, hcp: r.hcp ?? null, tot: r.tot ?? 0, ano: r.ano ?? 0, hcpDate: r.hcpDate ?? null, first: r.firstSeenIso ?? null, last: r.lastSeenIso ?? null },
-                    ...(r.aliases || []).map((a) => ({ lic: a.licencia, cur: false, club: a.club ? displayName(a.club) : "", hcp: a.hcp, tot: a.tot, ano: a.ano, hcpDate: a.hcpDate, first: a.firstSeenIso, last: a.lastSeenIso })),
-                  ];
-                  return (
-                  <Fragment key={r.licencia}>
-                  <tr
-                    className={"player-list-row u-cur-pointer" + (r._manuel ? " row-manuel" : "") + (isOpen ? " is-open u-bg-bg-detail" : "")}
-                    onClick={() => toggleExp(r.licencia)}
-                    title="Ver os torneios e resultados deste jogador"
-                  >
-                    <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap">
-                      <span aria-hidden className="u-mr-4px u-c-accent"><ExpandArrow open={isOpen} /></span>
-                      {r.licencia}
-                      {nLic > 1 && (
-                        <button
-                          type="button"
-                          onClick={(e) => { e.stopPropagation(); toggleExp(r.licencia); }}
-                          title={`Mudou de clube — ${nLic} licenças. Clica para ver o histórico.`}
-                          className={"lic-pill" + (isOpen ? " open" : "")}
-                        >
-                          🔄 {nLic}
-                        </button>
-                      )}
-                    </td>
-                    {dataCells(mainView, has)}
-                  </tr>
-                  {isOpen && (
-                    <tr className="player-list-row-detail">
-                      <td colSpan={colCount} className="u-bg-bg-detail u-p-0-12px-4px">
-                        {tourns
-                          ? <PlayerTournaments file={tourns} licencias={subLics.map((s) => s.lic)} />
-                          : tournsState === "error"
-                            ? <div className="muted fs-11 u-p-8px-4px">
-                                Não foi possível carregar <code>spain-player-tournaments.json</code> — corre <code>node scripts/build-spain-player-tournaments.js</code>.
-                              </div>
-                            : <LoadingState message="A carregar torneios…" />}
-                      </td>
-                    </tr>
-                  )}
-                  {isOpen && r.aliases && (
-                    <>
-                      <tr className="player-list-row-detail">
-                        <td colSpan={colCount} className="u-bg-bg-detail u-p-6px-12px-3px">
-                          <span className="muted fs-11 u-fw-600">Histórico de licenças — mudança de clube / região</span>
-                          <span className="muted fs-10 u-fst-italic u-ml-8px">
-                            as linhas abaixo são as que existiriam na tabela sem o agrupamento · período = 1ª → última inscrição (a RFEG não publica a data de emissão)
-                          </span>
-                        </td>
-                      </tr>
-                      {subLics.map((s) => (
-                        <tr key={s.lic} className="player-list-row u-bg-bg-detail">
-                          <td className="u-ff-font-mono u-fs-fs-11 u-c-text-muted u-ws-nowrap u-pl-16px">
-                            <span aria-hidden className="u-mr-4px">{s.cur ? "🟢" : "⚪"}</span>{s.lic}
-                            {s.cur && <span className="u-ml-6px u-c-accent u-fw-700 u-fs-fs-10">ACTUAL</span>}
-                            <div className="muted u-fs-fs-10 u-mt-1px u-pl-18px" title="Período em que esta licença apareceu em competição (1ª → última inscrição)">
-                              {activePeriod(s.first, s.last)}
-                            </div>
-                          </td>
-                          {dataCells({ ...shared, club: s.club, hcp: s.hcp, tot: s.tot, ano: s.ano, hcpDate: s.hcpDate }, has)}
-                        </tr>
-                      ))}
-                    </>
-                  )}
-                  </Fragment>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Paginação */}
-          <Pager page={page} totalPages={totalPages} onPage={setPage} />
+          Fonte: <code>spain-players.json</code> + contagem de torneios de <code>rfegolf-rivals</code>/<code>fcg-rivals</code>.
+          DOB · sexo · clube só existem para jogadores vistos nos torneios juvenis scrapados.
         </>
-      )}
-
-      <div className="muted fs-11 u-mt-16px u-ta-center">
-        Fonte: <code>spain-players.json</code> + contagem de torneios de <code>rfegolf-rivals</code>/<code>fcg-rivals</code>.
-        DOB · sexo · clube só existem para jogadores vistos nos torneios juvenis scrapados.
-      </div>
-    </div>
+      }
+    />
   );
 }
-
