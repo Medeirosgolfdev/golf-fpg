@@ -20,8 +20,9 @@ import ExpandArrow from "./ExpandArrow";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
 import { toggleSet } from "../utils/mathUtils";
-
+
 import SectionTitle from "./SectionTitle";
+import { playerKey } from "../utils/playerKey";
 interface Player {
   pos: number | string | null;
   name: string;
@@ -78,7 +79,7 @@ function buildAthletes(tournaments: Tournament[]): AthleteSummary[] {
       const posNum = typeof p.pos === "number" ? p.pos : (p.pos != null ? parseInt(String(p.pos)) : null);
       if (posNum == null || isNaN(posNum) || posNum > 5) continue;
       if (!SDS_REGEX.test(p.club || "")) continue;
-      const key = (p.fedCode || ("name:" + (p.name || "?").toLowerCase())).toString();
+      const key = playerKey(p.fedCode, p.name || "?");
       if (!map.has(key)) {
         map.set(key, {
           fed: p.fedCode || null,
@@ -199,7 +200,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
           </thead>
           <tbody>
             {sorted.map((a) => {
-              const key = (a.fed || a.name);
+              const key = playerKey(a.fed, a.name);
               const isOpen = expanded.has(key);
               const years = [...new Set(a.entries.map((e) => e.year))].sort();
               return (

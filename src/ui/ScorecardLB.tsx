@@ -43,7 +43,7 @@ import { useFedBirthdates } from "./InscricoesComponents";
 import { displayFed } from "../utils/fedKeys";
 import ShareRoundPanel from "./ShareRoundPanel";
 import { shareOptionsForRound } from "./overlay/shareOptions";
-import TabRow from "./TabRow";
+import ModoClassifTabs from "./ModoClassifTabs";
 
 /* PName — alias local */
 const PName = ({
@@ -85,11 +85,6 @@ type SortKey =
  *  Stroke Play = pancadas sem handicap (a grelha de sempre); Medal Net e
  *  Stableford Net contam com o HCP de jogo de cada um (whsCalc). */
 type Modo = ModoClassif;
-const MODOS: Array<{ key: Modo; label: string; title: string }> = [
-  { key: "stroke", label: "Stroke Play", title: "Pancadas, sem handicap" },
-  { key: "medalNet", label: "Medal Net", title: "Pancadas menos o HCP de jogo" },
-  { key: "stbNet", label: "Stableford Net", title: "Pontos Stableford com o HCP de jogo (2 pontos no par líquido)" },
-];
 
 export function ScorecardLB({
   tournament,
@@ -835,9 +830,7 @@ export function ScorecardLB({
           </InfoGroup>
           <RatingFontes list={tournament._ratingFontes} />
           {temModos && (
-            <TabRow className="seg-sm" ariaLabel="Modalidade da classificação" active={modoAtivo} onChange={setModo}
-              tabs={MODOS.map((m) => ({ key: m.key, label: m.label + (modoDaProva === m.key ? " ✓" : ""),
-                title: modoDaProva === m.key ? `${m.title} — a modalidade desta prova` : m.title }))} />
+            <ModoClassifTabs active={modoAtivo} onChange={setModo} modoDaProva={modoDaProva} />
           )}
         </>
       }

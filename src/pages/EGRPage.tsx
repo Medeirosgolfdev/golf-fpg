@@ -35,6 +35,8 @@ import { buildEgrEntries } from "./egr/egrCircuit";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { C } from "../utils/colors";
 import ExtLink from "../ui/ExternalLink";
+import { toParByRounds } from "../data/intlCommon";
+import { voltasComCartao } from "../utils/classificacao";
 
 const EGR_SITE = "https://www.europeangolfrankings.com";
 const PLAYER_EVENTS_URL = "/data/egr/egr-player-events.json";
@@ -81,10 +83,9 @@ interface EgrEvent {
 }
 
 /* ── Helpers ───────────────────────────────────────────────────── */
-const toPar = (total: number | null, par: number | null, rounds: number) =>
-  total != null && total > 0 && par != null && rounds > 0 ? total - par * rounds : null;
-/** Voltas JOGADAS (uma volta a 0 não conta — «87·0» dava «−57»). */
-const jogadas = (rounds: (number | null)[]) => rounds.filter((g) => (g ?? 0) > 0).length;
+/** ±par pelas voltas JOGADAS — regra global (`toParByRounds`): uma volta a 0 não conta («87·0» dava «−57»). */
+const toPar = (total: number | null, par: number | null, rounds: number) => toParByRounds(total, par, rounds);
+const jogadas = (rounds: (number | null)[]) => voltasComCartao(rounds);
 const ageNum = (a: string | null) => { const d = (a || "").replace(/\D/g, ""); return d ? parseInt(d) : null; };
 /** Data do EGR («Saturday, 23. May 26») → AAAAMMDD para ordenar; sem data → null.
  *  10/11/2026: ordenava-se com `new Date(texto)`, que só o Chrome entende (no

@@ -26,8 +26,9 @@ import type { Champion } from "../data/jovensAnaliseData";
 import ExpandArrow from "./ExpandArrow";
 import PlayerLink from "./PlayerLink";
 import ExtLink from "./ExternalLink";
-
+
 import SectionTitle from "./SectionTitle";
+import { playerKey } from "../utils/playerKey";
 const MAX_CLUBS = 10;
 
 /** Normaliza nome de clube para agrupamento (lower-case, remove pontuação,
@@ -338,7 +339,7 @@ export default function TopClubesPanel({
                           <div className="u-d-flex u-fwr-wrap u-gap-6px">
                             {c.athletes.map((a) => (
                               <span
-                                key={(a.fed || "name:" + a.name) + "-tag"}
+                                key={playerKey(a.fed, a.name) + "-tag"}
                                 className="u-d-inline-flex u-ai-center u-gap-6px u-p-3px-8px u-br-radius-xl u-bg-bg-card u-bd-1px-solid-border-light u-fs-fs-12"
                               >
                                 {a.fed ? (

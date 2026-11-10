@@ -35,6 +35,7 @@ import { classificarPorTotal, parsePos, posicoesComEmpates, temCartao } from "..
 import { buracosDoFlight, cartaoDaVolta, toParDaVolta } from "../../utils/voltasJogadas";
 import { EXTRA_FAMILIAS, extraTidFamilia, extraTidAno, extraTidEscalao, extraTidEscalaoNome, type ExtraFamilia } from "../../utils/extraTid";
 import PosMedal from "../../ui/PosMedal";
+import { signupanytimeUrl } from "../../utils/signupanytime";
 
 // ─────────────────────────────────────────────────────────────────────
 // Tcodes "canónicos" que aparecem sempre como coluna se metadata existe.
@@ -349,12 +350,8 @@ function buildUpTorn(field: FieldData | null): typeof UP_TORN {
   return [...UP_TORN, ...extra].sort((a, b) => (a.date_iso || "").localeCompare(b.date_iso || ""));
 }
 
-// Link oficial de RESULTADOS (signupanytime) por tcode USKids — usado nos
-// cabeçalhos de torneio da cross-table (coluna por edição + grupo da série).
-const SIGNUP_AX_INTL = "1129";
-function signupResultsUrl(tcode: string | number): string {
-  return `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=${SIGNUP_AX_INTL}&t=${tcode}`;
-}
+// (O link oficial de RESULTADOS da signupanytime vem do módulo global
+// `utils/signupanytime` — havia aqui uma cópia com o `ax` fixo.)
 
 // Ficheiros FFG Internationaux U14 a integrar (Garçons). O escalão U14
 // abrange Boys 9-14 — qualquer escalão dentro desse range vê estes torneios.
@@ -1095,7 +1092,7 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
         holes,
         field: count,        // proxy: número de jogadores DO ESCALÃO que jogaram
         nations: 0,           // será recalculado abaixo após D estar pronto
-        url: signupResultsUrl(tcode),
+        url: signupanytimeUrl(tcode),
       };
     });
 
@@ -1862,7 +1859,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                       </span>
                     )}
                     {/^\d+$/.test(e.tcode) && (
-                      <ExtLink href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${e.tcode}`}
+                      <ExtLink href={signupanytimeUrl(e.tcode)}
                          onClick={(ev) => ev.stopPropagation()}
                          title="Abrir resultados oficiais USKids/signupanytime"
                          className="u-fs-fs-11 u-c-color-info u-td-none u-fw-700">

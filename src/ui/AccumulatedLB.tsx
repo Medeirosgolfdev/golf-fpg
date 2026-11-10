@@ -19,16 +19,10 @@ import { birthFieldsOf } from "./BirthCells";
 import type { MultiRoundRow as MRRow, MRRound, ExtraColumn } from "./multiRoundTypes";
 import { medalNet, stablefordNet } from "../utils/whsCalc";
 import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
-import TabRow from "./TabRow";
+import ModoClassifTabs from "./ModoClassifTabs";
 import { isNoCardGross } from "../data/intlCommon";
 import { temCartao } from "../utils/classificacao";
 
-/** As mesmas três modalidades do tab da volta (ScorecardLB). */
-const MODOS: Array<{ key: ModoClassif; label: string; title: string }> = [
-  { key: "stroke", label: "Stroke Play", title: "Pancadas, sem handicap" },
-  { key: "medalNet", label: "Medal Net", title: "Pancadas menos o HCP de jogo, somadas as voltas" },
-  { key: "stbNet", label: "Stableford Net", title: "Pontos Stableford com o HCP de jogo, somadas as voltas" },
-];
 
 export function AccumulatedLB({
   tournament,
@@ -275,9 +269,7 @@ export function AccumulatedLB({
         </InfoGroup>
         <RatingFontes list={tournament._ratingFontes} />
         {temModos && (
-          <TabRow className="seg-sm" ariaLabel="Modalidade da classificação" active={modo} onChange={setModo}
-            tabs={MODOS.map((m) => ({ key: m.key, label: m.label + (modoDaProva === m.key ? " ✓" : ""),
-              title: modoDaProva === m.key ? `${m.title} — a modalidade desta prova` : m.title }))} />
+          <ModoClassifTabs active={modo} onChange={setModo} modoDaProva={modoDaProva} acumulado />
         )}
       </div>
       <MultiRoundLeaderboard

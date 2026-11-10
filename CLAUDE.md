@@ -288,7 +288,8 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   código de prova de fora (wjgc/doral/eowagr…) → `utils/extraTid.ts`; link da
   signupanytime → `utils/signupanytime.ts`; destaque do melhor valor →
   `utils/melhorValor.ts`; rank por z-score → `utils/zRank.ts`; clube que é um
-  país → `utils/clubePais.ts`; selo do lugar → `ui/PosMedal.tsx`; cache de uma
+  país → `utils/clubePais.ts`; selo do lugar → `ui/PosMedal.tsx`; separadores
+  Stroke Play/Medal Net/Stableford Net → `ui/ModoClassifTabs.tsx`; cache de uma
   promessa que NÃO guarda a falha → `memoAsync` (`data/fetchCache.ts`); eclético
   de uma volta (a metade certa nas de 9) → `eclecticForRound`
   (`data/playerDataLoader.ts`).

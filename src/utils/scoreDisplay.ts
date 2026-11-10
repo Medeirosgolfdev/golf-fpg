@@ -6,6 +6,7 @@
  */
 
 import type { RoundData } from "../data/playerDataLoader";
+import { isNoCardGross } from "../data/intlCommon";
 
 /** Classe CSS para score vs par (eagle, birdie, par, bogey, double, ...) */
 export function scClass(gross: number | null, par: number | null): string {
@@ -33,7 +34,7 @@ export function fmtGrossDelta(
   const g = Number(gross);
   if (!isFinite(g)) return { text: String(gross), delta: "", cls: "" };
   // Gross ≥ 900 (998/999) = sem cartão: nem o número nem o ±par («999 +927»).
-  if (g >= 900) return { text: "—", delta: "", cls: "" };
+  if (isNoCardGross(g)) return { text: "—", delta: "", cls: "" };
   const p = Number(par);
   if (!isFinite(p) || p <= 0) return { text: String(g), delta: "", cls: "" };
   const diff = g - p;

@@ -15,6 +15,7 @@ import ExtLink from "./ExternalLink";
 import { Tint, Fill } from "./DataStyle";
 
 import SectionTitle from "./SectionTitle";
+import { signupanytimeUrl } from "../utils/signupanytime";
 /** Dias desde a inscrição de um jogador.
  *  Prefere `regDia` — o dia de inscrição vindo do `pid` do signupanytime (ver
  *  scripts/lib/uskids-reg-dates.js) — e só cai no `firstSeen` (dia em que o
@@ -45,8 +46,8 @@ export function uskidsLinks(t: number, urlUskids?: string | null): { label: stri
     ?? extras.find(l => l.label === "USKids ↗")?.url
     ?? REGIONAL_CHAMPIONSHIPS[t]?.urlUSKids;
   return [
-    { url:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t}`, label:"📋 Inscritos" },
-    { url:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t}`, label:"🏆 Resultados ↗" },
+    { url: signupanytimeUrl(t, "field", 2739), label:"📋 Inscritos" }, // ax 2739 como estava (por confirmar se vale para todos)
+    { url: signupanytimeUrl(t), label:"🏆 Resultados ↗" },
     ...(uskidsUrl ? [{ url: uskidsUrl, label: "USKids ↗" }] : []),
     ...extras.filter(l => l.label !== "USKids ↗"),
   ];

@@ -20,6 +20,8 @@ import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import type { ExtraColumn } from "../multiRoundTypes";
 import { buildFPGTournament, type IntlPlayerIn } from "../../data/intlTournament";
 import { gf } from "../../utils/flagUtils";
+import { toParByRounds } from "../../data/intlCommon";
+import { voltasComCartao } from "../../utils/classificacao";
 
 /** O draw de uma volta: o desenho da página (`render`) ou o DrawTab com os dados. */
 export function roundDrawNode(rd: CircuitRoundDraw): React.ReactNode {
@@ -57,10 +59,10 @@ export function totalsDivisionView(d: CircuitDivision, meta: { name: string; dat
   const players = t.players.map((p, i): IntlPlayerIn => {
     const id = `${i}|${p.name}`;
     porId.set(id, p);
-    const jogadas = p.rounds.filter((g) => g != null && g > 0).length;
+    const jogadas = voltasComCartao(p.rounds);
     // ±par: o da fonte; sem ele, total − par × voltas jogadas.
     const toPar = p.toPar !== undefined ? p.toPar
-      : (t.parPerRound && p.total != null && p.total > 0 && jogadas > 0 ? p.total - t.parPerRound * jogadas : null); // total 0 sem voltas = não jogou (dava «E»)
+      : toParByRounds(p.total, t.parPerRound, jogadas); // regra global: total 0 ou sem voltas fica sem ±par (dava «E»)
     return {
       // Sem clube (WAGR, EGR, GJGL), a coluna mostra o país com a bandeira.
       id, name: p.name, pos: p.pos ?? null, club: p.club || (p.country ? `${gf(p.country)} ${p.country}`.trim() : ""), country: p.country ?? null,

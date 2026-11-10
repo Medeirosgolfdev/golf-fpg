@@ -5,6 +5,7 @@
  * tendência (regressão dos SDs), conclusão em prosa e timeline SVG dos gross.
  */
 import React, { useMemo } from "react";
+import { temCartao } from "../../../utils/classificacao";
 import type { RoundData } from "../../../data/playerDataLoader";
 import { fmtSign } from "../../../utils/format";
 import { getTeeHex } from "../../../utils/teeColors";
@@ -133,7 +134,7 @@ export default function CoursePerformanceSection({ rounds }: { rounds: RoundData
       sd: r.sd != null ? Number(r.sd) : null, stb: r.stb != null ? Number(r.stb) : null,
       hi: r.hi, tee: r.tee || "?", date: r.date || "", dateSort: r.dateSort,
       // gross ≥ 900 = sem cartão: fica fora da média de pancadas e do gráfico
-      holeCount: 18, gross: r.gross && Number(r.gross) < 900 ? Number(r.gross) : null, par: r.par ? Number(r.par) : null
+      holeCount: 18, gross: temCartao(Number(r.gross)) ? Number(r.gross) : null, par: r.par ? Number(r.par) : null
     }));
     r9.forEach(r => allNorm.push({
       sd: r.sd != null ? Number(r.sd) : null, stb: r.stb != null ? Number(r.stb) + 17 : null,

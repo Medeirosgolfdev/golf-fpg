@@ -8,6 +8,7 @@
  * ou Independente, e a ecléctica.
  */
 import { useEffect, useState } from "react";
+import { isNoCardGross } from "../../data/intlCommon";
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import type { CircuitDivision, CircuitEntry } from "./types";
 import { matchDivision } from "./pastEditions";
@@ -48,7 +49,7 @@ export function editionFromTournament(
     (p.roundScores || []).forEach((r, i) => {
       const strokes = (r.scores || []).slice(0, hpr);
       const gross = r.gross || strokes.reduce((a, b) => a + (b || 0), 0);
-      if (!(gross >= minGross) || gross >= 900) return;
+      if (!(gross >= minGross) || isNoCardGross(gross)) return;
       const t9 = tallyHoles(strokes, r.pars?.length ? r.pars : parOk);
       rds.push({
         rn: r.round || i + 1, gross, strokes,

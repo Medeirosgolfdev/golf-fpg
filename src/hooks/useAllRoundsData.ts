@@ -14,6 +14,7 @@
  */
 
 import { useState, useMemo } from "react";
+import { isNoCardGross } from "../data/intlCommon";
 import { useSort, compareNullsLast, compareTextNullsLast } from "./useSort";
 import type { Player, Tournament, RoundScore, PlayerFilter } from "../data/fpgTypes";
 import { EMPTY_FILTER } from "../ui/multiRoundTypes";
@@ -252,7 +253,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   function buildRdData(p: Player, rdNum: number): RdData | null {
     const rs = p.roundScores?.find((r) => r.round === rdNum);
     if (!rs) return null;
-    if (rs.gross >= 999 || (rs.scores?.length > 0 && rs.scores.every((s) => s === 0)))
+    if (isNoCardGross(rs.gross) || (rs.scores?.length > 0 && rs.scores.every((s) => s === 0)))
       return null;
     const ref = roundRefs[rdNum - 1] ?? ref0;
     const refPars = rs.pars?.length ? rs.pars : ref.pars;

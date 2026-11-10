@@ -18,7 +18,8 @@ import { useEffect, useState } from "react";
 import type { CircuitEntry, CircuitDivision } from "./types";
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import { fieldIsManuel } from "./repeaters";
-import { parsePos } from "../../utils/classificacao";
+import { parsePos, temCartao } from "../../utils/classificacao";
+import { isNoCardGross } from "../../data/intlCommon";
 import { isRoundInProgress } from "../../data/fpgUtils";
 import LoadingState from "../LoadingState";
 import EmptyState from "../EmptyState";
@@ -126,13 +127,13 @@ export function matchDivision(divisions: CircuitDivision[], label: string): Circ
 /** Volta jogada até ao fim — distingue "cartão truncado na fonte" de "volta
  *  ainda a decorrer" (ver `isRoundInProgress`). */
 const isFullRound = (r: { gross?: number | null; scores?: number[]; pars?: (number | null)[] }) =>
-  (r.gross || 0) > 0 && (r.gross || 0) < 900 && !isRoundInProgress(r);
+  temCartao(r.gross) && !isRoundInProgress(r);
 
 /** ±Par pelas voltas, cada uma contra o SEU par (fontes sem ±Par no jogador —
  *  USKids; uma volta encurtada a 9 buracos conta contra o par dos 9). Null se
  *  alguma volta jogada não tiver par. */
 function toParPelasVoltas(rs: { gross?: number | null; pars?: (number | null)[] }[]): number | null {
-  const jogadas = rs.filter((r) => (r.gross || 0) > 0 && (r.gross || 0) < 900);
+  const jogadas = rs.filter((r) => temCartao(r.gross));
   if (!jogadas.length) return null;
   let s = 0;
   for (const r of jogadas) {
@@ -155,8 +156,8 @@ export function buildPastEditionFromTournament(
       // Sem cartão (gross ≥ 900: 998/999, ou 74+998 = 1072): a volta fica vazia e
       // o total, o ±par e o lugar não contam (10/11/2026 — entravam «1072 · +936»
       // nas edições anteriores e na média do Scout).
-      const semCartao = (typeof p.grossTotal === "number" && p.grossTotal >= 900)
-        || (p.roundScores || []).some((r) => (r.gross || 0) >= 900);
+      const semCartao = isNoCardGross(p.grossTotal as number | null | undefined)
+        || (p.roundScores || []).some((r) => isNoCardGross(r.gross));
       return {
       // «T4» → 4, «CUT»/«WD» → sem lugar (`parsePos`; o parseInt deixava «T4» sem lugar).
       pos: semCartao ? null : parsePos(p.pos),
@@ -167,7 +168,7 @@ export function buildPastEditionFromTournament(
       club: p.club || null,
       total: !semCartao && typeof p.grossTotal === "number" ? p.grossTotal : null,
       toPar: semCartao ? null : typeof p.toPar === "number" ? p.toPar : toParPelasVoltas(p.roundScores || []),
-      rounds: (p.roundScores || []).map((r) => (r.gross != null && r.gross < 900 ? r.gross : null)),
+      rounds: (p.roundScores || []).map((r) => (r.gross != null && !isNoCardGross(r.gross) ? r.gross : null)),
       holesPlayed: (p.roundScores || []).reduce((s, r) => s + (r.scores || []).filter(Boolean).length, 0),
       fullRounds: (p.roundScores || []).filter(isFullRound).length,
       // Pelo federado quando o há (o pai, 54907, também é «Manuel Medeiros»).

@@ -28,6 +28,7 @@ import ExtLink from "./ExternalLink";
 import CloseButton from "./CloseButton";
 
 import SectionTitle from "./SectionTitle";
+import { playerKey } from "../utils/playerKey";
 interface PlayerEntry {
   pos: number | string | null;
   name: string;
@@ -95,7 +96,7 @@ function buildAthleteIndex(
           : null;
       if (posNum == null) continue;
       const fed = p.fedCode ? String(p.fedCode) : null;
-      const key = fed ? `fed:${fed}` : `name:${normName(p.name || "?")}`;
+      const key = playerKey(fed, p.name || "?");
       if (!map.has(key)) {
         map.set(key, {
           fed,
@@ -274,7 +275,7 @@ export default function AtletaSearchPanel({
   }, [selected, detailSort]);
 
   const handleSelect = (a: AthleteFile) => {
-    const k = a.fed ? `fed:${a.fed}` : `name:${normName(a.name)}`;
+    const k = playerKey(a.fed, a.name);
     setSelectedKey(k);
   };
 
@@ -322,7 +323,7 @@ export default function AtletaSearchPanel({
             </thead>
             <tbody>
               {sortedMatches.map((a) => {
-                const k = a.fed ? `fed:${a.fed}` : `name:${normName(a.name)}`;
+                const k = playerKey(a.fed, a.name);
                 return (
                   <tr
                     key={k}

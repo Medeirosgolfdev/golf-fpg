@@ -127,7 +127,7 @@ export function isHiddenNonManuelDrive(t: Tournament | undefined | null): boolea
  *     4º+5º+6º no seguinte, e assim sucessivamente
  *   - O último grupo pode ter 1 ou 2 jogadores se o total não for múltiplo de 3
  *   - Jogadores que não terminaram alguma das rondas anteriores (WD, scorecard
- *     vazio ou gross >= 999) são excluídos — não vão a jogar a ronda seguinte
+ *     vazio ou «sem cartão», gross ≥ 900) são excluídos — não vão a jogar a ronda seguinte
  *
  * Não tem tee times nem buracos de saída (a FPG só os define com o draw oficial).
  * O `note` no draw devolvido sinaliza que é estimado para o DrawTab mostrar aviso.
