@@ -68,7 +68,7 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
   let grossSum = 0, grossN = 0, bestGross: number | null = null;
   let f9slSum = 0, b9slSum = 0, f9n = 0, b9n = 0;
   const distAcc = { eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0, total: 0 };
-  const parAgg: Record<number, { sumVsPar: number; sumSL: number; count: number }> = {};
+  const parAgg: Record<number, { sumVsPar: number; holes: number; sumSL: number; count: number }> = {};
   for (const ck in data.HOLE_STATS) for (const tk in data.HOLE_STATS[ck]) {
     const hs = data.HOLE_STATS[ck][tk];
     if (hs.holeCount !== 18 || hs.nRounds < 2) continue;
@@ -87,8 +87,9 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
     }
     for (const pt of [3, 4, 5]) {
       const g = hs.byParType[pt]; if (!g || g.totalN === 0) continue;
-      if (!parAgg[pt]) parAgg[pt] = { sumVsPar: 0, sumSL: 0, count: 0 };
+      if (!parAgg[pt]) parAgg[pt] = { sumVsPar: 0, holes: 0, sumSL: 0, count: 0 };
       parAgg[pt].sumVsPar += (g.avgVsPar ?? 0) * g.totalN;
+      parAgg[pt].holes += g.totalN;
       parAgg[pt].sumSL += g.strokesLostPerRound * hs.nRounds;
       parAgg[pt].count += hs.nRounds;
     }
@@ -97,7 +98,9 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
   const byPar: Record<number, { avgVsPar: number; slPerRound: number }> = {};
   for (const pt of [3, 4, 5]) {
     const a = parAgg[pt]; if (!a?.count) continue;
-    byPar[pt] = { avgVsPar: a.sumVsPar / a.count, slPerRound: a.sumSL / a.count };
+    // Média por BURACO: pesada pelos buracos, dividida pelos buracos (dividir
+    // pelas voltas dava +7,02 em vez de +0,72 num par 4).
+    byPar[pt] = { avgVsPar: a.holes ? a.sumVsPar / a.holes : 0, slPerRound: a.sumSL / a.count };
   }
   const pob = totalHoles > 0 ? (distAcc.eagle + distAcc.birdie + distAcc.par) / totalHoles * 100 : 0;
   const dow = totalHoles > 0 ? (distAcc.double + distAcc.triple) / totalHoles * 100 : 0;
@@ -283,7 +286,13 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
   rows.push({ label: "Δ HCP 3m", emoji: "📉", values: val((_, st) => st?.hcpDelta3m != null ? ((st.hcpDelta3m > 0 ? "+" : "") + st.hcpDelta3m.toFixed(1)) : null), best: "low" });
 
   const bestIdx = rows.map(r => {
-    const nums = r.values.map(v => v != null ? parseFloat(v.replace(/[+%]/g, "")) : null);
+    // No HCP o «+» é handicap PLUS (abaixo de zero): «+3.5» é melhor do que «+2.4».
+    const plusNeg = r.label === "HCP Atual";
+    const nums = r.values.map(v => {
+      if (v == null) return null;
+      const n = parseFloat(v.replace(/[+%]/g, ""));
+      return plusNeg && v.startsWith("+") ? -n : n;
+    });
     const valid = nums.filter((n): n is number => n != null && !isNaN(n));
     if (valid.length < 2) return -1;
     const target = r.best === "high" ? Math.max(...valid) : Math.min(...valid);
@@ -346,7 +355,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
     { key: "birdie", label: "Birdie", emoji: "🐦" },
     { key: "par", label: "Par", emoji: "✅" },
     { key: "bogey", label: "Bogey", emoji: "🟡" },
-    { key: "double", label: "Double+", emoji: "🔴" },
+    { key: "double", label: "Double", emoji: "🔴" },
     { key: "triple", label: "Triple+", emoji: "⛔" },
   ];
 
@@ -562,7 +571,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
     for (const [, m] of eventMap) {
       if (m.size < 2) continue;
       const first = [...m.values()][0];
-      const results = [...m.entries()].map(([idx, r]) => ({ idx, gross: Number(r.gross) })).filter(r => r.gross > 50);
+      const results = [...m.entries()].map(([idx, r]) => ({ idx, gross: Number(r.gross) })).filter(r => r.gross > 50 && r.gross < 900); // ≥ 900 = sem cartão
       if (results.length < 2) continue;
       results.sort((a, b) => a.gross - b.gross);
       res.push({ event: first.eventName, date: first.date, dateSort: first.dateSort, results });
@@ -573,7 +582,8 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
 
   if (matches.length === 0) return null;
   const wins = loaded.map(() => 0);
-  matches.forEach(m => { wins[m.results[0].idx]++; });
+  // Empate no melhor resultado não é vitória de ninguém (conta em «Empates»).
+  matches.forEach(m => { if (m.results[0].gross < m.results[1].gross) wins[m.results[0].idx]++; });
   const totalMatches = matches.length;
 
   const deltaOf = (m: typeof matches[number]) => {

@@ -114,7 +114,7 @@ function extractPlayerRounds(t: Tournament): PlayerRoundOnCourse[] {
     for (const rs of p.roundScores) {
       if (!rs.scores || rs.scores.length === 0) continue;
       // Filtrar rondas inválidas (todos zeros, gross >= 999, ou WD)
-      if (rs.gross == null || rs.gross >= 999) continue;
+      if (rs.gross == null || rs.gross >= 900) continue;
       if (rs.scores.every(s => s === 0)) continue;
       const pars = rs.pars && rs.pars.length ? rs.pars : (p.par || []);
       if (!pars.length) continue;
@@ -355,7 +355,7 @@ function buildHoleStats(
   const parKey = parRef.join(",");
   const valid = allRounds.filter(r => {
     if (r.scores.length !== 18) return false;
-    if (r.gross == null || r.gross >= 999) return false;
+    if (r.gross == null || r.gross >= 900) return false;
     if (!r.pars || r.pars.length !== 18) return true;
     return r.pars.join(",") === parKey;
   });
@@ -1023,7 +1023,7 @@ export function buildHoleDials(
   const parKey = parRef.join(",");
   const valid = allRounds.filter(r => {
     if (r.scores.length !== 18) return false;
-    if (r.gross == null || r.gross >= 999) return false;
+    if (r.gross == null || r.gross >= 900) return false;
     if (!r.pars || r.pars.length !== 18) return true;
     return r.pars.join(",") === parKey;
   });

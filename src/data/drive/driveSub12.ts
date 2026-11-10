@@ -290,10 +290,15 @@ export function buildSub12Data(
     // sexo (de todos: sem ele, os pontos saem errados — 2026-11-02).
     // Quem não acabou todas as voltas não tem cartão: o Resumo soma só as voltas
     // válidas (87 de uma volta ficava à frente de 138 em duas — 2026-11-02).
+    // …e também quem tem MENOS voltas do que a prova (cut/incompleto, sem volta
+    // ≥ 900): no 4.º Aquapor de 16/05/2025 dois jogadores com uma volta (86 e 87)
+    // ficavam 1.º e 2.º com 250 e 165 pontos (10/11/2026).
+    const voltasDe = (p: Player) => (p.roundScores || []).filter(r => r.gross > 0 && r.gross < 900).length;
+    const voltasDaProva = Math.max(0, ...t.players.map(voltasDe));
     const field = t.players.map(p => ({
       fed: p.fed || p.fedCode || "",
       pos: p.pos,
-      gross: typeof p.grossTotal === "number" && !desistiu(p) ? p.grossTotal : null,
+      gross: typeof p.grossTotal === "number" && !desistiu(p) && voltasDe(p) >= voltasDaProva ? p.grossTotal : null,
       sex: sexOf(p.fed || p.fedCode || ""),
     }));
     const ptsByFed = tournamentPoints(field, t.series, t.name);

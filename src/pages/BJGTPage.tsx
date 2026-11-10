@@ -165,12 +165,13 @@ export function bjgtEvoFor(cur: TDef, all: TDef[]): { evo?: Map<string, EvoEntry
   const curNR = Math.max(...cur.data.players.map((p) => p.rounds.length), 0);
   const curParTotal = cur.data.parTotal * curNR;
   const input: EvoInput = {
-    currentPlayers: cur.data.players.filter((p) => p.total != null)
+    // Só quem jogou TODAS as voltas (cut/WD com menos voltas dava «−40», «Δ −85»).
+    currentPlayers: cur.data.players.filter((p) => p.total != null && p.rounds.length === curNR)
       .map((p) => ({ name: p.name, value: p.total! - curParTotal, category: cur.category })),
     referencePlayers: refDefs.flatMap((t) => {
       const tNR = Math.max(...t.data.players.map((p) => p.rounds.length), 0);
       const tPar = t.data.parTotal * tNR;
-      return t.data.players.filter((p) => p.total != null)
+      return t.data.players.filter((p) => p.total != null && p.rounds.length === tNR)
         .map((p) => ({ name: p.name, value: p.total! - tPar, category: t.category }));
     }),
     referenceYear: String(refYear),

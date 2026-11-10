@@ -323,7 +323,10 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
   const field = currentField(current);
   if (!field.length || (!previous.length && !input.todos)) return [];
 
+  // 1.º as voltas da PRÓPRIA prova; as edições anteriores só quando ela não diz
+  // (uma prova de 3 voltas sem edições anteriores previa o total de 1 volta).
   const nRounds = input.nRounds
+    || (typeof current.rounds === "number" && current.rounds > 0 ? current.rounds : 0)
     || Math.max(1, ...previous.map((p) => Math.max(1, ...(p.t.players || []).map((x) => (x.roundScores || []).length || 1))));
   const parPerRound = input.parPerRound
     ?? current.players?.find((p) => typeof p.parTotal === "number")?.parTotal

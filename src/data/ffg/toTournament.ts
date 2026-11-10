@@ -162,7 +162,8 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
       name: ffgPlayerName(p),
       club: playerCountry ? intlCountryCell(playerCountry, clubText).trim() : clubText,
       total: p.total,
-      toPar: p.total != null && parTotal > 0 ? p.total - (parTotal * numRounds) : null,
+      // Pelas voltas que o JOGADOR jogou (82 numa volta de uma série de 2 dava «−62»).
+      toPar: p.total != null && parTotal > 0 ? p.total - (parTotal * (rounds.length || numRounds)) : null,
       hcp: p.hcp,
       rounds,
       scores: rounds[0]?.scores || [],

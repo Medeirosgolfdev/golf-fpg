@@ -152,7 +152,7 @@ export function analyzeRounds(me: ARound[], field: ARound[][] = []): Analysis | 
     if (pos[k] != null && pos[k - 1] != null) {
       const dp = pos[k]! - pos[k - 1]!;
       ins.push({ tone: dp < 0 ? "good" : dp > 0 ? "bad" : "neutral",
-        text: dp === 0 ? `Manteve o ${pos[k]}º lugar.` : `${dp < 0 ? "Subiu" : "Desceu"} do ${pos[k - 1]}º para o ${pos[k]}º lugar.` });
+        text: dp === 0 ? `Manteve o ${pos[k]}.º lugar.` : `${dp < 0 ? "Subiu" : "Desceu"} do ${pos[k - 1]}.º para o ${pos[k]}.º lugar.` });
     }
     rounds.push({ round: b.round, prev: a.round, gross: gross(b), prevGross: gross(a), insights: ins });
   }
@@ -192,7 +192,7 @@ export function analyzeRounds(me: ARound[], field: ARound[][] = []): Analysis | 
   }
   if (pos.length && pos[pos.length - 1] != null) {
     const p0 = pos[0]!, pN = pos[pos.length - 1]!;
-    if (p0 !== pN) tour.push({ tone: pN < p0 ? "good" : "bad", text: `Do ${p0}º lugar após a R1 para o ${pN}º após a R${rs[rs.length - 1].round}.` });
+    if (p0 !== pN) tour.push({ tone: pN < p0 ? "good" : "bad", text: `Do ${p0}.º lugar após a R1 para o ${pN}.º após a R${rs[rs.length - 1].round}.` });
   }
 
   // Manchete: a última comparação, em 1–2 frases.

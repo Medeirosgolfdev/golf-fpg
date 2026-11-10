@@ -82,7 +82,9 @@ interface EgrEvent {
 
 /* ── Helpers ───────────────────────────────────────────────────── */
 const toPar = (total: number | null, par: number | null, rounds: number) =>
-  total != null && par != null && rounds > 0 ? total - par * rounds : null;
+  total != null && total > 0 && par != null && rounds > 0 ? total - par * rounds : null;
+/** Voltas JOGADAS (uma volta a 0 não conta — «87·0» dava «−57»). */
+const jogadas = (rounds: (number | null)[]) => rounds.filter((g) => (g ?? 0) > 0).length;
 const ageNum = (a: string | null) => { const d = (a || "").replace(/\D/g, ""); return d ? parseInt(d) : null; };
 
 /* ═══════════════════════════════════════════════════════════════ */
@@ -153,8 +155,8 @@ const EVENT_COLS: RankingCol<EgrEvent>[] = [
   { key: "pos", label: "Pos", className: "num", sort: (e) => typeof e.pos === "number" ? e.pos : null, firstDir: "asc", cell: (e) => e.pos ?? "—", tdClassName: "num u-fw-600" },
   { key: "rounds", label: "Rondas", title: "Rondas", className: "tight", cell: (e) => e.rounds.join("·") || "—", tdClassName: "tight u-c-text-muted" },
   { key: "total", label: "Total", className: "num", sort: (e) => e.total, firstDir: "asc", cell: (e) => e.total ?? "—" },
-  { key: "toPar", label: "±Par", title: "To par (total − par×rondas)", className: "num", sort: (e) => toPar(e.total, e.par, e.rounds.length), firstDir: "asc",
-    cell: (e) => { const tp = toPar(e.total, e.par, e.rounds.length); return <span className={tp != null && tp < 0 ? "u-c-score-birdie" : undefined}>{fmtToPar(tp, "")}</span>; } },
+  { key: "toPar", label: "±Par", title: "To par (total − par×rondas)", className: "num", sort: (e) => toPar(e.total, e.par, jogadas(e.rounds)), firstDir: "asc",
+    cell: (e) => { const tp = toPar(e.total, e.par, jogadas(e.rounds)); return <span className={tp != null && tp < 0 ? "u-c-score-birdie" : undefined}>{fmtToPar(tp, "")}</span>; } },
   { key: "points", label: "Pts", title: "Pontos EGR", className: "num", sort: (e) => e.egrPoints, cell: (e) => num(e.egrPoints, 0), tdClassName: "num u-c-text-muted" },
 ];
 

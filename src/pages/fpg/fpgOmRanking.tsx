@@ -155,6 +155,9 @@ const OM_LEVELS: Array<{ rx: RegExp; level: Level }> = [
 export function omLevelOf(t: Tournament): Level | null {
   // ccode pode vir "7" ou "007" conforme a fonte — normalizar a 3 dígitos.
   if (String(t.ccode ?? "").padStart(3, "0") !== "007") return null;
+  // Só as provas da ÉPOCA da OM: a «Taça Presidente 2025» não conta para a OM 2026.
+  const ano = String(t.date || "").slice(0, 4);
+  if (ano && ano !== OM_FIM_EPOCA.slice(0, 4)) return null;
   const name = t.name || "";
   if (/\b9\s*buracos?\b/i.test(name)) return null; // 9B não conta
   for (const { rx, level } of OM_LEVELS) if (rx.test(name)) return level;

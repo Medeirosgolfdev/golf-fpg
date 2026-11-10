@@ -31,7 +31,7 @@ describe("analyzeRounds", () => {
     const other: ARound[] = [{ round: 1, par, scores: par.map((p) => p + 1) }, { round: 2, par, scores: par.map((p) => p + 1) }]; // 90 + 90
     const best: ARound[] = [{ round: 1, par, scores: par }, { round: 2, par, scores: par }];
     const a = analyzeRounds([R1, R2], [[R1, R2], other, best])!;
-    expect(a.rounds[0].insights.some((x) => x.text === "Manteve o 2º lugar.")).toBe(true);
+    expect(a.rounds[0].insights.some((x) => x.text === "Manteve o 2.º lugar.")).toBe(true);
   });
 
   it("uma volta só não dá análise", () => {

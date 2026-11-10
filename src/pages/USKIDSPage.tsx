@@ -355,7 +355,11 @@ export default function USKidsFieldPage() {
       // escalaoManuelParaData retorna NUMBER (idade); comparar com age_group, não com nome ("Boys 11").
       // Exigir escalão Boys — Manuel é rapaz; sem isto, torneios com Girls do mesmo número
       // (ex: Veteran Qualifier t=21666 com "Girls 10") destacavam o escalão errado.
-      const esc = t.escaloes?.find((e: any) => e.age_group === em && /boys/i.test(e.nome));
+      // ⚠ `age_group` é um id da USKids (2105, 7, 3899…), NÃO a idade — comparar
+      // com ele nunca casava e as vagas do escalão nunca apareciam (10/11/2026).
+      // Primeiro o escalão onde o Manuel está inscrito; senão «Boys {idade}».
+      const esc = t.escaloes?.find((e: any) => (e.jogadores ?? []).some((j: any) => isManuel(j.nome)))
+        ?? t.escaloes?.find((e: any) => new RegExp(`^boys\\s+${em}$`, "i").test(String(e.nome ?? "").trim()));
       const ended = isTerminado(t.date_fim, t.date_inicio);
       // Verificar se Manuel está inscrito em QUALQUER escalão (escalões agrupados como "Boys 9-10" podem
       // não bater certo com a idade exacta — ser permissivo aqui evita falsos negativos no filtro Manuel)
@@ -392,11 +396,27 @@ export default function USKidsFieldPage() {
             (r.leaderboard ?? r.jogadores ?? []).some((j: RondaJogador) => isManuel(j.nome))
           )
         );
-        const lastRonda = escalaoM?.rondas?.[escalaoM.rondas.length - 1];
-        const lb = lastRonda?.leaderboard ?? lastRonda?.jogadores ?? [];
-        const sorted = [...lb].sort((a, b) => b.pontos - a.pontos || a.score - b.score);
-        const mIdx = sorted.findIndex(j => isManuel(j.nome));
-        if (mIdx >= 0) { manuelPos = mIdx + 1; manuelScore = sorted[mIdx].score; }
+        // Lugar e ±par do ACUMULADO (10/11/2026: antes era o lugar só da última
+        // volta e o gross dessa volta mostrado como ±par — «#8 (+79)»). Só entra
+        // na classificação quem tem todas as voltas com cartão.
+        const rondas = (escalaoM?.rondas ?? []).filter((r: RondaResult) => (r.leaderboard ?? r.jogadores ?? []).some((j: RondaJogador) => j.score > 0));
+        const acc = new Map<string, { total: number; toPar: number | null; n: number; manuel: boolean }>();
+        for (const r of rondas) {
+          for (const j of (r.leaderboard ?? r.jogadores ?? [])) {
+            if (!(j.score > 0) || j.score >= 900) continue;
+            const a = acc.get(j.nome) ?? { total: 0, toPar: 0, n: 0, manuel: isManuel(j.nome) };
+            a.total += j.score;
+            a.toPar = a.toPar != null && j.to_par != null ? a.toPar + j.to_par : null;
+            a.n++;
+            acc.set(j.nome, a);
+          }
+        }
+        const completos = [...acc.values()].filter(a => a.n === rondas.length);
+        const eu = completos.find(a => a.manuel);
+        if (eu) {
+          manuelPos = 1 + completos.filter(a => a.total < eu.total).length;
+          manuelScore = eu.toPar;
+        }
       }
       const ended = isTerminado(t.date_fim, t.date_inicio);
       const rondasTotal = t.rondas_total ?? (t.escaloes?.[0]?.rondas?.length ?? 1);
@@ -668,12 +688,15 @@ export default function USKidsFieldPage() {
 
   // Quando muda de tab, verificar se o torneio seleccionado existe nessa tab
   const handleTabChange = (newTab: Tab) => {
-    setTab(newTab);
-    if (newTab === "resultados") {
-      // Ir para o torneio mais recente, a menos que o seleccionado já tenha resultados.
-      const exists = selectedT != null && torneiosResultados.some(t => t.t === selectedT);
-      if (!exists && ultimoResultadoT != null) setSelectedT(ultimoResultadoT);
-    }
+    // Ir para o torneio mais recente, a menos que o seleccionado já tenha resultados.
+    const exists = selectedT != null && torneiosResultados.some(t => t.t === selectedT);
+    const irPara = newTab === "resultados" && !exists && ultimoResultadoT != null ? ultimoResultadoT : null;
+    if (irPara == null) { setTab(newTab); return; }
+    // Os dois num SÓ setSearchParams: com dois seguidos o 2.º apagava o `tab`
+    // do 1.º e o link copiado abria em «Torneios».
+    setTabState(newTab);
+    setSelectedTState(irPara);
+    setSearchParams(prev => { const n = new URLSearchParams(prev); n.set("tab", newTab); n.set("t", String(irPara)); return n; }, { replace: true });
   };
 
   const TABS: { id: Tab; label: string; badge: number | null }[] = [

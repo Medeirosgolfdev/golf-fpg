@@ -652,7 +652,7 @@ function AgsSection({
                       <td className={h.strokes > 0 ? "u-c-chart-2 u-fw-700" : "u-c-border u-fw-400"}>
                         {h.strokes > 0 ? h.strokes : "·"}
                       </td>
-                      {is18 && i === 8 && <td className="col-out" />}
+                      {is18 && i === 8 && <td className="col-out fw-700 c-blue-2563">{front.reduce((s, x) => s + x.strokes, 0)}</td>}
                     </React.Fragment>
                   ))}
                   {is18 && back.map((h) => (
@@ -660,7 +660,7 @@ function AgsSection({
                       {h.strokes > 0 ? h.strokes : "·"}
                     </td>
                   ))}
-                  <td className={`col-${is18 ? "in" : "total"} fw-700 c-blue-2563`}>{courseHcp}</td>
+                  <td className={`col-${is18 ? "in" : "total"} fw-700 c-blue-2563`}>{is18 ? back.reduce((s, x) => s + x.strokes, 0) : courseHcp}</td>
                   {is18 && <td className="col-total fw-700 c-blue-2563">{courseHcp}</td>}
                 </tr>
 
@@ -1626,7 +1626,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
           {playerData && playerData.HCP_INFO?.current != null && whs20.length > 0 && (
             <details className="mt-14" open id="sim-ese">
               <summary className="sim-section-toggle">
-                Simulador "E se?" — impacto no Handicap Index de {players[playerFed]?.name ?? "jogador"}
+                Simulador "E se?" — impacto no Handicap Index de {nameOf(playerFed) || "jogador"}
               </summary>
               <div className="mt-8">
                 <div className="muted fs-12 mb-8">
@@ -1636,6 +1636,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
                   se entra nos melhores e que resultado sai da janela.
                 </div>
                 <RoundSimulator
+                  key={playerFed}
                   hcp={playerData.HCP_INFO}
                   whs20={whs20}
                   playerData={playerData}

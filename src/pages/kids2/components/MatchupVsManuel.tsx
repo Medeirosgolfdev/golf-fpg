@@ -68,7 +68,10 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
     const shared = findSharedFlight(t, junior, manuel);
     if (!shared) return null;
     const { flight, rJ, rM } = shared;
-    const diff = rJ.toPar != null && rM.toPar != null ? rJ.toPar - rM.toPar
+    // Total ≥ 900 = sem cartão (999, 89+998…): não há diferença a mostrar.
+    const semCartao = (rJ.totalGross ?? 0) >= 900 || (rM.totalGross ?? 0) >= 900;
+    const diff = semCartao ? null
+      : rJ.toPar != null && rM.toPar != null ? rJ.toPar - rM.toPar
       : rJ.totalGross != null && rM.totalGross != null ? rJ.totalGross - rM.totalGross
       : null;
     const outcome = typeof rJ.pos === "number" && typeof rM.pos === "number"

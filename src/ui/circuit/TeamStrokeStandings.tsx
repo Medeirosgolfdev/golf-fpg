@@ -93,7 +93,7 @@ function PlayersTable({ cat, model, color, cols, bpbMode, showTotal }: {
     const INF = sortDir === "asc" ? Infinity : -Infinity;
     const v = (p: TsPlayer): number | string => {
       if (sortKey === "nome") return p.name;
-      if (sortKey === "hcp") return p.hcpSort ?? 999;
+      if (sortKey === "hcp") return p.hcpSort ?? INF; // sem HCP no fim, nas duas direcções
       if (sortKey === "bur") return p.holes ?? INF;
       if (sortKey === "tot") return p.total ?? INF;
       if (sortKey === "conta") return p.conta ? 0 : 1;

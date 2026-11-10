@@ -60,7 +60,7 @@ export function totalsDivisionView(d: CircuitDivision, meta: { name: string; dat
     const jogadas = p.rounds.filter((g) => g != null && g > 0).length;
     // ±par: o da fonte; sem ele, total − par × voltas jogadas.
     const toPar = p.toPar !== undefined ? p.toPar
-      : (t.parPerRound && p.total != null ? p.total - t.parPerRound * jogadas : null);
+      : (t.parPerRound && p.total != null && p.total > 0 && jogadas > 0 ? p.total - t.parPerRound * jogadas : null); // total 0 sem voltas = não jogou (dava «E»)
     return {
       // Sem clube (WAGR, EGR, GJGL), a coluna mostra o país com a bandeira.
       id, name: p.name, pos: p.pos ?? null, club: p.club || (p.country ? `${gf(p.country)} ${p.country}`.trim() : ""), country: p.country ?? null,

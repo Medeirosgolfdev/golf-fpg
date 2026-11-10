@@ -65,8 +65,11 @@ export function tournamentFamilyKey(name?: string | null): string | null {
     .replace(/^\s*\d{4}\s*\/\/\s*/, " ")           // "2025 // " (FFG)
     .toLowerCase()
     .replace(/\b(19|20)\d{2}\b/g, " ")             // anos
-    .replace(/\b\d{1,3}\s*[oaºª]\b/g, " ")         // ordinais "3º", "12ª"
-    .replace(/\b[ivxlcdm]{1,6}\b/g, " ")           // ordinais romanos (LXXV…)
+    // ordinais «3º», «12ª», «3o» (depois de º/ª não há `\b`: «108ª Lisbon Cup» ficava)
+    .replace(/\b\d{1,3}\s*(?:[oa]\b|[ºª])/g, " ")
+    // numerais romanos VÁLIDOS até 399 (LXXV, XII, III…) — qualquer palavra com
+    // as letras ivxlcdm apagava «mid» («Mid-Amateur» = «Amateur») e «di»
+    .replace(/\b(?=[ivxlc])c{0,3}(?:xc|xl|l?x{0,3})(?:ix|iv|v?i{0,3})\b/g, (m) => (m.length === 1 && !/[ivx]/.test(m) ? m : " "))
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
   return base || null;
@@ -121,13 +124,13 @@ export function matchDivision(divisions: CircuitDivision[], label: string): Circ
 /** Volta jogada até ao fim — distingue "cartão truncado na fonte" de "volta
  *  ainda a decorrer" (ver `isRoundInProgress`). */
 const isFullRound = (r: { gross?: number | null; scores?: number[]; pars?: (number | null)[] }) =>
-  (r.gross || 0) > 0 && !isRoundInProgress(r);
+  (r.gross || 0) > 0 && (r.gross || 0) < 900 && !isRoundInProgress(r);
 
 /** ±Par pelas voltas, cada uma contra o SEU par (fontes sem ±Par no jogador —
  *  USKids; uma volta encurtada a 9 buracos conta contra o par dos 9). Null se
  *  alguma volta jogada não tiver par. */
 function toParPelasVoltas(rs: { gross?: number | null; pars?: (number | null)[] }[]): number | null {
-  const jogadas = rs.filter((r) => (r.gross || 0) > 0);
+  const jogadas = rs.filter((r) => (r.gross || 0) > 0 && (r.gross || 0) < 900);
   if (!jogadas.length) return null;
   let s = 0;
   for (const r of jogadas) {
@@ -146,18 +149,27 @@ export function buildPastEditionFromTournament(
 ): PastEdition | null {
   const players = t.players
     .filter((p) => p.grossTotal != null || (p.roundScores || []).some((r) => (r.scores || []).length))
-    .map((p) => ({
-      pos: typeof p.pos === "number" ? p.pos : (parseInt(String(p.pos ?? ""), 10) || null),
+    .map((p) => {
+      // Sem cartão (gross ≥ 900: 998/999, ou 74+998 = 1072): a volta fica vazia e
+      // o total, o ±par e o lugar não contam (10/11/2026 — entravam «1072 · +936»
+      // nas edições anteriores e na média do Scout).
+      const semCartao = (typeof p.grossTotal === "number" && p.grossTotal >= 900)
+        || (p.roundScores || []).some((r) => (r.gross || 0) >= 900);
+      return {
+      pos: semCartao ? null : typeof p.pos === "number" ? p.pos : (parseInt(String(p.pos ?? ""), 10) || null),
       name: p.name,
       club: p.club || null,
-      total: typeof p.grossTotal === "number" ? p.grossTotal : null,
-      toPar: typeof p.toPar === "number" ? p.toPar : toParPelasVoltas(p.roundScores || []),
-      rounds: (p.roundScores || []).map((r) => r.gross ?? null),
+      total: !semCartao && typeof p.grossTotal === "number" ? p.grossTotal : null,
+      toPar: semCartao ? null : typeof p.toPar === "number" ? p.toPar : toParPelasVoltas(p.roundScores || []),
+      rounds: (p.roundScores || []).map((r) => (r.gross != null && r.gross < 900 ? r.gross : null)),
       holesPlayed: (p.roundScores || []).reduce((s, r) => s + (r.scores || []).filter(Boolean).length, 0),
       fullRounds: (p.roundScores || []).filter(isFullRound).length,
       isManuel: isM(p.name),
       isPt: !!(p as unknown as { _isPortuguese?: boolean })._isPortuguese,
-    }))
+      };
+    })
+    // Quem ficou sem nada válido (NS: 999 sem voltas) não é uma linha da edição.
+    .filter((p) => p.total != null || p.holesPlayed > 0 || p.rounds.some((g) => g != null))
     // ⚠ Ordenar por total sozinho põe em 1º quem NÃO acabou (2 voltas somam
     // menos que 3). Mais voltas completas primeiro; total só desempata iguais.
     .sort((a, b) => (b.fullRounds - a.fullRounds)

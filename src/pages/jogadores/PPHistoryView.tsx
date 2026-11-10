@@ -27,7 +27,7 @@ import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import ExtLink from "../../ui/ExternalLink";
 import { isoToDmy } from "../../utils/format";
-
+
 import SectionTitle from "../../ui/SectionTitle";
 type SortKey = "date" | "tourn" | "course" | "holes" | "gross" | "stb" | "sd" | "index";
 
@@ -147,7 +147,7 @@ export default function PPHistoryView({ fed, name }: { fed: string; name?: strin
                     <tr className={`roundRow${isOpen ? " pa-row-open" : ""} ${hasCard ? "u-cur-pointer" : "u-cur-default"}`}
                       onClick={() => hasCard && toggle(key)}>
                       <td>
-                        <TeeDate date={r.date || ""} tee={r.scorecard?.teeName || ""} />
+                        <TeeDate date={isoToDmy(r.date || "")} tee={r.scorecard?.teeName || ""} />
                         <div className="muted fs-10">#{r.scoreId}</div>
                       </td>
                       <td>{r.tourn || "—"}</td>

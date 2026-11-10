@@ -314,7 +314,7 @@ export function RFEGPlayersView() {
         case "sex":      return compareTextNullsLast(a.sex, b.sex, mult);
         case "hcp":      return compareNullsLast(a._hcp, b._hcp, mult);
         case "club":     return compareTextNullsLast(a._club, b._club, mult, "es");
-        case "dob":      return compareNullsLast(a._year, b._year, mult);
+        case "dob":      return compareTextNullsLast(a.dobIso, b.dobIso, mult);
         case "age":      return compareNullsLast(a._age, b._age, mult);
         case "tot":      v = a._tot - b._tot; break;
         case "ano":      v = a._ano - b._ano; break;

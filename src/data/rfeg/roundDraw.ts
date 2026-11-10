@@ -73,8 +73,17 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
       dobIso: esDateToIso(p.dob),
       club: p.club || null,
       hcp: typeof p.hcp === "number" ? p.hcp : null,
-      gross: Array.isArray(p.rounds) ? (p.rounds.find((g) => g != null && g > 0) ?? 0) : 0,
-      toPar: typeof p.toPar === "number" ? p.toPar : null,
+      // O resultado é o da VOLTA PEDIDA (o mitarjeta já traz as 3 voltas): antes
+      // era sempre a 1.ª volta com o ±par do torneio, em todos os draws.
+      ...((): { gross: number; toPar: number | null } => {
+        const voltas = Array.isArray(p.rounds) ? p.rounds : [];
+        const g = voltas[round - 1];
+        if (g == null || !(g > 0)) return { gross: 0, toPar: null };
+        // Par da volta = (total − ±par do torneio) / voltas jogadas, se der inteiro.
+        const jog = voltas.filter((x): x is number => x != null && x > 0);
+        const par = typeof p.toPar === "number" ? (jog.reduce((a, b) => a + b, 0) - p.toPar) / jog.length : NaN;
+        return { gross: g, toPar: Number.isInteger(par) ? g - par : null };
+      })(),
       country: ((p as { country?: string | null }).country) || rfegPlayerFlag(p.name, paisOf(p.licencia, p.name)) || null,
     }),
     "first",
@@ -149,7 +158,7 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
       }
     }
   } else {
-    // mitarjeta só tem R1 — indexar por fed (autoritativo) E por nome normalizado.
+    // mitarjeta (resultado da volta pedida) — indexar por fed (autoritativo) E por nome normalizado.
     for (const [key, info] of mitaByName) {
       if (info.gross > 0) {
         const rec = { gross: info.gross, toPar: info.toPar };

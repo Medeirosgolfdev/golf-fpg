@@ -134,10 +134,14 @@ export function calcStrokesPerHole(
   holes: { hole: number; par: number; si: number }[],
   ch: number,
 ): { hole: number; par: number; si: number; strokes: number; maxScore: number }[] {
-  return holes
-    .filter(h => h.par != null && h.si != null)
-    .map(h => {
-      const strokes = strokesOnHole(h.si, ch);
+  const hs = holes.filter(h => h.par != null && h.si != null);
+  // 9 buracos (ou menos): os SI de 1 a 18 ordenam-se e as pancadas repartem-se
+  // pelos buracos jogados — a mesma regra do `ndbCaps`. Com a regra de 18
+  // («SI ≤ CH») um CH de 5 dava só 3 pancadas no Simulador de 9 buracos.
+  const dist = hs.length <= 9 ? strokesPerHole(hs.map(h => h.si), Math.max(0, ch), hs.length) : null;
+  return hs
+    .map((h, i) => {
+      const strokes = dist ? dist[i] : strokesOnHole(h.si, ch);
       return { hole: h.hole, par: h.par, si: h.si, strokes, maxScore: h.par + 2 + strokes };
     })
     .sort((a, b) => a.hole - b.hole);

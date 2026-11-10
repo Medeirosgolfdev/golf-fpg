@@ -60,7 +60,7 @@ const NOMES_FONTE: Record<EscalaoSource, Record<string, number>> = {
 };
 
 /** Palavras de sexo que se tiram antes de ler o escalão (o sexo tem filtro próprio). */
-const SEXO_RE = /\b(boys?|girls?|rapaz(es)?|raparigas?|varonil|femenil|gar[cç]ons?|filles?|masculin[oa]?|feminin[oa]?|mas|fem|men|women|messieurs|dames|homens|senhoras|m|f|h)\b/g;
+const SEXO_RE = /\b(boys?|girls?|rapaz(es)?|raparigas?|varonil|femenil|gar[cç]ons?|filles?|masculin[oa]?|fem[ei]nin[oa]?|mas|fem|men|women|messieurs|dames|homens|senhoras|m|f|h)\b/g;
 
 const sub = (n: number) => `Sub ${n}`;
 
@@ -123,7 +123,7 @@ export function escalaoCanon(raw: string | null | undefined, source?: EscalaoSou
 export function escalaoSex(raw: string | null | undefined): "M" | "F" | null {
   const c = clean(String(raw ?? ""));
   if (/\b(boys?|rapaz(es)?|varonil|gar[cç]ons?|masculin[oa]?|messieurs|homens|men)\b/.test(c)) return "M";
-  if (/\b(girls?|raparigas?|femenil|filles?|feminin[oa]?|dames|senhoras|women)\b/.test(c)) return "F";
+  if (/\b(girls?|raparigas?|femenil|filles?|fem[ei]nin[oa]?|dames|senhoras|women)\b/.test(c)) return "F";
   return null;
 }
 

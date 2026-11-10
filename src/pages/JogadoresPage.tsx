@@ -487,7 +487,7 @@ export default function JogadoresPage() {
             const isActive = selected?.fed === p.fed;
             const displayClub = (isActive && playerMeta?.club) ? playerMeta.club : clubShort(p);
             const displayEscalao = (isActive && playerMeta?.escalao) ? playerMeta.escalao : p.escalao;
-            const displayHcp = (isActive) ? (playerMeta?.latestHcp ?? null) : p.hcp;
+            const displayHcp = (isActive) ? (playerMeta?.latestHcp ?? p.hcp) : p.hcp;
             const rank = rankings.get(p.fed);
             const ps = statsDb[p.fed];
             const d = daysSince(ps);

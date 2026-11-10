@@ -98,7 +98,7 @@ function grossForRound(p: Player | undefined, rd: number, maxHole: number): numb
   if (!p) return null;
   const rs = p.roundScores?.find(r => r.round === rd);
   if (rs) {
-    if (rs.gross >= 999) return null;
+    if (rs.gross >= 900) return null;
     if (rs.scores?.length) {
       if (rs.scores.every(s => s === 0)) return null;
       return rs.scores.reduce((sum, s) => sum + Math.min(s, maxHole), 0);

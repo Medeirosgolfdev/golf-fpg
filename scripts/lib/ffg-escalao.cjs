@@ -40,8 +40,8 @@ function ffgEscalaoCanonico(raw) {
   if (/\bCAD/.test(u)) return "Sub-18 (Cadet)";
   if (/JUNIOR|\bJUN\b|^J[GF]\b/.test(u)) return "Sub-21 (Junior)";
   if (/ENFANT/.test(u)) return "Sub-8";
-  const am = u.match(/(?:JUSQU|MOINS|-)\D{0,8}?(\d{1,2})\s*ANS/);
-  if (am) return bucket(+am[1]);
+  const am = u.match(/(JUSQU|MOINS|-)\D{0,8}?(\d{1,2})\s*ANS/);
+  if (am) return bucket(am[1] === "JUSQU" ? +am[2] : +am[2] - 1); // «moins de 15 ans» = até aos 14
   if (/\bSENIOR|\bVETERAN|\bADULTE|MID[\s-]?AM/.test(u)) return "Adultos";
   return null;
 }

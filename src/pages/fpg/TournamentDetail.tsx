@@ -36,6 +36,7 @@ import { useModalidadeProva } from "../../data/fpgModalidades";
 import { SSERRA_CCODE } from "../../ui/TournSidebarItem";
 import { LinksBar } from "../../ui/LinksBar";
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../../ui/LeaderboardComponents";
+import { sexoDaProva } from "../../utils/tournamentSex";
 import Aroeira2AnaliseView from "../../ui/Aroeira2AnaliseView";
 import AdmissionsTab from "../../ui/AdmissionsTab";
 import { teeRuleFor } from "../../utils/teeRegulation";
@@ -646,7 +647,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
               reservaLabel={featured?.reservaLabel}
               hcpActual={featured?.hcpActual}
               tournamentEscalao={tournament.escalao || undefined}
-              tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
+              tournamentSex={sexoDaProva(tournament._tabLabel, tournament.escalao, tournament.name)}
               teeRule={teeRuleFor(tournament.ccode, tournament.tcode)}
             />
           </>;
@@ -658,7 +659,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
             roundNum={drawRoundNum}
             playersDB={playersDB as any}
             tournamentEscalao={tournament.escalao || undefined}
-            tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
+            tournamentSex={sexoDaProva(tournament._tabLabel, tournament.escalao, tournament.name)}
             tournamentDate={tournament.date}
             admissions={effAdmissions}
             results={drawResults}

@@ -274,8 +274,9 @@ export default function AdmissionsTab({
     const INF = 9999;
     const mult = sortDir === "asc" ? 1 : -1;
     // Posição absoluta: confirmed 1..N, reservas N+1.., desistentes por último.
-    const nConf = ultimoLugar(filtered);
-    const nRes = filtered.filter(p => p.status === "reserva").length;
+    // Sobre a lista COMPLETA: com um filtro ligado o nº da lista de espera mudava.
+    const nConf = ultimoLugar(enriched);
+    const nRes = enriched.filter(p => p.status === "reserva").length;
     const absPos = (p: typeof filtered[number]) =>
       p.status === "confirmed" ? (p.pos ?? INF)
         : p.status === "reserva" ? nConf + (p.pos ?? INF)
@@ -283,7 +284,12 @@ export default function AdmissionsTab({
     return [...filtered].sort((a, b) => {
       let v = 0;
       switch (sortKey) {
-        case "pos":     v = absPos(a) - absPos(b); break;
+        case "pos": {
+          // Quem se desinscreveu não tem lugar: sempre no fim, nas duas direcções.
+          const da = a.status === "desistente", db = b.status === "desistente";
+          if (da !== db) return da ? 1 : -1;
+          v = absPos(a) - absPos(b); break;
+        }
         case "nome":    v = a._nomeFormatted.localeCompare(b._nomeFormatted, "pt"); break;
         // Vazios (sem escalão, sem HCP, sem cartão…) sempre no fim, nas duas direcções.
         case "esc":     return compareTextNullsLast(a._escHist, b._escHist, mult);
@@ -302,13 +308,13 @@ export default function AdmissionsTab({
       }
       return mult * v;
     });
-  }, [filtered, sortKey, sortDir, extraCols]);
+  }, [filtered, enriched, sortKey, sortDir, extraCols]);
 
   const rows: ScorecardRow[] = useMemo(() => {
     // Posição contínua: confirmed 1..N, reservas N+1..N+M. Mostra números únicos
     // mesmo quando confirmed e reservas aparecem misturadas por sort custom.
-    const nConf = ultimoLugar(sorted);
-    const nRes = sorted.filter(p => p.status === "reserva").length;
+    const nConf = ultimoLugar(enriched);
+    const nRes = enriched.filter(p => p.status === "reserva").length;
     return sorted.map((p, i) => {
       const manuel = p.fed === MANUEL_FED;
       const isReserva = p.status === "reserva";

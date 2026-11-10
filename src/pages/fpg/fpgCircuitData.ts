@@ -24,6 +24,7 @@ import { tournamentHasManuel } from "../../data/fpgUtils";
 import { clubesHasManuel, clubesIndividualTournament } from "../../data/clubesFormats";
 import { parseTournKey, yearOfDate } from "../../utils/format";
 import { withDivisionModel } from "../../data/model/division";
+import { sexoDaProva } from "../../utils/tournamentSex";
 
 /** Chave de membro = chave de URL do escalão (`parseTournKey` parte no 1º "-"). */
 export function fpgMemberKey(t: FPGTournament): string {
@@ -34,10 +35,7 @@ export function fpgMemberKey(t: FPGTournament): string {
 /** Sexo do escalão a partir do sufixo do label/escalão/nome (H→M, S→F). Só
  *  quando inequívoco — senão undefined (a FPG mistura escalões M+F por evento). */
 function divSex(t: FPGTournament): CircuitSex | undefined {
-  const s = `${t._tabLabel ?? ""} ${t.escalao ?? ""} ${t.name ?? ""}`;
-  if (/\b(S|Fem(inin[oa]s?)?|Raparigas?)\b/.test(s)) return "F";
-  if (/\b(H|M|Mascul(in[oa]s?)?|Rapazes?)\b/.test(s)) return "M";
-  return undefined;
+  return sexoDaProva(t._tabLabel, t.escalao, t.name);
 }
 
 /** Label da tab de escalão — espelha a lógica da barra de escalões da FPGPage:

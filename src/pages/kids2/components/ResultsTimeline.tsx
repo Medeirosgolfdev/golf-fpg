@@ -79,7 +79,8 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
           // SÓ contar como confronto se Manuel jogou no MESMO flight (mesmo escalão).
           // Senão o diff/pos são ilusórios — escalões diferentes não comparam.
           const mR = f.results.find((rr) => rr.juniorId === data.manuel!.id);
-          if (mR?.totalGross != null && r.totalGross != null) {
+          // Total ≥ 900 = sem cartão: não entra na diferença.
+          if (mR?.totalGross != null && r.totalGross != null && mR.totalGross < 900 && r.totalGross < 900) {
             vsManuelDiff = r.totalGross - mR.totalGross;
           }
           if (mR && typeof mR.pos === "number") manuelPos = mR.pos;

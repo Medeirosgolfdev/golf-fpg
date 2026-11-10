@@ -45,8 +45,8 @@ export function ffgEscalaoCanonico(raw: string | null | undefined): string | nul
   if (/JUNIOR|\bJUN\b|^J[GF]\b/.test(u)) return "Sub-21 (Junior)";
   if (/ENFANT/.test(u)) return "Sub-8";
   // Limites por idade: "Joueurs jusqu'à 14 ans", "MOINS DE 15 ANS", "-13 ans"
-  const am = u.match(/(?:JUSQU|MOINS|-)\D{0,8}?(\d{1,2})\s*ANS/);
-  if (am) return bucket(+am[1]);
+  const am = u.match(/(JUSQU|MOINS|-)\D{0,8}?(\d{1,2})\s*ANS/);
+  if (am) return bucket(am[1] === "JUSQU" ? +am[2] : +am[2] - 1); // «moins de 15 ans» = até aos 14
   // ⚠ Só marcadores GENUINAMENTE adultos. MESSIEURS/DAMES/HOMMES/FEMMES são
   // SEXO e "1ère Série" é NÍVEL de divisão — nenhum diz a idade. No portal FFG
   // as divisões de um torneio juvenil chamam-se "Messieurs"/"Dames"; a idade

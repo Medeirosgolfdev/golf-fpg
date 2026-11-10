@@ -567,7 +567,9 @@ export default function RivaisDashboard({
                         );
 
                       // Tier color
-                      const playerAvg = res.t! / t.rounds;
+                      // Pelas voltas que ELE jogou (um cortado com 152 em 2 voltas
+                      // dava 50,7 por volta numa prova de 3 e ficava «Elite»).
+                      const playerAvg = res.t! / ((res.rd || []).filter((x) => x > 0).length || t.rounds);
                       const roundAvgs = AVG_R[t.id] as RoundAvg[] | undefined;
                       let fieldAvg: number | null = null,
                         fieldStd: number | null = null;

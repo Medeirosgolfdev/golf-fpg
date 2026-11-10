@@ -487,7 +487,7 @@ export function ScorecardLB({
   if (!rawPlayers.length) return <EmptyState size="sm" message="Scorecards não disponíveis." />;
 
   const rows: ScorecardRow[] = sorted.map((p, idx) => {
-    const isWDPlayer = !!p._wd || p.grossTotal == null || numGross(p) >= 999;
+    const isWDPlayer = !!p._wd || p.grossTotal == null || numGross(p) >= 900;
     const gross = isWDPlayer ? 0 : numGross(p);
     const dp = posOf(p);
     const showPos = idx === 0 || dp !== posOf(sorted[idx - 1]);

@@ -257,9 +257,11 @@ export function fmtFieldInfo(fieldSize: number, nRounds: number, category: strin
  *  Aceita ISO, MM/DD/YYYY ou DD-MM-YYYY */
 export function fmtDate(s: string): string {
   if (!s) return "";
-  const iso = isoDate(s);
-  if (!iso) return s;
-  return new Date(iso).toLocaleDateString("pt-PT", { day: "2-digit", month: "short", year: "numeric" });
+  const p = dateParts(isoDate(s));
+  if (!p) return s;
+  // O dia é o do calendário, em qualquer fuso: `new Date("AAAA-MM-DD")` é
+  // meia-noite UTC e, mostrado na hora local a oeste (Miami), dava a véspera.
+  return new Date(Date.UTC(p.y, p.m - 1, p.d)).toLocaleDateString("pt-PT", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" });
 }
 
 /** Formata to-par: +5, -2, E */
@@ -474,7 +476,8 @@ export function displayName(s: string): string {
   }
   return clean.toLowerCase().split(' ').map((w, i) => {
     if (i > 0 && PARTICLES.has(w)) return w;
-    return w.charAt(0).toUpperCase() + w.slice(1);
+    // Também depois de hífen e apóstrofo: «garcia-poggio» → «Garcia-Poggio».
+    return w.replace(/(^|[-'’])(\p{L})/gu, (_, sep: string, c: string) => sep + c.toUpperCase());
   }).join(' ');
 }
 

@@ -312,7 +312,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                   {(() => {
                     const totalWeakSL = weaknesses.reduce((a, w) => a + w.strokesLost, 0);
                     return (
-                      <div className="haTopSummary">Estes {weaknesses.length} buracos custam <b>{totalWeakSL.toFixed(1)} pancadas por volta</b> ({Math.round(totalWeakSL / stats.totalStrokesLost * 100)}% do total).</div>
+                      <div className="haTopSummary">Estes {weaknesses.length} buracos custam <b>{totalWeakSL.toFixed(1)} pancadas por volta</b>{/* a percentagem só faz sentido quando os buracos maus cabem no total líquido (senão dava «133%» ou «−17%») */}{stats.totalStrokesLost > 0 && totalWeakSL <= stats.totalStrokesLost ? ` (${Math.round(totalWeakSL / stats.totalStrokesLost * 100)}% do total)` : ""}.</div>
                     );
                   })()}
                 </>

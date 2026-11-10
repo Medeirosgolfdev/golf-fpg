@@ -617,7 +617,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                         {isExpanded && (
                           <div className="cal-indent">
                             {calEvts.map(ev => {
-                              const isPast = (ev.endDate || ev.date) < today;
+                              const isPast = jaPassou(ev, today);
                               const d = ev.date;
                               const dd = `${d.getDate()}/${d.getMonth() + 1}`;
                               return (

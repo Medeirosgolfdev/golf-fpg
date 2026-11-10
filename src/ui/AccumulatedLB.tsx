@@ -126,7 +126,8 @@ export function AccumulatedLB({
       const mappedRounds = Array.from({ length: nRounds }, (_, i) => {
         const rdNum = i + 1;
         const rs = roundScores.find((r) => r.round === rdNum);
-        if (!rs) return undefined;
+        // Volta sem cartão (gross ≥ 900) = não jogada: «–», nunca «999 · +927».
+        if (!rs || rs.gross >= 900) return undefined;
         // SD: o oficial da FPG ou, sem ele, o calculado com o HCP da inscrição.
         const { sd } = computeSD({
           ...p,

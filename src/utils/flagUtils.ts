@@ -57,6 +57,8 @@ export const FLAG: Record<string, string> = {
   GW:"🇬🇼",  // Guiné-Bissau
   TL:"🇹🇱",  // Timor-Leste
   ST:"🇸🇹",  // São Tomé e Príncipe
+  // Em falta até 10/11/2026 (juniores do Kids 2 sem bandeira)
+  JM:"🇯🇲", CK:"🇨🇰", AX:"🇦🇽", CM:"🇨🇲", EG:"🇪🇬", BH:"🇧🇭", MP:"🇲🇵", GG:"🇬🇬", IR:"🇮🇷",
   // Prefixos internos FPG (apátridas/desconhecidos)
   "@1":"🏴","@2":"🏴","@3":"🏴","@4":"🏴",
 };
@@ -143,7 +145,11 @@ const CODE_ALIAS: Record<string, string> = {
   vie:"vn", arg:"ar", chl:"cl", pol:"pl", cze:"cz", aut:"at",
   por:"pt", esp:"es", fra:"fr", ale:"de", ita:"it", rum:"ro",
   hun:"hu", srb:"rs", bul:"bg", ltu:"lt", est:"ee", svk:"sk",
-  svn:"si", hrv:"hr", mne:"me", bih:"ba", alb:"al", mac:"ma",
+  svn:"si", hrv:"hr", mne:"me", bih:"ba", alb:"al", mac:"mo", // MAC = Macau (Marrocos é MAR)
+  // Códigos do COI que faltavam (palmarés RFEG, eventos EGR)
+  ger:"de", ned:"nl", sco:"gb-sct", wal:"gb-wls", rsa:"za", cro:"hr", slo:"si", gre:"gr",
+  lat:"lv", tpe:"tw", phi:"ph", mas:"my", ina:"id", sin:"sg", chi:"cl", par:"py", crc:"cr",
+  pur:"pr", zim:"zw", ksa:"sa", iri:"ir",
   tun:"tn", geo:"ge", arm:"am", aze:"az", tur:"tr", isl:"is",
   irl:"ie", fin:"fi", eng:"gb", sct:"gb", wls:"gb", nir:"gb",
   // ISO 3166-1 alpha-3 codes (FFG/FFGolf/FPG resultats usam estes em vez dos IOC).

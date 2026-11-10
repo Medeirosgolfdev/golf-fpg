@@ -446,7 +446,7 @@ export default function JogadoresListPage() {
     setHcpMin(""); setHcpMax(""); setHcpStatus("ALL");
     setSex("ALL"); setTipo("ALL"); setFedStatus("ALL");
     setActivosAnoOnly(false); setJovensOnly(false);
-    setComSDOnly(false); setDiffsOnly(false); setNatFilter("ALL");
+    setComSDOnly(false); setDiffsOnly(false); setNatFilter("ALL"); setOnlyPP(false);
     setPrioritizeDestaques(false); // volta à ordem alfabética pura
   };
 

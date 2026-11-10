@@ -143,7 +143,7 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
                   <td className="r mono">{e.y25}</td>
                   <td className="r mono">{e.y26}</td>
                   <td className="r"><ToPar v={e.delta} kind="delta" /></td>
-                  <td><EvoBadge pill={e.pill as "UP" | "EQ" | "NEW"} from={e.from} to={e.to} /></td>
+                  <td><EvoBadge pill={(e.pill === "STAY" ? "EQ" : e.pill) as "UP" | "EQ" | "NEW"} from={e.from} to={e.to} /></td>
                 </tr>
               );
             })}

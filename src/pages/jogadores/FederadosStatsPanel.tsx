@@ -19,7 +19,7 @@ import { fmt, todayIso } from "../../utils/format";
 import CloseButton from "../../ui/CloseButton";
 import { fmtHcp } from "../../utils/format";
 import SectionTitle from "../../ui/SectionTitle";
-
+
 import { HcpText } from "../../ui/HcpPill";
 import { Cols } from "../../ui/DataStyle";
 export interface GlobalStats {
@@ -93,7 +93,7 @@ export function computeGlobalStats(federados: FederadoRaw[]): GlobalStats {
   const topBestHcp = [...federados]
     .filter(f => isCountableHcp(f.hcp_exact))
     .sort((a, b) => (a.hcp_exact as number) - (b.hcp_exact as number))
-    .slice(0, 20);
+    .slice(0, 15);
   const avgHcp = withHcp > 0 ? totalHcp / withHcp : 0;
 
   const admissionYears = Object.entries(byAdmissionYear)

@@ -13,6 +13,19 @@ import { normName } from "../utils/normName";
 /** Federação FPG. */
 export const MANUEL_FED = "52884";
 
+/** Federado do pai — também «Manuel Medeiros»; nunca é o Manuel. */
+export const MANUEL_PAI_FED = "54907";
+
+/** O Manuel numa lista de jogadores de UMA prova: primeiro quem traz o federado
+ *  dele; senão o nome, menos o pai. (Não usa o `isManuel`: nas provas de fora o
+ *  `fed` é a licença estrangeira e ele deixaria de ser reconhecido.) */
+export function findManuelNaProva<T extends { name?: string | null; fed?: string | null; fedCode?: string | null }>(players: readonly T[] | null | undefined): T | undefined {
+  const lista = players ?? [];
+  const fedDe = (p: T) => String(p.fed || p.fedCode || "");
+  return lista.find((p) => fedDe(p) === MANUEL_FED)
+    ?? lista.find((p) => fedDe(p) !== MANUEL_PAI_FED && isManuelByName(p.name || ""));
+}
+
 /**
  * IDs USKids do Manuel — actual + legacy (conta abandonada após El Prat 2023).
  * Histórico, confrontos H2H e progressão de escalões mergeam os dois como um

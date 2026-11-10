@@ -606,7 +606,10 @@ export interface RoundStats {
  */
 function isVolta18(rd: { gross?: number | null; strokes?: number[] }, parTotal: number): boolean {
   if (typeof rd.gross !== "number") return false;
-  if (Array.isArray(rd.strokes)) return rd.strokes.filter((x) => x > 0).length >= 15;
+  // `strokes: []` (ou só zeros) = volta só com o total, sem buraco a buraco
+  // (Áustria): decide-se pelo ±par, não se deita fora.
+  const jogados = Array.isArray(rd.strokes) ? rd.strokes.filter((x) => x > 0).length : 0;
+  if (jogados > 0) return jogados >= 15;
   return rd.gross - parTotal >= -8;
 }
 

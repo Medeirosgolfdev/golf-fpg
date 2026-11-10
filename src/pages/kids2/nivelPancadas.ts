@@ -68,8 +68,10 @@ const ITERACOES = 50;
 /** Ver `NivelOpcoes.ligacao`. */
 const LIGACAO = 5;
 
-/** Formatos de equipa — não são voltas individuais. */
-export const FORMATO_EQUIPA_RE = /parent|child|scramble|foursome|pairs|greensome|equipa|team|par(e|ej)as|fourball|four-ball|texas/i;
+/** Formatos de equipa — não são voltas individuais.
+ *  Palavras INTEIRAS: «child» apanhava «Fairchild», «Rothschild» e «Childwall»,
+ *  e «texas» (de «Texas scramble») todas as provas individuais do Texas. */
+export const FORMATO_EQUIPA_RE = /\b(parent|child|scramble|foursomes?|pairs|greensomes?|equipas?|teams?|pare(ja)?s|fourball|four-ball)\b/i;
 /** Pitch & putt — não é golfe de campo (buracos de 40–90 m). */
 export const PITCH_PUTT_RE = /\bp\s*&\s*p\b|pitch\s*(&|and|n|y)\s*putt/i;
 /** Abaixo disto por buraco (metros) a volta é pitch & putt, mesmo sem o nome dizer. */
@@ -101,7 +103,10 @@ function observacoes(torneios: Iterable<NivelTorneio>, hoje: number, dias: numbe
         for (const rd of r.rounds || []) {
           const g = rd.gross;
           if (typeof g !== "number" || g <= 0 || g >= 300) continue;
-          let buracos = Array.isArray(rd.strokes) ? rd.strokes.filter((x) => x > 0).length : (np || 18);
+          // `strokes: []` (ou só zeros) = volta só com o total (Áustria: só a
+          // última volta traz buraco a buraco) — conta pelos buracos do par.
+          const jogados = Array.isArray(rd.strokes) ? rd.strokes.filter((x) => x > 0).length : 0;
+          let buracos = jogados > 0 ? jogados : (np || 18);
           if (buracos >= 15) buracos = 18;
           else if (buracos >= 8 && buracos <= 10) buracos = 9;
           else continue;

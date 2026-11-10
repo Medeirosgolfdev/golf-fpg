@@ -426,8 +426,12 @@ export function buildJovensAnalise(
     const significantEsc = [...escCounts.entries()]
       .filter(([, n]) => n >= 2)
       .map(([e]) => e);
+    // Só quando o nome/tabLabel NÃO diz escalão nenhum. Com um escalão no nome
+    // («Campeonato Nacional de Jovens Sub 14 S») a prova é desse escalão, mesmo
+    // com mais novos a jogar para cima: quem ganha é campeão desse escalão
+    // (10/11/2026 — o `<= 1` dava o Sub 14 F de 2025 à 4.ª classificada).
     const isImplicitlyCombined =
-      designatedEscListExplicit.length <= 1 && significantEsc.length >= 2;
+      designatedEscListExplicit.length === 0 && significantEsc.length >= 2;
     const designatedEscList = isImplicitlyCombined
       ? significantEsc.sort((a, b) => {
           const m = (s: string) => {

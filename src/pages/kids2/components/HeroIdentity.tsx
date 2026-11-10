@@ -20,6 +20,7 @@ import HcpSparkline from "./HcpSparkline";
 import BirthPill from "../../../ui/BirthPill";
 import { EscPill, RankPill } from "../../../ui/PillBadge";
 import { shortDateSlash, fmtHcp, MONTHS_PT, fmtSign } from "../../../utils/format";
+import { formatStars } from "../tournWeight";
 import { stripAccents } from "../../../utils/normName";
 
 import ExtLink from "../../../ui/ExternalLink";
@@ -268,7 +269,7 @@ export default function HeroIdentity({ data, junior }: Props) {
               {topWins.map((w, i) => (
                 <span key={i} title={`${w.fmtDate} · ${w.flightLabel}${w.parts ? " · " + w.parts : ""}`} className="u-fs-fs-11 u-p-2px-8px u-br-radius-pill u-bg-bg u-bd-1px-solid-border-light u-c-text-2 u-fw-500 u-d-inline-flex u-ai-center u-gap-4px u-ws-nowrap">
                   <span className="u-c-medal-gold-strong u-ls-0_2px u-fs-fs-10">
-                    {"★".repeat(w.stars)}
+                    {formatStars(w.stars)}
                   </span>
                   <span>{w.shortName}</span>
                   <span className="u-op-0_55 u-fs-fs-10">· {w.year}</span>

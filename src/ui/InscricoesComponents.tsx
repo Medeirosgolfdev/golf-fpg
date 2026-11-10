@@ -210,7 +210,7 @@ function PainelResumo({ torneios, nossosByFed }: {
     for (const j of t.jogadores) {
       const p = j.fed ? nossosByFed.get(j.fed) : undefined;
       if (!p?.dob) continue;
-      const a = anoEscalao(p.dob, t.escalao);
+      const a = anoEscalao(p.dob, t.escalao, CN_JOVENS_EDICAO.inicio); // o ano da EDIÇÃO, não o de hoje
       if (a) { anoTotals[a]++; anoBase++; }
     }
   }
@@ -417,7 +417,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
         cell: p => { const b = p.fed ? nossosByFed.get(p.fed) : undefined;
           return b ? <span className="gap-4 u-d-inline-flex u-ai-center u-ws-nowrap">
               <SexBadge sex={b.sex} size="sm" />
-              {b.dob && <AnoEscalaoPill dob={b.dob} escalao={t.escalao} />}
+              {b.dob && <AnoEscalaoPill dob={b.dob} escalao={t.escalao} data={CN_JOVENS_EDICAO.inicio} />}
             </span>
             : <span className="muted fs-11">{p.fed ? "Nao na BD" : "–"}</span>; } },
     ];

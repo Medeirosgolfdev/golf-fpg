@@ -140,7 +140,9 @@ export function buildDrawResults(
     const rs = p.roundScores?.find(r => r.round === roundNum);
     if (rs) {
       gross = rs.gross;
-      const parT = p.parTotal || rs.pars.reduce((a, b) => a + b, 0);
+      // O par é o da PRÓPRIA volta (uma R2 de 9 buracos não se compara com o
+      // par 72 da R1 — dava «−33»); o do jogador só quando a volta não o traz.
+      const parT = (rs.pars || []).reduce((a, b) => a + (b || 0), 0) || p.parTotal || 0;
       toPar = gross > 0 && parT > 0 ? gross - parT : null;
     } else if (perRound || (roundNum === 1 && !(p.roundScores?.length))) {
       // Entrada já-por-ronda (perRound) OU torneio de ronda única.

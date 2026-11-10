@@ -109,7 +109,7 @@ export type ComputeRoundSD = (
 
 export interface UseAllRoundsOptions {
   tournament: Tournament;
-  /** Máximo de score por buraco (cap). Default: 10 */
+  /** Máximo de score por buraco (cap). Default: sem tecto. */
   maxHoleScore?: number;
   /** Função para resolver escalão. Se omitida, usa "" */
   resolveEsc?: (p: Player) => string;
@@ -165,7 +165,9 @@ export interface AllRoundsResult {
 export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   const {
     tournament,
-    maxHoleScore = 10,
+    // Sem tecto por omissão: o gross tem de ser o oficial (10/11/2026 — o 10
+    // de antes baixava o total de quem fez mais de 10 num buraco, em 141 torneios).
+    maxHoleScore = Infinity,
     resolveEsc: resolveEscFn,
     playerFilter,
     computeRoundSD,

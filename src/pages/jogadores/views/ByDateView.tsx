@@ -97,6 +97,7 @@ export default function ByDateView({ data, search }: {
         onRowClick={r => { if (r.hasCard) setOpenScorecardId(openScorecardId === r.scoreId ? null : r.scoreId); }}
         rowClassName={(_r, open) => `roundRow${open ? " pa-row-open" : ""}`}
         separatorBefore={(r, prev) => {
+          if (sortKey !== "date") return null; // barras de ano só na ordem por data
           const year = r.date ? r.date.slice(-4) : null;
           const prevYear = prev?.date ? prev.date.slice(-4) : null;
           return (year && prevYear && year !== prevYear) ? <div className="year-label">{year}</div> : null;

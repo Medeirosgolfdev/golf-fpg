@@ -47,7 +47,7 @@ import { IntlTournView } from "../IntlTournView";
 import { CampoDoCircuito } from "../../pages/fpg/fpgCourseTab";
 import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
-import { isManuelByName } from "../../constants/manuel";
+import { findManuelNaProva } from "../../constants/manuel";
 import { tournamentAces } from "../../utils/aces";
 import MatchplayView from "./MatchplayView";
 import { entryManuelState, entryPtState, entryHasAce } from "./entryState";
@@ -177,8 +177,12 @@ function applyToggles(
   }
   if (active.has("top10")) {
     // Top 10 por gross acumulado (robusto mesmo sem campo pos fiável).
+    // Só entre quem tem TODAS as voltas e cartão: quem falhou o cut soma menos
+    // e ficava à frente do vencedor (10/11/2026).
+    const voltasDe = (p: (typeof players)[number]) => (p.roundScores || []).filter(r => r.gross > 0 && r.gross < 900).length;
+    const maxVoltas = Math.max(0, ...players.map(voltasDe));
     const ranked = [...players]
-      .filter(p => typeof p.grossTotal === "number")
+      .filter(p => typeof p.grossTotal === "number" && p.grossTotal < 900 && voltasDe(p) === maxVoltas)
       .sort((a, b) => (a.grossTotal as number) - (b.grossTotal as number));
     const top = new Set(ranked.slice(0, 10));
     players = players.filter(p => top.has(p));
@@ -839,7 +843,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                   {/* Resultado do Manuel (pílulas pequenas, cor dele) — no escalão
                       em que jogou, mesmo quando se está a ver outro. */}
                   {(() => {
-                    const md = curDivisions.find(d => d.results?.players.some(p => isManuelByName(p.name)));
+                    const md = curDivisions.find(d => findManuelNaProva(d.results?.players));
                     return md ? <ManuelResultPills tournament={md.results}
                       label={curDivisions.length > 1 ? (md.tabLabel || md.escalao) : null} /> : null;
                   })()}

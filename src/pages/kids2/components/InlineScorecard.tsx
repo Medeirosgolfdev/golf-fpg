@@ -37,8 +37,11 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
   const parArr = merged.par.slice();
   const yardsArr = merged.yards;
   // (merged.si fica disponível para futura coluna SI no scorecard.)
+  // Nas provas FPG o `yards` do flight já vem em METROS (bate com o `metros`
+  // da volta); converter outra vez encurtava o campo 8,6 % (6034 m → «5517m»).
+  const jaEmMetros = tournament.sourceId === "fpg";
   const metersArr = yardsArr.length > 0
-    ? yardsArr.map((y) => (y && y > 0 ? Math.round(y * 0.9144) : 0))
+    ? yardsArr.map((y) => (y && y > 0 ? (jaEmMetros ? y : Math.round(y * 0.9144)) : 0))
     : [];
 
   const holesFromPar = parArr.filter((p) => p > 0).length;

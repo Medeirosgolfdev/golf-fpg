@@ -652,8 +652,11 @@ export function buildTcodePills(melhorias: MelhoriasJson): Record<string, TournP
       const entry = raw as { pill?: TournPill; links?: Record<string, unknown> };
       if (!entry.pill) continue;
       for (const v of Object.values(entry.links || {})) {
+        // Chave «ccode-tcode» (o link traz os dois): só o tcode dava a pill a
+        // provas de outros clubes com o mesmo número.
         const match = String(v).match(/tcode=(\d+)/);
-        if (match) pills[match[1]] = entry.pill;
+        const cc = String(v).match(/(?:ccode|club)=(\d+)/)?.[1];
+        if (match && cc) pills[`${cc.padStart(3, "0")}-${match[1]}`] = entry.pill;
       }
     }
   }

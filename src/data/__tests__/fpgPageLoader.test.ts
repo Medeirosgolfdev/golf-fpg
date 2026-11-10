@@ -166,13 +166,13 @@ describe("Jovens: candidatos, filtros e grupos", () => {
 });
 
 describe("buildTcodePills", () => {
-  it("tira os tcodes dos links das entradas com pill", () => {
+  it("tira clube + tcode dos links das entradas com pill", () => {
     const m = {
       "52884": {
-        "s1": { pill: "REGIONAL", links: { d1: "https://x?tcode=111&x=1", d2: "https://x?tcode=112" } },
+        "s1": { pill: "REGIONAL", links: { d1: "https://x?ccode=7&tcode=111&x=1", d2: "https://x?ccode=007&tcode=112" } },
         "s2": { links: { d1: "https://x?tcode=999" } },
       },
     } as unknown as MelhoriasJson;
-    expect(buildTcodePills(m)).toEqual({ "111": "REGIONAL", "112": "REGIONAL" });
+    expect(buildTcodePills(m)).toEqual({ "007-111": "REGIONAL", "007-112": "REGIONAL" });
   });
 });

@@ -198,13 +198,11 @@ export default function RankingPage() {
     if (status.kind !== "ready" || !rankingMap) return [];
     const { juniors, tournamentById } = status.data;
     const rows: CohortRow[] = [];
-    const seenNames = new Set<string>();
+    // Uma linha por FICHA (id): dois juniores com o mesmo nome e ano são duas
+    // pessoas (dois «Eric Pak» de 2014) — cortar pelo nome escondia uma delas.
     for (const j of juniors) {
       const entry = rankingMap.get(j.id);
       if (!entry || entry.birthYear !== year || entry.sex !== sex) continue;
-      const nameKey = (j.canonicalName || j.id).toLowerCase().trim();
-      if (seenNames.has(nameKey)) continue;
-      seenNames.add(nameKey);
       rows.push({
         junior: j,
         entry,

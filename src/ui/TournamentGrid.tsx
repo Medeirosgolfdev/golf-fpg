@@ -78,6 +78,8 @@ function TournamentGrid({
           return mult * a.name.localeCompare(b.name, "pt");
         case "fed":
           return compareTextNullsLast(a.fed, b.fed, mult);
+        case "played":
+          return mult * (a.tourneiosPlayed - b.tourneiosPlayed);
         case "escalao": {
           const ea = escalaoDeRow(a);
           const eb = escalaoDeRow(b);

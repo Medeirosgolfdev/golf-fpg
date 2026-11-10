@@ -132,7 +132,8 @@ export default function CoursePerformanceSection({ rounds }: { rounds: RoundData
     r18.forEach(r => allNorm.push({
       sd: r.sd != null ? Number(r.sd) : null, stb: r.stb != null ? Number(r.stb) : null,
       hi: r.hi, tee: r.tee || "?", date: r.date || "", dateSort: r.dateSort,
-      holeCount: 18, gross: r.gross ? Number(r.gross) : null, par: r.par ? Number(r.par) : null
+      // gross ≥ 900 = sem cartão: fica fora da média de pancadas e do gráfico
+      holeCount: 18, gross: r.gross && Number(r.gross) < 900 ? Number(r.gross) : null, par: r.par ? Number(r.par) : null
     }));
     r9.forEach(r => allNorm.push({
       sd: r.sd != null ? Number(r.sd) : null, stb: r.stb != null ? Number(r.stb) + 17 : null,

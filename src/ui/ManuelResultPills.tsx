@@ -7,7 +7,7 @@
  * tabs». Cor do Manuel: a da pílula «★ Manuel» e da linha dele nas tabelas.
  */
 import type { Tournament } from "../data/fpgTypes";
-import { isManuelByName } from "../constants/manuel";
+import { findManuelNaProva } from "../constants/manuel";
 import { fmtToPar } from "../utils/format";
 
 const sum = (a?: (number | null)[]) => (a || []).reduce<number>((s, v) => s + (v || 0), 0);
@@ -15,7 +15,7 @@ const completa = (rs: { scores?: number[]; pars?: (number | null)[]; gross?: num
   (rs.gross ?? 0) > 0 && (!rs.pars?.length || (rs.scores || []).filter((x) => x > 0).length >= rs.pars.length);
 
 export default function ManuelResultPills({ tournament, label }: { tournament: Tournament | null | undefined; label?: string | null }) {
-  const m = tournament?.players.find((p) => isManuelByName(p.name));
+  const m = findManuelNaProva(tournament?.players);
   if (!tournament || !m) return null;
   const pills = (m.roundScores || []).filter(completa).map((rs) => {
     const gross = rs.gross as number;

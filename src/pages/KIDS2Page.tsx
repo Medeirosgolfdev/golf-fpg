@@ -229,7 +229,7 @@ function KIDS2PageContent() {
           />
       </>}>
           {selected ? (
-            <PlayerProfile data={data} junior={selected} />
+            <PlayerProfile key={selected.id} data={data} junior={selected} />
           ) : (
             <EmptyState size="md" message="Selecciona um rival na barra lateral." />
           )}

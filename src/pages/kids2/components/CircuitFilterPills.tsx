@@ -33,7 +33,8 @@ function getTournamentCircuit(t: { sourceId: string; name?: string; shortName?: 
   const name = ((t.name || t.shortName || "") + " " + (t.seriesId || "")).toLowerCase();
 
   if (src === "uskids") {
-    if (/world|championship/i.test(name) && !/european/i.test(name)) {
+    // Só os Mundiais: «… (Tour Championship)» é a final de um Local Tour.
+    if (/world/i.test(name) && !/european/i.test(name)) {
       return { id: "uskids-world", label: "USKids World" };
     }
     if (/european|venice|rome|marco|el prat|euro/i.test(name)) {

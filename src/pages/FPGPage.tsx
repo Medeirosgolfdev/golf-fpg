@@ -478,7 +478,7 @@ function Content() {
     const sidebarT: SidebarItemTournament = {
       ...t,
       playerCount: entry.playerCount,
-      campo: (t.campo || "Oporto") + progressSuffix,
+      campo: (t.campo || "") + progressSuffix,
       _manuelInscrito: !!entry.hasManuel,
     };
     return (
@@ -546,8 +546,10 @@ function Content() {
     const activeEntry = g.entries.find(e => fpgMemberKey(e) === shellSel.divKey) ?? g.entries[0];
 
     // Pill dinâmico (REGIONAL, NACIONAL, etc.) agregando todos os tcodes do grupo.
-    const allTcodes = g.entries.flatMap(e => (e.tcode || "").split("+"));
-    const pillVal = allTcodes.map(tc => TOURN_PILLS[tc] || tcodePills?.[tc]).find(Boolean);
+    // Por CLUBE + tcode: a FPG repete tcodes entre clubes (o NACIONAL de 000-10825
+    // aparecia no «XII Aberto CGSS», 007-10825).
+    const pillVal = g.entries.flatMap(e => (e.tcode || "").split("+").map(tc =>
+      TOURN_PILLS[tc] || tcodePills?.[`${String(e.ccode ?? "").padStart(3, "0")}-${tc}`])).find(Boolean);
 
     // Contagem de escalões (só se houver mais que 1 entrada).
     const counterPill = isMulti ? (

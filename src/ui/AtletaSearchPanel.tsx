@@ -289,7 +289,7 @@ export default function AtletaSearchPanel({
         <input
           type="text"
           value={q}
-          onChange={(e) => setQ(e.target.value)}
+          onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
           placeholder="Escreve o nome ou nº de federado..."
           className="u-w-100pc u-maxw-480px u-p-8px-12px u-bd-1px-solid-border u-br-radius u-fs-fs-14 u-bg-bg-card u-c-text-1"
           autoFocus

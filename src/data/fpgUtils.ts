@@ -150,7 +150,7 @@ export function synthesizeDrawFromCumulative(
     for (let i = 0; i < priorRounds; i++) {
       const g = rs[i]?.gross;
       // gross >= 999 é o sentinela de WD/DNS; <=0 é cartão vazio/não entregue
-      if (typeof g !== "number" || g <= 0 || g >= 999) { ok = false; break; }
+      if (typeof g !== "number" || g <= 0 || g >= 900) { ok = false; break; }
       cum += g;
     }
     if (!ok) continue;
@@ -886,11 +886,14 @@ export function buildDisplayList(tournaments: Tournament[]): Tournament[] {
   const synthetics: Tournament[] = [];
   for (const group of candidates.values()) {
     if (group.length < 2) continue;
-    group.forEach(t => hiddenTcodes.add(t.tcode));
+    // Clube + tcode: a FPG repete tcodes entre clubes e anos — só pelo tcode
+    // sumiam da lista provas sem relação (a «Taça Nena», 003-10675, por causa
+    // do Regional de Jovens 007-10675).
+    group.forEach(t => hiddenTcodes.add(`${t.ccode ?? ""}/${t.tcode}`));
     synthetics.push(mergeTournamentRounds(group));
   }
 
-  const standalone = tournaments.filter(t => !hiddenTcodes.has(t.tcode));
+  const standalone = tournaments.filter(t => !hiddenTcodes.has(`${t.ccode ?? ""}/${t.tcode}`));
   return [...standalone, ...synthetics].sort((a, b) => {
     const d = (b.date || "").localeCompare(a.date || "");
     if (d !== 0) return d;

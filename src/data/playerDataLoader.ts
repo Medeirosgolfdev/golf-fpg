@@ -8,6 +8,7 @@
 
 import { canonicalCourseName, rotateAroeira2HolesIfNeeded, resolveAroeiraIIByPar, resolveSantoDaSerraByPar } from "../utils/courseAliases";
 import { stripAccents } from "../utils/normName";
+import { numSafe } from "../utils/mathUtils";
 
 /* ─── Tipos (espelham a estrutura gerada pelo pipeline Node) ─── */
 
@@ -562,6 +563,10 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
       const curYear = String(new Date().getFullYear());
       for (const c of data) {
         for (const r of (c.rounds || [])) {
+          // O data.json traz sd/stb/hi vazios como "" (e o hi às vezes em texto).
+          // Sem isto o "" contava como 0: médias erradas, «17*» em voltas de 9 sem
+          // Stableford e os vazios no topo ao ordenar (10/11/2026).
+          r.sd = numSafe(r.sd); r.stb = numSafe(r.stb); r.hi = numSafe(r.hi);
           totalRounds++;
           if ((r.date || "").endsWith(curYear)) roundsCurrentYear++;
         }
