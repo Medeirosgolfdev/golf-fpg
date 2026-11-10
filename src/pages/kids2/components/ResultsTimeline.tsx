@@ -25,6 +25,7 @@ import { TrophyPos } from "../../../ui/PosBadge";
 import { toggleSet } from "../../../utils/mathUtils";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Tint } from "../../../ui/DataStyle";
+import { resumoResultado, diferencaDeTotais, type ResumoResultado } from "../../../utils/voltasJogadas";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -39,9 +40,13 @@ interface Row {
   tournament: Tournament;
   flight: Flight;
   result: Result;
+  /** Voltas, total e ±par com as regras do site (sem cartão, 9 buracos, voltas jogadas). */
+  resumo: ResumoResultado;
   year: string;
   date: string;
   vsManuelDiff: number | null;
+  /** O Manuel jogou no MESMO flight (há confronto, mesmo sem diferença para mostrar). */
+  comManuel: boolean;
   /** Posição do Manuel neste mesmo torneio (se também jogou) — null se não. */
   manuelPos: number | null;
   /** Top % = pos/fieldSize. null se faltar pos ou fieldSize. */
@@ -73,23 +78,26 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
         const r = f.results.find((x) => x.juniorId === junior.id);
         if (!r) continue;
         const date = t.date || t.startDate || "";
+        const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
+        const resumo = resumoResultado(r, f.par, opts);
         let vsManuelDiff: number | null = null;
         let manuelPos: number | null = null;
+        let comManuel = false;
         if (!isManuel && manuelSharedIds.has(tid) && data.manuel) {
           // SÓ contar como confronto se Manuel jogou no MESMO flight (mesmo escalão).
           // Senão o diff/pos são ilusórios — escalões diferentes não comparam.
           const mR = f.results.find((rr) => rr.juniorId === data.manuel!.id);
-          // Total ≥ 900 = sem cartão: não entra na diferença.
-          if (mR?.totalGross != null && r.totalGross != null && mR.totalGross < 900 && r.totalGross < 900) {
-            vsManuelDiff = r.totalGross - mR.totalGross;
-          }
+          // Só com total dos dois lados (≥ 900 = sem cartão) e o MESMO nº de voltas
+          // (10/11/2026: 173 em 2 voltas contra 285 em 3 dava «−112»).
+          if (mR) vsManuelDiff = diferencaDeTotais(resumo, resumoResultado(mR, f.par, opts));
+          comManuel = !!mR;
           if (mR && typeof mR.pos === "number") manuelPos = mR.pos;
         }
         const fs = f.fieldSize ?? null;
         const topPct = typeof r.pos === "number" && fs && fs > 0
           ? Math.round((r.pos / fs) * 100)
           : null;
-        out.push({ tid, tournament: t, flight: f, result: r, year: date.slice(0, 4) || "?", date, vsManuelDiff, manuelPos, topPct });
+        out.push({ tid, tournament: t, flight: f, result: r, resumo, year: date.slice(0, 4) || "?", date, vsManuelDiff, comManuel, manuelPos, topPct });
       }
     }
     out.sort((a, b) => b.date.localeCompare(a.date));
@@ -179,7 +187,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
       {years.map((y) => {
         const yearRows = byYear.get(y)!;
         const wins = yearRows.filter((r) => r.result.pos === 1).length;
-        const manuelEncounters = yearRows.filter((r) => r.vsManuelDiff != null).length;
+        const manuelEncounters = yearRows.filter((r) => r.comManuel).length;
         const expanded = isYearExpanded(y);
         return (
           <div key={y} className="u-mb-10px">
@@ -271,8 +279,8 @@ function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
         case "pos":    return compareNullsLast(num(a.result.pos), num(b.result.pos), sign);
         case "name":   return compareTextNullsLast(a.tournament.name, b.tournament.name, sign);
         case "flight": return compareTextNullsLast(a.flight.label, b.flight.label, sign);
-        case "rounds": return compareNullsLast(a.result.totalGross, b.result.totalGross, sign);
-        case "toPar":  return compareNullsLast(num(a.result.toPar), num(b.result.toPar), sign);
+        case "rounds": return compareNullsLast(a.resumo.total, b.resumo.total, sign);
+        case "toPar":  return compareNullsLast(a.resumo.toPar, b.resumo.toPar, sign);
         case "vsM":    return compareNullsLast(num(a.vsManuelDiff), num(b.vsManuelDiff), sign);
         default: return 0;
       }
@@ -319,14 +327,13 @@ function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
 function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: Row, round: number) => void; isExpanded?: boolean }) {
   // Linha com confronto com o Manuel → "cor Manuel" (a das colunas Manuel em
   // MatchupVsManuel, .k2-row-vs-manuel); aberta → fundo esbatido.
-  const rowCls = r.vsManuelDiff != null
+  const rowCls = r.comManuel
     ? "k2-row-vs-manuel"
     : isExpanded ? "k2-row-open" : undefined;
-  const parTotal = r.flight.par?.reduce((a, b) => a + (b || 0), 0) || r.tournament.parTotal;
+  // Total, ±par e voltas saem do resumo global (10/11/2026): total/gross ≥ 900
+  // deixa de aparecer («1087», «+941») e o ±par de recurso é pelas voltas jogadas.
   const rounds = r.result.rounds || [];
-  const grosses = rounds.map((rd) => rd.gross).filter((g): g is number => typeof g === "number");
-  const total = r.result.totalGross ?? (grosses.length ? grosses.reduce((a, b) => a + b, 0) : null);
-  const toPar = r.result.toPar ?? (total != null && parTotal && grosses.length ? total - parTotal * grosses.length : null);
+  const { total, toPar, voltas } = r.resumo;
   const categorizedLinks = categorizeTournamentLinks(r.tournament);
   const roundsWithStrokes = new Set(rounds.filter((rd) => rd.strokes && rd.strokes.some((s) => s > 0)).map((rd) => rd.round));
   return (
@@ -349,29 +356,12 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
       <td>
         <div className="u-d-flex u-ai-center u-gap-4px u-fwr-wrap">
           <span>{r.tournament.name || r.tournament.shortName || r.tid}</span>
-          {(() => {
-            const nR = (r.result.rounds || []).filter((rd) => typeof rd.gross === "number").length;
-            return <RoundPill nR={nR} />;
-          })()}
+          <RoundPill nR={r.resumo.jogadas.length} />
           {/* SCRATCH/HCP só nas provas da RFEG — as outras federações não publicam este atributo. */}
           {r.tournament.sourceId === "rfeg" && <ScoringTag scoringType={(r.tournament.extra as any)?.scoringType} />}
-          {(() => {
-            // 9H também pelas voltas do PRÓPRIO jogador: escalões novos jogam
-            // 9 buracos num torneio cuja meta é de 18 (British Kids 2021, Boys
-            // 7&U) — o holesPerRound/par do flight não o denunciam. Guarda de
-            // cartão truncado: só conta como 9H se Σ strokes == gross (um
-            // cartão de 18 truncado na fonte tem gross MAIOR que a soma).
-            const rds = (r.result.rounds || []).filter((rd) => typeof rd.gross === "number");
-            const nineByStrokes = rds.length > 0 && rds.every((rd) => {
-              if (!Array.isArray(rd.strokes)) return false;
-              const played = rd.strokes.filter((s) => s > 0);
-              return played.length > 0 && played.length <= 9 && played.reduce((a, b) => a + b, 0) === rd.gross;
-            });
-            const is9 = r.tournament.holesPerRound === 9 ||
-              (Array.isArray(r.flight.par) && r.flight.par.filter((p) => p > 0).length === 9) ||
-              nineByStrokes;
-            return is9 ? <NineHPill /> : null;
-          })()}
+          {/* 9H pelas voltas do PRÓPRIO jogador (`buracosDoFlight`): os escalões novos
+              jogam 9 buracos em torneios cuja ficha diz 18 (British Kids 2021, Boys 7&U). */}
+          {r.resumo.nBuracos === 9 && <NineHPill />}
           {categorizedLinks.map((l) => (
             <Tint as={ExtLink} key={l.key + l.url} href={l.url} fg={`var(${l.colorVar})`} bd={`var(${l.colorVar})`}
               title={`Abrir em ${l.label}`} className="src-link-tag"
@@ -398,12 +388,12 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
       <td className="u-ta-right">
         {rounds.length > 0 ? (
           rounds.map((rd, i) => {
-            const g = rd.gross;
+            const g = voltas[i]; // null = sem cartão (≥ 900) ou sem gross
             const clickable = roundsWithStrokes.has(rd.round);
             return (
               <React.Fragment key={i}>
                 {i > 0 && <span className="u-c-text-3">·</span>}
-                {clickable && typeof g === "number" ? (
+                {clickable && g != null ? (
                   <button
                     onClick={() => onOpenRound(r, rd.round)}
                     className="u-bg-none u-bd-none u-p-0-2px u-fs-fs-11 u-c-var-color-info-dark-1e3a8a u-cur-pointer u-td-underline u-fw-600 u-fvn-tabular-nums"

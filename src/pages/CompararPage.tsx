@@ -36,8 +36,13 @@ import SearchInput from "../ui/SearchInput";
 import CloseButton from "../ui/CloseButton";
 import Select from "../ui/Select";
 import { Tint, Fill } from "../ui/DataStyle";
+import { indicesDoMelhor, arredondar } from "../utils/melhorValor";
+import { temCartao } from "../utils/classificacao";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
+// ⚠ A cor é a do LUGAR do jogador na barra de cima (o índice em `slots`), nunca a
+// posição numa lista já filtrada: 10/11/2026 — com um jogador sem dados (ou sem
+// histórico de handicap) no meio, os seguintes trocavam de cor de secção para secção.
 const COLORS = [C.chartGreen, C.chartBlue, C.chartRed, C.chartAmber];
 // Variantes claras (fundos de série) — tokens --chart-N-light dedicados (só usados
 // em inline styles do DOM, por isso var() chega; sem espelho em colors.ts).
@@ -58,14 +63,13 @@ interface AggStats {
   nRounds: number;
   scoreDist: { eagle: number; birdie: number; par: number; bogey: number; double: number; triple: number; total: number };
   avgGross: number | null;
-  bestGross: number | null;
   f9sl: number | null;
   b9sl: number | null;
 }
 
 function aggregateStats(data: PlayerPageData): AggStats | null {
   let totalN = 0, totalSL = 0, totalHoles = 0, nRounds = 0;
-  let grossSum = 0, grossN = 0, bestGross: number | null = null;
+  let grossSum = 0, grossN = 0;
   let f9slSum = 0, b9slSum = 0, f9n = 0, b9n = 0;
   const distAcc = { eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0, total: 0 };
   const parAgg: Record<number, { sumVsPar: number; holes: number; sumSL: number; count: number }> = {};
@@ -74,7 +78,6 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
     if (hs.holeCount !== 18 || hs.nRounds < 2) continue;
     nRounds += hs.nRounds; totalN++; totalSL += hs.totalStrokesLost;
     if (hs.avgGross != null) { grossSum += hs.avgGross * hs.nRounds; grossN += hs.nRounds; }
-    if (hs.bestRound) { if (bestGross === null || hs.bestRound.gross < bestGross) bestGross = hs.bestRound.gross; }
     const td = hs.totalDist;
     if (td) {
       distAcc.eagle += td.eagle; distAcc.birdie += td.birdie; distAcc.par += td.par;
@@ -108,13 +111,29 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
     totalStrokesLost: totalSL / totalN, parOrBetterPct: pob, dblOrWorsePct: dow,
     byPar, nRounds, scoreDist: distAcc,
     avgGross: grossN > 0 ? grossSum / grossN : null,
-    bestGross,
     f9sl: f9n > 0 ? f9slSum / f9n : null,
     b9sl: b9n > 0 ? b9slSum / b9n : null,
   };
 }
 
 const pct = (v: number) => v.toFixed(0) + "%";
+
+/** Melhor gross de 18 buracos de TODAS as voltas com cartão (10/11/2026: o das
+ *  estatísticas por buraco só olha aos tees com 2 ou mais voltas — a melhor volta
+ *  de sempre, num campo jogado uma vez, ficava de fora). */
+function melhorGross18(data: PlayerPageData | null): number | null {
+  let best: number | null = null;
+  for (const c of data?.DATA ?? []) for (const r of c.rounds) {
+    const g = Number(r.gross);
+    if (r.holeCount !== 18 || !temCartao(g)) continue;
+    if (best === null || g < best) best = g;
+  }
+  return best;
+}
+
+/** Jogadores com o lugar (e a cor) que têm na barra de cima. */
+type SlotI = { s: Slot; i: number };
+const comLugar = (slots: Slot[]): SlotI[] => slots.map((s, i) => ({ s, i }));
 
 /* ═══════════════════ Search + Chips ═══════════════════ */
 
@@ -263,43 +282,34 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
   const loaded = slots.map((s, i) => ({ s, agg: allAgg[i], st: stats[s.fed], i })).filter(x => x.agg || x.st);
   if (loaded.length < 2) return null;
 
-  type Row = { label: string; values: (string | null)[]; best?: "low" | "high"; emoji?: string };
-  const rows: Row[] = [];
-  const val = (fn: (agg: AggStats | null, st: typeof loaded[0]["st"]) => string | null) =>
-    loaded.map(x => fn(x.agg, x.st));
+  // Cada célula guarda o NÚMERO ao lado do texto: o destaque do melhor compara o
+  // número (10/11/2026 — antes lia-se o texto de volta e «+3.5» de handicap plus
+  // virava 3,5), arredondado às casas com que se mostra.
+  type Cel = { txt: string; num: number } | null;
+  type Row = { label: string; cells: Cel[]; best: "low" | "high"; emoji: string };
+  type Lin = typeof loaded[number];
+  const cel = (v: number | null | undefined, casas: number, fmt: (n: number) => string): Cel =>
+    v == null || !Number.isFinite(v) ? null : { txt: fmt(v), num: arredondar(v, casas) };
+  const row = (label: string, emoji: string, best: "low" | "high", fn: (x: Lin) => Cel): Row =>
+    ({ label, emoji, best, cells: loaded.map(fn) });
 
-  rows.push({ label: "HCP Atual", emoji: "🏌️", values: val((_, st) => st?.currentHcp != null ? fmtHcp(st.currentHcp) : null), best: "low" });
-  rows.push({ label: "Melhor Gross", emoji: "🏆", values: val((a, st) => {
-    const v = a?.bestGross ?? st?.bestGross; return v != null ? String(v) : null;
-  }), best: "low" });
-  rows.push({ label: "Gross Médio", emoji: "📊", values: val((a, st) => {
-    const v = a?.avgGross ?? st?.avgGross5; return v != null ? v.toFixed(0) : null;
-  }), best: "low" });
-  rows.push({ label: "SD Best 8/20", emoji: "📈", values: val((_, st) => st?.avgSD8 != null ? st.avgSD8.toFixed(1) : null), best: "low" });
-  rows.push({ label: "Panc. Perdidas/Volta", emoji: "🎯", values: val((a) => a ? fD(a.totalStrokesLost) : null), best: "low" });
-  rows.push({ label: "Par ou Melhor", emoji: "⛳", values: val((a) => a ? pct(a.parOrBetterPct) : null), best: "high" });
-  rows.push({ label: "Dbl+ ou Pior", emoji: "⚠️", values: val((a) => a ? pct(a.dblOrWorsePct) : null), best: "low" });
-  rows.push({ label: "Par 3 vs Par", emoji: "🟢", values: val((a) => a?.byPar[3] ? fD2(a.byPar[3].avgVsPar) : null), best: "low" });
-  rows.push({ label: "Par 4 vs Par", emoji: "🔵", values: val((a) => a?.byPar[4] ? fD2(a.byPar[4].avgVsPar) : null), best: "low" });
-  rows.push({ label: "Par 5 vs Par", emoji: "🟣", values: val((a) => a?.byPar[5] ? fD2(a.byPar[5].avgVsPar) : null), best: "low" });
-  rows.push({ label: "Voltas 12m", emoji: "📅", values: val((_, st) => st?.roundsLast12m != null ? String(st.roundsLast12m) : null), best: "high" });
-  rows.push({ label: "Δ HCP 3m", emoji: "📉", values: val((_, st) => st?.hcpDelta3m != null ? ((st.hcpDelta3m > 0 ? "+" : "") + st.hcpDelta3m.toFixed(1)) : null), best: "low" });
+  const rows: Row[] = [
+    // HCP plus é negativo no número («+3.5» mostra-se, −3,5 compara-se).
+    row("HCP Atual", "🏌️", "low", x => cel(x.st?.currentHcp, 1, fmtHcp)),
+    row("Melhor Gross", "🏆", "low", x => cel(melhorGross18(x.s.data) ?? x.st?.bestGross, 0, String)),
+    row("Gross Médio", "📊", "low", x => cel(x.agg?.avgGross ?? x.st?.avgGross5, 0, v => v.toFixed(0))),
+    row("SD Best 8/20", "📈", "low", x => cel(x.st?.avgSD8, 1, v => v.toFixed(1))),
+    row("Panc. Perdidas/Volta", "🎯", "low", x => cel(x.agg?.totalStrokesLost, 1, fD)),
+    row("Par ou Melhor", "⛳", "high", x => cel(x.agg?.parOrBetterPct, 0, pct)),
+    row("Dbl+ ou Pior", "⚠️", "low", x => cel(x.agg?.dblOrWorsePct, 0, pct)),
+    row("Par 3 vs Par", "🟢", "low", x => cel(x.agg?.byPar[3]?.avgVsPar, 2, fD2)),
+    row("Par 4 vs Par", "🔵", "low", x => cel(x.agg?.byPar[4]?.avgVsPar, 2, fD2)),
+    row("Par 5 vs Par", "🟣", "low", x => cel(x.agg?.byPar[5]?.avgVsPar, 2, fD2)),
+    row("Voltas 12m", "📅", "high", x => cel(x.st?.roundsLast12m, 0, String)),
+    row("Δ HCP 3m", "📉", "low", x => cel(x.st?.hcpDelta3m, 1, v => fmtSign(v, 1))),
+  ];
 
-  const bestIdx = rows.map(r => {
-    // No HCP o «+» é handicap PLUS (abaixo de zero): «+3.5» é melhor do que «+2.4».
-    const plusNeg = r.label === "HCP Atual";
-    const nums = r.values.map(v => {
-      if (v == null) return null;
-      const n = parseFloat(v.replace(/[+%]/g, ""));
-      return plusNeg && v.startsWith("+") ? -n : n;
-    });
-    const valid = nums.filter((n): n is number => n != null && !isNaN(n));
-    if (valid.length < 2) return -1;
-    const target = r.best === "high" ? Math.max(...valid) : Math.min(...valid);
-    return nums.indexOf(target);
-  });
-
-  const sortedRows = rows.map((r, ri) => ({ ...r, bi: bestIdx[ri] }));
+  const sortedRows = rows.map(r => ({ ...r, melhores: indicesDoMelhor(r.cells.map(c => c?.num), r.best) }));
   if (sortKey === "label") {
     sortedRows.sort((a, b) => sortDir === "asc" ? a.label.localeCompare(b.label, "pt") : b.label.localeCompare(a.label, "pt"));
   }
@@ -326,12 +336,11 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
                   <span className="u-mr-6px">{r.emoji}</span>{r.label}
                 </td>
                 {loaded.map((x, ci) => {
-                  const v = r.values[ci];
-                  const isBest = r.bi === ci;
+                  const isBest = r.melhores.includes(ci);
                   return (
                     <Tint as="td" key={ci} className={"r mono " + (isBest ? "u-fw-800" : "u-fw-400")}
                       fg={isBest ? COLORS[x.i] : null} bg={isBest ? COLORS_LIGHT[x.i] : null}>
-                      {v ?? "–"}
+                      {r.cells[ci]?.txt ?? "–"}
                     </Tint>
                   );
                 })}
@@ -409,8 +418,11 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
 function HoleByHoleSection({ slots }: { slots: Slot[] }) {
   // Chaves: "h" (buraco), "par", `avg${i}` (média vs par do jogador i), `sl${i}` (pancadas perdidas)
   const { sortKey: hKey, sortDir: hDir, toggleSort: toggleHole } = useSort<string>("h");
-  const loaded = slots.filter(s => s.data);
-  if (loaded.length < 2) return null;
+  // Hooks TODOS antes de qualquer `return` (10/11/2026): com um `return` no meio,
+  // o React rebenta quando o nº de jogadores com dados muda com a secção montada.
+  // `ci` = lugar do jogador na barra de cima (a cor); o índice no `loaded` é só a
+  // posição nas colunas desta secção.
+  const loaded = useMemo(() => comLugar(slots).filter(x => x.s.data).map(x => ({ ...x.s, ci: x.i })), [slots]);
 
   const combos = useMemo(() => {
     const maps = loaded.map(s => {
@@ -436,7 +448,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
   }, [loaded]);
 
   const [sel, setSel] = useState(0);
-  if (combos.length === 0) return null;
+  if (loaded.length < 2 || combos.length === 0) return null;
   const combo = combos[Math.min(sel, combos.length - 1)];
   const refStats = combo.stats.find(Boolean)!;
 
@@ -489,8 +501,8 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
           if (pts.length < 2) return null;
           const d = pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" L ");
           return (<g key={si}>
-            <path d={`M ${d}`} fill="none" stroke={COLORS[si]} strokeWidth={2.5} opacity={0.8} strokeLinejoin="round" />
-            {pts.map((p, j) => (<circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[si]} className="pt-ring" strokeWidth={1}><title>{shortName(s.player.name)}: Bur. {p.hole} {fD2(p.val)} vs par</title></circle>))}
+            <path d={`M ${d}`} fill="none" stroke={COLORS[s.ci]} strokeWidth={2.5} opacity={0.8} strokeLinejoin="round" />
+            {pts.map((p, j) => (<circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[s.ci]} className="pt-ring" strokeWidth={1}><title>{shortName(s.player.name)}: Bur. {p.hole} {fD2(p.val)} vs par</title></circle>))}
           </g>);
         })}
       </svg>
@@ -499,8 +511,8 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
         {loaded.map((s, i) => {
           const st = combo.stats[i];
           return (
-            <Tint as="div" key={i} bd={COLORS[i]} className="caKpi">
-              <Tint as="div" fg={COLORS[i]} className="caKpiVal">{st ? st.avgGross?.toFixed(0) ?? "–" : "–"}</Tint>
+            <Tint as="div" key={i} bd={COLORS[s.ci]} className="caKpi">
+              <Tint as="div" fg={COLORS[s.ci]} className="caKpiVal">{st ? st.avgGross?.toFixed(0) ?? "–" : "–"}</Tint>
               <div className="caKpiLbl">{shortName(s.player.name)} · {st?.nRounds ?? 0} rondas</div>
             </Tint>
           );
@@ -522,14 +534,15 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
               const entries = loaded.map((_, si) => combo.stats[si]?.holes[hi] ?? null);
               const par = entries.map(e => e?.par ?? 0).find(p => p > 0) || 0;
               const avgs = entries.map(e => e?.avg != null && e?.par != null ? e.avg - e.par : null);
-              const bestAvg = Math.min(...avgs.filter((v): v is number => v != null));
+              // Comparado como se mostra (2 casas); empate entre todos = sem destaque.
+              const melhores = indicesDoMelhor(avgs.map(v => v == null ? null : arredondar(v, 2)));
               return (<tr key={hi}>
                 <td className="r"><b>{hi + 1}</b></td>
                 <td className="r u-c-text-3">{par}</td>
                 {entries.map((e, i) => {
                   const diff = e?.avg != null && e?.par != null ? e.avg - e.par : null;
                   const sl = e?.strokesLost ?? null;
-                  const isBest = diff != null && diff === bestAvg && avgs.filter(v => v === bestAvg).length === 1;
+                  const isBest = melhores.includes(i);
                   const diffTone = diff == null ? "" : diff <= 0 ? "tone-good" : diff <= 0.3 ? "u-c-var-color-warn-e07b00" : "tone-bad";
                   return (<React.Fragment key={i}>
                     <td className={`r ${diffTone}`}>{diff != null ? (isBest ? <b>{fD2(diff)}</b> : fD2(diff)) : "–"}</td>
@@ -553,8 +566,8 @@ const H2H_SORT_DIRS: Record<string, "asc" | "desc"> = { event: "asc", g0: "asc",
 function HeadToHeadSection({ slots }: { slots: Slot[] }) {
   // Chaves: "date", "event", `g${i}` (gross do jogador i), "delta" (diferença, só com 2 jogadores)
   const { sortKey: mKey, sortDir: mDir, toggleSort: toggleMatch } = useSort<string>("date", "desc", H2H_SORT_DIRS);
-  const loaded = slots.filter(s => s.data);
-  if (loaded.length < 2) return null;
+  // Hooks antes de qualquer `return`; `ci` = lugar (cor) na barra de cima (10/11/2026).
+  const loaded = useMemo(() => comLugar(slots).filter(x => x.s.data).map(x => ({ ...x.s, ci: x.i })), [slots]);
 
   const matches = useMemo(() => {
     const eventMap = new Map<string, Map<number, RoundData & { course: string }>>();
@@ -571,7 +584,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
     for (const [, m] of eventMap) {
       if (m.size < 2) continue;
       const first = [...m.values()][0];
-      const results = [...m.entries()].map(([idx, r]) => ({ idx, gross: Number(r.gross) })).filter(r => r.gross > 50 && r.gross < 900); // ≥ 900 = sem cartão
+      const results = [...m.entries()].map(([idx, r]) => ({ idx, gross: Number(r.gross) })).filter(r => r.gross > 50 && temCartao(r.gross)); // ≥ 900 = sem cartão
       if (results.length < 2) continue;
       results.sort((a, b) => a.gross - b.gross);
       res.push({ event: first.eventName, date: first.date, dateSort: first.dateSort, results });
@@ -580,7 +593,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
     return res;
   }, [loaded]);
 
-  if (matches.length === 0) return null;
+  if (loaded.length < 2 || matches.length === 0) return null;
   const wins = loaded.map(() => 0);
   // Empate no melhor resultado não é vitória de ninguém (conta em «Empates»).
   matches.forEach(m => { if (m.results[0].gross < m.results[1].gross) wins[m.results[0].idx]++; });
@@ -613,7 +626,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           const w = totalMatches > 0 ? (wins[i] / totalMatches * 100) : 0;
           if (w === 0) return null;
           return (
-            <Fill key={i} pct={w} bg={COLORS[i]} className="win-bar-seg">
+            <Fill key={i} pct={w} bg={COLORS[s.ci]} className="win-bar-seg">
               {wins[i] > 0 && `${firstName(s.player.name)} ${wins[i]}`}
             </Fill>
           );
@@ -627,8 +640,8 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
 
       <div className="caKpis">
         {loaded.map((s, i) => (
-          <Tint as="div" key={i} bd={wins[i] === Math.max(...wins) ? COLORS[i] : null} className="caKpi">
-            <Tint as="div" fg={COLORS[i]} className="caKpiVal">{wins[i]}</Tint>
+          <Tint as="div" key={i} bd={indicesDoMelhor(wins, "high").includes(i) ? COLORS[s.ci] : null} className="caKpi">
+            <Tint as="div" fg={COLORS[s.ci]} className="caKpiVal">{wins[i]}</Tint>
             <div className="caKpiLbl">{firstName(s.player.name)} vitórias</div>
           </Tint>
         ))}
@@ -652,14 +665,16 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           </tr></thead>
           <tbody>
             {sortedMatches.slice(0, 30).map((m, mi) => {
-              const bestGross = Math.min(...m.results.map(r => r.gross));
+              // Melhor gross do torneio; empate entre todos = ninguém em destaque.
+              const melhores = indicesDoMelhor(loaded.map((_, i) => m.results.find(r => r.idx === i)?.gross));
               return (<tr key={mi} className="roundRow">
                 <td className="u-c-text-3 u-ws-nowrap">{m.date}</td>
                 <td>{m.event}</td>
-                {loaded.map((_, i) => {
+                {loaded.map((s, i) => {
                   const r = m.results.find(r => r.idx === i);
                   if (!r) return <td key={i} className="r">–</td>;
-                  return <Tint as="td" key={i} className={"r " + (r.gross === bestGross ? "u-fw-800" : "u-fw-400")} fg={r.gross === bestGross ? COLORS[i] : null}>{r.gross}</Tint>;
+                  const isBest = melhores.includes(i);
+                  return <Tint as="td" key={i} className={"r " + (isBest ? "u-fw-800" : "u-fw-400")} fg={isBest ? COLORS[s.ci] : null}>{r.gross}</Tint>;
                 })}
                 <td className="r u-c-text-3">
                   {loaded.length === 2 ? (() => {
@@ -681,11 +696,13 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
 
 function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
   const [period, setPeriod] = useState(12);
-  const loaded = slots.filter(s => s.data && s.data.CROSS_DATA[s.fed]?.hcpHistory?.length >= 2);
+  // Quem não tem histórico de handicap sai da lista, mas os outros mantêm a cor
+  // do seu lugar na barra de cima (10/11/2026).
+  const loaded = comLugar(slots).filter(({ s }) => s.data && s.data.CROSS_DATA[s.fed]?.hcpHistory?.length >= 2);
   if (loaded.length < 2) return null;
   const cutoff = period > 0 ? Date.now() - period * 30.44 * 86400000 : 0;
   const W = 800, H = 260, PAD = { top: 20, right: 20, bottom: 30, left: 45 };
-  const series = loaded.map((s, i) => ({ name: s.player.name, color: COLORS[i], pts: (s.data!.CROSS_DATA[s.fed]?.hcpHistory || []).filter(p => p.d >= cutoff).sort((a, b) => a.d - b.d) }));
+  const series = loaded.map(({ s, i }) => ({ name: s.player.name, color: COLORS[i], pts: (s.data!.CROSS_DATA[s.fed]?.hcpHistory || []).filter(p => p.d >= cutoff).sort((a, b) => a.d - b.d) }));
   const allPts = series.flatMap(s => s.pts);
   if (allPts.length === 0) return null;
   const minD = Math.min(...allPts.map(p => p.d)), maxD = Math.max(...allPts.map(p => p.d));

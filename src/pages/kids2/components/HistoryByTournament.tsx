@@ -27,6 +27,7 @@ import Sparkline from "../../../ui/Sparkline";
 import { TrophyPos } from "../../../ui/PosBadge";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Tint } from "../../../ui/DataStyle";
+import { resumoResultado, buracosDoFlight } from "../../../utils/voltasJogadas";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -43,6 +44,11 @@ interface Edition {
 }
 
 const TOP_SERIES_DEFAULT = 8;
+
+/** Voltas, total e ±par de uma edição com as regras do site (10/11/2026): sem
+ *  cartão (≥ 900) fica vazio e o ±par de recurso é pelas voltas JOGADAS. */
+const resumoDe = (ed: Edition) =>
+  resumoResultado(ed.result, ed.flight.par, { parTotal: ed.tournament.parTotal, buracos: ed.tournament.holesPerRound });
 
 export default function HistoryByTournament({ data, junior, filterTids }: Props) {
   const [showAllSeries, setShowAllSeries] = useState(false);
@@ -143,9 +149,11 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
             Edições únicas · {oneOffs.length}
           </div>
           <div className="u-d-flex u-fwr-wrap u-gap-4px">
-            {(showAllOneOffs ? oneOffs : oneOffs.slice(0, 16))
-              .slice()
+            {/* Ordenar ANTES de cortar (10/11/2026): cortava as 16 primeiras pela
+                ordem do ficheiro e só depois ordenava — as mais recentes ficavam de fora. */}
+            {[...oneOffs]
               .sort((a, b) => (b.tournament.date || "").localeCompare(a.tournament.date || ""))
+              .slice(0, showAllOneOffs ? oneOffs.length : 16)
               .map((ed, i) => (
                 <OneOffPill key={i} ed={ed} />
               ))}
@@ -183,17 +191,12 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
     const mul = sortDir === "asc" ? 1 : -1;
     // Vazios (null / "") sempre no fim, nas duas direcções.
     const getVal = (ed: Edition, key: EdSortKey): string | number | null => {
-      const parTotal = ed.flight.par?.reduce((a, b) => a + (b || 0), 0) || ed.tournament.parTotal;
-      const rounds = ed.result.rounds || [];
-      const grosses = rounds.map((r) => r.gross).filter((g): g is number => typeof g === "number");
-      const total = ed.result.totalGross ?? (grosses.length ? grosses.reduce((a, b) => a + b, 0) : null);
-      const toPar = ed.result.toPar ?? (total != null && parTotal && rounds.length ? total - parTotal * rounds.length : null);
       switch (key) {
         case "year": return ed.tournament.date || null;
         case "flight": return (ed.flight.label || "").toLowerCase() || null;
         case "pos": return typeof ed.result.pos === "number" ? ed.result.pos : null;
-        case "rounds": return total ?? null;
-        case "toPar": return toPar ?? null;
+        case "rounds": return resumoDe(ed).total;
+        case "toPar": return resumoDe(ed).toPar;
         case "topPct": {
           const pos = ed.result.pos;
           const fs = ed.flight.fieldSize ?? null;
@@ -228,7 +231,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
               {formatStars(tournWeight.stars)}
             </span>
             <ScoringTag scoringType={(last.tournament.extra as any)?.scoringType} />
-            <SeriesNineHolesPill tournament={last.tournament} flight={last.flight} />
+            <SeriesNineHolesPill ed={last} />
           </div>
           <div className="u-fs-fs-10 u-c-text-3 u-mt-1px">
             {editions.length} {editions.length === 1 ? "edição" : "edições"}
@@ -266,11 +269,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
             </thead>
             <tbody>
               {sortedEditions.map((ed, i) => {
-                const parTotal = ed.flight.par?.reduce((a, b) => a + (b || 0), 0) || ed.tournament.parTotal;
-                const rounds = ed.result.rounds || [];
-                const grosses = rounds.map((r) => r.gross).filter((g): g is number => typeof g === "number");
-                const total = ed.result.totalGross ?? (grosses.length ? grosses.reduce((a, b) => a + b, 0) : null);
-                const toPar = ed.result.toPar ?? (total != null && parTotal && rounds.length ? total - parTotal * rounds.length : null);
+                const { voltas, jogadas, total, toPar } = resumoDe(ed);
                 const fs = ed.flight.fieldSize ?? null;
                 const topPct = typeof ed.result.pos === "number" && fs && fs > 0
                   ? Math.round((ed.result.pos / fs) * 100)
@@ -290,8 +289,8 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                       {topPct != null ? `${topPct}%` : "—"}
                     </td>
                     <td className="u-ta-right">
-                      {grosses.length ? grosses.join("·") : total ?? "—"}
-                      {total != null && grosses.length > 1 && <span className="u-c-text-3 u-ml-4px">({total})</span>}
+                      {jogadas.length ? voltas.map((g) => g ?? "—").join("·") : total ?? "—"}
+                      {total != null && jogadas.length > 1 && <span className="u-c-text-3 u-ml-4px">({total})</span>}
                     </td>
                     <td className={"u-ta-right " + (toPar != null && toPar !== 0 ? "u-fw-700" : "u-fw-400") + " " + (toneClass(toPar) || "tone-muted")}>
                       {fmtToPar(toPar)}
@@ -366,10 +365,9 @@ function trophyColor(pos: number | null | undefined): string {
 }
 
 
-function SeriesNineHolesPill({ tournament, flight }: { tournament: Tournament; flight: Flight }) {
-  const is9 = tournament.holesPerRound === 9 ||
-    (Array.isArray(flight.par) && flight.par.filter((p) => p > 0).length === 9);
-  if (!is9) return null;
+function SeriesNineHolesPill({ ed }: { ed: Edition }) {
+  // Pelas voltas do próprio jogador; sem buraco a buraco, o par do flight e a ficha do torneio.
+  if (buracosDoFlight(ed.result.rounds, ed.flight.par, ed.tournament.holesPerRound) !== 9) return null;
   return (
     <span title="Torneio de 9 buracos" className="u-fs-fs-9 u-p-1px-4px u-br-radius-sm u-fw-700 u-bg-bg-muted u-c-text-2 u-bd-1px-solid-border-light u-lh-1_4 u-fsh-0">
       9H

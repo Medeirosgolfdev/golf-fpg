@@ -2,9 +2,10 @@
  * RivaisDashboard — International rivals analysis table
  */
 import { useMemo, useState } from "react";
-import { fmtSign, sortArrow, fmtOrd } from "../utils/format";
+import { fmtSign, sortArrow, fmtOrd, dateParts } from "../utils/format";
 import { flag as countryFlag } from "../utils/flagUtils";
-import { zTier, getTrend, getAvgZ, meanArr } from "../utils/mathUtils";
+import { zTier, getTrend, meanArr } from "../utils/mathUtils";
+import { avgZPonderado } from "../utils/zRank";
 import { toneClass } from "../utils/scoreDisplay";
 import KpiCard from "./KpiCard";
 import { compareNullsLast } from "../hooks/useSort";
@@ -22,13 +23,9 @@ import { Tint, Cols, Place } from "./DataStyle";
 // DOB formatter — aceita YYYY-MM-DD, DD/MM/YYYY, ou outro; devolve "DD/MM/YY"
 function fmtDob(dob?: string): string {
   if (!dob) return "";
-  // YYYY-MM-DD
-  let m = dob.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (m) return `${m[3]}/${m[2]}/${m[1].slice(2)}`;
-  // DD/MM/YYYY
-  m = dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if (m) return `${m[1].padStart(2, "0")}/${m[2].padStart(2, "0")}/${m[3].slice(2)}`;
-  return dob;
+  const p = dateParts(dob);   // a leitura de datas do site (utils/format), não uma cópia
+  const dd = (n: number) => String(n).padStart(2, "0");
+  return p ? `${dd(p.d)}/${dd(p.m)}/${String(p.y).slice(2)}` : dob;
 }
 
 interface RivaisDashboardProps {
@@ -81,6 +78,16 @@ export default function RivaisDashboard({
   const [dOnly, setDOnly] = useState(fieldMode);
   const [vsOn, setVsOn] = useState(true);
 
+  // z-score médio de cada jogador: cada volta contra a média/desvio dessa volta
+  // nesse torneio (AVG_R), com o peso de prestígio do torneio (T_WEIGHTS).
+  // 10/11/2026: chamava-se o `getAvgZ` sem estatísticas e vinha sempre null — o
+  // rank não ordenava nada e o rodapé dizia «0 jogadores com dados».
+  const zOf = useMemo(() => {
+    const m = new Map<RivalPlayer, number | null>();
+    for (const p of D) m.set(p, avgZPonderado(p.r, AVG_R, T_WEIGHTS));
+    return (p: RivalPlayer) => m.get(p) ?? null;
+  }, [D, AVG_R, T_WEIGHTS]);
+
   const list = useMemo(() => {
     let pl = [...D];
     if (dOnly) pl = pl.filter(x => Object.values(x.r).some(r => r.tp != null));
@@ -97,8 +104,7 @@ export default function RivaisDashboard({
       let cmp = 0;
       if (sort === "name") cmp = a.n.localeCompare(b.n);
       else if (sort === "zrank") {
-        const z = getAvgZ as unknown as (p: RivalPlayer) => number | null;
-        return compareNullsLast(z(a), z(b), d);
+        return compareNullsLast(zOf(a), zOf(b), d);
       } else if (sort === "vsManuel") {
         return compareNullsLast(getVsAvg(a), getVsAvg(b), d);
       } else if (sort.startsWith("t:")) {
@@ -126,13 +132,9 @@ export default function RivaisDashboard({
             return -n; // mais top10 primeiro quando asc
           }
           if (sort === "age") {
-            if (!x.dob) return null;
-            const dm = x.dob.match(/^(\d{4})-(\d{2})-(\d{2})/) || x.dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-            if (!dm) return null;
-            let y, m, d;
-            if (dm[0].includes("-")) { y = +dm[1]; m = +dm[2]; d = +dm[3]; }
-            else { d = +dm[1]; m = +dm[2]; y = +dm[3]; }
-            return -new Date(y, m - 1, d).getTime(); // mais velho primeiro
+            const dp = dateParts(x.dob);
+            if (!dp) return null;
+            return -new Date(dp.y, dp.m - 1, dp.d).getTime(); // mais velho primeiro
           }
           // avg18 / best18
           const gross18: number[] = [];
@@ -151,7 +153,7 @@ export default function RivaisDashboard({
       return cmp * d;
     });
     return pl;
-  }, [fTour, fUp, fCo, q, sort, dir, dOnly, D, T]);
+  }, [fTour, fUp, fCo, q, sort, dir, dOnly, D, T, zOf]);
 
   // Nº de inscritos que o "Só com dados" está a esconder (sem resultado em
   // nenhuma coluna), contados DEPOIS dos restantes filtros — para o chip junto
@@ -179,17 +181,14 @@ export default function RivaisDashboard({
 
   // Compute global ordinal rankings from z-score (across ALL players, not just filtered)
   const rankMap = useMemo(() => {
-    const scored = D.map(p => ({
-      n: p.n,
-      z: (getAvgZ as unknown as (p: RivalPlayer) => number | null)(p),
-    })).filter(x => x.z != null) as { n: string; z: number }[];
+    const scored = D.map(p => ({ n: p.n, z: zOf(p) })).filter(x => x.z != null) as { n: string; z: number }[];
     scored.sort((a, b) => a.z - b.z); // lower z = better
     const map: Record<string, number> = {};
     scored.forEach((s, i) => {
       map[s.n] = i + 1;
     });
     return map;
-  }, [D]);
+  }, [D, zOf]);
   const totalRanked = Object.keys(rankMap).length;
 
   function getVsAvg(p: RivalPlayer) {
@@ -522,12 +521,9 @@ export default function RivaisDashboard({
                             // ("11.8 anos"). Sem tournamentDate cai no DOB cru.
                             let label = fmtDob(p.dob);
                             if (fieldMode && tournamentDate) {
-                              const dm = p.dob.match(/^(\d{4})-(\d{2})-(\d{2})/) || p.dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-                              if (dm) {
-                                let y, m, d;
-                                if (dm[0].includes("-")) { y = +dm[1]; m = +dm[2]; d = +dm[3]; }
-                                else { d = +dm[1]; m = +dm[2]; y = +dm[3]; }
-                                const dob = new Date(y, m - 1, d);
+                              const dp = dateParts(p.dob);
+                              if (dp) {
+                                const dob = new Date(dp.y, dp.m - 1, dp.d);
                                 const tdt = new Date(tournamentDate);
                                 const diffMs = tdt.getTime() - dob.getTime();
                                 const diffYears = diffMs / (365.25 * 86400000);
@@ -653,11 +649,7 @@ export default function RivaisDashboard({
                       >
                         {rankMap[p.n] != null ? (
                           <div
-                            title={`z-score: ${(
-                              (getAvgZ as unknown as (
-                                p: RivalPlayer
-                              ) => number | null)(p) ?? 0
-                            ).toFixed(2)} · ${nRounds(p)} rondas`}
+                            title={`z-score: ${(zOf(p) ?? 0).toFixed(2)} · ${nRounds(p)} rondas`}
                           >
                             <div
                               className={`fw-800 fs-13 ${

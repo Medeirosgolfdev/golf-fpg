@@ -21,6 +21,7 @@ import { fmtToPar, MONTHS_PT } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
 import ShowMoreButton from "../../../ui/ShowMoreButton";
 import SectionTitle from "../../../ui/SectionTitle";
+import { resumoResultado } from "../../../utils/voltasJogadas";
 
 const DEFAULT_LIMIT = 6;
 const RECENT_MONTHS = 24; // "recente" = últimos 24 meses
@@ -127,7 +128,7 @@ function WinCard({ win }: { win: WinCard }) {
         )}
         {win.manuelToPar != null && (
           <span title="±par do Manuel neste torneio" className="u-fs-fs-9 u-p-1px-4px u-br-radius-sm u-fw-700 u-bg-bg-success-subtle u-c-color-good-dark u-bd-1px-solid-color-good-dark">
-            M: {win.manuelToPar === 0 ? "E" : win.manuelToPar > 0 ? `+${win.manuelToPar}` : String(win.manuelToPar)}
+            M: {fmtToPar(win.manuelToPar)}
           </span>
         )}
         {url && (
@@ -154,11 +155,10 @@ function collectAllWins(data: CanonicalData, junior: Junior, filterTids?: Set<st
       seenTid.add(tid);
       const flightFs = typeof f.fieldSize === "number" && f.fieldSize > 0 ? f.fieldSize : f.results.length;
       const w = getTournWeight(t, flightFs);
-      // ±par do junior (preferir explícito, senão calcular)
-      const parTotal = f.par?.reduce((a, b) => a + (b || 0), 0) || t.parTotal || 0;
-      const grosses = (r.rounds || []).map((rd) => rd.gross).filter((g): g is number => typeof g === "number");
-      const total = r.totalGross ?? (grosses.length ? grosses.reduce((a, b) => a + b, 0) : null);
-      const toPar = r.toPar ?? (total != null && parTotal && grosses.length ? total - parTotal * grosses.length : null);
+      // ±par do junior pelo resumo global (10/11/2026): sem cartão (≥ 900) fica
+      // vazio e o ±par de recurso é pelas voltas jogadas.
+      const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
+      const toPar = resumoResultado(r, f.par, opts).toPar;
 
       // ±par do Manuel no mesmo torneio (se aplicável)
       let manuelToPar: number | null = null;
@@ -166,10 +166,7 @@ function collectAllWins(data: CanonicalData, junior: Junior, filterTids?: Set<st
         for (const mf of t.flights) {
           const mR = mf.results.find((x) => x.juniorId === manuelId);
           if (!mR) continue;
-          const mParTotal = mf.par?.reduce((a, b) => a + (b || 0), 0) || t.parTotal || 0;
-          const mGrosses = (mR.rounds || []).map((rd) => rd.gross).filter((g): g is number => typeof g === "number");
-          const mTotal = mR.totalGross ?? (mGrosses.length ? mGrosses.reduce((a, b) => a + b, 0) : null);
-          manuelToPar = mR.toPar ?? (mTotal != null && mParTotal && mGrosses.length ? mTotal - mParTotal * mGrosses.length : null);
+          manuelToPar = resumoResultado(mR, mf.par, opts).toPar;
           break;
         }
       }

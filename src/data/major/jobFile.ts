@@ -15,7 +15,7 @@
  */
 import { isManuelByName as isM } from "../../constants/manuel";
 import { isPtCountry, normPaisDisplay } from "../../utils/flagUtils";
-import { intlCountryCell } from "../intlCommon";
+import { holesByMajority, intlCountryCell } from "../intlCommon";
 import { ageAtDate } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { buildEvoMap, type EvoEntry } from "../../hooks/useEvoComparison";
@@ -80,12 +80,7 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
   // buracos basta UM jogador que desistiu a meio (uma ronda de 9 scores) para
   // `some` marcar a divisão inteira como 9 buracos e fatiar todos os cartões
   // a 9 (ex: FM 2026 "13 & 14" tem 328 rondas de 18 + 1 de 9 por desistência).
-  let n9 = 0, n18 = 0;
-  for (const p of players) for (const r of p.rounds || []) {
-    const L = r.scores?.length;
-    if (L === 9) n9++; else if (L === 18) n18++;
-  }
-  const nineHole = n9 > n18;
+  const nineHole = holesByMajority(players.flatMap((p) => (p.rounds || []).map((r) => r.scores))) === 9;
   const holes = nineHole ? 9 : 18;
 
   // Arrays do campo completo (18 buracos), quando válidos.

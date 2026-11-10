@@ -11,6 +11,7 @@ import type { Tournament } from "../fpgTypes";
 import { buildDriveEntries, shortCampo } from "./driveCircuitData";
 import { filterDriveSource, type DriveSeries } from "./driveSource";
 import { DRIVE_REGION_LABEL } from "./driveRegions";
+import { addDaysIso } from "../../utils/dias";
 
 export interface DriveCalEntry {
   /** «1º DT Sul», «Final DC Madeira», «3º AQUAPOR». */
@@ -28,13 +29,6 @@ export interface DriveCalEntry {
 }
 
 const PREFIX: Record<DriveSeries, string> = { tour: "DT", challenge: "DC", aquapor: "AQUAPOR" };
-
-/** AAAA-MM-DD + n dias. */
-function addDays(iso: string, n: number): string {
-  const d = new Date(iso + "T12:00:00Z");
-  d.setUTCDate(d.getUTCDate() + n);
-  return d.toISOString().slice(0, 10);
-}
 
 /** Etiqueta curta de um evento: ordem (do nome) + série + zona. */
 export function driveCalLabel(name: string, series: DriveSeries, region: string | null | undefined): string {
@@ -58,7 +52,7 @@ export function driveCalendar(src: Tournament[], series: DriveSeries, year: stri
       return {
         name: driveCalLabel(e.name, series, e.liga),
         date,
-        ...(e.dateEnd && e.dateEnd !== date ? { endDate: e.dateEnd } : n > 1 ? { endDate: addDays(date, n - 1) } : {}),
+        ...(e.dateEnd && e.dateEnd !== date ? { endDate: e.dateEnd } : n > 1 ? { endDate: addDaysIso(date, n - 1) } : {}),
         campo: shortCampo(e.course),
         region: e.liga || "nacional",
         series,

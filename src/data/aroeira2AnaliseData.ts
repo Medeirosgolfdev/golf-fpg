@@ -23,6 +23,7 @@ import type { Tournament } from "./fpgTypes";
 import { fmtToPar } from "../utils/format";
 import { MANUEL_FED, isManuel as isManuelPlayer } from "../constants/manuel";
 import { normLoose } from "../utils/normName";
+import { isNoCardGross } from "./intlCommon";
 
 const SUB12_NACIONAL_2026_TCODE = "10941"; // Campeonato Nacional de Jovens Sub 12 H
 
@@ -113,8 +114,8 @@ function extractPlayerRounds(t: Tournament): PlayerRoundOnCourse[] {
     if (!p.roundScores || p.roundScores.length === 0) continue;
     for (const rs of p.roundScores) {
       if (!rs.scores || rs.scores.length === 0) continue;
-      // Filtrar rondas inválidas (todos zeros, gross >= 999, ou WD)
-      if (rs.gross == null || rs.gross >= 900) continue;
+      // Filtrar rondas inválidas (todos zeros, «sem cartão» ≥ 900, ou WD)
+      if (rs.gross == null || isNoCardGross(rs.gross)) continue;
       if (rs.scores.every(s => s === 0)) continue;
       const pars = rs.pars && rs.pars.length ? rs.pars : (p.par || []);
       if (!pars.length) continue;
@@ -264,7 +265,7 @@ async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<Anal
   const si18 = currentTournament.players?.[0]?.roundScores?.[0]?.si?.slice(0, 18) ?? [];
   const hotSpots: HoleHotSpot[] = [];
   // Field rounds = todas rondas do torneio actual (todos os 21 jogadores)
-  const fieldRoundsCurrent = (currentTournament.players || []).flatMap(p => (p.roundScores || []).filter(rs => rs.scores && rs.scores.length === 18 && rs.gross < 900 && !rs.scores.every(s => s === 0)));
+  const fieldRoundsCurrent = (currentTournament.players || []).flatMap(p => (p.roundScores || []).filter(rs => rs.scores && rs.scores.length === 18 && !isNoCardGross(rs.gross) && !rs.scores.every(s => s === 0)));
   const manuelRoundsAll = manuelHistory.filter(r => r.scores.length === 18);
 
   for (let h = 0; h < 18; h++) {
@@ -355,7 +356,7 @@ function buildHoleStats(
   const parKey = parRef.join(",");
   const valid = allRounds.filter(r => {
     if (r.scores.length !== 18) return false;
-    if (r.gross == null || r.gross >= 900) return false;
+    if (r.gross == null || isNoCardGross(r.gross)) return false;
     if (!r.pars || r.pars.length !== 18) return true;
     return r.pars.join(",") === parKey;
   });
@@ -1023,7 +1024,7 @@ export function buildHoleDials(
   const parKey = parRef.join(",");
   const valid = allRounds.filter(r => {
     if (r.scores.length !== 18) return false;
-    if (r.gross == null || r.gross >= 900) return false;
+    if (r.gross == null || isNoCardGross(r.gross)) return false;
     if (!r.pars || r.pars.length !== 18) return true;
     return r.pars.join(",") === parKey;
   });

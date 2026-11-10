@@ -29,8 +29,10 @@ import IdentityPills, { PlayerExtLinks } from "./IdentityPills";
 import LoadingState from "../../ui/LoadingState";
 import ErrorState from "../../ui/ErrorState";
 import Modal from "../../ui/Modal";
-import { isoToDmy } from "../../utils/format";
+import { isoToDmy, todayIso } from "../../utils/format";
 import SectionTitle from "../../ui/SectionTitle";
+import { numSafe } from "../../utils/mathUtils";
+import { diasEntre } from "../../utils/dias";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
  *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
@@ -297,10 +299,11 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
         const inYear = (y: number) => liveRounds.filter(r => year(r) === y);
         const thisYearRounds = inYear(currentYear);
         const prevYearRounds = inYear(prevYear);
+        // Dias do calendário pela conta global (`utils/dias`), não por milissegundos.
+        const hojeIso = todayIso();
         const last90Days = liveRounds.filter(r => {
-          const d = new Date((r.score_dateStr || "").slice(0, 10));
-          if (!isFinite(d.getTime())) return false;
-          return (now.getTime() - d.getTime()) / 86400000 <= 90;
+          const dias = diasEntre((r.score_dateStr || "").slice(0, 10), hojeIso);
+          return dias != null && dias <= 90;
         });
         const sds = liveRounds.filter(r => r.score_differential != null).map(r => Number(r.score_differential)).filter(n => isFinite(n));
         const bestSD = sds.length ? Math.min(...sds) : null;
@@ -399,6 +402,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
                     courseName={scorecardModal.round.course_description || ""}
                     date={isoToDmy(scorecardModal.round.score_dateStr || "")}
                     tee={String(sc.tee_name ?? "")}
+                    grossOficial={numSafe(sc.gross_total)}
                   />
                 </>
               );

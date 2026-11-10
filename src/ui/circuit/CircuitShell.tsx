@@ -26,7 +26,6 @@ import ManuelResultPills from "../ManuelResultPills";
 import AdmissionsTab, { type AdmissionsExtraCol } from "../AdmissionsTab";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import React, { useMemo, useState, useEffect, useCallback, useContext } from "react";
-import { useSearchParams } from "react-router-dom";
 import { CircuitPastEditionsTab, divisionTournament } from "./pastEditions";
 import { ScoutDoCircuito } from "./ScoutProva";
 import { CircuitPastScorecardsTab } from "./PastScorecardsTab";
@@ -53,6 +52,7 @@ import MatchplayView from "./MatchplayView";
 import { entryManuelState, entryPtState, entryHasAce } from "./entryState";
 import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
+import { classificarPorTotal, voltasComCartao } from "../../utils/classificacao";
 import { monthLabel, fmtDateRangePt } from "../../utils/format";
 import { textOnColor } from "../../utils/teeColors";
 import SidebarCard from "../SidebarCard";
@@ -154,6 +154,9 @@ function entryPlayerCount(e: CircuitEntry): number {
 
 // ── Filtros de toggles aplicados ao leaderboard ───────────────────────
 
+/** Os toggles que filtram JOGADORES (os outros filtram a lista de torneios). */
+const PLAYER_TOGGLES: CircuitToggle[] = ["top10", "veteranos", "regressados", "subiram"];
+
 function applyToggles(
   t: FPGTournament,
   active: Set<CircuitToggle>,
@@ -178,13 +181,14 @@ function applyToggles(
   if (active.has("top10")) {
     // Top 10 por gross acumulado (robusto mesmo sem campo pos fiável).
     // Só entre quem tem TODAS as voltas e cartão: quem falhou o cut soma menos
-    // e ficava à frente do vencedor (10/11/2026).
-    const voltasDe = (p: (typeof players)[number]) => (p.roundScores || []).filter(r => r.gross > 0 && r.gross < 900).length;
-    const maxVoltas = Math.max(0, ...players.map(voltasDe));
-    const ranked = [...players]
-      .filter(p => typeof p.grossTotal === "number" && p.grossTotal < 900 && voltasDe(p) === maxVoltas)
-      .sort((a, b) => (a.grossTotal as number) - (b.grossTotal as number));
-    const top = new Set(ranked.slice(0, 10));
+    // e ficava à frente do vencedor (10/11/2026) — a regra única de
+    // `utils/classificacao.ts`.
+    const { ordenados } = classificarPorTotal(
+      players,
+      p => voltasComCartao(p.roundScores),
+      p => (typeof p.grossTotal === "number" ? p.grossTotal : null),
+    );
+    const top = new Set(ordenados.slice(0, 10));
     players = players.filter(p => top.has(p));
   }
 
@@ -287,6 +291,20 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     }
     return m;
   }, [entries, config.veteranIndex]);
+
+  // ── Filtros de JOGADOR da barra (Top 10 · Veteranos · Regressados · Subiram)
+  // como função estável: o mesmo torneio dá sempre o mesmo objecto filtrado
+  // (não se refaz o leaderboard a cada render) e vai também às divisões com
+  // `renderFull` (/FPG, /major), onde os chips não faziam nada (10/11/2026).
+  const playerFilter = useMemo(() => {
+    if (!PLAYER_TOGGLES.some(t => toggles.has(t))) return undefined;
+    const feitos = new WeakMap<FPGTournament, FPGTournament>();
+    return (t: FPGTournament): FPGTournament => {
+      let r = feitos.get(t);
+      if (!r) { r = applyToggles(t, toggles, vetIndex, vetThreshold); feitos.set(t, r); }
+      return r;
+    };
+  }, [toggles, vetIndex, vetThreshold]);
 
   // ── Opções dos dropdowns ────────────────────────────────────────────
   const years = useMemo(
@@ -464,7 +482,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
 
   // ── Leaderboard com toggles aplicados ───────────────────────────────
   const baseTourn = curDiv?.results ?? totalsView?.tournament ?? null;
-  const resultsTourn = baseTourn ? applyToggles(baseTourn, toggles, vetIndex, vetThreshold) : null;
+  const resultsTourn = baseTourn && playerFilter ? playerFilter(baseTourn) : baseTourn;
 
   const leadingTabs: { key: string; label: string; content: React.ReactNode }[] = [];
   if (curDiv && !curDiv.renderFull) {
@@ -497,16 +515,10 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // "scorecards", "matchplay", "past-editions"), para o link funcionar tanto
   // nas divisões com `renderFull` (TournamentDetail) como nas que ficam no
   // IntlTournView do shell. `replace` para não encher o histórico.
-  const [searchParams, setSearchParams] = useSearchParams();
+  // Quem lê e escreve o URL é o próprio TournamentDetail: o shell só lhe diz o
+  // NOME do parâmetro (a /uskids usa «rt»). Antes passava `tabKey`/`onTabKey`,
+  // que o detalhe já não lê — o `&rt=scout` nunca lá chegava (10/11/2026).
   const tabParamName = config.tabParam ?? "tab";
-  const tabParam = searchParams.get(tabParamName) || undefined;
-  const setTabParam = useCallback((k: string) => {
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev);
-      next.set(tabParamName, k);
-      return next;
-    }, { replace: true });
-  }, [setSearchParams, tabParamName]);
   // ── Tab "Edições anteriores" (embutida, keyed por config.editionKey) ──────
   // O shell tem TODAS as entradas (todos os anos) em memória, cada uma com o
   // seu `loadDivisions` lazy → basta agrupar as irmãs (mesma `editionKey`) e
@@ -862,7 +874,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                 {/* O campo do cabeçalho vai como reserva para a aba «⛳ O campo»
                     (o torneio do escalão nem sempre traz `campo`). */}
                 <CampoDoCircuito.Provider value={cur.course || undefined}>
-                {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, pastScorecardsTab: pastScorecardsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined, repeatersTab: repeatersTabNode ?? undefined })}
+                {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, pastScorecardsTab: pastScorecardsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined, repeatersTab: repeatersTabNode ?? undefined, playerFilter })}
                 {!curDiv.renderFull && detailTourn && (
                   <IntlTournView
                     tournament={detailTourn}
@@ -880,8 +892,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     leadingTabs={leadingTabs.length ? leadingTabs : undefined}
                     trailingTabs={trailingTabs.length ? trailingTabs : undefined}
                     roundDraws={curDiv.roundDraws}
-                    tabKey={tabParam}
-                    onTabKey={setTabParam}
+                    tabParam={tabParamName}
                     defaultTab={temResumoSemVoltas ? "resumo" : undefined}
                   />
                 )}

@@ -2,6 +2,7 @@
  * Drive utilities - expandMultiRound and related helpers
  */
 import { expandMultiRound as expandMultiRoundOne, numGross } from "../data/fpgUtils";
+import { isNoCardGross } from "../data/intlCommon";
 import type { Tournament, Player } from "./driveTypes";
 
 /**
@@ -9,7 +10,7 @@ import type { Tournament, Player } from "./driveTypes";
  */
 export function isDNS(p: Player): boolean {
   const g = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
-  if (g != null && g >= 900) return true;
+  if (isNoCardGross(g)) return true;
   if (String(p.pos) === "NS" && p.scores?.every((s) => s === 0)) return true;
   return false;
 }
@@ -50,7 +51,7 @@ export function expandMultiRound(tournaments: Tournament[]): Tournament[] {
       const players: Player[] = e.players.map(p => {
         const pa = p as Player & { _pos?: number | null; _cut?: boolean; _roundsPlayed?: number };
         const valid = (p.roundScores || []).filter(rs =>
-          rs.gross < 900 && !(rs.scores?.length && rs.scores.every((s: number) => s === 0)));
+          !isNoCardGross(rs.gross) && !(rs.scores?.length && rs.scores.every((s: number) => s === 0)));
         const n = pa._roundsPlayed ?? valid.length;
         // Par combinado só do que existe (sem par não se inventa — nada de 72).
         const combinedPar = valid.reduce((s, rs) => s + (rs.pars?.length ? rs.pars.reduce((a: number, b: number) => a + b, 0) : 0), 0);

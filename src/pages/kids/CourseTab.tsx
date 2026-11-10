@@ -14,6 +14,7 @@
  *
  * resolveCourseTee() e exportado para a tab "Previsao" reutilizar.
  */
+import { buracosDoFlight } from "../../utils/voltasJogadas";
 import { useMemo } from "react";
 import CourseHeroCard from "../../ui/CourseHeroCard";
 import { useCourses } from "../../context/CoursesContext";
@@ -238,10 +239,13 @@ function buildCourseTee(
   courseName: string,
   par: number[],
   yards: number[],
-  hpr: number,
+  hprDoTorneio: number,
   escalaoNome: string,
   simCourses: Course[],
 ): ResolvedCourse {
+  // Buracos pelo par do ESCALÃO (10/11/2026): com o par de 9 buracos e a ficha do
+  // torneio a dizer 18, o campo do Boys 8 saía com 9 buracos vazios.
+  const hpr = buracosDoFlight(null, par, hprDoTorneio);
   const matchedCourse = matchSimCourse(courseName, simCourses);
 
   let targetMeters = 0;

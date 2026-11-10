@@ -394,43 +394,10 @@ function normalizeTournament(t, kind, playerMap, { nascimento = new Map(), fedsD
         extra: { primary: false },
       });
     }
-    // Status
-    let status = "OK";
-    let totalGross = typeof pl.grossTotal === "number" ? pl.grossTotal : null;
-    if (typeof pl.grossTotal === "string") {
-      const sg = pl.grossTotal.toUpperCase();
-      if (sg.includes("WD")) status = "WD";
-      else if (sg.includes("DNS")) status = "DNS";
-      else if (sg.includes("DQ")) status = "DQ";
-      totalGross = null;
-    }
-    const rounds = [];
-    const rs = Array.isArray(pl.roundScores) ? pl.roundScores : [];
-    for (const r of rs) {
-      rounds.push({
-        round: r.round || rounds.length + 1,
-        gross: typeof r.gross === "number" ? r.gross : null,
-        strokes: Array.isArray(r.scores) ? r.scores : undefined,
-        // metros do tee que ESTE jogador jogou (as provas «Geral» misturam tees)
-        ...(somaMetros(r.meters) ? { metros: somaMetros(r.meters) } : {}),
-      });
-    }
-    // Compatibilidade com formato antigo "flat" (scores no top-level do player)
-    if (!rounds.length && Array.isArray(pl.scores)) {
-      rounds.push({
-        round: 1,
-        gross: typeof pl.grossTotal === "number" ? pl.grossTotal : null,
-        strokes: pl.scores,
-      });
-    }
     results.push({
       playerSourceKey: fedCode,
       playerName: displayName(pl.name || ""),
-      pos: typeof pl.pos === "number" ? pl.pos : null,
-      status,
-      totalGross,
-      toPar: typeof pl.toPar === "number" ? pl.toPar : null,
-      rounds,
+      ...resultadoDoJogador(pl),
     });
   }
 
@@ -501,4 +468,61 @@ function detectScoringType(t) {
   return "HANDICAP";
 }
 
-module.exports = { load, SOURCE_ID, SOURCE_LABEL, provasDeJovensDoManuel, fedDoJogador };
+/** «Sem cartão»: gross ≥ 900 (997/998/999 — NS, NR, WD). A regra da casa, a
+ *  mesma do site (`isNoCardGross`, src/data/intlCommon.ts). */
+const SEM_CARTAO_DESDE = 900;
+const semCartao = (g) => typeof g === "number" && g >= SEM_CARTAO_DESDE;
+
+/**
+ * Lugar, status, total, ±par e voltas de um jogador de uma prova FPG.
+ *
+ * 10/11/2026 (F1): a FPG grava 997/998/999 na volta que o jogador não entregou
+ * e SOMA-os no total (89 + 998 = 1087; 998 + 999 = 1997). Isto saía para o
+ * canónico como resultado, com `status: "OK"`, ±par («+941») e às vezes lugar —
+ * 64 resultados, a entrar nos confrontos com o Manuel e nos gráficos do Kids 2.
+ * Agora: a volta ≥ 900 fica sem gross (a volta continua lá, para as outras
+ * manterem o número); com uma volta sem cartão, ou um total ≥ 900, o total, o
+ * ±par e o lugar NÃO se gravam e o status passa a «WD» (não terminou).
+ */
+function resultadoDoJogador(pl) {
+  let status = "OK";
+  let totalGross = typeof pl.grossTotal === "number" ? pl.grossTotal : null;
+  if (typeof pl.grossTotal === "string") {
+    const sg = pl.grossTotal.toUpperCase();
+    if (sg.includes("WD")) status = "WD";
+    else if (sg.includes("DNS")) status = "DNS";
+    else if (sg.includes("DQ")) status = "DQ";
+    totalGross = null;
+  }
+  const rounds = [];
+  let voltaSemCartao = false;
+  const grossDaVolta = (g) => {
+    if (semCartao(g)) { voltaSemCartao = true; return null; }
+    return typeof g === "number" ? g : null;
+  };
+  const rs = Array.isArray(pl.roundScores) ? pl.roundScores : [];
+  for (const r of rs) {
+    rounds.push({
+      round: r.round || rounds.length + 1,
+      gross: grossDaVolta(r.gross),
+      strokes: Array.isArray(r.scores) ? r.scores : undefined,
+      // metros do tee que ESTE jogador jogou (as provas «Geral» misturam tees)
+      ...(somaMetros(r.meters) ? { metros: somaMetros(r.meters) } : {}),
+    });
+  }
+  // Compatibilidade com formato antigo "flat" (scores no top-level do player)
+  if (!rounds.length && Array.isArray(pl.scores)) {
+    rounds.push({ round: 1, gross: grossDaVolta(pl.grossTotal), strokes: pl.scores });
+  }
+  const semResultado = voltaSemCartao || semCartao(totalGross);
+  if (semResultado && status === "OK") status = "WD";
+  return {
+    pos: !semResultado && typeof pl.pos === "number" ? pl.pos : null,
+    status,
+    totalGross: semResultado ? null : totalGross,
+    toPar: !semResultado && typeof pl.toPar === "number" ? pl.toPar : null,
+    rounds,
+  };
+}
+
+module.exports = { load, SOURCE_ID, SOURCE_LABEL, provasDeJovensDoManuel, fedDoJogador, resultadoDoJogador };

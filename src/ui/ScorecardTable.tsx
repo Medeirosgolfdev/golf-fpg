@@ -1,6 +1,8 @@
 import React from "react";
 import type { EclecticEntry, HoleScores } from "../data/playerDataLoader";
 import { sumArr } from "../utils/mathUtils";
+import { resumoJogado } from "../utils/parJogado";
+import { temCartao } from "../utils/classificacao";
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import { fmtSign } from "../utils/format";
 import { scClass, toParClass } from "../utils/scoreDisplay";
@@ -22,6 +24,24 @@ export interface ScorecardTableProps {
   /** Sem cabeçalho (campo/data/tee/PAR-RESULTADO-SCORE) — para contextos que já
    *  mostram essas stats por cima, ex: modal da Vista federado. */
   bare?: boolean;
+  /** Gross oficial da volta (o do WHS). Só é usado quando o cartão tem buracos
+   *  em branco: o cabeçalho mostra este total em vez da soma dos buracos que há. */
+  grossOficial?: number | null;
+}
+
+/** Total de um troço da linha do jogador: pancadas dos buracos jogados e o ±par
+ *  contra o par DESSES buracos (10/11/2026 — com buracos em branco comparava-se
+ *  com o par do troço inteiro: «75 · +3» num cartão de 13 buracos). */
+function TotalJogado({ gross, par, from, to, className }: {
+  gross: (number | null)[]; par: (number | null)[]; from: number; to: number; className: string;
+}) {
+  const r = resumoJogado(gross, par, from, to);
+  if (!r.jogados) return <td className={className}>–</td>;
+  return (
+    <td className={className} title={r.completo ? undefined : `${r.jogados} de ${r.buracos} buracos no cartão`}>
+      {r.pancadas}{r.toPar != null && <span className={`sc-topar ${toParClass(r.toPar)}`}>{fmtSign(r.toPar)}</span>}
+    </td>
+  );
 }
 
 const linkLabels: Record<string, string> = {
@@ -48,7 +68,16 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
   const parArr = eclectic.holes.slice(0, holeCount).map((h, i) => h?.par ?? par[i]);
 
   const sumEc = sumArr(ecArr, 0, holeCount);
-  const sumGross = sumArr(gross, 0, holeCount);
+  // Δ de um troço: só nos buracos que a volta jogou (10/11/2026 — com buracos em
+  // branco, eclético dos 18 menos a soma de 13 dava um Δ sem sentido).
+  const deltaTroco = (from: number, to: number): string => {
+    let d = 0, n = 0;
+    for (let i = from; i < to; i++) {
+      const gv = gross[i], ev = ecArr[i];
+      if (gv != null && gv > 0 && ev != null) { d += ev - gv; n++; }
+    }
+    return !n ? "" : d === 0 ? "=" : fmtSign(d);
+  };
 
   return (
     <>
@@ -111,39 +140,20 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
               <td className="u-c-text-3">
                 {diff != null ? (diff === 0 ? "=" : (diff > 0 ? "+" : "") + diff) : ""}
               </td>
-              {h === frontEnd - 1 && !is9 && (() => {
-                const dOut = sumArr(ecArr, 0, frontEnd) - sumArr(gross, 0, frontEnd);
-                return (
-                  <td className="col-out fw-600 u-c-text-3">
-                    {dOut === 0 ? "=" : (dOut > 0 ? "+" : "") + dOut}
-                  </td>
-                );
-              })()}
+              {h === frontEnd - 1 && !is9 && (
+                <td className="col-out fw-600 u-c-text-3">{deltaTroco(0, frontEnd)}</td>
+              )}
             </React.Fragment>
           );
         })}
-        {(() => {
-          const dIn = (is9 ? sumEc : sumArr(ecArr, 9, holeCount)) - (is9 ? sumGross : sumArr(gross, 9, holeCount));
-          return (
-            <td className={`col-${is9 ? "total" : "in"} fw-600 u-c-text-3`}>
-              {dIn === 0 ? "=" : (dIn > 0 ? "+" : "") + dIn}
-            </td>
-          );
-        })()}
-        {!is9 && (() => {
-          const totalDiff = sumEc - sumGross;
-          return (
-            <td className="col-total u-c-text-3">
-              {fmtSign(totalDiff)}
-            </td>
-          );
-        })()}
+        <td className={`col-${is9 ? "total" : "in"} fw-600 u-c-text-3`}>{deltaTroco(is9 ? 0 : 9, holeCount)}</td>
+        {!is9 && <td className="col-total u-c-text-3">{deltaTroco(0, holeCount)}</td>}
       </tr>
     </>
   );
 }
 
-export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecticEntry, bare }: ScorecardTableProps) {
+export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecticEntry, bare, grossOficial }: ScorecardTableProps) {
   const { g: gross, p: par, si, m: meters, hc: holeCount } = holes;
   const is9 = holeCount === 9;
   const frontEnd = is9 ? holeCount : 9;
@@ -153,10 +163,20 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
   const teeFg_ = textOnColor(teeHex_);
 
   const parTotal = sumArr(par, 0, totalHoles);
-  const grossTotal = sumArr(gross, 0, totalHoles);
   const metersTotal = meters ? sumArr(meters, 0, totalHoles) : 0;
-  const toPar = grossTotal - parTotal;
-  const toParStr = fmtSign(toPar);
+  // Cartão com buracos em branco (10/11/2026): a soma dos buracos que há não é o
+  // resultado da volta. No cabeçalho vai o gross oficial (quando quem chama o
+  // dá) contra o par inteiro; sem ele, a soma e o ±par só dos buracos jogados,
+  // com a nota «N de M buracos».
+  const card = resumoJogado(gross, par, 0, totalHoles);
+  const incompleto = card.jogados > 0 && !card.completo;
+  const oficial = incompleto && temCartao(grossOficial) && grossOficial > card.pancadas ? grossOficial : null;
+  const grossTotal = oficial ?? card.pancadas;
+  const toPar = oficial != null ? (parTotal > 0 ? oficial - parTotal : null) : card.toPar;
+  const toParStr = toPar != null ? fmtSign(toPar) : "–";
+  const notaIncompleto = incompleto
+    ? `Cartão com ${card.jogados} de ${totalHoles} buracos` + (oficial != null ? " — resultado oficial da volta" : " — soma e ±par só desses buracos")
+    : undefined;
 
   // Date pill label (DD/MM)
   const datePill = date ? date.substring(0, 5).replace("-", "/") : "Gross";
@@ -194,12 +214,12 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
             <div className="sc-stat-value">{parTotal || "–"}</div>
           </div>
           <div className="v-sep" />
-          <div className="sc-stat">
-            <div className="sc-stat-label">RESULTADO</div>
+          <div className="sc-stat" title={notaIncompleto}>
+            <div className="sc-stat-label">{incompleto && oficial == null ? `${card.jogados} BURACOS` : "RESULTADO"}</div>
             <div className="sc-stat-value">{grossTotal || "–"}</div>
           </div>
           <div className="v-sep" />
-          <div className="sc-stat sc-stat-score">
+          <div className="sc-stat sc-stat-score" title={notaIncompleto}>
             <div className="sc-stat-label">SCORE</div>
             <div className="sc-stat-value">{toParStr}</div>
           </div>
@@ -214,7 +234,8 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
             <th className="row-label sim-br-sep">Buraco</th>
             {Array.from({ length: totalHoles }, (_, h) => (
               <React.Fragment key={h}>
-                <th className="hole-header">{h + 1}</th>
+                {/* Volta de 9 jogada nos buracos 10–18 (`holes.nine === "B"`): numerar 10–18. */}
+                <th className="hole-header">{h + 1 + (is9 && holes.nine === "B" ? 9 : 0)}</th>
                 {h === frontEnd - 1 && !is9 && <th className="hole-header col-out">Out</th>}
               </React.Fragment>
             ))}
@@ -290,39 +311,14 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
                       ? <span className={`sc-score ${cls}`}>{g}</span>
                       : "–"}
                   </td>
-                  {h === frontEnd - 1 && !is9 && (() => {
-                    const outG = sumArr(gross, 0, frontEnd);
-                    const outP = sumArr(par, 0, frontEnd);
-                    const outTP = outG - outP;
-                    const tpCls = toParClass(outTP);
-                    return (
-                      <td className="col-out fw-700">
-                        {outG}<span className={`sc-topar ${tpCls}`}>{fmtSign(outTP)}</span>
-                      </td>
-                    );
-                  })()}
+                  {h === frontEnd - 1 && !is9 && (
+                    <TotalJogado gross={gross} par={par} from={0} to={frontEnd} className="col-out fw-700" />
+                  )}
                 </React.Fragment>
               );
             })}
-            {(() => {
-              const inG = is9 ? grossTotal : sumArr(gross, 9, totalHoles);
-              const inP = is9 ? parTotal : sumArr(par, 9, totalHoles);
-              const inTP = inG - inP;
-              const inCls = toParClass(inTP);
-              return (
-                <td className={`col-${is9 ? "total" : "in"} fw-700`}>
-                  {inG}<span className={`sc-topar ${inCls}`}>{fmtSign(inTP)}</span>
-                </td>
-              );
-            })()}
-            {!is9 && (() => {
-              const totCls = toParClass(toPar);
-              return (
-                <td className="col-total">
-                  {grossTotal}<span className={`sc-topar ${totCls}`}>{toParStr}</span>
-                </td>
-              );
-            })()}
+            <TotalJogado gross={gross} par={par} from={is9 ? 0 : 9} to={totalHoles} className={`col-${is9 ? "total" : "in"} fw-700`} />
+            {!is9 && <TotalJogado gross={gross} par={par} from={0} to={totalHoles} className="col-total" />}
           </tr>
 
           {/* Eclectic + Delta rows */}

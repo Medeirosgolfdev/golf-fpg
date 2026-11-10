@@ -3,29 +3,34 @@
  * completo), ordenadas pela classificação da volta; o Manuel por omissão.
  * Servem o separador da volta (uma volta) e o Resumo/Scorecards (todas).
  */
-import type { Tournament } from "../../data/fpgTypes";
+import type { Player, Tournament } from "../../data/fpgTypes";
 import { computeRoundSD, fillBlankHoles, numGross } from "../../data/fpgUtils";
 import { isManuel } from "../../constants/manuel";
 import { overlayFromRound, roundNumberOf } from "./fromRound";
 import type { ShareOption } from "../ShareRoundPanel";
 
 import { fmtOrd } from "../../utils/format";
+import { temCartao } from "../../utils/classificacao";
+import { chavesSemFundir } from "../../utils/chaveJogador";
+import { playerKey } from "../../utils/playerKey";
 type Ctx = { event?: string; course?: string; date?: string };
 export type ShareOptions = { options: ShareOption[]; defaultKey?: string };
 
-/** Uma volta (o torneio já expandido para essa ronda). */
-export function shareOptionsForRound(t: Tournament, ctx: Ctx = {}, prefix = ""): ShareOptions {
+/** Uma volta: cada opção com o jogador a que pertence (o torneio completo
+ *  precisa dele para juntar as voltas sem fundir homónimos). */
+function roundEntries(t: Tournament, ctx: Ctx = {}, prefix = ""): { entries: { option: ShareOption; player: Player }[]; defaultKey?: string } {
   const done = t.players.filter((p) => {
     if (p._wd) return false;
     const g = numGross(p);
-    if (!(g > 0 && g < 900)) return false;
+    if (!temCartao(g)) return false;
     // Cartão completo — com os buracos em branco completados pelo gross oficial,
     // como no leaderboard (1 em branco = exacto; mais = a mesma estimativa).
     const par = (p.par?.length ? p.par : p.roundScores?.[0]?.pars) || [];
     const sc = fillBlankHoles(p).scores;
     return par.length > 0 && sc.slice(0, par.length).filter((v) => v > 0).length === par.length;
   }).sort((a, b) => numGross(a) - numGross(b));
-  const options: ShareOption[] = [];
+  const entries: { option: ShareOption; player: Player }[] = [];
+  const usadas = new Set<string>();
   let defaultKey: string | undefined;
   done.forEach((p, i) => {
     // Posição na volta, com empates (o mesmo gross = a mesma posição).
@@ -33,12 +38,20 @@ export function shareOptionsForRound(t: Tournament, ctx: Ctx = {}, prefix = ""):
     while (pos > 1 && numGross(done[pos - 2]) === numGross(p)) pos--;
     const data = overlayFromRound(t, { ...p, _pos: pos, _field: done.length } as typeof p, computeRoundSD(p, t.date).sd, ctx);
     if (!data) return;
-    const key = `${prefix}${p.scoreId || p.name}`;
-    const pid = String(p.fed || p.fedCode || p.name).toLowerCase();
-    options.push({ key, label: `${prefix}${fmtOrd(pos)} · ${p.name} — ${numGross(p)}`, data, pid });
+    // Sem scoreId a chave é o nome — dois homónimos ficavam com a mesma opção.
+    let key = `${prefix}${p.scoreId || p.name}`;
+    for (let n = 2; usadas.has(key); n++) key = `${prefix}${p.scoreId || p.name} #${n}`;
+    usadas.add(key);
+    entries.push({ option: { key, label: `${prefix}${fmtOrd(pos)} · ${p.name} — ${numGross(p)}`, data, pid: playerKey(p.fed || p.fedCode, p.name) }, player: p });
     if (!defaultKey && isManuel(p)) defaultKey = key;
   });
-  return { options, defaultKey };
+  return { entries, defaultKey };
+}
+
+/** Uma volta (o torneio já expandido para essa ronda). */
+export function shareOptionsForRound(t: Tournament, ctx: Ctx = {}, prefix = ""): ShareOptions {
+  const { entries, defaultKey } = roundEntries(t, ctx, prefix);
+  return { options: entries.map((e) => e.option), defaultKey };
 }
 
 /** Todas as voltas (Resumo / Scorecards): «R2 · 10º · Nome — 85»; por omissão
@@ -60,15 +73,22 @@ export function shareOptionsForRounds(rounds: Tournament[], ctx: Ctx = {}): Shar
 export function shareOptionsForTournament(rounds: Tournament[], ctx: Ctx = {}): ShareOptions {
   type Acc = { name: string; manuel: boolean; per: { r: number; data: NonNullable<ReturnType<typeof overlayFromRound>> }[] };
   const byPlayer = new Map<string, Acc>();
+  // Federado, ou nome — sem fundir homónimos (10/11/2026): dois jogadores sem
+  // federado com o mesmo nome somavam as voltas no mesmo acumulador (4 «voltas»
+  // numa prova de 2) e, por terem «mais voltas», tiravam todos os outros da
+  // lista. Separa-os o clube; se nem assim, ficam fora do torneio completo
+  // (continuam a ter as opções volta a volta).
+  const chaves = chavesSemFundir(rounds.map((r) => r.players));
   for (const r of rounds) {
     const rn = roundNumberOf(r);
-    for (const o of shareOptionsForRound(r, ctx).options) {
-      const key = o.pid ?? o.key;
-      const p = r.players.find((x) => String(x.scoreId || x.name) === o.key);
+    for (const { option: o, player: p } of roundEntries(r, ctx).entries) {
+      const key = chaves.get(p);
+      if (key == null) continue;
       if (!byPlayer.has(key)) byPlayer.set(key, { name: o.data.player, manuel: false, per: [] });
       const acc = byPlayer.get(key)!;
-      if (p && isManuel(p)) acc.manuel = true;
-      acc.per.push({ r: rn, data: o.data });
+      if (isManuel(p)) acc.manuel = true;
+      // Uma volta por ronda: a mesma chave duas vezes na mesma ronda nunca soma.
+      if (!acc.per.some((x) => x.r === rn)) acc.per.push({ r: rn, data: o.data });
     }
   }
   const full = [...byPlayer.entries()].filter(([, a]) => a.per.length >= 2);

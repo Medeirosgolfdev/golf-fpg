@@ -24,6 +24,7 @@ import { Tint } from "../../../ui/DataStyle";
 import { MUTED } from "../../../ui/tableCells";
 import { TrophyPos } from "../../../ui/PosBadge";
 import SectionTitle from "../../../ui/SectionTitle";
+import { resumoResultado } from "../../../utils/voltasJogadas";
 
 interface Props {
   data: CanonicalData;
@@ -59,11 +60,9 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
       for (const f of t.flights) {
         const r = f.results.find((x) => x.juniorId === junior.id);
         if (!r) continue;
-        const parTotal = f.par?.reduce((a, b) => a + (b || 0), 0) || t.parTotal || null;
-        const grosses = (r.rounds || []).map((rd) => (typeof rd.gross === "number" ? rd.gross : null));
-        const numericGrosses = grosses.filter((g): g is number => typeof g === "number");
-        const total = r.totalGross ?? (numericGrosses.length ? numericGrosses.reduce((a, b) => a + b, 0) : null);
-        const toPar = r.toPar ?? (total != null && parTotal && numericGrosses.length ? total - parTotal * numericGrosses.length : null);
+        // Resumo global (10/11/2026): sem cartão (≥ 900) fica sem total nem ±par, a
+        // volta sem cartão é «—», e as voltas de 9 buracos contam contra 9 buracos.
+        const { voltas: grosses, total, toPar } = resumoResultado(r, f.par, { parTotal: t.parTotal, buracos: t.holesPerRound });
         out.push({
           tid,
           date: t.date || t.startDate || "",

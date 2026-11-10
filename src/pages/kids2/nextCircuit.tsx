@@ -18,6 +18,7 @@ import type { FpgAdmissionPlayer, FpgAdmissions } from "../../data/nacional2026L
 import { isManuelByName as isManuel } from "../../constants/manuel";
 import { displayName, isoDate, todayIso } from "../../utils/format";
 import { tournamentFamilyKey } from "../../ui/circuit/pastEditions";
+import { EXTRA_FAMILIAS } from "../../utils/extraTid";
 import type { CircuitConfig, CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
 import type { Torneio as UskTorneio, TorneioResult, UskidsDrawsData } from "../../ui/uskidsTypes";
 import {
@@ -94,7 +95,9 @@ export const SERIES = {
   ffg: "FFG · Internationaux U14",
   intl: "Torneios internacionais",
 } as const;
-const FAMILIAS = ["WJGC", "Doral", "EOWAGR"] as const;
+// As famílias de fora são as do `utils/extraTid` (10/11/2026): o FCG e o JWGC têm
+// entrada própria — antes vinham rotulados «WJGC».
+const FAMILIAS = EXTRA_FAMILIAS;
 
 function baseEntry(ft: FieldTorneio): Omit<CircuitEntry, "id" | "loadDivisions"> {
   const iso = isoDate(ft.date_inicio || "");
@@ -128,7 +131,7 @@ export function buildNextEntries({ data, results, draws, escRef }: NextSources):
   const d0 = todayIso();
 
   for (const ft of data.futureTorneios) {
-    const fam = FAMILIAS.find(f => ft.name.startsWith(f + " "));
+    const fam = FAMILIAS.find(f => ft.name.startsWith(f + " ") || ft.name === f);
     if (ft.t < 0 && fam) {
       const ano = ft.name.match(/\b(\d{4})\b/)?.[1] ?? "";
       const k = `${fam}|${ano}`;

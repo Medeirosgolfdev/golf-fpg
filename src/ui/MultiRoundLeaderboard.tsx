@@ -6,6 +6,7 @@ import { birthCells, birthFieldsOf, pillDoAno } from "./BirthCells";
 import BirthPill from "./BirthPill";
 import { RowsFilterBar, filterRows, buildSexByName } from "./PlayerFilterBar";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
+import { semBandeira, clubeEhPais } from "../utils/clubePais";
 import { useSort, compareNullsLast, compareTextNullsLast, compareValuesNullsLast } from "../hooks/useSort";
 import WdBadge from "../ui/WdBadge";
 import EmptyState from "../ui/EmptyState";
@@ -157,11 +158,8 @@ export function MultiRoundLeaderboard({
   // «Clube» que é só o país (USKids, internacionais: IT, GB-ENG…): a bandeira vai
   // para antes do nome e a coluna sai — com clubes a sério a coluna fica.
   // O código pode vir sozinho («IT») ou já com a bandeira à frente («🇮🇹 IT», USKids).
-  const semBandeira = (c?: string | null) => (c || "").replace(/^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}][\u{1F1E6}-\u{1F1FF}\u{E0000}-\u{E007F}]*\s*/u, "").trim();
-  const clubesSaoPaises = useMemo(() => rows.some(r => r.club) && rows.every(r => {
-    const u = semBandeira(r.club).toUpperCase();
-    return !u || (/^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(u) && flagOf(u) !== "🏳️");
-  }), [rows]);
+  // (leitura partilhada com a tabela da volta — utils/clubePais)
+  const clubesSaoPaises = useMemo(() => rows.some(r => r.club) && rows.every(r => !semBandeira(r.club) || clubeEhPais(r.club)), [rows]);
   const hasAnyClub = useMemo(() => !clubesSaoPaises && outros.some(r => r.club != null && r.club !== ""), [outros, clubesSaoPaises]);
   const hasAnyHcp  = useMemo(() => outros.some(r => r.hcp != null), [outros]);
   // TEE: também sai quando todos jogam do mesmo tee (já está na informação da prova).
@@ -204,8 +202,6 @@ export function MultiRoundLeaderboard({
 
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<MRSortKey>("pos", "asc");
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
-
-  if (!rows.length) return <EmptyState size="sm" message="Sem resultados." />;
 
   // WD = desistiu; incomplete = ainda nao jogou todas as rondas; cut = eliminado no cut
   const complete   = rows.filter(r => !r.isIncomplete && !r.isWD && !r.isCut);
@@ -382,6 +378,10 @@ export function MultiRoundLeaderboard({
   const compareSel = useCompareSelection<string | number>();
   const compareKey = (row: MultiRoundRow) => row.key || row.name;
   const visibleSorted = compareSel.filter(sorted, compareKey);
+
+  // Só depois de TODOS os hooks (10/11/2026): com o `return` lá em cima, uma
+  // tabela que passasse de vazia a preenchida (ou o contrário) rebentava o React.
+  if (!rows.length) return <EmptyState size="sm" message="Sem resultados." />;
 
   function SHdr({ k, children, className }: { k: MRSortKey; children: React.ReactNode; className?: string }) {
     if (!sortable) return <th className={className}>{children}</th>;

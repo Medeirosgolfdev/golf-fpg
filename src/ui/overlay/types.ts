@@ -7,6 +7,10 @@ export type OverlayData = {
   courseName: string; teeName: string; teeDist: number | null;
   cr: number; slope: number;
   par: number[]; scores: (number | null)[]; si: number[];
+  /** Par TOTAL do tee/volta, para quando não há buraco a buraco (`par` vazio):
+   *  é com ele que se faz o ±par do «Score Total» escrito à mão. Sem ele não há
+   *  ±par — nunca 72/36 inventado. */
+  parTotal?: number | null;
   meters?: (number | null)[];  // metros por buraco (do tee)
   hi: number | null; courseHcp: number | null; sd: number | null;
   is9h: boolean; hasHoles: boolean;
@@ -50,6 +54,8 @@ export type StT = {
 export type Stats = {
   pF: number; pB: number; pT: number;
   sF: number; sB: number; sT: number;
+  /** ±par do total. NaN = sem par conhecido (os desenhos mostram «—», nunca um
+   *  ±par contra um par inventado). */
   vpT: number; vpF: number; vpB: number;
   sd: number; st: StT;
 };

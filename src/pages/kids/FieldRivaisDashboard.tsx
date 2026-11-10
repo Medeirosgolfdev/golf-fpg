@@ -31,6 +31,10 @@ import { compareNullsLast } from "../../hooks/useSort";
 import EmptyState from "../../ui/EmptyState";
 import ExtLink from "../../ui/ExternalLink";
 import { MUTED } from "../../ui/tableCells";
+import { classificarPorTotal, parsePos, posicoesComEmpates, temCartao } from "../../utils/classificacao";
+import { buracosDoFlight, cartaoDaVolta, toParDaVolta } from "../../utils/voltasJogadas";
+import { EXTRA_FAMILIAS, extraTidFamilia, extraTidAno, extraTidEscalao, extraTidEscalaoNome, type ExtraFamilia } from "../../utils/extraTid";
+import PosMedal from "../../ui/PosMedal";
 
 // ─────────────────────────────────────────────────────────────────────
 // Tcodes "canónicos" que aparecem sempre como coluna se metadata existe.
@@ -215,18 +219,19 @@ function normalizeIntlCol(def: IntlColDef, raw: unknown): IntlColData | null {
     // rondas: roundGross[] (JobFile) ou rounds[].gross (ambos os formatos)
     const rg = Array.isArray(p.roundGross) ? (p.roundGross as unknown[]) : null;
     const rd = (rg ?? (Array.isArray(p.rounds) ? (p.rounds as Array<{ gross?: unknown }>).map(r => r?.gross) : []))
-      .map(Number).filter(g => Number.isFinite(g) && g > 0);
+      .map(Number).filter(g => temCartao(g)); // ≥ 900 = sem cartão: não é volta
     if (rd.length === 0) continue;
     maxRounds = Math.max(maxRounds, rd.length);
     const total = Number(p.total);
-    const t = Number.isFinite(total) && total > 0 ? total : rd.reduce((a, b) => a + b, 0);
+    const t = temCartao(total) ? total : rd.reduce((a, b) => a + b, 0);
     // toPar (JobFile) ou result (BlueGolf) — servem para inferir o par por ronda
     const tpRaw = Number(p.toPar ?? p.result);
     const tp = Number.isFinite(tpRaw) ? tpRaw : null;
     if (!parPer && tp != null) parPer = Math.round((t - tp) / rd.length);
-    const posNum = Number(p.pos);
     players.set(normName(nome), {
-      p: Number.isFinite(posNum) && posNum > 0 ? posNum : 0, // 0 = a calcular
+      // «T4» → 4; «CUT»/«WD»/vazio → 0 = a calcular (10/11/2026: `Number("T4")` é
+      // NaN e 78 de 87 jogadores do UA 2026 ficavam sem a posição da fonte).
+      p: parsePos(p.pos) ?? 0,
       t, tp, rd,
     });
   }
@@ -236,14 +241,10 @@ function normalizeIntlCol(def: IntlColDef, raw: unknown): IntlColData | null {
   // FCG 2026 são 57 nulos em 75) — o resto ficava "#—". Como temos o total de
   // toda a divisão, a posição calcula-se: ordenar por total e dar o mesmo
   // lugar a totais iguais (empates).
-  const rank = [...players.values()].filter(c => c.t != null).sort((a, b) => a.t! - b.t!);
-  let prevTotal = -1, prevPlace = 0;
-  rank.forEach((c, i) => {
-    const place = c.t === prevTotal ? prevPlace : i + 1;
-    prevTotal = c.t!; prevPlace = place;
-    if (!c.p) c.p = place;
-  });
-  for (const c of players.values()) if (!c.p) c.p = "WD";
+  // Só entre quem jogou TODAS as voltas (`classificarPorTotal`): por total simples,
+  // quem só jogou 1 volta (92) ficava #1 ao lado do vencedor.
+  const { pos } = classificarPorTotal([...players.values()], c => c.rd.length, c => c.t);
+  for (const c of players.values()) if (!c.p) c.p = pos.get(c) ?? "WD";
   // tp em falta: derivar do par da divisão
   for (const c of players.values()) {
     if (c.tp == null && c.t != null) c.tp = c.t - parPer * c.rd.length;
@@ -374,78 +375,56 @@ const FFG_FILES: FFGFileDef[] = [
 //   • 21004 = USKids Desert Shootout 2026 (US-only, irrelevante para europeu)
 const HIDDEN_TCODES = new Set<string>(["15573", "21004"]);
 
-// Prefixos de tid para EXTRA detection automática (substitui EXTRA_TIDS hardcoded).
-// Qualquer tid em autoRivals.r que comece com um destes prefixos passa a ser
-// considerado uma fonte EXTRA — disponível para o dropdown.
-const EXTRA_TID_PREFIXES = ["wjgc", "doral", "eowagr"] as const;
-
-/** Nome/abreviado/data para um tid EXTRA (wjgc/doral/eowagr) quando os
- *  metadados do loader não bastam. Deriva ano + escalão do próprio tid.
- *  `meta` (do canónico) tem prioridade para nome e data. */
-function describeExtraTid(
-  tid: string,
-  meta?: { name: string; short: string; dateISO: string; url: string | null },
-): { name: string; short: string; date: string; url: string } {
-  let year = new Date().getFullYear();
-  const y4 = tid.match(/20(\d{2})/);
-  const ys = tid.match(/(?:wjgc|doral|eowagr)(\d{2})(?:[_\-]|$)/);
-  if (y4) year = 2000 + parseInt(y4[1], 10);
-  else if (ys) year = 2000 + parseInt(ys[1], 10);
-  else if (meta?.dateISO) { const m = meta.dateISO.match(/^(\d{4})/); if (m) year = parseInt(m[1], 10); }
-  const yy = String(year).slice(2);
-
-  let esc = "";
-  const bc = tid.match(/_b(\d{2,4})(?:[_\-]|$)/);
-  if (bc) {
-    const a = bc[1];
-    esc = a.length === 2 ? `B${a[0]}-${a[1]}` : a.length === 4 ? `B${a.slice(0, 2)}-${a.slice(2)}` : `B${a}`;
-  } else if (/_1213(?:[_\-]|$)/.test(tid)) esc = "B12-13";
-  else if (/_1011(?:[_\-]|$)/.test(tid)) esc = "B10-11";
-  else if (/_89(?:[_\-]|$)/.test(tid)) esc = "B8-9";
-  else if (/_bwagr(?:[_\-]|$)/.test(tid)) esc = "WAGR";
-  else if (/_gwagr(?:[_\-]|$)/.test(tid)) esc = "G-WAGR";
-  else if (/_g1213(?:[_\-]|$)/.test(tid)) esc = "G12-13";
-  else if (/^wjgc\d{2}$/.test(tid)) esc = "B10-11";
-
-  // ⚠ O prefixo `wjgc-` é só o guarda-chuva do loader — por baixo dele vivem
-  // eventos BlueGolf diferentes (brjgt = Daily Mail WJGC, fcg = FCG Callaway,
-  // jwgc = Uswing Mojing). Rotular tudo "WJGC" fazia o FCG 2025 aparecer como
-  // "WJGC '25". O rótulo sai do slug do evento, não do guarda-chuva.
-  const pfx = /^wjgc-fcg/.test(tid) ? "FCG"
-    : /^wjgc-jwgc/.test(tid) ? "JWGC"
-    : tid.startsWith("wjgc") ? "WJGC"
-    : tid.startsWith("doral") ? "Doral"
-    : tid.startsWith("eowagr") ? "EOWAGR" : "";
+/** Família, ano e escalão de um tid EXTRA (wjgc/doral/eowagr) — a MESMA leitura
+ *  (`utils/extraTid`) no menu dos Próximos torneios, nas colunas da grelha e na
+ *  aba «Scores» (10/11/2026: eram três cópias, cada uma com os seus erros).
+ *  `rotulo` = rótulo do flight de um resultado (`ageGroup`), para os tids que
+ *  não trazem o escalão no código («eowagr-eowagr25_contest109»). */
+function lerExtraTid(tid: string, rotulo?: string | null) {
+  const meta = extraTidMeta.get(tid);
+  // Do nome só serve o fim («… - 10-11 Boys»); sem « - » o nome não diz o escalão.
+  const nome = meta?.name?.includes(" - ") ? meta.name : null;
   return {
-    name: prettifyExtraName(meta?.name || "") || `${pfx} ${year}${esc ? " " + esc : ""}`,
-    short: `${pfx} '${yy}${esc ? " " + esc : ""}`,
-    date: meta?.dateISO || `${year}-06-15`,
+    meta,
+    familia: extraTidFamilia(tid),
+    ano: extraTidAno(tid, meta?.dateISO),
+    /** Para mostrar (a divisão WAGR pelo nome). */
+    escalao: extraTidEscalaoNome(tid, rotulo, nome),
+    /** Para o `escalaoMatches` (WAGR = 13-18). */
+    faixa: extraTidEscalao(tid, rotulo, nome),
+  };
+}
+
+/** «Boys 10-11» → «B10-11» (cabeçalhos das colunas); «Geral» → vazio. */
+function escalaoCurto(esc: string): string {
+  if (esc === "Geral") return "";
+  if (/wagr/i.test(esc)) return /girl/i.test(esc) ? "G-WAGR" : "WAGR";
+  return esc.replace(/^Boys\s+/, "B").replace(/^Girls\s+/, "G");
+}
+
+/** Nome/abreviado/data para a coluna de um tid EXTRA. O nome e a data do
+ *  canónico (`extraTidMeta`) têm prioridade; o resto vem do próprio tid. */
+function describeExtraTid(tid: string, rotulo?: string | null): { name: string; short: string; date: string; url: string } {
+  const { meta, familia, ano, escalao } = lerExtraTid(tid, rotulo);
+  const esc = escalaoCurto(escalao);
+  return {
+    name: prettifyExtraName(meta?.name || "") || [familia, ano, esc].filter(Boolean).join(" "),
+    short: [familia, ano != null ? `'${String(ano).slice(2)}` : "", esc].filter(Boolean).join(" "),
+    date: meta?.dateISO || (ano != null ? `${ano}-06-15` : ""),
     url: meta?.url || "",
   };
 }
 
-/** Escalão de um tid EXTRA (wjgc/doral/eowagr) em formato testável por
- *  escalaoMatches. Usado para não mostrar como coluna divisões que não têm
- *  nada a ver com o escalão activo — Doral B8-9 ou WJGC Girls 12-13 numa
- *  análise de Boys 12. "Geral" quando o tid não codifica escalão. */
-function extraTidEscalao(tid: string): string {
-  const sex = /_girls?_|_g(?:\d|wagr)/.test(tid) ? "Girls" : "Boys";
-  // Formato longo: "wjgc-brjgt251_boys_12-13", "wjgc-fcg268_girls_9-10"
-  const rng = tid.match(/_(?:boys|girls)_(\d{1,2})-(\d{1,2})(?:[_-]|$)/);
-  if (rng) return `${sex} ${rng[1]}-${rng[2]}`;
-  if (/_(?:boys|girls)_7under(?:[_-]|$)/.test(tid)) return `${sex} U7`;
-  // WAGR = divisão aberta de ranking, na prática 13+; fora de uma análise Sub-12.
-  if (/_(?:boys|girls)_wagr(?:[_-]|$)/.test(tid)) return `${sex} 13-18`;
-  // Formato compacto: "doral25_b1011", "eowagr25_b78" (⚠ o \d{2,4} tem de vir
-  // SEMPRE colado ao b/g — senão apanha o ano de "wjgc-wjgc_2025_b1011").
-  const cmp = tid.match(/_[bg](\d{2,4})(?:[_-]|$)/);
-  if (cmp) {
-    const a = cmp[1];
-    if (a.length === 4) return `${sex} ${a.slice(0, 2)}-${a.slice(2)}`;
-    if (a.length === 2) return `${sex} ${a[0]}-${a[1]}`;
+/** Par por volta de um torneio EXTRA, lido dos resultados: (total − ±par) / voltas
+ *  do primeiro jogador que traz os três. null = sem par (nunca um par inventado). */
+function parPorVoltaDosResultados(results: Iterable<{ t: number | null; tp: number | null; rd?: number[] } | null | undefined>): number | null {
+  for (const r of results) {
+    if (r && r.tp != null && temCartao(r.t) && r.rd?.length) {
+      const par = (r.t - r.tp) / r.rd.length;
+      if (Number.isInteger(par) && par > 0) return par;
+    }
   }
-  if (/^wjgc\d{2}$/.test(tid)) return "Boys 10-11";
-  return "Geral";
+  return null;
 }
 
 /** Desloca um escalão N anos para trás: "Boys 12" + 1 ano → "Boys 11".
@@ -844,73 +823,45 @@ export function useFieldRivaisData(autoRivals: AutoRivalPlayer[] | undefined, pe
       const allExtraTids = new Set<string>();
       for (const p of autoRivals) {
         for (const tid of Object.keys(p.r)) {
-          if (EXTRA_TID_PREFIXES.some(pre => tid.startsWith(pre))) allExtraTids.add(tid);
+          if (extraTidFamilia(tid)) allExtraTids.add(tid);
         }
       }
-      // 2. Para cada tid, construir entrada
-      interface DynExtra { tid: string; name: string; players: FieldPlayer[]; year: number; escalao: string }
+      // 2. Para cada tid, construir entrada. Família, ano e escalão saem da
+      //    leitura única (`lerExtraTid`, 10/11/2026): antes o ano caía no ano
+      //    corrente («wjgc-brjgt243_boys_10-11», de 2024, era «WJGC 2026»), o
+      //    escalão do formato longo ficava «Geral» e o FCG/JWGC eram «WJGC».
+      //    O nome é sempre «{Família} {ano} {escalão}» — é por ele que o
+      //    nextCircuit agrupa as famílias e a aba «Scores» encontra a série.
+      interface DynExtra { name: string; players: FieldPlayer[]; year: number; escalao: string; dateUS: string }
       const dyn: DynExtra[] = [];
-      const ynow = new Date().getFullYear() % 100;
       for (const tid of allExtraTids) {
         const players: FieldPlayer[] = [];
+        let rotulo: string | undefined;
         for (const p of autoRivals) {
-          if (p.r[tid]) players.push({ nome: p.n, pais: (p as any).co || "" });
+          const res = p.r[tid];
+          if (!res) continue;
+          players.push({ nome: p.n, pais: p.co || "" });
+          rotulo ??= res.ageGroup;
         }
         if (players.length === 0) continue;
-        // Derivar ano + escalão do tid. Formatos possíveis:
-        //   "doral25_b1011"          → year=25, escalao=Boys 10-11
-        //   "wjgc26_1213"            → year=26, escalao=Boys 12-13
-        //   "wjgc-wjgc_2025_b1011"   → year=25 (2025), escalao=Boys 10-11 (do flightKey via canonical)
-        //   "eowagr-eowagr25_contest77" → year=25, escalao=Geral
-        let year = ynow;
-        // Procura QUALQUER sequência 20XX (4 dígitos) ou XX (2 dígitos depois de prefixo/separador)
-        const y4 = tid.match(/20(\d{2})/);
-        if (y4) {
-          year = parseInt(y4[1], 10);
-        } else {
-          // Match curto: wjgc26, doral25, eowagr25
-          const ys = tid.match(/(?:wjgc|doral|eowagr)(\d{2})(?:[_\-]|$)/);
-          if (ys) year = parseInt(ys[1], 10);
-        }
-
-        let escalao = "Geral";
-        // Padrões: _b89, _b1011, _b1213 (formato compacto)
-        const bCompact = tid.match(/_b(\d{2,4})(?:[_\-]|$)/);
-        if (bCompact) {
-          const a = bCompact[1];
-          if (a.length === 2) escalao = `Boys ${a[0]}-${a[1]}`; // "89" → "Boys 8-9"
-          else if (a.length === 4) escalao = `Boys ${a.slice(0, 2)}-${a.slice(2)}`; // "1011" → "Boys 10-11"
-          else escalao = `Boys ${a}`;
-        } else if (/_1213(?:[_\-]|$)/.test(tid)) escalao = "Boys 12-13";
-        else if (/_89(?:[_\-]|$)/.test(tid)) escalao = "Boys 8-9";
-        else if (/_1011(?:[_\-]|$)/.test(tid)) escalao = "Boys 10-11";
-        else if (/_b7u(?:[_\-]|$)/.test(tid)) escalao = "Boys 7&Under";
-        else if (/_bwagr(?:[_\-]|$)/.test(tid)) escalao = "WAGR";
-        else if (/_gwagr(?:[_\-]|$)/.test(tid)) escalao = "Girls WAGR";
-        else if (/_g1213(?:[_\-]|$)/.test(tid)) escalao = "Girls 12-13";
-        else if (/_b7(?:[_\-]|$)/.test(tid)) escalao = "Boys 7";
-        else if (/^wjgc\d{2}$/.test(tid)) escalao = "Boys 10-11"; // wjgc26 (legacy)
-        // Display name
-        const yfull = year < 50 ? 2000 + year : 1900 + year;
-        let displayName = "";
-        if (tid.startsWith("wjgc")) displayName = `WJGC ${yfull}` + (escalao !== "Geral" ? ` ${escalao}` : "");
-        else if (tid.startsWith("doral")) displayName = `Doral ${yfull}` + (escalao !== "Geral" ? ` ${escalao}` : "");
-        else if (tid.startsWith("eowagr")) displayName = `EOWAGR ${yfull}` + (escalao !== "Geral" ? ` ${escalao}` : "");
-        else displayName = tid;
-        dyn.push({ tid, name: displayName, players, year, escalao });
+        const { meta, familia, ano, escalao } = lerExtraTid(tid, rotulo);
+        const iso = /^\d{4}-\d{2}-\d{2}/.test(meta?.dateISO ?? "") ? meta!.dateISO : "";
+        dyn.push({
+          name: [familia, ano, escalao !== "Geral" ? escalao : ""].filter(Boolean).join(" "),
+          players, year: ano ?? 0, escalao,
+          // A data do canónico; sem ela, 1 Jan do ano (só para o ano da entrada).
+          dateUS: iso ? `${+iso.slice(5, 7)}/${+iso.slice(8, 10)}/${iso.slice(0, 4)}` : ano != null ? `1/1/${ano}` : "",
+        });
       }
       // Ordenar: ano desc, depois nome
       dyn.sort((a, b) => b.year - a.year || a.name.localeCompare(b.name));
       // Atribuir IDs negativos (a partir de -200 para não colidir com FFG -101..)
       let nextNeg = -200;
       for (const d of dyn) {
-        // dateUS de fallback (1 Jan do ano)
-        const yfull = d.year < 50 ? 2000 + d.year : 1900 + d.year;
-        const dateUS = `1/1/${yfull}`;
         out.push({
           t: nextNeg--,
           name: d.name,
-          date_inicio: dateUS,
+          date_inicio: d.dateUS,
           escaloes: [{ nome: d.escalao, jogadores: d.players }],
         });
       }
@@ -1119,19 +1070,21 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
     const T: TournDef[] = selectedTcodes.map(({ tcode, count }) => {
       const meta = mh.torneios[tcode];
       const name = meta?.name || `tcode ${tcode}`;
-      // Buracos por ronda: usar holesPerRound se existir; senão inferir do array par
-      const holes = meta?.holesPerRound ?? (meta?.par && meta.par.length === 9 ? 9 : 18);
-      // Par por ronda: sumar APENAS os primeiros `holes` valores
-      const par = meta?.par
-        ? meta.par.slice(0, holes).reduce((a, b) => a + b, 0)
-        : (holes === 9 ? 36 : 72);
+      // Buracos e par por volta do ESCALÃO em que este field lá jogou, pelas
+      // voltas jogadas (10/11/2026): a ficha do torneio diz 18 buracos e traz o
+      // par de 18, mas o Boys 8 e o 7 & Under jogam 9 (três voltas de 40 davam «−96»).
+      const entradas = fieldMids
+        .map(fm => (fm.mid ? mh.jogadores[fm.mid].torneios[tcode] : undefined))
+        .filter((e): e is MHTorn => !!e);
+      const nPorEsc = new Map<string, number>();
+      for (const e of entradas) nPorEsc.set(e.ageGroup, (nPorEsc.get(e.ageGroup) ?? 0) + 1);
+      const escDoField = [...nPorEsc].sort((a, b) => b[1] - a[1])[0]?.[0];
+      const parArr = (escDoField ? meta?.byEscalao?.[escDoField]?.par : null) || meta?.par || null;
+      const holes = buracosDoFlight(entradas.flatMap(e => Object.values(e.rounds || {})), parArr, meta?.holesPerRound);
+      const par = cartaoDaVolta(parArr, null, { nBuracos: holes }).parVolta ?? (holes === 9 ? 36 : 72);
       // contar nº max de rondas que algum jogador tem
       let maxRounds = 1;
-      for (const fm of fieldMids) {
-        if (!fm.mid) continue;
-        const tEntry = mh.jogadores[fm.mid].torneios[tcode];
-        if (tEntry?.rounds) maxRounds = Math.max(maxRounds, Object.keys(tEntry.rounds).length);
-      }
+      for (const e of entradas) maxRounds = Math.max(maxRounds, Object.keys(e.rounds || {}).length);
       return {
         id: `usk${tcode}`,
         name,
@@ -1175,25 +1128,32 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
     // SCAN DINÂMICO: qualquer tid wjgc/doral/eowagr que algum jogador do field
     // tenha jogado vira coluna (substitui a lista EXTRA_TIDS hardcoded e incompleta).
     const extraRounds = new Map<string, number>(); // tid → nº máx de rondas
+    const extraRotulo = new Map<string, string>(); // tid → rótulo do flight (escalão)
+    const extraPar = new Map<string, number>();    // tid → par por volta lido dos resultados
     for (const fm of fieldMids) {
       const ar = findAR(fm.p.nome);
       if (!ar) continue;
       for (const tid of Object.keys(ar.r)) {
-        if (!EXTRA_TID_PREFIXES.some((pre) => tid.startsWith(pre))) continue;
+        if (!extraTidFamilia(tid)) continue;
         const res = ar.r[tid];
         if (!res || res.tp == null) continue;
-        const rounds = (res as any).rd as number[] | undefined;
-        if (!rounds || rounds.length === 0) continue;
+        // Só voltas com cartão (≥ 900 = sem cartão). Com alguma sem cartão o
+        // jogador fica «WD» nessa prova: nem total 1087 nem ±par +941.
+        const semCartao = (res.rd ?? []).some(g => !temCartao(g)) || (res.t != null && !temCartao(res.t));
+        const rounds = (res.rd ?? []).filter(g => temCartao(g));
+        if (rounds.length === 0) continue;
         const total = rounds.reduce((a, b) => a + b, 0);
-        const place = (res as any).p as number | undefined;
+        const place = parsePos(res.p);
         extraCounts.set(tid, (extraCounts.get(tid) ?? 0) + 1);
         extraRounds.set(tid, Math.max(extraRounds.get(tid) ?? 0, rounds.length));
+        if (res.ageGroup && !extraRotulo.has(tid)) extraRotulo.set(tid, res.ageGroup);
+        if (!semCartao && !extraPar.has(tid)) { const pv = parPorVoltaDosResultados([res]); if (pv != null) extraPar.set(tid, pv); }
         let m = extraData.get(tid);
         if (!m) { m = new Map(); extraData.set(tid, m); }
         m.set(normName(fm.p.nome), {
-          p: place && place > 0 ? place : "WD",
+          p: place != null && !semCartao ? place : "WD",
           t: total,
-          tp: (res as any).tp ?? null,
+          tp: semCartao ? null : res.tp,
           rd: rounds,
         });
       }
@@ -1208,7 +1168,7 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
       if (isGlobalField && EURO_EXTRA_PREFIXES.some(p => tid.startsWith(p))) continue;
       // Já coberto por uma coluna INTL (FCG, JWGC) — evita coluna duplicada.
       if (INTL_COLUMNS.some(d => d.dupTid?.test(tid))) continue;
-      const info = describeExtraTid(tid, extraTidMeta.get(tid));
+      const info = describeExtraTid(tid, extraRotulo.get(tid));
       // Divisão tem de conter o escalão que estes miúdos tinham À DATA do
       // torneio (mata Doral B8-9, divisões Girls, e escolhe a B10-11 em vez da
       // B12-13 num Doral de 2025 para um field que hoje é Boys 12).
@@ -1220,20 +1180,11 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
       const anos = Number.isNaN(tidMs) || Number.isNaN(refMs)
         ? Math.max(0, refYear - (parseInt(info.date.match(/(?:19|20)\d{2}/)?.[0] || "", 10) || refYear))
         : Math.max(0, (refMs - tidMs) / (365.25 * 86400000));
-      const escTid = extraTidEscalao(tid);
+      const escTid = lerExtraTid(tid, extraRotulo.get(tid)).faixa;
       if (![Math.floor(anos), Math.ceil(anos)].some(a => escalaoMatches(shiftEscalao(escalaoNome, a), escTid))) continue;
       const nrounds = extraRounds.get(tid) ?? 1;
       // Par por ronda: derivado de (total − toPar) / nº de rondas de um jogador.
-      let parPer = 72;
-      const m = extraData.get(tid);
-      if (m) {
-        for (const v of m.values()) {
-          if (v.tp != null && v.t != null && v.rd && v.rd.length) {
-            parPer = Math.round((v.t - v.tp) / v.rd.length);
-            break;
-          }
-        }
-      }
+      const parPer = extraPar.get(tid) ?? 72;
       T.push({
         id: tid,
         name: info.name,
@@ -1387,14 +1338,22 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
         const tcode = td.id.slice(3); // strip "usk" prefix
         let rounds: number[] = [];
         let placeNum = 0;
+        let tpProprio: number | null = null;
         // Fonte 1: member-history-slim
         if (prof) {
           const tEntry = prof.torneios[tcode];
           if (tEntry) {
             placeNum = tEntry.place ?? 0;
-            rounds = Object.keys(tEntry.rounds).sort((a, b) => Number(a) - Number(b))
-              .map(rn => tEntry.rounds[rn].gross)
-              .filter(g => g > 0);
+            const voltas = Object.keys(tEntry.rounds).sort((a, b) => Number(a) - Number(b))
+              .map(rn => tEntry.rounds[rn])
+              .filter(r => temCartao(r.gross));
+            rounds = voltas.map(r => r.gross);
+            // ±par contra o par dos buracos que ELE jogou, no escalão em que jogou
+            // (há um ano estava noutro escalão, com outro tee e às vezes 9 buracos).
+            const metaT = mh.torneios[tcode];
+            const parEsc = metaT?.byEscalao?.[tEntry.ageGroup]?.par || metaT?.par || null;
+            const tps = voltas.map(r => toParDaVolta(parEsc, r));
+            if (tps.length && tps.every(x => x != null)) tpProprio = tps.reduce<number>((a, x) => a + (x as number), 0);
           }
         }
         // Fonte 2: uskids-results.json (fallback quando mh ainda não cobre)
@@ -1408,8 +1367,8 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
         }
         if (rounds.length === 0) continue;
         const total = rounds.reduce((a, b) => a + b, 0);
-        // tp já com par per-round correcto (td.par considera só os `holes` primeiros)
-        const tp = td.par > 0 ? total - td.par * rounds.length : null;
+        // Sem buraco a buraco (ou via uskids-results): o par por volta da coluna.
+        const tp = tpProprio ?? (td.par > 0 ? total - td.par * rounds.length : null);
         r[td.id] = { p: placeNum > 0 ? placeNum : "WD", t: total, tp, rd: rounds };
       }
       // Preencher tids "extra" a partir do extraData (vindo de autoRivals)
@@ -1590,73 +1549,33 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
     // sem entrada em member-history-slim). Agregamos via autoRivals
     // todos os tids da série filtrando pelo escalão do utilizador.
     // ─────────────────────────────────────────────────────────────────
-    const seriesPrefix = (() => {
-      if (torneio.t >= 0) return null;
-      const n = torneio.name.toLowerCase();
-      if (n.startsWith("wjgc"))   return "wjgc";
-      if (n.startsWith("doral"))  return "doral";
-      if (n.startsWith("eowagr")) return "eowagr";
-      return null;
-    })();
-    if (seriesPrefix && autoRivals) {
-      // 1. Recolher todos os tids da série
+    // A família sai do nome da entrada («WJGC 2026 Boys 10-11», «FCG 2026 …»),
+    // que o `useFieldRivaisData` monta com a mesma leitura (`lerExtraTid`).
+    const familia: ExtraFamilia | null = torneio.t < 0
+      ? EXTRA_FAMILIAS.find(f => torneio.name.startsWith(f + " ") || torneio.name === f) ?? null
+      : null;
+    if (familia && autoRivals) {
+      // 1. Recolher todos os tids da família (e o rótulo do flight de cada um)
       const allTids = new Set<string>();
+      const rotulos = new Map<string, string>();
       for (const p of autoRivals) {
-        for (const tid of Object.keys(p.r)) {
-          if (tid.toLowerCase().startsWith(seriesPrefix)) allTids.add(tid);
+        for (const [tid, res] of Object.entries(p.r)) {
+          if (extraTidFamilia(tid) !== familia) continue;
+          allTids.add(tid);
+          if (res?.ageGroup && !rotulos.has(tid)) rotulos.set(tid, res.ageGroup);
         }
       }
 
-      // Helpers locais reusando a lógica do futureTorneios
-      const yearOfTid = (tid: string): number | null => {
-        const y4 = tid.match(/20(\d{2})/);
-        if (y4) return 2000 + parseInt(y4[1], 10);
-        const ys = tid.match(/(?:wjgc|doral|eowagr)(\d{2})(?:[_\-]|$)/);
-        if (ys) { const yy = parseInt(ys[1], 10); return yy < 50 ? 2000 + yy : 1900 + yy; }
-        return null;
-      };
-      const escalaoOfTid = (tid: string): string => {
-        // Mantém em sincronia com a derivação em futureTorneios — qualquer
-        // escalão não capturado cai em "Geral" e passa por escalaoMatches
-        // sempre, o que provoca mistura de escalões na tabela. Cobrir tudo.
-        const bCompact = tid.match(/_b(\d{2,4})(?:[_\-]|$)/);
-        if (bCompact) {
-          const a = bCompact[1];
-          if (a.length === 2) return `Boys ${a[0]}-${a[1]}`;
-          if (a.length === 4) return `Boys ${a.slice(0, 2)}-${a.slice(2)}`;
-          return `Boys ${a}`;
-        }
-        if (/_1213(?:[_\-]|$)/.test(tid)) return "Boys 12-13";
-        if (/_89(?:[_\-]|$)/.test(tid))   return "Boys 8-9";
-        if (/_1011(?:[_\-]|$)/.test(tid)) return "Boys 10-11";
-        if (/_b7u(?:[_\-]|$)/.test(tid))  return "Boys 7&Under";
-        if (/_bwagr(?:[_\-]|$)/.test(tid))return "WAGR";
-        if (/_gwagr(?:[_\-]|$)/.test(tid))return "Girls WAGR";
-        if (/_g1213(?:[_\-]|$)/.test(tid))return "Girls 12-13";
-        if (/_b7(?:[_\-]|$)/.test(tid))   return "Boys 7";
-        if (/^wjgc\d{2}$/.test(tid))      return "Boys 10-11";
-        return "Geral";
-      };
+      // Ano e escalão pela leitura única (10/11/2026): as cópias locais davam o
+      // ano errado a 35 de 68 tids e «Geral» ao formato longo («_boys_10-11»).
+      const yearOfTid = (tid: string): number | null => lerExtraTid(tid, rotulos.get(tid)).ano;
+      const escalaoOfTid = (tid: string): string => lerExtraTid(tid, rotulos.get(tid)).escalao;
       // Match local: respeita o range numérico mas também aceita match exacto
       // por nome (case-insensitive) para escalões não-numéricos (WAGR, etc.).
       const escalaoMatchesLocal = (userEsc: string, candEsc: string): boolean => {
         if (!candEsc) return true;
         if (candEsc.toLowerCase() === userEsc.toLowerCase()) return true;
         return escalaoMatches(userEsc, candEsc);
-      };
-      const parOfTid = (tid: string): number | undefined => {
-        if (tid.startsWith("wjgc25"))   return 71;
-        if (tid.startsWith("wjgc26"))   return 72;
-        if (tid.startsWith("eowagr"))   return 72;
-        if (tid.startsWith("doral")) {
-          // Boys 7 / 8-9 / 7&Under jogam 9 buracos → par ~36.
-          // Boys 10-11 / 12-13 e restantes 18H → par ~71.
-          if (/_b89(?:[_\-]|$)/.test(tid)
-              || /_b7u(?:[_\-]|$)/.test(tid)
-              || /_b7(?:[_\-]|$)/.test(tid)) return 36;
-          return 71;
-        }
-        return undefined;
       };
 
       // 2. Para cada tid: filtra por escalão e agrupa por ano
@@ -1691,12 +1610,16 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
         });
         const chosen = list[0];
         const tid = chosen.tid;
-        const par = parOfTid(tid);
+        // Par por volta LIDO dos resultados (total − ±par), nunca um par «~71»
+        // escrito à mão por prefixo; sem ele a edição fica sem ±par.
+        const par = parPorVoltaDosResultados(autoRivals.map(p => p.r[tid])) ?? undefined;
+        // Divisões de 9 buracos (par até 40): o mínimo de uma volta é o de 9.
+        const nove = par != null && par <= 40;
 
         // Construir RankedEntry[] a partir de autoRivals
         const ranked: RankedEntry[] = [];
         let maxRounds = 0;
-        const minGross = MIN_GROSS_18H;
+        const minGross = nove ? MIN_GROSS_9H : MIN_GROSS_18H;
         for (const p of autoRivals) {
           const tr = p.r[tid];
           if (!tr) continue;
@@ -1706,7 +1629,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
           const rdArr = tr.rd || [];
           for (let i = 0; i < rdArr.length; i++) {
             const g = rdArr[i];
-            if (!g || g <= 0 || g < minGross) continue;
+            if (!temCartao(g) || g < minGross) continue; // ≥ 900 = sem cartão
             rd[String(i + 1)] = g;
             total += g;
             valid++;
@@ -1718,13 +1641,14 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
             country: p.co || "",
             total,
             rounds: rd,
-            officialPlace: typeof tr.p === "number" && tr.p > 0 ? tr.p : null,
+            officialPlace: parsePos(tr.p),
           });
         }
         const completed = ranked.filter(e => Object.keys(e.rounds).length === maxRounds);
         if (completed.length < MIN_FIELD_SIZE) continue;
         const byTotal = [...completed].sort((a, b) => a.total - b.total);
-        byTotal.forEach((e, i) => { e.wouldBePos = i + 1; });
+        const lugar = posicoesComEmpates(byTotal, e => e.total);
+        byTotal.forEach(e => { e.wouldBePos = lugar.get(e); });
         completed.sort((a, b) => {
           const aOff = a.officialPlace ?? Number.POSITIVE_INFINITY;
           const bOff = b.officialPlace ?? Number.POSITIVE_INFINITY;
@@ -1733,7 +1657,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
         });
         editions.push({
           tcode: tid, year: String(year),
-          nRounds: maxRounds, holesPerRound: 18,
+          nRounds: maxRounds, holesPerRound: nove ? 9 : 18,
           fieldSize: completed.length,
           parPerRound: par,
           ranked: completed,
@@ -1743,8 +1667,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       if (editions.length === 0) return null;
       editions.sort((a, b) => b.year.localeCompare(a.year));
       const maxPos = Math.max(...editions.map(e => e.ranked.length));
-      const seriesLabel = seriesPrefix === "wjgc" ? "WJGC" : seriesPrefix === "doral" ? "Doral" : "EOWAGR";
-      return { baseName: seriesLabel, ageGroup: escalaoNome, editions, maxPos };
+      return { baseName: familia, ageGroup: escalaoNome, editions, maxPos };
     }
 
     // ─────────────────────────────────────────────────────────────────
@@ -1763,23 +1686,27 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       const yearMatch = meta.name.match(/(\d{4})/);
       if (!yearMatch) continue;
       const year = yearMatch[1];
-      const hpr = (meta as any).holesPerRound || 18;
+      // Buracos por volta do ESCALÃO, pelas voltas jogadas (10/11/2026): a ficha
+      // do torneio diz 18 mas o Boys 8 e o 7 & Under jogam 9 — com o mínimo de 55
+      // pancadas não sobrava volta nenhuma («Sem histórico»).
+      const escMeta = meta.byEscalao?.[escalaoNome];
+      const parArr = escMeta?.par || meta.par || [];
+      const doEscalao = Object.values(mh.jogadores).filter(p => p.torneios[tcode]?.ageGroup === escalaoNome);
+      const hpr = buracosDoFlight(doEscalao.flatMap(p => Object.values(p.torneios[tcode].rounds || {})), parArr, meta.holesPerRound);
       const minGross = hpr === 9 ? MIN_GROSS_9H : MIN_GROSS_18H;
 
       const all: RankedEntry[] = [];
       let maxRounds = 0;
-      for (const p of Object.values(mh.jogadores)) {
+      for (const p of doEscalao) {
         const tEntry = p.torneios[tcode];
-        if (!tEntry) continue;
-        if (tEntry.ageGroup !== escalaoNome) continue;
         // Aceitar TODOS os jogadores com rondas válidas (incluindo IE/DSQ/WD).
         // Os que não têm place oficial (null) são marcados visualmente como IE.
-        const officialPlace = (typeof tEntry.place === "number" && tEntry.place > 0) ? tEntry.place : null;
+        const officialPlace = parsePos(tEntry.place);
         const rd: Record<string, number> = {};
         let total = 0;
         let valid = 0;
         for (const [rn, r] of Object.entries(tEntry.rounds || {})) {
-          if (!r || r.gross <= 0) continue;
+          if (!r || !temCartao(r.gross)) continue;
           if (r.gross < minGross) {
             // Round impossível → ignorada (ex: gross=21 numa volta de 18H).
             continue;
@@ -1818,7 +1745,8 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       // contassem para o ranking (ordenando por total ASC). Necessária para
       // mostrar a posição virtual dos IE/DSQ em parêntesis.
       const byTotal = [...completed].sort((a, b) => a.total - b.total);
-      byTotal.forEach((e, i) => { e.wouldBePos = i + 1; });
+      const lugar = posicoesComEmpates(byTotal, e => e.total);
+      byTotal.forEach(e => { e.wouldBePos = lugar.get(e); });
       // Ordenação final: officialPlace ASC (com place) primeiro, IE/DSQ no fim
       // (ordenados pelo total ASC entre si).
       completed.sort((a, b) => {
@@ -1828,12 +1756,11 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
         return a.total - b.total;
       });
       // Tentar buscar course+yards específicos do escalão (byEscalao); fallback para o tcode-level yards
-      const escMeta = (meta as any).byEscalao?.[escalaoNome] as MHEscalaoMeta | undefined;
-      const yardsArr = escMeta?.yards || (meta as any).yards || [];
+      const yardsArr = escMeta?.yards || meta.yards || [];
       const yardsTotal = Array.isArray(yardsArr) ? yardsArr.reduce((a: number, b: number) => a + (b || 0), 0) : 0;
       const meters = yardsTotal > 0 ? Math.round(yardsTotal * 0.9144) : undefined;
-      const parArr = escMeta?.par || (meta as any).par || [];
-      const parPerRound = Array.isArray(parArr) ? parArr.reduce((a: number, b: number) => a + (b || 0), 0) : 0;
+      // Par de UMA volta do escalão: o dos buracos que ele joga (9 num campo com par nos 18).
+      const parPerRound = cartaoDaVolta(parArr, null, { nBuracos: hpr }).parVolta ?? 0;
       editions.push({
         tcode, year, nRounds: maxRounds,
         holesPerRound: hpr,
@@ -2004,26 +1931,20 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
             const firstEntry = firstEd?.ranked[row.idx];
             const isIE = firstEntry && firstEntry.officialPlace == null;
             const displayPos = firstEntry?.officialPlace ?? null;
-            const medalPos = displayPos ?? 99;
-            const medalCls = medalPos === 1 ? "u-bg-medal-gold-bg u-c-medal-gold-fg"
-              : medalPos === 2 ? "u-bg-medal-silver-bg u-c-medal-silver-fg"
-              : medalPos === 3 ? "u-bg-medal-bronze-bg u-c-medal-bronze-fg"
-              : "u-bg-bg u-c-text-2";
             return (
               <tr key={pos} className={`u-bb-1px-solid-border-light${isIE ? " u-op-0_75" : ""}`}>
-                <td className={`u-p-4px-8px u-fw-700 u-ta-center u-pos-sticky u-left-0 u-z-z-base u-ws-nowrap ${medalCls}`}>
+                <td className="u-p-4px-8px u-fw-700 u-ta-center u-pos-sticky u-left-0 u-z-z-base u-ws-nowrap u-bg-bg u-c-text-2">
                   {compareSel.checkbox(row.rank)}
-                  {displayPos != null
-                    ? `#${displayPos}`
-                    : (
-                      <span title={firstEntry?.wouldBePos ? `Sem classificação oficial. Por total seria #${firstEntry.wouldBePos}.` : "Sem classificação oficial"}>
-                        — {firstEntry?.wouldBePos != null && (
-                          <span className="u-fs-fs-9 u-fw-500 u-c-text-3">
-                            ({firstEntry.wouldBePos})
-                          </span>
-                        )}
-                      </span>
-                    )}
+                  {/* O selo do lugar é a peça global (`PosMedal`), não classes de pódio à mão. */}
+                  <PosMedal pos={displayPos} empty={
+                    <span title={firstEntry?.wouldBePos ? `Sem classificação oficial. Por total seria ${firstEntry.wouldBePos}.º.` : "Sem classificação oficial"}>
+                      — {firstEntry?.wouldBePos != null && (
+                        <span className="u-fs-fs-9 u-fw-500 u-c-text-3">
+                          ({firstEntry.wouldBePos})
+                        </span>
+                      )}
+                    </span>
+                  } />
                 </td>
                 {data.editions.flatMap((e, ei) => {
                   const entry = e.ranked[row.idx];

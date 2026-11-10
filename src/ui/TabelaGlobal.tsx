@@ -4,12 +4,12 @@ import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import WdBadge from "./WdBadge";
 import KpiCard from "./KpiCard";
-import { uskTournNames, normName as normNameAuto } from "../data/KIDSdataLoader";
+import { uskTournNames, fpgTournNames, extraTidMeta, normName as normNameAuto } from "../data/KIDSdataLoader";
 import type { AutoRivalPlayer } from "../data/KIDSdataLoader";
 import type { FieldData } from "./uskidsTypes";
 import { HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
 import { zTier } from "../utils/mathUtils";
-import { isManuelByName } from "../constants/manuel";
+import { isManuel } from "../constants/manuel";
 import ClearButton from "./ClearButton";
 import ExpandArrow from "./ExpandArrow";
 import ExtLink from "./ExternalLink";
@@ -19,7 +19,8 @@ import { Tint } from "./DataStyle";
 import TrendArrow from "./TrendArrow";
 import TierLegend from "./TierLegend";
 import Select from "./Select";
-import { fmtSign, fmtOrd } from "../utils/format";
+import { fmtSign, fmtOrd, fmtMonthYear, shortTournamentName } from "../utils/format";
+import { isoDeMesAno } from "../utils/mesAno";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
 interface TGTournDef {
@@ -28,14 +29,20 @@ interface TGTournDef {
   intendedRounds?: number; url: string; dateExact?: string;
 }
 interface TGResult {
-  p: number | "WD"; t?: number | null; tp?: number | null; rd: number[];
+  /** Lugar; "WD" = desistiu; null = jogou mas a fonte não dá lugar. */
+  p: number | "WD" | null; t?: number | null; tp?: number | null; rd: number[];
 }
-interface TGPlayer {
+interface TGPlayerBase {
   n: string; co: string; isM?: boolean; dob?: string;
   r: Record<string, TGResult>; up: string[];
 }
+/** Uma LINHA da tabela = uma pessoa. `id` é único (dois homónimos têm ids
+ *  diferentes) — é a chave da linha e do rank, nunca o nome. */
+interface TGPlayer extends TGPlayerBase { id: string }
 
 // ── Torneios fixos (BJGT/EOWAGR — tids que NÃO existem no USKids scraper) ──
+// Datas do QDL 2025 e do Greatgolf 2026 corrigidas a 10/11/2026 pelo WHS do
+// Manuel (voltas a 29/12/2025 e a 16–17/02/2026; estavam «Nov 2025»/08-11 e 02-08).
 const TG_T: TGTournDef[] = [
   { id:"gg25",     name:"Greatgolf Open 2025",    short:"GG25",      date:"Fev 2025", rounds:2, par:72, field:12, nations:4,  dateExact:"2025-02-08", url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10202&club=935" },
   { id:"brjgt25",  name:"WJGC 2025",              short:"WJGC",      date:"Fev 2025", rounds:3, par:71, field:40, nations:17, dateExact:"2025-02-24", url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
@@ -43,8 +50,8 @@ const TG_T: TGTournDef[] = [
   { id:"venice25", name:"Venice Open 2025",        short:"Venice",    date:"Ago 2025", rounds:3, par:72, field:39, nations:16, dateExact:"2025-08-07", url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results" },
   { id:"rome25",   name:"Rome Classic 2025",       short:"Rome",      date:"Out 2025", rounds:2, par:72, field:14, nations:6,  dateExact:"2025-10-18", url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results" },
   { id:"doral25",  name:"Doral Junior 2025",       short:"Doral",     date:"Dez 2025", rounds:2, par:71, field:35, nations:13, dateExact:"2025-12-18", url:"https://www.golfgenius.com/v2tournaments/4222407" },
-  { id:"qdl25",    name:"QDL Junior Open 2025",    short:"QDL",       date:"Nov 2025", rounds:1, par:72, field:12, nations:7,  dateExact:"2025-11-08", url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2" },
-  { id:"gg26",     name:"Greatgolf Junior Open",   short:"GG",        date:"Fev 2026", rounds:2, par:72, field:12, nations:4,  dateExact:"2026-02-08", url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T" },
+  { id:"qdl25",    name:"QDL Junior Open 2025",    short:"QDL",       date:"Dez 2025", rounds:1, par:72, field:12, nations:7,  dateExact:"2025-12-29", url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2" },
+  { id:"gg26",     name:"Greatgolf Junior Open",   short:"GG",        date:"Fev 2026", rounds:2, par:72, field:12, nations:4,  dateExact:"2026-02-16", url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T" },
   { id:"wjgc26",   name:"WJGC 2026",              short:"WJGC26",    date:"Fev 2026", rounds:3, par:72, field:38, nations:18, dateExact:"2026-02-24", url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm" },
   { id:"marco26",  name:"Marco Simone Inv. 2026",  short:"Marco 26",  date:"Mar 2026", rounds:2, par:72, field:17, nations:9,  dateExact:"2026-03-14", url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/results" },
 ];
@@ -101,7 +108,7 @@ const TG_AUTO_NAMES: Record<string, { name: string; short: string; date: string 
 };
 
 // ── Players estáticos (BJGT/WJGC não cobertos pelo USKids scraper) ──
-const TG_D: TGPlayer[] = [
+const TG_D: TGPlayerBase[] = [
   {n:"Manuel Medeiros",co:"Portugal",isM:true,dob:"29/04/2014",r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]},wjgc26:{p:9,t:232,tp:16,rd:[79,78,75]}},up:[]},
   {n:"Dmitrii Elchaninov",co:"Russian Federation",dob:"13/05/2014",r:{brjgt25:{p:1,t:205,tp:-8,rd:[69,68,68]},eowagr25:{p:2,t:218,tp:2,rd:[77,70,71]},venice25:{p:1,t:198,tp:-18,rd:[62,68,68]},qdl25:{p:1,t:71,tp:-1,rd:[71]},wjgc26:{p:1,t:210,tp:-6,rd:[69,69,72]}},up:[]},
   {n:"Diego Gross Paneque",co:"Spain",r:{brjgt25:{p:16,t:249,tp:36,rd:[80,84,85]},wjgc26:{p:9,t:232,tp:16,rd:[76,75,81]}},up:[]},
@@ -168,7 +175,7 @@ const TG_HIDDEN: Array<[string, string]> = [
   ["usk18438_b9","usk18438_b11"], ["usk18438_b10","usk18438_b11"], ["usk18438_b12","usk18438_b11"],
 ];
 
-function tgHiddenTids(p: TGPlayer): Set<string> {
+function tgHiddenTids(p: TGPlayerBase): Set<string> {
   const hidden = new Set<string>();
   for (const [toHide, whenPresent] of TG_HIDDEN) {
     if ((p.r[toHide] as any)?.rd?.length > 0 && (p.r[whenPresent] as any)?.rd?.length > 0)
@@ -177,12 +184,12 @@ function tgHiddenTids(p: TGPlayer): Set<string> {
   return hidden;
 }
 
-function tgNPlayed(p: TGPlayer) {
+function tgNPlayed(p: TGPlayerBase) {
   const total = Object.values(p.r).filter(r => r && (r.tp != null || r.rd?.length > 0)).length;
   return total - tgHiddenTids(p).size;
 }
 
-function tgNRounds(p: TGPlayer) {
+function tgNRounds(p: TGPlayerBase) {
   const hidden = tgHiddenTids(p);
   return Object.entries(p.r).reduce((acc, [tid, res]) => {
     if (hidden.has(tid)) return acc;
@@ -192,14 +199,22 @@ function tgNRounds(p: TGPlayer) {
 
 function tgGetTournInfo(tid: string): { name: string; short: string; date: string; dateExact: string } {
   const manual = TG_T.find(t => t.id === tid);
-  if (manual) return { name: manual.name, short: manual.short, date: manual.date, dateExact: manual.dateExact ?? manual.date };
+  if (manual) return { name: manual.name, short: manual.short, date: manual.date, dateExact: manual.dateExact ?? isoDeMesAno(manual.date) };
   const autoName = TG_AUTO_NAMES[tid];
-  if (autoName) return { ...autoName, dateExact: autoName.date };
+  // «Fev 2025» → «2025-02» (10/11/2026: as colunas ordenavam o texto «Fev 2025»
+  // ao lado de datas ISO).
+  if (autoName) return { ...autoName, dateExact: isoDeMesAno(autoName.date) };
   const uskMatch = tid.match(/^(usk\d+)_b(\d+)$/);
   if (uskMatch) {
     const base = uskTournNames.get(uskMatch[1]);
     if (base) return { name: base.name, short: base.short, date: base.date, dateExact: base.dateExact ?? base.date };
   }
+  // Provas da FPG e séries extra (WJGC/Doral/EOWAGR): nome e data do canónico
+  // (10/11/2026 — a coluna mostrava o código interno, «fpg10021_20241004»).
+  const fpg = fpgTournNames.get(tid);
+  if (fpg) return { name: fpg.name, short: shortTournamentName(fpg.name, { year: "short", max: 16 }), date: fpg.date, dateExact: fpg.dateExact || "9999" };
+  const extra = extraTidMeta.get(tid);
+  if (extra) return { name: extra.name, short: shortTournamentName(extra.name, { year: "short", max: 16 }), date: fmtMonthYear(extra.dateISO, "?"), dateExact: extra.dateISO || "9999" };
   return { name: tid, short: tid, date: "?", dateExact: "9999" };
 }
 
@@ -233,24 +248,24 @@ function tgTpColorDark(tp: number | null | undefined): string {
 
 // ── Rank map (simplified z-rank) ──
 function tgBuildRankMap(rivals: TGPlayer[]): Record<string, number> {
-  const scored: { n: string; avg: number }[] = [];
+  const scored: { id: string; avg: number }[] = [];
   for (const p of rivals) {
     const hidden = tgHiddenTids(p);
     const tps = Object.entries(p.r)
       .filter(([tid, r]) => !hidden.has(tid) && r?.tp != null)
       .map(([, r]) => r.tp as number);
     if (tps.length >= 2) {
-      scored.push({ n: p.n, avg: tps.reduce((a, b) => a + b, 0) / tps.length });
+      scored.push({ id: p.id, avg: tps.reduce((a, b) => a + b, 0) / tps.length });
     }
   }
   scored.sort((a, b) => a.avg - b.avg);
   const m: Record<string, number> = {};
-  scored.forEach((s, i) => { m[s.n] = i + 1; });
+  scored.forEach((s, i) => { m[s.id] = i + 1; });
   return m;
 }
 
 // ── Trend (simplified) ──
-function tgGetTrend(p: TGPlayer): string | null {
+function tgGetTrend(p: TGPlayerBase): string | null {
   const hidden = tgHiddenTids(p);
   const tps = Object.entries(p.r)
     .filter(([tid, r]) => !hidden.has(tid) && r?.tp != null)
@@ -299,6 +314,13 @@ const TG_TID_EXACT: Record<string, string> = {
   "usk20175_b11":"rome25",    // Rome Classic 2025 (tcode 20175) — Boys 11
   // Marco Simone 2025 — colapsar formato antigo no formato completo (evitar 2 colunas auto)
   "marco25_b11":"usk18438_b11",  // Marco Simone Inv. 2025 (tcode 18438) — Boys 11
+  // 10/11/2026 — a MESMA prova chegava por dois códigos e ficava em duas colunas
+  // (e a dobrar no KPI «MANUEL — TOTAL»). Conferido no canónico: o código do
+  // evento/torneio é o do link da coluna fixa e o resultado do Manuel é igual.
+  "wjgc-brjgt251_boys_10-11":"brjgt25",   // WJGC 2025 Boys 10-11 (evento brjgt251)
+  "wjgc-brjgt2537_boys_10-11":"wjgc26",   // WJGC 2026 Boys 10-11 (evento brjgt2537)
+  "fpg10296_20260216":"gg26",             // Greatgolf Junior Open 2026 U12 (clube 935, torneio 10296)
+  "fpg10080_20251229":"qdl25",            // Quinta do Lago Junior Open 2025 U12 (clube 962, torneio 10080)
 };
 // Mapeamento genérico por tcode USKids — vazio intencionalmente.
 // Anteriormente mapeava TODOS os escalões de venice25/rome25 para o mesmo tid.
@@ -314,41 +336,84 @@ function tgNormalizeTid(tid: string): string {
 
 // ── Merge TG_D com autoRivals ──
 function tgMerge(autoRivals: AutoRivalPlayer[]): TGPlayer[] {
-  // As variantes do nome do Manuel juntam-se numa só linha.
-  const resolve = (n: string) => (isManuelByName(n) ? "manuel medeiros" : normNameAuto(n));
+  const MANUEL = "manuel medeiros";
+  // O Manuel pelo detector único (federado → conta USKids → nome): as variantes
+  // do nome e as duas contas juntam-se numa só linha; o pai (54907) não.
+  const nomeDe = (ap: AutoRivalPlayer) => (isManuel({ n: ap.n, fed: ap.ptFed, memberId: ap.memberId }) ? MANUEL : normNameAuto(ap.n));
 
   // Canonicalizar `co` na origem para que entradas estáticas ("Russian
   // Federation", "United States") dedupem com as canonicalizadas pelo loader
   // ("Russia", "USA") — ver KIDSPage.tsx ~601.
-  const map = new Map<string, TGPlayer>(TG_D.map(p => [resolve(p.n), { ...p, co: normPaisDisplay(p.co), r: { ...p.r } }]));
-
-  for (const ap of autoRivals) {
-    const key = resolve(ap.n);
-    const apCoCanon = normPaisDisplay(ap.co || "");
-    if (map.has(key)) {
-      const ex = map.get(key)!;
-      for (const [rawTid, res] of Object.entries(ap.r)) {
-        const tid = tgNormalizeTid(rawTid);
-        if (!ex.r[tid] || (res.rd?.length ?? 0) > (ex.r[tid]?.rd?.length ?? 0)) {
-          ex.r[tid] = { p: res.p ?? "WD", tp: res.tp ?? null, t: undefined, rd: res.rd ?? [] };
-        }
-      }
-      if (apCoCanon && !ex.co) ex.co = apCoCanon;
-      if (ap.dob && !ex.dob) ex.dob = ap.dob;
-      // Merge up arrays — inscrições futuras do autoRivals
-      if (ap.up?.length) ex.up = [...new Set([...ex.up, ...ap.up])];
-    } else {
-      const convertedR: Record<string, TGResult> = {};
-      for (const [rawTid, v] of Object.entries(ap.r)) {
-        const tid = tgNormalizeTid(rawTid);
-        if (!convertedR[tid] || (v.rd?.length ?? 0) > (convertedR[tid]?.rd?.length ?? 0)) {
-          convertedR[tid] = { p: v.p ?? "WD" as "WD", tp: v.tp ?? null, rd: v.rd ?? [] };
-        }
-      }
-      map.set(key, { n: ap.n, co: apCoCanon, r: convertedR, up: ap.up ?? [] });
-    }
+  const linhas = new Map<string, TGPlayer>();
+  const estaticoPorNome = new Map<string, TGPlayer>();
+  for (const p of TG_D) {
+    const nome = p.isM ? MANUEL : normNameAuto(p.n);
+    const linha: TGPlayer = { ...p, id: nome, co: normPaisDisplay(p.co), r: { ...p.r } };
+    linhas.set(linha.id, linha);
+    estaticoPorNome.set(nome, linha);
   }
-  return Array.from(map.values());
+
+  // Resultado de uma ficha do canónico. Sem lugar na fonte fica SEM lugar (null)
+  // — antes passava a "WD" e o Marco Simone 2026 do Manuel (170, +26) aparecia «WD».
+  const resultado = (v: AutoRivalPlayer["r"][string]): TGResult =>
+    ({ p: v.p ?? null, tp: v.tp ?? null, t: v.t ?? null, rd: v.rd ?? [] });
+  const juntar = (ex: TGPlayerBase, ap: AutoRivalPlayer) => {
+    for (const [rawTid, res] of Object.entries(ap.r)) {
+      const tid = tgNormalizeTid(rawTid);
+      if (!ex.r[tid] || (res.rd?.length ?? 0) > (ex.r[tid]?.rd?.length ?? 0)) ex.r[tid] = resultado(res);
+    }
+    const apCoCanon = normPaisDisplay(ap.co || "");
+    if (apCoCanon && !ex.co) ex.co = apCoCanon;
+    if (ap.dob && !ex.dob) ex.dob = ap.dob;
+    // Merge up arrays — inscrições futuras do autoRivals
+    if (ap.up?.length) ex.up = [...new Set([...ex.up, ...ap.up])];
+  };
+  // Quantas provas da linha fixa esta ficha repete, volta a volta — é o que
+  // prova que a ficha é a pessoa da linha fixa quando há homónimos.
+  const afinidade = (est: TGPlayerBase, ap: AutoRivalPlayer): number => {
+    let n = 0;
+    for (const [rawTid, res] of Object.entries(ap.r)) {
+      const e = est.r[tgNormalizeTid(rawTid)];
+      const rd = res.rd ?? [];
+      if (e && e.rd.length > 0 && e.rd.length === rd.length && e.rd.every((v, i) => v === rd[i])) n++;
+    }
+    return n;
+  };
+
+  // Cada ficha do canónico é UMA pessoa (10/11/2026): juntar pelo nome fundia
+  // homónimos numa só linha (373 nomes repetidos no Kids 2). Só o nome já não
+  // chega para juntar duas fichas — cada uma fica com a sua linha.
+  const porNome = new Map<string, { ap: AutoRivalPlayer; i: number }[]>();
+  autoRivals.forEach((ap, i) => {
+    const nome = nomeDe(ap);
+    const g = porNome.get(nome);
+    if (g) g.push({ ap, i }); else porNome.set(nome, [{ ap, i }]);
+  });
+  for (const [nome, fichas] of porNome) {
+    const est = estaticoPorNome.get(nome);
+    if (est && nome === MANUEL) { for (const f of fichas) juntar(est, f.ap); continue; }
+    // Qual das fichas é a pessoa da linha fixa: a única; ou, entre homónimos, a
+    // que repete resultados dela (sem empate). Na dúvida, nenhuma.
+    let daLinhaFixa = -1;
+    if (est) {
+      if (fichas.length === 1) daLinhaFixa = 0;
+      else {
+        const af = fichas.map(f => afinidade(est, f.ap));
+        const max = Math.max(...af);
+        if (max > 0 && af.filter(x => x === max).length === 1) daLinhaFixa = af.indexOf(max);
+      }
+    }
+    fichas.forEach((f, k) => {
+      if (k === daLinhaFixa) { juntar(est!, f.ap); return; }
+      const sozinho = fichas.length === 1 && !est;
+      let id = sozinho ? nome : `${nome}#${f.ap.memberId || f.ap.ptFed || f.ap.esLicencia || f.ap.frFed || f.i}`;
+      while (linhas.has(id)) id += "'";
+      const linha: TGPlayer = { id, n: f.ap.n, co: "", r: {}, up: [] };
+      juntar(linha, f.ap);
+      linhas.set(id, linha);
+    });
+  }
+  return Array.from(linhas.values());
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -506,7 +571,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
       // Vazios (sem rank, sem resultado) sempre no fim, nas duas direcções.
       let cmp = 0;
       if (sort === "name") cmp = a.n.localeCompare(b.n);
-      else if (sort === "rank") return compareNullsLast(rankMap[a.n], rankMap[b.n], d);
+      else if (sort === "rank") return compareNullsLast(rankMap[a.id], rankMap[b.id], d);
       else if (sort === "nT") cmp = tgNPlayed(b) - tgNPlayed(a);
       else if (sort.startsWith("t:")) {
         const tid = sort.slice(2);
@@ -567,7 +632,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
               <KpiCard key={t.id} label={t.short} value="–" size="sm" className="u-op-0_4 u-p-6px-8px u-fl-1-1-60px u-minw-60px" />
             );
             return (
-              <KpiCard key={t.id} label={t.short} value={tgFmtSign(res.tp)} sub={<>#{res.p as number}{res.rd?.length > 0 && <span className="u-ml-3px u-op-0_7">{res.rd.join("-")}</span>}</>} color={tgTpColorDark(res.tp)} size="sm" className="u-p-6px-8px u-fl-1-1-60px u-minw-60px" />
+              <KpiCard key={t.id} label={t.short} value={tgFmtSign(res.tp)} sub={<>{typeof res.p === "number" ? `#${res.p}` : res.p ?? ""}{res.rd?.length > 0 && <span className="u-ml-3px u-op-0_7">{res.rd.join("-")}</span>}</>} color={tgTpColorDark(res.tp)} size="sm" className="u-p-6px-8px u-fl-1-1-60px u-minw-60px" />
             );
           })}
         </div>
@@ -623,6 +688,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                   const stars = weight >= 1.3 ? "★★★★★" : weight >= 1.1 ? "★★★★" : weight >= 0.9 ? "★★★" : weight >= 0.6 ? "★★" : weight >= 0.4 ? "★" : "½";
                   return (
                     <SortableHdr key={tid} k={"t:" + tid} sortKey={sort} sortDir={dir} onSort={toggleSort}
+                      title={info.name}
                       className={"rivais-th ta-c u-minw-56px" + (isFixed ? "" : " u-op-0_85")}>
                       {url ? <ExtLink href={url} className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</ExtLink> : info.short}
                       {!isFuture && <div className="fs-10 fw-500 op-6 mt-1">{stars} {info.date}</div>}
@@ -641,7 +707,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                 const fl = flag(p.co);
                 const played = tgNPlayed(p);
                 return (
-                  <tr key={p.n} className={isM ? "rivais-row-ref" : ""}>
+                  <tr key={p.id} className={isM ? "rivais-row-ref" : ""}>
                     <td className="rivais-player-name">
                       <span className="rivais-flag" title={p.co}>{fl}</span>
                       <span className={`fs-12 ${isM ? "fw-700 u-c-text" : "fw-600 u-c-text-2"}`}>{p.n}</span>
@@ -695,10 +761,10 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       );
                     })}
                     <td className="ta-c u-bl-3px-solid-border-light u-p-4px-6px">
-                      {rankMap[p.n] != null ? (
+                      {rankMap[p.id] != null ? (
                         <div>
-                          <div className={`fw-800 fs-13 ${rankMap[p.n] <= 10 ? "u-c-color-good-dark" : rankMap[p.n] <= 30 ? "u-c-text" : "u-c-text-3"}`}>
-                            {fmtOrd(rankMap[p.n])}
+                          <div className={`fw-800 fs-13 ${rankMap[p.id] <= 10 ? "u-c-color-good-dark" : rankMap[p.id] <= 30 ? "u-c-text" : "u-c-text-3"}`}>
+                            {fmtOrd(rankMap[p.id])}
                           </div>
                           <div className="fs-10 c-text-3">{tgNPlayed(p)}T · {tgNRounds(p)}R</div>
                         </div>

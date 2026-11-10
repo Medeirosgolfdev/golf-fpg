@@ -14,7 +14,7 @@
  */
 
 import { useMemo, useState } from "react";
-import type { CanonicalData, Junior, Tournament, Flight } from "../data";
+import type { CanonicalData, Junior, Tournament, Flight, Result } from "../data";
 import { normName } from "../data";
 import {
   distFromRounds,
@@ -48,7 +48,16 @@ interface DerivedCard {
   flightLabel: string;
   par: readonly number[];
   rounds: readonly (readonly number[])[];
+  /** Nº da ronda de cada cartão em `rounds` (só entram as rondas com cartão de
+   *  18 buracos — a 2.ª da lista pode ser a R3). */
+  roundNos: readonly number[];
   normName: string;
+}
+
+/** As rondas de um resultado com cartão de 18 buracos, e o nº de cada uma. */
+function rondasComCartao(rounds: Result["rounds"]): { rounds: number[][]; roundNos: number[] } {
+  const com = (rounds || []).filter((rd) => Array.isArray(rd.strokes) && rd.strokes.length === 18 && rd.strokes.some((v) => v > 0));
+  return { rounds: com.map((rd) => rd.strokes as number[]), roundNos: com.map((rd) => rd.round) };
 }
 
 /** Extrai scorecards 18H completos de um junior. */
@@ -63,9 +72,7 @@ function extractJuniorScorecards(junior: Junior, data: CanonicalData, filterTids
       if (!r) continue;
       const par = f.par || [];
       if (par.length !== 18 || par.filter((p) => p > 0).length !== 18) continue;
-      const rounds = (r.rounds || [])
-        .map((rd) => rd.strokes || [])
-        .filter((s) => s.length === 18 && s.some((v) => v > 0));
+      const { rounds, roundNos } = rondasComCartao(r.rounds);
       if (rounds.length === 0) continue;
       out.push({
         tid,
@@ -74,6 +81,7 @@ function extractJuniorScorecards(junior: Junior, data: CanonicalData, filterTids
         flightLabel: f.label,
         par,
         rounds,
+        roundNos,
         normName: normName(junior.canonicalName),
       });
     }
@@ -92,9 +100,7 @@ function extractFieldCards(data: CanonicalData, flights: Array<{ tournament: Tou
       if (!j) continue;
       const nn = normName(j.canonicalName);
       if (nn === excludeNormName) continue;
-      const rounds = (r.rounds || [])
-        .map((rd) => rd.strokes || [])
-        .filter((s) => s.length === 18 && s.some((v) => v > 0));
+      const { rounds, roundNos } = rondasComCartao(r.rounds);
       if (rounds.length === 0) continue;
       out.push({
         tid: t.id,
@@ -103,6 +109,7 @@ function extractFieldCards(data: CanonicalData, flights: Array<{ tournament: Tou
         flightLabel: f.label,
         par,
         rounds,
+        roundNos,
         normName: nn,
       });
     }
@@ -293,7 +300,9 @@ function RoundsPane({ cards }: { cards: DerivedCard[] }) {
     prs.forEach((prd, i) => {
       entries.push({
         tornLabel: shortenTournLabel(sc.tornLabel),
-        round: i + 1,
+        // O nº real da ronda (10/11/2026): pelo índice, a R3 de quem não tem
+        // cartão da R2 aparecia como «R2».
+        round: sc.roundNos[i] ?? i + 1,
         gross: prd.gross,
         toPar: prd.toPar,
         dist: prd.dist,

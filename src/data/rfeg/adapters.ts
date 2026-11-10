@@ -204,6 +204,17 @@ export function ncCatSex(name?: string | null): "M" | "F" | null {
   return null;
 }
 
+/** Ordem de preferência das classificações NextCaddy de um torneio (menor
+ *  ganha no dedup por licença): finais antes das de uma jornada; dentro de cada
+ *  grupo Scratch antes das sem nome; as Handicap (líquidas) sempre no fim. */
+export function ncCategoryRank(name?: string | null): number {
+  const s = (name || "").toLowerCase();
+  const parcial = (/\b(jornadas?|vueltas?|rondas?)\b|\d\s*ª?\s*j\./.test(s)
+    && !/\b(final|finales|total|acumulad[oa]|general)\b/.test(s)) ? 1 : 0;
+  if (/h[aá]ndicap|\bhcp\b|\bneto\b/.test(s)) return 4 + parcial;
+  return parcial * 2 + (/scratch/.test(s) ? 0 : 1);
+}
+
 export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
   // Data: o NextCaddy não a expõe nos endpoints, mas muitos nomes trazem-na no fim
   // (ex.: "...9P3 HOYOS 13-06-26"). Extrai DD-MM-YY[YY] / DD/MM/YYYY do nome;
@@ -241,12 +252,14 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
   // pos/total/toPar são LÍQUIDOS (gross − hcp de jogo). O dedup abaixo mantém a
   // primeira ocorrência por licença — ordenar as Scratch primeiro garante que a
   // linha que sobrevive traz as pancadas reais, nunca o resultado líquido.
-  const ncCatClass = (name?: string | null): number => {
-    const s = (name || "").toLowerCase();
-    if (/scratch/.test(s)) return 0;
-    if (/h[aá]ndicap|\bhcp\b|\bneto\b/.test(s)) return 2;
-    return 1;
-  };
+  //
+  // 10/11/2026 (J5): a classificação de UMA jornada («2ª Jornada Scratch», «1ª
+  // J.», «Primera Jornada», «1ª Vuelta») vem DEPOIS da final — o total dela é o
+  // desse dia (ou o acumulado até aí), não o da prova. Só por ter «Scratch» no
+  // nome passava à frente da «Clasificación Final» (Campeonato de Canarias
+  // Juvenil 2024: os 48 jogadores com 137 em vez de 207). As Handicap continuam
+  // no fim de tudo (são líquidas).
+  const ncCatClass = (name?: string | null): number => ncCategoryRank(name);
   const ncCats = [...(nc.leaderboard || [])].sort(
     (a, b) => ncCatClass(a.categoryName) - ncCatClass(b.categoryName),
   );

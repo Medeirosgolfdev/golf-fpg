@@ -14,6 +14,7 @@ import SexBadge from "./SexBadge";
 import { Tint } from "./DataStyle";
 import { fmt, fmtCR } from "../utils/format";
 import { physicalTeeGroups, type SexKey } from "../utils/teeGroups";
+import { teeChoiceKey } from "../utils/teeChoice";
 
 /** Nome do tee para a barra (escalão nos tees USKids): sem o prefixo «USKids». */
 function teeLabel(t: Tee | undefined): string {
@@ -84,7 +85,10 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
                 </>
               );
               if (selectable && tee) {
-                const active = selectedTeeId != null && tee.teeId === selectedTeeId;
+                // Pela chave tee + sexo (há 27 pares M/F com o MESMO teeId: só pelo
+                // teeId acendiam os dois botões). O teeId cru continua a valer para
+                // quem ainda o passa (Campos).
+                const active = selectedTeeId != null && (teeChoiceKey(tee) === selectedTeeId || tee.teeId === selectedTeeId);
                 return (
                   <button
                     key={s}

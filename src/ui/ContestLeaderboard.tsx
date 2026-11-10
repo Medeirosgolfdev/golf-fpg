@@ -80,7 +80,8 @@ export default function ContestLeaderboard({ contest, evo }: ContestLeaderboardP
 /* ── Evolução 2025 → 2026 ── */
 
 function ManuelEvo({ evo }: { evo: EvoEntry[] }) {
-  const m = evo.find((e) => e.n.includes("Manuel"));
+  // O detector único (10/11/2026): `includes("Manuel")` apanhava qualquer Manuel da lista.
+  const m = evo.find((e) => isManuelByName(e.n));
   if (!m) return null;
   return (
     <div className="card u-bg-bg-success-subtle u-bd-1px-solid-good">

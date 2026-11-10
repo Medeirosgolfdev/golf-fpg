@@ -47,10 +47,34 @@ export function flagForCountry(country: string | null | undefined): string {
   return iso2 ? (gf(iso2) || "🏳") : "🏳";
 }
 
+/** Par de 18 buracos válido (um número > 0 por buraco) ou null. */
+const par18De = (par: readonly (number | null)[] | null | undefined): number[] | null =>
+  par && par.length >= 18 && par.every((x) => typeof x === "number" && x > 0) ? (par as number[]) : null;
+
+const mesmoPar = (a: readonly number[], b: readonly number[]) => a.length === b.length && a.every((x, i) => x === b[i]);
+
+/**
+ * Dias que NÃO são voltas da divisão: ninguém jogou 9 buracos nesse dia (o
+ * play-off de desempate vem da fonte como uma «volta» de 1 buraco). 10/11/2026
+ * (J9): GJG Edge Mason 2026 — o vencedor ficava com 3 voltas contra 2 dos
+ * outros («incompleto» para todos) e ±par −69. Uma volta abandonada a meio por
+ * UM jogador (WD) continua a contar: nesse dia os outros jogaram 18.
+ */
+export function gjglDiasSemVolta(div: GjglDivision): Set<number> {
+  const maxBuracos = new Map<number, number>();
+  for (const p of div.players) for (const r of p.rounds || []) {
+    if (!r || !Array.isArray(r.scores)) continue;   // só totais: não se sabe, conta como volta
+    const n = r.scores.filter((x) => typeof x === "number" && x > 0).length;
+    maxBuracos.set(r.day, Math.max(maxBuracos.get(r.day) ?? 0, n));
+  }
+  return new Set([...maxBuracos].filter(([, n]) => n < 9).map(([day]) => day));
+}
+
 /* ── Adapter GjglData → FPGTournament por escalão ─────────────────── */
 export function divisionToTournament(d: GjglData, div: GjglDivision, label: string, ovr?: GjglCourseOverride | null): FPGTournament {
   // Sem par por buraco → sem par (nunca 4 inventado); o ±par é o da fonte.
   const par18: number[] = d.par && d.par.length >= 18 ? (d.par as number[]) : [];
+  const semVolta = gjglDiasSemVolta(div);
   return buildFPGTournament(
     { name: label, tcode: `${d.slug}-u${div.ak}`, date: d.start_date || "", campo: ovr?.course || d.course || d.country },
     { par: par18, teeName: "Tee", holes: 18, parTotal: par18.length ? undefined : null },
@@ -59,13 +83,34 @@ export function divisionToTournament(d: GjglData, div: GjglDivision, label: stri
       // mostrar metros dos rapazes a uma rapariga).
       const teeOvr = ovr?.tees?.[p.gender === "f" ? "F" : "M"] ?? null;
       const dispCountry = /united states/i.test(p.country || "") ? "USA" : (p.country || "");
+      // Play-off fora das voltas; e sai do total quando a fonte o somou lá.
+      const todas = p.rounds || [];
+      const voltas = todas.filter((r) => !semVolta.has(r.day));
+      const fora = todas.length - voltas.length;
+      const soma = (rs: typeof todas) => rs.reduce((s, r) => s + (r.gross ?? 0), 0);
+      const total = fora > 0 && p.total != null && p.total === soma(todas) ? soma(voltas) : p.total;
+      // O par é o de CADA volta do jogador (10/11/2026, J3): as raparigas jogam
+      // outro par (Loretto 2026: 73 contra 70) e a fonte dá-o volta a volta. O
+      // par do torneio só serve a quem não traz o seu.
+      const pars = voltas.map((r) => par18De(r.par));
+      const parJog = pars.find((x) => x) ?? null;
+      const base = parJog ?? par18;
       return {
         id: p.playerKey || p.name, name: p.name, pos: p.pos,
         club: p.country ? `${flagForCountry(p.country)} ${dispCountry}` : "",
-        country: p.country, total: p.total, hcp: p.hcp, rounds: p.rounds || [],
+        country: p.country, total, hcp: p.hcp,
+        rounds: voltas.map((r, i) => {
+          const pr = pars[i];
+          return pr && !mesmoPar(pr, base) ? { ...r, card: { par: pr } } : r;
+        }),
         ...(par18.length ? {} : { toPar: typeof p.toPar === "number" ? p.toPar : null }),
         wd: false,
-        course: teeOvr ? { si: teeOvr.si, meters: teeOvr.meters, teeName: teeOvr.tee ?? "Tee" } : undefined,
+        course: teeOvr || (parJog && !mesmoPar(parJog, par18))
+          ? {
+              ...(teeOvr ? { si: teeOvr.si, meters: teeOvr.meters, teeName: teeOvr.tee ?? "Tee" } : {}),
+              ...(parJog && !mesmoPar(parJog, par18) ? { par: parJog, parTotal: undefined } : {}),
+            }
+          : undefined,
       };
     }),
   );

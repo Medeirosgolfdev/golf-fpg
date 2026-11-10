@@ -184,6 +184,11 @@ describe("countWins / countTop3", () => {
     ]);
     expect(countWins(rival, ti)).toBe(1);
     expect(countTop3(rival, ti)).toBe(2);
+    // Com o filtro de circuito (10/11/2026): só os torneios filtrados contam.
+    const nenhum = new Set<string>();
+    expect(countWins(rival, ti, undefined, nenhum)).toBe(0);
+    expect(countTop3(rival, ti, undefined, nenhum)).toBe(0);
+    expect(countWins(rival, ti, undefined, new Set(rival.tournamentIds))).toBe(1);
   });
 });
 

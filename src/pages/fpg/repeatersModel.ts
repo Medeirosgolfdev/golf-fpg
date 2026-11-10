@@ -19,6 +19,10 @@ import { computeSD } from "../../data/fpgUtils";
 import { isManuel } from "../../constants/manuel";
 import { calcScore } from "../../utils/whsCalc";
 import { norm } from "../../utils/courseAliases"; // a limpeza única «sem acentos, só letras e dígitos»
+import { fedFpg, isFedFpg, playerKey } from "../../utils/playerKey";
+import { parsePos, temCartao } from "../../utils/classificacao";
+import { playerIdentity } from "../../data/model/identity";
+import type { PlayerIdentity } from "../../data/model/types";
 
 /** Uma volta jogada por um repetente numa edição anterior. */
 export interface RepeaterRound {
@@ -86,7 +90,11 @@ export interface PlayerForm {
 }
 
 export interface Repeater {
+  /** Federado FPG para o índice e a forma WHS (o da prova; sem ele, o da ficha do Kids 2). */
   fed: string | null;
+  /** O federado/licença tal como a prova o traz — com o nome, é a chave da
+   *  linha (`playerKey`): dois homónimos não partilham dados (10/11/2026). */
+  fedProva: string | null;
   name: string;
   club: string | null;
   escalao: string | null;
@@ -128,6 +136,11 @@ export interface FieldEntry {
   tee?: string | null;
   teeTime?: string | null;
   startHole?: number | null;
+  /** País (ISO) e nascimento (ISO, ou só o ano) que a PRÓPRIA prova traz —
+   *  provas de fora: sem isto um estrangeiro sem ficha no Kids 2 ficava sem
+   *  bandeira nem escalão no Scout (10/11/2026). */
+  country?: string | null;
+  dob?: string | null;
 }
 
 /** Dados de hoje vindos do federados.json, por federado. */
@@ -150,9 +163,12 @@ export function nameKey(name: string | null | undefined): string {
   return t.sort().join(" ");
 }
 
-/** Índice de um jogador dentro de uma edição: pelo federado, senão pelo nome. */
-const keyOf = (fed: string | null | undefined, name: string): string =>
-  fed ? `f:${fed}` : `n:${nameKey(name)}`;
+/** País e nascimento de um registo da prova (resultado, inscrição ou linha do
+ *  draw) — pela identidade do modelo comum (`src/data/model/identity.ts`). */
+function paisENasc(x: object): { country: string | null; dob: string | null } {
+  const id = (x as { identity?: PlayerIdentity }).identity ?? playerIdentity(x);
+  return { country: id.countryIso, dob: id.dob ?? (id.birthYear != null ? String(id.birthYear) : null) };
+}
 
 /** Extrai o field de HOJE: o draw da 1ª ronda se existir, senão a leaderboard. */
 export function currentField(t: Tournament | null | undefined): FieldEntry[] {
@@ -161,23 +177,43 @@ export function currentField(t: Tournament | null | undefined): FieldEntry[] {
   const r1 = draws && (draws["1"] || Object.values(draws)[0]);
   // O draw de fora (MAJOR, USKids…) não traz o federado: o da MESMA prova —
   // resultados ou inscrições —, pelo nome (dados-da-propria-prova, 05/11/2026).
-  const fedDaProva = new Map<string, string>();
-  for (const p of t.players || []) { const f = (p as Player).fedCode; if (f && p.name) fedDaProva.set(nameKey(p.name), f); }
-  for (const p of t._admissions?.players || []) if (p?.fed && p.nome && !fedDaProva.has(nameKey(p.nome))) fedDaProva.set(nameKey(p.nome), p.fed);
+  // Idem o país e o nascimento. Um nome com DOIS federados na prova (homónimos)
+  // não dá nada a ninguém pelo nome: não se adivinha qual é qual (10/11/2026).
+  type DaProva = { fed: string | null; country: string | null; dob: string | null };
+  const daProva = new Map<string, DaProva | null>();
+  const junta = (nome: string | null | undefined, fed: string | null | undefined, x: object) => {
+    const k = nameKey(nome);
+    if (!k) return;
+    const antes = daProva.get(k);
+    if (antes === null) return;
+    const id = paisENasc(x);
+    // Dois federados do mesmo tipo e diferentes = duas pessoas. (Um número da FPG
+    // e uma licença de fora podem ser a mesma: resultados e inscrições nem sempre
+    // trazem o mesmo identificador.)
+    if (antes?.fed && fed && antes.fed !== fed && isFedFpg(antes.fed) === isFedFpg(fed)) { daProva.set(k, null); return; }
+    daProva.set(k, { fed: antes?.fed || fed || null, country: antes?.country ?? id.country, dob: antes?.dob ?? id.dob });
+  };
+  for (const p of t.players || []) junta(p.name, (p as Player).fedCode, p);
+  for (const p of t._admissions?.players || []) if (p) junta(p.nome, p.fed, p);
   const out: FieldEntry[] = [];
   for (const g of r1?.groups || []) {
     for (const p of g.players || []) {
       if (!p?.nome) continue;
+      const extra = daProva.get(nameKey(p.nome));
+      // O que a prova diz desse nome só vale se não for de outro federado.
+      const dele = extra && (!p.fed || !extra.fed || extra.fed === p.fed) ? extra : null;
+      const id = paisENasc(p);
       out.push({
-        fed: p.fed || fedDaProva.get(nameKey(p.nome)) || null, name: p.nome, tee: p.tee ?? g.tee ?? null,
+        fed: p.fed || dele?.fed || null, name: p.nome, tee: p.tee ?? g.tee ?? null,
         teeTime: g.teeTime ?? null, startHole: g.startHole ?? null,
+        country: id.country ?? dele?.country ?? null, dob: id.dob ?? dele?.dob ?? null,
       });
     }
   }
   if (out.length) return out;
   for (const p of t.players || []) {
     if (!p?.name) continue;
-    out.push({ fed: (p as Player).fedCode || null, name: p.name, tee: (p as Player).teeName || null });
+    out.push({ fed: (p as Player).fedCode || null, name: p.name, tee: (p as Player).teeName || null, ...paisENasc(p) });
   }
   if (out.length) return out;
   // Só inscrições (prova por jogar, ainda sem draw — 05/11/2026, Castro Marim U14):
@@ -185,7 +221,7 @@ export function currentField(t: Tournament | null | undefined): FieldEntry[] {
   for (const p of t._admissions?.players || []) {
     if (!p?.nome) continue;
     if ((p.status === "desistente" || p.status === "reserva") && !isManuel({ name: p.nome, fed: p.fed ?? undefined })) continue;
-    out.push({ fed: p.fed || null, name: p.nome, tee: null });
+    out.push({ fed: p.fed || null, name: p.nome, tee: null, ...paisENasc(p) });
   }
   return out;
 }
@@ -342,10 +378,10 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
   for (const { id, year, t } of previous) {
     for (const p of t.players || []) {
       if (!p?.name) continue;
-      const k = keyOf((p as Player).fedCode, p.name);
+      const k = playerKey((p as Player).fedCode, p.name);
       const rounds: RepeaterRound[] = [];
       for (const r of p.roundScores || []) {
-        if (typeof r.gross !== "number" || r.gross >= 900) continue;
+        if (!temCartao(r.gross)) continue;
         rounds.push({
           year, round: r.round ?? rounds.length + 1, gross: r.gross,
           sd: roundSD(p as Player, r),
@@ -356,8 +392,8 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
       }
       const ed: RepeaterEdition = {
         id, year,
-        pos: typeof p.pos === "number" ? p.pos : (parseInt(String(p.pos ?? ""), 10) || null),
-        total: typeof p.grossTotal === "number" && p.grossTotal < 900 ? p.grossTotal : null,
+        pos: parsePos(p.pos),
+        total: typeof p.grossTotal === "number" && temCartao(p.grossTotal) ? p.grossTotal : null,
         toPar: typeof p.toPar === "number" ? p.toPar : null,
         hcpThen: typeof p.hcpExact === "number" ? p.hcpExact : null,
         rounds,
@@ -380,11 +416,14 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
 
   const out: Repeater[] = [];
   for (const f of field) {
-    const editions = hist.get(keyOf(f.fed, f.name)) ?? [];
+    const editions = hist.get(playerKey(f.fed, f.name)) ?? [];
     if (!editions.length && !input.todos) continue;
     editions.sort((a, b) => b.year - a.year);
-    // O federado para o índice e a forma WHS (o histórico desta prova já casou acima).
-    const fed = f.fed || input.fedPorNome?.(f.name) || null;
+    // O federado para o índice e a forma WHS (o histórico desta prova já casou
+    // acima). Só um federado FPG serve: nas provas de fora o `fed` é a licença
+    // estrangeira, e com ela um português com ficha no Kids 2 ficava sem WHS
+    // (10/11/2026) — aí vale o da ficha, ligada pelo nome.
+    const fed = fedFpg(f.fed) || input.fedPorNome?.(f.name) || null;
 
     const info = fedInfo(fed);
     const sds = editions.flatMap((e) => e.rounds.map((r) => r.sd)).filter((x): x is number => x != null);
@@ -465,7 +504,7 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
     }
 
     out.push({
-      fed, name: f.name,
+      fed, fedProva: f.fed ?? null, name: f.name,
       club: info?.club ?? null,
       escalao: info?.escalao ?? null,
       sex: info?.sex ?? null,

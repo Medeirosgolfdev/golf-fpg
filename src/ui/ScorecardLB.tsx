@@ -14,10 +14,13 @@ import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } fro
 import { numGross, resolveEsc, playerDob, computeRoundSD, filterPlayers, fillBlankHoles, isRoundInProgress } from "../data/fpgUtils";
 import { useSort, compareNullsLast, compareValuesNullsLast } from "../hooks/useSort";
 import { isNoCardGross } from "../data/intlCommon";
+import { temCartao } from "../utils/classificacao";
+import { resumoJogado } from "../utils/parJogado";
 import { fmtHcp, ageAtDate, fmtDobPt, medal as medalOf } from "../utils/format";
 import { medalNet, stablefordNet } from "../utils/whsCalc";
 import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
+import { semBandeira, clubeEhPais } from "../utils/clubePais";
 import { EMPTY_FILTER } from "./multiRoundTypes";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { EscPill } from "./PillBadge";
@@ -130,12 +133,8 @@ export function ScorecardLB({
   // bandeira passa para antes do nome e a coluna sai — menos uma coluna (pedido
   // da Mariana, 20/10/2026). Com clubes a sério a coluna fica.
   // O código pode vir sozinho («IT») ou já com a bandeira à frente («🇮🇹 IT», USKids).
-  const semBandeira = (c?: string | null) => (c || "").replace(/^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}][\u{1F1E6}-\u{1F1FF}\u{E0000}-\u{E007F}]*\s*/u, "").trim();
-  const clubEhPais = (c?: string | null) => {
-    const u = semBandeira(c).toUpperCase();
-    return /^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(u) && flagOf(u) !== "🏳️";
-  };
-  const clubesSaoPaises = tournament.players.some((p) => p.club) && tournament.players.every((p) => !p.club || clubEhPais(p.club));
+  // (leitura partilhada com o Resumo — utils/clubePais)
+  const clubesSaoPaises = tournament.players.some((p) => p.club) && tournament.players.every((p) => !p.club || clubeEhPais(p.club));
   const hideClub_ = (options?.hideClub ?? false) || !temOutros((p) => !!p.club) || clubesSaoPaises;
   const showAge_ = options?.showAge ?? false;
   const showClass_ = options?.showClass ?? false;
@@ -169,7 +168,7 @@ export function ScorecardLB({
   // — com o gross e o ±par e os buracos em branco, em vez de desaparecer.
   const hasCard = (p: Player) => !!(p.scores && p.scores.length > 0);
   const anyCard = tournament.players.some(hasCard);
-  const rawPlayers = tournament.players.filter((p) => hasCard(p) || (anyCard && !p._wd && numGross(p) > 0 && numGross(p) < 900));
+  const rawPlayers = tournament.players.filter((p) => hasCard(p) || (anyCard && !p._wd && temCartao(numGross(p))));
 
   // ─── Calcular ref, par, posições ANTES de qualquer early return ───────────
   // (React exige que todos os hooks sejam chamados incondicionalmente)
@@ -249,8 +248,16 @@ export function ScorecardLB({
   // ebtc2/egtc/elg/avtrophy — trazem-nos em roundScores[]) e não no jogador.
   const sdOf = (p: Player): SDResult => computeRoundSD(p, tournament.date);
 
-  const nonWD = rawPlayers.filter((p) => !p._wd);
-  const wdOnly = rawPlayers.filter((p) => p._wd);
+  // Sem cartão = desistiu: a marca `_wd`, sem gross, ou o gross «sem cartão»
+  // (≥ 900: 997/998/999). UMA regra para a lista, a posição, a ordenação e a
+  // linha (10/11/2026 — a linha já dizia «WD» a quem tinha 998, mas esse jogador
+  // continuava entre os classificados, com lugar e a contar para o HCP de jogo).
+  const semCartao = (p: Player): boolean => {
+    const g = numGross(p);
+    return !!p._wd || p.grossTotal == null || Number.isNaN(g) || isNoCardGross(g);
+  };
+  const nonWD = rawPlayers.filter((p) => !semCartao(p));
+  const wdOnly = rawPlayers.filter(semCartao);
   // ⚠ Ordenar só por gross põe quem NÃO terminou a volta em 1º: 13 buracos
   // somam 54 e 18 somam 68 (caso Johanna Janisch, ELG 2026 R2). Quem tem a
   // volta completa vem primeiro; os que ainda vão a meio ficam no fim, por
@@ -287,9 +294,9 @@ export function ScorecardLB({
   /** Valor do jogador na modalidade activa (null = não se calcula: sem HCP de jogo
    *  ou, no Stableford, sem cartão buraco a buraco). */
   const valorModo = (p: Player): number | null => {
-    if (modoAtivo === "stroke" || p._wd || p.hcpPlay == null) return null;
+    if (modoAtivo === "stroke" || semCartao(p) || p.hcpPlay == null) return null;
     const g = numGross(p);
-    if (!(g > 0) || g >= 900) return null;
+    if (!temCartao(g)) return null;
     if (modoAtivo === "medalNet") return medalNet(g, p.hcpPlay);
     const card = cardOf(p);
     return card.some((v) => v > 0) ? stablefordNet(card, playerPar(p), siOf(p), p.hcpPlay) : null;
@@ -307,7 +314,7 @@ export function ScorecardLB({
       posModo.set(p, i > 0 && valorModo(p) === valorModo(prev) && done(p) === done(prev) ? posModo.get(prev)! : i + 1);
     });
   }
-  const posOf = (p: Player): number => (modoAtivo === "stroke" ? (p as any)._pos : posModo.get(p) ?? (p._wd ? 9999 : 9998));
+  const posOf = (p: Player): number => (modoAtivo === "stroke" ? (p as any)._pos : posModo.get(p) ?? (semCartao(p) ? 9999 : 9998));
   // A média só junta voltas COMPLETAS (do tamanho da grelha) — misturar quem
   // fez 9 buracos com quem fez 18 dava "Média 44.6 (−26)" numa ronda a decorrer.
   // "completa" = buracos com score, não o tamanho do array (os buracos por
@@ -318,14 +325,14 @@ export function ScorecardLB({
   // de um torneio acabado (22/10/2026).
   const complete = byGross.filter((p) => {
     const g = numGross(p);
-    if (!(g > 0) || g >= 900) return false; // sem gross ou «sem cartão» (WD)
+    if (!temCartao(g)) return false; // sem gross ou «sem cartão» (WD)
     return holesOf(p) === nh
       || !isRoundInProgress({ gross: g, scores: p.roundScores?.[0]?.scores ?? p.scores, pars: p.roundScores?.[0]?.pars ?? p.par });
   });
   const grosses = (complete.length ? complete : byGross).map((p) => numGross(p)).filter((g) => !isNaN(g));
   const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
   // Só as voltas mesmo a meio (sem contar os «sem cartão», que são WD).
-  const nIncompletos = byGross.filter((p) => { const g = numGross(p); return g > 0 && g < 900; }).length - complete.length;
+  const nIncompletos = byGross.filter((p) => temCartao(numGross(p))).length - complete.length;
 
   // Hooks têm de vir ANTES de qualquer return condicional
   const fedBirthdates = useFedBirthdates();
@@ -368,6 +375,49 @@ export function ScorecardLB({
     return m;
   }, [rawPlayers, par]);
 
+  /** ±par MOSTRADO de um jogador. A mesma conta serve a célula e a ordenação por
+   *  «±» (10/11/2026: a ordenação fazia gross − par dos 18 e numa volta a
+   *  decorrer não seguia o valor à vista — 41 pancadas em 9 buracos, «+5»,
+   *  ordenava como −31). */
+  const toParOf = (p: Player): number | null => {
+    if (semCartao(p)) return null;
+    const gross = numGross(p);
+    const stats = statsByPlayer.get(p);
+    const scores = stats?.scores ?? [];
+    const inferred = stats?.inferred ?? [];
+    const pp = playerPar(p);
+    const ppTotal = pp === par ? parTotal : pp.reduce((a, b) => a + b, 0);
+    // Cartão INCOMPLETO sem gross oficial (o `inferred` só reconcilia quando há
+    // gross publicado): comparar a soma dos buracos jogados com o par de TODOS
+    // dava um ±par falso — 16 buracos em 81 apareciam como "+9" (caso Tomás
+    // Câmara, Regional de Clubes 2026). Sem cartão completo não há ±par.
+    // ⚠ EXCEPÇÃO: volta a DECORRER. Aí o gross publicado é o dos buracos já
+    // jogados (36 ao fim de 9) — o cartão é coerente consigo próprio e o ±par
+    // desses buracos é exactamente o que qualquer leaderboard live mostra.
+    // Distingue-se do caso acima por `gross === soma dos buracos publicados`.
+    const scoredHoles = scores.filter(Boolean).length;
+    // Pancadas e par só dos buracos jogados (utils/parJogado).
+    const { pancadas: playedSum, par: playedParSum } = resumoJogado(scores, pp, 0, pp.length);
+    // Par TOTAL real sem par por buraco (MAJOR: total − toPar da fonte).
+    const parTotalReal = typeof p.parTotal === "number" && p.parTotal > 0 ? p.parTotal : null;
+    if (pp.length < nh || !pp.length) {
+      // Sem par por buraco: só há ±par com o par total real e a volta inteira.
+      return parTotalReal != null && (scoredHoles === 0 || scoredHoles >= nh) ? gross - parTotalReal : null;
+    }
+    if (noInfer) {
+      // Torneio interrompido / a decorrer: nunca estimar buracos por jogar.
+      if (scoredHoles >= nh) return ppTotal > 0 ? gross - ppTotal : null;   // volta completa
+      if (scoredHoles > 0) return playedSum - playedParSum;                 // a meio → só os jogados
+      // Sem cartão hole-by-hole: só há ±par se o gross for um total de volta
+      // completa credível (não um total a correr de uma volta parada).
+      return ppTotal > 0 && gross >= nh && gross >= ppTotal - 12 ? gross - ppTotal : null;
+    }
+    const inProgress = scoredHoles > 0 && scoredHoles < pp.length && playedSum === gross;
+    const isPartial = scoredHoles > 0 && scoredHoles < pp.length && inferred.every(v => !v) && !inProgress;
+    // Par só dos buracos jogados quando a volta ainda vai a meio.
+    return isPartial ? null : gross - (inProgress ? playedParSum : ppTotal);
+  };
+
   const sorted = useMemo(() => {
     // Vazios (buraco por jogar, sem lugar/HCP/SD, gross «sem cartão»…) sempre no
     // fim, nas duas direcções; os WD ficam abaixo de todos.
@@ -378,8 +428,8 @@ export function ScorecardLB({
     };
     return [...filteredPlayers].sort((a, b) => {
       // WD players sempre no fim, independentemente do sortKey
-      const aWD = a._wd;
-      const bWD = b._wd;
+      const aWD = semCartao(a);
+      const bWD = semCartao(b);
       if (aWD && !bWD) return 1;
       if (!aWD && bWD) return -1;
 
@@ -438,12 +488,10 @@ export function ScorecardLB({
           av = grossOf(a);
           bv = grossOf(b);
           break;
-        case "toPar": {
-          const ga = grossOf(a), gb = grossOf(b);
-          av = ga != null ? ga - parTotal : null;
-          bv = gb != null ? gb - parTotal : null;
-          break;
-        }
+        case "toPar":
+          // O valor que está na coluna (ver toParOf).
+          av = toParOf(a);
+          bv = toParOf(b);
           break;
         case "tee":
           av = a.teeName;
@@ -487,7 +535,7 @@ export function ScorecardLB({
   if (!rawPlayers.length) return <EmptyState size="sm" message="Scorecards não disponíveis." />;
 
   const rows: ScorecardRow[] = sorted.map((p, idx) => {
-    const isWDPlayer = !!p._wd || p.grossTotal == null || numGross(p) >= 900;
+    const isWDPlayer = semCartao(p);
     const gross = isWDPlayer ? 0 : numGross(p);
     const dp = posOf(p);
     const showPos = idx === 0 || dp !== posOf(sorted[idx - 1]);
@@ -517,46 +565,7 @@ export function ScorecardLB({
     const pars = stats?.pars ?? 0;
     const bogs = stats?.bogs ?? 0;
     const pp = playerPar(p);
-    const ppTotal = pp === par ? parTotal : pp.reduce((a, b) => a + b, 0);
-    // Cartão INCOMPLETO sem gross oficial (o `inferred` só reconcilia quando há
-    // gross publicado): comparar a soma dos buracos jogados com o par de TODOS
-    // dava um ±par falso — 16 buracos em 81 apareciam como "+9" (caso Tomás
-    // Câmara, Regional de Clubes 2026). Sem cartão completo não há ±par.
-    // ⚠ EXCEPÇÃO: volta a DECORRER. Aí o gross publicado é o dos buracos já
-    // jogados (36 ao fim de 9) — o cartão é coerente consigo próprio e o ±par
-    // desses buracos é exactamente o que qualquer leaderboard live mostra.
-    // Distingue-se do caso acima por `gross === soma dos buracos publicados`.
-    const scoredHoles = scores.filter(Boolean).length;
-    const playedSum = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
-    const playedParSum = pp.reduce((a, v, i) => a + (scores[i] ? v : 0), 0);
-    // Par TOTAL real sem par por buraco (MAJOR: total − toPar da fonte).
-    const parTotalReal = typeof p.parTotal === "number" && p.parTotal > 0 ? p.parTotal : null;
-    let toParVal: number | null;
-    if (isWDPlayer) {
-      toParVal = null;
-    } else if (pp.length < nh || !pp.length) {
-      // Sem par por buraco: só há ±par com o par total real e a volta inteira.
-      toParVal = parTotalReal != null && (scoredHoles === 0 || scoredHoles >= nh) ? gross - parTotalReal : null;
-    } else if (noInfer) {
-      // Torneio interrompido / a decorrer: nunca estimar buracos por jogar.
-      if (scoredHoles >= nh) {
-        toParVal = ppTotal > 0 ? gross - ppTotal : null;            // volta completa
-      } else if (scoredHoles > 0) {
-        toParVal = playedSum - playedParSum;                        // a meio → só os jogados
-      } else {
-        // Sem cartão hole-by-hole: só há ±par se o gross for um total de volta
-        // completa credível (não um total a correr de uma volta parada).
-        toParVal = ppTotal > 0 && gross >= nh && gross >= ppTotal - 12
-          ? gross - ppTotal
-          : null;
-      }
-    } else {
-      const inProgress = scoredHoles > 0 && scoredHoles < pp.length && playedSum === gross;
-      const isPartial = scoredHoles > 0 && scoredHoles < pp.length && inferred.every(v => !v) && !inProgress;
-      // Par só dos buracos jogados quando a volta ainda vai a meio.
-      const refParTotal = inProgress ? pp.reduce((a, v, i) => a + (scores[i] ? v : 0), 0) : ppTotal;
-      toParVal = isPartial ? null : gross - refParTotal;
-    }
+    const toParVal = toParOf(p);
 
     return {
       key: p.scoreId || idx,

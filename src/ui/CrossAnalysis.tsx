@@ -81,8 +81,6 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
     }
   }, [escalaos, activeEsc, data]);
 
-  if (keys.length < 2) return null;
-
   const players = useMemo(() => {
     let p = (byEscalao[activeEsc] || [])
       .filter(pp => {
@@ -107,6 +105,10 @@ export function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boo
     });
     return p;
   }, [byEscalao, activeEsc, sexFilter, hcpMax, sortKey, sortDir]);
+
+  // Só depois de TODOS os hooks (10/11/2026): com o `return` antes do useMemo o
+  // React rebentava quando o nº de jogadores cruzados mudava com a ficha aberta.
+  if (keys.length < 2) return null;
 
   const curYear = new Date().getFullYear();
 

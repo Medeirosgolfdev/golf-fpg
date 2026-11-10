@@ -1,10 +1,11 @@
 ﻿// @refresh reset
-import { useEffect, useState, useMemo, useTransition, useCallback } from "react";
+import { useEffect, useState, useMemo, useTransition, useCallback, useRef } from "react";
 import { ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import LoadingState from "../ui/LoadingState";
 import { useSearchParams, Link } from "react-router-dom";
-import { isoDate, fmtToPar, todayIso, medal as medalOf } from "../utils/format";
+import { isoDate, fmtToPar, todayIso } from "../utils/format";
+import PosMedal from "../ui/PosMedal";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill, EscPill } from "../ui/PillBadge";
 import TabRow from "../ui/TabRow";
@@ -35,6 +36,7 @@ import { ToggleChip } from "../ui/FilterField";
 import FilterPillRow from "../ui/FilterPillRow";
 import { Fill } from "../ui/DataStyle";
 import { isPtCountry } from "../utils/flagUtils";
+import { temCartao, classificarPorTotal } from "../utils/classificacao";
 
 
 
@@ -399,22 +401,31 @@ export default function USKidsFieldPage() {
         // Lugar e ±par do ACUMULADO (10/11/2026: antes era o lugar só da última
         // volta e o gross dessa volta mostrado como ±par — «#8 (+79)»). Só entra
         // na classificação quem tem todas as voltas com cartão.
-        const rondas = (escalaoM?.rondas ?? []).filter((r: RondaResult) => (r.leaderboard ?? r.jogadores ?? []).some((j: RondaJogador) => j.score > 0));
+        // A classificação é a regra global (`classificarPorTotal`, utils/classificacao):
+        // só quem tem todas as voltas com cartão, com empates.
         const acc = new Map<string, { total: number; toPar: number | null; n: number; manuel: boolean }>();
-        for (const r of rondas) {
+        for (const r of (escalaoM?.rondas ?? [])) {
+          // Dois jogadores com o mesmo nome na mesma volta são pessoas diferentes.
+          const vistos = new Map<string, number>();
           for (const j of (r.leaderboard ?? r.jogadores ?? [])) {
-            if (!(j.score > 0) || j.score >= 900) continue;
-            const a = acc.get(j.nome) ?? { total: 0, toPar: 0, n: 0, manuel: isManuel(j.nome) };
+            if (!temCartao(j.score)) continue;
+            const manuel = isManuel(j.nome);
+            // O Manuel tem 4 variantes de nome: uma só chave para ele.
+            const base = manuel ? "★manuel" : `${j.nome}|${j.pais ?? ""}`;
+            const vez = (vistos.get(base) ?? 0) + 1;
+            vistos.set(base, vez);
+            const chave = vez > 1 ? `${base}#${vez}` : base;
+            const a = acc.get(chave) ?? { total: 0, toPar: 0, n: 0, manuel };
             a.total += j.score;
             a.toPar = a.toPar != null && j.to_par != null ? a.toPar + j.to_par : null;
             a.n++;
-            acc.set(j.nome, a);
+            acc.set(chave, a);
           }
         }
-        const completos = [...acc.values()].filter(a => a.n === rondas.length);
-        const eu = completos.find(a => a.manuel);
+        const { ordenados, pos } = classificarPorTotal([...acc.values()], a => a.n, a => a.total);
+        const eu = ordenados.find(a => a.manuel);
         if (eu) {
-          manuelPos = 1 + completos.filter(a => a.total < eu.total).length;
+          manuelPos = pos.get(eu) ?? null;
           manuelScore = eu.toPar;
         }
       }
@@ -651,12 +662,18 @@ export default function USKidsFieldPage() {
   // estar — mudou um filtro, ou o ?t= guardado é de um torneio que já acabou —
   // abre-se o primeiro visível: os do Manuel primeiro, depois o mais próximo.
   const chaveVisiveis = listaVisivel.map(t => t.t).join(",");
+  /** A página já mostrou um torneio (ou já decidiu o que fazer com a lista vazia). */
+  const abriuUmaVez = useRef(false);
   useEffect(() => {
     // Só depois de os resultados chegarem — antes disso um torneio já jogado
     // ainda não «tem resultados» e a selecção saltava para outro.
-    if (!chaveVisiveis || !resultsData) return;
-    const ids = new Set(chaveVisiveis.split(",").map(Number));
-    if (selectedT != null && ids.has(selectedT)) return;
+    if (!resultsData || !fieldData) return;
+    // ⚠ Lista vazia NÃO é motivo para sair logo (10/11/2026): quando o Manuel não
+    // tem inscrições futuras a lista dos Torneios (com o ★ Manuel) fica vazia, e
+    // saindo aqui a página abria em branco e os links ?t= de torneios já jogados
+    // deixavam de saltar para Resultados.
+    const ids = new Set(chaveVisiveis ? chaveVisiveis.split(",").map(Number) : []);
+    if (selectedT != null && ids.has(selectedT)) { abriuUmaVez.current = true; return; }
     // Link ?t= para um torneio que já acabou e tem resultados: abre em
     // Resultados em vez de saltar para outro torneio (14/10/2026 — o link do
     // Marco Simone 2026, t=21080, abria o Spanish Open).
@@ -669,6 +686,17 @@ export default function USKidsFieldPage() {
     if (selectedT != null && selectedT === tLigado && filterManuel && allTorneios.some(t => t.t === selectedT)) {
       setFilterManuel(false); return;
     }
+    if (ids.size === 0) {
+      // Ao ABRIR a página nos Torneios sem nenhum do Manuel por jogar: desliga o
+      // ★ Manuel para se verem os próximos torneios (só da 1.ª vez — se for ela a
+      // ligar o filtro depois, a lista vazia é a resposta certa).
+      if (!abriuUmaVez.current && tab === "campo" && filterManuel && allTorneios.some(t => !t.terminado)) {
+        abriuUmaVez.current = true;
+        setFilterManuel(false);
+      }
+      return;
+    }
+    abriuUmaVez.current = true;
     const hoje = todayIso();
     const vis = allTorneios.filter(t => ids.has(t.t))
       .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
@@ -677,7 +705,7 @@ export default function USKidsFieldPage() {
       ? vis[vis.length - 1]
       : vis.find(t => t.manuelJogou) ?? vis.find(t => isoDate(t.date) >= hoje) ?? vis[0];
     if (alvo) setSelectedT(alvo.t);
-  }, [chaveVisiveis, selectedT, tab, resultsData, filterManuel]);
+  }, [chaveVisiveis, selectedT, tab, resultsData, fieldData, filterManuel]);
 
   if (erro) return (
     <div className="u-p-32px">
@@ -731,10 +759,11 @@ export default function USKidsFieldPage() {
         {nPaises > 1 && <span className="p p-sm p-muted">{nPaises} países</span>}
         {t.manuelJogou && <ManuelPill />}
         {t.manuelJogou && manuelPos != null && (
-          <span className={`p p-sm p-tourn ${manuelPos === 1 ? "p-pos-1" : manuelPos <= 3 ? "p-pos-podium" : "p-muted"}`}>
-            {medalOf(manuelPos) ?? `#${manuelPos}`}
-            {manuelScore != null && ` (${fmtToPar(manuelScore)})`}
-          </span>
+          <>
+            {/* Lugar do Manuel no acumulado: o selo global (PosMedal, «13.º»). */}
+            <PosMedal pos={manuelPos} title="Lugar do Manuel no acumulado" />
+            {manuelScore != null && <span className="p p-sm p-muted">{fmtToPar(manuelScore)}</span>}
+          </>
         )}
         {t.urlResultados && (
           <ExtLink href={t.urlResultados}

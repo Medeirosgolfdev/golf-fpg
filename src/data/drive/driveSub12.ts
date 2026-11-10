@@ -15,6 +15,8 @@ import type { Tournament, Player, TStats, Sub12Row, EscLookup } from "../../ui/d
 import type { CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
 import { escalaoCanon, escaloesCanon } from "../model/escalao";
 import { isManuelByName } from "../../constants/manuel";
+import { isNoCardGross } from "../intlCommon";
+import { classificarPorTotal, parsePos, temCartao, voltasComCartao } from "../../utils/classificacao";
 
 export type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
 
@@ -165,32 +167,31 @@ export function filterTournByEsc(
   const want = new Set(escs.flatMap(e => escaloesCanon(e, "fpg")));
   return tournaments.map(t => {
     const filtered = t.players.filter(p => {
-      if (isDNS(p)) return false;
+      // Sem total E sem volta nenhuma com cartão (não saiu). Quem desistiu a
+      // meio (83 + 997) FICA: tem a R1 para mostrar — 10/11/2026 (J6), antes
+      // desaparecia também da R1.
+      if (isDNS(p) && voltasComCartao(p.roundScores) === 0) return false;
       const esc = escOf ? escOf(p) : resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup, fedBirthdates);
       return escaloesCanon(esc, "fpg").some(e => want.has(e));
     }).map(p => ({ ...p }));
     if (!filtered.length) return null;
-    // Recalculate positions
-    const sorted = [...filtered].sort((a, b) => {
-      if (a._incomplete && !b._incomplete) return 1;
-      if (!a._incomplete && b._incomplete) return -1;
-      const ag = typeof a.grossTotal === "string" ? parseInt(a.grossTotal) : (a.grossTotal as number ?? 999);
-      const bg = typeof b.grossTotal === "string" ? parseInt(b.grossTotal) : (b.grossTotal as number ?? 999);
-      return ag - bg;
-    });
-    let pos = 1;
-    sorted.forEach((p, i) => {
-      if (p._incomplete) { p.pos = "INC"; return; }
-      if (i > 0) {
-        const prev = sorted[i - 1];
-        if (!prev._incomplete) {
-          const ag = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number ?? 999);
-          const bg = typeof prev.grossTotal === "string" ? parseInt(prev.grossTotal) : (prev.grossTotal as number ?? 999);
-          if (ag !== bg) pos = i + 1;
-        }
-      }
-      p.pos = pos;
-    });
+    // Lugares refeitos pela regra única (`classificarPorTotal`): só entre quem
+    // tem total com cartão e TODAS as voltas da prova, com empates. Os outros
+    // (incompleto, cut, desistiu) vão para o fim, sem lugar.
+    const fora = (p: Player) => !!p._incomplete || !!p._wd || !!(p as { _cut?: boolean })._cut;
+    const { ordenados, pos } = classificarPorTotal(
+      filtered,
+      p => (p.roundScores?.length ? voltasComCartao(p.roundScores) : 1),
+      p => (fora(p) ? null : numGrossOrNull(p)),
+    );
+    for (const p of ordenados) p.pos = pos.get(p)!;
+    const resto = filtered.filter(p => !pos.has(p));
+    const grupo = (p: Player) => (desistiu(p) ? 2 : (p as { _cut?: boolean })._cut ? 0 : 1);
+    for (const p of resto) {
+      const texto = typeof p.pos === "string" && p.pos && parsePos(p.pos) == null ? p.pos : null;
+      p.pos = p._incomplete ? "INC" : texto ?? (desistiu(p) ? "WD" : (p as { _cut?: boolean })._cut ? "CUT" : "INC");
+    }
+    const sorted = [...ordenados, ...[0, 1, 2].flatMap(g => resto.filter(p => grupo(p) === g))];
     return { ...t, players: sorted, playerCount: sorted.length };
   }).filter(Boolean) as Tournament[];
 }
@@ -258,7 +259,12 @@ export function dateToSort(d: string): number {
 }
 /** Desistiu (ou ficou sem cartão) numa das voltas. */
 function desistiu(p: Player): boolean {
-  return !!p._wd || !!p.roundScores?.some(r => r.gross >= 900);
+  return !!p._wd || !!p.roundScores?.some(r => isNoCardGross(r.gross));
+}
+/** Total do jogador em número (o `grossTotal` pode vir em texto: «WD»); null se não for. */
+function numGrossOrNull(p: Player): number | null {
+  const g = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
+  return typeof g === "number" && !isNaN(g) ? g : null;
 }
 /** Distância (m) da volta jogada: a soma dos metros da 1.ª volta; `null`
  *  quando a fonte não os traz. */
@@ -293,12 +299,17 @@ export function buildSub12Data(
     // …e também quem tem MENOS voltas do que a prova (cut/incompleto, sem volta
     // ≥ 900): no 4.º Aquapor de 16/05/2025 dois jogadores com uma volta (86 e 87)
     // ficavam 1.º e 2.º com 250 e 165 pontos (10/11/2026).
-    const voltasDe = (p: Player) => (p.roundScores || []).filter(r => r.gross > 0 && r.gross < 900).length;
-    const voltasDaProva = Math.max(0, ...t.players.map(voltasDe));
+    // Regra única (`classificarPorTotal`, utils/classificacao): só tem gross para
+    // a classificação quem tem total com cartão e todas as voltas da prova.
+    const { pos: classificados } = classificarPorTotal(
+      t.players,
+      p => voltasComCartao(p.roundScores),
+      p => (typeof p.grossTotal === "number" && !desistiu(p) ? p.grossTotal : null),
+    );
     const field = t.players.map(p => ({
       fed: p.fed || p.fedCode || "",
       pos: p.pos,
-      gross: typeof p.grossTotal === "number" && !desistiu(p) && voltasDe(p) >= voltasDaProva ? p.grossTotal : null,
+      gross: classificados.has(p) ? (p.grossTotal as number) : null,
       sex: sexOf(p.fed || p.fedCode || ""),
     }));
     const ptsByFed = tournamentPoints(field, t.series, t.name);
@@ -323,7 +334,7 @@ export function buildSub12Data(
       const { gross: g, toPar: tp, sd, sds, roundSds, nholes, birdies, pars: parsCount, bogeys } = stats;
       // Cada volta jogada com o seu SD (alinhados; sem as voltas sem cartão).
       const voltas = (p.roundScores?.length ? p.roundScores.map((r, i) => ({ g: r.gross, sd: roundSds[i] ?? null })) : [{ g, sd }])
-        .filter(v => v.g > 0 && v.g < 900);
+        .filter(v => temCartao(v.g));
       const tournKey = t.tcode + "_" + t.date;
       if (!playerMap.has(fed)) {
         const dbInfo = playersDB[fed];

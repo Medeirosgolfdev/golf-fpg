@@ -6,6 +6,7 @@
  */
 import { useMemo, useState } from "react";
 import type { PlayerPageData, RoundData } from "../../../data/playerDataLoader";
+import { eclecticForRound } from "../../../data/playerDataLoader";
 import { norm } from "../../../utils/format";
 import { normKey } from "../../../utils/teeColors";
 import { fmtStb } from "../../../utils/scoreDisplay";
@@ -107,11 +108,12 @@ export default function ByDateView({ data, search }: {
           if (!holes) return null;
           const courseKey = norm(r.course);
           const teeKey = r.teeKey || normKey(r.tee || "");
-          const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
+          // O eclético da MESMA metade nas voltas de 9 buracos (10/11/2026, I4).
+          const ecEntry = eclecticForRound(data, courseKey, { ...r, teeKey });
           return (
             <div className="scroll-x jg-sc-host">
               <ScorecardTable holes={holes} courseName={r.course} date={r.date} tee={r.tee || ""}
-                hi={r.hi} links={r._links} pill={effectivePill(r)} eclecticEntry={ecEntry} />
+                hi={r.hi} links={r._links} pill={effectivePill(r)} eclecticEntry={ecEntry} grossOficial={r.gross} />
             </div>
           );
         }}

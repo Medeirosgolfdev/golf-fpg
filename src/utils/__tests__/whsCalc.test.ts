@@ -34,6 +34,19 @@ describe("strokesOnHole + ndbCaps (Net Double Bogey)", () => {
     // HI 18, CR 34, Slope 113, par 34 → CH de 9 = 9 → uma pancada em cada buraco
     expect(ndbCapsForRound(par, si, 34, 113, 18, 9)).toEqual(par.map((p) => p + 3));
   });
+  it("handicap plus devolve pancadas a começar no SI mais alto (10/11/2026)", () => {
+    expect(strokesOnHole(18, -2)).toBe(-1);
+    expect(strokesOnHole(17, -2)).toBe(-1);
+    expect(strokesOnHole(16, -2)).toBe(0);
+    expect(strokesOnHole(1, -2)).toBe(0);
+    // CH −1: o buraco de SI mais alto fica com máximo par + 1; os outros par + 2
+    expect(ndbCaps([4, 4, 3], [1, 2, 3], -1, 3)).toEqual([6, 6, 4]);
+    const par = Array.from({ length: 18 }, () => 4);
+    const si = Array.from({ length: 18 }, (_, i) => i + 1);
+    const caps = ndbCaps(par, si, -2, 18);
+    expect(caps.slice(0, 16)).toEqual(par.slice(0, 16).map((p) => p + 2));
+    expect(caps.slice(16)).toEqual([5, 5]);
+  });
 });
 
 describe("Medal Net e Stableford Net (classificação do tab Scorecard)", () => {
@@ -177,6 +190,12 @@ describe("applyCaps (Regra 5.8)", () => {
   it("sem Low HI só limita a 54", () => {
     expect(applyCaps(60, null)).toBe(54);
     expect(applyCaps(20, 0)).toBe(20);
+  });
+  it("Low HI negativo (handicap plus) também tem caps (10/11/2026)", () => {
+    // Low −2: soft cap em +1 (a subida conta metade), hard cap em +3
+    expect(applyCaps(2, -2)).toBe(1.5);
+    expect(applyCaps(9, -2)).toBe(3);
+    expect(applyCaps(-1.5, -2)).toBe(-1.5);
   });
 });
 

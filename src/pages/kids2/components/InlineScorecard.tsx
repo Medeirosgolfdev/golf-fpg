@@ -13,6 +13,9 @@ import { getKnownScorecard, mergeFlightWithKnown } from "../knownScorecards";
 import CloseButton from "../../../ui/CloseButton";
 import ToPar from "../../../ui/ToPar";
 import { ScorecardLeaderboard, type ScorecardRow } from "../../../ui/ScorecardLeaderboard";
+import { isNoCardGross } from "../../../data/intlCommon";
+import { temCartao } from "../../../utils/classificacao";
+import { cartaoDaVolta, toParDaVolta, parPorVoltaDaFonte, resumoResultado } from "../../../utils/voltasJogadas";
 
 interface Props {
   tournament: Tournament;
@@ -44,58 +47,42 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
     ? yardsArr.map((y) => (y && y > 0 ? (jaEmMetros ? y : Math.round(y * 0.9144)) : 0))
     : [];
 
-  const holesFromPar = parArr.filter((p) => p > 0).length;
+  // Buracos de cada volta pelo que ela jogou (10/11/2026): as voltas de 9 da
+  // USKids vêm com 9 pancadas seguidas e o par dos 18 buracos do campo (gross 35
+  // dava «−37»), ou com o par só nos buracos 10–18 (o cartão saía sem pancadas).
   const allRounds = merged.rounds.filter((r) => r && (r.strokes?.length || typeof r.gross === "number"));
-  const firstStrokes = allRounds[0]?.strokes || [];
-  const holesFromStrokes = firstStrokes.filter((s) => s > 0).length;
-  const holes = holesFromPar > 0 ? holesFromPar : (holesFromStrokes <= 9 && holesFromStrokes > 0 ? 9 : 18);
-  const is9 = holes <= 9;
-
-  let effIndices: number[];
-  if (is9 && parArr.length === 18) {
-    effIndices = parArr.map((p, i) => (p > 0 ? i : -1)).filter((i) => i >= 0);
-    if (effIndices.length !== 9) {
-      effIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    }
-  } else if (is9) {
-    effIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-  } else {
-    effIndices = Array.from({ length: 18 }, (_, i) => i);
-  }
-
-  const parEff = effIndices.map((i) => parArr[i] || 0);
+  const parEsperado = parPorVoltaDaFonte(result);
+  const cartoes = allRounds.map((rd) => cartaoDaVolta(parArr, rd, { parEsperado }));
+  // O desenho do cartão (9 ou 18 buracos, e quais) é o da 1.ª volta com buraco a buraco.
+  const ref = cartoes.find((c) => c.temPancadas) ?? cartoes[0] ?? cartaoDaVolta(parArr, null, { parEsperado });
+  const is9 = ref.nBuracos === 9;
+  const effIndices = ref.buracos;
+  const parEff = ref.par;
   const metersEff = metersArr.length > 0 ? effIndices.map((i) => metersArr[i] || 0) : [];
 
   const sum = (a: number[]) => a.reduce((s, x) => s + x, 0);
-  const frontPar = is9 ? sum(parEff) : sum(parEff.slice(0, 9));
-  const backPar = is9 ? 0 : sum(parEff.slice(9));
-  const totalPar = frontPar + backPar;
-  const frontM = is9 ? sum(metersEff) : sum(metersEff.slice(0, 9));
-  const backM = is9 ? 0 : sum(metersEff.slice(9));
-  const totalM = frontM + backM;
+  const totalPar = ref.parVolta ?? 0;
+  const totalM = sum(metersEff);
 
-  const roundRows = allRounds.map((rd) => {
-    const strokes = (rd.strokes || []).slice();
-    const strokesEff = effIndices.map((i) => strokes[i] || 0);
-    const front = is9 ? sum(strokesEff) : sum(strokesEff.slice(0, 9));
-    const back = is9 ? 0 : sum(strokesEff.slice(9));
-    const gross = (rd.gross && rd.gross > 0) ? rd.gross : front + back;
+  const roundRows = allRounds.map((rd, k) => {
+    const c = cartoes[k];
+    const strokesEff = effIndices.map((h) => { const j = c.buracos.indexOf(h); return j >= 0 ? c.pancadas[j] : 0; });
+    // Gross ≥ 900 = sem cartão: a volta fica sem gross nem ±par.
+    const gross = temCartao(rd.gross) ? rd.gross : isNoCardGross(rd.gross) ? 0 : sum(strokesEff);
     return {
       round: rd.round,
       strokesEff,
-      front, back, gross,
+      gross,
+      toPar: toParDaVolta(parArr, { ...rd, gross }, { parEsperado }),
       isFocused: rd.round === focusedRound,
     };
   });
 
-  const totalGross = result.totalGross
-    || (roundRows.length > 0 && roundRows.every((r) => r.gross > 0)
-      ? roundRows.reduce((s, r) => s + r.gross, 0)
-      : 0);
-  const totalToPar = result.toPar
-    ?? (totalGross > 0 && totalPar > 0 && roundRows.length > 0
-      ? totalGross - totalPar * roundRows.length
-      : null);
+  // Total e ±par com as regras do site (sem cartão → vazio; ±par pelas voltas jogadas).
+  const resumo = resumoResultado({ totalGross: result.totalGross, toPar: result.toPar, rounds: allRounds }, parArr,
+    { parTotal: tournament.parTotal, buracos: tournament.holesPerRound });
+  const totalGross = resumo.total ?? 0;
+  const totalToPar = resumo.toPar;
 
   // O cartão é o ScorecardLeaderboard global, com uma linha por ronda.
   const parForLb = parEff.some((p) => p > 0) ? parEff : [];
@@ -103,7 +90,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
     key: rr.round,
     pos: "",
     gross: rr.gross,
-    toPar: rr.gross > 0 && totalPar > 0 ? rr.gross - totalPar : null,
+    toPar: rr.toPar,
     scores: rr.strokesEff,
     nameContent: <span className="fw-700">R{rr.round}</span>,
     rowBg: rr.isFocused ? "var(--bg-muted)" : undefined,

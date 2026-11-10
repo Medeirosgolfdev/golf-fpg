@@ -1159,11 +1159,17 @@ const galzignano: Course = {
    RECUPERA o enriquecimento e ELIMINA os duplicados que apareciam (3 tees
    redundantes: "Vermelhas", "Vermelho" e um "WJGC 2026" com distâncias erradas).
 
-   Tee VERMELHAS — mesmas marcações nos dois anos (5295 m, CR 66.4 / Sl 132).
+   Tee VERMELHAS — mesmas marcações nos dois anos (4828 m, CR 66.4 / Sl 132).
    A ÚNICA diferença em 2026 foi o PAR: o buraco 10 passou de par 4 a par 5,
    logo par total 72 (vs 71 em 2025). Distâncias e CR/Slope idênticos — por isso
-   os dois tees partilham metros e rating, mudando só o par (confirmado pelo
-   jogador; o valor 4842 m da rivalData estava errado — era jardas).
+   os dois tees partilham metros e rating, mudando só o par.
+
+   ⚠ 10/11/2026 — os «5295 m» que aqui estavam eram JARDAS. Prova: o ficheiro do
+   WJGC 2026 (`public/data/brjgt2537_boys_10-11.json`) traz estas distâncias num
+   campo chamado `yards` (453,157,342,128…); convertidas (×0,9144) dão, buraco a
+   buraco nos 18, as «Rojas» da página da RFEG (414,144,313,117… = 4828 m), e o
+   CR 66,4 é o das Rojas. O Manuel jogou as Rojas. (O 468 do buraco 1 era a
+   versão antiga, 428 m; a RFEG e o WJGC 2026 dizem 414 m / 453 jardas.)
 
    Para deixar UM único campo, esta definição cobre as DUAS chaves de origem:
      - away-villa-padierna-flamingos-espanha  (entrada do pipeline, nome "…, Espanha")
@@ -1173,7 +1179,7 @@ const galzignano: Course = {
    ────────────────────────────────────────────────────────────────────── */
 
 const vpFlamSI   = [4,10,6,18,16,8,14,12,2, 1,7,9,15,11,5,13,17,3];
-const vpFlamDist = [468,157,342,128,293,459,317,137,287, 352,456,130,278,340,420,102,259,370]; // 5295m
+const vpFlamDist = [414,144,313,117,268,420,290,125,262, 322,417,119,254,311,384,93,237,338]; // 4828 m (= Rojas da RFEG)
 const vpPar2025  = [5,3,4,3,4,5,4,3,4, 4,5,3,4,4,5,3,4,4]; // par 71
 const vpPar2026  = [5,3,4,3,4,5,4,3,4, 5,5,3,4,4,5,3,4,4]; // par 72 (buraco 10: par 5)
 
@@ -1209,7 +1215,7 @@ const vpFlamingosTees: Tee[] = [
 
 /* Tees do clube — página da RFEG (rfegolf.es/club/villa-padierna-golf-club, «Recorrido y
    Hoyos», lida a 30/10/2026; = tabela slope do clube de 18/06/2019): par, SI e metros por
-   buraco. Nenhum é o tee do WJGC (5295 m, entre as Amarillas 5456 e as Rojas 4828); o
+   buraco. O tee do WJGC SÃO as Rojas (4828 m — os «5295» eram jardas, ver acima); o
    66,4/132 desse tee vem do cartão FPG e junta o CR de homens das Rojas (66,4) ao slope
    de senhoras (132) — fica como foi lançado. Sem rating de senhoras nas Blancas/Amarillas. */
 const vpFlamRfegPar = [5,3,4,3,4,5,4,3,4,4,5,3,4,4,5,3,4,4];

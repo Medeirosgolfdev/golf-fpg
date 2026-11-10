@@ -94,4 +94,39 @@ describe("calcularNiveis (Nível em pancadas)", () => {
     // nos fields grandes o M fez 6 pancadas a menos: as vitórias sozinho não o passam à frente
     expect(n.get("M")!.nivel).toBeLessThan(n.get("L")!.nivel);
   });
+
+  // F10 (10/11/2026): condados ingleses — o mesmo jogador em «Boys» e «Boys Geral».
+  it("quem está em dois flights do mesmo torneio conta cada volta uma só vez", () => {
+    const linhas: [string, number][] = [["A", 74], ["B", 80], ["C", 86]];
+    const res = (ls: [string, number][]) => ls.map(([juniorId, gross]) => ({ juniorId, rounds: [{ round: 1, gross }] }));
+    const duplo: NivelTorneio = {
+      id: "d1", name: "County Junior Open", sourceId: "teste", date: "2026-10-01",
+      flights: [
+        { flightKey: "boys", label: "Boys", par: PAR, results: res(linhas.slice(0, 2)) },
+        { flightKey: "geral", label: "Boys Geral", par: PAR, results: res(linhas) },
+      ],
+    };
+    const n = calcularNiveis([duplo, prova("t2", "2026-10-15", linhas)], geracao, "2026-11-05", { ligacao: 0 });
+    expect(n.get("A")!.voltas).toBe(2); // d1 (uma vez) + t2
+    expect(n.get("C")!.voltas).toBe(2);
+  });
+
+  // F11 (10/11/2026): par nos 18 buracos mas jardas só dos 9 jogados — os metros
+  // são de 9 buracos e dobram-se; não é pitch & putt.
+  it("voltas de 9 num flight com par de 18: os metros dos 9 buracos dobram-se", () => {
+    const nove = [5, 4, 4, 4, 5, 4, 4, 5, 4]; // 39 pancadas, par 36
+    const yards9 = [...Array(9).fill(0), ...Array(9).fill(180)]; // 1620 jardas = 1481 m em 9 buracos
+    const t9 = (id: string, date: string, yards: number[] | undefined): NivelTorneio => ({
+      id, name: `Local ${id}`, sourceId: "teste", date,
+      flights: [{
+        flightKey: "b9", label: "Boys 9", par: PAR, metros: 1481, yards, fieldSize: 2,
+        results: ["A", "B"].map((juniorId) => ({ juniorId, rounds: [{ round: 1, gross: 39, strokes: nove }] })),
+      }],
+    });
+    const com = calcularNiveis([t9("n1", "2026-10-01", yards9)], geracao, "2026-11-05", { ligacao: 0 });
+    expect(com.get("A")!.voltas).toBe(0.5); // conta (meia volta), não é cortada
+    // Sem jardas vale o par (18): 1481 m em «18 buracos» continua a ser pitch & putt.
+    const sem = calcularNiveis([t9("n2", "2026-10-01", undefined)], geracao, "2026-11-05", { ligacao: 0 });
+    expect(sem.get("A")).toBeUndefined();
+  });
 });

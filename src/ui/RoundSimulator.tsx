@@ -4,6 +4,7 @@ import type { RoundData, PlayerPageData, HcpInfo } from "../data/playerDataLoade
 import type {} from "../data/types";
 import { useCourses } from "../context/CoursesContext";
 import { norm, fmtHcp, fmtSign } from "../utils/format";
+import { teeChoiceKey, findTeeByChoice } from "../utils/teeChoice";
 import {
   whsQtyCalc, hiAdjustment, addRoundToPool, historicExceptionalAdj, topRanks, topIds,
   scoreDifferential, sd18FromSd9, expectedSD9, round1, get9hRatings,
@@ -123,6 +124,8 @@ export function RoundSimulator({
     exceptionalAdj: number;
     exceptionalDiff: number;
     hiBeforeRound: number;
+    /** Low HI em vigor ANTES desta ronda (desce quando uma simulada anterior o bate). */
+    lowBeforeRound: number | null;
     hiAfterRound: number;
     delta: number;
     entersTop: boolean;
@@ -309,8 +312,11 @@ export function RoundSimulator({
 
   function getEffectiveTeeId(r: SimRound): string {
     const valid = getValidTees(r.courseKey, r.holesMode);
-    if (r.teeId && valid.some((t) => t.teeId === r.teeId)) return r.teeId;
-    return valid[0]?.teeId || "";
+    // Chave tee + sexo (`utils/teeChoice`): há pares M/F com o MESMO teeId, e só
+    // pelo teeId o tee de senhoras caía no de homens (10/11/2026). Um teeId
+    // antigo guardado continua a valer quando é de um só tee.
+    const t = findTeeByChoice(valid, r.teeId) ?? valid[0];
+    return t ? teeChoiceKey(t) : "";
   }
 
   function getTeeRatings(
@@ -320,7 +326,7 @@ export function RoundSimulator({
   ) {
     const c = allRatedCourses.find((x) => x.courseKey === courseKey);
     const tees = getValidTees(courseKey, holesMode);
-    const tee = tees.find((t) => t.teeId === teeId) ?? tees[0] ?? null;
+    const tee = findTeeByChoice(tees, teeId) ?? tees[0] ?? null;
     if (tee && is9hMode(holesMode)) {
       const r9 = get9hRatings(tee, holesMode);
       return {
@@ -442,7 +448,7 @@ export function RoundSimulator({
     };
     const teeOk =
       !!ir.courseKey && !!ir.teeId &&
-      getValidTees(ir.courseKey, ir.holesMode).some((t) => t.teeId === ir.teeId);
+      !!findTeeByChoice(getValidTees(ir.courseKey, ir.holesMode), ir.teeId);
     const gross = ir.gross != null ? String(ir.gross) : "";
     const r: SimRound =
       ir.sd != null
@@ -578,6 +584,7 @@ export function RoundSimulator({
           exceptionalAdj: 0,
           exceptionalDiff: 0,
           hiBeforeRound: curHI,
+          lowBeforeRound: curLow,
           hiAfterRound: curHI,
           delta: 0,
           entersTop: false,
@@ -618,6 +625,7 @@ export function RoundSimulator({
         exceptionalAdj,
         exceptionalDiff,
         hiBeforeRound: curHI,
+        lowBeforeRound: curLow,
         hiAfterRound: newHI,
         delta: newHI - curHI,
         entersTop,
@@ -702,6 +710,7 @@ export function RoundSimulator({
       par = defaultPar,
       poolBefore,
       hiBeforeRound,
+      lowBeforeRound,
       roundIdx,
       gross: enteredGross,
     } = last;
@@ -734,7 +743,9 @@ export function RoundSimulator({
         { eid: "__gt__", sd, adj: 0, isSimulated: true, roundIdx: -1 },
         hiBeforeRound,
         totalAdjustment,
-        lowHI
+        // O mesmo Low HI que a simulação usou nesta ronda (10/11/2026): com o
+        // original, a tabela de impacto divergia depois de uma simulada o baixar.
+        lowBeforeRound
       );
       const newHI = step.newHI;
       rows.push({
@@ -750,7 +761,7 @@ export function RoundSimulator({
       });
     }
     return { rows, par: par as number, cr, slope, roundIdx, is9, holesMode: last.holesMode, exp9: is9 ? exp9 : null };
-  }, [simResults, totalAdjustment, rounds, lowHI]);
+  }, [simResults, totalAdjustment, rounds]);
 
   // ── Rondas deslocadas ──
   // Cada ronda simulada expulsa a mais antiga da janela; a 1ª simulada expulsa
@@ -1405,14 +1416,14 @@ export function RoundSimulator({
                           );
                           if (!r9) return null;
                           return (
-                            <option key={t.teeId} value={t.teeId}>
+                            <option key={teeChoiceKey(t)} value={teeChoiceKey(t)}>
                               {t.teeName} — CR {r9.cr} / Slope {r9.slope} /
                               Par {r9.par}
                             </option>
                           );
                         }
                         return (
-                          <option key={t.teeId} value={t.teeId}>
+                          <option key={teeChoiceKey(t)} value={teeChoiceKey(t)}>
                             {t.teeName} — CR{" "}
                             {t.ratings.holes18!.courseRating} / Slope{" "}
                             {t.ratings.holes18!.slopeRating}

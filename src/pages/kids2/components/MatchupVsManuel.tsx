@@ -18,6 +18,7 @@ import { fmtSign, fmtMonthYear, fmtOrd } from "../../../utils/format";
 import ExtLink from "../../../ui/ExternalLink";
 import { TrophyPos } from "../../../ui/PosBadge";
 import SectionTitle from "../../../ui/SectionTitle";
+import { resumoResultado, diferencaDeTotais, type ResumoResultado } from "../../../utils/voltasJogadas";
 
 type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff" | "result";
 
@@ -32,6 +33,9 @@ interface Row {
   flight: Flight;
   rJ: Result;
   rM: Result;
+  /** Voltas, total e ±par de cada lado com as regras do site (sem cartão ≥ 900). */
+  resJ: ResumoResultado;
+  resM: ResumoResultado;
   /** Dif. junior−Manuel: ±par quando ambos têm toPar (robusto a nº de rondas
    *  diferente, ex: WD), senão gross; null quando falta dos dois lados. */
   diff: number | null;
@@ -68,16 +72,15 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
     const shared = findSharedFlight(t, junior, manuel);
     if (!shared) return null;
     const { flight, rJ, rM } = shared;
-    // Total ≥ 900 = sem cartão (999, 89+998…): não há diferença a mostrar.
-    const semCartao = (rJ.totalGross ?? 0) >= 900 || (rM.totalGross ?? 0) >= 900;
-    const diff = semCartao ? null
-      : rJ.toPar != null && rM.toPar != null ? rJ.toPar - rM.toPar
-      : rJ.totalGross != null && rM.totalGross != null ? rJ.totalGross - rM.totalGross
-      : null;
+    // Sem cartão (999, 89+998…) não há total nem ±par a mostrar nem a comparar;
+    // a diferença em gross só entre o mesmo nº de voltas (10/11/2026).
+    const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
+    const resJ = resumoResultado(rJ, flight.par, opts), resM = resumoResultado(rM, flight.par, opts);
+    const diff = resJ.toPar != null && resM.toPar != null ? resJ.toPar - resM.toPar : diferencaDeTotais(resJ, resM);
     const outcome = typeof rJ.pos === "number" && typeof rM.pos === "number"
       ? (rJ.pos < rM.pos ? -1 : rJ.pos > rM.pos ? 1 : 0)
       : null;
-    return { t, flight, rJ, rM, diff, outcome } as Row;
+    return { t, flight, rJ, rM, resJ, resM, diff, outcome } as Row;
   }).filter(Boolean) as Row[];
 
   if (rows.length === 0) return null;
@@ -112,9 +115,9 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
         case "date": return r.t.date || null;
         case "name": return (r.t.name || r.t.id || "").toLowerCase();
         case "flight": return r.flight.label || null;
-        case "jGross": return r.rJ.totalGross ?? null;
+        case "jGross": return r.resJ.total;
         case "jPos": return typeof r.rJ.pos === "number" ? r.rJ.pos : null;
-        case "mGross": return r.rM.totalGross ?? null;
+        case "mGross": return r.resM.total;
         case "mPos": return typeof r.rM.pos === "number" ? r.rM.pos : null;
         case "diff": return r.diff ?? null;
         case "result": return r.outcome ?? null;
@@ -164,13 +167,13 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
               </td>
               <td className="u-c-text-3">{r.flight.label}</td>
               <td className="u-ta-right">
-                <RoundsCell result={r.rJ} />
-                <ToParTag tp={r.rJ.toPar} />
+                <RoundsCell res={r.resJ} />
+                <ToParTag tp={r.resJ.toPar} />
               </td>
               <td className="u-ta-center"><TrophyPos pos={r.rJ.pos} /></td>
               <td className="col-manuel u-ta-right">
-                <RoundsCell result={r.rM} />
-                <ToParTag tp={r.rM.toPar} />
+                <RoundsCell res={r.resM} />
+                <ToParTag tp={r.resM.toPar} />
               </td>
               <td className="col-manuel u-ta-center"><TrophyPos pos={r.rM.pos} /></td>
               <td className="u-ta-right">
@@ -199,19 +202,13 @@ function ToParTag({ tp }: { tp: number | null | undefined }) {
   return <ToPar v={tp} light className="u-fs-fs-10 u-ml-4px" prefix="(" suffix=")" />;
 }
 
-function RoundsCell({ result }: { result: Result }) {
-  if (!result.rounds?.length) {
-    return <>{result.totalGross != null ? String(result.totalGross) : "—"}</>;
-  }
-  const grosses = result.rounds.map((r) => r.gross).filter((g): g is number => typeof g === "number");
-  if (!grosses.length) {
-    return <>{result.totalGross != null ? String(result.totalGross) : "—"}</>;
-  }
-  const total = result.totalGross != null && grosses.length > 1 ? result.totalGross : null;
+/** Voltas e total de um lado. Volta sem cartão (≥ 900) = «—»; sem total quando há «sem cartão». */
+function RoundsCell({ res }: { res: ResumoResultado }) {
+  if (!res.jogadas.length) return <>{res.total != null ? String(res.total) : "—"}</>;
   return (
     <>
-      <span className="u-c-text">{grosses.join("·")}</span>
-      {total != null && <span className="u-c-text-3 u-ml-4px">({total})</span>}
+      <span className="u-c-text">{res.voltas.map((g) => g ?? "—").join("·")}</span>
+      {res.total != null && res.jogadas.length > 1 && <span className="u-c-text-3 u-ml-4px">({res.total})</span>}
     </>
   );
 }

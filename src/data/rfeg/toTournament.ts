@@ -17,6 +17,7 @@ import { normEs } from "./text";
 import { ageToEscalaoEs, escaloEsForPlayer } from "./escalao";
 import type { RFEGPlayer, RFEGDetail, DobLookup } from "./types";
 import { dobLookupByName, holesOf, isNoCardGross } from "../intlCommon";
+import { addDaysIso } from "../../utils/dias";
 
 /* ── lgsToFPGTournament ──────────────────────────────────────
  * Converte JSON livegolfscoring para FPGTournament — permite reusar
@@ -48,6 +49,8 @@ export function lgsToFPGTournament(
   /** Fichas GolfBox (EGA + federações nórdicas) por nome — DOB/licença dos
    *  ESTRANGEIROS, que a fonte espanhola não conhece. */
   golfbox?: Map<string, GolfboxEntry[]>,
+  /** «Hoje» (dia em Lisboa) — só para saber se a prova já acabou. */
+  today: string = todayIso(),
 ): FPGTournament {
   const norm = normEs;
   const lookupByName = dobLookupByName(dobLookup, norm);
@@ -85,7 +88,14 @@ export function lgsToFPGTournament(
   // aparecer como **WD**, o líder da véspera incluído. Uma ronda está a decorrer
   // enquanto houver cartões a meio, ou enquanto menos de metade do campo tiver
   // entregue (uma ronda acabada tem quase toda a gente, tirando WD genuínos).
+  // Uma volta só pode estar «a decorrer» DURANTE a prova (10/11/2026, J11):
+  // depois de um cut a volta final tem menos de 85 % do campo com total e ficava
+  // «a decorrer» para sempre (Barcelona Masculino 2023). Passados os dias da
+  // prova (1 por volta, mais 2 de folga) todas as voltas com totais estão fechadas.
+  const inicio = /^\d{4}-\d{2}-\d{2}/.test(lgs.meta.dateIso || "") ? (lgs.meta.dateIso as string).slice(0, 10) : null;
+  const provaAcabou = inicio != null && today > addDaysIso(inicio, numRounds + 1);
   const roundEmCurso = (r: { players: Array<{ total: number | null; partialGross?: number | null }> }) => {
+    if (provaAcabou) return false;
     const ps = r.players ?? [];
     if (!ps.length) return false;
     const comTotal = ps.filter((p) => isLgsCard(p.total)).length;
@@ -473,7 +483,11 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
   const results = (detail.results || []).filter(r => r.players && r.players.length > 0);
   if (results.length === 0) return null;
   // Concatenar todos os groups de resultados (categorias)
-  const allRows = results.flatMap(g => g.players.map(p => ({ ...p, _label: g.label })));
+  // `_nR`: as voltas da categoria do jogador (10/11/2026, J7) — numa prova que
+  // junta categorias com menos voltas (II Puntuable Zonal Aragón 2025: Sub-12 a
+  // 1 volta, os outros a 2), comparar com o máximo deixava essas categorias
+  // inteiras «incompletas», sem lugar.
+  const allRows = results.flatMap(g => g.players.map(p => ({ ...p, _label: g.label, _nR: g.nRounds || 0 })));
   const nRounds = Math.max(...results.map(r => r.nRounds || 0), 1);
 
   const norm = normEs;
@@ -504,7 +518,9 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
     const rounds: IntlRoundIn[] = (p.rounds || [])
       .map((g, i) => ({ round: i + 1, gross: g, scores: [] }))
       .filter((r) => r.gross != null && r.gross > 0);
+    const menosVoltas = p._nR > 0 && p._nR < nRounds;
     return {
+      ...(menosVoltas ? { wd: rounds.length < p._nR } : {}),
       id: `rfeg-${detail.compId}-${idx}`,
       pos: p.pos ?? idx + 1,
       name: formatPlayerName(p.name || ""),
@@ -521,6 +537,8 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
         // HCP do inscrito (null quando não há — tal como vinha).
         hcpExact: (typeof ins?.hcp === "number") ? ins.hcp : null,
         dob: ins?.dob || e?.dob || undefined,
+        // Lido pelo `expandMultiRound` (fpgUtils): incompleto só com menos do que isto.
+        ...(menosVoltas ? { _roundsExpected: p._nR } : {}),
       },
     };
   });

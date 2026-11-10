@@ -12,7 +12,7 @@
  */
 
 import { useEffect, useState } from "react";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { cachedFetchJson, memoAsync } from "../../data/fetchCache";
 import type { DataSource } from "../../ui/DataSources";
 import { normName } from "../../utils/normName";
 import type { Junior, Tournament, TournamentSeries } from "./juniorCalc";
@@ -73,6 +73,12 @@ async function fetchWithSource(path: string, group?: string): Promise<{ data: un
   }
 }
 
+/** Lança com os ficheiros que falharam a carregar. */
+function falhaSe(sources: DataSource[]): void {
+  const maus = sources.filter((x) => x.status === "error");
+  if (maus.length) throw new Error(maus.map((x) => `${x.path}: ${x.error ?? "erro"}`).join(" · "));
+}
+
 async function loadCanonical(): Promise<CanonicalData> {
   const sources: DataSource[] = [];
 
@@ -82,6 +88,10 @@ async function loadCanonical(): Promise<CanonicalData> {
     fetchWithSource("/data/tournament-catalog.json", "main"),
   ]);
   sources.push(juniorsLoad.source, tournamentsLoad.source, catalogLoad.source);
+  // Ficheiro que falhou (rede, 5xx, JSON partido) ou que não existe É ERRO, nunca
+  // «vazio» (10/11/2026): a base ficava em cache como «0 juniors · ✓» até recarregar.
+  falhaSe([juniorsLoad, tournamentsLoad, catalogLoad].map((l) => l.source));
+  if (!juniorsLoad.data || !tournamentsLoad.data) throw new Error("juniors.json ou juniors-tournaments.json em falta");
 
   const juniors: Junior[] = (juniorsLoad.data as any)?.juniors || [];
   const series: TournamentSeries[] = (catalogLoad.data as any)?.series || [];
@@ -93,6 +103,7 @@ async function loadCanonical(): Promise<CanonicalData> {
     const shardLoads = await Promise.all(
       tResp.shards.map((fn: string) => fetchWithSource(`/data/${fn}`, "shards")),
     );
+    falhaSe(shardLoads.map((sl) => sl.source));
     for (const sl of shardLoads) {
       sources.push(sl.source);
       const arr = (sl.data as any)?.tournaments;
@@ -157,12 +168,9 @@ async function loadCanonical(): Promise<CanonicalData> {
 // Cache + Hook
 // ═════════════════════════════════════════════════════════════════════
 
-let _cache: Promise<CanonicalData> | null = null;
-
-function getCache(): Promise<CanonicalData> {
-  if (!_cache) _cache = loadCanonical();
-  return _cache;
-}
+// Um carregamento por sessão; uma FALHA não fica guardada (`memoAsync`): a
+// montagem seguinte tenta outra vez.
+const getCache = memoAsync(loadCanonical);
 
 export type CanonicalStatus =
   | { kind: "loading" }

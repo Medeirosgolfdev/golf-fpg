@@ -159,6 +159,8 @@ describe("BlueGolf — normalizeBlueGolf / blueGolfToTournament", () => {
 });
 
 describe("Doral — normalizeDoralFile / doralEntryToTournament", () => {
+  // 10/11/2026 (J13): o retrato fixava o erro — raparigas 7–11 (9 buracos, par 36)
+  // como 18b e 14-15/16-18 (par 72) como 9b. Agora pela maioria dos cartões.
   it("Doral 2025: escalões normalizados, metros e CR/Slope do escalão", () => {
     const src = DORAL_FILES.find((f) => f.url.includes("2025"))!.sourceUrl;
     const entries = normalizeDoralFile(parse(doral2025Raw), src);
@@ -170,12 +172,12 @@ describe("Doral — normalizeDoralFile / doralEntryToTournament", () => {
         "2025_Boys_12-13 · Silver Fox · 18b · par 71 · CR 74/140 · 70 jog",
         "2025_Boys_14-15 · Golden Palm · 18b · par 71 · CR 72/136 · 92 jog",
         "2025_Boys_16-18 · Blue Monster · 18b · par 71 · CR 74/140 · 93 jog",
-        "2025_Girls_7_&_Under · Red Tiger · 18b · par 36 · CR –/– · 6 jog",
-        "2025_Girls_8-9 · Red Tiger · 18b · par 36 · CR –/– · 12 jog",
-        "2025_Girls_10-11 · Red Tiger · 18b · par 36 · CR –/– · 28 jog",
+        "2025_Girls_7_&_Under · Red Tiger · 9b · par 36 · CR –/– · 6 jog",
+        "2025_Girls_8-9 · Red Tiger · 9b · par 36 · CR –/– · 12 jog",
+        "2025_Girls_10-11 · Red Tiger · 9b · par 36 · CR –/– · 28 jog",
         "2025_Girls_12-13 · Golden Palm · 18b · par 71 · CR 71/134 · 15 jog",
-        "2025_Girls_14-15 · Red Tiger · 9b · par 72 · CR –/– · 38 jog",
-        "2025_Girls_16-18 · Red Tiger · 9b · par 72 · CR 75/140 · 50 jog",
+        "2025_Girls_14-15 · Red Tiger · 18b · par 72 · CR –/– · 38 jog",
+        "2025_Girls_16-18 · Red Tiger · 18b · par 72 · CR 75/140 · 50 jog",
       ]
     `);
     const b1011 = entries.find((e) => e.category === "Boys 10-11")!;

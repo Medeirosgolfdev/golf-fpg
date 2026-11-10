@@ -8,7 +8,7 @@
  * Tirado do src/ui/InscricoesComponents.tsx a 21/10/2026 (quem os usa é a
  * camada de dados de Espanha, src/data/rfeg/).
  */
-import { cachedFetchJson } from "./fetchCache";
+import { cachedFetchJson, memoAsync } from "./fetchCache";
 import { stripAccents } from "../utils/normName";
 
 /* ── nome → ficha do federado FPG (lazy-load, mesma cache dos hooks de federados) ──
@@ -40,11 +40,11 @@ const _fedNameKeys = (name: string): string[] => {
   const extremos = [toks[0], toks[toks.length - 1]].sort().join("|");
   return [ordenado, extremos].filter((k, i, arr) => arr.indexOf(k) === i);
 };
-let _fedByNamePromise: Promise<Map<string, FedByNameEntry>> | null = null;
-export function loadFedByName(): Promise<Map<string, FedByNameEntry>> {
-  if (_fedByNamePromise) return _fedByNamePromise;
-  _fedByNamePromise = cachedFetchJson<any>("/data/federados.json")   // eslint-disable-line @typescript-eslint/no-explicit-any
-    .catch(() => null)
+/* 10/11/2026: `memoAsync` — uma falha passageira devolve o mapa vazio mas não
+ * fica guardada (antes o `.catch(() => null)` deixava as fichas sem clube nem
+ * escalão até recarregar a página). */
+const _loadFedByName = memoAsync<Map<string, FedByNameEntry>>(
+  () => cachedFetchJson<any>("/data/federados.json")   // eslint-disable-line @typescript-eslint/no-explicit-any
     .then((feds) => {
       const byKey = new Map<string, FedByNameEntry[]>();
       if (!feds) return new Map<string, FedByNameEntry>();
@@ -70,9 +70,10 @@ export function loadFedByName(): Promise<Map<string, FedByNameEntry>> {
       const out = new Map<string, FedByNameEntry>();
       for (const [k, arr] of byKey) if (arr.length === 1) out.set(k, arr[0]);
       return out;
-    });
-  return _fedByNamePromise;
-}
+    }),
+  { fallback: () => new Map<string, FedByNameEntry>() },
+);
+export function loadFedByName(): Promise<Map<string, FedByNameEntry>> { return _loadFedByName(); }
 
 /** Chaves de um nome no mapa do `loadFedByName` (e do índice GolfBox): usar a
  *  PRIMEIRA que resolver. */
@@ -91,11 +92,8 @@ export const fedByNameKeys = _fedNameKeys;
  * descartadas, e chaves ambíguas dentro do mesmo país também.
  */
 export interface GolfboxEntry { name: string; dob: string; nat: string | null; club: string | null; memberId: string | null }
-let _golfboxPromise: Promise<Map<string, GolfboxEntry[]>> | null = null;
-function loadGolfboxIndex(): Promise<Map<string, GolfboxEntry[]>> {
-  if (_golfboxPromise) return _golfboxPromise;
-  _golfboxPromise = cachedFetchJson<{ players?: (GolfboxEntry & { dobAlt?: string[] })[] }>("/data/golfbox-players.json")
-    .catch(() => null)
+const _loadGolfboxIndex = memoAsync<Map<string, GolfboxEntry[]>>(
+  () => cachedFetchJson<{ players?: (GolfboxEntry & { dobAlt?: string[] })[] }>("/data/golfbox-players.json")
     .then((d) => {
       const idx = new Map<string, GolfboxEntry[]>();
       for (const p of d?.players || []) {
@@ -106,10 +104,10 @@ function loadGolfboxIndex(): Promise<Map<string, GolfboxEntry[]>> {
         }
       }
       return idx;
-    });
-  return _golfboxPromise;
-}
-export function loadGolfboxPlayers(): Promise<Map<string, GolfboxEntry[]>> { return loadGolfboxIndex(); }
+    }),
+  { fallback: () => new Map<string, GolfboxEntry[]>() },
+);
+export function loadGolfboxPlayers(): Promise<Map<string, GolfboxEntry[]>> { return _loadGolfboxIndex(); }
 
 /** Ficha GolfBox de um nome, exigindo a nacionalidade (ISO-2 ou "GB-ENG"). */
 export function golfboxLookup(

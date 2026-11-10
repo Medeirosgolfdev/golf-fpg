@@ -52,9 +52,17 @@ export function calcPlayingHcp(
 }
 
 /** Pancadas de handicap num buraco com este Stroke Index: 1 com SI ≤ CH, uma
- *  2.ª com SI ≤ CH−18, uma 3.ª com SI ≤ CH−36. */
+ *  2.ª com SI ≤ CH−18, uma 3.ª com SI ≤ CH−36. Course Handicap «plus»
+ *  (negativo) DEVOLVE pancadas, a começar no SI 18 (10/11/2026: dava sempre 0). */
 export function strokesOnHole(si: number, courseHcp: number): number {
   const ch = Math.round(courseHcp);
+  if (ch < 0) {
+    const back = -ch;
+    let g = 0;
+    if (si > 18 - Math.min(back, 18)) g--;
+    if (back > 18 && si > 18 - Math.min(back - 18, 18)) g--;
+    return g;
+  }
   let s = 0;
   if (si <= Math.min(ch, 18)) s++;
   if (ch > 18 && si <= Math.min(ch - 18, 18)) s++;
@@ -64,10 +72,12 @@ export function strokesOnHole(si: number, courseHcp: number): number {
 
 /** Máximo por buraco para o AGS (Net Double Bogey = par + 2 + pancadas).
  *  Em 9 buracos, os SI de 1 a 18 ordenam-se e as pancadas distribuem-se pelos
- *  9 buracos jogados. */
+ *  9 buracos jogados. Com Course Handicap «plus» as pancadas devolvidas
+ *  DESCONTAM no máximo (par + 2 − 1), a começar no SI mais alto — Regras de
+ *  Handicap 3.1 (10/11/2026: o plus era tratado como 0). */
 export function ndbCaps(par: number[], si: number[], courseHcp: number, nholes: number): number[] {
   const n = Math.min(nholes, par.length, si.length);
-  const strokes = strokesPerHole(si, Math.max(0, courseHcp), n);
+  const strokes = strokesPerHole(si, courseHcp, n);
   return par.slice(0, n).map((p, i) => p + 2 + strokes[i]);
 }
 
@@ -138,7 +148,7 @@ export function calcStrokesPerHole(
   // 9 buracos (ou menos): os SI de 1 a 18 ordenam-se e as pancadas repartem-se
   // pelos buracos jogados — a mesma regra do `ndbCaps`. Com a regra de 18
   // («SI ≤ CH») um CH de 5 dava só 3 pancadas no Simulador de 9 buracos.
-  const dist = hs.length <= 9 ? strokesPerHole(hs.map(h => h.si), Math.max(0, ch), hs.length) : null;
+  const dist = hs.length <= 9 ? strokesPerHole(hs.map(h => h.si), ch, hs.length) : null;
   return hs
     .map((h, i) => {
       const strokes = dist ? dist[i] : strokesOnHole(h.si, ch);
@@ -340,10 +350,12 @@ export function exceptionalAdjustment(hi: number, sd: number): 0 | -1 | -2 {
 
 /** Soft cap e hard cap (Regra 5.8) em relação ao Low HI: acima de Low+3 a
  *  subida conta metade, e nunca passa de Low+5. Sem Low HI (menos de 20
- *  resultados) só se aplica o máximo de 54. */
+ *  resultados) só se aplica o máximo de 54. `null` e `0` = «sem Low HI» (é
+ *  assim que os dados o trazem); um Low HI NEGATIVO é um handicap plus e os
+ *  caps aplicam-se (10/11/2026: com `> 0` os 23 jogadores plus ficavam sem caps). */
 export function applyCaps(hi: number, lowHI?: number | null): number {
   let v = hi;
-  if (lowHI != null && lowHI > 0) {
+  if (lowHI != null && Number.isFinite(lowHI) && lowHI !== 0) {
     const soft = lowHI + 3;
     if (v > soft) v = soft + (v - soft) / 2;
     v = Math.min(v, lowHI + 5);

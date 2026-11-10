@@ -21,6 +21,7 @@ import { SOURCE_COLORS, SOURCE_LABELS } from "../../../constants/kids2Sources";
 import { ToggleChip } from "../../../ui/FilterField";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Tint } from "../../../ui/DataStyle";
+import { resumoResultado } from "../../../utils/voltasJogadas";
 
 interface Props {
   data: CanonicalData;
@@ -47,17 +48,6 @@ interface Point {
   trophy?: 1 | 2 | 3;
   /** nº de buracos por ronda — útil para etiqueta "9H". */
   nholes: number;
-}
-
-/** Devolve nº de buracos por ronda do torneio (preferindo `holesPerRound`,
- *  senão contando pars > 0 no flight). */
-function inferNholes(holesPerRound?: number, par?: number[]): number {
-  if (typeof holesPerRound === "number" && holesPerRound > 0) return holesPerRound;
-  if (Array.isArray(par)) {
-    const n = par.filter((p) => p > 0).length;
-    if (n === 9 || n === 18) return n;
-  }
-  return 18;
 }
 
 /** ±par/ronda equivalente a 18 buracos. Útil para misturar 9H e 18H. */
@@ -88,14 +78,14 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
         if (!y || !m || !d) continue;
         const ts = new Date(y, m - 1, d).getTime();
 
-        // toPar do torneio completo (usa r.toPar ou calcula)
-        const parTotal = f.par?.reduce((a, b) => a + (b || 0), 0) || t.parTotal || 0;
-        const grosses = (r.rounds || []).map((rd) => rd.gross).filter((g): g is number => typeof g === "number");
-        const total = r.totalGross ?? (grosses.length ? grosses.reduce((a, b) => a + b, 0) : null);
-        const toParTotal = r.toPar ?? (total != null && parTotal && grosses.length ? total - parTotal * grosses.length : null);
-
-        const nh = inferNholes(t.holesPerRound, f.par);
-        const nRounds = r.rounds?.length || grosses.length || (typeof t.rounds === "number" ? t.rounds : 1);
+        // ±par do torneio pelo resumo global (10/11/2026): sem cartão (≥ 900) não
+        // entra no gráfico, o ±par de recurso é pelas voltas JOGADAS e os buracos
+        // por volta vêm das voltas do próprio jogador (9H em provas «de 18»).
+        const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
+        const res = resumoResultado(r, f.par, opts);
+        const toParTotal = res.toPar;
+        const nh = res.nBuracos;
+        const nRounds = res.jogadas.length || (typeof t.rounds === "number" ? t.rounds : 1);
         // ±par MÉDIO POR RONDA (não total) — escala consistente entre torneios de 1, 2 ou 4 rondas
         const toPar = toParTotal != null && nRounds > 0 ? Math.round((toParTotal / nRounds) * 10) / 10 : null;
         // ±par/18H normalizado (útil para misturar 9H + 18H)
@@ -112,12 +102,10 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
             const mR = mf.results.find((x) => x.juniorId === manuelId);
             if (!mR) continue;
             if (typeof mR.pos === "number") manuelPos = mR.pos;
-            const mParTotal = mf.par?.reduce((a, b) => a + (b || 0), 0) || t.parTotal || 0;
-            const mGrosses = (mR.rounds || []).map((rd) => rd.gross).filter((g): g is number => typeof g === "number");
-            const mTotal = mR.totalGross ?? (mGrosses.length ? mGrosses.reduce((a, b) => a + b, 0) : null);
-            const mTpTotal = mR.toPar ?? (mTotal != null && mParTotal && mGrosses.length ? mTotal - mParTotal * mGrosses.length : null);
-            const mNh = inferNholes(t.holesPerRound, mf.par);
-            const mNRounds = mR.rounds?.length || mGrosses.length || (typeof t.rounds === "number" ? t.rounds : 1);
+            const mRes = resumoResultado(mR, mf.par, opts);
+            const mTpTotal = mRes.toPar;
+            const mNh = mRes.nBuracos;
+            const mNRounds = mRes.jogadas.length || (typeof t.rounds === "number" ? t.rounds : 1);
             // ±par por ronda do Manuel (mesma transformação)
             manuelToPar = mTpTotal != null && mNRounds > 0 ? Math.round((mTpTotal / mNRounds) * 10) / 10 : null;
             manuelToParNorm = tprNorm(mTpTotal ?? null, mNRounds, mNh);

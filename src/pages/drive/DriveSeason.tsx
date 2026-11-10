@@ -20,7 +20,8 @@ import PlayerLink from "../../ui/PlayerLink";
 import TeeSwatch from "../../ui/TeeSwatch";
 import TeePill from "../../ui/TeePill";
 import EmptyState from "../../ui/EmptyState";
-import { medalClass } from "../../ui/PosBadge";
+import PosMedal from "../../ui/PosMedal";
+import { parsePos, posicoesComEmpates } from "../../utils/classificacao";
 import { RowsFilterBar, filterRows, type FilterableRow } from "../../ui/PlayerFilterBar";
 import { EMPTY_FILTER } from "../../ui/multiRoundTypes";
 import type { PlayerFilter } from "../../data/fpgTypes";
@@ -28,7 +29,7 @@ import { getTeeHex } from "../../utils/teeColors";
 import { shortCampo } from "../../data/drive/driveCircuitData";
 import { AnoEscalaoPill } from "../../ui/AnoEscalaoPill";
 import { MUTED } from "../../ui/tableCells";
-import { fmtHcp, medal, norm, shortDateSlash, fmtOrd } from "../../utils/format";
+import { fmtHcp, medal, norm, shortDateSlash } from "../../utils/format";
 import { flagOrEmpty, isPtCountry } from "../../utils/flagUtils";
 import { ESCALOES_DRIVE } from "../../constants/escaloes";
 import type { DriveCalEntry } from "../../data/drive/driveCalendar";
@@ -98,13 +99,20 @@ function teeModal(rows: Sub12Row[], e: Etapa): { tee: string; meters: number } |
   return { tee, meters: +meters };
 }
 
+/** Lugar de cada jogador (federado → lugar) pelos pontos da época; empates
+ *  partilham o lugar (`posicoesComEmpates`). Usado aqui e no Ranking da /drive. */
+export function rankByPts(rows: Sub12Row[]): Map<string, number> {
+  const s = [...rows].sort((a, b) => b.totalPts - a.totalPts);
+  const pos = posicoesComEmpates(s, r => r.totalPts);
+  return new Map(s.map(r => [r.fed, pos.get(r)!]));
+}
+
 const fmtM = (m: number) => m.toLocaleString("pt-PT").replace(/\s/g, " ");
 
 /** O lugar a mostrar: no AQUAPOR o do sexo; no Drive o da prova. */
 function lugarOf(r: TournResult, bySex: boolean): number | null {
   if (bySex) return r.sexPos ?? null;
-  const n = typeof r.pos === "number" ? r.pos : parseInt(String(r.pos ?? ""), 10);
-  return Number.isFinite(n) && n > 0 ? n : null;
+  return parsePos(r.pos); // «T4» → 4; «CUT»/«WD» → sem lugar
 }
 
 /** A célula de uma etapa: cada volta (pancadas e, por baixo, o SD), o lugar e os pontos. */
@@ -123,7 +131,7 @@ function EtapaCell({ r, modal, bySex }: { r: TournResult | undefined; modal: { t
       {rounds.map((g, i) => <span key={"g" + i} className="aq-volta" title={`${i + 1}.ª volta`}>{g}</span>)}
       <span className="aq-lugar">
         {r.wd ? <span className="aq-wd">desistiu</span>
-          : lugar != null ? <span className={"pos-medal pos-medal-sm " + medalClass(lugar)}>{fmtOrd(lugar)}</span> : MUTED}
+          : <PosMedal pos={lugar} />}
         {outroTee && <TeeSwatch tee={r.tee!} />}
       </span>
       {rounds.map((_, i) => sds[i] != null
@@ -176,12 +184,7 @@ export default function DriveSeason({ title, bySex, pointsNote, calId, rows, all
     return base.filter(r => ok.has(r.fed));
   }, [base, filtraveis, filter]);
   // Lugar no ranking da época: pelos pontos, dentro do universo (empates partilham).
-  const rank = useMemo(() => {
-    const s = [...universo].sort((a, b) => b.totalPts - a.totalPts);
-    const m = new Map<string, number>();
-    s.forEach((r, i) => m.set(r.fed, i > 0 && s[i - 1].totalPts === r.totalPts ? m.get(s[i - 1].fed)! : i + 1));
-    return m;
-  }, [universo]);
+  const rank = useMemo(() => rankByPts(universo), [universo]);
   const modal = useMemo(() => new Map(cols.map(c => [c.id, teeModal(base, c)])), [cols, base]);
   const nM = allRows.filter(r => r.sex === "M").length;
   const nF = allRows.filter(r => r.sex === "F").length;

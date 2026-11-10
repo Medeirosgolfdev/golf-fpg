@@ -26,6 +26,7 @@ import { stripAccents } from "../../../utils/normName";
 import ExtLink from "../../../ui/ExternalLink";
 import { Tint } from "../../../ui/DataStyle";
 import { useJson } from "../../../hooks/useJson";
+import { voltasComCartao } from "../../../utils/classificacao";
 /** Bandeira por federação — mostrada junto ao número de licença. */
 const SOURCE_FLAGS: Record<string, string> = {
   USKIDS: flagOf("United States"),
@@ -82,10 +83,8 @@ function countTotalRounds(junior: Junior, tournamentById: Map<string, Tournament
     if (!t) continue;
     for (const f of t.flights) {
       const r = f.results.find((x) => x.juniorId === junior.id);
-      if (!r?.rounds) continue;
-      for (const rd of r.rounds) {
-        if (typeof rd.gross === "number") n++;
-      }
+      // Só voltas com cartão: gross ≥ 900 («sem cartão») não é volta jogada.
+      n += voltasComCartao(r?.rounds);
     }
   }
   return n;

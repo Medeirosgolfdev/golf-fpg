@@ -152,7 +152,13 @@ function Content() {
   // utilizador da tab em que está (Jovens/Santo/PJA). Nesse caso, a selecção
   // de torneio deve ser local à tab; não é uma mudança de tab.
   useEffect(() => {
-    if (params.tkey) return;  // rota /FPG/torneio/:tkey → preservar tab actual
+    if (params.tkey) {
+      // rota /FPG/torneio/:tkey → preservar a série actual. Mas um torneio no URL
+      // é SEMPRE a vista «Torneios»: ao «Retroceder» de um ranking para um
+      // torneio, o `navMode` ficava no ranking e era ele que se via (10/11/2026).
+      if (navMode !== "torneios") setNavMode("torneios");
+      return;
+    }
 
     // Navegação por tabs (Ranking PJA / Ranking Sub-12 / Torneios)
     const targetNav = URL_TO_NAV[urlSeg] ?? "torneios";
@@ -320,10 +326,11 @@ function Content() {
       byId.set(e.id, orig);
       for (const d of e.divisions ?? []) {
         const t = d.results!;
-        d.renderFull = () => (
+        d.renderFull = (extras) => (
           <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
             leadingTabs={clubesLeadingTabs(orig, playersDB)} defaultTab={CLUBES_DEFAULT_TAB}
-            extraTabs={fpgExtraTabs(editionsIndex, t, playersDB, matchplayData)} />
+            extraTabs={fpgExtraTabs(editionsIndex, t, playersDB, matchplayData)}
+            playerFilter={extras?.playerFilter} />
         );
       }
     });
@@ -340,9 +347,12 @@ function Content() {
     // não do mecanismo do shell — por isso a config não define editionKey.
     for (const e of ents) for (const d of e.divisions ?? []) {
       const t = d.results!;
-      d.renderFull = () => (
+      // `playerFilter`: os chips de jogador da barra do shell (🏆 Top 10) — sem
+      // isto não faziam nada nesta página (10/11/2026).
+      d.renderFull = (extras) => (
         <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
-          extraTabs={fpgExtraTabs(editionsIndex, t, playersDB, matchplayData)} />
+          extraTabs={fpgExtraTabs(editionsIndex, t, playersDB, matchplayData)}
+          playerFilter={extras?.playerFilter} />
       );
     }
     return ents;

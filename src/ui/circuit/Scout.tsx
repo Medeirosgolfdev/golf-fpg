@@ -27,23 +27,23 @@ import React, { useContext, useMemo, useState } from "react";
 import { KidsLinkCtx, KidsLink } from "../KidsLink";
 import { useJson } from "../../hooks/useJson";
 import { normName } from "../../utils/normName";
+import { fedFpg, playerKey } from "../../utils/playerKey";
+import PosMedal from "../PosMedal";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
 import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp, escalaoAtDate, fmtOrd, shortTournamentName } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
-import { isManuel as isManuelPlayer } from "../../constants/manuel";
 import { useFedBirthdates } from "../InscricoesComponents";
 import TierBadge from "../TierBadge";
-import { medalClass } from "../PosBadge";
 import { AnoEscalaoPill } from "../AnoEscalaoPill";
 import { SDPill } from "../tournamentPrimitives";
 import { RowsFilterBar, filterRows, type FilterableRow } from "../PlayerFilterBar";
 import { EMPTY_FILTER } from "../multiRoundTypes";
 import type { PlayerFilter } from "../../data/fpgTypes";
 import { compareEscalao } from "../../data/model/escalao";
-import { buildRepeaters, type FieldPlayer, type RepeaterRow } from "./repeaters";
+import { buildRepeaters, fieldIsManuel, type FieldPlayer, type RepeaterRow } from "./repeaters";
 import type { PastEdition } from "./PastEditionsTable";
 import {
   computeThreat, formaMedia, idade, N_FORMA, THREAT_LABEL, porVolta, ultimoLugar, ultimosTorneios,
@@ -89,13 +89,14 @@ function useProximas(): Map<string, Proxima[]> | null {
 }
 
 /** Coluna própria de uma página (ex.: FPG — saída, HCP oficial, forma WHS,
- *  previsão), calculada pelo nome do jogador. */
+ *  previsão), calculada para o jogador da linha: o nome e o federado que a
+ *  prova traz (o federado desfaz homónimos — 10/11/2026). */
 export interface ScoutExtraCol {
   key: string;
   label: React.ReactNode;
   title?: string;
-  cell: (name: string) => React.ReactNode;
-  sort?: (name: string) => number | string | null;
+  cell: (name: string, fed?: string | null) => React.ReactNode;
+  sort?: (name: string, fed?: string | null) => number | string | null;
   dir?: "asc" | "desc";
   /** Bloco da linha de grupos por cima (colunas seguidas do mesmo grupo = um bloco). */
   grupo?: string;
@@ -116,9 +117,8 @@ interface Linha {
   fed: string | null;
 }
 
-/** É o Manuel? Pelo federado quando o field o traz (o pai, 54907, também se
- *  chama «Manuel Medeiros»), senão pelo nome — é o que o isManuel faz. */
-const eManuel = (p: FieldPlayer) => isManuelPlayer({ fed: p.fed ?? undefined, name: p.name });
+/** É o Manuel? — `fieldIsManuel` (repeaters.ts): pelo federado FPG, senão pelo nome. */
+const eManuel = fieldIsManuel;
 
 /** Provas em comum com o Manuel, juntas por dia: as da página (ex.: FPG — todos
  *  os torneios, de clube incluídos) e as do Kids 2. */
@@ -142,7 +142,7 @@ export default function Scout({
   colsAntes?: ScoutExtraCol[];
   colsDepois?: ScoutExtraCol[];
   /** Bloco extra no detalhe de cada jogador (ex.: FPG — voltas aqui, forma WHS, previsão). */
-  detalheExtra?: (name: string) => React.ReactNode | null;
+  detalheExtra?: (name: string, fed?: string | null) => React.ReactNode | null;
   /** Mais texto na linha de resumo, e uma nota no fim da tabela. */
   resumoExtra?: React.ReactNode;
   rodape?: React.ReactNode;
@@ -176,20 +176,36 @@ export default function Scout({
 
   const linhas = useMemo<Linha[]>(() => {
     if (!scout) return [];
-    const repByName = new Map(rep.rows.map((r) => [normName(r.name), r]));
+    // Cada jogador pela chave dele NA PROVA (federado, senão nome —
+    // `utils/playerKey.ts`). Pelo nome só, dois homónimos com federados
+    // diferentes ficavam com os dados um do outro (10/11/2026).
+    const repByKey = new Map(rep.rows.map((r) => [r.key, r]));
+    // Nomes que no field são de mais de uma pessoa.
+    const pessoasPorNome = new Map<string, Set<string>>();
+    for (const p of field) {
+      const nk = normName(p.name);
+      if (nk) (pessoasPorNome.get(nk) ?? pessoasPorNome.set(nk, new Set()).get(nk)!).add(playerKey(p.fed, p.name));
+    }
     const vistos = new Set<string>();
     const out: Linha[] = [];
     for (const p of field) {
       const k = normName(p.name);
-      if (!k || vistos.has(p.fed || k)) continue;
-      vistos.add(p.fed || k);
+      const key = playerKey(p.fed, p.name);
+      if (!k || !key || vistos.has(key)) continue;
+      vistos.add(key);
+      // O federado FPG da prova. Fora da FPG o `fed` é a licença estrangeira
+      // (RFEG «CMA8989869»): não se compara com o federado da ficha do Kids 2 —
+      // um português nas listas espanholas era dado como «outra pessoa» (10/11/2026).
+      const fpg = fedFpg(p.fed);
       // A ficha do Kids 2 só vale se o federado bater (o pai do Manuel tem o
-      // nome de uma das variantes do filho).
+      // nome de uma das variantes do filho); e, quando o nome é de dois jogadores
+      // do field, só para aquele cujo federado é o da ficha.
       const kid = kidsMap.get(k);
-      const outraPessoa = !!(p.fed && kid?.fed && kid.fed !== p.fed);
+      const homonimo = (pessoasPorNome.get(k)?.size ?? 0) > 1;
+      const outraPessoa = !!(fpg && kid?.fed && kid.fed !== fpg) || (homonimo && !(fpg && kid?.fed === fpg));
       const id = kid && !outraPessoa ? kid.id : undefined;
       const scBase = id ? scout.players[id] : undefined;
-      const rr = repByName.get(k);
+      const rr = repByKey.get(key);
       const isManuel = eManuel(p);
       const extraM = !isManuel ? provasComManuel?.(p) : null;
       const sc = extraM?.length ? { ...scBase, m: juntarComManuel(extraM, scBase?.m) } : scBase;
@@ -210,10 +226,10 @@ export default function Scout({
       // Nascimento: o do Kids 2, o que a prova traz, ou o da base de federados —
       // pelo federado da prova ou, sem ele (o scrape do Drive às vezes não o
       // traz), pelo da ficha do Kids 2.
-      const fedNasc = p.fed || (!outraPessoa ? kid?.fed : null);
+      const fedNasc = fpg || (!outraPessoa ? kid?.fed : null);
       const nasc = sc?.d ?? p.dob ?? (fedNasc ? fedBirthdates.get(fedNasc) : undefined) ?? null;
       out.push({
-        key: k, name: p.name, club: p.club ?? sc?.c ?? null, country: p.country ?? null, isManuel, sc, ult: ultimosTorneios(sc?.u, scout.tn), rep: rr,
+        key, name: p.name, club: p.club ?? sc?.c ?? null, country: p.country ?? null, isManuel, sc, ult: ultimosTorneios(sc?.u, scout.tn), rep: rr,
         idade: nasc ? idade(nasc) ?? (/^\d{4}$/.test(nasc) ? new Date().getFullYear() - +nasc : null) : null,
         nasc, escalao: nasc ? escalaoAtDate(nasc, todayIso()) : escalaoDaProva(escalaoProva),
         escProva: !nasc && !!escalaoDaProva(escalaoProva),
@@ -296,7 +312,7 @@ export default function Scout({
         case "prox": return l.proximas.length || null;
         default: {
           const ex = extras.find((c) => c.key === sortKey);
-          return ex ? (ex.sort ? ex.sort(l.name) : null) : l.rep?.byEd[sortKey]?.pos ?? null;
+          return ex ? (ex.sort ? ex.sort(l.name, l.fed) : null) : l.rep?.byEd[sortKey]?.pos ?? null;
         }
       }
     };
@@ -396,15 +412,14 @@ export default function Scout({
   };
   const extraTd = (l: Linha) => (c: ScoutExtraCol, i: number, arr: ScoutExtraCol[]) => {
     const sep = i === 0 || (arr[i - 1].grupo ?? "") !== (c.grupo ?? "");
-    return <td key={c.key} className={sep ? "scout-sep" : undefined}>{c.cell(l.name)}</td>;
+    return <td key={c.key} className={sep ? "scout-sep" : undefined}>{c.cell(l.name, l.fed)}</td>;
   };
   // Separador do 1.º de cada bloco (a 1.ª coluna que aparece).
   const sepPerfil = { esc: tem.esc, hcp: !tem.esc && tem.hcp, nivel: !tem.esc && !tem.hcp };
   const sepAno = { torn: tem.torn, vit: !tem.torn && tem.vit, pod: !tem.torn && !tem.vit && tem.pod,
     voltas: !tem.torn && !tem.vit && !tem.pod && tem.voltas, forma: !tem.torn && !tem.vit && !tem.pod && !tem.voltas };
-  const lugar = (pos: number | null | undefined, title?: string, field?: number | null) => pos != null
-    ? <span className={"pos-medal pos-medal-sm " + medalClass(pos)} title={title}>{fmtOrd(pos)}{field ? <span className="scout-field">/{field}</span> : null}</span>
-    : <span className="scout-sem" title={title}>–</span>;
+  const lugar = (pos: number | null | undefined, title?: string, field?: number | null) =>
+    <PosMedal pos={pos} field={field} title={title} empty={<span className="scout-sem" title={title}>–</span>} />;
   // Um dos últimos torneios numa caixinha: o lugar quando há classificação, «WD»
   // quando não acabou, e nas provas de clube (sem classificação) o ±par.
   const caixaTorneio = (x: ScoutTorneio) => {
@@ -516,7 +531,7 @@ export default function Scout({
               const mostraClube = clube && !/^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(clube);
               const fmd = formaMedia(l.sc?.u);
               const ultimos = l.ult.slice(0, N_FORMA);
-              const detExtra = detalheExtra?.(l.name) ?? null;
+              const detExtra = detalheExtra?.(l.name, l.fed) ?? null;
               const temDetalhe = !!(l.ult.length || l.sc?.m?.length || l.proximas.length || detExtra);
               const nM = l.sc?.m?.length ?? 0;
               const empates = nM - l.frente - l.atras;
@@ -528,7 +543,7 @@ export default function Scout({
                       title={temDetalhe ? "Ver o detalhe: últimos torneios, provas em comum com o Manuel e próximas inscrições" : undefined}>
                     {colsAntes.map(extraTd(l))}
                     <td className="u-ta-left scout-jog">
-                      <span className={l.isManuel ? "fw-700" : "fw-600"}>{bandeira}{l.name}</span> <KidsLink nome={l.name} fed={l.fed} />
+                      <span className={l.isManuel ? "fw-700" : "fw-600"}>{bandeira}{l.name}</span> <KidsLink nome={l.name} fed={fedFpg(l.fed)} />
                       {(() => {
                         const w = worldChampionship(l.ult);
                         return w ? <span className="p p-sm p-world u-ml-4px" title={`Foi ao World Championship ${w.ano}${w.lugar != null ? ` — ${fmtOrd(w.lugar)}${w.field ? ` de ${w.field}` : ""}` : w.estado ? ` — ${w.estado}` : ""}`}>🌍 World {w.ano.slice(2)}{w.lugar != null ? ` · ${fmtOrd(w.lugar)}` : ""}</span> : null;
@@ -608,7 +623,9 @@ export default function Scout({
                       const c = l.rep?.byEd[e.id];
                       if (!c) return <td key={e.id}><span className="scout-sem">–</span></td>;
                       const title = [c.pos != null ? `${fmtOrd(c.pos)} de ${c.field}` : null, c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ");
-                      return <td key={e.id}>{c.complete ? lugar(c.pos, title) : <span className="scout-wd" title={title}>{c.pos != null ? fmtOrd(c.pos) : "WD"}</span>}</td>;
+                      // Quem não acabou: o lugar oficial se a fonte o dá; sem ele não tem
+                      // lugar (antes saía o número da linha) — «INC» com total, «WD» sem cartão.
+                      return <td key={e.id}>{c.complete ? lugar(c.pos, title) : <span className="scout-wd" title={title}>{c.pos != null ? fmtOrd(c.pos) : c.total != null ? "INC" : "WD"}</span>}</td>;
                     })}
                     {tem.vsm && (
                       <td className="scout-sep u-ta-left" title={nM ? `${nM} prova${nM > 1 ? "s" : ""} em comum${empates > 0 ? ` · ${empates} empate${empates > 1 ? "s" : ""}` : ""}` : undefined}>

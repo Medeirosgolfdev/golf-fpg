@@ -17,7 +17,8 @@
 import { useEffect, useState } from "react";
 import type { CircuitEntry, CircuitDivision } from "./types";
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
-import { isManuelByName as isM } from "../../constants/manuel";
+import { fieldIsManuel } from "./repeaters";
+import { parsePos } from "../../utils/classificacao";
 import { isRoundInProgress } from "../../data/fpgUtils";
 import LoadingState from "../LoadingState";
 import EmptyState from "../EmptyState";
@@ -25,6 +26,7 @@ import PastEditionsTable, { type PastEdition } from "./PastEditionsTable";
 import { totalsDivisionView } from "./divisionPieces";
 import { currentField } from "../../pages/fpg/repeatersModel";
 import { stripAccents } from "../../utils/normName";
+import { isPtCountry } from "../../utils/flagUtils";
 
 /**
  * O torneio de hoje de uma divisão, como o Scout o lê (`currentField`: draw →
@@ -156,15 +158,20 @@ export function buildPastEditionFromTournament(
       const semCartao = (typeof p.grossTotal === "number" && p.grossTotal >= 900)
         || (p.roundScores || []).some((r) => (r.gross || 0) >= 900);
       return {
-      pos: semCartao ? null : typeof p.pos === "number" ? p.pos : (parseInt(String(p.pos ?? ""), 10) || null),
+      // «T4» → 4, «CUT»/«WD» → sem lugar (`parsePos`; o parseInt deixava «T4» sem lugar).
+      pos: semCartao ? null : parsePos(p.pos),
       name: p.name,
+      // O federado da própria edição: é ele que casa o jogador com o field de
+      // hoje (dois homónimos com federados diferentes — 10/11/2026).
+      fed: p.fedCode || p.fed || null,
       club: p.club || null,
       total: !semCartao && typeof p.grossTotal === "number" ? p.grossTotal : null,
       toPar: semCartao ? null : typeof p.toPar === "number" ? p.toPar : toParPelasVoltas(p.roundScores || []),
       rounds: (p.roundScores || []).map((r) => (r.gross != null && r.gross < 900 ? r.gross : null)),
       holesPlayed: (p.roundScores || []).reduce((s, r) => s + (r.scores || []).filter(Boolean).length, 0),
       fullRounds: (p.roundScores || []).filter(isFullRound).length,
-      isManuel: isM(p.name),
+      // Pelo federado quando o há (o pai, 54907, também é «Manuel Medeiros»).
+      isManuel: fieldIsManuel({ name: p.name, fed: p.fedCode || p.fed || null }),
       isPt: !!(p as unknown as { _isPortuguese?: boolean })._isPortuguese,
       };
     })
@@ -214,14 +221,15 @@ export function buildPastEditionFromTotals(
       return {
         pos: typeof p.pos === "number" ? p.pos : null,
         name: p.name,
+        fed: p.fed || null,
         club: p.club || null,
         total: typeof p.total === "number" ? p.total : null,
         toPar: typeof p.total === "number" && par != null && jogadas ? p.total - par * jogadas : null,
         rounds,
         holesPlayed: jogadas * 18,
         fullRounds: jogadas,
-        isManuel: isM(p.name),
-        isPt: /portugal/i.test(String(p.country || "")) || /^(pt|prt|por)$/i.test(String(p.country || "")),
+        isManuel: fieldIsManuel({ name: p.name, fed: p.fed || null }),
+        isPt: isPtCountry(p.country),
       };
     })
     .sort((a, b) => (b.fullRounds - a.fullRounds) || ((a.total ?? 9e9) - (b.total ?? 9e9)));

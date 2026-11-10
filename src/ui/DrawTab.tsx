@@ -11,7 +11,7 @@
  * Usa `useSort` + `SortableHdr` nas colunas custom.
  */
 
-import { birthCells, pillDoAno } from "./BirthCells";
+import { birthCells, pillDoAno, birthSortValue, compareBirth } from "./BirthCells";
 import { useMemo, useState } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { isManuel } from "../constants/manuel";
@@ -87,7 +87,7 @@ function hora24(t: string | null | undefined): string {
   return m2 ? `0${m2[1]}:${m2[2]}` : s;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco" | "toPar" | "gross" | "om";
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "idade" | "hora" | "buraco" | "toPar" | "gross" | "om";
 
 /** Registo de resultado de uma ronda usado para cruzar com o draw. */
 export type DrawResult = { gross: number; toPar: number | null };
@@ -512,12 +512,13 @@ export default function DrawTab({
         case "clube":  return compareTextNullsLast(a.clube, b.clube, mult);
         case "hcp":    return compareNullsLast(a.hcp, b.hcp, mult);
         case "tee":    return compareTextNullsLast(a.tee, b.tee, mult);
-        case "nasc": {
+        case "nasc":
+        case "idade": {
           // Data completa quando há; senão o ano (lido ou estimado) a meio do ano —
-          // as estimativas ordenam-se junto das datas reais, não no fim.
-          const k = (p: typeof a) => p.dob ? Date.parse(p.dob)
-            : (p.dobYear ?? p.birthYearEst) != null ? Date.UTC((p.dobYear ?? p.birthYearEst)!, 6, 1) : null;
-          return compareNullsLast(k(a), k(b), mult);
+          // as estimativas ordenam-se junto das datas reais, não no fim. Nasc. e
+          // Idade têm cada uma a sua chave (10/11/2026).
+          const k = (p: typeof a) => birthSortValue(p.dob, p.dobYear ?? p.birthYearEst);
+          return compareBirth(sortKey, k(a), k(b), mult);
         }
         case "hora":   v = a.teeTime.localeCompare(b.teeTime); break;
         case "buraco": return compareNullsLast(a.startHole, b.startHole, mult);
@@ -698,7 +699,7 @@ export default function DrawTab({
       {/* Ordem e aspecto das colunas = Resumo: ESC. · Nasc. · Idade · FED · Clube · HCP · TEE */}
       {!hc.esc && <SortableHdr k="esc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
       {!hc.nasc && <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Nasc.</SortableHdr>}
-      {!hc.nasc && <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>}
+      {!hc.nasc && <SortableHdr k="idade" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>}
       {!hc.fed && <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
       {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">{clubLabel ? clubLabel.charAt(0) + clubLabel.slice(1).toLowerCase() : "Clube"}</SortableHdr>}
       {!hc.hcp && <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>}

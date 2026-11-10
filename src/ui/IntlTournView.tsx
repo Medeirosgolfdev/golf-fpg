@@ -31,12 +31,10 @@ export interface IntlTournViewProps {
   leadingTabs?: { key: string; label: string; content: React.ReactNode }[];
   roundDraws?: CircuitRoundDraw[];
   trailingTabs?: { key: string; label: string; content: React.ReactNode }[];
+  /** Nome do parâmetro do URL que guarda a aba (default «tab»; a /uskids usa «rt»). */
   tabParam?: string;
   /** Separador que abre sem `?tab=` (o shell abre no «Resumo» as provas sem cartões). */
   defaultTab?: string;
-  /** Obsoletos: a aba vive no URL (?tab=…) — aceites só por compatibilidade. */
-  tabKey?: string;
-  onTabKey?: (key: string) => void;
 }
 
 export function IntlTournView({

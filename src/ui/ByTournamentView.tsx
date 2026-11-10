@@ -2,6 +2,8 @@
 import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLoader";
 import { norm, fmtToPar, fmtSign, fmtDateSpan } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
+import { resumoJogado } from "../utils/parJogado";
+import { temCartao } from "../utils/classificacao";
 import { scClass, toParClass } from "../utils/scoreDisplay";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
 import { GrossCell, CountPill, RoundNumericCells, MUTED } from "./tableCells";
@@ -42,6 +44,7 @@ function TournRoundRow({ r, idx: _idx, data }: {
                 hi={r.hi}
                 links={r._links}
                 eclecticEntry={null}
+                grossOficial={r.gross}
               />
             </div>
           </td>
@@ -85,15 +88,19 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
 }) {
   // O ±par dos totais em linha (ao lado do gross), não empilhado por baixo.
 
-  const toParSpan = (g: number, p: number) => {
-    const tp = g - p;
-    const cls = toParClass(tp);
-    return <span className={`sc-topar ${cls} u-d-inline u-ml-4px`}>{fmtSign(tp)}</span>;
+  // Total de um troço: pancadas dos buracos jogados e ±par contra o par DESSES
+  // buracos (10/11/2026 — um cartão com buracos em branco era comparado com o
+  // par do troço inteiro). Sem par, só as pancadas; sem buracos, vazio.
+  const troco = (from: number, to: number, zeroE = false) => {
+    const r = resumoJogado(gross, par, from, to);
+    if (!r.jogados) return null;
+    return (
+      <span title={r.completo ? undefined : `${r.jogados} de ${r.buracos} buracos no cartão`}>
+        {r.pancadas}
+        {r.toPar != null && <span className={`sc-topar ${toParClass(r.toPar)} u-d-inline u-ml-4px`}>{zeroE ? fmtToPar(r.toPar, "") : fmtSign(r.toPar)}</span>}
+      </span>
+    );
   };
-
-  const totalG = sumArr(gross, 0, hc);
-  const totalP = par ? sumArr(par, 0, hc) : 0;
-  const tp = par ? totalG - totalP : null;
 
   return (
     <tr className="ec-round-row">
@@ -109,25 +116,12 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
                 ? <span className={`sc-score ${cls}`}>{gv}</span>
                 : ""}
             </td>
-            {i === frontEnd - 1 && !is9 && (
-              <td className="col-out">
-                {sumArr(gross, 0, frontEnd)}
-                {par && toParSpan(sumArr(gross, 0, frontEnd), sumArr(par, 0, frontEnd))}
-              </td>
-            )}
+            {i === frontEnd - 1 && !is9 && <td className="col-out">{troco(0, frontEnd)}</td>}
           </React.Fragment>
         );
       })}
-      <td className={is9 ? "col-total" : "col-in"}>
-        {is9 ? totalG : sumArr(gross, backStart, hc)}
-        {par && toParSpan(is9 ? totalG : sumArr(gross, backStart, hc), is9 ? totalP : sumArr(par, backStart, hc))}
-      </td>
-      {!is9 && (
-        <td className="col-total">
-          {totalG}
-          {tp != null && <span className={`sc-topar ${toParClass(tp)} u-d-inline u-ml-4px`}>{fmtToPar(tp, "")}</span>}
-        </td>
-      )}
+      <td className={is9 ? "col-total" : "col-in"}>{troco(is9 ? 0 : backStart, hc)}</td>
+      {!is9 && <td className="col-total">{troco(0, hc, true)}</td>}
     </tr>
   );
 }
@@ -146,31 +140,37 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
     return { text: fmtSign(d), color: d <= 0 ? "u-c-color-good" : "u-c-color-danger", weight: "u-fw-600" };
   };
 
+  // Δ de um troço: só os buracos jogados nas DUAS voltas (10/11/2026 — somar 18
+  // buracos de uma contra 13 da outra dava uma diferença sem sentido).
+  const ambos = (i: number) => (last[i] ?? 0) > 0 && (first[i] ?? 0) > 0;
+  const deltaTroco = (from: number, to: number): number | null => {
+    let d = 0, n = 0;
+    for (let i = from; i < to; i++) if (ambos(i)) { d += last[i]! - first[i]!; n++; }
+    return n ? d : null;
+  };
+
   return (
     <tr className="ec-ref-row bt-heavy">
       <td className="row-label">Δ</td>
       {Array.from({ length: hc }, (_, i) => {
-        const d = last[i] != null && first[i] != null ? last[i]! - first[i]! : null;
+        const d = ambos(i) ? last[i]! - first[i]! : null;
         const f = fmtDelta(d);
         return (
           <React.Fragment key={i}>
             <td className={`${f.color} ${f.weight}`}>{f.text}</td>
             {i === frontEnd - 1 && !is9 && (() => {
-              const dOut = sumArr(last, 0, frontEnd) - sumArr(first, 0, frontEnd);
-              const fo = fmtDelta(dOut);
+              const fo = fmtDelta(deltaTroco(0, frontEnd));
               return <td className={`col-out ${fo.color} ${fo.weight}`}>{fo.text}</td>;
             })()}
           </React.Fragment>
         );
       })}
       {(() => {
-        const dIn = (is9 ? sumArr(last, 0, hc) : sumArr(last, backStart, hc)) - (is9 ? sumArr(first, 0, hc) : sumArr(first, backStart, hc));
-        const fi = fmtDelta(dIn);
+        const fi = fmtDelta(deltaTroco(is9 ? 0 : backStart, hc));
         return <td className={`${is9 ? "col-total" : "col-in"} ${fi.color} ${fi.weight}`}>{fi.text}</td>;
       })()}
       {!is9 && (() => {
-        const dTot = sumArr(last, 0, hc) - sumArr(first, 0, hc);
-        const ft = fmtDelta(dTot);
+        const ft = fmtDelta(deltaTroco(0, hc));
         return <td className={`col-total ${ft.color}`}>{ft.text}</td>;
       })()}
     </tr>
@@ -308,7 +308,8 @@ function eventBest(rounds: RoundExt[]): { gross: number; toPar: number } | null 
   let best: { gross: number; toPar: number } | null = null;
   for (const r of rounds) {
     const g = Number(r.gross), p = Number(r.par);
-    if (isFinite(g) && isFinite(p) && g > 0 && p > 0) {
+    // Volta «sem cartão» (≥ 900) não é o melhor resultado de ninguém.
+    if (temCartao(g) && isFinite(p) && p > 0) {
       const tp = g - p;
       if (best == null || tp < best.toPar) best = { gross: g, toPar: tp };
     }
@@ -452,7 +453,10 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
     return result;
   }, [data, search]);
 
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  // Torneio aberto pela sua CHAVE, não pelo índice da linha (10/11/2026): ao
+  // ordenar ou pesquisar, ficava aberto o torneio que passava a ocupar a linha.
+  const [openKey, setOpenKey] = useState<string | null>(null);
+  const itemKey = (it: { type: string; rounds: RoundExt[] }) => `${it.type}:${it.rounds[0]?.scoreId ?? ""}`;
   const { sortKey, sortDir, toggleSort } = useSort<"torneio" | "campo" | "rondas" | "melhor" | "datas">("datas", "desc", {
     rondas: "desc", melhor: "asc",
   });
@@ -498,23 +502,24 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
             </tr>
           </thead>
           <tbody>
-            {sortedItems.map((it, idx) => {
+            {sortedItems.map((it) => {
+              const key = itemKey(it);
               const start = it.rounds[0]?.date || "";
               const end = it.rounds[it.rounds.length - 1]?.date || "";
-              const isOpen = openIdx === idx;
+              const isOpen = openKey === key;
               const best = eventBest(it.rounds);
               const sortedRounds = isOpen ? it.rounds.slice().sort((a, b) => a.dateSort - b.dateSort) : [];
               // Tee representativo do torneio (última ronda) → cor do pill de contagem
               const repTee = it.rounds[it.rounds.length - 1]?.tee || "";
               return (
-                <React.Fragment key={idx}>
+                <React.Fragment key={key}>
                   <tr>
                     <td className="u-c-text-2 u-fvn-tabular-nums u-ws-nowrap">
                       <span className="fs-11">{fmtDateSpan(start, end)}</span>
                     </td>
                     <td className="r"><CountPill count={it.rounds.length} tee={repTee} /></td>
                     <td>
-                      <button className="courseBtn" onClick={() => setOpenIdx(isOpen ? null : idx)}>{it.name}</button>
+                      <button className="courseBtn" onClick={() => setOpenKey(isOpen ? null : key)}>{it.name}</button>
                     </td>
                     <td><CourseLink name={it.course} /></td>
                     <td className="r">
@@ -542,11 +547,14 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
                                 );
                               })}
                               {(() => {
-                                const withGross = sortedRounds.filter(r => r.gross != null);
+                                // Só as voltas com cartão (10/11/2026): o 999 «sem cartão»
+                                // entrava na soma, e o par somava também as voltas sem gross.
+                                const withGross = sortedRounds.filter(r => temCartao(r.gross));
                                 if (withGross.length < 2) return null;
                                 const totalGross = withGross.reduce((a, r) => a + Number(r.gross), 0);
                                 const totalStb = sortedRounds.reduce((a, r) => a + (r.stb ?? 0), 0);
-                                const totalPar = sortedRounds.reduce((a, r) => a + (Number(r.par) || 0), 0);
+                                const semPar = withGross.some(r => !(Number(r.par) > 0));
+                                const totalPar = semPar ? 0 : withGross.reduce((a, r) => a + Number(r.par), 0);
                                 return (
                                   <tr className="bg-detail fw-700 bt-heavy">
                                     <td colSpan={5} className="r fw-700 c-text-2">Total ({withGross.length} voltas)</td>

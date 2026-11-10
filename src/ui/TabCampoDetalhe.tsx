@@ -278,6 +278,13 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               {/* Resultados anos anteriores */}
                               {prevResults.map(({ y, res }) => {
                                 const p = res!.p;
+                                // Desistiu / sem lugar nessa edição: «WD» esbatido, sem cor de pódio (10/11/2026).
+                                if (p == null) return (
+                                  <span key={y} title={`${y}: desistiu ou ficou sem lugar`} className="fs-10 fw-700 u-op-0_85 u-c-text-3">
+                                    WD
+                                    <span className="fs-10 fw-400 u-op-0_7">'{String(y).slice(2)}</span>
+                                  </span>
+                                );
                                 const medal = medalOf(p);
                                 const col = p <= 3 ? "u-c-color-warn-dark" : p <= 10 ? "u-c-color-good-dark" : "u-c-text-3";
                                 return (

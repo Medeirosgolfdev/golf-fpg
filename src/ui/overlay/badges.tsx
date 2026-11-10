@@ -179,6 +179,8 @@ export function TpBadge({ vp, sz = 22 }: { vp: number; sz?: number }) {
      perdida): abaixo do par vermelho (a cor dos birdies); no par/acima no
      destaque do cartão (AccentCtx.cur), com o texto em contraste. */
   const { cur } = useContext(AccentCtx);
+  // Sem par conhecido (NaN) não há pílula — antes saía «E» (10/11/2026).
+  if (!Number.isFinite(vp)) return null;
   const under = vp < 0;
   const txt = vp < 0 ? String(vp) : vp > 0 ? `+${vp}` : "E";
   const fill = under ? "#dc2626" : cur ?? "#6b7280";

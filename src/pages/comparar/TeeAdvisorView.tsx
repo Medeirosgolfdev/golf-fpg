@@ -214,6 +214,9 @@ interface LongPerf {
   nLongGood: number; nShortGood: number;
   /** Melhor (menor) score differential em campos longos, com campo e metros. */
   bestLong: { sd: number; course: string; meters: number } | null;
+  /** Melhor (menor) score differential em campos CURTOS — para saber se o melhor
+   *  golfe do período foi mesmo num campo longo. */
+  bestShortSd: number | null;
 }
 
 /** Desempenho do jogador em campos LONGOS vs curtos (últimos 12 meses), medido
@@ -226,13 +229,14 @@ interface LongPerf {
 function longTeePerformance(
   data: PlayerPageData | null, simCourses: Course[], thresholdM: number, index: number,
 ): LongPerf {
-  const empty: LongPerf = { thresholdM, index, nLong: 0, nShort: 0, nLongGood: 0, nShortGood: 0, bestLong: null };
+  const empty: LongPerf = { thresholdM, index, nLong: 0, nShort: 0, nLongGood: 0, nShortGood: 0, bestLong: null, bestShortSd: null };
   if (!data) return empty;
   // Só os últimos 12 meses: um júnior cresce depressa — o que era capaz há mais
   // de um ano não representa o jogo de hoje.
   const cutoff = Date.now() - 365 * 24 * 60 * 60 * 1000;
   let longN = 0, shortN = 0, nLongGood = 0, nShortGood = 0;
   let bestLong: { sd: number; course: string; meters: number } | null = null;
+  let bestShortSd: number | null = null;
   for (const c of data.DATA) for (const r of c.rounds) {
     if (r.holeCount !== 18 || r.dateSort < cutoff) continue;
     const sd = toNum(r.sd);
@@ -247,9 +251,10 @@ function longTeePerformance(
       if (bestLong == null || sd < bestLong.sd) bestLong = { sd, course: c.course, meters: m };
     } else {
       shortN++; if (good) nShortGood++;
+      if (bestShortSd == null || sd < bestShortSd) bestShortSd = sd;
     }
   }
-  return { thresholdM, index, nLong: longN, nShort: shortN, nLongGood, nShortGood, bestLong };
+  return { thresholdM, index, nLong: longN, nShort: shortN, nLongGood, nShortGood, bestLong, bestShortSd };
 }
 
 /* ═══════════════════ Métricas por tee ═══════════════════ */
@@ -723,15 +728,28 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
     const pLong = lp.nLong ? lp.nLongGood / lp.nLong : 0;
     const pShort = lp.nShort ? lp.nShortGood / lp.nShort : 0;
     const asGoodAsShort = lp.nShort >= 3 && pLong >= pShort - 0.01;
+    // 10/11/2026: cada afirmação só sai quando os números a suportam. Antes a
+    // frase dizia SEMPRE «os dados dão-te confiança», «abaixo do teu índice» e «é
+    // aí que mostras o teu melhor golfe» — mesmo com 0 voltas ao nível do índice.
+    const confianca = lp.nLongGood >= 1 && (lp.nShort < 3 || asGoodAsShort);
+    const best = lp.bestLong;
+    const bestVsIndice = best == null ? null
+      : best.sd < lp.index ? "abaixo do teu índice"
+      : best.sd > lp.index ? "acima do teu índice"
+      : "igual ao teu índice";
+    // O melhor differential do período foi num campo longo?
+    const melhorFoiLongo = best != null && best.sd <= lp.index && (lp.bestShortSd == null || best.sd <= lp.bestShortSd);
     return (
       <>
-        {" "}Os dados dão-te confiança: nos <b>últimos 12 meses</b> jogaste <b>{lp.nLong} voltas em campos de {lp.thresholdM} m ou mais</b> e
+        {" "}{confianca ? "Os dados dão-te confiança" : "O que os dados dizem"}: nos <b>últimos 12 meses</b> jogaste <b>{lp.nLong} voltas em campos de {lp.thresholdM} m ou mais</b> e
         em <b>{lp.nLongGood}</b> delas jogaste ao nível do teu índice ({fmtHcp(lp.index)}) ou melhor
         {asGoodAsShort ? <> — tão frequente como nos campos curtos</> : null}.
-        {lp.bestLong
-          ? <> O teu melhor differential deste período (<b>{lp.bestLong.sd.toFixed(1)}</b>, abaixo do teu índice) foi em {lp.bestLong.course} ({lp.bestLong.meters} m).</>
+        {best
+          ? <> O teu melhor differential em campos longos neste período (<b>{best.sd.toFixed(1)}</b>, {bestVsIndice}) foi em {best.course} ({best.meters} m).</>
           : null}
-        {" "}Jogar longo não te tira qualidade — é aí que mostras o teu melhor golfe.
+        {asGoodAsShort
+          ? <>{" "}Jogar longo não te tira qualidade{melhorFoiLongo ? " — é aí que mostras o teu melhor golfe" : ""}.</>
+          : null}
       </>
     );
   }, [recommendation]);

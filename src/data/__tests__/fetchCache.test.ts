@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { cachedFetchJson, invalidateCache } from "../fetchCache";
+import { cachedFetchJson, invalidateCache, memoAsync } from "../fetchCache";
 
 /**
  * fetchCache — guarda a Promise do objecto já convertido (um só fetch + um só
@@ -77,5 +77,52 @@ describe("cachedFetchJson", () => {
     const b = await cachedFetchJson(url);
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(b).not.toBe(a);
+  });
+});
+
+describe("memoAsync (10/11/2026 — não guardar a falha)", () => {
+  it("carrega uma vez e devolve a mesma Promise", async () => {
+    const load = vi.fn(async () => ({ n: 1 }));
+    const m = memoAsync(load);
+    const [a, b] = await Promise.all([m(), m()]);
+    expect(await m()).toBe(a);
+    expect(b).toBe(a);
+    expect(load).toHaveBeenCalledTimes(1);
+  });
+
+  it("na falha entrega o fallback e NÃO o guarda: a seguinte tenta outra vez", async () => {
+    const load = vi.fn<() => Promise<Record<string, number>>>();
+    load.mockRejectedValueOnce(new Error("HTTP 502"));
+    load.mockResolvedValueOnce({ ok: 1 });
+    const m = memoAsync(load, { fallback: () => ({}) });
+    expect(await m()).toEqual({});
+    expect(await m()).toEqual({ ok: 1 });
+    expect(await m()).toEqual({ ok: 1 });
+    expect(load).toHaveBeenCalledTimes(2);
+  });
+
+  it("sem fallback rejeita, e também não guarda a falha", async () => {
+    const load = vi.fn<() => Promise<number>>();
+    load.mockRejectedValueOnce(new Error("rede"));
+    load.mockResolvedValueOnce(7);
+    const m = memoAsync(load);
+    await expect(m()).rejects.toThrow(/rede/);
+    expect(await m()).toBe(7);
+  });
+
+  it("keep=false entrega o resultado sem o guardar; reset larga o guardado", async () => {
+    let n = 0;
+    const m = memoAsync(async () => ++n, { keep: (v) => v >= 2 });
+    expect(await m()).toBe(1);   // parcial: não fica
+    expect(await m()).toBe(2);   // fica
+    expect(await m()).toBe(2);
+    m.reset();
+    expect(await m()).toBe(3);
+  });
+
+  it("os argumentos só contam na chamada que carrega", async () => {
+    const m = memoAsync(async (x: number) => x * 2);
+    expect(await m(2)).toBe(4);
+    expect(await m(5)).toBe(4);
   });
 });

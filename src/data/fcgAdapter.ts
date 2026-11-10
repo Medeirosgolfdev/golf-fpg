@@ -21,7 +21,7 @@ import { displayName as displayCase } from "../utils/format";
 import type { DobLookup, HcpLookup } from "./intlCommon";
 import { holesOf } from "./intlCommon";
 import type { Tournament as FPGTournament } from "./fpgTypes";
-import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "./intlTournament";
+import { buildFPGTournament, type IntlCourse, type IntlPlayerIn, type IntlRoundIn } from "./intlTournament";
 import { escaloEsForPlayer, escaloEsFromCategory } from "./rfeg/escalao";
 
 interface FCGScorecardGameTee {
@@ -279,31 +279,53 @@ function ageAtFcg(dobIso: string | null | undefined, refIso: string | null | und
   } catch { return null; }
 }
 
+/** Cartão do campo de um jogador golfdirecto (o `gameTee` do scorecard dele). */
+interface FcgCard { key: string; par: number[]; si: number[]; meters: number[]; teeName: string }
+
+const soNumeros = (arr: (number | null)[] | null | undefined): number[] =>
+  (arr || []).filter((x): x is number => typeof x === "number");
+
+/** null quando o cartão não traz par de 9 ou 18 buracos. */
+function fcgCardOf(t: FCGScorecardGameTee | null | undefined): FcgCard | null {
+  if (!t) return null;
+  const par = soNumeros(t.par1_18);
+  if (!holesOf(par)) return null;
+  const si = soNumeros(t.hcp1_18);
+  const meters = soNumeros(t.meters1_18);
+  const teeName = t.color ? t.color[0].toUpperCase() + t.color.slice(1) : "Tour";
+  // Mesmo tee = mesma cor, mesmos metros, SI e par (M e F da mesma cor só mudam o rating).
+  return { key: [t.color || "", par.join(), si.join(), meters.join()].join("|"), par, si, meters, teeName };
+}
+
+const cardCourse = (c: FcgCard): Partial<IntlCourse> => ({
+  par: c.par, si: c.si, meters: c.meters, teeName: c.teeName, holes: c.par.length,
+  parTotal: undefined,   // o par total é a soma do par DESTE cartão
+});
+
 export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLookup): FPGTournament | null {
   const cats = detail.__categories || [];
   if (cats.length === 0) return null;
 
-  // Procurar par/SI/meters do primeiro scorecard com gameTee
-  let par18: number[] = [];
-  let si18: number[] = [];
-  let meters18: number[] = [];
-  let teeName = "";
-  for (const c of cats) {
-    for (const p of c.players) {
-      if (p.scorecard && p.scorecard.gameTee) {
-        const t = p.scorecard.gameTee;
-        const pp = (t.par1_18 || []).filter((x): x is number => typeof x === "number");
-        if (holesOf(pp)) {
-          par18 = pp;
-          si18 = (t.hcp1_18 || []).filter((x): x is number => typeof x === "number");
-          meters18 = (t.meters1_18 || []).filter((x): x is number => typeof x === "number");
-          teeName = t.color ? t.color[0].toUpperCase() + t.color.slice(1) : "Tour";
-          break;
-        }
-      }
-    }
-    if (par18.length > 0) break;
+  // Par/SI/metros/tee: os do cartão de CADA jogador (`scorecard.gameTee`).
+  // 10/11/2026 (I6): antes o PRIMEIRO cartão valia para todos — na Prueba
+  // Infantil SACE-2025 as 6 raparigas das vermelhas (4351 m) apareciam com as
+  // amarelas (5010 m); 122 de 163 ficheiros têm mais de um tee.
+  const cartoes = new Map<FCGPlayer, FcgCard>();
+  for (const c of cats) for (const p of c.players) {
+    const card = fcgCardOf(p.scorecard?.gameTee);
+    if (card) cartoes.set(p, card);
   }
+  // Cartão comum (quem não traz o seu): o do torneio só quando TODOS jogam o
+  // mesmo tee; com vários tees fica só o par (se for igual em todos) — não se
+  // dá a ninguém os metros de um tee que não se sabe se jogou.
+  const distintos = [...new Map([...cartoes.values()].map((c) => [c.key, c])).values()];
+  const primeiro = distintos[0];
+  const parComum = primeiro && distintos.every((c) => c.par.join() === primeiro.par.join()) ? primeiro.par : [];
+  const umSoTee = distintos.length === 1;
+  const par18: number[] = parComum;
+  const si18: number[] = umSoTee ? primeiro.si : [];
+  const meters18: number[] = umSoTee ? primeiro.meters : [];
+  const teeName = umSoTee ? primeiro.teeName : "";
   // Nenhum cartão com par → sem par (o ±par é o da fonte, `onlyGross`).
 
   const dateRef = detail.meta.dateStart || null;
@@ -357,6 +379,8 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
         scores,
         wd: !p.isCardFinished,
         country: p.country,   // destaque PT pela regra comum (ISO-3)
+        // O campo do PRÓPRIO jogador (tee, metros, SI e par do seu cartão).
+        ...(cartoes.has(p) && !umSoTee ? { course: cardCourse(cartoes.get(p)!) } : {}),
         extra: { fed: lic, fedCode: lic, escalao, _sex: sex, _age: age, _category: cat.name },
       });
     }

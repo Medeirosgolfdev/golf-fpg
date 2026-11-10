@@ -22,6 +22,10 @@ import { normalizePlayer } from "../utils/playerUtils";
 import { ndbCapsForRound, roundDifferential } from "../utils/whsCalc";
 import { escalaoAtDate } from "../utils/format";
 import { isManuel } from "../constants/manuel";
+import { isNoCardGross, toParPlayed } from "./intlCommon";
+import { temCartao } from "../utils/classificacao";
+import { playerKey } from "../utils/playerKey";
+import { parDosJogados } from "../utils/parJogado";
 
 export function numGross(p: Player): number {
   return typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number) ?? 999;
@@ -48,7 +52,7 @@ export function tournamentPccs(
   for (const p of t?.players || []) {
     for (const rs of (p.roundScores || []) as ReadonlyArray<{ round?: number | string; gross?: number | string | null; pcc?: number }>) {
       const g = Number(rs.gross);
-      if (!(g > 0 && g < 900)) continue;
+      if (!temCartao(g)) continue;
       const r = Number(rs.round) || 1;
       const v = typeof rs.pcc === "number" ? rs.pcc : 0;
       const m = porVolta.get(r) ?? new Map<number, number>();
@@ -149,8 +153,8 @@ export function synthesizeDrawFromCumulative(
     let ok = true;
     for (let i = 0; i < priorRounds; i++) {
       const g = rs[i]?.gross;
-      // gross >= 999 é o sentinela de WD/DNS; <=0 é cartão vazio/não entregue
-      if (typeof g !== "number" || g <= 0 || g >= 900) { ok = false; break; }
+      // «sem cartão» (≥ 900: WD/DNS/NR); <=0 é cartão vazio/não entregue
+      if (!temCartao(g)) { ok = false; break; }
       cum += g;
     }
     if (!ok) continue;
@@ -405,7 +409,7 @@ export function fillBlankHoles(p: Player): FilledScores {
   for (let i = 0; i < scores.length; i++) if (!scores[i] || scores[i] <= 0) blanks.push(i);
 
   if (blanks.length === 0) return { scores, inferred, hasInferred: false };
-  if (gross == null || isNaN(gross) || gross >= 999 || gross <= 0) return { scores, inferred, hasInferred: false };
+  if (!temCartao(gross)) return { scores, inferred, hasInferred: false };
   if (blanks.length >= scores.length) return { scores, inferred, hasInferred: false };
 
   const played = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
@@ -480,7 +484,7 @@ export function computeSD(p: SDPlayer, date?: string | null): SDResult {
   const none: SDResult = { sd: null, source: null };
   const asPlayer = p as unknown as Player;
   const gross = numGross(asPlayer);
-  if (gross >= 900) return none;
+  if (isNoCardGross(gross)) return none;
   if (typeof p.sd === "number") return { sd: p.sd, source: "fpg" };
   // Com várias voltas o jogador é o acumulado, que não tem SD.
   if ((p.roundScores?.length ?? 0) > 1) return none;
@@ -606,7 +610,8 @@ export function playedParTotal(rs: { scores?: number[]; pars?: number[]; gross?:
   const sum = (a: number[]) => a.reduce((x, y) => x + (y || 0), 0);
   if ((rs.gross || 0) > sum(sc.map((s) => (s > 0 ? s : 0)))) return sum(pars);
   if (sc.length === pars.length) {
-    return sc.some((s) => !s) ? sum(pars.filter((_, i) => !!sc[i])) : sum(pars);
+    // Buracos em branco: o par só dos jogados (regra única, utils/parJogado).
+    return sc.some((s) => !s) ? parDosJogados(sc, pars) : sum(pars);
   }
   if (sc.length && sc.length < pars.length) return sum(pars.slice(0, sc.length));
   return sum(pars);
@@ -630,6 +635,14 @@ export function isRoundInProgress(rs: { gross?: number | null; scores?: number[]
   const nPar = (rs.pars || []).length;
   if (!n || !nPar || n >= nPar) return false;
   return sc.reduce((a, b) => a + (b > 0 ? b : 0), 0) === gross;
+}
+
+/** Voltas que se esperam DESTE jogador: as da categoria dele (`_roundsExpected`,
+ *  posto pelo conversor quando a prova junta categorias com nº de voltas
+ *  diferente), nunca mais do que as já jogadas na prova. */
+function expectedRoundsOf(p: Player, playedRounds: number): number {
+  const own = (p as { _roundsExpected?: number })._roundsExpected;
+  return typeof own === "number" && own > 0 ? Math.min(own, playedRounds) : playedRounds;
 }
 
 /** Expand multi-round: 1 torneio → R1 + R2 + ... + Total */
@@ -688,9 +701,9 @@ export function expandMultiRound(t: Tournament): Tournament[] {
   for (const p of t.players) {
     if (!p.roundScores?.length) continue;
 
-    // Rondas válidas: excluir WD (gross>=999 ou scorecard todo zeros)
+    // Rondas válidas: excluir WD («sem cartão», gross ≥ 900, ou scorecard todo zeros)
     const validRounds = p.roundScores.filter(rs =>
-      rs.gross < 900 && !(rs.scores?.length && rs.scores.every(s => s === 0))
+      !isNoCardGross(rs.gross) && !(rs.scores?.length && rs.scores.every(s => s === 0))
     );
     const isWD = validRounds.length < p.roundScores.length;   // desistiu em ≥1 ronda
     const nPlayed = validRounds.length;
@@ -699,7 +712,13 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     // volta ainda a decorrer (sem ser WD). O MultiRoundLeaderboard só classifica
     // os completos — sem a 2ª condição, quem ia a meio da última volta entrava
     // na classificação com um total mais baixo e ficava em 1º.
-    const incomplete = !isWD && (nPlayed < playedRounds || validRounds.some(isRoundInProgress));
+    //
+    // 10/11/2026 (J7): quando a prova junta categorias com MENOS voltas (os
+    // Sub-12 de um Zonal jogam 1, os outros 2), o jogador traz as voltas da SUA
+    // categoria em `_roundsExpected` — é com essas que se compara, não com o
+    // máximo da prova (os 15 Sub-12 ficavam todos «incompletos», sem lugar).
+    const expected = expectedRoundsOf(p, playedRounds);
+    const incomplete = !isWD && (nPlayed < expected || validRounds.some(isRoundInProgress));
 
     const gross = validRounds.reduce((s, rs) => s + rs.gross, 0);
     const parPerRound = p.parTotal || (p.roundScores[0]?.pars.reduce((a, b) => a + b, 0) || 0);
@@ -724,7 +743,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
   const countByN: Record<number, number> = {};
   for (const p of totalPlayers) {
     const n = (p as any)._roundsPlayed as number;
-    if (!(p as any)._wd && n > 0 && n < playedRounds) {
+    if (!(p as any)._wd && n > 0 && n < expectedRoundsOf(p, playedRounds)) {
       countByN[n] = (countByN[n] || 0) + 1;
     }
   }
@@ -735,7 +754,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
   // cada clube escolhe quem joga cada dia; 11 jogaram só o 2.º dia e apareciam
   // como «CUT»). Havendo voltas saltadas, a prova não tem cut (22/10/2026).
   const skipped = t.players.some((p) => {
-    const played = (p.roundScores ?? []).filter((rs) => rs.gross < 900).map((rs) => rs.round).filter((r): r is number => typeof r === "number");
+    const played = (p.roundScores ?? []).filter((rs) => !isNoCardGross(rs.gross)).map((rs) => rs.round).filter((r): r is number => typeof r === "number");
     return played.length > 0 && Math.max(...played) > played.length;
   });
   // ⚠ Com uma ronda AINDA A DECORRER não se procura cut nenhum: quem não saiu
@@ -758,7 +777,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
   if (cutN > 0) {
     const firstN = (p: Player) => (p.roundScores ?? [])
       .filter((rs) => typeof rs.round !== "number" || rs.round <= cutN)
-      .reduce((s, rs) => s + (rs.gross < 900 ? rs.gross : 0), 0);
+      .reduce((s, rs) => s + (isNoCardGross(rs.gross) ? 0 : rs.gross), 0);
     const stopped = totalPlayers.filter((p) => (p as any)._incomplete && !p._wd && (p as any)._roundsPlayed === cutN).map(firstN);
     const went = totalPlayers.filter((p) => !p._wd && ((p as any)._roundsPlayed ?? 0) > cutN).map(firstN);
     if (stopped.length && went.length && Math.max(...went) > Math.min(...stopped)) cutN = -1;
@@ -775,14 +794,20 @@ export function expandMultiRound(t: Tournament): Tournament[] {
   }
 
   // Completos ordenados por gross; cut no meio; incompletos no fim; WD no fim de tudo
-  const complete   = totalPlayers.filter(p => !(p as any)._incomplete && !p._wd && !(p as any)._cut).sort((a, b) => numGross(a) - numGross(b));
+  // Quem tem mais voltas primeiro (categorias com menos voltas ficam depois),
+  // e dentro do mesmo nº de voltas pelo gross.
+  const complete   = totalPlayers.filter(p => !(p as any)._incomplete && !p._wd && !(p as any)._cut)
+    .sort((a, b) => (((b as any)._roundsPlayed ?? 0) - ((a as any)._roundsPlayed ?? 0)) || (numGross(a) - numGross(b)));
   const cutPlayers = totalPlayers.filter(p =>  (p as any)._cut && !p._wd).sort((a, b) => numGross(a) - numGross(b));
   const wdPlayers  = totalPlayers.filter(p => p._wd);
   const incomplete = totalPlayers.filter(p =>  (p as any)._incomplete && !p._wd).sort((a, b) => numGross(a) - numGross(b));
-  // Positions only for complete players
-  let pos = 1;
+  // Positions only for complete players — os lugares contam-se entre quem jogou
+  // o MESMO nº de voltas (um total de 1 volta não se compara com um de 2).
+  let pos = 1, inicio = 0;
   complete.forEach((p, i) => {
-    if (i > 0 && numGross(p) !== numGross(complete[i - 1])) pos = i + 1;
+    const prev = complete[i - 1];
+    if (i > 0 && ((p as any)._roundsPlayed ?? 0) !== ((prev as any)._roundsPlayed ?? 0)) { inicio = i; pos = 1; }
+    else if (i > 0 && numGross(p) !== numGross(prev)) pos = i - inicio + 1;
     (p as any)._pos = pos;
   });
   cutPlayers.forEach(p => { (p as any)._pos = null; });
@@ -809,7 +834,7 @@ function mergeTournamentRounds(rounds: Tournament[]): Tournament {
 
   sorted.forEach((t, ri) => {
     for (const p of t.players) {
-      const key = p.fedCode || ("name:" + p.name.toLowerCase().trim());
+      const key = playerKey(p.fedCode, p.name);   // federado; senão o nome (regra única)
       const rs: RoundScore = {
         round: ri + 1,
         gross: numGross(p),
@@ -829,19 +854,25 @@ function mergeTournamentRounds(rounds: Tournament[]): Tournament {
     }
   });
 
-  const refParTotal = sorted[0].players[0]?.parTotal
-    || sorted[0].players[0]?.par?.reduce((a, b) => a + b, 0)
-    || 72;
+  // Par de uma volta: o do PRÓPRIO jogador; quem não o traz usa o do primeiro
+  // jogador que o tenha; sem par em ninguém a prova fica SEM PAR — nunca se
+  // inventa (10/11/2026, I13: quando o 1.º jogador não trazia par punha-se 72).
+  const soma = (a: number[] | undefined) => (a || []).reduce((x, y) => x + (y || 0), 0);
+  const parDe = (p: Player): number => p.parTotal || soma(p.par) || soma(p.roundScores?.[0]?.pars) || 0;
+  const refParTotal = sorted.flatMap(t => t.players).map(parDe).find(v => v > 0) ?? 0;
 
   const players: Player[] = [];
   for (const { player, rsArr } of byKey.values()) {
     const grossTotal = rsArr.reduce((s, r) => s + r.gross, 0);
+    const par1 = parDe(player) || refParTotal;
     players.push({
       ...player,
       roundScores: rsArr,
       grossTotal,
-      toPar: grossTotal - refParTotal * rsArr.length,
-      parTotal: refParTotal,
+      // ±par pelo par de CADA volta; null sem par ou com uma volta «sem cartão»
+      // (o total ≥ 900 não é resultado).
+      toPar: toParPlayed(grossTotal, rsArr.map(r => soma(r.pars) || par1)),
+      parTotal: par1 || undefined,
       scores: rsArr[0]?.scores,
       par:    rsArr[0]?.pars,
       si:     rsArr[0]?.si,

@@ -268,6 +268,30 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
 - Definições partilhadas vivem em `constants/`, `utils/` e `App.css`, nunca
   duplicadas por página. Filtrar e calcular nos loaders, não nos componentes.
   Sem código morto.
+- **Lógica repetida vai SEMPRE para um módulo global** (Mariana, 10/11/2026:
+  «se identificares módulos que possam ser globais em vez de repetidos em vários
+  locais, muda-os SEMPRE para módulos/componentes globais»). Os que nasceram da
+  revisão de erros de 10/11/2026 — usar, nunca reescrever:
+  classificar/ordenar por total → `utils/classificacao.ts` (`temCartao`,
+  `voltasComCartao`, `parsePos` — «T4» → 4, «CUT» → null —, `posicoesComEmpates`,
+  `classificarPorTotal`: só quem tem TODAS as voltas e cartão); quem é o jogador
+  (federado, senão nome; nunca fundir homónimos) → `utils/playerKey.ts`
+  (`playerKey`, `isFedFpg`, `indexPlayers`) e `utils/chaveJogador.ts`; ligar um
+  nome a um federado só com clube/idade a confirmar → `utils/federadoPorNome.ts`;
+  o Manuel numa prova → `findManuelNaProva` (`constants/manuel.ts`; nunca o pai);
+  sexo da prova pelo rótulo → `sexoDaProva` (`utils/tournamentSex.ts`); ±par só
+  dos buracos jogados → `utils/parJogado.ts`; buracos/cartão/±par de uma volta
+  (9 vs 18, USKids) → `utils/voltasJogadas.ts`; ±par pelas voltas que o jogador
+  jogou → `toParPlayed`/`toParByRounds` (`data/intlCommon.ts`); escolha de tee
+  por tee + sexo (há pares M/F com o mesmo `teeId`) → `utils/teeChoice.ts`;
+  contas com dias → `utils/dias.ts`; «Fev 2025» ordenável → `utils/mesAno.ts`;
+  código de prova de fora (wjgc/doral/eowagr…) → `utils/extraTid.ts`; link da
+  signupanytime → `utils/signupanytime.ts`; destaque do melhor valor →
+  `utils/melhorValor.ts`; rank por z-score → `utils/zRank.ts`; clube que é um
+  país → `utils/clubePais.ts`; selo do lugar → `ui/PosMedal.tsx`; cache de uma
+  promessa que NÃO guarda a falha → `memoAsync` (`data/fetchCache.ts`); eclético
+  de uma volta (a metade certa nas de 9) → `eclecticForRound`
+  (`data/playerDataLoader.ts`).
 
 ### Contas de handicap — um só sítio: `src/utils/whsCalc.ts`
 - SD, Course/Playing Handicap, Net Double Bogey/AGS, Expected SD de 9 buracos,

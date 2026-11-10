@@ -13,7 +13,7 @@
  */
 
 import { MONTHS_PT } from "../utils/format";
-import { cachedFetchJson } from "../data/fetchCache";
+import { cachedFetchJson, memoAsync } from "../data/fetchCache";
 import { normPaisDisplay } from "../utils/flagUtils";
 import { normName } from "../utils/normName";
 import { legacyTid, toAutoResult, keepBetter, type AutoTournResult } from "./kidsTid";
@@ -150,7 +150,6 @@ export const ffgolfTournNames: Map<string, {
 
 const _scorecards: Map<string, AutoScorecard[]> = new Map();
 let _loadedFiles: KidsFileMeta[] = [];
-let _autoRivalsCache: Promise<AutoRivalPlayer[]> | null = null;
 
 export function getScorecards(playerName: string): AutoScorecard[] {
   const key = normName(playerName);
@@ -252,25 +251,51 @@ function ptDate(iso: string | null | undefined): string {
 // Loader principal
 // ═════════════════════════════════════════════════════════════════════
 
+/** Fontes cujo nome/data dos torneios vive num mapa próprio (`uskTournNames`,
+ *  `fpgTournNames`, `ffgolfTournNames`); as outras vão para o `extraTidMeta`. */
+const FONTES_COM_MAPA = new Set(["uskids", "rfeg", "fpg", "ffgolf"]);
+
+/** Houve uma falha PASSAGEIRA (rede, HTTP ≥ 500) na última carga do canónico —
+ *  um 404 não conta (o ficheiro não existe; tentar outra vez não muda nada). */
+let _falhaPassageira = false;
+
 async function fetchJson(path: string): Promise<unknown> {
-  const data = await cachedFetchJson(path);
+  let data: unknown;
+  try { data = await cachedFetchJson(path); } catch (e) { _falhaPassageira = true; throw e; }
   if (data === null) throw new Error(`Ficheiro não encontrado: ${path}`);
   return data;
 }
 
-export async function buildAutoRivals(
+/** Field de um tid. Dois flights com o mesmo tid (flights A/B dos Mundiais
+ *  USKids: Boys 10 de 2023 = 124 + 99) → fica o MAIOR, o do flight principal;
+ *  antes ficava o último (99). O field certo de cada jogador vai no resultado
+ *  dele (`r[tid].fs`). 10/11/2026 (I7). */
+function guardaField(tid: string, fieldSize: number | null | undefined): void {
+  if (fieldSize && fieldSize > (uskFieldSizes.get(tid) ?? 0)) uskFieldSizes.set(tid, fieldSize);
+}
+
+/* 10/11/2026 (I10): `memoAsync` — se o canónico falhar por uma falha passageira
+ * (502, rede), o resultado (vazio ou parcial) entrega-se mas NÃO fica guardado:
+ * a chamada seguinte carrega outra vez. Antes ficava «0 juniors» até recarregar. */
+const _autoRivals = memoAsync(
+  (onProgress?: (p: LoadProgress) => void, onUpdate?: (players: AutoRivalPlayer[]) => void) =>
+    _buildAutoRivalsInternal(onProgress, onUpdate),
+  { keep: () => !_falhaPassageira },
+);
+
+export function buildAutoRivals(
   onProgress?: (p: LoadProgress) => void,
   opts?: { force?: boolean; onUpdate?: (players: AutoRivalPlayer[]) => void; ageGroups?: string[] }
 ): Promise<AutoRivalPlayer[]> {
-  if (!opts?.force && _autoRivalsCache) return _autoRivalsCache;
-  _autoRivalsCache = _buildAutoRivalsInternal(onProgress, opts?.onUpdate);
-  return _autoRivalsCache;
+  if (opts?.force) _autoRivals.reset();
+  return _autoRivals(onProgress, opts?.onUpdate);
 }
 
 async function _buildAutoRivalsInternal(
   onProgress?: (p: LoadProgress) => void,
   onUpdate?: (players: AutoRivalPlayer[]) => void
 ): Promise<AutoRivalPlayer[]> {
+  _falhaPassageira = false;
   _scorecards.clear();
   uskTournNames.clear();
   uskFieldSizes.clear();
@@ -342,7 +367,7 @@ async function _buildAutoRivalsInternal(
             dateExact: t.date || "",
           });
         }
-        if (f.fieldSize) uskFieldSizes.set(tid, f.fieldSize);
+        guardaField(tid, f.fieldSize);
       }
       // RFEG: populamos uskTournNames com tid (e.g. "nc61067_alevín") porque
       // o KIDSPage faz lookup partilhado nesse map para tids "nc"/"lgs".
@@ -353,7 +378,7 @@ async function _buildAutoRivalsInternal(
           date: ptDate(t.date),
           dateExact: t.date || "",
         });
-        if (f.fieldSize) uskFieldSizes.set(tid, f.fieldSize);
+        guardaField(tid, f.fieldSize);
       }
       if (t.sourceId === "fpg" && t.name) {
         fpgTournNames.set(tid, {
@@ -369,7 +394,10 @@ async function _buildAutoRivalsInternal(
           ccode: t.sourceKey ? t.sourceKey.split("-")[0] : undefined,
         });
       }
-      if ((t.sourceId === "wjgc" || t.sourceId === "doral" || t.sourceId === "eowagr") && !extraTidMeta.has(tid)) {
+      // Todas as fontes sem mapa próprio (10/11/2026, G3): antes só wjgc/doral/
+      // eowagr — as colunas da Tabela global das outras (Faldo Madeira, FSGA,
+      // GolfBox…) ficavam com o código interno («faldomadeira-faldomadeira_2026»).
+      if (!FONTES_COM_MAPA.has(t.sourceId) && !extraTidMeta.has(tid)) {
         extraTidMeta.set(tid, {
           name: t.name || tid,
           short: shortNameOf(t.name || tid),
@@ -495,17 +523,14 @@ interface ScoutLite {
   players: Record<string, { d?: string; p?: string; x?: Record<string, [number | "WD" | null, number | null, number | null, number[], string, number]> }>;
 }
 
-let _extraRivalsCache: Promise<AutoRivalPlayer[]> | null = null;
-
 /** Os rivais que os Próximos torneios precisam — os resultados WJGC/Doral/EOWAGR
  *  e a data de nascimento — a partir dos resumos do agregador
  *  (juniors-links.json + juniors-scout.json, ~6 MB), em vez da base inteira
  *  (~188 MB) do `buildAutoRivals`. Os tids e os resultados saem do mesmo
  *  `kidsTid.ts`, por isso são iguais aos do `buildAutoRivals`; enche também o
- *  `extraTidMeta`. */
-export function buildExtraRivals(): Promise<AutoRivalPlayer[]> {
-  if (_extraRivalsCache) return _extraRivalsCache;
-  _extraRivalsCache = Promise.all([
+ *  `extraTidMeta`. Uma falha não fica guardada (`memoAsync`). */
+export const buildExtraRivals: () => Promise<AutoRivalPlayer[]> = memoAsync(() =>
+  Promise.all([
     cachedFetchJson<LinksFile>("/data/juniors-links.json"),
     cachedFetchJson<ScoutLite>("/data/juniors-scout.json"),
   ]).then(([links, scout]) => {
@@ -524,7 +549,4 @@ export function buildExtraRivals(): Promise<AutoRivalPlayer[]> {
       players.push(p);
     }
     return players;
-  });
-  _extraRivalsCache.catch(() => { _extraRivalsCache = null; });
-  return _extraRivalsCache;
-}
+  }));

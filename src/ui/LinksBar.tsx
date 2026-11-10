@@ -20,6 +20,7 @@ function buildLinkGroups(links: Record<string, string>, escalao?: string | null)
   const grouped: Record<string, { name: string; url: string }[]> = {};
 
   for (const [key, url] of Object.entries(links)) {
+    if (typeof url !== "string" || !/^https?:/.test(url)) continue;
     const grp = GROUP_ORDER.find(g => key.includes(g)) || "outro";
     if (!grouped[grp]) grouped[grp] = [];
     grouped[grp].push({ name: LABELS[key] || key, url });
@@ -35,7 +36,9 @@ function buildLinkGroups(links: Record<string, string>, escalao?: string | null)
     ? GROUP_ORDER.filter(g => g === "wagr" || esc.includes(g))
     : GROUP_ORDER;
 
-  return filteredOrder
+  // «Outros» (links cuja chave não diz o escalão) no fim, sempre (10/11/2026:
+  // o grupo era montado e rotulado mas nunca chegava a ser desenhado).
+  return [...filteredOrder, "outro"]
     .filter(g => grouped[g]?.length)
     .map(g => ({
       label: GROUPLABELS[g] || g,

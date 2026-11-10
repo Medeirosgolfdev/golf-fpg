@@ -21,8 +21,9 @@ export default function MetricsGrid({ data, junior, filterTids }: Props) {
   const total = filterTids
     ? junior.tournamentIds.filter((tid) => filterTids.has(tid)).length
     : junior.tournamentIds.length;
-  const wins = countWins(junior, data.tournamentById);
-  const top3 = countTop3(junior, data.tournamentById);
+  // Com o MESMO filtro de circuito dos torneios (10/11/2026): senão a taxa passava de 100 %.
+  const wins = countWins(junior, data.tournamentById, undefined, filterTids);
+  const top3 = countTop3(junior, data.tournamentById, undefined, filterTids);
   const stats = computeRoundStats(junior, data.tournamentById, filterTids);
 
   const winsPct = total > 0 ? Math.round((wins / total) * 100) : 0;

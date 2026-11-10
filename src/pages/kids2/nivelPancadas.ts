@@ -25,6 +25,8 @@ export interface NivelRonda { round: number; gross?: number | null; strokes?: nu
 export interface NivelResultado { juniorId: string; rounds?: NivelRonda[] }
 export interface NivelFlight {
   flightKey: string; label: string; par?: number[]; metros?: number; fieldSize?: number | null;
+  /** Jardas por buraco (as do canónico): dizem quantos buracos o `metros` soma. */
+  yards?: number[];
   results: NivelResultado[];
 }
 export interface NivelTorneio {
@@ -83,6 +85,31 @@ interface Volta { lab: string; src: string; fs: number; metros: number | null }
 /** Faixa do tamanho do field para o «esperado» da volta. */
 const faixa = (fs: number) => (fs <= 3 ? "1-3" : fs <= 6 ? "4-6" : fs <= 12 ? "7-12" : fs <= 30 ? "13-30" : fs <= 80 ? "31-80" : "81+");
 
+/**
+ * Quem aparece em DOIS flights do mesmo torneio (condados ingleses: «Boys» e
+ * «Boys Geral») jogou cada volta uma só vez (10/11/2026: contava a dobrar).
+ * Devolve, só para essas voltas repetidas (`junior|volta`), o flight onde contam:
+ * o de field maior (o que melhor mede a dificuldade); empate → o primeiro.
+ */
+function flightDasVoltasRepetidas(flights: NivelFlight[]): Map<string, NivelFlight> {
+  const primeiro = new Map<string, NivelFlight>();
+  const repetidas = new Map<string, NivelFlight>();
+  for (const f of flights) {
+    for (const r of f.results) {
+      for (const rd of r.rounds || []) {
+        if (typeof rd.gross !== "number") continue;
+        const k = `${r.juniorId}|${rd.round}`;
+        const ant = primeiro.get(k);
+        if (!ant) { primeiro.set(k, f); continue; }
+        if (ant === f) continue;
+        const dono = repetidas.get(k) ?? ant;
+        repetidas.set(k, f.results.length > dono.results.length ? f : dono);
+      }
+    }
+  }
+  return repetidas;
+}
+
 /** As observações (jogador × volta) até `diasDificuldade` antes de `hoje`. */
 function observacoes(torneios: Iterable<NivelTorneio>, hoje: number, dias: number) {
   const obs: Obs[] = [];
@@ -93,16 +120,25 @@ function observacoes(torneios: Iterable<NivelTorneio>, hoje: number, dias: numbe
     if (!data) continue;
     const idade = (hoje - Date.parse(data)) / DIA;
     if (!(idade >= 0 && idade <= dias)) continue;
-    for (const f of t.flights) {
-      if (FORMATO_EQUIPA_RE.test(`${t.name} ${f.label}`) || PITCH_PUTT_RE.test(`${t.name} ${f.label}`)) continue;
+    const flights = t.flights.filter((f) => !FORMATO_EQUIPA_RE.test(`${t.name} ${f.label}`) && !PITCH_PUTT_RE.test(`${t.name} ${f.label}`));
+    const repetidas = flights.length > 1 ? flightDasVoltasRepetidas(flights) : null;
+    for (const f of flights) {
       const par = f.par || [];
       const np = par.filter((p) => p > 0).length;
       const parTot = par.reduce((a, b) => a + (b || 0), 0);
-      const metrosFlight = f.metros ? ((np || 18) === 9 ? f.metros * 2 : f.metros) : null;
+      // Metros do flight em equivalente de 18 buracos. O `metros` soma só os buracos
+      // com jardas: quantos são diz-se pelas jardas, não pelo par (10/11/2026: flights
+      // com par nos 18 mas jardas só dos 9 jogados ficavam com metade dos metros e
+      // eram cortados como pitch & putt). Sem jardas, vale o par como antes.
+      const nJardas = (f.yards || []).filter((y) => y > 0).length;
+      const metrosDeNove = nJardas > 0 ? nJardas <= 10 : (np || 18) === 9;
+      const metrosFlight = f.metros ? (metrosDeNove ? f.metros * 2 : f.metros) : null;
       for (const r of f.results) {
         for (const rd of r.rounds || []) {
           const g = rd.gross;
           if (typeof g !== "number" || g <= 0 || g >= 300) continue;
+          const dono = repetidas?.get(`${r.juniorId}|${rd.round}`);
+          if (dono && dono !== f) continue;
           // `strokes: []` (ou só zeros) = volta só com o total (Áustria: só a
           // última volta traz buraco a buraco) — conta pelos buracos do par.
           const jogados = Array.isArray(rd.strokes) ? rd.strokes.filter((x) => x > 0).length : 0;

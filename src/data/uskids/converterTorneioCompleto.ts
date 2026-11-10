@@ -11,6 +11,19 @@
 
 import type { TorneioResult, EscalaoResult, RondaResult, RondaJogador } from '../../ui/uskidsTypes';
 
+/**
+ * Jogador de uma volta com o cartão do SEU flight, quando não é o do escalão
+ * (10/11/2026, J12). Nos Mundiais o escalão divide-se em flights que jogam em
+ * campos diferentes (World Championship 2023 Boys 10: Legacy Golf Links e Quail
+ * Ridge); a `RondaResult` só leva UM par/metros (os do 1.º flight). Quem jogou
+ * noutro cartão traz aqui o seu — ler `j.par ?? ronda.par`, `j.metros ??
+ * ronda.metros`, `j.campo ?? escalao.campo`.
+ */
+export type RondaJogadorComCampo = RondaJogador & { par?: number[]; metros?: number[]; campo?: string };
+
+const mesmaLista = (a: readonly number[] | undefined, b: readonly number[] | undefined): boolean =>
+  (a?.length ?? 0) === (b?.length ?? 0) && (a ?? []).every((x, i) => x === b![i]);
+
 export function converterTorneioCompleto(raw: any): TorneioResult | null {
   // Detectar formato pela presença de signupanytime_t (novo) vs t+meta (antigo)
   const isNovoFormato = !!raw?.signupanytime_t;
@@ -77,6 +90,8 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
       // com 18 entries (yards completos do percurso), mas só as 9 jogadas têm `par > 0`.
       // Filtrar AMBOS pelos índices onde par > 0 para garantir alinhamento.
       const courseInfo: Record<string, any> = flight.course_info ?? {};
+      // O cartão DESTE flight em cada volta (para quem não joga o do escalão).
+      const cartaoDoFlight = new Map<number, { par: number[]; metros?: number[]; campo?: string }>();
       for (const [rKey, rInfo] of Object.entries(courseInfo)) {
         const rn = parseInt(rKey.replace(/^R/, ''));
         if (isNaN(rn)) continue;
@@ -85,6 +100,14 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
         const playedIdx = holes_arr
           .map((h: any, i: number) => ((h.par ?? 0) > 0 ? i : -1))
           .filter((i: number) => i >= 0);
+        if (playedIdx.length > 0) {
+          const m = playedIdx.map((i: number) => Math.round((holes_arr[i].yards ?? 0) * 0.9144));
+          cartaoDoFlight.set(rn, {
+            par: playedIdx.map((i: number) => holes_arr[i].par as number),
+            ...(m.some((x: number) => x > 0) ? { metros: m } : {}),
+            ...(rInfo.course_name ?? rInfo.courseName ? { campo: rInfo.course_name ?? rInfo.courseName } : {}),
+          });
+        }
 
         if (!esc.parPorRonda.has(rn) && playedIdx.length > 0) {
           const par = playedIdx.map((i: number) => holes_arr[i].par as number);
@@ -116,7 +139,13 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
           if (isNaN(rn)) continue;
           const rd = rdRaw as any;
           if (!esc.roundsMap.has(rn)) esc.roundsMap.set(rn, []);
-          esc.roundsMap.get(rn)!.push({
+          // Cartão próprio só quando difere do do escalão (o do 1.º flight).
+          const fc = cartaoDoFlight.get(rn);
+          const outroCartao = !!fc && (
+            !mesmaLista(fc.par, esc.parPorRonda.get(rn))
+            || !mesmaLista(fc.metros, esc.metrosPorRonda.get(rn))
+            || (!!fc.campo && !!esc.campo && fc.campo !== esc.campo));
+          const jogador: RondaJogadorComCampo = {
             nome, pais, cidade, tee,
             pontos:     0,
             score:      rd.num_strokes ?? (rd.strokes ?? []).filter((s: number) => s > 0).reduce((a: number, b: number) => a + b, 0),
@@ -125,7 +154,9 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
             grupo:      rd.group_number ?? 0,
             strokes:    rd.strokes ?? [],
             to_par:     null,
-          });
+            ...(outroCartao ? fc : {}),
+          };
+          esc.roundsMap.get(rn)!.push(jogador);
         }
       }
     }

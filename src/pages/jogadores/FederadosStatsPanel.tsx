@@ -383,11 +383,8 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
   const binRange = hcpBinRange(bin);
 
   // isCountableHcp já exclui os placeholders (≥54/99); o range 30+ tem tecto 54.
-  const inBin = federados.filter(f =>
-    isCountableHcp(f.hcp_exact) &&
-    f.hcp_exact >= binRange.min &&
-    f.hcp_exact < binRange.max
-  );
+  // A MESMA regra da contagem das barras (`hcpBinKey`), para a lista bater com o número.
+  const inBin = federados.filter(f => isCountableHcp(f.hcp_exact) && hcpBinKey(f.hcp_exact) === bin);
   const top = inBin
     .sort((a, b) => (a.hcp_exact as number) - (b.hcp_exact as number))
     .slice(0, 15);

@@ -360,10 +360,13 @@ export function getResultInTournament(junior: Junior, tournament: Tournament): {
   return null;
 }
 
-/** `desde` (AAAA-MM-DD): só os torneios a partir dessa data (o «último ano» do Scout). */
-export function countWins(junior: Junior, tournamentById: Map<string, Tournament>, desde?: string): number {
+/** `desde` (AAAA-MM-DD): só os torneios a partir dessa data (o «último ano» do Scout).
+ *  `filterTids`: só esses torneios (o filtro de circuito da ficha — 10/11/2026: sem
+ *  ele, 10 vitórias sobre os 3 torneios filtrados davam «333% taxa»). */
+export function countWins(junior: Junior, tournamentById: Map<string, Tournament>, desde?: string, filterTids?: Set<string> | null): number {
   let wins = 0;
   for (const tid of junior.tournamentIds) {
+    if (filterTids && !filterTids.has(tid)) continue;
     const t = tournamentById.get(tid);
     if (!t || (desde && (t.date || t.startDate || "") < desde)) continue;
     for (const f of t.flights) {
@@ -374,9 +377,10 @@ export function countWins(junior: Junior, tournamentById: Map<string, Tournament
   return wins;
 }
 
-export function countTop3(junior: Junior, tournamentById: Map<string, Tournament>, desde?: string): number {
+export function countTop3(junior: Junior, tournamentById: Map<string, Tournament>, desde?: string, filterTids?: Set<string> | null): number {
   let n = 0;
   for (const tid of junior.tournamentIds) {
+    if (filterTids && !filterTids.has(tid)) continue;
     const t = tournamentById.get(tid);
     if (!t || (desde && (t.date || t.startDate || "") < desde)) continue;
     for (const f of t.flights) {
@@ -679,7 +683,9 @@ export function bestRoundGross(junior: Junior, tournamentById: Map<string, Tourn
       const r = f.results.find((x) => x.juniorId === junior.id);
       if (!r?.rounds) continue;
       for (const rd of r.rounds) {
-        if (typeof rd.gross !== "number") continue;
+        // Sem gross, a zeros ou «sem cartão» (≥ 900) não é volta. (Sem imports
+        // neste ficheiro — a regra é a do `temCartao`, utils/classificacao.)
+        if (typeof rd.gross !== "number" || rd.gross <= 0 || rd.gross >= 900) continue;
         if (!best || rd.gross < best.gross) best = { gross: rd.gross, tournamentId: tid, round: rd.round };
       }
     }

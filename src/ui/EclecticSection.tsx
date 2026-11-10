@@ -16,6 +16,9 @@ import { Tint } from "./DataStyle";
 import { toneClass, fmtStb, fmtSdVal } from "../utils/scoreDisplay";
 import ExpandArrow from "./ExpandArrow";
 
+/** Chave da variante de um eclético: tee + nº de buracos (+ a metade, nas de 9). */
+const chaveVariante = (ec: EclecticEntry) => `${ec.teeKey}|${ec.holeCount}|${ec.holeCount === 9 ? (ec.nine ?? "") : ""}`;
+
 export function EclecticSection({ ecList, ecDet, courseRounds, holesData, activeTee, onSelectTee }: {
   ecList: EclecticEntry[]; ecDet: Record<string, EclecticEntry>;
   courseRounds: RoundData[]; holesData: Record<string, HoleScores>;
@@ -47,7 +50,8 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
       const g = typeof r.gross === "number" ? r.gross : null;
       if (g == null || g <= 0) continue;
       const rhc = r.holeCount || (h.g.filter(x => x != null && Number(x) > 0).length <= 9 ? 9 : 18);
-      const key = `${tk}|${rhc}`;
+      // Nas voltas de 9, cada METADE (1–9 / 10–18) é uma variante à parte (10/11/2026, I4).
+      const key = `${tk}|${rhc}|${rhc === 9 ? (h.nine ?? "") : ""}`;
       const cur = m.get(key) || { n: 0, best: null, sum: 0 };
       cur.n++; cur.sum += g; cur.best = cur.best == null ? g : Math.min(cur.best, g);
       m.set(key, cur);
@@ -59,16 +63,17 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
   // vai o que era a tabela «Resumo por tee»: voltas, eclético, melhor e média
   // de cada variante (18H e 9H).
   const sortedGroups = useMemo(() => {
-    const n = (g: EclecticEntry[]) => variantStats.get(`${g[0].teeKey}|${g[0].holeCount}`)?.n ?? 0;
+    const n = (g: EclecticEntry[]) => variantStats.get(chaveVariante(g[0]))?.n ?? 0;
     return [...teeGroups].sort((a, b) => n(b) - n(a));
   }, [teeGroups, variantStats]);
   const dots = sortedGroups.map(group => ({
     key: group[0].teeKey,
     name: group[0].teeName,
     title: [group[0].teeName, ...group.map(ec => {
-      const vs = variantStats.get(`${ec.teeKey}|${ec.holeCount}`);
+      const vs = variantStats.get(chaveVariante(ec));
       const n = vs?.n ?? 0;
-      return `${ec.holeCount}H: ${n} volta${n === 1 ? "" : "s"} · eclético ${ec.totalGross}`
+      const metade = ec.holeCount === 9 && ec.nine ? (ec.nine === "B" ? " (10–18)" : " (1–9)") : "";
+      return `${ec.holeCount}H${metade}: ${n} volta${n === 1 ? "" : "s"} · eclético ${ec.totalGross}`
         + (vs?.best != null ? ` · melhor ${vs.best} · média ${(vs.sum / vs.n).toFixed(1)}` : "");
     })].join("\n"),
   }));
@@ -83,17 +88,34 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
   const is9 = hc === 9;
   const hx = getTeeHex(primary.teeName), fg = textOnColor(hx);
 
-  // Todas as voltas deste tee (qualquer nº de buracos). As de 9 buracos
-  // aparecem com o front 9 preenchido e o restante vazio.
+  // Uma volta de 9 buracos traz sempre 9 posições, seja 1–9 ou 10–18: no quadro
+  // de 18 as «B» vão para os buracos 10–18; no quadro de 9 só entra a mesma
+  // metade (das voltas de 18 tira-se a metade certa). Antes ia tudo para o 1–9
+  // e o «melhor do buraco 1» podia vir do buraco 10 (10/11/2026, I4).
+  const metadeDoQuadro = is9 ? (primary.nine ?? null) : null;
+  const naGrelha = (r: RoundData, arr: (number | null)[] | undefined): (number | null)[] => {
+    const a = arr || [];
+    const nine = holesData[r.scoreId]?.nine;
+    if (!is9) return nine === "B" && a.length <= 9 ? [...new Array<number | null>(9).fill(null), ...a] : a;
+    return metadeDoQuadro === "B" && a.length >= 18 ? a.slice(9, 18) : a;
+  };
+
+  // Todas as voltas deste tee (qualquer nº de buracos), menos as de 9 buracos
+  // da OUTRA metade quando o quadro é de 9.
   const teeRounds = courseRounds
     .filter(r => normKey(r.tee || "") === primary.teeKey && holesData[r.scoreId]?.g)
+    .filter(r => {
+      const h = holesData[r.scoreId]!;
+      const de9 = (r.holeCount || h.hc) === 9;
+      return !is9 || !de9 || !metadeDoQuadro || !h.nine || h.nine === metadeDoQuadro;
+    })
     .sort((a, b) => b.dateSort - a.dateSort);
 
   // Distância por buraco: primeiro valor não-nulo entre as rondas deste tee
   // (todas as rondas do mesmo tee/holeCount partilham a mesma marcação).
   const metersArr: (number | null)[] = new Array(18).fill(null);
   for (const r of teeRounds) {
-    const m = holesData[r.scoreId]?.m;
+    const m = holesData[r.scoreId]?.m ? naGrelha(r, holesData[r.scoreId]!.m) : null;
     if (!m) continue;
     for (let i = 0; i < 18; i++) {
       if (metersArr[i] == null && m[i] != null && Number(m[i]) > 0) metersArr[i] = Number(m[i]);
@@ -105,7 +127,7 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
   // front 9 das voltas de 9 buracos).
   const ecBest: (number | null)[] = new Array(18).fill(null);
   for (const r of teeRounds) {
-    const g = holesData[r.scoreId]?.g;
+    const g = holesData[r.scoreId]?.g ? naGrelha(r, holesData[r.scoreId]!.g) : null;
     if (!g) continue;
     for (let i = 0; i < 18; i++) {
       const v = g[i];
@@ -167,8 +189,8 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
             <thead>
               <tr>
                 <th className="row-label col-w60">Buraco</th>
-                {Array.from({ length: Math.min(hc, 9) }, (_, i) => <th key={i + 1}>{i + 1}</th>)}
-                <th className="col-out">Out</th>
+                {Array.from({ length: Math.min(hc, 9) }, (_, i) => <th key={i + 1}>{i + 1 + (metadeDoQuadro === "B" ? 9 : 0)}</th>)}
+                <th className="col-out">{metadeDoQuadro === "B" ? "In" : "Out"}</th>
                 {!is9 && Array.from({ length: 9 }, (_, i) => <th key={i + 10}>{i + 10}</th>)}
                 {!is9 && <th className="col-in">In</th>}
                 <th className="col-total">Total</th>
@@ -229,7 +251,7 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
                 })()}
               </tr>
               {aberto && teeRounds.map(tr => {
-                const trG = holesData[tr.scoreId]!.g;
+                const trG = naGrelha(tr, holesData[tr.scoreId]!.g);
                 const trDate = tr.date ? tr.date.substring(0, 5).replace("-", "/") : "";
                 const sdInfo = fmtSdVal(tr);
                 const trDist = distOf(trG);

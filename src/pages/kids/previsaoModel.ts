@@ -13,6 +13,8 @@ import type { PlayerPageData } from "../../data/playerDataLoader";
 import type { Tee } from "../../data/types";
 import { strokesOnHole } from "../../utils/whsCalc";
 import { firstShotClub } from "../../utils/clubScale";
+import { classificarPorTotal, temCartao } from "../../utils/classificacao";
+import { buracosDoFlight } from "../../utils/voltasJogadas";
 
 // ── 1. Perfil do Manuel por (par, distancia) ─────────────────────────────
 export interface HoleProfile {
@@ -364,21 +366,23 @@ export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite |
     if (meta.name.replace(/\s+\d{4}\s*$/, "").trim() !== baseName) continue;
     const ym = meta.name.match(/(\d{4})/);
     if (!ym) continue;
-    const hpr = meta.holesPerRound || 18;
+    const par = meta.byEscalao?.[escalaoNome]?.par || meta.par || null;
+    const doEscalao = Object.values(mh.jogadores).map((pl) => pl.torneios[tcode]).filter((t) => t && t.ageGroup === escalaoNome);
+    // Buracos por volta do ESCALÃO, pelas voltas jogadas (10/11/2026): a ficha do
+    // torneio diz 18 mas o Boys 8 e o 7 & Under jogam 9 — com o mínimo de 55
+    // pancadas todas as voltas eram deitadas fora («Sem histórico»).
+    const hpr = buracosDoFlight(doEscalao.flatMap((t) => Object.values(t.rounds || {})), par, meta.holesPerRound);
     const is9 = hpr === 9;
     const minGross = is9 ? MIN_GROSS_9 : MIN_GROSS_18;
-    const par = meta.byEscalao?.[escalaoNome]?.par || meta.par || null;
     const parPerRound = Array.isArray(par) ? par.slice(0, hpr).reduce((a, b) => a + (b || 0), 0) : 0;
 
     // totais por jogador (so quem completou todas as rondas da edicao)
     let nRoundsMax = 0;
     const players: number[][] = [];
-    for (const pl of Object.values(mh.jogadores)) {
-      const t = pl.torneios[tcode];
-      if (!t || t.ageGroup !== escalaoNome) continue;
+    for (const t of doEscalao) {
       const rs: number[] = [];
       for (const r of Object.values(t.rounds || {})) {
-        if (!r || r.gross < minGross) continue;
+        if (!r || r.gross < minGross || !temCartao(r.gross)) continue;
         rs.push(r.gross);
       }
       if (rs.length === 0) continue;
@@ -506,8 +510,9 @@ export interface TopFieldStats {
   roundKeys: string[];
   par: number[];
   players: string[];
-  /** [holeIdx][roundIdx] = { avg, scores[] } do top-N na edição anterior. */
-  holes: { avg: number | null; scores: number[] }[][];
+  /** [holeIdx][roundIdx] = { avg, scores[], nomes[] } do top-N na edição anterior
+   *  (`nomes[j]` é quem fez `scores[j]` — quem não tem pancadas nesse buraco não entra). */
+  holes: { avg: number | null; scores: number[]; nomes: string[] }[][];
 }
 
 /** Comportamento do TOP-N (por total) na edição mais recente do MESMO
@@ -550,20 +555,24 @@ export function topFieldHoleStats(
     let tot = 0, any = false;
     for (const [rn, r] of Object.entries(t.rounds || {})) {
       const st = r.strokes || [];
-      if (st.some(x => x > 0)) { rounds[rn] = st; tot += (r.gross || st.reduce((a, b) => a + (b || 0), 0)); any = true; }
+      const g = r.gross || st.reduce((a, b) => a + (b > 0 ? b : 0), 0);
+      if (st.some(x => x > 0) && temCartao(g)) { rounds[rn] = st; tot += g; any = true; }
     }
     if (any) players.push({ name: p.name, tot, rounds });
   }
-  players.sort((a, b) => a.tot - b.tot);
-  const top = players.slice(0, topN);
+  // Top-N só entre quem jogou TODAS as voltas (10/11/2026): por total simples,
+  // quem só jogou 1 volta (77) ficava à frente do vencedor (3 voltas).
+  const top = classificarPorTotal(players, p => Object.keys(p.rounds).length, p => p.tot).ordenados.slice(0, topN);
   const roundKeys = [...new Set(top.flatMap(p => Object.keys(p.rounds)))].sort((a, b) => Number(a) - Number(b));
 
-  const holes: { avg: number | null; scores: number[] }[][] = [];
+  const holes: TopFieldStats["holes"] = [];
   for (let i = 0; i < 18; i++) {
     holes.push(roundKeys.map(rk => {
-      const sc = top.map(p => p.rounds[rk]?.[i]).filter((x): x is number => typeof x === "number" && x > 0);
+      // Pancadas e nome lado a lado: filtrar só as pancadas desalinhava os nomes do hover.
+      const quem = top.map(p => ({ nome: p.name, sc: p.rounds[rk]?.[i] })).filter((x): x is { nome: string; sc: number } => typeof x.sc === "number" && x.sc > 0);
+      const sc = quem.map(x => x.sc);
       const avg = sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null;
-      return { avg, scores: sc };
+      return { avg, scores: sc, nomes: quem.map(x => x.nome) };
     }));
   }
   return { year: String(best.year), roundKeys, par, players: top.map(p => p.name), holes };

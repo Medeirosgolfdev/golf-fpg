@@ -8,6 +8,7 @@ import {
 } from "../utils/format";
 import { FL } from "../utils/flagUtils";
 import { meanArr } from "../utils/mathUtils";
+import { isoDeMesAno } from "../utils/mesAno";
 import { scClass, toParClass, tpColorDark } from "../utils/scoreDisplay";
 import ToPar from "./ToPar";
 import KpiCard from "./KpiCard";
@@ -306,7 +307,8 @@ export default function FieldPlayerDetail({
         case "name":
           return mul * a.short.localeCompare(b.short);
         case "date":
-          return mul * a.date.localeCompare(b.date);
+          // «Fev 2025» não se ordena como texto (10/11/2026: saía por ordem alfabética do mês).
+          return mul * isoDeMesAno(a.date).localeCompare(isoDeMesAno(b.date));
         case "par":
           return mul * (a.par - b.par);
         case "pos":

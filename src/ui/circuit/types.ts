@@ -41,6 +41,11 @@ export interface CircuitRenderFullExtras {
   pastScorecardsTab?: { key: string; label: string; content: React.ReactNode };
   seasonTab?: { key: string; label: string; content: React.ReactNode };
   repeatersTab?: { key: string; label: string; content: React.ReactNode };
+  /** Os filtros de JOGADOR ligados na barra (🏆 Top 10, ✦ Veteranos,
+   *  ↻ Regressados, ⬆ Subiram) como função — passar ao `playerFilter` do
+   *  TournamentDetail, que os aplica só às classificações (10/11/2026: nas
+   *  divisões com `renderFull` os chips não faziam nada). Nenhum ligado → ausente. */
+  playerFilter?: (t: FPGTournament) => FPGTournament;
 }
 
 /** Secções possíveis no detalhe (cada uma só aparece se tiver dados). */

@@ -9,7 +9,7 @@
  * O nome mantém-se por historial.
  */
 
-import { cachedFetchJson } from "./fetchCache";
+import { cachedFetchJson, invalidateCache, memoAsync, type MemoAsync } from "./fetchCache";
 
 // ── Tipos ──────────────────────────────────────────────────────────
 
@@ -152,7 +152,7 @@ const ADMISSIONS_SKIP_TCODES = new Set<string>([
 // ── Loader ─────────────────────────────────────────────────────────
 
 /** Por ficheiro: o completo e o só-do-Drive (`fpg-admissions-draws-drive.json`). */
-const _cache = new Map<string, FpgAdmissionsDrawsFile>();
+const _cache = new Map<string, MemoAsync<FpgAdmissionsDrawsFile>>();
 export const FPG_ADMISSIONS_URL = "/data/fpg-admissions-draws.json";
 /** Só os torneios do Drive/AQUAPOR (gerado no build, scripts/build-drive-admissions.js). */
 export const FPG_ADMISSIONS_DRIVE_URL = "/data/fpg-admissions-draws-drive.json";
@@ -195,14 +195,26 @@ function normalizePlayer(p: any): FpgAdmissionPlayer {
   };
 }
 
-export async function loadFpgAdmissionsDraws(opts: { force?: boolean; url?: string } = {}): Promise<FpgAdmissionsDrawsFile> {
+const semAdmissoes = (): FpgAdmissionsDrawsFile => ({ scrapedAt: null, total: 0, tournaments: [] });
+
+/**
+ * 10/11/2026 (I12 + I10): uma só carga por ficheiro (`memoAsync` guarda a
+ * PROMISE). Antes guardava-se o resultado só no fim: duas chamadas ao mesmo
+ * tempo (a /FPG e a /drive pedem-no em paralelo) tratavam o MESMO objecto duas
+ * vezes e os torneios só-draw do CGSS entravam em duplicado; e uma falha de
+ * rede ficava em cache como «sem inscrições» até recarregar a página.
+ */
+export function loadFpgAdmissionsDraws(opts: { force?: boolean; url?: string } = {}): Promise<FpgAdmissionsDrawsFile> {
   const url = opts.url ?? FPG_ADMISSIONS_URL;
-  const hit = _cache.get(url);
-  if (hit && !opts.force) return hit;
-  let out: FpgAdmissionsDrawsFile;
-  try {
-    const raw = await cachedFetchJson<FpgAdmissionsDrawsFile>(url);
-    if (raw) {
+  let carga = _cache.get(url);
+  if (!carga) {
+    // `completo`: os draws manuais chegaram todos. Se um falhar (502), entrega-se
+    // o que há mas não fica guardado — a chamada seguinte tenta outra vez.
+    let completo = true;
+    carga = memoAsync(async () => {
+      completo = true;
+      const raw = await cachedFetchJson<FpgAdmissionsDrawsFile>(url);
+      if (!raw) return semAdmissoes();   // 404: o ficheiro não existe
       // Filtra torneios suprimidos (ver ADMISSIONS_SKIP_TCODES). Aplicado aqui
       // ao carregar para garantir que NENHUM consumidor (sidebar, Admissões,
       // Draw, índices) os vê. O ficheiro JSON em disco mantém-se intacto.
@@ -220,21 +232,22 @@ export async function loadFpgAdmissionsDraws(opts: { force?: boolean; url?: stri
       // PDFs preenchem essa lacuna. Aplicado aqui (no carregamento) para que
       // TODOS os consumidores (FPGPage, DrawsPage, índices) os vejam, sem tocar
       // no fpg-admissions-draws.json (que o scraper regenera).
-      await mergeCgssManualDraws(raw);
-    }
-    out = raw || { scrapedAt: null, total: 0, tournaments: [] };
-  } catch {
-    out = { scrapedAt: null, total: 0, tournaments: [] };
+      completo = await mergeCgssManualDraws(raw);
+      return raw;
+    }, { fallback: semAdmissoes, keep: () => completo });
+    _cache.set(url, carga);
   }
-  _cache.set(url, out);
-  return out;
+  if (opts.force) { carga.reset(); invalidateCache(url); }
+  return carga();
 }
 
 /** Funde os draws curados do CGSS (cgss-draws-manual.json) no ficheiro de
  *  admissions/draws: preenche o `draws` vazio das entradas existentes por
- *  `${ccode}-${tcode}` e injecta torneios draw-only que ainda não existam. */
-async function mergeCgssManualDraws(raw: FpgAdmissionsDrawsFile): Promise<void> {
-  if (!Array.isArray(raw.tournaments)) return;
+ *  `${ccode}-${tcode}` e injecta torneios draw-only que ainda não existam.
+ *  Devolve false se algum dos ficheiros manuais falhou a carregar. */
+async function mergeCgssManualDraws(raw: FpgAdmissionsDrawsFile): Promise<boolean> {
+  let completo = true;
+  if (!Array.isArray(raw.tournaments)) return completo;
   const hasDraws = (t: FpgTournamentData | undefined): boolean =>
     !!t && !!t.draws && Object.keys(t.draws).length > 0;
   const byKey = new Map<string, FpgTournamentData>();
@@ -248,6 +261,7 @@ async function mergeCgssManualDraws(raw: FpgAdmissionsDrawsFile): Promise<void> 
     try {
       file = await cachedFetchJson<{ tournaments?: FpgTournamentData[] }>(url);
     } catch {
+      completo = false;
       continue;
     }
     if (!file || !Array.isArray(file.tournaments)) continue;
@@ -271,6 +285,7 @@ async function mergeCgssManualDraws(raw: FpgAdmissionsDrawsFile): Promise<void> 
       }
     }
   }
+  return completo;
 }
 
 /** Indexa os torneios por `${ccode}-${tcode}`. */

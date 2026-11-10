@@ -272,7 +272,8 @@ describe("isSeniorEscalao / coerceEscalao", () => {
 describe("hcpBinKey", () => {
   it("classifica os limites dos bins", () => {
     expect(hcpBinKey(-2)).toBe("plus");
-    expect(hcpBinKey(0)).toBe("0-5");
+    expect(hcpBinKey(0)).toBe("plus"); // scratch conta em «Scratch ou melhor (HCP ≤ 0)»
+    expect(hcpBinKey(0.1)).toBe("0-5");
     expect(hcpBinKey(4.9)).toBe("0-5");
     expect(hcpBinKey(5)).toBe("5-10");
     expect(hcpBinKey(29.9)).toBe("20-30");

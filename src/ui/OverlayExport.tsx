@@ -165,7 +165,11 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     [noHoleData, data.scores, data.par],
   );
   const manualTotal  = noHoleData ? parseInt(manualScore) || null : null;
-  const manualPar    = data.is9h ? 36 : 72;
+  // Par do «Score Total» escrito à mão: o par TOTAL real do tee (data.parTotal)
+  // ou a soma do par por buraco. Sem nenhum fica SEM par (10/11/2026: era 72/36
+  // inventado — num campo par 71, 75 pancadas saíam «+3» em vez de «+4»).
+  const parDosBuracos = data.par.reduce((a, b) => a + (b || 0), 0);
+  const manualPar: number | null = data.parTotal && data.parTotal > 0 ? data.parTotal : parDosBuracos > 0 ? parDosBuracos : null;
   const manualSD     = manualTotal !== null
     ? scoreDifferential({ score: manualTotal, cr: data.cr, slope: data.slope, is9: data.is9h, hi: data.hi })?.sd ?? null
     : null;
@@ -187,10 +191,10 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
 
   const stats = useMemo((): Stats => {
     if (!noHoleData) return calcStats(dd);
-    const sT = manualTotal ?? manualPar;
+    const sT = manualTotal ?? manualPar ?? 0;
     return {
-      pF:0, pB:0, pT:manualPar, sF:0, sB:0, sT,
-      vpT: sT - manualPar, vpF: 0, vpB: 0,
+      pF:0, pB:0, pT:manualPar ?? 0, sF:0, sB:0, sT,
+      vpT: manualPar != null ? sT - manualPar : NaN, vpF: 0, vpB: 0,
       sd: manualSD ?? 0,
       st: { hio:0, eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0, quads:0 } as StT,
     };
@@ -393,7 +397,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
           {noHoleData && (
             <div className="ov-field">
               <label style={{ fontSize:11, fontWeight:700, color:"#888" }}>Score Total</label>
-              <input type="text" inputMode="numeric" value={manualScore} onChange={e=>setManualScore(e.target.value.replace(/\D/g,""))} placeholder={String(manualPar)} className="input" style={{ width:"100%", fontWeight:800 }} />
+              <input type="text" inputMode="numeric" value={manualScore} onChange={e=>setManualScore(e.target.value.replace(/\D/g,""))} placeholder={manualPar != null ? String(manualPar) : ""} className="input" style={{ width:"100%", fontWeight:800 }} />
             </div>
           )}
         </div>

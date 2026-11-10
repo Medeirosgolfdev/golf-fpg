@@ -93,6 +93,15 @@ function bestSd(row: RankRow): number | null {
 const roundClass = (res: RankRoundResult): string =>
   res.excluded ? " pja-rd-excl" : !res.inTop14 ? " pja-rd-out" : "";
 
+/** Porque é que uma volta jogada não conta, por regra do ranking (10/11/2026:
+ *  dizia sempre «14 melhores voltas — não soma», também no modo SD, que é a
+ *  MÉDIA das 8 melhores, e no PJA 2025, que soma os 7 melhores torneios). */
+function foraDasQueContam(metric: RankMetric, top7Torneios: boolean): string {
+  if (metric === "sd") return `Fora das ${BEST_SD_N} melhores voltas — não entra na média`;
+  if (top7Torneios) return "Fora dos 7 melhores torneios — não soma";
+  return "Fora das 14 melhores voltas — não soma";
+}
+
 /** As colunas da lista: # · Jogador · Esc. · Clube · HCP · T · Voltas · Total · Melhor. */
 function rankCols(metric: RankMetric, rank: Map<string, number>, playersDB: PlayersDB, totalLabel: string, medals = true): RankingCol<RankRow>[] {
   const isSd = metric === "sd";
@@ -579,7 +588,7 @@ export function PJARankingView({
                             res.prova,
                             res.meters ? `${res.meters.toLocaleString("pt-PT")} m` : null,
                             res.excludedReason,
-                            !res.excluded && !res.inTop14 ? "Fora das 14 melhores voltas — não soma" : null,
+                            !res.excluded && !res.inTop14 ? foraDasQueContam(metric, specialRules && year === "2025") : null,
                           ].filter(Boolean).join(" · ") || undefined;
                           // Duas maneiras de uma volta não somar, com aspecto
                           // diferente de propósito:

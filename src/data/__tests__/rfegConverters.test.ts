@@ -273,6 +273,8 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
     `);
   });
 
+  // 10/11/2026 (I6): o retrato fixava o erro — o tee do 1.º cartão («Yellow») para
+  // todos. Agora cada jogador tem o tee do seu cartão (alevins: Red e Blue).
   it("golfdirecto (Campionat de Catalunya Infantil i Aleví 2026)", async () => {
     const d = await loadRfegDivisionData(t("golfdirecto", "69e7837119dbb562774fed8d", "fcg/69e7837119dbb562774fed8d.json"));
     expect(resumo(d)).toMatchInlineSnapshot(`
@@ -288,8 +290,8 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
         "links": [],
         "porSexo": null,
         "top": [
-          "1 | Ana Iturmendi Simon | REAL CLUB DE GOLF "EL PRAT" | 76 | 6 | 18 | 70 | Yellow | Alevín | 11",
-          "1 | Gabriel de Souza Rodriguez | CLUB DE GOLF TERRAMAR | 69 | -1 | 18 | 70 | Yellow | Alevín | 11",
+          "1 | Ana Iturmendi Simon | REAL CLUB DE GOLF "EL PRAT" | 76 | 6 | 18 | 70 | Red | Alevín | 11",
+          "1 | Gabriel de Souza Rodriguez | CLUB DE GOLF TERRAMAR | 69 | -1 | 18 | 70 | Blue | Alevín | 11",
           "1 | Marcos Leach Lopez | REAL CLUB DE GOLF DE CERDAÑA | 71 | 1 | 18 | 70 | Yellow | Infantil | 13",
         ],
         "totais": null,

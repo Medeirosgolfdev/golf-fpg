@@ -18,7 +18,7 @@
  * majors) — nesses casos mostra o ranking júnior cumulativo + os links, com nota
  * de que a prova ainda não pontuou.
  */
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import type { Tournament } from "../../data/fpgTypes";
 import { useJson } from "../../hooks/useJson";
@@ -27,6 +27,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
 import { norm, shortDateSlash, fmtDatePt, todayIso, fmtOrd } from "../../utils/format";
 import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
+import { posicoesComEmpates } from "../../utils/classificacao";
 import termosJson from "../../data/omCgssTermos.json";
 import { ModalidadePill } from "../../ui/PillBadge";
 import LoadingState from "../../ui/LoadingState";
@@ -269,18 +270,24 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
   // da Mariana as provas a que se faltou contam a zero e são as primeiras a cair,
   // e todos os juniores já faltaram a 3 ou mais — o fecho é igual aos pontos, por
   // isso não há coluna própria (tirada a 02/10/2026).
-  const standings = useMemo(() => {
+  const classificar = useCallback((ate: string | null) => {
     const list = (data?.ranking ?? []).map(p => {
-      const evs = asOf ? p.events.filter(e => e.date <= asOf) : p.events;
-      const total = asOf ? evs.reduce((s, e) => s + e.pts, 0) : p.total;
+      const evs = ate ? p.events.filter(e => e.date <= ate) : p.events;
+      const total = ate ? evs.reduce((s, e) => s + e.pts, 0) : p.total;
       const te = thisEvent ? evs.find(e => String(e.tcode) === String(thisEvent.tcode)) : undefined;
       return { ...p, events: evs, total, played: evs.length, herePts: te?.pts ?? 0, herePos: te?.pos ?? null };
     }).filter(p => p.total > 0);
     list.sort((a, b) => b.total - a.total || (a.lastResult ?? 99) - (b.lastResult ?? 99) || a.name.localeCompare(b.name));
-    let rk = 0, prev: number | null = null, seen = 0;
-    for (const p of list) { seen++; if (prev === null || p.total !== prev) { rk = seen; prev = p.total; } p.rank = rk; }
+    const lugares = posicoesComEmpates(list, p => p.total);
+    for (const p of list) p.rank = lugares.get(p)!;
     return list;
-  }, [data, asOf, thisEvent]);
+  }, [data, thisEvent]);
+  const standings = useMemo(() => classificar(asOf), [classificar, asOf]);
+  // A classificação de HOJE (todas as provas já jogadas) — é sobre ela que se
+  // faz a conta do «Ainda por distribuir»: as provas que faltam são as do
+  // calendário de hoje. Numa prova antiga, a tabela de cima fica à data dela, mas
+  // somar-lhe os pontos que faltam HOJE misturava as duas datas (10/11/2026).
+  const standingsHoje = useMemo(() => (asOf ? classificar(null) : standings), [classificar, asOf, standings]);
 
   // Colunas da matriz = torneios que já contam até esta prova (data ≤ asOf),
   // por ordem de data. Prova futura (asOf null) → todos os já disputados.
@@ -573,7 +580,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
             // Valores individuais das provas que faltam, do maior para o menor.
             const valores = jogo.porNivel.flatMap(n => Array.from({ length: n.provas }, () => n.porProva));
             const proj = projectar(
-              standings.map(p => ({
+              standingsHoje.map(p => ({
                 fed: p.fed, name: p.name, total: p.total, played: p.played,
                 canWin: p.canWin, pontuacoes: p.events.map(e => e.pts),
               })),
@@ -586,6 +593,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                 <div className="fs-12 u-mb-6px">
                   🧮 <strong>Ainda por distribuir</strong> — <strong className="u-c-accent">{jogo.total} pontos</strong> a quem ganhar todas as {missing.length} provas que faltam
                   {" "}({jogo.porNivel.map(n => `${n.provas}× ${LEVEL_LABEL[n.level].replace(" (Major)", "")} a ${n.porProva}`).join(" · ")}).
+                  {standingsHoje !== standings && <span className="p-muted"> Sobre a classificação de hoje, não a da data desta prova.</span>}
                 </div>
                 <div className="u-ox-auto">
                   <table className="dtable player-list-table u-fvn-tabular-nums">
@@ -599,7 +607,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                       </tr>
                     </thead>
                     <tbody>
-                      {rows.map(p => {
+                      {standingsHoje.map(p => {
                         const x = byFed.get(p.fed);
                         if (!x) return null;
                         const eu = p.fed === MANUEL_FED;

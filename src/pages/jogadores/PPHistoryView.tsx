@@ -52,7 +52,7 @@ function Scorecard({ r }: { r: PPRound }) {
       {/* O cartão global (o mesmo das outras vistas), sem cabeçalho — já vem por cima. */}
       <ScorecardTable bare
         holes={{ g: arr(sc.gross), p: arr(sc.par), si: Array(nh).fill(null), m: arr(sc.meters), hc: nh }}
-        courseName={sc.course || ""} date={isoToDmy(r.date || "")} tee={sc.teeName || ""} />
+        courseName={sc.course || ""} date={isoToDmy(r.date || "")} tee={sc.teeName || ""} grossOficial={sc.grossTotal} />
     </div>
   );
 }

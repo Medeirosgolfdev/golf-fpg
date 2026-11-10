@@ -23,6 +23,8 @@ import { CircuitPastScorecardsTab } from "../../ui/circuit/PastScorecardsTab";
 import ScoutProva from "../../ui/circuit/ScoutProva";
 import { currentField } from "./repeatersModel";
 import { MANUEL_FED } from "../../constants/manuel";
+import { diaIso } from "../../utils/dias";
+import { parsePos, temCartao, voltasComCartao } from "../../utils/classificacao";
 import type { ScoutComManuel } from "../../ui/circuit/scoutModel";
 
 /**
@@ -132,15 +134,6 @@ function toEntry(t: Tournament): CircuitEntry {
   };
 }
 
-/** "AAAA-MM-DD" a partir de ISO ou DD/MM/AAAA (as datas da FPG). */
-function diaIso(s: string | null | undefined): string {
-  const v = String(s || "");
-  const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(v);
-  if (iso) return `${iso[1]}-${iso[2]}-${iso[3]}`;
-  const dmy = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(v);
-  return dmy ? `${dmy[3]}-${dmy[2].padStart(2, "0")}-${dmy[1].padStart(2, "0")}` : v;
-}
-
 /**
  * Provas FPG em comum com o Manuel, por federado (20/10/2026 — o Scout só via
  * as do Kids 2, que não tem os torneios de clube nem o Drive: o Mateus Penucho
@@ -157,12 +150,10 @@ export function buildFpgManuelH2H(pool: Tournament[]): Map<string, ScoutComManue
   }
   type P = NonNullable<Tournament["players"]>[number];
   const fedDe = (p: P) => String(p.fed || p.fedCode || "");
-  const gross = (p: P) => (typeof p.grossTotal === "number" && p.grossTotal > 0 && p.grossTotal < 900 ? p.grossTotal : null);
-  const voltas = (p: P) => (p.roundScores || []).filter((r) => (r.gross || 0) > 0 && (r.gross || 0) < 900).length || 1;
-  const lugar = (p: P) => {
-    const n = typeof p.pos === "number" ? p.pos : parseInt(String(p.pos ?? "").replace(/\D/g, ""), 10);
-    return n > 0 ? n : null;
-  };
+  // As regras únicas de `utils/classificacao.ts`: cartão (< 900), voltas com cartão, lugar («T4» → 4).
+  const gross = (p: P) => (typeof p.grossTotal === "number" && temCartao(p.grossTotal) ? p.grossTotal : null);
+  const voltas = (p: P) => voltasComCartao(p.roundScores) || 1;
+  const lugar = (p: P) => parsePos(p.pos);
   const out = new Map<string, ScoutComManuel[]>();
   for (const t of porId.values()) {
     const ps = t.players || [];
@@ -170,7 +161,7 @@ export function buildFpgManuelH2H(pool: Tournament[]): Map<string, ScoutComManue
     const gM = m ? gross(m) : null;
     if (!m || gM == null) continue;
     const vM = voltas(m);
-    const dia = diaIso(t.date);
+    const dia = diaIso(t.date) ?? String(t.date || "");
     for (const p of ps) {
       const f = fedDe(p);
       const g = gross(p);

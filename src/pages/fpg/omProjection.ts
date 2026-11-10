@@ -8,6 +8,8 @@
  * não se sabe fica de fora e a UI di-lo.
  */
 
+import { diasEntre } from "../../utils/dias";
+
 export type OmLevel = "A" | "B" | "C";
 
 /** Pontos do 1.º lugar de cada nível (o topo da escada). */
@@ -53,8 +55,8 @@ export function estadoProva(
   if (p.jogada) return "jogada";
   if (!p.data || p.data > fimEpoca) return "fora-do-calendario";
   if (p.data >= hoje) return "por-jogar";
-  const dias = (Date.parse(hoje) - Date.parse(p.data)) / 86_400_000;
-  return dias <= DIAS_A_AGUARDAR ? "a-aguardar" : "nao-realizada";
+  const dias = diasEntre(p.data, hoje);
+  return dias != null && dias <= DIAS_A_AGUARDAR ? "a-aguardar" : "nao-realizada";
 }
 
 export interface JogadorOm {

@@ -53,6 +53,26 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
   };
 }
 
+/** Valor para ORDENAR pelo nascimento (ms): a data completa quando há; senão o
+ *  ano (lido ou estimado) a meio do ano — as estimativas ordenam-se junto das
+ *  datas reais. null = sem data nem ano. */
+export function birthSortValue(dob: string | null | undefined, ano?: number | null): number | null {
+  const dp = dateParts(dob ? String(dob) : null);
+  if (dp) return Date.UTC(dp.y, dp.m - 1, dp.d);
+  const soAno = /^\d{4}$/.test(String(dob ?? "").trim()) ? +String(dob).trim() : null;
+  const y = ano ?? soAno;
+  return y != null ? Date.UTC(y, 6, 1) : null;
+}
+
+/** Comparador das colunas «Nasc.» e «Idade» (10/11/2026: partilhavam a chave e
+ *  «Idade ▲» punha os mais velhos primeiro). «Nasc. ▲» = nascido há mais tempo
+ *  primeiro; «Idade ▲» = o mais novo primeiro (a data ao contrário). Sem data
+ *  nem ano → sempre no fim, nas duas direcções. `dir` = 1 (asc) ou -1 (desc). */
+export function compareBirth(coluna: "nasc" | "idade", a: number | null, b: number | null, dir: 1 | -1): number {
+  if (a == null || b == null) return a == null && b == null ? 0 : a == null ? 1 : -1;
+  return (a - b) * (coluna === "idade" ? -dir : dir);
+}
+
 /** Escalão de quem nasceu em `ano`, à data `refDate` (pelo ano civil, como a
  *  FPG — `escalaoAtDate`): a cor da pílula de nascimento/idade. */
 export function escDoAno(ano: number | null | undefined, refDate?: string | null): string | null {

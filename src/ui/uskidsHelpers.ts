@@ -14,6 +14,7 @@ import type { AutoRivalPlayer } from "../data/KIDSdataLoader";
 import { uskTournNames, uskFieldSizes } from "../data/KIDSdataLoader";
 import { C } from "../utils/colors";
 import { isoDate } from "../utils/format";
+import { parsePos } from "../utils/classificacao";
 import { USA_KEYWORDS, EURO_KEYWORDS, NON_USKIDS_KEYWORDS } from "./uskidsData";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -79,12 +80,14 @@ export function seriesBase(name: string): string {
   return tornCanon(name).replace(/-\d+$/, "");
 }
 
-/** Find a player's result in a specific tournament series for a given year */
+/** Find a player's result in a specific tournament series for a given year.
+ *  `p` = lugar, ou null quando jogou sem lugar (WD/DQ) — nunca 0: o «#0» saía
+ *  com cor de pódio na lista de inscritos (10/11/2026). */
 export function playerSeriesResult(
   ar: AutoRivalPlayer,
   sBase: string,
   year: number,
-): { p: number; tp: number | null; fieldSize: number } | null {
+): { p: number | null; tp: number | null; fieldSize: number } | null {
   for (const [tid, res] of Object.entries(ar.r)) {
     const uskM = tid.match(/^(usk\d+)/);
     if (!uskM) continue;
@@ -94,8 +97,9 @@ export function playerSeriesResult(
     if (metaYear !== year) continue;
     const canon = tornCanon(meta.name).replace(/-\d+$/, "");
     if (canon !== sBase) continue;
-    const fs = uskFieldSizes.get(tid) ?? 0;
-    return { p: typeof res.p === "number" ? res.p : 0, tp: res.tp ?? null, fieldSize: fs };
+    // 1.º o field do flight do PRÓPRIO jogador (flights A/B têm tamanhos diferentes).
+    const fs = res.fs ?? uskFieldSizes.get(tid) ?? 0;
+    return { p: parsePos(res.p), tp: res.tp ?? null, fieldSize: fs };
   }
   return null;
 }

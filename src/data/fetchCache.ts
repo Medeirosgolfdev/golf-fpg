@@ -21,6 +21,10 @@
  *   import { cachedFetchJson } from "../data/fetchCache";
  *   const data = await cachedFetchJson<MyType>("/data/players.json");
  *   // → lança erro se HTTP não OK; retorna null se ficheiro não existir (404/0)
+ *
+ * Quem transforma o JSON e guarda o resultado (um índice, um Map) usa o
+ * `memoAsync` daqui — nunca um `let _promise` com `.catch(() => vazio)` lá
+ * dentro, que guarda a FALHA para a sessão inteira.
  */
 
 const _cache = new Map<string, Promise<unknown>>();
@@ -33,6 +37,7 @@ async function fetchJson<T>(url: string): Promise<T | null> {
     throw new Error(`HTTP ${res.status} ao carregar ${url}`);
   }
   let text = await res.text();
+  if (text.charCodeAt(0) === 0xfeff) text = text.slice(1); // BOM
   // Remover null bytes que podem surgir de escrita truncada no Windows
   if (text.includes("\0")) text = text.replace(/\0+/g, "");
   return JSON.parse(text) as T;
@@ -56,6 +61,48 @@ export function cachedFetchJson<T = unknown>(url: string): Promise<T | null> {
     if (_cache.get(url) === p) _cache.delete(url);
   });
   return p;
+}
+
+export interface MemoAsync<T, A extends unknown[] = []> {
+  (...args: A): Promise<T>;
+  /** Larga o que estiver guardado: a chamada seguinte carrega outra vez. */
+  reset(): void;
+}
+
+/**
+ * Guarda a Promise de um carregamento (um resultado por sessão) e LARGA-A quando
+ * falha, para a chamada seguinte tentar outra vez (10/11/2026). Antes, cinco
+ * loaders faziam `.catch(() => ({}))` DENTRO da Promise guardada: um 502
+ * passageiro ficava em cache como «vazio» até recarregar a página.
+ *
+ * - `load` deve LANÇAR quando falha (o `cachedFetchJson` já o faz; um 404 não é
+ *   falha — devolve null e esse resultado guarda-se).
+ * - `fallback`: o que quem chamou recebe nessa falha (ex. `{}`), sem ficar
+ *   guardado. Sem `fallback` a Promise devolvida rejeita.
+ * - `keep`: devolve false para um resultado que se entrega mas não se guarda
+ *   (ex. carga parcial).
+ * - Os argumentos só contam na chamada que carrega; com a Promise guardada são
+ *   ignorados (não é uma cache por chave — para isso, um Map de `memoAsync`).
+ */
+export function memoAsync<T, A extends unknown[] = []>(
+  load: (...args: A) => Promise<T>,
+  opts: { fallback?: (e: unknown) => T; keep?: (v: T) => boolean } = {},
+): MemoAsync<T, A> {
+  let guardada: Promise<T> | null = null;
+  const fn = ((...args: A): Promise<T> => {
+    if (guardada) return guardada;
+    let carga: Promise<T>;
+    try { carga = Promise.resolve(load(...args)); } catch (e) { carga = Promise.reject(e); }
+    const largar = () => { if (guardada === p) guardada = null; };
+    const p: Promise<T> = carga.then(
+      (v) => { if (opts.keep && !opts.keep(v)) largar(); return v; },
+      (e) => { largar(); if (opts.fallback) return opts.fallback(e); throw e; },
+    );
+    guardada = p;
+    return p;
+  }) as MemoAsync<T, A>;
+  fn.reset = () => { guardada = null; };
+  return fn;
 }
 
 /**

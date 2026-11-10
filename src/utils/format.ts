@@ -145,10 +145,14 @@ export function abreviarNome(nome: string, maxLen = 25): string {
 export const MONTHS_PT = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"] as const;
 
 /** Normaliza uma string de data para ISO (YYYY-MM-DD).
- *  Aceita "YYYY-MM-DD" (passa), "MM/DD/YYYY" (US), "DD-MM-YYYY" */
+ *  Aceita "YYYY-MM-DD" (passa), "MM/DD/YYYY" (US) e "DD-MM-YYYY" (com hífens,
+ *  dia primeiro — o formato dos `data.json` da FPG). 10/11/2026: o comentário
+ *  prometia o "DD-MM-YYYY" mas a conta não o convertia. */
 export function isoDate(s: string): string {
   if (!s) return "";
   if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  const dmy = /^(\d{1,2})-(\d{1,2})-(\d{4})$/.exec(s.trim());
+  if (dmy) return `${dmy[3]}-${dmy[2].padStart(2, "0")}-${dmy[1].padStart(2, "0")}`;
   const parts = s.split("/");
   if (parts.length === 3 && parts[2].length === 4)
     return `${parts[2]}-${parts[0].padStart(2,"0")}-${parts[1].padStart(2,"0")}`;

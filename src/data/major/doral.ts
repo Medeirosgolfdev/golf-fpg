@@ -10,7 +10,7 @@
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos.
  * Tirado da DORALPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
-import { intlCountryCell, isNoCardGross } from "../intlCommon";
+import { holesByMajority, intlCountryCell, isNoCardGross } from "../intlCommon";
 import type { Tournament as FPGTournament } from "../fpgTypes";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
 
@@ -171,7 +171,10 @@ export function normalizeDoralCategory(raw: string): string {
 
 export function normalizeDoralFile(raw: DoralFile, sourceUrl: string): DoralEntry[] {
   return raw.divisions.map((div): DoralEntry => {
-    const nineHole = div.players.some(p => p.rounds.some(r => r.startingHole === 10 && r.scores.length === 9));
+    // Pela MAIORIA dos cartões (`holesByMajority`) — 10/11/2026 (J13): com
+    // «algum cartão de 9 a sair do 10» as raparigas 7–11 (9 buracos, saem do 1)
+    // davam 18, e as 14-15/16-18 (18 buracos, uma desistência a meio) davam 9.
+    const nineHole = holesByMajority(div.players.flatMap(p => p.rounds.map(r => r.scores))) === 9;
     // Reordenar rondas por data (mais antiga = R1)
     const players = div.players
       .filter(p => p.rounds.length > 0)

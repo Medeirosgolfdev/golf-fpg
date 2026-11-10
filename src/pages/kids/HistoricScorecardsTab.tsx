@@ -29,6 +29,8 @@ import { kidsUrl } from "../../ui/KidsLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../../ui/ScorecardLeaderboard";
 import EmptyState from "../../ui/EmptyState";
 import ExtLink from "../../ui/ExternalLink";
+import { parsePos, temCartao } from "../../utils/classificacao";
+import { buracosDoFlight } from "../../utils/voltasJogadas";
 
 interface FieldEscalao { nome: string; jogadores?: unknown[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -134,13 +136,16 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
       const yearMatch = meta.name.match(/(\d{4})/);
       if (!yearMatch) continue;
       const year = yearMatch[1];
-      const hpr = (meta as any).holesPerRound || 18;
-      const is9 = hpr === 9;
-      const minGross = is9 ? MIN_GROSS_9H : MIN_GROSS_18H;
-
       const escMeta = (meta as any).byEscalao?.[escalaoNome] as MHEscalaoMeta | undefined;
       const par = escMeta?.par || (meta as any).par || null;
       const yards = escMeta?.yards || (meta as any).yards || null;
+      // Buracos por volta do ESCALÃO, pelas voltas jogadas (10/11/2026): a ficha
+      // do torneio diz 18 mas o Boys 8 e o 7 & Under jogam 9 — com o mínimo de 55
+      // pancadas não sobrava volta nenhuma.
+      const doEscalao = Object.entries(mh.jogadores).filter(([, p]) => p.torneios[tcode]?.ageGroup === escalaoNome);
+      const hpr = buracosDoFlight(doEscalao.flatMap(([, p]) => Object.values(p.torneios[tcode].rounds || {})), par, (meta as any).holesPerRound);
+      const is9 = hpr === 9;
+      const minGross = is9 ? MIN_GROSS_9H : MIN_GROSS_18H;
       const parPerRound = Array.isArray(par)
         ? par.slice(0, hpr).reduce((a: number, b: number) => a + (b || 0), 0)
         : 0;
@@ -157,15 +162,13 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
 
       const players: PlayerCard[] = [];
       let nRoundsMax = 0;
-      for (const [mid, p] of Object.entries(mh.jogadores)) {
+      for (const [mid, p] of doEscalao) {
         const tEntry = p.torneios[tcode];
-        if (!tEntry) continue;
-        if (tEntry.ageGroup !== escalaoNome) continue;
-        const officialPlace = (typeof tEntry.place === "number" && tEntry.place > 0) ? tEntry.place : null;
+        const officialPlace = parsePos(tEntry.place);
         const rds: PlayerRound[] = [];
         let total = 0;
         for (const [rn, r] of Object.entries(tEntry.rounds || {})) {
-          if (!r || r.gross <= 0) continue;
+          if (!r || !temCartao(r.gross)) continue; // ≥ 900 = sem cartão
           if (r.gross < minGross) continue;
           const strokes = Array.isArray(r.strokes) ? r.strokes.slice() : [];
           const t = tallyHoles(strokes, par);
@@ -337,7 +340,9 @@ export function HistoricScorecardsView({ editions }: { editions: Edition[] }) {
     for (const ed of orderedEditions) {
       let players = ed.players.slice(0, limit);
       // Aplicar sort aos players dentro da edição.
-      if (sortKey !== "year" && sortKey !== "pos") {
+      // «#» também ordena (10/11/2026): clicar 2.ª vez não invertia. Sem lugar
+      // oficial sempre no fim, nas duas direcções.
+      if (sortKey !== "year") {
         players = [...players].sort((a, b) => {
           const va = playerMetric(a, sortKey);
           const vb = playerMetric(b, sortKey);
@@ -348,7 +353,9 @@ export function HistoricScorecardsView({ editions }: { editions: Edition[] }) {
       for (const pl of players) {
         const rowBg = idx % 2 === 0 ? undefined : "var(--bg-muted)";
         const subBg = rowBg ? "color-mix(in srgb,var(--bg-muted) 60%,transparent)" : "var(--bg-stripe)";
-        const posStr = String(pl.officialPlace ?? idx + 1);
+        // Sem classificação oficial fica «—» (10/11/2026): levava o nº da linha e
+        // o Manuel 2026 (IE) do Marco Simone aparecia «18».
+        const posStr = pl.officialPlace != null ? String(pl.officialPlace) : "—";
         pl.rounds.forEach((r, ri) => {
           const first = ri === 0;
           const bg = first ? rowBg : subBg;

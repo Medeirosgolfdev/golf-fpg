@@ -22,6 +22,7 @@ export interface TidFlight {
   ageMin?: number | null;
   ageMax?: number | null;
   sex?: "M" | "F" | "mixed" | null;
+  fieldSize?: number | null;
 }
 export interface TidResult {
   pos?: number | null;
@@ -39,6 +40,10 @@ export interface AutoTournResult {
   rd: number[];
   ageGroup?: string;
   nholes?: number;
+  /** Nº de jogadores do flight ONDE o junior jogou (10/11/2026, I7). Nos
+   *  Mundiais USKids o escalão divide-se em flights A/B com o mesmo tid: o
+   *  field por tid (`uskFieldSizes`) não serve aos dois — usar este primeiro. */
+  fs?: number;
 }
 
 /** WJGC/EOWAGR/Doral usavam tids hardcoded por sourceKey de ficheiro. */
@@ -76,8 +81,12 @@ export function legacyTid(t: TidTournament, f: TidFlight): string | null {
   }
   if (sid === "doral") {
     const base = FILE_TO_LEGACY_TID[skey] || `doral${(t.date || "").slice(2, 4)}`;
-    if (f.ageMin == null && f.ageMax == null) return base;
     const ages = `${f.ageMin || ""}${f.ageMax && f.ageMax !== f.ageMin ? f.ageMax : ""}`;
+    // 10/11/2026 (I7): as raparigas levam «_g» — antes «Girls 10-11» saía
+    // «doral25_b1011», o tid dos rapazes, e os dois escalões misturavam-se
+    // (também «Girls 7 & Under», que caía no tid base dos rapazes).
+    if (f.sex === "F") return `${base}_g${ages}`;
+    if (f.ageMin == null && f.ageMax == null) return base;
     return `${base}_b${ages}`;
   }
   if (sid === "fpg") {
@@ -111,6 +120,7 @@ export function toAutoResult(result: TidResult, flight: TidFlight, tournament: T
     rd,
     ageGroup: flight.label,
     nholes: tournament.holesPerRound || 18,
+    ...(typeof flight.fieldSize === "number" && flight.fieldSize > 0 ? { fs: flight.fieldSize } : {}),
   };
 }
 

@@ -729,7 +729,7 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
                           {cell && cell.scores.length ? (
                             <span className="u-d-inline-flex u-gap-1px u-jc-center">
                               {cell.scores.map((sc, j) => (
-                                <span key={j} className={"sc-score sc-score-sm " + scClass(sc, hp)} title={topField.players[j]}>{sc}</span>
+                                <span key={j} className={"sc-score sc-score-sm " + scClass(sc, hp)} title={cell.nomes[j]}>{sc}</span>
                               ))}
                             </span>
                           ) : MUTED}

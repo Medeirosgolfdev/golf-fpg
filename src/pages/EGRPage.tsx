@@ -25,7 +25,7 @@
 
 import { useMemo } from "react";
 import { flagOrEmpty, isPtCountry } from "../utils/flagUtils";
-import { norm, fmtToPar } from "../utils/format";
+import { norm, fmtToPar, MONTH_MAP } from "../utils/format";
 import SexBadge from "../ui/SexBadge";
 import {
   RankingPage, RankingList, RankingMeta, RankingTable, RankingDetail, usePlayerEvents,
@@ -86,6 +86,17 @@ const toPar = (total: number | null, par: number | null, rounds: number) =>
 /** Voltas JOGADAS (uma volta a 0 não conta — «87·0» dava «−57»). */
 const jogadas = (rounds: (number | null)[]) => rounds.filter((g) => (g ?? 0) > 0).length;
 const ageNum = (a: string | null) => { const d = (a || "").replace(/\D/g, ""); return d ? parseInt(d) : null; };
+/** Data do EGR («Saturday, 23. May 26») → AAAAMMDD para ordenar; sem data → null.
+ *  10/11/2026: ordenava-se com `new Date(texto)`, que só o Chrome entende (no
+ *  Safari/Firefox dava «Invalid Date» e a coluna não ordenava). */
+function egrDateKey(s: string | null | undefined): number | null {
+  const m = /(\d{1,2})\.?\s+([A-Za-zÀ-ÿ]{3})[A-Za-zÀ-ÿ]*\.?\s+(\d{2,4})\b/.exec(s || "");
+  if (!m) return null;
+  const mes = MONTH_MAP[m[2].toLowerCase()];
+  if (mes == null) return null;
+  const ano = m[3].length <= 2 ? 2000 + parseInt(m[3], 10) : parseInt(m[3], 10);
+  return ano * 10000 + (mes + 1) * 100 + parseInt(m[1], 10);
+}
 
 /* ═══════════════════════════════════════════════════════════════ */
 const CFG: RankingPageConfig<EgrRanking, Parameters<typeof buildEgrEntries>[0][number]> = {
@@ -147,7 +158,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
 
 /* ── Detalhe (/egr/jogador/:id) ────────────────────────────────── */
 const EVENT_COLS: RankingCol<EgrEvent>[] = [
-  { key: "date", label: "Data", sort: (e) => e.date ? new Date(e.date).getTime() : null, cell: (e) => e.date || "—", tdClassName: "u-ws-nowrap u-c-text-muted" },
+  { key: "date", label: "Data", sort: (e) => egrDateKey(e.date), cell: (e) => e.date || "—", tdClassName: "u-ws-nowrap u-c-text-muted" },
   { key: "event", label: "Evento", sort: (e) => norm(e.name || ""), firstDir: "asc",
     cell: (e) => <ExtLink href={`${EGR_SITE}/events/${e.eventId}`}>{e.name || `Evento ${e.eventId}`}</ExtLink> },
   { key: "country", label: "Local", className: "tight", sort: (e) => norm(e.country || ""), firstDir: "asc", cell: (e) => <span title={e.country || ""}>{flagOrEmpty(e.country)}</span> },

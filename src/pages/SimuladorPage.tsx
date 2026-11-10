@@ -24,6 +24,7 @@ import {
 } from "../utils/whsCalc";
 import TeeBars from "../ui/TeeBars";
 import { physicalTeeKey } from "../utils/teeGroups";
+import { teeChoiceKey, isTeeChoiceKey } from "../utils/teeChoice";
 import { loadPlayerData } from "../data/playerDataLoader";
 import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
@@ -916,7 +917,7 @@ const SIM_LS_KEY = "simulador_state_v1";
 
 type SimPersistState = {
   course: string;   // courseKey ou MANUAL_KEY (só para o redireccionamento do /simulador antigo)
-  tee: string;      // índice do tee (string) ou ""
+  tee: string;      // chave de escolha do tee (`teeId|sexo`, utils/teeChoice) ou ""
   holes: HolesMode;
   sex: SexFilter;
   hi: string;
@@ -992,16 +993,28 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
   const [manualMode, setManualMode] = useState<boolean>(
     () => init.course === MANUAL_KEY || (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("manual") === "1"),
   );
-  const [selectedTeeIdx, setSelectedTeeIdx] = useState<number | null>(
-    init.tee !== "" && !isNaN(parseInt(init.tee, 10)) ? parseInt(init.tee, 10) : null
+  /* O tee escolhido guarda-se pela CHAVE (`teeId|sexo`), não pelo índice na lista
+   * (10/11/2026): o índice guardado no URL/localStorage era aplicado a outro campo
+   * — o 4.º tee do Santo da Serra abria o 4.º do Palheiro — e mudava de tee com o
+   * filtro de sexo ou de buracos. A chave traz o campo: noutro campo não casa.
+   * Links antigos com o índice (`tee=3`) abrem no tee habitual. */
+  const [selectedTeeKey, setSelectedTeeKey] = useState<string | null>(
+    isTeeChoiceKey(init.tee) ? init.tee : null
   );
-  /* Mudar de campo na lista dos Campos → o índice do tee deixa de valer (o
+  /* Mudar de campo na lista dos Campos → o tee escolhido deixa de valer (o
    * primeiro render mantém o tee do URL). */
   const lastCourseKey = useRef(course?.courseKey ?? null);
   useEffect(() => {
     const k = course?.courseKey ?? null;
-    if (k !== lastCourseKey.current) { lastCourseKey.current = k; setSelectedTeeIdx(null); }
+    if (k !== lastCourseKey.current) { lastCourseKey.current = k; setSelectedTeeKey(null); }
   }, [course?.courseKey]);
+  /* Chave guardada de OUTRO campo (localStorage, ou um ?tee= que ficou no URL):
+   * não é deste — sai, para não voltar a ser escrita no URL deste campo. */
+  useEffect(() => {
+    if (selectedTeeKey && course && !course.master.tees.some((t) => teeChoiceKey(t) === selectedTeeKey)) {
+      setSelectedTeeKey(null);
+    }
+  }, [course, selectedTeeKey]);
   const [pcc, setPcc] = useState(() => { const v = parseInt(init.pcc, 10); return isNaN(v) ? 0 : v; });
   const [hiInput, setHiInput] = useState(init.hi);
   const [allowance, setAllowance] = useState(() => { const v = parseInt(init.allow, 10); return isNaN(v) ? 100 : v; });
@@ -1091,9 +1104,9 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
    * estava a ser usado, para se poder ajustar a partir daí. */
   const selectPlayer = useCallback((fed: string) => {
     if (!fed && playerHI != null) setHiInput(String(playerHI));
-    // Mudar de sexo muda a lista de tees — o índice do tee deixa de valer
+    // Mudar de sexo muda a lista de tees — o tee escolhido deixa de valer
     const s = fed ? sexOf(fed) : null;
-    if (s && s !== sexFilter) setSelectedTeeIdx(null);
+    if (s && s !== sexFilter) setSelectedTeeKey(null);
     setPlayerFed(fed);
     setIncomingRound(null);
   }, [playerHI, sexOf, sexFilter]);
@@ -1142,7 +1155,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
   useEffect(() => {
     const state: SimPersistState = {
       course: manualMode ? MANUAL_KEY : (course?.courseKey ?? ""),
-      tee: selectedTeeIdx != null ? String(selectedTeeIdx) : "",
+      tee: selectedTeeKey ?? "",
       holes: holesMode,
       sex: sexFilter,
       hi: hiInput,
@@ -1169,7 +1182,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
     if (state.allow !== "100") next.set("allow", state.allow);
     setSearchParams(next, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [course?.courseKey, manualMode, selectedTeeIdx, holesMode, sexFilter, hiInput, pcc, allowance, playerFed]);
+  }, [course?.courseKey, manualMode, selectedTeeKey, holesMode, sexFilter, hiInput, pcc, allowance, playerFed]);
 
   /* Campo seleccionado — vem da lista dos Campos */
   const selected = isManual ? null : course;
@@ -1202,7 +1215,9 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
     for (const r of rs.slice(0, 10)) {
       const t = resolvePlayedTee(r.course, r.tee, courses, playerFed);
       if (!t) continue;
-      let idx = availableTees.findIndex((x) => x.teeId === t.teeId);
+      // Primeiro o tee do MESMO sexo (o teeId é igual em M e F em vários campos).
+      let idx = availableTees.findIndex((x) => teeChoiceKey(x) === teeChoiceKey(t));
+      if (idx < 0) idx = availableTees.findIndex((x) => x.teeId === t.teeId);
       if (idx < 0) idx = availableTees.findIndex((x) => physicalTeeKey(x) === physicalTeeKey(t));
       if (idx >= 0) count.set(idx, (count.get(idx) ?? 0) + 1);
     }
@@ -1215,11 +1230,9 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
   /* Tee selecionado */
   const selectedTee = useMemo(() => {
     if (!availableTees.length) return null;
-    if (selectedTeeIdx !== null && selectedTeeIdx < availableTees.length) {
-      return availableTees[selectedTeeIdx];
-    }
-    return availableTees[usualTeeIdx ?? 0];
-  }, [availableTees, selectedTeeIdx, usualTeeIdx]);
+    const escolhido = selectedTeeKey ? availableTees.find((t) => teeChoiceKey(t) === selectedTeeKey) : undefined;
+    return escolhido ?? availableTees[usualTeeIdx ?? 0];
+  }, [availableTees, selectedTeeKey, usualTeeIdx]);
 
 
   /* Dados do tee para cálculos (18h ou 9h) — campo selecionado OU manual */
@@ -1373,6 +1386,9 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
       courseName, teeName, teeDist,
       cr, slope,
       par: overlayHoleData?.par ?? [], scores: holeScores ?? [], si: overlayHoleData?.si ?? [],
+      // Par do tee/percurso escolhido (10/11/2026): sem ele a imagem de partilha
+      // mostrava «—» no ±par quando não há par buraco a buraco.
+      parTotal: teeData.par,
       meters,
       hi, courseHcp: courseHcp !== null ? Math.round(courseHcp) : null, sd,
       is9h, hasHoles: !!overlayHoleData,
@@ -1384,7 +1400,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
     <div className="sim-view">
       {/* Controlos do simulador (o campo e o sexo vêm da barra dos Campos) */}
       <div className="sim-controls">
-        <Select value={holesMode} onChange={(v) => { setHolesMode(v as HolesMode); setSelectedTeeIdx(null); }}>
+        <Select value={holesMode} onChange={(v) => { setHolesMode(v as HolesMode); setSelectedTeeKey(null); }}>
           <option value="18">18 buracos</option>
           <option value="front9">Front 9</option>
           <option value="back9">Back 9</option>
@@ -1432,7 +1448,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
         <button
           type="button"
           className={`btn${manualMode ? " active" : ""}`}
-          onClick={() => { setManualMode((m) => !m); setSelectedTeeIdx(null); }}
+          onClick={() => { setManualMode((m) => !m); setSelectedTeeKey(null); }}
           title="Calcular sem campo: escrever o CR e o Slope à mão"
         >
           ✎ {manualMode ? "Modo manual (ligado)" : "Sem campo (manual)"}
@@ -1533,11 +1549,8 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
               <TeeBars
                 tees={availableTees}
                 nine={is9h ? (holesMode as "front9" | "back9") : undefined}
-                selectedTeeId={selectedTee?.teeId ?? null}
-                onSelectTee={(tee) => {
-                  const idx = availableTees.findIndex((t) => t.teeId === tee.teeId);
-                  if (idx >= 0) setSelectedTeeIdx(idx);
-                }}
+                selectedTeeId={selectedTee ? teeChoiceKey(selectedTee) : null}
+                onSelectTee={(tee) => setSelectedTeeKey(teeChoiceKey(tee))}
               />
               {availableTees.length === 0 && (
                 <span className="muted">Sem tees com ratings para este filtro</span>

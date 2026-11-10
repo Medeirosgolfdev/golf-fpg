@@ -22,6 +22,7 @@
 import type { Tournament, Player } from "./fpgTypes";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import { escalaoAtDate } from "../utils/format";
+import { parsePos, posicoesComEmpates, temCartao } from "../utils/classificacao";
 
 type ChampionshipType = "Nacional" | "Regional";
 export type Sex = "M" | "F" | "?";
@@ -253,15 +254,20 @@ function parseEscaloes(s: string): string[] {
   // ⚠ Apenas considerar range quando AMBOS os números são valores plausíveis
   // de escalão (≤ 30). Caso contrário "Sub 10 - 2024 - Rapazes" seria
   // interpretado como Sub-10 a Sub-2024 → todos os escalões.
-  const rangeMatch = s.match(/Sub\s*(\d+)\s*(?:[-–]|\sa\s)\s*(?:Sub\s*)?(\d+)/i);
+  // 10/11/2026: «Sub-25», «Sub-12» (com hífen colado — é assim que a FPG
+  // escreve «Final Nacional Drive Tour Sub-25 H» e «… Sub-12 Rapazes») não eram
+  // lidos: o nome ficava «sem escalão», a prova passava por «combinada» e saía
+  // um campeão por idade (um «Sub 21» em 2024, um «Sub 10» a mais em 2008).
+  const rangeMatch = s.match(/Sub\s*[-–.]?\s*(\d+)\s*(?:[-–]|\sa\s)\s*(?:Sub\s*[-–.]?\s*)?(\d+)/i);
   if (rangeMatch) {
     let n1 = parseInt(rangeMatch[1]);
     let n2 = parseInt(rangeMatch[2]);
     if (n1 === 25) n1 = 24;
     if (n2 === 25) n2 = 24;
-    // Se n2 é claramente um ano (≥31 — fora do espaço de escalões), ignorar e
-    // tratar como mono-escalão (apenas n1).
-    if (n2 >= 31) {
+    // Se n2 é claramente um ano (≥31 — fora do espaço de escalões) ou um número
+    // solto que não é escalão (<10: «Sub-12 - 1ª volta»), ignorar e tratar como
+    // mono-escalão (apenas n1).
+    if (n2 >= 31 || n2 < 10) {
       return [`Sub ${n1}`];
     }
     const lo = Math.min(n1, n2);
@@ -270,12 +276,12 @@ function parseEscaloes(s: string): string[] {
   }
 
   // Caso 2: enumeração "Sub N1 e N2 & N3 / N4, N5"
-  const firstMatch = s.match(/Sub\s*(\d+)/i);
+  const firstMatch = s.match(/Sub\s*[-–.]?\s*(\d+)/i);
   if (!firstMatch) return [];
   const nums = new Set<number>();
   nums.add(parseInt(firstMatch[1]));
   const after = s.slice((firstMatch.index || 0) + firstMatch[0].length);
-  const extraRe = /(?:[&/,]|\s+e\s+)\s*(?:Sub\s*)?(\d+)/gi;
+  const extraRe = /(?:[&/,]|\s+e\s+)\s*(?:Sub\s*[-–.]?\s*)?(\d+)/gi;
   let em: RegExpExecArray | null;
   while ((em = extraRe.exec(after)) !== null) {
     nums.add(parseInt(em[1]));
@@ -499,7 +505,7 @@ export function buildJovensAnalise(
         // Em torneios provisórios (1R de 2), usar a primeira ronda real
         const reals = realRoundsOf(p);
         if (reals.length >= 1) return reals[0];
-        return typeof p.grossTotal === "number" && p.grossTotal < 900 ? p.grossTotal : null;
+        return typeof p.grossTotal === "number" && temCartao(p.grossTotal) ? p.grossTotal : null;
       }
       const reals = realRoundsOf(p);
       if (reals.length < expectedRounds) return null;
@@ -510,12 +516,31 @@ export function buildJovensAnalise(
     // Ordenar por grossTotal efectivo (NÃO pelo pos guardado nem pelo
     // grossTotal armazenado — ambos podem estar inconsistentes em torneios
     // merged manualmente).
-    const ordered = players
+    //
+    // 10/11/2026 (I11): lugares COM empates (1, 2, 2, 4…) — antes os empatados
+    // ficavam 2.º e 3.º pela ordem do ficheiro, e num empate no 1.º lugar o
+    // campeão era quem vinha primeiro. Um empate só se desfaz quando a FONTE o
+    // desfez (play-off): os empatados trazem exactamente os lugares seguidos que
+    // ocupam (1 e 2). Fora disso o `pos` guardado não manda (pode ser o de um só
+    // dia, nos torneios fundidos) e os empatados partilham o lugar.
+    const comGross = players
       .filter(p => isComplete(p))
-      .map(p => ({ p, gross: effectiveGross(p) }))
-      .filter(x => typeof x.gross === "number" && (x.gross as number) > 0)
-      .sort((a, b) => (a.gross as number) - (b.gross as number))
-      .map((x, i) => ({ p: x.p, pos: i + 1, gross: x.gross as number }));
+      .map(p => ({ p, gross: effectiveGross(p) as number }))
+      .filter(x => typeof x.gross === "number" && x.gross > 0)
+      .sort((a, b) => a.gross - b.gross);
+    const lugarPartilhado = posicoesComEmpates(comGross, x => x.gross);
+    const ordered: { p: Player; pos: number; gross: number }[] = [];
+    for (let i = 0; i < comGross.length;) {
+      let j = i;
+      while (j < comGross.length && comGross[j].gross === comGross[i].gross) j++;
+      const grupo = comGross.slice(i, j).map(x => ({ ...x, fonte: parsePos(x.p.pos) }));
+      const primeiro = lugarPartilhado.get(comGross[i])!;
+      const lugaresDaFonte = grupo.map(x => x.fonte).sort((a, b) => (a ?? 0) - (b ?? 0));
+      const desfeito = grupo.length > 1 && lugaresDaFonte.every((v, k) => v === primeiro + k);
+      if (desfeito) grupo.sort((a, b) => (a.fonte as number) - (b.fonte as number));
+      grupo.forEach((x, k) => ordered.push({ p: x.p, pos: desfeito ? primeiro + k : primeiro, gross: x.gross }));
+      i = j;
+    }
 
     // Vencedor de facto absoluto = primeiro do leaderboard (pode ser estrangeiro)
 

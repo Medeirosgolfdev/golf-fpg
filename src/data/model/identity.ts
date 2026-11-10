@@ -13,6 +13,7 @@
 import { normCountry } from "../../utils/flagUtils";
 import type { PlayerIdentity } from "./types";
 import { escalaoCanon } from "./escalao";
+import { diaIso } from "../../utils/dias";
 
 /** O que se sabe do jogador fora da linha (divisão, base de jogadores). */
 export interface IdentityContext {
@@ -54,11 +55,12 @@ export function countryIsoOf(raw: unknown): string | null {
  *  DD-MM-AAAA. Outra coisa → null. */
 export function dobIso(raw: unknown): string | null {
   const s = String(raw ?? "").trim();
-  let m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
-  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
-  m = /^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})$/.exec(s);
-  if (m) return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
-  return null;
+  // ISO e DD/MM/AAAA: a leitura comum (`diaIso`, utils/dias). Aqui só ficam os
+  // separadores a mais das fontes de fora (DD-MM-AAAA, DD.MM.AAAA).
+  const comum = diaIso(s);
+  if (comum) return comum;
+  const m = /^(\d{1,2})[.-](\d{1,2})[.-](\d{4})$/.exec(s);
+  return m ? `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}` : null;
 }
 
 /** Ano de nascimento plausível (1900..2100) ou null. */

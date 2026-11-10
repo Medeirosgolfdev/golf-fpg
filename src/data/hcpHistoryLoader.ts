@@ -7,40 +7,38 @@
  *
  * Usado pela /jogadores-por-ano para a secção de análise de evolução de HCP.
  */
+import { cachedFetchJson, invalidateCache, memoAsync } from "./fetchCache";
 
 export type HcpPoint = { d: number; h: number }; // d em ms (epoch), h = índice
 export type HcpHistoryDb = Record<string, HcpPoint[]>;
 
 const MS_DAY = 86400000;
 
-let _cache: Promise<HcpHistoryDb> | null = null;
+const URL_HCP_HISTORY = "/data/hcp-history.json";
 
-export async function loadHcpHistory(): Promise<HcpHistoryDb> {
-  if (_cache) return _cache;
-  _cache = (async () => {
-    try {
-      const resp = await fetch("/data/hcp-history.json");
-      if (!resp.ok) {
-        console.warn("hcp-history.json não encontrado — gráfico de evolução desactivado");
-        return {};
-      }
-      let text = await resp.text();
-      if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
-      text = text.replace(/\0+/g, ""); // null bytes de escrita truncada no Windows
-      const raw = JSON.parse(text) as Record<string, [number, number][]>;
-      const out: HcpHistoryDb = {};
-      for (const fed in raw) {
-        const arr = raw[fed];
-        if (!Array.isArray(arr) || arr.length < 2) continue;
-        out[fed] = arr
-          .map(([day, h]) => ({ d: day * MS_DAY, h }))
-          .filter(p => isFinite(p.d) && isFinite(p.h));
-      }
-      return out;
-    } catch (e) {
-      console.warn("Falha a carregar hcp-history.json:", e);
+/** Uma falha passageira (502, rede) devolve `{}` mas NÃO fica guardada — a
+ *  chamada seguinte tenta outra vez (10/11/2026, `memoAsync`). */
+const _load = memoAsync<HcpHistoryDb>(
+  async () => {
+    const raw = await cachedFetchJson<Record<string, [number, number][]>>(URL_HCP_HISTORY);
+    if (!raw) {
+      console.warn("hcp-history.json não encontrado — gráfico de evolução desactivado");
       return {};
     }
-  })();
-  return _cache;
+    const out: HcpHistoryDb = {};
+    for (const fed in raw) {
+      const arr = raw[fed];
+      if (!Array.isArray(arr) || arr.length < 2) continue;
+      out[fed] = arr
+        .map(([day, h]) => ({ d: day * MS_DAY, h }))
+        .filter(p => isFinite(p.d) && isFinite(p.h));
+    }
+    invalidateCache(URL_HCP_HISTORY); // o cru já não é preciso: fica só o convertido
+    return out;
+  },
+  { fallback: (e) => { console.warn("Falha a carregar hcp-history.json:", e); return {}; } },
+);
+
+export function loadHcpHistory(): Promise<HcpHistoryDb> {
+  return _load();
 }

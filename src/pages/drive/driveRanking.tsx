@@ -41,7 +41,7 @@ import SexSelect from "../../ui/SexSelect";
 import Select from "../../ui/Select";
 import { MUTED } from "../../ui/tableCells";
 import { regionLabel } from "../../data/drive/driveRegions";
-import DriveSeason from "./DriveSeason";
+import DriveSeason, { rankByPts } from "./DriveSeason";
 import type { DriveCalEntry } from "../../data/drive/driveCalendar";
 import SectionTitle from "../../ui/SectionTitle";
 
@@ -166,14 +166,6 @@ export interface DriveRankingDeps {
   top?: (series: DriveSeries) => React.ReactNode;
 }
 
-/** Posição de cada jogador por pontos (empates partilham). */
-function rankByPts(rows: Sub12Row[]): Map<string, number> {
-  const s = [...rows].sort((a, b) => b.totalPts - a.totalPts);
-  const m = new Map<string, number>();
-  s.forEach((r, i) => m.set(r.fed, i > 0 && s[i - 1].totalPts === r.totalPts ? m.get(s[i - 1].fed)! : i + 1));
-  return m;
-}
-
 function cols(rows: Sub12Row[], withEsc: boolean, pdb: PlayersDB): RankingCol<Sub12Row>[] {
   const rk = rankByPts(rows);
   return [
@@ -283,12 +275,16 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
       const upcoming = year ? (d.calendar?.(s, year) ?? [])
         .filter(c => (c.endDate || c.date) >= todayIso() && (aq || (c.region === zona && !(isNacionalFinal(c.name) && !inferDriveRegion(c.name))))) : [];
       const zonaLabel = aq || zona === "nacional" ? "" : ` ${regionLabel(zona)}`;
-      return <DriveSeason title={`${aq ? "AQUAPOR" : `Drive ${SERIE_LABELS[s]}`}${zonaLabel} ${year ?? ""}`.trim()} bySex={aq}
+      // O sexo da tabela segue a divisão aberta: ao passar de «Masculino» para
+      // «Senhoras» a grelha ficava nos homens (o estado do componente guardava o
+      // sexo com que abriu). A `key` remonta-o quando a divisão muda de sexo (10/11/2026).
+      const sexoDaDivisao = /senhora|femin/i.test(ctx.division ?? "") ? "F" : "M";
+      return <DriveSeason key={`${s}-${sexoDaDivisao}`} title={`${aq ? "AQUAPOR" : `Drive ${SERIE_LABELS[s]}`}${zonaLabel} ${year ?? ""}`.trim()} bySex={aq}
         pointsNote={aq ? "Pontos do ranking oficial (lugar dentro do sexo; empates partilham os pontos)"
           : "Pontos do Drive: as 4 melhores da fase regular + a Final regional ×1,5"}
         calId={aq ? "fpg_aquapor" : undefined}
         rows={rows} allRows={all} entries={ctx.entries} pdb={d.pdb} upcoming={upcoming}
-        fedBirthdates={d.fedBirthdates} initialSex={/senhora|femin/i.test(ctx.division ?? "") ? "F" : "M"} escLabel={esc ? escLabel(esc) : d.classEsc!.join(" · ")} />;
+        fedBirthdates={d.fedBirthdates} initialSex={sexoDaDivisao} escLabel={esc ? escLabel(esc) : d.classEsc!.join(" · ")} />;
     },
   };
 }

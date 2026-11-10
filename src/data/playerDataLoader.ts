@@ -9,6 +9,7 @@
 import { canonicalCourseName, rotateAroeira2HolesIfNeeded, resolveAroeiraIIByPar, resolveSantoDaSerraByPar } from "../utils/courseAliases";
 import { stripAccents } from "../utils/normName";
 import { numSafe } from "../utils/mathUtils";
+import { cachedFetchJson, memoAsync } from "./fetchCache";
 
 /* ─── Tipos (espelham a estrutura gerada pelo pipeline Node) ─── */
 
@@ -58,6 +59,9 @@ export interface HoleScores {
   si: (number | null)[];
   m?: (number | null)[];
   hc: number;
+  /** Só voltas de 9 buracos: a metade do campo — "F" (1–9) ou "B" (10–18).
+   *  Posta pelo loader (`nineOf9HoleRound`); ausente = não se sabe. */
+  nine?: "F" | "B";
 }
 
 interface EclecticHole {
@@ -77,6 +81,32 @@ export interface EclecticEntry {
   holes: EclecticHole[];
   si: (number | null)[];
   wins: Record<string, number>;
+  /** Só entradas de 9 buracos com a metade conhecida: "F" (buracos 1–9) ou
+   *  "B" (10–18; os `holes[].h` vão de 10 a 18). 10/11/2026. */
+  nine?: "F" | "B";
+}
+
+/**
+ * O eclético certo para comparar com UMA volta: nas de 18 buracos o do tee
+ * (ECDET); nas de 9, o da MESMA metade (`HOLES[scoreId].nine`) — nunca o dos 18
+ * nem o da outra metade, que comparavam o buraco 10 com o buraco 1. null quando
+ * não há (ou quando a metade da volta não se sabe e o tee tem mais de um
+ * eclético de 9). 10/11/2026 (I4).
+ */
+export function eclecticForRound(
+  data: Pick<PlayerPageData, "EC" | "ECDET" | "HOLES">,
+  courseKey: string,
+  round: Pick<RoundData, "scoreId" | "teeKey" | "holeCount">,
+): EclecticEntry | null {
+  const h = data.HOLES?.[round.scoreId];
+  const is9 = (round.holeCount || h?.hc) === 9;
+  if (!is9) {
+    const det = data.ECDET?.[courseKey]?.[round.teeKey];
+    return det && det.holeCount !== 9 ? det : null;
+  }
+  const nove = (data.EC?.[courseKey] || []).filter((e) => e.teeKey === round.teeKey && e.holeCount === 9);
+  if (h?.nine) return nove.find((e) => e.nine === h.nine) ?? null;
+  return nove.length === 1 && !nove[0].nine ? nove[0] : null;
 }
 
 export interface HoleStatEntry {
@@ -328,6 +358,45 @@ function normCourseKey(s: string): string {
     .trim();
 }
 
+/** Em quantos buracos dois pares de 9 diferem (Infinity se não forem 9 + 9). */
+function parDiff9(a: readonly number[], b: readonly number[]): number {
+  if (a.length !== 9 || b.length !== 9) return Infinity;
+  let d = 0;
+  for (let i = 0; i < 9; i++) if (a[i] !== b[i]) d++;
+  return d;
+}
+
+/**
+ * Que metade do campo é uma volta de 9 buracos: "F" (1–9) ou "B" (10–18).
+ * O pipeline grava as voltas de 9 com 9 posições, SEM dizer a metade — a única
+ * pista é o par: compara-se com o par dos 18 buracos do mesmo campo (`ref18`).
+ * Tolera um buraco de diferença (a organização às vezes muda o par de um
+ * buraco entre épocas). null quando não se consegue dizer (sem referência, as
+ * duas metades com o mesmo par, ou par que não bate com nenhuma) — nunca se
+ * adivinha. 10/11/2026 (I4).
+ */
+export function nineOf9HoleRound(
+  par9: readonly (number | null)[] | null | undefined,
+  ref18: readonly (number | null)[] | null | undefined,
+): "F" | "B" | null {
+  const p = (par9 ?? []).slice(0, 9).map(Number);
+  const ref = (ref18 ?? []).slice(0, 18).map(Number);
+  if (p.length !== 9 || ref.length !== 18 || [...p, ...ref].some((v) => !(v > 0))) return null;
+  const dF = parDiff9(p, ref.slice(0, 9));
+  const dB = parDiff9(p, ref.slice(9, 18));
+  if (dF <= 1 && dB > dF + 1) return "F";
+  if (dB <= 1 && dF > dB + 1) return "B";
+  return null;
+}
+
+/** Onde estão os 9 buracos jogados dentro dos arrays da volta: 0, ou 9 quando
+ *  o cartão traz 18 posições com a primeira metade vazia. */
+function offsetOf9(h: HoleScores): number {
+  const jogado = (v: number | null | undefined) => v != null && Number(v) > 0;
+  if ((h.g?.length ?? 0) < 18) return 0;
+  return !h.g.slice(0, 9).some(jogado) && h.g.slice(9, 18).some(jogado) ? 9 : 0;
+}
+
 function recomputeECForAllCourses(
   data: CourseData[],
   holes: Record<string, HoleScores>,
@@ -339,10 +408,30 @@ function recomputeECForAllCourses(
     const courseKey = normCourseKey(course.course || "");
     if (!courseKey) continue;
 
+    // Par dos 18 buracos do campo (referência para saber a metade das voltas de
+    // 9): o da volta de 18 mais recente do mesmo tee; senão, de qualquer tee.
+    const ref18ByTee = new Map<string, (number | null)[]>();
+    for (const r of course.rounds) {
+      const h = holes[r.scoreId];
+      if (!h?.p || h.p.length < 18 || h.p.slice(0, 18).some((v) => !(Number(v) > 0))) continue;
+      const tk = r.teeKey || "";
+      if (!ref18ByTee.has(tk)) ref18ByTee.set(tk, h.p);
+      if (!ref18ByTee.has("*")) ref18ByTee.set("*", h.p);
+    }
+
     // Agrupar rondas por (teeKey, holeCount). Um mesmo tee pode ter
-    // entradas separadas para 9 e 18 buracos.
-    type Bucket = { teeName: string; teeKey: string; holeCount: number; rounds: RoundData[] };
+    // entradas separadas para 9 e 18 buracos — e, nos 9, uma por METADE
+    // (10/11/2026: as voltas 1–9 e 10–18 caíam no mesmo balde `tee|9` e o
+    // eclético misturava buracos diferentes; fed 38233, Quinta do Lago Laranjal).
+    type Bucket = {
+      teeName: string; teeKey: string; holeCount: number; rounds: RoundData[];
+      /** Só nos 9 buracos: metade ("F"/"B") ou null = não se sabe. */
+      nine: "F" | "B" | null;
+      /** Par dos 9 (só baldes de metade desconhecida — junta-se par com par). */
+      sig: number[] | null;
+    };
     const buckets = new Map<string, Bucket>();
+    const offOf = new Map<string, number>();
     for (const r of course.rounds) {
       if (r._isTreino || r._isExtra || r._isTeamEvent) continue;
       const h = holes[r.scoreId];
@@ -350,9 +439,26 @@ function recomputeECForAllCourses(
       const teeKey = r.teeKey || "";
       const teeName = r.tee || "";
       const holeCount = r.holeCount || (h.g.length === 9 ? 9 : 18);
-      const k = `${teeKey}|${holeCount}`;
+      let k = `${teeKey}|${holeCount}`;
+      let nine: Bucket["nine"] = null;
+      let sig: number[] | null = null;
+      if (holeCount === 9) {
+        const off = offsetOf9(h);
+        offOf.set(r.scoreId, off);
+        const p9 = h.p.slice(off, off + 9);
+        nine = off === 9 ? "B" : nineOf9HoleRound(p9, ref18ByTee.get(teeKey) ?? ref18ByTee.get("*"));
+        h.nine = nine ?? undefined;
+        if (nine) k += `|${nine}`;
+        else {
+          // Metade desconhecida: junta-se só a voltas com o mesmo par (±1 buraco).
+          sig = p9.map(Number);
+          const igual = [...buckets.entries()].find(([, b]) =>
+            b.teeKey === teeKey && b.holeCount === 9 && b.sig && parDiff9(b.sig, sig!) <= 1);
+          k = igual ? igual[0] : `${k}|?${sig.join("")}`;
+        }
+      }
       if (!buckets.has(k)) {
-        buckets.set(k, { teeName, teeKey, holeCount, rounds: [] });
+        buckets.set(k, { teeName, teeKey, holeCount, rounds: [], nine, sig });
       }
       buckets.get(k)!.rounds.push(r);
     }
@@ -360,12 +466,19 @@ function recomputeECForAllCourses(
 
     const newEntries: EclecticEntry[] = [];
     const newDet: Record<string, EclecticEntry> = {};
+    const nRoundsOf = new Map<EclecticEntry, number>();
 
     for (const b of buckets.values()) {
-      // O array `g` em HOLES tem sempre 18 posições (pos 0-17). Para 9-hole
-      // rounds, podem usar pos 0-8 (front-9) ou 9-17 (back-9); o valor que
-      // está fora é null/0.
+      // Linha de 18 posições. As voltas de 9 buracos entram na metade do balde
+      // (pos 0-8 = front, 9-17 = back), venham os 9 buracos em que posição
+      // vierem no cartão (`offOf`).
       const ROW_SIZE = 18;
+      const base = b.holeCount === 9 && b.nine === "B" ? 9 : 0;
+      const at = (arr: (number | null)[] | undefined, r: RoundData, i: number): number | null | undefined => {
+        if (b.holeCount !== 9) return arr?.[i];
+        const j = i - base;
+        return j >= 0 && j < 9 ? arr?.[(offOf.get(r.scoreId) ?? 0) + j] : null;
+      };
       const bestArr: (number | null)[] = new Array(ROW_SIZE).fill(null);
       const parArr: (number | null)[] = new Array(ROW_SIZE).fill(null);
       const siArr: (number | null)[] = new Array(ROW_SIZE).fill(null);
@@ -376,8 +489,9 @@ function recomputeECForAllCourses(
       for (const r of b.rounds) {
         const h = holes[r.scoreId]!;
         for (let i = 0; i < ROW_SIZE; i++) {
-          if (parArr[i] == null && h.p?.[i] != null) parArr[i] = Number(h.p[i]);
-          if (siArr[i] == null && h.si?.[i] != null) siArr[i] = Number(h.si[i]);
+          const pv = at(h.p, r, i), sv = at(h.si, r, i);
+          if (parArr[i] == null && pv != null) parArr[i] = Number(pv);
+          if (siArr[i] == null && sv != null) siArr[i] = Number(sv);
         }
       }
 
@@ -396,13 +510,14 @@ function recomputeECForAllCourses(
         let parOfBest: number | null = null;
         for (const r of b.rounds) {
           const h = holes[r.scoreId]!;
-          const g = h.g?.[i];
+          const g = at(h.g, r, i);
           if (g == null || Number(g) <= 0) continue;
           const v = Number(g);
           if (best == null || v < best) {
             best = v;
             from = { scoreId: r.scoreId, date: r.date };
-            parOfBest = h.p?.[i] != null ? Number(h.p[i]) : null;
+            const pv = at(h.p, r, i);
+            parOfBest = pv != null ? Number(pv) : null;
           }
         }
         bestArr[i] = best;
@@ -411,11 +526,9 @@ function recomputeECForAllCourses(
         if (from) wins[from.scoreId] = (wins[from.scoreId] || 0) + 1;
       }
 
-      // 3) Construir EclecticEntry. Para 9-hole, slice ao range correcto.
-      const startHole = b.holeCount === 9
-        ? (parArr.slice(0, 9).every(p => p != null) ? 1 : 10)
-        : 1;
-      const sliceStart = startHole === 10 ? 9 : 0;
+      // 3) Construir EclecticEntry. Para 9-hole, slice à metade do balde.
+      //    (os `h` de uma metade "B" vão de 10 a 18).
+      const sliceStart = base;
       const sliceEnd = sliceStart + b.holeCount;
 
       const holesArr: EclecticHole[] = [];
@@ -442,21 +555,27 @@ function recomputeECForAllCourses(
         si: siArr.slice(sliceStart, sliceEnd),
         wins,
       };
+      if (b.holeCount === 9 && b.nine) entry.nine = b.nine;
       newEntries.push(entry);
+      nRoundsOf.set(entry, b.rounds.length);
       // Se houver multiplos buckets no mesmo tee (9H + 18H), o ECDET deve
       // ficar com o de MAIOR holeCount (18H prefere 9H). A ordem de iteracao
       // do Map e a de insercao (nao ordenada), por isso nao se pode assumir
       // que o 18H e processado por ultimo: ha que comparar explicitamente.
+      // Entre dois baldes de 9 (metades diferentes) fica o que tem mais voltas.
       const existingDet = newDet[b.teeKey];
-      if (!existingDet || b.holeCount > existingDet.holeCount) {
+      if (!existingDet || b.holeCount > existingDet.holeCount
+        || (b.holeCount === existingDet.holeCount && b.rounds.length > (nRoundsOf.get(existingDet) ?? 0))) {
         newDet[b.teeKey] = entry;
       }
     }
 
     // Ordenar entries: 18H primeiro, depois 9H; dentro de cada, por holeCount desc + tee
+    // (nos 9 buracos, a metade com mais voltas primeiro).
     newEntries.sort((a, b) =>
       b.holeCount - a.holeCount ||
-      a.teeName.localeCompare(b.teeName)
+      a.teeName.localeCompare(b.teeName) ||
+      (nRoundsOf.get(b) ?? 0) - (nRoundsOf.get(a) ?? 0)
     );
 
     // Apagar TODAS as variantes antigas de keys (com sufixos como "- cnj fpg",
@@ -499,15 +618,15 @@ export async function loadPlayerData(fedId: string): Promise<PlayerPageData> {
  * fichas. Fichas antigas que ainda tragam `CROSS_DATA` embutido continuam a
  * funcionar (ganham prioridade sobre o ficheiro partilhado).
  */
-let _crossDataPromise: Promise<Record<string, CrossPlayerData>> | null = null;
+/* 10/11/2026: `memoAsync` — um 502 passageiro devolve `{}` a quem pediu mas não
+ * fica guardado (antes as fichas ficavam sem a tabela global até recarregar). */
+const _loadCrossData = memoAsync<Record<string, CrossPlayerData>>(
+  async () => (await cachedFetchJson<Record<string, CrossPlayerData>>("/data/cross-data.json")) ?? {},
+  { fallback: () => ({}) },
+);
 
 export function loadCrossData(): Promise<Record<string, CrossPlayerData>> {
-  if (!_crossDataPromise) {
-    _crossDataPromise = fetch("/data/cross-data.json")
-      .then((r) => (r.ok ? r.json() : {}))
-      .catch(() => ({}));
-  }
-  return _crossDataPromise;
+  return _loadCrossData();
 }
 
 /** Ficha de um federado gerada pelo pipeline (`output/{fed}/analysis/data.json`). */

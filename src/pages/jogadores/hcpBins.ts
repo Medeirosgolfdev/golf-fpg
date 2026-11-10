@@ -18,7 +18,9 @@ export function emptyHcpBins(): Record<string, { m: number; f: number }> {
 }
 
 export function hcpBinKey(h: number): HcpBin {
-  if (h < 0) return "plus";
+  // Scratch (0.0) conta em «Scratch ou melhor» (10/11/2026): o rótulo dizia
+  // «HCP ≤ 0» mas o 0.0 caía no 0-5.
+  if (h <= 0) return "plus";
   if (h < 5) return "0-5";
   if (h < 10) return "5-10";
   if (h < 15) return "10-15";
@@ -27,10 +29,11 @@ export function hcpBinKey(h: number): HcpBin {
   return "30+";
 }
 
-/** Range numérico + etiqueta longa de um bin (usado no drill-down). */
+/** Range numérico + etiqueta longa de um bin (usado no drill-down). Para saber
+ *  se um HCP está num bin usar `hcpBinKey(h) === bin` — é a mesma regra da contagem. */
 export function hcpBinRange(bin: string): { min: number; max: number; label: string } {
   if (bin === "plus") return { min: -Infinity, max: 0, label: "Scratch ou melhor (HCP ≤ 0)" };
-  if (bin === "0-5")  return { min: 0, max: 5, label: "HCP 0 a 4.9" };
+  if (bin === "0-5")  return { min: 0, max: 5, label: "HCP 0.1 a 4.9" };
   if (bin === "5-10") return { min: 5, max: 10, label: "HCP 5 a 9.9" };
   if (bin === "10-15") return { min: 10, max: 15, label: "HCP 10 a 14.9" };
   if (bin === "15-20") return { min: 15, max: 20, label: "HCP 15 a 19.9" };

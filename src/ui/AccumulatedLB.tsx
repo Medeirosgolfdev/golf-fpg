@@ -20,6 +20,8 @@ import type { MultiRoundRow as MRRow, MRRound, ExtraColumn } from "./multiRoundT
 import { medalNet, stablefordNet } from "../utils/whsCalc";
 import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
 import TabRow from "./TabRow";
+import { isNoCardGross } from "../data/intlCommon";
+import { temCartao } from "../utils/classificacao";
 
 /** As mesmas três modalidades do tab da volta (ScorecardLB). */
 const MODOS: Array<{ key: ModoClassif; label: string; title: string }> = [
@@ -95,7 +97,7 @@ export function AccumulatedLB({
     if (modo === "stroke") return m;
     for (const p of rawPlayers) {
       const rss = p.roundScores || [];
-      const ok = p.hcpPlay != null && rss.length > 0 && rss.every((rs) => (rs.gross ?? 0) > 0 && (rs.gross ?? 0) < 900);
+      const ok = p.hcpPlay != null && rss.length > 0 && rss.every((rs) => temCartao(rs.gross));
       let v: number | null = null;
       if (ok) {
         v = 0;
@@ -127,7 +129,7 @@ export function AccumulatedLB({
         const rdNum = i + 1;
         const rs = roundScores.find((r) => r.round === rdNum);
         // Volta sem cartão (gross ≥ 900) = não jogada: «–», nunca «999 · +927».
-        if (!rs || rs.gross >= 900) return undefined;
+        if (!rs || isNoCardGross(rs.gross)) return undefined;
         // SD: o oficial da FPG ou, sem ele, o calculado com o HCP da inscrição.
         const { sd } = computeSD({
           ...p,

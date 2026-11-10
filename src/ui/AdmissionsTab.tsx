@@ -21,7 +21,7 @@ import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, Pill } from "./PillBadge";
 import BirthPill from "./BirthPill";
-import { pillDoAno } from "./BirthCells";
+import { pillDoAno, birthSortValue, compareBirth } from "./BirthCells";
 import { useFedCountries, useFedBirthdates, useFedGenders, useFedHcp } from "./InscricoesComponents";
 import { parseSubNumber, teeNameFor, type TeeRule } from "../utils/teeRegulation";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -100,7 +100,7 @@ function fmtRegisto(s: string | null | undefined): string {
   return `${m[3]}/${m[2]}${ano}${m[4] ? ` ${m[4]}` : ""}`;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "pts" | "vac" | "registo" | "status" | `x:${string}`;
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "idade" | "pts" | "vac" | "registo" | "status" | `x:${string}`;
 
 /** Último lugar ocupado pelos confirmados — a lista de espera numera-se a seguir.
  *  Normalmente é o nº de confirmados; numa lista com lugares por atribuir (ex.:
@@ -296,7 +296,9 @@ export default function AdmissionsTab({
         case "fed":     return compareTextNullsLast(a.fed, b.fed, mult);
         case "clube":   return compareTextNullsLast(a._clube, b._clube, mult);
         case "hcp":     return compareNullsLast(a.hcp, b.hcp, mult);
-        case "nasc":    return compareNullsLast(a._dobYear, b._dobYear, mult);
+        // Nasc. e Idade têm cada uma a sua chave (10/11/2026); pela data inteira, não só o ano.
+        case "nasc":
+        case "idade":   return compareBirth(sortKey, birthSortValue(a._dob, a._dobYear), birthSortValue(b._dob, b._dobYear), mult);
         case "pts":     return compareNullsLast(a.pts, b.pts, mult);
         case "vac":     return compareNullsLast(a.vac, b.vac, mult);
         case "registo": return compareTextNullsLast(a.dataInscricao, b.dataInscricao, mult);
@@ -455,7 +457,7 @@ export default function AdmissionsTab({
       {!hide.esc && <SortableHdr k="esc"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
       {!hide.nasc && <>
       <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Nasc.</SortableHdr>
-      <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>
+      <SortableHdr k="idade"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>
       </>}
       {!hide.fed && <SortableHdr k="fed"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
       <SortableHdr k="clube"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">Clube</SortableHdr>

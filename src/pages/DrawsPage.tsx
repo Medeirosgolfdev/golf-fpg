@@ -35,6 +35,10 @@ import { kidsUrl } from "../ui/KidsLink";
 import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName, fmtToPar, medal as medalOf, fmtDatePt } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
+import { federadoPorNome, clubeCompativel } from "../utils/federadoPorNome";
+import { playerKey, isFedFpg } from "../utils/playerKey";
+import { signupanytimeUrl } from "../utils/signupanytime";
+import { clubLong, clubShort } from "../utils/playerUtils";
 import { loadPlayers } from "../data/loader";
 import { useJson } from "../hooks/useJson";
 import type { PlayersDb } from "../data/types";
@@ -194,10 +198,14 @@ function fmtScore(s: Score): string {
 interface PlayerLite { fed: string; name: string; dob: string | null; clubNorm?: string }
 interface Lookups {
   dobByFed: Map<string, string>;          // fed → dob (players + inativos + federados)
-  byNorm: Map<string, PlayerLite>;        // nome exacto (players + inativos + federados únicos)
+  byNorm: Map<string, PlayerLite[]>;      // nome exacto → TODOS os homónimos (um por federado)
+  /** A lista de federados já chegou — só então se sabe se um nome é único. */
+  homonimosCompletos: boolean;
   byISsmall: Map<string, PlayerLite[]>;   // "inicial|apelido" só players+inativos → resolve o pai
   byISfed: Map<string, PlayerLite[]>;     // "inicial|apelido" nos federados (c/ clube p/ scoping)
 }
+/** A prova onde o companheiro aparece — o escalão dela ajuda a excluir homónimos. */
+interface ProvaCtx { torneioNome: string | null; data: string | null }
 
 // "Apelido,Nome" → "Nome Apelido" (só quando há exactamente uma vírgula)
 function flipComma(nome: string): string {
@@ -208,23 +216,24 @@ function flipComma(nome: string): string {
   return nome.trim();
 }
 
-// Um clube de companheiro ("Santo da Serra") casa com o clube de um federado?
-function clubMatch(compClube: string | null, clubNorm?: string): boolean {
-  const cc = norm(compClube || "");
-  if (!cc || !clubNorm) return false;
-  return clubNorm.includes(cc);
-}
-
 // Resolve um companheiro para { fed, nome, dob } canónicos.
-function resolveCompanion(c: Companion, lk: Lookups): { fed: string | null; nome: string; dob: string | null } {
+function resolveCompanion(c: Companion, lk: Lookups, prova: ProvaCtx): { fed: string | null; nome: string; dob: string | null } {
   const nome = displayName(flipComma(c.nome));
   // 1) já tem licença → manter o nome (já corrigido) e buscar dob da BD
   if (c.fed) {
     return { fed: c.fed, nome, dob: lk.dobByFed.get(c.fed) || null };
   }
-  // 2) match exacto por nome → adopta identidade da BD
-  const exact = lk.byNorm.get(norm(nome));
-  if (exact) return { fed: exact.fed, nome: exact.name, dob: exact.dob };
+  // 2) só pelo nome — regra única de `federadoPorNome` (10/11/2026; antes ficava
+  //    o 1.º homónimo das nossas listas, sem olhar aos outros federados): nome
+  //    único em toda a federação, ou o clube/escalão da prova apontam para UM só;
+  //    senão fica sem federado. Só depois de a lista de federados chegar.
+  if (lk.homonimosCompletos) {
+    // (o próprio Manuel nunca é companheiro dele — o pai tem o mesmo nome)
+    const exact = federadoPorNome((lk.byNorm.get(norm(nome)) ?? []).filter(p => p.fed !== MANUEL_FED), {
+      clube: c.clube, pais: c.pais, torneioNome: prova.torneioNome, data: prova.data,
+    });
+    if (exact) return { fed: exact.fed, nome: exact.name, dob: exact.dob };
+  }
   // 3) abreviatura "I.Apelido"
   const m = nome.match(/^([A-Za-zÀ-ÿ])\.\s*(.+)$/);
   if (m) {
@@ -233,7 +242,7 @@ function resolveCompanion(c: Companion, lk: Lookups): { fed: string | null; nome
     const small = (lk.byISsmall.get(key) || []).filter(p => p.fed !== MANUEL_FED);
     if (small.length === 1) return { fed: small[0].fed, nome: small[0].name, dob: small[0].dob };
     // 3b) federados, com scoping pelo clube do companheiro (desambigua nos torneios de pares)
-    const fedC = (lk.byISfed.get(key) || []).filter(p => p.fed !== MANUEL_FED && clubMatch(c.clube, p.clubNorm));
+    const fedC = (lk.byISfed.get(key) || []).filter(p => p.fed !== MANUEL_FED && clubeCompativel(c.clube, p.clubNorm));
     if (fedC.length === 1) return { fed: fedC[0].fed, nome: fedC[0].name, dob: fedC[0].dob };
   }
   return { fed: null, nome, dob: null };
@@ -261,7 +270,8 @@ function RondaPill({ n }: { n: number }) {
   );
 }
 
-// Medalha para os 3 companheiros com mais rondas em conjunto
+/** Ronda jogada em conjunto (0 = practice round conta; -1 = «conhecido», não). */
+const rondaJogada = (ronda: number) => ronda >= 0;
 
 // Resultado do Manuel face ao companheiro numa ronda (`cls` = cor do ponto)
 function h2hDot(manuel: Score, comp: Score): { res: "W" | "D" | "L"; cls: string; title: string } | null {
@@ -294,8 +304,10 @@ function aggregateCompanions(rondas: Round[], lk: Lookups): CompanionRow[] {
   const map = new Map<string, CompanionRow>();
   for (const r of rondas) {
     for (const c of r.companheiros) {
-      const res = resolveCompanion(c, lk);
-      const k = res.fed ? `fed:${res.fed}` : `name:${norm(res.nome)}|${c.pais || ""}`;
+      const res = resolveCompanion(c, lk, { torneioNome: r.torneioNome, data: r.data });
+      // Chave global do jogador (`playerKey`): o federado manda; só pelo nome, o
+      // país separa homónimos de fora.
+      const k = res.fed ? playerKey(res.fed, res.nome) : `${playerKey(null, res.nome)}|${c.pais || ""}`;
       let row = map.get(k);
       if (!row) {
         row = {
@@ -319,7 +331,9 @@ function aggregateCompanions(rondas: Round[], lk: Lookups): CompanionRow[] {
       if (!row.pais && c.pais) row.pais = c.pais;
       if (!row.fed && res.fed) row.fed = res.fed;
       if (!row.dob && res.dob) row.dob = res.dob;
-      row.vezes += 1;
+      // «Conhecido» (ronda -1) não é uma ronda jogada em conjunto (10/11/2026:
+      // contava 1 e quem nunca jogou com o Manuel aparecia com «Rondas: 1»).
+      if (rondaJogada(r.ronda)) row.vezes += 1;
       if (r.data) {
         if (!row.ultimaData || r.data > row.ultimaData) row.ultimaData = r.data;
         if (!row.primeiraData || r.data < row.primeiraData) row.primeiraData = r.data;
@@ -354,8 +368,8 @@ function aggregateCompanions(rondas: Round[], lk: Lookups): CompanionRow[] {
 // ── Componentes auxiliares ────────────────────────────────────────────
 
 function CompanionNameLink({ row }: { row: CompanionRow }) {
-  // FPG → link para /jogadores/{fed}
-  if (row.fed) {
+  // FPG → link para /jogadores/{fed} (só com um federado da FPG, não uma licença de fora)
+  if (isFedFpg(row.fed)) {
     return (
       <Link to={`/jogadores/${row.fed}`} className="tourn-pname tourn-pname-link">
         {row.nome}
@@ -469,7 +483,7 @@ function TorneiosList({
 
 // Nome de um membro do grupo → link (FPG: /jogadores/{fed}; senão ficha kids2)
 function GroupMemberLink({ nome, fed }: { nome: string; fed: string | null }) {
-  const to = fed ? `/jogadores/${fed}` : kidsUrl({ name: nome });
+  const to = isFedFpg(fed) ? `/jogadores/${fed}` : kidsUrl({ name: nome });
   return <Link to={to} className="tourn-pname-link">{nome}</Link>;
 }
 
@@ -627,41 +641,55 @@ export default function DrawsPage() {
   // Índices de resolução de identidade (nome/fed/dob).
   // Estratégia para não introduzir ambiguidade:
   //  - dobByFed: TODAS as fontes (players + inativos + federados) → escalão p/ adultos
-  //  - byNorm (exacto): players+inativos + federados com nome ÚNICO
+  //  - byNorm (exacto): TODOS os homónimos de players+inativos+federados; quem
+  //    escolhe é o `federadoPorNome` (nome único, clube ou escalão da prova)
   //  - byISsmall (inicial+apelido): só players+inativos → resolve o pai sem ruído
   //  - byISfed (inicial+apelido): federados (com clube) → desambigua por clube
   const lookups = useMemo<Lookups>(() => {
     const lk: Lookups = {
       dobByFed: new Map(), byNorm: new Map(), byISsmall: new Map(), byISfed: new Map(),
+      homonimosCompletos: fedAll != null,
     };
     const isKey = (nm: string) => {
       const parts = nm.split(" ");
       return parts.length >= 2 ? `${parts[0][0]}|${parts[parts.length - 1]}` : null;
     };
-    // Fontes pequenas e curadas — prioridade no byNorm e únicas no byISsmall
-    const addSmall = (fed: string, name: string, dob: string | null) => {
+    // Nome exacto → TODOS os homónimos, um por federado (a escolha entre eles é
+    // do `federadoPorNome`). A mesma pessoa vem de várias listas: junta-se o que
+    // cada uma sabe (nascimento, clube); o nome fica o da 1.ª lista (as nossas).
+    const addHomonimo = (nm: string, lite: PlayerLite) => {
+      const a = lk.byNorm.get(nm) || [];
+      const ja = a.find(x => x.fed === lite.fed);
+      if (ja) {
+        ja.dob = ja.dob || lite.dob;
+        ja.clubNorm = [ja.clubNorm, lite.clubNorm].filter(Boolean).join(" ") || undefined;
+      }
+      else a.push({ ...lite });
+      lk.byNorm.set(nm, a);
+    };
+    // Fontes pequenas e curadas — únicas no byISsmall
+    const addSmall = (fed: string, name: string, dob: string | null, clubNorm?: string) => {
       if (!fed) return;
       if (dob && !lk.dobByFed.has(fed)) lk.dobByFed.set(fed, dob);
       const nm = norm(name);
       if (!nm) return;
-      const lite: PlayerLite = { fed, name: displayName(name), dob };
-      if (!lk.byNorm.has(nm)) lk.byNorm.set(nm, lite);
+      const lite: PlayerLite = { fed, name: displayName(name), dob, clubNorm };
+      addHomonimo(nm, lite);
       const k = isKey(nm);
       if (k) { const a = lk.byISsmall.get(k) || []; a.push(lite); lk.byISsmall.set(k, a); }
     };
-    for (const [fed, p] of Object.entries(playersDb)) addSmall(fed, (p as any).name || "", (p as any).dob || null);
+    for (const [fed, p] of Object.entries(playersDb)) {
+      addSmall(fed, p.name || "", p.dob || null, norm(`${clubLong(p)} ${clubShort(p)}`) || undefined);
+    }
     for (const p of inativos ?? []) addSmall(p.fed, p.name, p.dob);
-    // Federados activos — dob + índice por inicial/apelido (c/ clube) + exacto único
-    const nameCount = new Map<string, number>();
-    for (const p of fedAll ?? []) { const nm = norm(p.name); if (nm) nameCount.set(nm, (nameCount.get(nm) || 0) + 1); }
+    // Federados activos — dob + índice por inicial/apelido (c/ clube) + homónimos
     for (const p of fedAll ?? []) {
       if (!p.fed) continue;
       if (p.dob && !lk.dobByFed.has(p.fed)) lk.dobByFed.set(p.fed, p.dob);
       const nm = norm(p.name);
       if (!nm) continue;
       const lite: PlayerLite = { fed: p.fed, name: displayName(p.name), dob: p.dob, clubNorm: p.clubNorm };
-      // exacto: só se único nos federados e ainda não definido pelas fontes curadas
-      if (nameCount.get(nm) === 1 && !lk.byNorm.has(nm)) lk.byNorm.set(nm, lite);
+      addHomonimo(nm, lite);
       const k = isKey(nm);
       if (k) { const a = lk.byISfed.get(k) || []; a.push(lite); lk.byISfed.set(k, a); }
     }
@@ -718,7 +746,7 @@ export default function DrawsPage() {
       out.push({
         ...r,
         rondas,
-        vezes: rondas.length,
+        vezes: rondas.filter(rd => rondaJogada(rd.ronda)).length,
         ultimaData: datas.length ? datas.reduce((a, b) => (a > b ? a : b)) : null,
         primeiraData: datas.length ? datas.reduce((a, b) => (a < b ? a : b)) : null,
       });
@@ -735,7 +763,7 @@ export default function DrawsPage() {
     const anos = anoFilter;
     const byT = new Map<string, Round[]>();
     for (const r of rondasFiltradas) {
-      if (r.ronda < 0) continue; // "conhecido" sem ronda jogada não é um dia de draw
+      if (!rondaJogada(r.ronda)) continue; // "conhecido" sem ronda jogada não é um dia de draw
       if (anos.size > 0) { const y = r.data?.slice(0, 4); if (!(y && anos.has(y))) continue; }
       const a = byT.get(r.torneioId) || [];
       a.push(r);
@@ -754,7 +782,7 @@ export default function DrawsPage() {
           startHole: r.startHole,
           manuelScore: r.manuelScore,
           grupo: r.companheiros.map(c => {
-            const id = resolveCompanion(c, lookups);
+            const id = resolveCompanion(c, lookups, { torneioNome: r.torneioNome, data: r.data });
             const esc = escalaoAtDate(id.dob, r.data) || MANUAL_ESCALAO[norm(id.nome)] || null;
             return { nome: id.nome, fed: id.fed, clube: c.clube, pais: c.pais, escalao: esc, score: c.score };
           }),
@@ -879,7 +907,7 @@ export default function DrawsPage() {
     if (!data) return { FPG: 0, Intl: 0 };
     let fpg = 0, intl = 0;
     for (const r of data.rondas) {
-      if (r.ronda < 0) continue;
+      if (!rondaJogada(r.ronda)) continue;
       if (r.circuito === "FPG") fpg++;
       else intl++;
     }
@@ -1094,7 +1122,7 @@ export default function DrawsPage() {
                           <td colSpan={7} className="u-bg-bg-detail u-p-10px-14px-14px">
                             <div className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-mb-8px">
                               <span className="h-xs u-m-0">
-                                Frente a frente — Manuel vs {row.nome.split(" ")[0]} ({row.rondas.length} {row.rondas.length === 1 ? "ronda" : "rondas"})
+                                Frente a frente — Manuel vs {row.nome.split(" ")[0]} ({row.vezes} {row.vezes === 1 ? "ronda" : "rondas"})
                               </span>
                               <span className="legend-row u-m-0 u-ml-auto">
                                 <span className="legend-item"><span className="legend-dot u-bg-color-good u-br-50pc" /> Manuel melhor</span>
@@ -1194,7 +1222,8 @@ export default function DrawsPage() {
                   </td>
                   <td colSpan={2} className="muted u-fw-400">
                     {(() => {
-                      const nrondas = rondasFiltradas.length;
+                      // O mesmo número do KPI «Rondas em conjunto» (sem os «conhecidos»).
+                      const nrondas = contagensTab[tab];
                       return `${nrondas} ${nrondas === 1 ? "ronda" : "rondas"} com draw`;
                     })()}
                   </td>
@@ -1272,7 +1301,8 @@ export default function DrawsPage() {
                     <ul className="u-m-0 u-pl-18px">
                       {lista.map((tn, i) => (
                         <li key={i} className="u-mb-2px">
-                          <ExtLink href={`https://www.signupanytime.com/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${tn.t}`} className="courseLink">
+                          {/* 10/11/2026: faltava o /plugins/links no caminho e o El Prat saía com o ax internacional. */}
+                          <ExtLink href={signupanytimeUrl(tn.t)} className="courseLink">
                             {tn.nome}
                           </ExtLink>
                           <span className="muted">

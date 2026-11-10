@@ -22,6 +22,7 @@
 import type { Tournament } from "../fpgTypes";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import { escalaoAtDate } from "../../utils/format";
+import { temCartao } from "../../utils/classificacao";
 import {
   pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent,
 } from "../../../ranking-pja/pja-rules.mjs";
@@ -426,7 +427,7 @@ export function buildRankRows(yearTournaments: Tournament[], opts: BuildRankRows
       const aquaporSkipped = applyNewRules && evType === "AQUAPOR" && playerDidDT.get(playerKey) === true;
 
       const addRound = (roundNum: number, gross: number, par: number, rs?: any) => {
-        if (!par || !gross || gross >= 900) return;
+        if (!par || !temCartao(gross)) return;
         const tp = gross - par;
         const pts = pjaPts(tp, mult);
         const roundKey = tournKey + "_r" + roundNum;
@@ -461,7 +462,7 @@ export function buildRankRows(yearTournaments: Tournament[], opts: BuildRankRows
       } else {
         const tp = typeof p.toPar === "string" ? parseInt(p.toPar) : p.toPar as number;
         const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal as number;
-        if (tp == null || isNaN(tp) || gross == null || isNaN(gross) || gross >= 900) continue;
+        if (tp == null || isNaN(tp) || !temCartao(gross)) continue;
         const par = gross - tp;
         // Passar a ronda (quando existe) para o modo metric="sd" poder ler o
         // differential dela — torneios de 1 ronda caem neste ramo e sem isto

@@ -27,7 +27,8 @@ import type { Course, Tee, Hole } from "../data/types";
 import CourseHeroCard, { getParTotal, PAR_HSL, HeroStat } from "../ui/CourseHeroCard";
 import { MultiTeeSDTable } from "../ui/ScoreTable";
 import TeePill from "../ui/TeePill";
-import { physicalTeeGroups, physicalTeeKey } from "../utils/teeGroups";
+import { physicalTeeKey } from "../utils/teeGroups";
+import { teeChoiceKey, findTeeByChoice, teeChoiceOptions } from "../utils/teeChoice";
 import { calcSD, calcPlayingHcp } from "../utils/whsCalc";
 import { fmtSD, fmtHcp, fmtSign } from "../utils/format";
 import { teeHexFromTee as teeHex } from "../utils/teeUtils";
@@ -57,24 +58,9 @@ function filterCoursesForComparison(courses: Course[]): Course[] {
   });
 }
 
-const SEX_MARK: Record<string, string> = { M: " · M", F: " · F" };
-
-/** Opções de tee para os <select>, uma por tee FÍSICO (sem o mesmo tee 2× com
- *  texto idêntico). Quando um tee físico tem ratings M e F, expande nas duas
- *  entradas com marcador de sexo no texto (para serem distinguíveis), mantendo
- *  o teeId real como value — a lógica de selecção/rating a jusante não muda. */
-function teeSelectOptions(tees: Tee[]): { teeId: string; label: string }[] {
-  const opts: { teeId: string; label: string }[] = [];
-  for (const g of physicalTeeGroups(tees)) {
-    const sexes = (["M", "F", "U"] as const).filter(s => g.teeBySex[s]);
-    const multi = sexes.length > 1;
-    for (const s of sexes) {
-      const t = g.teeBySex[s]!;
-      opts.push({ teeId: t.teeId, label: g.label + (multi ? (SEX_MARK[s] ?? "") : "") });
-    }
-  }
-  return opts;
-}
+// As opções de tee dos <select> saem de `teeChoiceOptions` (utils/teeChoice): o
+// value é `teeId + sexo`. 10/11/2026: com o `teeId` sozinho, «Amarelas · F» da
+// Praia d'El-Rey voltava sempre a «· M» (27 pares M/F partilham o teeId).
 
 // ═══════════════════ Similitude ═══════════════════
 
@@ -241,12 +227,17 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
 
 // ═══════════════════ Comparação lado-a-lado de 2 campos ═══════════════════
 
-/** Mostra delta (B − A) formatado com sinal e cor. */
+/** Diferença A − B — o MESMO sentido em todo o cartão (10/11/2026: os cartões de
+ *  cima e as pílulas faziam A − B e a tabela buraco a buraco B − A; com o A 300 m
+ *  mais comprido lia-se «+300 m» em cima e valores negativos por baixo). */
+const deltaAB = (a: number, b: number) => a - b;
+
+/** Mostra a diferença (A − B) formatada com sinal e cor. */
 function Delta({ a, b, decimals = 0, unit = "" }: {
   a: number | null; b: number | null; decimals?: number; unit?: string;
 }) {
   if (a === null || b === null) return MUTED;
-  return <ToPar v={b - a} kind="delta" tone="neutral" digits={decimals} className="u-ff-font-mono" suffix={b !== a ? unit : undefined} />;
+  return <ToPar v={deltaAB(a, b)} kind="delta" tone="neutral" digits={decimals} className="u-ff-font-mono" suffix={b !== a ? unit : undefined} />;
 }
 
 // ═══════════════════ Tabela Score→SD lado a lado (tee A vs tee B) ═══════════
@@ -259,9 +250,20 @@ function nearestTee(course: Course, excludeTee: Tee, refTee: Tee): Tee | null {
   const score = (t: Tee) =>
     Math.abs((t.ratings!.holes18!.courseRating! - crRef) / 3) +
     Math.abs((t.ratings!.holes18!.slopeRating! - slRef) / 15);
+  // Só tees do MESMO sexo do escolhido (10/11/2026): sem isto o «≈» de um tee de
+  // Homens podia ser o rating de Senhoras de outro tee, sem nada que o dissesse.
+  const mesmoSexo = (t: Tee) => t.sex === excludeTee.sex || t.sex === "U" || excludeTee.sex === "U";
   return course.master.tees
-    .filter(t => t.teeId !== excludeTee.teeId && t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating)
+    .filter(t => t.teeId !== excludeTee.teeId && mesmoSexo(t) && t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating)
     .sort((a, b) => score(a) - score(b))[0] ?? null;
+}
+
+type SdCol = { tee: Tee; cr: number; sl: number; par: number; hex: string; isChosen: boolean };
+function sdCol(tee: Tee | null, isChosen: boolean): SdCol | null {
+  const cr = tee?.ratings?.holes18?.courseRating;
+  const sl = tee?.ratings?.holes18?.slopeRating;
+  if (!tee || !cr || !sl) return null;
+  return { tee, cr, sl, par: tee.ratings?.holes18?.par ?? 72, hex: teeHex(tee), isChosen };
 }
 
 function TwoTeeSDTable({
@@ -276,28 +278,16 @@ function TwoTeeSDTable({
   const bestMatchB = useMemo(() => nearestTee(courseB, teeB, teeA), [courseB, teeA, teeB]);
 
   // Colunas: [teeA escolhido, bestMatchA?] | [bestMatchB?, teeB escolhido]
-  type ColDef = { tee: Tee; cr: number; sl: number; par: number; hex: string; isChosen: boolean };
-  const makeCol = (tee: Tee, isChosen: boolean): ColDef | null => {
-    const cr = tee.ratings?.holes18?.courseRating;
-    const sl = tee.ratings?.holes18?.slopeRating;
-    if (!cr || !sl) return null;
-    return { tee, cr, sl, par: tee.ratings?.holes18?.par ?? 72, hex: teeHex(tee), isChosen };
-  };
-
-  const colsA = [makeCol(teeA, true), bestMatchA ? makeCol(bestMatchA, false) : null]
-    .filter(Boolean) as ColDef[];
-  const colsB = [bestMatchB ? makeCol(bestMatchB, false) : null, makeCol(teeB, true)]
-    .filter(Boolean) as ColDef[];
-  const allCols = [...colsA, ...colsB];
+  const { colsA, colsB, allCols } = useMemo(() => {
+    const a = [sdCol(teeA, true), sdCol(bestMatchA, false)].filter((c): c is SdCol => !!c);
+    const b = [sdCol(bestMatchB, false), sdCol(teeB, true)].filter((c): c is SdCol => !!c);
+    return { colsA: a, colsB: b, allCols: [...a, ...b] };
+  }, [teeA, teeB, bestMatchA, bestMatchB]);
   const divIdx = colsA.length; // índice onde começa o grupo B
 
-  if (!allCols.length) {
-    return <p className="muted u-fs-fs-12">Tees sem ratings para calcular.</p>;
-  }
-
-  const phcps = allCols.map(c => Math.round(calcPlayingHcp(hi, c.sl, c.cr, c.par)));
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Hooks TODOS antes do `return` antecipado (10/11/2026): com os dois campos sem
+  // ratings (Paço do Lumiar) e depois mudar um deles, o React rebentava. E as
+  // linhas dependem dos TEES (não do teeId, que é igual em M e F).
   const rows = useMemo(() => {
     const result: { delta: number; sds: number[] }[] = [];
     for (let delta = -8; delta <= 36; delta++) {
@@ -305,8 +295,13 @@ function TwoTeeSDTable({
       result.push({ delta, sds: allCols.map(c => calcSD(c.par + delta, c.cr, c.sl, pcc)) });
     }
     return result;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bestMatchA?.teeId, bestMatchB?.teeId, teeA.teeId, teeB.teeId, pcc]);
+  }, [allCols, pcc]);
+
+  if (!allCols.length) {
+    return <p className="muted u-fs-fs-12">Tees sem ratings para calcular.</p>;
+  }
+
+  const phcps = allCols.map(c => Math.round(calcPlayingHcp(hi, c.sl, c.cr, c.par)));
 
 
   return (
@@ -421,7 +416,7 @@ function CourseSideBySide({
       {(() => {
         const fmtDelta = (a: number | null, b: number | null, dec = 0) => {
           if (a == null || b == null) return "–";
-          return fmtSign(a - b, dec);
+          return fmtSign(deltaAB(a, b), dec);
         };
         const deltaColor = (a: number | null, b: number | null) => {
           if (a == null || b == null) return "var(--text-3)";
@@ -576,7 +571,7 @@ function CourseSideBySide({
                     {pairs.map(({a, b, rankA, rankB}, i) => {
                       const psA = a ? pillCores(par, rankA, holesA.length) : null;
                       const psB = b ? pillCores(par, rankB, holesB.length) : null;
-                      const delta = a && b ? (a.distance ?? 0) - (b.distance ?? 0) : null;
+                      const delta = a && b ? deltaAB(a.distance ?? 0, b.distance ?? 0) : null;
                       return (
                         <Fragment key={i}>
                           <div key={`a${i}`} className="u-d-flex u-jc-flex-end u-pr-8px">
@@ -645,8 +640,8 @@ function CourseSideBySide({
                       <span className="u-ml-6px"><TeePill name={teeB.teeName} hex={teeHex(teeB)} /></span>
                     </th>
                     <th className="r">Dist B (m)</th>
-                    <th className="r">Δ dist</th>
-                    <th className="r">Δ par</th>
+                    <th className="r" title="Distância A − B">Δ dist (A−B)</th>
+                    <th className="r" title="Par A − B">Δ par (A−B)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -693,7 +688,7 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
     return sds?.courseKey ?? sortedCourses[0]?.courseKey ?? "";
   }, [sortedCourses, initialCourseKey]);
 
-  // ── Campo A ──
+  // ── Campo A ── (o tee guarda-se pela chave de escolha `teeId + sexo`)
   const [selectedCourseKey, setSelectedCourseKey] = useState<string>(defaultCourseKey);
   const [selectedTeeId, setSelectedTeeId] = useState<string>("");
 
@@ -714,7 +709,7 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
   );
   const selectedTee = useMemo(() => {
     if (!selectedCourse) return undefined;
-    return selectedCourse.master.tees.find(t => t.teeId === selectedTeeId) ?? selectedCourse.master.tees[0];
+    return findTeeByChoice(selectedCourse.master.tees, selectedTeeId) ?? selectedCourse.master.tees[0];
   }, [selectedCourse, selectedTeeId]);
 
   const selectedCourseB = useMemo(
@@ -723,7 +718,7 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
   );
   const selectedTeeB = useMemo(() => {
     if (!selectedCourseB) return undefined;
-    return selectedCourseB.master.tees.find(t => t.teeId === selectedTeeBId) ?? selectedCourseB.master.tees[0];
+    return findTeeByChoice(selectedCourseB.master.tees, selectedTeeBId) ?? selectedCourseB.master.tees[0];
   }, [selectedCourseB, selectedTeeBId]);
 
   const comparisonCourses = useMemo(() => filterCoursesForComparison(simCourses), [simCourses]);
@@ -778,11 +773,11 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
             <ToolbarSep />
             <ToolbarMeta>Tee</ToolbarMeta>
             <Select
-              value={selectedTee?.teeId ?? ""}
+              value={selectedTee ? teeChoiceKey(selectedTee) : ""}
               onChange={setSelectedTeeId}
             >
-              {teeSelectOptions(selectedCourse.master.tees).map(o => (
-                <option key={o.teeId} value={o.teeId}>{o.label}</option>
+              {teeChoiceOptions(selectedCourse.master.tees).map(o => (
+                <option key={o.key} value={o.key}>{o.label}</option>
               ))}
             </Select>
           </>
@@ -806,11 +801,11 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
             <ToolbarSep />
             <ToolbarMeta>Tee</ToolbarMeta>
             <Select
-              value={selectedTeeB?.teeId ?? ""}
+              value={selectedTeeB ? teeChoiceKey(selectedTeeB) : ""}
               onChange={setSelectedTeeBId}
             >
-              {teeSelectOptions(selectedCourseB.master.tees).map(o => (
-                <option key={o.teeId} value={o.teeId}>{o.label}</option>
+              {teeChoiceOptions(selectedCourseB.master.tees).map(o => (
+                <option key={o.key} value={o.key}>{o.label}</option>
               ))}
             </Select>
           </>
@@ -893,11 +888,11 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
                   : null}
                 onPick={row => {
                   setSelectedCourseBKey(prev =>
-                    prev === row.course.courseKey && selectedTeeB?.teeId === row.tee.teeId
+                    prev === row.course.courseKey && selectedTeeB != null && teeChoiceKey(selectedTeeB) === teeChoiceKey(row.tee)
                       ? ""
                       : row.course.courseKey
                   );
-                  setSelectedTeeBId(row.tee.teeId);
+                  setSelectedTeeBId(teeChoiceKey(row.tee));
                 }}
               />
             )}

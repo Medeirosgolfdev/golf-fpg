@@ -64,10 +64,12 @@ export const VP_PAR = [5,3,4,3,4,5,4,3,4,4,5,3,4,4,5,3,4,4]; // par 71 — tee n
 // par 72 (buracos 10 é par 5 no WJGC vs par 4 no tee normal)
 export const VP_WJGC26_PAR = [5,3,4,3,4,5,4,3,4,5,5,3,4,4,5,3,4,4];
 export const VP_WJGC26_SI  = [4,10,6,18,16,8,14,12,2,1,7,9,15,11,5,13,17,3];
-export const VP_WJGC26_M   = [428,144,313,117,268,420,290,125,262,322,417,119,254,311,384,93,237,338]; // 4842m
+// Metros = «Rojas» da RFEG (4828 m). O buraco 1 era 428: a RFEG e o próprio WJGC 2026
+// (453 jardas no `brjgt2537_boys_10-11.json`) dizem 414 — ver extraCourses.ts (10/11/2026).
+export const VP_WJGC26_M   = [414,144,313,117,268,420,290,125,262,322,417,119,254,311,384,93,237,338]; // 4828m
 // Villa Padierna Flamingos — tee normal VERMELHAS (away-villa-padierna-flamingos-espanha-0)
 export const VP_SI = [4,10,6,18,16,8,14,12,2,1,7,9,15,11,5,13,17,3];
-export const VP_M  = [428,144,313,117,268,420,290,125,262,322,417,119,254,311,384,93,237,338]; // 4842m
+export const VP_M  = [414,144,313,117,268,420,290,125,262,322,417,119,254,311,384,93,237,338]; // 4828m
 // Villa Padierna Alferini — WJGC 2026 Boys 12-13 (away-villa-padierna-alferini-0)
 export const VP_ALFERINI_PAR = [4,4,3,5,4,4,5,3,4,4,4,5,5,3,4,5,3,4]; // par 72
 export const VP_ALFERINI_SI  = [5,1,15,13,7,17,11,3,9,16,6,18,14,12,4,2,10,8];

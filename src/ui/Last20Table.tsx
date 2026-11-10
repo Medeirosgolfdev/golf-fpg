@@ -1,5 +1,6 @@
 ﻿import React, { useState, useMemo } from "react";
 import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
+import { eclecticForRound } from "../data/playerDataLoader";
 import { norm } from "../utils/format";
 import { normKey } from "../utils/teeColors";
 import { fmtStb } from "../utils/scoreDisplay";
@@ -103,7 +104,8 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
               // Eclectic entry
               const courseKey = norm(r.course);
               const teeKey = r.teeKey || normKey(r.tee || "");
-              const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
+              // O eclético da MESMA metade nas voltas de 9 buracos (10/11/2026, I4).
+          const ecEntry = eclecticForRound(data, courseKey, { ...r, teeKey });
 
               return (
                 <React.Fragment key={r.scoreId}>
@@ -149,6 +151,7 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
                             links={r._links}
                             pill={effectivePill(r)}
                             eclecticEntry={ecEntry}
+                            grossOficial={r.gross}
                           />
                         </div>
                       </td>

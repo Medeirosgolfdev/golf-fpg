@@ -7,7 +7,7 @@
  */
 import { isPT } from "../../utils/ptPlayers";
 import { normPaisDisplay } from "../../utils/flagUtils";
-import { intlCountryCell } from "../intlCommon";
+import { intlCountryCell, toParByRounds } from "../intlCommon";
 import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes";
 import { intlScorecardOptions } from "../intlScorecard";
 import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
@@ -163,7 +163,7 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
       club: playerCountry ? intlCountryCell(playerCountry, clubText).trim() : clubText,
       total: p.total,
       // Pelas voltas que o JOGADOR jogou (82 numa volta de uma série de 2 dava «−62»).
-      toPar: p.total != null && parTotal > 0 ? p.total - (parTotal * (rounds.length || numRounds)) : null,
+      toPar: toParByRounds(p.total, parTotal, rounds.length || numRounds),
       hcp: p.hcp,
       rounds,
       scores: rounds[0]?.scores || [],

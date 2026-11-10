@@ -418,6 +418,8 @@ function RegionChampionsBlock({
   const km = byRegionMap;
   const ovr = (showRegion ? regionOverrides[region] : null) || {};
   const hideYearsSet = new Set(ovr.hideYears || []);
+  /** O campeão pertence ao grupo de escalões deste bloco? */
+  const noGrupo = (c: Champion) => !escFilter || escFilter.has(c.escalao);
 
   // ── Anos a mostrar (SCROLL horizontal — mostrar TODOS os anos com dados) ──
   // Para "Nacional" queremos mostrar só os anos que tenham champions nacionais.
@@ -425,7 +427,9 @@ function RegionChampionsBlock({
   // região específica (não os anos do outro circuit).
   const yearsWithDataForThisBlock = [...allYears].filter(y => {
     if (hideYearsSet.has(y)) return false;
-    return champions.some(c => c.year === y && (!showRegion || c.region === region));
+    // Só os anos com campeões DESTE grupo de escalões (10/11/2026): no bloco
+    // Sub-16/18+ aparecia a coluna de um ano que só tinha Sub-10/12/14.
+    return champions.some(c => c.year === y && (!showRegion || c.region === region) && noGrupo(c));
   });
   const yearCols = yearsWithDataForThisBlock.sort((a, b) => a - b);
 
@@ -480,7 +484,9 @@ function RegionChampionsBlock({
   if (rows.length === 0) return null;
 
   // Quantos campeões já preenchidos (para mostrar contador no header colapsado)
-  const filledCount = [...km.values()].length;
+  // — só os do grupo de escalões e dos anos à vista (10/11/2026: os dois blocos
+  // de uma região mostravam o mesmo total, o da região inteira).
+  const filledCount = [...km.values()].filter(c => noGrupo(c) && !hideYearsSet.has(c.year)).length;
 
   return (
     <div className={showRegion ? "u-mb-20px" : "u-mb-8px"}>

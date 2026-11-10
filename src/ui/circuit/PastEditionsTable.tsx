@@ -14,7 +14,9 @@
  * `PastEditionsTab` na MajorPage, que faz lazy-load dos `{slug}_{ano}.json`).
  */
 import { useMemo, useState } from "react";
-import { medal as medalOf, fmtOrd } from "../../utils/format";
+import { fmtOrd } from "../../utils/format";
+import PosMedal from "../PosMedal";
+import { editionPlaces } from "./repeaters";
 import { clubFlagPrefix } from "../../utils/flagUtils";
 import ToPar from "../ToPar";
 import EmptyState from "../EmptyState";
@@ -25,6 +27,8 @@ import { MUTED } from "../tableCells";
 export interface PastEditionPlayer {
   pos: number | null;
   name: string;
+  /** Federado/licença que a edição traz — desfaz homónimos (dois «Pedro Aires»). */
+  fed?: string | null;
   /** Clube/país já formatado pela página (ex: "🇿🇼 Zimbabwe") — mostra-se só a bandeira. */
   club?: string | null;
   total: number | null;
@@ -92,7 +96,8 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
         return sortDir === "asc" ? va - vb : vb - va;
       });
     }
-    return { ...e, players: list };
+    // Os lugares saem da edição original (não mudam com a ordenação).
+    return { ...e, players: list, lugares: editionPlaces(e) };
   }), [editions, sortKey, sortDir]);
 
   const maxRows = Math.max(0, ...cols.map((e) => e.players.length));
@@ -116,9 +121,13 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
         <table className="sc-lb sc-lb-dense u-fvn-tabular-nums u-w-max-content">
           <thead>
             <tr>
+              {/* «#» é só o número da linha (cada edição é uma lista à parte e pode
+                  estar ordenada por uma volta); o lugar de cada jogador vai no selo
+                  ao lado do nome. Clicar repõe a ordem da classificação. */}
               <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={onSort} rowSpan={2}
+                  title="Linha da tabela — o lugar de cada jogador está no selo ao lado do nome. Clicar repõe a ordem da classificação."
                   className="u-p-6px-8px u-fs-fs-11 u-pos-sticky u-left-0 u-z-z-raised u-w-50px u-minw-50px">
-                Pos
+                #
               </SortableHdr>
               {cols.map((e) => (
                 <th key={e.id} colSpan={2 + (e.parPerRound ? 1 : 0) + e.nRounds}
@@ -177,23 +186,26 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
           </thead>
           <tbody>
             {Array.from({ length: maxRows }, (_, ri) => {
-              // Pódio como no scorecard: medalha na coluna da posição, sem fundo de cor.
-              const medal = medalOf(ri + 1);
               return (
                 <tr key={ri}>
                   <td className="lb-pos u-pos-sticky u-left-0 u-bg-bg-card u-z-z-base u-ws-nowrap">
-                    {medal ?? ri + 1}
+                    {ri + 1}
                   </td>
                   {cols.flatMap((e) => {
                     const p = e.players[ri];
+                    // O lugar é o do JOGADOR nesta edição (empatados partilham-no) —
+                    // a medalha era a da linha: dois 1.ºs saíam 🥇 e 🥈 e, ao ordenar
+                    // por uma volta, a 🥇 ficava ao lado do pior (10/11/2026).
+                    const lugar = p ? e.lugares.get(p) ?? null : null;
                     const cells = [
                       // Destaque com as classes GLOBAIS do projecto (versão por
                       // célula) — cada coluna é um torneio diferente, por isso
                       // não dá para usar .row-manuel/.row-portuguese na linha.
                       <td key={`${e.id}_n`}
                           className={["pe-bl pe-name", p?.isManuel ? "cell-manuel fw-700" : p?.isPt ? "cell-portuguese" : ""].filter(Boolean).join(" ")}
-                          title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${fmtOrd(p.pos)} oficial` : ""}` : undefined}>
-                        {p ? <>{clubFlagPrefix(p.club) }{p.name}</> : MUTED}
+                          title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${fmtOrd(p.pos)} oficial` : lugar != null ? ` · ${fmtOrd(lugar)}` : ""}` : undefined}>
+                        {/* Selo só no pódio (a coluna do nome é estreita); os outros lugares estão no tooltip. */}
+                        {p ? <>{lugar != null && lugar <= 3 ? <><PosMedal pos={lugar} />{" "}</> : null}{clubFlagPrefix(p.club) }{p.name}</> : MUTED}
                       </td>,
                       // Total de quem NÃO completou (WD/DNF ou volta a decorrer)
                       // fica esbatido — 2 voltas somam menos que 3 e um total

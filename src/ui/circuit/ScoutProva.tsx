@@ -23,6 +23,7 @@ import { TeeDot, type PlayersDB } from "../tournamentPrimitives";
 import { fmtToPar, fmtSign, fmtOrd } from "../../utils/format";
 import ToPar from "../ToPar";
 import { normName } from "../../utils/normName";
+import { playerKey } from "../../utils/playerKey";
 import { loadMasterData } from "../../data/loader";
 import { loadPlayerStats, type PlayerStatsDb } from "../../data/playerStatsTypes";
 import LoadingState from "../LoadingState";
@@ -114,62 +115,70 @@ export default function ScoutProva({ current, previous = SEM_EDICOES, h2hManuel,
     return buildRepeaters({ current, previous, fedInfo, form, masterRatings: masterRatings ?? undefined, todos: true, fedPorNome });
   }, [current, previous, playersDB, masterRatings, stats, fedPorNome]);
 
-  const porNome = useMemo(() => new Map(rows.map((r) => [normName(r.name), r])), [rows]);
+  // Cada linha pela chave do jogador NA PROVA (federado, senão nome). Pelo nome
+  // só, dois homónimos ficavam com o índice, a forma e a previsão um do outro
+  // (Aniversário Estela 2025: os dois «Pedro Aires», 4939 e 42068 — 10/11/2026).
+  const porChave = useMemo(() => new Map(rows.map((r) => [playerKey(r.fedProva, r.name), r])), [rows]);
   // As edições anteriores no bloco «Nesta prova» do Scout (igual em todas as páginas).
   const edicoes = useMemo(() => previous
     .map((p) => buildPastEditionFromTournament(p.t, { id: p.id, year: p.year, label: p.label ?? null, division: p.label || escalaoProva || "", course: p.t.campo || null }))
     .filter((e): e is PastEdition => !!e), [previous, escalaoProva]);
-  const field = useMemo(() => currentField(current).map((f) => ({ name: f.name, fed: f.fed, club: porNome.get(normName(f.name))?.club ?? null })), [current, porNome]);
+  // O país e o nascimento que a prova traz seguem para o Scout (bandeira e
+  // escalão de quem não tem ficha no Kids 2 — 10/11/2026).
+  const field = useMemo(() => currentField(current).map((f): FieldPlayer => ({
+    name: f.name, fed: f.fed, club: porChave.get(playerKey(f.fed, f.name))?.club ?? null,
+    country: f.country ?? null, dob: f.dob ?? null,
+  })), [current, porChave]);
   const provasComManuel = useCallback((p: FieldPlayer) => (p.fed ? h2hManuel?.get(p.fed) : null), [h2hManuel]);
 
   const extras = useMemo(() => {
-    const R = (name: string): Repeater | undefined => porNome.get(normName(name));
+    const R = (name: string, fed?: string | null): Repeater | undefined => porChave.get(playerKey(fed, name));
     const tem = {
       hora: rows.some((r) => r.teeTime), tee: rows.some((r) => r.teeNow),
       hcp: rows.some((r) => r.hcpNow != null), forma: rows.some((r) => r.form?.avgSD5 != null),
       aqui: rows.some((r) => r.editions.length), prev: rows.some((r) => r.forecast),
     };
     const antes: ScoutExtraCol[] = [];
-    if (tem.hora) antes.push({ key: "hora", label: "Saída", title: "Hora do draw", cell: (n) => R(n)?.teeTime || "–", sort: (n) => R(n)?.teeTime || null });
-    if (tem.tee) antes.push({ key: "tee", label: "Tee", cell: (n) => { const t = R(n)?.teeNow; return t ? <TeeDot teeName={t} /> : "–"; } });
+    if (tem.hora) antes.push({ key: "hora", label: "Saída", title: "Hora do draw", cell: (n, f) => R(n, f)?.teeTime || "–", sort: (n, f) => R(n, f)?.teeTime || null });
+    if (tem.tee) antes.push({ key: "tee", label: "Tee", cell: (n, f) => { const t = R(n, f)?.teeNow; return t ? <TeeDot teeName={t} /> : "–"; } });
     const depois: ScoutExtraCol[] = [];
     if (tem.hcp) {
-      depois.push({ grupo: "WHS", key: "fpghcp", label: "Índice", title: "Índice de hoje (FPG)", cell: (n) => R(n)?.hcpNow ?? "–", sort: (n) => R(n)?.hcpNow ?? null });
-      depois.push({ grupo: "WHS", key: "d3m", label: "Δ 3m", title: "Variação do índice nos últimos 3 meses", cell: (n) => {
-        const d = R(n)?.form?.hcpDelta3m;
+      depois.push({ grupo: "WHS", key: "fpghcp", label: "Índice", title: "Índice de hoje (FPG)", cell: (n, f) => R(n, f)?.hcpNow ?? "–", sort: (n, f) => R(n, f)?.hcpNow ?? null });
+      depois.push({ grupo: "WHS", key: "d3m", label: "Δ 3m", title: "Variação do índice nos últimos 3 meses", cell: (n, f) => {
+        const d = R(n, f)?.form?.hcpDelta3m;
         return d ? `${fmtSign(d)}` : "–";
       } });
     }
     if (tem.forma) {
-      depois.push({ grupo: "WHS", key: "whs", label: "Forma", title: "Differential médio das últimas 5 voltas (verde: acima do seu normal)", cell: (n) => <FormaCell f={R(n)?.form ?? null} />, sort: (n) => R(n)?.form?.avgSD5 ?? null });
-      depois.push({ grupo: "WHS", key: "whs20", label: "Média", title: "Differential médio das últimas 20 voltas", cell: (n) => n1(R(n)?.form?.avgSD20) });
+      depois.push({ grupo: "WHS", key: "whs", label: "Forma", title: "Differential médio das últimas 5 voltas (verde: acima do seu normal)", cell: (n, f) => <FormaCell f={R(n, f)?.form ?? null} />, sort: (n, f) => R(n, f)?.form?.avgSD5 ?? null });
+      depois.push({ grupo: "WHS", key: "whs20", label: "Média", title: "Differential médio das últimas 20 voltas", cell: (n, f) => n1(R(n, f)?.form?.avgSD20) });
     }
     if (tem.aqui) {
-      depois.push({ grupo: "Nesta prova (±par e SD)", key: "aquiTp", label: "Melhor ±", title: "Melhor ±par que fez nesta prova", sort: (n) => R(n)?.bestToPar ?? null, cell: (n) => {
-        const b = R(n)?.bestToPar;
+      depois.push({ grupo: "Nesta prova (±par e SD)", key: "aquiTp", label: "Melhor ±", title: "Melhor ±par que fez nesta prova", sort: (n, f) => R(n, f)?.bestToPar ?? null, cell: (n, f) => {
+        const b = R(n, f)?.bestToPar;
         return b != null ? fmtToPar(b) : "–";
       } });
-      depois.push({ grupo: "Nesta prova (±par e SD)", key: "fit", label: "vs Campo", title: "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio", sort: (n) => R(n)?.courseFit ?? null, cell: (n) => {
-        const c = R(n)?.courseFit;
+      depois.push({ grupo: "Nesta prova (±par e SD)", key: "fit", label: "vs Campo", title: "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio", sort: (n, f) => R(n, f)?.courseFit ?? null, cell: (n, f) => {
+        const c = R(n, f)?.courseFit;
         return c == null ? "–" : `${fmtSign(c)}`;
       } });
     }
     if (tem.prev) {
-      depois.push({ grupo: "Previsão WHS", key: "prevWhs", label: "Gross", title: "Gross esperado no torneio", sort: (n) => R(n)?.forecast?.total ?? null, cell: (n) => R(n)?.forecast?.total ?? "–" });
-      depois.push({ grupo: "Previsão WHS", key: "prevWhsTp", label: "±", cell: (n) => {
-        const tp = R(n)?.forecast?.toPar;
+      depois.push({ grupo: "Previsão WHS", key: "prevWhs", label: "Gross", title: "Gross esperado no torneio", sort: (n, f) => R(n, f)?.forecast?.total ?? null, cell: (n, f) => R(n, f)?.forecast?.total ?? "–" });
+      depois.push({ grupo: "Previsão WHS", key: "prevWhsTp", label: "±", cell: (n, f) => {
+        const tp = R(n, f)?.forecast?.toPar;
         return tp != null ? fmtToPar(tp) : "–";
       } });
-      depois.push({ grupo: "Previsão WHS", key: "prevWhsInt", label: "Intervalo", title: "Intervalo plausível (bom e mau dia)", cell: (n) => {
-        const f = R(n)?.forecast;
-        return f ? `${f.low}–${f.high}` : "–";
+      depois.push({ grupo: "Previsão WHS", key: "prevWhsInt", label: "Intervalo", title: "Intervalo plausível (bom e mau dia)", cell: (n, f) => {
+        const fc = R(n, f)?.forecast;
+        return fc ? `${fc.low}–${fc.high}` : "–";
       } });
     }
     return { antes, depois };
-  }, [rows, porNome]);
+  }, [rows, porChave]);
 
-  const detalhe = (name: string) => {
-    const r = porNome.get(normName(name));
+  const detalhe = (name: string, fed?: string | null) => {
+    const r = porChave.get(playerKey(fed, name));
     if (!r || (!r.editions.length && !r.form && !r.forecast)) return null;
     const f = r.form;
     return (

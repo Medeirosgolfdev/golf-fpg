@@ -17,6 +17,8 @@ import type { PlayersDB } from "../ui/tournamentPrimitives";
 import { bestN } from "../utils/mathUtils";
 import { abreviarNome, escalaoAtDate, fmtHcp } from "../utils/format";
 import { firstPlayerParTotal } from "./fpgUtils";
+import { isNoCardGross } from "./intlCommon";
+import { posicoesComEmpates } from "../utils/classificacao";
 import { C } from "../utils/colors";
 
 export interface Bpb { bir: number; par: number; bog: number }
@@ -98,7 +100,7 @@ function grossForRound(p: Player | undefined, rd: number, maxHole: number): numb
   if (!p) return null;
   const rs = p.roundScores?.find(r => r.round === rd);
   if (rs) {
-    if (rs.gross >= 900) return null;
+    if (isNoCardGross(rs.gross)) return null;
     if (rs.scores?.length) {
       if (rs.scores.every(s => s === 0)) return null;
       return rs.scores.reduce((sum, s) => sum + Math.min(s, maxHole), 0);
@@ -117,7 +119,10 @@ function calcBpb(p: Player | undefined, rd: number, maxHole: number): Bpb | null
   if (!rs?.scores?.length || !rs?.pars?.length) return null;
   let bir = 0, par = 0, bog = 0;
   rs.scores.forEach((s, h) => {
-    const diff = Math.min(s, maxHole) - (rs.pars[h] || 0);
+    // Buraco por jogar (0) ou sem par não conta — antes o 0 saía «birdie» (10/11/2026, I9).
+    const p0 = rs.pars[h];
+    if (!(s > 0) || !(p0 > 0)) return;
+    const diff = Math.min(s, maxHole) - p0;
     if (diff <= -1) bir++; else if (diff === 0) par++; else bog++;
   });
   return { bir, par, bog };
@@ -126,11 +131,17 @@ function calcBpb(p: Player | undefined, rd: number, maxHole: number): Bpb | null
 /** Lugares com empates (1, 2, 2, 4…) por um valor (menor é melhor). */
 function rankBy<T>(items: T[], val: (x: T) => number | null, set: (x: T, pos: number, n: number) => void) {
   const withV = items.filter(x => val(x) != null).sort((a, b) => (val(a) as number) - (val(b) as number));
-  let pos = 1;
-  withV.forEach((x, i) => {
-    if (i > 0 && val(x) !== val(withV[i - 1])) pos = i + 1;
-    set(x, pos, withV.length);
-  });
+  const pos = posicoesComEmpates(withV, x => val(x) as number);
+  for (const x of withV) set(x, pos.get(x)!, withV.length);
+}
+
+/** Só tem total da prova a equipa com resultado em TODAS as voltas que as
+ *  outras já têm (10/11/2026, I9): com menos voltas somava menos e ficava à
+ *  frente. As voltas que tem continuam à vista; o total, o ±par e o lugar não. */
+function semTotalSeIncompleta(cats: TsCat[]): void {
+  const nVoltas = (c: TsCat) => c.rdTotals.filter(v => v != null).length;
+  const max = Math.max(0, ...cats.map(nVoltas));
+  for (const c of cats) if (nVoltas(c) < max) { c.total = null; c.toPar = null; }
 }
 
 function hcpParse(h: number | string): number | null {
@@ -207,12 +218,16 @@ function playerRows(js: GrupoJogador[], byFed: Map<string, Player>, rounds: numb
 function catTotals(players: TsPlayer[], rounds: number[], nFor: (rd: number) => number, parTotal: number) {
   const rdTotals = rounds.map((rd, ri) => {
     const sc = players.map(p => p.rds[ri].gross).filter((v): v is number => v != null);
-    return sc.length ? bestN(sc, nFor(rd)) : null;
+    // Com menos de N cartões válidos a equipa NÃO tem resultado nessa volta
+    // (10/11/2026, I9): somar só os que há dava um total mais baixo do que o
+    // das equipas completas e punha-a à frente.
+    return sc.length >= nFor(rd) ? bestN(sc, nFor(rd)) : null;
   });
   const rdToPar = rdTotals.map((v, ri) => (v != null && parTotal > 0 ? v - parTotal * nFor(rounds[ri]) : null));
   const present = rdTotals.filter((v): v is number => v != null);
   const total = present.length ? present.reduce((s, v) => s + v, 0) : null;
-  const teamPar = parTotal > 0 && rounds.length ? parTotal * rounds.reduce((s, rd) => s + nFor(rd), 0) : 0;
+  // O par da equipa é o das voltas em que TEM resultado.
+  const teamPar = parTotal > 0 ? parTotal * rounds.reduce((s, rd, ri) => s + (rdTotals[ri] != null ? nFor(rd) : 0), 0) : 0;
   const rdSumsAll = rounds.map((_, ri) => {
     const sc = players.map(p => p.rds[ri].gross).filter((v): v is number => v != null);
     return sc.length ? sc.reduce((s, v) => s + v, 0) : null;
@@ -246,6 +261,7 @@ export function buildClubesGrupos(grupos: GrupoEntry[], t: Tournament | null, op
       cats: [{ key: "_", label: "", nLabel: "", players, ...tot, pos: null, fieldSize: 0, footerLabel: `Total ${g.jogadores.length} Jogadores` }],
     };
   });
+  semTotalSeIncompleta(teams.map(x => x.cats[0]));
   rankBy(teams.map(x => x.cats[0]), c => c.total, (c, pos, n) => { c.pos = pos; c.fieldSize = n; });
   const nRounds = t?.rounds ?? 1;
   const rule = opts.formatNote === undefined
@@ -292,8 +308,9 @@ export function buildClubesCategorias(grupos: GrupoEntry[], t: Tournament | null
   }));
   // Lugar POR CATEGORIA (cada escalão é um campeonato independente).
   for (const cfg of categories) {
-    rankBy(teams.map(x => x.cats.find(c => c.key === cfg.key)).filter((c): c is TsCat => !!c),
-      c => c.total, (c, pos, n) => { c.pos = pos; c.fieldSize = n; });
+    const daCategoria = teams.map(x => x.cats.find(c => c.key === cfg.key)).filter((c): c is TsCat => !!c);
+    semTotalSeIncompleta(daCategoria);
+    rankBy(daCategoria, c => c.total, (c, pos, n) => { c.pos = pos; c.fieldSize = n; });
   }
   const rule = `Por categoria dentro de cada clube — ${categories.map(c => `${c.label} ${labelN(c.bestN)}`).join(" · ")}.`;
   return { rounds, nRounds: t?.rounds ?? rounds.length, rule, rankBy: "gross", multiCat: true, showHcp: true, showHoles: false,

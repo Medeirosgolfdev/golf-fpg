@@ -12,7 +12,7 @@
  */
 import type { Tournament, Player, RoundScore } from "./fpgTypes";
 import { isPtCountry } from "../utils/flagUtils";
-import { isNoCardGross } from "./intlCommon";
+import { isNoCardGross, toParPlayed } from "./intlCommon";
 import { withTournamentModel } from "./model/tournament";
 import { playerIdentity } from "./model/identity";
 
@@ -139,8 +139,10 @@ export function buildFPGTournament(
       } as RoundScore;
     });
     const played = p.rounds.length;
+    // ±par pelas voltas JOGADAS, cada uma com o SEU par (cartão da volta, do
+    // jogador ou do torneio) — regra única `toParPlayed` (10/11/2026).
     const toPar = p.toPar !== undefined ? p.toPar
-      : p.total != null && parSum > 0 ? p.total - parSum * played : null;
+      : toParPlayed(p.total, roundScores.map((r) => (r.pars ?? []).reduce((a: number, b: number) => a + b, 0)));
     return {
       scoreId: p.id,
       pos: raw ? p.pos : (p.pos ?? null),

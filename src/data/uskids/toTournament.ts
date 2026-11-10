@@ -16,6 +16,7 @@ import { flag } from "../../utils/flagUtils";
 import { TEES_LOOKUP, isWD } from "../../ui/USKIDSPageHelpers";
 import type { Torneio, TorneioResult, EscalaoResult, UskidsDrawsData, UskidsDrawRonda } from "../../ui/uskidsTypes";
 import type { CircuitRoundDraw } from "../../ui/circuit/types";
+import type { RondaJogadorComCampo } from "./converterTorneioCompleto";
 
 export type FieldEscalao = Torneio["escaloes"][number];
 
@@ -59,11 +60,22 @@ export function escalaoToTournament(
     const hasSI = si.some(v => v > 0);
     // Para USKids: se não há SI real, usar metros na linha que normalmente seria SI
     const siForDisplay: number[] = hasSI ? si : meters;
-    const parPerRound = parKnown ? par.reduce((s, p) => s + p, 0) : null;
+    const parPerRoundEsc = parKnown ? par.reduce((s, p) => s + p, 0) : null;
+    const cartaoEsc = { par, meters, si: siForDisplay, parPerRound: parPerRoundEsc, cr: teeInfo?.cr, slope: teeInfo?.slope, tee: teeInfo?.tee, campo: teeInfo?.campo };
 
     for (const j of lb) {
       const key = j.nome.toLowerCase().trim();
       const strokes: number[] = j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []);
+      // Cartão do flight do PRÓPRIO jogador quando não é o do escalão (10/11/2026,
+      // J12 — Mundial 2023 Boys 10: dois flights em campos diferentes). O CR/Slope
+      // e o tee curados são do cartão do escalão: a estes jogadores não se aplicam.
+      const jc = j as RondaJogadorComCampo;
+      const proprio = jc.par?.length === buracos;
+      const metrosJ = proprio && jc.metros?.length === buracos ? jc.metros : null;
+      const { par: parJ, meters: metersJ, si: siJ, parPerRound, cr, slope, tee, campo } = proprio
+        ? { par: jc.par as number[], meters: metrosJ ?? (Array(buracos).fill(0) as number[]), si: hasSI ? si : (metrosJ ?? (Array(buracos).fill(0) as number[])),
+            parPerRound: (jc.par as number[]).reduce((s, p) => s + p, 0), cr: undefined, slope: undefined, tee: undefined, campo: jc.campo }
+        : cartaoEsc;
       if (!playerMap.has(key)) {
         // Lookup HCP FPG (só jogadores PT federados — via arMap → fpgHcpExact).
         // Quando disponível, computeSD() vai pelo ramo AGS (Net Double Bogey)
@@ -82,15 +94,15 @@ export function escalaoToTournament(
           club: flag(j.pais) + " " + j.pais,
           grossTotal: 0,
           toPar: null,
-          par, si: siForDisplay, meters,
+          par: parJ, si: siJ, meters: metersJ,
           parTotal: 0,
           nholes: buracos,
           // Course Rating / Slope (quando disponíveis no TEES_LOOKUP) —
           // necessários para o cálculo de SD em computeSD().
-          courseRating: teeInfo?.cr,
-          slope: teeInfo?.slope,
-          teeName: teeInfo?.tee,
-          course: teeInfo?.campo,
+          courseRating: cr,
+          slope,
+          teeName: tee,
+          course: campo,
           // HCP FPG do jogador (só PT com licença federativa) — permite SD AGS exacto.
           hcpExact,
           fedCode: fpgFed,
@@ -107,15 +119,15 @@ export function escalaoToTournament(
         round: r.ronda,
         gross: j.score || 0,
         scores: strokes,
-        pars: par,
-        si: siForDisplay,
-        meters,
+        pars: parJ,
+        si: siJ,
+        meters: metersJ,
         // CR/Slope/teeName por ronda — expandMultiRound usa estes valores
         // ao criar as views per-round (sem isto, o computeSD da R1/R2/R3
         // não tem dados e devolve null → coluna SD fica "—").
-        courseRating: teeInfo?.cr,
-        slope: teeInfo?.slope,
-        teeName: teeInfo?.tee,
+        courseRating: cr,
+        slope,
+        teeName: tee,
       });
       // scores / par / si do primeiro round (para ScorecardLB de ronda única)
       if (r.ronda === rondasComDados[0].ronda) {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { estimateField, ultimas20, buildHoleProfile, porComprimento } from "./previsaoModel";
+import { estimateField, topFieldHoleStats, ultimas20, buildHoleProfile, porComprimento } from "./previsaoModel";
 import type { PlayerPageData } from "../../data/playerDataLoader";
 
 // Mocks mínimos do formato uskids-member-history-slim consumido por estimateField.
@@ -144,5 +144,46 @@ describe("porComprimento — grupos pelo comprimento do tee", () => {
     expect(par.sdMelhor).toBe(8);
     expect(par.vsParMedio).toBe(9);
     expect(par.metros).toBe(5050);
+  });
+});
+
+// Revisão de 10/11/2026 — E5 e E7.
+describe("topFieldHoleStats — top-N só entre quem jogou todas as voltas", () => {
+  const par = Array(18).fill(4);
+  const volta = (g: number) => ({ gross: g, strokes: [g - 68, ...Array(17).fill(4)] });
+  const jog = (name: string, gs: number[]) => ({ name, torneios: { w26: { ageGroup: ESC, place: null,
+    rounds: Object.fromEntries(gs.map((g, i) => [String(i + 1), volta(g)])) } } });
+  const mh = {
+    torneios: { w26: { name: "World Championship 2026", startDate: "", holesPerRound: 18, par } },
+    jogadores: { a: jog("Vencedor", [72, 72, 72]), b: jog("Segundo", [74, 74, 74]), c: jog("Uma volta", [77]) },
+  };
+  const top = topFieldHoleStats(mh as never, { t: 1, name: "World Championship 2027" } as never, ESC, 5)!;
+
+  it("quem só jogou 1 volta (77) não passa à frente do vencedor (216)", () => {
+    expect(top.players).toEqual(["Vencedor", "Segundo"]);
+  });
+
+  it("os nomes do hover acompanham as pancadas de cada buraco", () => {
+    const cel = top.holes[0][0];
+    expect(cel.scores).toEqual([4, 6]);
+    expect(cel.nomes).toEqual(["Vencedor", "Segundo"]);
+  });
+});
+
+describe("estimateField — escalão de 9 buracos num torneio «de 18»", () => {
+  it("Boys 8: voltas de 40 contam (o mínimo de 55 é só para 18 buracos)", () => {
+    const nove = [5, 5, 4, 4, 4, 5, 4, 5, 4]; // 40
+    const jogadores: Record<string, Player> = {};
+    for (let i = 0; i < 5; i++) {
+      const rounds: Rounds = {};
+      for (let r = 1; r <= 3; r++) rounds[String(r)] = { gross: 40 + i, strokes: [...nove.slice(0, 8), 4 + i] };
+      jogadores[`b${i}`] = { name: `b${i}`, torneios: { v25: { ageGroup: "Boys 8", place: null, rounds } } };
+    }
+    const mh = { torneios: { v25: { name: "Venice Open 2025", startDate: "", holesPerRound: 18, par: Array(18).fill(4) } }, jogadores };
+    const est = estimateField(mh as never, { t: 1, name: "Venice Open 2026" } as never, "Boys 8");
+    expect(est.editions.length).toBe(1);
+    expect(est.editions[0].holesPerRound).toBe(9);
+    expect(est.editions[0].winner).toBe(120);
+    expect(est.editions[0].parPerRound).toBe(36);
   });
 });

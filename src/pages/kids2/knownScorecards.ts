@@ -4,7 +4,8 @@
  * Substitui kids/courseScorecards.ts. Diferenças:
  *   1. Lookup por (junior, tournament) em vez de nome string solto.
  *      Aceita aliases do junior e múltiplas chaves do torneio (id, name,
- *      shortName, seriesId). Match por nome normalizado (NFD + lowercase).
+ *      shortName — a série não: junta todos os anos e escalões). Match por
+ *      nome normalizado (NFD + lowercase).
  *   2. API uniforme: getKnownScorecard(junior, tournament) → { par, si, meters, rounds, source } | null.
  *   3. Helper de merge: applyKnownScorecard(flight, result, fallback) devolve
  *      flight/result enriquecidos para o caso de o canónico não ter par ou
@@ -190,10 +191,10 @@ const KNOWN_TOURNAMENTS: readonly KnownTournamentEntry[] = [
   },
   {
     matchKeys: [
-      "eowagr25", "eowagr 2025", "eowagr",
+      // Só chaves com o ANO (10/11/2026): «eowagr» e «european open wagr» sozinhas
+      // casavam com qualquer edição e escalão.
+      "eowagr25", "eowagr 2025",
       "european open wagr 2025",
-      "european open wagr",
-      "le touquet la foret",
     ],
     par: LT_FORET_PAR, si: LT_FORET_SI, meters: LT_FORET_M,
     cards: EOWAGR25_CARDS,
@@ -205,33 +206,28 @@ const KNOWN_TOURNAMENTS: readonly KnownTournamentEntry[] = [
 // Resolver
 // ═══════════════════════════════════════════════════════════════════════
 
-/** Match entre uma chave normalizada e o conjunto de matchKeys de um torneio.
- *  Aceita:
- *    - igualdade exacta
- *    - chave do lookup contém uma matchKey (ex: "wjgc 2026 boys 10-11 villa padierna" contém "wjgc 2026 boys 10-11")
- *    - matchKey contém a chave do lookup (ex: matchKey "wjgc26_b1011" contém "wjgc26")
- *  A second condição é a comum: nomes de torneio do canónico tendem a ser
- *  longos ("World Junior Golf Championship 2026 - Boys 10/11"), as matchKeys
- *  são curtas. */
+/** Match entre uma chave do torneio e as matchKeys de uma entrada: igualdade, ou
+ *  a chave do torneio CONTÉM a matchKey (os nomes do canónico são longos —
+ *  «Daily Mail WJGC 2026 - Boys 10-11» — e as matchKeys curtas).
+ *  ⚠ Nunca ao contrário (10/11/2026): com «a matchKey contém a chave», a série
+ *  «wjgc» cabia em «wjgc26» e QUALQUER prova WJGC (2024, Boys 8-9…) recebia o
+ *  cartão «WJGC 2026 Boys 10-11». */
 function tournamentMatches(lookupKey: string, entry: KnownTournamentEntry): boolean {
   const lk = normName(lookupKey);
   if (!lk) return false;
   for (const k of entry.matchKeys) {
     const nk = normName(k);
     if (!nk) continue;
-    if (nk === lk || lk.includes(nk) || nk.includes(lk)) return true;
+    if (nk === lk || lk.includes(nk)) return true;
   }
   return false;
 }
 
-function findEntryForTournament(t: { id?: string; name?: string; shortName?: string; seriesId?: string }): KnownTournamentEntry | null {
-  const candidates = [t.id, t.shortName, t.name, t.seriesId].filter((s): s is string => !!s && s.length > 0);
-  for (const entry of KNOWN_TOURNAMENTS) {
-    for (const c of candidates) {
-      if (tournamentMatches(c, entry)) return entry;
-    }
-  }
-  return null;
+/** As entradas que casam com o torneio, pela ordem da tabela. O `seriesId` não
+ *  entra: uma série junta todos os anos e escalões, não identifica um cartão. */
+function findEntriesForTournament(t: { id?: string; name?: string; shortName?: string }): KnownTournamentEntry[] {
+  const candidates = [t.id, t.shortName, t.name].filter((s): s is string => !!s && s.length > 0);
+  return KNOWN_TOURNAMENTS.filter((entry) => candidates.some((c) => tournamentMatches(c, entry)));
 }
 
 function findCardForJunior(entry: KnownTournamentEntry, j: { canonicalName: string; aliases?: string[] }): readonly (readonly number[])[] | null {
@@ -250,7 +246,7 @@ function findCardForJunior(entry: KnownTournamentEntry, j: { canonicalName: stri
 // ═══════════════════════════════════════════════════════════════════════
 
 /** Devolve o scorecard hardcoded para (junior, torneio), se existir.
- *  Match por: tournament.id / shortName / name / seriesId × junior.canonicalName / aliases.
+ *  Match por: tournament.id / shortName / name × junior.canonicalName / aliases.
  *
  *  Devolve `null` quando:
  *    - o torneio não está em `KNOWN_TOURNAMENTS`
@@ -261,17 +257,13 @@ export function getKnownScorecard(
   junior: { canonicalName: string; aliases?: string[] },
   tournament: { id?: string; name?: string; shortName?: string; seriesId?: string },
 ): KnownScorecard | null {
-  const entry = findEntryForTournament(tournament);
-  if (!entry) return null;
-  const rounds = findCardForJunior(entry, junior);
-  if (!rounds) return null;
-  return {
-    par: entry.par,
-    si: entry.si,
-    meters: entry.meters,
-    rounds,
-    source: entry.source,
-  };
+  // A 1.ª entrada que casa E tem o cartão do jogador (a chave genérica «WJGC
+  // 2026» casa com os dois escalões; o jogador só está nos cartões do seu).
+  for (const entry of findEntriesForTournament(tournament)) {
+    const rounds = findCardForJunior(entry, junior);
+    if (rounds) return { par: entry.par, si: entry.si, meters: entry.meters, rounds, source: entry.source };
+  }
+  return null;
 }
 
 // ═══════════════════════════════════════════════════════════════════════

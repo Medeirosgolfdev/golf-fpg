@@ -21,7 +21,9 @@ import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { MultiRoundRow } from "../../ui/multiRoundTypes";
 import { expandMultiRound, synthesizeDrawFromCumulative } from "../../data/fpgUtils";
 import { tournamentHasManuel, tournamentPccs } from "../../data/fpgUtils";
-import { fmtDate, fpgAdmissionsUrl, fpgDrawUrl, fpgScoringUrl, tournamentUrl, norm } from "../../utils/format";
+import { fmtDate, fpgAdmissionsUrl, fpgDrawUrl, fpgScoringUrl, tournamentUrl, todayIso } from "../../utils/format";
+import { playerKey } from "../../utils/playerKey";
+import { posicoesComEmpates, temCartao } from "../../utils/classificacao";
 import { FEATURED_TOURNAMENTS } from "../../data/featuredTournaments";
 import { useLiveAdmissions } from "../../hooks/useLiveAdmissions";
 import { juntarDesistentes } from "../../data/desistentes";
@@ -42,7 +44,7 @@ import AdmissionsTab from "../../ui/AdmissionsTab";
 import { teeRuleFor } from "../../utils/teeRegulation";
 import DrawTab, { buildDrawResults } from "../../ui/DrawTab";
 import { TOURNAMENT_EXTRA_LINKS } from "./constants";
-import { initialTabIndex } from "./detailTabs";
+import { initialTabIndex, provaAindaDecorre } from "./detailTabs";
 import { crossApuradosInscritos } from "../../data/drive/driveCircuitData";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import ExtLink from "../../ui/ExternalLink";
@@ -101,9 +103,15 @@ export interface TournamentDetailProps {
   /** Aba a abrir quando o URL não traz nenhuma (ex.: «grupos» nos torneios de
    *  clubes). Sem ela, abre na fase mais avançada do torneio. */
   defaultTab?: string;
+  /** Filtro de jogadores das CLASSIFICAÇÕES (voltas, Pré-Cut, Resumo e
+   *  Scorecards) — os chips Top 10/Veteranos/Regressados/Subiram do CircuitShell
+   *  (`CircuitRenderFullExtras.playerFilter`). Cabeçalho, inscrições, draws e
+   *  Scout ficam com o field todo. Tem de devolver sempre o mesmo objecto para o
+   *  mesmo torneio (o do shell faz cache). */
+  playerFilter?: (t: Tournament) => Tournament;
 }
 
-function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extraTabs: extraTabsIn, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab", defaultTab }: TournamentDetailProps) {
+function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extraTabs: extraTabsIn, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab", defaultTab, playerFilter }: TournamentDetailProps) {
   // Nascimento do Kids 2 para quem a fonte não o traz (USKids, MAJOR, FFG…) —
   // nas voltas, no Resumo e nos Scorecards (02/11/2026).
   const kidsDob = useKidsDob(precisaKidsDob(tournamentIn.players));
@@ -167,7 +175,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
     // Convocados: compara só com quem já estava inscrito no último scrape.
     const scraped = (admissions?.players ?? []).filter(p => p.status !== "desistente" && (!convocados || p.status === "confirmed"));
     if (scraped.length === 0) return null;
-    const keyOf = (p: { fed: string | null; nome: string }) => p.fed || norm(p.nome || "");
+    const keyOf = (p: { fed: string | null; nome: string }) => playerKey(p.fed, p.nome);
     const liveKeys = new Set(live.players.map(keyOf));
     const scrKeys = new Set(scraped.map(keyOf));
     return {
@@ -192,10 +200,15 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
     // emparelhamento real existiu (e está na FPG) e a estimativa seria
     // enganadora — foi o que acontecia em torneios concluídos, que mostravam
     // um "Draw R2" fabricado apesar de a R2 já ter sido disputada.
+    //
+    // ⚠ E só ENQUANTO a prova decorre (10/11/2026): a Taça João Salazar de Sousa
+    // (12/09/2026, só a R1 nos dados) mostrava «Draw R2 estimado… a FPG ainda não
+    // publicou» dois meses depois. A regra está em `provaAindaDecorre` (detailTabs.ts).
     const nR = tournament.rounds || 1;
     const playedRounds = Math.max(0, ...(tournament.players ?? []).map(p => p.roundScores?.length ?? 0));
     const nextRound = playedRounds + 1;
-    if (synthDraws && nextRound >= 2 && nextRound <= nR && !out.has(nextRound)) {
+    const aDecorrer = provaAindaDecorre(tournament.date, nR, todayIso());
+    if (synthDraws && aDecorrer && nextRound >= 2 && nextRound <= nR && !out.has(nextRound)) {
       const synth = synthesizeDrawFromCumulative(tournament, nextRound);
       if (synth && (synth.groups?.length ?? 0) > 0) out.set(nextRound, synth);
     }
@@ -229,6 +242,11 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
 
   // Expanded list: R1, R2, ..., Resumo
   const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
+  // As classificações com os filtros de jogador da barra (Top 10, Veteranos…):
+  // filtra-se ANTES de expandir, como o shell faz nas divisões sem `renderFull`.
+  // As abas continuam a sair do torneio todo (`expanded`).
+  const lbTournament = useMemo(() => (playerFilter ? playerFilter(tournament) : tournament), [tournament, playerFilter]);
+  const expandedLb = useMemo(() => (lbTournament === tournament ? expanded : expandMultiRound(lbTournament)), [lbTournament, tournament, expanded]);
 
   // ── Pré-Cut ── (vem do expandMultiRound: _cutAfterRound no Resumo). Cut após
   // a R1 não gera tab (seria igual à própria R1).
@@ -243,19 +261,19 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
   const preCutTourn = useMemo(() => {
     if (!cutAfterRound) return null;
     const wanted = Array.from({ length: cutAfterRound }, (_, i) => i + 1);
-    const trimmed = tournament.players.map((p) => {
+    const trimmed = lbTournament.players.map((p) => {
       const rs = (p.roundScores || []).filter((r) => r.round <= cutAfterRound);
-      const hasAll = wanted.every((rd) => rs.some((r) => r.round === rd && (r.gross || 0) > 0 && (r.gross || 0) < 900));
+      const hasAll = wanted.every((rd) => rs.some((r) => r.round === rd && temCartao(r.gross)));
       const parPerRound = p.parTotal || (rs[0]?.pars?.reduce((a, b) => a + b, 0) || 0);
       const gross = rs.reduce((x, r) => x + (r.gross || 0), 0);
       return { ...p, roundScores: rs, grossTotal: gross, toPar: gross - parPerRound * cutAfterRound, parTotal: parPerRound,
         _wd: false, _cut: false, _incomplete: false, _roundsPlayed: cutAfterRound, _hasAll: hasAll };
     }).filter((p) => p._hasAll);
     trimmed.sort((a, b) => (a.grossTotal ?? 99999) - (b.grossTotal ?? 99999));
-    let pos = 1;
-    trimmed.forEach((p, i) => { if (i > 0 && (p.grossTotal ?? 0) !== (trimmed[i - 1].grossTotal ?? 0)) pos = i + 1; (p as any)._pos = pos; });
+    const lugares = posicoesComEmpates(trimmed, (p) => p.grossTotal ?? 0);
+    for (const p of trimmed) (p as any)._pos = lugares.get(p);
     return { ...tournament, players: trimmed, rounds: cutAfterRound, _roundLabel: `Resumo Pré-Cut (R1–R${cutAfterRound})`, _isTotal: true } as unknown as Tournament;
-  }, [tournament, cutAfterRound]);
+  }, [tournament, lbTournament, cutAfterRound]);
   /** Etiqueta da volta i (0 = R1): a da página, a do expandMultiRound ou «R{n}». */
   const roundLabel = (i: number, fallback: string) => roundLabels?.[i] || fallback;
   /**
@@ -282,6 +300,9 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
         if (hasDraw(roundNum)) {
           out.push({ key: `draw:${roundNum}`, label: `Draw R${roundNum}` });
         }
+        // Volta ainda por jogar (prova de 3 voltas a meio: o expandMultiRound cria
+        // a R3 sem ninguém) → sem aba «R3» vazia; o draw dela, se o há, fica (10/11/2026).
+        if (!rondas[i].players.length) continue;
         out.push({ key: `round:${i}`, label: roundLabel(i, (rondas[i] as any)._roundLabel || `R${roundNum}`) });
         if (cutAfterRound && roundNum === cutAfterRound && rondas.length > cutAfterRound) out.push({ key: "precut", label: `Pré-Cut R1–R${cutAfterRound}` });
       }
@@ -396,13 +417,21 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
   const modalidade = modalidadeFpg ?? omTermosOf(tournament)?.modalidade ?? null;
   const lbOptions = useMemo(() => ({ ...options, modalidade }), [options, modalidade]);
 
-  // curT só é relevante para round/resumo tabs (lógica existente)
-  const expandedIdxForCurT = isResumoTab
-    ? expanded.findIndex((e: any) => e._isTotal)
-    : isRoundTab
-      ? expanded.findIndex((e: any, i: number) => !e._isTotal && expanded.filter((x: any, j: number) => !x._isTotal && j <= i).length === roundIdx + 1)
-      : -1;
-  const curT = expandedIdxForCurT >= 0 && expanded[expandedIdxForCurT] ? expanded[expandedIdxForCurT] : tournament;
+  // curT só é relevante para round/resumo tabs: a volta `roundIdx` (ou o Resumo)
+  // das classificações — já com os filtros de jogador da barra, se os houver.
+  const curT = (() => {
+    if (isResumoTab) return expandedLb.find((e: any) => e._isTotal) ?? lbTournament;
+    if (!isRoundTab) return lbTournament;
+    const volta = (xs: Tournament[]) => xs.filter((e: any) => !e._isTotal)[roundIdx];
+    // Filtrados que já não fazem uma prova de várias voltas (cada um só com uma):
+    // a volta sai da do torneio todo, só com esses jogadores.
+    if (lbTournament !== tournament && isMulti && expandedLb.length <= 1) {
+      const full = volta(expanded);
+      const fica = new Set(lbTournament.players.map((p) => playerKey(p.fed || p.fedCode, p.name)));
+      return full ? { ...full, players: full.players.filter((p) => fica.has(playerKey(p.fed || p.fedCode, p.name))) } : lbTournament;
+    }
+    return volta(expandedLb) ?? lbTournament;
+  })();
   const isAcc = isResumoTab;
   const isCombined = isCombinedTab;
   // «📷 Partilhar volta» no Resumo / Scorecards / Draw: torneio completo + cada
@@ -669,7 +698,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extr
             fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
           />{shareRounds}</>;
         if (isCombined)
-          return <><AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} options={options} />{shareRounds}</>;
+          return <><AllRoundsScorecardLB tournament={lbTournament} escLookup={escLookup} playersDB={playersDB} options={options} />{shareRounds}</>;
         if (isAnaliseAroeiraTab)
           return <Aroeira2AnaliseView tournament={tournament} />;
         if (isPreCutTab && preCutTourn)

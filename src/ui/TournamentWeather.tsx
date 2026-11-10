@@ -19,6 +19,7 @@
  */
 import { norm } from "../utils/courseAliases";
 import { useJson } from "../hooks/useJson";
+import { diaIso, addDaysIso, diasEntre } from "../utils/dias";
 import ExtLink from "./ExternalLink";
 
 const WEATHER_URL = "/data/weather.json";
@@ -56,20 +57,19 @@ function parseISO(s?: string | null): Date | null {
   if (m) return new Date(Date.UTC(+m[3], +m[2] - 1, +m[1]));
   return null;
 }
-function isoOf(d: Date): string { return d.toISOString().slice(0, 10); }
-function addDays(d: Date, n: number): Date { const x = new Date(d); x.setUTCDate(x.getUTCDate() + n); return x; }
 
-/** Datas das rondas: start + 0..n−1 dias (rondas consecutivas). */
+/** Datas das rondas: start + 0..n−1 dias (rondas consecutivas). As contas com
+ *  dias vêm do módulo global `utils/dias` (10/11/2026 — havia uma cópia aqui). */
 function roundDates(start?: string | null, end?: string | null, rounds?: number): string[] {
-  const s = parseISO(start);
+  const s = diaIso(start);
   if (!s) return [];
   let n = rounds && rounds > 0 ? rounds : 0;
   if (!n) {
-    const e = parseISO(end);
-    n = e ? Math.round((e.getTime() - s.getTime()) / 86400000) + 1 : 1;
+    const d = diasEntre(s, diaIso(end));
+    n = d != null ? d + 1 : 1;
   }
   n = Math.max(1, Math.min(n, 8)); // segurança
-  return Array.from({ length: n }, (_, i) => isoOf(addDays(s, i)));
+  return Array.from({ length: n }, (_, i) => addDaysIso(s, i));
 }
 
 const DOW_PT = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];

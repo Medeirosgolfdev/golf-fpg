@@ -245,3 +245,48 @@ describe("previsão pela FORMA (player-stats)", () => {
     expect(r[0].teeNow).toBe("AMARELAS");
   });
 });
+
+describe("currentField — o que a própria prova diz do jogador (10/11/2026)", () => {
+  it("traz o país e o nascimento dos resultados", () => {
+    const f = currentField(torneio([
+      jogador({ name: "Pablo García", fedCode: "CM00123456", country: "ESP", dob: "12/03/2013" }),
+      jogador({ name: "Tom Smith", fedCode: null, country: "England", birthYear: 2012 }),
+      jogador({ name: "João Silva", fedCode: "50001" }),
+    ]));
+    expect(f[0]).toMatchObject({ fed: "CM00123456", country: "ES", dob: "2013-03-12" });
+    expect(f[1]).toMatchObject({ fed: null, dob: "2012" });
+    expect(f[2]).toMatchObject({ fed: "50001", country: null, dob: null });
+  });
+
+  it("o draw sem federado vai buscá-lo aos resultados da MESMA prova — menos nos homónimos", () => {
+    const t = {
+      ...torneio([
+        jogador({ name: "AIRES,Pedro", fedCode: "4939" }),
+        jogador({ name: "Pedro Aires", fedCode: "42068" }),
+        jogador({ name: "ROCHA,João", fedCode: "48297", country: "PT" }),
+      ]),
+      _draws: { "1": { groups: [{ teeTime: "09:00", players: [{ nome: "Pedro Aires" }, { nome: "João Rocha" }] }] } },
+    } as unknown as Tournament;
+    const f = currentField(t);
+    expect(f.find((x) => x.name === "Pedro Aires")!.fed).toBeNull();
+    expect(f.find((x) => x.name === "João Rocha")).toMatchObject({ fed: "48297", country: "PT" });
+  });
+});
+
+describe("buildRepeaters — homónimos e licenças de fora (10/11/2026)", () => {
+  const fedInfo = (fed: string | null) => (fed === "4939" ? { hcp: 4.2, club: "Estela", escalao: "Sénior", sex: "M" }
+    : fed === "42068" ? { hcp: 28.5, club: "Estela", escalao: "Sub 14", sex: "M" }
+    : fed === "50001" ? { hcp: 9.9, club: "CGSS", escalao: "Sub 14", sex: "M" } : null);
+
+  it("dois «Pedro Aires» ficam cada um com o seu índice e a sua linha", () => {
+    const current = torneio([jogador({ name: "Pedro Aires", fedCode: "4939" }), jogador({ name: "Pedro Aires", fedCode: "42068" })]);
+    const rows = buildRepeaters({ current, previous: [], fedInfo, todos: true });
+    expect(rows.map((r) => [r.fedProva, r.hcpNow]).sort()).toEqual([["42068", 28.5], ["4939", 4.2]]);
+  });
+
+  it("com licença estrangeira na prova, o índice vem pelo federado da ficha (nome)", () => {
+    const current = torneio([jogador({ name: "João Iglésias", fedCode: "CMA8989869" })]);
+    const rows = buildRepeaters({ current, previous: [], fedInfo, todos: true, fedPorNome: () => "50001" });
+    expect(rows[0]).toMatchObject({ fedProva: "CMA8989869", fed: "50001", hcpNow: 9.9 });
+  });
+});

@@ -154,6 +154,9 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
             ...(dv.players.some((p) => p.dob || p.birthYear || p.birthYearEst) ? { nasc: false } : {}),
           }}
           hideHeader
+          // Os chips de jogador da barra (Top 10, Veteranos, Regressados, Subiram):
+          // sem isto não faziam nada nestas divisões (10/11/2026).
+          playerFilter={extras?.playerFilter}
           extraTabs={[...mpBase, ...[extras?.pastEditionsTab, extras?.pastScorecardsTab, extras?.repeatersTab].filter((x): x is NonNullable<typeof x> => !!x)]}
         />
       ),

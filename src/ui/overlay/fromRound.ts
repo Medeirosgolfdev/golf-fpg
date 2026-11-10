@@ -71,6 +71,7 @@ export function overlayFromRound(
     teeDist,
     cr, slope,
     par, scores: holeScores, si,
+    parTotal,
     meters: meters.length === nh ? meters : undefined,
     hi,
     courseHcp: hi != null && rated ? Math.round(calcCourseHcp(hi, slope, cr, parTotal, is9h)) : null,

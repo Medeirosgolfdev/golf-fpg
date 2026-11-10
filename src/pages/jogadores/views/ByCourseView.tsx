@@ -9,6 +9,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { PlayerPageData, CourseData, RoundData } from "../../../data/playerDataLoader";
+import { eclecticForRound } from "../../../data/playerDataLoader";
 import { norm } from "../../../utils/format";
 import { normKey } from "../../../utils/teeColors";
 import { fmtStb } from "../../../utils/scoreDisplay";
@@ -220,7 +221,8 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
   const holes = data.HOLES[String(r.scoreId)];
   const courseKey = norm(courseName);
   const teeKey = r.teeKey || normKey(r.tee || "");
-  const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
+  // O eclético da MESMA metade nas voltas de 9 buracos (10/11/2026, I4).
+          const ecEntry = eclecticForRound(data, courseKey, { ...r, teeKey });
   return (
     <>
       <tr className={r.hasCard ? "roundRow u-cur-pointer" : "roundRow u-cur-default"} onClick={r.hasCard ? onToggle : undefined}>
@@ -248,6 +250,7 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
                 links={r._links}
                 pill={effectivePill(r, courseName)}
                 eclecticEntry={ecEntry}
+                grossOficial={r.gross}
               />
             </div>
           </td>

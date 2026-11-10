@@ -8,6 +8,8 @@ import type { FpgTournamentData } from "../nacional2026Loader";
 import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic } from "../featuredTournaments";
 import { isAquaporSenhoras, mergeDrivePlaceholders, stripEscalaoFromName } from "./driveCircuitData";
 import { todayIso } from "../../utils/format";
+import { isNoCardGross } from "../intlCommon";
+import { classificarPorTotal, temCartao, voltasComCartao } from "../../utils/classificacao";
 
 export type DriveSeries = "tour" | "challenge" | "aquapor";
 export type DriveAdmissionsIndex = Map<string, FpgTournamentData>;
@@ -118,14 +120,22 @@ export function preencherSenhorasAquapor(src: Tournament[]): Tournament[] {
     if (!main) return t;
     const elas = main.players.filter(p => inscritas.has(String(p.fedCode || p.fed || "")));
     if (!elas.length) return t;
-    const temCartao = (p: Tournament["players"][number]) => typeof p.grossTotal === "number" && p.grossTotal < 900;
-    const ord = elas.filter(temCartao).sort((a, b) => (a.grossTotal as number) - (b.grossTotal as number));
-    const players: Tournament["players"] = [];
-    ord.forEach((p, i) => {
-      const pos = i > 0 && ord[i - 1].grossTotal === p.grossTotal ? players[i - 1].pos : i + 1;
-      players.push({ ...p, pos });
-    });
-    for (const p of elas.filter(p => !temCartao(p))) players.push({ ...p, pos: "WD" });
+    // Lugar pela regra única (`classificarPorTotal`): só entre quem tem total com
+    // cartão e TODAS as voltas da prova — 10/11/2026 (J10): pelo total cru, quem
+    // tivesse só uma volta ficava à frente (o defeito do J1). Volta sem cartão
+    // (≥ 900) = «WD»; menos voltas, sem desistir = «INC».
+    type P = Tournament["players"][number];
+    const semCartao = (p: P) => !!p._wd || !!p.roundScores?.some(r => isNoCardGross(r.gross));
+    const { ordenados, pos } = classificarPorTotal(
+      elas,
+      (p: P) => (p.roundScores?.length ? voltasComCartao(p.roundScores) : 1),
+      (p: P) => (typeof p.grossTotal === "number" && !semCartao(p) ? p.grossTotal : null),
+    );
+    const players: Tournament["players"] = ordenados.map(p => ({ ...p, pos: pos.get(p)! }));
+    const resto = elas.filter(p => !pos.has(p));
+    const wd = (p: P) => semCartao(p) || !temCartao(typeof p.grossTotal === "number" ? p.grossTotal : null);
+    for (const p of resto.filter(p => !wd(p))) players.push({ ...p, pos: "INC" });
+    for (const p of resto.filter(wd)) players.push({ ...p, pos: "WD" });
     return { ...t, players, playerCount: players.length, rounds: main.rounds, campo: t.campo ?? main.campo, num: main.num };
   });
 }

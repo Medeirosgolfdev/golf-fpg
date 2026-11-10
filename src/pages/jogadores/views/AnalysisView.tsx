@@ -255,7 +255,8 @@ function HistogramCard({ rounds, period, setPeriod }: {
             </div>
           ))}
           <div className="muted mt-6 ta-c fs-11">
-            {bins.total} rondas · Média: +{bins.avg.toFixed(1)} · Mediana: +{bins.median.toFixed(0)}
+            {/* Sinal pelo valor (10/11/2026): o «+» fixo dava «+-1.2» a quem joga abaixo do par. */}
+            {bins.total} rondas · Média: {fmtSign(bins.avg, 1)} · Mediana: {fmtSign(bins.median, Number.isInteger(bins.median) ? 0 : 1)}
           </div>
         </>
       }
@@ -264,6 +265,9 @@ function HistogramCard({ rounds, period, setPeriod }: {
 }
 
 /* ─── Trajectory ─── */
+/** A média longa da Trajectória é a do PERÍODO escolhido; só é a da carreira em «Total». */
+const rotuloMediaLonga = (period: number) => (period > 0 ? "NO PERÍODO" : "CARREIRA");
+
 function TrajectoryCard({ rounds, period, setPeriod }: {
   rounds: (RoundData & { course: string })[]; period: number; setPeriod: (n: number) => void;
 }) {
@@ -308,7 +312,7 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
             </div>
           </div>
           <div className="bg-detail br-lg jog-cross-pad">
-            <div className="muted fs-10">CARREIRA</div>
+            <div className="muted fs-10">{rotuloMediaLonga(period)}</div>
             <div className="kpi-val">{stats.overall}</div>
             <div className="muted fs-10">{stats.n} rondas</div>
           </div>
@@ -379,9 +383,11 @@ export function WHSDetail({ hcp, bare }: { hcp: HcpInfo; bare?: boolean }) {
           color="var(--color-good)" accentBorder="var(--color-good)" />
         <UiKpiCard label="Actual" value={fmtHcp(hcp.current)}
           color="var(--chart-2)" accentBorder="var(--chart-2)"
-          sub={hcp.lowHcp != null
-            ? <span className="tone-bad fw-600">+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</span>
-            : undefined} />
+          sub={hcp.lowHcp == null ? undefined
+            // No mínimo (10/11/2026): «+0.0 do mínimo» a vermelho quando o índice É o mínimo.
+            : Math.round((hcp.current - hcp.lowHcp) * 10) <= 0
+              ? <span className="tone-good fw-600">é o mínimo</span>
+              : <span className="tone-bad fw-600">+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</span>} />
         <UiKpiCard label={`Média ${hcp.qtyCalc || 8} melhores`} value={hcp.scoreAvg?.toFixed(1) ?? "–"} />
       </div>
  <div className="fs-11 c-text-3 d-flex u-gap-14px u-bt-1px-solid-bg u-pt-8px">
