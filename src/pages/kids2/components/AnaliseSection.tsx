@@ -31,6 +31,7 @@ import TabRow from "../../../ui/TabRow";
 import Select from "../../../ui/Select";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Fill } from "../../../ui/DataStyle";
+import { resultadosDoJunior } from "../juniorCalc";
 
 type SubTab = "scoring" | "rounds" | "ninesplit" | "holes";
 
@@ -63,28 +64,21 @@ function rondasComCartao(rounds: Result["rounds"]): { rounds: number[][]; roundN
 /** Extrai scorecards 18H completos de um junior. */
 function extractJuniorScorecards(junior: Junior, data: CanonicalData, filterTids?: Set<string> | null): DerivedCard[] {
   const out: DerivedCard[] = [];
-  for (const tid of junior.tournamentIds) {
-    if (filterTids && !filterTids.has(tid)) continue;
-    const t = data.tournamentById.get(tid);
-    if (!t) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      if (!r) continue;
-      const par = f.par || [];
-      if (par.length !== 18 || par.filter((p) => p > 0).length !== 18) continue;
-      const { rounds, roundNos } = rondasComCartao(r.rounds);
-      if (rounds.length === 0) continue;
-      out.push({
-        tid,
-        flightKey: f.flightKey,
-        tornLabel: t.name || t.shortName || tid,
-        flightLabel: f.label,
-        par,
-        rounds,
-        roundNos,
-        normName: normName(junior.canonicalName),
-      });
-    }
+  for (const { tid, t, f, r } of resultadosDoJunior(junior, data.tournamentById, filterTids)) {
+    const par = f.par || [];
+    if (par.length !== 18 || par.filter((p) => p > 0).length !== 18) continue;
+    const { rounds, roundNos } = rondasComCartao(r.rounds);
+    if (rounds.length === 0) continue;
+    out.push({
+      tid,
+      flightKey: f.flightKey,
+      tornLabel: t.name || t.shortName || tid,
+      flightLabel: f.label,
+      par,
+      rounds,
+      roundNos,
+      normName: normName(junior.canonicalName),
+    });
   }
   return out;
 }

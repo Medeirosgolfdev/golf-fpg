@@ -35,6 +35,7 @@ import { TrophyCount } from "../../ui/PillBadge";
 import ExtLink from "../../ui/ExternalLink";
 import { Tint } from "../../ui/DataStyle";
 import { kidsUrl } from "../../ui/KidsLink";
+import { resultadosDoJunior } from "./juniorCalc";
 // ── Constantes ────────────────────────────────────────────────────────────────
 
 const YEARS = Array.from({ length: 12 }, (_, i) => 2019 - i); // 2019..2008
@@ -62,29 +63,23 @@ interface JourneyItem {
 
 function buildJourney(j: Junior, tournamentById: Map<string, Tournament>): JourneyItem[] {
   const items: JourneyItem[] = [];
-  for (const tid of j.tournamentIds) {
-    const t = tournamentById.get(tid);
-    if (!t) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === j.id);
-      if (!r) continue;
-      // Usar fieldSize do flight específico (igual a computeCareerScore)
-      // para evitar inflação pela soma de todos os escalões do torneio.
-      const flightFs = typeof f.fieldSize === "number" && f.fieldSize > 0
-        ? f.fieldSize
-        : f.results.length;
-      const { stars } = getTournWeight(t, flightFs);
-      items.push({
-        tid,
-        name: t.name || tid,
-        shortName: shortTournamentName(t.name || tid, { year: "short" }),
-        date: t.date || t.startDate || "",
-        stars,
-        pos: typeof r.pos === "number" ? r.pos : null,
-        toPar: typeof r.toPar === "number" ? r.toPar : null,
-        flightLabel: f.label || "",
-      });
-    }
+  for (const { tid, t, f, r } of resultadosDoJunior(j, tournamentById)) {
+    // Usar fieldSize do flight específico (igual a computeCareerScore)
+    // para evitar inflação pela soma de todos os escalões do torneio.
+    const flightFs = typeof f.fieldSize === "number" && f.fieldSize > 0
+      ? f.fieldSize
+      : f.results.length;
+    const { stars } = getTournWeight(t, flightFs);
+    items.push({
+      tid,
+      name: t.name || tid,
+      shortName: shortTournamentName(t.name || tid, { year: "short" }),
+      date: t.date || t.startDate || "",
+      stars,
+      pos: typeof r.pos === "number" ? r.pos : null,
+      toPar: typeof r.toPar === "number" ? r.toPar : null,
+      flightLabel: f.label || "",
+    });
   }
   items.sort((a, b) => b.date.localeCompare(a.date));
   return items;

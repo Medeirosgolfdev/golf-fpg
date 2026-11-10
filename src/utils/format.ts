@@ -6,6 +6,11 @@ export function fmt(n: number | null | undefined): string {
   return ptFmt.format(n);
 }
 
+/** Contador de uma lista filtrada: «1 234 de 18 297» (10/11/2026 — estava escrito à mão em três listas). */
+export function fmtDeTotal(n: number, total: number): string {
+  return `${ptFmt.format(n)} de ${ptFmt.format(total)}`;
+}
+
 /** Course Rating com 1 decimal (ponto, como os outros números do site). */
 export function fmtCR(n: number | null | undefined): string {
   if (n == null || !Number.isFinite(n)) return "—";

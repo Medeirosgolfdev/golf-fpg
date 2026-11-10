@@ -24,7 +24,7 @@ import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName, fmtDatePt, fmtHcp } from "../../utils/format";
+import { displayName, fmtDatePt, fmtHcp, fmtDeTotal } from "../../utils/format";
 import { isManuelByName } from "../../constants/manuel";
 import { PlayerTournaments, type EsPlayerTournamentsFile } from "./PlayerTournaments";
 import Pager from "../../ui/Pager";
@@ -354,7 +354,7 @@ export function RFEGPlayersView() {
         <ToggleChip checked={jovens} onChange={setJovens} label="🧒 Só Jovens"
           title="Só escalões juvenis (Benjamín, Alevín, Infantil, Cadete, Juvenil)" />
         <span className="muted fs-12 u-ml-auto">
-          {filtered.length.toLocaleString("pt")} de {all.length.toLocaleString("pt")}
+          {fmtDeTotal(filtered.length, all.length)}
         </span>
       </div>
 

@@ -17,7 +17,7 @@ import { hasRealPPHcp } from "../../data/federadosPPLoader";
 import { norm } from "../../utils/format";
 import { clubShort } from "../../utils/playerUtils";
 import { compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
-import { PIN_RANK } from "../../constants/pinnedPlayers";
+import { comparePinned } from "../../constants/pinnedPlayers";
 import { ESC_ORDER_FULL as ESC_ORDER, isSeniorEscalao } from "../../constants/escaloes";
 
 export type SortKey = "name" | "hcp" | "club" | "escalao" | "ranking" | "rounds" | "aces";
@@ -255,14 +255,9 @@ export function filterAndSortPlayers<T extends ListPlayer>(
   const pinActive = f.prioritizeJuniors && f.sortKey === "name";
   return [...list].sort((a, b) => {
     if (pinActive) {
-      const ra = PIN_RANK.get(a.fed);
-      const rb = PIN_RANK.get(b.fed);
-      if (ra != null || rb != null) {
-        if (ra == null) return 1;
-        if (rb == null) return -1;
-        if (ra !== rb) return ra - rb;
+        const p = comparePinned(a.fed, b.fed);
+        if (p) return p;
       }
-    }
     switch (f.sortKey) {
       case "name": return dir * a.name.localeCompare(b.name, "pt");
       case "hcp": return compareNullsLast(a.hcp, b.hcp, dir);

@@ -26,6 +26,7 @@ import { toggleSet } from "../../../utils/mathUtils";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Tint } from "../../../ui/DataStyle";
 import { resumoResultado, diferencaDeTotais, type ResumoResultado } from "../../../utils/voltasJogadas";
+import { resultadosDoJunior } from "../juniorCalc";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -70,35 +71,28 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
       ? new Set(getSharedTournamentIds(junior, data.manuel))
       : new Set<string>();
     const out: Row[] = [];
-    for (const tid of junior.tournamentIds) {
-      if (filterTids && !filterTids.has(tid)) continue;
-      const t = data.tournamentById.get(tid);
-      if (!t) continue;
-      for (const f of t.flights) {
-        const r = f.results.find((x) => x.juniorId === junior.id);
-        if (!r) continue;
-        const date = t.date || t.startDate || "";
-        const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
-        const resumo = resumoResultado(r, f.par, opts);
-        let vsManuelDiff: number | null = null;
-        let manuelPos: number | null = null;
-        let comManuel = false;
-        if (!isManuel && manuelSharedIds.has(tid) && data.manuel) {
-          // SÓ contar como confronto se Manuel jogou no MESMO flight (mesmo escalão).
-          // Senão o diff/pos são ilusórios — escalões diferentes não comparam.
-          const mR = f.results.find((rr) => rr.juniorId === data.manuel!.id);
-          // Só com total dos dois lados (≥ 900 = sem cartão) e o MESMO nº de voltas
-          // (10/11/2026: 173 em 2 voltas contra 285 em 3 dava «−112»).
-          if (mR) vsManuelDiff = diferencaDeTotais(resumo, resumoResultado(mR, f.par, opts));
-          comManuel = !!mR;
-          if (mR && typeof mR.pos === "number") manuelPos = mR.pos;
-        }
-        const fs = f.fieldSize ?? null;
-        const topPct = typeof r.pos === "number" && fs && fs > 0
-          ? Math.round((r.pos / fs) * 100)
-          : null;
-        out.push({ tid, tournament: t, flight: f, result: r, resumo, year: date.slice(0, 4) || "?", date, vsManuelDiff, comManuel, manuelPos, topPct });
+    for (const { tid, t, f, r } of resultadosDoJunior(junior, data.tournamentById, filterTids)) {
+      const date = t.date || t.startDate || "";
+      const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
+      const resumo = resumoResultado(r, f.par, opts);
+      let vsManuelDiff: number | null = null;
+      let manuelPos: number | null = null;
+      let comManuel = false;
+      if (!isManuel && manuelSharedIds.has(tid) && data.manuel) {
+        // SÓ contar como confronto se Manuel jogou no MESMO flight (mesmo escalão).
+        // Senão o diff/pos são ilusórios — escalões diferentes não comparam.
+        const mR = f.results.find((rr) => rr.juniorId === data.manuel!.id);
+        // Só com total dos dois lados (≥ 900 = sem cartão) e o MESMO nº de voltas
+        // (10/11/2026: 173 em 2 voltas contra 285 em 3 dava «−112»).
+        if (mR) vsManuelDiff = diferencaDeTotais(resumo, resumoResultado(mR, f.par, opts));
+        comManuel = !!mR;
+        if (mR && typeof mR.pos === "number") manuelPos = mR.pos;
       }
+      const fs = f.fieldSize ?? null;
+      const topPct = typeof r.pos === "number" && fs && fs > 0
+        ? Math.round((r.pos / fs) * 100)
+        : null;
+      out.push({ tid, tournament: t, flight: f, result: r, resumo, year: date.slice(0, 4) || "?", date, vsManuelDiff, comManuel, manuelPos, topPct });
     }
     out.sort((a, b) => b.date.localeCompare(a.date));
     return out;

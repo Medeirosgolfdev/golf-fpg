@@ -19,6 +19,7 @@
  * Dados: uskids-member-history-slim.json (apenas USKids; WJGC/Doral/EOWAGR
  * mostram mensagem porque os tids correspondentes não têm strokes[]).
  */
+import type { MHEscalaoMeta, MHSlim } from "../../data/uskids/memberHistory";
 import { useMemo, useState, type ReactNode } from "react";
 import ToPar from "../../ui/ToPar";
 import SortableHdr from "../../ui/SortableHdr";
@@ -35,21 +36,6 @@ import { buracosDoFlight } from "../../utils/voltasJogadas";
 interface FieldEscalao { nome: string; jogadores?: unknown[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
 
-interface MHRound { gross: number; strokes?: number[] }
-interface MHTorn { ageGroup: string; place: number | null; rounds: Record<string, MHRound> }
-interface MHPlr { name: string; country: string; torneios: Record<string, MHTorn> }
-interface MHEscalaoMeta { course?: string; yards?: number[]; par?: number[] }
-interface MHSlim {
-  torneios: Record<string, {
-    name: string;
-    startDate: string;
-    holesPerRound: number;
-    par: number[] | null;
-    yards?: number[] | null;
-    byEscalao?: Record<string, MHEscalaoMeta>;
-  }>;
-  jogadores: Record<string, MHPlr>;
-}
 
 export interface PlayerRound {
   rn: number;

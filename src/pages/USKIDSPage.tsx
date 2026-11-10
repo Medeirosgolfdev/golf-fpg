@@ -22,7 +22,7 @@ import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from 
 import { cachedFetchJson } from "../data/fetchCache";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import TabelaGlobal from "../ui/TabelaGlobal";
-import type { UskidsDrawsData, Torneio as UskTorneio, TorneioResult as UskTorneioResult } from "../ui/uskidsTypes"; // pairings (Draw R{n})
+import type { UskidsDrawsData, Torneio as UskTorneio, TorneioResult, RondaJogador, RondaResult, EscalaoResult } from "../ui/uskidsTypes"; // pairings (Draw R{n})
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
 import type { CircuitDivision, CircuitEntry } from "../ui/circuit/types";
@@ -72,40 +72,7 @@ interface FieldData { gerado_em: string; torneios: Torneio[]; }
 // ─────────────────────────────────────────────
 // TIPOS — RESULTADOS
 // ─────────────────────────────────────────────
-interface RondaJogador {
-  _nota?: string;
-  nome: string; pais: string; cidade: string;
-  pontos: number; score: number; tee: string;
-  to_par: number | null;
-  buracos: number;
-  start_time: string; grupo: number;
-  strokes: number[];  // directamente no jogador (nova estrutura)
-  // legacy (estrutura antiga — manter compatibilidade)
-  rondas?: Record<string, {
-    strokes: number[]; total: number; buracos: number;
-    start_time: string; grupo: number;
-  }>;
-}
-interface RondaResult {
-  ronda: number;
-  par: number[];
-  si: number[];
-  metros?: number[];   // distâncias por buraco em metros (convertidas de jardas)
-  buracos: number;
-  total_par: number | null;
-  leaderboard: RondaJogador[];  // nova estrutura
-  jogadores?: RondaJogador[];   // legacy
-}
-interface EscalaoResult  { age_group: number; nome: string; holes: number; is_manuel: boolean; rondas: RondaResult[]; campo?: string; }
-interface TorneioResult  {
-  t: number; name: string;
-  date_inicio: string; date_fim?: string; campo: string | null;
-  rondas_total: number;
-  escalao_manuel?: number;
-  url_resultados?: string;
-  escaloes: EscalaoResult[];
-  ultima_atualizacao: string;
-}
+// (RondaJogador/RondaResult/EscalaoResult/TorneioResult vêm de ui/uskidsTypes — um só sítio.)
 interface ResultsData { gerado_em: string; resultados: TorneioResult[]; }
 
 // ─────────────────────────────────────────────
@@ -605,7 +572,7 @@ export default function USKidsFieldPage() {
       let feito: CircuitDivision[] | null = null;
       m.set(t, () => Promise.resolve(feito ??= uskidsDivisions(
         (campoPorT.get(t) ?? null) as unknown as UskTorneio | null,
-        (resPorT.get(t) ?? null) as unknown as UskTorneioResult | null,
+        (resPorT.get(t) ?? null) as unknown as TorneioResult | null,
         drawsData)));
     }
     return m;
@@ -619,7 +586,7 @@ export default function USKidsFieldPage() {
     const m = new Map<number, CircuitEntry>();
     for (const t of allTorneios) {
       const iso = isoDate(t.date);
-      const res = (resPorT.get(t.t) ?? null) as unknown as UskTorneioResult | null;
+      const res = (resPorT.get(t.t) ?? null) as unknown as TorneioResult | null;
       const campoT = campoPorT.get(t.t);
       const escM = campoT?.escaloes.find(e => e.nome === t.escalaoManuel);
       m.set(t.t, {

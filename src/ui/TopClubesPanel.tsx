@@ -18,17 +18,17 @@
  */
 
 import { useMemo, useState, Fragment } from "react";
-import { fmtToPar, fpgScoringUrl } from "../utils/format";
+import { fmtToPar } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import type { Tournament } from "../data/fpgTypes";
 import type { Champion } from "../data/jovensAnaliseData";
 import ExpandArrow from "./ExpandArrow";
 import PlayerLink from "./PlayerLink";
-import ExtLink from "./ExternalLink";
 
 import SectionTitle from "./SectionTitle";
 import { playerKey } from "../utils/playerKey";
+import FpgTournLink from "./FpgTournLink";
 const MAX_CLUBS = 10;
 
 /** Normaliza nome de clube para agrupamento (lower-case, remove pontuação,
@@ -385,13 +385,7 @@ export default function TopClubesPanel({
                                 <td className="r u-fw-600">{t.gross ?? "—"}</td>
                                 <td className="r">{t.toPar != null ? fmtToPar(t.toPar) : "—"}</td>
                                 <td>
-                                  <ExtLink
-                                    href={fpgScoringUrl(t.ccode, t.tcode)}
-                                    className="u-c-accent u-td-none"
-                                    title="Ver torneio na FPG (nova janela)"
-                                  >
-                                    {t.tournamentName} ↗
-                                  </ExtLink>
+                                  <FpgTournLink ccode={t.ccode} tcode={t.tcode} name={t.tournamentName} />
                                 </td>
                               </tr>
                             ))}

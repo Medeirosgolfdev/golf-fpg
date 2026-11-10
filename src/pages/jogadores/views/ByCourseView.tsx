@@ -13,7 +13,7 @@ import { eclecticForRound } from "../../../data/playerDataLoader";
 import { norm } from "../../../utils/format";
 import { normKey } from "../../../utils/teeColors";
 import { fmtStb } from "../../../utils/scoreDisplay";
-import { useSort, compareNullsLast, compareTextNullsLast } from "../../../hooks/useSort";
+import { useSort, compareNullsLast } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { HoleBadge, GrossCell, SdCell, CountPill, RoundNumericCells } from "../../../ui/tableCells";
 import TeePill from "../../../ui/TeePill";
@@ -29,6 +29,7 @@ import { EventInfo, effectivePill } from "../../../ui/eventInfo";
 import { type CourseSort } from "../shared";
 import CoursePerformanceSection from "./CoursePerformanceSection";
 import ExtLink from "../../../ui/ExternalLink";
+import { compareRoundBy } from "../../../utils/roundSort";
 
 function ByCourseRow({ course, data, openScorecard, openScorecardId }: {
   course: CourseData; data: PlayerPageData;
@@ -163,20 +164,7 @@ function CourseRoundsTable({ rows, data, courseName, note, openScorecardId, open
   });
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    return [...rows].sort((a, b) => {
-      switch (sortKey) {
-        case "date": return dir * (a.dateSort - b.dateSort);
-        case "event": return compareTextNullsLast(a.eventName, b.eventName, dir);
-        case "holes": return dir * (a.holeCount - b.holeCount);
-        case "hcp": return compareNullsLast(a.hi, b.hi, dir);
-        case "tee": return compareTextNullsLast(a.tee, b.tee, dir);
-        case "meters": return compareNullsLast(a.meters || null, b.meters || null, dir);
-        case "gross": return compareNullsLast(a.gross, b.gross, dir);
-        case "stb": return compareNullsLast(a.stb, b.stb, dir);
-        case "sd": return compareNullsLast(a.sd, b.sd, dir);
-        default: return dir * (a.dateSort - b.dateSort);
-      }
-    });
+    return [...rows].sort((a, b) => compareRoundBy(a, b, sortKey, dir));
   }, [rows, sortKey, sortDir]);
 
   return (

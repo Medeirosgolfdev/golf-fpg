@@ -25,7 +25,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import { norm, shortDate, ageAtDate, todayIso, fmtSD, fmtHcp } from "../utils/format";
+import { norm, shortDate, ageAtDate, todayIso, fmtSD, fmtHcp, fmtDeTotal } from "../utils/format";
 import { gf, isPtCountry } from "../utils/flagUtils";
 import Pager from "../ui/Pager";
 import {
@@ -43,7 +43,7 @@ import {
   type PlayerStatsDb,
 } from "../data/playerStatsTypes";
 import { MANUEL_FED } from "../constants/manuel";
-import { PIN_RANK } from "../constants/pinnedPlayers";
+import { comparePinned } from "../constants/pinnedPlayers";
 import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import SexBadge from "../ui/SexBadge";
@@ -364,13 +364,8 @@ export default function JogadoresListPage() {
 
     arr.sort((a, b) => {
       if (pinActive) {
-        const ra = PIN_RANK.get(a.fed);
-        const rb = PIN_RANK.get(b.fed);
-        if (ra != null || rb != null) {
-          if (ra == null) return 1;
-          if (rb == null) return -1;
-          if (ra !== rb) return ra - rb;
-        }
+        const p = comparePinned(a.fed, b.fed);
+        if (p) return p;
       }
       switch (sortKey) {
         case "nfed":         return (Number(a.fed) - Number(b.fed)) * dir;
@@ -469,7 +464,7 @@ export default function JogadoresListPage() {
       <Toolbar>
         <ToolbarTitle>👥 Lista de Jogadores</ToolbarTitle>
         <ToolbarMeta>
-          {sorted.length.toLocaleString("pt-PT")} de {rows.length.toLocaleString("pt-PT")}
+          {fmtDeTotal(sorted.length, rows.length)}
         </ToolbarMeta>
         <ToolbarSep />
         <ClearButton onClick={resetFilters} />

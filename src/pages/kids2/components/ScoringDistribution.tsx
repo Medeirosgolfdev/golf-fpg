@@ -15,6 +15,7 @@ import { useMemo } from "react";
 import type { CanonicalData, Junior } from "../data";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Fill } from "../../../ui/DataStyle";
+import { resultadosDoJunior } from "../juniorCalc";
 
 interface Props {
   data: CanonicalData;
@@ -163,32 +164,26 @@ function compute(data: CanonicalData, junior: Junior, filterTids?: Set<string> |
   };
   let totalHoles = 0, eaglesPlus = 0, birdies = 0, pars = 0, bogeys = 0, doublesPlus = 0, subPar = 0;
 
-  for (const tid of junior.tournamentIds) {
-    if (filterTids && !filterTids.has(tid)) continue;
-    const t = data.tournamentById.get(tid);
-    if (!t) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      if (!r?.rounds || !f.par) continue;
-      for (const rd of r.rounds) {
-        if (!rd.strokes || rd.strokes.length === 0) continue;
-        for (let i = 0; i < rd.strokes.length; i++) {
-          const strokes = rd.strokes[i];
-          const par = f.par[i];
-          if (!strokes || strokes <= 0 || !par || par <= 0) continue;
-          // só Par 3/4/5 (skip ranges anómalos)
-          const p = (par === 3 || par === 4 || par === 5) ? (par as 3 | 4 | 5) : null;
-          if (!p) continue;
-          const diff = strokes - p;
-          totalHoles++;
-          byPar[p].holesPlayed++;
-          byPar[p].totalStrokes += strokes;
-          if (diff <= -2) { eaglesPlus++; byPar[p].eagles++; subPar++; }
-          else if (diff === -1) { birdies++; byPar[p].birdies++; subPar++; }
-          else if (diff === 0) { pars++; byPar[p].pars++; }
-          else if (diff === 1) { bogeys++; byPar[p].bogeys++; }
-          else { doublesPlus++; byPar[p].doublesPlus++; }
-        }
+  for (const { f, r } of resultadosDoJunior(junior, data.tournamentById, filterTids)) {
+    if (!r?.rounds || !f.par) continue;
+    for (const rd of r.rounds) {
+      if (!rd.strokes || rd.strokes.length === 0) continue;
+      for (let i = 0; i < rd.strokes.length; i++) {
+        const strokes = rd.strokes[i];
+        const par = f.par[i];
+        if (!strokes || strokes <= 0 || !par || par <= 0) continue;
+        // só Par 3/4/5 (skip ranges anómalos)
+        const p = (par === 3 || par === 4 || par === 5) ? (par as 3 | 4 | 5) : null;
+        if (!p) continue;
+        const diff = strokes - p;
+        totalHoles++;
+        byPar[p].holesPlayed++;
+        byPar[p].totalStrokes += strokes;
+        if (diff <= -2) { eaglesPlus++; byPar[p].eagles++; subPar++; }
+        else if (diff === -1) { birdies++; byPar[p].birdies++; subPar++; }
+        else if (diff === 0) { pars++; byPar[p].pars++; }
+        else if (diff === 1) { bogeys++; byPar[p].bogeys++; }
+        else { doublesPlus++; byPar[p].doublesPlus++; }
       }
     }
   }

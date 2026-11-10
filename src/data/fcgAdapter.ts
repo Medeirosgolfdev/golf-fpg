@@ -23,6 +23,8 @@ import { holesOf } from "./intlCommon";
 import type { Tournament as FPGTournament } from "./fpgTypes";
 import { buildFPGTournament, type IntlCourse, type IntlPlayerIn, type IntlRoundIn } from "./intlTournament";
 import { escaloEsForPlayer, escaloEsFromCategory } from "./rfeg/escalao";
+import type { RFEGDetail } from "./rfeg/types";
+import { soAdmitidos } from "./rfeg/inscritos";
 
 interface FCGScorecardGameTee {
   color: string | null;
@@ -109,22 +111,8 @@ export interface MinimalRFEGShape {
   compId: string | number;
   ok: boolean;
   scrapedAt: string;
-  meta: {
-    name: string | null;
-    dateStart: string | null;
-    dateEnd: string | null;
-    course: string | null;
-    courseClubId: number | null;
-    players: number | null;
-    hcpLimitMen: number | null;
-    hcpLimitWomen: number | null;
-    mode: string | null;
-    style: string | null;
-    category: string | null;
-    sex: string | null;
-    federation: string | null;
-    federationCatId: number | null;
-  };
+  /** A mesma forma do detalhe RFEG — declarada uma vez, em `rfeg/types`. */
+  meta: RFEGDetail["meta"];
   coursePar?: number[] | null;
   parConfidence?: "high" | "medium" | "low";
   inscritos: {
@@ -233,22 +221,7 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
     },
     coursePar,
     parConfidence: coursePar ? "high" : undefined,
-    inscritos: {
-      admitidos,
-      reservas: [],
-      bajas: [],
-      invitados: [],
-      noAdmitidos: [],
-      provisional: [],
-      counts: {
-        admitidos: admitidos.length,
-        reservas: 0,
-        bajas: 0,
-        invitados: 0,
-        noAdmitidos: 0,
-        provisional: 0,
-      },
-    },
+    inscritos: soAdmitidos(admitidos),
     results: [],
     __fcg: true,
     __categories: cats,

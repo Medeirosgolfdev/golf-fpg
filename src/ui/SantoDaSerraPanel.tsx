@@ -12,17 +12,17 @@
  */
 
 import { Fragment, useMemo, useState } from "react";
-import { fmtToPar, fpgScoringUrl } from "../utils/format";
+import { fmtToPar } from "../utils/format";
 import { useSort, compareTextNullsLast } from "../hooks/useSort";
 import PosBadge from "./PosBadge";
 import SortableHdr from "./SortableHdr";
 import ExpandArrow from "./ExpandArrow";
 import PlayerLink from "./PlayerLink";
-import ExtLink from "./ExternalLink";
 import { toggleSet } from "../utils/mathUtils";
 
 import SectionTitle from "./SectionTitle";
 import { playerKey } from "../utils/playerKey";
+import FpgTournLink from "./FpgTournLink";
 interface Player {
   pos: number | string | null;
   name: string;
@@ -259,11 +259,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                                 <td>{e.escalao}{e.isClubes ? " · Clubes" : ""}</td>
                                 <td className="r u-fw-600">{e.gross ?? "\u2014"}</td>
                                 <td className="r">{e.toPar != null ? fmtToPar(e.toPar) : "\u2014"}</td>
-                                <td ><ExtLink href={fpgScoringUrl(e.ccode, e.tcode)}
-                                    className="u-c-accent u-td-none"
-                                    title="Ver torneio na FPG (nova janela)">
-                                    {e.tournamentName} ↗
-                                  </ExtLink>
+                                <td><FpgTournLink ccode={e.ccode} tcode={e.tcode} name={e.tournamentName} />
                                 </td>
                               </tr>
                             ))}

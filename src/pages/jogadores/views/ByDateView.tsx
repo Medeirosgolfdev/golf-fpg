@@ -10,7 +10,7 @@ import { eclecticForRound } from "../../../data/playerDataLoader";
 import { norm } from "../../../utils/format";
 import { normKey } from "../../../utils/teeColors";
 import { fmtStb } from "../../../utils/scoreDisplay";
-import { useSort, compareNullsLast, compareTextNullsLast } from "../../../hooks/useSort";
+import { useSort } from "../../../hooks/useSort";
 import ListaTabela, { type ListaColuna } from "../../../ui/ListaTabela";
 import { HoleBadge, GrossCell, SdCell } from "../../../ui/tableCells";
 import TeePill from "../../../ui/TeePill";
@@ -19,6 +19,7 @@ import EmptyState from "../../../ui/EmptyState";
 import { ScorecardTable } from "../../../ui/ScorecardTable";
 import { CourseLink } from "../../../ui/jogadoresHelpers";
 import { EventInfo, effectivePill } from "../../../ui/eventInfo";
+import { compareRoundBy } from "../../../utils/roundSort";
 
 export default function ByDateView({ data, search }: {
   data: PlayerPageData; search: string;
@@ -42,23 +43,7 @@ export default function ByDateView({ data, search }: {
       );
     }
     const dir = sortDir === "asc" ? 1 : -1;
-    rounds.sort((a, b) => {
-      let av: number | null, bv: number | null;
-      switch (sortKey) {
-        case "date": av = a.dateSort; bv = b.dateSort; break;
-        case "course": return dir * a.course.localeCompare(b.course, "pt");
-        case "event": return compareTextNullsLast(a.eventName, b.eventName, dir);
-        case "holes": av = a.holeCount; bv = b.holeCount; break;
-        case "hcp": av = a.hi; bv = b.hi; break;
-        case "tee": return compareTextNullsLast(a.tee, b.tee, dir);
-        case "meters": av = a.meters || null; bv = b.meters || null; break;
-        case "gross": av = a.gross; bv = b.gross; break;
-        case "stb": av = a.stb; bv = b.stb; break;
-        case "sd": av = a.sd; bv = b.sd; break;
-        default: av = a.dateSort; bv = b.dateSort;
-      }
-      return compareNullsLast(av, bv, dir);
-    });
+    rounds.sort((a, b) => compareRoundBy(a, b, sortKey, dir));
     return rounds;
   }, [data, search, sortKey, sortDir]);
 

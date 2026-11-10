@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { isNoCardGross } from "../../data/intlCommon";
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import type { CircuitDivision, CircuitEntry } from "./types";
-import { matchDivision } from "./pastEditions";
+import { matchDivision, entryDivisions } from "./pastEditions";
 import {
   HistoricScorecardsView, tallyHoles, MIN_GROSS_9H, MIN_GROSS_18H,
   type Edition, type PlayerCard, type PlayerRound,
@@ -93,12 +93,6 @@ export function editionFromTournament(
     meters,
     players: completos,
   };
-}
-
-async function entryDivisions(e: CircuitEntry): Promise<CircuitDivision[]> {
-  if (e.divisions) return e.divisions;
-  if (e.loadDivisions) return e.loadDivisions();
-  return [];
 }
 
 /** A aba: as edições ANTERIORES (todas as irmãs menos a de hoje), mais

@@ -14,7 +14,7 @@
  */
 
 import { useMemo, useState } from "react";
-import { fmtToPar, fpgScoringUrl, fmtOrd } from "../utils/format";
+import { fmtToPar, fmtOrd } from "../utils/format";
 import { normName } from "../utils/normName";
 import type { Tournament } from "../data/fpgTypes";
 import { RoundPill, EscPill } from "./PillBadge";
@@ -24,11 +24,11 @@ import PosBadge from "./PosBadge";
 import SortableHdr from "./SortableHdr";
 import KpiCard from "./KpiCard";
 import PlayerLink from "./PlayerLink";
-import ExtLink from "./ExternalLink";
 import CloseButton from "./CloseButton";
 
 import SectionTitle from "./SectionTitle";
 import { playerKey } from "../utils/playerKey";
+import FpgTournLink from "./FpgTournLink";
 interface PlayerEntry {
   pos: number | string | null;
   name: string;
@@ -427,13 +427,7 @@ export default function AtletaSearchPanel({
                       {r.totalPlayers > 0 ? `${r.pos}/${r.totalPlayers}` : "—"}
                     </td>
                     <td>
-                      <ExtLink
-                        href={fpgScoringUrl(r.ccode, r.tcode)}
-                        className="u-c-accent u-td-none"
-                        title="Ver torneio na FPG (nova janela)"
-                      >
-                        {r.tournamentName} ↗
-                      </ExtLink>
+                      <FpgTournLink ccode={r.ccode} tcode={r.tcode} name={r.tournamentName} />
                     </td>
                   </tr>
                 ))}

@@ -22,6 +22,7 @@ import ExtLink from "../../../ui/ExternalLink";
 import ShowMoreButton from "../../../ui/ShowMoreButton";
 import SectionTitle from "../../../ui/SectionTitle";
 import { resumoResultado } from "../../../utils/voltasJogadas";
+import { resultadosDoJunior } from "../data";
 
 const DEFAULT_LIMIT = 6;
 const RECENT_MONTHS = 24; // "recente" = últimos 24 meses
@@ -144,44 +145,37 @@ function collectAllWins(data: CanonicalData, junior: Junior, filterTids?: Set<st
   const isManuelView = manuelId === junior.id;
   const out: WinCard[] = [];
   const seenTid = new Set<string>();
-  for (const tid of junior.tournamentIds) {
-    if (filterTids && !filterTids.has(tid)) continue;
-    const t = data.tournamentById.get(tid);
-    if (!t) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      if (r?.pos !== 1) continue;
-      if (seenTid.has(tid)) continue; // 1 win per tournament
-      seenTid.add(tid);
-      const flightFs = typeof f.fieldSize === "number" && f.fieldSize > 0 ? f.fieldSize : f.results.length;
-      const w = getTournWeight(t, flightFs);
-      // ±par do junior pelo resumo global (10/11/2026): sem cartão (≥ 900) fica
-      // vazio e o ±par de recurso é pelas voltas jogadas.
-      const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
-      const toPar = resumoResultado(r, f.par, opts).toPar;
+  for (const { tid, t, f, r } of resultadosDoJunior(junior, data.tournamentById, filterTids)) {
+    if (r.pos !== 1) continue;
+    if (seenTid.has(tid)) continue; // 1 win per tournament
+    seenTid.add(tid);
+    const flightFs = typeof f.fieldSize === "number" && f.fieldSize > 0 ? f.fieldSize : f.results.length;
+    const w = getTournWeight(t, flightFs);
+    // ±par do junior pelo resumo global (10/11/2026): sem cartão (≥ 900) fica
+    // vazio e o ±par de recurso é pelas voltas jogadas.
+    const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
+    const toPar = resumoResultado(r, f.par, opts).toPar;
 
-      // ±par do Manuel no mesmo torneio (se aplicável)
-      let manuelToPar: number | null = null;
-      if (manuelId && !isManuelView) {
-        for (const mf of t.flights) {
-          const mR = mf.results.find((x) => x.juniorId === manuelId);
-          if (!mR) continue;
-          manuelToPar = resumoResultado(mR, mf.par, opts).toPar;
-          break;
-        }
+    // ±par do Manuel no mesmo torneio (se aplicável)
+    let manuelToPar: number | null = null;
+    if (manuelId && !isManuelView) {
+      for (const mf of t.flights) {
+        const mR = mf.results.find((x) => x.juniorId === manuelId);
+        if (!mR) continue;
+        manuelToPar = resumoResultado(mR, mf.par, opts).toPar;
+        break;
       }
-
-      out.push({
-        tid,
-        tournament: t,
-        flight: f,
-        result: r,
-        stars: w.stars,
-        toPar: toPar ?? null,
-        manuelToPar,
-      });
-      break;
     }
+
+    out.push({
+      tid,
+      tournament: t,
+      flight: f,
+      result: r,
+      stars: w.stars,
+      toPar: toPar ?? null,
+      manuelToPar,
+    });
   }
   // Sort: prioriza vitórias recentes; só 3★+ do passado conseguem subir.
   const now = Date.now();

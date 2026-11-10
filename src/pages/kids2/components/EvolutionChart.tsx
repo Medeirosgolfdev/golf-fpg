@@ -22,6 +22,7 @@ import { ToggleChip } from "../../../ui/FilterField";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Tint } from "../../../ui/DataStyle";
 import { resumoResultado } from "../../../utils/voltasJogadas";
+import { resultadosDoJunior } from "../data";
 
 interface Props {
   data: CanonicalData;
@@ -65,67 +66,60 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
 
   const points = useMemo<Point[]>(() => {
     const arr: Point[] = [];
-    for (const tid of junior.tournamentIds) {
-      if (filterTids && !filterTids.has(tid)) continue;
-      const t = data.tournamentById.get(tid);
-      if (!t) continue;
-      for (const f of t.flights) {
-        const r = f.results.find((x) => x.juniorId === junior.id);
-        if (!r) continue;
-        const date = t.date || t.startDate || "";
-        if (!date) continue;
-        const [y, m, d] = date.split("-").map(Number);
-        if (!y || !m || !d) continue;
-        const ts = new Date(y, m - 1, d).getTime();
+    for (const { tid, t, f, r } of resultadosDoJunior(junior, data.tournamentById, filterTids)) {
+      const date = t.date || t.startDate || "";
+      if (!date) continue;
+      const [y, m, d] = date.split("-").map(Number);
+      if (!y || !m || !d) continue;
+      const ts = new Date(y, m - 1, d).getTime();
 
-        // ±par do torneio pelo resumo global (10/11/2026): sem cartão (≥ 900) não
-        // entra no gráfico, o ±par de recurso é pelas voltas JOGADAS e os buracos
-        // por volta vêm das voltas do próprio jogador (9H em provas «de 18»).
-        const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
-        const res = resumoResultado(r, f.par, opts);
-        const toParTotal = res.toPar;
-        const nh = res.nBuracos;
-        const nRounds = res.jogadas.length || (typeof t.rounds === "number" ? t.rounds : 1);
-        // ±par MÉDIO POR RONDA (não total) — escala consistente entre torneios de 1, 2 ou 4 rondas
-        const toPar = toParTotal != null && nRounds > 0 ? Math.round((toParTotal / nRounds) * 10) / 10 : null;
-        // ±par/18H normalizado (útil para misturar 9H + 18H)
-        const toParNorm = tprNorm(toParTotal ?? null, nRounds, nh);
+      // ±par do torneio pelo resumo global (10/11/2026): sem cartão (≥ 900) não
+      // entra no gráfico, o ±par de recurso é pelas voltas JOGADAS e os buracos
+      // por volta vêm das voltas do próprio jogador (9H em provas «de 18»).
+      const opts = { parTotal: t.parTotal, buracos: t.holesPerRound };
+      const res = resumoResultado(r, f.par, opts);
+      const toParTotal = res.toPar;
+      const nh = res.nBuracos;
+      const nRounds = res.jogadas.length || (typeof t.rounds === "number" ? t.rounds : 1);
+      // ±par MÉDIO POR RONDA (não total) — escala consistente entre torneios de 1, 2 ou 4 rondas
+      const toPar = toParTotal != null && nRounds > 0 ? Math.round((toParTotal / nRounds) * 10) / 10 : null;
+      // ±par/18H normalizado (útil para misturar 9H + 18H)
+      const toParNorm = tprNorm(toParTotal ?? null, nRounds, nh);
 
-        const trophy: 1 | 2 | 3 | undefined = typeof r.pos === "number" && r.pos <= 3 ? (r.pos as 1 | 2 | 3) : undefined;
+      const trophy: 1 | 2 | 3 | undefined = typeof r.pos === "number" && r.pos <= 3 ? (r.pos as 1 | 2 | 3) : undefined;
 
-        // Procurar dados do Manuel no MESMO torneio (qualquer flight)
-        let manuelToPar: number | null = null;
-        let manuelToParNorm: number | null = null;
-        let manuelPos: number | null = null;
-        if (manuelId) {
-          for (const mf of t.flights) {
-            const mR = mf.results.find((x) => x.juniorId === manuelId);
-            if (!mR) continue;
-            if (typeof mR.pos === "number") manuelPos = mR.pos;
-            const mRes = resumoResultado(mR, mf.par, opts);
-            const mTpTotal = mRes.toPar;
-            const mNh = mRes.nBuracos;
-            const mNRounds = mRes.jogadas.length || (typeof t.rounds === "number" ? t.rounds : 1);
-            // ±par por ronda do Manuel (mesma transformação)
-            manuelToPar = mTpTotal != null && mNRounds > 0 ? Math.round((mTpTotal / mNRounds) * 10) / 10 : null;
-            manuelToParNorm = tprNorm(mTpTotal ?? null, mNRounds, mNh);
-            break;
-          }
+      // Procurar dados do Manuel no MESMO torneio (qualquer flight)
+      let manuelToPar: number | null = null;
+      let manuelToParNorm: number | null = null;
+      let manuelPos: number | null = null;
+      if (manuelId) {
+        for (const mf of t.flights) {
+          const mR = mf.results.find((x) => x.juniorId === manuelId);
+          if (!mR) continue;
+          if (typeof mR.pos === "number") manuelPos = mR.pos;
+          const mRes = resumoResultado(mR, mf.par, opts);
+          const mTpTotal = mRes.toPar;
+          const mNh = mRes.nBuracos;
+          const mNRounds = mRes.jogadas.length || (typeof t.rounds === "number" ? t.rounds : 1);
+          // ±par por ronda do Manuel (mesma transformação)
+          manuelToPar = mTpTotal != null && mNRounds > 0 ? Math.round((mTpTotal / mNRounds) * 10) / 10 : null;
+          manuelToParNorm = tprNorm(mTpTotal ?? null, mNRounds, mNh);
+          break;
         }
-
-        arr.push({
-          date, ts,
-          toPar: toPar ?? null,
-          toParNorm,
-          pos: typeof r.pos === "number" ? r.pos : null,
-          manuelToPar, manuelToParNorm, manuelPos,
-          flight: f.label,
-          tName: t.shortName || t.name || tid,
-          sourceId: t.sourceId,
-          trophy,
-          nholes: nh,
-        });
       }
+
+      arr.push({
+        date, ts,
+        toPar: toPar ?? null,
+        toParNorm,
+        pos: typeof r.pos === "number" ? r.pos : null,
+        manuelToPar, manuelToParNorm, manuelPos,
+        flight: f.label,
+        tName: t.shortName || t.name || tid,
+        sourceId: t.sourceId,
+        trophy,
+        nholes: nh,
+      });
     }
     arr.sort((a, b) => a.ts - b.ts);
     return arr;

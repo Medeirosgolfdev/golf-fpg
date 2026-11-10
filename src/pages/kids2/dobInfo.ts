@@ -19,6 +19,7 @@
 
 import type { Junior, Tournament } from "./data";
 import { MONTHS_PT, fmtDatePt } from "../../utils/format";
+import { resultadosDoJunior } from "./data";
 
 type DobState = "known" | "range" | "inferred" | "unknown";
 
@@ -90,30 +91,23 @@ interface Constraint {
 /** Extrai constraints (data + range de idade) de cada torneio onde o junior participou. */
 function collectConstraints(junior: Junior, tournamentById: Map<string, Tournament>): Constraint[] {
   const out: Constraint[] = [];
-  for (const tid of junior.tournamentIds) {
-    const t = tournamentById.get(tid);
-    if (!t) continue;
-    const dateIso = t.date || t.startDate;
-    const date = parseIsoDate(dateIso);
+  for (const { tid, t, f } of resultadosDoJunior(junior, tournamentById)) {
+    const date = parseIsoDate(t.date || t.startDate);
     if (!date) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      if (!r) continue;
-      const ageMin = typeof f.ageMin === "number" ? f.ageMin : null;
-      const ageMax = typeof f.ageMax === "number" ? f.ageMax : null;
-      if (ageMin == null && ageMax == null) continue;
-      // Só ageMin (escalão de idade exacta, ex: Boys 11) → copia para o ageMax.
-      // Só ageMax ("Sub-18", "U16", European Girls' Team U18…) é um TECTO: o
-      // jogador pode ter qualquer idade abaixo. Copiá-lo para o ageMin dava a
-      // toda a gente a idade máxima do escalão (Hockenhull, 12 anos, aparecia
-      // "Jul 2008 · ~18" por ter jogado o Carris Trophy, que é Sub-18).
-      const hasMin = ageMin != null;
-      const lo = ageMin ?? 5;
-      const hi = ageMax ?? ageMin!;
-      // Sanity: ranges absurdos saltam-se
-      if (lo < 5 || hi > 25 || lo > hi) continue;
-      out.push({ date, ageMin: lo, ageMax: hi, hasMin, tid });
-    }
+    const ageMin = typeof f.ageMin === "number" ? f.ageMin : null;
+    const ageMax = typeof f.ageMax === "number" ? f.ageMax : null;
+    if (ageMin == null && ageMax == null) continue;
+    // Só ageMin (escalão de idade exacta, ex: Boys 11) → copia para o ageMax.
+    // Só ageMax ("Sub-18", "U16", European Girls' Team U18…) é um TECTO: o
+    // jogador pode ter qualquer idade abaixo. Copiá-lo para o ageMin dava a
+    // toda a gente a idade máxima do escalão (Hockenhull, 12 anos, aparecia
+    // "Jul 2008 · ~18" por ter jogado o Carris Trophy, que é Sub-18).
+    const hasMin = ageMin != null;
+    const lo = ageMin ?? 5;
+    const hi = ageMax ?? ageMin!;
+    // Sanity: ranges absurdos saltam-se
+    if (lo < 5 || hi > 25 || lo > hi) continue;
+    out.push({ date, ageMin: lo, ageMax: hi, hasMin, tid });
   }
   return out;
 }

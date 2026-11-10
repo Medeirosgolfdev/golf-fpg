@@ -8,6 +8,7 @@
 import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } from "../playerLookups";
 import { isPtCountry } from "../../utils/flagUtils";
 import { normEs } from "./text";
+import { soAdmitidos } from "./inscritos";
 import type { RFEGPlayer, RFEGDetail, NCRoundScore, NCDetail, DobLookup, HcpLookup, LgsRound, LgsDetail, LgsHorarioRound } from "./types";
 import { dobLookupByName, isNoCardGross } from "../intlCommon";
 
@@ -414,21 +415,6 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
     // descartava o SI/metros dos torneios de 9.
     _ncCourseSi: (nc.course?.si && Array.isArray(nc.course.si) && (nc.course.si.length === 9 || nc.course.si.length === 18)) ? nc.course.si : null,
     _ncCourseMeters: (nc.course?.meters && Array.isArray(nc.course.meters) && (nc.course.meters.length === 9 || nc.course.meters.length === 18)) ? nc.course.meters : null,
-    inscritos: {
-      admitidos,
-      reservas: [],
-      bajas: [],
-      invitados: [],
-      noAdmitidos: [],
-      provisional: [],
-      counts: {
-        admitidos: admitidos.length,
-        reservas: 0,
-        bajas: 0,
-        invitados: 0,
-        noAdmitidos: 0,
-        provisional: 0,
-      },
-    },
+    inscritos: soAdmitidos(admitidos),
   } as RFEGDetail & { _ncCourseSi?: number[] | null; _ncCourseMeters?: number[] | null };
 }

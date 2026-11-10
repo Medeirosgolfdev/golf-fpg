@@ -3,15 +3,14 @@ import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
 import { eclecticForRound } from "../data/playerDataLoader";
 import { norm } from "../utils/format";
 import { normKey } from "../utils/teeColors";
-import { fmtStb } from "../utils/scoreDisplay";
-import { GrossCell, SdCell, HoleBadge } from "./tableCells";
+import { RoundNumericCells } from "./tableCells";
 import { EventInfo, effectivePill } from "./eventInfo";
-import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
+import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
-import TeePill from "./TeePill";
 import { ScorecardTable } from "./ScorecardTable";
 import { CourseLink } from "./jogadoresHelpers";
+import { compareRoundBy } from "../utils/roundSort";
 
 /** Sort keys for Last20 scorecard table */
 export type L20SortKey = "whs" | "date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd" | "rank";
@@ -44,23 +43,10 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
     const dir = sortDir === "asc" ? 1 : -1;
     const arr = [...last20Table];
     arr.sort((a, b) => {
-      let av: number | null | undefined, bv: number | null | undefined;
-      switch (sortKey) {
-        case "whs": av = whsPosMap.get(a.scoreId); bv = whsPosMap.get(b.scoreId); break;
-        case "date": av = a.dateSort; bv = b.dateSort; break;
-        case "course": return dir * a.course.localeCompare(b.course, "pt");
-        case "event": return compareTextNullsLast(a.eventName, b.eventName, dir);
-        case "holes": av = a.holeCount; bv = b.holeCount; break;
-        case "hcp": av = a.hi; bv = b.hi; break;
-        case "tee": return compareTextNullsLast(a.tee, b.tee, dir);
-        case "meters": av = a.meters || null; bv = b.meters || null; break;
-        case "gross": av = a.gross; bv = b.gross; break;
-        case "stb": av = a.stb; bv = b.stb; break;
-        case "sd": av = a.sd; bv = b.sd; break;
-        case "rank": av = best8.get(a.scoreId); bv = best8.get(b.scoreId); break;
-        default: av = a.dateSort; bv = b.dateSort;
-      }
-      return compareNullsLast(av, bv, dir);
+      // As duas colunas próprias desta tabela; o resto é a ordenação comum das voltas.
+      if (sortKey === "whs") return compareNullsLast(whsPosMap.get(a.scoreId), whsPosMap.get(b.scoreId), dir);
+      if (sortKey === "rank") return compareNullsLast(best8.get(a.scoreId), best8.get(b.scoreId), dir);
+      return compareRoundBy(a, b, sortKey, dir);
     });
     return arr;
   }, [last20Table, sortKey, sortDir, best8, whsPosMap]);
@@ -125,13 +111,8 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
                     <td><CourseLink name={r.course} /></td>
                     <td className="fs-11"><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links}
                       fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} /></td>
-                    <td className="r"><HoleBadge hc={r.holeCount} /></td>
-                    <td className="r">{r.hi ?? ""}</td>
-                    <td><TeePill name={r.tee || ""} /></td>
-                    <td className="r muted">{r.meters ? `${r.meters}m` : ""}</td>
-                    <td className="r"><GrossCell gross={r.gross} par={r.par} /></td>
-                    <td className="r">{fmtStb(r.stb, r.holeCount)}</td>
-                    <td className="r"><SdCell round={r} /></td>
+                    {/* As 7 células comuns das tabelas de voltas (Bur/HCP/Tee/Dist/Gross/Stb/SD). */}
+                    <RoundNumericCells r={r} />
                     <td className="r">
                       {isBest8 && (
                         <><span className="c-good">★</span>{" "}<span className="fw-700">#{rank}</span></>

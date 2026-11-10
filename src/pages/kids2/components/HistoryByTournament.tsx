@@ -28,6 +28,7 @@ import { TrophyPos } from "../../../ui/PosBadge";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Tint } from "../../../ui/DataStyle";
 import { resumoResultado, buracosDoFlight } from "../../../utils/voltasJogadas";
+import { countWins, getResultInTournament } from "../data";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -62,14 +63,10 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
       if (filterTids && !filterTids.has(tid)) continue;
       const t = data.tournamentById.get(tid);
       if (!t) continue;
-      let flight: Flight | null = null;
-      let result: Result | null = null;
-      for (const f of t.flights) {
-        const r = f.results.find((x) => x.juniorId === junior.id);
-        if (r) { flight = f; result = r; break; }
-      }
-      if (!flight || !result) continue;
-      const ed: Edition = { tournament: t, flight, result };
+      // (o primeiro flight em que o júnior aparece — uma edição por torneio)
+      const achado = getResultInTournament(junior, t);
+      if (!achado) continue;
+      const ed: Edition = { tournament: t, flight: achado.flight, result: achado.result };
       if (t.seriesId) {
         let arr = bySeries.get(t.seriesId);
         if (!arr) { arr = []; bySeries.set(t.seriesId, arr); }
@@ -105,15 +102,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
       return b.score - a.score;
     });
 
-    let wins = 0;
-    for (const tid of junior.tournamentIds) {
-      const t = data.tournamentById.get(tid);
-      if (!t) continue;
-      for (const f of t.flights) {
-        const r = f.results.find((x) => x.juniorId === junior.id);
-        if (r?.pos === 1) wins++;
-      }
-    }
+    const wins = countWins(junior, data.tournamentById);
 
     return { multiSeries: ms, oneOffs: oo, totalWins: wins };
   }, [data, junior, filterTids]);

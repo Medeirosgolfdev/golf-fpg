@@ -27,6 +27,7 @@ import ExtLink from "../../../ui/ExternalLink";
 import { Tint } from "../../../ui/DataStyle";
 import { useJson } from "../../../hooks/useJson";
 import { voltasComCartao } from "../../../utils/classificacao";
+import { resultadosDoJunior } from "../juniorCalc";
 /** Bandeira por federação — mostrada junto ao número de licença. */
 const SOURCE_FLAGS: Record<string, string> = {
   USKIDS: flagOf("United States"),
@@ -78,14 +79,9 @@ function useEgrRank(junior: Junior): EgrSlimEntry | null {
  *  Diferente de computeRoundStats.total que filtra para 18H. */
 function countTotalRounds(junior: Junior, tournamentById: Map<string, Tournament>): number {
   let n = 0;
-  for (const tid of junior.tournamentIds) {
-    const t = tournamentById.get(tid);
-    if (!t) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      // Só voltas com cartão: gross ≥ 900 («sem cartão») não é volta jogada.
-      n += voltasComCartao(r?.rounds);
-    }
+  for (const { r } of resultadosDoJunior(junior, tournamentById)) {
+    // Só voltas com cartão: gross ≥ 900 («sem cartão») não é volta jogada.
+    n += voltasComCartao(r?.rounds);
   }
   return n;
 }
@@ -94,15 +90,11 @@ function countTotalRounds(junior: Junior, tournamentById: Map<string, Tournament
  *  inglês). Não é o HI: depende do campo e da percentagem do dia. */
 function ultimoHcpJogo(junior: Junior, tournamentById: Map<string, Tournament>): { valor: number; date: string; serie: string } | null {
   let melhor: { valor: number; date: string; serie: string } | null = null;
-  for (const tid of junior.tournamentIds) {
-    const t = tournamentById.get(tid);
-    const date = t?.date || t?.startDate;
-    if (!t || !date) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      if (typeof r?.hcpJogo === "number" && (!melhor || date > melhor.date)) {
-        melhor = { valor: r.hcpJogo, date, serie: t.seriesLabel || t.name || "" };
-      }
+  for (const { t, r } of resultadosDoJunior(junior, tournamentById)) {
+    const date = t.date || t.startDate;
+    if (!date) continue;
+    if (typeof r?.hcpJogo === "number" && (!melhor || date > melhor.date)) {
+      melhor = { valor: r.hcpJogo, date, serie: t.seriesLabel || t.name || "" };
     }
   }
   return melhor;

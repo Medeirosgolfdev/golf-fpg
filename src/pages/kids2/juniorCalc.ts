@@ -352,6 +352,27 @@ export function hasRealConfrontWithManuel(junior: Junior, manuel: Junior | null,
   return getSharedFlightTids(junior, manuel, tournamentById).length > 0;
 }
 
+/** Um resultado do júnior numa prova: o torneio, o flight (escalão) e a linha dele. */
+export interface ResultadoDoJunior { tid: string; t: Tournament; f: Flight; r: Result }
+
+/** TODOS os resultados de um júnior, pela ordem dos seus torneios: um por flight em
+ *  que aparece. `filterTids` = só esses torneios (o filtro de circuito da ficha).
+ *  Um só sítio (10/11/2026 — o mesmo ciclo triplo estava escrito em ~20 sítios do
+ *  Kids 2); quem precisa de mais condições (data, par de 18…) filtra no seu ciclo. */
+export function resultadosDoJunior(junior: Junior, tournamentById: Map<string, Tournament>, filterTids?: Set<string> | null): ResultadoDoJunior[] {
+  const out: ResultadoDoJunior[] = [];
+  for (const tid of junior.tournamentIds) {
+    if (filterTids && !filterTids.has(tid)) continue;
+    const t = tournamentById.get(tid);
+    if (!t) continue;
+    for (const f of t.flights) {
+      const r = f.results.find((x) => x.juniorId === junior.id);
+      if (r) out.push({ tid, t, f, r });
+    }
+  }
+  return out;
+}
+
 export function getResultInTournament(junior: Junior, tournament: Tournament): { flight: Flight; result: Result } | null {
   for (const f of tournament.flights) {
     const r = f.results.find((x) => x.juniorId === junior.id);
@@ -365,28 +386,18 @@ export function getResultInTournament(junior: Junior, tournament: Tournament): {
  *  ele, 10 vitórias sobre os 3 torneios filtrados davam «333% taxa»). */
 export function countWins(junior: Junior, tournamentById: Map<string, Tournament>, desde?: string, filterTids?: Set<string> | null): number {
   let wins = 0;
-  for (const tid of junior.tournamentIds) {
-    if (filterTids && !filterTids.has(tid)) continue;
-    const t = tournamentById.get(tid);
-    if (!t || (desde && (t.date || t.startDate || "") < desde)) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      if (r?.pos === 1) wins++;
-    }
+  for (const { t, r } of resultadosDoJunior(junior, tournamentById, filterTids)) {
+    if (desde && (t.date || t.startDate || "") < desde) continue;
+    if (r.pos === 1) wins++;
   }
   return wins;
 }
 
 export function countTop3(junior: Junior, tournamentById: Map<string, Tournament>, desde?: string, filterTids?: Set<string> | null): number {
   let n = 0;
-  for (const tid of junior.tournamentIds) {
-    if (filterTids && !filterTids.has(tid)) continue;
-    const t = tournamentById.get(tid);
-    if (!t || (desde && (t.date || t.startDate || "") < desde)) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      if (typeof r?.pos === "number" && r.pos <= 3) n++;
-    }
+  for (const { t, r } of resultadosDoJunior(junior, tournamentById, filterTids)) {
+    if (desde && (t.date || t.startDate || "") < desde) continue;
+    if (typeof r.pos === "number" && r.pos <= 3) n++;
   }
   return n;
 }
@@ -433,27 +444,22 @@ export function inferBirthYear(j: Junior, tournamentById: Map<string, Tournament
   // Inferir de TODOS os flights onde o jogador tem resultado — usar a moda.
   // Não parar no primeiro: um único torneio com ageMin errado estragaria tudo.
   const byYearCount = new Map<number, number>();
-  for (const tid of j.tournamentIds) {
-    const t = tournamentById.get(tid);
-    if (!t) continue;
+  for (const { t, f } of resultadosDoJunior(j, tournamentById)) {
     const dateStr = t.date || t.startDate || t.endDate;
     const tYear = dateStr ? parseInt(dateStr.slice(0, 4), 10) : null;
     if (!tYear || isNaN(tYear)) continue;
-    for (const f of t.flights) {
-      if (!f.results.find((r) => r.juniorId === j.id)) continue;
-      let age: number | null = null;
-      if (typeof f.ageMin === "number" && f.ageMin > 0) age = f.ageMin;
-      else {
-        const m = (f.label || "").match(/\b(\d{1,2})\b/);
-        if (m) {
-          const a = parseInt(m[1], 10);
-          if (a >= 7 && a <= 18) age = a;
-        }
+    let age: number | null = null;
+    if (typeof f.ageMin === "number" && f.ageMin > 0) age = f.ageMin;
+    else {
+      const m = (f.label || "").match(/\b(\d{1,2})\b/);
+      if (m) {
+        const a = parseInt(m[1], 10);
+        if (a >= 7 && a <= 18) age = a;
       }
-      if (age !== null) {
-        const by = tYear - age;
-        byYearCount.set(by, (byYearCount.get(by) ?? 0) + 1);
-      }
+    }
+    if (age !== null) {
+      const by = tYear - age;
+      byYearCount.set(by, (byYearCount.get(by) ?? 0) + 1);
     }
   }
   if (byYearCount.size === 0) return null;
@@ -622,33 +628,27 @@ export function computeRoundStats(junior: Junior, tournamentById: Map<string, To
   const toPars: Array<{ value: number; tournamentId: string; round: number }> = [];
   let subParCount = 0;
   let withParCount = 0;
-  for (const tid of junior.tournamentIds) {
-    if (filterTids && !filterTids.has(tid)) continue;
-    const t = tournamentById.get(tid);
-    if (!t) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      if (!r?.rounds) continue;
-      // ⚠ Filtra 9H — comparar +3 num 9H (par 36) com +0 num 18H (par 72) é
-      // enganador. Para "Melhor ±par" agregado da carreira só consideramos
-      // rondas 18H. Se quisermos um KPI separado para 9H, criar à parte.
-      const parArr = f.par || [];
-      const par18 = parArr.length === 18 && parArr.filter((p) => p > 0).length === 18;
-      if (!par18) continue;
-      const parTotal = parArr.reduce((a, b) => a + (b || 0), 0);
-      if (parTotal < 60) continue; // sanity — par 18H deve ser ≥ 60
-      for (const rd of r.rounds) {
-        if (typeof rd.gross !== "number") continue;
-        // Sanity: gross de 18H deve ser ≥ 50 (alguém com nível profissional)
-        // ou ≤ 200. Valores fora disto são bugs de scrape.
-        if (rd.gross < 50 || rd.gross > 200) continue;
-        if (!isVolta18(rd, parTotal)) continue;
-        grosses.push(rd.gross);
-        withParCount++;
-        const diff = rd.gross - parTotal;
-        toPars.push({ value: diff, tournamentId: tid, round: rd.round });
-        if (diff < 0) subParCount++;
-      }
+  for (const { tid, f, r } of resultadosDoJunior(junior, tournamentById, filterTids)) {
+    if (!r?.rounds) continue;
+    // ⚠ Filtra 9H — comparar +3 num 9H (par 36) com +0 num 18H (par 72) é
+    // enganador. Para "Melhor ±par" agregado da carreira só consideramos
+    // rondas 18H. Se quisermos um KPI separado para 9H, criar à parte.
+    const parArr = f.par || [];
+    const par18 = parArr.length === 18 && parArr.filter((p) => p > 0).length === 18;
+    if (!par18) continue;
+    const parTotal = parArr.reduce((a, b) => a + (b || 0), 0);
+    if (parTotal < 60) continue; // sanity — par 18H deve ser ≥ 60
+    for (const rd of r.rounds) {
+      if (typeof rd.gross !== "number") continue;
+      // Sanity: gross de 18H deve ser ≥ 50 (alguém com nível profissional)
+      // ou ≤ 200. Valores fora disto são bugs de scrape.
+      if (rd.gross < 50 || rd.gross > 200) continue;
+      if (!isVolta18(rd, parTotal)) continue;
+      grosses.push(rd.gross);
+      withParCount++;
+      const diff = rd.gross - parTotal;
+      toPars.push({ value: diff, tournamentId: tid, round: rd.round });
+      if (diff < 0) subParCount++;
     }
   }
   if (grosses.length === 0) {
@@ -676,18 +676,13 @@ export function computeRoundStats(junior: Junior, tournamentById: Map<string, To
 
 export function bestRoundGross(junior: Junior, tournamentById: Map<string, Tournament>): { gross: number; tournamentId: string; round: number } | null {
   let best: { gross: number; tournamentId: string; round: number } | null = null;
-  for (const tid of junior.tournamentIds) {
-    const t = tournamentById.get(tid);
-    if (!t) continue;
-    for (const f of t.flights) {
-      const r = f.results.find((x) => x.juniorId === junior.id);
-      if (!r?.rounds) continue;
-      for (const rd of r.rounds) {
-        // Sem gross, a zeros ou «sem cartão» (≥ 900) não é volta. (Sem imports
-        // neste ficheiro — a regra é a do `temCartao`, utils/classificacao.)
-        if (typeof rd.gross !== "number" || rd.gross <= 0 || rd.gross >= 900) continue;
-        if (!best || rd.gross < best.gross) best = { gross: rd.gross, tournamentId: tid, round: rd.round };
-      }
+  for (const { tid, r } of resultadosDoJunior(junior, tournamentById)) {
+    if (!r?.rounds) continue;
+    for (const rd of r.rounds) {
+      // Sem gross, a zeros ou «sem cartão» (≥ 900) não é volta. (Sem imports
+      // neste ficheiro — a regra é a do `temCartao`, utils/classificacao.)
+      if (typeof rd.gross !== "number" || rd.gross <= 0 || rd.gross >= 900) continue;
+      if (!best || rd.gross < best.gross) best = { gross: rd.gross, tournamentId: tid, round: rd.round };
     }
   }
   return best;

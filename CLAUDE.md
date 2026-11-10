@@ -292,7 +292,17 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   Stroke Play/Medal Net/Stableford Net → `ui/ModoClassifTabs.tsx`; cache de uma
   promessa que NÃO guarda a falha → `memoAsync` (`data/fetchCache.ts`); eclético
   de uma volta (a metade certa nas de 9) → `eclecticForRound`
-  (`data/playerDataLoader.ts`).
+  (`data/playerDataLoader.ts`); todos os resultados de um júnior do Kids 2
+  (torneio + flight + a linha dele) → `resultadosDoJunior` (`pages/kids2/juniorCalc.ts`;
+  o primeiro de um torneio → `getResultInTournament`; vitórias/pódios →
+  `countWins`/`countTop3`) — nunca o ciclo triplo à mão; ordenar voltas de um
+  jogador por coluna → `compareRoundBy` (`utils/roundSort.ts`); as 7 células comuns
+  de uma linha de volta → `RoundNumericCells` (`ui/tableCells`); link de um torneio
+  para a FPG → `ui/FpgTournLink.tsx`; contador «N de M» → `fmtDeTotal`
+  (`utils/format`); ordem dos fixados → `comparePinned` (`constants/pinnedPlayers`);
+  inscritos só com admitidos → `soAdmitidos` (`data/rfeg/inscritos.ts`); tipos do
+  histórico USKids → `data/uskids/memberHistory.ts`; tipos de resultados da /uskids →
+  `ui/uskidsTypes.ts` (a página não os redeclara).
 
 ### Contas de handicap — um só sítio: `src/utils/whsCalc.ts`
 - SD, Course/Playing Handicap, Net Double Bogey/AGS, Expected SD de 9 buracos,

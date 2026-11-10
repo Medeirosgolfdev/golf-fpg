@@ -40,3 +40,14 @@ const PINNED_TOP_FEDS: string[] = [
 export const PIN_RANK: Map<string, number> = new Map(
   PINNED_TOP_FEDS.map((fed, i) => [fed, i]),
 );
+
+/** Ordem dos fixados entre dois federados: quem está em PIN_RANK primeiro, pela
+ *  sua ordem. 0 quando nenhum é fixado (ou é o mesmo lugar) — aí vale a ordenação
+ *  normal. Um só sítio (10/11/2026 — estava copiada na lista e no filtro). */
+export function comparePinned(a: string, b: string): number {
+  const ra = PIN_RANK.get(a), rb = PIN_RANK.get(b);
+  if (ra == null && rb == null) return 0;
+  if (ra == null) return 1;
+  if (rb == null) return -1;
+  return ra - rb;
+}

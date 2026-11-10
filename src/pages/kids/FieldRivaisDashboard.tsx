@@ -8,6 +8,7 @@
  *
  * Reutiliza o componente visual RivaisDashboard sem o modificar.
  */
+import type { MHTorn, MHSlim } from "../../data/uskids/memberHistory";
 import { useEffect, useMemo, useRef, useState } from "react";
 import RivaisDashboard from "../../ui/RivaisDashboard";
 import { cachedFetchJson } from "../../data/fetchCache";
@@ -485,21 +486,6 @@ interface USKResTorneio {
 }
 interface USKResData { resultados?: USKResTorneio[] }
 
-interface MHRound { gross: number; strokes?: number[] }
-interface MHTorn { ageGroup: string; place: number | null; rounds: Record<string, MHRound> }
-interface MHPlr { name: string; country: string; torneios: Record<string, MHTorn> }
-interface MHEscalaoMeta { course?: string; yards?: number[]; par?: number[] }
-interface MHSlim {
-  torneios: Record<string, {
-    name: string;
-    startDate: string;
-    holesPerRound: number;
-    par: number[] | null;
-    yards?: number[] | null;
-    byEscalao?: Record<string, MHEscalaoMeta>;
-  }>;
-  jogadores: Record<string, MHPlr>;
-}
 
 // ─────────────────────────────────────────────────────────────────────
 // Main component

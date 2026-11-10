@@ -25,7 +25,7 @@ import SexBadge from "../../ui/SexBadge";
 import { EscPill } from "../../ui/PillBadge";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName, fmtDatePt, fmtHcp, fmtSign, fmtOrd } from "../../utils/format";
+import { displayName, fmtDatePt, fmtHcp, fmtSign, fmtOrd, fmtDeTotal } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { isManuelByName } from "../../constants/manuel";
 import { kidsUrl, KidsArrow } from "../../ui/KidsLink";
@@ -288,7 +288,7 @@ export function FFGPlayersView() {
         <ToggleChip checked={jovens} onChange={setJovens} label="🧒 Só Jovens"
           title="Só séries juvenis (Poucet, Poussin, Benjamin, Minime, Cadet, Junior / U8-U21)" />
         <span className="muted fs-12 u-ml-auto">
-          {filtered.length.toLocaleString("pt")} de {all.length.toLocaleString("pt")}
+          {fmtDeTotal(filtered.length, all.length)}
         </span>
       </div>
 

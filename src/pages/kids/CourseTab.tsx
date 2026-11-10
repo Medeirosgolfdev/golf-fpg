@@ -14,6 +14,7 @@
  *
  * resolveCourseTee() e exportado para a tab "Previsao" reutilizar.
  */
+import type { MHEscalaoMeta, MHSlim } from "../../data/uskids/memberHistory";
 import { buracosDoFlight } from "../../utils/voltasJogadas";
 import { useMemo } from "react";
 import CourseHeroCard from "../../ui/CourseHeroCard";
@@ -26,19 +27,6 @@ import { teeDaSede } from "../../data/uskidsVenues";
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
 
-interface MHEscalaoMeta { course?: string; yards?: number[]; par?: number[] }
-interface MHTornMeta {
-  name: string;
-  startDate: string;
-  holesPerRound: number;
-  par: number[] | null;
-  yards?: number[] | null;
-  byEscalao?: Record<string, MHEscalaoMeta>;
-}
-interface MHSlim {
-  torneios: Record<string, MHTornMeta>;
-  jogadores: Record<string, unknown>;
-}
 
 /** Resultado da resolucao de campo/tee para um torneio+escalao. */
 export interface ResolvedCourse {
