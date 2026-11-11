@@ -1,7 +1,6 @@
 /**
- * pages/kids/HistoricScorecardsTab.tsx
- *
- * Tab "Scorecards" do FieldRivaisDashboard.
+ * pages/kids/HistoricScorecardsTab.tsx — a TABELA dos «Scorecards anteriores»
+ * (`HistoricScorecardsView`) e as suas contas (`tallyHoles`, `buildEclectic`).
  *
  * UMA tabela contínua (não uma por ano) que mostra, para cada edição passada
  * do MESMO torneio+escalão, os top-N finishers com strokes hole-by-hole por
@@ -14,28 +13,23 @@
  *
  * Colunas: # | Jogador | Ano | País | Rnd | ± | Tot | 1..9 | Out | 10..18 | In | 🐦 | Par | ■
  * Cada edição traz o seu par (`holePars`); sem par completo a linha fica sem
- * cores e o ± fica «—». SD não aparece porque o slim não tem slope/CR.
+ * cores e o ± fica «—».
  *
- * Dados: uskids-member-history-slim.json (apenas USKids; WJGC/Doral/EOWAGR
- * mostram mensagem porque os tids correspondentes não têm strokes[]).
+ * Quem a usa é a aba do CircuitShell (`ui/circuit/PastScorecardsTab`), igual em
+ * todas as páginas. Até 11/11/2026 havia aqui também uma aba própria do Kids 2,
+ * montada do histórico USKids (member-history-slim): saiu — medido em quatro
+ * provas, tinha as mesmas edições ou menos do que a do shell e incluía a do
+ * próprio ano.
  */
-import type { MHSlim } from "../../data/uskids/memberHistory";
-import { mhEdicoesDoEscalao } from "../../data/uskids/memberHistory";
 import { useMemo, useState, type ReactNode } from "react";
 import ToPar from "../../ui/ToPar";
 import SortableHdr from "../../ui/SortableHdr";
 import { compareNullsLast, compareTextNullsLast, compareValuesNullsLast } from "../../hooks/useSort";
 import TabRow from "../../ui/TabRow";
-import LoadingState from "../../ui/LoadingState";
 import { kidsUrl } from "../../ui/KidsLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../../ui/ScorecardLeaderboard";
-import EmptyState from "../../ui/EmptyState";
 import ExtLink from "../../ui/ExternalLink";
-import { parsePos, temCartao } from "../../utils/classificacao";
-import { jardasParaMetrosPorBuraco, jardasParaMetros } from "../../utils/jardas";
 
-interface FieldEscalao { nome: string; jogadores?: unknown[] }
-interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
 
 
 export interface PlayerRound {
@@ -78,7 +72,6 @@ export interface Edition {
   players: PlayerCard[];
 }
 
-const MIN_FIELD_SIZE = 3;
 
 type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" | "birds" | "pars" | "bogeys" | `h${number}`;
 
@@ -97,128 +90,6 @@ export function tallyHoles(strokes: number[], par: number[] | null): { birds: nu
     else worse++;
   }
   return { birds, pars, bogeys, worse };
-}
-
-export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
-  mh: MHSlim | null;
-  torneio: FieldTorneio | null;
-  escalaoNome: string;
-}) {
-
-  const editions: Edition[] | null = useMemo(() => {
-    if (!mh || !torneio) return null;
-    if (torneio.t < 0) return [];
-    const out: Edition[] = [];
-    // As edições da mesma família em que o escalão jogou (buracos por volta e
-    // mínimo de pancadas já pelo ESCALÃO: o Boys 8 e o 7 & Under jogam 9).
-    for (const { tcode, meta, year, escMeta, par, yards, jogadores: doEscalao, hpr, minGross } of mhEdicoesDoEscalao(mh, torneio.name, escalaoNome)) {
-      const is9 = hpr === 9;
-      const parPerRound = Array.isArray(par)
-        ? par.slice(0, hpr).reduce((a: number, b: number) => a + (b || 0), 0)
-        : 0;
-      const parF9 = Array.isArray(par) ? par.slice(0, Math.min(9, hpr)).reduce((a, b) => a + (b || 0), 0) : 0;
-      const parB9 = Array.isArray(par) && !is9 ? par.slice(9, 18).reduce((a, b) => a + (b || 0), 0) : 0;
-
-      const yardsTotal = Array.isArray(yards)
-        ? yards.slice(0, hpr).reduce((a: number, b: number) => a + (b || 0), 0)
-        : 0;
-      const meters = yardsTotal > 0 ? jardasParaMetros(yardsTotal) : undefined;
-      const metersPerHole: number[] | null = Array.isArray(yards)
-        ? jardasParaMetrosPorBuraco(yards.slice(0, hpr))
-        : null;
-
-      const players: PlayerCard[] = [];
-      let nRoundsMax = 0;
-      for (const [mid, p] of doEscalao) {
-        const tEntry = p.torneios[tcode];
-        const officialPlace = parsePos(tEntry.place);
-        const rds: PlayerRound[] = [];
-        let total = 0;
-        for (const [rn, r] of Object.entries(tEntry.rounds || {})) {
-          if (!r || !temCartao(r.gross)) continue; // ≥ 900 = sem cartão
-          if (r.gross < minGross) continue;
-          const strokes = Array.isArray(r.strokes) ? r.strokes.slice() : [];
-          const t = tallyHoles(strokes, par);
-          const out9 = strokes.slice(0, Math.min(9, hpr)).reduce((a, b) => a + (b || 0), 0);
-          const in9 = !is9 ? strokes.slice(9, 18).reduce((a, b) => a + (b || 0), 0) : 0;
-          rds.push({
-            rn: parseInt(rn, 10),
-            gross: r.gross,
-            strokes,
-            toPar: parPerRound > 0 ? r.gross - parPerRound : 0,
-            birds: t.birds,
-            pars: t.pars,
-            bogeys: t.bogeys,
-            worse: t.worse,
-            out: out9,
-            inn: in9,
-          });
-          total += r.gross;
-        }
-        if (rds.length === 0) continue;
-        rds.sort((a, b) => a.rn - b.rn);
-        if (rds.length > nRoundsMax) nRoundsMax = rds.length;
-        players.push({
-          memberId: mid,
-          name: p.name || "?",
-          country: p.country || "",
-          officialPlace,
-          total,
-          rounds: rds,
-        });
-      }
-      const completed = players.filter(pl => pl.rounds.length === nRoundsMax);
-      if (completed.length < MIN_FIELD_SIZE) continue;
-
-      const placedEntries = completed.filter(e => e.officialPlace != null);
-      if (placedEntries.length > 0) {
-        const maxOfficialPlace = Math.max(...placedEntries.map(e => e.officialPlace!));
-        const coverage = placedEntries.length / maxOfficialPlace;
-        if (coverage < 0.8) continue;
-      }
-
-      completed.sort((a, b) => {
-        const aOff = a.officialPlace ?? Number.POSITIVE_INFINITY;
-        const bOff = b.officialPlace ?? Number.POSITIVE_INFINITY;
-        if (aOff !== bOff) return aOff - bOff;
-        return a.total - b.total;
-      });
-
-      out.push({
-        tcode, name: meta.name, year,
-        course: escMeta?.course,
-        par: Array.isArray(par) ? par : null,
-        metersPerHole,
-        parPerRound, parF9, parB9,
-        holesPerRound: hpr,
-        is9,
-        nRoundsMax,
-        fieldSize: completed.length,
-        meters,
-        players: completed,
-      });
-    }
-    out.sort((a, b) => b.year.localeCompare(a.year));
-    return out;
-  }, [mh, torneio, escalaoNome]);
-
-  if (!torneio) {
-    return <EmptyState size="sm" message="Sem torneio seleccionado." />;
-  }
-  if (editions === null) {
-    return <LoadingState message="A carregar histórico…" />;
-  }
-  if (editions.length === 0) {
-    return (
-      <div className="muted p-16">
-        Sem scorecards hole-by-hole disponíveis para esta combinação. Esta vista
-        funciona apenas com edições USKids cobertas pelo member-history-slim
-        (≥ {MIN_FIELD_SIZE} finishers, ≥ 80% de cobertura do field oficial).
-      </div>
-    );
-  }
-
-  return <HistoricScorecardsView editions={editions} />;
 }
 
 /**

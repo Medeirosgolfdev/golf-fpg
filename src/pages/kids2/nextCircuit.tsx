@@ -7,7 +7,7 @@
  *   • USKids → os escalões da /uskids (uskidsDivisions: Inscrições, Draw, voltas,
  *     Resumo, Scorecards), com «Edições anteriores» e «Scout» do shell;
  *   • os outros → o field como Inscrições (AdmissionsTab) + Scout;
- *   • em todos, as abas de análise da vista: Por torneio, Scores, Scorecards,
+ *   • em todos, as abas de análise da vista: Por torneio, Scores,
  *     O Campo, Previsão (FieldRivaisSection).
  * Chave da divisão = nome do escalão, que é o `esc=` do URL.
  */

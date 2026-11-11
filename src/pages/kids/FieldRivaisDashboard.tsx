@@ -23,7 +23,6 @@ import { normPaisDisplay } from "../../utils/flagUtils";
 import { fmtToPar, displayName, todayIso } from "../../utils/format";
 import { toneClass } from "../../utils/scoreDisplay";
 import { useCompareSelection } from "../../ui/useCompareSelection";
-import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import { CoursesGate } from "../../context/CoursesContext";
 import PrevisaoTab from "./PrevisaoTab";
@@ -493,7 +492,7 @@ interface USKResData { resultados?: USKResTorneio[] }
 // Main component
 // ─────────────────────────────────────────────────────────────────────
 
-type SectionKey = "grelha" | "scores" | "sc-edicoes" | "campo" | "previsao";
+type SectionKey = "grelha" | "scores" | "campo" | "previsao";
 
 /** Abas de análise de cada escalão nos Próximos torneios do Kids 2. Desde
  *  20/10/2026 a escolha do torneio e do escalão é do CircuitShell
@@ -501,8 +500,9 @@ type SectionKey = "grelha" | "scores" | "sc-edicoes" | "campo" | "previsao";
 export const FIELD_SECTIONS: { key: SectionKey; label: string }[] = [
   { key: "grelha", label: "Por torneio" },
   { key: "scores", label: "Scores" },
-  // «sc-edicoes»: o «scorecards» é a aba do TournamentDetail (as voltas desta edição).
-  { key: "sc-edicoes", label: "Scorecards anteriores" },
+  // («Scorecards anteriores» é a aba do shell, igual em todas as páginas — 11/11/2026:
+  // a versão própria daqui, feita do histórico USKids, tinha menos edições e
+  // contava a do próprio ano.)
   { key: "campo", label: "O Campo" },
   { key: "previsao", label: "🔮 Previsão" },
 ];
@@ -1458,7 +1458,6 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
 
   const torneio = futureTorneios.find(x => x.t === torneioT) || null;
   if (section === "scores") return <HistoricTopNTable mh={mh} torneio={torneio} escalaoNome={escalaoNome} autoRivals={autoRivals} />;
-  if (section === "sc-edicoes") return <HistoricScorecardsTab mh={mh} torneio={torneio} escalaoNome={escalaoNome} />;
   if (section === "campo") return <CoursesGate><CourseTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} /></CoursesGate>;
   if (section === "previsao") return <CoursesGate><PrevisaoTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} /></CoursesGate>;
   if (!dataset) return <EmptyState size="sm" message="Sem dados para este torneio/escalão." />;
