@@ -35,3 +35,31 @@ describe("Mérite Jeunes — linhas da vista", () => {
     }
   });
 });
+
+describe("Mérite Jeunes — homónimos", () => {
+  // Dois «Louis HAMON» na lista: cada linha traz a chave das provas da SUA ficha (`pk`).
+  const cols = ["s", "rank", "rankPrev", "nom", "prenom", "cat", "by", "golf", "moy", "moy6", "nbt", "div", "total", "rankAnn", "statut", "idx", "pk"];
+  const linha = (golf: string, by: number, nbt: number, idx: number | null, pk: string | null, prenom = "Louis") =>
+    ["M", null, null, "HAMON", prenom, "Poussin 1", by, golf, null, null, nbt, null, null, null, null, idx, pk];
+  const file = {
+    generatedAt: "", month: "202611",
+    info: data.info, cols,
+    rows: [linha("RENNES", 2016, 11, 14.5, "M|HAMON|LOUIS#aaa"), linha("LOUVIGNY", 2015, 2, 28.6, "M|HAMON|LOUIS#bbb"), linha("NANTES", 2014, 5, 9.9, null, "Paul")],
+    prov: { "M|HAMON|LOUIS#aaa": [], "M|HAMON|LOUIS#bbb": [], "M|HAMON|PAUL": [] },
+  } as unknown as MeriteFile;
+
+  it("partilham o nome mas não a chave das provas nem o índice", () => {
+    const [a, b, c] = meriteRows(file);
+    expect(a.key).toBe(b.key);
+    expect([a.pk, b.pk]).toEqual(["M|HAMON|LOUIS#aaa", "M|HAMON|LOUIS#bbb"]);
+    expect([a.idx, b.idx]).toEqual([14.5, 28.6]);
+    // Quem não tem homónimo continua a ir pelo nome.
+    expect(c.pk).toBeNull();
+    expect(file.prov[c.pk ?? c.key]).toBeDefined();
+  });
+
+  it("um ficheiro antigo, sem a coluna `pk`, lê-se na mesma", () => {
+    const antigo = { ...file, cols: cols.slice(0, -1), rows: file.rows.map((r) => r.slice(0, -1)) } as MeriteFile;
+    expect(meriteRows(antigo).every((r) => r.pk === null)).toBe(true);
+  });
+});

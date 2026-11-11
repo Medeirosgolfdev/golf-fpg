@@ -43,9 +43,11 @@ interface TGPlayer extends TGPlayerBase { id: string }
 // ── Torneios fixos (BJGT/EOWAGR — tids que NÃO existem no USKids scraper) ──
 // Datas do QDL 2025 e do Greatgolf 2026 corrigidas a 10/11/2026 pelo WHS do
 // Manuel (voltas a 29/12/2025 e a 16–17/02/2026; estavam «Nov 2025»/08-11 e 02-08).
+// Greatgolf 2025 corrigido a 11/11/2026 pelo mesmo WHS: o Manuel jogou-o a 2 e 3 de
+// Março de 2025, torneio 10260 do clube 935 (estava «Fev 2025», 02-08, torneio 10202).
 const TG_T: TGTournDef[] = [
-  { id:"gg25",     name:"Greatgolf Open 2025",    short:"GG25",      date:"Fev 2025", rounds:2, par:72, field:12, nations:4,  dateExact:"2025-02-08", url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10202&club=935" },
   { id:"brjgt25",  name:"WJGC 2025",              short:"WJGC",      date:"Fev 2025", rounds:3, par:71, field:40, nations:17, dateExact:"2025-02-24", url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+  { id:"gg25",     name:"Greatgolf Open 2025",    short:"GG25",      date:"Mar 2025", rounds:2, par:72, field:12, nations:4,  dateExact:"2025-03-02", url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10260&club=935" },
   { id:"eowagr25", name:"European Open",           short:"EU Open",   date:"Ago 2025", rounds:3, par:72, field:8,  nations:6,  dateExact:"2025-08-01", url:"https://brjgt.bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm" },
   { id:"venice25", name:"Venice Open 2025",        short:"Venice",    date:"Ago 2025", rounds:3, par:72, field:39, nations:16, dateExact:"2025-08-07", url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results" },
   { id:"rome25",   name:"Rome Classic 2025",       short:"Rome",      date:"Out 2025", rounds:2, par:72, field:14, nations:6,  dateExact:"2025-10-18", url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results" },
@@ -102,7 +104,7 @@ const TG_AUTO_NAMES: Record<string, { name: string; short: string; date: string 
   doral24_b89:   { name:"Doral Junior 2024",   short:"Doral24",  date:"Dez 2024" },
   doral24_b1011: { name:"Doral Junior 2024",   short:"Doral24",  date:"Dez 2024" },
   doral24_b1213: { name:"Doral Junior 2024",   short:"Doral24",  date:"Dez 2024" },
-  gg25:          { name:"Greatgolf Open 2025",  short:"GG25",     date:"Fev 2025" },
+  gg25:          { name:"Greatgolf Open 2025",  short:"GG25",     date:"Mar 2025" },
   gg26_u14:      { name:"Greatgolf U14 2026",   short:"GG U14",   date:"Fev 2026" },
   gg26_open:     { name:"Greatgolf Open 2026",  short:"GG Open",  date:"Fev 2026" },
 };
@@ -320,6 +322,10 @@ const TG_TID_EXACT: Record<string, string> = {
   "wjgc-brjgt251_boys_10-11":"brjgt25",   // WJGC 2025 Boys 10-11 (evento brjgt251)
   "wjgc-brjgt2537_boys_10-11":"wjgc26",   // WJGC 2026 Boys 10-11 (evento brjgt2537)
   "fpg10296_20260216":"gg26",             // Greatgolf Junior Open 2026 U12 (clube 935, torneio 10296)
+  // 11/11/2026 — o Greatgolf 2025 também: no WHS do Manuel há UM só Greatgolf em 2025,
+  // o 935-10260 (2–3 Mar, Vilamoura Millennium, 88+89), por isso a coluna fixa «GG25»
+  // e a da FPG são a mesma prova (ficavam em duas colunas).
+  "fpg10260_20250302":"gg25",
   "fpg10080_20251229":"qdl25",            // Quinta do Lago Junior Open 2025 U12 (clube 962, torneio 10080)
 };
 // Mapeamento genérico por tcode USKids — vazio intencionalmente.

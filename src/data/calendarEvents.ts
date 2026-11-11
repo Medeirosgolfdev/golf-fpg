@@ -126,7 +126,9 @@ export const EVENTS: CalEvent[] = [
   ev("cgss_om_c",     "Torneio da Primavera CGSS",           new Date(2026,2,14), "Santo da Serra", "Stableford"),
   ev("cgss_patrocin", "Torneio Golf & Clássicos 3rd edition",new Date(2026,2,21), "Santo da Serra", "Stableford"),
   // Abril
-  ev("cgss_pares",    "III Prova Camp. Clube de Pares",       new Date(2026,3,11), "Santo da Serra", "Stableford Agg"),
+  // (Saiu a «III Prova Camp. Clube de Pares» de 11 Abr: não se jogou — na lista de
+  // torneios do clube na FPG, consultada a 11/11/2026, as provas de pares de 2026
+  // são T1 31 Jan, T2 28 Fev e T3 4 Jul, e a 11 Abr não há torneio nenhum.)
   ev("cgss_om_c",     "Torneio CGSS",                        new Date(2026,3,25), "Santo da Serra", "Stableford"),
   // Maio
   ev("cgss_ouro",     "I Aberto CGSS 2026",                  new Date(2026,4,3),  "Santo da Serra", "Strokeplay"),
@@ -135,6 +137,7 @@ export const EVENTS: CalEvent[] = [
   ev("cgss_patrocin", "Madeira Golf Trophy",                 new Date(2026,5,6),  "Santo da Serra", "Strokeplay"),
   ev("cgss_ouro",     "III Aberto CGSS 2026",                new Date(2026,5,7),  "Santo da Serra", "Strokeplay"),
   // Julho
+  // A III é esta (FPG: «T3 CAMP. CGSS de Pares», 007-11041).
   ev("cgss_pares",    "III Prova Camp. Clube de Pares",      new Date(2026,6,4),  "Santo da Serra", "Texas Scramble"),
   ev("cgss_patrocin", "Expresso BPI Golf Cup QR",            new Date(2026,6,18), "Santo da Serra", "Texas Scramble"),
   ev("cgss_patrocin", "Expresso BPI Golf Cup MF",            new Date(2026,6,19), "Santo da Serra", "Texas Scramble"),
@@ -154,12 +157,14 @@ export const EVENTS: CalEvent[] = [
   // Outubro
   ev("cgss_patrocin", "Torneio 50 Anos de Autonomia",       new Date(2026,9,3),  "Santo da Serra", "Stableford", new Date(2026,9,4)),
   ev("cgss_major",    "Troféu João Sousa",                  new Date(2026,9,10), "Santo da Serra", "Stableford"),
-  ev("cgss_pares",    "V Prova Camp. Clube de Pares",       new Date(2026,9,24), "Santo da Serra", "Stableford Agg"),
+  // (Saiu a «V Prova Camp. Clube de Pares» de 24 Out: não está na FPG — a 25 jogou-se o V Aberto.)
   ev("cgss_major",    "Taça Presidente",                    new Date(2026,9,31), "Santo da Serra", "Stableford"),
   // Novembro
   ev("cgss_om_c",     "Torneio de São Martinho CGSS",       new Date(2026,10,7), "Santo da Serra", "Stableford"),
-  // O PDF do clube chama-lhe "V Prova", tal como à de 24 Out — número por confirmar.
-  ev("cgss_pares",    "VI Prova Camp. Clube de Pares",      new Date(2026,10,14),"Santo da Serra", "Betterball"),
+  // SEM número, de propósito: o PDF do clube (08/09/2026) chama-lhe "V Prova", aqui
+  // estava "VI", e pela FPG só se jogaram três em 2026 (seria a T4). Nenhuma fonte
+  // confirma — pôr o número quando o clube a criar na FPG.
+  ev("cgss_pares",    "Prova Camp. Clube de Pares",         new Date(2026,10,14),"Santo da Serra", "Betterball"),
   ev("cgss_patrocin", "Taça 1937 — Gala Encerramento",      new Date(2026,10,21),"Santo da Serra", "Stableford"),
   // Dezembro
   ev("cgss_patrocin", "Torneio Solidário",                  new Date(2026,11,5), "Santo da Serra", "Stableford"),
@@ -343,7 +348,7 @@ export const EVENTS: CalEvent[] = [
      ══════════════════════════════════════ */
   ev("treino", "Mypro Golf Algarve — Campo de Golf",          new Date(2026,2,28), "Algarve",     "", new Date(2026,3,4)),
   ev("treino", "Volta de treino — Venice Open 2026",          new Date(2026,7,12), "Venice (IT)", ""),
-  ev("treino", "Volta de treino — VIII Miramar Open U25",     new Date(2026,7,18), "CG Miramar",  ""),
+  ev("treino", "Volta de treino — X Miramar Open U25",        new Date(2026,7,18), "CG Miramar",  ""),
   ev("colonias", "Aranhiços 1 — Colónia",                     new Date(2026,6,17), "",            "", new Date(2026,6,26)),
 
   /* ══════════════════════════════════════

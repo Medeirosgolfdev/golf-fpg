@@ -1,131 +1,31 @@
 /**
- * scripts/lib/drive-points.cjs — ESPELHO Node de src/constants/drivePoints.ts
- * (espelho antigo; hoje o Node ≥ 22.18 já carrega .ts — ver scripts/lib/whs.cjs).
- * ⚠ MANTER SINCRONIZADO com src/constants/drivePoints.ts.
+ * scripts/lib/drive-points.cjs
  *
- * Tabelas oficiais FPG/DataGolf do ranking Drive — POR SÉRIE (2026-07-10):
- *   TOUR:      8º = 38, 20º = 18 (empírico, RankingsClassifLST)
- *   CHALLENGE: 8º = 35
- *   FINAL:     8º = 38 — as Finais do Challenge usam a tabela do TOUR, não a do
- *              Challenge (2026-09-10: 16/16 oitavos lugares nas Finais oficiais
- *              valem 57 = 38×1.5; a fase regular do Challenge dá 35 em 137/137).
+ * Porta de entrada dos scripts Node para os pontos do ranking Drive. Carrega o
+ * MESMO ficheiro que o site — src/constants/drivePoints.ts — e não uma cópia:
+ * as tabelas (Tour 8.º = 38, Challenge 8.º = 35, Finais a ×1.5), os empates e o
+ * total do ranking vivem num só sítio. Até 11/11/2026 isto era um ESPELHO
+ * escrito à mão, para manter sincronizado; conferido nesse dia que dava o mesmo
+ * em todos os casos, passou a carregador (como scripts/lib/whs.cjs).
+ *
+ *   const dp = require("./lib/drive-points.cjs");   // a partir de scripts/
+ *
+ * Precisa de Node ≥ 22.18, que corre TypeScript directamente (os workflows usam
+ * Node 24). Por isso o drivePoints.ts só pode ter sintaxe que o Node sabe apagar
+ * (tipos e interfaces — nada de `enum` nem `namespace`) e não pode importar
+ * outros ficheiros do `src` (`scripts/drive-points-loader.test.js` parte se
+ * isto falhar).
  */
 "use strict";
 
-const BASE = {
-  1: 250, 2: 165, 3: 94, 4: 75, 5: 64, 6: 53, 7: 45,
-  9: 33, 10: 30, 11: 27, 12: 26, 13: 24, 14: 23,
-  15: 22, 16: 21, 17: 20, 18: 19, 19: 18,
-  20: 18,  // observado nos oficiais em AMBAS as séries
-};
-
-const DRIVE_POINTS_TOUR = { ...BASE, 8: 38 };
-const DRIVE_POINTS_CHALLENGE = { ...BASE, 8: 35 };
-const DRIVE_POINTS_FINAL = { ...BASE, 8: 38 };
-const DRIVE_POINTS = DRIVE_POINTS_CHALLENGE;  // retro-compat
-
-/** `series`: "final" → tabela das Finais; "tour"/"aquapor" → Tour; resto → Challenge. */
-function drivePoints(pos, series) {
-  if (pos == null) return 0;
-  const n = Number(pos);
-  if (isNaN(n) || n <= 0) return 0;
-  const table = series === "final" ? DRIVE_POINTS_FINAL
-    : (series === "tour" || series === "aquapor") ? DRIVE_POINTS_TOUR
-    : DRIVE_POINTS_CHALLENGE;
-  return table[n] ?? 0;
+let dp;
+try {
+  dp = require("../../src/constants/drivePoints.ts");
+} catch (e) {
+  throw new Error(
+    `scripts/lib/drive-points.cjs: não consegui carregar src/constants/drivePoints.ts com o Node ${process.version} ` +
+    `(precisa de Node ≥ 22.18, que corre TypeScript). Erro original: ${e.message}`,
+  );
 }
 
-const FINAL_WEIGHT = 1.5;
-
-function isFinalEvent(name) {
-  return /\bfinal\b/i.test(String(name || ""));
-}
-
-function isNacionalFinal(name) {
-  return isFinalEvent(name) && /nacional/i.test(String(name || ""));
-}
-
-/** Pontos de uma Final: tabela das Finais × 1.5, arredondado.
- *  O `series` é ignorado (mantido por compatibilidade de assinatura). */
-function finalPoints(pos, _series) {
-  return Math.round(drivePoints(pos, "final") * FINAL_WEIGHT);
-}
-
-/** Empate que o countback não separa: os `count` jogadores partilham a posição
- *  `pos` e recebem a MÉDIA dos pontos dos lugares que ocupam (pos..pos+count-1).
- *  Confirmado no oficial: 2 empatados no 14º → (23+22)/2 = 22.5 cada.
- *  Sem arredondamento — o oficial publica mesmo meios pontos. */
-function sharedPoints(pos, count, series) {
-  const n = Math.max(1, Number(count) || 1);
-  if (n === 1) return drivePoints(pos, series);
-  let sum = 0;
-  for (let i = 0; i < n; i++) sum += drivePoints(Number(pos) + i, series);
-  // O oficial publica com 1 decimal (3 empatados no 12º → (26+24+23)/3 = 24.3).
-  return Math.round((sum / n) * 10) / 10;
-}
-
-const RANKING_BEST_N = 4;
-
-function hasCard(gross) {
-  return typeof gross === "number" && gross > 0 && gross < 900;
-}
-
-/** Pontos de UM torneio por federado, com as regras oficiais de empate.
- *  Aquapor classifica dentro do sexo; Challenge/Tour usa a posição já
- *  desempatada por countback. Numa Final (`tournName`) a tabela é a das
- *  Finais — sem o nome o 8º lugar de uma Final sai com 35 em vez de 38.
- *  ESPELHO de src/constants/drivePoints.ts. */
-function tournamentPoints(field, series, tournName) {
-  const out = new Map();
-  const scored = field.filter(p => p.fed && hasCard(p.gross));
-  if (series === "aquapor") {
-    for (const sex of ["M", "F", ""]) {
-      const grupo = scored.filter(p => (p.sex || "") === sex);
-      if (!grupo.length) continue;
-      const ord = [...grupo].sort((a, b) => a.gross - b.gross);
-      let i = 0;
-      while (i < ord.length) {
-        let j = i + 1;
-        while (j < ord.length && ord[j].gross === ord[i].gross) j++;
-        const pts = sharedPoints(i + 1, j - i, series);
-        for (let k = i; k < j; k++) out.set(ord[k].fed, pts);
-        i = j;
-      }
-    }
-    return out;
-  }
-  const tabela = isFinalEvent(tournName) ? "final" : series;
-  const porPos = new Map();
-  for (const p of scored) {
-    const k = String(p.pos);
-    if (!porPos.has(k)) porPos.set(k, []);
-    porPos.get(k).push(p);
-  }
-  for (const [, grupo] of porPos) {
-    const pts = sharedPoints(grupo[0].pos, grupo.length, tabela);
-    for (const p of grupo) out.set(p.fed, pts);
-  }
-  return out;
-}
-
-/** Total do ranking como a FPG: melhores-N da fase regular + Finais ×1.5. */
-function rankingTotal(results, bestN = RANKING_BEST_N) {
-  const regulares = [];
-  let finais = 0;
-  for (const r of results) {
-    if (isNacionalFinal(r.tournName)) continue;
-    const final = isFinalEvent(r.tournName);
-    const base = r.pts ?? drivePoints(r.pos, final ? "final" : r.series);
-    if (!base) continue;
-    if (final) finais += Math.round(base * FINAL_WEIGHT);
-    else regulares.push(base);
-  }
-  const melhores = regulares.sort((a, b) => b - a).slice(0, bestN).reduce((s, x) => s + x, 0);
-  return Math.round((melhores + finais) * 10) / 10;
-}
-
-module.exports = {
-  DRIVE_POINTS, DRIVE_POINTS_TOUR, DRIVE_POINTS_CHALLENGE, DRIVE_POINTS_FINAL, drivePoints,
-  FINAL_WEIGHT, isFinalEvent, isNacionalFinal, finalPoints, sharedPoints,
-  RANKING_BEST_N, hasCard, tournamentPoints, rankingTotal,
-};
+module.exports = dp;

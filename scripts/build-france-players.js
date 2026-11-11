@@ -500,8 +500,9 @@ const tournsByLicense = {};
 let nApps = 0, nMismatch = 0;
 
 // Mérite Jeunes (scrape-ffgolf-merite.js): ano de nascimento exacto. Liga por
-// sexo + apelido + nome; um homónimo no Mérite (2 registos com a mesma chave)
-// não se usa.
+// sexo + apelido + nome. Homónimos não se usam: dois no roster com a mesma chave
+// (`meriteCount`), ou dois no próprio Mérite (o scraper marca o registo com `dup` —
+// a chave é o nome, por isso só lá cabe um dos dois).
 const meriteNorm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
 let merite = {};
 try { merite = JSON.parse(fs.readFileSync(MERITE, "utf8")).players || {}; } catch { /* sem Mérite → só a inferência */ }
@@ -515,7 +516,7 @@ let nSemCat = 0, nMerite = 0, nMeriteMuda = 0;
 for (const [lic, e] of players) {
   Object.assign(e, categoriaDe(e));
   const mk = `${e.sex}|${meriteNorm(e._nom)}|${meriteNorm(e._prenom)}`;
-  const m = e._nom && meriteCount.get(mk) === 1 ? merite[mk] : null;
+  const m = e._nom && meriteCount.get(mk) === 1 && !merite[mk]?.dup ? merite[mk] : null;
   if (m) {
     nMerite++;
     e.merite = { rank: m.rank, rankAnn: m.rankAnn, moy: m.moy, moy6: m.moy6, nbt: m.nbt, idx: m.idx, cat: m.cat, month: m.month };

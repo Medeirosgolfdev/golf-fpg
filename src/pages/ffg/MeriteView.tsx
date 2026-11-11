@@ -49,6 +49,8 @@ interface Row {
   name: string; cat: string | null; by: number | null; sub: string | null; golf: string; moy: number | null;
   moy6: number | null; nbt: number; div: number | null; total: number | null; rankAnn: number | null;
   statut: string | null; idx: number | null; pt: boolean;
+  /** Chave das provas (`prov`) quando não é o nome: os homónimos trazem a da sua ficha. */
+  pk: string | null;
 }
 type SK = "rank" | "name" | "cat" | "by" | "golf" | "idx" | "moy" | "moy6" | "nbt" | "total" | "rankAnn";
 
@@ -74,6 +76,7 @@ export function meriteRows(data: MeriteFile): Row[] {
       golf: displayName(g<string>("golf") || ""), moy: g("moy"), moy6: g("moy6"), nbt: g<number>("nbt") ?? 0,
       div: g("div"), total: g("total"), rankAnn: g("rankAnn"), statut: g("statut"), idx: g("idx"),
       pt: isPTByName(name),
+      pk: (ix.pk != null ? g<string | null>("pk") : null) || null,
     };
   });
 }
@@ -191,10 +194,11 @@ export function FFGMeriteView() {
               </thead>
               <tbody>
                 {pageRows.map((r) => {
-                  // Homónimos partilham a chave: a linha distingue-se também pelo lugar e clube.
+                  // Homónimos partilham o nome: a linha distingue-se também pelo lugar e clube,
+                  // e as provas são as da ficha de cada um (`pk`), nunca as do nome.
                   const id = `${r.key}#${r.rank ?? ""}#${r.golf}`;
                   const isOpen = open.has(id);
-                  const prov = data.prov[r.key];
+                  const prov = data.prov[r.pk ?? r.key];
                   const destaque = isManuelByName(r.name) || r.pt;
                   return (
                     <Fragment key={id}>

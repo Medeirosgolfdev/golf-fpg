@@ -64,6 +64,24 @@ async function get(url, json = true) {
 
 const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
 const pkey = (sex, nom, prenom) => `${sex}|${norm(nom)}|${norm(prenom)}`;
+/** Nomes que aparecem em mais de uma linha da lista de um sexo (homónimos: os dois
+ *  «Louis HAMON», as duas «Hortense DUBOIS»). */
+function nomesRepetidos(sex, datas) {
+  const n = new Map();
+  for (const p of datas || []) { const k = pkey(sex, p.NOM, p.PRENOM); n.set(k, (n.get(k) || 0) + 1); }
+  return new Set([...n].filter(([, c]) => c > 1).map(([k]) => k));
+}
+/** Chave das PROVAS e do índice de um jogador da lista do mês: o nome, e para os
+ *  homónimos o nome + o CODE da ficha (único por jogador; muda de mês para mês, por
+ *  isso só serve dentro do mesmo mês — é o caso: as provas são do mês). */
+const chaveFicha = (sex, p, repetidos) => {
+  const k = pkey(sex, p.NOM, p.PRENOM);
+  return repetidos.has(k) ? `${k}#${p.CODE}` : k;
+};
+/** Uma prova da ficha na forma do ficheiro: [trnId, data, nome, lugar, [voltas], pontos, Moy.SSS].
+ *  O que já vem do ficheiro anterior (mesmo mês, ficha não pedida de novo) JÁ está
+ *  nessa forma e fica como está — lê-lo como objecto gravava a prova em branco. */
+const provaDoFicheiro = (r, inIx) => (Array.isArray(r) ? r : [inIx.has(r.trnId) ? r.trnId : null, r.date, r.name, r.place, r.t, r.pts, r.moy]);
 const num = (v) => { const n = parseFloat(String(v ?? "").replace(",", ".")); return Number.isFinite(n) ? n : null; };
 
 /** Idade FFG de cada escalão (catégories d'âge: a idade que se faz no ano civil). */
@@ -160,6 +178,16 @@ function monthsBack(from, to) {
   let prevRank = null;
   try { prevRank = JSON.parse(fs.readFileSync(OUT_RANK, "utf8")); } catch { /* 1.ª vez */ }
   const provBy = prevRank?.month === month ? { ...(prevRank.prov || {}) } : {};
+  // Homónimos: provas e índice por ficha (CODE), nunca pelo nome partilhado.
+  const repetidos = { M: nomesRepetidos("M", lists.M.datas), F: nomesRepetidos("F", lists.F.datas) };
+  const idxFicha = {};
+  // No ficheiro dos jogadores a chave é o nome: o registo de um homónimo é de DOIS jogadores
+  // (fica o último da lista) — marca-se `dup` para ninguém lhe tirar o ano de nascimento.
+  for (const s of ["M", "F"]) for (const k of repetidos[s]) if (players[k]) players[k].dup = true;
+  if (prevRank?.month === month) {
+    const ci = (prevRank.cols || []).indexOf("idx"), cp = (prevRank.cols || []).indexOf("pk");
+    if (ci >= 0 && cp >= 0) for (const r of prevRank.rows || []) if (r[cp] && r[ci] != null) idxFicha[r[cp]] = r[ci];
+  }
   if (DETAILS) {
     // Classificados (Moy.SSS e Index) e também os rapazes NÃO classificados nascidos
     // em 2010–2018 — a ficha deles dá o Index na mesma (03/11/2026: só 1 040 de
@@ -174,10 +202,14 @@ function monthsBack(from, to) {
       if (++n % 100 === 0) console.log(`  ${n}/${todo.length} fichas…`);
       if (!html) continue;
       const k = pkey(sex, p.NOM, p.PRENOM);
+      const homonimo = repetidos[sex].has(k);
+      const kf = chaveFicha(sex, p, repetidos[sex]);
       const { idx, rows, all } = parseDetail(html);
-      provBy[k] = all;
-      if (idx != null) players[k].idx = idx;
-      for (const r of rows) { (rowsBy[r.trnId] ||= {})[k] = [...r.t, r.moy]; nRows++; }
+      provBy[kf] = all;
+      if (homonimo) { if (idx != null) idxFicha[kf] = idx; }   // o `players[k]` é dos dois: não leva o índice de um
+      else if (idx != null) players[k].idx = idx;
+      // As linhas para o SSS casam-se pelo nome + voltas iguais; as de um homónimo ficam de fora.
+      if (!homonimo) for (const r of rows) { (rowsBy[r.trnId] ||= {})[k] = [...r.t, r.moy]; nRows++; }
       await sleep(150);
     }
     console.log(`Fichas: ${n} lidas, ${nRows} linhas com Moy.SSS`);
@@ -225,18 +257,20 @@ function monthsBack(from, to) {
   const inIx = new Set(ix.map((t) => t.trnId));
   const rank = { generatedAt: new Date().toISOString(), month,
     info: Object.fromEntries(["M", "F"].map((s) => [s, { nb: Number(lists[s].nb), title: lists[s].ma_title, from: lists[s].date_debut, to: lists[s].date_fin, parution: lists[s].date_parution }])),
-    cols: ["s", "rank", "rankPrev", "nom", "prenom", "cat", "by", "golf", "moy", "moy6", "nbt", "div", "total", "rankAnn", "statut", "idx"],
+    // `pk` = chave das provas em `prov` quando NÃO é o nome (homónimos: nome#CODE); null nos outros.
+    cols: ["s", "rank", "rankPrev", "nom", "prenom", "cat", "by", "golf", "moy", "moy6", "nbt", "div", "total", "rankAnn", "statut", "idx", "pk"],
     rows: [], prov: {} };
-  const seen = {};
   for (const s of ["M", "F"]) {
     for (const p of lists[s].datas) {
-      // Valores da própria linha (dois homónimos partilham a chave em `players`; só as provas e o index vêm de lá).
+      // Valores da própria linha (dois homónimos partilham a chave em `players`); as provas e o
+      // índice vêm da ficha de cada um — pelo nome, ou pelo nome#CODE nos homónimos.
       const k = pkey(s, p.NOM, p.PRENOM), rec = players[k], { cat, age } = categoria(p.CATEGORIE);
-      const homonimo = (seen[k] = (seen[k] || 0) + 1) > 1 || lists[s].datas.filter((x) => pkey(s, x.NOM, x.PRENOM) === k).length > 1;
+      const homonimo = repetidos[s].has(k);
+      const kf = chaveFicha(s, p, repetidos[s]);
       rank.rows.push([s, p.RANK === "-" ? null : Number(p.RANK), Number(p.RANKANC) || null, p.NOM, p.PRENOM, cat, age ? +month.slice(0, 4) - age : null,
         p.GOLF || null, num(p.MOY_SSS), num(p.MOY_SSS_6), Number(p.NBTOURNOIS) || 0, Number(p.DIVISOR) || null, num(p.TOTAL),
-        Number(p.RANKANN) || null, p.STATUT || null, homonimo ? null : rec.idx]);
-      if (provBy[k] && !homonimo) rank.prov[k] = provBy[k].map((r) => [inIx.has(r.trnId) ? r.trnId : null, r.date, r.name, r.place, r.t, r.pts, r.moy]);
+        Number(p.RANKANN) || null, p.STATUT || null, homonimo ? (idxFicha[kf] ?? null) : rec.idx, homonimo ? kf : null]);
+      if (provBy[kf]) rank.prov[kf] = provBy[kf].map((r) => provaDoFicheiro(r, inIx));
     }
   }
   writeJsonGuarded(OUT_RANK, rank, { spaces: 0, failOnRefuse: true, count: (o) => o.rows.length });

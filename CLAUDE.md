@@ -363,6 +363,10 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   par vivem só em `src/utils/courseAliases.ts`; os scripts usam
   `scripts/lib/course-aliases.cjs` (e o pipeline `lib/course-aliases.js`), que o
   carregam. Mesmas restrições (`scripts/course-aliases-loader.test.js`).
+- **Pontos do ranking Drive: o mesmo esquema** (11/11/2026) — as tabelas, os empates e o
+  total vivem só em `src/constants/drivePoints.ts`; os scripts usam
+  `scripts/lib/drive-points.cjs`, que o carrega (era um espelho escrito à mão). Mesmas
+  restrições: sem imports, `enum` nem `namespace` (`scripts/drive-points-loader.test.js`).
 - Detalhe e validação contra o oficial: [whs-pcc-sd.md](docs/claude/whs-pcc-sd.md)
   e [convencoes-e-armadilhas.md](docs/claude/convencoes-e-armadilhas.md).
 
