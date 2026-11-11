@@ -23,6 +23,7 @@ import type { Course, Tee } from "../../data/types";
 import EmptyState from "../../ui/EmptyState";
 import { stripAccents } from "../../utils/normName";
 import { teeDaSede } from "../../data/uskidsVenues";
+import { jardasParaMetros } from "../../utils/jardas";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -239,7 +240,7 @@ function buildCourseTee(
   let targetMeters = 0;
   for (let i = 0; i < hpr; i++) {
     const y = yards[i] ?? 0;
-    if (y > 0) targetMeters += Math.round(y * 0.9144);
+    if (y > 0) targetMeters += jardasParaMetros(y);
   }
   const matchedTee = matchedCourse ? pickTeeForEscalao(matchedCourse, escalaoNome, targetMeters) : null;
 
@@ -261,7 +262,7 @@ function buildCourseTee(
   let totalDist = 0, f9Dist = 0, b9Dist = 0;
   for (let i = 0; i < hpr; i++) {
     const y = yards[i] ?? 0;
-    const m = y > 0 ? Math.round(y * 0.9144) : 0;
+    const m = y > 0 ? jardasParaMetros(y) : 0;
     holes.push({ hole: i + 1, par: par[i] ?? null, si: matchedSI[i] ?? null, distance: m > 0 ? m : null });
     totalDist += m;
     if (i < 9) f9Dist += m; else b9Dist += m;

@@ -11,7 +11,7 @@ import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
 import { Tint } from "./DataStyle";
-import { ScorecardTable } from "./ScorecardTable";
+import RoundScorecard from "./RoundScorecard";
 import { CourseLink } from "./jogadoresHelpers";
 
 type RoundExt = RoundData & { course: string };
@@ -36,16 +36,7 @@ function TournRoundRow({ r, idx: _idx, data }: {
         <tr>
           <td colSpan={8} className="bg-page p-0">
             <div className="scroll-x u-m-6px-8px u-bd-1px-solid-border u-br-radius-xl u-bg-bg-card u-p-10px u-ov-hidden">
-              <ScorecardTable
-                holes={holes}
-                courseName={r.course}
-                date={r.date}
-                tee={r.tee || ""}
-                hi={r.hi}
-                links={r._links}
-                eclecticEntry={null}
-                grossOficial={r.gross}
-              />
+              <RoundScorecard r={r} holes={holes} />
             </div>
           </td>
         </tr>

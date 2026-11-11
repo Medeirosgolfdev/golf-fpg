@@ -17,6 +17,8 @@ import { useMemo, useState } from "react";
 import { fmtToPar, fmtOrd } from "../utils/format";
 import { normName } from "../utils/normName";
 import type { Tournament } from "../data/fpgTypes";
+import type { JogadorNacional } from "../data/jovensAnaliseData";
+import { parsePos } from "../utils/classificacao";
 import { RoundPill, EscPill } from "./PillBadge";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import { isNoCardGross } from "../data/intlCommon";
@@ -29,17 +31,7 @@ import CloseButton from "./CloseButton";
 import SectionTitle from "./SectionTitle";
 import { playerKey } from "../utils/playerKey";
 import FpgTournLink from "./FpgTournLink";
-interface PlayerEntry {
-  pos: number | string | null;
-  name: string;
-  club?: string;
-  fedCode?: string | null;
-  grossTotal?: number | string | null;
-  toPar?: number | null;
-  dob?: string | null;
-  age?: number | null;
-  sex?: string;
-}
+type PlayerEntry = JogadorNacional;
 
 interface NationalResult {
   date: string;
@@ -88,12 +80,8 @@ function buildAthleteIndex(
     }
     const escalao = (t as { escalao?: string }).escalao || "";
     for (const p of t.players as PlayerEntry[]) {
-      const posNum =
-        typeof p.pos === "number"
-          ? p.pos
-          : p.pos != null && !isNaN(parseInt(String(p.pos)))
-          ? parseInt(String(p.pos))
-          : null;
+      // Lugar pela regra única («T4» → 4; ND/NS/DQ → fora).
+      const posNum = parsePos(p.pos);
       if (posNum == null) continue;
       const fed = p.fedCode ? String(p.fedCode) : null;
       const key = playerKey(fed, p.name || "?");

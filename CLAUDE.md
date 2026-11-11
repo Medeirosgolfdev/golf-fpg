@@ -301,8 +301,14 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   para a FPG → `ui/FpgTournLink.tsx`; contador «N de M» → `fmtDeTotal`
   (`utils/format`); ordem dos fixados → `comparePinned` (`constants/pinnedPlayers`);
   inscritos só com admitidos → `soAdmitidos` (`data/rfeg/inscritos.ts`); tipos do
-  histórico USKids → `data/uskids/memberHistory.ts`; tipos de resultados da /uskids →
-  `ui/uskidsTypes.ts` (a página não os redeclara).
+  histórico USKids → `data/uskids/memberHistory.ts` (também as edições passadas de
+  um torneio por escalão → `mhEdicoesDoEscalao`, e os mínimos `MIN_GROSS_18H`/`_9H`);
+  tipos de resultados da /uskids → `ui/uskidsTypes.ts` (a página não os redeclara);
+  **jardas ↔ metros → `utils/jardas.ts`** (`jardasParaMetros`, `jardasParaMetrosPorBuraco`,
+  `metrosParaJardas`; nunca `× 0.9144` à mão); o cartão de uma volta do jogador →
+  `ui/RoundScorecard.tsx`; lugar de uma fonte → sempre `parsePos` (nunca `parseInt`
+  da posição: «T4» ficava de fora); jogador de uma prova dos Nacionais →
+  `JogadorNacional` (`data/jovensAnaliseData.ts`).
 
 ### Contas de handicap — um só sítio: `src/utils/whsCalc.ts`
 - SD, Course/Playing Handicap, Net Double Bogey/AGS, Expected SD de 9 buracos,

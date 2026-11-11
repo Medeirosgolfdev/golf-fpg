@@ -10,6 +10,7 @@
  */
 
 import type { TorneioResult, EscalaoResult, RondaResult, RondaJogador } from '../../ui/uskidsTypes';
+import { jardasParaMetros } from "../../utils/jardas";
 
 /**
  * Jogador de uma volta com o cartão do SEU flight, quando não é o do escalão
@@ -101,7 +102,7 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
           .map((h: any, i: number) => ((h.par ?? 0) > 0 ? i : -1))
           .filter((i: number) => i >= 0);
         if (playedIdx.length > 0) {
-          const m = playedIdx.map((i: number) => Math.round((holes_arr[i].yards ?? 0) * 0.9144));
+          const m = playedIdx.map((i: number) => jardasParaMetros(holes_arr[i].yards ?? 0));
           cartaoDoFlight.set(rn, {
             par: playedIdx.map((i: number) => holes_arr[i].par as number),
             ...(m.some((x: number) => x > 0) ? { metros: m } : {}),
@@ -115,7 +116,7 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
         }
         if (!esc.metrosPorRonda.has(rn) && playedIdx.length > 0) {
           const metros = playedIdx
-            .map((i: number) => Math.round((holes_arr[i].yards ?? 0) * 0.9144));
+            .map((i: number) => jardasParaMetros(holes_arr[i].yards ?? 0));
           // só guardar se algum metro real (> 0)
           if (metros.some((m: number) => m > 0)) esc.metrosPorRonda.set(rn, metros);
         }

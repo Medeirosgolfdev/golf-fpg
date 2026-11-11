@@ -8,7 +8,7 @@ import { EventInfo, effectivePill } from "./eventInfo";
 import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
-import { ScorecardTable } from "./ScorecardTable";
+import RoundScorecard from "./RoundScorecard";
 import { CourseLink } from "./jogadoresHelpers";
 import { compareRoundBy } from "../utils/roundSort";
 
@@ -123,17 +123,7 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
                     <tr>
                       <td colSpan={12} className="bg-page p-0">
                         <div className="scroll-x l20-sc-host">
-                          <ScorecardTable
-                            holes={holes}
-                            courseName={r.course}
-                            date={r.date}
-                            tee={r.tee || ""}
-                            hi={r.hi}
-                            links={r._links}
-                            pill={effectivePill(r)}
-                            eclecticEntry={ecEntry}
-                            grossOficial={r.gross}
-                          />
+                          <RoundScorecard r={r} holes={holes} pill={effectivePill(r)} eclecticEntry={ecEntry} />
                         </div>
                       </td>
                     </tr>

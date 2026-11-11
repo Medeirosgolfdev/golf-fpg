@@ -9,6 +9,7 @@
 
 import type { Course, Tee, Hole } from "./types";
 import { BKC26, VALE_LAKE_RED_F, VALE_LAKE_YELLOW, VALE_WN_YELLOW, type RatingEstimado } from "./uskids/ratingsEstimados";
+import { jardasParaMetrosPorBuraco, jardasParaMetros } from "../utils/jardas";
 
 /* Marco Simone Golf & Country Club — distâncias por tee (metros) */
 
@@ -336,7 +337,7 @@ function ncrdbTee(teeId: string, sex: "M" | "F", teeName: string, par: number[] 
     ...(teeColor ? { scorecardMeta: { teeColor } } : {}),
     ratings: { holes18: { par: parTotal, courseRating: cr, slopeRating: slope } },
     holes: par ? par.map((p, i) => ({ hole: i + 1, par: p, si: null, distance: null })) : [],
-    distances: { total: Math.round(yards * 0.9144), front9: null, back9: null, holesCount: 18, complete18: false },
+    distances: { total: jardasParaMetros(yards), front9: null, back9: null, holesCount: 18, complete18: false },
   };
 }
 
@@ -1631,7 +1632,7 @@ const elPratValles = elPratRoute("valles", "El Vallès (9 buracos ×2)", pratVal
    ESTIMADOS a partir deles (src/data/uskids/ratingsEstimados.ts), marcados.
    ───────────────────────────────────────────────────────────────────────── */
 
-const jd = (yards: number[]) => yards.map((y) => Math.round(y * 0.9144));
+const jd = jardasParaMetrosPorBuraco;
 // Tees do clube — cartões oficiais (jardas), par e SI de homens e de senhoras.
 const valeWNClubPar  = [4,5,3,5,4,4,5,3,4, 5,4,3,4,3,5,4,4,4]; // 73
 const valeWNClubSI   = [3,1,17,5,13,15,9,7,11, 6,16,18,2,12,14,8,4,10];
@@ -1773,7 +1774,7 @@ function ukYdTee(
   teeId: string, sex: "M" | "F", teeName: string, par: number[], yd: number[] | null,
   start: 1 | 10, cr: number | null, slope: number | null, teeColor?: string | null,
 ): Tee {
-  return ukMTee(teeId, sex, teeName, par, yd ? yd.map((y) => Math.round(y * 0.9144)) : null, start, cr, slope, teeColor);
+  return ukMTee(teeId, sex, teeName, par, yd ? jardasParaMetrosPorBuraco(yd) : null, start, cr, slope, teeColor);
 }
 
 function ukMTee(
@@ -2366,7 +2367,7 @@ const theAltoClub: Course = {
    Nomes dos campos iguais aos dos resultados USKids.
    ───────────────────────────────────────────────────────────────────────── */
 
-const yd2m = (yd: number[]) => yd.map((y) => Math.round(y * 0.9144));
+const yd2m = jardasParaMetrosPorBuraco;
 
 const HOLIDAY_CLASSIC_2025_LINKS = [
   {
@@ -2702,7 +2703,7 @@ function craigielaw(courseKey: string, name: string): Course {
           scorecardMeta: { teeColor: null },
           ratings: { holes18: { par: 71, courseRating: 76.2, slopeRating: 138 } },
           holes: craigPar.map((p, i) => ({ hole: i + 1, par: p, si: craigSI[i], distance: null })),
-          distances: { total: Math.round(6090 * 0.9144), front9: null, back9: null, holesCount: 18, complete18: true },
+          distances: { total: jardasParaMetros(6090), front9: null, back9: null, holesCount: 18, complete18: true },
         },
         {
           teeId: "craig-uk-boys11",

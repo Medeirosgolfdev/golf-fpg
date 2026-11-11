@@ -27,6 +27,20 @@ import { parsePos, posicoesComEmpates, temCartao } from "../utils/classificacao"
 type ChampionshipType = "Nacional" | "Regional";
 export type Sex = "M" | "F" | "?";
 
+/** Um jogador numa prova dos Nacionais, como vem do histórico — o que os painéis
+ *  dos Títulos lêem (pesquisa de atleta, Santo da Serra). Um só sítio (10/11/2026). */
+export interface JogadorNacional {
+  pos: number | string | null;
+  name: string;
+  club?: string;
+  fedCode?: string | null;
+  grossTotal?: number | string | null;
+  toPar?: number | null;
+  dob?: string | null;
+  age?: number | null;
+  sex?: string;
+}
+
 /** Entrada de jogador (campeão ou sub-campeão) */
 export interface PodiumEntry {
   name: string;

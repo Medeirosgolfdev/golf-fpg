@@ -28,6 +28,7 @@ import {
 } from "../../data/rivalData";
 import type { Flight, Result } from "./data";
 import { normName as normNameStr } from "../../utils/normName";
+import { metrosParaJardas } from "../../utils/jardas";
 /** O normName único (utils/normName), tolerante a null/undefined. */
 const normName = (s: string | undefined | null) => normNameStr(s ?? "");
 
@@ -320,7 +321,7 @@ export function mergeFlightWithKnown(
 
   const yards = flightHasYards
     ? flight.yards!
-    : (known?.meters ? known.meters.map((m) => (m > 0 ? Math.round(m / 0.9144) : 0)) : []);
+    : (known?.meters ? known.meters.map((m) => (m > 0 ? metrosParaJardas(m) : 0)) : []);
   if (!flightHasYards && known?.meters?.length) usedFallbackYards = true;
 
   const si = (known?.si ? known.si.slice() : []);

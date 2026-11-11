@@ -16,6 +16,7 @@ import { ScorecardLeaderboard, type ScorecardRow } from "../../../ui/ScorecardLe
 import { isNoCardGross } from "../../../data/intlCommon";
 import { temCartao } from "../../../utils/classificacao";
 import { cartaoDaVolta, toParDaVolta, parPorVoltaDaFonte, resumoResultado } from "../../../utils/voltasJogadas";
+import { jardasParaMetros } from "../../../utils/jardas";
 
 interface Props {
   tournament: Tournament;
@@ -44,7 +45,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
   // da volta); converter outra vez encurtava o campo 8,6 % (6034 m → «5517m»).
   const jaEmMetros = tournament.sourceId === "fpg";
   const metersArr = yardsArr.length > 0
-    ? yardsArr.map((y) => (y && y > 0 ? (jaEmMetros ? y : Math.round(y * 0.9144)) : 0))
+    ? yardsArr.map((y) => (y && y > 0 ? (jaEmMetros ? y : jardasParaMetros(y)) : 0))
     : [];
 
   // Buracos de cada volta pelo que ela jogou (10/11/2026): as voltas de 9 da

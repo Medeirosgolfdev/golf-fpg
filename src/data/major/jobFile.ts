@@ -25,6 +25,7 @@ import { playedParTotal } from "../fpgUtils";
 import { intlScorecardOptions } from "../intlScorecard";
 import { buildFpgDraw, indexByName } from "../intlDraw";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
+import { parsePos } from "../../utils/classificacao";
 
 export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
   // Cartão de tee POR RONDA (provas que mudam de campo ou de marcação a cada
@@ -184,7 +185,7 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
     const toPar = p.toPar ?? (rounds.length && playedPar > 0 ? playedGross - playedPar : null);
     return {
       id: p.detailId || p.name,
-      pos: parseInt(String(p.pos).replace(/^T/i, ""), 10) || null,
+      pos: parsePos(p.pos),
       name: p.name,
       // Coluna «Clube»: a bandeira do país e o CLUBE quando a fonte o dá (Faldo
       // Madeira: «🏴 Prestbury», «🇵🇹 Oporto Golf Clube»); sem clube, o país.

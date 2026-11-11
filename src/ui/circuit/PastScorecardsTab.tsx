@@ -13,12 +13,14 @@ import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import type { CircuitDivision, CircuitEntry } from "./types";
 import { matchDivision, entryDivisions } from "./pastEditions";
 import {
-  HistoricScorecardsView, tallyHoles, MIN_GROSS_9H, MIN_GROSS_18H,
+  HistoricScorecardsView, tallyHoles,
   type Edition, type PlayerCard, type PlayerRound,
 } from "../../pages/kids/HistoricScorecardsTab";
 import LoadingState from "../LoadingState";
 import EmptyState from "../EmptyState";
 import { fmtMonthYear } from "../../utils/format";
+import { parsePos } from "../../utils/classificacao";
+import { MIN_GROSS_9H, MIN_GROSS_18H } from "../../data/uskids/memberHistory";
 
 /** Menos do que isto não é um field (como no Kids 2). */
 const MIN_FIELD = 3;
@@ -63,12 +65,13 @@ export function editionFromTournament(
     if (!rds.length) continue;
     rds.sort((a, b) => a.rn - b.rn);
     nRoundsMax = Math.max(nRoundsMax, rds.length);
-    const pos = typeof p.pos === "number" ? p.pos : parseInt(String(p.pos ?? ""), 10);
+    // Lugar pela regra única («T4» → 4 — um empatado ficava sem lugar oficial).
+    const pos = parsePos(p.pos);
     players.push({
       memberId: String(p.fed || p.fedCode || p.name),
       name: p.name,
       country: p.identity?.countryIso || "",
-      officialPlace: Number.isFinite(pos) && pos > 0 ? pos : null,
+      officialPlace: pos,
       total,
       rounds: rds,
     });

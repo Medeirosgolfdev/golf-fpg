@@ -19,7 +19,8 @@
  * Dados: uskids-member-history-slim.json (apenas USKids; WJGC/Doral/EOWAGR
  * mostram mensagem porque os tids correspondentes não têm strokes[]).
  */
-import type { MHEscalaoMeta, MHSlim } from "../../data/uskids/memberHistory";
+import type { MHSlim } from "../../data/uskids/memberHistory";
+import { mhEdicoesDoEscalao } from "../../data/uskids/memberHistory";
 import { useMemo, useState, type ReactNode } from "react";
 import ToPar from "../../ui/ToPar";
 import SortableHdr from "../../ui/SortableHdr";
@@ -31,7 +32,7 @@ import { ScorecardLeaderboard, type ScorecardRow } from "../../ui/ScorecardLeade
 import EmptyState from "../../ui/EmptyState";
 import ExtLink from "../../ui/ExternalLink";
 import { parsePos, temCartao } from "../../utils/classificacao";
-import { buracosDoFlight } from "../../utils/voltasJogadas";
+import { jardasParaMetrosPorBuraco, jardasParaMetros } from "../../utils/jardas";
 
 interface FieldEscalao { nome: string; jogadores?: unknown[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -78,9 +79,6 @@ export interface Edition {
 }
 
 const MIN_FIELD_SIZE = 3;
-/** Abaixo disto o gross é erro de dados (cartão incompleto), não uma volta. */
-export const MIN_GROSS_18H = 55;
-export const MIN_GROSS_9H = 28;
 
 type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" | "birds" | "pars" | "bogeys" | `h${number}`;
 
@@ -110,28 +108,11 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
   const editions: Edition[] | null = useMemo(() => {
     if (!mh || !torneio) return null;
     if (torneio.t < 0) return [];
-    const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
-    if (!baseName) return [];
-
     const out: Edition[] = [];
-    for (const [tcode, meta] of Object.entries(mh.torneios)) {
-      if (!meta?.name) continue;
-      if (/Parent\/Child/i.test(meta.name)) continue;
-      const mBase = meta.name.replace(/\s+\d{4}\s*$/, "").trim();
-      if (mBase !== baseName) continue;
-      const yearMatch = meta.name.match(/(\d{4})/);
-      if (!yearMatch) continue;
-      const year = yearMatch[1];
-      const escMeta = (meta as any).byEscalao?.[escalaoNome] as MHEscalaoMeta | undefined;
-      const par = escMeta?.par || (meta as any).par || null;
-      const yards = escMeta?.yards || (meta as any).yards || null;
-      // Buracos por volta do ESCALÃO, pelas voltas jogadas (10/11/2026): a ficha
-      // do torneio diz 18 mas o Boys 8 e o 7 & Under jogam 9 — com o mínimo de 55
-      // pancadas não sobrava volta nenhuma.
-      const doEscalao = Object.entries(mh.jogadores).filter(([, p]) => p.torneios[tcode]?.ageGroup === escalaoNome);
-      const hpr = buracosDoFlight(doEscalao.flatMap(([, p]) => Object.values(p.torneios[tcode].rounds || {})), par, (meta as any).holesPerRound);
+    // As edições da mesma família em que o escalão jogou (buracos por volta e
+    // mínimo de pancadas já pelo ESCALÃO: o Boys 8 e o 7 & Under jogam 9).
+    for (const { tcode, meta, year, escMeta, par, yards, jogadores: doEscalao, hpr, minGross } of mhEdicoesDoEscalao(mh, torneio.name, escalaoNome)) {
       const is9 = hpr === 9;
-      const minGross = is9 ? MIN_GROSS_9H : MIN_GROSS_18H;
       const parPerRound = Array.isArray(par)
         ? par.slice(0, hpr).reduce((a: number, b: number) => a + (b || 0), 0)
         : 0;
@@ -141,9 +122,9 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
       const yardsTotal = Array.isArray(yards)
         ? yards.slice(0, hpr).reduce((a: number, b: number) => a + (b || 0), 0)
         : 0;
-      const meters = yardsTotal > 0 ? Math.round(yardsTotal * 0.9144) : undefined;
+      const meters = yardsTotal > 0 ? jardasParaMetros(yardsTotal) : undefined;
       const metersPerHole: number[] | null = Array.isArray(yards)
-        ? yards.slice(0, hpr).map((y: number) => y > 0 ? Math.round(y * 0.9144) : 0)
+        ? jardasParaMetrosPorBuraco(yards.slice(0, hpr))
         : null;
 
       const players: PlayerCard[] = [];

@@ -12,6 +12,7 @@ import { gf, normPaisDisplay } from "../../utils/flagUtils";
 import type { Tournament as FPGTournament } from "../fpgTypes";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
 import { isNoCardGross } from "../intlCommon";
+import { jardasParaMetrosPorBuraco } from "../../utils/jardas";
 
 /* ── Types ── */
 export interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
@@ -196,7 +197,7 @@ export function blueGolfToTournament(data: TData, def: TDef): FPGTournament {
   const rated = courseRating != null && slope != null;
   const nR = Math.max(...players.map(p => p.rounds.length), 0);
   // Distâncias: o BlueGolf dá `yards` por buraco → converter para metros.
-  const meters = data.yards && data.yards.length >= par.length ? data.yards.map(y => Math.round(y * 0.9144)) : [];
+  const meters = data.yards && data.yards.length >= par.length ? jardasParaMetrosPorBuraco(data.yards) : [];
   const hasMeters = meters.length >= par.length && par.length > 0;
   const t = buildFPGTournament({
     name: def.label,

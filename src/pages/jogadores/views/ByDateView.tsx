@@ -16,7 +16,7 @@ import { HoleBadge, GrossCell, SdCell } from "../../../ui/tableCells";
 import TeePill from "../../../ui/TeePill";
 import TeeDate from "../../../ui/TeeDate";
 import EmptyState from "../../../ui/EmptyState";
-import { ScorecardTable } from "../../../ui/ScorecardTable";
+import RoundScorecard from "../../../ui/RoundScorecard";
 import { CourseLink } from "../../../ui/jogadoresHelpers";
 import { EventInfo, effectivePill } from "../../../ui/eventInfo";
 import { compareRoundBy } from "../../../utils/roundSort";
@@ -97,8 +97,7 @@ export default function ByDateView({ data, search }: {
           const ecEntry = eclecticForRound(data, courseKey, { ...r, teeKey });
           return (
             <div className="scroll-x jg-sc-host">
-              <ScorecardTable holes={holes} courseName={r.course} date={r.date} tee={r.tee || ""}
-                hi={r.hi} links={r._links} pill={effectivePill(r)} eclecticEntry={ecEntry} grossOficial={r.gross} />
+              <RoundScorecard r={r} holes={holes} pill={effectivePill(r)} eclecticEntry={ecEntry} />
             </div>
           );
         }}

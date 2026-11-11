@@ -9,6 +9,7 @@
  * Reutiliza o componente visual RivaisDashboard sem o modificar.
  */
 import type { MHTorn, MHSlim } from "../../data/uskids/memberHistory";
+import { MIN_GROSS_18H, MIN_GROSS_9H, mhFamilia, mhEdicoesDoEscalao } from "../../data/uskids/memberHistory";
 import { useEffect, useMemo, useRef, useState } from "react";
 import RivaisDashboard from "../../ui/RivaisDashboard";
 import { cachedFetchJson } from "../../data/fetchCache";
@@ -22,7 +23,7 @@ import { normPaisDisplay } from "../../utils/flagUtils";
 import { fmtToPar, displayName, todayIso } from "../../utils/format";
 import { toneClass } from "../../utils/scoreDisplay";
 import { useCompareSelection } from "../../ui/useCompareSelection";
-import HistoricScorecardsTab, { MIN_GROSS_18H, MIN_GROSS_9H } from "./HistoricScorecardsTab";
+import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import { CoursesGate } from "../../context/CoursesContext";
 import PrevisaoTab from "./PrevisaoTab";
@@ -37,6 +38,7 @@ import { buracosDoFlight, cartaoDaVolta, toParDaVolta } from "../../utils/voltas
 import { EXTRA_FAMILIAS, extraTidFamilia, extraTidAno, extraTidEscalao, extraTidEscalaoNome, type ExtraFamilia } from "../../utils/extraTid";
 import PosMedal from "../../ui/PosMedal";
 import { signupanytimeUrl } from "../../utils/signupanytime";
+import { jardasParaMetros } from "../../utils/jardas";
 
 // ─────────────────────────────────────────────────────────────────────
 // Tcodes "canónicos" que aparecem sempre como coluna se metadata existe.
@@ -1658,29 +1660,17 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
     // (ex: "European Championship" agrega 2022/2023/2024/2025).
     // ─────────────────────────────────────────────────────────────────
     if (!mh) return null;
-    const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
+    const baseName = mhFamilia(torneio.name);
     if (!baseName) return null;
 
-    for (const [tcode, meta] of Object.entries(mh.torneios)) {
-      if (!meta?.name) continue;
-      if (/Parent\/Child/i.test(meta.name)) continue;
-      const mBase = meta.name.replace(/\s+\d{4}\s*$/, "").trim();
-      if (mBase !== baseName) continue;
-      const yearMatch = meta.name.match(/(\d{4})/);
-      if (!yearMatch) continue;
-      const year = yearMatch[1];
-      // Buracos por volta do ESCALÃO, pelas voltas jogadas (10/11/2026): a ficha
-      // do torneio diz 18 mas o Boys 8 e o 7 & Under jogam 9 — com o mínimo de 55
-      // pancadas não sobrava volta nenhuma («Sem histórico»).
-      const escMeta = meta.byEscalao?.[escalaoNome];
-      const parArr = escMeta?.par || meta.par || [];
-      const doEscalao = Object.values(mh.jogadores).filter(p => p.torneios[tcode]?.ageGroup === escalaoNome);
-      const hpr = buracosDoFlight(doEscalao.flatMap(p => Object.values(p.torneios[tcode].rounds || {})), parArr, meta.holesPerRound);
-      const minGross = hpr === 9 ? MIN_GROSS_9H : MIN_GROSS_18H;
+    // As edições da mesma família em que o escalão jogou (buracos por volta e
+    // mínimo de pancadas já pelo ESCALÃO: o Boys 8 e o 7 & Under jogam 9).
+    for (const { tcode, meta, year, escMeta, par, jogadores, hpr, minGross } of mhEdicoesDoEscalao(mh, torneio.name, escalaoNome)) {
+      const parArr = par || [];
 
       const all: RankedEntry[] = [];
       let maxRounds = 0;
-      for (const p of doEscalao) {
+      for (const [, p] of jogadores) {
         const tEntry = p.torneios[tcode];
         // Aceitar TODOS os jogadores com rondas válidas (incluindo IE/DSQ/WD).
         // Os que não têm place oficial (null) são marcados visualmente como IE.
@@ -1741,7 +1731,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       // Tentar buscar course+yards específicos do escalão (byEscalao); fallback para o tcode-level yards
       const yardsArr = escMeta?.yards || meta.yards || [];
       const yardsTotal = Array.isArray(yardsArr) ? yardsArr.reduce((a: number, b: number) => a + (b || 0), 0) : 0;
-      const meters = yardsTotal > 0 ? Math.round(yardsTotal * 0.9144) : undefined;
+      const meters = yardsTotal > 0 ? jardasParaMetros(yardsTotal) : undefined;
       // Par de UMA volta do escalão: o dos buracos que ele joga (9 num campo com par nos 18).
       const parPerRound = cartaoDaVolta(parArr, null, { nBuracos: hpr }).parVolta ?? 0;
       editions.push({

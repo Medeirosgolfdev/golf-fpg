@@ -7,6 +7,7 @@
  * Sem isto o Kids 2 («O Campo», «🔮 Previsão») usava o campo da edição
  * anterior (Spanish Open 2025 = Alto Golf).
  */
+import { METROS_POR_JARDA } from "../utils/jardas";
 
 /** Grelha «International Partner Multi-Day Event Yardage» da USKids (jardas
  *  por escalão), lida da imagem da página «Age Groups and Yardages»
@@ -88,7 +89,7 @@ export function teeDaSede<C extends { courseKey: string; master: { name: string;
     const course = courses.find((c) => c.courseKey === key);
     for (const tee of course?.master.tees ?? []) {
       if (tee.sex !== faixa.sex || !tee.distances?.total) continue;
-      const d = Math.abs(tee.distances.total / 0.9144 - alvo);
+      const d = Math.abs(tee.distances.total / METROS_POR_JARDA - alvo);
       if (!best || d < best.d) best = { course: course!, tee, d };
     }
   }

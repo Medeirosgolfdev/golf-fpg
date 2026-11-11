@@ -13,6 +13,8 @@
 
 import { Fragment, useMemo, useState } from "react";
 import { fmtToPar } from "../utils/format";
+import type { JogadorNacional } from "../data/jovensAnaliseData";
+import { parsePos } from "../utils/classificacao";
 import { useSort, compareTextNullsLast } from "../hooks/useSort";
 import PosBadge from "./PosBadge";
 import SortableHdr from "./SortableHdr";
@@ -23,16 +25,7 @@ import { toggleSet } from "../utils/mathUtils";
 import SectionTitle from "./SectionTitle";
 import { playerKey } from "../utils/playerKey";
 import FpgTournLink from "./FpgTournLink";
-interface Player {
-  pos: number | string | null;
-  name: string;
-  club?: string;
-  fedCode?: string | null;
-  grossTotal?: number | string | null;
-  toPar?: number | null;
-  dob?: string | null;
-  age?: number | null;
-}
+type Player = JogadorNacional;
 interface TournamentInput {
   name: string;
   ccode?: string;
@@ -76,8 +69,9 @@ function buildAthletes(tournaments: Tournament[]): AthleteSummary[] {
   const map = new Map<string, AthleteSummary>();
   for (const t of tournaments) {
     for (const p of t.players || []) {
-      const posNum = typeof p.pos === "number" ? p.pos : (p.pos != null ? parseInt(String(p.pos)) : null);
-      if (posNum == null || isNaN(posNum) || posNum > 5) continue;
+      // Lugar pela regra única («T4» → 4; ND/NS/DQ → fora).
+      const posNum = parsePos(p.pos);
+      if (posNum == null || posNum > 5) continue;
       if (!SDS_REGEX.test(p.club || "")) continue;
       const key = playerKey(p.fedCode, p.name || "?");
       if (!map.has(key)) {

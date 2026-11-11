@@ -17,6 +17,8 @@ import { cachedFetchJson, memoAsync } from "../data/fetchCache";
 import { normPaisDisplay } from "../utils/flagUtils";
 import { normName } from "../utils/normName";
 import { legacyTid, toAutoResult, keepBetter, type AutoTournResult } from "./kidsTid";
+import type { Tournament, Flight, Result } from "../pages/kids2/juniorCalc";
+import { jardasParaMetrosPorBuraco } from "../utils/jardas";
 
 // ═════════════════════════════════════════════════════════════════════
 // Helpers de string
@@ -188,39 +190,11 @@ export function getLoadedKidsFiles(): KidsFileMeta[] {
 // Mantém-se o formato.
 // ═════════════════════════════════════════════════════════════════════
 
-interface CanonicalTournament {
-  id: string;
-  sourceId: string;
-  sourceKey: string;
-  name?: string;
-  date?: string;
-  parTotal?: number;
-  holesPerRound?: number;
-  links?: Array<{ label: string; url: string }>;
-  flights: CanonicalFlight[];
-}
-
-interface CanonicalFlight {
-  flightKey: string;
-  label: string;
-  ageMin?: number | null;
-  ageMax?: number | null;
-  sex?: "M" | "F" | "mixed" | null;
-  par?: number[];
-  yards?: number[];
-  fieldSize?: number | null;
-  results: CanonicalResult[];
-}
-
-interface CanonicalResult {
-  juniorId: string;
-  playerNameInSource?: string;
-  pos?: number | null;
-  status?: string;
-  totalGross?: number | null;
-  toPar?: number | null;
-  rounds?: Array<{ round: number; gross?: number | null; strokes?: number[] }>;
-}
+// Torneio, flight e resultado canónicos: os tipos do Kids 2 (um só sítio — 10/11/2026;
+// este ficheiro tinha uma cópia mais curta dos três).
+type CanonicalTournament = Tournament;
+type CanonicalFlight = Flight;
+type CanonicalResult = Result;
 
 interface CanonicalJunior {
   id: string;
@@ -486,7 +460,7 @@ async function _buildAutoRivalsInternal(
           const yardsArr = (flight.yards || []) as number[];
           const isYardsSource = tournament.sourceId === "uskids" || tournament.sourceId === "wjgc" || tournament.sourceId === "eowagr" || tournament.sourceId === "doral";
           const metersArr = isYardsSource
-            ? yardsArr.map((y) => (typeof y === "number" && y > 0 ? Math.round(y * 0.9144) : 0))
+            ? jardasParaMetrosPorBuraco(yardsArr)
             : yardsArr;
           sc = {
             tid,

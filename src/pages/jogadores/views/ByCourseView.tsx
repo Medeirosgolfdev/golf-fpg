@@ -21,7 +21,7 @@ import TeeDate from "../../../ui/TeeDate";
 import AroeiraNotice, { countRotatedRounds } from "../../../ui/AroeiraNotice";
 import { PillBadge } from "../../../ui/PillBadge";
 import HoleStatsSection from "../../../ui/HoleStatsSection";
-import { ScorecardTable } from "../../../ui/ScorecardTable";
+import RoundScorecard from "../../../ui/RoundScorecard";
 import { EclecticSection } from "../../../ui/EclecticSection";
 import { findCourseKey } from "../../../ui/jogadoresHelpers";
 import { courseDisplayName } from "../../../utils/courseAliases";
@@ -229,17 +229,7 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
         <tr>
           <td colSpan={9} className="bg-page p-0">
             <div className="scroll-x jg-sc-host">
-              <ScorecardTable
-                holes={holes}
-                courseName={courseName}
-                date={r.date}
-                tee={r.tee || ""}
-                hi={r.hi}
-                links={r._links}
-                pill={effectivePill(r, courseName)}
-                eclecticEntry={ecEntry}
-                grossOficial={r.gross}
-              />
+              <RoundScorecard r={r} holes={holes} courseName={courseName} pill={effectivePill(r, courseName)} eclecticEntry={ecEntry} />
             </div>
           </td>
         </tr>

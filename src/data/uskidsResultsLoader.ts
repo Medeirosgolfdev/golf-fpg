@@ -14,6 +14,7 @@ import { todayIso } from "../utils/format";
 import { converterTorneioCompleto } from "./uskids/converterTorneioCompleto";
 import type { DataSource } from "../ui/DataSources";
 import type { ResultsData, RondaJogador, TorneioResult } from "../ui/uskidsTypes";
+import { jardasParaMetrosPorBuraco } from "../utils/jardas";
 
 // ⚠ Manter em sincronia com o número real de ficheiros uskids_torneios_completos(N).json
 // em public/data/. Ao adicionar novos ficheiros, incrementar AQUI e também em
@@ -103,7 +104,7 @@ function carregar(): Promise<ResultsData> {
       for (const esc of t.escaloes ?? []) {
         for (const rd of esc.rondas ?? []) {
           if (!rd.metros?.length && (rd as any).yards?.length) {
-            rd.metros = ((rd as any).yards as number[]).map(y => Math.round(y * 0.9144));
+            rd.metros = jardasParaMetrosPorBuraco((rd as any).yards as number[]);
           }
         }
       }

@@ -29,6 +29,7 @@ import { divKey, tournamentFamilyKey } from "../../ui/circuit/pastEditions";
 import { fmtTs, ArMapCtx, isTerminado } from "../../ui/USKIDSPageHelpers";
 import { sortEscaloes, type Torneio, type TorneioResult, type EscalaoResult, type UskidsDrawsData } from "../../ui/uskidsTypes";
 import type { CircuitConfig, CircuitDivision, CircuitEntry, CircuitRenderFullExtras } from "../../ui/circuit/types";
+import { jardasParaMetrosPorBuraco } from "../../utils/jardas";
 
 
 // ─────────────────────────────────────────────
@@ -186,7 +187,7 @@ export function edicaoEntry(x: EdicoesIndex["torneios"][number]): CircuitEntry {
       // As voltas vêm em jardas (como o uskids-results.json) → metros.
       for (const esc of ed.escaloes ?? []) for (const rd of esc.rondas ?? []) {
         const yards = (rd as { yards?: number[] }).yards;
-        if (!rd.metros?.length && yards?.length) rd.metros = yards.map(y => Math.round(y * 0.9144));
+        if (!rd.metros?.length && yards?.length) rd.metros = jardasParaMetrosPorBuraco(yards);
       }
       return uskidsDivisions(null, ed, null);
     }),
