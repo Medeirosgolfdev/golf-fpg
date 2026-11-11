@@ -17,9 +17,8 @@
 import type { Tournament } from "../../data/fpgTypes";
 import type { CircuitEntry, CircuitDivision } from "../../ui/circuit/types";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
-import SectionErrorBoundary from "../../ui/SectionErrorBoundary";
-import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pastEditions";
-import { CircuitPastScorecardsTab } from "../../ui/circuit/PastScorecardsTab";
+import { tournamentFamilyKey } from "../../ui/circuit/pastEditions";
+import { abasDeEdicoes, abaScout } from "../../ui/circuit/abasComuns";
 import ScoutProva from "../../ui/circuit/ScoutProva";
 import { currentField } from "./repeatersModel";
 import { MANUEL_FED } from "../../constants/manuel";
@@ -222,36 +221,12 @@ export function fpgPastEditionsTabs(
     .filter((e) => e.id !== curId && e.divisions?.[0]?.results)
     .map((e) => ({ id: e.id, year: e.year ?? 0, t: e.divisions![0].results as Tournament }))
     .sort((a, b) => b.year - a.year);
-  const tabs: { key: string; label: string; content: React.ReactNode }[] = [];
-  // ⚠ Cada bloco no seu error boundary. A tab é carregada com a página (que
-  // é lazy), por isso um erro aqui dentro derrubava a /FPG INTEIRA e deixava o
-  // ecrã em branco (aconteceu a 2026-09-02).
-  if (entries.length >= 2) tabs.push({
-    key: "past-editions",
-    label: "Edições anteriores",
-    content: (
-      <SectionErrorBoundary label="Edições anteriores">
-        <CircuitPastEditionsTab editions={entries} division={division} />
-      </SectionErrorBoundary>
-    ),
-  });
-  if (entries.length >= 2) tabs.push({
-    key: "sc-edicoes",
-    label: "Scorecards anteriores",
-    content: (
-      <SectionErrorBoundary label="Scorecards anteriores">
-        <CircuitPastScorecardsTab editions={entries} division={division} currentId={curId} />
-      </SectionErrorBoundary>
-    ),
-  });
-  if (currentField(current).length) tabs.push({
-    key: "scout",
-    label: "Scout",
-    content: (
-      <SectionErrorBoundary label="Scout">
-        <ScoutProva current={current} previous={previous} h2hManuel={H2H_DO_INDICE.get(index)} escalaoProva={current.escalao ?? null} playersDB={playersDB} />
-      </SectionErrorBoundary>
-    ),
-  });
+  // A definição das abas (chave, nome, ≥2 edições, protecção contra erros) é a
+  // de `ui/circuit/abasComuns` — a mesma do CircuitShell. Daqui só saem as
+  // edições (a regra de identidade da FPG, acima) e o que o Scout sabe a mais.
+  const tabs = abasDeEdicoes({ editions: entries, division, currentId: curId });
+  if (currentField(current).length) tabs.push(abaScout(
+    <ScoutProva current={current} previous={previous} h2hManuel={H2H_DO_INDICE.get(index)} escalaoProva={current.escalao ?? null} playersDB={playersDB} />,
+  ));
   return tabs.length ? tabs : undefined;
 }

@@ -232,6 +232,13 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   `renderAccSection`/`renderRoundSection` na divisão. A evolução ano-a-ano de uma
   divisão (marcar regressados + colunas + resumo) é `evoDaDivisao` (`ui/evo.tsx`),
   espalhada na divisão; só o Doral tem colunas próprias (histórico de vários anos).
+- **As abas comuns têm UMA definição: `ui/circuit/abasComuns.tsx`** (11/11/2026) —
+  `abasDeEdicoes` («Edições anteriores» + «Scorecards anteriores»: chave, nome, ≥2
+  edições, cada uma no seu error boundary) e `abaScout`. Usa-as o CircuitShell (todas
+  as páginas) e a /FPG, que só lhes dá as SUAS edições: lá a identidade de uma prova é
+  dado da FPG (clube + família do nome + nomes rebaptizados à mão, uma prova por
+  código — `pages/fpg/fpgPastEditions.tsx`) e não passa para o shell. Mudar o nome ou a
+  regra de uma aba faz-se aí e muda em todo o lado.
 - **Uma página de torneios entrega DADOS ao CircuitShell; quem monta o detalhe e as
   abas é o shell** — **num só caminho, com uma única chamada ao TournamentDetail** (Mariana, 11/11/2026: «simplifica ao máximo, que seja tudo igual, que quando eu mudar uma coisa mude em todo o lado; não quero adaptadores; as abas só aparecem quando há essa informação») (Mariana, 11/11/2026: «as páginas todas são circuit shell…
   porquê que não são todas iguais?»). A divisão dá `results`/`totals`/`roundDraws`/

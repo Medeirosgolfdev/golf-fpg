@@ -404,25 +404,16 @@ export interface CircuitConfig {
   veteranIndex?: Map<string, number>;
 
   /**
-   * Tab extra no FIM da barra de cada divisão (a seguir a Resumo/Scorecards/
-   * Match Play) — a MAJOR usa-a para "Edições anteriores". Recebe o torneio e a
-   * divisão abertos e devolve o conteúdo; `null` esconde a tab.
-   *
-   * ⚠ Só se aplica às divisões que usam o render por secções do shell. As que
-   * definem `renderFull` (delegam tudo no TournamentDetail) têm de passar a tab
-   * pelo `extraTabs` desse componente — o shell não lhes toca no conteúdo.
-   */
-  pastEditionsTab?: (entry: CircuitEntry, div: CircuitDivision) => { label: string; content: React.ReactNode } | null;
-
-  /**
    * Identidade do TORNEIO entre anos, para a tab "Edições anteriores" embutida
    * no shell. Duas entradas com a mesma chave são a mesma prova em anos
    * diferentes (ex: MAJOR → `e.source`; England/GJGL → família do slug). Quando
    * definida, o shell constrói a tab automaticamente (entrega-a às divisões do
    * TournamentDetail como trailing-tab e às `renderFull` via argumento) usando as
    * próprias `entries` — sem cada página reimplementar o carregador. `null`/
-   * ausente para uma entrada = sem tab. Alternativa ao `pastEditionsTab` (mais
-   * baixo nível); quando ambos existem, `editionKey` ganha.
+   * ausente para uma entrada = sem tab. As abas são as de `abasComuns.tsx`
+   * («Edições anteriores» + «Scorecards anteriores»), as mesmas que a /FPG usa
+   * com as suas edições (lá a identidade é por código de prova, com nomes
+   * rebaptizados à mão — `pages/fpg/fpgPastEditions.tsx`).
    *
    * ⚠ Semântica = "a MESMA prova": para a MAJOR/England é o torneio anual; para
    * o Drive é a MESMA prova NO MESMO CAMPO (série+campo), porque uma etapa Drive
