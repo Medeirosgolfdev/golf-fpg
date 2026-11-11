@@ -8,6 +8,7 @@ import {
 } from "../utils/format";
 import { FL } from "../utils/flagUtils";
 import { meanArr } from "../utils/mathUtils";
+import { distFromRounds } from "../utils/analysisStats";
 import { isoDeMesAno } from "../utils/mesAno";
 import { scClass, toParClass, tpColorDark } from "../utils/scoreDisplay";
 import ToPar from "./ToPar";
@@ -340,31 +341,8 @@ export default function FieldPlayerDetail({
   // Scoring distribution
   const scoringStats = card
     ? (() => {
-        let eagles = 0,
-          birdies = 0,
-          pars = 0,
-          bogeys = 0,
-          doubles = 0,
-          worse = 0;
-        for (const rd of card.rounds)
-          for (let i = 0; i < 18; i++) {
-            const d = rd[i] - par[i];
-            if (d <= -2) eagles++;
-            else if (d === -1) birdies++;
-            else if (d === 0) pars++;
-            else if (d === 1) bogeys++;
-            else if (d === 2) doubles++;
-            else worse++;
-          }
-        return {
-          eagles,
-          birdies,
-          pars,
-          bogeys,
-          doubles,
-          worse,
-          total: card.rounds.length * 18,
-        };
+        const d = distFromRounds(card.rounds, par);
+        return { eagles: d.eagles, birdies: d.birdies, pars: d.pars, bogeys: d.bogeys, doubles: d.doubles, worse: d.triplesPlus, total: d.total };
       })()
     : null;
 

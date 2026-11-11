@@ -1,11 +1,14 @@
 /**
- * analysisStats.ts
+ * analysisStats.ts — as contas sobre cartões buraco a buraco, num só sítio.
  *
- * Funções puras de agregação usadas pela secção de Análise (estilo Masters)
- * na KIDSPage. Todas recebem dados hole-by-hole e devolvem métricas derivadas.
+ * ⛔ Contar eagles/birdies/pares/bogeys de um cartão, ou separá-lo por tipo de
+ * buraco (par 3, 4, 5, 6), faz-se SEMPRE por aqui: `distFromRound` e
+ * `parTypeStats`. Até 11/11/2026 havia dez sítios a contar à mão, cada um com
+ * as suas guardas — a /drive Sub-12 contava como BIRDIE cada buraco por jogar
+ * (zeros das voltas de 9), e o Resumo contava tudo como BOGEY quando não havia
+ * par. Aqui um buraco só conta com pancadas > 0 E par > 0.
  *
- * Nenhuma destas funções depende de React, data-loaders, ou state global —
- * para poderem ser testadas isoladamente e reutilizadas noutras páginas.
+ * Funções puras: sem React, sem loaders, sem estado — testáveis à parte.
  */
 
 export interface ScoringDist {
@@ -13,12 +16,14 @@ export interface ScoringDist {
   birdies: number;  // -1
   pars: number;     // 0
   bogeys: number;   // +1
-  dbPlus: number;   // +2 ou pior
+  dbPlus: number;   // +2 ou pior (= doubles + triplesPlus)
+  doubles: number;      // +2
+  triplesPlus: number;  // +3 ou pior
   total: number;    // buracos contabilizados
 }
 
 export const emptyDist = (): ScoringDist =>
-  ({ eagles: 0, birdies: 0, pars: 0, bogeys: 0, dbPlus: 0, total: 0 });
+  ({ eagles: 0, birdies: 0, pars: 0, bogeys: 0, dbPlus: 0, doubles: 0, triplesPlus: 0, total: 0 });
 
 /** Percentagens da distribuição (0–100, somam 100 quando total>0). */
 export function distPct(d: ScoringDist): { eagles: number; birdies: number; pars: number; bogeys: number; dbPlus: number } {
@@ -40,6 +45,8 @@ export function addDist(a: ScoringDist, b: ScoringDist): ScoringDist {
     pars:    a.pars    + b.pars,
     bogeys:  a.bogeys  + b.bogeys,
     dbPlus:  a.dbPlus  + b.dbPlus,
+    doubles: a.doubles + b.doubles,
+    triplesPlus: a.triplesPlus + b.triplesPlus,
     total:   a.total   + b.total,
   };
 }
@@ -60,10 +67,60 @@ export function distFromRound(scores: readonly number[], par: readonly number[])
     else if (dv === -1) d.birdies++;
     else if (dv === 0)  d.pars++;
     else if (dv === 1)  d.bogeys++;
-    else                d.dbPlus++;
+    else { d.dbPlus++; if (dv === 2) d.doubles++; else d.triplesPlus++; }
     d.total++;
   }
   return d;
+}
+
+/** Um cartão: as pancadas de uma volta e o par dessa volta. */
+export interface Cartao { scores: readonly number[]; par: readonly number[] }
+
+/** Distribuição somada de vários cartões, cada um com o SEU par. */
+export function distFromCards(cards: readonly Cartao[]): ScoringDist {
+  return cards.reduce<ScoringDist>((acc, c) => addDist(acc, distFromRound(c.scores, c.par)), emptyDist());
+}
+
+/* POR TIPO DE BURACO (par 3, 4, 5 e 6) */
+
+/** Os tipos de buraco que existem. O par 6 é raro mas existe (Otepää). */
+export const PAR_TYPES = [3, 4, 5, 6] as const;
+
+export interface ParTypeStat {
+  par: number;
+  holes: number;       // buracos jogados deste tipo
+  strokes: number;     // pancadas somadas
+  vsPar: number;       // ±par somado
+  avgStrokes: number;  // média de pancadas por buraco
+  avgVsPar: number;    // ±par médio por buraco
+  dist: ScoringDist;
+  scores: number[];    // as pancadas, pela ordem dos cartões
+}
+
+/** Os cartões separados por tipo de buraco — só os tipos que foram jogados, por
+ *  ordem (par 3 primeiro). Buracos com par fora de 3–6 ficam de fora. */
+export function parTypeStats(cards: readonly Cartao[]): ParTypeStat[] {
+  const acc = new Map<number, { scores: number[]; pars: number[] }>();
+  for (const c of cards) {
+    const n = Math.min(c.scores.length, c.par.length);
+    for (let i = 0; i < n; i++) {
+      const sc = c.scores[i], p = c.par[i];
+      if (!sc || sc <= 0 || !(PAR_TYPES as readonly number[]).includes(p)) continue;
+      let g = acc.get(p);
+      if (!g) { g = { scores: [], pars: [] }; acc.set(p, g); }
+      g.scores.push(sc); g.pars.push(p);
+    }
+  }
+  return PAR_TYPES.filter((p) => acc.has(p)).map((p) => {
+    const g = acc.get(p)!;
+    const strokes = g.scores.reduce((a, b) => a + b, 0);
+    const holes = g.scores.length;
+    return {
+      par: p, holes, strokes, vsPar: strokes - p * holes,
+      avgStrokes: strokes / holes, avgVsPar: strokes / holes - p,
+      dist: distFromRound(g.scores, g.pars), scores: g.scores,
+    };
+  });
 }
 
 /** Distribuição agregada ao longo de várias rondas (todas com o mesmo par). */

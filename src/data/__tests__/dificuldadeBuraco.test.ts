@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { Player, Tournament } from "../fpgTypes";
 import {
-  cartaoCompleto, chaveDoCampo, dificuldadePorBuraco, parValido, porTipoDeBuraco, resumoDaVolta, resumoDoTotal,
+  cartaoCompleto, chaveDoCampo, dificuldadePorBuraco, parValido, resumoDaVolta, resumoDoTotal,
 } from "../dificuldadeBuraco";
 
 const PAR = [4, 4, 3, 5, 4, 4, 3, 5, 4, 4, 4, 3, 5, 4, 4, 3, 5, 4]; // 72
@@ -105,14 +105,5 @@ describe("cartão do jogador", () => {
     expect(cartaoCompleto(jogador("A", PAR.map((p, i) => (i === 17 ? 0 : p))))).toBeNull();
     expect(cartaoCompleto(jogador("A", cartao([]), { par: [] }))).toBeNull();
     expect(cartaoCompleto(undefined)).toBeNull();
-  });
-
-  it("porTipoDeBuraco: par 3/4/5 e também par 6 quando existe", () => {
-    const par = [3, 4, 5, 6, 4, 4, 4, 4, 4];
-    const t = porTipoDeBuraco([2, 5, 5, 8, 4, 4, 4, 4, 4], par);
-    expect(t.map((x) => x.par)).toEqual([3, 4, 5, 6]);
-    expect(t[0]).toEqual({ par: 3, n: 1, total: -1, media: -1, scores: [2] });
-    expect(t[3]).toEqual({ par: 6, n: 1, total: 2, media: 2, scores: [8] });
-    expect(porTipoDeBuraco(PAR, PAR).map((x) => x.par)).toEqual([3, 4, 5]);
   });
 });

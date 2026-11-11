@@ -10,6 +10,7 @@ import type { RoundData, EclecticEntry, HoleScores } from "../data/playerDataLoa
 import { getTeeHex, textOnColor, normKey } from "../utils/teeColors";
 import { fmtToPar } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
+import { distFromRound } from "../utils/analysisStats";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
 import { Tint } from "./DataStyle";
@@ -141,18 +142,9 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
   // gross de cada buraco com o par do tee. Mesma lógica das leaderboards
   // (ScorecardLB): birds = d<=-1, pars = d===0, bogs = d>=1.
   const distOf = (g: (number | null)[] | undefined) => {
-    const acc = { birds: 0, pars: 0, bogs: 0, total: 0 };
-    for (let i = 0; i < 18; i++) {
-      const pv = parArr[i];
-      const gv = g?.[i];
-      if (pv == null || gv == null || Number(gv) <= 0) continue;
-      const diff = Number(gv) - pv;
-      if (diff <= -1) acc.birds++;
-      else if (diff === 0) acc.pars++;
-      else acc.bogs++;
-      acc.total++;
-    }
-    return acc;
+    const num = (v: number | null | undefined) => Number(v) || 0;
+    const d = distFromRound((g ?? []).slice(0, 18).map(num), parArr.slice(0, 18).map(num));
+    return { birds: d.eagles + d.birdies, pars: d.pars, bogs: d.bogeys + d.dbPlus, total: d.total };
   };
 
   // Célula de subtotal (Out / In / Total) — gross e, por baixo em pequenino, a

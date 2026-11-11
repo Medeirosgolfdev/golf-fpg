@@ -23,6 +23,7 @@
  */
 import { useMemo, useState, type ReactNode } from "react";
 import ToPar from "../../ui/ToPar";
+import { distFromRound } from "../../utils/analysisStats";
 import SortableHdr from "../../ui/SortableHdr";
 import { compareNullsLast, compareTextNullsLast, compareValuesNullsLast } from "../../hooks/useSort";
 import TabRow from "../../ui/TabRow";
@@ -77,19 +78,9 @@ type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" |
 
 /** Conta birdies/pars/bogeys/worse num scorecard. */
 export function tallyHoles(strokes: number[], par: number[] | null): { birds: number; pars: number; bogeys: number; worse: number } {
-  let birds = 0, pars = 0, bogeys = 0, worse = 0;
-  if (!par) return { birds, pars, bogeys, worse };
-  for (let i = 0; i < strokes.length; i++) {
-    const g = strokes[i];
-    const p = par[i];
-    if (!g || g <= 0 || !p || p <= 0) continue;
-    const d = g - p;
-    if (d <= -1) birds++;
-    else if (d === 0) pars++;
-    else if (d === 1) bogeys++;
-    else worse++;
-  }
-  return { birds, pars, bogeys, worse };
+  if (!par) return { birds: 0, pars: 0, bogeys: 0, worse: 0 };
+  const d = distFromRound(strokes, par);
+  return { birds: d.eagles + d.birdies, pars: d.pars, bogeys: d.bogeys, worse: d.dbPlus };
 }
 
 /**

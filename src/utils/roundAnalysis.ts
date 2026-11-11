@@ -8,13 +8,13 @@
  * buraco com a média do campo.
  */
 
+import { distFromRound, parTypeStats, PAR_TYPES } from "./analysisStats";
+
 export type ARound = { round: number; scores: number[]; par: number[] };
 export type Tone = "good" | "bad" | "neutral";
 export type Insight = { tone: Tone; text: string };
 export type RoundBlock = { round: number; prev: number; gross: number; prevGross: number; insights: Insight[] };
 export type Analysis = { headline: Insight[]; rounds: RoundBlock[]; tournament: Insight[] };
-
-type Cnt = { eag: number; bir: number; par: number; bog: number; dbl: number };
 
 const sum = (a: number[]) => a.reduce((x, y) => x + y, 0);
 const gross = (r: ARound) => sum(r.scores);
@@ -24,14 +24,8 @@ const pl = (n: number, s: string, p = `${s}s`) => `${n} ${n === 1 ? s : p}`;
 const fmt1 = (v: number) => v.toFixed(1);
 const fmtAvg = (v: number) => (v > 0 ? `+${fmt1(v)}` : fmt1(v));
 
-function count(r: ARound, from = 0, to = r.scores.length): Cnt {
-  const c: Cnt = { eag: 0, bir: 0, par: 0, bog: 0, dbl: 0 };
-  for (let i = from; i < to; i++) {
-    const d = r.scores[i] - r.par[i];
-    if (d <= -2) c.eag++; else if (d === -1) c.bir++; else if (d === 0) c.par++; else if (d === 1) c.bog++; else c.dbl++;
-  }
-  return c;
-}
+/** Eagles, birdies, pares, bogeys e duplos+ de uma volta (contas em analysisStats). */
+const count = (r: ARound) => distFromRound(r.scores, r.par);
 
 /** «melhorou 4 pancadas» / «piorou 2 pancadas» / «igual». */
 const better = (d: number) => (d < 0 ? `melhorou ${pl(-d, "pancada")}` : d > 0 ? `piorou ${pl(d, "pancada")}` : "ficou igual");
@@ -53,8 +47,8 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 function countsInsight(a: ARound, b: ARound): Insight[] {
   const ca = count(a), cb = count(b);
   const out: Insight[] = [];
-  const goodA = ca.eag + ca.bir, goodB = cb.eag + cb.bir;
-  const badA = ca.dbl, badB = cb.dbl;
+  const goodA = ca.eagles + ca.birdies, goodB = cb.eagles + cb.birdies;
+  const badA = ca.dbPlus, badB = cb.dbPlus;
   const g = goodB - goodA, x = badB - badA;
   const gTxt = g > 0 ? `mais birdies (${goodA} → ${goodB})` : g < 0 ? `menos birdies (${goodA} → ${goodB})` : "";
   const xTxt = x > 0 ? `mais duplos-bogeys ou pior (${badA} → ${badB})` : x < 0 ? `menos duplos-bogeys ou pior (${badA} → ${badB})` : "";
@@ -63,22 +57,22 @@ function countsInsight(a: ARound, b: ARound): Insight[] {
     out.push({ tone: sameDir ? (g > 0 ? "good" : "bad") : "neutral", text: `${cap(gTxt)}${sameDir ? " e " : ", mas também "}${xTxt}.` });
   } else if (gTxt) out.push({ tone: g > 0 ? "good" : "bad", text: `${cap(gTxt)}.` });
   else if (xTxt) out.push({ tone: x < 0 ? "good" : "bad", text: `${cap(xTxt)}.` });
-  if (cb.bog !== ca.bog && Math.abs(cb.bog - ca.bog) >= 2) out.push({ tone: cb.bog < ca.bog ? "good" : "bad", text: `${cb.bog < ca.bog ? "Menos" : "Mais"} bogeys (${ca.bog} → ${cb.bog}).` });
-  if (cb.par - ca.par >= 3) out.push({ tone: "good", text: `Mais pares (${ca.par} → ${cb.par}) — volta mais consistente.` });
+  if (cb.bogeys !== ca.bogeys && Math.abs(cb.bogeys - ca.bogeys) >= 2) out.push({ tone: cb.bogeys < ca.bogeys ? "good" : "bad", text: `${cb.bogeys < ca.bogeys ? "Menos" : "Mais"} bogeys (${ca.bogeys} → ${cb.bogeys}).` });
+  if (cb.pars - ca.pars >= 3) out.push({ tone: "good", text: `Mais pares (${ca.pars} → ${cb.pars}) — volta mais consistente.` });
   return out;
 }
 
-/** Média vs par em par 3 / 4 / 5. */
-function byParType(rs: ARound[]): Record<3 | 4 | 5, { n: number; avg: number }> {
-  const acc: Record<number, { n: number; s: number }> = { 3: { n: 0, s: 0 }, 4: { n: 0, s: 0 }, 5: { n: 0, s: 0 } };
-  for (const r of rs) r.scores.forEach((sc, i) => { const p = r.par[i]; if (acc[p]) { acc[p].n++; acc[p].s += sc - p; } });
-  const f = (p: number) => ({ n: acc[p].n, avg: acc[p].n ? acc[p].s / acc[p].n : 0 });
-  return { 3: f(3), 4: f(4), 5: f(5) };
+/** Média vs par por tipo de buraco (par 3 a 6; n = 0 nos que não se jogaram). */
+function byParType(rs: ARound[]): Record<number, { n: number; avg: number }> {
+  const out: Record<number, { n: number; avg: number }> = {};
+  for (const p of PAR_TYPES) out[p] = { n: 0, avg: 0 };
+  for (const t of parTypeStats(rs)) out[t.par] = { n: t.holes, avg: t.avgVsPar };
+  return out;
 }
 
 function parTypeInsight(a: ARound, b: ARound): Insight | null {
   const ta = byParType([a]), tb = byParType([b]);
-  const diffs = ([3, 4, 5] as const).filter((p) => ta[p].n && tb[p].n).map((p) => ({ p, d: (tb[p].avg - ta[p].avg) * tb[p].n }));
+  const diffs = PAR_TYPES.filter((p) => ta[p].n && tb[p].n).map((p) => ({ p, d: (tb[p].avg - ta[p].avg) * tb[p].n }));
   const best = [...diffs].sort((x, y) => x.d - y.d)[0], worst = [...diffs].sort((x, y) => y.d - x.d)[0];
   const parts: string[] = [];
   if (best && best.d <= -2) parts.push(`ganhou ${pl(Math.round(-best.d), "pancada")} nos par ${best.p}`);
@@ -164,7 +158,7 @@ export function analyzeRounds(me: ARound[], field: ARound[][] = []): Analysis | 
   const allSame = rs.every((r) => gross(r) === gross(rs[0]));
   tour.push({ tone: "neutral", text: `Total ${tot} (${fmtTP(tp)}) em ${rs.length} voltas — ${allSame ? `todas com ${gross(best)}` : `melhor volta R${best.round} (${gross(best)}), média ${fmt1(tot / rs.length)}`}.` });
   const all = byParType(rs);
-  const types = ([3, 4, 5] as const).filter((p) => all[p].n);
+  const types = PAR_TYPES.filter((p) => all[p].n);
   if (types.length >= 2) {
     const sorted = [...types].sort((x, y) => all[x].avg - all[y].avg);
     const s = sorted[0], w = sorted[sorted.length - 1];

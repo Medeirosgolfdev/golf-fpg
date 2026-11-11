@@ -127,14 +127,6 @@ export function resumoDoTotal(total: Tournament): ResumoDoCampo {
   };
 }
 
-/** Os buracos de um cartão por tipo de par: quantos, o ±par somado e as pancadas. */
-export function porTipoDeBuraco(scores: readonly number[], par: readonly number[]): { par: number; n: number; total: number; media: number; scores: number[] }[] {
-  return [3, 4, 5, 6].map((t) => {
-    const idx = par.map((p, i) => (p === t ? i : -1)).filter((i) => i >= 0);
-    const total = idx.reduce((s, i) => s + scores[i] - par[i], 0);
-    return { par: t, n: idx.length, total, media: idx.length ? total / idx.length : 0, scores: idx.map((i) => scores[i]) };
-  }).filter((x) => x.n > 0);
-}
 
 /** O cartão COMPLETO de um jogador numa volta (todos os buracos jogados, par oficial), ou null. */
 export function cartaoCompleto(p: Player | null | undefined): { scores: number[]; par: number[] } | null {

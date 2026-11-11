@@ -1,6 +1,7 @@
 import React from "react";
 import type { HoleStatsData, HoleStatEntry } from "../data/playerDataLoader";
 import { fD, fD2, fmtSign } from "../utils/format";
+import { PAR_TYPES } from "../utils/analysisStats";
 import { toneClass, scClass } from "../utils/scoreDisplay";
 import { sumArr } from "../utils/mathUtils";
 import KpiCard from "./KpiCard";
@@ -165,7 +166,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
 
   // By par type
-  const parTypes = [3, 4, 5].filter(p => stats.byParType[p]);
+  const parTypes = PAR_TYPES.filter(p => stats.byParType[p]);
   const worstPT = parTypes.length > 1
     ? parTypes.reduce((a, b) => (stats.byParType[a]?.avgVsPar ?? 0) > (stats.byParType[b]?.avgVsPar ?? 0) ? a : b)
     : null;

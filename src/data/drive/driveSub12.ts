@@ -16,6 +16,7 @@ import type { CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
 import { escalaoCanon, escaloesCanon } from "../model/escalao";
 import { isManuelByName } from "../../constants/manuel";
 import { isNoCardGross } from "../intlCommon";
+import { distFromCards } from "../../utils/analysisStats";
 import { classificarPorTotal, parsePos, temCartao, voltasComCartao } from "../../utils/classificacao";
 
 export type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
@@ -51,27 +52,13 @@ export function computeStats(p: Player, date?: string | null): TStats | null {
   const sds = rawSds.filter((x): x is number => x != null).map(x => Math.round(x * 10) / 10);
   const sd = sds.length ? Math.round((sds.reduce((s, x) => s + x, 0) / sds.length) * 10) / 10 : null;
 
-  let birdies = 0, pars = 0, bogeys = 0;
-  // If player has multiple roundScores, count across all rounds
-  if (p.roundScores && p.roundScores.length > 1) {
-    for (const rs of p.roundScores) {
-      const rScores = rs.scores || [];
-      const rPars = rs.pars || [];
-      for (let i = 0; i < rScores.length && i < rPars.length; i++) {
-        const d = rScores[i] - rPars[i];
-        if (d <= -1) birdies++;
-        else if (d === 0) pars++;
-        else bogeys++;
-      }
-    }
-  } else {
-    for (let i = 0; i < scores.length && i < parArr.length; i++) {
-      const d = scores[i] - parArr[i];
-      if (d <= -1) birdies++;
-      else if (d === 0) pars++;
-      else bogeys++;
-    }
-  }
+  // Birdies (ou melhor), pares e bogeys (ou pior) de todas as voltas — contas em
+  // utils/analysisStats. Antes contava-se aqui à mão SEM saltar os buracos por
+  // jogar: numa volta de 9 guardada com 18 posições cada zero saía como birdie.
+  const dist = distFromCards(p.roundScores && p.roundScores.length > 1
+    ? p.roundScores.map((rs) => ({ scores: rs.scores || [], par: rs.pars || [] }))
+    : [{ scores, par: parArr }]);
+  const birdies = dist.eagles + dist.birdies, pars = dist.pars, bogeys = dist.bogeys + dist.dbPlus;
   return { pos: p.pos, gross: g, toPar: tp, sd, sds, roundSds: rawSds.map(x => x == null ? null : Math.round(x * 10) / 10),
     nholes: nh, birdies, pars, bogeys };
 }

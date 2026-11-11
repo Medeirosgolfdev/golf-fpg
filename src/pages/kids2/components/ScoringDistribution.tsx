@@ -16,6 +16,7 @@ import type { CanonicalData, Junior } from "../data";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Fill } from "../../../ui/DataStyle";
 import { resultadosDoJunior } from "../juniorCalc";
+import { addDist, emptyDist, parTypeStats, type Cartao } from "../../../utils/analysisStats";
 
 interface Props {
   data: CanonicalData;
@@ -27,7 +28,7 @@ interface Props {
 interface Bucket { label: string; count: number; cls: string; }
 
 interface ParBreakdown {
-  parValue: 3 | 4 | 5;
+  parValue: number;
   holesPlayed: number;
   totalStrokes: number;
   avgStrokes: number | null;
@@ -157,44 +158,21 @@ interface CareerStats {
 }
 
 function compute(data: CanonicalData, junior: Junior, filterTids?: Set<string> | null): CareerStats {
-  const byPar: Record<3 | 4 | 5, ParBreakdown> = {
-    3: { parValue: 3, holesPlayed: 0, totalStrokes: 0, avgStrokes: null, eagles: 0, birdies: 0, pars: 0, bogeys: 0, doublesPlus: 0 },
-    4: { parValue: 4, holesPlayed: 0, totalStrokes: 0, avgStrokes: null, eagles: 0, birdies: 0, pars: 0, bogeys: 0, doublesPlus: 0 },
-    5: { parValue: 5, holesPlayed: 0, totalStrokes: 0, avgStrokes: null, eagles: 0, birdies: 0, pars: 0, bogeys: 0, doublesPlus: 0 },
-  };
-  let totalHoles = 0, eaglesPlus = 0, birdies = 0, pars = 0, bogeys = 0, doublesPlus = 0, subPar = 0;
-
+  // Os cartões de todas as provas, cada um com o par do seu escalão; as contas
+  // (por tipo de buraco e a distribuição) são as de utils/analysisStats.
+  const cards: Cartao[] = [];
   for (const { f, r } of resultadosDoJunior(junior, data.tournamentById, filterTids)) {
     if (!r?.rounds || !f.par) continue;
-    for (const rd of r.rounds) {
-      if (!rd.strokes || rd.strokes.length === 0) continue;
-      for (let i = 0; i < rd.strokes.length; i++) {
-        const strokes = rd.strokes[i];
-        const par = f.par[i];
-        if (!strokes || strokes <= 0 || !par || par <= 0) continue;
-        // só Par 3/4/5 (skip ranges anómalos)
-        const p = (par === 3 || par === 4 || par === 5) ? (par as 3 | 4 | 5) : null;
-        if (!p) continue;
-        const diff = strokes - p;
-        totalHoles++;
-        byPar[p].holesPlayed++;
-        byPar[p].totalStrokes += strokes;
-        if (diff <= -2) { eaglesPlus++; byPar[p].eagles++; subPar++; }
-        else if (diff === -1) { birdies++; byPar[p].birdies++; subPar++; }
-        else if (diff === 0) { pars++; byPar[p].pars++; }
-        else if (diff === 1) { bogeys++; byPar[p].bogeys++; }
-        else { doublesPlus++; byPar[p].doublesPlus++; }
-      }
-    }
+    for (const rd of r.rounds) if (rd.strokes?.length) cards.push({ scores: rd.strokes, par: f.par });
   }
-
-  for (const p of [3, 4, 5] as const) {
-    if (byPar[p].holesPlayed > 0) byPar[p].avgStrokes = byPar[p].totalStrokes / byPar[p].holesPlayed;
-  }
-
+  const tipos = parTypeStats(cards);
+  const d = tipos.reduce((acc, t) => addDist(acc, t.dist), emptyDist());
   return {
-    totalHoles, eaglesPlus, birdies, pars, bogeys, doublesPlus,
-    subParPct: totalHoles > 0 ? Math.round((subPar / totalHoles) * 100) : 0,
-    byPar: [byPar[3], byPar[4], byPar[5]].filter((x) => x.holesPlayed > 0),
+    totalHoles: d.total, eaglesPlus: d.eagles, birdies: d.birdies, pars: d.pars, bogeys: d.bogeys, doublesPlus: d.dbPlus,
+    subParPct: d.total > 0 ? Math.round(((d.eagles + d.birdies) / d.total) * 100) : 0,
+    byPar: tipos.map((t): ParBreakdown => ({
+      parValue: t.par, holesPlayed: t.holes, totalStrokes: t.strokes, avgStrokes: t.avgStrokes,
+      eagles: t.dist.eagles, birdies: t.dist.birdies, pars: t.dist.pars, bogeys: t.dist.bogeys, doublesPlus: t.dist.dbPlus,
+    })),
   };
 }

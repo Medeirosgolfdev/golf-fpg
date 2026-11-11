@@ -17,6 +17,8 @@ import { useMemo, useState } from "react";
 import type { CanonicalData, Junior, Tournament, Flight, Result } from "../data";
 import { normName } from "../data";
 import {
+  addDist,
+  emptyDist,
   distFromRounds,
   distPct,
   perRoundDists,
@@ -162,18 +164,11 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
   const aggregated = useMemo(() => {
     const holeSum = new Array<number>(18).fill(0);
     const holeN = new Array<number>(18).fill(0);
-    let dist: ScoringDist = { eagles: 0, birdies: 0, pars: 0, bogeys: 0, dbPlus: 0, total: 0 };
+    let dist: ScoringDist = emptyDist();
 
     for (const sc of playerCards) {
       const d = distFromRounds(sc.rounds, sc.par);
-      dist = {
-        eagles: dist.eagles + d.eagles,
-        birdies: dist.birdies + d.birdies,
-        pars: dist.pars + d.pars,
-        bogeys: dist.bogeys + d.bogeys,
-        dbPlus: dist.dbPlus + d.dbPlus,
-        total: dist.total + d.total,
-      };
+      dist = addDist(dist, d);
       for (const rd of sc.rounds) {
         for (let i = 0; i < Math.min(18, rd.length); i++) {
           const s = rd[i];
@@ -395,24 +390,13 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
 }
 
 function nineAggregate(cards: DerivedCard[]) {
-  const accFront = { eagles: 0, birdies: 0, pars: 0, bogeys: 0, dbPlus: 0, total: 0 };
-  const accBack = { eagles: 0, birdies: 0, pars: 0, bogeys: 0, dbPlus: 0, total: 0 };
+  let accFront = emptyDist(), accBack = emptyDist();
   const frontTps: number[] = [], backTps: number[] = [];
 
   for (const sc of cards) {
     const ns = nineSplit(sc.rounds, sc.par);
-    accFront.eagles += ns.front.eagles;
-    accFront.birdies += ns.front.birdies;
-    accFront.pars += ns.front.pars;
-    accFront.bogeys += ns.front.bogeys;
-    accFront.dbPlus += ns.front.dbPlus;
-    accFront.total += ns.front.total;
-    accBack.eagles += ns.back.eagles;
-    accBack.birdies += ns.back.birdies;
-    accBack.pars += ns.back.pars;
-    accBack.bogeys += ns.back.bogeys;
-    accBack.dbPlus += ns.back.dbPlus;
-    accBack.total += ns.back.total;
+    accFront = addDist(accFront, ns.front);
+    accBack = addDist(accBack, ns.back);
     if (ns.frontToParAvg != null) frontTps.push(ns.frontToParAvg);
     if (ns.backToParAvg != null) backTps.push(ns.backToParAvg);
   }

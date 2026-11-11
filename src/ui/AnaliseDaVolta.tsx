@@ -15,9 +15,10 @@ import React, { useMemo } from "react";
 import type { Tournament } from "../data/fpgTypes";
 import { numGross } from "../data/fpgUtils";
 import {
-  cartaoCompleto, chaveDoCampo, dificuldadePorBuraco, porTipoDeBuraco, resumoDaVolta, resumoDoTotal,
+  cartaoCompleto, chaveDoCampo, dificuldadePorBuraco, resumoDaVolta, resumoDoTotal,
   type DificuldadeBuraco,
 } from "../data/dificuldadeBuraco";
+import { parTypeStats } from "../utils/analysisStats";
 import { findManuelNaProva } from "../constants/manuel";
 import { scClass, toParClass } from "../utils/scoreDisplay";
 import { fmtToPar, fmtSign, fmtSignParen } from "../utils/format";
@@ -172,7 +173,7 @@ export function AnaliseManuel({ volta, anterior, numVolta }: {
   const eagles = holes.filter((h) => h.diff <= -2), birdies = holes.filter((h) => h.diff === -1);
   const pars = holes.filter((h) => h.diff === 0), bogeys = holes.filter((h) => h.diff === 1);
   const doubles = holes.filter((h) => h.diff === 2), worse = holes.filter((h) => h.diff >= 3);
-  const tipos = porTipoDeBuraco(scores, par);
+  const tipos = parTypeStats([{ scores, par }]);
 
   const vsPrev = holes[0]?.prev != null ? holes.map((h) => ({ ...h, delta: h.gross - (h.prev as number) })) : null;
   const worseVP = vsPrev?.filter((h) => h.delta > 0).sort((a, b) => b.delta - a.delta) ?? [];
@@ -202,8 +203,8 @@ export function AnaliseManuel({ volta, anterior, numVolta }: {
       <div className="grid-auto-fill mb-8 gap-6">
         {tipos.map((d) => (
           <div key={d.par} className="card-detail br p-4-8">
-            <div className="fw-700 fs-11">Par {d.par} ({d.n})</div>
-            <div className="fs-10">{d.scores.join(", ")} → <span className={d.total < 0 ? "fw-700 c-good" : d.total > 0 ? "fw-700 c-danger" : "fw-700"}>{fmtToPar(d.total)}</span><span className="c-text-3"> (avg {fmtSign(d.media, 2)})</span></div>
+            <div className="fw-700 fs-11">Par {d.par} ({d.holes})</div>
+            <div className="fs-10">{d.scores.join(", ")} → <span className={d.vsPar < 0 ? "fw-700 c-good" : d.vsPar > 0 ? "fw-700 c-danger" : "fw-700"}>{fmtToPar(d.vsPar)}</span><span className="c-text-3"> (avg {fmtSign(d.avgVsPar, 2)})</span></div>
           </div>
         ))}
       </div>

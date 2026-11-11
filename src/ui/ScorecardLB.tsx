@@ -17,6 +17,7 @@ import { isNoCardGross } from "../data/intlCommon";
 import { temCartao } from "../utils/classificacao";
 import { resumoJogado } from "../utils/parJogado";
 import { fmtHcp, ageAtDate, fmtDobPt, medal as medalOf } from "../utils/format";
+import { distFromRound } from "../utils/analysisStats";
 import { medalNet, stablefordNet } from "../utils/whsCalc";
 import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
@@ -356,16 +357,9 @@ export function ScorecardLB({
     for (const p of rawPlayers) {
       const { scores, inferred } = !hasCard(p) ? { scores: [] as number[], inferred: [] as boolean[] } : noInfer ? rawFilled(p) : fillBlankHoles(p);
       const pp = playerPar(p);
-      let eags = 0, birds = 0, pars = 0, bogs = 0;
-      for (let i = 0; i < scores.length && i < pp.length; i++) {
-        if (!scores[i]) continue;
-        const d = scores[i] - pp[i];
-        if (d <= -2) eags++;
-        else if (d === -1) birds++;
-        else if (d === 0) pars++;
-        else bogs++;
-      }
-      m.set(p, { eags, birds, pars, bogs, scores, inferred });
+      // Contas em utils/analysisStats (buracos por jogar e buracos sem par não contam).
+      const d = distFromRound(scores, pp);
+      m.set(p, { eags: d.eagles, birds: d.birdies, pars: d.pars, bogs: d.bogeys + d.dbPlus, scores, inferred });
     }
     return m;
   }, [rawPlayers, par]);

@@ -8,6 +8,7 @@ import React, { useMemo, useState } from "react";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Tournament } from "../data/fpgTypes";
 import { numGross, resolveEsc, playerDob, computeSD, playedParTotal, isRoundInProgress } from "../data/fpgUtils";
+import { distFromRound } from "../utils/analysisStats";
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import { RoundPill } from "./PillBadge";
 import { HoleBadge } from "./tableCells";
@@ -141,29 +142,19 @@ export function AccumulatedLB({
           nholes: rs.pars?.length,
           grossTotal: rs.gross,
         }, tournament.date);
-        let eagles = 0,
-          birdies = 0,
-          pars = 0,
-          bogeys = 0;
-        for (let i = 0; i < (rs.pars?.length ? rs.scores?.length ?? 0 : 0); i++) {
-          const sc = rs.scores[i] || 0;
-          if (sc <= 0) continue; // buraco não jogado (9H guardadas como 18 com zeros)
-          const d = sc - (rs.pars[i] || 0);
-          if (d <= -2) eagles++;
-          else if (d === -1) birdies++;
-          else if (d === 0) pars++;
-          else bogeys++;
-        }
+        // Contas em utils/analysisStats: sem par, ou buraco por jogar, não conta
+        // (antes, sem par, todos os buracos jogados saíam como bogey).
+        const dist = distFromRound(rs.scores ?? [], rs.pars ?? []);
         return {
           gross: rs.gross,
           // Par SÓ dos buracos jogados — numa volta a decorrer os restantes vêm
           // a zero e comparar 9 buracos com o par de 18 dava "36 (−36)".
           parPerRound: (playedParTotal(rs, parPerRound ?? 0) || parPerRound) ?? undefined,
           sd,
-          eagles,
-          birdies,
-          pars,
-          bogeys,
+          eagles: dist.eagles,
+          birdies: dist.birdies,
+          pars: dist.pars,
+          bogeys: dist.bogeys + dist.dbPlus,
         };
       }) as MRRound[];
       return {

@@ -313,7 +313,10 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   nome a um federado só com clube/idade a confirmar → `utils/federadoPorNome.ts`;
   o Manuel numa prova → `findManuelNaProva` (`constants/manuel.ts`; nunca o pai);
   sexo da prova pelo rótulo → `sexoDaProva` (`utils/tournamentSex.ts`); ±par só
-  dos buracos jogados → `utils/parJogado.ts`; buracos/cartão/±par de uma volta
+  dos buracos jogados → `utils/parJogado.ts`; **contar eagles/birdies/pares/bogeys de um
+  cartão, ou separá-lo por tipo de buraco (par 3–6) → `utils/analysisStats.ts`** (`distFromRound`,
+  `distFromCards`, `parTypeStats`, `PAR_TYPES`; 11/11/2026 — havia dez sítios a contar à mão: a
+  /drive contava como birdie cada buraco por jogar, o Resumo contava tudo como bogey sem par); buracos/cartão/±par de uma volta
   (9 vs 18, USKids) → `utils/voltasJogadas.ts`; ±par pelas voltas que o jogador
   jogou → `toParPlayed`/`toParByRounds` (`data/intlCommon.ts`); escolha de tee
   por tee + sexo (há pares M/F com o mesmo `teeId`) → `utils/teeChoice.ts`;

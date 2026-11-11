@@ -15,6 +15,7 @@
 
 import { useState, useMemo } from "react";
 import { isNoCardGross } from "../data/intlCommon";
+import { distFromRound, emptyDist } from "../utils/analysisStats";
 import { useSort, compareNullsLast, compareTextNullsLast } from "./useSort";
 import type { Player, Tournament, RoundScore, PlayerFilter } from "../data/fpgTypes";
 import { EMPTY_FILTER } from "../ui/multiRoundTypes";
@@ -273,17 +274,10 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
     const parTotalReal = typeof p.parTotal === "number" && p.parTotal > 0 ? p.parTotal : null;
     const fullCard = !capped.length || capped.filter((s) => s > 0).length >= nh;
     const toPar = semPar ? (parTotalReal != null && fullCard ? gross - parTotalReal : null) : gross - rdPar;
-    let eags = 0, birds = 0, pars2 = 0, bogs = 0;
-    capped.forEach((s, h) => {
-      if (!s || s <= 0 || semPar) return; // buraco não jogado (9H guardadas como 18 com zeros)
-      const d = s - (holePar(h) ?? 0);
-      if (d <= -2) eags++;
-      else if (d === -1) birds++;
-      else if (d === 0) pars2++;
-      else bogs++;
-    });
+    // Contas em utils/analysisStats (buraco por jogar ou sem par não conta).
+    const dist = semPar ? emptyDist() : distFromRound(capped, capped.map((_, h) => holePar(h) ?? 0));
     const sd = computeRoundSD ? computeRoundSD(p, capped, rs, ref, gross) : null;
-    return { scores: capped, gross, toPar, sd, eags, birds, pars: pars2, bogs, holePars: refPars || [] };
+    return { scores: capped, gross, toPar, sd, eags: dist.eagles, birds: dist.birdies, pars: dist.pars, bogs: dist.bogeys + dist.dbPlus, holePars: refPars || [] };
   }
 
   // Jogadores filtrados

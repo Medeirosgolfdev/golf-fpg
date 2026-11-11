@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
+  distFromCards, parTypeStats,
   emptyDist,
   addDist,
   distPct,
@@ -17,7 +18,7 @@ describe("distFromRound", () => {
   it("classifica eagles, birdies, pars, bogeys, dbPlus", () => {
     // Todos pars
     const d1 = distFromRound(PAR72, PAR72);
-    expect(d1).toEqual({ eagles:0, birdies:0, pars:18, bogeys:0, dbPlus:0, total:18 });
+    expect(d1).toEqual({ eagles:0, birdies:0, pars:18, bogeys:0, dbPlus:0, doubles:0, triplesPlus:0, total:18 });
   });
 
   it("1 birdie + 1 bogey no resto pars", () => {
@@ -25,7 +26,7 @@ describe("distFromRound", () => {
     scores[0] = PAR72[0] - 1;   // birdie
     scores[5] = PAR72[5] + 1;   // bogey
     const d = distFromRound(scores, PAR72);
-    expect(d).toEqual({ eagles:0, birdies:1, pars:16, bogeys:1, dbPlus:0, total:18 });
+    expect(d).toEqual({ eagles:0, birdies:1, pars:16, bogeys:1, dbPlus:0, doubles:0, triplesPlus:0, total:18 });
   });
 
   it("dbPlus junta +2, +3, +4", () => {
@@ -73,8 +74,8 @@ describe("distFromRounds + addDist", () => {
   });
 
   it("addDist é comutativa", () => {
-    const a = { eagles:1, birdies:2, pars:3, bogeys:4, dbPlus:5, total:15 };
-    const b = { eagles:5, birdies:4, pars:3, bogeys:2, dbPlus:1, total:15 };
+    const a = { eagles:1, birdies:2, pars:3, bogeys:4, dbPlus:5, doubles:5, triplesPlus:0, total:15 };
+    const b = { eagles:5, birdies:4, pars:3, bogeys:2, dbPlus:1, doubles:1, triplesPlus:0, total:15 };
     expect(addDist(a, b)).toEqual(addDist(b, a));
     expect(addDist(a, emptyDist())).toEqual(a);
   });
@@ -82,7 +83,7 @@ describe("distFromRounds + addDist", () => {
 
 describe("distPct", () => {
   it("soma 100% quando total>0", () => {
-    const d = { eagles:1, birdies:2, pars:10, bogeys:4, dbPlus:1, total:18 };
+    const d = { eagles:1, birdies:2, pars:10, bogeys:4, dbPlus:1, doubles:1, triplesPlus:0, total:18 };
     const p = distPct(d);
     const sum = p.eagles + p.birdies + p.pars + p.bogeys + p.dbPlus;
     expect(sum).toBeCloseTo(100, 5);
@@ -193,5 +194,43 @@ describe("aggregateField", () => {
     const agg = aggregateField([a], "");
     expect(agg.nRounds).toBe(0);
     expect(agg.dist.total).toBe(0);
+  });
+});
+
+describe("duplos e triplos em separado", () => {
+  it("dbPlus = doubles + triplesPlus", () => {
+    const par = [4, 4, 4, 4];
+    const d = distFromRound([6, 7, 9, 4], par);
+    expect([d.doubles, d.triplesPlus, d.dbPlus, d.pars, d.total]).toEqual([1, 2, 3, 1, 4]);
+  });
+  it("buracos por jogar (0) e buracos sem par não contam — nem como birdie, nem como bogey", () => {
+    expect(distFromRound([4, 0, 0, 5], [4, 4, 4, 4]).total).toBe(2);
+    expect(distFromRound([4, 5, 6], [0, 0, 0]).total).toBe(0);
+    expect(distFromRound([4, 5, 6], []).total).toBe(0);
+  });
+  it("distFromCards soma cartões com pares diferentes", () => {
+    const d = distFromCards([{ scores: [3, 4], par: [4, 4] }, { scores: [5, 7], par: [5, 5] }]);
+    expect([d.birdies, d.pars, d.doubles, d.total]).toEqual([1, 2, 1, 4]);
+  });
+});
+
+describe("parTypeStats — por tipo de buraco", () => {
+  it("separa por par 3/4/5 e também par 6 quando existe", () => {
+    const par = [3, 4, 5, 6, 4, 4, 4, 4, 4];
+    const t = parTypeStats([{ scores: [2, 5, 5, 8, 4, 4, 4, 4, 4], par }]);
+    expect(t.map((s) => s.par)).toEqual([3, 4, 5, 6]);
+    expect([t[0].holes, t[0].vsPar, t[0].avgVsPar, t[0].scores]).toEqual([1, -1, -1, [2]]);
+    expect([t[1].holes, t[1].strokes, t[1].vsPar]).toEqual([6, 25, 1]);
+    expect(t[1].dist.bogeys).toBe(1);
+    expect([t[3].vsPar, t[3].dist.doubles]).toEqual([2, 1]);
+  });
+  it("só devolve os tipos jogados e ignora zeros e pares estranhos", () => {
+    const t = parTypeStats([{ scores: [4, 0, 5, 9], par: [4, 3, 5, 7] }]);
+    expect(t.map((s) => s.par)).toEqual([4, 5]);
+  });
+  it("junta várias voltas, cada uma com o seu par", () => {
+    const t = parTypeStats([{ scores: [3, 4], par: [3, 4] }, { scores: [4, 4], par: [3, 4] }]);
+    expect([t[0].holes, t[0].avgStrokes, t[0].avgVsPar]).toEqual([2, 3.5, 0.5]);
+    expect(t[1].avgVsPar).toBe(0);
   });
 });
