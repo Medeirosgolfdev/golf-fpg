@@ -133,6 +133,20 @@ describe('avaliarCanario', () => {
     expect(r.avisos[0]).toMatch(/rate limit/);
   });
 
+  it('recusa que DURA (fronteira parada há 4+ dias) toca o alarme; a de um ou dois dias não', () => {
+    // O caso real de 07–11/11/2026: HTTP 403 todos os dias, 5 dias sem avançar.
+    const dura = avaliarCanario({ varredura: { fim: 'rate-limit' }, diasSemDescoberta: 5, diasSemAvanco: 5, rateLimitHits: 1 });
+    expect(dura.falhar).toBe(true);
+    expect(dura.erros[0]).toMatch(/recusa-nos.*5 dias/);
+    const curta = avaliarCanario({ varredura: { fim: 'rate-limit' }, diasSemDescoberta: 3, diasSemAvanco: 3, rateLimitHits: 1 });
+    expect(curta.falhar).toBe(false);
+    expect(curta.avisos).toHaveLength(1);
+    // Passados os 21 dias fala o limiar antigo — uma só mensagem, não duas.
+    const longa = avaliarCanario({ varredura: { fim: 'rate-limit' }, diasSemDescoberta: 22, diasSemAvanco: 22, rateLimitHits: 1 });
+    expect(longa.erros).toHaveLength(1);
+    expect(longa.erros[0]).toMatch(/22 dias sem a fronteira/);
+  });
+
   it('os limiares de dias disparam MESMO com rate limit — é a rede que fica', () => {
     // Esta é a garantia de que calar o ruído diário não esconde uma paragem
     // real: se a recusa persistir, ao fim de 21/30 dias o alarme toca na mesma.

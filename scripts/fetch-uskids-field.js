@@ -20,8 +20,14 @@ const {
   planearFase2, ordemFase2, BACKFILL_POR_CORRIDA, PISO_BACKFILL,
 } = require('./lib/uskids-frontier');
 const {
-  ehRateLimit, erroRateLimit, deveRecusarEscrita, PERDA_MAXIMA,
+  erroRateLimit, deveRecusarEscrita, PERDA_MAXIMA,
 } = require('./lib/uskids-rate-guard');
+// Recusa = HTTP 403/429/503 OU «Too many requests» em texto com HTTP 200 — a mesma
+// regra dos resultados e dos draws. Até 11/11/2026 este script só reconhecia o
+// TEXTO: quando o signupanytime passou a responder 403 (07/11) a recusa lia-se
+// como «falha de rede», a Fase 2 fez ~100 pedidos por dia contra um servidor que
+// já tinha dito não, durante 5 dias, e a fronteira ficou «rede degradada».
+const { ehRecusa } = require('./lib/uskids-recusa');
 
 // ── Filtros de descoberta ─────────────────────
 // A classificação (tipo do GetMeta + palavras-chave + excepções por tcode)
@@ -38,7 +44,9 @@ const escalaoComNomes = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase()
 // scripts/lib/uskids-frontier.js.
 // ⚠ `USKIDS_DELAY_MS` existe só para os testes (0); em produção nunca se define.
 const DELAY_SERIE     = Number(process.env.USKIDS_DELAY_MS ?? 1200);  // Fase 1, entre pedidos
-const DELAY_FETCH     = 400;                                           // Fase 2, entre pedidos
+// Fase 2, entre pedidos. `USKIDS_DELAY_FETCH_MS` abranda uma corrida feita à mão
+// (ex.: `--only` no PC quando a fonte anda a recusar — 11/11/2026).
+const DELAY_FETCH     = Number(process.env.USKIDS_DELAY_FETCH_MS ?? 400);
 // Tecto de pedidos de inscritos por corrida. Todos os torneios são vistos todos
 // os dias (~1 pedido cada + nomes onde a contagem mudou): ~250–400 por dia.
 const ORCAMENTO_FASE2 = 800;
@@ -229,7 +237,7 @@ function esperarGetMeta(page, t, ms = 12000) {
       page.off('response', handler);
       try {
         const txt = await response.text();
-        if (ehRateLimit(txt)) return reject(erroRateLimit());
+        if (ehRecusa(response.status(), txt)) return reject(erroRateLimit());
         resolve(JSON.parse(txt));
       } catch (e) { reject(e); }
     };
@@ -243,9 +251,9 @@ async function pageJSON(page, url) {
     const r = await fetch(u, { credentials: 'include' });
     return { status: r.status, txt: await r.text() };
   }, url);
-  // A recusa da fonte vem em texto ("Too many requests"): reconhecê-la aqui, em
-  // vez de a deixar rebentar no JSON.parse como se fosse um erro de formato.
-  if (ehRateLimit(txt)) throw erroRateLimit();
+  // A recusa da fonte vem em texto ("Too many requests") ou como HTTP 403/429/503:
+  // reconhecê-la aqui, em vez de a deixar passar por erro de formato ou de rede.
+  if (ehRecusa(status, txt)) throw erroRateLimit();
   if (status < 200 || status >= 300) throw new Error('HTTP ' + status);
   return JSON.parse(txt);
 }
@@ -268,6 +276,9 @@ async function metaTournament(t) {
         signal: ctl.signal,
       });
       clearTimeout(to);
+      // ⚠ Um 403/429/503 é RECUSA, não rede instável: não se repete (as 3
+      // tentativas contra um servidor que já disse não são 3 pedidos a mais).
+      if (ehRecusa(r.status)) { rateLimitHits++; return ERRO; }
       if (!r.ok) throw new Error('HTTP ' + r.status);
       // ⚠ Um tcode que não existe responde HTTP 200 com CORPO VAZIO. Chamar
       // r.json() aí lança, e tratar essa excepção como falha de rede faz cada
@@ -280,7 +291,7 @@ async function metaTournament(t) {
       // instável; contra um rate limit multiplicam por 3 os pedidos contra um
       // servidor que já disse não — com concorrência 5 eram 15 pedidos só
       // para o bloco perceber que estava travado.
-      if (ehRateLimit(txt)) { rateLimitHits++; return ERRO; }
+      if (ehRecusa(r.status, txt)) { rateLimitHits++; return ERRO; }
       if (!txt) return null;                    // não existe
       let j;
       try { j = JSON.parse(txt); } catch { return null; }   // lixo ⇒ não existe

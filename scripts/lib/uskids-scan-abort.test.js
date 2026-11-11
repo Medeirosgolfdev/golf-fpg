@@ -20,13 +20,15 @@ import path from 'node:path';
 let servidor, pedidos = 0;
 /** O que o "servidor" responde a cada número (t → corpo). */
 let responder = () => 'Too many requests';
+/** Código HTTP da resposta (o signupanytime também recusa com 403). */
+let estado = () => 200;
 let dirDados;
 
 beforeAll(async () => {
   servidor = http.createServer((req, res) => {
     pedidos++;
     const t = Number(new URL(req.url, 'http://x').searchParams.get('t'));
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.writeHead(estado(t), { 'Content-Type': 'text/plain' });
     res.end(responder(t));
   });
   await new Promise(r => servidor.listen(0, '127.0.0.1', r));
@@ -58,6 +60,17 @@ describe('um pedido contra a fonte', () => {
     expect((await consultar(1)).r).toBe('recusa');
     expect(pedidos).toBe(1);
   }, 30000);
+
+  it('um HTTP 403 é "recusa", à primeira e sem repetir (o caso de 07/11/2026)', async () => {
+    const { consultar } = await import('../fetch-uskids-field.js');
+    responder = () => '<html><head><title>403 Forbidden</title></head></html>';
+    estado = () => 403;
+    pedidos = 0;
+    try {
+      expect((await consultar(1)).r).toBe('recusa');
+      expect(pedidos).toBe(1);   // eram 3: o 403 lia-se como rede instável e repetia-se
+    } finally { estado = () => 200; }
+  });
 
   it('um número inexistente (200 + corpo vazio) é "nao-existe", não recusa', async () => {
     const { consultar, metaTournament } = await import('../fetch-uskids-field.js');

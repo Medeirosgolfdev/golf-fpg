@@ -83,6 +83,10 @@ function deveRecusarEscrita(torneiosAntigos, torneiosNovos, { max = PERDA_MAXIMA
 /** Limiares do canário — largos de propósito: avisam que a varredura PAROU. */
 const DIAS_SEM_DESCOBERTA = 30;
 const DIAS_SEM_AVANCO = 21;
+/** Recusa da fonte HOJE com a fronteira parada há estes dias = bloqueio que dura,
+ *  não um corte de um dia. (11/11/2026: o 403 de 07/11 durou 5 dias; sem isto, ao
+ *  reconhecê-lo como recusa o job ficava verde até aos 21 dias.) */
+const DIAS_RECUSA_SEGUIDA = 4;
 
 /**
  * O canário: falhar o job (= email) ou só avisar?
@@ -117,6 +121,9 @@ function avaliarCanario({ varredura, diasSemDescoberta, diasSemAvanco, rateLimit
     avisos.push(v.fim === 'rede-degradada'
       ? 'o signupanytime recusou-nos — a fronteira foi abandonada nesta corrida'
       : 'o signupanytime aplicou rate limit — varredura truncada nesta corrida');
+    // Uma recusa de um dia resolve-se sozinha; uma que dura é um bloqueio.
+    if (diasSemAvanco != null && diasSemAvanco >= DIAS_RECUSA_SEGUIDA && diasSemAvanco <= DIAS_SEM_AVANCO)
+      erros.push(`o signupanytime recusa-nos e a fronteira não avança há ${diasSemAvanco} dias — bloqueio que dura`);
   } else if (v.fim === 'rede-degradada') {
     erros.push('a fronteira foi abandonada por falta de resposta do servidor');
   } else if (v.intervalos_degradados >= 2) {
@@ -128,7 +135,7 @@ function avaliarCanario({ varredura, diasSemDescoberta, diasSemAvanco, rateLimit
 
 module.exports = {
   PERDA_MAXIMA,
-  DIAS_SEM_DESCOBERTA, DIAS_SEM_AVANCO, avaliarCanario,
+  DIAS_SEM_DESCOBERTA, DIAS_SEM_AVANCO, DIAS_RECUSA_SEGUIDA, avaliarCanario,
   ehRateLimit, erroRateLimit,
   inscritosPorTorneio, perdaNosComuns, deveRecusarEscrita,
 };

@@ -625,6 +625,26 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
 - **Marcados sempre:** SD em itálico com contorno tracejado (`_sdEstimate` → `SDPill est`), «(estimados)» junto ao CR/Slope; na /campos «estimado» nos tees e CR/Slope em itálico (title com a origem).
 - Feito: **British Kids Championship 2026** (The Vale, t=22885) — base Wales Golf 2025 (Wales National Yellow 73.5/126, 6617 jd; Lake Yellow 70.3/123, 5986 jd; Lake Red F 74.9/134, 5745 jd). As jardas do Wales National vêm do cartão de 2020 (ratings de 2025). 9 buracos (Boys 7/8) ficam sem rating.
 
+## ⛔ Recusa desde 07/11/2026 — estado e o que NÃO se fez (11/11/2026)
+
+- **Facto:** desde ~07/11/2026 o signupanytime responde **HTTP 403** (às vezes 429) aos pedidos dos nossos
+  scripts, no GitHub e no PC de casa. Todos os workflows da USKids estão a ser recusados; os inscritos de 99
+  dos 100 torneios ficaram com a data de 06/11.
+- **Defeito nosso, corrigido:** o `fetch-uskids-field.js` só reconhecia a recusa em TEXTO («Too many
+  requests»); o 403 lia-se como «falha de rede» e a Fase 2 fez ~100 pedidos por dia, 5 dias seguidos, contra um
+  servidor que já tinha dito não. Passou a usar `ehRecusa` (`lib/uskids-recusa.js`: 403/429/503 ou o texto),
+  como os outros scripts: pára à primeira, sem repetir. O canário toca quando há recusa E a fronteira não
+  avança há 4+ dias (`DIAS_RECUSA_SEGUIDA`) — senão um bloqueio que dura ficava verde até aos 21 dias.
+- **O que se observou na página pública** (aberta no browser, a 11/11): os pedidos dela são
+  `POST LinksAJAX.aspx?op=…&jbgr=<hora em segundos>&c=1` (o `c=1` é a cache deles; código em
+  `includes/js/Utils.js`), e no `GetPlayerTeeTimes` o `p` e o `t` são sim/não («quero jogadores», «quero
+  horas»), não números de página — a resposta traz o escalão inteiro num pedido. Os nossos scripts fazem
+  `GET`, sem `jbgr`/`c`, e pediam «páginas» `p=1..N` que não existem (N pedidos repetidos por escalão).
+- ⛔ **NÃO se alterou a forma dos pedidos para passar a recusa.** Pôr um script a imitar os pedidos do browser
+  depois de um 403 é contornar um bloqueio, não respeitá-lo; a tentativa de o testar fora do browser foi
+  travada e ficou por aí. Decisão da Mariana — as opções estão no documento do assunto (04).
+- `USKIDS_DELAY_FETCH_MS` abranda a Fase 2 numa corrida feita à mão (por omissão 400 ms).
+
 ## API Signupanytime
 
 Base: `https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op={OP}&…`
