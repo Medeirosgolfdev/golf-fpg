@@ -16,8 +16,12 @@ import SectionTitle from "./SectionTitle";
 import { Tint } from "./DataStyle";
 
 interface HoleEntry { hole: number; distance: number | null }
+/** Os pares que um buraco pode ter. O par 6 é raro (Otepää, na Estónia, tem um)
+ *  mas existe: sem ele a ficha contava «17 buracos» num campo de 18 (11/11/2026). */
+type ParGrupo = 3 | 4 | 5 | 6;
+const PARES = [3, 4, 5, 6] as const;
 interface ParBreakdown {
-  par: 3 | 4 | 5;
+  par: ParGrupo;
   count: number;
   avgDistance: number | null;
   totalDistance: number;
@@ -27,7 +31,7 @@ interface ParBreakdown {
 function parBreakdown(tee: Tee | null | undefined): ParBreakdown[] {
   if (!tee || !Array.isArray(tee.holes)) return [];
   const out: ParBreakdown[] = [];
-  for (const p of [3, 4, 5] as const) {
+  for (const p of PARES) {
     const holes = tee.holes
       .filter(h => h.par === p)
       .map(h => ({ hole: h.hole, distance: h.distance }))
@@ -55,15 +59,16 @@ export function getParTotal(tee: Tee | null | undefined): number {
 }
 
 // Cor por buraco: gradiente HSL forte dentro do par (curto=claro → longo=escuro)
-export const PAR_HSL: Record<3 | 4 | 5, { h: number; s: number }> = {
+export const PAR_HSL: Record<ParGrupo, { h: number; s: number }> = {
   // 04/11/2026 (Mariana): o verde e o vermelho confundiam-se com os outros
   // verdes/vermelhos do site (atacar/defender, birdie, ±par) → teal e terracota.
   3: { h: 180, s: 60 },  // teal
   4: { h: 270, s: 55 },  // roxo
   5: { h: 25, s: 75 },   // terracota
+  6: { h: 215, s: 55 },  // azul-ardósia (par 6: raro)
 };
 
-function holeColor(par: 3 | 4 | 5, t: number): { bg: string; fg: string; border: string } {
+function holeColor(par: ParGrupo, t: number): { bg: string; fg: string; border: string } {
   const { h, s: sMax } = PAR_HSL[par];
   const l = 82 - t * 27;
   const s = 45 + t * (sMax - 45);
@@ -84,9 +89,9 @@ export function parHoleColors(tee: Tee): Map<number, { bg: string; fg: string; b
   return out;
 }
 
-function holesByNumber(tee: Tee): Array<{ hole: number; par: 3|4|5|null; distance: number | null; color: ReturnType<typeof holeColor> | null }> {
+function holesByNumber(tee: Tee): Array<{ hole: number; par: ParGrupo | null; distance: number | null; color: ReturnType<typeof holeColor> | null }> {
   const pars = parBreakdown(tee);
-  const tByHole = new Map<number, { par: 3|4|5; t: number }>();
+  const tByHole = new Map<number, { par: ParGrupo; t: number }>();
   for (const p of pars) {
     if (p.count === 0) continue;
     const dists = p.holes.map(h => h.distance ?? 0).filter(d => d > 0);
@@ -103,10 +108,10 @@ function holesByNumber(tee: Tee): Array<{ hole: number; par: 3|4|5|null; distanc
     .sort((a, b) => a.hole - b.hole)
     .map(h => {
       const info = tByHole.get(h.hole);
-      const isValidPar = h.par === 3 || h.par === 4 || h.par === 5;
+      const isValidPar = h.par === 3 || h.par === 4 || h.par === 5 || h.par === 6;
       return {
         hole: h.hole,
-        par: isValidPar ? (h.par as 3 | 4 | 5) : null,
+        par: isValidPar ? (h.par as ParGrupo) : null,
         distance: h.distance,
         color: info ? holeColor(info.par, info.t) : null,
       };
@@ -199,10 +204,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
             <div className="haParGrid">
               {pars.map(p => {
                 if (p.count === 0) return null;
-                const accentColor =
-                  p.par === 3 ? `hsl(${PAR_HSL[3].h}deg, ${PAR_HSL[3].s}%, 38%)` :
-                  p.par === 4 ? `hsl(${PAR_HSL[4].h}deg, ${PAR_HSL[4].s}%, 45%)` :
-                  `hsl(${PAR_HSL[5].h}deg, ${PAR_HSL[5].s}%, 45%)`;
+                const accentColor = `hsl(${PAR_HSL[p.par].h}deg, ${PAR_HSL[p.par].s}%, ${p.par === 3 ? 38 : 45}%)`;
                 const pct = totalParHoles > 0 ? Math.round((p.count / totalParHoles) * 100) : 0;
                 const dists = p.holes.map(h => h.distance ?? 0).filter(d => d > 0);
                 const minDist = dists.length > 0 ? Math.min(...dists) : 0;
@@ -303,7 +305,8 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                 );
               })()}
               <div className="u-d-flex u-gap-16px u-mt-12px u-fwr-wrap u-fs-fs-11 u-c-text-3">
-                {([3, 4, 5] as const).map(p => {
+                {/* (o par 6 só entra na legenda quando o campo tem algum) */}
+                {PARES.filter(p => p !== 6 || pars.some(x => x.par === 6 && x.count > 0)).map(p => {
                   const sample = holeColor(p, 0.6);
                   return (
                     <span key={p} className="u-d-inline-flex u-ai-center u-gap-6px">
