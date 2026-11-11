@@ -228,26 +228,29 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
                   isAnimationActive={false}
                 />
               )}
-              {/* Scatters coloridos por sourceId. Pontos 9H ficam mais pequenos + outline tracejado. */}
-              {sources.map((src) => (
-                <Scatter
-                  key={src}
-                  name={SOURCE_LABELS[src] || src}
-                  data={visiblePoints.filter((p) => p.sourceId === src && p[yKey] != null)}
-                  dataKey={yKey}
-                  fill={SOURCE_COLORS[src] || "var(--text-3)"}
-                  shape={(props: any) => {
-                    const { cx, cy, payload } = props;
-                    if (typeof cx !== "number" || typeof cy !== "number") return <></>;
-                    const trophy = payload.trophy;
-                    const is9h = payload.nholes === 9;
-                    const color = trophy === 1 ? "var(--medal-gold-bg)" : trophy === 2 ? "var(--medal-silver-bg)" : trophy === 3 ? "var(--medal-bronze-bg)" : (SOURCE_COLORS[src] || "var(--text-3)");
-                    const stroke = trophy ? (trophy === 1 ? "var(--medal-gold-fg)" : trophy === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)") : (is9h ? "var(--text-2)" : "white");
-                    const radius = trophy ? 5 : is9h ? 2.5 : 3.5;
-                    return <circle cx={cx} cy={cy} r={radius} fill={color} stroke={stroke} strokeWidth={trophy ? 1.5 : 1} strokeDasharray={is9h ? "1 1" : undefined} />;
-                  }}
-                />
-              ))}
+              {/* As bolinhas, coloridas pela fonte de cada ponto. Pontos 9H ficam mais pequenos + outline tracejado.
+                  ⚠ UMA só série, com os dados do gráfico (sem `data` próprio). Até 11/11/2026 havia uma
+                  série por fonte, cada uma com a sua lista filtrada: o Recharts cola as listas das séries
+                  para saber que ponto está debaixo do rato, a lista principal acaba na última prova e a
+                  seguinte recomeça na primeira — e o balão saltava para a ÚLTIMA prova em muitos pontos
+                  (a Final Drive Tour de 07/11 «aparecia» em Agosto e em 2025). */}
+              <Scatter
+                name="Resultados"
+                dataKey={yKey}
+                fill="var(--text-3)"
+                isAnimationActive={false}
+                shape={(props: any) => {
+                  const { cx, cy, payload } = props;
+                  if (!Number.isFinite(cx) || !Number.isFinite(cy) || payload?.[yKey] == null) return <></>;
+                  const src: string = payload.sourceId;
+                  const trophy = payload.trophy;
+                  const is9h = payload.nholes === 9;
+                  const color = trophy === 1 ? "var(--medal-gold-bg)" : trophy === 2 ? "var(--medal-silver-bg)" : trophy === 3 ? "var(--medal-bronze-bg)" : (SOURCE_COLORS[src] || "var(--text-3)");
+                  const stroke = trophy ? (trophy === 1 ? "var(--medal-gold-fg)" : trophy === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)") : (is9h ? "var(--text-2)" : "white");
+                  const radius = trophy ? 5 : is9h ? 2.5 : 3.5;
+                  return <circle cx={cx} cy={cy} r={radius} fill={color} stroke={stroke} strokeWidth={trophy ? 1.5 : 1} strokeDasharray={is9h ? "1 1" : undefined} />;
+                }}
+              />
             </ComposedChart>
         </ChartBox>
 
