@@ -9,15 +9,12 @@
  * vivem em src/data/rfeg/ desde 21/10/2026; aqui fica o que se desenha.
  */
 import { withDivisionModel } from "../data/model/division";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CategoriasInfo from "../ui/info/CategoriasInfo";
 import { RFEGRankingView } from "./rfeg/RankingView";
-import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
 import { C } from "../utils/colors";
-import DrawTab from "../ui/DrawTab";
-import TabRow from "../ui/TabRow";
 import type { Player as FPGPlayer } from "./FPGPage";
 import { RFEGFederationsView } from "./rfeg/FederationsView";
 import { RFEGPlayersView } from "./rfeg/PlayersView";
@@ -27,59 +24,13 @@ import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import type { RFEGIndexEntry, DobLookup, HcpLookup } from "../data/rfeg/types";
 import { lgsScorecardOptions } from "../data/rfeg/toTournament";
 import { rfegSex } from "../data/rfeg/entries";
-import { rfegRoundDraw, type RfegDrawDetail } from "../data/rfeg/roundDraw";
+import { rfegRoundDraw } from "../data/rfeg/roundDraw";
 import { loadRfegDivisionData } from "../data/rfeg/divisionData";
 import type { TotalsPlayer } from "../data/model/types";
 import { RankingTable, nameCell, type RankingCol } from "../ui/ranking/RankingPage";
 import { useRfegData } from "../data/rfeg/useRfegData";
 import ErrorState from "../ui/ErrorState";
 import { MUTED } from "../ui/tableCells";
-
-/* ── DrawSaidaView ──────────────────────────────────────────
- * Aba "Draw R{n}" da RFEGPage — o DrawTab partilhado (= FPG). Os dados (horários
- * de cada fonte → FpgDraw, enriquecido com o leaderboard) vêm do rfegRoundDraw
- * (src/data/rfeg/roundDraw.ts); aqui só se desenha. */
-function DrawSaidaView({ detail, entry, onlyRound }: {
-  detail: RfegDrawDetail;
-  entry: RFEGIndexEntry;
-  /** Se definido, renderiza SÓ esta ronda (sem os chips R1/R2/R3) — usado quando o
-   *  draw de cada ronda é uma aba própria intercalada na barra principal. */
-  onlyRound?: number;
-}) {
-  const [activeRoundState, setActiveRound] = useState<number>(1);
-  // Em modo `onlyRound` (aba por ronda na barra principal), a ronda é fixa.
-  const activeRound = onlyRound ?? activeRoundState;
-  const { horarios, draw, playersDB, results, tournamentDate } = useMemo(
-    () => rfegRoundDraw(detail, entry, activeRound),
-    [detail, entry, activeRound],
-  );
-
-  if (!horarios || horarios.length === 0) {
-    return <EmptyState message={
-      entry.source === "nextcaddy" || entry.source === "livegolfscoring"
-        ? "Sem tee times publicados para este torneio."
-        : "Tee times ainda não disponíveis. Consulta o Microsite oficial."
-    } />;
-  }
-  if (!draw) return <EmptyState message="Sem dados de draw para esta ronda." />;
-
-  return (
-    <div>
-      {onlyRound == null && horarios.length > 1 && (
-        <TabRow className="mb-12" ariaLabel="Ronda" active={activeRound}
-          onChange={setActiveRound}
-          tabs={horarios.map(r => ({ key: r.round, label: `R${r.round}`, count: r.players.length }))} />
-      )}
-      <DrawTab
-        draw={draw}
-        roundNum={activeRound}
-        tournamentDate={tournamentDate}
-        playersDB={playersDB}
-        results={results}
-      />
-    </div>
-  );
-}
 
 /* ── RFEGCategoriesView (Categorías de edad RFEG — info no body) ─────── */
 
@@ -329,9 +280,13 @@ async function rfegLoadDivisions(
     </>
   ) : undefined;
 
-  // Draw por ronda → abas "Draw R{n}" intercaladas com os resultados (o MESMO
-  // DrawSaidaView → DrawTab partilhado, uma ronda de cada vez).
-  const roundDraws = d.drawRounds.map((round) => ({ round, render: () => <DrawSaidaView detail={data} entry={t} onlyRound={round} /> }));
+  // Draw por ronda → abas "Draw R{n}" intercaladas com os resultados. Em DADOS,
+  // como as outras fontes (11/11/2026): quem desenha é o DrawTab partilhado. Uma
+  // volta sem grupos não ganha aba.
+  const roundDraws = d.drawRounds.flatMap((round) => {
+    const r = rfegRoundDraw(data, t, round);
+    return r.draw ? [{ round, draw: r.draw, playersDB: r.playersDB, results: r.results, tournamentDate: r.tournamentDate }] : [];
+  });
 
   const division: CircuitDivision = {
     key: "main",

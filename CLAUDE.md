@@ -233,7 +233,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   anteriores» (os cartões) são DUAS abas e ficam as duas.** O `renderFull` (a página a desenhar o detalhe) SAIU de todas as páginas de torneios a 11/11/2026 (/torneios-recentes, /drive, /major, /uskids, /FPG); só o usa a grelha «Todos» dos torneios por disputar da /uskids, que não é um detalhe de torneio. A trava `scripts/detalhe-pelo-shell.test.js` não deixa voltar: o TournamentDetail só é chamado pelo shell (e pela análise BJGT), e uma página nova nunca o usa. Migrar uma página =
   comparar o texto do detalhe antes/depois em 2–3 torneios, aba a aba (tem de dar igual; esperar ~18 s antes do retrato — «⛳ O campo» e «🔮 Previsão» chegam depois, com os campos).
 - **Peças únicas, nunca uma tabela própria por página:** inscrições →
-  `AdmissionsTab`; draws → `DrawTab` (fontes de fora convertem para `FpgDraw`;
+  `AdmissionsTab`; draws → `DrawTab`, SEMPRE em dados (`roundDraws[].draw`, mais `results`/`playersDB`; já não há `render` próprio — Espanha passou a dados a 11/11/2026) (fontes de fora convertem para `FpgDraw`;
   no CircuitShell vão em `admissions`/`roundDraws` da divisão); barra de filtros
   de jogadores → `PlayerFilterBar.tsx`; linha «Rótulo: Todos · a · b» →
   `FilterPillRow`; escolha única e barras de navegação → `TabRow` (separador-link

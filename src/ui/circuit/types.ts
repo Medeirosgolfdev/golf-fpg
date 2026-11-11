@@ -24,12 +24,10 @@ import type { EscLookup } from "../../utils/playerUtils";
 import type { PlayersDB } from "../tournamentPrimitives";
 import type { TournamentDetailProps } from "../../pages/fpg/TournamentDetail";
 
-/** Draw de uma volta numa divisão: os DADOS (`draw`…, desenhados pelo DrawTab
- *  partilhado — ver `divisionPieces.tsx`) ou, para desenhos à medida que ainda
- *  não passaram a dados (Espanha: `DrawSaidaView`), um `render`, que ganha. */
-export interface CircuitRoundDraw extends RoundDrawData {
-  render?: () => React.ReactNode;
-}
+/** Draw de uma volta numa divisão: só DADOS (`draw`, `results`, `playersDB`…),
+ *  desenhados pelo DrawTab partilhado — ver `divisionPieces.tsx`. (Até 11/11/2026
+ *  havia um `render` para o desenho próprio de Espanha; já não há.) */
+export type CircuitRoundDraw = RoundDrawData;
 
 /** Sexo de uma divisão/escalão. "Mixed" → mostra dois badges (M+F). */
 export type CircuitSex = "M" | "F" | "Mixed";

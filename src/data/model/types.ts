@@ -11,6 +11,7 @@
  * elas (há testes). Só tipos aqui — nada de React.
  */
 import type { FpgDraw } from "../nacional2026Loader";
+import type { PlayersDB } from "../../ui/tournamentPrimitives";
 
 /** Formato do torneio (o que decide a peça que o desenha). */
 export type TournamentFormat =
@@ -91,6 +92,9 @@ export interface RoundDrawData {
   clubLabel?: string;
   /** Resultado de cada jogador nessa volta, por federado/nome normalizado. */
   results?: Map<string, { gross: number; toPar: number | null }>;
+  /** O que se sabe dos jogadores do draw (nascimento, sexo, clube…) quando a
+   *  fonte o dá à parte dos grupos (Espanha: a lista de inscritos). */
+  playersDB?: PlayersDB;
 }
 
 /** Aviso por cima de uma tabela de totais: `aviso` = caixa «notice» (WAGR);

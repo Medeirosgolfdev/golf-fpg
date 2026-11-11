@@ -23,13 +23,12 @@ import { gf } from "../../utils/flagUtils";
 import { toParByRounds } from "../../data/intlCommon";
 import { voltasComCartao } from "../../utils/classificacao";
 
-/** O draw de uma volta: o desenho da página (`render`) ou o DrawTab com os dados. */
+/** O draw de uma volta: o DrawTab partilhado, com os dados da divisão. */
 export function roundDrawNode(rd: CircuitRoundDraw): React.ReactNode {
-  if (rd.render) return rd.render();
   if (!rd.draw) return null;
   return (
     <DrawTab draw={rd.draw} roundNum={rd.round} tournamentDate={rd.tournamentDate}
-      results={rd.results} hideCols={rd.hideCols} clubLabel={rd.clubLabel} />
+      results={rd.results} hideCols={rd.hideCols} clubLabel={rd.clubLabel} playersDB={rd.playersDB} />
   );
 }
 

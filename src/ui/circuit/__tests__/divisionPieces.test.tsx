@@ -17,9 +17,13 @@ describe("roundDrawNode — draw como dados", () => {
     expect(html(viaDados)).toBe(html(aMao));
     expect(html(viaDados)).toContain("Ana Silva");
   });
-  it("o `render` da página ganha; sem dados nem render → nada", () => {
-    expect(roundDrawNode({ round: 1, draw, render: () => "à medida" })).toBe("à medida");
+  it("sem dados → nada (já não há desenho próprio da página: só dados — 11/11/2026)", () => {
     expect(roundDrawNode({ round: 1 })).toBeNull();
+  });
+  it("os jogadores que a fonte dá à parte (Espanha) chegam ao DrawTab", () => {
+    const playersDB = {};
+    const viaDados = roundDrawNode({ round: 1, draw, playersDB });
+    expect(html(viaDados)).toBe(html(<DrawTab draw={draw} roundNum={1} playersDB={playersDB} />));
   });
 });
 
