@@ -20,6 +20,7 @@
  */
 const fs = require("fs");
 const path = require("path");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 
 const INDEX = path.resolve(__dirname, "../public/data/ffgolf-resultats-index.json");
 const RES_DIR = path.resolve(__dirname, "../public/data/ffgolf-resultats");
@@ -110,6 +111,7 @@ async function findOne(t) {
     if (m) console.log(`  ${t.trnId} ${t.dateIso} ${t.name} → ${m.tenant}/${m.id} ${m.name}`);
   }
   const sorted = Object.fromEntries(Object.entries(out).sort(([a], [b]) => a.localeCompare(b)));
-  fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString(), tournaments: sorted }, null, 1) + "\n");
+  writeJsonGuarded(OUT, { generatedAt: new Date().toISOString(), tournaments: sorted },
+    { spaces: 1, trailingNewline: true, failOnRefuse: true, count: (o) => Object.keys(o.tournaments).length });
   console.log(`RMS9: ${found} novos ligados; total ligados ${Object.values(sorted).filter((v) => v.id).length}`);
 })();

@@ -25,6 +25,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { readJsonSafe } = require("./io");
 
 const ROSTER = path.resolve(__dirname, "../../../public/data/golfbox-players.json");
 
@@ -55,8 +56,10 @@ function natKey(v) {
 
 function carregarRoster(file = ROSTER) {
   if (!fs.existsSync(file)) return null;
-  let d;
-  try { d = JSON.parse(fs.readFileSync(file, "utf-8")); } catch { return null; }
+  // Roster presente mas ilegível = ERRO (`CorruptInputError`, como os outros inputs
+  // do agregador): devolver «sem roster» tirava em silêncio as datas de nascimento
+  // desta fonte a todos os juniores (11/11/2026).
+  const d = readJsonSafe(file);
   const idx = new Map();
   for (const p of d.players || []) {
     if (!p.name || !p.dob || p.dobAlt) continue;

@@ -26,6 +26,7 @@
 const fs = require("fs");
 const path = require("path");
 const { writeJsonAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 
 const DATA_DIR = path.join(__dirname, "..", "public", "data");
 const OUT = path.join(DATA_DIR, "major-catalog.json");
@@ -62,13 +63,21 @@ function isPtCountry(c) {
 }
 
 /* ── IO ── */
+// Um ficheiro de dados que não se lê é um ERRO, nunca «uma prova que não existe»
+// (11/11/2026): saltá-lo em silêncio tirava a prova da /major sem ninguém dar por
+// isso — e é o que acontece com um JSON com marcadores de conflito do git. Os
+// ilegíveis juntam-se aqui e o script acaba em erro SEM gravar o catálogo.
+const ILEGIVEIS = [];
 function readJson(file) {
-  try { return JSON.parse(fs.readFileSync(path.join(DATA_DIR, file), "utf8")); }
-  catch { return null; }
+  let txt;
+  try { txt = fs.readFileSync(path.join(DATA_DIR, file), "utf8"); }
+  catch (e) { ILEGIVEIS.push(`${file}: não se conseguiu ler (${e.message})`); return null; }
+  try { return JSON.parse(txt.charCodeAt(0) === 0xfeff ? txt.slice(1) : txt); }
+  catch (e) { ILEGIVEIS.push(`${file}: JSON inválido (${String(e.message).slice(0, 120)})`); return null; }
 }
+/** A pasta de dados tem de se ler: se não der, o script rebenta (não há catálogo «vazio»). */
 function listFiles(re) {
-  try { return fs.readdirSync(DATA_DIR).filter((f) => re.test(f)); }
-  catch { return []; }
+  return fs.readdirSync(DATA_DIR).filter((f) => re.test(f));
 }
 
 /* ── Datas de ronda bjgt/eowagr (não estão nos ficheiros; espelham URLS) ── */
@@ -420,7 +429,16 @@ const out = {
   entries,
 };
 
-writeJsonAtomic(OUT, out);
+if (ILEGIVEIS.length) {
+  console.error(`❌ build-major-catalog: ${ILEGIVEIS.length} ficheiro(s) de dados ilegíveis — o catálogo NÃO foi gravado:`);
+  for (const m of ILEGIVEIS) console.error(`   · ${m}`);
+  console.log(`::error::build-major-catalog: ${ILEGIVEIS.length} ficheiro(s) ilegíveis (${ILEGIVEIS[0]})`);
+  process.exit(1);
+}
+// Guarda anti-encolhimento: um catálogo com menos de metade dos torneios do que
+// está em disco não se grava (salvo --force) e o script acaba em erro.
+const gravado = writeJsonGuarded(OUT, out, { count: (o) => (o.entries || []).length, failOnRefuse: true });
+if (!gravado.written) process.exit(1);
 
 // ── major-veterans.json: ranking de "internacionalizações" (tab da /major) ──
 // Um jogador por linha, ≥2 torneios internacionais. Carregado LAZY só quando a

@@ -37,8 +37,16 @@ const comCartao = (g) => typeof g === "number" && g > 0 && g < 900;
 const diasEntre = (a, b) => Math.abs(Date.parse(a) - Date.parse(b)) / 864e5;
 const media1 = (xs) => (xs.length ? Math.round((xs.reduce((s, x) => s + x, 0) / xs.length) * 10) / 10 : null);
 
+/** Ficheiro ausente → null (nem todos os federados têm cartões). Presente mas
+ *  ilegível → null também, mas COM aviso (anotação no workflow): é um ficheiro por
+ *  jogador e não justifica parar o agregador inteiro, mas não pode ser silencioso. */
 function lerJson(f) {
-  try { return JSON.parse(fs.readFileSync(f, "utf-8")); } catch { return null; }
+  if (!fs.existsSync(f)) return null;
+  try { return JSON.parse(fs.readFileSync(f, "utf-8")); }
+  catch (e) {
+    console.log(`::warning::agregador (últimas voltas): ${path.relative(process.cwd(), f)} ilegível — ${String(e.message).slice(0, 100)}`);
+    return null;
+  }
 }
 
 /** Data ISO de um `/Date(ms)/` da FPG (meia-noite de Lisboa). */

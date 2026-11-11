@@ -94,7 +94,7 @@ jobs:
           # 0 = ficheiro actualizado → commit
           # 2 = sem alterações → não commit (NÃO é erro)
           # 1 = erro real (cookies expirados, run parcial, etc.)
-          if [ "$EXIT_CODE" = "1" ]; then
+          if [ "$EXIT_CODE" != "0" ] && [ "$EXIT_CODE" != "2" ]; then
             echo "❌ Scraper falhou — ver logs acima (provável cookies expirados)"
             exit 1
           fi

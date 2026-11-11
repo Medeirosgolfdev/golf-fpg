@@ -376,10 +376,19 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   anti-encolhimento; um script novo também tem de ter.
   Usar `writeJsonGuarded` (`scripts/lib/shrink-guard.js`): escrita atómica +
   guarda numa só chamada. Input/cache/scope **ilegível é erro**, nunca «vazio».
+  Um construtor que percorre ficheiros de dados **não salta** o que não consegue ler
+  (`if (!d) continue` depois de um `catch` mudo): junta os ilegíveis e acaba em erro sem
+  gravar — ver `build-major-catalog.js` (11/11/2026). Scraper incremental: um pedido que
+  FALHA não se grava como «não tem» (fica para a próxima corrida); o que a fonte ainda não
+  tem grava-se com `checkedAt` e volta a pedir-se passado um prazo (`scrape-ffgolf-rms9*.js`).
 - **Exit codes dos scrapers:** `0` gravou · `2` nada de novo (não é erro, o
   workflow salta o commit) · `1` erro · `3` FPG em baixo. O step do workflow
   tem de aceitar o 2 (`node scripts/x.js || [ $? -eq 2 ]`), e um
   `process.exit(0)` final não pode apagar o `exitCode = 1` de uma guarda.
+  No workflow, erro é TUDO o que não for 0 nem 2 — nunca só `= "1"` (um processo morto por
+  memória ou sinal sai com 134/137 e passava por verde; corrigido em 16 workflows a 11/11/2026).
+  Passo com vários scripts e `set +e`: usar o embrulho `node()` + `FAILED` do `update-egr.yml`
+  e o passo final «Falhar se…» (o que correu bem publica-se, a falha fica vermelha).
 - **A FPG reutiliza tcodes entre clubes e anos:** nunca casar só por tcode. Usar
   tcode + data + campo (PCC), fed + data da volta (SD), `ccode:tcode` no
   `--tcodes`. No PJA, `PJA_TCODES` só leva tcodes que não se repetem; os outros

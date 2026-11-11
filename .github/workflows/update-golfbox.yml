@@ -66,8 +66,8 @@ jobs:
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
           # 0 = houve novidades → regenerar canónico + commit
           # 2 = sem alterações → no-op (NÃO é erro)
-          # 1 = erro real
-          if [ "$EXIT_CODE" = "1" ]; then
+          # qualquer outro (1, ou o processo morto: 134, 137…) = erro real
+          if [ "$EXIT_CODE" != "0" ] && [ "$EXIT_CODE" != "2" ]; then
             echo "❌ Scraper GolfBox falhou — ver logs acima"
             exit 1
           fi

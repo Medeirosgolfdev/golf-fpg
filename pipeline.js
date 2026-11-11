@@ -417,7 +417,9 @@ if (syncOnly) {
   const feds = fedCodes.length > 0 ? fedCodes : Object.keys(playersDb);
   console.log(`--sync-players: ${feds.length} jogadores`);
   syncPlayersJson(feds);
-  process.exit(0);
+  // O código de saída é o que o sync deixou: a guarda anti-encolhimento marca 1
+  // quando recusa gravar, e um exit(0) aqui apagava-o (11/11/2026).
+  process.exit(process.exitCode ?? 0);
 }
 
 if (fedCodes.length === 0) {

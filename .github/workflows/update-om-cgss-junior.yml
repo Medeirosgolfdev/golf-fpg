@@ -57,7 +57,7 @@ jobs:
           EXIT_CODE=$?
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
           # 0 = escrito/alterado → commit · 2 = sem alterações → skip · 1 = erro
-          if [ "$EXIT_CODE" = "1" ]; then
+          if [ "$EXIT_CODE" != "0" ] && [ "$EXIT_CODE" != "2" ]; then
             echo "❌ build falhou (cookies expirados?) — ver logs"
             exit 1
           fi

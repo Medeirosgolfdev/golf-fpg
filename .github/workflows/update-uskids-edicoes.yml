@@ -52,7 +52,7 @@ jobs:
             --max-pedidos "${{ github.event.inputs.max_pedidos || '1500' }}"
           code=$?
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
-          [ "$code" = "1" ] && exit 1 || exit 0
+          if [ "$code" != "0" ] && [ "$code" != "2" ]; then exit 1; fi; exit 0
 
       - name: Commit e push (se houve alterações)
         if: steps.fetch.outputs.exit_code == '0'

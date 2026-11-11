@@ -121,7 +121,7 @@ jobs:
           if [ "$ERRO" = "1" ]; then
             echo "❌ Uma das federações falhou — ver logs acima"
           fi
-          if [ "$EXIT_CODE" = "1" ]; then exit 1; fi
+          if [ "$EXIT_CODE" != "0" ] && [ "$EXIT_CODE" != "2" ]; then exit 1; fi
           if [ "$EXIT_CODE" = "2" ]; then
             echo "ℹ️  Sem alterações — a saltar regeneração e commit"
           fi

@@ -91,7 +91,7 @@ jobs:
           RC=$?
           set -e
           # Exit code 2 = nada novo (não é erro). 1 = erro real.
-          if [ "$RC" = "1" ]; then exit 1; fi
+          if [ "$RC" != "0" ] && [ "$RC" != "2" ]; then exit 1; fi
           echo "rc=$RC"
 
       - name: Regenerar índice agregado

@@ -10,19 +10,28 @@
  * («Messieurs», «Dames») fica com o único tee desse sexo, se só houver um —
  * nesse caso a nota diz que o RMS9 não liga o tee à série.
  *
- * Incremental (só os trnId que faltam; --all refaz tudo).
+ * Incremental (só os trnId que faltam; --all refaz tudo). Um torneio que ainda
+ * NÃO tem tees fica com `series: {}` e `checkedAt`, e volta a ser pedido passados
+ * 7 dias (o organizador carrega os tees mais tarde); um pedido que FALHA não se
+ * grava — tenta-se outra vez na corrida seguinte. (Até 11/11/2026 as duas coisas
+ * ficavam gravadas «sem séries» para sempre: 18 de 235 torneios.)
  * Output: public/data/ffgolf-rms9-tees.json
- *   { generatedAt, tournaments: { trnId: { tenant, id, series: { CHAVE: {...FFGSerieCourse} } } } }
+ *   { generatedAt, tournaments: { trnId: { tenant, id, series: { CHAVE: {...FFGSerieCourse} }, checkedAt? } } }
  *   CHAVE = serieCourseKey(label) (src/data/ffg/toTournament.ts).
  */
 const fs = require("fs");
 const path = require("path");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 
 const DATA = path.resolve(__dirname, "../public/data");
 const LINKS = path.join(DATA, "ffgolf-rms9.json");
 const INDEX = path.join(DATA, "ffgolf-resultats-index.json");
 const OUT = path.join(DATA, "ffgolf-rms9-tees.json");
 const ALL = process.argv.includes("--all");
+const RECHECK_DIAS = 7;
+const semTees = (e) => !Object.keys((e && e.series) || {}).length;
+/** Guardado sem tees há mais de RECHECK_DIAS (ou sem data: gravado pela versão antiga). */
+const aRever = (e) => semTees(e) && (!e.checkedAt || Date.now() - Date.parse(e.checkedAt) > RECHECK_DIAS * 86400000);
 
 const H = (t) => ({ "x-tenant-id": "fr_" + t, "x-access-token": "", "Accept-Language": "fr_FR" });
 async function get(tenant, p) {
@@ -71,10 +80,14 @@ const fmt = (d) => String(d || "").slice(0, 10).split("-").reverse().join("/");
   const byTrn = Object.fromEntries(ix.map((t) => [t.trnId, t]));
   const prev = !ALL && fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, "utf8")).tournaments || {} : {};
   const out = { ...prev };
-  let n = 0, nSeries = 0, semSerie = 0;
+  let n = 0, nSeries = 0, semSerie = 0, falhas = 0, revistos = 0;
   for (const [trnId, l] of Object.entries(links)) {
-    if (!l.id || out[trnId] || !byTrn[trnId]) continue;
+    if (!l.id || !byTrn[trnId]) continue;
+    if (out[trnId] && !aRever(out[trnId])) continue;
+    if (out[trnId]) revistos++;
     const ca = await get(l.tenant, `tournaments/${l.id}/course-assignments`);
+    // Sem resposta (erro ou 404): NÃO se grava «sem tees» — volta-se a tentar na próxima corrida.
+    if (!ca) { falhas++; continue; }
     const tees = ((ca && ca.tournAssignments && ca.tournAssignments.courseAssignments) || []).map((x) => ({
       tee: x.courseTeeName, sex: x.sex === "Female" ? "F" : "M", cr: x.cr, slope: x.slope, par: x.par, length: x.length,
       validFrom: x.courseValidFrom, course: x.courseName, holes: x.holes || [],
@@ -103,11 +116,12 @@ const fmt = (d) => String(d || "").slice(0, 10).split("-").reverse().join("/");
       };
       nSeries++;
     }
-    out[trnId] = { tenant: l.tenant, id: l.id, series };
+    out[trnId] = { tenant: l.tenant, id: l.id, series, ...(semTees({ series }) ? { checkedAt: new Date().toISOString().slice(0, 10) } : {}) };
     n++;
     if (n % 20 === 0) console.log(`  ${n} torneios…`);
   }
   const sorted = Object.fromEntries(Object.entries(out).sort(([a], [b]) => a.localeCompare(b)));
-  fs.writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString(), tournaments: sorted }) + "\n");
-  console.log(`RMS9 tees: ${n} torneios lidos, ${nSeries} séries com tee (${semSerie} sem ligação explícita no RMS9)`);
+  writeJsonGuarded(OUT, { generatedAt: new Date().toISOString(), tournaments: sorted },
+    { spaces: 0, trailingNewline: true, failOnRefuse: true, count: (o) => Object.keys(o.tournaments).length });
+  console.log(`RMS9 tees: ${n} torneios lidos (${revistos} revistos por estarem sem tees), ${nSeries} séries com tee (${semSerie} sem ligação explícita no RMS9)` + (falhas ? `; ${falhas} sem resposta — ficam para a próxima corrida` : ""));
 })();

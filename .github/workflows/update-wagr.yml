@@ -56,6 +56,7 @@ jobs:
         run: npm ci
 
       - name: Scrape WAGR (ranking + eventos + índice)
+        id: wagr
         run: |
           set +e
           SKIP="--skip-existing"
@@ -68,10 +69,15 @@ jobs:
             YEARS="$YEARS --year ${{ github.event.inputs.extra_year }}"
           fi
 
+          # Nenhum passo trava os outros nem o commit (exit 2 = sem novidades),
+          # mas uma falha real fica registada e o job acaba vermelho no fim
+          # (11/11/2026 — acabava sempre em verde, com o erro só nos logs).
+          FAILED=""
+          node() { command node "$@"; local rc=$?; if [ $rc != 0 ] && [ $rc != 2 ]; then echo "::error::node $* → exit $rc"; FAILED="$FAILED $(basename "$1" .js)"; fi; return 0; }
           echo "▸ ranking";       node scripts/scrape-wagr.js --ranking
           echo "▸ eventos $YEARS"; node scripts/scrape-wagr.js --events $YEARS $SKIP --concurrency 8
           echo "▸ índice";        node scripts/build-wagr-events-list.js
-          # Nenhum destes é fatal (exit 2 = sem novidades). Erros reais nos logs.
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
           exit 0
 
       - name: Detectar alterações WAGR
@@ -89,3 +95,9 @@ jobs:
         run: |
           bash scripts/ci/push-generated.sh -m "data: WAGR refresh $(date +'%Y-%m-%d %H:%M')" \
             -- public/data/wagr public/data/wagr-ranking.json
+
+      - name: Falhar se algum passo do WAGR falhou
+        if: always() && steps.wagr.outputs.failed != ''
+        run: |
+          echo "❌ Falharam:${{ steps.wagr.outputs.failed }} — o que correu bem já foi publicado."
+          exit 1

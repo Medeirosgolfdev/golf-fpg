@@ -118,7 +118,7 @@ jobs:
           echo "exit_code=$CODE" >> $GITHUB_OUTPUT
 
           # 2 = nada de novo. Não é erro.
-          if [ "$CODE" = "1" ]; then exit 1; fi
+          if [ "$CODE" != "0" ] && [ "$CODE" != "2" ]; then exit 1; fi
           exit 0
 
       - name: Commit

@@ -70,7 +70,7 @@ jobs:
           node scripts/scrape-ffgolf-gg-fetch.js --year "$YEAR" --force
           RC=$?
           set -e
-          if [ "$RC" = "1" ]; then exit 1; fi
+          if [ "$RC" != "0" ] && [ "$RC" != "2" ]; then exit 1; fi
           echo "gg-fetch rc=$RC"
 
       - name: Tee sheet (draws + handicaps)
@@ -85,7 +85,7 @@ jobs:
           RC=$?
           set -e
           # 1 = erro real; 2 = nada a fazer (nenhum torneio a decorrer) — normal.
-          if [ "$RC" = "1" ]; then exit 1; fi
+          if [ "$RC" != "0" ] && [ "$RC" != "2" ]; then exit 1; fi
           echo "teesheet rc=$RC"
 
       - name: Regenerar roster FR (handicaps → fichas kids2)

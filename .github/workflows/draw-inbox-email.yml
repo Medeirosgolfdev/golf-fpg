@@ -124,7 +124,7 @@ jobs:
           node scripts/draw-mail-inbox.js
           CODE=$?
           echo "code=$CODE" >> $GITHUB_OUTPUT
-          if [ "$CODE" = "1" ]; then exit 1; fi
+          if [ "$CODE" != "0" ] && [ "$CODE" != "2" ]; then exit 1; fi
           exit 0
         env:
           DRAW_MAIL_USER: ${{ secrets.DRAW_MAIL_USER }}
