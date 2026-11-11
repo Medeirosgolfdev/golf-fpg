@@ -131,11 +131,13 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
       // (título, campo, pílulas, link do escalão), e junta-lhe as abas comuns
       // (Época, Edições anteriores, Scorecards anteriores, Scout) e os filtros
       // de jogador da barra. Da página só a aba «Match Play».
+      // As opções dos cartões, as colunas de evolução e o resumo dos regressados
+      // são da divisão, como nas outras provas de fora (BJGT, Doral).
+      scOptions: { ...scOpts, shareEvent, shareCourse },
+      evoCols,
+      accHeader: hasEvo ? <EvoSummary evo={d.evo!} what={`regressaram de ${d.evoYear}`} metric="±par" /> : undefined,
       detail: {
-        options: { ...scOpts, shareEvent, shareCourse },
         accShowCols: { esc: false, fed: false, tee: false, hcp: !!def.showRatings },
-        accExtraColumns: evoCols,
-        accHeader: hasEvo ? <EvoSummary evo={d.evo!} what={`regressaram de ${d.evoYear}`} metric="±par" /> : undefined,
         drawHideCols: {
           ...JOB_DRAW_HIDE_COLS,
           ...(dv.players.some((p) => typeof p.hcp === "number") ? { hcp: false } : {}),

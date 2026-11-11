@@ -227,7 +227,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   porquê que não são todas iguais?»). A divisão dá `results`/`totals`/`roundDraws`/
   `admissions` e, nos torneios da federação, **`detail`** (`CircuitDetailSpec`:
   `escLookup`, `playersDB`, as abas PRÓPRIAS da página em `leadingTabs`/`extraTabs`,
-  `defaultTab`, `intro`; e as opções do leaderboard — `options`, `accShowCols`, `accExtraColumns`, `accHeader`, `drawHideCols` —). O shell junta sempre, e pela mesma ordem, as abas comuns:
+  `defaultTab`, `intro`, e que colunas se vêem — `accShowCols`, `drawHideCols`). **As opções dos cartões, as colunas a mais e o que vai por cima do Resumo são da DIVISÃO — `scOptions`, `evoCols`, `accHeader` —, um só sítio para todas as páginas** (11/11/2026; o que a página põe em `scOptions` ganha às opções por omissão do shell). O shell junta sempre, e pela mesma ordem, as abas comuns:
   Época → Edições anteriores → Scorecards anteriores → Scout, e os filtros de
   jogador. **«Edições anteriores» (tabela-resumo de cada ano) e «Scorecards
   anteriores» (os cartões) são DUAS abas e ficam as duas.** O `renderFull` (a página a desenhar o detalhe) SAIU de todas as páginas de torneios a 11/11/2026 (/torneios-recentes, /drive, /major, /uskids, /FPG); só o usa a grelha «Todos» dos torneios por disputar da /uskids, que não é um detalhe de torneio. A trava `scripts/detalhe-pelo-shell.test.js` não deixa voltar: o TournamentDetail só é chamado pelo shell (e pela análise BJGT), e uma página nova nunca o usa. Migrar uma página =

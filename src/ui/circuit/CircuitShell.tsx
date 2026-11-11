@@ -894,13 +894,14 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     <TournamentDetail
                       tournament={detailTourn}
                       escLookup={d?.escLookup} playersDB={d?.playersDB}
-                      // Provas de fora: o campo próprio do escalão (≠ do torneio) vai
-                      // na linha de informação, junto do CR/Slope (14/10/2026).
-                      options={d?.options ?? { ...(curDiv.scOptions ?? {}), showCourse: !!detailTourn.campo && detailTourn.campo.trim() !== String(cur.course || "").trim(), shareEvent: cur.name, shareCourse: detailTourn.campo || cur.course, shareDate: cur.dateStart }}
+                      // O campo próprio do escalão (≠ do torneio) vai na linha de
+                      // informação, junto do CR/Slope (14/10/2026); a partilha leva o
+                      // nome, o campo e a data. O que a página disser em `scOptions` ganha.
+                      options={{ showCourse: !!detailTourn.campo && detailTourn.campo.trim() !== String(cur.course || "").trim(), shareEvent: cur.name, shareCourse: detailTourn.campo || cur.course, shareDate: cur.dateStart, ...(curDiv.scOptions ?? {}) }}
                       roundLabels={curDiv.roundLabels} siLabel={curDiv.siLabel}
                       accShowCols={d?.accShowCols}
-                      accExtraColumns={d?.accExtraColumns ?? curDiv.evoCols ?? totalsView?.accExtraColumns}
-                      accHeader={d?.accHeader ?? curDiv.accHeader ?? totalsView?.accHeader}
+                      accExtraColumns={curDiv.evoCols ?? totalsView?.accExtraColumns}
+                      accHeader={curDiv.accHeader ?? totalsView?.accHeader}
                       accExtra={curDiv.accExtra} roundExtra={curDiv.roundExtra}
                       renderAccSection={curDiv.renderAccSection} renderRoundSection={curDiv.renderRoundSection}
                       drawHideCols={d?.drawHideCols}

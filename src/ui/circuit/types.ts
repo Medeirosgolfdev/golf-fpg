@@ -78,13 +78,10 @@ export interface CircuitDetailSpec {
   extraTabs?: CircuitTab[];
   /** Aba que abre sem `?tab=` (sem ela, a fase mais avançada da prova). */
   defaultTab?: string;
-  /** Opções do leaderboard — as mesmas do TournamentDetail, em dados: o que os
-   *  cartões mostram, as colunas do Resumo (e as colunas a mais, ex.: evolução
-   *  face ao ano anterior), o que vai por cima do Resumo e as colunas dos draws. */
-  options?: TournamentDetailProps["options"];
+  /** Que colunas o Resumo e os draws mostram. (As opções dos cartões, as colunas a
+   *  mais e o que vai por cima do Resumo são da DIVISÃO — `scOptions`, `evoCols`,
+   *  `accHeader` —, iguais para todas as páginas: um só sítio, 11/11/2026.) */
   accShowCols?: TournamentDetailProps["accShowCols"];
-  accExtraColumns?: TournamentDetailProps["accExtraColumns"];
-  accHeader?: TournamentDetailProps["accHeader"];
   drawHideCols?: TournamentDetailProps["drawHideCols"];
   /** Aviso próprio por cima do detalhe (ex.: «reconstruído das voltas dos nossos»). */
   intro?: React.ReactNode;
