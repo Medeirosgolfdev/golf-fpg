@@ -13,7 +13,7 @@ const META = [
   [/Champion of Champions/, "eu14", "2027-07-21", false, "Champion of Champions", "Under 15", "Só por convite (campeões nacionais). Não há U14 de rapazes: o Manuel jogaria Under 15."],
   [/^Belgian/, "eu14", "2027-07-01", true, "Belgian Int. U14 — Albert Vermeiren", "Boys U14"],
   [/^European Young Masters/, "u16", "2027-07-22", true, "European Young Masters", "U16 (por selecção)", "Só por selecção nacional (2 rapazes + 2 raparigas por país)."],
-  [/^Malta/, "eu14", "2027-03-21", true, "Malta Junior Open", "U14 (nova em 2027)"],
+  [/^Malta/, "eu14", "2027-03-22", true, "Malta Junior Open", "U16 em stroke play (HCP ≤ 12) ou U14 em Stableford", "A categoria U14, nova em 2027, joga em Stableford; com 6,4 o Manuel pode inscrever-se no U16 (stroke play). Coincide com o CN de Clubes Sub-14 (24–26/03, Montado). 175 €."],
   [/Godillot/, "eu14", "2027-04-09", false, "French Int. U14 — Alexis Godillot", "U14"],
   [/Evian/, "eu14", "2027-09-22", false, "Amundi Evian Juniors Cup", "U14 (por selecção)", "Por selecção nacional (2 rapazes + 2 raparigas por país)."],
   [/^Faldo/, "pt", "2027-10-16", false, "Faldo Junior Tour Madeira", "Boys 16 & Under"],
