@@ -509,7 +509,9 @@ nas 18 listas, 1129 só pelo nome) e aplicado com o «sim» dela, em `util/hcp-l
    dessa licença; o federado que a PRÓPRIA prova dá ao inscrito (`lista.prova` = {ccode, tcode}
    → inscrições/draw, `util/feds-das-provas.js`, partilhado com a fonte `fpg`) liga à ficha
    desse federado — e só a essa. As 5 listas de Castro Marim têm `prova` 000/90872 (rapazes)
-   e 000/90873 (raparigas). Apanhou logo um erro: o «Ricardo Ferreira» da lista (11.3) é o
+   e 000/90873 (raparigas). Quem já esteve na lista e saiu fica em `admissions.saidos`
+   (11/11/2026: a FPG tirou quem tinha HI acima de 6,0) e conta na mesma — as listas antigas
+   continuam a tê-lo. Apanhou logo um erro: o «Ricardo Ferreira» da lista (11.3) é o
    Ricardo ROCHA Ferreira (51180, Miramar, n. 2015), não o 45366 do Oporto (2012).
 2. **Homónimos na federação inteira**, não só no Kids 2: PT (federados.json), ES (licenças
    RFEG, uma pessoa = data de nascimento ou 6 dígitos finais), FR (licenças FFG) — pelo nome

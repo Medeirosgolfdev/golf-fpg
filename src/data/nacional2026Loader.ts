@@ -192,6 +192,9 @@ function normalizePlayer(p: any): FpgAdmissionPlayer {
     // Sexo da própria lista (ex.: Entry List «Girls» de Castro Marim) — sem ele as
     // estrangeiras sem federado caíam no tee dos rapazes.
     ...(p.sex === "M" || p.sex === "F" ? { sex: p.sex } : {}),
+    // Ficha do Kids 2 dada pela própria lista: nome do PDF diferente do da ficha
+    // («Aodhán Christopher Fitzgerald», «Nathan Bonefant») — pelo nome não ligava.
+    ...(p.juniorId ? { juniorId: p.juniorId } : {}),
   };
 }
 

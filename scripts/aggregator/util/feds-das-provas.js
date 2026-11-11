@@ -22,6 +22,9 @@ function lerFedsDasProvas() {
       const k = chaveProva(t.ccode, t.tcode, t.date);
       const nomes = porProva.get(k) || new Map();
       const juntar = (p) => { if (p?.fed && p.nome) nomes.set(normName(p.nome), String(Number(p.fed))); };
+      // `saidos` = quem já esteve na lista e saiu (Castro Marim U14, 10/11/2026: a FPG
+      // tirou quem tinha HI acima de 6,0). As Entry Lists antigas continuam a tê-los.
+      for (const p of t.admissions?.saidos || []) juntar(p);
       for (const p of t.admissions?.players || []) juntar(p);
       for (const ronda of Object.values(t.draws || {})) for (const g of ronda?.groups || []) for (const p of g.players || []) juntar(p);
       if (nomes.size) porProva.set(k, nomes);
