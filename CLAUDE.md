@@ -231,8 +231,8 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   Época → Edições anteriores → Scorecards anteriores → Scout, e os filtros de
   jogador. **«Edições anteriores» (tabela-resumo de cada ano) e «Scorecards
   anteriores» (os cartões) são DUAS abas e ficam as duas.** O `renderFull` (a
-  página a desenhar o detalhe) está a SAIR: já migraram /torneios-recentes, /drive e /major; faltam
-  /uskids e /FPG — a trava `scripts/detalhe-pelo-shell.test.js` só
+  página a desenhar o detalhe) está a SAIR: já migraram /torneios-recentes, /drive, /major e os escalões com resultados da /uskids; faltam
+  a /FPG e a grelha «Todos» da /uskids — a trava `scripts/detalhe-pelo-shell.test.js` só
   deixa a lista encolher, e uma página nova nunca o usa. Migrar uma página =
   comparar o texto do detalhe antes/depois em 2–3 torneios, aba a aba (tem de dar igual; esperar ~18 s antes do retrato — «⛳ O campo» e «🔮 Previsão» chegam depois, com os campos).
 - **Peças únicas, nunca uma tabela própria por página:** inscrições →

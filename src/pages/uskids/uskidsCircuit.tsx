@@ -17,89 +17,39 @@ import { withDivisionModel } from "../../data/model/division";
 import {
   type FieldEscalao, temDados, escalaoToTournament, roundDrawsOf, escalaoTemManuel, fieldAdmissions, sexoEscalao,
 } from "../../data/uskids/toTournament";
-import { useContext, useMemo } from "react";
-import { TournamentDetail, type TournamentDetailProps } from "../fpg/TournamentDetail";
-import EmptyState from "../../ui/EmptyState";
 import TabCampoDetalhe, { uskidsLinks } from "../../ui/TabCampoDetalhe";
-import { normName as normNameAuto } from "../../data/KIDSdataLoader";
+import type { AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { isManuelByName as isManuel } from "../../constants/manuel";
 import { displayName, isoDate } from "../../utils/format";
 import { divKey, tournamentFamilyKey } from "../../ui/circuit/pastEditions";
-import { fmtTs, ArMapCtx, isTerminado } from "../../ui/USKIDSPageHelpers";
+import { fmtTs, isTerminado } from "../../ui/USKIDSPageHelpers";
 import { sortEscaloes, type Torneio, type TorneioResult, type EscalaoResult, type UskidsDrawsData } from "../../ui/uskidsTypes";
-import type { CircuitConfig, CircuitDivision, CircuitEntry, CircuitRenderFullExtras } from "../../ui/circuit/types";
+import type { CircuitConfig, CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
 import { jardasParaMetrosPorBuraco } from "../../utils/jardas";
 
 
 // ─────────────────────────────────────────────
-// Detalhe de um escalão com resultados (TournamentDetail)
+// Aviso por cima de um escalão com resultados
 // ─────────────────────────────────────────────
-function UskidsEscalaoDetail({ escalao: e, torneio: t, drawsData, extras, moreTabs, tabParam = "rt" }: {
-  escalao: EscalaoResult;
-  torneio: TorneioResult;
-  drawsData: UskidsDrawsData | null;
-  extras?: CircuitRenderFullExtras;
-  /** Abas da página a seguir às do shell (o Kids 2 junta as de análise). */
-  moreTabs?: UskidsExtraTab[];
-  tabParam?: string;
-}) {
-  // O arMap chega aos poucos (os rivais carregam em fundo): o torneio monta-se
-  // aqui, no render, para o HCP FPG dos portugueses (SD exacto) entrar quando chega.
-  const arMap = useContext(ArMapCtx);
-  const tournament = useMemo(() => escalaoToTournament(e, t, arMap), [e, t, arMap]);
-  const roundDraws = useMemo(() => roundDrawsOf(drawsData, t.t, e.age_group, e, t.date_inicio), [drawsData, t, e]);
-  // Escalão num campo diferente do do torneio (ex.: European Championship, um
-  // campo por escalão): o campo vai para a linha de informação, junto do CR e
-  // do Slope (14/10/2026).
-  const campo = tournament.campo || "";
-  const campoProprio = !!campo && campo.trim() !== (t.campo || "").trim();
-  const options = useMemo(() => ({ noInferBlanks: true, showCourse: campoProprio }), [campoProprio]);
-  // «Edições anteriores», «Scorecards anteriores» e «Scout» vêm do shell; os
-  // «Scorecards anteriores» do Kids 2 (histórico USKids, mais completo) ganham
-  // aos do shell quando a página já os traz (`moreTabs` com «sc-edicoes»).
-  const extraTabs = useMemo(() => {
-    const temProprio = (moreTabs ?? []).some((x) => x.key === "sc-edicoes");
-    const tabs = [extras?.pastEditionsTab, temProprio ? null : extras?.pastScorecardsTab, extras?.repeatersTab, ...(moreTabs ?? [])].filter((x): x is NonNullable<typeof x> => !!x);
-    return tabs.length ? tabs : undefined;
-  }, [extras?.pastEditionsTab, extras?.pastScorecardsTab, extras?.repeatersTab, moreTabs]);
-
-  // playersDB com kidsHash para todos os jogadores deste escalão
-  const kidsDB = useMemo(() => {
-    const db: Record<string, { name: string; kidsHash: string }> = {};
-    if (!arMap) return db;
-    for (const rd of e.rondas) {
-      for (const j of (rd.leaderboard ?? rd.jogadores ?? [])) {
-        const ar = arMap.get(normNameAuto(j.nome));
-        if (!ar) continue;
-        const memberId = (ar as any).memberId as string | undefined;
-        const key = normNameAuto(j.nome);
-        if (!db[key]) db[key] = { name: ar.n, kidsHash: memberId ?? encodeURIComponent(ar.n) };
-      }
-    }
-    return db;
-  }, [arMap, e]);
-
-  if (!temDados(e) && !roundDraws) return <EmptyState size="sm" message="Sem dados para este escalão." />;
-
-  // Notas sobre resultados (ex.: penalização do Manuel no Marco Simone 2026),
-  // visíveis por cima das tabelas do escalão — 14/10/2026.
+/** O que a USKids tem de seu por cima das tabelas: quando os resultados foram
+ *  actualizados e as notas (ex.: penalização do Manuel no Marco Simone 2026 —
+ *  14/10/2026). O detalhe em si (voltas, Resumo, Scorecards, draws) e as abas
+ *  comuns monta-os o shell, como em todas as páginas (11/11/2026 — era um
+ *  `renderFull` com o seu próprio TournamentDetail). */
+function UskidsIntro({ escalao: e, torneio: t }: { escalao: EscalaoResult; torneio: TorneioResult }) {
   const notas = [...new Map(e.rondas.flatMap(r => (r.leaderboard ?? r.jogadores ?? []))
     .filter(j => j._nota).map(j => [`${j.nome}|${j._nota}`, j] as const)).values()];
   const actualizado = fmtTs(t.ultima_atualizacao);
-
   return (
-    <div>
+    <>
       {actualizado && <div className="muted fs-11 u-m-2px-0-6px">Resultados actualizados {actualizado}</div>}
       {notas.map(j => (
         <div key={j.nome + j._nota} className="notice u-m-2px-0-6pxx u-p-4px-10px">
           ⚠️ <strong>{displayName(j.nome)}</strong> — {j._nota}
         </div>
       ))}
-      {/* «rt» na /uskids: lá o «tab» é das vistas da página. */}
-      <TournamentDetail tournament={tournament} escLookup={new Map()} playersDB={kidsDB as unknown as TournamentDetailProps["playersDB"]}
-        options={options} siLabel="m" hideHeader synthDraws={false} roundDraws={roundDraws} extraTabs={extraTabs} tabParam={tabParam} />
-    </div>
+    </>
   );
 }
 
@@ -109,10 +59,11 @@ function UskidsEscalaoDetail({ escalao: e, torneio: t, drawsData, extras, moreTa
 
 export interface UskidsExtraTab { key: string; label: string; content: React.ReactNode }
 export interface UskidsDivisionsOpts {
-  /** Abas próprias de cada escalão, depois das do shell (Kids 2: as de análise). */
+  /** Abas próprias de cada escalão (Kids 2: as de análise) — antes das do shell,
+   *  como em todas as páginas. */
   extraTabs?: (escalao: string) => UskidsExtraTab[];
-  /** Parâmetro do URL das abas do TournamentDetail (default «rt», o da /uskids). */
-  tabParam?: string;
+  /** Os rivais (chegam em fundo): dão o HCP FPG dos portugueses → SD exacto. */
+  arMap?: Map<string, AutoRivalPlayer> | null;
   /** Sem a grelha «Todos» dos torneios por disputar. */
   semTodos?: boolean;
 }
@@ -131,18 +82,19 @@ export function uskidsDivisions(campo: Torneio | null, res: TorneioResult | null
   const date = res?.date_inicio ?? campo?.date_inicio ?? "";
   const tCode = res?.t ?? campo?.t ?? 0;
   const divs: CircuitDivision[] = sortEscaloes([...byAge.values()]).map((p): CircuitDivision => {
-    const results = p.r && res ? escalaoToTournament(p.r, res) : undefined;
+    const results = p.r && res ? escalaoToTournament(p.r, res, opts.arMap ?? undefined) : undefined;
     const roundDraws = roundDrawsOf(drawsData, tCode, p.age_group, p.r ?? null, date);
     const hasManuel = (p.r && res ? escalaoTemManuel(p.r, res) : false)
       || (p.f?.jogadores ?? []).some(j => isManuel(j.nome));
     const base: CircuitDivision = { key: `g${p.age_group}`, escalao: p.nome, sex: sexoEscalao(p.nome), hasManuel };
     if (results && p.r && res) {
       const r = p.r;
+      // Só DADOS: os resultados, os draws, as abas próprias e o aviso por cima.
       return {
-        ...base, results, roundDraws,
-        renderFullKeepHeader: true,
-        renderFull: (extras) => <UskidsEscalaoDetail escalao={r} torneio={res} drawsData={drawsData} extras={extras}
-          moreTabs={opts.extraTabs?.(p.nome)} tabParam={opts.tabParam} />,
+        ...base, results, roundDraws, siLabel: "m",
+        scOptions: { noInferBlanks: true },
+        extraSections: opts.extraTabs?.(p.nome),
+        detail: { intro: <UskidsIntro escalao={r} torneio={res} /> },
       };
     }
     return { ...base, admissions: p.f ? fieldAdmissions(p.f) : undefined, roundDraws, siLabel: "m", extraSections: opts.extraTabs?.(p.nome) };

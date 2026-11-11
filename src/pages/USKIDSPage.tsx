@@ -573,10 +573,12 @@ export default function USKidsFieldPage() {
       m.set(t, () => Promise.resolve(feito ??= uskidsDivisions(
         (campoPorT.get(t) ?? null) as unknown as UskTorneio | null,
         (resPorT.get(t) ?? null) as unknown as TorneioResult | null,
-        drawsData)));
+        drawsData, { arMap: arMapCtxValue })));
     }
     return m;
-  }, [torneiosCampo, torneiosResultados, drawsData]);
+    // (os rivais chegam em fundo: quando chegam, as divisões refazem-se com o
+    // HCP FPG dos portugueses — antes era o detalhe que o fazia, ao desenhar)
+  }, [torneiosCampo, torneiosResultados, drawsData, arMapCtxValue]);
   // Link para o Scout (rt=scout): nos Torneios abre no escalão do Manuel, não
   // na grelha «Todos» (que não tem Scout).
   const pedeScout = searchParams.get("rt") === "scout";

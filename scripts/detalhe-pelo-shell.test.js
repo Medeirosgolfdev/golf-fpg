@@ -15,6 +15,7 @@ import path from "path";
  */
 const AINDA_COM_RENDER_FULL = [
   "src/pages/FPGPage.tsx",
+  // só a grelha «Todos» dos torneios por disputar (não é um detalhe de torneio)
   "src/pages/uskids/uskidsCircuit.tsx",
 ];
 
@@ -55,7 +56,7 @@ describe("detalhe do torneio montado pelo shell (o renderFull está a sair)", ()
     // (uma chamada a sério leva props: «<TournamentDetail » — não conta o nome num comentário)
     const chamam = ficheiros(path.join(RAIZ, "src")).filter((f) => /<TournamentDetail\s/.test(fs.readFileSync(f, "utf8"))).map(rel).sort();
     expect(chamam).toEqual([
-      ...AINDA_COM_RENDER_FULL,              // a sair
+      "src/pages/FPGPage.tsx",               // a sair (última página por migrar)
       "src/ui/ContestLeaderboard.tsx",       // análise BJGT (fora do shell)
       "src/ui/circuit/CircuitShell.tsx",     // O sítio
     ].sort());

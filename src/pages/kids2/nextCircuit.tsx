@@ -81,7 +81,7 @@ const comJogadores = (ft: FieldTorneio) => ft.escaloes.filter(e => (e.jogadores?
 /** Escalões de um torneio USKids: os da /uskids (com resultados e draws quando
  *  os há), senão o field da vista. */
 function uskidsDivs(ft: FieldTorneio, campo: UskTorneio | null, res: TorneioResult | null, draws: UskidsDrawsData | null): CircuitDivision[] {
-  const divs = uskidsDivisions(campo, res, draws, { extraTabs: analise(ft.t), tabParam: "tab", semTodos: true })
+  const divs = uskidsDivisions(campo, res, draws, { extraTabs: analise(ft.t), semTodos: true })
     .map(d => ({ ...d, key: d.escalao }));
   return divs.length ? divs : comJogadores(ft).map(e => fieldDivision(ft, e));
 }
