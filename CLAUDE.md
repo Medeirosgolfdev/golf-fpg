@@ -222,6 +222,19 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   páginas junta-o o TournamentDetail. Nada de Scouts próprios por página. O `IntlTournView` é só um adaptador da interface antiga — funcionalidade
   nova entra no TournamentDetail. A aba vive no URL (`?tab=`; `tabParam` muda o
   nome — a `/uskids` usa `rt`).
+- **Uma página de torneios entrega DADOS ao CircuitShell; quem monta o detalhe e as
+  abas é o shell** (Mariana, 11/11/2026: «as páginas todas são circuit shell…
+  porquê que não são todas iguais?»). A divisão dá `results`/`totals`/`roundDraws`/
+  `admissions` e, nos torneios da federação, **`detail`** (`CircuitDetailSpec`:
+  `escLookup`, `playersDB`, as abas PRÓPRIAS da página em `leadingTabs`/`extraTabs`,
+  `defaultTab`, `intro`). O shell junta sempre, e pela mesma ordem, as abas comuns:
+  Época → Edições anteriores → Scorecards anteriores → Scout, e os filtros de
+  jogador. **«Edições anteriores» (tabela-resumo de cada ano) e «Scorecards
+  anteriores» (os cartões) são DUAS abas e ficam as duas.** O `renderFull` (a
+  página a desenhar o detalhe) está a SAIR: já migrou /torneios-recentes; faltam
+  /drive, /major, /uskids e /FPG — a trava `scripts/detalhe-pelo-shell.test.js` só
+  deixa a lista encolher, e uma página nova nunca o usa. Migrar uma página =
+  comparar o texto do detalhe antes/depois em 2–3 torneios (tem de dar igual).
 - **Peças únicas, nunca uma tabela própria por página:** inscrições →
   `AdmissionsTab`; draws → `DrawTab` (fontes de fora convertem para `FpgDraw`;
   no CircuitShell vão em `admissions`/`roundDraws` da divisão); barra de filtros

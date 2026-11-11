@@ -14,11 +14,14 @@
  * páginas de torneios: lista por ano (abre no ano corrente — são ~3 000),
  * «por scrapear / scrapeado» como fonte (chip e filtro), mínimo de nossos na
  * barra, e o detalhe no TournamentDetail da FPG. Dados em src/data/recentTournaments.ts.
+ *
+ * Desde 11/11/2026 a página já não desenha o detalhe (`renderFull`): entrega os
+ * resultados e o `detail` em dados, e é o shell que monta o TournamentDetail e
+ * as abas comuns — a 1.ª página da unificação «todos os torneios carregados iguais».
  */
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
-import type { EscLookup } from "../utils/playerUtils";
 import { useJson } from "../hooks/useJson";
 import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
 import { loadPlayers } from "../data/loader";
@@ -27,8 +30,7 @@ import { ToolbarTitle } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
-import type { CircuitConfig, CircuitEntry, CircuitRenderFullExtras } from "../ui/circuit/types";
-import { TournamentDetail } from "./fpg/TournamentDetail";
+import type { CircuitConfig, CircuitEntry } from "../ui/circuit/types";
 import {
   RECENT_URL, RECENT_SOURCES, normalizeRecent, recentEntry,
   type RecentDoc, type RecentTournament,
@@ -49,16 +51,14 @@ const CONFIG: CircuitConfig = {
   loadingMessage: "A carregar torneios recentes…",
 };
 
-/* ── Detalhe de um torneio ─────────────────────────────────────── */
-function RecentDetail({ t, escLookup, playersDB, extras }: {
-  t: RecentTournament; escLookup: EscLookup; playersDB: PlayersDB; extras?: CircuitRenderFullExtras;
-}) {
-  // Os links da Federação (Inscrições/Draw/Scoring ↗) vêm do próprio
-  // TournamentDetail. Aqui só o link para a leaderboard completa no NOSSO
-  // site, quando já scrapeada.
-  const extraTabs = [...(fpgOmRankingTabs(t) ?? []), ...(extras?.repeatersTab ? [extras.repeatersTab] : [])];
+/* ── Aviso por cima do detalhe ─────────────────────────────────── */
+/** O que esta página tem de seu: quantos dos nossos, se já está scrapeado (com o
+ *  link para a leaderboard completa no NOSSO site) e o aviso de que a posição é
+ *  entre os nossos. Os links da Federação (Inscrições/Draw/Scoring ↗) vêm do
+ *  detalhe; o detalhe em si e as abas (Scout, O campo…) monta-os o shell. */
+function RecentIntro({ t }: { t: RecentTournament }) {
   return (
-    <div>
+    <>
       <div className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-p-2px-0-4px">
         <span className="u-fs-fs-12 u-c-text-muted">
           {t.nOurs} dos nossos · {t.scraped ? "leaderboard completa scrapeada" : "só os nossos (por scrapear)"}
@@ -74,9 +74,7 @@ function RecentDetail({ t, escLookup, playersDB, extras }: {
         ⓘ Classificação e scorecards reconstruídos das voltas WHS dos jogadores que seguimos —
         a posição é <b>entre os nossos</b>, não a oficial do torneio.
       </div>
-      <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
-        extraTabs={extraTabs.length ? extraTabs : undefined} />
-    </div>
+    </>
   );
 }
 
@@ -98,13 +96,14 @@ export default function RecentTournamentsPage() {
   const tournaments = useMemo<RecentTournament[]>(() => (doc ? normalizeRecent(doc) : []), [doc]);
   const escLookup = useMemo(() => buildEscLookup(pdb as any, tournaments as any), [pdb, tournaments]);
 
-  // Entradas (uma divisão cada, com o TournamentDetail). Refeitas só quando
-  // os dados mudam — o shell guarda a selecção pelo id.
+  // Entradas (uma divisão cada). Só DADOS: os resultados e com que se monta o
+  // detalhe — quem o desenha (e lhe junta o Scout e as outras abas comuns) é o
+  // shell. Refeitas só quando os dados mudam — o shell guarda a selecção pelo id.
   const all = useMemo<CircuitEntry[]>(() => tournaments.map((t) => ({
     ...recentEntry(t),
     divisions: [{
       key: "t", escalao: t.escalao || "", results: t,
-      renderFull: (extras?: CircuitRenderFullExtras) => <RecentDetail t={t} escLookup={escLookup} playersDB={pdb} extras={extras} />,
+      detail: { escLookup, playersDB: pdb, extraTabs: fpgOmRankingTabs(t), intro: <RecentIntro t={t} /> },
     }],
   })), [tournaments, escLookup, pdb]);
   const entries = useMemo(() => {

@@ -20,6 +20,8 @@ import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import type { AdmissionsExtraCol } from "../AdmissionsTab";
 import type { TotalsPlayer } from "../../data/model/types";
 import type { TournamentModel, RoundDrawData, TotalsNotice, TotalsExtraCol } from "../../data/model/types";
+import type { EscLookup } from "../../utils/playerUtils";
+import type { PlayersDB } from "../tournamentPrimitives";
 
 /** Draw de uma volta numa divisão: os DADOS (`draw`…, desenhados pelo DrawTab
  *  partilhado — ver `divisionPieces.tsx`) ou, para desenhos à medida que ainda
@@ -46,6 +48,36 @@ export interface CircuitRenderFullExtras {
    *  TournamentDetail, que os aplica só às classificações (10/11/2026: nas
    *  divisões com `renderFull` os chips não faziam nada). Nenhum ligado → ausente. */
   playerFilter?: (t: FPGTournament) => FPGTournament;
+}
+
+/** Uma aba própria da página (as do shell não se declaram: ele junta-as sempre). */
+export interface CircuitTab { key: string; label: string; content: React.ReactNode }
+
+/**
+ * Detalhe «à FPG» em DADOS (11/11/2026 — substitui o `renderFull`, página a página).
+ * A página diz COM QUÊ; quem monta o TournamentDetail é o shell, sobre os `results`
+ * da divisão, e é ele que lhe junta — sempre, e sempre pela mesma ordem — as abas
+ * comuns: Época → Edições anteriores → Scorecards anteriores → Scout, e os filtros
+ * de jogador da barra. Com o `renderFull` cada página reencaminhava (ou esquecia)
+ * essas abas à mão.
+ *
+ * «Edições anteriores» (tabela-resumo de cada ano) e «Scorecards anteriores» (os
+ * cartões buraco a buraco) são DUAS abas diferentes e ficam as duas (Mariana, 11/11/2026).
+ */
+export interface CircuitDetailSpec {
+  /** Identidade FPG dos jogadores (escalão por federado, nascimento…) — é o que
+   *  distingue um torneio da federação de um de fora. */
+  escLookup: EscLookup;
+  playersDB: PlayersDB;
+  /** Abas próprias da página ANTES de tudo (ex.: «Grupos» dos Clubes). */
+  leadingTabs?: CircuitTab[];
+  /** Abas próprias da página DEPOIS das voltas/Resumo/Scorecards (ex.: Equipas,
+   *  Ordem de Mérito). As do shell vêm a seguir. */
+  extraTabs?: CircuitTab[];
+  /** Aba que abre sem `?tab=` (sem ela, a fase mais avançada da prova). */
+  defaultTab?: string;
+  /** Aviso próprio por cima do detalhe (ex.: «reconstruído das voltas dos nossos»). */
+  intro?: React.ReactNode;
 }
 
 /** Secções possíveis no detalhe (cada uma só aparece se tiver dados). */
@@ -150,6 +182,14 @@ export interface CircuitDivision extends TournamentModel {
   renderRoundSection?: (leaderboard: React.ReactNode, roundIndex: number) => React.ReactNode;
 
   /**
+   * Detalhe «à FPG» em dados — ver `CircuitDetailSpec`. Precisa de `results`.
+   * É o caminho novo: uma página que o use não escreve o detalhe nem escolhe as
+   * abas do shell.
+   */
+  detail?: CircuitDetailSpec;
+  /**
+   * ⚠ A SAIR (11/11/2026): usar `detail`. Fica enquanto /drive, /major, /uskids e
+   * /FPG não migram.
    * Substituição TOTAL do detalhe da divisão (header + section-tabs + conteúdo).
    * Quando definido, o shell desenha só as tabs de escalão e delega TUDO o resto
    * neste node — a DrivePage usa-o para montar o `TournamentDetail` da FPGPage

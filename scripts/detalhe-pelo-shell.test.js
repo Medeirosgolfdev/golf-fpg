@@ -1,0 +1,58 @@
+import { describe, it, expect } from "vitest";
+import fs from "fs";
+import path from "path";
+
+/**
+ * Trava da unificação «todos os torneios carregados iguais» (11/11/2026, Mariana:
+ * «supostamente as páginas todas são circuit shell… porquê que não são todas
+ * iguais?»).
+ *
+ * Uma página de torneios entrega DADOS ao CircuitShell (`results`, `totals`,
+ * `roundDraws`, `admissions` e, para os torneios da federação, `detail`). O
+ * `renderFull` — a página a desenhar o detalhe e a escolher as abas à mão — está
+ * a SAIR, página a página. Esta lista só pode ENCOLHER: quando uma página migra,
+ * tira-se daqui; uma página nova nunca entra.
+ */
+const AINDA_COM_RENDER_FULL = [
+  "src/pages/DrivePage.tsx",
+  "src/pages/FPGPage.tsx",
+  "src/pages/MajorPage.tsx",
+  "src/pages/uskids/uskidsCircuit.tsx",
+];
+
+/** Onde o `renderFull` é definido/lido por natureza (o contrato e o shell). */
+const DO_SHELL = ["src/ui/circuit/types.ts", "src/ui/circuit/CircuitShell.tsx"];
+
+function ficheiros(dir, out = []) {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (e.name === "__tests__") continue;
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) ficheiros(p, out);
+    else if (/\.tsx?$/.test(e.name) && !/\.test\./.test(e.name)) out.push(p);
+  }
+  return out;
+}
+
+const RAIZ = path.join(__dirname, "..");
+const rel = (f) => path.relative(RAIZ, f).replace(/\\/g, "/");
+/** Atribui um `renderFull` (não conta comentários nem o `renderFullKeepHeader`). */
+const usaRenderFull = (s) => s.split(/\r?\n/).some((l) => !/^\s*(\/\/|\*|\/\*)/.test(l) && /\brenderFull\s*[:=]/.test(l));
+
+describe("detalhe do torneio montado pelo shell (o renderFull está a sair)", () => {
+  const usam = ficheiros(path.join(RAIZ, "src")).filter((f) => usaRenderFull(fs.readFileSync(f, "utf8"))).map(rel)
+    .filter((f) => !DO_SHELL.includes(f)).sort();
+
+  it("nenhuma página NOVA desenha o detalhe com renderFull", () => {
+    expect(usam.filter((f) => !AINDA_COM_RENDER_FULL.includes(f))).toEqual([]);
+  });
+
+  it("a lista das que faltam está em dia (quem já migrou sai da lista)", () => {
+    expect(AINDA_COM_RENDER_FULL.filter((f) => !usam.includes(f))).toEqual([]);
+  });
+
+  it("os Torneios recentes já entregam o detalhe em dados (`detail`)", () => {
+    const s = fs.readFileSync(path.join(RAIZ, "src/pages/RecentTournamentsPage.tsx"), "utf8");
+    expect(/\bdetail:\s*\{/.test(s)).toBe(true);
+    expect(s.includes("<TournamentDetail")).toBe(false);
+  });
+});
