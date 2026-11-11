@@ -369,24 +369,17 @@ function DriveContent() {
         {(availRegions.length > 1 || availEscs.length > 0) && (
           <div className={"drive-below" + (md.isMobile ? " is-mobile" : "")}>
             {availRegions.length > 1 && (<>
-              <button className={"tourn-tab tourn-tab-sm shrink-0" + (regionFilter === null ? " active" : "")}
-                onClick={() => go({ region: null, esc: [] })}>
-                {md.isMobile ? `Todas ${countEvents(seriesT)}` : `Todas (${countEvents(seriesT)})`}
-              </button>
-              {availRegions.map(reg => {
-                const rt = seriesT.filter(t => t.region === reg.id);
-                const nT = countEvents(rt);
-                const nJ = uniquePC(rt);
-                return (
-                  <button key={reg.id}
-                    className={"tourn-tab tourn-tab-sm drive-region" + (regionFilter === reg.id ? " active" : " tourn-tab-muted")}
-                    onClick={() => go({ region: reg.id, esc: [] })}>
-                    {md.isMobile
-                      ? `${reg.label} ${nT}·${nJ}`
-                      : `${reg.emoji} ${reg.label} (${nT}T · ${nJ} jog)`}
-                  </button>
-                );
-              })}
+              {/* Regiões: a peça global dos filtros, uma de cada vez (11/11/2026 — eram botões à mão). */}
+              <FilterPillRow inline single
+                allLabel={md.isMobile ? `Todas ${countEvents(seriesT)}` : `Todas (${countEvents(seriesT)})`}
+                items={availRegions.map(reg => {
+                  const rt = seriesT.filter(t => t.region === reg.id);
+                  const nT = countEvents(rt);
+                  const nJ = uniquePC(rt);
+                  return { key: reg.id, label: md.isMobile ? `${reg.label} ${nT}·${nJ}` : `${reg.emoji} ${reg.label} (${nT}T · ${nJ} jog)` };
+                })}
+                active={regionFilter ? [regionFilter] : []}
+                onChange={sel => go({ region: sel[0] ?? null, esc: [] })} />
               <ToolbarSep />
             </>)}
             {/* Não é o mesmo que o filtro da tabela: este refaz a classificação

@@ -4372,7 +4372,6 @@ table td.lb-col-divider {
 .aq-evol.is-good { color: var(--color-good); }
 .aq-evol.is-bad { color: var(--color-danger); }
 .segmented-toggle.drive-tabrow { margin-bottom: 0; }
-.tourn-tab.drive-region { flex-shrink: 0; }
 .drive-below { display: flex; align-items: center; column-gap: var(--space-6); row-gap: var(--space-4); padding: var(--space-4) var(--space-12) var(--space-6); flex-wrap: wrap; border-top: 1px solid var(--border-light); }
 .drive-below.is-mobile { column-gap: var(--space-4); }
 .drive-kpi { font-weight: 700; color: var(--text); }
