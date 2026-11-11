@@ -17,7 +17,8 @@ import type { PlayersDB } from "../../ui/tournamentPrimitives";
 export type TournamentFormat =
   /** Stroke play com cartões buraco a buraco (TournamentDetail). */
   | "stroke"
-  /** Só totais por volta, sem cartões (prova `_noHbh` no TournamentDetail). */
+  /** Só totais por volta, sem cartões: o TournamentDetail desenha o mesmo Resumo,
+   *  sem «📋 Scorecards» (é este campo que ele lê; até 11/11/2026 era a marca `_noHbh`). */
   | "totals"
   /** Match play individual (MatchplayView: Taça FPG, CFJ…). */
   | "matchplay-ind"
@@ -106,7 +107,7 @@ export interface TotalsNotice { kind: "aviso" | "nota"; text: string; title?: st
 export interface TotalsExtraCol { header: string; title?: string; field: string; decimals?: number }
 
 /** Um jogador de uma prova só com totais por volta (sem buraco a buraco). O
- *  CircuitShell transforma-os numa prova `_noHbh` do TournamentDetail
+ *  CircuitShell transforma-os numa prova `format: "totals"` do TournamentDetail
  *  (`totalsDivisionView`, ui/circuit/divisionPieces). */
 export interface TotalsPlayer {
   name: string;

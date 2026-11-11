@@ -29,14 +29,14 @@ describe("roundDrawNode — draw como dados", () => {
 
 describe("totalsDivisionView — só totais como dados → prova sem buraco a buraco", () => {
   const players = [{ name: "Ana Silva", country: "Portugal", pos: 1, rounds: [70, 72], total: 142, points: 12.345 }];
-  it("prova `_noHbh` com as voltas, o aviso e a coluna extra (valor de cada jogador)", () => {
+  it("prova só com totais (`format: totals`) com as voltas, o aviso e a coluna extra (valor de cada jogador)", () => {
     const d: CircuitDivision = { key: "m", escalao: "Junior", totals: {
       players, parPerRound: null, tournamentDate: "2026-05-01",
       notice: { kind: "aviso", title: "t", text: "⚠ aviso" },
       extra: [{ header: "PTS", title: "Pontos", field: "points", decimals: 2 }],
     } };
     const v = totalsDivisionView(d, { name: "Prova" })!;
-    expect((v.tournament as unknown as { _noHbh: boolean })._noHbh).toBe(true);
+    expect(v.tournament.format).toBe("totals");
     expect(v.tournament.rounds).toBe(2);
     const p = v.tournament.players[0];
     expect(p.roundScores?.map((r) => r.gross)).toEqual([70, 72]);

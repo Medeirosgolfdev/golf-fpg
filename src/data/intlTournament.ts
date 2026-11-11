@@ -14,6 +14,7 @@ import type { Tournament, Player, RoundScore } from "./fpgTypes";
 import { isPtCountry } from "../utils/flagUtils";
 import { isNoCardGross, toParPlayed } from "./intlCommon";
 import { withTournamentModel } from "./model/tournament";
+import type { TournamentFormat } from "./model/types";
 import { playerIdentity } from "./model/identity";
 
 /** Campo de uma volta: par por buraco e, quando a fonte os dá, SI, metros, tee e CR/Slope. */
@@ -82,8 +83,13 @@ export interface IntlBuildOptions {
    *  «só quando cobrem todos os buracos», sem null → 0 e sem os valores por
    *  omissão de posição, clube e total. */
   raw?: boolean;
-  /** Campos do próprio torneio (`_openRound`, `_noHbh`, …). */
+  /** Campos do próprio torneio (`_openRound`, `_officialPos`, …). */
   extra?: Record<string, unknown>;
+  /** O formato, quando o conversor o sabe melhor do que os dados — `"totals"` =
+   *  prova SEM cartões buraco a buraco (só totais por volta): o TournamentDetail
+   *  desenha o mesmo Resumo e não mostra «📋 Scorecards». (Até 11/11/2026 era a
+   *  marca `_noHbh`; passou a ser o `format` do modelo comum, src/data/model.) */
+  format?: TournamentFormat;
 }
 
 /** O par da fonte quando é válido (um valor por buraco); senão SEM PAR (`[]`:
@@ -180,5 +186,5 @@ export function buildFPGTournament(
     playerCount: out.length,
     players: out,
     ...opts.extra,
-  } as Tournament);
+  } as Tournament, opts.format);
 }

@@ -196,7 +196,7 @@ export function MultiRoundLeaderboard({
   // ±Par só quando alguém o tem (fontes sem par — WAGR — não mostram uma coluna de traços).
   const showToPar = wantToPar && rows.some(r => r.toPar != null);
   // Contadores por buraco (🦅 🐦 = ■) só com cartões: as provas só com totais
-  // por volta (`_noHbh`) ficam com o SD no mesmo sítio e sem colunas vazias.
+  // por volta (`format: "totals"`) ficam com o SD no mesmo sítio e sem colunas vazias.
   const showHoleStats = showRoundStats && hasAnyRoundHoleStats;
   const showRoundToPar = wantRoundToPar;
 

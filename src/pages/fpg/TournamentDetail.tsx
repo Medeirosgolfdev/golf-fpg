@@ -161,6 +161,9 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
   // Uma volta só com totais (classificações em PDF das federações espanholas):
   // sem cartões o ScorecardLB fica vazio — mostra-se a classificação acumulada.
+  /** Prova sem cartões buraco a buraco: o `format` do modelo comum (src/data/model),
+   *  gravado pelos conversores — o mesmo Resumo, sem «📋 Scorecards». */
+  const semCartoes = tournament.format === "totals";
   const soTotais = !isMulti && hasAnyRounds && !tournament.players.some(p => (p.scores?.length ?? 0) > 0);
 
   // Dados extra (admissions + draws) — injectados no loader Jovens
@@ -344,8 +347,8 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
       const futureDrawsMulti = allDrawRounds.filter(r => r > rondas.length);
       for (const r of futureDrawsMulti) out.push({ key: `draw:${r}`, label: `Draw R${r}` });
       if (temResumo) out.push({ key: "resumo", label: "Resumo" });
-      // Sem cartão buraco a buraco (ex.: RFEG só PDF → _noHbh) não há Scorecards.
-      if (!(tournament as { _noHbh?: boolean })._noHbh) out.push({ key: "scorecards", label: COMBINED_TAB });
+      // Sem cartão buraco a buraco (formato «só totais» do modelo comum) não há Scorecards.
+      if (!semCartoes) out.push({ key: "scorecards", label: COMBINED_TAB });
       // Tab "Análise Aroeira II" — só para o PJA Aroeira Masters 2026 (029/10543)
       if (tournament.ccode === "029" && tournament.tcode === "10543") {
         out.push({ key: "analise-aroeira2", label: "🎯 Análise" });
@@ -370,7 +373,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
       // concluídos e o utilizador não precisa de esperar pela última ronda.
       if (nRounds > 1) {
         out.push({ key: "resumo", label: "Resumo" });
-        if (!(tournament as { _noHbh?: boolean })._noHbh) out.push({ key: "scorecards", label: COMBINED_TAB });
+        if (!semCartoes) out.push({ key: "scorecards", label: COMBINED_TAB });
       }
     } else {
       // Sem rondas jogadas — pode ter só draws (torneio prestes a começar)
@@ -382,7 +385,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
       if (!out.some(t => t.key === et.key)) out.push({ key: et.key, label: et.label });
     }
     return out;
-  }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds, extraTabs, leadingTabs, allDrawRounds, roundLabels, cutAfterRound, tournament]);
+  }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds, extraTabs, leadingTabs, allDrawRounds, roundLabels, cutAfterRound, tournament, semCartoes]);
 
   // Tab activa = URL state (?tab=KEY). Permite deep-links como
   //   /FPG/torneio/000-10935?tab=draw:1   → abre directo no Draw R1

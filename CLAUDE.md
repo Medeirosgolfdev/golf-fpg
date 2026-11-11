@@ -289,6 +289,12 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   `tournament.ts`/`division.ts` (os conversores gravam-nos com `withTournamentModel`/
   `withDivisionModel`); identidade do jogador (sexo, país ISO, nascimento, escalão)
   de `identity.ts`; nomes de escalão de `escalao.ts` (tabela única de sinónimos).
+  **«Prova sem cartões» é o `format: "totals"` do modelo** (11/11/2026): é ele que o
+  TournamentDetail lê para não mostrar «📋 Scorecards»; o conversor que o sabe passa
+  `format: "totals"` ao `buildFPGTournament` (a marca `_noHbh` acabou). Os outros
+  campos antigos NÃO são cópias do modelo e ficam: `_openRound` diz QUAL volta está
+  aberta (o modelo tira daí o `live`), `_cut` é por jogador (o modelo dá o cut da
+  prova) e `hasResults` é da entrada do índice, antes de a prova estar carregada.
   Nada de inferências novas por página. Divisões do CircuitShell com DADOS, não
   JSX: draws em `roundDraws[].draw`, só totais em `totals` — quem desenha é
   `ui/circuit/divisionPieces.tsx`. → [convencoes-e-armadilhas.md](docs/claude/convencoes-e-armadilhas.md#modelo-comum-srcdatamodel)

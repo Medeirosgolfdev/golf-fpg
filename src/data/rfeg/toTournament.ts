@@ -551,9 +551,9 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
     {
       keepNoRounds: true, raw: true,
       // RFEGolf publica ~65% só em PDF: temos os TOTAIS por ronda mas NÃO o cartão
-      // hole-by-hole (scores/par/si/meters vazios). Marca para o TournamentDetail NÃO
-      // mostrar a tab "📋 Scorecards" (grelha vazia = parece partido).
-      extra: { _noHbh: true },
+      // hole-by-hole (scores/par/si/meters vazios). Formato «só totais»: o
+      // TournamentDetail NÃO mostra a tab "📋 Scorecards" (grelha vazia = parece partido).
+      format: "totals",
     },
   );
 }

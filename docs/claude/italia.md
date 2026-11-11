@@ -70,7 +70,7 @@ verificato un errore» e timeouts. O scraper usa 4 e repete com espera.
 - `src/data/federgolf/` — `types.ts`, `toTournament.ts` (`fgToTournament`:
   voltas com cartão, tee, CR/Slope e SD oficial em `roundScores[].sd`; escalão
   de cada jogador pela categoria; sem cartões ainda, a mesma prova marcada
-  `_noHbh` — mesmo Resumo, SD em cada volta, sem Scorecards), `entries.ts` (`buildFgEntries`: M e F da mesma prova numa
+  `format: "totals"` — mesmo Resumo, SD em cada volta, sem Scorecards), `entries.ts` (`buildFgEntries`: M e F da mesma prova numa
   entrada, `memberIds`; «Pulcine»/«Pulcini» do mesmo dia e clube juntam-se).
 - `admissions.tsx` — a «Lista iscritti» (gravada em `inscritos[]` desde
   02/11/2026, com quem não chegou a jogar) → separador Inscrições

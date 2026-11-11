@@ -7,7 +7,7 @@
  * página. Quem desenha é isto:
  *  - draw de uma volta → `DrawTab` partilhado (`render` da página, se existir, ganha);
  *  - só totais (`format: "totals"`) → UM SÓ CAMINHO (02/11/2026): a prova vai
- *    para o TournamentDetail como prova sem buraco a buraco (`_noHbh`, como as
+ *    para o TournamentDetail como prova sem buraco a buraco (`format: "totals"`, como as
  *    provas só em PDF da /rfeg) — o MESMO Resumo das provas com cartões; as
  *    colunas próprias (pontos WAGR…) entram como colunas extra do Resumo.
  * Assim os loaders ficam sem React e o Kids 2/scripts podem reaproveitá-los.
@@ -78,7 +78,7 @@ export function totalsDivisionView(d: CircuitDivision, meta: { name: string; dat
     { name: meta.name, tcode: d.key, date: t.tournamentDate ?? meta.date ?? "", campo: meta.campo ?? "", rounds: nRounds },
     { par: [], holes: 18, parTotal: t.parPerRound ?? null },
     players,
-    { keepNoRounds: true, extra: { _noHbh: true, ...(t.officialPos ? { _officialPos: true } : {}) } },
+    { keepNoRounds: true, format: "totals", ...(t.officialPos ? { extra: { _officialPos: true } } : {}) },
   );
   const accExtraColumns = t.extra?.map((c: TotalsExtraCol): ExtraColumn => {
     const valor = (key?: string) => { const v = key ? porId.get(key)?.[c.field] : undefined; return typeof v === "number" ? v : null; };

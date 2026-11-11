@@ -38,7 +38,7 @@ export const fgEscalaoProva = (categoria: string): string => escalaoCanon(catego
 
 /** `nascimentos`: id do jogador → ano de nascimento (do ranking juvenil — `fgAnosNascimento`).
  *  Prova ainda sem cartões (passagem rápida): o gross de cada volta, o SD e o
- *  tee sem buraco a buraco, marcada `_noHbh` — o TournamentDetail desenha o
+ *  tee sem buraco a buraco, com `format: "totals"` — o TournamentDetail desenha o
  *  MESMO Resumo das provas com cartões, sem o separador Scorecards (como as
  *  provas só em PDF da /rfeg). */
 export function fgToTournament(d: FgProva, nascimentos?: Map<string, number>): FPGTournament {
@@ -84,7 +84,7 @@ export function fgToTournament(d: FgProva, nascimentos?: Map<string, number>): F
         },
       };
     }),
-    semCartoes ? { extra: { _noHbh: true } } : {},
+    semCartoes ? { format: "totals" } : {},
   );
 }
 

@@ -474,7 +474,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // caminhos não podem passar a um caminho só?». A barra é sempre a mesma:
   //   Inscrições → Draw → R1 → … → Resumo → 📋 Scorecards → Época → Edições → Scout
   // Só com totais (EGR, WAGR, GJGL, Liguillas NextCaddy, LGPIDF): a prova é
-  // convertida numa prova sem buraco a buraco (`_noHbh`) e desenhada pelo MESMO
+  // convertida numa prova sem buraco a buraco (`format: "totals"`) e desenhada pelo MESMO
   // Resumo — sem o separador Scorecards.
   /** Só as páginas por migrar (`renderFull`) desenham o seu detalhe; para todas
    *  as outras há UM caminho: os dados da divisão → o TournamentDetail. */

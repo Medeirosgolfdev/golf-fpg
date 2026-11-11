@@ -41,7 +41,7 @@ function loadDivision(p: FgIndiceProva): Promise<CircuitDivision | null> {
       escalao: fgEscalaoProva(p.categoria),
       tabLabel: p.sexo ? SEXO_LABEL[p.sexo] : undefined,
       sex: p.sexo ?? undefined,
-      // Com ou sem cartões (sem eles, prova `_noHbh`: o mesmo Resumo, sem Scorecards).
+      // Com ou sem cartões (sem eles, prova `format: "totals"`: o mesmo Resumo, sem Scorecards).
       ...(d.jogadores.length ? { results: fgToTournament(d, nasc) } : {}),
       ...(nota ? { accHeader: noticeNode(nota) } : {}),
       // A «Lista iscritti» (com quem não chegou a jogar) no separador Inscrições.

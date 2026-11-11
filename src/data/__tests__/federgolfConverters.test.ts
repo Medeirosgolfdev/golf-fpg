@@ -191,8 +191,8 @@ describe("Federgolf — entradas", () => {
     expect(fgTemCartoes(semCartoes)).toBe(false);
     expect(fgTemCartoes(prova)).toBe(true);
     const t = fgToTournament(semCartoes);
-    expect((t as unknown as { _noHbh: boolean })._noHbh).toBe(true);
-    expect((fgToTournament(prova) as unknown as { _noHbh?: boolean })._noHbh).toBeUndefined();
+    expect(t.format).toBe("totals");
+    expect(fgToTournament(prova).format).toBe("stroke");
     const [p1, p2] = t.players;
     expect(p1.toPar).toBe(-1);
     // Sem ±par da fonte (falta a R2): total − par da volta × voltas jogadas.
