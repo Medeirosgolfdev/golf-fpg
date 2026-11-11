@@ -21,7 +21,7 @@
 | `/bjgt-analysis/:fed?` | BJGTAnalysisPage | data.json por jogador |
 | `/major` (+ `/:source/:year`) | MajorPage | funde Doral + BJGT/EOWAGR no CircuitShell, agrupado por série/ano |
 | — (`/doral` e `/doral-legacy` → redirect `/major`) | DORALPage.tsx é MÓDULO (doralEvoFor, doralMajorDivision) consumido pela MajorPage; os dados vivem em `src/data/major/doral.ts` — UI standalone removida 2026-07-02 | ftm_doral_*.json |
-| `/comparar` | ComparePage (redirect) | **saiu da barra 2026-10-13** → `/campos?view=comparar` (vista «Comparar» dos Campos: Campo A vs B · Vantagem de Tee — `CamposCompareView`); comparar jogadores = `/jogadores?comparar=1` (CompararPage na vista «⚔️ Comparar» dos Jogadores) |
+| `/comparar` | redirect no `App.tsx` (a vista é `pages/comparar/CompararCampos.tsx`) | **saiu da barra 2026-10-13** → `/campos?view=comparar` (vista «Comparar» dos Campos: Campo A vs B · Vantagem de Tee — `CamposCompareView`); comparar jogadores = `/jogadores/{fed}?comparar=1` (na ficha de um jogador, não na lista) (`pages/jogadores/CompararJogadores.tsx` na vista «⚔️ Comparar» dos Jogadores) |
 | `/simulador` | SimuladorRedirect | **vista dos Campos desde 2026-10-13** → `/campos/<campo>?view=sim` |
 | `/calendario` | CalendarioPage (dados em `src/data/calendarEvents.ts`) | players.json (aniversários) |
 | `/draws` | — | **saiu da barra 2026-10-13** → `/jogadores/52884?view=draws` (vista «🤝 Draws» só na ficha do Manuel; DrawsPage embebida no PlayerDetail) |

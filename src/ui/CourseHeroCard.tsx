@@ -2,7 +2,7 @@
  * src/ui/CourseHeroCard.tsx
  *
  * Componente partilhado de "hero" do campo — KPIs (distância/par/slope/CR)
- * + distribuição de pares (Por par / Por buraco). Extraído da ComparePage
+ * + distribuição de pares (Por par / Por buraco). Extraído da comparação de campos (comparar/CompararCampos)
  * para reuso em /kids2/next-t (tab "O Campo") e potencialmente noutras
  * páginas que precisem de visualizar a anatomia de um campo+tee.
  *
@@ -120,7 +120,7 @@ function holesByNumber(tee: Tee): Array<{ hole: number; par: ParGrupo | null; di
 
 /**
  * CourseHeroCard — KPIs + distribuição de pares.
- * Drop-in replacement do HeroCard interno da ComparePage.
+ * Drop-in replacement do HeroCard interno da comparação de campos.
  */
 /** Número com ícone (Distância, Par, Slope, CR…) — o mesmo na ficha do campo e
  *  na comparação de campos (.haDiagCard). `valueColor` só para cores dos dados. */

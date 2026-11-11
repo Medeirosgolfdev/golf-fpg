@@ -45,7 +45,7 @@ import { syntheticFederadoFromFedCode } from "./jogadores/syntheticFederado";
 import type { PlayerPageData } from "../data/playerDataLoader";
 import MasterDetail from "../ui/MasterDetail";
 // Comparar jogadores lado a lado (vista «⚔️ Comparar» da toolbar).
-const CompararPlayersView = lazy(() => import("./CompararPage"));
+const CompararPlayersView = lazy(() => import("./jogadores/CompararJogadores"));
 
 export default function JogadoresPage() {
   const { players } = useAppContext();

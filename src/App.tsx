@@ -44,7 +44,6 @@ const KIDS2NextTournaments = lazy(() => import("./pages/kids2/NextTournaments"))
 const KIDS2NextTournamentsGlobal = lazy(() => import("./pages/kids2/NextTournamentsGlobal"));
 const KIDS2RankingPage = lazy(() => import("./pages/kids2/RankingPage"));
 const KIDS2ListasPage = lazy(() => import("./pages/kids2/ListasPage"));
-const ComparePage = lazy(() => import("./pages/ComparePage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
 const FPGPage = lazy(() => import("./pages/FPGPage"));
@@ -177,7 +176,7 @@ export default function App() {
                 <Route path="/torneios-recentes" element={<RecentTournamentsPage />} />
                 <Route path="/torneios-recentes/:key" element={<RecentTournamentsPage />} />
                 <Route path="/simulador" element={<CoursesGate><SimuladorPage /></CoursesGate>} />
-                <Route path="/comparar" element={<ComparePage />} />
+                <Route path="/comparar" element={<Navigate to="/campos?view=comparar" replace />} />
                 <Route path="/calendario" element={<CalendarioPage />} />
                 <Route path="/drive" element={<DrivePage />} />
                 {/* Deep-link canónico de torneio Drive: /drive/torneio/{ccode}-{tcode} */}

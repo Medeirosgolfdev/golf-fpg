@@ -5139,7 +5139,7 @@ table td.lb-col-divider {
 .campos-tee-dot.is-14 { width: 14px; height: 14px; }
 .campos-hdr-manuel { background: color-mix(in srgb, var(--accent) 12%, var(--bg-card)); }
 .tee-card.campos-tee-card.tint-bd { border-color: var(--border) !important; border-top-color: var(--tint-bd) !important; }
-/* Comparar campos (pages/ComparePage): grelha dos pares A | Δ | B e a célula do HCP de jogo (cor do tee no <Tint bd>). */
+/* Comparar campos (pages/comparar/CompararCampos): grelha dos pares A | Δ | B e a célula do HCP de jogo (cor do tee no <Tint bd>). */
 .cmpc-par-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4) 0; }
 .cmpc-par-grid.is-same { grid-template-columns: 1fr auto 1fr; }
 .dtable .mt-sd.is-hcp.tint-bd { border-color: var(--border) !important; border-top: 2px solid var(--tint-bd) !important; border-bottom-color: var(--tint-bd) !important; }

@@ -1,5 +1,9 @@
 /**
- * CompararPage.tsx — Comparação entre jogadores (v2)
+ * jogadores/CompararJogadores.tsx — a comparação entre JOGADORES (vista da /jogadores)
+ *
+ * Não é uma página: é a vista «Comparar» que a JogadoresPage mostra. (Até
+ * 11/11/2026 chamava-se `pages/CompararPage.tsx`; a comparação de CAMPOS é outra
+ * coisa e vive em `pages/comparar/CompararCampos.tsx`.)
  *
  * Melhorias:
  *   1. Radar chart — perfil comparativo visual
@@ -18,26 +22,26 @@
  *   .jog-pill .chip .muted .input .select
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import type { Player, PlayersDb } from "../data/types";
+import type { Player, PlayersDb } from "../../data/types";
 import {
   loadPlayerData, type PlayerPageData, type RoundData,
   type HoleStatsData,
-} from "../data/playerDataLoader";
-import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
-import { norm, shortName, firstName, fD, fD2, fmtHcp, fmtSign } from "../utils/format";
-import { clubShort } from "../utils/playerUtils";
-import { deepFixMojibake } from "../utils/fixEncoding";
-import LoadingState from "../ui/LoadingState";
-import { C } from "../utils/colors";
-import { useSort } from "../hooks/useSort";
-import SortableHdr from "../ui/SortableHdr";
-import { toneClass } from "../utils/scoreDisplay";
-import SearchInput from "../ui/SearchInput";
-import CloseButton from "../ui/CloseButton";
-import Select from "../ui/Select";
-import { Tint, Fill } from "../ui/DataStyle";
-import { indicesDoMelhor, arredondar } from "../utils/melhorValor";
-import { temCartao } from "../utils/classificacao";
+} from "../../data/playerDataLoader";
+import { loadPlayerStats, type PlayerStatsDb } from "../../data/playerStatsTypes";
+import { norm, shortName, firstName, fD, fD2, fmtHcp, fmtSign } from "../../utils/format";
+import { clubShort } from "../../utils/playerUtils";
+import { deepFixMojibake } from "../../utils/fixEncoding";
+import LoadingState from "../../ui/LoadingState";
+import { C } from "../../utils/colors";
+import { useSort } from "../../hooks/useSort";
+import SortableHdr from "../../ui/SortableHdr";
+import { toneClass } from "../../utils/scoreDisplay";
+import SearchInput from "../../ui/SearchInput";
+import CloseButton from "../../ui/CloseButton";
+import Select from "../../ui/Select";
+import { Tint, Fill } from "../../ui/DataStyle";
+import { indicesDoMelhor, arredondar } from "../../utils/melhorValor";
+import { temCartao } from "../../utils/classificacao";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
 // ⚠ A cor é a do LUGAR do jogador na barra de cima (o índice em `slots`), nunca a
@@ -747,7 +751,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
 
 /* ═══════════════════ MAIN ═══════════════════ */
 
-export default function CompararPage({ players }: { players: PlayersDb }) {
+export default function CompararJogadores({ players }: { players: PlayersDb }) {
   const [slots, setSlots] = useState<Slot[]>([]);
   const [stats, setStats] = useState<PlayerStatsDb>({});
   useEffect(() => { loadPlayerStats().then(setStats); }, []);

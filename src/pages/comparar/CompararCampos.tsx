@@ -1,12 +1,16 @@
 /**
- * ComparePage.tsx — Página /comparar
+ * comparar/CompararCampos.tsx — a comparação de CAMPOS (vista «Comparar» da /campos)
  *
- * Duas tabs (estilo .tab-under, coerente com FPGPage/BJGTPage/USKIDSPage):
- *   • Campos     — hero completo (KPIs + distribuição de pares) + tabela de similitude
- *                  + comparação lado-a-lado de 2 campos (par 3/4/5, distâncias, buracos)
- *   • Jogadores  — comparação detalhada entre 2-4 jogadores (delega em CompararPage)
+ * Não é uma página: é a vista que a CamposPage mostra em `/campos?view=comparar`
+ * (`CamposCompareView`). O endereço antigo `/comparar` reencaminha para lá (App.tsx).
+ * Até 11/11/2026 este ficheiro chamava-se `pages/ComparePage.tsx` e o cabeçalho
+ * ainda descrevia uma página com um separador «Jogadores» — a comparação de
+ * jogadores é outra coisa e vive em `pages/jogadores/CompararJogadores.tsx`.
  *
- * Estilos via classes existentes em App.css e tokens em tokens.css (sem hex hardcoded).
+ * O que tem:
+ *   • hero do campo (KPIs + distribuição de pares) + tabela de similitude;
+ *   • comparação lado a lado de 2 campos (por tipo de buraco, distâncias, buracos);
+ *   • «Vantagem de Tee» (`./TeeAdvisorView`).
  *
  * Algoritmo de similitude: 25% distância, 15% par, 60% min(slope, CR).
  * O min força que AMBOS slope E CR sejam parecidos.
@@ -15,35 +19,34 @@
  * Tabela ordenável por clique no cabeçalho (useState local + SortableHdr).
  */
 import { Fragment, useState, useMemo, lazy, Suspense } from "react";
-import { Navigate } from "react-router-dom";
-import { useAppContext } from "../context/AppContext";
-import { useCourses } from "../context/CoursesContext";
-import EmptyState from "../ui/EmptyState";
-import LoadingState from "../ui/LoadingState";
-import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
-import SortableHdr from "../ui/SortableHdr";
-import { compareValuesNullsLast } from "../hooks/useSort";
-import type { Course, Tee, Hole } from "../data/types";
-import CourseHeroCard, { getParTotal, PAR_HSL, HeroStat } from "../ui/CourseHeroCard";
-import { MultiTeeSDTable } from "../ui/ScoreTable";
-import TeePill from "../ui/TeePill";
-import { physicalTeeKey } from "../utils/teeGroups";
-import { teeChoiceKey, findTeeByChoice, teeChoiceOptions } from "../utils/teeChoice";
-import { calcSD, calcPlayingHcp } from "../utils/whsCalc";
-import { fmtSD, fmtHcp, fmtSign } from "../utils/format";
-import { teeHexFromTee as teeHex } from "../utils/teeUtils";
-import { MANUEL_FED } from "../constants/manuel";
-import { isPtCountry } from "../utils/flagUtils";
-import { MUTED } from "../ui/tableCells";
-import ToPar from "../ui/ToPar";
-import TabRow from "../ui/TabRow";
-import ExpandArrow from "../ui/ExpandArrow";
-import NumberInput from "../ui/NumberInput";
-import Select from "../ui/Select";
-import SectionTitle from "../ui/SectionTitle";
-import { Tint } from "../ui/DataStyle";
+import { useAppContext } from "../../context/AppContext";
+import { useCourses } from "../../context/CoursesContext";
+import EmptyState from "../../ui/EmptyState";
+import LoadingState from "../../ui/LoadingState";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar";
+import SortableHdr from "../../ui/SortableHdr";
+import { compareValuesNullsLast } from "../../hooks/useSort";
+import type { Course, Tee, Hole } from "../../data/types";
+import CourseHeroCard, { getParTotal, PAR_HSL, HeroStat } from "../../ui/CourseHeroCard";
+import { MultiTeeSDTable } from "../../ui/ScoreTable";
+import TeePill from "../../ui/TeePill";
+import { physicalTeeKey } from "../../utils/teeGroups";
+import { teeChoiceKey, findTeeByChoice, teeChoiceOptions } from "../../utils/teeChoice";
+import { calcSD, calcPlayingHcp } from "../../utils/whsCalc";
+import { fmtSD, fmtHcp, fmtSign } from "../../utils/format";
+import { teeHexFromTee as teeHex } from "../../utils/teeUtils";
+import { MANUEL_FED } from "../../constants/manuel";
+import { isPtCountry } from "../../utils/flagUtils";
+import { MUTED } from "../../ui/tableCells";
+import ToPar from "../../ui/ToPar";
+import TabRow from "../../ui/TabRow";
+import ExpandArrow from "../../ui/ExpandArrow";
+import NumberInput from "../../ui/NumberInput";
+import Select from "../../ui/Select";
+import SectionTitle from "../../ui/SectionTitle";
+import { Tint } from "../../ui/DataStyle";
 
-const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
+const TeeAdvisorView = lazy(() => import("./TeeAdvisorView"));
 
 // ═══════════════════ Helpers ═══════════════════
 
@@ -926,7 +929,3 @@ export function CamposCompareView({ courseKey }: { courseKey?: string }) {
   );
 }
 
-/** /comparar antigo → Campos na vista «Comparar». */
-export default function ComparePage() {
-  return <Navigate to="/campos?view=comparar" replace />;
-}

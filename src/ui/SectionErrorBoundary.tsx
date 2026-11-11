@@ -4,7 +4,7 @@
  * Error boundary reutilizável para secções de páginas.
  * Previne que um crash numa secção derrube a página toda.
  *
- * Usado em: CompararPage, BJGTAnalysisPage, JogadoresPage, TorneioPage
+ * Usado em: CompararJogadores, BJGTAnalysisPage, JogadoresPage, TorneioPage
  */
 
 import React from "react";

@@ -1,7 +1,7 @@
 /**
  * src/ui/ScoreTable.tsx
  *
- * Tabelas Score → SD extraídas de SimuladorPage para reuso em ComparePage.
+ * Tabelas Score → SD extraídas de SimuladorPage para reuso em comparar/CompararCampos.
  *
  * Exporta:
  *   - HolesMode        type

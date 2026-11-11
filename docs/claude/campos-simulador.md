@@ -325,7 +325,7 @@ por fed (além de `names`); o loader expõe-os via `useCoursePlayerMeta()`
 
 ## Tab "Vantagem de Tee" (`/comparar`) — conselho de tee para júnior (2026-06-14)
 
-`src/pages/comparar/TeeAdvisorView.tsx`, 2ª tab (de 4: Campos · Vantagem de Tee · Jogadores · Simulador) da `ComparePage`. Compara dois tees
+`src/pages/comparar/TeeAdvisorView.tsx`, 2ª tab (de 4: Campos · Vantagem de Tee · Jogadores · Simulador) da comparação de campos (`src/pages/comparar/CompararCampos.tsx`, vista «Comparar» da /campos — até 11/11/2026 `pages/ComparePage.tsx`). Compara dois tees
 de um campo e dá um **conselho fundamentado** sobre se o Manuel deve subir de tee.
 Sessão grande de 2026-06-14 transformou-o de heurística mecânica em conselho
 ancorado em **evidência real** e em **literacia WHS**. Sem gráficos.

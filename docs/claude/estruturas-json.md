@@ -244,7 +244,7 @@ Lido pelo agregador (`scripts/aggregator/sources/uskids.js`) como lookup de nome
 | melhorias.json (⚠ na RAIZ, não em public/data) | FPG | enrich-intl-round.js | ✓ | JogadoresPage, CamposPage (importado em `App.tsx`) |
 | away-courses.json | FPG | pipeline.js | ✓ | CamposPage |
 | player-stats.json (⚠ em `public/`, não em public/data) | FPG | enrich-players.js | ✗ | JogadoresPage |
-| {fed}/analysis/data.json | FPG | make-scorecards-ui.js | ✓ | JogadoresPage (PlayerDetail), BJGTAnalysisPage, CamposPage, CompararPage, SimuladorPage, TeeAdvisorView, kids/PrevisaoTab |
+| {fed}/analysis/data.json | FPG | make-scorecards-ui.js | ✓ | JogadoresPage (PlayerDetail), BJGTAnalysisPage, CamposPage, CompararJogadores, SimuladorPage, TeeAdvisorView, kids/PrevisaoTab |
 | uskids-results.json | USKids | fetch-uskids-results.js | ✓ | USKIDSPage, agregador (`sources/uskids.js`) |
 | uskids_torneios_completos(1-41).json | USKids | browser script | ✓ | USKIDSPage, agregador (`sources/uskids.js`) |
 | uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |

@@ -1,6 +1,6 @@
 ﻿import { useMemo, useState, useEffect, Fragment, type ReactNode } from "react";
 import { SimuladorView } from "./SimuladorPage";
-import { CamposCompareView } from "./ComparePage";
+import { CamposCompareView } from "./comparar/CompararCampos";
 import SidebarToggle from "../ui/SidebarToggle";
 import KpiCard from "../ui/KpiCard";
 import TabRow from "../ui/TabRow";
