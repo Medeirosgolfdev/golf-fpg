@@ -21,11 +21,12 @@
  * e SI por buraco, CR e Slope quando a fonte os dá) — com as mesmas peças
  * (CourseHeroCard, PrevisaoTab). Sem «Como jogou»: ninguém nosso lá jogou.
  */
-import { createContext, lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { createContext, lazy, Suspense, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Course, Tee } from "../../data/types";
 import type { Tournament } from "../../data/fpgTypes";
-import type { ResolvedCourse } from "../kids/CourseTab";
+import { resolveCourseTee, type ResolvedCourse, type FieldTorneio as ProvaUskids } from "../../data/uskids/campoDoHistorico";
+import type { MHSlim } from "../../data/uskids/memberHistory";
 import type { JogadorNoTee } from "../kids/PrevisaoTab";
 import { useFedBirthdates, useFedGenders, useFedHcp } from "../../ui/InscricoesComponents";
 import { formatPlayerName } from "../../utils/playerUtils";
@@ -51,6 +52,22 @@ const ckey = (s: string) => norm(canonicalCourseName(s) || s);
  *  quando o torneio de um escalão não traz `campo` (MAJOR, fontes de fora). */
 export const CampoDoCircuito = createContext<string | undefined>(undefined);
 
+/** A prova aberta no circuito: o id da entrada (numa prova USKids é o código
+ *  dela) e o escalão da divisão. Quem o diz é o CircuitShell — o torneio de um
+ *  escalão nem sempre traz estas duas coisas. */
+export const ProvaDoCircuito = createContext<{ id: string; escalao: string } | null>(null);
+
+/** O histórico USKids, quando a PÁGINA o tem carregado (são ~47 MB — hoje só o
+ *  Kids 2). Com ele as abas do campo sabem o par e as jardas que cada escalão
+ *  jogou (também em provas por disputar, pela edição anterior) e a «🔮 Previsão»
+ *  mostra como o field jogou cada buraco. `prova` = a prova e o escalão como o
+ *  histórico os conhece, ou null se não for uma prova dele. */
+export interface HistoricoUskidsValue {
+  mh: MHSlim;
+  prova: (t: number, escalao: string) => { torneio: ProvaUskids; escalaoNome: string } | null;
+}
+export const HistoricoUskids = createContext<HistoricoUskidsValue | null>(null);
+
 /** O nome inteiro e cada parte dele: as provas juntam muitas vezes o clube ao
  *  campo («Oeiras Green Valley / Academia Municipal de Golfe»). E «clube - nine-nine»,
  *  a forma que os combos (Santo da Serra «… | Machico Serras») resolvem pelo nome. */
@@ -72,31 +89,46 @@ export function findCourseByName(courses: readonly Course[], campo: string): Cou
   return null;
 }
 
-function CampoDaProva({ courseKey, teeId }: { courseKey: string; teeId?: string | null }) {
+/** A ficha de um campo no tee da prova — a MESMA venha o campo de onde vier (da
+ *  lista, da sede, do histórico USKids): o aviso de onde veio, os números e os
+ *  buracos; e, quando o campo está na lista, a ligação à página dele e o mesmo
+ *  «Como jogou» de lá. */
+function FichaDoCampo({ course, tee, nota }: { course: Course; tee: Tee | null; nota?: string }) {
   const { simCourses } = useCourses();
   const navigate = useNavigate();
+  const naLista = useMemo(() => simCourses.find((c) => c.courseKey === course.courseKey) ?? null, [simCourses, course.courseKey]);
+  return (
+    <div className="mt-8">
+      {nota && <div className="muted fs-11 mb-8 u-p-6px-10px u-bg-bg-muted u-bd-qpvg4 u-br-radius">⚠ {nota}</div>}
+      {tee && <div className="mb-8"><CourseHeroCard course={course} tee={tee} /></div>}
+      {naLista && (
+        <>
+          <div className="muted fs-11 mb-8">
+            <a href={`/campos/${naLista.courseKey}?view=manuel`} className="tourn-ext-link" title="Abrir a página do campo"
+              onClick={(e) => { e.preventDefault(); navigate(`/campos/${naLista.courseKey}?view=manuel`); }}>
+              ⛳ {naLista.master.name} ↗
+            </a>{" "}
+            — o mesmo «Como jogou» da página do campo.
+          </div>
+          <Suspense fallback={<LoadingState size="sm" message="A carregar o campo…" />}>
+            <CourseComoJogou course={naLista} onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)} />
+          </Suspense>
+        </>
+      )}
+    </div>
+  );
+}
+
+/** O campo da lista (pela chave), no tee da prova (o mesmo da Previsão) —
+ *  sempre, mesmo quando nenhum dos nossos jogou lá e o «Como jogou» fica vazio
+ *  (04/11/2026, Spanish Open no San Roque: «este fica vazio»). */
+function CampoDaProva({ courseKey, teeId, nota }: { courseKey: string; teeId?: string | null; nota?: string }) {
+  const { simCourses } = useCourses();
   const course = useMemo(() => simCourses.find((c) => c.courseKey === courseKey) ?? null, [simCourses, courseKey]);
-  // A ficha do campo no tee da prova (o mesmo da Previsão) — sempre, mesmo
-  // quando nenhum dos nossos jogou lá e o «Como jogou» fica vazio
-  // (04/11/2026, Spanish Open no San Roque: «este fica vazio»).
   const tee = useMemo(() => course?.master.tees.find((t) => t.teeId === teeId)
     ?? course?.master.tees.find((t) => t.sex !== "F") ?? course?.master.tees[0] ?? null, [course, teeId]);
   if (!course) return null;
-  return (
-    <div className="mt-8">
-      {tee && <div className="mb-8"><CourseHeroCard course={course} tee={tee} /></div>}
-      <div className="muted fs-11 mb-8">
-        <a href={`/campos/${course.courseKey}?view=manuel`} className="tourn-ext-link" title="Abrir a página do campo"
-          onClick={(e) => { e.preventDefault(); navigate(`/campos/${course.courseKey}?view=manuel`); }}>
-          ⛳ {course.master.name} ↗
-        </a>{" "}
-        — o mesmo «Como jogou» da página do campo.
-      </div>
-      <Suspense fallback={<LoadingState size="sm" message="A carregar o campo…" />}>
-        <CourseComoJogou course={course} onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)} />
-      </Suspense>
-    </div>
-  );
+  return <FichaDoCampo course={course} tee={tee} nota={nota} />;
 }
 
 /** Um tee na caixa de escolha: nome, sexo e distância. */
@@ -301,19 +333,29 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
   const teeEsc = teeProva ? "" : (teePeloEscalao(tournament) ?? "");
   const tee = teeProva || teeEsc;
   const fonte: TeeFonte = teeProva ? "prova" : teeEsc ? "escalao" : "nenhum";
-  const [found, setFound] = useState<{ q: string; key: string | null; teeId: string | null; exacto?: boolean; notaSede?: string } | null>(null);
+  const [found, setFound] = useState<{ q: string; key: string | null; teeId: string | null; exacto?: boolean; notaSede?: string; hist?: ResolvedCourse } | null>(null);
+  // Prova USKids numa página com o histórico carregado: o campo e o tee do
+  // escalão saem dele (par e jardas que o escalão jogou → sede → edição anterior).
+  const prova = useContext(ProvaDoCircuito);
+  const hist = useContext(HistoricoUskids);
+  const alvo = useMemo(() => (hist && prova ? hist.prova(parseInt(prova.id, 10), prova.escalao) : null), [hist, prova]);
   // Prova USKids com sede conhecida (USKIDS_SEDES — Spanish Open 2026 no San
   // Roque): o campo e o tee do escalão saem dela, não do nome (04/11/2026).
   const tcodeN = Number(tournament.tcode) || 0;
   const escalaoProva = (tournament as { escalao?: string | null }).escalao ?? "";
-  const q = `${nome}|${tee}|${tcodeN}|${escalaoProva}`;
+  const q = `${nome}|${tee}|${tcodeN}|${escalaoProva}|${alvo ? `${alvo.torneio.t}:${alvo.escalaoNome}` : ""}`;
   useEffect(() => {
-    if (!nome) return;
+    if (!nome && !alvo) return;
     let alive = true;
     import("../../data/courses")
       .then((m) => m.loadCourses())
       .then(({ simCourses }) => {
         if (!alive) return;
+        if (alvo && hist) {
+          const r = resolveCourseTee(alvo.torneio, alvo.escalaoNome, hist.mh, simCourses);
+          if (r) { setFound({ q, key: null, teeId: null, hist: r }); return; }
+        }
+        if (!nome) { setFound({ q, key: null, teeId: null, exacto: false }); return; }
         const sede = tcodeN && escalaoProva ? teeDaSede(tcodeN, escalaoProva, simCourses) : null;
         if (sede) {
           setFound({ q, key: sede.course.courseKey, teeId: (sede.tee as Tee).teeId, exacto: true, notaSede: sede.nota });
@@ -326,7 +368,7 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
       })
       .catch(() => { if (alive) setFound({ q, key: null, teeId: null, exacto: false }); });
     return () => { alive = false; };
-  }, [nome, tee, q, tcodeN, escalaoProva]);
+  }, [nome, tee, q, tcodeN, escalaoProva, alvo, hist]);
   const cur = found && found.q === q ? found : null;
   const key = cur?.key ?? null;
   const teeId = cur?.teeId ?? null;
@@ -336,9 +378,25 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
   // campo do cartão da prova, se o cartão chegar (par e metros em todos os buracos).
   const procurou = !nome || cur != null;
   const doCartaoCourse = useMemo(
-    () => (doCartao && procurou && !key ? campoDoCartao(tournament, nome || null) : null),
-    [doCartao, procurou, key, tournament, nome]);
+    () => (doCartao && procurou && !key && !cur?.hist ? campoDoCartao(tournament, nome || null) : null),
+    [doCartao, procurou, key, tournament, nome, cur]);
+  const doHistorico = cur?.hist ?? null;
   return useMemo(() => {
+    if (doHistorico && alvo && hist) {
+      return [
+        { key: "campo", label: "⛳ O campo", content: <CoursesGate withPlayers><FichaDoCampo course={doHistorico.course} tee={doHistorico.tee} nota={doHistorico.note} /></CoursesGate> },
+        {
+          key: "previsao", label: "🔮 Previsão",
+          content: (
+            <CoursesGate>
+              <Suspense fallback={<LoadingState size="sm" message="A preparar a previsão…" />}>
+                <div className="mt-8"><PrevisaoTab torneio={alvo.torneio} escalaoNome={alvo.escalaoNome} mh={hist.mh} /></div>
+              </Suspense>
+            </CoursesGate>
+          ),
+        },
+      ];
+    }
     if (!key && doCartaoCourse) {
       const t0 = teeInicial(doCartaoCourse, teeProva);
       if (!t0) return [];
@@ -351,7 +409,7 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
     const abas: Aba[] = [{
       key: "campo",
       label: "⛳ O campo",
-      content: <CoursesGate withPlayers><CampoDaProva courseKey={key} teeId={teeId} /></CoursesGate>,
+      content: <CoursesGate withPlayers><CampoDaProva courseKey={key} teeId={teeId} nota={notaSede} /></CoursesGate>,
     }];
     if (teeId) abas.push({
       key: "previsao",
@@ -359,5 +417,5 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
       content: <CoursesGate><PrevisaoDaProva courseKey={key} teeId={teeId} tournament={tournament} fonte={fonteFinal} teeSugerido={tee} notaSede={notaSede} /></CoursesGate>,
     });
     return abas;
-  }, [key, teeId, tournament, tee, fonteFinal, notaSede, doCartaoCourse, teeProva]);
+  }, [key, teeId, tournament, tee, fonteFinal, notaSede, doCartaoCourse, teeProva, doHistorico, alvo, hist]);
 }

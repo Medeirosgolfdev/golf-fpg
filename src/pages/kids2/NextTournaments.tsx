@@ -26,7 +26,8 @@ import { useJson } from "../../hooks/useJson";
 import { loadUskidsResults } from "../../data/uskidsResultsLoader";
 import { escalaoManuelParaData } from "../../constants/manuel";
 import type { TorneioResult, UskidsDrawsData } from "../../ui/uskidsTypes";
-import { useFieldRivaisData } from "../kids/FieldRivaisDashboard";
+import { useFieldRivaisData, escalaoMatches } from "../kids/FieldRivaisDashboard";
+import { HistoricoUskids, type HistoricoUskidsValue } from "../fpg/fpgCourseTab";
 import { edicaoEntry, type EdicoesIndex } from "../uskids/uskidsCircuit";
 import { Kids2Nav } from "./Kids2SubNav";
 import { Kids2NextCtx, NEXT_CONFIG, buildEditionsPool, buildNextEntries, defaultEntryId } from "./nextCircuit";
@@ -120,6 +121,20 @@ function NextTournamentsContent() {
     onSelectPlayer: (name: string) => { navigate(kidsUrl({ name })); },
   }), [data, autoRivals, rivaisCompletos, navigate]);
 
+  // O histórico USKids para as abas globais «⛳ O campo» e «🔮 Previsão»: a prova
+  // e o escalão como o histórico os conhece (o nome do escalão na lista pode não
+  // ser o dos resultados — «Boys 11-12» num JobFile → o igual, senão o compatível).
+  const historico = useMemo<HistoricoUskidsValue | null>(() => (data?.mhReady ? {
+    mh: data.mh,
+    prova: (t, escalao) => {
+      const torneio = data.futureTorneios.find(x => x.t === t);
+      if (!torneio) return null;
+      const com = torneio.escaloes.filter(e => (e.jogadores?.length ?? 0) > 0);
+      const esc = com.find(e => e.nome === escalao) ?? com.find(e => escalaoMatches(escalao, e.nome));
+      return { torneio, escalaoNome: esc?.nome ?? escalao };
+    },
+  } : null), [data]);
+
   const lead = <Kids2Nav />;
   const trail = autoRivals
     ? <span className="toolbar-meta shrink-0">{autoRivals.length.toLocaleString("pt-PT")} rivais</span>
@@ -129,6 +144,7 @@ function NextTournamentsContent() {
 
   return (
     <Kids2NextCtx.Provider value={ctx}>
+    <HistoricoUskids.Provider value={historico}>
       <div className="tourn-layout u-h-calc-100vh-52px">
         <CircuitToolbarSlotCtx.Provider value={{ lead, trail, hideTitle: true }}>
           <CircuitShell
@@ -143,6 +159,7 @@ function NextTournamentsContent() {
           />
         </CircuitToolbarSlotCtx.Provider>
       </div>
+    </HistoricoUskids.Provider>
     </Kids2NextCtx.Provider>
   );
 }

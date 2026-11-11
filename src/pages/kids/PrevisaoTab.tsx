@@ -16,7 +16,7 @@
  */
 import { useEffect, useMemo, useState } from "react";
 import { useCourses } from "../../context/CoursesContext";
-import { resolveCourseTee, type ResolvedCourse } from "./CourseTab";
+import { resolveCourseTee, type ResolvedCourse } from "../../data/uskids/campoDoHistorico";
 import { calcSD, calcScore, calcCourseHcp, calcPlayingHcp } from "../../utils/whsCalc";
 import { fmtCR, fmtToPar, fmtSign, fmtOrd } from "../../utils/format";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../../hooks/useSort";

@@ -23,9 +23,6 @@ import { normPaisDisplay } from "../../utils/flagUtils";
 import { fmtToPar, displayName, todayIso } from "../../utils/format";
 import { toneClass } from "../../utils/scoreDisplay";
 import { useCompareSelection } from "../../ui/useCompareSelection";
-import CourseTab from "./CourseTab";
-import { CoursesGate } from "../../context/CoursesContext";
-import PrevisaoTab from "./PrevisaoTab";
 import { kidsUrl } from "../../ui/KidsLink";
 import SortableHdr from "../../ui/SortableHdr";
 import { compareNullsLast } from "../../hooks/useSort";
@@ -492,7 +489,7 @@ interface USKResData { resultados?: USKResTorneio[] }
 // Main component
 // ─────────────────────────────────────────────────────────────────────
 
-type SectionKey = "grelha" | "scores" | "campo" | "previsao";
+type SectionKey = "grelha" | "scores";
 
 /** Abas de análise de cada escalão nos Próximos torneios do Kids 2. Desde
  *  20/10/2026 a escolha do torneio e do escalão é do CircuitShell
@@ -503,8 +500,9 @@ export const FIELD_SECTIONS: { key: SectionKey; label: string }[] = [
   // («Scorecards anteriores» é a aba do shell, igual em todas as páginas — 11/11/2026:
   // a versão própria daqui, feita do histórico USKids, tinha menos edições e
   // contava a do próprio ano.)
-  { key: "campo", label: "O Campo" },
-  { key: "previsao", label: "🔮 Previsão" },
+  // («⛳ O campo» e «🔮 Previsão» são as abas globais do detalhe — 11/11/2026: as
+  // daqui eram uma 2.ª versão; o que tinham a mais, o histórico USKids, passou a
+  // ser uma fonte das globais — HistoricoUskids, pages/fpg/fpgCourseTab.)
 ];
 
 export type { FieldTorneio, FieldEscalao, FieldPlayer };
@@ -1458,8 +1456,6 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
 
   const torneio = futureTorneios.find(x => x.t === torneioT) || null;
   if (section === "scores") return <HistoricTopNTable mh={mh} torneio={torneio} escalaoNome={escalaoNome} autoRivals={autoRivals} />;
-  if (section === "campo") return <CoursesGate><CourseTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} /></CoursesGate>;
-  if (section === "previsao") return <CoursesGate><PrevisaoTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} /></CoursesGate>;
   if (!dataset) return <EmptyState size="sm" message="Sem dados para este torneio/escalão." />;
   return (
     <RivaisDashboard

@@ -43,7 +43,7 @@ import SexBadge from "../SexBadge";
 import ExtLink from "../ExternalLink";
 import { EscPill, RoundPill, ManuelPill } from "../PillBadge";
 import { TournamentDetail } from "../../pages/fpg/TournamentDetail";
-import { CampoDoCircuito } from "../../pages/fpg/fpgCourseTab";
+import { CampoDoCircuito, ProvaDoCircuito } from "../../pages/fpg/fpgCourseTab";
 import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { findManuelNaProva } from "../../constants/manuel";
@@ -618,6 +618,8 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     ? { name: cur.name, tcode: cur.id, date: cur.dateStart ?? "", campo: cur.course ?? "", escalao: curDiv.escalao ?? null, rounds: 0, playerCount: 0, players: [] } as unknown as FPGTournament
     : null), [curDiv, cur, baseTourn, delega]);
   const detailTourn = baseTourn ?? semVoltasTourn;
+  /** A prova e o escalão abertos — para as abas do campo (histórico USKids). */
+  const provaCtx = useMemo(() => (cur && curDiv ? { id: cur.id, escalao: curDiv.escalao } : null), [cur, curDiv]);
   const temResumoSemVoltas = !baseTourn && leadingTabs.some((t) => t.key === "resumo");
 
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
@@ -878,6 +880,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                 {/* O campo do cabeçalho vai como reserva para a aba «⛳ O campo»
                     (o torneio do escalão nem sempre traz `campo`). */}
                 <CampoDoCircuito.Provider value={cur.course || undefined}>
+                <ProvaDoCircuito.Provider value={provaCtx}>
                 {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, pastScorecardsTab: pastScorecardsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined, repeatersTab: repeatersTabNode ?? undefined, playerFilter })}
                 {/* UM SÓ CAMINHO (11/11/2026): os dados da divisão → o TournamentDetail.
                     As abas próprias da página primeiro; depois as do shell, sempre
@@ -911,6 +914,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                   );
                   return d?.intro ? <div>{d.intro}{detalhe}</div> : detalhe;
                 })()}
+                </ProvaDoCircuito.Provider>
                 </CampoDoCircuito.Provider>
               </>
             ) : (

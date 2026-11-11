@@ -1,32 +1,30 @@
 /**
- * pages/kids/CourseTab.tsx
+ * src/data/uskids/campoDoHistorico.ts — o CAMPO e o TEE de um escalão numa prova
+ * USKids, tirados do histórico (member-history-slim). Só dados.
  *
- * Tab "O Campo" do FieldRivaisDashboard.
+ * Cada ESCALÃO pode jogar um percurso diferente. Fontes, por ordem:
+ *   1. o histórico da própria prova: `byEscalao[escalão]` traz o campo, o par e as
+ *      jardas do tee que esse escalão jogou;
+ *   2. a sede deste ano (`USKIDS_SEDES`), com o tee pela grelha de distâncias USKids;
+ *   3. a edição anterior do mesmo escalão (quando a actual ainda não tem campo).
+ * O par e as jardas do histórico mandam; o tee correspondente na lista de campos
+ * (escolhido pelo nome/distância) dá o CR, o Slope e o SI — interpolados por
+ * distância quando esse tee não tem rating.
  *
- * Estrategia (cada ESCALAO pode jogar percurso diferente). Fontes, por ordem
- * de preferencia:
- *   1. member-history-slim.json -> byEscalao[escalao] traz course (nome),
- *      par[18] e yards[18] do tee jogado por esse escalao. Ground truth.
- *   2. Edicao anterior do mesmo escalao (quando a actual ainda nao tem course).
- *   3. Match por nome + tee contra simCourses (away-courses + extraCourses) por
- *      SOBREPOSICAO DE TOKENS + escolha do TEE do escalao (nome + distancia) ->
- *      slope/CR/SI reais (ex: Paris Boys 12 -> tee Bleus, CR 67.8 / Slope 119).
- *
- * resolveCourseTee() e exportado para a tab "Previsao" reutilizar.
+ * Era a aba «O Campo» do Kids 2 (pages/kids/CourseTab.tsx). Desde 11/11/2026 é uma
+ * FONTE das abas globais «⛳ O campo» e «🔮 Previsão» (pages/fpg/fpgCourseTab): quando
+ * a página tem o histórico carregado, entrega-o e as abas usam-no — uma só versão.
  */
-import type { MHEscalaoMeta, MHSlim } from "../../data/uskids/memberHistory";
+import type { MHEscalaoMeta, MHSlim } from "./memberHistory";
 import { buracosDoFlight } from "../../utils/voltasJogadas";
-import { useMemo } from "react";
-import CourseHeroCard from "../../ui/CourseHeroCard";
-import { useCourses } from "../../context/CoursesContext";
-import type { Course, Tee } from "../../data/types";
-import EmptyState from "../../ui/EmptyState";
+import type { Course, Tee } from "../types";
 import { stripAccents } from "../../utils/normName";
-import { teeDaSede } from "../../data/uskidsVenues";
+import { teeDaSede } from "../uskidsVenues";
 import { jardasParaMetros } from "../../utils/jardas";
 
 interface FieldEscalao { nome: string }
-interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
+/** O que se precisa de saber da prova: código, nome (com o ano) e escalões. */
+export interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
 
 
 /** Resultado da resolucao de campo/tee para um torneio+escalao. */
@@ -347,43 +345,4 @@ export function resolveCourseTee(
   }
 
   return null;
-}
-
-export default function CourseTab({ torneio, escalaoNome, mh }: {
-  torneio: FieldTorneio | null;
-  escalaoNome: string;
-  mh: MHSlim | null;
-}) {
-  const { simCourses } = useCourses();
-  const result = useMemo<ResolvedCourse | null>(
-    () => resolveCourseTee(torneio, escalaoNome, mh, simCourses),
-    [torneio, escalaoNome, mh, simCourses],
-  );
-
-  if (!torneio) {
-    return <EmptyState size="sm" message="Sem torneio seleccionado." />;
-  }
-  if (!result) {
-    return (
-      <div className="muted p-16 u-d-flex u-fd-column u-gap-6px">
-        <span>Sem informação detalhada de campo para este torneio/escalão.</span>
-        <span className="u-fs-fs-11">
-          Esta vista lê os dados do member-history-slim. Se o torneio é novo
-          e ainda não foi scrapado, a info aparecerá depois do próximo run de
-          <code className="u-m-0-4px u-p-1px-4px u-bg-bg-muted u-br-radius-sm">fetch-uskids-results</code>.
-        </span>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      {result.note && (
-        <div className="muted fs-11 mb-8 u-p-6px-10px u-bg-bg-muted u-bd-qpvg4 u-br-radius">
-          {"⚠"} {result.note}
-        </div>
-      )}
-      <CourseHeroCard course={result.course} tee={result.tee} />
-    </div>
-  );
 }
