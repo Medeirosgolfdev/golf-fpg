@@ -15,7 +15,6 @@ import path from "path";
  */
 const AINDA_COM_RENDER_FULL = [
   "src/pages/FPGPage.tsx",
-  "src/pages/MajorPage.tsx",
   "src/pages/uskids/uskidsCircuit.tsx",
 ];
 
@@ -50,7 +49,7 @@ describe("detalhe do torneio montado pelo shell (o renderFull está a sair)", ()
   });
 
   it("as páginas já migradas entregam o detalhe em dados (`detail`) e não o desenham", () => {
-    for (const f of ["src/pages/RecentTournamentsPage.tsx", "src/pages/DrivePage.tsx"]) {
+    for (const f of ["src/pages/RecentTournamentsPage.tsx", "src/pages/DrivePage.tsx", "src/pages/MajorPage.tsx"]) {
       const s = fs.readFileSync(path.join(RAIZ, f), "utf8");
       expect(/\bdetail\s*[:=]\s*\{/.test(s), f).toBe(true);
       expect(s.includes("<TournamentDetail"), f).toBe(false);

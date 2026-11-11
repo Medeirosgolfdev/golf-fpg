@@ -227,12 +227,12 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   porquê que não são todas iguais?»). A divisão dá `results`/`totals`/`roundDraws`/
   `admissions` e, nos torneios da federação, **`detail`** (`CircuitDetailSpec`:
   `escLookup`, `playersDB`, as abas PRÓPRIAS da página em `leadingTabs`/`extraTabs`,
-  `defaultTab`, `intro`). O shell junta sempre, e pela mesma ordem, as abas comuns:
+  `defaultTab`, `intro`; e as opções do leaderboard — `options`, `accShowCols`, `accExtraColumns`, `accHeader`, `drawHideCols` —, com `shellHeader` para o cabeçalho do shell). O shell junta sempre, e pela mesma ordem, as abas comuns:
   Época → Edições anteriores → Scorecards anteriores → Scout, e os filtros de
   jogador. **«Edições anteriores» (tabela-resumo de cada ano) e «Scorecards
   anteriores» (os cartões) são DUAS abas e ficam as duas.** O `renderFull` (a
-  página a desenhar o detalhe) está a SAIR: já migraram /torneios-recentes e /drive; faltam
-  /major, /uskids e /FPG — a trava `scripts/detalhe-pelo-shell.test.js` só
+  página a desenhar o detalhe) está a SAIR: já migraram /torneios-recentes, /drive e /major; faltam
+  /uskids e /FPG — a trava `scripts/detalhe-pelo-shell.test.js` só
   deixa a lista encolher, e uma página nova nunca o usa. Migrar uma página =
   comparar o texto do detalhe antes/depois em 2–3 torneios, aba a aba (tem de dar igual; esperar ~18 s antes do retrato — «⛳ O campo» e «🔮 Previsão» chegam depois, com os campos).
 - **Peças únicas, nunca uma tabela própria por página:** inscrições →

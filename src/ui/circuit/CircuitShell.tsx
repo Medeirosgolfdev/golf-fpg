@@ -44,6 +44,7 @@ import ExtLink from "../ExternalLink";
 import { EscPill, RoundPill, ManuelPill } from "../PillBadge";
 import { IntlTournView } from "../IntlTournView";
 import { TournamentDetail } from "../../pages/fpg/TournamentDetail";
+import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../tournamentPrimitives";
 import { CampoDoCircuito } from "../../pages/fpg/fpgCourseTab";
 import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
@@ -798,7 +799,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     })}
                   </div>
                 )}
-                {(!delega || curDiv.renderFullKeepHeader) && (
+                {(!delega || curDiv.renderFullKeepHeader || curDiv.detail?.shellHeader) && (
                 <DetailHeader
                   title={cur.name}
                   actions={headerHasActions ? (
@@ -892,7 +893,10 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                   const d = curDiv.detail;
                   const abas = [...(d.extraTabs ?? []), ...shellTabs];
                   const detalhe = (
-                    <TournamentDetail tournament={curDiv.results} escLookup={d.escLookup} playersDB={d.playersDB}
+                    <TournamentDetail tournament={curDiv.results}
+                      escLookup={d.escLookup ?? EMPTY_ESC_LOOKUP} playersDB={d.playersDB ?? EMPTY_PLAYERS_DB}
+                      options={d.options} accShowCols={d.accShowCols} accExtraColumns={d.accExtraColumns}
+                      accHeader={d.accHeader} drawHideCols={d.drawHideCols} hideHeader={d.shellHeader}
                       leadingTabs={d.leadingTabs} defaultTab={d.defaultTab}
                       extraTabs={abas.length ? abas : undefined}
                       playerFilter={playerFilter} tabParam={tabParamName} />

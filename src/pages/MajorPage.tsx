@@ -21,14 +21,12 @@ import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitRenderFullExtras } from "../ui/circuit/types";
+import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../ui/circuit/types";
 import MatchplayView from "../ui/circuit/MatchplayView";
 import { bjgtEvoFor, bjgtMajorDivision } from "./BJGTPage";
 import { EvoSummary, tagEvo, makeEvoCols } from "../ui/evo";
 import { doralEvoFor, doralMajorDivision } from "./DORALPage";
 import type { ScorecardOptions } from "./FPGPage";
-import { TournamentDetail } from "./fpg/TournamentDetail";
-import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../ui/tournamentPrimitives";
 import { KidsLink } from "../ui/KidsLink";
 import MajorVeteransView from "./major/MajorVeteransView";
 import { C } from "../utils/colors";
@@ -138,28 +136,24 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
       // Link para a página de resultados deste escalão (no FM cada age group
       // tem a sua própria página /pages/{id}). Fica no header do detalhe.
       links: dv.source ? [{ label: linkLabel, icon: "🔗", url: dv.source }] : undefined,
-      renderFullKeepHeader: true,
-      renderFull: (extras?: CircuitRenderFullExtras) => (
-        <TournamentDetail
-          tournament={d.results}
-          escLookup={EMPTY_ESC_LOOKUP}
-          playersDB={EMPTY_PLAYERS_DB}
-          options={{ ...scOpts, shareEvent, shareCourse }}
-          accShowCols={{ esc: false, fed: false, tee: false, hcp: !!def.showRatings }}
-          accExtraColumns={evoCols}
-          accHeader={hasEvo ? <EvoSummary evo={d.evo!} what={`regressaram de ${d.evoYear}`} metric="±par" /> : undefined}
-          drawHideCols={{
-            ...JOB_DRAW_HIDE_COLS,
-            ...(dv.players.some((p) => typeof p.hcp === "number") ? { hcp: false } : {}),
-            ...(dv.players.some((p) => p.dob || p.birthYear || p.birthYearEst) ? { nasc: false } : {}),
-          }}
-          hideHeader
-          // Os chips de jogador da barra (Top 10, Veteranos, Regressados, Subiram):
-          // sem isto não faziam nada nestas divisões (10/11/2026).
-          playerFilter={extras?.playerFilter}
-          extraTabs={[...mpBase, ...[extras?.pastEditionsTab, extras?.pastScorecardsTab, extras?.repeatersTab].filter((x): x is NonNullable<typeof x> => !!x)]}
-        />
-      ),
+      // Detalhe IDÊNTICO à FPG, em DADOS (11/11/2026 — era um `renderFull`): o
+      // shell monta o TournamentDetail com estas opções, sob o SEU cabeçalho
+      // (título, campo, pílulas, link do escalão), e junta-lhe as abas comuns
+      // (Época, Edições anteriores, Scorecards anteriores, Scout) e os filtros
+      // de jogador da barra. Da página só a aba «Match Play».
+      detail: {
+        shellHeader: true,
+        options: { ...scOpts, shareEvent, shareCourse },
+        accShowCols: { esc: false, fed: false, tee: false, hcp: !!def.showRatings },
+        accExtraColumns: evoCols,
+        accHeader: hasEvo ? <EvoSummary evo={d.evo!} what={`regressaram de ${d.evoYear}`} metric="±par" /> : undefined,
+        drawHideCols: {
+          ...JOB_DRAW_HIDE_COLS,
+          ...(dv.players.some((p) => typeof p.hcp === "number") ? { hcp: false } : {}),
+          ...(dv.players.some((p) => p.dob || p.birthYear || p.birthYearEst) ? { nasc: false } : {}),
+        },
+        extraTabs: mpBase.length ? mpBase : undefined,
+      },
     };
   });
   return def.sortByAge ? divisions.sort(majorDivCompare) : divisions;

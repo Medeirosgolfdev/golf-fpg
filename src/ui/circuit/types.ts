@@ -22,6 +22,7 @@ import type { TotalsPlayer } from "../../data/model/types";
 import type { TournamentModel, RoundDrawData, TotalsNotice, TotalsExtraCol } from "../../data/model/types";
 import type { EscLookup } from "../../utils/playerUtils";
 import type { PlayersDB } from "../tournamentPrimitives";
+import type { TournamentDetailProps } from "../../pages/fpg/TournamentDetail";
 
 /** Draw de uma volta numa divisão: os DADOS (`draw`…, desenhados pelo DrawTab
  *  partilhado — ver `divisionPieces.tsx`) ou, para desenhos à medida que ainda
@@ -66,16 +67,29 @@ export interface CircuitTab { key: string; label: string; content: React.ReactNo
  */
 export interface CircuitDetailSpec {
   /** Identidade FPG dos jogadores (escalão por federado, nascimento…) — é o que
-   *  distingue um torneio da federação de um de fora. */
-  escLookup: EscLookup;
-  playersDB: PlayersDB;
+   *  distingue um torneio da federação de um de fora. Sem eles (provas de fora
+   *  com o detalhe «à FPG»: Future Masters, Orange Bowl…), ficam vazios. */
+  escLookup?: EscLookup;
+  playersDB?: PlayersDB;
   /** Abas próprias da página ANTES de tudo (ex.: «Grupos» dos Clubes). */
   leadingTabs?: CircuitTab[];
   /** Abas próprias da página DEPOIS das voltas/Resumo/Scorecards (ex.: Equipas,
-   *  Ordem de Mérito). As do shell vêm a seguir. */
+   *  Ordem de Mérito, Match Play). As do shell vêm a seguir. */
   extraTabs?: CircuitTab[];
   /** Aba que abre sem `?tab=` (sem ela, a fase mais avançada da prova). */
   defaultTab?: string;
+  /** Opções do leaderboard — as mesmas do TournamentDetail, em dados: o que os
+   *  cartões mostram, as colunas do Resumo (e as colunas a mais, ex.: evolução
+   *  face ao ano anterior), o que vai por cima do Resumo e as colunas dos draws. */
+  options?: TournamentDetailProps["options"];
+  accShowCols?: TournamentDetailProps["accShowCols"];
+  accExtraColumns?: TournamentDetailProps["accExtraColumns"];
+  accHeader?: TournamentDetailProps["accHeader"];
+  drawHideCols?: TournamentDetailProps["drawHideCols"];
+  /** O cabeçalho é o do SHELL (título, campo, pílulas, links da divisão), como nas
+   *  provas de fora; sem isto, o do próprio detalhe (o da FPG, com os links da
+   *  Federação). */
+  shellHeader?: boolean;
   /** Aviso próprio por cima do detalhe (ex.: «reconstruído das voltas dos nossos»). */
   intro?: React.ReactNode;
 }
