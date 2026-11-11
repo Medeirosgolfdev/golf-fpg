@@ -12,6 +12,7 @@
 import type { CircuitRoundDraw } from "../../ui/circuit/types";
 import { roundDrawNode } from "../../ui/circuit/divisionPieces";
 import { ShareRoundsPanel, RoundAnalysisFor } from "../../ui/ShareRoundPanel";
+import { DificuldadePorBuraco, AnaliseManuel } from "../../ui/AnaliseDaVolta";
 import ManuelResultPills from "../../ui/ManuelResultPills";
 import React, { useContext, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -90,14 +91,10 @@ export interface TournamentDetailProps {
   siLabel?: string;
   accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean; age?: boolean; birthYear?: boolean };
   accExtraColumns?: React.ComponentProps<typeof AccumulatedLB>["extraColumns"];
-  /** Por cima / por baixo do Resumo. */
+  /** Por cima / por baixo do Resumo. (Por baixo de cada volta e do Resumo o
+   *  detalhe põe sozinho a análise global — `ui/AnaliseDaVolta`.) */
   accHeader?: React.ReactNode;
   accExtra?: React.ReactNode;
-  /** Por baixo de cada volta (índice da volta, 0 = R1). */
-  roundExtra?: (roundIndex: number) => React.ReactNode;
-  /** Substituição total das secções (recebem o leaderboard já montado). */
-  renderRoundSection?: (leaderboard: React.ReactNode, roundIndex: number) => React.ReactNode;
-  renderAccSection?: (leaderboard: React.ReactNode) => React.ReactNode;
   /** Nome no Resumo (ex.: bandeira + seta kids2). */
   renderAccName?: (row: MultiRoundRow) => React.ReactNode;
   drawHideCols?: React.ComponentProps<typeof DrawTab>["hideCols"];
@@ -129,7 +126,7 @@ const kidsAccName = (row: MultiRoundRow) => (
   <span className="tourn-pname inline-flex items-center">{row.countryFlag} {row.name}<KidsLink nome={row.name} /></span>
 );
 
-function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, playersDB: playersDBIn, extraTabs: extraTabsIn, leadingTabs, roundDraws, roundLabels, siLabel, options: optionsIn, accShowCols: accShowColsIn, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName: renderAccNameIn, drawHideCols, hideHeader: hideHeaderIn, synthDraws: synthDrawsIn, tabParam = "tab", defaultTab, playerFilter }: TournamentDetailProps) {
+function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, playersDB: playersDBIn, extraTabs: extraTabsIn, leadingTabs, roundDraws, roundLabels, siLabel, options: optionsIn, accShowCols: accShowColsIn, accExtraColumns, accHeader, accExtra, renderAccName: renderAccNameIn, drawHideCols, hideHeader: hideHeaderIn, synthDraws: synthDrawsIn, tabParam = "tab", defaultTab, playerFilter }: TournamentDetailProps) {
   // ── Prova DE FORA da federação = sem federados. Um só sítio para as regras:
   //   · sem o cabeçalho FPG (a página-mãe tem o seu);
   //   · sem prever o draw da volta seguinte (a regra de emparelhamento é da FPG);
@@ -740,7 +737,10 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
           return <AccumulatedLB tournament={preCutTourn} nRounds={cutAfterRound!} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} modalidade={modalidade} />;
         if (isAcc) {
           const accLB = <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} modalidade={modalidade} />;
-          return renderAccSection ? <>{renderAccSection(accLB)}{shareRounds}</> : <>{accHeader}{accLB}{accExtra}{shareRounds}</>;
+          // Por baixo: a dificuldade por buraco de todas as voltas (só as do Resumo aberto).
+          const voltas = expandedLb.filter((e: any) => !e._isTotal);
+          const total = (curT as { _isTotal?: boolean })._isTotal ? curT : undefined;
+          return <>{accHeader}{accLB}<DificuldadePorBuraco voltas={voltas} total={total} rotulo={total ? "Todas as rondas" : undefined} />{accExtra}{shareRounds}</>;
         }
         if (soTotais)
           return <AccumulatedLB tournament={curT} nRounds={1} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} modalidade={modalidade} />;
@@ -750,9 +750,16 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
           const roundAn = isMulti && isRoundTab && roundIdx >= 1
             ? <RoundAnalysisFor key={`${tournament.tcode}-an${roundIdx}`} rounds={expanded.filter((e: any) => !e._isTotal)} round={roundIdx + 1} />
             : null;
-          return renderRoundSection
-            ? <>{renderRoundSection(roundLB, roundIdx)}{roundAn}</>
-            : <>{roundLB}{roundExtra?.(roundIdx)}{roundAn}</>;
+          // Análise global da volta, igual em todas as páginas: a dificuldade por
+          // buraco (campo comparável) e o cartão do Manuel em números.
+          const numVolta = isMulti ? roundIdx + 1 : undefined;
+          const anterior = isMulti && roundIdx >= 1 ? expanded.filter((e: any) => !e._isTotal)[roundIdx - 1] : undefined;
+          return <>
+            {roundLB}
+            <DificuldadePorBuraco voltas={[curT]} rotulo={isMulti ? roundLabel(roundIdx, `R${roundIdx + 1}`) : undefined} numVolta={numVolta} />
+            <AnaliseManuel volta={curT} anterior={anterior} numVolta={numVolta ?? 1} />
+            {roundAn}
+          </>;
         }
         return null;
       })()}

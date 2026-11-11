@@ -2,8 +2,10 @@
  * evo.tsx — a evolução ano-a-ano dos torneios com várias edições (BJGT/EOWAGR,
  * Junior Orange Bowl, Future Masters, Doral): o resumo por cima do Resumo, as
  * colunas Ant. · Δ · Percurso e a marcação dos regressados. Cada página só
- * constrói o seu mapa de evolução (`buildEvoMap` ou o histórico da Doral).
+ * constrói o seu mapa de evolução (`buildEvoMap` ou o histórico da Doral) e
+ * entrega-o a `evoDaDivisao`.
  */
+import type React from "react";
 import ToPar from "./ToPar";
 import { fmtSign } from "../utils/format";
 import EvoBadge from "./EvoBadge";
@@ -72,4 +74,21 @@ export function makeEvoCols(evo: Map<string, EvoEntry>, evoYear?: string): Extra
       cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); return ev ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} /> : <EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} />; },
     },
   ];
+}
+
+/** A evolução ano-a-ano de uma divisão, de uma vez: marca os regressados nos
+ *  resultados e devolve as colunas e o resumo que vai por cima do Resumo —
+ *  para espalhar na `CircuitDivision` (`...evoDaDivisao(results, evo, ano)`).
+ *  Sem mapa de evolução não devolve nada. */
+export function evoDaDivisao(
+  results: { players: { name: string }[] },
+  evo: Map<string, EvoEntry> | null | undefined,
+  evoYear?: string,
+): { evoCols?: ExtraColumn<EvoRowWithPos>[]; accHeader?: React.ReactNode } {
+  if (!evo || evo.size === 0) return {};
+  tagEvo(results, evo);
+  return {
+    evoCols: makeEvoCols(evo, evoYear),
+    accHeader: <EvoSummary evo={evo} what={`regressaram de ${evoYear}`} metric="±par" />,
+  };
 }

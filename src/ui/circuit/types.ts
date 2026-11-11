@@ -168,23 +168,12 @@ export interface CircuitDivision extends TournamentModel {
   roundLabels?: string[];
   siLabel?: string;
 
-  // ── Módulos avançados opcionais (BJGT: HoleDiff/ManuelDay; evo cross-ano) ──
+  // ── Evolução ano-a-ano (`evoDaDivisao`, ui/evo) e o que vai por cima do Resumo ──
+  // (A análise por baixo das classificações — dificuldade por buraco, análise do
+  // Manuel — é do TournamentDetail, igual em todas as páginas: até 11/11/2026
+  // havia aqui `roundExtra`/`accExtra`/`renderAccSection`/`renderRoundSection`.)
   evoCols?: ExtraColumn<MultiRoundRow & { _pos?: number | null }>[];
   accHeader?: React.ReactNode;
-  roundExtra?: (roundIndex: number) => React.ReactNode;
-  accExtra?: React.ReactNode;
-  /**
-   * Substituição total da secção acumulada (Resumo) do TournamentDetail. Recebe o
-   * elemento do leaderboard acumulado e devolve o conteúdo completo da secção
-   * (England/BJGT usam isto para envolver o leaderboard em cards + HoleDiff +
-   * Field Stats). Tem precedência sobre accHeader/accExtra.
-   */
-  renderAccSection?: (leaderboard: React.ReactNode) => React.ReactNode;
-  /**
-   * Substituição total da secção de cada ronda do TournamentDetail. Recebe o
-   * leaderboard da ronda e o índice. Tem precedência sobre roundExtra.
-   */
-  renderRoundSection?: (leaderboard: React.ReactNode, roundIndex: number) => React.ReactNode;
 
   /**
    * Detalhe «à FPG» em dados — ver `CircuitDetailSpec`. Precisa de `results`.

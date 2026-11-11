@@ -222,6 +222,16 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   páginas junta-o o TournamentDetail. Nada de Scouts próprios por página. Não há adaptadores (o `IntlTournView` foi apagado a 11/11/2026): as regras das provas de fora — sem cabeçalho FPG, sem previsão de draw, nome com a seta do Kids 2 — vivem DENTRO do TournamentDetail, que as aplica quando a prova não traz federados (`escLookup`). Funcionalidade
   nova entra no TournamentDetail. A aba vive no URL (`?tab=`; `tabParam` muda o
   nome — a `/uskids` usa `rt`).
+- **A análise por baixo das classificações é do TournamentDetail, igual em todas as
+  páginas** (11/11/2026 — eram blocos só do BJGT): `ui/AnaliseDaVolta.tsx` —
+  «📊 Dificuldade por buraco» (por baixo de cada volta e do Resumo; média do campo
+  por buraco, **uma tabela por tee**, nunca a misturar campos: mesmo par + tee +
+  metros, mínimo 3 jogadores com cartão, só com par oficial; contas em
+  `data/dificuldadeBuraco.ts`) e «🇵🇹 Análise Manuel — R{n}» (quando ele tem o cartão
+  completo). As páginas não lhes tocam: já não há `roundExtra`/`accExtra`/
+  `renderAccSection`/`renderRoundSection` na divisão. A evolução ano-a-ano de uma
+  divisão (marcar regressados + colunas + resumo) é `evoDaDivisao` (`ui/evo.tsx`),
+  espalhada na divisão; só o Doral tem colunas próprias (histórico de vários anos).
 - **Uma página de torneios entrega DADOS ao CircuitShell; quem monta o detalhe e as
   abas é o shell** — **num só caminho, com uma única chamada ao TournamentDetail** (Mariana, 11/11/2026: «simplifica ao máximo, que seja tudo igual, que quando eu mudar uma coisa mude em todo o lado; não quero adaptadores; as abas só aparecem quando há essa informação») (Mariana, 11/11/2026: «as páginas todas são circuit shell…
   porquê que não são todas iguais?»). A divisão dá `results`/`totals`/`roundDraws`/

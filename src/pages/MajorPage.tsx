@@ -24,7 +24,7 @@ import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../ui/circuit/types";
 import MatchplayView from "../ui/circuit/MatchplayView";
 import { bjgtEvoFor, bjgtMajorDivision } from "./BJGTPage";
-import { EvoSummary, tagEvo, makeEvoCols } from "../ui/evo";
+import { evoDaDivisao } from "../ui/evo";
 import { doralEvoFor, doralMajorDivision } from "./DORALPage";
 import MajorVeteransView from "./major/MajorVeteransView";
 import { C } from "../utils/colors";
@@ -82,8 +82,6 @@ function doralDivisions(year: number, entries: DoralEntry[]): CircuitDivision[] 
 /** Junior Orange Bowl: Rapazes/Raparigas no leaderboard do shell. */
 function jobDivisions({ file, files }: MajorJobData): CircuitDivision[] {
   return jobFileDivisions(file, files, (d, idx) => JOB_DIV_LABELS[idx] || d.division, false).map((d): CircuitDivision => {
-    const hasEvo = !!d.evo && d.evo.size > 0;
-    tagEvo(d.results, d.evo);
     return {
       key: d.key,
       escalao: d.label,
@@ -91,8 +89,7 @@ function jobDivisions({ file, files }: MajorJobData): CircuitDivision[] {
       hasManuel: d.hasManuel,
       results: d.results,
       scOptions: jobScorecardOptions(),
-      evoCols: hasEvo ? makeEvoCols(d.evo!, d.evoYear) : undefined,
-      accHeader: hasEvo ? <EvoSummary evo={d.evo!} what={`regressaram de ${d.evoYear}`} metric="±par" /> : undefined,
+      ...evoDaDivisao(d.results, d.evo, d.evoYear),
     };
   });
 }
@@ -114,9 +111,6 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
   const shareCourse = f.course || def.defaultCourse || undefined;
   const divisions = jobFileDivisions(f, files, (d) => d.division || def.series, true).map((d): CircuitDivision => {
     const dv = d.division;
-    const hasEvo = !!d.evo && d.evo.size > 0;
-    tagEvo(d.results, d.evo);
-    const evoCols = hasEvo ? makeEvoCols(d.evo!, d.evoYear) : undefined;
     return {
       key: d.key,
       escalao: d.label,
@@ -134,8 +128,7 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
       // As opções dos cartões, as colunas de evolução e o resumo dos regressados
       // são da divisão, como nas outras provas de fora (BJGT, Doral).
       scOptions: { ...scOpts, shareEvent, shareCourse },
-      evoCols,
-      accHeader: hasEvo ? <EvoSummary evo={d.evo!} what={`regressaram de ${d.evoYear}`} metric="±par" /> : undefined,
+      ...evoDaDivisao(d.results, d.evo, d.evoYear),
       detail: {
         accShowCols: { esc: false, fed: false, tee: false, hcp: !!def.showRatings },
         drawHideCols: {

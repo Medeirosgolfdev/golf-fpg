@@ -902,8 +902,6 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                       accShowCols={d?.accShowCols}
                       accExtraColumns={curDiv.evoCols ?? totalsView?.accExtraColumns}
                       accHeader={curDiv.accHeader ?? totalsView?.accHeader}
-                      accExtra={curDiv.accExtra} roundExtra={curDiv.roundExtra}
-                      renderAccSection={curDiv.renderAccSection} renderRoundSection={curDiv.renderRoundSection}
                       drawHideCols={d?.drawHideCols}
                       leadingTabs={antes.length ? antes : undefined}
                       extraTabs={depois.length ? depois : undefined}
