@@ -14,7 +14,6 @@ import path from "path";
  * tira-se daqui; uma página nova nunca entra.
  */
 const AINDA_COM_RENDER_FULL = [
-  "src/pages/DrivePage.tsx",
   "src/pages/FPGPage.tsx",
   "src/pages/MajorPage.tsx",
   "src/pages/uskids/uskidsCircuit.tsx",
@@ -50,9 +49,11 @@ describe("detalhe do torneio montado pelo shell (o renderFull está a sair)", ()
     expect(AINDA_COM_RENDER_FULL.filter((f) => !usam.includes(f))).toEqual([]);
   });
 
-  it("os Torneios recentes já entregam o detalhe em dados (`detail`)", () => {
-    const s = fs.readFileSync(path.join(RAIZ, "src/pages/RecentTournamentsPage.tsx"), "utf8");
-    expect(/\bdetail:\s*\{/.test(s)).toBe(true);
-    expect(s.includes("<TournamentDetail")).toBe(false);
+  it("as páginas já migradas entregam o detalhe em dados (`detail`) e não o desenham", () => {
+    for (const f of ["src/pages/RecentTournamentsPage.tsx", "src/pages/DrivePage.tsx"]) {
+      const s = fs.readFileSync(path.join(RAIZ, f), "utf8");
+      expect(/\bdetail\s*[:=]\s*\{/.test(s), f).toBe(true);
+      expect(s.includes("<TournamentDetail"), f).toBe(false);
+    }
   });
 });

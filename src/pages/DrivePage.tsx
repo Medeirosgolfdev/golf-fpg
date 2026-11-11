@@ -4,7 +4,7 @@
  * v10: Reads scraper v7 format directly (fedCode, roundScores)
  *      + multi-round support (R1/R2/Total tabs)
  */
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import TabRow from "../ui/TabRow";
 import FilterPillRow from "../ui/FilterPillRow";
 import { useParams, useNavigate, useLocation, useSearchParams } from "react-router-dom";
@@ -29,7 +29,6 @@ import { calendarStatus, driveCalendar, type DriveCalEntry } from "../data/drive
 import { todayIso } from "../utils/format";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG } from "../data/drive/driveCircuitData";
-import { TournamentDetail } from "./fpg/TournamentDetail";
 import { loadDriveAdmissions, loadDriveDataProgressive, loadDriveEquipas } from "../data/drive/driveLoader";
 import { attachDriveAdmissions, buildDriveSource, driveDefaultYear, filterDriveSource, type DriveAdmissionsIndex, type DriveSeries } from "../data/drive/driveSource";
 import {
@@ -204,18 +203,21 @@ function DriveContent() {
     if (escFilter.length > 0) {
       ents = driveEntriesByEsc(ents, escFilter, (p, t) => resolveEscForTournament(p, t, escLookup, pdb, temporalEscLookup, fedBirthdates));
     }
-    // Detalhe IDÊNTICO à FPGPage: cada divisão (escalão) renderiza o TournamentDetail
-    // da FPGPage — tabs flat (Inscrições·Draw·R1·R2·Resumo·Scorecards), que busca
-    // inscrições/draws sozinho por ccode-tcode.
+    // Detalhe IDÊNTICO à FPGPage, em DADOS (11/11/2026 — era um `renderFull`): cada
+    // divisão (escalão) diz com que se monta o detalhe e o shell monta o
+    // TournamentDetail — tabs flat (Inscrições·Draw·R1·R2·Resumo·Scorecards), que
+    // busca inscrições/draws sozinho por ccode-tcode — e junta-lhe Época · Edições
+    // anteriores · Scorecards anteriores · Scout. Da página só a aba «Equipas».
     for (const e of ents) {
       for (const d of e.divisions ?? []) {
         const t = d.results;
         if (!t) continue;  // as divisões do Drive trazem sempre `results`
         const eqData = equipasIdx[`${t.ccode}-${t.tcode}`];
-        const equipasTab = eqData ? { key: "equipas", label: "Equipas", content: <TeamStrokeStandings model={buildDriveEquipas(eqData)}
-          footnote={<>Fonte: <ExtLink href={eqData.fonte}>PDF «Resultados» da FPG</ExtLink>.</>} /> } : null;
-        d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup} playersDB={pdb} playerFilter={extras?.playerFilter}
-          extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab, extras?.pastScorecardsTab, extras?.repeatersTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
+        d.detail = {
+          escLookup, playersDB: pdb,
+          extraTabs: eqData ? [{ key: "equipas", label: "Equipas", content: <TeamStrokeStandings model={buildDriveEquipas(eqData)}
+            footnote={<>Fonte: <ExtLink href={eqData.fonte}>PDF «Resultados» da FPG</ExtLink>.</>} /> }] : undefined,
+        };
       }
     }
     return ents;
