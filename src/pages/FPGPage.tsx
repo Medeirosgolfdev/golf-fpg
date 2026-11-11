@@ -49,7 +49,6 @@ import {
   type SeriesKey, URL_TO_FILTER, URL_TO_NAV, NAV_TO_URL, FILTER_TO_URL, INSCRITOS_SHORTCUTS,
   clubesCtRedirect,
 } from "./fpg/routes";
-import { TournamentDetail } from "./fpg/TournamentDetail";
 import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEditions";
 import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
 import { fpgMatchplayTabs, useFpgMatchplay, type FpgMatchplayData } from "./fpg/fpgMatchplay";
@@ -326,12 +325,12 @@ function Content() {
       byId.set(e.id, orig);
       for (const d of e.divisions ?? []) {
         const t = d.results!;
-        d.renderFull = (extras) => (
-          <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
-            leadingTabs={clubesLeadingTabs(orig, playersDB)} defaultTab={CLUBES_DEFAULT_TAB}
-            extraTabs={fpgExtraTabs(editionsIndex, t, playersDB, matchplayData)}
-            playerFilter={extras?.playerFilter} />
-        );
+        // Em DADOS (11/11/2026 — era um `renderFull`): o shell monta o detalhe.
+        d.detail = {
+          escLookup, playersDB,
+          leadingTabs: clubesLeadingTabs(orig, playersDB), defaultTab: CLUBES_DEFAULT_TAB,
+          extraTabs: fpgExtraTabs(editionsIndex, t, playersDB, matchplayData),
+        };
       }
     });
     return { entries: ents, byId };
@@ -341,19 +340,18 @@ function Content() {
     if (isClubesView) return clubesShell.entries;
     // Jovens: ano da edição e contagem de inscritos nos torneios por disputar.
     const ents = isJovensView ? buildJovensEntries(jovensGroups) : buildFpgEntries(shellGroups);
-    // Anexa o render do detalhe (delegado ao TournamentDetail da FPG, que tem
-    // escLookup/playersDB em runtime) — mesmo padrão do DrivePage. As tabs
-    // "Edições anteriores" vêm do índice próprio da FPG (fpgPastEditionsTabs),
-    // não do mecanismo do shell — por isso a config não define editionKey.
+    // O detalhe em DADOS (11/11/2026 — era um `renderFull`), como em todas as
+    // páginas: a identidade FPG (escLookup/playersDB) e as abas da página; o shell
+    // monta o TournamentDetail e aplica os filtros de jogador da barra.
+    // Na FPG cada ESCALÃO é um torneio próprio (ccode-tcode), por isso é a página
+    // que sabe quais são as edições irmãs (índice por clube + família do nome, com
+    // os aliases curados — fpgPastEditions.tsx) e entrega as abas «Edições
+    // anteriores», «Scorecards anteriores» e «Scout» já com elas — desenhadas pelas
+    // MESMAS peças do shell (CircuitPastEditionsTab, CircuitPastScorecardsTab,
+    // ScoutProva). A config não define editionKey.
     for (const e of ents) for (const d of e.divisions ?? []) {
       const t = d.results!;
-      // `playerFilter`: os chips de jogador da barra do shell (🏆 Top 10) — sem
-      // isto não faziam nada nesta página (10/11/2026).
-      d.renderFull = (extras) => (
-        <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
-          extraTabs={fpgExtraTabs(editionsIndex, t, playersDB, matchplayData)}
-          playerFilter={extras?.playerFilter} />
-      );
+      d.detail = { escLookup, playersDB, extraTabs: fpgExtraTabs(editionsIndex, t, playersDB, matchplayData) };
     }
     return ents;
   }, [isClubesView, clubesShell, isJovensView, jovensGroups, shellGroups, escLookup, playersDB, editionsIndex, matchplayData]);
