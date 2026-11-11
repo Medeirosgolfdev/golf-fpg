@@ -219,15 +219,15 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   (draw → resultados → inscrições), edições anteriores no bloco «Nesta prova»,
   WHS e Previsão WHS para quem tem federado (o da prova, senão o da ficha do Kids 2).
   A FPG e o CircuitShell (`ScoutDoCircuito`) dão-lhe as edições; nas outras
-  páginas junta-o o TournamentDetail. Nada de Scouts próprios por página. O `IntlTournView` é só um adaptador da interface antiga — funcionalidade
+  páginas junta-o o TournamentDetail. Nada de Scouts próprios por página. Não há adaptadores (o `IntlTournView` foi apagado a 11/11/2026): as regras das provas de fora — sem cabeçalho FPG, sem previsão de draw, nome com a seta do Kids 2 — vivem DENTRO do TournamentDetail, que as aplica quando a prova não traz federados (`escLookup`). Funcionalidade
   nova entra no TournamentDetail. A aba vive no URL (`?tab=`; `tabParam` muda o
   nome — a `/uskids` usa `rt`).
 - **Uma página de torneios entrega DADOS ao CircuitShell; quem monta o detalhe e as
-  abas é o shell** (Mariana, 11/11/2026: «as páginas todas são circuit shell…
+  abas é o shell** — **num só caminho, com uma única chamada ao TournamentDetail** (Mariana, 11/11/2026: «simplifica ao máximo, que seja tudo igual, que quando eu mudar uma coisa mude em todo o lado; não quero adaptadores; as abas só aparecem quando há essa informação») (Mariana, 11/11/2026: «as páginas todas são circuit shell…
   porquê que não são todas iguais?»). A divisão dá `results`/`totals`/`roundDraws`/
   `admissions` e, nos torneios da federação, **`detail`** (`CircuitDetailSpec`:
   `escLookup`, `playersDB`, as abas PRÓPRIAS da página em `leadingTabs`/`extraTabs`,
-  `defaultTab`, `intro`; e as opções do leaderboard — `options`, `accShowCols`, `accExtraColumns`, `accHeader`, `drawHideCols` —, com `shellHeader` para o cabeçalho do shell). O shell junta sempre, e pela mesma ordem, as abas comuns:
+  `defaultTab`, `intro`; e as opções do leaderboard — `options`, `accShowCols`, `accExtraColumns`, `accHeader`, `drawHideCols` —). O shell junta sempre, e pela mesma ordem, as abas comuns:
   Época → Edições anteriores → Scorecards anteriores → Scout, e os filtros de
   jogador. **«Edições anteriores» (tabela-resumo de cada ano) e «Scorecards
   anteriores» (os cartões) são DUAS abas e ficam as duas.** O `renderFull` (a

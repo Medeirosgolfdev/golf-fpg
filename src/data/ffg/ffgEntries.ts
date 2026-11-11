@@ -163,7 +163,7 @@ export function ffgGgDivision(meta: CatalogEntry, data: FFGTournament): CircuitD
     tabLabel: label,
     sex: ggSexFromName(data.tournament || meta.title || ""),
     hasManuel,
-    // `results` (não `customResults`): só assim a shell renderiza o IntlTournView
+    // `results` (não `customResults`): só assim a shell renderiza o TournamentDetail
     // e intercala as abas "Draw R{n}" antes de cada ronda.
     results: toFPGTournament(data),
     scOptions: ffgScorecardOptions(),

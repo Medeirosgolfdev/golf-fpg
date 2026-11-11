@@ -63,7 +63,7 @@ function shortTitle(t: FFGTournament | CatalogEntry): string {
     .trim();
 }
 
-/* ── Adaptador FFG Resultats → FPGTournament (reusa IntlTournView com par real) ── */
+/* ── Adaptador FFG Resultats → FPGTournament (reusa TournamentDetail com par real) ── */
 export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FPGTournament {
   // Filtrar série específica ou agregar tudo. Se o filtro não corresponde a
   // nenhuma série (caso comum quando vimos de outro torneio), faz fallback
@@ -189,7 +189,7 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
   return t;
 }
 
-/* ── Adaptador FFG → FPGTournament (para reusar IntlTournView) ── */
+/* ── Adaptador FFG → FPGTournament (para reusar TournamentDetail) ── */
 export function toFPGTournament(t: FFGTournament): FPGTournament {
   // Ordenar: primeiro quem jogou mais voltas, depois o total ascendente (pode
   // estar fora de ordem nos JSONs antigos). Só pelo total, quem desistiu depois

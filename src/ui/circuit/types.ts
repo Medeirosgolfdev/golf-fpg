@@ -7,8 +7,8 @@
  * normalizam os seus dados para estes tipos e entregam-nos ao <CircuitShell>.
  * Cada página passa a ser: loader + adaptador + config — sem layout próprio.
  *
- * O leaderboard em si continua a ser desenhado pelo <IntlTournView>, que recebe
- * um Tournament (FPG-format) por divisão/secção. Ver src/ui/IntlTournView.tsx.
+ * O leaderboard é desenhado pelo <TournamentDetail> (o único detalhe de torneio),
+ * que o shell chama num só sítio com os dados da divisão.
  */
 
 import type { CircuitRanking } from "./CircuitRanking";
@@ -86,10 +86,6 @@ export interface CircuitDetailSpec {
   accExtraColumns?: TournamentDetailProps["accExtraColumns"];
   accHeader?: TournamentDetailProps["accHeader"];
   drawHideCols?: TournamentDetailProps["drawHideCols"];
-  /** O cabeçalho é o do SHELL (título, campo, pílulas, links da divisão), como nas
-   *  provas de fora; sem isto, o do próprio detalhe (o da FPG, com os links da
-   *  Federação). */
-  shellHeader?: boolean;
   /** Aviso próprio por cima do detalhe (ex.: «reconstruído das voltas dos nossos»). */
   intro?: React.ReactNode;
 }
@@ -134,10 +130,10 @@ export interface CircuitDivision extends TournamentModel {
   hasManuel?: boolean;
 
   // ── Secções (pelo menos uma) ──────────────────────────────────────
-  /** Leaderboard de resultados (hole-by-hole se houver). Alimenta o IntlTournView. */
+  /** Leaderboard de resultados (hole-by-hole se houver). Alimenta o TournamentDetail. */
   results?: FPGTournament;
   /**
-   * Conteúdo de resultados à medida, renderizado em vez do IntlTournView quando
+   * Conteúdo de resultados à medida, renderizado em vez do TournamentDetail quando
    * não há resultados. Para só totais, usar `totals` (dados — o shell passa-os
    * ao TournamentDetail como prova sem buraco a buraco); isto fica para o que
    * não são resultados (destaques de live scoring do NextCaddy).
@@ -183,14 +179,14 @@ export interface CircuitDivision extends TournamentModel {
   roundExtra?: (roundIndex: number) => React.ReactNode;
   accExtra?: React.ReactNode;
   /**
-   * Substituição total da secção acumulada (Resumo) do IntlTournView. Recebe o
+   * Substituição total da secção acumulada (Resumo) do TournamentDetail. Recebe o
    * elemento do leaderboard acumulado e devolve o conteúdo completo da secção
    * (England/BJGT usam isto para envolver o leaderboard em cards + HoleDiff +
    * Field Stats). Tem precedência sobre accHeader/accExtra.
    */
   renderAccSection?: (leaderboard: React.ReactNode) => React.ReactNode;
   /**
-   * Substituição total da secção de cada ronda do IntlTournView. Recebe o
+   * Substituição total da secção de cada ronda do TournamentDetail. Recebe o
    * leaderboard da ronda e o índice. Tem precedência sobre roundExtra.
    */
   renderRoundSection?: (leaderboard: React.ReactNode, roundIndex: number) => React.ReactNode;
@@ -223,7 +219,7 @@ export interface CircuitDivision extends TournamentModel {
   /**
    * Draws POR RONDA (cada um um DrawTab partilhado), intercalados com os
    * resultados na barra principal (Inscrições · Draw R1 · R1 · Draw R2 · R2 · …):
-   * o shell passa-os ao `IntlTournView`, que insere cada "Draw R{n}" antes da
+   * o shell passa-os ao `TournamentDetail`, que insere cada "Draw R{n}" antes da
    * ronda n. Sem resultados de ronda, aparecem na secção "Draw". `round` é
    * 1-based. Pode incluir rondas ainda não jogadas (só os pairings).
    */
@@ -235,7 +231,7 @@ export interface CircuitDivision extends TournamentModel {
    * MATCH PLAY (brackets) do torneio — schema `MatchplayFile` gerado pelo
    * `scrape-golfbox-matchplay.js` (ETC no GolfBox: {slug}_matchplay_{ano}.json).
    * Com resultados de ronda, aparece como aba "Match Play" no FIM da barra do
-   * IntlTournView (é a fase final, depois da qualificação stroke play); sem
+   * TournamentDetail (é a fase final, depois da qualificação stroke play); sem
    * rondas, entra na barra de secções. Renderizado pelo <MatchplayView>.
    */
   matchplay?: MatchplayFile;
@@ -439,7 +435,7 @@ export interface CircuitConfig {
    * no shell. Duas entradas com a mesma chave são a mesma prova em anos
    * diferentes (ex: MAJOR → `e.source`; England/GJGL → família do slug). Quando
    * definida, o shell constrói a tab automaticamente (entrega-a às divisões do
-   * IntlTournView como trailing-tab e às `renderFull` via argumento) usando as
+   * TournamentDetail como trailing-tab e às `renderFull` via argumento) usando as
    * próprias `entries` — sem cada página reimplementar o carregador. `null`/
    * ausente para uma entrada = sem tab. Alternativa ao `pastEditionsTab` (mais
    * baixo nível); quando ambos existem, `editionKey` ganha.

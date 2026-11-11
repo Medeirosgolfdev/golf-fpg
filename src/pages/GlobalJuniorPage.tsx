@@ -8,7 +8,7 @@
  * Estética inspirada na FPGPage:
  *   • Sidebar master-detail agrupada por ano
  *   • Toolbar com tabs de escalão
- *   • IntlTournView (componente partilhado) por escalão
+ *   • TournamentDetail (componente partilhado) por escalão
  *
  * O GJGL só expõe escalões U14, U18, U23. Manuel (12y) compete em U14.
  */

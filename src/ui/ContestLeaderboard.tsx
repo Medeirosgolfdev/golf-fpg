@@ -1,7 +1,7 @@
 /**
  * ContestLeaderboard — classificação de um contest WJGC (análise BJGT).
- * O leaderboard é o detalhe de torneio único (TournamentDetail, pelo adaptador
- * IntlTournView): Resumo, voltas, Scorecards e análise como nas outras páginas.
+ * O leaderboard é o detalhe de torneio único (TournamentDetail): Resumo, voltas,
+ * Scorecards e análise como nas outras páginas.
  * Aqui só fica o que é deste ecrã — a evolução 2025 → 2026 (cartão do Manuel e
  * tabela), no fim do Resumo.
  */
@@ -12,7 +12,7 @@ import EvoBadge from "./EvoBadge";
 import SortableHdr from "./SortableHdr";
 import { useSort, compareTextNullsLast } from "../hooks/useSort";
 import ToPar from "./ToPar";
-import { IntlTournView } from "./IntlTournView";
+import { TournamentDetail } from "../pages/fpg/TournamentDetail";
 import type { Tournament as FPGTournament } from "../pages/FPGPage";
 import { intlScorecardOptions } from "../data/intlScorecard";
 import { buildFPGTournament, type IntlPlayerIn } from "../data/intlTournament";
@@ -74,7 +74,7 @@ export default function ContestLeaderboard({ contest, evo }: ContestLeaderboardP
   const extra = evo && evo.length > 0
     ? <>{hasManuel && <ManuelEvo evo={evo} />}<EvoTable evo={evo} /></>
     : undefined;
-  return <IntlTournView tournament={tournament} scOptions={SC_OPTIONS} accExtra={extra} />;
+  return <TournamentDetail tournament={tournament} options={SC_OPTIONS} accExtra={extra} />;
 }
 
 /* ── Evolução 2025 → 2026 ── */

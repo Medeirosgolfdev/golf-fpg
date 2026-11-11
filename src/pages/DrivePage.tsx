@@ -155,7 +155,7 @@ function DriveContent() {
   // Inscrições + draws da FPG (uma vez), por ccode-tcode.
 
   // ── CircuitShell: entries a partir da lista CRUA (não-expandida) ─────────
-  // O IntlTournView desenha as tabs de ronda a partir de results.players[].roundScores;
+  // O TournamentDetail desenha as tabs de ronda a partir de results.players[].roundScores;
   // as secções Inscritos/Draw vêm de _admissions/_draws (anexados por tcode base).
   // Todos os torneios (resultados + por jogar), sem filtros: deep-links e `?t=`.
   const allSrc = useMemo(() => {

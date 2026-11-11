@@ -8,7 +8,7 @@
  * página-mãe `CircuitShell` consome — mesmo padrão usado em RFEGPage.
  *
  * Estratégia de leaderboard: NATIVA do CircuitShell. Cada divisão entrega o
- * seu `results: FPGTournament` e o `IntlTournView` desenha o leaderboard
+ * seu `results: FPGTournament` e o `TournamentDetail` desenha o leaderboard
  * (incl. tabs de ronda a partir de `players[].roundScores`).
  *
  * O detalhe de cada divisão é o TournamentDetail (a DrivePage põe-no em
@@ -288,7 +288,7 @@ function driveDivisions(group: DriveGroup): CircuitDivision[] {
   }
   if (group.isMulti) {
     // Multi-ronda: usar a entrada "Resumo" (jogadores com roundScores de todas as
-    // rondas) para o IntlTournView desenhar as tabs de ronda; fallback à 1ª entrada.
+    // rondas) para o TournamentDetail desenhar as tabs de ronda; fallback à 1ª entrada.
     const resumo = group.entries.find(t => t._roundLabel === "Resumo") ?? group.entries[0];
     const roundLabels = Array.from({ length: group.totalRounds }, (_, i) => `R${i + 1}`);
     return [{

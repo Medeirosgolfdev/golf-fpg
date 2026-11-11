@@ -18,6 +18,8 @@ import { useSearchParams } from "react-router-dom";
 import type { Tournament, ScorecardOptions } from "../../data/fpgTypes";
 import type { EscLookup } from "../../utils/playerUtils";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
+import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../../ui/tournamentPrimitives";
+import { KidsLink } from "../../ui/KidsLink";
 import type { MultiRoundRow } from "../../ui/multiRoundTypes";
 import { expandMultiRound, synthesizeDrawFromCumulative } from "../../data/fpgUtils";
 import { tournamentHasManuel, tournamentPccs } from "../../data/fpgUtils";
@@ -63,12 +65,17 @@ function dedupLinks(links: Array<{ label: string; url: string; icon?: string }>)
 type TabContent = { key: string; label: string; content: React.ReactNode };
 
 /** Tudo o que uma página de torneio pode ligar — O ÚNICO componente de detalhe
- *  de torneio da app (FPG, Drive, MAJOR, França, Espanha, Global Junior…; o
- *  IntlTournView é só um adaptador). Cada página esconde o que não precisa. */
+ *  de torneio da app (FPG, Drive, MAJOR, França, Espanha, Global Junior…), chamado
+ *  pelo CircuitShell num só sítio. Cada página dá os dados; o que não há não aparece. */
 export interface TournamentDetailProps {
   tournament: Tournament;
-  escLookup: EscLookup;
-  playersDB: PlayersDB;
+  /** Identidade FPG dos jogadores (escalão por federado, nascimento, ficha).
+   *  SEM eles a prova é «de fora» (França, Espanha, MAJOR, USKids…) e o detalhe
+   *  ajusta-se sozinho — ver `deFora` em baixo. As páginas não têm de saber as
+   *  regras: basta darem, ou não, os federados (11/11/2026 — estas regras viviam
+   *  num adaptador à parte, o IntlTournView). */
+  escLookup?: EscLookup;
+  playersDB?: PlayersDB;
   options?: ScorecardOptions;
   /** Tabs DEPOIS das voltas/Resumo/Scorecards (Match Play, Edições anteriores…). */
   extraTabs?: TabContent[];
@@ -111,7 +118,33 @@ export interface TournamentDetailProps {
   playerFilter?: (t: Tournament) => Tournament;
 }
 
-function TournamentDetail({ tournament: tournamentIn, escLookup, playersDB, extraTabs: extraTabsIn, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab", defaultTab, playerFilter }: TournamentDetailProps) {
+/** Colunas do Resumo numa prova de fora: sem ESC/FED/TEE (não há federados). */
+const ACC_COLS_DE_FORA = { esc: false, fed: false, tee: false };
+/** Nome numa prova de fora: com a seta ↗ para a ficha do Kids 2 (só aparece para
+ *  quem lá está — resolve pelo KidsLinkCtx do CircuitShell). */
+const kidsNameDecorator: NonNullable<ScorecardOptions["nameDecorator"]> = (name, content) => (
+  <span className="inline-flex items-center">{content}<KidsLink nome={name} /></span>
+);
+const kidsAccName = (row: MultiRoundRow) => (
+  <span className="tourn-pname inline-flex items-center">{row.countryFlag} {row.name}<KidsLink nome={row.name} /></span>
+);
+
+function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, playersDB: playersDBIn, extraTabs: extraTabsIn, leadingTabs, roundDraws, roundLabels, siLabel, options: optionsIn, accShowCols: accShowColsIn, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName: renderAccNameIn, drawHideCols, hideHeader: hideHeaderIn, synthDraws: synthDrawsIn, tabParam = "tab", defaultTab, playerFilter }: TournamentDetailProps) {
+  // ── Prova DE FORA da federação = sem federados. Um só sítio para as regras:
+  //   · sem o cabeçalho FPG (a página-mãe tem o seu);
+  //   · sem prever o draw da volta seguinte (a regra de emparelhamento é da FPG);
+  //   · Resumo sem ESC/FED/TEE; nomes com a seta para o Kids 2.
+  // Uma prop explícita ganha sempre ao valor por omissão.
+  const deFora = !escLookupIn;
+  const escLookup = escLookupIn ?? EMPTY_ESC_LOOKUP;
+  const playersDB = playersDBIn ?? EMPTY_PLAYERS_DB;
+  const hideHeader = hideHeaderIn ?? deFora;
+  const synthDraws = synthDrawsIn ?? !deFora;
+  const accShowCols = accShowColsIn ?? (deFora ? ACC_COLS_DE_FORA : undefined);
+  const options = useMemo(
+    () => (deFora && !optionsIn?.nameDecorator ? { ...optionsIn, nameDecorator: kidsNameDecorator } : optionsIn),
+    [deFora, optionsIn]);
+  const renderAccName = renderAccNameIn ?? (deFora ? kidsAccName : undefined);
   // Nascimento do Kids 2 para quem a fonte não o traz (USKids, MAJOR, FFG…) —
   // nas voltas, no Resumo e nos Scorecards (02/11/2026).
   const kidsDob = useKidsDob(precisaKidsDob(tournamentIn.players));

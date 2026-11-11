@@ -617,7 +617,7 @@ export function ScorecardLB({
             <SexBadge sex={sex} />
           </span>
         ) : withFlag;
-        // ⚠ O `nameDecorator` das paginas de circuito (IntlTournView, MajorPage)
+        // ⚠ O `nameDecorator` das paginas de circuito (TournamentDetail, MajorPage)
         // serve so para acrescentar a seta ↗ do kids2 -- e o <TournPName> acima
         // JA a desenha. Aplica-lo aos dois punha DUAS setas em cada linha (o
         // mesmo bug que o comentario em tournamentPrimitives.tsx ja descreve;

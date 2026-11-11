@@ -230,7 +230,7 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
 
 /* ── fcgToFPGTournament ────────────────────────────────────────
  * Converte os JSONs FCG (golfdirecto) para FPGTournament — formato consumido
- * pela tab "Resultados" via IntlTournView/ScorecardLeaderboard. Mantém:
+ * pela tab "Resultados" via TournamentDetail/ScorecardLeaderboard. Mantém:
  *   - par/SI/metros reais por buraco (gameTee.par1_18 etc.)
  *   - scorecard hbh por jogador (score.gross1-18)
  *   - posição + total + to-par (view.acc)

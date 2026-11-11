@@ -21,7 +21,7 @@ import { addDaysIso } from "../../utils/dias";
 
 /* ── lgsToFPGTournament ──────────────────────────────────────
  * Converte JSON livegolfscoring para FPGTournament — permite reusar
- * IntlTournView (mesmo componente que FFGPage usa) para aspecto consistente
+ * TournamentDetail (mesmo componente que FFGPage usa) para aspecto consistente
  * com FPG/FFG: cabeçalho, tabs R1/R2/Resumo, scorecard global com cores. */
 /** Volta com cartão no LGS: total > 0 e não «sem cartão» (gross ≥ 900, regra comum). */
 export const isLgsCard = (total: number | null | undefined): total is number =>
@@ -280,7 +280,7 @@ export function lgsScorecardOptions(): ScorecardOptions {
 
 /* ── ncToFPGTournament ────────────────────────────────────────
  * Converte JSON NextCaddy (já adaptado para RFEGDetail por adaptNextCaddy)
- * em FPGTournament — mesma estrutura uniforme para IntlTournView.
+ * em FPGTournament — mesma estrutura uniforme para TournamentDetail.
  *
  * Requer que o JSON tenha sido scrapado com `--scorecards` (popula roundScores
  * em cada player + course.par[]). Se estiver vazio, devolve null. */
@@ -477,7 +477,7 @@ export function ncToFPGTournament(
 
 /* ── rfegolfToFPGTournament ─────────────────────────────────────
  * Converte RFEGolf microsite results (PDF parsed) em FPGTournament. Sem hbh,
- * apenas totais por ronda — IntlTournView mostra "Resumo" mas as tabs Rn
+ * apenas totais por ronda — TournamentDetail mostra "Resumo" mas as tabs Rn
  * mostram só totais. Útil para uniformidade visual. */
 export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGTournament | null {
   const results = (detail.results || []).filter(r => r.players && r.players.length > 0);
@@ -551,7 +551,7 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
     {
       keepNoRounds: true, raw: true,
       // RFEGolf publica ~65% só em PDF: temos os TOTAIS por ronda mas NÃO o cartão
-      // hole-by-hole (scores/par/si/meters vazios). Marca para o IntlTournView NÃO
+      // hole-by-hole (scores/par/si/meters vazios). Marca para o TournamentDetail NÃO
       // mostrar a tab "📋 Scorecards" (grelha vazia = parece partido).
       extra: { _noHbh: true },
     },

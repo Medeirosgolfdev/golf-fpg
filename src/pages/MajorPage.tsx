@@ -26,8 +26,6 @@ import MatchplayView from "../ui/circuit/MatchplayView";
 import { bjgtEvoFor, bjgtMajorDivision } from "./BJGTPage";
 import { EvoSummary, tagEvo, makeEvoCols } from "../ui/evo";
 import { doralEvoFor, doralMajorDivision } from "./DORALPage";
-import type { ScorecardOptions } from "./FPGPage";
-import { KidsLink } from "../ui/KidsLink";
 import MajorVeteransView from "./major/MajorVeteransView";
 import { C } from "../utils/colors";
 import type { TDef } from "../data/major/bluegolf";
@@ -38,15 +36,6 @@ import {
   type MajorCatalog, type MajorCatalogEntry, type MajorJobData,
 } from "../data/major/majorLoader";
 
-/** Seta ↗ para a página KIDS2 do jogador, injectada nos nomes do detalhe (via
- *  `nameDecorator`). Resolve pelo KidsLinkCtx que o CircuitShell já fornece — só
- *  aparece para quem existir no agregado de juniores. Os torneios BJGT/Doral
- *  (IntlTournView) já a têm; isto dá-a aos que usam TournamentDetail (FM +
- *  GolfGenius/GolfBox: FSGA, UA, México, Interzonas, avtrophy). */
-const kidsNameDecorator: NonNullable<ScorecardOptions["nameDecorator"]> = (name, content) => (
-  <span className="inline-flex items-center">{content}<KidsLink nome={name} /></span>
-);
-const withKidsLink = (opts: ScorecardOptions): ScorecardOptions => ({ ...opts, nameDecorator: kidsNameDecorator });
 
 
 /** Ordena escalões: Boys antes de Girls, idade crescente (7&U→…→16-18), WAGR no fim. */
@@ -117,7 +106,8 @@ function jobDivisions({ file, files }: MajorJobData): CircuitDivision[] {
  *  FM (`sortByAge`: 10 and Under → 11 & 12 → 13 & 14 → 15 …). */
 function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): CircuitDivision[] {
   const linkLabel = def.linkLabel ?? "Resultados GolfGenius";
-  const scOpts = withKidsLink(jobScorecardOptions({ showRatings: def.showRatings, showAges: def.showAges }));
+  // (a seta ↗ para o Kids 2 nos nomes é do próprio detalhe, em todas as provas de fora)
+  const scOpts = jobScorecardOptions({ showRatings: def.showRatings, showAges: def.showAges });
   // Match play (brackets ETC) — tab extra no TournamentDetail.
   const mpBase = matchplay ? [{ key: "matchplay", label: "Match Play", content: <MatchplayView data={matchplay} /> }] : [];
   const shareEvent = def.eventName ? `${def.eventName} ${f.year}` : (f.tournament || `${def.series} ${f.year}`);
@@ -142,7 +132,6 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
       // (Época, Edições anteriores, Scorecards anteriores, Scout) e os filtros
       // de jogador da barra. Da página só a aba «Match Play».
       detail: {
-        shellHeader: true,
         options: { ...scOpts, shareEvent, shareCourse },
         accShowCols: { esc: false, fed: false, tee: false, hcp: !!def.showRatings },
         accExtraColumns: evoCols,
@@ -173,7 +162,7 @@ const MAJOR_CONFIG: CircuitConfig = {
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   // Identidade de torneio entre anos = a FONTE (coc, fsga, uajt, bjgt, doral…).
   // O shell constrói a tab "Edições anteriores" das entradas irmãs e entrega-a
-  // às divisões do IntlTournView (trailing-tab) E às `renderFull` (via extras).
+  // às divisões do TournamentDetail (trailing-tab) E às `renderFull` (via extras).
   // "Edições anteriores" = mesma prova ao longo dos anos. Nos multi-etapa/fase
   // (Estonian Junior Tour, Optimist Phase 1-3) a "mesma prova" é a MESMA
   // etapa/fase (nº no id `{src}:ano:n`) — sem isto as etapas de um ano

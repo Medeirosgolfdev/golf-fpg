@@ -181,7 +181,7 @@ rankings, inscrições, Kids 2, equipas) e aos scripts.
 - **Desenho escolhido pelos dados** (`ui/circuit/divisionPieces.tsx`):
   `roundDrawNode` (draw de uma volta → `DrawTab`; um `render` da página ganha) e
   `totalsDivisionView` (`totals` → prova `_noHbh` do TournamentDetail). Usados
-  pelo CircuitShell, IntlTournView e TournamentDetail. Já são dados: draws
+  pelo CircuitShell e pelo TournamentDetail (o adaptador IntlTournView foi apagado a 11/11/2026). Já são dados: draws
   GolfGenius e LGPIDF (/ffg) e USKids; totais EGR, WAGR, GJGL e LGPIDF. Ainda JSX:
   `renderFull` (FPG, Drive, MAJOR, USKids — o TournamentDetail com props da página; a sair
   desde 11/11/2026, substituído por `detail` em dados — /torneios-recentes já migrou),

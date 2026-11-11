@@ -48,6 +48,19 @@ describe("detalhe do torneio montado pelo shell (o renderFull está a sair)", ()
     expect(AINDA_COM_RENDER_FULL.filter((f) => !usam.includes(f))).toEqual([]);
   });
 
+  it("um só caminho: sem adaptador, e o detalhe só é chamado pelo shell", () => {
+    // O adaptador IntlTournView foi apagado a 11/11/2026 — as regras das provas
+    // de fora vivem dentro do TournamentDetail. Não volta.
+    expect(fs.existsSync(path.join(RAIZ, "src/ui/IntlTournView.tsx"))).toBe(false);
+    // (uma chamada a sério leva props: «<TournamentDetail » — não conta o nome num comentário)
+    const chamam = ficheiros(path.join(RAIZ, "src")).filter((f) => /<TournamentDetail\s/.test(fs.readFileSync(f, "utf8"))).map(rel).sort();
+    expect(chamam).toEqual([
+      ...AINDA_COM_RENDER_FULL,              // a sair
+      "src/ui/ContestLeaderboard.tsx",       // análise BJGT (fora do shell)
+      "src/ui/circuit/CircuitShell.tsx",     // O sítio
+    ].sort());
+  });
+
   it("as páginas já migradas entregam o detalhe em dados (`detail`) e não o desenham", () => {
     for (const f of ["src/pages/RecentTournamentsPage.tsx", "src/pages/DrivePage.tsx", "src/pages/MajorPage.tsx"]) {
       const s = fs.readFileSync(path.join(RAIZ, f), "utf8");

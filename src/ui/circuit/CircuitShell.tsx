@@ -7,7 +7,7 @@
  *   • master-detail (sidebar agrupada por ano / série / fonte)
  *   • toolbar de filtros (pesquisa, ano, escalão, sexo, fonte) + toggles
  *     rápidos (★ Manuel, 🇵🇹 PT, 🏆 Top 10, ✦ Veteranos, ↻ Regressados, ⬆ Subiram)
- *   • detalhe: DetailHeader + tabs de escalão + a barra ÚNICA do <IntlTournView>
+ *   • detalhe: DetailHeader + tabs de escalão + a barra ÚNICA do <TournamentDetail>
  *     (o TournamentDetail da FPG): Inscrições → Draw → R1 → … → Resumo →
  *     📋 Scorecards → Época → Edições anteriores → Scout
  *
@@ -15,7 +15,7 @@
  * apenas: loader + adaptador → CircuitShell. Sem layout próprio.
  *
  * UM SÓ CAMINHO (02/11/2026): com ou sem cartões, tudo passa pelo
- * IntlTournView. Só com totais, a prova vai como prova sem buraco a buraco
+ * TournamentDetail. Só com totais, a prova vai como prova sem buraco a buraco
  * (`totalsDivisionView`): o mesmo Resumo, sem Scorecards — já não há barra de
  * secções à parte nem tabela de totais própria.
  */
@@ -42,9 +42,7 @@ import Counter from "../Counter";
 import SexBadge from "../SexBadge";
 import ExtLink from "../ExternalLink";
 import { EscPill, RoundPill, ManuelPill } from "../PillBadge";
-import { IntlTournView } from "../IntlTournView";
 import { TournamentDetail } from "../../pages/fpg/TournamentDetail";
-import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../tournamentPrimitives";
 import { CampoDoCircuito } from "../../pages/fpg/fpgCourseTab";
 import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
@@ -133,7 +131,7 @@ const TOGGLE_DEF: Record<CircuitToggle, { label: string; title: string }> = {
 
 // Labels/ordem alinhados com a barra de tabs da FPGPage (TournamentDetail):
 // Inscrições → Draw → R1 → … → Resumo → 📋 Scorecards. Texto simples, sem ícones
-// de secção (a FPG só usa ícone no "📋 Scorecards", que vem do IntlTournView).
+// de secção (a FPG só usa ícone no "📋 Scorecards", que vem do TournamentDetail).
 const SECTION_DEF: Record<CircuitSectionKind, { label: string; icon: string }> = {
   // «Resumo», como nas provas com cartões (desenho próprio de página sem resultados).
   results:   { label: "Resumo",      icon: "" },
@@ -471,24 +469,22 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     setFLiga("all"); setFIntl(false); setToggles(new Set());
   };
 
-  // ── UM SÓ CAMINHO (02/11/2026): todas as divisões passam pelo IntlTournView
+  // ── UM SÓ CAMINHO (02/11/2026): todas as divisões passam pelo TournamentDetail
   // (o TournamentDetail da FPG), com ou sem cartões — pedido da Mariana: «os 2
   // caminhos não podem passar a um caminho só?». A barra é sempre a mesma:
   //   Inscrições → Draw → R1 → … → Resumo → 📋 Scorecards → Época → Edições → Scout
   // Só com totais (EGR, WAGR, GJGL, Liguillas NextCaddy, LGPIDF): a prova é
   // convertida numa prova sem buraco a buraco (`_noHbh`) e desenhada pelo MESMO
   // Resumo — sem o separador Scorecards.
-  /** A divisão tem detalhe «à FPG»: em dados (`detail`, o shell monta-o) ou, nas
-   *  páginas por migrar, o `renderFull`. Nos dois casos o caminho das fontes de
-   *  fora (IntlTournView) não se aplica. */
-  const delega = !!(curDiv?.renderFull || (curDiv?.detail && curDiv.results));
+  /** Só as páginas por migrar (`renderFull`) desenham o seu detalhe; para todas
+   *  as outras há UM caminho: os dados da divisão → o TournamentDetail. */
+  const delega = !!curDiv?.renderFull;
   const totalsView = useMemo(() => (curDiv && !delega && !curDiv.results && cur
     ? totalsDivisionView(curDiv, { name: cur.name, date: cur.dateStart, campo: cur.course })
     : null), [curDiv, cur, delega]);
 
   // ── Leaderboard com toggles aplicados ───────────────────────────────
   const baseTourn = curDiv?.results ?? totalsView?.tournament ?? null;
-  const resultsTourn = baseTourn && playerFilter ? playerFilter(baseTourn) : baseTourn;
 
   const leadingTabs: { key: string; label: string; content: React.ReactNode }[] = [];
   if (curDiv && !delega) {
@@ -501,7 +497,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     }
     // Desenho próprio da página sem resultados (destaques de live scoring do
     // NextCaddy: só HiO/eagles/birdies, sem pancadas) → no lugar do «Resumo».
-    if (!resultsTourn && curDiv.customResults !== undefined) {
+    if (!baseTourn && curDiv.customResults !== undefined) {
       leadingTabs.push({ key: "resumo", label: sectionLabel("results"), content: curDiv.customResults });
     }
   }
@@ -520,7 +516,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // Mesmo vocabulário do TournamentDetail ("round:0", "draw:2", "resumo",
   // "scorecards", "matchplay", "past-editions"), para o link funcionar tanto
   // nas divisões com `renderFull` (TournamentDetail) como nas que ficam no
-  // IntlTournView do shell. `replace` para não encher o histórico.
+  // TournamentDetail do shell. `replace` para não encher o histórico.
   // Quem lê e escreve o URL é o próprio TournamentDetail: o shell só lhe diz o
   // NOME do parâmetro (a /uskids usa «rt»). Antes passava `tabKey`/`onTabKey`,
   // que o detalhe já não lê — o `&rt=scout` nunca lá chegava (10/11/2026).
@@ -530,7 +526,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // seu `loadDivisions` lazy → basta agrupar as irmãs (mesma `editionKey`) e
   // entregá-las ao componente partilhado. Só se mostra com ≥2 edições (uma só
   // não tem com que comparar). Construída aqui uma vez e entregue às duas vias:
-  // trailing-tab (IntlTournView) e argumento de `renderFull` (TournamentDetail).
+  // trailing-tab (TournamentDetail) e argumento de `renderFull` (TournamentDetail).
   const { editionKey, seasonKey, pastEditionsTab: pastEditionsTabConfig, matchDivision: matchDiv, scoutDivisions, scoutTCode } = config;
   const curDivLabel = curDiv ? (curDiv.tabLabel || curDiv.escalao || "") : "";
   // ⚠ `siblings` MEMOIZADO: sem isto o array era recriado a cada render e o
@@ -615,20 +611,14 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       match={matchDiv} scoutMatch={scoutMatch} tCode={tCodeScout} />,
   } : null;
   if (repeatersTabNode && !delega) trailingTabs.push(repeatersTabNode);
-  // As abas comuns do shell, pela ordem de sempre — para o detalhe em dados
-  // (`detail`): as da página primeiro, depois Época · Edições anteriores ·
-  // Scorecards anteriores · Scout. («Edições» = tabela-resumo por ano;
-  // «Scorecards» = os cartões. São duas abas e ficam as duas.)
-  const shellTabs = [seasonTabNode, pastEditionsTabNode, pastScorecardsTabNode, repeatersTabNode]
-    .filter((t): t is { key: string; label: string; content: React.ReactNode } => !!t);
   // Sem resultados (só inscritos, ou o desenho próprio da página), o
   // TournamentDetail recebe um torneio sem voltas (só para a barra): os
   // separadores vêm todos de fora e abre no «Resumo» quando o há.
   const semVoltasTourn = useMemo<FPGTournament | null>(() => (curDiv && !delega && !baseTourn && cur
     ? { name: cur.name, tcode: cur.id, date: cur.dateStart ?? "", campo: cur.course ?? "", escalao: curDiv.escalao ?? null, rounds: 0, playerCount: 0, players: [] } as unknown as FPGTournament
     : null), [curDiv, cur, baseTourn, delega]);
-  const detailTourn = resultsTourn ?? semVoltasTourn;
-  const temResumoSemVoltas = !resultsTourn && leadingTabs.some((t) => t.key === "resumo");
+  const detailTourn = baseTourn ?? semVoltasTourn;
+  const temResumoSemVoltas = !baseTourn && leadingTabs.some((t) => t.key === "resumo");
 
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
   const headerStats = (() => {
@@ -799,7 +789,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     })}
                   </div>
                 )}
-                {(!delega || curDiv.renderFullKeepHeader || curDiv.detail?.shellHeader) && (
+                {/* O cabeçalho do shell, sempre que o detalhe não traz o seu (o da
+                    FPG, nas provas com federados). */}
+                {(curDiv.renderFull ? curDiv.renderFullKeepHeader : !curDiv.detail?.escLookup) && (
                 <DetailHeader
                   title={cur.name}
                   actions={headerHasActions ? (
@@ -880,50 +872,45 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                 </DetailHeader>
                 )}
 
-                {/* Conteúdo do torneio: barra ÚNICA estilo FPG (IntlTournView →
+                {/* Conteúdo do torneio: barra ÚNICA estilo FPG (TournamentDetail →
                     TournamentDetail), com ou sem cartões — Inscrições → Draw →
                     R1 → … → Resumo → 📋 Scorecards → Época → Edições → Scout. */}
                 {/* O campo do cabeçalho vai como reserva para a aba «⛳ O campo»
                     (o torneio do escalão nem sempre traz `campo`). */}
                 <CampoDoCircuito.Provider value={cur.course || undefined}>
                 {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, pastScorecardsTab: pastScorecardsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined, repeatersTab: repeatersTabNode ?? undefined, playerFilter })}
-                {/* Detalhe «à FPG» em DADOS: o shell monta o TournamentDetail e
-                    junta-lhe as abas comuns (não é a página que as reencaminha). */}
-                {!curDiv.renderFull && curDiv.detail && curDiv.results && (() => {
+                {/* UM SÓ CAMINHO (11/11/2026): os dados da divisão → o TournamentDetail.
+                    As abas próprias da página primeiro; depois as do shell, sempre
+                    pela mesma ordem. Se a prova é da federação ou de fora decide-o o
+                    detalhe (há, ou não, federados em `detail`). */}
+                {!delega && detailTourn && (() => {
                   const d = curDiv.detail;
-                  const abas = [...(d.extraTabs ?? []), ...shellTabs];
+                  const antes = [...(d?.leadingTabs ?? []), ...leadingTabs];
+                  const depois = [...(d?.extraTabs ?? []), ...trailingTabs];
                   const detalhe = (
-                    <TournamentDetail tournament={curDiv.results}
-                      escLookup={d.escLookup ?? EMPTY_ESC_LOOKUP} playersDB={d.playersDB ?? EMPTY_PLAYERS_DB}
-                      options={d.options} accShowCols={d.accShowCols} accExtraColumns={d.accExtraColumns}
-                      accHeader={d.accHeader} drawHideCols={d.drawHideCols} hideHeader={d.shellHeader}
-                      leadingTabs={d.leadingTabs} defaultTab={d.defaultTab}
-                      extraTabs={abas.length ? abas : undefined}
-                      playerFilter={playerFilter} tabParam={tabParamName} />
+                    <TournamentDetail
+                      tournament={detailTourn}
+                      escLookup={d?.escLookup} playersDB={d?.playersDB}
+                      // Provas de fora: o campo próprio do escalão (≠ do torneio) vai
+                      // na linha de informação, junto do CR/Slope (14/10/2026).
+                      options={d?.options ?? { ...(curDiv.scOptions ?? {}), showCourse: !!detailTourn.campo && detailTourn.campo.trim() !== String(cur.course || "").trim(), shareEvent: cur.name, shareCourse: detailTourn.campo || cur.course, shareDate: cur.dateStart }}
+                      roundLabels={curDiv.roundLabels} siLabel={curDiv.siLabel}
+                      accShowCols={d?.accShowCols}
+                      accExtraColumns={d?.accExtraColumns ?? curDiv.evoCols ?? totalsView?.accExtraColumns}
+                      accHeader={d?.accHeader ?? curDiv.accHeader ?? totalsView?.accHeader}
+                      accExtra={curDiv.accExtra} roundExtra={curDiv.roundExtra}
+                      renderAccSection={curDiv.renderAccSection} renderRoundSection={curDiv.renderRoundSection}
+                      drawHideCols={d?.drawHideCols}
+                      leadingTabs={antes.length ? antes : undefined}
+                      extraTabs={depois.length ? depois : undefined}
+                      roundDraws={curDiv.roundDraws}
+                      tabParam={tabParamName}
+                      defaultTab={d?.defaultTab ?? (temResumoSemVoltas ? "resumo" : undefined)}
+                      playerFilter={playerFilter}
+                    />
                   );
-                  return d.intro ? <div>{d.intro}{detalhe}</div> : detalhe;
+                  return d?.intro ? <div>{d.intro}{detalhe}</div> : detalhe;
                 })()}
-                {!delega && detailTourn && (
-                  <IntlTournView
-                    tournament={detailTourn}
-                    // Campo próprio do escalão (≠ do torneio) → na linha de
-                    // informação, junto do CR/Slope (14/10/2026).
-                    scOptions={{ ...(curDiv.scOptions ?? {}), showCourse: !!detailTourn.campo && detailTourn.campo.trim() !== String(cur.course || "").trim(), shareEvent: cur.name, shareCourse: detailTourn.campo || cur.course, shareDate: cur.dateStart }}
-                    roundLabels={curDiv.roundLabels}
-                    siLabel={curDiv.siLabel}
-                    evoCols={curDiv.evoCols ?? totalsView?.accExtraColumns}
-                    accHeader={curDiv.accHeader ?? totalsView?.accHeader}
-                    roundExtra={curDiv.roundExtra}
-                    accExtra={curDiv.accExtra}
-                    renderAccSection={curDiv.renderAccSection}
-                    renderRoundSection={curDiv.renderRoundSection}
-                    leadingTabs={leadingTabs.length ? leadingTabs : undefined}
-                    trailingTabs={trailingTabs.length ? trailingTabs : undefined}
-                    roundDraws={curDiv.roundDraws}
-                    tabParam={tabParamName}
-                    defaultTab={temResumoSemVoltas ? "resumo" : undefined}
-                  />
-                )}
                 </CampoDoCircuito.Provider>
               </>
             ) : (
