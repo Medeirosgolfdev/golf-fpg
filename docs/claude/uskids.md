@@ -644,6 +644,13 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
   depois de um 403 é contornar um bloqueio, não respeitá-lo; a tentativa de o testar fora do browser foi
   travada e ficou por aí. Decisão da Mariana — as opções estão no documento do assunto (04).
 - `USKIDS_DELAY_FETCH_MS` abranda a Fase 2 numa corrida feita à mão (por omissão 400 ms).
+- ⏸ **Os 6 workflows da USKids estão PAUSADOS desde 11/11/2026** (decisão da Mariana: «esperar uns dias»,
+  sem pedidos): `uskids-field.yml`, `uskids-results.yml`, `uskids-member-history.yml`,
+  `uskids-refresh-all.yml`, `update-uskids-edicoes.yml`, `update-uskids-rich-players.yml`. Estão desligados no
+  GitHub (`disabled_manually`), não no ficheiro. Rever a partir de 18/11/2026 — só se ela pedir; não há tarefa
+  agendada para os religar. Para religar: `gh workflow enable <ficheiro>` (um a um), de preferência começando
+  só pelo `uskids-field.yml` e vendo se a recusa passou antes de ligar os outros. Enquanto estiverem
+  desligados os dados da USKids ficam como estavam a 10/11 (inscritos de 06/11 em 99 de 100 torneios).
 
 ## API Signupanytime
 
