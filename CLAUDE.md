@@ -213,7 +213,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   props. As abas «⛳ O campo» e «🔮 Previsão» (a do Kids 2, no tee do Manuel:
   draw → voltas → regulamento/escalão) junta-as ele sozinho sempre que o campo
   da prova é conhecido (`useCampoTabs`, `pages/fpg/fpgCourseTab.tsx`; reserva: o
-  `course` do CircuitShell) — as páginas não as acrescentam. **O «Scout» é UM só
+  `course` do CircuitShell) — as páginas não as acrescentam. **Campo que não está na lista (provas de FORA): as duas abas montam-se do cartão da própria prova** (11/11/2026, «O campo e previsão são abas que eu quero que apareçam» → «Sim, constrói»): `data/campoDoCartao.ts` faz um `Course` no formato da base com o par, os metros e o SI por buraco e o CR/Slope que a fonte dá (cada cartão diferente = um tee) — só com par oficial E metros em todos os buracos; sem isso não há aba. Nunca nas provas da FPG nem nos torneios reconstruídos (os cartões podem ser os dos clubes). Em França os metros vêm do RMS9 do organizador (`ffgolf-rms9-tees.json`); os GP Jeunes de clubes sem RMS9 não têm metros, logo não têm aba. **O «Scout» é UM só
   e igual em todas as páginas** (05/11/2026, «EU QUERO QUE EM TODAS AS PÁGINAS
   APAREÇA O MESMO»): `ui/circuit/ScoutProva.tsx` — field por `currentField`
   (draw → resultados → inscrições), edições anteriores no bloco «Nesta prova»,

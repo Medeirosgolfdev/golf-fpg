@@ -14,6 +14,12 @@
  * existe carregam-se só os campos (master + away, sem o course-players); o
  * «quem jogou» (~10 MB) vem pelo `CoursesGate withPlayers` só ao abrir a aba.
  * Também para provas que ainda não se jogaram: o campo resolve-se pelo nome.
+ *
+ * Desde 11/11/2026 («O campo e previsão são abas que eu quero que apareçam» →
+ * «Sim, constrói»): quando o campo NÃO está na lista e a prova é de fora, as duas
+ * abas montam-se do CARTÃO da própria prova (`data/campoDoCartao.ts`: par, metros
+ * e SI por buraco, CR e Slope quando a fonte os dá) — com as mesmas peças
+ * (CourseHeroCard, PrevisaoTab). Sem «Como jogou»: ninguém nosso lá jogou.
  */
 import { createContext, lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -33,6 +39,8 @@ import { teeRuleFor, teeNameFor, parseSubNumber } from "../../utils/teeRegulatio
 import { teeDaSede } from "../../data/uskidsVenues";
 import LoadingState from "../../ui/LoadingState";
 import CourseHeroCard from "../../ui/CourseHeroCard";
+import Select from "../../ui/Select";
+import { campoDoCartao, teeInicial } from "../../data/campoDoCartao";
 
 const CourseComoJogou = lazy(() => import("../CamposPage").then((m) => ({ default: m.CourseComoJogou })));
 const PrevisaoTab = lazy(() => import("../kids/PrevisaoTab"));
@@ -88,6 +96,57 @@ function CampoDaProva({ courseKey, teeId }: { courseKey: string; teeId?: string 
         <CourseComoJogou course={course} onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)} />
       </Suspense>
     </div>
+  );
+}
+
+/** Um tee na caixa de escolha: nome, sexo e distância. */
+const rotuloTee = (t: Tee) => `${t.teeName}${t.sex === "F" && !/senhoras/i.test(t.teeName) ? " (senhoras)" : ""}${t.distances.total && !t.teeName.includes(" m") ? ` · ${t.distances.total} m` : ""}`;
+
+/** «⛳ O campo» de uma prova cujo campo NÃO está na lista: a ficha montada do
+ *  cartão da prova, no tee à escolha. Sem «Como jogou» (ninguém nosso lá jogou). */
+function CampoDoCartao({ course, teeId }: { course: Course; teeId: string }) {
+  const [sel, setSel] = useState(teeId);
+  const tees = course.master.tees;
+  const tee = tees.find((t) => t.teeId === sel) ?? tees.find((t) => t.teeId === teeId) ?? tees[0];
+  const r = tee.ratings.holes18 ?? tee.ratings.holes9Front;
+  const temRatings = r?.courseRating != null && r.slopeRating != null;
+  return (
+    <div className="mt-8">
+      <div className="muted fs-11 mb-8">
+        ⓘ Este campo não está na nossa lista de campos — a ficha foi montada a partir do cartão desta prova
+        (par e metros por buraco{temRatings ? ", CR e Slope" : "; a fonte não publica CR nem Slope"}).
+      </div>
+      {tees.length > 1 && (
+        <div className="mb-8">
+          <Select variant="filter" value={tee.teeId} onChange={setSel} title="Tee">
+            {tees.map((t) => <option key={t.teeId} value={t.teeId}>{rotuloTee(t)}</option>)}
+          </Select>
+        </div>
+      )}
+      <CourseHeroCard course={course} tee={tee} />
+    </div>
+  );
+}
+
+/** «🔮 Previsão» sobre o campo montado do cartão: o plano por buraco do Manuel
+ *  faz-se com o par e os metros; a régua WHS precisa do CR e do Slope (os do
+ *  cartão, ou escritos nas caixas quando a fonte não os publica). */
+function PrevisaoDoCartao({ course, teeId }: { course: Course; teeId: string }) {
+  const resolved = useMemo<ResolvedCourse | null>(() => {
+    const tee = course.master.tees.find((t) => t.teeId === teeId);
+    if (!tee) return null;
+    const r = tee.ratings.holes18;
+    const semRatings = !(r?.courseRating != null && r.slopeRating != null);
+    return {
+      course, tee,
+      note: "Campo montado a partir do cartão desta prova (não está na nossa lista de campos)."
+        + (semRatings ? " A fonte não publica CR nem Slope — para a régua WHS escrevem-se nas caixas." : ""),
+    };
+  }, [course, teeId]);
+  return (
+    <Suspense fallback={<LoadingState size="sm" message="A preparar a previsão…" />}>
+      <div className="mt-8"><PrevisaoTab resolved={resolved} /></div>
+    </Suspense>
   );
 }
 
@@ -232,8 +291,10 @@ type Aba = { key: string; label: string; content: React.ReactNode };
  *  o campo é conhecido (04/11/2026); a Previsão começa no tee do Manuel na prova
  *  → o do escalão dele (quando não está na prova) → o 1.º tee de homens, e
  *  muda-se de tee numa caixa. Vazio enquanto se procura. `campo` vazio/null →
- *  não procura nada. */
-export function useCampoTabs(campo: string | null | undefined, manuelTee: string | null | undefined, tournament: Tournament): Aba[] {
+ *  não procura nada.
+ *  `doCartao` (provas de FORA): campo que não está na lista → montado do cartão
+ *  da prova. Nas provas da FPG nunca — aí os cartões podem ser os dos clubes. */
+export function useCampoTabs(campo: string | null | undefined, manuelTee: string | null | undefined, tournament: Tournament, doCartao = false): Aba[] {
   const nome = campo?.trim() || "";
   // Sem o tee do Manuel na prova, o do escalão dele (ele não está na prova).
   const teeProva = manuelTee?.trim() || "";
@@ -271,7 +332,21 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
   const teeId = cur?.teeId ?? null;
   const fonteFinal: TeeFonte = cur?.exacto ? fonte : "nenhum";
   const notaSede = cur?.notaSede;
+  // Fora da lista (já se procurou, ou a prova nem traz o nome do campo) → o
+  // campo do cartão da prova, se o cartão chegar (par e metros em todos os buracos).
+  const procurou = !nome || cur != null;
+  const doCartaoCourse = useMemo(
+    () => (doCartao && procurou && !key ? campoDoCartao(tournament, nome || null) : null),
+    [doCartao, procurou, key, tournament, nome]);
   return useMemo(() => {
+    if (!key && doCartaoCourse) {
+      const t0 = teeInicial(doCartaoCourse, teeProva);
+      if (!t0) return [];
+      return [
+        { key: "campo", label: "⛳ O campo", content: <CampoDoCartao key={t0.teeId} course={doCartaoCourse} teeId={t0.teeId} /> },
+        { key: "previsao", label: "🔮 Previsão", content: <CoursesGate><PrevisaoDoCartao course={doCartaoCourse} teeId={t0.teeId} /></CoursesGate> },
+      ];
+    }
     if (!key) return [];
     const abas: Aba[] = [{
       key: "campo",
@@ -284,5 +359,5 @@ export function useCampoTabs(campo: string | null | undefined, manuelTee: string
       content: <CoursesGate><PrevisaoDaProva courseKey={key} teeId={teeId} tournament={tournament} fonte={fonteFinal} teeSugerido={tee} notaSede={notaSede} /></CoursesGate>,
     });
     return abas;
-  }, [key, teeId, tournament, tee, fonteFinal, notaSede]);
+  }, [key, teeId, tournament, tee, fonteFinal, notaSede, doCartaoCourse, teeProva]);
 }

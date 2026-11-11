@@ -156,7 +156,9 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
   const campoProprio = abaPropria("campo") || abaPropria("previsao");
   const campoDoCircuito = useContext(CampoDoCircuito);
   const manuelTee = useMemo(() => manuelTeeNaProva(tournament), [tournament]);
-  const campoTabs = useCampoTabs(campoProprio ? null : (tournament.campo?.trim() || campoDoCircuito), manuelTee, tournament);
+  // Provas de fora cujo campo não está na lista: as duas abas montam-se do cartão
+  // da própria prova (11/11/2026). Nas da FPG vale só a lista de campos.
+  const campoTabs = useCampoTabs(campoProprio ? null : (tournament.campo?.trim() || campoDoCircuito), manuelTee, tournament, deFora && !campoProprio);
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
