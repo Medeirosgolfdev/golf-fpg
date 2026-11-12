@@ -16,6 +16,7 @@ import { fedFpg, indexPlayers, playerKey } from "../../utils/playerKey";
 import { findManuelNaProva, isManuel } from "../../constants/manuel";
 import { classificarPorTotal } from "../../utils/classificacao";
 import type { PastEdition, PastEditionPlayer } from "./PastEditionsTable";
+import { soma } from "../../utils/mathUtils";
 
 /**
  * O lugar de cada jogador numa edição: o oficial da fonte (`pos`) quando o há;
@@ -123,7 +124,7 @@ export function buildRepeaters(field: FieldPlayer[], editions: PastEdition[], cu
       key, name: fp.name, club: fp.club ?? null, isManuel: isM, byEd,
       n: cells.length,
       bestPos: pos.length ? Math.min(...pos) : null,
-      avgToPar: tp.length ? Math.round((tp.reduce((s, v) => s + v, 0) / tp.length) * 10) / 10 : null,
+      avgToPar: tp.length ? Math.round((soma(tp) / tp.length) * 10) / 10 : null,
       vsManuel: !isM && ahead + behind > 0 ? [ahead, behind] : null,
     });
   }

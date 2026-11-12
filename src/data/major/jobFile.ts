@@ -26,6 +26,7 @@ import { intlScorecardOptions } from "../intlScorecard";
 import { buildFpgDraw, indexByName } from "../intlDraw";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
 import { parsePos } from "../../utils/classificacao";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
   // Cartão de tee POR RONDA (provas que mudam de campo ou de marcação a cada
@@ -117,7 +118,7 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
   // Representativo (cabeçalho/stats): a 1ª ronda jogada na divisão.
   const repSH = players.find((p) => p.rounds?.length)?.rounds?.[0]?.startingHole;
   const par = parForRound(repSH);
-  const parTotal: number | null = par18 ? par.reduce((a, b) => a + b, 0) : parRoundReal;
+  const parTotal: number | null = par18 ? soma(par) : parRoundReal;
   // A linha de metros no scorecard só aparece quando há teeName.
   const teeName = meters18 ? (div.teeName || "Tee") : undefined;
 
@@ -126,7 +127,7 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       // Preferir a soma dos scores quando a ronda está completa (mais fiável que
       // o `gross` do leaderboard, que pode divergir em ficheiros antigos).
       const sc = r.scores || [];
-      const gross = sc.length === holes ? sc.reduce((a, b) => a + b, 0) : r.gross;
+      const gross = sc.length === holes ? soma(sc) : r.gross;
       // Par POR RONDA: quando o ficheiro traz `pars` na ronda (ex: FSGA joga em
       // dois campos com pares hole-by-hole diferentes), usá-lo em vez do par da
       // divisão — só assim a coloração buraco-a-buraco fica certa em cada ronda.
@@ -177,11 +178,11 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
     // Em torneios a DECORRER o GolfGenius dá o to-par corrente mas ainda não o
     // `total` agregado (null). Reconstruir o gross/to-par acumulado das rondas
     // jogadas — senão o jogador aparece como WD e a média fica 999.
-    const playedGross = rounds.reduce((s, r) => s + (r.gross || 0), 0);
+    const playedGross = somaDe(rounds, r => (r.gross || 0));
     const grossTotal = p.total ?? (rounds.length ? playedGross : null);
     // Par acumulado somado RONDA A RONDA (só os buracos jogados) — `parTotal ×
     // nº de rondas` dava −50 a quem estava a meio da última volta.
-    const playedPar = rounds.reduce((s, r) => s + playedParTotal({ gross: r.gross, scores: r.scores, pars: r.card.par }, parTotal ?? 0), 0);
+    const playedPar = somaDe(rounds, r => playedParTotal({ gross: r.gross, scores: r.scores, pars: r.card.par }, parTotal ?? 0));
     const toPar = p.toPar ?? (rounds.length && playedPar > 0 ? playedGross - playedPar : null);
     return {
       id: p.detailId || p.name,

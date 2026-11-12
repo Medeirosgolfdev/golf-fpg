@@ -11,8 +11,8 @@ import { normLoose } from "../utils/normName";
 export function firstPlayerParTotal(tournament: Tournament | null | undefined): number {
   const p = tournament?.players?.[0];
   return p?.parTotal
-    || p?.par?.reduce((a, b) => a + b, 0)
-    || p?.roundScores?.[0]?.pars?.reduce((a, b) => a + b, 0)
+    || soma(p?.par)
+    || soma(p?.roundScores?.[0]?.pars)
     || 0;
 }
 import type { EscLookup } from "../utils/playerUtils";
@@ -25,7 +25,7 @@ import { isManuel } from "../constants/manuel";
 import { isNoCardGross, toParPlayed } from "./intlCommon";
 import { temCartao } from "../utils/classificacao";
 import { playerKey } from "../utils/playerKey";
-import { soma } from "../utils/mathUtils";
+import { soma, somaDe } from "../utils/mathUtils";
 import { parDosJogados } from "../utils/parJogado";
 
 export function numGross(p: Player): number {
@@ -413,7 +413,7 @@ export function fillBlankHoles(p: Player): FilledScores {
   if (!temCartao(gross)) return { scores, inferred, hasInferred: false };
   if (blanks.length >= scores.length) return { scores, inferred, hasInferred: false };
 
-  const played = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
+  const played = somaDe(scores, b => (b > 0 ? b : 0));
   const remaining = gross - played;
   if (remaining <= 0) return { scores, inferred, hasInferred: false };
   if (!parArr.length && blanks.length > 1) return { scores, inferred, hasInferred: false };
@@ -434,7 +434,7 @@ export function fillBlankHoles(p: Player): FilledScores {
   // Vários buracos vazios — distribuir `remaining`, cada um limitado ao NDB.
   const vals = blanks.map((i) => (caps ? caps[i] : (parArr[i] || 4) + 2));
   const floors = blanks.map((i) => (caps ? Math.max(1, caps[i] - 2) : Math.max(1, parArr[i] || 4))); // net par
-  let sum = vals.reduce((a, b) => a + b, 0);
+  let sum = soma(vals);
   // gross < soma dos NDB → reduzir, começando pelos buracos com valor mais alto.
   let guard = 0;
   while (sum > remaining && guard++ < 5000) {
@@ -634,7 +634,7 @@ export function isRoundInProgress(rs: { gross?: number | null; scores?: number[]
   const n = sc.filter(Boolean).length;
   const nPar = (rs.pars || []).length;
   if (!n || !nPar || n >= nPar) return false;
-  return sc.reduce((a, b) => a + (b > 0 ? b : 0), 0) === gross;
+  return somaDe(sc, b => (b > 0 ? b : 0)) === gross;
 }
 
 /** Voltas que se esperam DESTE jogador: as da categoria dele (`_roundsExpected`,
@@ -720,11 +720,11 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     const expected = expectedRoundsOf(p, playedRounds);
     const incomplete = !isWD && (nPlayed < expected || validRounds.some(isRoundInProgress));
 
-    const gross = validRounds.reduce((s, rs) => s + rs.gross, 0);
-    const parPerRound = p.parTotal || (p.roundScores[0]?.pars.reduce((a, b) => a + b, 0) || 0);
+    const gross = somaDe(validRounds, rs => rs.gross);
+    const parPerRound = p.parTotal || (soma(p.roundScores[0]?.pars) || 0);
     // Somar o par RONDA A RONDA (e só dos buracos jogados) em vez de
     // `parPerRound × nPlayed` — com uma ronda a meio o produto inventa par.
-    const parT = validRounds.reduce((s, rs) => s + playedParTotal(rs, parPerRound), 0);
+    const parT = somaDe(validRounds, rs => playedParTotal(rs, parPerRound));
 
     totalPlayers.push(normalizePlayer({
       ...p,
@@ -775,9 +775,8 @@ export function expandMultiRound(t: Tournament): Tournament[] {
   // pararam. Senão foram desistências — Torneio 50 Anos de Autonomia 2026: 10 só
   // com a R1, espalhados do 50.º ao 119.º lugar, apareciam como «CUT» (22/10/2026).
   if (cutN > 0) {
-    const firstN = (p: Player) => (p.roundScores ?? [])
-      .filter((rs) => typeof rs.round !== "number" || rs.round <= cutN)
-      .reduce((s, rs) => s + (isNoCardGross(rs.gross) ? 0 : rs.gross), 0);
+    const firstN = (p: Player) => somaDe((p.roundScores ?? [])
+      .filter((rs) => typeof rs.round !== "number" || rs.round <= cutN), rs => (isNoCardGross(rs.gross) ? 0 : rs.gross));
     const stopped = totalPlayers.filter((p) => (p as any)._incomplete && !p._wd && (p as any)._roundsPlayed === cutN).map(firstN);
     const went = totalPlayers.filter((p) => !p._wd && ((p as any)._roundsPlayed ?? 0) > cutN).map(firstN);
     if (stopped.length && went.length && Math.max(...went) > Math.min(...stopped)) cutN = -1;
@@ -862,7 +861,7 @@ function mergeTournamentRounds(rounds: Tournament[]): Tournament {
 
   const players: Player[] = [];
   for (const { player, rsArr } of byKey.values()) {
-    const grossTotal = rsArr.reduce((s, r) => s + r.gross, 0);
+    const grossTotal = somaDe(rsArr, r => r.gross);
     const par1 = parDe(player) || refParTotal;
     players.push({
       ...player,

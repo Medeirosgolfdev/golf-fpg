@@ -11,6 +11,7 @@
 import { getTierLabel, getTournWeight, nivelIncerto, type TierKey, type RankingRow } from "../../pages/kids2/juniorCalc";
 
 import { fmtOrd } from "../../utils/format";
+import { round1, somaDe } from "../../utils/mathUtils";
 /** Um dos últimos torneios (`u` do juniors-scout.json, 02/11/2026 — Kids 2 +
  *  as provas de clube dos cartões FPG): [data, índice do nome em `tn`, lugar
  *  (ou "WD"/"DQ"/"DNS"; null nas provas de clube, sem classificação), field,
@@ -75,7 +76,7 @@ export const N_FORMA = 5;
 export function formaMedia(u: readonly ScoutTorneioRaw[] | undefined): number | null {
   const r = (u ?? []).filter((x) => x[6] != null && x[7] >= 9).slice(0, N_FORMA);
   if (!r.length) return null;
-  return Math.round((r.reduce((s, x) => s + (x[6]! * 18) / x[7], 0) / r.length) * 10) / 10;
+  return Math.round((somaDe(r, x => (x[6]! * 18) / x[7]) / r.length) * 10) / 10;
 }
 /** O lugar mais recente conhecido (as provas de clube não têm classificação). */
 export function ultimoLugar(u: readonly ScoutTorneioRaw[] | undefined): number | null {
@@ -116,7 +117,7 @@ export interface ThreatInfo { score: number; level: ThreatLevel; reasons: string
 
 const clamp = (v: number, lo: number, hi: number) => (v < lo ? lo : v > hi ? hi : v);
 function fmtMargin(n: number): string {
-  const r = Math.round(n * 10) / 10;
+  const r = round1(n);
   return (Number.isInteger(r) ? String(r) : r.toFixed(1));
 }
 
@@ -193,7 +194,7 @@ export function previsaoRival(
   a: { vsMMedia: number | null; nConfrontos: number; toParAno: number | null; hcp: number | null },
   manuel: { toParAno: number | null; hcp: number | null },
 ): Previsao | null {
-  const r1 = (x: number) => Math.round(x * 10) / 10;
+  const r1 = round1;
   if (manuel.toParAno != null && a.vsMMedia != null && a.nConfrontos > 0) {
     return { toPar: r1(manuel.toParAno + a.vsMMedia), vsManuel: r1(a.vsMMedia), fonte: "confrontos" };
   }

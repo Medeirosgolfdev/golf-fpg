@@ -12,6 +12,7 @@ import { fgAdmissions, fgAdmissionsCols, fgNotaPtNaoJogaram } from "./admissions
 import { fgAnosNascimento, fgIdPorNomeUnico, loadFgRanking } from "./ranking";
 import { fgEscalaoProva, fgScorecardOptions, fgToTournament } from "./toTournament";
 import { fgChaveProva, fgClube, fgNomeBase, fgTitulo } from "./nomes";
+import { somaDe } from "../../utils/mathUtils";
 
 export { fgNomeBase };
 
@@ -78,7 +79,7 @@ export function buildFgEntries(idx: FgIndice): CircuitEntry[] {
       sex,
       roundsCount: Math.max(...ps.map((p) => p.voltas)),
       divisionCount: ps.length,
-      playerCount: ps.reduce((a, p) => a + p.jogadores, 0),
+      playerCount: somaDe(ps, p => p.jogadores),
       // Provas por jogar (só inscritos) não têm resultados — o filtro «Com resultados» esconde-as.
       hasResults: ps.some((p) => !p.futura && p.jogadores > 0),
       hasPt: ps.some((p) => p.hasPt),

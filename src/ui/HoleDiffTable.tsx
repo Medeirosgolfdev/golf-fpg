@@ -16,6 +16,7 @@ import { getTeeHex } from "../utils/teeColors";
 import { buildReach, type HoleReach } from "../utils/reach";
 import { Tint } from "./DataStyle";
 import { parHoleColors } from "./CourseHeroCard";
+import { somaDe } from "../utils/mathUtils";
 
 
 export interface ReachTee { tee: Tee; label?: React.ReactNode }
@@ -67,8 +68,8 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
     for (const m of byHole) { const r = m.get(h); if (r?.par != null) return r.par; }
     return null;
   };
-  const totals = data.map((_, i) => holes.reduce((s, h) => s + (distAt(i, h) ?? 0), 0));
-  const parTotal = data.length ? data[0].reach.reduce((s, r) => s + (r.par ?? 0), 0) : 0;
+  const totals = data.map((_, i) => somaDe(holes, h => (distAt(i, h) ?? 0)));
+  const parTotal = data.length ? somaDe(data[0].reach, r => (r.par ?? 0)) : 0;
   // Com 1 tee não se pinta a linha (não há nada a distinguir); com 2, cada tee na sua cor.
   const fundo = (hex: string) => (two ? hex + "1f" : undefined);
   const rotulo = (d: (typeof data)[number], txt: string) => (two ? <>{d.label} <span className="u-fw-600">· {txt}</span></> : txt);

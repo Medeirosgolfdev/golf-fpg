@@ -21,13 +21,14 @@ import type { Player, Tournament, RoundScore, PlayerFilter } from "../data/fpgTy
 import { EMPTY_FILTER } from "../ui/multiRoundTypes";
 import { filterRows } from "../ui/PlayerFilterBar";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
+import { soma, somaDe } from "../utils/mathUtils";
 
 /* ── Helpers de sort (Out/In a partir dos scores da ronda) ── */
 function frontSum(rd: { scores: number[] }): number {
-  return rd.scores.slice(0, 9).reduce((s, v) => s + (v > 0 ? v : 0), 0);
+  return somaDe(rd.scores.slice(0, 9), v => (v > 0 ? v : 0));
 }
 function backSum(rd: { scores: number[] }): number {
-  return rd.scores.slice(9, 18).reduce((s, v) => s + (v > 0 ? v : 0), 0);
+  return somaDe(rd.scores.slice(9, 18), v => (v > 0 ? v : 0));
 }
 
 /* ── Types exportados ── */
@@ -225,9 +226,9 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   const meters = ref0.meters || [];
   const nh = par.length || 18;
   const is9 = nh <= 9;
-  const parF9 = par.slice(0, 9).reduce((a, b) => a + b, 0);
-  const parB9 = !is9 ? par.slice(9).reduce((a, b) => a + b, 0) : 0;
-  const parTot = par.reduce((a, b) => a + b, 0);
+  const parF9 = soma(par.slice(0, 9));
+  const parB9 = !is9 ? soma(par.slice(9)) : 0;
+  const parTot = soma(par);
   const hasSI = si.length >= nh;
 
   // Metros por tee distinto — recolhe de TODOS os jogadores/rondas (não só o
@@ -256,7 +257,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
       .map(([teeName, m]) => ({
         teeName,
         meters: m,
-        _tot: m.slice(0, nh).reduce((a, b) => a + (Number(b) || 0), 0),
+        _tot: somaDe(m.slice(0, nh), b => (Number(b) || 0)),
       }))
       // Ordenar por distância total — tee mais comprido primeiro (convenção de scorecard).
       .sort((a, b) => b._tot - a._tot)
@@ -277,14 +278,14 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
     const ref = roundRefs[rdNum - 1] ?? ref0;
     const refPars = rs.pars?.length ? rs.pars : ref.pars;
     const capped = rs.scores?.map((s) => Math.min(s, maxHoleScore)) ?? [];
-    const gross = capped.length ? capped.reduce((a, b) => a + b, 0) : rs.gross;
+    const gross = capped.length ? soma(capped) : rs.gross;
     // Par da ronda = par dos buracos EFECTIVAMENTE JOGADOS. Com o par de todos
     // os buracos, um cartão incompleto (ou uma volta de 9 guardada como 18 com
     // zeros) dava um to-par enganador — o gross só conta os jogados.
     const rdPar = capped.length
-      ? (capped.reduce((a, s, i) => a + (s > 0 ? (refPars?.[i] ?? par[i] ?? 0) : 0), 0)
-         || refPars?.reduce((a, b) => a + b, 0) || parTot)
-      : (refPars?.reduce((a, b) => a + b, 0) || parTot);
+      ? (somaDe(capped, (s, i) => (s > 0 ? (refPars?.[i] ?? par[i] ?? 0) : 0))
+         || soma(refPars) || parTot)
+      : (soma(refPars) || parTot);
     // Sem par por buraco (fonte sem par oficial): sem contagens nem ±par por
     // buraco; o ±par da volta só com o par total real e o cartão inteiro.
     const holePar = (h: number): number | undefined => refPars?.[h] ?? par[h];
@@ -312,8 +313,8 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
       const anyWD = rds.some(
         (r, ri) => r == null && !!p.roundScores?.find((rs) => rs.round === ri + 1),
       );
-      const total = validRds.length ? validRds.reduce((s, r) => s + r.gross, 0) : null;
-      const totalTP = validRds.length && validRds.every((r) => r.toPar != null) ? validRds.reduce((s, r) => s + (r.toPar as number), 0) : null;
+      const total = validRds.length ? somaDe(validRds, r => r.gross) : null;
+      const totalTP = validRds.length && validRds.every((r) => r.toPar != null) ? somaDe(validRds, r => (r.toPar as number)) : null;
       return {
         key: p.scoreId || p.name,
         name: p.name,

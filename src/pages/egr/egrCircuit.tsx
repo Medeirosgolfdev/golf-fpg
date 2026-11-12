@@ -15,7 +15,7 @@
  * informação e colocar lá também»).
  */
 import { withDivisionModel } from "../../data/model/division";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { cachedFetchJson, memoAsync } from "../../data/fetchCache";
 import { normLoose } from "../../utils/normName";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import { jobFileDivisions, jobScorecardOptions, type JobFile } from "../../data/major/jobFile";
@@ -57,19 +57,13 @@ interface EgrEventPlayer {
 /* ── HCP do roster GolfBox (egr-dob-roster.json), por nome. O leaderboard EGR
  *  não traz HCP; junta-se aqui o índice actual onde existir. Carrega 1× (cache). */
 interface EgrRoster { players: Record<string, { name: string; hcp?: number | null }> }
-let _hcpMapPromise: Promise<Map<string, number>> | null = null;
-function loadHcpMap(): Promise<Map<string, number>> {
-  if (!_hcpMapPromise) {
-    _hcpMapPromise = cachedFetchJson<EgrRoster>("/data/egr/egr-dob-roster.json")
-      .then((r) => {
-        const m = new Map<string, number>();
-        for (const v of Object.values(r?.players || {})) if (typeof v.hcp === "number") m.set(normLoose(v.name), v.hcp);
-        return m;
-      })
-      .catch(() => new Map<string, number>());
-  }
-  return _hcpMapPromise;
-}
+// `memoAsync`: uma carga por sessão; uma falha entrega o vazio mas não fica guardada.
+const loadHcpMap = memoAsync(async (): Promise<Map<string, number>> => {
+  const r = await cachedFetchJson<EgrRoster>("/data/egr/egr-dob-roster.json");
+  const m = new Map<string, number>();
+  for (const v of Object.values(r?.players || {})) if (typeof v.hcp === "number") m.set(normLoose(v.name), v.hcp);
+  return m;
+}, { fallback: () => new Map<string, number>() });
 interface EgrEventFull {
   id: string; name: string; venue?: string; country?: string;
   ageGroup?: string; sex?: "M" | "F" | null; cr?: number | null; par?: number | null;
@@ -88,15 +82,10 @@ function rotuloFonte(url: string): string {
 /** `links`: o ficheiro completo e as classes; `paginas`: a página da prova aqui
  *  no site para as fontes com formato próprio (FFG, FIG, RFEG). */
 interface EgrFontesRicas { links: Record<string, { file: string; divs: number[] }>; paginas?: Record<string, string> }
-let _linksPromise: Promise<EgrFontesRicas> | null = null;
-function loadFontesRicas(): Promise<EgrFontesRicas> {
-  if (!_linksPromise) {
-    _linksPromise = cachedFetchJson<EgrFontesRicas>("/data/egr/egr-fontes-ricas.json")
-      .then((r) => ({ links: r?.links || {}, paginas: r?.paginas || {} }))
-      .catch(() => ({ links: {}, paginas: {} }));
-  }
-  return _linksPromise;
-}
+const loadFontesRicas = memoAsync(async (): Promise<EgrFontesRicas> => {
+  const r = await cachedFetchJson<EgrFontesRicas>("/data/egr/egr-fontes-ricas.json");
+  return { links: r?.links || {}, paginas: r?.paginas || {} };
+}, { fallback: (): EgrFontesRicas => ({ links: {}, paginas: {} }) });
 
 /** As divisões do JobFile que correspondem ao evento EGR, com cartões. */
 async function divisoesRicas(e: EgrEventListItem, link: { file: string; divs: number[] }): Promise<CircuitDivision[] | null> {

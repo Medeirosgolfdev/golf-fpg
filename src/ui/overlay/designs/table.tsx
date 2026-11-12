@@ -7,6 +7,7 @@ import { II, OS, BN, SG, TS, vpC, vpCd, fillA, ink, isLightText, onColor } from 
 import { SC, SCL, TpBadge, StatsRow, Info } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
+import { soma } from "../../../utils/mathUtils";
 void TpBadge;
 
 /* V14 · COMPACT TABLE */
@@ -104,8 +105,8 @@ export function V16({ d, v, s, fa }: P) {
       </div>
       {v.holeScores && (is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len],ri) => {
         const isLast = !is18 || ri===1;
-        const subP = d.par.slice(off,off+len).reduce((a,b)=>a+b,0);
-        const subS = d.scores.slice(off,off+len).reduce((a,b)=>a+b,0);
+        const subP = soma(d.par.slice(off,off+len));
+        const subS = soma(d.scores.slice(off,off+len));
         return (
           <div key={off}>
             <div style={{ display:"flex", width:"fit-content", background:fillA("#1e3a2f", fa), borderRadius:ri===0?"5px 5px 0 0":"0 5px 0 0", padding:"2px 0" }}>
@@ -148,8 +149,8 @@ export function V17({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
     <div style={{ fontFamily:II, display:"inline-block", padding:"3px 6px 4px", background:bg||"rgba(0,0,0,.75)", borderRadius:10, color:tc, border:`1px solid ${ink(tc, .1)}`, textShadow:TS }}>
       {v.holeScores && (is18 ? [[0,"Out"],[9,"In"]] as [number,string][] : [[0,"Tot"] as [number,string]]).map(([off,label],ri) => {
         const cnt = is18?9:d.scores.length;
-        const subS = d.scores.slice(off,off+cnt).reduce((a,b)=>a+b,0);
-        const subP = d.par.slice(off,off+cnt).reduce((a,b)=>a+b,0);
+        const subS = soma(d.scores.slice(off,off+cnt));
+        const subP = soma(d.par.slice(off,off+cnt));
         return (
           <div key={off} style={{ marginBottom:ri===0&&is18?2:0 }}>
             <div style={{ display:"flex", background:ink(tc, .14), borderTop:`2px solid ${ta}`, borderRadius:ri===0?"6px 6px 0 0":0, padding:"3px 0" }}>

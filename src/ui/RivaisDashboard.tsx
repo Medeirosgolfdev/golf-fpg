@@ -4,7 +4,7 @@
 import { useMemo, useState } from "react";
 import { fmtSign, sortArrow, fmtOrd, dateParts } from "../utils/format";
 import { flag as countryFlag } from "../utils/flagUtils";
-import { zTier, getTrend, meanArr } from "../utils/mathUtils";
+import { zTier, getTrend, meanArr, soma } from "../utils/mathUtils";
 import { avgZPonderado } from "../utils/zRank";
 import { toneClass } from "../utils/scoreDisplay";
 import KpiCard from "./KpiCard";
@@ -153,7 +153,7 @@ export default function RivaisDashboard({
           }
           if (gross18.length === 0) return null;
           if (sort === "best18") return Math.min(...gross18);
-          return gross18.reduce((a, b) => a + b, 0) / gross18.length;
+          return soma(gross18) / gross18.length;
         };
         return compareNullsLast(stat(a), stat(b), d);
       }
@@ -585,10 +585,10 @@ export default function RivaisDashboard({
                           .map(x => x.s);
                         if (ms.length > 0) {
                           fieldAvg =
-                            ms.reduce((a: number, b: number) => a + b, 0) /
+                            soma(ms) /
                             ms.length;
                           fieldStd =
-                            ss.reduce((a: number, b: number) => a + b, 0) /
+                            soma(ss) /
                             ss.length;
                         }
                       }

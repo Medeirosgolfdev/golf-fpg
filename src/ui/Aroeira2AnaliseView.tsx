@@ -22,7 +22,7 @@ import SortableHdr from "./SortableHdr";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import { fmtToPar, fmtHcp, fmtSign } from "../utils/format";
 import { scClass, toneClass } from "../utils/scoreDisplay";
-import { soma } from "../utils/mathUtils";
+import { soma, somaDe } from "../utils/mathUtils";
 import { parDosJogados } from "../utils/parJogado";
 import PlayerLink from "./PlayerLink";
 import { MANUEL_FED } from "../constants/manuel";
@@ -66,8 +66,8 @@ function KpiCard({ label, value, hint, tone = "neutral" }: { label: string; valu
 
 /* ── Mapa do campo: tabela sc-lb padrão ───────────── */
 function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
-  const totMeters = holes.reduce((s, h) => s + (h.meters ?? 0), 0);
-  const totPar = holes.reduce((s, h) => s + h.par, 0);
+  const totMeters = somaDe(holes, h => (h.meters ?? 0));
+  const totPar = somaDe(holes, h => h.par);
   return (
     <div className="bjgt-chart-scroll">
       <table className="sc-lb">
@@ -83,9 +83,9 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
           <tr className="lb-par-row">
             <td className="lb-par-lbl">PAR</td>
             {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole">{h.par}</td>)}
-            <td className="lb-halftot">{holes.slice(0, 9).reduce((s, h) => s + h.par, 0)}</td>
+            <td className="lb-halftot">{somaDe(holes.slice(0, 9), h => h.par)}</td>
             {holes.slice(9).map(h => <td key={h.hole} className="lb-hole">{h.par}</td>)}
-            <td className="lb-halftot">{holes.slice(9).reduce((s, h) => s + h.par, 0)}</td>
+            <td className="lb-halftot">{somaDe(holes.slice(9), h => h.par)}</td>
             <td className="lb-halftot">{totPar}</td>
           </tr>
           <tr className="lb-si-row">
@@ -101,9 +101,9 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
           <tr>
             <td className="lb-name muted">Dist (m)</td>
             {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole muted">{h.meters ?? "–"}</td>)}
-            <td className="lb-halftot muted">{holes.slice(0, 9).reduce((s, h) => s + (h.meters ?? 0), 0) || "–"}</td>
+            <td className="lb-halftot muted">{somaDe(holes.slice(0, 9), h => (h.meters ?? 0)) || "–"}</td>
             {holes.slice(9).map(h => <td key={h.hole} className="lb-hole muted">{h.meters ?? "–"}</td>)}
-            <td className="lb-halftot muted">{holes.slice(9).reduce((s, h) => s + (h.meters ?? 0), 0) || "–"}</td>
+            <td className="lb-halftot muted">{somaDe(holes.slice(9), h => (h.meters ?? 0)) || "–"}</td>
             <td className="lb-halftot fw-600">{totMeters || "–"}</td>
           </tr>
           <tr>
@@ -141,18 +141,18 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
           <tr>
             <td className="lb-name muted">Avg field</td>
             {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole muted">{h.avgScore.toFixed(2)}</td>)}
-            <td className="lb-halftot muted fw-600">{holes.slice(0, 9).reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
+            <td className="lb-halftot muted fw-600">{somaDe(holes.slice(0, 9), h => h.avgScore).toFixed(1)}</td>
             {holes.slice(9).map(h => <td key={h.hole} className="lb-hole muted">{h.avgScore.toFixed(2)}</td>)}
-            <td className="lb-halftot muted fw-600">{holes.slice(9).reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
-            <td className="lb-halftot fw-700">{holes.reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
+            <td className="lb-halftot muted fw-600">{somaDe(holes.slice(9), h => h.avgScore).toFixed(1)}</td>
+            <td className="lb-halftot fw-700">{somaDe(holes, h => h.avgScore).toFixed(1)}</td>
           </tr>
           <tr className="u-bg-bg-success">
             <td className="lb-name fw-700 u-c-color-good-dark">⭐ Manuel</td>
             {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole fw-600 u-c-color-good-dark">{fmtAvg(h.manuelAvg, 2)}</td>)}
-            <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(holes.slice(0, 9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
+            <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(somaDe(holes.slice(0, 9), h => (h.manuelAvg ?? 0)))}</td>
             {holes.slice(9).map(h => <td key={h.hole} className="lb-hole fw-600 u-c-color-good-dark">{fmtAvg(h.manuelAvg, 2)}</td>)}
-            <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(holes.slice(9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
-            <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(holes.reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
+            <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(somaDe(holes.slice(9), h => (h.manuelAvg ?? 0)))}</td>
+            <td className="lb-halftot fw-700 u-c-color-good-dark">{fmtAvg(somaDe(holes, h => (h.manuelAvg ?? 0)))}</td>
           </tr>
           <tr>
             <td className="lb-name fw-700">Tipo</td>
@@ -292,8 +292,8 @@ function CelulasDoCartao({ r, parRef }: {
 function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef: number[] }) {
   const [open, setOpen] = useState(card.fedCode === MANUEL_FED);
   const isManuel = card.fedCode === MANUEL_FED;
-  const parF9 = parRef.slice(0, 9).reduce((a, b) => a + b, 0);
-  const parB9 = parRef.slice(9, 18).reduce((a, b) => a + b, 0);
+  const parF9 = soma(parRef.slice(0, 9));
+  const parB9 = soma(parRef.slice(9, 18));
   return (
     <div className={"player-card-block aro-card" + (isManuel ? " is-manuel" : "")}>
       <button
@@ -331,7 +331,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
               <tr className="lb-par-row">
                 <td className="lb-par-lbl">PAR</td>
                 <td className="lb-topar"></td>
-                <td className="lb-gross">{parRef.reduce((a, b) => a + b, 0)}</td>
+                <td className="lb-gross">{soma(parRef)}</td>
                 {parRef.slice(0, 9).map((p, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{p}</td>)}
                 <td className="lb-halftot">{parF9}</td>
                 {parRef.slice(9).map((p, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{p}</td>)}
@@ -408,7 +408,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
   const manuelStats = useMemo(() => pkg ? buildManuelHoleStats(pkg.manuelHistory, pkg.parReference) : [], [pkg]);
   const theoretical = useMemo(() => pkg && manuelStats.length === 18 ? buildManuelTheoretical(manuelStats, pkg.manuelHistory) : null, [pkg, manuelStats]);
   const holeRecs = useMemo(() => pkg ? buildHoleRecommendations(pkg.holeStats.perHole) : [], [pkg]);
-  const fieldAvgGross = useMemo(() => pkg ? pkg.holeStats.perHole.reduce((s, h) => s + h.avgScore, 0) : 0, [pkg]);
+  const fieldAvgGross = useMemo(() => pkg ? somaDe(pkg.holeStats.perHole, h => h.avgScore) : 0, [pkg]);
   const fieldRanking = useMemo(() => pkg ? buildFieldRanking(pkg.playerCards, fieldAvgGross) : [], [pkg, fieldAvgGross]);
   const cronoRounds = useMemo(() => pkg ? buildChronologicalRounds(pkg.playerCards) : [], [pkg]);
   const evolution = useMemo(() => pkg ? buildEvolutionStats(pkg.playerCards) : [], [pkg]);
@@ -491,8 +491,8 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
 
   const top21Cards = pkg.playerCards.filter(c => c.category === "top21");
   const sub12CardsCom = pkg.playerCards.filter(c => c.category === "sub12_inscrito");
-  const parF9Ref = pkg.parReference.slice(0, 9).reduce((a, b) => a + b, 0);
-  const parB9Ref = pkg.parReference.slice(9, 18).reduce((a, b) => a + b, 0);
+  const parF9Ref = soma(pkg.parReference.slice(0, 9));
+  const parB9Ref = soma(pkg.parReference.slice(9, 18));
 
   return (
     <div className="aroeira2-analise fs-13 u-d-flex u-fd-column u-gap-24px u-pb-40px">
@@ -648,19 +648,19 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                 <tr className="lb-par-row">
                   <td className="lb-par-lbl">PAR</td>
                   {manuelStats.map(s => <td key={s.hole} className="lb-hole">{s.par}</td>)}
-                  <td className="lb-halftot">{manuelStats.reduce((a, s) => a + s.par, 0) || 72}</td>
+                  <td className="lb-halftot">{somaDe(manuelStats, s => s.par) || 72}</td>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td className="lb-name fw-600 u-c-color-good">Best (eclética)</td>
                   {manuelStats.map(s => <td key={s.hole} className="lb-hole"><span className={"sc-score " + scClass(s.best, s.par)}>{s.best || "–"}</span></td>)}
-                  <td className="lb-halftot fw-700 u-c-color-good-dark">{manuelStats.filter(s => s.best > 0).reduce((a, s) => a + s.best, 0) || "–"}</td>
+                  <td className="lb-halftot fw-700 u-c-color-good-dark">{somaDe(manuelStats.filter(s => s.best > 0), s => s.best) || "–"}</td>
                 </tr>
                 <tr>
                   <td className="lb-name fw-600 u-c-color-danger">Worst (anti-eclética)</td>
                   {manuelStats.map(s => <td key={s.hole} className="lb-hole"><span className={"sc-score " + scClass(s.worst, s.par)}>{s.worst || "–"}</span></td>)}
-                  <td className="lb-halftot fw-700 u-c-color-danger">{manuelStats.filter(s => s.worst > 0).reduce((a, s) => a + s.worst, 0) || "–"}</td>
+                  <td className="lb-halftot fw-700 u-c-color-danger">{somaDe(manuelStats.filter(s => s.worst > 0), s => s.worst) || "–"}</td>
                 </tr>
                 <tr>
                   <td className="lb-name fw-600">Pior – Melhor</td>
@@ -669,7 +669,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                     const color = gap === 0 ? "u-c-color-good" : gap <= 1 ? "u-c-heat-good-mid" : gap <= 2 ? "u-c-text" : "u-c-color-danger";
                     return <td key={s.hole} className={"lb-hole fw-700 " + color}>{s.scores.length ? gap : "–"}</td>;
                   })}
-                  <td className="lb-halftot fw-700">{manuelStats.filter(s => s.scores.length).reduce((a, s) => a + (s.worst - s.best), 0) || "–"}</td>
+                  <td className="lb-halftot fw-700">{somaDe(manuelStats.filter(s => s.scores.length), s => (s.worst - s.best)) || "–"}</td>
                 </tr>
               </tbody>
             </table>
@@ -817,7 +817,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
               <tr className="lb-par-row">
                 <td colSpan={4} className="lb-par-lbl">PAR</td>
                 <td className="lb-topar"></td>
-                <td className="lb-gross">{pkg.parReference.reduce((a, b) => a + b, 0)}</td>
+                <td className="lb-gross">{soma(pkg.parReference)}</td>
                 {pkg.parReference.slice(0, 9).map((p, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{p}</td>)}
                 <td className="lb-halftot">{parF9Ref}</td>
                 {pkg.parReference.slice(9).map((p, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{p}</td>)}

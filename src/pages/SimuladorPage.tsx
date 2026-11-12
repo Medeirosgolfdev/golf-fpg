@@ -33,6 +33,7 @@ import { useJson } from "../hooks/useJson";
 import { courseMatchKey, resolvePlayedTee } from "../utils/playedDistance";
 import ClearButton from "../ui/ClearButton";
 import Select from "../ui/Select";
+import { soma, somaDe } from "../utils/mathUtils";
 
 /** ±par de um buraco no cartão do simulador: verde abaixo, cinzento no par, âmbar até +2,
  *  vermelho acima. Utilitários (!important) porque a linha `.sc-table-modern .meta-row td`
@@ -268,18 +269,18 @@ type ComputedHole = {
 
 /* ── Funções puras para os totais do scorecard (extraídas do render) ── */
 function scSumPar(slice: ComputedHole[]): number {
-  return slice.reduce((s, h) => s + h.par, 0);
+  return somaDe(slice, h => h.par);
 }
 function scSumGross(slice: ComputedHole[]): number | null {
   const f = slice.filter(h => h.actual !== null);
-  return f.length === slice.length ? f.reduce((s, h) => s + h.actual!, 0) : null;
+  return f.length === slice.length ? somaDe(f, h => h.actual!) : null;
 }
 function scSumAdj(slice: ComputedHole[]): number | null {
   const f = slice.filter(h => h.adjusted !== null);
-  return f.length === slice.length ? f.reduce((s, h) => s + h.adjusted!, 0) : null;
+  return f.length === slice.length ? somaDe(f, h => h.adjusted!) : null;
 }
 function scSumMax(slice: ComputedHole[]): number {
-  return slice.reduce((s, h) => s + h.maxScore, 0);
+  return somaDe(slice, h => h.maxScore);
 }
 function scFmtVsPar(gross: number | null, p: number): string {
   if (gross === null) return "–";
@@ -359,8 +360,8 @@ function AgsSection({
     if (!computed) return null;
     const filled = computed.filter(h => h.actual !== null);
     const allFilled = filled.length === computed.length && filled.length > 0;
-    const grossTotal = allFilled ? filled.reduce((s, h) => s + h.actual!, 0) : null;
-    const agsTotal = allFilled && hasAgs ? filled.reduce((s, h) => s + h.adjusted!, 0) : null;
+    const grossTotal = allFilled ? somaDe(filled, h => h.actual!) : null;
+    const agsTotal = allFilled && hasAgs ? somaDe(filled, h => h.adjusted!) : null;
     // SD pela biblioteca (utils/whsCalc): em 9 buracos o SD dos 9 jogados e o SD
     // a 18 com o Expected SD do HI; sem HI em 9 buracos só há o dos 9.
     const sdOf = (score: number | null): { sd9: number | null; sd18: number | null } => {
@@ -410,8 +411,8 @@ function AgsSection({
       par: computed.map(h => h.par),
       scores: computed.map(h => h.actual),
       si: computed.map(h => h.si),
-      gross: complete ? computed.reduce((s, h) => s + h.actual!, 0) : null,
-      ags: complete && hasAgs ? computed.reduce((s, h) => s + h.adjusted!, 0) : null,
+      gross: complete ? somaDe(computed, h => h.actual!) : null,
+      ags: complete && hasAgs ? somaDe(computed, h => h.adjusted!) : null,
     });
   }, [computed, hasAgs, onOverlayData]);
 
@@ -653,7 +654,7 @@ function AgsSection({
                       <td className={h.strokes > 0 ? "u-c-chart-2 u-fw-700" : "u-c-border u-fw-400"}>
                         {h.strokes > 0 ? h.strokes : "·"}
                       </td>
-                      {is18 && i === 8 && <td className="col-out fw-700 c-blue-2563">{front.reduce((s, x) => s + x.strokes, 0)}</td>}
+                      {is18 && i === 8 && <td className="col-out fw-700 c-blue-2563">{somaDe(front, x => x.strokes)}</td>}
                     </React.Fragment>
                   ))}
                   {is18 && back.map((h) => (
@@ -661,7 +662,7 @@ function AgsSection({
                       {h.strokes > 0 ? h.strokes : "·"}
                     </td>
                   ))}
-                  <td className={`col-${is18 ? "in" : "total"} fw-700 c-blue-2563`}>{is18 ? back.reduce((s, x) => s + x.strokes, 0) : courseHcp}</td>
+                  <td className={`col-${is18 ? "in" : "total"} fw-700 c-blue-2563`}>{is18 ? somaDe(back, x => x.strokes) : courseHcp}</td>
                   {is18 && <td className="col-total fw-700 c-blue-2563">{courseHcp}</td>}
                 </tr>
 
@@ -1383,7 +1384,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
     // Scores completos para cálculo de SD
     const holeScores = overlayHoleData?.scores ?? null;
     const allFilled = holeScores ? holeScores.every(s => s !== null) : false;
-    const grossTotal = allFilled ? (holeScores as number[]).reduce((a, b) => a + b, 0) : null;
+    const grossTotal = allFilled ? soma((holeScores as number[])) : null;
     // SD da volta como em todo o site: AGS (quando há HI) e 9 buracos pela biblioteca
     const sd = grossTotal !== null
       ? scoreDifferential({ score: overlayHoleData?.ags ?? grossTotal, cr, slope, pcc, is9: is9h, hi })?.sd ?? null

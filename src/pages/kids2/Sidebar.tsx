@@ -12,7 +12,7 @@ import { getSharedFlightTids } from "./data";
 import { flag as flagOf } from "../../utils/flagUtils";
 import ExpandArrow from "../../ui/ExpandArrow";
 import SearchInput from "../../ui/SearchInput";
-import { toggleSet } from "../../utils/mathUtils";
+import { toggleSet, somaDe } from "../../utils/mathUtils";
 
 import SidebarSectionTitle from "../../ui/SidebarSectionTitle";
 const MAX_VISIBLE = 8000;
@@ -169,7 +169,7 @@ export default function Sidebar({
       remaining -= slice.length;
     }
 
-    const shown = dir.length + byCountry.reduce((a, b) => a + b.juniors.length, 0);
+    const shown = dir.length + somaDe(byCountry, b => b.juniors.length);
     return {
       directos: dir,
       byCountry,

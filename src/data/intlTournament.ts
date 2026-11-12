@@ -16,6 +16,7 @@ import { isNoCardGross, toParPlayed } from "./intlCommon";
 import { withTournamentModel } from "./model/tournament";
 import type { TournamentFormat } from "./model/types";
 import { playerIdentity } from "./model/identity";
+import { soma } from "../utils/mathUtils";
 
 /** Campo de uma volta: par por buraco e, quando a fonte os dá, SI, metros, tee e CR/Slope. */
 export interface IntlCourse {
@@ -123,7 +124,7 @@ export function buildFPGTournament(
   const out: Player[] = kept.map((p) => {
     const c: IntlCourse = { ...course, ...p.course, par: p.course?.par ?? course.par };
     const n = c.par.length;
-    const parSum = c.par.reduce((a, b) => a + b, 0);
+    const parSum = soma(c.par);
     const parTotal = c.parTotal === null ? undefined : (c.parTotal ?? parSum);
     const si = full(c.si, n), meters = full(c.meters, n);
     const roundScores: RoundScore[] = p.rounds.map((r, ri) => {
@@ -148,7 +149,7 @@ export function buildFPGTournament(
     // ±par pelas voltas JOGADAS, cada uma com o SEU par (cartão da volta, do
     // jogador ou do torneio) — regra única `toParPlayed` (10/11/2026).
     const toPar = p.toPar !== undefined ? p.toPar
-      : toParPlayed(p.total, roundScores.map((r) => (r.pars ?? []).reduce((a: number, b: number) => a + b, 0)));
+      : toParPlayed(p.total, roundScores.map((r) => soma((r.pars ?? []))));
     return {
       scoreId: p.id,
       pos: raw ? p.pos : (p.pos ?? null),

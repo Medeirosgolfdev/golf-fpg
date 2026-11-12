@@ -11,6 +11,7 @@
 
 import type { TorneioResult, EscalaoResult, RondaResult, RondaJogador } from '../../ui/uskidsTypes';
 import { jardasParaMetros } from "../../utils/jardas";
+import { soma } from "../../utils/mathUtils";
 
 /**
  * Jogador de uma volta com o cartão do SEU flight, quando não é o do escalão
@@ -51,7 +52,7 @@ function escaloesProntos(emConstrucao: Iterable<EscalaoEmConstrucao>): EscalaoRe
         si: [],
         ...(metros?.length ? { metros } : {}),
         buracos: esc.holes,
-        total_par: par.length === esc.holes ? par.reduce((a, b) => a + b, 0) : null,
+        total_par: par.length === esc.holes ? soma(par) : null,
         leaderboard,
       });
     }
@@ -196,7 +197,7 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
           const jogador: RondaJogadorComCampo = {
             nome, pais, cidade, tee,
             pontos:     0,
-            score:      rd.num_strokes ?? (rd.strokes ?? []).filter((s: number) => s > 0).reduce((a: number, b: number) => a + b, 0),
+            score:      rd.num_strokes ?? soma((rd.strokes ?? []).filter((s: number) => s > 0)),
             buracos:    rd.num_holes   ?? (rd.strokes ?? []).filter((s: number) => s > 0).length,
             start_time: rd.start_time  ?? '',
             grupo:      rd.group_number ?? 0,
@@ -292,10 +293,10 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
           if (rd.course_name) campoTally.set(rd.course_name, (campoTally.get(rd.course_name) ?? 0) + 1);
           if (!esc.roundsMap.has(rn)) esc.roundsMap.set(rn, []);
           const strokes: number[] = rd.strokes ?? [];
-          const score   = rd.num_strokes ?? strokes.filter((s: number) => s > 0).reduce((a: number, b: number) => a + b, 0);
+          const score   = rd.num_strokes ?? soma(strokes.filter((s: number) => s > 0));
           const buracos = rd.num_holes   ?? strokes.filter((s: number) => s > 0).length;
           const parArr  = esc.parPorRonda.get(rn);
-          const total_par = parArr && parArr.length === buracos ? parArr.reduce((a, b) => a + b, 0) : null;
+          const total_par = parArr && parArr.length === buracos ? soma(parArr) : null;
           esc.roundsMap.get(rn)!.push({
             nome, pais, cidade, tee,
             pontos:     0,

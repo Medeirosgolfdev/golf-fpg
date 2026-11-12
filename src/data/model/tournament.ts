@@ -14,6 +14,7 @@
 import type { Tournament, Player } from "../fpgTypes";
 import { expandMultiRound } from "../fpgUtils";
 import type { CutInfo, ParOrigin, TournamentFormat, TournamentModel, TournamentStatus } from "./types";
+import { somaDe } from "../../utils/mathUtils";
 
 /* ── Resultados e estado ── */
 
@@ -106,7 +107,7 @@ function computeCut(t: Tournament): CutInfo | null {
   const passed = tot.players.filter((p) => !p._cut && !p._wd && (p.roundScores?.length ?? 0) >= n);
   const sums = passed.map((p) => {
     const rs = (p.roundScores ?? []).filter((r) => r.round <= n);
-    return rs.length === n && rs.every((r) => r.gross > 0) ? rs.reduce((a, r) => a + r.gross, 0) : null;
+    return rs.length === n && rs.every((r) => r.gross > 0) ? somaDe(rs, r => r.gross) : null;
   });
   const line = sums.length && sums.every((x) => x != null) ? Math.max(...(sums as number[])) : null;
   return { afterRound: n, line, out: tot.players.filter((p) => p._cut).length };

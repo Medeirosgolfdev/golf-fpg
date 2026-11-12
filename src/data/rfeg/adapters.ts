@@ -11,6 +11,7 @@ import { normEs } from "./text";
 import { soAdmitidos } from "./inscritos";
 import type { RFEGPlayer, RFEGDetail, NCRoundScore, NCDetail, DobLookup, HcpLookup, LgsRound, LgsDetail, LgsHorarioRound } from "./types";
 import { dobLookupByName, isNoCardGross } from "../intlCommon";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 /** Voltas LGS sem total (cartão por publicar) recebem o resultado da volta que
  *  a classificação final traz (`roundTotals`). Caso real: Campeonato de España
@@ -84,7 +85,7 @@ export function adaptLgs(lgsIn: LgsDetail, dobLookup?: DobLookup, hcpLookup?: Hc
         playerAgg[key].toPar = p.toPar;
         playerAgg[key].hoy = p.hoy;
         // Total acumulado = sum das rondas
-        playerAgg[key].total = playerAgg[key].rounds.reduce((a, b) => a + b, 0);
+        playerAgg[key].total = soma(playerAgg[key].rounds);
       }
     }
   }
@@ -246,7 +247,7 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
   const teeMetersByIns: Record<string, number> = {};
   // Info por inscribedId para enriquecer o Draw como na FPG (escalão + ±/Tot por ronda).
   const drawInfoByIns: Record<string, { dob: string | null; name: string | null; licencia: string | null; club: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }> = {};
-  const ncParTotal = Array.isArray(nc.course?.par) ? nc.course!.par!.reduce((a, b) => a + (b || 0), 0) : 0;
+  const ncParTotal = Array.isArray(nc.course?.par) ? somaDe(nc.course!.par!, b => (b || 0)) : 0;
   const lbPlayers: RFEGPlayer[] = [];
   // O NextCaddy publica o MESMO torneio em classificações Scratch E Handicap
   // (ex: "Alevín Masculino Scratch" + "Alevín Masculino Handicap"). Nas Handicap,
@@ -279,13 +280,13 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
             round: r.round,
             gross: typeof r.total === "number"
               ? r.total
-              : (Array.isArray(r.scores) ? (r.scores.filter((x) => x > 0).reduce((a, b) => a + b, 0) || null) : null),
+              : (Array.isArray(r.scores) ? (soma(r.scores.filter((x) => x > 0)) || null) : null),
             scores: Array.isArray(r.scores) ? r.scores : undefined,
             meters: Array.isArray(r.meters) ? r.meters : null,   // metros do tee deste jogador
           }))
         : (p.rounds || []);
       const teeM = rs.find((r) => Array.isArray(r.meters) && r.meters.length)?.meters || null;
-      const teeMetersTotal = teeM ? teeM.reduce((a, b) => a + (b || 0), 0) : null;
+      const teeMetersTotal = teeM ? somaDe(teeM, b => (b || 0)) : null;
       if (teeMetersTotal) {
         if (p.licencia) teeMetersByLic[p.licencia.trim().toUpperCase()] = teeMetersTotal;
         if (p.inscribedId) teeMetersByIns[String(p.inscribedId)] = teeMetersTotal;
@@ -300,7 +301,7 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
           club: e ? e.club : null,   // o NextCaddy não publica o clube; a tabela de licenças sim
           rounds: rs.map((r) => {
             const g = typeof r.total === "number" ? r.total
-              : (Array.isArray(r.scores) ? (r.scores.filter((x) => x > 0).reduce((a, b) => a + b, 0) || null) : null);
+              : (Array.isArray(r.scores) ? (soma(r.scores.filter((x) => x > 0)) || null) : null);
             return { round: r.round, gross: g, toPar: (g != null && ncParTotal) ? g - ncParTotal : null };
           }),
         };

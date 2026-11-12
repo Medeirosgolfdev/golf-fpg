@@ -56,6 +56,7 @@ import TabRow from "../../ui/TabRow";
 import { useCampoTabs, manuelTeeNaProva, CampoDoCircuito } from "./fpgCourseTab";
 import ScoutProva from "../../ui/circuit/ScoutProva";
 import { currentField } from "./repeatersModel";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 /** Junta listas de links extra removendo repetidos pelo URL (a mesma página do
  *  clube pode vir do synthetic FEATURED e da config ao mesmo tempo). */
@@ -300,8 +301,8 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
     const trimmed = lbTournament.players.map((p) => {
       const rs = (p.roundScores || []).filter((r) => r.round <= cutAfterRound);
       const hasAll = wanted.every((rd) => rs.some((r) => r.round === rd && temCartao(r.gross)));
-      const parPerRound = p.parTotal || (rs[0]?.pars?.reduce((a, b) => a + b, 0) || 0);
-      const gross = rs.reduce((x, r) => x + (r.gross || 0), 0);
+      const parPerRound = p.parTotal || (soma(rs[0]?.pars) || 0);
+      const gross = somaDe(rs, r => (r.gross || 0));
       return { ...p, roundScores: rs, grossTotal: gross, toPar: gross - parPerRound * cutAfterRound, parTotal: parPerRound,
         _wd: false, _cut: false, _incomplete: false, _roundsPlayed: cutAfterRound, _hasAll: hasAll };
     }).filter((p) => p._hasAll);
@@ -479,7 +480,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
   // Info about tournament
   const refPlayer = tournament.players[0];
   const nholes = refPlayer?.nholes || refPlayer?.par?.length || refPlayer?.roundScores?.[0]?.pars?.length || 18;
-  const parTotal = refPlayer?.parTotal || refPlayer?.par?.reduce((a, b) => a + b, 0) || refPlayer?.roundScores?.[0]?.pars.reduce((a, b) => a + b, 0) || 0;
+  const parTotal = refPlayer?.parTotal || soma(refPlayer?.par) || soma(refPlayer?.roundScores?.[0]?.pars) || 0;
 
   // Seta ↗ para KIDS2 no Resumo: o AccumulatedLB não lê `options` (ao contrário
   // do ScorecardLB/AllRoundsScorecardLB), mas aceita um `renderName`. Quando o

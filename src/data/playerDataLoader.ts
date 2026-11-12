@@ -8,7 +8,7 @@
 
 import { canonicalCourseName, rotateAroeira2HolesIfNeeded, resolveAroeiraIIByPar, resolveSantoDaSerraByPar } from "../utils/courseAliases";
 import { stripAccents } from "../utils/normName";
-import { numSafe } from "../utils/mathUtils";
+import { numSafe, somaDe } from "../utils/mathUtils";
 import { cachedFetchJson, memoAsync } from "./fetchCache";
 
 /* ─── Tipos (espelham a estrutura gerada pelo pipeline Node) ─── */
@@ -540,8 +540,8 @@ function recomputeECForAllCourses(
           from: fromArr[pos],
         });
       }
-      const totalGross = holesArr.reduce((s, x) => s + (x.best ?? 0), 0);
-      const totalPar = holesArr.reduce((s, x) => s + (x.par ?? 0), 0);
+      const totalGross = somaDe(holesArr, x => (x.best ?? 0));
+      const totalPar = somaDe(holesArr, x => (x.par ?? 0));
       const allBest = holesArr.every(x => x.best != null);
 
       const entry: EclecticEntry = {

@@ -14,6 +14,7 @@ import type { Course, Tee } from "../data/types";
 import InfoIcon from "./InfoIcon";
 import SectionTitle from "./SectionTitle";
 import { Tint } from "./DataStyle";
+import { soma, somaDe } from "../utils/mathUtils";
 
 interface HoleEntry { hole: number; distance: number | null }
 /** Os pares que um buraco pode ter. O par 6 é raro (Otepää, na Estónia, tem um)
@@ -41,7 +42,7 @@ function parBreakdown(tee: Tee | null | undefined): ParBreakdown[] {
       continue;
     }
     const dists = holes.map(h => h.distance ?? 0).filter(d => d > 0);
-    const totalDistance = dists.reduce((a, b) => a + b, 0);
+    const totalDistance = soma(dists);
     out.push({
       par: p,
       count: holes.length,
@@ -55,7 +56,7 @@ function parBreakdown(tee: Tee | null | undefined): ParBreakdown[] {
 
 export function getParTotal(tee: Tee | null | undefined): number {
   if (!tee || !Array.isArray(tee.holes)) return 0;
-  return tee.holes.reduce((sum, h) => sum + (h.par ?? 0), 0);
+  return somaDe(tee.holes, h => (h.par ?? 0));
 }
 
 // Cor por buraco: gradiente HSL forte dentro do par (curto=claro → longo=escuro)
@@ -148,7 +149,7 @@ export function HeroStat({ icon, tone, value, unit, label, valueColor }: {
 export default function CourseHeroCard({ course, tee }: { course: Course; tee: Tee }) {
   const pars = useMemo(() => parBreakdown(tee), [tee]);
   const orderedHoles = useMemo(() => holesByNumber(tee), [tee]);
-  const totalParHoles = pars.reduce((s, p) => s + p.count, 0);
+  const totalParHoles = somaDe(pars, p => p.count);
   const slope = tee.ratings?.holes18?.slopeRating ?? null;
   const cr = tee.ratings?.holes18?.courseRating ?? null;
   const distance = tee.distances?.total ?? null;
@@ -273,9 +274,9 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   );
                 };
                 const sumDist = (arr: typeof orderedHoles) =>
-                  arr.reduce((s, h) => s + (h.distance ?? 0), 0);
+                  somaDe(arr, h => (h.distance ?? 0));
                 const sumPar = (arr: typeof orderedHoles) =>
-                  arr.reduce((s, h) => s + (h.par ?? 0), 0);
+                  somaDe(arr, h => (h.par ?? 0));
 
                 return (
                   <div className="u-d-flex u-fd-column u-gap-14px">

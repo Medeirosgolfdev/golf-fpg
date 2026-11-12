@@ -1,7 +1,7 @@
 ﻿import React, { useState, useMemo } from "react";
 import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLoader";
 import { norm, fmtToPar, fmtSign, fmtDateSpan } from "../utils/format";
-import { sumArr } from "../utils/mathUtils";
+import { sumArr, somaDe } from "../utils/mathUtils";
 import { resumoJogado } from "../utils/parJogado";
 import { temCartao } from "../utils/classificacao";
 import { scClass, toParClass } from "../utils/scoreDisplay";
@@ -542,10 +542,10 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
                                 // entrava na soma, e o par somava também as voltas sem gross.
                                 const withGross = sortedRounds.filter(r => temCartao(r.gross));
                                 if (withGross.length < 2) return null;
-                                const totalGross = withGross.reduce((a, r) => a + Number(r.gross), 0);
-                                const totalStb = sortedRounds.reduce((a, r) => a + (r.stb ?? 0), 0);
+                                const totalGross = somaDe(withGross, r => Number(r.gross));
+                                const totalStb = somaDe(sortedRounds, r => (r.stb ?? 0));
                                 const semPar = withGross.some(r => !(Number(r.par) > 0));
-                                const totalPar = semPar ? 0 : withGross.reduce((a, r) => a + Number(r.par), 0);
+                                const totalPar = semPar ? 0 : somaDe(withGross, r => Number(r.par));
                                 return (
                                   <tr className="bg-detail fw-700 bt-heavy">
                                     <td colSpan={5} className="r fw-700 c-text-2">Total ({withGross.length} voltas)</td>

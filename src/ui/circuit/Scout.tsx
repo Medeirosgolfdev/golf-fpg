@@ -35,6 +35,7 @@ import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
 import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp, escalaoAtDate, fmtOrd, shortTournamentName, fmtSignTipo } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
+import { addMonthsIso } from "../../utils/dias";
 import { useFedBirthdates } from "../InscricoesComponents";
 import TierBadge from "../TierBadge";
 import { AnoEscalaoPill } from "../AnoEscalaoPill";
@@ -54,6 +55,7 @@ import {
 } from "./scoutModel";
 import KpiCard from "../KpiCard";
 import { decodeRanking, type RankingRow } from "../../pages/kids2/juniorCalc";
+import { round1 } from "../../utils/mathUtils";
 
 interface UskFieldFile {
   torneios?: Array<{ t: number; name: string; date_inicio?: string; escaloes?: Array<{ nome: string; jogadores?: Array<{ nome: string }> | null }> }>;
@@ -251,12 +253,12 @@ export default function Scout({
     // O ±par de referência é o do Manuel no último ano.
     const man = out.find((l) => l.isManuel);
     const ref = { toParAno: man?.sc?.v?.[3] ?? null, hcp: man?.sc?.h ?? null };
-    const desde = (() => { const d = new Date(todayIso()); d.setMonth(d.getMonth() - 18); return d.toISOString().slice(0, 10); })();
+    const desde = addMonthsIso(todayIso(), -18);
     const esc = escalaPorComparacoes(out.map((l) => ({ key: l.key, isManuel: l.isManuel, u: l.sc?.u, m: l.sc?.m })), desde);
     const pct = (l: Linha) => (l.kidId ? ranking.get(l.kidId)?.percentile ?? null : null);
     const nivel = (l: Linha) => (l.kidId ? ranking.get(l.kidId)?.nivel ?? null : null);
     const nivelManuel = man ? nivel(man) : null;
-    const r1 = (x: number) => Math.round(x * 10) / 10;
+    const r1 = round1;
     for (const l of out) {
       if (l.isManuel) {
         l.prev = ref.toParAno != null ? { toPar: r1(ref.toParAno), vsManuel: 0, fonte: "media" } : null;

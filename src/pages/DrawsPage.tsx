@@ -50,6 +50,7 @@ import ErrorState from "../ui/ErrorState";
 import { MUTED } from "../ui/tableCells";
 import SectionTitle from "../ui/SectionTitle";
 import { Fill } from "../ui/DataStyle";
+import { somaDe } from "../utils/mathUtils";
 
 // ── Tipos ─────────────────────────────────────────────────────────────
 
@@ -1196,7 +1197,7 @@ export default function DrawsPage() {
                     {linhasOrdenadas.length} {linhasOrdenadas.length === 1 ? "jogador" : "jogadores"} únicos
                   </td>
                   <td className="r">
-                    {linhasOrdenadas.reduce((s, r) => s + r.vezes, 0)}
+                    {somaDe(linhasOrdenadas, r => r.vezes)}
                   </td>
                   <td colSpan={2} className="muted u-fw-400">
                     {(() => {

@@ -33,6 +33,7 @@ import {
   ffgGgEscalaoLabel, ffgEventFamilyKey, ffgPrettyTitle,
 } from "./golfgenius";
 import { fmtSign } from "../../utils/format";
+import { somaDe } from "../../utils/mathUtils";
 
 /** O que a página desenha dentro das divisões. Os draws e o leaderboard de
  *  totais da LGPIDF já são DADOS (`roundDraws[].draw`, `totals` — desenhados
@@ -259,7 +260,7 @@ export function ggMergedEntry(members: { meta: CatalogEntry; data: FFGTournament
       url: m.data.source || `https://www.golfgenius.com/pages/${m.meta.gg_page}`,
       icon: "🏌️",
     })),
-    playerCount: members.reduce((s, m) => s + m.data.players.length, 0),
+    playerCount: somaDe(members, m => m.data.players.length),
     divisionCount: divisions.length,
     hasManuel: divisions.some((d) => d.hasManuel),
     divisions,
@@ -270,7 +271,7 @@ export function ggMergedEntry(members: { meta: CatalogEntry; data: FFGTournament
 
 /** LGPIDF: 1 entry, uma divisão com inscritos, horários, totais e mapa do campo. */
 export function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament, R: FfgRenderers): CircuitEntry {
-  const inscritos = data.inscritosPdfs.reduce((s, pf) => s + pf.players.length, 0);
+  const inscritos = somaDe(data.inscritosPdfs, pf => pf.players.length);
   const hasManuel = data.players.some((p) => isM(p.name)) || data.inscritosPdfs.some((pf) => pf.players.some((pl) => isM(pl.name)));
   return {
     id: `lgpidf:${meta.year}_${meta.slug}`,

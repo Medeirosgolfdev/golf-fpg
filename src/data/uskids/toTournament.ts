@@ -18,6 +18,7 @@ import { TEES_LOOKUP, isWD } from "../../ui/USKIDSPageHelpers";
 import type { Torneio, TorneioResult, EscalaoResult, UskidsDrawsData, UskidsDrawRonda } from "../../ui/uskidsTypes";
 import type { CircuitRoundDraw } from "../../ui/circuit/types";
 import type { RondaJogadorComCampo } from "./converterTorneioCompleto";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 export type FieldEscalao = Torneio["escaloes"][number];
 
@@ -61,7 +62,7 @@ export function escalaoToTournament(
     const hasSI = si.some(v => v > 0);
     // Para USKids: se não há SI real, usar metros na linha que normalmente seria SI
     const siForDisplay: number[] = hasSI ? si : meters;
-    const parPerRoundEsc = parKnown ? par.reduce((s, p) => s + p, 0) : null;
+    const parPerRoundEsc = parKnown ? soma(par) : null;
     const cartaoEsc = { par, meters, si: siForDisplay, parPerRound: parPerRoundEsc, cr: teeInfo?.cr, slope: teeInfo?.slope, tee: teeInfo?.tee, campo: teeInfo?.campo };
 
     for (const j of lb) {
@@ -75,7 +76,7 @@ export function escalaoToTournament(
       const metrosJ = proprio && jc.metros?.length === buracos ? jc.metros : null;
       const { par: parJ, meters: metersJ, si: siJ, parPerRound, cr, slope, tee, campo } = proprio
         ? { par: jc.par as number[], meters: metrosJ ?? (Array(buracos).fill(0) as number[]), si: hasSI ? si : (metrosJ ?? (Array(buracos).fill(0) as number[])),
-            parPerRound: (jc.par as number[]).reduce((s, p) => s + p, 0), cr: undefined, slope: undefined, tee: undefined, campo: jc.campo }
+            parPerRound: soma((jc.par as number[])), cr: undefined, slope: undefined, tee: undefined, campo: jc.campo }
         : cartaoEsc;
       if (!playerMap.has(key)) {
         // Lookup HCP FPG (só jogadores PT federados — via arMap → fpgHcpExact).
@@ -180,7 +181,7 @@ function uskidsRoundResults(e: EscalaoResult | null, ronda: number): Map<string,
   const m = new Map<string, { gross: number; toPar: number | null }>();
   const r = e?.rondas.find((x) => x.ronda === ronda);
   if (!r) return m;
-  const parTotal = r.total_par ?? (r.par?.length ? r.par.reduce((s, v) => s + (v || 0), 0) : null);
+  const parTotal = r.total_par ?? (r.par?.length ? somaDe(r.par, v => (v || 0)) : null);
   for (const j of r.leaderboard ?? r.jogadores ?? []) {
     if (!j.nome || !(j.score > 0)) continue;
     const toPar = j.to_par ?? (parTotal ? j.score - parTotal : null);

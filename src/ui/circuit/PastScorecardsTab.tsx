@@ -22,6 +22,7 @@ import EmptyState from "../EmptyState";
 import { fmtMonthYear } from "../../utils/format";
 import { parsePos } from "../../utils/classificacao";
 import { MIN_GROSS_9H, MIN_GROSS_18H } from "../../data/uskids/memberHistory";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 /** Menos do que isto não é um field (como no Kids 2). */
 const MIN_FIELD = 3;
@@ -39,9 +40,9 @@ export function editionFromTournament(
   const is9 = hpr === 9;
   const par = ref.pars?.length ? ref.pars.slice(0, hpr) : null;
   const parOk = par && par.length === hpr && par.every((v) => v > 0) ? par : null;
-  const parPerRound = parOk ? parOk.reduce((a, b) => a + b, 0) : 0;
+  const parPerRound = parOk ? soma(parOk) : 0;
   const metersPerHole = ref.meters?.length ? ref.meters.slice(0, hpr).map((m) => m || 0) : null;
-  const meters = metersPerHole ? metersPerHole.reduce((a, b) => a + b, 0) || undefined : undefined;
+  const meters = metersPerHole ? soma(metersPerHole) || undefined : undefined;
   const minGross = is9 ? MIN_GROSS_9H : MIN_GROSS_18H;
 
   const players: PlayerCard[] = [];
@@ -51,15 +52,15 @@ export function editionFromTournament(
     let total = 0;
     (p.roundScores || []).forEach((r, i) => {
       const strokes = (r.scores || []).slice(0, hpr);
-      const gross = r.gross || strokes.reduce((a, b) => a + (b || 0), 0);
+      const gross = r.gross || somaDe(strokes, b => (b || 0));
       if (!(gross >= minGross) || isNoCardGross(gross)) return;
       const t9 = tallyHoles(strokes, r.pars?.length ? r.pars : parOk);
       rds.push({
         rn: r.round || i + 1, gross, strokes,
         toPar: parPerRound ? gross - parPerRound : 0,
         birds: t9.birds, pars: t9.pars, bogeys: t9.bogeys, worse: t9.worse,
-        out: strokes.slice(0, 9).reduce((a, b) => a + (b || 0), 0),
-        inn: is9 ? 0 : strokes.slice(9, 18).reduce((a, b) => a + (b || 0), 0),
+        out: somaDe(strokes.slice(0, 9), b => (b || 0)),
+        inn: is9 ? 0 : somaDe(strokes.slice(9, 18), b => (b || 0)),
       });
       total += gross;
     });
@@ -88,8 +89,8 @@ export function editionFromTournament(
     par: parOk,
     metersPerHole,
     parPerRound,
-    parF9: parOk ? parOk.slice(0, 9).reduce((a, b) => a + b, 0) : 0,
-    parB9: parOk && !is9 ? parOk.slice(9, 18).reduce((a, b) => a + b, 0) : 0,
+    parF9: parOk ? soma(parOk.slice(0, 9)) : 0,
+    parB9: parOk && !is9 ? soma(parOk.slice(9, 18)) : 0,
     holesPerRound: hpr,
     is9,
     nRoundsMax,

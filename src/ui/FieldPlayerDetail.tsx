@@ -7,7 +7,7 @@ import {
   fmtToPar,
 } from "../utils/format";
 import { FL } from "../utils/flagUtils";
-import { meanArr } from "../utils/mathUtils";
+import { meanArr, soma, somaDe } from "../utils/mathUtils";
 import { distFromRounds } from "../utils/analysisStats";
 import { isoDeMesAno } from "../utils/mesAno";
 import { scClass, toParClass, tpColorDark } from "../utils/scoreDisplay";
@@ -74,11 +74,11 @@ export default function FieldPlayerDetail({
 
   const par = VP_PAR;
   const FH = FIELD_2025.holes;
-  const frontPar = par.slice(0, 9).reduce((a, b) => a + b, 0);
-  const backPar = par.slice(9).reduce((a, b) => a + b, 0);
+  const frontPar = soma(par.slice(0, 9));
+  const backPar = soma(par.slice(9));
   const totalPar = frontPar + backPar;
   const sm = (arr: number[], f: number, t: number) =>
-    arr.slice(f, t).reduce((a, b) => a + b, 0);
+    soma(arr.slice(f, t));
 
   /* ── Sub-total cell with ±par annotation ── */
   const SubCell = ({
@@ -229,20 +229,18 @@ export default function FieldPlayerDetail({
           <td className="fs-10 c-muted">{h.fAvg.toFixed(1)}</td>
           {i === 8 && (
             <td className="col-out c-muted">
-              {FH.slice(0, 9)
-                .reduce((a, x) => a + x.fAvg, 0)
+              {somaDe(FH.slice(0, 9), x => x.fAvg)
                 .toFixed(1)}
             </td>
           )}
         </React.Fragment>
       ))}
       <td className="col-in c-muted">
-        {FH.slice(9)
-          .reduce((a, x) => a + x.fAvg, 0)
+        {somaDe(FH.slice(9), x => x.fAvg)
           .toFixed(1)}
       </td>
       <td className="col-total fs-10 c-muted">
-        {FH.reduce((a, x) => a + x.fAvg, 0).toFixed(1)}
+        {somaDe(FH, x => x.fAvg).toFixed(1)}
       </td>
     </tr>
   );
@@ -535,9 +533,8 @@ export default function FieldPlayerDetail({
                           </td>
                           {i === 8 && (
                             <td className="col-out fw-600">
-                              {playerHoleAvg
-                                .slice(0, 9)
-                                .reduce((a, b) => a + b, 0)
+                              {soma(playerHoleAvg
+                                .slice(0, 9))
                                 .toFixed(1)}
                             </td>
                           )}
@@ -545,14 +542,12 @@ export default function FieldPlayerDetail({
                       );
                     })}
                     <td className="col-in fw-600">
-                      {playerHoleAvg
-                        .slice(9)
-                        .reduce((a, b) => a + b, 0)
+                      {soma(playerHoleAvg
+                        .slice(9))
                         .toFixed(1)}
                     </td>
                     <td className="col-total fs-10 fw-700">
-                      {playerHoleAvg
-                        .reduce((a, b) => a + b, 0)
+                      {soma(playerHoleAvg)
                         .toFixed(1)}
                     </td>
                   </tr>

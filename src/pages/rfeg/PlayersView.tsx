@@ -28,6 +28,7 @@ import { isManuelByName } from "../../constants/manuel";
 import { PlayerTournaments, type EsPlayerTournamentsFile } from "./PlayerTournaments";
 import { MUTED } from "../../ui/tableCells";
 import JogadoresFederacao, { colunasComuns, ANO_CORRENTE, type ColunaJogadorFed, type JogadorFedRow } from "../../ui/info/JogadoresFederacao";
+import { somaDe } from "../../utils/mathUtils";
 
 interface SpainPlayer {
   licencia: string;
@@ -266,7 +267,7 @@ export function RFEGPlayersView() {
   }, [data]);
 
   // Quantos jogadores têm mais do que uma licença (mudaram de clube/região).
-  const dupCount = useMemo(() => all.reduce((n, p) => n + (p.aliases && p.aliases.length ? 1 : 0), 0), [all]);
+  const dupCount = useMemo(() => somaDe(all, p => (p.aliases && p.aliases.length ? 1 : 0)), [all]);
 
   const catOptions = useMemo(() => {
     const s = new Set<string>();

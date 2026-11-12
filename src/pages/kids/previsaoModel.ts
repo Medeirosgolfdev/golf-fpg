@@ -10,7 +10,7 @@
  *      passadas do MESMO torneio+escalao (member-history-slim).
  */
 import type { PlayerPageData } from "../../data/playerDataLoader";
-import { meanArr } from "../../utils/mathUtils";
+import { meanArr, soma, somaDe } from "../../utils/mathUtils";
 import type { Tee } from "../../data/types";
 import { strokesOnHole } from "../../utils/whsCalc";
 import { firstShotClub } from "../../utils/clubScale";
@@ -91,7 +91,7 @@ export function buildHoleProfile(pd: PlayerPageData | null, soVoltas?: Set<strin
   function avgFor(par: number): number | null {
     const arr = byPar[par];
     if (!arr || arr.length === 0) return null;
-    return arr.reduce((a, b) => a + b.vsPar, 0) / arr.length;
+    return somaDe(arr, b => b.vsPar) / arr.length;
   }
 
   function expectedVsPar(par: number | null, dist: number | null): number | null {
@@ -239,15 +239,15 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
     };
   });
 
-  const parTotal = base.reduce((a, r) => a + (r.par ?? 0), 0);
-  const profileTotal = base.reduce((a, r) => a + (r.expStrokes ?? (r.par ?? 0)), 0);
+  const parTotal = somaDe(base, r => (r.par ?? 0));
+  const profileTotal = somaDe(base, r => (r.expStrokes ?? (r.par ?? 0)));
   const overPar = profileTotal - parTotal;
 
   // Redistribui a volta média do Manuel pela DIFICULDADE REAL de cada buraco
   // (vsPar do field na edição anterior) — dá spread real por buraco em vez de
   // um valor quase plano por par. Sem field, mantém o perfil do Manuel.
   const fieldW = base.map(r => Math.max(0, r.fieldVsPar ?? 0));
-  const sumW = fieldW.reduce((a, b) => a + b, 0);
+  const sumW = soma(fieldW);
   const useField = base.filter(r => r.fieldVsPar != null).length >= 10 && sumW > 0;
   const media = base.map((r, i) => {
     if (r.par == null) return r.expStrokes;
@@ -261,7 +261,7 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
     return v != null && r.par != null ? r.par + v : null;
   });
   const bomOk = bomProfile != null && bomProfile.nHoles > 0 && bomBase.every((v, i) => v != null || base[i].par == null);
-  const bomOver = bomBase.reduce<number>((a, v, i) => a + (v ?? base[i].par ?? 0), 0) - parTotal;
+  const bomOver = somaDe(bomBase, (v, i) => (v ?? base[i].par ?? 0)) - parTotal;
   const bom = base.map((r, i) => !bomOk || r.par == null ? null
     : useField ? r.par + bomOver * (fieldW[i] / sumW) : bomBase[i]);
 
@@ -355,7 +355,7 @@ export function estimateField(mh: MHSlim | null, torneio: FieldTorneioLite | nul
   // pancadas — tudo do módulo global (data/uskids/memberHistory), não refeito aqui.
   for (const { tcode, year, par, jogadores, hpr, minGross } of mhEdicoesDoEscalao(mh, torneio.name, escalaoNome)) {
     const doEscalao = jogadores.map(([, pl]) => pl.torneios[tcode]);
-    const parPerRound = Array.isArray(par) ? par.slice(0, hpr).reduce((a, b) => a + (b || 0), 0) : 0;
+    const parPerRound = Array.isArray(par) ? somaDe(par.slice(0, hpr), b => (b || 0)) : 0;
 
     // totais por jogador (so quem completou todas as rondas da edicao)
     let nRoundsMax = 0;
@@ -372,7 +372,7 @@ export function estimateField(mh: MHSlim | null, torneio: FieldTorneioLite | nul
     }
     const totals = players
       .filter(rs => rs.length === nRoundsMax)
-      .map(rs => rs.reduce((a, b) => a + b, 0))
+      .map(rs => soma(rs))
       .sort((a, b) => a - b);
     if (totals.length < MIN_FIELD) continue;
 
@@ -513,7 +513,7 @@ export function topFieldHoleStats(
     let tot = 0, any = false;
     for (const [rn, r] of Object.entries(t.rounds || {})) {
       const st = r.strokes || [];
-      const g = r.gross || st.reduce((a, b) => a + (b > 0 ? b : 0), 0);
+      const g = r.gross || somaDe(st, b => (b > 0 ? b : 0));
       if (st.some(x => x > 0) && temCartao(g)) { rounds[rn] = st; tot += g; any = true; }
     }
     if (any) players.push({ name: p.name, tot, rounds });
@@ -574,7 +574,7 @@ export function porComprimento(pd: PlayerPageData | null, teeM: number, months =
       const ts = parseRoundDate((r as { date?: string }).date);
       if (ts == null || ts < cut) continue;
       const hm = (pd?.HOLES?.[r.scoreId]?.m || []).filter((x): x is number => typeof x === "number" && x > 0);
-      const m = hm.length === 18 ? hm.reduce((a, b) => a + b, 0) : Number((r as { meters?: number }).meters) || 0;
+      const m = hm.length === 18 ? soma(hm) : Number((r as { meters?: number }).meters) || 0;
       if (!m) continue;
       const gross = Number((r as { gross?: number }).gross), par = Number((r as { par?: number }).par);
       g[m < teeM - janela ? "curtos" : m > teeM + janela ? "compridos" : "parecidos"]

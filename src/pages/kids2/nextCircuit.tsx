@@ -29,6 +29,7 @@ import {
 import {
   uskidsDivisions, uskidsCircuitLinks, matchEscalaoDiv, scoutEscaloes, type UskidsExtraTab,
 } from "../uskids/uskidsCircuit";
+import { somaDe } from "../../utils/mathUtils";
 
 // ─────────────────────────────────────────────
 // Contexto das abas de análise (os dados chegam aos poucos — as abas lêem-nos
@@ -108,7 +109,7 @@ function baseEntry(ft: FieldTorneio): Omit<CircuitEntry, "id" | "loadDivisions">
     year: parseInt(iso.slice(0, 4), 10) || null,
     dateStart: iso || undefined,
     hasManuel: escs.some(e => (e.jogadores ?? []).some(j => isManuel(j.nome))),
-    playerCount: escs.reduce((s, e) => s + (e.jogadores?.length ?? 0), 0),
+    playerCount: somaDe(escs, e => (e.jogadores?.length ?? 0)),
     divisionCount: escs.length,
   };
 }
@@ -183,7 +184,7 @@ export function buildNextEntries({ data, results, draws, escRef }: NextSources):
       id: `${fam.toLowerCase()}-${ano}`, name: `${fam} ${ano}`, series: fam,
       year: parseInt(ano, 10) || null,
       hasManuel: divisions.some(d => d.hasManuel),
-      playerCount: escs.reduce((s, e) => s + (e.jogadores?.length ?? 0), 0),
+      playerCount: somaDe(escs, e => (e.jogadores?.length ?? 0)),
       divisionCount: divisions.length,
       defaultDivKey: escs.find(e => escalaoMatches(escRef, e.nome))?.nome,
       divisions,

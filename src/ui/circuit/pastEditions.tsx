@@ -28,6 +28,7 @@ import { totalsDivisionView } from "./divisionPieces";
 import { currentField } from "../../pages/fpg/repeatersModel";
 import { stripAccents } from "../../utils/normName";
 import { isPtCountry } from "../../utils/flagUtils";
+import { somaDe } from "../../utils/mathUtils";
 
 /**
  * O torneio de hoje de uma divisão, como o Scout o lê (`currentField`: draw →
@@ -137,7 +138,7 @@ function toParPelasVoltas(rs: { gross?: number | null; pars?: (number | null)[] 
   if (!jogadas.length) return null;
   let s = 0;
   for (const r of jogadas) {
-    const par = (r.pars || []).reduce<number>((a, b) => a + (b || 0), 0);
+    const par = somaDe((r.pars || []), b => (b || 0));
     if (!par) return null;
     s += (r.gross as number) - par;
   }
@@ -169,7 +170,7 @@ export function buildPastEditionFromTournament(
       total: !semCartao && typeof p.grossTotal === "number" ? p.grossTotal : null,
       toPar: semCartao ? null : typeof p.toPar === "number" ? p.toPar : toParPelasVoltas(p.roundScores || []),
       rounds: (p.roundScores || []).map((r) => (r.gross != null && !isNoCardGross(r.gross) ? r.gross : null)),
-      holesPlayed: (p.roundScores || []).reduce((s, r) => s + (r.scores || []).filter(Boolean).length, 0),
+      holesPlayed: somaDe((p.roundScores || []), r => (r.scores || []).filter(Boolean).length),
       fullRounds: (p.roundScores || []).filter(isFullRound).length,
       // Pelo federado quando o há (o pai, 54907, também é «Manuel Medeiros»).
       isManuel: fieldIsManuel({ name: p.name, fed: p.fedCode || p.fed || null }),

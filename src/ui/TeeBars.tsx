@@ -15,6 +15,7 @@ import { Tint } from "./DataStyle";
 import { fmt, fmtCR } from "../utils/format";
 import { physicalTeeGroups, type SexKey } from "../utils/teeGroups";
 import { teeChoiceKey } from "../utils/teeChoice";
+import { somaDe } from "../utils/mathUtils";
 
 /** Nome do tee para a barra (escalão nos tees USKids): sem o prefixo «USKids». */
 function teeLabel(t: Tee | undefined): string {
@@ -27,7 +28,7 @@ function nineDistance(t: Tee, nine: "front9" | "back9"): number | null {
   if (d != null && d > 0) return d;
   const hs = (t.holes ?? []).filter((h) => (nine === "front9" ? h.hole <= 9 : h.hole > 9));
   if (hs.length !== 9 || hs.some((h) => !h.distance)) return null;
-  return hs.reduce((s, h) => s + (h.distance ?? 0), 0);
+  return somaDe(hs, h => (h.distance ?? 0));
 }
 
 interface TeeBarsProps {

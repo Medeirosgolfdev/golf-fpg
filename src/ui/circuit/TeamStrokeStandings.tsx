@@ -12,7 +12,7 @@
  * Tudo ordenável. A de pontos (match play) continua na TeamPointsStandings.
  */
 import React, { useMemo, useState } from "react";
-import { useSort } from "../../hooks/useSort";
+import { useSort, compareNullsLast } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import { EscPill } from "../PillBadge";
 import { medal, fmtToPar } from "../../utils/format";
@@ -25,6 +25,7 @@ import { MUTED } from "../tableCells";
 import Select from "../Select";
 import SectionTitle from "../SectionTitle";
 import { Tint } from "../DataStyle";
+import { soma } from "../../utils/mathUtils";
 
 type View = "cartoes" | "lista" | "jogadores";
 /** Volta escolhida (uma categoria): grupo = ordem das letras + 🐦○■ de todas as voltas. */
@@ -168,7 +169,7 @@ function PlayersTable({ cat, model, color, cols, bpbMode, showTotal }: {
             </>) : showTotal && (
               model.footerAll ? (() => {
                 const vs = cols.map(ri => cat.rdSumsAll[ri]);
-                const grand = vs.every(v => v != null) ? (vs as number[]).reduce((s, v) => s + v, 0) : null;
+                const grand = vs.every(v => v != null) ? soma((vs as number[])) : null;
                 return <td className="ts-grand-all">{grand ?? "–"}</td>;
               })() : (
                 <td className="ts-grand">
@@ -359,25 +360,29 @@ function AllPlayers({ model }: { model: TsModel }) {
   const { sortKey, sortDir, toggleSort } = useSort<JKey>(model.rankBy === "toPar" ? "r0" : "tot", "asc");
   const rows = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    const INF = sortDir === "asc" ? Infinity : -Infinity;
     const all = model.teams.filter(t => !equipa || t.key === equipa)
       .flatMap(t => t.cats.flatMap(c => c.players.map(p => ({ t, c, p }))));
-    const v = ({ t, c, p }: typeof all[number]): number | string => {
+    // Vazio (sem lugar, sem HCP, sem volta) = null: fica SEMPRE no fim, nas duas direcções.
+    const v = ({ c, p }: typeof all[number]): number | string | null => {
       switch (sortKey) {
-        case "equipa": return (c.pos ?? 999) * 1000 + (model.teams.indexOf(t));
+        case "equipa": return c.pos ?? null;
         case "cat": return c.label;
         case "nome": return p.name;
-        case "hcp": return p.hcpSort ?? 999;
-        case "bur": return p.holes ?? INF;
-        case "tot": return p.total ?? INF;
+        case "hcp": return p.hcpSort ?? null;
+        case "bur": return p.holes ?? null;
+        case "tot": return p.total ?? null;
         case "conta": return p.conta ? 0 : 1;
-        default: { const r = p.rds[parseInt(sortKey.slice(1), 10)]; return (model.rankBy === "toPar" ? r?.toPar : r?.gross) ?? INF; }
+        default: { const r = p.rds[parseInt(sortKey.slice(1), 10)]; return (model.rankBy === "toPar" ? r?.toPar : r?.gross) ?? null; }
       }
     };
+    const iEquipa = (t: TsTeam) => model.teams.indexOf(t);
     return all.sort((a, b) => {
       const av = v(a), bv = v(b);
       if (typeof av === "string") return dir * av.localeCompare(bv as string, "pt");
-      return dir * ((av as number) - (bv as number)) || a.p.name.localeCompare(b.p.name, "pt");
+      return compareNullsLast(av as number | null, bv as number | null, dir)
+        // Por equipa: no mesmo lugar (ou sem lugar), a ordem das equipas na prova.
+        || (sortKey === "equipa" ? dir * (iEquipa(a.t) - iEquipa(b.t)) : 0)
+        || a.p.name.localeCompare(b.p.name, "pt");
     });
   }, [model, equipa, sortKey, sortDir]);
   const hdr = (k: JKey, l: React.ReactNode, cls?: string, title?: string) =>
@@ -443,19 +448,18 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
   // categorias — pela melhor posição do clube em qualquer categoria.
   const cards = useMemo(() => {
     if (!single) {
-      return [...model.teams].sort((a, b) => {
-        const ba = Math.min(...a.cats.map(c => c.pos ?? Infinity), Infinity);
-        const bb = Math.min(...b.cats.map(c => c.pos ?? Infinity), Infinity);
-        return ba - bb || a.name.localeCompare(b.name, "pt");
-      });
+      const melhor = (t: TsTeam): number | null => {
+        const ps = t.cats.map(c => c.pos).filter((p): p is number => p != null);
+        return ps.length ? Math.min(...ps) : null;
+      };
+      return [...model.teams].sort((a, b) => compareNullsLast(melhor(a), melhor(b), 1) || a.name.localeCompare(b.name, "pt"));
     }
-    const INF = sortDir === "asc" ? Infinity : -Infinity;
     return [...model.teams].sort((a, b) => {
       if (sel === "grupo") return (sortDir === "asc" ? 1 : -1) * (a.letter ?? a.name).localeCompare(b.letter ?? b.name);
       const ri = typeof sel === "number" ? model.rounds.indexOf(sel) : null;
-      const av = (a.cats[0] ? teamVal(a.cats[0], model, ri) : null) ?? INF;
-      const bv = (b.cats[0] ? teamVal(b.cats[0], model, ri) : null) ?? INF;
-      return sortDir === "asc" ? av - bv : bv - av;
+      const av = a.cats[0] ? teamVal(a.cats[0], model, ri) : null;
+      const bv = b.cats[0] ? teamVal(b.cats[0], model, ri) : null;
+      return compareNullsLast(av, bv, sortDir === "asc" ? 1 : -1);
     });
   }, [model, single, sel, sortDir]);
 

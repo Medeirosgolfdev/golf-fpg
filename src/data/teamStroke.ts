@@ -14,7 +14,7 @@
 import type { Player, Tournament, GrupoEntry, GrupoJogador } from "./fpgTypes";
 import type { DriveEquipasData } from "./drive/driveLoader";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
-import { bestN } from "../utils/mathUtils";
+import { bestN, soma, somaDe } from "../utils/mathUtils";
 import { abreviarNome, escalaoAtDate, fmtHcp } from "../utils/format";
 import { firstPlayerParTotal } from "./fpgUtils";
 import { isNoCardGross } from "./intlCommon";
@@ -103,7 +103,7 @@ function grossForRound(p: Player | undefined, rd: number, maxHole: number): numb
     if (isNoCardGross(rs.gross)) return null;
     if (rs.scores?.length) {
       if (rs.scores.every(s => s === 0)) return null;
-      return rs.scores.reduce((sum, s) => sum + Math.min(s, maxHole), 0);
+      return somaDe(rs.scores, s => Math.min(s, maxHole));
     }
     return rs.gross;
   }
@@ -209,7 +209,7 @@ function playerRows(js: GrupoJogador[], byFed: Map<string, Player>, rounds: numb
     return {
       key: j.fed ?? j.nome, name: abreviarNome(j.nome), fed: j.fed, link: !!(p && j.fed),
       hcp: h.hcp, hcpSort: h.sort, esc: escOf(j), holes: null, rds,
-      total: played.length ? played.reduce((s, v) => s + v, 0) : null,
+      total: played.length ? soma(played) : null,
       conta: rds.some(r => r.counts), hasScore: played.length > 0,
     };
   });
@@ -225,12 +225,12 @@ function catTotals(players: TsPlayer[], rounds: number[], nFor: (rd: number) => 
   });
   const rdToPar = rdTotals.map((v, ri) => (v != null && parTotal > 0 ? v - parTotal * nFor(rounds[ri]) : null));
   const present = rdTotals.filter((v): v is number => v != null);
-  const total = present.length ? present.reduce((s, v) => s + v, 0) : null;
+  const total = present.length ? soma(present) : null;
   // O par da equipa é o das voltas em que TEM resultado.
-  const teamPar = parTotal > 0 ? parTotal * rounds.reduce((s, rd, ri) => s + (rdTotals[ri] != null ? nFor(rd) : 0), 0) : 0;
+  const teamPar = parTotal > 0 ? parTotal * somaDe(rounds, (rd, ri) => (rdTotals[ri] != null ? nFor(rd) : 0)) : 0;
   const rdSumsAll = rounds.map((_, ri) => {
     const sc = players.map(p => p.rds[ri].gross).filter((v): v is number => v != null);
-    return sc.length ? sc.reduce((s, v) => s + v, 0) : null;
+    return sc.length ? soma(sc) : null;
   });
   return { rdTotals, rdToPar, total, toPar: total != null && teamPar > 0 ? total - teamPar : null, rdSumsAll };
 }

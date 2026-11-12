@@ -24,6 +24,7 @@ import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
 import ModoClassifTabs from "./ModoClassifTabs";
 import { isNoCardGross } from "../data/intlCommon";
 import { temCartao } from "../utils/classificacao";
+import { soma, somaDe } from "../utils/mathUtils";
 
 
 export function AccumulatedLB({
@@ -62,7 +63,7 @@ export function AccumulatedLB({
   // Par de uma volta: o par total ou a soma do par por buraco. Sem nenhum dos
   // dois (fonte sem par oficial) → sem par: nada de ±par nem «Par 72» inventado.
   const parOfPlayer = (p: (typeof rawPlayers)[number] | undefined): number | null =>
-    p?.parTotal || p?.par?.reduce((a, b) => a + b, 0) || null;
+    p?.parTotal || soma(p?.par) || null;
   const parPerRound: number | null = parOfPlayer(complete[0]) ?? parOfPlayer(incomplete[0]);
   const semParBuraco = !rawPlayers.some((p) => p.roundScores?.some((rs) => rs.pars?.length));
   // Par do torneio = soma do par de CADA volta (13/10/2026 — PGA Golf Club
@@ -71,7 +72,7 @@ export function AccumulatedLB({
   const sumRoundPars = (p: (typeof rawPlayers)[number] | undefined): number | null => {
     const rss = p?.roundScores || [];
     if (!rss.length || rss.some((rs) => !rs.pars?.length)) return null;
-    return rss.reduce((s, rs) => s + rs.pars.reduce((a: number, b) => a + (b || 0), 0), 0);
+    return somaDe(rss, rs => somaDe(rs.pars, b => (b || 0)));
   };
   const parRef = complete.find((p) => (p.roundScores?.length ?? 0) >= nRounds);
   const parTorneio = sumRoundPars(parRef) ?? (parPerRound != null ? parPerRound * nRounds : null);
@@ -207,7 +208,7 @@ export function AccumulatedLB({
   const nEmCurso = complete.length - fully.length;
   const grosses = (fully.length ? fully : complete).map((p) => numGross(p)).filter((g) => !isNaN(g) && g > 0);
   const avgGross = grosses.length
-    ? grosses.reduce((a, b) => a + b, 0) / grosses.length
+    ? soma(grosses) / grosses.length
     : null;
 
   // Buracos de cada volta e distância por tee (como na linha da volta, 22/10/2026).
@@ -221,7 +222,7 @@ export function AccumulatedLB({
       const m = rs.meters?.length ? rs.meters : p.meters;
       if (tn && m && m.length >= n && n > 0 && !teeDist.has(tn)) {
         const off = n === 9 && m.length >= 18 && rs.startHole === 10 ? 9 : 0;
-        const tot = m.slice(off, off + n).reduce((a, b) => a + (b || 0), 0);
+        const tot = somaDe(m.slice(off, off + n), b => (b || 0));
         if (tot > 0) teeDist.set(tn, tot);
       }
     }

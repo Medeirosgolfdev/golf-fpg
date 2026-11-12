@@ -15,6 +15,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import { useSort, compareTextNullsLast } from "../../hooks/useSort";
 import SectionTitle from "../../ui/SectionTitle";
 import KpiCard from "../../ui/KpiCard";
+import { somaDe } from "../../utils/mathUtils";
 
 interface RFEGFederation {
   /** Nome oficial RFEG */
@@ -318,8 +319,8 @@ export function RFEGFederationsView() {
   const gdFeds = RFEG_FEDERATIONS.filter(f => f.platform === "GolfDirecto");
   const ownFeds = RFEG_FEDERATIONS.filter(f => f.platform === "Próprio");
   const emptyFeds = RFEG_FEDERATIONS.filter(f => f.platform === "Vazio");
-  const totalScraped = ncFeds.reduce((acc, f) => acc + (f.scrapedCount || 0), 0);
-  const totalGdScraped = gdFeds.reduce((acc, f) => acc + (f.scrapedCount || 0), 0);
+  const totalScraped = somaDe(ncFeds, f => (f.scrapedCount || 0));
+  const totalGdScraped = somaDe(gdFeds, f => (f.scrapedCount || 0));
   const trackedTotal = ncFeds.length + gdFeds.length;
 
   return (

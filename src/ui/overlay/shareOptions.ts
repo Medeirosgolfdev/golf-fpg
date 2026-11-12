@@ -13,6 +13,7 @@ import { fmtOrd } from "../../utils/format";
 import { temCartao } from "../../utils/classificacao";
 import { chavesSemFundir } from "../../utils/chaveJogador";
 import { playerKey } from "../../utils/playerKey";
+import { somaDe } from "../../utils/mathUtils";
 type Ctx = { event?: string; course?: string; date?: string };
 export type ShareOptions = { options: ShareOption[]; defaultKey?: string };
 
@@ -93,7 +94,7 @@ export function shareOptionsForTournament(rounds: Tournament[], ctx: Ctx = {}): 
   }
   const full = [...byPlayer.entries()].filter(([, a]) => a.per.length >= 2);
   const maxN = Math.max(0, ...full.map(([, a]) => a.per.length));
-  const total = (a: Acc) => a.per.reduce((s, x) => s + x.data.scores.reduce<number>((t, v) => t + (v ?? 0), 0), 0);
+  const total = (a: Acc) => somaDe(a.per, x => somaDe(x.data.scores, v => (v ?? 0)));
   const ranked = full.filter(([, a]) => a.per.length === maxN).sort((x, y) => total(x[1]) - total(y[1]));
   const options: ShareOption[] = [];
   let defaultKey: string | undefined;
@@ -104,7 +105,7 @@ export function shareOptionsForTournament(rounds: Tournament[], ctx: Ctx = {}): 
     const last = a.per[a.per.length - 1].data;
     const sums = a.per.map((x) => ({
       round: x.r, scores: x.data.scores.map((v) => v ?? 0), par: x.data.par,
-      gross: x.data.scores.reduce<number>((t, v) => t + (v ?? 0), 0),
+      gross: somaDe(x.data.scores, v => (v ?? 0)),
       toPar: x.data.scores.reduce<number>((t, v, j) => t + (v ?? 0) - (x.data.par[j] ?? 0), 0),
       date: x.data.date,
     }));

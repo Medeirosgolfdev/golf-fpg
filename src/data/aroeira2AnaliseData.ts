@@ -22,7 +22,7 @@
 import type { Tournament } from "./fpgTypes";
 import { cachedFetchJson } from "./fetchCache";
 import { fmtToPar, fmtSign } from "../utils/format";
-import { meanArr } from "../utils/mathUtils";
+import { meanArr, soma, somaDe } from "../utils/mathUtils";
 import { compareNullsLast } from "../hooks/useSort";
 import { MANUEL_FED, isManuel as isManuelPlayer } from "../constants/manuel";
 import { normLoose } from "../utils/normName";
@@ -122,7 +122,7 @@ function extractPlayerRounds(t: Tournament): PlayerRoundOnCourse[] {
       if (rs.scores.every(s => s === 0)) continue;
       const pars = rs.pars && rs.pars.length ? rs.pars : (p.par || []);
       if (!pars.length) continue;
-      const parTot = pars.reduce((a, b) => a + b, 0);
+      const parTot = soma(pars);
       out.push({
         fedCode: p.fedCode || null,
         name: p.name,
@@ -186,7 +186,7 @@ async function inscritosSub12Nacional(): Promise<InscritoSub12[]> {
  *  (ccode/tcode): quando a mesma vem de dois ficheiros fica a que tem mais voltas
  *  (em caso de empate, a primeira da lista). */
 function voltasNoAroeiraII(torneios: Tournament[]): PlayerRoundOnCourse[] {
-  const nVoltas = (t: Tournament) => (t.players || []).reduce((s, p) => s + (p.roundScores?.length || 0), 0);
+  const nVoltas = (t: Tournament) => somaDe((t.players || []), p => (p.roundScores?.length || 0));
   const porProva = new Map<string, Tournament>();
   for (const t of torneios) {
     if (!isAroeiraIICourse((t as any).campo) && !isAroeiraIICourse((t as any).course)) continue;
@@ -287,7 +287,7 @@ async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<Anal
 
   for (let h = 0; h < 18; h++) {
     const fieldVals = fieldRoundsCurrent.map(rs => rs.scores[h]).filter(s => s > 0);
-    const fieldAvg = fieldVals.length ? fieldVals.reduce((s, v) => s + v, 0) / fieldVals.length : 0;
+    const fieldAvg = fieldVals.length ? soma(fieldVals) / fieldVals.length : 0;
     const manuelVals = manuelRoundsAll.map(r => r.scores[h]).filter(s => s > 0);
     const manuelAvg = meanArr(manuelVals);
     const par = par18[h] ?? 4;
@@ -392,7 +392,7 @@ function buildHoleStats(
       else nDb++;
       freq[s] = (freq[s] ?? 0) + 1;
     }
-    const sum = scoresField.reduce((a, b) => a + b, 0);
+    const sum = soma(scoresField);
     const avg = n ? sum / n : 0;
     const modal = n ? Number(Object.entries(freq).sort((a, b) => b[1] - a[1])[0][0]) : par;
     const pctB = n ? (nB / n) * 100 : 0;
@@ -589,8 +589,8 @@ export function buildKPIs(pkg: AnalisePackage, holes: HoleDistribution[]): KPI[]
     const sortedByDate = [...validManuel].sort((a, b) => a.date.localeCompare(b.date) || a.round - b.round);
     const earlier = sortedByDate.slice(0, Math.max(1, Math.floor(sortedByDate.length / 2)));
     const recent = sortedByDate.slice(Math.max(1, Math.floor(sortedByDate.length / 2)));
-    const earlyAvg = earlier.reduce((s, r) => s + r.gross!, 0) / earlier.length;
-    const recentAvg = recent.reduce((s, r) => s + r.gross!, 0) / recent.length;
+    const earlyAvg = somaDe(earlier, r => r.gross!) / earlier.length;
+    const recentAvg = somaDe(recent, r => r.gross!) / recent.length;
     const diff = recentAvg - earlyAvg;
     const tone = diff < -3 ? "good" : diff > 3 ? "danger" : "neutral";
     const arrow = diff < -1 ? "↓" : diff > 1 ? "↑" : "→";
@@ -606,16 +606,16 @@ export function buildParGroupStats(holes: HoleDistribution[]): ParGroupStats[] {
     const par = g === "Par 3" ? 3 : g === "Par 4" ? 4 : 5;
     const sub = holes.filter(h => h.par === par);
     if (!sub.length) continue;
-    const fieldAvg = sub.reduce((s, h) => s + h.avgScore, 0) / sub.length;
+    const fieldAvg = somaDe(sub, h => h.avgScore) / sub.length;
     const manuelHoles = sub.filter(h => h.manuelAvg != null);
-    const manuelAvg = manuelHoles.length ? manuelHoles.reduce((s, h) => s + (h.manuelAvg ?? 0), 0) / manuelHoles.length : null;
+    const manuelAvg = manuelHoles.length ? somaDe(manuelHoles, h => (h.manuelAvg ?? 0)) / manuelHoles.length : null;
     out.push({
       group: g, count: sub.length,
       fieldAvg, fieldDelta: fieldAvg - par,
       manuelAvg, manuelDelta: manuelAvg != null ? manuelAvg - par : null,
-      pctBirdiePlus: sub.reduce((s, h) => s + h.pctBirdiePlus, 0) / sub.length,
-      pctBogey: sub.reduce((s, h) => s + h.pctBogey, 0) / sub.length,
-      pctDoublePlus: sub.reduce((s, h) => s + h.pctDoublePlus, 0) / sub.length,
+      pctBirdiePlus: somaDe(sub, h => h.pctBirdiePlus) / sub.length,
+      pctBogey: somaDe(sub, h => h.pctBogey) / sub.length,
+      pctDoublePlus: somaDe(sub, h => h.pctDoublePlus) / sub.length,
     });
   }
   return out;
@@ -630,10 +630,10 @@ export function buildManuelHoleStats(manuelRounds: PlayerRoundOnCourse[], parRef
       out.push({ hole: h + 1, par, scores: [], avg: 0, best: 0, worst: 0, sd: 0, consistency: "média" });
       continue;
     }
-    const avg = scores.reduce((s, v) => s + v, 0) / scores.length;
+    const avg = soma(scores) / scores.length;
     const best = Math.min(...scores);
     const worst = Math.max(...scores);
-    const variance = scores.reduce((s, v) => s + (v - avg) ** 2, 0) / scores.length;
+    const variance = somaDe(scores, v => (v - avg) ** 2) / scores.length;
     const sd = Math.sqrt(variance);
     const consistency = sd < 0.7 ? "alta" : sd < 1.4 ? "média" : "baixa";
     out.push({ hole: h + 1, par, scores, avg, best, worst, sd, consistency });
@@ -653,7 +653,7 @@ export interface ManuelTheoretical {
 export function buildManuelTheoretical(manuelStats: ManuelHoleStats[], manuelRounds: PlayerRoundOnCourse[]): ManuelTheoretical | null {
   const valid = manuelStats.filter(s => s.scores.length > 0);
   if (valid.length < 18) return null;
-  const theoretical = valid.reduce((s, h) => s + h.best, 0);
+  const theoretical = somaDe(valid, h => h.best);
   const realRounds = manuelRounds.filter(r => r.gross != null && r.scores.length === 18);
   if (!realRounds.length) return null;
   const bestReal = Math.min(...realRounds.map(r => r.gross!));
@@ -774,10 +774,10 @@ export function buildEvolutionStats(playerCards: PlayerScorecardBundle[]): Evolu
     let slope = 0;
     if (n >= 2) {
       const xs = validG.map((_, i) => i);
-      const meanX = xs.reduce((s, v) => s + v, 0) / n;
-      const meanY = validG.reduce((s, v) => s + v, 0) / n;
-      const num = xs.reduce((s, x, i) => s + (x - meanX) * (validG[i] - meanY), 0);
-      const den = xs.reduce((s, x) => s + (x - meanX) ** 2, 0);
+      const meanX = soma(xs) / n;
+      const meanY = soma(validG) / n;
+      const num = somaDe(xs, (x, i) => (x - meanX) * (validG[i] - meanY));
+      const den = somaDe(xs, x => (x - meanX) ** 2);
       slope = den ? num / den : 0;
     }
     const firstToLast = validG.length >= 2 ? validG[validG.length - 1] - validG[0] : null;
@@ -786,8 +786,8 @@ export function buildEvolutionStats(playerCards: PlayerScorecardBundle[]): Evolu
       const half = Math.floor(validG.length / 2);
       const first = validG.slice(0, half);
       const last = validG.slice(half);
-      const fAvg = first.reduce((s, v) => s + v, 0) / first.length;
-      const lAvg = last.reduce((s, v) => s + v, 0) / last.length;
+      const fAvg = soma(first) / first.length;
+      const lAvg = soma(last) / last.length;
       trendDelta = lAvg - fAvg;
     }
     const bestGross = validG.length ? Math.min(...validG) : null;

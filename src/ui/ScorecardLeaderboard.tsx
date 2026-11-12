@@ -34,6 +34,7 @@ import { isNoCardGross } from "../data/intlCommon";
 import { useCompareSelection } from "./useCompareSelection";
 import TeeSwatch from "./TeeSwatch";
 import { Tint } from "./DataStyle";
+import { soma, somaDe } from "../utils/mathUtils";
 
 export interface ScorecardRow {
   key: string | number;
@@ -153,9 +154,9 @@ export function ScorecardLeaderboard({
   const hasPar = par.length > 0;
   const nh = hasPar ? par.length : (holesProp ?? holesFromCards(rows));
   const is9 = nh <= 9;
-  const parF9 = par.slice(0, 9).reduce((a, b) => a + b, 0);
-  const parB9 = !is9 ? par.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
-  const parTotal = par.reduce((a, b) => a + b, 0);
+  const parF9 = soma(par.slice(0, 9));
+  const parB9 = !is9 ? soma(par.slice(9, 18)) : 0;
+  const parTotal = soma(par);
   const hasSI = nh > 0 && (si?.length ?? 0) >= nh;
   const siArr = hasSI ? si!.slice(0, nh).map(v => typeof v === 'string' ? parseInt(v as string, 10) : (Number(v) || 0)) : [];
 
@@ -192,7 +193,7 @@ export function ScorecardLeaderboard({
           const arr = intSortKey === "f9" ? s.slice(0, 9) : s.slice(9, 18);
           const valid = arr.filter(v => v > 0);
           if (!valid.length) return null;
-          return arr.reduce((acc, v) => acc + (v || 0), 0);
+          return somaDe(arr, v => (v || 0));
         };
         return compareNullsLast(sliceFn(a.scores), sliceFn(b.scores), dir);
       }
@@ -247,9 +248,9 @@ export function ScorecardLeaderboard({
             {/* Linhas de metros por tee — uma por cada tee distinto, NÃO sticky */}
             {showScorecard && validTeeMeters.map(tm => {
               const mArr = tm.meters.slice(0, nh);
-              const mF9  = mArr.slice(0, 9).reduce((a, b) => a + b, 0);
-              const mB9  = !is9 ? mArr.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
-              const mTot = mArr.reduce((a, b) => a + b, 0);
+              const mF9  = soma(mArr.slice(0, 9));
+              const mB9  = !is9 ? soma(mArr.slice(9, 18)) : 0;
+              const mTot = soma(mArr);
               return (
                 <tr key={tm.teeName} className="lb-si-row">
                   <td className="sticky-col-0" />
@@ -283,9 +284,9 @@ export function ScorecardLeaderboard({
                 as distâncias apareciam duas vezes (14/10/2026). */}
             {showScorecard && hasSI && !(siLabel === "m" && validTeeMeters.length > 0) && (() => {
               const siIsMeters = siLabel === "m";
-              const siF9  = siIsMeters ? siArr.slice(0, 9).reduce((a, b) => a + b, 0) : 0;
-              const siB9  = siIsMeters && !is9 ? siArr.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
-              const siTot = siIsMeters ? siArr.reduce((a, b) => a + b, 0) : 0;
+              const siF9  = siIsMeters ? soma(siArr.slice(0, 9)) : 0;
+              const siB9  = siIsMeters && !is9 ? soma(siArr.slice(9, 18)) : 0;
+              const siTot = siIsMeters ? soma(siArr) : 0;
               return (
               <tr className="lb-si-row">
                 <td className="sticky-col-0" />
@@ -404,8 +405,8 @@ export function ScorecardLeaderboard({
               const highlightCls = row.isManuel ? " row-manuel" : (row.isPortuguese ? " row-portuguese" : "");
               const scores = row.scores ?? [];
               const inf = row.inferredHoles ?? [];
-              const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
-              const b9 = !is9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
+              const f9 = soma(scores.slice(0, 9));
+              const b9 = !is9 ? soma(scores.slice(9, 18)) : 0;
               // Par por buraco do jogador (campo que ele jogou nesta ronda) —
               // cai para o par partilhado quando a linha não traz o seu próprio.
               const rp = row.noPar ? [] : row.holePars && row.holePars.length >= nh ? row.holePars : par;
@@ -414,7 +415,7 @@ export function ScorecardLeaderboard({
               // scorecard incompleto (cartão por entregar, jogo interrompido), o
               // par dos 9 contra a soma de 7 buracos dava um "(−1)" enganador.
               const playedPar = (from: number, to: number) =>
-                rp.slice(from, to).reduce((a, p, i) => a + (scores[from + i] ? p : 0), 0);
+                somaDe(rp.slice(from, to), (p, i) => (scores[from + i] ? p : 0));
               const playedN = (from: number, to: number) =>
                 scores.slice(from, to).filter(Boolean).length;
               const rpF9 = playedPar(0, 9);

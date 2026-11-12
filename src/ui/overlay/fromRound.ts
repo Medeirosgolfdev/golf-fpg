@@ -7,6 +7,7 @@ import { fillBlankHoles } from "../../data/fpgUtils";
 import { calcCourseHcp } from "../../utils/whsCalc";
 import { MONTHS_PT, isoDate, fmtOrd } from "../../utils/format";
 import type { OverlayData } from "./types";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 /** Data da fonte → Date (meio-dia, sem saltos de fuso). Segue o `isoDate` da
  *  app: ISO passa, "M/D/AAAA" é americano (USKids). */
@@ -54,10 +55,10 @@ export function overlayFromRound(
   const si = siRaw.length === nh && new Set(siRaw).size === nh && siRaw.every((v) => v >= 1 && v <= nh) ? siRaw : [];
   const meters = ((rs?.meters?.length ? rs.meters : p.meters) || []).slice(0, nh);
   const teeDist = meters.length === nh && meters.every((v) => (v ?? 0) > 0)
-    ? meters.reduce((a, b) => a + (b ?? 0), 0) : null;
+    ? somaDe(meters, b => (b ?? 0)) : null;
   const is9h = nh <= 9;
   const hi = p.hcpExact ?? null;
-  const parTotal = par.reduce((a, b) => a + b, 0);
+  const parTotal = soma(par);
   const round = roundNumberOf(t);
   const pos = (p as { _pos?: number })._pos;
   const field = (p as { _field?: number })._field;

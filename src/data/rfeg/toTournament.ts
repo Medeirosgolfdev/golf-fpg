@@ -18,6 +18,7 @@ import { ageToEscalaoEs, escaloEsForPlayer } from "./escalao";
 import type { RFEGPlayer, RFEGDetail, DobLookup } from "./types";
 import { dobLookupByName, holesOf, isNoCardGross } from "../intlCommon";
 import { addDaysIso } from "../../utils/dias";
+import { round1, soma, somaDe } from "../../utils/mathUtils";
 
 /* ── lgsToFPGTournament ──────────────────────────────────────
  * Converte JSON livegolfscoring para FPGTournament — permite reusar
@@ -66,7 +67,7 @@ export function lgsToFPGTournament(
   const courseHoles: number = holesOf(rawPar) ?? (lgs.course as { holes?: number } | null | undefined)?.holes ?? 18;
   // Sem par válido → sem par (o ±par do torneio é o do leaderboard oficial).
   const par = parOrNone(rawPar, courseHoles);
-  const parTotal = par.length ? par.reduce((a, b) => a + b, 0) : null;
+  const parTotal = par.length ? soma(par) : null;
   const numRounds = lgs.rounds.length;
   // Rondas EFECTIVAMENTE jogadas: uma ronda só com SCORES reais conta. Uma ronda
   // agendada mas ainda por jogar pode (a) vir vazia, OU (b) trazer já a lista de
@@ -112,7 +113,7 @@ export function lgsToFPGTournament(
   // teeName com a distância total → o scorecard só desenha a linha de METROS quando
   // o jogador tem teeName (ScorecardLB agrupa metros por tee). Sem isto, os torneios
   // livegolfscoring (par/metros reais no `course`) NÃO mostravam a linha de metros.
-  const lgsMetersTotal = sliceH(lgs.course?.meters).reduce((a: number, b) => a + (b || 0), 0);
+  const lgsMetersTotal = somaDe(sliceH(lgs.course?.meters), b => (b || 0));
   const lgsTeeLabel: string | undefined = lgsMetersTotal > 0 ? `${lgsMetersTotal} m` : undefined;
 
   // Agregar por jogador (key = memberId ou nome) com scores hbh por ronda
@@ -157,9 +158,8 @@ export function lgsToFPGTournament(
         agg[key].toPar = p.toPar;
         // Só VOLTAS FECHADAS somam para o total do torneio — somar o parcial de
         // quem vai no buraco 12 dava um "total" que não é resultado nenhum.
-        agg[key].total = agg[key].rounds
-          .filter((x) => !x.extra?._emCurso)
-          .reduce((a, b) => a + b.gross, 0);
+        agg[key].total = somaDe(agg[key].rounds
+          .filter((x) => !x.extra?._emCurso), b => b.gross);
       }
     }
   }
@@ -310,8 +310,8 @@ export function ncDeriveRatings(
     }
     if (pts.length < 4) return null;
     const n = pts.length;
-    const mx = pts.reduce((a, q) => a + q[0], 0) / n;
-    const my = pts.reduce((a, q) => a + q[1], 0) / n;
+    const mx = somaDe(pts, q => q[0]) / n;
+    const my = somaDe(pts, q => q[1]) / n;
     let sxy = 0, sxx = 0, syy = 0;
     for (const [x, y] of pts) { sxy += (x - mx) * (y - my); sxx += (x - mx) ** 2; syy += (y - my) ** 2; }
     if (sxx === 0) return null;
@@ -320,7 +320,7 @@ export function ncDeriveRatings(
     const slope = a * slopeDivisor, cr = parTotal + b;
     // Sanidade WHS: Slope plausível + CR perto do par + ajuste apertado.
     if (r2 < 0.9 || !(slope > 55 && slope < 165) || Math.abs(cr - parTotal) > 14) return null;
-    return { cr: Math.round(cr * 10) / 10, slope: Math.round(slope * 10) / 10 };
+    return { cr: round1(cr), slope: round1(slope) };
   };
   return { M: fit("M"), F: fit("F") };
 }
@@ -362,7 +362,7 @@ export function ncToFPGTournament(
   const par18 = ncIsPitchAndPutt
     ? new Array(holeCount).fill(3)
     : parOrNone(detail.coursePar, holeCount);
-  const parTotal = par18.reduce((a, b) => a + b, 0);   // 0 = sem par
+  const parTotal = soma(par18);   // 0 = sem par
   const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === holeCount) ? detail._ncCourseSi : [];
   // Em Stableford o NextCaddy põe PONTOS nas colunas J1/J2… (e no total), não
   // pancadas — aí uma volta sem cartão não pode entrar só com o total.
@@ -404,7 +404,7 @@ export function ncToFPGTournament(
       }
       return meters18;
     })();
-    const playerMetersTotal = playerMeters.reduce((a, b) => a + (b || 0), 0);
+    const playerMetersTotal = somaDe(playerMeters, b => (b || 0));
     const teeLabel = playerMetersTotal > 0 ? `${playerMetersTotal} m` : (meters18.length ? "Tour" : undefined);
     const temCartao = (r: { scores?: number[] }) =>
       Array.isArray(r.scores) && r.scores.length === holeCount && r.scores.some((x) => x > 0);
@@ -424,7 +424,7 @@ export function ncToFPGTournament(
         const cartao = temCartao(r as { scores?: number[] });
         return {
           round: r.round,
-          gross: (r.gross != null) ? r.gross : ((r as any).scores.reduce((a: number, b: number) => a + b, 0) || 0),
+          gross: (r.gross != null) ? r.gross : (soma((r as any).scores) || 0),
           scores: cartao ? (r as any).scores : [],
           card: { meters: mm },
         };
@@ -435,7 +435,7 @@ export function ncToFPGTournament(
     // a contradizer o scorecard. Sem cartões (só inscrito) cai no `p.total` como
     // antes. A ordem do leaderboard é por `pos` (classificação oficial), logo
     // continua correcta mesmo em Stableford (o pos não vem do gross).
-    const grossSum = roundScores.reduce((s, r) => s + (r.gross || 0), 0);
+    const grossSum = somaDe(roundScores, r => (r.gross || 0));
     const grossTotal = grossSum > 0 ? grossSum : (typeof p.total === "number" ? p.total : null);
     // Sem par: sem ±par calculado (o toPar da fonte só vale sem cartões — e
     // também quando as voltas entraram só com o total da classificação).
@@ -574,7 +574,7 @@ export function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLook
   const si = valid(detail._rfegCourseSi) ? (detail._rfegCourseSi as number[]) : [];
   const meters = valid(detail._rfegCourseMeters) ? (detail._rfegCourseMeters as number[]) : [];
   const nHoles = par.length || (group.perHole ? group.perHole.length : 18);
-  const parTotal = par.reduce((a, b) => a + b, 0); // 0 quando não há par
+  const parTotal = soma(par); // 0 quando não há par
 
   // Rondas REALMENTE jogadas (não as declaradas): num torneio a decorrer só há
   // R1 — usar as declaradas marcaria todos como incompletos (WD) e apagaria o total.
@@ -609,7 +609,7 @@ export function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLook
         const sc = (p.holeScores && p.holeScores[String(rn)]) || [];
         return {
           round: rn,
-          gross: (gross != null && gross > 0) ? gross : (sc.reduce((a, b) => a + b, 0) || 0),
+          gross: (gross != null && gross > 0) ? gross : (soma(sc) || 0),
           scores: sc.length === nHoles ? sc : [],
           startHole,
         };

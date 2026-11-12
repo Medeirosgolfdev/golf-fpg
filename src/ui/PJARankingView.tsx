@@ -24,6 +24,7 @@ import CloseButton from "./CloseButton";
 import ClearButton from "./ClearButton";
 import SearchInput from "./SearchInput";
 import { MUTED } from "./tableCells";
+import { somaDe } from "../utils/mathUtils";
 
 /* ─────────────────────────────────────────────
    RANKINGS DA /FPG — Ranking PJA, Ranking Sub-12 por SD e Classificações.
@@ -544,7 +545,7 @@ export function PJARankingView({
               // 18 voltas ao lado de um total de 14 e as contas não fechavam.
               const contadas = row.voltas - cortadas;
               const totalTodas = cortadas > 0
-                ? row.allRounds.reduce((a, r) => a + r.pts, 0)
+                ? somaDe(row.allRounds, r => r.pts)
                 : 0;
               const classes = [
                 isManuel(row) ? "row-manuel" : "",

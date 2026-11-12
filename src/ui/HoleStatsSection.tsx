@@ -3,7 +3,7 @@ import type { HoleStatsData, HoleStatEntry } from "../data/playerDataLoader";
 import { fD, fD2, fmtSign } from "../utils/format";
 import { PAR_TYPES } from "../utils/analysisStats";
 import { toneClass, scClass } from "../utils/scoreDisplay";
-import { sumArr } from "../utils/mathUtils";
+import { sumArr, somaDe } from "../utils/mathUtils";
 import KpiCard from "./KpiCard";
 import SectionTitle from "./SectionTitle";
 import { Fill } from "./DataStyle";
@@ -311,7 +311,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     );
                   })}
                   {(() => {
-                    const totalWeakSL = weaknesses.reduce((a, w) => a + w.strokesLost, 0);
+                    const totalWeakSL = somaDe(weaknesses, w => w.strokesLost);
                     return (
                       <div className="haTopSummary">Estes {weaknesses.length} buracos custam <b>{totalWeakSL.toFixed(1)} pancadas por volta</b>{/* a percentagem só faz sentido quando os buracos maus cabem no total líquido (senão dava «133%» ou «−17%») */}{stats.totalStrokesLost > 0 && totalWeakSL <= stats.totalStrokesLost ? ` (${Math.round(totalWeakSL / stats.totalStrokesLost * 100)}% do total)` : ""}.</div>
                     );
@@ -388,14 +388,14 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     return (
                       <React.Fragment key={i}>
                         <td className={`fw-700 ${tone}`}>{h.avg?.toFixed(1) ?? ""}</td>
-                        {i === fe - 1 && !is9 && <td className="fw-700 col-out">{(stats.holes.slice(0, fe).reduce((s, x) => s + (x.avg ?? 0), 0)).toFixed(1)}</td>}
+                        {i === fe - 1 && !is9 && <td className="fw-700 col-out">{(somaDe(stats.holes.slice(0, fe), x => (x.avg ?? 0))).toFixed(1)}</td>}
                       </React.Fragment>
                     );
                   })}
                   <td className={`fw-700 ${is9 ? "col-total" : "col-in"}`}>
-                    {(is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)).reduce((s, x) => s + (x.avg ?? 0), 0).toFixed(1)}
+                    {somaDe((is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)), x => (x.avg ?? 0)).toFixed(1)}
                   </td>
-                  {!is9 && <td className="fw-700 col-total">{stats.holes.slice(0, hc).reduce((s, x) => s + (x.avg ?? 0), 0).toFixed(1)}</td>}
+                  {!is9 && <td className="fw-700 col-total">{somaDe(stats.holes.slice(0, hc), x => (x.avg ?? 0)).toFixed(1)}</td>}
                 </tr>
                 {/* Best row */}
                 <tr>
@@ -439,14 +439,14 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                       <React.Fragment key={i}>
                         <td className={`fw-700 ${slTone}${slBg}`}>{h.n > 0 ? fD(sl) : ""}</td>
                         {i === fe - 1 && !is9 && (() => {
-                          const outSL = stats.holes.slice(0, fe).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
+                          const outSL = somaDe(stats.holes.slice(0, fe), x => (x.strokesLost ?? 0));
                           return <td className={`fw-700 col-out ${outSL <= 0 ? "tone-good" : "tone-bad"}`}>{fD(outSL)}</td>;
                         })()}
                       </React.Fragment>
                     );
                   })}
                   {(() => {
-                    const inSL = (is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
+                    const inSL = somaDe((is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)), x => (x.strokesLost ?? 0));
                     return <td className={`fw-700 ${is9 ? "col-total" : "col-in"} ${inSL <= 0 ? "tone-good" : "tone-bad"}`}>{fD(inSL)}</td>;
                   })()}
                   {!is9 && <td className={`fw-700 col-total ${stats.totalStrokesLost <= 0 ? "tone-good" : "tone-bad"}`}>{fD(stats.totalStrokesLost)}</td>}

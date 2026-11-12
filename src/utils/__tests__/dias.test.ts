@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { addDaysIso, diaIso, diasEntre, isoDeData } from "../dias";
+import { addDaysIso, diaIso, diasEntre, isoDeData, addMonthsIso } from "../dias";
 
 describe("dias — contas com dias do calendário", () => {
   it("lê as datas dos torneios (ISO ou DD/MM/AAAA)", () => {
@@ -36,5 +36,20 @@ describe("isoDeData — o dia civil local de um Date", () => {
   });
   it("não muda de dia perto da meia-noite (o toISOString mudava, por ser UTC)", () => {
     expect(isoDeData(new Date(2026, 5, 30, 0, 5))).toBe("2026-06-30");
+  });
+});
+
+describe("addMonthsIso — meses do calendário", () => {
+  it("anda para trás e para a frente, passando o ano", () => {
+    expect(addMonthsIso("2026-11-12", -18)).toBe("2025-05-12");
+    expect(addMonthsIso("2026-11-12", 2)).toBe("2027-01-12");
+    expect(addMonthsIso("2026-06-30", -6)).toBe("2025-12-30");
+  });
+  it("dia que não existe no mês de chegada fica no último dia desse mês", () => {
+    expect(addMonthsIso("2026-03-31", -1)).toBe("2026-02-28");
+    expect(addMonthsIso("2024-01-31", 1)).toBe("2024-02-29");
+  });
+  it("data ilegível volta como veio", () => {
+    expect(addMonthsIso("sem data", 3)).toBe("sem data");
   });
 });

@@ -14,6 +14,7 @@
 import type { Course, Tee, Hole, Ratings } from "./types";
 import type { MelhoriasJson } from "./melhoriasTypes";
 import { sumRange } from "../utils/format";
+import { somaDe } from "../utils/mathUtils";
 
 type ScorecardEntry = Record<string, unknown>;
 
@@ -170,8 +171,8 @@ export function extractAwayCourses(melhorias: MelhoriasJson): Course[] {
           }
 
           const nHoles = holes.length;
-          const parTotal = parHoles.reduce((s, v) => s + (v ?? 0), 0) || null;
-          const distTotal = metersHoles.reduce((s, v) => s + (v ?? 0), 0) || null;
+          const parTotal = somaDe(parHoles, v => (v ?? 0)) || null;
+          const distTotal = somaDe(metersHoles, v => (v ?? 0)) || null;
           const is9 = nHoles <= 9;
           const isFront = is9 && holeStart <= 1;
           const isBack = is9 && holeStart >= 10;
@@ -182,12 +183,12 @@ export function extractAwayCourses(melhorias: MelhoriasJson): Course[] {
             cr: null,
             slope: null,
             par18: is9 ? null : parTotal,
-            parFront: isFront ? parTotal : (is9 ? null : parHoles.slice(0, 9).reduce((s, v) => s + (v ?? 0), 0)),
-            parBack: isBack ? parTotal : (is9 ? null : parHoles.slice(9).reduce((s, v) => s + (v ?? 0), 0)),
+            parFront: isFront ? parTotal : (is9 ? null : somaDe(parHoles.slice(0, 9), v => (v ?? 0))),
+            parBack: isBack ? parTotal : (is9 ? null : somaDe(parHoles.slice(9), v => (v ?? 0))),
             holes,
             totalDist: is9 ? null : distTotal,
-            frontDist: isFront ? distTotal : (is9 ? null : metersHoles.slice(0, 9).reduce((s, v) => s + (v ?? 0), 0)),
-            backDist: isBack ? distTotal : (is9 ? null : metersHoles.slice(9).reduce((s, v) => s + (v ?? 0), 0)),
+            frontDist: isFront ? distTotal : (is9 ? null : somaDe(metersHoles.slice(0, 9), v => (v ?? 0))),
+            backDist: isBack ? distTotal : (is9 ? null : somaDe(metersHoles.slice(9), v => (v ?? 0))),
           };
 
           const courseKey = `away-${campo.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")}`;

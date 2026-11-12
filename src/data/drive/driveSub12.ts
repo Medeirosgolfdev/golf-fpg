@@ -17,7 +17,7 @@ import { escalaoCanon, escaloesCanon } from "../model/escalao";
 import { isManuelByName } from "../../constants/manuel";
 import { isNoCardGross } from "../intlCommon";
 import { distFromCards } from "../../utils/analysisStats";
-import { soma } from "../../utils/mathUtils";
+import { soma, round1, somaDe } from "../../utils/mathUtils";
 import { classificarPorTotal, parsePos, temCartao, voltasComCartao } from "../../utils/classificacao";
 
 export type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
@@ -35,7 +35,7 @@ export function computeStats(p: Player, date?: string | null): TStats | null {
   const parArr = p.par?.length ? p.par : rs0?.pars || [];
   const scores = p.scores?.length ? p.scores : rs0?.scores || [];
 
-  const parT = p.parTotal || parArr.reduce((a, b) => a + b, 0);
+  const parT = p.parTotal || soma(parArr);
   const tp = g - parT;
   const nh = p.nholes || scores.length || parArr.length || 18;
   // SD: o oficial da FPG, ou o calculado com o HCP da inscrição (ver computeSD).
@@ -50,8 +50,8 @@ export function computeStats(p: Player, date?: string | null): TStats | null {
           pcc: p.pcc ?? rs0?.pcc, nholes: nh,
         }, date).sd
       : null];
-  const sds = rawSds.filter((x): x is number => x != null).map(x => Math.round(x * 10) / 10);
-  const sd = sds.length ? Math.round((sds.reduce((s, x) => s + x, 0) / sds.length) * 10) / 10 : null;
+  const sds = rawSds.filter((x): x is number => x != null).map(round1);
+  const sd = sds.length ? Math.round((soma(sds) / sds.length) * 10) / 10 : null;
 
   // Birdies (ou melhor), pares e bogeys (ou pior) de todas as voltas — contas em
   // utils/analysisStats. Antes contava-se aqui à mão SEM saltar os buracos por
@@ -60,7 +60,7 @@ export function computeStats(p: Player, date?: string | null): TStats | null {
     ? p.roundScores.map((rs) => ({ scores: rs.scores || [], par: rs.pars || [] }))
     : [{ scores, par: parArr }]);
   const birdies = dist.eagles + dist.birdies, pars = dist.pars, bogeys = dist.bogeys + dist.dbPlus;
-  return { pos: p.pos, gross: g, toPar: tp, sd, sds, roundSds: rawSds.map(x => x == null ? null : Math.round(x * 10) / 10),
+  return { pos: p.pos, gross: g, toPar: tp, sd, sds, roundSds: rawSds.map(x => x == null ? null : round1(x)),
     nholes: nh, birdies, pars, bogeys };
 }
 
@@ -210,12 +210,12 @@ export function driveEntriesByEsc(
       const [f] = filterTournByEsc([t], escs, new Map(), {}, undefined, undefined, (p) => escOf(p, t));
       if (f) kept.push({ ...d, results: f, hasManuel: f.players.some(p => isManuelByName(p.name)) });
     }
-    if (kept.length) out.push({ ...e, divisions: kept, playerCount: kept.reduce((a, d) => a + (d.results?.players.length ?? 0), 0) });
+    if (kept.length) out.push({ ...e, divisions: kept, playerCount: somaDe(kept, d => (d.results?.players.length ?? 0)) });
   }
   return out;
 }
 
-export const numAvg = (nums: number[]): number | null => nums.length === 0 ? null : nums.reduce((a, b) => a + b, 0) / nums.length;
+export const numAvg = (nums: number[]): number | null => nums.length === 0 ? null : soma(nums) / nums.length;
 
 /** Compara escalões ignorando espaços/hífens/caixa ("Sub-12" ≡ "Sub 12" ≡ "sub12").
  *  Generalização 2026-07-10: o ranking deixou de ser fixo Sub-10+Sub-12 — o
@@ -394,9 +394,9 @@ export function filterBySub12Series(rows: Sub12Row[], series: Sub12SeriesTab): S
       avgGross: numAvg(fG), avgSD: numAvg(fS),
       bestGross: fG.length ? Math.min(...fG) : null,
       bestSD: fS.length ? Math.min(...fS) : null,
-      totalBird: fR.reduce((s, r) => s + r.birdies, 0),
-      totalPars: fR.reduce((s, r) => s + r.pars, 0),
-      totalBog:  fR.reduce((s, r) => s + r.bogeys, 0),
+      totalBird: somaDe(fR, r => r.birdies),
+      totalPars: somaDe(fR, r => r.pars),
+      totalBog:  somaDe(fR, r => r.bogeys),
       totalPts:  rankingTotal(fR),
     };
   }).filter(Boolean) as Sub12Row[];
@@ -417,7 +417,7 @@ export function sub12SeriesCounts(rows: Sub12Row[], series: readonly Sub12Series
 export function sub12Kpis(rows: Sub12Row[]): { players: number; rounds: number; bestSD: number | null; best: number | null } {
   return {
     players: rows.length,
-    rounds: rows.reduce((s, p) => s + p.tourneiosPlayed, 0),
+    rounds: somaDe(rows, p => p.tourneiosPlayed),
     bestSD: numAvg(rows.filter(p => p.bestSD != null).map(p => p.bestSD!)),
     best: rows.reduce<number | null>((best, p) => p.bestGross != null && (best == null || p.bestGross < best) ? p.bestGross : best, null),
   };

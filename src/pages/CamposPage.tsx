@@ -25,7 +25,7 @@ import { PillBadge, EscPill } from "../ui/PillBadge";
 import ExtLink from "../ui/ExternalLink";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
-import { cachedFetchJson } from "../data/fetchCache";
+import { cachedFetchJson, memoAsync } from "../data/fetchCache";
 import { isTournamentCourse } from "../constants/tournamentCourses";
 import { MANUEL_FED } from "../constants/manuel";
 import { calcSD, round1 } from "../utils/whsCalc";
@@ -41,7 +41,7 @@ import SexSelect from "../ui/SexSelect";
 import Select from "../ui/Select";
 import { Tint } from "../ui/DataStyle";
 import { MUTED } from "../ui/tableCells";
-import { toggleSet } from "../utils/mathUtils";
+import { toggleSet, somaDe } from "../utils/mathUtils";
 
 import ToPar from "../ui/ToPar";
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
@@ -54,24 +54,13 @@ type CoursePlayerMeta = {
 };
 const EMPTY_META: CoursePlayerMeta = { names: {}, dob: {}, sex: {} };
 let _coursePlayerMeta: CoursePlayerMeta | null = null;
-let _coursePlayerMetaPromise: Promise<CoursePlayerMeta> | null = null;
-function loadCoursePlayerMeta(): Promise<CoursePlayerMeta> {
-  if (_coursePlayerMeta) return Promise.resolve(_coursePlayerMeta);
-  if (!_coursePlayerMetaPromise) {
-    _coursePlayerMetaPromise = cachedFetchJson<Partial<CoursePlayerMeta>>(
-      "/data/course-player-names.json"
-    )
-      .then((d) => {
-        _coursePlayerMeta = { names: d?.names ?? {}, dob: d?.dob ?? {}, sex: (d?.sex as CoursePlayerMeta["sex"]) ?? {} };
-        return _coursePlayerMeta;
-      })
-      .catch(() => {
-        _coursePlayerMeta = EMPTY_META;
-        return _coursePlayerMeta;
-      });
-  }
-  return _coursePlayerMetaPromise;
-}
+/** Uma carga por sessão, pelo `memoAsync`: se o pedido falhar entrega-se o vazio mas NÃO fica
+ *  guardado — a vez seguinte tenta outra vez (antes, um 502 passageiro ficava como «sem nomes»). */
+const loadCoursePlayerMeta = memoAsync(async (): Promise<CoursePlayerMeta> => {
+  const d = await cachedFetchJson<Partial<CoursePlayerMeta>>("/data/course-player-names.json");
+  _coursePlayerMeta = { names: d?.names ?? {}, dob: d?.dob ?? {}, sex: (d?.sex as CoursePlayerMeta["sex"]) ?? {} };
+  return _coursePlayerMeta;
+}, { fallback: () => EMPTY_META });
 
 
 
@@ -176,7 +165,7 @@ const SD_PAR_TITLE = "Score Differential de quem fizer o par do campo neste tee 
 function teeParRange(t: Tee | undefined, from: number, to: number): number | null {
   const hs = (t?.holes ?? []).filter((h) => h.hole >= from && h.hole <= to);
   if (hs.length !== to - from + 1 || hs.some((h) => h.par == null)) return null;
-  return hs.reduce((a, h) => a + (h.par as number), 0);
+  return somaDe(hs, h => (h.par as number));
 }
 
 function fmtSdPar(par: number | null, r: { cr: number; sl: number } | undefined): string {
@@ -1364,7 +1353,7 @@ export default function CamposPage() {
   }, [selected]);
 
   /* Stats globais */
-  const totalTees = useMemo(() => courses.reduce((n, c) => n + new Set(c.master.tees.map(physicalTeeKey)).size, 0), [courses]);
+  const totalTees = useMemo(() => somaDe(courses, c => new Set(c.master.tees.map(physicalTeeKey)).size), [courses]);
   const intlCount = useMemo(() => courses.filter(c => c.courseKey.startsWith("away-")).length, [courses]);
 
   return (

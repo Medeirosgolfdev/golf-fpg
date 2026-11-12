@@ -45,6 +45,7 @@ import { displayFed } from "../utils/fedKeys";
 import ShareRoundPanel from "./ShareRoundPanel";
 import { shareOptionsForRound } from "./overlay/shareOptions";
 import ModoClassifTabs from "./ModoClassifTabs";
+import { soma, somaDe } from "../utils/mathUtils";
 
 /* PName — alias local */
 const PName = ({
@@ -202,7 +203,7 @@ export function ScorecardLB({
     const scores = raw.slice(0, n).map((v) => (typeof v === "number" && v > 0 ? v : 0));
     return { scores, inferred: new Array(scores.length).fill(false) };
   };
-  const parTotal = par.reduce((a, b) => a + b, 0);
+  const parTotal = soma(par);
   const si = refP?.si?.length ? refP.si : refRs0?.si || [];
 
   // Colectar metros por tee (cada tee distinto gera uma linha)
@@ -223,7 +224,7 @@ export function ScorecardLB({
   // Metros dos buracos jogados (9 buracos a sair do 10 → os da 2.ª volta).
   const playedMeters = (m: number[]): number => {
     const off = nh === 9 && m.length >= 18 && startHole_ === 10 ? 9 : 0;
-    return m.slice(off, off + nh).reduce((a, b) => a + (b || 0), 0);
+    return somaDe(m.slice(off, off + nh), b => (b || 0));
   };
 
   // Colectar CR/Slope distintos por tee (para metaLine multi-tee)
@@ -326,7 +327,7 @@ export function ScorecardLB({
       || !isRoundInProgress({ gross: g, scores: p.roundScores?.[0]?.scores ?? p.scores, pars: p.roundScores?.[0]?.pars ?? p.par });
   });
   const grosses = (complete.length ? complete : byGross).map((p) => numGross(p)).filter((g) => !isNaN(g));
-  const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
+  const avg = grosses.length ? soma(grosses) / grosses.length : 0;
   // Só as voltas mesmo a meio (sem contar os «sem cartão», que são WD).
   const nIncompletos = byGross.filter((p) => temCartao(numGross(p))).length - complete.length;
 
@@ -375,7 +376,7 @@ export function ScorecardLB({
     const scores = stats?.scores ?? [];
     const inferred = stats?.inferred ?? [];
     const pp = playerPar(p);
-    const ppTotal = pp === par ? parTotal : pp.reduce((a, b) => a + b, 0);
+    const ppTotal = pp === par ? parTotal : soma(pp);
     // Cartão INCOMPLETO sem gross oficial (o `inferred` só reconcilia quando há
     // gross publicado): comparar a soma dos buracos jogados com o par de TODOS
     // dava um ±par falso — 16 buracos em 81 apareciam como "+9" (caso Tomás
@@ -436,7 +437,7 @@ export function ScorecardLB({
           const arr = sortKey === "f9" ? s.slice(0, 9) : s.slice(9, 18);
           const valid = arr.filter(v => v > 0);
           if (!valid.length) return null;
-          return arr.reduce((acc, v) => acc + (v || 0), 0);
+          return somaDe(arr, v => (v || 0));
         };
         return compareNullsLast(sumHalf(a), sumHalf(b), d);
       }

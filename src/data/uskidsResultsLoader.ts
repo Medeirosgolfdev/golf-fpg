@@ -15,6 +15,7 @@ import { converterTorneioCompleto } from "./uskids/converterTorneioCompleto";
 import type { DataSource } from "../ui/DataSources";
 import type { ResultsData, RondaJogador, TorneioResult } from "../ui/uskidsTypes";
 import { jardasParaMetrosPorBuraco } from "../utils/jardas";
+import { soma, somaDe } from "../utils/mathUtils";
 
 // ⚠ Manter em sincronia com o número real de ficheiros uskids_torneios_completos(N).json
 // em public/data/. Ao adicionar novos ficheiros, incrementar AQUI e também em
@@ -134,9 +135,9 @@ function fixShortenedRounds(resultados: TorneioResult[]): void {
       j.strokes = st.map((s) => (s > 0 ? s : 0));
       const played = j.strokes.map((s, i) => (s > 0 ? i : -1)).filter((i) => i >= 0);
       if (!played.length) continue;
-      j.score = played.reduce((s, i) => s + j.strokes[i], 0);
+      j.score = somaDe(played, i => j.strokes[i]);
       j.buracos = played.length;
-      const par = played.reduce((s, i) => s + (r.par?.[i] ?? 0), 0);
+      const par = somaDe(played, i => (r.par?.[i] ?? 0));
       j.to_par = par > 0 ? j.score - par : null;
     }
     // Se TODO o escalão jogou os mesmos buracos (volta encurtada pela
@@ -153,7 +154,7 @@ function fixShortenedRounds(resultados: TorneioResult[]): void {
     r.si = pick(r.si) ?? r.si;
     r.metros = pick(r.metros);
     r.buracos = keep.length;
-    r.total_par = r.par.reduce((s, p) => s + p, 0);
+    r.total_par = soma(r.par);
     for (const j of lb) if (Array.isArray(j.strokes) && j.strokes.length === parLen) j.strokes = keep.map((i) => j.strokes[i]);
   }
 }

@@ -13,7 +13,7 @@
  * `colunasComuns` — não se reescrevem.
  */
 import { Fragment, useMemo, useState, type ReactNode } from "react";
-import { cachedFetchJson } from "../../data/fetchCache";
+import { useJson } from "../../hooks/useJson";
 import DetailHeader from "../DetailHeader";
 import LoadingState from "../LoadingState";
 import EmptyState from "../EmptyState";
@@ -164,21 +164,15 @@ export default function JogadoresFederacao<R extends JogadorFedRow, F>({
   const [jovens, setJovens] = useState(false);
   const { sortKey, sortDir, toggleSort } = useSort<string>("name");
   const [open, setOpen] = useState<Set<string>>(() => new Set());
-  const [file, setFile] = useState<F | null>(null);
-  const [fileState, setFileState] = useState<"idle" | "loading" | "error">("idle");
+  // O ficheiro dos torneios só se pede quando se abre a primeira linha (peça global `useJson`).
+  const [pedido, setPedido] = useState(false);
+  const ficheiro = useJson<F>(pedido ? torneios.url : null);
+  const file = ficheiro.data && torneios.ok(ficheiro.data) ? ficheiro.data : null;
+  const fileErro = pedido && !ficheiro.loading && !file;
 
   const toggleOpen = (key: string) => {
     setOpen((prev) => toggleSet(prev, key));
-    if (!file && fileState === "idle") {
-      setFileState("loading");
-      cachedFetchJson<F>(torneios.url)
-        .then((d) => {
-          if (!d || !torneios.ok(d)) { setFileState("error"); return; }
-          setFile(d);
-          setFileState("idle");
-        })
-        .catch(() => setFileState("error"));
-    }
+    setPedido(true);
   };
 
   const all = useMemo(() => rows ?? [], [rows]);
@@ -271,7 +265,7 @@ export default function JogadoresFederacao<R extends JogadorFedRow, F>({
                           <td colSpan={colCount} className="u-bg-bg-detail u-p-0-12px-4px">
                             {file
                               ? torneios.render(file, r)
-                              : fileState === "error"
+                              : fileErro
                                 ? <div className="muted fs-11 u-p-8px-4px">{torneios.erro}</div>
                                 : <LoadingState message="A carregar torneios…" />}
                           </td>

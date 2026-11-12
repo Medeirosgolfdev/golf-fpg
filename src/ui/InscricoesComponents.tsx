@@ -29,7 +29,7 @@ import { TORNEIOS_CONFIG, CN_JOVENS_EDICAO } from "../constants/config";
 import SexBadge from "./SexBadge";
 import { AnoEscalaoPill, TrendBadge } from "./AnoEscalaoPill";
 import LoadingState from "./LoadingState";
-import { FLAG } from "../utils/flagUtils";
+import { FLAG, isPtCountry } from "../utils/flagUtils";
 import { cachedFetchJson } from "../data/fetchCache";
 import { useJson } from "../hooks/useJson";
 import AdmissionsTab, { type AdmissionsExtraCol } from "./AdmissionsTab";
@@ -40,6 +40,7 @@ import ExtLink from "./ExternalLink";
 import { stripAccents } from "../utils/normName";
 import { MUTED } from "./tableCells";
 import { SDPill } from "./tournamentPrimitives";
+import { soma, somaDe } from "../utils/mathUtils";
 
 /* ═══════════════════════════════════════════════════════
    HOOKS
@@ -84,7 +85,7 @@ function loadFedCountries(): Promise<Map<string, string>> {
         if (fed.startsWith("_")) continue;  // metadados (_README, etc.)
         const cc = String(raw || "").toUpperCase().trim().slice(0, 2);
         if (!cc) { m.delete(fed); continue; }
-        if (cc === "PT") m.delete(fed);   // forçar default (sem bandeira)
+        if (isPtCountry(cc)) m.delete(fed);   // forçar default (sem bandeira)
         else m.set(fed, cc);
       }
     }
@@ -194,7 +195,7 @@ function PainelResumo({ torneios, nossosByFed }: {
   const [clubesAbertos, setClubesAbertos] = React.useState(false);
 
   const carregados = torneios.filter(t => t.totalInscritos > 0 || t._status === "ok");
-  const totalGeral = carregados.reduce((s, t) => s + t.totalInscritos, 0);
+  const totalGeral = somaDe(carregados, t => t.totalInscritos);
   if (totalGeral === 0) return null;
 
   const escaloes = ["Sub-18", "Sub-16", "Sub-14", "Sub-12", "Sub-10"];
@@ -340,7 +341,7 @@ function TorneioCard({ t, active, onClick }: {
     return m;
   }, [t.jogadores, fedCountries]);
   const estrangeirosTotal = useMemo(
-    () => [...estrangeirosByCountry.values()].reduce((a, b) => a + b, 0),
+    () => soma([...estrangeirosByCountry.values()]),
     [estrangeirosByCountry]
   );
   const estrangeirosTitle = useMemo(() => {

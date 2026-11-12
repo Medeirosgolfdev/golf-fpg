@@ -40,6 +40,7 @@ import ExtLink from "../ui/ExternalLink";
 import ErrorState from "../ui/ErrorState";
 import { ToggleChip } from "../ui/FilterField";
 import { DRIVE_REGIONS, DRIVE_REGION_EMOJI } from "../data/drive/driveRegions";
+import { somaDe } from "../utils/mathUtils";
 
 /* ── Constants ── */
 
@@ -130,7 +131,7 @@ function DriveContent() {
         lastUpdated: "",
         source: "scoring.datagolf.pt",
         totalTournaments: allTourns.length,
-        totalPlayers: allTourns.reduce((s, t) => s + t.playerCount, 0),
+        totalPlayers: somaDe(allTourns, t => t.playerCount),
         totalScorecards: 0,
         tournaments: allTourns,
       };

@@ -43,7 +43,7 @@ import ExpandArrow from "../ExpandArrow";
 import EmptyState from "../EmptyState";
 import PlayerLink from "../PlayerLink";
 import { MUTED } from "../tableCells";
-import { toggleSet } from "../../utils/mathUtils";
+import { toggleSet, somaDe } from "../../utils/mathUtils";
 import SectionTitle from "../SectionTitle";
 
 /** Nome de um jogador: com federado liga à ficha /jogadores/:fed; ↗ kids2 se
@@ -573,7 +573,7 @@ export default function MatchplayView({ data, roundPicker = false }: {
   if (!data.flights.length) return <EmptyState size="sm" message="Sem brackets de match play." />;
   const multiFlight = data.flights.length > 1;
   const visRounds = data.flights.flatMap(fl => fl.rounds.filter(r => roundFilter == null || r.number === roundFilter));
-  const pendentes = data.pendingNote ? visRounds.reduce((s, r) => s + r.matches.filter(m => !m.isSettled).length, 0) : 0;
+  const pendentes = data.pendingNote ? somaDe(visRounds, r => r.matches.filter(m => !m.isSettled).length) : 0;
   const anyGames = visRounds.some(r => r.matches.some(m => m.games.length));
   const nway = visRounds.some(r => r.matches.some(m => m.sides));
   return (

@@ -8,6 +8,7 @@
 import { fmtSD, fmtHcp } from "../../utils/format";
 import { scoreDifferential } from "../../utils/whsCalc";
 import type { DD, Vis, Stats, StT } from "./types";
+import { soma } from "../../utils/mathUtils";
 
 /* ═══════ FONT STACKS ═══════ */
 export const FONT_LINK = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap";
@@ -191,12 +192,12 @@ export function countHoles(scores: number[], par: number[], from = 0, to = score
 export function calcStats(d: DD): Stats {
   const n = d.scores.length;
   const is18 = n >= 18;
-  const pF = d.par.slice(0, Math.min(9,n)).reduce((a,b)=>a+b,0);
-  const pB = is18 ? d.par.slice(9).reduce((a,b)=>a+b,0) : 0;
-  const pT = is18 ? pF+pB : d.par.reduce((a,b)=>a+b,0);
-  const sF = d.scores.slice(0, Math.min(9,n)).reduce((a,b)=>a+b,0);
-  const sB = is18 ? d.scores.slice(9).reduce((a,b)=>a+b,0) : 0;
-  const sT = is18 ? sF+sB : d.scores.reduce((a,b)=>a+b,0);
+  const pF = soma(d.par.slice(0, Math.min(9,n)));
+  const pB = is18 ? soma(d.par.slice(9)) : 0;
+  const pT = is18 ? pF+pB : soma(d.par);
+  const sF = soma(d.scores.slice(0, Math.min(9,n)));
+  const sB = is18 ? soma(d.scores.slice(9)) : 0;
+  const sT = is18 ? sF+sB : soma(d.scores);
   const st = countHoles(d.scores, d.par);
   // SD pela biblioteca (utils/whsCalc) — em 9 buracos soma o Expected SD do HI
   const sd = scoreDifferential({ score: sT, cr: d.cr, slope: d.slope, is9: !is18, hi: d.hi })?.sd ?? 0;

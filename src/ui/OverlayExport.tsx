@@ -22,6 +22,7 @@ import { CellInfoCtx, AccentCtx, Info } from "./overlay/badges";
 import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, ACCENTS, CAT_ORDER, CAT_COLS, MIX_BG, MIX_BG_LIGHT, MIX_ACC, BG_ACC, defaultVis, type DesignDef } from "./overlay/registry";
 import { OVERLAY_LOGOS, LOGO_HEIGHTS, defaultLogoFor, type LogoSize, type OverlayLogo } from "./overlay/logos";
 import NumberInput from "./NumberInput";
+import { somaDe } from "../utils/mathUtils";
 
 /* Re-export OverlayData para consumidores externos (SimuladorPage, etc). */
 export type { OverlayData } from "./overlay/types";
@@ -168,7 +169,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   // Par do «Score Total» escrito à mão: o par TOTAL real do tee (data.parTotal)
   // ou a soma do par por buraco. Sem nenhum fica SEM par (10/11/2026: era 72/36
   // inventado — num campo par 71, 75 pancadas saíam «+3» em vez de «+4»).
-  const parDosBuracos = data.par.reduce((a, b) => a + (b || 0), 0);
+  const parDosBuracos = somaDe(data.par, b => (b || 0));
   const manualPar: number | null = data.parTotal && data.parTotal > 0 ? data.parTotal : parDosBuracos > 0 ? parDosBuracos : null;
   const manualSD     = manualTotal !== null
     ? scoreDifferential({ score: manualTotal, cr: data.cr, slope: data.slope, is9: data.is9h, hi: data.hi })?.sd ?? null

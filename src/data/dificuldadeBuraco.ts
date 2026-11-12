@@ -14,6 +14,7 @@ import type { Player, Tournament } from "./fpgTypes";
 import { numGross } from "./fpgUtils";
 import { temCartao } from "../utils/classificacao";
 import { playerKey } from "../utils/playerKey";
+import { soma, meanArr } from "../utils/mathUtils";
 
 export interface BuracoMedia {
   /** Média de pancadas no buraco (null = ninguém o jogou). */
@@ -76,19 +77,19 @@ export function dificuldadePorBuraco(voltas: readonly Tournament[]): Dificuldade
     if (quem.size < MIN_CARTOES) continue;   // jogadores, não cartões: 2 jogadores em 2 voltas não fazem um campo
     const par = parDe(cartoes[0]);
     if (!parValido(par)) continue;
-    const soma = par.map(() => 0), n = par.map(() => 0);
+    const somas = par.map(() => 0), n = par.map(() => 0);
     for (const p of cartoes) {
       const sc = scoresDe(p);
-      for (let i = 0; i < par.length; i++) if (sc[i] > 0) { soma[i] += sc[i]; n[i]++; }
+      for (let i = 0; i < par.length; i++) if (sc[i] > 0) { somas[i] += sc[i]; n[i]++; }
     }
     const buracos = par.map((pr, i): BuracoMedia => (n[i]
-      ? { media: soma[i] / n[i], vsPar: soma[i] / n[i] - pr, n: n[i] }
+      ? { media: somas[i] / n[i], vsPar: somas[i] / n[i] - pr, n: n[i] }
       : { media: null, vsPar: null, n: 0 }));
     const m = metrosDe(cartoes[0]);
     const tee = String(cartoes[0].teeName ?? cartoes[0].roundScores?.[0]?.teeName ?? "").trim();
     grupos.push({
       chave, tee: tee || null,
-      metros: m.some((v) => v > 0) ? m.reduce((a, b) => a + b, 0) : null,
+      metros: m.some((v) => v > 0) ? soma(m) : null,
       par, buracos, comCartao: quem.size,
     });
   }
@@ -109,7 +110,7 @@ export interface ResumoDoCampo {
 /** Uma volta: quantos a acabaram e a média de pancadas. */
 export function resumoDaVolta(volta: Tournament): ResumoDoCampo {
   const feitos = volta.players.filter((p) => !p._wd && temCartao(numGross(p)));
-  const media = feitos.length ? feitos.reduce((s, p) => s + numGross(p), 0) / feitos.length : null;
+  const media = meanArr(feitos.map(numGross));
   return { jogadores: feitos.length, outros: volta.players.length - feitos.length, media };
 }
 
@@ -118,7 +119,7 @@ export function resumoDoTotal(total: Tournament): ResumoDoCampo {
   const completos = total.players
     .filter((p) => !p._wd && !p._cut && !p._incomplete && temCartao(numGross(p)))
     .sort((a, b) => numGross(a) - numGross(b));
-  const media = completos.length ? completos.reduce((s, p) => s + numGross(p), 0) / completos.length : null;
+  const media = meanArr(completos.map(numGross));
   return {
     jogadores: completos.length,
     outros: total.players.length - completos.length,

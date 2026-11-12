@@ -24,6 +24,7 @@ import { fedFpg, isFedFpg, playerKey } from "../../utils/playerKey";
 import { parsePos, temCartao } from "../../utils/classificacao";
 import { playerIdentity } from "../../data/model/identity";
 import type { PlayerIdentity } from "../../data/model/types";
+import { soma } from "../../utils/mathUtils";
 
 /** Uma volta jogada por um repetente numa edição anterior. */
 export interface RepeaterRound {
@@ -286,7 +287,7 @@ export const SD_MEDIA_ACIMA_DO_INDICE = 3.5;
  *  uma previsão mais precisa do que o golfe permite. */
 const SPREAD_MIN = 2.5;
 
-function media(xs: number[]): number { return xs.reduce((a, b) => a + b, 0) / xs.length; }
+function media(xs: number[]): number { return soma(xs) / xs.length; }
 
 /**
  * CR/Slope de TODOS os tees de um campo, a partir do `master-courses.json`.

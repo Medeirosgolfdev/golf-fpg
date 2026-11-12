@@ -20,7 +20,7 @@ import PosBadge from "./PosBadge";
 import SortableHdr from "./SortableHdr";
 import ExpandArrow from "./ExpandArrow";
 import PlayerLink from "./PlayerLink";
-import { toggleSet } from "../utils/mathUtils";
+import { toggleSet, somaDe } from "../utils/mathUtils";
 
 import SectionTitle from "./SectionTitle";
 import { playerKey } from "../utils/playerKey";
@@ -166,9 +166,9 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
     setExpanded((s) => toggleSet(s, key));
   };
 
-  const totalEntries = athletes.reduce((s, a) => s + a.totalTop5, 0);
-  const totalChamp = athletes.reduce((s, a) => s + a.championships, 0);
-  const totalPodium = athletes.reduce((s, a) => s + a.podiums, 0);
+  const totalEntries = somaDe(athletes, a => a.totalTop5);
+  const totalChamp = somaDe(athletes, a => a.championships);
+  const totalPodium = somaDe(athletes, a => a.podiums);
 
   return (
     <section className="u-m-16px-12px-24px u-bd-1px-solid-border u-br-radius-lg u-ov-hidden">

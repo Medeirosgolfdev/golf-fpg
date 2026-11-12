@@ -29,6 +29,7 @@ import PlayerLink from "./PlayerLink";
 import SectionTitle from "./SectionTitle";
 import { playerKey } from "../utils/playerKey";
 import FpgTournLink from "./FpgTournLink";
+import { somaDe } from "../utils/mathUtils";
 const MAX_CLUBS = 10;
 
 /** Normaliza nome de clube para agrupamento (lower-case, remove pontuação,
@@ -219,8 +220,8 @@ export default function TopClubesPanel({
       return n;
     });
 
-  const totalTitles = top.reduce((s, c) => s + c.titles.length, 0);
-  const totalAthletes = top.reduce((s, c) => s + c.athletes.length, 0);
+  const totalTitles = somaDe(top, c => c.titles.length);
+  const totalAthletes = somaDe(top, c => c.athletes.length);
 
   return (
     <section

@@ -11,9 +11,10 @@ import { II, OS, BN, countHoles, vpC, ink, panel, fillA, isLightText } from "../
 import { SC, TpBadge, StatsRow, Info } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P, RoundSum } from "../types";
+import { soma, somaDe } from "../../../utils/mathUtils";
 
-const tot = (rs: RoundSum[]) => rs.reduce((a, r) => a + r.gross, 0);
-const totPar = (rs: RoundSum[]) => rs.reduce((a, r) => a + r.toPar, 0);
+const tot = (rs: RoundSum[]) => somaDe(rs, r => r.gross);
+const totPar = (rs: RoundSum[]) => somaDe(rs, r => r.toPar);
 /** Breakdown de todas as voltas juntas. */
 const allStats = (rs: RoundSum[]) => countHoles(rs.flatMap((r) => r.scores), rs.flatMap((r) => r.par));
 /** Cor da diferença de pancadas: menos = verde, mais = vermelho. */
@@ -66,7 +67,7 @@ export function V51({ d, v, bg, tc = "white", ta = tc, tc3, fa }: P) {
   const nines = nh >= 18 ? [[0, 9], [9, 9]] : [[0, nh]];
   const a = rs[rs.length - 2], b = rs[rs.length - 1];
   const SZ = 26, W = 28, LW = 26;
-  const sub = (r: RoundSum, off: number, len: number) => r.scores.slice(off, off + len).reduce((x, y) => x + y, 0);
+  const sub = (r: RoundSum, off: number, len: number) => soma(r.scores.slice(off, off + len));
   return (
     <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, borderRadius: 10, padding: "8px 10px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 10, marginBottom: 6 }}>
@@ -157,7 +158,7 @@ const splitPos = (s: string) => {
   const m = /^(\d+\.?º)(?:\s+de\s+(\d+))?/.exec(s || "");
   return m ? { pos: m[1], of: m[2] ?? "" } : null;
 };
-const subSum = (r: RoundSum, a: number, b: number) => r.scores.slice(a, b).reduce((x, y) => x + y, 0);
+const subSum = (r: RoundSum, a: number, b: number) => soma(r.scores.slice(a, b));
 
 /* V53 · CARTÃO DO TORNEIO — tabela clara (como o B&W Card): uma linha por
    volta com Out / In / Total / ±, e a linha do total. Fundo sempre o dele. */
@@ -198,7 +199,7 @@ export function V53({ d, v, fa }: P) {
       ))}
       <div style={{ display: "flex", alignItems: "center", background: fillA("#f8fafc", fa), fontWeight: 900 }}>
         <div style={cell(40, { fontSize: 11 })}>Tot</div>
-        {is18 && <><div style={cell(40, { fontSize: 13 })}>{rs.reduce((a, r) => a + subSum(r, 0, 9), 0)}</div><div style={cell(40, { fontSize: 13 })}>{rs.reduce((a, r) => a + subSum(r, 9, 18), 0)}</div></>}
+        {is18 && <><div style={cell(40, { fontSize: 13 })}>{somaDe(rs, r => subSum(r, 0, 9))}</div><div style={cell(40, { fontSize: 13 })}>{somaDe(rs, r => subSum(r, 9, 18))}</div></>}
         <div style={cell(48, { fontFamily: OS, fontSize: 18 })}>{tot(rs)}</div>
         <div style={cell(40, { fontSize: 12, color: vpC(totPar(rs), "#111111") })}>{fmtToPar(totPar(rs))}</div>
       </div>

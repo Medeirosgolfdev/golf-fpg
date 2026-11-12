@@ -29,6 +29,7 @@ import SectionTitle from "../../../ui/SectionTitle";
 import { Tint } from "../../../ui/DataStyle";
 import { resumoResultado, buracosDoFlight } from "../../../utils/voltasJogadas";
 import { countWins, getResultInTournament } from "../data";
+import { soma } from "../../../utils/mathUtils";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -409,7 +410,7 @@ function computeSeriesTrend(editions: Edition[]): SeriesTrend | null {
   if (validPos.length >= 3) {
     const last = validPos[validPos.length - 1];
     const prev = validPos.slice(0, -1);
-    const avgPrev = prev.reduce((a, b) => a + b, 0) / prev.length;
+    const avgPrev = soma(prev) / prev.length;
     if (last <= 3 && last < avgPrev - 5) {
       return { label: `recuperou`, icon: "↗️", bg: "var(--bg-success-subtle)", fg: "var(--color-good-dark)", title: `Última edição #${last} — média anterior #${avgPrev.toFixed(0)}` };
     }
@@ -419,8 +420,8 @@ function computeSeriesTrend(editions: Edition[]): SeriesTrend | null {
   if (half >= 1) {
     const firstHalf = validPos.slice(0, half);
     const secondHalf = validPos.slice(-half);
-    const avg1 = firstHalf.reduce((a, b) => a + b, 0) / firstHalf.length;
-    const avg2 = secondHalf.reduce((a, b) => a + b, 0) / secondHalf.length;
+    const avg1 = soma(firstHalf) / firstHalf.length;
+    const avg2 = soma(secondHalf) / secondHalf.length;
     const delta = avg2 - avg1;
     if (delta < -3) {
       return { label: "a subir", icon: "▲", bg: "var(--bg-success-subtle)", fg: "var(--color-good-dark)", title: `Posição melhorou de média #${avg1.toFixed(0)} para #${avg2.toFixed(0)}` };

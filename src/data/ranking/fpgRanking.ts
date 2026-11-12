@@ -26,6 +26,7 @@ import { temCartao } from "../../utils/classificacao";
 import {
   pjaPts, isGFTournament, getTournMultiplier, classifyPJAEvent,
 } from "../../../ranking-pja/pja-rules.mjs";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 export type RankMetric = "pts" | "sd";
 
@@ -245,8 +246,8 @@ export function buildYearTournaments(list: Tournament[], year: string, specialRu
       // Calcular grossTotal e toPar combinados onde possível
       const players = Array.from(byPlayer.values()).map((p: any) => {
         const rondas = p.roundScores || [];
-        const grossSum = rondas.reduce((s: number, r: any) => s + (typeof r.gross === "number" ? r.gross : 0), 0);
-        const parSum = rondas.reduce((s: number, r: any) => s + ((r.pars || []).reduce((a: number,b: number) => a+b, 0) || 0), 0);
+        const grossSum = somaDe(rondas, (r: any) => (typeof r.gross === "number" ? r.gross : 0));
+        const parSum = somaDe(rondas, (r: any) => (soma((r.pars || [])) || 0));
         if (grossSum > 0 && parSum > 0) {
           p.grossTotal = grossSum;
           p.toPar = grossSum - parSum;
@@ -450,13 +451,13 @@ export function buildRankRows(yearTournaments: Tournament[], opts: BuildRankRows
 
       if (isSynth && subRounds.length > 1 && p.roundScores && p.roundScores.length > 0) {
         p.roundScores.forEach((rs: any, i: number) => {
-          const parR = (rs.pars || []).reduce((a: number, b: number) => a + b, 0) || rs.parTotal || 0;
+          const parR = soma((rs.pars || [])) || rs.parTotal || 0;
           addRound(i + 1, rs.gross, parR, rs);
         });
       } else if (p.roundScores && p.roundScores.length > 1) {
         // Multi-round não-sintético (e.g. pull-torneios 2-round event vindo directo)
         p.roundScores.forEach((rs: any, i: number) => {
-          const parR = (rs.pars || []).reduce((a: number, b: number) => a + b, 0) || rs.parTotal || 0;
+          const parR = soma((rs.pars || [])) || rs.parTotal || 0;
           addRound(i + 1, rs.gross, parR, rs);
         });
       } else {
@@ -482,7 +483,7 @@ export function buildRankRows(yearTournaments: Tournament[], opts: BuildRankRows
       const chaves = new Set(melhores.map(r => r.roundKey));
       for (const [rk, res] of row.results.entries()) res.inTop14 = chaves.has(rk);
       row.total = melhores.length
-        ? Math.round((melhores.reduce((a, r) => a + r.sd, 0) / melhores.length) * 10) / 10
+        ? Math.round((somaDe(melhores, r => r.sd) / melhores.length) * 10) / 10
         : NaN;
       row.voltas = sds.length;
       row.eligible = sds.length >= MIN_SD_ROUNDS;
@@ -535,7 +536,7 @@ export function buildRankRows(yearTournaments: Tournament[], opts: BuildRankRows
       for (const [rk, res] of row.results.entries()) {
         res.inTop14 = top14Keys.has(rk);
       }
-      row.total = sorted.slice(0, 14).reduce((s, r) => s + r.pts, 0);
+      row.total = somaDe(sorted.slice(0, 14), r => r.pts);
       row.voltas = row.allRounds.length;
       row.eligible = row.voltas >= 14;
     }
@@ -661,7 +662,7 @@ export function cutInfo(row: RankRow, metric: RankMetric): { cortadas: number; c
   return {
     cortadas,
     contadas: row.voltas - cortadas,
-    totalTodas: cortadas > 0 ? row.allRounds.reduce((a, r) => a + r.pts, 0) : 0,
+    totalTodas: cortadas > 0 ? somaDe(row.allRounds, r => r.pts) : 0,
   };
 }
 

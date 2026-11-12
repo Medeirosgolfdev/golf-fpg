@@ -22,7 +22,9 @@
 import type { Tournament, Player } from "./fpgTypes";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import { escalaoAtDate } from "../utils/format";
+import { isPtCountry } from "../utils/flagUtils";
 import { parsePos, posicoesComEmpates, temCartao } from "../utils/classificacao";
+import { soma } from "../utils/mathUtils";
 
 type ChampionshipType = "Nacional" | "Regional";
 export type Sex = "M" | "F" | "?";
@@ -393,7 +395,7 @@ export function buildJovensAnalise(
       if (!fed) return true;
       const cc = nationality[String(fed)];
       if (!cc) return true;
-      return cc === "PT";
+      return isPtCountry(cc);
     };
 
     // Sexo de um jogador: playersDB primeiro, depois playerInfo (inativos).
@@ -523,7 +525,7 @@ export function buildJovensAnalise(
       }
       const reals = realRoundsOf(p);
       if (reals.length < expectedRounds) return null;
-      const sum = reals.slice(0, expectedRounds).reduce((s, g) => s + g, 0);
+      const sum = soma(reals.slice(0, expectedRounds));
       return sum > 0 ? sum : null;
     };
 

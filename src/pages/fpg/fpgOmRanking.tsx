@@ -32,6 +32,7 @@ import termosJson from "../../data/omCgssTermos.json";
 import { ModalidadePill } from "../../ui/PillBadge";
 import LoadingState from "../../ui/LoadingState";
 import ExtLink from "../../ui/ExternalLink";
+import { somaDe } from "../../utils/mathUtils";
 
 /* ── Tipos do om-cgss-junior.json ── */
 type Level = "A" | "B" | "C";
@@ -273,7 +274,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
   const classificar = useCallback((ate: string | null) => {
     const list = (data?.ranking ?? []).map(p => {
       const evs = ate ? p.events.filter(e => e.date <= ate) : p.events;
-      const total = ate ? evs.reduce((s, e) => s + e.pts, 0) : p.total;
+      const total = ate ? somaDe(evs, e => e.pts) : p.total;
       const te = thisEvent ? evs.find(e => String(e.tcode) === String(thisEvent.tcode)) : undefined;
       return { ...p, events: evs, total, played: evs.length, herePts: te?.pts ?? 0, herePos: te?.pos ?? null };
     }).filter(p => p.total > 0);

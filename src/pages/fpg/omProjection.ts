@@ -9,6 +9,7 @@
  */
 
 import { diasEntre } from "../../utils/dias";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 export type OmLevel = "A" | "B" | "C";
 
@@ -31,7 +32,7 @@ export function pontosEmJogo(missing: { level: OmLevel }[], topo: TopByLevel): P
     if (!provas || porProva == null) continue;
     porNivel.push({ level: lv, provas, porProva, soma: provas * porProva });
   }
-  return { total: porNivel.reduce((s, x) => s + x.soma, 0), porNivel };
+  return { total: somaDe(porNivel, (x) => x.soma), porNivel };
 }
 
 /** Estado de uma prova do calendário da OM, visto a partir de hoje. */
@@ -97,7 +98,7 @@ export interface Projeccao {
  */
 export function projectar(jogadores: JogadorOm[], valores: number[]): Projeccao[] {
   const ordenados = [...valores].sort((a, b) => b - a);
-  const emJogo = ordenados.reduce((s, v) => s + v, 0);
+  const emJogo = soma(ordenados);
   const lider = jogadores.filter((j) => j.canWin).reduce((m, j) => Math.max(m, j.total), 0);
 
   return jogadores.map((j) => {
@@ -117,7 +118,7 @@ export function projectar(jogadores: JogadorOm[], valores: number[]): Projeccao[
       paraOLider: falta,
       vitoriasNecessarias: falta === 0 ? 0 : n,
       aindaChega: falta === 0 || j.total + emJogo > lider,
-      comDesconto: scores.slice(3).reduce((s, v) => s + v, 0),
+      comDesconto: soma(scores.slice(3)),
     };
   });
 }

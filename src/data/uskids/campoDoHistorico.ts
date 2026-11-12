@@ -21,6 +21,7 @@ import type { Course, Tee } from "../types";
 import { stripAccents } from "../../utils/normName";
 import { teeDaSede } from "../uskidsVenues";
 import { jardasParaMetros } from "../../utils/jardas";
+import { round1, somaDe } from "../../utils/mathUtils";
 
 interface FieldEscalao { nome: string }
 /** O que se precisa de saber da prova: código, nome (com o ano) e escalões. */
@@ -216,7 +217,7 @@ function interpolateRatings(course: Course, targetMeters: number | null, sex: st
   const cr = lo.cr + f * (hi.cr - lo.cr);
   let slope = Math.round(lo.slope + f * (hi.slope - lo.slope));
   slope = Math.max(55, Math.min(155, slope));
-  return { cr: Math.round(cr * 10) / 10, slope };
+  return { cr: round1(cr), slope };
 }
 
 /** Constroi Course/Tee a partir do slim (par/yards/courseName), enriquecido
@@ -265,7 +266,7 @@ function buildCourseTee(
     totalDist += m;
     if (i < 9) f9Dist += m; else b9Dist += m;
   }
-  const parTotal = par.slice(0, hpr).reduce((a, b) => a + (b || 0), 0);
+  const parTotal = somaDe(par.slice(0, hpr), b => (b || 0));
   const teeName = matchedTee?.teeName || (courseName.split("-").slice(-1)[0].trim() || courseName);
 
   const tee: Tee = {

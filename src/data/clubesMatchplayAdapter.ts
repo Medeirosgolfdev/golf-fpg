@@ -22,6 +22,7 @@ import type {
 import type { TeamPointsData, TeamPointsPlayerRow, TeamPointsSelection } from "../ui/circuit/teamPointsTypes";
 import { diaPendentes, diaPoints, playerRows } from "./clubesFormats";
 import { isManuel } from "../constants/manuel";
+import { somaDe } from "../utils/mathUtils";
 
 /** Texto do aviso de confrontos sem resultado (a FPG não publicou a classificação). */
 export const CLUBES_PENDING_NOTE =
@@ -239,10 +240,10 @@ export function clubesTeamPoints(mp: MatchPlayData, opts: ClubesAdapterOpts = {}
     for (const club of mp.clubs) { pts[club.key] = {}; players[club.key] = []; }
     for (const { cat } of cats) {
       const dias = cat.dias.filter(diaOk);
-      pending += dias.reduce((s, d) => s + diaPendentes(d), 0);
+      pending += somaDe(dias, d => diaPendentes(d));
       const matches = dias.flatMap(d => (d.matches ?? []).map(m => ({ ...m, _dia: d.dia })));
       for (const club of catClubs(mp, cat)) {
-        pts[club.key][cat.key] = dias.reduce((s, d) => s + diaPoints(d, club.key), 0);
+        pts[club.key][cat.key] = somaDe(dias, d => diaPoints(d, club.key));
         for (const r of playerRows(matches, club.key)) {
           const row: TeamPointsPlayerRow = {
             key: `${cat.key}:${r.key}`,

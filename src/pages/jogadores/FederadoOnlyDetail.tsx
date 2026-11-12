@@ -31,7 +31,7 @@ import ErrorState from "../../ui/ErrorState";
 import Modal from "../../ui/Modal";
 import { isoToDmy, todayIso } from "../../utils/format";
 import SectionTitle from "../../ui/SectionTitle";
-import { numSafe } from "../../utils/mathUtils";
+import { numSafe, somaDe } from "../../utils/mathUtils";
 import { diasEntre } from "../../utils/dias";
 import { meanArr } from "../../utils/mathUtils";
 
@@ -201,7 +201,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
         // Campos "soltos" — apareceram no JSON mas não estão mapeados em nenhum lado
         const extraFields = Object.keys(fRec).filter(k => !covered.has(k));
         const visibleCount =
-          FEDERADO_SECTIONS.reduce((n, s) => n + s.fields.filter(k => fKeys.has(k)).length, 0) +
+          somaDe(FEDERADO_SECTIONS, s => s.fields.filter(k => fKeys.has(k)).length) +
           extraFields.length;
         const technicalCount = FEDERADO_TECHNICAL_FIELDS.filter(k => fKeys.has(k)).length;
 

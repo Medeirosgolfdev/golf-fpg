@@ -29,6 +29,7 @@ import {
 import type { Flight, Result } from "./data";
 import { normName as normNameStr } from "../../utils/normName";
 import { metrosParaJardas } from "../../utils/jardas";
+import { somaDe } from "../../utils/mathUtils";
 /** O normName único (utils/normName), tolerante a null/undefined. */
 const normName = (s: string | undefined | null) => normNameStr(s ?? "");
 
@@ -333,7 +334,7 @@ export function mergeFlightWithKnown(
     // Usar known.rounds; preservar gross do canónico quando index bate
     rounds = known.rounds.map((strokes, i) => {
       const cr = canonicalRounds[i];
-      const sumKnown = strokes.reduce((s, x) => s + (x > 0 ? x : 0), 0);
+      const sumKnown = somaDe(strokes, x => (x > 0 ? x : 0));
       return {
         round: cr?.round ?? (i + 1),
         gross: cr?.gross ?? (sumKnown > 0 ? sumKnown : null),

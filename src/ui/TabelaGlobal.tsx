@@ -9,7 +9,7 @@ import { uskTournNames, fpgTournNames, extraTidMeta, normName as normNameAuto } 
 import type { AutoRivalPlayer } from "../data/KIDSdataLoader";
 import type { FieldData } from "./uskidsTypes";
 import { HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
-import { zTier } from "../utils/mathUtils";
+import { zTier, soma, somaDe } from "../utils/mathUtils";
 import { isManuel } from "../constants/manuel";
 import ClearButton from "./ClearButton";
 import ExpandArrow from "./ExpandArrow";
@@ -149,8 +149,8 @@ for (const t of TG_T) {
   for (let i = 0; i < t.rounds; i++) {
     const vals = TG_D.filter(p => (p.r[t.id] as any)?.rd?.[i] != null).map(p => (p.r[t.id] as any).rd[i]).filter((v: any): v is number => v != null);
     if (vals.length > 1) {
-      const m = vals.reduce((a: number, b: number) => a + b, 0) / vals.length;
-      const s = Math.sqrt(vals.reduce((a: number, b: number) => a + (b - m) ** 2, 0) / vals.length);
+      const m = soma(vals) / vals.length;
+      const s = Math.sqrt(somaDe(vals, (b: number) => (b - m) ** 2) / vals.length);
       TG_AVG_R[t.id][i] = { m, s };
     }
   }
@@ -258,7 +258,7 @@ function tgBuildRankMap(rivals: TGPlayer[]): Record<string, number> {
       .filter(([tid, r]) => !hidden.has(tid) && r?.tp != null)
       .map(([, r]) => r.tp as number);
     if (tps.length >= 2) {
-      scored.push({ id: p.id, avg: tps.reduce((a, b) => a + b, 0) / tps.length });
+      scored.push({ id: p.id, avg: soma(tps) / tps.length });
     }
   }
   scored.sort((a, b) => a.avg - b.avg);
@@ -276,8 +276,8 @@ function tgGetTrend(p: TGPlayerBase): string | null {
     .map(([, r]) => r.tp as number);
   if (tps.length < 2) return null;
   const half = Math.floor(tps.length / 2);
-  const first = tps.slice(0, half).reduce((a, b) => a + b, 0) / half;
-  const last  = tps.slice(-half).reduce((a, b) => a + b, 0) / half;
+  const first = soma(tps.slice(0, half)) / half;
+  const last  = soma(tps.slice(-half)) / half;
   const diff = last - first;
   if (diff <= -5)  return "up2";
   if (diff <= -2)  return "up";
@@ -544,12 +544,12 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
         if (!res || res.tp == null) continue;
         const rounds = res.rd?.filter((x: number) => x > 0);
         if (!rounds?.length) continue;
-        const gross = rounds.reduce((a: number, b: number) => a + b, 0);
+        const gross = soma(rounds);
         avgs.push(gross / rounds.length); // média por ronda
       }
       if (avgs.length < 3) { m[tid] = null; continue; }
-      const avg = avgs.reduce((a, b) => a + b, 0) / avgs.length;
-      const std = Math.sqrt(avgs.reduce((a, b) => a + (b - avg) ** 2, 0) / avgs.length);
+      const avg = soma(avgs) / avgs.length;
+      const std = Math.sqrt(somaDe(avgs, b => (b - avg) ** 2) / avgs.length);
       m[tid] = std > 0 ? { avg, std } : null;
     }
     return m;
@@ -607,7 +607,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
     return {
       torn: tgNPlayed(manuelRef),
       rondas: tgNRounds(manuelRef),
-      avg: allRds.length ? (allRds.reduce((a, b) => a + b, 0) / allRds.length).toFixed(1) : null,
+      avg: allRds.length ? (soma(allRds) / allRds.length).toFixed(1) : null,
       best: allRds.length ? Math.min(...allRds) : null,
     };
   })() : null;
@@ -745,7 +745,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       const validRd = res.rd?.filter((x: number) => x > 0) ?? [];
                       const rounds = validRd.length || 1;
                       const playerAvg = validRd.length
-                        ? validRd.reduce((a: number, b: number) => a + b, 0) / rounds
+                        ? soma(validRd) / rounds
                         : (res.t != null ? res.t / rounds : 0);
                       let ti: keyof typeof TIER | null = null;
                       const fixedAvgs = TG_AVG_R[tid];
@@ -753,7 +753,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       if (hasFixedAvg) {
                         const ms = fixedAvgs.filter((x: any): x is {m:number;s:number} => x != null).map((x: {m:number}) => x.m);
                         const ss = fixedAvgs.filter((x: any): x is {m:number;s:number} => x != null).map((x: {s:number}) => x.s);
-                        if (ms.length) ti = zTier(playerAvg, { m: ms.reduce((a,b)=>a+b,0)/ms.length, s: ss.reduce((a,b)=>a+b,0)/ss.length });
+                        if (ms.length) ti = zTier(playerAvg, { m: soma(ms)/ms.length, s: soma(ss)/ss.length });
                       } else {
                         const ar = autoAvgR[tid];
                         if (ar) ti = zTier(playerAvg, { m: ar.avg, s: ar.std });

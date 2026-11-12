@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { zTier, soma, meanArr } from "../mathUtils";
+import { zTier, soma, somaDe, meanArr, round1 } from "../mathUtils";
 
 /** zTier — único sítio dos níveis por z-score (Rivais e Tabela global). */
 describe("zTier", () => {
@@ -34,5 +34,23 @@ describe("soma e meanArr", () => {
     expect(meanArr([80, null, 90, undefined])).toBe(85);
     expect(meanArr([])).toBeNull();
     expect(meanArr([null, undefined])).toBeNull();
+  });
+});
+
+describe("somaDe e round1", () => {
+  it("soma um campo de cada elemento; vazios não contam", () => {
+    const js = [{ p: 3 }, { p: null }, { p: 4 }, {}] as { p?: number | null }[];
+    expect(somaDe(js, j => j.p)).toBe(7);
+    expect(somaDe([], () => 1)).toBe(0);
+    expect(somaDe(null, () => 1)).toBe(0);
+  });
+  it("também conta (1 por cada um que cumpre) e dá o índice", () => {
+    expect(somaDe([1, 5, 9], x => (x > 3 ? 1 : 0))).toBe(2);
+    expect(somaDe([10, 10, 10], (x, i) => x * i)).toBe(30);
+  });
+  it("round1 arredonda a uma casa (a mesma função do whsCalc)", () => {
+    expect(round1(12.34)).toBe(12.3);
+    expect(round1(12.35)).toBe(12.4);
+    expect(round1(-0.04)).toBe(-0);
   });
 });

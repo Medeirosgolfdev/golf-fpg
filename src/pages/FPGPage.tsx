@@ -37,6 +37,7 @@ import { isClubesMatchPlay } from "../data/clubesFormats";
 import { isDNS } from "../ui/driveUtils";
 import { InscricoesPanel, buildJovensGroups, buildEventGroups, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
+import { somaDe } from "../utils/mathUtils";
 // Re-exports para consumidores que ainda importam de FPGPage
 export type { RoundScore, Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
 export { expandMultiRound } from "../data/fpgUtils";
@@ -507,7 +508,7 @@ function Content() {
    *  cabeçalho de secção). Sem ClubePill nem data automática do item. */
   function renderJovensSidebarItem(g: JovensGroup, opts: { onClick: () => void; href?: string; isActive: boolean }) {
     const t0 = g.entries[0];
-    const totalJog = g.entries.reduce((s, e) => s + (e.playerCount || e.players.length), 0);
+    const totalJog = somaDe(g.entries, e => (e.playerCount || e.players.length));
     const regionLabel = REGION_LABEL[t0.ccode ?? ""] ?? t0.ccode ?? "";
     const ddmm = g.date ? fmtDateShort(g.date) : "";
     const sidebarT: SidebarItemTournament = {
@@ -574,7 +575,7 @@ function Content() {
     // pode aparecer em múltiplos escalões se o organizador o listou assim —
     // raro). Simples e suficiente: somar playerCount de cada entrada.
     const nJog = isMulti
-      ? g.entries.reduce((s, e) => s + (e.playerCount || e.players.filter(p => !isDNS(p)).length), 0)
+      ? somaDe(g.entries, e => (e.playerCount || e.players.filter(p => !isDNS(p)).length))
       : (activeEntry.playerCount || activeEntry.players.filter(p => !isDNS(p)).length);
 
     // Nome a mostrar: simplificado se grupo; original se singleton (preserva

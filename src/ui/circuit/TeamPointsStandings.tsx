@@ -22,6 +22,7 @@ import ExpandArrow from "../ExpandArrow";
 import EmptyState from "../EmptyState";
 import PlayerLink from "../PlayerLink";
 import { MUTED } from "../tableCells";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 type TeamRow = {
   key: string;
@@ -67,7 +68,7 @@ function TeamPlayers({ rows, opps, catLabel }: {
       if (sortKey === "pts") return r.pts;
       // vs:<equipa> → pontos ganhos contra essa equipa
       const res = r.vs[sortKey.slice(3)] ?? [];
-      return res.reduce((s, x) => s + (x.won ? 1 : x.half ? 0.5 : 0), 0);
+      return somaDe(res, x => (x.won ? 1 : x.half ? 0.5 : 0));
     };
     return rows.map((r, i) => ({ r, i })).sort((a, b) => {
       const va = val(a.r), vb = val(b.r);
@@ -122,7 +123,7 @@ export default function TeamPointsStandings({ data, defaultRound = "all" }: {
   const rows = useMemo<TeamRow[]>(() => {
     const base = data.teams.map(t => {
       const cats = cur.pts[t.key] ?? {};
-      const total = Object.values(cats).reduce((s, v) => s + v, 0);
+      const total = soma(Object.values(cats));
       return { key: t.key, name: t.name, cats, total, official: data.officialPlaces?.[t.key] ?? null };
     });
     // Lugar pelos pontos da vista actual; empatados partilham o lugar.

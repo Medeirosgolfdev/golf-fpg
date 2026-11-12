@@ -42,6 +42,7 @@ import Select from "../../ui/Select";
 import { Tint, Fill } from "../../ui/DataStyle";
 import { indicesDoMelhor, arredondar } from "../../utils/melhorValor";
 import { temCartao } from "../../utils/classificacao";
+import { soma } from "../../utils/mathUtils";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
 // ⚠ A cor é a do LUGAR do jogador na barra de cima (o índice em `slots`), nunca a
@@ -447,7 +448,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
       const first = entries.find(Boolean)!;
       result.push({ label: first.label, nRounds: entries.map(e => e?.nR ?? 0), stats: entries.map(e => e?.stats ?? null) });
     }
-    result.sort((a, b) => b.nRounds.reduce((s, v) => s + v, 0) - a.nRounds.reduce((s, v) => s + v, 0));
+    result.sort((a, b) => soma(b.nRounds) - soma(a.nRounds));
     return result;
   }, [loaded]);
 

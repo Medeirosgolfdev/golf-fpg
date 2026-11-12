@@ -15,6 +15,7 @@ import type { MatchPlayData, MpDia, MpMatch, MpRow } from "./clubesMatchplayType
 import type { CategoriaCfg } from "./teamStroke";
 import { isManuel } from "../constants/manuel";
 import { normName } from "../utils/normName";
+import { soma, somaDe } from "../utils/mathUtils";
 
 export interface ClubesTeamFormat {
   bestNByRound?: number[];
@@ -201,7 +202,7 @@ export function matchPlayToPlayers(mp: MatchPlayData): Player[] {
   if (!par.length) return [];
   const meters = mp.course?.meters ?? [];
   const tee = mp.course?.tee;
-  const parTot = par.reduce((s, v) => s + v, 0);
+  const parTot = soma(par);
   type RndEntry = { diaNum: number; gross: number; scores: (number | null)[]; nholes: number };
   const byPlayer = new Map<string, { fed?: string; name: string; club: string; rounds: RndEntry[] }>();
   for (const cat of mp.categories) {
@@ -211,7 +212,7 @@ export function matchPlayToPlayers(mp: MatchPlayData): Player[] {
           const p = m.players?.[cl.key];
           if (!p?.scores || p.scores.filter(Boolean).length < 9) continue;
           const holesPlayed = p.scores.filter((v): v is number => v != null);
-          const gross = holesPlayed.reduce((s, v) => s + v, 0);
+          const gross = soma(holesPlayed);
           const nholes = holesPlayed.length;
           // fed code → merge rounds; sem fed → entrada única por dia/match
           const key = p.fed ?? `${cat.key}-d${dia.dia}-${cl.key}-m${m.match}`;
@@ -224,7 +225,7 @@ export function matchPlayToPlayers(mp: MatchPlayData): Player[] {
     }
   }
   return Array.from(byPlayer.entries()).map(([key, entry]): Player => {
-    const allGross = entry.rounds.reduce((s, r) => s + r.gross, 0);
+    const allGross = somaDe(entry.rounds, r => r.gross);
     const allComplete = entry.rounds.every(r => r.nholes >= par.length);
     const toPar = allComplete ? allGross - parTot * entry.rounds.length : null;
     // ⚠ `nholes` é o TAMANHO DA VOLTA (18), não os buracos preenchidos: com 16
@@ -276,7 +277,7 @@ export function matchPlayDia1Draw(mp: MatchPlayData): FpgDraw | undefined {
       })),
     }))
     .sort((a, b) => a.teeTime.localeCompare(b.teeTime));
-  const total = flights.reduce((s, f) => s + f.players.length, 0);
+  const total = somaDe(flights, f => f.players.length);
   return { name: `Draw — ${dia1.modalidade ?? "R1"}`, date: dia1.date, totalJogadores: total, groups: flights };
 }
 

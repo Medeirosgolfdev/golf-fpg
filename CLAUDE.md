@@ -357,6 +357,16 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   `fpgPageLoader`, `playerDataLoader`, `datagolfClient`, `useLiveAdmissions`). No `App.css`, regras
   SEGUIDAS com o corpo igual escrevem-se como uma só (selectores separados por vírgula); regras
   iguais mas distantes NÃO se juntam (mudava a ordem da cascata).
+  **Somas e arredondamentos (12/11/2026, «Sim, tudo»):** já não há `reduce` a somar em lado nenhum —
+  `soma(xs)` para uma lista de números e `somaDe(xs, x => x.campo)` para somar (ou contar) um valor
+  de cada elemento, os dois em `utils/mathUtils`; arredondar a uma casa → `round1` (definido no
+  `whsCalc`, servido também pelo `mathUtils`); `iso` ± n meses → `addMonthsIso` (`utils/dias`, nunca
+  `setMonth` + `toISOString`). Carregador que guarda a sua Promise → `memoAsync` (`data/fetchCache`),
+  nunca `.catch(() => vazio)` dentro da Promise guardada (a falha ficava em cache como «vazio»).
+  **Ficheiros do `src` que o Node carrega com `require`** (não podem ganhar imports): só `whsCalc`,
+  `courseAliases`, `drivePoints`, `desistentes`, `kidsTid`, `juniorCalc`, `nivelPancadas`,
+  `ffg/ffgJogador` e `federgolf/nomes` — a prova é `node -e "require('<ficheiro>')"`; os outros que os
+  scripts citam são empacotados (esbuild) ou lidos como texto, e podem importar à vontade.
 
 ### Contas de handicap — um só sítio: `src/utils/whsCalc.ts`
 - SD, Course/Playing Handicap, Net Double Bogey/AGS, Expected SD de 9 buracos,

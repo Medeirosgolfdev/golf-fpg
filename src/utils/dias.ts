@@ -35,6 +35,21 @@ export function addDaysIso(iso: string, n: number): string {
   return t == null ? iso : new Date(t + n * 86_400_000).toISOString().slice(0, 10);
 }
 
+/** `iso` + n meses («2026-11-12» − 18 → «2025-05-12»), em dias do calendário — sem o
+ *  desvio de um dia que `setMonth` + `toISOString` dava na hora de Verão. Dia que não
+ *  existe no mês de chegada (31 → Fevereiro) fica no último dia desse mês. */
+export function addMonthsIso(iso: string, n: number): string {
+  const t = diaUtc(iso);
+  if (t == null) return iso;
+  const d = new Date(t);
+  const dia = d.getUTCDate();
+  d.setUTCDate(1);
+  d.setUTCMonth(d.getUTCMonth() + n);
+  const ultimo = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+  d.setUTCDate(Math.min(dia, ultimo));
+  return d.toISOString().slice(0, 10);
+}
+
 /** Dias do calendário de `de` até `ate` (negativo se `ate` é antes); null se
  *  alguma das duas não é uma data ISO. */
 export function diasEntre(de: string | null | undefined, ate: string | null | undefined): number | null {

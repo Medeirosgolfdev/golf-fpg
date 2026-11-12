@@ -5,6 +5,10 @@
  * Centraliza helpers que estavam inline no JogadoresPage.
  */
 
+/** Arredondar a uma casa decimal — a definição é a do `whsCalc` (uma só no site);
+ *  serve-se daqui para as contas que não são de handicap. */
+export { round1 } from "./whsCalc";
+
 /** Converte valor desconhecido para número, ou null se inválido */
 export function numSafe(v: unknown): number | null {
   if (v === null || v === undefined) return null;
@@ -30,8 +34,8 @@ export function stdevArr(arr: (number | null | undefined)[]): number | null {
     if (n != null) vals.push(n);
   }
   if (vals.length < 2) return null;
-  const m = vals.reduce((a, b) => a + b, 0) / vals.length;
-  const variance = vals.reduce((a, v) => a + (v - m) ** 2, 0) / (vals.length - 1);
+  const m = soma(vals) / vals.length;
+  const variance = somaDe(vals, (v) => (v - m) ** 2) / (vals.length - 1);
   return Math.sqrt(variance);
 }
 
@@ -47,7 +51,7 @@ export function median(nums: number[]): number | null {
 /** Soma dos N melhores (menores) scores de uma lista — usado nos rankings por clube. */
 export function bestN(scores: number[], n: number): number {
   if (!scores.length) return 0;
-  return [...scores].sort((a, b) => a - b).slice(0, n).reduce((s, v) => s + v, 0);
+  return soma([...scores].sort((a, b) => a - b).slice(0, n));
 }
 
 /** Soma de uma lista: ignora vazios, e uma lista em falta vale 0. É A soma do
@@ -55,6 +59,18 @@ export function bestN(scores: number[], n: number): number {
 export function soma(arr: readonly (number | null | undefined)[] | null | undefined): number {
   let s = 0;
   if (arr) for (const v of arr) if (v != null && Number.isFinite(v)) s += v;
+  return s;
+}
+
+/** Soma de um valor tirado de cada elemento — `somaDe(jogadores, j => j.pontos)` — em vez de
+ *  `reduce((s, j) => s + j.pontos, 0)` escrito à mão. Valores vazios ou não-numéricos não contam;
+ *  lista vazia ou em falta dá 0. Também serve para contar: `somaDe(xs, x => x.ok ? 1 : 0)`. */
+export function somaDe<T>(arr: readonly T[] | null | undefined, valor: (x: T, i: number) => number | null | undefined): number {
+  let s = 0;
+  if (arr) for (let i = 0; i < arr.length; i++) {
+    const v = valor(arr[i], i);
+    if (v != null && Number.isFinite(v)) s += v;
+  }
   return s;
 }
 
@@ -153,7 +169,7 @@ export function getAvgZ(
       if (rd > 0) zs.push((rd - stats.m) / stats.s);
     }
   }
-  return zs.length ? zs.reduce((a, b) => a + b, 0) / zs.length : null;
+  return meanArr(zs);
 }
 
 /** Toggle de valor num array — adiciona se ausente, remove se presente */

@@ -15,7 +15,7 @@ import RivaisDashboard from "../../ui/RivaisDashboard";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { useJson } from "../../hooks/useJson";
 import { loadUskidsResults } from "../../data/uskidsResultsLoader";
-import { meanArr } from "../../utils/mathUtils";
+import { meanArr, soma, somaDe } from "../../utils/mathUtils";
 import { normName, extraTidMeta, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import { isManuelByName } from "../../constants/manuel";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
@@ -233,7 +233,7 @@ function normalizeIntlCol(def: IntlColDef, raw: unknown): IntlColData | null {
     if (rd.length === 0) continue;
     maxRounds = Math.max(maxRounds, rd.length);
     const total = Number(p.total);
-    const t = temCartao(total) ? total : rd.reduce((a, b) => a + b, 0);
+    const t = temCartao(total) ? total : soma(rd);
     // toPar (JobFile) ou result (BlueGolf) — servem para inferir o par por ronda
     const tpRaw = Number(p.toPar ?? p.result);
     const tp = Number.isFinite(tpRaw) ? tpRaw : null;
@@ -1135,7 +1135,7 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
         const semCartao = (res.rd ?? []).some(g => !temCartao(g)) || (res.t != null && !temCartao(res.t));
         const rounds = (res.rd ?? []).filter(g => temCartao(g));
         if (rounds.length === 0) continue;
-        const total = rounds.reduce((a, b) => a + b, 0);
+        const total = soma(rounds);
         const place = parsePos(res.p);
         extraCounts.set(tid, (extraCounts.get(tid) ?? 0) + 1);
         extraRounds.set(tid, Math.max(extraRounds.get(tid) ?? 0, rounds.length));
@@ -1302,7 +1302,7 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
           // Calcular rounds[] em ordem e ranking por total dentro do escalão
           const arr = [...players.entries()].map(([nm, rs]) => {
             const rounds = Object.keys(rs).sort((a, b) => Number(a) - Number(b)).map(rn => rs[Number(rn)]);
-            return { nm, rounds, total: rounds.reduce((a, b) => a + b, 0) };
+            return { nm, rounds, total: soma(rounds) };
           }).filter(x => x.rounds.length > 0)
             .sort((a, b) => a.total - b.total);
           let prevTotal = -1; let prevPlace = 0;
@@ -1346,7 +1346,7 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
             const metaT = mh.torneios[tcode];
             const parEsc = metaT?.byEscalao?.[tEntry.ageGroup]?.par || metaT?.par || null;
             const tps = voltas.map(r => toParDaVolta(parEsc, r));
-            if (tps.length && tps.every(x => x != null)) tpProprio = tps.reduce<number>((a, x) => a + (x as number), 0);
+            if (tps.length && tps.every(x => x != null)) tpProprio = somaDe(tps, x => (x as number));
           }
         }
         // Fonte 2: uskids-results.json (fallback quando mh ainda não cobre)
@@ -1359,7 +1359,7 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
           }
         }
         if (rounds.length === 0) continue;
-        const total = rounds.reduce((a, b) => a + b, 0);
+        const total = soma(rounds);
         // Sem buraco a buraco (ou via uskids-results): o par por volta da coluna.
         const tp = tpProprio ?? (td.par > 0 ? total - td.par * rounds.length : null);
         r[td.id] = { p: placeNum > 0 ? placeNum : "WD", t: total, tp, rd: rounds };
@@ -1439,7 +1439,7 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
         const vals = D.filter(p => p.r[td.id] && p.r[td.id].rd && p.r[td.id].rd[i] != null).map(p => p.r[td.id].rd[i]);
         if (vals.length > 1) {
           const m = meanArr(vals) ?? 0;
-          const s = Math.sqrt(vals.reduce((a, b) => a + (b - m) ** 2, 0) / vals.length);
+          const s = Math.sqrt(somaDe(vals, b => (b - m) ** 2) / vals.length);
           AVG_R[td.id][i] = { m, s };
         }
       }
@@ -1718,7 +1718,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       ordenarPeloLugarOficial(completed);
       // Tentar buscar course+yards específicos do escalão (byEscalao); fallback para o tcode-level yards
       const yardsArr = escMeta?.yards || meta.yards || [];
-      const yardsTotal = Array.isArray(yardsArr) ? yardsArr.reduce((a: number, b: number) => a + (b || 0), 0) : 0;
+      const yardsTotal = Array.isArray(yardsArr) ? somaDe(yardsArr, (b: number) => (b || 0)) : 0;
       const meters = yardsTotal > 0 ? jardasParaMetros(yardsTotal) : undefined;
       // Par de UMA volta do escalão: o dos buracos que ele joga (9 num campo com par nos 18).
       const parPerRound = cartaoDaVolta(parArr, null, { nBuracos: hpr }).parVolta ?? 0;

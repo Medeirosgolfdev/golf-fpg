@@ -19,7 +19,7 @@ import ExtLink from "../../../ui/ExternalLink";
 import { TrophyPos } from "../../../ui/PosBadge";
 import SectionTitle from "../../../ui/SectionTitle";
 import { resumoResultado, diferencaDeTotais, type ResumoResultado } from "../../../utils/voltasJogadas";
-import { meanArr } from "../../../utils/mathUtils";
+import { meanArr, round1 } from "../../../utils/mathUtils";
 
 type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff" | "result";
 
@@ -216,6 +216,6 @@ function RoundsCell({ res }: { res: ResumoResultado }) {
 
 /** Diferença com sinal: inteiros como estão, médias com uma casa (antes saíam 3: «-13.143»). */
 function fmtDiff(n: number): string {
-  return Number.isInteger(n) ? fmtSign(n) : fmtSign(Math.round(n * 10) / 10, 1);
+  return Number.isInteger(n) ? fmtSign(n) : fmtSign(round1(n), 1);
 }
 

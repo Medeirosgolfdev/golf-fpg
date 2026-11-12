@@ -7,7 +7,7 @@
 import React, { useMemo, useState } from "react";
 import type { PlayerPageData, RoundData, HcpInfo } from "../../../data/playerDataLoader";
 import { shortDate, fmtSign, fmtHcp } from "../../../utils/format";
-import { numSafe, meanArr, stdevArr, linearSlope, median } from "../../../utils/mathUtils";
+import { numSafe, meanArr, stdevArr, linearSlope, median, soma } from "../../../utils/mathUtils";
 import { toneClass } from "../../../utils/scoreDisplay";
 import UiKpiCard from "../../../ui/KpiCard";
 import CollapseCard from "../../../ui/CollapseCard";
@@ -279,11 +279,11 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
       }
     }
     if (grosses.length < 3) return null;
-    const overall = grosses.reduce((a, b) => a + b, 0) / grosses.length;
+    const overall = soma(grosses) / grosses.length;
     const last5 = grosses.slice(0, Math.min(5, grosses.length));
-    const last5avg = last5.reduce((a, b) => a + b, 0) / last5.length;
+    const last5avg = soma(last5) / last5.length;
     const last10 = grosses.slice(0, Math.min(10, grosses.length));
-    const last10avg = last10.reduce((a, b) => a + b, 0) / last10.length;
+    const last10avg = soma(last10) / last10.length;
     const diff5 = last5avg - overall;
     const diff10 = last10avg - overall;
     return { overall: overall.toFixed(1), last5: last5avg.toFixed(1), last10: last10avg.toFixed(1), diff5, diff10, n: grosses.length };

@@ -11,6 +11,7 @@
  */
 import type { CourseData, HoleScores, RoundData } from "./playerDataLoader";
 import { normKey } from "../utils/teeColors";
+import { somaDe } from "../utils/mathUtils";
 
 export const SSERRA_LOOPS = [
   { nome: "Machico", pars: [4, 4, 5, 3, 4, 4, 5, 3, 4] },
@@ -109,7 +110,7 @@ function fechar(nome: string, pars: readonly number[], tees: Map<string, Acc>): 
         if (v != null && (best[i] == null || v < (best[i] as number))) { best[i] = v; bestFrom[i] = r.date; }
       });
     }
-    const total = best.every(v => v != null) ? best.reduce<number>((s, v) => s + (v as number), 0) : null;
+    const total = best.every(v => v != null) ? somaDe(best, v => (v as number)) : null;
     return { teeName: acc.teeName, teeKey, rounds, best, bestFrom, meters: acc.meters, pars: acc.pars ?? [...pars], total };
   });
   lista.sort((a, b) => (b.rounds[0]?.dateSort ?? 0) - (a.rounds[0]?.dateSort ?? 0));

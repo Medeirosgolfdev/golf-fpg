@@ -30,6 +30,7 @@ import TabRow from "../../ui/TabRow";
 import { kidsUrl } from "../../ui/KidsLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../../ui/ScorecardLeaderboard";
 import ExtLink from "../../ui/ExternalLink";
+import { somaDe } from "../../utils/mathUtils";
 
 
 
@@ -115,8 +116,8 @@ export function HistoricScorecardsView({ editions }: { editions: Edition[] }) {
 
   // Total de scorecards/jogadores mostrados (respeitando top-N)
   const limit = topN === 0 ? Infinity : topN;
-  const totalPlayers = editions.reduce((a, e) => a + Math.min(limit, e.players.length), 0);
-  const totalScorecards = editions.reduce((a, e) => a + Math.min(limit, e.players.length) * e.nRoundsMax, 0);
+  const totalPlayers = somaDe(editions, e => Math.min(limit, e.players.length));
+  const totalScorecards = somaDe(editions, e => Math.min(limit, e.players.length) * e.nRoundsMax);
 
   // Linhas Metros e PAR da tabela — do tee da edição mais recente.
   const ref = editions[0];
@@ -146,9 +147,9 @@ export function HistoricScorecardsView({ editions }: { editions: Edition[] }) {
         case "country": return pl.country || null;
         case "topar":   return Math.min(...pl.rounds.map(r => r.toPar));
         case "gross":   return Math.min(...pl.rounds.map(r => r.gross));
-        case "birds":   return pl.rounds.reduce((a, r) => a + r.birds, 0);
-        case "pars":    return pl.rounds.reduce((a, r) => a + r.pars,  0);
-        case "bogeys":  return pl.rounds.reduce((a, r) => a + r.bogeys,0);
+        case "birds":   return somaDe(pl.rounds, r => r.birds);
+        case "pars":    return somaDe(pl.rounds, r => r.pars);
+        case "bogeys":  return somaDe(pl.rounds, r => r.bogeys);
         case "rnd":     return pl.rounds.length;
         case "year":    return 0; // year sort ordena edições, não players
         case "pos":
@@ -452,9 +453,9 @@ export function buildEclectic(pl: PlayerCard, ed: Edition): EcleticLine {
     }
     best[h] = m;
   }
-  const total = best.reduce((a, b) => a + (b || 0), 0);
-  const out = best.slice(0, Math.min(9, hpr)).reduce((a, b) => a + (b || 0), 0);
-  const inn = !ed.is9 ? best.slice(9, 18).reduce((a, b) => a + (b || 0), 0) : 0;
+  const total = somaDe(best, b => (b || 0));
+  const out = somaDe(best.slice(0, Math.min(9, hpr)), b => (b || 0));
+  const inn = !ed.is9 ? somaDe(best.slice(9, 18), b => (b || 0)) : 0;
   const t = tallyHoles(best, ed.par);
   const bestRound = Math.min(...pl.rounds.map((r) => r.gross));
   return {

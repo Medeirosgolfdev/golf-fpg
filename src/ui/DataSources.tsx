@@ -17,6 +17,7 @@ import ExpandArrow from "./ExpandArrow";
 import CloseButton from "./CloseButton";
 import SectionTitle from "./SectionTitle";
 import { Place } from "./DataStyle";
+import { somaDe } from "../utils/mathUtils";
 
 type DataSourceStatus = "loaded" | "loading" | "error";
 
@@ -309,7 +310,7 @@ export function DataSourcesChip({
   const loaded = sources.filter(s => s.status === "loaded").length;
   const loading = sources.filter(s => s.status === "loading").length;
   const errors = sources.filter(s => s.status === "error").length;
-  const totalCount = sources.reduce((s, x) => s + (x.count || 0), 0);
+  const totalCount = somaDe(sources, x => (x.count || 0));
 
   return (
     <div className="u-pos-relative u-fsh-0">
@@ -370,7 +371,7 @@ function DataSourcesPanel({
 
   // O aspecto vive em .ds-panel/.ds-src-panel (largura = PANEL_WIDTH); daqui só a posição calculada (Place).
 
-  const totalCount = sources.reduce((s, x) => s + (x.count || 0), 0);
+  const totalCount = somaDe(sources, x => (x.count || 0));
 
   return (
     <Place className="ds-panel ds-src-panel" left={left} top={top} maxH={maxHeight} onClick={(e) => e.stopPropagation()}>

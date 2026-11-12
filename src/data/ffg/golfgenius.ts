@@ -12,6 +12,7 @@ import { normalizeName, ffgEscaloesOfTournament, ffgCategoryLabel } from "./name
 import { isPT } from "../../utils/ptPlayers";
 import type { FFGTournament, FFGDrawRound, CatalogEntry } from "./types";
 import { stripAccents } from "../../utils/normName";
+import { somaDe } from "../../utils/mathUtils";
 
 export function ggDrawToFpgDraw(round: FFGDrawRound): FpgDraw {
   return buildFpgDraw(
@@ -23,7 +24,7 @@ export function ggDrawToFpgDraw(round: FFGDrawRound): FpgDraw {
     {
       name: round.label ?? undefined,
       date: round.dateIso ?? undefined,
-      totalJogadores: round.groups.reduce((s, g) => s + g.players.length, 0),
+      totalJogadores: somaDe(round.groups, g => g.players.length),
     },
   );
 }

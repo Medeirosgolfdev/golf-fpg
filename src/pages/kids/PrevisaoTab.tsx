@@ -45,6 +45,7 @@ import { stripAccents } from "../../utils/normName";
 import Select from "../../ui/Select";
 import SectionTitle from "../../ui/SectionTitle";
 import { FilterField } from "../../ui/FilterField";
+import { somaDe } from "../../utils/mathUtils";
 
 interface FieldEscalao { nome: string }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -120,7 +121,7 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
   // CR 71.3 contra 66.4 — «a melhor», «ao handicap» e «a média» seguidas).
   // O tee resolvido fica sempre na lista, seja qual for.
   const teesDe = (c: (typeof campos)[number]) => c.master.tees.filter((t) => t.sex !== "F" || (c.courseKey === base?.course.courseKey && t.teeId === base?.tee.teeId));
-  const nTees = campos.reduce((a, c) => a + teesDe(c).length, 0);
+  const nTees = somaDe(campos, c => teesDe(c).length);
   const opcaoTee = (c: { courseKey: string }, t: { teeId: string; teeName: string; sex?: string; distances?: { total?: number | null } }) => (
     <option key={c.courseKey + t.teeId} value={`${c.courseKey}|${t.teeId}`}>
       {t.teeName}{t.sex === "F" ? " (senhoras)" : t.sex === "M" ? " (homens)" : ""}{t.distances?.total ? ` · ${t.distances.total} m` : ""}
@@ -244,8 +245,8 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
       aqui: gr.sdMedio != null && cr != null && slope != null ? Math.round(calcScore(gr.sdMedio, cr, slope)) : null,
       ordem: gr.key === "curtos" ? 0 : gr.key === "parecidos" ? 1 : 2,
     }));
-    const todas = grupos.reduce((a, gr) => a + gr.n, 0);
-    const sdGeral = todas ? grupos.reduce((a, gr) => a + (gr.sdMedio ?? 0) * gr.n, 0) / todas : null;
+    const todas = somaDe(grupos, gr => gr.n);
+    const sdGeral = todas ? somaDe(grupos, gr => (gr.sdMedio ?? 0) * gr.n) / todas : null;
     return { grupos, todas, sdGeral };
   }, [playerData, teeM, cr, slope]);
   const { sortKey: cK, sortDir: cD, toggleSort: cT } = useSort<"ordem" | "n" | "metros" | "vsParMedio" | "sdMedio" | "sdMelhor" | "aqui">("ordem", "asc");
@@ -543,7 +544,8 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
       {comprimento && teeM && comprimento.todas > 0 && (() => {
         const par = comprimento.grupos.find(gr => gr.key === "parecidos")!;
         const dif = par.sdMedio != null && comprimento.sdGeral != null ? par.sdMedio - comprimento.sdGeral : null;
-        const pancadas = dif != null && slope != null ? Math.round(Math.abs(dif) * slope / 113) : null;
+        // Diferença de SD em pancadas neste tee: a conta inversa do SD, do whsCalc (sem CR nem PCC).
+        const pancadas = dif != null && slope != null ? Math.round(calcScore(Math.abs(dif), 0, slope)) : null;
         const nome = (k: string) => k === "curtos" ? `Mais curtos (< ${teeM - 250} m)` : k === "parecidos" ? `Parecidos (${teeM - 250}–${teeM + 250} m)` : `Mais compridos (> ${teeM + 250} m)`;
         return (
           <details className="card" open>
@@ -743,9 +745,9 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
             <tfoot>
               <tr className="u-fw-800 u-bg-bg-header u-bt-2px-solid-border">
                 <td className="r u-ws-nowrap">{nove ? "Σ 18" : "Σ"}</td>
-                <td className="r">{gamePlan.reduce((a, h) => a + (h.dist ?? 0), 0)}</td>
+                <td className="r">{somaDe(gamePlan, h => (h.dist ?? 0))}</td>
                 <td />
-                <td className="r">{gamePlan.reduce((a, h) => a + (h.par ?? 0), 0)}</td>
+                <td className="r">{somaDe(gamePlan, h => (h.par ?? 0))}</td>
                 {/* Totais: a Média (dia normal) e o Bom dia, com o ±par — 04/11/2026,
                     em vez do «≈ 81 pancadas (+7)» solto no fim, que repetia a Média. */}
                 <td className="r u-ws-nowrap" title={expPerRound != null ? `Soma da coluna Média: ${expPerRound.toFixed(1)}` : undefined}>

@@ -11,6 +11,7 @@ import { isManuelByName } from "../../constants/manuel";
 import { tournamentAces } from "../../utils/aces";
 import type { Player as FPGPlayer } from "../../data/fpgTypes";
 import type { CircuitDivision, CircuitEntry } from "./types";
+import { somaDe } from "../../utils/mathUtils";
 
 /** Português? via flag do adaptador (_isPortuguese) ou nome do Manuel. */
 function isPt(p: FPGPlayer): boolean {
@@ -50,7 +51,7 @@ export function entryListMeta(e: CircuitEntry): Omit<CircuitEntry, "divisions" |
     roundsCount: meta.roundsCount ?? (nR || undefined),
     divisionCount: meta.divisionCount ?? divisions.length,
   };
-  if (out.playerCount == null) out.playerCount = divisions.reduce((a, d) => a + (d.results?.players.length ?? 0), 0);
+  if (out.playerCount == null) out.playerCount = somaDe(divisions, d => (d.results?.players.length ?? 0));
   // Filtros de escalão/sexo: o shell também procura nas divisões — os
   // metadados têm de cobrir o que elas trazem, e o dropdown tem de ser o mesmo.
   const esc = out.escaloes ?? [];

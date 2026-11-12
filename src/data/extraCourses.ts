@@ -10,6 +10,7 @@
 import type { Course, Tee, Hole } from "./types";
 import { BKC26, VALE_LAKE_RED_F, VALE_LAKE_YELLOW, VALE_WN_YELLOW, type RatingEstimado } from "./uskids/ratingsEstimados";
 import { jardasParaMetrosPorBuraco, jardasParaMetros } from "../utils/jardas";
+import { soma } from "../utils/mathUtils";
 
 /* Marco Simone Golf & Country Club — distâncias por tee (metros) */
 
@@ -43,8 +44,8 @@ function msHoles(dist: number[]): Hole[] {
 }
 
 function msDist(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
-  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
-  const back9 = dist.slice(9).reduce((a, b) => a + b, 0);
+  const front9 = soma(dist.slice(0, 9));
+  const back9 = soma(dist.slice(9));
   return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
 }
 
@@ -321,8 +322,8 @@ function doralHoles18(par: number[], dist: number[]): Hole[] {
 }
 
 function doralDist18(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
-  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
-  const back9  = dist.slice(9).reduce((a, b) => a + b, 0);
+  const front9 = soma(dist.slice(0, 9));
+  const back9  = soma(dist.slice(9));
   return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
 }
 
@@ -396,7 +397,7 @@ const doralRedTiger: Course = {
         ratings: { holes18: { par: 36, courseRating: null, slopeRating: null } },
         // 9 buracos (holes 10-18): usar holes[9..17] do scorecard
         holes: doralHoles9(doralRTParB9, doralRTDistB89, 10),
-        distances: { total: doralRTDistB89.reduce((a,b)=>a+b,0), front9: 0, back9: doralRTDistB89.reduce((a,b)=>a+b,0), holesCount: 9, complete18: false },
+        distances: { total: soma(doralRTDistB89), front9: 0, back9: soma(doralRTDistB89), holesCount: 9, complete18: false },
       },
       {
         teeId: "doral-rt-b7u",
@@ -405,7 +406,7 @@ const doralRedTiger: Course = {
         scorecardMeta: { teeColor: "#fbbf24" },
         ratings: { holes18: { par: 36, courseRating: null, slopeRating: null } },
         holes: doralHoles9(doralRTParB9, doralRTDistB7, 10),
-        distances: { total: doralRTDistB7.reduce((a,b)=>a+b,0), front9: 0, back9: doralRTDistB7.reduce((a,b)=>a+b,0), holesCount: 9, complete18: false },
+        distances: { total: soma(doralRTDistB7), front9: 0, back9: soma(doralRTDistB7), holesCount: 9, complete18: false },
       },
       ...doralRTUsgaTees,
     ],
@@ -517,8 +518,8 @@ function ltHoles(par: number[], si: number[], dist: number[]): Hole[] {
 }
 
 function ltDist(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
-  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
-  const back9  = dist.slice(9).reduce((a, b) => a + b, 0);
+  const front9 = soma(dist.slice(0, 9));
+  const back9  = soma(dist.slice(9));
   return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
 }
 
@@ -709,8 +710,8 @@ function glenHoles(par: number[], si: number[], dist: number[]): Hole[] {
 }
 
 function glenDist(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
-  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
-  const back9  = dist.slice(9).reduce((a, b) => a + b, 0);
+  const front9 = soma(dist.slice(0, 9));
+  const back9  = soma(dist.slice(9));
   return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
 }
 
@@ -889,8 +890,8 @@ function vHoles(par: number[], dist: number[], si?: number[]): Hole[] {
 }
 
 function vDist(dist: number[]): { total: number; front9: number; back9: number | null; holesCount: number; complete18: boolean } {
-  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
-  const back9 = dist.length > 9 ? dist.slice(9).reduce((a, b) => a + b, 0) : null;
+  const front9 = soma(dist.slice(0, 9));
+  const back9 = dist.length > 9 ? soma(dist.slice(9)) : null;
   return { total: front9 + (back9 ?? 0), front9, back9, holesCount: dist.length, complete18: dist.length === 18 };
 }
 
@@ -1188,8 +1189,8 @@ function vpHoles(par: number[], si: number[], dist: number[]): Hole[] {
   return dist.map((d, i) => ({ hole: i + 1, par: par[i], si: si[i], distance: d }));
 }
 function vpDist(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
-  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
-  const back9 = dist.slice(9).reduce((a, b) => a + b, 0);
+  const front9 = soma(dist.slice(0, 9));
+  const back9 = soma(dist.slice(9));
   return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
 }
 
@@ -1653,7 +1654,7 @@ const valeLakeRed    = jd([160,430,131,430,357,449,475,196,370, 122,328,295,129,
 function valeClubTee(teeId: string, teeName: string, sex: "M" | "F", par: number[], si: number[], dist: number[], cr: number, slope: number): Tee {
   return {
     teeId, sex, teeName,
-    ratings: { holes18: { par: par.reduce((a, b) => a + b, 0), courseRating: cr, slopeRating: slope } },
+    ratings: { holes18: { par: soma(par), courseRating: cr, slopeRating: slope } },
     holes: vHoles(par, dist, si),
     distances: vDist(dist),
   };
@@ -1677,7 +1678,7 @@ function valeTee(teeId: string, teeName: string, par: number[], dist: number[], 
   return {
     teeId, sex, teeName,
     ratings: { holes18: {
-      par: par.slice(0, dist.length).reduce((a, b) => a + b, 0),
+      par: soma(par.slice(0, dist.length)),
       courseRating: r?.cr ?? null, slopeRating: r?.slope ?? null,
       ...(r ? { estimado: r.nota } : {}),
     } },
@@ -1782,8 +1783,8 @@ function ukMTee(
   start: 1 | 10, cr: number | null, slope: number | null, teeColor?: string | null,
 ): Tee {
   const n = dist?.length ?? par.length;
-  const total = dist ? dist.reduce((a, b) => a + b, 0) : null;
-  const r = { par: par.slice(0, n).reduce((a, b) => a + b, 0), courseRating: cr, slopeRating: slope };
+  const total = dist ? soma(dist) : null;
+  const r = { par: soma(par.slice(0, n)), courseRating: cr, slopeRating: slope };
   return {
     teeId, sex, teeName,
     ...(teeColor !== undefined ? { scorecardMeta: { teeColor } } : {}),
@@ -2051,8 +2052,8 @@ function parisHoles(dist: number[]): Hole[] {
   return dist.map((d, i) => ({ hole: i + 1, par: parisPar[i], si: parisSI[i], distance: d }));
 }
 function parisDist(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
-  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
-  const back9  = dist.slice(9).reduce((a, b) => a + b, 0);
+  const front9 = soma(dist.slice(0, 9));
+  const back9  = soma(dist.slice(9));
   return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
 }
 
@@ -2261,7 +2262,7 @@ function backNineHoles(par: number[], si: number[] | null, dist: number[]): Hole
 }
 
 function backNineDist(dist: number[]): { total: number; front9: null; back9: number; holesCount: 9; complete18: false } {
-  const back9 = dist.reduce((a, b) => a + b, 0);
+  const back9 = soma(dist);
   return { total: back9, front9: null, back9, holesCount: 9, complete18: false };
 }
 
@@ -2743,14 +2744,14 @@ function tdcTee(id: string, sex: "M" | "F", teeName: string, cr: number, slope: 
   const back9 = dist?.length === 9 || (!dist && cr < 40);
   const par = back9 ? tdcParB11.slice(9) : tdcParB11;
   const holes: Hole[] = par.map((p, i) => ({ hole: i + (back9 ? 10 : 1), par: p, si: null, distance: dist?.[i] ?? null }));
-  const r = { par: par.reduce((a, b) => a + b, 0), courseRating: cr, slopeRating: slope };
+  const r = { par: soma(par), courseRating: cr, slopeRating: slope };
   return {
     teeId: id, sex, teeName,
     ...(teeColor ? { scorecardMeta: { teeColor } } : {}),
     ratings: back9 ? { holes9Back: r } : { holes18: r },
     holes,
     distances: dist ? (back9
-      ? { total: dist.reduce((a, b) => a + b, 0), front9: null, back9: dist.reduce((a, b) => a + b, 0), holesCount: 9, complete18: false }
+      ? { total: soma(dist), front9: null, back9: soma(dist), holesCount: 9, complete18: false }
       : vDist(dist))
       : { total: null, front9: null, back9: null, holesCount: back9 ? 9 : 18, complete18: false },
   };

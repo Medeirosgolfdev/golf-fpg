@@ -19,6 +19,7 @@ import type { RFEGDetail, RFEGIndexEntry, NCHorario, LgsHorarioRound, LgsRound }
 import { esDateToIso } from "./text";
 import { escaloEsForPlayer } from "./escalao";
 import { lgsHorariosToHorarios, teeTimesAllToHorarios, teeTimesToHorarios } from "./horarios";
+import { soma, somaDe } from "../../utils/mathUtils";
 
 /** O detalhe já adaptado, com os extras que cada fonte acrescenta. */
 export type RfegDrawDetail = RFEGDetail & {
@@ -81,7 +82,7 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
         if (g == null || !(g > 0)) return { gross: 0, toPar: null };
         // Par da volta = (total − ±par do torneio) / voltas jogadas, se der inteiro.
         const jog = voltas.filter((x): x is number => x != null && x > 0);
-        const par = typeof p.toPar === "number" ? (jog.reduce((a, b) => a + b, 0) - p.toPar) / jog.length : NaN;
+        const par = typeof p.toPar === "number" ? (soma(jog) - p.toPar) / jog.length : NaN;
         return { gross: g, toPar: Number.isInteger(par) ? g - par : null };
       })(),
       country: ((p as { country?: string | null }).country) || rfegPlayerFlag(p.name, paisOf(p.licencia, p.name)) || null,
@@ -97,7 +98,7 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
   const lgsRounds = (detail as { _lgsRounds?: LgsRound[] })._lgsRounds;
   if (Array.isArray(lgsRounds)) {
     const parTotal = Array.isArray(detail.coursePar) && detail.coursePar.length
-      ? detail.coursePar.reduce((a: number, b) => a + (b || 0), 0)
+      ? somaDe(detail.coursePar, b => (b || 0))
       : null;
     for (const r of lgsRounds) {
       // ±par DESTA ronda (gross − par do campo). O `toPar` do leaderboard é o

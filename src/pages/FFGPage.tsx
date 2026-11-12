@@ -32,6 +32,7 @@ import type { FfgRenderers } from "../data/ffg/ffgEntries";
 import { useFfgData } from "../data/ffg/useFfgData";
 import { C } from "../utils/colors";
 import EmptyState from "../ui/EmptyState";
+import { somaDe } from "../utils/mathUtils";
 
 /* ── CategoriesView (Catégories d'âge FFG — info no body) ─────── */
 // Desenhada pela peça comum CategoriasInfo (a mesma da /rfeg e da /fig).
@@ -126,7 +127,7 @@ function LGPIDFCourseMapTab({ data }: { data: LGPIDFTournament }) {
   return (
     <div>
       {data.courseMapPdfs.map((pdf) => {
-        const total = pdf.holes.reduce((s, h) => s + h.distance, 0);
+        const total = somaDe(pdf.holes, h => h.distance);
         return (
           <div key={pdf.pdfFilename} className="mb-12">
             <div className="muted fs-10 mb-8">

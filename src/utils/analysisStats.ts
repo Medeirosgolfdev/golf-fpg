@@ -10,7 +10,7 @@
  *
  * Funções puras: sem React, sem loaders, sem estado — testáveis à parte.
  */
-import { meanArr } from "./mathUtils";
+import { meanArr, soma, somaDe } from "./mathUtils";
 
 export interface ScoringDist {
   eagles: number;   // -2 ou melhor
@@ -114,7 +114,7 @@ export function parTypeStats(cards: readonly Cartao[]): ParTypeStat[] {
   }
   return PAR_TYPES.filter((p) => acc.has(p)).map((p) => {
     const g = acc.get(p)!;
-    const strokes = g.scores.reduce((a, b) => a + b, 0);
+    const strokes = soma(g.scores);
     const holes = g.scores.length;
     return {
       par: p, holes, strokes, vsPar: strokes - p * holes,
@@ -141,10 +141,10 @@ export interface PerRoundDist {
 }
 
 export function perRoundDists(rounds: readonly (readonly number[])[], par: readonly number[]): PerRoundDist[] {
-  const parTotal = par.reduce((a, b) => a + (b || 0), 0);
+  const parTotal = somaDe(par, b => (b || 0));
   return rounds.map((r, i) => {
     const dist = distFromRound(r, par);
-    const gross = r.reduce((a, v) => a + (v > 0 ? v : 0), 0);
+    const gross = somaDe(r, v => (v > 0 ? v : 0));
     const complete = dist.total >= 18;
     return {
       label: `R${i + 1}`,
@@ -172,8 +172,8 @@ export function nineSplit(rounds: readonly (readonly number[])[], par: readonly 
   const front = emptyDist(), back = emptyDist();
   const frontGs: number[] = [], backGs: number[] = [];
   const frontTps: number[] = [], backTps: number[] = [];
-  const fp = par.slice(0, 9).reduce((a, b) => a + (b || 0), 0);
-  const bp = par.slice(9, 18).reduce((a, b) => a + (b || 0), 0);
+  const fp = somaDe(par.slice(0, 9), b => (b || 0));
+  const bp = somaDe(par.slice(9, 18), b => (b || 0));
 
   for (const r of rounds) {
     const f9 = r.slice(0, 9);
@@ -189,12 +189,12 @@ export function nineSplit(rounds: readonly (readonly number[])[], par: readonly 
 
     // Só conta totais quando as 9 foram jogadas
     if (df.total === 9) {
-      const g = f9.reduce((a, v) => a + v, 0);
+      const g = soma(f9);
       frontGs.push(g);
       if (fp > 0) frontTps.push(g - fp);
     }
     if (db.total === 9) {
-      const g = b9.reduce((a, v) => a + v, 0);
+      const g = soma(b9);
       backGs.push(g);
       if (bp > 0) backTps.push(g - bp);
     }

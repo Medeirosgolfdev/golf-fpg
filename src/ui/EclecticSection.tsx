@@ -9,7 +9,7 @@ import { useMemo, useState } from "react";
 import type { RoundData, EclecticEntry, HoleScores } from "../data/playerDataLoader";
 import { getTeeHex, textOnColor, normKey } from "../utils/teeColors";
 import { fmtToPar } from "../utils/format";
-import { sumArr } from "../utils/mathUtils";
+import { sumArr, somaDe } from "../utils/mathUtils";
 import { distFromRound } from "../utils/analysisStats";
 import ScoreCircle from "./ScoreCircle";
 import TeeDots from "./TeeDots";
@@ -135,8 +135,8 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
       if (v != null && Number(v) > 0 && parArr[i] != null && (ecBest[i] == null || Number(v) < (ecBest[i] as number))) ecBest[i] = Number(v);
     }
   }
-  const ecTotal = ecBest.reduce<number>((s, v) => s + (v ?? 0), 0);
-  const ecTotalPar = parArr.reduce<number>((s, p, i) => s + (p != null && ecBest[i] != null ? Number(p) : 0), 0);
+  const ecTotal = somaDe(ecBest, v => (v ?? 0));
+  const ecTotalPar = somaDe(parArr, (p, i) => (p != null && ecBest[i] != null ? Number(p) : 0));
 
   // Contagem de scores (birdie+ / par / bogey+) de uma ronda, comparando o
   // gross de cada buraco com o par do tee. Mesma lógica das leaderboards

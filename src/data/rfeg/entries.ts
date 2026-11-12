@@ -9,6 +9,7 @@
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import type { RFEGIndex, RFEGIndexEntry } from "./types";
 import { stripAccents } from "../../utils/normName";
+import { somaDe } from "../../utils/mathUtils";
 
 export function rfegSex(s: string | null | undefined): CircuitSex | undefined {
   return s === "M" ? "M" : s === "F" ? "F" : (s === "Mixto" || s === "Mixed") ? "Mixed" : undefined;
@@ -345,7 +346,7 @@ export function buildRfegEntries(
       hasManuel: sorted.some((t) => t.hasManuel),
       hasPt: sorted.some((t) => t.hasPt),
       hasResults: sorted.some((t) => (t.leaderboardPlayers || 0) > 0),
-      playerCount: sorted.reduce((s, t) => s + (t.leaderboardPlayers || t.counts?.admitidos || 0), 0) || undefined,
+      playerCount: somaDe(sorted, t => (t.leaderboardPlayers || t.counts?.admitidos || 0)) || undefined,
       roundsCount: Math.max(0, ...sorted.map((t) => t.nRounds ?? 0)) || undefined,
       divisionCount: sorted.length,
       loadDivisions: async () => {

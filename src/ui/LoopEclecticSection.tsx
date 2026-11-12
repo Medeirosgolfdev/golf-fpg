@@ -7,7 +7,7 @@
  * recente desse 9 (e mostra-se a pill).
  */
 import { useMemo, useState } from "react";
-import { soma } from "../utils/mathUtils";
+import { soma, somaDe } from "../utils/mathUtils";
 import type { PlayerPageData } from "../data/playerDataLoader";
 import { eclecticos9, type LoopEclectic, type LoopTee } from "../data/sserraLoops";
 import { useCamposDe9 } from "../hooks/useCamposDe9";
@@ -26,7 +26,7 @@ const corPar = (d: number) => toneClass(d, { muted: true });
 const nVoltas = (t: LoopTee) => new Set(t.rounds.map(r => r.scoreId)).size;
 
 function TotalCel({ g, pars }: { g: (number | null)[]; pars: readonly number[] }) {
-  const gt = soma(g), pt = g.reduce<number>((s, v, i) => s + (v != null ? pars[i] : 0), 0);
+  const gt = soma(g), pt = somaDe(g, (v, i) => (v != null ? pars[i] : 0));
   return (
     <td className="col-total fw-700">
       <div className="ec-sum-g">{gt || ""}</div>
@@ -40,7 +40,7 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
   const [teeKey, setTeeKey] = useState(l.tees[0]?.teeKey);
   const t: LoopTee = l.tees.find(x => x.teeKey === teeKey) ?? l.tees[0];
   const pars = t.pars; // os pares deste tee (podem diferir de tee para tee)
-  const parTot = pars.reduce((a, b) => a + b, 0);
+  const parTot = soma(pars);
   const hx = getTeeHex(t.teeName), fg = textOnColor(hx);
   return (
     <div className="ecPillBlock ecActive overflow-hidden br-lg u-d-inline-flex u-fd-column u-maxw-100pc">

@@ -68,7 +68,7 @@ import SearchInput from "../SearchInput";
 import SexSelect from "../SexSelect";
 import Select from "../Select";
 import { ToggleChip } from "../FilterField";
-import { toggleSet } from "../../utils/mathUtils";
+import { toggleSet, soma, somaDe } from "../../utils/mathUtils";
 import { Tint } from "../DataStyle";
 
 // ── Helpers ─────────────────────────────────────────────────────────── //
@@ -148,7 +148,7 @@ const sectionLabel = (s: CircuitSectionKind): string => {
 /** Jogadores totais de um entry (metadado leve, ou soma das divisões carregadas). */
 function entryPlayerCount(e: CircuitEntry): number {
   if (e.playerCount != null) return e.playerCount;
-  return (e.divisions ?? []).reduce((acc, d) => acc + (d.results?.players.length ?? 0), 0);
+  return somaDe((e.divisions ?? []), d => (d.results?.players.length ?? 0));
 }
 
 
@@ -614,7 +614,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     const nPlayers = res?.playerCount ?? players.length;
     const nRounds = res?.rounds ?? curDiv?.roundLabels?.length ?? 0;
     const parArr = players[0]?.par;
-    const parTotal = players[0]?.parTotal ?? (parArr ? parArr.reduce((a, b) => a + b, 0) : 0);
+    const parTotal = players[0]?.parTotal ?? (parArr ? soma(parArr) : 0);
     // Holes-in-one da divisão (sobre a lista consolidada, NÃO a filtrada por toggles).
     const aces = tournamentAces(players);
     return { nPlayers, nRounds, parTotal, aces };

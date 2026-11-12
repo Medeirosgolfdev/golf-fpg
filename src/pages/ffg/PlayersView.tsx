@@ -34,6 +34,7 @@ import { PlayerTournaments, type FfgPlayerTournamentsFile } from "./PlayerTourna
 import { MUTED } from "../../ui/tableCells";
 import Select from "../../ui/Select";
 import JogadoresFederacao, { colunasComuns, type ColunaJogadorFed, type JogadorFedRow } from "../../ui/info/JogadoresFederacao";
+import { somaDe } from "../../utils/mathUtils";
 
 interface FrancePlayer {
   license: string;
@@ -241,7 +242,7 @@ export function FFGPlayersView() {
   }, [all]);
 
   const passaRegiao = useCallback((p: Row) => region === "ALL" || p._region === region, [region]);
-  const kidsCount = useMemo(() => all.reduce((n, p) => n + (p._kid ? 1 : 0), 0), [all]);
+  const kidsCount = useMemo(() => somaDe(all, p => (p._kid ? 1 : 0)), [all]);
 
   return (
     <JogadoresFederacao<Row, FfgPlayerTournamentsFile>

@@ -25,6 +25,7 @@ import { clubesHasManuel, clubesIndividualTournament } from "../../data/clubesFo
 import { parseTournKey, yearOfDate } from "../../utils/format";
 import { withDivisionModel } from "../../data/model/division";
 import { sexoDaProva } from "../../utils/tournamentSex";
+import { somaDe } from "../../utils/mathUtils";
 
 /** Chave de membro = chave de URL do escalão (`parseTournKey` parte no 1º "-"). */
 export function fpgMemberKey(t: FPGTournament): string {
@@ -97,7 +98,7 @@ export function buildFpgEntries(groups: EventGroup[]): CircuitEntry[] {
       escalao: escaloes.length === 1 ? escaloes[0] : undefined,
       escaloes: escaloes.length > 1 ? escaloes : undefined,
       sex: sexes.length === 1 ? sexes[0] : (sexes.length > 1 ? "Mixed" : undefined),
-      playerCount: divisions.reduce((acc, d) => acc + (d.results?.players.length ?? 0), 0),
+      playerCount: somaDe(divisions, d => (d.results?.players.length ?? 0)),
       divisionCount: divisions.length,
       hasManuel: divisions.some(d => d.hasManuel),
       divisions,
@@ -119,7 +120,7 @@ export function buildJovensEntries(groups: JovensGroup[]): CircuitEntry[] {
     return {
       ...e,
       year: Number.isFinite(y) ? y : e.year,
-      playerCount: g.entries.reduce((s, t) => s + (t.players.length || t.playerCount || 0), 0),
+      playerCount: somaDe(g.entries, t => (t.players.length || t.playerCount || 0)),
     };
   });
 }

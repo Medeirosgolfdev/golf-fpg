@@ -12,6 +12,7 @@
  * - 404 → `data: null` sem erro (ficheiro que ainda não existe).
  * - `transform` corre uma vez sobre o JSON (ex. tirar uma lista de dentro).
  * - Ignora respostas que chegam depois de o componente sair ou de o url mudar.
+ * - Quando o `url` muda (ou passa de null a um endereço), `loading` já vem a true nesse desenho.
  */
 import { useEffect, useState } from "react";
 import { cachedFetchJson } from "../data/fetchCache";
@@ -24,7 +25,10 @@ export interface JsonState<T> {
 
 export function useJson<T = unknown, R = T>(url: string | null | undefined, transform?: (raw: T) => R): JsonState<R> {
   const [state, setState] = useState<JsonState<R>>({ data: null, loading: !!url, error: null });
+  // O endereço a que o estado diz respeito: enquanto não for o pedido, está «a carregar».
+  const [urlDoEstado, setUrlDoEstado] = useState<string | null>(url ?? null);
   useEffect(() => {
+    setUrlDoEstado(url ?? null);
     if (!url) { setState({ data: null, loading: false, error: null }); return; }
     let alive = true;
     setState((s) => ({ data: s.data, loading: true, error: null }));
@@ -41,5 +45,8 @@ export function useJson<T = unknown, R = T>(url: string | null | undefined, tran
     // `transform` fica de fora de propósito: é quase sempre uma função nova em cada render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
+  // Endereço acabado de mudar (ou de aparecer): o efeito ainda não correu — já é «a carregar»,
+  // para quem lê não ver um desenho com «nem dados nem a carregar» (parecia erro).
+  if (url && urlDoEstado !== url) return { data: state.data, loading: true, error: null };
   return state;
 }

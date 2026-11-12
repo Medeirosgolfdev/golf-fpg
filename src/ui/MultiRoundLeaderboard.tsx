@@ -58,6 +58,7 @@ import { toneClass } from "../utils/scoreDisplay";
 import { EscPill } from "../ui/PillBadge";
 import { displayFed } from "../utils/fedKeys";
 import { MUTED } from "./tableCells";
+import { somaDe } from "../utils/mathUtils";
 
 /* ══════════════════════════════════════════════════════════════
    TIPOS SORT
@@ -317,23 +318,23 @@ export function MultiRoundLeaderboard({
       case "par-stat":  return compareNullsLast(a.rounds[0]?.pars, b.rounds[0]?.pars, nd);
       case "bog":       return compareNullsLast(a.rounds[0]?.bogeys, b.rounds[0]?.bogeys, d);
       case "acc:eag":   {
-        const sa = a.rounds.reduce((t, r) => t + (r?.eagles || 0), 0);
-        const sb = b.rounds.reduce((t, r) => t + (r?.eagles || 0), 0);
+        const sa = somaDe(a.rounds, r => (r?.eagles || 0));
+        const sb = somaDe(b.rounds, r => (r?.eagles || 0));
         return sortDir === "asc" ? sb - sa : sa - sb;
       }
       case "acc:bird":  {
-        const sa = a.rounds.reduce((t, r) => t + (r?.birdies || 0), 0);
-        const sb = b.rounds.reduce((t, r) => t + (r?.birdies || 0), 0);
+        const sa = somaDe(a.rounds, r => (r?.birdies || 0));
+        const sb = somaDe(b.rounds, r => (r?.birdies || 0));
         return sortDir === "asc" ? sb - sa : sa - sb;
       }
       case "acc:par":   {
-        const sa = a.rounds.reduce((t, r) => t + (r?.pars || 0), 0);
-        const sb = b.rounds.reduce((t, r) => t + (r?.pars || 0), 0);
+        const sa = somaDe(a.rounds, r => (r?.pars || 0));
+        const sb = somaDe(b.rounds, r => (r?.pars || 0));
         return sortDir === "asc" ? sb - sa : sa - sb;
       }
       case "acc:bog":   {
-        const sa = a.rounds.reduce((t, r) => t + (r?.bogeys || 0), 0);
-        const sb = b.rounds.reduce((t, r) => t + (r?.bogeys || 0), 0);
+        const sa = somaDe(a.rounds, r => (r?.bogeys || 0));
+        const sb = somaDe(b.rounds, r => (r?.bogeys || 0));
         return sortDir === "asc" ? sa - sb : sb - sa;
       }
       case "birthYear": {

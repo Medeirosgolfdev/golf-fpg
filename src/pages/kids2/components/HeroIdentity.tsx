@@ -28,6 +28,7 @@ import { Tint } from "../../../ui/DataStyle";
 import { useJson } from "../../../hooks/useJson";
 import { voltasComCartao } from "../../../utils/classificacao";
 import { resultadosDoJunior } from "../juniorCalc";
+import { round1 } from "../../../utils/mathUtils";
 /** Bandeira por federação — mostrada junto ao número de licença. */
 const SOURCE_FLAGS: Record<string, string> = {
   USKIDS: flagOf("United States"),
@@ -572,7 +573,7 @@ function compareAgeToManuel(dobIso: string, state: DobInfo["state"]): string | n
     return `${months} ${months === 1 ? "mês" : "meses"} ${olderThanManuel ? "mais velho" : "mais novo"} que Manuel`;
   }
   const years = diffDays / 365.25;
-  const yearsRound = Math.round(years * 10) / 10;
+  const yearsRound = round1(years);
   const yearsWhole = Math.round(yearsRound);
   const isWholeYear = Math.abs(yearsRound - yearsWhole) < 0.05;
   const label = isWholeYear ? yearsWhole + " " + (yearsWhole === 1 ? "ano" : "anos") : yearsRound.toFixed(1) + " anos";

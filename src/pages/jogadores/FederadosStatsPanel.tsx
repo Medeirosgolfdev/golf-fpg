@@ -8,7 +8,7 @@
  */
 import React from "react";
 import type { FederadoRaw } from "../../data/federadosLoader";
-import { gf, isForeignPrefix, prefixFlag } from "../../utils/flagUtils";
+import { gf, isForeignPrefix, isPtCountry, prefixFlag } from "../../utils/flagUtils";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
@@ -197,7 +197,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
   const maxHcpBin = Math.max(...Object.values(stats.hcpBins).map(totalOf));
   const maxAdm = Math.max(...stats.admissionYears.map(([, v]) => totalOf(v)));
 
-  const ptCount = stats.topCountries.find(c => c.cp === "PT")?.count ?? 0;
+  const ptCount = stats.topCountries.find(c => isPtCountry(c.cp))?.count ?? 0;
   const foreignCount = stats.total - ptCount;
 
   return (

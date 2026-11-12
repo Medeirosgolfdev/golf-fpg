@@ -4,6 +4,7 @@
 import { expandMultiRound as expandMultiRoundOne, numGross } from "../data/fpgUtils";
 import { isNoCardGross } from "../data/intlCommon";
 import type { Tournament, Player } from "./driveTypes";
+import { soma, somaDe } from "../utils/mathUtils";
 
 /**
  * Check if a player is DNS (Did Not Start)
@@ -54,7 +55,7 @@ export function expandMultiRound(tournaments: Tournament[]): Tournament[] {
           !isNoCardGross(rs.gross) && !(rs.scores?.length && rs.scores.every((s: number) => s === 0)));
         const n = pa._roundsPlayed ?? valid.length;
         // Par combinado só do que existe (sem par não se inventa — nada de 72).
-        const combinedPar = valid.reduce((s, rs) => s + (rs.pars?.length ? rs.pars.reduce((a: number, b: number) => a + b, 0) : 0), 0);
+        const combinedPar = somaDe(valid, rs => (rs.pars?.length ? soma(rs.pars) : 0));
         return {
           ...p,
           pos: p._wd ? "WD" : pa._cut ? "CUT" : p._incomplete ? "INC" : isDNS(p) ? (p.pos || "NS") : (pa._pos ?? p.pos),
