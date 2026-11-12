@@ -25,6 +25,7 @@ import { adaptLgs, adaptNextCaddy } from "./adapters";
 import { lgsToFPGTournament, ncToFPGTournament, rfegolfToFPGTournament, mitarjetaToFPGTournament } from "./toTournament";
 import { loadDobLookup, loadHcpLookup } from "./lookups";
 import { rfegHorarios, type RfegDrawDetail } from "./roundDraw";
+import { inscritosComGemeo } from "./gemeo";
 
 /* ── Destaques NextCaddy ──────────────────────────────────────────────
  * Mesmo quando o leaderboard final só sai em PDF, o NextCaddy regista em tempo
@@ -147,16 +148,22 @@ function rfegolfResultLinks(data: RFEGDetail): CircuitLink[] {
   return links;
 }
 
+/** O ficheiro do site da RFEG que é gémeo deste LGS (`rfegolf-lgs-twins.json`), ou
+ *  null. É a mesma prova noutra fonte: a página mostra o LGS (tem o buraco a buraco)
+ *  e vai buscar ao gémeo o que só ele tem — os países e as listas oficiais de inscritos. */
+async function gemeoRfegDoLgs(lgsId: number | string): Promise<RFEGDetail | null> {
+  const tw = await cachedFetchJson<{ twins?: Record<string, number> }>("/data/rfegolf-lgs-twins.json").catch(() => null);
+  const rfegId = Object.entries(tw?.twins ?? {}).find(([, lgs]) => String(lgs) === String(lgsId))?.[0];
+  if (!rfegId) return null;
+  return cachedFetchJson<RFEGDetail>(`/data/rfegolf-resultats/${rfegId}.json`).catch(() => null);
+}
+
 /** LGS com gémeo RFEGolf: o LGS não traz o país de quem não tem bandeira na
  *  linha, mas as listas de inscritos do gémeo trazem («PORTUGAL»). Preenche o
  *  `country` em falta (só estrangeiros — os espanhóis não levam bandeira) para
  *  o destaque PT e a bandeira valerem no leaderboard, nas inscrições e no draw.
  *  Devolve uma cópia; o ficheiro em cache não é tocado. */
-async function lgsWithTwinCountries(raw: LgsDetail): Promise<LgsDetail> {
-  const tw = await cachedFetchJson<{ twins?: Record<string, number> }>("/data/rfegolf-lgs-twins.json").catch(() => null);
-  const rfegId = Object.entries(tw?.twins ?? {}).find(([, lgs]) => lgs === raw.id)?.[0];
-  if (!rfegId) return raw;
-  const twin = await cachedFetchJson<RFEGDetail>(`/data/rfegolf-resultats/${rfegId}.json`).catch(() => null);
+function lgsWithTwinCountries(raw: LgsDetail, twin: RFEGDetail | null): LgsDetail {
   if (!twin?.inscritos) return raw;
   const paisOf = rfegPaisLookup(twin.inscritos as unknown as Record<string, unknown>, normEs);
   return {
@@ -204,16 +211,17 @@ export async function loadRfegDivisionData(
 ): Promise<RfegDivisionData | null> {
   const raw = await cachedFetchJson<RFEGDetail | NCDetail | LgsDetail>(`/data/${t.filePath}`);
   if (!raw) return null;
-  const [fbn, dob, hcp, gbx] = await Promise.all([
+  const [fbn, dob, hcp, gbx, gemeo] = await Promise.all([
     fedByName && fedByName.size ? Promise.resolve(fedByName) : loadFedByName().catch(() => undefined),
     dobLookup && Object.keys(dobLookup).length ? Promise.resolve(dobLookup) : loadDobLookup(),
     hcpLookup && Object.keys(hcpLookup).length ? Promise.resolve(hcpLookup) : loadHcpLookup(),
     loadGolfboxPlayers().catch(() => undefined),
+    t.source === "livegolfscoring" ? gemeoRfegDoLgs((raw as LgsDetail).id) : Promise.resolve(null),
   ]);
 
   let data: RFEGDetail;
   if (t.source === "nextcaddy") data = adaptNextCaddy(raw as NCDetail, dob, hcp);
-  else if (t.source === "livegolfscoring") data = adaptLgs(await lgsWithTwinCountries(raw as LgsDetail), dob, hcp, fbn, gbx);
+  else if (t.source === "livegolfscoring") data = adaptLgs(lgsWithTwinCountries(raw as LgsDetail, gemeo), dob, hcp, fbn, gbx);
   else if (t.source === "golfdirecto") data = adaptFcg(raw as unknown as FCGDetail, dob, hcp) as unknown as RFEGDetail;
   else { const d = raw as RFEGDetail; data = { ...d, coursePar: d.coursePar ?? null }; }
 
@@ -291,7 +299,9 @@ export async function loadRfegDivisionData(
   return {
     data: drawData,
     results,
-    admissions: buildAdmissions(data),
+    // LGS com gémeo: as inscrições são as listas oficiais do site da RFEG, fundidas
+    // com quem jogou (data/rfeg/gemeo.ts). O resto do detalhe continua a ser o do LGS.
+    admissions: buildAdmissions(gemeo ? { ...data, inscritos: inscritosComGemeo(data.inscritos, gemeo.inscritos) } : data),
     links: t.source === "rfegolf" ? rfegolfResultLinks(data) : [],
     drawRounds,
     ncTotals,

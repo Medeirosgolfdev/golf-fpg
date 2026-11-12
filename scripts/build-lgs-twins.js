@@ -8,8 +8,13 @@
  * Este script cruza-os por NOME normalizado (sem o ano) + ANO e produz o mapa
  *   public/data/rfegolf-lgs-twins.json = { generatedAt, twins: { "<compId>": <lgsId> } }
  *
- * A app usa-o para: (1) ESCONDER o gémeo LGS da lista (canónico = RFEGolf), e
- * (2) FUNDIR o buraco-a-buraco + metros do LGS na página RFEGolf.
+ * A app usa-o para (src/data/rfeg/entries.ts e divisionData.ts):
+ *  (1) mostrar UMA só entrada — por omissão a do LGS (tem o buraco a buraco) e
+ *      esconde-se a do RFEGolf (`twins`); quando o RFEGolf tem mitarjeta com
+ *      tantas ou mais voltas, é ao contrário (`lgsSuppressed`);
+ *  (2) ir buscar ao gémeo escondido o que só ele tem: países, listas oficiais de
+ *      inscritos e limites de handicap (src/data/rfeg/gemeo.ts, 12/11/2026).
+ *  (Este cabeçalho dizia «canónico = RFEGolf» — era o contrário do que a app faz.)
  *
  * USO: node scripts/build-lgs-twins.js
  */

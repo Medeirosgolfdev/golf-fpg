@@ -181,7 +181,20 @@ voltas com draw, totais/destaques NextCaddy, divisão M/F), `entries.ts`
 lista de destaques (`RankingTable`). Destaque PT
 (22/10/2026): `isPtCountry` sobre o país da fonte; RFEGolf PDF e mitarjeta não
 trazem país e vão buscá-lo às listas de inscritos (`rfegPaisLookup`), e o LGS
-com gémeo RFEGolf aos inscritos do gémeo (`lgsWithTwinCountries`). Escalão:
+com gémeo RFEGolf aos inscritos do gémeo (`lgsWithTwinCountries`). **Gémeos
+RFEGolf↔LGS fundem as inscrições** (12/11/2026, `data/rfeg/gemeo.ts`): a página
+mostra o LGS (buraco a buraco) e esconde o do site da RFEG, mas a aba «Inscrições»
+passa a ser a lista OFICIAL do gémeo — admitidos, convidados e reservas, com licença,
+handicap de inscrição e nascimento — em vez de «quem jogou». Regras da fusão
+(`inscritosComGemeo`): a lista oficial é a base; um português mantém o federado e o
+clube da FPG (na lista vem com licença espanhola e a federação regional como clube);
+campos vazios e licenças-fantasma («XXXXXPOR04») preenchem-se com os de quem jogou;
+quem jogou e não consta junta-se no fim; «a mesma pessoa» = o mesmo nome ou, com UMA
+só candidata, apelidos a mais/menos — na dúvida não se casa. Os limites de handicap
+da entrada vêm do gémeo no índice (`limitesHcp` em `entries.ts`). O ficheiro do gémeo
+já se descarregava para os países, por isso não há pedidos a mais. ⚠ Os links dos PDFs
+oficiais (`/Lists/Resultados/Attachments/…`) NÃO se juntam: dão 404 desde que a RFEG
+mudou de site (testado a 12/11/2026). Escalão:
 `escaloEsForPlayer` também no golfdirecto (coorte de ano; sem nascimento, o
 nome da categoria por `escaloEsFromCategory`). Sem par (RFEGolf PDF, LGS/NextCaddy/golfdirecto sem cartão
 do campo) não se inventa par (22/10/2026): o ±par é o da fonte (PDF,

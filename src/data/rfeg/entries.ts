@@ -219,6 +219,20 @@ export function buildRfegEntries(
       && !(t.source === "livegolfscoring" && lgsSuppressed?.[String(t.id)] != null),
   );
 
+  // LGS com gémeo no site da RFEG: os limites de handicap vêm de lá (o LGS não os publica).
+  const gemeoRfegDoLgs = new Map<string, RFEGIndexEntry>();
+  for (const t of index.tournaments) {
+    const lgsId = t.source === "rfegolf" ? twins?.[String(t.id)] : undefined;
+    if (lgsId != null) gemeoRfegDoLgs.set(String(lgsId), t);
+  }
+  const limitesHcp = (t: RFEGIndexEntry): CircuitEntry["hcpLimit"] => {
+    const de = (t.hcpLimitMen != null || t.hcpLimitWomen != null) ? t
+      : t.source === "livegolfscoring" ? gemeoRfegDoLgs.get(String(t.id)) : undefined;
+    return de && (de.hcpLimitMen != null || de.hcpLimitWomen != null)
+      ? { men: de.hcpLimitMen ?? undefined, women: de.hcpLimitWomen ?? undefined }
+      : undefined;
+  };
+
   const single = (t: RFEGIndexEntry): CircuitEntry => ({
     id: `${t.source}:${t.id}`,
     year: t.year,
@@ -230,9 +244,7 @@ export function buildRfegEntries(
     dateStart: t.dateStartIso ?? t.dateStart ?? undefined,
     dateEnd: t.dateEndIso ?? t.dateEnd ?? undefined,
     sourceUrl: rfegSourceUrl(t),
-    hcpLimit: (t.hcpLimitMen != null || t.hcpLimitWomen != null)
-      ? { men: t.hcpLimitMen ?? undefined, women: t.hcpLimitWomen ?? undefined }
-      : undefined,
+    hcpLimit: limitesHcp(t),
     escalao: t.category ?? undefined,
     escaloes: t.escaloes?.length ? t.escaloes : undefined,
     sex: rfegSex(t.sex),
