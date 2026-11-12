@@ -177,6 +177,22 @@ function resolve(rawSources, overrides) {
   }
 
   // ────────────────────────────────────────────────────────────────────
+  // 2a. Licença RFEG dada pela PRÓPRIA prova (12/11/2026). Um estrangeiro numa
+  // prova da FPG não tem federado; quando as inscrições/draws dessa prova trazem
+  // a licença dele (`extra.rfegLic`, sources/fpg.js), junta-se à ficha da RFEG
+  // com essa licença — antes de qualquer casamento por nome («Diego Gross» da
+  // classificação do Miramar 2026 = Diego Gross Paneque, AM15976580).
+  // ────────────────────────────────────────────────────────────────────
+  let ligadasPorLicenca = 0;
+  for (const e of entities) {
+    const lic = e.sourceId === "fpg" && e.raw.extra?.rfegLic;
+    if (!lic) continue;
+    const alvo = entityByKey.get(`rfeg:${lic}`);
+    if (alvo && tryUnion(e.entityKey, alvo.entityKey)) ligadasPorLicenca++;
+  }
+  if (ligadasPorLicenca) console.log(`[identity] ${ligadasPorLicenca} estrangeiro(s) de provas FPG ligados pela licença RFEG da própria prova`);
+
+  // ────────────────────────────────────────────────────────────────────
   // 3. Build index: por (firstName, lastName) — captura variantes com middle names
   // ────────────────────────────────────────────────────────────────────
   const byFirstLast = new Map();
@@ -833,7 +849,9 @@ function buildJunior(entities) {
   // a de uma ficha da RFEG — dá o id «r…» e põe-na no âmbito do hándicap oficial
   // (scrape-federados-es.js → rfegOficial), que assim se actualiza sozinho.
   for (const e of entities) {
-    const lic = e.sourceId === SOURCE_MANUAL && e.raw.extra?.rfegLic;
+    // …e o estrangeiro de uma prova da FPG com a licença nas inscrições dessa prova
+    // (sources/fpg.js) que ainda não tem ficha da RFEG no agregador.
+    const lic = (e.sourceId === SOURCE_MANUAL || e.sourceId === "fpg") && e.raw.extra?.rfegLic;
     if (lic && !sources.rfeg) sources.rfeg = { lic, club: e.raw.club || undefined, sex: e.raw.sex, manual: true };
   }
 

@@ -25,7 +25,7 @@ function metrosComuns(results) {
 }
 const { pathToFileURL } = require("url");
 const { DATA, DATA_DIR, readJsonSafe, listFiles } = require("../util/io");
-const { lerFedsDasProvas, fedDoJogador } = require("../util/feds-das-provas");
+const { lerFedsDasProvas, fedDoJogador , lerRfegDasProvas, rfegDoJogador } = require("../util/feds-das-provas");
 const { displayName, countryToIso2, dobToIso } = require("../util/names");
 const { seriesId } = require("../util/id");
 const { warn, sub } = require("../util/log");
@@ -131,6 +131,14 @@ function seriesFromTournName(name) {
   if (/Quinta do Lago Junior Open/i.test(n)) return { id: "fpg-qdl-junior-open", label: "Quinta do Lago Junior Open" };
   // PJA
   if (/Portuguese Junior Amateur|PJA/i.test(n)) return { id: "fpg-pja", label: "Portuguese Junior Amateur" };
+  // Miramar Internacional Open — o nome muda todos os anos («X Miramar…», «… U25 ( Sub10)»,
+  // «… - sub 10») e cada edição ficava uma série à parte (12/11/2026). O Sub-10 é outra
+  // prova (9 buracos por dia), por isso tem série própria.
+  if (/Miramar Internacional Open/i.test(n)) {
+    return /sub\s*-?\s*10/i.test(n)
+      ? { id: "fpg-miramar-internacional-open-sub10", label: "Miramar Internacional Open · Sub 10" }
+      : { id: "fpg-miramar-internacional-open-u25", label: "Miramar Internacional Open U25" };
+  }
   // Default: slug por nome (sem ano)
   const noYear = n.replace(/\b20\d{2}\b/g, "").replace(/\s+/g, " ").trim();
   return { id: `fpg-${seriesId(noYear)}`, label: noYear };
@@ -247,7 +255,7 @@ async function load(opts) {
   // Com o Drive (só para as provas do Manuel, em 2c).
   const todas = collectTournamentEntries([...pullFiles, ...jovensFiles, ...listFiles(DATA_DIR, DATA.fpgDrivePattern)]);
   const nascimento = lerNascimentos();
-  const federados = { nascimento, fedsDasProvas: lerFedsDasProvas() };
+  const federados = { nascimento, fedsDasProvas: lerFedsDasProvas(), rfegDasProvas: lerRfegDasProvas() };
 
   const tournaments = [];
   for (const t of tournEntries) {
@@ -342,7 +350,7 @@ function collectHcpHistory(tournEntries, playerMap) {
   }
 }
 
-function normalizeTournament(t, kind, playerMap, { nascimento = new Map(), fedsDasProvas = new Map() } = {}) {
+function normalizeTournament(t, kind, playerMap, { nascimento = new Map(), fedsDasProvas = new Map(), rfegDasProvas = new Map() } = {}) {
   if (!t || !t.tcode) return null;
   // sourceKey inclui data para evitar colisão (tcodes são reutilizados entre anos)
   // Adicionalmente inclui escalão slug para distinguir flights do mesmo torneio.
@@ -363,6 +371,25 @@ function normalizeTournament(t, kind, playerMap, { nascimento = new Map(), fedsD
     let fedCode = fedDoJogador(t, pl, fedsDasProvas);
     // Sem fedCode (nem nas inscrições/draws da prova): criar entrada anónima keyed por nome+país
     // (estrangeiros em torneios FPG — e.g. Dmitrii no QDL 2025)
+    // Estrangeiro com a licença RFEG nas inscrições/draws da PRÓPRIA prova: entra
+    // com essa identidade (nome canónico, nascimento, sexo, país) e a licença, que
+    // o identity-matcher usa para o juntar à ficha da RFEG — nunca pelo nome.
+    const rf = !fedCode ? rfegDoJogador(t, pl, rfegDasProvas) : null;
+    if (rf) {
+      const key = `anon|rfeg:${rf.licencia}`;
+      fedCode = key;
+      if (!playerMap.has(key)) {
+        playerMap.set(key, {
+          sourceKey: key,
+          name: displayName(rf.nomeCanonico || rf.nome || pl.name || ""),
+          dob: /^\d{4}-\d{2}-\d{2}/.test(String(rf.dob || "")) ? String(rf.dob).slice(0, 10) : null,
+          sex: rf.sex === "M" || rf.sex === "F" ? rf.sex : null,
+          country: countryToIso2(rf.pais || "ESP") || "ES",
+          club: rf.club || null,
+          extra: { primary: false, anonymous: true, rfegLic: String(rf.licencia) },
+        });
+      }
+    }
     if (!fedCode) {
       const cleanName = displayName(pl.name || "");
       if (cleanName) {
@@ -525,4 +552,4 @@ function resultadoDoJogador(pl) {
   };
 }
 
-module.exports = { load, SOURCE_ID, SOURCE_LABEL, provasDeJovensDoManuel, fedDoJogador, resultadoDoJogador };
+module.exports = { load, SOURCE_ID, SOURCE_LABEL, provasDeJovensDoManuel, fedDoJogador, resultadoDoJogador, seriesFromTournName, normalizeTournament };

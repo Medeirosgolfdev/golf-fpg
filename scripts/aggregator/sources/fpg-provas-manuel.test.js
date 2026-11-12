@@ -65,3 +65,25 @@ describe("fedDoJogador", () => {
     expect(fedDoJogador({ ...nacional, tcode: "10938" }, { name: "Ryan Dantas" }, feds)).toBeNull();
   });
 });
+
+describe("fonte fpg — séries e estrangeiros com licença na própria prova (12/11/2026)", () => {
+  const { seriesFromTournName, normalizeTournament } = require("./fpg.js");
+
+  it("as edições do Miramar Internacional Open ficam numa série; o Sub-10 noutra", () => {
+    const id = (n) => seriesFromTournName(n).id;
+    expect(id("X Miramar Internacional Open U25")).toBe(id("Miramar Internacional Open U25"));
+    expect(id("X Miramar Internacional Open U25 - Sub10")).toBe(id("Miramar Internacional Open - sub 10"));
+    expect(id("Miramar Internacional Open U25 ( Sub10)")).toBe(id("Miramar Internacional Open - sub 10"));
+    expect(id("X Miramar Internacional Open U25")).not.toBe(id("X Miramar Internacional Open U25 - Sub10"));
+  });
+
+  it("o estrangeiro sem federado entra com a identidade RFEG das inscrições da prova", () => {
+    const t = { ccode: "003", tcode: "10652", date: "2026-08-19", name: "X Miramar Internacional Open U25", campo: "Miramar",
+      players: [{ name: "Diego Gross", club: "ESP", pos: 8, grossTotal: 227, roundScores: [] }, { name: "Outro Sem Licença", club: "ESP", pos: 9, grossTotal: 230, roundScores: [] }] };
+    const rfegDasProvas = new Map([["003|10652|2026", new Map([["diego gross", { licencia: "AM15976580", nomeCanonico: "Diego Gross Paneque", dob: "2015-02-01", sex: "M", pais: "ESP" }]])]]);
+    const playerMap = new Map();
+    const out = normalizeTournament(t, "pull", playerMap, { rfegDasProvas });
+    expect(out.flights[0].results.map((r) => r.playerSourceKey)).toEqual(["anon|rfeg:AM15976580", "anon|outro sem licença|ES"]);
+    expect(playerMap.get("anon|rfeg:AM15976580")).toMatchObject({ name: "Diego Gross Paneque", dob: "2015-02-01", sex: "M", country: "ES", extra: { rfegLic: "AM15976580" } });
+  });
+});

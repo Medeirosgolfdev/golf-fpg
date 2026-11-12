@@ -59,3 +59,35 @@ describe("identity-matcher — ficha sem país não junta pessoas de idades dife
     expect(br.tournamentIds).toEqual(["uskids-u1"]);
   });
 });
+
+describe("identity-matcher — licença RFEG dada pela própria prova da FPG (12/11/2026)", () => {
+  // Miramar Internacional Open 2026: a classificação diz «Diego Gross», sem número; as
+  // inscrições da prova têm a licença AM15976580 — a do Diego Gross Paneque.
+  const rfeg = {
+    sourceId: "rfeg",
+    players: [{ sourceKey: "AM15976580", name: "Diego Gross Paneque", country: "ES", dob: "2015-02-01", sex: "M" }],
+    tournaments: [{ sourceKey: "nc1", name: "Campeonato Alevin", date: "2026-07-04",
+      flights: [{ flightKey: "a", label: "Alevín", results: [{ playerSourceKey: "AM15976580", playerName: "Diego Gross Paneque", pos: 3, totalGross: 150 }] }] }],
+  };
+  const fpg = (extra) => ({
+    sourceId: "fpg",
+    // o nome é o canónico da licença (é o que o sources/fpg.js grava)
+    players: [{ sourceKey: "anon|rfeg:AM15976580", name: "Diego Gross Paneque", country: "ES", extra: { primary: false, anonymous: true, ...extra } }],
+    tournaments: [{ sourceKey: "003-10652-20260819-all", name: "X Miramar Internacional Open U25", date: "2026-08-19",
+      flights: [{ flightKey: "esc_all", label: "Geral", results: [{ playerSourceKey: "anon|rfeg:AM15976580", playerName: "Diego Gross", pos: 8, totalGross: 227 }] }] }],
+  });
+
+  it("com a licença, o resultado da FPG fica na ficha da RFEG", () => {
+    const { juniors } = resolve([rfeg, fpg({ rfegLic: "AM15976580" })], {});
+    expect(juniors).toHaveLength(1);
+    expect(juniors[0].tournamentIds.sort()).toEqual(["fpg-003-10652-20260819-all", "rfeg-nc1"]);
+    expect(juniors[0].canonicalName).toBe("Diego Gross Paneque");
+  });
+
+  it("sem ficha da RFEG no agregador, a licença fica na ficha (id «r…»)", () => {
+    const { juniors } = resolve([fpg({ rfegLic: "GC55066066" })], {});
+    expect(juniors).toHaveLength(1);
+    expect(juniors[0].id).toBe("rGC55066066");
+    expect(juniors[0].sources.rfeg.lic).toBe("GC55066066");
+  });
+});

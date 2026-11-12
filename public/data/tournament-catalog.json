@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-12T18:06:03.392Z",
+  "generatedAt": "2026-11-12T18:16:34.502Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -22226,8 +22226,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -29971,8 +29971,8 @@
       "tournamentIds": [
         "wagr-260403",
         "wagr-271900",
-        "wagr-235865",
         "wagr-225888",
+        "wagr-235865",
         "wagr-219502"
       ],
       "firstDate": "2022-09-17",
@@ -30112,6 +30112,21 @@
       ],
       "firstDate": "2022-06-22",
       "lastDate": "2026-06-23",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-georgia-junior-championship",
+      "label": "Georgia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270174",
+        "wagr-258188",
+        "wagr-233854",
+        "wagr-223986",
+        "wagr-74879"
+      ],
+      "firstDate": "2022-06-20",
+      "lastDate": "2026-07-06",
       "editionsCount": 5
     },
     {
@@ -37175,20 +37190,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-cga-dogwood-state-junior-boys-championship",
-      "label": "CGA Dogwood State Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271132",
-        "wagr-259377",
-        "wagr-234649",
-        "wagr-224807"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-27",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-first-tee-miami-doral-junior-classic",
       "label": "First Tee Miami Doral Junior Classic",
       "sourceId": "wagr",
@@ -37256,20 +37257,6 @@
       ],
       "firstDate": "2022-06-28",
       "lastDate": "2025-07-29",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-georgia-junior-championship",
-      "label": "Georgia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270174",
-        "wagr-258188",
-        "wagr-233854",
-        "wagr-223986"
-      ],
-      "firstDate": "2023-06-19",
-      "lastDate": "2026-07-06",
       "editionsCount": 4
     },
     {
@@ -46285,6 +46272,32 @@
       "editionsCount": 3
     },
     {
+      "id": "fpg-miramar-internacional-open-sub10",
+      "label": "Miramar Internacional Open · Sub 10",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-003-10478-20240826-sub_10",
+        "fpg-003-10565-20250819-sub_10",
+        "fpg-003-10653-20260819-sub_10"
+      ],
+      "firstDate": "2024-08-26",
+      "lastDate": "2026-08-19",
+      "editionsCount": 3
+    },
+    {
+      "id": "fpg-miramar-internacional-open-u25",
+      "label": "Miramar Internacional Open U25",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-003-10477-20240826-all",
+        "fpg-003-10564-20250819-all",
+        "fpg-003-10652-20260819-all"
+      ],
+      "firstDate": "2024-08-26",
+      "lastDate": "2026-08-19",
+      "editionsCount": 3
+    },
+    {
       "id": "ffgolf-1re-division-u16-filles-trophee-brigitte-varangot",
       "label": "1re Division U16 Filles - Trophée Brigitte VARANGOT",
       "sourceId": "ffgolf",
@@ -47442,19 +47455,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-north-carolina-junior-boys-championship",
-      "label": "North Carolina Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258192",
-        "wagr-233861",
-        "wagr-270178"
-      ],
-      "firstDate": "2024-06-19",
-      "lastDate": "2026-06-23",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-matthew-nesmith-junior-championship",
       "label": "Matthew NeSmith Junior Championship",
       "sourceId": "wagr",
@@ -47478,6 +47478,19 @@
       ],
       "firstDate": "2024-04-11",
       "lastDate": "2026-04-16",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-cga-dogwood-state-junior-boys-championship",
+      "label": "CGA Dogwood State Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271132",
+        "wagr-234649",
+        "wagr-224807"
+      ],
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-27",
       "editionsCount": 3
     },
     {
@@ -47663,19 +47676,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-pga-west-junior-championship",
-      "label": "PGA WEST Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270202",
-        "wagr-258222",
-        "wagr-233922"
-      ],
-      "firstDate": "2024-06-18",
-      "lastDate": "2026-06-16",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-ben-an-junior-championship",
       "label": "Ben An Junior Championship",
       "sourceId": "wagr",
@@ -47712,19 +47712,6 @@
       ],
       "firstDate": "2022-05-28",
       "lastDate": "2026-05-23",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-visit-owensboro-junior-championship",
-      "label": "Visit Owensboro Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269461",
-        "wagr-257236",
-        "wagr-251444"
-      ],
-      "firstDate": "2024-05-03",
-      "lastDate": "2026-04-30",
       "editionsCount": 3
     },
     {
@@ -47907,6 +47894,19 @@
       ],
       "firstDate": "2023-08-02",
       "lastDate": "2025-08-05",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-pga-west-junior-championship",
+      "label": "PGA WEST Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270202",
+        "wagr-258222",
+        "wagr-233922"
+      ],
+      "firstDate": "2024-06-18",
+      "lastDate": "2026-06-16",
       "editionsCount": 3
     },
     {
@@ -49457,19 +49457,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
-      "label": "Ochsner Health / AJGA New Orleans Classic",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269997",
-        "wagr-257942",
-        "wagr-251448"
-      ],
-      "firstDate": "2024-06-04",
-      "lastDate": "2026-05-26",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-italian-u18-team-championship-qualifying",
       "label": "Italian U18 Team Championship Qualifying",
       "sourceId": "wagr",
@@ -49740,6 +49727,19 @@
       ],
       "firstDate": "2024-06-21",
       "lastDate": "2026-06-19",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
+      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269997",
+        "wagr-257942",
+        "wagr-251448"
+      ],
+      "firstDate": "2024-06-04",
+      "lastDate": "2026-05-26",
       "editionsCount": 3
     },
     {
@@ -61470,18 +61470,6 @@
       "editionsCount": 2
     },
     {
-      "id": "fpg-miramar-internacional-open-u25",
-      "label": "Miramar Internacional Open U25",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-003-10477-20240826-all",
-        "fpg-003-10564-20250819-all"
-      ],
-      "firstDate": "2024-08-26",
-      "lastDate": "2025-08-19",
-      "editionsCount": 2
-    },
-    {
       "id": "ffgolf-gpj-hdf-benj-minimes",
       "label": "GPJ HDF BENJ MINIMES",
       "sourceId": "ffgolf",
@@ -66690,18 +66678,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-jimmy-anderson-junior-boys",
-      "label": "Jimmy Anderson Junior Boys",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-261130",
-        "wagr-236605"
-      ],
-      "firstDate": "2024-10-19",
-      "lastDate": "2025-10-25",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-hv3-foundation-junior-championship-presented-by-visit-mooresville",
       "label": "HV3 Foundation Junior Championship presented by Visit Mooresville",
       "sourceId": "wagr",
@@ -66711,6 +66687,18 @@
       ],
       "firstDate": "2025-08-18",
       "lastDate": "2026-08-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-north-carolina-junior-boys-championship",
+      "label": "North Carolina Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258192",
+        "wagr-270178"
+      ],
+      "firstDate": "2025-06-17",
+      "lastDate": "2026-06-23",
       "editionsCount": 2
     },
     {
@@ -67023,6 +67011,18 @@
       ],
       "firstDate": "2025-05-01",
       "lastDate": "2026-04-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071",
+        "wagr-77024"
+      ],
+      "firstDate": "2022-06-14",
+      "lastDate": "2026-06-15",
       "editionsCount": 2
     },
     {
@@ -70683,6 +70683,18 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2023-07-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-tennessee-junior-amateur",
+      "label": "Tennessee Junior Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234076",
+        "wagr-224241"
+      ],
+      "firstDate": "2023-06-27",
+      "lastDate": "2024-06-24",
       "editionsCount": 2
     },
     {
@@ -94646,17 +94658,6 @@
       "editionsCount": 1
     },
     {
-      "id": "fpg-miramar-internacional-open-u25-sub10",
-      "label": "Miramar Internacional Open U25 ( Sub10)",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-003-10478-20240826-sub_10"
-      ],
-      "firstDate": "2024-08-26",
-      "lastDate": "2024-08-26",
-      "editionsCount": 1
-    },
-    {
       "id": "fpg-at-t-pebble-beach-pro-am-by-titleist",
       "label": "AT&T PEBBLE BEACH PRO-AM BY TITLEIST",
       "sourceId": "fpg",
@@ -94690,17 +94691,6 @@
       "editionsCount": 1
     },
     {
-      "id": "fpg-miramar-internacional-open-sub-10",
-      "label": "Miramar Internacional Open - sub 10",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-003-10565-20250819-sub_10"
-      ],
-      "firstDate": "2025-08-19",
-      "lastDate": "2025-08-19",
-      "editionsCount": 1
-    },
-    {
       "id": "fpg-race-to-dunas-g-final",
       "label": "Race to Dunas G. Final",
       "sourceId": "fpg",
@@ -94709,28 +94699,6 @@
       ],
       "firstDate": "2025-11-29",
       "lastDate": "2025-11-29",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-x-miramar-internacional-open-u25",
-      "label": "X Miramar Internacional Open U25",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-003-10652-20260819-all"
-      ],
-      "firstDate": "2026-08-19",
-      "lastDate": "2026-08-19",
-      "editionsCount": 1
-    },
-    {
-      "id": "fpg-x-miramar-internacional-open-u25-sub10",
-      "label": "X Miramar Internacional Open U25 - Sub10",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-003-10653-20260819-sub_10"
-      ],
-      "firstDate": "2026-08-19",
-      "lastDate": "2026-08-19",
       "editionsCount": 1
     },
     {
@@ -107076,6 +107044,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-jimmy-anderson-junior-boys",
+      "label": "Jimmy Anderson Junior Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261130"
+      ],
+      "firstDate": "2025-10-25",
+      "lastDate": "2025-10-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-russell-henley-junior-championship-presented-by-synovus",
       "label": "Russell Henley Junior Championship presented by Synovus",
       "sourceId": "wagr",
@@ -107505,6 +107484,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-visit-owensboro-junior-championship",
+      "label": "Visit Owensboro Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269461"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-idaho-junior-amateur",
       "label": "Idaho Junior Amateur",
       "sourceId": "wagr",
@@ -107612,17 +107602,6 @@
       ],
       "firstDate": "2026-08-03",
       "lastDate": "2026-08-03",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071"
-      ],
-      "firstDate": "2026-06-15",
-      "lastDate": "2026-06-15",
       "editionsCount": 1
     },
     {
@@ -113511,17 +113490,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-haskins-junior-invitational",
-      "label": "Haskins Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259106"
-      ],
-      "firstDate": "2025-07-15",
-      "lastDate": "2025-07-15",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-the-junior-tour-powered-by-under-armour-winter-nationals",
       "label": "The Junior Tour Powered by Under Armour - Winter Nationals",
       "sourceId": "wagr",
@@ -119195,17 +119163,6 @@
       ],
       "firstDate": "2022-05-14",
       "lastDate": "2022-05-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-tennessee-junior-amateur",
-      "label": "Tennessee Junior Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234076"
-      ],
-      "firstDate": "2024-06-24",
-      "lastDate": "2024-06-24",
       "editionsCount": 1
     },
     {

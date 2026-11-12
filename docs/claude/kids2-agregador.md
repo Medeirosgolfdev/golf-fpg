@@ -519,6 +519,18 @@ Masters, Race to Dunas G. Final — vão pelo `PJA_TCODES` de `ranking-pja/pja-r
   (Francisco Silva, 48649) ficava com a de 1990 do adulto homónimo.
 - **Provas abertas a adultos** (Miramar Open U25): saem os federados com mais de 18 anos no ano da
   prova. Os estrangeiros não têm federado nem escalão na prova — ficam.
+- **Estrangeiros com a licença nas inscrições da própria prova** (12/11/2026, ela: «o diego não
+  tem» / «há mais espanhóis na prova»). A classificação do Miramar 2026 diz «Diego Gross», sem
+  número, e ele ficava numa ficha anónima à parte da do Diego Gross Paneque. As inscrições/draws
+  curadas da prova trazem a ficha da RFEG em `_rfeg` (licença, nome canónico, nascimento, sexo):
+  `lerRfegDasProvas`/`rfegDoJogador` (`util/feds-das-provas.js`) → a fonte `fpg` cria o jogador
+  com a chave `anon|rfeg:<licença>` e `extra.rfegLic` → o identity-matcher (passo 2a) junta-o à
+  entidade `rfeg:<licença>`, antes de qualquer casamento por nome; sem ficha da RFEG no agregador,
+  a licença fica na ficha (id «r…»). Vale para todas as provas com `_rfeg` nas inscrições
+  (a 12/11/2026: Miramar 003/10652 e 10653, e três provas de 2024 do clube 107 com um jogador cada).
+- **Série do Miramar Internacional Open** (`seriesFromTournName`): o nome muda todos os anos
+  («X Miramar…», «… U25 ( Sub10)», «… - sub 10»); as edições U25 ficam numa série e as do
+  Sub-10 noutra (é outra prova, 9 buracos por dia).
 - 9 buracos: `holesPerRound` = 9 quando o par tem 9 (Nacionais Sub-10).
 - Efeito: o Manuel passou de 29 para 38 provas; miúdos no mesmo escalão 325 → 391; topo dos
   cruzamentos = Ricardo Castro-Ferreira, João Rocha, Pedro Costa Alemão… Miúdos de clubes da
