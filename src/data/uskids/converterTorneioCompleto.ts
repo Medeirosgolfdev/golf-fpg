@@ -25,6 +25,46 @@ export type RondaJogadorComCampo = RondaJogador & { par?: number[]; metros?: num
 const mesmaLista = (a: readonly number[] | undefined, b: readonly number[] | undefined): boolean =>
   (a?.length ?? 0) === (b?.length ?? 0) && (a ?? []).every((x, i) => x === b![i]);
 
+/** Um escalão enquanto se lê o ficheiro: as voltas e o par de cada uma (e, no formato que
+ *  os traz, os metros por volta e o campo do escalão). */
+interface EscalaoEmConstrucao {
+  age_group: number; nome: string; holes: number;
+  roundsMap: Map<number, RondaJogador[]>;
+  parPorRonda: Map<number, number[]>;
+  metrosPorRonda?: Map<number, number[]>;
+  campo?: string;
+}
+
+/** Os escalões prontos a servir — igual nos dois formatos: as voltas por ordem, cada uma com
+ *  o par, os buracos, o par total (só quando há par para todos os buracos) e a classificação;
+ *  metros e campo do escalão só quando existem. */
+function escaloesProntos(emConstrucao: Iterable<EscalaoEmConstrucao>): EscalaoResult[] {
+  const escaloes: EscalaoResult[] = [];
+  for (const esc of emConstrucao) {
+    const rondas: RondaResult[] = [];
+    for (const [rn, leaderboard] of esc.roundsMap) {
+      const par = esc.parPorRonda.get(rn) ?? [];
+      const metros = esc.metrosPorRonda?.get(rn);
+      rondas.push({
+        ronda: rn,
+        par,
+        si: [],
+        ...(metros?.length ? { metros } : {}),
+        buracos: esc.holes,
+        total_par: par.length === esc.holes ? par.reduce((a, b) => a + b, 0) : null,
+        leaderboard,
+      });
+    }
+    rondas.sort((a, b) => a.ronda - b.ronda);
+    escaloes.push({
+      age_group: esc.age_group, nome: esc.nome,
+      holes: esc.holes, is_manuel: false, rondas,
+      ...(esc.campo ? { campo: esc.campo } : {}),
+    });
+  }
+  return escaloes;
+}
+
 /** Nome, país, cidade e tee de um jogador — iguais nos dois formatos de ficheiro da USKids.
  *  Sem nome → null (a linha não se aproveita). */
 function fichaDoJogador(player: any): { nome: string; pais: string; cidade: string; tee: string } | null {
@@ -58,13 +98,7 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
     // Usar índice numérico sintético para manter compatibilidade com age_group int
     const catToId = new Map<string, number>();
     let nextId = 1;
-    const escalaoMap = new Map<number, {
-      age_group: number; nome: string; holes: number;
-      roundsMap: Map<number, RondaJogador[]>;
-      parPorRonda: Map<number, number[]>;
-      metrosPorRonda: Map<number, number[]>;
-      campo?: string;
-    }>();
+    const escalaoMap = new Map<number, EscalaoEmConstrucao & { metrosPorRonda: Map<number, number[]> }>();
 
     const flightsDict: Record<string, any> = raw.flights ?? {};
     // World 2024: escalões grandes divididos em flights «A»/«B» — o `category`
@@ -190,29 +224,7 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
       campo = firstCourse?.name ?? null;
     }
 
-    const escaloes: EscalaoResult[] = [];
-    for (const esc of escalaoMap.values()) {
-      const rondas: RondaResult[] = [];
-      for (const [rn, leaderboard] of esc.roundsMap) {
-        const par = esc.parPorRonda.get(rn) ?? [];
-        const metros = (esc as any).metrosPorRonda?.get(rn) as number[] | undefined;
-        rondas.push({
-          ronda: rn,
-          par,
-          si: [],
-          ...(metros?.length ? { metros } : {}),
-          buracos: esc.holes,
-          total_par: par.length === esc.holes ? par.reduce((a, b) => a + b, 0) : null,
-          leaderboard,
-        });
-      }
-      rondas.sort((a, b) => a.ronda - b.ronda);
-      escaloes.push({
-        age_group: esc.age_group, nome: esc.nome,
-        holes: esc.holes, is_manuel: false, rondas,
-        ...(esc.campo ? { campo: esc.campo } : {}),
-      });
-    }
+    const escaloes = escaloesProntos(escalaoMap.values());
 
     return {
       t:           tCode,
@@ -241,11 +253,7 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
       if (pars.length > 0) frPars[frid] = pars;
     }
 
-    const escalaoMap = new Map<number, {
-      age_group: number; nome: string; holes: number;
-      roundsMap: Map<number, RondaJogador[]>;
-      parPorRonda: Map<number, number[]>;
-    }>();
+    const escalaoMap = new Map<number, EscalaoEmConstrucao>();
     const campoTally: Map<string, number> = new Map();
 
     for (const flight of (raw.flights ?? [])) {
@@ -311,26 +319,7 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
       campo = firstCourse?.name ?? tourn.course ?? null;
     }
 
-    const escaloes: EscalaoResult[] = [];
-    for (const esc of escalaoMap.values()) {
-      const rondas: RondaResult[] = [];
-      for (const [rn, leaderboard] of esc.roundsMap) {
-        const par = esc.parPorRonda.get(rn) ?? [];
-        rondas.push({
-          ronda: rn,
-          par,
-          si: [],
-          buracos: esc.holes,
-          total_par: par.length === esc.holes ? par.reduce((a, b) => a + b, 0) : null,
-          leaderboard,
-        });
-      }
-      rondas.sort((a, b) => a.ronda - b.ronda);
-      escaloes.push({
-        age_group: esc.age_group, nome: esc.nome,
-        holes: esc.holes, is_manuel: false, rondas,
-      });
-    }
+    const escaloes = escaloesProntos(escalaoMap.values());
 
     return {
       t:            Number(raw.t),

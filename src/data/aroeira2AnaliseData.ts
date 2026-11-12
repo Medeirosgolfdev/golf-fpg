@@ -182,6 +182,36 @@ async function inscritosSub12Nacional(): Promise<InscritoSub12[]> {
   return adm?.tournaments?.find(t => t.ccode === "000" && t.tcode === SUB12_NACIONAL_2026_TCODE)?.admissions?.players ?? [];
 }
 
+/** As voltas jogadas no Aroeira II, de uma lista de torneios. Uma entrada por prova
+ *  (ccode/tcode): quando a mesma vem de dois ficheiros fica a que tem mais voltas
+ *  (em caso de empate, a primeira da lista). */
+function voltasNoAroeiraII(torneios: Tournament[]): PlayerRoundOnCourse[] {
+  const nVoltas = (t: Tournament) => (t.players || []).reduce((s, p) => s + (p.roundScores?.length || 0), 0);
+  const porProva = new Map<string, Tournament>();
+  for (const t of torneios) {
+    if (!isAroeiraIICourse((t as any).campo) && !isAroeiraIICourse((t as any).course)) continue;
+    const k = `${t.ccode}/${t.tcode}`;
+    const cur = porProva.get(k);
+    if (!cur || nVoltas(t) > nVoltas(cur)) porProva.set(k, t);
+  }
+  const out: PlayerRoundOnCourse[] = [];
+  for (const t of porProva.values()) out.push(...extractPlayerRounds(t));
+  return out;
+}
+
+/** Só as voltas de 18 buracos com cartão cujo par, buraco a buraco, é o do torneio actual
+ *  (routing de Nov 2025+) — garante que B1, B2… são fisicamente os mesmos buracos.
+ *  Volta sem pares conhecidos passa. */
+function voltasNoRoutingActual(allRounds: PlayerRoundOnCourse[], parRef: number[]): PlayerRoundOnCourse[] {
+  const parKey = parRef.join(",");
+  return allRounds.filter(r => {
+    if (r.scores.length !== 18) return false;
+    if (r.gross == null || isNoCardGross(r.gross)) return false;
+    if (!r.pars || r.pars.length !== 18) return true;
+    return r.pars.join(",") === parKey;
+  });
+}
+
 async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<AnalisePackage> {
   const allTournaments: Tournament[] = await torneiosDasFontes();
 
@@ -190,25 +220,8 @@ async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<Anal
   const seenKeys = new Set(allTournaments.map(ccTc));
   if (!seenKeys.has(ccTc(currentTournament))) allTournaments.push(currentTournament);
 
-  // Filter to Aroeira II tournaments
-  const aroeira2Torns = allTournaments.filter(t =>
-    isAroeiraIICourse((t as any).campo) || isAroeiraIICourse((t as any).course)
-  );
-
-  // Dedupe by ccode/tcode (keep richest, e.g. with players > 0)
-  const dedup = new Map<string, Tournament>();
-  for (const t of aroeira2Torns) {
-    const k = ccTc(t);
-    const cur = dedup.get(k);
-    if (!cur) { dedup.set(k, t); continue; }
-    const curN = (cur.players || []).reduce((s, p) => s + (p.roundScores?.length || 0), 0);
-    const newN = (t.players || []).reduce((s, p) => s + (p.roundScores?.length || 0), 0);
-    if (newN > curN) dedup.set(k, t);
-  }
-
-  // All rounds across all Aroeira II tournaments
-  const allRounds: PlayerRoundOnCourse[] = [];
-  for (const t of dedup.values()) allRounds.push(...extractPlayerRounds(t));
+  // Todas as voltas jogadas no Aroeira II (uma entrada por prova).
+  const allRounds = voltasNoAroeiraII(allTournaments);
 
   // Manuel history
   const manuelHistory = allRounds
@@ -357,13 +370,7 @@ function buildHoleStats(
   // 1) Filtrar pelo routing actual (Nov 2025+) — só rondas cuja sequencia de
   // pars bate com a do torneio actual. Garante que B1, B2, etc. são fisicamente
   // os mesmos buracos.
-  const parKey = parRef.join(",");
-  const valid = allRounds.filter(r => {
-    if (r.scores.length !== 18) return false;
-    if (r.gross == null || isNoCardGross(r.gross)) return false;
-    if (!r.pars || r.pars.length !== 18) return true;
-    return r.pars.join(",") === parKey;
-  });
+  const valid = voltasNoRoutingActual(allRounds, parRef);
   const manuelRounds = valid.filter(r => isManuelPlayer({ fed: r.fedCode ?? undefined, name: r.name }));
 
   for (let h = 0; h < 18; h++) {
@@ -506,18 +513,7 @@ export async function loadRichAroeiraIIAnalise(currentTournament: Tournament): P
   const pkg = await loadAroeiraIIAnalise(currentTournament);
   // As mesmas fontes (já em cache), agora com a prova aberta à frente.
   const allTournaments: Tournament[] = [currentTournament, ...(await torneiosDasFontes())];
-  const aroeira2 = allTournaments.filter(t => isAroeiraIICourse((t as any).campo) || isAroeiraIICourse((t as any).course));
-  const dedup = new Map<string, Tournament>();
-  for (const t of aroeira2) {
-    const k = `${t.ccode}/${t.tcode}`;
-    const cur = dedup.get(k);
-    if (!cur) { dedup.set(k, t); continue; }
-    const curN = (cur.players || []).reduce((s, p) => s + (p.roundScores?.length || 0), 0);
-    const newN = (t.players || []).reduce((s, p) => s + (p.roundScores?.length || 0), 0);
-    if (newN > curN) dedup.set(k, t);
-  }
-  const allRounds: PlayerRoundOnCourse[] = [];
-  for (const t of dedup.values()) allRounds.push(...extractPlayerRounds(t));
+  const allRounds = voltasNoAroeiraII(allTournaments);
 
   // metros do torneio actual (R1)
   const refRound = currentTournament.players?.[0]?.roundScores?.[0];
@@ -827,6 +823,26 @@ export async function loadSub12FedSet(): Promise<Set<string>> {
   return out;
 }
 
+/** Os números de um jogador sobre as suas voltas no campo, por ordem de data:
+ *  quantas, média/melhor/pior gross, média do ±par e a última. */
+function resumoDasVoltas(voltas: PlayerRoundOnCourse[]): Pick<Sub12Performance,
+  "nRounds" | "avgGross" | "bestGross" | "worstGross" | "avgToPar" | "lastGross" | "lastDate" | "rounds"> {
+  const rounds = [...voltas].sort((a, b) => a.date.localeCompare(b.date) || a.round - b.round);
+  const grosses = rounds.map(r => r.gross).filter((g): g is number => g != null);
+  const toPars = rounds.map(r => r.toPar).filter((t): t is number => t != null);
+  const last = rounds.length ? rounds[rounds.length - 1] : null;
+  return {
+    nRounds: rounds.length,
+    avgGross: meanArr(grosses),
+    bestGross: grosses.length ? Math.min(...grosses) : null,
+    worstGross: grosses.length ? Math.max(...grosses) : null,
+    avgToPar: meanArr(toPars),
+    lastGross: last?.gross ?? null,
+    lastDate: last?.date ?? null,
+    rounds,
+  };
+}
+
 export interface Sub12Performance {
   fedCode: string | null;
   name: string;
@@ -869,47 +885,22 @@ export function buildSub12Performance(
     if (!isSub12) continue;
     const playerCard = pkg.top21Compare.find(c => c.fedCode === fed);
     if (!playerCard) continue;
-    const validG = [...playerCard.priorRounds, ...playerCard.currentRounds]
-      .map(r => r.gross).filter((g): g is number => g != null);
-    const validTp = [...playerCard.priorRounds, ...playerCard.currentRounds]
-      .map(r => r.toPar).filter((t): t is number => t != null);
-    const allRounds = [...playerCard.priorRounds, ...playerCard.currentRounds]
-      .sort((a, b) => a.date.localeCompare(b.date) || a.round - b.round);
-    const last = allRounds.length ? allRounds[allRounds.length - 1] : null;
     out.push({
       fedCode: fed || null,
       name: playerCard.name, club: playerCard.club,
       hcpExact: playerCard.hcpExact,
       status: sub12FedSet.has(fed) ? "top21+inscrito" : "top21_so",
-      nRounds: allRounds.length,
-      avgGross: meanArr(validG),
-      bestGross: validG.length ? Math.min(...validG) : null,
-      worstGross: validG.length ? Math.max(...validG) : null,
-      avgToPar: meanArr(validTp),
-      lastGross: last?.gross ?? null,
-      lastDate: last?.date ?? null,
-      rounds: allRounds,
+      ...resumoDasVoltas([...playerCard.priorRounds, ...playerCard.currentRounds]),
     });
   }
 
   // 2) Sub-12 inscritos com histórico (que não estavam no Top 21)
   for (const c of pkg.sub12Inscritos) {
     if (c.fedCode && inTorneio.has(c.fedCode)) continue; // já tratado em (1)
-    const validG = c.priorRounds.map(r => r.gross).filter((g): g is number => g != null);
-    const validTp = c.priorRounds.map(r => r.toPar).filter((t): t is number => t != null);
-    const sortedR = [...c.priorRounds].sort((a, b) => a.date.localeCompare(b.date) || a.round - b.round);
-    const last = sortedR.length ? sortedR[sortedR.length - 1] : null;
     out.push({
       fedCode: c.fedCode, name: c.name, club: c.club, hcpExact: c.hcpExact,
       status: "inscrito_com_historico",
-      nRounds: sortedR.length,
-      avgGross: meanArr(validG),
-      bestGross: validG.length ? Math.min(...validG) : null,
-      worstGross: validG.length ? Math.max(...validG) : null,
-      avgToPar: meanArr(validTp),
-      lastGross: last?.gross ?? null,
-      lastDate: last?.date ?? null,
-      rounds: sortedR,
+      ...resumoDasVoltas(c.priorRounds),
     });
   }
 
@@ -997,13 +988,7 @@ export function buildHoleDials(
   sub12FedSet: Set<string>,
 ): HoleDial[] {
   const out: HoleDial[] = [];
-  const parKey = parRef.join(",");
-  const valid = allRounds.filter(r => {
-    if (r.scores.length !== 18) return false;
-    if (r.gross == null || isNoCardGross(r.gross)) return false;
-    if (!r.pars || r.pars.length !== 18) return true;
-    return r.pars.join(",") === parKey;
-  });
+  const valid = voltasNoRoutingActual(allRounds, parRef);
   const isManuel = (r: PlayerRoundOnCourse) => isManuelPlayer({ fed: r.fedCode ?? undefined, name: r.name });
   const isSub12 = (r: PlayerRoundOnCourse) => isManuel(r) || (r.fedCode != null && sub12FedSet.has(r.fedCode));
   const minOrNull = (a: number[]) => a.length ? Math.min(...a) : null;

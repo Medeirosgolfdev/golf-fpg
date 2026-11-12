@@ -15,7 +15,7 @@ import type { Tee } from "../../data/types";
 import { strokesOnHole } from "../../utils/whsCalc";
 import { firstShotClub } from "../../utils/clubScale";
 import { classificarPorTotal, temCartao } from "../../utils/classificacao";
-import { buracosDoFlight } from "../../utils/voltasJogadas";
+import { mhEdicoesDoEscalao, type MHSlim, type MHEdicao } from "../../data/uskids/memberHistory";
 
 // ── 1. Perfil do Manuel por (par, distancia) ─────────────────────────────
 export interface HoleProfile {
@@ -310,14 +310,6 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
 }
 
 // ── 3. Estimativa de score do field (edicoes passadas) ───────────────────
-interface MHRoundLite { gross: number; strokes?: number[] }
-interface MHTornLite { ageGroup: string; place: number | null; rounds: Record<string, MHRoundLite> }
-interface MHPlrLite { name: string; torneios: Record<string, MHTornLite> }
-interface MHEscMeta { par?: number[] }
-interface MHSlimLite {
-  torneios: Record<string, { name: string; startDate: string; holesPerRound: number; par?: number[] | null; byEscalao?: Record<string, MHEscMeta> }>;
-  jogadores: Record<string, MHPlrLite>;
-}
 interface FieldTorneioLite { t: number; name: string }
 
 interface EditionScore {
@@ -352,29 +344,17 @@ export interface FieldEstimate {
 
 const MIN_FIELD = 4;             // mínimo para a edição sequer aparecer na tabela
 const MIN_FIELD_ESTIMATE = 10;   // mínimo para a edição CONTAR na estimativa (amostra fiável)
-const MIN_GROSS_18 = 55, MIN_GROSS_9 = 28;
 
-export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite | null, escalaoNome: string): FieldEstimate {
+export function estimateField(mh: MHSlim | null, torneio: FieldTorneioLite | null, escalaoNome: string): FieldEstimate {
   const empty: FieldEstimate = { editions: [], avgWinner: null, avgTop10: null, avgMedian: null, parPerRound: null, nRoundsTypical: null, holesPerRoundTypical: null, formatLabel: null, nCounted: 0, nExcluded: 0, nExcludedFormat: 0, nExcludedField: 0, minField: null };
   if (!mh || !torneio) return empty;
-  const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
-  if (!baseName) return empty;
 
   const editions: EditionScore[] = [];
-  for (const [tcode, meta] of Object.entries(mh.torneios)) {
-    if (!meta?.name) continue;
-    if (/Parent\/Child/i.test(meta.name)) continue;
-    if (meta.name.replace(/\s+\d{4}\s*$/, "").trim() !== baseName) continue;
-    const ym = meta.name.match(/(\d{4})/);
-    if (!ym) continue;
-    const par = meta.byEscalao?.[escalaoNome]?.par || meta.par || null;
-    const doEscalao = Object.values(mh.jogadores).map((pl) => pl.torneios[tcode]).filter((t) => t && t.ageGroup === escalaoNome);
-    // Buracos por volta do ESCALÃO, pelas voltas jogadas (10/11/2026): a ficha do
-    // torneio diz 18 mas o Boys 8 e o 7 & Under jogam 9 — com o mínimo de 55
-    // pancadas todas as voltas eram deitadas fora («Sem histórico»).
-    const hpr = buracosDoFlight(doEscalao.flatMap((t) => Object.values(t.rounds || {})), par, meta.holesPerRound);
-    const is9 = hpr === 9;
-    const minGross = is9 ? MIN_GROSS_9 : MIN_GROSS_18;
+  // As edições da mesma família em que o escalão jogou, com o par, os buracos por volta
+  // (9 no Boys 8 e no 7 & Under, mesmo quando a ficha do torneio diz 18) e o mínimo de
+  // pancadas — tudo do módulo global (data/uskids/memberHistory), não refeito aqui.
+  for (const { tcode, year, par, jogadores, hpr, minGross } of mhEdicoesDoEscalao(mh, torneio.name, escalaoNome)) {
+    const doEscalao = jogadores.map(([, pl]) => pl.torneios[tcode]);
     const parPerRound = Array.isArray(par) ? par.slice(0, hpr).reduce((a, b) => a + (b || 0), 0) : 0;
 
     // totais por jogador (so quem completou todas as rondas da edicao)
@@ -398,7 +378,7 @@ export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite |
 
     const median = totals[Math.floor((totals.length - 1) / 2)];
     editions.push({
-      year: ym[1], tcode, nRounds: nRoundsMax, holesPerRound: hpr,
+      year, tcode, nRounds: nRoundsMax, holesPerRound: hpr,
       parPerRound,
       winner: totals[0],
       // só há "top-10" quando o field chega a 10; senão o 10.º lugar não existe
@@ -470,26 +450,17 @@ export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite |
 /** vsPar médio do FIELD por buraco (18), da edição mais recente (com scores
  *  buraco-a-buraco) do MESMO torneio+escalão. Base da classificação de
  *  dificuldade do plano de jogo (atacar = fácil p/ field, defender = difícil). */
-export function fieldHoleVsPar(mh: MHSlimLite | null, torneio: FieldTorneioLite | null, escalaoNome: string): (number | null)[] {
+export function fieldHoleVsPar(mh: MHSlim | null, torneio: FieldTorneioLite | null, escalaoNome: string): (number | null)[] {
   const out: (number | null)[] = new Array(18).fill(null);
   if (!mh || !torneio) return out;
-  const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
-  if (!baseName) return out;
   let best: { year: number; sums: number[]; cnt: number[]; par: number[] } | null = null;
-  for (const [tcode, meta] of Object.entries(mh.torneios)) {
-    if (!meta?.name) continue;
-    if (/Parent\/Child/i.test(meta.name)) continue;
-    if (meta.name.replace(/\s+\d{4}\s*$/, "").trim() !== baseName) continue;
-    const ym = meta.name.match(/(\d{4})/);
-    if (!ym) continue;
-    const year = parseInt(ym[1], 10);
-    const par = meta.byEscalao?.[escalaoNome]?.par || meta.par;
+  for (const { tcode, year: ano, par, jogadores } of mhEdicoesDoEscalao(mh, torneio.name, escalaoNome)) {
+    const year = parseInt(ano, 10);
     if (!Array.isArray(par)) continue;
     const sums = new Array(18).fill(0), cnt = new Array(18).fill(0);
     let any = false;
-    for (const p of Object.values(mh.jogadores)) {
-      const t = p.torneios?.[tcode];
-      if (!t || t.ageGroup !== escalaoNome) continue;
+    for (const [, p] of jogadores) {
+      const t = p.torneios[tcode];
       for (const r of Object.values(t.rounds || {})) {
         const st = r.strokes || [];
         for (let i = 0; i < 18; i++) {
@@ -520,38 +491,24 @@ export interface TopFieldStats {
  *  torneio+escalão: média e scores por buraco e por ronda. Mostra que os bons
  *  fazem birdies onde a média do field/Manuel fica acima do par. */
 export function topFieldHoleStats(
-  mh: MHSlimLite | null, torneio: FieldTorneioLite | null, escalaoNome: string, topN = 5,
+  mh: MHSlim | null, torneio: FieldTorneioLite | null, escalaoNome: string, topN = 5,
 ): TopFieldStats | null {
   if (!mh || !torneio) return null;
-  const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
-  if (!baseName) return null;
-  let best: { year: number; tcode: string; par: number[] } | null = null;
-  for (const [tcode, meta] of Object.entries(mh.torneios)) {
-    if (!meta?.name || /Parent\/Child/i.test(meta.name)) continue;
-    if (meta.name.replace(/\s+\d{4}\s*$/, "").trim() !== baseName) continue;
-    const ym = meta.name.match(/(\d{4})/);
-    if (!ym) continue;
-    const year = parseInt(ym[1], 10);
-    const par = meta.byEscalao?.[escalaoNome]?.par || meta.par;
+  let best: { year: number; tcode: string; par: number[]; jogadores: MHEdicao["jogadores"] } | null = null;
+  for (const { tcode, year: ano, par, jogadores } of mhEdicoesDoEscalao(mh, torneio.name, escalaoNome)) {
+    const year = parseInt(ano, 10);
     if (!Array.isArray(par)) continue;
-    let has = false;
-    for (const p of Object.values(mh.jogadores)) {
-      const t = p.torneios?.[tcode];
-      if (t && t.ageGroup === escalaoNome) {
-        for (const r of Object.values(t.rounds || {})) { if ((r.strokes || []).some(x => x > 0)) { has = true; break; } }
-      }
-      if (has) break;
-    }
+    // Só edições com pancadas buraco a buraco.
+    const has = jogadores.some(([, p]) => Object.values(p.torneios[tcode].rounds || {}).some(r => (r.strokes || []).some(x => x > 0)));
     if (!has) continue;
-    if (!best || year > best.year) best = { year, tcode, par };
+    if (!best || year > best.year) best = { year, tcode, par, jogadores };
   }
   if (!best) return null;
   const { tcode, par } = best;
 
   const players: { name: string; tot: number; rounds: Record<string, number[]> }[] = [];
-  for (const p of Object.values(mh.jogadores)) {
-    const t = p.torneios?.[tcode];
-    if (!t || t.ageGroup !== escalaoNome) continue;
+  for (const [, p] of best.jogadores) {
+    const t = p.torneios[tcode];
     const rounds: Record<string, number[]> = {};
     let tot = 0, any = false;
     for (const [rn, r] of Object.entries(t.rounds || {})) {

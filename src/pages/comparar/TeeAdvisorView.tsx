@@ -22,6 +22,7 @@
  */
 import React, { useEffect, useMemo, useState } from "react";
 import type { Course, Tee } from "../../data/types";
+import { useCamposOrdenados } from "./useCamposOrdenados";
 import { loadPlayerData, type PlayerPageData } from "../../data/playerDataLoader";
 import { getParTotal } from "../../ui/CourseHeroCard";
 import { useSort, compareValuesNullsLast } from "../../hooks/useSort";
@@ -560,17 +561,8 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
 /* ═══════════════════ Vista principal ═══════════════════ */
 
 export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCourses: Course[]; initialCourseKey?: string }) {
-  const sortedCourses = useMemo(
-    () => [...simCourses].sort((a, b) => a.master.name.localeCompare(b.master.name, "pt", { sensitivity: "base" })),
-    [simCourses]
-  );
-
-  const defaultCourseKey = useMemo(() => {
-    // Dentro dos Campos: abre no campo seleccionado na lista.
-    if (initialCourseKey && sortedCourses.some(c => c.courseKey === initialCourseKey)) return initialCourseKey;
-    const sds = sortedCourses.find(c => /santo\s+d[ao]\s+serra/i.test(c.master.name));
-    return sds?.courseKey ?? sortedCourses[0]?.courseKey ?? "";
-  }, [sortedCourses, initialCourseKey]);
+  // Campos por ordem alfabética e o campo com que a vista abre (o da lista, senão o Santo da Serra).
+  const { sortedCourses, defaultCourseKey } = useCamposOrdenados(simCourses, initialCourseKey);
 
   const [courseKey, setCourseKey] = useState(defaultCourseKey);
   const [sexFilter, setSexFilter] = useState<"M" | "F">("M");

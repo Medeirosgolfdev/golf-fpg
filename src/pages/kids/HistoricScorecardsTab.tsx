@@ -334,13 +334,7 @@ export function HistoricScorecardsView({ editions }: { editions: Edition[] }) {
             {hdr("bogeys", "lb-bog", "■")}
           </>
         }
-        onSortPos={() => toggleSort("pos")}
-        onSortName={() => toggleSort("name")}
-        onSortToPar={() => toggleSort("topar")}
-        onSortGross={() => toggleSort("gross")}
-        onSortHole={(i) => toggleSort(`h${i + 1}`)}
-        activeSortKey={lbSortKey(sortKey)}
-        activeSortDir={sortDir}
+        {...ordenacaoDoCartao(toggleSort, sortKey, sortDir)}
       />
 
       {/* ── Linha ecléctica por jogador ── */}
@@ -352,6 +346,21 @@ export function HistoricScorecardsView({ editions }: { editions: Edition[] }) {
 interface FlatRow { pl: PlayerCard; r: PlayerRound; ed: Edition }
 
 /** Chaves locais (topar · h1..h18) no vocabulário do ScorecardLeaderboard. */
+/** As colunas fixas do cartão (lugar, nome, ±par, gross e cada buraco) ordenam-se da mesma
+ *  maneira na tabela das edições e na ecléctica — as props vêm daqui. */
+type ChaveDoCartao = "pos" | "name" | "topar" | "gross" | `h${number}`;
+function ordenacaoDoCartao(toggleSort: (k: ChaveDoCartao) => void, sortKey: string, sortDir: "asc" | "desc") {
+  return {
+    onSortPos: () => toggleSort("pos"),
+    onSortName: () => toggleSort("name"),
+    onSortToPar: () => toggleSort("topar"),
+    onSortGross: () => toggleSort("gross"),
+    onSortHole: (i: number) => toggleSort(`h${i + 1}`),
+    activeSortKey: lbSortKey(sortKey),
+    activeSortDir: sortDir,
+  };
+}
+
 function lbSortKey(k: string): string {
   if (k === "topar") return "toPar";
   if (/^h\d+$/.test(k)) return `hole:${parseInt(k.slice(1), 10) - 1}`;
@@ -593,13 +602,7 @@ function EcleticTable({ editions, limit, hpr }: {
             {hdr("delta", "lb-topar", "Δ")}
           </>
         }
-        onSortPos={() => toggleSort("pos")}
-        onSortName={() => toggleSort("name")}
-        onSortToPar={() => toggleSort("topar")}
-        onSortGross={() => toggleSort("gross")}
-        onSortHole={(i) => toggleSort(`h${i + 1}`)}
-        activeSortKey={lbSortKey(sortKey)}
-        activeSortDir={sortDir}
+        {...ordenacaoDoCartao(toggleSort, sortKey, sortDir)}
       />
     </details>
   );

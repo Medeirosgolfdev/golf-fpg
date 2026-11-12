@@ -27,6 +27,7 @@ import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar
 import SortableHdr from "../../ui/SortableHdr";
 import { compareValuesNullsLast } from "../../hooks/useSort";
 import type { Course, Tee, Hole } from "../../data/types";
+import { useCamposOrdenados } from "./useCamposOrdenados";
 import CourseHeroCard, { getParTotal, PAR_HSL, HeroStat } from "../../ui/CourseHeroCard";
 import { MultiTeeSDTable } from "../../ui/ScoreTable";
 import TeePill from "../../ui/TeePill";
@@ -677,19 +678,8 @@ function CourseSideBySide({
 
 export function CourseComparisonView({ simCourses, initialCourseKey }: { simCourses: Course[]; initialCourseKey?: string }) {
   const { players } = useAppContext();
-  const sortedCourses = useMemo(
-    () => [...simCourses].sort((a, b) =>
-      a.master.name.localeCompare(b.master.name, "pt", { sensitivity: "base" })
-    ),
-    [simCourses]
-  );
-
-  const defaultCourseKey = useMemo(() => {
-    // Dentro dos Campos: o Campo A é o campo seleccionado na lista.
-    if (initialCourseKey && sortedCourses.some(c => c.courseKey === initialCourseKey)) return initialCourseKey;
-    const sds = sortedCourses.find(c => /santo\s+d[ao]\s+serra/i.test(c.master.name));
-    return sds?.courseKey ?? sortedCourses[0]?.courseKey ?? "";
-  }, [sortedCourses, initialCourseKey]);
+  // Campos por ordem alfabética e o campo com que a vista abre (o da lista, senão o Santo da Serra).
+  const { sortedCourses, defaultCourseKey } = useCamposOrdenados(simCourses, initialCourseKey);
 
   // ── Campo A ── (o tee guarda-se pela chave de escolha `teeId + sexo`)
   const [selectedCourseKey, setSelectedCourseKey] = useState<string>(defaultCourseKey);

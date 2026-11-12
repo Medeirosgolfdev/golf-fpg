@@ -21,6 +21,19 @@ import Select from "./Select";
 import { Tint, Cols, Place } from "./DataStyle";
 
 // DOB formatter — aceita YYYY-MM-DD, DD/MM/YYYY, ou outro; devolve "DD/MM/YY"
+/** Os filtros de torneio, escalão, país e nome — os mesmos na lista e no contador dos que
+ *  o «Só com dados» esconde. */
+function filtrarRivais(pl: RivalPlayer[], fTour: string, fUp: string, fCo: string, q: string): RivalPlayer[] {
+  if (fTour !== "all") pl = pl.filter(x => x.r[fTour]);
+  if (fUp !== "all") pl = pl.filter(x => x.up.includes(fUp));
+  if (fCo !== "all") pl = pl.filter(x => x.co === fCo);
+  if (q) {
+    const ql = q.toLowerCase();
+    pl = pl.filter(x => x.n.toLowerCase().includes(ql));
+  }
+  return pl;
+}
+
 function fmtDob(dob?: string): string {
   if (!dob) return "";
   const p = dateParts(dob);   // a leitura de datas do site (utils/format), não uma cópia
@@ -91,13 +104,7 @@ export default function RivaisDashboard({
   const list = useMemo(() => {
     let pl = [...D];
     if (dOnly) pl = pl.filter(x => Object.values(x.r).some(r => r.tp != null));
-    if (fTour !== "all") pl = pl.filter(x => x.r[fTour]);
-    if (fUp !== "all") pl = pl.filter(x => x.up.includes(fUp));
-    if (fCo !== "all") pl = pl.filter(x => x.co === fCo);
-    if (q) {
-      const ql = q.toLowerCase();
-      pl = pl.filter(x => x.n.toLowerCase().includes(ql));
-    }
+    pl = filtrarRivais(pl, fTour, fUp, fCo, q);
     // Vazios (sem dados, sem resultado) sempre no fim, nas duas direcções.
     const d = dir === "asc" ? 1 : -1;
     pl.sort((a, b) => {
@@ -161,13 +168,7 @@ export default function RivaisDashboard({
   const hiddenNoData = useMemo(() => {
     if (!dOnly) return 0;
     let pl = D.filter(x => !Object.values(x.r).some(r => r.tp != null));
-    if (fTour !== "all") pl = pl.filter(x => x.r[fTour]);
-    if (fUp !== "all") pl = pl.filter(x => x.up.includes(fUp));
-    if (fCo !== "all") pl = pl.filter(x => x.co === fCo);
-    if (q) {
-      const ql = q.toLowerCase();
-      pl = pl.filter(x => x.n.toLowerCase().includes(ql));
-    }
+    pl = filtrarRivais(pl, fTour, fUp, fCo, q);
     return pl.length;
   }, [dOnly, fTour, fUp, fCo, q, D]);
 

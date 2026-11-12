@@ -240,6 +240,19 @@ interface FedColumn {
   defaultDir?: "asc" | "desc";
 }
 
+/** Colunas que as tabelas das federações têm em comum — uma só definição de cada. */
+const COL_COMUNIDADE: FedColumn = { key: "region", label: "Comunidade", sortVal: f => f.region, cell: f => f.region };
+const COL_LICENCA: FedColumn = { key: "lic", label: "Lic.", cellClass: "mono", sortVal: f => f.licPrefix ?? "", cell: f => <code>{f.licPrefix}</code> };
+const COL_SITE: FedColumn = { key: "website", label: "Site oficial", cell: f => f.website && <ExtLink href={f.website} className="tourn-ext-link">🔗</ExtLink> };
+const COL_PAGINA_RFEG: FedColumn = { key: "rfegPage", label: "Página RFEG", cell: f => <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink> };
+/** Quantos torneios/jogos temos da federação (o rótulo muda com a plataforma). */
+const colContagem = (label: string): FedColumn => ({
+  key: "scrapedCount", label, align: "right", defaultDir: "desc",
+  cellClass: "mono u-c-color-good u-fw-600",
+  sortVal: f => f.scrapedCount ?? 0,
+  cell: f => f.scrapedCount,
+});
+
 /** Tabela de federações genérica e ordenável por qualquer coluna com `sortVal`. */
 function FedTable({ rows, columns }: { rows: RFEGFederation[]; columns: FedColumn[] }) {
   const dirMap: Record<string, "asc" | "desc"> = {};
@@ -357,37 +370,17 @@ export function RFEGFederationsView() {
             sortVal: f => f.name,
             cell: f => <strong>{f.name}</strong>,
           },
-          {
-            key: "region", label: "Comunidade",
-            sortVal: f => f.region,
-            cell: f => f.region,
-          },
-          {
-            key: "lic", label: "Lic.",
-            cellClass: "mono",
-            sortVal: f => f.licPrefix ?? "",
-            cell: f => <code>{f.licPrefix}</code>,
-          },
+          COL_COMUNIDADE,
+          COL_LICENCA,
           {
             key: "ncCode", label: "Cód. NC",
             cellClass: "mono",
             sortVal: f => f.ncCode ?? "",
             cell: f => <code>{f.ncCode}</code>,
           },
-          {
-            key: "scrapedCount", label: "Torneios", align: "right", defaultDir: "desc",
-            cellClass: "mono u-c-color-good u-fw-600",
-            sortVal: f => f.scrapedCount ?? 0,
-            cell: f => f.scrapedCount,
-          },
-          {
-            key: "website", label: "Site oficial",
-            cell: f => f.website && <ExtLink href={f.website} className="tourn-ext-link">🔗</ExtLink>,
-          },
-          {
-            key: "rfegPage", label: "Página RFEG",
-            cell: f => <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>,
-          },
+          colContagem("Torneios"),
+          COL_SITE,
+          COL_PAGINA_RFEG,
         ]}
       />
 
@@ -413,35 +406,15 @@ export function RFEGFederationsView() {
               </>
             ),
           },
-          {
-            key: "region", label: "Comunidade",
-            sortVal: f => f.region,
-            cell: f => f.region,
-          },
-          {
-            key: "lic", label: "Lic.",
-            cellClass: "mono",
-            sortVal: f => f.licPrefix ?? "",
-            cell: f => <code>{f.licPrefix}</code>,
-          },
+          COL_COMUNIDADE,
+          COL_LICENCA,
           {
             key: "platform", label: "Plataforma actual",
             cell: () => <ExtLink href="https://www.golfdirecto.com/" className="tourn-ext-link">golfdirecto.com</ExtLink>,
           },
-          {
-            key: "scrapedCount", label: "Games scrapados", align: "right", defaultDir: "desc",
-            cellClass: "mono u-c-color-good u-fw-600",
-            sortVal: f => f.scrapedCount ?? 0,
-            cell: f => f.scrapedCount,
-          },
-          {
-            key: "website", label: "Site oficial",
-            cell: f => f.website && <ExtLink href={f.website} className="tourn-ext-link">🔗</ExtLink>,
-          },
-          {
-            key: "rfegPage", label: "Página RFEG",
-            cell: f => <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>,
-          },
+          colContagem("Games scrapados"),
+          COL_SITE,
+          COL_PAGINA_RFEG,
         ]}
       />
 
@@ -460,17 +433,8 @@ export function RFEGFederationsView() {
             sortVal: f => f.name,
             cell: f => f.name,
           },
-          {
-            key: "region", label: "Comunidade",
-            sortVal: f => f.region,
-            cell: f => f.region,
-          },
-          {
-            key: "lic", label: "Lic.",
-            cellClass: "mono",
-            sortVal: f => f.licPrefix ?? "",
-            cell: f => <code>{f.licPrefix}</code>,
-          },
+          COL_COMUNIDADE,
+          COL_LICENCA,
           {
             key: "website", label: "Site oficial",
             cell: f => <ExtLink href={f.website} className="tourn-ext-link">🔗 oficial</ExtLink>,
@@ -496,22 +460,14 @@ export function RFEGFederationsView() {
             sortVal: f => f.region,
             cell: f => f.region,
           },
-          {
-            key: "lic", label: "Lic.",
-            cellClass: "mono",
-            sortVal: f => f.licPrefix ?? "",
-            cell: f => <code>{f.licPrefix}</code>,
-          },
+          COL_LICENCA,
           {
             key: "ncCode", label: "Cód. NC (vazio)",
             cellClass: "mono",
             sortVal: f => f.ncCode ?? "",
             cell: f => <code>{f.ncCode}</code>,
           },
-          {
-            key: "rfegPage", label: "Página RFEG",
-            cell: f => <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>,
-          },
+          COL_PAGINA_RFEG,
         ]}
       />
 
