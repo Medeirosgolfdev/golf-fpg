@@ -118,6 +118,7 @@ function resolve(rawSources, overrides) {
     }
   }
 
+  let vetosIdade = 0;
   const parent = new Map();
   // groupEntities: root → Entity[] (todas as entidades do grupo)
   const groupEntities = new Map();
@@ -155,6 +156,11 @@ function resolve(rawSources, overrides) {
         for (const f of forb) if (bigKeys.has(f)) return false;
       }
     }
+    // Veto pela idade (12/11/2026): duas pessoas com anos de nascimento a 2+
+    // anos de distância nunca são uma. Uma ficha sem país nem data servia de
+    // ponte entre homónimos (Santiago Dias PT n. 2012 + USKids BR n. 2018,
+    // pela ficha do Champion of Champions 2023 sem país).
+    if (!opts.force && anosIncompativeis(ea, eb)) { vetosIdade++; return false; }
     if (!opts.force) {
       const strongBySource = new Map();
       for (const e of combined) {
@@ -223,6 +229,8 @@ function resolve(rawSources, overrides) {
         if (find(a.entityKey) === find(b.entityKey)) continue;
         if (dobConflict(a.raw.dob, b.raw.dob)) continue;
         if (a.normName !== b.normName) continue; // EXIGIR full match — não basta first+last
+        // Fichas sem país nem nascimento ligam-se no fim (passo 5a), só a UM homónimo.
+        if (semIdentidade(a) || semIdentidade(b)) continue;
         const dobCompat = dobsCompatible(a.raw, b.raw);
         const countryMatch = a.raw.country && b.raw.country && a.raw.country === b.raw.country;
         const oneMissingCountry = !a.raw.country || !b.raw.country;
@@ -262,6 +270,36 @@ function resolve(rawSources, overrides) {
       }
     }
   }
+
+  // ────────────────────────────────────────────────────────────────────
+  // 5a. Fichas sem país nem nascimento (12/11/2026). Ligam-se como no passo 5
+  // (a todos os homónimos com o mesmo nome), mas DEPOIS das outras e por ordem:
+  // primeiro o grupo que já tem uma ficha da mesma fonte (outra edição da
+  // prova), depois o maior. Assim, quando o veto pela idade só deixa ligar a um,
+  // fica no certo (Champion of Champions 2023 → o Santiago Dias português, que
+  // tem a edição de 2024; o USKids brasileiro com o mesmo nome fica de fora).
+  // ────────────────────────────────────────────────────────────────────
+  let semIdentidadeLigadas = 0;
+  for (const arr of byFirstLast.values()) {
+    if (arr.length < 2) continue;
+    for (const e of arr) {
+      if (!semIdentidade(e) || CASAMENTO_POR_PROVAS.has(e.sourceId)) continue;
+      const roots = new Set();
+      for (const o of arr) {
+        if (o === e || o.normName !== e.normName || CASAMENTO_POR_PROVAS.has(o.sourceId)) continue;
+        if (e.sourceId === o.sourceId && STRONG_SOURCES.has(e.sourceId)) continue;
+        roots.add(find(o.entityKey));
+      }
+      const mesmaFonte = (r) => (groupEntities.get(r) || []).some((x) => x.sourceId === e.sourceId && x !== e);
+      const ordem = [...roots].sort((a, b) => (mesmaFonte(b) - mesmaFonte(a))
+        || ((groupEntities.get(b) || []).length - (groupEntities.get(a) || []).length));
+      for (const r of ordem) {
+        if (find(r) === find(e.entityKey)) continue;
+        if (tryUnion(e.entityKey, r)) semIdentidadeLigadas++;
+      }
+    }
+  }
+  sub(`fichas sem país nem nascimento: ${semIdentidadeLigadas} uniões · ${vetosIdade} uniões travadas pela idade (anos de nascimento a 2+ anos)`);
 
   // ────────────────────────────────────────────────────────────────────
   // 5b. Casamento por provas (Federgolf, 02/11/2026 — regra dela: «apenas o
@@ -915,6 +953,33 @@ function countryCompatible(a, b) {
   // RU pode jogar em ES (caso Dmitrii). Tolerância em casos comuns.
   // Não bloqueamos por país; nationality é um signal mas não veto.
   return true;
+}
+
+/** Ficha sem país nem nascimento (nem data nem intervalo): o nome é tudo o que tem. */
+function semIdentidade(e) {
+  return !e.raw.country && !e.raw.dob && !e.raw.dobRange;
+}
+
+/** Anos de nascimento de que se tem a certeza: data exacta, ou o intervalo dos
+ *  escalões USKids (idade oficial em cada prova). Estimativas (GJGL, rankings) não contam. */
+function anosCertos(grupo) {
+  const out = [];
+  for (const e of grupo) {
+    if (e.raw.dob) { const y = +e.raw.dob.slice(0, 4); out.push([y, y]); }
+    else if (e.sourceId === "uskids" && e.raw.dobRange?.lo && e.raw.dobRange?.hi) {
+      out.push([+e.raw.dobRange.lo.slice(0, 4), +e.raw.dobRange.hi.slice(0, 4)]);
+    }
+  }
+  return out;
+}
+
+/** Os dois grupos têm anos de nascimento a 2+ anos de distância (1 de folga para datas mal escritas). */
+function anosIncompativeis(ga, gb) {
+  const a = anosCertos(ga), b = anosCertos(gb);
+  for (const [alo, ahi] of a) for (const [blo, bhi] of b) {
+    if (blo - ahi >= 2 || alo - bhi >= 2) return true;
+  }
+  return false;
 }
 
 function dobConflict(a, b) {

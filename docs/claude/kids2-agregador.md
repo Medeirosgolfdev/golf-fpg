@@ -254,6 +254,30 @@ existiam no kids2 mas não creditavam nenhum jogador. Jogadores vistos em
 resultados mas fora do roster ganham RawPlayer próprio (com dob/club quando o
 mitarjeta os traz).
 
+### Veto pela idade e fichas sem país (12/11/2026)
+
+O Santiago Dias português (FPG 42908, n. 2012) estava junto a um USKids
+brasileiro com o mesmo nome (610461, Boys 6 & Under em 2024, n. 2018). A ponte
+era a ficha do Champion of Champions 2023, **sem país nem data**: o passo 5
+aceitava «um dos países em falta» e ligava-a aos dois. Agora, no
+`identity-matcher.js`:
+
+- **Veto pela idade no `tryUnion`** (`anosIncompativeis`): dois grupos cujos
+  anos de nascimento certos (data exacta, ou o intervalo dos escalões USKids)
+  ficam a 2+ anos nunca se juntam. As estimativas (GJGL `birthYearEst`, anos de
+  rankings) não contam. O `forceMerge` continua a passar por cima.
+- **Fichas sem país nem nascimento (`semIdentidade`) ligam-se no passo 5a**,
+  depois das outras, a todos os homónimos como antes, mas por esta ordem:
+  primeiro o grupo que já tem outra ficha da MESMA fonte (outra edição da prova)
+  e depois o maior. Assim, quando o veto só deixa ligar a um, fica no certo.
+- ⚠ Deixar sozinhas as fichas ambíguas (1.ª tentativa) partia 73 fichas certas
+  (Dmitrii perdia o EOWAGR/WJGC): muitas uniões só se completam depois, no
+  forceMerge e no passo 5.9.
+- Mudaram 6 fichas: Santiago Dias, Connor Wilson, Miguel Freitas, Santiago
+  Concha, Oliver Smith (o fed 45647, n. 2008, saiu da ficha britânica; ficou o
+  51612, n. 2013, ligado só pelo nome) e Michael Egan. Teste em
+  `identity-matcher.test.js`.
+
 ### UI kids2 — checklist ao adicionar uma fonte
 
 1. `Kids2SourceKey` + `SOURCE_PILLS` em `KIDS2Page.tsx` e `SourceKey` em `kids2/Sidebar.tsx` (o filtro para fontes fracas funciona via `tournament.sourceId`, sem mais código).
