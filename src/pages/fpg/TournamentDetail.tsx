@@ -13,6 +13,7 @@ import type { CircuitRoundDraw } from "../../ui/circuit/types";
 import { roundDrawNode } from "../../ui/circuit/divisionPieces";
 import { ShareRoundsPanel, RoundAnalysisFor } from "../../ui/ShareRoundPanel";
 import { DificuldadePorBuraco, AnaliseManuel } from "../../ui/AnaliseDaVolta";
+import { compareNullsLast } from "../../hooks/useSort";
 import ManuelResultPills from "../../ui/ManuelResultPills";
 import React, { useContext, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -304,7 +305,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
       return { ...p, roundScores: rs, grossTotal: gross, toPar: gross - parPerRound * cutAfterRound, parTotal: parPerRound,
         _wd: false, _cut: false, _incomplete: false, _roundsPlayed: cutAfterRound, _hasAll: hasAll };
     }).filter((p) => p._hasAll);
-    trimmed.sort((a, b) => (a.grossTotal ?? 99999) - (b.grossTotal ?? 99999));
+    trimmed.sort((a, b) => compareNullsLast(a.grossTotal, b.grossTotal, 1));
     const lugares = posicoesComEmpates(trimmed, (p) => p.grossTotal ?? 0);
     for (const p of trimmed) (p as any)._pos = lugares.get(p);
     return { ...tournament, players: trimmed, rounds: cutAfterRound, _roundLabel: `Resumo Pré-Cut (R1–R${cutAfterRound})`, _isTotal: true } as unknown as Tournament;

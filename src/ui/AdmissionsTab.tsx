@@ -14,7 +14,7 @@
 
 import { useContext, useMemo, useState, type ReactNode } from "react";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
-import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf, isRecentHours, fmtDatePt, todayIso } from "../utils/format";
+import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf, isRecentHours, fmtDatePt, todayIso, fmtSignTipo } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
@@ -174,7 +174,7 @@ export default function AdmissionsTab({
           sort: (p) => sc(p)?.w ?? null, cell: (p) => sc(p) ? (sc(p)!.w ?? 0) : sem },
         { key: "k2forma", label: "Forma", title: "±par médio por 18 buracos nos últimos torneios (Kids 2 e provas de clube FPG)",
           sort: (p) => formaMedia(sc(p)?.u),
-          cell: (p) => { const f = formaMedia(sc(p)?.u); return f == null ? sem : f > 0 ? `+${f}` : f === 0 ? "E" : `${f}`.replace("-", "−"); } },
+          cell: (p) => { const f = formaMedia(sc(p)?.u); return f == null ? sem : f === 0 ? "E" : fmtSignTipo(f); } },
       );
     }
     return cols;

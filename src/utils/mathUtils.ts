@@ -50,6 +50,14 @@ export function bestN(scores: number[], n: number): number {
   return [...scores].sort((a, b) => a - b).slice(0, n).reduce((s, v) => s + v, 0);
 }
 
+/** Soma de uma lista: ignora vazios, e uma lista em falta vale 0. É A soma do
+ *  site (11/11/2026 — havia nove `soma`/`sum` escritas ficheiro a ficheiro). */
+export function soma(arr: readonly (number | null | undefined)[] | null | undefined): number {
+  let s = 0;
+  if (arr) for (const v of arr) if (v != null && Number.isFinite(v)) s += v;
+  return s;
+}
+
 /** Soma elementos de array numérico entre índices [from, to) */
 export function sumArr(arr: (number | null)[], from: number, to: number): number {
   let s = 0;

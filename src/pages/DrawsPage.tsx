@@ -24,6 +24,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
+import FichaLink from "../ui/FichaLink";
 import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
@@ -31,12 +32,11 @@ import KpiCard from "../ui/KpiCard";
 import TabRow from "../ui/TabRow";
 import FilterPillRow from "../ui/FilterPillRow";
 import { EscPill, roundPillClass, CircuitPill, type Circuito } from "../ui/PillBadge";
-import { kidsUrl } from "../ui/KidsLink";
 import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName, fmtToPar, medal as medalOf, fmtDatePt } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
 import { federadoPorNome, clubeCompativel } from "../utils/federadoPorNome";
-import { playerKey, isFedFpg } from "../utils/playerKey";
+import { playerKey } from "../utils/playerKey";
 import { signupanytimeUrl } from "../utils/signupanytime";
 import { clubLong, clubShort } from "../utils/playerUtils";
 import { loadPlayers } from "../data/loader";
@@ -367,23 +367,6 @@ function aggregateCompanions(rondas: Round[], lk: Lookups): CompanionRow[] {
 
 // ── Componentes auxiliares ────────────────────────────────────────────
 
-function CompanionNameLink({ row }: { row: CompanionRow }) {
-  // FPG → link para /jogadores/{fed} (só com um federado da FPG, não uma licença de fora)
-  if (isFedFpg(row.fed)) {
-    return (
-      <Link to={`/jogadores/${row.fed}`} className="tourn-pname tourn-pname-link">
-        {row.nome}
-      </Link>
-    );
-  }
-  // USKids/Intl → ficha kids2 (método único: kidsUrl → resolver do KIDS2Page)
-  return (
-    <Link to={kidsUrl({ name: row.nome })} className="tourn-pname tourn-pname-link">
-      {row.nome}
-    </Link>
-  );
-}
-
 function CircuitBadge({ circuitos }: { circuitos: Set<Circuito> }) {
   const order: Circuito[] = ["FPG", "USKids", "Intl"];
   return (
@@ -481,11 +464,6 @@ function TorneiosList({
   );
 }
 
-// Nome de um membro do grupo → link (FPG: /jogadores/{fed}; senão ficha kids2)
-function GroupMemberLink({ nome, fed }: { nome: string; fed: string | null }) {
-  const to = isFedFpg(fed) ? `/jogadores/${fed}` : kidsUrl({ name: nome });
-  return <Link to={to} className="tourn-pname-link">{nome}</Link>;
-}
 
 // Info de saída de um dia: hora de tee + buraco de partida (quando ≠ 1)
 function teeInfo(d: TournDay): string | null {
@@ -555,7 +533,7 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
                         return (
                           <div key={gi} className="u-d-flex u-ai-center u-gap-8px">
                             <span className="u-fl-1 u-minw-0 u-ov-hidden u-tov-ellipsis u-ws-nowrap">
-                              <GroupMemberLink nome={g.nome} fed={g.fed} />
+                              <FichaLink nome={g.nome} fed={g.fed} />
                               {g.escalao && (
                                 <span className="muted u-fs-fs-11 u-ml-6px">{g.escalao}</span>
                               )}
@@ -1099,7 +1077,7 @@ export default function DrawsPage() {
                           <ExpandArrow open={open} />
                         </td>
                         <td>
-                          <CompanionNameLink row={row} />
+                          <FichaLink nome={row.nome} fed={row.fed} className="tourn-pname tourn-pname-link" />
                         </td>
                         <td>
                           {row.escalao ? <EscPill esc={row.escalao} /> : MUTED}

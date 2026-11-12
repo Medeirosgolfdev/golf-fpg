@@ -25,6 +25,24 @@ export type RondaJogadorComCampo = RondaJogador & { par?: number[]; metros?: num
 const mesmaLista = (a: readonly number[] | undefined, b: readonly number[] | undefined): boolean =>
   (a?.length ?? 0) === (b?.length ?? 0) && (a ?? []).every((x, i) => x === b![i]);
 
+/** Nome, país, cidade e tee de um jogador — iguais nos dois formatos de ficheiro da USKids.
+ *  Sem nome → null (a linha não se aproveita). */
+function fichaDoJogador(player: any): { nome: string; pais: string; cidade: string; tee: string } | null {
+  const nome = `${player.first ?? ''} ${player.last ?? ''}`.trim();
+  if (!nome) return null;
+  return { nome, pais: (player.country ?? '').toUpperCase(), cidade: player.place ?? '', tee: player.teeMarkerName ?? '' };
+}
+
+/** As voltas de um jogador como [n.º da volta, dados], só as de número válido. */
+function voltasDoJogador(player: any): [number, any][] {
+  const out: [number, any][] = [];
+  for (const [rnStr, rd] of Object.entries(player.rounds ?? {})) {
+    const rn = parseInt(rnStr);
+    if (!isNaN(rn)) out.push([rn, rd]);
+  }
+  return out;
+}
+
 export function converterTorneioCompleto(raw: any): TorneioResult | null {
   // Detectar formato pela presença de signupanytime_t (novo) vs t+meta (antigo)
   const isNovoFormato = !!raw?.signupanytime_t;
@@ -129,16 +147,11 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
       // Players estão directamente em flight.flight_players (sem rounds_data)
       const fp: Record<string, any> = flight.flight_players ?? {};
       for (const player of Object.values(fp)) {
-        const nome = `${player.first ?? ''} ${player.last ?? ''}`.trim();
-        if (!nome) continue;
-        const pais   = (player.country ?? '').toUpperCase();
-        const cidade = player.place ?? '';
-        const tee    = player.teeMarkerName ?? '';
+        const ficha = fichaDoJogador(player);
+        if (!ficha) continue;
+        const { nome, pais, cidade, tee } = ficha;
 
-        for (const [rnStr, rdRaw] of Object.entries(player.rounds ?? {})) {
-          const rn = parseInt(rnStr);
-          if (isNaN(rn)) continue;
-          const rd = rdRaw as any;
+        for (const [rn, rd] of voltasDoJogador(player)) {
           if (!esc.roundsMap.has(rn)) esc.roundsMap.set(rn, []);
           // Cartão próprio só quando difere do do escalão (o do 1.º flight).
           const fc = cartaoDoFlight.get(rn);
@@ -258,16 +271,11 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
       const fp: Record<string, any> = roundsData[firstKey].flight_players ?? {};
 
       for (const player of Object.values(fp)) {
-        const nome = `${player.first ?? ''} ${player.last ?? ''}`.trim();
-        if (!nome) continue;
-        const pais   = (player.country ?? '').toUpperCase();
-        const cidade = player.place ?? '';
-        const tee    = player.teeMarkerName ?? '';
+        const ficha = fichaDoJogador(player);
+        if (!ficha) continue;
+        const { nome, pais, cidade, tee } = ficha;
 
-        for (const [rnStr, rdRaw] of Object.entries(player.rounds ?? {})) {
-          const rn = parseInt(rnStr);
-          if (isNaN(rn)) continue;
-          const rd = rdRaw as any;
+        for (const [rn, rd] of voltasDoJogador(player)) {
           // Tentar obter par do flight_round
           if (!esc.parPorRonda.has(rn) && rd.flight_round) {
             const par = frPars[rd.flight_round];

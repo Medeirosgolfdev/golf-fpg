@@ -15,6 +15,7 @@
  * vazio exactamente quando ele serve para alguma coisa.
  */
 import type { Tournament, Player } from "../../data/fpgTypes";
+import { compareNullsLast } from "../../hooks/useSort";
 import { computeSD } from "../../data/fpgUtils";
 import { isManuel } from "../../constants/manuel";
 import { calcScore } from "../../utils/whsCalc";
@@ -525,8 +526,8 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
 
   // Melhor ±par aqui primeiro; sem ±par, pela previsão.
   out.sort((a, b) =>
-    (a.bestToPar ?? 999) - (b.bestToPar ?? 999)
-    || (a.forecast?.total ?? 9e9) - (b.forecast?.total ?? 9e9)
+    compareNullsLast(a.bestToPar, b.bestToPar, 1)
+    || compareNullsLast(a.forecast?.total, b.forecast?.total, 1)
     || a.name.localeCompare(b.name));
   return out;
 }

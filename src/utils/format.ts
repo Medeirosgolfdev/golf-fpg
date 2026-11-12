@@ -306,6 +306,13 @@ export function fmtSign(n: number, decimals?: number): string {
   return n > 0 ? `+${s}` : s;
 }
 
+/** Como o `fmtSign`, mas com o sinal de menos tipográfico («−1.2»): Scout, Forma,
+ *  PCC e Campos já o usavam, cada um escrito à mão (11/11/2026). Zero sem sinal. */
+export function fmtSignTipo(n: number, decimals?: number): string {
+  const s = decimals != null ? Math.abs(n).toFixed(decimals) : String(Math.abs(n));
+  return n > 0 ? `+${s}` : n < 0 ? `−${s}` : s;
+}
+
 /** Número com sinal e parênteses: "(E)" / "(+3)" / "(-2)". Usado para subtotais F9/B9. */
 export function fmtSignParen(n: number): string {
   if (n === 0) return "(E)";

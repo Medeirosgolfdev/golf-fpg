@@ -8,6 +8,7 @@
  * ou Independente, e a ecléctica.
  */
 import { useEffect, useState } from "react";
+import { compareNullsLast } from "../../hooks/useSort";
 import { isNoCardGross } from "../../data/intlCommon";
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import type { CircuitDivision, CircuitEntry } from "./types";
@@ -78,7 +79,7 @@ export function editionFromTournament(
   }
   const completos = players.filter((pl) => pl.rounds.length === nRoundsMax);
   if (completos.length < MIN_FIELD) return null;
-  completos.sort((a, b) => (a.officialPlace ?? Infinity) - (b.officialPlace ?? Infinity) || a.total - b.total);
+  completos.sort((a, b) => compareNullsLast(a.officialPlace, b.officialPlace, 1) || a.total - b.total);
   return {
     tcode: meta.id,
     name: meta.name || t.name,

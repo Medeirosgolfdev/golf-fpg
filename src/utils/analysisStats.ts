@@ -10,6 +10,7 @@
  *
  * Funções puras: sem React, sem loaders, sem estado — testáveis à parte.
  */
+import { meanArr } from "./mathUtils";
 
 export interface ScoringDist {
   eagles: number;   // -2 ou melhor
@@ -199,13 +200,12 @@ export function nineSplit(rounds: readonly (readonly number[])[], par: readonly 
     }
   }
 
-  const avg = (a: number[]): number | null => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
   return {
     front, back,
-    frontAvg: avg(frontGs),
-    backAvg:  avg(backGs),
-    frontToParAvg: avg(frontTps),
-    backToParAvg:  avg(backTps),
+    frontAvg: meanArr(frontGs),
+    backAvg:  meanArr(backGs),
+    frontToParAvg: meanArr(frontTps),
+    backToParAvg:  meanArr(backTps),
   };
 }
 

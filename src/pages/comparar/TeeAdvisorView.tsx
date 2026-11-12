@@ -338,7 +338,7 @@ function buildConclusions(a: TeeMetrics, b: TeeMetrics): Conclusion[] {
         <>
           <TeeNameSpan tee={longer.tee} /> dá +{perdao} pancada{perdao === 1 ? "" : "s"} de perdão (gross alvo {longer.grossAlvo} vs {shorter.grossAlvo})
           {haveGir
-            ? <> e cria {perigos} {perigos === 1 ? "perigo" : "perigos"} — buraco{perigos === 1 ? "" : "s"} fora de alcance em regulação. Saldo {saldo > 0 ? "+" : ""}{saldo}: {
+            ? <> e cria {perigos} {perigos === 1 ? "perigo" : "perigos"} — buraco{perigos === 1 ? "" : "s"} fora de alcance em regulação. Saldo {fmtSign(saldo)}: {
                 saldo >= 2 ? <>a compensação cobre os perigos <b>com folga</b> — o tee longo compensa.</>
                 : saldo === 1 ? <>cobre os perigos <b>à justa</b>, sem margem — se algo correr mal não há folga. Na prática, <b>empate</b>.</>
                 : saldo === 0 ? <>iguala exatamente os perigos — <b>empate</b>.</>
@@ -370,7 +370,7 @@ function buildConclusions(a: TeeMetrics, b: TeeMetrics): Conclusion[] {
       const g = Math.round(m.deltaHab!);
       if (g > 200) return `${g} m acima do que joga em competição`;
       if (g < -200) return `${Math.abs(g)} m abaixo do que joga em competição`;
-      return `à distância que já joga em competição (${g >= 0 ? "+" : ""}${g} m)`;
+      return `à distância que já joga em competição (${fmtSign(g)} m)`;
     };
     cs.push({
       icon: "📏", title: "Ajuste à distância de competição", short: "Distância",
@@ -537,7 +537,7 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
               <td><TeePill tee={m.tee} /></td>
               <td className="r mono">{m.dist ?? "–"}</td>
               <td className={"r mono" + (m.deltaHab != null && Math.abs(m.deltaHab) <= 200 ? " u-c-color-good-dark" : "")}>
-                {m.deltaHab != null && habitual != null ? (m.deltaHab > 0 ? "+" : "") + m.deltaHab.toFixed(0) : "–"}
+                {m.deltaHab != null && habitual != null ? fmtSign(m.deltaHab, 0) : "–"}
               </td>
               <td className="r mono">{m.par || "–"}</td>
               <td className="r mono">{m.cr != null ? m.cr.toFixed(1) : "–"}</td>
@@ -880,7 +880,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                     <div className="u-fs-fs-13 u-mt-4px u-lh-1_6">
                       {recommendation.mode === "suit" ? (
                         <>
-                          Ainda não bateste as <TeeNameSpan tee={recommendation.shorter.tee} /> deste campo{recommendation.sForm != null && <> (resultado típico {fmtToPar(Math.round(recommendation.sForm))} vs par {recommendation.shortRecentN === recommendation.shorter.hist.n ? "" : "nas últimas "}{recommendation.shortRecentN} volta{recommendation.shortRecentN === 1 ? "" : "s"}, quando o handicap aqui aponta para ~{fmtToPar(recommendation.shorterPh ?? 0)})</>} — mas isso pode não ser falta de jogo. Um campo curto demais <b>tira-te o driver da mão</b>, deixa-te distâncias <i>tweener</i> (nem wedge cheio, nem ferro confortável) e não premia o teu comprimento. As <TeeNameSpan tee={recommendation.longer.tee} /> ({recommendation.longer.dist} m) estão dentro da distância que já jogas a sério{recommendation.habitual != null ? <> ({Math.round(recommendation.habitual)} m)</> : null} e devolvem-te o driver, pancadas cheias e <b>variedade de tacos</b> no approach — podem encaixar melhor no teu jogo.{perfLine}{recommendation.perdao != null && recommendation.perdao > 0 && <> Ainda recebes +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} de perdão{recommendation.alerts > 0 ? <> (saldo {recommendation.saldo! > 0 ? "+" : ""}{recommendation.saldo})</> : null}.</>} Vale a pena experimentá-las e comparar os resultados.{recommendation.neverPlayedHere && <> Como é a tua estreia no campo, ganha-lhe a medida nas primeiras voltas.</>}
+                          Ainda não bateste as <TeeNameSpan tee={recommendation.shorter.tee} /> deste campo{recommendation.sForm != null && <> (resultado típico {fmtToPar(Math.round(recommendation.sForm))} vs par {recommendation.shortRecentN === recommendation.shorter.hist.n ? "" : "nas últimas "}{recommendation.shortRecentN} volta{recommendation.shortRecentN === 1 ? "" : "s"}, quando o handicap aqui aponta para ~{fmtToPar(recommendation.shorterPh ?? 0)})</>} — mas isso pode não ser falta de jogo. Um campo curto demais <b>tira-te o driver da mão</b>, deixa-te distâncias <i>tweener</i> (nem wedge cheio, nem ferro confortável) e não premia o teu comprimento. As <TeeNameSpan tee={recommendation.longer.tee} /> ({recommendation.longer.dist} m) estão dentro da distância que já jogas a sério{recommendation.habitual != null ? <> ({Math.round(recommendation.habitual)} m)</> : null} e devolvem-te o driver, pancadas cheias e <b>variedade de tacos</b> no approach — podem encaixar melhor no teu jogo.{perfLine}{recommendation.perdao != null && recommendation.perdao > 0 && <> Ainda recebes +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} de perdão{recommendation.alerts > 0 ? <> (saldo {fmtSign(recommendation.saldo!)})</> : null}.</>} Vale a pena experimentá-las e comparar os resultados.{recommendation.neverPlayedHere && <> Como é a tua estreia no campo, ganha-lhe a medida nas primeiras voltas.</>}
                         </>
                       ) : recommendation.mode === "go" ? (
                         <>
@@ -894,7 +894,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                           )}
                           {recommendation.perdao != null && recommendation.perdao > 0 && (
                             <> Ainda por cima recebes +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} de perdão{recommendation.alerts > 0
-                              ? <> para {recommendation.alerts} perigo{recommendation.alerts === 1 ? "" : "s"} (saldo {recommendation.saldo! > 0 ? "+" : ""}{recommendation.saldo}{recommendation.goodDeal ? ", cobre-os com folga" : ""})</>
+                              ? <> para {recommendation.alerts} perigo{recommendation.alerts === 1 ? "" : "s"} (saldo {fmtSign(recommendation.saldo!)}{recommendation.goodDeal ? ", cobre-os com folga" : ""})</>
                               : <> e nenhum buraco fica fora de alcance</>}.</>
                           )}
                           {recommendation.beyondWindow && (
@@ -920,7 +920,7 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
                         <>
                           <TeeNameSpan tee={recommendation.longer.tee} /> ({recommendation.longer.dist} m) está
                           {recommendation.habitual != null
-                            ? <> acima da distância que já jogas a sério ({Math.round(recommendation.habitual)} m){recommendation.perdao != null && recommendation.alerts > 0 && <>, e a troca só te dá +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} para {recommendation.alerts} perigo{recommendation.alerts === 1 ? "" : "s"} (saldo {recommendation.saldo! > 0 ? "+" : ""}{recommendation.saldo})</>}</>
+                            ? <> acima da distância que já jogas a sério ({Math.round(recommendation.habitual)} m){recommendation.perdao != null && recommendation.alerts > 0 && <>, e a troca só te dá +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} para {recommendation.alerts} perigo{recommendation.alerts === 1 ? "" : "s"} (saldo {fmtSign(recommendation.saldo!)})</>}</>
                             : <> acima do comprimento adequado ao teu drive de {driveM} m (24–28× ≈ {recommendation.low}–{recommendation.high} m)</>}.
                           {" "}Consolida primeiro nas <TeeNameSpan tee={recommendation.shorter.tee} /> e sobe quando jogares esta distância com regularidade.
                         </>

@@ -10,6 +10,7 @@
  * fórmula de alcance: utils/reach.
  */
 import React, { useMemo } from "react";
+import { fmtSign } from "../utils/format";
 import type { Tee } from "../data/types";
 import { getTeeHex } from "../utils/teeColors";
 import { buildReach, type HoleReach } from "../utils/reach";
@@ -111,13 +112,13 @@ export default function HoleDiffTable({ tees, driveM, secondM }: {
           {/* Delta (so com 2 tees) */}
           {two && (
             <tr className="u-bt-2px-solid-border">
-              <td className="hdt-lbl">Δ (m) <span className="muted fw-400">· {totals[0] && totals[1] ? (totals[0] - totals[1] > 0 ? "+" : "") + (totals[0] - totals[1]) : "–"}</span></td>
+              <td className="hdt-lbl">Δ (m) <span className="muted fw-400">· {totals[0] && totals[1] ? fmtSign(totals[0] - totals[1]) : "–"}</span></td>
               {holes.map(h => {
                 const a = distAt(0, h), b = distAt(1, h);
                 const delta = a != null && b != null ? a - b : null;
                 return (
                   <td key={h} className={"ta-c mono " + (delta != null && Math.abs(delta) >= 30 ? "u-fw-800" : "u-fw-400")}>
-                    {delta != null ? (delta > 0 ? "+" : "") + delta : "–"}
+                    {delta != null ? fmtSign(delta) : "–"}
                   </td>
                 );
               })}

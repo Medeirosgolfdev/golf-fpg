@@ -7,6 +7,7 @@
  * recente desse 9 (e mostra-se a pill).
  */
 import { useMemo, useState } from "react";
+import { soma } from "../utils/mathUtils";
 import type { PlayerPageData } from "../data/playerDataLoader";
 import { eclecticos9, type LoopEclectic, type LoopTee } from "../data/sserraLoops";
 import { useCamposDe9 } from "../hooks/useCamposDe9";
@@ -20,7 +21,6 @@ import ExpandArrow from "./ExpandArrow";
 import { MUTED } from "./tableCells";
 import SectionTitle from "./SectionTitle";
 
-const soma = (g: (number | null)[]) => g.reduce<number>((s, v) => s + (v ?? 0), 0);
 const corPar = (d: number) => toneClass(d, { muted: true });
 /** Voltas (dias), não metades: uma volta de 18 num 9 jogado 2× conta uma vez. */
 const nVoltas = (t: LoopTee) => new Set(t.rounds.map(r => r.scoreId)).size;

@@ -33,7 +33,7 @@ import TeePill from "../../ui/TeePill";
 import { physicalTeeKey } from "../../utils/teeGroups";
 import { teeChoiceKey, findTeeByChoice, teeChoiceOptions } from "../../utils/teeChoice";
 import { calcSD, calcPlayingHcp } from "../../utils/whsCalc";
-import { fmtSD, fmtHcp, fmtSign } from "../../utils/format";
+import { fmtSD, fmtHcp, fmtSign, fmtToPar } from "../../utils/format";
 import { teeHexFromTee as teeHex } from "../../utils/teeUtils";
 import { MANUEL_FED } from "../../constants/manuel";
 import { isPtCountry } from "../../utils/flagUtils";
@@ -345,7 +345,7 @@ function TwoTeeSDTable({
             return (
               <tr key={r.delta} className={["sim-row", isPar ? "sim-row-par" : ""].join(" ")}>
                 <td className={"mt-delta" + (isPar ? " is-par" : "")}>
-                  {r.delta === 0 ? "E" : r.delta > 0 ? `+${r.delta}` : r.delta}
+                  {fmtToPar(r.delta)}
                 </td>
                 {allCols.map((c, i) => {
                   const sd = r.sds[i];
@@ -591,7 +591,7 @@ function CourseSideBySide({
                             <div key={`d${i}`} className="u-d-flex u-ai-center u-jc-center u-p-0-6px">
                               {delta !== null ? (
                                 <span className="u-fs-fs-10 u-fw-700 u-ff-font-mono u-c-text-2">
-                                  {delta > 0 ? `+${delta}` : delta}m
+                                  {fmtSign(delta)}m
                                 </span>
                               ) : MUTED}
                             </div>
@@ -850,7 +850,7 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
                   onChange={v => setPcc(Number(v))}
                 >
                   {[-3, -2, -1, 0, 1, 2, 3].map(v => (
-                    <option key={v} value={v}>{v > 0 ? `+${v}` : v}</option>
+                    <option key={v} value={v}>{fmtSign(v)}</option>
                   ))}
                 </Select>
               </div>

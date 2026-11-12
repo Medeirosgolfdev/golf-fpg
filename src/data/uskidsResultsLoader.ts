@@ -49,18 +49,19 @@ function carregar(): Promise<ResultsData> {
 
   return Promise.all([
     // ficheiro auto-gerado — cache diária para não re-buscar em cada refresh
-    fetch(`/data/uskids-results.json?v=${daily}`)
-      .then(r => {
-        if (!r.ok) {
-          registar({ path: "/data/uskids-results.json", status: "error", error: `HTTP ${r.status}`, group: "results" });
+    cachedFetchJson<ResultsData>(`/data/uskids-results.json?v=${daily}`)
+      .then((d): ResultsData => {
+        if (!d) {
+          registar({ path: "/data/uskids-results.json", status: "error", error: "o ficheiro não existe", group: "results" });
           return { gerado_em: "", resultados: [] };
         }
-        return r.json().then((d: ResultsData) => {
-          registar({ path: "/data/uskids-results.json", status: "loaded", count: d.resultados?.length, group: "results" });
-          return d;
-        });
+        registar({ path: "/data/uskids-results.json", status: "loaded", count: d.resultados?.length, group: "results" });
+        return d;
       })
-      .catch((): ResultsData => ({ gerado_em: "", resultados: [] })),
+      .catch((e): ResultsData => {
+        registar({ path: "/data/uskids-results.json", status: "error", error: String(e), group: "results" });
+        return { gerado_em: "", resultados: [] };
+      }),
     // ficheiros históricos permanentes (usam cachedFetchJson — cached em memória na sessão)
     ...historicosUrls.map((url) => cachedFetchJson(url).then(d => {
       registar({ path: url, status: "loaded", group: "completos" });

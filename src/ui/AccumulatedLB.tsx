@@ -9,6 +9,7 @@ import type { EscLookup } from "../utils/playerUtils";
 import type { Tournament } from "../data/fpgTypes";
 import { numGross, resolveEsc, playerDob, computeSD, playedParTotal, isRoundInProgress } from "../data/fpgUtils";
 import { distFromRound } from "../utils/analysisStats";
+import { fmtSign } from "../utils/format";
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import { RoundPill } from "./PillBadge";
 import { HoleBadge } from "./tableCells";
@@ -227,7 +228,7 @@ export function AccumulatedLB({
   }
   const holesPerRound = [...holesCount.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
 
-  const fmtDelta = (x: number) => `${x >= 0 ? "+" : ""}${x.toFixed(1)}`;
+  const fmtDelta = (x: number) => fmtSign(x, 1);
 
   // Early return seguro — useMemo já foi chamado acima
   if (!rawPlayers.length) return <EmptyState size="sm" message="Sem resultados." />;

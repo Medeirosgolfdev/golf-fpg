@@ -19,6 +19,7 @@ import {
   type DificuldadeBuraco,
 } from "../data/dificuldadeBuraco";
 import { parTypeStats } from "../utils/analysisStats";
+import { soma } from "../utils/mathUtils";
 import { findManuelNaProva } from "../constants/manuel";
 import { scClass, toParClass } from "../utils/scoreDisplay";
 import { fmtToPar, fmtSign, fmtSignParen } from "../utils/format";
@@ -28,7 +29,6 @@ import SectionTitle from "./SectionTitle";
 import { MUTED } from "./tableCells";
 import TeeSwatch from "./TeeSwatch";
 
-const soma = (xs: readonly number[]) => xs.reduce((a, b) => a + b, 0);
 const corMedia = (d: number | null, neutra: string) => (d == null ? neutra : d > 0.7 ? "c-danger" : d < 0.2 ? "c-good" : neutra);
 
 /** A tabela de um tee: Par · Média · vs Par (e o cartão do Manuel, se for o tee dele). */

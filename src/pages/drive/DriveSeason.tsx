@@ -29,7 +29,8 @@ import { getTeeHex } from "../../utils/teeColors";
 import { shortCampo } from "../../data/drive/driveCircuitData";
 import { AnoEscalaoPill } from "../../ui/AnoEscalaoPill";
 import { MUTED } from "../../ui/tableCells";
-import { fmtHcp, medal, norm, shortDateSlash } from "../../utils/format";
+import { fmtHcp, medal, norm, shortDateSlash, fmtToPar } from "../../utils/format";
+import { isoDeData } from "../../utils/dias";
 import { flagOrEmpty, isPtCountry } from "../../utils/flagUtils";
 import { ESCALOES_DRIVE } from "../../constants/escaloes";
 import type { DriveCalEntry } from "../../data/drive/driveCalendar";
@@ -55,7 +56,7 @@ const baseKey = (k: string) => k.replace(/_(R\d+|Total)_/, "_");
 function campoDoCalendario(calId: string | undefined, date: string): string {
   if (!calId) return "";
   const ev = EVENTS.find(e => e.calId === calId
-    && `${e.date.getFullYear()}-${String(e.date.getMonth() + 1).padStart(2, "0")}-${String(e.date.getDate()).padStart(2, "0")}` === date);
+    && isoDeData(e.date) === date);
   return ev ? shortCampo(ev.campo) : "";
 }
 
@@ -123,7 +124,7 @@ function EtapaCell({ r, modal, bySex }: { r: TournResult | undefined; modal: { t
   const lugar = lugarOf(r, bySex);
   const outroTee = r.tee && modal && r.tee !== modal.tee;
   const title = [r.tee && `Tee ${r.tee}${r.meters ? ` · ${fmtM(r.meters)} m` : ""}`,
-    !r.wd && `Total ${r.gross} (${r.toPar > 0 ? "+" : ""}${r.toPar === 0 ? "E" : r.toPar})`].filter(Boolean).join("\n");
+    !r.wd && `Total ${r.gross} (${fmtToPar(r.toPar)})`].filter(Boolean).join("\n");
   // Grelha de 2 linhas (para a linha da tabela não engordar): em cima as
   // pancadas de cada volta e o lugar; em baixo o SD de cada volta e os pontos.
   return (

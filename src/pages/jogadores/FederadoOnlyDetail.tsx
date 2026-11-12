@@ -33,6 +33,7 @@ import { isoToDmy, todayIso } from "../../utils/format";
 import SectionTitle from "../../ui/SectionTitle";
 import { numSafe } from "../../utils/mathUtils";
 import { diasEntre } from "../../utils/dias";
+import { meanArr } from "../../utils/mathUtils";
 
 /** Máximo de scorecards a enriquecer no batch (tee/gross) = tecto de linhas
  *  renderizadas pela FederadoRoundsTable. Sem tecto, um federado veterano com
@@ -307,7 +308,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
         });
         const sds = liveRounds.filter(r => r.score_differential != null).map(r => Number(r.score_differential)).filter(n => isFinite(n));
         const bestSD = sds.length ? Math.min(...sds) : null;
-        const avgSD = sds.length ? sds.reduce((a, b) => a + b, 0) / sds.length : null;
+        const avgSD = meanArr(sds);
         const tornRounds = liveRounds.filter(r => /torn/i.test(String(r.score_origin || "")));
         const lastDate = liveRounds[0]?.score_dateStr?.slice(0, 10) || null;
         const kpi = (label: string, value: ReactNode, sub?: string) => (

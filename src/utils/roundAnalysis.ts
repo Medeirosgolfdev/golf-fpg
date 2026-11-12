@@ -9,6 +9,7 @@
  */
 
 import { distFromRound, parTypeStats, PAR_TYPES } from "./analysisStats";
+import { soma as sum } from "./mathUtils";
 
 export type ARound = { round: number; scores: number[]; par: number[] };
 export type Tone = "good" | "bad" | "neutral";
@@ -16,7 +17,6 @@ export type Insight = { tone: Tone; text: string };
 export type RoundBlock = { round: number; prev: number; gross: number; prevGross: number; insights: Insight[] };
 export type Analysis = { headline: Insight[]; rounds: RoundBlock[]; tournament: Insight[] };
 
-const sum = (a: number[]) => a.reduce((x, y) => x + y, 0);
 const gross = (r: ARound) => sum(r.scores);
 const toPar = (r: ARound) => gross(r) - sum(r.par);
 const fmtTP = (v: number) => (v > 0 ? `+${v}` : v === 0 ? "par" : String(v));

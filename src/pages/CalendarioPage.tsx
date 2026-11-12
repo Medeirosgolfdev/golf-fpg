@@ -26,7 +26,8 @@ import { norm, todayIso } from "../utils/format";
 import { schoolDay, isFreeDay, freeDayReason } from "../data/schoolCalendar";
 import { CAL_DEFS, EVENTS, DOB_OVERRIDES, ANO_BASE, ANO_FIM } from "../data/calendarEvents";
 import type { CalEvent, CalGroup, CalDef } from "../data/calendarEvents";
-import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
+import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG, fmtDayMonthYear, fmtDateSpan } from "../utils/format";
+import { isoDeData } from "../utils/dias";
 import SidebarToggle from "../ui/SidebarToggle";
 import SearchInput from "../ui/SearchInput";
 import Modal from "../ui/Modal";
@@ -135,10 +136,9 @@ function eventOnDay(e: CalEvent, d: Date) {
   return !!(e.endDate && d >= e.date && d <= e.endDate);
 }
 function fmtRange(e: CalEvent): string {
-  const o: Intl.DateTimeFormatOptions = { day: "numeric", month: "short" };
-  if (!e.endDate || isSameDay(e.date, e.endDate))
-    return `${DAY_NAMES[e.date.getDay()]}, ${e.date.toLocaleDateString("pt-PT", o)} ${e.date.getFullYear()}`;
-  return `${e.date.toLocaleDateString("pt-PT", o)} – ${e.endDate.toLocaleDateString("pt-PT", o)} ${e.date.getFullYear()}`;
+  // Datas pelos formatadores globais (utils/format): «Qui, 12 Nov 2026» e «12–14 Nov 2026».
+  if (!e.endDate || isSameDay(e.date, e.endDate)) return `${DAY_NAMES[e.date.getDay()]}, ${fmtDayMonthYear(isoDeData(e.date))}`;
+  return fmtDateSpan(isoDeData(e.date), isoDeData(e.endDate));
 }
 function calColor(e: CalEvent): string { return CAL_MAP.get(e.calId)?.color ?? "var(--text-3)"; }
 
@@ -809,7 +809,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
 function DayEventsPopup({ date, events, onSelect, onClose }: {
   date: Date; events: CalEvent[]; onSelect: (e: CalEvent) => void; onClose: () => void;
 }) {
-  const title = `${DAY_NAMES[date.getDay()]}, ${date.toLocaleDateString("pt-PT", { day: "numeric", month: "long" })} ${date.getFullYear()}`;
+  const title = `${DAY_NAMES[date.getDay()]}, ${date.getDate()} de ${MONTHS_PT_LONG[date.getMonth()].toLowerCase()} ${date.getFullYear()}`;
   return (
     <Modal onClose={onClose} size="sm" bare className="u-maxh-80vh u-d-flex u-fd-column u-animation-calpopin-0_2s-ease">
         <div className="u-bg-accent u-p-14px-18px u-d-flex u-jc-space-between u-ai-center u-fsh-0">

@@ -8,7 +8,7 @@ import { useAppContext } from "../context/AppContext";
 import { useCourses } from "../context/CoursesContext";
 import { sortTees, filterTees } from "../utils/teeUtils";
 import { SDTable, MultiTeeSDTable, type HolesMode } from "../ui/ScoreTable";
-import { fmtCR, fmtToPar, titleCase } from "../utils/format";
+import { fmtCR, fmtToPar, titleCase, fmtSign } from "../utils/format";
 import {
   calcSD, calcScore, calcCourseHcp, calcPlayingHcp, expectedSD9, calcStrokesPerHole, get9hRatings,
   scoreDifferential, scoreForDifferential,
@@ -55,7 +55,7 @@ type SimPlayersFile = { months: number; players: Record<string, SimExtraPlayer>;
 /* Decimais com ponto, como no resto do site (decisão de 02/11/2026) */
 const dec1 = (v: number): string => v.toFixed(1);
 const sdPt = (v: number | null | undefined): string =>
-  v == null || !Number.isFinite(v) ? "—" : (v >= 0 ? "+" : "") + dec1(v);
+  v == null || !Number.isFinite(v) ? "—" : fmtSign(v, 1);
 
 const MANUAL_KEY = "__manual__";
 
@@ -202,7 +202,7 @@ function HcpStrip({
       {pcc !== 0 && (
         <div className="sim-strip-cell">
           <span className="sim-strip-label">PCC</span>
-          <span className="sim-strip-num">{pcc > 0 ? `+${pcc}` : pcc}</span>
+          <span className="sim-strip-num">{fmtSign(pcc)}</span>
         </div>
       )}
       {exp9hSD !== null && (
@@ -284,7 +284,7 @@ function scSumMax(slice: ComputedHole[]): number {
 function scFmtVsPar(gross: number | null, p: number): string {
   if (gross === null) return "–";
   const d = gross - p;
-  return d === 0 ? "E" : d > 0 ? `+${d}` : String(d);
+  return fmtToPar(d);
 }
 
 function AgsSection({
@@ -622,7 +622,7 @@ function AgsSection({
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
                   <td className={vsParCls(h.vsPar)}>
-                    {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
+                    {h.vsPar != null ? fmtToPar(h.vsPar) : ""}
                   </td>
                   {is18 && i === 8 && (
  <td className={`col-out fw-600 ${grossOut != null ? (grossOut - scSumPar(front) <= 0 ? "u-c-color-good" : "u-c-var-color-warn-e07b00") : "u-c-border"}`}>
@@ -633,7 +633,7 @@ function AgsSection({
               ))}
               {is18 && back.map((h) => (
                 <td key={h.hole} className={vsParCls(h.vsPar)}>
-                  {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
+                  {h.vsPar != null ? fmtToPar(h.vsPar) : ""}
                 </td>
               ))}
               <td className={`col-${is18 ? "in" : "total"} fw-600`}>
@@ -879,7 +879,7 @@ function RoundImpactCard({ name, hi, score, isAgs, r, onSend }: {
         <div className={`sim-target-cell${tone}`}>
           <span className="sim-strip-label">Handicap Index</span>
           <span className="sim-strip-num">{dec1(hi)} → {dec1(r.newHI)}</span>
-          <span className="sim-strip-sub">{delta > 0 ? "+" : ""}{dec1(delta)}</span>
+          <span className="sim-strip-sub">{fmtSign(delta, 1)}</span>
         </div>
         <div className="sim-target-cell">
           <span className="sim-strip-label">Nas {qty} melhores</span>
@@ -1341,6 +1341,18 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
   }, [teeData, roundImpact, roundScore, holesMode, isManual, selected, selectedTee, pcc]);
 
   const teeLabel = isManual ? "CR/Slope manual" : selectedTee ? titleCase(selectedTee.teeName) : "";
+  // Aviso dos 9 buracos — o mesmo com o campo escrito à mão e com o campo da lista.
+  const aviso9h = is9h && (
+    <div className="notice notice-info">
+      <strong>WHS 2024 — 9 buracos:</strong> O SD de 18 buracos é calculado somando
+      o SD dos 9 buracos jogados com o Expected SD baseado no HI do jogador.
+      Fórmula: <code>SD_18h = SD_9h + Expected_9h(HI)</code>
+      {hi === null && (
+        <span className="notice-warn-text"> ⚠ Preenche o HI em cima para ver o SD 18h.</span>
+      )}
+    </div>
+  );
+
   const targetCard = playerName && poolHI != null && targets && teeData ? (
     <TargetCard name={playerName} hi={poolHI} t={targets} par={teeData.par}
       teeLabel={teeLabel} holesLabel={holesLabel} />
@@ -1497,16 +1509,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
                   <HcpStrip hi={hi} courseHcp={courseHcp} playingHcp={playingHcp} allowance={allowance}
                     cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} exp9hSD={exp9hSD} />
 
-                  {is9h && (
-                    <div className="notice notice-info">
-                      <strong>WHS 2024 — 9 buracos:</strong> O SD de 18 buracos é calculado somando
-                      o SD dos 9 buracos jogados com o Expected SD baseado no HI do jogador.
-                      Fórmula: <code>SD_18h = SD_9h + Expected_9h(HI)</code>
-                      {hi === null && (
-                        <span className="notice-warn-text"> ⚠ Preenche o HI em cima para ver o SD 18h.</span>
-                      )}
-                    </div>
-                  )}
+                  {aviso9h}
 
                   {targetCard}
 
@@ -1560,17 +1563,7 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
               <HcpStrip hi={hi} courseHcp={courseHcp} playingHcp={playingHcp} allowance={allowance}
                 cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} exp9hSD={exp9hSD} />
 
-              {/* Info box para 9 buracos */}
-              {is9h && (
-                <div className="notice notice-info">
-                  <strong>WHS 2024 — 9 buracos:</strong> O SD de 18 buracos é calculado somando
-                  o SD dos 9 buracos jogados com o Expected SD baseado no HI do jogador.
-                  Fórmula: <code>SD_18h = SD_9h + Expected_9h(HI)</code>
-                  {hi === null && (
-                    <span className="notice-warn-text"> ⚠ Preenche o HI em cima para ver o SD 18h.</span>
-                  )}
-                </div>
-              )}
+              {aviso9h}
 
               {targetCard}
 

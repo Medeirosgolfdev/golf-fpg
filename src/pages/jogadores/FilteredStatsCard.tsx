@@ -6,6 +6,7 @@
  * por HCP, distribuições por escalão/clube/região e histograma de HCP).
  */
 import type { FederadoRaw, MergedPlayer } from "../../data/federadosLoader";
+import { compareNullsLast } from "../../hooks/useSort";
 import { gf, isForeignPrefix } from "../../utils/flagUtils";
 import SexBadge from "../../ui/SexBadge";
 import EmptyState from "../../ui/EmptyState";
@@ -62,7 +63,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
   }
 
   const avgHcp = withHcp ? totalHcp / withHcp : 0;
-  const sortedEsc = Object.entries(byEsc).sort((a, b) => (ESC_IDX.get(a[0]) ?? 999) - (ESC_IDX.get(b[0]) ?? 999));
+  const sortedEsc = Object.entries(byEsc).sort((a, b) => compareNullsLast(ESC_IDX.get(a[0]), ESC_IDX.get(b[0]), 1));
   const maxEsc = Math.max(...Object.values(byEsc).map(v => v.m + v.f), 1);
   const topClubs = Object.entries(byClub).sort((a, b) => b[1].count - a[1].count).slice(0, 12);
   const maxClub = topClubs[0]?.[1].count ?? 1;

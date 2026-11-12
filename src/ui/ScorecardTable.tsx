@@ -138,7 +138,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
           return (
             <React.Fragment key={h}>
               <td className="u-c-text-3">
-                {diff != null ? (diff === 0 ? "=" : (diff > 0 ? "+" : "") + diff) : ""}
+                {diff != null ? (diff === 0 ? "=" : fmtSign(diff)) : ""}
               </td>
               {h === frontEnd - 1 && !is9 && (
                 <td className="col-out fw-600 u-c-text-3">{deltaTroco(0, frontEnd)}</td>

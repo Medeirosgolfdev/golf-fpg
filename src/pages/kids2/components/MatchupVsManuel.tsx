@@ -19,6 +19,7 @@ import ExtLink from "../../../ui/ExternalLink";
 import { TrophyPos } from "../../../ui/PosBadge";
 import SectionTitle from "../../../ui/SectionTitle";
 import { resumoResultado, diferencaDeTotais, type ResumoResultado } from "../../../utils/voltasJogadas";
+import { meanArr } from "../../../utils/mathUtils";
 
 type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff" | "result";
 
@@ -102,7 +103,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
       posJSum += r.rJ.pos; posMSum += r.rM.pos; posN++;
     }
   }
-  const avgDiff = diffs.length ? diffs.reduce((a, b) => a + b, 0) / diffs.length : null;
+  const avgDiff = meanArr(diffs);
   const avgPosJ = posN ? Math.round(posJSum / posN) : null;
   const avgPosM = posN ? Math.round(posMSum / posN) : null;
 

@@ -16,6 +16,7 @@
  * as categorias e usamos `__cat` para identificar (mostrado na UI).
  */
 import { displayName as displayCase } from "../utils/format";
+import { compareNullsLast } from "../hooks/useSort";
 
 // Os mesmos lookups por licença das outras fontes de Espanha.
 import type { DobLookup, HcpLookup } from "./intlCommon";
@@ -197,7 +198,7 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
       });
     }
   }
-  admitidos.sort((a, b) => (a.pos ?? 999) - (b.pos ?? 999));
+  admitidos.sort((a, b) => compareNullsLast(a.pos, b.pos, 1));
 
   return {
     compId: d.gameId,

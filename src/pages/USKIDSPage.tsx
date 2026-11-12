@@ -235,9 +235,11 @@ export default function USKidsFieldPage() {
     // Cache diário: só re-faz fetch uma vez por dia (usa HTTP cache nos restantes pedidos da sessão)
     const daily = todayIso(); // "2026-04-03"
 
-    fetch(`/data/uskids-field.json?v=${daily}`)
-      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
-      .then((d: FieldData) => {
+    // Pela peça global de carregamento (data/fetchCache). Fica neste efeito, e não num
+    // `useJson`, porque as escolhas abaixo têm de cair no MESMO desenho que os dados.
+    cachedFetchJson<FieldData>(`/data/uskids-field.json?v=${daily}`)
+      .then(d => {
+        if (!d) throw new Error("o ficheiro uskids-field.json não existe");
         setFieldData(d);
         // Link para um torneio que não é do Manuel: o ★ Manuel arranca desligado,
         // senão o torneio pedido nem estava na lista (no mesmo render, batched).
@@ -264,19 +266,14 @@ export default function USKidsFieldPage() {
     // existir ainda nos primeiros dias antes do primeiro draw publicado;
     // tratamos 404 silenciosamente (não é erro). O draw aparece automaticamente
     // como tab "Draw R{n}" antes de cada ronda no escalão do Manuel.
-    fetch(`/data/uskids-draws.json?v=${daily}`)
-      .then(r => {
-        if (r.status === 404) {
+    cachedFetchJson<UskidsDrawsData>(`/data/uskids-draws.json?v=${daily}`)
+      .then(d => {
+        if (!d) {
           // Ficheiro ainda não publicado — não é erro, é estado normal antes
           // do workflow correr pela primeira vez na semana de um torneio.
           upsertFileMeta({ path: "/data/uskids-draws.json", status: "error", error: "ainda não publicado", group: "draws" });
-          return null;
+          return;
         }
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((d: UskidsDrawsData | null) => {
-        if (!d) return;
         setDrawsData(d);
         upsertFileMeta({ path: "/data/uskids-draws.json", status: "loaded", count: d.torneios?.length, group: "draws" });
       })

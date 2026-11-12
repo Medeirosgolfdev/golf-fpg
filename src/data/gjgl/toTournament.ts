@@ -5,6 +5,7 @@
  * Tirado da GlobalJuniorPage a 23/10/2026 (fase 5 do plano) — igual ao que estava lá.
  */
 import { gf } from "../../utils/flagUtils";
+import { soma } from "../../utils/mathUtils";
 import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes";
 import { intlScorecardOptions } from "../intlScorecard";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
@@ -87,8 +88,8 @@ export function divisionToTournament(d: GjglData, div: GjglDivision, label: stri
       const todas = p.rounds || [];
       const voltas = todas.filter((r) => !semVolta.has(r.day));
       const fora = todas.length - voltas.length;
-      const soma = (rs: typeof todas) => rs.reduce((s, r) => s + (r.gross ?? 0), 0);
-      const total = fora > 0 && p.total != null && p.total === soma(todas) ? soma(voltas) : p.total;
+      const grossDe = (rs: typeof todas) => soma(rs.map((r) => r.gross));
+      const total = fora > 0 && p.total != null && p.total === grossDe(todas) ? grossDe(voltas) : p.total;
       // O par é o de CADA volta do jogador (10/11/2026, J3): as raparigas jogam
       // outro par (Loretto 2026: 73 contra 70) e a fonte dá-o volta a volta. O
       // par do torneio só serve a quem não traz o seu.

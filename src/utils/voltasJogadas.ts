@@ -13,12 +13,12 @@
  * resultado com voltas (`{ totalGross, toPar, rounds: [{ gross, strokes }] }`).
  */
 import { isNoCardGross } from "../data/intlCommon";
+import { soma } from "./mathUtils";
 import { temCartao } from "./classificacao";
 
 export interface VoltaLike { round?: number; gross?: number | null; strokes?: readonly number[] | null }
 export interface ResultadoLike { totalGross?: number | null; toPar?: number | null; rounds?: readonly VoltaLike[] | null }
 
-const soma = (a: readonly number[]) => a.reduce((s, x) => s + x, 0);
 const pancadasDe = (v: VoltaLike | null | undefined): readonly number[] => (Array.isArray(v?.strokes) ? v!.strokes! : []);
 const NOVE_IDA = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const NOVE_VOLTA = [9, 10, 11, 12, 13, 14, 15, 16, 17];

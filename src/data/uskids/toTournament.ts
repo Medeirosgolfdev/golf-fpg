@@ -7,6 +7,7 @@
  * igual ao que estava lá.
  */
 import type { Tournament as TATournament } from "../fpgTypes";
+import { isPtCountry } from "../../utils/flagUtils";
 import type { FpgAdmissionPlayer, FpgAdmissions, FpgDraw } from "../nacional2026Loader";
 import { normName as normNameAuto, type AutoRivalPlayer } from "../KIDSdataLoader";
 import { playerIdentity } from "../model/identity";
@@ -82,7 +83,7 @@ export function escalaoToTournament(
         // e devolve source="ags" — SD exacto em vez de "raw".
         let hcpExact: number | undefined;
         let fpgFed: string | undefined;
-        if (arMap && j.pais === "PT") {
+        if (arMap && isPtCountry(j.pais)) {
           const ar = arMap.get(normNameAuto(j.nome));
           if (ar?.fpgHcpExact != null) hcpExact = ar.fpgHcpExact;
           if (ar?.ptFed) fpgFed = ar.ptFed;

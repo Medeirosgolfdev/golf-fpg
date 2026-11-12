@@ -25,6 +25,7 @@ import { isManuel } from "../constants/manuel";
 import { isNoCardGross, toParPlayed } from "./intlCommon";
 import { temCartao } from "../utils/classificacao";
 import { playerKey } from "../utils/playerKey";
+import { soma } from "../utils/mathUtils";
 import { parDosJogados } from "../utils/parJogado";
 
 export function numGross(p: Player): number {
@@ -607,14 +608,13 @@ export function playedParTotal(rs: { scores?: number[]; pars?: number[]; gross?:
   const pars = rs.pars || [];
   const sc = rs.scores || [];
   if (!pars.length) return fallback;
-  const sum = (a: number[]) => a.reduce((x, y) => x + (y || 0), 0);
-  if ((rs.gross || 0) > sum(sc.map((s) => (s > 0 ? s : 0)))) return sum(pars);
+  if ((rs.gross || 0) > soma(sc.map((s) => (s > 0 ? s : 0)))) return soma(pars);
   if (sc.length === pars.length) {
     // Buracos em branco: o par só dos jogados (regra única, utils/parJogado).
-    return sc.some((s) => !s) ? parDosJogados(sc, pars) : sum(pars);
+    return sc.some((s) => !s) ? parDosJogados(sc, pars) : soma(pars);
   }
-  if (sc.length && sc.length < pars.length) return sum(pars.slice(0, sc.length));
-  return sum(pars);
+  if (sc.length && sc.length < pars.length) return soma(pars.slice(0, sc.length));
+  return soma(pars);
 }
 
 /**
@@ -857,7 +857,6 @@ function mergeTournamentRounds(rounds: Tournament[]): Tournament {
   // Par de uma volta: o do PRÓPRIO jogador; quem não o traz usa o do primeiro
   // jogador que o tenha; sem par em ninguém a prova fica SEM PAR — nunca se
   // inventa (10/11/2026, I13: quando o 1.º jogador não trazia par punha-se 72).
-  const soma = (a: number[] | undefined) => (a || []).reduce((x, y) => x + (y || 0), 0);
   const parDe = (p: Player): number => p.parTotal || soma(p.par) || soma(p.roundScores?.[0]?.pars) || 0;
   const refParTotal = sorted.flatMap(t => t.players).map(parDe).find(v => v > 0) ?? 0;
 

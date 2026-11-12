@@ -26,7 +26,8 @@ import {
   aggregateField,
   type ScoringDist,
 } from "../../../utils/analysisStats";
-import { fmtToPar } from "../../../utils/format";
+import { fmtToPar, fmtSign } from "../../../utils/format";
+import { meanArr } from "../../../utils/mathUtils";
 import { toneClass } from "../../../utils/scoreDisplay";
 import ComparisonDonut from "../../../ui/ComparisonDonut";
 import TabRow from "../../../ui/TabRow";
@@ -355,11 +356,11 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
         <div className="u-fs-fs-11 u-c-text-3 u-ls-0_6px u-fw-700 u-mb-4px u-tt-uppercase">{label}</div>
         <div className="u-d-flex u-ai-baseline u-gap-8px u-mb-10px">
           <span className={`u-fs-fs-28 u-fw-800 u-fvn-tabular-nums ${toPar == null ? "tone-muted" : toneClass(toPar) || "u-c-text"}`}>
-            {toPar != null ? (toPar >= 0 ? `+${toPar.toFixed(1)}` : toPar.toFixed(1)) : "—"}
+            {toPar != null ? fmtSign(toPar, 1) : "—"}
           </span>
           <span className="u-fs-fs-11 u-c-text-3">
             ±par média
-            {fieldToPar != null && <span> · field {fieldToPar >= 0 ? "+" : ""}{fieldToPar.toFixed(1)}</span>}
+            {fieldToPar != null && <span> · field {fmtSign(fieldToPar, 1)}</span>}
           </span>
         </div>
         <div className="u-d-flex u-h-10px u-br-radius-sm u-ov-hidden u-gap-1px u-bg-bg-muted">
@@ -400,10 +401,9 @@ function nineAggregate(cards: DerivedCard[]) {
     if (ns.frontToParAvg != null) frontTps.push(ns.frontToParAvg);
     if (ns.backToParAvg != null) backTps.push(ns.backToParAvg);
   }
-  const avg = (a: number[]) => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
   return {
     front: accFront, back: accBack,
-    frontToParAvg: avg(frontTps), backToParAvg: avg(backTps),
+    frontToParAvg: meanArr(frontTps), backToParAvg: meanArr(backTps),
   };
 }
 

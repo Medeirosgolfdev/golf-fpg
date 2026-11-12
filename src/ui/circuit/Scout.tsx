@@ -33,7 +33,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
-import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp, escalaoAtDate, fmtOrd, shortTournamentName } from "../../utils/format";
+import { fmtToPar, isoDate, shortDateSlash, todayIso, fmtHcp, escalaoAtDate, fmtOrd, shortTournamentName, fmtSignTipo } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
 import { useFedBirthdates } from "../InscricoesComponents";
 import TierBadge from "../TierBadge";
@@ -562,7 +562,7 @@ export default function Scout({
                       <td>
                         {l.isManuel ? <span className="scout-sem">—</span>
                           : l.prev?.vsManuel != null
-                            ? <span className={"scout-topar" + (l.prev.vsManuel > 0.05 ? " is-good" : l.prev.vsManuel < -0.05 ? " is-bad" : "")}>{l.prev.vsManuel > 0 ? "+" : l.prev.vsManuel < 0 ? "−" : ""}{Math.abs(l.prev.vsManuel).toFixed(1)}</span>
+                            ? <span className={"scout-topar" + (l.prev.vsManuel > 0.05 ? " is-good" : l.prev.vsManuel < -0.05 ? " is-bad" : "")}>{fmtSignTipo(l.prev.vsManuel, 1)}</span>
                             : <span className="scout-sem">–</span>}
                       </td>
                     )}
@@ -678,7 +678,7 @@ export default function Scout({
                                     <td>{x[0] ? shortDateSlash(x[0]) : "–"}</td>
                                     <td>{lugar(x[2])}</td>
                                     <td>{lugar(x[3])}</td>
-                                    <td>{pv != null ? <span className={"scout-topar" + (pv > 0.05 ? " is-good" : pv < -0.05 ? " is-bad" : "")}>{pv > 0 ? "+" : pv < 0 ? "−" : ""}{Math.abs(pv).toFixed(1)}</span> : "–"}</td>
+                                    <td>{pv != null ? <span className={"scout-topar" + (pv > 0.05 ? " is-good" : pv < -0.05 ? " is-bad" : "")}>{fmtSignTipo(pv, 1)}</span> : "–"}</td>
                                     <td>{x[5] ?? "–"}</td>
                                   </tr>
                                 );

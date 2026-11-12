@@ -18,6 +18,7 @@
  */
 
 import React from "react";
+import { fmtSignTipo } from "../utils/format";
 import { C } from "../utils/colors";
 import { MUTED } from "./tableCells";
 import { Tint } from "./DataStyle";
@@ -289,7 +290,7 @@ export function ModalidadePill({ nome, title }: { nome: string; title?: string }
 /** PCC oficial ≠ 0 de uma volta. `round` só em torneios de várias voltas. */
 export function PccPill({ pcc, round }: { pcc: number; round?: number }) {
   if (!pcc) return null;
-  const txt = `PCC ${pcc > 0 ? "+" : "−"}${Math.abs(pcc)}`;
+  const txt = `PCC ${fmtSignTipo(pcc)}`;
   const t = pcc < 0
     ? "PCC oficial da FPG: dia mais fácil do que o normal — o SD desta volta sobe cerca de 1"
     : `PCC oficial da FPG: dia mais difícil do que o normal — o SD desta volta desce cerca de ${pcc}`;

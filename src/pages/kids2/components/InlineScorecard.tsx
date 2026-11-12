@@ -9,6 +9,7 @@
  */
 
 import type { Tournament, Flight, Result, Junior } from "../data";
+import { soma as sum } from "../../../utils/mathUtils";
 import { getKnownScorecard, mergeFlightWithKnown } from "../knownScorecards";
 import CloseButton from "../../../ui/CloseButton";
 import ToPar from "../../../ui/ToPar";
@@ -61,7 +62,6 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
   const parEff = ref.par;
   const metersEff = metersArr.length > 0 ? effIndices.map((i) => metersArr[i] || 0) : [];
 
-  const sum = (a: number[]) => a.reduce((s, x) => s + x, 0);
   const totalPar = ref.parVolta ?? 0;
   const totalM = sum(metersEff);
 

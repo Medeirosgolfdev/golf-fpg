@@ -108,6 +108,16 @@ const MAX_COLUMNS = 20;
 /** Extrai escalao a partir do nome do EXTRA_TID (ex: "WJGC 2026 B10-11" → "Boys 10-11"). */
 /** Parse "Boys 12" → [12, 12]; "Boys 10-11" → [10, 11]; "U14"/"Boys U14" →
  *  [0, 14]; "10 and Under" → [0, 10]. */
+/** Numa classificação com lugares oficiais e gente sem lugar (IE/DSQ): grava em cada um o
+ *  lugar que teria se TODOS contassem (por total, com empates — `wouldBePos`, o que se mostra
+ *  entre parêntesis) e ordena a lista: lugar oficial primeiro; quem não o tem no fim, pelo total. */
+function ordenarPeloLugarOficial<T extends { total: number; officialPlace?: number | null; wouldBePos?: number }>(lista: T[]): void {
+  const porTotal = [...lista].sort((a, b) => a.total - b.total);
+  const lugar = posicoesComEmpates(porTotal, e => e.total);
+  porTotal.forEach(e => { e.wouldBePos = lugar.get(e); });
+  lista.sort((a, b) => compareNullsLast(a.officialPlace, b.officialPlace, 1) || a.total - b.total);
+}
+
 function parseEscalaoRange(esc: string): [number, number] | null {
   if (!esc) return null;
   // "U14" / "U12" / "U10"
@@ -1626,15 +1636,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
         }
         const completed = ranked.filter(e => Object.keys(e.rounds).length === maxRounds);
         if (completed.length < MIN_FIELD_SIZE) continue;
-        const byTotal = [...completed].sort((a, b) => a.total - b.total);
-        const lugar = posicoesComEmpates(byTotal, e => e.total);
-        byTotal.forEach(e => { e.wouldBePos = lugar.get(e); });
-        completed.sort((a, b) => {
-          const aOff = a.officialPlace ?? Number.POSITIVE_INFINITY;
-          const bOff = b.officialPlace ?? Number.POSITIVE_INFINITY;
-          if (aOff !== bOff) return aOff - bOff;
-          return a.total - b.total;
-        });
+        ordenarPeloLugarOficial(completed);
         editions.push({
           tcode: tid, year: String(year),
           nRounds: maxRounds, holesPerRound: nove ? 9 : 18,
@@ -1712,17 +1714,8 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       // Calcular "would-be position" — posição que cada jogador teria se TODOS
       // contassem para o ranking (ordenando por total ASC). Necessária para
       // mostrar a posição virtual dos IE/DSQ em parêntesis.
-      const byTotal = [...completed].sort((a, b) => a.total - b.total);
-      const lugar = posicoesComEmpates(byTotal, e => e.total);
-      byTotal.forEach(e => { e.wouldBePos = lugar.get(e); });
-      // Ordenação final: officialPlace ASC (com place) primeiro, IE/DSQ no fim
-      // (ordenados pelo total ASC entre si).
-      completed.sort((a, b) => {
-        const aOff = a.officialPlace ?? Number.POSITIVE_INFINITY;
-        const bOff = b.officialPlace ?? Number.POSITIVE_INFINITY;
-        if (aOff !== bOff) return aOff - bOff;
-        return a.total - b.total;
-      });
+      // Ordenação final: lugar oficial primeiro, IE/DSQ no fim (pelo total entre si).
+      ordenarPeloLugarOficial(completed);
       // Tentar buscar course+yards específicos do escalão (byEscalao); fallback para o tcode-level yards
       const yardsArr = escMeta?.yards || meta.yards || [];
       const yardsTotal = Array.isArray(yardsArr) ? yardsArr.reduce((a: number, b: number) => a + (b || 0), 0) : 0;

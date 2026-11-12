@@ -7,10 +7,10 @@
  * tabs». Cor do Manuel: a da pílula «★ Manuel» e da linha dele nas tabelas.
  */
 import type { Tournament } from "../data/fpgTypes";
+import { soma as sum } from "../utils/mathUtils";
 import { findManuelNaProva } from "../constants/manuel";
 import { fmtToPar } from "../utils/format";
 
-const sum = (a?: (number | null)[]) => (a || []).reduce<number>((s, v) => s + (v || 0), 0);
 const completa = (rs: { scores?: number[]; pars?: (number | null)[]; gross?: number | null }) =>
   (rs.gross ?? 0) > 0 && (!rs.pars?.length || (rs.scores || []).filter((x) => x > 0).length >= rs.pars.length);
 

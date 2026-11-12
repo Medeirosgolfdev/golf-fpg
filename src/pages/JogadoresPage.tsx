@@ -18,6 +18,7 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useCourses } from "../context/CoursesContext";
 import { useMasterDetail } from "../hooks/useMasterDetail";
+import { compareNullsLast } from "../hooks/useSort";
 import { MOBILE_BREAKPOINT } from "../hooks/useIsMobile";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { loadFederados, loadFederadosInativos, federadoToPlayer, mergePlayersWithFederados, normalizeAgeLevel, type FederadoRaw, type MergedPlayer } from "../data/federadosLoader";
@@ -353,7 +354,7 @@ export default function JogadoresPage() {
   const rankings = useMemo(() => {
     const withHcp = allPlayers
       .filter(p => p.hcp != null)
-      .sort((a, b) => (a.hcp ?? 999) - (b.hcp ?? 999));
+      .sort((a, b) => compareNullsLast(a.hcp, b.hcp, 1));
     const map = new Map<string, number>();
     withHcp.forEach((p, i) => map.set(p.fed, i + 1));
     return map;

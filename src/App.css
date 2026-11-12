@@ -588,8 +588,8 @@ a.seg-btn, a.tab-under { text-decoration: none; }
 .p-origin { border-radius: var(--radius-sm); font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
 .p-eds { background: var(--color-amber); color: var(--text-on-color); }
 .p-import { background: var(--pill-import-bg); color: var(--text-on-color); }
-.p-indiv { background: var(--color-amber); color: var(--text-on-color); }
-.p-treino { background: var(--color-amber); color: var(--text-on-color); }
+.p-indiv,
+.p-treino,
 .p-extra { background: var(--color-amber); color: var(--text-on-color); }
 
 /* ── Tee (12px radius — arredondado, cores inline via TeePill) ── */
@@ -709,7 +709,7 @@ a.seg-btn, a.tab-under { text-decoration: none; }
  z-index: 1;
 }
 /* Hover de linha — consistente com .ratings-table / .sc-table-ec */
-.sc-table .sc-tee-row:hover td { background: var(--bg-hover); }
+.sc-table .sc-tee-row:hover td,
 .sc-table .sc-tee-row:hover td.sc-sticky { background: var(--bg-hover); }
 
 .sc-h { min-width: 38px; }
@@ -894,7 +894,7 @@ a.seg-btn, a.tab-under { text-decoration: none; }
 /* .dh-statline REMOVIDO 2026-08-15 — juntava identidade+KPIs num flex-wrap
    e sem foto fundiam-se numa linha única; agora são filhos directos do
    .dh-idblock (coluna), cada um na sua linha. */
-.dh-idblock .jog-pills { margin: 0; }
+.dh-idblock .jog-pills,
 .dh-idblock .jog-kpi-strip { margin: 0; }
 @media (max-width: 700px) {
   .dh-top { flex-wrap: wrap; }
@@ -1122,7 +1122,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 /* Densidade das tabelas de rondas — linhas mais arejadas (2026-07-06). Mantém-se
    a leitura tabular mas com respiração vertical, ao nível dos KPI cards. */
-.pa-content .dtable-lg th { padding: var(--space-8) var(--space-10); }
+.pa-content .dtable-lg th,
 .pa-content .dtable-lg td { padding: var(--space-8) var(--space-10); }
 /* O scorecard do Eclético vive DENTRO da linha de detalhe da tabela de campos
    (.dtable-lg): sem isto, os 7px 10px de cima apanhavam cada buraco e a tabela
@@ -1163,14 +1163,14 @@ tr.cross-current { background: var(--bg-success); }
 .pa-content .sc-table-modern td { padding: var(--space-2) var(--space-4); height: 26px; }
 /* Linhas horizontais TODAS com a mesma espessura fina (1px suave), incluindo o cabeçalho */
 .pa-content .sc-table-modern th,
-.pa-content .sc-table-modern .hole-header { border-bottom: 1px solid var(--border-light); }
+.pa-content .sc-table-modern .hole-header,
 .pa-content .sc-table-modern .sep-row td,
 .pa-content .sc-table-ec .sep-row td { border-bottom: 1px solid var(--border-light); }
 /* Grelha do scorecard com UMA linha só: TODAS as linhas horizontais a 1px e na
    MESMA cor (--border, o verde do cabeçalho). Uniformiza espessura e cor — o verde
    do "Buraco" fica visível e igual às restantes. Última linha (Δ) sem borda: a
    linha de topo da legenda fecha a grelha (evita traço duplo). */
-.pa-content .sc-modern .sc-table-modern thead th { border-bottom: 1px solid var(--border); }
+.pa-content .sc-modern .sc-table-modern thead th,
 .pa-content .sc-modern .sc-table-modern tbody tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
 .pa-content .sc-modern .sc-table-modern tbody tr:last-child td { border-bottom: none; }
 .pa-content .sc-table-modern .hole-header { background: transparent; color: var(--text-3); font-weight: 500; }
@@ -1436,7 +1436,7 @@ tr.cross-current { background: var(--bg-success); }
 .sc-grid .sc-col-out, .sc-grid .sc-col-in, .sc-grid .sc-tot { border-left: 1px solid var(--border); }
 .sc-grid .col-out, .sc-grid .sc-col-out { border-right: 1px solid var(--border); }
 /* Separadores horizontais — 1px var(--border-light), iguais (sem 2px) */
-.sc-grid tbody td { border-bottom: 1px solid var(--border-light); }
+.sc-grid tbody td,
 .sc-grid .sep-row td { border-bottom: 1px solid var(--border-light); }
 .sc-table-modern .par-label { color: var(--text-muted); font-weight: 600; font-size: var(--fs-11); }
 
@@ -1472,7 +1472,7 @@ tr.cross-current { background: var(--bg-success); }
  * Cores: ramp do verde/amarelo/vermelho (under) ao azul progressivo (over)
  * Não existem outros sistemas de score (sc-dot foi eliminado).
  */
-.sc-score.holeinone { background: var(--score-hio); color: var(--text-on-color); border-radius: 50%; }
+.sc-score.holeinone,
 .sc-score.albatross { background: var(--score-hio); color: var(--text-on-color); border-radius: 50%; }
 .sc-score.eagle { background: var(--score-eagle); color: var(--text-on-color); border-radius: 50%; }
 .sc-score.birdie { background: var(--score-birdie); color: var(--text-on-color); border-radius: 50%; }
@@ -2457,7 +2457,7 @@ tr.scout-detalhe > td { padding: var(--space-6) var(--space-10) var(--space-12) 
 /* «SD par» — a coluna que interessa, a verde. */
 .sc-table th.sc-sdpar-h { padding: var(--space-2) var(--space-6); font-weight: 700; color: var(--accent-text); background: var(--accent-light); }
 .sc-table td.sc-sdpar { font-size: var(--fs-12); font-weight: 700; color: var(--accent-text); background: var(--accent-light); }
-.sc-table .sc-tee-row.sel { background: var(--accent-light); }
+.sc-table .sc-tee-row.sel,
 .sc-table .sc-tee-row.sel td.sc-sticky { background: var(--accent-light); }
 /* Nome de jogador nos cartões de recorde (corta com reticências). */
 .cp-pname { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; font-weight: 500; }
@@ -2825,7 +2825,7 @@ tr.scout-detalhe > td { padding: var(--space-6) var(--space-10) var(--space-12) 
 
 /* Só o header de colunas fica sticky — SI e PAR fazem scroll */
 .sc-lb thead tr:last-child th { position: sticky; top: 0; z-index: 4; }
-.sc-lb thead tr:last-child .sticky-col-0 { z-index: 6; }
+.sc-lb thead tr:last-child .sticky-col-0,
 .sc-lb thead tr:last-child .sticky-col-1 { z-index: 6; }
 
 /* Contexto partilhado para scorecards (Drive, Diversos, BJGT) */
@@ -2842,7 +2842,7 @@ tr.scout-detalhe > td { padding: var(--space-6) var(--space-10) var(--space-12) 
 
 /* Só a última linha do header fica sticky — linha de grupos faz scroll */
 .cs-table thead tr:last-child th { position: sticky; top: 0; z-index: 4; }
-.cs-table thead tr:last-child .sticky-col-0 { z-index: 6; }
+.cs-table thead tr:last-child .sticky-col-0,
 .cs-table thead tr:last-child .sticky-col-1 { z-index: 6; }
 .cs-table .cs-grp-row td,
 .cs-table .cs-grp-row th { position: static; background: var(--bg-hover); border-bottom: none; }
@@ -2979,7 +2979,7 @@ table.has-cmp .sticky-col-1 { left: 48px; }
 .sc-lb thead th.lb-acc-par,
 .sc-lb thead th.lb-acc-bog  { background: var(--bg-acc-header); }
 /* ±Par e Total — mais escuros que as stats acumuladas (multi-ronda) */
-.sc-lb-multi .lb-topar { background: var(--bg-acc-strong); }
+.sc-lb-multi .lb-topar,
 .sc-lb-multi .lb-gross { background: var(--bg-acc-strong); }
 .sc-lb-multi thead th.lb-topar,
 .sc-lb-multi thead th.lb-gross { background: var(--bg-acc-header); }
@@ -3009,7 +3009,7 @@ table.has-cmp .sticky-col-1 { left: 48px; }
 .sc-lb .lb-par-row .sticky-col-0,
 .sc-lb .lb-par-row .sticky-col-1 { background: var(--bg-hover); }
 .sc-lb .lb-par-row td { border-bottom: 2px solid var(--border); background: var(--bg-hover); }
-.sc-lb .lb-par-row td.lb-topar { background: var(--accent-light); }
+.sc-lb .lb-par-row td.lb-topar,
 .sc-lb .lb-par-row td.lb-gross { background: var(--accent-light); }
 .sc-lb .lb-si-row     { background: var(--bg); }
 .sc-lb .lb-si-row td  { font-size: var(--fs-10); color: var(--text-muted); background: var(--bg);
@@ -3038,11 +3038,11 @@ table.has-cmp .sticky-col-1 { left: 48px; }
    discreto, caso Ricardo na /ffg). Tinta suave do MESMO verde néon, misturada
    com o fundo do cartão para as sticky-cols ficarem OPACAS (senão o conteúdo
    por baixo aparecia através delas no scroll horizontal). */
-.row-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var(--bg-card)) !important; }
+.row-portuguese,
 .row-portuguese .sticky-col-0,
 .row-portuguese .sticky-col-1 { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var(--bg-card)) !important; }
 .row-portuguese:hover { background: color-mix(in srgb, var(--pill-intl-bg) 26%, var(--bg-card)) !important; }
-.row-portuguese.row-selected { background: var(--bg-warn-subtle) !important; }
+.row-portuguese.row-selected,
 .row-portuguese.row-selected .sticky-col-0,
 .row-portuguese.row-selected .sticky-col-1 { background: var(--bg-warn-subtle) !important; }
 
@@ -3060,16 +3060,16 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 /* Linha seleccionada via clique (Ranking PJA e outros rankings clicáveis).
    Destaca com fundo amarelo suave — sem border nas células (era ruidoso
    dentro do cs-table com dezenas de colunas). */
-.row-selected { background: var(--bg-warn-subtle) !important; }
+.row-selected,
 .row-selected .sticky-col-0,
 .row-selected .sticky-col-1 { background: var(--bg-warn-subtle) !important; }
 .row-selected:hover { background: var(--bg-warn-subtle) !important; filter: brightness(0.97); }
 /* Combinação Manuel + seleccionado: mantém amarelo (seleccionado vence) */
-.row-manuel.row-selected { background: var(--bg-warn-subtle) !important; }
+.row-manuel.row-selected,
 .row-manuel.row-selected .sticky-col-0,
 .row-manuel.row-selected .sticky-col-1 { background: var(--bg-warn-subtle) !important; }
 
-.sc-lb tbody tr:hover { background: var(--bg-detail); }
+.sc-lb tbody tr:hover,
 .sc-lb tbody tr:hover .sticky-col-0,
 .sc-lb tbody tr:hover .sticky-col-1 { background: var(--bg-detail); }
 
@@ -3516,10 +3516,10 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 .cp-row { cursor: pointer; }
 .cp-row:hover { background: var(--bg-hover); }
 .cp-row td { vertical-align: baseline; }
-.cp-row-manuel {
+.cp-row-manuel,
+.cp-row-manuel:hover {
   background: var(--bg-subtle);
 }
-.cp-row-manuel:hover { background: var(--bg-subtle); }
 .cp-row-manuel .cp-name { font-weight: 700; }
 .cp-row-open { background: var(--bg-subtle); }
 /* Chevron de expansão */
@@ -3551,7 +3551,7 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 .dtable .cp-row-paired > td:not([rowspan]) { border-bottom: none; }
 .cp-row-sub { cursor: pointer; }
 .dtable .cp-row-sub > td { padding-top: 0; vertical-align: baseline; }
-.cp-row-paired:hover, .cp-row-sub:hover { background: var(--bg-subtle); }
+.cp-row-paired:hover, .cp-row-sub:hover,
 .cp-row-sub.cp-row-manuel { background: var(--bg-subtle); }
 .cp-round-9 { font-size: var(--fs-10); font-weight: 600; color: var(--text-muted); }
 .cp-round-nc { font-size: var(--fs-11); font-style: italic; color: var(--text-muted); }
@@ -3629,7 +3629,7 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
  border-left: 1px solid var(--border);
 }
 /* OUT e IN fechados dos dois lados (divisores a delimitar os subtotais) */
-.sc-table .sc-col-out { border-right: 1px solid var(--border); }
+.sc-table .sc-col-out,
 .sc-table .sc-col-in { border-right: 1px solid var(--border); }
 .sc-table .sc-tee-cell {
  padding-left: var(--space-10);

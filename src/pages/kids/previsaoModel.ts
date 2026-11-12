@@ -10,6 +10,7 @@
  *      passadas do MESMO torneio+escalao (member-history-slim).
  */
 import type { PlayerPageData } from "../../data/playerDataLoader";
+import { meanArr } from "../../utils/mathUtils";
 import type { Tee } from "../../data/types";
 import { strokesOnHole } from "../../utils/whsCalc";
 import { firstShotClub } from "../../utils/clubScale";
@@ -446,7 +447,7 @@ export function estimateField(mh: MHSlimLite | null, torneio: FieldTorneioLite |
     if (e.exclReason === "format") nExcludedFormat++; else nExcludedField++;
   }
 
-  const mean = (xs: number[]) => xs.length ? Math.round(xs.reduce((a, b) => a + b, 0) / xs.length) : null;
+  const mean = (xs: number[]) => { const m = meanArr(xs); return m == null ? null : Math.round(m); };
   const avgWinner = mean(counted.map(e => e.winner));
   const avgTop10 = mean(counted.filter(e => e.top10 != null).map(e => e.top10 as number));
   const avgMedian = mean(counted.map(e => e.median));
@@ -571,7 +572,7 @@ export function topFieldHoleStats(
       // Pancadas e nome lado a lado: filtrar só as pancadas desalinhava os nomes do hover.
       const quem = top.map(p => ({ nome: p.name, sc: p.rounds[rk]?.[i] })).filter((x): x is { nome: string; sc: number } => typeof x.sc === "number" && x.sc > 0);
       const sc = quem.map(x => x.sc);
-      const avg = sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null;
+      const avg = meanArr(sc);
       return { avg, scores: sc, nomes: quem.map(x => x.nome) };
     }));
   }
@@ -623,7 +624,7 @@ export function porComprimento(pd: PlayerPageData | null, teeM: number, months =
         .push({ m, sd: r.sd, vp: gross > 0 && par > 0 ? gross - par : null });
     }
   }
-  const avg = (a: number[]) => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+  const avg = meanArr;
   return (["curtos", "parecidos", "compridos"] as const).map(key => {
     const v = g[key];
     const vps = v.map(x => x.vp).filter((x): x is number => x != null);

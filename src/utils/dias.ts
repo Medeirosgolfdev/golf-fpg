@@ -22,6 +22,13 @@ export function diaIso(s: string | null | undefined): string | null {
   return dmy ? `${dmy[3]}-${dmy[2].padStart(2, "0")}-${dmy[1].padStart(2, "0")}` : null;
 }
 
+/** «AAAA-MM-DD» de um objecto `Date`, no dia CIVIL local (o do relógio de quem vê) —
+ *  nunca `toISOString()`, que é o dia em UTC. Era escrito à mão em quatro sítios
+ *  (calendário escolar, épocas do Drive, idades na classificação, datas do Kids 2). */
+export function isoDeData(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
 /** `iso` + n dias(«2026-12-30» + 3 → «2027-01-02»). Data ilegível → devolve-a como veio. */
 export function addDaysIso(iso: string, n: number): string {
   const t = diaUtc(iso);

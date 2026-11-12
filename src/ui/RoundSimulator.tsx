@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import type { RoundData, PlayerPageData, HcpInfo } from "../data/playerDataLoader";
 import type {} from "../data/types";
 import { useCourses } from "../context/CoursesContext";
-import { norm, fmtHcp, fmtSign } from "../utils/format";
+import { norm, fmtHcp, fmtSign, fmtToPar, fmtDatePt, todayIso } from "../utils/format";
 import { teeChoiceKey, findTeeByChoice } from "../utils/teeChoice";
 import {
   whsQtyCalc, hiAdjustment, addRoundToPool, historicExceptionalAdj, topRanks, topIds,
@@ -785,7 +785,7 @@ export function RoundSimulator({
     const finalDelta = finalHIv - (currentHI ?? 0);
     const playerName = (playerData as any)?.META?.name ?? "";
     const fedNum = (playerData as any)?.META?.fed ?? urlFedId ?? "";
-    const dateStr = new Date().toLocaleDateString("pt-PT");
+    const dateStr = fmtDatePt(todayIso());
     const timeStr = new Date().toLocaleTimeString("pt-PT", {
       hour: "2-digit",
       minute: "2-digit",
@@ -1206,6 +1206,30 @@ export function RoundSimulator({
           const computedSdRaw = preview ? (is9 ? preview.sd9 : preview.sd) : null;
           const exp9Preview = preview?.exp9 ?? null;
           const computedSd18 = preview?.sd ?? null;
+          // O gross e o SD que dele sai: a mesma peça com CR/Slope à mão e com o campo da lista.
+          const grossESd = (
+            <>
+              <label className="fs-13 fw-600 u-d-flex u-ai-center u-gap-6px">
+                {is9 ? "Gross (9h):" : "Gross:"}
+                <NumberInput variant="big" className="u-w-80px" step="1"
+                  placeholder={is9 ? "ex: 42" : "ex: 85"}
+                  value={round.grossInput}
+                  onChange={(t) => updateRound(round.id, { grossInput: t })} />
+              </label>
+              {computedSdRaw != null && !is9 && (
+                <SDPill sd={computedSdRaw} hcp={hiRef} size="lg" prefix="SD" />
+              )}
+              {computedSdRaw != null && is9 && exp9Preview != null && computedSd18 != null && (
+                <span className="u-d-inline-flex u-ai-center u-gap-6px u-fwr-wrap">
+                  <SDPill sd={computedSdRaw} hcp={hiRef} colorSd={computedSd18} size="lg" prefix="SD9" title="SD de 9 buracos antes da conversão para 18H" />
+                  <span className="muted fs-11">
+                    + exp9({hiRef.toFixed(1)}) = {exp9Preview.toFixed(1)} →
+                  </span>
+                  <SDPill sd={computedSd18} hcp={hiRef} size="lg" prefix="SD18" title="SD equivalente a 18H — é este que entra no pool WHS" />
+                </span>
+              )}
+            </>
+          );
           return (
             <div key={round.id} className={"rs-card" + roundTone(result)}>
               {/* Cabeçalho */}
@@ -1274,8 +1298,7 @@ export function RoundSimulator({
                       {fmtHcp(result.hiAfterRound)}
                     </span>
                     <span className={"u-fs-fs-12 u-fw-700 " + deltaC(result.delta, "u-c-text-3")}>
-                      ({result.delta > 0 ? "+" : ""}
-                      {result.delta.toFixed(1)})
+                      ({fmtSign(result.delta, 1)})
                     </span>
                   </div>
                 )}
@@ -1337,28 +1360,7 @@ export function RoundSimulator({
                           } />
                       </label>
                     ))}
-                    <label
-                      className="fs-13 fw-600 u-d-flex u-ai-center u-gap-6px"
-
-                    >
-                      {is9 ? "Gross (9h):" : "Gross:"}
-                      <NumberInput variant="big" className="u-w-80px" step="1"
-                        placeholder={is9 ? "ex: 42" : "ex: 85"}
-                        value={round.grossInput}
-                        onChange={(t) => updateRound(round.id, { grossInput: t })} />
-                    </label>
-                    {computedSdRaw != null && !is9 && (
-                      <SDPill sd={computedSdRaw} hcp={hiRef} size="lg" prefix="SD" />
-                    )}
-                    {computedSdRaw != null && is9 && exp9Preview != null && computedSd18 != null && (
-                      <span className="u-d-inline-flex u-ai-center u-gap-6px u-fwr-wrap">
-                        <SDPill sd={computedSdRaw} hcp={hiRef} colorSd={computedSd18} size="lg" prefix="SD9" title="SD de 9 buracos antes da conversão para 18H" />
-                        <span className="muted fs-11">
-                          + exp9({hiRef.toFixed(1)}) = {exp9Preview.toFixed(1)} →
-                        </span>
-                        <SDPill sd={computedSd18} hcp={hiRef} size="lg" prefix="SD18" title="SD equivalente a 18H — é este que entra no pool WHS" />
-                      </span>
-                    )}
+                    {grossESd}
                     {(ratings.cr == null || ratings.slope == null) && (
                       <span className="muted fs-11">
                         Preenche CR e Slope{is9 ? ` de ${holesLabel(round.holesMode)}` : ""} para ver o SD.
@@ -1431,28 +1433,7 @@ export function RoundSimulator({
                         );
                       })}
                     </Select>
-                    <label
-                      className="fs-13 fw-600 u-d-flex u-ai-center u-gap-6px"
-
-                    >
-                      {is9 ? "Gross (9h):" : "Gross:"}
-                      <NumberInput variant="big" className="u-w-80px" step="1"
-                        placeholder={is9 ? "ex: 42" : "ex: 85"}
-                        value={round.grossInput}
-                        onChange={(t) => updateRound(round.id, { grossInput: t })} />
-                    </label>
-                    {computedSdRaw != null && !is9 && (
-                      <SDPill sd={computedSdRaw} hcp={hiRef} size="lg" prefix="SD" />
-                    )}
-                    {computedSdRaw != null && is9 && exp9Preview != null && computedSd18 != null && (
-                      <span className="u-d-inline-flex u-ai-center u-gap-6px u-fwr-wrap">
-                        <SDPill sd={computedSdRaw} hcp={hiRef} colorSd={computedSd18} size="lg" prefix="SD9" title="SD de 9 buracos antes da conversão para 18H" />
-                        <span className="muted fs-11">
-                          + exp9({hiRef.toFixed(1)}) = {exp9Preview.toFixed(1)} →
-                        </span>
-                        <SDPill sd={computedSd18} hcp={hiRef} size="lg" prefix="SD18" title="SD equivalente a 18H — é este que entra no pool WHS" />
-                      </span>
-                    )}
+                    {grossESd}
                     {ratings.cr != null && (
                       <span className="muted fs-11">
                         CR {ratings.cr} / Slope{" "}
@@ -1682,8 +1663,7 @@ export function RoundSimulator({
                         )}
                       </td>
                       <td className="r muted">
-                        {row.toPar >= 0 ? "+" : ""}
-                        {row.toPar}
+                        {fmtToPar(row.toPar)}
                       </td>
                       {grossTable.is9 && (
                         <td className="r muted fs-11">

@@ -53,6 +53,7 @@ import SexSelect from "../ui/SexSelect";
 import { ToggleChip } from "../ui/FilterField";
 import NumberInput from "../ui/NumberInput";
 import Select from "../ui/Select";
+import { meanArr } from "../utils/mathUtils";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -280,12 +281,12 @@ export default function JogadoresPorAnoPage() {
   /* ── Métricas agregadas de um conjunto de rows ─────────────── */
   const metricsOf = (rows: Row[]) => {
     const hcps = rows.map(r => num(r.hcp)).filter((h): h is number => h != null && h < HCP_UNESTABLISHED);
-    const avgHcp = hcps.length ? hcps.reduce((s, h) => s + h, 0) / hcps.length : null;
+    const avgHcp = meanArr(hcps);
     const bestHcp = hcps.length ? Math.min(...hcps) : null;
     const nM = rows.filter(r => r.sex === "M").length;
     const nF = rows.filter(r => r.sex === "F").length;
     const r12 = rows.map(r => statsDb[r.fed]?.roundsLast12m).filter((v): v is number => v != null);
-    const avgR12 = r12.length ? r12.reduce((s, v) => s + v, 0) / r12.length : null;
+    const avgR12 = meanArr(r12);
     const nActive = rows.filter(r => (statsDb[r.fed]?.roundsLast12m ?? 0) > 0).length;
     return { avgHcp, bestHcp, nM, nF, avgR12, nActive };
   };

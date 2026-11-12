@@ -1,5 +1,5 @@
 import { useContext, useMemo } from "react";
-import { isoDate, fmtDate, displayName, medal as medalOf, fmtDateTime } from "../utils/format";
+import { isoDate, fmtDate, displayName, medal as medalOf, fmtDateTime, fmtToPar } from "../utils/format";
 import { flag, isPtCountry } from "../utils/flagUtils";
 import { normName as normNameAuto } from "../data/KIDSdataLoader";
 import { KidsLink, KidsLinkCtx } from "./KidsLink";
@@ -289,7 +289,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                                 const medal = medalOf(p);
                                 const col = p <= 3 ? "u-c-color-warn-dark" : p <= 10 ? "u-c-color-good-dark" : "u-c-text-3";
                                 return (
-                                  <span key={y} title={`${y}: #${p}${res!.tp != null ? ` (${res!.tp > 0 ? "+" : ""}${res!.tp})` : ""}`}
+                                  <span key={y} title={`${y}: #${p}${res!.tp != null ? ` (${fmtToPar(res!.tp)})` : ""}`}
                                     className={`fs-10 fw-700 u-op-0_85 ${col}`}>
                                     {medal ?? `#${p}`}
                                     <span className="fs-10 fw-400 u-op-0_7">'{String(y).slice(2)}</span>

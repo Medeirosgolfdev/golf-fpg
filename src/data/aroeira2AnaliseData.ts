@@ -20,7 +20,10 @@
  */
 
 import type { Tournament } from "./fpgTypes";
-import { fmtToPar } from "../utils/format";
+import { cachedFetchJson } from "./fetchCache";
+import { fmtToPar, fmtSign } from "../utils/format";
+import { meanArr } from "../utils/mathUtils";
+import { compareNullsLast } from "../hooks/useSort";
 import { MANUEL_FED, isManuel as isManuelPlayer } from "../constants/manuel";
 import { normLoose } from "../utils/normName";
 import { isNoCardGross } from "./intlCommon";
@@ -152,26 +155,35 @@ interface AdmissionsFile {
 
 interface PullFile { tournaments: Tournament[] }
 
+/** Ficheiros onde procurar provas jogadas no Aroeira II (a lista estava escrita duas vezes). */
+const FONTES_AROEIRA = [
+  "/data/jovens_2026.json",
+  "/data/jovens_2025.json",
+  "/data/pull-torneios000.json",
+  "/data/pull-torneios003.json",
+  "/data/drive-data-2026-04.json",
+  "/data/drive-data-2026-03.json",
+  "/data/drive-data-2025-02.json",
+];
+
+/** Os torneios de todas as fontes, pela cache global (`cachedFetchJson`: cada ficheiro
+ *  pede-se uma só vez). Ficheiro que não existe ou falha fica de fora. SÓ LEITURA —
+ *  os objectos são os da cache, partilhados com quem mais os pedir. */
+async function torneiosDasFontes(): Promise<Tournament[]> {
+  const ficheiros = await Promise.all(FONTES_AROEIRA.map(src => cachedFetchJson<PullFile>(src).catch(() => null)));
+  return ficheiros.flatMap(j => j?.tournaments ?? []);
+}
+
+type InscritoSub12 = NonNullable<NonNullable<AdmissionsFile["tournaments"][number]["admissions"]>["players"]>[number];
+
+/** Inscritos do Campeonato Nacional Sub-12 H 2026 (o ficheiro era pedido três vezes). */
+async function inscritosSub12Nacional(): Promise<InscritoSub12[]> {
+  const adm = await cachedFetchJson<AdmissionsFile>("/data/fpg-admissions-draws.json").catch(() => null);
+  return adm?.tournaments?.find(t => t.ccode === "000" && t.tcode === SUB12_NACIONAL_2026_TCODE)?.admissions?.players ?? [];
+}
+
 async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<AnalisePackage> {
-  // Sources to scan for Aroeira II tournaments
-  const sources = [
-    "/data/jovens_2026.json",
-    "/data/jovens_2025.json",
-    "/data/pull-torneios000.json",
-    "/data/pull-torneios003.json",
-    "/data/drive-data-2026-04.json",
-    "/data/drive-data-2026-03.json",
-    "/data/drive-data-2025-02.json",
-  ];
-  const allTournaments: Tournament[] = [];
-  await Promise.all(sources.map(async src => {
-    try {
-      const r = await fetch(src);
-      if (!r.ok) return;
-      const j: PullFile = await r.json();
-      for (const t of (j.tournaments || [])) allTournaments.push(t);
-    } catch { /* ignore */ }
-  }));
+  const allTournaments: Tournament[] = await torneiosDasFontes();
 
   // Add current tournament too (if not already in list)
   const ccTc = (t: Tournament) => `${t.ccode}/${t.tcode}`;
@@ -224,41 +236,33 @@ async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<Anal
       club: p.club || "",
       hcpExact: p.hcpExact ?? null,
       nRounds: playerRounds.length,
-      avgGross: validGross.length ? validGross.reduce((s, g) => s + g, 0) / validGross.length : null,
+      avgGross: meanArr(validGross),
       bestGross: validGross.length ? Math.min(...validGross) : null,
-      avgToPar: validToPar.length ? validToPar.reduce((s, t) => s + t, 0) / validToPar.length : null,
+      avgToPar: meanArr(validToPar),
       priorRounds, currentRounds,
     });
   }
 
   // Sub-12 inscritos no Nacional 2026 (tcode 10941)
   const sub12Inscritos: CompareRow[] = [];
-  try {
-    const r = await fetch("/data/fpg-admissions-draws.json");
-    if (r.ok) {
-      const adm: AdmissionsFile = await r.json();
-      const sub12 = adm.tournaments?.find(t => t.ccode === "000" && t.tcode === SUB12_NACIONAL_2026_TCODE);
-      const inscritos = sub12?.admissions?.players || [];
-      const top21Feds = new Set(top21Compare.map(c => c.fedCode).filter(Boolean));
-      for (const ins of inscritos) {
-        if (top21Feds.has(ins.fed)) continue; // já está no Top 21
-        const playerRounds = allRounds.filter(r => r.fedCode === ins.fed);
-        if (playerRounds.length === 0) continue; // só os que JÁ jogaram Aroeira II
-        const validGross = playerRounds.map(r => r.gross).filter((g): g is number => g != null);
-        const validToPar = playerRounds.map(r => r.toPar).filter((t): t is number => t != null);
-        sub12Inscritos.push({
-          fedCode: ins.fed, name: ins.nome, club: ins.clube || "",
-          hcpExact: typeof ins.hcp === "number" ? ins.hcp : null,
-          nRounds: playerRounds.length,
-          avgGross: validGross.length ? validGross.reduce((s, g) => s + g, 0) / validGross.length : null,
-          bestGross: validGross.length ? Math.min(...validGross) : null,
-          avgToPar: validToPar.length ? validToPar.reduce((s, t) => s + t, 0) / validToPar.length : null,
-          priorRounds: playerRounds, currentRounds: [],
-        });
-      }
-    }
-  } catch { /* sem inscrições disponíveis */ }
-  sub12Inscritos.sort((a, b) => (a.avgGross ?? 999) - (b.avgGross ?? 999));
+  const top21Feds = new Set(top21Compare.map(c => c.fedCode).filter(Boolean));
+  for (const ins of await inscritosSub12Nacional()) {
+    if (top21Feds.has(ins.fed)) continue; // já está no Top 21
+    const playerRounds = allRounds.filter(r => r.fedCode === ins.fed);
+    if (playerRounds.length === 0) continue; // só os que JÁ jogaram Aroeira II
+    const validGross = playerRounds.map(r => r.gross).filter((g): g is number => g != null);
+    const validToPar = playerRounds.map(r => r.toPar).filter((t): t is number => t != null);
+    sub12Inscritos.push({
+      fedCode: ins.fed, name: ins.nome, club: ins.clube || "",
+      hcpExact: typeof ins.hcp === "number" ? ins.hcp : null,
+      nRounds: playerRounds.length,
+      avgGross: meanArr(validGross),
+      bestGross: validGross.length ? Math.min(...validGross) : null,
+      avgToPar: meanArr(validToPar),
+      priorRounds: playerRounds, currentRounds: [],
+    });
+  }
+  sub12Inscritos.sort((a, b) => compareNullsLast(a.avgGross, b.avgGross, 1));
 
   // Hot-spots hole-by-hole (Manuel vs field do torneio actual)
   const par18 = currentTournament.players?.[0]?.roundScores?.[0]?.pars?.slice(0, 18) ?? [];
@@ -272,7 +276,7 @@ async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<Anal
     const fieldVals = fieldRoundsCurrent.map(rs => rs.scores[h]).filter(s => s > 0);
     const fieldAvg = fieldVals.length ? fieldVals.reduce((s, v) => s + v, 0) / fieldVals.length : 0;
     const manuelVals = manuelRoundsAll.map(r => r.scores[h]).filter(s => s > 0);
-    const manuelAvg = manuelVals.length ? manuelVals.reduce((s, v) => s + v, 0) / manuelVals.length : null;
+    const manuelAvg = meanArr(manuelVals);
     const par = par18[h] ?? 4;
     hotSpots.push({
       hole: h + 1, par,
@@ -391,7 +395,7 @@ function buildHoleStats(
 
     // Manuel
     const manuelVals = manuelRounds.map(r => r.scores[h]).filter(s => s > 0);
-    const manuelAvg = manuelVals.length ? manuelVals.reduce((s, v) => s + v, 0) / manuelVals.length : null;
+    const manuelAvg = meanArr(manuelVals);
 
     // Label
     let label: HoleDistribution["label"];
@@ -464,9 +468,9 @@ function buildPlayerScorecards(
       hcpExact: p.hcpExact ?? null,
       category: "top21",
       nRounds: rounds.length,
-      avgGross: validG.length ? validG.reduce((s, g) => s + g, 0) / validG.length : null,
+      avgGross: meanArr(validG),
       bestGross: validG.length ? Math.min(...validG) : null,
-      avgToPar: validTp.length ? validTp.reduce((s, t) => s + t, 0) / validTp.length : null,
+      avgToPar: meanArr(validTp),
       currentPos: typeof p.pos !== "undefined" ? (p.pos as any) : null,
       rounds,
     });
@@ -500,25 +504,8 @@ export interface RichAnalisePackage extends AnalisePackage {
 
 export async function loadRichAroeiraIIAnalise(currentTournament: Tournament): Promise<RichAnalisePackage> {
   const pkg = await loadAroeiraIIAnalise(currentTournament);
-  // Re-fetch to get all rounds (slight duplication — could be refactored)
-  const sources = [
-    "/data/jovens_2026.json",
-    "/data/jovens_2025.json",
-    "/data/pull-torneios000.json",
-    "/data/pull-torneios003.json",
-    "/data/drive-data-2026-04.json",
-    "/data/drive-data-2026-03.json",
-    "/data/drive-data-2025-02.json",
-  ];
-  const allTournaments: Tournament[] = [currentTournament];
-  await Promise.all(sources.map(async src => {
-    try {
-      const r = await fetch(src);
-      if (!r.ok) return;
-      const j = await r.json();
-      for (const t of (j.tournaments || [])) allTournaments.push(t);
-    } catch { /* ignore */ }
-  }));
+  // As mesmas fontes (já em cache), agora com a prova aberta à frente.
+  const allTournaments: Tournament[] = [currentTournament, ...(await torneiosDasFontes())];
   const aroeira2 = allTournaments.filter(t => isAroeiraIICourse((t as any).campo) || isAroeiraIICourse((t as any).course));
   const dedup = new Map<string, Tournament>();
   for (const t of aroeira2) {
@@ -611,7 +598,7 @@ export function buildKPIs(pkg: AnalisePackage, holes: HoleDistribution[]): KPI[]
     const diff = recentAvg - earlyAvg;
     const tone = diff < -3 ? "good" : diff > 3 ? "danger" : "neutral";
     const arrow = diff < -1 ? "↓" : diff > 1 ? "↑" : "→";
-    out.push({ label: "Tendência Manuel", value: arrow + " " + (diff > 0 ? "+" : "") + diff.toFixed(1), hint: `Primeiras ${earlier.length} rondas avg ${earlyAvg.toFixed(1)} → últimas ${recent.length} avg ${recentAvg.toFixed(1)}`, tone });
+    out.push({ label: "Tendência Manuel", value: arrow + " " + fmtSign(diff, 1), hint: `Primeiras ${earlier.length} rondas avg ${earlyAvg.toFixed(1)} → últimas ${recent.length} avg ${recentAvg.toFixed(1)}`, tone });
   }
   return out;
 }
@@ -836,14 +823,7 @@ export function buildEvolutionStats(playerCards: PlayerScorecardBundle[]): Evolu
  *  Devolve um Set de fed codes que estão confirmados como Sub-12. */
 export async function loadSub12FedSet(): Promise<Set<string>> {
   const out = new Set<string>();
-  try {
-    const r = await fetch("/data/fpg-admissions-draws.json");
-    if (!r.ok) return out;
-    const f = await r.json();
-    const sub12 = (f.tournaments || []).find((t: any) => t.ccode === "000" && t.tcode === SUB12_NACIONAL_2026_TCODE);
-    const inscritos = sub12?.admissions?.players || [];
-    for (const p of inscritos) if (p.fed) out.add(String(p.fed));
-  } catch { /* ignore */ }
+  for (const p of await inscritosSub12Nacional()) if (p.fed) out.add(String(p.fed));
   return out;
 }
 
@@ -902,10 +882,10 @@ export function buildSub12Performance(
       hcpExact: playerCard.hcpExact,
       status: sub12FedSet.has(fed) ? "top21+inscrito" : "top21_so",
       nRounds: allRounds.length,
-      avgGross: validG.length ? validG.reduce((s, g) => s + g, 0) / validG.length : null,
+      avgGross: meanArr(validG),
       bestGross: validG.length ? Math.min(...validG) : null,
       worstGross: validG.length ? Math.max(...validG) : null,
-      avgToPar: validTp.length ? validTp.reduce((s, t) => s + t, 0) / validTp.length : null,
+      avgToPar: meanArr(validTp),
       lastGross: last?.gross ?? null,
       lastDate: last?.date ?? null,
       rounds: allRounds,
@@ -923,10 +903,10 @@ export function buildSub12Performance(
       fedCode: c.fedCode, name: c.name, club: c.club, hcpExact: c.hcpExact,
       status: "inscrito_com_historico",
       nRounds: sortedR.length,
-      avgGross: validG.length ? validG.reduce((s, g) => s + g, 0) / validG.length : null,
+      avgGross: meanArr(validG),
       bestGross: validG.length ? Math.min(...validG) : null,
       worstGross: validG.length ? Math.max(...validG) : null,
-      avgToPar: validTp.length ? validTp.reduce((s, t) => s + t, 0) / validTp.length : null,
+      avgToPar: meanArr(validTp),
       lastGross: last?.gross ?? null,
       lastDate: last?.date ?? null,
       rounds: sortedR,
@@ -953,12 +933,8 @@ export async function enrichSub12WithEstreantes(
   perf: Sub12Performance[],
   sub12FedSet: Set<string>,
 ): Promise<Sub12Performance[]> {
-  try {
-    const r = await fetch("/data/fpg-admissions-draws.json");
-    if (!r.ok) return perf;
-    const f = await r.json();
-    const sub12T = (f.tournaments || []).find((t: any) => t.ccode === "000" && t.tcode === SUB12_NACIONAL_2026_TCODE);
-    const inscritos = sub12T?.admissions?.players || [];
+  {
+    const inscritos = await inscritosSub12Nacional();
     const seenFeds = new Set(perf.map(p => p.fedCode).filter(Boolean) as string[]);
     for (const ins of inscritos) {
       if (!ins.fed || seenFeds.has(ins.fed)) continue;
@@ -971,7 +947,7 @@ export async function enrichSub12WithEstreantes(
         avgToPar: null, lastGross: null, lastDate: null, rounds: [],
       });
     }
-  } catch { /* ignore */ }
+  }
   return perf;
 }
 

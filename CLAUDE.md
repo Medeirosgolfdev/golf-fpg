@@ -345,6 +345,18 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   `ui/RoundScorecard.tsx`; lugar de uma fonte → sempre `parsePos` (nunca `parseInt`
   da posição: «T4» ficava de fora); jogador de uma prova dos Nacionais →
   `JogadorNacional` (`data/jovensAnaliseData.ts`).
+  **Das páginas que não são de torneios (12/11/2026, «Substituir todos por componente global»):**
+  soma de uma lista → `soma`, média → `meanArr` (`utils/mathUtils`; nada de `reduce((a, b) => a + b, 0)`
+  nem de `x.length ? soma / x.length : null` à mão); número com sinal → `fmtSign` (diferenças),
+  `fmtToPar` (±par, zero = «E») ou `fmtSignTipo` (menos tipográfico, «−1.2») — nunca
+  `n > 0 ? "+" + n : n`; um `Date` em «AAAA-MM-DD» do dia local → `isoDeData` (`utils/dias`);
+  nome que abre a ficha na mesma janela (federado FPG → /jogadores, senão Kids 2) →
+  `ui/FichaLink.tsx`; pedir um ficheiro de dados fora de um componente → `cachedFetchJson`
+  (`data/fetchCache`: 404 → null, erro com o endereço), nunca `fetch` + `r.ok` + `r.json()` à mão
+  (ficam de fora, de propósito, as chamadas à API e os carregadores com regras próprias:
+  `fpgPageLoader`, `playerDataLoader`, `datagolfClient`, `useLiveAdmissions`). No `App.css`, regras
+  SEGUIDAS com o corpo igual escrevem-se como uma só (selectores separados por vírgula); regras
+  iguais mas distantes NÃO se juntam (mudava a ordem da cascata).
 
 ### Contas de handicap — um só sítio: `src/utils/whsCalc.ts`
 - SD, Course/Playing Handicap, Net Double Bogey/AGS, Expected SD de 9 buracos,

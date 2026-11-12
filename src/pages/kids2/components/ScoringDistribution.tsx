@@ -16,6 +16,7 @@ import type { CanonicalData, Junior } from "../data";
 import SectionTitle from "../../../ui/SectionTitle";
 import { Fill } from "../../../ui/DataStyle";
 import { resultadosDoJunior } from "../juniorCalc";
+import { fmtSign } from "../../../utils/format";
 import { addDist, emptyDist, parTypeStats, type Cartao } from "../../../utils/analysisStats";
 
 interface Props {
@@ -112,7 +113,7 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
 
 function ParCard({ pb }: { pb: ParBreakdown }) {
   const diff = pb.avgStrokes != null ? pb.avgStrokes - pb.parValue : null;
-  const diffLabel = diff == null ? "—" : diff === 0 ? "= par" : diff > 0 ? `+${diff.toFixed(2)}` : diff.toFixed(2);
+  const diffLabel = diff == null ? "—" : diff === 0 ? "= par" : fmtSign(diff, 2);
   const diffTone =
     diff == null ? "u-c-text-3" :
     diff <= -0.2 ? "u-c-medal-gold-strong" :

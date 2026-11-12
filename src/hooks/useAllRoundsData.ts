@@ -32,6 +32,24 @@ function backSum(rd: { scores: number[] }): number {
 
 /* ── Types exportados ── */
 
+/** As colunas que as duas vistas (por jogador e por volta) têm em comum —
+ *  posição, nome, clube, tee, HCP e idade — ordenam-se aqui, uma só vez. */
+function cmpColunasComuns(
+  a: Pick<PRow, "pos" | "name" | "club" | "teeName" | "hcp" | "age">,
+  b: Pick<PRow, "pos" | "name" | "club" | "teeName" | "hcp" | "age">,
+  sortKey: string, d: 1 | -1,
+): number {
+  switch (sortKey) {
+    case "pos":  return compareNullsLast(a.pos, b.pos, d);
+    case "name": return d * a.name.localeCompare(b.name, "pt");
+    case "club": return d * a.club.localeCompare(b.club, "pt");
+    case "tee":  return compareTextNullsLast(a.teeName, b.teeName, d);
+    case "hcp":  return compareNullsLast(a.hcp, b.hcp, d);
+    case "age":  return compareNullsLast(a.age, b.age, d);
+    default:     return 0;
+  }
+}
+
 export interface RdData {
   scores: number[];
   gross: number;
@@ -447,22 +465,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         // bird/par: mais primeiro em asc. bog: menos primeiro em asc.
         return compareNullsLast(agg(a), agg(b), sortKey === "bog" ? d : nd);
       }
-      switch (sortKey) {
-        case "pos":
-          return compareNullsLast(a.pos, b.pos, d);
-        case "name":
-          return sortDir === "asc" ? a.name.localeCompare(b.name, "pt") : b.name.localeCompare(a.name, "pt");
-        case "club":
-          return sortDir === "asc" ? a.club.localeCompare(b.club, "pt") : b.club.localeCompare(a.club, "pt");
-        case "tee":
-          return compareTextNullsLast(a.teeName, b.teeName, d);
-        case "hcp":
-          return compareNullsLast(a.hcp, b.hcp, d);
-        case "age":
-          return compareNullsLast(a.age, b.age, d);
-        default:
-          return 0;
-      }
+      return cmpColunasComuns(a, b, sortKey, d);
     }
     // WD vão sempre ao fundo, mas ENTRE WDs também respeitam o cmp escolhido.
     return [
@@ -492,22 +495,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         const pick = (rd: RdData) => sortKey === "eag" ? rd.eags : sortKey === "bird" ? rd.birds : sortKey === "par" ? rd.pars : rd.bogs;
         return compareNullsLast(pick(a.rd), pick(b.rd), sortKey === "bog" ? d : nd);
       }
-      switch (sortKey) {
-        case "pos":
-          return compareNullsLast(a.pos, b.pos, d);
-        case "name":
-          return sortDir === "asc" ? a.name.localeCompare(b.name, "pt") : b.name.localeCompare(a.name, "pt");
-        case "club":
-          return sortDir === "asc" ? a.club.localeCompare(b.club, "pt") : b.club.localeCompare(a.club, "pt");
-        case "tee":
-          return compareTextNullsLast(a.teeName, b.teeName, d);
-        case "hcp":
-          return compareNullsLast(a.hcp, b.hcp, d);
-        case "age":
-          return compareNullsLast(a.age, b.age, d);
-        default:
-          return 0;
-      }
+      return cmpColunasComuns(a, b, sortKey, d);
     }
     return [
       ...rankedFlat.filter((r) => !r.isWD).sort(cmp),

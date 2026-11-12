@@ -23,6 +23,7 @@
  * garante isto (o TournamentDetail só o pede quando a prova não traz federados).
  */
 import type { Course, Tee, Hole } from "./types";
+import { soma } from "../utils/mathUtils";
 
 /** O que se lê de um jogador (os campos do cartão — `Player`/`RoundScore` da FPG). */
 interface CartaoLike {
@@ -47,7 +48,6 @@ export interface ProvaLike {
 
 type Sexo = "M" | "F" | "U";
 
-const soma = (a: readonly number[]) => a.reduce((s, x) => s + x, 0);
 const maisComum = <T,>(xs: readonly T[]): T | null => {
   const n = new Map<T, number>();
   let melhor: T | null = null, max = 0;

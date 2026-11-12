@@ -23,6 +23,7 @@ import { isPTByName } from "../../utils/ptPlayers";
 import { isManuelByName } from "../../constants/manuel";
 import { displayName, fmtDatePt, fmtSign, fmtOrd, titleCase } from "../../utils/format";
 import Pager from "../../ui/Pager";
+import { usePaged } from "../../hooks/usePaged";
 import { RankChange, MUTED } from "../../ui/tableCells";
 import ExpandArrow from "../../ui/ExpandArrow";
 import ExtLink from "../../ui/ExternalLink";
@@ -89,7 +90,6 @@ export function FFGMeriteView() {
   const [cat, setCat] = useState("ALL");
   const [q, setQ] = useState("");
   const [soClass, setSoClass] = useState(true);
-  const [page, setPage] = useState(1);
   const [open, setOpen] = useState<Set<string>>(() => new Set());
   const { sortKey, sortDir, toggleSort } = useSort<SK>("rank", "asc", { moy6: "asc", total: "desc", nbt: "desc", by: "desc" });
 
@@ -130,15 +130,13 @@ export function FFGMeriteView() {
   }, [filtered, sortKey, sortDir]);
 
   const sig = `${sex}|${cat}|${q}|${soClass}|${sortKey}|${sortDir}`;
-  const [lastSig, setLastSig] = useState(sig);
-  if (sig !== lastSig) { setLastSig(sig); if (page !== 1) setPage(1); }
+  // Paginação global (hooks/usePaged): volta à 1.ª página quando os filtros ou a ordem mudam.
+  const { page, setPage, totalPages, pageRows } = usePaged(sorted, sig, PAGE_SIZE);
 
   if (err) return <ErrorState message="Erro ao carregar o Mérite" detail={err} />;
   if (!data) return <LoadingState message="A carregar o Mérite Jeunes..." />;
 
   const info = data.info[sex];
-  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
-  const pageRows = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
   const toggleOpen = (k: string) => setOpen((p) => toggleSet(p, k));
   const hdr = (k: SK, label: string, cls?: string, title?: string) =>
     <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={cls} title={title}>{label}</SortableHdr>;

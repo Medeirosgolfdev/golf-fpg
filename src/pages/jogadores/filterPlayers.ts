@@ -9,6 +9,7 @@
  *   - a contagem de rondas para ordenação (duplicada com a sidebar)
  */
 import type { Player, SexFilter } from "../../data/types";
+import { isPtCountry } from "../../utils/flagUtils";
 import type { FederadoRaw, MergedPlayer } from "../../data/federadosLoader";
 import type { PlayerStats, PlayerStatsDb } from "../../data/playerStatsTypes";
 import { daysSince } from "../../data/playerStatsTypes";
@@ -213,8 +214,8 @@ export function filterAndSortPlayers<T extends ListPlayer>(
   if (viewMode === "todos" && f.natFilter !== "ALL") {
     list = list.filter(p => {
       const cp = p._federadoRaw?.country_prefix;
-      if (f.natFilter === "PT") return cp === "PT" || !cp;
-      return cp && cp !== "PT";
+      if (f.natFilter === "PT") return !cp || isPtCountry(cp);
+      return cp && !isPtCountry(cp);
     });
   }
   if (f.clubFilter !== "ALL") {

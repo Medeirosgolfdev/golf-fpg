@@ -28,6 +28,7 @@ import { useAppContext } from "../context/AppContext";
 import { norm, shortDate, ageAtDate, todayIso, fmtSD, fmtHcp, fmtDeTotal } from "../utils/format";
 import { gf, isPtCountry } from "../utils/flagUtils";
 import Pager from "../ui/Pager";
+import { usePaged } from "../hooks/usePaged";
 import {
   loadFederados,
   mergePlayersWithFederados,
@@ -197,10 +198,6 @@ export default function JogadoresListPage() {
     hcp: "asc", ppHcp: "asc", age: "asc", dob: "desc", roundsTotal: "desc", roundsYear: "desc",
     lastSD: "asc", avgSD5: "asc",
   });
-  const [page, setPage] = useState(1);
-
-  // Reset à página quando muda algum filtro relevante
-  useEffect(() => { setPage(1); }, [q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly, onlyPP, prioritizeDestaques, natFilter]);
 
   /* Build merged rows */
   const rows: Row[] = useMemo(() => {
@@ -392,11 +389,8 @@ export default function JogadoresListPage() {
   }, [filtered, sortKey, sortDir, prioritizeDestaques]);
 
   /* Paginação */
-  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
-  const pageRows = useMemo(() => {
-    const start = (page - 1) * PAGE_SIZE;
-    return sorted.slice(start, start + PAGE_SIZE);
-  }, [sorted, page]);
+  // Paginação global (hooks/usePaged): volta à 1.ª página quando a lista filtrada/ordenada muda.
+  const { page, setPage, totalPages, pageRows } = usePaged(sorted, sorted, PAGE_SIZE);
 
   /* Escalões disponíveis */
   const escaloesPresentes = useMemo(() => {

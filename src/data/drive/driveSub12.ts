@@ -17,6 +17,7 @@ import { escalaoCanon, escaloesCanon } from "../model/escalao";
 import { isManuelByName } from "../../constants/manuel";
 import { isNoCardGross } from "../intlCommon";
 import { distFromCards } from "../../utils/analysisStats";
+import { soma } from "../../utils/mathUtils";
 import { classificarPorTotal, parsePos, temCartao, voltasComCartao } from "../../utils/classificacao";
 
 export type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
@@ -257,8 +258,8 @@ function numGrossOrNull(p: Player): number | null {
  *  quando a fonte não os traz. */
 function roundMeters(p: Player): number | null {
   const m = p.roundScores?.[0]?.meters?.length ? p.roundScores[0].meters : p.meters;
-  const sum = (m ?? []).reduce((s, x) => s + (x || 0), 0);
-  return sum > 0 ? sum : null;
+  const total = soma(m);
+  return total > 0 ? total : null;
 }
 export function buildSub12Data(
   tournaments: Tournament[],

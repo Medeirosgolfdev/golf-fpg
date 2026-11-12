@@ -22,6 +22,8 @@ import SortableHdr from "./SortableHdr";
 import { useSort, compareNullsLast, compareTextNullsLast } from "../hooks/useSort";
 import { fmtToPar, fmtHcp, fmtSign } from "../utils/format";
 import { scClass, toneClass } from "../utils/scoreDisplay";
+import { soma } from "../utils/mathUtils";
+import { parDosJogados } from "../utils/parJogado";
 import PlayerLink from "./PlayerLink";
 import { MANUEL_FED } from "../constants/manuel";
 import ToPar from "./ToPar";
@@ -256,6 +258,37 @@ function HoleDial({ d }: { d: HoleDial }) {
 }
 
 /* ── Player block (consistente com o resto da app) ─── */
+/** ±par, gross, os 18 buracos e o total de cada metade de uma volta — as mesmas células no
+ *  cartão de um jogador e na lista cronológica. O par é o da volta (senão o de referência);
+ *  no ±par de cada metade conta só o dos buracos jogados (`parDosJogados`). */
+function CelulasDoCartao({ r, parRef }: {
+  r: { scores: number[]; pars?: number[] | null; toPar: number | null; gross: number | null };
+  parRef: number[];
+}) {
+  const pars = r.pars && r.pars.length === 18 ? r.pars : parRef;
+  const metade = (de: number) => {
+    const total = soma(r.scores.slice(de, de + 9));
+    return (
+      <>
+        {r.scores.slice(de, de + 9).map((sc, i) => (
+          <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+            <span className={"sc-score " + scClass(sc, pars[de + i] ?? 4)}>{sc || ""}</span>
+          </td>
+        ))}
+        <td className="lb-halftot">{total} <span className="fs-10 c-text-3">({fmtToPar(total - parDosJogados(r.scores, pars, de, de + 9))})</span></td>
+      </>
+    );
+  };
+  return (
+    <>
+      <td className="lb-topar"><ToPar v={r.toPar} /></td>
+      <td className="lb-gross fw-700">{r.gross ?? "–"}</td>
+      {metade(0)}
+      {metade(9)}
+    </>
+  );
+}
+
 function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef: number[] }) {
   const [open, setOpen] = useState(card.fedCode === MANUEL_FED);
   const isManuel = card.fedCode === MANUEL_FED;
@@ -307,30 +340,10 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
             </thead>
             <tbody>
               {card.rounds.map((r, idx) => {
-                const f9 = r.scores.slice(0, 9).reduce((a, b) => a + b, 0);
-                const b9 = r.scores.slice(9, 18).reduce((a, b) => a + b, 0);
-                const rPars = r.pars && r.pars.length === 18 ? r.pars : parRef;
-                // Par SÓ dos buracos jogados — num cartão incompleto o par dos
-                // 9 contra a soma de menos buracos dava um ±par enganador.
-                const rParF9 = rPars.slice(0, 9).reduce((a, p, i) => a + (r.scores[i] ? p : 0), 0);
-                const rParB9 = rPars.slice(9, 18).reduce((a, p, i) => a + (r.scores[9 + i] ? p : 0), 0);
                 return (
                   <tr key={idx}>
                     <td className="lb-name muted fs-11 u-ws-nowrap">{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
-                    <td className="lb-topar"><ToPar v={r.toPar} /></td>
-                    <td className="lb-gross fw-700">{r.gross ?? "–"}</td>
-                    {r.scores.slice(0, 9).map((sc, i) => (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
-                        <span className={"sc-score " + scClass(sc, rPars[i] ?? 4)}>{sc || ""}</span>
-                      </td>
-                    ))}
-                    <td className="lb-halftot">{f9} <span className="fs-10 c-text-3">({fmtToPar(f9 - rParF9)})</span></td>
-                    {r.scores.slice(9, 18).map((sc, i) => (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
-                        <span className={"sc-score " + scClass(sc, rPars[9 + i] ?? 4)}>{sc || ""}</span>
-                      </td>
-                    ))}
-                    <td className="lb-halftot">{b9} <span className="fs-10 c-text-3">({fmtToPar(b9 - rParB9)})</span></td>
+                    <CelulasDoCartao r={r} parRef={parRef} />
                   </tr>
                 );
               })}
@@ -813,34 +826,14 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
             </thead>
             <tbody>
               {cronoRounds.map((r, idx) => {
-                const f9 = r.scores.slice(0, 9).reduce((a, b) => a + b, 0);
-                const b9 = r.scores.slice(9, 18).reduce((a, b) => a + b, 0);
                 const isManuel = r.fedCode === MANUEL_FED;
-                const rPars = r.pars && r.pars.length === 18 ? r.pars : pkg.parReference;
-                // Par SÓ dos buracos jogados — num cartão incompleto o par dos
-                // 9 contra a soma de menos buracos dava um ±par enganador.
-                const rParF9 = rPars.slice(0, 9).reduce((a, p, i) => a + (r.scores[i] ? p : 0), 0);
-                const rParB9 = rPars.slice(9, 18).reduce((a, p, i) => a + (r.scores[9 + i] ? p : 0), 0);
                 return (
                   <tr key={idx} className={isManuel ? "row-manuel" : undefined}>
                     <td className="lb-pos muted fs-11">{idx + 1}</td>
                     <td className="lb-name muted fs-11 u-ws-nowrap">{r.date.slice(0, 10)} · R{r.round} · {r.tournamentName}</td>
                     <td className="lb-name fw-600">{r.fedCode ? <PlayerLink fed={r.fedCode} name={r.playerName} /> : r.playerName}{isManuel && " ⭐"}</td>
                     <td className="lb-hcp fs-11">{fmtHcp(r.hcpExact)}</td>
-                    <td className="lb-topar"><ToPar v={r.toPar} /></td>
-                    <td className="lb-gross fw-700">{r.gross ?? "–"}</td>
-                    {r.scores.slice(0, 9).map((sc, i) => (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
-                        <span className={"sc-score " + scClass(sc, rPars[i] ?? 4)}>{sc || ""}</span>
-                      </td>
-                    ))}
-                    <td className="lb-halftot">{f9} <span className="fs-10 c-text-3">({fmtToPar(f9 - rParF9)})</span></td>
-                    {r.scores.slice(9, 18).map((sc, i) => (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
-                        <span className={"sc-score " + scClass(sc, rPars[9 + i] ?? 4)}>{sc || ""}</span>
-                      </td>
-                    ))}
-                    <td className="lb-halftot">{b9} <span className="fs-10 c-text-3">({fmtToPar(b9 - rParB9)})</span></td>
+                    <CelulasDoCartao r={r} parRef={pkg.parReference} />
                   </tr>
                 );
               })}

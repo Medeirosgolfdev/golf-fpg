@@ -8,6 +8,7 @@ import { RowsFilterBar, filterRows, buildSexByName } from "./PlayerFilterBar";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { semBandeira, clubeEhPais } from "../utils/clubePais";
 import { useSort, compareNullsLast, compareTextNullsLast, compareValuesNullsLast } from "../hooks/useSort";
+import { isoDeData } from "../utils/dias";
 import WdBadge from "../ui/WdBadge";
 import EmptyState from "../ui/EmptyState";
 import SortableHdr from "../ui/SortableHdr";
@@ -182,7 +183,7 @@ export function MultiRoundLeaderboard({
     if (!tournamentDate) return null;
     if (/^\d{4}-\d{2}-\d{2}/.test(tournamentDate)) return tournamentDate.slice(0, 10);
     const d = new Date(tournamentDate);
-    return isNaN(+d) ? null : `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    return isNaN(+d) ? null : isoDeData(d);
   }, [tournamentDate]);
 
   const showEsc = wantEsc && hasAnyEsc;
@@ -362,7 +363,7 @@ export function MultiRoundLeaderboard({
   // Comparador para cut/incomplete/wd: ordenar sempre por gross (asc).
   // No header sort principal os cut continuam separados (sempre depois dos completos).
   function cmpGross(a: RowWithPos, b: RowWithPos): number {
-    return (a.gross ?? 9999) - (b.gross ?? 9999);
+    return compareNullsLast(a.gross, b.gross, 1);
   }
   const sorted = useMemo(() => {
     if (!sortable) return [...filteredComplete, ...filteredCut, ...filteredIncomplete, ...filteredWD];

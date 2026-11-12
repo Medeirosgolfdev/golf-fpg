@@ -19,6 +19,7 @@
 
 import type { Junior, Tournament } from "./data";
 import { MONTHS_PT, fmtDatePt } from "../../utils/format";
+import { isoDeData as toIso } from "../../utils/dias";
 import { resultadosDoJunior } from "./data";
 
 type DobState = "known" | "range" | "inferred" | "unknown";
@@ -59,12 +60,6 @@ function parseIsoDate(iso: string | null | undefined): Date | null {
   return new Date(y, mo - 1, d, 12);
 }
 
-function toIso(d: Date): string {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-}
 
 /** Idade em anos completos de `dob` à data `at`. */
 function ageAt(dob: Date, at: Date): number {
@@ -260,7 +255,7 @@ function fmtRange(lo: Date, hi: Date): string {
   const spanDays = Math.round((hi.getTime() - lo.getTime()) / 86400000);
   if (spanDays <= 1) {
     // essentially exact
-    return `${String(lo.getDate()).padStart(2, "0")}/${String(lo.getMonth() + 1).padStart(2, "0")}/${lo.getFullYear()}`;
+    return fmtDatePt(toIso(lo));
   }
   const minY = lo.getFullYear(), maxY = hi.getFullYear();
   const minM = lo.getMonth(), maxM = hi.getMonth();

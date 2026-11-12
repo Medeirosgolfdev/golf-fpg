@@ -16,6 +16,7 @@
  * esbatido, para se ver de relance que uma viagem cai (ou não) em período
  * lectivo.
  */
+import { isoDeData as iso } from "../utils/dias";
 
 export interface SchoolTerm { nome: string; inicio: string; fim: string }
 export interface SchoolBreak { nome: string; inicio: string; fim: string }
@@ -82,8 +83,6 @@ export const SCHOOL_HOLIDAYS: SchoolOffDay[] = [
   { data: "2027-08-21", motivo: "Dia do Funchal" },
 ];
 
-const iso = (d: Date): string =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
 const OFF = new Map<string, string>([
   ...SCHOOL_OFF_DAYS.map((x) => [x.data, x.motivo] as [string, string]),

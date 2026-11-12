@@ -16,7 +16,7 @@ import { useCourses } from "../context/CoursesContext";
 import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex, teeBorder } from "../utils/teeColors";
-import { fmt, fmtCR, norm, sumRange, titleCase, fmtDatePt, fmtDateShort, fmtSign, escalaoAtDate } from "../utils/format";
+import { fmt, fmtCR, norm, sumRange, titleCase, fmtDatePt, fmtDateShort, fmtSign, escalaoAtDate, fmtSignTipo } from "../utils/format";
 import { sortEscaloes } from "../data/model/escalao";
 import { flag } from "../utils/flagUtils";
 import { fixMojibake } from "../utils/fixEncoding";
@@ -182,7 +182,7 @@ function teeParRange(t: Tee | undefined, from: number, to: number): number | nul
 function fmtSdPar(par: number | null, r: { cr: number; sl: number } | undefined): string {
   if (!r || par == null || !r.sl) return "";
   const v = round1(calcSD(par, r.cr, r.sl));
-  return `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(1)}`;
+  return fmtSignTipo(v, 1);
 }
 
 /* ——— Componente: Grelha Scorecard Multi-Tee ——— */

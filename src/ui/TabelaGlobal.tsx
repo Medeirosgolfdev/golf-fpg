@@ -2,6 +2,7 @@
 import { flag, normPaisDisplay } from "../utils/flagUtils";
 import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
+import SearchInput from "./SearchInput";
 import WdBadge from "./WdBadge";
 import KpiCard from "./KpiCard";
 import { uskTournNames, fpgTournNames, extraTidMeta, normName as normNameAuto } from "../data/KIDSdataLoader";
@@ -647,7 +648,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
       {/* Filtros */}
       <div className="u-mb-8px">
         <div className="detail-toolbar u-fwr-wrap">
-          <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input u-maxw-140px" />
+          <SearchInput value={q} onChange={setQ} size="sm" />
           <Select value={fTour} onChange={setFTour}>
             <option value="all">Todos Torneios</option>
             {allTournCols.map(({ tid, info }) => <option key={tid} value={tid}>{info.short} {info.date}</option>)}
