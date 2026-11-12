@@ -80,7 +80,18 @@ interface Constraint {
   ageMax: number;
   /** false = o escalão só tem limite de cima ("Sub-18", "U16") — não diz idade mínima. */
   hasMin: boolean;
+  /** «U14», «Under 14» = no dia da prova ainda NÃO tem 14 anos (idade máx. 13). Os
+   *  tectos «7 & Under», «12 y menores», «AK 18», «Sub 10» incluem o número. */
+  tectoExclusivo: boolean;
   tid: string;
+}
+
+/** «U14», «Boys U16», «Under 18» — menos de N anos. Não apanha «7 & Under», «8U» nem
+ *  «12 y menores», que incluem o N. */
+function tectoExclusivo(label: string | undefined): boolean {
+  const s = label ?? "";
+  if (/(&|\band|\bor|\by|\bou|\be)\s*(under|menores|menos)\b/i.test(s)) return false;
+  return /\bU\s?-?\d|\bunder\s*-?\d/i.test(s);
 }
 
 /** Extrai constraints (data + range de idade) de cada torneio onde o junior participou. */
@@ -102,7 +113,7 @@ function collectConstraints(junior: Junior, tournamentById: Map<string, Tourname
     const hi = ageMax ?? ageMin!;
     // Sanity: ranges absurdos saltam-se
     if (lo < 5 || hi > 25 || lo > hi) continue;
-    out.push({ date, ageMin: lo, ageMax: hi, hasMin, tid });
+    out.push({ date, ageMin: lo, ageMax: hi, hasMin, tectoExclusivo: !hasMin && tectoExclusivo(f.label), tid });
   }
   return out;
 }
@@ -178,8 +189,11 @@ export function computeDobInfo(junior: Junior, tournamentById: Map<string, Tourn
   for (const c of constraints) {
     const latest = new Date(c.date);
     latest.setFullYear(latest.getFullYear() - c.ageMin);
+    // Idade máxima no dia da prova: N num «N & Under», N−1 num «U N» (Scottish U14 de
+    // 10/08/2026 dava «Ago 2011 ou depois · ≤15 anos»; é «Ago 2012 ou depois · ≤14»).
+    const idadeMax = c.tectoExclusivo ? c.ageMax - 1 : c.ageMax;
     const earliest = new Date(c.date);
-    earliest.setFullYear(earliest.getFullYear() - c.ageMax - 1);
+    earliest.setFullYear(earliest.getFullYear() - idadeMax - 1);
     earliest.setDate(earliest.getDate() + 1);
 
     const newMin: Date = (!rangeMin || earliest > rangeMin) ? earliest : rangeMin;

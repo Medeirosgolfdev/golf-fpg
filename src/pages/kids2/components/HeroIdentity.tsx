@@ -457,7 +457,7 @@ function DobPill({ info, esc }: { info: DobInfo; esc?: string | null }) {
   return (
     <BirthPill esc={esc} dashed={info.state !== "known"} title={title}>
       🎂 {info.dobLabel}
-      <span className="u-op-0_7">·</span>
+      <span className="u-op-0_7 u-m-0-4px">·</span>
       <span className="u-fw-700">{info.ageLabel}</span>
       {info.nextBdayDays != null && info.nextBdayDays <= 30 && info.nextAge != null && (
         <span className="u-ml-4px u-fs-fs-10 u-op-0_85">
