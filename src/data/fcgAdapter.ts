@@ -16,6 +16,7 @@
  * as categorias e usamos `__cat` para identificar (mostrado na UI).
  */
 import { displayName as displayCase } from "../utils/format";
+import { totaisAnteriores } from "./fcgVoltas";
 import { compareNullsLast } from "../hooks/useSort";
 
 // Os mesmos lookups por licença das outras fontes de Espanha.
@@ -26,9 +27,9 @@ import { buildFPGTournament, type IntlCourse, type IntlPlayerIn, type IntlRoundI
 import { escaloEsForPlayer, escaloEsFromCategory } from "./rfeg/escalao";
 import type { RFEGDetail } from "./rfeg/types";
 import { soAdmitidos } from "./rfeg/inscritos";
-import { soma, somaDe } from "../utils/mathUtils";
+import { soma } from "../utils/mathUtils";
 
-interface FCGScorecardGameTee {
+export interface FCGScorecardGameTee {
   color: string | null;
   gender: string | null;
   lap: string | null;
@@ -45,7 +46,10 @@ interface FCGScorecard {
   gross: (number | null)[];
 }
 
-interface FCGPlayer {
+/** Cartão de uma volta ANTERIOR à do jogo (vem do ficheiro do jogo dessa volta — data/fcgVoltas.ts). */
+export interface FcgVoltaAnterior { round: number; gross: (number | null)[]; gameTee: FCGScorecardGameTee | null }
+
+export interface FCGPlayer {
   _id: string;
   firstName: string;
   surname: string;
@@ -66,9 +70,13 @@ interface FCGPlayer {
   } | null;
   previous: any[];
   scorecard: FCGScorecard | null;
+  /** Cartões das voltas anteriores (postos pelo `juntarVoltasFcg`; não vêm da fonte). */
+  __voltas?: FcgVoltaAnterior[];
+  /** Só aparece nos jogos das voltas anteriores: não chegou à última (cut, desistência). */
+  __soAnteriores?: boolean;
 }
 
-interface FCGCategory {
+export interface FCGCategory {
   _id: string;
   name: string;
   gender: "M" | "F" | null;
@@ -176,7 +184,8 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
       const dobEntry = lic && dobLookup ? dobLookup[lic] : null;
       const acc = (p.view && p.view.acc) || {};
       const day = (p.view && p.view.day) || {};
-      const pos = typeof acc.rankingPosition === "number" ? acc.rankingPosition : (typeof day.rankingPosition === "number" ? day.rankingPosition : null);
+      const pos = p.__soAnteriores ? null
+        : typeof acc.rankingPosition === "number" ? acc.rankingPosition : (typeof day.rankingPosition === "number" ? day.rankingPosition : null);
       const total = typeof acc.strokeNumber === "number" ? acc.strokeNumber : (typeof day.strokeNumber === "number" ? day.strokeNumber : null);
       const toPar = typeof acc.onlyGross === "number" ? acc.onlyGross : (typeof day.onlyGross === "number" ? day.onlyGross : null);
       admitidos.push({
@@ -189,7 +198,7 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
         sexo: p.gender || c.gender,
         club: dobEntry?.club || null,
         dob: dobEntry?.dob || null,
-        estado: p.isCardFinished ? "Finalizado" : (p.isCardClosed ? "Encerrado" : "Em curso"),
+        estado: p.__soAnteriores ? "Não chegou à última volta" : p.isCardFinished ? "Finalizado" : (p.isCardClosed ? "Encerrado" : "Em curso"),
         // total + toPar para serem visíveis na lista de admitidos
         total,
         toPar,
@@ -318,7 +327,8 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
       const acc = view.acc || view.day || {};
       const grossTotal = typeof acc.strokeNumber === "number" ? acc.strokeNumber : null;
       const toPar = typeof acc.onlyGross === "number" ? acc.onlyGross : null;
-      const pos = typeof acc.rankingPosition === "number" ? acc.rankingPosition : (scoreIdCounter + 1);
+      // Quem não chegou à última volta fica sem lugar (o que trazia era o de a meio da prova).
+      const pos = p.__soAnteriores ? null : typeof acc.rankingPosition === "number" ? acc.rankingPosition : (scoreIdCounter + 1);
 
       const scoresRaw = p.scorecard && p.scorecard.gross ? p.scorecard.gross : [];
       const scores: number[] = scoresRaw.map((x) => (typeof x === "number" ? x : 0));
@@ -329,11 +339,21 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
       // só dá o cartão da volta do jogo; as anteriores vêm em `previous[]` só com
       // o total do dia. Se o `previous` já incluir esta volta (soma = acumulado),
       // a última sai.
-      const prev: (number | null)[] = (Array.isArray(p.previous) ? p.previous : [])
-        .map((x: { day?: { strokeNumber?: number } | null } | null) => (x && x.day && typeof x.day.strokeNumber === "number" ? x.day.strokeNumber : null));
-      if (prev.length && grossTotal != null && prev.every((g) => g != null) && somaDe(prev, g => (g ?? 0)) === grossTotal) prev.pop();
-      // Volta sem total (não a jogou) não entra — conta como incompleto no Resumo.
-      const rounds: IntlRoundIn[] = prev.map((g, i) => ({ round: i + 1, gross: g })).filter((r) => r.gross != null);
+      const prev = totaisAnteriores(p);
+      // Os cartões das voltas anteriores vêm dos ficheiros dos jogos dessas voltas
+      // (`__voltas`, data/fcgVoltas.ts), cada um com o tee DESSE dia. Volta sem
+      // total nem cartão (não a jogou) não entra — conta como incompleto no Resumo.
+      const cartaoDe = new Map((p.__voltas ?? []).map((v) => [v.round, v]));
+      const rounds: IntlRoundIn[] = [];
+      prev.forEach((g, i) => {
+        const v = cartaoDe.get(i + 1);
+        const sc = v ? v.gross.map((x) => (typeof x === "number" ? x : 0)) : null;
+        const temSc = !!sc && sc.some((s) => s > 0);
+        const gross = g ?? (temSc ? soma(sc!) : null);
+        if (gross == null) return;
+        const card = temSc && v ? fcgCardOf(v.gameTee) : null;
+        rounds.push({ round: i + 1, gross, ...(temSc ? { scores: sc! } : {}), ...(card ? { card: cardCourse(card) } : {}) });
+      });
       if (hasScorecard) rounds.push({ round: prev.length + 1, gross: r1Total, scores });
 
       // Regra comum de Espanha (22/10/2026): coorte de ano (ano do torneio −
@@ -352,7 +372,7 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
         rounds,
         // O cartão da 1.ª linha é o do jogo, mesmo sem buracos jogados.
         scores,
-        wd: !p.isCardFinished,
+        wd: p.__soAnteriores ? true : !p.isCardFinished,
         country: p.country,   // destaque PT pela regra comum (ISO-3)
         // O campo do PRÓPRIO jogador (tee, metros, SI e par do seu cartão).
         ...(cartoes.has(p) && !umSoTee ? { course: cardCourse(cartoes.get(p)!) } : {}),

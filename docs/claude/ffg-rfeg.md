@@ -386,6 +386,17 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
   - **Voltas:** um jogo «Ronda 2» só traz o cartão dessa volta; as anteriores
     estão em `previous[].day.strokeNumber`. Quando a soma do `previous` dá o
     acumulado, o `previous` já inclui a volta do jogo (provas de 1 volta).
+  - **Uma prova = uma entrada, mesmo com um jogo por volta** (12/11/2026): os jogos
+    com o mesmo `tournamentId` (o índice já o guarda) são a mesma prova. Na /rfeg
+    fica só o jogo com mais voltas (`juntarJogosGolfdirecto`, `data/rfeg/entries.ts`),
+    que leva os ficheiros dos anteriores; ao abrir, `juntarVoltasFcg`
+    (`data/fcgVoltas.ts`) dá a cada jogador o buraco a buraco das voltas anteriores
+    — com o tee DESSE dia, que muda de volta para volta — e junta no fim quem não
+    chegou à última (sem lugar, WD/«INC»). Guarda: só é «volta anterior» um jogo com
+    menos voltas e ≥ metade do plantel em comum (jogos da mesma prova que sejam
+    categorias diferentes ficam separados). O id do jogo escondido fica em
+    `memberIds`: os links antigos abrem a prova. Casos a 12/11/2026: os dois
+    campeonatos da Galiza (Infantil/Alevín/Benjamín e Sub 25/18/16).
   - **Gémeos com PDF** (`scripts/lib/golfdirecto-twins.js`): provas golfdirecto
     **ou NextCaddy** a ±1 dia com ≥75% das licenças do PDF → o PDF sai do índice
     e dos rivais. Entre dois PDFs regionais só no **mesmo dia** (`registar`): as

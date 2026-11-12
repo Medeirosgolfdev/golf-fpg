@@ -108,6 +108,46 @@ function rosterOverlap(a?: string[], b?: string[]): number {
   return hit / small.length;
 }
 
+/** golfdirecto: cada volta de uma prova é publicada como um «jogo» à parte, todos
+ *  com o mesmo `tournamentId`. Fica UMA entrada — a do jogo com mais voltas, que
+ *  leva os ficheiros dos anteriores (o detalhe junta-os: data/fcgVoltas.ts).
+ *  Guarda: só conta como volta anterior um jogo com MENOS voltas e o mesmo plantel
+ *  (≥ metade em comum) — jogos da mesma prova que sejam categorias diferentes no
+ *  mesmo dia ficam como estão. */
+export function juntarJogosGolfdirecto(lista: RFEGIndexEntry[]): RFEGIndexEntry[] {
+  const porProva = new Map<string, RFEGIndexEntry[]>();
+  for (const t of lista) {
+    if (t.source !== "golfdirecto" || !t.tournamentId) continue;
+    const arr = porProva.get(t.tournamentId) ?? [];
+    arr.push(t);
+    porProva.set(t.tournamentId, arr);
+  }
+  const fora = new Set<RFEGIndexEntry>();
+  const troca = new Map<RFEGIndexEntry, RFEGIndexEntry>();
+  const dia = (t: RFEGIndexEntry) => String(t.dateStartIso ?? t.dateStart ?? "");
+  for (const jogos of porProva.values()) {
+    if (jogos.length < 2) continue;
+    const ord = [...jogos].sort((a, b) => ((a.nRounds ?? 1) - (b.nRounds ?? 1)) || dia(a).localeCompare(dia(b)));
+    const ultimo = ord[ord.length - 1];
+    const antes = ord.slice(0, -1).filter((a) =>
+      (a.nRounds ?? 1) < (ultimo.nRounds ?? 1) && rosterOverlap(a.roster, ultimo.roster) >= 0.5);
+    if (!antes.length) continue;
+    for (const a of antes) fora.add(a);
+    const inicio = [ultimo, ...antes].map(dia).filter(Boolean).sort()[0] || null;
+    const roster = [...new Set([ultimo, ...antes].flatMap((j) => j.roster ?? []))];
+    troca.set(ultimo, {
+      ...ultimo,
+      dateStart: inicio ?? ultimo.dateStart,
+      dateStartIso: inicio ?? ultimo.dateStartIso,
+      roster,
+      leaderboardPlayers: Math.max(roster.length, ultimo.leaderboardPlayers ?? 0),
+      jogosAnteriores: antes.map((a) => a.filePath),
+      idsAnteriores: antes.map((a) => String(a.id)),
+    });
+  }
+  return fora.size ? lista.filter((t) => !fora.has(t)).map((t) => troca.get(t) ?? t) : lista;
+}
+
 /** Sobreposição a partir da qual dois eventos com o mesmo nome+ano se consideram
  *  o MESMO evento (duplicado a deduplicar), e não dois eventos distintos. */
 const RFEG_ROSTER_SAME_MIN = 0.85;
@@ -211,13 +251,13 @@ export function buildRfegEntries(
   //    LGS que se suprime (`lgsSuppressed[lgsId]`) e fica o RFEGolf+mitarjeta.
   // Provas de 4/5/9 buracos (escalões muito novos) não interessam (Mariana,
   // 30/10/2026) — o nº de buracos vem do índice (dados ou nome).
-  const visible = index.tournaments.filter(
+  const visible = juntarJogosGolfdirecto(index.tournaments.filter(
     (t) => t.category
       && !(t.holes != null && t.holes < 18)
       && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0)
       && !(t.source === "rfegolf" && twins?.[String(t.id)] != null)
       && !(t.source === "livegolfscoring" && lgsSuppressed?.[String(t.id)] != null),
-  );
+  ));
 
   // LGS com gémeo no site da RFEG: os limites de handicap vêm de lá (o LGS não os publica).
   const gemeoRfegDoLgs = new Map<string, RFEGIndexEntry>();
@@ -257,6 +297,8 @@ export function buildRfegEntries(
     playerCount: t.leaderboardPlayers || t.counts?.admitidos || undefined,
     roundsCount: t.nRounds ?? undefined,
     divisionCount: 1,
+    // golfdirecto: um link antigo para o jogo de uma volta anterior abre esta entrada.
+    ...(t.idsAnteriores?.length ? { memberIds: t.idsAnteriores.map((id) => `${t.source}:${id}`) } : {}),
     loadDivisions: () => loadDivisions(t),
   });
 
@@ -287,7 +329,7 @@ export function buildRfegEntries(
      const base = rfegBaseName(t) || t.name || "";
      const nm = (t.year != null && !base.includes(String(t.year))) ? `${base} ${t.year}` : base;
      const e = single(t);
-     entries.push({ ...e, memberIds: [`${t.source}:grp-${slugify(nm)}`] });
+     entries.push({ ...e, memberIds: [...(e.memberIds ?? []), `${t.source}:grp-${slugify(nm)}`] });
      continue;
    }
    // Cada balde produz as suas entradas num array local para podermos desambiguar
@@ -345,7 +387,7 @@ export function buildRfegEntries(
       source: sorted[0].source,
       // Deep-link vindo de fora (ex: painel de torneios de um jogador) usa o id
       // da prova; sem esta lista não bateria com nenhuma entrada da sidebar.
-      memberIds: sorted.map((t) => `${t.source}:${t.id}`),
+      memberIds: sorted.flatMap((t) => [`${t.source}:${t.id}`, ...(t.idsAnteriores ?? []).map((id) => `${t.source}:${id}`)]),
       dateStart: starts[0] ?? undefined,
       dateEnd: ends[ends.length - 1] ?? undefined,
       federation: sorted.find((t) => t.federation)?.federation ?? undefined,

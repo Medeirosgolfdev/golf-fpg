@@ -8,6 +8,7 @@
  */
 import { cachedFetchJson } from "../fetchCache";
 import { adaptFcg, fcgToFPGTournament, type FCGDetail, type MinimalRFEGShape } from "../fcgAdapter";
+import { juntarVoltasFcg } from "../fcgVoltas";
 import { formatPlayerName } from "../../utils/playerUtils";
 import { displayName } from "../../utils/format";
 import type { TotalsPlayer } from "../model/types";
@@ -222,7 +223,12 @@ export async function loadRfegDivisionData(
   let data: RFEGDetail;
   if (t.source === "nextcaddy") data = adaptNextCaddy(raw as NCDetail, dob, hcp);
   else if (t.source === "livegolfscoring") data = adaptLgs(lgsWithTwinCountries(raw as LgsDetail, gemeo), dob, hcp, fbn, gbx);
-  else if (t.source === "golfdirecto") data = adaptFcg(raw as unknown as FCGDetail, dob, hcp) as unknown as RFEGDetail;
+  else if (t.source === "golfdirecto") {
+    // Os jogos das voltas anteriores da mesma prova (postos pelo buildRfegEntries):
+    // dão o buraco a buraco dessas voltas e quem não chegou à última.
+    const antes = await Promise.all((t.jogosAnteriores ?? []).map((fp) => cachedFetchJson<FCGDetail>(`/data/${fp}`).catch(() => null)));
+    data = adaptFcg(juntarVoltasFcg(raw as unknown as FCGDetail, antes), dob, hcp) as unknown as RFEGDetail;
+  }
   else { const d = raw as RFEGDetail; data = { ...d, coursePar: d.coursePar ?? null }; }
 
   let results: FPGTournament | null = null;

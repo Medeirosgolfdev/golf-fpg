@@ -50,6 +50,13 @@ export interface RFEGIndexEntry {
   /** Pré-computados pelo build do índice (páginas lazy): há Manuel / portugueses? */
   hasManuel?: boolean;
   hasPt?: boolean;
+  /** golfdirecto: a prova a que o jogo pertence (`game.tournament._id`). Cada volta
+   *  é um jogo; os jogos com a mesma prova são UMA entrada (`buildRfegEntries`). */
+  tournamentId?: string | null;
+  /** golfdirecto, posto pelo `buildRfegEntries` no jogo da última volta (não vem
+   *  do índice): os ficheiros e os ids dos jogos das voltas anteriores. */
+  jogosAnteriores?: string[];
+  idsAnteriores?: string[];
   /** Fingerprint de roster (nomes normalizados, ordenados+únicos) gerado pelo
    *  build do índice. Permite confirmar "é o mesmo evento?" por JOGADORES no
    *  buildRfegEntries sem carregar as divisões. Vazio p/ torneios só-inscritos. */
