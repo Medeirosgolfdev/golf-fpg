@@ -57,6 +57,9 @@ export interface RFEGIndexEntry {
    *  do índice): os ficheiros e os ids dos jogos das voltas anteriores. */
   jogosAnteriores?: string[];
   idsAnteriores?: string[];
+  /** Posto pelo `buildRfegEntries` na prova de um PDF regional (não vem do índice):
+   *  entradas de outra fonte que são um pedaço desta mesma prova e ficam escondidas. */
+  entradasContidas?: RFEGIndexEntry[];
   /** Fingerprint de roster (nomes normalizados, ordenados+únicos) gerado pelo
    *  build do índice. Permite confirmar "é o mesmo evento?" por JOGADORES no
    *  buildRfegEntries sem carregar as divisões. Vazio p/ torneios só-inscritos. */

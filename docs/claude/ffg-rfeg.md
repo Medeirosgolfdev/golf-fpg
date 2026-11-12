@@ -397,6 +397,17 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
     categorias diferentes ficam separados). O id do jogo escondido fica em
     `memberIds`: os links antigos abrem a prova. Casos a 12/11/2026: os dois
     campeonatos da Galiza (Infantil/Alevín/Benjamín e Sub 25/18/16).
+  - **PDF regional que contém um pedaço vindo de outra fonte** (12/11/2026,
+    `juntarContidosNoPdf`, `data/rfeg/entries.ts`): quando uma entrada do
+    golfdirecto/NextCaddy é só uma parte da prova que o PDF da federação traz
+    inteira (Copa Vasca 2025: PDF com os 67 jogadores; o golfdirecto só a «Jornada 2»
+    dos 8 primeiros de cada categoria, sem cartões e com os mesmos totais), fica a
+    entrada do PDF e a outra esconde-se dentro dela (`entradasContidas`; o link
+    antigo abre a do PDF). Ao abrir, as divisões da escondida só entram — como abas
+    «Cartões · …» — se trouxerem buraco a buraco que o PDF não tem. Guardas: a mesma
+    federação (`organizer` ↔ `federation`), o dia dentro das datas do PDF, ≥ 5
+    jogadores e ≥ 85 % deles no PDF, e o PDF com mais jogadores. É o inverso do gémeo
+    abaixo (em que a outra fonte cobre o PDF e é o PDF que sai do índice).
   - **Gémeos com PDF** (`scripts/lib/golfdirecto-twins.js`): provas golfdirecto
     **ou NextCaddy** a ±1 dia com ≥75% das licenças do PDF → o PDF sai do índice
     e dos rivais. Entre dois PDFs regionais só no **mesmo dia** (`registar`): as

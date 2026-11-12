@@ -148,6 +148,67 @@ export function juntarJogosGolfdirecto(lista: RFEGIndexEntry[]): RFEGIndexEntry[
   return fora.size ? lista.filter((t) => !fora.has(t)).map((t) => troca.get(t) ?? t) : lista;
 }
 
+/** Fontes que são o PDF da própria federação regional (classificação completa, só totais). */
+const FONTES_PDF = new Set<string>(["fgcv", "fvg", "fng", "fgclm", "frg"]);
+
+/** A federação sem as palavras comuns («Federación Vasca de Golf» → «vasca»), para
+ *  comparar o `organizer` do golfdirecto com a `federation` do PDF. */
+function chaveFederacao(s?: string | null): string {
+  return stripAccents(String(s ?? "")).toLowerCase().replace(/[^a-z ]+/g, " ").split(/\s+/)
+    .filter((w) => w && !["federacion", "federacio", "real", "de", "del", "la", "golf"].includes(w)).sort().join(" ");
+}
+
+/** Um PDF regional e uma entrada do golfdirecto/NextCaddy que é um PEDAÇO da mesma
+ *  prova (Copa Vasca 2025: o PDF tem os 67 jogadores, o golfdirecto só a «Jornada 2»
+ *  dos 8 primeiros de cada categoria) → fica a do PDF e a outra esconde-se dentro
+ *  dela (`entradasContidas`). Ao abrir, as divisões da escondida só entram — como
+ *  abas a mais — se trouxerem cartões que o PDF não tem (`buildRfegEntries`).
+ *  Guardas, todas precisas: a mesma federação; o dia da outra dentro das datas do
+ *  PDF; ≥ 5 jogadores e ≥ 85 % deles no PDF; e o PDF com mais jogadores. */
+export function juntarContidosNoPdf(lista: RFEGIndexEntry[]): RFEGIndexEntry[] {
+  const pdfs = lista.filter((t) => FONTES_PDF.has(t.source) && (t.roster?.length ?? 0) > 0);
+  if (!pdfs.length) return lista;
+  const dia = (s?: string | null) => String(s ?? "").slice(0, 10);
+  const contidas = new Map<RFEGIndexEntry, RFEGIndexEntry[]>();
+  const fora = new Set<RFEGIndexEntry>();
+  for (const g of lista) {
+    if (g.source !== "golfdirecto" && g.source !== "nextcaddy") continue;
+    const plantel = g.roster ?? [];
+    const fed = chaveFederacao(g.organizer ?? g.federation);
+    const quando = dia(g.dateStartIso ?? g.dateStart);
+    if (plantel.length < 5 || !fed || !quando) continue;
+    let melhor: { p: RFEGIndexEntry; s: number } | null = null;
+    for (const p of pdfs) {
+      const ini = dia(p.dateStartIso ?? p.dateStart), fim = dia(p.dateEndIso ?? p.dateEnd) || ini;
+      if (!ini || quando < ini || quando > fim) continue;
+      if (chaveFederacao(p.federation) !== fed) continue;
+      const doPdf = new Set(p.roster);
+      if (doPdf.size <= plantel.length) continue;
+      const s = plantel.filter((n) => doPdf.has(n)).length / plantel.length;
+      if (s >= 0.85 && (!melhor || s > melhor.s)) melhor = { p, s };
+    }
+    if (!melhor) continue;
+    fora.add(g);
+    contidas.set(melhor.p, [...(contidas.get(melhor.p) ?? []), g]);
+  }
+  if (!fora.size) return lista;
+  return lista.filter((t) => !fora.has(t)).map((t) => (contidas.has(t) ? { ...t, entradasContidas: contidas.get(t) } : t));
+}
+
+/** A divisão traz buraco a buraco de alguém? */
+function divisaoComCartoes(d: CircuitDivision): boolean {
+  return !!d.results?.players?.some((p) => (p.roundScores ?? []).some((r) => (r.scores ?? []).some((s) => typeof s === "number" && s > 0)));
+}
+
+/** Os ids das entradas que esta esconde (voltas anteriores do golfdirecto, pedaços
+ *  contidos num PDF): um link antigo para qualquer delas abre esta. */
+function idsEscondidos(t: RFEGIndexEntry): string[] {
+  return [
+    ...(t.idsAnteriores ?? []).map((id) => `${t.source}:${id}`),
+    ...(t.entradasContidas ?? []).flatMap((g) => [`${g.source}:${g.id}`, ...idsEscondidos(g)]),
+  ];
+}
+
 /** Sobreposição a partir da qual dois eventos com o mesmo nome+ano se consideram
  *  o MESMO evento (duplicado a deduplicar), e não dois eventos distintos. */
 const RFEG_ROSTER_SAME_MIN = 0.85;
@@ -251,13 +312,26 @@ export function buildRfegEntries(
   //    LGS que se suprime (`lgsSuppressed[lgsId]`) e fica o RFEGolf+mitarjeta.
   // Provas de 4/5/9 buracos (escalões muito novos) não interessam (Mariana,
   // 30/10/2026) — o nº de buracos vem do índice (dados ou nome).
-  const visible = juntarJogosGolfdirecto(index.tournaments.filter(
+  const visible = juntarContidosNoPdf(juntarJogosGolfdirecto(index.tournaments.filter(
     (t) => t.category
       && !(t.holes != null && t.holes < 18)
       && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0)
       && !(t.source === "rfegolf" && twins?.[String(t.id)] != null)
       && !(t.source === "livegolfscoring" && lgsSuppressed?.[String(t.id)] != null),
-  ));
+  )));
+
+  // As divisões de uma entrada. Se ela esconde um pedaço vindo de outra fonte, as
+  // divisões desse pedaço só entram (abas a mais) quando trazem cartões — senão
+  // seriam a mesma classificação outra vez.
+  const carregar = async (t: RFEGIndexEntry): Promise<CircuitDivision[]> => {
+    const base = await loadDivisions(t);
+    if (!t.entradasContidas?.length) return base;
+    const extras = await Promise.all(t.entradasContidas.map(async (g) =>
+      (await loadDivisions(g)).filter(divisaoComCartoes).map((d, i) => ({
+        ...d, key: `${g.source}:${g.id}:${i}`, tabLabel: `Cartões · ${d.tabLabel ?? d.escalao}`,
+      }))));
+    return [...base, ...extras.flat()];
+  };
 
   // LGS com gémeo no site da RFEG: os limites de handicap vêm de lá (o LGS não os publica).
   const gemeoRfegDoLgs = new Map<string, RFEGIndexEntry>();
@@ -297,9 +371,9 @@ export function buildRfegEntries(
     playerCount: t.leaderboardPlayers || t.counts?.admitidos || undefined,
     roundsCount: t.nRounds ?? undefined,
     divisionCount: 1,
-    // golfdirecto: um link antigo para o jogo de uma volta anterior abre esta entrada.
-    ...(t.idsAnteriores?.length ? { memberIds: t.idsAnteriores.map((id) => `${t.source}:${id}`) } : {}),
-    loadDivisions: () => loadDivisions(t),
+    // Um link antigo para uma entrada que esta esconde (volta anterior, pedaço de PDF) abre esta.
+    ...(idsEscondidos(t).length ? { memberIds: idsEscondidos(t) } : {}),
+    loadDivisions: () => carregar(t),
   });
 
   // Agrupar por (fonte | ano | nome-base). Um grupo é UM campeonato dividido por
@@ -387,7 +461,7 @@ export function buildRfegEntries(
       source: sorted[0].source,
       // Deep-link vindo de fora (ex: painel de torneios de um jogador) usa o id
       // da prova; sem esta lista não bateria com nenhuma entrada da sidebar.
-      memberIds: sorted.flatMap((t) => [`${t.source}:${t.id}`, ...(t.idsAnteriores ?? []).map((id) => `${t.source}:${id}`)]),
+      memberIds: sorted.flatMap((t) => [`${t.source}:${t.id}`, ...idsEscondidos(t)]),
       dateStart: starts[0] ?? undefined,
       dateEnd: ends[ends.length - 1] ?? undefined,
       federation: sorted.find((t) => t.federation)?.federation ?? undefined,
@@ -405,7 +479,7 @@ export function buildRfegEntries(
       divisionCount: sorted.length,
       loadDivisions: async () => {
         const per = await Promise.all(sorted.map(async (ct) => {
-          const divs = await loadDivisions(ct);
+          const divs = await carregar(ct);
           // O torneio combinado não tem `sourceUrl` (é multi-escalão), por isso o
           // link oficial de cada categoria — que numa entry avulsa vinha do
           // `sourceUrl` — é reposto AQUI como link da divisão (microsite RFEG),
