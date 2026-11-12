@@ -14,14 +14,13 @@
 
 import { useContext, useMemo, useState, type ReactNode } from "react";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
-import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf, isRecentHours, fmtDatePt, todayIso, fmtSignTipo } from "../utils/format";
+import { fmtHcp, escalaoAtDate, birthYearOf, isRecentHours, fmtDatePt, todayIso, fmtSignTipo } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, Pill } from "./PillBadge";
-import BirthPill from "./BirthPill";
-import { pillDoAno, birthSortValue, compareBirth } from "./BirthCells";
+import { birthCells, escDoAno, birthSortValue, compareBirth } from "./BirthCells";
 import { useFedCountries, useFedBirthdates, useFedGenders, useFedHcp } from "./InscricoesComponents";
 import { parseSubNumber, teeNameFor, type TeeRule } from "../utils/teeRegulation";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -31,9 +30,9 @@ import { displayFed } from "../utils/fedKeys";
 import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
 import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
 import { KidsLinkCtx } from "./KidsLink";
-import { normName } from "../data/KIDSdataLoader";
 import { useJson } from "../hooks/useJson";
-import { makeKidsDobLookup, kidsDobLida } from "../data/kidsDob";
+import { makeKidsDobLookup, kidsDobLida, kidsAcrescento } from "../data/kidsDob";
+import { fichaDoKids } from "../data/kidsFicha";
 import { formaMedia, nivelPoucoSeguro, type ScoutFile, type JuniorScout } from "./circuit/scoutModel";
 import { getTierLabel, type TierKey } from "../pages/kids2/juniorCalc";
 import ExtLink from "./ExternalLink";
@@ -135,10 +134,11 @@ export default function AdmissionsTab({
   const fedGenders = useFedGenders();
   const fedHcp = useFedHcp();
   const players = admissions.players || [];
-  // Ficha do Kids 2 de cada inscrito (pelo nome, como a seta ↗ e o Scout; um
-  // homónimo com outro federado não conta). Dá a data de nascimento a quem a
-  // inscrição não traz e, com `kidsCols`, as colunas do Kids 2. Só a data
-  // completa (`d`) — nunca o ano estimado do ranking.
+  // Ficha do Kids 2 de cada inscrito — a mesma da seta ↗ (data/kidsFicha.ts:
+  // o `juniorId` da lista, senão o nome; um homónimo com outro federado não
+  // conta). Dá o nascimento e o sexo a quem a inscrição não traz — como no Draw
+  // e no Resumo: data lida → ano certo de uma federação → ano estimado pelos
+  // escalões USKids (a vermelho) — e, com `kidsCols`, as colunas do Kids 2.
   const kidsMap = useContext(KidsLinkCtx);
   const precisaScout = kidsMap.size > 0 && (kidsCols || players.some(p => !p.dob && !p.fed));
   const scout = useJson<ScoutFile>(precisaScout ? "/data/juniors-scout.json" : null).data;
@@ -146,9 +146,8 @@ export default function AdmissionsTab({
     const m = new Map<string, JuniorScout>();
     if (!scout) return m;
     for (const p of players) {
-      const kid = kidsMap.get(normName(p.nome || ""));
-      if (!kid?.id || (p.fed && kid.fed && kid.fed !== p.fed)) continue;
-      const sc = scout.players[kid.id];
+      const id = fichaDoKids(kidsMap, p)?.id;
+      const sc = id ? scout.players[id] : undefined;
       if (sc) m.set(scoutKey(p), sc);
     }
     return m;
@@ -201,11 +200,17 @@ export default function AdmissionsTab({
     // A ficha RFEG (_rfeg) entra por ultimo, mas e a unica fonte de dob/sexo
     // para quem nao tem federado portugues — sem ela os internacionais ficam
     // sem escalao e sem marcacao calculada pelo regulamento.
-    const dob: string | undefined =
-      p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined) || (p as any)._rfeg?.dob ||
-      kidsDobLida(kidsDobOf(p.nome, p.fed));
-    // Sem data, o ano solto da fonte (ex.: ranking da Federgolf) — idade «~».
-    const dobYear = birthYearOf(dob) ?? p.birthYear ?? null;
+    const dobSemKids: string | undefined =
+      p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined) || (p as any)._rfeg?.dob;
+    // Kids 2 (só para quem a fonte não dá a data): a data lida, o ano certo de
+    // uma federação ou o ano estimado — a regra comum do kidsDob.ts.
+    const kidsLido = !dobSemKids ? kidsDobOf(p.nome, p.fed, p.juniorId) : undefined;
+    const kidsNasc = kidsLido ? kidsAcrescento({ birthYear: p.birthYear }, kidsLido) : null;
+    const dob: string | undefined = dobSemKids || kidsDobLida(kidsNasc ?? undefined);
+    // Sem data, o ano solto: o da fonte (ex.: ranking da Federgolf), senão o da ficha — idade «~».
+    const dobYear = birthYearOf(dob) ?? p.birthYear ?? (kidsNasc && "birthYear" in kidsNasc ? kidsNasc.birthYear : null);
+    const kidsEst = dobYear == null && kidsNasc && "birthYearEst" in kidsNasc ? kidsNasc : null;
+    const ficha = fichaDoKids(kidsMap, p);
     let clube = p.clube;
     if (!clube && bd) {
       const club = typeof bd.club === "string" ? bd.club : bd.club?.short;
@@ -214,7 +219,8 @@ export default function AdmissionsTab({
     // Escalão: calculado da dob (autoritativo). NÃO cair em `tournamentEscalao`
     // porque torneios combinados (Regional Sub 14-24, Sub 10+12) misturam vários
     // escalões — o genérico engana.
-    const escHist = p.escalao || escalaoAtDate(dob, date || undefined) || null;
+    // Só com o ano (lido), o escalão é o desse ano — a FPG conta pelo ano civil.
+    const escHist = p.escalao || escalaoAtDate(dob, date || undefined) || escDoAno(dobYear, date) || null;
     // Tee por REGULAMENTO (escalão do jogador + sexo) — só quando o torneio
     // traz uma `teeRule`. Sexo: override do jogador → playersDB → federados.json.
     const sex: "M" | "F" | undefined =
@@ -222,6 +228,7 @@ export default function AdmissionsTab({
       (bd?.sex as "M" | "F" | undefined) ||
       (p.fed ? fedGenders.get(p.fed) : undefined) ||
       ((p as any)._rfeg?.sex as "M" | "F" | undefined) ||
+      ficha?.sexo ||
       tournamentSex;
     const ruleTee = teeRule ? teeRule(parseSubNumber(escHist), sex) : undefined;
     return {
@@ -230,10 +237,11 @@ export default function AdmissionsTab({
       _clube: clube || "",
       _dob: dob,
       _dobYear: dobYear,
+      _est: kidsEst,
       _escHist: escHist,
       _ruleTee: ruleTee,
     };
-  }), [players, playersDB, fedBirthdates, fedGenders, date, teeRule, tournamentSex, kidsDobOf]);
+  }), [players, playersDB, fedBirthdates, fedGenders, date, teeRule, tournamentSex, kidsDobOf, kidsMap]);
 
   // Colunas sem nada para mostrar escondem-se sozinhas; o ESC. também quando
   // todos são do mesmo escalão (USKids: a divisão já é o escalão, 30/10/2026).
@@ -242,7 +250,7 @@ export default function AdmissionsTab({
     return {
       ...hideCols,
       esc: hideCols.esc || escs.size <= 1,
-      nasc: hideCols.nasc || !enriched.some(p => p._dobYear != null),
+      nasc: hideCols.nasc || !enriched.some(p => p._dobYear != null || p._est),
       fed: hideCols.fed || !enriched.some(p => displayFed(p.fed)),
       hcp: !enriched.some(p => p.hcp != null),
       tee: hideCols.tee || (!teeName && !enriched.some(p => p._ruleTee || p.teeName)),
@@ -298,7 +306,7 @@ export default function AdmissionsTab({
         case "hcp":     return compareNullsLast(a.hcp, b.hcp, mult);
         // Nasc. e Idade têm cada uma a sua chave (10/11/2026); pela data inteira, não só o ano.
         case "nasc":
-        case "idade":   return compareBirth(sortKey, birthSortValue(a._dob, a._dobYear), birthSortValue(b._dob, b._dobYear), mult);
+        case "idade":   return compareBirth(sortKey, birthSortValue(a._dob, a._dobYear ?? a._est?.birthYearEst), birthSortValue(b._dob, b._dobYear ?? b._est?.birthYearEst), mult);
         case "pts":     return compareNullsLast(a.pts, b.pts, mult);
         case "vac":     return compareNullsLast(a.vac, b.vac, mult);
         case "registo": return compareTextNullsLast(a.dataInscricao, b.dataInscricao, mult);
@@ -324,10 +332,12 @@ export default function AdmissionsTab({
       // Wild card (tag da fonte: «Wild card» das listas FPG, «Wildcard» da Federgolf).
       const wildCard = p.status === "confirmed" && !!p.tags?.some(t => /^wild ?card$/i.test(t));
       const desinscritoEm = (p as any).desinscritoEm as string | undefined;
-      const age = ageAtDate(p._dob, date || undefined);
-      // Só o ano: idade no ano do torneio, aproximada («~12a»).
-      const anoRef = Number(String(date || todayIso()).slice(0, 4));
-      const ageAprox = age == null && p._dobYear != null && anoRef ? anoRef - p._dobYear : null;
+      // Nasc. + Idade pela peça comum (BirthCells): lido em pílula com a cor do
+      // escalão, só o ano → idade «~12a», estimativa do Kids 2 a vermelho. Só o
+      // ano na coluna, como no Resumo (a data completa fica no tooltip).
+      const nasc = birthCells({ dob: p._dob, birthYear: p._dobYear, showDate: false,
+        ...(p._est ? { birthYearEst: p._est.birthYearEst, birthYearEstMax: p._est.birthYearEstMax, estNote: p._est.estNote } : {}) },
+        date || todayIso());
       // Desistentes não ocupam número de posição (a inscrição foi anulada);
       // confirmed 1..N, reservas N+1.., desistentes fora da numeração.
       const numPos = isDesist ? null : isReserva ? nConf + (p.pos ?? i + 1) : (p.pos ?? i + 1);
@@ -373,15 +383,10 @@ export default function AdmissionsTab({
             {!hide.esc && <td className="lb-esc">
               {p._escHist ? <EscPill esc={p._escHist} /> : MUTED}
             </td>}
-            {/* Nasc. + Idade como no Resumo (pílulas com a cor do escalão, colunas próprias). */}
+            {/* Nasc. + Idade como no Draw e no Resumo (BirthCells, colunas próprias). */}
             {!hide.nasc && <>
-            <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
-              {p._dobYear != null ? <BirthPill {...pillDoAno(p._dobYear, date)}>{p._dobYear}</BirthPill> : MUTED}
-            </td>
-            <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
-              {age != null ? <BirthPill {...pillDoAno(p._dobYear, date)}>{age}a</BirthPill>
-                : ageAprox != null ? <BirthPill {...pillDoAno(p._dobYear, date)}>~{ageAprox}a</BirthPill> : MUTED}
-            </td>
+            <td className="lb-esc" title={nasc.tip}>{nasc.nasc}</td>
+            <td className="lb-esc" title={nasc.tip}>{nasc.idade}</td>
             </>}
             {/* Chaves virtuais (`kids:`/`intl:`) sao ids internos derivados do
                 nome — mostrar "–", que e a informacao verdadeira: sem federado.

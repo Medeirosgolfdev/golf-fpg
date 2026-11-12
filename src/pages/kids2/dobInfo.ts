@@ -8,7 +8,8 @@
  *
  * 4 estados:
  *   • known     — junior.dob presente (formato ISO "YYYY-MM-DD")
- *   • range     — junior.dobRange presente (aggregator pré-calculou um range)
+ *   • range     — junior.birthYear (o ano que uma federação publica, sem a data:
+ *                 a janela é esse ano) ou junior.dobRange (range do aggregator)
  *   • inferred  — calculado a partir dos torneios + escalões
  *   • unknown   — sem dados suficientes
  *
@@ -42,6 +43,8 @@ export interface DobInfo {
   nextBdayDays: number | null;
   /** Próxima idade após o aniversário (só quando known + countdown activo). */
   nextAge: number | null;
+  /** De onde vem o valor, quando não é a data lida nem a inferência (tooltip da pílula). */
+  nota?: string;
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -148,7 +151,31 @@ export function computeDobInfo(junior: Junior, tournamentById: Map<string, Tourn
     }
   }
 
-  // ── Estado 2: range (junior.dobRange pré-calculado pelo aggregator) ───
+  // ── Estado 2a: o ANO que uma federação publica (Federgolf, GolfBox), sem a data ──
+  // É um dado lido, não uma dedução: ganha aos tectos dos escalões. Sem isto a
+  // ficha de quem nasceu em 2014 e jogou um troféu «U16» dizia «Abr 2009 ou depois ·
+  // ≤17 anos», enquanto as tabelas de torneio (que leem o mesmo ano pelo
+  // juniors-scout) mostravam «2014 · ~12a» — a página parecia de outro jogador
+  // (Erik Nasirov, 12/11/2026).
+  const ano = junior.birthYear;
+  if (typeof ano === "number" && ano > 1950 && ano <= new Date().getFullYear()) {
+    const today = new Date();
+    return {
+      state: "range",
+      dobIso: `${ano}-07-01`,
+      rangeMin: `${ano}-01-01`,
+      rangeMax: `${ano}-12-31`,
+      age: ageAt(new Date(ano, 6, 1, 12), today),
+      // Como nas tabelas de torneio: a idade que faz no ano («~12»).
+      ageLabel: `~${today.getFullYear() - ano} anos`,
+      dobLabel: String(ano),
+      nextBdayDays: null,
+      nextAge: null,
+      nota: "Ano de nascimento publicado pela federação (sem a data)",
+    };
+  }
+
+  // ── Estado 2b: range (junior.dobRange pré-calculado pelo aggregator) ───
   if (junior.dobRange?.lo && junior.dobRange?.hi) {
     const lo = parseIsoDate(junior.dobRange.lo);
     const hi = parseIsoDate(junior.dobRange.hi);

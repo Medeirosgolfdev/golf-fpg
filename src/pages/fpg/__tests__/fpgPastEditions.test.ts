@@ -131,6 +131,80 @@ describe("buildFpgEditionsIndex — o nome da etapa do Torre pode mudar", () => 
   }
 });
 
+describe("buildFpgEditionsIndex — jovens da Quinta do Lago (escalão colado ao nome)", () => {
+  // 12/11/2026: o Junior Open 2026 entra com o escalão posto e nomes «… - U12»;
+  // as edições anteriores vêm sem `escalao` e com os mais velhos num só código.
+  const qdl = [
+    t("962", "10067", "Quinta do Lago Junior Open 2024 - U21&U16", "2024-12-27"),
+    t("962", "10069", "Quinta do Lago Junior Open 2024 - U12", "2024-12-27"),
+    t("962", "10078", "Quinta do Lago Junior Open 2025 - U21 & U16", "2025-12-29"),
+    t("962", "10080", "Quinta do Lago Junior Open 2025 - U12", "2025-12-29"),
+    t("962", "90912", "Quinta do Lago Junior Open 2026 - U12", "2026-12-27", "Sub 12"),
+    t("962", "90916", "Quinta do Lago Junior Open 2026 - U16", "2026-12-27", "Sub 16"),
+    t("962", "90921", "Quinta do Lago Junior Open 2026 - U21", "2026-12-27", "Sub 21"),
+  ];
+  const escsDe = (index: ReturnType<typeof buildFpgEditionsIndex>, tcode: string) =>
+    [...index.values()].flat().find(e => e.tcode === tcode)!.divisions!.map(d => d.escalao);
+
+  it("todas as edições e escalões ficam na mesma família", () => {
+    const index = buildFpgEditionsIndex(qdl);
+    expect([...index.values()]).toHaveLength(1);
+  });
+
+  it("a edição sem escalão lê-o do nome (U12 → Sub 12)", () => {
+    const index = buildFpgEditionsIndex(qdl);
+    expect(escsDe(index, "10080")).toEqual(["Sub 12"]);
+    expect(escsDe(index, "90912")).toEqual(["Sub 12"]);
+  });
+
+  it("a prova conjunta «U21 & U16» é edição anterior dos dois escalões", () => {
+    const index = buildFpgEditionsIndex(qdl);
+    expect(escsDe(index, "10078")).toEqual(["Sub 21", "Sub 16"]);
+    expect(escsDe(index, "10067")).toEqual(["Sub 21", "Sub 16"]);
+  });
+
+  it("com a idade da FPG, a prova conjunta parte-se: cada escalão só com os seus, lugar recalculado", () => {
+    const conjunta = {
+      ccode: "962", tcode: "10078", name: "Quinta do Lago Junior Open 2025 - U21 & U16", date: "2025-12-29",
+      escalao: null, campo: "Quinta do Lago Laranjal",
+      players: [
+        { scoreId: "1", name: "Mais Velho A", pos: 1, grossTotal: 70, toPar: -2, age: 18, roundScores: [{ gross: 70 }] },
+        { scoreId: "2", name: "Novo A", pos: 2, grossTotal: 74, toPar: 2, age: 16, roundScores: [{ gross: 74 }] },
+        { scoreId: "3", name: "Mais Velho B", pos: 3, grossTotal: 75, toPar: 3, age: 17, roundScores: [{ gross: 75 }] },
+        { scoreId: "4", name: "Novo B", pos: 4, grossTotal: 79, toPar: 7, age: 15, roundScores: [{ gross: 79 }] },
+      ],
+    } as unknown as Tournament;
+    const index = buildFpgEditionsIndex([conjunta, t("962", "90916", "Quinta do Lago Junior Open 2026 - U16", "2026-12-27", "Sub 16")]);
+    const e = [...index.values()].flat().find(x => x.tcode === "10078")!;
+    const de = (esc: string) => (e.divisions!.find(d => d.escalao === esc)!.results as Tournament).players.map(p => `${p.pos}.${p.name}`);
+    expect(de("Sub 16")).toEqual(["1.Novo A", "2.Novo B"]);
+    expect(de("Sub 21")).toEqual(["1.Mais Velho A", "2.Mais Velho B"]);
+  });
+
+  it("sem idades gravadas, a prova conjunta fica inteira nos dois escalões (não se adivinha)", () => {
+    const index = buildFpgEditionsIndex(qdl);
+    const e = [...index.values()].flat().find(x => x.tcode === "10078")!;
+    expect(e.divisions![0].results).toBe(e.divisions![1].results);
+  });
+
+  it("o Paul McGinley junta «Under 14» com «U14» e parte o «Under 18 & 16»", () => {
+    const index = buildFpgEditionsIndex([
+      t("962", "10064", "Paul McGinley Junior Cup 2024 - Under 14", "2024-08-23"),
+      t("962", "10063", "Paul McGinley Junior Cup 2024 - Under 18 & 16", "2024-08-23"),
+      t("962", "10083", "Paul McGinley Junior Cup 2026 - U14", "2026-08-21"),
+    ]);
+    expect([...index.values()]).toHaveLength(1);
+    expect(escsDe(index, "10064")).toEqual(["Sub 14"]);
+    expect(escsDe(index, "10083")).toEqual(["Sub 14"]);
+    expect(escsDe(index, "10063")).toEqual(["Sub 18", "Sub 16"]);
+  });
+
+  it("não se mistura com o Junior Open (são duas provas do mesmo clube)", () => {
+    const index = buildFpgEditionsIndex([...qdl, t("962", "10083", "Paul McGinley Junior Cup 2026 - U14", "2026-08-21")]);
+    expect([...index.values()]).toHaveLength(2);
+  });
+});
+
 describe("buildFpgManuelH2H — provas FPG em comum com o Manuel, pelo federado", () => {
   const torneio = (tcode: string, date: string, players: object[]) =>
     ({ ccode: "007", tcode, name: `T${tcode}`, date, players } as unknown as Tournament);

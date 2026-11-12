@@ -6,6 +6,7 @@
 import { describe, it, expect } from "vitest";
 import { makeKidsDobLookup, precisaKidsDob, withKidsDob, kidsDobLida, KIDS_EST_NOTE, type ScoutDobFile } from "../kidsDob";
 import { buildKidsLinkMap, fromLinkRow, type LinkRow } from "../../hooks/useKidsLinkMap";
+import { fichaDoKids } from "../kidsFicha";
 import { escalaoToTournament } from "../uskids/toTournament";
 import type { TorneioResult } from "../../ui/uskidsTypes";
 import type { KidsLinkEntry } from "../../ui/KidsLink";
@@ -112,6 +113,36 @@ describe("Venice Open 2026 · Boys 12 (USKids t=22243) — dados reais", () => {
 
   it("o TournamentDetail e o DrawTab passam pela regra (senão a tabela volta a sair vazia)", () => {
     expect(tournamentDetailSrc).toMatch(/withKidsDob\(tournamentIn, kidsDob\)/);
-    expect(drawTabSrc).toMatch(/kidsDob\?\.\(p\.nome, fed\)/);
+    expect(drawTabSrc).toMatch(/kidsDob\?\.\(p\.nome, fed, juniorIdSrc\)/);
+  });
+});
+
+describe("a ficha do Kids 2 de uma linha (data/kidsFicha.ts) — o caminho da seta ↗", () => {
+  const rows: LinkRow[] = [
+    ["f55498", "Zeyn Lababedi", 0, 0, "55498", 0, "GB", "M"],
+    ["g1", "Sofia Leblond", 0, 0, 0, 0, "FR", "F"],
+    ["u1", "Manuel Medeiros", 0, "630106", "52884", 0, "PT", "M"],
+  ];
+  const m = buildKidsLinkMap(rows.map(fromLinkRow));
+
+  it("o índice das setas leva o país e o sexo da ficha", () => {
+    expect(fichaDoKids(m, { nome: "Sofia Leblond" })).toMatchObject({ id: "g1", pais: "FR", sexo: "F" });
+  });
+
+  it("o juniorId da lista ganha ao nome (o PDF escreve «Zeyn Lababed»)", () => {
+    expect(fichaDoKids(m, { nome: "Zeyn Lababed" })).toBeUndefined();
+    expect(fichaDoKids(m, { nome: "Zeyn Lababed", juniorId: "f55498" })).toMatchObject({ id: "f55498", pais: "GB" });
+  });
+
+  it("um homónimo com outro federado não conta (o pai do Manuel)", () => {
+    expect(fichaDoKids(m, { nome: "Manuel Medeiros", fed: "54907" })).toBeUndefined();
+    expect(fichaDoKids(m, { nome: "Manuel Medeiros", fed: "52884" })?.id).toBe("u1");
+  });
+
+  it("o nascimento lê-se pela mesma ficha: com juniorId, mesmo com outro nome", () => {
+    const look = makeKidsDobLookup(m, { players: { f55498: { d: "2015-09-16" }, g1: { y: 2016 } } });
+    expect(look("Zeyn Lababed")).toBeUndefined();
+    expect(look("Zeyn Lababed", null, "f55498")).toEqual({ dob: "2015-09-16" });
+    expect(look("Sofia Leblond")).toEqual({ birthYear: 2016 });
   });
 });

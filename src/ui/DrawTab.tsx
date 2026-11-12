@@ -435,13 +435,16 @@ export default function DrawTab({
         const dobSemKids: string | undefined =
           srcDob || bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined);
         // Kids 2: a data lida, ou o ano estimado pelos escalões USKids (a vermelho).
-        const kidsLido = !dobSemKids ? kidsDob?.(p.nome, fed) : undefined;
+        const juniorIdSrc = ((p as { juniorId?: string | null }).juniorId ?? (p as any)._rfeg?.juniorId) as string | undefined;
+        const kidsLido = !dobSemKids ? kidsDob?.(p.nome, fed, juniorIdSrc) : undefined;
         const kidsNasc = kidsLido
           ? kidsAcrescento({ birthYear: srcBirthYear, birthYearEst: (p as { birthYearEst?: number | null }).birthYearEst }, kidsLido) ?? undefined
           : undefined;
         const dob: string | undefined = dobSemKids || kidsDobLida(kidsNasc);
         const kidsEst = kidsNasc && "birthYearEst" in kidsNasc ? kidsNasc : null;
-        const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : srcBirthYear;
+        // Sem data: o ano da fonte, senão o ano CERTO da ficha do Kids 2 (Federgolf, GolfBox).
+        const dobYear = dob ? parseInt(dob.slice(0, 4), 10)
+          : srcBirthYear ?? (kidsNasc && "birthYear" in kidsNasc ? kidsNasc.birthYear : null);
         // Data completa visível na coluna (só quando vem da fonte do draw).
         const dobShown = srcDob ? fmtDatePt(srcDob) : null;
         // Escalão: calculado da dob (fonte autoritativa). NÃO caímos em
@@ -469,7 +472,7 @@ export default function DrawTab({
           // Id do agregador dos internacionais (_rfeg.juniorId, gravado no
           // fpg-admissions-draws.json). Sem o copiar para aqui perdia-se: este
           // objecto e construido de raiz, nao e um spread do original.
-          juniorId: ((p as any)._rfeg?.juniorId as string | undefined) ?? undefined,
+          juniorId: juniorIdSrc ?? undefined,
           noFed,
           hcp,
           hcpCurrent,

@@ -32,6 +32,10 @@ export interface Player extends BasePlayer {
   roundScores?: RoundScore[];
   /** Escalão do jogador nesta entrada (torneios multi-escalão trazem-no por linha). */
   escalao?: string | null;
+  /** Idade no dia da prova e sexo, dados pela FPG na própria classificação
+   *  (`player_age`/`player_gender`; gravados desde 12/11/2026). */
+  age?: number | null;
+  sex?: "M" | "F";
   /** Campo jogado (presente em linhas de scorecard/volta individual). */
   course?: string;
   // flags internas de multi-ronda (não vêm do JSON — atribuídas por expandMultiRound)

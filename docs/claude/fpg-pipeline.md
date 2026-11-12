@@ -243,6 +243,37 @@ Quando o tcode real tiver draws/resultados volta a aparecer — é a altura de p
 tudo para ele (destaque, JSON, `prova` das hcp-listas, regra de tees) e apagar os
 provisórios.
 
+**Quinta do Lago Junior Open 2026 (2026-11-12) — prova de clube só com a Entry List em PDF:**
+27-29/12/2026, Laranjal, clube 962. A FPG ainda não tinha a prova no scoring, por isso
+vive em quatro entradas `_manual` com tcode provisório «909» + escalão — `962/90912`
+(U12), `90914` (U14), `90916` (U16), `90921` (U21) — uma carta com quatro separadores.
+A lista (PDF do clube, botão «Entry List» de
+`quintadolago.com/en/events/quinta-do-lago-junior-open/`) só traz nome, sexo, categoria e
+handicap: federado/clube/nascimento vêm do `federados.json` (nome + idade + handicap e as
+listas das provas anteriores do clube); quem não tem federado leva `escalao` = a categoria
+do PDF (sem ele a regra de tees recebia «sem escalão» e dava o tee dos mais velhos) e
+`juniorId` quando o PDF escreve o nome de outra maneira. Handicap com «-» no PDF fica
+vazio, com o texto na marca (o mesmo PDF usa «+» para os plus). Tees:
+`QDL_JUNIOR_OPEN_TEE_RULE` (o «Silver» dos Termos é o «Brancas» do scoring). Actualizar a
+lista = reler o PDF e regravar `admissions.players` (quem sair vai para `saidos`).
+
+**Edições anteriores das provas de jovens da Quinta do Lago (2026-11-12):** as edições
+de 2024 e 2025 vêm sem `escalao`, com o escalão colado ao nome («… - U12», «… - Under 14»)
+e com os mais velhos num só código («U21 & U16», «Under 18 & 16»). Em
+`pages/fpg/fpgPastEditions.tsx` o Junior Open e o Paul McGinley têm família própria
+(`deriveEscFromName`) e `escsFromName` dá à prova conjunta UMA divisão por escalão — é a
+edição anterior do Sub 16 e do Sub 21. A aba só conta as edições em que o escalão aberto
+existiu. Antes: o U12 de 2026 dizia «Sem edições anteriores com dados» e o U16 nem tinha a aba.
+A prova conjunta parte-se pela **idade que a FPG dá a cada jogador na própria classificação**
+(`player_age`, no dia da prova; `player_gender`): até ao número do escalão mais novo é desse
+(«U21 & U16»: ≤ 16 → Sub 16, o resto → Sub 21), com o lugar recalculado dentro do escalão
+(`porEscalao`). O `scrape-classif-node.js` grava agora `age` e `sex` em cada jogador
+(`mapPlayer`); as 15 provas do clube 962 já gravadas foram completadas a 12/11/2026 (leitura
+da `ClassifLST`, casadas por `scoreId`). Sem idades gravadas não se separa: a prova fica
+inteira nos dois escalões. ⚠ O dropdown `DpClassif` da página tem as classificações do clube
+(«Stroke Play U21», «Strokeplay U16», «U16 Girls»), mas a `ClassifLST` devolve sempre os 60
+com `classiforder`/`Classi` diferentes — não serve para filtrar.
+
 **Drives futuros AUTO-DESCOBERTOS (2026-07-10):** sem config manual — dois
 mecanismos em cadeia: (1) o `INCLUDE_RX` da Fonte 3 do
 `scrape-fpg-admissions-draws-node.js` ganhou `/\bdrive\s+(tour\b|chall)/i` (prefixo "chall": a FPG abrevia os nomes longos)

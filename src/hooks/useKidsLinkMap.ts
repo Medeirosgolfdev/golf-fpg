@@ -26,14 +26,24 @@ export interface LinkJunior {
   fed?: string;
   /** Licença FFG (chave forte do agregador) — usada pela lista de jogadores da /ffg. */
   ffgLic?: string;
+  /** País (ISO-2) e sexo da ficha. */
+  pais?: string;
+  sexo?: "M" | "F";
 }
 
-export function fromLinkRow([id, canonicalName, aliases, memberId, fed, ffgLic]: LinkRow): LinkJunior {
+export function fromLinkRow([id, canonicalName, aliases, memberId, fed, ffgLic, pais, sexo]: LinkRow): LinkJunior {
   return {
     id, canonicalName, aliases: aliases || [],
     memberId: memberId || undefined, fed: fed || undefined, ffgLic: ffgLic || undefined,
+    pais: pais || undefined, sexo: sexo || undefined,
   };
 }
+
+/** A entrada do mapa das setas de um junior do índice. */
+const entradaDe = (j: LinkJunior): KidsLinkEntry => ({
+  n: j.canonicalName, memberId: j.memberId, id: j.id, fed: j.fed,
+  ...(j.pais ? { pais: j.pais } : {}), ...(j.sexo ? { sexo: j.sexo } : {}),
+});
 
 /** Roster compacto dos juniores do kids2 (juniors-links.json); [] até chegar. */
 const SEM_ROSTER: LinkJunior[] = [];
@@ -47,7 +57,7 @@ export function useJuniorsLinks(): LinkJunior[] {
 export function buildKidsLinkMap(roster: LinkJunior[]): Map<string, KidsLinkEntry> {
   const m = new Map<string, KidsLinkEntry>();
   for (const j of roster) {
-    const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.memberId, id: j.id, fed: j.fed };
+    const entry = entradaDe(j);
     // Nome canónico + aliases → mesma chave normName que o KidsLink usa no
     // lookup. Primeiro-a-entrar ganha em caso de homónimos (igual ao
     // juniorByNormName do kids2).
@@ -63,7 +73,7 @@ export function buildKidsLinkMap(roster: LinkJunior[]): Map<string, KidsLinkEntr
   // colidirem com um nome real nem com a variante de outro jogador.
   const variantes = new Map<string, KidsLinkEntry | null>();
   for (const j of roster) {
-    const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.memberId, id: j.id, fed: j.fed };
+    const entry = entradaDe(j);
     const toks = normName(j.canonicalName).split(" ").filter(Boolean);
     for (let i = 1; i < toks.length - 1; i++) {
       const vk = [...toks.slice(0, i), ...toks.slice(i + 1)].join(" ");

@@ -12,6 +12,8 @@ export interface KidsLinkEntry {
   memberId?: string;    // memberId USKids (fallback de hash)
   id?: string;          // juniorId canónico kids2 → link directo /kids2/{id} (sem ambiguidade)
   fed?: string;         // federado FPG da ficha — desfaz homónimos (Manuel pai × filho)
+  pais?: string;        // país da ficha (ISO-2) — bandeira de quem a fonte não diz de onde é
+  sexo?: "M" | "F";     // sexo da ficha — para quem a fonte não o traz
 }
 
 /**

@@ -420,6 +420,11 @@ function mapPlayer(r) {
     toPar: isNS ? null : toParNum,
     hcpExact: r.exact_hcp != null ? Number(r.exact_hcp) : undefined,
     hcpPlay:  r.play_hcp  != null ? Number(r.play_hcp)  : undefined,
+    // Idade (no dia da prova) e sexo que a FPG dá a cada jogador na própria
+    // classificação — a única fonte para os estrangeiros sem federado, e é com a
+    // idade que se separam os escalões de uma prova conjunta («U21 & U16»).
+    ...(Number.isFinite(Number(r.player_age)) && Number(r.player_age) > 0 ? { age: Number(r.player_age) } : {}),
+    ...(r.player_gender === "M" || r.player_gender === "F" ? { sex: r.player_gender } : {}),
     fedCode: null, courseRating: null, slope: null,
     teeName: null, teeColorId: null, parTotal: null, nholes: null, course: null,
     roundScores: [],

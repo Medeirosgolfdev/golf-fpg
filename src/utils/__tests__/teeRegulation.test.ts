@@ -24,6 +24,21 @@ describe("teeRuleFor", () => {
     expect(r(10, "M")).toBe("Roxas");
   });
 
+  it("Quinta do Lago Junior Open 2026 (Termos do clube): Pretas/Douradas/Brancas/Verdes por escalão e sexo", () => {
+    for (const tcode of ["90912", "90914", "90916", "90921"]) {
+      const r = teeRuleFor("962", tcode);
+      expect(r).toBeDefined();
+      expect(r!(21, "M")).toBe("Pretas");
+      expect(r!(16, "M")).toBe("Pretas");
+      expect(r!(16, "F")).toBe("Douradas");
+      expect(r!(14, "M")).toBe("Douradas");
+      expect(r!(14, "F")).toBe("Brancas");   // «Silver» nos Termos
+      expect(r!(12, "M")).toBe("Brancas");
+      expect(r!(12, "F")).toBe("Verdes");
+      expect(r!(10, "M")).toBe("Brancas");   // mais novos inscritos no U12
+    }
+  });
+
   it("sem regra própria → undefined (usa a tabela geral)", () => {
     expect(teeRuleFor("000", "10872")).toBeUndefined();
     expect(parseSubNumber("Sub 14")).toBe(14);

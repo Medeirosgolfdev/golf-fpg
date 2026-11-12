@@ -432,3 +432,16 @@ describe("getTournWeight", () => {
     expect(formatStars(2.5)).toBe("★★½☆☆");  // 2 full + ½ + 2 empty
   });
 });
+
+describe("corte de Elite — os primeiros 5 % da geração (12/11/2026)", () => {
+  it("numa geração de 1267, o 64.º ainda é Elite e o 128.º (Benji Botham) passa a Forte", async () => {
+    const { decodeRanking } = await import("../juniorCalc");
+    const rows = Array.from({ length: 1267 }, (_, i) => [`j${i + 1}`, [2015, "M", i + 1, 6 + i / 100, 5]] as [string, [number, string, number, number, number]]);
+    const r = decodeRanking(rows);
+    expect(r.get("j1")!.tier).toBe("elite");
+    expect(r.get("j64")!.tier).toBe("elite");
+    expect(r.get("j128")!.tier).toBe("strong");
+    expect(r.get("j380")!.tier).toBe("strong");   // o corte de Forte não mudou (top 30 %)
+    expect(r.get("j400")!.tier).toBe("solid");
+  });
+});

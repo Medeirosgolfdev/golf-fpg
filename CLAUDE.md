@@ -249,6 +249,20 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   jogador. **«Edições anteriores» (tabela-resumo de cada ano) e «Scorecards
   anteriores» (os cartões) são DUAS abas e ficam as duas.** O `renderFull` (a página a desenhar o detalhe) SAIU de todas as páginas de torneios a 11/11/2026 (/torneios-recentes, /drive, /major, /uskids, /FPG); só o usa a grelha «Todos» dos torneios por disputar da /uskids, que não é um detalhe de torneio. A trava `scripts/detalhe-pelo-shell.test.js` não deixa voltar: o TournamentDetail só é chamado pelo shell (e pela análise BJGT), e uma página nova nunca o usa. Migrar uma página =
   comparar o texto do detalhe antes/depois em 2–3 torneios, aba a aba (tem de dar igual; esperar ~18 s antes do retrato — «⛳ O campo» e «🔮 Previsão» chegam depois, com os campos).
+- **O que a seta ↗ do Kids 2 sabe, a tabela mostra — pelo MESMO caminho** (Mariana,
+  12/11/2026: «em todas as tabelas, de todas as páginas, da mesma forma que aparece a
+  setinha para a página de kids2, também deve de vir de lá a info daquele jogador»). A ficha
+  de uma linha é `fichaDoKids` (`src/data/kidsFicha.ts`: o `juniorId` da fonte, senão o nome
+  pelo mapa das setas; um homónimo com outro federado não conta). Dela saem: bandeira e sexo
+  (no `TournPName`, o nome de todas as tabelas de torneio — o índice `juniors-links.json` já
+  os traz) e o nascimento/HCP (`data/kidsDob.ts`: data lida → ano certo de uma federação →
+  ano estimado a vermelho), iguais nas Inscrições, no Draw, nas voltas e no Resumo, sempre
+  pela peça `birthCells`. Preenchem-se as colunas que a tabela JÁ TEM; **não se acrescentam
+  colunas do Kids 2** (Nível, Torn., Vit., Forma) a uma tabela sem ela pedir — isso é a aba
+  Scout. A própria ficha (/kids2) mostra o mesmo: `computeDobInfo` usa o ano da federação
+  (`junior.birthYear`) antes de deduzir a idade dos escalões — senão a tabela dizia «2014» e a
+  ficha «2009 ou depois» e parecia outro jogador. Por fazer: as tabelas que só têm a seta solta (`<KidsLink>`: match play, equipas por
+  pontos, rankings, grelha de campos) ainda não vão buscar nada à ficha.
 - **Peças únicas, nunca uma tabela própria por página:** inscrições →
   `AdmissionsTab`; draws → `DrawTab`, SEMPRE em dados (`roundDraws[].draw`, mais `results`/`playersDB`; já não há `render` próprio — Espanha passou a dados a 11/11/2026) (fontes de fora convertem para `FpgDraw`;
   no CircuitShell vão em `admissions`/`roundDraws` da divisão); barra de filtros

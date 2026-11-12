@@ -71,6 +71,23 @@ export const MIRAMAR_U25_TEE_RULE: TeeRule = (n, sex) => {
 export const CASTRO_MARIM_U14_TEE_RULE: TeeRule = (_n, sex) => (sex === "F" ? "Vermelhas" : "Amarelas");
 
 /**
+ * Quinta do Lago Junior Open 2026 (Laranjal, 27-29/12/2026) — Terms of
+ * Competition do clube, «Teeing Areas»:
+ *   U21 e U16 — Boys Black  ; Girls Gold
+ *   U14       — Boys Gold   ; Girls Silver
+ *   U12       — Boys Silver ; Girls Green
+ * No scoring da FPG os tees do Laranjal chamam-se Pretas, Douradas, Brancas,
+ * Laranjas e Verdes: o «Silver» dos Termos é o «Brancas» (nos draws de 2024 e
+ * 2025 — 962/10067-10069 e 10078-10080 — as raparigas U14 e os rapazes U12
+ * saíram das Brancas, com a mesma escada de tees).
+ */
+export const QDL_JUNIOR_OPEN_TEE_RULE: TeeRule = (n, sex) => {
+  if (n != null && n <= 12) return sex === "F" ? "Verdes" : "Brancas";
+  if (n != null && n <= 14) return sex === "F" ? "Brancas" : "Douradas";
+  return sex === "F" ? "Douradas" : "Pretas";
+};
+
+/**
  * Registo de regras por torneio, chaveado por `{ccode}-{tcode}`.
  *
  * O Miramar 2026 já usa os tcodes REAIS descobertos nas Classifications da FPG
@@ -86,6 +103,12 @@ const TEE_RULES_BY_TOURNAMENT: Record<string, TeeRule> = {
   "000-90872": CASTRO_MARIM_U14_TEE_RULE, // Rapazes
   "000-90873": CASTRO_MARIM_U14_TEE_RULE, // Raparigas
   "000-10946": CASTRO_MARIM_U14_TEE_RULE, // tcode real
+  // Quinta do Lago Junior Open 2026 — tcodes PROVISÓRIOS da Entry List em PDF
+  // (featuredTournaments.ts); trocar pelos reais quando a FPG abrir a prova.
+  "962-90912": QDL_JUNIOR_OPEN_TEE_RULE, // U12
+  "962-90914": QDL_JUNIOR_OPEN_TEE_RULE, // U14
+  "962-90916": QDL_JUNIOR_OPEN_TEE_RULE, // U16
+  "962-90921": QDL_JUNIOR_OPEN_TEE_RULE, // U21
 };
 
 /** Resolve a regra de tees de um torneio (undefined = usar tabela genérica). */

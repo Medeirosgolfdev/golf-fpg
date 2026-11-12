@@ -451,7 +451,8 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
 function DobPill({ info, esc }: { info: DobInfo; esc?: string | null }) {
   if (info.state === "unknown") return null;
   const title =
-    info.state === "known" ? "Data de nascimento confirmada"
+    info.nota ? info.nota
+    : info.state === "known" ? "Data de nascimento confirmada"
     : info.state === "range" ? "Janela de DOB pré-calculada"
     : "DOB inferida a partir dos torneios + escalões";
   return (

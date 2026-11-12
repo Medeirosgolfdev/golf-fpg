@@ -291,4 +291,35 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     reservaLabel: "lista de espera",
     hcpActual: true,
   },
+
+  // ── Quinta do Lago Junior Open 2026 (9.ª edição) — 27-29/12/2026, Laranjal ──
+  // Prova do clube (ccode 962), 54 buracos (18 por dia), quatro categorias:
+  // U21 (2005-09), U16 (2010-11), U14 (2012-13) e U12 (2014-15). Inscrições na
+  // loja do clube até 18/12 ou 85 jogadores.
+  // Os inscritos são os da Entry List em PDF do clube (12/11/2026: 47), curados à
+  // mão (`_manual` em fpg-admissions-draws.json) em tcodes PROVISÓRIOS — «909» +
+  // escalão: 90912, 90914, 90916, 90921. A 12/11/2026 a FPG ainda não tinha a
+  // prova no scoring (as edições anteriores foram 962/10067-10070 e 10078-10081,
+  // com U21 e U16 juntos num só código).
+  // Quando a FPG a abrir: trocar os tcodes aqui, no JSON e na regra de tees
+  // (`QDL_JUNIOR_OPEN_TEE_RULE` em utils/teeRegulation.ts) — ou `tcodeReal`, se
+  // o scoring só tiver parte dos inscritos (ver Castro Marim, acima).
+  ...(["U12", "U14", "U16", "U21"] as const).map((cat): FeaturedTournament => ({
+    ccode: "962",
+    tcode: `909${cat.slice(1)}`,
+    name: `Quinta do Lago Junior Open 2026 - ${cat}`,
+    escalao: `Sub ${cat.slice(1)}`,
+    date: "2026-12-27",
+    campo: "Quinta do Lago Laranjal",
+    rounds: 3,
+    extraLinks: [
+      { label: "página do torneio (Quinta do Lago)", url: "https://www.quintadolago.com/en/events/quinta-do-lago-junior-open/", icon: "🏌️" },
+      { label: "Termos PDF", url: "https://cdn.shopify.com/s/files/1/0562/8926/3793/files/The_Junior_Open_2026_-_Terms_of_Competition_EN.pdf?v=1790331679", icon: "📋" },
+      { label: "Entry List PDF", url: "https://drive.google.com/file/d/13xvrfV4W4sFx9hVoAFXCKtxDByvVIcbf/view", icon: "📝" },
+      { label: "inscrições (loja do clube)", url: "https://shop.quintadolago.com/products/quinta-do-lago-junior-open-2026", icon: "🛒" },
+    ],
+    live: false,
+    semLinksFpg: true,
+    hcpActual: true,
+  })),
 ];

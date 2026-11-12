@@ -13,7 +13,7 @@
  * pelo DrawTab e pelo AdmissionsTab, por isso as páginas de torneio ficam iguais.
  */
 import type { KidsLinkEntry } from "../ui/KidsLink";
-import { normName } from "../utils/normName";
+import { fichaDoKids } from "./kidsFicha";
 import { isoDate } from "../utils/format";
 
 /** O que interessa do juniors-scout.json. */
@@ -30,9 +30,10 @@ export type KidsNasc =
 export interface KidsHcp { hcp: number; date: string }
 
 /** Nome (e federado, se houver) → nascimento do Kids 2; `hcpAt` → o HCP mais perto
- *  de uma data (para pintar o SD de quem não tem HCP na linha — 03/11/2026). */
-export type KidsDobLookup = ((nome: string | null | undefined, fed?: string | null) => KidsNasc | undefined) & {
-  hcpAt?: (nome: string | null | undefined, fed: string | null | undefined, date: string | null | undefined) => KidsHcp | undefined;
+ *  de uma data (para pintar o SD de quem não tem HCP na linha — 03/11/2026).
+ *  `juniorId`: a ficha dada pela própria fonte — ganha ao nome (kidsFicha.ts). */
+export type KidsDobLookup = ((nome: string | null | undefined, fed?: string | null, juniorId?: string | null) => KidsNasc | undefined) & {
+  hcpAt?: (nome: string | null | undefined, fed: string | null | undefined, date: string | null | undefined, juniorId?: string | null) => KidsHcp | undefined;
 };
 
 /** Até quantos dias de distância um HCP do Kids 2 ainda serve para a data do torneio. */
@@ -42,14 +43,13 @@ const ISO_DATE = /^\d{4}-\d{2}-\d{2}/;
 export const KIDS_EST_NOTE = "ano deduzido dos escalões USKids em que jogou (Kids 2)";
 
 export function makeKidsDobLookup(kidsMap: Map<string, KidsLinkEntry>, scout: ScoutDobFile | null | undefined): KidsDobLookup {
-  const fichaDe = (nome: string | null | undefined, fed?: string | null) => {
-    if (!scout || !nome) return undefined;
-    const kid = kidsMap.get(normName(nome));
-    if (!kid?.id || (fed && kid.fed && kid.fed !== fed)) return undefined;
-    return scout.players[kid.id];
+  const fichaDe = (nome: string | null | undefined, fed?: string | null, juniorId?: string | null) => {
+    if (!scout) return undefined;
+    const kid = fichaDoKids(kidsMap, { nome, fed, juniorId });
+    return kid?.id ? scout.players[kid.id] : undefined;
   };
-  const lookup: KidsDobLookup = (nome, fed) => {
-    const s = fichaDe(nome, fed);
+  const lookup: KidsDobLookup = (nome, fed, juniorId) => {
+    const s = fichaDe(nome, fed, juniorId);
     if (s?.d && ISO_DATE.test(s.d)) return { dob: s.d.slice(0, 10) };
     if (typeof s?.y === "number") return { birthYear: s.y };
     if (s?.ne) return { birthYearEst: s.ne[0], birthYearEstMax: s.ne[1], estNote: KIDS_EST_NOTE };
@@ -57,8 +57,8 @@ export function makeKidsDobLookup(kidsMap: Map<string, KidsLinkEntry>, scout: Sc
   };
   // O HCP com a data mais perto da do torneio (no máximo KIDS_HCP_JANELA_DIAS de
   // distância; em empate, o de antes). Sem data do torneio ou longe demais → nada.
-  lookup.hcpAt = (nome, fed, date) => {
-    const hh = fichaDe(nome, fed)?.hh;
+  lookup.hcpAt = (nome, fed, date, juniorId) => {
+    const hh = fichaDe(nome, fed, juniorId)?.hh;
     const iso = date ? isoDate(date) : "";   // aceita «8/13/2026» (USKids) e «2026-08-13»
     const ref = iso ? Date.parse(iso) : NaN;
     if (!hh?.length || Number.isNaN(ref)) return undefined;
@@ -72,7 +72,7 @@ export function makeKidsDobLookup(kidsMap: Map<string, KidsLinkEntry>, scout: Sc
   return lookup;
 }
 
-interface DobPlayer { name: string; fed?: string; fedCode?: string; dob?: string | null; birthYear?: number | null; birthYearEst?: number | null; hcpExact?: number | null }
+interface DobPlayer { name: string; fed?: string; fedCode?: string; juniorId?: string | null; dob?: string | null; birthYear?: number | null; birthYearEst?: number | null; hcpExact?: number | null }
 
 /** Há alguém sem data nem federado (o federado tem-na pelo playersDB)? */
 export function precisaKidsDob(players: readonly DobPlayer[]): boolean {
@@ -99,7 +99,7 @@ export function withKidsDob<P extends DobPlayer, T extends { players: P[]; date?
   const players = t.players.map((p): P => {
     let q = p;
     if (!p.dob) {
-      const n = lookup(p.name, p.fed || p.fedCode);
+      const n = lookup(p.name, p.fed || p.fedCode, p.juniorId);
       const a = n ? kidsAcrescento(p, n) : null;
       if (a) {
         q = { ...q, ...a };
@@ -110,7 +110,7 @@ export function withKidsDob<P extends DobPlayer, T extends { players: P[]; date?
       }
     }
     if (q.hcpExact == null && lookup.hcpAt) {
-      const h = lookup.hcpAt(p.name, p.fed || p.fedCode, t.date);
+      const h = lookup.hcpAt(p.name, p.fed || p.fedCode, t.date, p.juniorId);
       if (h) q = { ...q, hcpExact: h.hcp, hcpKidsDate: h.date };
     }
     if (q !== p) mudou = true;
@@ -119,5 +119,5 @@ export function withKidsDob<P extends DobPlayer, T extends { players: P[]; date?
   return mudou ? { ...t, players } : t;
 }
 
-/** Só a data lida (as Inscrições não mostram estimativas). */
+/** Só a data lida, de um nascimento do Kids 2. */
 export const kidsDobLida = (n: KidsNasc | undefined): string | undefined => (n && "dob" in n ? n.dob : undefined);

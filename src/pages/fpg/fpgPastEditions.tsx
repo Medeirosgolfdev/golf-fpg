@@ -17,13 +17,13 @@
 import type { Tournament } from "../../data/fpgTypes";
 import type { CircuitEntry, CircuitDivision } from "../../ui/circuit/types";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
-import { tournamentFamilyKey } from "../../ui/circuit/pastEditions";
+import { tournamentFamilyKey, matchDivision } from "../../ui/circuit/pastEditions";
 import { abasDeEdicoes, abaScout } from "../../ui/circuit/abasComuns";
 import ScoutProva from "../../ui/circuit/ScoutProva";
 import { currentField } from "./repeatersModel";
 import { MANUEL_FED } from "../../constants/manuel";
 import { diaIso } from "../../utils/dias";
-import { parsePos, temCartao, voltasComCartao } from "../../utils/classificacao";
+import { parsePos, temCartao, voltasComCartao, classificarPorTotal } from "../../utils/classificacao";
 import type { ScoutComManuel } from "../../ui/circuit/scoutModel";
 
 /**
@@ -87,6 +87,15 @@ const EDITION_ALIASES: EditionAlias[] = [
   // inglês — "1st" (2025, 10872) e "2nd" (2026) — e o family key só tira os
   // portugueses ("3º"), por isso cada edição ficava singleton.
   { match: /\bcastro marim portuguese int\w*\b.*\bu14\b/, canon: "castro marim portuguese int u14", deriveEscFromName: true },
+  // Provas de jovens da Quinta do Lago (ccode 962): o escalão vem colado ao nome
+  // («… 2025 - U12», «… 2024 - Under 14») e a fonte não traz `escalao`, por isso
+  // cada escalão era uma família à parte e nenhuma casava com a edição seguinte,
+  // que cá entra com o escalão posto (12/11/2026: o Junior Open 2026 U12 dizia
+  // «Sem edições anteriores com dados» e o U16 nem tinha a aba). Os mais velhos
+  // jogam JUNTOS num só código («U21 & U16», «U21&U16», «Under 18 & 16»): essa
+  // prova é a edição anterior dos dois escalões (ver `escsFromName`).
+  { match: /^quinta do lago junior open\b/, canon: "quinta do lago junior open", deriveEscFromName: true },
+  { match: /^paul mcginley junior cup\b/, canon: "paul mcginley junior cup", deriveEscFromName: true },
 ];
 function editionAliasFor(rawFamKey: string | null, campo?: string | null): EditionAlias | null {
   if (!rawFamKey) return null;
@@ -98,6 +107,14 @@ function editionAliasFor(rawFamKey: string | null, campo?: string | null): Editi
 function escFromName(name?: string | null): string | null {
   const m = String(name || "").match(/\b(?:sub|under|u)[\s\-_]?(\d{1,2})\b/i);
   return m ? `Sub ${m[1]}` : null;
+}
+/** Todos os escalões de um nome: «U21 & U16», «U21&U16» e «Under 18 & 16» são
+ *  UMA prova para dois escalões → ["Sub 21", "Sub 16"]. Sem «&», o de `escFromName`. */
+function escsFromName(name?: string | null): string[] {
+  const m = String(name || "").match(/\b(?:sub|under|u)[\s\-_]?(\d{1,2})\s*&\s*(?:sub|under|u)?[\s\-_]?(\d{1,2})\b/i);
+  if (m) return [`Sub ${m[1]}`, `Sub ${m[2]}`];
+  const um = escFromName(name);
+  return um ? [um] : [];
 }
 
 /**
@@ -117,11 +134,38 @@ function editionKey(t: Tournament): string | null {
   return `${cc || "?"}|${fam}`;
 }
 
+/**
+ * Os jogadores de UM escalão numa prova conjunta («U21 & U16»: uma só
+ * classificação para os dois). Separa-se pela idade que a FPG dá a cada jogador
+ * no dia da prova (`age`, da própria classificação): até ao número do escalão
+ * mais novo é desse; acima, do mais velho. O lugar é recalculado dentro do
+ * escalão (o da prova conjunta é o geral).
+ * Sem idades gravadas não há como separar — fica a prova inteira (era o que
+ * acontecia a 12/11/2026: «as edições anteriores de sub16 e sub21 estão iguais»).
+ * Quem não tem idade fica nos dois, para não desaparecer de nenhum.
+ */
+function porEscalao(t: Tournament, escs: string[], esc: string): Tournament {
+  const players = t.players || [];
+  if (!players.some((p) => typeof p.age === "number")) return t;
+  const nums = escs.map((e) => parseInt(e.replace(/\D/g, ""), 10)).sort((a, b) => a - b);
+  const n = parseInt(esc.replace(/\D/g, ""), 10);
+  const maisNovo = nums[0];
+  const doEscalao = players.filter((p) => typeof p.age !== "number" || (n === maisNovo ? p.age <= maisNovo : p.age > maisNovo));
+  const { pos } = classificarPorTotal(doEscalao,
+    (p) => voltasComCartao(p.roundScores) || 1,
+    (p) => (typeof p.grossTotal === "number" ? p.grossTotal : null));
+  return { ...t, escalao: esc, playerCount: doEscalao.length, players: doEscalao.map((p) => (pos.has(p) ? { ...p, pos: pos.get(p)! } : p)) } as Tournament;
+}
+
 /** Converte um torneio FPG numa `CircuitEntry` (uma coluna = uma edição). */
 function toEntry(t: Tournament): CircuitEntry {
   const alias = editionAliasFor(tournamentFamilyKey(t.name), t.campo);
-  const esc = t.escalao || (alias?.deriveEscFromName ? escFromName(t.name) : null) || "—";
-  const div: CircuitDivision = { key: "d", escalao: esc, tabLabel: esc, results: t };
+  // Uma divisão por escalão do nome (quase sempre uma só). A prova conjunta de
+  // dois escalões é a edição anterior de cada um deles — só com os jogadores
+  // desse escalão (`porEscalao`).
+  const escs = t.escalao ? [t.escalao] : alias?.deriveEscFromName ? escsFromName(t.name) : [];
+  const divisions: CircuitDivision[] = (escs.length ? escs : ["—"])
+    .map((esc, i) => ({ key: i ? `d${i}` : "d", escalao: esc, tabLabel: esc, results: escs.length > 1 ? porEscalao(t, escs, esc) : t }));
   return {
     id: `${t.ccode}-${t.tcode}`,
     year: parseInt(String(t.date || "").slice(0, 4), 10) || null,
@@ -129,7 +173,7 @@ function toEntry(t: Tournament): CircuitEntry {
     tcode: String(t.tcode || ""),
     course: t.campo || undefined,
     dateStart: t.date || undefined,
-    divisions: [div],
+    divisions,
   };
 }
 
@@ -213,7 +257,10 @@ export function fpgPastEditionsTabs(
   if (!current) return undefined;
   const k = editionKey(current);
   const entries = (k && index.get(k)) || [];
-  const division = current.escalao || "—";
+  // O escalão aberto: o da prova; sem ele, o do nome nas famílias em que o
+  // escalão se lê do nome (as edições antigas da Quinta do Lago, do World Kids…).
+  const alias = editionAliasFor(tournamentFamilyKey(current.name), current.campo);
+  const division = current.escalao || (alias?.deriveEscFromName ? escFromName(current.name) : null) || "—";
   // Edições ANTERIORES (as outras, mais recente primeiro) com resultados — é
   // sobre elas que o Scout cruza o field de hoje.
   const curId = `${current.ccode}-${current.tcode}`;
@@ -224,7 +271,11 @@ export function fpgPastEditionsTabs(
   // A definição das abas (chave, nome, ≥2 edições, protecção contra erros) é a
   // de `ui/circuit/abasComuns` — a mesma do CircuitShell. Daqui só saem as
   // edições (a regra de identidade da FPG, acima) e o que o Scout sabe a mais.
-  const tabs = abasDeEdicoes({ editions: entries, division, currentId: curId });
+  // Nas famílias com vários escalões, só contam as edições em que ESTE escalão
+  // existiu (senão a aba aparecia vazia: «as abas só aparecem quando há essa
+  // informação»).
+  const doEscalao = entries.filter((e) => e.id === curId || matchDivision(e.divisions ?? [], division));
+  const tabs = abasDeEdicoes({ editions: doEscalao, division, currentId: curId });
   if (currentField(current).length) tabs.push(abaScout(
     <ScoutProva current={current} previous={previous} h2hManuel={H2H_DO_INDICE.get(index)} escalaoProva={current.escalao ?? null} playersDB={playersDB} />,
   ));

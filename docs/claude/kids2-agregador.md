@@ -97,7 +97,10 @@ nunca pelo nome do escalão da prova.
 O Nível (Elite · Forte · Sólido · Em Dev. · Iniciante) é o percentil na geração (ano de
 nascimento × sexo) do **nível em pancadas** — `src/pages/kids2/nivelPancadas.ts`
 (`calcularNiveis`), corrido pelo agregador em `util/scout.js` e gravado no `r` do
-`juniors-scout.json` como `[ano, sexo, posição, nível, peso]`.
+`juniors-scout.json` como `[ano, sexo, posição, nível, peso]`. Cortes (`rankingAt`, no
+`juniorCalc.ts`): **Elite = primeiros 5 %** (`PERCENTIL_ELITE = 95`; eram 10 % até
+12/11/2026 — decisão da Mariana, caso Benji Botham, 128.º de 1267 rapazes de 2015) · Forte
+até 30 % · Sólido até 55 % · Em Dev. até 80 % · Iniciante o resto. As vitórias não entram.
 
 - Cada volta: ±par = nível do jogador + dificuldade da volta (+ efeito do tee quando há tees
   diferentes na mesma volta). A dificuldade mede-se por quem jogou a volta — field, força do

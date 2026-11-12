@@ -38,6 +38,8 @@ export interface Junior {
   canonicalName: string;
   aliases?: string[];
   dob?: string;
+  /** Ano de nascimento CERTO sem a data (Federgolf, GolfBox) — o `y` do juniors-scout.json. */
+  birthYear?: number | null;
   dobRange?: { lo: string; hi: string };
   sex?: "M" | "F";
   nationality?: string;
@@ -515,7 +517,10 @@ export function geracaoDoJunior(j: Junior, tournamentById: Map<string, Tournamen
  * (`calcularNiveis`, nivelPancadas.ts — só o último ano; mais baixo = melhor).
  * Rapazes e raparigas em rankings separados; sem sexo conta como rapaz.
  * Só entra quem tem ≥ MIN_VOLTAS_RANKING voltas no último ano.
- *   top 10% → Elite · top 30% → Forte · top 55% → Sólido · top 80% → Em Dev. · resto → Iniciante
+ *   top 5% → Elite · top 30% → Forte · top 55% → Sólido · top 80% → Em Dev. · resto → Iniciante
+ * (Elite era o top 10 % até 12/11/2026 — Mariana: «o benji está como ELITE»; ele era o 128.º
+ * de 1267 rapazes de 2015, dentro do corte por 5 lugares. Os outros cortes não mudaram:
+ * quem sai de Elite passa a Forte.)
  */
 export function computeRanking(
   juniors: Junior[],
@@ -544,12 +549,15 @@ export function computeRanking(
   return result;
 }
 
+/** Percentil mínimo de «Elite»: os primeiros 5 % da geração (12/11/2026; antes 90). */
+const PERCENTIL_ELITE = 95;
+
 /** Percentil e tier de quem está na posição `rank` de uma coorte de `n`. */
 function rankingAt(rank: number, n: number, birthYear: number, sex: string): RankingEntry {
   // percentil 100 = melhor; n=1 → único na coorte → 100
   const percentile = n === 1 ? 100 : Math.round(((n - rank) / (n - 1)) * 100);
   let tier: TierKey;
-  if (percentile >= 90) tier = "elite";
+  if (percentile >= PERCENTIL_ELITE) tier = "elite";
   else if (percentile >= 70) tier = "strong";
   else if (percentile >= 45) tier = "solid";
   else if (percentile >= 20) tier = "developing";

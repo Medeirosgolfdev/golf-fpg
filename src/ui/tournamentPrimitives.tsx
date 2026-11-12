@@ -39,6 +39,7 @@ import { flag as flagOf } from "../utils/flagUtils";
 /* ─── Constante do jogador especial (re-export de constants/manuel) ─── */
 import { MANUEL_FED as _MANUEL_FED, isManuel } from "../constants/manuel";
 import { kidsUrl, KidsArrow, KidsLinkCtx } from "./KidsLink";
+import { fichaDoKids } from "../data/kidsFicha";
 import PlayerLink from "./PlayerLink";
 import { MUTED } from "./tableCells";
 import TeeSwatch from "./TeeSwatch";
@@ -198,11 +199,16 @@ export function TournPName({
   // Para cada campo (sex/kidsHash/country): preferir directEntry; fallback aos
   // candidates por nome (filtrar pelo campo desejado para evitar apanhar entry
   // FPG sem kidsHash quando há um intl: com kidsHash).
-  const sex = directEntry?.sex ?? candidates.find(e => e.sex)?.sex ?? sexProp;
+  // A ficha do Kids 2 — a mesma da seta ↗ (data/kidsFicha.ts): dá a bandeira e o
+  // sexo a quem nem o playersDB nem a própria fonte os trazem, em TODAS as
+  // tabelas que usam este nome (12/11/2026).
+  const kidsCtx = useContext(KidsLinkCtx);
+  const ficha = fichaDoKids(kidsCtx, { nome: name, fed: fedKey, juniorId });
+  const sex = directEntry?.sex ?? candidates.find(e => e.sex)?.sex ?? sexProp ?? ficha?.sexo;
   const kidsHash = directEntry?.kidsHash ?? candidates.find(e => e.kidsHash)?.kidsHash;
   // A ficha do kids2 por nome só vale se o federado bater (como no KidsLink).
   const kidsEntry = candidates.find(e => e.kidsId && !(fedKey && e.kidsFed && e.kidsFed !== fedKey));
-  const country = directEntry?.country ?? candidates.find(e => e.country)?.country ?? countryProp;
+  const country = directEntry?.country ?? candidates.find(e => e.country)?.country ?? countryProp ?? ficha?.pais;
   // PT não leva bandeira por defeito — num site português seria ruído em todas
   // as linhas. A excepção é o país vir por PROP: só as páginas de circuitos
   // estrangeiros a passam, e aí ver a bandeira portuguesa é justamente o ponto.
@@ -217,7 +223,7 @@ export function TournPName({
   // A do mapa estava a ser desenhada por um <KidsLink> IRMAO nos chamadores, o que
   // punha DUAS setas na mesma linha quando (2) e (3) resolviam ambas. Passa a
   // ser resolvida aqui, para haver sempre exactamente uma.
-  const ctxEntry = useContext(KidsLinkCtx).get(normNameLocal(name));
+  const ctxEntry = kidsCtx.get(normNameLocal(name));
   // O mapa (3) dá o id canónico; vem antes do kidsHash (2), que é só o nome —
   // a /drive tem os dois desde que usa o playersDB da /FPG (decisão F,
   // 22/10/2026); a /FPG não fornece o mapa, por isso não muda.
