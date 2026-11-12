@@ -185,6 +185,11 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
   const featured = FEATURED_TOURNAMENTS.find(
     f => f.ccode === tournament.ccode && f.tcode === String(tournament.tcode));
   const syntheticAdm = tournament._sourceFile === "fpg-admissions-draws.json";
+  // Código da prova no scoring da FPG — o que se mostra e para onde apontam os
+  // links da Federação: o tcode REAL de uma entrada ainda provisória
+  // (`tcodeReal`), nenhum se o provisório ainda não tem real (`semLinksFpg`),
+  // senão o da própria entrada.
+  const tcodeFpg = featured?.tcodeReal ?? (featured?.semLinksFpg ? null : (tournament.tcode ? String(tournament.tcode) : null));
   // Inscrições já encerradas no último scrape → não vale a pena ir ao live
   // (a lista não muda mais e a FPG deixa de a servir): evita fetches inúteis.
   const admissionsClosed = /fechad|encerrad/i.test(admissions?.status || "");
@@ -524,9 +529,9 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
                 {tournament.ccode}
               </span>
             )}
-            {tournament.tcode && !featured?.semLinksFpg && (
+            {tcodeFpg && (
               <span title="tcode" className="fs-10 fw-700 mono u-bg-accent u-c-fff u-br-radius-sm u-p-1px-6px u-ls-0_02em u-user-select-all u-cur-text">
-                {tournament.tcode}
+                {tcodeFpg}
               </span>
             )}
           </div>
@@ -557,19 +562,19 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
                       </React.Fragment>
                     : null
                 ))
-              : tournament.ccode && tournament.tcode && !featured?.semLinksFpg && (
+              : tournament.ccode && tcodeFpg && (
                   <>
-                    <ExtLink href={fpgAdmissionsUrl(tournament.ccode, tournament.tcode)}
+                    <ExtLink href={fpgAdmissionsUrl(tournament.ccode, tcodeFpg)}
                       title="Inscrições (tournAdmissions) na Federação"
                       className="tourn-ext-link">
                       Inscrições ↗
                     </ExtLink>
-                    <ExtLink href={fpgDrawUrl(tournament.ccode, tournament.tcode)}
+                    <ExtLink href={fpgDrawUrl(tournament.ccode, tcodeFpg)}
                       title="Emparelhamentos (Draw) na Federação"
                       className="tourn-ext-link">
                       Draw ↗
                     </ExtLink>
-                    <ExtLink href={fpgScoringUrl(tournament.ccode, tournament.tcode)}
+                    <ExtLink href={fpgScoringUrl(tournament.ccode, tcodeFpg)}
                       title="Classificação (Scoring) na Federação"
                       className="tourn-ext-link">
                       Scoring ↗
@@ -709,7 +714,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
               admissions={effAdmissions}
               playersDB={playersDB as any}
               date={tournament.date}
-              fpgUrl={tournament.ccode && tournament.tcode && !featured?.semLinksFpg ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
+              fpgUrl={tournament.ccode && tcodeFpg ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tcodeFpg}` : undefined}
               reservaLabel={featured?.reservaLabel}
               hcpActual={featured?.hcpActual}
               tournamentEscalao={tournament.escalao || undefined}
@@ -732,7 +737,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
             hideCols={drawHideCols}
             clubLabel={options?.clubLabel}
             omLookup={omLookup}
-            fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
+            fpgUrl={tournament.ccode && tcodeFpg ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tcodeFpg}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
           />{shareRounds}</>;
         if (isCombined)
           return <><AllRoundsScorecardLB tournament={lbTournament} escLookup={escLookup} playersDB={playersDB} options={options} />{shareRounds}</>;

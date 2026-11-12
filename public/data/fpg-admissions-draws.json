@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-11-08T21:04:20.750Z",
+  "scrapedAt": "2026-11-12T14:36:55.996Z",
   "total": 1268,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
@@ -406450,13 +406450,13 @@
       "ccode": "000",
       "tcode": "90872",
       "name": "2nd Castro Marim Portuguese Int. U14 Championship",
-      "date": "2026-12-03",
+      "date": "2026-12-04",
       "campo": "Quinta do Vale",
       "_manual": true,
-      "_note": "Rapazes. tcode PROVISÓRIO (a FPG ainda não abriu o torneio no scoring). Lido do PDF Entry List Boys de 10/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Boys-06_11_26_II.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-10_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Lugares 1-12 = lugares de wild card (tag «Wild card»): 1-10 atribuídos a 05/11 (Burkhalter, Harran, Durando, Palmares, Rocha, Ivo de Carvalho, Nunes, Castro Ferreira, Balixa, Rente); 11-12, que estavam por atribuir, são desde 06/11 Theophile Galle (+0,2, era 7.º da espera) e Cayssi Dunlop (0,8, era 21.º) — o PDF não escreve «wild card», lê-se da posição (fora da ordem dos handicaps). 13-42 por handicap; espera com a numeração do PDF. A lista de 10/11 já não traz quem tinha HI acima de 6,0 (o máximo dos Termos; a vermelho até 06/11): Manuel Medeiros (6,4), Sebastião Soares, Casper Bernstein, Tiago Araujo, Tomas Lima Pinto, Pierre-Antoine Maupin, Ricardo Ferreira, Eduardo Ferreira, Miguel Ferreira. Convocados que entraram pelo handicap: Santiago Dias. Artyom Becerra: o PDF escreve «3,9» sem o «+», mas está na ordem dos +4,2/+3,8 (era +1,9 a 04/11) — guardado como +3,9. «Aodhán Christopher Fitzgerald» é o «Aodhan Fitzgerald» das listas anteriores (+1,7; era +1,6). Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json).",
+      "_note": "Rapazes. tcode PROVISÓRIO (o das listas em PDF; o real no scoring é o 000/10946 — ver o fim desta nota). Lido do PDF Entry List Boys de 10/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Boys-06_11_26_II.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-10_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Lugares 1-12 = lugares de wild card (tag «Wild card»): 1-10 atribuídos a 05/11 (Burkhalter, Harran, Durando, Palmares, Rocha, Ivo de Carvalho, Nunes, Castro Ferreira, Balixa, Rente); 11-12, que estavam por atribuir, são desde 06/11 Theophile Galle (+0,2, era 7.º da espera) e Cayssi Dunlop (0,8, era 21.º) — o PDF não escreve «wild card», lê-se da posição (fora da ordem dos handicaps). 13-42 por handicap; espera com a numeração do PDF. A lista de 10/11 já não traz quem tinha HI acima de 6,0 (o máximo dos Termos; a vermelho até 06/11): Manuel Medeiros (6,4), Sebastião Soares, Casper Bernstein, Tiago Araujo, Tomas Lima Pinto, Pierre-Antoine Maupin, Ricardo Ferreira, Eduardo Ferreira, Miguel Ferreira. Convocados que entraram pelo handicap: Santiago Dias. Artyom Becerra: o PDF escreve «3,9» sem o «+», mas está na ordem dos +4,2/+3,8 (era +1,9 a 04/11) — guardado como +3,9. «Aodhán Christopher Fitzgerald» é o «Aodhan Fitzgerald» das listas anteriores (+1,7; era +1,6). Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json). A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946 (rapazes e raparigas juntos; só lá estão os federados portugueses — 13 a 12/11/2026), ligado a esta entrada por `tcodeReal` no featuredTournaments.ts: na lista do site há uma só carta, com estas listas completas. Data = 1.ª volta (4/12; o treino é a 3/12).",
       "admissions": {
         "name": "2nd Castro Marim Portuguese Int. U14 Championship — Rapazes",
-        "date": "2026-12-03",
+        "date": "2026-12-04",
         "status": "Entry List final FPG 10/11 · 12 wild cards atribuídos (lugares 1-12) · fora quem tinha HI acima de 6,0",
         "totalInscritos": 42,
         "reservas": 45,
@@ -407572,13 +407572,13 @@
       "ccode": "000",
       "tcode": "90873",
       "name": "2nd Castro Marim Portuguese Int. U14 Championship — Raparigas",
-      "date": "2026-12-03",
+      "date": "2026-12-04",
       "campo": "Quinta do Vale",
       "_manual": true,
-      "_note": "Raparigas. tcode PROVISÓRIO (a FPG ainda não abriu o torneio no scoring). Lido do PDF Entry List Girls de 10/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Girls-10_11_26_II.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-10_FPG_Entry_List_Girls_Castro_Marim_U14.pdf. Lugares 1-4 = wild cards (Riana Kohler, Sabrina Crisóstomo, Margarida Pinto, Catarina Sousa Conceição; tag «Wild card»); 5-42 por handicap. Face a 05/11 saem Andrea Arnal Adsuara (+2,6) e Austine Farrando (3,2) e entram as duas primeiras da espera, Rachel Strek (4,7) e Allegra Kuhnert (5,5); a lista de 10/11 já não tem espera (saíram Madalena Miguel Araújo 8,2, Catarina Valério 13 e Francisca Fragoso 15,5 — as três a vermelho a 05/11). Convocada que entrou pelo handicap: Laura Santos. Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts.",
+      "_note": "Raparigas. tcode PROVISÓRIO (o das listas em PDF; o real no scoring é o 000/10946 — ver o fim desta nota). Lido do PDF Entry List Girls de 10/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Girls-10_11_26_II.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-10_FPG_Entry_List_Girls_Castro_Marim_U14.pdf. Lugares 1-4 = wild cards (Riana Kohler, Sabrina Crisóstomo, Margarida Pinto, Catarina Sousa Conceição; tag «Wild card»); 5-42 por handicap. Face a 05/11 saem Andrea Arnal Adsuara (+2,6) e Austine Farrando (3,2) e entram as duas primeiras da espera, Rachel Strek (4,7) e Allegra Kuhnert (5,5); a lista de 10/11 já não tem espera (saíram Madalena Miguel Araújo 8,2, Catarina Valério 13 e Francisca Fragoso 15,5 — as três a vermelho a 05/11). Convocada que entrou pelo handicap: Laura Santos. Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946 (rapazes e raparigas juntos; só lá estão os federados portugueses — 13 a 12/11/2026), ligado a esta entrada por `tcodeReal` no featuredTournaments.ts: na lista do site há uma só carta, com estas listas completas. Data = 1.ª volta (4/12; o treino é a 3/12).",
       "admissions": {
         "name": "2nd Castro Marim Portuguese Int. U14 Championship — Raparigas",
-        "date": "2026-12-03",
+        "date": "2026-12-04",
         "status": "Entry List final FPG 10/11 · 4 wild cards atribuídos (lugares 1-4) · lista cheia (42) · sem lista de espera",
         "totalInscritos": 42,
         "reservas": 0,
@@ -408013,14 +408013,15 @@
           },
           {
             "pos": 35,
-            "fed": null,
+            "fed": "51523",
             "nome": "Angelina Gao",
-            "clube": null,
+            "clube": "Quinta do Peru",
             "hcp": 2.9,
             "vac": null,
             "dataInscricao": null,
             "status": "confirmed",
             "country": "Hong Kong",
+            "dob": "2011-06-09",
             "sex": "F"
           },
           {
@@ -408172,11 +408173,11 @@
       "tcode": "10946",
       "name": "2nd Castro Marim Portuguese Int. U14 Championship",
       "date": "2026-12-04",
-      "expectedYear": "2026",
+      "expectedYear": 2026,
       "admissions": {
         "name": "2nd Castro Marim Portuguese Int. U14 Championship",
         "date": "2026-12-04",
-        "totalInscritos": 12,
+        "totalInscritos": 13,
         "reservas": 0,
         "status": "Inscrições fechadas",
         "rounds": 1,
@@ -408301,6 +408302,16 @@
             "hcp": -1.1,
             "vacf": null,
             "registo": "2026/11/06 11:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "51523",
+            "nome": "Angelina Gao",
+            "clube": "Quinta do Peru",
+            "hcp": 2.9,
+            "vacf": null,
+            "registo": "2026/11/09 13:06",
             "status": "confirmed"
           }
         ]

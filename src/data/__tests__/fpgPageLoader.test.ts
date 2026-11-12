@@ -163,6 +163,23 @@ describe("Jovens: candidatos, filtros e grupos", () => {
     expect(out[1]._jovensYear).toBe("2026");
     expect(out[1].playerCount).toBe(5);
   });
+
+  it("prova com tcode provisório e `tcodeReal`: a entrada só-inscrições do tcode real não entra (uma só carta); volta com draws", () => {
+    // Castro Marim U14 2026: listas completas em 000/90872 (rapazes) e 90873
+    // (raparigas); a FPG abriu o 000/10946 só com os federados portugueses.
+    const prov = (tcode: string): [string, FpgTournamentData] =>
+      [`000-${tcode}`, { ccode: "000", tcode, name: "2nd Castro Marim Portuguese Int. U14 Championship", date: "2026-12-04", admissions: { totalInscritos: 42, players: [] } }];
+    const real = (draws?: Record<string, FpgDraw>): [string, FpgTournamentData] =>
+      ["000-10946", { ccode: "000", tcode: "10946", name: "2nd Castro Marim Portuguese Int. U14 Championship", date: "2026-12-04", admissions: { totalInscritos: 13, players: [] }, ...(draws ? { draws } : {}) }];
+    const semDraw = mergeJovensWithAdmissions([], new Map([prov("90872"), prov("90873"), real()]));
+    expect(semDraw.map(t => t.tcode)).toEqual(["90872", "90873"]);
+    expect(semDraw.map(t => t._tcodeFpg)).toEqual(["10946", "10946"]);
+    expect(semDraw.map(t => t.date)).toEqual(["2026-12-04", "2026-12-04"]);
+    const comDraw = mergeJovensWithAdmissions([], new Map([prov("90872"), prov("90873"), real(draw)]));
+    expect(comDraw.map(t => t.tcode)).toEqual(["90872", "90873", "10946"]);
+    // sem as entradas provisórias, o tcode real entra como qualquer outro
+    expect(mergeJovensWithAdmissions([], new Map([real()])).map(t => t.tcode)).toEqual(["10946"]);
+  });
 });
 
 describe("buildTcodePills", () => {

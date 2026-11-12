@@ -79,10 +79,13 @@ export const CASTRO_MARIM_U14_TEE_RULE: TeeRule = (_n, sex) => (sex === "F" ? "V
 const TEE_RULES_BY_TOURNAMENT: Record<string, TeeRule> = {
   "003-10652": MIRAMAR_U25_TEE_RULE, // U25 (Sub12→Sub25) — tcode real
   "003-10653": MIRAMAR_U25_TEE_RULE, // Sub-10 (competição separada, 9 buracos/dia) → Roxas — tcode real
-  // Castro Marim U14 2026 — tcodes PROVISÓRIOS (featuredTournaments.ts); trocar
-  // aqui também quando a FPG publicar os reais.
+  // Castro Marim U14 2026 — tcodes PROVISÓRIOS das listas em PDF
+  // (featuredTournaments.ts) e o REAL que a FPG abriu no scoring (10946,
+  // rapazes e raparigas juntos). Os provisórios saem quando a prova passar
+  // toda para o real.
   "000-90872": CASTRO_MARIM_U14_TEE_RULE, // Rapazes
   "000-90873": CASTRO_MARIM_U14_TEE_RULE, // Raparigas
+  "000-10946": CASTRO_MARIM_U14_TEE_RULE, // tcode real
 };
 
 /** Resolve a regra de tees de um torneio (undefined = usar tabela genérica). */

@@ -98,6 +98,10 @@ export interface Tournament extends BaseTournament, TournamentModel {
    *  Regional combinado Sub 10/12 ou Sub 14 a 24, o label fica "Sub 10 e 12"
    *  ou "Sub 14 a 24" apenas no botão, mantendo o `escalao` para sorting/pills. */
   _tabLabel?: string;
+  /** tcode REAL da prova no scoring da FPG quando a entrada ainda vive com um
+   *  tcode provisório (`tcodeReal` em featuredTournaments.ts): é o que a carta e
+   *  o detalhe mostram e para onde apontam os links da Federação. */
+  _tcodeFpg?: string;
   /** Inscrições e draws tal como vêm no JSON do torneio (CLUBES{ano}.json,
    *  fpg-nacionais-historico.json). O detalhe lê as versões `_admissions`/`_draws`. */
   admissions?: FpgAdmissions;

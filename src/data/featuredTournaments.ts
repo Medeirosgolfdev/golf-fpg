@@ -67,6 +67,14 @@ export interface FeaturedTournament {
   /** tcode PROVISÓRIO (a FPG ainda não abriu o torneio no scoring): esconde o
    *  tcode e os links Inscrições/Draw da Federação, que dariam páginas vazias. */
   semLinksFpg?: boolean;
+  /** tcode REAL que a FPG entretanto abriu no scoring para uma prova que ainda
+   *  vive aqui com tcode provisório (os inscritos completos são os das listas
+   *  em PDF; a FPG só inscreve no scoring quem tem federado português). A carta
+   *  e o detalhe mostram este código e os links da Federação apontam para ele; a
+   *  entrada só-inscrições que o scraper cria para o tcode real NÃO entra na
+   *  lista enquanto não tiver draws (seria a mesma prova duas vezes, uma delas
+   *  só com os portugueses) — ver `mergeJovensWithAdmissions`. */
+  tcodeReal?: string;
   /** Etiqueta do estado «reserva» na tab Inscrições (default «pendente»). */
   reservaLabel?: string;
   /** Coluna «HCP actual» (FPG) na tab Inscrições — listas lidas de PDF. */
@@ -143,6 +151,7 @@ export function buildFeaturedSynthetic(ft: FeaturedTournament, ad: FpgTournament
     _draws: ad.draws,
     extraLinks: ft.extraLinks,
     ...(ft.tabLabel ? { _tabLabel: ft.tabLabel } : {}),
+    ...(ft.tcodeReal ? { _tcodeFpg: ft.tcodeReal } : {}),
   };
 }
 
@@ -228,15 +237,18 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     campo: "Santo da Serra - Desertas-Serras",
   },
 
-  // ── 2nd Castro Marim Portuguese International U14 — 3-6/12/2026 (Quinta do Vale) ──
-  // A FPG ainda não abriu o torneio no scoring (as inscrições são pelo
-  // formulário do fpg.pt), por isso os tcodes 90872 (rapazes) e 90873
-  // (raparigas) são PROVISÓRIOS e os inscritos são os das Entry Lists em PDF
-  // de 10/11/2026 («Final Entry List – Pending Handicap Verification»),
-  // curados à mão (`_manual` em fpg-admissions-draws.json).
-  // A 1.ª edição é 000/10872 (rapazes e raparigas no mesmo tcode).
-  // Quando a FPG publicar o tcode real, trocar aqui, no JSON e na regra de tees
-  // (`CASTRO_MARIM_U14_TEE_RULE` em utils/teeRegulation.ts: Amarelas/Vermelhas).
+  // ── 2nd Castro Marim Portuguese International U14 — 4-6/12/2026 (Quinta do Vale) ──
+  // Treino a 3/12; as 3 voltas são a 4, 5 e 6/12 (Termos da Competição).
+  // As inscrições são pelo formulário do fpg.pt e os inscritos completos são os
+  // das Entry Lists em PDF de 10/11/2026 («Final Entry List – Pending Handicap
+  // Verification»), curados à mão (`_manual` em fpg-admissions-draws.json) nos
+  // tcodes PROVISÓRIOS 90872 (rapazes) e 90873 (raparigas).
+  // A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946
+  // (rapazes e raparigas juntos, como a 1.ª edição, 000/10872), mas só lá
+  // inscreve quem tem federado português (13 a 12/11/2026) — por isso é o
+  // `tcodeReal` das duas entradas e não uma entrada à parte.
+  // Quando o 10946 tiver draws/resultados, passar tudo para ele: aqui, no JSON
+  // e na regra de tees (`CASTRO_MARIM_U14_TEE_RULE` em utils/teeRegulation.ts).
   {
     ccode: "000",
     tcode: "90872",
@@ -245,12 +257,13 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     name: "2nd Castro Marim Portuguese Int. U14 Championship - Rapazes",
     tabLabel: "Rapazes",
     escalao: "Sub 14",
-    date: "2026-12-03",
+    date: "2026-12-04",
     campo: "Quinta do Vale",
     rounds: 3,
+    tcodeReal: "10946",
     extraLinks: [
       { label: "página oficial FPG", url: "https://competicoes.fpg.pt/evento/2nd-portuguese-international-u14-championship/", icon: "🏆" },
-      { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Term-Of-Competition-2nd-Castro-Marim-2026.pdf", icon: "📋" },
+      { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/2nd-Castro-Marim-Term-Of-Competition.pdf", icon: "📋" },
       { label: "Entry List Boys 10/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Boys-06_11_26_II.pdf", icon: "📝" },
     ],
     live: false,
@@ -264,12 +277,13 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     name: "2nd Castro Marim Portuguese Int. U14 Championship - Raparigas",
     tabLabel: "Raparigas",
     escalao: "Sub 14",
-    date: "2026-12-03",
+    date: "2026-12-04",
     campo: "Quinta do Vale",
     rounds: 3,
+    tcodeReal: "10946",
     extraLinks: [
       { label: "página oficial FPG", url: "https://competicoes.fpg.pt/evento/2nd-portuguese-international-u14-championship/", icon: "🏆" },
-      { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Term-Of-Competition-2nd-Castro-Marim-2026.pdf", icon: "📋" },
+      { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/2nd-Castro-Marim-Term-Of-Competition.pdf", icon: "📋" },
       { label: "Entry List Girls 10/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Girls-10_11_26_II.pdf", icon: "📝" },
     ],
     live: false,

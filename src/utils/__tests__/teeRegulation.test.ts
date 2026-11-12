@@ -6,7 +6,7 @@ import { parseSubNumber, teeNameFor, teeRuleFor } from "../teeRegulation";
 
 describe("teeRuleFor", () => {
   it("Castro Marim U14 2026 (Termos FPG): rapazes Amarelas em todos os escalões, raparigas Vermelhas", () => {
-    for (const tcode of ["90872", "90873"]) {
+    for (const tcode of ["90872", "90873", "10946"]) {
       const r = teeRuleFor("000", tcode);
       expect(r).toBeDefined();
       expect(r!(12, "M")).toBe("Amarelas"); // Sub12 também (a tabela geral daria Vermelhas)

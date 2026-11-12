@@ -52,6 +52,9 @@ export interface SidebarItemTournament {
    *  não em `players`. Quando true, o ManuelPill é mostrado mesmo que `players` esteja
    *  vazio. Preenchido pelo caller (FPGPage) via `tournamentHasManuel(t)`. */
   _manuelInscrito?: boolean;
+  /** tcode REAL no scoring da FPG de uma entrada ainda com tcode provisório
+   *  (`tcodeReal` em featuredTournaments.ts) — é o que a carta mostra e liga. */
+  _tcodeFpg?: string;
 }
 
 export interface TournSidebarItemProps {
@@ -78,7 +81,7 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
   // ManuelPill: torneios jogados têm Manuel em `players`; pre-jogo tem-no apenas
   // em _admissions/_draws — a flag `_manuelInscrito` é setada pelo caller nesses casos.
   const manuelPlayed = t.players.some(p => isManuel(p as any)) || !!t._manuelInscrito;
-  const tcodes   = (t.tcode || "").split("+").map(s => s.trim()).filter(Boolean);
+  const tcodes   = (t._tcodeFpg || t.tcode || "").split("+").map(s => s.trim()).filter(Boolean);
   // Holes-in-one no torneio (dedup por jogador+buraco — os players podem vir
   // repetidos por ronda em grupos multi-ronda).
   const nAces = (() => {

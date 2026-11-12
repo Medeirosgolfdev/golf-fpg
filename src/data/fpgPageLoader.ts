@@ -345,9 +345,18 @@ export function mergeJovensWithAdmissions(rows: Tournament[], admIdx: Map<string
     } as unknown as Tournament;
     seen.set(key, synthetic);
   }
+  // tcodes REAIS de provas que já cá estão com tcode provisório (`tcodeReal`):
+  // a entrada só-inscrições do tcode real seria a mesma prova outra vez, e só
+  // com quem a FPG inscreveu no scoring (Castro Marim U14 2026: os portugueses).
+  // Volta a entrar quando tiver draws — aí traz o que o provisório não tem.
+  const reaisJaCa = new Set<string>();
+  for (const ft of FEATURED_TOURNAMENTS) {
+    if (ft.tcodeReal && seen.has(`${ft.ccode}/${ft.tcode}`)) reaisJaCa.add(`${ft.ccode}/${ft.tcodeReal}`);
+  }
   for (const [, ad] of admIdx) {
     const tournKey = `${ad.ccode}/${ad.tcode}`;
     if (seen.has(tournKey)) continue;
+    if (reaisJaCa.has(tournKey) && !hasDraws(ad.draws)) continue;
     const playerCount = ad.admissions?.totalInscritos ?? (ad.admissions?.players?.length ?? 0);
     if (playerCount === 0) continue;
     if (!ADM_JOVEM_RE.test(stripAccents(ad.name || ""))) continue;

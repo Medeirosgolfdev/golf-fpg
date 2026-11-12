@@ -91,7 +91,7 @@ export function buildFpgEntries(groups: EventGroup[]): CircuitEntry[] {
       id: g.key,
       year: yearOfDate(g.date),
       name: g.name || g.campo || "Torneio",
-      tcode: g.entries[0]?.tcode,
+      tcode: g.entries[0]?._tcodeFpg ?? g.entries[0]?.tcode,
       course: g.campo || undefined,
       dateStart: g.date,
       memberIds: divisions.map(d => d.key),

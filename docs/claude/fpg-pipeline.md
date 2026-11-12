@@ -228,6 +228,21 @@ verificação live vêm de borla. O construtor do sintético é partilhado:
 `featuredTournaments.ts`. Dedup por ccode/tcode em ambas as páginas: quando o
 torneio real chega aos ficheiros de resultados, o sintético deixa de entrar.
 
+**Prova com tcode provisório e tcode real ao mesmo tempo — `tcodeReal` (2026-11-12):**
+quando os inscritos completos só existem em listas PDF (entradas `_manual` com tcode
+provisório `9xxxx`) e a FPG abre entretanto o torneio no scoring só com parte deles
+(Castro Marim U14 2026: provisórios `000/90872` rapazes e `000/90873` raparigas; real
+`000/10946`, só com os federados portugueses), a entrada do destaque leva
+`tcodeReal: "10946"`. Efeitos: (1) o `mergeJovensWithAdmissions` não injecta a entrada
+só-inscrições do tcode real enquanto ela não tiver draws — fica UMA carta, com as
+listas completas; (2) a carta (`TournSidebarItem`, `_tcodeFpg`) e o cabeçalho do
+detalhe mostram o tcode real e os links Inscrições/Draw/Scoring da Federação apontam
+para ele (`tcodeFpg` no TournamentDetail). O federado de quem a FPG lá inscreve é o
+«federado da própria prova»: copia-se para a lista manual (mesmo nome + mesmo HCP).
+Quando o tcode real tiver draws/resultados volta a aparecer — é a altura de passar
+tudo para ele (destaque, JSON, `prova` das hcp-listas, regra de tees) e apagar os
+provisórios.
+
 **Drives futuros AUTO-DESCOBERTOS (2026-07-10):** sem config manual — dois
 mecanismos em cadeia: (1) o `INCLUDE_RX` da Fonte 3 do
 `scrape-fpg-admissions-draws-node.js` ganhou `/\bdrive\s+(tour\b|chall)/i` (prefixo "chall": a FPG abrevia os nomes longos)
