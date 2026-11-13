@@ -1,11 +1,11 @@
 {
-  "generated": "2026-11-09T01:54:46.772Z",
+  "generated": "2026-11-13T17:08:34.518Z",
   "season": 2026,
   "title": "Ordem de Mérito Júnior — CG Santo da Serra",
   "subtitle": "by NOS Madeira · categoria Júnior (0-18, sem distinção de género)",
   "regulamento": "docs/reference/Regulamento-OM-CGSS-NOS-2026.pdf",
   "source": "scoring.datagolf.pt (derivado das OMs adultas oficiais + ClassifLST por prova)",
-  "method": "Em cada prova, os juniores (0-18 anos) classificados como mandam os Termos da Competição dessa prova: em pancadas brutas com máximo de 10 por buraco quando os Termos o dizem; senão, pela classificação principal da prova (o que o clube publica como OM JUNIORES); só os sócios CGSS podem ganhar; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
+  "method": "Em cada prova, os juniores (0-18 anos) pela classificação principal da prova (o que o clube publica como OM JUNIORES), em todas as provas — como na OM Júnior oficial do clube (13/11/2026); só os sócios CGSS podem ganhar; pontos Nível(A/B/C)×posição; total soma as provas (regra 7.1 desconta 3 piores no fecho).",
   "points": {
     "A": {
       "1": 25,
@@ -1917,8 +1917,8 @@
       "level": "C",
       "course": "Santo da Serra - Machico-Desertas",
       "scoring": "Stableford Net",
-      "juniorScoring": "Stroke Play",
-      "juniorBasis": "termos",
+      "juniorScoring": "Stableford Net",
+      "juniorBasis": "prova",
       "termos": {
         "ficheiro": "2026-01-17_CGSS_Termos_Competicao_Torneio_Inverno.pdf",
         "texto": "Na categoria JUNIOR, pontuam em STROKEPLAY com limite máximo de 10 pancadas por buraco.",
@@ -1928,20 +1928,20 @@
       "nJuniors": 2,
       "juniors": [
         {
-          "fed": "52884",
-          "name": "Manuel Goulartt Medeiros",
-          "club": "Santo da Serra",
-          "gross": 92,
-          "score": "92",
-          "pos": 1,
-          "pts": 15
-        },
-        {
           "fed": "52393",
           "name": "Mateus Penucho",
           "club": "Santo da Serra",
           "gross": 99,
-          "score": "99",
+          "score": "25",
+          "pos": 1,
+          "pts": 15
+        },
+        {
+          "fed": "52884",
+          "name": "Manuel Goulartt Medeiros",
+          "club": "Santo da Serra",
+          "gross": 92,
+          "score": "23",
           "pos": 2,
           "pts": 12
         }
@@ -1955,8 +1955,8 @@
       "level": "A",
       "course": "Santo da Serra - Machico-Desertas",
       "scoring": "Stableford Net",
-      "juniorScoring": "Medal",
-      "juniorBasis": "termos",
+      "juniorScoring": "Stableford Net",
+      "juniorBasis": "prova",
       "termos": {
         "ficheiro": "2026-01-24_CGSS_Termos_Competicao_Torneio_Restauracao.pdf",
         "texto": "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
@@ -1966,29 +1966,29 @@
       "nJuniors": 3,
       "juniors": [
         {
+          "fed": "41124",
+          "name": "Manuel Gouveia",
+          "club": "Santo da Serra",
+          "gross": 101,
+          "score": "33",
+          "pos": 1,
+          "pts": 25
+        },
+        {
           "fed": "52884",
           "name": "Manuel Goulartt Medeiros",
           "club": "Santo da Serra",
           "gross": 82,
-          "score": "82",
-          "pos": 1,
-          "pts": 25
+          "score": "33",
+          "pos": 2,
+          "pts": 20
         },
         {
           "fed": "40990",
           "name": "Maria Câmara",
           "club": "Santo da Serra",
           "gross": 95,
-          "score": "95",
-          "pos": 2,
-          "pts": 20
-        },
-        {
-          "fed": "41124",
-          "name": "Manuel Gouveia",
-          "club": "Santo da Serra",
-          "gross": 101,
-          "score": "101",
+          "score": "26",
           "pos": 3,
           "pts": 18
         }
@@ -2002,8 +2002,8 @@
       "level": "C",
       "course": "Santo da Serra - Desertas-Serras",
       "scoring": "Stableford Net",
-      "juniorScoring": "Medal",
-      "juniorBasis": "termos",
+      "juniorScoring": "Stableford Net",
+      "juniorBasis": "prova",
       "termos": {
         "ficheiro": "2026-02-14_CGSS_Termos_Competicao_Torneio_Carnaval.pdf",
         "texto": "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
@@ -2013,20 +2013,20 @@
       "nJuniors": 2,
       "juniors": [
         {
-          "fed": "41108",
-          "name": "Martim Lima",
-          "club": "Santo da Serra",
-          "gross": 83,
-          "score": "83",
-          "pos": 1,
-          "pts": 15
-        },
-        {
           "fed": "41124",
           "name": "Manuel Gouveia",
           "club": "Santo da Serra",
           "gross": 86,
-          "score": "86",
+          "score": "44",
+          "pos": 1,
+          "pts": 15
+        },
+        {
+          "fed": "41108",
+          "name": "Martim Lima",
+          "club": "Santo da Serra",
+          "gross": 83,
+          "score": "38",
           "pos": 2,
           "pts": 12
         }
@@ -2059,8 +2059,8 @@
       "level": "B",
       "course": "Santo da Serra - Machico-Desertas",
       "scoring": "Stableford Net",
-      "juniorScoring": "Medal",
-      "juniorBasis": "termos",
+      "juniorScoring": "Stableford Net",
+      "juniorBasis": "prova",
       "termos": {
         "ficheiro": "2026-05-23_CGSS_Termos_Competicao_Torneio_NOS_Empresas.pdf",
         "texto": "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
@@ -2077,7 +2077,7 @@
           "name": "Maria Câmara",
           "club": "Santo da Serra",
           "gross": 83,
-          "score": "83",
+          "score": "37",
           "pos": 1,
           "pts": 20
         },
@@ -2086,7 +2086,7 @@
           "name": "Vasco Leal Gouveia",
           "club": "Santo da Serra",
           "gross": 102,
-          "score": "102",
+          "score": "24",
           "pos": 2,
           "pts": 16
         }
@@ -2428,10 +2428,10 @@
           "name": "Torneio de Inverno CGSS",
           "date": "2026-01-17",
           "level": "C",
-          "pos": 1,
+          "pos": 2,
           "gross": 92,
-          "score": "92",
-          "pts": 15
+          "score": "23",
+          "pts": 12
         },
         {
           "tcode": "10986",
@@ -2439,10 +2439,10 @@
           "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
           "date": "2026-01-24",
           "level": "A",
-          "pos": 1,
+          "pos": 2,
           "gross": 82,
-          "score": "82",
-          "pts": 25
+          "score": "33",
+          "pts": 20
         },
         {
           "tcode": "11050",
@@ -2500,9 +2500,9 @@
           "pts": 20
         }
       ],
-      "total": 121,
+      "total": 113,
       "played": 7,
-      "bestDrop3": 79,
+      "bestDrop3": 74,
       "lastResult": 2,
       "rank": 1
     },
@@ -2519,10 +2519,10 @@
           "name": "Torneio de Inverno CGSS",
           "date": "2026-01-17",
           "level": "C",
-          "pos": 2,
+          "pos": 1,
           "gross": 99,
-          "score": "99",
-          "pts": 12
+          "score": "25",
+          "pts": 15
         },
         {
           "tcode": "11050",
@@ -2580,9 +2580,9 @@
           "pts": 14
         }
       ],
-      "total": 87,
+      "total": 90,
       "played": 6,
-      "bestDrop3": 49,
+      "bestDrop3": 50,
       "lastResult": null,
       "rank": 2
     },
@@ -2632,6 +2632,64 @@
       "bestDrop3": 0,
       "lastResult": 1,
       "rank": 3
+    },
+    {
+      "fed": "41124",
+      "name": "Manuel Gouveia",
+      "club": "Santo da Serra",
+      "gender": "M",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "10986",
+          "ccode": "007",
+          "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
+          "date": "2026-01-24",
+          "level": "A",
+          "pos": 1,
+          "gross": 101,
+          "score": "33",
+          "pts": 25
+        },
+        {
+          "tcode": "10994",
+          "ccode": "007",
+          "name": "Torneio de Carnaval CGSS 2026",
+          "date": "2026-02-14",
+          "level": "C",
+          "pos": 1,
+          "gross": 86,
+          "score": "44",
+          "pts": 15
+        },
+        {
+          "tcode": "11050",
+          "ccode": "007",
+          "name": "Torneio CGSS RALI 2026",
+          "date": "2026-08-01",
+          "level": "C",
+          "pos": 5,
+          "gross": 98,
+          "score": "27",
+          "pts": 7
+        },
+        {
+          "tcode": "11075",
+          "ccode": "007",
+          "name": "TROFÉU JOÃO SOUSA CGSS 2026",
+          "date": "2026-10-10",
+          "level": "A",
+          "pos": 3,
+          "gross": 91,
+          "score": "30",
+          "pts": 18
+        }
+      ],
+      "total": 65,
+      "played": 4,
+      "bestDrop3": 25,
+      "lastResult": null,
+      "rank": 4
     },
     {
       "fed": "50398",
@@ -2689,64 +2747,6 @@
       "played": 4,
       "bestDrop3": 20,
       "lastResult": 3,
-      "rank": 4
-    },
-    {
-      "fed": "41124",
-      "name": "Manuel Gouveia",
-      "club": "Santo da Serra",
-      "gender": "M",
-      "canWin": true,
-      "events": [
-        {
-          "tcode": "10986",
-          "ccode": "007",
-          "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
-          "date": "2026-01-24",
-          "level": "A",
-          "pos": 3,
-          "gross": 101,
-          "score": "101",
-          "pts": 18
-        },
-        {
-          "tcode": "10994",
-          "ccode": "007",
-          "name": "Torneio de Carnaval CGSS 2026",
-          "date": "2026-02-14",
-          "level": "C",
-          "pos": 2,
-          "gross": 86,
-          "score": "86",
-          "pts": 12
-        },
-        {
-          "tcode": "11050",
-          "ccode": "007",
-          "name": "Torneio CGSS RALI 2026",
-          "date": "2026-08-01",
-          "level": "C",
-          "pos": 5,
-          "gross": 98,
-          "score": "27",
-          "pts": 7
-        },
-        {
-          "tcode": "11075",
-          "ccode": "007",
-          "name": "TROFÉU JOÃO SOUSA CGSS 2026",
-          "date": "2026-10-10",
-          "level": "A",
-          "pos": 3,
-          "gross": 91,
-          "score": "30",
-          "pts": 18
-        }
-      ],
-      "total": 55,
-      "played": 4,
-      "bestDrop3": 18,
-      "lastResult": null,
       "rank": 5
     },
     {
@@ -2762,10 +2762,10 @@
           "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
           "date": "2026-01-24",
           "level": "A",
-          "pos": 2,
+          "pos": 3,
           "gross": 95,
-          "score": "95",
-          "pts": 20
+          "score": "26",
+          "pts": 18
         },
         {
           "tcode": "11025",
@@ -2775,51 +2775,15 @@
           "level": "B",
           "pos": 1,
           "gross": 83,
-          "score": "83",
+          "score": "37",
           "pts": 20
         }
       ],
-      "total": 40,
+      "total": 38,
       "played": 2,
       "bestDrop3": 0,
       "lastResult": null,
       "rank": 6
-    },
-    {
-      "fed": "41108",
-      "name": "Martim Lima",
-      "club": "Santo da Serra",
-      "gender": "M",
-      "canWin": true,
-      "events": [
-        {
-          "tcode": "10994",
-          "ccode": "007",
-          "name": "Torneio de Carnaval CGSS 2026",
-          "date": "2026-02-14",
-          "level": "C",
-          "pos": 1,
-          "gross": 83,
-          "score": "83",
-          "pts": 15
-        },
-        {
-          "tcode": "11050",
-          "ccode": "007",
-          "name": "Torneio CGSS RALI 2026",
-          "date": "2026-08-01",
-          "level": "C",
-          "pos": 4,
-          "gross": 90,
-          "score": "32",
-          "pts": 8
-        }
-      ],
-      "total": 23,
-      "played": 2,
-      "bestDrop3": 0,
-      "lastResult": null,
-      "rank": 7
     },
     {
       "fed": "38006",
@@ -2844,7 +2808,43 @@
       "played": 1,
       "bestDrop3": 0,
       "lastResult": null,
-      "rank": 8
+      "rank": 7
+    },
+    {
+      "fed": "41108",
+      "name": "Martim Lima",
+      "club": "Santo da Serra",
+      "gender": "M",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "10994",
+          "ccode": "007",
+          "name": "Torneio de Carnaval CGSS 2026",
+          "date": "2026-02-14",
+          "level": "C",
+          "pos": 2,
+          "gross": 83,
+          "score": "38",
+          "pts": 12
+        },
+        {
+          "tcode": "11050",
+          "ccode": "007",
+          "name": "Torneio CGSS RALI 2026",
+          "date": "2026-08-01",
+          "level": "C",
+          "pos": 4,
+          "gross": 90,
+          "score": "32",
+          "pts": 8
+        }
+      ],
+      "total": 20,
+      "played": 2,
+      "bestDrop3": 0,
+      "lastResult": null,
+      "rank": 7
     },
     {
       "fed": "41130",
@@ -2861,7 +2861,7 @@
           "level": "B",
           "pos": 2,
           "gross": 102,
-          "score": "102",
+          "score": "24",
           "pts": 16
         }
       ],
