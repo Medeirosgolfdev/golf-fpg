@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-11-12T14:36:55.996Z",
-  "total": 1272,
+  "scrapedAt": "2026-11-13T21:03:33.597Z",
+  "total": 1273,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -406288,6 +406288,18 @@
       "draws": {}
     },
     {
+      "ccode": "007",
+      "tcode": "90079",
+      "name": "Torneio CGSS São Martinho",
+      "date": "2026-11-14",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "987",
       "tcode": "10263",
       "name": "Torneio Drive Challenge_Preparação 2027 Sub 18",
@@ -408169,6 +408181,156 @@
       "draws": {}
     },
     {
+      "ccode": "000",
+      "tcode": "10946",
+      "name": "2nd Castro Marim Portuguese Int. U14 Championship",
+      "date": "2026-12-04",
+      "expectedYear": 2026,
+      "admissions": {
+        "name": "2nd Castro Marim Portuguese Int. U14 Championship",
+        "date": "2026-12-04",
+        "totalInscritos": 13,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "10946",
+        "ccode": "000",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "49124",
+            "nome": "Nuno Palmares Jr.",
+            "clube": "Estoril",
+            "hcp": 1.3,
+            "vacf": null,
+            "registo": "2026/11/06 11:17",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "48297",
+            "nome": "João Rocha",
+            "clube": "Estoril",
+            "hcp": 3.5,
+            "vacf": null,
+            "registo": "2026/11/06 11:18",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "43968",
+            "nome": "Salvador Ivo de Carvalho",
+            "clube": "Estoril",
+            "hcp": 3.4,
+            "vacf": null,
+            "registo": "2026/11/06 11:18",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "46299",
+            "nome": "Francisco Nunes (jr)",
+            "clube": "Miramar",
+            "hcp": 1.2,
+            "vacf": null,
+            "registo": "2026/11/06 11:18",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "49085",
+            "nome": "Ricardo Castro Ferreira",
+            "clube": "Estoril",
+            "hcp": 3.9,
+            "vacf": null,
+            "registo": "2026/11/06 11:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "46038",
+            "nome": "João Balixa",
+            "clube": "Miramar",
+            "hcp": 3.3,
+            "vacf": null,
+            "registo": "2026/11/06 11:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "46311",
+            "nome": "Tomás Rente",
+            "clube": "Miramar",
+            "hcp": 4,
+            "vacf": null,
+            "registo": "2026/11/06 11:23",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "42908",
+            "nome": "Santiago Dias",
+            "clube": "Oporto",
+            "hcp": -2,
+            "vacf": null,
+            "registo": "2026/11/06 11:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "48971",
+            "nome": "Sabrina Ribeiro Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 4.2,
+            "vacf": null,
+            "registo": "2026/11/06 11:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "46310",
+            "nome": "Margarida Silva Pinto",
+            "clube": "Miramar",
+            "hcp": 4.9,
+            "vacf": null,
+            "registo": "2026/11/06 11:26",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "48794",
+            "nome": "Catarina Sousa Conceição",
+            "clube": "Vilamoura, C. G",
+            "hcp": 5,
+            "vacf": null,
+            "registo": "2026/11/06 11:27",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "45393",
+            "nome": "Laura Santos",
+            "clube": "PXO Clube",
+            "hcp": -1.1,
+            "vacf": null,
+            "registo": "2026/11/06 11:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "51523",
+            "nome": "Angelina Gao",
+            "clube": "Quinta do Peru",
+            "hcp": 2.9,
+            "vacf": null,
+            "registo": "2026/11/09 13:06",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
       "ccode": "962",
       "tcode": "90912",
       "name": "Quinta do Lago Junior Open 2026 - U12",
@@ -408863,156 +409025,6 @@
           }
         ],
         "saidos": []
-      },
-      "draws": {}
-    },
-    {
-      "ccode": "000",
-      "tcode": "10946",
-      "name": "2nd Castro Marim Portuguese Int. U14 Championship",
-      "date": "2026-12-04",
-      "expectedYear": 2026,
-      "admissions": {
-        "name": "2nd Castro Marim Portuguese Int. U14 Championship",
-        "date": "2026-12-04",
-        "totalInscritos": 13,
-        "reservas": 0,
-        "status": "Inscrições fechadas",
-        "rounds": 1,
-        "tcode": "10946",
-        "ccode": "000",
-        "players": [
-          {
-            "pos": 1,
-            "fed": "49124",
-            "nome": "Nuno Palmares Jr.",
-            "clube": "Estoril",
-            "hcp": 1.3,
-            "vacf": null,
-            "registo": "2026/11/06 11:17",
-            "status": "confirmed"
-          },
-          {
-            "pos": 2,
-            "fed": "48297",
-            "nome": "João Rocha",
-            "clube": "Estoril",
-            "hcp": 3.5,
-            "vacf": null,
-            "registo": "2026/11/06 11:18",
-            "status": "confirmed"
-          },
-          {
-            "pos": 3,
-            "fed": "43968",
-            "nome": "Salvador Ivo de Carvalho",
-            "clube": "Estoril",
-            "hcp": 3.4,
-            "vacf": null,
-            "registo": "2026/11/06 11:18",
-            "status": "confirmed"
-          },
-          {
-            "pos": 4,
-            "fed": "46299",
-            "nome": "Francisco Nunes (jr)",
-            "clube": "Miramar",
-            "hcp": 1.2,
-            "vacf": null,
-            "registo": "2026/11/06 11:18",
-            "status": "confirmed"
-          },
-          {
-            "pos": 5,
-            "fed": "49085",
-            "nome": "Ricardo Castro Ferreira",
-            "clube": "Estoril",
-            "hcp": 3.9,
-            "vacf": null,
-            "registo": "2026/11/06 11:23",
-            "status": "confirmed"
-          },
-          {
-            "pos": 6,
-            "fed": "46038",
-            "nome": "João Balixa",
-            "clube": "Miramar",
-            "hcp": 3.3,
-            "vacf": null,
-            "registo": "2026/11/06 11:23",
-            "status": "confirmed"
-          },
-          {
-            "pos": 7,
-            "fed": "46311",
-            "nome": "Tomás Rente",
-            "clube": "Miramar",
-            "hcp": 4,
-            "vacf": null,
-            "registo": "2026/11/06 11:23",
-            "status": "confirmed"
-          },
-          {
-            "pos": 8,
-            "fed": "42908",
-            "nome": "Santiago Dias",
-            "clube": "Oporto",
-            "hcp": -2,
-            "vacf": null,
-            "registo": "2026/11/06 11:24",
-            "status": "confirmed"
-          },
-          {
-            "pos": 9,
-            "fed": "48971",
-            "nome": "Sabrina Ribeiro Crisóstomo",
-            "clube": "Vilamoura, C. G",
-            "hcp": 4.2,
-            "vacf": null,
-            "registo": "2026/11/06 11:26",
-            "status": "confirmed"
-          },
-          {
-            "pos": 10,
-            "fed": "46310",
-            "nome": "Margarida Silva Pinto",
-            "clube": "Miramar",
-            "hcp": 4.9,
-            "vacf": null,
-            "registo": "2026/11/06 11:26",
-            "status": "confirmed"
-          },
-          {
-            "pos": 11,
-            "fed": "48794",
-            "nome": "Catarina Sousa Conceição",
-            "clube": "Vilamoura, C. G",
-            "hcp": 5,
-            "vacf": null,
-            "registo": "2026/11/06 11:27",
-            "status": "confirmed"
-          },
-          {
-            "pos": 12,
-            "fed": "45393",
-            "nome": "Laura Santos",
-            "clube": "PXO Clube",
-            "hcp": -1.1,
-            "vacf": null,
-            "registo": "2026/11/06 11:28",
-            "status": "confirmed"
-          },
-          {
-            "pos": 13,
-            "fed": "51523",
-            "nome": "Angelina Gao",
-            "clube": "Quinta do Peru",
-            "hcp": 2.9,
-            "vacf": null,
-            "registo": "2026/11/09 13:06",
-            "status": "confirmed"
-          }
-        ]
       },
       "draws": {}
     },

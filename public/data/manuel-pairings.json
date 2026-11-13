@@ -1,24 +1,24 @@
 {
-  "geradoEm": "2026-11-08T23:19:33.023Z",
+  "geradoEm": "2026-11-13T21:03:36.784Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 165,
-  "totalCompanheirosUnicos": 195,
+  "totalRondas": 166,
+  "totalCompanheirosUnicos": 197,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 142,
-      "rondasComDraw": 130,
+      "rondasJogadas": 143,
+      "rondasComDraw": 131,
       "torneiosJogados": 106,
-      "torneiosComDraw": 101,
+      "torneiosComDraw": 102,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "000-10947",
           "nome": "Final Drive Tour – Oeiras Green Valley / Academia",
           "data": "2026-11-07",
-          "rondas": 1
+          "rondas": 2
         },
         {
           "torneioId": "007-11084",
@@ -687,6 +687,40 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "007-90079",
+      "torneioNome": "Torneio CGSS São Martinho",
+      "data": "2026-11-14",
+      "ronda": 1,
+      "teeTime": "08:20",
+      "startHole": 1,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Martinho Gouveia",
+          "fed": "61174",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Lionel Melim",
+          "fed": "60890",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Carlota Braz Gil",
+          "fed": "47374",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "985-10246",
