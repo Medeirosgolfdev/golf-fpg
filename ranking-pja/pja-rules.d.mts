@@ -16,6 +16,7 @@ export function pjaPts(toPar: number, mult: number): number;
 export function isGFTournament(t: PJATournLike): boolean;
 export function getTournMultiplier(t: PJATournLike): number;
 export function classifyPJAEvent(t: PJATournLike): PJAEventType;
+export function isDriveTourFinal(name: string | null | undefined): boolean;
 export function isPJACore(t: PJATournLike): boolean;
 
 export interface PJANota {

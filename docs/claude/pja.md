@@ -110,6 +110,7 @@ serem exactamente as 4 piores.
 | Prova | ccode/tcode | Porque fica fora |
 |---|---|---|
 | Camp. Juvenil — Taça Visconde Pereira Machado (6-7 Jul, Estoril) | 004/10580 (Esc. A) + 004/10581 (Esc. B) | Os tees de partida não foram os estabelecidos para as restantes provas do circuito (jogou-se das **brancas**) — resultados não comparáveis. **Exclusão deliberada — não re-adicionar.** ⚠ A nota pública fica-se pelo facto, em registo formal: não entra em cores de marcas nem na mecânica dos pontos. |
+| Final Drive Tour (7-8 Nov, Oeiras) — não está no calendário PJA, mas entrava sozinha pelo nome «Drive Tour» | 000/10947 (e as «Grande Final Drive Tour CN Jovens…» das inscrições) | Regulamento 2026, ponto 2.2: do Drive Tour só contam os «torneios de 1 dia, organizados por regiões». A Final é nacional, de 2 dias e só para apurados. Decisão da Mariana a 13/11/2026 («Sim, tirar»). Regra: `isDriveTourFinal` (Drive Tour + «final» no nome). **Sem nota pública** (não é prova do calendário). |
 | Miramar Open — Sub-10 (19-21 Ago) | 003/10653 | Não há Sub-10 inscritos no PJA 2026 → nunca creditaria ninguém, só acrescentava uma coluna vazia. Do Miramar conta só o U25 (003/10652). Basta apagar a linha do `Sub 10` no `isPJACore` se um dia houver um. **Sem nota pública** (ver acima). |
 
 ⚠ Se alguma delas vier a entrar, entra **por NOME** em `isPJACore` — nunca por

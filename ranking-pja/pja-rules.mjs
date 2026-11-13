@@ -80,6 +80,11 @@ export function classifyPJAEvent(t) {
   return "PJA_EXCL";
 }
 
+/** Final (nacional) do Drive Tour — fora do ranking PJA (ver isPJACore). */
+export function isDriveTourFinal(name) {
+  return /Drive\s+Tour/i.test(name || "") && /\bfinal\b/i.test(name || "");
+}
+
 /** Um torneio conta para o ranking PJA? (regras partilhadas por nome/tcode/ano)
  *  Regras específicas da app (torneios `_manual` com `_origin === "PJA"`,
  *  exclusão do Santo da Serra por ccode) ficam no wrapper da FPGPage. */
@@ -92,6 +97,11 @@ export function isPJACore(t) {
   if (tcodes.some((tc) => PJA_TCODES.has(tc))) return true;
   if (year >= "2026") {
     if (/greatgolf.*junior/i.test(name)) return true;
+    // A Final do Drive Tour NÃO conta: o regulamento (2.2) só fala dos
+    // torneios de 1 dia organizados por regiões, e a Final (nacional, 2 dias,
+    // só para apurados) não está no calendário PJA. Nomes na FPG: "Final Drive
+    // Tour – Oeiras…" e "Grande Final Drive Tour CN Jovens…".
+    if (isDriveTourFinal(name)) return false;
     if (/Drive\s+Tour/i.test(name) && !/Challenge/i.test(name)) return true;
     if (/Circuito\s+Aquapor/i.test(name)) return true;
     // Amendoeira World Kids Golfe (ccode 179, tcodes 10603-10607 em 2026, um

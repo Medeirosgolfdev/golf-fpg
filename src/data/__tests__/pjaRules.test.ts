@@ -26,6 +26,12 @@ describe("isPJACore", () => {
     expect(isPJACore({ name: "3º Drive Challenge Madeira - Palheiro", date: "2026-02-28" })).toBe(false);
   });
 
+  it("2026+: a Final do Drive Tour não conta (regulamento 2.2: só os torneios regionais de 1 dia)", () => {
+    expect(isPJACore({ name: "Final Drive Tour – Oeiras Green Valley / Academia", tcode: "10947", date: "2026-11-07" })).toBe(false);
+    expect(isPJACore({ name: "Grande Final Drive Tour CN Jovens Sub12 H", date: "2026-11-07" })).toBe(false);
+    expect(isPJACore({ name: "Drive Tour Norte - Amarante", date: "2026-08-30" })).toBe(true);
+  });
+
   it("2026+: Aquapor e Greatgolf Junior entram", () => {
     expect(isPJACore({ name: "1º Torneio do Circuito Aquapor-Morgado Golf", date: "2026-02-01" })).toBe(true);
     expect(isPJACore({ name: "Greatgolf Junior Open 2026", tcode: "10294", date: "2026-02-16" })).toBe(true);
