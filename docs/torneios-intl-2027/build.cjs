@@ -57,7 +57,7 @@ const META = [
   [/^North of England U14/, "eu14", "2027-07-28", true, "North of England U14", "U14 (idade a 1 Jan)", "Aberta a todas as nacionalidades, HCP ≤ 15, £45. Coincide com o US Kids World Teen e com o Irish U14."],
   [/^Reply Italian International U16/, "u16", "2027-09-01", true, "Italian Int. U16 — Trofeo Soldati", "U16 (sobe de escalão)"],
   [/^Hungarian Junior Open/, "eu14", "2027-08-10", true, "Hungarian Junior Open", "Categoria B (U12+U14, HCP ≤ 13)", "U12 e U14 jogam juntos na categoria B (azuis). Coincide com o Scottish U14 (9–10 Ago)."],
-  [/^Grand Prix Jeunes Majeur U14/, "eu14", "2027-03-20", false, "FFG Grand Prix Jeunes Majeur U14 (4/ano)", "U14", "Estrangeiros com licença reconhecida + certificado de HCP + atestado médico. Datas de 2027 por publicar."],
+  [/^Grand Prix Jeunes Majeur U14/, "eu14", "2027-03-20", false, "FFG Grand Prix Jeunes Majeur U14 (4/ano)", "U14", "Aberto a estrangeiros no papel (índice ≤ 10,4), mas a lista faz-se pelo Mérite Jeunes francês: sem lugar no Mérite fica-se no fim da lista de espera. Datas de 2027 por publicar (visto a 11/11/2026)."],
   [/^JGT — Junior Golf Tour/, "eu14", "2027-01-02", true, "JGT — Junior Golf Tour (Tunísia e Europa)", "U14 (campo fraco)"],
   [/^Austrian Girls & Boys/, "eu14", "2027-07-23", true, "Austrian Girls & Boys U10–U21", "U14"],
   [/^Quinta do Lago Junior Open/, "pt", "2026-12-27", false, "Quinta do Lago Junior Open", "U14", "Datas por confirmar. 11 rivais estrangeiros do Manuel jogaram-no em 2025–26."],

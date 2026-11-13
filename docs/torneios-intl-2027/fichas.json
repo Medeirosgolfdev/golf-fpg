@@ -8484,13 +8484,37 @@
  },
  {
   "nome": "Grand Prix Jeunes Majeur U14 (FFG)",
-  "datas2027": "4 por ano (Mar, Mai, Jun e Ago em Evian) — datas de 2027 por publicar",
+  "datas2027": "4 por ano (Mar, Mai, Jun e Ago em Evian) — datas de 2027 por publicar (a 11/11/2026 o calendário de jovens da ffgolf só ia até 2026)",
   "campo": "Vários (França)",
   "pais": "França",
   "links": [
    {
-    "rotulo": "FFG — calendário e resultados",
-    "url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier"
+    "rotulo": "ffgolf — calendário Grands Prix Jeunes 2026 (o de 2027 ainda não existe)",
+    "url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026"
+   },
+   {
+    "rotulo": "Inscrições ffgolf (portal CPI — é aqui que as provas de 2027 vão aparecer)",
+    "url": "https://cpi.ffgolf.org/fr/"
+   },
+   {
+    "rotulo": "Como se inscreve + documentos para estrangeiros (questionário de saúde, modelo de certificado de handicap, taxas)",
+    "url": "https://www.ffgolf.org/golf-amateur/inscriptions-entry-form"
+   },
+   {
+    "rotulo": "Regulamento 2026 do GP Jeunes Majeur U14 (PDF)",
+    "url": "https://files.ffgolf.org/calfed/2026/2601405319/2026_2601405319_reglement_competition.pdf"
+   },
+   {
+    "rotulo": "GP n.º 1 de 2026 (Chiberta) — quadro oficial e resultados",
+    "url": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-garcons-u14/tableau-officiel"
+   },
+   {
+    "rotulo": "Lista oficial de Evian 2025 (admitidos, wild cards e lista de espera, com índice e lugar no Mérite)",
+    "url": "https://cpi.ffgolf.org/fr/detail/1765"
+   },
+   {
+    "rotulo": "Vademecum 2026 (PDF)",
+    "url": "https://www.ffgolf.org/content/download/92525/file/VADEMECUM%202026%20au%202906.pdf"
    }
   ],
   "distancias": [
@@ -8732,8 +8756,14 @@
    }
   ],
   "portugueses": [],
-  "elegibilidade": "Estrangeiros com licença de uma federação reconhecida, certificado de HCP e atestado médico.",
-  "notas": "36 buracos (2 voltas), sem corte, quadro fixo de 48 rapazes, todos franceses nos resultados EGR de 2024–2026: nenhum estrangeiro nem português. O GP #4 de 2026 (Evian, Ago) e o GP #2 de 2024 não estão no repo. A distância varia muito (5390–6330 m) com o campo."
+  "elegibilidade": {
+   "idade": "U14: 14 anos ou menos (regulamento 2026: nascidos em 2012 ou depois → em 2027 deverá ser 2013 ou depois; o Manuel, de 2014, cabe)",
+   "hcp": "Índice máximo 10,4 nos rapazes e 13,4 nas raparigas, à data de fecho das inscrições",
+   "voltas": "36 buracos stroke play (18 por dia), sem corte; distâncias de Minimes, um só tee por sexo; sem caddie, sem trolley eléctrico e sem medidor de distâncias",
+   "entrada": "Aberta a franceses e estrangeiros com licença de uma federação reconhecida. Máximo 72 (rapazes + raparigas): 60 escolhidos pela ordem do Mérite Jeunes francês e só depois pelo índice, mais 12 wild cards da Direcção Técnica Nacional (mínimo 42 rapazes e 18 raparigas). Inscrição individual, só online, no portal CPI da ffgolf, até 1 mês antes do 1.º dia, com pagamento por cartão no acto; a federação pode recusar. Quem não tem licença francesa entrega o questionário de saúde (todas as respostas «não») e o índice certificado pela sua federação à data de fecho",
+   "preco": "Tabela 2026 da ffgolf: 120 € para quem não tem licença francesa (50 € para licenciados em França até 18 anos), «salvo indicação em contrário»; o valor exacto aparece no portal ao inscrever"
+  },
+  "notas": "Lido no site da ffgolf a 11/11/2026. ⚠ Na prática um estrangeiro sem lugar no Mérite Jeunes francês não entra: a lista ordena-se primeiro pelo Mérite e quem não o tem vai para o fim da lista de espera, seja qual for o índice. Exemplo, Evian 2025 (rapazes): 43 admitidos (o último era o 220.º do Mérite), 5 wild cards (todos franceses, índices 3,0–7,0) e 25 em espera; um jogador com índice 2,9 mas sem Mérite ficou em 24.º da espera. Quadro: desde 2023 são sempre 45–51 rapazes e 21–25 raparigas, e nas seis provas de 2025–26 que temos foram exactamente 48 + 24 = 72 (em 2020–22 eram 60–66 rapazes e ~30 raparigas). Nos resultados de 2023–2026 há 1 a 3 jogadores por prova com outra nacionalidade (suíços, um alemão, um chinês), mas quase todos de clubes franceses e com lugar no Mérite (Vitula e Larens estão na lista de Evian 2025 por Campagne e Cannes-Mougins); a única excepção possível é um belga de um clube belga em Le Mans 2025 (31.º). Nenhum português. Em 2026 jogaram 47 rapazes em Chiberta (1.º 141, 10.º 150, mediana 156, último 174) e 48 em Bondues (1.º 146, 10.º 155, mediana 160, último 179). O GP #4 de 2026 (Evian, Ago) e o GP #2 de 2024 não estão no repo. A distância varia muito (5390–6330 m) com o campo. Como se entra no Mérite Jeunes (Vademecum 2026, § 6.6): só para licenciados na ffgolf, até Sub-16; é preciso pontuar pelo menos 3 vezes nos últimos 12 meses, e em cada prova só pontua a metade de cima da classificação. Pontuam os Grands Prix Jeunes regionais (sem limite de índice; lista por Mérite, depois índice, depois ordem de inscrição, mais wild cards da Liga), uma prova departamental, uma regional, as qualificações regionais e o Campeonato de França de Jovens, e provas internacionais U14 validadas pela ffgolf. Um miúdo novo começa pelos Grands Prix Jeunes regionais, onde entra pelo índice. O Majeur de Evian tem quadro mais pequeno: 63 (39 rapazes + 3 wild cards; 18 raparigas + 3)."
  },
  {
   "nome": "JGT — Junior Golf Tour (Tunísia, Alemanha, Áustria, Chéquia, Suíça)",
