@@ -1,7 +1,7 @@
 {
   "lastUpdated": "10/10/2026",
   "source": "scrape-classif-node.js (Node puro, linkpage + classif.aspx/ClassifLST)",
-  "totalTournaments": 180,
+  "totalTournaments": 181,
   "totalPlayers": 9815,
   "totalScorecards": 9222,
   "tournaments": [
@@ -1020424,6 +1020424,17 @@
           "roundScores": []
         }
       ]
+    },
+    {
+      "name": "Torneio CGSS São Martinho",
+      "ccode": "007",
+      "tcode": "90079",
+      "date": "2026-11-14",
+      "campo": "Santo da Serra - Machico-Desertas",
+      "rounds": 1,
+      "playerCount": 60,
+      "_drawOnly": true,
+      "players": []
     }
   ]
 }
