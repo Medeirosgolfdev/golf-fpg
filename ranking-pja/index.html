@@ -9,7 +9,7 @@
     --bg:#ffffff; --card:#ffffff; --line:#e2e8f0; --txt:#1a2230; --muted:#64748b;
     --accent:#16a34a; --accent2:#b45309; --head:#f1f5f9; --rowalt:#f8fafc;
     --manuel:#dcfce7; --pts:#b45309; --link:#2563eb; --under:#dc2626; --over:#2563eb;
-    --line2:#94a3b8; --risco:#fee2e2;
+    --line2:#94a3b8;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:16px}
@@ -49,9 +49,7 @@
   .leg li{padding:6px 0;border-bottom:1px solid var(--line)}
   .leg ul{list-style:none;margin:0;padding:0 14px 6px}
   .x{opacity:.4;text-decoration:line-through}
-  .detail td.fora{opacity:.35}                 /* volta fora das 14 melhores */
-  .detail td.risco{background:var(--risco)}    /* 2 piores que contam: a Grande Final pode tirá-las */
-  /* Vlt/Total de quem passou as 14: o que CONTA em grande, o que jogou em
+  .detail td.fora{opacity:.35}                 /* volta fora das 14 melhores */  /* Vlt/Total de quem passou as 14: o que CONTA em grande, o que jogou em
      pequeno — na MESMA linha. Empilhar os dois (display:block) punha a linha
      da tabela a 38px contra os 26px das outras; inline a altura é a mesma. */
   .detail td.two .sub{font-size:8.5px;font-weight:500;color:var(--muted);margin-left:1px}
@@ -90,8 +88,7 @@
   <div class="rules">
     Pontuação: <b>par = 25 pts</b>, −1 por pancada acima do par, +1 por pancada abaixo (mín. 0).
     Contam as <b>14 melhores voltas</b> do ano: quem jogar mais do que isso fica com as melhores 14 e as restantes não somam (aparecem <span style="opacity:.35">esbatidas</span> nas pontuações detalhadas).
-    Para quem já tem as 14, as <span style="background:var(--risco);padding:0 3px;border-radius:3px">2 piores que contam</span> são as que as voltas da Grande Final podem substituir.
-    Drive Tour conta para todos · Aquapor só os 2 primeiros do ano e só para quem não joga Drive Tour · Greatgolf Main R1 não conta · Grande Final ×1,5.
+    Drive Tour conta para todos · Aquapor só os 2 primeiros do ano e só para quem não joga Drive Tour · Greatgolf Main R1 não conta · Grande Final ×1,5 (par = 37,5 pts), que <b>soma</b> aos pontos das 14 melhores voltas.
   </div>
 
   <div class="notas" id="notas"></div>
@@ -164,13 +161,13 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       cols.push({tournKey:tournKey,ccode:(t.ccode||""),tcode:String(t.tcode||""),circuito:sn.circuito,local:sn.local,date:t.date||"",mult:getMult(t),rounds:rounds,totalRondas:nR,type:ev});});
     var map={};
     function rpar(rs,parTotal,n){if(rs&&rs.pars&&rs.pars.length){var s=rs.pars.reduce(function(a,b){return a+(typeof b==="number"?b:0);},0);if(s>0)return s;}return parTotal?parTotal/n:null;}
-    list.forEach(function(t){var ev=classify(t);if(ev==="AQUAPOR"&&!aqAllow.has(t.tcode+"_"+t.date))return;var mult=getMult(t);var tournKey=t.tcode+"_"+t.date;
+    list.forEach(function(t){var ev=classify(t);if(ev==="AQUAPOR"&&!aqAllow.has(t.tcode+"_"+t.date))return;var mult=getMult(t);var gf=isGF(t);var tournKey=t.tcode+"_"+t.date;
       (t.players||[]).forEach(function(p){var fed=p.fedCode?String(p.fedCode):null;var key=fed||("name:"+((p.name||"").toLowerCase().trim()));
         if(!map[key]){var db=fed?playersDB[fed]:null;var es=(db&&db.dob?escalaoAtDate(db.dob):null)||(db&&db.escalao)||"";
           map[key]={fed:fed,name:(db&&db.name)||p.name||fed,club:clubShort(db)||p.club||"",escalao:es,sex:(db&&db.sex)||"",results:{},rounds:[],total:0,voltas:0};}
         var row=map[key];var aqSkip=ev==="AQUAPOR"&&didDT[key]===true;
         function add(rn,g,par){if(!par||!g||g>=900)return;var tp=g-par;var rk=tournKey+"_r"+rn;var excl=(ev==="GG_MAIN"&&rn===1)||aqSkip;var pts=pjaPts(tp,mult);
-          row.results[rk]={toPar:tp,pts:pts,excluded:excl,inTop:false};if(!excl)row.rounds.push({rk:rk,pts:pts});}
+          row.results[rk]={toPar:tp,pts:pts,excluded:excl,inTop:false};if(!excl)row.rounds.push({rk:rk,pts:pts,gf:gf});}
         var rs=p.roundScores;
         if(rs&&rs.length>1){rs.forEach(function(r,i){add(i+1,r.gross,rpar(r,p.parTotal,rs.length));});}
         else{var tp=typeof p.toPar==="string"?parseInt(p.toPar):p.toPar;var g=typeof p.grossTotal==="string"?parseInt(p.grossTotal):p.grossTotal;if(tp==null||isNaN(tp)||g==null||isNaN(g))return;add(1,g,g-tp);}});});
@@ -178,18 +175,18 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
        em que alguem passa as 14, o total deixa de ser a soma da linha — por
        isso marca-se cada volta com `inTop`, para a tabela poder mostrar quais
        e que ficaram de fora (senao as contas nao batem e ninguem percebe). */
+    /* GRANDE FINAL: as voltas da Final (x1,5) NAO entram nas 14 — somam-se
+       por cima das 14 melhores da epoca (Mariana, 13/11/2026: «os pontos da
+       final SOMAM aos existentes»). */
     Object.keys(map).forEach(function(k){var r=map[k];
-      var s=r.rounds.slice().sort(function(a,b){return b.pts-a.pts;});
-      var dentro=s.slice(0,14);
+      var reg=r.rounds.filter(function(x){return !x.gf;}),fin=r.rounds.filter(function(x){return x.gf;});
+      var s=reg.slice().sort(function(a,b){return b.pts-a.pts;});
+      var dentro=s.slice(0,14).concat(fin);
       r.total=dentro.reduce(function(a,b){return a+b.pts;},0);
       dentro.forEach(function(x){if(r.results[x.rk])r.results[x.rk].inTop=true;});
-      /* Quem ja tem as 14: as 2 PIORES que contam sao as que as 2 voltas da
-         Grande Final (x1,5) podem substituir -> pintadas a vermelho claro
-         (pedido da Mariana, 13/11/2026). */
-      if(dentro.length>=14)dentro.slice(-2).forEach(function(x){if(r.results[x.rk])r.results[x.rk].risco=true;});
       r.contadas=dentro.length;
       r.totalTodas=r.rounds.reduce(function(a,b){return a+b.pts;},0);
-      r.voltas=r.rounds.length;r.cortadas=Math.max(0,r.rounds.length-14);});
+      r.voltas=r.rounds.length;r.cortadas=Math.max(0,reg.length-14);});
     var memberSet=new Set((members||[]).map(String));
     memberSet.forEach(function(fed){if(map[fed])return;var db=playersDB[fed];if(!db)return;var es=(db.dob?escalaoAtDate(db.dob):null)||db.escalao||"";
       map[fed]={fed:fed,name:db.name||fed,club:clubShort(db),escalao:es,sex:db.sex||"",results:{},rounds:[],total:0,voltas:0};});
@@ -269,8 +266,8 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       h+='<tr><td class="pos sticky0">'+(i+1)+'</td><td class="sticky1">'+esc(r.name)+(r.sex==="F"?' <span class="fem">&#9792;</span>':'')+'</td><td class="c"><span class="esc">'+(r.escalao||"—")+'</span></td><td class="ge">'+esc(r.club||"—")+'</td>';
       cols.forEach(function(c){c.rounds.forEach(function(rd,j){var last=j===c.rounds.length-1;var res=r.results[rd.roundKey];
         if(!res){h+='<td class="tp"></td><td class="pt'+(last?' ge':'')+'"></td>';}
-        else{var xs=res.excluded?" x":(res.inTop?(res.risco?" risco":""):" fora");
-             var ti=res.excluded?"":(res.inTop?(res.risco?' title="Uma das 2 piores voltas que contam — pode sair se a Grande Final der mais pontos"':""):' title="Fora das 14 melhores voltas — nao soma"');
+        else{var xs=res.excluded?" x":(res.inTop?"":" fora");
+             var ti=res.excluded?"":(res.inTop?"":' title="Fora das 14 melhores voltas — nao soma"');
              h+='<td class="tp'+xs+'"'+ti+' style="color:'+tpColor(res.toPar)+'">'+fmtTP(res.toPar)+'</td><td class="pt'+xs+(last?' ge':'')+'"'+ti+'>'+fmt(res.pts)+'</td>';}});});
       if(r.cortadas){
         h+='<td class="vl two" title="'+r.contadas+' das '+r.voltas+' voltas contam para o total"><span class="big">'+r.contadas+'</span><span class="sub">/'+r.voltas+'</span></td>'

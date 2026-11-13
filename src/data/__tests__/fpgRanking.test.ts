@@ -41,6 +41,15 @@ describe("ranking por SD (Sub-12)", () => {
 });
 
 describe("regras PJA 2026+", () => {
+  it("Grande Final soma por cima das 14 melhores (não substitui as piores)", () => {
+    // 15 provas PJA: ±par 0..14 → 25..11 pts; contam 25..12. A Grande Final a +20 (5×1,5 = 7,5) soma na mesma.
+    const ts = Array.from({ length: 15 }, (_, i) => t1(String(300 + i), `2026-03-${String(i + 1).padStart(2, "0")}`, `PJA Torneio ${i}`, [["f", i]]));
+    ts.push(t1("10019", "2026-11-28", "Race to Dunas G. Final", [["f", 20]]));
+    const [row] = buildRankRows(buildYearTournaments(ts, "2026", true), opts("2026", { specialRules: true }));
+    const top14 = Array.from({ length: 14 }, (_, i) => 25 - i).reduce((a, b) => a + b, 0);
+    expect(row.total).toBe(top14 + 7.5);
+    expect(row.eligible).toBe(true);
+  });
   it("Aquapor não conta para quem joga Drive Tour; só os 2 primeiros Aquapor do ano", () => {
     const ts = [
       t1("1", "2026-01-10", "1º Torneio Drive Tour Madeira - Palheiro Golf", [["dt", 0]]),

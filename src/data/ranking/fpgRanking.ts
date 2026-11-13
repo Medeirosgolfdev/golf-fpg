@@ -530,15 +530,19 @@ export function buildRankRows(yearTournaments: Tournament[], opts: BuildRankRows
       // "Elegível" em 2025: ter participado em ≥7 torneios regulares (≈ campanha completa)
       row.eligible = regular.length >= 7;
     } else {
-      // 2026+ e legado: TOP-14 voltas
-      const sorted = [...row.allRounds].sort((a, b) => b.pts - a.pts);
-      const top14Keys = new Set(sorted.slice(0, 14).map(r => r.roundKey));
+      // 2026+ e legado: TOP-14 voltas. As voltas da Grande Final (×1,5) NÃO
+      // entram nas 14: somam-se por cima (Mariana, 13/11/2026: «os pontos da
+      // final SOMAM aos existentes»), como já era em 2025.
+      const gf = specialRules ? row.allRounds.filter(r => r.isGF) : [];
+      const regular = specialRules ? row.allRounds.filter(r => !r.isGF) : row.allRounds;
+      const sorted = [...regular].sort((a, b) => b.pts - a.pts);
+      const conta = new Set([...sorted.slice(0, 14), ...gf].map(r => r.roundKey));
       for (const [rk, res] of row.results.entries()) {
-        res.inTop14 = top14Keys.has(rk);
+        res.inTop14 = conta.has(rk);
       }
-      row.total = somaDe(sorted.slice(0, 14), r => r.pts);
+      row.total = somaDe(sorted.slice(0, 14), r => r.pts) + somaDe(gf, r => r.pts);
       row.voltas = row.allRounds.length;
-      row.eligible = row.voltas >= 14;
+      row.eligible = regular.length >= 14;
     }
   }
 
