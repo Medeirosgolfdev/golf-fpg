@@ -148,7 +148,9 @@ export const PJA_NOTAS = [
   {
     ano: "2026",
     tipo: "fora",
-    titulo: "Taça Visconde Pereira Machado (6-7 Jul) — não considerada no ranking",
+    // As notas "fora" aparecem como uma linha discreta junto das regras
+    // («Não conta para o ranking: <titulo> — <texto>»), não como aviso.
+    titulo: "Taça Visconde Pereira Machado (6-7 Jul)",
     texto:
       "Os tees de partida utilizados nesta prova não corresponderam aos " +
       "estabelecidos para as restantes provas do circuito, pelo que os " +

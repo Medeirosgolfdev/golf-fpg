@@ -45,10 +45,19 @@ const PName = ({ name, fedCode, playersDB, sex }: { name: string; fedCode?: stri
  *  em nada. A lista vem do `pja-rules.mjs` (a MESMA que a página standalone
  *  ranking-pja.vercel.app mostra) — aqui só vive a apresentação. */
 const RankingNotas = ({ year }: { year: string | number }) => {
-  const notas = notasPJA(year);
-  if (!notas.length) return null;
+  const todas = notasPJA(year);
+  if (!todas.length) return null;
+  // Provas que não contam: uma linha discreta, não um aviso (Mariana,
+  // 13/11/2026: «não precisa ter tanto destaque»). As de agenda ficam em caixa.
+  const fora = todas.filter(n => n.tipo === "fora");
+  const notas = todas.filter(n => n.tipo !== "fora");
   return (
     <div className="print-hide u-d-grid u-gap-6px u-m-10px-0-14px">
+      {fora.map((n, i) => (
+        <div key={"f" + i} className="muted u-fs-fs-12">
+          Não conta para o ranking: <b>{n.titulo}</b> — {n.texto}
+        </div>
+      ))}
       {notas.map((n, i) => (
         <div
           key={i}

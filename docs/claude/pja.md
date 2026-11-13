@@ -60,6 +60,11 @@ está na fonte única pela mesma razão que as regras: senão as duas páginas
 acabam a dizer coisas diferentes.
 
 - `tipo: "fora"` — prova do calendário que não conta (fica indefinidamente).
+  Desde 2026-11-13 aparece como **uma linha discreta** («Não conta para o
+  ranking: <titulo> — <texto>»): na standalone dentro da caixa das regras
+  (`#fora`), na app como linha `muted` por cima das caixas — nunca como aviso
+  laranja (ela: «não precisa ter tanto destaque»). O `titulo` é só o nome da
+  prova e as datas.
   ⚠ Só entram aqui as exclusões que alguém de fora **iria estranhar** (uma
   prova do calendário sem coluna no ranking). O Sub-10 do Miramar não tem nota
   pública de propósito: não há Sub-10 no circuito, ninguém dá pela falta, e a
