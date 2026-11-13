@@ -93,6 +93,13 @@ Agora, nas duas superfícies:
   vistas. Inline a altura fica igual à das restantes (medido: excesso 0);
 - a linha de regras explica-o em texto.
 
+**As 2 piores que contam a vermelho claro (2026-11-13).** Quem já tem as 14:
+as duas voltas de menos pontos DENTRO das 14 ficam com `td.risco`
+(`--risco:#fee2e2`) — são as que as 2 voltas da Grande Final (×1,5: par =
+37,5, ±1,5 por pancada) podem substituir. Marcadas no motor (`risco` no
+resultado, `dentro.slice(-2)`), só na standalone. Regulamento 2.8: quem não
+tem 14 voltas não pode jogar a Grande Final.
+
 ⚠ Não confundir com o `excluded` (GG Main R1, Aquapor de quem joga Drive Tour),
 que continua **riscado** — são coisas diferentes: uma regra tirou-a vs. jogou-se
 e vale, mas há 14 melhores.
