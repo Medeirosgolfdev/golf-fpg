@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-11-14T00:34:57.246Z",
+  "geradoEm": "2026-11-14T17:12:55.222Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -689,7 +689,7 @@
   "rondas": [
     {
       "circuito": "FPG",
-      "torneioId": "007-90079",
+      "torneioId": "007-11087",
       "torneioNome": "Torneio CGSS São Martinho",
       "data": "2026-11-14",
       "ronda": 1,
@@ -703,21 +703,30 @@
           "fed": "61174",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 94,
+            "toPar": 22
+          }
         },
         {
           "nome": "Lionel Melim",
           "fed": "60890",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 114,
+            "toPar": 42
+          }
         },
         {
           "nome": "Carlota Braz Gil",
           "fed": "47374",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 99,
+            "toPar": 27
+          }
         }
       ]
     },
