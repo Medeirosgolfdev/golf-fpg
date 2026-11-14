@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-11-13T21:03:33.597Z",
+  "scrapedAt": "2026-11-14T21:03:34.620Z",
   "total": 1273,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
@@ -406294,8 +406294,116 @@
       "date": "2026-11-14",
       "expectedYear": "2026",
       "admissions": {
-        "error": "param-errors",
-        "players": []
+        "name": "Torneio CGSS São Martinho",
+        "date": "2026-11-14",
+        "totalInscritos": 10,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "11087",
+        "ccode": "007",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "52884",
+            "nome": "Manuel Goulartt Medeiros",
+            "clube": "Santo da Serra",
+            "hcp": 6.4,
+            "vacf": null,
+            "registo": "2026/11/10 12:13",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "47374",
+            "nome": "Carlota Braz Gil",
+            "clube": "Santo da Serra",
+            "hcp": 11.9,
+            "vacf": null,
+            "registo": "2026/11/10 14:00",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "2121",
+            "nome": "Gilda Sousa",
+            "clube": "Santo da Serra",
+            "hcp": 21.1,
+            "vacf": null,
+            "registo": "2026/11/12 14:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "12318",
+            "nome": "Rui Freitas",
+            "clube": "Santo da Serra",
+            "hcp": 15.4,
+            "vacf": null,
+            "registo": "2026/11/12 14:18",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "36592",
+            "nome": "Vítor Rodrigues",
+            "clube": "Santo da Serra",
+            "hcp": 8.6,
+            "vacf": null,
+            "registo": "2026/11/12 14:29",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "2432",
+            "nome": "Ana Bela Camacho",
+            "clube": "Santo da Serra",
+            "hcp": 18.9,
+            "vacf": null,
+            "registo": "2026/11/12 14:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "2412",
+            "nome": "José António Camacho",
+            "clube": "Santo da Serra",
+            "hcp": 21.8,
+            "vacf": null,
+            "registo": "2026/11/12 14:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "45839",
+            "nome": "João Paulo Gomes",
+            "clube": "Santo da Serra",
+            "hcp": 12.9,
+            "vacf": null,
+            "registo": "2026/11/12 15:17",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "34797",
+            "nome": "Blass Rodrigues",
+            "clube": "Santo da Serra",
+            "hcp": 25.2,
+            "vacf": null,
+            "registo": "2026/11/12 16:49",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "60555",
+            "nome": "Sally Sparks",
+            "clube": "Santo da Serra",
+            "hcp": 12.6,
+            "vacf": null,
+            "registo": "2026/11/13 10:58",
+            "status": "confirmed"
+          }
+        ]
       },
       "draws": {}
     },
