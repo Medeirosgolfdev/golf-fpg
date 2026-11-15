@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-11-15T07:46:14.326Z",
+  "lastUpdated": "2026-11-15T21:03:47.407Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-11-15",
   "summary": {
     "total": 1835,
-    "complete": 837,
+    "complete": 836,
     "in_progress": 1,
     "future": 1,
     "stale": 10,
@@ -12,7 +12,7 @@
     "missing_admissions": 0,
     "missing_classif": 0,
     "missing_scorecards": 0,
-    "missing_draws": 2,
+    "missing_draws": 3,
     "unknown": 0
   },
   "tournaments": [
@@ -724,8 +724,8 @@
       "name": "6º Torneio do Circuito Aquapor S",
       "date": "2026-11-14",
       "rounds": 1,
-      "has_admissions": false,
-      "admissions_count": 0,
+      "has_admissions": true,
+      "admissions_count": 10,
       "has_draws": false,
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
@@ -737,7 +737,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "complete"
+      "status": "missing_draws"
     },
     {
       "ccode": "007",
