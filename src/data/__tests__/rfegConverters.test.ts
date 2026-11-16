@@ -358,6 +358,20 @@ describe("buildRfegEntries — gémeos e campeonatos juntos", () => {
       ]
     `);
   });
+  it("a entrada grp-… leva o campo das provas (cartão e pesquisa)", () => {
+    // Circuito Juvenil + Benjamín Zona E, Granada, 14/11/2026 — agrupados, não
+    // apareciam a pesquisar «Granada».
+    const grp = entries.find((e) => e.memberIds?.includes("nextcaddy:61240"))!;
+    expect(grp.id.includes(":grp-")).toBe(true);
+    expect(grp.course).toBe("Granada Club de Golf");
+    // Todo o grupo cujas provas têm campo no índice leva-o (algumas NextCaddy
+    // não publicam o campo — essas ficam sem ele).
+    const campoDe = new Map(index.tournaments.map((t) => [`${t.source}:${t.id}`, t.course]));
+    for (const e of entries.filter((x) => x.id.includes(":grp-"))) {
+      const temCampo = (e.memberIds ?? []).some((id) => !!campoDe.get(id));
+      if (temCampo) expect(e.course, e.id).toBeTruthy();
+    }
+  });
   it("sem categoria ou sem inscritos/resultados → fora da lista", () => {
     expect(ids.has("livegolfscoring:64")).toBe(false);
     expect(ids.has("rfegolf:16111")).toBe(false);

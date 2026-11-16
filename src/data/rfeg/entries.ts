@@ -462,6 +462,10 @@ export function buildRfegEntries(
       // Deep-link vindo de fora (ex: painel de torneios de um jogador) usa o id
       // da prova; sem esta lista não bateria com nenhuma entrada da sidebar.
       memberIds: sorted.flatMap((t) => [`${t.source}:${t.id}`, ...idsEscondidos(t)]),
+      // Campo(s) das provas juntas: o cartão mostra-o e a pesquisa procura nele
+      // (16/11/2026 — o Circuito Zona E de Granada, agrupado, não aparecia a
+      // pesquisar «Granada»). Campos diferentes ficam todos, por « · ».
+      course: [...new Set(sorted.map((t) => t.course?.trim()).filter((c): c is string => !!c))].join(" · ") || undefined,
       dateStart: starts[0] ?? undefined,
       dateEnd: ends[ends.length - 1] ?? undefined,
       federation: sorted.find((t) => t.federation)?.federation ?? undefined,
