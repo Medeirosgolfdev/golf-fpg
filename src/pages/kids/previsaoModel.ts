@@ -13,7 +13,7 @@ import type { PlayerPageData } from "../../data/playerDataLoader";
 import { meanArr, soma, somaDe } from "../../utils/mathUtils";
 import type { Tee } from "../../data/types";
 import { strokesOnHole } from "../../utils/whsCalc";
-import { firstShotClub } from "../../utils/clubScale";
+import { clubDistances, firstShotClub } from "../../utils/clubScale";
 import { classificarPorTotal, temCartao } from "../../utils/classificacao";
 import { mhEdicoesDoEscalao, type MHSlim, type MHEdicao } from "../../data/uskids/memberHistory";
 
@@ -163,7 +163,14 @@ export interface HolePlan {
 export interface GamePlanOpts { driveM: number; secondM: number; courseHcp: number; fieldVsPar?: (number | null)[]; bomProfile?: HoleProfile | null }
 
 /** Texto de estratégia COERENTE com a tag (atacar/neutro/defender). */
-function strategyNote(tag: HoleTag, par: number | null, dist: number | null, remainingAfterDrive: number | null, secondM: number, peloManuel: boolean, saida = "Drive", hist: HoleHist | null = null): string {
+function strategyNote(tag: HoleTag, par: number | null, dist: number | null, remainingAfterDrive: number | null, secondM: number, peloManuel: boolean, saida = "Drive", hist: HoleHist | null = null, frenteMorta: { wedgeM: number } | null = null): string {
+  const texto = strategyText(tag, par, dist, remainingAfterDrive, secondM, peloManuel, saida, hist, frenteMorta);
+  // Frente do green «morta» (Hole.frenteMorta, 16/11/2026 — San Roque Old, buraco 17:
+  // o site mandava ir «quase em 2» e deixar um chip, que é a zona morta).
+  return frenteMorta && par !== 5 ? `${texto} À frente do green é «morto»: um taco a mais na aproximação.` : texto;
+}
+
+function strategyText(tag: HoleTag, par: number | null, dist: number | null, remainingAfterDrive: number | null, secondM: number, peloManuel: boolean, saida: string, hist: HoleHist | null, frenteMorta: { wedgeM: number } | null): string {
   const rem = remainingAfterDrive;
   // «Defender» pelo Manuel é um AVISO, não uma certeza (16/11/2026, ela: «não quero que
   // afirmes que fica acima do par; quero que digas atenção pois podes ficar acima do par,
@@ -183,6 +190,12 @@ function strategyNote(tag: HoleTag, par: number | null, dist: number | null, rem
   if (par === 5) {
     const em2 = rem != null && rem <= secondM * 1.05;
     const terceira = rem != null ? Math.max(0, Math.round(rem - secondM)) : null;
+    if (frenteMorta) {
+      const fim = tag === "attack" ? " — oportunidade de birdie." : tag === "defend" && peloManuel ? ` — ${aviso.charAt(0).toLowerCase()}${aviso.slice(1)}.` : ".";
+      return em2
+        ? `Alcançável em 2, mas à frente do green é «morto» — só ir se chegar com folga; senão deixar ~${frenteMorta.wedgeM}m e um taco a mais na 3.ª${fim}`
+        : `À frente do green é «morto» — não ir ao green em 2: deixar ~${frenteMorta.wedgeM}m (wedge cheio) e um taco a mais na 3.ª${fim}`;
+    }
     return tag === "attack"
       ? (em2 ? "Alcançável em 2 — ir ao green, oportunidade de birdie."
         : terceira != null && terceira <= 40 ? `Quase em 2 — a 3.ª é um chip (~${terceira}m), oportunidade de birdie.`
@@ -201,6 +214,8 @@ const BOM_DEFENDER = 0.2;
 export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts): HolePlan[] {
   const { driveM, secondM, courseHcp, fieldVsPar, bomProfile } = opts;
   const chRounded = Math.round(courseHcp);
+  // Lay-up para um wedge cheio (gap wedge) quando a frente do green é «morta».
+  const wedgeM = clubDistances(driveM).find(c => c.abbr === "GW")?.m ?? Math.round(driveM * 0.45);
 
   // ── Passe 1: base por buraco (par/dist/alcance/expectativa média) ──
   const base = tee.holes.map(h => {
@@ -241,7 +256,7 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
     }
 
     return {
-      hole: h.hole, par, si, dist, remainingAfterDrive, reach, getsStroke, saida,
+      hole: h.hole, par, si, dist, remainingAfterDrive, reach, getsStroke, saida, frenteMorta: h.frenteMorta === true,
       expVsPar, expStrokes, note, fieldVsPar: fieldVsPar?.[h.hole - 1] ?? null,
     };
   });
@@ -313,8 +328,9 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
       tag = r.reach === "out" ? "defend" : "neutral";
     }
     const hist = profile.distribution(r.par, r.dist);
+    const frente = r.frenteMorta ? { wedgeM } : null;
     return { ...r, expVsPar, expStrokes, expBom, tag, tagSource, hist,
-      note: strategyNote(tag, r.par, r.dist, r.remainingAfterDrive, secondM, tagSource === "manuel", r.saida, hist) };
+      note: strategyNote(tag, r.par, r.dist, r.remainingAfterDrive, secondM, tagSource === "manuel", r.saida, hist, frente) };
   });
 }
 

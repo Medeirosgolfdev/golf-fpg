@@ -19,6 +19,10 @@ export type Hole = {
   par: number | null;
   si: number | null;
   distance: number | null;
+  /** À frente do green não há salvação (água, barranco): uma aproximação curta
+   *  custa pancadas. Vem da descrição do buraco do clube; o Plano de jogo da
+   *  Previsão deixa de mandar ir ao green «quase em 2» e pede um taco a mais. */
+  frenteMorta?: boolean;
 };
 
 type Distances = {

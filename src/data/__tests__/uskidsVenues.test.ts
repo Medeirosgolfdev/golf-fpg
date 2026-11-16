@@ -51,4 +51,10 @@ describe("teeDaSede — Spanish Open 2026 com os tees oficiais", () => {
   it("a nota diz que é oficial", () => {
     expect(teeDaSede(23132, "Boys 12", courses)?.nota).toMatch(/SO26 - METERS/);
   });
+  it("Old Course: só o buraco 17 tem a frente do green «morta», em todos os tees", () => {
+    const old = courses.find(c => c.courseKey === "away-the-san-roque-club-old")!;
+    for (const t of old.master.tees) {
+      expect(t.holes.filter(h => h.frenteMorta).map(h => h.hole)).toEqual([17]);
+    }
+  });
 });

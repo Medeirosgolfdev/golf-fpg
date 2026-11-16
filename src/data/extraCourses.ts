@@ -889,6 +889,11 @@ function vHoles(par: number[], dist: number[], si?: number[]): Hole[] {
   return dist.map((d, i) => ({ hole: i + 1, par: par[i], si: si?.[i] ?? null, distance: d }));
 }
 
+/** Marca os buracos em que a frente do green é «morta» (`Hole.frenteMorta`). */
+function comFrenteMorta(holes: Hole[], buracos: readonly number[]): Hole[] {
+  return holes.map(h => (buracos.includes(h.hole) ? { ...h, frenteMorta: true } : h));
+}
+
 function vDist(dist: number[]): { total: number; front9: number; back9: number | null; holesCount: number; complete18: boolean } {
   const front9 = soma(dist.slice(0, 9));
   const back9 = dist.length > 9 ? soma(dist.slice(9)) : null;
@@ -1281,33 +1286,37 @@ const srOldAzules = [442,372,334,382,144,303,125,389,366,343,391,116,274,408,284
 const srOldRojas = [403,326,271,287,110,262,107,389,309,287,306,92,272,407,284,102,356,304]; // 4874 m
 // Spanish Open USKids 2026, «SO26 - METERS» (16/11/2026): tee 5 = 4916 m.
 const srOldUskids5 = [403,326,271,287,110,262,125,389,309,287,306,116,272,407,284,102,356,304]; // 4916 m
+// Buraco 17: «Be sure to take 1 extra club with your approach as short of the green
+// is dead!» (sanroqueclub.com/holes/old-course-hole-17, lido a 16/11/2026). É o mesmo
+// buraco em todos os tees.
+const srOldFrenteMorta = [17] as const;
 const srOldTees: Tee[] = [
   { teeId: "srOld-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
     ratings: { holes18: { par: 72, courseRating: 74.1, slopeRating: 133 } },
-    holes: vHoles(srOldPar, srOldBlancas, srOldSI), distances: vDist(srOldBlancas) },
+    holes: comFrenteMorta(vHoles(srOldPar, srOldBlancas, srOldSI), srOldFrenteMorta), distances: vDist(srOldBlancas) },
   { teeId: "srOld-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
     ratings: { holes18: { par: 72, courseRating: 72.6, slopeRating: 131 } },
-    holes: vHoles(srOldPar, srOldAmarillas, srOldSI), distances: vDist(srOldAmarillas) },
+    holes: comFrenteMorta(vHoles(srOldPar, srOldAmarillas, srOldSI), srOldFrenteMorta), distances: vDist(srOldAmarillas) },
   { teeId: "srOld-azules-f", sex: "F", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
     ratings: { holes18: { par: 72, courseRating: 75.6, slopeRating: 131 } },
-    holes: vHoles(srOldPar, srOldAzules, srOldSI1), distances: vDist(srOldAzules) },
+    holes: comFrenteMorta(vHoles(srOldPar, srOldAzules, srOldSI1), srOldFrenteMorta), distances: vDist(srOldAzules) },
   { teeId: "srOld-azules-m", sex: "M", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
     ratings: { holes18: { par: 72, courseRating: 70.1, slopeRating: 126 } },
-    holes: vHoles(srOldPar, srOldAzules, srOldSI1), distances: vDist(srOldAzules) },
+    holes: comFrenteMorta(vHoles(srOldPar, srOldAzules, srOldSI1), srOldFrenteMorta), distances: vDist(srOldAzules) },
   { teeId: "srOld-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
     ratings: { holes18: { par: 72, courseRating: 71.3, slopeRating: 121 } },
-    holes: vHoles(srOldPar, srOldRojas, srOldSI1), distances: vDist(srOldRojas) },
+    holes: comFrenteMorta(vHoles(srOldPar, srOldRojas, srOldSI1), srOldFrenteMorta), distances: vDist(srOldRojas) },
   { teeId: "srOld-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
     ratings: { holes18: { par: 72, courseRating: 66.4, slopeRating: 120 } },
-    holes: vHoles(srOldPar, srOldRojas, srOldSI1), distances: vDist(srOldRojas) },
+    holes: comFrenteMorta(vHoles(srOldPar, srOldRojas, srOldSI1), srOldFrenteMorta), distances: vDist(srOldRojas) },
   // Spanish Open USKids 2026 — tee 5 (Boys 12, Girls 13-14 e 15-18): as Rojas com os
   // par 3 do 7 e do 12 nas Azules (125 e 116 m); 4916 m. CR/Slope oficiais da prova.
   { teeId: "srOld-uskids5-m", sex: "M", teeName: "USKids 5 (SO26)", scorecardMeta: { teeColor: "#ffffff" },
     ratings: { holes18: { par: 72, courseRating: 66.4, slopeRating: 120 } },
-    holes: vHoles(srOldPar, srOldUskids5, srOldSI1), distances: vDist(srOldUskids5) },
+    holes: comFrenteMorta(vHoles(srOldPar, srOldUskids5, srOldSI1), srOldFrenteMorta), distances: vDist(srOldUskids5) },
   { teeId: "srOld-uskids5-f", sex: "F", teeName: "USKids 5 (SO26)", scorecardMeta: { teeColor: "#ffffff" },
     ratings: { holes18: { par: 72, courseRating: 71.3, slopeRating: 121 } },
-    holes: vHoles(srOldPar, srOldUskids5, srOldSI1), distances: vDist(srOldUskids5) },
+    holes: comFrenteMorta(vHoles(srOldPar, srOldUskids5, srOldSI1), srOldFrenteMorta), distances: vDist(srOldUskids5) },
 ];
 const srNewPar = [4,5,4,3,4,4,5,3,4,4,5,4,3,4,4,5,3,4];
 const srNewSI = [13,15,9,7,17,5,1,11,3,16,2,18,14,4,8,10,12,6];

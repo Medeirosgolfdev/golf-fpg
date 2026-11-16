@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { estimateField, topFieldHoleStats, ultimas20, buildHoleProfile, porComprimento } from "./previsaoModel";
+import { estimateField, topFieldHoleStats, ultimas20, buildHoleProfile, porComprimento, buildGamePlan, type HoleProfile } from "./previsaoModel";
+import type { Tee, Hole } from "../../data/types";
 import type { PlayerPageData } from "../../data/playerDataLoader";
 
 // Mocks mínimos do formato uskids-member-history-slim consumido por estimateField.
@@ -185,5 +186,38 @@ describe("estimateField — escalão de 9 buracos num torneio «de 18»", () => 
     expect(est.editions[0].holesPerRound).toBe(9);
     expect(est.editions[0].winner).toBe(120);
     expect(est.editions[0].parPerRound).toBe(36);
+  });
+});
+
+describe("buildGamePlan — frente do green «morta» (San Roque Old, buraco 17)", () => {
+  // Perfil plano: faz o par em tudo → num bom dia todos os buracos dão «Atacar».
+  const plano: HoleProfile = {
+    byPar: {}, overallVsPar: 0, nHoles: 200, recent: true,
+    expectedVsPar: () => 0, distribution: () => null,
+  };
+  const par = [5, 4, 4, 4, 3, 4, 3, 5, 4, 4, 4, 3, 4, 5, 4, 3, 5, 4];
+  const m = [403, 326, 271, 287, 110, 262, 125, 389, 309, 287, 306, 116, 272, 407, 284, 102, 356, 304];
+  const tee = (marcados: number[]): Tee => ({
+    teeId: "t", sex: "M", teeName: "T", ratings: { holes18: { par: 72, courseRating: 66.4, slopeRating: 120 } },
+    holes: m.map((d, i): Hole => ({ hole: i + 1, par: par[i], si: null, distance: d, ...(marcados.includes(i + 1) ? { frenteMorta: true } : {}) })),
+    distances: { total: 4916, front9: null, back9: null, holesCount: 18, complete18: true },
+  });
+  const opts = { driveM: 185, secondM: 160, courseHcp: 0, bomProfile: plano };
+
+  it("sem a marca, o 17 (356 m) manda ir «quase em 2» com um chip", () => {
+    expect(buildGamePlan(tee([]), plano, opts)[16].note).toMatch(/Quase em 2/);
+  });
+
+  it("com a marca, não manda ir ao green em 2: lay-up para um wedge cheio e um taco a mais", () => {
+    const h17 = buildGamePlan(tee([17]), plano, opts)[16];
+    expect(h17.tag).toBe("attack");
+    expect(h17.note).toMatch(/não ir ao green em 2/);
+    expect(h17.note).toMatch(/~83m/); // gap wedge = 45% de 185 m
+    expect(h17.note).not.toMatch(/chip/);
+  });
+
+  it("num par 4 marcado, acrescenta o aviso do taco a mais", () => {
+    expect(buildGamePlan(tee([3]), plano, opts)[2].note).toMatch(/um taco a mais na aproximação/);
+    expect(buildGamePlan(tee([]), plano, opts)[2].note).not.toMatch(/morto/);
   });
 });
