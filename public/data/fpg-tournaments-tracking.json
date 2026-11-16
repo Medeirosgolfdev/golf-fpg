@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-11-15T23:41:38.839Z",
+  "lastUpdated": "2026-11-16T07:53:37.969Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-11-15",
+  "today": "2026-11-16",
   "summary": {
     "total": 1835,
-    "complete": 836,
-    "in_progress": 1,
+    "complete": 837,
+    "in_progress": 0,
     "future": 1,
     "stale": 10,
     "excluded": 984,
@@ -709,14 +709,14 @@
       "draws_rounds_with_data": 2,
       "draws_players_total": 94,
       "has_classif": true,
-      "player_count": 49,
-      "players_with_scorecards": 49,
-      "players_with_full_scorecards": 0,
+      "player_count": 48,
+      "players_with_scorecards": 48,
+      "players_with_full_scorecards": 44,
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 1,
-      "full_scorecards_ratio": 0,
+      "full_scorecards_ratio": 0.917,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "000",
