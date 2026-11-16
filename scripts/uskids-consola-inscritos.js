@@ -102,10 +102,10 @@
     const porAG = {};
     for (const [fid, f] of Object.entries(flights)) if (!porAG[f.age_group]) porAG[f.age_group] = { fid, f };
     let todosComNomes = true, incompleto = false;
-    if (!prev) alteracoes.push({ torneio: nomeT, escalao: "(torneio novo na app)", antes: "", agora: Object.values(flights).reduce((n, f) => n + (f.registered || 0), 0), entraram: "", sairam: "" });
+    if (!prev) alteracoes.push({ torneio: nomeT, escalao: "(torneio novo na app)", antes: "", agora: Object.values(flights).reduce((n, f) => n + (f.active ?? f.registered ?? 0), 0), entraram: "", sairam: "" });
     for (const [ag, { fid, f }] of Object.entries(porAG)) {
       const esc = meta.age_groups?.[ag]?.name || `age_group_${ag}`;
-      const inscr = f.registered || 0;
+      const inscr = f.active ?? f.registered ?? 0; // `registered` conta os WD; `active` não
       const ePrev = (prev?.escaloes || []).find(e => e.age_group === Number(ag));
       if (ePrev && ePrev.inscritos !== inscr) alteracoes.push({ torneio: nomeT, escalao: esc, antes: ePrev.inscritos, agora: inscr, entraram: "", sairam: "" });
       if (!comNomes(esc) || inscr <= 0) continue;

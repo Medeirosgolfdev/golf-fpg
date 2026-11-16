@@ -601,7 +601,10 @@ async function processarTorneio(page, torneio, prev, modo = 'completo') {
   for (const [ag, { fid, f }] of Object.entries(flightsPorAG)) {
     const agInfo = ageGroups[ag] || {};
     const nome   = agInfo.name || `age_group_${ag}`;
-    const inscr  = f.registered || 0;
+    // `registered` conta também quem desistiu (WD, status 8); `active` só os que jogam — e a lista
+    // de nomes é a dos activos (parsearJogadores). Antes de 16/11/2026 gravava-se `registered`:
+    // o Spanish Open dizia 21 inscritos com 20 nomes (o 21.º era o Klabin Basilio, WD).
+    const inscr  = f.active ?? f.registered ?? 0;
     const max    = f.max_entry  || 0;
 
     const escalao = {
@@ -616,7 +619,8 @@ async function processarTorneio(page, torneio, prev, modo = 'completo') {
     // é a de ontem — sem pedidos. Uma troca (sai um, entra outro) é apanhada no
     // refrescamento semanal, que vem sempre em modo 'completo'.
     const ePrev = modo === 'contagens'
-      ? (prev?.escaloes || []).find(x => x.age_group === parseInt(ag) && x.jogadores && x.inscritos === inscr)
+      // (o 2.º caso: o registo anterior ainda foi gravado com `registered` e nada mudou)
+      ? (prev?.escaloes || []).find(x => x.age_group === parseInt(ag) && x.jogadores && (x.inscritos === inscr || x.inscritos === f.registered))
       : null;
     if (ePrev) {
       escalao.jogadores = ePrev.jogadores;
@@ -648,6 +652,16 @@ async function processarTorneio(page, torneio, prev, modo = 'completo') {
           console.warn(`  ⛔ ${nome}: a fonte recusou — pára aqui`);
           rateLimitHits++;
           return preservarAnterior(torneio, prev, 'rate limit (Too many requests)');
+        }
+        // --replay sem a lista deste escalão (a consola não a pediu): ficam os nomes que já havia,
+        // nunca «sem nomes».
+        const anterior = REPLAY && (prev?.escaloes || []).find(x => x.age_group === parseInt(ag) && x.jogadores);
+        if (anterior) {
+          escalao.jogadores = anterior.jogadores;
+          escalao.paises    = anterior.paises;
+          console.log(`  · ${nome}: ${inscr}/${max} (lista não veio no ficheiro — ficam os nomes anteriores)`);
+          escaloes.push(escalao);
+          continue;
         }
         console.log(`  · ${nome}: ${inscr}/${max} (nomes indisponíveis)`);
       }

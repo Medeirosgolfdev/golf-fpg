@@ -26,12 +26,14 @@ beforeAll(() => {
   fs.writeFileSync(path.join(dir, 'uskids-field.json'), JSON.stringify({
     gerado_em: '2026-11-10T00:00:00.000Z', rate_limit_hits: 0,
     torneios: [{
-      ...torneio, total_inscritos: 14, total_maximo: 16, ultima_atualizacao: '2026-11-10T00:00:00.000Z',
+      ...torneio, total_inscritos: 16, total_maximo: 24, ultima_atualizacao: '2026-11-10T00:00:00.000Z',
       escaloes: [
         { age_group: 1, nome: 'Boys 12', genero: 'Boys', holes: 18, flight_id: 11, inscritos: 10, maximo: 10, vagas: 0, pct_cheio: 100,
           jogadores: LETRAS.map((l, i) => jog(`Jogador ${l}`, 101 + i)), paises: [{ pais: 'PT', n: 10 }] },
         { age_group: 2, nome: 'Girls 11-12', genero: 'Girls', holes: 18, flight_id: 22, inscritos: 4, maximo: 6, vagas: 2, pct_cheio: 67,
           jogadores: null, paises: null },
+        { age_group: 3, nome: 'Boys 10', genero: 'Boys', holes: 18, flight_id: 33, inscritos: 2, maximo: 8, vagas: 6, pct_cheio: 25,
+          jogadores: [jog('Outro A', 201), jog('Outro B', 202)], paises: [{ pais: 'PT', n: 2 }] },
       ],
     }],
   }));
@@ -42,8 +44,10 @@ beforeAll(() => {
     respostas: {
       [`GetMeta:${T}`]: {
         tournament: { name: 'Teste Open', start_date: futuro, end_date: futuro, rounds: 3, courses: 'Campo', fee_18: '1', tour: 'International Championships Tour', type: 8 },
-        age_groups: { 1: { name: 'Boys 12', gender: 'Boys', holes_per_round: 18 }, 2: { name: 'Girls 11-12', gender: 'Girls', holes_per_round: 18 } },
-        flights: { 11: { age_group: 1, registered: 9, max_entry: 10 }, 22: { age_group: 2, registered: 5, max_entry: 6 } },
+        age_groups: { 1: { name: 'Boys 12', gender: 'Boys', holes_per_round: 18 }, 2: { name: 'Girls 11-12', gender: 'Girls', holes_per_round: 18 }, 3: { name: 'Boys 10', gender: 'Boys', holes_per_round: 18 } },
+        // `registered` conta o WD; `active` não — a app grava o `active`.
+        flights: { 11: { age_group: 1, registered: 10, active: 9, max_entry: 10 }, 22: { age_group: 2, registered: 5, active: 5, max_entry: 6 },
+          33: { age_group: 3, registered: 3, active: 3, max_entry: 8 } },
       },
       'GetPlayerTeeTimes:11': { flight_players: Object.fromEntries(LETRAS.map((l, i) => [101 + i, p('Jogador', l, l === 'J' ? 8 : 1)])) },
     },
@@ -67,7 +71,11 @@ describe('fetch-uskids-field --replay', () => {
     expect(b12.jogadores.some(j => j.nome === 'Jogador J')).toBe(false);
     expect(b12.removed.map(x => x.nome)).toEqual(['Jogador J']);
     expect(t.escaloes.find(e => e.nome === 'Girls 11-12').inscritos).toBe(5);
-    expect(t.total_inscritos).toBe(14);
+    // Boys 10: a lista não veio no ficheiro — ficam os nomes que havia, nunca «sem nomes».
+    const b10 = t.escaloes.find(e => e.nome === 'Boys 10');
+    expect(b10.inscritos).toBe(3);
+    expect(b10.jogadores.map(j => j.nome)).toEqual(['Outro A', 'Outro B']);
+    expect(t.total_inscritos).toBe(17);
     // Um --replay não é um run completo: o cabeçalho fica o do último run inteiro.
     expect(out.gerado_em).toBe('2026-11-10T00:00:00.000Z');
   }, 60000);
