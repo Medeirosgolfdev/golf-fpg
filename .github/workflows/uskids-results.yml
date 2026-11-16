@@ -39,5 +39,5 @@ jobs:
       - name: Commit
         run: |
           bash scripts/ci/push-generated.sh -m "data: resultados + draws USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" \
-            -o public/data/uskids-results.json -o public/data/uskids-draws.json \
-            -- public/data/uskids-results.json public/data/uskids-draws.json
+            -o public/data/uskids-results.json -o public/data/uskids-draws.json -o public/data/uskids-results-index.json \
+            -- public/data/uskids-results.json public/data/uskids-draws.json public/data/uskids-results-index.json

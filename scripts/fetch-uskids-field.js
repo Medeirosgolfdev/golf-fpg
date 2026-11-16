@@ -258,7 +258,7 @@ function esperarGetMeta(page, t, ms = 12000) {
 }
 
 /** `--replay <ficheiro>` (16/11/2026): as respostas vêm de um ficheiro gravado pela consola do
- *  browser (scripts/uskids-consola-inscritos.js) em vez da USKids — enquanto a fonte recusa os
+ *  browser (scripts/uskids-consola.js) em vez da USKids — enquanto a fonte recusa os
  *  pedidos feitos sem browser. Chave: `GetMeta:<t>` e `GetPlayerTeeTimes:<f>` (o `p` não conta:
  *  um pedido traz o escalão inteiro, e os nomes repetidos deduplicam-se). */
 let REPLAY = null;

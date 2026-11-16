@@ -551,7 +551,7 @@ para ela os colar no chat e entrarem na app. Mudar o `INICIO` para o número a s
 «Registos» ligado; o `copy()` perde-se se ela copiar o texto da consola por cima — daí o script dos inscritos gravar
 um ficheiro.
 
-**uskids-consola-inscritos.js** (`scripts/`, 16/11/2026) — os **inscritos à mão**, enquanto os workflows estão
+**uskids-consola.js** (`scripts/`, 16/11/2026; até ao fim desse dia `uskids-consola-inscritos.js`) — os **inscritos e os resultados à mão**, enquanto os workflows estão
 pausados. Na consola de uma página do signupanytime: vai buscar à app (`golf-fpg.vercel.app/data`, CORS `*`) o
 `uskids-field.json` e a `uskids-discovery-cache.json`; para cada torneio por jogar pede o `GetMeta` e, nos Boys 9–13,
 o `GetPlayerTeeTimes` (sempre nos `seguido` e nos do Manuel; nos outros só onde o número mudou ou faltam nomes — a
@@ -560,6 +560,13 @@ contagens) e **descarrega** `uskids-inscritos-AAAA-MM-DD-HHMM.json` (respostas a
 que fique a meio não vai no ficheiro. Aplicar: `node scripts/fetch-uskids-field.js --replay <ficheiro>` — sem browser
 nem pedidos; o resto (firstSeen, `removed`, datas pelo pid, guarda anti-encolhimento, `seguido`) é o de sempre, e os
 torneios que não vêm no ficheiro ficam como estavam (como no `--only`). Teste: `scripts/lib/uskids-replay.test.js`.
+**Resultados** (mesmo script, depois dos inscritos): os torneios da `uskids-discovery-cache.json` que acabaram há menos
+de 60 dias e não estão no `uskids-results-index.json` (índice só com os tcodes, ~1 KB, gerado sempre que se grava o
+`uskids-results.json`; `node scripts/fetch-uskids-results.js --indice` regera-o). Para cada um: `GetMeta` inteiro e, nos
+escalões Boys, `GetPlayerTeeTimes&r=<volta>&p=<página>&t=0` até ter `registered` jogadores. Vão na secção
+`resultados: { torneios, respostas }` do ficheiro (agora `uskids-AAAA-MM-DD-HHMM.json`), chaves `GetMeta:<t>` e
+`GetPlayerTeeTimes:<f>:<volta>:<página>`. Aplicar: `node scripts/fetch-uskids-results.js --replay <ficheiro>` (página
+não pedida = vazia). Teste: `scripts/lib/uskids-results-replay.test.js`. Tecto 900 pedidos.
 
 ### Torneios no member-history (`ALL_TCODES` em fetch-uskids-member-history.js)
 

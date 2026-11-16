@@ -1,6 +1,6 @@
 /**
  * `fetch-uskids-field.js --replay <ficheiro>` (16/11/2026): os inscritos vêm de um ficheiro gravado
- * pela consola do browser (scripts/uskids-consola-inscritos.js), sem browser nem pedidos. O
+ * pela consola do browser (scripts/uskids-consola.js), sem browser nem pedidos. O
  * processamento é o de sempre — quem desiste (WD, status 8) sai dos inscritos e entra em `removed`,
  * as contagens actualizam-se — e corre numa pasta temporária (USKIDS_DATA_DIR), nunca em public/data.
  */

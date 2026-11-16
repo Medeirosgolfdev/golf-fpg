@@ -157,15 +157,22 @@ const TORNEIOS_ALL_AGE_GROUPS = new Set([
 ]);
 
 const DELAY_MS   = 400;
-const DIR        = path.join(__dirname, '..', 'public', 'data');
+const DIR        = process.env.USKIDS_DATA_DIR || path.join(__dirname, '..', 'public', 'data'); // a pasta muda só nos testes
 const CACHE_PATH = path.join(DIR, 'uskids-discovery-cache.json');
 const OUTPUT     = path.join(DIR, 'uskids-results.json');
+// Índice pequeno (só os tcodes): a consola do browser vê o que já temos sem descarregar os 28 MB.
+const INDEX      = path.join(DIR, 'uskids-results-index.json');
+
+// --replay <ficheiro> (16/11/2026): as respostas vêm do ficheiro gravado pela consola do browser
+// (scripts/uskids-consola.js, secção «resultados»), sem browser nem pedidos — a USKids recusa (403)
+// os pedidos feitos sem browser. Chaves: «GetMeta:<t>» e «GetPlayerTeeTimes:<f>:<ronda>:<página>».
+let REPLAY = null;
 
 const IFRAME_URL = (t, ax = 1129) =>
   `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=${ax}&t=${t}`;
 const API = 'https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx';
 
-const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+const sleep = (ms) => (REPLAY ? Promise.resolve() : new Promise(r => setTimeout(r, ms)));
 
 function parsearDataISO(s) {
   if (!s) return null;
@@ -199,7 +206,13 @@ function esperarGetMeta(page, t, ms = 12000) {
   });
 }
 
-const pageJSON = (page, url) => pageJSONcomRecusa(page, url, 'GET');
+function respostaReplay(url) {
+  const q = new URL(url, 'https://x/').searchParams;
+  const k = `${q.get('op')}:${q.get('f')}:${q.get('r')}:${q.get('p')}`;
+  // Página que a consola não pediu = página vazia (a consola pára quando já tem o flight todo).
+  return JSON.parse(JSON.stringify(REPLAY.resultados.respostas[k] ?? { flight_players: {} }));
+}
+const pageJSON = (page, url) => (REPLAY ? Promise.resolve(respostaReplay(url)) : pageJSONcomRecusa(page, url, 'GET'));
 
 // ══════════════════════════════════════
 // Extrair PAR + YARDS de flight_courses (do GetMeta)
@@ -257,7 +270,10 @@ async function processarTorneio(page, torneio) {
   console.log(`\n▶ ${torneio.name} (t=${torneio.t})`);
 
   let meta;
-  try {
+  if (REPLAY) {
+    meta = REPLAY.resultados.respostas[`GetMeta:${torneio.t}`];
+    if (!meta) { console.warn('  ⚠️  sem GetMeta no ficheiro — fica de fora'); return null; }
+  } else try {
     const metaP = esperarGetMeta(page, torneio.t, 12000);
     await page.goto(IFRAME_URL(torneio.t, torneio.ax ?? 1129), { waitUntil: 'domcontentloaded', timeout: 15000 });
     meta = await metaP;
@@ -413,14 +429,33 @@ async function processarTorneio(page, torneio) {
 // ─────────────────────────────────────────────
 // MAIN
 // ─────────────────────────────────────────────
+function escreverIndice(todos) {
+  writeJsonAtomic(INDEX, { gerado_em: new Date().toISOString(), t: todos.map(r => r.t).sort((a, b) => a - b) });
+}
+
 async function main() {
   console.log('══════════════════════════════════════');
   console.log('🏆  USKids Results');
   console.log(`    ${new Date().toLocaleString('pt-PT')}`);
   console.log('══════════════════════════════════════');
 
+  const iReplay = process.argv.indexOf('--replay');
+  if (iReplay > 0) {
+    const f = process.argv[iReplay + 1];
+    try { REPLAY = JSON.parse(fs.readFileSync(f, 'utf8')); }
+    catch (err) { console.error(`❌ --replay: não consegui ler ${f}: ${err.message}`); process.exitCode = 1; return; }
+    if (!Array.isArray(REPLAY.resultados?.torneios) || !REPLAY.resultados.respostas) {
+      console.error(`❌ --replay: ${f} não tem a secção «resultados»`); process.exitCode = 1; return;
+    }
+    console.log(`📂 --replay: ${f} (${REPLAY.gerado_em}, ${REPLAY.resultados.torneios.length} torneios com resultados)`);
+  }
+
   let emCurso = [];
-  if (fs.existsSync(CACHE_PATH)) {
+  if (REPLAY) {
+    const cache = fs.existsSync(CACHE_PATH) ? JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8')) : { torneios: [] };
+    const porT = new Map((cache.torneios || []).map(t => [t.t, t]));
+    emCurso = REPLAY.resultados.torneios.map(t => porT.get(Number(t)) || { t: Number(t), name: `t=${t}` });
+  } else if (fs.existsSync(CACHE_PATH)) {
     try {
       const cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8'));
       emCurso = (cache.torneios || []).filter(estaEmCursoOuRecente);
@@ -431,7 +466,7 @@ async function main() {
     ? JSON.parse(fs.readFileSync(OUTPUT, 'utf8'))
     : { resultados: [] };
   const mapaActual = new Map((outputActual.resultados || []).map(r => [r.t, r]));
-  const historicosNovos = HISTORICOS.filter(h => {
+  const historicosNovos = REPLAY ? [] : HISTORICOS.filter(h => {
     const existente = mapaActual.get(h.t);
     if (!existente) return true;
     if (h.age_groups) {
@@ -472,11 +507,11 @@ async function main() {
     return;
   }
 
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
+  const browser = REPLAY ? null : await chromium.launch({ headless: true });
+  const context = browser && await browser.newContext({
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
   });
-  const page = await context.newPage();
+  const page = REPLAY ? null : await context.newPage();
 
   const novos = [];
   let recusa = null;
@@ -495,7 +530,7 @@ async function main() {
       await sleep(DELAY_MS);
     }
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
   }
 
   const force = process.argv.includes('--force');
@@ -522,11 +557,14 @@ async function main() {
 
   fs.mkdirSync(DIR, { recursive: true });
   writeJsonAtomic(OUTPUT, { gerado_em: new Date().toISOString(), resultados: todos });
+  escreverIndice(todos);
 
   console.log('\n══════════════════════════════════════');
   console.log(`✅  uskids-results.json — ${todos.length} torneios`);
   console.log('══════════════════════════════════════');
 }
 
-main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });
+// --indice: só (re)gera o índice a partir do uskids-results.json, sem pedidos.
+if (process.argv.includes('--indice')) escreverIndice(JSON.parse(fs.readFileSync(OUTPUT, 'utf8')).resultados || []);
+else main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });
 // EOF

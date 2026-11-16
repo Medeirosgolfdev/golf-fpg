@@ -1,4 +1,6 @@
-// scripts/uskids-consola-inscritos.js — inscritos dos torneios USKids, À MÃO, no browser
+// scripts/uskids-consola.js — inscritos E resultados dos torneios USKids, À MÃO, no browser
+// (até 16/11/2026 chamava-se uskids-consola-inscritos.js e só fazia os inscritos; os resultados
+// entraram a pedido dela: «quero os resultados dos torneios desde dia 6»)
 // (16/11/2026, Mariana: «e agora o script para colar na consola e ter os inscritos? é melhor fazeres
 // com que ele grave um ficheiro» + «quero também saber se há alterações aos inscritos que já temos
 // de todos os torneios»).
@@ -15,27 +17,33 @@
 //      sempre nos torneios seguidos todos os dias e nos do Manuel; nos outros só onde o número
 //      mudou ou ainda não temos nomes. É a mesma regra do fetch-uskids-field.js («contagens»).
 //   3. Mostra as alterações (quem entrou, quem saiu, quem desistiu — WD — e os números que mudaram).
-//   4. Descarrega um ficheiro `uskids-inscritos-AAAA-MM-DD-HHMM.json` com as respostas tal como
-//      vieram (aparadas ao que a app usa), que a app lê com:
-//        node scripts/fetch-uskids-field.js --replay <ficheiro>
+//   4. RESULTADOS: os torneios que já acabaram e que a app ainda não tem (índice
+//      uskids-results-index.json) — GetMeta inteiro e, nos escalões Boys, as listas de cada volta
+//      (GetPlayerTeeTimes&r=<volta>), página a página até ter o flight todo.
+//   5. Descarrega um ficheiro `uskids-AAAA-MM-DD-HHMM.json` com as respostas tal como vieram
+//      (aparadas ao que a app usa), que a app lê com:
+//        node scripts/fetch-uskids-field.js --replay <ficheiro>     (inscritos)
+//        node scripts/fetch-uskids-results.js --replay <ficheiro>   (resultados)
 //
 // Como usar: abrir https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=23132
-// → F12 → Consola → colar → Enter. ~150 pedidos, ~8 minutos.
+// → F12 → Consola → colar → Enter. ~300 pedidos de inscritos + ~10 por torneio acabado; 3 s cada.
 (async () => {
   const APP = "https://golf-fpg.vercel.app/data";
   const PAUSA_MS = 3000;
-  const MAX_PEDIDOS = 400;
+  const MAX_PEDIDOS = 900;
   const PREFIXOS_NOMES = ["boys 9", "boys 10", "boys 11", "boys 12", "boys 13"];
   const comNomes = (nome) => PREFIXOS_NOMES.some(p => String(nome || "").toLowerCase().startsWith(p));
   const norm = (s) => String(s || "").toLowerCase().trim().replace(/\s+/g, " ");
   const dormir = (ms) => new Promise(r => setTimeout(r, ms));
   const dataISO = (s) => { const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s || ""); return m ? `${m[3]}-${m[1].padStart(2, "0")}-${m[2].padStart(2, "0")}` : null; };
   const ontem = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const hojeISO = new Date().toISOString().slice(0, 10);
 
   // ── 1. O que a app já tem ────────────────────────────────────────────────
-  const [field, cache] = await Promise.all([
+  const [field, cache, indiceRes] = await Promise.all([
     fetch(`${APP}/uskids-field.json`, { cache: "no-store" }).then(r => r.json()),
     fetch(`${APP}/uskids-discovery-cache.json`, { cache: "no-store" }).then(r => r.json()),
+    fetch(`${APP}/uskids-results-index.json`, { cache: "no-store" }).then(r => r.json()),
   ]);
   const prevPorT = new Map(field.torneios.map(t => [t.t, t]));
   const lista = new Map();
@@ -49,7 +57,14 @@
     const ka = (pa?.seguido || doManuel(pa)) ? 0 : 1, kb = (pb?.seguido || doManuel(pb)) ? 0 : 1;
     return ka - kb || (dataISO(a.date_inicio) || "").localeCompare(dataISO(b.date_inicio) || "");
   });
-  console.log(`📋 ${torneios.length} torneios por jogar (os seguidos e os do Manuel primeiro).`);
+  // Resultados em falta: acabaram (até ontem), há menos de 60 dias, e a app ainda não os tem.
+  const temRes = new Set(indiceRes.t || []);
+  const ha60 = new Date(Date.now() - 60 * 86400000).toISOString().slice(0, 10);
+  const acabados = cache.torneios.filter(t => {
+    const fim = dataISO(t.date_fim) || dataISO(t.date_inicio);
+    return fim && fim < hojeISO && fim >= ha60 && !temRes.has(t.t);
+  }).sort((a, b) => (dataISO(a.date_inicio) || "").localeCompare(dataISO(b.date_inicio) || ""));
+  console.log(`📋 ${torneios.length} torneios por jogar (os seguidos e os do Manuel primeiro) · ${acabados.length} acabados sem resultados.`);
 
   // ── 2. Pedidos, como a página os faz ─────────────────────────────────────
   let pedidos = 0, recusa = null;
@@ -74,16 +89,18 @@
 
   const alteracoes = [];
   const feitos = [];
+  const resFeitos = [], resRespostas = {}, resLinhas = [];
   let gravacoes = 0;
   function gravar(parcial) {
     const agora = new Date();
     const carimbo = `${agora.toISOString().slice(0, 10)}-${String(agora.getHours()).padStart(2, "0")}${String(agora.getMinutes()).padStart(2, "0")}`;
-    const ficheiro = { gerado_em: agora.toISOString(), fonte: "consola do browser (scripts/uskids-consola-inscritos.js)", parcial: !!parcial, recusa, pedidos, torneios: [...feitos], alteracoes: [...alteracoes], respostas };
+    const ficheiro = { gerado_em: agora.toISOString(), fonte: "consola do browser (scripts/uskids-consola.js)", parcial: !!parcial, recusa, pedidos, torneios: [...feitos], alteracoes: [...alteracoes], respostas,
+      resultados: { torneios: [...resFeitos], respostas: resRespostas } };
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([JSON.stringify(ficheiro)], { type: "application/json" }));
-    a.download = `uskids-inscritos-${carimbo}${parcial ? "-parcial" : ""}${gravacoes++ ? `-${gravacoes}` : ""}.json`;
+    a.download = `uskids-${carimbo}${parcial ? "-parcial" : ""}${gravacoes++ ? `-${gravacoes}` : ""}.json`;
     document.body.appendChild(a); a.click(); a.remove();
-    console.log(`💾 Gravado: ${a.download} (${feitos.length} torneios, pasta Transferências).`);
+    console.log(`💾 Gravado: ${a.download} (inscritos de ${feitos.length} torneios, resultados de ${resFeitos.length}; pasta Transferências).`);
   }
   // A meio, para gravar o que já veio sem parar: escrever  uskidsGravar()  na consola.
   window.uskidsGravar = () => gravar(true);
@@ -137,6 +154,43 @@
     feitos.push({ t: tor.t, modo: todosComNomes ? "completo" : "contagens" });
     console.log(`✓ ${nomeT} (t=${tor.t}) · ${pedidos} pedidos até agora`);
   }
+
+  // ── Resultados dos torneios que já acabaram ──────────────────────────────
+  for (const tor of acabados) {
+    if (recusa || pedidos >= MAX_PEDIDOS) break;
+    const meta = await pedir("GetMeta", `t=${tor.t}`);
+    if (!meta) break;
+    if (!meta.flights) continue; // sem escalões publicados: nada a guardar
+    const novas = { [`GetMeta:${tor.t}`]: meta };
+    const rondas = meta.tournament?.rounds || tor.rondas || 1;
+    const porAG = {};
+    for (const [fid, f] of Object.entries(meta.flights || {})) if (!porAG[f.age_group]) porAG[f.age_group] = { fid, f };
+    let incompleto = false, nJog = 0;
+    for (const [ag, { fid, f }] of Object.entries(porAG)) {
+      const nome = String(meta.age_groups?.[ag]?.name || "");
+      if (!nome.toLowerCase().startsWith("boys") || !(f.registered > 0)) continue; // a app guarda os Boys
+      for (let r = 1; r <= rondas && !incompleto; r++) {
+        const vistos = new Set();
+        for (let p = 1; p <= 10; p++) {
+          const d = await pedir("GetPlayerTeeTimes", `f=${fid}&r=${r}&p=${p}&t=0`);
+          if (!d) { incompleto = true; break; }
+          const fp = d.flight_players || {};
+          novas[`GetPlayerTeeTimes:${fid}:${r}:${p}`] = { flight_players: fp };
+          const antes = vistos.size;
+          for (const pid of Object.keys(fp)) vistos.add(pid);
+          if (vistos.size === antes || vistos.size >= f.registered) break; // já temos o flight todo
+        }
+        if (r === 1) nJog += vistos.size;
+      }
+      if (incompleto) break;
+    }
+    // Um torneio a meio não vai no ficheiro (a app ficava com escalões vazios).
+    if (incompleto) { console.warn(`… resultados de ${meta.tournament?.name || tor.name} (t=${tor.t}) ficaram a meio — não vão no ficheiro`); break; }
+    Object.assign(resRespostas, novas);
+    resFeitos.push(tor.t);
+    resLinhas.push({ torneio: meta.tournament?.name || tor.name, data: tor.date_inicio, rondas, jogadores_boys: nJog });
+    console.log(`🏆 ${meta.tournament?.name || tor.name} (t=${tor.t}) · ${rondas} volta(s) · ${nJog} rapazes · ${pedidos} pedidos até agora`);
+  }
   } catch (err) {
     console.error("❌ Erro inesperado — gravo o que já veio:", err);
   } finally {
@@ -146,8 +200,9 @@
     ? `⛔ A USKids recusou (HTTP ${recusa.status}) no pedido ${recusa.op} ${recusa.extra} — parei aqui. Não voltes a correr hoje.`
     : `⛔ Falhou a ligação (${recusa.erro}) no pedido ${recusa.op} ${recusa.extra} — parei aqui e gravo o que já veio.`);
   if (pedidos >= MAX_PEDIDOS) console.warn(`⚠️ Parei no tecto de ${MAX_PEDIDOS} pedidos.`);
-  console.log(`📊 ${feitos.length} de ${torneios.length} torneios vistos · ${pedidos} pedidos · ${alteracoes.length} alterações`);
+  console.log(`📊 Inscritos: ${feitos.length} de ${torneios.length} torneios vistos · ${alteracoes.length} alterações · Resultados: ${resFeitos.length} de ${acabados.length} · ${pedidos} pedidos`);
   if (alteracoes.length) console.table(alteracoes); else console.log("Sem alterações aos inscritos.");
+  if (resLinhas.length) console.table(resLinhas);
 
   gravar(false);
   }
