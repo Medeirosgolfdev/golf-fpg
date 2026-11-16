@@ -163,17 +163,21 @@ export interface HolePlan {
 export interface GamePlanOpts { driveM: number; secondM: number; courseHcp: number; fieldVsPar?: (number | null)[]; bomProfile?: HoleProfile | null }
 
 /** Texto de estratégia COERENTE com a tag (atacar/neutro/defender). */
-function strategyNote(tag: HoleTag, par: number | null, dist: number | null, remainingAfterDrive: number | null, secondM: number, peloManuel: boolean, saida = "Drive"): string {
+function strategyNote(tag: HoleTag, par: number | null, dist: number | null, remainingAfterDrive: number | null, secondM: number, peloManuel: boolean, saida = "Drive", hist: HoleHist | null = null): string {
   const rem = remainingAfterDrive;
+  // «Defender» pelo Manuel é um AVISO, não uma certeza (16/11/2026, ela: «não quero que
+  // afirmes que fica acima do par; quero que digas atenção pois podes ficar acima do par,
+  // como é 1 em cada 3x, não é NORMALMENTE»). Com a % de bogeys dele em buracos parecidos.
+  const aviso = `Atenção, podes ficar acima do par${hist && hist.n ? ` (bogey ou pior em ${Math.round((hist.bogeys / hist.n) * 100)}% destes buracos)` : ""}`;
   if (par === 3) {
     return tag === "attack" ? (dist != null && dist <= 130 ? "Ferro curto — atacar a bandeira." : "Num bom dia faz par ou melhor — atacar o green.")
-      : tag === "defend" ? (peloManuel ? "Mesmo num bom dia perde pancada — centro do green, par é ganho." : "Par-3 exigente — centro do green, par é ganho.")
+      : tag === "defend" ? (peloManuel ? `${aviso} — centro do green, par é ganho.` : "Par-3 exigente — centro do green, par é ganho.")
       : "Centro do green, 2 putts.";
   }
   if (par === 4) {
     return tag === "attack"
       ? (rem != null && rem > 110 ? `${saida} + ${Math.round(rem)}m ao green — oportunidade de birdie.` : `${saida} + wedge — oportunidade de birdie.`)
-      : tag === "defend" ? (peloManuel ? "Mesmo num bom dia perde pancada — par é excelente, evitar o duplo." : "Buraco difícil — evitar o duplo, par é excelente.")
+      : tag === "defend" ? (peloManuel ? `${aviso} — par é excelente, evitar o duplo.` : "Buraco difícil — evitar o duplo, par é excelente.")
       : `${saida} + ${rem != null ? Math.round(rem) + "m" : "ferro"} ao green — 2 putts.`;
   }
   if (par === 5) {
@@ -184,7 +188,7 @@ function strategyNote(tag: HoleTag, par: number | null, dist: number | null, rem
         : terceira != null && terceira <= 40 ? `Quase em 2 — a 3.ª é um chip (~${terceira}m), oportunidade de birdie.`
         : terceira != null && terceira <= 110 ? `Em 3 pancadas, a última com wedge (~${terceira}m) — oportunidade de birdie.`
         : "Em 3 pancadas — deixar a 2.ª para um wedge, oportunidade de birdie.")
-      : tag === "defend" ? (peloManuel ? "Mesmo num bom dia perde pancada — 3 pancadas seguras, evitar erros." : "Par-5 longo — 3 pancadas seguras, evitar erros.")
+      : tag === "defend" ? (peloManuel ? `${aviso} — 3 pancadas seguras, evitar erros.` : "Par-5 longo — 3 pancadas seguras, evitar erros.")
       : "Par-5 de 3 pancadas — lay-up para a distância preferida.";
   }
   return "";
@@ -295,7 +299,8 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
       // Pelo Manuel (04/11/2026, escolha dela): o SI é a dificuldade para o
       // jogador em geral e contradizia os números dele (Oeiras: o buraco 3,
       // SI 1, é um par-5 de 425 m onde ele ganha pancadas). Atacar = num bom
-      // dia faz par ou melhor; Defender = mesmo num bom dia fica acima do par.
+      // dia faz par ou melhor; Defender = mesmo num bom dia a média passa o par
+      // (aviso de risco — 16/11/2026: não afirmar que fica acima do par).
       tagSource = "manuel";
       const bomVsPar = expBom - r.par;
       tag = bomVsPar <= BOM_ATACAR ? "attack" : bomVsPar >= BOM_DEFENDER ? "defend" : "neutral";
@@ -307,8 +312,9 @@ export function buildGamePlan(tee: Tee, profile: HoleProfile, opts: GamePlanOpts
     } else if (expStrokes == null) {
       tag = r.reach === "out" ? "defend" : "neutral";
     }
-    return { ...r, expVsPar, expStrokes, expBom, tag, tagSource, hist: profile.distribution(r.par, r.dist),
-      note: strategyNote(tag, r.par, r.dist, r.remainingAfterDrive, secondM, tagSource === "manuel", r.saida) };
+    const hist = profile.distribution(r.par, r.dist);
+    return { ...r, expVsPar, expStrokes, expBom, tag, tagSource, hist,
+      note: strategyNote(tag, r.par, r.dist, r.remainingAfterDrive, secondM, tagSource === "manuel", r.saida, hist) };
   });
 }
 
