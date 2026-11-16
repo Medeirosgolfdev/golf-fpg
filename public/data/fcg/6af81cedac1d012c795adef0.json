@@ -1,0 +1,174 @@
+{
+  "gameId": "6af81cedac1d012c795adef0",
+  "fetchedAt": "2026-11-16T12:44:19.825Z",
+  "game": {
+    "_id": "6af81cedac1d012c795adef0",
+    "name": "FINAL LIGA FVG INTERCLUBS INFANTIL",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-11-22T10:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6af81cedac1d012c795adf1d",
+      "name": "FINAL LIGA FVG INTERCLUBS INFANTIL",
+      "clientName": "Federación Vasca de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a744d36dfe90dea3a4d",
+      "name": "CAMPO DE GOLF MEAZTEGI S.A.",
+      "city": "ORTUELLA",
+      "state": "BIZKAIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a744d36dfe90dea3a54",
+      "name": "MEAZTEGI GOLF - Meaztegi",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "white",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 73.9,
+        "slope": 135,
+        "par": 72,
+        "_id": "6af81cedac1d012c795adfdf"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 69,
+        "slope": 124,
+        "par": 72,
+        "_id": "6af81cedac1d012c795ae05c"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 72.9,
+        "slope": 135,
+        "par": 72,
+        "_id": "6af81cedac1d012c795adff8"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 70.9,
+        "slope": 134,
+        "par": 72,
+        "_id": "6af81cedac1d012c795ae02a"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 76.9,
+        "slope": 133,
+        "par": 72,
+        "_id": "6af81cedac1d012c795ae011"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 74.3,
+        "slope": 134,
+        "par": 72,
+        "_id": "6af81cedac1d012c795ae043"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 80.1,
+        "slope": 135,
+        "par": 72,
+        "_id": "6af81cedac1d012c795ae075"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 78.9,
+        "slope": 134,
+        "par": 72,
+        "_id": "6af81cedac1d012c795ae08f"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6af81cedac1d012c795adf35",
+      "name": "INFANTIL MASCULINO",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": "yellow",
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6af81cedac1d012c795adf38",
+      "name": "INFANTIL FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": "red",
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6af81cedac1d012c795adf3b",
+      "name": "ALEVÍN MASCULINO",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": "blue",
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6af81cedac1d012c795adf3e",
+      "name": "ALEVÍN FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": "red",
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

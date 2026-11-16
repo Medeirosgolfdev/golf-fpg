@@ -1,7 +1,7 @@
 {
   "tourId": 74887,
   "url": "https://www.nextcaddy.com/tour/74887",
-  "scrapedAt": "2026-11-09T12:43:26.768Z",
+  "scrapedAt": "2026-11-16T12:38:34.306Z",
   "meta": {
     "name": "LIGAS MAJ - 9 Hoyos - Noviembre",
     "organizer": null,
@@ -22,9 +22,129 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Handicap 9 Hoyos",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gustavo Perez",
+          "licencia": "AMI5019018",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2444454
+        },
+        {
+          "pos": 2,
+          "name": "Jose Luis Rodriguez Meneses",
+          "licencia": "AMI5096081",
+          "hcp": 37.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2444074
+        },
+        {
+          "pos": 3,
+          "name": "Amit Thadani Vashi",
+          "licencia": "AM11528698",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2445000
+        },
+        {
+          "pos": 4,
+          "name": "Emilio Yuste Ortega",
+          "licencia": "AMH1380101",
+          "hcp": 53.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2444477
+        },
+        {
+          "pos": 5,
+          "name": "Dario Plaza Medina",
+          "licencia": "AMI5028207",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2444466
+        },
+        {
+          "pos": 6,
+          "name": "Manuel Bocanegra Bolivar",
+          "licencia": "AMI5037404",
+          "hcp": 38,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2447174
+        },
+        {
+          "pos": 7,
+          "name": "Ramona Ruiz Padilla",
+          "licencia": "AM04983130",
+          "hcp": 41,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2438341
+        },
+        {
+          "pos": null,
+          "name": "Sergio Merelo Palomares",
+          "licencia": "AMD2520488",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2445618
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Handicap 9 Hoyos",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -58,11 +178,110 @@
       "orden": 4,
       "name": "Emilio Yuste Ortega",
       "licencia": "AMH1380101",
-      "hcp": 54,
+      "hcp": 53.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Amit Thadani Vashi",
+      "licencia": "AM11528698",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Sergio Merelo Palomares",
+      "licencia": "AMD2520488",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Manuel Bocanegra Bolivar",
+      "licencia": "AMI5037404",
+      "hcp": 38,
       "nivel": "Mid"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:00",
+          "tee": 3,
+          "name": "Gustavo Perez",
+          "hcp": 36,
+          "ins": "2444454",
+          "jid": "80251",
+          "nivel": "S"
+        },
+        {
+          "time": "12:00",
+          "tee": 3,
+          "name": "Dario Plaza Medina",
+          "hcp": 36,
+          "ins": "2444466",
+          "jid": "80251",
+          "nivel": "S"
+        },
+        {
+          "time": "12:00",
+          "tee": 3,
+          "name": "Amit Thadani Vashi",
+          "hcp": 36,
+          "ins": "2445000",
+          "jid": "80251",
+          "nivel": "M"
+        },
+        {
+          "time": "12:00",
+          "tee": 3,
+          "name": "Sergio Merelo Palomares",
+          "hcp": 36,
+          "ins": "2445618",
+          "jid": "80251",
+          "nivel": "S"
+        },
+        {
+          "time": "12:00",
+          "tee": 4,
+          "name": "Jose Luis Rodriguez Meneses",
+          "hcp": 37.3,
+          "ins": "2444074",
+          "jid": "80251",
+          "nivel": "S"
+        },
+        {
+          "time": "12:00",
+          "tee": 4,
+          "name": "Manuel Bocanegra Bolivar",
+          "hcp": 38,
+          "ins": "2447174",
+          "jid": "80251",
+          "nivel": "M"
+        },
+        {
+          "time": "12:00",
+          "tee": 4,
+          "name": "Ramona Ruiz Padilla",
+          "hcp": 41,
+          "ins": "2438341",
+          "jid": "80251",
+          "nivel": "S"
+        },
+        {
+          "time": "12:00",
+          "tee": 4,
+          "name": "Emilio Yuste Ortega",
+          "hcp": 53.8,
+          "ins": "2444477",
+          "jid": "80251",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -81,6 +300,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-11-09T12:44:46.351Z"
+  ]
 }

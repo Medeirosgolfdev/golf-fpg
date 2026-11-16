@@ -1,7 +1,7 @@
 {
   "tourId": 67821,
   "url": "https://www.nextcaddy.com/tour/67821",
-  "scrapedAt": "2026-11-09T12:43:16.902Z",
+  "scrapedAt": "2026-11-16T12:38:17.782Z",
   "meta": {
     "name": "Final Circuito Dobles Pitch & Putt",
     "organizer": "Federacion de Golf de Madrid",
@@ -23,8 +23,13 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -359,7 +364,7 @@
           "time": "10:00",
           "tee": 3,
           "name": "Ivan De Paz Rodriguez",
-          "hcp": 9.8,
+          "hcp": 9.3,
           "ins": "2443063",
           "jid": "72317",
           "nivel": "M"
@@ -377,7 +382,7 @@
           "time": "10:00",
           "tee": 3,
           "name": "Alvaro Ballesteros Blanco",
-          "hcp": 1.4,
+          "hcp": 1.3,
           "ins": "2443066",
           "jid": "72317",
           "nivel": "S"
@@ -449,7 +454,7 @@
           "time": "10:00",
           "tee": 5,
           "name": "Alberto Castor Rodriguez",
-          "hcp": 20.5,
+          "hcp": 20.8,
           "ins": "2443075",
           "jid": "72317",
           "nivel": "S"

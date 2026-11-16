@@ -1,7 +1,7 @@
 {
   "tourId": 67677,
   "url": "https://www.nextcaddy.com/tour/67677",
-  "scrapedAt": "2026-11-09T12:43:16.663Z",
+  "scrapedAt": "2026-11-16T12:38:17.482Z",
   "meta": {
     "name": "8ª Prueba Ranking Damas 2026",
     "organizer": null,
@@ -20,10 +20,364 @@
     "dateIso": "2026-11-10",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 27,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Helen Hodgson",
+          "licencia": "AM11413786",
+          "hcp": 31.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2439760
+        },
+        {
+          "pos": 2,
+          "name": "Maria Del Carmen Ruiz Polo",
+          "licencia": "AM11962339",
+          "hcp": 15.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2444078
+        },
+        {
+          "pos": 3,
+          "name": "Jutta Niedermair",
+          "licencia": "AM11617959",
+          "hcp": 22.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2445070
+        },
+        {
+          "pos": 4,
+          "name": "Caridad Cuevas Villalba",
+          "licencia": "AM11153734",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2443316
+        },
+        {
+          "pos": 5,
+          "name": "Maria Jesus Lopez-Cortijo Gomez De Salazar",
+          "licencia": "AM11125600",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2444216
+        },
+        {
+          "pos": 6,
+          "name": "Ana Vega Narvaez",
+          "licencia": "AM11159480",
+          "hcp": 12.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2442345
+        },
+        {
+          "pos": 7,
+          "name": "Helena Chacin Hoogerbrugge",
+          "licencia": "AM11815229",
+          "hcp": 13.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2441076
+        },
+        {
+          "pos": 8,
+          "name": "Penelope Rhodes",
+          "licencia": "AM11612569",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2444212
+        },
+        {
+          "pos": 9,
+          "name": "Teresa Delgado Marquez",
+          "licencia": "AM11194628",
+          "hcp": 10.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2443803
+        },
+        {
+          "pos": 10,
+          "name": "Gladys Monica Zaine D`mello",
+          "licencia": "AM11348843",
+          "hcp": 20.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2442391
+        },
+        {
+          "pos": 11,
+          "name": "Helen Haughan",
+          "licencia": "AM11918816",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2443739
+        },
+        {
+          "pos": 12,
+          "name": "Gloria Sancho Lora",
+          "licencia": "AM00755786",
+          "hcp": 26.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2442821
+        },
+        {
+          "pos": 13,
+          "name": "Joan Maxwell",
+          "licencia": "AM11311934",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2441106
+        },
+        {
+          "pos": 14,
+          "name": "Maria Torres Trillo",
+          "licencia": "AM51813080",
+          "hcp": 17.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2444077
+        },
+        {
+          "pos": 15,
+          "name": "Josefa Vazquez Rojas",
+          "licencia": "AM11111739",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2443481
+        },
+        {
+          "pos": 16,
+          "name": "Charlotte Mccracken",
+          "licencia": "AM11923825",
+          "hcp": 30.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2443542
+        },
+        {
+          "pos": 17,
+          "name": "Belinda Romero Pineda",
+          "licencia": "AM11782225",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2443452
+        },
+        {
+          "pos": 18,
+          "name": "Joanne Hollings",
+          "licencia": "AM11079768",
+          "hcp": 24.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2442329
+        },
+        {
+          "pos": 19,
+          "name": "Maria Johanna Meeuwis Vermeeren",
+          "licencia": "AM11208515",
+          "hcp": 27,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2444075
+        },
+        {
+          "pos": 20,
+          "name": "Isabel Maria Martin Jimenez",
+          "licencia": "AM11163750",
+          "hcp": 30.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2444284
+        },
+        {
+          "pos": 21,
+          "name": "Jane Patricia Hindmarsh",
+          "licencia": "AM11345299",
+          "hcp": 33.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2442260
+        },
+        {
+          "pos": 22,
+          "name": "Maria Ortega Delgado",
+          "licencia": "AM11354334",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2442820
+        },
+        {
+          "pos": 23,
+          "name": "Sagrario Huete Molina",
+          "licencia": "AM11343010",
+          "hcp": 33.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2444204
+        },
+        {
+          "pos": 24,
+          "name": "Pamela Avis Redican",
+          "licencia": "AM11910480",
+          "hcp": 29.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2439472
+        },
+        {
+          "pos": 25,
+          "name": "Irene Bueno Roman",
+          "licencia": "AM11345336",
+          "hcp": 28.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2442245
+        },
+        {
+          "pos": 26,
+          "name": "Maria Jesus Martin Molinos",
+          "licencia": "CM22296282",
+          "hcp": 34.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2443735
+        },
+        {
+          "pos": 27,
+          "name": "Christine Jakubowski",
+          "licencia": "AM84898758",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 31,
+          "inscribedId": 2440108
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 27
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -41,184 +395,184 @@
     },
     {
       "orden": 3,
-      "name": "Manita Choeychazyaphum",
-      "licencia": "AM11250501",
-      "hcp": 11.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 4,
       "name": "Helen Hodgson",
       "licencia": "AM11413786",
       "hcp": 31.8,
       "nivel": "S"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Christine Jakubowski",
       "licencia": "AM84898758",
       "hcp": 16.3,
       "nivel": "S"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Helena Chacin Hoogerbrugge",
       "licencia": "AM11815229",
       "hcp": 13.1,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Joan Maxwell",
       "licencia": "AM11311934",
       "hcp": 20.6,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Irene Bueno Roman",
       "licencia": "AM11345336",
       "hcp": 28.7,
       "nivel": "S"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Jane Patricia Hindmarsh",
       "licencia": "AM11345299",
       "hcp": 33.4,
       "nivel": "S"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Joanne Hollings",
       "licencia": "AM11079768",
       "hcp": 24.5,
       "nivel": "Mid"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Ana Vega Narvaez",
       "licencia": "AM11159480",
       "hcp": 12.7,
       "nivel": "S"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Gladys Monica Zaine D`mello",
       "licencia": "AM11348843",
       "hcp": 20.4,
       "nivel": "S"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Maria Ortega Delgado",
       "licencia": "AM11354334",
       "hcp": 25,
       "nivel": "S"
     },
     {
-      "orden": 14,
+      "orden": 13,
       "name": "Gloria Sancho Lora",
       "licencia": "AM00755786",
       "hcp": 26.6,
       "nivel": "S"
     },
     {
-      "orden": 15,
+      "orden": 14,
       "name": "Caridad Cuevas Villalba",
       "licencia": "AM11153734",
       "hcp": 18.6,
       "nivel": "S"
     },
     {
-      "orden": 16,
+      "orden": 15,
       "name": "Belinda Romero Pineda",
       "licencia": "AM11782225",
       "hcp": 18.2,
       "nivel": "S"
     },
     {
-      "orden": 17,
+      "orden": 16,
       "name": "Josefa Vazquez Rojas",
       "licencia": "AM11111739",
       "hcp": 26,
       "nivel": "S"
     },
     {
-      "orden": 18,
+      "orden": 17,
       "name": "Charlotte Mccracken",
       "licencia": "AM11923825",
       "hcp": 30.1,
       "nivel": "S"
     },
     {
-      "orden": 19,
+      "orden": 18,
       "name": "Maria Jesus Martin Molinos",
       "licencia": "CM22296282",
       "hcp": 34.8,
       "nivel": "S"
     },
     {
-      "orden": 20,
+      "orden": 19,
       "name": "Helen Haughan",
       "licencia": "AM11918816",
       "hcp": 20.7,
       "nivel": "S"
     },
     {
-      "orden": 21,
+      "orden": 20,
       "name": "Teresa Delgado Marquez",
       "licencia": "AM11194628",
       "hcp": 10.7,
       "nivel": "S"
     },
     {
-      "orden": 22,
+      "orden": 21,
       "name": "Maria Johanna Meeuwis Vermeeren",
       "licencia": "AM11208515",
       "hcp": 27,
       "nivel": "S"
     },
     {
-      "orden": 23,
+      "orden": 22,
       "name": "Maria Torres Trillo",
       "licencia": "AM51813080",
       "hcp": 17.9,
       "nivel": "S"
     },
     {
-      "orden": 24,
+      "orden": 23,
       "name": "Maria Del Carmen Ruiz Polo",
       "licencia": "AM11962339",
       "hcp": 15.3,
       "nivel": "S"
     },
     {
-      "orden": 25,
+      "orden": 24,
       "name": "Sagrario Huete Molina",
       "licencia": "AM11343010",
       "hcp": 33.4,
       "nivel": "S"
     },
     {
-      "orden": 26,
+      "orden": 25,
       "name": "Penelope Rhodes",
       "licencia": "AM11612569",
       "hcp": 21.5,
       "nivel": "S"
     },
     {
-      "orden": 27,
+      "orden": 26,
       "name": "Maria Jesus Lopez-Cortijo Gomez De Salazar",
       "licencia": "AM11125600",
       "hcp": 18.8,
       "nivel": "S"
     },
     {
-      "orden": 28,
+      "orden": 27,
       "name": "Isabel Maria Martin Jimenez",
       "licencia": "AM11163750",
       "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Jutta Niedermair",
+      "licencia": "AM11617959",
+      "hcp": 22.7,
       "nivel": "S"
     }
   ],
@@ -409,15 +763,6 @@
         {
           "time": "09:30",
           "tee": 16,
-          "name": "Manita Choeychazyaphum",
-          "hcp": 12,
-          "ins": "2439583",
-          "jid": "72159",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 16,
           "name": "Jane Patricia Hindmarsh",
           "hcp": 34.1,
           "ins": "2442260",
@@ -439,6 +784,15 @@
           "name": "Helen Haughan",
           "hcp": 20.7,
           "ins": "2443739",
+          "jid": "72159",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 16,
+          "name": "Jutta Niedermair",
+          "hcp": 22.7,
+          "ins": "2445070",
           "jid": "72159",
           "nivel": "S"
         },

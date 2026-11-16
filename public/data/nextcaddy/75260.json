@@ -1,7 +1,7 @@
 {
   "tourId": 75260,
   "url": "https://www.nextcaddy.com/tour/75260",
-  "scrapedAt": "2026-11-09T12:43:32.603Z",
+  "scrapedAt": "2026-11-16T12:43:03.890Z",
   "meta": {
     "name": "9ª PRUEBA LIGA INFANTIL 5 HOYOS",
     "organizer": null,
@@ -22,15 +22,593 @@
     "dateIso": "2026-11-15",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      4,
+      5,
+      4,
+      4,
+      5,
+      3,
+      4
+    ],
+    "si": [
+      14,
+      2,
+      12,
+      6,
+      18,
+      4,
+      8,
+      16,
+      10,
+      11,
+      9,
+      15,
+      17,
+      5,
+      1,
+      13,
+      7,
+      3
+    ],
+    "meters": [
+      196,
+      225,
+      73,
+      246,
+      271,
+      281,
+      96,
+      220,
+      339,
+      209,
+      83,
+      182,
+      304,
+      234,
+      235,
+      284,
+      101,
+      208
+    ],
+    "parTotal": 72
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Javier Torollo De La Escalera",
+          "licencia": "AM85491699",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2444761,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                8,
+                4,
+                6,
+                7,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339,
+                209,
+                83,
+                182,
+                304,
+                234,
+                235,
+                284,
+                101,
+                208
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Javier Larrea Clemente",
+          "licencia": "AM85523992",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 12,
+          "inscribedId": 2448278,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                8,
+                4,
+                8,
+                10,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339,
+                209,
+                83,
+                182,
+                304,
+                234,
+                235,
+                284,
+                101,
+                208
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Irene Barrio Garcia",
+          "licencia": "AM85348758",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 13,
+          "inscribedId": 2444762,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                4,
+                8,
+                10,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339,
+                209,
+                83,
+                182,
+                304,
+                234,
+                235,
+                284,
+                101,
+                208
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Miguel Angel Martinez Sande",
+          "licencia": "AM85000556",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2448286,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                8,
+                4,
+                7,
+                9,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339,
+                209,
+                83,
+                182,
+                304,
+                234,
+                235,
+                284,
+                101,
+                208
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Ana Sampedro Morillo",
+          "licencia": "AM85977520",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2448281,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                9,
+                4,
+                8,
+                8,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339,
+                209,
+                83,
+                182,
+                304,
+                234,
+                235,
+                284,
+                101,
+                208
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Ana Rincon Sanchez",
+          "licencia": "AM85416142",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2444763,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                8,
+                6,
+                9,
+                8,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339,
+                209,
+                83,
+                182,
+                304,
+                234,
+                235,
+                284,
+                101,
+                208
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Lucas Rosell Carrasco",
+          "licencia": "AM85020282",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2448280,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                10,
+                6,
+                9,
+                8,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339,
+                209,
+                83,
+                182,
+                304,
+                234,
+                235,
+                284,
+                101,
+                208
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Juan Martinez Sande",
+          "licencia": "AM85000561",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2448284,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                11,
+                9,
+                5,
+                12,
+                10,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339,
+                209,
+                83,
+                182,
+                304,
+                234,
+                235,
+                284,
+                101,
+                208
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Francisco Javier Torollo De La Escalera",
       "licencia": "AM85491699",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Javier Larrea Clemente",
+      "licencia": "AM85523992",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Lucas Rosell Carrasco",
+      "licencia": "AM85020282",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Juan Martinez Sande",
+      "licencia": "AM85000561",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Miguel Angel Martinez Sande",
+      "licencia": "AM85000556",
       "hcp": 54,
       "nivel": "B"
     },
@@ -47,9 +625,94 @@
       "licencia": "AM85416142",
       "hcp": 54,
       "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Ana Sampedro Morillo",
+      "licencia": "AM85977520",
+      "hcp": 54,
+      "nivel": "A"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Francisco Javier Torollo De La Escalera",
+          "hcp": 54,
+          "ins": "2444761",
+          "jid": "80670",
+          "nivel": "B"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Irene Barrio Garcia",
+          "hcp": 54,
+          "ins": "2444762",
+          "jid": "80670",
+          "nivel": "B"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Ana Rincon Sanchez",
+          "hcp": 54,
+          "ins": "2444763",
+          "jid": "80670",
+          "nivel": "B"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Javier Larrea Clemente",
+          "hcp": 54,
+          "ins": "2448278",
+          "jid": "80670",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Lucas Rosell Carrasco",
+          "hcp": 54,
+          "ins": "2448280",
+          "jid": "80670",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Ana Sampedro Morillo",
+          "hcp": 54,
+          "ins": "2448281",
+          "jid": "80670",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Juan Martinez Sande",
+          "hcp": 54,
+          "ins": "2448284",
+          "jid": "80670",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Miguel Angel Martinez Sande",
+          "hcp": 54,
+          "ins": "2448286",
+          "jid": "80670",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -80,6 +743,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2539757641_75260-9-prueba-liga-infantil-5-hoyos.pdf"
-  ],
-  "horariosScrapedAt": "2026-11-09T12:44:48.754Z"
+  ]
 }

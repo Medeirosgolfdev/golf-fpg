@@ -1,7 +1,7 @@
 {
   "tourId": 74596,
   "url": "https://www.nextcaddy.com/tour/74596",
-  "scrapedAt": "2026-11-09T12:43:45.884Z",
+  "scrapedAt": "2026-11-16T12:39:07.554Z",
   "meta": {
     "name": "Final Liga Universitaria",
     "organizer": "Federacion de Golf de Madrid",
@@ -9,11 +9,12 @@
     "courseCode": "CMA5",
     "dateStart": "2026-11-28",
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "format": "Stableford (Handicap) Liga Universitaria",
     "categories": [
       "Caballeros",
       "Señoras",
       "Juvenil",
+      "caballeros",
       "Infantil",
       "Profesional",
       "Senior"
@@ -25,7 +26,43 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Iñigo Arreytunandia Usabiaga",
+      "licencia": "CM01814266",
+      "hcp": 16.5,
+      "nivel": "M"
+    },
+    {
+      "orden": 2,
+      "name": "Javier Gonzalez Conde",
+      "licencia": "CMA8945367",
+      "hcp": 22.8,
+      "nivel": "J"
+    },
+    {
+      "orden": 3,
+      "name": "Diego Moreno Rubio",
+      "licencia": "CM61887754",
+      "hcp": 10.9,
+      "nivel": "J"
+    },
+    {
+      "orden": 4,
+      "name": "Daniel Ranedo Pilares",
+      "licencia": "CM60814855",
+      "hcp": 11.8,
+      "nivel": "J"
+    },
+    {
+      "orden": 1,
+      "name": "Irene Ranedo Pilares",
+      "licencia": "CM60814853",
+      "hcp": 14.5,
+      "nivel": "J"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -47,5 +84,5 @@
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/3865529326_cc.2026_juv_final_liga_universitaria_rfgm_2026.pdf"
   ],
-  "horariosScrapedAt": "2026-11-09T12:44:45.123Z"
+  "horariosScrapedAt": "2026-11-16T12:40:09.060Z"
 }

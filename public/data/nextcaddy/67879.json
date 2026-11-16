@@ -1,7 +1,7 @@
 {
   "tourId": 67879,
   "url": "https://www.nextcaddy.com/tour/67879",
-  "scrapedAt": "2026-11-09T12:43:29.971Z",
+  "scrapedAt": "2026-11-16T12:38:40.797Z",
   "meta": {
     "name": "Villanueva Golf & Croquet - Categoría Especial",
     "organizer": null,
@@ -23,188 +23,540 @@
     "dateIso": "2026-11-15",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 28,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Bianca Jorfi Acedo",
+          "licencia": "AMD5005176",
+          "hcp": 48.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2439503
+        },
+        {
+          "pos": 2,
+          "name": "Faustino Martinez Mangas",
+          "licencia": "AM02416116",
+          "hcp": 47,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2436356
+        },
+        {
+          "pos": 3,
+          "name": "Philemon Casado Diouf",
+          "licencia": "AM11467632",
+          "hcp": 53.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2428806
+        },
+        {
+          "pos": 4,
+          "name": "Mateo Muñoz-Calero Fernandez De Cordova",
+          "licencia": "AM02474706",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2428176
+        },
+        {
+          "pos": 5,
+          "name": "Fabio Utrera Carracao",
+          "licencia": "AM11012935",
+          "hcp": 45.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2430131
+        },
+        {
+          "pos": 6,
+          "name": "Sofia Gil Salas",
+          "licencia": "AM11475356",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2439239
+        },
+        {
+          "pos": 7,
+          "name": "Jaime Delage Ruiz",
+          "licencia": "AM02498149",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2436367
+        },
+        {
+          "pos": 8,
+          "name": "Angel Osborne Duque",
+          "licencia": "AM02517852",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2436362
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Dominguez Feito",
+          "licencia": "AM02997769",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2436371
+        },
+        {
+          "pos": 10,
+          "name": "Cristobal Lopez Carrasco",
+          "licencia": "AM11353951",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2427343
+        },
+        {
+          "pos": 11,
+          "name": "Perico Fernandez Fernandez",
+          "licencia": "AM02080102",
+          "hcp": 45.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2431368
+        },
+        {
+          "pos": 12,
+          "name": "Carlos Salido Maesso",
+          "licencia": "AM02169809",
+          "hcp": 49.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2428216
+        },
+        {
+          "pos": 13,
+          "name": "Pablo Solis Toro",
+          "licencia": "AM02490990",
+          "hcp": 45.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2428206
+        },
+        {
+          "pos": 14,
+          "name": "Felipe Merello Lloret",
+          "licencia": "AM25490112",
+          "hcp": 47,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2443850
+        },
+        {
+          "pos": 15,
+          "name": "Manuel Gil Maroto",
+          "licencia": "AM11022565",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2429788
+        },
+        {
+          "pos": 16,
+          "name": "Eric Verstrynge Ruiz",
+          "licencia": "AM02497604",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2436363
+        },
+        {
+          "pos": 17,
+          "name": "Beltran Martinez Mangas",
+          "licencia": "AM02416122",
+          "hcp": 45.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2436355
+        },
+        {
+          "pos": 18,
+          "name": "Pablo Benjumea Rodriguez",
+          "licencia": "AM02483394",
+          "hcp": 52.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2428182
+        },
+        {
+          "pos": 19,
+          "name": "Rafael Muñoz-Rojas Salinas",
+          "licencia": "AM02488032",
+          "hcp": 47.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2428170
+        },
+        {
+          "pos": 20,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "licencia": "AM02466106",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2428173
+        },
+        {
+          "pos": 21,
+          "name": "Jose Maria Estrada Garcia De Alvear",
+          "licencia": "AM02508016",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2436364
+        },
+        {
+          "pos": 22,
+          "name": "Fernando Criado Montoto",
+          "licencia": "AM02490722",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2436357
+        },
+        {
+          "pos": 23,
+          "name": "David Diaz Reyes",
+          "licencia": "AMD5084341",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2429023
+        },
+        {
+          "pos": null,
+          "name": "Clara Sanchez Paredes",
+          "licencia": "AM02998408",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2428236
+        },
+        {
+          "pos": null,
+          "name": "Luis Criado Montoto",
+          "licencia": "AM02490724",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2436358
+        },
+        {
+          "pos": null,
+          "name": "Gonzaga Valcarcel Vorcy",
+          "licencia": "AM02488169",
+          "hcp": 52.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2436360
+        },
+        {
+          "pos": null,
+          "name": "Ignacio Valdenebro Olavarria",
+          "licencia": "AM02466882",
+          "hcp": 52,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2436370
+        },
+        {
+          "pos": null,
+          "name": "Beatriz Abaurre Romero",
+          "licencia": "AM02377545",
+          "hcp": 53.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2428226
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 28
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
-      "name": "Lucas Arejola Garzon",
-      "licencia": "CM41082586",
-      "hcp": 47.3,
-      "nivel": "B"
-    },
-    {
-      "orden": 2,
       "name": "Cristobal Lopez Carrasco",
       "licencia": "AM11353951",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Rafael Muñoz-Rojas Salinas",
       "licencia": "AM02488032",
       "hcp": 47.4,
       "nivel": "B"
     },
     {
-      "orden": 4,
-      "name": "Enrique Osborne Loring",
-      "licencia": "AM02488226",
-      "hcp": 47.4,
-      "nivel": "B"
-    },
-    {
-      "orden": 5,
+      "orden": 3,
       "name": "Jeronimo Rodriguez Astolfi",
       "licencia": "AM02466106",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 6,
+      "orden": 4,
       "name": "Mateo Muñoz-Calero Fernandez De Cordova",
       "licencia": "AM02474706",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 7,
+      "orden": 5,
       "name": "Pablo Benjumea Rodriguez",
       "licencia": "AM02483394",
       "hcp": 52.4,
       "nivel": "B"
     },
     {
-      "orden": 8,
+      "orden": 6,
       "name": "Pablo Solis Toro",
       "licencia": "AM02490990",
       "hcp": 45.9,
       "nivel": "B"
     },
     {
-      "orden": 9,
+      "orden": 7,
       "name": "Carlos Salido Maesso",
       "licencia": "AM02169809",
       "hcp": 49.7,
       "nivel": "B"
     },
     {
-      "orden": 10,
+      "orden": 8,
       "name": "Philemon Casado Diouf",
       "licencia": "AM11467632",
       "hcp": 53.9,
       "nivel": "B"
     },
     {
-      "orden": 11,
+      "orden": 9,
       "name": "David Diaz Reyes",
       "licencia": "AMD5084341",
       "hcp": 54,
       "nivel": "A"
     },
     {
-      "orden": 12,
+      "orden": 10,
       "name": "Manuel Gil Maroto",
       "licencia": "AM11022565",
       "hcp": 53,
       "nivel": "B"
     },
     {
-      "orden": 13,
+      "orden": 11,
       "name": "Fabio Utrera Carracao",
       "licencia": "AM11012935",
       "hcp": 45.8,
       "nivel": "B"
     },
     {
-      "orden": 14,
+      "orden": 12,
       "name": "Perico Fernandez Fernandez",
       "licencia": "AM02080102",
       "hcp": 45.2,
       "nivel": "A"
     },
     {
-      "orden": 15,
+      "orden": 13,
       "name": "Beltran Martinez Mangas",
       "licencia": "AM02416122",
       "hcp": 45.7,
       "nivel": "B"
     },
     {
-      "orden": 16,
+      "orden": 14,
       "name": "Faustino Martinez Mangas",
       "licencia": "AM02416116",
       "hcp": 47,
       "nivel": "B"
     },
     {
-      "orden": 17,
+      "orden": 15,
       "name": "Fernando Criado Montoto",
       "licencia": "AM02490722",
       "hcp": 53,
       "nivel": "B"
     },
     {
-      "orden": 18,
+      "orden": 16,
       "name": "Luis Criado Montoto",
       "licencia": "AM02490724",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 19,
+      "orden": 17,
       "name": "Gonzaga Valcarcel Vorcy",
       "licencia": "AM02488169",
       "hcp": 52.5,
       "nivel": "B"
     },
     {
-      "orden": 20,
+      "orden": 18,
       "name": "Angel Osborne Duque",
       "licencia": "AM02517852",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 21,
+      "orden": 19,
       "name": "Eric Verstrynge Ruiz",
       "licencia": "AM02497604",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 22,
+      "orden": 20,
       "name": "Jose Maria Estrada Garcia De Alvear",
       "licencia": "AM02508016",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 23,
+      "orden": 21,
       "name": "Jaime Delage Ruiz",
       "licencia": "AM02498149",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 24,
+      "orden": 22,
       "name": "Ignacio Valdenebro Olavarria",
       "licencia": "AM02466882",
-      "hcp": 54,
+      "hcp": 52,
       "nivel": "B"
     },
     {
-      "orden": 25,
+      "orden": 23,
       "name": "Carlos Dominguez Feito",
       "licencia": "AM02997769",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 26,
+      "orden": 24,
       "name": "Felipe Merello Lloret",
       "licencia": "AM25490112",
       "hcp": 47,
@@ -239,7 +591,265 @@
       "nivel": "B"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "Beltran Martinez Mangas",
+          "hcp": 45.7,
+          "ins": "2436355",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "Fabio Utrera Carracao",
+          "hcp": 45.8,
+          "ins": "2430131",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "Pablo Solis Toro",
+          "hcp": 45.9,
+          "ins": "2428206",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "Felipe Merello Lloret",
+          "hcp": 47,
+          "ins": "2443850",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Perico Fernandez Fernandez",
+          "hcp": 45.2,
+          "ins": "2431368",
+          "jid": "72395",
+          "nivel": "A"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Faustino Martinez Mangas",
+          "hcp": 47,
+          "ins": "2436356",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Carlos Salido Maesso",
+          "hcp": 49.7,
+          "ins": "2428216",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Gonzaga Valcarcel Vorcy",
+          "hcp": 52.5,
+          "ins": "2436360",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Rafael Muñoz-Rojas Salinas",
+          "hcp": 47.4,
+          "ins": "2428170",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Pablo Benjumea Rodriguez",
+          "hcp": 52.4,
+          "ins": "2428182",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Fernando Criado Montoto",
+          "hcp": 53,
+          "ins": "2436357",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "hcp": 54,
+          "ins": "2428173",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Bianca Jorfi Acedo",
+          "hcp": 48.2,
+          "ins": "2439503",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Manuel Gil Maroto",
+          "hcp": 53,
+          "ins": "2429788",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Philemon Casado Diouf",
+          "hcp": 53.9,
+          "ins": "2428806",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Sofia Gil Salas",
+          "hcp": 54,
+          "ins": "2439239",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "Beatriz Abaurre Romero",
+          "hcp": 53.4,
+          "ins": "2428226",
+          "jid": "72395",
+          "nivel": "I"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "Clara Sanchez Paredes",
+          "hcp": 54,
+          "ins": "2428236",
+          "jid": "72395",
+          "nivel": "A"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "Cristobal Lopez Carrasco",
+          "hcp": 54,
+          "ins": "2427343",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "David Diaz Reyes",
+          "hcp": 54,
+          "ins": "2429023",
+          "jid": "72395",
+          "nivel": "A"
+        },
+        {
+          "time": "15:00",
+          "tee": 1,
+          "name": "Mateo Muñoz-Calero Fernandez De Cordova",
+          "hcp": 54,
+          "ins": "2428176",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "15:00",
+          "tee": 1,
+          "name": "Jaime Delage Ruiz",
+          "hcp": 54,
+          "ins": "2436367",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "15:00",
+          "tee": 1,
+          "name": "Luis Criado Montoto",
+          "hcp": 54,
+          "ins": "2436358",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "15:00",
+          "tee": 1,
+          "name": "Angel Osborne Duque",
+          "hcp": 54,
+          "ins": "2436362",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "15:10",
+          "tee": 1,
+          "name": "Eric Verstrynge Ruiz",
+          "hcp": 54,
+          "ins": "2436363",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "15:10",
+          "tee": 1,
+          "name": "Jose Maria Estrada Garcia De Alvear",
+          "hcp": 54,
+          "ins": "2436364",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "15:10",
+          "tee": 1,
+          "name": "Ignacio Valdenebro Olavarria",
+          "hcp": 54,
+          "ins": "2436370",
+          "jid": "72395",
+          "nivel": "B"
+        },
+        {
+          "time": "15:10",
+          "tee": 1,
+          "name": "Carlos Dominguez Feito",
+          "hcp": 54,
+          "ins": "2436371",
+          "jid": "72395",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -278,7 +888,7 @@
     }
   },
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-11-09T12:44:13.470Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1840930788_reglas_locales_villanueva_golf.pdf"
+  ]
 }

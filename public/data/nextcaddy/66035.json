@@ -1,7 +1,7 @@
 {
   "tourId": 66035,
   "url": "https://www.nextcaddy.com/tour/66035",
-  "scrapedAt": "2026-11-09T12:43:55.417Z",
+  "scrapedAt": "2026-11-16T12:39:19.275Z",
   "meta": {
     "name": "Campeonato Andalucía de Profesionales Masculino",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -9,13 +9,12 @@
     "courseCode": "AM17",
     "dateStart": "2026-12-16",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Caballeros C. Prof",
+    "format": "Medal Play (Scratch)  Senior  Absoluta C",
     "categories": [
       "Profesional",
-      "Caballeros",
-      "Infantil",
       "Senior",
-      "Juvenil"
+      "Juvenil",
+      "Infantil"
     ],
     "dateIso": "2026-12-16",
     "year": 2026
@@ -24,7 +23,106 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Manuel Garzon Escobosa",
+      "licencia": "AM590909-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Alvaro Quiros Garcia",
+      "licencia": "AM111364-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 3,
+      "name": "Ruben Holgado Guerrero",
+      "licencia": "AME51579-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Ignacio Marin Casado",
+      "licencia": "AM651807-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 5,
+      "name": "Jordi Garcia Del Moral",
+      "licencia": "AM001568-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Luis Garcia Jimenez",
+      "licencia": "AM653747-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 7,
+      "name": "Ignacio Sanchez-Palencia Moreno",
+      "licencia": "AM651601-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 8,
+      "name": "Manuel Ayoso Alvarez",
+      "licencia": "AMC92037-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 9,
+      "name": "Antonio Rodriguez Yaguez",
+      "licencia": "AM852042-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 1,
+      "name": "Juan Antonio Gamez Martin",
+      "licencia": "AM610536-P",
+      "hcp": 4.5,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Antonio Jimenez Rodriguez",
+      "licencia": "AMI51079-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Lorca Alcaide",
+      "licencia": "AM650696-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Manuel Ruiz Moreno",
+      "licencia": "AM590726-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 5,
+      "name": "Andres Rosa Rueda",
+      "licencia": "AM510578-P",
+      "hcp": 0,
+      "nivel": "P+"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -47,7 +145,9 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1605630950_cartel.pdf",
+    "/uploads/circular/2026/ce5e016c7c9a923ea17a84fe9e3c9fba.pdf"
   ],
-  "horariosScrapedAt": "2026-11-09T12:44:08.837Z"
+  "horariosScrapedAt": "2026-11-16T12:39:32.813Z"
 }

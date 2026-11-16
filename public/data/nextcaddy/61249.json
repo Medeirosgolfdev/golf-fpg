@@ -1,7 +1,7 @@
 {
   "tourId": 61249,
   "url": "https://www.nextcaddy.com/tour/61249",
-  "scrapedAt": "2026-11-09T12:43:52.379Z",
+  "scrapedAt": "2026-11-16T12:39:14.923Z",
   "meta": {
     "name": "Campeonato Andalucía Femenino Categoría Mid Amateur",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -9,9 +9,8 @@
     "courseCode": "AM52",
     "dateStart": "2026-12-12",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Caballeros  Señora",
+    "format": "Medal Play (Scratch)  Señoras C. Femenin",
     "categories": [
-      "Caballeros",
       "Señoras",
       "Infantil",
       "Profesional",
@@ -25,7 +24,15 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Anouchka Azria",
+      "licencia": "AM49373256",
+      "hcp": 1.7,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -134,7 +141,8 @@
     }
   },
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circular/2026/d0d5164caa785cdb38d22056e8d27036.pdf"
   ],
-  "horariosScrapedAt": "2026-11-09T12:44:07.517Z"
+  "horariosScrapedAt": "2026-11-16T12:39:31.517Z"
 }

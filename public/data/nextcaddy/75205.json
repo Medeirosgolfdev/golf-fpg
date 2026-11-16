@@ -1,13 +1,13 @@
 {
   "tourId": 75205,
   "url": "https://www.nextcaddy.com/tour/75205",
-  "scrapedAt": "2026-11-09T12:43:50.402Z",
+  "scrapedAt": "2026-11-16T12:39:16.634Z",
   "meta": {
     "name": "Torneo Colegio Abogados Málaga",
     "organizer": null,
     "course": "Club Deportivo Añoreta Golf",
     "courseCode": "AM75",
-    "dateStart": "2026-12-05",
+    "dateStart": "2026-12-12",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -18,14 +18,43 @@
       "Senior",
       "Juvenil"
     ],
-    "dateIso": "2026-12-05",
+    "dateIso": "2026-12-12",
     "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Antonio Torrecillas Cabrera",
+      "licencia": "AM15188914",
+      "hcp": 19.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Jose Espejo Zurita",
+      "licencia": "AM04963096",
+      "hcp": 24.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Salvador Garcia De-Lucchi",
+      "licencia": "AM04889997",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Lourdes Abela Dominguez",
+      "licencia": "AM04964690",
+      "hcp": null,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -47,5 +76,5 @@
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1393615703_75205-torneo-colegio-abogados-malaga.pdf"
   ],
-  "horariosScrapedAt": "2026-11-09T12:44:48.411Z"
+  "horariosScrapedAt": "2026-11-16T12:40:11.952Z"
 }

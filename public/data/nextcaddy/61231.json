@@ -1,7 +1,7 @@
 {
   "tourId": 61231,
   "url": "https://www.nextcaddy.com/tour/61231",
-  "scrapedAt": "2026-11-09T12:43:28.876Z",
+  "scrapedAt": "2026-11-16T12:43:01.626Z",
   "meta": {
     "name": "Pequecircuito Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -21,10 +21,1424 @@
     "dateIso": "2026-11-15",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      9,
+      17,
+      13,
+      11,
+      1,
+      7,
+      15,
+      3,
+      5,
+      10,
+      18,
+      14,
+      12,
+      2,
+      8,
+      16,
+      4,
+      6
+    ],
+    "meters": [
+      160,
+      142,
+      82,
+      68,
+      116,
+      103,
+      100,
+      73,
+      119,
+      160,
+      142,
+      82,
+      68,
+      116,
+      103,
+      100,
+      73,
+      119
+    ],
+    "parTotal": 54
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Pequecircuito Damas Categoria 3 (11 Y 12 Años)",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Martin Sabiote",
+          "licencia": "AMA2518374",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 57,
+          "toPar": 30,
+          "inscribedId": 2423778,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                8,
+                7,
+                4,
+                8,
+                8,
+                6,
+                6,
+                4,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Manuela Sanchez Fernandez",
+          "licencia": "AM23471556",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 63,
+          "toPar": 36,
+          "inscribedId": 2444371,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                8,
+                9,
+                6,
+                9,
+                7,
+                5,
+                6,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Scratch Pequecircuito Caballeros Categoria 3 (11 Y 12 Años)",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alejandro Soler Orus",
+          "licencia": "AM62027049",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 47,
+          "toPar": 20,
+          "inscribedId": 2443798,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                7,
+                4,
+                5,
+                5,
+                5,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Ignacio García Zazo",
+          "licencia": "AMC7519025",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 55,
+          "toPar": 28,
+          "inscribedId": 2428837,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                6,
+                3,
+                7,
+                8,
+                5,
+                5,
+                7,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Aaron Manzano Acien",
+          "licencia": "AM59027029",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 31,
+          "inscribedId": 2439333,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                8,
+                7,
+                5,
+                6,
+                6,
+                5,
+                6,
+                8,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Scratch Pequecircuito Damas Categoria 2 (9 A 10 Años)",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Terres Ortiz",
+          "licencia": "AMC7531422",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 31,
+          "inscribedId": 2435270,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                9,
+                6,
+                6,
+                7,
+                6,
+                6,
+                5,
+                6,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Scratch Pequecircuito Caballeros Categoria 2 (9 A 10 Años)",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alan Gonzalez Bonilla",
+          "licencia": "AM63507568",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": 13,
+          "inscribedId": 2443756,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                4,
+                4,
+                5,
+                3,
+                7,
+                3,
+                3,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "David Prieto Perez",
+          "licencia": "AM59080295",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": 14,
+          "inscribedId": 2444093,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                3,
+                5,
+                4,
+                6,
+                5,
+                3,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Jose Antonio Sanchez Montes",
+          "licencia": "AMC7478625",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 47,
+          "toPar": 20,
+          "inscribedId": 2435269,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                3,
+                4,
+                6,
+                6,
+                5,
+                5,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Francisco Cara Gonzalez",
+          "licencia": "AM59009982",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 50,
+          "toPar": 23,
+          "inscribedId": 2428948,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                3,
+                7,
+                6,
+                8,
+                6,
+                4,
+                4,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Nicolas Moreno Vargas",
+          "licencia": "AM59021319",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 52,
+          "toPar": 25,
+          "inscribedId": 2425299,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                9,
+                5,
+                6,
+                5,
+                3,
+                4,
+                9,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Abel Salvador Morales",
+          "licencia": "AM59528430",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 54,
+          "toPar": 27,
+          "inscribedId": 2425304,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                8,
+                3,
+                4,
+                7,
+                8,
+                5,
+                7,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Mario Gabarron Garcia",
+          "licencia": "AMA2027995",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 55,
+          "toPar": 28,
+          "inscribedId": 2440400,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                5,
+                9,
+                5,
+                6,
+                4,
+                5,
+                7,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Antonio Cara Gonzalez",
+          "licencia": "AM59009984",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 55,
+          "toPar": 28,
+          "inscribedId": 2428947,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                9,
+                6,
+                5,
+                7,
+                5,
+                6,
+                4,
+                7,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Scratch Pequecircuito Caballeros Categoria 1 (8 Años O Menos)",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Parron Barranco",
+          "licencia": "AM59026895",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": 16,
+          "inscribedId": 2436690,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                5,
+                6,
+                5,
+                4,
+                3,
+                6,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Lucas Lope De Lima",
+          "licencia": "AMA2345518",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 31,
+          "inscribedId": 2429017,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                9,
+                9,
+                5,
+                7,
+                5,
+                4,
+                6,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Sergio Maqueda Carreño",
+          "licencia": "AMC7038141",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 61,
+          "toPar": 34,
+          "inscribedId": 2436733,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                9,
+                5,
+                5,
+                8,
+                6,
+                6,
+                9,
+                6,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Ramon Terres Ortiz",
+          "licencia": "AMC7531420",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": 44,
+          "inscribedId": 2435271,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                9,
+                7,
+                8,
+                8,
+                9,
+                6,
+                7,
+                9,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Scratch Peque Categoria Especial Masculino",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "licencia": "AMC7099154",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 5,
+          "inscribedId": 2435897,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                3,
+                3,
+                4,
+                5,
+                3,
+                4,
+                3,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Mario Dos Santos Vicente",
+          "licencia": "AM62474265",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 5,
+          "inscribedId": 2443791,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                3,
+                3,
+                4,
+                4,
+                3,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Tiago Dos Santos Vicente",
+          "licencia": "AM62352030",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 8,
+          "inscribedId": 2443792,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119,
+                160,
+                142,
+                82,
+                68,
+                116,
+                103,
+                100,
+                73,
+                119
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pequecircuito Damas Categoria 3 (11 Y 12 Años)",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Scratch Pequecircuito Caballeros Categoria 3 (11 Y 12 Años)",
+      "jugadores": 3
+    },
+    "3": {
+      "name": "Scratch Pequecircuito Damas Categoria 2 (9 A 10 Años)",
+      "jugadores": 1
+    },
+    "4": {
+      "name": "Scratch Pequecircuito Caballeros Categoria 2 (9 A 10 Años)",
+      "jugadores": 8
+    },
+    "5": {
+      "name": "Scratch Pequecircuito Caballeros Categoria 1 (8 Años O Menos)",
+      "jugadores": 4
+    },
+    "6": {
+      "name": "Scratch Peque Categoria Especial Masculino",
+      "jugadores": 3
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -149,14 +1563,14 @@
       "orden": 15,
       "name": "Mario Dos Santos Vicente",
       "licencia": "AM62474265",
-      "hcp": 33,
+      "hcp": 32.6,
       "nivel": "B"
     },
     {
       "orden": 16,
       "name": "Tiago Dos Santos Vicente",
       "licencia": "AM62352030",
-      "hcp": 29.1,
+      "hcp": 28.4,
       "nivel": "B"
     },
     {
@@ -174,15 +1588,531 @@
       "nivel": "B"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "14:00",
+          "tee": 1,
+          "name": "Tiago Dos Santos Vicente",
+          "hcp": 29.1,
+          "ins": "2443792",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:00",
+          "tee": 1,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "hcp": 32.2,
+          "ins": "2435897",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:00",
+          "tee": 1,
+          "name": "Mario Dos Santos Vicente",
+          "hcp": 33,
+          "ins": "2443791",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "David Prieto Perez",
+          "hcp": 41.7,
+          "ins": "2444093",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "Ignacio García Zazo",
+          "hcp": 51.1,
+          "ins": "2428837",
+          "jid": "64918",
+          "nivel": "A"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "Antonio Cara Gonzalez",
+          "hcp": 54,
+          "ins": "2428947",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Mario Gabarron Garcia",
+          "hcp": 54,
+          "ins": "2440400",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Francisco Cara Gonzalez",
+          "hcp": 54,
+          "ins": "2428948",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Alan Gonzalez Bonilla",
+          "hcp": 54,
+          "ins": "2443756",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Lucas Lope De Lima",
+          "hcp": 54,
+          "ins": "2429017",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Aaron Manzano Acien",
+          "hcp": 54,
+          "ins": "2439333",
+          "jid": "64918",
+          "nivel": "A"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Nicolas Moreno Vargas",
+          "hcp": 54,
+          "ins": "2425299",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Juan Parron Barranco",
+          "hcp": 54,
+          "ins": "2436690",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Sergio Maqueda Carreño",
+          "hcp": 54,
+          "ins": "2436733",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Jose Antonio Sanchez Montes",
+          "hcp": 54,
+          "ins": "2435269",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Abel Salvador Morales",
+          "hcp": 54,
+          "ins": "2425304",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Alejandro Soler Orus",
+          "hcp": 54,
+          "ins": "2443798",
+          "jid": "64918",
+          "nivel": "A"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Ramon Terres Ortiz",
+          "hcp": 54,
+          "ins": "2435271",
+          "jid": "64918",
+          "nivel": "B"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "Maria Martin Sabiote",
+          "hcp": 54,
+          "ins": "2423778",
+          "jid": "64918",
+          "nivel": "A"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "Manuela Sanchez Fernandez",
+          "hcp": 54,
+          "ins": "2444371",
+          "jid": "64918",
+          "nivel": "A"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "Maria Terres Ortiz",
+          "hcp": 54,
+          "ins": "2435270",
+          "jid": "64918",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 162520,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            22
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            30
+          ],
+          [
+            "Peor",
+            137
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162521,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            68
+          ],
+          [
+            "2",
+            75
+          ],
+          [
+            "3",
+            55
+          ],
+          [
+            "4",
+            38
+          ],
+          [
+            "5",
+            65
+          ],
+          [
+            "6",
+            57
+          ],
+          [
+            "7",
+            43
+          ],
+          [
+            "8",
+            46
+          ],
+          [
+            "9",
+            50
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162522,
+        "datos": [
+          [
+            "Hoyo",
+            "Juan Alberto Muñoz Del Pozo Salinas",
+            "Mario Dos Santos Vicente",
+            "Tiago Dos Santos Vicente"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            2,
+            2
+          ],
+          [
+            "Hoyo 3",
+            1,
+            3,
+            2
+          ],
+          [
+            "Hoyo 4",
+            1,
+            3,
+            3
+          ],
+          [
+            "Hoyo 5",
+            2,
+            3,
+            3
+          ],
+          [
+            "Hoyo 6",
+            4,
+            3,
+            4
+          ],
+          [
+            "Hoyo 7",
+            4,
+            4,
+            5
+          ],
+          [
+            "Hoyo 8",
+            5,
+            5,
+            6
+          ],
+          [
+            "Hoyo 9",
+            5,
+            5,
+            8
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162523,
+        "datos": [
+          [
+            "Hoyo",
+            "Juan Alberto Muñoz Del Pozo Salinas",
+            "Mario Dos Santos Vicente",
+            "Tiago Dos Santos Vicente"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -194,6 +2124,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/circular/2026/60646390603b16b04fdebb02436999ef.pdf"
-  ],
-  "horariosScrapedAt": "2026-11-09T12:44:07.095Z"
+  ]
 }

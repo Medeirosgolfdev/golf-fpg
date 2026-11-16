@@ -1,7 +1,7 @@
 {
   "tourId": 61241,
   "url": "https://www.nextcaddy.com/tour/61241",
-  "scrapedAt": "2026-11-09T12:43:22.758Z",
+  "scrapedAt": "2026-11-16T12:43:13.916Z",
   "meta": {
     "name": "Circuito Benjamín Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -22,10 +22,858 @@
     "dateIso": "2026-11-14",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "par": [
+      4,
+      3,
+      5,
+      4,
+      5,
+      4,
+      4,
+      3,
+      4,
+      3,
+      3,
+      4,
+      5,
+      4,
+      4,
+      4,
+      5,
+      3
+    ],
+    "si": [
+      4,
+      10,
+      14,
+      12,
+      2,
+      18,
+      6,
+      8,
+      16,
+      1,
+      9,
+      17,
+      7,
+      13,
+      3,
+      5,
+      15,
+      11
+    ],
+    "meters": [
+      317,
+      138,
+      391,
+      286,
+      446,
+      200,
+      333,
+      166,
+      221,
+      181,
+      140,
+      245,
+      425,
+      309,
+      346,
+      369,
+      433,
+      115
+    ],
+    "parTotal": 71
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Benjamin Femenino",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Liane Gavira Rodriguez",
+          "licencia": "AM11418118",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 48,
+          "toPar": 12,
+          "inscribedId": 2429781,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                7,
+                5,
+                7,
+                5,
+                6,
+                4,
+                4,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Scratch Benjamin Masculino",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Nikita Elchaninov",
+          "licencia": "AM84081325",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": 5,
+          "inscribedId": 2432034,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                6,
+                5,
+                4,
+                4,
+                4,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Tiago Dos Santos Vicente",
+          "licencia": "AM62352030",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 45,
+          "toPar": 9,
+          "inscribedId": 2432092,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                7,
+                5,
+                5,
+                4,
+                6,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Mario Dos Santos Vicente",
+          "licencia": "AM62474265",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 49,
+          "toPar": 13,
+          "inscribedId": 2432091,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                7,
+                5,
+                9,
+                4,
+                5,
+                6,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Rafael Valle Garcia-Valdecasas",
+          "licencia": "AM65965658",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 50,
+          "toPar": 14,
+          "inscribedId": 2423790,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                7,
+                4,
+                7,
+                5,
+                6,
+                5,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "licencia": "AMC7099154",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 53,
+          "toPar": 17,
+          "inscribedId": 2435896,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                7,
+                7,
+                8,
+                6,
+                6,
+                4,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Handicap Benjamin Femenino",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Liane Gavira Rodriguez",
+          "licencia": "AM11418118",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": -1,
+          "inscribedId": 2429781,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                7,
+                5,
+                7,
+                5,
+                6,
+                4,
+                4,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Handicap Benjamin Masculino",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Tiago Dos Santos Vicente",
+          "licencia": "AM62352030",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": -3,
+          "inscribedId": 2432092,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                7,
+                5,
+                5,
+                4,
+                6,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Mario Dos Santos Vicente",
+          "licencia": "AM62474265",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": -1,
+          "inscribedId": 2432091,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                7,
+                5,
+                9,
+                4,
+                5,
+                6,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Nikita Elchaninov",
+          "licencia": "AM84081325",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": 1,
+          "inscribedId": 2432034,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                6,
+                5,
+                4,
+                4,
+                4,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Rafael Valle Garcia-Valdecasas",
+          "licencia": "AM65965658",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": 2,
+          "inscribedId": 2423790,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                7,
+                4,
+                7,
+                5,
+                6,
+                5,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "licencia": "AMC7099154",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": 4,
+          "inscribedId": 2435896,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                7,
+                7,
+                8,
+                6,
+                6,
+                4,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                317,
+                138,
+                391,
+                286,
+                446,
+                200,
+                333,
+                166,
+                221,
+                181,
+                140,
+                245,
+                425,
+                309,
+                346,
+                369,
+                433,
+                115
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Benjamin Femenino",
+      "jugadores": 1
+    },
+    "2": {
+      "name": "Scratch Benjamin Masculino",
+      "jugadores": 5
+    },
+    "3": {
+      "name": "Handicap Benjamin Femenino",
+      "jugadores": 1
+    },
+    "4": {
+      "name": "Handicap Benjamin Masculino",
+      "jugadores": 5
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -70,15 +918,396 @@
       "nivel": "B"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Nikita Elchaninov",
+          "hcp": 12,
+          "ins": "2432034",
+          "jid": "64930",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Liane Gavira Rodriguez",
+          "hcp": 26.1,
+          "ins": "2429781",
+          "jid": "64930",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Tiago Dos Santos Vicente",
+          "hcp": 29.1,
+          "ins": "2432092",
+          "jid": "64930",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Rafael Valle Garcia-Valdecasas",
+          "hcp": 29.7,
+          "ins": "2423790",
+          "jid": "64930",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "hcp": 32.2,
+          "ins": "2435896",
+          "jid": "64930",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Mario Dos Santos Vicente",
+          "hcp": 33,
+          "ins": "2432091",
+          "jid": "64930",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 162432,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            10
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            24
+          ],
+          [
+            "Peor",
+            20
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162433,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            9
+          ],
+          [
+            "2",
+            5
+          ],
+          [
+            "3",
+            9
+          ],
+          [
+            "4",
+            5
+          ],
+          [
+            "5",
+            14
+          ],
+          [
+            "6",
+            6
+          ],
+          [
+            "7",
+            8
+          ],
+          [
+            "8",
+            9
+          ],
+          [
+            "9",
+            5
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162434,
+        "datos": [
+          [
+            "Hoyo",
+            "Nikita Elchaninov",
+            "Tiago Dos Santos Vicente",
+            "Liane Gavira Rodriguez"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            2,
+            1,
+            3
+          ],
+          [
+            "Hoyo 3",
+            2,
+            2,
+            5
+          ],
+          [
+            "Hoyo 4",
+            2,
+            2,
+            6
+          ],
+          [
+            "Hoyo 5",
+            3,
+            4,
+            8
+          ],
+          [
+            "Hoyo 6",
+            4,
+            5,
+            9
+          ],
+          [
+            "Hoyo 7",
+            4,
+            6,
+            11
+          ],
+          [
+            "Hoyo 8",
+            5,
+            7,
+            12
+          ],
+          [
+            "Hoyo 9",
+            5,
+            9,
+            12
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162435,
+        "datos": [
+          [
+            "Hoyo",
+            "Nikita Elchaninov",
+            "Tiago Dos Santos Vicente",
+            "Liane Gavira Rodriguez"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            2,
+            2
+          ],
+          [
+            "Hoyo 6",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 8",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -89,7 +1318,7 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf"
-  ],
-  "horariosScrapedAt": "2026-11-09T12:44:07.363Z"
+    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf",
+    "/uploads/competiciones/pdf/3824813053_346535121_reglas_locales.pdf"
+  ]
 }

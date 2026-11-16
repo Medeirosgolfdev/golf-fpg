@@ -1,7 +1,7 @@
 {
   "tourId": 75258,
   "url": "https://www.nextcaddy.com/tour/75258",
-  "scrapedAt": "2026-11-09T12:43:32.385Z",
+  "scrapedAt": "2026-11-16T12:38:43.923Z",
   "meta": {
     "name": "8ª PRUEBA LIGA DE DAMAS (DOMINGO)",
     "organizer": null,
@@ -21,75 +21,668 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Tercera Categoria",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carol Maria Osuna Feore",
+          "licencia": "AM85355004",
+          "hcp": 33.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2448239
+        },
+        {
+          "pos": 2,
+          "name": "Heike Thielsch",
+          "licencia": "AM85795757",
+          "hcp": 35.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2448243
+        },
+        {
+          "pos": 3,
+          "name": "Maria Fernandez De Velasco",
+          "licencia": "AMG3983084",
+          "hcp": 39.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2448307
+        },
+        {
+          "pos": null,
+          "name": "Maria Victoria Martinez Peso",
+          "licencia": "AMG3351533",
+          "hcp": 29.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2448238
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sonsoles Espinosa Goñi",
+          "licencia": "AM85600005",
+          "hcp": 29,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2444753
+        },
+        {
+          "pos": 2,
+          "name": "Ana Ordoñez Cocovi",
+          "licencia": "AM85142580",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2444748
+        },
+        {
+          "pos": 3,
+          "name": "Paula Gallegos Miralles De Imperial",
+          "licencia": "AM25155798",
+          "hcp": 23.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2444750
+        },
+        {
+          "pos": 4,
+          "name": "Mercedes Menchon Orta",
+          "licencia": "AM85601178",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2448242
+        },
+        {
+          "pos": 5,
+          "name": "Pia Jaraquemada Ovando",
+          "licencia": "AM85348869",
+          "hcp": 29.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2448240
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Primera Categoria",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Elena Guija Rodriguez",
+          "licencia": "AM85609937",
+          "hcp": 10.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2444752
+        },
+        {
+          "pos": 2,
+          "name": "Cristina Sanchez Mendoza",
+          "licencia": "AM85358701",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2448241
+        },
+        {
+          "pos": 3,
+          "name": "Maria Angeles Cortabitarte Gutierrez",
+          "licencia": "AM85888809",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2444749
+        },
+        {
+          "pos": 4,
+          "name": "Laura Maria Vila Villa",
+          "licencia": "AMG3812494",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2444747
+        },
+        {
+          "pos": 5,
+          "name": "Gloria Osorio Sanchez",
+          "licencia": "AM85126347",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2444751
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carol Maria Osuna Feore",
+          "licencia": "AM85355004",
+          "hcp": 33.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2448239
+        },
+        {
+          "pos": 2,
+          "name": "Sonsoles Espinosa Goñi",
+          "licencia": "AM85600005",
+          "hcp": 29,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2444753
+        },
+        {
+          "pos": 3,
+          "name": "Elena Guija Rodriguez",
+          "licencia": "AM85609937",
+          "hcp": 10.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2444752
+        },
+        {
+          "pos": 4,
+          "name": "Cristina Sanchez Mendoza",
+          "licencia": "AM85358701",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2448241
+        },
+        {
+          "pos": 5,
+          "name": "Ana Ordoñez Cocovi",
+          "licencia": "AM85142580",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2444748
+        },
+        {
+          "pos": 6,
+          "name": "Heike Thielsch",
+          "licencia": "AM85795757",
+          "hcp": 35.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2448243
+        },
+        {
+          "pos": 7,
+          "name": "Paula Gallegos Miralles De Imperial",
+          "licencia": "AM25155798",
+          "hcp": 23.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2444750
+        },
+        {
+          "pos": 8,
+          "name": "Mercedes Menchon Orta",
+          "licencia": "AM85601178",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2448242
+        },
+        {
+          "pos": 9,
+          "name": "Maria Angeles Cortabitarte Gutierrez",
+          "licencia": "AM85888809",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2444749
+        },
+        {
+          "pos": 10,
+          "name": "Laura Maria Vila Villa",
+          "licencia": "AMG3812494",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2444747
+        },
+        {
+          "pos": 11,
+          "name": "Pia Jaraquemada Ovando",
+          "licencia": "AM85348869",
+          "hcp": 29.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2448240
+        },
+        {
+          "pos": 12,
+          "name": "Gloria Osorio Sanchez",
+          "licencia": "AM85126347",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2444751
+        },
+        {
+          "pos": 13,
+          "name": "Maria Fernandez De Velasco",
+          "licencia": "AMG3983084",
+          "hcp": 39.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2448307
+        },
+        {
+          "pos": null,
+          "name": "Maria Victoria Martinez Peso",
+          "licencia": "AMG3351533",
+          "hcp": 29.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2448238
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Tercera Categoria",
+      "jugadores": 4
+    },
+    "2": {
+      "name": "Segunda Categoria",
+      "jugadores": 5
+    },
+    "3": {
+      "name": "Primera Categoria",
+      "jugadores": 5
+    },
+    "4": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
-      "name": "Magdalena Sainz De La Maza Ramirez",
-      "licencia": "AM85769836",
-      "hcp": 18.3,
-      "nivel": "S"
-    },
-    {
-      "orden": 2,
-      "name": "Ana Maria Montes O Connor",
-      "licencia": "AM85278684",
-      "hcp": 26.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 3,
       "name": "Laura Maria Vila Villa",
       "licencia": "AMG3812494",
       "hcp": 22.8,
       "nivel": "S"
     },
     {
-      "orden": 4,
+      "orden": 2,
       "name": "Ana Ordoñez Cocovi",
       "licencia": "AM85142580",
       "hcp": 27.4,
       "nivel": "S"
     },
     {
-      "orden": 5,
+      "orden": 3,
       "name": "Maria Angeles Cortabitarte Gutierrez",
       "licencia": "AM85888809",
       "hcp": 21.4,
       "nivel": "S"
     },
     {
-      "orden": 6,
+      "orden": 4,
       "name": "Paula Gallegos Miralles De Imperial",
       "licencia": "AM25155798",
       "hcp": 23.8,
       "nivel": "Mid"
     },
     {
-      "orden": 7,
+      "orden": 5,
       "name": "Gloria Osorio Sanchez",
       "licencia": "AM85126347",
       "hcp": 16.6,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 6,
       "name": "Elena Guija Rodriguez",
       "licencia": "AM85609937",
       "hcp": 10.9,
       "nivel": "Mid"
     },
     {
-      "orden": 9,
+      "orden": 7,
       "name": "Sonsoles Espinosa Goñi",
       "licencia": "AM85600005",
       "hcp": 29,
       "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Maria Victoria Martinez Peso",
+      "licencia": "AMG3351533",
+      "hcp": 29.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Carol Maria Osuna Feore",
+      "licencia": "AM85355004",
+      "hcp": 33.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Pia Jaraquemada Ovando",
+      "licencia": "AM85348869",
+      "hcp": 29.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Cristina Sanchez Mendoza",
+      "licencia": "AM85358701",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Mercedes Menchon Orta",
+      "licencia": "AM85601178",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Heike Thielsch",
+      "licencia": "AM85795757",
+      "hcp": 35.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Maria Fernandez De Velasco",
+      "licencia": "AMG3983084",
+      "hcp": null,
+      "nivel": "S"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Maria Angeles Cortabitarte Gutierrez",
+          "hcp": 21.4,
+          "ins": "2444749",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Gloria Osorio Sanchez",
+          "hcp": 16.6,
+          "ins": "2444751",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Laura Maria Vila Villa",
+          "hcp": 22.8,
+          "ins": "2444747",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Cristina Sanchez Mendoza",
+          "hcp": 18,
+          "ins": "2448241",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Elena Guija Rodriguez",
+          "hcp": 10.9,
+          "ins": "2444752",
+          "jid": "80668",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Ana Ordoñez Cocovi",
+          "hcp": 27.4,
+          "ins": "2444748",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Mercedes Menchon Orta",
+          "hcp": 26.5,
+          "ins": "2448242",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Paula Gallegos Miralles De Imperial",
+          "hcp": 23.8,
+          "ins": "2444750",
+          "jid": "80668",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Sonsoles Espinosa Goñi",
+          "hcp": 29,
+          "ins": "2444753",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Pia Jaraquemada Ovando",
+          "hcp": 29.4,
+          "ins": "2448240",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Maria Victoria Martinez Peso",
+          "hcp": 29.7,
+          "ins": "2448238",
+          "jid": "80668",
+          "nivel": "M"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Carol Maria Osuna Feore",
+          "hcp": 33.3,
+          "ins": "2448239",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Heike Thielsch",
+          "hcp": 35.2,
+          "ins": "2448243",
+          "jid": "80668",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Maria Fernandez De Velasco",
+          "hcp": 36,
+          "ins": "2448307",
+          "jid": "80668",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -109,6 +702,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2603926324_75258-8-prueba-liga-de-damas-domingo.pdf"
-  ],
-  "horariosScrapedAt": "2026-11-09T12:44:48.679Z"
+  ]
 }

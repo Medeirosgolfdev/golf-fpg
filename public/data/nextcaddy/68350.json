@@ -1,7 +1,7 @@
 {
   "tourId": 68350,
   "url": "https://www.nextcaddy.com/tour/68350",
-  "scrapedAt": "2026-11-09T12:43:23.646Z",
+  "scrapedAt": "2026-11-16T12:38:30.616Z",
   "meta": {
     "name": "Torneo Mid-Amateur Femenino",
     "organizer": "Federacion de Golf de Madrid",
@@ -9,7 +9,7 @@
     "courseCode": "CM03",
     "dateStart": "2026-11-14",
     "dateEnd": null,
-    "format": "Stableford (Scratch) Ranking Mid-Amateur",
+    "format": "Medal Play (Scratch) Ranking Mid-Amateur",
     "categories": [
       "Senior Femenino",
       "Señoras",
@@ -25,8 +25,527 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
-  "horarios": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Carmen Alonso Aviles",
+      "licencia": "CM03100693",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Beatriz Alvarez Alonso",
+      "licencia": "CMA5818038",
+      "hcp": 11.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Consuelo Azabal Arroyo",
+      "licencia": "CMD9792576",
+      "hcp": 25.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Carlota Bachiller Marco",
+      "licencia": "CM05307775",
+      "hcp": 1.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Estela De Pedro Santamaria",
+      "licencia": "CM87626094",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Maria Elena Delgado Palomar",
+      "licencia": "CMD3933144",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Cristina Diaz Bellostas",
+      "licencia": "CM87902412",
+      "hcp": 27.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Maria Teresa Diaz Bellostas",
+      "licencia": "CM87760315",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Monica Dominguez Fernandez",
+      "licencia": "CM87382852",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Adriangela Dornaleteche Uguina",
+      "licencia": "CM41798092",
+      "hcp": 23.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Sonia Fernandez Menor",
+      "licencia": "CM03140943",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Encarnacion Galdamez Nuñez",
+      "licencia": "CM03146807",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Julia Garcia Morillas",
+      "licencia": "CM03159350",
+      "hcp": 30.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Ana Maria Garcia-Pagan Garcia",
+      "licencia": "CM41802668",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Belinda Hernandez Fernandez",
+      "licencia": "CM03670768",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Georgina Herrera Rubio",
+      "licencia": "CM41509485",
+      "hcp": 4.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Natalia Jimenez Toro",
+      "licencia": "CMA5635451",
+      "hcp": 26.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Anita Larrasa Galvan",
+      "licencia": "CM87308259",
+      "hcp": 19.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Elena Manzanero Carrasco",
+      "licencia": "CM66962674",
+      "hcp": 20.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Elena Martinez Llano",
+      "licencia": "CM87158252",
+      "hcp": 23.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Rocio Meana Mañes",
+      "licencia": "CM03248403",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Maria Del Carmen Moreno Rodriguez",
+      "licencia": "CM03352578",
+      "hcp": 20.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 23,
+      "name": "Elena Ponte Chamorro",
+      "licencia": "CM03917611",
+      "hcp": 19.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Maria Victoria Saavedra Perez",
+      "licencia": "CM87622721",
+      "hcp": 26.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Pilar Sanchez Vilches",
+      "licencia": "CM15813476",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Maria Jose Tarascon Baldasano",
+      "licencia": "CM41183079",
+      "hcp": 24.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Mercedes Tarascon Baldasano",
+      "licencia": "CM02152083",
+      "hcp": 32.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Lourdes Vallarino Maestro",
+      "licencia": "CM03111602",
+      "hcp": 7.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 29,
+      "name": "Maria Cruz Yepes Temiño",
+      "licencia": "CM03193063",
+      "hcp": 13.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Marta Yepes Temiño",
+      "licencia": "CM03941297",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Emilia Martin Sanchez",
+      "licencia": "CM41795219",
+      "hcp": 32.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Francis Alcantara Torres",
+      "licencia": "CMC2888436",
+      "hcp": 25,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Encarnacion Galdamez Nuñez",
+          "hcp": 15.5,
+          "ins": "2445874",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Belinda Hernandez Fernandez",
+          "hcp": 30.5,
+          "ins": "2445878",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Elena Ponte Chamorro",
+          "hcp": 19.5,
+          "ins": "2445890",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Rocio Meana Mañes",
+          "hcp": 29,
+          "ins": "2445888",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Maria Victoria Saavedra Perez",
+          "hcp": 26.9,
+          "ins": "2445891",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Pilar Sanchez Vilches",
+          "hcp": 28,
+          "ins": "2445892",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Sonia Fernandez Menor",
+          "hcp": 36,
+          "ins": "2445873",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Carmen Alonso Aviles",
+          "hcp": 36,
+          "ins": "2445863",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Julia Garcia Morillas",
+          "hcp": 30.8,
+          "ins": "2445875",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Maria Jose Tarascon Baldasano",
+          "hcp": 24.4,
+          "ins": "2445893",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Mercedes Tarascon Baldasano",
+          "hcp": 32.7,
+          "ins": "2445894",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Maria Cruz Yepes Temiño",
+          "hcp": 13.2,
+          "ins": "2445896",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Carlota Bachiller Marco",
+          "hcp": 1.2,
+          "ins": "2445866",
+          "jid": "72938",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Georgina Herrera Rubio",
+          "hcp": 4.8,
+          "ins": "2445879",
+          "jid": "72938",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Lourdes Vallarino Maestro",
+          "hcp": 7.9,
+          "ins": "2445895",
+          "jid": "72938",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Beatriz Alvarez Alonso",
+          "hcp": 11.9,
+          "ins": "2445864",
+          "jid": "72938",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Maria Elena Delgado Palomar",
+          "hcp": 15.5,
+          "ins": "2445868",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Anita Larrasa Galvan",
+          "hcp": 19.5,
+          "ins": "2445883",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Estela De Pedro Santamaria",
+          "hcp": 19.8,
+          "ins": "2445867",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Maria Teresa Diaz Bellostas",
+          "hcp": 20.4,
+          "ins": "2445870",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Maria Del Carmen Moreno Rodriguez",
+          "hcp": 20.6,
+          "ins": "2445889",
+          "jid": "72938",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Elena Manzanero Carrasco",
+          "hcp": 20.9,
+          "ins": "2445886",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Elena Martinez Llano",
+          "hcp": 23.8,
+          "ins": "2445887",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Adriangela Dornaleteche Uguina",
+          "hcp": 23.9,
+          "ins": "2445872",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Francis Alcantara Torres",
+          "hcp": 25,
+          "ins": "2445899",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Consuelo Azabal Arroyo",
+          "hcp": 25.3,
+          "ins": "2445865",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "Natalia Jimenez Toro",
+          "hcp": 26.9,
+          "ins": "2445880",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "Cristina Diaz Bellostas",
+          "hcp": 27.6,
+          "ins": "2445869",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "Emilia Martin Sanchez",
+          "hcp": 32.1,
+          "ins": "2445898",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Ana Maria Garcia-Pagan Garcia",
+          "hcp": 36,
+          "ins": "2445877",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Marta Yepes Temiño",
+          "hcp": 36,
+          "ins": "2445897",
+          "jid": "72938",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Monica Dominguez Fernandez",
+          "hcp": 36,
+          "ins": "2445871",
+          "jid": "72938",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -45,7 +564,7 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/pdf/1985466331_normativa_torneo_damas_barberan.pdf"
-  ],
-  "horariosScrapedAt": "2026-11-09T12:44:17.040Z"
+    "/uploads/competiciones/pdf/1985466331_normativa_torneo_damas_barberan.pdf",
+    "/uploads/competiciones/pdf/56941328_arb_reg_loc_cm03_2019.pdf"
+  ]
 }
