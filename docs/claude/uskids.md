@@ -687,6 +687,9 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
   ⚠ **No `GetMeta`, `registered` conta os WD; `active` não** (16/11/2026: 23 de 1318 flights diferentes). O
   `inscritos` do `uskids-field.json` é o `active` desde então (`f.active ?? f.registered`); antes gravava-se o
   `registered` e a contagem ficava acima do nº de nomes.
+  Os desistentes não se perdem (Mariana, 16/11/2026): os WD (status 8) entram em `removed` com `wd: true`, mesmo
+  os nunca vistos inscritos; `removed` fica até o torneio sair do ficheiro (já não há janela de 60 dias); e cada
+  escalão grava `desistentes` = `registered − active`.
   Nesse dia, lido no browser: Spanish Open (23132) só com uma mudança — Antonio Klabin Basilio (Boys 12) **WD** →
   passado à mão para `removed` no `uskids-field.json`; Holiday Classic (23670) Boys 12 igual (39).
 
