@@ -1279,6 +1279,8 @@ const srOldBlancas = [479,403,363,405,161,327,156,447,390,376,418,152,343,466,39
 const srOldAmarillas = [452,379,341,388,155,313,148,446,367,357,397,130,317,448,390,172,441,385]; // 6026 m
 const srOldAzules = [442,372,334,382,144,303,125,389,366,343,391,116,274,408,284,155,430,304]; // 5562 m
 const srOldRojas = [403,326,271,287,110,262,107,389,309,287,306,92,272,407,284,102,356,304]; // 4874 m
+// Spanish Open USKids 2026, «SO26 - METERS» (16/11/2026): tee 5 = 4916 m.
+const srOldUskids5 = [403,326,271,287,110,262,125,389,309,287,306,116,272,407,284,102,356,304]; // 4916 m
 const srOldTees: Tee[] = [
   { teeId: "srOld-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
     ratings: { holes18: { par: 72, courseRating: 74.1, slopeRating: 133 } },
@@ -1298,6 +1300,14 @@ const srOldTees: Tee[] = [
   { teeId: "srOld-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
     ratings: { holes18: { par: 72, courseRating: 66.4, slopeRating: 120 } },
     holes: vHoles(srOldPar, srOldRojas, srOldSI1), distances: vDist(srOldRojas) },
+  // Spanish Open USKids 2026 — tee 5 (Boys 12, Girls 13-14 e 15-18): as Rojas com os
+  // par 3 do 7 e do 12 nas Azules (125 e 116 m); 4916 m. CR/Slope oficiais da prova.
+  { teeId: "srOld-uskids5-m", sex: "M", teeName: "USKids 5 (SO26)", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 66.4, slopeRating: 120 } },
+    holes: vHoles(srOldPar, srOldUskids5, srOldSI1), distances: vDist(srOldUskids5) },
+  { teeId: "srOld-uskids5-f", sex: "F", teeName: "USKids 5 (SO26)", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 71.3, slopeRating: 121 } },
+    holes: vHoles(srOldPar, srOldUskids5, srOldSI1), distances: vDist(srOldUskids5) },
 ];
 const srNewPar = [4,5,4,3,4,4,5,3,4,4,5,4,3,4,4,5,3,4];
 const srNewSI = [13,15,9,7,17,5,1,11,3,16,2,18,14,4,8,10,12,6];
@@ -1306,6 +1316,9 @@ const srNewBlancas = [365,473,316,164,334,316,513,188,372,318,515,279,160,403,37
 const srNewAmarillas = [332,454,289,144,307,284,479,161,359,297,481,252,137,367,358,405,137,332]; // 5575 m
 const srNewAzules = [302,418,271,112,283,257,432,132,326,267,439,215,113,335,334,367,111,296]; // 5010 m
 const srNewRojas = [259,367,253,108,257,238,404,110,304,232,410,193,93,325,324,367,86,263]; // 4593 m
+// Spanish Open USKids 2026, «SO26 - METERS» (16/11/2026): tee 6 = as Amarillas com o
+// 1 a 322 m (5565 m); tee 4 = as Rojas (4593 m).
+const srNewUskids6 = [322,454,289,144,307,284,479,161,359,297,481,252,137,367,358,405,137,332]; // 5565 m
 const srNewTees: Tee[] = [
   { teeId: "srNew-negras-m", sex: "M", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
     ratings: { holes18: { par: 72, courseRating: 74.7, slopeRating: 137 } },
@@ -1327,6 +1340,16 @@ const srNewTees: Tee[] = [
     holes: vHoles(srNewPar, srNewAzules, srNewSI), distances: vDist(srNewAzules) },
   { teeId: "srNew-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
     ratings: { holes18: { par: 72, courseRating: 69, slopeRating: 127 } },
+    holes: vHoles(srNewPar, srNewRojas, srNewSI), distances: vDist(srNewRojas) },
+  // Spanish Open USKids 2026 — CR/Slope oficiais da prova («SO26 - CR and SLOPE»).
+  // Tee 6 (Boys 13-14 e 15-18): 69,5/132, o das Amarillas M.
+  { teeId: "srNew-uskids6-m", sex: "M", teeName: "USKids 6 (SO26)", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 69.5, slopeRating: 132 } },
+    holes: vHoles(srNewPar, srNewUskids6, srNewSI), distances: vDist(srNewUskids6) },
+  // Tee 4 (Boys 10 e 11): as Rojas, 4593 m, com 66,7/121 — a USKids dá às Rojas o
+  // rating que a RFEG publica para as Azules M (5010 m); fica o da prova.
+  { teeId: "srNew-uskids4-m", sex: "M", teeName: "USKids 4 (SO26)", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 66.7, slopeRating: 121 } },
     holes: vHoles(srNewPar, srNewRojas, srNewSI), distances: vDist(srNewRojas) },
 ];
 

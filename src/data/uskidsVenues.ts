@@ -5,7 +5,9 @@
  * SAN ROQUE… vamos ter uma ideia do campo que vamos jogar»).
  *
  * Sem isto o Kids 2 («O Campo», «🔮 Previsão») usava o campo da edição
- * anterior (Spanish Open 2025 = Alto Golf).
+ * anterior (Spanish Open 2025 = Alto Golf). Quando a USKids publica os metros e o
+ * CR/Slope de cada escalão, o tee oficial entra em `teeOficial` (16/11/2026:
+ * Spanish Open 2026, «SO26 - METERS» e «SO26 - CR and SLOPE»).
  */
 import { METROS_POR_JARDA } from "../utils/jardas";
 
@@ -44,6 +46,11 @@ export const USKIDS_SEDES: Record<number, {
   /** Campo de cada escalão (nome USKids → courseKey); os outros vão para `resto`. */
   porEscalao?: Record<string, string>;
   resto?: string;
+  /** Tee OFICIAL de cada escalão (teeId num dos campos do escalão), quando a
+   *  USKids publica as distâncias e o CR/Slope; ganha à estimativa pela grelha. */
+  teeOficial?: Record<string, string>;
+  /** De onde vêm os tees oficiais (vai para a nota). */
+  fonteOficial?: string;
   nota: string;
 }> = {
   // Spanish Open 2026 (20–22/11): «this year's championship will feature two
@@ -62,6 +69,19 @@ export const USKIDS_SEDES: Record<number, {
       "Girls 15-18": "away-the-san-roque-club-old",
     },
     resto: "away-san-roque",
+    // «SO26 - METERS» e «SO26 - CR and SLOPE» da USKids (Mariana, 16/11/2026).
+    // Boys 9 e Girls 11-12 (tee 3, 3964 m) não têm CR/Slope publicado — ficam
+    // pela grelha; os de 9 buracos também.
+    teeOficial: {
+      "Boys 12": "srOld-uskids5-m",
+      "Girls 13-14": "srOld-uskids5-f",
+      "Girls 15-18": "srOld-uskids5-f",
+      "Boys 13-14": "srNew-uskids6-m",
+      "Boys 15-18": "srNew-uskids6-m",
+      "Boys 10": "srNew-uskids4-m",
+      "Boys 11": "srNew-uskids4-m",
+    },
+    fonteOficial: "distâncias e CR/Slope oficiais da USKids («SO26 - METERS» e «SO26 - CR and SLOPE», 16/11/2026)",
     nota: "Spanish Open 2026: Boys 12, Girls 13-14 e Girls 15-18 no The San Roque Club (Old Course); os outros escalões no San Roque Golf & Resort (New Course)",
   },
 };
@@ -81,8 +101,23 @@ export function teeDaSede<C extends { courseKey: string; master: { name: string;
   t: number, escalao: string, courses: readonly C[],
 ): { course: C; tee: C["master"]["tees"][number]; nota: string } | null {
   const sede = USKIDS_SEDES[t];
+  if (!sede) return null;
+  const oficial = sede.teeOficial?.[escalao];
+  if (oficial) {
+    for (const key of camposDoEscalao(sede, escalao)) {
+      const course = courses.find((c) => c.courseKey === key);
+      const tee = course?.master.tees.find((x) => (x as { teeId?: string }).teeId === oficial);
+      if (course && tee) {
+        return {
+          course,
+          tee,
+          nota: `${sede.nota}. Tee de ${escalao} pelas ${sede.fonteOficial ?? "distâncias oficiais"}: ${course.master.name} · ${tee.teeName}, ${tee.distances.total ?? 0} m.`,
+        };
+      }
+    }
+  }
   const faixa = uskidsIntlYardage(escalao);
-  if (!sede || !faixa || faixa.holes !== 18) return null;
+  if (!faixa || faixa.holes !== 18) return null;
   const alvo = (faixa.min + faixa.max) / 2;
   let best: { course: C; tee: C["master"]["tees"][number]; d: number } | null = null;
   for (const key of camposDoEscalao(sede, escalao)) {
