@@ -542,6 +542,12 @@ carregar `tour`/`type` por torneio.
 - Configurar: editar array `TOURNAMENTS`: `{ t: "21080" }`
 - Após download: copiar para `public/data/` e atualizar `TORNEIOS_COMPLETOS_COUNT` em `src/data/uskidsResultsLoader.ts` (actualmente **41**)
 
+**uskids-consola-numeros-novos.js** (`scripts/`, 16/11/2026) — a descoberta de números novos **à mão**, enquanto os
+workflows estão pausados pela recusa (403). A Mariana cola-o na consola de uma página do signupanytime aberta por ela;
+faz o `GetMeta` como a página, um número de cada vez, 4 s entre pedidos, e pára à primeira recusa, a 25 vazios seguidos
+ou aos 150 pedidos. No fim copia os torneios no formato das `entradas` do `uskids-tcode-catalog.json` (com o `t`),
+para ela os colar no chat e entrarem na app. Mudar o `INICIO` para o número a seguir ao último do catálogo.
+
 ### Torneios no member-history (`ALL_TCODES` em fetch-uskids-member-history.js)
 
 Os torneios a processar estão em `ALL_TCODES`; os flights Boys 9-13 de cada
