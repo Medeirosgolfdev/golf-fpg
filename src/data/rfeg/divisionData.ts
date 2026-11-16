@@ -130,6 +130,23 @@ export function buildAdmissions(data: RFEGDetail): FpgAdmissions {
   };
 }
 
+/** As inscrições de UM sexo (NextCaddy: a lista é do tour inteiro, rapazes e
+ *  raparigas juntos — os separadores M/F mostravam todos). `sexoPorLic` = o sexo
+ *  da categoria em que cada licença jogou; sem sexo conhecido fica no M, como na
+ *  classificação. */
+export function admissionsDoSexo(adm: FpgAdmissions, sexoPorLic: Map<string, "M" | "F">, sx: "M" | "F"): FpgAdmissions {
+  const players = (adm.players ?? []).filter((p) => {
+    const s = p.sex ?? (p.fed ? sexoPorLic.get(p.fed.trim().toUpperCase()) : undefined);
+    return (s ?? "M") === sx;
+  });
+  return {
+    ...adm,
+    players,
+    totalInscritos: players.filter((p) => p.status === "confirmed").length,
+    reservas: players.filter((p) => p.status === "reserva").length,
+  };
+}
+
 /** Links dos resultados originais — o RFEGolf publica ~65% dos resultados só em
  *  PDF. Cada grupo de resultados traz o seu pdfUrl; juntamos os únicos como
  *  links de acção no header (o CircuitShell desenha-os via division.links). */

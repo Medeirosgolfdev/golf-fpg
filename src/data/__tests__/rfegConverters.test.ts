@@ -12,7 +12,7 @@ import federadosRaw from "../../../public/data/federados.json?raw";
 import indexRaw from "../../../public/data/rfegolf-resultats-index.json?raw";
 import twinsRaw from "../../../public/data/rfegolf-lgs-twins.json?raw";
 import { loadRfegDivisionData, type RfegDivisionData } from "../rfeg/divisionData";
-import { rfegRoundDraw } from "../rfeg/roundDraw";
+import { rfegRoundDraw, drawDoSexo } from "../rfeg/roundDraw";
 import { buildRfegEntries } from "../rfeg/entries";
 import { ageToSubN, escaloEsForPlayer } from "../rfeg/escalao";
 import { rfegPlayerFlag } from "../rfeg/flags";
@@ -317,6 +317,11 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
     // Cada jogador tem o tee dele (metros) — os três tees da prova.
     const tees = new Set(r1.draw!.groups!.flatMap((g) => g.players).map((p) => p.tee).filter(Boolean));
     expect([...tees].sort()).toEqual(["5061 m", "5345 m", "5649 m"]);
+    // Um só horário para o tour inteiro → cada separador M/F só com o seu sexo.
+    const m = drawDoSexo(r1.draw!, r1.playersDB, "M"), f = drawDoSexo(r1.draw!, r1.playersDB, "F");
+    expect([m.totalJogadores, f.totalJogadores]).toEqual([33, 6]);
+    expect(f.groups!.flatMap((g) => g.players).some((p) => p.nome.startsWith("Jessica Roskosch"))).toBe(true);
+    expect(m.groups!.flatMap((g) => g.players).some((p) => p.nome.startsWith("Jessica Roskosch"))).toBe(false);
   });
 });
 

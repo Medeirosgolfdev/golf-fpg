@@ -24,8 +24,8 @@ import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import type { RFEGIndexEntry, DobLookup, HcpLookup } from "../data/rfeg/types";
 import { lgsScorecardOptions } from "../data/rfeg/toTournament";
 import { rfegSex } from "../data/rfeg/entries";
-import { rfegRoundDraw } from "../data/rfeg/roundDraw";
-import { loadRfegDivisionData } from "../data/rfeg/divisionData";
+import { rfegRoundDraw, drawDoSexo } from "../data/rfeg/roundDraw";
+import { loadRfegDivisionData, admissionsDoSexo } from "../data/rfeg/divisionData";
 import type { TotalsPlayer } from "../data/model/types";
 import { RankingTable, nameCell, type RankingCol } from "../ui/ranking/RankingPage";
 import { useRfegData } from "../data/rfeg/useRfegData";
@@ -309,12 +309,32 @@ async function rfegLoadDivisions(
   // NextCaddy junta rapazes e raparigas no MESMO tour → 2 tabs M/F (só gross).
   if (d.bySex && results) {
     const escLbl = t.category ?? division.escalao;
+    // Sexo de cada licença: o da categoria em que jogou (classificação e draw).
+    const sexoPorLic = new Map<string, "M" | "F">();
+    for (const rd of roundDraws) {
+      for (const [lic, info] of Object.entries(rd.playersDB)) {
+        const s = (info as { sex?: string }).sex;
+        if (s === "M" || s === "F") sexoPorLic.set(lic.trim().toUpperCase(), s);
+      }
+    }
+    for (const sx of ["M", "F"] as const) {
+      for (const p of d.bySex[sx]) {
+        const lic = (p as FPGPlayer & { fed?: string }).fed;
+        const s = (p as FPGPlayer & { _sex?: string })._sex;
+        if (lic && (s === "M" || s === "F")) sexoPorLic.set(lic.trim().toUpperCase(), s);
+      }
+    }
     const mkSex = (sx: "M" | "F", plist: FPGPlayer[]): CircuitDivision => ({
       ...division,
       key: sx,
       sex: sx,
       tabLabel: `${escLbl} ${sx}`,
       results: { ...results, players: plist, playerCount: plist.length },
+      // Inscrições e horário do NextCaddy são do tour inteiro: cada separador só com o seu sexo.
+      admissions: d.admissions ? admissionsDoSexo(d.admissions, sexoPorLic, sx) : d.admissions,
+      roundDraws: roundDraws.length
+        ? roundDraws.map((rd) => ({ ...rd, draw: drawDoSexo(rd.draw, rd.playersDB, sx) }))
+        : undefined,
     });
     return [mkSex("M", d.bySex.M), mkSex("F", d.bySex.F)].map(withDivisionModel);
   }

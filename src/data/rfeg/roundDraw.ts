@@ -41,6 +41,22 @@ export interface RfegRoundDraw {
   tournamentDate: string | null;
 }
 
+/** O draw de UM sexo. O NextCaddy publica um só horário para o tour inteiro
+ *  (rapazes e raparigas juntos); nos separadores «Juvenil M»/«Juvenil F» cada um
+ *  mostrava os 39 (Circuito Zona E, Granada 14/11/2026). O sexo é o da categoria
+ *  em que jogou (playersDB, `NcDrawInfo.sex`); sem sexo conhecido fica no M,
+ *  como na classificação (`bySex`). Grupos que ficam vazios saem. */
+export function drawDoSexo(draw: FpgDraw, playersDB: PlayersDB, sx: "M" | "F"): FpgDraw {
+  const sexoDe = (fed: string | null | undefined): "M" | "F" | null => {
+    const s = fed ? (playersDB[fed] as { sex?: string } | undefined)?.sex : undefined;
+    return s === "M" || s === "F" ? s : null;
+  };
+  const groups = (draw.groups ?? [])
+    .map((g) => ({ ...g, players: g.players.filter((p) => (sexoDe(p.fed) ?? "M") === sx) }))
+    .filter((g) => g.players.length > 0);
+  return { ...draw, groups, totalJogadores: somaDe(groups, (g) => g.players.length) };
+}
+
 /** Os horários de todas as voltas, seja qual for a fonte. */
 export function rfegHorarios(detail: RfegDrawDetail): NCHorario[] | null {
   return detail._ncHorarios ?? lgsHorariosToHorarios(detail._lgsHorarios)
