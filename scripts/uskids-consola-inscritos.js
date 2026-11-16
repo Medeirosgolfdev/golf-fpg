@@ -57,8 +57,15 @@
   async function pedir(op, extra) {
     if (recusa || pedidos >= MAX_PEDIDOS) return null;
     pedidos++;
-    const r = await fetch(`/plugins/links/admin/LinksAJAX.aspx?op=${op}&${extra}&jbgr=${Math.floor(Date.now() / 1000)}&c=1`, { method: "POST" });
-    const txt = (await r.text()).trim();
+    let r, txt;
+    try {
+      r = await fetch(`/plugins/links/admin/LinksAJAX.aspx?op=${op}&${extra}&jbgr=${Math.floor(Date.now() / 1000)}&c=1`, { method: "POST" });
+      txt = (await r.text()).trim();
+    } catch (err) {
+      // Rede em baixo: pára como numa recusa (e grava o que já há), em vez de rebentar sem gravar.
+      recusa = { op, extra, status: 0, erro: String(err) };
+      return null;
+    }
     await dormir(PAUSA_MS);
     if ([403, 429, 503].includes(r.status) || /too many requests/i.test(txt)) { recusa = { op, extra, status: r.status }; return null; }
     if (!txt) return {};
@@ -67,6 +74,21 @@
 
   const alteracoes = [];
   const feitos = [];
+  let gravacoes = 0;
+  function gravar(parcial) {
+    const agora = new Date();
+    const carimbo = `${agora.toISOString().slice(0, 10)}-${String(agora.getHours()).padStart(2, "0")}${String(agora.getMinutes()).padStart(2, "0")}`;
+    const ficheiro = { gerado_em: agora.toISOString(), fonte: "consola do browser (scripts/uskids-consola-inscritos.js)", parcial: !!parcial, recusa, pedidos, torneios: [...feitos], alteracoes: [...alteracoes], respostas };
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(ficheiro)], { type: "application/json" }));
+    a.download = `uskids-inscritos-${carimbo}${parcial ? "-parcial" : ""}${gravacoes++ ? `-${gravacoes}` : ""}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    console.log(`💾 Gravado: ${a.download} (${feitos.length} torneios, pasta Transferências).`);
+  }
+  // A meio, para gravar o que já veio sem parar: escrever  uskidsGravar()  na consola.
+  window.uskidsGravar = () => gravar(true);
+  console.log("ℹ️ Para gravar a meio, sem parar: escreve  uskidsGravar()  e Enter.");
+  try {
   for (const tor of torneios) {
     if (recusa || pedidos >= MAX_PEDIDOS) break;
     const prev = prevPorT.get(tor.t);
@@ -115,19 +137,18 @@
     feitos.push({ t: tor.t, modo: todosComNomes ? "completo" : "contagens" });
     console.log(`✓ ${nomeT} (t=${tor.t}) · ${pedidos} pedidos até agora`);
   }
+  } catch (err) {
+    console.error("❌ Erro inesperado — gravo o que já veio:", err);
+  } finally {
 
   // ── 3. Resultado ──────────────────────────────────────────────────────────
-  if (recusa) console.warn(`⛔ A USKids recusou (HTTP ${recusa.status}) no pedido ${recusa.op} ${recusa.extra} — parei aqui. Não voltes a correr hoje.`);
+  if (recusa) console.warn(recusa.status
+    ? `⛔ A USKids recusou (HTTP ${recusa.status}) no pedido ${recusa.op} ${recusa.extra} — parei aqui. Não voltes a correr hoje.`
+    : `⛔ Falhou a ligação (${recusa.erro}) no pedido ${recusa.op} ${recusa.extra} — parei aqui e gravo o que já veio.`);
   if (pedidos >= MAX_PEDIDOS) console.warn(`⚠️ Parei no tecto de ${MAX_PEDIDOS} pedidos.`);
   console.log(`📊 ${feitos.length} de ${torneios.length} torneios vistos · ${pedidos} pedidos · ${alteracoes.length} alterações`);
   if (alteracoes.length) console.table(alteracoes); else console.log("Sem alterações aos inscritos.");
 
-  const agora = new Date();
-  const carimbo = `${agora.toISOString().slice(0, 10)}-${String(agora.getHours()).padStart(2, "0")}${String(agora.getMinutes()).padStart(2, "0")}`;
-  const ficheiro = { gerado_em: agora.toISOString(), fonte: "consola do browser (scripts/uskids-consola-inscritos.js)", recusa, pedidos, torneios: feitos, alteracoes, respostas };
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(ficheiro)], { type: "application/json" }));
-  a.download = `uskids-inscritos-${carimbo}.json`;
-  document.body.appendChild(a); a.click(); a.remove();
-  console.log(`💾 Gravado: ${a.download} (pasta Transferências).`);
+  gravar(false);
+  }
 })();
