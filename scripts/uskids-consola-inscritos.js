@@ -1,0 +1,133 @@
+// scripts/uskids-consola-inscritos.js — inscritos dos torneios USKids, À MÃO, no browser
+// (16/11/2026, Mariana: «e agora o script para colar na consola e ter os inscritos? é melhor fazeres
+// com que ele grave um ficheiro» + «quero também saber se há alterações aos inscritos que já temos
+// de todos os torneios»).
+//
+// Os workflows estão pausados: o signupanytime recusa (HTTP 403) os pedidos feitos sem browser
+// (docs/claude/uskids.md). Este script corre na consola do browser dela, numa página do
+// signupanytime aberta por ela, e faz os mesmos pedidos que a página faz — devagar (3 s entre
+// pedidos) e parando à primeira recusa.
+//
+//   1. Vai buscar à app (golf-fpg.vercel.app, CORS aberto) a lista de torneios e os inscritos que
+//      já temos.
+//   2. Para cada torneio que ainda não acabou: o resumo (GetMeta — inscritos por escalão) e, nos
+//      escalões Boys 9–13 (os que a app guarda com nomes), a lista de nomes (GetPlayerTeeTimes) —
+//      sempre nos torneios seguidos todos os dias e nos do Manuel; nos outros só onde o número
+//      mudou ou ainda não temos nomes. É a mesma regra do fetch-uskids-field.js («contagens»).
+//   3. Mostra as alterações (quem entrou, quem saiu, quem desistiu — WD — e os números que mudaram).
+//   4. Descarrega um ficheiro `uskids-inscritos-AAAA-MM-DD-HHMM.json` com as respostas tal como
+//      vieram (aparadas ao que a app usa), que a app lê com:
+//        node scripts/fetch-uskids-field.js --replay <ficheiro>
+//
+// Como usar: abrir https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=23132
+// → F12 → Consola → colar → Enter. ~150 pedidos, ~8 minutos.
+(async () => {
+  const APP = "https://golf-fpg.vercel.app/data";
+  const PAUSA_MS = 3000;
+  const MAX_PEDIDOS = 400;
+  const PREFIXOS_NOMES = ["boys 9", "boys 10", "boys 11", "boys 12", "boys 13"];
+  const comNomes = (nome) => PREFIXOS_NOMES.some(p => String(nome || "").toLowerCase().startsWith(p));
+  const norm = (s) => String(s || "").toLowerCase().trim().replace(/\s+/g, " ");
+  const dormir = (ms) => new Promise(r => setTimeout(r, ms));
+  const dataISO = (s) => { const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s || ""); return m ? `${m[3]}-${m[1].padStart(2, "0")}-${m[2].padStart(2, "0")}` : null; };
+  const ontem = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+
+  // ── 1. O que a app já tem ────────────────────────────────────────────────
+  const [field, cache] = await Promise.all([
+    fetch(`${APP}/uskids-field.json`, { cache: "no-store" }).then(r => r.json()),
+    fetch(`${APP}/uskids-discovery-cache.json`, { cache: "no-store" }).then(r => r.json()),
+  ]);
+  const prevPorT = new Map(field.torneios.map(t => [t.t, t]));
+  const lista = new Map();
+  for (const t of [...cache.torneios, ...field.torneios]) {
+    const d = dataISO(t.date_inicio);
+    if (d && d >= ontem && !lista.has(t.t)) lista.set(t.t, t);
+  }
+  const doManuel = (p) => (p?.escaloes || []).some(e => (e.jogadores || []).some(j => /manuel.*medeiros/i.test(j.nome)));
+  const torneios = [...lista.values()].sort((a, b) => {
+    const pa = prevPorT.get(a.t), pb = prevPorT.get(b.t);
+    const ka = (pa?.seguido || doManuel(pa)) ? 0 : 1, kb = (pb?.seguido || doManuel(pb)) ? 0 : 1;
+    return ka - kb || (dataISO(a.date_inicio) || "").localeCompare(dataISO(b.date_inicio) || "");
+  });
+  console.log(`📋 ${torneios.length} torneios por jogar (os seguidos e os do Manuel primeiro).`);
+
+  // ── 2. Pedidos, como a página os faz ─────────────────────────────────────
+  let pedidos = 0, recusa = null;
+  const respostas = {};
+  async function pedir(op, extra) {
+    if (recusa || pedidos >= MAX_PEDIDOS) return null;
+    pedidos++;
+    const r = await fetch(`/plugins/links/admin/LinksAJAX.aspx?op=${op}&${extra}&jbgr=${Math.floor(Date.now() / 1000)}&c=1`, { method: "POST" });
+    const txt = (await r.text()).trim();
+    await dormir(PAUSA_MS);
+    if ([403, 429, 503].includes(r.status) || /too many requests/i.test(txt)) { recusa = { op, extra, status: r.status }; return null; }
+    if (!txt) return {};
+    try { return JSON.parse(txt); } catch { return null; }
+  }
+
+  const alteracoes = [];
+  const feitos = [];
+  for (const tor of torneios) {
+    if (recusa || pedidos >= MAX_PEDIDOS) break;
+    const prev = prevPorT.get(tor.t);
+    const completo = !prev || prev.seguido || doManuel(prev);
+    const nAlteracoes = alteracoes.length;
+    const meta = await pedir("GetMeta", `t=${tor.t}`);
+    if (!meta) continue;
+    respostas[`GetMeta:${tor.t}`] = { tournament: meta.tournament, age_groups: meta.age_groups, flights: meta.flights };
+    const nomeT = meta.tournament?.name || tor.name;
+    const flights = meta.flights || {};
+    const porAG = {};
+    for (const [fid, f] of Object.entries(flights)) if (!porAG[f.age_group]) porAG[f.age_group] = { fid, f };
+    let todosComNomes = true, incompleto = false;
+    for (const [ag, { fid, f }] of Object.entries(porAG)) {
+      const esc = meta.age_groups?.[ag]?.name || `age_group_${ag}`;
+      const inscr = f.registered || 0;
+      const ePrev = (prev?.escaloes || []).find(e => e.age_group === Number(ag));
+      if (ePrev && ePrev.inscritos !== inscr) alteracoes.push({ torneio: nomeT, escalao: esc, antes: ePrev.inscritos, agora: inscr, entraram: "", sairam: "" });
+      if (!prev) alteracoes.push({ torneio: nomeT, escalao: esc, antes: "(novo)", agora: inscr, entraram: "", sairam: "" });
+      if (!comNomes(esc) || inscr <= 0) continue;
+      const precisa = completo || !ePrev || !ePrev.jogadores || ePrev.inscritos !== inscr;
+      if (!precisa) { todosComNomes = false; continue; }
+      const d = await pedir("GetPlayerTeeTimes", `f=${fid}&r=1&p=1&t=0`);
+      // Sem esta lista (recusa ou tecto a meio), o torneio NÃO vai no ficheiro: a app apagaria os
+      // nomes que já tem deste escalão. Fica como está e vê-se na próxima vez.
+      if (!d) { incompleto = true; break; }
+      const fp = {};
+      for (const [pid, p] of Object.entries(d.flight_players || {})) fp[pid] = { first: p.first, last: p.last, country: p.country, place: p.place, status: p.status };
+      respostas[`GetPlayerTeeTimes:${fid}`] = { flight_players: fp };
+      if (ePrev?.jogadores) {
+        const antes = new Set(ePrev.jogadores.map(j => norm(j.nome)));
+        const ativos = Object.values(fp).filter(p => p.status === 1).map(p => `${p.first || ""} ${p.last || ""}`.trim());
+        const agora = new Set(ativos.map(norm));
+        const wd = Object.values(fp).filter(p => p.status === 8).map(p => `${p.first || ""} ${p.last || ""}`.trim());
+        const entraram = ativos.filter(n => !antes.has(norm(n)));
+        const sairam = ePrev.jogadores.map(j => j.nome).filter(n => !agora.has(norm(n)))
+          .map(n => wd.some(w => norm(w) === norm(n)) ? `${n} (WD)` : n);
+        if (entraram.length || sairam.length) {
+          const linha = alteracoes.find(a => a.torneio === nomeT && a.escalao === esc);
+          if (linha) { linha.entraram = entraram.join(", "); linha.sairam = sairam.join(", "); }
+          else alteracoes.push({ torneio: nomeT, escalao: esc, antes: ePrev.inscritos, agora: inscr, entraram: entraram.join(", "), sairam: sairam.join(", ") });
+        }
+      }
+    }
+    if (incompleto) { alteracoes.length = nAlteracoes; console.warn(`… ${nomeT} (t=${tor.t}) ficou a meio — não vai no ficheiro`); break; }
+    feitos.push({ t: tor.t, modo: todosComNomes ? "completo" : "contagens" });
+    console.log(`✓ ${nomeT} (t=${tor.t}) · ${pedidos} pedidos até agora`);
+  }
+
+  // ── 3. Resultado ──────────────────────────────────────────────────────────
+  if (recusa) console.warn(`⛔ A USKids recusou (HTTP ${recusa.status}) no pedido ${recusa.op} ${recusa.extra} — parei aqui. Não voltes a correr hoje.`);
+  if (pedidos >= MAX_PEDIDOS) console.warn(`⚠️ Parei no tecto de ${MAX_PEDIDOS} pedidos.`);
+  console.log(`📊 ${feitos.length} de ${torneios.length} torneios vistos · ${pedidos} pedidos · ${alteracoes.length} alterações`);
+  if (alteracoes.length) console.table(alteracoes); else console.log("Sem alterações aos inscritos.");
+
+  const agora = new Date();
+  const carimbo = `${agora.toISOString().slice(0, 10)}-${String(agora.getHours()).padStart(2, "0")}${String(agora.getMinutes()).padStart(2, "0")}`;
+  const ficheiro = { gerado_em: agora.toISOString(), fonte: "consola do browser (scripts/uskids-consola-inscritos.js)", recusa, pedidos, torneios: feitos, alteracoes, respostas };
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(ficheiro)], { type: "application/json" }));
+  a.download = `uskids-inscritos-${carimbo}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  console.log(`💾 Gravado: ${a.download} (pasta Transferências).`);
+})();

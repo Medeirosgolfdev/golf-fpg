@@ -547,6 +547,19 @@ workflows estão pausados pela recusa (403). A Mariana cola-o na consola de uma 
 faz o `GetMeta` como a página, um número de cada vez, 4 s entre pedidos, e pára à primeira recusa, a 25 vazios seguidos
 ou aos 150 pedidos. No fim copia os torneios no formato das `entradas` do `uskids-tcode-catalog.json` (com o `t`),
 para ela os colar no chat e entrarem na app. Mudar o `INICIO` para o número a seguir ao último do catálogo.
+1.ª corrida (16/11/2026): 50 números (23893–23942), depois 25 vazios. Firefox: a consola só mostra as linhas com
+«Registos» ligado; o `copy()` perde-se se ela copiar o texto da consola por cima — daí o script dos inscritos gravar
+um ficheiro.
+
+**uskids-consola-inscritos.js** (`scripts/`, 16/11/2026) — os **inscritos à mão**, enquanto os workflows estão
+pausados. Na consola de uma página do signupanytime: vai buscar à app (`golf-fpg.vercel.app/data`, CORS `*`) o
+`uskids-field.json` e a `uskids-discovery-cache.json`; para cada torneio por jogar pede o `GetMeta` e, nos Boys 9–13,
+o `GetPlayerTeeTimes` (sempre nos `seguido` e nos do Manuel; nos outros só onde o número mudou ou faltam nomes — a
+regra «contagens»). 3 s entre pedidos, pára à primeira recusa, tecto 400. Mostra as alterações (entraram, saíram, WD,
+contagens) e **descarrega** `uskids-inscritos-AAAA-MM-DD-HHMM.json` (respostas aparadas ao que a app usa). Um torneio
+que fique a meio não vai no ficheiro. Aplicar: `node scripts/fetch-uskids-field.js --replay <ficheiro>` — sem browser
+nem pedidos; o resto (firstSeen, `removed`, datas pelo pid, guarda anti-encolhimento, `seguido`) é o de sempre, e os
+torneios que não vêm no ficheiro ficam como estavam (como no `--only`). Teste: `scripts/lib/uskids-replay.test.js`.
 
 ### Torneios no member-history (`ALL_TCODES` em fetch-uskids-member-history.js)
 

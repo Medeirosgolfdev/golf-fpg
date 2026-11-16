@@ -245,8 +245,25 @@ function esperarGetMeta(page, t, ms = 12000) {
   });
 }
 
+/** `--replay <ficheiro>` (16/11/2026): as respostas vêm de um ficheiro gravado pela consola do
+ *  browser (scripts/uskids-consola-inscritos.js) em vez da USKids — enquanto a fonte recusa os
+ *  pedidos feitos sem browser. Chave: `GetMeta:<t>` e `GetPlayerTeeTimes:<f>` (o `p` não conta:
+ *  um pedido traz o escalão inteiro, e os nomes repetidos deduplicam-se). */
+let REPLAY = null;
+function chaveReplay(url) {
+  const q = new URL(url, 'https://x/').searchParams;
+  const op = q.get('op');
+  return op === 'GetMeta' ? `GetMeta:${q.get('t')}` : `${op}:${q.get('f')}`;
+}
+function respostaReplay(url) {
+  const k = chaveReplay(url);
+  if (!Object.prototype.hasOwnProperty.call(REPLAY.respostas || {}, k)) throw new Error(`sem resposta no ficheiro (${k})`);
+  return JSON.parse(JSON.stringify(REPLAY.respostas[k]));
+}
+
 async function pageJSON(page, url) {
   pedidosFase2++;
+  if (REPLAY) return respostaReplay(url);
   const { status, txt } = await page.evaluate(async (u) => {
     const r = await fetch(u, { credentials: 'include' });
     return { status: r.status, txt: await r.text() };
@@ -663,18 +680,32 @@ async function main() {
   console.log(`    ${new Date().toLocaleString('pt-PT')}`);
   console.log('══════════════════════════════════════');
 
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
+  // --replay <ficheiro>: sem browser nem pedidos — ver respostaReplay.
+  const iReplay = process.argv.indexOf('--replay');
+  if (iReplay > 0) {
+    const f = process.argv[iReplay + 1];
+    try { REPLAY = JSON.parse(fs.readFileSync(f, 'utf8')); }
+    catch (err) { console.error(`❌ --replay: não consegui ler ${f}: ${err.message}`); process.exitCode = 1; return; }
+    if (!Array.isArray(REPLAY.torneios) || !REPLAY.respostas) {
+      console.error(`❌ --replay: ${f} não tem «torneios» e «respostas»`); process.exitCode = 1; return;
+    }
+    console.log(`
+📂 --replay: ${f} (${REPLAY.gerado_em}, ${REPLAY.torneios.length} torneios, ${REPLAY.pedidos} pedidos` +
+      `${REPLAY.recusa ? `, a fonte recusou a meio` : ''})`);
+  }
+  const browser = REPLAY ? null : await chromium.launch({ headless: true });
+  const context = browser && await browser.newContext({
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
   });
-  const page = await context.newPage();
+  const page = REPLAY ? { url: () => 'https://www.signupanytime.com/' } : await context.newPage();
 
   // --only t1,t2 — actualiza SÓ esses torneios: sem descoberta (Fase 1) e sem
   // tocar nos restantes. São poucos pedidos e em série, o que serve para
   // refrescar os torneios que interessam quando a fonte corta a rajada diária
   // (Set 2026: o signupanytime bloqueia qualquer IP que faça a Fase 1 inteira).
   const iOnly = process.argv.indexOf('--only');
-  const only = iOnly > 0
+  const only = REPLAY ? new Set(REPLAY.torneios.map(x => Number(x.t)))
+    : iOnly > 0
     ? new Set(String(process.argv[iOnly + 1] || '').split(',').map(Number).filter(Boolean))
     : null;
 
@@ -709,7 +740,9 @@ async function main() {
     const doManuel = new Set([...prevMap.prevTorneios.values()]
       .filter(p => (p.escaloes || []).some(e => (e.jogadores || []).some(j => /manuel.*medeiros/i.test(j.nome))))
       .map(p => p.t));
-    const plano2 = only
+    const plano2 = REPLAY
+      ? new Map(REPLAY.torneios.map(x => [Number(x.t), x.modo === 'contagens' ? 'contagens' : 'completo']))
+      : only
       ? new Map(aFazer.map(t => [t.t, 'completo']))
       : planearFase2(aFazer, prevMap.prevTorneios, { diaSemana: new Date().getUTCDay() });
     const conta = { completo: 0, contagens: 0 };
@@ -813,7 +846,7 @@ async function main() {
     console.log('══════════════════════════════════════');
 
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
   }
 }
 
