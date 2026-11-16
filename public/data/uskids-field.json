@@ -12,7 +12,7 @@
       "fee_18": "475.00",
       "tour": "International Championships Tour",
       "type": 8,
-      "total_inscritos": 164,
+      "total_inscritos": 163,
       "total_maximo": 167,
       "escaloes": [
         {
@@ -627,10 +627,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 300228,
-          "inscritos": 21,
+          "inscritos": 20,
           "maximo": 21,
-          "vagas": 0,
-          "pct_cheio": 100,
+          "vagas": 1,
+          "pct_cheio": 95,
           "jogadores": [
             {
               "nome": "Albert Piskorz",
@@ -639,15 +639,6 @@
               "pid": 1817209,
               "firstSeen": "2026-08-23T11:49:34.448Z",
               "regDia": "2026-08-07",
-              "regObs": false
-            },
-            {
-              "nome": "Antonio Klabin Basilio",
-              "pais": "BR",
-              "cidade": "Rio De Janeiro , RJ",
-              "pid": 1813418,
-              "firstSeen": "2026-08-23T11:49:34.448Z",
-              "regDia": "2026-08-04",
               "regObs": false
             },
             {
@@ -844,10 +835,6 @@
               "n": 1
             },
             {
-              "pais": "BR",
-              "n": 1
-            },
-            {
               "pais": "RU",
               "n": 1
             },
@@ -881,6 +868,11 @@
             }
           ],
           "removed": [
+            {
+              "nome": "Antonio Klabin Basilio",
+              "removedAt": "2026-11-16T14:30:00.000Z",
+              "pais": "BR"
+            },
             {
               "nome": "Hugo Strasser",
               "removedAt": "2026-10-15T12:38:57.116Z",
@@ -1182,7 +1174,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-10T15:29:46.400Z",
+      "ultima_atualizacao": "2026-11-16T14:30:00.000Z",
       "seguido": true
     },
     {

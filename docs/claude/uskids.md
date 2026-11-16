@@ -651,6 +651,15 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
   agendada para os religar. Para religar: `gh workflow enable <ficheiro>` (um a um), de preferência começando
   só pelo `uskids-field.yml` e vendo se a recusa passou antes de ligar os outros. Enquanto estiverem
   desligados os dados da USKids ficam como estavam a 10/11 (inscritos de 06/11 em 99 de 100 torneios).
+- **16/11/2026 — a recusa continua e a USKids mudou de anfitrião.** Um único `GET …LinksAJAX.aspx?op=GetMeta&t=23132`
+  a partir do PC deu **HTTP 403**. A página pública da USKids («Tournament Field») já não embebe o signupanytime:
+  o iframe é **`https://tourcaddiepro.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t={t}`**
+  (o mesmo «Links Tournament Manager», outro domínio, `ax=2739`). Aberta no browser, a lista lê-se bem (escalões
+  num `<select>`; desistências marcadas «WD» a seguir ao nome). Os scripts continuam a apontar ao
+  `www.signupanytime.com`. **Por decidir (Mariana):** passar os scripts para o domínio novo e testar UM pedido antes
+  de religar os workflows. Não se fez nenhum pedido de script ao tourcaddiepro.com.
+  Nesse dia, lido no browser: Spanish Open (23132) só com uma mudança — Antonio Klabin Basilio (Boys 12) **WD** →
+  passado à mão para `removed` no `uskids-field.json`; Holiday Classic (23670) Boys 12 igual (39).
 
 ## API Signupanytime
 
