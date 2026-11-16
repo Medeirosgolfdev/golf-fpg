@@ -684,6 +684,9 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
   continua no `GetPlayerTeeTimes` com `status: 8` (a página escreve «WD» em expoente ao lado do nome). Os nossos
   scripts só contam `status === 1` (`fetch-uskids-field.js`, `-draws`, `-results`), por isso um WD sai dos
   inscritos e o diff põe-no em `removed` — foi assim que se tratou o Klabin Basilio (16/11, `status: 8`).
+  ⚠ **No `GetMeta`, `registered` conta os WD; `active` não** (16/11/2026: 23 de 1318 flights diferentes). O
+  `inscritos` do `uskids-field.json` é o `active` desde então (`f.active ?? f.registered`); antes gravava-se o
+  `registered` e a contagem ficava acima do nº de nomes.
   Nesse dia, lido no browser: Spanish Open (23132) só com uma mudança — Antonio Klabin Basilio (Boys 12) **WD** →
   passado à mão para `removed` no `uskids-field.json`; Holiday Classic (23670) Boys 12 igual (39).
 
