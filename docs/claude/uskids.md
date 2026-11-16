@@ -567,6 +567,17 @@ escalões Boys, `GetPlayerTeeTimes&r=<volta>&p=<página>&t=0` até ter `register
 `resultados: { torneios, respostas }` do ficheiro (agora `uskids-AAAA-MM-DD-HHMM.json`), chaves `GetMeta:<t>` e
 `GetPlayerTeeTimes:<f>:<volta>:<página>`. Aplicar: `node scripts/fetch-uskids-results.js --replay <ficheiro>` (página
 não pedida = vazia). Teste: `scripts/lib/uskids-results-replay.test.js`. Tecto 900 pedidos.
+**Semanal, pelo Agendador do Windows** (16/11/2026, ela: «quero que semanalmente se veja os inscritos» → «Sim, à
+segunda 9h»; registar com `scripts/agendador/registar-uskids-consola.ps1 -Aplicar`, corre em pwsh):
+- «USKids - lembrete da consola», segunda 9:00 — `uskids-lembrete-consola.ps1`: abre a página no Firefox, põe o
+  script na área de transferência e mostra o que fazer. **Colar e Enter são dela**: pôr o Chrome a correr sozinho
+  seria contornar a protecção da USKids (ela perguntou; ficou de fora).
+- «USKids - aplicar ficheiro da consola», de 10 em 10 min — `uskids-aplicar-consola.ps1`: havendo
+  `uskids-AAAA-MM-DD-HHMM*.json` nas Transferências, aplica o mais recente (os dois `--replay`), `npm test` (repete uma
+  vez) + `npm run build`, commit/push só dos `public/data/uskids-*`, arquiva em `logs/uskids-consola/` e mostra o
+  resumo numa janela. Falhou → desfaz os dados, ficheiro em `logs/uskids-consola/falhou/`, janela de aviso. Ficheiro
+  sem torneios ou dados USKids por gravar no repo → não publica. Log: `logs/uskids-consola.log`. Testar sem janelas
+  noutra pasta: `USKIDS_CONSOLA_PASTA=<pasta> USKIDS_CONSOLA_SEM_AVISOS=1`.
 
 ### Torneios no member-history (`ALL_TCODES` em fetch-uskids-member-history.js)
 
