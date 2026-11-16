@@ -631,6 +631,7 @@
           "maximo": 21,
           "vagas": 1,
           "pct_cheio": 95,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Albert Piskorz",
@@ -871,7 +872,8 @@
             {
               "nome": "Antonio Klabin Basilio",
               "removedAt": "2026-11-16T14:30:00.000Z",
-              "pais": "BR"
+              "pais": "BR",
+              "wd": true
             },
             {
               "nome": "Hugo Strasser",
@@ -1174,7 +1176,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:02.489Z",
+      "ultima_atualizacao": "2026-11-16T17:31:20.988Z",
       "seguido": true
     },
     {
@@ -3228,6 +3230,16 @@
               "nome": "Rock Kuperman",
               "removedAt": "2026-09-23T12:45:17.168Z",
               "pais": "US"
+            },
+            {
+              "nome": "Ryan Ritchie",
+              "pais": "US",
+              "removedAt": "2026-09-15T10:20:34.489Z"
+            },
+            {
+              "nome": "Watson Mercier",
+              "pais": "US",
+              "removedAt": "2026-09-10T12:14:42.348Z"
             }
           ]
         },
@@ -3323,7 +3335,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:07.364Z",
+      "ultima_atualizacao": "2026-11-16T17:31:25.884Z",
       "seguido": true
     },
     {
@@ -3706,6 +3718,7 @@
           "maximo": 12,
           "vagas": 10,
           "pct_cheio": 17,
+          "desistentes": 1,
           "jogadores": null,
           "paises": null
         },
@@ -4174,7 +4187,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:09.394Z",
+      "ultima_atualizacao": "2026-11-16T17:31:27.917Z",
       "seguido": true
     },
     {
@@ -4451,7 +4464,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:11.414Z",
+      "ultima_atualizacao": "2026-11-16T17:31:29.951Z",
       "seguido": true
     },
     {
@@ -4746,7 +4759,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:13.464Z",
+      "ultima_atualizacao": "2026-11-16T17:31:31.979Z",
       "seguido": true
     },
     {
@@ -7874,6 +7887,7 @@
           "maximo": 12,
           "vagas": 7,
           "pct_cheio": 42,
+          "desistentes": 2,
           "jogadores": null,
           "paises": null
         },
@@ -7900,6 +7914,7 @@
           "maximo": 12,
           "vagas": 6,
           "pct_cheio": 50,
+          "desistentes": 2,
           "jogadores": [
             {
               "nome": "David Szterling",
@@ -7964,9 +7979,16 @@
           ],
           "removed": [
             {
+              "nome": "João Pedro Piccini",
+              "removedAt": "2026-11-16T17:32:44.391Z",
+              "pais": "BR",
+              "wd": true
+            },
+            {
               "nome": "Bernardo Bavaresco",
               "removedAt": "2026-11-16T17:17:11.842Z",
-              "pais": "BR"
+              "pais": "BR",
+              "wd": true
             },
             {
               "nome": "José Pedro  Gardiano",
@@ -7985,6 +8007,7 @@
           "maximo": 12,
           "vagas": 4,
           "pct_cheio": 67,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Alexandre Boaventura",
@@ -8069,7 +8092,8 @@
             {
               "nome": "Theo Ribeiro",
               "removedAt": "2026-11-16T17:17:11.842Z",
-              "pais": "BR"
+              "pais": "BR",
+              "wd": true
             }
           ]
         },
@@ -8083,6 +8107,7 @@
           "maximo": 15,
           "vagas": 3,
           "pct_cheio": 80,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Antonio Marzotto",
@@ -8198,6 +8223,14 @@
               "pais": "BR",
               "n": 12
             }
+          ],
+          "removed": [
+            {
+              "nome": "João Ramires",
+              "removedAt": "2026-11-16T17:32:44.391Z",
+              "pais": "BR",
+              "wd": true
+            }
           ]
         },
         {
@@ -8210,6 +8243,7 @@
           "maximo": 12,
           "vagas": 7,
           "pct_cheio": 42,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Antonio Azevedo",
@@ -8267,7 +8301,8 @@
             {
               "nome": "Lorenzo Almeida",
               "removedAt": "2026-11-16T17:17:11.842Z",
-              "pais": "BR"
+              "pais": "BR",
+              "wd": true
             }
           ]
         },
@@ -8281,6 +8316,7 @@
           "maximo": 16,
           "vagas": 3,
           "pct_cheio": 81,
+          "desistentes": 3,
           "jogadores": [
             {
               "nome": "Andres Argudín",
@@ -8410,17 +8446,20 @@
             {
               "nome": "Markos Peille Roumbaki",
               "removedAt": "2026-11-16T17:17:11.842Z",
-              "pais": "BR"
+              "pais": "BR",
+              "wd": true
             },
             {
               "nome": "Otávio ROCHA",
               "removedAt": "2026-11-16T17:17:11.842Z",
-              "pais": "BR"
+              "pais": "BR",
+              "wd": true
             },
             {
               "nome": "Pedro Wilhelm",
               "removedAt": "2026-11-16T17:17:11.842Z",
-              "pais": "BR"
+              "pais": "BR",
+              "wd": true
             },
             {
               "nome": "Lucas Imperatriz",
@@ -8504,11 +8543,12 @@
           "maximo": 12,
           "vagas": 10,
           "pct_cheio": 17,
+          "desistentes": 1,
           "jogadores": null,
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:15.891Z"
+      "ultima_atualizacao": "2026-11-16T17:31:34.420Z"
     },
     {
       "t": 23680,
@@ -8646,6 +8686,7 @@
           "maximo": 64,
           "vagas": 63,
           "pct_cheio": 2,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Beau  Martin",
@@ -8835,7 +8876,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:17.533Z"
+      "ultima_atualizacao": "2026-11-16T17:31:34.829Z"
     },
     {
       "t": 23429,
@@ -9060,6 +9101,7 @@
           "maximo": 30,
           "vagas": 19,
           "pct_cheio": 37,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Carson Dowst",
@@ -9166,6 +9208,14 @@
               "pais": "US",
               "n": 11
             }
+          ],
+          "removed": [
+            {
+              "nome": "Krish Phale",
+              "removedAt": "2026-11-16T17:32:44.391Z",
+              "pais": "US",
+              "wd": true
+            }
           ]
         },
         {
@@ -9178,6 +9228,7 @@
           "maximo": 30,
           "vagas": 18,
           "pct_cheio": 40,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Adam Vaughn",
@@ -9293,6 +9344,14 @@
               "pais": "US",
               "n": 12
             }
+          ],
+          "removed": [
+            {
+              "nome": "Paul  Clement Jr",
+              "removedAt": "2026-11-16T17:32:44.391Z",
+              "pais": "US",
+              "wd": true
+            }
           ]
         },
         {
@@ -9318,6 +9377,7 @@
           "maximo": 30,
           "vagas": 23,
           "pct_cheio": 23,
+          "desistentes": 2,
           "jogadores": null,
           "paises": null
         },
@@ -9387,7 +9447,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:19.982Z"
+      "ultima_atualizacao": "2026-11-16T17:31:37.279Z"
     },
     {
       "t": 23213,
@@ -9607,6 +9667,7 @@
           "maximo": 12,
           "vagas": 7,
           "pct_cheio": 42,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Eli Keen",
@@ -9664,7 +9725,8 @@
             {
               "nome": "Chandler Strain",
               "removedAt": "2026-11-16T17:17:11.842Z",
-              "pais": "US"
+              "pais": "US",
+              "wd": true
             }
           ]
         },
@@ -9678,6 +9740,7 @@
           "maximo": 64,
           "vagas": 58,
           "pct_cheio": 9,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Chance  Petersen",
@@ -9738,6 +9801,14 @@
             {
               "pais": "US",
               "n": 6
+            }
+          ],
+          "removed": [
+            {
+              "nome": "Gavin Grant",
+              "removedAt": "2026-11-16T17:32:44.391Z",
+              "pais": "US",
+              "wd": true
             }
           ]
         },
@@ -9803,6 +9874,7 @@
           "maximo": 12,
           "vagas": 9,
           "pct_cheio": 25,
+          "desistentes": 1,
           "jogadores": null,
           "paises": null
         },
@@ -9820,7 +9892,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:22.402Z"
+      "ultima_atualizacao": "2026-11-16T17:31:39.734Z"
     },
     {
       "t": 23027,
@@ -10158,6 +10230,7 @@
           "maximo": 12,
           "vagas": 1,
           "pct_cheio": 92,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Allenlichengzhen  Li",
@@ -10287,6 +10360,7 @@
           "maximo": 24,
           "vagas": 3,
           "pct_cheio": 88,
+          "desistentes": 3,
           "jogadores": [
             {
               "nome": "Alden Cook",
@@ -10542,6 +10616,7 @@
           "maximo": 15,
           "vagas": 3,
           "pct_cheio": 80,
+          "desistentes": 3,
           "jogadores": null,
           "paises": null
         },
@@ -10594,6 +10669,7 @@
           "maximo": 9,
           "vagas": 5,
           "pct_cheio": 44,
+          "desistentes": 3,
           "jogadores": null,
           "paises": null
         },
@@ -10611,7 +10687,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:23.619Z"
+      "ultima_atualizacao": "2026-11-16T17:31:40.143Z"
     },
     {
       "t": 22952,
@@ -11076,6 +11152,7 @@
           "maximo": 12,
           "vagas": 4,
           "pct_cheio": 67,
+          "desistentes": 2,
           "jogadores": null,
           "paises": null
         },
@@ -11145,7 +11222,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:24.846Z"
+      "ultima_atualizacao": "2026-11-16T17:31:40.551Z"
     },
     {
       "t": 23685,
@@ -11491,7 +11568,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:26.067Z"
+      "ultima_atualizacao": "2026-11-16T17:31:41.774Z"
     },
     {
       "t": 23616,
@@ -11529,6 +11606,7 @@
           "maximo": 54,
           "vagas": 0,
           "pct_cheio": 100,
+          "desistentes": 1,
           "jogadores": [
             {
               "nome": "Aiden Jim",
@@ -12033,6 +12111,12 @@
           ],
           "removed": [
             {
+              "nome": "David Herndon",
+              "removedAt": "2026-11-16T17:32:44.391Z",
+              "pais": "US",
+              "wd": true
+            },
+            {
               "nome": "Danilo Custer",
               "removedAt": "2026-11-16T17:17:11.842Z",
               "pais": "US"
@@ -12069,11 +12153,12 @@
           "maximo": 27,
           "vagas": 1,
           "pct_cheio": 96,
+          "desistentes": 2,
           "jogadores": null,
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:27.701Z"
+      "ultima_atualizacao": "2026-11-16T17:31:43.407Z"
     },
     {
       "t": 23455,
@@ -12540,7 +12625,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:29.739Z"
+      "ultima_atualizacao": "2026-11-16T17:31:43.815Z"
     },
     {
       "t": 23365,
@@ -12868,7 +12953,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:30.965Z"
+      "ultima_atualizacao": "2026-11-16T17:31:45.043Z"
     },
     {
       "t": 23154,
@@ -13321,7 +13406,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:33.405Z"
+      "ultima_atualizacao": "2026-11-16T17:31:47.477Z"
     },
     {
       "t": 23248,
@@ -13651,7 +13736,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:34.624Z"
+      "ultima_atualizacao": "2026-11-16T17:31:47.884Z"
     },
     {
       "t": 23398,
@@ -13888,7 +13973,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:35.028Z"
+      "ultima_atualizacao": "2026-11-16T17:31:48.292Z"
     },
     {
       "t": 23624,
@@ -14086,7 +14171,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:35.435Z"
+      "ultima_atualizacao": "2026-11-16T17:31:48.698Z"
     },
     {
       "t": 23637,
@@ -14324,7 +14409,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:36.655Z"
+      "ultima_atualizacao": "2026-11-16T17:31:49.919Z"
     },
     {
       "t": 23658,
@@ -14633,7 +14718,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:37.057Z"
+      "ultima_atualizacao": "2026-11-16T17:31:50.326Z"
     },
     {
       "t": 23708,
@@ -14903,7 +14988,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:38.297Z"
+      "ultima_atualizacao": "2026-11-16T17:31:50.732Z"
     },
     {
       "t": 23497,
@@ -15640,7 +15725,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:40.340Z"
+      "ultima_atualizacao": "2026-11-16T17:31:51.141Z"
     },
     {
       "t": 23482,
@@ -16132,7 +16217,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:41.968Z"
+      "ultima_atualizacao": "2026-11-16T17:31:51.547Z"
     },
     {
       "t": 23392,
@@ -16459,7 +16544,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:42.792Z"
+      "ultima_atualizacao": "2026-11-16T17:31:51.953Z"
     },
     {
       "t": 23286,
@@ -16916,7 +17001,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:44.409Z"
+      "ultima_atualizacao": "2026-11-16T17:31:52.360Z"
     },
     {
       "t": 23058,
@@ -17292,7 +17377,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:46.455Z"
+      "ultima_atualizacao": "2026-11-16T17:31:52.769Z"
     },
     {
       "t": 22942,
@@ -18102,7 +18187,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:47.677Z"
+      "ultima_atualizacao": "2026-11-16T17:31:53.177Z"
     },
     {
       "t": 22764,
@@ -18817,7 +18902,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:49.295Z"
+      "ultima_atualizacao": "2026-11-16T17:31:53.584Z"
     },
     {
       "t": 23730,
@@ -19102,7 +19187,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:50.524Z"
+      "ultima_atualizacao": "2026-11-16T17:31:53.993Z"
     },
     {
       "t": 23254,
@@ -19596,7 +19681,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:52.573Z"
+      "ultima_atualizacao": "2026-11-16T17:31:54.396Z"
     },
     {
       "t": 22966,
@@ -20447,7 +20532,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:54.599Z"
+      "ultima_atualizacao": "2026-11-16T17:31:54.797Z"
     },
     {
       "t": 23461,
@@ -20675,7 +20760,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:55.000Z"
+      "ultima_atualizacao": "2026-11-16T17:31:55.204Z"
     },
     {
       "t": 23570,
@@ -21284,7 +21369,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:55.820Z"
+      "ultima_atualizacao": "2026-11-16T17:31:55.606Z"
     },
     {
       "t": 23701,
@@ -21536,7 +21621,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:56.630Z"
+      "ultima_atualizacao": "2026-11-16T17:31:56.008Z"
     },
     {
       "t": 23694,
@@ -21958,7 +22043,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:15:58.657Z"
+      "ultima_atualizacao": "2026-11-16T17:31:56.422Z"
     },
     {
       "t": 23630,
@@ -22270,7 +22355,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:00.704Z"
+      "ultima_atualizacao": "2026-11-16T17:31:58.458Z"
     },
     {
       "t": 23412,
@@ -22703,7 +22788,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:02.322Z"
+      "ultima_atualizacao": "2026-11-16T17:31:58.861Z"
     },
     {
       "t": 22857,
@@ -23136,7 +23221,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:04.357Z"
+      "ultima_atualizacao": "2026-11-16T17:31:59.263Z"
     },
     {
       "t": 23795,
@@ -23334,7 +23419,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:04.759Z"
+      "ultima_atualizacao": "2026-11-16T17:31:59.675Z"
     },
     {
       "t": 23428,
@@ -24071,6 +24156,11 @@
               "nome": "Eduard Tervooren",
               "removedAt": "2026-09-24T12:43:32.174Z",
               "pais": "US"
+            },
+            {
+              "nome": "Keegan Sayles",
+              "pais": "US",
+              "removedAt": "2026-08-30T11:07:23.873Z"
             }
           ]
         },
@@ -24687,6 +24777,11 @@
               "nome": "Allan Barra Reingenheim",
               "removedAt": "2026-09-23T12:45:17.168Z",
               "pais": "US"
+            },
+            {
+              "nome": "Collin Huang",
+              "pais": "US",
+              "removedAt": "2026-09-14T18:10:17.188Z"
             }
           ]
         },
@@ -24743,7 +24838,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:06.390Z"
+      "ultima_atualizacao": "2026-11-16T17:32:00.090Z"
     },
     {
       "t": 23095,
@@ -25189,7 +25284,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:07.605Z"
+      "ultima_atualizacao": "2026-11-16T17:32:00.503Z"
     },
     {
       "t": 23241,
@@ -25385,7 +25480,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:08.021Z"
+      "ultima_atualizacao": "2026-11-16T17:32:00.915Z"
     },
     {
       "t": 23131,
@@ -25811,7 +25906,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:08.423Z"
+      "ultima_atualizacao": "2026-11-16T17:32:01.317Z"
     },
     {
       "t": 23724,
@@ -26063,7 +26158,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:09.624Z"
+      "ultima_atualizacao": "2026-11-16T17:32:01.724Z"
     },
     {
       "t": 23782,
@@ -26657,7 +26752,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:11.272Z"
+      "ultima_atualizacao": "2026-11-16T17:32:02.135Z"
     },
     {
       "t": 23651,
@@ -26853,7 +26948,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:11.675Z"
+      "ultima_atualizacao": "2026-11-16T17:32:02.536Z"
     },
     {
       "t": 23430,
@@ -27314,7 +27409,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:12.492Z"
+      "ultima_atualizacao": "2026-11-16T17:32:02.951Z"
     },
     {
       "t": 23582,
@@ -27609,7 +27704,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:13.312Z"
+      "ultima_atualizacao": "2026-11-16T17:32:03.357Z"
     },
     {
       "t": 23756,
@@ -27837,7 +27932,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:13.726Z"
+      "ultima_atualizacao": "2026-11-16T17:32:03.760Z"
     },
     {
       "t": 23082,
@@ -28198,7 +28293,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:15.359Z"
+      "ultima_atualizacao": "2026-11-16T17:32:04.162Z"
     },
     {
       "t": 23305,
@@ -28483,7 +28578,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:15.761Z"
+      "ultima_atualizacao": "2026-11-16T17:32:04.563Z"
     },
     {
       "t": 23467,
@@ -28705,7 +28800,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:16.169Z"
+      "ultima_atualizacao": "2026-11-16T17:32:04.975Z"
     },
     {
       "t": 23684,
@@ -29344,7 +29439,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:17.794Z"
+      "ultima_atualizacao": "2026-11-16T17:32:05.375Z"
     },
     {
       "t": 23436,
@@ -29787,7 +29882,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:18.616Z"
+      "ultima_atualizacao": "2026-11-16T17:32:05.788Z"
     },
     {
       "t": 23002,
@@ -29985,7 +30080,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:19.020Z"
+      "ultima_atualizacao": "2026-11-16T17:32:06.199Z"
     },
     {
       "t": 22742,
@@ -30980,7 +31075,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:19.428Z"
+      "ultima_atualizacao": "2026-11-16T17:32:06.601Z"
     },
     {
       "t": 23736,
@@ -31265,7 +31360,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:20.243Z"
+      "ultima_atualizacao": "2026-11-16T17:32:07.017Z"
     },
     {
       "t": 22780,
@@ -31508,7 +31603,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:20.655Z"
+      "ultima_atualizacao": "2026-11-16T17:32:07.425Z"
     },
     {
       "t": 22676,
@@ -31766,7 +31861,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:21.060Z"
+      "ultima_atualizacao": "2026-11-16T17:32:07.828Z"
     },
     {
       "t": 23762,
@@ -32468,7 +32563,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:23.096Z"
+      "ultima_atualizacao": "2026-11-16T17:32:08.237Z"
     },
     {
       "t": 23695,
@@ -32926,7 +33021,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:25.142Z"
+      "ultima_atualizacao": "2026-11-16T17:32:08.647Z"
     },
     {
       "t": 23009,
@@ -33318,7 +33413,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:26.777Z"
+      "ultima_atualizacao": "2026-11-16T17:32:10.260Z"
     },
     {
       "t": 23088,
@@ -33585,7 +33680,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:27.178Z"
+      "ultima_atualizacao": "2026-11-16T17:32:10.664Z"
     },
     {
       "t": 23768,
@@ -33798,7 +33893,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:27.581Z"
+      "ultima_atualizacao": "2026-11-16T17:32:11.078Z"
     },
     {
       "t": 23891,
@@ -33996,7 +34091,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:27.994Z"
+      "ultima_atualizacao": "2026-11-16T17:32:11.479Z"
     },
     {
       "t": 23856,
@@ -34066,7 +34161,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:28.398Z"
+      "ultima_atualizacao": "2026-11-16T17:32:11.879Z"
     },
     {
       "t": 23817,
@@ -35548,7 +35643,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:32.062Z"
+      "ultima_atualizacao": "2026-11-16T17:32:12.286Z"
     },
     {
       "t": 23825,
@@ -35945,7 +36040,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:33.283Z"
+      "ultima_atualizacao": "2026-11-16T17:32:13.496Z"
     },
     {
       "t": 23803,
@@ -36143,7 +36238,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:36.101Z"
+      "ultima_atualizacao": "2026-11-16T17:32:16.363Z"
     },
     {
       "t": 23849,
@@ -36380,7 +36475,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:36.501Z"
+      "ultima_atualizacao": "2026-11-16T17:32:16.776Z"
     },
     {
       "t": 23873,
@@ -37069,7 +37164,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:40.166Z"
+      "ultima_atualizacao": "2026-11-16T17:32:20.433Z"
     },
     {
       "t": 23769,
@@ -37609,7 +37704,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:41.376Z"
+      "ultima_atualizacao": "2026-11-16T17:32:20.848Z"
     },
     {
       "t": 23885,
@@ -37894,7 +37989,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:42.586Z"
+      "ultima_atualizacao": "2026-11-16T17:32:21.249Z"
     },
     {
       "t": 23527,
@@ -38241,7 +38336,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:43.804Z"
+      "ultima_atualizacao": "2026-11-16T17:32:22.467Z"
     },
     {
       "t": 23511,
@@ -38875,7 +38970,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:45.851Z"
+      "ultima_atualizacao": "2026-11-16T17:32:24.490Z"
     },
     {
       "t": 23809,
@@ -39073,7 +39168,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:46.664Z"
+      "ultima_atualizacao": "2026-11-16T17:32:25.302Z"
     },
     {
       "t": 23864,
@@ -39177,7 +39272,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:49.505Z"
+      "ultima_atualizacao": "2026-11-16T17:32:28.135Z"
     },
     {
       "t": 23871,
@@ -40826,7 +40921,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:54.790Z"
+      "ultima_atualizacao": "2026-11-16T17:32:33.447Z"
     },
     {
       "t": 23870,
@@ -41434,7 +41529,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:56.408Z"
+      "ultima_atualizacao": "2026-11-16T17:32:34.255Z"
     },
     {
       "t": 23772,
@@ -41904,7 +41999,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:58.018Z"
+      "ultima_atualizacao": "2026-11-16T17:32:35.063Z"
     },
     {
       "t": 23832,
@@ -42258,7 +42353,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:59.241Z"
+      "ultima_atualizacao": "2026-11-16T17:32:35.465Z"
     },
     {
       "t": 23855,
@@ -42480,7 +42575,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:00.055Z"
+      "ultima_atualizacao": "2026-11-16T17:32:36.272Z"
     },
     {
       "t": 23879,
@@ -42678,7 +42773,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:00.458Z"
+      "ultima_atualizacao": "2026-11-16T17:32:36.673Z"
     },
     {
       "t": 23816,
@@ -42891,7 +42986,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:02.898Z"
+      "ultima_atualizacao": "2026-11-16T17:32:39.091Z"
     },
     {
       "t": 23714,
@@ -43089,7 +43184,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:03.705Z"
+      "ultima_atualizacao": "2026-11-16T17:32:39.907Z"
     },
     {
       "t": 23863,
@@ -43287,7 +43382,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:04.110Z"
+      "ultima_atualizacao": "2026-11-16T17:32:40.320Z"
     },
     {
       "t": 23608,
@@ -44200,7 +44295,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:04.912Z"
+      "ultima_atualizacao": "2026-11-16T17:32:40.724Z"
     },
     {
       "t": 23840,
@@ -44437,7 +44532,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:06.144Z"
+      "ultima_atualizacao": "2026-11-16T17:32:41.942Z"
     },
     {
       "t": 23775,
@@ -44920,7 +45015,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:07.362Z"
+      "ultima_atualizacao": "2026-11-16T17:32:42.345Z"
     },
     {
       "t": 23715,
@@ -45495,7 +45590,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:09.396Z"
+      "ultima_atualizacao": "2026-11-16T17:32:42.753Z"
     },
     {
       "t": 23716,
@@ -45892,7 +45987,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:10.624Z"
+      "ultima_atualizacao": "2026-11-16T17:32:43.157Z"
     },
     {
       "t": 23857,
@@ -46049,7 +46144,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:11.429Z"
+      "ultima_atualizacao": "2026-11-16T17:32:43.978Z"
     },
     {
       "t": 23899,
@@ -46277,7 +46372,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:34.498Z"
+      "ultima_atualizacao": "2026-11-16T17:32:14.736Z"
     },
     {
       "t": 23930,
@@ -46710,7 +46805,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:35.700Z"
+      "ultima_atualizacao": "2026-11-16T17:32:15.959Z"
     },
     {
       "t": 23900,
@@ -46938,7 +47033,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:37.735Z"
+      "ultima_atualizacao": "2026-11-16T17:32:17.998Z"
     },
     {
       "t": 23931,
@@ -46993,7 +47088,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:46.261Z"
+      "ultima_atualizacao": "2026-11-16T17:32:24.897Z"
     },
     {
       "t": 23919,
@@ -47313,7 +47408,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:48.698Z"
+      "ultima_atualizacao": "2026-11-16T17:32:27.320Z"
     },
     {
       "t": 23903,
@@ -47526,7 +47621,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:50.316Z"
+      "ultima_atualizacao": "2026-11-16T17:32:28.946Z"
     },
     {
       "t": 23929,
@@ -47724,7 +47819,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:55.191Z"
+      "ultima_atualizacao": "2026-11-16T17:32:33.851Z"
     },
     {
       "t": 23912,
@@ -47922,7 +48017,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:16:56.809Z"
+      "ultima_atualizacao": "2026-11-16T17:32:34.655Z"
     },
     {
       "t": 23898,
@@ -48120,7 +48215,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:00.866Z"
+      "ultima_atualizacao": "2026-11-16T17:32:37.078Z"
     },
     {
       "t": 23939,
@@ -48363,7 +48458,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:02.495Z"
+      "ultima_atualizacao": "2026-11-16T17:32:38.690Z"
     },
     {
       "t": 23940,
@@ -48418,7 +48513,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-16T17:17:03.303Z"
+      "ultima_atualizacao": "2026-11-16T17:32:39.506Z"
     }
   ]
 }

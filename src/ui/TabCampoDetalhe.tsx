@@ -221,6 +221,11 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                       <div className={`fw-800 u-fs-fs-15 ${man ? "u-c-accent" : "u-c-text"}`}>
                         {e.inscritos}<span className="fs-11 fw-400 c-text-3">/{e.maximo}</span>
                       </div>
+                      {(e.desistentes ?? 0) > 0 && (
+                        <div className="fs-10 fw-600 u-c-color-danger" title="Desistiram (WD) — a USKids ainda os conta, os inscritos não">
+                          {e.desistentes} desist{e.desistentes === 1 ? "iu" : "iram"}
+                        </div>
+                      )}
                       {bd && (
                         <Tint className="fs-11 fw-700 u-p-1px-6px u-br-radius" bg={bd.bg} fg={bd.cor}>
                           {bd.label}
@@ -308,7 +313,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                       })}
                     </div>
                   )}
-                  {/* Jogadores removidos (desinscritos) — janela de 60 dias, mais recentes primeiro */}
+                  {/* Desinscritos (os WD da USKids e quem saiu da lista), até o torneio acabar; mais recentes primeiro */}
                   {e.removed && e.removed.length > 0 && (
                     <div className="u-bt-1px-dashed-border-light u-pt-4px u-mt-4px">
                       <div className="fs-10 fw-600 c-text-3 u-mb-2px">
@@ -325,6 +330,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               <span className="u-td-line-through">{displayName(r.nome)}</span>
                               {r.pais && <span className="u-ml-2px">{flag(r.pais)}</span>}
                               <KidsLink nome={r.nome} />
+                              {r.wd && <span className="fs-10 fw-700 u-c-color-danger u-ml-2px" title="Withdrawn — marcado WD na lista da USKids">WD</span>}
                               {label && (
                                 <span className="fs-10 fw-600 c-text-3 u-ml-auto u-op-0_8"
                                   title={r.removedAt ? `Desinscrito em ${r.removedAt.slice(0,10)}` : undefined}>

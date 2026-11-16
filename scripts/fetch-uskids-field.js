@@ -110,8 +110,16 @@ function parsearJogadores(flightPlayers) {
     .sort((a, b) => a.nome.localeCompare(b.nome));
 }
 
-/** Janela (dias) durante a qual uma desinscrição continua visível. */
-const REMOVED_WINDOW_DAYS = 60;
+/** Quem a USKids marca como desistente (WD, status 8) — continua na lista dela. */
+function parsearWD(flightPlayers) {
+  return Object.values(flightPlayers || {})
+    .filter(p => p.status === 8)
+    .map(p => ({ nome: `${p.first || ''} ${p.last || ''}`.trim(), pais: (p.country || '').toUpperCase() || null }))
+    .filter(p => p.nome);
+}
+
+// Os desinscritos ficam até o torneio sair do ficheiro (Mariana, 16/11/2026: «quero que continue a
+// mostrar os que continuam inscritos e os que desistiram entretanto»). Até aí desapareciam ao fim de 60 dias.
 
 /** Normaliza nome para matching entre recolhas (lowercase + whitespace colapsado). */
 function normNome(s) {
@@ -162,11 +170,11 @@ function carregarFieldAnterior() {
 
 /** Aplica firstSeen e calcula removed cumulativo (desinscrições) por escalão.
  *  - novas saídas: estava na recolha anterior e já não está → removedAt = agora
- *  - preserva saídas anteriores ainda dentro da janela de REMOVED_WINDOW_DAYS dias
+ *  - preserva as saídas anteriores (até o torneio sair do ficheiro)
+ *  - junta os WD da USKids (`_wd`, status 8), mesmo os que nunca vimos inscritos
  *  - quem voltou a inscrever-se é retirado da lista */
 function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao, prevRemoved }) {
   const agora = new Date().toISOString();
-  const agoraMs = Date.now();
   for (const t of resultados) {
     for (const e of (t.escaloes || [])) {
       // firstSeen
@@ -182,10 +190,7 @@ function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao, prevRemoved
         // as já registadas (dentro da janela) mantêm-se: sem isto, um escalão que
         // vinha vazio uma vez perdia o histórico de quem saiu (pendente de 01/10).
         const prevRem = prevRemoved.get(escKey);
-        const ficam = prevRem ? [...prevRem.values()].filter((obj) => {
-          const ageMs = obj.removedAt ? (agoraMs - new Date(obj.removedAt).getTime()) : 0;
-          return ageMs / 86400_000 <= REMOVED_WINDOW_DAYS;
-        }) : [];
+        const ficam = prevRem ? [...prevRem.values()] : [];
         if (ficam.length) e.removed = ficam.sort((a, b) => String(b.removedAt || '').localeCompare(String(a.removedAt || '')));
         continue;
       }
@@ -198,8 +203,6 @@ function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao, prevRemoved
       if (prevRem) {
         for (const [nk, obj] of prevRem) {
           if (curSet.has(nk)) continue; // re-inscreveu-se → sai da lista
-          const ageMs = obj.removedAt ? (agoraMs - new Date(obj.removedAt).getTime()) : 0;
-          if (ageMs / 86400_000 > REMOVED_WINDOW_DAYS) continue; // fora da janela
           acc.set(nk, obj);
         }
       }
@@ -213,6 +216,14 @@ function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao, prevRemoved
         }
       }
 
+      // Os WD da própria USKids (status 8): entram mesmo que nunca os tenhamos visto inscritos.
+      for (const w of (e._wd || [])) {
+        const nk = normNome(w.nome);
+        if (curSet.has(nk)) continue;
+        const ja = acc.get(nk);
+        acc.set(nk, ja ? { ...ja, wd: true } : { nome: w.nome, removedAt: agora, pais: w.pais ?? null, wd: true });
+      }
+
       if (acc.size) {
         e.removed = [...acc.values()].sort((a, b) =>
           String(b.removedAt || '').localeCompare(String(a.removedAt || '')));
@@ -221,6 +232,7 @@ function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao, prevRemoved
       }
     }
   }
+  for (const t of resultados) for (const e of (t.escaloes || [])) delete e._wd;
 }
 
 /** Nº de torneios que bateram no rate limit nesta corrida (ver guardaRateLimit). */
@@ -607,11 +619,14 @@ async function processarTorneio(page, torneio, prev, modo = 'completo') {
     const inscr  = f.active ?? f.registered ?? 0;
     const max    = f.max_entry  || 0;
 
+    // Desistentes que a USKids ainda conta (registered − active): também nos escalões sem nomes.
+    const desist = Math.max(0, (f.registered ?? inscr) - inscr);
     const escalao = {
       age_group: parseInt(ag), nome,
       genero: agInfo.gender || null, holes: agInfo.holes_per_round || 18,
       flight_id: parseInt(fid), inscritos: inscr, maximo: max,
       vagas: max - inscr, pct_cheio: max > 0 ? Math.round((inscr/max)*100) : 0,
+      ...(desist ? { desistentes: desist } : {}),
       jogadores: null, paises: null,
     };
 
@@ -625,15 +640,16 @@ async function processarTorneio(page, torneio, prev, modo = 'completo') {
     if (ePrev) {
       escalao.jogadores = ePrev.jogadores;
       escalao.paises    = ePrev.paises;
-    } else if (escalaoComNomes(nome) && inscr > 0) {
+    } else if (escalaoComNomes(nome) && (inscr > 0 || desist > 0)) {
       try {
         // Buscar todas as páginas (cada página tem ~20 jogadores)
-        const todosJogs = [];
-        const totalPags = Math.ceil(inscr / 20);
+        const todosJogs = [], wds = [];
+        const totalPags = Math.ceil((f.registered ?? inscr) / 20); // os WD também ocupam a lista
         for (let p = 1; p <= totalPags; p++) {
           await sleep(DELAY_FETCH);
           const d = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=${p}&t=0`);
           todosJogs.push(...parsearJogadores(d.flight_players));
+          wds.push(...parsearWD(d.flight_players));
         }
         // Deduplicar por nome
         const vistos = new Set();
@@ -643,6 +659,7 @@ async function processarTorneio(page, torneio, prev, modo = 'completo') {
         for (const j of jogs) cp[j.pais] = (cp[j.pais]||0)+1;
         escalao.paises    = Object.entries(cp).sort((a,b)=>b[1]-a[1]).map(([pais,n])=>({pais,n}));
         escalao.jogadores = jogs;
+        if (wds.length) escalao._wd = wds; // → removed, em aplicarFirstSeen
         const pt = jogs.filter(j=>j.pais==='PT');
         console.log(`  ✓ ${nome}: ${jogs.length}/${max}${pt.length?'  🇵🇹 '+pt.map(j=>j.nome).join(', '):''}`);
       } catch (err) {

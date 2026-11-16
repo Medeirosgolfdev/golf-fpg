@@ -41,6 +41,8 @@ interface Desinscrito {
   nome: string;
   removedAt: string;      // ISO — data em que foi detetado como desinscrito
   pais?: string | null;
+  /** A USKids marca-o como WD (status 8) na lista dela. */
+  wd?: boolean;
 }
 
 interface Escalao {
@@ -53,6 +55,8 @@ interface Escalao {
   maximo: number;
   vagas: number;
   pct_cheio: number;
+  /** Desistentes que a USKids ainda conta (registered − active); `inscritos` já não os tem. */
+  desistentes?: number;
   jogadores: Jogador[] | null;
   paises: PaisContagem[] | null;
   removed?: Desinscrito[];

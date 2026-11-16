@@ -108,7 +108,7 @@
       const inscr = f.active ?? f.registered ?? 0; // `registered` conta os WD; `active` não
       const ePrev = (prev?.escaloes || []).find(e => e.age_group === Number(ag));
       if (ePrev && ePrev.inscritos !== inscr) alteracoes.push({ torneio: nomeT, escalao: esc, antes: ePrev.inscritos, agora: inscr, entraram: "", sairam: "" });
-      if (!comNomes(esc) || inscr <= 0) continue;
+      if (!comNomes(esc) || (f.registered ?? inscr) <= 0) continue;
       const precisa = completo || !ePrev || !ePrev.jogadores || ePrev.inscritos !== inscr;
       if (!precisa) { todosComNomes = false; continue; }
       const d = await pedir("GetPlayerTeeTimes", `f=${fid}&r=1&p=1&t=0`);
