@@ -661,6 +661,11 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
   https://tourcaddiepro.com/plugins/links/admin/LinksAJAX.aspx?op=GetMeta&t=23132`, com os cabeçalhos dos scripts →
   HTTP 403**, a mesma página nginx do signupanytime. Mudar de domínio não resolve; os scripts ficaram como estavam e
   os workflows pausados. O que sobra: escrever à USKids a pedir uma via autorizada, ou ler as listas no browser.
+- **Estados do jogador** (`LINKS_GLOBALS.PLAYER_STATUS` da própria página, lido a 16/11/2026): 0 IN Inactive ·
+  **1 AC Active** · 2 IE Active Ineligible · 7 NS No Show · **8 WD Withdrawn** · 9 DQ Disqualified. Quem desiste
+  continua no `GetPlayerTeeTimes` com `status: 8` (a página escreve «WD» em expoente ao lado do nome). Os nossos
+  scripts só contam `status === 1` (`fetch-uskids-field.js`, `-draws`, `-results`), por isso um WD sai dos
+  inscritos e o diff põe-no em `removed` — foi assim que se tratou o Klabin Basilio (16/11, `status: 8`).
   Nesse dia, lido no browser: Spanish Open (23132) só com uma mudança — Antonio Klabin Basilio (Boys 12) **WD** →
   passado à mão para `removed` no `uskids-field.json`; Holiday Classic (23670) Boys 12 igual (39).
 
