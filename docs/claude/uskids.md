@@ -657,7 +657,10 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
   (o mesmo «Links Tournament Manager», outro domínio, `ax=2739`). Aberta no browser, a lista lê-se bem (escalões
   num `<select>`; desistências marcadas «WD» a seguir ao nome). Os scripts continuam a apontar ao
   `www.signupanytime.com`. **Por decidir (Mariana):** passar os scripts para o domínio novo e testar UM pedido antes
-  de religar os workflows. Não se fez nenhum pedido de script ao tourcaddiepro.com.
+  de religar os workflows. **Feito no mesmo dia (ela: «Sim, testa um»): um único `GET
+  https://tourcaddiepro.com/plugins/links/admin/LinksAJAX.aspx?op=GetMeta&t=23132`, com os cabeçalhos dos scripts →
+  HTTP 403**, a mesma página nginx do signupanytime. Mudar de domínio não resolve; os scripts ficaram como estavam e
+  os workflows pausados. O que sobra: escrever à USKids a pedir uma via autorizada, ou ler as listas no browser.
   Nesse dia, lido no browser: Spanish Open (23132) só com uma mudança — Antonio Klabin Basilio (Boys 12) **WD** →
   passado à mão para `removed` no `uskids-field.json`; Holiday Classic (23670) Boys 12 igual (39).
 
