@@ -52,7 +52,11 @@ const API = "https://rfegolf.es/wp-json/handicap-search/v1/search";
 const DATA = path.resolve(__dirname, "../public/data");
 const OUT = path.join(DATA, "rfeg-hcp.json");
 const MANUEL_ANO = 2014;
-const ESCALOES_JOVENS = /benjam|alev|infantil|cadete/i;
+// Também as letras do nível do NextCaddy (B/A/I/C = Benjamín/Alevín/Infantil/Cadete):
+// é assim que a maioria dos juniores das provas regionais vem no juniors.json, e sem
+// elas 1402 ficavam de fora da consulta (16/11/2026 — o Draw do Circuito Zona E de
+// Granada tinha metade dos jogadores sem clube nem sexo).
+const ESCALOES_JOVENS = /benjam|alev|infantil|cadete|^\s*[BAIC]\s*$/i;
 
 /* ─── nomes ───────────────────────────────────────────────────── */
 const PARTICULAS = new Set(["DE", "DEL", "LA", "LAS", "LOS", "Y", "I", "DA", "DO", "DOS", "VAN", "DER", "VON"]);

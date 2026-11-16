@@ -35,10 +35,19 @@ export const ES_TERM_CANON: Record<string, string> = {
   benjamin: "Benjamín", alevin: "Alevín", infantil: "Infantil",
   cadete: "Cadete", junior: "Junior", juvenil: "Juvenil", absoluto: "Absoluto",
 };
+/** Letra do nível do NextCaddy (coluna «Nivel») → escalão. Confirmado contra o
+ *  nome da categoria em que cada jogador aparece (Circuito Juvenil Zona E,
+ *  Granada 14/11/2026: A = Alevín, I = Infantil, C = Cadete, J = Junior em
+ *  todas as linhas). As outras letras (S, M, Mid, P+…) são de adultos. */
+export const NC_NIVEL_ESCALAO: Record<string, string> = {
+  B: "Benjamín", A: "Alevín", I: "Infantil", C: "Cadete", J: "Sub-18",
+};
 export function canonEscaloEs(s: string | null | undefined): string | null {
   if (!s) return null;
-  const k = stripAccents(s.toLowerCase()).replace(/[\s-]/g, "");
-  return ES_TERM_CANON[k] || s.trim();
+  const t = s.trim();
+  if (NC_NIVEL_ESCALAO[t]) return NC_NIVEL_ESCALAO[t];
+  const k = stripAccents(t.toLowerCase()).replace(/[\s-]/g, "");
+  return ES_TERM_CANON[k] || t;
 }
 /** Escalão RFEG a partir do NOME de uma categoria de prova (golfdirecto e
  *  afins), com as abreviaturas que as fontes usam: «SCR Inf Mas», «SCR Cad Fem»,

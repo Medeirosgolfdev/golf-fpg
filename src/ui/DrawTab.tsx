@@ -450,7 +450,10 @@ export default function DrawTab({
         // Escalão: calculado da dob (fonte autoritativa). NÃO caímos em
         // `tournamentEscalao` porque torneios combinados (Regional Sub 14-24,
         // Sub 10+12) têm múltiplos escalões em disputa — o genérico engana.
-        const escHist = escalaoAtDate(dob, effDate || undefined) || null;
+        // Sem nascimento: o escalão em que jogou NESTA prova, quando a fonte o dá
+        // (categoria da classificação NextCaddy) — nunca o genérico do torneio.
+        const escHist = escalaoAtDate(dob, effDate || undefined)
+          || (p as { escalao?: string | null }).escalao || null;
         // Cruzar com os resultados da ronda (quando disponíveis): tentar por
         // fed primeiro (autoritativo), depois por nome normalizado. Sem match
         // → gross 0 / toPar null (a tabela mostra "–").

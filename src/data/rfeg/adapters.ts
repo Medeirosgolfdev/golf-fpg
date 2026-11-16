@@ -9,7 +9,8 @@ import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } 
 import { isPtCountry } from "../../utils/flagUtils";
 import { normEs } from "./text";
 import { soAdmitidos } from "./inscritos";
-import type { RFEGPlayer, RFEGDetail, NCRoundScore, NCDetail, DobLookup, HcpLookup, LgsRound, LgsDetail, LgsHorarioRound } from "./types";
+import type { RFEGPlayer, RFEGDetail, NCRoundScore, NCDetail, DobLookup, HcpLookup, LgsRound, LgsDetail, LgsHorarioRound, NcDrawInfo } from "./types";
+import { escaloEsFromCategory, NC_NIVEL_ESCALAO } from "./escalao";
 import { dobLookupByName, isNoCardGross } from "../intlCommon";
 import { soma, somaDe } from "../../utils/mathUtils";
 
@@ -246,7 +247,7 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
   const teeMetersByLic: Record<string, number> = {};
   const teeMetersByIns: Record<string, number> = {};
   // Info por inscribedId para enriquecer o Draw como na FPG (escalão + ±/Tot por ronda).
-  const drawInfoByIns: Record<string, { dob: string | null; name: string | null; licencia: string | null; club: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }> = {};
+  const drawInfoByIns: Record<string, NcDrawInfo> = {};
   const ncParTotal = Array.isArray(nc.course?.par) ? somaDe(nc.course!.par!, b => (b || 0)) : 0;
   const lbPlayers: RFEGPlayer[] = [];
   // O NextCaddy publica o MESMO torneio em classificações Scratch E Handicap
@@ -299,6 +300,10 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
           name: p.name ?? null,
           licencia: p.licencia ? p.licencia.trim().toUpperCase() : null,
           club: e ? e.club : null,   // o NextCaddy não publica o clube; a tabela de licenças sim
+          // Escalão e sexo em que jogou NESTA prova (categoria/nível da classificação):
+          // dão o Esc. e o M/F no Draw a quem não tem nascimento (16/11/2026).
+          escalao: escaloEsFromCategory(cat.categoryName) ?? (p.nivel ? NC_NIVEL_ESCALAO[p.nivel.trim()] ?? null : null),
+          sex: catSex ?? (e ? (e.sex === "M" || e.sex === "F" ? e.sex : null) : null),
           rounds: rs.map((r) => {
             const g = typeof r.total === "number" ? r.total
               : (Array.isArray(r.scores) ? (soma(r.scores.filter((x) => x > 0)) || null) : null);

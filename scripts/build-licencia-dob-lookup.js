@@ -199,6 +199,27 @@ if (fs.existsSync(ROSTER_ES)) {
   }
 }
 
+/* ── Hándicap oficial da RFEG (rfeg-hcp.json, scrape-federados-es.js) ───────
+ * A pesquisa de hándicap da RFEG dá o clube e o sexo de cada licença. Os
+ * juniores que só jogam provas regionais no NextCaddy não têm nenhum dos dois
+ * noutra fonte (o NextCaddy não publica o clube) — no Draw do Circuito Zona E
+ * de Granada (14/11/2026) metade dos jogadores aparecia sem clube. Só preenche
+ * o que falta, nunca cria licenças nem sobrepõe. Ficheiro ilegível = erro. */
+const HCP_ES = path.resolve(__dirname, "../public/data/rfeg-hcp.json");
+let hcpEnrich = 0;
+if (fs.existsSync(HCP_ES)) {
+  const hc = JSON.parse(fs.readFileSync(HCP_ES, "utf-8"));
+  for (const [lic, r] of Object.entries(hc.byLicencia || {})) {
+    const prev = lookup[lic];
+    if (!prev || !r || r.naoEncontrado) continue;
+    let mudou = false;
+    if (!prev.club && r.clube) { prev.club = r.clube; mudou = true; }
+    if (!prev.sex && (r.sexo === "M" || r.sexo === "F")) { prev.sex = r.sexo; mudou = true; }
+    if (mudou) { hcpEnrich++; if (!prev.sources.includes("rfeg-hcp")) prev.sources.push("rfeg-hcp"); }
+  }
+  console.log(`Hándicap RFEG (rfeg-hcp.json): enriquecidos=${hcpEnrich}`);
+}
+
 const out = {
   generatedAt: new Date().toISOString(),
   source: "scripts/build-licencia-dob-lookup.js",

@@ -130,4 +130,15 @@ describe("rfeg-oficial — casar juniores com rankings e hándicap", () => {
     expect(d.rfegOficial).toMatchObject({ hcp: 0.3, hcpData: "2026-10-05" });
     expect(d.rfegOficial.rankings).toBeUndefined(); // o lugar no ranking já não se guarda (02/11/2026)
   });
+  it("ficha sem sexo nem clube fica com os da RFEG; nunca se sobrepõe ao que a ficha tem (16/11/2026)", () => {
+    const hcp = {
+      AM11978080: { lic: "AM11978080", hcp: 12.6, data: "2026-09-23", sexo: "M", clube: "CLUB DE GOLF LA CAÑADA", via: "licenca" },
+      AMC7966801: { lic: "AMC7966801", hcp: 5.9, data: "2026-10-26", sexo: "M", clube: "ALBORÁN GOLF", via: "licenca" },
+    };
+    const raul = { id: "rAM11978080", canonicalName: "Raul Blanco Fernandez", sex: null, club: null, sources: { rfeg: { lic: "AM11978080" } } };
+    const gonzalo = { id: "rAMC7966801", canonicalName: "Gonzalo Peinado Padilla", sex: "M", club: "Outro Clube", sources: { rfeg: { lic: "AMC7966801" } } };
+    enriquecer([raul, gonzalo], { hcp, linhas: [] });
+    expect([raul.sex, raul.club]).toEqual(["M", "CLUB DE GOLF LA CAÑADA"]);
+    expect([gonzalo.sex, gonzalo.club]).toEqual(["M", "Outro Clube"]);
+  });
 });

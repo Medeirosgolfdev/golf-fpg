@@ -77,6 +77,13 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
+      # Clube e sexo da consulta de hándicap → tabela por licença (as tabelas de
+      # Espanha leem-na) — logo a seguir à consulta, sem esperar pela segunda-feira
+      # do update-spain (16/11/2026).
+      - name: Tabela por licença (clube e sexo da RFEG)
+        if: steps.diff.outputs.changed == 'true'
+        run: node scripts/build-licencia-dob-lookup.js
+
       - name: Regenerar juniores canónicos (agregador)
         if: steps.diff.outputs.changed == 'true'
         run: node scripts/aggregator/index.js
@@ -85,7 +92,8 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         run: |
           bash scripts/ci/push-generated.sh -m "data: RFEG hándicap oficial + rankings juvenis $(date -u +'%Y-%m-%d %H:%M UTC')" \
-            -f agregador -o 'public/data/rfeg-hcp.json' -- \
+            -f agregador -o 'public/data/rfeg-hcp.json' \
+            -g 'public/data/licencia-dob-lookup.json' -r 'node scripts/build-licencia-dob-lookup.js' -- \
             public/data/rfeg-rankings public/data/rfeg-rankings-index.json public/data/rfeg-hcp.json public/data
 
       - name: Falhar se algum passo falhou

@@ -98,6 +98,38 @@ export function initCourseColorCache(courses: Course[], force = false): void {
   _courseColorCache = m;
 }
 
+/*  Tees que a fonte só identifica pela distância («5345 m»)
+ *
+ * NextCaddy e LGS dão os metros de cada jogador mas não a cor do tee; o nome
+ * do tee é a distância total. Sem isto ficavam todos com o cinzento do
+ * fallback e não se via quem jogou de onde (Circuito Zona E, Granada,
+ * 14/11/2026: 3 tees, todos cinzentos). Cada prova regista os seus tees e o
+ * mais comprido leva a 1.ª cor do site, o seguinte a 2.ª… São cores DO SITE,
+ * não a cor do tee no campo (o `TeeSwatch` diz isso ao passar o rato).
+ * Decisão da Mariana, 16/11/2026 («Cores do site»).
+ */
+const DIST_RE = /^\s*(\d{3,5})\s*m\s*$/i;
+const DIST_PALETTE: string[] = (teeData as { distanceOnly?: string[] }).distanceOnly ?? [];
+const _distColorCache: Map<string, string> = new Map();
+
+/** O nome do tee é só a distância («5345 m»)? */
+export function isTeeSoDistancia(name: string | null | undefined): boolean {
+  return DIST_RE.test(name ?? "");
+}
+
+/** Dá uma cor do site a cada tee só-distância de UMA prova (o mais comprido
+ *  primeiro). Chamado pelo `buildFPGTournament`. */
+export function registarTeesSoDistancia(nomes: Iterable<string | null | undefined>): void {
+  if (!DIST_PALETTE.length) return;
+  const metros = new Set<number>();
+  for (const n of nomes) {
+    const m = DIST_RE.exec(n ?? "");
+    if (m) metros.add(Number(m[1]));
+  }
+  [...metros].sort((a, b) => b - a)
+    .forEach((m, i) => _distColorCache.set(`${m}m`, DIST_PALETTE[i % DIST_PALETTE.length]));
+}
+
 /* ── API pública ── */
 
 /** Normaliza string de tee: lowercase, sem acentos, sem espaços */
@@ -117,6 +149,9 @@ function teeColor(name: string): string {
   // 1. Cor real do campo (scorecardMeta) — mais específica
   const cached = _courseColorCache.get(k);
   if (cached) return cached;
+  // 1b. Tee só com a distância («5345 m») — cor do site registada pela prova
+  const dist = _distColorCache.get(k);
+  if (dist) return dist;
   // 2. Mapeamento exacto por nome (tee-colors.json)
   if (EXACT[k]) return EXACT[k];
   // 3. Substring (fallback genérico)

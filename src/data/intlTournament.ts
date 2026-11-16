@@ -17,6 +17,7 @@ import { withTournamentModel } from "./model/tournament";
 import type { TournamentFormat } from "./model/types";
 import { playerIdentity } from "./model/identity";
 import { soma } from "../utils/mathUtils";
+import { registarTeesSoDistancia } from "../utils/teeColors";
 
 /** Campo de uma volta: par por buraco e, quando a fonte os dá, SI, metros, tee e CR/Slope. */
 export interface IntlCourse {
@@ -177,6 +178,8 @@ export function buildFPGTournament(
       identity: playerIdentity({ country: p.country, ...p.extra }),
     } as unknown as Player;
   });
+  // Tees só com a distância («5345 m», NextCaddy/LGS): cada um com a sua cor do site.
+  registarTeesSoDistancia(out.flatMap((p) => [p.teeName, ...(p.roundScores ?? []).map((r) => r.teeName)]));
   // Formato, estado, buracos, cut e origem do par (src/data/model).
   return withTournamentModel({
     name: meta.name,

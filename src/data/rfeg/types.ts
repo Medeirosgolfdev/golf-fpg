@@ -216,6 +216,17 @@ export interface NCInsc {
   hcp?: number | null;
   nivel?: string | null;
 }
+/** O que a classificação NextCaddy sabe de cada inscrito (pelo `inscribedId`),
+ *  para enriquecer o draw. `escalao`/`sex` = a categoria em que jogou NESTA prova. */
+export interface NcDrawInfo {
+  dob: string | null;
+  name: string | null;
+  licencia?: string | null;
+  club?: string | null;
+  escalao?: string | null;
+  sex?: "M" | "F" | null;
+  rounds: { round: number; gross: number | null; toPar: number | null }[];
+}
 export interface NCHorario {
   round: number;
   players: Array<{

@@ -5,10 +5,12 @@
  * `teeBorder` (.tee-bd-claro); os outros o contorno suave de .tee-swatch. Antes eram 5 cópias à
  * mão com 8, 9, 10 e 12px.
  */
-import { getTeeHex, teeBorder } from "../utils/teeColors";
+import { getTeeHex, teeBorder, isTeeSoDistancia } from "../utils/teeColors";
 import { Tint } from "./DataStyle";
 
 export default function TeeSwatch({ tee, size = "sm", title }: { tee: string; size?: "sm" | "md"; title?: string }) {
   const hex = getTeeHex(tee);
-  return <Tint className={`tee-swatch is-${size}${teeBorder(hex) ? " tee-bd-claro" : ""}`} title={title} bg={hex} />;
+  // Tee só com a distância: a cor é do site, não do campo — diz-se ao passar o rato.
+  const aviso = isTeeSoDistancia(tee) ? `${tee} — cor do site; a fonte não diz a cor do tee` : undefined;
+  return <Tint className={`tee-swatch is-${size}${teeBorder(hex) ? " tee-bd-claro" : ""}`} title={title ?? aviso} bg={hex} />;
 }

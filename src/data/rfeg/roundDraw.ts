@@ -15,7 +15,8 @@ import type { FpgDraw } from "../nacional2026Loader";
 import { buildFpgDraw, groupConsecutive, indexByName } from "../intlDraw";
 import { isLgsCard } from "./toTournament";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
-import type { RFEGDetail, RFEGIndexEntry, NCHorario, LgsHorarioRound, LgsRound } from "./types";
+import type { RFEGDetail, RFEGIndexEntry, NCHorario, LgsHorarioRound, LgsRound, NcDrawInfo } from "./types";
+import { registarTeesSoDistancia } from "../../utils/teeColors";
 import { esDateToIso } from "./text";
 import { escaloEsForPlayer } from "./escalao";
 import { lgsHorariosToHorarios, teeTimesAllToHorarios, teeTimesToHorarios } from "./horarios";
@@ -26,7 +27,7 @@ export type RfegDrawDetail = RFEGDetail & {
   _ncHorarios?: NCHorario[] | null;
   _lgsHorarios?: LgsHorarioRound[] | null;
   _teeMetersByIns?: Record<string, number>;
-  _drawInfoByIns?: Record<string, { dob: string | null; name: string | null; licencia?: string | null; club?: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }>;
+  _drawInfoByIns?: Record<string, NcDrawInfo>;
 };
 
 export interface RfegRoundDraw {
@@ -123,8 +124,12 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
         const key = ncKey(p);
         if (!key) continue;
         const info = drawInfo[String(p.ins)];
-        const esc = escaloEsForPlayer(null, info.dob, detail.meta.dateStart) || undefined;
-        playersDB[key] = { dob: info.dob || undefined, escalao: esc, name: info.name || undefined, country: "ES" };
+        // Escalão pelo nascimento; sem ele, a categoria em que jogou nesta prova.
+        const esc = escaloEsForPlayer(info.escalao ?? null, info.dob, detail.meta.dateStart) || undefined;
+        playersDB[key] = {
+          dob: info.dob || undefined, escalao: esc, name: info.name || undefined, country: "ES",
+          ...(info.sex ? { sex: info.sex } : {}),
+        };
       }
     }
   } else {
@@ -169,6 +174,9 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
     }
   }
 
+  // Tees só com a distância → cores do site (as mesmas do scorecard da prova).
+  registarTeesSoDistancia(Object.values(teeByIns).map((m) => `${m} m`));
+
   // FpgDraw da ronda pedida: agrupar por (hora, buraco de saída) → flights.
   let draw: FpgDraw | null = null;
   const r = horarios && horarios.length ? (horarios.find((rd) => rd.round === round) || horarios[0]) : null;
@@ -188,6 +196,8 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
           fed: isNc ? ncKey(p) : null,   // licença NC (pelo ins) / licencia mitarjeta mais abaixo
           hcp: isNc ? p.hcp : null,
           tee: dist ? `${dist} m` : null, // DrawTab mostra p.tee — aqui a distância do jogador (NC)
+          // Escalão em que jogou nesta prova (o DrawTab usa-o quando não há nascimento).
+          ...(isNc && p.ins && drawInfo[String(p.ins)]?.escalao ? { escalao: drawInfo[String(p.ins)].escalao } : {}),
           isPortuguese: isPtCountry(null),
           country: null,
         };

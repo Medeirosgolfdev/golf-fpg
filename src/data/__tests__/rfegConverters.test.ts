@@ -2,6 +2,7 @@ import { describe, it, expect, beforeAll, vi } from "vitest";
 import lgs388Raw from "../../../public/data/rfegolf-livegolfscoring/388.json?raw";
 import nc74574Raw from "../../../public/data/nextcaddy/74574.json?raw";
 import nc74579Raw from "../../../public/data/nextcaddy/74579.json?raw";
+import nc61240Raw from "../../../public/data/nextcaddy/61240.json?raw";
 import rfeg16192Raw from "../../../public/data/rfegolf-resultats/16192.json?raw";
 import fcgRaw from "../../../public/data/fcg/69e7837119dbb562774fed8d.json?raw";
 import dobRaw from "../../../public/data/licencia-dob-lookup.json?raw";
@@ -29,6 +30,7 @@ const FILES: Record<string, string> = {
   "/data/rfegolf-livegolfscoring/388.json": lgs388Raw,
   "/data/nextcaddy/74574.json": nc74574Raw,
   "/data/nextcaddy/74579.json": nc74579Raw,
+  "/data/nextcaddy/61240.json": nc61240Raw,
   "/data/rfegolf-resultats/16192.json": rfeg16192Raw,
   "/data/fcg/69e7837119dbb562774fed8d.json": fcgRaw,
   "/data/licencia-dob-lookup.json": dobRaw,
@@ -164,16 +166,16 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
         ],
         "inscritos": "22 + 0 reservas",
         "inscritos1": [
-          "Lucia Saenz Vidau | AM05983535 | 37.9 | A |  | 4730 m",
+          "Lucia Saenz Vidau | AM05983535 | 37.9 | Alevín |  | 4730 m",
           "Gadea Geldinovski Ruiz | AM05322815 | 30.8 | Benjamín |  | 4730 m",
         ],
         "jogadores": 22,
         "links": [],
         "porSexo": "M 21 · F 1",
         "top": [
-          "1 | Lucia Saenz Vidau | — | 96 | 24 | 18 | 72 | 4730 m | A | null",
+          "1 | Lucia Saenz Vidau | — | 96 | 24 | 18 | 72 | 4730 m | Alevín | null",
           "2 | Gadea Geldinovski Ruiz | Real Club de Golf Vista Hermosa | 94 | 22 | 18 | 72 | 4730 m | Benjamín | 10",
-          "3 | Blanca Moreno Quintero | — | 104 | 32 | 18 | 72 | 4730 m | I | null",
+          "3 | Blanca Moreno Quintero | — | 104 | 32 | 18 | 72 | 4730 m | Infantil | null",
         ],
         "totais": null,
         "voltas": 1,
@@ -187,6 +189,7 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
           {
             "clube": "Real Club de Golf Vista Hermosa",
             "country": null,
+            "escalao": "Infantil",
             "fed": "AM05415928",
             "hcp": 4.1,
             "isPortuguese": false,
@@ -213,8 +216,8 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
         ],
         "inscritos": "4 + 0 reservas",
         "inscritos1": [
-          "Santiago Segura Ramos | AM05008598 | 54 | B |  | ",
-          "Alvaro Peña Brandariz | AM05499827 | 54 | B |  | ",
+          "Santiago Segura Ramos | AM05008598 | 54 | Benjamín |  | ",
+          "Alvaro Peña Brandariz | AM05499827 | 54 | Benjamín |  | ",
         ],
         "jogadores": null,
         "links": [],
@@ -302,6 +305,18 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
 
   it("ficheiro que não existe → null", async () => {
     expect(await loadRfegDivisionData(t("nextcaddy", 1, "nextcaddy/nao-existe.json"))).toBeNull();
+  });
+
+  it("NextCaddy 61240 (Circuito Juvenil Zona E, Granada 14/11/2026): sem nascimento, o Draw tem o escalão e o sexo da categoria em que jogou", async () => {
+    const d = await loadRfegDivisionData(t("nextcaddy", 61240, "nextcaddy/61240.json"));
+    const r1 = rfegRoundDraw(d!.data, t("nextcaddy", 61240, ""), 1);
+    const linha = (nome: string) => r1.draw!.groups!.flatMap((g) => g.players).find((p) => p.nome.startsWith(nome))!;
+    // Diego Torres Gallardo e Jessica Roskosch: só jogam provas regionais (sem nascimento em fonte nenhuma).
+    expect([linha("Diego Torres").escalao, r1.playersDB[linha("Diego Torres").fed!]?.sex]).toEqual(["Infantil", "M"]);
+    expect([linha("Jessica Roskosch").escalao, r1.playersDB[linha("Jessica Roskosch").fed!]?.sex]).toEqual(["Infantil", "F"]);
+    // Cada jogador tem o tee dele (metros) — os três tees da prova.
+    const tees = new Set(r1.draw!.groups!.flatMap((g) => g.players).map((p) => p.tee).filter(Boolean));
+    expect([...tees].sort()).toEqual(["5061 m", "5345 m", "5649 m"]);
   });
 });
 

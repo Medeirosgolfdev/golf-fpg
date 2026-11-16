@@ -165,7 +165,14 @@ function enriquecer(juniors, { hcp, linhas }) {
     const h = hcpDoJunior(j, hcp, licsRanking);
     if (!h && !ls.some((l) => l.lic)) { if (temLic) st.semNada++; continue; }
     const o = {};
-    if (h) { o.lic = h.lic; o.hcp = h.hcp; o.hcpData = h.data; if (h.clube) o.hcpClube = h.clube; o.hcpVia = h.via; st.comHcp++; }
+    if (h) {
+      o.lic = h.lic; o.hcp = h.hcp; o.hcpData = h.data; if (h.clube) o.hcpClube = h.clube; o.hcpVia = h.via; st.comHcp++;
+      // A ficha fica com o sexo e o clube da RFEG quando não os tem por outra
+      // fonte (juniores que só jogam provas regionais no NextCaddy; 16/11/2026).
+      // O sexo já foi conferido pelo hcpDoJunior (nunca o contrário do da ficha).
+      if (!j.sex && (h.sexo === "M" || h.sexo === "F")) { j.sex = h.sexo; st.sexoDaRfeg = (st.sexoDaRfeg || 0) + 1; }
+      if (!j.club && h.clube) { j.club = h.clube; st.clubeDaRfeg = (st.clubeDaRfeg || 0) + 1; }
+    }
     if (ls.length) {
       if (!o.lic && ls[0].lic) o.lic = ls[0].lic;
       st.comRanking++;
