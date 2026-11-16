@@ -27,7 +27,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import { loadPlayerData } from "../../data/playerDataLoader";
 import type { PlayerPageData } from "../../data/playerDataLoader";
 import { MANUEL_FED } from "../../constants/manuel";
-import { buildHoleProfile, buildGamePlan, estimateField, fieldHoleVsPar, topFieldHoleStats, ultimas20, porComprimento, type HolePlan } from "./previsaoModel";
+import { buildHoleProfile, buildGamePlan, estimateField, fieldHoleVsPar, topFieldHoleStats, ultimas20, porComprimento, RECENT_MONTHS, type HolePlan } from "./previsaoModel";
 import HoleDiffTable from "../../ui/HoleDiffTable";
 import KpiCard from "../../ui/KpiCard";
 import { scClass } from "../../utils/scoreDisplay";
@@ -460,7 +460,7 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
         <>
           {/* Strip de KPIs */}
           <div className="kpi-row kpi-row-4">
-            <KpiCard label="A sua média" value={predMedia ?? "–"} sub={predMedia != null ? `${fmtToPar(predMedia - (par as number))} · forma 6m` : undefined} />
+            <KpiCard label="A sua média" value={predMedia ?? "–"} sub={predMedia != null ? `${fmtToPar(predMedia - (par as number))} · forma ${RECENT_MONTHS}m` : undefined} />
             {/* «Ao handicap» e «Bom dia» são a MESMA coisa (o índice é a média das
                 8 voltas que contam) — uma só KPI (04/11/2026, «é a mesma coisa?»);
                 o buraco a buraco só diz quando dá diferente. */}
@@ -472,7 +472,7 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
 
           <p className="muted fs-12 u-m-0">
             Para competir, o alvo não é a média — é jogar <strong>ao handicap</strong> (+{Math.round(calc.courseHcp)} ≈ <strong>{predGross}</strong>) ou abaixo, que é o que faz num <strong>bom dia</strong> (o índice é a média das 8 voltas que contam).
-            A volta <strong>média</strong> (forma 6m) ronda {predMedia}{vinte && <>; das últimas {vinte.n} voltas, <strong>{vinte.ok}</strong> davam {predGross} ou menos neste tee e a melhor {vinte.melhor}</>}.
+            A volta <strong>média</strong> (forma {RECENT_MONTHS}m) ronda {predMedia}{vinte && <>; das últimas {vinte.n} voltas, <strong>{vinte.ok}</strong> davam {predGross} ou menos neste tee e a melhor {vinte.melhor}</>}.
             A régua abaixo traduz cada gross no Score Differential que geraria.
           </p>
 
@@ -532,7 +532,7 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
           </table>
 
           <p className="muted fs-11 u-m-0">
-            Cenários: "média" = volta típica (forma 6m) · "ao handicap" = jogar ao índice (+HCP) · "bom dia" = como jogou buraco a buraco nas 8 voltas que contam para o handicap (as 8 de Score Differential mais baixo das últimas 20), nos buracos deste tee · "N ou menos" = das últimas 20 voltas, quantas, convertidas para este tee pelo Score Differential, davam o gross de jogar ao handicap ou melhor · "Voltas" na régua = quantas das últimas 20 deram exactamente esse gross neste tee (somam 20 com a linha das piores). Score Differential = (113 / Slope) × (Gross − CR). O índice é a média das 8 melhores de 20 voltas
+            Cenários: "média" = volta típica (forma {RECENT_MONTHS}m) · "ao handicap" = jogar ao índice (+HCP) · "bom dia" = como jogou buraco a buraco nas 8 voltas que contam para o handicap (as 8 de Score Differential mais baixo das últimas 20), nos buracos deste tee · "N ou menos" = das últimas 20 voltas, quantas, convertidas para este tee pelo Score Differential, davam o gross de jogar ao handicap ou melhor · "Voltas" na régua = quantas das últimas 20 deram exactamente esse gross neste tee (somam 20 com a linha das piores). Score Differential = (113 / Slope) × (Gross − CR). O índice é a média das 8 melhores de 20 voltas
             (o potencial num bom dia), por isso joga-se "ao índice" ou melhor só ~1 em cada 4 a 5 voltas (cerca de 20–25% das vezes).
           </p>
         </>
@@ -551,11 +551,11 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
           <details className="card" open>
             <summary className="fs-13 fw-600 u-cur-pointer u-user-select-none">
               📏 O comprimento do tee — {teeM} m
-              <span className="muted fw-400 fs-11">{"  ·  as voltas de 18 dos últimos 6 meses, pelo comprimento do tee"}</span>
+              <span className="muted fw-400 fs-11">{`  ·  as voltas de 18 dos últimos ${RECENT_MONTHS} meses, pelo comprimento do tee`}</span>
             </summary>
             <p className="fs-12 u-m-6px-0-0">
               {par.n < 3
-                ? <>Só {par.n} {par.n === 1 ? "volta" : "voltas"} em tees deste comprimento nos últimos 6 meses — pouco para dizer se joga pior aqui do que o SD prevê.</>
+                ? <>Só {par.n} {par.n === 1 ? "volta" : "voltas"} em tees deste comprimento nos últimos {RECENT_MONTHS} meses — pouco para dizer se joga pior aqui do que o SD prevê.</>
                 : dif != null && Math.abs(dif) < 1
                   ? <>Nos tees deste comprimento joga <strong>como no resto</strong> (SD médio {par.sdMedio!.toFixed(1)} contra {comprimento.sdGeral!.toFixed(1)} em geral): o CR e o Slope já descontam a distância, e a conversão pelo SD é justa.</>
                   : dif != null && dif >= 1
@@ -663,9 +663,9 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
                 <SortableHdr k="dist" sortKey={pK} sortDir={pD} onSort={pT} className="r">m</SortableHdr>
                 <SortableHdr k="si" sortKey={pK} sortDir={pD} onSort={pT}>SI</SortableHdr>
                 <SortableHdr k="par" sortKey={pK} sortDir={pD} onSort={pT} className="r">Par</SortableHdr>
-                <SortableHdr k="exp" sortKey={pK} sortDir={pD} onSort={pT} className="r" title="Pancadas esperadas num dia normal (a média dele nos últimos 6 meses)">Média</SortableHdr>
+                <SortableHdr k="exp" sortKey={pK} sortDir={pD} onSort={pT} className="r" title={`Pancadas esperadas num dia normal (a média dele nos últimos ${RECENT_MONTHS} meses)`}>Média</SortableHdr>
                 <th className="r" title="Pancadas esperadas num bom dia: como jogou buracos parecidos (par e distância) nas 8 voltas que contam para o handicap">Bom<br />dia</th>
-                <th className="u-ta-center" title="% de birdies ou melhor · pares · bogeys ou pior do Manuel em buracos parecidos (mesmo par, distância próxima) de qualquer campo, nos últimos 6 meses">Manuel<br />buracos parecidos</th>
+                <th className="u-ta-center" title={`% de birdies ou melhor · pares · bogeys ou pior do Manuel em buracos parecidos (mesmo par, distância próxima) de qualquer campo, nos últimos ${RECENT_MONTHS} meses`}>Manuel<br />buracos parecidos</th>
                 {campoAqui && <th className="u-ta-center" title={`% de birdies ou melhor · pares · bogeys ou pior dos nossos jogadores seguidos neste buraco, das ${resolved.tee.teeName} (${campoAqui.r} voltas de ${campoAqui.j} jogadores, sem o Manuel)`}>Quem jogou<br />aqui ({campoAqui.j})</th>}
                 <SortableHdr k="tag" sortKey={pK} sortDir={pD} onSort={pT}>Plano</SortableHdr>
                 <th>Estratégia</th>
@@ -709,7 +709,7 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
                     <td className={`r u-fw-600 ${vsParTone(h.expStrokes, h.par)}`}>{h.expStrokes != null ? h.expStrokes.toFixed(1) : "–"}</td>
                     <td className={`r ${vsParTone(h.expBom, h.par)}`}>{h.expBom != null ? h.expBom.toFixed(1) : "–"}</td>
                     <td className="u-ta-center u-ws-nowrap"
-                      title={h.hist ? `Manuel, em ${h.hist.n} buracos de par ${h.par} com distância parecida a ${h.dist} m (últimos 6 meses): ${h.hist.birdies} birdies ou melhor, ${h.hist.pares} pares, ${h.hist.bogeys} bogeys ou pior` : "Poucos buracos parecidos no histórico do Manuel"}>
+                      title={h.hist ? `Manuel, em ${h.hist.n} buracos de par ${h.par} com distância parecida a ${h.dist} m (últimos ${RECENT_MONTHS} meses): ${h.hist.birdies} birdies ou melhor, ${h.hist.pares} pares, ${h.hist.bogeys} bogeys ou pior` : "Poucos buracos parecidos no histórico do Manuel"}>
                       <DistBuraco par={h.par} c={h.hist ? [h.hist.n, h.hist.birdies, h.hist.pares, h.hist.bogeys] : null} />
                     </td>
                     {campoAqui && (() => {
@@ -764,7 +764,7 @@ export default function PrevisaoTab({ torneio = null, escalaoNome = "", mh = nul
           </table></div>
           {!playerData && <LoadingState size="sm" message="A carregar o histórico do Manuel para o «esperado»…" />}
           <p className="muted fs-11 u-m-6px-0-0">
-            "Média" e "Bom dia" = pancadas que o Manuel deve fazer em cada buraco num dia normal (a média dele em buracos do mesmo par e distância nos últimos 6 meses) e num bom dia (o mesmo, só nas 8 voltas que contam para o handicap — as 8 melhores das últimas 20); cada coluna soma ao total das KPIs lá em cima (verde = abaixo do par, vermelho = acima). Base: média do Manuel em buracos do mesmo par e distância ({profile.recent ? "últimos 6 meses" : "todas as voltas"}). "Plano" = {planFonte === "manuel" ? <>pelo histórico do Manuel, não pelo SI (o SI é a dificuldade para o jogador em geral): <strong>Atacar</strong> = num bom dia faz par ou melhor neste tipo de buraco · <strong>Defender</strong> = mesmo num bom dia fica acima do par · Neutro = o resto. Os círculos são percentagens — birdie ou melhor · par · bogey ou pior: "Manuel · buracos parecidos" = o que ele fez em buracos do mesmo par e distância parecida, em qualquer campo, nos últimos 6 meses; "Quem jogou aqui" = o que os nossos jogadores seguidos (sem o Manuel) fizeram NESTE buraco, deste tee.</> : <>dificuldade do buraco {planFonte === "field" ? "para o field na edição anterior" : planFonte === "si" ? "pelo índice (SI) do campo — o terço mais difícil defender, o mais fácil atacar" : "pelo histórico do Manuel em buracos parecidos"} (atacar = mais fáceis, defender = mais difíceis).</>}{nove ? " Campo de 9 buracos jogado 2 vezes: cada linha é a 1.ª e a 2.ª passagem (o SI da 2.ª em pequeno); o Σ é o das 18." : ""}{topField && <> "T5 R#" = scores dos 5 melhores classificados da edição anterior nessa ronda, por ordem de classificação (cor = convenção dos scorecards: birdie/par/bogey). Mostra que os bons fazem birdies onde a média fica acima do par; nome do jogador no hover.</>}
+            "Média" e "Bom dia" = pancadas que o Manuel deve fazer em cada buraco num dia normal (a média dele em buracos do mesmo par e distância nos últimos {RECENT_MONTHS} meses) e num bom dia (o mesmo, só nas 8 voltas que contam para o handicap — as 8 melhores das últimas 20); cada coluna soma ao total das KPIs lá em cima (verde = abaixo do par, vermelho = acima). Base: média do Manuel em buracos do mesmo par e distância ({profile.recent ? `últimos ${RECENT_MONTHS} meses` : "todas as voltas"}). "Plano" = {planFonte === "manuel" ? <>pelo histórico do Manuel, não pelo SI (o SI é a dificuldade para o jogador em geral): <strong>Atacar</strong> = num bom dia faz par ou melhor neste tipo de buraco · <strong>Defender</strong> = mesmo num bom dia fica acima do par · Neutro = o resto. Os círculos são percentagens — birdie ou melhor · par · bogey ou pior: "Manuel · buracos parecidos" = o que ele fez em buracos do mesmo par e distância parecida, em qualquer campo, nos últimos {RECENT_MONTHS} meses; "Quem jogou aqui" = o que os nossos jogadores seguidos (sem o Manuel) fizeram NESTE buraco, deste tee.</> : <>dificuldade do buraco {planFonte === "field" ? "para o field na edição anterior" : planFonte === "si" ? "pelo índice (SI) do campo — o terço mais difícil defender, o mais fácil atacar" : "pelo histórico do Manuel em buracos parecidos"} (atacar = mais fáceis, defender = mais difíceis).</>}{nove ? " Campo de 9 buracos jogado 2 vezes: cada linha é a 1.ª e a 2.ª passagem (o SI da 2.ª em pequeno); o Σ é o das 18." : ""}{topField && <> "T5 R#" = scores dos 5 melhores classificados da edição anterior nessa ronda, por ordem de classificação (cor = convenção dos scorecards: birdie/par/bogey). Mostra que os bons fazem birdies onde a média fica acima do par; nome do jogador no hover.</>}
           </p>
         </details>
       )}

@@ -124,7 +124,7 @@ describe("ultimas20 — as voltas do «Bom dia»", () => {
   });
 });
 
-// «📏 O comprimento do tee» (04/11/2026): voltas de 18 dos últimos 6 meses em
+// «📏 O comprimento do tee» (04/11/2026): voltas de 18 dos últimos RECENT_MONTHS meses (3) em
 // curtos / parecidos (±250 m) / compridos, comparados com o tee da prova.
 describe("porComprimento — grupos pelo comprimento do tee", () => {
   const hoje = new Date(Date.now() - 30 * 864e5);

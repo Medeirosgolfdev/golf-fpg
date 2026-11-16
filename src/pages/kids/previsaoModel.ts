@@ -34,7 +34,10 @@ export interface HoleProfile {
 export interface HoleHist { n: number; birdies: number; pares: number; bogeys: number }
 
 const KERNEL_BW: Record<number, number> = { 3: 18, 4: 30, 5: 42 };
-const RECENT_MONTHS = 6;
+/** Janela das voltas «recentes» da previsão (16/11/2026, pedido dela: «ele mudou
+ *  de tacos e cresceu no fim do verão, estar a ver os últimos 6 meses talvez é
+ *  dispersar» — eram 6). Com menos de MIN_RECENT_HOLES buracos cai para tudo. */
+export const RECENT_MONTHS = 3;
 const MIN_RECENT_HOLES = 120; // ~7 voltas 18h; abaixo disto cai p/ histórico todo
 
 function parseRoundDate(s: string | undefined): number | null {
@@ -46,11 +49,11 @@ function parseRoundDate(s: string | undefined): number | null {
 }
 
 /** Perfil por (par, distância). Sem `soVoltas`: todas as voltas, preferindo as
- *  dos últimos 6 meses. Com `soVoltas` (scoreIds): só essas, sem corte de
+ *  dos últimos RECENT_MONTHS meses. Com `soVoltas` (scoreIds): só essas, sem corte de
  *  datas — é assim que se faz o «Bom dia» (as 8 voltas que contam para o
  *  handicap, `ultimas20`). */
 export function buildHoleProfile(pd: PlayerPageData | null, soVoltas?: Set<string>): HoleProfile {
-  // Recolhe todas as amostras e prefere as RECENTES (últimos 6 meses): um
+  // Recolhe todas as amostras e prefere as RECENTES (últimos RECENT_MONTHS meses): um
   // júnior melhora depressa — a média de toda a carreira sobrestima o que ele
   // faz HOJE. Só cai para o histórico completo se não houver dados recentes.
   type Sample = { par: number; dist: number | null; vsPar: number; ts: number | null };
@@ -150,7 +153,7 @@ export interface HolePlan {
    *  campo (sem field — provas FPG/Drive/…) ou, sem SI, o perfil do Manuel. */
   tagSource: "manuel" | "field" | "si" | "perfil";
   /** Birdies/pares/bogeys dele em buracos parecidos (mesmo par, distância
-   *  próxima) nos últimos 6 meses — o que sustenta o Atacar/Defender. */
+   *  próxima) nos últimos RECENT_MONTHS meses — o que sustenta o Atacar/Defender. */
   hist: HoleHist | null;
   note: string;
   /** vsPar médio do field na edição anterior (null se sem dados). */
@@ -565,7 +568,7 @@ export interface GrupoComprimento {
   key: "curtos" | "parecidos" | "compridos";
   n: number; metros: number | null; sdMedio: number | null; sdMelhor: number | null; vsParMedio: number | null;
 }
-export function porComprimento(pd: PlayerPageData | null, teeM: number, months = 6, janela = 250): GrupoComprimento[] {
+export function porComprimento(pd: PlayerPageData | null, teeM: number, months = RECENT_MONTHS, janela = 250): GrupoComprimento[] {
   const cut = Date.now() - months * 30.4 * 24 * 3600 * 1000;
   const g: Record<GrupoComprimento["key"], { m: number; sd: number; vp: number | null }[]> = { curtos: [], parecidos: [], compridos: [] };
   for (const c of pd?.DATA || []) {
