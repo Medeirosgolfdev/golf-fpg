@@ -240,7 +240,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   // ── 2nd Castro Marim Portuguese International U14 — 4-6/12/2026 (Quinta do Vale) ──
   // Treino a 3/12; as 3 voltas são a 4, 5 e 6/12 (Termos da Competição).
   // As inscrições são pelo formulário do fpg.pt e os inscritos completos são os
-  // das Entry Lists em PDF de 10/11/2026 («Final Entry List – Pending Handicap
+  // das Entry Lists em PDF de 16/11/2026 (rapazes) e 10/11/2026 (raparigas) («Final Entry List – Pending Handicap
   // Verification»), curados à mão (`_manual` em fpg-admissions-draws.json) nos
   // tcodes PROVISÓRIOS 90872 (rapazes) e 90873 (raparigas).
   // A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946
@@ -264,7 +264,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     extraLinks: [
       { label: "página oficial FPG", url: "https://competicoes.fpg.pt/evento/2nd-portuguese-international-u14-championship/", icon: "🏆" },
       { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/2nd-Castro-Marim-Term-Of-Competition.pdf", icon: "📋" },
-      { label: "Entry List Boys 10/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Boys-06_11_26_II.pdf", icon: "📝" },
+      { label: "Entry List Boys 16/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Boys-16_11.pdf", icon: "📝" },
     ],
     live: false,
     semLinksFpg: true,
@@ -296,7 +296,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   // Prova do clube (ccode 962), 54 buracos (18 por dia), quatro categorias:
   // U21 (2005-09), U16 (2010-11), U14 (2012-13) e U12 (2014-15). Inscrições na
   // loja do clube até 18/12 ou 85 jogadores.
-  // Os inscritos são os da Entry List em PDF do clube (12/11/2026: 47), curados à
+  // Os inscritos são os da Entry List em PDF do clube (12/11/2026: 47; relida a 16/11: 47), curados à
   // mão (`_manual` em fpg-admissions-draws.json) em tcodes PROVISÓRIOS — «909» +
   // escalão: 90912, 90914, 90916, 90921. A 12/11/2026 a FPG ainda não tinha a
   // prova no scoring (as edições anteriores foram 962/10067-10070 e 10078-10081,

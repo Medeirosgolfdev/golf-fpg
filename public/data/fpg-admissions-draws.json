@@ -407497,14 +407497,14 @@
       "date": "2026-12-04",
       "campo": "Quinta do Vale",
       "_manual": true,
-      "_note": "Rapazes. tcode PROVISÓRIO (o das listas em PDF; o real no scoring é o 000/10946 — ver o fim desta nota). Lido do PDF Entry List Boys de 10/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Boys-06_11_26_II.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-10_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Lugares 1-12 = lugares de wild card (tag «Wild card»): 1-10 atribuídos a 05/11 (Burkhalter, Harran, Durando, Palmares, Rocha, Ivo de Carvalho, Nunes, Castro Ferreira, Balixa, Rente); 11-12, que estavam por atribuir, são desde 06/11 Theophile Galle (+0,2, era 7.º da espera) e Cayssi Dunlop (0,8, era 21.º) — o PDF não escreve «wild card», lê-se da posição (fora da ordem dos handicaps). 13-42 por handicap; espera com a numeração do PDF. A lista de 10/11 já não traz quem tinha HI acima de 6,0 (o máximo dos Termos; a vermelho até 06/11): Manuel Medeiros (6,4), Sebastião Soares, Casper Bernstein, Tiago Araujo, Tomas Lima Pinto, Pierre-Antoine Maupin, Ricardo Ferreira, Eduardo Ferreira, Miguel Ferreira. Convocados que entraram pelo handicap: Santiago Dias. Artyom Becerra: o PDF escreve «3,9» sem o «+», mas está na ordem dos +4,2/+3,8 (era +1,9 a 04/11) — guardado como +3,9. «Aodhán Christopher Fitzgerald» é o «Aodhan Fitzgerald» das listas anteriores (+1,7; era +1,6). Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json). A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946 (rapazes e raparigas juntos; só lá estão os federados portugueses — 13 a 12/11/2026), ligado a esta entrada por `tcodeReal` no featuredTournaments.ts: na lista do site há uma só carta, com estas listas completas. Data = 1.ª volta (4/12; o treino é a 3/12).",
+      "_note": "Rapazes. tcode PROVISÓRIO (o das listas em PDF; o real no scoring é o 000/10946 — ver o fim desta nota). Lido do PDF Entry List Boys de 16/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Boys-16_11.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-16_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Face a 10/11: sai Karol Gil (+0,8, era 42.º) e entra o 1.º da espera, Julius Gellermann (+0,7); Nicolas Xu Chen passa de 0,7 para +0,2 (19.º → 7.º da espera); 42 + 44 em espera. Lugares 1-12 = lugares de wild card (tag «Wild card»): 1-10 atribuídos a 05/11 (Burkhalter, Harran, Durando, Palmares, Rocha, Ivo de Carvalho, Nunes, Castro Ferreira, Balixa, Rente); 11-12, que estavam por atribuir, são desde 06/11 Theophile Galle (+0,2, era 7.º da espera) e Cayssi Dunlop (0,8, era 21.º) — o PDF não escreve «wild card», lê-se da posição (fora da ordem dos handicaps). 13-42 por handicap; espera com a numeração do PDF. A lista de 10/11 já não traz quem tinha HI acima de 6,0 (o máximo dos Termos; a vermelho até 06/11): Manuel Medeiros (6,4), Sebastião Soares, Casper Bernstein, Tiago Araujo, Tomas Lima Pinto, Pierre-Antoine Maupin, Ricardo Ferreira, Eduardo Ferreira, Miguel Ferreira. Convocados que entraram pelo handicap: Santiago Dias. Artyom Becerra: o PDF escreve «3,9» sem o «+», mas está na ordem dos +4,2/+3,8 (era +1,9 a 04/11) — guardado como +3,9. «Aodhán Christopher Fitzgerald» é o «Aodhan Fitzgerald» das listas anteriores (+1,7; era +1,6). Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json). A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946 (rapazes e raparigas juntos; só lá estão os federados portugueses — 13 a 12/11/2026), ligado a esta entrada por `tcodeReal` no featuredTournaments.ts: na lista do site há uma só carta, com estas listas completas. Data = 1.ª volta (4/12; o treino é a 3/12).",
       "admissions": {
         "name": "2nd Castro Marim Portuguese Int. U14 Championship — Rapazes",
         "date": "2026-12-04",
-        "status": "Entry List final FPG 10/11 · 12 wild cards atribuídos (lugares 1-12) · fora quem tinha HI acima de 6,0",
+        "status": "Entry List final FPG 16/11 · 12 wild cards atribuídos (lugares 1-12) · fora quem tinha HI acima de 6,0",
         "totalInscritos": 42,
-        "reservas": 45,
-        "_source": "PDF Entry List Boys FPG 10/11/2026 (manual)",
+        "reservas": 44,
+        "_source": "PDF Entry List Boys FPG 16/11/2026 (manual)",
         "players": [
           {
             "pos": 1,
@@ -408009,27 +408009,16 @@
           {
             "pos": 42,
             "fed": null,
-            "nome": "Karol Gil",
-            "clube": null,
-            "hcp": -0.8,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "confirmed",
-            "country": "Poland"
-          },
-          {
-            "pos": 1,
-            "fed": null,
             "nome": "Julius Gellermann",
             "clube": null,
             "hcp": -0.7,
             "vac": null,
             "dataInscricao": null,
-            "status": "reserva",
+            "status": "confirmed",
             "country": "Germany"
           },
           {
-            "pos": 2,
+            "pos": 1,
             "fed": null,
             "nome": "Adam Allouache",
             "clube": null,
@@ -408040,7 +408029,7 @@
             "country": "France"
           },
           {
-            "pos": 3,
+            "pos": 2,
             "fed": null,
             "nome": "Gaspard Bremond",
             "clube": null,
@@ -408051,7 +408040,7 @@
             "country": "France"
           },
           {
-            "pos": 4,
+            "pos": 3,
             "fed": null,
             "nome": "Riccardo Rizzo",
             "clube": null,
@@ -408062,7 +408051,7 @@
             "country": "Italy"
           },
           {
-            "pos": 5,
+            "pos": 4,
             "fed": null,
             "nome": "Samuele Pollastri",
             "clube": null,
@@ -408073,7 +408062,7 @@
             "country": "Italy"
           },
           {
-            "pos": 6,
+            "pos": 5,
             "fed": null,
             "nome": "Gabin Tosatto",
             "clube": null,
@@ -408084,7 +408073,7 @@
             "country": "France"
           },
           {
-            "pos": 7,
+            "pos": 6,
             "fed": null,
             "nome": "Giorgio Regoli",
             "clube": null,
@@ -408093,6 +408082,17 @@
             "dataInscricao": null,
             "status": "reserva",
             "country": "Italy"
+          },
+          {
+            "pos": 7,
+            "fed": null,
+            "nome": "Nicolas Xu Chen",
+            "clube": null,
+            "hcp": -0.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "reserva",
+            "country": "Spain"
           },
           {
             "pos": 8,
@@ -408218,17 +408218,6 @@
           {
             "pos": 19,
             "fed": null,
-            "nome": "Nicolas Xu Chen",
-            "clube": null,
-            "hcp": 0.7,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "reserva",
-            "country": "Spain"
-          },
-          {
-            "pos": 20,
-            "fed": null,
             "nome": "Paul Misha",
             "clube": null,
             "hcp": 1,
@@ -408238,7 +408227,7 @@
             "country": "France"
           },
           {
-            "pos": 21,
+            "pos": 20,
             "fed": null,
             "nome": "Harry Wang",
             "clube": null,
@@ -408249,7 +408238,7 @@
             "country": "England"
           },
           {
-            "pos": 22,
+            "pos": 21,
             "fed": null,
             "nome": "Jules Dechery",
             "clube": null,
@@ -408260,7 +408249,7 @@
             "country": "France"
           },
           {
-            "pos": 23,
+            "pos": 22,
             "fed": null,
             "nome": "Ricky Mohun",
             "clube": null,
@@ -408271,7 +408260,7 @@
             "country": "England"
           },
           {
-            "pos": 24,
+            "pos": 23,
             "fed": "51612",
             "nome": "Oliver Smith",
             "clube": "Vila Sol",
@@ -408283,7 +408272,7 @@
             "dob": "2013-05-03"
           },
           {
-            "pos": 25,
+            "pos": 24,
             "fed": null,
             "nome": "Matteo Kaipel",
             "clube": null,
@@ -408294,7 +408283,7 @@
             "country": "Austria"
           },
           {
-            "pos": 26,
+            "pos": 25,
             "fed": null,
             "nome": "Ramaroson Iavo",
             "clube": null,
@@ -408305,7 +408294,7 @@
             "country": "France"
           },
           {
-            "pos": 27,
+            "pos": 26,
             "fed": "55269",
             "nome": "Finn Gordon",
             "clube": "Vilamoura, C. G",
@@ -408317,7 +408306,7 @@
             "dob": "2012-09-25"
           },
           {
-            "pos": 28,
+            "pos": 27,
             "fed": null,
             "nome": "Mathis da Silva",
             "clube": null,
@@ -408328,7 +408317,7 @@
             "country": "France"
           },
           {
-            "pos": 29,
+            "pos": 28,
             "fed": null,
             "nome": "Hector Dawson",
             "clube": null,
@@ -408339,7 +408328,7 @@
             "country": "United Kingdom"
           },
           {
-            "pos": 30,
+            "pos": 29,
             "fed": null,
             "nome": "Felipe Tavares de Araujo",
             "clube": null,
@@ -408350,7 +408339,7 @@
             "country": "Italy"
           },
           {
-            "pos": 31,
+            "pos": 30,
             "fed": null,
             "nome": "Nelson Nunez de Leon",
             "clube": null,
@@ -408361,7 +408350,7 @@
             "country": "Monaco"
           },
           {
-            "pos": 32,
+            "pos": 31,
             "fed": null,
             "nome": "Ilyes Cauden",
             "clube": null,
@@ -408372,7 +408361,7 @@
             "country": "Maroc"
           },
           {
-            "pos": 33,
+            "pos": 32,
             "fed": null,
             "nome": "Edouard Peltier",
             "clube": null,
@@ -408383,7 +408372,7 @@
             "country": "France"
           },
           {
-            "pos": 34,
+            "pos": 33,
             "fed": null,
             "nome": "Leo Tunney",
             "clube": null,
@@ -408394,7 +408383,7 @@
             "country": "France"
           },
           {
-            "pos": 35,
+            "pos": 34,
             "fed": null,
             "nome": "Carlos Dominguez Jurado",
             "clube": null,
@@ -408405,7 +408394,7 @@
             "country": "Spain"
           },
           {
-            "pos": 36,
+            "pos": 35,
             "fed": null,
             "nome": "César Raynaud Gérard",
             "clube": null,
@@ -408416,7 +408405,7 @@
             "country": "France"
           },
           {
-            "pos": 37,
+            "pos": 36,
             "fed": "51524",
             "nome": "William Gao",
             "clube": "Quinta do Peru",
@@ -408428,7 +408417,7 @@
             "dob": "2012-11-14"
           },
           {
-            "pos": 38,
+            "pos": 37,
             "fed": null,
             "nome": "Aaron Veyrenc",
             "clube": null,
@@ -408439,7 +408428,7 @@
             "country": "France"
           },
           {
-            "pos": 39,
+            "pos": 38,
             "fed": "46296",
             "nome": "Raul Pazos",
             "clube": "Miramar",
@@ -408451,7 +408440,7 @@
             "dob": "2013-02-08"
           },
           {
-            "pos": 40,
+            "pos": 39,
             "fed": "58937",
             "nome": "Alfie Dunbar",
             "clube": "Vila Sol",
@@ -408463,7 +408452,7 @@
             "dob": "2012-02-18"
           },
           {
-            "pos": 41,
+            "pos": 40,
             "fed": "39097",
             "nome": "Francisco Saraiva",
             "clube": "Oporto",
@@ -408475,7 +408464,7 @@
             "dob": "2012-04-20"
           },
           {
-            "pos": 42,
+            "pos": 41,
             "fed": null,
             "nome": "Haqvin Sylven",
             "clube": null,
@@ -408486,7 +408475,7 @@
             "country": "Switzerland"
           },
           {
-            "pos": 43,
+            "pos": 42,
             "fed": "46480",
             "nome": "Afonso Pinto",
             "clube": "Oporto",
@@ -408498,7 +408487,7 @@
             "dob": "2013-04-16"
           },
           {
-            "pos": 44,
+            "pos": 43,
             "fed": null,
             "nome": "Aristophane Baruch",
             "clube": null,
@@ -408509,7 +408498,7 @@
             "country": "France"
           },
           {
-            "pos": 45,
+            "pos": 44,
             "fed": "52856",
             "nome": "Francisco Carvalho",
             "clube": "Vale Pisão",
@@ -408522,6 +408511,15 @@
           }
         ],
         "saidos": [
+          {
+            "fed": null,
+            "nome": "Karol Gil",
+            "clube": null,
+            "hcp": -0.8,
+            "country": "Poland",
+            "ultimaLista": "2026-11-10",
+            "estavaEm": "42.º (confirmado)"
+          },
           {
             "nome": "Manuel Medeiros",
             "fed": "52884",
@@ -409369,14 +409367,14 @@
       "date": "2026-12-27",
       "campo": "Quinta do Lago Laranjal",
       "_manual": true,
-      "_note": "U12 (nascidos em 2014 e 2015; HI máx. 23). tcode PROVISÓRIO: a 12/11/2026 a prova ainda não existe no scoring da FPG (clube 962; sondados 10085-10089, vazios). Lido do PDF «QUINTA DO LAGO JUNIOR OPEN 2026 - ENTRY LIST» do clube (botão «Entry List» de quintadolago.com/en/events/quinta-do-lago-junior-open/, ficheiro 13xvrfV4W4sFx9hVoAFXCKtxDByvVIcbf no Google Drive), lido e conferido à vista a 12/11/2026: 47 inscritos (U12 12, U14 8, U16 17, U21 10). O PDF só traz nome, sexo, categoria e handicap, pela ordem do PDF; handicap = o que o PDF escreve («+» = plus). Federados FPG ligados por nome + idade + handicap e pelas listas das provas anteriores do clube (962/10063-10084); país de quem não tem federado = o dessas listas; quem não aparece em nenhuma fica sem país. 27-29/12/2026, 54 buracos (18 por dia), Laranjal; inscrições até 18/12 ou 85 jogadores. Quem não tem federado leva `escalao` = a categoria do PDF (sem ele o tee saía o dos mais velhos); os federados ficam com o escalão da idade. `juniorId` (ficha do Kids 2) em quem o PDF escreve de outra maneira: Zeyn Lababed = «Zeyn Lababedi», Afonso Pinto = «Afonso de Sousa Pinto», Clement Tarasov = «Clementy Tarasov», Ethan Prybys-Orton = «Ethan Prybys Orton» (os quatro pelo federado) e Toby Hankin = «Toby Hankins» das provas do clube de 2025. Tees pelos Termos (QDL_JUNIOR_OPEN_TEE_RULE em src/utils/teeRegulation.ts). Harley Botham (2017) e Harry Seabrook (2016) são mais novos do que o escalão (não há Sub-10 este ano). Zeyn Lababed: o PDF escreve «Female»; é o federado 55498 «Zeyn Lababedi» (Vila Sol, 16/09/2015, HCP 18,3 = o do PDF), que a FPG tem como rapaz e que jogou as provas do clube de 2025 e 2026 — fica como rapaz, com a marca «Female no PDF». Quando a FPG abrir a prova no scoring, trocar o tcode aqui, no featuredTournaments.ts e na regra de tees (ou usar tcodeReal, como em Castro Marim).",
+      "_note": "U12 (nascidos em 2014 e 2015; HI máx. 23). tcode PROVISÓRIO: a 12/11/2026 a prova ainda não existe no scoring da FPG (clube 962; sondados 10085-10089, vazios). Lido do PDF «QUINTA DO LAGO JUNIOR OPEN 2026 - ENTRY LIST» do clube (botão «Entry List» de quintadolago.com/en/events/quinta-do-lago-junior-open/, ficheiro 13xvrfV4W4sFx9hVoAFXCKtxDByvVIcbf no Google Drive), lido e conferido à vista a 12/11/2026 e relido a 16/11/2026 (OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-16_QDL_Junior_Open_Entry_List.pdf): 47 inscritos (U12 12, U14 8, U16 17, U21 10). O PDF só traz nome, sexo, categoria e handicap, pela ordem do PDF; handicap = o que o PDF escreve («+» = plus). Federados FPG ligados por nome + idade + handicap e pelas listas das provas anteriores do clube (962/10063-10084); país de quem não tem federado = o dessas listas; quem não aparece em nenhuma fica sem país. 27-29/12/2026, 54 buracos (18 por dia), Laranjal; inscrições até 18/12 ou 85 jogadores. Quem não tem federado leva `escalao` = a categoria do PDF (sem ele o tee saía o dos mais velhos); os federados ficam com o escalão da idade. `juniorId` (ficha do Kids 2) em quem o PDF escreve de outra maneira: Zeyn Lababed = «Zeyn Lababedi», Afonso Pinto = «Afonso de Sousa Pinto», Clement Tarasov = «Clementy Tarasov», Ethan Prybys-Orton = «Ethan Prybys Orton» (os quatro pelo federado) e Toby Hankin = «Toby Hankins» das provas do clube de 2025. Tees pelos Termos (QDL_JUNIOR_OPEN_TEE_RULE em src/utils/teeRegulation.ts). Harley Botham (2017) e Harry Seabrook (2016) são mais novos do que o escalão (não há Sub-10 este ano). Zeyn Lababed: o PDF de 12/11 escrevia «Female» (corrigido para «Male» no de 16/11); é o federado 55498 «Zeyn Lababedi» (Vila Sol, 16/09/2015, HCP 18,3 = o do PDF), que a FPG tem como rapaz e que jogou as provas do clube de 2025 e 2026 — rapaz. Quando a FPG abrir a prova no scoring, trocar o tcode aqui, no featuredTournaments.ts e na regra de tees (ou usar tcodeReal, como em Castro Marim).",
       "admissions": {
         "name": "Quinta do Lago Junior Open 2026 - U12",
         "date": "2026-12-27",
-        "status": "Entry List do clube de 12/11/2026 · inscrições abertas até 18/12 ou 85 jogadores",
+        "status": "Entry List do clube de 16/11/2026 · inscrições abertas até 18/12 ou 85 jogadores",
         "totalInscritos": 12,
         "reservas": 0,
-        "_source": "PDF Entry List do clube, 12/11/2026 (manual)",
+        "_source": "PDF Entry List do clube, 16/11/2026 (manual)",
         "players": [
           {
             "pos": 1,
@@ -409528,9 +409526,6 @@
             "country": "United Kingdom",
             "dob": "2015-09-16",
             "sex": "M",
-            "tags": [
-              "«Female» no PDF"
-            ],
             "juniorId": "f55498"
           }
         ],
@@ -409545,14 +409540,14 @@
       "date": "2026-12-27",
       "campo": "Quinta do Lago Laranjal",
       "_manual": true,
-      "_note": "U14 (nascidos em 2012 e 2013; HI máx. 18). tcode PROVISÓRIO: a 12/11/2026 a prova ainda não existe no scoring da FPG (clube 962; sondados 10085-10089, vazios). Lido do PDF «QUINTA DO LAGO JUNIOR OPEN 2026 - ENTRY LIST» do clube (botão «Entry List» de quintadolago.com/en/events/quinta-do-lago-junior-open/, ficheiro 13xvrfV4W4sFx9hVoAFXCKtxDByvVIcbf no Google Drive), lido e conferido à vista a 12/11/2026: 47 inscritos (U12 12, U14 8, U16 17, U21 10). O PDF só traz nome, sexo, categoria e handicap, pela ordem do PDF; handicap = o que o PDF escreve («+» = plus). Federados FPG ligados por nome + idade + handicap e pelas listas das provas anteriores do clube (962/10063-10084); país de quem não tem federado = o dessas listas; quem não aparece em nenhuma fica sem país. 27-29/12/2026, 54 buracos (18 por dia), Laranjal; inscrições até 18/12 ou 85 jogadores. Quem não tem federado leva `escalao` = a categoria do PDF (sem ele o tee saía o dos mais velhos); os federados ficam com o escalão da idade. `juniorId` (ficha do Kids 2) em quem o PDF escreve de outra maneira: Zeyn Lababed = «Zeyn Lababedi», Afonso Pinto = «Afonso de Sousa Pinto», Clement Tarasov = «Clementy Tarasov», Ethan Prybys-Orton = «Ethan Prybys Orton» (os quatro pelo federado) e Toby Hankin = «Toby Hankins» das provas do clube de 2025. Tees pelos Termos (QDL_JUNIOR_OPEN_TEE_RULE em src/utils/teeRegulation.ts). Dois Oliver Smith na FPG: o da lista é o 51612 (03/05/2013, HCP 0,4), não o 45647 (mais velho). Afonso Pinto = 46480 Afonso de Sousa Pinto (2013, HCP 5,9 = o do PDF), não o 46309 Afonso Silva Pinto (2011). Quando a FPG abrir a prova no scoring, trocar o tcode aqui, no featuredTournaments.ts e na regra de tees (ou usar tcodeReal, como em Castro Marim).",
+      "_note": "U14 (nascidos em 2012 e 2013; HI máx. 18). tcode PROVISÓRIO: a 12/11/2026 a prova ainda não existe no scoring da FPG (clube 962; sondados 10085-10089, vazios). Lido do PDF «QUINTA DO LAGO JUNIOR OPEN 2026 - ENTRY LIST» do clube (botão «Entry List» de quintadolago.com/en/events/quinta-do-lago-junior-open/, ficheiro 13xvrfV4W4sFx9hVoAFXCKtxDByvVIcbf no Google Drive), lido e conferido à vista a 12/11/2026 e relido a 16/11/2026 (OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-16_QDL_Junior_Open_Entry_List.pdf): 47 inscritos (U12 12, U14 8, U16 17, U21 10). O PDF só traz nome, sexo, categoria e handicap, pela ordem do PDF; handicap = o que o PDF escreve («+» = plus). Federados FPG ligados por nome + idade + handicap e pelas listas das provas anteriores do clube (962/10063-10084); país de quem não tem federado = o dessas listas; quem não aparece em nenhuma fica sem país. 27-29/12/2026, 54 buracos (18 por dia), Laranjal; inscrições até 18/12 ou 85 jogadores. Quem não tem federado leva `escalao` = a categoria do PDF (sem ele o tee saía o dos mais velhos); os federados ficam com o escalão da idade. `juniorId` (ficha do Kids 2) em quem o PDF escreve de outra maneira: Zeyn Lababed = «Zeyn Lababedi», Afonso Pinto = «Afonso de Sousa Pinto», Clement Tarasov = «Clementy Tarasov», Ethan Prybys-Orton = «Ethan Prybys Orton» (os quatro pelo federado) e Toby Hankin = «Toby Hankins» das provas do clube de 2025. Tees pelos Termos (QDL_JUNIOR_OPEN_TEE_RULE em src/utils/teeRegulation.ts). Dois Oliver Smith na FPG: o da lista é o 51612 (03/05/2013, HCP 0,4), não o 45647 (mais velho). Afonso Pinto = 46480 Afonso de Sousa Pinto (2013, HCP 5,9 = o do PDF), não o 46309 Afonso Silva Pinto (2011). Quando a FPG abrir a prova no scoring, trocar o tcode aqui, no featuredTournaments.ts e na regra de tees (ou usar tcodeReal, como em Castro Marim).",
       "admissions": {
         "name": "Quinta do Lago Junior Open 2026 - U14",
         "date": "2026-12-27",
-        "status": "Entry List do clube de 12/11/2026 · inscrições abertas até 18/12 ou 85 jogadores",
+        "status": "Entry List do clube de 16/11/2026 · inscrições abertas até 18/12 ou 85 jogadores",
         "totalInscritos": 8,
         "reservas": 0,
-        "_source": "PDF Entry List do clube, 12/11/2026 (manual)",
+        "_source": "PDF Entry List do clube, 16/11/2026 (manual)",
         "players": [
           {
             "pos": 1,
@@ -409669,14 +409664,14 @@
       "date": "2026-12-27",
       "campo": "Quinta do Lago Laranjal",
       "_manual": true,
-      "_note": "U16 (nascidos em 2010 e 2011; HI máx. 12). tcode PROVISÓRIO: a 12/11/2026 a prova ainda não existe no scoring da FPG (clube 962; sondados 10085-10089, vazios). Lido do PDF «QUINTA DO LAGO JUNIOR OPEN 2026 - ENTRY LIST» do clube (botão «Entry List» de quintadolago.com/en/events/quinta-do-lago-junior-open/, ficheiro 13xvrfV4W4sFx9hVoAFXCKtxDByvVIcbf no Google Drive), lido e conferido à vista a 12/11/2026: 47 inscritos (U12 12, U14 8, U16 17, U21 10). O PDF só traz nome, sexo, categoria e handicap, pela ordem do PDF; handicap = o que o PDF escreve («+» = plus). Federados FPG ligados por nome + idade + handicap e pelas listas das provas anteriores do clube (962/10063-10084); país de quem não tem federado = o dessas listas; quem não aparece em nenhuma fica sem país. 27-29/12/2026, 54 buracos (18 por dia), Laranjal; inscrições até 18/12 ou 85 jogadores. Quem não tem federado leva `escalao` = a categoria do PDF (sem ele o tee saía o dos mais velhos); os federados ficam com o escalão da idade. `juniorId` (ficha do Kids 2) em quem o PDF escreve de outra maneira: Zeyn Lababed = «Zeyn Lababedi», Afonso Pinto = «Afonso de Sousa Pinto», Clement Tarasov = «Clementy Tarasov», Ethan Prybys-Orton = «Ethan Prybys Orton» (os quatro pelo federado) e Toby Hankin = «Toby Hankins» das provas do clube de 2025. Tees pelos Termos (QDL_JUNIOR_OPEN_TEE_RULE em src/utils/teeRegulation.ts). Luciana Reis (federada 40196, 30/05/2005, HCP +2,0 = o do PDF) está na tabela «Under 16» do PDF apesar de ter idade de U21 — fica onde o PDF a põe. Dan Rowley «-1.2» e Max Galway «-3.4»: o PDF usa «+» para os handicaps plus (Elena Leblond +5, Luciana Reis +2.0), por isso o «-» não se sabe ler (plus ou handicap normal) — HCP fica vazio, com o texto do PDF na marca. Quando a FPG abrir a prova no scoring, trocar o tcode aqui, no featuredTournaments.ts e na regra de tees (ou usar tcodeReal, como em Castro Marim).",
+      "_note": "U16 (nascidos em 2010 e 2011; HI máx. 12). tcode PROVISÓRIO: a 12/11/2026 a prova ainda não existe no scoring da FPG (clube 962; sondados 10085-10089, vazios). Lido do PDF «QUINTA DO LAGO JUNIOR OPEN 2026 - ENTRY LIST» do clube (botão «Entry List» de quintadolago.com/en/events/quinta-do-lago-junior-open/, ficheiro 13xvrfV4W4sFx9hVoAFXCKtxDByvVIcbf no Google Drive), lido e conferido à vista a 12/11/2026 e relido a 16/11/2026 (OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-16_QDL_Junior_Open_Entry_List.pdf): 47 inscritos (U12 12, U14 8, U16 17, U21 10). O PDF só traz nome, sexo, categoria e handicap, pela ordem do PDF; handicap = o que o PDF escreve («+» = plus). Federados FPG ligados por nome + idade + handicap e pelas listas das provas anteriores do clube (962/10063-10084); país de quem não tem federado = o dessas listas; quem não aparece em nenhuma fica sem país. 27-29/12/2026, 54 buracos (18 por dia), Laranjal; inscrições até 18/12 ou 85 jogadores. Quem não tem federado leva `escalao` = a categoria do PDF (sem ele o tee saía o dos mais velhos); os federados ficam com o escalão da idade. `juniorId` (ficha do Kids 2) em quem o PDF escreve de outra maneira: Zeyn Lababed = «Zeyn Lababedi», Afonso Pinto = «Afonso de Sousa Pinto», Clement Tarasov = «Clementy Tarasov», Ethan Prybys-Orton = «Ethan Prybys Orton» (os quatro pelo federado) e Toby Hankin = «Toby Hankins» das provas do clube de 2025. Tees pelos Termos (QDL_JUNIOR_OPEN_TEE_RULE em src/utils/teeRegulation.ts). Luciana Reis (2005) e Francisco Reis (2010) estavam trocados no PDF de 12/11; no de 16/11 o Francisco está no Under 16 e a Luciana no Under 21. Max Galway: «-3.4» a 12/11, «+3.4» a 16/11 → +3,4. Dan Rowley «-1.2»: o PDF usa «+» para os handicaps plus (Elena Leblond +5, Max Galway +3.4), por isso o «-» não se sabe ler (plus ou handicap normal) — HCP fica vazio, com o texto do PDF na marca. Quando a FPG abrir a prova no scoring, trocar o tcode aqui, no featuredTournaments.ts e na regra de tees (ou usar tcodeReal, como em Castro Marim).",
       "admissions": {
         "name": "Quinta do Lago Junior Open 2026 - U16",
         "date": "2026-12-27",
-        "status": "Entry List do clube de 12/11/2026 · inscrições abertas até 18/12 ou 85 jogadores",
+        "status": "Entry List do clube de 16/11/2026 · inscrições abertas até 18/12 ou 85 jogadores",
         "totalInscritos": 17,
         "reservas": 0,
-        "_source": "PDF Entry List do clube, 12/11/2026 (manual)",
+        "_source": "PDF Entry List do clube, 16/11/2026 (manual)",
         "players": [
           {
             "pos": 1,
@@ -409798,6 +409793,19 @@
           },
           {
             "pos": 10,
+            "fed": "40534",
+            "nome": "Francisco Reis",
+            "clube": "Vilamoura, C. G",
+            "hcp": 0.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Portugal",
+            "dob": "2010-06-16",
+            "sex": "M"
+          },
+          {
+            "pos": 11,
             "fed": null,
             "nome": "Greta Grohs",
             "clube": null,
@@ -409810,7 +409818,7 @@
             "escalao": "Sub 16"
           },
           {
-            "pos": 11,
+            "pos": 12,
             "fed": null,
             "nome": "Lau Limpens",
             "clube": null,
@@ -409822,32 +409830,16 @@
             "escalao": "Sub 16"
           },
           {
-            "pos": 12,
-            "fed": "40196",
-            "nome": "Luciana Reis",
-            "clube": "Arquitectos",
-            "hcp": -2,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "confirmed",
-            "country": "Portugal",
-            "dob": "2005-05-30",
-            "sex": "F"
-          },
-          {
             "pos": 13,
             "fed": null,
             "nome": "Max Galway",
             "clube": null,
-            "hcp": null,
+            "hcp": -3.4,
             "vac": null,
             "dataInscricao": null,
             "status": "confirmed",
             "country": "Ireland",
             "sex": "M",
-            "tags": [
-              "HCP «-3.4» no PDF"
-            ],
             "escalao": "Sub 16"
           },
           {
@@ -409914,14 +409906,14 @@
       "date": "2026-12-27",
       "campo": "Quinta do Lago Laranjal",
       "_manual": true,
-      "_note": "U21 (nascidos em 2005 a 2009; HI máx. 12). tcode PROVISÓRIO: a 12/11/2026 a prova ainda não existe no scoring da FPG (clube 962; sondados 10085-10089, vazios). Lido do PDF «QUINTA DO LAGO JUNIOR OPEN 2026 - ENTRY LIST» do clube (botão «Entry List» de quintadolago.com/en/events/quinta-do-lago-junior-open/, ficheiro 13xvrfV4W4sFx9hVoAFXCKtxDByvVIcbf no Google Drive), lido e conferido à vista a 12/11/2026: 47 inscritos (U12 12, U14 8, U16 17, U21 10). O PDF só traz nome, sexo, categoria e handicap, pela ordem do PDF; handicap = o que o PDF escreve («+» = plus). Federados FPG ligados por nome + idade + handicap e pelas listas das provas anteriores do clube (962/10063-10084); país de quem não tem federado = o dessas listas; quem não aparece em nenhuma fica sem país. 27-29/12/2026, 54 buracos (18 por dia), Laranjal; inscrições até 18/12 ou 85 jogadores. Quem não tem federado leva `escalao` = a categoria do PDF (sem ele o tee saía o dos mais velhos); os federados ficam com o escalão da idade. `juniorId` (ficha do Kids 2) em quem o PDF escreve de outra maneira: Zeyn Lababed = «Zeyn Lababedi», Afonso Pinto = «Afonso de Sousa Pinto», Clement Tarasov = «Clementy Tarasov», Ethan Prybys-Orton = «Ethan Prybys Orton» (os quatro pelo federado) e Toby Hankin = «Toby Hankins» das provas do clube de 2025. Tees pelos Termos (QDL_JUNIOR_OPEN_TEE_RULE em src/utils/teeRegulation.ts). Francisco Reis (federado 40534, 16/06/2010, HCP 0,2 = o do PDF) está na tabela «Under 21» do PDF apesar de ter idade de U16 — fica onde o PDF o põe. John Rösch «-2.5»: o PDF usa «+» para os handicaps plus (Jack Galway +2.2), por isso o «-» não se sabe ler — HCP fica vazio, com o texto do PDF na marca. Quando a FPG abrir a prova no scoring, trocar o tcode aqui, no featuredTournaments.ts e na regra de tees (ou usar tcodeReal, como em Castro Marim).",
+      "_note": "U21 (nascidos em 2005 a 2009; HI máx. 12). tcode PROVISÓRIO: a 12/11/2026 a prova ainda não existe no scoring da FPG (clube 962; sondados 10085-10089, vazios). Lido do PDF «QUINTA DO LAGO JUNIOR OPEN 2026 - ENTRY LIST» do clube (botão «Entry List» de quintadolago.com/en/events/quinta-do-lago-junior-open/, ficheiro 13xvrfV4W4sFx9hVoAFXCKtxDByvVIcbf no Google Drive), lido e conferido à vista a 12/11/2026 e relido a 16/11/2026 (OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-16_QDL_Junior_Open_Entry_List.pdf): 47 inscritos (U12 12, U14 8, U16 17, U21 10). O PDF só traz nome, sexo, categoria e handicap, pela ordem do PDF; handicap = o que o PDF escreve («+» = plus). Federados FPG ligados por nome + idade + handicap e pelas listas das provas anteriores do clube (962/10063-10084); país de quem não tem federado = o dessas listas; quem não aparece em nenhuma fica sem país. 27-29/12/2026, 54 buracos (18 por dia), Laranjal; inscrições até 18/12 ou 85 jogadores. Quem não tem federado leva `escalao` = a categoria do PDF (sem ele o tee saía o dos mais velhos); os federados ficam com o escalão da idade. `juniorId` (ficha do Kids 2) em quem o PDF escreve de outra maneira: Zeyn Lababed = «Zeyn Lababedi», Afonso Pinto = «Afonso de Sousa Pinto», Clement Tarasov = «Clementy Tarasov», Ethan Prybys-Orton = «Ethan Prybys Orton» (os quatro pelo federado) e Toby Hankin = «Toby Hankins» das provas do clube de 2025. Tees pelos Termos (QDL_JUNIOR_OPEN_TEE_RULE em src/utils/teeRegulation.ts). Luciana Reis (federada 40196, 2005, HCP +2,0 = o do PDF) passou para aqui no PDF de 16/11 (estava no Under 16 a 12/11, trocada com o Francisco Reis). John Rösch «-2.5»: o PDF usa «+» para os handicaps plus (Jack Galway +2.2), por isso o «-» não se sabe ler — HCP fica vazio, com o texto do PDF na marca. Quando a FPG abrir a prova no scoring, trocar o tcode aqui, no featuredTournaments.ts e na regra de tees (ou usar tcodeReal, como em Castro Marim).",
       "admissions": {
         "name": "Quinta do Lago Junior Open 2026 - U21",
         "date": "2026-12-27",
-        "status": "Entry List do clube de 12/11/2026 · inscrições abertas até 18/12 ou 85 jogadores",
+        "status": "Entry List do clube de 16/11/2026 · inscrições abertas até 18/12 ou 85 jogadores",
         "totalInscritos": 10,
         "reservas": 0,
-        "_source": "PDF Entry List do clube, 12/11/2026 (manual)",
+        "_source": "PDF Entry List do clube, 16/11/2026 (manual)",
         "players": [
           {
             "pos": 1,
@@ -409951,19 +409943,6 @@
           },
           {
             "pos": 3,
-            "fed": "40534",
-            "nome": "Francisco Reis",
-            "clube": "Vilamoura, C. G",
-            "hcp": 0.2,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "confirmed",
-            "country": "Portugal",
-            "dob": "2010-06-16",
-            "sex": "M"
-          },
-          {
-            "pos": 4,
             "fed": null,
             "nome": "Jack Galway",
             "clube": null,
@@ -409976,7 +409955,7 @@
             "escalao": "Sub 21"
           },
           {
-            "pos": 5,
+            "pos": 4,
             "fed": null,
             "nome": "Jamie Joshua",
             "clube": null,
@@ -409989,7 +409968,7 @@
             "escalao": "Sub 21"
           },
           {
-            "pos": 6,
+            "pos": 5,
             "fed": null,
             "nome": "John Rösch",
             "clube": null,
@@ -410003,6 +409982,19 @@
               "HCP «-2.5» no PDF"
             ],
             "escalao": "Sub 21"
+          },
+          {
+            "pos": 6,
+            "fed": "40196",
+            "nome": "Luciana Reis",
+            "clube": "Arquitectos",
+            "hcp": -2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed",
+            "country": "Portugal",
+            "dob": "2005-05-30",
+            "sex": "F"
           },
           {
             "pos": 7,
