@@ -10,7 +10,7 @@ import { cachedFetchJson } from "../fetchCache";
 import { adaptFcg, fcgToFPGTournament, type FCGDetail, type MinimalRFEGShape } from "../fcgAdapter";
 import { juntarVoltasFcg } from "../fcgVoltas";
 import { formatPlayerName } from "../../utils/playerUtils";
-import { displayName } from "../../utils/format";
+import { displayName, todayIso } from "../../utils/format";
 import type { TotalsPlayer } from "../model/types";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../fpgTypes";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
@@ -275,7 +275,12 @@ export async function loadRfegDivisionData(
   // o indivíduo), por isso são último recurso.
   let ncTotals: TotalsPlayer[] | null = null;
   let ncHighlights: RfegDivisionData["ncHighlights"] = null;
-  if (t.source === "nextcaddy" && !results) {
+  // Prova que ainda não começou: só inscrições. Os «destaques» do live scoring de
+  // uma prova futura são de outra (Torneo «Illescas» Alevín/Benjamín Femenino de
+  // 21/11/2026, vistos a 16/11: pares pai-filho e, no feminino, nomes de rapazes).
+  const aindaNaoComecou = !!data.meta.dateStart && /^\d{4}-\d{2}-\d{2}$/.test(data.meta.dateStart)
+    && data.meta.dateStart > todayIso();
+  if (t.source === "nextcaddy" && !results && !aindaNaoComecou) {
     const admit = data.inscritos.admitidos;
     if (admit.some((p) => p.total != null || p.toPar != null)) ncTotals = ncTotalsPlayers(admit);
     else {

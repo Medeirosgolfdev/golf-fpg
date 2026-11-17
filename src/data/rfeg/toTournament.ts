@@ -325,10 +325,58 @@ export function ncDeriveRatings(
   return { M: fit("M"), F: fit("F") };
 }
 
+type NcDetailIn = RFEGDetail & { _ncCourseSi?: number[] | null; _ncCourseMeters?: number[] | null };
+
+/** Volta de 9 buracos guardada numa grelha de 18 (campo de 9 buracos que os
+ *  Alevín/Infantil jogam 2× e os Benjamín 1×; Torneo «Illescas» 14/11/2026: os
+ *  Benjamín tinham as 9 de trás vazias e o site dava Par 66, 3.675 m e ±par −22).
+ *  Quando TODOS os cartões só têm uma das metades jogada, a prova passa a ser de
+ *  9 buracos: par, SI, metros e cartões cortados a essa metade. Para não confundir
+ *  com uma volta de 18 a decorrer (só a frente jogada), o ±par da fonte tem de
+ *  bater com o par dessa metade; sem ±par na fonte, só depois do dia da prova. */
+export function cortarMeiaVolta<D extends NcDetailIn>(d: D): D {
+  const par = d.coursePar;
+  if (!Array.isArray(par) || par.length !== 18) return d;
+  const jog = (x: unknown): boolean => typeof x === "number" && x > 0;
+  const comCartao = d.inscritos.admitidos.flatMap((p) => (p.rounds || [])
+    .map((r) => ({ p, s: (r as { scores?: (number | null)[] }).scores }))
+    .filter((c): c is { p: typeof p; s: (number | null)[] } => Array.isArray(c.s) && c.s.length === 18 && c.s.some(jog)));
+  if (!comCartao.length) return d;
+  const so = (a: number, b: number) => comCartao.every(({ s }) => s.every((x, i) => (i >= a && i < b) || !jog(x)));
+  const [a, b] = so(0, 9) ? [0, 9] : so(9, 18) ? [9, 18] : [0, 0];
+  if (a === b) return d;
+  const parMeia = somaDe(par.slice(a, b), (x) => (x || 0));
+  // Confirmação pelo ±par da fonte (1 volta): total − par da metade.
+  const comToPar = comCartao.filter(({ p }) => typeof p.toPar === "number" && typeof p.total === "number" && (p.rounds || []).length === 1);
+  const confirmado = comToPar.length
+    ? comToPar.every(({ p }) => (p.total as number) - parMeia === p.toPar)
+    : !!d.meta.dateStart && d.meta.dateStart < todayIso();
+  if (!confirmado) return d;
+  const cut = <T,>(arr: T[] | null | undefined): T[] | null | undefined =>
+    (Array.isArray(arr) && arr.length === 18 ? arr.slice(a, b) : arr);
+  return {
+    ...d,
+    coursePar: cut(par),
+    _ncCourseSi: cut(d._ncCourseSi),
+    _ncCourseMeters: cut(d._ncCourseMeters),
+    inscritos: {
+      ...d.inscritos,
+      admitidos: d.inscritos.admitidos.map((p) => ({
+        ...p,
+        rounds: (p.rounds || []).map((r) => {
+          const rr = r as typeof r & { scores?: (number | null)[]; meters?: number[] | null };
+          return { ...rr, scores: cut(rr.scores), meters: cut(rr.meters) } as typeof r;
+        }),
+      })),
+    },
+  };
+}
+
 export function ncToFPGTournament(
-  detail: RFEGDetail & { _ncCourseSi?: number[] | null; _ncCourseMeters?: number[] | null },
+  detailIn: NcDetailIn,
   dobLookup?: DobLookup,
 ): FPGTournament | null {
+  const detail = cortarMeiaVolta(detailIn);
   const players = detail.inscritos.admitidos;
   // Determinar nº de rondas a partir do max round encontrado
   let nRounds = 0;

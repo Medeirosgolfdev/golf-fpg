@@ -11,6 +11,7 @@ import { normEs } from "./text";
 import { soAdmitidos } from "./inscritos";
 import type { RFEGPlayer, RFEGDetail, NCRoundScore, NCDetail, DobLookup, HcpLookup, LgsRound, LgsDetail, LgsHorarioRound, NcDrawInfo } from "./types";
 import { escaloEsFromCategory, NC_NIVEL_ESCALAO } from "./escalao";
+import { resumoJogado } from "../../utils/parJogado";
 import { dobLookupByName, isNoCardGross } from "../intlCommon";
 import { soma, somaDe } from "../../utils/mathUtils";
 
@@ -218,6 +219,18 @@ export function ncCategoryRank(name?: string | null): number {
   return parcial * 2 + (/scratch/.test(s) ? 0 : 1);
 }
 
+/** Metros do tee contando só os buracos jogados quando o cartão é uma volta de 9
+ *  numa grelha de 18 (uma metade jogada, a outra vazia); senão, todos. */
+export function metrosJogados(meters: readonly (number | null)[], scores?: readonly (number | null)[] | null): number {
+  const tudo = somaDe(meters, (b) => (b || 0));
+  if (!Array.isArray(scores) || scores.length !== 18 || meters.length !== 18) return tudo;
+  const jog = (x: number | null | undefined) => typeof x === "number" && x > 0;
+  const frente = scores.slice(0, 9).some(jog), tras = scores.slice(9).some(jog);
+  if (frente && !tras) return somaDe(meters.slice(0, 9), (b) => (b || 0));
+  if (tras && !frente) return somaDe(meters.slice(9), (b) => (b || 0));
+  return tudo;
+}
+
 export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
   // Data: o NextCaddy não a expõe nos endpoints, mas muitos nomes trazem-na no fim
   // (ex.: "...9P3 HOYOS 13-06-26"). Extrai DD-MM-YY[YY] / DD/MM/YYYY do nome;
@@ -286,8 +299,12 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
             meters: Array.isArray(r.meters) ? r.meters : null,   // metros do tee deste jogador
           }))
         : (p.rounds || []);
-      const teeM = rs.find((r) => Array.isArray(r.meters) && r.meters.length)?.meters || null;
-      const teeMetersTotal = teeM ? somaDe(teeM, b => (b || 0)) : null;
+      const rsTee = rs.find((r) => Array.isArray(r.meters) && r.meters.length);
+      const teeM = rsTee?.meters || null;
+      // Metros dos buracos JOGADOS: uma volta de 9 numa grelha de 18 (Benjamín do
+      // Torneo «Illescas», 14/11/2026) somava os 18 — o tee aparecia com 3.675 m
+      // em vez de 1.806 m. Cartão completo (ou sem cartão) = todos os buracos.
+      const teeMetersTotal = teeM ? metrosJogados(teeM, rsTee?.scores) : null;
       if (teeMetersTotal) {
         if (p.licencia) teeMetersByLic[p.licencia.trim().toUpperCase()] = teeMetersTotal;
         if (p.inscribedId) teeMetersByIns[String(p.inscribedId)] = teeMetersTotal;
@@ -307,7 +324,14 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
           rounds: rs.map((r) => {
             const g = typeof r.total === "number" ? r.total
               : (Array.isArray(r.scores) ? (soma(r.scores.filter((x) => x > 0)) || null) : null);
-            return { round: r.round, gross: g, toPar: (g != null && ncParTotal) ? g - ncParTotal : null };
+            // ±par contra o par dos buracos JOGADOS (regra única, utils/parJogado):
+            // 9 buracos contra o par dos 18 davam −22 no draw dos Benjamín de Illescas.
+            const coursePar = nc.course?.par;
+            const pj = Array.isArray(r.scores) && Array.isArray(coursePar) && coursePar.length === r.scores.length
+              ? resumoJogado(r.scores, coursePar) : null;
+            const toPar = pj && pj.jogados > 0 && pj.pancadas === g ? pj.toPar
+              : (g != null && ncParTotal) ? g - ncParTotal : null;
+            return { round: r.round, gross: g, toPar };
           }),
         };
       }
