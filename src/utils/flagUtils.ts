@@ -192,7 +192,7 @@ const CODE_TO_DISPLAY: Record<string, string> = {
   bg:"Bulgaria", lt:"Lithuania", lv:"Latvia", ee:"Estonia", tr:"Turkey",
   ma:"Morocco", ae:"UAE", kz:"Kazakhstan", vn:"Vietnam", at:"Austria",
   py:"Paraguay", ng:"Nigeria", om:"Oman", pr:"Puerto Rico", cr:"Costa Rica",
-  je:"Jersey", cy:"Cyprus", lb:"Lebanon", id:"Indonesia", hk:"Hong Kong",
+  je:"Jersey", gg:"Guernsey", cy:"Cyprus", lb:"Lebanon", id:"Indonesia", hk:"Hong Kong",
   tw:"Taiwan", nz:"New Zealand", am:"Armenia", co:"Colombia", cl:"Chile",
   bb:"Barbados", bs:"Bahamas", bo:"Bolivia", do:"Dominican Rep.",
   dz:"Algeria", ec:"Ecuador", gt:"Guatemala", hn:"Honduras", ke:"Kenya",

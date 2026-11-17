@@ -89,7 +89,7 @@ const US_STATES = new Set(['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI
 const COUNTRY_MAP = { Canada:'CA', Mexico:'MX', England:'GB-ENG', Scotland:'GB-SCT', Wales:'GB-WLS', France:'FR', Germany:'DE', Spain:'ES', Italy:'IT', Sweden:'SE', Portugal:'PT', China:'CN', Japan:'JP', 'South Korea':'KR', Korea:'KR', Australia:'AU', Colombia:'CO', Venezuela:'VE', Brazil:'BR', Argentina:'AR', 'Puerto Rico':'PR', Bahamas:'BS', 'Dominican Republic':'DO',
   // Eventos internacionais (Champion of Champions) declaram a afiliação como
   // PAÍS, não como cidade — sem estas entradas caíam todos no fallback "US".
-  Ireland:'IE', 'Northern Ireland':'GB-NIR', 'Great Britain and Ireland':'GB', 'Isle of Man':'IM', 'United States':'US', 'United States of America':'US',
+  Ireland:'IE', 'Northern Ireland':'GB-NIR', 'Great Britain and Ireland':'GB', 'Isle of Man':'IM', Guernsey:'GG', Jersey:'JE', 'United States':'US', 'United States of America':'US',
   Belgium:'BE', Netherlands:'NL', Denmark:'DK', Norway:'NO', Finland:'FI', Iceland:'IS', Austria:'AT', Switzerland:'CH', Poland:'PL', 'Czech Republic':'CZ', Czechia:'CZ', Slovakia:'SK', Slovenia:'SI', Croatia:'HR', Hungary:'HU', Bulgaria:'BG', Romania:'RO', Greece:'GR', Turkey:'TR', Malta:'MT', Luxembourg:'LU', Estonia:'EE', Latvia:'LV', Lithuania:'LT', Ukraine:'UA', Kazakhstan:'KZ',
   'South Africa':'ZA', Zimbabwe:'ZW', Zambia:'ZM', Botswana:'BW', Egypt:'EG', Morocco:'MA', Kenya:'KE', Nigeria:'NG',
   'United Kingdom':'GB', 'Great Britain':'GB', 'Golf Ireland':'IE', Azerbaijan:'AZ', 'Türkiye':'TR', Turkiye:'TR',

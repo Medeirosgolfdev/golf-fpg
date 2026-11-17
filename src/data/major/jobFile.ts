@@ -304,6 +304,9 @@ export function jobDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players:
       ...(p.age != null && p.ageDate ? { idadeLida: { idade: p.age, data: p.ageDate } } : {}) }
     : undefined), "last");
   const countryByName = indexByName(players, key, (p) => (p.country ? intlCountryCell(p.country).trim() : undefined), "last");
+  // Federado FPG casado pelo scraper → o draw usa-o (bandeira, seta ↗ e ficha do Kids 2
+  // pelo número; sem ele o Santiago Dias da Grand Final ia para o homónimo brasileiro).
+  const fedByName = indexByName(players, key, (p) => (p.fed ? String(p.fed) : undefined), "last");
   // Conterrâneos destacados (.row-portuguese) também no draw — regra da casa.
   const ptByName = indexByName(players, key, (p) => (p.country && isPtCountry(p.country) ? true : undefined), "last");
   // Escalão real de cada jogador (os «Overall …» juntam todos — não contam).
@@ -322,6 +325,7 @@ export function jobDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players:
       return {
         clube: countryByName.get(k) ?? null,
         hcp: hcpByName.get(k) ?? null,
+        ...(fedByName.has(k) ? { fed: fedByName.get(k) } : {}),
         ...(birthByName.get(k) ?? {}),
         ...(estByName.get(k) ?? {}),
         ...(ptByName.has(k) ? { isPortuguese: true } : {}),

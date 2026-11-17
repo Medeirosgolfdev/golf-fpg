@@ -243,6 +243,9 @@ function parseRoster(html) {
   return out;
 }
 
+/** Marca do HCP que veio da lista de jogadores do GG (o dos federados FPG ganha-lhe). */
+const ROSTER_HCP = 'GolfGenius (lista de jogadores)';
+
 /** Chave de comparação de nomes entre fontes (sem acentos/pontuação). */
 const nameKey = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
   .toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -278,7 +281,11 @@ function usDateToIso(label, year, anchorIso) {
  * Mapeia as colunas pelos rótulos do cabeçalho (não por posição fixa).
  */
 async function fetchRoster(lid, rosterPageId) {
-  const html = await ggGet(`${GG}/leagues/${lid}/widgets/players?page_id=${rosterPageId}`);
+  return parsePlayerList(await ggGet(`${GG}/leagues/${lid}/widgets/players?page_id=${rosterPageId}`));
+}
+
+/** As linhas do widget «Player List» (nome, clube, país, ano de graduação, HCP). */
+function parsePlayerList(html) {
   const th = [...html.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)].map((m) => txt(m[1]).toLowerCase());
   // Dois formatos de tabela: England = "Handle | Home Club | Country" (nome numa
   // coluna só); Optimist = "Last Name | First Name | Graduation Year | Country"
@@ -290,6 +297,8 @@ async function fetchRoster(lid, rosterPageId) {
   const iClub = th.findIndex((h) => /club/.test(h));
   const iCountry = th.findIndex((h) => /country|nation/.test(h));
   const iGrad = th.findIndex((h) => /grad/.test(h));
+  // Handicap Index («H.I.™» na Grand Final Faldo 2026; «+2.8» = plus 2.8 → −2.8).
+  const iHcp = th.findIndex((h) => /^h\.?\s*i\b|handicap|hcp/.test(h));
   const tbody = (html.match(/<tbody[\s\S]*?<\/tbody>/i) || [null])[0] || html;
   const out = [];
   for (const rm of tbody.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)) {
@@ -299,7 +308,9 @@ async function fetchRoster(lid, rosterPageId) {
       : tds[iName];
     if (!name) continue;
     const grad = iGrad >= 0 ? parseInt(tds[iGrad], 10) : NaN;
+    const hm = iHcp >= 0 ? /^(\+)?(\d{1,2}(?:\.\d)?)$/.exec(String(tds[iHcp] || '').trim()) : null;
     out.push({
+      hcp: hm ? (hm[1] ? -Number(hm[2]) : Number(hm[2])) : null,
       name: normalizeName(name),
       club: iClub >= 0 ? (tds[iClub] || null) : null,
       countryName: iCountry >= 0 ? (tds[iCountry] || null) : null,
@@ -813,7 +824,7 @@ function applyFpgFederados(out, { overrides = {}, minBirthYear = 2005, file = pa
     }
     // 99 = «Sem HCP» na FPG (hcp_status_id 99) — não é um handicap.
     const semHcp = x.hcp_status_id === 99 || !(typeof x.hcp_exact === 'number' && x.hcp_exact < 99);
-    if (p.hcp == null && !semHcp) { p.hcp = x.hcp_exact; p.hcpSource = `FPG federados ${asOf}`; }
+    if ((p.hcp == null || p.hcpSource === ROSTER_HCP) && !semHcp) { p.hcp = x.hcp_exact; p.hcpSource = `FPG federados ${asOf}`; }
     p.fed = String(x.federation_code);
     if (!p.dob && x.birthdate) p.dob = String(x.birthdate).slice(0, 10);
     if (!p.club && x.club_name) p.club = x.club_name;
@@ -1131,10 +1142,13 @@ async function runOne(opts) {
           if (!r) continue;
           if (r.club && !p.club) p.club = r.club;
           if (r.gradYear && p.gradYear == null) p.gradYear = r.gradYear;
+          if (r.hcp != null && p.hcp == null) { p.hcp = r.hcp; p.hcpSource = ROSTER_HCP; }
           if (r.countryName) {
             if (!p.location) p.location = r.countryName;
             const iso = inferCountry(r.countryName, null);
-            if (iso && (p.country == null || p.country === 'US')) p.country = iso;
+            // A lista diz a nação dentro do Reino Unido (England/Wales/Scotland) —
+            // mais certo do que o «GB» genérico da bandeira do cartão.
+            if (iso && (p.country == null || p.country === 'US' || (p.country === 'GB' && iso.startsWith('GB-')))) p.country = iso;
           }
         }
         // Semear só faz sentido num evento de 1 divisão (todos os inscritos são dela).
@@ -1194,7 +1208,9 @@ async function runOne(opts) {
   }
   // Leaderboard já partido + tee sheet sem escalão: o draw de cada escalão são
   // os grupos onde joga alguém dele (o fallback __ALL__ só servia 1 divisão).
-  if (teeDiv && out.divisions.length > 1 && teeDraws) {
+  // (Grand Final Faldo 2026: 7 divisões e um só tee sheet sem escalão — sem
+  // isto nenhuma divisão ficava com o draw.)
+  if (out.divisions.length > 1 && teeDraws) {
     for (const dv of out.divisions) {
       if (dv.draws && Object.keys(dv.draws).length) continue;
       const names = new Set(dv.players.map((p) => nameKey(p.name)));
@@ -1347,4 +1363,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { applyFpgFederados, applyOwnDivisionTee, birthFromAge, applyPlayerOverrides, discoverDivisions, isRoundOnlyLabel, runOne, jardasParaMetrosJob, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };
+module.exports = { applyFpgFederados, applyOwnDivisionTee, birthFromAge, parsePlayerList, applyPlayerOverrides, discoverDivisions, isRoundOnlyLabel, runOne, jardasParaMetrosJob, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };

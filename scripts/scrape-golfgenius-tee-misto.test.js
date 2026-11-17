@@ -62,3 +62,20 @@ describe('birthFromAge', () => {
     expect(b.birthYearEst).toBeUndefined();
   });
 });
+
+// «Player List» da Grand Final Faldo 2026: First | Last | H.I.™ | Home Club | Country.
+const { parsePlayerList } = require('./scrape-golfgenius-node.js');
+describe('parsePlayerList', () => {
+  const html = `<table><thead><tr><th>First Name</th><th>Last Name</th><th>H.I.&trade;</th><th>Home Club</th><th>Country</th></tr></thead>
+  <tbody><tr><td><a>Dominik</a></td><td>Dada</td><td>+2.8</td><td>Albatross</td><td>Czechia</td></tr>
+  <tr><td><a>Emily</a></td><td>Howells</td><td>3.0</td><td>Chelmsford</td><td>England</td></tr>
+  <tr><td><a>Sem</a></td><td>Handicap</td><td></td><td>X</td><td>Wales</td></tr></tbody></table>`;
+  it('nome, HCP (plus = negativo), clube e país', () => {
+    const r = parsePlayerList(html);
+    expect(r.map((x) => [x.name, x.hcp, x.club, x.countryName])).toEqual([
+      ['Dominik Dada', -2.8, 'Albatross', 'Czechia'],
+      ['Emily Howells', 3, 'Chelmsford', 'England'],
+      ['Sem Handicap', null, 'X', 'Wales'],
+    ]);
+  });
+});

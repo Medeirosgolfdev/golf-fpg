@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T03:47:58.055Z",
+  "generatedAt": "2026-11-18T12:41:12.206Z",
   "listas": [
     {
       "id": "fpg-entry-list-girls-2026-10-01",
@@ -680,7 +680,7 @@
           "name": "Laura Santos",
           "club": "PXO Clube",
           "dob": "2012-02-12",
-          "hcp": -1.1,
+          "hcp": -1.2,
           "juniorId": "f45393",
           "inscrito": null,
           "anterior": {
@@ -782,7 +782,7 @@
           "name": "Catarina Valério",
           "club": "Vilamoura, C. G",
           "dob": "2012-07-24",
-          "hcp": 13,
+          "hcp": 12.9,
           "juniorId": "u575909",
           "inscrito": {
             "lista": "entry",
@@ -2765,21 +2765,6 @@
         },
         {
           "rank": 12,
-          "fed": "46480",
-          "name": "Afonso de Sousa Pinto",
-          "club": "Oporto",
-          "dob": "2013-04-16",
-          "hcp": 5.9,
-          "juniorId": "f46480",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 32,
-            "hcp": 5.9
-          },
-          "anterior": null
-        },
-        {
-          "rank": 13,
           "fed": "52856",
           "name": "Francisco Vilardell Carvalho",
           "club": "Vale Pisão",
@@ -2790,6 +2775,21 @@
             "lista": "waiting",
             "pos": 35,
             "hcp": 6.7
+          },
+          "anterior": null
+        },
+        {
+          "rank": 13,
+          "fed": "46480",
+          "name": "Afonso de Sousa Pinto",
+          "club": "Oporto",
+          "dob": "2013-04-16",
+          "hcp": 6.4,
+          "juniorId": "f46480",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 32,
+            "hcp": 5.9
           },
           "anterior": null
         },
@@ -2810,17 +2810,6 @@
         },
         {
           "rank": 15,
-          "fed": "47341",
-          "name": "Sebastião Soares",
-          "club": "Oporto",
-          "dob": "2012-02-15",
-          "hcp": 6.6,
-          "juniorId": "f47341",
-          "inscrito": null,
-          "anterior": null
-        },
-        {
-          "rank": 16,
           "fed": "53646",
           "name": "Henrique Pereira",
           "club": "Miramar",
@@ -2831,13 +2820,24 @@
           "anterior": null
         },
         {
-          "rank": 17,
+          "rank": 16,
           "fed": "49717",
           "name": "Diogo Lima",
           "club": "Citynorte",
           "dob": "2012-09-25",
-          "hcp": 7,
+          "hcp": 6.9,
           "juniorId": "f49717",
+          "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 17,
+          "fed": "47341",
+          "name": "Sebastião Soares",
+          "club": "Oporto",
+          "dob": "2012-02-15",
+          "hcp": 7,
+          "juniorId": "f47341",
           "inscrito": null,
           "anterior": null
         },
@@ -2865,12 +2865,12 @@
         },
         {
           "rank": 20,
-          "fed": "46308",
-          "name": "Marc Costa",
-          "club": "Citynorte",
-          "dob": "2013-02-20",
-          "hcp": 8.3,
-          "juniorId": "f46308",
+          "fed": "42985",
+          "name": "Martim Moreira",
+          "club": "Belas",
+          "dob": "2012-02-16",
+          "hcp": 8.4,
+          "juniorId": "u521022",
           "inscrito": null,
           "anterior": null
         }
@@ -16539,21 +16539,6 @@
         },
         {
           "rank": 12,
-          "fed": "46480",
-          "name": "Afonso de Sousa Pinto",
-          "club": "Oporto",
-          "dob": "2013-04-16",
-          "hcp": 5.9,
-          "juniorId": "f46480",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 56,
-            "hcp": 5.9
-          },
-          "anterior": null
-        },
-        {
-          "rank": 13,
           "fed": "52856",
           "name": "Francisco Vilardell Carvalho",
           "club": "Vale Pisão",
@@ -16564,6 +16549,21 @@
             "lista": "waiting",
             "pos": 59,
             "hcp": 6.7
+          },
+          "anterior": null
+        },
+        {
+          "rank": 13,
+          "fed": "46480",
+          "name": "Afonso de Sousa Pinto",
+          "club": "Oporto",
+          "dob": "2013-04-16",
+          "hcp": 6.4,
+          "juniorId": "f46480",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 56,
+            "hcp": 5.9
           },
           "anterior": null
         },
@@ -16584,21 +16584,6 @@
         },
         {
           "rank": 15,
-          "fed": "47341",
-          "name": "Sebastião Soares",
-          "club": "Oporto",
-          "dob": "2012-02-15",
-          "hcp": 6.6,
-          "juniorId": "f47341",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 63,
-            "hcp": 6.1
-          },
-          "anterior": null
-        },
-        {
-          "rank": 16,
           "fed": "53646",
           "name": "Henrique Pereira",
           "club": "Miramar",
@@ -16609,14 +16594,29 @@
           "anterior": null
         },
         {
-          "rank": 17,
+          "rank": 16,
           "fed": "49717",
           "name": "Diogo Lima",
           "club": "Citynorte",
           "dob": "2012-09-25",
-          "hcp": 7,
+          "hcp": 6.9,
           "juniorId": "f49717",
           "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 17,
+          "fed": "47341",
+          "name": "Sebastião Soares",
+          "club": "Oporto",
+          "dob": "2012-02-15",
+          "hcp": 7,
+          "juniorId": "f47341",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 63,
+            "hcp": 6.1
+          },
           "anterior": null
         },
         {
@@ -16643,12 +16643,12 @@
         },
         {
           "rank": 20,
-          "fed": "46308",
-          "name": "Marc Costa",
-          "club": "Citynorte",
-          "dob": "2013-02-20",
-          "hcp": 8.3,
-          "juniorId": "f46308",
+          "fed": "42985",
+          "name": "Martim Moreira",
+          "club": "Belas",
+          "dob": "2012-02-16",
+          "hcp": 8.4,
+          "juniorId": "u521022",
           "inscrito": null,
           "anterior": null
         }
@@ -19233,21 +19233,6 @@
         },
         {
           "rank": 12,
-          "fed": "46480",
-          "name": "Afonso de Sousa Pinto",
-          "club": "Oporto",
-          "dob": "2013-04-16",
-          "hcp": 5.9,
-          "juniorId": "f46480",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 55,
-            "hcp": 5.9
-          },
-          "anterior": null
-        },
-        {
-          "rank": 13,
           "fed": "52856",
           "name": "Francisco Vilardell Carvalho",
           "club": "Vale Pisão",
@@ -19258,6 +19243,21 @@
             "lista": "waiting",
             "pos": 59,
             "hcp": 6.7
+          },
+          "anterior": null
+        },
+        {
+          "rank": 13,
+          "fed": "46480",
+          "name": "Afonso de Sousa Pinto",
+          "club": "Oporto",
+          "dob": "2013-04-16",
+          "hcp": 6.4,
+          "juniorId": "f46480",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 55,
+            "hcp": 5.9
           },
           "anterior": null
         },
@@ -19278,21 +19278,6 @@
         },
         {
           "rank": 15,
-          "fed": "47341",
-          "name": "Sebastião Soares",
-          "club": "Oporto",
-          "dob": "2012-02-15",
-          "hcp": 6.6,
-          "juniorId": "f47341",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 58,
-            "hcp": 6.1
-          },
-          "anterior": null
-        },
-        {
-          "rank": 16,
           "fed": "53646",
           "name": "Henrique Pereira",
           "club": "Miramar",
@@ -19303,14 +19288,29 @@
           "anterior": null
         },
         {
-          "rank": 17,
+          "rank": 16,
           "fed": "49717",
           "name": "Diogo Lima",
           "club": "Citynorte",
           "dob": "2012-09-25",
-          "hcp": 7,
+          "hcp": 6.9,
           "juniorId": "f49717",
           "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 17,
+          "fed": "47341",
+          "name": "Sebastião Soares",
+          "club": "Oporto",
+          "dob": "2012-02-15",
+          "hcp": 7,
+          "juniorId": "f47341",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 58,
+            "hcp": 6.1
+          },
           "anterior": null
         },
         {
@@ -19337,12 +19337,12 @@
         },
         {
           "rank": 20,
-          "fed": "46308",
-          "name": "Marc Costa",
-          "club": "Citynorte",
-          "dob": "2013-02-20",
-          "hcp": 8.3,
-          "juniorId": "f46308",
+          "fed": "42985",
+          "name": "Martim Moreira",
+          "club": "Belas",
+          "dob": "2012-02-16",
+          "hcp": 8.4,
+          "juniorId": "u521022",
           "inscrito": null,
           "anterior": null
         }
@@ -20583,7 +20583,7 @@
           "name": "Laura Santos",
           "club": "PXO Clube",
           "dob": "2012-02-12",
-          "hcp": -1.1,
+          "hcp": -1.2,
           "juniorId": "f45393",
           "inscrito": {
             "lista": "entry",
@@ -20693,7 +20693,7 @@
           "name": "Catarina Valério",
           "club": "Vilamoura, C. G",
           "dob": "2012-07-24",
-          "hcp": 13,
+          "hcp": 12.9,
           "juniorId": "u575909",
           "inscrito": {
             "lista": "waiting",
@@ -23474,21 +23474,6 @@
         },
         {
           "rank": 12,
-          "fed": "46480",
-          "name": "Afonso de Sousa Pinto",
-          "club": "Oporto",
-          "dob": "2013-04-16",
-          "hcp": 5.9,
-          "juniorId": "f46480",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 57,
-            "hcp": 5.9
-          },
-          "anterior": null
-        },
-        {
-          "rank": 13,
           "fed": "52856",
           "name": "Francisco Vilardell Carvalho",
           "club": "Vale Pisão",
@@ -23499,6 +23484,21 @@
             "lista": "waiting",
             "pos": 59,
             "hcp": 6
+          },
+          "anterior": null
+        },
+        {
+          "rank": 13,
+          "fed": "46480",
+          "name": "Afonso de Sousa Pinto",
+          "club": "Oporto",
+          "dob": "2013-04-16",
+          "hcp": 6.4,
+          "juniorId": "f46480",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 57,
+            "hcp": 5.9
           },
           "anterior": null
         },
@@ -23519,21 +23519,6 @@
         },
         {
           "rank": 15,
-          "fed": "47341",
-          "name": "Sebastião Soares",
-          "club": "Oporto",
-          "dob": "2012-02-15",
-          "hcp": 6.6,
-          "juniorId": "f47341",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 61,
-            "hcp": 6.6
-          },
-          "anterior": null
-        },
-        {
-          "rank": 16,
           "fed": "53646",
           "name": "Henrique Pereira",
           "club": "Miramar",
@@ -23544,14 +23529,29 @@
           "anterior": null
         },
         {
-          "rank": 17,
+          "rank": 16,
           "fed": "49717",
           "name": "Diogo Lima",
           "club": "Citynorte",
           "dob": "2012-09-25",
-          "hcp": 7,
+          "hcp": 6.9,
           "juniorId": "f49717",
           "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 17,
+          "fed": "47341",
+          "name": "Sebastião Soares",
+          "club": "Oporto",
+          "dob": "2012-02-15",
+          "hcp": 7,
+          "juniorId": "f47341",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 61,
+            "hcp": 6.6
+          },
           "anterior": null
         },
         {
@@ -23578,12 +23578,12 @@
         },
         {
           "rank": 20,
-          "fed": "46308",
-          "name": "Marc Costa",
-          "club": "Citynorte",
-          "dob": "2013-02-20",
-          "hcp": 8.3,
-          "juniorId": "f46308",
+          "fed": "42985",
+          "name": "Martim Moreira",
+          "club": "Belas",
+          "dob": "2012-02-16",
+          "hcp": 8.4,
+          "juniorId": "u521022",
           "inscrito": null,
           "anterior": null
         }
@@ -24824,7 +24824,7 @@
           "name": "Laura Santos",
           "club": "PXO Clube",
           "dob": "2012-02-12",
-          "hcp": -1.1,
+          "hcp": -1.2,
           "juniorId": "f45393",
           "inscrito": {
             "lista": "entry",
@@ -24934,7 +24934,7 @@
           "name": "Catarina Valério",
           "club": "Vilamoura, C. G",
           "dob": "2012-07-24",
-          "hcp": 13,
+          "hcp": 12.9,
           "juniorId": "u575909",
           "inscrito": {
             "lista": "waiting",
@@ -27689,21 +27689,6 @@
         },
         {
           "rank": 12,
-          "fed": "46480",
-          "name": "Afonso de Sousa Pinto",
-          "club": "Oporto",
-          "dob": "2013-04-16",
-          "hcp": 5.9,
-          "juniorId": "f46480",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 45,
-            "hcp": 5.9
-          },
-          "anterior": null
-        },
-        {
-          "rank": 13,
           "fed": "52856",
           "name": "Francisco Vilardell Carvalho",
           "club": "Vale Pisão",
@@ -27714,6 +27699,21 @@
             "lista": "waiting",
             "pos": 47,
             "hcp": 6
+          },
+          "anterior": null
+        },
+        {
+          "rank": 13,
+          "fed": "46480",
+          "name": "Afonso de Sousa Pinto",
+          "club": "Oporto",
+          "dob": "2013-04-16",
+          "hcp": 6.4,
+          "juniorId": "f46480",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 45,
+            "hcp": 5.9
           },
           "anterior": null
         },
@@ -27734,21 +27734,6 @@
         },
         {
           "rank": 15,
-          "fed": "47341",
-          "name": "Sebastião Soares",
-          "club": "Oporto",
-          "dob": "2012-02-15",
-          "hcp": 6.6,
-          "juniorId": "f47341",
-          "inscrito": {
-            "lista": "waiting",
-            "pos": 49,
-            "hcp": 6.6
-          },
-          "anterior": null
-        },
-        {
-          "rank": 16,
           "fed": "53646",
           "name": "Henrique Pereira",
           "club": "Miramar",
@@ -27759,14 +27744,29 @@
           "anterior": null
         },
         {
-          "rank": 17,
+          "rank": 16,
           "fed": "49717",
           "name": "Diogo Lima",
           "club": "Citynorte",
           "dob": "2012-09-25",
-          "hcp": 7,
+          "hcp": 6.9,
           "juniorId": "f49717",
           "inscrito": null,
+          "anterior": null
+        },
+        {
+          "rank": 17,
+          "fed": "47341",
+          "name": "Sebastião Soares",
+          "club": "Oporto",
+          "dob": "2012-02-15",
+          "hcp": 7,
+          "juniorId": "f47341",
+          "inscrito": {
+            "lista": "waiting",
+            "pos": 49,
+            "hcp": 6.6
+          },
           "anterior": null
         },
         {
@@ -27793,12 +27793,12 @@
         },
         {
           "rank": 20,
-          "fed": "46308",
-          "name": "Marc Costa",
-          "club": "Citynorte",
-          "dob": "2013-02-20",
-          "hcp": 8.3,
-          "juniorId": "f46308",
+          "fed": "42985",
+          "name": "Martim Moreira",
+          "club": "Belas",
+          "dob": "2012-02-16",
+          "hcp": 8.4,
+          "juniorId": "u521022",
           "inscrito": null,
           "anterior": null
         }
