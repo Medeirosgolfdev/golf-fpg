@@ -900,6 +900,55 @@ function applyTeeRatings(out, teeRatings) {
   if (n) console.log(`   🎯 ${n} volta(s) em divisões mistas com o cartão do tee corrigido`);
 }
 
+/** Classificações MISTAS (Overall Leaderboard com rapazes e raparigas): o cartão
+ *  de tee da divisão sai de dois jogadores de amostra e fica o tee DELES para
+ *  todos (Grand Final Faldo 2026: o Overall ficou com o White das raparigas —
+ *  5.226 m, CR 67.5 — e os rapazes jogaram o Black). Quem está noutras divisões
+ *  que concordam TODAS num tee diferente leva, em cada volta, o cartão desse tee
+ *  (a /major lê primeiro o da ronda). Corre antes da conversão de jardas. */
+function applyOwnDivisionTee(out) {
+  const divs = (out.divisions || []).filter((dv) => dv.teeName);
+  const ondeEsta = new Map();   // nameKey → [{ dv, p }]
+  for (const dv of divs) for (const p of dv.players || []) {
+    const k = nameKey(p.name);
+    if (!ondeEsta.has(k)) ondeEsta.set(k, []);
+    ondeEsta.get(k).push({ dv, p });
+  }
+  const sig = (dv) => `${dv.teeName}|${dv.courseRating}|${dv.slope}`;
+  // Mista = partilha jogadores com uma divisão MAIS PEQUENA de outro tee (o
+  // Overall é a união dos escalões). Só as mistas se corrigem, e só a partir
+  // das que não o são (senão o Boys WAGR herdava o tee errado do Overall).
+  const mistas = new Set();
+  for (const lista of ondeEsta.values()) for (const a of lista) for (const b of lista) {
+    if (a.dv !== b.dv && sig(a.dv) !== sig(b.dv) && a.dv.players.length > b.dv.players.length) mistas.add(a.dv);
+  }
+  let n = 0;
+  const mudados = new Map();
+  for (const dv of mistas) {
+    for (const p of dv.players || []) {
+      const outras = (ondeEsta.get(nameKey(p.name)) || []).filter((x) => x.dv !== dv && !mistas.has(x.dv));
+      if (!outras.length) continue;
+      const sigs = new Set(outras.map((x) => sig(x.dv)));
+      if (sigs.size !== 1 || sigs.has(sig(dv))) continue;
+      const src = outras[0];
+      const srcRounds = src.p.rounds || [];
+      for (const r of p.rounds || []) {
+        const sr = srcRounds.find((q) => (r.date && q.date === r.date) || (r.day != null && q.day === r.day)) || {};
+        r.teeName = sr.teeName || src.dv.teeName;
+        r.meters = sr.meters || src.dv.meters || null;
+        r.si = sr.si || src.dv.si || r.si || null;
+        r.courseRating = sr.courseRating ?? src.dv.courseRating ?? null;
+        r.slope = sr.slope ?? src.dv.slope ?? null;
+        n++;
+      }
+      if (!p.tee) p.tee = src.dv.teeName;
+      mudados.set(dv.division, (mudados.get(dv.division) || 0) + 1);
+    }
+  }
+  if (n) console.log(`   🎯 divisões mistas: ${[...mudados].map(([d, k]) => `${d} ${k} jogador(es)`).join(' · ')} com o tee da sua divisão (${n} volta(s))`);
+  return n;
+}
+
 /** Jardas → metros num JobFile (divisões, campos por tee, metros por volta).
  *  Marca cada divisão com `distancias: "convertidas de jardas"` e não volta a
  *  converter o que já está marcado. Também o usa o fix-jardas-golfgenius.js. */
@@ -1160,6 +1209,8 @@ async function runOne(opts) {
   // rating do sexo errado (Faldo Madeira 2026: Yellow das raparigas com o CR
   // masculino). Vale para o sexo que joga esse tee no `teeDivisions`.
   if (opts.teeRatings) applyTeeRatings(out, opts.teeRatings);
+  // Classificações mistas: cada jogador com o tee da sua divisão.
+  applyOwnDivisionTee(out);
 
   // HCP/dob/clube dos portugueses pelos federados FPG (scope `fpgFederados`).
   if (opts.fpgFederados) applyFpgFederados(out, { overrides: opts.fpgFed || {} });
@@ -1276,4 +1327,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { applyFpgFederados, applyPlayerOverrides, discoverDivisions, isRoundOnlyLabel, runOne, jardasParaMetrosJob, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };
+module.exports = { applyFpgFederados, applyOwnDivisionTee, applyPlayerOverrides, discoverDivisions, isRoundOnlyLabel, runOne, jardasParaMetrosJob, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };
