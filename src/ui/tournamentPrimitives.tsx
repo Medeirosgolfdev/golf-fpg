@@ -208,7 +208,10 @@ export function TournPName({
   const kidsHash = directEntry?.kidsHash ?? candidates.find(e => e.kidsHash)?.kidsHash;
   // A ficha do kids2 por nome só vale se o federado bater (como no KidsLink).
   const kidsEntry = candidates.find(e => e.kidsId && !(fedKey && e.kidsFed && e.kidsFed !== fedKey));
-  const country = directEntry?.country ?? candidates.find(e => e.country)?.country ?? countryProp ?? ficha?.pais;
+  // A ficha achada pelo federado ganha aos homónimos por nome (o «Santiago Dias»
+  // 42908 saía com a bandeira de um Santiago Dias brasileiro).
+  const fichaPeloFed = fedKey && ficha?.fed === String(fedKey) ? ficha : undefined;
+  const country = directEntry?.country ?? fichaPeloFed?.pais ?? candidates.find(e => e.country)?.country ?? countryProp ?? ficha?.pais;
   // PT não leva bandeira por defeito — num site português seria ruído em todas
   // as linhas. A excepção é o país vir por PROP: só as páginas de circuitos
   // estrangeiros a passam, e aí ver a bandeira portuguesa é justamente o ponto.
@@ -223,7 +226,9 @@ export function TournPName({
   // A do mapa estava a ser desenhada por um <KidsLink> IRMAO nos chamadores, o que
   // punha DUAS setas na mesma linha quando (2) e (3) resolviam ambas. Passa a
   // ser resolvida aqui, para haver sempre exactamente uma.
-  const ctxEntry = kidsCtx.get(normNameLocal(name));
+  // A MESMA ficha que dá a bandeira e o nascimento (`fichaDoKids`): o federado
+  // da linha decide antes do nome, e um homónimo com outro federado não conta.
+  const ctxEntry = ficha;
   // O mapa (3) dá o id canónico; vem antes do kidsHash (2), que é só o nome —
   // a /drive tem os dois desde que usa o playersDB da /FPG (decisão F,
   // 22/10/2026); a /FPG não fornece o mapa, por isso não muda.

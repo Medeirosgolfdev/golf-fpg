@@ -28,7 +28,7 @@ import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
 import { parsePos } from "../../utils/classificacao";
 import { soma, somaDe } from "../../utils/mathUtils";
 
-export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
+export interface JobPlayer { pos: string; name: string; country: string; location?: string; fed?: string | null; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
   // Cartão de tee POR RONDA (provas que mudam de campo ou de marcação a cada
   // ronda) — ganha ao da divisão quando existe.
   date?: string; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; courseRating?: number | null; slope?: number | null }[]; }
@@ -203,6 +203,9 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       // Sem marca de WD: o TournamentDetail decide pelas voltas.
       wd: null,
       extra: {
+        // Federado FPG quando o scraper o casou (`fpgFederados`: Faldo Madeira,
+        // Grand Final) — a ficha, a bandeira e a seta ↗ saem dele, não do nome.
+        ...(p.fed ? { fed: p.fed, fedCode: p.fed } : {}),
         _hcpEst: p.hcp != null && p.hcpEstimated ? true : undefined,
         _hcpNote: p.hcpEstimated ? p.estNote ?? null : undefined,
         // Idade À DATA DO TORNEIO quando há DOB completa + data (GolfBox traz as

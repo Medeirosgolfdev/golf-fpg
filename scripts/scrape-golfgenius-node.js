@@ -811,11 +811,18 @@ function applyFpgFederados(out, { overrides = {}, minBirthYear = 2005, file = pa
       if (c.length !== 1) { if (c.length > 1) console.log(`   ⚠ FPG: ${p.name} tem ${c.length} homónimos — sem HCP (pôr em fpgFed no scope)`); continue; }
       x = c[0];
     }
-    if (p.hcp == null && typeof x.hcp_exact === 'number') { p.hcp = x.hcp_exact; p.hcpSource = `FPG federados ${asOf}`; }
+    // 99 = «Sem HCP» na FPG (hcp_status_id 99) — não é um handicap.
+    const semHcp = x.hcp_status_id === 99 || !(typeof x.hcp_exact === 'number' && x.hcp_exact < 99);
+    if (p.hcp == null && !semHcp) { p.hcp = x.hcp_exact; p.hcpSource = `FPG federados ${asOf}`; }
     p.fed = String(x.federation_code);
     if (!p.dob && x.birthdate) p.dob = String(x.birthdate).slice(0, 10);
     if (!p.club && x.club_name) p.club = x.club_name;
-    p.country = 'PT';
+    // Federado na FPG não é o mesmo que português: há estrangeiros federados
+    // cá (Alwin Türklitz, alemão, Quinta do Lago — Grand Final Faldo 2026).
+    // O país é o `country_prefix` da FPG (a FPG usa «@1» para a Inglaterra);
+    // sem prefixo válido, PT.
+    const pref = String(x.country_prefix || '').toUpperCase();
+    p.country = pref === '@1' ? 'GB-ENG' : /^[A-Z]{2}$/.test(pref) ? pref : 'PT';
     if (!p.location) p.location = x.acronym || x.club_name || 'Portugal';
     n++;
   }

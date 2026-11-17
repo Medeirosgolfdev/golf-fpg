@@ -14,6 +14,7 @@ import { useMemo } from "react";
 import { useJson } from "./useJson";
 import { normName } from "../utils/normName";
 import type { KidsLinkEntry } from "../ui/KidsLink";
+import { indexarFederados } from "../data/kidsFicha";
 
 /** Linha do índice: [id, nome canónico, aliases?, memberId?, fed?, licença FFG?, país?, sexo?] (0 = falta). */
 export type LinkRow = [string, string, (string[] | 0)?, (string | 0)?, (string | 0)?, (string | 0)?, (string | 0)?, ("M" | "F" | 0)?];
@@ -83,6 +84,8 @@ export function buildKidsLinkMap(roster: LinkJunior[]): Map<string, KidsLinkEntr
     }
   }
   for (const [vk, entry] of variantes) if (entry) m.set(vk, entry);
+  // Por federado, de todo o roster — os homónimos que o mapa por nome deixou cair.
+  indexarFederados(m, roster.filter((j) => j.fed).map(entradaDe));
   return m;
 }
 

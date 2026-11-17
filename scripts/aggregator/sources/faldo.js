@@ -11,7 +11,7 @@
  * «Overall Leaderboard» com as mesmas voltas — o umaDivisaoPorJogador deixa
  * cada jogador só no escalão. «16 & Under» / «16 and Under» = idade máx. 16 (o
  * parseSexAge leria 16–16); as gerais ficam com 21.
- * Scraper: scrape-golfgenius-node.js (entradas faldo1…faldo11 no scope).
+ * Scraper: scrape-golfgenius-node.js (entradas faldo1…faldo12 no scope; 12 = Grand Final).
  */
 const { buildJobfileSource, parseSexAge } = require("../util/jobfile");
 

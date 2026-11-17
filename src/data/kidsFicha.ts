@@ -36,6 +36,17 @@ function porId(kidsMap: ReadonlyMap<string, KidsLinkEntry>): Map<string, KidsLin
   return idx;
 }
 
+/** Federado FPG → ficha, de TODO o roster (o mapa por nome só guarda o primeiro
+ *  homónimo: na Grand Final Faldo 2026 o «Santiago Dias» federado 42908 perdia
+ *  para um Santiago Dias brasileiro do USKids e a seta ia para a ficha errada).
+ *  Preenchido por quem constrói o mapa (`buildKidsLinkMap`). */
+const _porFed = new WeakMap<ReadonlyMap<string, KidsLinkEntry>, Map<string, KidsLinkEntry>>();
+export function indexarFederados(kidsMap: ReadonlyMap<string, KidsLinkEntry>, fichas: Iterable<KidsLinkEntry>): void {
+  const idx = new Map<string, KidsLinkEntry>();
+  for (const e of fichas) if (e.fed && !idx.has(e.fed)) idx.set(e.fed, e);
+  _porFed.set(kidsMap, idx);
+}
+
 /** A ficha do Kids 2 do jogador, ou undefined (sem ficha, ou só um homónimo). */
 export function fichaDoKids(kidsMap: ReadonlyMap<string, KidsLinkEntry>, q: QuemEKids): KidsLinkEntry | undefined {
   if (q.juniorId) {
@@ -43,6 +54,9 @@ export function fichaDoKids(kidsMap: ReadonlyMap<string, KidsLinkEntry>, q: Quem
     // para ler o juniors-scout.json.
     return porId(kidsMap).get(q.juniorId) ?? { n: q.nome ?? "", id: q.juniorId };
   }
+  // O federado da linha decide antes do nome (determinístico, como o juniorId).
+  const pf = q.fed ? _porFed.get(kidsMap)?.get(String(q.fed)) : undefined;
+  if (pf) return pf;
   if (!q.nome) return undefined;
   const e = kidsMap.get(normName(q.nome));
   if (!e || (q.fed && e.fed && e.fed !== q.fed)) return undefined;
