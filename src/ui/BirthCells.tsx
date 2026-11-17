@@ -20,6 +20,10 @@ export interface BirthInfo {
   birthYearEst?: number | null;
   birthYearEstMax?: number | null;
   estNote?: string | null;
+  /** Idade LIDA na fonte numa data (GolfGenius: «14 AGE» na página do jogador),
+   *  sem data nem ano de nascimento. Mostra-se como lida quando a prova é dessa
+   *  altura (até 31 dias); o ano fica a estimativa a vermelho. */
+  idadeLida?: { idade: number; data: string } | null;
   /** Mostrar a data completa (só quando é a própria prova que a publica — senão
    *  só o ano, como no Resumo e nas Inscrições da FPG). Default: true. */
   showDate?: boolean;
@@ -39,7 +43,12 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
   const est = dobYear == null && lo != null;
   const estYear = !est ? null : hi === null ? `≥${lo}` : hi != null && hi > lo! ? `${lo}–${String(hi).slice(2)}` : `${lo}`;
   const estAge = !est || !y ? null : hi === null ? `≤${y - lo!}` : hi != null && hi > lo! ? `~${y - hi}–${y - lo!}` : `~${y - lo!}`;
-  const tip = dob ? `${dob} (${age ?? "?"} anos à data)` : est ? `Estimativa — ${b.estNote || "ano deduzido, não lido"}` : "";
+  const il = b.idadeLida;
+  const idadeLida = age == null && il && refDate && Math.abs(Date.parse(String(refDate).slice(0, 10)) - Date.parse(il.data)) <= 31 * 864e5
+    ? il.idade : null;
+  const tip = dob ? `${dob} (${age ?? "?"} anos à data)`
+    : idadeLida != null ? `${idadeLida} anos a ${fmtDatePt(il!.data)} (lido na fonte)${est ? ` — ano estimado: ${b.estNote || "deduzido da idade"}` : ""}`
+    : est ? `Estimativa — ${b.estNote || "ano deduzido, não lido"}` : "";
   const shown = b.showDate !== false && dob && /^\d{4}-\d{2}-\d{2}$/.test(dob) ? fmtDatePt(dob) : dobYear;
   // Ano e idade lidos pintam-se com a cor do escalão (pelo ano, como a FPG);
   // as estimativas ficam a vermelho, como sempre.
@@ -48,6 +57,7 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
     nasc: dobYear != null ? <BirthPill {...pill}>{shown}</BirthPill>
       : est ? <span className="est-value">{estYear}</span> : MUTED,
     idade: age != null ? <BirthPill {...pill}>{!dob ? "~" : ""}{age}a</BirthPill>
+      : idadeLida != null ? <BirthPill esc={null} ano1={false}>{idadeLida}a</BirthPill>
       : estAge ? <span className="est-value">{estAge}a</span> : MUTED,
     tip,
   };
@@ -89,10 +99,11 @@ export function pillDoAno(ano: number | null | undefined, refDate?: string | nul
 
 /** Os campos de nascimento além da data (ano solto, estimativa e nota) de um
  *  jogador, para passar a uma linha de tabela sem os perder. */
-export function birthFieldsOf(p: object): Pick<BirthInfo, "birthYear" | "birthYearEst" | "birthYearEstMax" | "estNote"> {
+export function birthFieldsOf(p: object): Pick<BirthInfo, "birthYear" | "birthYearEst" | "birthYearEstMax" | "estNote" | "idadeLida"> {
   const x = p as BirthInfo;
   return {
     ...(x.birthYear != null ? { birthYear: x.birthYear } : {}),
+    ...(x.idadeLida ? { idadeLida: x.idadeLida } : {}),
     ...(x.birthYearEst != null
       ? { birthYearEst: x.birthYearEst, ...("birthYearEstMax" in x ? { birthYearEstMax: x.birthYearEstMax } : {}), estNote: x.estNote ?? null }
       : {}),

@@ -949,6 +949,25 @@ function applyOwnDivisionTee(out) {
   return n;
 }
 
+/** Idade lida no GolfGenius (`age` à data `ageDate`) → ano de nascimento
+ *  ESTIMADO (dois anos possíveis), para quem não tem data nem ano de outra fonte
+ *  (federados FPG, scope). A idade em si mostra-se como lida (BirthCells). */
+function birthFromAge(out) {
+  let n = 0;
+  for (const dv of out.divisions || []) for (const p of dv.players || []) {
+    if (p.age == null || !p.ageDate || p.dob || p.birthYear != null || p.birthYearEst != null) continue;
+    const [y, m, d] = p.ageDate.split('-').map(Number);
+    const hi = y - p.age;                              // fez anos até ageDate
+    const lo = m === 12 && d === 31 ? hi : hi - 1;     // ainda não fez
+    p.birthYearEst = lo;
+    p.birthYearEstMax = hi;
+    p.estNote = `GolfGenius: ${p.age} anos a ${String(d).padStart(2, '0')}/${String(m).padStart(2, '0')}/${y}`;
+    n++;
+  }
+  if (n) console.log(`   🎂 idade do GolfGenius: ${n} linha(s) com o ano de nascimento estimado`);
+  return n;
+}
+
 /** Jardas → metros num JobFile (divisões, campos por tee, metros por volta).
  *  Marca cada divisão com `distancias: "convertidas de jardas"` e não volta a
  *  converter o que já está marcado. Também o usa o fix-jardas-golfgenius.js. */
@@ -1215,6 +1234,7 @@ async function runOne(opts) {
   // HCP/dob/clube dos portugueses pelos federados FPG (scope `fpgFederados`).
   if (opts.fpgFederados) applyFpgFederados(out, { overrides: opts.fpgFed || {} });
   if (opts.players) applyPlayerOverrides(out, opts.players);
+  birthFromAge(out);
 
   // `jardas: true` no scope: as distâncias do cartão são JARDAS (o rótulo do
   // GolfGenius não o diz — ver fetchTeeCards). Converte-se aqui, uma vez, e marca-se.
@@ -1327,4 +1347,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { applyFpgFederados, applyOwnDivisionTee, applyPlayerOverrides, discoverDivisions, isRoundOnlyLabel, runOne, jardasParaMetrosJob, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };
+module.exports = { applyFpgFederados, applyOwnDivisionTee, birthFromAge, applyPlayerOverrides, discoverDivisions, isRoundOnlyLabel, runOne, jardasParaMetrosJob, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };

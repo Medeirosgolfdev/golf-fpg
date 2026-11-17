@@ -49,3 +49,16 @@ describe('applyOwnDivisionTee', () => {
     expect(out.divisions[1].players.find((p) => p.name === 'Rapaz Dois').rounds[0].teeName).toBeUndefined();
   });
 });
+
+// Idade lida no GolfGenius («14 AGE») → ano de nascimento estimado (dois anos).
+const { birthFromAge } = require('./scrape-golfgenius-node.js');
+describe('birthFromAge', () => {
+  it('14 anos a 17/11/2026 → nascido em 2011 ou 2012, com a nota da fonte', () => {
+    const out = { divisions: [{ players: [{ name: 'A', age: 14, ageDate: '2026-11-17' }, { name: 'B', age: 14, ageDate: '2026-11-17', dob: '2012-05-29' }] }] };
+    expect(birthFromAge(out)).toBe(1);
+    const [a, b] = out.divisions[0].players;
+    expect([a.birthYearEst, a.birthYearEstMax]).toEqual([2011, 2012]);
+    expect(a.estNote).toBe('GolfGenius: 14 anos a 17/11/2026');
+    expect(b.birthYearEst).toBeUndefined();
+  });
+});

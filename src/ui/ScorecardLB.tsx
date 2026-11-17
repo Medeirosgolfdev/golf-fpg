@@ -138,7 +138,7 @@ export function ScorecardLB({
   // Idade do jogador — o mesmo componente do Draw e das Inscrições (BirthCells).
   // Nas voltas não há coluna Nasc. (a idade chega — 16/10/2026); a data fica no tooltip.
   const birthOf = (p: any) => birthCells({ dob: p.dob, birthYear: p.birthYear, birthYearEst: p.birthYearEst,
-    ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote }, tournament.date);
+    ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote, idadeLida: p.idadeLida }, tournament.date);
   const clubLabel_ = options?.clubLabel ?? "CLUBE";
   const startHole_ = options?.startHole ?? 1;
   const nameDecorator_ = options?.nameDecorator;

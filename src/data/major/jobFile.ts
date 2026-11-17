@@ -28,7 +28,7 @@ import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
 import { parsePos } from "../../utils/classificacao";
 import { soma, somaDe } from "../../utils/mathUtils";
 
-export interface JobPlayer { pos: string; name: string; country: string; location?: string; fed?: string | null; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
+export interface JobPlayer { pos: string; name: string; country: string; location?: string; fed?: string | null; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null; age?: number | null; ageDate?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
   // Cartão de tee POR RONDA (provas que mudam de campo ou de marcação a cada
   // ronda) — ganha ao da divisão quando existe.
   date?: string; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; courseRating?: number | null; slope?: number | null }[]; }
@@ -223,6 +223,8 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
         birthYearEst: p.birthYearEst ?? undefined,
         ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}),
         estNote: p.estNote ?? undefined,
+        // Idade lida no GolfGenius («14 AGE» na página do jogador) e a data da leitura.
+        ...(p.age != null && p.ageDate ? { idadeLida: { idade: p.age, data: p.ageDate } } : {}),
       },
     };
   });
@@ -298,7 +300,8 @@ export function jobDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players:
   const birthByName = indexByName(players, key, (p) => (p.dob || p.birthYear ? { dob: p.dob ?? null, birthYear: p.birthYear ?? null } : undefined), "last");
   // Valores ESTIMADOS (Faldo Madeira: estrangeiros sem fonte) → itálico vermelho no draw.
   const estByName = indexByName(players, key, (p) => (p.hcpEstimated || p.birthYearEst || p.countryEstimated
-    ? { hcpEstimated: !!p.hcpEstimated, birthYearEst: p.birthYearEst ?? null, ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}), countryEstimated: !!p.countryEstimated, estNote: p.estNote ?? null }
+    ? { hcpEstimated: !!p.hcpEstimated, birthYearEst: p.birthYearEst ?? null, ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}), countryEstimated: !!p.countryEstimated, estNote: p.estNote ?? null,
+      ...(p.age != null && p.ageDate ? { idadeLida: { idade: p.age, data: p.ageDate } } : {}) }
     : undefined), "last");
   const countryByName = indexByName(players, key, (p) => (p.country ? intlCountryCell(p.country).trim() : undefined), "last");
   // Conterrâneos destacados (.row-portuguese) também no draw — regra da casa.

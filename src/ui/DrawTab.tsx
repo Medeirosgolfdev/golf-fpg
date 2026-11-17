@@ -263,6 +263,7 @@ export default function DrawTab({
       hcpEstimated?: boolean;
       birthYearEst?: number | null;
       birthYearEstMax?: number | null;
+      idadeLida?: { idade: number; data: string } | null;
       countryEstimated?: boolean;
       estNote?: string | null;
       escHist: string | null;
@@ -487,6 +488,7 @@ export default function DrawTab({
           ...("birthYearEstMax" in (p as object) ? { birthYearEstMax: (p as { birthYearEstMax?: number | null }).birthYearEstMax ?? null }
             : kidsEst ? { birthYearEstMax: kidsEst.birthYearEstMax } : {}),
           estNote: (p as { estNote?: string | null }).estNote ?? kidsEst?.estNote ?? null,
+          idadeLida: (p as { idadeLida?: { idade: number; data: string } | null }).idadeLida ?? null,
           countryEstimated: !!(p as { countryEstimated?: boolean }).countryEstimated,
           escHist,
           // Gross ≥ 900 (998/999) é «sem cartão» — regra comum: mostra «–», sem ±.
@@ -644,7 +646,7 @@ export default function DrawTab({
               const bc = birthCells({ dob: p.dob ?? (p.dobShown ? p.dobShown.split("/").reverse().join("-") : null),
                 showDate: !!p.dobShown,   // data completa só se a prova a publica
                 birthYear: p.dobYear, birthYearEst: p.birthYearEst,
-                ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote }, effDate);
+                ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote, idadeLida: p.idadeLida }, effDate);
               return <>
                 <td className={"lb-esc" + bt} title={bc.tip}>{bc.nasc}</td>
                 <td className={"lb-esc" + bt} title={bc.tip}>{age != null && !p.dob && p.dobShown == null ? <BirthPill {...pillDoAno(p.dobYear, effDate)}>~{age}a</BirthPill> : bc.idade}</td>

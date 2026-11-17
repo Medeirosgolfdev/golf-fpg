@@ -256,7 +256,12 @@ async function fetchScorecard(detailId) {
   // Faldo (GolfGenius só expõe o clube). Ignora o genérico 'xx'/'un'.
   const fc = (html.match(/flag-icon-([a-z]{2})\b/) || [])[1] || null;
   const flagCountry = fc && fc !== 'xx' && fc !== 'un' ? fc.toUpperCase() : null;
-  return { rounds: parseScorecard(html), profileId, flagCountry };
+  // Idade do jogador (painel «Czechia · 14 AGE» por cima do cartão) — a idade
+  // NO DIA da leitura; quem a usa grava também a data (`ageDate`).
+  const plain = html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  const am = plain.match(/\b(\d{1,2})\s+AGE\b/);
+  const age = am && +am[1] >= 4 && +am[1] <= 30 ? +am[1] : null;
+  return { rounds: parseScorecard(html), profileId, flagCountry, age };
 }
 
 // Ficha do jogador (/profiles/{id}) — algumas federações (ex: FMG México) expõem
@@ -350,8 +355,9 @@ async function scrapeDivision(v2tid, label, opts = {}) {
       if (!p.detailId) { p.rounds = []; continue; }
       process.stdout.write(`\r     [${String(i + 1).padStart(3)}/${lb.players.length}] ${p.name.padEnd(26).slice(0, 26)}`);
       try {
-        const { rounds: parsed, profileId, flagCountry } = await fetchScorecard(p.detailId);
+        const { rounds: parsed, profileId, flagCountry, age } = await fetchScorecard(p.detailId);
         if (profileId) p.profileId = profileId;
+        if (age != null) { p.age = age; p.ageDate = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Lisbon' }); }
         // Corrige só o fallback "US" do inferCountry com a bandeira real do
         // detail page (não sobrepõe países já resolvidos por afiliação).
         if (flagCountry && (p.country === 'US' || p.country == null)) p.country = flagCountry;

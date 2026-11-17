@@ -45,6 +45,8 @@ export interface MultiRoundRow {
   /** Ano ESTIMADO (mais antigo / mais recente; null = em aberto) e a nota — a vermelho (BirthCells). */
   birthYearEst?: number | null;
   birthYearEstMax?: number | null;
+  /** Idade lida na fonte numa data (GolfGenius) — ver BirthCells. */
+  idadeLida?: { idade: number; data: string } | null;
   estNote?: string | null;
   /** Idade pré-calculada pelo adapter (à data do torneio). Preferida sobre recalcular
    *  por dob, para a coluna Idade ser CONSISTENTE com as tabs R1/R2/R3. */
