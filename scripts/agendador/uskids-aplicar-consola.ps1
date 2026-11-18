@@ -79,8 +79,14 @@ try {
         exit 0
     }
 
-    G pull --rebase --autostash -q | ForEach-Object { Log "git: $_" }
-    if ($LASTEXITCODE -ne 0) { throw 'git pull falhou' }
+    # Outra conversa a fazer `git fetch` ao mesmo tempo deixa o FETCH_HEAD com mais de um ramo
+    # («Cannot rebase onto multiple branches», 18/11/2026 14:05): espera e tenta mais duas vezes.
+    foreach ($tentativa in 1..3) {
+        G pull --rebase --autostash -q | ForEach-Object { Log "git: $_" }
+        if ($LASTEXITCODE -eq 0) { break }
+        if ($tentativa -lt 3) { Log "git pull falhou — tento outra vez daqui a 30 s ($tentativa/3)"; Start-Sleep -Seconds 30 }
+    }
+    if ($LASTEXITCODE -ne 0) { throw 'git pull falhou (3 tentativas)' }
 
     Push-Location $Repo
     try {
