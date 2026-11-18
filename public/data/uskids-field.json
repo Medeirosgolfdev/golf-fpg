@@ -12,7 +12,7 @@
       "fee_18": "475.00",
       "tour": "International Championships Tour",
       "type": 8,
-      "total_inscritos": 162,
+      "total_inscritos": 163,
       "total_maximo": 168,
       "escaloes": [
         {
@@ -25,8 +25,88 @@
           "maximo": 6,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Cruze Higgins",
+              "pais": "IE",
+              "cidade": "Dublin, DB",
+              "pid": 1839131,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Finnley Curtin",
+              "pais": "GB-ENG",
+              "cidade": "Southport ",
+              "pid": 1875283,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Harry Hamilton-Dewhurst",
+              "pais": "GB",
+              "cidade": "Billingham, STT",
+              "pid": 1865088,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Mark Bautista Musina",
+              "pais": "ES",
+              "cidade": "Santa Cruz De Bezana, CT",
+              "pid": 1840076,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Maxime Marionex",
+              "pais": "BE",
+              "cidade": "Hoegaarden, VBR",
+              "pid": 1868537,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Santino  Carrasco",
+              "pais": "CL",
+              "cidade": "Santiago, RM",
+              "pid": 1874664,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "IE",
+              "n": 1
+            },
+            {
+              "pais": "GB-ENG",
+              "n": 1
+            },
+            {
+              "pais": "GB",
+              "n": 1
+            },
+            {
+              "pais": "ES",
+              "n": 1
+            },
+            {
+              "pais": "BE",
+              "n": 1
+            },
+            {
+              "pais": "CL",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 2100,
@@ -38,8 +118,58 @@
           "maximo": 6,
           "vagas": 2,
           "pct_cheio": 67,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Adam Rai Jnr",
+              "pais": "GB",
+              "cidade": "Cannock",
+              "pid": 1809043,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Albie Cleasby",
+              "pais": "MT",
+              "cidade": "Swieqi, SWQ",
+              "pid": 1862012,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Beauden Humphries",
+              "pais": "GB-ENG",
+              "cidade": "Widnes, HAL",
+              "pid": 1860751,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Tommy Lackie",
+              "pais": "GB",
+              "cidade": "Barnsley, BNS",
+              "pid": 1854244,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "GB",
+              "n": 2
+            },
+            {
+              "pais": "MT",
+              "n": 1
+            },
+            {
+              "pais": "GB-ENG",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 2101,
@@ -51,8 +181,158 @@
           "maximo": 12,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Erik Bautista Musina",
+              "pais": "ES",
+              "cidade": "Santa Cruz De Bezana, CT",
+              "pid": 1840077,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Jeffrey Meads",
+              "pais": "GB",
+              "cidade": "Cold Ash, Thatcham",
+              "pid": 1813996,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Juan Agudo Goenechea",
+              "pais": "ES",
+              "cidade": "Madrid, MD",
+              "pid": 1857925,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Leon Choudury",
+              "pais": "CH",
+              "cidade": "Allschwil, BL",
+              "pid": 1836800,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Magnus Urban",
+              "pais": "PL",
+              "cidade": "Warsaw, MZ",
+              "pid": 1808610,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Mikhail Khontulev",
+              "pais": "PT",
+              "cidade": "Cascais ",
+              "pid": 1867024,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Oliver  Forsberg",
+              "pais": "MT",
+              "cidade": "Madliena",
+              "pid": 1881187,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Philipp Emanuel Getulio Reach",
+              "pais": "DE",
+              "cidade": "Zittau, SN",
+              "pid": 1857432,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ryan Hicham",
+              "pais": "MA",
+              "cidade": "Marrakech, MRK",
+              "pid": 1868677,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sullivan Powers",
+              "pais": "US",
+              "cidade": "Safety Harbor, FL",
+              "pid": 1867528,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Valentin Kohlschein",
+              "pais": "DE",
+              "cidade": "Wetter (Ruhr), NW",
+              "pid": 1867720,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Vincent  Mcmahon",
+              "pais": "GB-ENG",
+              "cidade": "Crosby ",
+              "pid": 1816275,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "ES",
+              "n": 2
+            },
+            {
+              "pais": "DE",
+              "n": 2
+            },
+            {
+              "pais": "GB",
+              "n": 1
+            },
+            {
+              "pais": "CH",
+              "n": 1
+            },
+            {
+              "pais": "PL",
+              "n": 1
+            },
+            {
+              "pais": "PT",
+              "n": 1
+            },
+            {
+              "pais": "MT",
+              "n": 1
+            },
+            {
+              "pais": "MA",
+              "n": 1
+            },
+            {
+              "pais": "US",
+              "n": 1
+            },
+            {
+              "pais": "GB-ENG",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 2102,
@@ -1017,7 +1297,7 @@
               "cidade": "Beirut",
               "pid": 1834621,
               "firstSeen": "2026-08-23T11:49:34.448Z",
-              "regDia": "2026-08-21",
+              "regDia": "2026-08-22",
               "regObs": false
             },
             {
@@ -1107,8 +1387,313 @@
           "maximo": 27,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Benjamin Geilert",
+              "pais": "DE",
+              "cidade": "Hamburg, HH",
+              "pid": 1841840,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Daniel Hobbs",
+              "pais": "GB-ENG",
+              "cidade": "Brookmans Park, HRT",
+              "pid": 1808728,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Erik Groth",
+              "pais": "SE",
+              "cidade": "Skanör, SK",
+              "pid": 1807927,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Gabriel Rambaud",
+              "pais": "FR",
+              "cidade": "Cannes, A06",
+              "pid": 1809125,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Georgy Molodtsov",
+              "pais": "RU",
+              "cidade": "Moscow, MOS",
+              "pid": 1807879,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Gian-Luca Grau",
+              "pais": "DE",
+              "cidade": "Marktbreit, BY",
+              "pid": 1847271,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Harry  Riley",
+              "pais": "GB",
+              "cidade": "Little Budworth, Cheshire",
+              "pid": 1861089,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ishan Namala",
+              "pais": "IN",
+              "cidade": "Hyderabad, AP",
+              "pid": 1845918,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "JOSE GOMEZ GUERRA",
+              "pais": "ES",
+              "cidade": "LAS PALMAS DE GRAN CANARIA, PM",
+              "pid": 1808922,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Julius Fliss",
+              "pais": "DE",
+              "cidade": "San Roque, CA",
+              "pid": 1860954,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Kahir Ladak",
+              "pais": "KE",
+              "cidade": "Nairobi, NA",
+              "pid": 1827629,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Konrad Schliep",
+              "pais": "DE",
+              "cidade": "Göttingen",
+              "pid": 1807921,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Louis Hawes",
+              "pais": "GB-ENG",
+              "cidade": "Norwich, NFK",
+              "pid": 1847068,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Louis Meinesz",
+              "pais": "BE",
+              "cidade": "Saint Trond, VLI",
+              "pid": 1834703,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Malin Keza",
+              "pais": "DE",
+              "cidade": "Mannheim",
+              "pid": 1860738,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Mario  Buijs Mariscal",
+              "pais": "ES",
+              "cidade": "Ibiza, IB",
+              "pid": 1808916,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Markus  JIN",
+              "pais": "HK",
+              "cidade": "Hong Kong , KKC",
+              "pid": 1811052,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Massimo Lustrissimi",
+              "pais": "EE",
+              "cidade": "Tallinn, 0",
+              "pid": 1847080,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Maximilian  Carbonare",
+              "pais": "DE",
+              "cidade": "Kronberg",
+              "pid": 1860141,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Milo Kaussen",
+              "pais": "ES",
+              "cidade": "Sotogrande, CA",
+              "pid": 1860805,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Murray Brown",
+              "pais": "GB",
+              "cidade": "London, WND",
+              "pid": 1845990,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Rafael Rambaud",
+              "pais": "FR",
+              "cidade": "Cannes, A06",
+              "pid": 1809126,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sascha Alexandru Krohn",
+              "pais": "RO",
+              "cidade": "Cluj",
+              "pid": 1809401,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sean Widor",
+              "pais": "AT",
+              "cidade": "Vienna",
+              "pid": 1826849,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Steven Yichen Song",
+              "pais": "DE",
+              "cidade": "Bad Vilbel",
+              "pid": 1860406,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Tommaso Testori",
+              "pais": "IT",
+              "cidade": "Milano, MI",
+              "pid": 1847116,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "William Greenwood",
+              "pais": "GB-ENG",
+              "cidade": "Burley In Wharfedale",
+              "pid": 1847168,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "DE",
+              "n": 7
+            },
+            {
+              "pais": "GB-ENG",
+              "n": 3
+            },
+            {
+              "pais": "ES",
+              "n": 3
+            },
+            {
+              "pais": "FR",
+              "n": 2
+            },
+            {
+              "pais": "GB",
+              "n": 2
+            },
+            {
+              "pais": "SE",
+              "n": 1
+            },
+            {
+              "pais": "RU",
+              "n": 1
+            },
+            {
+              "pais": "IN",
+              "n": 1
+            },
+            {
+              "pais": "KE",
+              "n": 1
+            },
+            {
+              "pais": "BE",
+              "n": 1
+            },
+            {
+              "pais": "HK",
+              "n": 1
+            },
+            {
+              "pais": "EE",
+              "n": 1
+            },
+            {
+              "pais": "RO",
+              "n": 1
+            },
+            {
+              "pais": "AT",
+              "n": 1
+            },
+            {
+              "pais": "IT",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 2112,
@@ -1116,13 +1701,110 @@
           "genero": "Girls",
           "holes": 18,
           "flight_id": 300232,
-          "inscritos": 6,
+          "inscritos": 7,
           "maximo": 7,
-          "vagas": 1,
-          "pct_cheio": 86,
+          "vagas": 0,
+          "pct_cheio": 100,
           "desistentes": 1,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Alejandra Gonzalez Hallin",
+              "pais": "ES",
+              "cidade": "San Roque, CZ",
+              "pid": 1811731,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ashling Poynton",
+              "pais": "BE",
+              "cidade": "Wespelaar, VBR",
+              "pid": 1848670,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "DARIA BULYCHEVA",
+              "pais": "RU",
+              "cidade": "Moskva, MOW",
+              "pid": 1823369,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ella Wester",
+              "pais": "US",
+              "cidade": "Key Biscayne, FL",
+              "pid": 1860759,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Maria Khristenko",
+              "pais": "RU",
+              "cidade": "Moscow",
+              "pid": 1884944,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Phoebe Bright",
+              "pais": "GB-ENG",
+              "cidade": "Sevenoaks, KEN",
+              "pid": 1851766,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sophie Jordan",
+              "pais": "GB",
+              "cidade": "Troon, SAY",
+              "pid": 1855170,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "RU",
+              "n": 2
+            },
+            {
+              "pais": "ES",
+              "n": 1
+            },
+            {
+              "pais": "BE",
+              "n": 1
+            },
+            {
+              "pais": "US",
+              "n": 1
+            },
+            {
+              "pais": "GB-ENG",
+              "n": 1
+            },
+            {
+              "pais": "GB",
+              "n": 1
+            }
+          ],
+          "removed": [
+            {
+              "nome": "Felicia Jungbluth",
+              "removedAt": "2026-11-18T14:17:19.658Z",
+              "pais": "ES",
+              "wd": true
+            }
+          ]
         },
         {
           "age_group": 2116,
@@ -1134,8 +1816,84 @@
           "maximo": 6,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Arabella  Offen",
+              "pais": "GB",
+              "cidade": "Hockley, ESS",
+              "pid": 1881737,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Hannah Ballesteros",
+              "pais": "ES",
+              "cidade": "Rubayo, CT",
+              "pid": 1868959,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ines Suke",
+              "pais": "MT",
+              "cidade": "Kalkara",
+              "pid": 1864153,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Isla Harper",
+              "pais": "GB",
+              "cidade": "Chattenden",
+              "pid": 1880545,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Mila Tiemann",
+              "pais": "SE",
+              "cidade": "Falsterbo",
+              "pid": 1812168,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Teodora Chepisheva",
+              "pais": "BG",
+              "cidade": "Sofia",
+              "pid": 1880884,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "GB",
+              "n": 2
+            },
+            {
+              "pais": "ES",
+              "n": 1
+            },
+            {
+              "pais": "MT",
+              "n": 1
+            },
+            {
+              "pais": "SE",
+              "n": 1
+            },
+            {
+              "pais": "BG",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 2121,
@@ -1147,8 +1905,71 @@
           "maximo": 5,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Idil Avcibasioglu",
+              "pais": "TR",
+              "cidade": "Ankara, ANK",
+              "pid": 1837870,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Larissa Ruby Lang",
+              "pais": "DE",
+              "cidade": "Korntal-Münchingen, BW",
+              "pid": 1842069,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Lotta Krasta",
+              "pais": "LV",
+              "cidade": "Marupe",
+              "pid": 1807352,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Patricia Elisa Ielciu",
+              "pais": "RO",
+              "cidade": "Cluj Napoca, CJ",
+              "pid": 1832696,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Una Freimane",
+              "pais": "LV",
+              "cidade": "Lici, RGR",
+              "pid": 1863995,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "LV",
+              "n": 2
+            },
+            {
+              "pais": "TR",
+              "n": 1
+            },
+            {
+              "pais": "DE",
+              "n": 1
+            },
+            {
+              "pais": "RO",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 3351,
@@ -1160,8 +1981,115 @@
           "maximo": 9,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Anastasia Ielciu",
+              "pais": "RO",
+              "cidade": "Cluj Napoca, CJ",
+              "pid": 1832694,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Arlet  Dedaj Ungureanu",
+              "pais": "ES",
+              "cidade": "Marbella, ML",
+              "pid": 1855232,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Charline Larsson",
+              "pais": "ES",
+              "cidade": "Marbella, ML",
+              "pid": 1834613,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Cristina  Corell Navarro",
+              "pais": "ES",
+              "cidade": "Rocafort , VC",
+              "pid": 1825836,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ipek Avcibasioglu",
+              "pais": "TR",
+              "cidade": "Ankara, ANK",
+              "pid": 1837817,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ivanka Tiemann",
+              "pais": "SE",
+              "cidade": "Falsterbo",
+              "pid": 1812169,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Julia Jaworska",
+              "pais": "PL",
+              "cidade": "Skórzewo, WP",
+              "pid": 1828533,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "LIANE GAVIRA RODRIGUEZ",
+              "pais": "ES",
+              "cidade": "Sotogrande, CZ",
+              "pid": 1869665,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Soraya Elgafari",
+              "pais": "CH",
+              "cidade": "Geneva, GE",
+              "pid": 1869747,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "ES",
+              "n": 4
+            },
+            {
+              "pais": "RO",
+              "n": 1
+            },
+            {
+              "pais": "TR",
+              "n": 1
+            },
+            {
+              "pais": "SE",
+              "n": 1
+            },
+            {
+              "pais": "PL",
+              "n": 1
+            },
+            {
+              "pais": "CH",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 3352,
@@ -1173,11 +2101,135 @@
           "maximo": 12,
           "vagas": 2,
           "pct_cheio": 83,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Ana Lucia Lotrean",
+              "pais": "RO",
+              "cidade": "Cluj Napoca , CJ",
+              "pid": 1863637,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Annabelle Bassi",
+              "pais": "GB",
+              "cidade": "Rotherham, ROT",
+              "pid": 1808669,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Emilija Veigure",
+              "pais": "LV",
+              "cidade": "Riga, RGR",
+              "pid": 1807463,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Helena Galazka",
+              "pais": "PL",
+              "cidade": "Zabki",
+              "pid": 1812329,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ilyana Belkhayat",
+              "pais": "MA",
+              "cidade": "Casablanca",
+              "pid": 1874698,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Iza-Valentina Tamas",
+              "pais": "RO",
+              "cidade": "Cluj-Napoca, CJ",
+              "pid": 1855023,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Linda Belakova",
+              "pais": "LV",
+              "cidade": "Jaunmarupe, RGA",
+              "pid": 1827669,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sophie Ottilia  Leonhardt",
+              "pais": "DE",
+              "cidade": "Berlin",
+              "pid": 1874737,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Tesla Chesneau",
+              "pais": "ES",
+              "cidade": "Madrid, MD",
+              "pid": 1811308,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Xiaoxuan  Wang",
+              "pais": "GB-ENG",
+              "cidade": "London",
+              "pid": 1835500,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "RO",
+              "n": 2
+            },
+            {
+              "pais": "LV",
+              "n": 2
+            },
+            {
+              "pais": "GB",
+              "n": 1
+            },
+            {
+              "pais": "PL",
+              "n": 1
+            },
+            {
+              "pais": "MA",
+              "n": 1
+            },
+            {
+              "pais": "DE",
+              "n": 1
+            },
+            {
+              "pais": "ES",
+              "n": 1
+            },
+            {
+              "pais": "GB-ENG",
+              "n": 1
+            }
+          ]
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:21.178Z",
+      "ultima_atualizacao": "2026-11-18T14:16:26.231Z",
       "seguido": true
     },
     {
@@ -1203,8 +2255,113 @@
           "maximo": 12,
           "vagas": 1,
           "pct_cheio": 92,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Andres Adrian",
+              "pais": "US",
+              "cidade": "Doral, FL",
+              "pid": 1868230,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Benjamin  Battista",
+              "pais": "US",
+              "cidade": "Saugus , MA",
+              "pid": 1873276,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Brooks Jones",
+              "pais": "US",
+              "cidade": "Eagle, ID",
+              "pid": 1850229,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Colston Bellville",
+              "pais": "US",
+              "cidade": "Overland Park, KS",
+              "pid": 1850183,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Deric  Wallace",
+              "pais": "US",
+              "cidade": "Ponte Vedra Beach , FL",
+              "pid": 1851809,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Jack Leeds",
+              "pais": "US",
+              "cidade": "Boca Raton, FL",
+              "pid": 1867295,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Leo Voeller",
+              "pais": "US",
+              "cidade": "Eagan, MN",
+              "pid": 1875363,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Myles Larkin",
+              "pais": "US",
+              "cidade": "Fort Wayne, IN",
+              "pid": 1883016,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Rhett Robbins",
+              "pais": "US",
+              "cidade": "Pensacola, FL",
+              "pid": 1863862,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sullivan Smith",
+              "pais": "US",
+              "cidade": "Mount Pleasant, SC",
+              "pid": 1862532,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "TT Tanner Toretto Wolf",
+              "pais": "US",
+              "cidade": "Sarasota, FL",
+              "pid": 1855452,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 11
+            }
+          ]
         },
         {
           "age_group": 2,
@@ -1216,8 +2373,184 @@
           "maximo": 18,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Austin Jones",
+              "pais": "US",
+              "cidade": "Summerville , SC",
+              "pid": 1860201,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Blake Patullo",
+              "pais": "US",
+              "cidade": "Parkland, FL",
+              "pid": 1855549,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Brady Drewitt",
+              "pais": "US",
+              "cidade": "Ponte Vedra Beach, FL",
+              "pid": 1877639,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Cash Kociolek",
+              "pais": "US",
+              "cidade": "Frankfort, IL",
+              "pid": 1863666,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Dariush Chirband",
+              "pais": "SE",
+              "cidade": "Lund, SK",
+              "pid": 1855506,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ford Sprouse",
+              "pais": "US",
+              "cidade": "Charlotte, NC",
+              "pid": 1866614,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Gianluca Giudice",
+              "pais": "US",
+              "cidade": "Dallas, TX",
+              "pid": 1860685,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Jack Schumacher",
+              "pais": "US",
+              "cidade": "Pewaukee, WI",
+              "pid": 1884806,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Jacob Berkowitz",
+              "pais": "US",
+              "cidade": "Southlake, TX",
+              "pid": 1859873,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Junhao Wang",
+              "pais": "US",
+              "cidade": "Millburn, NJ",
+              "pid": 1875234,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Leo Johnson",
+              "pais": "CA",
+              "cidade": "Toronto, ON",
+              "pid": 1850207,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Lucas Meier",
+              "pais": "US",
+              "cidade": "Saint Johns, FL",
+              "pid": 1850810,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Luka Stevanovic",
+              "pais": "US",
+              "cidade": "Frisco, TX",
+              "pid": 1855721,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Raj Chimmani",
+              "pais": "US",
+              "cidade": "Lakewood Ranch, FL",
+              "pid": 1872977,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ryder Harris",
+              "pais": "US",
+              "cidade": "Taylorsville, GA",
+              "pid": 1859703,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Slade  Middlebrook",
+              "pais": "US",
+              "cidade": "Granbury , TX",
+              "pid": 1856017,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Theodore Hannick",
+              "pais": "US",
+              "cidade": "Bronxville, NY",
+              "pid": 1859743,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Wayne Helberg",
+              "pais": "US",
+              "cidade": "Mcgregor, TX",
+              "pid": 1857552,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 16
+            },
+            {
+              "pais": "SE",
+              "n": 1
+            },
+            {
+              "pais": "CA",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 3,
@@ -1229,8 +2562,295 @@
           "maximo": 33,
           "vagas": 4,
           "pct_cheio": 88,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Brandon Widom",
+              "pais": "US",
+              "cidade": "Parkland, FL",
+              "pid": 1850287,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Camden Schwartz",
+              "pais": "US",
+              "cidade": "Ponte Vedra, FL",
+              "pid": 1866832,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Cash Draper",
+              "pais": "US",
+              "cidade": "Boise, ID",
+              "pid": 1859769,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Christian Procacci",
+              "pais": "US",
+              "cidade": "Fort Lauderdale, FL",
+              "pid": 1867239,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Colin Hong",
+              "pais": "US",
+              "cidade": "Basking Ridge, NJ",
+              "pid": 1864058,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Danny  Conley",
+              "pais": "US",
+              "cidade": "Naples, FL",
+              "pid": 1865719,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Gavin Korkow",
+              "pais": "US",
+              "cidade": "Sioux Falls, SD",
+              "pid": 1850326,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Gustavo Rojas",
+              "pais": "DO",
+              "cidade": "Santo Domingo, DN",
+              "pid": 1850896,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Harrison Siram",
+              "pais": "US",
+              "cidade": "Bethesda, MD",
+              "pid": 1875684,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Henley Parker",
+              "pais": "US",
+              "cidade": "Plano, TX",
+              "pid": 1882883,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Jack Scully",
+              "pais": "US",
+              "cidade": "Kapolei, HI",
+              "pid": 1860464,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "James Flanders",
+              "pais": "PR",
+              "cidade": "San Juan",
+              "pid": 1860473,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Jett Meytin",
+              "pais": "US",
+              "cidade": "Boca Raton, FL",
+              "pid": 1859820,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Joseph Ford",
+              "pais": "US",
+              "cidade": "Hingham, MA",
+              "pid": 1863671,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Leonard An",
+              "pais": "US",
+              "cidade": "Closter, NJ",
+              "pid": 1864703,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Leonard MASTAGNI",
+              "pais": "US",
+              "cidade": "New Orleans, LA",
+              "pid": 1880866,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Levi Berkowitz",
+              "pais": "US",
+              "cidade": "Southlake, TX",
+              "pid": 1850888,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Lucas Rolwing",
+              "pais": "US",
+              "cidade": "Saint Augustine, FL",
+              "pid": 1875221,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Mariano Adrian",
+              "pais": "US",
+              "cidade": "Doral, FL",
+              "pid": 1875394,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Mateo Ferreyra",
+              "pais": "US",
+              "cidade": "Weston, FL",
+              "pid": 1864165,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Nash Nelms",
+              "pais": "US",
+              "cidade": "Chambersbug, PA",
+              "pid": 1875386,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Noah Galo",
+              "pais": "NI",
+              "cidade": "Managua , MN",
+              "pid": 1856796,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Oliver Voeller",
+              "pais": "US",
+              "cidade": "Eagan, MN",
+              "pid": 1855764,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Pietro Salvati",
+              "pais": "IT",
+              "cidade": "Bologna , BO",
+              "pid": 1857285,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "RYAN Baughman",
+              "pais": "US",
+              "cidade": "Winchester, MA",
+              "pid": 1856439,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ryder Franklin",
+              "pais": "US",
+              "cidade": "Miami Beach, FL",
+              "pid": 1875140,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Theodore Chen",
+              "pais": "CA",
+              "cidade": "Toronto, ON",
+              "pid": 1863762,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Yates Neill",
+              "pais": "US",
+              "cidade": "Asheville, NC",
+              "pid": 1875317,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Zhaoshen Zhou",
+              "pais": "CA",
+              "cidade": "Richmond Hill, ON",
+              "pid": 1864680,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 23
+            },
+            {
+              "pais": "CA",
+              "n": 2
+            },
+            {
+              "pais": "DO",
+              "n": 1
+            },
+            {
+              "pais": "PR",
+              "n": 1
+            },
+            {
+              "pais": "NI",
+              "n": 1
+            },
+            {
+              "pais": "IT",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 4,
@@ -3273,8 +4893,95 @@
           "maximo": 9,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Alice Chen",
+              "pais": "US",
+              "cidade": "Menlo Park, CA",
+              "pid": 1863951,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Charlotte  Roe",
+              "pais": "US",
+              "cidade": "New York, NY",
+              "pid": 1863758,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Emilia  Luttrell",
+              "pais": "US",
+              "cidade": "Norman, OK",
+              "pid": 1863751,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Emma Choe",
+              "pais": "US",
+              "cidade": "Irvine, CA",
+              "pid": 1883325,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Evelyn Sheehan",
+              "pais": "US",
+              "cidade": "Sarasota, FL",
+              "pid": 1878404,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Olivia Li",
+              "pais": "US",
+              "cidade": "Alpharetta, GA",
+              "pid": 1881245,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Reese Mccormick",
+              "pais": "US",
+              "cidade": "Tampa, FL",
+              "pid": 1875158,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Scarlett Smith",
+              "pais": "US",
+              "cidade": "Mount Pleasant, SC",
+              "pid": 1861825,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ziya Bhatia",
+              "pais": "US",
+              "cidade": "Short Hills, NJ",
+              "pid": 1860172,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 9
+            }
+          ]
         },
         {
           "age_group": 10,
@@ -3286,8 +4993,117 @@
           "maximo": 12,
           "vagas": 1,
           "pct_cheio": 92,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Abigail Zhu",
+              "pais": "US",
+              "cidade": "Pennington, NJ",
+              "pid": 1863834,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ariana Phommachanh",
+              "pais": "US",
+              "cidade": "ORLANDO, FL",
+              "pid": 1875307,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Camilla Goldsmith",
+              "pais": "CL",
+              "cidade": "Santiago, RM",
+              "pid": 1869564,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Dylan Zaruba",
+              "pais": "US",
+              "cidade": "Parker, CO",
+              "pid": 1865549,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Katie Lang",
+              "pais": "US",
+              "cidade": "Tampa, FL",
+              "pid": 1860953,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Kennedy Sporn",
+              "pais": "US",
+              "cidade": "Houston, TX",
+              "pid": 1873274,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Mackenzie  Miller",
+              "pais": "US",
+              "cidade": "Jupiter, FL",
+              "pid": 1869277,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Natalie Yang",
+              "pais": "US",
+              "cidade": "Medina, WA",
+              "pid": 1850241,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sadie Hamner",
+              "pais": "US",
+              "cidade": "Pensacola, FL",
+              "pid": 1852875,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Valentina Tello",
+              "pais": "US",
+              "cidade": "Miami, FL",
+              "pid": 1859817,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Zoe Duan",
+              "pais": "US",
+              "cidade": "Los Altos, CA",
+              "pid": 1881360,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 10
+            },
+            {
+              "pais": "CL",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 11,
@@ -3299,8 +5115,149 @@
           "maximo": 15,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Anna Lam",
+              "pais": "US",
+              "cidade": "Short Hills, NJ",
+              "pid": 1850089,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ansley Gray",
+              "pais": "US",
+              "cidade": "Arcanum , OH",
+              "pid": 1868255,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Athena Ho",
+              "pais": "US",
+              "cidade": "Arcadia, CA",
+              "pid": 1884442,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Aubree Hua",
+              "pais": "US",
+              "cidade": "Suwanee, GA",
+              "pid": 1861495,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Claire Anderson",
+              "pais": "US",
+              "cidade": "Bonita Springs, FL",
+              "pid": 1865779,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Collins Dover",
+              "pais": "US",
+              "cidade": "Miami Beach, FL",
+              "pid": 1851253,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Deyla Diaz",
+              "pais": "US",
+              "cidade": "Winter Garden, FL",
+              "pid": 1850801,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ella Yu",
+              "pais": "US",
+              "cidade": "Cohoes, NY",
+              "pid": 1876484,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Gracie Hoffman",
+              "pais": "US",
+              "cidade": "Plantation, FL",
+              "pid": 1883162,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Hope Fitzgerald",
+              "pais": "US",
+              "cidade": "Lake Worth, FL",
+              "pid": 1875389,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Korbin Savage",
+              "pais": "US",
+              "cidade": "Mahtomedi, MN",
+              "pid": 1867312,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Leona Hibbard",
+              "pais": "US",
+              "cidade": "St Charles, MO",
+              "pid": 1855445,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Riley-Harper Lawrence",
+              "pais": "US",
+              "cidade": "Spanish Fort, AL",
+              "pid": 1850105,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sarah Kang",
+              "pais": "US",
+              "cidade": "Olive Branch, MS",
+              "pid": 1868898,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Zoe Zhang",
+              "pais": "US",
+              "cidade": "Short Hills, NJ",
+              "pid": 1850460,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 15
+            }
+          ]
         },
         {
           "age_group": 12,
@@ -3312,8 +5269,130 @@
           "maximo": 12,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Abril Galo",
+              "pais": "NI",
+              "cidade": "Managua, MN",
+              "pid": 1856797,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Amelia Halsey",
+              "pais": "US",
+              "cidade": "VAN BUREN, AR",
+              "pid": 1860981,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Chloe Noythanongsay",
+              "pais": "US",
+              "cidade": "Parrish, FL",
+              "pid": 1875157,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Chloe Wang",
+              "pais": "CA",
+              "cidade": "Markham, ON",
+              "pid": 1883663,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Diya Ahluwalia",
+              "pais": "US",
+              "cidade": "Ringoes, NJ",
+              "pid": 1859750,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Emily Ni",
+              "pais": "US",
+              "cidade": "Millburn, NJ",
+              "pid": 1864166,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Katie Kim",
+              "pais": "US",
+              "cidade": "Buford, GA",
+              "pid": 1875603,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Madison Jin",
+              "pais": "US",
+              "cidade": "Milton, GA",
+              "pid": 1863698,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Maia Sahara",
+              "pais": "US",
+              "cidade": "Irvington, NY",
+              "pid": 1859700,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Morgan Miller",
+              "pais": "US",
+              "cidade": "Jupiter, FL",
+              "pid": 1877158,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sierra Wang",
+              "pais": "US",
+              "cidade": "Woodside, NY",
+              "pid": 1876030,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sophia  Gu",
+              "pais": "US",
+              "cidade": "San Jose, CA",
+              "pid": 1855461,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 10
+            },
+            {
+              "pais": "NI",
+              "n": 1
+            },
+            {
+              "pais": "CA",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 13,
@@ -3325,8 +5404,192 @@
           "maximo": 18,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Arianna Testaiuti",
+              "pais": "US",
+              "cidade": "Newtown Square, PA",
+              "pid": 1883407,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Carli Rodriguez",
+              "pais": "US",
+              "cidade": "Weston, FL",
+              "pid": 1864660,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Eugénie  Deyra",
+              "pais": "FR",
+              "cidade": "Saint Tropez, A83",
+              "pid": 1850622,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Grace Yuemeng Wu",
+              "pais": "CA",
+              "cidade": "Richmond, BC",
+              "pid": 1850368,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Hannah De Guzman",
+              "pais": "US",
+              "cidade": "Sarasota, FL",
+              "pid": 1855480,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Harper Greer",
+              "pais": "US",
+              "cidade": "Indianapolis, IN",
+              "pid": 1877485,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Isabella Tello",
+              "pais": "US",
+              "cidade": "Pinecrest, FL",
+              "pid": 1863816,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Joey Wolf",
+              "pais": "US",
+              "cidade": "Sarasota, FL",
+              "pid": 1855449,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Katherine  Mai",
+              "pais": "US",
+              "cidade": "Warren, NJ",
+              "pid": 1860504,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Leila  Zina",
+              "pais": "US",
+              "cidade": "Weston, FL",
+              "pid": 1855890,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Luna Chan",
+              "pais": "US",
+              "cidade": "Edison, NJ",
+              "pid": 1860478,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Lydia Nye",
+              "pais": "US",
+              "cidade": "Columbus, OH",
+              "pid": 1882574,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Nicole Chen",
+              "pais": "US",
+              "cidade": "Menlo Park, CA",
+              "pid": 1850291,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Paola Dorta",
+              "pais": "US",
+              "cidade": "Doral, FL",
+              "pid": 1856602,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sloane  Savage",
+              "pais": "US",
+              "cidade": "Mahtomedi, MN",
+              "pid": 1850292,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sofia Sanchez",
+              "pais": "PR",
+              "cidade": "Guaynabo",
+              "pid": 1850143,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Tessa Peevy",
+              "pais": "US",
+              "cidade": "Orlando, FL",
+              "pid": 1880057,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Valeria  Rodriguez Duran",
+              "pais": "VE",
+              "cidade": "Boca Raton FL",
+              "pid": 1856453,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 14
+            },
+            {
+              "pais": "FR",
+              "n": 1
+            },
+            {
+              "pais": "CA",
+              "n": 1
+            },
+            {
+              "pais": "PR",
+              "n": 1
+            },
+            {
+              "pais": "VE",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 14,
@@ -3338,8 +5601,208 @@
           "maximo": 18,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Anastasia Todoric",
+              "pais": "US",
+              "cidade": "Pembroke Pines, FL",
+              "pid": 1857366,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Antonia  Jensen",
+              "pais": "DE",
+              "cidade": "Berlin",
+              "pid": 1875580,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Athena Li",
+              "pais": "US",
+              "cidade": "Osprey, FL",
+              "pid": 1850248,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Brooklyn Austyn",
+              "pais": "US",
+              "cidade": "Greensboro, NC",
+              "pid": 1850551,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Enya Chavitranurak",
+              "pais": "US",
+              "cidade": "Orlando, FL",
+              "pid": 1858549,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Hadley Hill",
+              "pais": "US",
+              "cidade": "Nashua, NH",
+              "pid": 1850784,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Helen  Pineda",
+              "pais": "HN",
+              "cidade": "La Lima, Cortes",
+              "pid": 1879783,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Helen  Wang",
+              "pais": "US",
+              "cidade": "Chevy Chase, MD",
+              "pid": 1861184,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Isabella  Rodriguez Duran",
+              "pais": "VE",
+              "cidade": "Boca Raton FL",
+              "pid": 1856454,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Lilo Tsai",
+              "pais": "US",
+              "cidade": "Ann Arbor, MI",
+              "pid": 1850301,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Mia-Mary Hodgson",
+              "pais": "CA",
+              "cidade": "Caledon, ON",
+              "pid": 1859698,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Narine Tokatlian-Maltez",
+              "pais": "AM",
+              "cidade": "Fort Lauderdale , YER",
+              "pid": 1857168,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Parina Gulati",
+              "pais": "US",
+              "cidade": "Holliston, MA",
+              "pid": 1875166,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "QUETZALI VALENTINA LEON ARROYO",
+              "pais": "MX",
+              "cidade": "QUERETARO, QUE",
+              "pid": 1850558,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Samantha Crater",
+              "pais": "US",
+              "cidade": "Wilmington, NC",
+              "pid": 1863672,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Shana Navarro",
+              "pais": "PY",
+              "cidade": "Weston, FL",
+              "pid": 1875162,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Victoria Coron",
+              "pais": "FR",
+              "cidade": "St Charles",
+              "pid": 1855573,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Viviana Kim",
+              "pais": "US",
+              "cidade": "SYOSSET, NY",
+              "pid": 1865278,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 10
+            },
+            {
+              "pais": "DE",
+              "n": 1
+            },
+            {
+              "pais": "HN",
+              "n": 1
+            },
+            {
+              "pais": "VE",
+              "n": 1
+            },
+            {
+              "pais": "CA",
+              "n": 1
+            },
+            {
+              "pais": "AM",
+              "n": 1
+            },
+            {
+              "pais": "MX",
+              "n": 1
+            },
+            {
+              "pais": "PY",
+              "n": 1
+            },
+            {
+              "pais": "FR",
+              "n": 1
+            }
+          ]
         },
         {
           "age_group": 15,
@@ -3351,11 +5814,183 @@
           "maximo": 18,
           "vagas": 0,
           "pct_cheio": 100,
-          "jogadores": null,
-          "paises": null
+          "jogadores": [
+            {
+              "nome": "Abigail Ollhoff",
+              "pais": "US",
+              "cidade": "Edina, MN",
+              "pid": 1855471,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Adela Zhang",
+              "pais": "US",
+              "cidade": "Princeton, NJ",
+              "pid": 1875635,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Belen Berishaj",
+              "pais": "US",
+              "cidade": "BIRMINGHAM, MI",
+              "pid": 1859761,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Dylan Hall",
+              "pais": "US",
+              "cidade": "Southfield, MI",
+              "pid": 1883471,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Ella Drage",
+              "pais": "US",
+              "cidade": "Mequon, WI",
+              "pid": 1867300,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Emerson Peevy",
+              "pais": "US",
+              "cidade": "Orlando, FL",
+              "pid": 1860237,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Esther Lavendoski",
+              "pais": "US",
+              "cidade": "Pinehurst, NC",
+              "pid": 1855540,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Hannah Wu",
+              "pais": "US",
+              "cidade": "Warren, NJ",
+              "pid": 1857188,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Harper Zhai",
+              "pais": "US",
+              "cidade": "Orlando, FL",
+              "pid": 1884115,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Julianne Zhang",
+              "pais": "US",
+              "cidade": "Lincoln, MA",
+              "pid": 1875630,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Lexie Hyers",
+              "pais": "US",
+              "cidade": "West Palm Beach , FL",
+              "pid": 1860553,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Lilly Nye",
+              "pais": "US",
+              "cidade": "Upper Arlington , OH",
+              "pid": 1863689,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Madison Murphy",
+              "pais": "US",
+              "cidade": "Longwood, FL",
+              "pid": 1855465,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Mila  Auth",
+              "pais": "US",
+              "cidade": "Stuart, FL",
+              "pid": 1875141,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Naw Whar",
+              "pais": "US",
+              "cidade": "HAMPTON, NH",
+              "pid": 1864099,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Rory Lynch",
+              "pais": "US",
+              "cidade": "Columbus, OH",
+              "pid": 1855666,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sara Valentine",
+              "pais": "US",
+              "cidade": "West Palm Beach, FL",
+              "pid": 1869001,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
+              "nome": "Sofia Victoria Jaén",
+              "pais": "PA",
+              "cidade": "Panama City",
+              "pid": 1860642,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            }
+          ],
+          "paises": [
+            {
+              "pais": "US",
+              "n": 17
+            },
+            {
+              "pais": "PA",
+              "n": 1
+            }
+          ]
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:26.080Z",
+      "ultima_atualizacao": "2026-11-18T14:16:35.613Z",
       "seguido": true
     },
     {
@@ -4493,7 +7128,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:28.131Z",
+      "ultima_atualizacao": "2026-11-18T14:16:37.668Z",
       "seguido": true
     },
     {
@@ -4788,7 +7423,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:30.162Z",
+      "ultima_atualizacao": "2026-11-18T14:16:39.701Z",
       "seguido": true
     },
     {
@@ -11252,7 +13887,7 @@
       "tour": "Teen Series Tour",
       "type": 2,
       "total_inscritos": 77,
-      "total_maximo": 78,
+      "total_maximo": 79,
       "escaloes": [
         {
           "age_group": 2489,
@@ -11261,9 +13896,9 @@
           "holes": 18,
           "flight_id": 307691,
           "inscritos": 29,
-          "maximo": 30,
-          "vagas": 1,
-          "pct_cheio": 97,
+          "maximo": 31,
+          "vagas": 2,
+          "pct_cheio": 94,
           "desistentes": 2,
           "jogadores": null,
           "paises": null
@@ -11604,7 +14239,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:31.386Z"
+      "ultima_atualizacao": "2026-11-18T14:16:40.104Z"
     },
     {
       "t": 23616,
@@ -12150,14 +14785,12 @@
             {
               "nome": "Cameron Amen",
               "removedAt": "2026-11-16T19:06:11.397Z",
-              "pais": "US",
-              "wd": true
+              "pais": "US"
             },
             {
               "nome": "David Herndon",
               "removedAt": "2026-11-16T17:32:44.391Z",
-              "pais": "US",
-              "wd": true
+              "pais": "US"
             },
             {
               "nome": "Danilo Custer",
@@ -12201,7 +14834,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:33.020Z"
+      "ultima_atualizacao": "2026-11-18T14:16:40.510Z"
     },
     {
       "t": 23455,
@@ -12336,7 +14969,7 @@
               "cidade": "Goldsboro , NC",
               "pid": 1828728,
               "firstSeen": "2026-09-15T10:20:34.489Z",
-              "regDia": "2026-08-17",
+              "regDia": "2026-08-18",
               "regObs": false
             }
           ],
@@ -12371,7 +15004,7 @@
               "cidade": "Goldsboro, NC",
               "pid": 1828714,
               "firstSeen": "2026-09-15T10:20:34.489Z",
-              "regDia": "2026-08-17",
+              "regDia": "2026-08-18",
               "regObs": false
             },
             {
@@ -12416,7 +15049,7 @@
               "cidade": "Morehead City, NC",
               "pid": 1828735,
               "firstSeen": "2026-09-15T10:20:34.489Z",
-              "regDia": "2026-08-17",
+              "regDia": "2026-08-18",
               "regObs": false
             },
             {
@@ -12499,7 +15132,7 @@
               "cidade": "Nashville, NC",
               "pid": 1828707,
               "firstSeen": "2026-09-15T10:20:34.489Z",
-              "regDia": "2026-08-17",
+              "regDia": "2026-08-18",
               "regObs": false
             },
             {
@@ -12526,7 +15159,7 @@
               "cidade": "Grimesland, NC",
               "pid": 1828722,
               "firstSeen": "2026-09-15T10:20:34.489Z",
-              "regDia": "2026-08-17",
+              "regDia": "2026-08-18",
               "regObs": false
             },
             {
@@ -12553,7 +15186,7 @@
               "cidade": "Goldsboro, NC",
               "pid": 1828814,
               "firstSeen": "2026-09-15T10:20:34.489Z",
-              "regDia": "2026-08-17",
+              "regDia": "2026-08-18",
               "regObs": false
             },
             {
@@ -12580,7 +15213,7 @@
               "cidade": "Wilson, NC",
               "pid": 1828755,
               "firstSeen": "2026-09-15T10:20:34.489Z",
-              "regDia": "2026-08-17",
+              "regDia": "2026-08-18",
               "regObs": false
             }
           ],
@@ -12677,7 +15310,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:33.434Z"
+      "ultima_atualizacao": "2026-11-18T14:16:40.916Z"
     },
     {
       "t": 23365,
@@ -13007,7 +15640,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:33.836Z"
+      "ultima_atualizacao": "2026-11-18T14:16:41.319Z"
     },
     {
       "t": 23154,
@@ -13019,7 +15652,7 @@
       "fee_18": "20.00",
       "tour": "Mombasa (KE) Tour",
       "type": 6,
-      "total_inscritos": 59,
+      "total_inscritos": 61,
       "total_maximo": 168,
       "escaloes": [
         {
@@ -13427,10 +16060,10 @@
           "genero": "Girls",
           "holes": 9,
           "flight_id": 300537,
-          "inscritos": 3,
+          "inscritos": 5,
           "maximo": 12,
-          "vagas": 9,
-          "pct_cheio": 25,
+          "vagas": 7,
+          "pct_cheio": 42,
           "jogadores": null,
           "paises": null
         },
@@ -13487,7 +16120,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:34.250Z"
+      "ultima_atualizacao": "2026-11-18T14:16:41.736Z"
     },
     {
       "t": 23248,
@@ -13877,7 +16510,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:34.651Z"
+      "ultima_atualizacao": "2026-11-18T14:16:42.150Z"
     },
     {
       "t": 23398,
@@ -14129,7 +16762,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:35.053Z"
+      "ultima_atualizacao": "2026-11-18T14:16:42.566Z"
     },
     {
       "t": 23624,
@@ -14357,7 +16990,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:36.268Z"
+      "ultima_atualizacao": "2026-11-18T14:16:42.972Z"
     },
     {
       "t": 23637,
@@ -14656,7 +17289,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:36.676Z"
+      "ultima_atualizacao": "2026-11-18T14:16:43.389Z"
     },
     {
       "t": 23658,
@@ -14974,7 +17607,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:37.091Z"
+      "ultima_atualizacao": "2026-11-18T14:16:43.790Z"
     },
     {
       "t": 23708,
@@ -15253,7 +17886,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:37.502Z"
+      "ultima_atualizacao": "2026-11-18T14:16:44.205Z"
     },
     {
       "t": 23497,
@@ -16015,7 +18648,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:37.917Z"
+      "ultima_atualizacao": "2026-11-18T14:16:44.615Z"
     },
     {
       "t": 23482,
@@ -16104,7 +18737,7 @@
               "cidade": "Columbia, SC",
               "pid": 1828860,
               "firstSeen": "2026-09-15T10:20:34.489Z",
-              "regDia": "2026-08-17",
+              "regDia": "2026-08-18",
               "regObs": false
             },
             {
@@ -16131,7 +18764,7 @@
               "cidade": "Roswell , GA",
               "pid": 1828859,
               "firstSeen": "2026-09-15T10:20:34.489Z",
-              "regDia": "2026-08-17",
+              "regDia": "2026-08-18",
               "regObs": false
             }
           ],
@@ -16543,7 +19176,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:38.331Z"
+      "ultima_atualizacao": "2026-11-18T14:16:45.021Z"
     },
     {
       "t": 23392,
@@ -16870,7 +19503,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:38.742Z"
+      "ultima_atualizacao": "2026-11-18T14:16:45.423Z"
     },
     {
       "t": 23286,
@@ -17354,7 +19987,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:39.143Z"
+      "ultima_atualizacao": "2026-11-18T14:16:45.838Z"
     },
     {
       "t": 23058,
@@ -17775,7 +20408,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:39.551Z"
+      "ultima_atualizacao": "2026-11-18T14:16:46.242Z"
     },
     {
       "t": 22942,
@@ -18207,7 +20840,7 @@
               "cidade": "Oakdale, CA",
               "pid": 1807885,
               "firstSeen": "2026-09-15T11:01:18.259Z",
-              "regDia": "2026-07-28",
+              "regDia": "2026-07-29",
               "regObs": false
             },
             {
@@ -18613,7 +21246,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:39.953Z"
+      "ultima_atualizacao": "2026-11-18T14:16:46.649Z"
     },
     {
       "t": 22764,
@@ -19328,7 +21961,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:40.353Z"
+      "ultima_atualizacao": "2026-11-18T14:16:47.053Z"
     },
     {
       "t": 23730,
@@ -19704,7 +22337,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:40.757Z"
+      "ultima_atualizacao": "2026-11-18T14:16:47.463Z"
     },
     {
       "t": 23254,
@@ -19716,7 +22349,7 @@
       "fee_18": "59.00",
       "tour": "Central Mississippi Tour",
       "type": 6,
-      "total_inscritos": 69,
+      "total_inscritos": 71,
       "total_maximo": 117,
       "escaloes": [
         {
@@ -19725,10 +22358,10 @@
           "genero": "Boys",
           "holes": 9,
           "flight_id": 301925,
-          "inscritos": 2,
+          "inscritos": 3,
           "maximo": 7,
-          "vagas": 5,
-          "pct_cheio": 29,
+          "vagas": 4,
+          "pct_cheio": 43,
           "jogadores": null,
           "paises": null
         },
@@ -19751,10 +22384,10 @@
           "genero": "Boys",
           "holes": 9,
           "flight_id": 301927,
-          "inscritos": 3,
+          "inscritos": 4,
           "maximo": 6,
-          "vagas": 3,
-          "pct_cheio": 50,
+          "vagas": 2,
+          "pct_cheio": 67,
           "jogadores": null,
           "paises": null
         },
@@ -20259,7 +22892,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:41.171Z"
+      "ultima_atualizacao": "2026-11-18T14:16:47.875Z"
     },
     {
       "t": 22966,
@@ -21105,7 +23738,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:41.572Z"
+      "ultima_atualizacao": "2026-11-18T14:16:48.291Z"
     },
     {
       "t": 23461,
@@ -21333,7 +23966,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:41.982Z"
+      "ultima_atualizacao": "2026-11-18T14:16:48.710Z"
     },
     {
       "t": 23570,
@@ -21942,7 +24575,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:42.394Z"
+      "ultima_atualizacao": "2026-11-18T14:16:49.112Z"
     },
     {
       "t": 23701,
@@ -22194,7 +24827,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:42.802Z"
+      "ultima_atualizacao": "2026-11-18T14:16:49.521Z"
     },
     {
       "t": 23694,
@@ -22643,7 +25276,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:43.206Z"
+      "ultima_atualizacao": "2026-11-18T14:16:49.925Z"
     },
     {
       "t": 23630,
@@ -22973,7 +25606,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:43.616Z"
+      "ultima_atualizacao": "2026-11-18T14:16:50.332Z"
     },
     {
       "t": 23412,
@@ -23415,7 +26048,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:44.016Z"
+      "ultima_atualizacao": "2026-11-18T14:16:50.737Z"
     },
     {
       "t": 22857,
@@ -23888,7 +26521,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:44.430Z"
+      "ultima_atualizacao": "2026-11-18T14:16:51.142Z"
     },
     {
       "t": 23795,
@@ -24086,7 +26719,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:44.831Z"
+      "ultima_atualizacao": "2026-11-18T14:16:51.559Z"
     },
     {
       "t": 23428,
@@ -25514,7 +28147,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:45.235Z"
+      "ultima_atualizacao": "2026-11-18T14:16:51.974Z"
     },
     {
       "t": 23095,
@@ -25585,7 +28218,7 @@
               "cidade": "Kuala Lumpur, KL",
               "pid": 1807894,
               "firstSeen": "2026-08-31T15:05:16.572Z",
-              "regDia": "2026-07-28",
+              "regDia": "2026-07-29",
               "regObs": false
             },
             {
@@ -25973,7 +28606,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:45.651Z"
+      "ultima_atualizacao": "2026-11-18T14:16:52.376Z"
     },
     {
       "t": 23241,
@@ -26169,7 +28802,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:46.056Z"
+      "ultima_atualizacao": "2026-11-18T14:16:52.789Z"
     },
     {
       "t": 23131,
@@ -26595,7 +29228,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:46.458Z"
+      "ultima_atualizacao": "2026-11-18T14:16:53.194Z"
     },
     {
       "t": 23724,
@@ -26847,7 +29480,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:46.875Z"
+      "ultima_atualizacao": "2026-11-18T14:16:53.607Z"
     },
     {
       "t": 23782,
@@ -27455,7 +30088,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:47.290Z"
+      "ultima_atualizacao": "2026-11-18T14:16:54.012Z"
     },
     {
       "t": 23651,
@@ -27666,7 +30299,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:47.702Z"
+      "ultima_atualizacao": "2026-11-18T14:16:54.420Z"
     },
     {
       "t": 23430,
@@ -28140,7 +30773,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:48.106Z"
+      "ultima_atualizacao": "2026-11-18T14:16:54.832Z"
     },
     {
       "t": 23582,
@@ -28444,7 +31077,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:48.506Z"
+      "ultima_atualizacao": "2026-11-18T14:16:55.243Z"
     },
     {
       "t": 23756,
@@ -28672,7 +31305,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:48.908Z"
+      "ultima_atualizacao": "2026-11-18T14:16:55.645Z"
     },
     {
       "t": 23082,
@@ -29033,7 +31666,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:49.323Z"
+      "ultima_atualizacao": "2026-11-18T14:16:56.046Z"
     },
     {
       "t": 23305,
@@ -29318,7 +31951,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:49.735Z"
+      "ultima_atualizacao": "2026-11-18T14:16:56.461Z"
     },
     {
       "t": 23467,
@@ -29549,7 +32182,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:50.541Z"
+      "ultima_atualizacao": "2026-11-18T14:16:56.863Z"
     },
     {
       "t": 23684,
@@ -30197,7 +32830,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:50.943Z"
+      "ultima_atualizacao": "2026-11-18T14:16:57.276Z"
     },
     {
       "t": 23436,
@@ -30640,7 +33273,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:51.347Z"
+      "ultima_atualizacao": "2026-11-18T14:16:57.677Z"
     },
     {
       "t": 23002,
@@ -30838,7 +33471,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:51.756Z"
+      "ultima_atualizacao": "2026-11-18T14:16:58.089Z"
     },
     {
       "t": 22742,
@@ -31833,7 +34466,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:52.158Z"
+      "ultima_atualizacao": "2026-11-18T14:16:58.498Z"
     },
     {
       "t": 23736,
@@ -32118,7 +34751,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:52.561Z"
+      "ultima_atualizacao": "2026-11-18T14:16:58.915Z"
     },
     {
       "t": 22780,
@@ -32370,7 +35003,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:52.976Z"
+      "ultima_atualizacao": "2026-11-18T14:16:59.329Z"
     },
     {
       "t": 22676,
@@ -32628,7 +35261,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:53.386Z"
+      "ultima_atualizacao": "2026-11-18T14:16:59.730Z"
     },
     {
       "t": 23762,
@@ -33333,7 +35966,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:53.793Z"
+      "ultima_atualizacao": "2026-11-18T14:17:00.138Z"
     },
     {
       "t": 23695,
@@ -33813,7 +36446,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:54.197Z"
+      "ultima_atualizacao": "2026-11-18T14:17:00.558Z"
     },
     {
       "t": 23009,
@@ -34193,7 +36826,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:54.602Z"
+      "ultima_atualizacao": "2026-11-18T14:17:00.963Z"
     },
     {
       "t": 23088,
@@ -34460,7 +37093,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:55.010Z"
+      "ultima_atualizacao": "2026-11-18T14:17:01.365Z"
     },
     {
       "t": 23768,
@@ -34673,7 +37306,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:55.418Z"
+      "ultima_atualizacao": "2026-11-18T14:17:01.768Z"
     },
     {
       "t": 23891,
@@ -34871,7 +37504,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:55.828Z"
+      "ultima_atualizacao": "2026-11-18T14:17:02.179Z"
     },
     {
       "t": 23856,
@@ -34941,7 +37574,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:56.231Z"
+      "ultima_atualizacao": "2026-11-18T14:17:02.584Z"
     },
     {
       "t": 23817,
@@ -36466,7 +39099,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:56.644Z"
+      "ultima_atualizacao": "2026-11-18T14:17:02.992Z"
     },
     {
       "t": 23825,
@@ -36863,7 +39496,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:57.058Z"
+      "ultima_atualizacao": "2026-11-18T14:17:03.397Z"
     },
     {
       "t": 23803,
@@ -37061,7 +39694,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:59.522Z"
+      "ultima_atualizacao": "2026-11-18T14:17:05.023Z"
     },
     {
       "t": 23849,
@@ -37298,7 +39931,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:59.931Z"
+      "ultima_atualizacao": "2026-11-18T14:17:05.429Z"
     },
     {
       "t": 23873,
@@ -37310,7 +39943,7 @@
       "fee_18": "0.00",
       "tour": "International Championships Tour",
       "type": 8,
-      "total_inscritos": 105,
+      "total_inscritos": 106,
       "total_maximo": 324,
       "escaloes": [
         {
@@ -37816,10 +40449,10 @@
           "genero": "Boys",
           "holes": 18,
           "flight_id": 310234,
-          "inscritos": 13,
+          "inscritos": 14,
           "maximo": 35,
-          "vagas": 22,
-          "pct_cheio": 37,
+          "vagas": 21,
+          "pct_cheio": 40,
           "jogadores": [
             {
               "nome": "Alex Yizhe Chen",
@@ -37894,6 +40527,15 @@
               "regObs": false
             },
             {
+              "nome": "SI YU QI",
+              "pais": "CN",
+              "cidade": "SUZHOU, 32",
+              "pid": 1884948,
+              "firstSeen": "2026-11-18T14:17:19.658Z",
+              "regDia": "2026-11-18",
+              "regObs": true
+            },
+            {
               "nome": "Theodore Sung",
               "pais": "US",
               "cidade": "Irvine, CA",
@@ -37942,7 +40584,7 @@
           "paises": [
             {
               "pais": "CN",
-              "n": 8
+              "n": 9
             },
             {
               "pais": "HK",
@@ -38050,7 +40692,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:00.741Z"
+      "ultima_atualizacao": "2026-11-18T14:17:06.641Z"
     },
     {
       "t": 23769,
@@ -38590,7 +41232,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:01.145Z"
+      "ultima_atualizacao": "2026-11-18T14:17:07.052Z"
     },
     {
       "t": 23885,
@@ -38890,7 +41532,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:01.546Z"
+      "ultima_atualizacao": "2026-11-18T14:17:07.455Z"
     },
     {
       "t": 23527,
@@ -39246,7 +41888,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:02.763Z"
+      "ultima_atualizacao": "2026-11-18T14:17:07.863Z"
     },
     {
       "t": 23511,
@@ -39880,7 +42522,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:03.163Z"
+      "ultima_atualizacao": "2026-11-18T14:17:08.273Z"
     },
     {
       "t": 23809,
@@ -40078,7 +42720,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:04.396Z"
+      "ultima_atualizacao": "2026-11-18T14:17:09.086Z"
     },
     {
       "t": 23864,
@@ -40200,7 +42842,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:05.630Z"
+      "ultima_atualizacao": "2026-11-18T14:17:09.895Z"
     },
     {
       "t": 23871,
@@ -41937,7 +44579,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:10.486Z"
+      "ultima_atualizacao": "2026-11-18T14:17:10.707Z"
     },
     {
       "t": 23870,
@@ -42545,7 +45187,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:11.298Z"
+      "ultima_atualizacao": "2026-11-18T14:17:11.530Z"
     },
     {
       "t": 23772,
@@ -43015,7 +45657,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:12.102Z"
+      "ultima_atualizacao": "2026-11-18T14:17:12.351Z"
     },
     {
       "t": 23832,
@@ -43369,7 +46011,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:12.516Z"
+      "ultima_atualizacao": "2026-11-18T14:17:12.754Z"
     },
     {
       "t": 23855,
@@ -43615,7 +46257,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:13.734Z"
+      "ultima_atualizacao": "2026-11-18T14:17:13.159Z"
     },
     {
       "t": 23879,
@@ -43813,7 +46455,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:14.147Z"
+      "ultima_atualizacao": "2026-11-18T14:17:13.569Z"
     },
     {
       "t": 23816,
@@ -44026,7 +46668,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:15.785Z"
+      "ultima_atualizacao": "2026-11-18T14:17:14.787Z"
     },
     {
       "t": 23714,
@@ -44224,7 +46866,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:17.005Z"
+      "ultima_atualizacao": "2026-11-18T14:17:15.600Z"
     },
     {
       "t": 23863,
@@ -44422,7 +47064,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:17.418Z"
+      "ultima_atualizacao": "2026-11-18T14:17:16.003Z"
     },
     {
       "t": 23608,
@@ -45351,7 +47993,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:17.833Z"
+      "ultima_atualizacao": "2026-11-18T14:17:16.406Z"
     },
     {
       "t": 23840,
@@ -45588,7 +48230,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:18.236Z"
+      "ultima_atualizacao": "2026-11-18T14:17:16.811Z"
     },
     {
       "t": 23775,
@@ -46071,7 +48713,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:18.638Z"
+      "ultima_atualizacao": "2026-11-18T14:17:17.626Z"
     },
     {
       "t": 23715,
@@ -46704,7 +49346,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:19.052Z"
+      "ultima_atualizacao": "2026-11-18T14:17:18.035Z"
     },
     {
       "t": 23716,
@@ -47114,7 +49756,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:19.462Z"
+      "ultima_atualizacao": "2026-11-18T14:17:18.439Z"
     },
     {
       "t": 23857,
@@ -47271,7 +49913,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:19.869Z"
+      "ultima_atualizacao": "2026-11-18T14:17:18.847Z"
     },
     {
       "t": 23899,
@@ -47499,7 +50141,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:57.461Z"
+      "ultima_atualizacao": "2026-11-18T14:17:03.805Z"
     },
     {
       "t": 23930,
@@ -47950,7 +50592,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:12:59.110Z"
+      "ultima_atualizacao": "2026-11-18T14:17:04.209Z"
     },
     {
       "t": 23900,
@@ -48178,7 +50820,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:00.333Z"
+      "ultima_atualizacao": "2026-11-18T14:17:05.835Z"
     },
     {
       "t": 23931,
@@ -48356,7 +50998,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:03.982Z"
+      "ultima_atualizacao": "2026-11-18T14:17:08.680Z"
     },
     {
       "t": 23919,
@@ -48676,7 +51318,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:04.808Z"
+      "ultima_atualizacao": "2026-11-18T14:17:09.491Z"
     },
     {
       "t": 23903,
@@ -48889,7 +51531,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:06.033Z"
+      "ultima_atualizacao": "2026-11-18T14:17:10.302Z"
     },
     {
       "t": 23929,
@@ -49087,7 +51729,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:10.891Z"
+      "ultima_atualizacao": "2026-11-18T14:17:11.124Z"
     },
     {
       "t": 23912,
@@ -49285,7 +51927,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:11.699Z"
+      "ultima_atualizacao": "2026-11-18T14:17:11.941Z"
     },
     {
       "t": 23898,
@@ -49498,7 +52140,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:14.961Z"
+      "ultima_atualizacao": "2026-11-18T14:17:13.974Z"
     },
     {
       "t": 23939,
@@ -49765,7 +52407,7 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:15.370Z"
+      "ultima_atualizacao": "2026-11-18T14:17:14.379Z"
     },
     {
       "t": 23940,
@@ -49920,7 +52562,601 @@
           "paises": null
         }
       ],
-      "ultima_atualizacao": "2026-11-18T13:13:16.602Z"
+      "ultima_atualizacao": "2026-11-18T14:17:15.190Z"
+    },
+    {
+      "t": 23950,
+      "name": "2027 Southern California - Winter State Invitational",
+      "date_inicio": "1/16/2027",
+      "date_fim": "1/17/2027",
+      "rondas": 2,
+      "campo": "Pala Mesa Resort Golf Course",
+      "fee_18": "365.00",
+      "tour": "State Invitationals Tour",
+      "type": 7,
+      "total_inscritos": 0,
+      "total_maximo": 138,
+      "escaloes": [
+        {
+          "age_group": 82,
+          "nome": "Boys 6 & Under",
+          "genero": "Boys",
+          "holes": 9,
+          "flight_id": 311258,
+          "inscritos": 0,
+          "maximo": 9,
+          "vagas": 9,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 83,
+          "nome": "Boys 7",
+          "genero": "Boys",
+          "holes": 9,
+          "flight_id": 311259,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 84,
+          "nome": "Boys 8",
+          "genero": "Boys",
+          "holes": 9,
+          "flight_id": 311260,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 85,
+          "nome": "Boys 9",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311261,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 86,
+          "nome": "Boys 10",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311262,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 87,
+          "nome": "Boys 11",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311263,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 88,
+          "nome": "Boys 12",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311264,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 89,
+          "nome": "Boys 13-14",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311265,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 90,
+          "nome": "Girls 8 & Under",
+          "genero": "Girls",
+          "holes": 9,
+          "flight_id": 311266,
+          "inscritos": 0,
+          "maximo": 9,
+          "vagas": 9,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 91,
+          "nome": "Girls 9-10",
+          "genero": "Girls",
+          "holes": 9,
+          "flight_id": 311267,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 92,
+          "nome": "Girls 11-12",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311268,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 93,
+          "nome": "Girls 13-14",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311269,
+          "inscritos": 0,
+          "maximo": 12,
+          "vagas": 12,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        }
+      ],
+      "ultima_atualizacao": "2026-11-18T14:17:04.616Z"
+    },
+    {
+      "t": 23948,
+      "name": "Noosa Springs Golf & Spa Resort (Tour Championship)",
+      "date_inicio": "3/14/2027",
+      "date_fim": "3/14/2027",
+      "rondas": 1,
+      "campo": "Noosa Springs Golf & Spa Resort",
+      "fee_18": "55.00",
+      "tour": "Sunshine Coast (AU) Tour",
+      "type": 6,
+      "total_inscritos": 0,
+      "total_maximo": 40,
+      "escaloes": [
+        {
+          "age_group": 3627,
+          "nome": "Boys 6 & Under",
+          "genero": "Boys",
+          "holes": 9,
+          "flight_id": 311228,
+          "inscritos": 0,
+          "maximo": 4,
+          "vagas": 4,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3628,
+          "nome": "Boys 7",
+          "genero": "Boys",
+          "holes": 9,
+          "flight_id": 311229,
+          "inscritos": 0,
+          "maximo": 2,
+          "vagas": 2,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3629,
+          "nome": "Boys 8",
+          "genero": "Boys",
+          "holes": 9,
+          "flight_id": 311230,
+          "inscritos": 0,
+          "maximo": 4,
+          "vagas": 4,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3630,
+          "nome": "Boys 9",
+          "genero": "Boys",
+          "holes": 9,
+          "flight_id": 311231,
+          "inscritos": 0,
+          "maximo": 9,
+          "vagas": 9,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3631,
+          "nome": "Boys 10",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311232,
+          "inscritos": 0,
+          "maximo": 2,
+          "vagas": 2,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3632,
+          "nome": "Boys 11",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311233,
+          "inscritos": 0,
+          "maximo": 3,
+          "vagas": 3,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3633,
+          "nome": "Boys 12",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311234,
+          "inscritos": 0,
+          "maximo": 1,
+          "vagas": 1,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3634,
+          "nome": "Boys 13-14",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311235,
+          "inscritos": 0,
+          "maximo": 3,
+          "vagas": 3,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3654,
+          "nome": "Boys 15-18",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311236,
+          "inscritos": 0,
+          "maximo": 1,
+          "vagas": 1,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3635,
+          "nome": "Girls 8 & Under",
+          "genero": "Girls",
+          "holes": 9,
+          "flight_id": 311237,
+          "inscritos": 0,
+          "maximo": 4,
+          "vagas": 4,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3636,
+          "nome": "Girls 9-10",
+          "genero": "Girls",
+          "holes": 9,
+          "flight_id": 311238,
+          "inscritos": 0,
+          "maximo": 3,
+          "vagas": 3,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3637,
+          "nome": "Girls 11-12",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311239,
+          "inscritos": 0,
+          "maximo": 4,
+          "vagas": 4,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3638,
+          "nome": "Girls 13-14",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311240,
+          "inscritos": 0,
+          "maximo": 0,
+          "vagas": 0,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 3639,
+          "nome": "Girls 15-18",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311241,
+          "inscritos": 0,
+          "maximo": 0,
+          "vagas": 0,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        }
+      ],
+      "ultima_atualizacao": "2026-11-18T14:17:17.219Z"
+    },
+    {
+      "t": 23949,
+      "name": "European Championship 2027",
+      "date_inicio": "6/1/2027",
+      "date_fim": "6/3/2027",
+      "rondas": 3,
+      "campo": "Longniddry Golf Club, The Musselburgh Golf Club , Craigielaw Golf Club, Glen Golf Club, Royal Musselburgh Golf Club",
+      "fee_18": "575.00",
+      "tour": "International Championships Tour",
+      "type": 8,
+      "total_inscritos": 0,
+      "total_maximo": 642,
+      "escaloes": [
+        {
+          "age_group": 2101,
+          "nome": "Boys 8",
+          "genero": "Boys",
+          "holes": 9,
+          "flight_id": 311243,
+          "inscritos": 0,
+          "maximo": 54,
+          "vagas": 54,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2102,
+          "nome": "Boys 9",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311244,
+          "inscritos": 0,
+          "maximo": 57,
+          "vagas": 57,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2103,
+          "nome": "Boys 10",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311245,
+          "inscritos": 0,
+          "maximo": 54,
+          "vagas": 54,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2104,
+          "nome": "Boys 11",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311246,
+          "inscritos": 0,
+          "maximo": 60,
+          "vagas": 60,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2105,
+          "nome": "Boys 12",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311247,
+          "inscritos": 0,
+          "maximo": 60,
+          "vagas": 60,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2111,
+          "nome": "Boys 15-18",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311250,
+          "inscritos": 0,
+          "maximo": 36,
+          "vagas": 36,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2113,
+          "nome": "Boys 7 & Under",
+          "genero": "Boys",
+          "holes": 9,
+          "flight_id": 311242,
+          "inscritos": 0,
+          "maximo": 39,
+          "vagas": 39,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2114,
+          "nome": "Boys 13",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311248,
+          "inscritos": 0,
+          "maximo": 54,
+          "vagas": 54,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2115,
+          "nome": "Boys 14",
+          "genero": "Boys",
+          "holes": 18,
+          "flight_id": 311249,
+          "inscritos": 0,
+          "maximo": 36,
+          "vagas": 36,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2112,
+          "nome": "Girls 15-18",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311256,
+          "inscritos": 0,
+          "maximo": 15,
+          "vagas": 15,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2116,
+          "nome": "Girls 8 & Under",
+          "genero": "Girls",
+          "holes": 9,
+          "flight_id": 311251,
+          "inscritos": 0,
+          "maximo": 36,
+          "vagas": 36,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2117,
+          "nome": "Girls 9",
+          "genero": "Girls",
+          "holes": 9,
+          "flight_id": 311252,
+          "inscritos": 0,
+          "maximo": 33,
+          "vagas": 33,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2118,
+          "nome": "Girls 10",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311253,
+          "inscritos": 0,
+          "maximo": 24,
+          "vagas": 24,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2119,
+          "nome": "Girls 11",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311254,
+          "inscritos": 0,
+          "maximo": 27,
+          "vagas": 27,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2120,
+          "nome": "Girls 12",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311255,
+          "inscritos": 0,
+          "maximo": 30,
+          "vagas": 30,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        },
+        {
+          "age_group": 2121,
+          "nome": "Girls 13-14",
+          "genero": "Girls",
+          "holes": 18,
+          "flight_id": 311257,
+          "inscritos": 0,
+          "maximo": 27,
+          "vagas": 27,
+          "pct_cheio": 0,
+          "jogadores": null,
+          "paises": null
+        }
+      ],
+      "ultima_atualizacao": "2026-11-18T14:17:19.255Z"
     }
   ]
 }
