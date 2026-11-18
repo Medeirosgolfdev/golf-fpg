@@ -27,6 +27,40 @@ const LOGOS_DIR = path.join(__dirname, "..", "public", "Logos");
 const OUT_FILE = path.join(LOGOS_DIR, "galeria.html");
 const VIEWABLE = new Set(["png", "jpg", "jpeg", "avif", "webp", "gif"]);
 
+// Ficheiros que ficam na pasta mas NÃO aparecem na galeria (pedido da Mariana,
+// 18/11/2026: banners, colecções e fotos de campos não são logos).
+const NAO_MOSTRAR = new Set([
+  "banner-campo-world-kids-golf-2024.png",
+  "banner-euc-2026.png",
+  "banner-european-championship-header.png",
+  "colecao-logos-varios.png",
+  "colecao-logos-varios-2.png",
+  "colecao-logos-varios-branco.png",
+  "foto-campo-oceanico-oconnor.png",
+  "foto-campo-zaudin.jpg",
+]);
+
+// Secções da galeria, pela ordem em que aparecem. Cada imagem vai para a
+// PRIMEIRA secção cujo padrão casa com o nome. Uma imagem sem secção faz o
+// script falhar — acrescentar o padrão certo, nunca uma secção genérica.
+const SECCOES = [
+  ["Manuel Medeiros", /manuel/],
+  ["U.S. Kids Golf", /uskids|us-kids|european-championship|venice-open|spanish-open|paris-inv/],
+  ["FPG e Portugal Golf", /fpg|portugal-golf|drive-|9-semanas|75-anos|pga-portugal/],
+  ["Clubes e torneios de golfe", /cgss|faldo|amendoeira|santo-da-serra|first-tee|orange-bowl|ryder-cup|paris-inv|hole-numero|world-kids/],
+  ["Portugal — bandeiras e símbolos", /bandeira-portugal|bandeira-madeira|bandeira-reino|bandeira-escocia|escudo-portugal|brasao-portugal|simbolo-madeira|icone-bandeira|enfeite|made-in-portugal|republica-portuguesa|governo-portugal|visit-portugal|portugal-2020|logo-portugal-animado|logo-portugal-em-branco|aneis-olimpicos|bandeira-olimpica/],
+  ["Futebol e outras entidades", /sporting|maritimo|taca-de-portugal|fpf|liga-3|campeonato-de-portugal|psp|ipdj|mbway|colecao-logos/],
+  ["Textos animados", /^texto_/],
+  ["Animações de golfe", /animad|golfista|sticker|luva|relogio|hole-in-one|green-|bola-/],
+  ["Fotografias", /^foto-|clipart|banner-/],
+];
+
+function seccaoDe(nome) {
+  const n = nome.toLowerCase();
+  for (const [titulo, re] of SECCOES) if (re.test(n)) return titulo;
+  return null;
+}
+
 function human(n) {
   let v = Number(n);
   for (const u of ["B", "KB", "MB"]) {
@@ -43,11 +77,12 @@ function walk(dir, base, out) {
       walk(full, base, out);
     } else if (entry.isFile()) {
       if (entry.name === "galeria.html") continue;
+      if (NAO_MOSTRAR.has(entry.name)) continue;
       const ext = entry.name.includes(".") ? entry.name.split(".").pop().toLowerCase() : "";
       if (!VIEWABLE.has(ext)) continue;
       const rel = path.relative(base, full).split(path.sep).join("/");
       const size = fs.statSync(full).size;
-      out.push({ name: entry.name, path: rel, ext, sizeh: human(size) });
+      out.push({ name: entry.name, path: rel, ext, sizeh: human(size), cat: seccaoDe(entry.name) });
     }
   }
 }
@@ -55,10 +90,10 @@ function walk(dir, base, out) {
 function collect() {
   const items = [];
   walk(LOGOS_DIR, LOGOS_DIR, items);
+  const ordem = new Map(SECCOES.map(([t], i) => [t, i]));
   items.sort((a, b) => {
-    const da = (a.path.match(/\//g) || []).length;
-    const db = (b.path.match(/\//g) || []).length;
-    if (da !== db) return da - db;
+    const ca = ordem.get(a.cat) ?? 99, cb = ordem.get(b.cat) ?? 99;
+    if (ca !== cb) return ca - cb;
     return a.path.toLowerCase().localeCompare(b.path.toLowerCase());
   });
   return items;
@@ -111,6 +146,9 @@ function pageHtml(data) {
   .row .dl:hover{border-color:#3a4150}
   .row .open:hover{border-color:#3a4150}
   .empty{color:var(--muted); text-align:center; padding:60px 20px}
+  .sec{grid-column:1/-1; font-size:16px; font-weight:700; margin:18px 0 0; padding-bottom:6px; border-bottom:1px solid var(--line)}
+  .sec:first-child{margin-top:0}
+  .sec .n{color:var(--muted); font-weight:500; font-size:13px; margin-left:8px}
   .lb{position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; z-index:100; align-items:center; justify-content:center; padding:30px; cursor:zoom-out}
   .lb.on{display:flex}
   .lb .frame{max-width:92vw; max-height:86vh; display:flex; flex-direction:column; align-items:center; gap:14px}
@@ -169,7 +207,10 @@ function render(){
   const list=IMAGES.filter(im=>(typeFilter==='all'||im.ext===typeFilter)&&(!term||im.name.toLowerCase().includes(term)));
   countEl.textContent=list.length+' de '+IMAGES.length+' imagens';
   grid.innerHTML=''; empty.style.display=list.length?'none':'block';
+  const porSeccao={}; for(const im of list) porSeccao[im.cat]=(porSeccao[im.cat]||0)+1;
+  let secAtual=null;
   for(const im of list){
+    if(im.cat!==secAtual){ secAtual=im.cat; const h=document.createElement('h2'); h.className='sec'; h.innerHTML=im.cat+'<span class="n">'+porSeccao[im.cat]+'</span>'; grid.appendChild(h); }
     const url=enc(im.path);
     const card=document.createElement('div'); card.className='card';
     card.innerHTML='<div class="thumb" data-url="'+url+'" data-name="'+esc(im.name)+'"><img loading="lazy" src="'+url+'" alt="'+esc(im.name)+'"></div>'+
@@ -222,6 +263,11 @@ function main() {
     process.exit(0); // nao falhar o build se a pasta nao existir
   }
   const items = collect();
+  const semSeccao = items.filter((it) => !it.cat).map((it) => it.name);
+  if (semSeccao.length) {
+    console.error("[logos-gallery] imagens sem secção (acrescentar o padrão em SECCOES):", semSeccao.join(", "));
+    process.exit(1);
+  }
   fs.writeFileSync(OUT_FILE, pageHtml(items), "utf8");
   const byType = {};
   for (const it of items) byType[it.ext] = (byType[it.ext] || 0) + 1;
