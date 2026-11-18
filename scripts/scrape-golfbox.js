@@ -311,6 +311,39 @@ function buildDivision(cls, courses, ageTag, sourceUrl, ratingsByCourse = {}) {
 
 /** Compara o novo output com o ficheiro existente, ignorando `scrapedAt`.
  *  Devolve true se há alterações reais (ou o ficheiro não existe). */
+/** Nascimento, HCP, clube e equipa são ADITIVOS: desde 18/11/2026 o GolfBox
+ *  deixou de publicar o nascimento (BirthYear 0 no leaderboard, sem BirthDate nos
+ *  inscritos), o HCP e o clube do leaderboard vêm vazios e a equipa também — o
+ *  scrape das 02:49 regravou 16 provas (Estónia, avtrophy, eatc/ebtc/egtc, elg,
+ *  eym) sem nada disto para NINGUÉM (as de equipas ficavam sem equipas). O que a fonte deixa de dar fica o
+ *  que estava em disco (mesmo jogador: detailId, senão o nome, na mesma
+ *  divisão). O HCP da inscrição (GetPlayers) só preenche o que continuar vazio. */
+function completarDoDisco(file, out) {
+  let prev = null;
+  try { if (fs.existsSync(file)) prev = JSON.parse(fs.readFileSync(file, 'utf8')); } catch { prev = null; }
+  const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  const prevDiv = new Map(((prev && prev.divisions) || []).map((d) => [d.division, d]));
+  let n = 0;
+  for (const dv of out.divisions || []) {
+    const pd = prevDiv.get(dv.division);
+    const byId = new Map(), byName = new Map();
+    for (const q of (pd && pd.players) || []) {
+      if (q.detailId) byId.set(q.detailId, q);
+      byName.set(norm(q.name), q);
+    }
+    for (const p of dv.players || []) {
+      const q = (p.detailId && byId.get(p.detailId)) || byName.get(norm(p.name));
+      if (q) for (const k of ['dob', 'birthYear', 'hcp', 'club', 'team']) {
+        if (p[k] == null && q[k] != null) { p[k] = q[k]; n++; }
+      }
+      if (p.hcp == null && p.hcpInscricao != null) p.hcp = p.hcpInscricao;
+      delete p.hcpInscricao;
+    }
+  }
+  if (n) console.log(`   ↩ ${n} valor(es) de nascimento/HCP/clube/equipa mantido(s) do ficheiro em disco (a fonte já não os dá)`);
+  return n;
+}
+
 function outputChanged(file, out) {
   if (!fs.existsSync(file)) return true;
   try {
@@ -376,6 +409,10 @@ async function scrapeOne(compId, opts = {}) {
         if (!rec) continue;
         if (rec.dob) { p.dob = rec.dob; enr++; }
         if (rec.club && !p.club) p.club = rec.club;
+        if (p.birthYear == null && rec.birthYear) p.birthYear = rec.birthYear;
+        // HCP da inscrição: só entra se o leaderboard e o ficheiro em disco não
+        // tiverem nenhum (decide-o completarDoDisco, antes de gravar).
+        if (p.hcp == null && rec.hcp != null) p.hcpInscricao = rec.hcp;
       }
       // Prova futura (leaderboard vazio) → semear o field com os inscritos.
       if (dv.players.length === 0) {
@@ -447,6 +484,7 @@ async function main() {
   for (const t of targets) {
     try {
       const { out, file, name } = await scrapeOne(t.competitionId, t);
+      completarDoDisco(file, out);
       if (outputChanged(file, out)) {
         writeJsonAtomic(file, out);
         changed++;
@@ -466,4 +504,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { fetchJsonp, buildDivision, parseGbDate, scrapeOne, getCompetition, getLeaderboard };
+module.exports = { fetchJsonp, buildDivision, parseGbDate, scrapeOne, getCompetition, getLeaderboard, completarDoDisco };

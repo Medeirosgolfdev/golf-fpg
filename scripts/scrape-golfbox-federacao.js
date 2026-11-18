@@ -43,7 +43,7 @@
 "use strict";
 const fs = require("fs");
 const path = require("path");
-const { fetchJsonp, scrapeOne } = require("./scrape-golfbox");
+const { fetchJsonp, scrapeOne, completarDoDisco } = require("./scrape-golfbox");
 const { writeJsonGuarded } = require("./lib/shrink-guard");
 
 const FEDERACOES = {
@@ -185,6 +185,8 @@ const comVoltas = (d) => (d.divisions || []).reduce((n, dv) => n + (dv.players |
       // classes sem ninguém (ex.: «Girls U18» sem inscritas) não entram
       // e as classes que não são juvenis nem individuais por pancadas (`classesFora`)
       const data = { ...out, divisions: (out.divisions || []).filter((dv) => (dv.players || []).length && !(fed.classesFora && fed.classesFora.test(dv.division || ""))), competitionId: p.id, customer: fed.nome };
+      // Nascimento/HCP/clube que o GolfBox deixou de dar (18/11/2026) ficam os do disco.
+      completarDoDisco(file, data);
       let anterior = null;
       try { anterior = JSON.parse(fs.readFileSync(file, "utf8")); } catch { /* ficheiro novo */ }
       const sem = (o) => { const c = { ...o }; delete c.scrapedAt; return JSON.stringify(c); };
