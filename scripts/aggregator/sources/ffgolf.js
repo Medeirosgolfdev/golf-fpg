@@ -91,6 +91,9 @@ function load(opts) {
       region: p.region || null,
       club: p.club ? String(p.club).trim() : null,
       hcp: typeof p.hcp === "number" ? p.hcp : null,
+      // A data do HCP (última prova em que foi visto) — 18/11/2026: perdia-se aqui e a
+      // ficha mostrava um HCP «sem data» mais velho do que o do histórico.
+      hcpDate: typeof p.hcp === "number" && /^\d{4}-\d{2}-\d{2}$/.test(String(p.hcpDate || "")) ? p.hcpDate : null,
       ...(anoMerite ? { dobRange: { lo: `${anoMerite}-01-01`, hi: `${anoMerite}-12-31` } } : {}),
       ...(m ? { hcpHistory: [{ date: `${String(m.month).slice(0, 4)}-${String(m.month).slice(4, 6)}-01`, hcpExact: m.idx, source: "ffg-merite", label: `Mérite Jeunes ${String(m.month).slice(4, 6)}/${String(m.month).slice(0, 4)}` }] } : {}),
       extra: {

@@ -13,7 +13,7 @@
  *
  * Saída (`public/data/juniors-scout.json`, compacta):
  *   { schemaVersion, generatedAt, manuelId, players: {
- *       [juniorId]: { n: torneios na carreira, t?: tier, w?: vitórias, t3?: top-3, h?: HCP, d?: "AAAA-MM-DD",
+ *       [juniorId]: { n: torneios na carreira, t?: tier, w?: vitórias, t3?: top-3, h?: HCP (o da FPG; senão o mais recente de `hh`; 18/11/2026), d?: "AAAA-MM-DD",
  *                     c?: clube, p?: país,
  *                     m?: [[data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel, voltas, buracos], …]
  *                         — as pancadas só das voltas que OS DOIS jogaram (com cartão); `voltas` quantas
@@ -187,20 +187,19 @@ function buildScout(juniors, tournaments, generatedAt) {
     const v = voltasDoAno(j, tById, desdeAno, ul?.voltasAno);
     if (v) o.v = v;
     const src = j.sources || {};
-    // HCP: o da FPG; senão o oficial actual da RFEG (com data); senão o da
-    // última inscrição RFEG; senão o da FFG.
     const rfo = j.rfegOficial;
     const hOficial = src.fpg?.hcpExact == null && typeof rfo?.hcp === "number" ? rfo.hcp : null;
-    const h = src.fpg?.hcpExact ?? hOficial ?? src.rfeg?.hcp ?? src.ffgolf?.hcp ?? null;
-    if (typeof h === "number") o.h = h;
-    if (hOficial != null) o.hr = [hOficial, rfo.hcpData || null];
     // Histórico curto de HCP com data (FPG, FFG, Federgolf, listas de inscritos):
     // as tabelas pintam o SD de quem não tem HCP na linha com o HCP mais perto da
     // data do torneio (03/11/2026). Os 6 mais recentes, um por data.
     const hh = [];
     const hist = [...(j.hcpHistory || [])];
-    // O HCP oficial da RFEG (com data) também conta.
+    // O HCP oficial da RFEG (com data) também conta, e o de cada federação com a data em
+    // que foi visto (RFEG: última inscrição; FFG: última prova — 18/11/2026).
     if (hOficial != null && rfo.hcpData) hist.push({ date: rfo.hcpData, hcpExact: hOficial });
+    for (const fs of [src.rfeg, src.ffgolf]) {
+      if (typeof fs?.hcp === "number" && fs.hcpDate) hist.push({ date: fs.hcpDate, hcpExact: fs.hcp });
+    }
     for (const x of hist.sort((a, b) => String(b.date).localeCompare(String(a.date)))) {
       const d = String(x.date || "").slice(0, 10);
       if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || typeof x.hcpExact !== "number" || hh.some((e) => e[0] === d)) continue;
@@ -208,6 +207,14 @@ function buildScout(juniors, tournaments, generatedAt) {
       if (hh.length === 6) break;
     }
     if (hh.length) o.hh = hh;
+    // HCP da ficha (18/11/2026 — era o da federação sem data, e o Scout dizia 4,5 ao Maxence
+    // Donnarel e «–» ao Leon Schneitter enquanto o Draw, pelo histórico, dava 3,8 e 7,2): o da
+    // FPG (oficial e de hoje); senão o MAIS RECENTE do histórico com data (que já inclui o
+    // oficial da RFEG); só sem histórico, o da última inscrição RFEG ou o da FFG.
+    const h = src.fpg?.hcpExact ?? (hh.length ? hh[0][1] : null) ?? hOficial ?? src.rfeg?.hcp ?? src.ffgolf?.hcp ?? null;
+    if (typeof h === "number") o.h = h;
+    // `hr` (o «h» é o oficial da RFEG, com data) só quando é mesmo esse o valor mostrado.
+    if (hOficial != null && h === hOficial && (!hh.length || hh[0][0] === String(rfo.hcpData || "").slice(0, 10))) o.hr = [hOficial, rfo.hcpData || null];
     if (j.dob) o.d = j.dob;
     else {
       // Ano certo — se não contradiz os escalões USKids em que jogou (senão é sinal

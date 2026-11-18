@@ -171,7 +171,10 @@ function enriquecer(juniors, { hcp, linhas }) {
       // fonte (juniores que só jogam provas regionais no NextCaddy; 16/11/2026).
       // O sexo já foi conferido pelo hcpDoJunior (nunca o contrário do da ficha).
       if (!j.sex && (h.sexo === "M" || h.sexo === "F")) { j.sex = h.sexo; st.sexoDaRfeg = (st.sexoDaRfeg || 0) + 1; }
-      if (!j.club && h.clube) { j.club = h.clube; st.clubeDaRfeg = (st.clubeDaRfeg || 0) + 1; }
+      // Sem clube a RFEG escreve a federação no lugar do clube («REAL FEDERACION ANDALUZA DE GOLF» —
+      // Karim El Gafari, 18/11/2026): isso não é um clube.
+      const clubeReal = h.clube && h.clube !== h.federacao && !/^(real\s+)?federaci[oó]n\b/i.test(h.clube) ? h.clube : null;
+      if (!j.club && clubeReal) { j.club = clubeReal; st.clubeDaRfeg = (st.clubeDaRfeg || 0) + 1; }
     }
     if (ls.length) {
       if (!o.lic && ls[0].lic) o.lic = ls[0].lic;

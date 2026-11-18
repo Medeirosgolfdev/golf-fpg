@@ -298,7 +298,8 @@ async function processarTorneio(page, torneio) {
   //      Simone/Venice) → todos os escalões
   //   2. Senão se torneio.age_groups está definido → só esses
   //   3. Senão → apanha apenas Boys 9-12 via escalaoApanhar
-  const isAllAgeGroups = TORNEIOS_ALL_AGE_GROUPS.has(torneio.t);
+  // Também os que a consola trouxe com todos os escalões (torneios do Manuel e internacionais — 18/11/2026).
+  const isAllAgeGroups = TORNEIOS_ALL_AGE_GROUPS.has(torneio.t) || !!REPLAY?.resultados?.todos_escaloes?.includes(Number(torneio.t));
   const agsFiltro = (!isAllAgeGroups && torneio.age_groups) ? new Set(torneio.age_groups) : null;
   if (isAllAgeGroups) console.log(`  ⭐ Torneio PREMIUM — todos os escalões serão descarregados`);
 

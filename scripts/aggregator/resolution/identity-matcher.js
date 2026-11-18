@@ -838,6 +838,7 @@ function buildJunior(entities) {
         lic: e.raw.sourceKey,
         club: e.raw.club,
         hcp: e.raw.hcp,
+        hcpDate: e.raw.hcpDate,
         region: e.raw.region,
         sex: e.raw.sex,
         glfLic: e.raw.extra?.glfLic,

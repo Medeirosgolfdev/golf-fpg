@@ -256,6 +256,8 @@ export default function DrawTab({
       noFed: boolean;
       hcp: number | null;
       hcpCurrent: boolean;
+      /** HCP da ficha do Kids 2 (sem outra fonte) — a data em que foi visto. */
+      hcpKidsDate?: string | null;
       dob?: string;
       dobYear: number | null;
       dobShown?: string | null;
@@ -424,8 +426,14 @@ export default function DrawTab({
         const admHcpByN = admHcpByName.get(norm(p.nome)) ?? admHcpByName.get(norm(nomeFormatted));
         const snapshotHcp = drawHcp ?? admHcp ?? admHcpByN ?? null;
         const currentHcp = snapshotHcp == null && fed ? (fedHcp.get(fed) ?? null) : null;
-        const hcp: number | null = snapshotHcp ?? currentHcp;
         const hcpCurrent = snapshotHcp == null && currentHcp != null;
+        const juniorIdSrc = ((p as { juniorId?: string | null }).juniorId ?? (p as any)._rfeg?.juniorId) as string | undefined;
+        //   4. Sem nenhuma destas: o HCP da ficha do Kids 2 mais perto da data da prova
+        //      (`hcpAt`, até 6 meses) — o mesmo que os cartões das voltas já usam
+        //      (`withKidsDob`). Era o que faltava aos draws USKids (18/11/2026, Mariana:
+        //      «o HCP é importante aparecer»), onde a fonte não dá HCP nenhum.
+        const kidsH = snapshotHcp == null && currentHcp == null ? kidsDob?.hcpAt?.(p.nome, fed, effDate, juniorIdSrc) : undefined;
+        const hcp: number | null = snapshotHcp ?? currentHcp ?? kidsH?.hcp ?? null;
         // Dob: playersDB (curado) → federados.json (base FPG) → ficha RFEG.
         // A RFEG entra por ultimo mas e a UNICA fonte para quem nao tem
         // federado portugues: sem ela os internacionais ficavam sem escalao,
@@ -436,7 +444,6 @@ export default function DrawTab({
         const dobSemKids: string | undefined =
           srcDob || bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined);
         // Kids 2: a data lida, ou o ano estimado pelos escalões USKids (a vermelho).
-        const juniorIdSrc = ((p as { juniorId?: string | null }).juniorId ?? (p as any)._rfeg?.juniorId) as string | undefined;
         const kidsLido = !dobSemKids ? kidsDob?.(p.nome, fed, juniorIdSrc) : undefined;
         const kidsNasc = kidsLido
           ? kidsAcrescento({ birthYear: srcBirthYear, birthYearEst: (p as { birthYearEst?: number | null }).birthYearEst }, kidsLido) ?? undefined
@@ -480,6 +487,7 @@ export default function DrawTab({
           noFed,
           hcp,
           hcpCurrent,
+          hcpKidsDate: kidsH?.date ?? null,
           dob,
           dobYear,
           dobShown,
@@ -562,6 +570,8 @@ export default function DrawTab({
 
   // Buraco de saída: só interessa quando há saídas fora do 1 (shotgun / tee 10).
   const showHole = flat.some((p) => p.startHole != null && p.startHole !== 1);
+  // HCP: escondido pela página ou sem um único valor (como nas Inscrições) — uma coluna só de «–» não diz nada.
+  const hideHcp = !!hc.hcp || !flat.some((p) => p.hcp != null);
   const rows: ScorecardRow[] = useMemo(() => {
     // Separador de grupos: linha mais grossa entre flights quando a ordenação
     // respeita o agrupamento natural (sort por `pos`, `hora` ou `buraco` — rows
@@ -654,9 +664,11 @@ export default function DrawTab({
             })()}
             {!hc.fed && <td className={"lb-fed" + bt}>{displayFed(p.fed) || "–"}</td>}
             {!hc.clube && <td className={"lb-club" + bt} title={p.countryEstimated ? `Estimativa — ${p.estNote || "país deduzido"}` : p.clube}>{p.clube ? (p.countryEstimated ? <span className="est-value">{p.clube}</span> : p.clube) : "–"}</td>}
-            {!hc.hcp && (
+            {!hideHcp && (
               <td className={"lb-hcp" + bt}
-                title={p.hcpCurrent ? "HCP actual (federado) — snapshot do evento indisponível" : p.hcpEstimated ? `Estimativa — ${p.estNote || "sem fonte com o HCP"}` : undefined}>
+                title={p.hcpCurrent ? "HCP actual (federado) — snapshot do evento indisponível"
+                  : p.hcpKidsDate ? `HCP da ficha do Kids 2, visto a ${fmtDatePt(p.hcpKidsDate)}`
+                  : p.hcpEstimated ? `Estimativa — ${p.estNote || "sem fonte com o HCP"}` : undefined}>
                 {p.hcpCurrent ? <span className="u-c-color-danger u-fw-700">*</span> : null}{p.hcp != null ? (p.hcpEstimated ? <span className="est-value">{fmtHcp(p.hcp)}</span> : fmtHcp(p.hcp)) : "–"}
               </td>
             )}
@@ -677,7 +689,7 @@ export default function DrawTab({
         ),
       };
     });
-  }, [visibleSorted, playersDB, teeName, effDate, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc, showHole]);
+  }, [visibleSorted, playersDB, teeName, effDate, sortKey, hc.esc, hc.fed, hc.clube, hideHcp, hc.tee, hc.nasc, showHole]);
 
   if (draw.error) {
     return <div className="detail-toolbar u-p-16px">
@@ -711,7 +723,7 @@ export default function DrawTab({
       {!hc.nasc && <SortableHdr k="idade" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>}
       {!hc.fed && <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
       {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">{clubLabel ? clubLabel.charAt(0) + clubLabel.slice(1).toLowerCase() : "Clube"}</SortableHdr>}
-      {!hc.hcp && <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>}
+      {!hideHcp && <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>}
       {!hc.tee && <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">TEE</SortableHdr>}
     </>
   );

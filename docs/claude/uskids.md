@@ -591,6 +591,14 @@ uma vez (os draws e os inscritos partilham-no).
   prova nada: `extrairGrupos` só aceita jogadores com grupo, e a consola só conta a volta como publicada se houver
   grupos. Os 17 «grupos» falsos já guardados (World Championship 2026 Boys 12 R2/R3 com 149 num grupo, 13 State
   Invitationals/Opens, Pueblo Viejo R1) saíram do `uskids-draws.json`.
+- **Todos os escalões nos torneios do Manuel** (18/11/2026, ela: «como temos portugueses a participar nos escalões, quero
+  descarregar tudo dos outros escalões também»): a consola traz o draw de TODOS os escalões (rapazes e raparigas; o dele
+  `is_manuel`, os ±1 `adjacent`), os nomes dos inscritos de todos (o `fetch-uskids-field.js` guarda-os em
+  `TODOS_ESCALOES` = torneios com o Manuel, além dos Boys 9–13) e os resultados de todos — também nas provas
+  internacionais (tipo 8). O ficheiro marca-os em `resultados.todos_escaloes`, que o `fetch-uskids-results.js` trata como
+  os premium (`TORNEIOS_ALL_AGE_GROUPS`). Uma corrida seguinte sem um escalão não o apaga (guarda anti-encolhimento).
+- **HCP no Draw** (18/11/2026): o `DRAW_HIDE` da USKids já não esconde o HCP; o `DrawTab` usa o HCP do Kids 2 mais perto
+  da data da prova (`hcpAt`, até 183 dias) e esconde a coluna quando ninguém o tem.
 - Teste: `scripts/lib/uskids-draws-numeros-replay.test.js`.
 
 **Semanal, pelo Agendador do Windows** (16/11/2026, ela: «quero que semanalmente se veja os inscritos» → «Sim, à

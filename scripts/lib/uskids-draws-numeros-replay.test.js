@@ -130,8 +130,8 @@ describe('fetch-uskids-results.js --replay de um torneio a decorrer', () => {
   const pars = [4, 4, 3, 5, 4, 4, 3, 5, 4];
   const meta = {
     tournament: { name: 'A Decorrer Open', start_date: futuro, end_date: futuro, rounds: 2, courses: 'Campo' },
-    age_groups: { 5: { name: 'Boys 12', holes_per_round: 9 } },
-    flights: { 11: { age_group: 5, registered: 2 } },
+    age_groups: { 5: { name: 'Boys 12', holes_per_round: 9 }, 6: { name: 'Girls 11-12', holes_per_round: 9 } },
+    flights: { 11: { age_group: 5, registered: 2 }, 22: { age_group: 6, registered: 1 } },
     flight_rounds: { 900: { flight: 11, round: 1, course: 7 }, 901: { flight: 11, round: 2, course: 7 } },
     flight_courses: { 900: { course: 7, pars, lengths: pars.map(() => 300) }, 901: { course: 7, pars, lengths: pars.map(() => 300) } },
     courses: { 7: { name: 'Campo Teste' } },
@@ -143,8 +143,11 @@ describe('fetch-uskids-results.js --replay de um torneio a decorrer', () => {
     const fp = { 1: jog('Ana', pars, comR2 ? pars : null), 2: jog('Bia', pars.map(p => p + 1), comR2 ? pars : null) };
     const f = path.join(dir, `decorrer-${comR2 ? 2 : 1}.json`);
     fs.writeFileSync(f, JSON.stringify({ gerado_em: '2026-11-18T10:00:00.000Z', torneios: [], respostas: {},
-      resultados: { torneios: [TR], respostas: { [`GetMeta:${TR}`]: meta,
-        'GetPlayerTeeTimes:11:1:1': { flight_players: fp }, 'GetPlayerTeeTimes:11:2:1': { flight_players: fp } } } }));
+      // Torneio do Manuel / internacional: a consola trouxe todos os escalões (18/11/2026).
+      resultados: { torneios: [TR], todos_escaloes: [TR], respostas: { [`GetMeta:${TR}`]: meta,
+        'GetPlayerTeeTimes:11:1:1': { flight_players: fp }, 'GetPlayerTeeTimes:11:2:1': { flight_players: fp },
+        'GetPlayerTeeTimes:22:1:1': { flight_players: { 9: jog('Rita', pars, comR2 ? pars : null) } },
+        'GetPlayerTeeTimes:22:2:1': { flight_players: { 9: jog('Rita', pars, comR2 ? pars : null) } } } } }));
     return f;
   };
   beforeAll(() => {
@@ -157,6 +160,7 @@ describe('fetch-uskids-results.js --replay de um torneio a decorrer', () => {
     expect(r.status, r.stderr + r.stdout).toBe(0);
     const t = ler('uskids-results.json').resultados.find(x => x.t === TR);
     expect(t.escaloes[0].rondas.map(x => x.leaderboard.length)).toEqual([2, 0]);
+    expect(t.escaloes.map(e => e.nome)).toEqual(['Boys 12', 'Girls 11-12']); // todos os escalões
     expect(ler('uskids-results-index.json').parciais).toEqual([TR]);
   });
 

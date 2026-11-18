@@ -15,9 +15,11 @@
 //   0. Vai buscar à app (golf-fpg.vercel.app, CORS aberto) a lista de torneios, os inscritos e o
 //      índice dos resultados que já temos.
 //   1. DRAWS (primeiro, por ser o mais urgente): torneios onde o Manuel está inscrito que começam
-//      daqui a 3 dias ou menos, ou estão a decorrer — o escalão dele e os vizinhos ±1, todas as
-//      voltas com draw publicado (GetPlayerTeeTimes&r=<volta>). Mostra o grupo e a hora dele.
-//      É a mesma regra do fetch-uskids-draws.js (Fonte 1).
+//      daqui a 3 dias ou menos, ou estão a decorrer — TODOS os escalões (18/11/2026: «como temos
+//      portugueses a participar nos escalões, quero descarregar tudo dos outros escalões também»),
+//      todas as voltas com draw publicado (GetPlayerTeeTimes&r=<volta>). Mostra o grupo e a hora dele.
+//      Nos torneios do Manuel os inscritos e os resultados também vêm de todos os escalões; nas
+//      provas internacionais (tipo 8) os resultados também.
 //   2. INSCRITOS de cada torneio que ainda não acabou: o resumo (GetMeta — inscritos por escalão)
 //      e, nos escalões Boys 9–13, a lista de nomes — sempre nos torneios seguidos e nos do Manuel;
 //      nos outros só onde o número mudou ou ainda não temos nomes («contagens» do
@@ -148,7 +150,7 @@
   const drawFeitos = [], drawRespostas = {}, drawLinhas = [];
   const alteracoes = [];
   const feitos = [];
-  const resFeitos = [], resRespostas = {}, resLinhas = [];
+  const resFeitos = [], resRespostas = {}, resLinhas = [], resTodos = [];
   const numEntradas = {}, numVazios = [];
   let numFim = null, numCompleto = false;
   let gravacoes = 0;
@@ -157,7 +159,7 @@
     const carimbo = `${agora.toISOString().slice(0, 10)}-${String(agora.getHours()).padStart(2, "0")}${String(agora.getMinutes()).padStart(2, "0")}`;
     const ficheiro = { gerado_em: agora.toISOString(), fonte: "consola do browser (scripts/uskids-consola.js)", parcial: !!parcial, recusa, pedidos,
       torneios: [...feitos], alteracoes: [...alteracoes], respostas,
-      resultados: { torneios: [...resFeitos], respostas: resRespostas },
+      resultados: { torneios: [...resFeitos], todos_escaloes: [...resTodos], respostas: resRespostas },
       draws: { torneios: [...drawFeitos], respostas: drawRespostas },
       numeros: { inicio: numInicio, fim: numFim, completo: numCompleto, entradas: { ...numEntradas }, vazios: [...numVazios] } };
     const a = document.createElement("a");
@@ -186,7 +188,9 @@
       const n = meta.age_groups?.[f.age_group]?.name;
       if (n && !porNome[n]) porNome[n] = { fid: Number(fid), age_group: Number(f.age_group), registered: f.registered || 0 };
     }
-    const alvos = nomes.map((n, i) => porNome[n] && { ...porNome[n], nome: n, is_manuel: i === 0, adjacent: i > 0 }).filter(Boolean);
+    // Todos os escalões (o do Manuel primeiro; `adjacent` = os vizinhos ±1, como no fetch-uskids-draws.js).
+    const alvos = Object.entries(porNome).map(([n, f]) => ({ ...f, nome: n, is_manuel: n === nomes[0], adjacent: nomes.slice(1).includes(n) }))
+      .sort((a, b) => (b.is_manuel - a.is_manuel) || a.age_group - b.age_group);
     const rondas = meta.tournament?.rounds || tor.rondas || 1;
     const novas = {};
     let incompleto = false;
@@ -227,7 +231,7 @@
       drawLinhas.push({ torneio: nomeT, volta: r, hora: rd.start_time || "", buraco: rd.start_hole || rd.starting_hole || "", campo: rd.course_name || rd.course || "",
         com: parceiros.map(j => `${nomeJ(j)} (${String(j.country || "").toUpperCase()})`).join(", ") });
     }
-    console.log(`⛳ Draw de ${nomeT} (t=${tor.t}) · ${alvos.map(a => a.nome).join(", ")} · voltas com draw: ${[...voltasComDraw].join(", ") || "nenhuma ainda"} · ${pedidos} pedidos até agora`);
+    console.log(`⛳ Draw de ${nomeT} (t=${tor.t}) · ${alvos.length} escalões · voltas com draw: ${[...voltasComDraw].sort().join(", ") || "nenhuma ainda"} · ${pedidos} pedidos até agora`);
   }
 
   // ── 2. Inscritos ──────────────────────────────────────────────────────────
@@ -250,7 +254,7 @@
       const inscr = f.active ?? f.registered ?? 0; // `registered` conta os WD; `active` não
       const ePrev = (prev?.escaloes || []).find(e => e.age_group === Number(ag));
       if (ePrev && ePrev.inscritos !== inscr) alteracoes.push({ torneio: nomeT, escalao: esc, antes: ePrev.inscritos, agora: inscr, entraram: "", sairam: "" });
-      if (!comNomes(esc) || (f.registered ?? inscr) <= 0) continue;
+      if (!(comNomes(esc) || doManuel(prev)) || (f.registered ?? inscr) <= 0) continue; // torneios do Manuel: todos os escalões
       const precisa = completo || !ePrev || !ePrev.jogadores || ePrev.inscritos !== inscr;
       if (!precisa) { todosComNomes = false; continue; }
       const d = await pedir("GetPlayerTeeTimes", `f=${fid}&r=1&p=1&t=0`);
@@ -286,6 +290,8 @@
     const meta = await getMeta(tor.t);
     if (!meta) break;
     if (!meta.flights) continue; // sem escalões publicados: nada a guardar
+    // Torneios do Manuel e provas internacionais: todos os escalões; os outros, só os Boys.
+    const todosEsc = doManuel(prevPorT.get(tor.t)) || tor.type === 8 || meta.tournament?.type === 8;
     const novas = { [`GetMeta:${tor.t}`]: meta };
     const rondas = meta.tournament?.rounds || tor.rondas || 1;
     const porAG = {};
@@ -293,7 +299,7 @@
     let incompleto = false, nJog = 0;
     for (const [ag, { fid, f }] of Object.entries(porAG)) {
       const nome = String(meta.age_groups?.[ag]?.name || "");
-      if (!nome.toLowerCase().startsWith("boys") || !(f.registered > 0)) continue; // a app guarda os Boys
+      if (!(todosEsc || nome.toLowerCase().startsWith("boys")) || !(f.registered > 0)) continue; // a app guarda os Boys
       for (let r = 1; r <= rondas; r++) {
         const vistos = await flightNaVolta(fid, r, f.registered, (p, fp) => { novas[`GetPlayerTeeTimes:${fid}:${r}:${p}`] = { flight_players: fp }; });
         if (!vistos) { incompleto = true; break; }
@@ -305,8 +311,9 @@
     if (incompleto) { console.warn(`… resultados de ${meta.tournament?.name || tor.name} (t=${tor.t}) ficaram a meio — não vão no ficheiro`); break; }
     Object.assign(resRespostas, novas);
     resFeitos.push(tor.t);
-    resLinhas.push({ torneio: meta.tournament?.name || tor.name, data: tor.date_inicio, estado: aDecorrer(tor) ? "a decorrer" : "acabado", rondas, jogadores_boys: nJog });
-    console.log(`🏆 ${meta.tournament?.name || tor.name} (t=${tor.t})${aDecorrer(tor) ? " · A DECORRER" : ""} · ${rondas} volta(s) · ${nJog} rapazes · ${pedidos} pedidos até agora`);
+    if (todosEsc) resTodos.push(tor.t);
+    resLinhas.push({ torneio: meta.tournament?.name || tor.name, data: tor.date_inicio, estado: aDecorrer(tor) ? "a decorrer" : "acabado", rondas, jogadores: nJog, escaloes: todosEsc ? "todos" : "Boys" });
+    console.log(`🏆 ${meta.tournament?.name || tor.name} (t=${tor.t})${aDecorrer(tor) ? " · A DECORRER" : ""} · ${rondas} volta(s) · ${nJog} jogadores (${todosEsc ? "todos os escalões" : "Boys"}) · ${pedidos} pedidos até agora`);
   }
 
   // ── 4. Números novos de torneios ─────────────────────────────────────────

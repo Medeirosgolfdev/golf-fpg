@@ -190,7 +190,10 @@ function uskidsRoundResults(e: EscalaoResult | null, ronda: number): Map<string,
   return m;
 }
 
-const DRAW_HIDE = { esc: true, fed: true, hcp: true, tee: true, nasc: true };
+// Os escalões da USKids são por idade, por isso ESC./Nasc. ficam de fora. O HCP fica
+// (18/11/2026, Mariana: «o HCP é importante aparecer»): a USKids não o dá, vem da ficha
+// do Kids 2 (DrawTab → hcpAt); a coluna só aparece quando alguém o tem.
+const DRAW_HIDE = { esc: true, fed: true, tee: true, nasc: true };
 
 /** Draws de um escalão como DADOS (o shell/TournamentDetail desenham o DrawTab). */
 export function roundDrawsOf(drawsData: UskidsDrawsData | null | undefined, t: number, ageGroup: number, e: EscalaoResult | null, date: string): CircuitRoundDraw[] | undefined {

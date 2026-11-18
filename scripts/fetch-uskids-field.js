@@ -37,6 +37,9 @@ const { incluirTorneio, FORCAR_INCLUIR, TIPO_LABEL } = require('./lib/uskids-cla
 // Prefixos de escalão — apanha "Boys 12", "Boys 13-14", "Boys 13 & Under", etc.
 const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12', 'boys 13'];
 const escalaoComNomes = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase().startsWith(p));
+/** Torneios do Manuel: nomes de TODOS os escalões (18/11/2026, Mariana: «como temos portugueses
+ *  a participar nos escalões, quero descarregar tudo dos outros escalões também»). Enche-se no main. */
+let TODOS_ESCALOES = new Set();
 
 // ── Pedidos à USKids ─────────────────────
 // Um de cada vez, com pausa. A varredura antiga (5 em paralelo, sem pausa,
@@ -685,7 +688,7 @@ async function processarTorneio(page, torneio, prev, modo = 'completo') {
     if (ePrev) {
       escalao.jogadores = ePrev.jogadores;
       escalao.paises    = ePrev.paises;
-    } else if (escalaoComNomes(nome) && (inscr > 0 || desist > 0)) {
+    } else if ((escalaoComNomes(nome) || TODOS_ESCALOES.has(torneio.t)) && (inscr > 0 || desist > 0)) {
       try {
         // Buscar todas as páginas (cada página tem ~20 jogadores)
         const todosJogs = [], wds = [];
@@ -829,6 +832,7 @@ async function main() {
     const doManuel = new Set([...prevMap.prevTorneios.values()]
       .filter(p => (p.escaloes || []).some(e => (e.jogadores || []).some(j => /manuel.*medeiros/i.test(j.nome))))
       .map(p => p.t));
+    TODOS_ESCALOES = doManuel;
     const plano2 = REPLAY
       ? new Map(REPLAY.torneios.map(x => [Number(x.t), x.modo === 'contagens' ? 'contagens' : 'completo']))
       : only
