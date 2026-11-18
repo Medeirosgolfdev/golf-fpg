@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-17T18:28:46.705Z",
+  "generatedAt": "2026-11-18T02:48:41.256Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -14824,6 +14824,26 @@
       "editionsCount": 10
     },
     {
+      "id": "wagr-5-stars-junior-cup-by-adrian-meronk",
+      "label": "5 Stars Junior Cup by Adrian Meronk",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-229490",
+        "wagr-271638",
+        "wagr-270714",
+        "wagr-270383",
+        "wagr-269885",
+        "wagr-224656",
+        "wagr-234070",
+        "wagr-224232",
+        "wagr-233228",
+        "wagr-223319"
+      ],
+      "firstDate": "2023-05-26",
+      "lastDate": "2026-08-26",
+      "editionsCount": 10
+    },
+    {
       "id": "uskids-newnan-country-club",
       "label": "Newnan Country Club",
       "sourceId": "uskids",
@@ -19480,24 +19500,6 @@
       ],
       "firstDate": "2026-05-31",
       "lastDate": "2026-09-20",
-      "editionsCount": 8
-    },
-    {
-      "id": "wagr-5-stars-junior-cup-by-adrian-meronk",
-      "label": "5 Stars Junior Cup by Adrian Meronk",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-229490",
-        "wagr-224656",
-        "wagr-270714",
-        "wagr-234070",
-        "wagr-224232",
-        "wagr-269885",
-        "wagr-233228",
-        "wagr-223319"
-      ],
-      "firstDate": "2023-05-26",
-      "lastDate": "2026-07-20",
       "editionsCount": 8
     },
     {
@@ -30808,9 +30810,9 @@
       "tournamentIds": [
         "wagr-234817",
         "wagr-259250",
+        "wagr-224930",
         "wagr-271038",
-        "wagr-75714",
-        "wagr-224930"
+        "wagr-75714"
       ],
       "firstDate": "2022-07-25",
       "lastDate": "2026-07-21",
@@ -38529,6 +38531,20 @@
       ],
       "firstDate": "2023-02-23",
       "lastDate": "2026-04-02",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-danish-junior-games",
+      "label": "Danish Junior Games",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-259509",
+        "wagr-271255",
+        "wagr-226191",
+        "wagr-76874"
+      ],
+      "firstDate": "2022-10-07",
+      "lastDate": "2026-04-03",
       "editionsCount": 4
     },
     {
@@ -49433,19 +49449,6 @@
       ],
       "firstDate": "2024-07-08",
       "lastDate": "2026-07-07",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-danish-junior-games",
-      "label": "Danish Junior Games",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259509",
-        "wagr-226191",
-        "wagr-76874"
-      ],
-      "firstDate": "2022-10-07",
-      "lastDate": "2025-04-18",
       "editionsCount": 3
     },
     {
@@ -64300,18 +64303,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-european-amateur-team-championship",
-      "label": "European Amateur Team Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12628",
-        "egr-egr10394"
-      ],
-      "firstDate": "2025-07-08",
-      "lastDate": "2026-07-07",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-nations-cup-copa-sotogrande",
       "label": "Nations Cup (Copa Sotogrande)",
       "sourceId": "egr",
@@ -69613,6 +69604,18 @@
       ],
       "firstDate": "2025-08-19",
       "lastDate": "2026-08-18",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-danish-junior-internationals",
+      "label": "Danish Junior Internationals",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-273923",
+        "wagr-265134"
+      ],
+      "firstDate": "2025-07-29",
+      "lastDate": "2026-03-30",
       "editionsCount": 2
     },
     {
@@ -106258,6 +106261,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-european-amateur-team-championship",
+      "label": "European Amateur Team Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr10394"
+      ],
+      "firstDate": "2025-07-08",
+      "lastDate": "2025-07-08",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-sgu-men-s-county-championship",
       "label": "SGU Men's County Championship",
       "sourceId": "egr",
@@ -114123,6 +114137,28 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-gjg-edge-reed-sanderlin-championship",
+      "label": "GJG Edge Reed Sanderlin Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-274989"
+      ],
+      "firstDate": "2026-02-17",
+      "lastDate": "2026-02-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-west-coast-masters",
+      "label": "West Coast Masters",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-224381"
+      ],
+      "firstDate": "2023-07-08",
+      "lastDate": "2023-07-08",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-brian-wilkins-memorial-match-play-championships",
       "label": "Brian Wilkins Memorial Match Play Championships",
       "sourceId": "wagr",
@@ -115825,17 +115861,6 @@
       ],
       "firstDate": "2024-11-04",
       "lastDate": "2024-11-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-gjg-edge-reed-sanderlin-championship",
-      "label": "GJG Edge Reed Sanderlin Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274989"
-      ],
-      "firstDate": "2026-02-17",
-      "lastDate": "2026-02-17",
       "editionsCount": 1
     },
     {
@@ -119939,17 +119964,6 @@
       ],
       "firstDate": "2022-04-15",
       "lastDate": "2022-04-15",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-west-coast-masters",
-      "label": "West Coast Masters",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-224381"
-      ],
-      "firstDate": "2023-07-08",
-      "lastDate": "2023-07-08",
       "editionsCount": 1
     },
     {
