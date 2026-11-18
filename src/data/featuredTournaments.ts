@@ -240,7 +240,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   // ── 2nd Castro Marim Portuguese International U14 — 4-6/12/2026 (Quinta do Vale) ──
   // Treino a 3/12; as 3 voltas são a 4, 5 e 6/12 (Termos da Competição).
   // As inscrições são pelo formulário do fpg.pt e os inscritos completos são os
-  // das Entry Lists em PDF de 16/11/2026 (rapazes) e 10/11/2026 (raparigas) («Final Entry List – Pending Handicap
+  // das Entry Lists em PDF de 16/11/2026, 15:21 (rapazes e raparigas) («Final Entry List – Pending Handicap
   // Verification»), curados à mão (`_manual` em fpg-admissions-draws.json) nos
   // tcodes PROVISÓRIOS 90872 (rapazes) e 90873 (raparigas).
   // A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946
@@ -264,7 +264,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     extraLinks: [
       { label: "página oficial FPG", url: "https://competicoes.fpg.pt/evento/2nd-portuguese-international-u14-championship/", icon: "🏆" },
       { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/2nd-Castro-Marim-Term-Of-Competition.pdf", icon: "📋" },
-      { label: "Entry List Boys 16/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Boys-16_11.pdf", icon: "📝" },
+      { label: "Entry List Boys 16/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Boys-16_11_26.pdf", icon: "📝" },
     ],
     live: false,
     semLinksFpg: true,
@@ -284,7 +284,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     extraLinks: [
       { label: "página oficial FPG", url: "https://competicoes.fpg.pt/evento/2nd-portuguese-international-u14-championship/", icon: "🏆" },
       { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/2nd-Castro-Marim-Term-Of-Competition.pdf", icon: "📋" },
-      { label: "Entry List Girls 10/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Girls-10_11_26_II.pdf", icon: "📝" },
+      { label: "Entry List Girls 16/11 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Girls-16_11.pdf", icon: "📝" },
     ],
     live: false,
     semLinksFpg: true,

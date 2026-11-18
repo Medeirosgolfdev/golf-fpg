@@ -407497,14 +407497,14 @@
       "date": "2026-12-04",
       "campo": "Quinta do Vale",
       "_manual": true,
-      "_note": "Rapazes. tcode PROVISÓRIO (o das listas em PDF; o real no scoring é o 000/10946 — ver o fim desta nota). Lido do PDF Entry List Boys de 16/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Boys-16_11.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-16_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Face a 10/11: sai Karol Gil (+0,8, era 42.º) e entra o 1.º da espera, Julius Gellermann (+0,7); Nicolas Xu Chen passa de 0,7 para +0,2 (19.º → 7.º da espera); 42 + 44 em espera. Lugares 1-12 = lugares de wild card (tag «Wild card»): 1-10 atribuídos a 05/11 (Burkhalter, Harran, Durando, Palmares, Rocha, Ivo de Carvalho, Nunes, Castro Ferreira, Balixa, Rente); 11-12, que estavam por atribuir, são desde 06/11 Theophile Galle (+0,2, era 7.º da espera) e Cayssi Dunlop (0,8, era 21.º) — o PDF não escreve «wild card», lê-se da posição (fora da ordem dos handicaps). 13-42 por handicap; espera com a numeração do PDF. A lista de 10/11 já não traz quem tinha HI acima de 6,0 (o máximo dos Termos; a vermelho até 06/11): Manuel Medeiros (6,4), Sebastião Soares, Casper Bernstein, Tiago Araujo, Tomas Lima Pinto, Pierre-Antoine Maupin, Ricardo Ferreira, Eduardo Ferreira, Miguel Ferreira. Convocados que entraram pelo handicap: Santiago Dias. Artyom Becerra: o PDF escreve «3,9» sem o «+», mas está na ordem dos +4,2/+3,8 (era +1,9 a 04/11) — guardado como +3,9. «Aodhán Christopher Fitzgerald» é o «Aodhan Fitzgerald» das listas anteriores (+1,7; era +1,6). Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json). A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946 (rapazes e raparigas juntos; só lá estão os federados portugueses — 13 a 12/11/2026), ligado a esta entrada por `tcodeReal` no featuredTournaments.ts: na lista do site há uma só carta, com estas listas completas. Data = 1.ª volta (4/12; o treino é a 3/12).",
+      "_note": "Rapazes. tcode PROVISÓRIO (o das listas em PDF; o real no scoring é o 000/10946 — ver o fim desta nota). Lido do PDF Entry List Boys de 16/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Boys-16_11.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-16_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Face a 10/11: sai Karol Gil (+0,8, era 42.º) e entra o 1.º da espera, Julius Gellermann (+0,7); Nicolas Xu Chen passa de 0,7 para +0,2 (19.º → 7.º da espera); 42 + 44 em espera. Lugares 1-12 = lugares de wild card (tag «Wild card»): 1-10 atribuídos a 05/11 (Burkhalter, Harran, Durando, Palmares, Rocha, Ivo de Carvalho, Nunes, Castro Ferreira, Balixa, Rente); 11-12, que estavam por atribuir, são desde 06/11 Theophile Galle (+0,2, era 7.º da espera) e Cayssi Dunlop (0,8, era 21.º) — o PDF não escreve «wild card», lê-se da posição (fora da ordem dos handicaps). 13-42 por handicap; espera com a numeração do PDF. A lista de 10/11 já não traz quem tinha HI acima de 6,0 (o máximo dos Termos; a vermelho até 06/11): Manuel Medeiros (6,4), Sebastião Soares, Casper Bernstein, Tiago Araujo, Tomas Lima Pinto, Pierre-Antoine Maupin, Ricardo Ferreira, Eduardo Ferreira, Miguel Ferreira. Convocados que entraram pelo handicap: Santiago Dias. Artyom Becerra: o PDF escreve «3,9» sem o «+», mas está na ordem dos +4,2/+3,8 (era +1,9 a 04/11) — guardado como +3,9. «Aodhán Christopher Fitzgerald» é o «Aodhan Fitzgerald» das listas anteriores (+1,7; era +1,6). Lista de 16/11 às 15:21 (Entry-List_Boys-16_11_26.pdf; OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-16_FPG_Entry_List_Boys_Castro_Marim_U14_15h21.pdf): entra o Adam Allouache (FRA, +0,7), que era o 1.º da espera, como 43.º — para o lugar que a Angelina Gao deixou nas raparigas (Termos 1.iii: 84 lugares, 42+42, e os que um lado não preenche passam para o outro; as raparigas não têm espera); 43 + 43 em espera; os outros 86 iguais. O PDF não renumerou a espera (começa no 2); aqui vai de 1 a 43. Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json). A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946 (rapazes e raparigas juntos; só lá estão os federados portugueses — 13 a 12/11/2026), ligado a esta entrada por `tcodeReal` no featuredTournaments.ts: na lista do site há uma só carta, com estas listas completas. Data = 1.ª volta (4/12; o treino é a 3/12).",
       "admissions": {
         "name": "2nd Castro Marim Portuguese Int. U14 Championship — Rapazes",
         "date": "2026-12-04",
-        "status": "Entry List final FPG 16/11 · 12 wild cards atribuídos (lugares 1-12) · fora quem tinha HI acima de 6,0",
-        "totalInscritos": 42,
-        "reservas": 44,
-        "_source": "PDF Entry List Boys FPG 16/11/2026 (manual)",
+        "status": "Entry List final FPG 16/11 (15:21) · 12 wild cards atribuídos (lugares 1-12) · fora quem tinha HI acima de 6,0",
+        "totalInscritos": 43,
+        "reservas": 43,
+        "_source": "PDF Entry List Boys FPG 16/11/2026 15:21 (manual)",
         "players": [
           {
             "pos": 1,
@@ -408018,18 +408018,18 @@
             "country": "Germany"
           },
           {
-            "pos": 1,
+            "pos": 43,
             "fed": null,
             "nome": "Adam Allouache",
             "clube": null,
             "hcp": -0.7,
             "vac": null,
             "dataInscricao": null,
-            "status": "reserva",
+            "status": "confirmed",
             "country": "France"
           },
           {
-            "pos": 2,
+            "pos": 1,
             "fed": null,
             "nome": "Gaspard Bremond",
             "clube": null,
@@ -408040,7 +408040,7 @@
             "country": "France"
           },
           {
-            "pos": 3,
+            "pos": 2,
             "fed": null,
             "nome": "Riccardo Rizzo",
             "clube": null,
@@ -408051,7 +408051,7 @@
             "country": "Italy"
           },
           {
-            "pos": 4,
+            "pos": 3,
             "fed": null,
             "nome": "Samuele Pollastri",
             "clube": null,
@@ -408062,7 +408062,7 @@
             "country": "Italy"
           },
           {
-            "pos": 5,
+            "pos": 4,
             "fed": null,
             "nome": "Gabin Tosatto",
             "clube": null,
@@ -408073,7 +408073,7 @@
             "country": "France"
           },
           {
-            "pos": 6,
+            "pos": 5,
             "fed": null,
             "nome": "Giorgio Regoli",
             "clube": null,
@@ -408084,7 +408084,7 @@
             "country": "Italy"
           },
           {
-            "pos": 7,
+            "pos": 6,
             "fed": null,
             "nome": "Nicolas Xu Chen",
             "clube": null,
@@ -408095,7 +408095,7 @@
             "country": "Spain"
           },
           {
-            "pos": 8,
+            "pos": 7,
             "fed": null,
             "nome": "Arthur Mouy",
             "clube": null,
@@ -408106,7 +408106,7 @@
             "country": "France"
           },
           {
-            "pos": 9,
+            "pos": 8,
             "fed": null,
             "nome": "Giorgio Lopes",
             "clube": null,
@@ -408117,7 +408117,7 @@
             "country": "Italy"
           },
           {
-            "pos": 10,
+            "pos": 9,
             "fed": null,
             "nome": "Antonio Strano",
             "clube": null,
@@ -408128,7 +408128,7 @@
             "country": "Italy"
           },
           {
-            "pos": 11,
+            "pos": 10,
             "fed": null,
             "nome": "Côme Chaboud",
             "clube": null,
@@ -408139,7 +408139,7 @@
             "country": "France"
           },
           {
-            "pos": 12,
+            "pos": 11,
             "fed": null,
             "nome": "Tommaso Falla",
             "clube": null,
@@ -408150,7 +408150,7 @@
             "country": "Italy"
           },
           {
-            "pos": 13,
+            "pos": 12,
             "fed": null,
             "nome": "Paul Berger",
             "clube": null,
@@ -408161,7 +408161,7 @@
             "country": "Germany"
           },
           {
-            "pos": 14,
+            "pos": 13,
             "fed": null,
             "nome": "Arthur Yanez",
             "clube": null,
@@ -408172,7 +408172,7 @@
             "country": "France"
           },
           {
-            "pos": 15,
+            "pos": 14,
             "fed": null,
             "nome": "Taïg Xian Camblong",
             "clube": null,
@@ -408183,7 +408183,7 @@
             "country": "France"
           },
           {
-            "pos": 16,
+            "pos": 15,
             "fed": null,
             "nome": "Kit Hill",
             "clube": null,
@@ -408194,7 +408194,7 @@
             "country": "United Kingdom"
           },
           {
-            "pos": 17,
+            "pos": 16,
             "fed": null,
             "nome": "Hafsi Hedi",
             "clube": null,
@@ -408205,7 +408205,7 @@
             "country": "France"
           },
           {
-            "pos": 18,
+            "pos": 17,
             "fed": null,
             "nome": "Harry Tiernan",
             "clube": null,
@@ -408216,7 +408216,7 @@
             "country": "Ireland"
           },
           {
-            "pos": 19,
+            "pos": 18,
             "fed": null,
             "nome": "Paul Misha",
             "clube": null,
@@ -408227,7 +408227,7 @@
             "country": "France"
           },
           {
-            "pos": 20,
+            "pos": 19,
             "fed": null,
             "nome": "Harry Wang",
             "clube": null,
@@ -408238,7 +408238,7 @@
             "country": "England"
           },
           {
-            "pos": 21,
+            "pos": 20,
             "fed": null,
             "nome": "Jules Dechery",
             "clube": null,
@@ -408249,7 +408249,7 @@
             "country": "France"
           },
           {
-            "pos": 22,
+            "pos": 21,
             "fed": null,
             "nome": "Ricky Mohun",
             "clube": null,
@@ -408260,7 +408260,7 @@
             "country": "England"
           },
           {
-            "pos": 23,
+            "pos": 22,
             "fed": "51612",
             "nome": "Oliver Smith",
             "clube": "Vila Sol",
@@ -408272,7 +408272,7 @@
             "dob": "2013-05-03"
           },
           {
-            "pos": 24,
+            "pos": 23,
             "fed": null,
             "nome": "Matteo Kaipel",
             "clube": null,
@@ -408283,7 +408283,7 @@
             "country": "Austria"
           },
           {
-            "pos": 25,
+            "pos": 24,
             "fed": null,
             "nome": "Ramaroson Iavo",
             "clube": null,
@@ -408294,7 +408294,7 @@
             "country": "France"
           },
           {
-            "pos": 26,
+            "pos": 25,
             "fed": "55269",
             "nome": "Finn Gordon",
             "clube": "Vilamoura, C. G",
@@ -408306,7 +408306,7 @@
             "dob": "2012-09-25"
           },
           {
-            "pos": 27,
+            "pos": 26,
             "fed": null,
             "nome": "Mathis da Silva",
             "clube": null,
@@ -408317,7 +408317,7 @@
             "country": "France"
           },
           {
-            "pos": 28,
+            "pos": 27,
             "fed": null,
             "nome": "Hector Dawson",
             "clube": null,
@@ -408328,7 +408328,7 @@
             "country": "United Kingdom"
           },
           {
-            "pos": 29,
+            "pos": 28,
             "fed": null,
             "nome": "Felipe Tavares de Araujo",
             "clube": null,
@@ -408339,7 +408339,7 @@
             "country": "Italy"
           },
           {
-            "pos": 30,
+            "pos": 29,
             "fed": null,
             "nome": "Nelson Nunez de Leon",
             "clube": null,
@@ -408350,7 +408350,7 @@
             "country": "Monaco"
           },
           {
-            "pos": 31,
+            "pos": 30,
             "fed": null,
             "nome": "Ilyes Cauden",
             "clube": null,
@@ -408361,7 +408361,7 @@
             "country": "Maroc"
           },
           {
-            "pos": 32,
+            "pos": 31,
             "fed": null,
             "nome": "Edouard Peltier",
             "clube": null,
@@ -408372,7 +408372,7 @@
             "country": "France"
           },
           {
-            "pos": 33,
+            "pos": 32,
             "fed": null,
             "nome": "Leo Tunney",
             "clube": null,
@@ -408383,7 +408383,7 @@
             "country": "France"
           },
           {
-            "pos": 34,
+            "pos": 33,
             "fed": null,
             "nome": "Carlos Dominguez Jurado",
             "clube": null,
@@ -408394,7 +408394,7 @@
             "country": "Spain"
           },
           {
-            "pos": 35,
+            "pos": 34,
             "fed": null,
             "nome": "César Raynaud Gérard",
             "clube": null,
@@ -408405,7 +408405,7 @@
             "country": "France"
           },
           {
-            "pos": 36,
+            "pos": 35,
             "fed": "51524",
             "nome": "William Gao",
             "clube": "Quinta do Peru",
@@ -408417,7 +408417,7 @@
             "dob": "2012-11-14"
           },
           {
-            "pos": 37,
+            "pos": 36,
             "fed": null,
             "nome": "Aaron Veyrenc",
             "clube": null,
@@ -408428,7 +408428,7 @@
             "country": "France"
           },
           {
-            "pos": 38,
+            "pos": 37,
             "fed": "46296",
             "nome": "Raul Pazos",
             "clube": "Miramar",
@@ -408440,7 +408440,7 @@
             "dob": "2013-02-08"
           },
           {
-            "pos": 39,
+            "pos": 38,
             "fed": "58937",
             "nome": "Alfie Dunbar",
             "clube": "Vila Sol",
@@ -408452,7 +408452,7 @@
             "dob": "2012-02-18"
           },
           {
-            "pos": 40,
+            "pos": 39,
             "fed": "39097",
             "nome": "Francisco Saraiva",
             "clube": "Oporto",
@@ -408464,7 +408464,7 @@
             "dob": "2012-04-20"
           },
           {
-            "pos": 41,
+            "pos": 40,
             "fed": null,
             "nome": "Haqvin Sylven",
             "clube": null,
@@ -408475,7 +408475,7 @@
             "country": "Switzerland"
           },
           {
-            "pos": 42,
+            "pos": 41,
             "fed": "46480",
             "nome": "Afonso Pinto",
             "clube": "Oporto",
@@ -408487,7 +408487,7 @@
             "dob": "2013-04-16"
           },
           {
-            "pos": 43,
+            "pos": 42,
             "fed": null,
             "nome": "Aristophane Baruch",
             "clube": null,
@@ -408498,7 +408498,7 @@
             "country": "France"
           },
           {
-            "pos": 44,
+            "pos": 43,
             "fed": "52856",
             "nome": "Francisco Carvalho",
             "clube": "Vale Pisão",
@@ -408617,14 +408617,14 @@
       "date": "2026-12-04",
       "campo": "Quinta do Vale",
       "_manual": true,
-      "_note": "Raparigas. tcode PROVISÓRIO (o das listas em PDF; o real no scoring é o 000/10946 — ver o fim desta nota). Lido do PDF Entry List Girls de 10/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Girls-10_11_26_II.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-10_FPG_Entry_List_Girls_Castro_Marim_U14.pdf. Lugares 1-4 = wild cards (Riana Kohler, Sabrina Crisóstomo, Margarida Pinto, Catarina Sousa Conceição; tag «Wild card»); 5-42 por handicap. Face a 05/11 saem Andrea Arnal Adsuara (+2,6) e Austine Farrando (3,2) e entram as duas primeiras da espera, Rachel Strek (4,7) e Allegra Kuhnert (5,5); a lista de 10/11 já não tem espera (saíram Madalena Miguel Araújo 8,2, Catarina Valério 13 e Francisca Fragoso 15,5 — as três a vermelho a 05/11). Convocada que entrou pelo handicap: Laura Santos. Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946 (rapazes e raparigas juntos; só lá estão os federados portugueses — 13 a 12/11/2026), ligado a esta entrada por `tcodeReal` no featuredTournaments.ts: na lista do site há uma só carta, com estas listas completas. Data = 1.ª volta (4/12; o treino é a 3/12).",
+      "_note": "Raparigas. tcode PROVISÓRIO (o das listas em PDF; o real no scoring é o 000/10946 — ver o fim desta nota). Lido do PDF Entry List Girls de 10/11/2026 (final, por verificar handicaps; ficheiro «Entry-List_Girls-10_11_26_II.pdf») — OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-10_FPG_Entry_List_Girls_Castro_Marim_U14.pdf. Lugares 1-4 = wild cards (Riana Kohler, Sabrina Crisóstomo, Margarida Pinto, Catarina Sousa Conceição; tag «Wild card»); 5-42 por handicap. Face a 05/11 saem Andrea Arnal Adsuara (+2,6) e Austine Farrando (3,2) e entram as duas primeiras da espera, Rachel Strek (4,7) e Allegra Kuhnert (5,5); a lista de 10/11 já não tem espera (saíram Madalena Miguel Araújo 8,2, Catarina Valério 13 e Francisca Fragoso 15,5 — as três a vermelho a 05/11). Convocada que entrou pelo handicap: Laura Santos. Lista de 16/11 (Entry-List_Girls-16_11.pdf; OneDrive/Golfe/Arquivo_GOLF/2026/2026-11-16_FPG_Entry_List_Girls_Castro_Marim_U14.pdf): sai a Angelina Gao (51523, Hong Kong, 2,9, era a 35.ª); ficam 41, sem lista de espera — o lugar dela passou para os rapazes (Adam Allouache, Termos 1.iii). Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. A FPG abriu entretanto o torneio no scoring com o tcode REAL 000/10946 (rapazes e raparigas juntos; só lá estão os federados portugueses — 13 a 12/11/2026), ligado a esta entrada por `tcodeReal` no featuredTournaments.ts: na lista do site há uma só carta, com estas listas completas. Data = 1.ª volta (4/12; o treino é a 3/12).",
       "admissions": {
         "name": "2nd Castro Marim Portuguese Int. U14 Championship — Raparigas",
         "date": "2026-12-04",
-        "status": "Entry List final FPG 10/11 · 4 wild cards atribuídos (lugares 1-4) · lista cheia (42) · sem lista de espera",
-        "totalInscritos": 42,
+        "status": "Entry List final FPG 16/11 · 4 wild cards atribuídos (lugares 1-4) · 41 (saiu a Angelina Gao) · sem lista de espera",
+        "totalInscritos": 41,
         "reservas": 0,
-        "_source": "PDF Entry List Girls FPG 10/11/2026 (manual)",
+        "_source": "PDF Entry List Girls FPG 16/11/2026 (manual)",
         "players": [
           {
             "pos": 1,
@@ -409055,19 +409055,6 @@
           },
           {
             "pos": 35,
-            "fed": "51523",
-            "nome": "Angelina Gao",
-            "clube": "Quinta do Peru",
-            "hcp": 2.9,
-            "vac": null,
-            "dataInscricao": null,
-            "status": "confirmed",
-            "country": "Hong Kong",
-            "dob": "2011-06-09",
-            "sex": "F"
-          },
-          {
-            "pos": 36,
             "fed": null,
             "nome": "Paula Jiménez Tirado",
             "clube": null,
@@ -409079,7 +409066,7 @@
             "sex": "F"
           },
           {
-            "pos": 37,
+            "pos": 36,
             "fed": null,
             "nome": "Diane Yousfi",
             "clube": null,
@@ -409091,7 +409078,7 @@
             "sex": "F"
           },
           {
-            "pos": 38,
+            "pos": 37,
             "fed": null,
             "nome": "Louna Latard",
             "clube": null,
@@ -409103,7 +409090,7 @@
             "sex": "F"
           },
           {
-            "pos": 39,
+            "pos": 38,
             "fed": null,
             "nome": "Gabriela Delgado Pascual",
             "clube": null,
@@ -409115,7 +409102,7 @@
             "sex": "F"
           },
           {
-            "pos": 40,
+            "pos": 39,
             "fed": null,
             "nome": "Valentine Arosio",
             "clube": null,
@@ -409127,7 +409114,7 @@
             "sex": "F"
           },
           {
-            "pos": 41,
+            "pos": 40,
             "fed": null,
             "nome": "Rachel Strek",
             "clube": null,
@@ -409140,7 +409127,7 @@
             "juniorId": "g042206335"
           },
           {
-            "pos": 42,
+            "pos": 41,
             "fed": null,
             "nome": "Allegra Kuhnert",
             "clube": null,
@@ -409205,6 +409192,17 @@
             "sex": "F",
             "ultimaLista": "2026-11-05",
             "estavaEm": "5.º da espera"
+          },
+          {
+            "nome": "Angelina Gao",
+            "fed": "51523",
+            "clube": "Quinta do Peru",
+            "hcp": 2.9,
+            "country": "Hong Kong",
+            "dob": "2011-06-09",
+            "sex": "F",
+            "ultimaLista": "2026-11-10",
+            "estavaEm": "35.º da lista"
           }
         ]
       },
