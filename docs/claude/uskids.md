@@ -542,14 +542,10 @@ carregar `tour`/`type` por torneio.
 - Configurar: editar array `TOURNAMENTS`: `{ t: "21080" }`
 - Após download: copiar para `public/data/` e atualizar `TORNEIOS_COMPLETOS_COUNT` em `src/data/uskidsResultsLoader.ts` (actualmente **41**)
 
-**uskids-consola-numeros-novos.js** (`scripts/`, 16/11/2026) — a descoberta de números novos **à mão**, enquanto os
-workflows estão pausados pela recusa (403). A Mariana cola-o na consola de uma página do signupanytime aberta por ela;
-faz o `GetMeta` como a página, um número de cada vez, 4 s entre pedidos, e pára à primeira recusa, a 25 vazios seguidos
-ou aos 150 pedidos. No fim copia os torneios no formato das `entradas` do `uskids-tcode-catalog.json` (com o `t`),
-para ela os colar no chat e entrarem na app. Mudar o `INICIO` para o número a seguir ao último do catálogo.
-1.ª corrida (16/11/2026): 50 números (23893–23942), depois 25 vazios. Firefox: a consola só mostra as linhas com
-«Registos» ligado; o `copy()` perde-se se ela copiar o texto da consola por cima — daí o script dos inscritos gravar
-um ficheiro.
+**uskids-consola-numeros-novos.js** — ARQUIVADO a 18/11/2026 (`scripts/_archive/…_v1_ate-2026-11-18.js`): os números
+novos passaram para o `uskids-consola.js` (ver abaixo). 1.ª corrida (16/11/2026): 50 números (23893–23942), depois 25
+vazios. Firefox: a consola só mostra as linhas com «Registos» ligado; o `copy()` perde-se se ela copiar o texto da
+consola por cima — daí a consola gravar um ficheiro.
 
 **uskids-consola.js** (`scripts/`, 16/11/2026; até ao fim desse dia `uskids-consola-inscritos.js`) — os **inscritos e os resultados à mão**, enquanto os workflows estão
 pausados. Na consola de uma página do signupanytime: vai buscar à app (`golf-fpg.vercel.app/data`, CORS `*`) o
@@ -567,13 +563,43 @@ escalões Boys, `GetPlayerTeeTimes&r=<volta>&p=<página>&t=0` até ter `register
 `resultados: { torneios, respostas }` do ficheiro (agora `uskids-AAAA-MM-DD-HHMM.json`), chaves `GetMeta:<t>` e
 `GetPlayerTeeTimes:<f>:<volta>:<página>`. Aplicar: `node scripts/fetch-uskids-results.js --replay <ficheiro>` (página
 não pedida = vazia). Teste: `scripts/lib/uskids-results-replay.test.js`. Tecto 900 pedidos.
+**Draws e números novos** (18/11/2026, ela: «já há os draws para o torneio… podemos aproveitar para ver se há resultados
+novos e números de torneios novos, actualiza o script da consola para fazer tudo de uma vez só»). Ordem do script:
+**1. draws → 2. inscritos → 3. resultados → 4. números novos**; tecto 1100 pedidos; o `GetMeta` de cada torneio pede-se
+uma vez (os draws e os inscritos partilham-no).
+- **Draws** (a regra da Fonte 1 do `fetch-uskids-draws.js`): torneios do `uskids-field.json` com o Manuel inscrito que
+  começam daqui a ≤ 3 dias ou estão a decorrer (fim ≥ ontem) — o escalão dele e os Boys ±1 que existam (no Spanish
+  Open 2026: Boys 12 + Boys 11; o 13 é «13-14»). Cada volta: `GetPlayerTeeTimes&f&r=<volta>&p=<página>&t=0` até ter o
+  flight; a primeira volta sem nenhum `start_time`/`group_number` pára as seguintes (o draw ainda não saiu). Guarda
+  `rounds[<volta>]` sem os `strokes`. Mostra uma tabela com a hora, o buraco e os parceiros do Manuel. Secção
+  `draws: { torneios: [{ t, name, date_inicio, date_fim, campo, rondas, alvos }], respostas }`, chaves
+  `GetPlayerTeeTimes:<f>:<volta>:<página>`. Aplicar: `node scripts/fetch-uskids-draws.js --replay <ficheiro>` — volta
+  não pedida = sem grupos; a guarda anti-encolhimento e o cull são os de sempre (`fundirEGravar`).
+- **Números novos**: do `fronteira_max_t_visto + 1` da `uskids-discovery-cache.json` da app para a frente, até 25 vazios
+  seguidos (tecto 150). Secção `numeros: { inicio, fim, completo, entradas, vazios }` (`entradas` no formato do catálogo;
+  `vazios` só os buracos no meio). Aplicar: `node scripts/fetch-uskids-field.js --numeros <ficheiro>` — catálogo (com
+  `via: "consola DD/MM/AAAA"`), buracos, descoberta pela classificação de sempre (`incluirTorneio`), e a fronteira
+  (`varredura_max_t` = `fronteira_max_t_visto` = último que existe); exit 2 se nada for novo. Os inscritos dos torneios
+  acabados de descobrir só vêm na recolha seguinte (a consola lê a lista da app).
+- **Resultados a decorrer** (18/11/2026, ela: «mas não apanha os resultados de cada dia, só quando o torneio acaba?»):
+  a secção de resultados pede também os torneios que já começaram e ainda não acabaram (as voltas jogadas; as por jogar
+  ficam vazias, como fazia o workflow com `estaEmCursoOuRecente`). O `uskids-results-index.json` ganhou `parciais`:
+  gravado até ao último dia E com a última volta com menos jogadores do que a 1.ª (`torneioParcial`) — a consola volta a
+  pedi-los até ficarem completos (senão a última volta nunca entrava, porque o índice já os tinha). A consola não repete
+  um pedido na mesma corrida (`jaPedido`): draw, inscritos e resultados de um torneio a decorrer partilham as listas.
+- ⚠ **Volta por publicar = todos às 08:00 com `group_number: 0`** (Spanish Open 2026 R2/R3, 18/11/2026). A hora não
+  prova nada: `extrairGrupos` só aceita jogadores com grupo, e a consola só conta a volta como publicada se houver
+  grupos. Os 17 «grupos» falsos já guardados (World Championship 2026 Boys 12 R2/R3 com 149 num grupo, 13 State
+  Invitationals/Opens, Pueblo Viejo R1) saíram do `uskids-draws.json`.
+- Teste: `scripts/lib/uskids-draws-numeros-replay.test.js`.
+
 **Semanal, pelo Agendador do Windows** (16/11/2026, ela: «quero que semanalmente se veja os inscritos» → «Sim, à
 segunda 9h»; registar com `scripts/agendador/registar-uskids-consola.ps1 -Aplicar`, corre em pwsh):
 - «USKids - lembrete da consola», segunda 9:00 — `uskids-lembrete-consola.ps1`: abre a página no Firefox, põe o
   script na área de transferência e mostra o que fazer. **Colar e Enter são dela**: pôr o Chrome a correr sozinho
   seria contornar a protecção da USKids (ela perguntou; ficou de fora).
 - «USKids - aplicar ficheiro da consola», de 10 em 10 min — `uskids-aplicar-consola.ps1`: havendo
-  `uskids-AAAA-MM-DD-HHMM*.json` nas Transferências, aplica o mais recente (os dois `--replay`), `npm test` (repete uma
+  `uskids-AAAA-MM-DD-HHMM*.json` nas Transferências, aplica o mais recente (draws `--replay`, números `--numeros`, inscritos e resultados `--replay` — cada um só se o ficheiro o trouxer; desde 18/11/2026 também grava `uskids-draws.json`, o catálogo e a descoberta), `npm test` (repete uma
   vez) + `npm run build`, commit/push só dos `public/data/uskids-*`, arquiva em `logs/uskids-consola/` e mostra o
   resumo numa janela. Falhou → desfaz os dados, ficheiro em `logs/uskids-consola/falhou/`, janela de aviso. Ficheiro
   sem torneios ou dados USKids por gravar no repo → não publica. Log: `logs/uskids-consola.log`. Testar sem janelas

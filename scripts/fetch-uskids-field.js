@@ -547,6 +547,51 @@ async function descobrirTorneios() {
   return activos;
 }
 
+/** `--numeros <ficheiro>` (18/11/2026): os números novos que a consola do browser viu
+ *  (scripts/uskids-consola.js, secção «numeros») entram no catálogo e, os que interessam, na
+ *  descoberta — o que a Fase 1 faria se a USKids não recusasse os pedidos sem browser. Zero
+ *  pedidos. Os inscritos destes torneios chegam na recolha seguinte da consola (que já os vê na
+ *  lista da app). Devolve { catalogo, radar } com quantos entraram. */
+function aplicarNumeros(numeros) {
+  const cat = lerCatalogo();
+  cat.entradas = cat.entradas || {};
+  cat.buracos  = cat.buracos  || {};
+  let cache = { torneios: [] };
+  if (fs.existsSync(CACHE_PATH)) cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8')); // ilegível = erro
+  const hoje = hojeISO();
+  const via = `consola ${hoje.split('-').reverse().join('/')}`;
+  const conhecidos = new Set((cache.torneios || []).map(t => t.t));
+  let novosCat = 0, radar = 0, maxExiste = 0;
+  for (const [ts, e] of Object.entries(numeros.entradas || {})) {
+    const t = Number(ts);
+    if (!t || !e?.n) continue;
+    maxExiste = Math.max(maxExiste, t);
+    if (!cat.entradas[t]) novosCat++;
+    cat.entradas[t] = { ...e, via };
+    delete cat.buracos[t];
+    if (!incluirTorneio(t, e.n, e.ty, e.tour) || diasAte(e.s) < -30 || conhecidos.has(t)) continue;
+    const cls = TIPO_LABEL[e.ty] ? ` [${TIPO_LABEL[e.ty]}]` : '';
+    console.log(`  ✅ NOVO  t=${t}  ${e.s}  ${e.n}${cls}`);
+    cache.torneios.push({ t, name: e.n, date_inicio: e.s, date_fim: e.e, rondas: e.r, campo: e.c, fee_18: e.f, tour: e.tour, type: e.ty });
+    conhecidos.add(t);
+    radar++;
+  }
+  // Buracos: números vazios no meio dos que existem (a Fase 1 revê-os mais tarde).
+  for (const b of numeros.vazios || []) if (b < maxExiste && !cat.entradas[b]) cat.buracos[b] = hoje;
+  if (maxExiste) {
+    cache.varredura_max_t = Math.max(maxExiste, cache.fronteira_max_t_visto || 0);
+    if (maxExiste > (cache.fronteira_max_t_visto || 0)) { cache.fronteira_max_t_visto = maxExiste; cache.fronteira_avancou_em = hoje; }
+  }
+  if (radar) cache.ultima_descoberta = hoje;
+  cache.torneios.sort((a, b) => (parsearDataISO(a.date_inicio) || '').localeCompare(parsearDataISO(b.date_inicio) || ''));
+  cache.gerado_em = new Date().toISOString();
+  cat.gerado_em = cache.gerado_em;
+  writeAtomic(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf8');
+  gravarCatalogo(cat);
+  console.log(`   📚 Números da consola (${numeros.inicio}–${numeros.fim ?? '?'}): ${novosCat} novos no catálogo · ${radar} entram na descoberta`);
+  return { catalogo: novosCat, radar };
+}
+
 // ─────────────────────────────────────────────
 // FASE 2: INSCRITOS
 // ─────────────────────────────────────────────
@@ -710,6 +755,19 @@ async function main() {
   console.log('⛳  USKids Field Monitor');
   console.log(`    ${new Date().toLocaleString('pt-PT')}`);
   console.log('══════════════════════════════════════');
+
+  // --numeros <ficheiro>: só os números novos da consola → catálogo e descoberta.
+  const iNum = process.argv.indexOf('--numeros');
+  if (iNum > 0) {
+    const f = process.argv[iNum + 1];
+    let rep;
+    try { rep = JSON.parse(fs.readFileSync(f, 'utf8')); }
+    catch (err) { console.error(`❌ --numeros: não consegui ler ${f}: ${err.message}`); process.exitCode = 1; return; }
+    if (!rep.numeros || typeof rep.numeros.entradas !== 'object') { console.error(`❌ --numeros: ${f} não tem a secção «numeros»`); process.exitCode = 1; return; }
+    const n = aplicarNumeros(rep.numeros);
+    if (!n.catalogo && !n.radar) process.exitCode = 2;
+    return;
+  }
 
   // --replay <ficheiro>: sem browser nem pedidos — ver respostaReplay.
   const iReplay = process.argv.indexOf('--replay');
@@ -888,6 +946,6 @@ if (require.main === module) {
 
 // Exportado para os testes exercitarem o código REAL (não uma cópia).
 module.exports = {
-  consultar, metaTournament, preservarAnterior, descobrirTorneios, aplicarFirstSeen,
+  consultar, metaTournament, preservarAnterior, descobrirTorneios, aplicarFirstSeen, aplicarNumeros,
   get rateLimitHits() { return rateLimitHits; },
 };

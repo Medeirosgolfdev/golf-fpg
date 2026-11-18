@@ -7,8 +7,11 @@
 #  (scripts/uskids-consola.js: uskids-AAAA-MM-DD-HHMM*.json, ou o nome antigo
 #  uskids-inscritos-…), faz o que até 16/11/2026 se fazia à mão:
 #    1. git pull
-#    2. node scripts/fetch-uskids-field.js   --replay <ficheiro>   (inscritos)
-#       node scripts/fetch-uskids-results.js --replay <ficheiro>   (resultados)
+#    2. node scripts/fetch-uskids-draws.js   --replay  <ficheiro>   (draws, desde 18/11/2026)
+#       node scripts/fetch-uskids-field.js   --numeros <ficheiro>   (números novos, idem)
+#       node scripts/fetch-uskids-field.js   --replay  <ficheiro>   (inscritos)
+#       node scripts/fetch-uskids-results.js --replay  <ficheiro>   (resultados)
+#    (cada um só se o ficheiro trouxer essa parte)
 #    3. npm test (repete uma vez se falhar) e npm run build
 #    4. commit + push SÓ dos public/data/uskids-*  (o Vercel publica)
 #    5. arquiva o ficheiro em logs\uskids-consola\ e mostra o resumo
@@ -47,7 +50,9 @@ $f = $ficheiros[-1]
 $t1 = $f.Length; Start-Sleep -Seconds 5; $f.Refresh(); if ($f.Length -ne $t1) { exit 0 }
 
 $Dados = @('public/data/uskids-field.json', 'public/data/uskids-pid-anchors.json',
-           'public/data/uskids-results.json', 'public/data/uskids-results-index.json')
+           'public/data/uskids-results.json', 'public/data/uskids-results-index.json',
+           'public/data/uskids-draws.json', 'public/data/uskids-tcode-catalog.json',
+           'public/data/uskids-discovery-cache.json')
 New-Item -ItemType Directory -Force -Path $Arq | Out-Null
 
 function Arquivar([string]$destino) {
@@ -63,8 +68,11 @@ try {
     $j = Get-Content -Raw -Encoding UTF8 $f.FullName | ConvertFrom-Json
     $nIns = @($j.torneios).Count; $nAlt = @($j.alteracoes).Count
     $nRes = if ($j.resultados) { @($j.resultados.torneios).Count } else { 0 }
+    $nDraw = if ($j.draws) { @($j.draws.torneios).Count } else { 0 }
+    $nNum = if ($j.numeros -and $j.numeros.entradas) { @($j.numeros.entradas.PSObject.Properties).Count } else { 0 }
+    $resumo = "Draws: $nDraw torneio(s).`nInscritos: $nIns torneios ($nAlt alterações).`nResultados: $nRes torneios novos.`nNúmeros novos de torneios: $nNum."
     $recusa = if ($j.recusa) { " A USKids recusou a meio (HTTP $($j.recusa.status)); vai o que veio até aí." } else { '' }
-    if ($nIns -eq 0 -and $nRes -eq 0) {
+    if ($nIns -eq 0 -and $nRes -eq 0 -and $nDraw -eq 0 -and $nNum -eq 0) {
         Log 'ficheiro sem torneios — nada a aplicar.'
         Arquivar $Arq
         Aviso "O ficheiro da consola não trouxe torneios nenhuns — nada a publicar.$recusa" 'Warning'
@@ -76,9 +84,19 @@ try {
 
     Push-Location $Repo
     try {
-        & node scripts/fetch-uskids-field.js --replay $f.FullName *>> $Log
-        if ($LASTEXITCODE -notin 0, 2) { throw "fetch-uskids-field --replay saiu com $LASTEXITCODE" }
-        if ($j.resultados) {
+        if ($nDraw -gt 0) {
+            & node scripts/fetch-uskids-draws.js --replay $f.FullName *>> $Log
+            if ($LASTEXITCODE -notin 0, 2) { throw "fetch-uskids-draws --replay saiu com $LASTEXITCODE" }
+        }
+        if ($nNum -gt 0) {
+            & node scripts/fetch-uskids-field.js --numeros $f.FullName *>> $Log
+            if ($LASTEXITCODE -notin 0, 2) { throw "fetch-uskids-field --numeros saiu com $LASTEXITCODE" }
+        }
+        if ($nIns -gt 0) {
+            & node scripts/fetch-uskids-field.js --replay $f.FullName *>> $Log
+            if ($LASTEXITCODE -notin 0, 2) { throw "fetch-uskids-field --replay saiu com $LASTEXITCODE" }
+        }
+        if ($nRes -gt 0) {
             & node scripts/fetch-uskids-results.js --replay $f.FullName *>> $Log
             if ($LASTEXITCODE -notin 0, 2) { throw "fetch-uskids-results --replay saiu com $LASTEXITCODE" }
         }
@@ -87,7 +105,7 @@ try {
         if (-not $mudou) {
             Log 'nada de novo para gravar.'
             Arquivar $Arq
-            Aviso "Ficheiro aplicado: nada de novo (inscritos de $nIns torneios, resultados de $nRes).$recusa"
+            Aviso "Ficheiro aplicado: nada de novo.`n`n$resumo$recusa"
             exit 0
         }
 
@@ -98,7 +116,7 @@ try {
         if ($LASTEXITCODE -ne 0) { throw 'npm run build falhou' }
 
         G add -- $Dados | Out-Null
-        G commit -q -m "data: USKids pela consola do browser ($($f.Name): inscritos $nIns, resultados $nRes)" | ForEach-Object { Log "git: $_" }
+        G commit -q -m "data: USKids pela consola do browser ($($f.Name): draws $nDraw, inscritos $nIns, resultados $nRes, números $nNum)" | ForEach-Object { Log "git: $_" }
         $ok = $false
         foreach ($i in 1..3) {
             G push -q | ForEach-Object { Log "git: $_" }
@@ -108,10 +126,9 @@ try {
         if (-not $ok) { throw 'git push falhou 3 vezes (o commit ficou feito no PC)' }
     } finally { Pop-Location }
 
-    Log "publicado: inscritos $nIns torneios ($nAlt alterações), resultados $nRes torneios."
+    Log "publicado: draws $nDraw, inscritos $nIns torneios ($nAlt alterações), resultados $nRes torneios, números novos $nNum."
     Arquivar $Arq
-    Aviso ("Site actualizado com a recolha da consola.`n`n" +
-        "Inscritos: $nIns torneios ($nAlt alterações).`nResultados: $nRes torneios novos.$recusa`n`n" +
+    Aviso ("Site actualizado com a recolha da consola.`n`n$resumo$recusa`n`n" +
         "Daqui a uns minutos já se vê em golf-fpg.vercel.app.")
 } catch {
     $msg = $_.Exception.Message

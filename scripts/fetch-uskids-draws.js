@@ -13,6 +13,9 @@
  *
  * Corre no fim do workflow uskids-results.yml.
  *
+ * --replay <ficheiro> (18/11/2026): os draws vêm do ficheiro da consola do browser
+ * (scripts/uskids-consola.js, secção «draws») — sem browser nem pedidos.
+ *
  * Exit: 0 gravou · 2 nada a descarregar · 1 erro. Recusa da fonte (403/429/503,
  * «Too many requests») → pára e grava só os torneios completos.
  *
@@ -67,7 +70,7 @@ function isManuelByName(name) {
 
 // ── Configuração ────────────────────────────────────────────────────────
 const DELAY_MS = 400;
-const DIR         = path.join(__dirname, '..', 'public', 'data');
+const DIR         = process.env.USKIDS_DATA_DIR || path.join(__dirname, '..', 'public', 'data'); // a pasta muda só nos testes
 const FIELD_PATH  = path.join(DIR, 'uskids-field.json');
 const SLIM_PATH   = path.join(DIR, 'uskids-member-history-slim.json');
 const RESULTS_PATH= path.join(DIR, 'uskids-results.json');
@@ -286,7 +289,10 @@ function extrairGrupos(flightPlayers, ronda) {
     const tt  = rd.start_time   || '';
     const sh  = rd.start_hole   || rd.starting_hole || 1;
     const cn  = rd.course_name  || rd.course || '';
-    if (!grp && !tt) continue; // sem informação de pairing — salta
+    // Sem grupo = sem draw. ⚠ Uma volta por publicar vem com TODOS às 08:00 e group_number 0 (visto no
+    // Spanish Open 2026 R2/R3 a 18/11/2026; antes disso o World Championship 2026 ficou com os 149 do
+    // Boys 12 num só «grupo» das 08:00). A hora sozinha não prova nada.
+    if (!grp) continue;
     const key = `${grp}|${tt}|${sh}`;
     if (!grupos.has(key)) {
       grupos.set(key, {
@@ -475,6 +481,75 @@ async function processarTorneio(page, spec) {
   };
 }
 
+// ── --replay <ficheiro> (18/11/2026) ────────────────────────────────────
+/**
+ * Os draws vêm da secção «draws» do ficheiro gravado pela consola do browser
+ * (scripts/uskids-consola.js), sem browser nem pedidos — enquanto a USKids
+ * recusa (HTTP 403) os pedidos feitos sem browser. Formato:
+ *   draws.torneios  = [{ t, name, date_inicio, date_fim, campo, rondas, alvos: [{ age_group, nome, flight_id, is_manuel, adjacent }] }]
+ *   draws.respostas = { "GetPlayerTeeTimes:<f>:<volta>:<página>": { flight_players } }
+ * Volta que a consola não pediu (o draw ainda não tinha saído) = volta sem grupos.
+ */
+function torneioDoReplay(spec, respostas) {
+  const rondas = spec.rondas || 1;
+  const escaloes = (spec.alvos || []).map(alvo => {
+    const rondasData = [];
+    for (let r = 1; r <= rondas; r++) {
+      const players = {};
+      for (let p = 1; ; p++) {
+        const d = respostas[`GetPlayerTeeTimes:${alvo.flight_id}:${r}:${p}`];
+        if (!d) break;
+        Object.assign(players, d.flight_players || {});
+      }
+      const grupos = extrairGrupos(players, r);
+      console.log(`  ${alvo.is_manuel ? '★' : '·'} ${alvo.nome} R${r}: ${grupos.length} grupos | ${grupos.reduce((s, g) => s + g.jogadores.length, 0)} jogadores`);
+      rondasData.push({ ronda: r, grupos });
+    }
+    return { age_group: alvo.age_group, nome: alvo.nome, flight_id: alvo.flight_id, is_manuel: !!alvo.is_manuel, adjacent: !!alvo.adjacent, rondas: rondasData };
+  });
+  escaloes.sort((a, b) => (a.is_manuel !== b.is_manuel ? (a.is_manuel ? -1 : 1) : a.age_group - b.age_group));
+  return {
+    t: Number(spec.t), name: spec.name, date_inicio: spec.date_inicio, date_fim: spec.date_fim,
+    campo: spec.campo || null, rondas_total: rondas, escaloes, ultima_atualizacao: new Date().toISOString(),
+  };
+}
+
+/** Junta os torneios novos aos do ficheiro em disco e grava (comum ao browser e ao --replay). */
+function fundirEGravar(outputAnterior, novos, recusa) {
+  const force = process.argv.includes('--force');
+  const mapa = new Map((outputAnterior.torneios || []).map(r => [r.t, r]));
+  for (const r of novos) {
+    const g = deveManterAntigo(mapa.get(r.t), r, contarJogadoresDraw, { force });
+    if (g.manter) {
+      console.warn(`  ⚠️  t=${r.t} ${r.name}: ${g.motivo} — fica o draw em disco (--force para substituir)`);
+      continue;
+    }
+    mapa.set(r.t, r);
+  }
+  if (recusa) console.log(`::warning::USKids draws: a fonte recusou (${recusa}) — parei à primeira recusa; gravado só o que estava completo.`);
+
+  // Cull: manter permanentemente qualquer torneio que TENHA draw (os históricos
+  // do Manuel não desaparecem); os futuros/em-curso ainda sem draw ficam se
+  // terminaram há ≤ 14 dias (janela para backfill enquanto o draw não sai).
+  const HOJE_LIMITE = -14;
+  const temDraw = t => (t.escaloes || []).some(e => (e.rondas || []).some(r => (r.grupos || []).length));
+  const todos = [...mapa.values()]
+    .filter(t => temDraw(t) || diasAte(t.date_fim || t.date_inicio) >= HOJE_LIMITE)
+    .sort((a, b) => (parsearDataISO(a.date_inicio) || '').localeCompare(parsearDataISO(b.date_inicio) || ''));
+
+  fs.mkdirSync(DIR, { recursive: true });
+  writeJsonAtomic(OUTPUT, {
+    gerado_em: new Date().toISOString(),
+    manuel_focus: true,
+    janela_dias_antes: DIAS_ANTES,
+    torneios: todos,
+  });
+
+  console.log('\n══════════════════════════════════════');
+  console.log(`✅  uskids-draws.json — ${todos.length} torneios`);
+  console.log('══════════════════════════════════════');
+}
+
 // ── MAIN ────────────────────────────────────────────────────────────────
 async function main() {
   console.log('══════════════════════════════════════');
@@ -494,6 +569,23 @@ async function main() {
       .filter(t => (t.escaloes || []).some(e => (e.rondas || []).some(r => (r.grupos || []).length)))
       .map(t => t.t)
   );
+
+  const iReplay = process.argv.indexOf('--replay');
+  if (iReplay > 0) {
+    const f = process.argv[iReplay + 1];
+    let rep;
+    try { rep = JSON.parse(fs.readFileSync(f, 'utf8')); }
+    catch (err) { console.error(`❌ --replay: não consegui ler ${f}: ${err.message}`); process.exitCode = 1; return; }
+    if (!Array.isArray(rep.draws?.torneios) || !rep.draws.respostas) {
+      console.error(`❌ --replay: ${f} não tem a secção «draws»`); process.exitCode = 1; return;
+    }
+    console.log(`📂 --replay: ${f} (${rep.gerado_em}, ${rep.draws.torneios.length} torneio(s) com draw)`);
+    if (!rep.draws.torneios.length) { console.log('   Nada para aplicar.'); process.exitCode = 2; return; }
+    const novos = rep.draws.torneios.map(spec => { console.log(`
+▶ ${spec.name} (t=${spec.t})`); return torneioDoReplay(spec, rep.draws.respostas); });
+    fundirEGravar(outputAnterior, novos, null);
+    return;
+  }
 
   const aProcessar = [];   // { torneio, alvos? , idadeManuel? }
   const skipHistorico = process.argv.includes('--skip-historico');
@@ -594,38 +686,7 @@ async function main() {
     await browser.close();
   }
 
-  const force = process.argv.includes('--force');
-  const mapa = new Map((outputAnterior.torneios || []).map(r => [r.t, r]));
-  for (const r of novos) {
-    const g = deveManterAntigo(mapa.get(r.t), r, contarJogadoresDraw, { force });
-    if (g.manter) {
-      console.warn(`  ⚠️  t=${r.t} ${r.name}: ${g.motivo} — fica o draw em disco (--force para substituir)`);
-      continue;
-    }
-    mapa.set(r.t, r);
-  }
-  if (recusa) console.log(`::warning::USKids draws: a fonte recusou (${recusa}) — parei à primeira recusa; gravado só o que estava completo.`);
-
-  // Cull: manter permanentemente qualquer torneio que TENHA draw (os históricos
-  // do Manuel não desaparecem); os futuros/em-curso ainda sem draw ficam se
-  // terminaram há ≤ 14 dias (janela para backfill enquanto o draw não sai).
-  const HOJE_LIMITE = -14;
-  const temDraw = t => (t.escaloes || []).some(e => (e.rondas || []).some(r => (r.grupos || []).length));
-  const todos = [...mapa.values()]
-    .filter(t => temDraw(t) || diasAte(t.date_fim || t.date_inicio) >= HOJE_LIMITE)
-    .sort((a, b) => (parsearDataISO(a.date_inicio) || '').localeCompare(parsearDataISO(b.date_inicio) || ''));
-
-  fs.mkdirSync(DIR, { recursive: true });
-  writeJsonAtomic(OUTPUT, {
-    gerado_em: new Date().toISOString(),
-    manuel_focus: true,
-    janela_dias_antes: DIAS_ANTES,
-    torneios: todos,
-  });
-
-  console.log('\n══════════════════════════════════════');
-  console.log(`✅  uskids-draws.json — ${todos.length} torneios`);
-  console.log('══════════════════════════════════════');
+  fundirEGravar(outputAnterior, novos, recusa);
 }
 
 main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });

@@ -30,7 +30,7 @@ try {
 
     Add-Type -AssemblyName System.Windows.Forms
     [System.Windows.Forms.MessageBox]::Show(
-        "Recolha semanal USKids (inscritos e resultados).`n`n" +
+        "Recolha semanal USKids (draws, inscritos, resultados e números novos de torneios).`n`n" +
         "No Firefox, na página que abriu:`n" +
         "   1. F12  ->  Consola`n" +
         "   2. Ctrl+V  (o script já está copiado)`n" +
