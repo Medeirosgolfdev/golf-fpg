@@ -125,9 +125,16 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "paço do lumiar": "THE ONE Hills Lisbon City Golf",
   "palmela village golf": "Arrábida Resort & Golf Academy",
   "blue monster": "Trump Doral - Blue Monster",
-  "golf du touquet la foret": "Le Touquet Golf Club - La Forêt",
-  "golf du touquet - la mer": "Golf Du Touquet - La Mer",
-  "golf du touquet la mer": "Golf Du Touquet - La Mer",
+  // Le Touquet: o clube chama-se «Golf du Touquet»; os dois percursos com o mesmo
+  // nome de clube (18/11/2026 — antes «Le Touquet Golf Club - La Forêt» e «Golf Du…»).
+  "golf du touquet la foret": "Golf du Touquet - La Forêt",
+  "le touquet golf club - la forêt": "Golf du Touquet - La Forêt",
+  "golf du touquet - la mer": "Golf du Touquet - La Mer",
+  "golf du touquet la mer": "Golf du Touquet - La Mer",
+  // País colado ao nome do campo (18/11/2026): mostra-se só o nome do campo.
+  "county louth irlanda": "County Louth Golf Club",
+  "fontanals - espanha": "Fontanals Golf",
+  "cinder ridge golf course - usa": "Cinder Ridge Golf Course",
 
   // ── Variantes de nome do MESMO campo (typos / sufixos) ──
   "toya golf & country wroclaw": "Toya Golf & Country Club Wroclaw",

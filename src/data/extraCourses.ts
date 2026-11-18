@@ -601,7 +601,7 @@ const leToquet_LaForet: Course = {
   courseKey: "away-letouquet-foret",
   master: {
     courseId: "away-letouquet-foret",
-    name: "Le Touquet Golf Club - La Forêt",
+    name: "Golf du Touquet - La Forêt",
     country: "França",
     links: {
       fpg: null,
@@ -628,7 +628,7 @@ const leToquet_LaMer: Course = {
   courseKey: "away-letouquet-mer",
   master: {
     courseId: "away-letouquet-mer",
-    name: "Golf Du Touquet - La Mer",
+    name: "Golf du Touquet - La Mer",
     country: "França",
     links: {
       fpg: null,
