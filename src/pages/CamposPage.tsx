@@ -42,6 +42,7 @@ import Select from "../ui/Select";
 import { Tint } from "../ui/DataStyle";
 import { MUTED } from "../ui/tableCells";
 import { toggleSet, somaDe } from "../utils/mathUtils";
+import { compareNomeCampo } from "../utils/nomeCampo";
 
 import ToPar from "../ui/ToPar";
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
@@ -1236,8 +1237,9 @@ export default function CamposPage() {
       .sort((a, b) => a.label.localeCompare(b.label, "pt"));
   }, [courses]);
 
-  /* Filtrar e ordenar campos */
-  const filtered = useMemo(() => {
+  /* Filtrar e ordenar campos — primeiro sem o filtro de jogador (o campo aberto
+   * mantém-se se só o jogador o tirar da lista), depois com ele. */
+  const filteredSemJogador = useMemo(() => {
     const qq = norm(q);
     let list = courses;
     if (qq) {
@@ -1278,6 +1280,17 @@ export default function CamposPage() {
         c.master.tees.some((t) => teeGroupHex(t.teeName, t.scorecardMeta?.teeColor) === teeFilter)
       );
     }
+    // Ordenação: campos PT primeiro (A→Z), depois INTL (A→Z)
+    return [...list].sort((a, b) => {
+      const aPT = !a.courseKey.startsWith("away-");
+      const bPT = !b.courseKey.startsWith("away-");
+      if (aPT !== bPT) return aPT ? -1 : 1;
+      return compareNomeCampo(a.master.name, b.master.name);
+    });
+  }, [courses, q, originFilter, countryFilter, teeFilter]);
+
+  const filtered = useMemo(() => {
+    let list = filteredSemJogador;
     // Filtro por jogador — só campos onde o jogador jogou
     if (playerNfeds && playerNfeds.size > 0) {
       list = list.filter((c) => {
@@ -1289,27 +1302,23 @@ export default function CamposPage() {
       // Pesquisa activa mas sem jogador encontrado
       list = [];
     }
-    // Ordenação: campos PT primeiro (A→Z), depois INTL (A→Z)
-    list = [...list].sort((a, b) => {
-      const aPT = !a.courseKey.startsWith("away-");
-      const bPT = !b.courseKey.startsWith("away-");
-      if (aPT !== bPT) return aPT ? -1 : 1;
-      return a.master.name.localeCompare(b.master.name, "pt", { sensitivity: "base" });
-    });
     return list;
-  }, [courses, q, originFilter, countryFilter, teeFilter, playerNfeds, playerQ]);
+  }, [filteredSemJogador, playerNfeds, playerQ]);
 
   /* Campo selecionado */
   const selected = useMemo(() => {
     if (!selectedKey) return filtered[0] ?? null;
     // O seleccionado mantém-se enquanto passar os filtros (mudar Sexo/Tee já não
-    // salta para o 1.º da lista). Sem filtros, aceita também campos fora da lista
-    // (torneios escondidos no "Todos", abertos por URL).
-    const noFilters = !q && !playerQ && originFilter === "ALL" && countryFilter === "ALL" && teeFilter === "ALL";
+    // salta para o 1.º da lista). Escolher um jogador também não o fecha, mesmo
+    // que ele nunca lá tenha jogado (18/11/2026: o campo aberto desaparecia).
+    // Sem filtros, aceita também campos fora da lista (torneios escondidos no
+    // "Todos", abertos por URL).
+    const noFilters = !q && originFilter === "ALL" && countryFilter === "ALL" && teeFilter === "ALL";
     return filtered.find((c) => c.courseKey === selectedKey)
+      ?? filteredSemJogador.find((c) => c.courseKey === selectedKey)
       ?? (noFilters ? courses.find((c) => c.courseKey === selectedKey) : undefined)
       ?? filtered[0] ?? null;
-  }, [courses, filtered, selectedKey, q, playerQ, originFilter, countryFilter, teeFilter]);
+  }, [courses, filtered, filteredSemJogador, selectedKey, q, originFilter, countryFilter, teeFilter]);
 
   /* Rótulo canónico do tee do filtro (para as vistas "Como jogou", que agrupam por rótulo) */
   const teeFilterLabel = useMemo(
@@ -1366,14 +1375,14 @@ export default function CamposPage() {
         <input
           className="input"
           value={playerQ}
-          onChange={(e) => { setPlayerQ(e.target.value); selectCourse(null); }}
+          onChange={(e) => setPlayerQ(e.target.value)}
           placeholder="Jogador…"
           title="Mostra os campos onde este jogador já jogou"
         />
         {playerMatches.length > 1 && (
           <Select value={playerPick || playerMatches[0].nfed} aria-label="Qual jogador"
             title={`${playerMatches.length} jogadores com este nome`}
-            onChange={(v) => { setPlayerPick(v); selectCourse(null); }}>
+            onChange={setPlayerPick}>
             {playerMatches.slice(0, 40).map((m) => <option key={m.nfed} value={m.nfed}>{m.name} ({m.nfed})</option>)}
             <option value="ALL">Todos ({playerMatches.length})</option>
           </Select>
@@ -1441,7 +1450,11 @@ export default function CamposPage() {
             );
           })}
           {filtered.length === 0 && (
-            <EmptyState size="sm" message="Nenhum campo encontrado" />
+            <EmptyState size="sm" message={
+              !playerQ.trim() ? "Nenhum campo encontrado"
+                : playerNfeds?.size ? "Este jogador não jogou em nenhum destes campos"
+                : "Nenhum jogador com este nome"
+            } />
           )}
       </>}>
           {selected ? (

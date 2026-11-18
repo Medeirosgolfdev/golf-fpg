@@ -1202,10 +1202,10 @@
       }
     },
     {
-      "courseKey": "away-arrabida-resort",
+      "courseKey": "away-arrabida-resort-golf-academy",
       "master": {
-        "courseId": "away-arrabida-resort",
-        "name": "Arrábida Resort",
+        "courseId": "away-arrabida-resort-golf-academy",
+        "name": "Arrábida Resort & Golf Academy",
         "country": "Portugal",
         "links": {
           "fpg": null,
@@ -1213,7 +1213,7 @@
         },
         "tees": [
           {
-            "teeId": "away-arrabida-resort-0",
+            "teeId": "away-arrabida-resort-golf-academy-0",
             "sex": "M",
             "lastPlayed": "2018-05-01",
             "teeName": "BRANCAS",
@@ -1351,43 +1351,9 @@
               "holesCount": 18,
               "complete18": true
             }
-          }
-        ],
-        "_players": {
-          "28845": [
-            {
-              "date": "2018-05-01",
-              "gross": 75,
-              "toPar": 14,
-              "tee": "BRANCAS",
-              "event": "Arrábida 4 Friends - 4ª Edição",
-              "sd": 16.4
-            },
-            {
-              "date": "2017-05-01",
-              "gross": 65,
-              "toPar": 4,
-              "tee": "BRANCAS",
-              "event": "Arrábida 4 Friends 3ª Edição",
-              "sd": null
-            }
-          ]
-        }
-      }
-    },
-    {
-      "courseKey": "away-arrabida-resort-golf-academy",
-      "master": {
-        "courseId": "away-arrabida-resort-golf-academy",
-        "name": "Arrábida Resort & Golf Academy",
-        "country": "Portugal",
-        "links": {
-          "fpg": null,
-          "scorecards": null
-        },
-        "tees": [
+          },
           {
-            "teeId": "away-arrabida-resort-golf-academy-0",
+            "teeId": "away-arrabida-resort-golf-academy-1",
             "sex": "M",
             "lastPlayed": "2015-05-01",
             "teeName": "BRANCAS",
@@ -1529,6 +1495,22 @@
         ],
         "_players": {
           "28845": [
+            {
+              "date": "2018-05-01",
+              "gross": 75,
+              "toPar": 14,
+              "tee": "BRANCAS",
+              "event": "Arrábida 4 Friends - 4ª Edição",
+              "sd": 16.4
+            },
+            {
+              "date": "2017-05-01",
+              "gross": 65,
+              "toPar": 4,
+              "tee": "BRANCAS",
+              "event": "Arrábida 4 Friends 3ª Edição",
+              "sd": null
+            },
             {
               "date": "2015-05-01",
               "gross": 76,
@@ -3702,234 +3684,6 @@
               "tee": "BRANCAS",
               "event": "Scottish Boy's Under 16 Open",
               "sd": 2.3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "courseKey": "away-borsa-golf-club",
-      "master": {
-        "courseId": "away-borsa-golf-club",
-        "name": "Borsa Golf Club, Slovakia",
-        "country": "Eslováquia",
-        "links": {
-          "fpg": null,
-          "scorecards": null
-        },
-        "tees": [
-          {
-            "teeId": "away-borsa-golf-club-0",
-            "sex": "M",
-            "lastPlayed": "2023-07-14",
-            "teeName": "PRETAS",
-            "ratings": {
-              "holes18": {
-                "par": 72,
-                "courseRating": 75.4,
-                "slopeRating": 136
-              },
-              "holes9Front": {
-                "par": 36,
-                "courseRating": 37.7,
-                "slopeRating": 136
-              },
-              "holes9Back": {
-                "par": 36,
-                "courseRating": 37.7,
-                "slopeRating": 136
-              }
-            },
-            "holes": [
-              {
-                "hole": 1,
-                "par": 4,
-                "si": 13,
-                "distance": 372
-              },
-              {
-                "hole": 2,
-                "par": 3,
-                "si": 5,
-                "distance": 195
-              },
-              {
-                "hole": 3,
-                "par": 5,
-                "si": 9,
-                "distance": 561
-              },
-              {
-                "hole": 4,
-                "par": 4,
-                "si": 17,
-                "distance": 362
-              },
-              {
-                "hole": 5,
-                "par": 4,
-                "si": 3,
-                "distance": 434
-              },
-              {
-                "hole": 6,
-                "par": 4,
-                "si": 7,
-                "distance": 402
-              },
-              {
-                "hole": 7,
-                "par": 3,
-                "si": 11,
-                "distance": 204
-              },
-              {
-                "hole": 8,
-                "par": 5,
-                "si": 1,
-                "distance": 566
-              },
-              {
-                "hole": 9,
-                "par": 4,
-                "si": 15,
-                "distance": 335
-              },
-              {
-                "hole": 10,
-                "par": 4,
-                "si": 14,
-                "distance": 306
-              },
-              {
-                "hole": 11,
-                "par": 4,
-                "si": 4,
-                "distance": 387
-              },
-              {
-                "hole": 12,
-                "par": 3,
-                "si": 12,
-                "distance": 190
-              },
-              {
-                "hole": 13,
-                "par": 4,
-                "si": 6,
-                "distance": 371
-              },
-              {
-                "hole": 14,
-                "par": 5,
-                "si": 2,
-                "distance": 498
-              },
-              {
-                "hole": 15,
-                "par": 4,
-                "si": 18,
-                "distance": 305
-              },
-              {
-                "hole": 16,
-                "par": 3,
-                "si": 16,
-                "distance": 137
-              },
-              {
-                "hole": 17,
-                "par": 4,
-                "si": 8,
-                "distance": 382
-              },
-              {
-                "hole": 18,
-                "par": 5,
-                "si": 10,
-                "distance": 460
-              }
-            ],
-            "distances": {
-              "total": 6467,
-              "front9": 3431,
-              "back9": 3036,
-              "holesCount": 18,
-              "complete18": true
-            }
-          }
-        ],
-        "_players": {
-          "34186": [
-            {
-              "date": "2023-07-13",
-              "gross": 71,
-              "toPar": -1,
-              "tee": "PRETAS",
-              "event": "European Boys Team Championship div2",
-              "sd": -4.5
-            },
-            {
-              "date": "2023-07-12",
-              "gross": 70,
-              "toPar": -2,
-              "tee": "PRETAS",
-              "event": "European Boys Team Championship div2",
-              "sd": -4.5
-            }
-          ],
-          "35404": [
-            {
-              "date": "2023-07-13",
-              "gross": 76,
-              "toPar": 4,
-              "tee": "PRETAS",
-              "event": "European Boys Team Championship div2",
-              "sd": 0.5
-            },
-            {
-              "date": "2023-07-12",
-              "gross": 74,
-              "toPar": 2,
-              "tee": "PRETAS",
-              "event": "European Boys Team Championship div2",
-              "sd": -1.2
-            }
-          ],
-          "35849": [
-            {
-              "date": "2023-07-13",
-              "gross": 75,
-              "toPar": 3,
-              "tee": "PRETAS",
-              "event": "European Boys Team Championship div2",
-              "sd": -0.3
-            },
-            {
-              "date": "2023-07-12",
-              "gross": 78,
-              "toPar": 6,
-              "tee": "PRETAS",
-              "event": "European Boys Team Championship div2",
-              "sd": 2.2
-            }
-          ],
-          "40112": [
-            {
-              "date": "2023-07-14",
-              "gross": 75,
-              "toPar": 3,
-              "tee": "PRETAS",
-              "event": "2023 European Boys' Team Championship, Div. 2",
-              "sd": -0.3
-            },
-            {
-              "date": "2023-07-13",
-              "gross": 70,
-              "toPar": -2,
-              "tee": "PRETAS",
-              "event": "2023 European Boys' Team Championship, Div. 2",
-              "sd": -4.5
             }
           ]
         }
@@ -6865,7 +6619,7 @@
       "courseKey": "away-circolo-golf-villa-d-este",
       "master": {
         "courseId": "away-circolo-golf-villa-d-este",
-        "name": "Circolo Golf Villa d Este",
+        "name": "Circolo Golf Villa d'Este",
         "country": "Itália",
         "links": {
           "fpg": null,
@@ -6875,7 +6629,7 @@
           {
             "teeId": "away-circolo-golf-villa-d-este-0",
             "sex": "M",
-            "lastPlayed": "2026-04-25",
+            "lastPlayed": "2026-04-26",
             "teeName": "BRANCAS",
             "ratings": {
               "holes18": {
@@ -6898,109 +6652,109 @@
               {
                 "hole": 1,
                 "par": 5,
-                "si": 1,
+                "si": 6,
                 "distance": 540
               },
               {
                 "hole": 2,
                 "par": 4,
-                "si": 2,
+                "si": 4,
                 "distance": 363
               },
               {
                 "hole": 3,
                 "par": 3,
-                "si": 3,
+                "si": 8,
                 "distance": 194
               },
               {
                 "hole": 4,
                 "par": 4,
-                "si": 4,
+                "si": 14,
                 "distance": 297
               },
               {
                 "hole": 5,
                 "par": 3,
-                "si": 5,
+                "si": 18,
                 "distance": 133
               },
               {
                 "hole": 6,
                 "par": 4,
-                "si": 6,
+                "si": 16,
                 "distance": 292
               },
               {
                 "hole": 7,
                 "par": 3,
-                "si": 7,
+                "si": 12,
                 "distance": 186
               },
               {
                 "hole": 8,
                 "par": 4,
-                "si": 8,
+                "si": 2,
                 "distance": 386
               },
               {
                 "hole": 9,
                 "par": 4,
-                "si": 9,
+                "si": 10,
                 "distance": 356
               },
               {
                 "hole": 10,
                 "par": 3,
-                "si": 10,
+                "si": 13,
                 "distance": 179
               },
               {
                 "hole": 11,
                 "par": 4,
-                "si": 11,
+                "si": 3,
                 "distance": 385
               },
               {
                 "hole": 12,
                 "par": 4,
-                "si": 12,
+                "si": 9,
                 "distance": 337
               },
               {
                 "hole": 13,
                 "par": 5,
-                "si": 13,
+                "si": 7,
                 "distance": 492
               },
               {
                 "hole": 14,
                 "par": 3,
-                "si": 14,
+                "si": 5,
                 "distance": 204
               },
               {
                 "hole": 15,
                 "par": 4,
-                "si": 15,
+                "si": 1,
                 "distance": 426
               },
               {
                 "hole": 16,
                 "par": 3,
-                "si": 16,
+                "si": 17,
                 "distance": 165
               },
               {
                 "hole": 17,
                 "par": 5,
-                "si": 17,
+                "si": 15,
                 "distance": 483
               },
               {
                 "hole": 18,
                 "par": 4,
-                "si": 18,
+                "si": 11,
                 "distance": 314
               }
             ],
@@ -7014,6 +6768,32 @@
           }
         ],
         "_players": {
+          "34186": [
+            {
+              "date": "2026-04-25",
+              "gross": 74,
+              "toPar": 5,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D3",
+              "sd": 2.6
+            },
+            {
+              "date": "2026-04-24",
+              "gross": 71,
+              "toPar": 2,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D2",
+              "sd": 0
+            },
+            {
+              "date": "2026-04-23",
+              "gross": 79,
+              "toPar": 10,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE",
+              "sd": 5.2
+            }
+          ],
           "40112": [
             {
               "date": "2026-04-25",
@@ -7038,6 +6818,66 @@
               "tee": "BRANCAS",
               "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE",
               "sd": 0.9
+            }
+          ],
+          "40682": [
+            {
+              "date": "2026-04-25",
+              "gross": 72,
+              "toPar": 3,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D3",
+              "sd": 0.9
+            },
+            {
+              "date": "2026-04-24",
+              "gross": 76,
+              "toPar": 7,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D2",
+              "sd": 3.5
+            },
+            {
+              "date": "2026-04-23",
+              "gross": 71,
+              "toPar": 2,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE",
+              "sd": -1.7
+            }
+          ],
+          "42845": [
+            {
+              "date": "2026-04-26",
+              "gross": 68,
+              "toPar": -1,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D3",
+              "sd": -2.6
+            },
+            {
+              "date": "2026-04-25",
+              "gross": 69,
+              "toPar": 0,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D3",
+              "sd": -1.7
+            },
+            {
+              "date": "2026-04-24",
+              "gross": 76,
+              "toPar": 7,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D2",
+              "sd": 4.3
+            },
+            {
+              "date": "2026-04-23",
+              "gross": 67,
+              "toPar": -2,
+              "tee": "BRANCAS",
+              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE - 2026",
+              "sd": -4.3
             }
           ]
         }
@@ -14554,166 +14394,10 @@
               "holesCount": 18,
               "complete18": true
             }
-          },
-          {
-            "teeId": "away-garden-city-cc-1",
-            "sex": "M",
-            "lastPlayed": "2025-10-31",
-            "teeName": "LARANJAS",
-            "ratings": {
-              "holes18": {
-                "par": 72,
-                "courseRating": 77,
-                "slopeRating": 144
-              },
-              "holes9Front": {
-                "par": 36,
-                "courseRating": 38.5,
-                "slopeRating": 144
-              },
-              "holes9Back": {
-                "par": 36,
-                "courseRating": 38.5,
-                "slopeRating": 144
-              }
-            },
-            "holes": [
-              {
-                "hole": 1,
-                "par": 4,
-                "si": 4,
-                "distance": 474
-              },
-              {
-                "hole": 2,
-                "par": 5,
-                "si": 2,
-                "distance": 613
-              },
-              {
-                "hole": 3,
-                "par": 3,
-                "si": 18,
-                "distance": 178
-              },
-              {
-                "hole": 4,
-                "par": 5,
-                "si": 12,
-                "distance": 626
-              },
-              {
-                "hole": 5,
-                "par": 4,
-                "si": 16,
-                "distance": 420
-              },
-              {
-                "hole": 6,
-                "par": 4,
-                "si": 8,
-                "distance": 467
-              },
-              {
-                "hole": 7,
-                "par": 3,
-                "si": 10,
-                "distance": 229
-              },
-              {
-                "hole": 8,
-                "par": 4,
-                "si": 6,
-                "distance": 470
-              },
-              {
-                "hole": 9,
-                "par": 4,
-                "si": 14,
-                "distance": 411
-              },
-              {
-                "hole": 10,
-                "par": 5,
-                "si": 1,
-                "distance": 640
-              },
-              {
-                "hole": 11,
-                "par": 4,
-                "si": 15,
-                "distance": 364
-              },
-              {
-                "hole": 12,
-                "par": 4,
-                "si": 3,
-                "distance": 420
-              },
-              {
-                "hole": 13,
-                "par": 3,
-                "si": 11,
-                "distance": 230
-              },
-              {
-                "hole": 14,
-                "par": 4,
-                "si": 5,
-                "distance": 484
-              },
-              {
-                "hole": 15,
-                "par": 4,
-                "si": 13,
-                "distance": 382
-              },
-              {
-                "hole": 16,
-                "par": 5,
-                "si": 7,
-                "distance": 525
-              },
-              {
-                "hole": 17,
-                "par": 3,
-                "si": 17,
-                "distance": 138
-              },
-              {
-                "hole": 18,
-                "par": 4,
-                "si": 9,
-                "distance": 426
-              }
-            ],
-            "distances": {
-              "total": 7497,
-              "front9": 3888,
-              "back9": 3609,
-              "holesCount": 18,
-              "complete18": true
-            }
           }
         ],
         "_players": {
           "35404": [
-            {
-              "date": "2025-10-31",
-              "gross": 73,
-              "toPar": 1,
-              "tee": "LARANJAS",
-              "event": "NJCAA Division / National Preview",
-              "sd": -3.1
-            },
-            {
-              "date": "2025-10-30",
-              "gross": 71,
-              "toPar": -1,
-              "tee": "LARANJAS",
-              "event": "NJCAA Division / National Preview",
-              "sd": -4.7
-            },
             {
               "date": "2024-09-24",
               "gross": 74,
@@ -20368,10 +20052,10 @@
       }
     },
     {
-      "courseKey": "away-green-resort-hruba-borsa-slovakia",
+      "courseKey": "away-borsa-golf-club",
       "master": {
-        "courseId": "away-green-resort-hruba-borsa-slovakia",
-        "name": "Green Resort Hruba Borsa - Slovakia",
+        "courseId": "away-borsa-golf-club",
+        "name": "Green Resort Hrubá Borša",
         "country": "Eslováquia",
         "links": {
           "fpg": null,
@@ -20379,7 +20063,147 @@
         },
         "tees": [
           {
-            "teeId": "away-green-resort-hruba-borsa-slovakia-0",
+            "teeId": "away-borsa-golf-club-0",
+            "sex": "M",
+            "lastPlayed": "2023-07-14",
+            "teeName": "PRETAS",
+            "ratings": {
+              "holes18": {
+                "par": 72,
+                "courseRating": 75.4,
+                "slopeRating": 136
+              },
+              "holes9Front": {
+                "par": 36,
+                "courseRating": 37.7,
+                "slopeRating": 136
+              },
+              "holes9Back": {
+                "par": 36,
+                "courseRating": 37.7,
+                "slopeRating": 136
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 4,
+                "si": 13,
+                "distance": 372
+              },
+              {
+                "hole": 2,
+                "par": 3,
+                "si": 5,
+                "distance": 195
+              },
+              {
+                "hole": 3,
+                "par": 5,
+                "si": 9,
+                "distance": 561
+              },
+              {
+                "hole": 4,
+                "par": 4,
+                "si": 17,
+                "distance": 362
+              },
+              {
+                "hole": 5,
+                "par": 4,
+                "si": 3,
+                "distance": 434
+              },
+              {
+                "hole": 6,
+                "par": 4,
+                "si": 7,
+                "distance": 402
+              },
+              {
+                "hole": 7,
+                "par": 3,
+                "si": 11,
+                "distance": 204
+              },
+              {
+                "hole": 8,
+                "par": 5,
+                "si": 1,
+                "distance": 566
+              },
+              {
+                "hole": 9,
+                "par": 4,
+                "si": 15,
+                "distance": 335
+              },
+              {
+                "hole": 10,
+                "par": 4,
+                "si": 14,
+                "distance": 306
+              },
+              {
+                "hole": 11,
+                "par": 4,
+                "si": 4,
+                "distance": 387
+              },
+              {
+                "hole": 12,
+                "par": 3,
+                "si": 12,
+                "distance": 190
+              },
+              {
+                "hole": 13,
+                "par": 4,
+                "si": 6,
+                "distance": 371
+              },
+              {
+                "hole": 14,
+                "par": 5,
+                "si": 2,
+                "distance": 498
+              },
+              {
+                "hole": 15,
+                "par": 4,
+                "si": 18,
+                "distance": 305
+              },
+              {
+                "hole": 16,
+                "par": 3,
+                "si": 16,
+                "distance": 137
+              },
+              {
+                "hole": 17,
+                "par": 4,
+                "si": 8,
+                "distance": 382
+              },
+              {
+                "hole": 18,
+                "par": 5,
+                "si": 10,
+                "distance": 460
+              }
+            ],
+            "distances": {
+              "total": 6467,
+              "front9": 3431,
+              "back9": 3036,
+              "holesCount": 18,
+              "complete18": true
+            }
+          },
+          {
+            "teeId": "away-borsa-golf-club-1",
             "sex": "F",
             "lastPlayed": "2025-10-04",
             "teeName": "VERMELHAS",
@@ -20520,6 +20344,78 @@
           }
         ],
         "_players": {
+          "34186": [
+            {
+              "date": "2023-07-13",
+              "gross": 71,
+              "toPar": -1,
+              "tee": "PRETAS",
+              "event": "European Boys Team Championship div2",
+              "sd": -4.5
+            },
+            {
+              "date": "2023-07-12",
+              "gross": 70,
+              "toPar": -2,
+              "tee": "PRETAS",
+              "event": "European Boys Team Championship div2",
+              "sd": -4.5
+            }
+          ],
+          "35404": [
+            {
+              "date": "2023-07-13",
+              "gross": 76,
+              "toPar": 4,
+              "tee": "PRETAS",
+              "event": "European Boys Team Championship div2",
+              "sd": 0.5
+            },
+            {
+              "date": "2023-07-12",
+              "gross": 74,
+              "toPar": 2,
+              "tee": "PRETAS",
+              "event": "European Boys Team Championship div2",
+              "sd": -1.2
+            }
+          ],
+          "35849": [
+            {
+              "date": "2023-07-13",
+              "gross": 75,
+              "toPar": 3,
+              "tee": "PRETAS",
+              "event": "European Boys Team Championship div2",
+              "sd": -0.3
+            },
+            {
+              "date": "2023-07-12",
+              "gross": 78,
+              "toPar": 6,
+              "tee": "PRETAS",
+              "event": "European Boys Team Championship div2",
+              "sd": 2.2
+            }
+          ],
+          "40112": [
+            {
+              "date": "2023-07-14",
+              "gross": 75,
+              "toPar": 3,
+              "tee": "PRETAS",
+              "event": "2023 European Boys' Team Championship, Div. 2",
+              "sd": -0.3
+            },
+            {
+              "date": "2023-07-13",
+              "gross": 70,
+              "toPar": -2,
+              "tee": "PRETAS",
+              "event": "2023 European Boys' Team Championship, Div. 2",
+              "sd": -4.5
+            }
+          ],
           "40981": [
             {
               "date": "2025-10-04",
@@ -24762,172 +24658,6 @@
               "tee": "PRETAS",
               "event": "Men's Orlando International Amateur 2025",
               "sd": 4.8
-            }
-          ]
-        }
-      }
-    },
-    {
-      "courseKey": "away-iiii-prueba-liga-juvenvil-galega",
-      "master": {
-        "courseId": "away-iiii-prueba-liga-juvenvil-galega",
-        "name": "Liga Juvenil Galega",
-        "country": "Espanha",
-        "links": {
-          "fpg": null,
-          "scorecards": null
-        },
-        "tees": [
-          {
-            "teeId": "away-iiii-prueba-liga-juvenvil-galega-0",
-            "sex": "F",
-            "lastPlayed": "2022-05-07",
-            "teeName": "AZUIS",
-            "ratings": {
-              "holes18": {
-                "par": 70,
-                "courseRating": 71.8,
-                "slopeRating": 131
-              },
-              "holes9Front": {
-                "par": 35,
-                "courseRating": 35.9,
-                "slopeRating": 131
-              },
-              "holes9Back": {
-                "par": 35,
-                "courseRating": 35.9,
-                "slopeRating": 131
-              }
-            },
-            "holes": [
-              {
-                "hole": 1,
-                "par": 3,
-                "si": 15,
-                "distance": 128
-              },
-              {
-                "hole": 2,
-                "par": 4,
-                "si": 5,
-                "distance": 341
-              },
-              {
-                "hole": 3,
-                "par": 3,
-                "si": 17,
-                "distance": 104
-              },
-              {
-                "hole": 4,
-                "par": 5,
-                "si": 1,
-                "distance": 465
-              },
-              {
-                "hole": 5,
-                "par": 4,
-                "si": 11,
-                "distance": 296
-              },
-              {
-                "hole": 6,
-                "par": 4,
-                "si": 7,
-                "distance": 300
-              },
-              {
-                "hole": 7,
-                "par": 4,
-                "si": 9,
-                "distance": 282
-              },
-              {
-                "hole": 8,
-                "par": 4,
-                "si": 3,
-                "distance": 330
-              },
-              {
-                "hole": 9,
-                "par": 4,
-                "si": 13,
-                "distance": 259
-              },
-              {
-                "hole": 10,
-                "par": 3,
-                "si": 16,
-                "distance": 128
-              },
-              {
-                "hole": 11,
-                "par": 4,
-                "si": 6,
-                "distance": 341
-              },
-              {
-                "hole": 12,
-                "par": 3,
-                "si": 18,
-                "distance": 104
-              },
-              {
-                "hole": 13,
-                "par": 5,
-                "si": 2,
-                "distance": 465
-              },
-              {
-                "hole": 14,
-                "par": 4,
-                "si": 12,
-                "distance": 296
-              },
-              {
-                "hole": 15,
-                "par": 4,
-                "si": 8,
-                "distance": 300
-              },
-              {
-                "hole": 16,
-                "par": 4,
-                "si": 10,
-                "distance": 282
-              },
-              {
-                "hole": 17,
-                "par": 4,
-                "si": 4,
-                "distance": 330
-              },
-              {
-                "hole": 18,
-                "par": 4,
-                "si": 14,
-                "distance": 259
-              }
-            ],
-            "distances": {
-              "total": 5010,
-              "front9": 2505,
-              "back9": 2505,
-              "holesCount": 18,
-              "complete18": true
-            }
-          }
-        ],
-        "_players": {
-          "46437": [
-            {
-              "date": "2022-05-07",
-              "gross": 99,
-              "toPar": 29,
-              "tee": "AZUIS",
-              "event": "III Prueba Liga Juvenil Galega",
-              "sd": 23.5
             }
           ]
         }
@@ -42052,7 +41782,7 @@
       "courseKey": "away-real-novo-sancti-petri-golf-club-mar-e-pinos",
       "master": {
         "courseId": "away-real-novo-sancti-petri-golf-club-mar-e-pinos",
-        "name": "Real Novo Sancti Petri Mar y Pinos",
+        "name": "Real Novo Sancti Petri - Mar y Pinos",
         "country": "Espanha",
         "links": {
           "fpg": null,
@@ -42341,6 +42071,32 @@
           }
         ],
         "_players": {
+          "40115": [
+            {
+              "date": "2023-06-29",
+              "gross": 76,
+              "toPar": 4,
+              "tee": "AMARELAS",
+              "event": "Campeonato de Espana Infantil Masculino",
+              "sd": 5.4
+            },
+            {
+              "date": "2023-06-28",
+              "gross": 73,
+              "toPar": 1,
+              "tee": "AMARELAS",
+              "event": "Campeonato de Espana Infantil Masculino",
+              "sd": 2.7
+            },
+            {
+              "date": "2023-06-27",
+              "gross": 75,
+              "toPar": 3,
+              "tee": "AMARELAS",
+              "event": "Campeonato de Espana Infantil Masculino",
+              "sd": 3.6
+            }
+          ],
           "45340": [
             {
               "date": "2023-06-29",
@@ -45397,188 +45153,6 @@
       }
     },
     {
-      "courseKey": "away-real-novo-sancti-petri-golf-club",
-      "master": {
-        "courseId": "away-real-novo-sancti-petri-golf-club",
-        "name": "Sancti Petri",
-        "country": "Espanha",
-        "links": {
-          "fpg": null,
-          "scorecards": null
-        },
-        "tees": [
-          {
-            "teeId": "away-real-novo-sancti-petri-golf-club-0",
-            "sex": "M",
-            "lastPlayed": "2023-06-29",
-            "teeName": "AMARELAS",
-            "ratings": {
-              "holes18": {
-                "par": 72,
-                "courseRating": 69.9,
-                "slopeRating": 128
-              },
-              "holes9Front": {
-                "par": 36,
-                "courseRating": 35,
-                "slopeRating": 128
-              },
-              "holes9Back": {
-                "par": 36,
-                "courseRating": 35,
-                "slopeRating": 128
-              }
-            },
-            "holes": [
-              {
-                "hole": 1,
-                "par": 4,
-                "si": 2,
-                "distance": 346
-              },
-              {
-                "hole": 2,
-                "par": 5,
-                "si": 6,
-                "distance": 448
-              },
-              {
-                "hole": 3,
-                "par": 4,
-                "si": 8,
-                "distance": 321
-              },
-              {
-                "hole": 4,
-                "par": 4,
-                "si": 18,
-                "distance": 294
-              },
-              {
-                "hole": 5,
-                "par": 4,
-                "si": 4,
-                "distance": 279
-              },
-              {
-                "hole": 6,
-                "par": 4,
-                "si": 14,
-                "distance": 264
-              },
-              {
-                "hole": 7,
-                "par": 3,
-                "si": 12,
-                "distance": 159
-              },
-              {
-                "hole": 8,
-                "par": 5,
-                "si": 10,
-                "distance": 455
-              },
-              {
-                "hole": 9,
-                "par": 3,
-                "si": 16,
-                "distance": 161
-              },
-              {
-                "hole": 10,
-                "par": 4,
-                "si": 3,
-                "distance": 362
-              },
-              {
-                "hole": 11,
-                "par": 5,
-                "si": 11,
-                "distance": 388
-              },
-              {
-                "hole": 12,
-                "par": 4,
-                "si": 15,
-                "distance": 252
-              },
-              {
-                "hole": 13,
-                "par": 5,
-                "si": 7,
-                "distance": 481
-              },
-              {
-                "hole": 14,
-                "par": 4,
-                "si": 13,
-                "distance": 289
-              },
-              {
-                "hole": 15,
-                "par": 3,
-                "si": 17,
-                "distance": 108
-              },
-              {
-                "hole": 16,
-                "par": 4,
-                "si": 5,
-                "distance": 350
-              },
-              {
-                "hole": 17,
-                "par": 4,
-                "si": 1,
-                "distance": 361
-              },
-              {
-                "hole": 18,
-                "par": 3,
-                "si": 9,
-                "distance": 164
-              }
-            ],
-            "distances": {
-              "total": 5482,
-              "front9": 2727,
-              "back9": 2755,
-              "holesCount": 18,
-              "complete18": true
-            }
-          }
-        ],
-        "_players": {
-          "40115": [
-            {
-              "date": "2023-06-29",
-              "gross": 76,
-              "toPar": 4,
-              "tee": "AMARELAS",
-              "event": "Campeonato de Espana Infantil Masculino",
-              "sd": 5.4
-            },
-            {
-              "date": "2023-06-28",
-              "gross": 73,
-              "toPar": 1,
-              "tee": "AMARELAS",
-              "event": "Campeonato de Espana Infantil Masculino",
-              "sd": 2.7
-            },
-            {
-              "date": "2023-06-27",
-              "gross": 75,
-              "toPar": 3,
-              "tee": "AMARELAS",
-              "event": "Campeonato de Espana Infantil Masculino",
-              "sd": 3.6
-            }
-          ]
-        }
-      }
-    },
-    {
       "courseKey": "away-sand-creek-station",
       "master": {
         "courseId": "away-sand-creek-station",
@@ -45732,7 +45306,7 @@
           {
             "teeId": "away-sand-creek-station-1",
             "sex": "M",
-            "lastPlayed": "2025-10-07",
+            "lastPlayed": "2025-10-31",
             "teeName": "LARANJAS",
             "ratings": {
               "holes18": {
@@ -45927,6 +45501,22 @@
               "tee": "BRANCAS",
               "event": "JAYHAWK CONFERENCE",
               "sd": -2.4
+            },
+            {
+              "date": "2025-10-31",
+              "gross": 73,
+              "toPar": 1,
+              "tee": "LARANJAS",
+              "event": "NJCAA Division / National Preview",
+              "sd": -3.1
+            },
+            {
+              "date": "2025-10-30",
+              "gross": 71,
+              "toPar": -1,
+              "tee": "LARANJAS",
+              "event": "NJCAA Division / National Preview",
+              "sd": -4.7
             },
             {
               "date": "2025-10-07",
@@ -51436,6 +51026,16 @@
               "event": "Campeonato Galicia Sub14",
               "sd": -2.4
             }
+          ],
+          "46437": [
+            {
+              "date": "2022-05-07",
+              "gross": 99,
+              "toPar": 29,
+              "tee": "AZUIS",
+              "event": "III Prueba Liga Juvenil Galega",
+              "sd": 23.5
+            }
           ]
         }
       }
@@ -52518,248 +52118,6 @@
               "tee": "AMARELAS",
               "event": "Torneio de Encerramento",
               "sd": 10.7
-            }
-          ]
-        }
-      }
-    },
-    {
-      "courseKey": "away-villa-d-este",
-      "master": {
-        "courseId": "away-villa-d-este",
-        "name": "Villa D’Este",
-        "country": "Itália",
-        "links": {
-          "fpg": null,
-          "scorecards": null
-        },
-        "tees": [
-          {
-            "teeId": "away-villa-d-este-0",
-            "sex": "M",
-            "lastPlayed": "2026-04-26",
-            "teeName": "BRANCAS",
-            "ratings": {
-              "holes18": {
-                "par": 69,
-                "courseRating": 71,
-                "slopeRating": 130
-              },
-              "holes9Front": {
-                "par": 34,
-                "courseRating": 35.5,
-                "slopeRating": 130
-              },
-              "holes9Back": {
-                "par": 35,
-                "courseRating": 35.5,
-                "slopeRating": 130
-              }
-            },
-            "holes": [
-              {
-                "hole": 1,
-                "par": 5,
-                "si": 6,
-                "distance": 540
-              },
-              {
-                "hole": 2,
-                "par": 4,
-                "si": 4,
-                "distance": 363
-              },
-              {
-                "hole": 3,
-                "par": 3,
-                "si": 8,
-                "distance": 194
-              },
-              {
-                "hole": 4,
-                "par": 4,
-                "si": 14,
-                "distance": 297
-              },
-              {
-                "hole": 5,
-                "par": 3,
-                "si": 18,
-                "distance": 133
-              },
-              {
-                "hole": 6,
-                "par": 4,
-                "si": 16,
-                "distance": 292
-              },
-              {
-                "hole": 7,
-                "par": 3,
-                "si": 12,
-                "distance": 186
-              },
-              {
-                "hole": 8,
-                "par": 4,
-                "si": 2,
-                "distance": 386
-              },
-              {
-                "hole": 9,
-                "par": 4,
-                "si": 10,
-                "distance": 356
-              },
-              {
-                "hole": 10,
-                "par": 3,
-                "si": 13,
-                "distance": 179
-              },
-              {
-                "hole": 11,
-                "par": 4,
-                "si": 3,
-                "distance": 385
-              },
-              {
-                "hole": 12,
-                "par": 4,
-                "si": 9,
-                "distance": 337
-              },
-              {
-                "hole": 13,
-                "par": 5,
-                "si": 7,
-                "distance": 492
-              },
-              {
-                "hole": 14,
-                "par": 3,
-                "si": 5,
-                "distance": 204
-              },
-              {
-                "hole": 15,
-                "par": 4,
-                "si": 1,
-                "distance": 426
-              },
-              {
-                "hole": 16,
-                "par": 3,
-                "si": 17,
-                "distance": 165
-              },
-              {
-                "hole": 17,
-                "par": 5,
-                "si": 15,
-                "distance": 483
-              },
-              {
-                "hole": 18,
-                "par": 4,
-                "si": 11,
-                "distance": 314
-              }
-            ],
-            "distances": {
-              "total": 5732,
-              "front9": 2747,
-              "back9": 2985,
-              "holesCount": 18,
-              "complete18": true
-            }
-          }
-        ],
-        "_players": {
-          "34186": [
-            {
-              "date": "2026-04-25",
-              "gross": 74,
-              "toPar": 5,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D3",
-              "sd": 2.6
-            },
-            {
-              "date": "2026-04-24",
-              "gross": 71,
-              "toPar": 2,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D2",
-              "sd": 0
-            },
-            {
-              "date": "2026-04-23",
-              "gross": 79,
-              "toPar": 10,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE",
-              "sd": 5.2
-            }
-          ],
-          "40682": [
-            {
-              "date": "2026-04-25",
-              "gross": 72,
-              "toPar": 3,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D3",
-              "sd": 0.9
-            },
-            {
-              "date": "2026-04-24",
-              "gross": 76,
-              "toPar": 7,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D2",
-              "sd": 3.5
-            },
-            {
-              "date": "2026-04-23",
-              "gross": 71,
-              "toPar": 2,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE",
-              "sd": -1.7
-            }
-          ],
-          "42845": [
-            {
-              "date": "2026-04-26",
-              "gross": 68,
-              "toPar": -1,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D3",
-              "sd": -2.6
-            },
-            {
-              "date": "2026-04-25",
-              "gross": 69,
-              "toPar": 0,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D3",
-              "sd": -1.7
-            },
-            {
-              "date": "2026-04-24",
-              "gross": 76,
-              "toPar": 7,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE D2",
-              "sd": 4.3
-            },
-            {
-              "date": "2026-04-23",
-              "gross": 67,
-              "toPar": -2,
-              "tee": "BRANCAS",
-              "event": "CAMPIONATO INTERNAZIONALE D'ITALIA MASCHILE - 2026",
-              "sd": -4.3
             }
           ]
         }

@@ -5,6 +5,7 @@ import type {} from "../data/types";
 import { useCourses } from "../context/CoursesContext";
 import { norm, fmtHcp, fmtSign, fmtToPar, fmtDatePt, todayIso } from "../utils/format";
 import { teeChoiceKey, findTeeByChoice } from "../utils/teeChoice";
+import { compareNomeCampo } from "../utils/nomeCampo";
 import {
   whsQtyCalc, hiAdjustment, addRoundToPool, historicExceptionalAdj, topRanks, topIds,
   scoreDifferential, sd18FromSd9, expectedSD9, round1, get9hRatings,
@@ -186,7 +187,7 @@ export function RoundSimulator({
     const unplayed = valid.filter(
       (c) => !playedNormSet.has(norm(c.master.name))
     );
-    unplayed.sort((a, b) => a.master.name.localeCompare(b.master.name));
+    unplayed.sort((a, b) => compareNomeCampo(a.master.name, b.master.name));
     return [...played, ...unplayed];
   }, [courses, playedNormSet]);
 

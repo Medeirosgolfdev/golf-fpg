@@ -30,6 +30,41 @@ describe("buildAllCourses", () => {
     expect(out[0].master.tees.map((t) => t.teeName)).toEqual(["Amarelas"]);
   });
 
+  it("cartão com outro nome junta-se ao campo feito à mão sem repetir o mesmo tee físico", () => {
+    // San Roque Golf Resort (cartão de 2024) = New Course: as voltas juntam-se,
+    // o «BRANCAS» do cartão (mesma cor, sexo e metros das Blancas) não entra.
+    const novo = curso("away-san-roque", "San Roque - New Course", "Blancas", 6079);
+    const cartao = curso("away-san-roue-golf-resort", "San Roque Golf Resort", "BRANCAS", 6079);
+    cartao.master._players = { "40682": [{ date: "2024-09-27", gross: 77, toPar: 5, tee: "BRANCAS", event: null, sd: -0.2 }] };
+    const out = buildAllCourses({ fpg: [], pipelineAway: [cartao], melhoriasAway: [], extra: [novo] });
+    expect(out).toHaveLength(1);
+    expect(out[0].courseKey).toBe("away-san-roque");
+    expect(out[0].master.tees.map((t) => t.teeName)).toEqual(["Blancas"]);
+    expect(Object.keys(out[0].master._players ?? {})).toEqual(["40682"]);
+  });
+
+  it("campos juntados somam as voltas de cada jogador e o nome antigo dá lugar ao actual", () => {
+    // Paço do Lumiar (até 01/2025) = THE ONE Hills Lisbon City Golf (desde 04/2025).
+    const novo = curso("the-one-hills-lisbon-city-golf", "THE ONE Hills Lisbon City Golf", "BRANCAS", 3122);
+    const velho = curso("paco-do-lumiar", "Paço do Lumiar", "BRANCAS", 3122);
+    const v = (date: string, gross: number) => ({ date, gross, toPar: 0, tee: "BRANCAS", event: null, sd: 0 });
+    const out = buildAllCourses({
+      fpg: [velho, novo], pipelineAway: [], melhoriasAway: [], extra: [],
+      coursePlayers: {
+        "paco-do-lumiar": { "52884": [v("2024-05-01", 60), v("2024-06-01", 58)] },
+        "the-one-hills-lisbon-city-golf": { "52884": [v("2025-05-01", 57)] },
+      },
+    });
+    expect(out).toHaveLength(1);
+    expect(out[0].courseKey).toBe("the-one-hills-lisbon-city-golf");
+    expect((out[0].master._players?.["52884"] as unknown[]).length).toBe(3);
+    // Palmela Village Golf (FPG) fica com o URL, mas mostra o nome actual.
+    const palmela = curso("ncourse-098-1", "Palmela Village Golf", "Brancas", 3596);
+    const arr = curso("away-arrabida-resort-golf-academy", "Arrábida Resort & Golf Academy", "BRANCAS", 3596);
+    const o2 = buildAllCourses({ fpg: [palmela], pipelineAway: [arr], melhoriasAway: [], extra: [] });
+    expect(o2.map((c) => [c.courseKey, c.master.name])).toEqual([["ncourse-098-1", "Arrábida Resort & Golf Academy"]]);
+  });
+
   it("junta o course-players.json ao campo PT (quem jogou)", () => {
     const fpg = curso("ss", "Santo da Serra");
     const ronda = { date: "2026-01-01", gross: 80, toPar: 8, tee: "Amarelas", event: null, sd: 10 };

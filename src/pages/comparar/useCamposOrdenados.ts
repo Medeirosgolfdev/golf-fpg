@@ -7,13 +7,14 @@
  */
 import { useMemo } from "react";
 import type { Course } from "../../data/types";
+import { compareNomeCampo } from "../../utils/nomeCampo";
 
 export function useCamposOrdenados(simCourses: Course[], initialCourseKey?: string): {
   sortedCourses: Course[];
   defaultCourseKey: string;
 } {
   const sortedCourses = useMemo(
-    () => [...simCourses].sort((a, b) => a.master.name.localeCompare(b.master.name, "pt", { sensitivity: "base" })),
+    () => [...simCourses].sort((a, b) => compareNomeCampo(a.master.name, b.master.name)),
     [simCourses]
   );
   const defaultCourseKey = useMemo(() => {

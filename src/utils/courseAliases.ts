@@ -111,6 +111,19 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "golden palm": "Trump Doral - Golden Palm",
   "red tiger": "Trump Doral - Red Tiger",
   "silver fox": "Trump Doral - Silver Fox",
+  // San Roque (Cádis), 18/11/2026: o «San Roque Golf Resort» dos cartões de 2024
+  // (Triple A European Masters) é o New Course — metros e SI iguais aos das
+  // Blancas, só o par do cartão vinha desalinhado. O Old é o do The San Roque Club.
+  "san roque golf resort": "San Roque - New Course",
+  "san roque golf & resort": "San Roque - New Course",
+  "the san roque club": "San Roque - Old Course",
+  "the san roque club - old course": "San Roque - Old Course",
+  // Campos com nome novo, provados pelos metros iguais buraco a buraco em todos
+  // os tees e pelas datas seguidas das voltas (18/11/2026):
+  // Paço do Lumiar (voltas até 01/2025) = THE ONE Hills Lisbon City Golf (desde 04/2025);
+  // Palmela Village Golf (2015) = Arrábida Resort & Golf Academy (Brancas 3596 m).
+  "paço do lumiar": "THE ONE Hills Lisbon City Golf",
+  "palmela village golf": "Arrábida Resort & Golf Academy",
   "blue monster": "Trump Doral - Blue Monster",
   "golf du touquet la foret": "Le Touquet Golf Club - La Forêt",
   "golf du touquet - la mer": "Golf Du Touquet - La Mer",
@@ -122,7 +135,7 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "sedgefleld country club - donald ross course": "Sedgefield Country Club",
   "glen golf course": "Glen Golf Club",
   "chantilly vineuil new": "Golf de Chantilly Parcours de Vineul",
-  "vierumakki": "vierumaki golf club",
+  "vierumakki": "Vierumäki Golf Club",
   "454golf du médoc": "Golf du Médoc",
   "pga catalunya resort, spain": "PGA Catalunya Resort",
   // ELTC 2026: o mesmo campo registado com e sem «(Irlanda)» (2026-10-30).

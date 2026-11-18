@@ -1366,7 +1366,9 @@ const sanRoqueOld: Course = {
   courseKey: "away-the-san-roque-club-old",
   master: {
     courseId: "away-the-san-roque-club-old",
-    name: "The San Roque Club - Old Course",
+    // «San Roque - Old Course», ao lado do New nas listas (18/11/2026: como «The
+    // San Roque Club…» ficava no «T» e parecia não estar no simulador).
+    name: "San Roque - Old Course",
     country: "Espanha",
     links: { fpg: null, scorecards: "https://rfegolf.es/club/san-roque-club" },
     tees: srOldTees,

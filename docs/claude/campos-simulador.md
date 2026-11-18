@@ -199,6 +199,11 @@ validação corre SEMPRE no PC da utilizadora. Ver memória `cowork-sandbox-buil
 
 ---
 
+- **Filtro «Jogador…» da barra (18/11/2026):** mostra na lista só os campos onde o jogador jogou, mas NÃO fecha o campo aberto (nem a vista Simulador) — `filteredSemJogador` guarda a lista sem o filtro de jogador e o `selected` cai nela. Lista vazia → «Este jogador não jogou em nenhum destes campos». O jogador do simulador é outro: o selector dentro da vista.
+- **Campos juntados somam as voltas** (18/11/2026): `juntarVoltas` no `mergeCourses` — quem jogou nos dois nomes fica com as voltas dos dois (antes ficavam só as de um). O campo que fica com o URL e tem um nome antigo (alias) mostra o nome actual (Palmela Village Golf → Arrábida Resort & Golf Academy). Para encontrar repetidos: comparar os metros buraco a buraco de todos os tees entre campos (o `audit-courses.js` só vê nomes parecidos). Uma volta com o cartão de outro campo corrige-se pelo par em `course-aliases.json` → `parRoutes` (Garden City CC → Sand Creek Station).
+- **Ordem alfabética dos campos** nas listas (Campos, Simulador «E se?», Comparar): `compareNomeCampo` (`utils/nomeCampo.ts`), que ignora o «The» inicial.
+- **Cartão com outro nome que é um campo curado** (San Roque Golf Resort 2024 = New Course): alias em `courseAliases.ts`; no `mergeCourses`, um tee do cartão com a mesma cor + sexo + metros de um tee do `extraCourses` não entra (traria o par/rating do cartão do clube).
+
 ## CamposPage — "Quem jogou neste campo" (cruzamento jogador↔campo) — 2026-06-13
 
 A secção `CoursePlayersSection` da `CamposPage` mostra, por campo, quem lá jogou

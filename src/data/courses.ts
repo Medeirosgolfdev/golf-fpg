@@ -44,6 +44,7 @@ export interface CoursesInput {
 /** Fusão dos campos — FPG + Away (pipeline + melhorias + manuais). */
 export function buildAllCourses(input: CoursesInput): Course[] {
   const { fpg, pipelineAway, melhoriasAway, extra } = input;
+  const extraKeys = new Set(extra.map((c) => c.courseKey));
 
   // ── helpers ──────────────────────────────────────────────────────────
 
@@ -133,6 +134,23 @@ export function buildAllCourses(input: CoursesInput): Course[] {
     });
   }
 
+  /** Voltas de dois campos que são o mesmo: as de cada jogador SOMAM-SE (sem
+   *  repetir a mesma volta). Antes, quem tinha voltas nos dois nomes ficava só
+   *  com as de um — Paço do Lumiar + THE ONE Hills perdia ~140 voltas (18/11/2026). */
+  function juntarVoltas(
+    a: Course["master"]["_players"], b: Course["master"]["_players"],
+  ): NonNullable<Course["master"]["_players"]> {
+    const out: NonNullable<Course["master"]["_players"]> = { ...(a ?? {}) };
+    for (const [fed, rs] of Object.entries(b ?? {})) {
+      const prev = out[fed];
+      if (!Array.isArray(prev) || !Array.isArray(rs)) { if (!prev) out[fed] = rs; continue; }
+      const k = (r: CoursePlayerRound) => `${r.date}|${r.gross}|${r.tee}|${r.event}`;
+      const vistas = new Set(prev.map(k));
+      out[fed] = [...prev, ...rs.filter((r) => !vistas.has(k(r)))];
+    }
+    return out;
+  }
+
   /** Merge de dois campos: mantém o melhor de cada um.
    *  Se o base é um campo FPG (master-courses, key não começa por "away-"),
    *  os tees FPG são autoritativos — não fundir tees de scorecards (away).
@@ -143,12 +161,23 @@ export function buildAllCourses(input: CoursesInput): Course[] {
 
     // Campo FPG + fonte away → manter só tees FPG (dados oficiais)
     // Campo away + away, ou FPG + FPG → fundir normalmente
+    // Campo feito à mão (extraCourses) + entrada de um cartão com outro nome →
+    // o tee do cartão que é o MESMO tee físico (cor + sexo + metros) de um tee
+    // já curado não entra outra vez: traria o par/rating do cartão do clube
+    // (San Roque Golf Resort 2024 = New Course Blancas, com o par desalinhado;
+    // 18/11/2026).
+    const physKey = (t: Course["master"]["tees"][0]) =>
+      `${teeGroupHex(t.teeName, t.scorecardMeta?.teeColor)}|${t.sex ?? ""}|${Math.round(t.distances?.total ?? 0)}`;
+    const curated = extraKeys.has(base.courseKey) && !extraKeys.has(other.courseKey)
+      ? new Set(base.master.tees.filter((t) => (t.distances?.total ?? 0) > 0).map(physKey))
+      : null;
+    const otherTees = curated ? other.master.tees.filter((t) => !curated.has(physKey(t))) : other.master.tees;
     const combinedTees = (isBaseFPG && !isOtherFPG)
       ? base.master.tees
-      : [...base.master.tees, ...other.master.tees];
+      : [...base.master.tees, ...otherTees];
 
     const mergedTees = dedupTees(combinedTees);
-    const players = { ...(other.master._players ?? {}), ...(base.master._players ?? {}) };
+    const players = juntarVoltas(base.master._players, other.master._players);
     return {
       ...base,
       master: {
@@ -241,7 +270,10 @@ export function buildAllCourses(input: CoursesInput): Course[] {
       finalMap.set(canonical, mergeCourses(existing, c));
     } else {
       byName.set(nn, c.courseKey);
-      finalMap.set(c.courseKey, c);
+      // O campo que fica com o URL tem um nome antigo (alias) — mostra-se o
+      // actual (Palmela Village Golf → Arrábida Resort & Golf Academy, 18/11/2026).
+      const nome = isAliasName(c) ? canonicalCourseName(c.master.name) : c.master.name;
+      finalMap.set(c.courseKey, nome === c.master.name ? c : { ...c, master: { ...c.master, name: nome } });
     }
   }
 
