@@ -590,7 +590,32 @@
       "roundId": 73467
     }
   ],
-  "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T15:00:37.641Z"
+  "horariosScrapedAt": "2026-06-24T15:00:37.641Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cebreros Fernandez, Enrique",
+          "holeNumber": 17,
+          "createdAt": "02/03/26 09:47:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Maccari, Augusto",
+          "holeNumber": 11,
+          "createdAt": "02/03/26 10:56:49",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Moreno Carranza, Manuela",
+          "holeNumber": 15,
+          "createdAt": "02/03/26 11:25:28",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -560,9 +560,34 @@
       "roundId": 79671
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1929763777_74373-iv-liga-femenina-golf-cartuja-jornada-1-08-10-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fowler, Joanne",
+          "holeNumber": 8,
+          "createdAt": "08/10/26 11:05:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cruz Rey, Victoria E.",
+          "holeNumber": 8,
+          "createdAt": "08/10/26 11:42:18",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Herod, Natalia Luiza",
+          "holeNumber": 8,
+          "createdAt": "08/10/26 19:00:31",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

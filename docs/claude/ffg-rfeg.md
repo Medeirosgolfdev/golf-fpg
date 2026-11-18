@@ -203,6 +203,19 @@ par fica «–». As fichas por nome (`loadFedByName`, `loadGolfboxPlayers`)
 passaram para `src/data/playerLookups.ts`. Testes:
 `src/data/__tests__/rfegConverters.test.ts`.
 
+## Espanha — destaques NextCaddy pedidos pela VOLTA (2026-11-18)
+
+`stats/scoreTypes/{id}` (birdies/eagles/hole-in-one em tempo real — os «Destaques» da /rfeg nas
+provas só com PDF) quer o número de uma **volta** (`roundId` de `stats/rounds/{tourId}`), não o da
+prova. O `scrape-nextcaddy.js` pedia-o com o `tourId` e gravava os destaques da volta com esse
+número, de OUTRA prova: 1378 dos 2279 ficheiros com datas tinham estatísticas de outra prova (a
+tour 73284, Liga de Verano em Córdoba, tinha os de Azata 22/02; o teste da 74579, um Benjamín de
+18/10, fixava três adultos de 12/04). Agora `destaquesDasVoltas()` pede por volta e cada jogador leva
+o `roundNumber`. Limpeza: `--limpar-destaques` (tirados de 4603 ficheiros; os já pedidos por volta
+ficam) e `--destaques [--max N]` (volta a pedi-los só onde a /rfeg os mostra — sem classificação nem
+totais; marca `destaquesVistoEm`): 809 com destaques, 1015 sem; 650 com datas iguais às da prova,
+6 com buracos registados uns dias antes/depois, 154 sem data na prova.
+
 ## Espanha — provas gémeas LGS↔RFEG fundidas e licenças pelo sufixo (2026-11-03)
 
 Regra dela: das provas repetidas fica uma linha com o MÁXIMO de informação. O

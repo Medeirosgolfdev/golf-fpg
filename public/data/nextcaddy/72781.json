@@ -323,9 +323,23 @@
       "roundId": 77992
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:02.457Z"
+  "horariosScrapedAt": "2026-11-16T12:40:02.457Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": []
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": []
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": []
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

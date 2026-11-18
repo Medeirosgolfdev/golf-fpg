@@ -401,9 +401,69 @@
       "roundId": 78201
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/836627556_72989-campeonato-vi-manzanilla-o11-privado.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Sanchez Fernandez, Raul",
+          "holeNumber": 3,
+          "createdAt": "14/08/26 10:38:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lora Marquez, Ivan De",
+          "holeNumber": 12,
+          "createdAt": "14/08/26 13:14:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Galvez Diaz De Bustamante, Luis",
+          "holeNumber": 13,
+          "createdAt": "14/08/26 13:22:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Galvez Diaz De Bustamante, Felipe",
+          "holeNumber": 11,
+          "createdAt": "14/08/26 13:22:39",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sanchez Fernandez, Raul",
+          "holeNumber": 12,
+          "createdAt": "14/08/26 13:24:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sanchez Perez, Gonzalo",
+          "holeNumber": 16,
+          "createdAt": "14/08/26 13:42:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Parias Mora-Figueroa, Leopoldo",
+          "holeNumber": 16,
+          "createdAt": "14/08/26 14:18:52",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Lora Marquez, Ivan De",
+          "holeNumber": 16,
+          "createdAt": "14/08/26 14:19:09",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

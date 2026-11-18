@@ -417,9 +417,46 @@
       "roundId": 75117
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3679963827_70211-aigs-21-04-2026.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fergusson-Batte, Andrew",
+          "holeNumber": 14,
+          "createdAt": "21/04/26 12:10:39",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 17,
+          "createdAt": "21/04/26 12:40:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Malcolm, Graham James",
+          "holeNumber": 14,
+          "createdAt": "21/04/26 13:05:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Macmorran, James Duncan",
+          "holeNumber": 17,
+          "createdAt": "21/04/26 14:43:19",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Connelly, Andrew",
+          "holeNumber": 3,
+          "createdAt": "21/04/26 14:45:46",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

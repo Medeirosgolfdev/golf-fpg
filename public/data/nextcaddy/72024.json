@@ -241,9 +241,34 @@
       "roundId": 77172
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1050919064_72024-torneo-hoyo-19.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Luque Carmona, Jose",
+          "holeNumber": 4,
+          "createdAt": "11/07/26 10:30:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rios Santos, Jose Vicente",
+          "holeNumber": 7,
+          "createdAt": "11/07/26 11:26:02",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez Masa, Alfonso",
+          "holeNumber": 12,
+          "createdAt": "11/07/26 12:33:00",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

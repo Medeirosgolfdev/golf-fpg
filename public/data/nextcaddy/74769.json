@@ -100,9 +100,28 @@
       "roundId": 80099
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:09.713Z"
+  "horariosScrapedAt": "2026-11-16T12:40:09.713Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Nuño Medinilla, Lucas",
+          "holeNumber": 9,
+          "createdAt": "23/10/26 18:35:45",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Roman Garrido, Victor",
+          "holeNumber": 7,
+          "createdAt": "23/10/26 18:36:25",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

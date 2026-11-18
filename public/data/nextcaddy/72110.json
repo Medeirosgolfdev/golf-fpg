@@ -296,20 +296,39 @@
       "roundId": 77263
     }
   ],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3335012504_72110-liga-expres-jornada-3-manana-9-30.pdf"
+  ],
   "scoreTypes": {
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Grillo Guerrero, Daniel Angel",
+          "holeNumber": 9,
+          "createdAt": "09/07/26 10:11:42",
+          "roundNumber": 1
+        }
+      ]
+    },
     "birdie": {
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Fetherston, Bernadette",
-          "holeNumber": 17,
-          "createdAt": "20/01/26 13:38:07"
+          "playerName": "Santos Conde, Juan",
+          "holeNumber": 6,
+          "createdAt": "09/07/26 11:37:18",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sampedro Abascal, Fernando",
+          "holeNumber": 7,
+          "createdAt": "09/07/26 11:44:11",
+          "roundNumber": 1
         }
       ]
     }
   },
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/cartel/3335012504_72110-liga-expres-jornada-3-manana-9-30.pdf"
-  ]
+  "destaquesVistoEm": "2026-11-18"
 }

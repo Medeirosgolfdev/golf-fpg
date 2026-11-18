@@ -234,8 +234,74 @@
       "roundId": 78155
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Quiros Morales, Juan Jesus - Morales Lopez, Paqui",
+          "holeNumber": 16,
+          "createdAt": "15/08/26 10:48:54",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Torres Sanchez-Trasancos, Francisco De Asis - Torres  Bruzon, Luis",
+          "holeNumber": 13,
+          "createdAt": "15/08/26 10:50:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Carrillo Vicente, Miguel - Fernandez  Alvarez, Luz- Teresa",
+          "holeNumber": 16,
+          "createdAt": "15/08/26 11:00:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Torres Sanchez-Trasancos, Francisco De Asis - Torres  Bruzon, Luis",
+          "holeNumber": 4,
+          "createdAt": "15/08/26 11:53:54",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Quiros Morales, Juan Jesus - Morales Lopez, Paqui",
+          "holeNumber": 4,
+          "createdAt": "15/08/26 11:59:34",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Torres Bruzon, Borja - Torres Cotoner, Jose Luis",
+          "holeNumber": 15,
+          "createdAt": "15/08/26 12:24:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Torres Sanchez-Trasancos, Francisco De Asis - Torres  Bruzon, Luis",
+          "holeNumber": 7,
+          "createdAt": "15/08/26 12:40:03",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Tapia, Cayetano - Garcia Sanchez, Irene",
+          "holeNumber": 7,
+          "createdAt": "15/08/26 12:48:07",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Torres Sanchez-Trasancos, Francisco De Asis - Torres  Bruzon, Luis",
+          "holeNumber": 3,
+          "createdAt": "15/08/26 11:44:15",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

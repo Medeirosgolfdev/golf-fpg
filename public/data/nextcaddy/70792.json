@@ -545,9 +545,52 @@
       "roundId": 75778
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "/uploads/competiciones/pdf/2589933987_trofeo_copa_presidente_2026.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T15:00:58.960Z"
+  "horariosScrapedAt": "2026-06-24T15:00:58.960Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Vargas Santofimia, Francisco Javier",
+          "holeNumber": 17,
+          "createdAt": "23/05/26 11:25:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Molina Grande, Raul",
+          "holeNumber": 16,
+          "createdAt": "23/05/26 12:13:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Luque Fernandez, Jose Manuel",
+          "holeNumber": 17,
+          "createdAt": "23/05/26 12:49:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Blanco Ruiz, Pedro Jose",
+          "holeNumber": 6,
+          "createdAt": "23/05/26 13:40:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cerezo  Rodriguez, Pedro Luis",
+          "holeNumber": 6,
+          "createdAt": "23/05/26 13:40:52",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vargas Santofimia, Francisco Javier",
+          "holeNumber": 8,
+          "createdAt": "23/05/26 13:47:16",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

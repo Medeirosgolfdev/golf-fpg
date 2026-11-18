@@ -438,19 +438,18 @@
       "roundId": 74114
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Martinez Clavijo, M Rosario",
-          "holeNumber": 8,
-          "createdAt": "30/09/25 12:05:37"
-        }
-      ]
-    }
-  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": []
+    },
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": []
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

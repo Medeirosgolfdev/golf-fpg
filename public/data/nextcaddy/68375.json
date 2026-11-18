@@ -1026,10 +1026,35 @@
       "roundId": 72965
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/173418987_informacion_padres_e_hijos.pdf",
     "/uploads/competiciones/pdf/1632185356_reglas_locales_pineda._19.02.26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Salido Castillo, Carlos - Salido Maesso, Maria",
+          "holeNumber": 3,
+          "createdAt": "22/02/26 14:17:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Osborne Halcon, Enrique - Osborne Loring, Enrique",
+          "holeNumber": 3,
+          "createdAt": "22/02/26 14:18:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Benjumea Guzman, Pablo - Benjumea Rodriguez, Pablo",
+          "holeNumber": 9,
+          "createdAt": "22/02/26 16:03:25",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

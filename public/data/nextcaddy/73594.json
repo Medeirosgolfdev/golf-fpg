@@ -354,8 +354,27 @@
       "roundId": 78831
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Echevarria Salaverria, Jose Manuel",
+          "holeNumber": 2,
+          "createdAt": "09/09/26 09:26:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Aranguren Zubeldia, Francisco Javier",
+          "holeNumber": 2,
+          "createdAt": "09/09/26 09:49:04",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

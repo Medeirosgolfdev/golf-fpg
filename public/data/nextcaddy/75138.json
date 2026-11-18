@@ -448,9 +448,28 @@
       "roundId": 80527
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2209790280_75138-vi-liga-femenina-golf-cartuja-2-jornada-5-11-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lopez Collantes De Teran, Maria Luisa",
+          "holeNumber": 6,
+          "createdAt": "05/11/26 11:11:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Torres-Ternero Alvarez, Maria Gracia",
+          "holeNumber": 9,
+          "createdAt": "05/11/26 11:55:49",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -305,9 +305,40 @@
       "roundId": 77511
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/4022530556_72348-xi-torneo-garreos-golf.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Muñoz Egea, Sergio",
+          "holeNumber": 8,
+          "createdAt": "10/08/26 15:00:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ramirez De Pablo, Alfonso Luis",
+          "holeNumber": 2,
+          "createdAt": "10/08/26 15:12:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ramirez De Pablo, Alfonso Luis",
+          "holeNumber": 9,
+          "createdAt": "10/08/26 15:12:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ramirez Vera, Ramon Alfonso",
+          "holeNumber": 15,
+          "createdAt": "10/08/26 15:16:02",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

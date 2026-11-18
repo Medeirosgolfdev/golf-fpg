@@ -248,8 +248,86 @@
       "roundId": 79144
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Alessandrini, Enrique Miguel",
+          "holeNumber": 2,
+          "createdAt": "19/09/26 12:37:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Alessandrini, Enrique Miguel",
+          "holeNumber": 15,
+          "createdAt": "19/09/26 12:37:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Alessandrini, Enrique Miguel",
+          "holeNumber": 18,
+          "createdAt": "19/09/26 12:37:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Chao Gomez, Marcelino",
+          "holeNumber": 7,
+          "createdAt": "19/09/26 13:24:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Chao Gomez, Marcelino",
+          "holeNumber": 16,
+          "createdAt": "19/09/26 13:24:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pacheco Benitez, Jose Angel",
+          "holeNumber": 18,
+          "createdAt": "19/09/26 13:25:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Serrano Dominguez, Vicente",
+          "holeNumber": 7,
+          "createdAt": "19/09/26 13:33:08",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ortiz Garcia, Jose",
+          "holeNumber": 18,
+          "createdAt": "19/09/26 13:33:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Martinez, Miguel",
+          "holeNumber": 4,
+          "createdAt": "19/09/26 13:33:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Martinez, Miguel",
+          "holeNumber": 6,
+          "createdAt": "19/09/26 13:33:38",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Chao Gomez, Marcelino",
+          "holeNumber": 18,
+          "createdAt": "19/09/26 13:24:58",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

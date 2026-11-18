@@ -1274,8 +1274,561 @@
       "roundId": 77340
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Oliva Fernandez, Leon - Escudero Puebla, Angel Iluminado",
+          "holeNumber": 6,
+          "createdAt": "18/09/26 09:47:15",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Muñoz Mayoral, Jose Maria - Muñoz  Mayoral, Oscar",
+          "holeNumber": 9,
+          "createdAt": "18/09/26 09:48:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Checa Zavala, Carlos - Albor Marina, Victor",
+          "holeNumber": 6,
+          "createdAt": "18/09/26 09:52:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Hernandez, Miguel - Redondo Vazquez, Antonio",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 09:53:44",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalo Ugarte, Fernando - Morencos López, Ángel Luis",
+          "holeNumber": 6,
+          "createdAt": "18/09/26 09:55:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rincon Bautista, Jose - Nuevo Felipe, Agustin",
+          "holeNumber": 4,
+          "createdAt": "18/09/26 10:02:49",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cruz Gallego, Heliodoro - Camara Molinero, Antolin",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 10:07:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mendoza Rivero, Jorge - Martin Gonzalez, Luis",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 10:20:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Barreiro Sanchez, Raimundo - Adrian Malo, Jesus",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 10:20:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Carballo Diaz, Jose Marcos - Rodriguez Puertollano, Juan Carlos",
+          "holeNumber": 6,
+          "createdAt": "18/09/26 10:21:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lorenzo-Arroyo Poullet, Rocio - Fernandez De La Fuente, Jose Luis",
+          "holeNumber": 14,
+          "createdAt": "18/09/26 10:25:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rincon Bautista, Jose - Nuevo Felipe, Agustin",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 10:26:54",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Carballo Diaz, Jose Marcos - Rodriguez Puertollano, Juan Carlos",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 10:27:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cruz Gallego, Heliodoro - Camara Molinero, Antolin",
+          "holeNumber": 10,
+          "createdAt": "18/09/26 10:43:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Carballo Diaz, Jose Marcos - Rodriguez Puertollano, Juan Carlos",
+          "holeNumber": 9,
+          "createdAt": "18/09/26 10:51:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Maeso Salmeron, Carmen Maria - Ferrandez Del Cacho, Mercedes",
+          "holeNumber": 14,
+          "createdAt": "18/09/26 10:54:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Oliva Fernandez, Leon - Escudero Puebla, Angel Iluminado",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 11:02:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Muñoz Mayoral, Jose Maria - Muñoz  Mayoral, Oscar",
+          "holeNumber": 18,
+          "createdAt": "18/09/26 11:11:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Checa Zavala, Carlos - Albor Marina, Victor",
+          "holeNumber": 14,
+          "createdAt": "18/09/26 11:18:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalo Ugarte, Fernando - Morencos López, Ángel Luis",
+          "holeNumber": 13,
+          "createdAt": "18/09/26 11:23:49",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Adan Ortega, Domingo - Rodriguez Coronado, Manuela",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 11:23:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Hernandez, Miguel - Redondo Vazquez, Antonio",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 11:24:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalo Ugarte, Fernando - Morencos López, Ángel Luis",
+          "holeNumber": 14,
+          "createdAt": "18/09/26 11:31:13",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cruz Gallego, Heliodoro - Camara Molinero, Antolin",
+          "holeNumber": 15,
+          "createdAt": "18/09/26 11:33:25",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mendoza Rivero, Jorge - Martin Gonzalez, Luis",
+          "holeNumber": 14,
+          "createdAt": "18/09/26 11:40:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cruz Gallego, Heliodoro - Camara Molinero, Antolin",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 11:41:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lorenzo-Arroyo Poullet, Rocio - Fernandez De La Fuente, Jose Luis",
+          "holeNumber": 3,
+          "createdAt": "18/09/26 11:41:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Pinilla, Jesus Maria - Gimenez-Reyna Rodriguez, Francisco",
+          "holeNumber": 2,
+          "createdAt": "18/09/26 11:42:45",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalo Ugarte, Fernando - Morencos López, Ángel Luis",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 11:48:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cruz Gallego, Heliodoro - Camara Molinero, Antolin",
+          "holeNumber": 17,
+          "createdAt": "18/09/26 11:50:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Hernandez, Miguel - Redondo Vazquez, Antonio",
+          "holeNumber": 1,
+          "createdAt": "18/09/26 11:55:03",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Carballo Diaz, Jose Marcos - Rodriguez Puertollano, Juan Carlos",
+          "holeNumber": 15,
+          "createdAt": "18/09/26 11:58:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Carballo Diaz, Jose Marcos - Rodriguez Puertollano, Juan Carlos",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 12:04:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rincon Bautista, Jose - Nuevo Felipe, Agustin",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 12:05:13",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Barreiro Sanchez, Raimundo - Adrian Malo, Jesus",
+          "holeNumber": 18,
+          "createdAt": "18/09/26 12:07:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mendoza Rivero, Jorge - Martin Gonzalez, Luis",
+          "holeNumber": 18,
+          "createdAt": "18/09/26 12:14:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Oliva Fernandez, Leon - Escudero Puebla, Angel Iluminado",
+          "holeNumber": 4,
+          "createdAt": "18/09/26 12:14:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cruz Gallego, Heliodoro - Camara Molinero, Antolin",
+          "holeNumber": 2,
+          "createdAt": "18/09/26 12:24:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De La Ossa Durango, Jose Manuel - Sanchez Aguirre, Alfredo",
+          "holeNumber": 6,
+          "createdAt": "18/09/26 12:24:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Checa Zavala, Carlos - Albor Marina, Victor",
+          "holeNumber": 4,
+          "createdAt": "18/09/26 12:31:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gomez Gonzalez, Miguel Clemente - Prol Alvarez, Oscar",
+          "holeNumber": 6,
+          "createdAt": "18/09/26 17:07:03",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bazaga Nieto, Luis - Segura Collado, Tomas",
+          "holeNumber": 1,
+          "createdAt": "18/09/26 17:07:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Navio Abad, Jorge - Diaz Hernandez, David",
+          "holeNumber": 3,
+          "createdAt": "18/09/26 17:07:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rabadan Lopez, Nicolas - Rabadan Criado, Alberto",
+          "holeNumber": 2,
+          "createdAt": "18/09/26 17:08:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Correcher Vazquez, Mario - Martinez Quintas, Jorge",
+          "holeNumber": 2,
+          "createdAt": "18/09/26 17:16:01",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Calvo Benitez, Jorge - Encinas Lopez, Francisco Javier",
+          "holeNumber": 6,
+          "createdAt": "18/09/26 17:16:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bazaga Nieto, Luis - Segura Collado, Tomas",
+          "holeNumber": 2,
+          "createdAt": "18/09/26 17:19:01",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bazaga Nieto, Luis - Segura Collado, Tomas",
+          "holeNumber": 3,
+          "createdAt": "18/09/26 17:28:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rabadan Lopez, Nicolas - Rabadan Criado, Alberto",
+          "holeNumber": 5,
+          "createdAt": "18/09/26 17:32:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martin Tarascon, Alberto - Martin-Tarascon Rivera-Baldasano, Carlos",
+          "holeNumber": 8,
+          "createdAt": "18/09/26 17:34:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Correcher Vazquez, Mario - Martinez Quintas, Jorge",
+          "holeNumber": 4,
+          "createdAt": "18/09/26 17:35:13",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Nicolas Muñoz, Luis - Fernandez Bello, Eduardo",
+          "holeNumber": 6,
+          "createdAt": "18/09/26 17:40:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Navio Abad, Jorge - Diaz Hernandez, David",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 17:41:18",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bazaga Nieto, Luis - Segura Collado, Tomas",
+          "holeNumber": 5,
+          "createdAt": "18/09/26 17:41:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Correcher Vazquez, Mario - Martinez Quintas, Jorge",
+          "holeNumber": 5,
+          "createdAt": "18/09/26 17:43:24",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Dominguez Araujo, Carlos - Arribas Gomez, Jaime",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 17:43:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rabadan Lopez, Nicolas - Rabadan Criado, Alberto",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 17:47:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bazaga Nieto, Luis - Segura Collado, Tomas",
+          "holeNumber": 6,
+          "createdAt": "18/09/26 17:50:22",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Navio Abad, Jorge - Diaz Hernandez, David",
+          "holeNumber": 8,
+          "createdAt": "18/09/26 17:50:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Almansa Lapeira, Jose Manuel - Hormigos Zapata, Daniel",
+          "holeNumber": 9,
+          "createdAt": "18/09/26 17:51:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Correcher Vazquez, Mario - Martinez Quintas, Jorge",
+          "holeNumber": 7,
+          "createdAt": "18/09/26 17:59:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Navio Abad, Jorge - Diaz Hernandez, David",
+          "holeNumber": 9,
+          "createdAt": "18/09/26 17:59:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Herrero Gutierrez, Adelaida - Tejedor Herrero, David",
+          "holeNumber": 15,
+          "createdAt": "18/09/26 18:17:17",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bazaga Nieto, Luis - Segura Collado, Tomas",
+          "holeNumber": 9,
+          "createdAt": "18/09/26 18:17:41",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Correcher Vazquez, Mario - Martinez Quintas, Jorge",
+          "holeNumber": 9,
+          "createdAt": "18/09/26 18:19:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martin Tarascon, Alberto - Martin-Tarascon Rivera-Baldasano, Carlos",
+          "holeNumber": 13,
+          "createdAt": "18/09/26 18:26:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Dominguez Araujo, Carlos - Arribas Gomez, Jaime",
+          "holeNumber": 14,
+          "createdAt": "18/09/26 18:42:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rabadan Lopez, Nicolas - Rabadan Criado, Alberto",
+          "holeNumber": 12,
+          "createdAt": "18/09/26 18:45:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bazaga Nieto, Luis - Segura Collado, Tomas",
+          "holeNumber": 11,
+          "createdAt": "18/09/26 18:46:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Correcher Vazquez, Mario - Martinez Quintas, Jorge",
+          "holeNumber": 12,
+          "createdAt": "18/09/26 18:54:15",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Zamora Liarte, Josefa Agueda - Castro Torres, Carmen",
+          "holeNumber": 18,
+          "createdAt": "18/09/26 18:57:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Correcher Vazquez, Mario - Martinez Quintas, Jorge",
+          "holeNumber": 13,
+          "createdAt": "18/09/26 19:01:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Orgaz Escalera, Francisco - Orgaz Martin, Juan Francisco",
+          "holeNumber": 2,
+          "createdAt": "18/09/26 19:04:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Herrero Gutierrez, Adelaida - Tejedor Herrero, David",
+          "holeNumber": 2,
+          "createdAt": "18/09/26 19:04:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez Arroyo, Eduardo - Fernandez Lorenzo-Arroyo, Victoria",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 19:11:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Orgaz Escalera, Francisco - Orgaz Martin, Juan Francisco",
+          "holeNumber": 3,
+          "createdAt": "18/09/26 19:12:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bazaga Nieto, Luis - Segura Collado, Tomas",
+          "holeNumber": 14,
+          "createdAt": "18/09/26 19:13:54",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Nicolas Muñoz, Luis - Fernandez Bello, Eduardo",
+          "holeNumber": 17,
+          "createdAt": "18/09/26 19:17:25",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rabadan Lopez, Nicolas - Rabadan Criado, Alberto",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 19:18:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez Arroyo, Eduardo - Fernandez Lorenzo-Arroyo, Victoria",
+          "holeNumber": 17,
+          "createdAt": "18/09/26 19:21:09",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Dominguez Araujo, Carlos - Arribas Gomez, Jaime",
+          "holeNumber": 18,
+          "createdAt": "18/09/26 19:23:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Calvo Benitez, Jorge - Encinas Lopez, Francisco Javier",
+          "holeNumber": 1,
+          "createdAt": "18/09/26 19:29:34",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Correcher Vazquez, Mario - Martinez Quintas, Jorge",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 19:31:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bazaga Nieto, Luis - Segura Collado, Tomas",
+          "holeNumber": 16,
+          "createdAt": "18/09/26 19:33:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Dominguez Araujo, Carlos - Arribas Gomez, Jaime",
+          "holeNumber": 1,
+          "createdAt": "18/09/26 19:39:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Correcher Vazquez, Mario - Martinez Quintas, Jorge",
+          "holeNumber": 17,
+          "createdAt": "18/09/26 19:40:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez Arroyo, Eduardo - Fernandez Lorenzo-Arroyo, Victoria",
+          "holeNumber": 1,
+          "createdAt": "18/09/26 19:46:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Tarascon Baldasano, Maria Jose - Tarascon Baldasano, Mercedes",
+          "holeNumber": 5,
+          "createdAt": "18/09/26 19:48:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Calvo Benitez, Jorge - Encinas Lopez, Francisco Javier",
+          "holeNumber": 3,
+          "createdAt": "18/09/26 19:49:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Hidalgo Saez, Francisco Javier - Diaz Lopez, Felix",
+          "holeNumber": 3,
+          "createdAt": "18/09/26 19:55:09",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Almansa Lapeira, Jose Manuel - Hormigos Zapata, Daniel",
+          "holeNumber": 3,
+          "createdAt": "18/09/26 19:57:59",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -433,9 +433,105 @@
       "roundId": 77973
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1794629010_72764-aigs-04-08-2026.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 2,
+          "createdAt": "04/08/26 10:06:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bulley, Stephen",
+          "holeNumber": 4,
+          "createdAt": "04/08/26 10:19:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Spencer Terry, Geoffrey",
+          "holeNumber": 4,
+          "createdAt": "04/08/26 10:31:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Hazzard, John",
+          "holeNumber": 7,
+          "createdAt": "04/08/26 10:46:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mcgettigan, Ciaran",
+          "holeNumber": 5,
+          "createdAt": "04/08/26 11:27:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Thornet, Ian",
+          "holeNumber": 7,
+          "createdAt": "04/08/26 11:55:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Spencer Terry, Geoffrey",
+          "holeNumber": 11,
+          "createdAt": "04/08/26 12:05:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Malcolm, Graham James",
+          "holeNumber": 14,
+          "createdAt": "04/08/26 12:08:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bradbury, Diane",
+          "holeNumber": 13,
+          "createdAt": "04/08/26 12:15:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bulley, Stephen",
+          "holeNumber": 16,
+          "createdAt": "04/08/26 12:42:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 16,
+          "createdAt": "04/08/26 13:03:41",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Murphy, Jason",
+          "holeNumber": 16,
+          "createdAt": "04/08/26 13:03:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sharples, Michael",
+          "holeNumber": 14,
+          "createdAt": "04/08/26 14:22:46",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Sharples, Michael",
+          "holeNumber": 18,
+          "createdAt": "04/08/26 14:22:46",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

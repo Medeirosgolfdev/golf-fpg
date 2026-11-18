@@ -272,9 +272,34 @@
       "roundId": 80129
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1168242551_74780-liga-de-damas-j2.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Paramos Escapa, Ana Isabel",
+          "holeNumber": 11,
+          "createdAt": "23/10/26 10:46:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Herrero Alegria, Maria Jesus",
+          "holeNumber": 5,
+          "createdAt": "23/10/26 13:04:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Paramos Escapa, Ana Isabel",
+          "holeNumber": 7,
+          "createdAt": "23/10/26 14:09:37",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

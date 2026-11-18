@@ -369,9 +369,46 @@
       "roundId": 79245
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1628628076_73992-frogs-23-09-2026.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Millar, Gordon",
+          "holeNumber": 8,
+          "createdAt": "23/09/26 14:57:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pert, Lesley",
+          "holeNumber": 10,
+          "createdAt": "23/09/26 16:32:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Podmore, John",
+          "holeNumber": 11,
+          "createdAt": "23/09/26 16:50:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Parker, Darrell",
+          "holeNumber": 7,
+          "createdAt": "23/09/26 16:51:09",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Hodges, Terence",
+          "holeNumber": 11,
+          "createdAt": "23/09/26 16:51:50",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -272,9 +272,28 @@
       "roundId": 79120
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3697373751_73867-liga-de-damas-viernes.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Diaz Pichardo, Maria Isabel",
+          "holeNumber": 12,
+          "createdAt": "18/09/26 09:47:54",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Clemente Manzano, Beatriz",
+          "holeNumber": 10,
+          "createdAt": "18/09/26 10:23:09",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

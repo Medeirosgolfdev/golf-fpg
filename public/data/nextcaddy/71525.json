@@ -113,8 +113,27 @@
       "roundId": 76605
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gomez Varona, Victorio",
+          "holeNumber": 9,
+          "createdAt": "13/06/26 14:49:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gomez Varona, Victorio",
+          "holeNumber": 14,
+          "createdAt": "13/06/26 14:49:55",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

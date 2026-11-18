@@ -27,6 +27,8 @@
  *   node scripts/scrape-nextcaddy.js --discover --comite 1     # só Infantil y Juvenil
  *   node scripts/scrape-nextcaddy.js --discover --club AM00    # só RFGA
  *   node scripts/scrape-nextcaddy.js --scope scripts/nextcaddy-scope.json
+ *   node scripts/scrape-nextcaddy.js --limpar-destaques        # tira os destaques antigos (18/11/2026)
+ *   node scripts/scrape-nextcaddy.js --destaques --max 300     # volta a pedi-los por volta
  *
  * Exit: 0 gravou · 2 nada de novo (ou descoberta vazia/muito menor que o scope
  * em disco — scope anterior preservado) · 1 erro (todos os torneios falharam).
@@ -670,6 +672,33 @@ function parseEsAbbrevDate(s) {
   return `${m[3]}-${mon}-${m[1].padStart(2, "0")}`;
 }
 
+/**
+ * Birdies/eagles/hole-in-one em tempo real («destaques»), POR VOLTA.
+ * ⚠ (18/11/2026) `stats/scoreTypes/{id}` quer o número de uma VOLTA (roundId de
+ * `stats/rounds/{tourId}`), não o da prova. Pedia-se com o tourId e vinham os
+ * destaques da volta com esse número, de OUTRA prova (a tour 73284, Córdoba,
+ * gravava os de Azata 22/02 — a volta 73284 é da tour 68642): 1378 dos 2279
+ * ficheiros tinham estatísticas de outra prova, e a /rfeg mostrava-as como
+ * «Destaques». Junta as voltas; cada jogador leva o `roundNumber`.
+ */
+async function destaquesDasVoltas(rounds) {
+  const voltas = (Array.isArray(rounds) ? rounds : []).filter((r) => r && r.roundId);
+  if (!voltas.length) return null;
+  const out = {};
+  for (const v of voltas) {
+    const r = await get(`${BASE}/stats/scoreTypes/${v.roundId}`, { accept: "application/json" });
+    if (r.status !== 200) continue;
+    let j;
+    try { j = JSON.parse(r.body); } catch { continue; }
+    for (const [tipo, dados] of Object.entries(j || {})) {
+      if (!dados || !Array.isArray(dados.players)) continue;
+      const alvo = out[tipo] || (out[tipo] = { scoreTypeKey: dados.scoreTypeKey || tipo, players: [] });
+      for (const pl of dados.players) alvo.players.push({ ...pl, roundNumber: v.roundNumber ?? null });
+    }
+  }
+  return Object.keys(out).length ? out : null;
+}
+
 async function scrapeTour(tourId, opts) {
   opts = opts || {};
   const fetchScorecards = !!opts.scorecards;
@@ -682,9 +711,8 @@ async function scrapeTour(tourId, opts) {
     post(`${BASE}/getListadoHorarios`, `id=${tourId}`),
     get(`${BASE}/getListadoEstadisticas?id=${tourId}`, { accept: "application/json" }),
     get(`${BASE}/stats/rounds/${tourId}`, { accept: "application/json" }),
-    get(`${BASE}/stats/scoreTypes/${tourId}`, { accept: "application/json" }),
   ]);
-  const [pageR, clasR, inscR, horaR, estR, roundsR, scoreTypesR] = tasks;
+  const [pageR, clasR, inscR, horaR, estR, roundsR] = tasks;
 
   const meta = pageR.status === 200 ? parseTourMeta(pageR.body) : {};
   // Nome da listagem quando a página não o deu (provas futuras: meta.name vinha null).
@@ -710,8 +738,7 @@ async function scrapeTour(tourId, opts) {
   const estadisticas = estR.status === 200 ? parseEstadisticas(estR.body) : null;
   let rounds = [];
   try { rounds = JSON.parse(roundsR.body); } catch { /* ignore */ }
-  let scoreTypes = null;
-  try { scoreTypes = JSON.parse(scoreTypesR.body); } catch { /* ignore */ }
+  const scoreTypes = await destaquesDasVoltas(rounds);
   // PDFs: do clas response + da page (banderas, etc.)
   const pagePdfs = pageR.status === 200 ? parsePdfsAttached(pageR.body) : [];
   const allPdfs = [...new Set([...(clasParsed.pdfs || []), ...pagePdfs])];
@@ -851,6 +878,53 @@ async function main() {
   const patchScorecards = args.includes("--patch-scorecards");  // 2ª passada: só completa scorecards em falta
   const outArg = getArg("out", null);
   const filterArg = getArg("filter", null);
+
+  // --limpar-destaques (18/11/2026): tira o `scoreTypes` antigo de todos os ficheiros —
+  // foi pedido com o número da prova e é de outra prova (ver destaquesDasVoltas).
+  if (args.includes("--limpar-destaques")) {
+    let n = 0;
+    for (const f of fs.readdirSync(OUT_DIR).filter((x) => /^\d+\.json$/.test(x))) {
+      const file = path.join(OUT_DIR, f);
+      let t; try { t = JSON.parse(fs.readFileSync(file, "utf8")); } catch { continue; }
+      if (!("scoreTypes" in t)) continue;
+      // Os já pedidos por volta (cada jogador leva `roundNumber`) ficam.
+      if (Object.values(t.scoreTypes || {}).some((v) => (v && v.players || []).some((pl) => pl && "roundNumber" in pl))) continue;
+      delete t.scoreTypes;
+      writeJsonAtomic(file, t); n++;
+    }
+    console.log(`Destaques antigos tirados de ${n} ficheiro(s).`);
+    return;
+  }
+  // --destaques [--max N] (18/11/2026): volta a pedir os destaques, POR VOLTA (os roundIds já
+  // estão no ficheiro), nas provas onde a /rfeg os mostra — sem classificação nem totais. As
+  // mais recentes primeiro; uma prova sem destaques fica marcada (`destaquesVistoEm`) e não se repete.
+  if (args.includes("--destaques")) {
+    const max = parseInt(getArg("max", "0"), 10) || Infinity;
+    const lista = [];
+    for (const f of fs.readdirSync(OUT_DIR).filter((x) => /^\d+\.json$/.test(x))) {
+      const file = path.join(OUT_DIR, f);
+      let t; try { t = JSON.parse(fs.readFileSync(file, "utf8")); } catch { continue; }
+      if (t.scoreTypes || t.destaquesVistoEm || !(t.roundIds || []).length) continue;
+      const temRes = (t.leaderboard || []).some((c) => (c.players || []).length);
+      const temTot = (t.inscritos || []).some((p) => p && (p.total != null || p.toPar != null));
+      if (temRes || temTot) continue;
+      lista.push({ file, data: (t.meta && t.meta.dateIso) || "" });
+    }
+    lista.sort((a, b) => b.data.localeCompare(a.data));
+    const fazer = lista.slice(0, max);
+    console.log(`Destaques por volta: ${lista.length} prova(s) sem eles; agora ${fazer.length}.`);
+    let com = 0, sem = 0;
+    for (const { file } of fazer) {
+      const t = JSON.parse(fs.readFileSync(file, "utf8"));
+      const st = await destaquesDasVoltas(t.roundIds);
+      if (st) { t.scoreTypes = st; com++; } else { sem++; }
+      t.destaquesVistoEm = new Date().toISOString().slice(0, 10);
+      writeJsonAtomic(file, t);
+      await new Promise((r) => setTimeout(r, 250));
+    }
+    console.log(`Feito: ${com} com destaques, ${sem} sem.`);
+    return;
+  }
 
   if (discoverFlag) {
     const tag = (clubArg ? `club-${clubArg}` :

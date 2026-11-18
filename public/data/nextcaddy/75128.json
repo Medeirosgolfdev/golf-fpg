@@ -354,11 +354,54 @@
       "roundId": 80515
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "/uploads/competiciones/pdf/752246251_clasificacion_seniors_los_moriscos.pdf",
     "https://www.nextcaddy.com/uploads/competiciones/pdf/752246251_clasificacion_seniors_los_moriscos.pdf",
     "/uploads/circular/2026/539256dd2240e917cb5b247e369c5c30.pdf",
     "/uploads/competiciones/pdf/2734249872_r_locales.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Martin Mendoza, Begoña",
+          "holeNumber": 11,
+          "createdAt": "06/11/26 22:10:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rios Diaz, Manuel De Los",
+          "holeNumber": 1,
+          "createdAt": "06/11/26 22:11:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ruiz Martinez, Ernesto",
+          "holeNumber": 5,
+          "createdAt": "06/11/26 22:11:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ruiz Martinez, Ernesto",
+          "holeNumber": 10,
+          "createdAt": "06/11/26 22:11:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Li, Ni",
+          "holeNumber": 3,
+          "createdAt": "06/11/26 22:12:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Duarte Aguilar, Jose",
+          "holeNumber": 3,
+          "createdAt": "06/11/26 22:13:47",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

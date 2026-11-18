@@ -567,9 +567,28 @@
       "roundId": 75608
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "/uploads/competiciones/cartel/2114719227_70638-lunes-al-golf-j4-manana-9-30.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T15:00:57.449Z"
+  "horariosScrapedAt": "2026-06-24T15:00:57.449Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandez Pino, Rogelio",
+          "holeNumber": 17,
+          "createdAt": "11/05/26 09:41:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lillo Guerra, Jose Antonio",
+          "holeNumber": 17,
+          "createdAt": "11/05/26 11:42:47",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

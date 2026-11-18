@@ -633,8 +633,45 @@
       "roundId": 80532
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Maldonado Molero, Francisco",
+          "holeNumber": 1,
+          "createdAt": "07/11/26 14:17:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Barranquero Arroyo, Jose Maria",
+          "holeNumber": 5,
+          "createdAt": "07/11/26 14:45:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Morales Martinez, Joaquin Alberto",
+          "holeNumber": 14,
+          "createdAt": "08/11/26 14:24:01",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Liñan Arcas, Jose Ramon",
+          "holeNumber": 2,
+          "createdAt": "08/11/26 15:00:20",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Maldonado Molero, Miguel Angel",
+          "holeNumber": 1,
+          "createdAt": "08/11/26 14:22:31",
+          "roundNumber": 2
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

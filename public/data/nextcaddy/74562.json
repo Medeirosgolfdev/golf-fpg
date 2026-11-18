@@ -305,9 +305,34 @@
       "roundId": 79867
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1730830596_74562-8-jornada-liga-social.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gurrea Campos, Juan Manuel",
+          "holeNumber": 11,
+          "createdAt": "15/10/26 17:32:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sanchez Reyes, Francisco",
+          "holeNumber": 11,
+          "createdAt": "15/10/26 18:15:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ochoteco Aguilera, Antonio",
+          "holeNumber": 2,
+          "createdAt": "15/10/26 18:53:11",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -368,9 +368,28 @@
       "roundId": 80794
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/633704807_75368-suecos-miercoles-sur-18-11.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Forsgardh, Claes",
+          "holeNumber": 3,
+          "createdAt": "18/11/26 13:45:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Svensson, Ulf",
+          "holeNumber": 7,
+          "createdAt": "18/11/26 14:49:27",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

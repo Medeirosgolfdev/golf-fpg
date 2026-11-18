@@ -241,14 +241,28 @@
       "roundId": 80784
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": []
-    }
-  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3822190311_75358-legs-16-11.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Acha Garcia, Tomas",
+          "holeNumber": 15,
+          "createdAt": "16/11/26 13:02:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Van De Komer, Marco",
+          "holeNumber": 1,
+          "createdAt": "16/11/26 14:29:23",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

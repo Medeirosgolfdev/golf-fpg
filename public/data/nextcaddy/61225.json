@@ -2071,12 +2071,41 @@
       "roundId": 64909
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/1092972528_campeonato_de_andalucira_dobles_miguel_angel.pdf",
     "/uploads/competiciones/pdf/2055275423_informacion_del_campeonato.pdf",
     "/uploads/circular/2026/61786f446922477cb4aa10c769260b62.pdf",
     "/uploads/competiciones/pdf/4015528775_reglas_web_tablon.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": []
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Pastor Ayllon, Andres - De Miguel Becerra, Raul",
+          "holeNumber": 6,
+          "createdAt": "11/10/26 16:28:58",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Ruiz Batana, Juan Antonio - Grande Roman, Juan Jose",
+          "holeNumber": 18,
+          "createdAt": "11/10/26 16:29:00",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Montero Haro, Miguel Angel - Fernandez De Henestrosa Nevado, Alvaro",
+          "holeNumber": 14,
+          "createdAt": "11/10/26 16:29:01",
+          "roundNumber": 2
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

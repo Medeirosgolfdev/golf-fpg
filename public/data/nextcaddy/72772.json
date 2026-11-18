@@ -127,9 +127,28 @@
       "roundId": 77983
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:02.455Z"
+  "horariosScrapedAt": "2026-11-16T12:40:02.455Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez Fernandez, Carlos",
+          "holeNumber": 16,
+          "createdAt": "07/08/26 15:45:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Corraliza Galan, Antonio",
+          "holeNumber": 1,
+          "createdAt": "07/08/26 15:48:06",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

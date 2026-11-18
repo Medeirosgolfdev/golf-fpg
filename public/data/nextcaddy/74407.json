@@ -433,9 +433,28 @@
       "roundId": 79711
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/280714687_74407-torneo-pelote-grupo-privado.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cantero Gonzalez, Francisco",
+          "holeNumber": 12,
+          "createdAt": "14/11/26 13:27:24",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Palmero Dutoit, Julio Sergio",
+          "holeNumber": 14,
+          "createdAt": "14/11/26 14:06:22",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

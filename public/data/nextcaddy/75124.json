@@ -760,9 +760,58 @@
       "roundId": 80508
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1395629462_75124-vi-edicion-copa-hcp-36.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rodriguez Bau, Manuel Jesus",
+          "holeNumber": 3,
+          "createdAt": "14/11/26 12:59:24",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Barrenas Padura, Ernesto",
+          "holeNumber": 16,
+          "createdAt": "14/11/26 11:45:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Valenzuela Aranda, Jose",
+          "holeNumber": 10,
+          "createdAt": "14/11/26 09:40:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Valenzuela Aranda, Jose",
+          "holeNumber": 1,
+          "createdAt": "14/11/26 11:47:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Colchero Anaya, Juan Antonio",
+          "holeNumber": 3,
+          "createdAt": "14/11/26 09:24:09",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Poyato Ruiz-Ruano, Pablo",
+          "holeNumber": 13,
+          "createdAt": "14/11/26 11:45:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Benitez, Ignacio",
+          "holeNumber": 18,
+          "createdAt": "14/11/26 12:29:43",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

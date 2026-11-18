@@ -432,8 +432,27 @@
       "roundId": 73644
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Herod, Natalia Luiza",
+          "holeNumber": 1,
+          "createdAt": "05/03/26 16:51:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Herod, Natalia Luiza",
+          "holeNumber": 2,
+          "createdAt": "05/03/26 17:08:03",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

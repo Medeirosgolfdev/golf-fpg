@@ -369,27 +369,60 @@
       "roundId": 76636
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Castro Muñoz, Luis Alberto",
-          "holeNumber": 18,
-          "createdAt": "02/01/26 14:05:32"
-        },
-        {
-          "playerName": "Cabrera Garcia, Rafael",
-          "holeNumber": 16,
-          "createdAt": "02/01/26 14:11:23"
-        }
-      ]
-    }
-  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/972850535_71556-torneo-aesgolf-andalucia-oriental.pdf",
     "/uploads/competiciones/pdf/2175103119_reglamento.pdf",
     "/uploads/competiciones/pdf/3231498085_reglas_locales_competicion_2026.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Sousa Muros, Manuel",
+          "holeNumber": 2,
+          "createdAt": "29/07/26 09:24:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Iglesias, Luis",
+          "holeNumber": 2,
+          "createdAt": "29/07/26 09:48:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sanchez-Palencia Ramos, Abel",
+          "holeNumber": 4,
+          "createdAt": "29/07/26 10:21:41",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sousa Muros, Manuel",
+          "holeNumber": 11,
+          "createdAt": "29/07/26 12:07:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez Garcia, Javier",
+          "holeNumber": 16,
+          "createdAt": "29/07/26 13:45:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sousa Muros, Manuel",
+          "holeNumber": 17,
+          "createdAt": "29/07/26 13:46:45",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Iglesias, Luis",
+          "holeNumber": 18,
+          "createdAt": "29/07/26 14:01:32",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

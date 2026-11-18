@@ -113,9 +113,40 @@
       "roundId": 72040
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:35.410Z"
+  "horariosScrapedAt": "2026-11-16T12:39:35.410Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 15,
+          "createdAt": "15/01/26 13:25:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lumsden, Robert",
+          "holeNumber": 3,
+          "createdAt": "15/01/26 13:25:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lumsden, Robert",
+          "holeNumber": 5,
+          "createdAt": "15/01/26 13:25:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Malcolm, Graham James",
+          "holeNumber": 11,
+          "createdAt": "15/01/26 13:26:20",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

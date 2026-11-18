@@ -133,10 +133,29 @@
       "roundId": 75440
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2441464159_70496-liguilla-mujeres.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:52.045Z"
+  "horariosScrapedAt": "2026-11-16T12:39:52.045Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Martin Molina, Ascension",
+          "holeNumber": 16,
+          "createdAt": "02/05/26 09:07:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Soto Salvador, Montserrat",
+          "holeNumber": 1,
+          "createdAt": "02/05/26 09:22:00",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

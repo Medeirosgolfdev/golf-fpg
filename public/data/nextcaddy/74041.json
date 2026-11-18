@@ -625,9 +625,52 @@
       "roundId": 79299
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1779465792_74041-torneo-25-aniversario-vincci-costa-golf.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Malaver Echeverría Torres, Jaime",
+          "holeNumber": 1,
+          "createdAt": "26/09/26 10:00:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Malaver Echeverría Torres, Jaime",
+          "holeNumber": 13,
+          "createdAt": "26/09/26 13:09:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Malaver Echeverría Torres, Jaime",
+          "holeNumber": 18,
+          "createdAt": "26/09/26 14:30:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Malaver Pelaez, Jaime",
+          "holeNumber": 10,
+          "createdAt": "26/09/26 11:49:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Echevarria Pertiñez, Fernando",
+          "holeNumber": 18,
+          "createdAt": "26/09/26 14:32:02",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Calero Gracia, Rafael",
+          "holeNumber": 2,
+          "createdAt": "26/09/26 10:19:45",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

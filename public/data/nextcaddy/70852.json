@@ -728,9 +728,34 @@
       "roundId": 75854
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "/uploads/competiciones/cartel/1624428950_70852-lunes-al-golf-j4-manana-9-30.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T15:01:00.000Z"
+  "horariosScrapedAt": "2026-06-24T15:01:00.000Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Jimenez Marquez, Fco Javier",
+          "holeNumber": 9,
+          "createdAt": "18/05/26 11:39:19",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Calvo Borrego, Ignacio",
+          "holeNumber": 7,
+          "createdAt": "18/05/26 11:45:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Palma Jimenez, Jorge Manuel",
+          "holeNumber": 8,
+          "createdAt": "18/05/26 11:54:13",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

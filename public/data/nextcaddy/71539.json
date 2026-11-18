@@ -775,9 +775,28 @@
       "roundId": 76619
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3528030441_71539-9-jornada-v-liga-femenina-golf-cartuja-28-05-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Del Torno Miguel, Maria Elena",
+          "holeNumber": 9,
+          "createdAt": "11/06/26 11:57:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Escribano Del Castillo, Clara",
+          "holeNumber": 5,
+          "createdAt": "11/06/26 18:40:01",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

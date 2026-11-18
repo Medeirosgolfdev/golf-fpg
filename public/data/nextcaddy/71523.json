@@ -1353,9 +1353,52 @@
       "roundId": 76603
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/696192856_71523-torneo-fin-escuela-golf-primavera-25-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Andujar Ortuño, Antonio",
+          "holeNumber": 4,
+          "createdAt": "21/06/26 09:01:24",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Chaves Vinagre, Carlos",
+          "holeNumber": 8,
+          "createdAt": "20/06/26 08:34:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Puig De Sobrino, Joaquin",
+          "holeNumber": 8,
+          "createdAt": "20/06/26 08:57:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Carro, Victor",
+          "holeNumber": 1,
+          "createdAt": "20/06/26 08:45:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cantudo Lopez, Alonso",
+          "holeNumber": 3,
+          "createdAt": "21/06/26 08:50:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Puyana  Delgado, Rodrigo",
+          "holeNumber": 2,
+          "createdAt": "20/06/26 09:31:31",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -253,21 +253,58 @@
       "roundId": 75830
     }
   ],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/966495360_70828-torneo-cancelada-32.pdf"
+  ],
+  "horariosScrapedAt": "2026-11-16T12:39:53.630Z",
   "scoreTypes": {
     "birdie": {
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Tjon-Pian-Gi, Norman Patrick",
-          "holeNumber": 15,
-          "createdAt": "28/11/25 15:39:20"
+          "playerName": "De La Flor Perez, Jose Luis",
+          "holeNumber": 11,
+          "createdAt": "16/05/26 18:05:13",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez Grau, Juan Carlos",
+          "holeNumber": 11,
+          "createdAt": "16/05/26 18:13:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Portocarrero Thamshoi, Erik",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 18:13:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Morero Puertas, Francisco Jose",
+          "holeNumber": 17,
+          "createdAt": "16/05/26 18:47:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Peña Alonso, Armando",
+          "holeNumber": 1,
+          "createdAt": "16/05/26 19:05:11",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Reina Millan, Manuel",
+          "holeNumber": 9,
+          "createdAt": "16/05/26 18:52:58",
+          "roundNumber": 1
         }
       ]
     }
   },
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/cartel/966495360_70828-torneo-cancelada-32.pdf"
-  ],
-  "horariosScrapedAt": "2026-11-16T12:39:53.630Z"
+  "destaquesVistoEm": "2026-11-18"
 }

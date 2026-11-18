@@ -184,9 +184,39 @@
       "roundId": 80119
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:09.768Z"
+  "horariosScrapedAt": "2026-11-16T12:40:09.768Z",
+  "scoreTypes": {
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Ortega  Bermúdez, Carlota",
+          "holeNumber": 4,
+          "createdAt": "24/10/26 14:26:19",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ramajo Ferraro, Manuel",
+          "holeNumber": 1,
+          "createdAt": "24/10/26 14:43:08",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ramajo Ferraro, Manuel",
+          "holeNumber": 9,
+          "createdAt": "24/10/26 14:43:08",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

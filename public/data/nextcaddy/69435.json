@@ -833,9 +833,34 @@
       "roundId": 74206
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/69435_cartel_404.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Nuñez Garcia, Victor Fco.",
+          "holeNumber": 5,
+          "createdAt": "02/04/26 10:37:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Iñiguez, Manuel",
+          "holeNumber": 8,
+          "createdAt": "02/04/26 10:46:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Iñiguez, Pedro",
+          "holeNumber": 13,
+          "createdAt": "02/04/26 11:52:12",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

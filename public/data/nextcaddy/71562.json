@@ -727,35 +727,19 @@
       "roundId": 76642
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Staley, Michael",
-          "holeNumber": 9,
-          "createdAt": "01/01/26 12:08:03"
-        },
-        {
-          "playerName": "Fennelly, Barry",
-          "holeNumber": 9,
-          "createdAt": "01/01/26 12:22:49"
-        },
-        {
-          "playerName": "Staley, Michael",
-          "holeNumber": 15,
-          "createdAt": "01/01/26 13:23:14"
-        },
-        {
-          "playerName": "Rodgers, Glynn",
-          "holeNumber": 18,
-          "createdAt": "01/01/26 14:22:23"
-        }
-      ]
-    }
-  },
   "pdfs": [
     "/uploads/competiciones/cartel/3953581689_71562-rydercharly-4-0.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:56.688Z"
+  "horariosScrapedAt": "2026-11-16T12:39:56.688Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": []
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": []
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

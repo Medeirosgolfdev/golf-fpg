@@ -782,8 +782,39 @@
       "roundId": 72963
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gomez Martinez, Ana",
+          "holeNumber": 6,
+          "createdAt": "12/02/26 11:56:39",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez Fernandez, Antonia",
+          "holeNumber": 3,
+          "createdAt": "12/02/26 11:29:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cabrera De La Fuente, Maria Dolores",
+          "holeNumber": 2,
+          "createdAt": "12/02/26 11:16:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Arenado Sampil, Angeles",
+          "holeNumber": 9,
+          "createdAt": "12/02/26 17:43:45",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

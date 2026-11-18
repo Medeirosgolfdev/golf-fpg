@@ -1024,10 +1024,40 @@
       "roundId": 80708
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "/uploads/competiciones/pdf/2237846648_1-9.pdf",
     "https://www.nextcaddy.com/uploads/competiciones/pdf/2237846648_1-9.pdf",
     "/uploads/competiciones/cartel/350058463_75295-circuito-interescolar-hoyos-1-9.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Diez De Llano, Leo",
+          "holeNumber": 8,
+          "createdAt": "12/11/26 14:23:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pascual Pirenne, Rodrigo",
+          "holeNumber": 8,
+          "createdAt": "12/11/26 14:20:57",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Sevillano Sanchez, Alejandra",
+          "holeNumber": 6,
+          "createdAt": "12/11/26 14:35:06",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

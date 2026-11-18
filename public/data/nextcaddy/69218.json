@@ -624,8 +624,33 @@
       "roundId": 73960
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lillo Guerra, Jose Antonio",
+          "holeNumber": 4,
+          "createdAt": "17/03/26 09:14:01",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Suero Rincon, Jesus",
+          "holeNumber": 6,
+          "createdAt": "17/03/26 09:57:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martinez Jimenez, Pedro",
+          "holeNumber": 6,
+          "createdAt": "17/03/26 10:16:15",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

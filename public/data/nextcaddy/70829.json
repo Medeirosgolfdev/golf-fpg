@@ -406,9 +406,34 @@
       "roundId": 75831
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "/uploads/competiciones/cartel/3105121219_70829-torneo-grupo-empresa-airbus-2026-grupo-privado.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T15:00:59.270Z"
+  "horariosScrapedAt": "2026-06-24T15:00:59.270Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Oleart, Joel",
+          "holeNumber": 12,
+          "createdAt": "16/05/26 10:12:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martinez Del Rio, Jorge Juan",
+          "holeNumber": 12,
+          "createdAt": "16/05/26 10:26:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martinez Del Rio, Jorge Juan",
+          "holeNumber": 13,
+          "createdAt": "16/05/26 10:51:54",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

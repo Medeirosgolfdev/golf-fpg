@@ -757,9 +757,28 @@
       "roundId": 76216
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3026159264_71181-torneo-mujer-golfista.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Vazquez Rojas, Josefa - Delgado Marquez, Teresa",
+          "holeNumber": 13,
+          "createdAt": "20/06/26 09:19:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gago De La Cruz, Mº Carmen - Rodriguez Nuñez, Liane",
+          "holeNumber": 11,
+          "createdAt": "20/06/26 12:35:02",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

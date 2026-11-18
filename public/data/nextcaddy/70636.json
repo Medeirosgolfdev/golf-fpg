@@ -225,9 +225,34 @@
       "roundId": 75606
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:52.653Z"
+  "horariosScrapedAt": "2026-11-16T12:39:52.653Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Guerrero Amador, Antonio",
+          "holeNumber": 5,
+          "createdAt": "16/05/26 14:59:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Guerrero Amador, Antonio",
+          "holeNumber": 15,
+          "createdAt": "16/05/26 14:59:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Debrus Armand-Felicien, Jasper",
+          "holeNumber": 5,
+          "createdAt": "16/05/26 15:24:58",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

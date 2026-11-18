@@ -263,9 +263,22 @@
       "roundId": 79926
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3913571939_74621-5-jornada-xxi-liga-tirantes-verdes-16-10-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rey Gonzalez, Francisco Javier",
+          "holeNumber": 9,
+          "createdAt": "16/10/26 11:39:07",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

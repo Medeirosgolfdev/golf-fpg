@@ -433,9 +433,34 @@
       "roundId": 80040
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/826033845_74716-lunes-al-golf-jornada-3-manana-9-30.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Camarillo Naranjo, Juan Mariano",
+          "holeNumber": 8,
+          "createdAt": "26/10/26 11:36:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sampedro Abascal, Fernando",
+          "holeNumber": 8,
+          "createdAt": "26/10/26 11:55:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Farfan Perez, Miguel Angel",
+          "holeNumber": 6,
+          "createdAt": "26/10/26 11:57:39",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -211,10 +211,76 @@
       "roundId": 80047
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2183972793_74723-anniversary-medal.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:09.696Z"
+  "horariosScrapedAt": "2026-11-16T12:40:09.696Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Boyle, Stephen",
+          "holeNumber": 12,
+          "createdAt": "21/10/26 13:02:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Kemp, Jeff",
+          "holeNumber": 2,
+          "createdAt": "21/10/26 13:03:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mutch, Peter Andrew",
+          "holeNumber": 16,
+          "createdAt": "21/10/26 13:14:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 12,
+          "createdAt": "21/10/26 13:17:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Conway, Ann",
+          "holeNumber": 12,
+          "createdAt": "21/10/26 13:34:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Torgersen, Hans Kristian",
+          "holeNumber": 13,
+          "createdAt": "21/10/26 13:36:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Blyumin, Yuri",
+          "holeNumber": 15,
+          "createdAt": "21/10/26 13:53:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mennad, Laila",
+          "holeNumber": 12,
+          "createdAt": "21/10/26 13:55:31",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Blyumin, Yuri",
+          "holeNumber": 7,
+          "createdAt": "21/10/26 13:53:56",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

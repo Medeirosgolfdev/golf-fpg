@@ -903,18 +903,40 @@
       "roundId": 76326
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": []
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": []
-    }
-  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2924945980_71276-damas-canada-cup-sur-02-06-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Benitez Barba, Macarena - So, Sotheavy",
+          "holeNumber": 2,
+          "createdAt": "02/06/26 09:35:19",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sullivan, Laura - Jane - Pagett, Nichola",
+          "holeNumber": 2,
+          "createdAt": "02/06/26 11:03:34",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diaz-Negrete Y Sanz, Ana - Hidalgo Navarro, Maria Jose",
+          "holeNumber": 2,
+          "createdAt": "02/06/26 12:21:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bellod Alvarez De Lorenzana, Mª Soledad - Maestre Cañete, Nuria",
+          "holeNumber": 17,
+          "createdAt": "02/06/26 14:08:23",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -160,14 +160,28 @@
       "roundId": 80783
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": []
-    }
-  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1535790500_75357-holandeses-sur-16-11-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Tjon-Pian-Gi, Norman Patrick",
+          "holeNumber": 17,
+          "createdAt": "16/11/26 14:46:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Kremer, John",
+          "holeNumber": 17,
+          "createdAt": "16/11/26 15:01:29",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

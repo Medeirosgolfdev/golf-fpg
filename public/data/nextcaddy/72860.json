@@ -280,8 +280,27 @@
       "roundId": 78071
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fonfria Cervantes, Nahia - Fonfria Hernando, Jose Luis",
+          "holeNumber": 2,
+          "createdAt": "15/08/26 11:45:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sola Uriarte, Luis - Sola Ezpelta, Carlota",
+          "holeNumber": 2,
+          "createdAt": "15/08/26 13:49:37",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

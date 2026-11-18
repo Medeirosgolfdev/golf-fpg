@@ -241,9 +241,34 @@
       "roundId": 78076
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/4020752906_72865-liga-expres-jornada-8-manana-9-30.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Moll Lorca, Salvador",
+          "holeNumber": 12,
+          "createdAt": "13/08/26 10:07:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Barea De Lara, Rosario",
+          "holeNumber": 12,
+          "createdAt": "13/08/26 10:17:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Moll Lorca, Salvador",
+          "holeNumber": 17,
+          "createdAt": "13/08/26 11:35:31",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

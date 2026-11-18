@@ -452,9 +452,22 @@
       "roundId": 72721
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "/uploads/competiciones/pdf/68175_cartel_294.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T15:00:24.787Z"
+  "horariosScrapedAt": "2026-06-24T15:00:24.787Z",
+  "scoreTypes": {
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Cebreros Fernandez, Enrique",
+          "holeNumber": 7,
+          "createdAt": "09/02/26 09:47:10",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

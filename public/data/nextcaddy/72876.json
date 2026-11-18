@@ -890,9 +890,121 @@
       "roundId": 78087
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/3105130833_reglas_locales_2025.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Brandariz Borrero, Alvaro - Brandariz Carvallo, Eduardo",
+          "holeNumber": 1,
+          "createdAt": "11/08/26 08:59:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo - Epalza Ortega, Paula",
+          "holeNumber": 5,
+          "createdAt": "11/08/26 09:40:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Brandariz Borrero, Alvaro - Brandariz Carvallo, Eduardo",
+          "holeNumber": 4,
+          "createdAt": "11/08/26 09:41:49",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto - Gonzalez Muñoz, Roberto",
+          "holeNumber": 6,
+          "createdAt": "11/08/26 09:52:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo - Epalza Ortega, Paula",
+          "holeNumber": 9,
+          "createdAt": "11/08/26 10:38:24",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "G.barreda Tous Monsalve, Fernando - Gomez De Barreda Garcia-Solans, Francisco Javier",
+          "holeNumber": 4,
+          "createdAt": "11/08/26 10:40:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Neira  Moreno, Javier - Pascual Del Pobil Toscano, Ignacio",
+          "holeNumber": 8,
+          "createdAt": "11/08/26 10:49:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Colin Fernandez, Marco Antonio - Colin Cosano, Pablo",
+          "holeNumber": 9,
+          "createdAt": "11/08/26 10:59:15",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo - Epalza Ortega, Paula",
+          "holeNumber": 15,
+          "createdAt": "11/08/26 12:27:39",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Salamero Rodriguez-Varo, Fernando - Salamero Catalan, Fernando",
+          "holeNumber": 11,
+          "createdAt": "11/08/26 12:35:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martel Osborne, Carlos - Martel Molina, Adriana",
+          "holeNumber": 17,
+          "createdAt": "11/08/26 13:59:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Goñi Ceballos, Lucas - Goñi Ceballos, Blanca",
+          "holeNumber": 13,
+          "createdAt": "11/08/26 14:11:30",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Gonzalez Sanchez, Roberto - Gonzalez Muñoz, Roberto",
+          "holeNumber": 8,
+          "createdAt": "11/08/26 10:17:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Castillejo Oriol, Casilda - Miralles Serra, Eduardo",
+          "holeNumber": 9,
+          "createdAt": "11/08/26 11:07:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Brandariz Borrero, Alvaro - Brandariz Carvallo, Eduardo",
+          "holeNumber": 10,
+          "createdAt": "11/08/26 11:26:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez-Barbadillo Martin, Iñigo - Perez-Barbadillo Martin, Fernando",
+          "holeNumber": 17,
+          "createdAt": "11/08/26 14:39:16",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": []
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

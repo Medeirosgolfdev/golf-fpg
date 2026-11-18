@@ -164,30 +164,75 @@
       "roundId": 77344
     }
   ],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/REGLAMENTO-RANKING-SHERRY-GOLF-2026.pdf"
+  ],
   "scoreTypes": {
     "birdie": {
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Ledoux Emile Pierre, Marc",
-          "holeNumber": 1,
-          "createdAt": "15/03/26 11:11:39"
+          "playerName": "Mateos Alvarez, Bruno",
+          "holeNumber": 11,
+          "createdAt": "11/07/26 09:06:05",
+          "roundNumber": 1
         },
         {
-          "playerName": "Ravina Fernandez, Salvador",
+          "playerName": "Torres Paredes, Antonio",
+          "holeNumber": 14,
+          "createdAt": "11/07/26 09:37:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mateos Alvarez, Bruno",
+          "holeNumber": 16,
+          "createdAt": "11/07/26 10:05:01",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Plaza Rodriguez-Vita, Jaime",
+          "holeNumber": 17,
+          "createdAt": "11/07/26 10:33:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 18,
+          "createdAt": "11/07/26 10:37:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Paredes Pinteño, Roberto",
           "holeNumber": 3,
-          "createdAt": "15/03/26 11:41:19"
+          "createdAt": "11/07/26 11:36:04",
+          "roundNumber": 1
         },
         {
-          "playerName": "San Juan Rios, Juan Antonio",
-          "holeNumber": 2,
-          "createdAt": "15/03/26 13:00:25"
+          "playerName": "Torres Paredes, Antonio",
+          "holeNumber": 7,
+          "createdAt": "11/07/26 12:30:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Torres Paredes, Antonio",
+          "holeNumber": 9,
+          "createdAt": "11/07/26 13:03:32",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 5,
+          "createdAt": "11/07/26 12:03:21",
+          "roundNumber": 1
         }
       ]
     }
   },
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/REGLAMENTO-RANKING-SHERRY-GOLF-2026.pdf"
-  ]
+  "destaquesVistoEm": "2026-11-18"
 }

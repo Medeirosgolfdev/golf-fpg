@@ -517,8 +517,33 @@
       "roundId": 73392
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Moreno Carranza, Manuela",
+          "holeNumber": 2,
+          "createdAt": "26/02/26 12:00:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Enrile Boudere, Lourdes",
+          "holeNumber": 9,
+          "createdAt": "26/02/26 15:16:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Campos Vidiella, Montserrat",
+          "holeNumber": 5,
+          "createdAt": "26/02/26 19:26:13",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

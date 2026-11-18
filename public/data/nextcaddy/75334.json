@@ -113,9 +113,28 @@
       "roundId": 80750
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/4091348758_75334-liga-abonados-domingo-15-11-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Reina Rubio, Juan Carlos",
+          "holeNumber": 8,
+          "createdAt": "15/11/26 11:47:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Garcia, Jose Maria",
+          "holeNumber": 16,
+          "createdAt": "15/11/26 14:09:27",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

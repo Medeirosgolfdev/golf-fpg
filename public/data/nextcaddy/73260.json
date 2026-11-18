@@ -737,8 +737,74 @@
       "roundId": 78493
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Torres Sanchez, David Jesus",
+          "holeNumber": 4,
+          "createdAt": "11/09/26 08:47:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cañas Bartivas, Javier",
+          "holeNumber": 4,
+          "createdAt": "11/09/26 08:49:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cañas Bartivas, Javier",
+          "holeNumber": 9,
+          "createdAt": "11/09/26 10:31:44",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Torres Sanchez, David Jesus",
+          "holeNumber": 11,
+          "createdAt": "11/09/26 10:58:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cañas Bartivas, Javier",
+          "holeNumber": 13,
+          "createdAt": "11/09/26 11:14:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ureña Serrano, Antonio Manuel",
+          "holeNumber": 13,
+          "createdAt": "11/09/26 11:44:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cañas Bartivas, Javier",
+          "holeNumber": 15,
+          "createdAt": "11/09/26 12:02:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Abollo Garcia, Eduardo Jose",
+          "holeNumber": 15,
+          "createdAt": "11/09/26 12:48:38",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Sanchez Escribano, Antonio Luis",
+          "holeNumber": 11,
+          "createdAt": "11/09/26 11:20:32",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

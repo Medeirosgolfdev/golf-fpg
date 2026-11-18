@@ -304,8 +304,33 @@
       "roundId": 74130
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Balaguer Alvarez, Maria Del Pilar",
+          "holeNumber": 2,
+          "createdAt": "26/03/26 11:00:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Balaguer Alvarez, Maria Del Pilar",
+          "holeNumber": 4,
+          "createdAt": "26/03/26 11:27:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martinez Clavijo, M Rosario",
+          "holeNumber": 3,
+          "createdAt": "26/03/26 18:17:08",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -1652,8 +1652,476 @@
       "roundId": 77522
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lope Sanabria, Ignacio De - Gonzalez Sanchez, Roberto",
+          "holeNumber": 1,
+          "createdAt": "02/08/26 09:29:03",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De - Gonzalez Sanchez, Roberto",
+          "holeNumber": 2,
+          "createdAt": "02/08/26 09:29:03",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Guajardo-Fajardo Delgado, Luis - Daroca Guerrero, Tomas",
+          "holeNumber": 5,
+          "createdAt": "02/08/26 09:31:59",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando - Brandariz Borrero, Alvaro",
+          "holeNumber": 3,
+          "createdAt": "02/08/26 09:36:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Unciti Remon, Iñigo - De Gregorio Diego, Juan",
+          "holeNumber": 6,
+          "createdAt": "02/08/26 09:37:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Tapia Guadix, Ana",
+          "holeNumber": 3,
+          "createdAt": "02/08/26 09:37:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Guardiola Noguera, Salvador - Gonzalez Muñoz, Roberto",
+          "holeNumber": 4,
+          "createdAt": "02/08/26 09:39:09",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Elizburu Mostaza, Fermin - Elizburu Aguirre, Javier",
+          "holeNumber": 9,
+          "createdAt": "02/08/26 09:47:01",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Marin Soto, Emilio - Marin Fernandez, Emilio",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 10:03:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Van Panhuys, Eduardo - Guerrero Ruiz-Mateos, Ramon",
+          "holeNumber": 5,
+          "createdAt": "02/08/26 10:07:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Tapia Guadix, Ana",
+          "holeNumber": 5,
+          "createdAt": "02/08/26 10:08:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Conradi Delgado, Manuel - Vicente Sancho, Francisco",
+          "holeNumber": 6,
+          "createdAt": "02/08/26 10:09:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gross Paneque, Diego - Rubiales Dominguez, Sergio",
+          "holeNumber": 4,
+          "createdAt": "02/08/26 10:12:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez De Mesa Garcia, Juan - Grosso Romero, Alejandro",
+          "holeNumber": 9,
+          "createdAt": "02/08/26 10:15:15",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Guajardo-Fajardo Delgado, Luis - Daroca Guerrero, Tomas",
+          "holeNumber": 8,
+          "createdAt": "02/08/26 10:21:25",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando - Brandariz Borrero, Alvaro",
+          "holeNumber": 6,
+          "createdAt": "02/08/26 10:25:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De - Gonzalez Sanchez, Roberto",
+          "holeNumber": 6,
+          "createdAt": "02/08/26 10:29:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mesa Muñoz, Jose Luis - Mateos Arizon, Jaime",
+          "holeNumber": 4,
+          "createdAt": "02/08/26 10:36:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Guajardo-Fajardo Delgado, Luis - Daroca Guerrero, Tomas",
+          "holeNumber": 9,
+          "createdAt": "02/08/26 10:43:34",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vega Garcia, Jose Maria - Vega Ortega, Jose Maria",
+          "holeNumber": 16,
+          "createdAt": "02/08/26 10:44:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Boogen Ybarra, Virginia - Arsuaga Sentis, Belen",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 10:54:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Tapia Guadix, Ana",
+          "holeNumber": 8,
+          "createdAt": "02/08/26 10:57:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gross Paneque, Diego - Rubiales Dominguez, Sergio",
+          "holeNumber": 7,
+          "createdAt": "02/08/26 11:01:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Van Panhuys, Eduardo - Guerrero Ruiz-Mateos, Ramon",
+          "holeNumber": 8,
+          "createdAt": "02/08/26 11:02:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Corchado Ruiz-Jarabo, Francisco - Corchado Ruiz-Jarabo, Manuel",
+          "holeNumber": 2,
+          "createdAt": "02/08/26 11:06:44",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bel Perez, Jorge - Bel Perez, Francisco",
+          "holeNumber": 10,
+          "createdAt": "02/08/26 11:10:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Delage Estevez, Carlos - Rodriguez Benavente, Juan",
+          "holeNumber": 1,
+          "createdAt": "02/08/26 11:14:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando - Brandariz Borrero, Alvaro",
+          "holeNumber": 9,
+          "createdAt": "02/08/26 11:18:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Peredo, Juan Antonio - Gomez Paullada, Cesar",
+          "holeNumber": 17,
+          "createdAt": "02/08/26 11:19:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Salamero Rodriguez-Varo, Jose Ramon - Huerta Paez, Manuel",
+          "holeNumber": 9,
+          "createdAt": "02/08/26 11:20:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De - Gonzalez Sanchez, Roberto",
+          "holeNumber": 9,
+          "createdAt": "02/08/26 11:20:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Unciti Remon, Iñigo - De Gregorio Diego, Juan",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 11:28:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando - Brandariz Borrero, Alvaro",
+          "holeNumber": 10,
+          "createdAt": "02/08/26 11:30:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ramirez Moreno, Alfredo - Sanchez Lluch, Gustavo",
+          "holeNumber": 13,
+          "createdAt": "02/08/26 11:38:52",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vega Garcia, Jose Maria - Vega Ortega, Jose Maria",
+          "holeNumber": 2,
+          "createdAt": "02/08/26 11:44:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Brandariz Borrero, Eduardo - Salamero Rodriguez-Varo, Fernando",
+          "holeNumber": 11,
+          "createdAt": "02/08/26 11:48:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Manzanares, Javier - Caceres Rico, Javier Pedro",
+          "holeNumber": 18,
+          "createdAt": "02/08/26 11:49:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Conradi Delgado, Manuel - Vicente Sancho, Francisco",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 11:56:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Senovilla Garrido, Julio - Jimenez Plata, Jose Antonio",
+          "holeNumber": 3,
+          "createdAt": "02/08/26 11:59:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Peredo, Juan Antonio - Gomez Paullada, Cesar",
+          "holeNumber": 2,
+          "createdAt": "02/08/26 12:06:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando - Brandariz Borrero, Alvaro",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 12:06:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Tapia Guadix, Ana",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 12:06:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mesa Muñoz, Jose Luis - Mateos Arizon, Jaime",
+          "holeNumber": 10,
+          "createdAt": "02/08/26 12:12:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Van Panhuys, Eduardo - Guerrero Ruiz-Mateos, Ramon",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 12:14:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De - Gonzalez Sanchez, Roberto",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 12:16:41",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Salamero Rodriguez-Varo, Jose Ramon - Huerta Paez, Manuel",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 12:18:17",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Claro Guerrero, Fernando - Cardenas Gonzalez, Rafael",
+          "holeNumber": 9,
+          "createdAt": "02/08/26 12:19:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gross Paneque, Diego - Rubiales Dominguez, Sergio",
+          "holeNumber": 12,
+          "createdAt": "02/08/26 12:28:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Peredo, Juan Antonio - Gomez Paullada, Cesar",
+          "holeNumber": 4,
+          "createdAt": "02/08/26 12:42:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Elizburu Mostaza, Fermin - Elizburu Aguirre, Javier",
+          "holeNumber": 3,
+          "createdAt": "02/08/26 12:56:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia De Angulo Delage, Rafael - Caminero Salazar, Borja",
+          "holeNumber": 7,
+          "createdAt": "02/08/26 12:58:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Gutierrez, Guillermo - Martinez Navarro, Alvaro",
+          "holeNumber": 14,
+          "createdAt": "02/08/26 12:58:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Unciti Remon, Iñigo - De Gregorio Diego, Juan",
+          "holeNumber": 17,
+          "createdAt": "02/08/26 13:01:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Boogen Ybarra, Virginia - Arsuaga Sentis, Belen",
+          "holeNumber": 2,
+          "createdAt": "02/08/26 13:10:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Van Panhuys, Eduardo - Guerrero Ruiz-Mateos, Ramon",
+          "holeNumber": 15,
+          "createdAt": "02/08/26 13:10:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez De Mesa Garcia, Juan - Grosso Romero, Alejandro",
+          "holeNumber": 1,
+          "createdAt": "02/08/26 13:13:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Peñalver, Luis Pablo - Ollero Cuervo, Jesus",
+          "holeNumber": 3,
+          "createdAt": "02/08/26 13:15:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Peman Perez-Serrano, Javier - Peman Valderrama, Javier",
+          "holeNumber": 3,
+          "createdAt": "02/08/26 13:16:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Guardiola Noguera, Salvador - Gonzalez Muñoz, Roberto",
+          "holeNumber": 16,
+          "createdAt": "02/08/26 13:17:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Galiana Ferrandiz, Pablo - Galiana Velasco, Gonzalo",
+          "holeNumber": 6,
+          "createdAt": "02/08/26 13:34:19",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Salamero Rodriguez-Varo, Jose Ramon - Huerta Paez, Manuel",
+          "holeNumber": 16,
+          "createdAt": "02/08/26 13:36:17",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Brandariz Borrero, Eduardo - Salamero Rodriguez-Varo, Fernando",
+          "holeNumber": 16,
+          "createdAt": "02/08/26 13:36:41",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Blasco Ruiz, Juan Ignacio - Borruel Cabrera, Ramon",
+          "holeNumber": 14,
+          "createdAt": "02/08/26 13:41:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Senovilla Garrido, Julio - Jimenez Plata, Jose Antonio",
+          "holeNumber": 8,
+          "createdAt": "02/08/26 13:41:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Guajardo-Fajardo Delgado, Luis - Daroca Guerrero, Tomas",
+          "holeNumber": 1,
+          "createdAt": "02/08/26 13:43:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Solaeche Alonso-Carriazo, Manuel Angel - Olalla Hevia, Carlos",
+          "holeNumber": 3,
+          "createdAt": "02/08/26 13:54:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Gutierrez, Guillermo - Martinez Navarro, Alvaro",
+          "holeNumber": 17,
+          "createdAt": "02/08/26 13:55:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Van Panhuys, Eduardo - Guerrero Ruiz-Mateos, Ramon",
+          "holeNumber": 18,
+          "createdAt": "02/08/26 13:56:08",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Senovilla Garrido, Julio - Jimenez Plata, Jose Antonio",
+          "holeNumber": 9,
+          "createdAt": "02/08/26 14:02:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Peñalver, Luis Pablo - Ollero Cuervo, Jesus",
+          "holeNumber": 6,
+          "createdAt": "02/08/26 14:05:44",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando - Brandariz Borrero, Alvaro",
+          "holeNumber": 1,
+          "createdAt": "02/08/26 14:05:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Tapia Guadix, Ana",
+          "holeNumber": 1,
+          "createdAt": "02/08/26 14:08:49",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Unciti Remon, Iñigo - De Gregorio Diego, Juan",
+          "holeNumber": 3,
+          "createdAt": "02/08/26 14:09:34",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Guajardo-Fajardo Delgado, Luis - Daroca Guerrero, Tomas",
+          "holeNumber": 3,
+          "createdAt": "02/08/26 14:17:45",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Boogen Ybarra, Virginia - Arsuaga Sentis, Belen",
+          "holeNumber": 6,
+          "createdAt": "02/08/26 14:20:50",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Peman Perez-Serrano, Javier - Peman Valderrama, Javier",
+          "holeNumber": 16,
+          "createdAt": "02/08/26 11:53:08",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

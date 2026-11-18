@@ -401,20 +401,46 @@
       "roundId": 75688
     }
   ],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/801755304_70716-aigs-12-05-26.pdf"
+  ],
   "scoreTypes": {
-    "hole_in_one": {
-      "scoreTypeKey": "hole_in_one",
+    "birdie": {
+      "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Cascallana Garcia, Jesus Maria",
-          "holeNumber": 17,
-          "createdAt": "24/11/25 16:03:43"
+          "playerName": "Dalton, Michael",
+          "holeNumber": 5,
+          "createdAt": "12/05/26 10:33:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Van Laere, Gert",
+          "holeNumber": 7,
+          "createdAt": "12/05/26 13:09:44",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 14,
+          "createdAt": "12/05/26 13:17:49",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Brown, David",
+          "holeNumber": 14,
+          "createdAt": "12/05/26 13:27:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Langan, Stuart",
+          "holeNumber": 5,
+          "createdAt": "12/05/26 13:51:55",
+          "roundNumber": 1
         }
       ]
     }
   },
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/cartel/801755304_70716-aigs-12-05-26.pdf"
-  ]
+  "destaquesVistoEm": "2026-11-18"
 }

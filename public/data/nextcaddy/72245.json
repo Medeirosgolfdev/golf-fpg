@@ -209,9 +209,28 @@
       "roundId": 77404
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/130419515_72245-liga-expres-jornada-4-manana-9-30.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gomez Jara, Jose Antonio",
+          "holeNumber": 10,
+          "createdAt": "16/07/26 09:44:39",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gomez Jara, Jose Antonio",
+          "holeNumber": 12,
+          "createdAt": "16/07/26 10:09:10",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

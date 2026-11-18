@@ -222,9 +222,28 @@
       "roundId": 76982
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "/uploads/competiciones/cartel/2021476821_71840-liga-abonados-21-junio.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T15:01:10.058Z"
+  "horariosScrapedAt": "2026-06-24T15:01:10.058Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Nuñez Benicio, Juan Carlos",
+          "holeNumber": 2,
+          "createdAt": "21/06/26 10:13:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cruz Lopez, Miguel Raul De La",
+          "holeNumber": 6,
+          "createdAt": "21/06/26 10:52:03",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

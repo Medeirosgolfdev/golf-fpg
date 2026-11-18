@@ -182,50 +182,68 @@
       "roundId": 79059
     }
   ],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-11-16T12:40:05.824Z",
   "scoreTypes": {
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Dwyer, Angela",
+          "holeNumber": 7,
+          "createdAt": "16/09/26 15:36:13",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Hakman, Ute",
+          "holeNumber": 12,
+          "createdAt": "16/09/26 15:39:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Hakman, Ute",
+          "holeNumber": 14,
+          "createdAt": "16/09/26 15:39:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Hopmans, Cornelia Johanna",
+          "holeNumber": 1,
+          "createdAt": "16/09/26 15:39:33",
+          "roundNumber": 1
+        }
+      ]
+    },
     "birdie": {
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Lepe Gomez, Ricardo Santiago",
-          "holeNumber": 3,
-          "createdAt": "14/03/26 09:55:53"
+          "playerName": "Hopmans, Cornelia Johanna",
+          "holeNumber": 15,
+          "createdAt": "16/09/26 15:39:34",
+          "roundNumber": 1
         },
         {
-          "playerName": "Vizuete Marquez, J. Fernando",
-          "holeNumber": 9,
-          "createdAt": "14/03/26 09:59:18"
+          "playerName": "Hopmans, Cornelia Johanna",
+          "holeNumber": 16,
+          "createdAt": "16/09/26 15:39:34",
+          "roundNumber": 1
         },
         {
-          "playerName": "Cumplido Lopez, Juan Manuel",
-          "holeNumber": 11,
-          "createdAt": "14/03/26 10:04:59"
-        },
-        {
-          "playerName": "Houghton, Ian",
-          "holeNumber": 11,
-          "createdAt": "14/03/26 10:05:03"
-        },
-        {
-          "playerName": "Lepe Gomez, Ricardo Santiago",
-          "holeNumber": 5,
-          "createdAt": "14/03/26 10:36:01"
-        },
-        {
-          "playerName": "Luca De Tena Cordoba, Jose Manuel",
-          "holeNumber": 14,
-          "createdAt": "14/03/26 10:57:48"
-        },
-        {
-          "playerName": "Houghton, Ian",
-          "holeNumber": 1,
-          "createdAt": "14/03/26 12:34:06"
+          "playerName": "Loiret, Joelle",
+          "holeNumber": 7,
+          "createdAt": "16/09/26 15:55:34",
+          "roundNumber": 1
         }
       ]
     }
   },
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-11-16T12:40:05.824Z"
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -433,9 +433,46 @@
       "roundId": 77684
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3851325155_72510-los-lechuzos.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Nebro Mellado, Maria Dolores",
+          "holeNumber": 9,
+          "createdAt": "08/08/26 12:12:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cruces Navarro, Manuel",
+          "holeNumber": 17,
+          "createdAt": "08/08/26 14:11:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De La Torre Jaume, Eduardo",
+          "holeNumber": 7,
+          "createdAt": "08/08/26 11:08:18",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Camps Olmedo, Alejandro",
+          "holeNumber": 16,
+          "createdAt": "08/08/26 13:46:34",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Camps Olmedo, Alejandro",
+          "holeNumber": 18,
+          "createdAt": "08/08/26 14:09:52",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

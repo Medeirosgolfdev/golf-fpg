@@ -100,14 +100,22 @@
       "roundId": 80473
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": []
-    }
-  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:11.131Z"
+  "horariosScrapedAt": "2026-11-16T12:40:11.131Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Grimaldi Ferrer, Lucia",
+          "holeNumber": 8,
+          "createdAt": "06/11/26 18:18:09",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

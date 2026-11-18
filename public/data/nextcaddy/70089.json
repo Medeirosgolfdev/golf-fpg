@@ -134,9 +134,40 @@
       "roundId": 74990
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2349014694_70089-double-rr-golf.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Nordqvist, Per Ola",
+          "holeNumber": 5,
+          "createdAt": "17/04/26 12:12:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Nordqvist, Per Ola",
+          "holeNumber": 6,
+          "createdAt": "17/04/26 12:24:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Nordqvist, Per Ola",
+          "holeNumber": 7,
+          "createdAt": "17/04/26 12:37:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew",
+          "holeNumber": 8,
+          "createdAt": "17/04/26 13:13:57",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

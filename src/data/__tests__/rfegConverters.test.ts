@@ -202,15 +202,14 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
       `);
   });
 
-  it("NextCaddy 74579 sem leaderboard: destaques de live scoring", async () => {
+  // 18/11/2026: os «destaques» que aqui estavam (Les Bell, Trudy Helen Baldwyn, Michael Mooney —
+  // adultos de uma prova de 12/04/2026) eram de OUTRA prova: o scrape pedia stats/scoreTypes com o
+  // número da prova em vez do da volta. Pedidos pela volta (79884), esta prova Benjamín não tem destaques.
+  it("NextCaddy 74579 sem leaderboard: sem destaques de outra prova", async () => {
     const d = await loadRfegDivisionData(t("nextcaddy", 74579, "nextcaddy/74579.json"));
     expect(resumo(d)).toMatchInlineSnapshot(`
       {
-        "destaques": [
-          "Les Bell 10",
-          "Trudy Helen Baldwyn 3",
-          "Michael Mooney 3",
-        ],
+        "destaques": null,
         "drawRounds": [
           1,
         ],

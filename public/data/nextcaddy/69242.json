@@ -1173,52 +1173,60 @@
       "roundId": 73986
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gil Olaiz, Luis",
-          "holeNumber": 14,
-          "createdAt": "28/09/25 10:30:29"
-        },
-        {
-          "playerName": "Gil Olaiz, Luis",
-          "holeNumber": 18,
-          "createdAt": "28/09/25 11:52:18"
-        },
-        {
-          "playerName": "Calzada Barco, Alvaro",
-          "holeNumber": 1,
-          "createdAt": "28/09/25 12:17:32"
-        },
-        {
-          "playerName": "Gomez Rodriguez, Eduardo",
-          "holeNumber": 4,
-          "createdAt": "28/09/25 13:11:37"
-        },
-        {
-          "playerName": "Gil Olaiz, Luis",
-          "holeNumber": 5,
-          "createdAt": "28/09/25 13:28:17"
-        },
-        {
-          "playerName": "Delgado Tercero, Pedro",
-          "holeNumber": 11,
-          "createdAt": "28/09/25 15:08:04"
-        },
-        {
-          "playerName": "Calzada Barco, Alvaro",
-          "holeNumber": 11,
-          "createdAt": "28/09/25 15:09:09"
-        }
-      ]
-    }
-  },
   "pdfs": [
     "/uploads/competiciones/pdf/4088056170_clasificacion_senior_codoba.pdf",
     "/uploads/circular/2026/539256dd2240e917cb5b247e369c5c30.pdf",
     "/uploads/competiciones/pdf/2035969679_info_comitie_senior_federacion_2026.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T15:00:43.405Z"
+  "horariosScrapedAt": "2026-06-24T15:00:43.405Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Murillo De La Cuadra, Maria",
+          "holeNumber": 5,
+          "createdAt": "22/03/26 14:08:22",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ortiz Burgoa, Juan Angel",
+          "holeNumber": 18,
+          "createdAt": "22/03/26 14:10:02",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Caro Gomez, Joaquin",
+          "holeNumber": 15,
+          "createdAt": "22/03/26 14:47:13",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martinez Lopez, Raul",
+          "holeNumber": 13,
+          "createdAt": "22/03/26 14:47:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Muñoz Macias, Mario",
+          "holeNumber": 2,
+          "createdAt": "22/03/26 14:51:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Muñoz Macias, Mario",
+          "holeNumber": 15,
+          "createdAt": "22/03/26 14:51:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gomez Ferreiro, Marcos Antonio",
+          "holeNumber": 3,
+          "createdAt": "22/03/26 14:51:43",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

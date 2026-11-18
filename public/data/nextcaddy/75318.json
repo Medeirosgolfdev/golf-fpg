@@ -272,9 +272,28 @@
       "roundId": 80732
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/866976219_75318-9-jornada-xxi-liga-tirantes-verdes-13-11-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandez Siguenza, Fernando",
+          "holeNumber": 6,
+          "createdAt": "13/11/26 10:06:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Herran Perez, Alvaro",
+          "holeNumber": 8,
+          "createdAt": "13/11/26 11:00:42",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

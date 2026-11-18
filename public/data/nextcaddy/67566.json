@@ -728,7 +728,32 @@
       "roundId": 72033
     }
   ],
-  "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T15:00:08.413Z"
+  "horariosScrapedAt": "2026-06-24T15:00:08.413Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Torres Torres, Cristobal",
+          "holeNumber": 12,
+          "createdAt": "19/01/26 11:08:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Megias Casas, Manuel",
+          "holeNumber": 17,
+          "createdAt": "19/01/26 11:53:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Postigo Secano, Jose",
+          "holeNumber": 17,
+          "createdAt": "19/01/26 12:04:13",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -336,9 +336,34 @@
       "roundId": 79196
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3384802_73943-dia-de-las-damas-medal-norte.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rodrigues Da Costa, Rosenilda",
+          "holeNumber": 7,
+          "createdAt": "22/09/26 09:46:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Ibañez, Ana Maria",
+          "holeNumber": 6,
+          "createdAt": "22/09/26 10:01:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Macias  Gomez, Rocio",
+          "holeNumber": 11,
+          "createdAt": "22/09/26 11:22:34",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

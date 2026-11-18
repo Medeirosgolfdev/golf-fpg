@@ -872,9 +872,363 @@
       "roundId": 77778
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/3105130833_reglas_locales_2025.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Epalza Ortega, Iñigo - Epalza Ortega, Paula",
+          "holeNumber": 1,
+          "createdAt": "28/07/26 08:50:41",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Borja - Gonzalez Muñoz, Roberto",
+          "holeNumber": 1,
+          "createdAt": "28/07/26 08:56:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez-Tagle Muñoz, Violeta - De Lope Gomez, Candela",
+          "holeNumber": 2,
+          "createdAt": "28/07/26 08:57:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Vaca, Jose Miguel - Bernal Bollullos, Santiago",
+          "holeNumber": 1,
+          "createdAt": "28/07/26 08:57:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Terry Andrades, Roberto",
+          "holeNumber": 1,
+          "createdAt": "28/07/26 09:09:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Molina, Ignacio - Fernandez De Bobadilla Diaz, Borja",
+          "holeNumber": 1,
+          "createdAt": "28/07/26 09:19:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez-Tagle Muñoz, Violeta - De Lope Gomez, Candela",
+          "holeNumber": 4,
+          "createdAt": "28/07/26 09:21:49",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De - De Lope Gomez, Ignacio",
+          "holeNumber": 1,
+          "createdAt": "28/07/26 09:31:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto - Gonzalez Muñoz, Jaime",
+          "holeNumber": 1,
+          "createdAt": "28/07/26 09:33:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez-Tagle Muñoz, Violeta - De Lope Gomez, Candela",
+          "holeNumber": 5,
+          "createdAt": "28/07/26 09:36:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo - Epalza Ortega, Paula",
+          "holeNumber": 4,
+          "createdAt": "28/07/26 09:38:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Neira  Moreno, Javier - Pascual Del Pobil Toscano, Fernando",
+          "holeNumber": 4,
+          "createdAt": "28/07/26 09:46:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pascual Del Pobil Neira, Fernando - Pascual Del Pobil Toscano, Ignacio",
+          "holeNumber": 1,
+          "createdAt": "28/07/26 09:59:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Camara Gazapo, Blanca - Merino Camara, Alejandro",
+          "holeNumber": 1,
+          "createdAt": "28/07/26 10:05:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Borja - Gonzalez Muñoz, Roberto",
+          "holeNumber": 6,
+          "createdAt": "28/07/26 10:11:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Borja - Gonzalez Muñoz, Roberto",
+          "holeNumber": 8,
+          "createdAt": "28/07/26 10:27:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez-Tagle Muñoz, Violeta - De Lope Gomez, Candela",
+          "holeNumber": 9,
+          "createdAt": "28/07/26 10:30:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Neira  Moreno, Javier - Pascual Del Pobil Toscano, Fernando",
+          "holeNumber": 8,
+          "createdAt": "28/07/26 10:39:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Gallego, Manuel - Bernal Bollullos, Jose Miguel",
+          "holeNumber": 4,
+          "createdAt": "28/07/26 10:41:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De - De Lope Gomez, Ignacio",
+          "holeNumber": 6,
+          "createdAt": "28/07/26 10:47:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Vaca, Jose Miguel - Bernal Bollullos, Santiago",
+          "holeNumber": 8,
+          "createdAt": "28/07/26 10:49:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Molina, Ignacio - Fernandez De Bobadilla Diaz, Borja",
+          "holeNumber": 8,
+          "createdAt": "28/07/26 10:50:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Terry Andrades, Roberto",
+          "holeNumber": 8,
+          "createdAt": "28/07/26 10:58:39",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martel Osborne, Carlos - Martel Molina, Adriana",
+          "holeNumber": 6,
+          "createdAt": "28/07/26 11:07:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Molina, Ignacio - Fernandez De Bobadilla Diaz, Borja",
+          "holeNumber": 9,
+          "createdAt": "28/07/26 11:11:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sundheim Losada, Mercedes - Aguado Medina, Javier",
+          "holeNumber": 5,
+          "createdAt": "28/07/26 11:11:25",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto - Gonzalez Muñoz, Jaime",
+          "holeNumber": 8,
+          "createdAt": "28/07/26 11:14:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Gallego, Manuel - Bernal Bollullos, Jose Miguel",
+          "holeNumber": 6,
+          "createdAt": "28/07/26 11:14:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo - Epalza Ortega, Paula",
+          "holeNumber": 10,
+          "createdAt": "28/07/26 11:16:49",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Brandariz Fernandez, Eduardo - Brandariz Carvallo, Eduardo",
+          "holeNumber": 8,
+          "createdAt": "28/07/26 11:22:18",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Neira  Moreno, Javier - Pascual Del Pobil Toscano, Fernando",
+          "holeNumber": 10,
+          "createdAt": "28/07/26 11:37:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Gallego, Manuel - Bernal Bollullos, Jose Miguel",
+          "holeNumber": 8,
+          "createdAt": "28/07/26 11:41:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Molina Fernandez De La Mela, Manuel - Molina Fernandez De La Mela, Jose Maria",
+          "holeNumber": 11,
+          "createdAt": "28/07/26 11:56:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De - De Lope Gomez, Ignacio",
+          "holeNumber": 10,
+          "createdAt": "28/07/26 12:01:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Gallego, Manuel - Bernal Bollullos, Jose Miguel",
+          "holeNumber": 9,
+          "createdAt": "28/07/26 12:01:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez-Tagle Muñoz, Violeta - De Lope Gomez, Candela",
+          "holeNumber": 14,
+          "createdAt": "28/07/26 12:24:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto - Gonzalez Muñoz, Jaime",
+          "holeNumber": 12,
+          "createdAt": "28/07/26 12:28:41",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Molina, Ignacio - Fernandez De Bobadilla Diaz, Borja",
+          "holeNumber": 13,
+          "createdAt": "28/07/26 12:29:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Terry Andrades, Roberto",
+          "holeNumber": 14,
+          "createdAt": "28/07/26 12:38:39",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Molina Fernandez De La Mela, Manuel - Molina Fernandez De La Mela, Jose Maria",
+          "holeNumber": 13,
+          "createdAt": "28/07/26 12:45:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cejudo Galán, Jerónimo - Cejudo Leon, Carmen",
+          "holeNumber": 8,
+          "createdAt": "28/07/26 12:54:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Terry Andrades, Roberto",
+          "holeNumber": 15,
+          "createdAt": "28/07/26 13:00:09",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Molina Fernandez De La Mela, Manuel - Molina Fernandez De La Mela, Jose Maria",
+          "holeNumber": 15,
+          "createdAt": "28/07/26 13:06:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez-Tagle Muñoz, Violeta - De Lope Gomez, Candela",
+          "holeNumber": 17,
+          "createdAt": "28/07/26 13:17:41",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto - Gonzalez Muñoz, Jaime",
+          "holeNumber": 15,
+          "createdAt": "28/07/26 13:18:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Neira  Moreno, Javier - Pascual Del Pobil Toscano, Fernando",
+          "holeNumber": 16,
+          "createdAt": "28/07/26 13:20:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Terry Andrades, Roberto",
+          "holeNumber": 17,
+          "createdAt": "28/07/26 13:20:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Molina, Ignacio - Fernandez De Bobadilla Diaz, Borja",
+          "holeNumber": 16,
+          "createdAt": "28/07/26 13:25:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo - Epalza Ortega, Paula",
+          "holeNumber": 17,
+          "createdAt": "28/07/26 13:35:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pascual Del Pobil Neira, Fernando - Pascual Del Pobil Toscano, Ignacio",
+          "holeNumber": 15,
+          "createdAt": "28/07/26 13:36:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Borja - Gonzalez Muñoz, Roberto",
+          "holeNumber": 17,
+          "createdAt": "28/07/26 13:41:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Vaca, Jose Miguel - Bernal Bollullos, Santiago",
+          "holeNumber": 17,
+          "createdAt": "28/07/26 13:45:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Vaca, Jose Miguel - Bernal Bollullos, Santiago",
+          "holeNumber": 18,
+          "createdAt": "28/07/26 13:45:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pascual Del Pobil Neira, Fernando - Pascual Del Pobil Toscano, Ignacio",
+          "holeNumber": 17,
+          "createdAt": "28/07/26 14:21:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Gallego, Manuel - Bernal Bollullos, Jose Miguel",
+          "holeNumber": 17,
+          "createdAt": "28/07/26 14:29:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bernal Gallego, Manuel - Bernal Bollullos, Jose Miguel",
+          "holeNumber": 18,
+          "createdAt": "28/07/26 14:45:42",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Epalza Ortega, Iñigo - Epalza Ortega, Paula",
+          "holeNumber": 18,
+          "createdAt": "28/07/26 13:35:40",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

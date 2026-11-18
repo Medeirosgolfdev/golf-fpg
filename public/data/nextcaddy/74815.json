@@ -113,10 +113,41 @@
       "roundId": 80179
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/519217040_74815-cogs.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:09.974Z"
+  "horariosScrapedAt": "2026-11-16T12:40:09.974Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fierro De Orueta, Ignacio",
+          "holeNumber": 11,
+          "createdAt": "23/10/26 15:14:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Whelan, Paul",
+          "holeNumber": 5,
+          "createdAt": "23/10/26 15:36:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Whelan, Paul",
+          "holeNumber": 15,
+          "createdAt": "23/10/26 15:36:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Whelan, Paul",
+          "holeNumber": 17,
+          "createdAt": "23/10/26 15:36:37",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

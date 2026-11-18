@@ -369,9 +369,28 @@
       "roundId": 80088
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1441324596_74758-holandeses-domingo-sur-25-10.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Poelstra, Leona",
+          "holeNumber": 11,
+          "createdAt": "25/10/26 18:40:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Karel Martens, Henkrik",
+          "holeNumber": 7,
+          "createdAt": "25/10/26 18:44:07",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

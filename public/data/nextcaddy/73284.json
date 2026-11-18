@@ -1,13 +1,13 @@
 {
   "tourId": 73284,
   "url": "https://www.nextcaddy.com/tour/73284",
-  "scrapedAt": "2026-10-12T12:08:01.487Z",
+  "scrapedAt": "2026-11-18T15:29:59.195Z",
   "meta": {
     "name": "7ª PRUEBA LIGA DE VERANO 2026",
     "organizer": null,
     "course": "Real Club de Campo de Cordoba",
     "courseCode": "AM06",
-    "dateStart": "2026-09-02",
+    "dateStart": null,
     "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
@@ -17,17 +17,9 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-09-02",
-    "year": 2026
+    ]
   },
-  "course": {
-    "parTotal": 32,
-    "parInferred": true,
-    "parConfidence": "total-low",
-    "si": null,
-    "meters": null
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
@@ -2357,74 +2349,166 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Maldonado Trapaga, Jose Maria",
-          "holeNumber": 8,
-          "createdAt": "22/02/26 15:48:14"
-        },
-        {
-          "playerName": "Buijs Mariscal, Mario",
-          "holeNumber": 14,
-          "createdAt": "22/02/26 15:50:23"
-        },
-        {
-          "playerName": "Dedaj Ungureanu, Dylan",
-          "holeNumber": 6,
-          "createdAt": "22/02/26 15:51:07"
-        },
-        {
-          "playerName": "Dedaj Ungureanu, Dylan",
-          "holeNumber": 7,
-          "createdAt": "22/02/26 15:51:07"
-        },
-        {
-          "playerName": "Dedaj Ungureanu, Dylan",
+          "playerName": "Del Pino Espejo, Manuel Luis",
           "holeNumber": 13,
-          "createdAt": "22/02/26 15:51:07"
+          "createdAt": "02/09/26 20:34:29",
+          "roundNumber": 1
         },
         {
-          "playerName": "Enriquez Sáinz De La Flor, Borja",
-          "holeNumber": 4,
-          "createdAt": "22/02/26 15:51:35"
+          "playerName": "Del Pino Espejo, Manuel Luis",
+          "holeNumber": 16,
+          "createdAt": "02/09/26 20:34:29",
+          "roundNumber": 1
         },
         {
-          "playerName": "Enriquez Sáinz De La Flor, Borja",
+          "playerName": "Benitez Sillero, Juan De Dios",
           "holeNumber": 9,
-          "createdAt": "22/02/26 15:51:35"
+          "createdAt": "02/09/26 20:34:29",
+          "roundNumber": 1
         },
         {
-          "playerName": "Enriquez Sáinz De La Flor, Borja",
-          "holeNumber": 16,
-          "createdAt": "22/02/26 15:51:36"
+          "playerName": "Muñoz Polonio, Miguel Angel",
+          "holeNumber": 10,
+          "createdAt": "02/09/26 20:34:30",
+          "roundNumber": 1
         },
         {
-          "playerName": "Chepishev, Christian Hristo",
-          "holeNumber": 2,
-          "createdAt": "22/02/26 15:52:09"
+          "playerName": "Cruz Copete, Manuel",
+          "holeNumber": 17,
+          "createdAt": "02/09/26 20:34:30",
+          "roundNumber": 1
         },
         {
-          "playerName": "Chepishev, Christian Hristo",
-          "holeNumber": 16,
-          "createdAt": "22/02/26 15:52:09"
+          "playerName": "Gallego Gomez, Manuel",
+          "holeNumber": 1,
+          "createdAt": "02/09/26 20:34:31",
+          "roundNumber": 1
         },
         {
-          "playerName": "Bogdanovs, Miroslavs",
+          "playerName": "Gallego Gomez, Manuel",
+          "holeNumber": 10,
+          "createdAt": "02/09/26 20:34:31",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Segui Azpilcueta, Pedro",
+          "holeNumber": 17,
+          "createdAt": "02/09/26 20:34:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Guzman Teughels, Maria",
+          "holeNumber": 12,
+          "createdAt": "02/09/26 20:34:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Caballero Perez, Jacinto",
+          "holeNumber": 11,
+          "createdAt": "02/09/26 20:34:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Caballero Perez, Jacinto",
+          "holeNumber": 15,
+          "createdAt": "02/09/26 20:34:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Soriano Cuadrado, Javier",
+          "holeNumber": 6,
+          "createdAt": "02/09/26 20:34:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Soriano Cuadrado, Javier",
+          "holeNumber": 10,
+          "createdAt": "02/09/26 20:34:34",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Soriano Cuadrado, Javier",
           "holeNumber": 14,
-          "createdAt": "22/02/26 15:52:34"
+          "createdAt": "02/09/26 20:34:34",
+          "roundNumber": 1
         },
         {
-          "playerName": "Bogdanovs, Miroslavs",
-          "holeNumber": 18,
-          "createdAt": "22/02/26 15:52:35"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
+          "playerName": "Cano Cano, Galo",
+          "holeNumber": 6,
+          "createdAt": "02/09/26 20:34:34",
+          "roundNumber": 1
+        },
         {
-          "playerName": "Buijs Mariscal, Mario",
-          "holeNumber": 5,
-          "createdAt": "22/02/26 15:50:23"
+          "playerName": "Arenas Colomer, Horacio",
+          "holeNumber": 15,
+          "createdAt": "02/09/26 20:34:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vargas Cabrera, Jose Maria",
+          "holeNumber": 2,
+          "createdAt": "02/09/26 20:34:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vargas Cabrera, Jose Maria",
+          "holeNumber": 10,
+          "createdAt": "02/09/26 20:34:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vargas Cabrera, Jose Maria",
+          "holeNumber": 11,
+          "createdAt": "02/09/26 20:34:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vargas Cabrera, Jose Maria",
+          "holeNumber": 18,
+          "createdAt": "02/09/26 20:34:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vargas Calderon, Jose Maria",
+          "holeNumber": 11,
+          "createdAt": "02/09/26 20:34:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Navarro Larrea, Jose Rafael",
+          "holeNumber": 3,
+          "createdAt": "02/09/26 20:34:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Navarro Larrea, Jose Rafael",
+          "holeNumber": 9,
+          "createdAt": "02/09/26 20:34:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Zurera Baena, Rafael",
+          "holeNumber": 15,
+          "createdAt": "02/09/26 20:34:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Amo Triviño, Luis",
+          "holeNumber": 6,
+          "createdAt": "02/09/26 20:34:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Amo Triviño, Luis",
+          "holeNumber": 15,
+          "createdAt": "02/09/26 20:34:37",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Amo Triviño, Luis",
+          "holeNumber": 18,
+          "createdAt": "02/09/26 20:34:37",
+          "roundNumber": 1
         }
       ]
     }

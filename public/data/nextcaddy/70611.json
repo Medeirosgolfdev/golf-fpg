@@ -630,9 +630,63 @@
       "roundId": 75581
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3806373393_70611-ii-torneo-empresas-cc.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Mateo Gimenez, Gracian - Gonzalez Ortega, Juan",
+          "holeNumber": 2,
+          "createdAt": "09/05/26 09:40:24",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Calatrava Espinosa, Juan Carlos - Moncada Garcia, Miguel Angel",
+          "holeNumber": 10,
+          "createdAt": "09/05/26 10:16:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mateo Gimenez, Gracian - Gonzalez Ortega, Juan",
+          "holeNumber": 12,
+          "createdAt": "09/05/26 12:23:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Venegas Alonso, Francisco - Gazquez Piera, Carlos",
+          "holeNumber": 16,
+          "createdAt": "09/05/26 12:55:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mateo Gimenez, Gracian - Gonzalez Ortega, Juan",
+          "holeNumber": 13,
+          "createdAt": "09/05/26 12:56:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Muñoz Egea, Jose Maria - Vogt Sanchez, Stefan Alessandro",
+          "holeNumber": 14,
+          "createdAt": "09/05/26 12:57:21",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Simon Garcia, Gines - Ordoño Ceba, Rafael",
+          "holeNumber": 3,
+          "createdAt": "09/05/26 09:26:13",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

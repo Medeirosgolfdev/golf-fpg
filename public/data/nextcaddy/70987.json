@@ -161,9 +161,46 @@
       "roundId": 76000
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/591767678_70987-torneo-malitos-zaudin.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandez Gil, Javier",
+          "holeNumber": 2,
+          "createdAt": "22/05/26 10:11:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ojeda Becerra, Javier",
+          "holeNumber": 3,
+          "createdAt": "22/05/26 10:37:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ojeda Becerra, Francisco De Borja",
+          "holeNumber": 6,
+          "createdAt": "22/05/26 11:04:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez Gil, Javier",
+          "holeNumber": 9,
+          "createdAt": "22/05/26 11:55:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Murados Alderete, Roberto Eduardo",
+          "holeNumber": 14,
+          "createdAt": "22/05/26 13:32:43",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

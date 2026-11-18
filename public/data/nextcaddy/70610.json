@@ -630,9 +630,46 @@
       "roundId": 75580
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1556916586_70610-ii-torneo-empresas-fb.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cortes Canton, Juan - Perez Diaz, Norberto",
+          "holeNumber": 13,
+          "createdAt": "09/05/26 09:22:41",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martinez Huot, Juan Enrique - Martinez Siles, Cecilio",
+          "holeNumber": 13,
+          "createdAt": "09/05/26 09:59:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Diez, Jose Miguel - Goretti, Stefano",
+          "holeNumber": 13,
+          "createdAt": "09/05/26 10:28:25",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cortes Canton, Juan - Perez Diaz, Norberto",
+          "holeNumber": 1,
+          "createdAt": "09/05/26 11:03:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martinez Huot, Juan Enrique - Martinez Siles, Cecilio",
+          "holeNumber": 5,
+          "createdAt": "09/05/26 12:55:48",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

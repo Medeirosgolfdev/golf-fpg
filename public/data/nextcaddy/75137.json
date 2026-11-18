@@ -184,9 +184,22 @@
       "roundId": 80525
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:11.389Z"
+  "horariosScrapedAt": "2026-11-16T12:40:11.389Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ramajo Ferraro, Manuel",
+          "holeNumber": 5,
+          "createdAt": "07/11/26 14:23:45",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

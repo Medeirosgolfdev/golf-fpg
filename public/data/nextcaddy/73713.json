@@ -273,9 +273,28 @@
       "roundId": 78966
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3203168881_73713-liga-expres-final-manana-9-30.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Barea De Lara, Rosario",
+          "holeNumber": 15,
+          "createdAt": "17/09/26 11:17:24",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Megias Casas, Manuel",
+          "holeNumber": 17,
+          "createdAt": "17/09/26 11:53:38",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

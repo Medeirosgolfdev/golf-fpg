@@ -693,9 +693,28 @@
       "roundId": 76452
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3880416255_71398-hombres-canada-cup-shotgun-08-06-2026.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Mezquita Zurutuza, Javier - Gonzalez  Becerra, Sergio",
+          "holeNumber": 8,
+          "createdAt": "08/06/26 14:29:13",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mezquita Zurutuza, Javier - Gonzalez  Becerra, Sergio",
+          "holeNumber": 11,
+          "createdAt": "08/06/26 14:29:13",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

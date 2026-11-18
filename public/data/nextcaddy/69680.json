@@ -376,9 +376,39 @@
       "roundId": 74465
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1034434143_69680-torneo-corendi.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rosendi Galvin, Ismael",
+          "holeNumber": 15,
+          "createdAt": "11/04/26 15:50:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rodriguez  Sanz, Maria Del Rosario",
+          "holeNumber": 1,
+          "createdAt": "11/04/26 16:14:08",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Fernandez Bustelo, Javier",
+          "holeNumber": 14,
+          "createdAt": "11/04/26 16:03:10",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

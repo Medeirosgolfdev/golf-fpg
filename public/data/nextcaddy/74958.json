@@ -256,9 +256,22 @@
       "roundId": 80324
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3488894443_74958-iv-liga-femenina-golf-cartuja-1-jornada-30-10-26-bis.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Losada Sanz, Milagros",
+          "holeNumber": 4,
+          "createdAt": "30/10/26 11:51:47",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

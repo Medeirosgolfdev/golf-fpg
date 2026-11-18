@@ -876,9 +876,40 @@
       "roundId": 80070
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2578781774_74745-vi-liga-femenina-golf-cartuja-26-27-22-10-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Parlade Escobar, Josefina",
+          "holeNumber": 6,
+          "createdAt": "22/10/26 10:27:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diaz Fandos, Rosa",
+          "holeNumber": 5,
+          "createdAt": "22/10/26 11:23:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Osuna Feore, Carol Maria",
+          "holeNumber": 6,
+          "createdAt": "22/10/26 11:44:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martin Molinos, Isabel Maria",
+          "holeNumber": 1,
+          "createdAt": "22/10/26 14:52:06",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

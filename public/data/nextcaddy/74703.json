@@ -193,9 +193,40 @@
       "roundId": 80027
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1419138183_74703-liga-golfistas-de-sevilla-jornada-2-tarde-13-00.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cabello Rangel, Francisco Javier",
+          "holeNumber": 12,
+          "createdAt": "29/10/26 14:05:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lorenzo De Mula, Juan Manuel",
+          "holeNumber": 12,
+          "createdAt": "29/10/26 14:20:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pinelo Herrera, Jose Manuel",
+          "holeNumber": 17,
+          "createdAt": "29/10/26 15:40:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Jimenez-Maña Carmona, Jesus",
+          "holeNumber": 8,
+          "createdAt": "29/10/26 17:56:21",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

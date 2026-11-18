@@ -828,8 +828,39 @@
       "roundId": 72007
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gomez Ramos-Yzquierdo, Paz",
+          "holeNumber": 6,
+          "createdAt": "15/01/26 13:35:03",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Aguerri San Rafael, Leonor Maria",
+          "holeNumber": 3,
+          "createdAt": "15/01/26 13:47:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Aguerri San Rafael, Leonor Maria",
+          "holeNumber": 8,
+          "createdAt": "15/01/26 14:43:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Troya Medina, Elena",
+          "holeNumber": 8,
+          "createdAt": "15/01/26 18:15:31",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

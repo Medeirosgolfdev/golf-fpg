@@ -826,7 +826,26 @@
       "roundId": 71987
     }
   ],
-  "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T15:00:06.880Z"
+  "horariosScrapedAt": "2026-06-24T15:00:06.880Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lantz, Dag Ake",
+          "holeNumber": 11,
+          "createdAt": "15/01/26 12:15:59",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Couderc Guitard, Marie",
+          "holeNumber": 11,
+          "createdAt": "15/01/26 11:58:54",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

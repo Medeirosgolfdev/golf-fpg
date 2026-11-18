@@ -590,7 +590,32 @@
       "roundId": 75119
     }
   ],
-  "scoreTypes": null,
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T15:00:51.886Z"
+  "horariosScrapedAt": "2026-06-24T15:00:51.886Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Bermejo Aybar, Jose",
+          "holeNumber": 1,
+          "createdAt": "09/05/26 14:34:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Chaves Lopez, Arturo",
+          "holeNumber": 3,
+          "createdAt": "09/05/26 14:59:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sanchez Leon, Juan Manuel",
+          "holeNumber": 6,
+          "createdAt": "09/05/26 13:35:01",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

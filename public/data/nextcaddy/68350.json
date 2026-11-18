@@ -561,10 +561,23 @@
       "roundId": 72938
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/1985466331_normativa_torneo_damas_barberan.pdf",
     "/uploads/competiciones/pdf/56941328_arb_reg_loc_cm03_2019.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Alcantara Torres, Francis",
+          "holeNumber": 15,
+          "createdAt": "14/11/26 16:21:04",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

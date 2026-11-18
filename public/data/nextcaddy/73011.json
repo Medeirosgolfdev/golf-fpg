@@ -281,10 +281,82 @@
       "roundId": 78224
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2074210867_73011-club-la-cala-mijas.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:03.595Z"
+  "horariosScrapedAt": "2026-11-16T12:40:03.595Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Arias Gonzalez, Jose Manuel",
+          "holeNumber": 18,
+          "createdAt": "16/08/26 12:50:09",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bornao Rivera, Javier Andres",
+          "holeNumber": 7,
+          "createdAt": "16/08/26 12:50:54",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Maldonado Molero, Miguel Angel",
+          "holeNumber": 4,
+          "createdAt": "16/08/26 13:20:24",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Maldonado Molero, Francisco",
+          "holeNumber": 2,
+          "createdAt": "16/08/26 13:32:56",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Liñan Arcas, Jose Ramon",
+          "holeNumber": 10,
+          "createdAt": "16/08/26 13:33:54",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Corpas Perez, Gabriel",
+          "holeNumber": 15,
+          "createdAt": "16/08/26 13:39:59",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vergara Martin, Manuel",
+          "holeNumber": 10,
+          "createdAt": "16/08/26 13:41:13",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Coca Martin De Villodres, Jose Carlos",
+          "holeNumber": 12,
+          "createdAt": "16/08/26 13:44:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Brown Dasalla, Rima Desire",
+          "holeNumber": 5,
+          "createdAt": "16/08/26 13:47:38",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Lozano Benitez, Cristobal",
+          "holeNumber": 3,
+          "createdAt": "16/08/26 13:42:56",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

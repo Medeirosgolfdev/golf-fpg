@@ -98,8 +98,33 @@
       "roundId": 75343
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Bescansa Gutierrez, Ricardo",
+          "holeNumber": 2,
+          "createdAt": "02/05/26 13:38:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bescansa Gutierrez, Ricardo",
+          "holeNumber": 7,
+          "createdAt": "02/05/26 13:38:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bescansa Gutierrez, Ricardo",
+          "holeNumber": 16,
+          "createdAt": "02/05/26 13:38:46",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

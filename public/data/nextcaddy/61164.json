@@ -2817,11 +2817,66 @@
       "roundId": 64808
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/1046935814_web.pdf",
     "/uploads/circular/2026/960db328bdb9e41e59f0fd895701cb97.pdf",
     "/uploads/competiciones/pdf/2150759737_web.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Bostoen, Danielle",
+          "holeNumber": 4,
+          "createdAt": "17/06/26 14:46:52",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Saavedra, Maria Dolores",
+          "holeNumber": 16,
+          "createdAt": "17/06/26 14:46:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Piñeros Barrera, Claudia Rocio",
+          "holeNumber": 15,
+          "createdAt": "17/06/26 14:47:03",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Li, Ni",
+          "holeNumber": 13,
+          "createdAt": "17/06/26 14:47:21",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Rehlinger, Jeannine",
+          "holeNumber": 12,
+          "createdAt": "17/06/26 14:47:21",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Vega Narvaez, Ana",
+          "holeNumber": 4,
+          "createdAt": "17/06/26 14:47:22",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Vega Narvaez, Ana",
+          "holeNumber": 15,
+          "createdAt": "17/06/26 14:47:22",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Martinez-Sagrera Martin, Beatriz",
+          "holeNumber": 16,
+          "createdAt": "17/06/26 14:47:30",
+          "roundNumber": 2
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

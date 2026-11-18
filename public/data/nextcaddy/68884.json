@@ -113,9 +113,46 @@
       "roundId": 73584
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:44.528Z"
+  "horariosScrapedAt": "2026-11-16T12:39:44.528Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gomez Santana, Juan Jose",
+          "holeNumber": 8,
+          "createdAt": "01/03/26 14:42:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Robertson, Elizabeth Ann",
+          "holeNumber": 6,
+          "createdAt": "01/03/26 14:44:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Robertson, Elizabeth Ann",
+          "holeNumber": 8,
+          "createdAt": "01/03/26 14:44:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Robertson, Elizabeth Ann",
+          "holeNumber": 11,
+          "createdAt": "01/03/26 14:44:40",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Roessli, Pierre-Alain",
+          "holeNumber": 17,
+          "createdAt": "01/03/26 14:46:32",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

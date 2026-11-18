@@ -146,8 +146,39 @@
       "roundId": 72622
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rodriguez Infantes, Asier",
+          "holeNumber": 2,
+          "createdAt": "31/01/26 14:51:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bescansa Gutierrez, Ricardo",
+          "holeNumber": 13,
+          "createdAt": "31/01/26 16:07:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cazenave Alos, Aurelio",
+          "holeNumber": 7,
+          "createdAt": "31/01/26 14:51:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cazenave Alos, Aurelio",
+          "holeNumber": 13,
+          "createdAt": "31/01/26 14:51:08",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

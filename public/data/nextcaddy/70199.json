@@ -85,10 +85,35 @@
       "roundId": 75105
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/4188144597_70199-vuelta-valida-20-04-2026.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:50.467Z"
+  "horariosScrapedAt": "2026-11-16T12:39:50.467Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lopez Perez, Jose Antonio",
+          "holeNumber": 4,
+          "createdAt": "20/04/26 10:41:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez Perez, Jose Antonio",
+          "holeNumber": 16,
+          "createdAt": "20/04/26 10:41:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez Perez, Jose Antonio",
+          "holeNumber": 17,
+          "createdAt": "20/04/26 10:41:10",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -673,8 +673,45 @@
       "roundId": 80053
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lisbona Gonzalvo, Viola",
+          "holeNumber": 12,
+          "createdAt": "28/10/26 11:20:22",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Granged Bruñen, Luisa Maria",
+          "holeNumber": 2,
+          "createdAt": "28/10/26 12:42:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Artes Sanchis, Maria Luisa",
+          "holeNumber": 11,
+          "createdAt": "28/10/26 14:42:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Artes Sanchis, Maria Luisa",
+          "holeNumber": 12,
+          "createdAt": "28/10/26 14:42:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Parralo Marcos, Manuela",
+          "holeNumber": 14,
+          "createdAt": "28/10/26 14:49:37",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

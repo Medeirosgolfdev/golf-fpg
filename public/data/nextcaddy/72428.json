@@ -433,9 +433,34 @@
       "roundId": 77597
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3318699966_72428-liga-expres-jornada-5-manana-9-30.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Moll Lorca, Salvador",
+          "holeNumber": 4,
+          "createdAt": "23/07/26 10:16:22",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gandullo Nieto, Antonio Luis",
+          "holeNumber": 8,
+          "createdAt": "23/07/26 11:40:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Calvo Borrego, Jose Luis",
+          "holeNumber": 6,
+          "createdAt": "23/07/26 11:22:12",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

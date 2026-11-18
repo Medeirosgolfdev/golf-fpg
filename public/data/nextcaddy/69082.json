@@ -823,8 +823,33 @@
       "roundId": 73810
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "De La Cueva Gironza, Maria",
+          "holeNumber": 9,
+          "createdAt": "12/03/26 12:28:59",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Prat, Rocio",
+          "holeNumber": 4,
+          "createdAt": "12/03/26 11:58:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Arenado Sampil, Angeles",
+          "holeNumber": 2,
+          "createdAt": "12/03/26 13:49:24",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

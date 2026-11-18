@@ -629,9 +629,22 @@
       "roundId": 75987
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3559672454_70974-8-jornada-v-liga-femenina-golf-cartuja-21-05-26.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Peña Aguirre, Isabel",
+          "holeNumber": 2,
+          "createdAt": "21/05/26 10:55:29",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

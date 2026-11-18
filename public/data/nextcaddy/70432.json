@@ -313,10 +313,112 @@
       "roundId": 75374
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1243356115_70432-golf-trip-miraflores-men.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:51.784Z"
+  "horariosScrapedAt": "2026-11-16T12:39:51.784Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Hill, Dougy",
+          "holeNumber": 11,
+          "createdAt": "12/05/26 16:50:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Rijk, Michael",
+          "holeNumber": 9,
+          "createdAt": "12/05/26 18:02:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Rijk, Michael",
+          "holeNumber": 17,
+          "createdAt": "12/05/26 18:02:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Webster, Lawrence",
+          "holeNumber": 10,
+          "createdAt": "12/05/26 17:16:51",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Seaborn, Martin",
+          "holeNumber": 1,
+          "createdAt": "13/05/26 17:00:30",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Hill, Dougy",
+          "holeNumber": 15,
+          "createdAt": "13/05/26 16:06:47",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Richards, Bob",
+          "holeNumber": 10,
+          "createdAt": "13/05/26 16:53:38",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Hell, Helmut",
+          "holeNumber": 9,
+          "createdAt": "13/05/26 17:08:55",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Partridge, Mike",
+          "holeNumber": 9,
+          "createdAt": "13/05/26 16:16:40",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "De Rijk, Michael",
+          "holeNumber": 15,
+          "createdAt": "13/05/26 16:00:39",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Barrett, Paul",
+          "holeNumber": 6,
+          "createdAt": "13/05/26 16:30:46",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Barrett, Paul",
+          "holeNumber": 18,
+          "createdAt": "13/05/26 16:30:46",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Jacobson, Niklas",
+          "holeNumber": 18,
+          "createdAt": "13/05/26 16:59:31",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Markey, Ceril",
+          "holeNumber": 6,
+          "createdAt": "13/05/26 16:13:54",
+          "roundNumber": 2
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Seaborn, Martin",
+          "holeNumber": 18,
+          "createdAt": "13/05/26 17:00:30",
+          "roundNumber": 2
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

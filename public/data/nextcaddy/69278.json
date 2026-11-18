@@ -560,8 +560,39 @@
       "roundId": 74023
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Moreno Carranza, Manuela",
+          "holeNumber": 3,
+          "createdAt": "19/03/26 12:06:22",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Marcos Alonso, Sol",
+          "holeNumber": 7,
+          "createdAt": "19/03/26 12:57:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Barea De Lara, Rosario",
+          "holeNumber": 6,
+          "createdAt": "19/03/26 13:42:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Casanova Solano, Maria Concepcion",
+          "holeNumber": 9,
+          "createdAt": "19/03/26 17:46:49",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

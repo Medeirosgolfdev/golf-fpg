@@ -433,9 +433,28 @@
       "roundId": 80699
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/464746893_75286-pepon-group.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Calvo Yedro, Beltran",
+          "holeNumber": 2,
+          "createdAt": "13/11/26 10:10:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Calvo Borrego, Enrique",
+          "holeNumber": 15,
+          "createdAt": "13/11/26 13:58:45",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

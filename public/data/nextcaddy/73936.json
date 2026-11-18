@@ -133,10 +133,41 @@
       "roundId": 79189
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1316246268_73936-monday-club-21-09-2026.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:06.334Z"
+  "horariosScrapedAt": "2026-11-16T12:40:06.334Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Duncan, Neil",
+          "holeNumber": 4,
+          "createdAt": "21/09/26 11:29:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Robinson, David A.",
+          "holeNumber": 16,
+          "createdAt": "21/09/26 11:30:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Tweed, Richard",
+          "holeNumber": 11,
+          "createdAt": "21/09/26 12:22:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Grieve, Graeme",
+          "holeNumber": 4,
+          "createdAt": "21/09/26 12:44:08",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

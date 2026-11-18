@@ -505,12 +505,90 @@
       "roundId": 73873
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/1217436331_acp_torneo_golf_programa_af2.pdf",
     "/uploads/competiciones/pdf/859594475_reglamento_acp.pdf",
     "/uploads/competiciones/pdf/2818008825_reglas_locales_competicion_2026.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:46.436Z"
+  "horariosScrapedAt": "2026-11-16T12:39:46.436Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Araque Muñoz, Ignacio - Salamanca Alvarez, Alberto",
+          "holeNumber": 7,
+          "createdAt": "15/05/26 14:18:17",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Higuera Mata, Jacobo - Gonzalez Nicolas, Alberto",
+          "holeNumber": 7,
+          "createdAt": "15/05/26 14:21:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Acha Sanchez, Angel - Garcia Rodriguez, Javier",
+          "holeNumber": 4,
+          "createdAt": "15/05/26 14:22:59",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Acha Sanchez, Angel - Garcia Rodriguez, Javier",
+          "holeNumber": 17,
+          "createdAt": "15/05/26 14:22:59",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ruiz Avila, Alvaro - Domingo Corpas, Carlos",
+          "holeNumber": 14,
+          "createdAt": "15/05/26 14:27:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mancilla Castilla, Antonio Luis - Martin Herranz, Ignacio",
+          "holeNumber": 10,
+          "createdAt": "15/05/26 14:28:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mancilla Castilla, Antonio Luis - Martin Herranz, Ignacio",
+          "holeNumber": 16,
+          "createdAt": "15/05/26 14:28:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Erroz, Iñigo - Erroz, Oscar",
+          "holeNumber": 3,
+          "createdAt": "15/05/26 14:47:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Arcas Sanz, Fernando - Briales Delcampo, Jaime",
+          "holeNumber": 5,
+          "createdAt": "15/05/26 14:49:03",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Arcas Sanz, Fernando - Briales Delcampo, Jaime",
+          "holeNumber": 15,
+          "createdAt": "15/05/26 14:49:03",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Acha Sanchez, Angel - Garcia Rodriguez, Javier",
+          "holeNumber": 16,
+          "createdAt": "15/05/26 14:22:59",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

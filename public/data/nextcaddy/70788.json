@@ -384,11 +384,36 @@
       "roundId": 75774
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "/uploads/competiciones/pdf/2391702926_clasificaciones_seniors_baviera.pdf",
     "/uploads/circular/2026/539256dd2240e917cb5b247e369c5c30.pdf",
     "/uploads/competiciones/pdf/3589346291_reglas_locales_baviera.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T15:00:58.833Z"
+  "horariosScrapedAt": "2026-06-24T15:00:58.833Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Hirschfeld Fabregas, Esperanza",
+          "holeNumber": 8,
+          "createdAt": "15/05/26 19:36:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Iturbe Escolano, Ignacio",
+          "holeNumber": 1,
+          "createdAt": "15/05/26 19:36:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Robles Barrionuevo, Maria Ines",
+          "holeNumber": 15,
+          "createdAt": "15/05/26 19:37:41",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

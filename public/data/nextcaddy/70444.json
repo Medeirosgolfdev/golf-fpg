@@ -110,10 +110,35 @@
       "roundId": 75388
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/4229125503_70444-c-d-tamisuel-golf.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:51.871Z"
+  "horariosScrapedAt": "2026-11-16T12:39:51.871Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Hernandez Leon, Manuel Carlos",
+          "holeNumber": 2,
+          "createdAt": "02/05/26 15:12:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Valiente Galan, Jose",
+          "holeNumber": 10,
+          "createdAt": "03/05/26 14:26:05",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Valiente Galan, Jose",
+          "holeNumber": 15,
+          "createdAt": "03/05/26 14:26:05",
+          "roundNumber": 2
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

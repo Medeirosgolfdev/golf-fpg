@@ -433,9 +433,28 @@
       "roundId": 77675
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2715896168_72501-xxv-huevos-fritos-vi-memorial-tomas-fernandez-escribano.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Morenes Giles, Antonio",
+          "holeNumber": 13,
+          "createdAt": "23/07/26 14:37:02",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Suanzes Fernandez De Cañete, Jose Maria",
+          "holeNumber": 14,
+          "createdAt": "23/07/26 14:40:35",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

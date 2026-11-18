@@ -273,9 +273,34 @@
       "roundId": 80176
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/117514141_74812-torneo-estebbuna-24-10-2026-stableford-gp2.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Chacon Del Puerto, Ivan",
+          "holeNumber": 10,
+          "createdAt": "24/10/26 12:27:58",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Van Leeuwen Boomkamp Caballero, Silvia",
+          "holeNumber": 15,
+          "createdAt": "24/10/26 13:46:32",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Quiñones, Diego Jose",
+          "holeNumber": 18,
+          "createdAt": "24/10/26 14:08:37",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

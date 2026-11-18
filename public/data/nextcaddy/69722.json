@@ -282,9 +282,28 @@
       "roundId": 74521
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "/uploads/competiciones/cartel/82795236_69722-liga-abonados-viernes-10-04-26.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T15:00:49.516Z"
+  "horariosScrapedAt": "2026-06-24T15:00:49.516Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Perez Caballero, Jose",
+          "holeNumber": 1,
+          "createdAt": "10/04/26 15:03:08",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perdigonez Diaz, Romulo Edmundo",
+          "holeNumber": 16,
+          "createdAt": "10/04/26 18:36:09",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

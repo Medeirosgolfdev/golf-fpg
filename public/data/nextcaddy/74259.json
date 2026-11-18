@@ -113,10 +113,29 @@
       "roundId": 79554
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2518836194_74259-liga-femenina.pdf"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:08.059Z"
+  "horariosScrapedAt": "2026-11-16T12:40:08.059Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Diaz Gallego, Nuria",
+          "holeNumber": 5,
+          "createdAt": "02/10/26 16:15:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Prieto Solano, Marta",
+          "holeNumber": 5,
+          "createdAt": "02/10/26 16:17:15",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

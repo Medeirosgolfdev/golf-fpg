@@ -1713,8 +1713,374 @@
       "roundId": 78177
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cruz Rodriguez, Pedro",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 13:30:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Arribas Gridilla, Pablo",
+          "holeNumber": 4,
+          "createdAt": "14/08/26 09:35:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Arribas Gridilla, Pablo",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 10:24:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Canales Ollero, Ignacio",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 14:34:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Canales Ollero, Rafael",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 10:38:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Canales Ollero, Rafael",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 13:12:08",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diaz De Bustamante  Chavarri, Jaime",
+          "holeNumber": 1,
+          "createdAt": "14/08/26 11:18:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diaz De Bustamante  Chavarri, Jaime",
+          "holeNumber": 10,
+          "createdAt": "14/08/26 11:18:11",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo",
+          "holeNumber": 1,
+          "createdAt": "14/08/26 08:51:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo",
+          "holeNumber": 4,
+          "createdAt": "14/08/26 09:35:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 10:23:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo",
+          "holeNumber": 10,
+          "createdAt": "14/08/26 11:05:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Epalza Ortega, Iñigo",
+          "holeNumber": 14,
+          "createdAt": "14/08/26 12:12:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Esteban Garate, Pablo",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 10:38:25",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Esteban Garate, Pablo",
+          "holeNumber": 14,
+          "createdAt": "14/08/26 12:20:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Esteban Garate, Pablo",
+          "holeNumber": 18,
+          "createdAt": "14/08/26 13:28:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Estevan Pastor, Rafael",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 10:24:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gil Alonso, Carlos",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 11:12:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gonzalez Calvo, Bruno",
+          "holeNumber": 1,
+          "createdAt": "14/08/26 09:12:14",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martin Ariza, Candido",
+          "holeNumber": 1,
+          "createdAt": "14/08/26 09:32:08",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ollero Ruiz-Gollury, Javier",
+          "holeNumber": 1,
+          "createdAt": "14/08/26 10:13:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Molina, Ignacio",
+          "holeNumber": 12,
+          "createdAt": "14/08/26 12:07:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Molina, Ignacio",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 13:23:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Perez Molina, Ignacio",
+          "holeNumber": 18,
+          "createdAt": "14/08/26 13:44:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vallejo Poza, Jose Maria",
+          "holeNumber": 15,
+          "createdAt": "14/08/26 14:03:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando",
+          "holeNumber": 5,
+          "createdAt": "14/08/26 09:44:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando",
+          "holeNumber": 10,
+          "createdAt": "14/08/26 11:06:52",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando",
+          "holeNumber": 14,
+          "createdAt": "14/08/26 12:11:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 13:02:55",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando",
+          "holeNumber": 18,
+          "createdAt": "14/08/26 13:19:13",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Macpherson Mayol, Jose",
+          "holeNumber": 4,
+          "createdAt": "14/08/26 10:46:05",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Neira Lopez, Javier",
+          "holeNumber": 10,
+          "createdAt": "14/08/26 12:57:59",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Neira Lopez, Javier",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 14:17:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Andrada-Vanderwilde Sanz-Briz, Blanca",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 17:29:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Barquin Madariaga, Paz",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 17:16:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Campoy Zuasti, Alejandro",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 18:14:21",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Corchado Enrile, Pedro",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 18:25:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cubillo Perez De Ayala, Alvaro",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 19:14:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diez De Rivera Juste, Miguel",
+          "holeNumber": 14,
+          "createdAt": "14/08/26 18:20:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diez De Rivera Juste, Miguel",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 19:10:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diez De Rivera Juste, Sofia",
+          "holeNumber": 5,
+          "createdAt": "14/08/26 16:00:36",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diez De Rivera Juste, Sofia",
+          "holeNumber": 7,
+          "createdAt": "14/08/26 16:33:27",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diez De Rivera Juste, Sofia",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 16:47:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Diez De Rivera Oriol, Jaime",
+          "holeNumber": 11,
+          "createdAt": "14/08/26 16:37:44",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Juan Valero, Francisco Javier",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 15:48:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Juan Valero, Francisco Javier",
+          "holeNumber": 9,
+          "createdAt": "14/08/26 15:48:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Juan Valero, Francisco Javier",
+          "holeNumber": 10,
+          "createdAt": "14/08/26 16:11:23",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Juan Valero, Francisco Javier",
+          "holeNumber": 18,
+          "createdAt": "14/08/26 18:15:13",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lasso De La Vega Romero, Pelayo",
+          "holeNumber": 11,
+          "createdAt": "14/08/26 16:26:03",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martinez Vuillier, Lucas",
+          "holeNumber": 5,
+          "createdAt": "14/08/26 15:05:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Martinez Vuillier, Lucas",
+          "holeNumber": 14,
+          "createdAt": "14/08/26 17:28:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Morenes Solis, Santiago",
+          "holeNumber": 14,
+          "createdAt": "14/08/26 17:20:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Morenes Solis, Santiago",
+          "holeNumber": 17,
+          "createdAt": "14/08/26 18:07:17",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Romero Castaño, Lidia",
+          "holeNumber": 4,
+          "createdAt": "14/08/26 16:13:52",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ybarra Coello De Portugal, Jose Luis",
+          "holeNumber": 14,
+          "createdAt": "14/08/26 17:19:30",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lacave Martos, Alfonso",
+          "holeNumber": 18,
+          "createdAt": "14/08/26 19:19:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ollero Marin, Ernesto",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 12:09:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Duran De La Calle, Rafael",
+          "holeNumber": 8,
+          "createdAt": "14/08/26 16:56:18",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Lasso De La Vega Romero, Pelayo",
+          "holeNumber": 10,
+          "createdAt": "14/08/26 16:07:31",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

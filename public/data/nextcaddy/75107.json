@@ -142,9 +142,34 @@
       "roundId": 80483
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:11.125Z"
+  "horariosScrapedAt": "2026-11-16T12:40:11.125Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Morales Perez, Gala",
+          "holeNumber": 8,
+          "createdAt": "07/11/26 13:32:42",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez Diaz, Hugo",
+          "holeNumber": 5,
+          "createdAt": "07/11/26 13:41:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez Diaz, Hugo",
+          "holeNumber": 9,
+          "createdAt": "07/11/26 13:41:00",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

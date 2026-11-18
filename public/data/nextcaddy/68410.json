@@ -609,9 +609,111 @@
       "roundId": 73016
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/68410_cartel_340.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Thomas, Jacques Xavier",
+          "holeNumber": 5,
+          "createdAt": "15/02/26 12:41:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bulley, Stephen",
+          "holeNumber": 10,
+          "createdAt": "15/02/26 11:24:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rios Rubio, Adelino",
+          "holeNumber": 15,
+          "createdAt": "15/02/26 13:08:06",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Dalton, Michael",
+          "holeNumber": 16,
+          "createdAt": "15/02/26 12:19:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Murphy, Jason",
+          "holeNumber": 3,
+          "createdAt": "15/02/26 12:46:52",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Murphy, Jason",
+          "holeNumber": 15,
+          "createdAt": "15/02/26 12:46:52",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Murphy, Jason",
+          "holeNumber": 18,
+          "createdAt": "15/02/26 12:46:52",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Tineo Tineo, Francisco",
+          "holeNumber": 9,
+          "createdAt": "15/02/26 11:24:49",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Tineo Tineo, Francisco",
+          "holeNumber": 13,
+          "createdAt": "15/02/26 12:09:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Tineo Tineo, Francisco",
+          "holeNumber": 15,
+          "createdAt": "15/02/26 12:25:46",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 11,
+          "createdAt": "15/02/26 11:38:44",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 14,
+          "createdAt": "15/02/26 12:09:02",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Nordqvist, Per Ola",
+          "holeNumber": 5,
+          "createdAt": "15/02/26 11:02:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew",
+          "holeNumber": 15,
+          "createdAt": "15/02/26 12:05:32",
+          "roundNumber": 1
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Rios Rubio, Adelino",
+          "holeNumber": 17,
+          "createdAt": "15/02/26 13:08:06",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

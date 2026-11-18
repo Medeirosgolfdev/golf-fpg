@@ -127,9 +127,34 @@
       "roundId": 73184
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:42.488Z"
+  "horariosScrapedAt": "2026-11-16T12:39:42.488Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Robertson, Elizabeth Ann",
+          "holeNumber": 3,
+          "createdAt": "19/02/26 09:30:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Robertson, Elizabeth Ann",
+          "holeNumber": 13,
+          "createdAt": "19/02/26 09:30:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Robertson, Elizabeth Ann",
+          "holeNumber": 15,
+          "createdAt": "19/02/26 09:30:53",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

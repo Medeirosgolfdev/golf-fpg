@@ -610,14 +610,28 @@
       "roundId": 79797
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": []
-    }
-  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2930663198_74492-nordicos-miercoles.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lembke, Michael",
+          "holeNumber": 5,
+          "createdAt": "14/10/26 14:23:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lembke, Michael",
+          "holeNumber": 15,
+          "createdAt": "14/10/26 16:52:07",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

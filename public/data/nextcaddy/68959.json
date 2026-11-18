@@ -97,9 +97,34 @@
       "roundId": 73664
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:39:45.083Z"
+  "horariosScrapedAt": "2026-11-16T12:39:45.083Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Bertram, Edgar",
+          "holeNumber": 8,
+          "createdAt": "30/07/26 13:35:18",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mardo Yoma, Nicolas Andrea",
+          "holeNumber": 9,
+          "createdAt": "30/07/26 13:36:18",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rueda Cazorla, Eric",
+          "holeNumber": 8,
+          "createdAt": "30/07/26 13:37:36",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

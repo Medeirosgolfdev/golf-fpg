@@ -190,9 +190,34 @@
       "roundId": 80819
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-11-16T12:40:13.331Z"
+  "horariosScrapedAt": "2026-11-16T12:40:13.331Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Bryan, John",
+          "holeNumber": 1,
+          "createdAt": "18/11/26 11:49:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Boyle, Liz",
+          "holeNumber": 15,
+          "createdAt": "18/11/26 12:05:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Zacher, Katrin",
+          "holeNumber": 17,
+          "createdAt": "18/11/26 12:30:21",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

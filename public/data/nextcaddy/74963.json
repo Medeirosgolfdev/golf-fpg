@@ -327,9 +327,28 @@
       "roundId": 80329
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1221842890_74963-scandic-viernes-norte.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Flodman, Hans",
+          "holeNumber": 1,
+          "createdAt": "30/10/26 12:57:52",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Flodman, Hans",
+          "holeNumber": 12,
+          "createdAt": "30/10/26 15:36:41",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

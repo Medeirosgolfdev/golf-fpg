@@ -433,9 +433,22 @@
       "roundId": 80177
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1795999150_74813-torneo-estebbuna-24-10-2026-stableford-gp3.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Carmona Castro, Helio",
+          "holeNumber": 6,
+          "createdAt": "24/10/26 12:12:24",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

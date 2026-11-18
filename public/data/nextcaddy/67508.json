@@ -284,7 +284,38 @@
       "roundId": 71972
     }
   ],
-  "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T15:00:06.236Z"
+  "horariosScrapedAt": "2026-06-24T15:00:06.236Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Moreno Perez, Manuel",
+          "holeNumber": 11,
+          "createdAt": "23/01/26 13:51:18",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia Vega, Juan Manuel",
+          "holeNumber": 12,
+          "createdAt": "23/01/26 14:11:10",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Mendez Hernandez, Eduardo",
+          "holeNumber": 17,
+          "createdAt": "23/01/26 16:05:19",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rodriguez Gutierrez, Faustino",
+          "holeNumber": 6,
+          "createdAt": "23/01/26 17:23:09",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

@@ -257,9 +257,34 @@
       "roundId": 78414
     }
   ],
-  "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/781709939_73196-vobs-competition.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Jewell, Robert Edward",
+          "holeNumber": 6,
+          "createdAt": "24/08/26 10:24:20",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "James Corston, David",
+          "holeNumber": 6,
+          "createdAt": "24/08/26 10:31:15",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rodgers, Glynn",
+          "holeNumber": 9,
+          "createdAt": "24/08/26 11:07:16",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

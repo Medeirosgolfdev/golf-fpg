@@ -847,33 +847,37 @@
       "roundId": 62789
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Melgarejo Osborne, Juan Luis",
-          "holeNumber": 4,
-          "createdAt": "30/05/24 13:04:19"
-        },
-        {
-          "playerName": "Melgarejo Osborne, Juan Luis",
-          "holeNumber": 5,
-          "createdAt": "30/05/24 13:04:19"
-        },
-        {
-          "playerName": "Suanzes Fernandez De Cañete, Jose Maria",
-          "holeNumber": 5,
-          "createdAt": "30/05/24 13:05:07"
-        }
-      ]
-    }
-  },
   "pdfs": [
     "/uploads/competiciones/pdf/3639589029_valderrey_parejas_senior.pdf",
     "/uploads/competiciones/pdf/59498_cartel_326.pdf",
     "/uploads/competiciones/pdf/292508709_c.16.25_torneo_parejas_senior_2025.pdf",
     "/uploads/competiciones/pdf/2826171017_convocatoria_dobles_senior_2025.pdf"
   ],
-  "horariosScrapedAt": "2026-06-24T14:59:32.779Z"
+  "horariosScrapedAt": "2026-06-24T14:59:32.779Z",
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cotobal Malmierca, Manuel - Martin Sastre, Marco",
+          "holeNumber": 5,
+          "createdAt": "26/03/25 11:10:53",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cotobal Malmierca, Manuel - Martin Sastre, Marco",
+          "holeNumber": 8,
+          "createdAt": "26/03/25 12:09:01",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Paes Martin, Angel - Martin Bravo, Jose",
+          "holeNumber": 1,
+          "createdAt": "26/03/25 16:10:46",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }

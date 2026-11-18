@@ -2084,9 +2084,81 @@
       "roundId": 76451
     }
   ],
-  "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3250018200_71397-xi-gp-intl-damas-dobles-barcelo-montecastillo.pdf"
-  ]
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ruberte Herrero, M Angeles - Garcia-Belenguer Barbeira, M Pilar",
+          "holeNumber": 7,
+          "createdAt": "16/06/26 10:56:22",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ruberte Herrero, M Angeles - Garcia-Belenguer Barbeira, M Pilar",
+          "holeNumber": 12,
+          "createdAt": "16/06/26 12:23:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Xiao, Grace - Zhou, Huahua",
+          "holeNumber": 4,
+          "createdAt": "16/06/26 13:47:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rodriguez Gonzalez, Mª Yolanda - Fernandez Iban, Justina",
+          "holeNumber": 7,
+          "createdAt": "18/06/26 09:12:11",
+          "roundNumber": 3
+        },
+        {
+          "playerName": "Manzaneda Garcia, Maria Jose - Aznar Baixauli, Pilar",
+          "holeNumber": 6,
+          "createdAt": "18/06/26 10:38:07",
+          "roundNumber": 3
+        },
+        {
+          "playerName": "Ruberte Herrero, M Angeles - Garcia-Belenguer Barbeira, M Pilar",
+          "holeNumber": 7,
+          "createdAt": "18/06/26 10:45:30",
+          "roundNumber": 3
+        },
+        {
+          "playerName": "Fandos Dura, Pepa - Soler Lujan, Maria Dolores",
+          "holeNumber": 2,
+          "createdAt": "18/06/26 12:51:04",
+          "roundNumber": 3
+        },
+        {
+          "playerName": "Ruberte Herrero, M Angeles - Garcia-Belenguer Barbeira, M Pilar",
+          "holeNumber": 17,
+          "createdAt": "18/06/26 13:13:36",
+          "roundNumber": 3
+        },
+        {
+          "playerName": "Matos, Cristina - Gomes, Teresa",
+          "holeNumber": 17,
+          "createdAt": "18/06/26 13:36:15",
+          "roundNumber": 3
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Jalon Muguiro, Pilar - Escavias De Carvajal Pereda, Gari",
+          "holeNumber": 9,
+          "createdAt": "18/06/26 13:34:21",
+          "roundNumber": 3
+        }
+      ]
+    }
+  },
+  "destaquesVistoEm": "2026-11-18"
 }
