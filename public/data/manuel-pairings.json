@@ -1,12 +1,12 @@
 {
-  "geradoEm": "2026-11-15T23:41:41.388Z",
+  "geradoEm": "2026-11-19T17:04:31.312Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 166,
-  "totalCompanheirosUnicos": 197,
+  "totalRondas": 168,
+  "totalCompanheirosUnicos": 200,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 143,
@@ -673,20 +673,69 @@
       ]
     },
     "uskids": {
-      "rondasJogadas": 17,
-      "rondasComDraw": 17,
-      "torneiosJogados": 7,
-      "torneiosComDraw": 7,
+      "rondasJogadas": 18,
+      "rondasComDraw": 18,
+      "torneiosJogados": 8,
+      "torneiosComDraw": 8,
       "torneiosSemDrawDetalhe": []
     },
     "intl": {
-      "rondasJogadas": 17,
-      "rondasComDraw": 17,
-      "torneiosJogados": 8,
-      "torneiosComDraw": 8
+      "rondasJogadas": 15,
+      "rondasComDraw": 15,
+      "torneiosJogados": 5,
+      "torneiosComDraw": 5
     }
   },
   "rondas": [
+    {
+      "circuito": "USKids",
+      "torneioId": "usk-23132",
+      "torneioNome": "Spanish Open 2026",
+      "data": "2026-11-20",
+      "ronda": 1,
+      "teeTime": "12:54",
+      "startHole": 1,
+      "campo": "San Roque Golf & Resort, The San Roque Club",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Leon Schneitter",
+          "fed": null,
+          "clube": null,
+          "pais": "CH",
+          "score": null
+        },
+        {
+          "nome": "Maxence DONNAREL",
+          "fed": null,
+          "clube": null,
+          "pais": "FR",
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "USKids",
+      "torneioId": "usk-23132",
+      "torneioNome": "Spanish Open 2026",
+      "data": "2026-11-19",
+      "ronda": 0,
+      "teeTime": null,
+      "startHole": null,
+      "campo": "San Roque Golf & Resort, The San Roque Club",
+      "fonte": "manual (practice round) — Mariana, 19/11/2026",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "William Clarke",
+          "fed": null,
+          "clube": null,
+          "pais": "GB-ENG",
+          "score": null
+        }
+      ],
+      "treino": true
+    },
     {
       "circuito": "FPG",
       "torneioId": "007-11087",
@@ -1535,14 +1584,14 @@
       ]
     },
     {
-      "circuito": "Intl",
-      "torneioId": "usk-22243-pr",
-      "torneioNome": "Venice Open 2026 — Practice Round",
+      "circuito": "USKids",
+      "torneioId": "usk-22243",
+      "torneioNome": "Venice Open 2026",
       "data": "2026-08-12",
       "ronda": 0,
       "teeTime": "08:30",
       "startHole": null,
-      "campo": null,
+      "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
       "fonte": "manual (practice round, sem draw oficial)",
       "manuelScore": null,
       "companheiros": [
@@ -1553,7 +1602,8 @@
           "pais": "CH",
           "score": null
         }
-      ]
+      ],
+      "treino": true
     },
     {
       "circuito": "FPG",
@@ -2524,9 +2574,9 @@
       ]
     },
     {
-      "circuito": "Intl",
-      "torneioId": "usk-21080-pr",
-      "torneioNome": "Marco Simone Invitational 2026 — Practice Round",
+      "circuito": "USKids",
+      "torneioId": "usk-21080",
+      "torneioNome": "Marco Simone Invitational 2026",
       "data": "2026-03-13",
       "ronda": 0,
       "teeTime": null,
@@ -2542,7 +2592,8 @@
           "pais": "CH",
           "score": null
         }
-      ]
+      ],
+      "treino": true
     },
     {
       "circuito": "FPG",
@@ -2729,8 +2780,8 @@
     },
     {
       "circuito": "Intl",
-      "torneioId": "wjgc26-pr",
-      "torneioNome": "Daily Mail World Junior Golf Championship 2026 — Practice Round",
+      "torneioId": "wjgc26",
+      "torneioNome": "Daily Mail World Junior Golf Championship 2026",
       "data": "2026-02-24",
       "ronda": 0,
       "teeTime": null,
@@ -2746,7 +2797,8 @@
           "pais": "ES",
           "score": null
         }
-      ]
+      ],
+      "treino": true
     },
     {
       "circuito": "FPG",

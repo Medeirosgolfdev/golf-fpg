@@ -753,7 +753,19 @@ function main() {
     }
   }
 
-  const rondas = [...fpgPairings, ...uskidsPairings, ...intlPairings].sort((a, b) => {
+  // Volta de treino (override «<id>-pr», ronda 0) fica JUNTO do torneio (Mariana,
+  // 19/11/2026: «deveria ficar tudo junto… as voltas de treino com o torneio»):
+  // ganha o id, o nome, o circuito e o campo do torneio, e aparece como «PR» no
+  // mesmo cartão. Sem pairings do torneio, fica sozinha como estava.
+  const torneioDoTreino = new Map();
+  for (const r of [...fpgPairings, ...uskidsPairings, ...intlPairings]) {
+    if (!/-pr$/.test(r.torneioId) && !torneioDoTreino.has(r.torneioId)) torneioDoTreino.set(r.torneioId, r);
+  }
+  const comTreinoJunto = (r) => {
+    const t = r.ronda === 0 && /-pr$/.test(r.torneioId) ? torneioDoTreino.get(r.torneioId.slice(0, -3)) : null;
+    return t ? { ...r, circuito: t.circuito, torneioId: t.torneioId, torneioNome: t.torneioNome, campo: t.campo || r.campo, treino: true } : r;
+  };
+  const rondas = [...fpgPairings, ...uskidsPairings, ...intlPairings].map(comTreinoJunto).sort((a, b) => {
     const da = a.data || "0000-00-00", db = b.data || "0000-00-00";
     if (da !== db) return db.localeCompare(da);
     return (a.ronda || 0) - (b.ronda || 0);
@@ -866,7 +878,8 @@ function main() {
     // quem nunca jogou; entrada Unknown nos overrides) ficam FORA da cobertura:
     // não são rondas jogadas nem draws.
     intl: (() => {
-      const reais = intlPairings.filter(r => r.ronda >= 0);
+      // Depois de juntar as voltas de treino: as de provas USKids contam lá, não aqui.
+      const reais = rondas.filter(r => r.circuito === "Intl" && r.ronda >= 0);
       return {
         rondasJogadas: reais.length,
         rondasComDraw: reais.length,
@@ -891,7 +904,7 @@ function main() {
   console.log(`[pairings-build] escrito: ${outPath}`);
   console.log(`  FPG: ${fpgPairings.length}/${manuelRondasTotal} rondas (${Math.round(100*fpgPairings.length/manuelRondasTotal)}%), ${fpgTorneiosComDraw.size}/${manuelTorneiosTotal.size} torneios`);
   console.log(`  USKids: ${uskidsTotal}/${uskidsRondasEsperadas} rondas (${Math.round(100*uskidsTotal/uskidsRondasEsperadas)}%), ${cobertura.uskids.torneiosComDraw}/${uskidsTorneiosEsperados.size} torneios`);
-  console.log(`  Intl: ${intlPairings.length} rondas, ${cobertura.intl.torneiosJogados} torneios (Bluegolf+Doral via overrides)`);
+  console.log(`  Intl: ${cobertura.intl.rondasJogadas} rondas, ${cobertura.intl.torneiosJogados} torneios (Bluegolf+Doral via overrides)`);
   console.log(`  Companheiros únicos: ${compSet.size}, fed resolvidos: ${resolvidos}`);
 }
 

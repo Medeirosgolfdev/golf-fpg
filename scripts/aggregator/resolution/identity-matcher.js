@@ -913,7 +913,10 @@ const SOURCE_MANUAL = "manual";
  * Também servem para dar a uma ficha a data e o clube de um registo oficial que
  * não é uma fonte (golfdata.se — ranking da federação sueca; 03/11/2026), com um
  * forceMerge para a ficha: o clube dela passa à frente (é o actual).
- * Cada uma: { key, canonicalName, sex, country, dob?, club?, sources?: { rfeg?: { lic } }, reason }.
+ * Cada uma: { key, canonicalName, sex, country, dob?, club?, hcp?, sources?: { rfeg?: { lic } }, reason }.
+ * `hcp` = { valor, data (AAAA-MM-DD), fonte } — um HCP dito pelo jogador (ou pela família) a
+ * quem não tem HCP publicado (19/11/2026, William Clarke: «o william disse que era HCP 4»);
+ * entra no histórico de HCP com essa data, e um HCP oficial mais recente passa-lhe à frente.
  */
 function fonteManual(overrides) {
   const players = (overrides?.manualPlayers || []).filter((m) => m && m.key && m.canonicalName).map((m) => ({
@@ -923,6 +926,8 @@ function fonteManual(overrides) {
     country: m.country || undefined,
     club: m.club || undefined,
     dob: /^\d{4}-\d{2}-\d{2}$/.test(m.dob || "") ? m.dob : undefined,
+    hcpHistory: typeof m.hcp?.valor === "number" && /^\d{4}-\d{2}-\d{2}$/.test(m.hcp?.data || "")
+      ? [{ date: m.hcp.data, hcpExact: m.hcp.valor, source: "declarado" }] : undefined,
     extra: { manual: true, rfegLic: m.sources?.rfeg?.lic || undefined, ...(m.club ? { primary: true } : {}) },
   }));
   return players.length ? [{ sourceId: SOURCE_MANUAL, sourceLabel: "Ficha manual", players, tournaments: [] }] : [];

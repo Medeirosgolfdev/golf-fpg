@@ -80,3 +80,8 @@ IntersectionObserver que carrega mais ao chegar ao fim — todos os federados
 (~17,9k) ficam alcançáveis. Substituiu o tecto fixo `MAX_SIDEBAR_ITEMS`
 (500 → 2000 a 2026-04-15, porque "Joana Sousa" aparecia depois da 500ª posição).
 Sem react-window, de propósito.
+
+## Draws do Manuel (`?view=draws`) — voltas de treino
+
+- Lista de companheiros = `public/data/manuel-pairings.json`, gerado por `node scripts/pairings-build.js` (draws FPG + USKids + tee sheets GolfGenius + `public/data/manuel-draws-overrides.json`).
+- **Voltas de treino (practice round): registo à mão** (Mariana, 19/11/2026: «o que eu quero é ficar com o registo de quem vai dando voltas»). Uma entrada em `manuel-draws-overrides.json` → `intl`, com `ronda: 0`, `torneioId` `usk-<t>-pr` (USKids) ou `<prova>-pr`, `torneioNome` «… — Practice Round», `data`, `campo`, `fonte` e `companheiros` [{ nome, pais }]. Depois `node scripts/pairings-build.js`. **Ficam junto do torneio** (ela: «deveria ficar tudo junto… as voltas de treino com o torneio»): o `pairings-build` dá à volta `<id>-pr` o id, nome, circuito e campo do torneio `<id>` (marca `treino: true`), e ela aparece como «PR» no mesmo cartão, antes da R1 (vista «Por torneio»); sem pairings do torneio fica sozinha. Não se faz aba no torneio para a volta de treino (ela não quer).

@@ -258,6 +258,7 @@ const SCHEMA_VERSION = 1;
  * @property {string} [country]
  * @property {string} [dob]  YYYY-MM-DD de um registo oficial (ex. golfdata.se).
  * @property {string} [club]  Clube actual — passa à frente do das outras fontes.
+ * @property {{valor:number, data:string, fonte:string}} [hcp]  HCP dito pelo jogador/família (sem HCP publicado).
  * @property {{ rfeg?: { lic: string } }} [sources]  Licença RFEG → hándicap oficial.
  * @property {string} [reason]
  */

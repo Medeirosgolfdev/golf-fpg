@@ -625,3 +625,4 @@ As contas são as do kids2, **no mesmo ficheiro**: `src/pages/kids2/juniorCalc.t
 confrontos, peso dos torneios) não tem imports, e o Node carrega-o directamente (como o `whsCalc.ts`).
 O `data.ts` e o `tournWeight.ts` re-exportam daqui. Nada de `enum`/`namespace` nem imports nesse ficheiro.
 Os resumos e o índice são ficheiros gerados — em conflito de git, regenerar (`node scripts/aggregator/index.js`).
+- **HCP dito pelo jogador** (19/11/2026, ela: «o william disse que era HCP 4… coloca na ficha dele do kids2»): ficha manual em `juniors-overrides.json` → `manualPlayers` com `hcp: { valor, data, fonte }` + `forceMerge` para a conta da fonte. Entra no `hcpHistory` com essa data (`source: "declarado"`), por isso chega ao Scout (`h`/`hh`) e às colunas HCP do Draw/Inscrições; um HCP oficial mais recente passa-lhe à frente. Primeiro caso: William Clarke (USKids 586893), HCP 4 a 19/11/2026.
