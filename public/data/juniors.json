@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-19T17:12:23.975Z",
+  "generatedAt": "2026-11-19T17:18:32.164Z",
   "juniors": [
     {
       "id": "u391389",
@@ -392833,6 +392833,10 @@
           {
             "sourceId": "rockleague",
             "key": "rockleague-12970457162278003841"
+          },
+          {
+            "sourceId": "manual",
+            "key": "declarado-william-clarke"
           }
         ]
       },
@@ -392859,6 +392863,13 @@
         "rockleague-rockleague3_2025",
         "rockleague-rockleague3_2026"
       ],
+      "hcpHistory": [
+        {
+          "date": "2026-11-19",
+          "hcpExact": 4,
+          "source": "declarado"
+        }
+      ],
       "_match": {
         "confidence": "strong",
         "evidence": [
@@ -392868,11 +392879,13 @@
           "rockleague:rockleague-12463351213338944572",
           "rockleague:rockleague-12147036224380495299",
           "rockleague:rockleague-12147035950408558002",
-          "rockleague:rockleague-12970457162278003841"
+          "rockleague:rockleague-12970457162278003841",
+          "manual:declarado-william-clarke"
         ],
         "mergedFromSources": [
           "uskids",
-          "rockleague"
+          "rockleague",
+          "manual"
         ]
       }
     },
