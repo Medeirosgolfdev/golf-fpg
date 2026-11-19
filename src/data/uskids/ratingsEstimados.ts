@@ -30,6 +30,35 @@ export const VALE_WN_YELLOW: RatingBase = { tee: "Yellow", sex: "M", cr: 73.5, s
 export const VALE_LAKE_YELLOW: RatingBase = { tee: "Yellow", sex: "M", cr: 70.3, slope: 123, yards: 5986, fonte: "Wales Golf 2025" };
 export const VALE_LAKE_RED_F: RatingBase = { tee: "Red", sex: "F", cr: 74.9, slope: 134, yards: 5745, fonte: "Wales Golf 2025" };
 
+/* ── PGA National (Palm Beach Gardens, EUA) — Holiday Classic (2025 t=20878; 2026 t=23670) ──
+ * Ratings: NCRDB da USGA (Fazio 34555, Palmer 14406, Match 35501), os mesmos tees
+ * que estão em extraCourses.ts. Jardas dos escalões: «2025 Holiday Classic
+ * Yardages» (iguais de 2021 a 2025). O Match é par 67 no clube e par 72 na USKids
+ * (cinco par 4 compridos passam a par 5) — o CR vai pelas jardas, não pelo par. */
+export const PGA_FAZIO_T3_M: RatingBase = { tee: "Tee 3", sex: "M", cr: 67.2, slope: 117, yards: 5574, fonte: "USGA NCRDB" };
+export const PGA_FAZIO_T4_M: RatingBase = { tee: "Tee 4", sex: "M", cr: 65.2, slope: 112, yards: 5117, fonte: "USGA NCRDB" };
+export const PGA_PALMER_T2_M: RatingBase = { tee: "Tee 2", sex: "M", cr: 70.3, slope: 133, yards: 6127, fonte: "USGA NCRDB" };
+export const PGA_PALMER_T3_F: RatingBase = { tee: "Tee 3", sex: "F", cr: 72.9, slope: 135, yards: 5518, fonte: "USGA NCRDB" };
+export const PGA_PALMER_T34_F: RatingBase = { tee: "Tee 3/4", sex: "F", cr: 71.0, slope: 129, yards: 5177, fonte: "USGA NCRDB" };
+export const PGA_PALMER_T4_F: RatingBase = { tee: "Tee 4", sex: "F", cr: 69.0, slope: 119, yards: 4766, fonte: "USGA NCRDB" };
+export const PGA_MATCH_SAILBOAT_M: RatingBase = { tee: "Sailboat", sex: "M", cr: 64.5, slope: 118, yards: 4889, fonte: "USGA NCRDB" };
+export const PGA_MATCH_HELM_M: RatingBase = { tee: "Helm", sex: "M", cr: 60.9, slope: 109, yards: 3980, fonte: "USGA NCRDB" };
+export const PGA_MATCH_SAILBOAT_F: RatingBase = { tee: "Sailboat", sex: "F", cr: 69.1, slope: 125, yards: 4889, fonte: "USGA NCRDB" };
+export const PGA_MATCH_HELM_F: RatingBase = { tee: "Helm", sex: "F", cr: 64.0, slope: 109, yards: 3980, fonte: "USGA NCRDB" };
+
+export const HOLIDAY25 = {
+  fazioBoys12: estimar(PGA_FAZIO_T3_M, 5633),
+  fazioBoys11: estimar(PGA_FAZIO_T4_M, 5215),
+  palmerBoys1314: estimar(PGA_PALMER_T2_M, 6111),
+  palmerGirls1314: estimar(PGA_PALMER_T3_F, 5592),
+  palmerGirls12: estimar(PGA_PALMER_T34_F, 5215),
+  palmerGirls11: estimar(PGA_PALMER_T4_F, 4817),
+  matchBoys10: estimar(PGA_MATCH_SAILBOAT_M, 4701),
+  matchGirls11: estimar(PGA_MATCH_SAILBOAT_F, 4701),
+  matchBoys9: estimar(PGA_MATCH_HELM_M, 4148),
+  matchGirls10: estimar(PGA_MATCH_HELM_F, 4148),
+};
+
 export const BKC26 = {
   wnBoys1518: estimar(VALE_WN_YELLOW, 6243),
   wnBoys1314: estimar(VALE_WN_YELLOW, 5692),

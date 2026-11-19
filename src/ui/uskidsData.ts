@@ -9,7 +9,7 @@
  */
 
 import { compareEscalaoRaw } from "../data/model/escalao";
-import { BKC26, type RatingEstimado } from "../data/uskids/ratingsEstimados";
+import { BKC26, HOLIDAY25, type RatingEstimado } from "../data/uskids/ratingsEstimados";
 import type { TeeInfo } from "./uskidsTypes";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -160,7 +160,21 @@ const bkc26Tees: Record<number, TeeInfo> = {
   2119: est(VALE_LAKE, "Girls 11-12", BKC26.lakeGirls1112),
 };
 
+// Holiday Classic 2025 – PGA National (t=20878) — CR/Slope ESTIMADOS a partir dos
+// tees da USGA (ratingsEstimados.ts, HOLIDAY25). Chaves = age_group dos results
+// deste torneio (só traz Boys 9–12). O de 2026 (t=23670) entra quando houver results.
+const PGA_FAZIO = "PGA National Golf Club - Fazio";
+const PGA_MATCH = "PGA National Golf Club - Match";
+const holiday25Tees: Record<number, TeeInfo> = {
+  7: est(PGA_FAZIO, "Boys 12 (Tee 6)", HOLIDAY25.fazioBoys12),
+  6: est(PGA_FAZIO, "Boys 11 (Tee 5)", HOLIDAY25.fazioBoys11),
+  5: est(PGA_MATCH, "Boys 10 (Tee 4)", HOLIDAY25.matchBoys10),
+  4: est(PGA_MATCH, "Boys 9 (Tee 3)", HOLIDAY25.matchBoys9),
+};
+
 export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
+  // ── Holiday Classic 2025 – PGA National (ESTIMADOS) ──
+  20878: holiday25Tees,
   // ── British Kids Championship 2026 – The Vale (ESTIMADOS) ──
   22885: bkc26Tees,
   // ── Paris Invitational 2026 & 2025 – Golf Paris Val d'Europe (RED/BLUE) ──

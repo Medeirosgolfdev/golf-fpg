@@ -8,7 +8,7 @@
  */
 
 import type { Course, Tee, Hole } from "./types";
-import { BKC26, VALE_LAKE_RED_F, VALE_LAKE_YELLOW, VALE_WN_YELLOW, type RatingEstimado } from "./uskids/ratingsEstimados";
+import { BKC26, HOLIDAY25, VALE_LAKE_RED_F, VALE_LAKE_YELLOW, VALE_WN_YELLOW, type RatingEstimado } from "./uskids/ratingsEstimados";
 import { jardasParaMetrosPorBuraco, jardasParaMetros } from "../utils/jardas";
 import { soma } from "../utils/mathUtils";
 
@@ -2395,8 +2395,12 @@ const theAltoClub: Course = {
    mesmos buracos (2,4,6,11,13,18) e o 3 tem 255 jd como o tee Helm; a USKids
    faz par 5 de cinco par 4 compridos (1,9,10,15,17). O SI é o do campo.
    CR/Slope: a USGA (NCRDB) só tem os tees do resort (Fazio: Haig, 1…5; Match:
-   Anchor, Sailboat, Helm, Pelican; Palmer); os tees USKids misturam marcas
-   buraco a buraco e não têm rating — fica null, não se estima.
+   Anchor, Sailboat, Helm, Pelican; Palmer); a USKids não publica rating. Desde
+   19/11/2026 os tees USKids de 18 buracos levam CR/Slope ESTIMADOS a partir do
+   tee do clube de comprimento mais parecido (src/data/uskids/ratingsEstimados.ts,
+   HOLIDAY25), marcados «estimado»; os de 9 buracos ficam sem rating. No Match o
+   tee USKids é o mesmo para rapazes e raparigas — fica em dois tees (M e F),
+   porque o rating é por sexo.
    Campos por escalão iguais de 2021 a 2025 (PDFs de cada ano e
    uskids-results); excepção: Girls 11 no Palmer até 2024 e no Match em 2025.
    Nomes dos campos iguais aos dos resultados USKids.
@@ -2439,11 +2443,14 @@ const pgaFazioF9T1 = yd2m([241,175,181,232,65,162,76,188,199]);  // 1519 yd — 
 const pgaFazioF9RS = yd2m([212,121,142,201,63,148,66,137,141]);  // 1231 yd — Girls 7&U / Boys 6&U (1–9)
 const pgaFazioB9T2 = yd2m([217,233,297,101,196,241,83,311,209]); // 1888 yd — Boys 8 / Girls 9 (10–18)
 
-function pgaTee18(teeId: string, sex: "M" | "F" | "U", teeName: string, teeColor: string | null, par: number[], dist: number[], si?: number[]): Tee {
+function pgaTee18(teeId: string, sex: "M" | "F" | "U", teeName: string, teeColor: string | null, par: number[], dist: number[], si?: number[], r?: RatingEstimado): Tee {
   return {
     teeId, sex, teeName,
     scorecardMeta: { teeColor },
-    ratings: { holes18: { par: 72, courseRating: null, slopeRating: null } },
+    ratings: { holes18: {
+      par: 72, courseRating: r?.cr ?? null, slopeRating: r?.slope ?? null,
+      ...(r ? { estimado: r.nota } : {}),
+    } },
     holes: vHoles(par, dist, si),
     distances: vDist(dist),
   };
@@ -2502,10 +2509,10 @@ const pgaNationalPalmer: Course = {
     country: "EUA",
     links: { fpg: null, scorecards: null, extra: HOLIDAY_CLASSIC_2025_LINKS },
     tees: [
-      pgaTee18("pga-palmer-uk-b1314", "M", "USKids Boys 13-14", null, pgaPalmerPar, pgaPalmerB1314, pgaPalmerSIM), // Tee 7
-      pgaTee18("pga-palmer-uk-g1314", "F", "USKids Girls 13-14", "#111827", pgaPalmerPar, pgaPalmerG1314, pgaPalmerSIF), // Tee 6
-      pgaTee18("pga-palmer-uk-g12", "F", "USKids Girls 12", "#ffffff", pgaPalmerPar, pgaPalmerG12, pgaPalmerSIF), // Tee 5
-      pgaTee18("pga-palmer-uk-g11", "F", "USKids Girls 11 (2021–2024)", "#ef4444", pgaPalmerPar, pgaPalmerG11, pgaPalmerSIF), // Tee 4
+      pgaTee18("pga-palmer-uk-b1314", "M", "USKids Boys 13-14", null, pgaPalmerPar, pgaPalmerB1314, pgaPalmerSIM, HOLIDAY25.palmerBoys1314), // Tee 7
+      pgaTee18("pga-palmer-uk-g1314", "F", "USKids Girls 13-14", "#111827", pgaPalmerPar, pgaPalmerG1314, pgaPalmerSIF, HOLIDAY25.palmerGirls1314), // Tee 6
+      pgaTee18("pga-palmer-uk-g12", "F", "USKids Girls 12", "#ffffff", pgaPalmerPar, pgaPalmerG12, pgaPalmerSIF, HOLIDAY25.palmerGirls12), // Tee 5
+      pgaTee18("pga-palmer-uk-g11", "F", "USKids Girls 11 (2021–2024)", "#ef4444", pgaPalmerPar, pgaPalmerG11, pgaPalmerSIF, HOLIDAY25.palmerGirls11), // Tee 4
       ...pgaPalmerUsgaTees,
     ],
   },
@@ -2519,8 +2526,10 @@ const pgaNationalMatch: Course = {
     country: "EUA",
     links: { fpg: null, scorecards: null, extra: HOLIDAY_CLASSIC_2025_LINKS },
     tees: [
-      pgaTee18("pga-match-uk-tee4", "U", "USKids Girls 11 / Boys 10", "#ef4444", pgaMatchPar, pgaMatchTee4, pgaMatchSIM), // Tee 4
-      pgaTee18("pga-match-uk-tee3", "U", "USKids Girls 10 / Boys 9", "#f97316", pgaMatchPar, pgaMatchTee3, pgaMatchSIM), // Tee 3
+      pgaTee18("pga-match-uk-tee4", "M", "USKids Boys 10", "#ef4444", pgaMatchPar, pgaMatchTee4, pgaMatchSIM, HOLIDAY25.matchBoys10), // Tee 4
+      pgaTee18("pga-match-uk-tee4-f", "F", "USKids Girls 11", "#ef4444", pgaMatchPar, pgaMatchTee4, pgaMatchSIM, HOLIDAY25.matchGirls11), // Tee 4
+      pgaTee18("pga-match-uk-tee3", "M", "USKids Boys 9", "#f97316", pgaMatchPar, pgaMatchTee3, pgaMatchSIM, HOLIDAY25.matchBoys9), // Tee 3
+      pgaTee18("pga-match-uk-tee3-f", "F", "USKids Girls 10", "#f97316", pgaMatchPar, pgaMatchTee3, pgaMatchSIM, HOLIDAY25.matchGirls10), // Tee 3
       ...pgaMatchUsgaTees,
     ],
   },
@@ -2534,8 +2543,8 @@ const pgaNationalFazio: Course = {
     country: "EUA",
     links: { fpg: null, scorecards: null, extra: HOLIDAY_CLASSIC_2025_LINKS },
     tees: [
-      pgaTee18("pga-fazio-uk-b12", "M", "USKids Boys 12", "#111827", pgaFazioPar, pgaFazioB12, pgaFazioSIM), // Tee 6
-      pgaTee18("pga-fazio-uk-b11", "M", "USKids Boys 11", "#ffffff", pgaFazioPar, pgaFazioB11, pgaFazioSIM), // Tee 5
+      pgaTee18("pga-fazio-uk-b12", "M", "USKids Boys 12", "#111827", pgaFazioPar, pgaFazioB12, pgaFazioSIM, HOLIDAY25.fazioBoys12), // Tee 6
+      pgaTee18("pga-fazio-uk-b11", "M", "USKids Boys 11", "#ffffff", pgaFazioPar, pgaFazioB11, pgaFazioSIM, HOLIDAY25.fazioBoys11), // Tee 5
       {
         teeId: "pga-fazio-uk-tee2",
         sex: "U",
