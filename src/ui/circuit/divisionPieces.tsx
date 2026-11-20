@@ -28,7 +28,7 @@ export function roundDrawNode(rd: CircuitRoundDraw): React.ReactNode {
   if (!rd.draw) return null;
   return (
     <DrawTab draw={rd.draw} roundNum={rd.round} tournamentDate={rd.tournamentDate}
-      results={rd.results} hideCols={rd.hideCols} clubLabel={rd.clubLabel} playersDB={rd.playersDB} />
+      results={rd.results} prevResults={rd.prevResults} hideCols={rd.hideCols} clubLabel={rd.clubLabel} playersDB={rd.playersDB} />
   );
 }
 

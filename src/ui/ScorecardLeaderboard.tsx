@@ -123,6 +123,8 @@ interface ScorecardLeaderboardProps {
   sortable?: boolean;
   /** Esconder colunas ± e Tot (built-in). Útil para fontes sem par real (PDFs LGPIDF). */
   hideTotals?: boolean;
+  /** Rótulo da coluna «Tot» (o Draw com voltas anteriores põe «R2»…). */
+  grossLabel?: string;
 }
 
 type SCSortKey = "pos" | "name" | "gross" | "toPar" | "f9" | "b9" | `hole:${number}`;
@@ -147,6 +149,7 @@ export function ScorecardLeaderboard({
   onSortPos, onSortName, onSortToPar, onSortGross, onSortHole, onSortF9, onSortB9, activeSortKey, activeSortDir,
   sortable = false,
   hideTotals = false,
+  grossLabel,
 }: ScorecardLeaderboardProps) {
   const startHole = startHoleProp ?? 1;
   // Sem par, o nº de buracos vem de `holes` ou dos cartões — `par.length`
@@ -352,7 +355,7 @@ export function ScorecardLeaderboard({
                     onClick={handleSortGross}
                     title={handleSortGross ? "Clique para ordenar pelo total" : undefined}
                   >
-                    Tot<SortArrow col="gross" />
+                    {grossLabel ?? "Tot"}<SortArrow col="gross" />
                   </th>
                 </>
               )}

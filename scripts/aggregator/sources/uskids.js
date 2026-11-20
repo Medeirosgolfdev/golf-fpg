@@ -437,6 +437,17 @@ async function load(opts) {
         };
         t.flights.set(flightInfo.flightKey, flight);
       }
+      // Par do PRÓPRIO ficheiro de resultados (cada volta traz o par e as jardas do escalão)
+      // quando os «completos» e o histórico ainda não o têm — os torneios a decorrer
+      // (Spanish Open 2026: sem par, o ±par do ano do Manuel ficava vazio — 20/11/2026).
+      if (!(Array.isArray(flight.par) && flight.par.some((x) => x > 0))) {
+        const rp = (esc.rondas || []).find((r) => Array.isArray(r.par) && r.par.length && r.par.every((x) => typeof x === "number" && x > 0));
+        if (rp) {
+          flight.par = rp.par;
+          if (!(Array.isArray(flight.yards) && flight.yards.some((x) => x > 0)) && Array.isArray(rp.yards) && rp.yards.length === rp.par.length) flight.yards = rp.yards;
+          if (!flight.totalPar) flight.totalPar = rp.par.reduce((a, b) => a + b, 0);
+        }
+      }
       // Colapsar per-player rounds across all rondas
       const perPlayer = new Map();
       for (const ronda of esc.rondas || []) {

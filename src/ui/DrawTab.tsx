@@ -12,7 +12,7 @@
  */
 
 import { birthCells, pillDoAno, birthSortValue, compareBirth } from "./BirthCells";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { isManuel } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
@@ -22,7 +22,8 @@ import BirthPill from "./BirthPill";
 import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
 import { useKidsDob } from "../hooks/useKidsDob";
 import { kidsAcrescento, kidsDobLida } from "../data/kidsDob";
-import { norm, fmtHcp, ageAtDate, escalaoAtDate, fmtDatePt } from "../utils/format";
+import { norm, fmtHcp, ageAtDate, escalaoAtDate, fmtDatePt, fmtToPar } from "../utils/format";
+import { toneClass } from "../utils/scoreDisplay";
 import { teeNameFor } from "../utils/teeRegulation";
 import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -63,6 +64,10 @@ interface Props {
    *  o fed quer só tenha nome. Quando ausente (ronda ainda não jogada), as
    *  colunas mostram "–". */
   results?: Map<string, { gross: number; toPar: number | null }>;
+  /** Resultados das voltas ANTERIORES à do draw (20/11/2026, Mariana: «o de amanhã devia
+   *  mostrar o do dia anterior e depois de haver o do dia»): uma coluna por volta (R1, R2…),
+   *  antes do ±/Tot da própria volta. Mesmo formato e chaves de `results`. */
+  prevResults?: { round: number; results: Map<string, { gross: number; toPar: number | null }> }[];
   /** Esconde colunas que não se aplicam à fonte (ex: GolfGenius/internacional
    *  não expõe FED/HCP/Nasc.). Default: mostra todas. */
   hideCols?: { esc?: boolean; fed?: boolean; clube?: boolean; hcp?: boolean; tee?: boolean; nasc?: boolean };
@@ -88,7 +93,7 @@ function hora24(t: string | null | undefined): string {
   return m2 ? `0${m2[1]}:${m2[2]}` : s;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "idade" | "hora" | "buraco" | "toPar" | "gross" | "om";
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "idade" | "hora" | "buraco" | "toPar" | "gross" | "om" | `prev${number}`;
 
 /** Registo de resultado de uma ronda usado para cruzar com o draw. */
 export type DrawResult = { gross: number; toPar: number | null };
@@ -164,7 +169,7 @@ export function buildDrawResults(
 export default function DrawTab({
   draw, roundNum, playersDB,
   tournamentEscalao, tournamentSex, tournamentDate,
-  admissions, fpgUrl, results, hideCols, clubLabel, omLookup,
+  admissions, fpgUrl, results, prevResults, hideCols, clubLabel, omLookup,
 }: Props) {
   const hc = hideCols || {};
   const showOm = !!(omLookup && omLookup.size);
@@ -271,6 +276,8 @@ export default function DrawTab({
       escHist: string | null;
       gross: number;
       toPar: number | null;
+      /** Voltas anteriores (pela ordem de `prevResults`); null = sem cartão. */
+      prev: ({ gross: number; toPar: number | null } | null)[];
       isPortuguese: boolean;
       country?: string;
       /** Jogou outro escalão (flight misto) — marcado e fora do total. */
@@ -465,12 +472,13 @@ export default function DrawTab({
         // Cruzar com os resultados da ronda (quando disponíveis): tentar por
         // fed primeiro (autoritativo), depois por nome normalizado. Sem match
         // → gross 0 / toPar null (a tabela mostra "–").
-        const res = results
-          ? (fed ? results.get(fed) : undefined)
-            ?? results.get(norm(p.nome))
-            ?? results.get(norm(nomeFormatted))
+        const achar = (m?: Map<string, DrawResult>) => m
+          ? (fed ? m.get(fed) : undefined) ?? m.get(norm(p.nome)) ?? m.get(norm(nomeFormatted))
           : undefined;
+        const res = achar(results);
+        const prev = (prevResults ?? []).map((pr) => { const r = achar(pr.results); return r && !isNoCardGross(r.gross) && r.gross > 0 ? r : null; });
         out.push({
+          prev,
           pos: idx,
           groupIdx,
           teeTime: hora24(g.teeTime),
@@ -513,13 +521,21 @@ export default function DrawTab({
       }
     }
     return out;
-  }, [draw, nameToFeds, admFedByName, playersDB, fedBirthdates, fedHcp, effDate, tournamentEscalao, admHcpByFed, admHcpByName, results, kidsDob]);
+  }, [draw, nameToFeds, admFedByName, playersDB, fedBirthdates, fedHcp, effDate, tournamentEscalao, admHcpByFed, admHcpByName, results, prevResults, kidsDob]);
+  // Colunas das voltas anteriores que têm pelo menos um resultado.
+  const prevVisiveis = useMemo(() => (prevResults ?? []).map((pr, i) => ({ i, round: pr.round }))
+    .filter(({ i }) => flat.some((p) => p.prev[i])), [prevResults, flat]);
 
   // Ordenar por sortKey
   const sorted = useMemo(() => {
     const mult = sortDir === "asc" ? 1 : -1;
     return [...flat].sort((a, b) => {
       let v = 0;
+      // Colunas das voltas anteriores (`prev0`, `prev1`…): pelas pancadas.
+      if (String(sortKey).startsWith("prev")) {
+        const i = Number(String(sortKey).slice(4));
+        return compareNullsLast(a.prev[i]?.gross ?? null, b.prev[i]?.gross ?? null, mult);
+      }
       switch (sortKey) {
         case "pos":    v = a.pos - b.pos; break;
         case "nome":   v = a.nome.localeCompare(b.nome, "pt"); break;
@@ -673,6 +689,14 @@ export default function DrawTab({
               </td>
             )}
             {!hc.tee && <td className={"lb-tee" + bt}><TeeDot teeName={p.tee || teeName} /></td>}
+            {/* As voltas anteriores com as MESMAS colunas «± / Tot» da volta do dia (lb-topar/lb-gross). */}
+            {prevVisiveis.map(({ i, round }) => {
+              const r = p.prev[i];
+              return <Fragment key={`prev${round}`}>
+                <td className={`lb-topar ${r ? toneClass(r.toPar) : ""}${bt}`}>{r ? fmtToPar(r.toPar) : "–"}</td>
+                <td className={"lb-gross" + bt}>{r ? r.gross : "–"}</td>
+              </Fragment>;
+            })}
           </>
         ),
         postScorecardCells: (
@@ -689,7 +713,7 @@ export default function DrawTab({
         ),
       };
     });
-  }, [visibleSorted, playersDB, teeName, effDate, sortKey, hc.esc, hc.fed, hc.clube, hideHcp, hc.tee, hc.nasc, showHole]);
+  }, [visibleSorted, playersDB, teeName, effDate, sortKey, hc.esc, hc.fed, hc.clube, hideHcp, hc.tee, hc.nasc, showHole, prevVisiveis]);
 
   if (draw.error) {
     return <div className="detail-toolbar u-p-16px">
@@ -725,6 +749,12 @@ export default function DrawTab({
       {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">{clubLabel ? clubLabel.charAt(0) + clubLabel.slice(1).toLowerCase() : "Clube"}</SortableHdr>}
       {!hideHcp && <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>}
       {!hc.tee && <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">TEE</SortableHdr>}
+      {prevVisiveis.map(({ i, round }) => (
+        <Fragment key={`prev${round}`}>
+          <th className="lb-topar" title={`±par na volta ${round}`}>±</th>
+          <SortableHdr k={`prev${i}`} sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-gross" title={`Pancadas na volta ${round}`}>R{round}</SortableHdr>
+        </Fragment>
+      ))}
     </>
   );
   const postScorecardHeaderCells = (
@@ -784,6 +814,8 @@ export default function DrawTab({
       showScorecard={false}
       // Ronda por jogar: ± e Tot estariam todos vazios — escondem-se (como nas Inscrições).
       hideTotals={!rows.some(r => r.toPar != null || (r.gross ?? 0) > 0)}
+      // Com voltas anteriores, o «Tot» da volta do dia diz qual é (R2…), como as outras.
+      grossLabel={prevVisiveis.length ? `R${roundNum}` : undefined}
       filterBar={filterBar}
       // Sorting da pos e nome: delegamos a useSort externo
       onSortPos={() => toggleSort("pos")}

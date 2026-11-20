@@ -93,6 +93,9 @@ export interface RoundDrawData {
   clubLabel?: string;
   /** Resultado de cada jogador nessa volta, por federado/nome normalizado. */
   results?: Map<string, { gross: number; toPar: number | null }>;
+  /** Resultados das voltas ANTERIORES (R1 no Draw da R2…) — o TournamentDetail
+   *  tira-os do próprio torneio quando a página não os dá. */
+  prevResults?: { round: number; results: Map<string, { gross: number; toPar: number | null }> }[];
   /** O que se sabe dos jogadores do draw (nascimento, sexo, clube…) quando a
    *  fonte o dá à parte dos grupos (Espanha: a lista de inscritos). */
   playersDB?: PlayersDB;

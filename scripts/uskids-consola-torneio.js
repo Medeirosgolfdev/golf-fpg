@@ -14,6 +14,13 @@
 // `uskidsTorneio:<t>`) e entram no ficheiro sem pedido nenhum. Só se pedem o GetMeta e as voltas a
 // meio ou ainda não vistas. Sem nada de novo, não grava ficheiro. Para esquecer: uskidsEsquecer().
 //
+// DRAW (20/11/2026, ela: «não dá para correr só um pequeno para os resultados e draw?»): o grupo
+// e a hora de cada jogador vêm nas mesmas listas. As voltas já pedidas para os resultados dão o
+// draw sem pedido a mais; a volta seguinte (até amanhã) custa um pedido por escalão (t=0, a ordem
+// do draw). Só entra quando a USKids já pôs os grupos (group_number); o draw publicado fica
+// guardado neste browser. Vai na secção `draws` do ficheiro (fetch-uskids-draws.js --replay) e o
+// grupo do Manuel aparece no fim.
+//
 // Como usar: abrir a página do torneio, por exemplo
 //   https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=23132
 // → F12 → Consola → colar → Enter. ~2 pedidos por escalão e volta (poucos minutos).
@@ -90,6 +97,8 @@
   window.uskidsEsquecer = () => { try { localStorage.removeItem(CHAVE); } catch { /* nada */ } memoria = {}; console.log(`Esqueci as voltas guardadas do t=${t}.`); };
 
   const respostas = {}, linhas = [];
+  const drawRespostas = {}, drawAlvos = [], drawLinhas = [];
+  let drawTorneio = null;
   let nome = `t=${t}`, novas = 0, deMemoria = 0;
   try {
     const meta = await pedir("GetMeta", `t=${t}`);
@@ -102,6 +111,8 @@
     const mIni = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(meta.tournament?.start_date || "");
     const hoje = new Date().toISOString().slice(0, 10);
     const diaDaVolta = (r) => mIni ? new Date(Date.UTC(+mIni[3], +mIni[1] - 1, +mIni[2] + r - 1)).toISOString().slice(0, 10) : null;
+    const amanha = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+    const eManuel = (j) => /manuel/i.test(j.first || "") && /medeiros/i.test(j.last || "");
     console.log(`🏆 ${nome} (t=${t}) · ${rondas} volta(s) · ${Object.keys(meta.flights).length} escalões`);
     const porAG = {};
     for (const [fid, f] of Object.entries(meta.flights)) if (!porAG[f.age_group]) porAG[f.age_group] = { fid, f };
@@ -109,6 +120,7 @@
       const esc = String(meta.age_groups?.[ag]?.name || `escalão ${ag}`);
       if (!(f.registered > 0)) continue;
       let guardadas = 0, falta = "";
+      const paginasPorVolta = {};
       for (let r = 1; r <= rondas; r++) {
         const guardada = memoria[`${fid}:${r}`];
         if (!guardada && r > 1 && diaDaVolta(r) && diaDaVolta(r) > hoje) break;
@@ -126,13 +138,50 @@
           if (memoria[`meio:${fid}:${r}`] !== assinatura) { novas++; memoria[`meio:${fid}:${r}`] = assinatura; lembrar(); }
         }
         for (const [p, fp] of Object.entries(paginas)) respostas[`GetPlayerTeeTimes:${fid}:${r}:${p}`] = { flight_players: fp };
+        paginasPorVolta[r] = paginas;
         guardadas = r;
         if (e.estado === "a meio") { falta = `R${r} a meio (${e.acabaram}/${e.n} com resultado)`; break; }
       }
-      linhas.push({ escalao: esc, jogadores: f.registered, voltas_guardadas: guardadas ? `R1–R${guardadas}`.replace("R1–R1", "R1") : "—", estado: falta || (guardadas === rondas ? "acabou o torneio" : guardadas ? `R${guardadas} acabada` : "sem resultados publicados") });
+      // ── Draw: as voltas com grupos publicados (as dos resultados sem pedido; a seguinte com um).
+      const voltasDraw = [];
+      let temManuel = false;
+      for (let r = 1; r <= rondas && !recusa; r++) {
+        let pags = paginasPorVolta[r] || memoria[`draw:${fid}:${r}`] || null;
+        let novo = false;
+        if (!pags) {
+          if (r > 1 && diaDaVolta(r) && diaDaVolta(r) > amanha) break;
+          const l = await listaNaVolta(fid, r, f.registered, 0);
+          if (!l) break;
+          pags = { 1: l };
+          novo = true;
+        }
+        const js = Object.values(Object.assign({}, ...Object.values(pags))).filter(j => j.status === 1);
+        if (!js.some(j => j.rounds?.[String(r)]?.group_number)) break; // ainda sem draw (todos às 08:00, grupo 0)
+        if (novo) { memoria[`draw:${fid}:${r}`] = pags; lembrar(); novas++; }
+        for (const [p, fp] of Object.entries(pags)) {
+          const aparado = {};
+          for (const [pid, j] of Object.entries(fp)) {
+            const { strokes, ...rd } = j.rounds?.[String(r)] || {};
+            aparado[pid] = { first: j.first, last: j.last, country: j.country, place: j.place, status: j.status, rounds: { [r]: rd } };
+          }
+          drawRespostas[`GetPlayerTeeTimes:${fid}:${r}:${p}`] = { flight_players: aparado };
+        }
+        voltasDraw.push(r);
+        const m = js.find(eManuel);
+        if (m) {
+          temManuel = true;
+          const rd = m.rounds[String(r)];
+          const com = js.filter(j => j !== m && j.rounds?.[String(r)]?.group_number === rd.group_number && j.rounds?.[String(r)]?.start_time === rd.start_time);
+          drawLinhas.push({ volta: `R${r}`, hora: rd.start_time || "", buraco: rd.start_hole || "", com: com.map(j => `${(j.first || "").trim()} ${(j.last || "").trim()} (${String(j.country || "").toUpperCase()})`).join(", ") });
+        }
+      }
+      if (voltasDraw.length) drawAlvos.push({ age_group: Number(ag), nome: esc, flight_id: Number(fid), is_manuel: temManuel, adjacent: false });
+      linhas.push({ escalao: esc, jogadores: f.registered, draw: voltasDraw.length ? voltasDraw.map(r => `R${r}`).join(" ") : "—", voltas_guardadas: guardadas ? `R1–R${guardadas}`.replace("R1–R1", "R1") : "—", estado: falta || (guardadas === rondas ? "acabou o torneio" : guardadas ? `R${guardadas} acabada` : "sem resultados publicados") });
       console.log(`  ${guardadas ? "✅" : "⏳"} ${esc}: ${guardadas ? `até à R${guardadas}` : "sem resultados publicados"}${falta ? ` · ${falta}` : ""} · ${pedidos} pedidos (${deMemoria} volta(s) já guardadas, sem pedido)`);
       if (recusa) break;
     }
+    if (drawAlvos.length) drawTorneio = { t, name: nome, date_inicio: meta.tournament?.start_date || null, date_fim: meta.tournament?.end_date || null,
+      campo: meta.tournament?.courses || null, rondas, alvos: drawAlvos.sort((a, b) => (b.is_manuel - a.is_manuel) || a.age_group - b.age_group) };
   } catch (err) {
     console.error("❌", err.message || err);
   } finally {
@@ -140,8 +189,9 @@
       ? `⛔ A USKids recusou (HTTP ${recusa.status}) — parei aqui. Não voltes a correr hoje.`
       : `⛔ Falhou a ligação (${recusa.erro}) — parei aqui.`);
     if (linhas.length) console.table(linhas);
-    const comVoltas = linhas.some(l => l.voltas_guardadas !== "—");
-    if (!comVoltas) { console.warn("Ainda não há buracos jogados em nenhum escalão — não gravei ficheiro."); return; }
+    if (drawLinhas.length) { console.log("⛳ O Manuel no draw:"); console.table(drawLinhas); }
+    const comVoltas = linhas.some(l => l.voltas_guardadas !== "—") || !!drawTorneio;
+    if (!comVoltas) { console.warn("Ainda não há buracos jogados nem draw em nenhum escalão — não gravei ficheiro."); return; }
     if (!novas) { console.log(`Nada de novo desde a última vez (${deMemoria} volta(s) acabadas já guardadas) — não gravei ficheiro.`); return; }
     const agora = new Date();
     const carimbo = `${agora.toISOString().slice(0, 10)}-${String(agora.getHours()).padStart(2, "0")}${String(agora.getMinutes()).padStart(2, "0")}`;
@@ -149,13 +199,13 @@
       gerado_em: agora.toISOString(), fonte: "consola do browser (scripts/uskids-consola-torneio.js)", parcial: false, recusa, pedidos,
       torneios: [], alteracoes: [], respostas: {},
       resultados: { torneios: [t], todos_escaloes: [t], respostas },
-      draws: { torneios: [], respostas: {} },
+      draws: { torneios: drawTorneio ? [drawTorneio] : [], respostas: drawTorneio ? drawRespostas : {} },
       numeros: { inicio: null, fim: null, completo: false, entradas: {}, vazios: [] },
     };
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([JSON.stringify(ficheiro)], { type: "application/json" }));
     a.download = `uskids-${carimbo}.json`;
     document.body.appendChild(a); a.click(); a.remove();
-    console.log(`💾 Gravado: ${a.download} — resultados de ${nome}, tudo o que já havia (pasta Transferências).`);
+    console.log(`💾 Gravado: ${a.download} — resultados${drawTorneio ? " e draw" : ""} de ${nome}, tudo o que já havia (pasta Transferências).`);
   }
 })();

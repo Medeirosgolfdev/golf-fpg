@@ -15,7 +15,7 @@ import { ShareRoundsPanel, RoundAnalysisFor } from "../../ui/ShareRoundPanel";
 import { DificuldadePorBuraco, AnaliseManuel } from "../../ui/AnaliseDaVolta";
 import { compareNullsLast } from "../../hooks/useSort";
 import ManuelResultPills from "../../ui/ManuelResultPills";
-import React, { useContext, useMemo } from "react";
+import React, { useCallback, useContext, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Tournament, ScorecardOptions } from "../../data/fpgTypes";
 import type { EscLookup } from "../../utils/playerUtils";
@@ -257,7 +257,18 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
     return out;
   }, [draws, tournament, synthDraws]);
   // Draws desenhados pela página (internacionais) — ganham ao DrawTab FPG.
-  const customDraw = useMemo(() => new Map((roundDraws ?? []).map((d) => [d.round, () => roundDrawNode(d)] as const)), [roundDraws]);
+  // Voltas anteriores de cada Draw (R1 no Draw da R2…), tiradas do PRÓPRIO torneio — todas as
+  // páginas do CircuitShell e a /FPG (20/11/2026, Mariana: «o de amanhã devia mostrar o do dia
+  // anterior e depois de haver o do dia»; «em circuit shell para mostrar em todas as páginas»).
+  const prevDoDraw = useCallback((r: number) => {
+    const out: { round: number; results: Map<string, { gross: number; toPar: number | null }> }[] = [];
+    for (let k = 1; k < r; k++) {
+      const m = buildDrawResults(tournament.players, k);
+      if (m) out.push({ round: k, results: m });
+    }
+    return out.length ? out : undefined;
+  }, [tournament]);
+  const customDraw = useMemo(() => new Map((roundDraws ?? []).map((d) => [d.round, () => roundDrawNode({ ...d, prevResults: d.prevResults ?? prevDoDraw(d.round) })] as const)), [roundDraws, prevDoDraw]);
   const hasDraw = (r: number) => drawsByRound.has(r) || customDraw.has(r);
   const allDrawRounds = useMemo(() => [...new Set([...drawsByRound.keys(), ...customDraw.keys()])].sort((a, b) => a - b), [drawsByRound, customDraw]);
 
@@ -734,6 +745,7 @@ function TournamentDetail({ tournament: tournamentIn, escLookup: escLookupIn, pl
             tournamentDate={tournament.date}
             admissions={effAdmissions}
             results={drawResults}
+            prevResults={prevDoDraw(drawRoundNum)}
             hideCols={drawHideCols}
             clubLabel={options?.clubLabel}
             omLookup={omLookup}
