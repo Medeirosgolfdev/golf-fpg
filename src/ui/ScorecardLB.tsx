@@ -53,12 +53,14 @@ const PName = ({
   fedCode,
   playersDB,
   highlight,
+  country,
 }: {
   name: string;
   fedCode?: string;
   playersDB: PlayersDB;
   highlight?: boolean;
-}) => <TournPName name={name} fedCode={fedCode} playersDB={playersDB} highlight={highlight} />;
+  country?: string;
+}) => <TournPName name={name} fedCode={fedCode} playersDB={playersDB} highlight={highlight} country={country} />;
 
 /* SortKey — usado pelo ScorecardLB */
 type SortKey =
@@ -587,17 +589,21 @@ export function ScorecardLB({
             fedCode={p.fedCode}
             playersDB={playersDB}
             highlight={isManuel(p)}
+            // O país do «clube» vai para DENTRO do nome: o TournPName desenha UMA
+            // bandeira (a da ficha do Kids 2 ou esta). Pô-la também aqui fora dava
+            // duas bandeiras a quem tem ficha (USKids, 20/11/2026).
+            country={clubesSaoPaises ? semBandeira(p.club) || undefined : undefined}
           />
         );
-        // Bandeira ANTES do nome, quando o adapter injectou `_country` (LGS/RFEG:
-        // a fonte marca-a na linha do leaderboard). No ramo com TournPName a
-        // bandeira já vem de lá — aqui só o ramo `noLink`, que é um <span> nu.
+        // Bandeira ANTES do nome só no ramo `noLink` (RFEG/LGS: um <span> nu; a
+        // fonte marca o país em `_country` ou no «clube»). No ramo com TournPName
+        // a bandeira vem SEMPRE de lá (o país do «clube» vai-lhe por prop).
         // ⚠ Aqui os PORTUGUESES levam bandeira também. Na maior parte da app PT
         // é o default e a bandeira seria ruído; num torneio estrangeiro é o
         // contrário — é a razão de se olhar para a lista. A linha continua
         // destacada (`_isPortuguese`); as duas coisas somam-se.
         const ccFonte = (p as { _country?: string | null })._country;
-        const cc = (ccFonte && noLink ? ccFonte : null) || (clubesSaoPaises ? semBandeira(p.club) || null : null);
+        const cc = noLink ? (ccFonte || (clubesSaoPaises ? semBandeira(p.club) || null : null)) : null;
         const withFlag = cc ? (
           <span className="u-d-inline-flex u-ai-center u-gap-4px">
             <span aria-label={cc} title={cc}>{flagOf(cc)}</span>

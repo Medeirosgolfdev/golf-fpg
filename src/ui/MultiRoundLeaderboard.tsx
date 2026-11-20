@@ -511,11 +511,14 @@ export function MultiRoundLeaderboard({
                           : showPos ? (mdl || dp) : ""}
                   </td>
                   <td className={"lb-name sticky-col-1" + stickyBg}>
-                    {clubesSaoPaises && row.club && !row.countryFlag && <span title={semBandeira(row.club)} className="u-mr-4px">{flagOf(semBandeira(row.club))}</span>}
+                    {/* Uma só bandeira: com o TournPName (playersDB) o país do «clube» vai-lhe por
+                        prop — ele desenha a da ficha do Kids 2 ou esta, nunca as duas (20/11/2026). */}
+                    {clubesSaoPaises && row.club && !row.countryFlag && (renderName || !playersDB) && <span title={semBandeira(row.club)} className="u-mr-4px">{flagOf(semBandeira(row.club))}</span>}
                     {renderName
                       ? renderName(row)
                       : playersDB
-                        ? <TournPName name={row.name} fedCode={row.fed} playersDB={playersDB} />
+                        ? <TournPName name={row.name} fedCode={row.fed} playersDB={playersDB}
+                            country={clubesSaoPaises && row.club ? semBandeira(row.club) || undefined : undefined} />
                         : <>{row.countryFlag && <>{row.countryFlag} </>}<span className="fw-700">{row.name}</span></>
                     }
                     {isCut && <span className="badge-inc" title="Eliminado no cut">CUT</span>}

@@ -351,3 +351,5 @@ testes «skipped».
   deep-links 007-11011 (Sub 14) e 059-10685 (Clubes) com os dados reais.
 - `scripts/compact-deploy-json.test.js` — a compactação dos JSON no deploy
   (ver [deploy.md](deploy.md)).
+
+- **Bandeira só UMA vez no nome** (20/11/2026, ela: «estão a aparecer 2x a bandeira… já tivemos esse bug antes»): o `TournPName` desenha a bandeira (playersDB → ficha do Kids 2 → `country` por prop). Quem o usa NÃO põe outra bandeira por fora — passa-lhe o país por `country` (o «clube» que é só o país, USKids/intl, vai assim no `ScorecardLB` e no `MultiRoundLeaderboard`). Só os nomes que não são `TournPName` (ramo `noLink` da RFEG/LGS, `renderName` próprio) levam a bandeira de fora.
