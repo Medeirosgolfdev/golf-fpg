@@ -17,8 +17,9 @@ export const SIGNUP_AX_POR_TCODE: Readonly<Record<string, number>> = {
   "15573": 2760, // Real Club de Golf El Prat 2023
 };
 
-/** Vistas públicas da signupanytime: resultados ou lista de inscritos. */
-export type SignupVista = "results" | "field";
+/** Vistas públicas da signupanytime: resultados, lista de inscritos ou draw
+ *  (`teetime` = horas e grupos de cada volta; confirmado no Spanish Open a 20/11/2026). */
+export type SignupVista = "results" | "field" | "teetime";
 
 /** O `ax` certo para um torneio (o da excepção, senão o internacional). */
 export function signupAx(tcode: string | number): number {
@@ -30,6 +31,7 @@ export function signupAx(tcode: string | number): number {
  *   signupanytimeUrl(21080)              → resultados, ax 1129
  *   signupanytimeUrl(15573)              → resultados, ax 2760 (El Prat)
  *   signupanytimeUrl(21080, "field")     → inscritos
+ *   signupanytimeUrl(23132, "teetime")   → draw (tee times)
  * `ax` só se passa quando o chamador sabe que é outro (ex.: vem nos dados).
  */
 export function signupanytimeUrl(tcode: string | number, vista: SignupVista = "results", ax?: number): string {

@@ -47,6 +47,8 @@ export function uskidsLinks(t: number, urlUskids?: string | null): { label: stri
     ?? REGIONAL_CHAMPIONSHIPS[t]?.urlUSKids;
   return [
     { url: signupanytimeUrl(t, "field", 2739), label:"📋 Inscritos" }, // ax 2739 como estava (por confirmar se vale para todos)
+    // Draw (tee times) da signupanytime (20/11/2026, Mariana: «falta o link para o draw no signup»).
+    { url: signupanytimeUrl(t, "teetime"), label:"🕐 Draw ↗" },
     { url: signupanytimeUrl(t), label:"🏆 Resultados ↗" },
     ...(uskidsUrl ? [{ url: uskidsUrl, label: "USKids ↗" }] : []),
     ...extras.filter(l => l.label !== "USKids ↗"),

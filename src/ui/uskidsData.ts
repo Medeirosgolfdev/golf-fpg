@@ -67,6 +67,9 @@ export const REGIONAL_CHAMPIONSHIPS: Record<number, { shortName: string; locatio
    ═══════════════════════════════════════════════════════════════ */
 
 export const LINKS_EXTRA: Record<number, { label: string; url: string }[]> = {
+  // Página do torneio na USKids (20/11/2026, Mariana: «e também o link para a página do uskids»).
+  23132: [{ label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/519224/spanish-open-2026" }],
+  23670: [{ label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/519796/holiday-classic-2026" }],
   20175: [
     { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/registration" },
     { label: "📄 Distâncias", url: "https://drive.google.com/file/d/14rQM4CQuN7d4VqWaYTewcrRAoSzCzrgv/view?usp=sharing" },
