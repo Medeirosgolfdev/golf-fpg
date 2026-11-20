@@ -40,8 +40,8 @@ function Aviso([string]$texto, [string]$tipo = 'Information') {
     # das 15:28 ficou por aplicar até alguém carregar em OK).
     $cmd = "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(`$env:USKIDS_AVISO_TEXTO, 'USKids - recolha da consola', 'OK', '$tipo') | Out-Null"
     $env:USKIDS_AVISO_TEXTO = $texto
-    Start-Process -FilePath (Get-Process -Id $PID).Path -ArgumentList '-NoProfile', '-WindowStyle', 'Hidden', '-EncodedCommand',
-        [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($cmd))
+    $b64 = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($cmd))
+    Start-Process -FilePath (Get-Process -Id $PID).Path -ArgumentList @('-NoProfile', '-WindowStyle', 'Hidden', '-EncodedCommand', $b64)
 }
 # (não se pode chamar «Git»: o PowerShell não distingue maiúsculas e a função chamava-se a si própria)
 function G { & git.exe -C $Repo @args 2>&1 | ForEach-Object { "$_" } }
