@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { uskidsIntlYardage, USKIDS_SEDES, camposDoEscalao, teeDaSede } from "../uskidsVenues";
+import { uskidsIntlYardage, USKIDS_SEDES, camposDoEscalao, teeDaSede, teesOficiaisDaSede } from "../uskidsVenues";
 import { getExtraCourses } from "../extraCourses";
 import type { Tee } from "../types";
 
@@ -56,5 +56,19 @@ describe("teeDaSede — Spanish Open 2026 com os tees oficiais", () => {
     for (const t of old.master.tees) {
       expect(t.holes.filter(h => h.frenteMorta).map(h => h.hole)).toEqual([17]);
     }
+  });
+});
+
+describe("teesOficiaisDaSede — CR/Slope para o SD dos resultados (20/11/2026)", () => {
+  it("Spanish Open 2026: os escalões com tee oficial levam o CR/Slope da USKids", async () => {
+    const t = await teesOficiaisDaSede(23132);
+    expect(t?.["Boys 12"]).toMatchObject({ cr: 66.4, slope: 120 });
+    expect(t?.["Boys 12"].metros.reduce((a, b) => a + b, 0)).toBe(4916);
+    expect(t?.["Boys 15-18"]).toMatchObject({ cr: 69.5, slope: 132 });
+    expect(t?.["Boys 11"]).toMatchObject({ cr: 66.7, slope: 121 });
+    expect(t?.["Boys 9"]).toBeUndefined(); // sem CR/Slope publicado
+  });
+  it("prova sem sede → null", async () => {
+    expect(await teesOficiaisDaSede(1)).toBeNull();
   });
 });

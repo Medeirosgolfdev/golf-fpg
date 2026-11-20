@@ -35,8 +35,13 @@ function Log($m) { Add-Content -Path $Log -Value ("{0}  [aplicar] {1}" -f (Get-D
 function Aviso([string]$texto, [string]$tipo = 'Information') {
     Log ("aviso: " + ($texto -replace "`n+", ' / '))
     if ($SemAvisos) { return }
-    Add-Type -AssemblyName System.Windows.Forms
-    [System.Windows.Forms.MessageBox]::Show($texto, 'USKids - recolha semanal', 'OK', $tipo) | Out-Null
+    # A janela abre noutro processo e a tarefa acaba já (20/11/2026: a janela à espera do OK
+    # deixava a tarefa «a correr» e o Agendador recusava as passagens seguintes — o ficheiro
+    # das 15:28 ficou por aplicar até alguém carregar em OK).
+    $cmd = "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(`$env:USKIDS_AVISO_TEXTO, 'USKids - recolha da consola', 'OK', '$tipo') | Out-Null"
+    $env:USKIDS_AVISO_TEXTO = $texto
+    Start-Process -FilePath (Get-Process -Id $PID).Path -ArgumentList '-NoProfile', '-WindowStyle', 'Hidden', '-EncodedCommand',
+        [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($cmd))
 }
 # (não se pode chamar «Git»: o PowerShell não distingue maiúsculas e a função chamava-se a si própria)
 function G { & git.exe -C $Repo @args 2>&1 | ForEach-Object { "$_" } }

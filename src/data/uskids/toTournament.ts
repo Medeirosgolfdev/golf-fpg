@@ -15,7 +15,7 @@ import { escalaoManuelParaData, isManuelByName as isManuel } from "../../constan
 import { displayName, norm } from "../../utils/format";
 import { flag } from "../../utils/flagUtils";
 import { TEES_LOOKUP, isWD } from "../../ui/USKIDSPageHelpers";
-import type { Torneio, TorneioResult, EscalaoResult, UskidsDrawsData, UskidsDrawRonda } from "../../ui/uskidsTypes";
+import type { Torneio, TorneioResult, EscalaoResult, UskidsDrawsData, UskidsDrawRonda, TeeInfo } from "../../ui/uskidsTypes";
 import type { CircuitRoundDraw } from "../../ui/circuit/types";
 import type { RondaJogadorComCampo } from "./converterTorneioCompleto";
 import { soma, somaDe } from "../../utils/mathUtils";
@@ -39,8 +39,10 @@ export function escalaoToTournament(
   e: EscalaoResult,
   t: TorneioResult,
   arMap?: Map<string, AutoRivalPlayer>,
+  /** Tee oficial da sede (`teesOficiaisDaSede`) quando o TEES_LOOKUP não tem a prova. */
+  teeDaSede?: TeeInfo,
 ): TATournament {
-  const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
+  const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group] ?? teeDaSede;
   const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
 
   // Colectar todos os jogadores de todas as rondas

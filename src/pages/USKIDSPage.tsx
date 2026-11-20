@@ -37,6 +37,7 @@ import FilterPillRow from "../ui/FilterPillRow";
 import { Fill } from "../ui/DataStyle";
 import { isPtCountry } from "../utils/flagUtils";
 import { temCartao, classificarPorTotal } from "../utils/classificacao";
+import { teesOficiaisDaSede } from "../data/uskidsVenues";
 
 
 
@@ -567,10 +568,11 @@ export default function USKidsFieldPage() {
     const m = new Map<number, () => Promise<CircuitDivision[]>>();
     for (const t of new Set([...campoPorT.keys(), ...resPorT.keys()])) {
       let feito: CircuitDivision[] | null = null;
-      m.set(t, () => Promise.resolve(feito ??= uskidsDivisions(
+      // Os tees oficiais da sede (Spanish Open…) dão o CR/Slope → SD dos resultados.
+      m.set(t, async () => feito ??= uskidsDivisions(
         (campoPorT.get(t) ?? null) as unknown as UskTorneio | null,
         (resPorT.get(t) ?? null) as unknown as TorneioResult | null,
-        drawsData, { arMap: arMapCtxValue })));
+        drawsData, { arMap: arMapCtxValue, teesDaSede: resPorT.has(t) ? await teesOficiaisDaSede(t) : null }));
     }
     return m;
     // (os rivais chegam em fundo: quando chegam, as divisões refazem-se com o

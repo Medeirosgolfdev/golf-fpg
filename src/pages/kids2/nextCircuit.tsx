@@ -30,6 +30,7 @@ import {
   uskidsDivisions, uskidsCircuitLinks, matchEscalaoDiv, scoutEscaloes, type UskidsExtraTab,
 } from "../uskids/uskidsCircuit";
 import { somaDe } from "../../utils/mathUtils";
+import { teesOficiaisDaSede } from "../../data/uskidsVenues";
 
 // ─────────────────────────────────────────────
 // Contexto das abas de análise (os dados chegam aos poucos — as abas lêem-nos
@@ -214,7 +215,7 @@ export function buildEditionsPool(entries: CircuitEntry[], results: TorneioResul
     pool.push({
       id: String(r.t), tcode: String(r.t), name: r.name, year: parseInt(iso.slice(0, 4), 10) || null,
       dateStart: iso || undefined,
-      loadDivisions: () => Promise.resolve(feito ??= uskidsDivisions(null, r, draws, { semTodos: true })),
+      loadDivisions: async () => feito ??= uskidsDivisions(null, r, draws, { semTodos: true, teesDaSede: await teesOficiaisDaSede(r.t) }),
     });
   }
   for (const e of extra) if (!temos.has(e.id)) pool.push(e);

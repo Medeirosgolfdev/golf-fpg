@@ -24,7 +24,7 @@ import { isManuelByName as isManuel } from "../../constants/manuel";
 import { displayName, isoDate } from "../../utils/format";
 import { divKey, tournamentFamilyKey } from "../../ui/circuit/pastEditions";
 import { fmtTs, isTerminado } from "../../ui/USKIDSPageHelpers";
-import { sortEscaloes, type Torneio, type TorneioResult, type EscalaoResult, type UskidsDrawsData } from "../../ui/uskidsTypes";
+import { sortEscaloes, type Torneio, type TorneioResult, type EscalaoResult, type UskidsDrawsData, type TeeInfo } from "../../ui/uskidsTypes";
 import type { CircuitConfig, CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
 import { jardasParaMetrosPorBuraco } from "../../utils/jardas";
 
@@ -66,6 +66,8 @@ export interface UskidsDivisionsOpts {
   arMap?: Map<string, AutoRivalPlayer> | null;
   /** Sem a grelha «Todos» dos torneios por disputar. */
   semTodos?: boolean;
+  /** Tees oficiais da sede por escalão (`teesOficiaisDaSede`) → CR/Slope → SD. */
+  teesDaSede?: Record<string, TeeInfo> | null;
 }
 
 /** Escalões de um torneio: os dos resultados (com dados) e os dos inscritos,
@@ -82,7 +84,7 @@ export function uskidsDivisions(campo: Torneio | null, res: TorneioResult | null
   const date = res?.date_inicio ?? campo?.date_inicio ?? "";
   const tCode = res?.t ?? campo?.t ?? 0;
   const divs: CircuitDivision[] = sortEscaloes([...byAge.values()]).map((p): CircuitDivision => {
-    const results = p.r && res ? escalaoToTournament(p.r, res, opts.arMap ?? undefined) : undefined;
+    const results = p.r && res ? escalaoToTournament(p.r, res, opts.arMap ?? undefined, opts.teesDaSede?.[p.nome]) : undefined;
     const roundDraws = roundDrawsOf(drawsData, tCode, p.age_group, p.r ?? null, date);
     const hasManuel = (p.r && res ? escalaoTemManuel(p.r, res) : false)
       || (p.f?.jogadores ?? []).some(j => isManuel(j.nome));

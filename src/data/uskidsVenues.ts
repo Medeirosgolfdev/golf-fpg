@@ -10,6 +10,7 @@
  * Spanish Open 2026, «SO26 - METERS» e «SO26 - CR and SLOPE»).
  */
 import { METROS_POR_JARDA } from "../utils/jardas";
+import type { Tee } from "./types";
 
 /** Grelha «International Partner Multi-Day Event Yardage» da USKids (jardas
  *  por escalão), lida da imagem da página «Age Groups and Yardages»
@@ -85,6 +86,34 @@ export const USKIDS_SEDES: Record<number, {
     nota: "Spanish Open 2026: Boys 12, Girls 13-14 e Girls 15-18 no The San Roque Club (Old Course); os outros escalões no San Roque Golf & Resort (New Course)",
   },
 };
+
+/** Tee oficial de cada escalão numa prova com sede (`teeOficial`), no formato do
+ *  TEES_LOOKUP: campo, tee, par, metros e o CR/Slope oficiais — para o SD dos
+ *  resultados (20/11/2026, Mariana: «porque é que não mostra os SD dos resultados?»;
+ *  o Spanish Open tinha o CR/Slope na sede mas os resultados só liam o TEES_LOOKUP).
+ *  Os campos curados carregam-se só aqui (import dinâmico), para não pesarem no
+ *  arranque da /uskids. Sem sede ou sem tees oficiais → null. */
+export async function teesOficiaisDaSede(t: number): Promise<Record<string, {
+  campo: string; tee: string; par: number[]; metros: number[]; cr?: number; slope?: number;
+}> | null> {
+  const sede = USKIDS_SEDES[t];
+  if (!sede?.teeOficial) return null;
+  const { getExtraCourses } = await import("./extraCourses");
+  const porTee = new Map<string, { campo: string; tee: Tee }>();
+  for (const c of getExtraCourses()) for (const tee of c.master.tees) porTee.set(tee.teeId, { campo: c.master.name, tee });
+  const out: Record<string, { campo: string; tee: string; par: number[]; metros: number[]; cr?: number; slope?: number }> = {};
+  for (const [escalao, teeId] of Object.entries(sede.teeOficial)) {
+    const x = porTee.get(teeId);
+    if (!x?.tee.holes?.length) continue;
+    const r = x.tee.ratings?.holes18;
+    out[escalao] = {
+      campo: x.campo, tee: x.tee.teeName,
+      par: x.tee.holes.map(h => h.par ?? 0), metros: x.tee.holes.map(h => h.distance ?? 0),
+      ...(r?.courseRating && r?.slopeRating ? { cr: r.courseRating, slope: r.slopeRating } : {}),
+    };
+  }
+  return Object.keys(out).length ? out : null;
+}
 
 /** Os campos onde um escalão joga numa sede (um só quando se sabe). */
 export function camposDoEscalao(sede: (typeof USKIDS_SEDES)[number], escalao: string): string[] {
