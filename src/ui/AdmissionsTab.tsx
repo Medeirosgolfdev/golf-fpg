@@ -369,6 +369,8 @@ export default function AdmissionsTab({
         toPar: null,
         scores: [],
         isManuel: manuel,
+        // Português numa lista de fora — marcado pela fonte, como no DrawTab (20/11/2026).
+        isPortuguese: !manuel && !isDesist && !!p.isPortuguese,
         sortPos: numPos ?? (nConf + nRes + (p.pos ?? i + 1)),
         sortName: p._nomeFormatted,
         rowBg: manuel ? undefined
