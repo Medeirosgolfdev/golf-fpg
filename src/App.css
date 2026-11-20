@@ -2399,10 +2399,6 @@ table.sc-lb.scout-table td { vertical-align: middle; }
 .scout-jog { line-height: 1.25; }
 .scout-clube { font-size: var(--fs-10); color: var(--text-3); }
 .scout-sem { color: var(--text-3); }
-.scout-nivel { display: inline-flex; align-items: center; gap: var(--space-4); }
-.scout-ameaca { display: inline-block; width: var(--space-6); height: var(--space-6); border-radius: 50%; background: var(--text-3); }
-.scout-ameaca.is-high { background: var(--color-danger); }
-.scout-ameaca.is-med { background: var(--color-warn); }
 .scout-forma { display: inline-flex; align-items: center; gap: var(--space-2); }
 .scout-topar { font-size: var(--fs-11); font-weight: 700; color: var(--text-2); padding-left: var(--space-2); }
 .scout-topar.is-good, .scout-saldo.is-good { color: var(--color-good); }
@@ -2418,6 +2414,13 @@ table.sc-lb.scout-table td { vertical-align: middle; }
 .scout-prev.is-good { color: var(--color-good); }
 .scout-prev.is-bad { color: var(--color-danger); }
 .scout-conf { display: inline-flex; align-items: center; gap: var(--space-6); white-space: nowrap; }
+/* A próxima saída (hora, buraco) e, por baixo, a pílula «com o Manuel» quando é o grupo dele (20/11/2026). */
+.scout-saida { display: inline-flex; flex-direction: column; align-items: center; gap: var(--space-2); white-space: nowrap; }
+/* Confrontos: a pílula das voltas e os badges das provas em comum numa linha quando cabem;
+   sem espaço, os badges descem (cada um inteiro) — nunca empurram a tabela para o scroll. */
+.scout-table .scout-conf { flex-wrap: wrap; justify-content: center; row-gap: var(--space-2); }
+/* O bloco «Agora» (a prova a decorrer) destaca-se dos blocos do passado. */
+table.sc-lb th.scout-grp.scout-grp-agora { background: var(--bg-warn-strong); color: var(--color-warn-dark); }
 /* Caixas com a largura da tabela que levam (min-width: max-content) — se não cabem lado
    a lado, a segunda desce; nunca scroll horizontal dentro delas (20/11/2026). */
 .scout-det { display: flex; flex-wrap: wrap; gap: var(--space-12); padding: var(--space-8) 0; align-items: flex-start; }
@@ -3479,17 +3482,7 @@ td.cell-portuguese { background: color-mix(in srgb, var(--pill-intl-bg) 16%, var
 .hdt tr.hdt-left > td.hdt-lbl { font-weight: 400; color: var(--text-2); }
 .hdt td.hdt-green { border-top: 1px solid var(--border); vertical-align: top; }
 .par-chip { display: inline-block; min-width: 22px; padding: var(--space-1) var(--space-4); border: 1px solid transparent; border-radius: var(--radius-sm); text-align: center; font-weight: 800; }
-/* Scout: os 5 a vigiar (KpiCards numa fila; 2 por fila em ecrã estreito). */
-.scout-vigiar { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-10); margin: var(--space-10) 0; }
-.scout-vigiar > .kpi { min-width: 0; }
-@media (max-width: 900px) { .scout-vigiar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-/* Cartões pequenos dos 5 a vigiar e a pílula do World Championship. */
-.scout-vig { border: 1px solid var(--border-light); border-radius: var(--radius); background: var(--bg-card); padding: var(--space-8) var(--space-10); display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
-.scout-vig-top { display: flex; align-items: center; gap: var(--space-6); min-width: 0; }
-.scout-vig-n { font-weight: 800; color: var(--text-muted); }
-.scout-vig-nome { font-weight: 700; font-size: var(--fs-13); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
-.scout-vig-prev b { font-size: var(--fs-18); font-weight: 800; }
-.scout-vig-factos { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+/* A pílula do World Championship (Scout). */
 .p-world { background: var(--bg-warn-strong); color: var(--color-warn-dark); border-color: transparent; font-weight: 700; }
 
 /* ── Search input + compact select (DrivePage, FPGPage) ── */

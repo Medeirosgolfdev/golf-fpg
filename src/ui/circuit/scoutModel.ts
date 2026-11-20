@@ -10,7 +10,7 @@
  */
 import { getTierLabel, getTournWeight, nivelIncerto, type TierKey, type RankingRow } from "../../pages/kids2/juniorCalc";
 
-import { fmtOrd } from "../../utils/format";
+import { fmtOrd, shortTournamentName } from "../../utils/format";
 import { round1, somaDe } from "../../utils/mathUtils";
 /** Um dos últimos torneios (`u` do juniors-scout.json, 02/11/2026 — Kids 2 +
  *  as provas de clube dos cartões FPG): [data, índice do nome em `tn`, lugar
@@ -57,6 +57,24 @@ export function fraseVoltas(v: { ele: number; manuel: number; empates: number; v
   if (!v.voltas) return "";
   const emp = v.empates ? ` · ${v.empates} empate${v.empates > 1 ? "s" : ""}` : "";
   return `Manuel ${v.manuel}–${v.ele} ${nome} · ${v.voltas} volta${v.voltas > 1 ? "s" : ""}${emp}`;
+}
+
+/** Nome de uma prova em comum para o badge da tabela (20/11/2026, Mariana: «um badge
+ *  como o do World quando já jogou no mesmo torneio que o Manuel»): o nome curto do
+ *  site, sem o escalão («- Boys 10-11», «- U12») e com o ano curto no fim —
+ *  «2025 Daily Mail WJGC - Boys 10-11» → «DM WJGC '25». */
+export function nomeCurtoProva(nome: string): string {
+  const ano = /\b20(\d{2})\b/.exec(nome)?.[1];
+  let s = shortTournamentName(nome.replace(/\b20\d{2}\b/, " ")).split(/\s+[-–]\s+|\s*\(/)[0].replace(/\s+/g, " ").trim();
+  if (s.length > 16) s = s.slice(0, 15).trimEnd() + "…";
+  return ano ? `${s} '${ano}` : s;
+}
+
+/** Quantas linhas com dados uma coluna opcional precisa para aparecer: um terço do
+ *  field (no mínimo 2). Abaixo disso era uma coluna de «–» (20/11/2026, «vejo muita
+ *  coisa vazia») — o que há fica no detalhe do jogador. */
+export function coberturaMinima(n: number): number {
+  return Math.max(2, Math.ceil(n / 3));
 }
 
 /** Pancadas dele − Manuel por volta de 18 buracos, em todas as provas em comum. */

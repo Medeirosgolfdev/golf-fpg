@@ -18,9 +18,14 @@
  */
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { KidsLinkCtx } from "../KidsLink";
-import type { Tournament } from "../../data/fpgTypes";
+import type { Player, Tournament } from "../../data/fpgTypes";
 import { TeeDot, type PlayersDB } from "../tournamentPrimitives";
-import { fmtToPar, fmtSign, fmtOrd } from "../../utils/format";
+import { fmtToPar, fmtSign, fmtOrd, isoDate, fmtSignTipo, todayIso } from "../../utils/format";
+import { addDaysIso } from "../../utils/dias";
+import { soma, somaDe } from "../../utils/mathUtils";
+import { temCartao, classificarPorTotal, parsePos } from "../../utils/classificacao";
+import PosMedal from "../PosMedal";
+import KpiCard from "../KpiCard";
 import ToPar from "../ToPar";
 import { normName } from "../../utils/normName";
 import { playerKey } from "../../utils/playerKey";
@@ -29,8 +34,8 @@ import { loadPlayerStats, type PlayerStatsDb } from "../../data/playerStatsTypes
 import LoadingState from "../LoadingState";
 import { MUTED } from "../tableCells";
 import Scout, { type ScoutExtraCol } from "./Scout";
-import type { ScoutComManuel } from "./scoutModel";
-import type { FieldPlayer } from "./repeaters";
+import { coberturaMinima, type ScoutComManuel } from "./scoutModel";
+import { fieldIsManuel, type FieldPlayer } from "./repeaters";
 import { useAppContext } from "../../context/AppContext";
 import type { CircuitEntry, CircuitDivision } from "./types";
 import { buildPastEditionFromTournament, entryDivisions, matchDivision } from "./pastEditions";
@@ -61,6 +66,87 @@ function FormaCell({ f }: { f: PlayerForm | null }) {
 }
 
 const SEM_EDICOES: EdicaoScout[] = [];
+
+/** Uma volta da prova de hoje: pancadas e ±par (null sem o par do cartão). */
+interface VoltaHoje { gross: number; toPar: number | null }
+/** A prova a decorrer, jogador a jogador (20/11/2026, Mariana: «o que podíamos ter
+ *  realmente de relevante»): as voltas com cartão, o lugar depois das voltas fechadas e
+ *  o ±par acumulado. Por nome normalizado (os nomes do draw e dos resultados são os mesmos). */
+interface Agora {
+  voltas: Map<string, Map<number, VoltaHoje>>;
+  rondas: number[];
+  /** Voltas que contam para o lugar: as que (quase) todos já entregaram — não a que vai a meio. */
+  fechadas: number[];
+  pos: Map<string, number>;
+  total: Map<string, { gross: number; toPar: number | null }>;
+}
+
+function agoraDaProva(t: Tournament): Agora | null {
+  const voltas = new Map<string, Map<number, VoltaHoje>>();
+  const porRonda = new Map<number, number>();
+  for (const p of t.players || []) {
+    const vs = new Map<number, VoltaHoje>();
+    const rs = (p as Player).roundScores ?? [];
+    if (rs.length) {
+      for (const r of rs) {
+        if (!temCartao(r.gross)) continue;
+        const par = r.pars?.length && r.pars.length === r.scores?.length ? soma(r.pars) : null;
+        vs.set(r.round, { gross: r.gross, toPar: par != null ? r.gross - par : null });
+      }
+    } else if (typeof p.grossTotal === "number" && temCartao(p.grossTotal)) {
+      vs.set(1, { gross: p.grossTotal, toPar: p.toPar ?? null });
+    }
+    if (!vs.size) continue;
+    voltas.set(normName(p.name), vs);
+    for (const r of vs.keys()) porRonda.set(r, (porRonda.get(r) ?? 0) + 1);
+  }
+  if (!voltas.size) return null;
+  const rondas = [...porRonda.keys()].sort((a, b) => a - b);
+  const maxCartoes = Math.max(...porRonda.values());
+  const fechadas = rondas.filter((r) => r !== t._openRound && (porRonda.get(r) ?? 0) >= 0.8 * maxCartoes);
+  const total = new Map<string, { gross: number; toPar: number | null }>();
+  for (const [k, vs] of voltas) {
+    const fx = fechadas.map((r) => vs.get(r)).filter((v): v is VoltaHoje => !!v);
+    if (fx.length !== fechadas.length || !fx.length) continue;
+    total.set(k, { gross: soma(fx.map((v) => v.gross)), toPar: fx.every((v) => v.toPar != null) ? soma(fx.map((v) => v.toPar!)) : null });
+  }
+  // O lugar oficial da fonte quando a maioria o traz (o Drive classifica por escalão, cada um
+  // no seu tee — juntar tudo por pancadas misturava Sub 12 com Sub 18); senão, pelo total.
+  const oficiais = new Map<string, number>();
+  for (const p of t.players || []) { const n = parsePos(p.pos); if (n != null) oficiais.set(normName(p.name), n); }
+  const pos = new Map<string, number>();
+  if (oficiais.size >= voltas.size / 2) {
+    for (const [k, n] of oficiais) pos.set(k, n);
+  } else {
+    const { pos: posItens } = classificarPorTotal([...total.entries()], () => 1, ([, v]) => v.gross);
+    for (const [[k], n] of posItens) pos.set(k, n);
+  }
+  return { voltas, rondas, fechadas, pos, total };
+}
+
+/** A próxima saída: o draw da volta mais adiantada que ainda não acabou (há menos cartões
+ *  dessa volta do que jogadores no draw). Hora, buraco e grupo por nome, e o grupo do Manuel. */
+interface Saida { ronda: number; porNome: Map<string, { hora: string; grupo: number; buraco: number | null }>; grupoManuel: number | null }
+function proximaSaida(t: Tournament, agora: Agora | null): Saida | null {
+  const draws = t._draws ?? {};
+  const rondas = Object.keys(draws).map(Number).filter((r) => draws[String(r)]?.groups?.length).sort((a, b) => b - a);
+  const r = rondas[0];
+  if (r == null) return null;
+  const grupos = draws[String(r)].groups ?? [];
+  const noDraw = somaDe(grupos, (g) => g.players?.length ?? 0);
+  const cartoes = agora ? [...agora.voltas.values()].filter((vs) => vs.has(r)).length : 0;
+  if (cartoes >= noDraw) return null;
+  const porNome = new Map<string, { hora: string; grupo: number; buraco: number | null }>();
+  let grupoManuel: number | null = null;
+  grupos.forEach((g, i) => {
+    for (const p of g.players ?? []) {
+      if (!p?.nome) continue;
+      porNome.set(normName(p.nome), { hora: g.teeTime ?? "", grupo: i + 1, buraco: g.startHole ?? null });
+      if (fieldIsManuel({ name: p.nome, fed: p.fed ?? null })) grupoManuel = i + 1;
+    }
+  });
+  return { ronda: r, porNome, grupoManuel };
+}
 
 export default function ScoutProva({ current, previous = SEM_EDICOES, h2hManuel, tCode, escalaoProva, playersDB: pdbPagina }: {
   /** O torneio de hoje: o field sai dele (draw → resultados → inscrições). */
@@ -131,19 +217,118 @@ export default function ScoutProva({ current, previous = SEM_EDICOES, h2hManuel,
   })), [current, porChave]);
   const provasComManuel = useCallback((p: FieldPlayer) => (p.fed ? h2hManuel?.get(p.fed) : null), [h2hManuel]);
 
+  // A prova a decorrer e a próxima saída (20/11/2026).
+  const agora = useMemo(() => agoraDaProva(current), [current]);
+  const saida = useMemo(() => proximaSaida(current, agora), [current, agora]);
+  const manuelKey = useMemo(() => {
+    const m = field.find(fieldIsManuel);
+    return m ? normName(m.name) : null;
+  }, [field]);
+  // A prova de hoje, em dias: os confrontos e os últimos torneios destes dias são ela.
+  const datasProva = useMemo(() => {
+    const ini = isoDate(current.date || "");
+    return /^\d{4}-\d{2}-\d{2}$/.test(ini) ? { inicio: ini, fim: addDaysIso(ini, 4) } : null;
+  }, [current.date]);
+
+  // O índice WHS de hoje (FPG) vai para a coluna HCP do Perfil; quem não o tem fica com o do Kids 2.
+  const hcpDe = useCallback((name: string, fed?: string | null) => porChave.get(playerKey(fed, name))?.hcpNow ?? null, [porChave]);
+
+  // A decorrer (bloco «Agora», cartão «Manuel agora») ou já acabada («Resultado»): o estado do
+  // modelo quando o há; senão, se ainda há saídas por jogar, uma volta aberta, ou estamos nos dias dela.
+  const aDecorrer = current.status ? current.status !== "finished"
+    : !!saida || current._openRound != null || (!!datasProva && todayIso() <= datasProva.fim);
+
   const extras = useMemo(() => {
     const R = (name: string, fed?: string | null): Repeater | undefined => porChave.get(playerKey(fed, name));
     const tem = {
-      hora: rows.some((r) => r.teeTime), tee: rows.some((r) => r.teeNow),
-      hcp: rows.some((r) => r.hcpNow != null), forma: rows.some((r) => r.form?.avgSD5 != null),
+      tee: new Set(rows.map((r) => r.teeNow).filter(Boolean)).size > 1,
+      forma: rows.some((r) => r.form?.avgSD5 != null),
       aqui: rows.some((r) => r.editions.length), prev: rows.some((r) => r.forecast),
+      d3m: rows.some((r) => r.form?.hcpDelta3m),
     };
     const antes: ScoutExtraCol[] = [];
-    if (tem.hora) antes.push({ key: "hora", label: "Saída", title: "Hora do draw", cell: (n, f) => R(n, f)?.teeTime || "–", sort: (n, f) => R(n, f)?.teeTime || null });
+    // Saída da próxima volta (a que ainda não acabou), com o grupo do Manuel marcado.
+    if (saida) {
+      const S = (n: string) => saida.porNome.get(normName(n));
+      antes.push({
+        key: "hora", label: <>Saída<br />R{saida.ronda}</>, title: `Hora de saída na volta ${saida.ronda} (o draw); «com o Manuel» = no mesmo grupo`,
+        sort: (n) => S(n)?.hora || null,
+        cell: (n, f) => {
+          const s = S(n);
+          if (!s) return "–";
+          const comManuel = saida.grupoManuel != null && s.grupo === saida.grupoManuel && !fieldIsManuel({ name: n, fed: f ?? null });
+          return (
+            <span className="scout-saida" title={`Grupo ${s.grupo}${s.buraco && s.buraco !== 1 ? ` · sai do buraco ${s.buraco}` : ""}`}>
+              {s.hora}{s.buraco && s.buraco !== 1 ? <span className="scout-sub"> ({s.buraco})</span> : null}
+              {comManuel && <span className="p p-sm p-warn">com o Manuel</span>}
+            </span>
+          );
+        },
+      });
+    }
+    // O tee só quando não é o mesmo para todos (o USKids joga todo o escalão do mesmo).
     if (tem.tee) antes.push({ key: "tee", label: "Tee", cell: (n, f) => { const t = R(n, f)?.teeNow; return t ? <TeeDot teeName={t} /> : "–"; } });
+
+    // «Agora»: o lugar depois das voltas fechadas, cada volta e as pancadas contra o Manuel.
+    const doAgora: ScoutExtraCol[] = [];
+    if (agora) {
+      const A = (n: string) => agora.voltas.get(normName(n));
+      const grupo = aDecorrer ? "Agora" : "Resultado";
+      const depoisDe = agora.fechadas.length ? `depois de ${agora.fechadas.map((r) => `R${r}`).join("+")}` : "";
+      if (agora.fechadas.length) {
+        doAgora.push({
+          grupo, key: "agLugar", label: "Lugar", title: `Lugar ${depoisDe}`,
+          sort: (n) => agora.pos.get(normName(n)) ?? null,
+          cell: (n) => { const p = agora.pos.get(normName(n)); return p != null ? <PosMedal pos={p} /> : "–"; },
+        });
+      }
+      const voltaCell = (v: VoltaHoje | { gross: number; toPar: number | null } | undefined) => v
+        ? <span className="scout-media">
+            {v.toPar != null ? <b className={v.toPar <= 0 ? "c-good" : undefined}>{fmtToPar(v.toPar)}</b> : <b>{v.gross}</b>}
+            {v.toPar != null && <span className="scout-sub">{v.gross}</span>}
+          </span>
+        : "–";
+      for (const r of agora.rondas) {
+        doAgora.push({
+          grupo, key: `agR${r}`, label: `R${r}`, dir: "asc",
+          title: `Volta ${r}: ±par e pancadas${r === current._openRound ? " (a decorrer)" : ""}`,
+          sort: (n) => { const v = A(n)?.get(r); return v ? v.toPar ?? v.gross : null; },
+          cell: (n) => voltaCell(A(n)?.get(r)),
+        });
+      }
+      if (agora.fechadas.length > 1) {
+        doAgora.push({
+          grupo, key: "agTot", label: "Total", title: `±par e pancadas ${depoisDe}`, dir: "asc",
+          sort: (n) => { const t = agora.total.get(normName(n)); return t ? t.toPar ?? t.gross : null; },
+          cell: (n) => voltaCell(agora.total.get(normName(n))),
+        });
+      }
+      const vm = manuelKey ? agora.voltas.get(manuelKey) : null;
+      if (vm?.size) {
+        // Pancadas dele − Manuel nas voltas desta prova que os dois já jogaram.
+        const vsM = (n: string): number | null => {
+          const k = normName(n);
+          if (k === manuelKey) return null;
+          const vs = agora.voltas.get(k);
+          const comuns = [...(vs?.keys() ?? [])].filter((r) => vm.has(r));
+          return comuns.length ? soma(comuns.map((r) => vs!.get(r)!.gross - vm.get(r)!.gross)) : null;
+        };
+        doAgora.push({
+          grupo, key: "agVsM", label: <>vs<br />Manuel</>, dir: "asc",
+          title: "Pancadas dele a mais (+) ou a menos (−) do que o Manuel nas voltas desta prova",
+          sort: vsM,
+          cell: (n) => {
+            const d = vsM(n);
+            return d == null ? "–" : <span className={"scout-prev" + (d > 0 ? " is-good" : d < 0 ? " is-bad" : "")}>{d === 0 ? "=" : fmtSignTipo(d, 0)}</span>;
+          },
+        });
+      }
+    }
+
+    // Depois: WHS e previsão WHS — só aparecem com um terço do field com dados (o Scout
+    // decide); o índice de hoje passou para a coluna HCP do Perfil (`hcpDe`).
     const depois: ScoutExtraCol[] = [];
-    if (tem.hcp) {
-      depois.push({ grupo: "WHS", key: "fpghcp", label: "Índice", title: "Índice de hoje (FPG)", cell: (n, f) => R(n, f)?.hcpNow ?? "–", sort: (n, f) => R(n, f)?.hcpNow ?? null });
+    if (tem.d3m) {
       depois.push({ grupo: "WHS", key: "d3m", label: "Δ 3m", title: "Variação do índice nos últimos 3 meses", cell: (n, f) => {
         const d = R(n, f)?.form?.hcpDelta3m;
         return d ? `${fmtSign(d)}` : "–";
@@ -151,9 +336,9 @@ export default function ScoutProva({ current, previous = SEM_EDICOES, h2hManuel,
     }
     if (tem.forma) {
       depois.push({ grupo: "WHS", key: "whs", label: "Forma", title: "Differential médio das últimas 5 voltas (verde: acima do seu normal)", cell: (n, f) => <FormaCell f={R(n, f)?.form ?? null} />, sort: (n, f) => R(n, f)?.form?.avgSD5 ?? null });
-      depois.push({ grupo: "WHS", key: "whs20", label: "Média", title: "Differential médio das últimas 20 voltas", cell: (n, f) => n1(R(n, f)?.form?.avgSD20) });
+      depois.push({ grupo: "WHS", key: "whs20", label: "Média", title: "Differential médio das últimas 20 voltas", sort: (n, f) => R(n, f)?.form?.avgSD20 ?? null, cell: (n, f) => n1(R(n, f)?.form?.avgSD20) });
     }
-    if (tem.aqui) {
+    if (tem.aqui && previous.length >= 2) {
       depois.push({ grupo: "Nesta prova (±par e SD)", key: "aquiTp", label: "Melhor ±", title: "Melhor ±par que fez nesta prova", sort: (n, f) => R(n, f)?.bestToPar ?? null, cell: (n, f) => {
         const b = R(n, f)?.bestToPar;
         return b != null ? fmtToPar(b) : "–";
@@ -174,8 +359,8 @@ export default function ScoutProva({ current, previous = SEM_EDICOES, h2hManuel,
         return fc ? `${fc.low}–${fc.high}` : "–";
       } });
     }
-    return { antes, depois };
-  }, [rows, porChave]);
+    return { antes, agora: doAgora, depois };
+  }, [rows, porChave, saida, agora, manuelKey, current._openRound, previous.length, aDecorrer]);
 
   const detalhe = (name: string, fed?: string | null) => {
     const r = porChave.get(playerKey(fed, name));
@@ -236,10 +421,24 @@ export default function ScoutProva({ current, previous = SEM_EDICOES, h2hManuel,
 
   if (!masterRatings || !stats) return <LoadingState />;
 
+  // As contas WHS (forma, previsão, «vs Campo») só têm lugar quando um terço do field as tem
+  // (no USKids eram 2 de 21 — «vejo muita coisa vazia», 20/11/2026); senão ficam no detalhe.
+  const minimo = coberturaMinima(rows.length);
+  const whsVisivel = rows.filter((r) => r.form?.avgSD5 != null).length >= minimo || rows.filter((r) => r.forecast).length >= minimo;
   const favorito = [...rows].filter((r) => r.forecast).sort((a, b) => a.forecast!.total - b.forecast!.total)[0];
   const emAlta = [...rows]
     .filter((r) => r.form?.avgSD5 != null && r.form?.avgSD20 != null && r.form.avgSD5 - r.form.avgSD20 <= -1)
     .sort((a, b) => (a.form!.avgSD5! - a.form!.avgSD20!) - (b.form!.avgSD5! - b.form!.avgSD20!))[0];
+
+  // O cartão do Manuel na prova a decorrer: o lugar, o ±par e a distância ao 1.º.
+  const tm = agora && manuelKey ? agora.total.get(manuelKey) : null;
+  const pm = tm && manuelKey ? agora!.pos.get(manuelKey) : null;
+  const lider = agora && agora.total.size ? Math.min(...[...agora.total.values()].map((v) => v.gross)) : null;
+  const kpiAgora = tm && agora ? (
+    <KpiCard label={aDecorrer ? "Manuel agora" : "Manuel nesta prova"} value={pm != null ? fmtOrd(pm) : "–"}
+      sub={[`${tm.toPar != null ? fmtToPar(tm.toPar) : `${tm.gross} pancadas`} depois de ${agora.fechadas.map((r) => `R${r}`).join("+")}`,
+        lider != null ? (tm.gross === lider ? "na frente" : `a ${tm.gross - lider} do 1.º`) : null].filter(Boolean).join(" · ")} />
+  ) : null;
 
   return (
     <Scout
@@ -249,14 +448,17 @@ export default function ScoutProva({ current, previous = SEM_EDICOES, h2hManuel,
       tCode={tCode}
       escalaoProva={escalaoProva}
       colsAntes={extras.antes}
+      colsAgora={extras.agora}
       colsDepois={extras.depois}
       detalheExtra={detalhe}
-      semHcp
-      resumoExtra={<>
-        {favorito?.forecast ? <span className="muted u-ml-8px">· Melhor previsão: <b className="u-c-text">{favorito.name}</b> ({favorito.forecast.total})</span> : null}
-        {emAlta ? <span className="muted"> · Em alta: <b className="u-c-text">{emAlta.name}</b> ({n1(emAlta.form!.avgSD5)} nas últimas 5, contra {n1(emAlta.form!.avgSD20)} de média)</span> : null}
-      </>}
-      rodape={
+      hcpDe={hcpDe}
+      datasProva={datasProva}
+      kpiAgora={kpiAgora}
+      resumoExtra={whsVisivel && (favorito?.forecast || emAlta) ? <>
+        {favorito?.forecast ? <span className="muted">Melhor previsão: <b className="u-c-text">{favorito.name}</b> ({favorito.forecast.total})</span> : null}
+        {emAlta ? <span className="muted">{favorito?.forecast ? " · " : ""}Em alta: <b className="u-c-text">{emAlta.name}</b> ({n1(emAlta.form!.avgSD5)} nas últimas 5, contra {n1(emAlta.form!.avgSD20)} de média)</span> : null}
+      </> : undefined}
+      rodape={whsVisivel &&
         <details className="u-mt-8px u-fs-fs-12 u-c-text-muted">
           <summary className="u-cur-pointer">Como são feitas a «Forma WHS», o «vs Campo» e a «Previsão WHS»</summary>
           <p className="u-m-6px-0">
