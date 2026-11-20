@@ -1,8 +1,56 @@
 {
-  "generatedAt": "2026-11-19T02:48:05.448Z",
+  "generatedAt": "2026-11-20T02:34:32.023Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1283,
+  "total": 1284,
   "tournaments": [
+    {
+      "file": "03-04-2601492704.json",
+      "trnId": "2601492704",
+      "partKey": "fd9c456407cc4e6114f6c03bce53ac6e",
+      "name": "Grand Prix Jeunes de Terre Blanche",
+      "formule": "Simple",
+      "date": "21/11/2026",
+      "dateIso": "2026-11-21",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "04",
+      "seriesCount": 4,
+      "totalPlayers": 84,
+      "course": "Le Château",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 12
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 30
+        },
+        {
+          "serieId": "115",
+          "label": "BG",
+          "players": 33
+        },
+        {
+          "serieId": "213",
+          "label": "BF",
+          "players": 9
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "rms9": null,
+      "ligues": [
+        "04"
+      ]
+    },
     {
       "file": "03-02-2601488808.json",
       "trnId": "2601488808",
