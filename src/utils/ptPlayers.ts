@@ -20,6 +20,7 @@ const PT_NAME_EXCEPTIONS: ReadonlyArray<string[]> = [
   // bandeira deles»). Linha destacada; a bandeira continua a da fonte.
   ["benji", "botham"],   // FPG 59860 (Holywood, Irlanda do Norte, na USKids)
   ["zeyn", "lababedi"],  // FPG 55498 (St Albans, na USKids)
+  ["ziyang", "guo"],     // FPG 57904 — Estoril, PJA; bandeira CN na USKids (Mariana, 20/11/2026)
 ];
 
 export const ptNorm = (s: string | null | undefined): string =>

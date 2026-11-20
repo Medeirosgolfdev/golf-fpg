@@ -106,12 +106,25 @@ function buildExtra(tournaments) {
 function voltasEmComum(rJ, rM) {
   const ok = (g) => typeof g === "number" && g > 0 && g < 900;
   const vJ = rJ.rounds || [], vM = rM.rounds || [];
-  let diff = 0, n = 0;
+  // wJ/wM = voltas em que ele / o Manuel fez menos pancadas (20/11/2026, Mariana: «queria que
+  // os confrontos contra o Manuel fossem por ronda porque ele tanto faz uma boa como uma má»).
+  // pares = [volta, pancadas dele, pancadas do Manuel] de cada volta que os dois jogaram
+  // («eu gostava mesmo de ver realmente cada volta e não o agregado do torneio»).
+  let diff = 0, n = 0, wJ = 0, wM = 0;
+  const pares = [];
   for (let i = 0; i < Math.min(vJ.length, vM.length); i++) {
-    if (ok(vJ[i]?.gross) && ok(vM[i]?.gross)) { diff += vJ[i].gross - vM[i].gross; n++; }
+    if (ok(vJ[i]?.gross) && ok(vM[i]?.gross)) {
+      const d = vJ[i].gross - vM[i].gross;
+      diff += d; n++;
+      if (d < 0) wJ++; else if (d > 0) wM++;
+      pares.push([i + 1, vJ[i].gross, vM[i].gross]);
+    }
   }
-  if (n) return { diff, n };
-  if (!vJ.length && !vM.length && ok(rJ.totalGross) && ok(rM.totalGross)) return { diff: rJ.totalGross - rM.totalGross, n: 1 };
+  if (n) return { diff, n, wJ, wM, pares };
+  if (!vJ.length && !vM.length && ok(rJ.totalGross) && ok(rM.totalGross)) {
+    const d = rJ.totalGross - rM.totalGross;
+    return { diff: d, n: 1, wJ: d < 0 ? 1 : 0, wM: d > 0 ? 1 : 0, pares: [[1, rJ.totalGross, rM.totalGross]] };
+  }
   return null;
 }
 
@@ -240,7 +253,7 @@ function buildScout(juniors, tournaments, generatedAt) {
           if (!d) break;
           m.push([t.date || t.startDate || "", t.name || t.shortName || tid,
             typeof rJ.pos === "number" ? rJ.pos : null, typeof rM.pos === "number" ? rM.pos : null,
-            d.diff, d.n, t.holesPerRound || 18]);
+            d.diff, d.n, t.holesPerRound || 18, d.wJ, d.wM, d.pares]);
           break;
         }
       }

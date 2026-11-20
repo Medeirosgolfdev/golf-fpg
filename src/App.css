@@ -2412,6 +2412,43 @@ table.sc-lb.scout-table td { vertical-align: middle; }
 .scout-media { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.15; }
 .scout-sub { font-size: var(--fs-10); color: var(--text-3); }
 .scout-wd { font-style: italic; color: var(--text-3); }
+/* Scout (20/11/2026, «feio e confuso»): previsão e confrontos em números curtos;
+   a ficha aberta em blocos lado a lado, à largura toda. */
+.scout-prev { font-weight: 700; color: var(--text-2); white-space: nowrap; }
+.scout-prev.is-good { color: var(--color-good); }
+.scout-prev.is-bad { color: var(--color-danger); }
+.scout-conf { display: inline-flex; align-items: center; gap: var(--space-6); white-space: nowrap; }
+/* Caixas com a largura da tabela que levam (min-width: max-content) — se não cabem lado
+   a lado, a segunda desce; nunca scroll horizontal dentro delas (20/11/2026). */
+.scout-det { display: flex; flex-wrap: wrap; gap: var(--space-12); padding: var(--space-8) 0; align-items: flex-start; }
+/* «Últimos torneios» e «Com o Manuel» lado a lado, cada um a partir da largura do que leva
+   (flex-basis: max-content), a dividir o que sobra e a encolher quando falta — aí os nomes das
+   provas partem linha. A Forma WHS numa faixa por cima. Nunca uma caixa empurrada para baixo
+   com espaço de sobra, nem scroll (20/11/2026: «isto agora já nem cabe no ecrã»). */
+.scout-det > .scout-det-card { flex: 1 1 max-content; min-width: min(100%, 22rem); }
+.scout-det > .scout-det-linha { flex-basis: 100%; }
+.scout-det-card .dtable td:first-child { white-space: normal; }
+.scout-det-card { border: 1px solid var(--border-light); border-radius: var(--radius-lg); background: var(--bg-card); padding: var(--space-10) var(--space-12); min-width: 0; }
+
+/* Um só tamanho de letra na tabela do Scout (20/11/2026, Mariana: «porque é que temos
+   vários tamanhos diferentes de letras»): números a 13, cabeçalhos e pílula do nível a 11,
+   lugares/World/confrontos/clube a 10 — cada peça trazia o tamanho que tem sozinha no resto
+   do site. Aqui tudo a 12; só o clube por baixo do nome, secundário, a 11. */
+/* A tabela do Scout ocupa o espaço que há e não mais (20/11/2026, «eu odeio SCROLL»): tinha
+   a largura do conteúdo sem quebras (1600 px) e fazia scroll em janelas de 1600. Com espaço,
+   tudo numa linha; SÓ quando a janela não chega é que o jogador (nome, World, clube) e os
+   «Últimos torneios» quebram linha — nunca larguras fixas que partem com espaço de sobra
+   («isto tem tanto espaço… fica feio»). Os números nunca quebram. */
+.sc-lb.scout-table { width: max-content; max-width: 100%; } /* a largura do conteúdo; só encolhe quando a janela não chega («porque é que fica tudo tão espaçado?») */
+.sc-lb.scout-table td.scout-jog { white-space: normal; min-width: 9rem; }
+.scout-table .scout-forma { flex-wrap: wrap; justify-content: center; row-gap: var(--space-2); }
+.sc-lb.scout-table th { white-space: normal; }
+.sc-lb.scout-table th, .sc-lb.scout-table td,
+.scout-table :is(.p, .pos-medal, .tint-bg, .scout-clubpar, .ano-esc-pill, .scout-field, .scout-wd, .scout-prev, .kids-arrow, .cell-empty, b, .fw-600) { font-size: var(--fs-12); }
+.scout-table .scout-clube { font-size: var(--fs-11); }
+.scout-det-card .dtable tr.scout-prova > td { border-top: 2px solid var(--border-light); }
+.scout-det-card .dtable th.scout-sep, .scout-det-card .dtable td.scout-sep { border-left: 1px solid var(--border-light); }
+.scout-det-tit { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-4); font-weight: 700; font-size: var(--fs-13); margin-bottom: var(--space-8); }
 /* Prova de clube nos últimos torneios (sem classificação): o ±par numa caixinha tracejada. */
 .scout-clubpar { display: inline-block; padding: var(--space-1) var(--space-4); font-size: var(--fs-10); font-weight: 600;
   border: 1px dashed var(--border); border-radius: var(--radius-sm); color: var(--text-2); }
@@ -4667,7 +4704,6 @@ table td.lb-col-divider {
 .u-h-72px { height: 72px !important; }
 .u-h-8px { height: 8px !important; }
 .u-h-9px { height: 9px !important; }
-.u-h-calc-100vh-52px { height: calc(100vh - 52px) !important; }
 .u-inset-0 { inset: 0 !important; }
 .u-jc-center { justify-content: center !important; }
 .u-jc-flex-end { justify-content: flex-end !important; }

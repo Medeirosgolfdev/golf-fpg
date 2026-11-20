@@ -210,8 +210,22 @@ export function buildFpgManuelH2H(pool: Tournament[]): Map<string, ScoutComManue
       const g = gross(p);
       if (!f || f === MANUEL_FED || g == null || voltas(p) !== vM) continue;
       if (p.nholes && m.nholes && p.nholes !== m.nholes) continue;
+      // Volta a volta (o mesmo número de volta dos dois): quem fez menos pancadas.
+      const gV = (x: P, r: number) => x.roundScores?.find((rs) => rs.round === r)?.gross;
+      let wP = 0, wM = 0, nComp = 0;
+      const pares: Array<[number, number, number]> = [];
+      for (const rs of m.roundScores ?? []) {
+        const a = gV(p, rs.round), b = rs.gross;
+        if (typeof a !== "number" || typeof b !== "number" || !temCartao(a) || !temCartao(b) || a <= 0 || b <= 0) continue;
+        nComp++;
+        if (a < b) wP++; else if (a > b) wM++;
+        pares.push([rs.round, a, b]);
+      }
+      // Sem as voltas dos dois: numa prova de uma volta, o total diz quem ganhou a volta;
+      // com mais voltas fica sem contagem (nunca um «0–0» inventado).
+      if (!nComp && vM === 1) { if (g < gM) wP = 1; else if (g > gM) wM = 1; nComp = 1; pares.push([1, g, gM]); }
       const arr = out.get(f) ?? [];
-      arr.push([dia, t.name, lugar(p), lugar(m), g - gM]);
+      arr.push(nComp ? [dia, t.name, lugar(p), lugar(m), g - gM, vM, m.nholes || 18, wP, wM, pares] : [dia, t.name, lugar(p), lugar(m), g - gM, vM, m.nholes || 18]);
       out.set(f, arr);
     }
   }

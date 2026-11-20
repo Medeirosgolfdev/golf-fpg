@@ -32,7 +32,32 @@ export function ultimosTorneios(u: readonly ScoutTorneioRaw[] | undefined, tn: r
  *  pancadas dele − Manuel, voltas, buracos por volta]. As pancadas são só das
  *  voltas que os dois jogaram; sem `voltas`/`buracos` (provas da página, ex.
  *  FPG) conta como 1 volta de 18. */
-export type ScoutComManuel = [string, string, number | null, number | null, number, number?, number?];
+/** [data, prova, lugar dele, lugar do Manuel, pancadas dele − Manuel (soma), voltas em comum,
+ *  buracos por volta, voltas que ele ganhou, voltas que o Manuel ganhou,
+ *  cada volta: [n.º da volta, pancadas dele, pancadas do Manuel]]. */
+export type ScoutComManuel = [string, string, number | null, number | null, number, number?, number?, number?, number?, Array<[number, number, number]>?];
+
+/** Confrontos VOLTA A VOLTA (20/11/2026, Mariana: «queria que os confrontos contra o Manuel
+ *  fossem por ronda porque ele tanto faz uma boa como uma má»): em cada volta que os dois
+ *  jogaram, quem fez menos pancadas. Prova sem a conta por volta (ficheiros antigos): só se
+ *  conta quando foi de uma volta (o sinal da diferença); com mais voltas fica de fora. */
+export function voltasGanhas(m: readonly ScoutComManuel[]): { ele: number; manuel: number; empates: number; voltas: number } {
+  let ele = 0, manuel = 0, voltas = 0;
+  for (const x of m) {
+    const n = x[5] || 1;
+    if (x[7] != null && x[8] != null) { ele += x[7]; manuel += x[8]; voltas += n; }
+    else if (n === 1) { if (x[4] < 0) ele++; else if (x[4] > 0) manuel++; voltas++; }
+  }
+  return { ele, manuel, empates: voltas - ele - manuel, voltas };
+}
+
+/** «Manuel 5–4 Christian · 9 voltas» — os confrontos por volta numa frase curta
+ *  (20/11/2026: «Voltas: Manuel 1, ele 0 (1 em comum)» não se percebia). */
+export function fraseVoltas(v: { ele: number; manuel: number; empates: number; voltas: number }, nome = "ele"): string {
+  if (!v.voltas) return "";
+  const emp = v.empates ? ` · ${v.empates} empate${v.empates > 1 ? "s" : ""}` : "";
+  return `Manuel ${v.manuel}–${v.ele} ${nome} · ${v.voltas} volta${v.voltas > 1 ? "s" : ""}${emp}`;
+}
 
 /** Pancadas dele − Manuel por volta de 18 buracos, em todas as provas em comum. */
 export function porVolta(m: readonly ScoutComManuel[]): number | null {

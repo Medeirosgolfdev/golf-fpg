@@ -209,10 +209,12 @@ export default function ScoutProva({ current, previous = SEM_EDICOES, h2hManuel,
               {" "}· 8 melhores de 20 <b className="u-c-text">{n1(f.avgSD8)}</b>
               {" "}· média de 20 <b className="u-c-text">{n1(f.avgSD20)}</b>
               {f.lastSD != null ? <> · última volta {n1(f.lastSD)}</> : null}
+              {f.bestSD12m != null ? <> · melhor do ano <b className="u-c-text">{n1(f.bestSD12m)}</b></> : null}
               <div>
                 {f.roundsLast3m} voltas em 3 meses · {f.roundsLast12m} em 12
                 {f.lastRoundDate ? ` · última a ${f.lastRoundDate}` : ""}
-                {f.bestGross != null ? ` · melhor volta de sempre ${f.bestGross}` : ""}
+                {/* «de sempre» estava errado (é o último ano) e um WD com gross 0 dava «0» (20/11/2026). */}
+                {f.bestGross != null && f.bestGross > 0 && f.bestGross < 900 ? ` · melhor volta do ano ${f.bestGross} pancadas` : ""}
               </div>
             </div>
           </div>

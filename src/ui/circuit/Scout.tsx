@@ -48,7 +48,7 @@ import { buildRepeaters, fieldIsManuel, type FieldPlayer, type RepeaterRow } fro
 import type { PastEdition } from "./PastEditionsTable";
 import {
   computeThreat, formaMedia, idade, N_FORMA, THREAT_LABEL, porVolta, ultimoLugar, ultimosTorneios,
-  previsaoRival, fraseConfrontos, escalaoDaProva, FONTE_PREVISAO_LABEL, escalaPorComparacoes,
+  previsaoRival, fraseConfrontos, voltasGanhas, fraseVoltas, escalaoDaProva, FONTE_PREVISAO_LABEL, escalaPorComparacoes,
   worldChampionship, resultadoNotavel,
   type JuniorScout, type ScoutComManuel, type ScoutFile, type ScoutTorneio, type ThreatInfo, type Previsao,
   nivelPoucoSeguro,
@@ -108,6 +108,8 @@ interface Linha {
   key: string; name: string; club: string | null; country: string | null; isManuel: boolean;
   sc?: JuniorScout; ult: ScoutTorneio[]; rep?: RepeaterRow;
   idade: number | null; threat: ThreatInfo; frente: number; atras: number; vsMMedia: number | null;
+  /** Voltas ganhas em todas as provas em comum (`voltasGanhas`). */
+  vt: { ele: number; manuel: number; empates: number; voltas: number };
   /** Nascimento (ISO, ou só o ano) e o escalão deste ano (`escProva`: tirado
    *  do escalão USKids da prova, sem nascimento conhecido). */
   nasc: string | null; escalao: string | null; escProva?: boolean;
@@ -219,6 +221,8 @@ export default function Scout({
       const atras = m.filter(naFrente).length;
       // Pancadas por volta de 18 buracos, só nas voltas que os dois jogaram.
       const vsMMedia = porVolta(m);
+      // Confrontos volta a volta (a pílula da tabela e da ficha).
+      const vt = voltasGanhas(m);
       const threat = isManuel
         ? { score: -99, level: "none" as const, reasons: [] }
         : computeThreat({
@@ -236,7 +240,7 @@ export default function Scout({
         nasc, escalao: nasc ? escalaoAtDate(nasc, todayIso()) : escalaoDaProva(escalaoProva),
         escProva: !nasc && !!escalaoDaProva(escalaoProva),
         prev: null,
-        threat, frente, atras, vsMMedia,
+        threat, frente, atras, vsMMedia, vt,
         // As inscrições USKids são por nome: um homónimo (outro federado) não as herda.
         proximas: outraPessoa ? [] : (proximas?.get(k) ?? []).filter((x) => x.t !== tCode),
         fed: p.fed ?? null,
@@ -374,14 +378,25 @@ export default function Scout({
     prox: linhas.some((l) => l.proximas.length),
     prev: manuelNoField && linhas.some((l) => !l.isManuel && l.prev),
   };
+  // Colunas da página (WHS, «Nesta prova (±par e SD)», Previsão WHS…) sem dados em
+  // ninguém não aparecem (20/11/2026, Mariana: «feio e confuso» — eram blocos de «–»).
+  const comDados = (c: ScoutExtraCol) => linhas.some((l) => {
+    if (c.sort) { const v = c.sort(l.name, l.fed); return v != null && v !== ""; }
+    const n = c.cell(l.name, l.fed);
+    return n != null && n !== "" && n !== "–";
+  });
+  const colsAntesV = colsAntes.filter(comDados);
+  const colsDepoisV = colsDepois.filter(comDados);
   const sameYear = (e: PastEdition) => eds.some((o) => o !== e && o.year === e.year);
   const hp = { sortKey, sortDir, onSort: toggleSort };
   const nPerfil = (tem.esc ? 1 : 0) + (tem.hcp ? 1 : 0) + 1;
   const nAno = (tem.torn ? 1 : 0) + (tem.vit ? 1 : 0) + (tem.pod ? 1 : 0) + (tem.voltas ? 2 : 0) + (tem.forma ? 1 : 0);
   const nProva = eds.length ? 2 + eds.length : 0;
   const nManuel = tem.vsm ? 1 : 0;
-  const nPrev = tem.prev ? 2 : 0;
-  const nCols = colsAntes.length + 1 + nPrev + nPerfil + nAno + nProva + nManuel + (tem.prox ? 1 : 0) + colsDepois.length;
+  // Previsão: uma coluna só — o ±par previsto já é em relação ao Manuel (a «vs Manuel»
+  // repetia o mesmo número em todas as linhas).
+  const nPrev = tem.prev ? 1 : 0;
+  const nCols = colsAntesV.length + 1 + nPrev + nPerfil + nAno + nProva + nManuel + (tem.prox ? 1 : 0) + colsDepoisV.length;
   // Os 5 a vigiar: os que se prevê ficarem mais à frente do Manuel (e, a seguir,
   // os de maior ameaça) — com o porquê.
   const vigiar = manuelNoField
@@ -399,7 +414,7 @@ export default function Scout({
   const fmtVs = (v: number) => `${Math.abs(v).toFixed(1)} por volta ${v < 0 ? "à frente" : "atrás"} do Manuel`;
   // Blocos das colunas da página (cada coluna diz o seu grupo; seguidas = um bloco).
   const blocosDepois: { grupo: string; n: number }[] = [];
-  for (const c of colsDepois) {
+  for (const c of colsDepoisV) {
     const g = c.grupo ?? "";
     const ult = blocosDepois[blocosDepois.length - 1];
     if (ult && ult.grupo === g) ult.n++; else blocosDepois.push({ grupo: g, n: 1 });
@@ -482,10 +497,10 @@ export default function Scout({
       )}
       <RowsFilterBar rows={filtraveis} filter={filter} onChange={setFilter} total={filtraveis.length} />
       <div className="u-ox-auto u-pb-6px">
-        <table className="sc-lb scout-table u-fvn-tabular-nums u-w-max-content">
+        <table className="sc-lb scout-table u-fvn-tabular-nums">
           <thead>
             <tr>
-              {colsAntes.length > 0 && <th colSpan={colsAntes.length} />}
+              {colsAntesV.length > 0 && <th colSpan={colsAntesV.length} />}
               <th />
               {nPrev > 0 && <th colSpan={nPrev} className="scout-grp scout-sep" title="Num dia normal, em relação ao Manuel">Previsão</th>}
               <th colSpan={nPerfil} className="scout-grp scout-sep">Perfil</th>
@@ -496,10 +511,9 @@ export default function Scout({
               {blocosDepois.map((b, i) => <th key={i} colSpan={b.n} className="scout-grp scout-sep">{b.grupo}</th>)}
             </tr>
             <tr>
-              {colsAntes.map(extraHdr)}
+              {colsAntesV.map(extraHdr)}
               <SortableHdr k="name" {...hp} className="u-ta-left">Jogador</SortableHdr>
-              {tem.prev && hdr("prev", <>±par<br />previsto</>, "±par por volta de 18 buracos num dia normal, em relação ao Manuel (o ±par médio dele no último ano). Pelas provas em comum — com o Manuel e entre os jogadores do field — cada uma pesada pela força da prova (a regra do índice do jogador: voltas, field e países). Quem não tem provas em comum fica pelo Nível em pancadas (último ano), em relação ao do Manuel. A fonte está em cada linha.", true)}
-              {tem.prev && hdr("vsman", <>vs<br />Manuel</>, "Pancadas por volta a menos (à frente) ou a mais (atrás) do que o Manuel")}
+              {tem.prev && hdr("prev", <>vs<br />Manuel</>, "Pancadas por volta a menos (−, à frente) ou a mais (+, atrás) do que o Manuel num dia normal. ±par por volta de 18 buracos num dia normal, em relação ao Manuel (o ±par médio dele no último ano). Pelas provas em comum — com o Manuel e entre os jogadores do field — cada uma pesada pela força da prova (a regra do índice do jogador: voltas, field e países). Quem não tem provas em comum fica pelo Nível em pancadas (último ano), em relação ao do Manuel. A fonte está em cada linha.", true)}
               {tem.esc && hdr("esc", "Escalão", "Escalão deste ano e o ano de nascimento (1.º ou 2.º ano do escalão); a idade no tooltip", sepPerfil.esc)}
               {tem.hcp && hdr("hcp", "HCP", "Handicap (Portugal / Espanha / França)", sepPerfil.hcp)}
               {hdr("nivel", "Nível", "Nível na geração pelas pancadas do último ano (Elite, Forte, Sólido, Em Dev., Iniciante; «?» = poucas voltas); o pontinho é a ameaça para o Manuel. Ordenar por aqui põe primeiro os mais perigosos — o porquê está no tooltip de cada um.", sepPerfil.nivel)}
@@ -517,9 +531,9 @@ export default function Scout({
                   {sameYear(e) && e.label ? <div className="fs-10 muted u-fw-500">{e.label}</div> : null}
                 </SortableHdr>
               ))}
-              {tem.vsm && hdr("vsmp", "Confrontos", "Nas provas em comum: quem ficou à frente mais vezes e por quantas pancadas por volta de 18 buracos (só as voltas que os dois jogaram); a última prova em comum por baixo", true)}
+              {tem.vsm && hdr("vsmp", "Confrontos", "Volta a volta, nas provas em comum: voltas ganhas pelo Manuel – voltas ganhas por ele (menos pancadas nessa volta), e as pancadas por volta de 18 buracos (só as voltas que os dois jogaram; − = ele à frente). A frase e a última prova em comum no tooltip.", true)}
               {tem.prox && hdr("prox", "Torneios", "Próximos torneios USKids em que está inscrito (a lista no tooltip)", true)}
-              {colsDepois.map(extraHdr)}
+              {colsDepoisV.map(extraHdr)}
             </tr>
           </thead>
           <tbody>
@@ -543,7 +557,7 @@ export default function Scout({
                   <tr className={[l.isManuel ? "row-manuel" : "", temDetalhe ? "scout-clicavel" : "", isOpen ? "is-aberto" : ""].filter(Boolean).join(" ") || undefined}
                       onClick={temDetalhe ? () => setAberto(isOpen ? null : l.key) : undefined}
                       title={temDetalhe ? "Ver o detalhe: últimos torneios, provas em comum com o Manuel e próximas inscrições" : undefined}>
-                    {colsAntes.map(extraTd(l))}
+                    {colsAntesV.map(extraTd(l))}
                     <td className="u-ta-left scout-jog">
                       <span className={l.isManuel ? "fw-700" : "fw-600"}>{bandeira}{l.name}</span> <KidsLink nome={l.name} fed={fedFpg(l.fed)} />
                       {(() => {
@@ -553,18 +567,11 @@ export default function Scout({
                       {mostraClube && <div className="scout-clube">{clube}</div>}
                     </td>
                     {tem.prev && (
-                      <td className="scout-sep" title={l.prev ? `num dia normal, ${FONTE_PREVISAO_LABEL[l.prev.fonte]}` : undefined}>
-                        {l.prev
-                          ? <span className="scout-media"><b className={l.prev.toPar <= 0 ? "c-good" : undefined}>{fmtToPar(l.prev.toPar)}</b>
-                              <span className="scout-sub">{l.isManuel ? "referência" : l.prev.fonte === "comparacoes" ? `${l.provasComuns} comparaç${l.provasComuns === 1 ? "ão" : "ões"}` : l.prev.fonte === "nivel" ? `nível (top ${100 - (l.pct ?? 0)}%)` : l.prev.fonte === "media" ? "média do ano" : l.prev.fonte === "confrontos" ? "confrontos" : "handicap"}</span></span>
-                          : <span className="scout-sem">–</span>}
-                      </td>
-                    )}
-                    {tem.prev && (
-                      <td>
-                        {l.isManuel ? <span className="scout-sem">—</span>
+                      <td className="scout-sep"
+                          title={l.prev ? `num dia normal, ${FONTE_PREVISAO_LABEL[l.prev.fonte]}${l.prev.fonte === "comparacoes" ? ` (${l.provasComuns} comparaç${l.provasComuns === 1 ? "ão" : "ões"})` : l.prev.fonte === "nivel" ? ` (nível: top ${100 - (l.pct ?? 0)}%)` : ""}${l.prev.vsManuel != null && !l.isManuel ? ` — ${Math.abs(l.prev.vsManuel).toFixed(1)} por volta ${l.prev.vsManuel < 0 ? "à frente" : "atrás"} do Manuel` : ""}` : undefined}>
+                        {l.isManuel ? <span className="scout-sem">ref.</span>
                           : l.prev?.vsManuel != null
-                            ? <span className={"scout-topar" + (l.prev.vsManuel > 0.05 ? " is-good" : l.prev.vsManuel < -0.05 ? " is-bad" : "")}>{fmtSignTipo(l.prev.vsManuel, 1)}</span>
+                            ? <span className={"scout-prev" + (l.prev.vsManuel > 0.05 ? " is-good" : l.prev.vsManuel < -0.05 ? " is-bad" : "")}>{fmtSignTipo(l.prev.vsManuel, 1)}</span>
                             : <span className="scout-sem">–</span>}
                       </td>
                     )}
@@ -630,11 +637,13 @@ export default function Scout({
                       return <td key={e.id}>{c.complete ? lugar(c.pos, title) : <span className="scout-wd" title={title}>{c.pos != null ? fmtOrd(c.pos) : c.total != null ? "INC" : "WD"}</span>}</td>;
                     })}
                     {tem.vsm && (
-                      <td className="scout-sep u-ta-left" title={nM ? `${nM} prova${nM > 1 ? "s" : ""} em comum${empates > 0 ? ` · ${empates} empate${empates > 1 ? "s" : ""}` : ""}` : undefined}>
+                      <td className="scout-sep" title={nM ? `Voltas: ${fraseVoltas(l.vt, l.name.split(" ")[0])}
+Provas: ${fraseConfrontos(l.frente, l.atras, nM, l.vsMMedia)}
+${nM} prova${nM > 1 ? "s" : ""} em comum${empates > 0 ? ` · ${empates} empate${empates > 1 ? "s" : ""}` : ""} · última: ${l.sc!.m![0][1]}${l.sc!.m![0][0] ? ` (${shortDateSlash(l.sc!.m![0][0])})` : ""}` : undefined}>
                         {nM
-                          ? <span className="scout-media u-ws-nowrap">
-                              <span className={"fw-600 " + (l.frente > l.atras ? "c-good" : l.frente < l.atras ? "tone-bad" : "")}>{fraseConfrontos(l.frente, l.atras, nM, l.vsMMedia)}</span>
-                              <span className="scout-sub">última: {l.sc!.m![0][1]}{l.sc!.m![0][0] ? ` (${shortDateSlash(l.sc!.m![0][0])})` : ""}</span>
+                          ? <span className="scout-conf">
+                              {l.vt.voltas > 0 && <span className={"p p-sm " + (l.vt.manuel > l.vt.ele ? "p-good" : l.vt.manuel < l.vt.ele ? "p-bad" : "p-muted")}>{l.vt.manuel}–{l.vt.ele}</span>}
+                              {l.vsMMedia != null && Math.abs(l.vsMMedia) >= 0.05 && <span className={"scout-prev" + (l.vsMMedia > 0 ? " is-good" : " is-bad")}>{fmtSignTipo(l.vsMMedia, 1)}</span>}
                             </span>
                           : <span className="scout-sem">–</span>}
                       </td>
@@ -644,58 +653,98 @@ export default function Scout({
                         {l.proximas.length || <span className="scout-sem">–</span>}
                       </td>
                     )}
-                    {colsDepois.map(extraTd(l))}
+                    {colsDepoisV.map(extraTd(l))}
                   </tr>
                   {isOpen && (
                     <tr className="scout-detalhe">
                       <td colSpan={nCols} className="u-ta-left">
-                        {detExtra && <div className="u-mb-8px">{detExtra}</div>}
-                        {l.ult.length > 0 && (
-                          <table className="sc-lb scout-table u-w-max-content u-mb-6px">
-                            <thead><tr><th className="u-ta-left">Últimos torneios</th><th>Data</th><th>Lugar</th><th>Voltas</th><th>Pancadas</th><th>±par</th><th title="SD oficial da FPG (média das voltas)">SD</th></tr></thead>
-                            <tbody>
-                              {l.ult.map((x, i) => (
-                                <tr key={i}>
-                                  <td className="u-ta-left">{x.nome}</td>
-                                  <td>{shortDateSlash(x.data)}</td>
-                                  <td>{x.lugar != null ? lugar(x.lugar, undefined, x.field) : x.estado ? <span className="scout-wd">{x.estado}</span> : <span className="scout-sem" title="Prova de clube — sem classificação">–</span>}</td>
-                                  <td>{x.voltas || "–"}</td>
-                                  <td>{x.pancadas ?? "–"}</td>
-                                  <td>{x.toPar != null ? <span className={x.toPar <= 0 ? "c-good fw-600" : undefined}>{fmtToPar(x.toPar)}</span> : "–"}</td>
-                                  <td>{x.sd != null ? <SDPill sd={x.sd} /> : <span className="scout-sem">–</span>}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        )}
-                        {nM ? (
-                          <table className="sc-lb scout-table u-w-max-content u-mb-6px">
-                            <thead><tr><th className="u-ta-left">Prova em comum com o Manuel</th><th>Data</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel, por volta de 18 buracos (só as voltas que os dois jogaram)">Por volta</th><th>Voltas</th></tr></thead>
-                            <tbody>
-                              {l.sc!.m!.map((x, i) => {
-                                const pv = porVolta([x]);
-                                return (
-                                  <tr key={i}>
-                                    <td className="u-ta-left">{x[1]}</td>
-                                    <td>{x[0] ? shortDateSlash(x[0]) : "–"}</td>
-                                    <td>{lugar(x[2])}</td>
-                                    <td>{lugar(x[3])}</td>
-                                    <td>{pv != null ? <span className={"scout-topar" + (pv > 0.05 ? " is-good" : pv < -0.05 ? " is-bad" : "")}>{fmtSignTipo(pv, 1)}</span> : "–"}</td>
-                                    <td>{x[5] ?? "–"}</td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-                        ) : <div className="muted fs-12 u-mb-6px">Ainda não jogou nenhuma prova com o Manuel.</div>}
-                        {l.proximas.length > 0 && (
-                          <div className="fs-12">
-                            <span className="muted">Próximos: </span>
-                            {l.proximas.map((x, i) => (
-                              <span key={x.t}>{i > 0 && <span className="muted"> · </span>}{x.name} <span className="muted">{x.escalao} · {shortDateSlash(x.date)}</span></span>
-                            ))}
+                        {/* Blocos lado a lado, à largura toda (20/11/2026: era uma coluna
+                            estreita encostada à esquerda — «feio e confuso»). */}
+                        <div className="scout-det">
+                          {detExtra && <div className="scout-det-card scout-det-linha">{detExtra}</div>}
+                          {l.ult.length > 0 && (
+                            <div className="scout-det-card">
+                              <div className="scout-det-tit">Últimos torneios</div>
+                              <div className="u-ox-auto u-pb-6px"><table className="dtable dtable-sm">
+                                <thead><tr><th className="u-ta-left">Torneio</th><th>Data</th><th>Lugar</th><th>Voltas</th><th>Pancadas</th><th>±par</th><th title="SD oficial da FPG (média das voltas)">SD</th></tr></thead>
+                                <tbody>
+                                  {l.ult.map((x, i) => (
+                                    <tr key={i}>
+                                      <td className="u-ta-left">{x.nome}</td>
+                                      <td>{shortDateSlash(x.data)}</td>
+                                      <td>{x.lugar != null ? lugar(x.lugar, undefined, x.field) : x.estado ? <span className="scout-wd">{x.estado}</span> : <span className="scout-sem" title="Prova de clube — sem classificação">–</span>}</td>
+                                      <td>{x.voltas || "–"}</td>
+                                      <td>{x.pancadas ?? "–"}</td>
+                                      <td>{x.toPar != null ? <span className={x.toPar <= 0 ? "c-good fw-600" : undefined}>{fmtToPar(x.toPar)}</span> : "–"}</td>
+                                      <td>{x.sd != null ? <SDPill sd={x.sd} /> : <span className="scout-sem">–</span>}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table></div>
+                            </div>
+                          )}
+                          <div className="scout-det-card">
+                            <div className="scout-det-tit">
+                              Com o Manuel
+                              {l.vt.voltas > 0 && <span className={"p p-sm u-ml-8px " + (l.vt.manuel > l.vt.ele ? "p-good" : l.vt.manuel < l.vt.ele ? "p-bad" : "p-muted")} title="Voltas ganhas (menos pancadas nessa volta), em todas as provas em comum">{fraseVoltas(l.vt, l.name.split(" ")[0])}</span>}
+                              {nM > 0 && <span className="muted fs-12 u-fw-500" title={fraseConfrontos(l.frente, l.atras, nM, l.vsMMedia)}>em provas: Manuel {l.frente}–{l.atras}</span>}
+                            </div>
+                            {nM ? (
+                              <div className="u-ox-auto u-pb-6px"><table className="dtable dtable-sm">
+                                {/* Uma linha por VOLTA (20/11/2026, Mariana: «eu gostava mesmo de ver realmente
+                                    cada volta e não o agregado do torneio»); a prova, a data e os lugares
+                                    finais ocupam as linhas das voltas dela. */}
+                                <thead>
+                                  <tr><th rowSpan={2} className="u-ta-left">Prova</th><th rowSpan={2}>Data</th><th colSpan={2} className="scout-sep">Lugar final</th><th colSpan={4} className="scout-sep">Volta a volta</th></tr>
+                                  <tr><th className="scout-sep">{l.name.split(" ")[0]}</th><th>Manuel</th><th className="scout-sep">Volta</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel nessa volta (− = ele à frente)">Dif.</th></tr>
+                                </thead>
+                                <tbody>
+                                  {l.sc!.m!.map((x, i) => {
+                                    const pares = x[9]?.length ? x[9] : null;
+                                    const n = pares?.length ?? 1;
+                                    const cabeca = (
+                                      <>
+                                        <td rowSpan={n} className="u-ta-left">{x[1]}</td>
+                                        <td rowSpan={n}>{x[0] ? shortDateSlash(x[0]) : "–"}</td>
+                                        <td rowSpan={n} className="scout-sep">{lugar(x[2])}</td>
+                                        <td rowSpan={n}>{lugar(x[3])}</td>
+                                      </>
+                                    );
+                                    const dif = (d: number) => <span className={"scout-prev" + (d > 0 ? " is-good" : d < 0 ? " is-bad" : "")}>{d === 0 ? "=" : fmtSignTipo(d, 0)}</span>;
+                                    if (!pares) {
+                                      // Prova antiga sem as voltas guardadas: o total.
+                                      const pv = porVolta([x]);
+                                      return (
+                                        <tr key={i} className="scout-prova">
+                                          {cabeca}
+                                          <td className="scout-sep" colSpan={3}><span className="muted fs-11" title="Esta fonte não guarda as pancadas de cada volta — só a diferença nas voltas que os dois jogaram">sem as pancadas de cada volta</span></td>
+                                          <td>{pv != null ? <span className={"scout-prev" + (pv > 0.05 ? " is-good" : pv < -0.05 ? " is-bad" : "")}>{fmtSignTipo(pv, 1)}</span> : "–"}</td>
+                                        </tr>
+                                      );
+                                    }
+                                    return pares.map(([r, gJ, gM], k) => (
+                                      <tr key={`${i}-${r}`} className={k === 0 ? "scout-prova" : undefined}>
+                                        {k === 0 && cabeca}
+                                        <td className="scout-sep muted">R{r}</td>
+                                        <td className={gJ < gM ? "fw-700" : undefined}>{gJ}</td>
+                                        <td className={gM < gJ ? "fw-700" : undefined}>{gM}</td>
+                                        <td>{dif(gJ - gM)}</td>
+                                      </tr>
+                                    ));
+                                  })}
+                                </tbody>
+                              </table></div>
+                            ) : <div className="muted fs-12">Ainda não jogou nenhuma prova com o Manuel.</div>}
+                            {l.proximas.length > 0 && (
+                              <div className="fs-12 u-mt-8px">
+                                <span className="muted">Próximos: </span>
+                                {l.proximas.map((x, i) => (
+                                  <span key={x.t}>{i > 0 && <span className="muted"> · </span>}{x.name} <span className="muted">{x.escalao} · {shortDateSlash(x.date)}</span></span>
+                                ))}
+                              </div>
+                            )}
                           </div>
-                        )}
+                        </div>
                       </td>
                     </tr>
                   )}

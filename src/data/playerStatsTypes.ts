@@ -24,6 +24,8 @@ export interface PlayerStats {
   hcpDelta3m: number | null;
   formAlert: "hot" | "cold" | null;
   bestGross: number | null;
+  /** Melhor Differential dos últimos 12 meses (enrich-players.js, desde 20/11/2026). */
+  bestSD12m?: number | null;
   avgGross5: number | null;
   avgGross20: number | null;
   /** Nº de holes-in-one (gross 1 em par 3/4) nos scorecards do jogador.

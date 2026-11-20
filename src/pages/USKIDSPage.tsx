@@ -835,7 +835,7 @@ export default function USKidsFieldPage() {
     <KidsLinkCtx.Provider value={kidsMap}>
     <KidsLinkFallbackCtx.Provider value={arMapCtxValue}>
     <DataSourcesProvider tournaments={[]}>
-    <div className="tourn-layout u-h-calc-100vh-52px">
+    <div className="tourn-layout">
 
       {/* Torneios e Resultados: o CircuitShell, como as outras páginas de
           circuito (20/10/2026). Os controlos da página entram na barra dele. */}

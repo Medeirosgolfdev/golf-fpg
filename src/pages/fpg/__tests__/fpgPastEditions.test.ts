@@ -221,8 +221,9 @@ describe("buildFpgManuelH2H — provas FPG em comum com o Manuel, pelo federado"
       ]),
     ];
     const h = buildFpgManuelH2H(pool);
-    expect(h.get("52393")).toEqual([["2026-09-12", "T1", 1, 2, -2]]);
-    expect(h.get("54907")).toEqual([["2026-09-12", "T1", 9, 2, 15]]);
+    // [data, prova, lugar dele, lugar do Manuel, diferença, voltas, buracos, voltas ganhas dele, do Manuel]
+    expect(h.get("52393")).toEqual([["2026-09-12", "T1", 1, 2, -2, 1, 18, 1, 0, [[1, 78, 80]]]]);
+    expect(h.get("54907")).toEqual([["2026-09-12", "T1", 9, 2, 15, 1, 18, 0, 1, [[1, 95, 80]]]]);
     expect(h.has("52884")).toBe(false);
   });
 });

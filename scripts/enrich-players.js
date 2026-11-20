@@ -223,10 +223,17 @@ for (const fed of targetFeds) {
     : null;
 
   /* ── Gross stats ── */
-  const grosses = allRounds.filter(r => r.gross != null).map(r => r.gross);
+  // Só voltas com cartão: gross > 0 e < 900 (20/11/2026 — uma volta WD gravada com
+  // gross 0 dava «melhor volta 0» ao Ziyang Guo, 57904).
+  const temCartao = (g) => typeof g === "number" && g > 0 && g < 900;
+  const grosses = allRounds.filter(r => temCartao(r.gross)).map(r => r.gross);
   const avgGross5 = avg(grosses.slice(0, 5));
-  const grosses12m = allRounds.filter(r => r.gross != null && now - r.dateSort <= MS_12M).map(r => r.gross);
+  const no12m = (r) => now - r.dateSort <= MS_12M;
+  const grosses12m = allRounds.filter(r => temCartao(r.gross) && no12m(r)).map(r => r.gross);
   const bestGross = grosses12m.length > 0 ? Math.min(...grosses12m) : null;
+  // Melhor Differential do último ano (o «5» que a Mariana procurava — 20/11/2026).
+  const sds12m = comSD.filter(no12m).map(r => parseFloat(r.sd));
+  const bestSD12m = sds12m.length > 0 ? Math.min(...sds12m) : null;
 
   /* ── HCP Trend ── */
   let hcpTrend = "stable", hcpDelta3m = null;
@@ -272,7 +279,7 @@ for (const fed of targetFeds) {
     avgSD5: r(avgSD5), avgSD8: r(avgSD8), avgSD20: r(raw.avgSD20),
     lastSD: r(raw.lastSD), currentHcp: r(raw.currentHcp),
     hcpTrend, hcpDelta3m, formAlert,
-    bestGross, avgGross5: r(avgGross5), avgGross20: r(raw.avgGross20),
+    bestGross, bestSD12m: r(bestSD12m), avgGross5: r(avgGross5), avgGross20: r(raw.avgGross20),
     aces: canonical?.aces ?? 0,
   };
 

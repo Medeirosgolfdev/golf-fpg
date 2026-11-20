@@ -128,7 +128,7 @@ export default function RecentTournamentsPage() {
   );
 
   return (
-    <div className="tourn-layout u-h-calc-100vh-52px">
+    <div className="tourn-layout">
       <CircuitToolbarSlotCtx.Provider value={{ lead, trail, hideTitle: true }}>
         <CircuitShell
           entries={entries}
