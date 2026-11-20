@@ -81,6 +81,11 @@
     nome = meta.tournament?.name || nome;
     respostas[`GetMeta:${t}`] = meta;
     const rondas = meta.tournament?.rounds || 1;
+    // Dia de cada volta: a R2 é no dia a seguir ao da R1, e assim por diante. Antes desse dia
+    // não se pede a volta (nem se lhe conta um pedido por escalão em cada corrida).
+    const mIni = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(meta.tournament?.start_date || "");
+    const hoje = new Date().toISOString().slice(0, 10);
+    const diaDaVolta = (r) => mIni ? new Date(Date.UTC(+mIni[3], +mIni[1] - 1, +mIni[2] + r - 1)).toISOString().slice(0, 10) : null;
     console.log(`🏆 ${nome} (t=${t}) · ${rondas} volta(s) · ${Object.keys(meta.flights).length} escalões`);
     const porAG = {};
     for (const [fid, f] of Object.entries(meta.flights)) if (!porAG[f.age_group]) porAG[f.age_group] = { fid, f };
@@ -90,21 +95,26 @@
       let guardadas = 0, falta = "";
       for (let r = 1; r <= rondas; r++) {
         const guardada = memoria[`${fid}:${r}`];
+        if (!guardada && r > 1 && diaDaVolta(r) && diaDaVolta(r) > hoje) break;
         const paginas = guardada || await flightNaVolta(fid, r, f.registered);
         if (!paginas) { falta = "falhou o pedido"; break; }
         const e = guardada ? { estado: "acabada" } : estadoDaVolta(paginas, r);
         if (e.estado === "por jogar") break;
         if (guardada) deMemoria++;
+        else if (e.estado === "acabada") { novas++; memoria[`${fid}:${r}`] = paginas; lembrar(); }
         else {
-          novas++;
-          if (e.estado === "acabada") { memoria[`${fid}:${r}`] = paginas; lembrar(); }
+          // Volta a meio: só conta como novidade se mudou desde a última corrida (buracos
+          // lançados por jogador) — senão gravava um ficheiro igual em cada corrida.
+          const assinatura = Object.values(Object.assign({}, ...Object.values(paginas))).filter(j => j.status === 1)
+            .map(j => `${j.first} ${j.last}:${(j.rounds?.[String(r)]?.strokes || []).join(",")}`).sort().join("|");
+          if (memoria[`meio:${fid}:${r}`] !== assinatura) { novas++; memoria[`meio:${fid}:${r}`] = assinatura; lembrar(); }
         }
         for (const [p, fp] of Object.entries(paginas)) respostas[`GetPlayerTeeTimes:${fid}:${r}:${p}`] = { flight_players: fp };
         guardadas = r;
-        if (e.estado === "a meio") { falta = `R${r} a meio (${e.acabaram}/${e.n} acabaram)`; break; }
+        if (e.estado === "a meio") { falta = `R${r} a meio (${e.acabaram}/${e.n} com resultado)`; break; }
       }
-      linhas.push({ escalao: esc, jogadores: f.registered, voltas_guardadas: guardadas ? `R1–R${guardadas}`.replace("R1–R1", "R1") : "—", estado: falta || (guardadas === rondas ? "acabou o torneio" : guardadas ? `R${guardadas} acabada` : "ainda não começou") });
-      console.log(`  ${guardadas ? "✅" : "⏳"} ${esc}: ${guardadas ? `até à R${guardadas}` : "ainda não começou"}${falta ? ` · ${falta}` : ""} · ${pedidos} pedidos (${deMemoria} volta(s) já guardadas, sem pedido)`);
+      linhas.push({ escalao: esc, jogadores: f.registered, voltas_guardadas: guardadas ? `R1–R${guardadas}`.replace("R1–R1", "R1") : "—", estado: falta || (guardadas === rondas ? "acabou o torneio" : guardadas ? `R${guardadas} acabada` : "sem resultados publicados") });
+      console.log(`  ${guardadas ? "✅" : "⏳"} ${esc}: ${guardadas ? `até à R${guardadas}` : "sem resultados publicados"}${falta ? ` · ${falta}` : ""} · ${pedidos} pedidos (${deMemoria} volta(s) já guardadas, sem pedido)`);
       if (recusa) break;
     }
   } catch (err) {
