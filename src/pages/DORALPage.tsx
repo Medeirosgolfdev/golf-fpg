@@ -15,7 +15,7 @@ import { nameMatch, type EvoEntry } from "../hooks/useEvoComparison";
 import { EvoSummary, tagEvo } from "../ui/evo";
 import type { CircuitDivision } from "../ui/circuit/types";
 import { intlScorecardOptions } from "../data/intlScorecard";
-import { doralEntryToTournament, type DoralEntry } from "../data/major/doral";
+import { doralAdmissions, doralEntryToTournament, type DoralEntry } from "../data/major/doral";
 import { MUTED } from "../ui/tableCells";
 import ToPar from "../ui/ToPar";
 
@@ -162,9 +162,14 @@ export function doralMajorDivision(entry: DoralEntry, evo: Map<string, EvoEntryD
     key: entry.id,
     escalao: entry.category,
     tabLabel: entry.category,
-    hasManuel: entry.players.some((p) => isM(p.name)),
-    links: entry.sourceUrl ? [{ label: "GolfGenius", url: entry.sourceUrl, icon: "🔗" }] : undefined,
+    hasManuel: entry.players.some((p) => isM(p.name)) || !!entry.accepted?.some((a) => isM(a.name)),
+    links: [
+      ...(entry.sourceUrl ? [{ label: "GolfGenius", url: entry.sourceUrl, icon: "🔗" }] : []),
+      ...(entry.acceptedUrl ? [{ label: "Lista de aceites", url: entry.acceptedUrl, icon: "📋" }] : []),
+    ],
     results,
+    // Lista de aceites (antes do torneio) → aba «Inscrições» e field do Scout.
+    admissions: doralAdmissions(entry),
     scOptions: doralScorecardOptions(entry),
     siLabel: "m",
     evoCols,

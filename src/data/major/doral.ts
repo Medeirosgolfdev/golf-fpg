@@ -13,6 +13,9 @@
 import { holesByMajority, intlCountryCell, isNoCardGross } from "../intlCommon";
 import type { Tournament as FPGTournament } from "../fpgTypes";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
+import type { FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
+import { isPtCountry } from "../../utils/flagUtils";
+import { sexoDaProva } from "../../utils/tournamentSex";
 
 /* ── Types ─────────────────────────────────────────────────── */
 export interface DoralRound {
@@ -50,12 +53,32 @@ export interface DoralDivision {
   courseRating?: number;
   slope?: number;
   ratingNota?: string;
+  /** Campo DESTE ano (2026: tudo no Red Tiger — obras), por cima do do escalão
+   *  (DORAL_DIVISION_META). Campo diferente = os metros e o CR/Slope do escalão
+   *  não servem e ficam de fora. */
+  course?: string;
+  /** Lista de ACEITES publicada antes do torneio (`scrape-doral-aceites.js`). */
+  accepted?: DoralAccepted[];
   players: DoralPlayer[];
+}
+/** Jogador da lista de aceites: «Apelido, Nome» e país ISO-2 (vazio se a lista
+ *  trazia um país que não se reconhece — o original fica em `countryRaw`). */
+export interface DoralAccepted {
+  name: string;
+  country: string;
+  countryRaw?: string;
+  /** Escalão como vinha escrito, quando era gralha provada (ex.: «Boys 14 & 16»). */
+  divisionRaw?: string;
 }
 export interface DoralFile {
   tournament: string;
   year: number;
   source: string;
+  /** Datas oficiais (o ficheiro de um ano por jogar ainda não tem voltas). */
+  startDate?: string;
+  endDate?: string;
+  /** De onde veio a lista de aceites e quando foi publicada. */
+  acceptedList?: { url: string; published: string | null; total: number };
   divisions: DoralDivision[];
 }
 
@@ -82,6 +105,13 @@ export interface DoralEntry {
   metresTotal?: number;
   sourceUrl: string;
   players: DoralPlayer[];
+  /** Lista de aceites deste escalão (nomes já «Nome Apelido»). */
+  accepted?: DoralAccepted[];
+  /** Data de publicação da lista e o endereço dela. */
+  acceptedPublished?: string | null;
+  acceptedUrl?: string;
+  /** Data de início oficial (idades na lista de aceites). */
+  dateStart?: string;
 }
 
 /* ── Ficheiros de dados ─────────────────────────────────────── */
@@ -89,6 +119,10 @@ export interface DoralEntry {
    tolerados graciosamente pelo loader — só aparecem na UI os que existirem.
    Para scrapar um ano novo: `node scripts/scrape-golfgenius-v3.js --year YYYY` */
 export const DORAL_FILES: { url: string; sourceUrl: string }[] = [
+  {
+    url: "/data/ftm_doral_2026.json",
+    sourceUrl: "https://tftm-2026firstteemiamidoraljrclassic.golfgenius.com/pages/6172157",
+  },
   {
     url: "/data/ftm_doral_2025.json",
     sourceUrl: "https://2025firstteemiamidoraljrclassic.golfgenius.com/pages/5506943",
@@ -208,7 +242,11 @@ export function normalizeDoralFile(raw: DoralFile, sourceUrl: string): DoralEntr
     // "Boys 14 & 15" (com ampersand) mas o DORAL_DIVISION_META tem "Boys 14-15" (hífen).
     // Tenta primeiro o raw, depois a versão normalizada.
     const metaKeyNorm = normalizeDoralCategory(div.division);
-    const meta = DORAL_DIVISION_META[div.division] ?? DORAL_DIVISION_META[metaKeyNorm] ?? { course: "", metres: [], metresTotal: 0 };
+    const metaEsc = DORAL_DIVISION_META[div.division] ?? DORAL_DIVISION_META[metaKeyNorm];
+    // Campo do ano diferente do habitual do escalão → metros/CR/Slope do escalão não servem.
+    const meta: DivMeta = metaEsc && (!div.course || div.course === metaEsc.course)
+      ? metaEsc
+      : { course: div.course ?? "", metres: [], metresTotal: 0 };
     const normCategory = normalizeDoralCategory(div.division);
     return {
       id: `${raw.year}_${normCategory.replace(/\s+/g,"_")}`,
@@ -231,6 +269,12 @@ export function normalizeDoralFile(raw: DoralFile, sourceUrl: string): DoralEntr
       metresTotal: meta.metresTotal || undefined,
       sourceUrl,
       players,
+      ...(div.accepted ? {
+        accepted: div.accepted.map((a) => ({ ...a, name: lastFirstToFirstLast(a.name) })),
+        acceptedPublished: raw.acceptedList?.published ?? null,
+        acceptedUrl: raw.acceptedList?.url,
+      } : {}),
+      ...(raw.startDate ? { dateStart: raw.startDate } : {}),
     };
   });
 }
@@ -254,4 +298,26 @@ export function doralEntryToTournament(entry: DoralEntry): FPGTournament {
     t._sdEstimate = `CR ${entry.cr.toFixed(1)} · Slope ${entry.slope} estimados — ${entry.ratingNota}`;
   }
   return t;
+}
+
+/* ── Lista de aceites → Inscrições (AdmissionsTab partilhado) ── */
+/** A lista de aceites de um escalão no formato das inscrições da FPG — a aba
+ *  «Inscrições» do TournamentDetail e o Scout (field = inscrições enquanto não
+ *  há draw nem resultados). Sem lista → undefined (a aba não aparece). */
+export function doralAdmissions(entry: DoralEntry): FpgAdmissions | undefined {
+  if (!entry.accepted?.length) return undefined;
+  const sex = sexoDaProva(entry.category);
+  const players = entry.accepted.map((a, i): FpgAdmissionPlayer => ({
+    pos: i + 1, fed: null, nome: a.name, clube: null, hcp: null, vac: null, dataInscricao: null,
+    status: "confirmed", country: a.country || null, escalao: entry.category,
+    ...(sex ? { sex } : {}),
+    ...(isPtCountry(a.country) ? { isPortuguese: true } : {}),
+  }));
+  return {
+    name: `Aceites — ${entry.category}`,
+    ...(entry.acceptedPublished ? { date: entry.acceptedPublished } : {}),
+    totalInscritos: players.length,
+    reservas: 0,
+    players,
+  };
 }

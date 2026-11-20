@@ -19,6 +19,38 @@ node scripts/scrape-golfgenius.js                    # 2025 (URL default)
 node scripts/scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrclassic.golfgenius.com/pages/4894994
 ```
 
+**Doral — lista de ACEITES antes do torneio (20/11/2026).** Desde 2026 o field
+é limitado (obras no Doral) e a comissão escolhe quem entra; a lista sai numa
+página de texto do portal (2026: `pages/6172185`, publicada a 16/11).
+`scripts/doral-editions.json` tem, por ano, `acceptedPageId`, `leagueId`, as
+datas oficiais e o campo do ano (`course`; 2026 = Red Tiger para todos, final
+dos 14+ no Blue Monster).
+```bash
+node scripts/scrape-doral-aceites.js --year 2026     # fetch do widget text_pages → accepted[] por escalão
+node scripts/build-major-catalog.js
+```
+- Grava `accepted: [{ name: "Apelido, Nome", country: ISO-2, countryRaw?, divisionRaw? }]`
+  em cada divisão do `ftm_doral_{ano}.json` (`players` ficam vazios até haver
+  resultados) e `acceptedList { url, published, total }` + `startDate`/`endDate` no topo.
+  Leitura e normalização em `scripts/lib/doral-aceites.js` (com teste): país
+  escrito à mão → ISO-2 (desconhecido fica vazio, com o original); gralhas de
+  escalão só corrigidas com prova nos dados (`CORRECCOES` — Henry Sokol
+  «Boys 14 & 16» → 14 & 15, gémeo do Jack, 12-13 em 2024 e 14-15 em 2025).
+- Na `/major`: cada escalão ganha a aba **«Inscrições»** (`doralAdmissions`,
+  `src/data/major/doral.ts`) e o link «Lista de aceites»; as «Edições
+  anteriores», «Scorecards anteriores» e o Scout ligam-se sozinhos pela fonte
+  `doral`. O catálogo conta os aceites como `playerCount` enquanto não há
+  voltas e usa as datas oficiais. Campo do ano ≠ campo habitual do escalão →
+  metros e CR/Slope do escalão não se usam.
+- O Kids 2 (agregador) só leva escalões com resultados — um ano só com a
+  lista não entra lá.
+- Os resultados continuam a vir do `scrape-golfgenius-v3.js --year 2026`
+  (Playwright; página `6172157`), que agora **mantém** a lista, as datas e o
+  campo do ficheiro anterior (`manterAceites`).
+- ⚠ 2026: a lista publicada a 16/11 **não tem Boys 10-11, Boys 12-13 nem
+  Girls 12-13** (em 2025 eram 35 + 73 + 17); o GolfGenius ainda não tem os
+  escalões criados na página de resultados, por isso não há outra fonte.
+
 ---
 
 ## Scripts — MAJOR: campeonatos juvenis internacionais (2026-07-03)

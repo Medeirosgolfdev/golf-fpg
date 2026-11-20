@@ -112,6 +112,8 @@ function normalize(data, fileName, playerMap) {
     // (scraper GolfGenius por vezes falha a coluna POS — calcular pelo ranking
     // de total ascendente dentro do flight).
     inferMissingPositions(results);
+    // Escalão só com a lista de aceites (ano por jogar) → ainda não é um resultado.
+    if (!results.length) continue;
 
     flights.push({
       flightKey: divKey.toLowerCase().replace(/[^a-z0-9]+/g, "_"),
@@ -123,6 +125,7 @@ function normalize(data, fileName, playerMap) {
     });
   }
 
+  if (!flights.length) return null;
   return {
     sourceKey,
     name: data.tournament || `Doral ${year || ""}`.trim(),

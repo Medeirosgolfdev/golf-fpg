@@ -252,6 +252,10 @@ function buildDoral() {
     if (!year) continue;
     const players = d.divisions.flatMap((dv) => dv.players || []);
     const valid = players.filter((p) => p.total != null);
+    // Lista de aceites (scrape-doral-aceites.js): antes de haver resultados o
+    // torneio lista-se com os aceites (como o preField dos GolfGenius).
+    const aceites = d.divisions.flatMap((dv) => dv.accepted || []);
+    const datas = deriveDatesFromRounds(players, year);
     entries.push({
       id: `doral:${year}`,
       source: "doral",
@@ -261,12 +265,12 @@ function buildDoral() {
       // várias divisões = vários campos → "USA" (o Doral é
       // sempre multi-campo Red Tiger/Golden Palm/…).
       course: d.divisions.length > 1 ? "USA" : undefined,
-      ...deriveDatesFromRounds(players, year),
+      ...(datas.dateStart || !d.startDate ? datas : { dateStart: d.startDate, dateEnd: d.endDate || undefined }),
       roundsCount: maxRounds(valid) || undefined,
-      playerCount: valid.length,
+      playerCount: valid.length || aceites.length,
       divisionCount: d.divisions.length,
-      hasManuel: players.some((p) => isManuelByName(p.name)),
-      hasPt: players.some((p) => isPtCountry(p.country) || isManuelByName(p.name)),
+      hasManuel: players.some((p) => isManuelByName(p.name)) || aceites.some((p) => isManuelByName(p.name)),
+      hasPt: [...players, ...aceites].some((p) => isPtCountry(p.country) || isManuelByName(p.name)),
       escalao: d.divisions.length === 1 ? d.divisions[0].division : undefined,
     });
     addVet(`doral:${year}`, "doral", year, valid);

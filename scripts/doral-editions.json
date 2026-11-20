@@ -74,6 +74,20 @@
       "sourceUrl": "https://2025firstteemiamidoraljrclassic.golfgenius.com/pages/5506943",
       "widgetType": "customized_tournament_results",
       "_note": "leagueId será auto-detectado pelo scraper a partir do iframe da página"
+    },
+    {
+      "year": 2026,
+      "name": "2026 First Tee Miami Doral Jr. Classic",
+      "leagueId": "552157",
+      "primaryPageId": "6172157",
+      "pageIds": ["6172157"],
+      "sourceUrl": "https://tftm-2026firstteemiamidoraljrclassic.golfgenius.com/pages/6172157",
+      "widgetType": "customized_tournament_results",
+      "acceptedPageId": "6172185",
+      "startDate": "2026-12-20",
+      "endDate": "2026-12-23",
+      "course": "Red Tiger",
+      "_note": "Field limitado (obras no Doral): a comissão escolhe quem entra; lista de aceites em pages/6172185 (scripts/scrape-doral-aceites.js). 20/12 treino; 21–22/12 todos os escalões no Red Tiger; 23/12 final dos 14+ no Blue Monster (só quem passa o cut). Golden Palm e Silver Fox não entram em 2026."
     }
   ],
   "divisions": [

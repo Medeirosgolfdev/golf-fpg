@@ -28,6 +28,7 @@
 const { chromium } = require("playwright");
 const fs = require("fs");
 const path = require("path");
+const { manterAceites } = require("./lib/doral-aceites");
 
 const CONFIG_PATH = path.join(__dirname, "doral-editions.json");
 const OUTPUT_DIR  = path.join(__dirname, "..", "public", "data");
@@ -408,7 +409,11 @@ async function scrapeEdition(edition, page, context, opts = {}) {
       const output = await scrapeEdition(ed, page, context, { division: args.division, limit: args.limit });
       const outFile = args.out || path.join(OUTPUT_DIR, `ftm_doral_${ed.year}.json`);
       fs.mkdirSync(path.dirname(outFile), { recursive: true });
-      fs.writeFileSync(outFile, JSON.stringify(output, null, 2), "utf-8");
+      // Lista de aceites, datas e campo do ano (scrape-doral-aceites.js) não vêm
+      // dos resultados — mantêm-se do ficheiro anterior.
+      const anterior = fs.existsSync(outFile) ? JSON.parse(fs.readFileSync(outFile, "utf-8").replace(/^﻿/, "")) : null;
+      const final = manterAceites(anterior, output);
+      fs.writeFileSync(outFile, JSON.stringify(final, null, 2), "utf-8");
       const totalJ  = output.divisions.reduce((a, d) => a + d.players.length, 0);
       const totalOk = output.divisions.reduce((a, d) => a + d.players.filter((p) => p.rounds.length > 0).length, 0);
       console.log(`\n[OK] ${ed.year}: ${output.divisions.length} divisoes, ${totalJ} jogadores, ${totalOk} com scorecards`);
