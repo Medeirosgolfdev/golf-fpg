@@ -107,7 +107,11 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
   -webkit-overflow-scrolling: touch;
   margin-left: calc(-1 * var(--space-inner));
   margin-right: calc(-1 * var(--space-inner));
-  padding-right: 600px;
+  /* À direita, a mesma folga que à esquerda (a tabela tem margin-left). Até 20/11/2026
+     eram 600px (vindos de «majorfixes», Março) — a caixa tinha sempre scroll horizontal,
+     mesmo com a tabela a caber na janela (Mariana: «a minha janela até não precisava desse
+     scroll horizontal»). */
+  padding-right: var(--space-inner);
   /* Reserva espaço para a scrollbar horizontal não sobrepor a última linha
      da tabela — acontecia no Ranking PJA com a Rafaela Pinto cortada. */
   padding-bottom: var(--space-16);

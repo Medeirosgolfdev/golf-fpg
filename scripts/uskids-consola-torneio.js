@@ -41,19 +41,35 @@
     if (!txt) return {};
     try { return JSON.parse(txt); } catch { return null; }
   }
-  /** Um escalão numa volta, página a página até ter todos. null = falhou o pedido. */
-  async function flightNaVolta(fid, r, registados) {
-    const paginas = {}, vistos = new Set();
+  /** Um escalão numa volta numa variante da lista (t=0 ordem do draw, t=1 resultados), página a
+   *  página até ter todos. null = falhou o pedido. */
+  async function listaNaVolta(fid, r, registados, tt) {
+    const todos = {};
     for (let p = 1; p <= 10; p++) {
-      const d = await pedir("GetPlayerTeeTimes", `f=${fid}&r=${r}&p=${p}&t=0`);
+      const d = await pedir("GetPlayerTeeTimes", `f=${fid}&r=${r}&p=${p}&t=${tt}`);
       if (!d) return null;
       const fp = d.flight_players || {};
-      paginas[p] = fp;
-      const antes = vistos.size;
-      for (const pid of Object.keys(fp)) vistos.add(pid);
-      if (vistos.size === antes || vistos.size >= registados) break;
+      const antes = Object.keys(todos).length;
+      Object.assign(todos, fp);
+      if (Object.keys(todos).length === antes || Object.keys(todos).length >= registados) break;
     }
-    return paginas;
+    return todos;
+  }
+  /** As duas variantes juntas: a USKids guarda cada uma em cache e refresca-as em alturas
+   *  diferentes (20/11/2026: às 15:50 a t=1 tinha o Boys 12 e a t=0 não; às 16:00 o contrário —
+   *  teste de t=0..3, todas com os mesmos 21 jogadores). De cada jogador fica a versão com mais
+   *  buracos lançados. Devolve { 1: flight_players } (uma «página» só). null = falhou. */
+  async function flightNaVolta(fid, r, registados) {
+    const listas = [];
+    for (const tt of [0, 1]) {
+      const l = await listaNaVolta(fid, r, registados, tt);
+      if (!l) return null;
+      listas.push(l);
+    }
+    const buracos = (j) => (j?.rounds?.[String(r)]?.strokes || []).filter(x => x > 0).length;
+    const junto = {};
+    for (const l of listas) for (const [pid, j] of Object.entries(l)) if (!junto[pid] || buracos(j) > buracos(junto[pid])) junto[pid] = j;
+    return { 1: junto };
   }
   /** Estado de uma volta: «acabada» (todos com os buracos todos), «a meio» ou «por jogar». */
   function estadoDaVolta(paginas, r) {

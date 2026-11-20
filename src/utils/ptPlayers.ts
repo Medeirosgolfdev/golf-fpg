@@ -15,6 +15,11 @@ import { isPtCountry } from "./flagUtils";
 
 const PT_NAME_EXCEPTIONS: ReadonlyArray<string[]> = [
   ["castro", "ferreira", "ricardo"], // Ricardo Castro Ferreira — St Germain (FR) desde 2026
+  // Jogam em Portugal (federados FPG) mas a USKids dá-lhes bandeira GB (20/11/2026, Mariana:
+  // «não são portugueses, mas jogam em Portugal, podes colocá-los como portugueses?! deixa a
+  // bandeira deles»). Linha destacada; a bandeira continua a da fonte.
+  ["benji", "botham"],   // FPG 59860 (Holywood, Irlanda do Norte, na USKids)
+  ["zeyn", "lababedi"],  // FPG 55498 (St Albans, na USKids)
 ];
 
 export const ptNorm = (s: string | null | undefined): string =>
@@ -27,9 +32,9 @@ export function isPTByName(name: string | null | undefined): boolean {
   return PT_NAME_EXCEPTIONS.some((tokens) => tokens.every((t) => n.includes(t)));
 }
 
-/** Regra da FFG: o país pela regra comum (`isPtCountry`) OU a lista de
- *  excepções de nome (jogadores PT federados noutro país — vale mesmo com a
- *  bandeira FR, por isso NÃO é um recurso para país em falta e fica só na
- *  FFG; decisão de 22/10/2026). */
+/** O país pela regra comum (`isPtCountry`) OU a lista de excepções de nome
+ *  (vale mesmo com outra bandeira — não é um recurso para país em falta).
+ *  Usada na FFG (decisão de 22/10/2026) e, desde 20/11/2026 a pedido da
+ *  Mariana, na USKids (quem joga em Portugal com bandeira estrangeira). */
 export const isPT = (nat: string | null | undefined, flag?: string | null, name?: string | null): boolean =>
   isPtCountry(nat || flag) || isPTByName(name);

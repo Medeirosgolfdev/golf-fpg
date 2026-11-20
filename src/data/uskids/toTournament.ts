@@ -8,6 +8,7 @@
  */
 import type { Tournament as TATournament } from "../fpgTypes";
 import { isPtCountry } from "../../utils/flagUtils";
+import { isPT } from "../../utils/ptPlayers";
 import type { FpgAdmissionPlayer, FpgAdmissions, FpgDraw } from "../nacional2026Loader";
 import { normName as normNameAuto, type AutoRivalPlayer } from "../KIDSdataLoader";
 import { playerIdentity } from "../model/identity";
@@ -115,7 +116,7 @@ export function escalaoToTournament(
           // Português → linha destacada, como nas outras páginas de fora (20/11/2026,
           // Mariana: «temos uma regra para destacar os jogadores portugueses… porque é
           // que ela não funciona no uskids?»). O Manuel tem a dele.
-          _isPortuguese: isPtCountry(j.pais) || undefined,
+          _isPortuguese: isPT(j.pais, null, j.nome) || undefined,
           // Modelo comum (src/data/model): país, sexo e escalão do jogador.
           identity: playerIdentity({ pais: j.pais }, { sex: sexoEscalao(e.nome), escalao: e.nome, escalaoSource: "uskids" }),
         });
@@ -177,7 +178,7 @@ function uskidsDrawToFpg(dr: UskidsDrawRonda): FpgDraw {
     groups: dr.grupos.map((g) => ({
       teeTime: g.tee_time, startHole: g.start_hole ?? null, tee: null,
       players: g.jogadores.map((j) => ({ nome: displayName(j.nome), clube: j.cidade || null, country: j.pais || null,
-        ...(isPtCountry(j.pais) ? { isPortuguese: true } : {}) })),
+        ...(isPT(j.pais, null, j.nome) ? { isPortuguese: true } : {}) })),
     })),
   };
 }
@@ -231,7 +232,7 @@ export function fieldAdmissions(e: FieldEscalao): FpgAdmissions | undefined {
   const players: FpgAdmissionPlayer[] = [
     ...(e.jogadores ?? []).map((j, i): FpgAdmissionPlayer => ({
       ...base, pos: i + 1, nome: displayName(j.nome), clube: j.cidade || null, country: j.pais || null, status: "confirmed",
-      ...(isPtCountry(j.pais) ? { isPortuguese: true } : {}),
+      ...(isPT(j.pais, null, j.nome) ? { isPortuguese: true } : {}),
     })),
     ...(e.removed ?? []).map((r): FpgAdmissionPlayer => ({
       ...base, pos: null, nome: displayName(r.nome), clube: null, country: r.pais || null,
