@@ -1114,8 +1114,20 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
 
   /* O sexo acompanha o jogador escolhido (continua a poder mudar-se à mão) */
   const playerSex = playerFed ? sexOf(playerFed) : null;
+  // O sexo que o jogador pôs sozinho. Sem jogador («HI manual») esse filtro sai e
+  // voltam os ratings M e F de cada tee (20/11/2026, Mariana: «não aparecem os CR e
+  // Slope das senhoras… deve ser bug por vir o Manuel escolhido por default»).
+  // Um sexo escolhido à mão fica.
+  const sexoDoJogador = useRef<SexFilter | null>(null);
   useEffect(() => {
-    if (playerSex) setSexFilter(playerSex);
+    if (playerSex) {
+      sexoDoJogador.current = playerSex;
+      setSexFilter(playerSex);
+    } else if (!playerFed && sexoDoJogador.current) {
+      if (sexFilter === sexoDoJogador.current) setSexFilter("ALL");
+      sexoDoJogador.current = null;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- só ao mudar de jogador
   }, [playerSex, playerFed]);
 
   /* whs20 do jogador — últimas 20 rondas com SD válido (janela WHS real) */
