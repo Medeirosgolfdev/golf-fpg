@@ -1,12 +1,12 @@
 {
-  "geradoEm": "2026-11-19T17:04:31.312Z",
+  "geradoEm": "2026-11-20T21:04:06.067Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 168,
-  "totalCompanheirosUnicos": 200,
+  "totalRondas": 169,
+  "totalCompanheirosUnicos": 202,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 143,
@@ -673,8 +673,8 @@
       ]
     },
     "uskids": {
-      "rondasJogadas": 18,
-      "rondasComDraw": 18,
+      "rondasJogadas": 19,
+      "rondasComDraw": 19,
       "torneiosJogados": 8,
       "torneiosComDraw": 8,
       "torneiosSemDrawDetalhe": []
@@ -693,23 +693,59 @@
       "torneioNome": "Spanish Open 2026",
       "data": "2026-11-20",
       "ronda": 1,
-      "teeTime": "12:54",
+      "teeTime": "13:14",
       "startHole": 1,
       "campo": "San Roque Golf & Resort, The San Roque Club",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 83,
+        "toPar": 11
+      },
       "companheiros": [
         {
           "nome": "Leon Schneitter",
           "fed": null,
           "clube": null,
           "pais": "CH",
-          "score": null
+          "score": {
+            "gross": 71,
+            "toPar": -1
+          }
         },
         {
           "nome": "Maxence DONNAREL",
           "fed": null,
           "clube": null,
           "pais": "FR",
+          "score": {
+            "gross": 77,
+            "toPar": 5
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "USKids",
+      "torneioId": "usk-23132",
+      "torneioNome": "Spanish Open 2026",
+      "data": "2026-11-20",
+      "ronda": 2,
+      "teeTime": "12:18",
+      "startHole": 1,
+      "campo": "San Roque Golf & Resort, The San Roque Club",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Charlie Aldridge",
+          "fed": null,
+          "clube": null,
+          "pais": "GB",
+          "score": null
+        },
+        {
+          "nome": "Lucas Penna",
+          "fed": null,
+          "clube": null,
+          "pais": "ENG",
           "score": null
         }
       ]

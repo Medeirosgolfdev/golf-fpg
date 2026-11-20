@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-11-15T21:03:46.534Z",
-  "total": 1273,
+  "scrapedAt": "2026-11-20T21:04:03.501Z",
+  "total": 1276,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -407332,6 +407332,60 @@
       "draws": {}
     },
     {
+      "ccode": "007",
+      "tcode": "11091",
+      "name": "VI ABERTO CGSS 2026",
+      "date": "2026-11-15",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "VI ABERTO CGSS 2026",
+        "date": "2026-11-15",
+        "totalInscritos": 1,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "rounds": 1,
+        "tcode": "11091",
+        "ccode": "007",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "20877",
+            "nome": "Afonso Bento",
+            "clube": "Santo da Serra",
+            "hcp": 0.1,
+            "vacf": null,
+            "registo": "2026/11/10 12:46",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "177",
+      "tcode": "11238",
+      "name": "GJG Junior TRophy 2026 - Portugal",
+      "date": "2026-11-16",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "177",
+      "tcode": "11240",
+      "name": "GJG Portuguese Junior Classics 2026 - Portugal",
+      "date": "2026-11-20",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "987",
       "tcode": "10263",
       "name": "Torneio Drive Challenge_Preparação 2027 Sub 18",
@@ -409768,7 +409822,7 @@
             "fed": null,
             "nome": "Chloé Lam",
             "clube": null,
-            "hcp": -2.0,
+            "hcp": -2,
             "vac": null,
             "dataInscricao": null,
             "status": "confirmed",
