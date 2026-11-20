@@ -9,6 +9,11 @@
 // volta ainda sem nenhum buraco jogado.
 // Devagar (3 s entre pedidos) e pára à primeira recusa, como o uskids-consola.js.
 //
+// Voltas já ACABADAS não se voltam a pedir (20/11/2026, ela: «escusa de estar sempre a fazer os
+// pedidos dos que já temos»): ficam guardadas neste browser (localStorage do signupanytime, chave
+// `uskidsTorneio:<t>`) e entram no ficheiro sem pedido nenhum. Só se pedem o GetMeta e as voltas a
+// meio ou ainda não vistas. Sem nada de novo, não grava ficheiro. Para esquecer: uskidsEsquecer().
+//
 // Como usar: abrir a página do torneio, por exemplo
 //   https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=23132
 // → F12 → Consola → colar → Enter. ~2 pedidos por escalão e volta (poucos minutos).
@@ -61,8 +66,15 @@
     return { estado: n === js.length ? "acabada" : "a meio", n: js.length, acabaram: n };
   }
 
+  // Voltas acabadas de corridas anteriores: { "<fid>:<volta>": { <página>: flight_players } }.
+  const CHAVE = `uskidsTorneio:${t}`;
+  let memoria = {};
+  try { memoria = JSON.parse(localStorage.getItem(CHAVE) || "{}") || {}; } catch { memoria = {}; }
+  const lembrar = () => { try { localStorage.setItem(CHAVE, JSON.stringify(memoria)); } catch (err) { console.warn("Não consegui guardar as voltas acabadas neste browser:", err); } };
+  window.uskidsEsquecer = () => { try { localStorage.removeItem(CHAVE); } catch { /* nada */ } memoria = {}; console.log(`Esqueci as voltas guardadas do t=${t}.`); };
+
   const respostas = {}, linhas = [];
-  let nome = `t=${t}`;
+  let nome = `t=${t}`, novas = 0, deMemoria = 0;
   try {
     const meta = await pedir("GetMeta", `t=${t}`);
     if (!meta?.flights) throw new Error(`o torneio ${t} não tem escalões publicados`);
@@ -77,16 +89,22 @@
       if (!(f.registered > 0)) continue;
       let guardadas = 0, falta = "";
       for (let r = 1; r <= rondas; r++) {
-        const paginas = await flightNaVolta(fid, r, f.registered);
+        const guardada = memoria[`${fid}:${r}`];
+        const paginas = guardada || await flightNaVolta(fid, r, f.registered);
         if (!paginas) { falta = "falhou o pedido"; break; }
-        const e = estadoDaVolta(paginas, r);
+        const e = guardada ? { estado: "acabada" } : estadoDaVolta(paginas, r);
         if (e.estado === "por jogar") break;
+        if (guardada) deMemoria++;
+        else {
+          novas++;
+          if (e.estado === "acabada") { memoria[`${fid}:${r}`] = paginas; lembrar(); }
+        }
         for (const [p, fp] of Object.entries(paginas)) respostas[`GetPlayerTeeTimes:${fid}:${r}:${p}`] = { flight_players: fp };
         guardadas = r;
         if (e.estado === "a meio") { falta = `R${r} a meio (${e.acabaram}/${e.n} acabaram)`; break; }
       }
       linhas.push({ escalao: esc, jogadores: f.registered, voltas_guardadas: guardadas ? `R1–R${guardadas}`.replace("R1–R1", "R1") : "—", estado: falta || (guardadas === rondas ? "acabou o torneio" : guardadas ? `R${guardadas} acabada` : "ainda não começou") });
-      console.log(`  ${guardadas ? "✅" : "⏳"} ${esc}: ${guardadas ? `até à R${guardadas}` : "ainda não começou"}${falta ? ` · ${falta}` : ""} · ${pedidos} pedidos`);
+      console.log(`  ${guardadas ? "✅" : "⏳"} ${esc}: ${guardadas ? `até à R${guardadas}` : "ainda não começou"}${falta ? ` · ${falta}` : ""} · ${pedidos} pedidos (${deMemoria} volta(s) já guardadas, sem pedido)`);
       if (recusa) break;
     }
   } catch (err) {
@@ -98,6 +116,7 @@
     if (linhas.length) console.table(linhas);
     const comVoltas = linhas.some(l => l.voltas_guardadas !== "—");
     if (!comVoltas) { console.warn("Ainda não há buracos jogados em nenhum escalão — não gravei ficheiro."); return; }
+    if (!novas) { console.log(`Nada de novo desde a última vez (${deMemoria} volta(s) acabadas já guardadas) — não gravei ficheiro.`); return; }
     const agora = new Date();
     const carimbo = `${agora.toISOString().slice(0, 10)}-${String(agora.getHours()).padStart(2, "0")}${String(agora.getMinutes()).padStart(2, "0")}`;
     const ficheiro = {
