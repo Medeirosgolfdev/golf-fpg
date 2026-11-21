@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-11-21T01:02:11.020Z",
+  "lastUpdated": "2026-11-21T21:03:43.436Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-11-21",
   "summary": {
-    "total": 1838,
+    "total": 1839,
     "complete": 838,
-    "in_progress": 1,
+    "in_progress": 2,
     "future": 1,
     "stale": 10,
     "excluded": 984,
@@ -696,6 +696,27 @@
       "has_manuel": false,
       "status": "excluded",
       "excluded_reason": "Drive sem Manuel — coberto pelo pipeline drive-data"
+    },
+    {
+      "ccode": "007",
+      "tcode": "11090",
+      "name": "TAÇA 1937 by Clube de Golf Santo da Serra",
+      "date": "2026-11-21",
+      "rounds": 1,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": false,
+      "player_count": 0,
+      "players_with_scorecards": 0,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": null,
+      "scorecards_ratio": 0,
+      "full_scorecards_ratio": 0,
+      "has_manuel": false,
+      "status": "in_progress"
     },
     {
       "ccode": "177",

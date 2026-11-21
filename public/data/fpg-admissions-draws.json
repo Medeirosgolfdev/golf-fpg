@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-11-20T21:04:03.501Z",
-  "total": 1276,
+  "scrapedAt": "2026-11-21T21:03:42.626Z",
+  "total": 1277,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -407378,6 +407378,18 @@
       "tcode": "11240",
       "name": "GJG Portuguese Junior Classics 2026 - Portugal",
       "date": "2026-11-20",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "11090",
+      "name": "TAÇA 1937 by Clube de Golf Santo da Serra",
+      "date": "2026-11-21",
       "expectedYear": "2026",
       "admissions": {
         "error": "param-errors",
