@@ -397,11 +397,12 @@ function offsetOf9(h: HoleScores): number {
   return !h.g.slice(0, 9).some(jogado) && h.g.slice(9, 18).some(jogado) ? 9 : 0;
 }
 
-function recomputeECForAllCourses(
+export function recomputeECForAllCourses(
   data: CourseData[],
   holes: Record<string, HoleScores>,
   ec: Record<string, EclecticEntry[]>,
   ecdet: Record<string, Record<string, EclecticEntry>>,
+  opts?: { extrasSeSozinhas?: boolean },
 ): void {
   for (const course of data) {
     if (!course.rounds || course.rounds.length === 0) continue;
@@ -432,8 +433,14 @@ function recomputeECForAllCourses(
     };
     const buckets = new Map<string, Bucket>();
     const offOf = new Map<string, number>();
+    // Voltas Extra (provas internacionais, p.ex. USKids): por omissão ficam de
+    // fora (e o campo não entra na vista «Ecléticos»). Só a vista «Campos» pede
+    // `extrasSeSozinhas`, para um campo só com Extras mostrar a tabela tipo
+    // eclético com as voltas (22/11/2026, San Roque fed 52884).
+    const usarExtras = !!opts?.extrasSeSozinhas && !course.rounds.some(r =>
+      !r._isTreino && !r._isExtra && !r._isTeamEvent && holes[r.scoreId]?.g && holes[r.scoreId]?.p);
     for (const r of course.rounds) {
-      if (r._isTreino || r._isExtra || r._isTeamEvent) continue;
+      if (r._isTreino || r._isTeamEvent || (r._isExtra && !usarExtras)) continue;
       const h = holes[r.scoreId];
       if (!h || !h.g || !h.p) continue;
       const teeKey = r.teeKey || "";

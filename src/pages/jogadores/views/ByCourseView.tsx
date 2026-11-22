@@ -8,8 +8,8 @@
  * resumo por tee); o deep-link legado ?view=by_course_analysis mapeia aqui.
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { PlayerPageData, CourseData, RoundData } from "../../../data/playerDataLoader";
-import { eclecticForRound } from "../../../data/playerDataLoader";
+import type { PlayerPageData, CourseData, RoundData, EclecticEntry } from "../../../data/playerDataLoader";
+import { eclecticForRound, recomputeECForAllCourses } from "../../../data/playerDataLoader";
 import { norm } from "../../../utils/format";
 import { normKey } from "../../../utils/teeColors";
 import { fmtStb } from "../../../utils/scoreDisplay";
@@ -47,8 +47,17 @@ function ByCourseRow({ course, data, openScorecard, openScorecardId }: {
     return rr;
   }, [course.rounds, activeTee]);
 
-  const ecList = data.EC[courseKey] || [];
-  const ecDet = data.ECDET[courseKey] || {};
+  // Campo só com voltas Extra (p.ex. USKids no estrangeiro): não tem eclético
+  // nos dados (fica fora da vista «Ecléticos»), mas aqui mostra-se a mesma
+  // tabela com todas as voltas, calculada só para esta vista (22/11/2026).
+  const { ecList, ecDet } = useMemo(() => {
+    const list = data.EC[courseKey] || [];
+    if (list.length > 0) return { ecList: list, ecDet: data.ECDET[courseKey] || {} };
+    const ec: Record<string, EclecticEntry[]> = {};
+    const det: Record<string, Record<string, EclecticEntry>> = {};
+    recomputeECForAllCourses([course], data.HOLES, ec, det, { extrasSeSozinhas: true });
+    return { ecList: Object.values(ec)[0] || [], ecDet: Object.values(det)[0] || {} };
+  }, [data, course, courseKey]);
   const holeStats = data.HOLE_STATS[courseKey] || {};
   const courseLinkKey = findCourseKey(course.course);
 
@@ -58,10 +67,15 @@ function ByCourseRow({ course, data, openScorecard, openScorecardId }: {
   useEffect(() => {
     if (!open || activeTee) return;
     const keys = Object.keys(holeStats);
-    if (keys.length === 0) return;
+    if (keys.length === 0) {
+      // Sem estatísticas por buraco (campo só com voltas Extra): o tee do eclético.
+      const ecTee = ecList[0]?.teeKey;
+      if (ecTee != null) setActiveTee(ecTee);
+      return;
+    }
     const best = keys.reduce((a, b) => ((holeStats[a]?.nRounds ?? 0) >= (holeStats[b]?.nRounds ?? 0) ? a : b));
     setActiveTee(best);
-  }, [open, activeTee, holeStats]);
+  }, [open, activeTee, holeStats, ecList]);
 
   // Clique numa bolinha de tee do eclético — só muda o filtro (sem scroll automático).
   const handleSelectTee = useCallback((tk: string) => setActiveTee(tk), []);
