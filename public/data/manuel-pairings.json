@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-11-22T00:02:33.452Z",
+  "geradoEm": "2026-11-22T21:04:18.329Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -768,21 +768,30 @@
       "teeTime": "11:59",
       "startHole": 1,
       "campo": "San Roque Golf & Resort, The San Roque Club",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 79,
+        "toPar": 7
+      },
       "companheiros": [
         {
           "nome": "Manuel Luis Arjona Serrano",
           "fed": null,
           "clube": null,
           "pais": "ES",
-          "score": null
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
         },
         {
           "nome": "Teodor Georgiev",
           "fed": null,
           "clube": null,
           "pais": "BG",
-          "score": null
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
         }
       ]
     },
