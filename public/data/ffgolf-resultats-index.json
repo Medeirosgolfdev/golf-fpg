@@ -1,8 +1,49 @@
 {
-  "generatedAt": "2026-11-21T02:46:56.233Z",
+  "generatedAt": "2026-11-22T01:33:38.323Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1284,
+  "total": 1285,
   "tournaments": [
+    {
+      "file": "01-00-2601494169.json",
+      "trnId": "2601494169",
+      "partKey": "fd9c456407cc4e6114f6c03bce53ac6e",
+      "name": "Mini Tour U10 PACA - Finale",
+      "formule": "Simple",
+      "date": "21/11/2026",
+      "dateIso": "2026-11-21",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 2,
+      "totalPlayers": 15,
+      "course": [
+        "Le Château - Aller",
+        "Le Château - Retour"
+      ],
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "U10G",
+          "players": 9
+        },
+        {
+          "serieId": "26",
+          "label": "U10F",
+          "players": 6
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "rms9": null,
+      "ligues": [
+        "00"
+      ]
+    },
     {
       "file": "03-04-2601492704.json",
       "trnId": "2601492704",
