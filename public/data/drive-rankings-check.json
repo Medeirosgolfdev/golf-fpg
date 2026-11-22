@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-16T00:34:43.760Z",
+  "checkedAt": "2026-11-22T00:50:05.117Z",
   "year": "2026",
   "rankings": {
     "DC_MADM10G26": {
@@ -841,11 +841,15 @@
       "escalao": null,
       "type": "gross",
       "sex": "M",
-      "issues": [],
-      "bestN": 4,
+      "issues": [
+        "João Miguel Pereira: oficial=915 nosso(melhores-6)=957.5 (4 provas nossas vs 4 oficiais)",
+        "João Miguel Pereira 2026-10-17: pts oficial=165 (pos 2) vs nosso=207.5 (pos 1)",
+        "Bernardo Costa Pinheiro: oficial=435.5 nosso(melhores-6)=393 (5 provas nossas vs 5 oficiais)",
+        "Bernardo Costa Pinheiro 2026-10-17: pts oficial=250 (pos 1) vs nosso=207.5 (pos 1)"
+      ],
+      "bestN": 6,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-18",
-      "provasIgnoradas": 75
+      "oficialAte": "2026-11-14"
     },
     "RCAS26": {
       "code": "RCAS26",
@@ -854,11 +858,15 @@
       "escalao": null,
       "type": "gross",
       "sex": "F",
-      "issues": [],
-      "bestN": 4,
+      "issues": [
+        "Eva Silva: oficial=849.3 nosso(melhores-6)=806.8 (6 provas nossas vs 6 oficiais)",
+        "Eva Silva 2026-11-14: pts oficial=250 (pos 1) vs nosso=207.5 (pos 1)",
+        "Laura Santos: oficial=394 nosso(melhores-6)=436.5 (5 provas nossas vs 5 oficiais)",
+        "Laura Santos 2026-11-14: pts oficial=165 (pos 2) vs nosso=207.5 (pos 1)"
+      ],
+      "bestN": 6,
       "bestNmisses": 0,
-      "oficialAte": "2026-07-18",
-      "provasIgnoradas": 14
+      "oficialAte": "2026-11-14"
     },
     "RFDC_26N10G": {
       "code": "RFDC_26N10G",
@@ -1154,52 +1162,52 @@
     "aquapor|1": {
       "oficial": 250,
       "nosso": 250,
-      "amostras": "250×8"
+      "amostras": "250×12"
     },
     "aquapor|2": {
       "oficial": 165,
       "nosso": 165,
-      "amostras": "165×7 129.5×2"
+      "amostras": "165×11 129.5×2"
     },
     "aquapor|3": {
       "oficial": 94,
       "nosso": 94,
-      "amostras": "94×7"
+      "amostras": "94×10 84.5×2"
     },
     "aquapor|4": {
       "oficial": 75,
       "nosso": 75,
-      "amostras": "75×7 69.5×2"
+      "amostras": "75×10 69.5×2"
     },
     "aquapor|5": {
       "oficial": 64,
       "nosso": 64,
-      "amostras": "64×6 58.5×2"
+      "amostras": "64×8 58.5×4 54×3"
     },
     "aquapor|6": {
-      "oficial": 45.3,
+      "oficial": 53,
       "nosso": 53,
-      "amostras": "45.3×6 53×5"
+      "amostras": "53×7 45.3×6"
     },
     "aquapor|7": {
       "oficial": 45,
       "nosso": 45,
-      "amostras": "45×4 41.5×4"
+      "amostras": "45×6 41.5×4"
     },
     "aquapor|8": {
       "oficial": 38,
       "nosso": 38,
-      "amostras": "38×3 35.5×2"
+      "amostras": "38×5 35.5×4"
     },
     "aquapor|9": {
       "oficial": 33,
       "nosso": 33,
-      "amostras": "33×5 30×3 31.5×2"
+      "amostras": "33×7 30×3 31.5×2"
     },
     "aquapor|10": {
       "oficial": 30,
       "nosso": 30,
-      "amostras": "30×5 27.7×3"
+      "amostras": "30×5 28.5×4 27.7×3"
     },
     "aquapor|11": {
       "oficial": 27,
@@ -1209,17 +1217,17 @@
     "aquapor|12": {
       "oficial": 23.2,
       "nosso": 26,
-      "amostras": "23.2×5 24.3×3 26×3"
+      "amostras": "23.2×5 26×4 24.3×3 25×2"
     },
     "aquapor|13": {
-      "oficial": 24,
+      "oficial": 23,
       "nosso": 24,
-      "amostras": "24×3 23.5×2"
+      "amostras": "23×3 24×3 23.5×2"
     },
     "aquapor|14": {
       "oficial": 23,
       "nosso": 23,
-      "amostras": "23×4"
+      "amostras": "23×4 22×3"
     },
     "aquapor|15": {
       "oficial": 21.5,
@@ -1229,27 +1237,27 @@
     "aquapor|16": {
       "oficial": 20,
       "nosso": 21,
-      "amostras": "20×3 21×1"
+      "amostras": "20×6 21×1"
     },
     "aquapor|17": {
       "oficial": 18.8,
       "nosso": 20,
-      "amostras": "18.8×4 19×3 20×3"
+      "amostras": "18.8×4 20×4 19×3"
     },
     "aquapor|18": {
       "oficial": 18.5,
       "nosso": 19,
-      "amostras": "18.5×2 19×1"
+      "amostras": "18.5×4 19×1"
     },
     "aquapor|19": {
       "oficial": 18,
       "nosso": 18,
-      "amostras": "18×2"
+      "amostras": "18×4"
     },
     "aquapor|20": {
       "oficial": 9,
       "nosso": 18,
-      "amostras": "9×4"
+      "amostras": "9×6"
     },
     "challenge|1": {
       "oficial": 250,
@@ -1543,7 +1551,7 @@
       "challenge-final pos 11: valores oficiais inexplicados [80(1×)] — nosso=41",
       "tour pos 8: valores oficiais inexplicados [35(1×)] — nosso=38"
     ],
-    "ok": 96,
-    "divergent": 6
+    "ok": 94,
+    "divergent": 8
   }
 }
