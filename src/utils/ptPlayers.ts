@@ -21,6 +21,11 @@ const PT_NAME_EXCEPTIONS: ReadonlyArray<string[]> = [
   ["benji", "botham"],   // FPG 59860 (Holywood, Irlanda do Norte, na USKids)
   ["zeyn", "lababedi"],  // FPG 55498 (St Albans, na USKids)
   ["ziyang", "guo"],     // FPG 57904 — Estoril, PJA; bandeira CN na USKids (Mariana, 20/11/2026)
+  // Portuguesa (FPG 48971) que joga em Espanha com licença RFEG AM25371959 (Costa Ballena) — a
+  // RFEG não lhe dá país (23/11/2026, Mariana: «identifica a sabrina como portuguesa para
+  // conseguirmos sempre a encontrar, e ela estar destacada colorida… como as regras para todos
+  // os outros portugueses»).
+  ["sabrina", "crisostomo"],
 ];
 
 export const ptNorm = (s: string | null | undefined): string =>
@@ -35,7 +40,8 @@ export function isPTByName(name: string | null | undefined): boolean {
 
 /** O país pela regra comum (`isPtCountry`) OU a lista de excepções de nome
  *  (vale mesmo com outra bandeira — não é um recurso para país em falta).
- *  Usada na FFG (decisão de 22/10/2026) e, desde 20/11/2026 a pedido da
- *  Mariana, na USKids (quem joga em Portugal com bandeira estrangeira). */
+ *  Usada na FFG (decisão de 22/10/2026), desde 20/11/2026 a pedido da
+ *  Mariana na USKids (quem joga em Portugal com bandeira estrangeira) e, desde
+ *  23/11/2026, em Espanha (`rfegPlayerFlag`). */
 export const isPT = (nat: string | null | undefined, flag?: string | null, name?: string | null): boolean =>
   isPtCountry(nat || flag) || isPTByName(name);

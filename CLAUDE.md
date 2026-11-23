@@ -503,8 +503,10 @@ GolfBox) · `/ffg` · `/rfeg` · `/fig` · `/global-junior` · `/egr` · `/wagr`
   Scout). Casar só por licença → 6 dígitos finais → nome + ano de nascimento,
   com as guardas de `scripts/lib/rfeg-oficial.js`. → [ffg-rfeg.md](docs/claude/ffg-rfeg.md)
 - **Destaque PT nas fontes de fora e nos draws: sempre `isPtCountry`**
-  (`utils/flagUtils.ts`: PT, PRT, POR, Portugal), nunca `country === "PT"`. Só a
-  FFG soma as excepções por nome (`isPT`, `utils/ptPlayers.ts`).
+  (`utils/flagUtils.ts`: PT, PRT, POR, Portugal), nunca `country === "PT"`. A FFG, a
+  USKids e Espanha (`rfegPlayerFlag`) somam a lista única de portugueses por nome
+  (`isPT`/`isPTByName`, `utils/ptPlayers.ts`: portugueses com licença ou bandeira de
+  outro país — Ricardo Castro Ferreira, Sabrina Crisóstomo…); acrescentar lá.
 - **MAJOR:** correr `node scripts/build-major-catalog.js` sempre que um ficheiro
   de dados MAJOR muda (o workflow fá-lo em push). → [major.md](docs/claude/major.md)
 

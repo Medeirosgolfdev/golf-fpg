@@ -11,6 +11,7 @@ import { adaptFcg, fcgToFPGTournament, type FCGDetail, type MinimalRFEGShape } f
 import { juntarVoltasFcg } from "../fcgVoltas";
 import { formatPlayerName } from "../../utils/playerUtils";
 import { displayName, todayIso } from "../../utils/format";
+import { isPtCountry } from "../../utils/flagUtils";
 import type { TotalsPlayer } from "../model/types";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../fpgTypes";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
@@ -118,6 +119,9 @@ export function buildAdmissions(data: RFEGDetail): FpgAdmissions {
         status,
         dob: esDateToIso(p.dob),
         country: rfegPlayerFlag(p.name, p.pais),
+        // Linha destacada dos portugueses (bandeira PT ou a lista única por nome), como nas
+        // inscrições das outras páginas — 23/11/2026, Sabrina Crisóstomo (licença espanhola).
+        ...(isPtCountry(rfegPlayerFlag(p.name, p.pais)) ? { isPortuguese: true } : {}),
         escalao: escaloEsForPlayer(p.catEdad, p.dob, data.meta.dateStart),
         teeName: p.teeMeters ? `${p.teeMeters} m` : null,
       });

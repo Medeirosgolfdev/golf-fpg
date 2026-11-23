@@ -5,6 +5,7 @@
  * Tirado da RFEGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { stripAccents } from "../../utils/normName";
+import { isPTByName } from "../../utils/ptPlayers";
 
 /** O RFEGolf devolve o país por extenso em espanhol ("ESPAÑA", "PORTUGAL").
  *  Convertemos para código ISO-2 para a função flag() (que aceita ISO/EN/PT). */
@@ -86,9 +87,12 @@ export function rfegPaisLookup(
 }
 
 /** Bandeira a mostrar para um jogador na página de Espanha: override curado de
- *  nacionalidade primeiro, senão a regra geral (só estrangeiros levam bandeira). */
+ *  nacionalidade primeiro, depois os portugueses da lista única por nome (`isPTByName`,
+ *  23/11/2026 — portugueses com licença espanhola, ex. Sabrina Crisóstomo: PT e linha
+ *  destacada, como nas outras páginas), senão a regra geral (só estrangeiros levam bandeira). */
 export function rfegPlayerFlag(name: string | null | undefined, pais: string | null | undefined): string | undefined {
   const ov = RFEG_NAT_OVERRIDE[rfegNatNorm(name)];
   if (ov) return ov;
+  if (isPTByName(name)) return "PT";
   return rfegForeignFlag(pais);
 }
