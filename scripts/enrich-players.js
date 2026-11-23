@@ -36,12 +36,18 @@ const HCP_MIN_PLAUSIBLE = -10;
  * juniores têm menos do que isto; só downsample em casos extremos. */
 const HIST_MAX_PTS = 160;
 
+/* As voltas dos últimos 24 meses nunca se cortam no downsample: a tabela de
+ * evolução da /jogadores-por-ano tira daí o melhor SD e o SD médio do período
+ * (23/11/2026) e uma volta cortada fazia desaparecer o melhor SD. */
+const HIST_KEEP_RECENT_DAYS = 731;
+
 /**
- * Converte raw.hcpHistory ([{d:ms, h}]) num histórico compacto e robusto:
+ * Converte raw.hcpHistory ([{d:ms, h, sd}]) num histórico compacto e robusto:
  *  - exclui HCP não plausível (> 54 ou < -10) e valores não finitos; mantém os plus (negativos)
- *  - resolução diária (1 ponto/dia, fica o último), d em dias inteiros
- *  - downsample uniforme se exceder HIST_MAX_PTS (preservando extremos)
- * Formato: [[dayInt, h1dp], ...] — dayInt = ms/86400000, h com 1 casa.
+ *  - resolução diária (1 ponto/dia, fica o último HCP), d em dias inteiros
+ *  - os SD oficiais de TODAS as voltas desse dia vão a seguir ao HCP
+ *  - downsample uniforme da parte com mais de 24 meses se exceder HIST_MAX_PTS
+ * Formato: [[dayInt, h1dp, sd1?, sd2?…], ...] — dayInt = ms/86400000, h e sd com 1 casa.
  */
 function compactHcpHistory(hh) {
   if (!Array.isArray(hh) || hh.length === 0) return null;
@@ -49,16 +55,27 @@ function compactHcpHistory(hh) {
   for (const p of hh) {
     const d = Number(p.d), h = Number(p.h);
     if (!isFinite(d) || d <= 0 || !isFinite(h) || h < HCP_MIN_PLAUSIBLE || h > HCP_MAX_PLAUSIBLE) continue;
-    byDay.set(Math.round(d / 86400000), Math.round(h * 10) / 10); // último do dia vence
+    const day = Math.round(d / 86400000);
+    const e = byDay.get(day) || { h: 0, sds: [] };
+    e.h = Math.round(h * 10) / 10; // último do dia vence
+    const sd = p.sd == null || p.sd === "" ? NaN : Number(p.sd);
+    if (isFinite(sd) && sd > -20 && sd < 100) e.sds.push(Math.round(sd * 10) / 10);
+    byDay.set(day, e);
   }
-  let pts = [...byDay.entries()].sort((a, b) => a[0] - b[0]);
+  let pts = [...byDay.entries()].sort((a, b) => a[0] - b[0]).map(([day, e]) => [day, e.h, ...e.sds]);
   if (pts.length < 2) return null;
   if (pts.length > HIST_MAX_PTS) {
-    const step = (pts.length - 1) / (HIST_MAX_PTS - 1);
-    const keep = [];
-    for (let i = 0; i < HIST_MAX_PTS; i++) keep.push(pts[Math.round(i * step)]);
-    // garantir extremos e remover duplicados consecutivos do arredondamento
-    pts = keep.filter((p, i) => i === 0 || p[0] !== keep[i - 1][0]);
+    const limite = Math.round(Date.now() / 86400000) - HIST_KEEP_RECENT_DAYS;
+    const recentes = pts.filter(p => p[0] >= limite);
+    const antigos = pts.filter(p => p[0] < limite);
+    const quota = Math.max(2, HIST_MAX_PTS - recentes.length);
+    if (antigos.length > quota) {
+      const step = (antigos.length - 1) / (quota - 1);
+      const keep = [];
+      for (let i = 0; i < quota; i++) keep.push(antigos[Math.round(i * step)]);
+      // garantir extremos e remover duplicados consecutivos do arredondamento
+      pts = [...keep.filter((p, i) => i === 0 || p[0] !== keep[i - 1][0]), ...recentes];
+    }
   }
   return pts;
 }

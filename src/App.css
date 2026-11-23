@@ -245,6 +245,20 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  padding: 0 var(--space-6);
 }
 
+/* Todos os controlos da linha com a mesma altura dos selects (23/11/2026: na
+   /jogadores-por-ano os chips tinham 26 px, o «Nossos/TODOS» 30 e o «Ano» letra
+   11 — a barra parecia desalinhada). */
+.jogadores-page .toolbar > .tourn-tab,
+.jogadores-page .toolbar > .btn,
+.jogadores-page .toolbar > .segmented-toggle {
+ height: 28px;
+ box-sizing: border-box;
+ display: inline-flex;
+ align-items: center;
+ font-size: var(--fs-12);
+}
+.jogadores-page .toolbar > .segmented-toggle { padding-top: 0; padding-bottom: 0; }
+
 .jogadores-page .toolbar .input {
  height: 28px;
  font-size: var(--fs-12);

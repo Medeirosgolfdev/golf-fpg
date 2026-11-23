@@ -7,14 +7,18 @@
  *      os restantes em cinza ténue), eixo Y intuitivo (HCP melhor no topo) e
  *      outliers já filtrados na origem (HCP > 54 removido no pipeline);
  *   2) uma tabela ORDENÁVEL de métricas de evolução por jogador
- *      (início → actual, Δ, melhor, declive por mês).
+ *      (início → actual, Δ, melhor, declive por mês, melhor SD e SD médio do
+ *      período, última volta).
  *
  * Alimentado pelos jogadores filtrados da /jogadores-por-ano + hcp-history.json.
  */
 import { useEffect, useMemo, useState } from "react";
 import type { HcpHistoryDb } from "../data/hcpHistoryLoader";
 import { computeEvoMetrics, pointsInWindow, type EvoMetrics } from "../utils/hcpEvolution";
-import { fmtHcp, fmtSign, fmtMonthShort } from "../utils/format";
+import { fmtHcp, fmtSign, fmtMonthShort, fmtDayMonthYear } from "../utils/format";
+import { isoDeData } from "../utils/dias";
+import { SDPill } from "./tournamentPrimitives";
+import FichaLink from "./FichaLink";
 import { useSort, compareNullsLast } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import SexBadge from "./SexBadge";
@@ -45,7 +49,10 @@ const PERIODS: { v: number; label: string }[] = [
 ];
 
 type Row = { p: EvoPlayer; m: EvoMetrics };
-type SortKey = "nome" | "pontos" | "inicio" | "actual" | "delta" | "best" | "slope";
+type SortKey = "nome" | "pontos" | "inicio" | "actual" | "delta" | "best" | "slope" | "bestsd" | "avgsd" | "ultima";
+
+/** Dia de um ponto do histórico («17 Mar 2026»). */
+const diaDe = (ms: number) => fmtDayMonthYear(isoDeData(new Date(ms)));
 
 
 export default function HcpEvolution({ players, history, showChart = true }: {
@@ -55,6 +62,7 @@ export default function HcpEvolution({ players, history, showChart = true }: {
   const [focused, setFocused] = useState<string[]>([]);
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("delta", "asc", {
     pontos: "desc", best: "asc", inicio: "asc", actual: "asc", slope: "asc", delta: "asc", nome: "asc",
+    bestsd: "asc", avgsd: "asc", ultima: "desc",
   });
 
   // Estável por período (não recalcular Date.now() a cada render — mudava a
@@ -99,6 +107,9 @@ export default function HcpEvolution({ players, history, showChart = true }: {
         case "delta":  return dir * (a.m.delta - b.m.delta);
         case "best":   return dir * (a.m.best - b.m.best);
         case "slope":  return compareNullsLast(a.m.slopePerMonth, b.m.slopePerMonth, dir);
+        case "bestsd": return compareNullsLast(a.m.bestSD, b.m.bestSD, dir);
+        case "avgsd":  return compareNullsLast(a.m.avgSD, b.m.avgSD, dir);
+        case "ultima": return dir * (a.m.lastDate - b.m.lastDate);
         default:       return 0;
       }
     });
@@ -244,6 +255,9 @@ export default function HcpEvolution({ players, history, showChart = true }: {
               <SortableHdr k="delta" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Variação na janela (negativo = melhorou)">Δ</SortableHdr>
               <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Melhor HCP na janela">Melhor</SortableHdr>
               <SortableHdr k="slope" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Declive da regressão (pontos de HCP por mês; negativo = a melhorar)">/mês</SortableHdr>
+              <SortableHdr k="bestsd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Melhor score differential oficial do período (passar por cima para ver o dia)">Melhor SD</SortableHdr>
+              <SortableHdr k="avgsd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Média dos score differentials oficiais do período">SD médio</SortableHdr>
+              <SortableHdr k="ultima" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Dia da volta mais recente que já está no WHS da FPG (as voltas do fim-de-semana entram depois do processamento de domingo/segunda)">Últ. volta</SortableHdr>
             </tr>
           </thead>
           <tbody>
@@ -255,7 +269,8 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                   <td className="r u-c-text-3">{i + 1}</td>
                   <td className={on ? "u-fw-700 u-ws-nowrap" : "u-fw-500 u-ws-nowrap"}>
                     {on && <Tint className="hcp-evo-dot" bg={colorFor(r.p.fed)} />}
-                    {r.p.name}
+                    {/* O nome abre a ficha (23/11/2026, «falta link para a pág deles»). */}
+                    <FichaLink nome={r.p.name} fed={r.p.fed} className="player-link u-c-accent" />
                   </td>
                   <td>{r.p.sex ? <SexBadge sex={r.p.sex} /> : MUTED}</td>
                   <td className="r">{r.m.nPts}</td>
@@ -269,6 +284,15 @@ export default function HcpEvolution({ players, history, showChart = true }: {
                           {fmtSign(r.m.slopePerMonth, 2)}
                         </span>}
                   </td>
+                  <td className="r">
+                    {r.m.bestSD == null ? MUTED
+                      : <SDPill sd={r.m.bestSD} hcp={r.m.end}
+                          title={r.m.bestSDDate != null ? `Melhor SD do período: ${diaDe(r.m.bestSDDate)}` : undefined} />}
+                  </td>
+                  <td className="r" title={r.m.nSD ? `${r.m.nSD} voltas com SD` : undefined}>
+                    {r.m.avgSD == null ? MUTED : r.m.avgSD.toFixed(1)}
+                  </td>
+                  <td className="r u-ws-nowrap">{diaDe(r.m.lastDate)}</td>
                 </tr>
               );
             })}

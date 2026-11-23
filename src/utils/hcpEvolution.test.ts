@@ -75,3 +75,26 @@ describe("computeEvoMetrics", () => {
     expect(m.end).toBe(20);
   });
 });
+
+describe("computeEvoMetrics — SD do período (23/11/2026)", () => {
+  it("melhor SD, dia dele e SD médio só das voltas dentro da janela", () => {
+    const pts: HcpPoint[] = [
+      { d: ago(400), h: 12, sds: [2.0] },        // fora de 12 meses: não conta
+      { d: ago(200), h: 11, sds: [9.5, 7.1] },   // dois cartões no mesmo dia
+      { d: ago(30), h: 10, sds: [12.4] },
+      { d: ago(5), h: 9.6 },                     // dia sem SD
+    ];
+    const m = computeEvoMetrics(pts, ago(366))!;
+    expect(m.bestSD).toBe(7.1);
+    expect(m.bestSDDate).toBe(ago(200));
+    expect(m.nSD).toBe(3);
+    expect(m.avgSD).toBe(9.7); // (9.5 + 7.1 + 12.4) / 3
+  });
+
+  it("sem SD nenhum → null (ficheiros antigos sem SD)", () => {
+    const m = computeEvoMetrics([{ d: ago(20), h: 15 }, { d: ago(2), h: 14 }], 0)!;
+    expect(m.bestSD).toBeNull();
+    expect(m.avgSD).toBeNull();
+    expect(m.nSD).toBe(0);
+  });
+});

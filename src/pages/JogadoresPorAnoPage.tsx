@@ -54,6 +54,8 @@ import { ToggleChip } from "../ui/FilterField";
 import NumberInput from "../ui/NumberInput";
 import Select from "../ui/Select";
 import { meanArr } from "../utils/mathUtils";
+import { isPtCountry } from "../utils/flagUtils";
+import { useFedCountries } from "../ui/InscricoesComponents";
 const ESC_IDX = new Map(ESC_ORDER.map((e, i) => [e, i]));
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -116,6 +118,7 @@ export default function JogadoresPorAnoPage() {
   const [hcpMax, setHcpMax] = useState<string>("");
   const [activeOnly, setActiveOnly] = useState(false);
   const [withStatsOnly, setWithStatsOnly] = useState(false);
+  const [ptOnly, setPtOnly] = useState(false);               // só portugueses
   const [order, setOrder] = useState<"asc" | "desc">("asc"); // ordem das coortes (ano)
   const [combine, setCombine] = useState(false);             // juntar anos numa tabela única
 
@@ -126,6 +129,8 @@ export default function JogadoresPorAnoPage() {
 
   useEffect(() => { loadPlayerStats().then(setStatsDb); }, []);
   useEffect(() => { loadHcpHistory().then(setHcpHistory); }, []);
+  // País por federado (fora PT; correcções de nationalities.json) — a mesma fonte das bandeiras.
+  const fedCountries = useFedCountries();
 
   // Lazy-load federados.json só quando o utilizador escolhe TODOS
   useEffect(() => {
@@ -203,13 +208,17 @@ export default function JogadoresPorAnoPage() {
       const ps = statsDb[p.fed];
       if (activeOnly && !(ps && ps.roundsLast12m > 0)) return false;
       if (withStatsOnly && !ps) return false;
+      // Português = país da FPG (PT por omissão) com as correcções de nationalities.json.
+      // NÃO usa a lista de nomes do ptPlayers: lá estão também estrangeiros que jogam em
+      // Portugal (Guo Ziyang, Zeyn Lababedi…) só para ficarem destacados (Mariana, 23/11/2026).
+      if (ptOnly && !isPtCountry(fedCountries.get(p.fed) ?? "PT")) return false;
       if (ql) {
         const hay = `${p.name} ${clubName(p.club)} ${p.fed}`.toLowerCase();
         if (!hay.includes(ql)) return false;
       }
       return true;
     });
-  }, [allRows, q, sexFilter, escSet, yearSet, regionFilter, hcpMax, activeOnly, withStatsOnly, statsDb]);
+  }, [allRows, q, sexFilter, escSet, yearSet, regionFilter, hcpMax, activeOnly, withStatsOnly, ptOnly, fedCountries, statsDb]);
 
   /* ── Agrupar por ano de nascimento ─────────────────────────── */
   const cohorts = useMemo(() => {
@@ -258,7 +267,7 @@ export default function JogadoresPorAnoPage() {
   const activeFiltersCount =
     (q.trim() ? 1 : 0) + (sexFilter !== "ALL" ? 1 : 0) + (escSet.size > 0 ? 1 : 0) +
     (yearSet.size > 0 ? 1 : 0) + (regionFilter !== "ALL" ? 1 : 0) + (hcpMax.trim() ? 1 : 0) +
-    (activeOnly ? 1 : 0) + (withStatsOnly ? 1 : 0);
+    (activeOnly ? 1 : 0) + (withStatsOnly ? 1 : 0) + (ptOnly ? 1 : 0);
 
   // Juntar várias coortes numa só tabela: automático quando 2+ anos estão
   // seleccionados, ou forçado pela checkbox "Tabela única".
@@ -275,7 +284,7 @@ export default function JogadoresPorAnoPage() {
 
   const clearFilters = () => {
     setQ(""); setSexFilter("ALL"); setEscSet(new Set()); setYearSet(new Set());
-    setRegionFilter("ALL"); setHcpMax(""); setActiveOnly(false); setWithStatsOnly(false);
+    setRegionFilter("ALL"); setHcpMax(""); setActiveOnly(false); setWithStatsOnly(false); setPtOnly(false);
   };
 
   /* ── Métricas agregadas de um conjunto de rows ─────────────── */
@@ -394,6 +403,8 @@ export default function JogadoresPorAnoPage() {
           title="Mostrar só jogadores com HCP igual ou inferior a este valor" />
 
         <ToggleChip checked={activeOnly} onChange={setActiveOnly} label="Só activos (12m)" />
+        <ToggleChip checked={ptOnly} onChange={setPtOnly} label="🇵🇹 Só portugueses"
+          title="Só jogadores de nacionalidade portuguesa (país na FPG)" />
         <ToggleChip checked={withStatsOnly} onChange={setWithStatsOnly} label="Só com estatísticas" />
         <ToggleChip checked={combine} onChange={setCombine} label="Tabela única"
           title="Junta todos os anos seleccionados numa só tabela, em vez de uma tabela por ano" />
@@ -414,6 +425,8 @@ export default function JogadoresPorAnoPage() {
         <ErrorState message="Erro ao carregar a lista de federados (federados.json)" detail={fedsError} />
       )}
 
+      {/* Filtros de ano e escalão — afastados da barra (antes colavam-se a ela) */}
+      <div className="u-mt-8px">
       {/* Filtro por ANO de nascimento — anos recentes individuais, antigos em escalões de 5 anos */}
       {yearsPresent.length > 0 && (
         <FilterPillRow label="Ano:" active={yearKeys}
@@ -427,13 +440,14 @@ export default function JogadoresPorAnoPage() {
 
       {/* Filtro rápido por escalão */}
       {escaloesPresent.length > 0 && (
-        <FilterPillRow label="Escalão:" active={escSet} onChange={keys => setEscSet(new Set(keys))}
+        <FilterPillRow label="Escalão:" className="u-mb-0" active={escSet} onChange={keys => setEscSet(new Set(keys))}
           items={escaloesPresent.map(e => ({ key: e, label: e }))} />
       )}
+      </div>
 
       {/* Métricas de evolução de HCP da selecção filtrada (tabela, sem gráfico) */}
       {evoPlayers.length > 0 && (
-        <div className="u-m-12px-0">
+        <div>
           <HcpEvolution players={evoPlayers} history={hcpHistory} showChart={false} />
         </div>
       )}

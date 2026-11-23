@@ -2,14 +2,16 @@
  * hcpHistoryLoader.ts — Histórico compacto de HCP por jogador
  *
  * Carrega /data/hcp-history.json (gerado por scripts/enrich-players.js).
- * Formato no ficheiro: { [fed]: [[dayInt, hcp], ...] }, onde dayInt = ms/86400000
- * e hcp já vem filtrado (≤ 54, sem provisórios/lixo) e arredondado a 1 casa.
+ * Formato no ficheiro: { [fed]: [[dayInt, hcp, sd1?, sd2?…], ...] }, onde dayInt = ms/86400000
+ * e hcp já vem filtrado (≤ 54, sem provisórios/lixo) e arredondado a 1 casa; a seguir
+ * vêm os SD oficiais das voltas desse dia (desde 23/11/2026; ficheiros antigos não os têm).
  *
  * Usado pela /jogadores-por-ano para a secção de análise de evolução de HCP.
  */
 import { cachedFetchJson, invalidateCache, memoAsync } from "./fetchCache";
 
-export type HcpPoint = { d: number; h: number }; // d em ms (epoch), h = índice
+/** d em ms (epoch), h = índice, sds = SD das voltas desse dia (pode faltar). */
+export type HcpPoint = { d: number; h: number; sds?: number[] };
 export type HcpHistoryDb = Record<string, HcpPoint[]>;
 
 const MS_DAY = 86400000;
@@ -20,7 +22,7 @@ const URL_HCP_HISTORY = "/data/hcp-history.json";
  *  chamada seguinte tenta outra vez (10/11/2026, `memoAsync`). */
 const _load = memoAsync<HcpHistoryDb>(
   async () => {
-    const raw = await cachedFetchJson<Record<string, [number, number][]>>(URL_HCP_HISTORY);
+    const raw = await cachedFetchJson<Record<string, number[][]>>(URL_HCP_HISTORY);
     if (!raw) {
       console.warn("hcp-history.json não encontrado — gráfico de evolução desactivado");
       return {};
@@ -30,7 +32,7 @@ const _load = memoAsync<HcpHistoryDb>(
       const arr = raw[fed];
       if (!Array.isArray(arr) || arr.length < 2) continue;
       out[fed] = arr
-        .map(([day, h]) => ({ d: day * MS_DAY, h }))
+        .map(([day, h, ...sds]): HcpPoint => (sds.length ? { d: day * MS_DAY, h, sds } : { d: day * MS_DAY, h }))
         .filter(p => isFinite(p.d) && isFinite(p.h));
     }
     invalidateCache(URL_HCP_HISTORY); // o cru já não é preciso: fica só o convertido
