@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-11-22T21:04:16.475Z",
+  "lastUpdated": "2026-11-23T00:35:24.552Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-11-22",
+  "today": "2026-11-23",
   "summary": {
     "total": 1848,
     "complete": 841,
-    "in_progress": 6,
+    "in_progress": 5,
     "future": 1,
     "stale": 10,
     "excluded": 988,
     "missing_admissions": 0,
     "missing_classif": 0,
-    "missing_scorecards": 0,
+    "missing_scorecards": 1,
     "missing_draws": 2,
     "unknown": 0
   },
@@ -930,7 +930,7 @@
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "missing_scorecards"
     },
     {
       "ccode": "177",
