@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-16T15:23:11.376Z",
+  "generated_at": "2026-11-23T17:48:19.880Z",
   "years": [
     2019,
     2020,
@@ -11,10 +11,10 @@
     2026
   ],
   "maxAge": 18,
-  "totalArchive": 7972,
+  "totalArchive": 7974,
   "totalTargets": 938,
-  "scraped": 1,
-  "skipped": 937,
+  "scraped": 0,
+  "skipped": 938,
   "events": [
     {
       "id": "8604",
@@ -53653,15 +53653,15 @@
     {
       "id": "12036",
       "year": 2026,
-      "name": "Gara Nazionale 54",
+      "name": "Gara Nazionale Conca D'Oro",
       "ageGroup": "Adult",
       "ageNum": 99,
       "country": "ITA",
-      "startDateRaw": "13. Nov",
-      "endDateRaw": "15. Nov",
-      "startDate": "2026-11-13",
-      "endDate": "2026-11-15",
-      "egrPoints": 1500,
+      "startDateRaw": "6. Nov",
+      "endDateRaw": "8. Nov",
+      "startDate": "2026-11-06",
+      "endDate": "2026-11-08",
+      "egrPoints": 2118,
       "scraped": false
     },
     {
@@ -111579,7 +111579,7 @@
       "endDateRaw": "21. Nov",
       "startDate": "2026-11-19",
       "endDate": "2026-11-21",
-      "egrPoints": 2000,
+      "egrPoints": 1367.5,
       "scraped": false
     },
     {
@@ -111622,6 +111622,34 @@
       "startDate": "2026-12-15",
       "endDate": "2026-12-17",
       "egrPoints": 2000,
+      "scraped": false
+    },
+    {
+      "id": "12994",
+      "year": 2026,
+      "name": "Gara Nazionale Conca D'Oro",
+      "ageGroup": "Adult",
+      "ageNum": 99,
+      "country": "ITA",
+      "startDateRaw": "6. Nov",
+      "endDateRaw": "8. Nov",
+      "startDate": "2026-11-06",
+      "endDate": "2026-11-08",
+      "egrPoints": 572,
+      "scraped": false
+    },
+    {
+      "id": "12995",
+      "year": 2026,
+      "name": "Gara Nazionale 54",
+      "ageGroup": "Adult",
+      "ageNum": 99,
+      "country": "ITA",
+      "startDateRaw": "13. Nov",
+      "endDateRaw": "15. Nov",
+      "startDate": "2026-11-13",
+      "endDate": "2026-11-15",
+      "egrPoints": 2034,
       "scraped": false
     }
   ]

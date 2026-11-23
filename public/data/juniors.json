@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-23T16:32:23.674Z",
+  "generatedAt": "2026-11-23T17:56:10.333Z",
   "juniors": [
     {
       "id": "u391389",
@@ -29159,8 +29159,6 @@
       "canonicalName": "Alessandro Cesario",
       "aliases": [],
       "dob": null,
-      "birthYear": 2007,
-      "birthYearSource": "fig",
       "sex": "M",
       "nationality": "IT",
       "country": "IT",
@@ -29172,10 +29170,6 @@
           "ageGroupCurrent": "Boys 15-18"
         },
         "_secondary": [
-          {
-            "sourceId": "fig",
-            "key": "cfe00930-c189-e311-9439-b140d5dbde8f"
-          },
           {
             "sourceId": "doral",
             "key": "doral-405999015"
@@ -29265,22 +29259,6 @@
         "uskids-6838",
         "uskids-6840",
         "uskids-7731",
-        "fig-0108d960-5fcf-ef11-b8e8-00224884dbac",
-        "fig-0cdb19f6-70b3-ee11-a569-6045bd8f124f",
-        "fig-0cfc151c-8e68-f011-bec3-000d3a218cad",
-        "fig-11cfd5d4-ad95-ed11-aad1-000d3a2e4778",
-        "fig-1f4a90a3-7f74-ec11-8943-000d3a2d6a9d",
-        "fig-2ab8f9f6-76a4-ec11-983f-000d3a4bd27e",
-        "fig-54c298a6-62b0-ee11-a569-6045bd8f124f",
-        "fig-5b7465de-2f90-ed11-aad1-000d3a2e48af",
-        "fig-64f91537-9291-ed11-aad1-000d3a2e4778",
-        "fig-6a4c7e83-5ecf-ef11-b8e8-00224884dbac",
-        "fig-83766fa4-6ab0-ee11-a569-6045bd8f124f",
-        "fig-9df6c1bd-92ce-ef11-b8e8-6045bd98046e",
-        "fig-ec908924-6db0-ee11-a569-6045bd8f124f",
-        "fig-b38cfe73-f37d-ec11-8d21-00224881b0a4",
-        "fig-d066b64d-ae73-ec11-8943-000d3a2d6a9d",
-        "fig-eba7b803-ad73-ec11-8943-000d3a2d6a9d",
         "doral-ftm_doral_2018",
         "doral-ftm_doral_2019",
         "doral-ftm_doral_2022",
@@ -29329,97 +29307,12 @@
           "hcpExact": -1,
           "source": "gjgl",
           "label": "GJG Season Kickoff 2026 NUMBER 2"
-        },
-        {
-          "date": "2025-10-01",
-          "hcpExact": -3,
-          "source": "fig",
-          "label": "GC Milano Junior Trophy By AJGA IPS - WAGR"
-        },
-        {
-          "date": "2025-07-16",
-          "hcpExact": -3.7,
-          "source": "fig",
-          "label": "Pgai Junior Trophy (Valido WAGR)"
-        },
-        {
-          "date": "2025-05-10",
-          "hcpExact": -1.5,
-          "source": "fig",
-          "label": "Campionato Nazionale Ragazzi Medal - Trofeo Silvio Marazza"
-        },
-        {
-          "date": "2025-04-19",
-          "hcpExact": -0.5,
-          "source": "fig",
-          "label": "Trofeo Gianluca (Valido WAGR)"
-        },
-        {
-          "date": "2024-11-02",
-          "hcpExact": -0.2,
-          "source": "fig",
-          "label": "Trofeo Rocca D'Asolo"
-        },
-        {
-          "date": "2024-07-17",
-          "hcpExact": -1.1,
-          "source": "fig",
-          "label": "T.g.f. WAGR Pgai Junior Trophy"
-        },
-        {
-          "date": "2024-05-11",
-          "hcpExact": -0.6,
-          "source": "fig",
-          "label": "Campionato Nazionale Ragazzi Medal - Trofeo Silvio Marazza"
-        },
-        {
-          "date": "2024-03-09",
-          "hcpExact": -0.5,
-          "source": "fig",
-          "label": "Memorial Carlo Della Vida"
-        },
-        {
-          "date": "2023-08-29",
-          "hcpExact": -0.7,
-          "source": "fig",
-          "label": "Reply-Italian International U 16 Championship-T.soldati Trophy"
-        },
-        {
-          "date": "2023-07-26",
-          "hcpExact": -0.5,
-          "source": "fig",
-          "label": "Trofeo Arzaga"
-        },
-        {
-          "date": "2023-06-10",
-          "hcpExact": 0.6,
-          "source": "fig",
-          "label": "Campionato Nazionale Ragazzi Medal - Trofeo Silvio Marazza"
-        },
-        {
-          "date": "2022-07-04",
-          "hcpExact": 2.5,
-          "source": "fig",
-          "label": "Campionato Nazionale Cadetti - Trofeo Giovanni Alberto Agnelli"
-        },
-        {
-          "date": "2022-05-13",
-          "hcpExact": 3.3,
-          "source": "fig",
-          "label": "Campionato Nazionale Ragazzi Medal - Trofeo Silvio Marazza"
-        },
-        {
-          "date": "2022-04-30",
-          "hcpExact": 3.3,
-          "source": "fig",
-          "label": "Xxxvii Trofeo Leoncino D'Oro"
         }
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:497609",
-          "fig:cfe00930-c189-e311-9439-b140d5dbde8f",
           "doral:doral-405999015",
           "doral:doral-579685140",
           "doral:doral-1298576287",
@@ -29430,7 +29323,6 @@
         ],
         "mergedFromSources": [
           "uskids",
-          "fig",
           "doral",
           "england",
           "gjgl",
@@ -112742,26 +112634,16 @@
       "canonicalName": "Oscar Murphy",
       "aliases": [],
       "dob": null,
-      "sex": "M",
+      "sex": null,
       "nationality": "NN",
       "country": "NN",
-      "countries": [
-        "NN",
-        "IE"
-      ],
       "region": null,
-      "club": "Royal Portrush",
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "526099",
           "ageGroupCurrent": "Boys 15-18"
-        },
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "oscar murphy|IE"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "uskids-6713",
@@ -112769,33 +112651,15 @@
         "uskids-6903",
         "uskids-8300",
         "uskids-6758",
-        "uskids-6757",
-        "egr-egr9393",
-        "egr-egr10355",
-        "egr-egr6606",
-        "egr-egr6652",
-        "egr-egr6600",
-        "egr-egr5027",
-        "egr-egr4970",
-        "egr-egr5422",
-        "egr-egr3829",
-        "egr-egr3823",
-        "egr-egr11848",
-        "egr-egr11846",
-        "egr-egr11862",
-        "egr-egr11860",
-        "egr-egr11845",
-        "egr-egr11849"
+        "uskids-6757"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:526099",
-          "egr:oscar murphy|IE"
+          "uskids:526099"
         ],
         "mergedFromSources": [
-          "uskids",
-          "egr"
+          "uskids"
         ]
       }
     },
@@ -600946,17 +600810,13 @@
       }
     },
     {
-      "id": "x0eb3abeb5e",
+      "id": "x04f4a0afea",
       "canonicalName": "Zach Webster",
       "aliases": [],
-      "dob": "2009-03-09",
+      "dob": null,
       "sex": "M",
       "nationality": "GB",
       "country": "GB",
-      "countries": [
-        "GB",
-        "CH"
-      ],
       "region": null,
       "club": "UK",
       "sources": {
@@ -600980,10 +600840,6 @@
           {
             "sourceId": "egr",
             "key": "zach webster|GB"
-          },
-          {
-            "sourceId": "swissgolf",
-            "key": "swissgolf-gb46941868"
           }
         ]
       },
@@ -600994,33 +600850,21 @@
         "coc-coc_2026",
         "egr-egr11371",
         "egr-egr10724",
-        "egr-egr9993",
-        "swissgolf-5358515"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-05-02",
-          "hcpExact": 11.2,
-          "source": "swissgolf",
-          "label": "Swiss Golf Junior Tour Event - Sierre"
-        }
+        "egr-egr9993"
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
           "fpg:anon|zach webster|GB",
           "coc:coc-10805237253891178857",
           "coc:coc-11880483861727035520",
           "coc:coc-12918240921887195222",
-          "egr:zach webster|GB",
-          "swissgolf:swissgolf-gb46941868",
-          "dob:2009-03-09"
+          "egr:zach webster|GB"
         ],
         "mergedFromSources": [
           "fpg",
           "coc",
-          "egr",
-          "swissgolf"
+          "egr"
         ]
       }
     },
@@ -713378,10 +713222,6 @@
       "sex": "M",
       "nationality": "ES",
       "country": "ES",
-      "countries": [
-        "ES",
-        "RU"
-      ],
       "region": null,
       "club": "CLUB DE GOLF D'ARO",
       "sources": {
@@ -713395,13 +713235,7 @@
           "historicalLicenses": [
             "CB36804061"
           ]
-        },
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "mikhail efremov|RU"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "rfeg-lgs131",
@@ -713413,22 +713247,7 @@
         "rfeg-lgs273",
         "rfeg-lgs70",
         "rfeg-rfeg14308_cadete_m",
-        "rfeg-rfeg14310_cadete_m",
-        "egr-egr8505",
-        "egr-egr7603",
-        "egr-egr7314",
-        "egr-egr5587",
-        "egr-egr5233",
-        "egr-egr3761",
-        "egr-egr3716",
-        "egr-egr3845",
-        "egr-egr12269",
-        "wagr-227873",
-        "wagr-73894",
-        "wagr-236096",
-        "wagr-226815",
-        "wagr-219150",
-        "wagr-76341"
+        "rfeg-rfeg14310_cadete_m"
       ],
       "hcpHistory": [
         {
@@ -713532,12 +713351,10 @@
         "confidence": "strong",
         "evidence": [
           "rfeg:CB44804061",
-          "egr:mikhail efremov|RU",
           "dob:2006-03-10"
         ],
         "mergedFromSources": [
-          "rfeg",
-          "egr"
+          "rfeg"
         ]
       }
     },
@@ -743271,11 +743088,10 @@
       "country": "FR",
       "countries": [
         "ES",
-        "FR",
-        "DE"
+        "FR"
       ],
       "region": "OCCITANIE",
-      "club": "Gerolsbach, GP",
+      "club": "TORREMIRONA GOLF CLUB",
       "sources": {
         "rfeg": {
           "lic": "CB36926220",
@@ -743297,10 +743113,6 @@
         },
         "_secondary": [
           {
-            "sourceId": "fig",
-            "key": "c743c834-9972-f011-b4cc-000d3a27003c"
-          },
-          {
             "sourceId": "doral",
             "key": "doral-405999158"
           },
@@ -743309,20 +743121,8 @@
             "key": "doral-579660429"
           },
           {
-            "sourceId": "egr",
-            "key": "lily reitter|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001850099"
-          },
-          {
             "sourceId": "dgv",
             "key": "dgv-dgvLily Reitter"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490002059357"
           },
           {
             "sourceId": "sgf",
@@ -743344,37 +743144,12 @@
         "ffgolf-2200855791",
         "ffgolf-2200833138",
         "ffgolf-2200825383",
-        "fig-49edde21-74ce-ef11-b8e8-6045bd98046e",
         "doral-ftm_doral_2018",
         "doral-ftm_doral_2019",
-        "egr-egr10387",
-        "egr-egr10376",
-        "egr-egr9046",
-        "egr-egr9727",
-        "egr-egr7519",
-        "egr-egr7323",
-        "egr-egr6537",
-        "egr-egr5335",
-        "egr-egr10699",
-        "egr-egr12080",
-        "dgv-dgv_490002154950",
         "dgv-dgv_490002394181",
-        "dgv-dgv_490002871304",
         "sgf-5156386"
       ],
       "hcpHistory": [
-        {
-          "date": "2026-06-04",
-          "hcpExact": -5.4,
-          "source": "dgv",
-          "label": "22. German International Amateur Championship Girls 2026 - GC Bad Saarow"
-        },
-        {
-          "date": "2025-08-28",
-          "hcpExact": -4.5,
-          "source": "fig",
-          "label": "Campionato Internazionale D'Italia U18"
-        },
         {
           "date": "2025-07-11",
           "hcpExact": -3.9,
@@ -743400,12 +743175,6 @@
           "source": "ffg",
           "tcode": "2401175042",
           "label": "French International Lady Juniors' Amate"
-        },
-        {
-          "date": "2023-09-22",
-          "hcpExact": -3.1,
-          "source": "dgv",
-          "label": "Deutsche Meisterschaft Mädchen AK 14 - Hohenhardter Hof"
         },
         {
           "date": "2023-07-26",
@@ -743489,22 +743258,16 @@
         "evidence": [
           "rfeg:CB36926220",
           "ffgolf:513081293",
-          "fig:c743c834-9972-f011-b4cc-000d3a27003c",
           "doral:doral-405999158",
           "doral:doral-579660429",
-          "egr:lily reitter|DE",
-          "dgv:dgv-dgv490001850099",
           "dgv:dgv-dgvLily Reitter",
-          "dgv:dgv-dgv490002059357",
           "sgf:sgf-gb43182411",
           "dob:2009-01-03"
         ],
         "mergedFromSources": [
           "rfeg",
           "ffgolf",
-          "fig",
           "doral",
-          "egr",
           "dgv",
           "sgf"
         ]
@@ -1267977,10 +1267740,6 @@
       "sex": "M",
       "nationality": "CN",
       "country": "CN",
-      "countries": [
-        "CN",
-        "FR"
-      ],
       "region": "PARIS-ILE-DE-FRANCE",
       "club": "Rcf La Boulie",
       "sources": {
@@ -1267992,13 +1267751,7 @@
           "region": "PARIS-ILE-DE-FRANCE",
           "sex": "M",
           "glfLic": "0038"
-        },
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "yilang chen|FR"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "ffgolf-2300979835",
@@ -1268013,14 +1267766,7 @@
         "ffgolf-2200788315",
         "ffgolf-2200810388",
         "ffgolf-2200806964",
-        "ffgolf-2200810534",
-        "egr-egr5985",
-        "egr-egr5341",
-        "egr-egr5290",
-        "egr-egr5338",
-        "wagr-276471",
-        "wagr-276542",
-        "wagr-272366"
+        "ffgolf-2200810534"
       ],
       "hcpHistory": [
         {
@@ -1268119,12 +1267865,10 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:000264325",
-          "egr:yilang chen|FR",
           "dob:2011-06-03"
         ],
         "mergedFromSources": [
-          "ffgolf",
-          "egr"
+          "ffgolf"
         ]
       }
     },
@@ -1438061,14 +1437805,10 @@
       "id": "g510850332",
       "canonicalName": "Emile Luyten",
       "aliases": [],
-      "dob": "2009-05-17",
+      "dob": null,
       "sex": "M",
       "nationality": "BE",
       "country": "BE",
-      "countries": [
-        "BE",
-        "FR"
-      ],
       "region": "AUVERGNE-RHÔNE-ALPES",
       "club": "Bossey",
       "sources": {
@@ -1438085,25 +1437825,14 @@
           {
             "sourceId": "egr",
             "key": "emile luyten|BE"
-          },
-          {
-            "sourceId": "swissgolf",
-            "key": "swissgolf-gb46944124"
           }
         ]
       },
       "tournamentIds": [
         "ffgolf-2501346285",
-        "egr-egr7972",
-        "swissgolf-5358515"
+        "egr-egr7972"
       ],
       "hcpHistory": [
-        {
-          "date": "2026-05-02",
-          "hcpExact": 10.6,
-          "source": "swissgolf",
-          "label": "Swiss Golf Junior Tour Event - Sierre"
-        },
         {
           "date": "2025-07-11",
           "hcpExact": 9.4,
@@ -1438116,14 +1437845,11 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:510850332",
-          "egr:emile luyten|BE",
-          "swissgolf:swissgolf-gb46944124",
-          "dob:2009-05-17"
+          "egr:emile luyten|BE"
         ],
         "mergedFromSources": [
           "ffgolf",
-          "egr",
-          "swissgolf"
+          "egr"
         ]
       }
     },
@@ -1722431,6 +1722157,140 @@
       }
     },
     {
+      "id": "i0098ecacae",
+      "canonicalName": "Alessandro Cesario",
+      "aliases": [],
+      "dob": null,
+      "birthYear": 2007,
+      "birthYearSource": "fig",
+      "sex": "M",
+      "nationality": "IT",
+      "country": "IT",
+      "region": null,
+      "club": "Monticello",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fig",
+            "key": "cfe00930-c189-e311-9439-b140d5dbde8f"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fig-0108d960-5fcf-ef11-b8e8-00224884dbac",
+        "fig-0cdb19f6-70b3-ee11-a569-6045bd8f124f",
+        "fig-0cfc151c-8e68-f011-bec3-000d3a218cad",
+        "fig-11cfd5d4-ad95-ed11-aad1-000d3a2e4778",
+        "fig-1f4a90a3-7f74-ec11-8943-000d3a2d6a9d",
+        "fig-2ab8f9f6-76a4-ec11-983f-000d3a4bd27e",
+        "fig-54c298a6-62b0-ee11-a569-6045bd8f124f",
+        "fig-5b7465de-2f90-ed11-aad1-000d3a2e48af",
+        "fig-64f91537-9291-ed11-aad1-000d3a2e4778",
+        "fig-6a4c7e83-5ecf-ef11-b8e8-00224884dbac",
+        "fig-83766fa4-6ab0-ee11-a569-6045bd8f124f",
+        "fig-9df6c1bd-92ce-ef11-b8e8-6045bd98046e",
+        "fig-ec908924-6db0-ee11-a569-6045bd8f124f",
+        "fig-b38cfe73-f37d-ec11-8d21-00224881b0a4",
+        "fig-d066b64d-ae73-ec11-8943-000d3a2d6a9d",
+        "fig-eba7b803-ad73-ec11-8943-000d3a2d6a9d"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2025-10-01",
+          "hcpExact": -3,
+          "source": "fig",
+          "label": "GC Milano Junior Trophy By AJGA IPS - WAGR"
+        },
+        {
+          "date": "2025-07-16",
+          "hcpExact": -3.7,
+          "source": "fig",
+          "label": "Pgai Junior Trophy (Valido WAGR)"
+        },
+        {
+          "date": "2025-05-10",
+          "hcpExact": -1.5,
+          "source": "fig",
+          "label": "Campionato Nazionale Ragazzi Medal - Trofeo Silvio Marazza"
+        },
+        {
+          "date": "2025-04-19",
+          "hcpExact": -0.5,
+          "source": "fig",
+          "label": "Trofeo Gianluca (Valido WAGR)"
+        },
+        {
+          "date": "2024-11-02",
+          "hcpExact": -0.2,
+          "source": "fig",
+          "label": "Trofeo Rocca D'Asolo"
+        },
+        {
+          "date": "2024-07-17",
+          "hcpExact": -1.1,
+          "source": "fig",
+          "label": "T.g.f. WAGR Pgai Junior Trophy"
+        },
+        {
+          "date": "2024-05-11",
+          "hcpExact": -0.6,
+          "source": "fig",
+          "label": "Campionato Nazionale Ragazzi Medal - Trofeo Silvio Marazza"
+        },
+        {
+          "date": "2024-03-09",
+          "hcpExact": -0.5,
+          "source": "fig",
+          "label": "Memorial Carlo Della Vida"
+        },
+        {
+          "date": "2023-08-29",
+          "hcpExact": -0.7,
+          "source": "fig",
+          "label": "Reply-Italian International U 16 Championship-T.soldati Trophy"
+        },
+        {
+          "date": "2023-07-26",
+          "hcpExact": -0.5,
+          "source": "fig",
+          "label": "Trofeo Arzaga"
+        },
+        {
+          "date": "2023-06-10",
+          "hcpExact": 0.6,
+          "source": "fig",
+          "label": "Campionato Nazionale Ragazzi Medal - Trofeo Silvio Marazza"
+        },
+        {
+          "date": "2022-07-04",
+          "hcpExact": 2.5,
+          "source": "fig",
+          "label": "Campionato Nazionale Cadetti - Trofeo Giovanni Alberto Agnelli"
+        },
+        {
+          "date": "2022-05-13",
+          "hcpExact": 3.3,
+          "source": "fig",
+          "label": "Campionato Nazionale Ragazzi Medal - Trofeo Silvio Marazza"
+        },
+        {
+          "date": "2022-04-30",
+          "hcpExact": 3.3,
+          "source": "fig",
+          "label": "Xxxvii Trofeo Leoncino D'Oro"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fig:cfe00930-c189-e311-9439-b140d5dbde8f"
+        ],
+        "mergedFromSources": [
+          "fig"
+        ]
+      }
+    },
+    {
       "id": "xa06703284e",
       "canonicalName": "Paolo De Gennaro",
       "aliases": [],
@@ -1753617,8 +1753477,8 @@
       "aliases": [],
       "dob": "2008-05-21",
       "sex": "M",
-      "nationality": "IT",
-      "country": "IT",
+      "nationality": "DK",
+      "country": "DK",
       "countries": [
         "IT",
         "DK"
@@ -1753634,10 +1753494,6 @@
           {
             "sourceId": "egr",
             "key": "fennimore winston beverdam|DK"
-          },
-          {
-            "sourceId": "egr",
-            "key": "fennimore winston beverdam|IT"
           },
           {
             "sourceId": "dgu",
@@ -1753668,7 +1753524,6 @@
         "fig-c90549f8-5c92-ed11-aad1-000d3a2e48af",
         "fig-c93f1fed-5b92-ed11-aad1-000d3a2e48af",
         "fig-d066b64d-ae73-ec11-8943-000d3a2d6a9d",
-        "egr-egr5894",
         "egr-egr12584",
         "dgu-5427153"
       ],
@@ -1753817,7 +1753672,6 @@
         "evidence": [
           "fig:2adbc33b-c2e9-e511-83a9-00155d5290c4",
           "egr:fennimore winston beverdam|DK",
-          "egr:fennimore winston beverdam|IT",
           "dgu:dgu-gb46963996",
           "dob:2008-05-21"
         ],
@@ -1810497,6 +1810351,90 @@
         "mergedFromSources": [
           "fig",
           "egr"
+        ]
+      }
+    },
+    {
+      "id": "xe613badc24",
+      "canonicalName": "Lily Reitter",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "countries": [
+        "FR",
+        "DE"
+      ],
+      "region": null,
+      "club": "Gerolsbach, GP",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fig",
+            "key": "c743c834-9972-f011-b4cc-000d3a27003c"
+          },
+          {
+            "sourceId": "egr",
+            "key": "lily reitter|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001850099"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490002059357"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fig-49edde21-74ce-ef11-b8e8-6045bd98046e",
+        "egr-egr10387",
+        "egr-egr10376",
+        "egr-egr9046",
+        "egr-egr9727",
+        "egr-egr7519",
+        "egr-egr7323",
+        "egr-egr6537",
+        "egr-egr5335",
+        "egr-egr10699",
+        "egr-egr12080",
+        "dgv-dgv_490002154950",
+        "dgv-dgv_490002871304"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-04",
+          "hcpExact": -5.4,
+          "source": "dgv",
+          "label": "22. German International Amateur Championship Girls 2026 - GC Bad Saarow"
+        },
+        {
+          "date": "2025-08-28",
+          "hcpExact": -4.5,
+          "source": "fig",
+          "label": "Campionato Internazionale D'Italia U18"
+        },
+        {
+          "date": "2023-09-22",
+          "hcpExact": -3.1,
+          "source": "dgv",
+          "label": "Deutsche Meisterschaft Mädchen AK 14 - Hohenhardter Hof"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "fig:c743c834-9972-f011-b4cc-000d3a27003c",
+          "egr:lily reitter|DE",
+          "dgv:dgv-dgv490001850099",
+          "dgv:dgv-dgv490002059357"
+        ],
+        "mergedFromSources": [
+          "fig",
+          "egr",
+          "dgv"
         ]
       }
     },
@@ -2111204,17 +2111142,13 @@
       }
     },
     {
-      "id": "xfe99cf2750",
+      "id": "xf22e930b24",
       "canonicalName": "Heidar Jóhann Ingvarsson",
       "aliases": [],
       "dob": "2009-02-28",
       "sex": "M",
-      "nationality": "DK",
-      "country": "DK",
-      "countries": [
-        "IS",
-        "DK"
-      ],
+      "nationality": "IS",
+      "country": "IS",
       "region": null,
       "club": "Odense Golfklub",
       "sources": {
@@ -2111296,30 +2111230,6 @@
           "label": "Lübker Junior Open 2026"
         },
         {
-          "date": "2026-09-18",
-          "hcpExact": -0.9,
-          "source": "dgu",
-          "label": "Dormy Elite Tour Finale"
-        },
-        {
-          "date": "2026-07-21",
-          "hcpExact": -0.4,
-          "source": "dgu",
-          "label": "DM Juniorer - Slagspilskvalifikation"
-        },
-        {
-          "date": "2026-06-13",
-          "hcpExact": -0.8,
-          "source": "dgu",
-          "label": "Dormy Elite Tour II Drenge U22"
-        },
-        {
-          "date": "2026-05-09",
-          "hcpExact": -0.3,
-          "source": "dgu",
-          "label": "Kokkedal Ynglinge Cup – Dormy Elite Tour I Drenge U22"
-        },
-        {
           "date": "2026-04-02",
           "hcpExact": 0,
           "source": "gjgl",
@@ -2111330,34 +2111240,10 @@
           "hcpExact": 0,
           "source": "gjgl",
           "label": "Lübker Juniors International 2025"
-        },
-        {
-          "date": "2025-08-16",
-          "hcpExact": 0.6,
-          "source": "dgu",
-          "label": "Dormy Elite Tour III Drenge U22"
-        },
-        {
-          "date": "2025-07-22",
-          "hcpExact": 0.4,
-          "source": "dgu",
-          "label": "DM Juniorer - Slagspilskvalifikation"
-        },
-        {
-          "date": "2025-06-14",
-          "hcpExact": 1.9,
-          "source": "dgu",
-          "label": "Dormy Elite Tour II Drenge U22"
-        },
-        {
-          "date": "2025-05-10",
-          "hcpExact": 1.9,
-          "source": "dgu",
-          "label": "Kokkedal Ynglinge Cup XXXVIII – Dormy Elite Tour I Drenge U22"
         }
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
           "gjgl:Heidar Jóhann_Ingvarsson",
           "egr:heidar johann ingvarsson|IS",
@@ -2111375,6 +2111261,9 @@
           "gjgl",
           "egr",
           "dgu"
+        ],
+        "fichasJuntas": [
+          "xfe99cf2750"
         ]
       }
     },
@@ -2186634,6 +2186523,107 @@
           "swissgolf"
         ]
       }
+    },
+    {
+      "id": "x7b0bdbd40f",
+      "canonicalName": "Sandro Wulff",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "countries": [
+        "BG",
+        "GB",
+        "DE"
+      ],
+      "region": null,
+      "club": "Dubai Creek Golf and Yacht Club",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Sandro_Wulff"
+          },
+          {
+            "sourceId": "uaworlds",
+            "key": "uaworlds-10791074793613458878"
+          },
+          {
+            "sourceId": "egr",
+            "key": "sandro wulff|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001573972"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-migros-golfcard-gjg-international-2026-switzerland",
+        "gjgl-rb-german-junior-2026-germany",
+        "uaworlds-uaworlds_2024",
+        "egr-egr6395",
+        "dgv-dgv_490001895105",
+        "dgv-dgv_490001896699",
+        "dgv-dgv_490002019338",
+        "dgv-dgv_490002154952"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-07-07",
+          "hcpExact": 1,
+          "source": "gjgl",
+          "label": "Migros GolfCard GJG International 2026"
+        },
+        {
+          "date": "2026-06-02",
+          "hcpExact": 1,
+          "source": "gjgl",
+          "label": "RB German Junior 2026"
+        },
+        {
+          "date": "2023-09-22",
+          "hcpExact": 5.9,
+          "source": "dgv",
+          "label": "Deutsche Meisterschaft Jungen AK 16 - Mannheim-Viernheim"
+        },
+        {
+          "date": "2022-09-23",
+          "hcpExact": 6.9,
+          "source": "dgv",
+          "label": "Deutsche Meisterschaft Jungen AK 14 - Buchholz-Nordheide"
+        },
+        {
+          "date": "2022-08-27",
+          "hcpExact": 7.1,
+          "source": "dgv",
+          "label": "DMM Jungen AK 16 2022, Bundesfinale"
+        },
+        {
+          "date": "2022-07-22",
+          "hcpExact": 7.4,
+          "source": "dgv",
+          "label": "DM-Vorausscheid Jungen AK 14 - GC Kürten Bergerhöhe"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "gjgl:Sandro_Wulff",
+          "uaworlds:uaworlds-10791074793613458878",
+          "egr:sandro wulff|DE",
+          "dgv:dgv-dgv490001573972"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "uaworlds",
+          "egr",
+          "dgv"
+        ]
+      },
+      "birthYear": 2008,
+      "birthYearSource": "dgv-rangliste"
     },
     {
       "id": "x5a07821034",
@@ -2383921,82 +2383911,33 @@
       }
     },
     {
-      "id": "x262521060c",
+      "id": "xaa46c8bf3f",
       "canonicalName": "Riley Wong",
       "aliases": [],
-      "dob": "2015-11-18",
+      "dob": null,
       "sex": "M",
-      "nationality": "BE",
-      "country": "BE",
-      "countries": [
-        "NL",
-        "BE"
-      ],
+      "nationality": "NL",
+      "country": "NL",
       "region": null,
-      "club": "STEENHOVEN G & C.C. ",
+      "club": "Steenhoven",
       "sources": {
         "_secondary": [
           {
             "sourceId": "egr",
             "key": "riley wong|NL"
-          },
-          {
-            "sourceId": "egr",
-            "key": "riley wong|BE"
-          },
-          {
-            "sourceId": "rbgf",
-            "key": "rbgf-gb48960937"
-          },
-          {
-            "sourceId": "rbgf",
-            "key": "rbgf-gb49645471"
-          },
-          {
-            "sourceId": "rbgf",
-            "key": "rbgf-gb48960960"
           }
         ]
       },
       "tournamentIds": [
-        "egr-egr12537",
-        "rbgf-5355812",
-        "rbgf-5388308",
-        "rbgf-5741339"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-09-20",
-          "hcpExact": 18.1,
-          "source": "rbgf",
-          "label": "Finals Junior U12 & U14"
-        },
-        {
-          "date": "2026-07-31",
-          "hcpExact": 21.3,
-          "source": "rbgf",
-          "label": "Junior U12 & U14 Bruyère "
-        },
-        {
-          "date": "2026-07-23",
-          "hcpExact": 21.6,
-          "source": "rbgf",
-          "label": "Junior U12 & U14 Zoute"
-        }
+        "egr-egr12537"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "egr:riley wong|NL",
-          "egr:riley wong|BE",
-          "rbgf:rbgf-gb48960937",
-          "rbgf:rbgf-gb49645471",
-          "rbgf:rbgf-gb48960960",
-          "dob:2015-11-18"
+          "egr:riley wong|NL"
         ],
         "mergedFromSources": [
-          "egr",
-          "rbgf"
+          "egr"
         ]
       }
     },
@@ -2426575,6 +2426516,76 @@
           "rbgf:rbgf-gb47817347",
           "rbgf:rbgf-gb48917198",
           "dob:2012-09-28"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "rbgf"
+        ]
+      }
+    },
+    {
+      "id": "x262521060c",
+      "canonicalName": "Riley Wong",
+      "aliases": [],
+      "dob": "2015-11-18",
+      "sex": "M",
+      "nationality": "BE",
+      "country": "BE",
+      "region": null,
+      "club": "STEENHOVEN G & C.C. ",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "riley wong|BE"
+          },
+          {
+            "sourceId": "rbgf",
+            "key": "rbgf-gb48960937"
+          },
+          {
+            "sourceId": "rbgf",
+            "key": "rbgf-gb49645471"
+          },
+          {
+            "sourceId": "rbgf",
+            "key": "rbgf-gb48960960"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "rbgf-5355812",
+        "rbgf-5388308",
+        "rbgf-5741339"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-09-20",
+          "hcpExact": 18.1,
+          "source": "rbgf",
+          "label": "Finals Junior U12 & U14"
+        },
+        {
+          "date": "2026-07-31",
+          "hcpExact": 21.3,
+          "source": "rbgf",
+          "label": "Junior U12 & U14 Bruyère "
+        },
+        {
+          "date": "2026-07-23",
+          "hcpExact": 21.6,
+          "source": "rbgf",
+          "label": "Junior U12 & U14 Zoute"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:riley wong|BE",
+          "rbgf:rbgf-gb48960937",
+          "rbgf:rbgf-gb49645471",
+          "rbgf:rbgf-gb48960960",
+          "dob:2015-11-18"
         ],
         "mergedFromSources": [
           "egr",
@@ -2531540,7 +2531551,7 @@
       }
     },
     {
-      "id": "x04f4a0afea",
+      "id": "xb9025a7d2d",
       "canonicalName": "Zach (IRE) Webster",
       "aliases": [],
       "dob": null,
@@ -2584750,109 +2584761,6 @@
       }
     },
     {
-      "id": "x677d3f3ef3",
-      "canonicalName": "Sandro Wulff",
-      "aliases": [],
-      "dob": "2008-02-27",
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "countries": [
-        "DE",
-        "CH"
-      ],
-      "region": null,
-      "club": "Hubbelrath",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "sandro wulff|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001573972"
-          },
-          {
-            "sourceId": "swissgolf",
-            "key": "swissgolf-gb44264197"
-          },
-          {
-            "sourceId": "gjgl",
-            "key": "Sandro_Wulff"
-          },
-          {
-            "sourceId": "uaworlds",
-            "key": "uaworlds-10791074793613458878"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr6395",
-        "dgv-dgv_490001895105",
-        "dgv-dgv_490001896699",
-        "dgv-dgv_490002019338",
-        "dgv-dgv_490002154952",
-        "swissgolf-4868301",
-        "gjgl-migros-golfcard-gjg-international-2026-switzerland",
-        "gjgl-rb-german-junior-2026-germany",
-        "uaworlds-uaworlds_2024"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2025-08-04",
-          "hcpExact": -1.8,
-          "source": "swissgolf",
-          "label": "Swiss Golf Junior Tour Event - Markgräflerland"
-        },
-        {
-          "date": "2023-09-22",
-          "hcpExact": 5.9,
-          "source": "dgv",
-          "label": "Deutsche Meisterschaft Jungen AK 16 - Mannheim-Viernheim"
-        },
-        {
-          "date": "2022-09-23",
-          "hcpExact": 6.9,
-          "source": "dgv",
-          "label": "Deutsche Meisterschaft Jungen AK 14 - Buchholz-Nordheide"
-        },
-        {
-          "date": "2022-08-27",
-          "hcpExact": 7.1,
-          "source": "dgv",
-          "label": "DMM Jungen AK 16 2022, Bundesfinale"
-        },
-        {
-          "date": "2022-07-22",
-          "hcpExact": 7.4,
-          "source": "dgv",
-          "label": "DM-Vorausscheid Jungen AK 14 - GC Kürten Bergerhöhe"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:sandro wulff|DE",
-          "dgv:dgv-dgv490001573972",
-          "swissgolf:swissgolf-gb44264197",
-          "dob:2008-02-27",
-          "gjgl:Sandro_Wulff",
-          "uaworlds:uaworlds-10791074793613458878"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv",
-          "swissgolf",
-          "gjgl",
-          "uaworlds"
-        ],
-        "fichasJuntas": [
-          "x7b0bdbd40f"
-        ]
-      }
-    },
-    {
       "id": "xb367a27143",
       "canonicalName": "Jeremy Hug",
       "aliases": [],
@@ -2624661,17 +2624569,13 @@
       }
     },
     {
-      "id": "xdee6f5b474",
+      "id": "x0d69a438a1",
       "canonicalName": "Arthur Rosseel",
       "aliases": [],
-      "dob": "2007-10-15",
+      "dob": null,
       "sex": "M",
       "nationality": "BG",
       "country": "BG",
-      "countries": [
-        "BG",
-        "BE"
-      ],
       "region": null,
       "club": "Pravets",
       "sources": {
@@ -2624679,49 +2624583,20 @@
           {
             "sourceId": "egr",
             "key": "arthur rosseel|BG"
-          },
-          {
-            "sourceId": "rbgf",
-            "key": "rbgf-gb40551100"
           }
         ]
       },
       "tournamentIds": [
         "egr-egr7972",
-        "egr-egr12217",
-        "rbgf-4841160",
-        "wagr-259958",
-        "wagr-235304",
-        "wagr-229872",
-        "wagr-235149",
-        "wagr-264398",
-        "wagr-232501",
-        "wagr-235822",
-        "wagr-230828",
-        "wagr-231608",
-        "wagr-232209",
-        "wagr-226536",
-        "wagr-231730",
-        "wagr-221257"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2025-04-15",
-          "hcpExact": 4.9,
-          "source": "rbgf",
-          "label": "Junior Open Vlaanderen - Wallonie 54 Holes 27+27"
-        }
+        "egr-egr12217"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "egr:arthur rosseel|BG",
-          "rbgf:rbgf-gb40551100",
-          "dob:2007-10-15"
+          "egr:arthur rosseel|BG"
         ],
         "mergedFromSources": [
-          "egr",
-          "rbgf"
+          "egr"
         ]
       }
     },
@@ -2642740,6 +2642615,52 @@
         "confidence": "strong",
         "evidence": [
           "egr:zac hay|IE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x9daa085249",
+      "canonicalName": "Oscar Murphy",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "IE",
+      "country": "IE",
+      "region": null,
+      "club": "Royal Portrush",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "oscar murphy|IE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr9393",
+        "egr-egr10355",
+        "egr-egr6606",
+        "egr-egr6652",
+        "egr-egr6600",
+        "egr-egr5027",
+        "egr-egr4970",
+        "egr-egr5422",
+        "egr-egr3829",
+        "egr-egr3823",
+        "egr-egr11848",
+        "egr-egr11846",
+        "egr-egr11862",
+        "egr-egr11860",
+        "egr-egr11845",
+        "egr-egr11849"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:oscar murphy|IE"
         ],
         "mergedFromSources": [
           "egr"
@@ -2672887,6 +2672808,45 @@
         "evidence": [
           "egr:ella ericson|SE",
           "dob:2005-10-31"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x93f4371b4a",
+      "canonicalName": "Mikhail Efremov",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "RU",
+      "country": "RU",
+      "region": null,
+      "club": "Torremirona",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "mikhail efremov|RU"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr8505",
+        "egr-egr7603",
+        "egr-egr7314",
+        "egr-egr5587",
+        "egr-egr5233",
+        "egr-egr3761",
+        "egr-egr3716",
+        "egr-egr3845",
+        "egr-egr12269"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:mikhail efremov|RU"
         ],
         "mergedFromSources": [
           "egr"
@@ -2763537,6 +2763497,40 @@
       }
     },
     {
+      "id": "x2d8c07343a",
+      "canonicalName": "Yilang Chen",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "RCF La Boulie",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "yilang chen|FR"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr5985",
+        "egr-egr5341",
+        "egr-egr5290",
+        "egr-egr5338"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:yilang chen|FR"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
       "id": "xa019f567f6",
       "canonicalName": "Fabian Lang",
       "aliases": [],
@@ -2774110,6 +2774104,37 @@
         "evidence": [
           "egr:oskar becker frederiksen|DK",
           "dob:2006-07-28"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x740c18609b",
+      "canonicalName": "Fennimore Winston Beverdam",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "IT",
+      "country": "IT",
+      "region": null,
+      "club": "Franciacorta",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "fennimore winston beverdam|IT"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr5894"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:fennimore winston beverdam|IT"
         ],
         "mergedFromSources": [
           "egr"
@@ -2942579,6 +2942604,46 @@
       }
     },
     {
+      "id": "x677d3f3ef3",
+      "canonicalName": "Sandro Wulff",
+      "aliases": [],
+      "dob": "2008-02-27",
+      "sex": "M",
+      "nationality": "CH",
+      "country": "CH",
+      "region": null,
+      "club": "Golf & Country Club Zürich",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "swissgolf",
+            "key": "swissgolf-gb44264197"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "swissgolf-4868301"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2025-08-04",
+          "hcpExact": -1.8,
+          "source": "swissgolf",
+          "label": "Swiss Golf Junior Tour Event - Markgräflerland"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "swissgolf:swissgolf-gb44264197",
+          "dob:2008-02-27"
+        ],
+        "mergedFromSources": [
+          "swissgolf"
+        ]
+      }
+    },
+    {
       "id": "x9b313af779",
       "canonicalName": "Benjamin Mutter",
       "aliases": [],
@@ -2943537,6 +2943602,86 @@
         "evidence": [
           "swissgolf:swissgolf-gb45152408",
           "dob:2013-02-27"
+        ],
+        "mergedFromSources": [
+          "swissgolf"
+        ]
+      }
+    },
+    {
+      "id": "x0eb3abeb5e",
+      "canonicalName": "Zach Webster",
+      "aliases": [],
+      "dob": "2009-03-09",
+      "sex": "M",
+      "nationality": "CH",
+      "country": "CH",
+      "region": null,
+      "club": "ASGI",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "swissgolf",
+            "key": "swissgolf-gb46941868"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "swissgolf-5358515"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-05-02",
+          "hcpExact": 11.2,
+          "source": "swissgolf",
+          "label": "Swiss Golf Junior Tour Event - Sierre"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "swissgolf:swissgolf-gb46941868",
+          "dob:2009-03-09"
+        ],
+        "mergedFromSources": [
+          "swissgolf"
+        ]
+      }
+    },
+    {
+      "id": "xb80ec2b914",
+      "canonicalName": "Emile Luyten",
+      "aliases": [],
+      "dob": "2009-05-17",
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Golf & Country Club de Bossey",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "swissgolf",
+            "key": "swissgolf-gb46944124"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "swissgolf-5358515"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-05-02",
+          "hcpExact": 10.6,
+          "source": "swissgolf",
+          "label": "Swiss Golf Junior Tour Event - Sierre"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "swissgolf:swissgolf-gb46944124",
+          "dob:2009-05-17"
         ],
         "mergedFromSources": [
           "swissgolf"
@@ -2946767,6 +2946912,46 @@
           "rbgf:rbgf-gb43886407",
           "rbgf:rbgf-gb50317378",
           "dob:2013-04-20"
+        ],
+        "mergedFromSources": [
+          "rbgf"
+        ]
+      }
+    },
+    {
+      "id": "xdee6f5b474",
+      "canonicalName": "Arthur Rosseel",
+      "aliases": [],
+      "dob": "2007-10-15",
+      "sex": "M",
+      "nationality": "BE",
+      "country": "BE",
+      "region": null,
+      "club": "Pravets Golf Vlub",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "rbgf",
+            "key": "rbgf-gb40551100"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "rbgf-4841160"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2025-04-15",
+          "hcpExact": 4.9,
+          "source": "rbgf",
+          "label": "Junior Open Vlaanderen - Wallonie 54 Holes 27+27"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rbgf:rbgf-gb40551100",
+          "dob:2007-10-15"
         ],
         "mergedFromSources": [
           "rbgf"
@@ -3058398,16 +3058583,16 @@
     }
   ],
   "stats": {
-    "total": 43135,
+    "total": 43146,
     "droppedNoTourn": 35324,
-    "strong": 36782,
-    "probable": 6353,
+    "strong": 36790,
+    "probable": 6356,
     "manual": 0,
     "strongMerges": 20098,
-    "probableMerges": 23772,
-    "manualMerges": 781,
-    "collisionMerges": 266,
-    "collisionSplits": 85,
+    "probableMerges": 23744,
+    "manualMerges": 789,
+    "collisionMerges": 270,
+    "collisionSplits": 87,
     "vetosEgr": 127
   }
 }
