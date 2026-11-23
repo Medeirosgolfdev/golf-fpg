@@ -12,7 +12,7 @@ import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Player } from "../../data/types";
 import { useCourses } from "../../context/CoursesContext";
-import type { PlayerPageData } from "../../data/playerDataLoader";
+import { hcpPrevisto, type PlayerPageData } from "../../data/playerDataLoader";
 import { usePlayerData } from "../../data/usePlayerData";
 import { loadFederados, type FederadoRaw, type MergedPlayer } from "../../data/federadosLoader";
 import { loadFederadosPP, ppForFed, hasRealPPHcp, type FederadoPP } from "../../data/federadosPPLoader";
@@ -190,8 +190,10 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
     return acesFromHoleScores(data.HOLES).map(a => ({ ...a, ...info.get(a.scoreId) }));
   }, [data]);
 
-  // Current HCP = post-round value from HCP_INFO (not pre-round r.hi)
-  const latestHcp = data?.HCP_INFO?.current != null ? Number(data.HCP_INFO.current) : null;
+  // Current HCP = post-round value from HCP_INFO (not pre-round r.hi). Com voltas que a FPG
+  // ainda não tem (extra_rounds com SD), o índice mostrado é o PREVISTO e o oficial vai à parte.
+  const previsto = useMemo(() => (data ? hcpPrevisto(data) : null), [data]);
+  const latestHcp = previsto?.info.current ?? (data?.HCP_INFO?.current != null ? Number(data.HCP_INFO.current) : null);
   const meta = data?.META;
 
   /* Bucket do dropdown consolidado (3 opções): as vistas legadas mapeiam para
@@ -316,7 +318,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
               )}
             </IdentityPills>
             {data && (
-              <PlayerKpiStrip data={data} currentHcp={latestHcp} roundsThisYear={roundsThisYear}
+              <PlayerKpiStrip data={data} currentHcp={latestHcp} hcpOficial={previsto ? previsto.oficial : undefined} roundsThisYear={roundsThisYear}
                 ppHcp={pp && hasRealPPHcp(pp) ? pp.hcp : null}
                 onPpClick={() => setPpView(true)} />
             )}

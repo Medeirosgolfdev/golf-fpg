@@ -5,7 +5,7 @@
  * recordes, detalhe WHS, simulador de rondas, janela WHS e análise por campo.
  */
 import React, { useMemo, useState } from "react";
-import type { PlayerPageData, RoundData, HcpInfo } from "../../../data/playerDataLoader";
+import { hcpPrevisto, type PlayerPageData, type RoundData, type HcpInfo } from "../../../data/playerDataLoader";
 import { shortDate, fmtSign, fmtHcp } from "../../../utils/format";
 import { numSafe, meanArr, stdevArr, linearSlope, median, soma } from "../../../utils/mathUtils";
 import { toneClass } from "../../../utils/scoreDisplay";
@@ -49,6 +49,13 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
     allRoundsDesc.filter(r => Number.isFinite(parseFloat(String(r.sd ?? "").replace(",", ".")))).slice(0, 20),
     [allRoundsDesc]
   );
+
+  // Voltas que a FPG ainda não tem (extra_rounds com SD, ex. Spanish Open) estão na janela:
+  // o índice, o detalhe WHS e o simulador usam o PREVISTO com elas; o oficial fica dito no texto.
+  const previsto = useMemo(() => hcpPrevisto(data), [data]);
+  const hcpJanela = previsto?.info ?? data.HCP_INFO;
+  const provisoriasNomes = useMemo(() => [...new Set((previsto?.provisorias ?? [])
+    .map(r => String(r.eventName ?? "").replace(/\s+D\d+$/, "")))].join(", "), [previsto]);
 
   // whsPosMap: scoreId → position 1-20 in the WHS window
   const whsPosMap = useMemo(() => {
@@ -115,23 +122,28 @@ export default function AnalysisView({ data }: { data: PlayerPageData }) {
       {/* ── 1. Janela WHS — as 20 rondas do handicap (com o detalhe do
              cálculo em cima, para a ligação índice ← 8 melhores ser óbvia) ── */}
       <CollapseCard title="Janela WHS — as 20 rondas do handicap" icon="📋" defaultOpen={true}>
-        {data.HCP_INFO?.current != null && (
+        {hcpJanela?.current != null && (
           <div className="fs-12 mb-8 u-c-text-2">
-            O índice <b>{fmtHcp(Number(data.HCP_INFO.current))}</b> é a média dos{" "}
-            <b>{data.HCP_INFO.qtyCalc || 8} melhores</b> Score Differentials (marcados com ★)
-            das últimas <b>{data.HCP_INFO.qtyScores ?? 20}</b> rondas com SD — cada ronda nova
+            O índice {previsto ? "previsto " : ""}<b>{fmtHcp(Number(hcpJanela.current))}</b> é a média dos{" "}
+            <b>{hcpJanela.qtyCalc || 8} melhores</b> Score Differentials (marcados com ★)
+            das últimas <b>{hcpJanela.qtyScores ?? 20}</b> rondas com SD — cada ronda nova
             empurra a mais antiga para fora da janela.
+            {previsto && (
+              <> O oficial da FPG é <b>{fmtHcp(previsto.oficial)}</b>: ainda não conta {previsto.provisorias.length === 1 ? "a volta" : `as ${previsto.provisorias.length} voltas`} de{" "}
+                <b>{provisoriasNomes}</b>, que entram aqui com o SD calculado com o CR/Slope oficiais da prova
+                e mudam o índice quando a FPG as publicar.</>
+            )}
           </div>
         )}
         <div className="mb-12">
-          <WHSDetail hcp={data.HCP_INFO} bare />
+          <WHSDetail hcp={hcpJanela} bare />
         </div>
         <Last20Table data={data} last20Table={last20Table} best8={best8} whsPosMap={whsPosMap} bare />
       </CollapseCard>
 
       {/* ── 2. Simulador de rondas ("e se…?") ── */}
       <CollapseCard title="Simulador de rondas" icon="🎯" defaultOpen={true}>
-        <RoundSimulator hcp={data.HCP_INFO} whs20={whs20} playerData={data} bare />
+        <RoundSimulator hcp={hcpJanela} whs20={whs20} playerData={data} bare />
       </CollapseCard>
 
       {/* ── 3+. Indicadores derivados — recolhidos ── */}

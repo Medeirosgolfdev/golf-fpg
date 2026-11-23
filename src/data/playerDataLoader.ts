@@ -10,6 +10,7 @@ import { canonicalCourseName, rotateAroeira2HolesIfNeeded, resolveAroeiraIIByPar
 import { stripAccents } from "../utils/normName";
 import { numSafe, somaDe } from "../utils/mathUtils";
 import { cachedFetchJson, memoAsync } from "./fetchCache";
+import { indexFromWindow } from "../utils/whsCalc";
 
 /* ─── Tipos (espelham a estrutura gerada pelo pipeline Node) ─── */
 
@@ -209,6 +210,43 @@ export interface PlayerPageData {
     totalRounds: number;
     /** Voltas neste ano civil, calculado de DATA. */
     roundsCurrentYear: number;
+  };
+}
+
+/* ─── Índice previsto com voltas que a FPG ainda não tem ─── */
+
+/** O índice com as voltas que a FPG AINDA NÃO TEM (23/11/2026 — Mariana: «colocamos em
+ *  melhorias.json, nas extra_rounds, as voltas do spanish open enquanto a fpg não as publica,
+ *  mas não fizeste esse impacto no HCP»). As extra_rounds com SD (só as que têm CR/Slope
+ *  oficiais da prova — o process-data nunca o estima) entram na janela das 20 e empurram as mais
+ *  antigas para fora; o HCP_INFO é o OFICIAL da FPG, que ainda não as conta. Devolve o HcpInfo
+ *  da janela com elas (mesmo cálculo da FPG: `indexFromWindow`) e o oficial, ou null quando
+ *  nenhuma está na janela. */
+export interface HcpPrevisto {
+  /** HcpInfo com o índice e a média da janela que inclui as voltas por publicar. */
+  info: HcpInfo;
+  /** O índice oficial da FPG (sem elas). */
+  oficial: number | null;
+  /** As voltas por publicar que estão na janela (mais recente primeiro). */
+  provisorias: RoundData[];
+}
+
+export function hcpPrevisto(data: Pick<PlayerPageData, "DATA" | "HCP_INFO">): HcpPrevisto | null {
+  const janela = data.DATA.flatMap((c) => c.rounds)
+    .filter((r) => numSafe(r.sd) != null)
+    .sort((a, b) => (b.dateSort || 0) - (a.dateSort || 0))
+    .slice(0, 20);
+  const provisorias = janela.filter((r) => r._isExtra);
+  if (!provisorias.length) return null;
+  const r = indexFromWindow(
+    janela.map((x) => ({ sd: numSafe(x.sd)!, hi: numSafe(x.hi) })),
+    data.HCP_INFO?.lowHcp ?? null,
+  );
+  if (!r) return null;
+  return {
+    info: { ...data.HCP_INFO, current: r.hi, scoreAvg: r.scoreAvg, qtyScores: r.qtyScores, qtyCalc: r.qtyCalc, adjustTotal: 0 },
+    oficial: data.HCP_INFO?.current ?? null,
+    provisorias,
   };
 }
 

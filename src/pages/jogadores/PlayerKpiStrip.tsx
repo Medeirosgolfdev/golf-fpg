@@ -11,8 +11,11 @@ import { numSafe, meanArr } from "../../utils/mathUtils";
 import UiKpiCard from "../../ui/KpiCard";
 import { fmtHcp } from "../../utils/format";
 
-export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear, ppHcp, onPpClick }: {
+export default function PlayerKpiStrip({ data, currentHcp, hcpOficial, roundsThisYear, ppHcp, onPpClick }: {
   data: PlayerPageData; currentHcp: number | null; roundsThisYear: number;
+  /** Quando há voltas que a FPG ainda não tem na janela, `currentHcp` é o índice PREVISTO
+   *  e este é o oficial da FPG (mostrado por baixo). */
+  hcpOficial?: number | null;
   /** Handicap Pitch & Putt — mostrado ao LADO do índice normal (é um
    *  handicap, não um facto de cadastro). Clique abre a vista P&P. */
   ppHcp?: number | string | null;
@@ -41,7 +44,9 @@ export default function PlayerKpiStrip({ data, currentHcp, roundsThisYear, ppHcp
   return (
     <div className="jog-kpi-strip">
       <UiKpiCard size="sm" className="kpi-hero" label="Índice" value={fmtHcp(currentHcp)}
-        delta={k.idxDelta} deltaLabel="em 12m"
+        // Previsto (voltas que a FPG ainda não tem): o oficial fica por baixo, no lugar da variação.
+        sub={hcpOficial !== undefined ? `previsto · FPG ${fmtHcp(hcpOficial)}` : undefined}
+        delta={hcpOficial !== undefined ? null : k.idxDelta} deltaLabel="em 12m"
         fill={k.idxDelta == null ? null
           : k.idxDelta < -0.05 ? "good"   /* índice desceu → melhorou → verde */
           : k.idxDelta > 0.05 ? "danger"  /* índice subiu → piorou → vermelho */

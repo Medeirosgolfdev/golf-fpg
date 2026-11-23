@@ -197,3 +197,15 @@ A lógica partilhada (ficheiros, datas das rondas, casamento) está em
   `backfill-pcc.js`, sem pedidos à FPG. Cobertura das voltas dos torneios com SD
   oficial: 64% (2026-09-15).
 - Uma volta sem SD oficial usa o calculado com o HCP da inscrição (`computeSD`).
+
+## Índice previsto com voltas que a FPG ainda não tem (23/11/2026)
+
+As `extra_rounds` com SD (só com CR/Slope oficiais da prova — ver o `process-data`) entram na
+janela das 20 da vista Análises. O `HCP_INFO` é o OFICIAL da FPG e não as conta, por isso o índice
+mostrado com elas na janela é o **previsto**: `hcpPrevisto(data)` (`src/data/playerDataLoader.ts`)
+corre o `indexFromWindow` do `whsCalc` sobre a janela com elas e devolve `info` (HcpInfo previsto),
+`oficial` e `provisorias`. Usam-no o topo da ficha (`PlayerKpiStrip`: «Índice · previsto · FPG x»),
+o texto e o `WHSDetail` da janela WHS e o `RoundSimulator` (com o oficial, o `hiAdjustment` dava um
+resíduo falso). Sem voltas destas na janela → null e fica tudo no oficial. Teste:
+`src/data/__tests__/hcpPrevisto.test.ts`. Validado no Manuel: sem as do Spanish Open dá 6,4 (= FPG),
+com elas 7,1.
