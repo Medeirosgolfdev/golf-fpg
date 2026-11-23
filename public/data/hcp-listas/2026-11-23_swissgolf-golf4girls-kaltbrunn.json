@@ -1,0 +1,28 @@
+{
+  "_doc": "Lista de inscritas com o handicap de cada jogadora à data da leitura, lida do GolfBox da Swiss Golf (PlayersHandler/GetPlayers, campo HCP em décimas de milésima: 536000 = 53,6). A Swiss Golf esconde o HCP das provas já jogadas (visto a 23/11/2026), por isso guarda-se antes da prova. Usada pelo agregador kids2 (util/hcp-listas.js). Handicaps '+' guardados em negativo.",
+  "id": "swissgolf-golf4girls-kaltbrunn-2026-11-23",
+  "label": "Golf4Girls Indoor Kaltbrunn — inscritas (Swiss Golf, 23/11/2026)",
+  "fonte": "GolfBox da Swiss Golf — https://www.golfbox.dk/livescoring/tour/?language=2057#/competition/5383802/players",
+  "data": "2026-11-23",
+  "torneio": "Golf4Girls Indoor Event Kaltbrunn (Golf Vital Indoor Kaltbrunn, 28/11/2026)",
+  "prova": { "golfbox": 5383802 },
+  "sexo": "F",
+  "fonteCurta": "Swiss Golf",
+  "nota": "Única prova da Swiss Golf por jogar com inscritas à vista a 23/11/2026. 14 inscritas (o GolfBox repete-as na classe «mixed»). Sem ano de nascimento: o GolfBox deixou de o dar.",
+  "players": [
+    { "pos": 1, "lista": "entry", "name": "Zoe Hofmann", "country": "Switzerland", "hcp": 53.6, "clube": "Golfclub Lägern / Golfpark Otelfingen" },
+    { "pos": 2, "lista": "entry", "name": "Ivy Hofmann", "country": "Switzerland", "hcp": 54, "clube": "Golfclub Lägern / Golfpark Otelfingen" },
+    { "pos": 3, "lista": "entry", "name": "Shanti Moena Schoch", "country": "Switzerland", "hcp": 39.5, "clube": "Golf Club Bubikon" },
+    { "pos": 4, "lista": "entry", "name": "Marie Kübler", "country": "Switzerland", "hcp": 44.3, "clube": "Golf & Country Club Schönenberg" },
+    { "pos": 5, "lista": "entry", "name": "Angelina Bolt", "country": "Switzerland", "hcp": 24.5, "clube": "Golfclub Augwil" },
+    { "pos": 6, "lista": "entry", "name": "Louisa Wetter", "country": "Switzerland", "hcp": 34.4, "clube": "Golf & Country Club Zürich" },
+    { "pos": 7, "lista": "entry", "name": "Mila Kade", "country": "Switzerland", "hcp": 54, "clube": "Golfclub Lägern / Golfpark Otelfingen" },
+    { "pos": 8, "lista": "entry", "name": "Noemi Kade", "country": "Switzerland", "hcp": 46.7, "clube": "Golfclub Lägern / Golfpark Otelfingen" },
+    { "pos": 9, "lista": "entry", "name": "Mariella Mack-Even", "country": "Switzerland", "hcp": 48.1, "clube": "Golf Club Lipperswil" },
+    { "pos": 10, "lista": "entry", "name": "Michèle Mack-Even", "country": "Switzerland", "hcp": 49.3, "clube": "Golf Club Lipperswil" },
+    { "pos": 11, "lista": "entry", "name": "Erin Studer", "country": "Switzerland", "hcp": 50.5, "clube": "Golf Kyburg" },
+    { "pos": 12, "lista": "entry", "name": "Josefine Wetter", "country": "Switzerland", "hcp": 54, "clube": null },
+    { "pos": 13, "lista": "entry", "name": "Emily Paul", "country": "Switzerland", "hcp": 42.5, "clube": "Golfclub Ennetsee" },
+    { "pos": 14, "lista": "entry", "name": "Clara Charlotte Thanscheidt", "country": "Switzerland", "hcp": 42.5, "clube": "Golf Kyburg" }
+  ]
+}
