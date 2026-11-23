@@ -174,12 +174,7 @@ const API = 'https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx';
 
 const sleep = (ms) => (REPLAY ? Promise.resolve() : new Promise(r => setTimeout(r, ms)));
 
-function parsearDataISO(s) {
-  if (!s) return null;
-  if (s.includes('-')) return s;
-  const [m, d, y] = s.split('/');
-  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-}
+const { parsearDataISO, torneioParcial } = require('./lib/uskids-datas');
 
 function diasAte(s) {
   const iso = parsearDataISO(s);
@@ -430,17 +425,7 @@ async function processarTorneio(page, torneio) {
 // ─────────────────────────────────────────────
 // MAIN
 // ─────────────────────────────────────────────
-/** `parciais` (18/11/2026): os torneios gravados a decorrer — até ao último dia E com a última volta
- *  com menos jogadores do que a primeira (por jogar). A consola do browser volta a pedi-los até
- *  ficarem completos, senão a última volta nunca entrava. Um gravado no último dia já depois de
- *  acabar (ex. Big 5 2026) não conta. */
-function torneioParcial(r) {
-  const fim = parsearDataISO(r.date_fim || r.date_inicio);
-  const gravado = String(r.ultima_atualizacao || '').slice(0, 10);
-  if (!fim || !gravado || fim < gravado) return false;
-  const n = (v) => (v?.leaderboard || []).length;
-  return (r.escaloes || []).some(e => { const rs = e.rondas || []; return rs.length > 0 && n(rs[rs.length - 1]) < Math.max(1, n(rs[0])); });
-}
+// `parciais` (18/11/2026): torneioParcial vive em lib/uskids-datas.js (também o usa o resumo diário).
 function escreverIndice(todos) {
   writeJsonAtomic(INDEX, {
     gerado_em: new Date().toISOString(),

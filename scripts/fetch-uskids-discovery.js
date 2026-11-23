@@ -58,12 +58,7 @@ function ehInternacional(name) {
         !KEYWORDS_EXCLUIR.some(k => n.includes(k));
 }
 
-function parsearDataISO(s) {
-  if (!s) return null;
-  if (s.includes('-')) return s;
-  const [m, d, y] = s.split('/');
-  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-}
+const { parsearDataISO } = require('./lib/uskids-datas');
 
 function estaNoFuturo(dateStr) {
   const iso = parsearDataISO(dateStr);

@@ -723,6 +723,12 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
   agendada para os religar. Para religar: `gh workflow enable <ficheiro>` (um a um), de preferência começando
   só pelo `uskids-field.yml` e vendo se a recusa passou antes de ligar os outros. Enquanto estiverem
   desligados os dados da USKids ficam como estavam a 10/11 (inscritos de 06/11 em 99 de 100 torneios).
+- **Teste a 21/11/2026** (pedido dela): `uskids-field.yml` ligado e corrido uma vez — recusado logo no 1.º pedido
+  (descoberta), 0 pedidos na Fase 2, registos anteriores mantidos. Voltou a ser desligado. A corrida sai «verde» mesmo
+  recusada: ver as linhas «fim: rate-limit» e «recusas da fonte neste run» no log, não a cor.
+- **Datas da USKids e «prova a decorrer»: `scripts/lib/uskids-datas.js`** (21/11/2026) — `parsearDataISO` (M/D/AAAA →
+  ISO; estava copiada em discovery, draws, field e results) e `torneioParcial`. O resumo diário (`digest-extract.js`)
+  não anuncia vencedores de uma prova parcial: o Spanish Open saiu no email de 21/11 com «vencedor» depois da R1.
 - **16/11/2026 — a recusa continua; o mesmo sistema responde em dois domínios.** Um único `GET …LinksAJAX.aspx?op=GetMeta&t=23132`
   a partir do PC deu **HTTP 403**. A página pública da USKids («Tournament Field») embebe hoje o iframe de **`https://tourcaddiepro.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t={t}`**
   (o mesmo «Links Tournament Manager», outro domínio, `ax=2739`). ⚠ Correcção (Mariana, 16/11): o signupanytime **não** foi abandonado — `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=23132` mostra a mesma lista no browser. São dois endereços do mesmo sistema; a recusa (403) é aos pedidos sem browser nos dois. Hipótese dela, coerente com o que se vê: defesas contra robôs (tráfego de IA). Aberta no browser, a lista lê-se bem (escalões

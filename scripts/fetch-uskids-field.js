@@ -80,12 +80,7 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 const hojeISO = () => new Date().toISOString().slice(0, 10);
 
-function parsearDataISO(s) {
-  if (!s) return null;
-  if (s.includes('-')) return s;
-  const [m, d, y] = s.split('/');
-  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-}
+const { parsearDataISO } = require('./lib/uskids-datas');
 
 function diasAte(dateStr) {
   const iso = parsearDataISO(dateStr);

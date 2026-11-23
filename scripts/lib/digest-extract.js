@@ -20,6 +20,7 @@
  */
 
 "use strict";
+const { torneioParcial } = require("./uskids-datas");
 
 /* ── Apresentação de nomes ──────────────────────────────────────────────── */
 
@@ -456,6 +457,10 @@ function fromFpgPull(d) {
 function fromUskidsResults(d) {
   const out = [];
   for (const t of d.resultados || []) {
+    // Prova a decorrer (volta por jogar): o líder da última volta jogada não é o vencedor —
+    // anuncia-se quando a última volta entrar (21/11/2026: o Spanish Open saiu com «vencedor»
+    // depois da R1).
+    if (t && torneioParcial(t)) continue;
     for (const esc of (t && t.escaloes) || []) {
       const rondas = (esc && esc.rondas) || [];
       // A última ronda com leaderboard é a classificação final do escalão.

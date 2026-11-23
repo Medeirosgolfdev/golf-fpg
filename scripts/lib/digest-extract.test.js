@@ -356,6 +356,29 @@ describe("diffTournaments", () => {
   });
 });
 
+describe("USKids — prova a decorrer não tem vencedor (21/11/2026)", () => {
+  const esc = (r1, r2, r3) => ({ nome: "Boys 12", rondas: [
+    { ronda: 1, leaderboard: r1 }, { ronda: 2, leaderboard: r2 }, { ronda: 3, leaderboard: r3 },
+  ] });
+  const lb = [{ nome: "A", pos: 1 }, { nome: "B", pos: 2 }];
+  const prova = (e, gravado) => ({ resultados: [{ t: 23132, name: "Spanish Open 2026", date_inicio: "11/20/2026",
+    date_fim: "11/22/2026", ultima_atualizacao: gravado, escaloes: [e] }] });
+  const F = "public/data/uskids-results.json";
+
+  it("só com a R1 (R2/R3 por jogar) não anuncia o líder como vencedor", () => {
+    expect(extractTournaments(prova(esc(lb, [], []), "2026-11-20T19:08:19Z"), F)).toEqual([]);
+  });
+  it("com a última volta jogada anuncia o vencedor", () => {
+    const r = extractTournaments(prova(esc(lb, lb, lb), "2026-11-22T20:00:00Z"), F);
+    expect(r).toHaveLength(1);
+    expect(r[0].winner).toBe("A");
+  });
+  it("da prova a meio para a acabada, o vencedor entra no diff", () => {
+    const novos = diffTournaments(prova(esc(lb, [], []), "2026-11-20T19:08:19Z"), prova(esc(lb, lb, lb), "2026-11-22T20:00:00Z"), F);
+    expect(novos).toHaveLength(1);
+  });
+});
+
 describe("diffWhs", () => {
   const antigas = [{ score_id: 100, tourn_name: "A", score_origin: "Torn", hcp_dateStr: "2026-01-01" }];
   const novas = [
