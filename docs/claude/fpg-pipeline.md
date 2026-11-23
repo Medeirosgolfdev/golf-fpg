@@ -257,6 +257,15 @@ vazio, com o texto na marca (o mesmo PDF usa «+» para os plus). Tees:
 `QDL_JUNIOR_OPEN_TEE_RULE` (o «Silver» dos Termos é o «Brancas» do scoring). Actualizar a
 lista = reler o PDF e regravar `admissions.players` (quem sair vai para `saidos`).
 
+**Morgado International Junior Classic 2026 (2026-11-23) — prova do Portugal Junior Tour, não da FPG:**
+4-6/12/2026, NAU Morgado (clube 966, o das «NAU Morgado Open»), WAGR, 3 voltas. Pedido dela: primeiro na /major,
+depois «coloca isto em FPG em vez de em major» — segue o modelo do Quinta do Lago: duas entradas `_manual` com tcode
+provisório `966/96601` (rapazes) e `96602` (raparigas), uma carta com dois separadores. A lista é a Entry List em
+PDF do PJT (só nome, HCP com «+» nos plus e país, por sexo; sem categorias); 25 de 36 ligados a federados por nome +
+handicap (homónimos afastados pelo HCP), o Miguel Ferreira sem ligação. Sem regra de tees: os Termos da página carregam
+por JavaScript e não foram lidos. Pormenores no `_note` das entradas. Actualizar = reler o PDF novo e regravar
+`admissions.players`.
+
 **Edições anteriores das provas de jovens da Quinta do Lago (2026-11-12):** as edições
 de 2024 e 2025 vêm sem `escalao`, com o escalão colado ao nome («… - U12», «… - Under 14»)
 e com os mais velhos num só código («U21 & U16», «Under 18 & 16»). Em

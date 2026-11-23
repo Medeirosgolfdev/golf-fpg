@@ -322,4 +322,29 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     semLinksFpg: true,
     hcpActual: true,
   })),
+
+  // ── Morgado International Junior Classic 2026 — 4-6/12/2026, NAU Morgado ──
+  // Prova do Portugal Junior Tour (Series 1 — December; WAGR; 3 voltas), não da FPG.
+  // Os inscritos são os da Entry List em PDF do PJT de 23/11/2026 (36 + 10 lugares
+  // reservados sem nome), curados à mão (`_manual` em fpg-admissions-draws.json) nos
+  // tcodes PROVISÓRIOS 96601 (rapazes) e 96602 (raparigas) do clube 966 (NAU Morgado).
+  // Sem categorias por idade nem regra de tees (os Termos não foram lidos).
+  // Se a FPG a abrir no scoring: trocar os tcodes aqui e no JSON (ou `tcodeReal`).
+  ...([["96601", "Rapazes"], ["96602", "Raparigas"]] as const).map(([tcode, sexo]): FeaturedTournament => ({
+    ccode: "966",
+    tcode,
+    // Nomes diferentes de propósito (nome + data + campo iguais fundem-se); o
+    // «- Rapazes» sai do nome da carta.
+    name: `Morgado International Junior Classic 2026 - ${sexo}`,
+    tabLabel: sexo,
+    date: "2026-12-04",
+    campo: "Morgado Golf",
+    rounds: 3,
+    extraLinks: [
+      { label: "página do torneio (Portugal Junior Tour)", url: "https://portugaljuniortour.pt/events/international-morgado-junior-classic", icon: "🏌️" },
+    ],
+    live: false,
+    semLinksFpg: true,
+    hcpActual: true,
+  })),
 ];
