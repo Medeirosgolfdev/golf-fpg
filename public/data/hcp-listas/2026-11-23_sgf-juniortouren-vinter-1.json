@@ -1,0 +1,1577 @@
+{
+  "_doc": "Handicap dos juniores suecos inscritos nas provas da Svenska Golfförbundet por jogar a 23/11/2026, lido do GolfBox (PlayersHandler/GetPlayers, campo HCP ×10000: 245000 = 24,5). Uma linha por jogador (nome + clube), com as provas em que está inscrito. Sem ano de nascimento nem sexo (o GolfBox não os dá). Plus em negativo. Usada pelo agregador kids2 (util/hcp-listas.js).",
+  "id": "sgf-juniortouren-2026-11-23",
+  "label": "Svenska Juniortouren Vinter #1 — inscritos (SGF, HCP de 23/11/2026)",
+  "fonte": "GolfBox da Svenska Golfförbundet (customer 4) — https://www.golfbox.dk/livescoring/tour/?language=2057#/customer/4",
+  "data": "2026-11-23",
+  "torneio": "Svenska Juniortouren Vinter #1 (27–29/11/2026, várias salas e clubes)",
+  "soNomeExacto": true,
+  "fonteCurta": "SGF",
+  "nota": "Provas suecas por jogar com inscritos à vista a 23/11/2026: 29. 5885858 Svenska Juniortouren Vinter #1 CHIP indoor Golf (4); 5885888 Svenska Juniortouren Vinter #1 Ekarnas Golfklubb (2); 5889672 Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena (12); 5890306 Svenska Juniortouren Vinter #1 Lundsbrunn GK (5); 5885857 Svenska Juniortouren Vinter #1 Umeå Golfklubb (10); 5889650 Svenska Juniortouren Vinter #1 Borås Indoor Golf (2); 5889651 Svenska Juniortouren Vinter #1 Bromma Indoor Golf (1); 5885860 Svenska Juniortouren Vinter #1 Karlstad Indoor Golf (3); 5889659 Svenska Juniortouren Vinter #1 Kungsbacka Indoor Golf (2); 5889661 Svenska Juniortouren Vinter #1 Malmö Indoor Golf (1); 5885863 Svenska Juniortouren Vinter #1 Mjölby Golfklubb (4); 5889663 Svenska Juniortouren Vinter #1 Nacka Indoor Golf (1); 5885861 Svenska Juniortouren Vinter #1 Norrtelje Golf Powered by RUFF (6); 5891778 Svenska Juniortouren Vinter #1 Onsjö GK (5); 5886867 Svenska Juniortouren Vinter #1 SAIK Golfklubb (1); 5893416 Svenska Juniortouren Vinter #1 Sala IndoorGolf (2); 5889665 Svenska Juniortouren Vinter #1 Sisjön Indoor Golf (3); 5889666 Svenska Juniortouren Vinter #1 Täby Indoor Golf (3); 5889667 Svenska Juniortouren Vinter #1 Uppsala Indoor Golf (2); 5889669 Svenska Juniortouren Vinter #1 Västerås Indoor Golf (1); 5885864 Svenska Juniortouren Vinter #1 Örebro City Golf & CC (4); 5886864 Svenska Juniortouren Vinter #1 Östersund Indoor Golf By Didriks (1); 5891780 Svenska Juniortouren Vinter #1 Lindesbergs GK (2); 5885867 Svenska Juniortouren Vinter #1 RUFF Visby (3); 5893414 Svenska Juniortouren Vinter #1 Slice Golf (2); 5885853 Svenska Juniortouren Vinter #1 Smash i Kumla (3); 5885865 Svenska Juniortouren Vinter #1 Timrå GK (1); 5885856 Svenska Juniortouren Vinter #1 Vreta Kloster Golfklubb (4); 5890303 Svenska Juniortouren Vinter #1 Öjestrand Golf Club (2).",
+  "players": [
+    {
+      "pos": 1,
+      "lista": "entry",
+      "name": "Filip Danielsson",
+      "country": "SE",
+      "hcp": -2.7,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 2,
+      "lista": "entry",
+      "name": "Karl Hanell",
+      "country": "SE",
+      "hcp": -1.7,
+      "clube": "Kumla Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885853,
+          "title": "Svenska Juniortouren Vinter #1 Smash i Kumla",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 3,
+      "lista": "entry",
+      "name": "Tage Rosqvist",
+      "country": "SE",
+      "hcp": -1.5,
+      "clube": "Hinton Golf Club",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889661,
+          "title": "Svenska Juniortouren Vinter #1 Malmö Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 4,
+      "lista": "entry",
+      "name": "Olof Norsebäck",
+      "country": "SE",
+      "hcp": -1.4,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 5,
+      "lista": "entry",
+      "name": "Axel Jonsson",
+      "country": "SE",
+      "hcp": -1.3,
+      "clube": "Umeå Norrmjöle Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 6,
+      "lista": "entry",
+      "name": "Gusten Pettersson Persson",
+      "country": "SE",
+      "hcp": -1.1,
+      "clube": "Visby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885867,
+          "title": "Svenska Juniortouren Vinter #1 RUFF Visby",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 7,
+      "lista": "entry",
+      "name": "Olle Källberg",
+      "country": "SE",
+      "hcp": -0.8,
+      "clube": "Onsjö Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5891778,
+          "title": "Svenska Juniortouren Vinter #1 Onsjö GK",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 8,
+      "lista": "entry",
+      "name": "Alfred Wilhelmsson",
+      "country": "SE",
+      "hcp": -0.7,
+      "clube": "Kumla Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885853,
+          "title": "Svenska Juniortouren Vinter #1 Smash i Kumla",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 9,
+      "lista": "entry",
+      "name": "Anton Grönberg",
+      "country": "SE",
+      "hcp": -0.7,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 10,
+      "lista": "entry",
+      "name": "Mille Karlsson",
+      "country": "SE",
+      "hcp": -0.7,
+      "clube": "Mjölby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885863,
+          "title": "Svenska Juniortouren Vinter #1 Mjölby Golfklubb",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 11,
+      "lista": "entry",
+      "name": "Wille Esplund",
+      "country": "SE",
+      "hcp": -0.2,
+      "clube": "Hammarö Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5890306,
+          "title": "Svenska Juniortouren Vinter #1 Lundsbrunn GK",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 12,
+      "lista": "entry",
+      "name": "Lowe Ling",
+      "country": "SE",
+      "hcp": 0.1,
+      "clube": "Östersund-Frösö Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5886864,
+          "title": "Svenska Juniortouren Vinter #1 Östersund Indoor Golf By Didriks",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 13,
+      "lista": "entry",
+      "name": "Viggo Frick",
+      "country": "SE",
+      "hcp": 0.1,
+      "clube": "Vassunda Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889667,
+          "title": "Svenska Juniortouren Vinter #1 Uppsala Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 14,
+      "lista": "entry",
+      "name": "Victor Björkqvist",
+      "country": "SE",
+      "hcp": 0.2,
+      "clube": "Kungsbacka Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889659,
+          "title": "Svenska Juniortouren Vinter #1 Kungsbacka Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 15,
+      "lista": "entry",
+      "name": "Gustav Everitt",
+      "country": "SE",
+      "hcp": 0.3,
+      "clube": "Onsjö Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5891778,
+          "title": "Svenska Juniortouren Vinter #1 Onsjö GK",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 16,
+      "lista": "entry",
+      "name": "Theo Locke",
+      "country": "SE",
+      "hcp": 0.3,
+      "clube": "Karlstads Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885860,
+          "title": "Svenska Juniortouren Vinter #1 Karlstad Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 17,
+      "lista": "entry",
+      "name": "Melker Andreasson",
+      "country": "SE",
+      "hcp": 0.4,
+      "clube": "Täby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889666,
+          "title": "Svenska Juniortouren Vinter #1 Täby Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 18,
+      "lista": "entry",
+      "name": "Olle Brändström",
+      "country": "SE",
+      "hcp": 0.6,
+      "clube": "Umeå Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 19,
+      "lista": "entry",
+      "name": "Brasse Juthnäs",
+      "country": "SE",
+      "hcp": 0.7,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 20,
+      "lista": "entry",
+      "name": "Melker Brask Gustafsson",
+      "country": "SE",
+      "hcp": 0.7,
+      "clube": "Bryngfjordens Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885860,
+          "title": "Svenska Juniortouren Vinter #1 Karlstad Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 21,
+      "lista": "entry",
+      "name": "Dennis Ljungberg",
+      "country": "SE",
+      "hcp": 0.8,
+      "clube": "Roslagens Golfklubb Norrtälje",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885861,
+          "title": "Svenska Juniortouren Vinter #1 Norrtelje Golf Powered by RUFF",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 22,
+      "lista": "entry",
+      "name": "Anton Nilsson",
+      "country": "SE",
+      "hcp": 0.9,
+      "clube": "Lannalodge Golfresort",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885864,
+          "title": "Svenska Juniortouren Vinter #1 Örebro City Golf & CC",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 23,
+      "lista": "entry",
+      "name": "Leon Hofgren",
+      "country": "SE",
+      "hcp": 0.9,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 24,
+      "lista": "entry",
+      "name": "Manne Hilmersson",
+      "country": "SE",
+      "hcp": 0.9,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 25,
+      "lista": "entry",
+      "name": "Sam Tegern",
+      "country": "SE",
+      "hcp": 0.9,
+      "clube": "Umeå Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 26,
+      "lista": "entry",
+      "name": "Eric Tegeback",
+      "country": "SE",
+      "hcp": 1.2,
+      "clube": "Timrå Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885865,
+          "title": "Svenska Juniortouren Vinter #1 Timrå GK",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 27,
+      "lista": "entry",
+      "name": "Edvin Call",
+      "country": "SE",
+      "hcp": 1.5,
+      "clube": "Onsjö Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5891778,
+          "title": "Svenska Juniortouren Vinter #1 Onsjö GK",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 28,
+      "lista": "entry",
+      "name": "Ludvig Göthberg",
+      "country": "SE",
+      "hcp": 1.5,
+      "clube": "Onsjö Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5891778,
+          "title": "Svenska Juniortouren Vinter #1 Onsjö GK",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 29,
+      "lista": "entry",
+      "name": "Olle Sjöberg",
+      "country": "SE",
+      "hcp": 1.5,
+      "clube": "Örebro City Golf & Country Club",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885864,
+          "title": "Svenska Juniortouren Vinter #1 Örebro City Golf & CC",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 30,
+      "lista": "entry",
+      "name": "Melker Delsander",
+      "country": "SE",
+      "hcp": 1.6,
+      "clube": "Vreta Kloster Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885856,
+          "title": "Svenska Juniortouren Vinter #1 Vreta Kloster Golfklubb",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 31,
+      "lista": "entry",
+      "name": "Charlie Reuterwall",
+      "country": "SE",
+      "hcp": 1.7,
+      "clube": "Vreta Kloster Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885856,
+          "title": "Svenska Juniortouren Vinter #1 Vreta Kloster Golfklubb",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 32,
+      "lista": "entry",
+      "name": "Lukas Åsberg",
+      "country": "SE",
+      "hcp": 1.7,
+      "clube": "Umeå Norrmjöle Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 33,
+      "lista": "entry",
+      "name": "William Andersson",
+      "country": "SE",
+      "hcp": 1.8,
+      "clube": "Onsjö Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5891778,
+          "title": "Svenska Juniortouren Vinter #1 Onsjö GK",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 34,
+      "lista": "entry",
+      "name": "Embla Ståhl",
+      "country": "SE",
+      "hcp": 2,
+      "clube": "Karlstads Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885860,
+          "title": "Svenska Juniortouren Vinter #1 Karlstad Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 35,
+      "lista": "entry",
+      "name": "Edvin Nordh",
+      "country": "SE",
+      "hcp": 2.3,
+      "clube": "Borås Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889650,
+          "title": "Svenska Juniortouren Vinter #1 Borås Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 36,
+      "lista": "entry",
+      "name": "Hugo Skarin Ebenstrand",
+      "country": "SE",
+      "hcp": 2.3,
+      "clube": "Sigtuna Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889666,
+          "title": "Svenska Juniortouren Vinter #1 Täby Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 37,
+      "lista": "entry",
+      "name": "Ebba Norström",
+      "country": "SE",
+      "hcp": 2.4,
+      "clube": "Örebro City Golf & Country Club",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885864,
+          "title": "Svenska Juniortouren Vinter #1 Örebro City Golf & CC",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 38,
+      "lista": "entry",
+      "name": "Isak Suup",
+      "country": "SE",
+      "hcp": 2.5,
+      "clube": "Umeå Norrmjöle Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 39,
+      "lista": "entry",
+      "name": "Theo Ivarsson",
+      "country": "SE",
+      "hcp": 3,
+      "clube": "Partille Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885858,
+          "title": "Svenska Juniortouren Vinter #1 CHIP indoor Golf",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 40,
+      "lista": "entry",
+      "name": "Alfred Eriksson",
+      "country": "SE",
+      "hcp": 3.1,
+      "clube": "Sala Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5893416,
+          "title": "Svenska Juniortouren Vinter #1 Sala IndoorGolf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 41,
+      "lista": "entry",
+      "name": "Gustav Larsson",
+      "country": "SE",
+      "hcp": 3.3,
+      "clube": "Umeå Sörfors Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 42,
+      "lista": "entry",
+      "name": "Theo Marmsten",
+      "country": "SE",
+      "hcp": 3.3,
+      "clube": "Umeå Norrmjöle Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 43,
+      "lista": "entry",
+      "name": "Elliot Kjellberg",
+      "country": "SE",
+      "hcp": 3.4,
+      "clube": "Borås Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889650,
+          "title": "Svenska Juniortouren Vinter #1 Borås Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 44,
+      "lista": "entry",
+      "name": "Melker Liljekvist",
+      "country": "SE",
+      "hcp": 3.7,
+      "clube": "Frösåker Golf & Country Club",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889669,
+          "title": "Svenska Juniortouren Vinter #1 Västerås Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 45,
+      "lista": "entry",
+      "name": "Alfred Bernhardsson",
+      "country": "SE",
+      "hcp": 4.2,
+      "clube": "Umeå Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 46,
+      "lista": "entry",
+      "name": "Elliot Liljeberg",
+      "country": "SE",
+      "hcp": 4.3,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 47,
+      "lista": "entry",
+      "name": "Gustav Bergman",
+      "country": "SE",
+      "hcp": 4.3,
+      "clube": "Kumla Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885853,
+          "title": "Svenska Juniortouren Vinter #1 Smash i Kumla",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 48,
+      "lista": "entry",
+      "name": "Alvin Bellander",
+      "country": "SE",
+      "hcp": 4.4,
+      "clube": "Umeå Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 49,
+      "lista": "entry",
+      "name": "Dylan Köhnke",
+      "country": "SE",
+      "hcp": 4.4,
+      "clube": "Partille Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885858,
+          "title": "Svenska Juniortouren Vinter #1 CHIP indoor Golf",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 50,
+      "lista": "entry",
+      "name": "Oscar Edvardsson",
+      "country": "SE",
+      "hcp": 4.5,
+      "clube": "Ekarnas Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885888,
+          "title": "Svenska Juniortouren Vinter #1 Ekarnas Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 51,
+      "lista": "entry",
+      "name": "William Åberg",
+      "country": "SE",
+      "hcp": 4.6,
+      "clube": "Roslagens Golfklubb Norrtälje",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885861,
+          "title": "Svenska Juniortouren Vinter #1 Norrtelje Golf Powered by RUFF",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 52,
+      "lista": "entry",
+      "name": "Alexander Bergquist",
+      "country": "SE",
+      "hcp": 5,
+      "clube": "Nacka Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889663,
+          "title": "Svenska Juniortouren Vinter #1 Nacka Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 53,
+      "lista": "entry",
+      "name": "Casper Nyström",
+      "country": "SE",
+      "hcp": 5,
+      "clube": "Chalmers Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885858,
+          "title": "Svenska Juniortouren Vinter #1 CHIP indoor Golf",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 54,
+      "lista": "entry",
+      "name": "Erik Dahlerus",
+      "country": "SE",
+      "hcp": 5,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 55,
+      "lista": "entry",
+      "name": "Anton Hjertén",
+      "country": "SE",
+      "hcp": 5.2,
+      "clube": "Roslagens Golfklubb Norrtälje",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885861,
+          "title": "Svenska Juniortouren Vinter #1 Norrtelje Golf Powered by RUFF",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 56,
+      "lista": "entry",
+      "name": "Albin Nilsson",
+      "country": "SE",
+      "hcp": 5.3,
+      "clube": "Umeå Norrmjöle Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885857,
+          "title": "Svenska Juniortouren Vinter #1 Umeå Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 57,
+      "lista": "entry",
+      "name": "Albin Karmebäck",
+      "country": "SE",
+      "hcp": 5.4,
+      "clube": "Chalmers Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889665,
+          "title": "Svenska Juniortouren Vinter #1 Sisjön Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 58,
+      "lista": "entry",
+      "name": "Gustav Pamp",
+      "country": "SE",
+      "hcp": 5.5,
+      "clube": "Hills Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889665,
+          "title": "Svenska Juniortouren Vinter #1 Sisjön Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 59,
+      "lista": "entry",
+      "name": "Nils Brandt",
+      "country": "SE",
+      "hcp": 5.5,
+      "clube": "Mjölby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885863,
+          "title": "Svenska Juniortouren Vinter #1 Mjölby Golfklubb",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 60,
+      "lista": "entry",
+      "name": "Sven Lindblad",
+      "country": "SE",
+      "hcp": 5.6,
+      "clube": "Visby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885867,
+          "title": "Svenska Juniortouren Vinter #1 RUFF Visby",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 61,
+      "lista": "entry",
+      "name": "Harley Jern",
+      "country": "SE",
+      "hcp": 5.8,
+      "clube": "Mjölby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885863,
+          "title": "Svenska Juniortouren Vinter #1 Mjölby Golfklubb",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 62,
+      "lista": "entry",
+      "name": "Johan Jonsson",
+      "country": "SE",
+      "hcp": 5.8,
+      "clube": "Roslagens Golfklubb Norrtälje",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885861,
+          "title": "Svenska Juniortouren Vinter #1 Norrtelje Golf Powered by RUFF",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 63,
+      "lista": "entry",
+      "name": "Mahi Srivastava",
+      "country": "SE",
+      "hcp": 6.9,
+      "clube": "Danderyds Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889666,
+          "title": "Svenska Juniortouren Vinter #1 Täby Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 64,
+      "lista": "entry",
+      "name": "Gustaf Kihlberg",
+      "country": "SE",
+      "hcp": 7.1,
+      "clube": "Öijared Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889665,
+          "title": "Svenska Juniortouren Vinter #1 Sisjön Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 65,
+      "lista": "entry",
+      "name": "Pärla Liljeholm",
+      "country": "SE",
+      "hcp": 7.1,
+      "clube": "Varbergs Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889659,
+          "title": "Svenska Juniortouren Vinter #1 Kungsbacka Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 66,
+      "lista": "entry",
+      "name": "Lukas Klockgärd",
+      "country": "SE",
+      "hcp": 7.5,
+      "clube": "Vreta Kloster Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885856,
+          "title": "Svenska Juniortouren Vinter #1 Vreta Kloster Golfklubb",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 67,
+      "lista": "entry",
+      "name": "Love Laestadius",
+      "country": "SE",
+      "hcp": 7.7,
+      "clube": "Luleå Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5893414,
+          "title": "Svenska Juniortouren Vinter #1 Slice Golf",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 68,
+      "lista": "entry",
+      "name": "Alvin Löfgren",
+      "country": "SE",
+      "hcp": 8,
+      "clube": "Lundsbrunn Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5890306,
+          "title": "Svenska Juniortouren Vinter #1 Lundsbrunn GK",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 69,
+      "lista": "entry",
+      "name": "Jonathan Knutsson",
+      "country": "SE",
+      "hcp": 8,
+      "clube": "Vreta Kloster Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885856,
+          "title": "Svenska Juniortouren Vinter #1 Vreta Kloster Golfklubb",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 70,
+      "lista": "entry",
+      "name": "Melvin Rösander",
+      "country": "SE",
+      "hcp": 8.1,
+      "clube": "Roslagens Golfklubb Norrtälje",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885861,
+          "title": "Svenska Juniortouren Vinter #1 Norrtelje Golf Powered by RUFF",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 71,
+      "lista": "entry",
+      "name": "Victor Paulsson",
+      "country": "SE",
+      "hcp": 8.2,
+      "clube": "Fjällbacka Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885888,
+          "title": "Svenska Juniortouren Vinter #1 Ekarnas Golfklubb",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 72,
+      "lista": "entry",
+      "name": "Elton Riström",
+      "country": "SE",
+      "hcp": 8.3,
+      "clube": "Luleå Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5893414,
+          "title": "Svenska Juniortouren Vinter #1 Slice Golf",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 73,
+      "lista": "entry",
+      "name": "Max Nordqvist",
+      "country": "SE",
+      "hcp": 8.7,
+      "clube": "Lundsbrunn Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5890306,
+          "title": "Svenska Juniortouren Vinter #1 Lundsbrunn GK",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 74,
+      "lista": "entry",
+      "name": "Elias Lorin",
+      "country": "SE",
+      "hcp": 9.2,
+      "clube": "Mjölby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885863,
+          "title": "Svenska Juniortouren Vinter #1 Mjölby Golfklubb",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 75,
+      "lista": "entry",
+      "name": "Hugo Rasmusson",
+      "country": "SE",
+      "hcp": 9.4,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 76,
+      "lista": "entry",
+      "name": "Moa Åkermark",
+      "country": "SE",
+      "hcp": 9.7,
+      "clube": "Visby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885867,
+          "title": "Svenska Juniortouren Vinter #1 RUFF Visby",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 77,
+      "lista": "entry",
+      "name": "Ellie Ylitalo",
+      "country": "SE",
+      "hcp": 9.8,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 78,
+      "lista": "entry",
+      "name": "Maja Nordqvist",
+      "country": "SE",
+      "hcp": 10.2,
+      "clube": "Lundsbrunn Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5890306,
+          "title": "Svenska Juniortouren Vinter #1 Lundsbrunn GK",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 79,
+      "lista": "entry",
+      "name": "Emma Dahlerus",
+      "country": "SE",
+      "hcp": 10.3,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 80,
+      "lista": "entry",
+      "name": "Wilma Pettersson",
+      "country": "SE",
+      "hcp": 10.3,
+      "clube": "Kumla Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885864,
+          "title": "Svenska Juniortouren Vinter #1 Örebro City Golf & CC",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 81,
+      "lista": "entry",
+      "name": "Frank Sandh",
+      "country": "SE",
+      "hcp": 10.6,
+      "clube": "Lindesbergs Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5891780,
+          "title": "Svenska Juniortouren Vinter #1 Lindesbergs GK",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 82,
+      "lista": "entry",
+      "name": "Edwin Jönsson",
+      "country": "SE",
+      "hcp": 10.8,
+      "clube": "Mora Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5886867,
+          "title": "Svenska Juniortouren Vinter #1 SAIK Golfklubb",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 83,
+      "lista": "entry",
+      "name": "Folke Markusson",
+      "country": "SE",
+      "hcp": 11.6,
+      "clube": "Partille Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885858,
+          "title": "Svenska Juniortouren Vinter #1 CHIP indoor Golf",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 84,
+      "lista": "entry",
+      "name": "Neo Spoofhjelm Andersson",
+      "country": "SE",
+      "hcp": 12.6,
+      "clube": "Roslagens Golfklubb Norrtälje",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5885861,
+          "title": "Svenska Juniortouren Vinter #1 Norrtelje Golf Powered by RUFF",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 85,
+      "lista": "entry",
+      "name": "Zeb Grajdek Hedebäck",
+      "country": "SE",
+      "hcp": 13.2,
+      "clube": "Djurgårdens IF Golfförening",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889651,
+          "title": "Svenska Juniortouren Vinter #1 Bromma Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 86,
+      "lista": "entry",
+      "name": "Ludvig Hedling",
+      "country": "SE",
+      "hcp": 13.6,
+      "clube": "Lindesbergs Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5891780,
+          "title": "Svenska Juniortouren Vinter #1 Lindesbergs GK",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 87,
+      "lista": "entry",
+      "name": "Melvin Stridsberg",
+      "country": "SE",
+      "hcp": 14.1,
+      "clube": "Öjestrand Golf Club",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5890303,
+          "title": "Svenska Juniortouren Vinter #1 Öjestrand Golf Club",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 88,
+      "lista": "entry",
+      "name": "Erik Forsberg",
+      "country": "SE",
+      "hcp": 15.5,
+      "clube": "Älvkarleby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889667,
+          "title": "Svenska Juniortouren Vinter #1 Uppsala Indoor Golf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 89,
+      "lista": "entry",
+      "name": "Hilma Sandsjö",
+      "country": "SE",
+      "hcp": 15.6,
+      "clube": "Lundsbrunn Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5890306,
+          "title": "Svenska Juniortouren Vinter #1 Lundsbrunn GK",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 90,
+      "lista": "entry",
+      "name": "Alfred Westerlund",
+      "country": "SE",
+      "hcp": 16.1,
+      "clube": "Öjestrand Golf Club",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5890303,
+          "title": "Svenska Juniortouren Vinter #1 Öjestrand Golf Club",
+          "date": "2026-11-29",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 91,
+      "lista": "entry",
+      "name": "Vilda Erestam",
+      "country": "SE",
+      "hcp": 18.6,
+      "clube": "Kårsta Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5889672,
+          "title": "Svenska Juniortouren Vinter #1 Kårsta Inomhus Golfarena",
+          "date": "2026-11-27",
+          "classe": "A klass"
+        }
+      ]
+    },
+    {
+      "pos": 92,
+      "lista": "entry",
+      "name": "Tyra Eriksson",
+      "country": "SE",
+      "hcp": 20.3,
+      "clube": "Sala Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5893416,
+          "title": "Svenska Juniortouren Vinter #1 Sala IndoorGolf",
+          "date": "2026-11-28",
+          "classe": "A klass"
+        }
+      ]
+    }
+  ]
+}
