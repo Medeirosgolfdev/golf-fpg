@@ -1,22 +1,21 @@
 /**
  * src/pages/DrawsPage.tsx
  *
- * Página dedicada de Draws/Pairings do Manuel — lista de jogadores com quem
- * já foi parelhado em torneios FPG e USKids, com cruzamento de scores.
+ * Vista «🤝 Draws» da ficha do jogador (`/jogadores/:fed?view=draws`) — lista
+ * de jogadores com quem foi parelhado em torneios, com cruzamento de scores.
+ * Era só do Manuel; desde 23/11/2026 existe para todos os jogadores seguidos.
  *
  * Vertentes (tabs):
- *   - FPG          → pairings de torneios portugueses (fpg-admissions-draws)
- *   - USKids       → pairings de torneios USKids (uskids-draws, 5 torneios)
- *   - Internacional → placeholder; a preencher manualmente a partir de fotografias
- *                     (WJGC/EOWAGR/Doral/England/Espanha/França não publicam pairings)
+ *   - FPG           → pairings de torneios portugueses (fpg-admissions-draws)
+ *   - Internacional → USKids (uskids-draws), tee sheets GolfGenius (MAJOR e
+ *                     provas francesas) e, só no Manuel, os registos à mão
+ *                     (WJGC/EOWAGR/Doral/voltas de treino)
  *
- * Fonte de dados: public/data/manuel-pairings.json (gerado por
- * scripts/pairings-build.js — cruza FPG draws + USKids draws + overrides
- * manuais (Intl WJGC/Doral/EU WAGR e USKids IE) + sintetiza R3 pelo
- * acumulado quando o draw oficial não foi publicado).
+ * Fonte de dados (gerada por scripts/pairings-build.js): o Manuel em
+ * public/data/manuel-pairings.json; os outros em public/data/pairings/{fed}.json.
  *
  * Display: 1 linha por jogador único (agregado por fed ou nome+país). Click
- * expande para ver cada ronda jogada em conjunto, com score do Manuel vs
+ * expande para ver cada ronda jogada em conjunto, com o score do jogador vs
  * score do companheiro nessa ronda.
  */
 
@@ -41,6 +40,7 @@ import { signupanytimeUrl } from "../utils/signupanytime";
 import { clubLong, clubShort } from "../utils/playerUtils";
 import { loadPlayers } from "../data/loader";
 import { useJson } from "../hooks/useJson";
+import { useTemDraws, pairingsUrl } from "../hooks/useTemDraws";
 import type { PlayersDb } from "../data/types";
 import ExpandArrow from "../ui/ExpandArrow";
 import ExtLink from "../ui/ExternalLink";
@@ -73,7 +73,7 @@ interface Round {
   teeTime: string | null;
   startHole: number | null;
   campo: string | null;
-  manuelScore: Score;
+  jogadorScore: Score;
   companheiros: Companion[];
 }
 
@@ -97,9 +97,10 @@ interface CoverageBlock {
 }
 
 interface PairingsFile {
-  geradoEm: string;
-  manuelFed: string;
-  manuelUskidsIds: string[];
+  /** Só no ficheiro do Manuel (o dos outros não leva hora, para não mudar a cada corrida). */
+  geradoEm?: string;
+  fed: string;
+  uskidsIds: string[];
   totalRondas: number;
   totalCompanheirosUnicos: number;
   cobertura?: { fpg: CoverageBlock; uskids: CoverageBlock };
@@ -126,12 +127,12 @@ interface CompanionRow {
     campo: string | null;
     ronda: number;
     circuito: "FPG" | "USKids" | "Intl";
-    manuelScore: Score;
+    jogadorScore: Score;
     companheiroScore: Score;
   }>;
 }
 
-// Vista por torneio: 1 cartão por torneio, com o grupo do Manuel em cada dia/ronda.
+// Vista por torneio: 1 cartão por torneio, com o grupo do jogador em cada dia/ronda.
 interface TournDayMember {
   nome: string;
   fed: string | null;
@@ -146,7 +147,7 @@ interface TournDay {
   campo: string | null;
   teeTime: string | null;
   startHole: number | null;
-  manuelScore: Score;
+  jogadorScore: Score;
   grupo: TournDayMember[];
 }
 interface TournView {
@@ -198,6 +199,8 @@ function fmtScore(s: Score): string {
 
 interface PlayerLite { fed: string; name: string; dob: string | null; clubNorm?: string }
 interface Lookups {
+  /** O próprio jogador — nunca é companheiro dele (o pai do Manuel tem o mesmo nome). */
+  euFed: string;
   dobByFed: Map<string, string>;          // fed → dob (players + inativos + federados)
   byNorm: Map<string, PlayerLite[]>;      // nome exacto → TODOS os homónimos (um por federado)
   /** A lista de federados já chegou — só então se sabe se um nome é único. */
@@ -229,8 +232,8 @@ function resolveCompanion(c: Companion, lk: Lookups, prova: ProvaCtx): { fed: st
   //    único em toda a federação, ou o clube/escalão da prova apontam para UM só;
   //    senão fica sem federado. Só depois de a lista de federados chegar.
   if (lk.homonimosCompletos) {
-    // (o próprio Manuel nunca é companheiro dele — o pai tem o mesmo nome)
-    const exact = federadoPorNome((lk.byNorm.get(norm(nome)) ?? []).filter(p => p.fed !== MANUEL_FED), {
+    // (o próprio jogador nunca é companheiro dele — o pai do Manuel tem o mesmo nome)
+    const exact = federadoPorNome((lk.byNorm.get(norm(nome)) ?? []).filter(p => p.fed !== lk.euFed), {
       clube: c.clube, pais: c.pais, torneioNome: prova.torneioNome, data: prova.data,
     });
     if (exact) return { fed: exact.fed, nome: exact.name, dob: exact.dob };
@@ -240,10 +243,10 @@ function resolveCompanion(c: Companion, lk: Lookups, prova: ProvaCtx): { fed: st
   if (m) {
     const key = `${norm(m[1])}|${norm(m[2].split(/\s+/).pop() || "")}`;
     // 3a) índice pequeno (players+inativos): resolve o pai sem ambiguidade
-    const small = (lk.byISsmall.get(key) || []).filter(p => p.fed !== MANUEL_FED);
+    const small = (lk.byISsmall.get(key) || []).filter(p => p.fed !== lk.euFed);
     if (small.length === 1) return { fed: small[0].fed, nome: small[0].name, dob: small[0].dob };
     // 3b) federados, com scoping pelo clube do companheiro (desambigua nos torneios de pares)
-    const fedC = (lk.byISfed.get(key) || []).filter(p => p.fed !== MANUEL_FED && clubeCompativel(c.clube, p.clubNorm));
+    const fedC = (lk.byISfed.get(key) || []).filter(p => p.fed !== lk.euFed && clubeCompativel(c.clube, p.clubNorm));
     if (fedC.length === 1) return { fed: fedC[0].fed, nome: fedC[0].name, dob: fedC[0].dob };
   }
   return { fed: null, nome, dob: null };
@@ -274,22 +277,22 @@ function RondaPill({ n }: { n: number }) {
 /** Ronda jogada em conjunto (0 = practice round conta; -1 = «conhecido», não). */
 const rondaJogada = (ronda: number) => ronda >= 0;
 
-// Resultado do Manuel face ao companheiro numa ronda (`cls` = cor do ponto)
-function h2hDot(manuel: Score, comp: Score): { res: "W" | "D" | "L"; cls: string; title: string } | null {
-  if (!manuel || !comp) return null;
-  const a = manuel.toPar ?? manuel.gross;
+// Resultado do jogador (`eu`, primeiro nome) face ao companheiro numa ronda (`cls` = cor do ponto)
+function h2hDot(jogador: Score, comp: Score, eu: string): { res: "W" | "D" | "L"; cls: string; title: string } | null {
+  if (!jogador || !comp) return null;
+  const a = jogador.toPar ?? jogador.gross;
   const b = comp.toPar ?? comp.gross;
   if (a == null || b == null) return null;
-  if (a < b) return { res: "W", cls: "u-bg-color-good", title: "Manuel melhor nesta ronda" };
+  if (a < b) return { res: "W", cls: "u-bg-color-good", title: `${eu} melhor nesta ronda` };
   if (a > b) return { res: "L", cls: "u-bg-color-danger", title: "Companheiro melhor nesta ronda" };
   return { res: "D", cls: "u-bg-text-muted", title: "Empate nesta ronda" };
 }
 
-// Registo do Manuel face a um companheiro (só rondas com ambos os scores)
+// Registo do jogador face a um companheiro (só rondas com ambos os scores)
 function h2hRecord(rondas: CompanionRow["rondas"]): { w: number; d: number; l: number; played: number } {
   let w = 0, d = 0, l = 0;
   for (const r of rondas) {
-    const dot = h2hDot(r.manuelScore, r.companheiroScore);
+    const dot = h2hDot(r.jogadorScore, r.companheiroScore, "");
     if (!dot) continue;
     if (dot.res === "W") w++;
     else if (dot.res === "L") l++;
@@ -348,7 +351,7 @@ function aggregateCompanions(rondas: Round[], lk: Lookups): CompanionRow[] {
         campo: r.campo,
         ronda: r.ronda,
         circuito: r.circuito,
-        manuelScore: r.manuelScore,
+        jogadorScore: r.jogadorScore,
         companheiroScore: c.score,
       });
     }
@@ -475,8 +478,8 @@ function teeInfo(d: TournDay): string | null {
 }
 
 // ── Vista por torneio ─────────────────────────────────────────────────
-// 1 cartão por torneio; dentro, o grupo do Manuel em cada dia/ronda.
-function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
+// 1 cartão por torneio; dentro, o grupo do jogador em cada dia/ronda.
+function TorneiosView({ torneios, q, nome, primeiro }: { torneios: TournView[]; q: string; nome: string; primeiro: string }) {
   return (
     <div className="u-d-flex u-fd-column u-gap-16px">
       {torneios.map((t) => {
@@ -501,7 +504,7 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
               <span> · {t.dias.length} {t.dias.length === 1 ? "dia" : "dias"}</span>
             </div>
 
-            {/* Um bloco por dia/ronda com o grupo do Manuel */}
+            {/* Um bloco por dia/ronda com o grupo do jogador */}
             <div className="u-d-flex u-fwr-wrap u-gap-12px">
               {t.dias.map((d, di) => {
                 const info = teeInfo(d);
@@ -519,18 +522,18 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
                         <span className="muted u-fs-fs-11">{info}</span>
                       )}
                     </div>
-                    {/* Grupo: Manuel primeiro (destacado), depois os companheiros */}
+                    {/* Grupo: o jogador primeiro (destacado), depois os companheiros */}
                     <div className="u-d-flex u-fd-column u-gap-4px">
                       <div className="u-d-flex u-ai-center u-gap-8px">
                         <span className="u-fl-1 u-minw-0 u-fw-700 u-ov-hidden u-tov-ellipsis u-ws-nowrap">
-                          Manuel Medeiros
+                          {nome}
                         </span>
                         <span className="u-fw-700 u-fvn-tabular-nums u-fsh-0">
-                          {fmtScore(d.manuelScore)}
+                          {fmtScore(d.jogadorScore)}
                         </span>
                       </div>
                       {d.grupo.map((g, gi) => {
-                        const dot = h2hDot(d.manuelScore, g.score);
+                        const dot = h2hDot(d.jogadorScore, g.score, primeiro);
                         return (
                           <div key={gi} className="u-d-flex u-ai-center u-gap-8px">
                             <span className="u-fl-1 u-minw-0 u-ov-hidden u-tov-ellipsis u-ws-nowrap">
@@ -568,7 +571,9 @@ function TorneiosView({ torneios, q }: { torneios: TournView[]; q: string }) {
   );
 }
 
-export default function DrawsPage() {
+export default function DrawsPage({ fed, nome }: { fed: string; nome: string }) {
+  const primeiro = nome.split(" ")[0] || nome;
+  const eManuel = fed === MANUEL_FED;
   const [playersDb, setPlayersDb] = useState<PlayersDb>({});
   const [escFilter, setEscFilter] = useState<Set<string>>(new Set());
   const [anoFilter, setAnoFilter] = useState<Set<string>>(new Set());
@@ -584,10 +589,12 @@ export default function DrawsPage() {
     ultima: "desc",
   });
 
-  const { data, loading, error: erro } = useJson<PairingsFile>("/data/manuel-pairings.json");
-  // Links externos (Bluegolf/GolfGenius) — opcional
+  const temDraws = useTemDraws(fed);
+  const { data, loading: aLerFicheiro, error: erro } = useJson<PairingsFile>(temDraws ? pairingsUrl(fed) : null);
+  const loading = temDraws === null || aLerFicheiro;
+  // Links externos (Bluegolf/GolfGenius) — opcional, só do Manuel
   const { data: intlLinksData } = useJson<IntlLinksFile, IntlLink[]>(
-    "/data/manuel-pairings-intl-links.json", (j) => j.links ?? []);
+    eManuel ? "/data/manuel-pairings-intl-links.json" : null, (j) => j.links ?? []);
   const intlLinks = intlLinksData ?? [];
   // federados inativos juvenis — dob de quem já deixou de ser federado
   const { data: inativos } = useJson<any, PlayerLite[]>("/data/federados-inativos-jovens.json",
@@ -626,6 +633,7 @@ export default function DrawsPage() {
   //  - byISfed (inicial+apelido): federados (com clube) → desambigua por clube
   const lookups = useMemo<Lookups>(() => {
     const lk: Lookups = {
+      euFed: fed,
       dobByFed: new Map(), byNorm: new Map(), byISsmall: new Map(), byISfed: new Map(),
       homonimosCompletos: fedAll != null,
     };
@@ -673,7 +681,7 @@ export default function DrawsPage() {
       if (k) { const a = lk.byISfed.get(k) || []; a.push(lite); lk.byISfed.set(k, a); }
     }
     return lk;
-  }, [playersDb, inativos, fedAll]);
+  }, [fed, playersDb, inativos, fedAll]);
 
   // Rondas filtradas pelo tab — Intl junta USKids + Intl (todos os internacionais)
   const rondasFiltradas = useMemo(() => {
@@ -735,7 +743,7 @@ export default function DrawsPage() {
 
   // ── Vista por torneio ──────────────────────────────────────────────
   // Re-pivota as mesmas rondas: 1 cartão por torneio, e dentro dele o grupo
-  // do Manuel em cada dia/ronda (cada Round já traz os companheiros do flight
+  // do jogador em cada dia/ronda (cada Round já traz os companheiros do flight
   // + teeTime + startHole). Respeita o tab, o filtro de ano e a pesquisa.
   const torneiosView = useMemo<TournView[]>(() => {
     const term = norm(q.trim());
@@ -759,7 +767,7 @@ export default function DrawsPage() {
           campo: r.campo,
           teeTime: r.teeTime,
           startHole: r.startHole,
-          manuelScore: r.manuelScore,
+          jogadorScore: r.jogadorScore,
           grupo: r.companheiros.map(c => {
             const id = resolveCompanion(c, lookups, { torneioNome: r.torneioNome, data: r.data });
             const esc = escalaoAtDate(id.dob, r.data) || MANUAL_ESCALAO[norm(id.nome)] || null;
@@ -920,9 +928,9 @@ export default function DrawsPage() {
   return (
     <div className="page-full page-full--wide">
       <Toolbar>
-        <ToolbarTitle>🏌️ Draws — Manuel</ToolbarTitle>
-        <ToolbarMeta>Companheiros de jogo do Manuel em torneios</ToolbarMeta>
-        {data && (
+        <ToolbarTitle>🏌️ Draws — {nome}</ToolbarTitle>
+        <ToolbarMeta>Companheiros de jogo em torneios</ToolbarMeta>
+        {data?.geradoEm && (
           <span className="chip ml-auto">
             actualizado {fmtDatePt(data.geradoEm.slice(0, 10))}
           </span>
@@ -954,9 +962,9 @@ export default function DrawsPage() {
 
       {/* Conteúdo */}
       <div>
-        {!loading && !data && (
-          <ErrorState message="Erro ao carregar os pairings" detail={erro ?? "HTTP 404"} />
-        )}
+        {!loading && !data && (erro
+          ? <ErrorState message="Erro ao carregar os pairings" detail={erro} />
+          : <EmptyState message={`Ainda não há draws de ${primeiro}.`} />)}
 
         {loading && (
           <LoadingState size="sm" message="A carregar pairings…" />
@@ -977,13 +985,13 @@ export default function DrawsPage() {
           </div>
         )}
 
-        {/* Aviso no Internacional — SÓ quando há torneios DO MANUEL sem draw.
+        {/* Aviso no Internacional — SÓ quando há torneios DO JOGADOR sem draw.
             A cobertura USKids é calculada em pairings-build.js apenas sobre
             torneios que ele jogou (provas de rivais que ele não jogou ficam
             fora do denominador), por isso normalmente esta lista está vazia. */}
         {data && tab === "Intl" && (data.cobertura?.uskids?.torneiosSemDrawDetalhe?.length ?? 0) > 0 && (
           <div className="notice notice-warn">
-            ⚠ Torneios USKids do Manuel sem draw capturado:{" "}
+            ⚠ Torneios USKids de {primeiro} sem draw capturado:{" "}
             {data.cobertura!.uskids.torneiosSemDrawDetalhe!
               .map(t => `${t.nome}${t.data ? ` (${fmtDatePt(t.data)})` : ""}`)
               .join(", ")}
@@ -1030,7 +1038,7 @@ export default function DrawsPage() {
         )}
 
         {data && viewMode === "torneio" && torneiosView.length > 0 && (
-          <TorneiosView torneios={torneiosView} q={q} />
+          <TorneiosView torneios={torneiosView} q={q} nome={nome} primeiro={primeiro} />
         )}
 
         {data && viewMode === "companheiro" && linhasOrdenadas.length > 0 && (
@@ -1101,10 +1109,10 @@ export default function DrawsPage() {
                           <td colSpan={7} className="u-bg-bg-detail u-p-10px-14px-14px">
                             <div className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-mb-8px">
                               <span className="h-xs u-m-0">
-                                Frente a frente — Manuel vs {row.nome.split(" ")[0]} ({row.vezes} {row.vezes === 1 ? "ronda" : "rondas"})
+                                Frente a frente — {primeiro} vs {row.nome.split(" ")[0]} ({row.vezes} {row.vezes === 1 ? "ronda" : "rondas"})
                               </span>
                               <span className="legend-row u-m-0 u-ml-auto">
-                                <span className="legend-item"><span className="legend-dot u-bg-color-good u-br-50pc" /> Manuel melhor</span>
+                                <span className="legend-item"><span className="legend-dot u-bg-color-good u-br-50pc" /> {primeiro} melhor</span>
                                 <span className="legend-item"><span className="legend-dot u-bg-text-muted u-br-50pc" /> empate</span>
                                 <span className="legend-item"><span className="legend-dot u-bg-color-danger u-br-50pc" /> companheiro melhor</span>
                               </span>
@@ -1117,7 +1125,7 @@ export default function DrawsPage() {
                               return (
                                 <div className="u-d-flex u-ai-center u-gap-10px u-fwr-wrap u-mb-10px">
                                   <span className="u-d-flex u-h-8px u-w-160px u-br-radius-sm u-ov-hidden u-bg-bg-hover">
-                                    {seg(rec.w, "u-bg-color-good", "vitórias do Manuel")}
+                                    {seg(rec.w, "u-bg-color-good", `vitórias de ${primeiro}`)}
                                     {seg(rec.d, "u-bg-text-muted", "empates")}
                                     {seg(rec.l, "u-bg-color-danger", "vitórias do companheiro")}
                                   </span>
@@ -1129,7 +1137,7 @@ export default function DrawsPage() {
                                     <span className="u-c-color-danger">{rec.l}D</span>
                                   </span>
                                   <span className="muted u-fs-fs-11">
-                                    {rec.w > rec.l ? "Manuel leva vantagem" : rec.l > rec.w ? `${row.nome.split(" ")[0]} leva vantagem` : "equilibrado"}
+                                    {rec.w > rec.l ? `${primeiro} leva vantagem` :rec.l > rec.w ? `${row.nome.split(" ")[0]} leva vantagem` : "equilibrado"}
                                     {" "}({rec.played} {rec.played === 1 ? "ronda comparável" : "rondas comparáveis"})
                                   </span>
                                 </div>
@@ -1137,11 +1145,11 @@ export default function DrawsPage() {
                             })()}
                             <div className="u-d-flex u-fd-column u-gap-6px">
                               {row.rondas.map((r, i) => {
-                                const dot = h2hDot(r.manuelScore, r.companheiroScore);
-                                // Só o score do Manuel leva cor (verde ganhou / vermelho
+                                const dot = h2hDot(r.jogadorScore, r.companheiroScore, primeiro);
+                                // Só o score do jogador leva cor (verde ganhou / vermelho
                                 // perdeu); o do companheiro fica neutro — a cor aparece
                                 // sempre na mesma posição, leitura consistente
-                                const manuelCls = dot?.res === "W" ? "u-c-color-good"
+                                const jogadorCls = dot?.res === "W" ? "u-c-color-good"
                                   : dot?.res === "L" ? "u-c-color-danger"
                                   : "u-c-text";
                                 return (
@@ -1169,8 +1177,8 @@ export default function DrawsPage() {
                                       {dot && (
                                         <span title={dot.title} className={`cor-dot ${dot.cls}`} />
                                       )}
-                                      <span className={`u-fw-700 u-minw-60px u-ta-right ${manuelCls}`}>
-                                        {fmtScore(r.manuelScore)}
+                                      <span className={`u-fw-700 u-minw-60px u-ta-right ${jogadorCls}`}>
+                                        {fmtScore(r.jogadorScore)}
                                       </span>
                                       <span className="muted u-fs-fs-11">vs</span>
                                       <span className="u-c-text u-fw-700 u-minw-60px">
@@ -1215,7 +1223,7 @@ export default function DrawsPage() {
           {tab === "FPG" && (
             <aside className="u-d-flex u-fd-column u-gap-12px u-fl-1-1-280px u-minw-280px u-maxw-380px">
               <div className="muted u-lh-1_4">
-                Detalhe dos torneios FPG do Manuel — clica num para abrir a página do torneio.
+                Detalhe dos torneios FPG de {primeiro} — clica num para abrir a página do torneio.
               </div>
               <TorneiosList
                 titulo="Com draw scrapado"
@@ -1275,7 +1283,7 @@ export default function DrawsPage() {
                 {lista.length > 0 && (
                   <div>
                     <div className="h-xs u-mb-6px">
-                      🇺🇸 Torneios USKids do Manuel (pairings via signupanytime)
+                      🇺🇸 Torneios USKids de {primeiro} (pairings via signupanytime)
                     </div>
                     <ul className="u-m-0 u-pl-18px">
                       {lista.map((tn, i) => (

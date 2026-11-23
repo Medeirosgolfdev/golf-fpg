@@ -1,4 +1,11 @@
-// pairings-build.js — gera public/data/manuel-pairings.json
+// pairings-build.js — gera os Draws (companheiros de jogo) da ficha do jogador:
+//   - public/data/manuel-pairings.json — o Manuel: FPG + USKids + internacionais
+//   - public/data/pairings/{fed}.json  — os outros jogadores seguidos (players.json):
+//     FPG + USKids + GolfGenius (tee sheets MAJOR e provas francesas) + partidas
+//     RMS9 (França), desde 23/11/2026; public/data/pairings/index.json diz quem tem
+//
+// Cada ronda: { circuito, torneioId, torneioNome, data, ronda, teeTime,
+// startHole, campo, jogadorScore, companheiros[] }.
 //
 // Cruza:
 //   - fpg-admissions-draws.json    (draws FPG)
@@ -14,6 +21,7 @@
 
 const fs = require("fs");
 const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded, hasForceFlag } = require("./lib/shrink-guard");
 const path = require("path");
 const { lisbonCivilDayStr } = require("../lib/helpers");
 
@@ -30,6 +38,13 @@ const SKIP_CCODES = new Set(["982"]);
 function readJSON(p) {
   try { return JSON.parse(fs.readFileSync(p, "utf8")); }
   catch (e) { console.warn(`[warn] ${p}: ${e.message}`); return null; }
+}
+// Os tee sheets (MAJOR e FFG, ~50 MB) percorrem-se uma vez por jogador seguido:
+// lêem-se do disco uma só vez.
+const _jsonCache = new Map();
+function readJSONCached(p) {
+  if (!_jsonCache.has(p)) _jsonCache.set(p, readJSON(p));
+  return _jsonCache.get(p);
 }
 function listFiles(prefix) {
   return fs.readdirSync(DATA).filter(f => f.startsWith(prefix) && f.endsWith(".json")).map(f => path.join(DATA, f));
@@ -249,34 +264,36 @@ function findRoundScore(roundScores, rondaNum) {
   return null;
 }
 
-function extractFpgPairings(fpg, scoreIdx, scoreByNameIdx, nomeIdx, clubeIdx, manuelTournIdx) {
+// Score de uma ronda ({gross, toPar}) a partir da linha da classificação.
+function scoreDaRonda(info, rondaNum) {
+  const rs = info ? findRoundScore(info.roundScores, rondaNum) : null;
+  if (!rs || rs.gross == null || Number(rs.gross) >= 200) return null;
+  const parTot = Array.isArray(rs.pars) ? rs.pars.reduce((a, b) => a + (Number(b) || 0), 0) : null;
+  return { gross: Number(rs.gross), toPar: parTot != null ? Number(rs.gross) - parTot : null };
+}
+
+/**
+ * Uma só passagem por TODOS os grupos de todos os draws FPG (23/11/2026: os
+ * Draws passaram a existir para todos os jogadores seguidos, não só para o
+ * Manuel). Cada membro do grupo leva:
+ *   - `quem`: o federado do jogador, para saber de quem é a ronda — a licença
+ *     manda; sem ela, o Manuel pelo nome (regra antiga: o homónimo «Manuel
+ *     Medeiros», 54907, só se distingue pela licença) e os outros pelas
+ *     inscrições/draw da MESMA prova (`buildLocalNameToFed`), nunca por outras listas;
+ *   - `comp`: a linha dele como companheiro dos outros.
+ *
+ * ccode 982 (Madeira histórico) NÃO é excluído aqui: a FPG reatribuiu o ccode
+ * (era Madeira, agora Açores), mas torneios antigos do CGSS podem aparecer sob
+ * ele. Só entra quem está no grupo, por isso não há dados errados; o
+ * `SKIP_CCODES` serve só a cobertura (não listar Açores como «sem draw»).
+ */
+function buildFpgGroups(fpg, scoreIdx, scoreByNameIdx, nomeIdx, clubeIdx) {
   const out = [];
   for (const t of fpg.tournaments || []) {
-    // ccode 982 (Madeira histórico) NÃO é excluído aqui:
-    //   - FPG reatribuiu o ccode (era Madeira, agora Açores), mas os torneios
-    //     históricos do Manuel (CGSS Santo da Serra) podem ainda aparecer
-    //     legitimamente sob esse ccode nos snapshots antigos
-    //   - O filtro de `manuelIdx === -1` mais abaixo já garante que torneios
-    //     onde o Manuel não está (incluindo torneios novos em Açores) são
-    //     ignorados — não há perigo de injectar dados errados
-    //   - O `SKIP_CCODES` continua a ser usado no cálculo de cobertura para
-    //     não listar torneios novos de Açores como "rondas sem draw"
     const torneioId = `${t.ccode}-${t.tcode}`;
-    // Resolução de nome/data — preferir scorecards.json (autoritativo) quando
-    // o fpg-admissions-draws.json trouxer placeholders (ex: "Torneio 10514"
-    // / data=hoje, resíduo de scrape passado com tcode fora do scope).
-    const m = manuelTournIdx ? manuelTournIdx.get(torneioId) : null;
     const tNameRaw = t.name || (t.admissions && t.admissions.name) || null;
-    const tNameIsPlaceholder = tNameRaw && /^Torneio\s+\d+$/i.test(String(tNameRaw).trim());
+    const tNameIsPlaceholder = !!tNameRaw && /^Torneio\s+\d+$/i.test(String(tNameRaw).trim());
     const tDateRaw = normIsoDate(t.date || (t.admissions && t.admissions.date) || null);
-    // A data das admissions é muitas vezes um placeholder do scraper (data do
-    // scrape, ex 2026-05-27, ou "hoje"). A data autoritativa vem dos scorecards
-    // do Manuel (manuelTournIdx) — preferir SEMPRE m.data quando existe. Corrige
-    // torneios antigos (ex "World Kids 2024") que apareciam com 27/05/2026.
-    const data = (m && m.data) ? m.data : tDateRaw;
-    const torneioNome = (tNameIsPlaceholder && m && m.nome)
-      ? m.nome
-      : (tNameRaw || (m && m.nome) || torneioId);
     const tScores = scoreIdx.get(torneioId) || new Map();
     const tScoresByName = (scoreByNameIdx && scoreByNameIdx.get(torneioId)) || new Map();
     const localNameToFed = buildLocalNameToFed(t);
@@ -288,61 +305,82 @@ function extractFpgPairings(fpg, scoreIdx, scoreByNameIdx, nomeIdx, clubeIdx, ma
       if (!ronda || !Array.isArray(ronda.groups)) continue;
       const rondaNum = Number(rn);
       for (const grp of ronda.groups) {
-        const players = grp.players || [];
-        // Detecção do Manuel por LICENÇA primeiro: quando um jogador traz fed
-        // (campo `fed` ou `clube` com aparência de fed), a licença decide — assim
-        // o homónimo "Manuel Medeiros" (fed 54907) NUNCA é confundido com o júnior
-        // (fed 52884) em draws completos onde ambos aparecem. Só sem fed é que se
-        // recorre à heurística por nome.
-        const manuelIdx = players.findIndex(p => {
-          const pf = (p.fed && String(p.fed).trim())
-            || (isFedCode(p.clube) ? String(p.clube).trim() : null);
-          if (pf) return pf === MANUEL_FED;
-          return isManuel(p.nome);
-        });
-        if (manuelIdx === -1) continue;
-
-        const companheiros = players.map((p, i) => {
-          if (i === manuelIdx) return null;
+        const membros = (grp.players || []).map((p) => {
           // Prioridade do `fed`: campo explícito do jogador (síntese/scrape novo)
           // > clube com aparência de fed (scraper FPG legacy) > lookup por nome.
           const pFed = p.fed && String(p.fed).trim() ? String(p.fed).trim() : null;
           const rawClube = String(p.clube || "").trim();
           const isNumericFed = isFedCode(rawClube);
-          const fed = pFed || (isNumericFed ? rawClube : localNameToFed.get(normName(p.nome)) || null);
+          const licenca = pFed || (isNumericFed ? rawClube : null);
+          const fed = licenca || localNameToFed.get(normName(p.nome)) || null;
+          const quem = licenca || (isManuel(p.nome) ? MANUEL_FED : fed);
           const clubeTexto = (!isNumericFed && rawClube) ? rawClube : (fed && clubeIdx.get(fed)) || null;
           // Score: cruzar por fed; se falhar (ou sem fed, ex: emigrante), tentar
           // por NOME dentro do mesmo torneio (seguro — mesmo evento).
           const scInfo = (fed ? tScores.get(fed) : null) || tScoresByName.get(normName(p.nome)) || null;
-          const rs = scInfo ? findRoundScore(scInfo.roundScores, rondaNum) : null;
-          const parTot = rs && Array.isArray(rs.pars) ? rs.pars.reduce((a, b) => a + (Number(b) || 0), 0) : null;
-          const toPar = rs && rs.gross != null && parTot != null ? Number(rs.gross) - parTot : null;
           return {
-            nome: (nomeIdx.get(fed) || p.nome || "").trim(),
-            fed, clube: clubeTexto, pais: null,
-            score: rs && rs.gross != null && Number(rs.gross) < 200 ? { gross: Number(rs.gross), toPar } : null,
+            quem,
+            nomeBruto: p.nome || "",
+            comp: {
+              nome: (nomeIdx.get(fed) || p.nome || "").trim(),
+              fed, clube: clubeTexto, pais: null,
+              score: scoreDaRonda(scInfo, rondaNum),
+            },
           };
-        }).filter(Boolean);
-
-        const mInfo = tScores.get(MANUEL_FED) || tScoresByName.get(normName("Manuel Goulartt Medeiros"));
-        const mrs = mInfo ? findRoundScore(mInfo.roundScores, rondaNum) : null;
-        const mParTot = mrs && Array.isArray(mrs.pars) ? mrs.pars.reduce((a, b) => a + (Number(b) || 0), 0) : null;
-        const mToPar = mrs && mrs.gross != null && mParTot != null ? Number(mrs.gross) - mParTot : null;
-
+        });
         out.push({
-          circuito: "FPG",
-          torneioId, torneioNome, data,
+          torneioId, tNameRaw, tNameIsPlaceholder, tDateRaw,
+          campo: t.campo || null,
           ronda: rondaNum,
           teeTime: grp.teeTime || null,
           startHole: grp.startHole != null ? Number(grp.startHole) : null,
-          campo: t.campo || null,
-          manuelScore: mrs && mrs.gross != null && Number(mrs.gross) < 200 ? { gross: Number(mrs.gross), toPar: mToPar } : null,
-          companheiros,
+          tScores, tScoresByName, membros,
         });
       }
     }
   }
   return out;
+}
+
+// fed → [{ g, idx }]: os grupos em que cada federado jogou (idx = a posição dele).
+function indexGroupsByFed(groups) {
+  const idx = new Map();
+  for (const g of groups) {
+    const vistos = new Set();
+    g.membros.forEach((m, i) => {
+      if (!m.quem || vistos.has(m.quem)) return;
+      vistos.add(m.quem);
+      if (!idx.has(m.quem)) idx.set(m.quem, []);
+      idx.get(m.quem).push({ g, idx: i });
+    });
+  }
+  return idx;
+}
+
+// As rondas FPG de um federado. `tournIdx` (dos scorecards DELE) corrige nome e
+// data quando o fpg-admissions-draws.json traz placeholders («Torneio 10514» /
+// data do scrape): a data autoritativa é a dos scorecards, sempre que existe —
+// corrige torneios antigos (ex «World Kids 2024») que apareciam com 27/05/2026.
+function fpgPairingsDe(fed, groupsByFed, tournIdx) {
+  return (groupsByFed.get(fed) || []).map(({ g, idx }) => {
+    const m = tournIdx.get(g.torneioId) || null;
+    const eu = g.membros[idx];
+    const info = g.tScores.get(fed)
+      || g.tScoresByName.get(normName(fed === MANUEL_FED ? "Manuel Goulartt Medeiros" : eu.nomeBruto));
+    return {
+      circuito: "FPG",
+      torneioId: g.torneioId,
+      torneioNome: (g.tNameIsPlaceholder && m && m.nome) ? m.nome : (g.tNameRaw || (m && m.nome) || g.torneioId),
+      data: (m && m.data) ? m.data : g.tDateRaw,
+      ronda: g.ronda,
+      teeTime: g.teeTime,
+      startHole: g.startHole,
+      campo: g.campo,
+      jogadorScore: scoreDaRonda(info, g.ronda),
+      // cópias: a resolução por nome de cada ficheiro mexe nelas
+      companheiros: g.membros.filter((_, i) => i !== idx).map((x) => ({ ...x.comp })),
+    };
+  });
 }
 
 // ─── USKids ────────────────────────────────────────────────────────
@@ -391,14 +429,17 @@ function applyUskidsOverrides(uskidsDraws, overrides) {
   return injectados;
 }
 
-function extractUskidsPairings(uskidsDraws, scoreIdx) {
+// `eEle(nome)` diz se um nome do draw é o jogador. Os draws USKids não trazem
+// número nenhum: o Manuel reconhece-se pelo nome (`isManuel`) e só nos escalões
+// dele; os outros pelos nomes que o Kids 2 liga ao federado (`nomesUskidsPorFed`).
+function extractUskidsPairings(uskidsDraws, scoreIdx, eEle, soEscaloesDoManuel) {
   const out = [];
   for (const t of uskidsDraws.torneios || []) {
     const torneioId = `usk-${t.t}`;
     const torneioNome = t.name;
     const dataBase = normIsoDate(t.date_inicio || null);
     for (const esc of t.escaloes || []) {
-      if (!esc.is_manuel) continue;
+      if (soEscaloesDoManuel && !esc.is_manuel) continue;
       const ageGroup = esc.age_group || esc.nome;
       for (const ron of esc.rondas || []) {
         const rondaNum = Number(ron.ronda);
@@ -412,10 +453,10 @@ function extractUskidsPairings(uskidsDraws, scoreIdx) {
           // draw da ronda não sai (visto no Venice Open 2026 R2/R3: 31 jogadores
           // num grupo). Um grupo real USKids tem 3-4 jogadores — ignorar dumps.
           if (jogadores.length > 5) continue;
-          const manuelIdx = jogadores.findIndex(j => isManuel(j.nome));
-          if (manuelIdx === -1) continue;
+          const euIdx = jogadores.findIndex(j => eEle(j.nome));
+          if (euIdx === -1) continue;
           const companheiros = jogadores.map((j, i) => {
-            if (i === manuelIdx) return null;
+            if (i === euIdx) return null;
             const lbE = lbByName.get(normName(j.nome));
             return {
               nome: (j.nome || "").trim(),
@@ -423,8 +464,8 @@ function extractUskidsPairings(uskidsDraws, scoreIdx) {
               score: lbE && lbE.score != null ? { gross: Number(lbE.score), toPar: lbE.to_par != null ? Number(lbE.to_par) : null } : null,
             };
           }).filter(Boolean);
-          const mLb = lbByName.get(normName(jogadores[manuelIdx].nome)) || lb.find(e => isManuel(e.nome));
-          const manuelScore = mLb && mLb.score != null
+          const mLb = lbByName.get(normName(jogadores[euIdx].nome)) || lb.find(e => eEle(e.nome));
+          const jogadorScore = mLb && mLb.score != null
             ? { gross: Number(mLb.score), toPar: mLb.to_par != null ? Number(mLb.to_par) : null }
             : null;
           out.push({
@@ -434,7 +475,7 @@ function extractUskidsPairings(uskidsDraws, scoreIdx) {
             teeTime: grp.tee_time || null,
             startHole: grp.start_hole != null ? Number(grp.start_hole) : null,
             campo: t.campo || grp.course || null,
-            manuelScore, companheiros,
+            jogadorScore, companheiros,
           });
         }
       }
@@ -534,7 +575,7 @@ function buildIntlPairingsFromOverrides(overrides) {
       startHole: ov.startHole != null ? Number(ov.startHole) : null,
       campo: ov.campo || null,
       fonte: ov.fonte || null,
-      manuelScore,
+      jogadorScore: manuelScore,
       companheiros: (ov.companheiros || []).map(c => {
         let score = c.score || null;
         if (!score && src) score = lookupIntlScore(src, c.nome, rondaNum);
@@ -561,11 +602,11 @@ function ggDateIso(label, year) {
   if (!m || !MESES_EN[m[1].toLowerCase()]) return null;
   return `${year}-${String(MESES_EN[m[1].toLowerCase()]).padStart(2, "0")}-${m[2].padStart(2, "0")}`;
 }
-function buildMajorDrawPairings(jaCobertos) {
+function buildMajorDrawPairings(jaCobertos, eEle) {
   const out = [];
   const files = fs.readdirSync(DATA).filter((f) => /^[a-z0-9]+_\d{4}\.json$/.test(f));
   for (const f of files) {
-    const j = readJSON(path.join(DATA, f));
+    const j = readJSONCached(path.join(DATA, f));
     if (!j || !Array.isArray(j.divisions) || !j.divisions.some((d) => d.draws && Object.keys(d.draws).length)) continue;
     const year = j.year || Number(f.match(/_(\d{4})\./)[1]);
     const nome = `${j.tournament || f.replace(/\.json$/, "")} ${year}`;
@@ -586,7 +627,7 @@ function buildMajorDrawPairings(jaCobertos) {
         const rn = Number(rd.round || rnKey);
         for (const g of rd.groups || []) {
           const nomes = (g.players || []).map((x) => x.name);
-          const mNome = nomes.find((n) => isManuel(n));
+          const mNome = nomes.find((n) => eEle(n));
           if (!mNome) continue;
           const key = `${rn}|${g.time}`;
           if (vistas.has(key) || jaCobertos.has(`${normName(nome)}|${rn}`)) continue;
@@ -601,7 +642,7 @@ function buildMajorDrawPairings(jaCobertos) {
             startHole: g.startHole != null ? Number(g.startHole) : null,
             campo,
             fonte: `GolfGenius tee sheet (${f})`,
-            manuelScore: scoreOf(mNome, rn, rd.date),
+            jogadorScore: scoreOf(mNome, rn, rd.date),
             companheiros: nomes.filter((n) => n !== mNome).map((n) => {
               const p = byName.get(normName(n)) || {};
               return { nome: n, fed: p.fed || null, clube: p.club || null, pais: p.country || null, score: scoreOf(n, rn, rd.date) };
@@ -614,10 +655,133 @@ function buildMajorDrawPairings(jaCobertos) {
   return out;
 }
 
-// ─── Lista de torneios FPG do Manuel (cobertura) ────────────────────
+// ─── Intl automáticos: draws GolfGenius das provas francesas (FFG) ────
+// public/data/ffgolf/{ano}_{slug}.json — `draws` [{ round, label, dateIso,
+// course, groups[{ teeTime, players[{ name, club, country }] }] }] e os scores
+// em `players[].rounds` (23/11/2026, «e os do ricardo em frança?»). As horas
+// dos resultados FFG (ffgolf-resultats) NÃO entram: cada jogador traz uma só
+// hora sem dizer de que volta é — só 35% das séries com várias voltas batem
+// com «última volta» (medido a 23/11/2026); seria adivinhar os grupos.
+function buildFfgDrawPairings(jaCobertos, eEle) {
+  const out = [];
+  const dir = path.join(DATA, "ffgolf");
+  if (!fs.existsSync(dir)) return out;
+  for (const f of fs.readdirSync(dir).filter((x) => x.endsWith(".json"))) {
+    const j = readJSONCached(path.join(dir, f));
+    if (!j || !Array.isArray(j.draws) || !j.draws.some((d) => (d.groups || []).length)) continue;
+    const nome = `${j.tournament || f.replace(/\.json$/, "")} ${j.year || ""}`.trim();
+    const parTotal = j.course && Array.isArray(j.course.par) && j.course.par.length
+      ? j.course.par.reduce((a, b) => a + (Number(b) || 0), 0) : null;
+    // O mesmo jogador pode vir em várias divisões: juntam-se as voltas.
+    const voltas = new Map();
+    for (const p of j.players || []) {
+      const k = normName(p.name);
+      if (!voltas.has(k)) voltas.set(k, { club: p.club || null, country: p.country || null, rounds: [] });
+      voltas.get(k).rounds.push(...(p.rounds || []));
+    }
+    const scoreOf = (nm, rn) => {
+      const r = ((voltas.get(normName(nm)) || {}).rounds || []).find((x) => Number(x.round) === rn && x.gross != null);
+      return r ? { gross: Number(r.gross), toPar: parTotal != null ? Number(r.gross) - parTotal : null } : null;
+    };
+    for (const d of j.draws) {
+      const rn = Number(d.round);
+      if (jaCobertos.has(`${normName(nome)}|${rn}`)) continue;
+      for (const g of d.groups || []) {
+        const nomes = (g.players || []).map((x) => x.name);
+        const eu = nomes.find((n) => eEle(n));
+        if (!eu) continue;
+        out.push({
+          circuito: "Intl",
+          torneioId: `ffg-${f.replace(/\.json$/, "")}`,
+          torneioNome: nome,
+          data: d.dateIso || null,
+          ronda: rn,
+          teeTime: g.teeTime || null,
+          startHole: g.startHole != null ? Number(g.startHole) : null,
+          campo: d.course || (j.course && j.course.name) || null,
+          fonte: `GolfGenius (ffgolf/${f}) — ${d.label || `R${rn}`}`,
+          jogadorScore: scoreOf(eu, rn),
+          companheiros: nomes.filter((n) => n !== eu).map((n) => {
+            const v = voltas.get(normName(n)) || {};
+            return { nome: n, fed: null, clube: v.club || null, pais: v.country || null, score: scoreOf(n, rn) };
+          }),
+        });
+      }
+    }
+  }
+  return out;
+}
 
-function buildManuelTournamentsList() {
-  const scPath = path.join(ROOT, "output", MANUEL_FED, "scorecards.json");
+// ─── Intl automáticos: partidas RMS9 das provas francesas ────────────
+// public/data/ffgolf-rms9-startlists.json (scrape-ffgolf-rms9-startlists.js):
+// as listas de partidas que os organizadores publicam no RMS9 — os grupos
+// reais de cada volta (23/11/2026, «queria mais draws de frança..»). Os scores
+// vêm dos resultados FFG da mesma prova (ffgolf-resultats, pelo índice).
+// Uma volta que o jogador já tem pelo GolfGenius no mesmo dia fica de fora.
+let _rms9Provas = null;
+function rms9Provas() {
+  if (_rms9Provas) return _rms9Provas;
+  _rms9Provas = [];
+  const sl = readJSON(path.join(DATA, "ffgolf-rms9-startlists.json"));
+  const ix = readJSON(path.join(DATA, "ffgolf-resultats-index.json"));
+  if (!sl || !ix) return _rms9Provas;
+  const byTrn = new Map((ix.tournaments || []).map((t) => [String(t.trnId), t]));
+  for (const [trnId, t] of Object.entries(sl.tournaments || {})) {
+    if (!(t.rounds || []).some((r) => r.flights.length)) continue;
+    const meta = byTrn.get(trnId);
+    if (!meta) continue;
+    // Scores por jogador (chave do nome) → { t1..t4, parTotal da série dele }.
+    const scores = new Map();
+    const res = meta.file ? readJSON(path.join(DATA, "ffgolf-resultats", meta.file)) : null;
+    const series = res ? (Array.isArray(res.details) ? res.details : Object.values(res.details || {}).flat()) : [];
+    for (const s of series) {
+      for (const p of (s && s.players) || []) {
+        const k = chaveNome(p.name);
+        if (k && !scores.has(k)) scores.set(k, { p, parTotal: s.parTotal != null ? Number(s.parTotal) : null });
+      }
+    }
+    _rms9Provas.push({ trnId, meta, rounds: t.rounds, scores });
+  }
+  return _rms9Provas;
+}
+function buildRms9DrawPairings(eEle, diasJaCobertos) {
+  const out = [];
+  for (const { trnId, meta, rounds, scores } of rms9Provas()) {
+    const scoreOf = (nm, rn) => {
+      const e = scores.get(chaveNome(nm));
+      const g = e ? e.p[`t${rn}`] : null;
+      return g != null && Number(g) > 0 ? { gross: Number(g), toPar: e.parTotal != null ? Number(g) - e.parTotal : null } : null;
+    };
+    for (const r of rounds) {
+      if (r.date && diasJaCobertos.has(r.date)) continue;
+      for (const f of r.flights) {
+        const eu = f.p.find((x) => eEle(x.n));
+        if (!eu) continue;
+        out.push({
+          circuito: "Intl",
+          torneioId: `rms9-${trnId}`,
+          torneioNome: `${meta.name}${meta.year && !String(meta.name).includes(String(meta.year)) ? ` ${meta.year}` : ""}`,
+          data: r.date || meta.dateIso || null,
+          ronda: Number(r.number),
+          teeTime: f.t || null,
+          startHole: f.h != null ? Number(f.h) : null,
+          campo: (Array.isArray(meta.course) ? meta.course[0] : meta.course) || null,
+          fonte: "RMS9 (partidas do organizador)",
+          jogadorScore: scoreOf(eu.n, Number(r.number)),
+          companheiros: f.p.filter((x) => x !== eu).map((x) => ({
+            nome: x.n, fed: null, clube: x.c || null, pais: null, score: scoreOf(x.n, Number(r.number)),
+          })),
+        });
+      }
+    }
+  }
+  return out;
+}
+
+// ─── Lista de torneios FPG de um jogador (cobertura) ─────────────────
+
+function buildTournamentsList(fed) {
+  const scPath = path.join(ROOT, "output", fed, "scorecards.json");
   if (!fs.existsSync(scPath)) return [];
   const d = readJSON(scPath);
   if (!d) return [];
@@ -625,7 +789,7 @@ function buildManuelTournamentsList() {
   for (const sid of Object.keys(d)) {
     const sc = d[sid];
     if (sc.score_origin !== "Torn") continue;
-    if (String(sc.federated_code || "") !== MANUEL_FED) continue;
+    if (String(sc.federated_code || "") !== fed) continue;
     const cc = sc.club_code, tc = sc.tournament_code;
     if (!cc || !tc) continue;
     const key = `${cc}-${tc}`;
@@ -685,39 +849,11 @@ function mergeCgssDraws(fpg) {
   console.log(`  draws manuais (CGSS+PJA): ${preenchidos} preenchidos, ${injectados} injectados`);
 }
 
-function main() {
-  console.log("[pairings-build] a ler…");
-  const fpg = readJSON(path.join(DATA, "fpg-admissions-draws.json")) || { tournaments: [] };
-  mergeCgssDraws(fpg);  // injecta draws curados CGSS (PDFs) antes de extrair pairings
-  const uskidsDraws = readJSON(path.join(DATA, "uskids-draws.json")) || { torneios: [] };
-  const uskidsResults = readJSON(path.join(DATA, "uskids-results.json")) || { resultados: [] };
-  const overrides = readJSON(path.join(DATA, "manuel-draws-overrides.json"));
+// ─── Montar o ficheiro de um jogador ───────────────────────────────
 
-  const fpgScoreIdx = buildFpgScoreIndex();
-  const fpgScoreByNameIdx = buildFpgScoreIndexByName();
-  const clubeIdx = buildFpgClubeIndex(fpg);
-  const nomeIdx = buildFpgNomeIndex(fpg, fpgScoreIdx);
-  const uskScoreIdx = buildUskidsScoreIndex(uskidsResults);
-
-  const injectados = applyUskidsOverrides(uskidsDraws, overrides);
-  console.log(`  USKids overrides aplicados: ${injectados} grupos`);
-
-  // Pré-construir índice de torneios do Manuel (vindo de scorecards.json) — usado
-  // como fallback autoritativo de nome/data quando fpg-admissions-draws.json
-  // tem placeholders ("Torneio 10514" / data=hoje).
-  const manuelTournamentsList = buildManuelTournamentsList();
-  const manuelTournIdx = new Map();
-  for (const t of manuelTournamentsList) manuelTournIdx.set(t.torneioId, t);
-
-  const fpgPairings = extractFpgPairings(fpg, fpgScoreIdx, fpgScoreByNameIdx, nomeIdx, clubeIdx, manuelTournIdx);
-  const uskidsPairings = extractUskidsPairings(uskidsDraws, uskScoreIdx);
-  const intlPairings = buildIntlPairingsFromOverrides(overrides);
-  const cobertosIntl = new Set(intlPairings.map((r) => `${normName(r.torneioNome)}|${r.ronda}`));
-  const majorPairings = buildMajorDrawPairings(cobertosIntl);
-  console.log(`  MAJOR (tee sheets GolfGenius): ${majorPairings.length} ronda(s) do Manuel`);
-  intlPairings.push(...majorPairings);
-
-  // dedup global FPG por NOME (com fallback nome+clube para homónimos)
+// Companheiros FPG sem licença: resolve pelo nome DENTRO das rondas deste
+// jogador (com o clube a desempatar homónimos) e dá a todos o nome canónico.
+function resolverCompanheirosPorNome(fpgPairings, nomeIdx) {
   const nomeToFeds = new Map();
   const nomeClubeToFed = new Map();
   for (const r of fpgPairings) for (const c of r.companheiros) {
@@ -745,79 +881,64 @@ function main() {
       }
     }
   }
-  // nome canónico para todos com fed
   for (const r of fpgPairings) for (const c of r.companheiros) {
     if (c.fed) {
       const nm = nomeIdx.get(c.fed);
       if (nm) c.nome = nm;
     }
   }
+  return resolvidos;
+}
 
-  // Volta de treino (override «<id>-pr», ronda 0) fica JUNTO do torneio (Mariana,
-  // 19/11/2026: «deveria ficar tudo junto… as voltas de treino com o torneio»):
-  // ganha o id, o nome, o circuito e o campo do torneio, e aparece como «PR» no
-  // mesmo cartão. Sem pairings do torneio, fica sozinha como estava.
+// Volta de treino (override «<id>-pr», ronda 0) fica JUNTO do torneio (Mariana,
+// 19/11/2026: «deveria ficar tudo junto… as voltas de treino com o torneio»):
+// ganha o id, o nome, o circuito e o campo do torneio, e aparece como «PR» no
+// mesmo cartão. Sem pairings do torneio, fica sozinha como estava.
+function juntarTreinos(todas) {
   const torneioDoTreino = new Map();
-  for (const r of [...fpgPairings, ...uskidsPairings, ...intlPairings]) {
+  for (const r of todas) {
     if (!/-pr$/.test(r.torneioId) && !torneioDoTreino.has(r.torneioId)) torneioDoTreino.set(r.torneioId, r);
   }
-  const comTreinoJunto = (r) => {
+  return todas.map((r) => {
     const t = r.ronda === 0 && /-pr$/.test(r.torneioId) ? torneioDoTreino.get(r.torneioId.slice(0, -3)) : null;
     return t ? { ...r, circuito: t.circuito, torneioId: t.torneioId, torneioNome: t.torneioNome, campo: t.campo || r.campo, treino: true } : r;
-  };
-  const rondas = [...fpgPairings, ...uskidsPairings, ...intlPairings].map(comTreinoJunto).sort((a, b) => {
-    const da = a.data || "0000-00-00", db = b.data || "0000-00-00";
-    if (da !== db) return db.localeCompare(da);
-    return (a.ronda || 0) - (b.ronda || 0);
   });
+}
 
-  const compSet = new Set();
-  for (const r of rondas) for (const c of r.companheiros) {
-    compSet.add(c.fed ? `fed:${c.fed}` : `name:${normName(c.nome)}|${c.pais || ""}`);
-  }
+const porDataDesc = (a, b) => (b.data || "").localeCompare(a.data || "");
+const resumoTorneio = (t) => ({ torneioId: t.torneioId, nome: t.nome, data: t.data, rondas: t.rondas.length });
 
-  // Cobertura FPG via scorecards.json (já pré-construído acima)
-  const manuelTournaments = manuelTournamentsList;
-  const manuelTorneiosTotal = new Set(manuelTournaments.map(t => t.torneioId));
-  const manuelRondasTotal = manuelTournaments.reduce((s, t) => s + t.rondas.length, 0);
-  const fpgTorneiosComDraw = new Set(fpgPairings.map(r => r.torneioId));
-  const torneiosSemDraw = [...manuelTorneiosTotal]
-    .filter(tid => !fpgTorneiosComDraw.has(tid))
-    .filter(tid => !SKIP_CCODES.has(tid.split("-")[0]))
-    .sort();
-  const nomesDosTorneiosSemDraw = manuelTournaments
-    .filter(t => !fpgTorneiosComDraw.has(t.torneioId))
-    .filter(t => !SKIP_CCODES.has(t.ccode))
-    .sort((a, b) => (b.data || "").localeCompare(a.data || ""))
-    .map(t => ({ torneioId: t.torneioId, nome: t.nome, data: t.data, rondas: t.rondas.length }));
-  // Torneios COM draw — detalhe (nome+data+rondas) para mostrar na UI
-  const torneiosComDrawDetalhe = manuelTournaments
-    .filter(t => fpgTorneiosComDraw.has(t.torneioId))
-    .sort((a, b) => (b.data || "").localeCompare(a.data || ""))
-    .map(t => ({ torneioId: t.torneioId, nome: t.nome, data: t.data, rondas: t.rondas.length }));
-  // Torneios silenciosamente excluídos pelo SKIP_CCODES — para diagnóstico
-  // (ccode 982 = Drive Challenge Madeira; FPG reatribuiu ccode a Açores
-  // e os torneios antigos deixaram de ter draws scrapáveis)
-  const torneiosSkippedDetalhe = manuelTournaments
-    .filter(t => SKIP_CCODES.has(t.ccode))
-    .filter(t => !fpgTorneiosComDraw.has(t.torneioId))
-    .sort((a, b) => (b.data || "").localeCompare(a.data || ""))
-    .map(t => ({ torneioId: t.torneioId, nome: t.nome, data: t.data, rondas: t.rondas.length }));
+// Cobertura FPG: os torneios do jogador (scorecards dele) com e sem draw.
+function coberturaFpg(tournList, fpgPairings) {
+  const torneiosTotal = new Set(tournList.map(t => t.torneioId));
+  const comDraw = new Set(fpgPairings.map(r => r.torneioId));
+  const semDraw = tournList.filter(t => !comDraw.has(t.torneioId));
+  return {
+    rondasJogadas: tournList.reduce((s, t) => s + t.rondas.length, 0),
+    rondasComDraw: fpgPairings.length,
+    torneiosJogados: torneiosTotal.size,
+    torneiosComDraw: comDraw.size,
+    torneiosComDrawDetalhe: tournList.filter(t => comDraw.has(t.torneioId)).sort(porDataDesc).map(resumoTorneio),
+    torneiosSemDraw: [...torneiosTotal].filter(tid => !comDraw.has(tid) && !SKIP_CCODES.has(tid.split("-")[0])).sort(),
+    torneiosSemDrawDetalhe: semDraw.filter(t => !SKIP_CCODES.has(t.ccode)).sort(porDataDesc).map(resumoTorneio),
+    // Excluídos pelo SKIP_CCODES — para diagnóstico (ccode 982 = Drive Challenge
+    // Madeira; a FPG reatribuiu o ccode a Açores e os antigos ficaram sem draws)
+    torneiosSkippedDetalhe: semDraw.filter(t => SKIP_CCODES.has(t.ccode)).sort(porDataDesc).map(resumoTorneio),
+    skipCcodes: [...SKIP_CCODES],
+  };
+}
 
-  // Cobertura USKids — SÓ torneios que o Manuel JOGOU. O uskids-draws.json
-  // inclui de propósito escalões `is_manuel` de provas que ele NÃO jogou
-  // (State Invitationals etc., capturadas para o tracker de rivais — fonte 3
-  // do fetch-uskids-draws.js); contá-las no denominador dava um card de
-  // cobertura alarmista e enganador na /draws ("20%"). Universo honesto:
-  //   member-history-slim (carreira dele) ∪ torneios com pairing extraído
-  //   (cobre provas a decorrer que ainda não entraram no member-history).
-  // Provas antigas fora deste universo ficam fora de propósito: os tee times
-  // USKids são efémeros (sem backfill possível) — não são "draws em falta".
-  const uskidsTotal = uskidsPairings.length;
-  const slim = readJSON(path.join(DATA, "uskids-member-history-slim.json"));
+// Cobertura USKids — SÓ torneios que o jogador JOGOU. O uskids-draws.json
+// inclui escalões de provas que ele não jogou (capturadas para o tracker de
+// rivais); contá-las no denominador dava uma cobertura alarmista. Universo:
+//   member-history-slim (carreira dele, pelos memberIds) ∪ torneios com pairing
+//   (cobre provas a decorrer que ainda não entraram no member-history).
+// Os tee times USKids são efémeros (sem backfill) — provas antigas fora deste
+// universo não são «draws em falta».
+function coberturaUskids(uskidsPairings, memberIds, slim, uskidsDraws) {
   const mhTorneios = new Map(); // tcode → { nome, data, rondas jogadas }
   if (slim && slim.jogadores) {
-    for (const mid of MANUEL_USKIDS_IDS) {
+    for (const mid of memberIds) {
       const p = slim.jogadores[mid];
       if (!p) continue;
       for (const [tc, tt] of Object.entries(p.torneios || {})) {
@@ -830,21 +951,21 @@ function main() {
       }
     }
   }
-  const uskPairingsByT = new Map(); // tcode → nº rondas com draw
+  const porT = new Map(); // tcode → nº rondas com draw
   for (const r of uskidsPairings) {
     const tc = r.torneioId.replace(/^usk-/, "");
-    uskPairingsByT.set(tc, (uskPairingsByT.get(tc) || 0) + 1);
+    porT.set(tc, (porT.get(tc) || 0) + 1);
   }
-  const uskUniverse = new Set([...mhTorneios.keys(), ...uskPairingsByT.keys()]);
-  let uskidsRondasEsperadas = 0;
-  const uskidsSemDrawDetalhe = [];
-  for (const tc of uskUniverse) {
+  const universo = new Set([...mhTorneios.keys(), ...porT.keys()]);
+  let rondasEsperadas = 0;
+  const semDraw = [];
+  for (const tc of universo) {
     const played = mhTorneios.get(tc);
-    const comDraw = uskPairingsByT.get(tc) || 0;
-    uskidsRondasEsperadas += Math.max(played ? played.rondas : 0, comDraw);
+    const comDraw = porT.get(tc) || 0;
+    rondasEsperadas += Math.max(played ? played.rondas : 0, comDraw);
     if (comDraw === 0 && played) {
       const dt = (uskidsDraws.torneios || []).find(x => String(x.t) === tc);
-      uskidsSemDrawDetalhe.push({
+      semDraw.push({
         torneioId: `usk-${tc}`,
         nome: (dt && dt.name) || played.nome,
         data: normIsoDate(dt && dt.date_inicio) || played.data,
@@ -852,60 +973,194 @@ function main() {
       });
     }
   }
-  uskidsSemDrawDetalhe.sort((a, b) => (b.data || "").localeCompare(a.data || ""));
-  const uskidsTorneiosEsperados = uskUniverse;
-
-  const cobertura = {
-    fpg: {
-      rondasJogadas: manuelRondasTotal,
-      rondasComDraw: fpgPairings.length,
-      torneiosJogados: manuelTorneiosTotal.size,
-      torneiosComDraw: fpgTorneiosComDraw.size,
-      torneiosComDrawDetalhe,
-      torneiosSemDraw,
-      torneiosSemDrawDetalhe: nomesDosTorneiosSemDraw,
-      torneiosSkippedDetalhe,
-      skipCcodes: [...SKIP_CCODES],
-    },
-    uskids: {
-      rondasJogadas: uskidsRondasEsperadas,
-      rondasComDraw: uskidsTotal,
-      torneiosJogados: uskidsTorneiosEsperados.size,
-      torneiosComDraw: uskPairingsByT.size,
-      torneiosSemDrawDetalhe: uskidsSemDrawDetalhe,
-    },
-    // Registos "conhecidos" (ronda -1 — jogadores que o Manuel conhece mas com
-    // quem nunca jogou; entrada Unknown nos overrides) ficam FORA da cobertura:
-    // não são rondas jogadas nem draws.
-    intl: (() => {
-      // Depois de juntar as voltas de treino: as de provas USKids contam lá, não aqui.
-      const reais = rondas.filter(r => r.circuito === "Intl" && r.ronda >= 0);
-      return {
-        rondasJogadas: reais.length,
-        rondasComDraw: reais.length,
-        torneiosJogados: new Set(reais.map(r => r.torneioId)).size,
-        torneiosComDraw: new Set(reais.map(r => r.torneioId)).size,
-      };
-    })(),
+  return {
+    rondasJogadas: rondasEsperadas,
+    rondasComDraw: uskidsPairings.length,
+    torneiosJogados: universo.size,
+    torneiosComDraw: porT.size,
+    torneiosSemDrawDetalhe: semDraw.sort(porDataDesc),
   };
+}
 
-  const out = {
-    geradoEm: new Date().toISOString(),
-    manuelFed: MANUEL_FED,
-    manuelUskidsIds: MANUEL_USKIDS_IDS,
-    totalRondas: rondas.length,
-    totalCompanheirosUnicos: compSet.size,
-    cobertura,
-    rondas,
+/**
+ * O ficheiro de pairings de um jogador. `fpgPairings` é alterado (resolução de
+ * companheiros por nome). Registos «conhecidos» (ronda -1 — jogadores que o
+ * Manuel conhece mas com quem nunca jogou) ficam fora da cobertura Intl.
+ */
+function montarFicheiro({ fed, uskidsIds, fpgPairings, uskidsPairings, intlPairings, tournList, nomeIdx, slim, uskidsDraws }) {
+  const resolvidos = resolverCompanheirosPorNome(fpgPairings, nomeIdx);
+  const rondas = juntarTreinos([...fpgPairings, ...uskidsPairings, ...intlPairings]).sort((a, b) => {
+    const da = a.data || "0000-00-00", db = b.data || "0000-00-00";
+    if (da !== db) return db.localeCompare(da);
+    return (a.ronda || 0) - (b.ronda || 0);
+  });
+  const compSet = new Set();
+  for (const r of rondas) for (const c of r.companheiros) {
+    compSet.add(c.fed ? `fed:${c.fed}` : `name:${normName(c.nome)}|${c.pais || ""}`);
+  }
+  // Depois de juntar as voltas de treino: as de provas USKids contam lá, não aqui.
+  const intlReais = rondas.filter(r => r.circuito === "Intl" && r.ronda >= 0);
+  const intlTorneios = new Set(intlReais.map(r => r.torneioId)).size;
+  return {
+    resolvidos,
+    // Sem `geradoEm`: um ficheiro que não mudou fica igual byte a byte (o git
+    // não vê 200 ficheiros alterados a cada corrida). A hora vai no índice.
+    ficheiro: {
+      fed,
+      uskidsIds,
+      totalRondas: rondas.length,
+      totalCompanheirosUnicos: compSet.size,
+      cobertura: {
+        fpg: coberturaFpg(tournList, fpgPairings),
+        uskids: coberturaUskids(uskidsPairings, uskidsIds, slim, uskidsDraws),
+        intl: { rondasJogadas: intlReais.length, rondasComDraw: intlReais.length, torneiosJogados: intlTorneios, torneiosComDraw: intlTorneios },
+      },
+      rondas,
+    },
   };
+}
 
+// Chave de um nome sem olhar à ordem das palavras: o GolfGenius escreve
+// «CASTRO FERREIRA Ricardo», o Kids 2 «Ricardo Castro Ferreira».
+function chaveNome(s) {
+  return normName(s).replace(/[,.]/g, " ").split(/[\s-]+/).filter(Boolean).sort().join(" ");
+}
+
+// Nomes de fora (USKids, GolfGenius) de cada federado, pelo Kids 2
+// (juniors-links.json: [id, nome, aliases | 0, memberId?, fed?]) — o mesmo
+// caminho das setas ↗. Um nome que o Kids 2 dá a mais do que um federado não
+// conta (homónimos), nem um que seja o do Manuel (o pai, 54907, também se
+// chama «Manuel Medeiros»).
+function nomesKids2PorFed(links) {
+  const fedsDoNome = new Map();
+  const idsPorFed = new Map();
+  for (const [, nome, aliases, memberId, fed] of (links && links.j) || []) {
+    if (!fed) continue;
+    for (const n of [nome, ...(Array.isArray(aliases) ? aliases : [])]) {
+      const nm = chaveNome(n);
+      if (!nm || isManuel(n)) continue;
+      if (!fedsDoNome.has(nm)) fedsDoNome.set(nm, new Set());
+      fedsDoNome.get(nm).add(String(fed));
+    }
+    if (memberId) {
+      if (!idsPorFed.has(String(fed))) idsPorFed.set(String(fed), new Set());
+      idsPorFed.get(String(fed)).add(String(memberId));
+    }
+  }
+  const nomesPorFed = new Map();
+  for (const [nm, feds] of fedsDoNome) {
+    if (feds.size !== 1) continue;
+    const fed = [...feds][0];
+    if (!nomesPorFed.has(fed)) nomesPorFed.set(fed, new Set());
+    nomesPorFed.get(fed).add(nm);
+  }
+  return { nomesPorFed, idsPorFed };
+}
+
+const indiceTorneios = (lista) => new Map(lista.map(t => [t.torneioId, t]));
+
+// ─── main ──────────────────────────────────────────────────────────
+
+function main() {
+  console.log("[pairings-build] a ler…");
+  const fpg = readJSON(path.join(DATA, "fpg-admissions-draws.json")) || { tournaments: [] };
+  mergeCgssDraws(fpg);  // injecta draws curados CGSS (PDFs) antes de extrair pairings
+  const uskidsDraws = readJSON(path.join(DATA, "uskids-draws.json")) || { torneios: [] };
+  const uskidsResults = readJSON(path.join(DATA, "uskids-results.json")) || { resultados: [] };
+  const overrides = readJSON(path.join(DATA, "manuel-draws-overrides.json"));
+  const slim = readJSON(path.join(DATA, "uskids-member-history-slim.json"));
+
+  const fpgScoreIdx = buildFpgScoreIndex();
+  const fpgScoreByNameIdx = buildFpgScoreIndexByName();
+  const clubeIdx = buildFpgClubeIndex(fpg);
+  const nomeIdx = buildFpgNomeIndex(fpg, fpgScoreIdx);
+  const uskScoreIdx = buildUskidsScoreIndex(uskidsResults);
+
+  const injectados = applyUskidsOverrides(uskidsDraws, overrides);
+  console.log(`  USKids overrides aplicados: ${injectados} grupos`);
+
+  const groupsByFed = indexGroupsByFed(buildFpgGroups(fpg, fpgScoreIdx, fpgScoreByNameIdx, nomeIdx, clubeIdx));
+
+  // ── Manuel: FPG + USKids + internacionais (overrides e tee sheets MAJOR) ──
+  const manuelTournamentsList = buildTournamentsList(MANUEL_FED);
+  const fpgPairings = fpgPairingsDe(MANUEL_FED, groupsByFed, indiceTorneios(manuelTournamentsList));
+  const uskidsPairings = extractUskidsPairings(uskidsDraws, uskScoreIdx, isManuel, true);
+  const intlPairings = buildIntlPairingsFromOverrides(overrides);
+  const cobertosIntl = new Set(intlPairings.map((r) => `${normName(r.torneioNome)}|${r.ronda}`));
+  const majorPairings = buildMajorDrawPairings(cobertosIntl, isManuel);
+  const ffgPairings = buildFfgDrawPairings(cobertosIntl, isManuel);
+  const rms9Pairings = buildRms9DrawPairings(isManuel, new Set(ffgPairings.map((r) => r.data)));
+  console.log(`  MAJOR (tee sheets GolfGenius): ${majorPairings.length} ronda(s) do Manuel · França: GolfGenius ${ffgPairings.length}, RMS9 ${rms9Pairings.length}`);
+  intlPairings.push(...majorPairings, ...ffgPairings, ...rms9Pairings);
+
+  const { ficheiro, resolvidos } = montarFicheiro({
+    fed: MANUEL_FED, uskidsIds: MANUEL_USKIDS_IDS, fpgPairings, uskidsPairings, intlPairings,
+    tournList: manuelTournamentsList, nomeIdx, slim, uskidsDraws,
+  });
+  const out = { geradoEm: new Date().toISOString(), ...ficheiro };
   const outPath = path.join(DATA, "manuel-pairings.json");
   writeAtomic(outPath, JSON.stringify(out, null, 2), "utf8");
+  const cov = out.cobertura;
+  const pct = (a, b) => (b ? Math.round(100 * a / b) : 0);
   console.log(`[pairings-build] escrito: ${outPath}`);
-  console.log(`  FPG: ${fpgPairings.length}/${manuelRondasTotal} rondas (${Math.round(100*fpgPairings.length/manuelRondasTotal)}%), ${fpgTorneiosComDraw.size}/${manuelTorneiosTotal.size} torneios`);
-  console.log(`  USKids: ${uskidsTotal}/${uskidsRondasEsperadas} rondas (${Math.round(100*uskidsTotal/uskidsRondasEsperadas)}%), ${cobertura.uskids.torneiosComDraw}/${uskidsTorneiosEsperados.size} torneios`);
-  console.log(`  Intl: ${cobertura.intl.rondasJogadas} rondas, ${cobertura.intl.torneiosJogados} torneios (Bluegolf+Doral via overrides)`);
-  console.log(`  Companheiros únicos: ${compSet.size}, fed resolvidos: ${resolvidos}`);
+  console.log(`  FPG: ${cov.fpg.rondasComDraw}/${cov.fpg.rondasJogadas} rondas (${pct(cov.fpg.rondasComDraw, cov.fpg.rondasJogadas)}%), ${cov.fpg.torneiosComDraw}/${cov.fpg.torneiosJogados} torneios`);
+  console.log(`  USKids: ${cov.uskids.rondasComDraw}/${cov.uskids.rondasJogadas} rondas (${pct(cov.uskids.rondasComDraw, cov.uskids.rondasJogadas)}%), ${cov.uskids.torneiosComDraw}/${cov.uskids.torneiosJogados} torneios`);
+  console.log(`  Intl: ${cov.intl.rondasJogadas} rondas, ${cov.intl.torneiosJogados} torneios (Bluegolf+Doral via overrides)`);
+  console.log(`  Companheiros únicos: ${out.totalCompanheirosUnicos}, fed resolvidos: ${resolvidos}`);
+
+  // ── Os outros jogadores seguidos (23/11/2026): FPG + USKids + GolfGenius
+  // (tee sheets MAJOR e provas francesas). Ficam de fora os registos à mão
+  // (manuel-draws-overrides.json), que são só do Manuel.
+  // Um ficheiro por jogador com rondas, em public/data/pairings/{fed}.json, e
+  // o índice (quem tem) em public/data/pairings/index.json — a ficha só
+  // mostra a vista «Draws» a quem lá está.
+  const players = readJSON(path.join(DATA, "players.json"));
+  if (!players) { console.error("[pairings-build] players.json ilegível — não gravo os pairings dos outros jogadores"); process.exitCode = 1; return; }
+  const links = readJSON(path.join(DATA, "juniors-links.json"));
+  if (!links) { console.error("[pairings-build] juniors-links.json ilegível — não gravo os pairings dos outros jogadores"); process.exitCode = 1; return; }
+  const { nomesPorFed, idsPorFed } = nomesKids2PorFed(links);
+
+  const ficheiros = new Map();
+  for (const fed of Object.keys(players)) {
+    if (fed === MANUEL_FED || !isFedCode(fed)) continue;
+    const tournList = buildTournamentsList(fed);
+    const fpgP = fpgPairingsDe(fed, groupsByFed, indiceTorneios(tournList));
+    const nomes = nomesPorFed.get(fed);
+    const eEle = (n) => !!nomes && nomes.has(chaveNome(n));
+    const uskP = nomes ? extractUskidsPairings(uskidsDraws, uskScoreIdx, eEle, false) : [];
+    const ffgP = nomes ? buildFfgDrawPairings(new Set(), eEle) : [];
+    const intlP = nomes ? [
+      ...buildMajorDrawPairings(new Set(), eEle), ...ffgP,
+      ...buildRms9DrawPairings(eEle, new Set(ffgP.map((r) => r.data))),
+    ] : [];
+    if (!fpgP.length && !uskP.length && !intlP.length) continue;
+    const { ficheiro } = montarFicheiro({
+      fed, uskidsIds: [...(idsPorFed.get(fed) || [])], fpgPairings: fpgP, uskidsPairings: uskP, intlPairings: intlP,
+      tournList, nomeIdx, slim, uskidsDraws,
+    });
+    ficheiros.set(fed, ficheiro);
+  }
+
+  const dir = path.join(DATA, "pairings");
+  fs.mkdirSync(dir, { recursive: true });
+  const indice = { geradoEm: new Date().toISOString(), jogadores: {} };
+  for (const [fed, f] of [...ficheiros].sort((a, b) => Number(a[0]) - Number(b[0]))) {
+    indice.jogadores[fed] = f.rondas.filter(r => r.ronda >= 0).length;
+  }
+  const totalRondas = (d) => Object.values(d.jogadores).reduce((s, n) => s + n, 0);
+  // Guarda anti-encolhimento no índice: se as fontes vierem vazias, não se
+  // apagam os ficheiros que já estão em disco.
+  const r = writeJsonGuarded(path.join(dir, "index.json"), indice, {
+    count: totalRondas, maxDrop: 0.3, force: hasForceFlag(), label: "pairings/index", failOnRefuse: true,
+  });
+  if (!r.written) return;
+  for (const [fed, f] of ficheiros) writeAtomic(path.join(dir, `${fed}.json`), JSON.stringify(f), "utf8");
+  let apagados = 0;
+  for (const nome of fs.readdirSync(dir)) {
+    const m = nome.match(/^(\d+)\.json$/);
+    if (m && !ficheiros.has(m[1])) { fs.unlinkSync(path.join(dir, nome)); apagados++; }
+  }
+  console.log(`[pairings-build] outros jogadores seguidos: ${ficheiros.size} com draws, ${totalRondas(indice)} rondas${apagados ? `, ${apagados} ficheiro(s) que deixaram de ter draws apagados` : ""} → ${dir}`);
 }
 
 main();

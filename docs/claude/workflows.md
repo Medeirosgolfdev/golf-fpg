@@ -128,7 +128,7 @@ guarda a cache antes do 1.º push e repõe-na para o 2.º.
 | `major` | `major-catalog.json`, `major-veterans.json` | `build-major-catalog.js` | build-major-catalog, golfbox, golfgenius |
 | `tracking` | `fpg-tournaments-tracking.json` | `build-tournaments-tracking.js` | classif, admissions-draws |
 | `ffgolf` | `ffgolf-resultats-index.json`, `ffgolf-juniors-slim.json`, `france-players.json`, `ffgolf-gg-twins.json`, `ffgolf-player-tournaments.json` | os 3 builders FFG | as 4 FFG |
-| `pairings` | `manuel-pairings.json` | `pairings-build.js` (se falhar fica a do main) | admissions-draws, cgss-draw |
+| `pairings` | `manuel-pairings.json`, `pairings/` (Draws dos outros seguidos, desde 23/11/2026) | `pairings-build.js` (se falhar fica a do main) | admissions-draws, cgss-draw |
 | `simulador` | `simulador-players.json` | `build-simulador-players.js` | drive, federados |
 | (`-g`/`-r`) | `analise-percurso-juniores.html` | `build-analise-percurso.js` + `build-percurso-path.js` | update-data |
 

@@ -1,16 +1,21 @@
 // scrape-manuel-missing-draws.js
 //
-// Scrape dos draws (e admissões) em falta para torneios FPG que o Manuel jogou
-// mas que ainda não temos no `public/data/fpg-admissions-draws.json`.
+// Scrape dos draws (e admissões) em falta para torneios FPG que um jogador
+// jogou mas que ainda não temos no `public/data/fpg-admissions-draws.json`.
+// Por omissão o Manuel; `--fed 49085,48971,…` para outros jogadores seguidos
+// (23/11/2026 — os Draws passaram a existir para todos).
 //
-// Fontes:
-//   1. `public/data/manuel-pairings.json` → `cobertura.fpg.torneiosSemDrawDetalhe`
-//      (38 torneios sem draw, escopo "passíveis de scrapar")
-//   2. `public/data/manuel-pairings.json` → `cobertura.fpg.torneiosSkippedDetalhe`
-//      (~12 torneios DRIVE Challenge Madeira que foram silenciosamente
-//      excluídos pelo SKIP_CCODES do pairings-build.js — ccode 982).
-//      Se este campo ainda não estiver no JSON (build antiga), lemos
-//      `output/52884/scorecards.json` para inferir.
+// Fontes (por jogador; o ficheiro de Draws gerado pelo pairings-build.js:
+// `manuel-pairings.json` no Manuel, `pairings/{fed}.json` nos outros):
+//   1. `cobertura.fpg.torneiosSemDrawDetalhe` (escopo "passíveis de scrapar")
+//   2. `cobertura.fpg.torneiosSkippedDetalhe` (torneios DRIVE Challenge
+//      Madeira silenciosamente excluídos pelo SKIP_CCODES do pairings-build.js
+//      — ccode 982). Se este campo ainda não estiver no JSON (build antiga),
+//      lemos `output/{fed}/scorecards.json` para inferir.
+//
+// Os torneios que entram no scope só para este scrape e continuam SEM draw
+// saem outra vez do scope no fim — senão o workflow do fim-de-semana voltava
+// a pedi-los a cada corrida (a trava de congelamento só apanha quem tem draw).
 //
 // Por defeito o ccode 007 (CGSS Santo da Serra Madeira) é EXCLUÍDO — os clubes
 // regionais da Madeira não publicam draws no scoring.fpg.pt. O user pode
@@ -18,6 +23,7 @@
 //
 // Uso:
 //   node scripts/scrape-manuel-missing-draws.js                # tudo, sem 007
+//   node scripts/scrape-manuel-missing-draws.js --fed 49085,48971 # outros jogadores
 //   node scripts/scrape-manuel-missing-draws.js --dry-run      # só lista os tcodes
 //   node scripts/scrape-manuel-missing-draws.js --include-007  # inclui CGSS
 //   node scripts/scrape-manuel-missing-draws.js --no-drive     # exclui Drive Challenge (982)
@@ -26,7 +32,7 @@
 //   node scripts/scrape-manuel-missing-draws.js --skip-rebuild # NÃO regenera manuel-pairings.json no fim
 //
 // Após o scrape, re-corre automaticamente `pairings-build.js` para regenerar
-// `manuel-pairings.json` (a menos que `--skip-rebuild`).
+// os Draws (a menos que `--skip-rebuild`).
 
 const fs = require("fs");
 const path = require("path");
@@ -34,8 +40,10 @@ const { spawn } = require("child_process");
 const { lisbonCivilDayStr } = require("../lib/helpers");
 
 const ROOT = path.resolve(__dirname, "..");
-const PAIRINGS = path.join(ROOT, "public", "data", "manuel-pairings.json");
-const SCORECARDS = path.join(ROOT, "output", "52884", "scorecards.json");
+const pairingsPath = (fed) => fed === MANUEL_FED
+  ? path.join(ROOT, "public", "data", "manuel-pairings.json")
+  : path.join(ROOT, "public", "data", "pairings", `${fed}.json`);
+const scorecardsPath = (fed) => path.join(ROOT, "output", fed, "scorecards.json");
 const ADMISSIONS_DRAWS = path.join(ROOT, "public", "data", "fpg-admissions-draws.json");
 const SCOPE_FILE = path.join(__dirname, "fpg-admissions-scope.json");
 const SCRAPER = path.join(__dirname, "scrape-fpg-admissions-draws-node.js");
@@ -64,6 +72,7 @@ const CONCURRENCY = argVal("--concurrency", "2");
 const SKIP_REBUILD = args.includes("--skip-rebuild");
 const INCLUDE_007 = args.includes("--include-007");
 const NO_DRIVE = args.includes("--no-drive");
+const FEDS = String(argVal("--fed", MANUEL_FED)).split(",").map(s => s.trim()).filter(s => /^\d+$/.test(s));
 
 // ─── helpers ─────────────────────────────────────────────────────────
 
@@ -79,8 +88,9 @@ function normIsoDate(raw) {
   return null;
 }
 
-// Lê scorecards.json e devolve só os torneios do ccode 982 (Drive Challenge).
-function getDriveTorneiosFromScorecards() {
+// Lê o scorecards.json do jogador e devolve só os torneios do ccode 982 (Drive Challenge).
+function getDriveTorneiosFromScorecards(fed) {
+  const SCORECARDS = scorecardsPath(fed);
   if (!fs.existsSync(SCORECARDS)) {
     console.warn(`[scrape-manuel-missing] aviso: ${SCORECARDS} não existe — não consigo inferir torneios DRIVE 982.`);
     return [];
@@ -90,7 +100,7 @@ function getDriveTorneiosFromScorecards() {
   for (const sid of Object.keys(sc)) {
     const s = sc[sid];
     if (s.score_origin !== "Torn") continue;
-    if (String(s.federated_code || "") !== MANUEL_FED) continue;
+    if (String(s.federated_code || "") !== fed) continue;
     if (String(s.club_code) !== DRIVE_CCODE) continue;
     const cc = s.club_code, tc = s.tournament_code;
     if (!cc || !tc) continue;
@@ -120,16 +130,16 @@ function getDriveTorneiosFromScorecards() {
 // tcode fora do scope, usa data placeholder = hoje, o que faz o `markSuspect`
 // descartar o resultado (memória `fpg_scrape_tcodes_suspect_bug`).
 //
-// Devolve o número de entradas adicionadas.
+// Devolve os torneioIds adicionados.
 function ensureScope(torneios) {
   if (!fs.existsSync(SCOPE_FILE)) {
     console.warn(`[scrape-manuel-missing] aviso: scope ${SCOPE_FILE} não existe — sigo na mesma, scraper provavelmente irá falhar.`);
-    return 0;
+    return [];
   }
   const scope = JSON.parse(fs.readFileSync(SCOPE_FILE, "utf8"));
   const idx = new Set();
   for (const t of scope) idx.add(`${String(t.ccode).padStart(3, "0")}-${t.tcode}`);
-  let added = 0;
+  const added = [];
   for (const t of torneios) {
     const key = t.torneioId;
     if (idx.has(key)) continue;
@@ -144,15 +154,28 @@ function ensureScope(torneios) {
       _src: "manuel-missing",
     });
     idx.add(key);
-    added += 1;
+    added.push(key);
   }
-  if (added > 0) {
+  if (added.length > 0) {
     fs.writeFileSync(SCOPE_FILE, JSON.stringify(scope, null, 2), "utf8");
-    console.log(`[scrape-manuel-missing] scope actualizado: +${added} torneios.`);
+    console.log(`[scrape-manuel-missing] scope actualizado: +${added.length} torneios.`);
   } else {
     console.log("[scrape-manuel-missing] scope já contém todos os torneios — nada a adicionar.");
   }
   return added;
+}
+
+// Tira do scope os torneios que `ensureScope` acrescentou e que continuam sem
+// draw: a FPG não o publicou e o workflow do fim-de-semana não os deve voltar a pedir.
+function pruneScopeSemDraw(added) {
+  if (!added.length) return;
+  const cobertos = getJaCobertos();
+  const tirar = new Set(added.filter(k => !cobertos.has(k)));
+  if (!tirar.size) return;
+  const scope = JSON.parse(fs.readFileSync(SCOPE_FILE, "utf8"));
+  const novo = scope.filter(t => !tirar.has(`${String(t.ccode).padStart(3, "0")}-${t.tcode}`));
+  fs.writeFileSync(SCOPE_FILE, JSON.stringify(novo, null, 2), "utf8");
+  console.log(`[scrape-manuel-missing] scope: ${tirar.size} torneios sem draw publicado saíram outra vez (ficam ${added.length - tirar.size} com draw).`);
 }
 
 // Lê fpg-admissions-draws.json e devolve o Set de torneioIds já cobertos.
@@ -182,26 +205,33 @@ function getJaCobertos() {
 // ─── main ─────────────────────────────────────────────────────────────
 
 function main() {
-  if (!fs.existsSync(PAIRINGS)) {
-    console.error(`[scrape-manuel-missing] não encontrei ${PAIRINGS}.`);
-    console.error(`Corre primeiro: node scripts/pairings-build.js`);
+  if (!FEDS.length) {
+    console.error("[scrape-manuel-missing] --fed sem federados válidos.");
     process.exit(1);
   }
-
-  const data = readJSON(PAIRINGS);
-  const cov = (data.cobertura && data.cobertura.fpg) || {};
-
-  // 1. Torneios "sem draw" listados na cobertura
-  const semDrawDetalhe = cov.torneiosSemDrawDetalhe || [];
-  // 2. Torneios DRIVE silenciosamente excluídos
-  let driveDetalhe = cov.torneiosSkippedDetalhe || [];
-  if (driveDetalhe.length === 0 && !NO_DRIVE) {
-    // Fallback: inferir do scorecards.json se o JSON ainda não tiver o campo
-    const inferidos = getDriveTorneiosFromScorecards();
-    if (inferidos.length > 0) {
-      console.log(`[scrape-manuel-missing] inferi ${inferidos.length} torneios DRIVE (ccode 982) do scorecards.json (re-corre pairings-build.js para populares o campo no JSON).`);
+  const semDrawDetalhe = [];
+  let driveDetalhe = [];
+  for (const fed of FEDS) {
+    const PAIRINGS = pairingsPath(fed);
+    if (!fs.existsSync(PAIRINGS)) {
+      console.error(`[scrape-manuel-missing] não encontrei ${PAIRINGS} (o jogador ${fed} é seguido e tem draws?).`);
+      console.error(`Corre primeiro: node scripts/pairings-build.js`);
+      process.exit(1);
     }
-    driveDetalhe = inferidos;
+    const cov = (readJSON(PAIRINGS).cobertura || {}).fpg || {};
+    // 1. Torneios "sem draw" listados na cobertura
+    semDrawDetalhe.push(...(cov.torneiosSemDrawDetalhe || []));
+    // 2. Torneios DRIVE silenciosamente excluídos
+    let drive = cov.torneiosSkippedDetalhe || [];
+    if (drive.length === 0 && !NO_DRIVE) {
+      // Fallback: inferir do scorecards.json se o JSON ainda não tiver o campo
+      drive = getDriveTorneiosFromScorecards(fed);
+      if (drive.length > 0) {
+        console.log(`[scrape-manuel-missing] ${fed}: inferi ${drive.length} torneios DRIVE (ccode 982) do scorecards.json.`);
+      }
+    }
+    driveDetalhe = driveDetalhe.concat(drive);
+    console.log(`[scrape-manuel-missing] ${fed}: ${(cov.torneiosSemDrawDetalhe || []).length} sem draw, ${drive.length} DRIVE 982`);
   }
 
   // 3. Excluir os que já foram scrapados desde a última build do pairings.
@@ -281,7 +311,7 @@ function main() {
   }
 
   // Garantir scope (com data real) para evitar bug "data placeholder=hoje"
-  ensureScope(final);
+  const addedScope = ensureScope(final);
 
   // Construir flag --tcodes (formato ccode:tcode,ccode:tcode,…)
   const specs = final.map(t => t.torneioId.replace("-", ":"));
@@ -296,24 +326,25 @@ function main() {
   );
   child.on("exit", (code) => {
     // Exit code 2 do scraper = "sem novidades" (não é erro).
+    pruneScopeSemDraw(addedScope);
     if (code !== 0 && code !== 2) {
       console.error(`\n[scrape-manuel-missing] scraper saiu com código ${code}`);
       process.exit(code);
     }
     console.log(`\n[scrape-manuel-missing] scraper terminou (código ${code}).`);
     if (SKIP_REBUILD) {
-      console.log("[scrape-manuel-missing] --skip-rebuild: não vou regenerar manuel-pairings.json. Corre manualmente:");
+      console.log("[scrape-manuel-missing] --skip-rebuild: não vou regenerar os Draws. Corre manualmente:");
       console.log("  node scripts/pairings-build.js");
       return;
     }
-    console.log("[scrape-manuel-missing] a re-gerar manuel-pairings.json…\n");
+    console.log("[scrape-manuel-missing] a re-gerar os Draws (pairings-build)…\n");
     const child2 = spawn(process.execPath, [BUILDER], { stdio: "inherit" });
     child2.on("exit", (c2) => {
       if (c2 !== 0) {
         console.error(`[scrape-manuel-missing] builder saiu com código ${c2}`);
         process.exit(c2);
       }
-      console.log("\n[scrape-manuel-missing] pronto. Recarrega /draws no browser.");
+      console.log("\n[scrape-manuel-missing] pronto. Recarrega a vista Draws da ficha no browser.");
     });
   });
 }

@@ -60,7 +60,7 @@ usage() { sed -n '2,40p' "$0" >&2; exit 64; }
 #   -f major     → catálogo MAJOR
 #   -f tracking  → fpg-tournaments-tracking.json
 #   -f ffgolf    → derivados FFG (índice, slim, roster FR)
-#   -f pairings  → manuel-pairings.json (/draws)
+#   -f pairings  → manuel-pairings.json + pairings/ (vista Draws da ficha)
 #   -f simulador → simulador-players.json (/simulador)
 family() {
   case "$1" in
@@ -92,8 +92,8 @@ family() {
       REGEN+=('node scripts/build-simulador-players.js') ;;
     pairings)
       # Se falhar, fica a versão do main (nada se perde) — não trava o push dos resultados.
-      GEN+=('public/data/manuel-pairings.json')
-      REGEN+=('node scripts/pairings-build.js || echo "::warning::pairings-build falhou — manuel-pairings.json fica como no main"') ;;
+      GEN+=('public/data/manuel-pairings.json' 'public/data/pairings')
+      REGEN+=('node scripts/pairings-build.js || echo "::warning::pairings-build falhou — os pairings ficam como no main"') ;;
     *) echo "push-generated: família desconhecida: $1" >&2; exit 64 ;;
   esac
 }

@@ -33,7 +33,7 @@ import { LoopEclecticSection } from "../../ui/LoopEclecticSection";
 import { eclecticos9 } from "../../data/sserraLoops";
 import { useCamposDe9 } from "../../hooks/useCamposDe9";
 import type { ViewKey, CourseSort } from "./shared";
-import { MANUEL_FED } from "../../constants/manuel";
+import { useTemDraws } from "../../hooks/useTemDraws";
 import TabRow from "../../ui/TabRow";
 import SearchInput from "../../ui/SearchInput";
 import ErrorState from "../../ui/ErrorState";
@@ -138,7 +138,11 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
     return () => { cancelled = true; };
   }, [fedId]);
 
-  const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis", "eclectic_sds", ...(fedId === MANUEL_FED ? ["draws" as const] : [])];
+  // Vista «Draws» (companheiros de jogo): o Manuel e, desde 23/11/2026, todos os
+  // jogadores seguidos com draws (`useTemDraws`). O ?view=draws vale sempre (o
+  // índice chega depois do URL); quem não tem draws vê o aviso «Ainda não há draws».
+  const temDraws = useTemDraws(fedId);
+  const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis", "eclectic_sds", "draws"];
   const paramView = searchParams.get("view") as ViewKey | null;
 
   const [view, setViewState] = useState<ViewKey>(
@@ -338,7 +342,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   <option value="by_course">⛳ Campos</option>
                   <option value="analysis">📊 Análises</option>
                   {(temEclecticoSds || view === "eclectic_sds") && <option value="eclectic_sds">🏌️ Ecléticos</option>}
-                  {fedId === MANUEL_FED && <option value="draws">🤝 Draws (companheiros)</option>}
+                  {(temDraws || view === "draws") && <option value="draws">🤝 Draws (companheiros)</option>}
                 </Select>
                 {viewBucket === "by_date" && (
                   <TabRow ariaLabel="Agrupamento das rondas" active={view === "by_tournament" ? "by_tournament" : "by_date"} onChange={setView}
@@ -384,9 +388,9 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
             {view === "analysis" && (
               <AnalysisView data={data} />
             )}
-            {view === "draws" && fedId === MANUEL_FED && (
+            {view === "draws" && (
               <Suspense fallback={<LoadingState size="sm" message="A carregar draws…" />}>
-                <DrawsPage />
+                <DrawsPage key={fedId} fed={fedId} nome={selected.name} />
               </Suspense>
             )}
           </div>

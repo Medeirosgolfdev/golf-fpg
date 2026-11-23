@@ -56,6 +56,7 @@ const LIXO_DATA = [
   "drive-rankings-check.json",         // relatório do verify-drive-rankings
   "fpg-tournaments-tracking.json",     // scope do update-classif
   "recent-tournaments-scrape-scope.json", // scope do update-classif
+  "ffgolf-rms9-startlists.json",       // partidas RMS9 — só o pairings-build (Draws) as lê
 ];
 
 let bytes = 0, n = 0;

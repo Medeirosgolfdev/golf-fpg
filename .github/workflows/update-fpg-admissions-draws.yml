@@ -141,17 +141,19 @@ jobs:
         if: steps.scrape.outputs.exit_code != '1'
         run: node scripts/validate-data.js public/data/fpg-admissions-draws.json
 
-      - name: Regenerar manuel-pairings.json
+      - name: Regenerar os pairings (Draws da ficha)
         id: pairings
-        # A página /draws (companheiros do Manuel) lê public/data/manuel-pairings.json,
-        # que o pairings-build.js gera a partir do fpg-admissions-draws.json (entre
+        # A vista Draws da ficha do jogador lê public/data/manuel-pairings.json (o
+        # Manuel) e public/data/pairings/ (os outros seguidos, desde 23/11/2026), que
+        # o pairings-build.js gera a partir do fpg-admissions-draws.json (entre
         # outras fontes já commitadas). Corre SEMPRE (excepto erro do scraper) e marca
         # pairings_changed=true para o commit acontecer mesmo quando o scraper não
         # trouxe nada novo mas os draws mudaram (ex: draws adicionados manualmente).
         if: steps.scrape.outputs.exit_code != '1'
         run: |
           node scripts/pairings-build.js
-          if git diff --quiet -- public/data/manuel-pairings.json; then
+          git add -N public/data/pairings
+          if git diff --quiet -- public/data/manuel-pairings.json public/data/pairings; then
             echo "pairings_changed=false" >> $GITHUB_OUTPUT
           else
             echo "pairings_changed=true" >> $GITHUB_OUTPUT

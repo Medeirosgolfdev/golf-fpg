@@ -231,7 +231,7 @@ jobs:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
           FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
 
-      # O /draws lê o manuel-pairings.json, que é GERADO — sem isto o torneio
+      # Os Draws da ficha lêem os pairings, que são GERADOS — sem isto o torneio
       # ficava lá com o tcode placeholder e sem scores.
       - name: Regenerar pairings
         id: pairings
@@ -241,7 +241,7 @@ jobs:
 
       - name: Commit e push (se houve resultados)
         if: steps.scrape.outputs.updated == '1'
-        # -f pairings: o manuel-pairings.json é regenerado se o main avançar.
+        # -f pairings: os pairings são regenerados se o main avançar.
         run: |
           bash scripts/ci/push-generated.sh -m "data: resultados de torneio draw-only (placeholder → tcode real)" \
             -f pairings \
