@@ -1,7 +1,7 @@
 {
   "tourId": 68256,
   "url": "https://www.nextcaddy.com/tour/68256",
-  "scrapedAt": "2026-11-16T12:38:56.955Z",
+  "scrapedAt": "2026-11-23T13:15:55.195Z",
   "meta": {
     "name": "Campeonato de Madrid Interclubes Infantil y Cadete",
     "organizer": "Federacion de Golf de Madrid",
@@ -24,8 +24,13 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Equipos Scratch Total",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": null,
@@ -141,17 +146,17 @@
     },
     {
       "orden": null,
-      "name": "Guillermo Lopez Lopez",
-      "licencia": "CM11924399",
-      "hcp": null,
-      "nivel": "C"
-    },
-    {
-      "orden": null,
       "name": "Fernando Lopez De Santiago",
       "licencia": "CM11928793",
       "hcp": 1.9,
       "nivel": "I"
+    },
+    {
+      "orden": null,
+      "name": "Rodrigo Robredo Martinez",
+      "licencia": "CM11932170",
+      "hcp": 5.9,
+      "nivel": "C"
     },
     {
       "orden": null,
@@ -176,16 +181,16 @@
     },
     {
       "orden": null,
-      "name": "Ignacio Martinez Ferreiro",
-      "licencia": "CM02927177",
-      "hcp": 1.4,
+      "name": "Jorge Regalado Lara",
+      "licencia": "CM02951984",
+      "hcp": 4.7,
       "nivel": "I"
     },
     {
       "orden": null,
-      "name": "Jorge Regalado Lara",
-      "licencia": "CM02951984",
-      "hcp": 4.7,
+      "name": "Gabriel Diez Sanchez-Tabernero",
+      "licencia": "CM02911374",
+      "hcp": 5.4,
       "nivel": "I"
     },
     {
@@ -204,41 +209,6 @@
     },
     {
       "orden": null,
-      "name": "R.C.G Las Rozas",
-      "licencia": "",
-      "hcp": null,
-      "nivel": ""
-    },
-    {
-      "orden": null,
-      "name": "Adrian De Eguren Rodriguez-Solar",
-      "licencia": "CM06913080",
-      "hcp": 6,
-      "nivel": "C"
-    },
-    {
-      "orden": null,
-      "name": "Nicolas Manzanero Billordo",
-      "licencia": "CM06978512",
-      "hcp": 26.3,
-      "nivel": "I"
-    },
-    {
-      "orden": null,
-      "name": "Sayone Yim",
-      "licencia": "CM06071498",
-      "hcp": 9.3,
-      "nivel": "C"
-    },
-    {
-      "orden": null,
-      "name": "Irene Salgado Rodriguez",
-      "licencia": "CM06416641",
-      "hcp": 11.6,
-      "nivel": "I"
-    },
-    {
-      "orden": null,
       "name": "CENTRO NACIONAL DE GOLF",
       "licencia": "",
       "hcp": null,
@@ -246,9 +216,9 @@
     },
     {
       "orden": null,
-      "name": "Pablo Perez Cordero",
-      "licencia": "CMA8936858",
-      "hcp": null,
+      "name": "Martin Fernandez Aliaga",
+      "licencia": "CMA8955021",
+      "hcp": 1.7,
       "nivel": "C"
     },
     {
@@ -260,9 +230,9 @@
     },
     {
       "orden": null,
-      "name": "Carla Revenga Bengoechea",
-      "licencia": "CMA8903766",
-      "hcp": 0,
+      "name": "Sofia Caroline De Lucas Lopez",
+      "licencia": "CMA8372835",
+      "hcp": 7,
       "nivel": "C"
     },
     {
@@ -421,9 +391,9 @@
     },
     {
       "orden": null,
-      "name": "Jose Mittelbrum Infante",
-      "licencia": "CM04926489",
-      "hcp": 1.8,
+      "name": "Alfredo Sainz De Aja Solis",
+      "licencia": "CM04952468",
+      "hcp": 1.7,
       "nivel": "C"
     },
     {
@@ -445,41 +415,6 @@
       "name": "Alejandra Fernandez-Olano Vilariño",
       "licencia": "CM04962400",
       "hcp": 3.8,
-      "nivel": "I"
-    },
-    {
-      "orden": null,
-      "name": "RACE B",
-      "licencia": "",
-      "hcp": null,
-      "nivel": ""
-    },
-    {
-      "orden": null,
-      "name": "Alfredo Sainz De Aja Solis",
-      "licencia": "CM04952468",
-      "hcp": 1.7,
-      "nivel": "C"
-    },
-    {
-      "orden": null,
-      "name": "Tomas Diez Del Potro",
-      "licencia": "CM04968869",
-      "hcp": 9.4,
-      "nivel": "I"
-    },
-    {
-      "orden": null,
-      "name": "Sol Nogales Garcia",
-      "licencia": "CM04985185",
-      "hcp": 6.6,
-      "nivel": "I"
-    },
-    {
-      "orden": null,
-      "name": "Ana Prieto Cabrero",
-      "licencia": "CM04985050",
-      "hcp": 7.2,
       "nivel": "I"
     },
     {
@@ -516,44 +451,447 @@
       "licencia": "CM41992466",
       "hcp": 9.4,
       "nivel": "I"
-    },
-    {
-      "orden": null,
-      "name": "ESCUELA RFGM B",
-      "licencia": "",
-      "hcp": null,
-      "nivel": ""
-    },
-    {
-      "orden": null,
-      "name": "Hugo Rodriguez Barba",
-      "licencia": "CM41955942",
-      "hcp": 1.8,
-      "nivel": "I"
-    },
-    {
-      "orden": null,
-      "name": "Guillermo Cuadrado Lopez",
-      "licencia": "CM41928783",
-      "hcp": 4.4,
-      "nivel": "I"
-    },
-    {
-      "orden": null,
-      "name": "Macarena Kowalski Blanco",
-      "licencia": "CM41934118",
-      "hcp": 5.6,
-      "nivel": "C"
-    },
-    {
-      "orden": null,
-      "name": "Clara Triguero Fernandez",
-      "licencia": "CM41986467",
-      "hcp": 7.9,
-      "nivel": "A"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Lucas Barra Morris",
+          "hcp": 2.1,
+          "ins": "2447444",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Alvaro Herrero Bernal",
+          "hcp": 0.8,
+          "ins": "2447443",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Miguel Rona Baselga",
+          "hcp": 1.1,
+          "ins": "2443475",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Juan Almansa Recasens",
+          "hcp": 2.9,
+          "ins": "2443476",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Alfredo Sainz De Aja Solis",
+          "hcp": 1.7,
+          "ins": "2451874",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Francisco De Borja Rabadan Baldasano",
+          "hcp": 6.8,
+          "ins": "2447436",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Hugo Albino Cerezo Pascual",
+          "hcp": 2.1,
+          "ins": "2445717",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Carlos Fernandez Ripoll",
+          "hcp": 8.4,
+          "ins": "2445718",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Sergio Vargas Tejerina",
+          "hcp": 2.5,
+          "ins": "2447348",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Lucas Cerro Marian",
+          "hcp": 1.8,
+          "ins": "2447347",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Fernando Lopez De Santiago",
+          "hcp": 1.9,
+          "ins": "2444336",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Rodrigo Robredo Martinez",
+          "hcp": 5.9,
+          "ins": "2452213",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Maria De Pablo Chacon",
+          "hcp": 4.7,
+          "ins": "2447349",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Paloma Hernandez Perez",
+          "hcp": 12.4,
+          "ins": "2447350",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Adriana Garcia Lozano",
+          "hcp": 1.5,
+          "ins": "2444337",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Olivia Lopez Lopez",
+          "hcp": 3.5,
+          "ins": "2444338",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Jaime Leon De Valdenebro",
+          "hcp": 3.4,
+          "ins": "2443793",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Daniel Ponton Sanchez",
+          "hcp": 5.9,
+          "ins": "2443794",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Ignacio Roman Fernandez",
+          "hcp": 3.9,
+          "ins": "2444113",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Jaime Paradela Martin",
+          "hcp": 6,
+          "ins": "2444114",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Rocio Soler Lavalle",
+          "hcp": 10.3,
+          "ins": "2443795",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Macarena Soler Lavalle",
+          "hcp": 16.6,
+          "ins": "2443796",
+          "jid": "77982",
+          "nivel": "A"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Sandra Puente Fernandez",
+          "hcp": 7,
+          "ins": "2444116",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Mencia Madrigal Isidro",
+          "hcp": 14.1,
+          "ins": "2444115",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "Martin Fernandez Aliaga",
+          "hcp": 1.7,
+          "ins": "2453526",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "Benjamin Casas-Velez Osorio",
+          "hcp": 5.3,
+          "ins": "2445714",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "Ivan Ruiz Lopez",
+          "hcp": 2.5,
+          "ins": "2445932",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "Maximilia Puche Cascant",
+          "hcp": 4.3,
+          "ins": "2445933",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Sofia Caroline De Lucas Lopez",
+          "hcp": 7,
+          "ins": "2453535",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Ines Azcona Bustamante",
+          "hcp": 12.7,
+          "ins": "2445716",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Aitana Puerta Revuelta",
+          "hcp": 10.6,
+          "ins": "2445935",
+          "jid": "77982",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Maria Salas Dos Santos",
+          "hcp": 14,
+          "ins": "2445934",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Alvaro Gomez Bordallo",
+          "hcp": 9.8,
+          "ins": "2445745",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Francisco Llorca Castro",
+          "hcp": 10.4,
+          "ins": "2445746",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Jorge Regalado Lara",
+          "hcp": 4.7,
+          "ins": "2445392",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Gabriel Diez Sanchez-Tabernero",
+          "hcp": 5.4,
+          "ins": "2451916",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:39",
+          "tee": 1,
+          "name": "Alejandra Moreno Fernandez",
+          "hcp": 0.7,
+          "ins": "2447445",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:39",
+          "tee": 1,
+          "name": "Barbara Garcia De Vinuesa Serrano",
+          "hcp": 9.4,
+          "ins": "2447446",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:39",
+          "tee": 1,
+          "name": "Carmen Fevre De La Peña",
+          "hcp": 0.4,
+          "ins": "2443477",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:39",
+          "tee": 1,
+          "name": "Maria Almansa Recasens",
+          "hcp": 7.3,
+          "ins": "2443478",
+          "jid": "77982",
+          "nivel": "A"
+        },
+        {
+          "time": "09:39",
+          "tee": 2,
+          "name": "Blanca Nogales Garcia",
+          "hcp": 2.6,
+          "ins": "2447437",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:39",
+          "tee": 2,
+          "name": "Alejandra Fernandez-Olano Vilariño",
+          "hcp": 3.8,
+          "ins": "2447438",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:39",
+          "tee": 2,
+          "name": "Julia Salvadores Saez",
+          "hcp": 0.1,
+          "ins": "2445719",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:39",
+          "tee": 2,
+          "name": "Lola Suarez Delgado",
+          "hcp": 5.1,
+          "ins": "2445720",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:39",
+          "tee": 10,
+          "name": "Henar Pecharroman Canales",
+          "hcp": 14.3,
+          "ins": "2445748",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:39",
+          "tee": 10,
+          "name": "Barbara Jimena Martel Arroyo",
+          "hcp": 15.5,
+          "ins": "2445747",
+          "jid": "77982",
+          "nivel": "I"
+        },
+        {
+          "time": "09:39",
+          "tee": 10,
+          "name": "Macarena Silva Merino",
+          "hcp": 15.3,
+          "ins": "2445393",
+          "jid": "77982",
+          "nivel": "C"
+        },
+        {
+          "time": "09:39",
+          "tee": 10,
+          "name": "Maite Canalda Gutierrez",
+          "hcp": 18.1,
+          "ins": "2445394",
+          "jid": "77982",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -573,9 +911,500 @@
       "roundId": 77982
     }
   ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Salvadores Saez, Julia",
+          "holeNumber": 9,
+          "createdAt": "21/11/26 15:03:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Salvadores Saez, Julia",
+          "holeNumber": 10,
+          "createdAt": "21/11/26 15:03:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Suarez Delgado, Lola",
+          "holeNumber": 3,
+          "createdAt": "21/11/26 15:04:17",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Pablo Chacon, Maria",
+          "holeNumber": 8,
+          "createdAt": "21/11/26 15:04:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Hernandez Perez, Paloma",
+          "holeNumber": 17,
+          "createdAt": "21/11/26 15:04:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Hernandez Perez, Paloma",
+          "holeNumber": 18,
+          "createdAt": "21/11/26 15:04:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Regalado Lara, Jorge",
+          "holeNumber": 2,
+          "createdAt": "21/11/26 15:05:15",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Regalado Lara, Jorge",
+          "holeNumber": 8,
+          "createdAt": "21/11/26 15:05:15",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Regalado Lara, Jorge",
+          "holeNumber": 11,
+          "createdAt": "21/11/26 15:05:15",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gomez Bordallo, Alvaro",
+          "holeNumber": 1,
+          "createdAt": "21/11/26 15:05:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Gomez Bordallo, Alvaro",
+          "holeNumber": 7,
+          "createdAt": "21/11/26 15:05:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Nogales Garcia, Blanca",
+          "holeNumber": 17,
+          "createdAt": "21/11/26 15:09:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez Lopez, Olivia",
+          "holeNumber": 5,
+          "createdAt": "21/11/26 15:09:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Sainz De Aja Solis, Alfredo",
+          "holeNumber": 10,
+          "createdAt": "21/11/26 15:13:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez De Santiago, Fernando",
+          "holeNumber": 15,
+          "createdAt": "21/11/26 15:13:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Robredo Martinez, Rodrigo",
+          "holeNumber": 11,
+          "createdAt": "21/11/26 15:14:09",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Rabadan Baldasano, Francisco De Borja",
+          "holeNumber": 12,
+          "createdAt": "21/11/26 15:14:38",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fevre De La Peña, Carmen",
+          "holeNumber": 15,
+          "createdAt": "21/11/26 15:23:04",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Almansa Recasens, Maria",
+          "holeNumber": 2,
+          "createdAt": "21/11/26 15:23:25",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Almansa Recasens, Maria",
+          "holeNumber": 17,
+          "createdAt": "21/11/26 15:23:25",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia De Vinuesa Serrano, Barbara",
+          "holeNumber": 11,
+          "createdAt": "21/11/26 15:23:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Garcia De Vinuesa Serrano, Barbara",
+          "holeNumber": 18,
+          "createdAt": "21/11/26 15:23:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Moreno Fernandez, Alejandra",
+          "holeNumber": 5,
+          "createdAt": "21/11/26 15:24:08",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Moreno Fernandez, Alejandra",
+          "holeNumber": 16,
+          "createdAt": "21/11/26 15:24:08",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cerro Marian, Lucas",
+          "holeNumber": 4,
+          "createdAt": "21/11/26 15:29:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vargas Tejerina, Sergio",
+          "holeNumber": 15,
+          "createdAt": "21/11/26 15:30:22",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vargas Tejerina, Sergio",
+          "holeNumber": 17,
+          "createdAt": "21/11/26 15:30:22",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Vargas Tejerina, Sergio",
+          "holeNumber": 18,
+          "createdAt": "21/11/26 15:30:22",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Cerezo Pascual, Hugo Albino",
+          "holeNumber": 1,
+          "createdAt": "21/11/26 15:31:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Leon De Valdenebro, Jaime",
+          "holeNumber": 1,
+          "createdAt": "21/11/26 15:31:33",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Ponton Sanchez, Daniel",
+          "holeNumber": 15,
+          "createdAt": "21/11/26 15:31:50",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez Ripoll, Carlos",
+          "holeNumber": 3,
+          "createdAt": "21/11/26 15:33:00",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Soler Lavalle, Rocio",
+          "holeNumber": 5,
+          "createdAt": "21/11/26 15:33:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Soler Lavalle, Rocio",
+          "holeNumber": 15,
+          "createdAt": "21/11/26 15:33:16",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Puerta Revuelta, Aitana",
+          "holeNumber": 2,
+          "createdAt": "21/11/26 15:33:34",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Paradela Martin, Jaime",
+          "holeNumber": 4,
+          "createdAt": "21/11/26 15:34:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Paradela Martin, Jaime",
+          "holeNumber": 8,
+          "createdAt": "21/11/26 15:34:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Paradela Martin, Jaime",
+          "holeNumber": 15,
+          "createdAt": "21/11/26 15:34:29",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Herrero Bernal, Alvaro",
+          "holeNumber": 9,
+          "createdAt": "21/11/26 15:37:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Herrero Bernal, Alvaro",
+          "holeNumber": 18,
+          "createdAt": "21/11/26 15:37:57",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Almansa Recasens, Juan",
+          "holeNumber": 14,
+          "createdAt": "21/11/26 15:38:35",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Barra Morris, Lucas",
+          "holeNumber": 8,
+          "createdAt": "21/11/26 15:38:54",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Barra Morris, Lucas",
+          "holeNumber": 18,
+          "createdAt": "21/11/26 15:38:54",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Azcona Bustamante, Ines",
+          "holeNumber": 18,
+          "createdAt": "21/11/26 15:48:26",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "De Lucas Lopez, Sofia Caroline",
+          "holeNumber": 16,
+          "createdAt": "21/11/26 15:48:43",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez Aliaga, Martin",
+          "holeNumber": 9,
+          "createdAt": "21/11/26 15:50:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Fernandez Aliaga, Martin",
+          "holeNumber": 18,
+          "createdAt": "21/11/26 15:50:48",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Roman Fernandez, Ignacio",
+          "holeNumber": 4,
+          "createdAt": "21/11/26 15:51:34",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Regalado Lara, Jorge - Diez Sanchez-Tabernero, Gabriel",
+          "holeNumber": 3,
+          "createdAt": "22/11/26 14:06:42",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Regalado Lara, Jorge - Diez Sanchez-Tabernero, Gabriel",
+          "holeNumber": 14,
+          "createdAt": "22/11/26 14:06:42",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Fernandez Aliaga, Martin - Casas-Velez Osorio, Benjamin",
+          "holeNumber": 13,
+          "createdAt": "22/11/26 14:10:48",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Ruiz Lopez, Ivan - Puche Cascant, Maximilia",
+          "holeNumber": 2,
+          "createdAt": "22/11/26 14:11:19",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Ruiz Lopez, Ivan - Puche Cascant, Maximilia",
+          "holeNumber": 9,
+          "createdAt": "22/11/26 14:11:19",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Ruiz Lopez, Ivan - Puche Cascant, Maximilia",
+          "holeNumber": 16,
+          "createdAt": "22/11/26 14:11:19",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Salas Dos Santos, Maria - Puerta Revuelta, Aitana",
+          "holeNumber": 2,
+          "createdAt": "22/11/26 14:20:34",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Salas Dos Santos, Maria - Puerta Revuelta, Aitana",
+          "holeNumber": 7,
+          "createdAt": "22/11/26 14:20:34",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Puente Fernandez, Sandra - Madrigal Isidro, Mencia",
+          "holeNumber": 2,
+          "createdAt": "22/11/26 14:22:32",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Cerezo Pascual, Hugo Albino - Fernandez Ripoll, Carlos",
+          "holeNumber": 1,
+          "createdAt": "22/11/26 14:24:16",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Cerezo Pascual, Hugo Albino - Fernandez Ripoll, Carlos",
+          "holeNumber": 4,
+          "createdAt": "22/11/26 14:24:16",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Rabadan Baldasano, Francisco De Borja - Sainz De Aja Solis, Alfredo",
+          "holeNumber": 1,
+          "createdAt": "22/11/26 14:25:13",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Rabadan Baldasano, Francisco De Borja - Sainz De Aja Solis, Alfredo",
+          "holeNumber": 18,
+          "createdAt": "22/11/26 14:25:13",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Pecharroman Canales, Henar - Martel Arroyo, Barbara Jimena",
+          "holeNumber": 3,
+          "createdAt": "22/11/26 14:26:01",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Suarez Delgado, Lola - Salvadores Saez, Julia",
+          "holeNumber": 11,
+          "createdAt": "22/11/26 14:28:17",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Fernandez-Olano Vilariño, Alejandra - Nogales Garcia, Blanca",
+          "holeNumber": 4,
+          "createdAt": "22/11/26 14:28:46",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Herrero Bernal, Alvaro - Barra Morris, Lucas",
+          "holeNumber": 4,
+          "createdAt": "22/11/26 14:29:40",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Herrero Bernal, Alvaro - Barra Morris, Lucas",
+          "holeNumber": 15,
+          "createdAt": "22/11/26 14:29:40",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Herrero Bernal, Alvaro - Barra Morris, Lucas",
+          "holeNumber": 17,
+          "createdAt": "22/11/26 14:29:40",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Herrero Bernal, Alvaro - Barra Morris, Lucas",
+          "holeNumber": 18,
+          "createdAt": "22/11/26 14:29:40",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Almansa Recasens, Juan - Rona Baselga, Miguel",
+          "holeNumber": 13,
+          "createdAt": "22/11/26 14:30:10",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Lopez De Santiago, Fernando - Robredo Martinez, Rodrigo",
+          "holeNumber": 2,
+          "createdAt": "22/11/26 14:35:38",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Lopez De Santiago, Fernando - Robredo Martinez, Rodrigo",
+          "holeNumber": 9,
+          "createdAt": "22/11/26 14:35:38",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Vargas Tejerina, Sergio - Cerro Marian, Lucas",
+          "holeNumber": 18,
+          "createdAt": "22/11/26 14:36:20",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "De Pablo Chacon, Maria - Hernandez Perez, Paloma",
+          "holeNumber": 13,
+          "createdAt": "22/11/26 14:36:55",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Lopez Lopez, Olivia - Garcia Lozano, Adriana",
+          "holeNumber": 12,
+          "createdAt": "22/11/26 14:37:20",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Leon De Valdenebro, Jaime - Ponton Sanchez, Daniel",
+          "holeNumber": 17,
+          "createdAt": "22/11/26 14:39:43",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Roman Fernandez, Ignacio - Paradela Martin, Jaime",
+          "holeNumber": 14,
+          "createdAt": "22/11/26 14:40:15",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Roman Fernandez, Ignacio - Paradela Martin, Jaime",
+          "holeNumber": 16,
+          "createdAt": "22/11/26 14:40:15",
+          "roundNumber": 2
+        },
+        {
+          "playerName": "Moreno Fernandez, Alejandra - Garcia De Vinuesa Serrano, Barbara",
+          "holeNumber": 5,
+          "createdAt": "22/11/26 14:44:45",
+          "roundNumber": 2
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Sainz De Aja Solis, Alfredo",
+          "holeNumber": 15,
+          "createdAt": "21/11/26 15:13:28",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez De Santiago, Fernando - Robredo Martinez, Rodrigo",
+          "holeNumber": 15,
+          "createdAt": "22/11/26 14:35:38",
+          "roundNumber": 2
+        }
+      ]
+    }
+  },
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-11-16T12:39:40.309Z",
-  "destaquesVistoEm": "2026-11-18"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1111207065_2026_campeonato_de_madrid_interclubes_infantil_y_cadete_-_final.pdf"
+  ]
 }

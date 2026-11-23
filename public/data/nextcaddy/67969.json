@@ -1,7 +1,7 @@
 {
   "tourId": 67969,
   "url": "https://www.nextcaddy.com/tour/67969",
-  "scrapedAt": "2026-11-16T12:38:47.666Z",
+  "scrapedAt": "2026-11-23T13:15:39.587Z",
   "meta": {
     "name": "Campeonato de Madrid Dobles Femenino",
     "organizer": "Federacion de Golf de Madrid",
@@ -9,7 +9,7 @@
     "courseCode": "CM12",
     "dateStart": "2026-11-16",
     "dateEnd": null,
-    "format": "Stableford (Scratch)  Señoras C. Amateur",
+    "format": "Medal Play (Scratch)  Señoras C. Amateur",
     "categories": [
       "Señoras",
       "Infantil",
@@ -22,8 +22,17 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch",
+      "jugadores": 44
+    },
+    "2": {
+      "name": "Clasificación Handicap",
+      "jugadores": 44
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -667,18 +676,18 @@
         {
           "time": "10:00",
           "tee": 1,
-          "name": "Maria De Orueta Pemartin",
+          "name": "Amelia Alonso Suau",
           "hcp": 2.4,
-          "ins": "2443273",
+          "ins": "2443272",
           "jid": "72487",
           "nivel": "S"
         },
         {
           "time": "10:00",
           "tee": 1,
-          "name": "Amelia Alonso Suau",
+          "name": "Maria De Orueta Pemartin",
           "hcp": 2.4,
-          "ins": "2443272",
+          "ins": "2443273",
           "jid": "72487",
           "nivel": "S"
         },
@@ -1456,10 +1465,6 @@
       "roundId": 72487
     }
   ],
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/pdf/2521071403_arb_reg_loc_cm12_2024_-_documentos_de_google.pdf"
-  ],
   "scoreTypes": {
     "birdie": {
       "scoreTypeKey": "birdie",
@@ -1652,5 +1657,8 @@
       ]
     }
   },
-  "destaquesVistoEm": "2026-11-18"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/2521071403_arb_reg_loc_cm12_2024_-_documentos_de_google.pdf"
+  ]
 }

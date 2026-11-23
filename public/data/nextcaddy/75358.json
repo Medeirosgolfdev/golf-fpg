@@ -1,7 +1,7 @@
 {
   "tourId": 75358,
   "url": "https://www.nextcaddy.com/tour/75358",
-  "scrapedAt": "2026-11-16T12:38:49.061Z",
+  "scrapedAt": "2026-11-23T13:15:39.715Z",
   "meta": {
     "name": "LEGS 16/11",
     "organizer": null,
@@ -21,10 +21,184 @@
     "dateIso": "2026-11-16",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Tomas Acha Garcia",
+          "licencia": "AM83287132",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2448564
+        },
+        {
+          "pos": 2,
+          "name": "Maria Escamilla Banderas",
+          "licencia": "AM83783189",
+          "hcp": 16.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2448569
+        },
+        {
+          "pos": 3,
+          "name": "Karen Grant",
+          "licencia": "AM83603624",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2448567
+        },
+        {
+          "pos": 4,
+          "name": "David Robert Lethbridge",
+          "licencia": "AM83321938",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2448568
+        },
+        {
+          "pos": 5,
+          "name": "Jose Muñoz Perez",
+          "licencia": "AM83326777",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2448572
+        },
+        {
+          "pos": 6,
+          "name": "Stephen Broadway May",
+          "licencia": "AM83480761",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2448574
+        },
+        {
+          "pos": 7,
+          "name": "Marco Van De Komer",
+          "licencia": "EXX1912901",
+          "hcp": 14.5,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2448582
+        },
+        {
+          "pos": 8,
+          "name": "Susan Wood",
+          "licencia": "AM83931328",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2448570
+        },
+        {
+          "pos": 9,
+          "name": "Michael Barnes",
+          "licencia": "AM83611565",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2448566
+        },
+        {
+          "pos": 10,
+          "name": "Ian Sandells",
+          "licencia": "AM83907255",
+          "hcp": 16.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2448573
+        },
+        {
+          "pos": 11,
+          "name": "Alison Gould",
+          "licencia": "AM83494079",
+          "hcp": 15.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2448565
+        },
+        {
+          "pos": 12,
+          "name": "Urpo Raunio",
+          "licencia": "TAM5454545",
+          "hcp": 16.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2448575
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -241,10 +415,6 @@
       "roundId": 80784
     }
   ],
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/cartel/3822190311_75358-legs-16-11.pdf"
-  ],
   "scoreTypes": {
     "birdie": {
       "scoreTypeKey": "birdie",
@@ -264,5 +434,8 @@
       ]
     }
   },
-  "destaquesVistoEm": "2026-11-18"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3822190311_75358-legs-16-11.pdf"
+  ]
 }

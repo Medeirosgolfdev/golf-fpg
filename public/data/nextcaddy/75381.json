@@ -1,7 +1,7 @@
 {
   "tourId": 75381,
   "url": "https://www.nextcaddy.com/tour/75381",
-  "scrapedAt": "2026-11-16T12:38:49.598Z",
+  "scrapedAt": "2026-11-23T13:15:41.655Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
@@ -21,10 +21,232 @@
     "dateIso": "2026-11-16",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mickey Allen Padron",
+          "licencia": "AMD5030872",
+          "hcp": 13.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2449220
+        },
+        {
+          "pos": 2,
+          "name": "David James Corston",
+          "licencia": "AMD5033553",
+          "hcp": 12.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2449234
+        },
+        {
+          "pos": 3,
+          "name": "Tony Pearse",
+          "licencia": "AMD5344094",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2449229
+        },
+        {
+          "pos": 4,
+          "name": "Louis Jorfi",
+          "licencia": "AM25979495",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2449227
+        },
+        {
+          "pos": 5,
+          "name": "Mathias Manfred Czenna",
+          "licencia": "AMD5522071",
+          "hcp": 14.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2449231
+        },
+        {
+          "pos": 6,
+          "name": "Carl Cluck",
+          "licencia": "AME7902244",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2449228
+        },
+        {
+          "pos": 7,
+          "name": "Barry Fennelly",
+          "licencia": "AM66412924",
+          "hcp": 13.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2449217
+        },
+        {
+          "pos": 8,
+          "name": "Matthew Colin Anderson",
+          "licencia": "AMC3064506",
+          "hcp": 19.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2449219
+        },
+        {
+          "pos": 9,
+          "name": "Paul Boyce Howarth",
+          "licencia": "AMD5485623",
+          "hcp": 20.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2449230
+        },
+        {
+          "pos": 10,
+          "name": "Paul Monks",
+          "licencia": "AMD5980718",
+          "hcp": 16,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2449222
+        },
+        {
+          "pos": 11,
+          "name": "Kieran Byrne",
+          "licencia": "AM66981542",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2449224
+        },
+        {
+          "pos": 12,
+          "name": "Glynn Rodgers",
+          "licencia": "AM29975464",
+          "hcp": 4.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2449221
+        },
+        {
+          "pos": 13,
+          "name": "Robert Edward Jewell",
+          "licencia": "AM25603729",
+          "hcp": 9.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2449218
+        },
+        {
+          "pos": 14,
+          "name": "Jeffrey Wadsworth",
+          "licencia": "AMD5979795",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2449223
+        },
+        {
+          "pos": 15,
+          "name": "John Collins",
+          "licencia": "AMD5492691",
+          "hcp": 30.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2449226
+        },
+        {
+          "pos": 16,
+          "name": "Bret Myles Duncan",
+          "licencia": "AME7775047",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2449225
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -305,10 +527,6 @@
       "roundId": 80807
     }
   ],
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/cartel/2151228483_75381-vobs-competition.pdf"
-  ],
   "scoreTypes": {
     "birdie": {
       "scoreTypeKey": "birdie",
@@ -352,5 +570,8 @@
       ]
     }
   },
-  "destaquesVistoEm": "2026-11-18"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/2151228483_75381-vobs-competition.pdf"
+  ]
 }

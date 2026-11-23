@@ -1,10 +1,10 @@
 {
   "gameId": "6aece3d99dfa5416307d6f26",
-  "fetchedAt": "2026-11-16T12:44:17.977Z",
+  "fetchedAt": "2026-11-23T13:23:18.245Z",
   "game": {
     "_id": "6aece3d99dfa5416307d6f26",
     "name": "VIII TORNEO JUVENIL DE GOLF \"JORGE CAMPILLO\"",
-    "status": "scheduled",
+    "status": "running",
     "scheduleStartDate": "2026-11-22T08:00:01.631Z",
     "scheduleEndDate": null,
     "federation": "ESP",
@@ -223,5 +223,761 @@
       "scorecardErrors": []
     }
   ],
-  "card": []
+  "card": [
+    {
+      "teeNumber": 1,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "MARINA",
+          "surname": "TEJEDOR MORENO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 54,
+          "hcpGame": 63,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6b0042a596fa82aafa0c5828"
+        },
+        {
+          "firstName": "SOFIA",
+          "surname": "IGLESIAS MONREAL",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 54,
+          "hcpGame": 63,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6b0089b95b8514d75a24826f"
+        },
+        {
+          "firstName": "GONZALO",
+          "surname": "GARRIDO ARIAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 47.6,
+          "hcpGame": 54,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7053"
+          },
+          "_id": "6b0042889ff2c182e5d88fd9"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008ab7dec726ee0c1a2db7"
+    },
+    {
+      "teeNumber": 2,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "HUGO",
+          "surname": "DIAZ-CALVO MARTIN",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 47.3,
+          "hcpGame": 53,
+          "saceValue": 113.639,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7053"
+          },
+          "_id": "6b0087c49ff2c182e5dca707"
+        },
+        {
+          "firstName": "ELENA",
+          "surname": "LUCERO JORDAN",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 46.3,
+          "hcpGame": 54,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6b00425896fa82aafaf6a660"
+        },
+        {
+          "firstName": "CECILIA",
+          "surname": "GARRIDO ARIAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 44,
+          "hcpGame": 51,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6b0042bd5b8514d75aeb6e8e"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008ac696fa82aafa60ceb6"
+    },
+    {
+      "teeNumber": 3,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "GONZALO",
+          "surname": "GARCIA RODRIGUEZ-ARIAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 41,
+          "hcpGame": 50,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6afd8301f319d59f773be386"
+        },
+        {
+          "firstName": "RODRIGO",
+          "surname": "DIEZ PAJUELO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 39.9,
+          "hcpGame": 45,
+          "saceValue": 122.994,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7053"
+          },
+          "_id": "6afeb827fa1568a5cd589198"
+        },
+        {
+          "firstName": "ELENA",
+          "surname": "PACHECO BECERRA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 39.8,
+          "hcpGame": 46,
+          "saceValue": 121.677,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6afdc6c004837c6e59ebe746"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008af5dec726ee0c20d6ba"
+    },
+    {
+      "teeNumber": 4,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "CAYETANA",
+          "surname": "CALERO ROMERO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 30.5,
+          "hcpGame": 36,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6afc6a2508e5186b376ddbcd"
+        },
+        {
+          "firstName": "SERGIO",
+          "surname": "AGUILAR GARCIA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 27.1,
+          "hcpGame": 30,
+          "saceValue": 104.873,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7053"
+          },
+          "_id": "6aedfa471ab4f21da6848c94"
+        },
+        {
+          "firstName": "JIMENA",
+          "surname": "GARCIA DE ARRIBA LOZANO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 24.4,
+          "hcpGame": 29,
+          "saceValue": 100.972,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6aff068ce64dbfd6f48e4da1"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008b869ff2c182e54b6cf6"
+    },
+    {
+      "teeNumber": 5,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "VIDAL",
+          "surname": "RODRIGUEZ GALLARDO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 22.1,
+          "hcpGame": 24,
+          "saceValue": 99.768,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7053"
+          },
+          "_id": "6af88397ef4584c21cdf30d8"
+        },
+        {
+          "firstName": "LUCA",
+          "surname": "CARRON MIRON",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.9,
+          "hcpGame": 22,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6afaeb92a31918b570b62858"
+        },
+        {
+          "firstName": "CAYETANA",
+          "surname": "BURCIO MACIAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.5,
+          "hcpGame": 21,
+          "saceValue": 95.092,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6af8153a3fbf74ffef9946a9"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008b9996fa82aafa78b3f1"
+    },
+    {
+      "teeNumber": 6,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "MARC",
+          "surname": "AMBOAGE RODRIGUEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 16.8,
+          "hcpGame": 18,
+          "saceValue": 100.42,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7053"
+          },
+          "_id": "6afa037323d5370df0b7f8b1"
+        },
+        {
+          "firstName": "JORGE",
+          "surname": "LOPEZ  GARCIA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 12.1,
+          "hcpGame": 15,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6b0042e9dec726ee0cce7d10"
+        },
+        {
+          "firstName": "WILFREDO",
+          "surname": "NAVIA VILLAFANA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 10.2,
+          "hcpGame": 10,
+          "saceValue": 87.024,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7053"
+          },
+          "_id": "6aefa5f567a73a9c34c48389"
+        },
+        {
+          "firstName": "MIGUEL",
+          "surname": "DAVILA SANCHEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 9.9,
+          "hcpGame": 13,
+          "saceValue": 86.496,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6af0887a77b7cd1d6eb317f7"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008c6d96fa82aafa885d89"
+    },
+    {
+      "teeNumber": 7,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "LIVIA",
+          "surname": "ROLDAN MACIAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 8.7,
+          "hcpGame": 11,
+          "saceValue": 81.639,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6aeddf091ab4f21da683510f"
+        },
+        {
+          "firstName": "ALEX",
+          "surname": "CARRON MIRON",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 6.2,
+          "hcpGame": 5,
+          "saceValue": 81.596,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7053"
+          },
+          "_id": "6afaeaef5445bc1029aa5e67"
+        },
+        {
+          "firstName": "JORGE",
+          "surname": "SERVIA  SANZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 5.4,
+          "hcpGame": 7,
+          "saceValue": 80.961,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6af5be90a1e39bb384264c35"
+        },
+        {
+          "firstName": "MARCO",
+          "surname": "BARRIGA PEREZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 5.2,
+          "hcpGame": 4,
+          "saceValue": 80.408,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7053"
+          },
+          "_id": "6aed914aec94b7c14e8e3efe"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008c82dec726ee0c4a9266"
+    },
+    {
+      "teeNumber": 8,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "JAIME",
+          "surname": "BURCIO MACIAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 5.1,
+          "hcpGame": 7,
+          "saceValue": 80.928,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6af8153a3fbf74ffef994507"
+        },
+        {
+          "firstName": "MANUEL",
+          "surname": "GUERRERO RODRIGUEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 3.9,
+          "hcpGame": 6,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6b00430cdec726ee0cd59175"
+        },
+        {
+          "firstName": "DANIEL",
+          "surname": "AVILA SANZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 3.4,
+          "hcpGame": 5,
+          "saceValue": 78.18,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6af786243f2ad705e4d59973"
+        },
+        {
+          "firstName": "INES MARIA",
+          "surname": "GARCIA HIDALGO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 2.4,
+          "hcpGame": 4,
+          "saceValue": 75.198,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6aff31c8fa1568a5cd1bc5f3"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008c905b8514d75a70aab9"
+    },
+    {
+      "teeNumber": 9,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "JAIME",
+          "surname": "GISMERA DOMINGUEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 1.3,
+          "hcpGame": 3,
+          "saceValue": 75.358,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6b0043249ff2c182e5fa0e06"
+        },
+        {
+          "firstName": "ALEJANDRO",
+          "surname": "HUERTA DIAZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 1.1,
+          "hcpGame": 2,
+          "saceValue": 75.865,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6af1c4de3f87d1a99fc80c89"
+        },
+        {
+          "firstName": "CARLOTA ALEJANDRA",
+          "surname": "BURCIO MACIAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": -2,
+          "hcpGame": -1,
+          "saceValue": 70.77,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6af8153a3fbf74ffef9945db"
+        },
+        {
+          "firstName": "RICARDO",
+          "surname": "GARCIA DE ARRIBA LOZANO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 0.7,
+          "hcpGame": 2,
+          "saceValue": 74.967,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6aff070efb9c521b045cfb74"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008c989ff2c182e560ecb7"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2026-11-22T08:00:01.631Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "JORGE",
+          "surname": "CAMPILLO IÑIGUEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 0,
+          "hcpGame": 1,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7041"
+          },
+          "_id": "6b00435096fa82aafa300c6f"
+        },
+        {
+          "firstName": "MARIA JOSE",
+          "surname": "BORDA ARBELAEZ",
+          "nameSufix": null,
+          "country": "COL",
+          "hcpExact": 9.1,
+          "hcpGame": 11,
+          "saceValue": 82.623,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6af087045282bdc0c810d484"
+        },
+        {
+          "firstName": "LAURA",
+          "surname": "FUENTES UGENA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 12.6,
+          "hcpGame": 15,
+          "saceValue": 88.62,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6b00436c96fa82aafa33ea14"
+        },
+        {
+          "firstName": "JIMENA",
+          "surname": "GALAN HERNANDEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 18.1,
+          "hcpGame": 22,
+          "saceValue": 94.629,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "displayNumber": null,
+            "_id": "6aece3d99dfa5416307d7066"
+          },
+          "_id": "6afafa5023d5370df05c9736"
+        }
+      ],
+      "groups": [],
+      "_id": "6b008a955b8514d75a37ec82"
+    }
+  ]
 }

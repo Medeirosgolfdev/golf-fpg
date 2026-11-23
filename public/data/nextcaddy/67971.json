@@ -1,7 +1,7 @@
 {
   "tourId": 67971,
   "url": "https://www.nextcaddy.com/tour/67971",
-  "scrapedAt": "2026-11-16T12:37:24.758Z",
+  "scrapedAt": "2026-11-23T13:14:57.493Z",
   "meta": {
     "name": "Campeonato de Madrid Dobles de Profesionales",
     "organizer": "Federacion de Golf de Madrid",
@@ -590,15 +590,6 @@
         {
           "time": "09:30",
           "tee": 1,
-          "name": "Javier Colomo Hidalgo",
-          "hcp": 0,
-          "ins": "2353136",
-          "jid": "72493",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
           "name": "Alejandro Aguilera Martin",
           "hcp": 0,
           "ins": "2353135",
@@ -607,10 +598,10 @@
         },
         {
           "time": "09:30",
-          "tee": 2,
-          "name": "Juan Francisco Ojeda Racioppi",
+          "tee": 1,
+          "name": "Javier Colomo Hidalgo",
           "hcp": 0,
-          "ins": "2353122",
+          "ins": "2353136",
           "jid": "72493",
           "nivel": "P"
         },
@@ -620,6 +611,15 @@
           "name": "Joaquin Estevez Vila",
           "hcp": 0,
           "ins": "2353123",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Juan Francisco Ojeda Racioppi",
+          "hcp": 0,
+          "ins": "2353122",
           "jid": "72493",
           "nivel": "P"
         },
@@ -824,15 +824,6 @@
         {
           "time": "09:30",
           "tee": 8,
-          "name": "Andres Rojano Moreno",
-          "hcp": 0,
-          "ins": "2353379",
-          "jid": "72493",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 8,
           "name": "Ignacio Garrido Villacieros",
           "hcp": 0,
           "ins": "2353380",
@@ -842,9 +833,9 @@
         {
           "time": "09:30",
           "tee": 8,
-          "name": "David Salgado Chacon",
+          "name": "Andres Rojano Moreno",
           "hcp": 0,
-          "ins": "2353168",
+          "ins": "2353379",
           "jid": "72493",
           "nivel": "P"
         },
@@ -854,6 +845,15 @@
           "name": "Sigot Lopez",
           "hcp": 0,
           "ins": "2353169",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "David Salgado Chacon",
+          "hcp": 0,
+          "ins": "2353168",
           "jid": "72493",
           "nivel": "P"
         },
@@ -932,18 +932,18 @@
         {
           "time": "09:30",
           "tee": 11,
-          "name": "Jorge Garcia De La Osada",
+          "name": "Diego Fernandez Garcia",
           "hcp": 0,
-          "ins": "2352805",
+          "ins": "2352806",
           "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 11,
-          "name": "Diego Fernandez Garcia",
+          "name": "Jorge Garcia De La Osada",
           "hcp": 0,
-          "ins": "2352806",
+          "ins": "2352805",
           "jid": "72493",
           "nivel": "P"
         },
@@ -1202,10 +1202,6 @@
       "roundNumber": 2,
       "roundId": 72493
     }
-  ],
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/pdf/3383634678_rrll_cng.pdf"
   ],
   "scoreTypes": {
     "birdie": {
@@ -3031,5 +3027,8 @@
       ]
     }
   },
-  "destaquesVistoEm": "2026-11-18"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3383634678_rrll_cng.pdf"
+  ]
 }

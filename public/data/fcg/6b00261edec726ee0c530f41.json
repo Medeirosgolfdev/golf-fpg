@@ -1,0 +1,148 @@
+{
+  "gameId": "6b00261edec726ee0c530f41",
+  "fetchedAt": "2026-11-23T13:23:30.124Z",
+  "game": {
+    "_id": "6b00261edec726ee0c530f41",
+    "name": "TORNEO JUVENIL FAG",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-12-19T10:50:11.475Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6b00261edec726ee0c530f6f",
+      "name": "TORNEO JUVENIL FAG",
+      "clientName": "Federación Aragonesa de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a664d36dfe90dea2abb",
+      "name": "GOLF LOS LAGOS",
+      "city": "PINSEQUE",
+      "state": "ZARAGOZA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a664d36dfe90dea2abc",
+      "name": "LOS LAGOS",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "yellow",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 71.6,
+        "slope": 127,
+        "par": 72,
+        "_id": "6b00261edec726ee0c531059"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 67.7,
+        "slope": 121,
+        "par": 72,
+        "_id": "6b00261edec726ee0c53108b"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 72.8,
+        "slope": 131,
+        "par": 72,
+        "_id": "6b00261edec726ee0c5310d6"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 69.1,
+        "slope": 120,
+        "par": 72,
+        "_id": "6b00261edec726ee0c5310ef"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 61.6,
+        "slope": 111,
+        "par": 72,
+        "_id": "6b00261edec726ee0c531108"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 72.9,
+        "slope": 128,
+        "par": 72,
+        "_id": "6b00261edec726ee0c531072"
+      },
+      {
+        "gender": "F",
+        "color": "orange",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 66.4,
+        "slope": 111,
+        "par": 72,
+        "_id": "6b00261edec726ee0c5310a4"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "displayNumber": null,
+        "lap": "lap18",
+        "rating": 74.7,
+        "slope": 133,
+        "par": 72,
+        "_id": "6b00261edec726ee0c5310bd"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6b00261edec726ee0c530f87",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6b00261edec726ee0c530f8a",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

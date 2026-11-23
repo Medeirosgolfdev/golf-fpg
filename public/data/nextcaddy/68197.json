@@ -1,7 +1,7 @@
 {
   "tourId": 68197,
   "url": "https://www.nextcaddy.com/tour/68197",
-  "scrapedAt": "2026-11-16T12:39:00.356Z",
+  "scrapedAt": "2026-11-23T13:16:02.625Z",
   "meta": {
     "name": "Liga Femenina (hcp igual o menor de 42.0)",
     "organizer": "Federacion de Golf de Madrid",
@@ -14,6 +14,7 @@
       "Caballeros",
       "Señoras",
       "Juvenil",
+      "profesional",
       "Infantil",
       "Profesional",
       "Senior"
@@ -22,9 +23,273 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Señoras Femenino",
+      "expectedJugadores": 20,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alba De Funes Martin Del Campo",
+          "licencia": "CM09497349",
+          "hcp": 36.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2444893
+        },
+        {
+          "pos": 2,
+          "name": "Alejandra Sevillano Sanchez",
+          "licencia": "CM22475563",
+          "hcp": 23.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2444979
+        },
+        {
+          "pos": 3,
+          "name": "Candela Guerra Vera",
+          "licencia": "CM41998364",
+          "hcp": 33.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2444995
+        },
+        {
+          "pos": 4,
+          "name": "Sofia Lopez De Santiago",
+          "licencia": "CM11472210",
+          "hcp": 21,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2445946
+        },
+        {
+          "pos": 5,
+          "name": "Lucia Yarte Delgado",
+          "licencia": "CM06351648",
+          "hcp": 30.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2444992
+        },
+        {
+          "pos": 6,
+          "name": "Barbara Osaba Rohleder",
+          "licencia": "CM04376811",
+          "hcp": 32.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2444952
+        },
+        {
+          "pos": 7,
+          "name": "Teresa Fernandez De Gamboa Bareño",
+          "licencia": "CM01091018",
+          "hcp": 28.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2444811
+        },
+        {
+          "pos": 8,
+          "name": "Sofia Sendagorta Rojo",
+          "licencia": "CM60066758",
+          "hcp": 32.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2449419
+        },
+        {
+          "pos": 9,
+          "name": "Manuela Triguero Fernandez",
+          "licencia": "CM41373590",
+          "hcp": 31.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2444899
+        },
+        {
+          "pos": 10,
+          "name": "Valeria Fernandez Gallardo",
+          "licencia": "CM41414029",
+          "hcp": 26.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2444999
+        },
+        {
+          "pos": 11,
+          "name": "Carlota Moser-Rothschild Morales",
+          "licencia": "CM06354307",
+          "hcp": 28.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2449337
+        },
+        {
+          "pos": 12,
+          "name": "Vega Plaza San Gil",
+          "licencia": "CM04093487",
+          "hcp": 27.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2445122
+        },
+        {
+          "pos": 13,
+          "name": "Julieta Martin-Simo Llorente",
+          "licencia": "GC51970455",
+          "hcp": 39.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2444909
+        },
+        {
+          "pos": 14,
+          "name": "Carlotta Casas-Velez Osorio",
+          "licencia": "CM06355871",
+          "hcp": 26.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2446626
+        },
+        {
+          "pos": 15,
+          "name": "Teresa Martinez Garcia-Nieto",
+          "licencia": "CM04977192",
+          "hcp": 36.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2444727
+        },
+        {
+          "pos": 16,
+          "name": "Carla Amado Garcia Del Pino",
+          "licencia": "CMA5496403",
+          "hcp": 25.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2444676
+        },
+        {
+          "pos": 17,
+          "name": "Lucia Rodriguez Luna",
+          "licencia": "CM02977313",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2444627
+        },
+        {
+          "pos": 18,
+          "name": "Ana Chercasky Puiggari",
+          "licencia": "CM04480500",
+          "hcp": 38,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2445667
+        },
+        {
+          "pos": null,
+          "name": "Carmen Vicens Zavala",
+          "licencia": "CM01353088",
+          "hcp": 41.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2444866
+        },
+        {
+          "pos": null,
+          "name": "Marina Garcia Arias",
+          "licencia": "CM81985579",
+          "hcp": 36,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2445060
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Señoras Femenino",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -72,7 +337,7 @@
       "orden": 7,
       "name": "Manuela Triguero Fernandez",
       "licencia": "CM41373590",
-      "hcp": 32.1,
+      "hcp": 31.4,
       "nivel": "B"
     },
     {
@@ -86,7 +351,7 @@
       "orden": 9,
       "name": "Alejandra Sevillano Sanchez",
       "licencia": "CM22475563",
-      "hcp": 23.7,
+      "hcp": 23.1,
       "nivel": "B"
     },
     {
@@ -135,7 +400,7 @@
       "orden": 16,
       "name": "Sofia Lopez De Santiago",
       "licencia": "CM11472210",
-      "hcp": 21.9,
+      "hcp": 21,
       "nivel": "B"
     },
     {
@@ -167,7 +432,193 @@
       "nivel": "I"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Sofia Lopez De Santiago",
+          "hcp": 21,
+          "ins": "2445946",
+          "jid": "72744",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Alejandra Sevillano Sanchez",
+          "hcp": 23.1,
+          "ins": "2444979",
+          "jid": "72744",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Carla Amado Garcia Del Pino",
+          "hcp": 25.7,
+          "ins": "2444676",
+          "jid": "72744",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Carlota Moser-Rothschild Morales",
+          "hcp": 28.3,
+          "ins": "2449337",
+          "jid": "72744",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Teresa Fernandez De Gamboa Bareño",
+          "hcp": 28.8,
+          "ins": "2444811",
+          "jid": "72744",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Lucia Yarte Delgado",
+          "hcp": 30.8,
+          "ins": "2444992",
+          "jid": "72744",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 3,
+          "name": "Manuela Triguero Fernandez",
+          "hcp": 31.4,
+          "ins": "2444899",
+          "jid": "72744",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 3,
+          "name": "Barbara Osaba Rohleder",
+          "hcp": 32.3,
+          "ins": "2444952",
+          "jid": "72744",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 3,
+          "name": "Sofia Sendagorta Rojo",
+          "hcp": 32.7,
+          "ins": "2449419",
+          "jid": "72744",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 4,
+          "name": "Candela Guerra Vera",
+          "hcp": 33.7,
+          "ins": "2444995",
+          "jid": "72744",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 4,
+          "name": "Lucia Rodriguez Luna",
+          "hcp": 35,
+          "ins": "2444627",
+          "jid": "72744",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 4,
+          "name": "Marina Garcia Arias",
+          "hcp": 36,
+          "ins": "2445060",
+          "jid": "72744",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 5,
+          "name": "Teresa Martinez Garcia-Nieto",
+          "hcp": 36.6,
+          "ins": "2444727",
+          "jid": "72744",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 5,
+          "name": "Alba De Funes Martin Del Campo",
+          "hcp": 36.7,
+          "ins": "2444893",
+          "jid": "72744",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 5,
+          "name": "Ana Chercasky Puiggari",
+          "hcp": 38,
+          "ins": "2445667",
+          "jid": "72744",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 6,
+          "name": "Julieta Martin-Simo Llorente",
+          "hcp": 39.5,
+          "ins": "2444909",
+          "jid": "72744",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 6,
+          "name": "Carmen Vicens Zavala",
+          "hcp": 41.6,
+          "ins": "2444866",
+          "jid": "72744",
+          "nivel": "A"
+        },
+        {
+          "time": "10:09",
+          "tee": 1,
+          "name": "Valeria Fernandez Gallardo",
+          "hcp": 26.2,
+          "ins": "2444999",
+          "jid": "72744",
+          "nivel": "B"
+        },
+        {
+          "time": "10:09",
+          "tee": 1,
+          "name": "Carlotta Casas-Velez Osorio",
+          "hcp": 26.5,
+          "ins": "2446626",
+          "jid": "72744",
+          "nivel": "B"
+        },
+        {
+          "time": "10:09",
+          "tee": 1,
+          "name": "Vega Plaza San Gil",
+          "hcp": 27.1,
+          "ins": "2445122",
+          "jid": "72744",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -183,9 +634,33 @@
       "roundId": 72744
     }
   ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Sevillano Sanchez, Alejandra",
+          "holeNumber": 1,
+          "createdAt": "22/11/26 11:47:07",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Yarte Delgado, Lucia",
+          "holeNumber": 3,
+          "createdAt": "22/11/26 11:49:12",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Lopez De Santiago, Sofia",
+          "holeNumber": 6,
+          "createdAt": "22/11/26 11:47:42",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-11-16T12:39:39.559Z",
-  "destaquesVistoEm": "2026-11-18"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/537500237_arb_reg_loc_cm18_2019_-_golf_park.pdf"
+  ]
 }

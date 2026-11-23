@@ -1,0 +1,322 @@
+{
+  "tourId": 75463,
+  "url": "https://www.nextcaddy.com/tour/75463",
+  "scrapedAt": "2026-11-23T13:15:59.202Z",
+  "meta": {
+    "name": "ESCUELA COMPETICIÓN 21.11.26",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-11-21",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-11-21",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mateo Muñoz-Calero Fernandez De Cordova",
+          "licencia": "AM02474706",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": -14,
+          "inscribedId": 2453043
+        },
+        {
+          "pos": 2,
+          "name": "Beatriz Abaurre Romero",
+          "licencia": "AM02377545",
+          "hcp": 53.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": -10,
+          "inscribedId": 2453045
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Solis Toro",
+          "licencia": "AM02490990",
+          "hcp": 45.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2453044
+        },
+        {
+          "pos": 4,
+          "name": "Clara Sanchez Paredes",
+          "licencia": "AM02998408",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2453046
+        },
+        {
+          "pos": 5,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "licencia": "AM02466106",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2453040
+        },
+        {
+          "pos": 6,
+          "name": "Carlos Salido Maesso",
+          "licencia": "AM02169809",
+          "hcp": 50.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2453042
+        },
+        {
+          "pos": 7,
+          "name": "Enrique Osborne Loring",
+          "licencia": "AM02488226",
+          "hcp": 47.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2453041
+        },
+        {
+          "pos": null,
+          "name": "Pablo Benjumea Rodriguez",
+          "licencia": "AM02483394",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2453039
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Pablo Benjumea Rodriguez",
+      "licencia": "AM02483394",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Jeronimo Rodriguez Astolfi",
+      "licencia": "AM02466106",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Enrique Osborne Loring",
+      "licencia": "AM02488226",
+      "hcp": 47.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Carlos Salido Maesso",
+      "licencia": "AM02169809",
+      "hcp": 50.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Mateo Muñoz-Calero Fernandez De Cordova",
+      "licencia": "AM02474706",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Pablo Solis Toro",
+      "licencia": "AM02490990",
+      "hcp": 45.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Beatriz Abaurre Romero",
+      "licencia": "AM02377545",
+      "hcp": 53.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Clara Sanchez Paredes",
+      "licencia": "AM02998408",
+      "hcp": 54,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "14:30",
+          "tee": 5,
+          "name": "Pablo Benjumea Rodriguez",
+          "hcp": 54,
+          "ins": "2453039",
+          "jid": "80917",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 5,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "hcp": 54,
+          "ins": "2453040",
+          "jid": "80917",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 5,
+          "name": "Mateo Muñoz-Calero Fernandez De Cordova",
+          "hcp": 54,
+          "ins": "2453043",
+          "jid": "80917",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 5,
+          "name": "Clara Sanchez Paredes",
+          "hcp": 54,
+          "ins": "2453046",
+          "jid": "80917",
+          "nivel": "A"
+        },
+        {
+          "time": "14:30",
+          "tee": 6,
+          "name": "Pablo Solis Toro",
+          "hcp": 45.9,
+          "ins": "2453044",
+          "jid": "80917",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 6,
+          "name": "Enrique Osborne Loring",
+          "hcp": 47.4,
+          "ins": "2453041",
+          "jid": "80917",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 6,
+          "name": "Carlos Salido Maesso",
+          "hcp": 50.4,
+          "ins": "2453042",
+          "jid": "80917",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 6,
+          "name": "Beatriz Abaurre Romero",
+          "hcp": 53.4,
+          "ins": "2453045",
+          "jid": "80917",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 80917
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Solis Toro, Pablo",
+          "holeNumber": 9,
+          "createdAt": "21/11/26 17:54:30",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

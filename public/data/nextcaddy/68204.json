@@ -1,7 +1,7 @@
 {
   "tourId": 68204,
   "url": "https://www.nextcaddy.com/tour/68204",
-  "scrapedAt": "2026-11-16T12:39:00.774Z",
+  "scrapedAt": "2026-11-23T13:16:02.871Z",
   "meta": {
     "name": "Liga Femenina (hcp mayor o igual a 42.1)",
     "organizer": "Federacion de Golf de Madrid",
@@ -22,9 +22,513 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Señoras Femenino",
+      "expectedJugadores": 40,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sofia Carola Alvarez",
+          "licencia": "CM61481656",
+          "hcp": 50.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2444628
+        },
+        {
+          "pos": 2,
+          "name": "Olivia Vargas Tejerina",
+          "licencia": "CM41491983",
+          "hcp": 30.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2444858
+        },
+        {
+          "pos": 3,
+          "name": "Alexandra Serrano Villa",
+          "licencia": "CM41488811",
+          "hcp": 37.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2444633
+        },
+        {
+          "pos": 4,
+          "name": "Alba Peña Tribaldos",
+          "licencia": "CM41479430",
+          "hcp": 50.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2444894
+        },
+        {
+          "pos": 5,
+          "name": "Adriana Hontoria Cruz",
+          "licencia": "CM33085174",
+          "hcp": 40.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2444845
+        },
+        {
+          "pos": 6,
+          "name": "Maria Lama Gutierrez",
+          "licencia": "CMA8486913",
+          "hcp": 46.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2444630
+        },
+        {
+          "pos": 7,
+          "name": "Carmen Romero Anastasio",
+          "licencia": "CM02069631",
+          "hcp": 48.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2444640
+        },
+        {
+          "pos": 8,
+          "name": "Alejandra Domingo Capape",
+          "licencia": "CM15066695",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2444904
+        },
+        {
+          "pos": 9,
+          "name": "Lola Romero Anastasio",
+          "licencia": "CM02069632",
+          "hcp": 50.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2444646
+        },
+        {
+          "pos": 10,
+          "name": "Ines Portuondo Perez-Leiros",
+          "licencia": "CM00413757",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2444853
+        },
+        {
+          "pos": 11,
+          "name": "Almudena Domingo Capape",
+          "licencia": "CM15066693",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2444903
+        },
+        {
+          "pos": 12,
+          "name": "Claudia Vallarino Cabo",
+          "licencia": "CM03494717",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2444639
+        },
+        {
+          "pos": 13,
+          "name": "Sofia Fernandez De La Cruz",
+          "licencia": "CM41487421",
+          "hcp": 39,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2444850
+        },
+        {
+          "pos": 14,
+          "name": "Ines Bermejo Guerrero",
+          "licencia": "CMA8471498",
+          "hcp": 48.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2449038
+        },
+        {
+          "pos": 15,
+          "name": "Gabriela Cuervo-Arango De Echevarrieta",
+          "licencia": "CMA8476862",
+          "hcp": 47.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2444648
+        },
+        {
+          "pos": 16,
+          "name": "Emma Porres Asensio",
+          "licencia": "CM61518525",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2445093
+        },
+        {
+          "pos": 17,
+          "name": "Sol Fernandez De Cordoba Sanchez",
+          "licencia": "CM04985074",
+          "hcp": 45.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2449333
+        },
+        {
+          "pos": 18,
+          "name": "Paula De Funes Martin Del Campo",
+          "licencia": "CM09497350",
+          "hcp": 48.8,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2444891
+        },
+        {
+          "pos": 19,
+          "name": "Vera Endeiza Martinez",
+          "licencia": "CM52994103",
+          "hcp": 35.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2444783
+        },
+        {
+          "pos": 20,
+          "name": "Laura Anastasio Machado",
+          "licencia": "CMA8062491",
+          "hcp": 48.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2444650
+        },
+        {
+          "pos": 21,
+          "name": "Claudia Lesmes Esteban",
+          "licencia": "CM18483268",
+          "hcp": 53.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2447087
+        },
+        {
+          "pos": 22,
+          "name": "Silvia Triguero Fernandez",
+          "licencia": "CM41484593",
+          "hcp": 49.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2444898
+        },
+        {
+          "pos": 23,
+          "name": "Alejandra Espi Garrido",
+          "licencia": "CM06517679",
+          "hcp": 52.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2444867
+        },
+        {
+          "pos": 24,
+          "name": "Catalina Garcia Alonso",
+          "licencia": "CM41490527",
+          "hcp": 43.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2444653
+        },
+        {
+          "pos": 25,
+          "name": "Maria Viejo Micale",
+          "licencia": "CM41305616",
+          "hcp": 47.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2447857
+        },
+        {
+          "pos": 26,
+          "name": "Isabel Gutierrez Pascual Del Pobil",
+          "licencia": "CMA8418552",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2444636
+        },
+        {
+          "pos": 27,
+          "name": "Clara Cuervo-Arango De Echevarrieta",
+          "licencia": "CMA8509066",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2444652
+        },
+        {
+          "pos": 28,
+          "name": "Mariana Lizaso Perez-Minguez",
+          "licencia": "CM06351644",
+          "hcp": 45.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2447830
+        },
+        {
+          "pos": 29,
+          "name": "Eleanor Porta Porta",
+          "licencia": "CM06526892",
+          "hcp": 46.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2445740
+        },
+        {
+          "pos": 30,
+          "name": "Casilda Aparicio Vallarino",
+          "licencia": "CM41508458",
+          "hcp": 50.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2444673
+        },
+        {
+          "pos": 31,
+          "name": "Celsa Medina Susino",
+          "licencia": "CM02374033",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2444788
+        },
+        {
+          "pos": 32,
+          "name": "Nieves Maria Canalda Gutierrez",
+          "licencia": "CM41969878",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2444887
+        },
+        {
+          "pos": 33,
+          "name": "Ines Porres Asensio",
+          "licencia": "CM61518524",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2445095
+        },
+        {
+          "pos": 34,
+          "name": "Martina Miro Navarro",
+          "licencia": "CM41491285",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2448845
+        },
+        {
+          "pos": null,
+          "name": "Sol Zayas Montero",
+          "licencia": "CM02734206",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2444951
+        },
+        {
+          "pos": null,
+          "name": "Fernanda Castillejo Magan",
+          "licencia": "CM02486607",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2444785
+        },
+        {
+          "pos": null,
+          "name": "Gabriela Fabre Bertomeu",
+          "licencia": "CM11416878",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2447125
+        },
+        {
+          "pos": null,
+          "name": "Sol Vazquez Rojo",
+          "licencia": "CM01413243",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2444789
+        },
+        {
+          "pos": null,
+          "name": "Mercedes Vicens Zavala",
+          "licencia": "CM01352296",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2444864
+        },
+        {
+          "pos": null,
+          "name": "Carmen Zayas Montero",
+          "licencia": "CM02731944",
+          "hcp": 50.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2444950
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Señoras Femenino",
+      "jugadores": 40
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -44,7 +548,7 @@
       "orden": 3,
       "name": "Alexandra Serrano Villa",
       "licencia": "CM41488811",
-      "hcp": 37.7,
+      "hcp": 37.2,
       "nivel": "B"
     },
     {
@@ -112,214 +616,568 @@
     },
     {
       "orden": 13,
-      "name": "Camino Castillejo Magan",
-      "licencia": "CM02486606",
-      "hcp": 48.5,
+      "name": "Vera Endeiza Martinez",
+      "licencia": "CM52994103",
+      "hcp": 35.3,
       "nivel": "B"
     },
     {
       "orden": 14,
-      "name": "Vera Endeiza Martinez",
-      "licencia": "CM52994103",
-      "hcp": 36.1,
-      "nivel": "B"
-    },
-    {
-      "orden": 15,
       "name": "Fernanda Castillejo Magan",
       "licencia": "CM02486607",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 16,
+      "orden": 15,
       "name": "Celsa Medina Susino",
       "licencia": "CM02374033",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 17,
+      "orden": 16,
       "name": "Sol Vazquez Rojo",
       "licencia": "CM01413243",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 18,
+      "orden": 17,
       "name": "Adriana Hontoria Cruz",
       "licencia": "CM33085174",
       "hcp": 40.9,
       "nivel": "I"
     },
     {
-      "orden": 19,
+      "orden": 18,
       "name": "Sofia Fernandez De La Cruz",
       "licencia": "CM41487421",
       "hcp": 39,
       "nivel": "A"
     },
     {
-      "orden": 20,
+      "orden": 19,
       "name": "Ines Portuondo Perez-Leiros",
       "licencia": "CM00413757",
       "hcp": 54,
       "nivel": "A"
     },
     {
-      "orden": 21,
+      "orden": 20,
       "name": "Olivia Vargas Tejerina",
       "licencia": "CM41491983",
       "hcp": 30.5,
       "nivel": "B"
     },
     {
-      "orden": 22,
+      "orden": 21,
       "name": "Mercedes Vicens Zavala",
       "licencia": "CM01352296",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 23,
+      "orden": 22,
       "name": "Alejandra Espi Garrido",
       "licencia": "CM06517679",
       "hcp": 52.4,
       "nivel": "B"
     },
     {
-      "orden": 24,
+      "orden": 23,
       "name": "Nieves Maria Canalda Gutierrez",
       "licencia": "CM41969878",
       "hcp": 54,
       "nivel": "A"
     },
     {
-      "orden": 25,
+      "orden": 24,
       "name": "Paula De Funes Martin Del Campo",
       "licencia": "CM09497350",
       "hcp": 48.8,
       "nivel": "A"
     },
     {
-      "orden": 26,
+      "orden": 25,
       "name": "Alba Peña Tribaldos",
       "licencia": "CM41479430",
       "hcp": 50.3,
       "nivel": "B"
     },
     {
-      "orden": 27,
+      "orden": 26,
       "name": "Silvia Triguero Fernandez",
       "licencia": "CM41484593",
       "hcp": 49.2,
       "nivel": "B"
     },
     {
-      "orden": 28,
+      "orden": 27,
       "name": "Almudena Domingo Capape",
       "licencia": "CM15066693",
       "hcp": 54,
       "nivel": "A"
     },
     {
-      "orden": 29,
+      "orden": 28,
       "name": "Alejandra Domingo Capape",
       "licencia": "CM15066695",
       "hcp": 54,
       "nivel": "A"
     },
     {
-      "orden": 30,
+      "orden": 29,
       "name": "Carmen Zayas Montero",
       "licencia": "CM02731944",
       "hcp": 50.3,
       "nivel": "A"
     },
     {
-      "orden": 31,
+      "orden": 30,
       "name": "Sol Zayas Montero",
       "licencia": "CM02734206",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 32,
+      "orden": 31,
       "name": "Emma Porres Asensio",
       "licencia": "CM61518525",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 33,
+      "orden": 32,
       "name": "Ines Porres Asensio",
       "licencia": "CM61518524",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 34,
+      "orden": 33,
       "name": "Eleanor Porta Porta",
       "licencia": "CM06526892",
       "hcp": 46.9,
       "nivel": "A"
     },
     {
-      "orden": 900,
-      "name": "Los jugadores por debajo de esta línea se encuentran en lista de espera Al estar cubierto el máximo de inscritos, la participación de los jugadores en lista de espera estará pendiente de posibles bajas de otros jugadores. En caso de no ser incluidos en la lista final de participantes se les devolverá el importe de la inscripción por el mismo medio empleado para su pago \">",
-      "hcp": null
-    },
-    {
-      "orden": 1035,
+      "orden": 34,
       "name": "Claudia Lesmes Esteban",
       "licencia": "CM18483268",
       "hcp": 53.1,
       "nivel": "A"
     },
     {
-      "orden": 1036,
+      "orden": 35,
       "name": "Gabriela Fabre Bertomeu",
       "licencia": "CM11416878",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 1037,
+      "orden": 36,
       "name": "Mariana Lizaso Perez-Minguez",
       "licencia": "CM06351644",
       "hcp": 45.2,
       "nivel": "B"
     },
     {
-      "orden": 1038,
+      "orden": 37,
       "name": "Maria Viejo Micale",
       "licencia": "CM41305616",
       "hcp": 47.5,
       "nivel": "A"
     },
     {
-      "orden": 1039,
+      "orden": 38,
       "name": "Martina Miro Navarro",
       "licencia": "CM41491285",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 1040,
+      "orden": 39,
       "name": "Ines Bermejo Guerrero",
       "licencia": "CMA8471498",
       "hcp": 48.3,
       "nivel": "A"
     },
     {
-      "orden": 1041,
+      "orden": 40,
       "name": "Sol Fernandez De Cordoba Sanchez",
       "licencia": "CM04985074",
       "hcp": 45.5,
       "nivel": "A"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 6,
+          "name": "Olivia Vargas Tejerina",
+          "hcp": 30.5,
+          "ins": "2444858",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 7,
+          "name": "Vera Endeiza Martinez",
+          "hcp": 35.3,
+          "ins": "2444783",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 7,
+          "name": "Alexandra Serrano Villa",
+          "hcp": 37.2,
+          "ins": "2444633",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 7,
+          "name": "Sofia Fernandez De La Cruz",
+          "hcp": 39,
+          "ins": "2444850",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 8,
+          "name": "Adriana Hontoria Cruz",
+          "hcp": 40.9,
+          "ins": "2444845",
+          "jid": "72751",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 8,
+          "name": "Catalina Garcia Alonso",
+          "hcp": 43.5,
+          "ins": "2444653",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 8,
+          "name": "Mariana Lizaso Perez-Minguez",
+          "hcp": 45.2,
+          "ins": "2447830",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 9,
+          "name": "Sol Fernandez De Cordoba Sanchez",
+          "hcp": 45.5,
+          "ins": "2449333",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 9,
+          "name": "Maria Lama Gutierrez",
+          "hcp": 46.2,
+          "ins": "2444630",
+          "jid": "72751",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 9,
+          "name": "Eleanor Porta Porta",
+          "hcp": 46.9,
+          "ins": "2445740",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Maria Viejo Micale",
+          "hcp": 47.5,
+          "ins": "2447857",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Gabriela Cuervo-Arango De Echevarrieta",
+          "hcp": 47.7,
+          "ins": "2444648",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Carmen Romero Anastasio",
+          "hcp": 48.3,
+          "ins": "2444640",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 2,
+          "name": "Silvia Triguero Fernandez",
+          "hcp": 49.2,
+          "ins": "2444898",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 2,
+          "name": "Sofia Carola Alvarez",
+          "hcp": 50.1,
+          "ins": "2444628",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 2,
+          "name": "Alba Peña Tribaldos",
+          "hcp": 50.3,
+          "ins": "2444894",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 3,
+          "name": "Carmen Zayas Montero",
+          "hcp": 50.3,
+          "ins": "2444950",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 3,
+          "name": "Lola Romero Anastasio",
+          "hcp": 50.4,
+          "ins": "2444646",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 3,
+          "name": "Casilda Aparicio Vallarino",
+          "hcp": 50.8,
+          "ins": "2444673",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 4,
+          "name": "Alejandra Espi Garrido",
+          "hcp": 52.4,
+          "ins": "2444867",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 4,
+          "name": "Claudia Lesmes Esteban",
+          "hcp": 53.1,
+          "ins": "2447087",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 4,
+          "name": "Isabel Gutierrez Pascual Del Pobil",
+          "hcp": 54,
+          "ins": "2444636",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 5,
+          "name": "Almudena Domingo Capape",
+          "hcp": 54,
+          "ins": "2444903",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 5,
+          "name": "Clara Cuervo-Arango De Echevarrieta",
+          "hcp": 54,
+          "ins": "2444652",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 5,
+          "name": "Fernanda Castillejo Magan",
+          "hcp": 54,
+          "ins": "2444785",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 6,
+          "name": "Celsa Medina Susino",
+          "hcp": 54,
+          "ins": "2444788",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 6,
+          "name": "Sol Vazquez Rojo",
+          "hcp": 54,
+          "ins": "2444789",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 6,
+          "name": "Ines Portuondo Perez-Leiros",
+          "hcp": 54,
+          "ins": "2444853",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 7,
+          "name": "Mercedes Vicens Zavala",
+          "hcp": 54,
+          "ins": "2444864",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 7,
+          "name": "Nieves Maria Canalda Gutierrez",
+          "hcp": 54,
+          "ins": "2444887",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 7,
+          "name": "Emma Porres Asensio",
+          "hcp": 54,
+          "ins": "2445093",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 8,
+          "name": "Claudia Vallarino Cabo",
+          "hcp": 54,
+          "ins": "2444639",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 8,
+          "name": "Sol Zayas Montero",
+          "hcp": 54,
+          "ins": "2444951",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 8,
+          "name": "Alejandra Domingo Capape",
+          "hcp": 54,
+          "ins": "2444904",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 9,
+          "name": "Ines Porres Asensio",
+          "hcp": 54,
+          "ins": "2445095",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 9,
+          "name": "Gabriela Fabre Bertomeu",
+          "hcp": 54,
+          "ins": "2447125",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 9,
+          "name": "Martina Miro Navarro",
+          "hcp": 54,
+          "ins": "2448845",
+          "jid": "72751",
+          "nivel": "B"
+        },
+        {
+          "time": "11:39",
+          "tee": 1,
+          "name": "Ines Bermejo Guerrero",
+          "hcp": 48.3,
+          "ins": "2449038",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:39",
+          "tee": 1,
+          "name": "Laura Anastasio Machado",
+          "hcp": 48.6,
+          "ins": "2444650",
+          "jid": "72751",
+          "nivel": "A"
+        },
+        {
+          "time": "11:39",
+          "tee": 1,
+          "name": "Paula De Funes Martin Del Campo",
+          "hcp": 48.8,
+          "ins": "2444891",
+          "jid": "72751",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -335,9 +1193,33 @@
       "roundId": 72751
     }
   ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Carola Alvarez, Sofia",
+          "holeNumber": 6,
+          "createdAt": "22/11/26 13:19:09",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Domingo Capape, Almudena",
+          "holeNumber": 1,
+          "createdAt": "22/11/26 13:13:47",
+          "roundNumber": 1
+        },
+        {
+          "playerName": "Viejo Micale, Maria",
+          "holeNumber": 6,
+          "createdAt": "22/11/26 13:19:56",
+          "roundNumber": 1
+        }
+      ]
+    }
+  },
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-11-16T12:39:39.595Z",
-  "destaquesVistoEm": "2026-11-18"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1371557237_arb_reg_loc_cm18_2019_-_golf_park.pdf"
+  ]
 }

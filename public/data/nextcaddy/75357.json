@@ -1,7 +1,7 @@
 {
   "tourId": 75357,
   "url": "https://www.nextcaddy.com/tour/75357",
-  "scrapedAt": "2026-11-16T12:38:48.775Z",
+  "scrapedAt": "2026-11-23T13:15:39.650Z",
   "meta": {
     "name": "HOLANDESES SUR 16.11.26",
     "organizer": null,
@@ -20,10 +20,124 @@
     "dateIso": "2026-11-16",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "John Kremer",
+          "licencia": "AM51343506",
+          "hcp": 15.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2448549
+        },
+        {
+          "pos": 2,
+          "name": "Norman Patrick Tjon-Pian-Gi",
+          "licencia": "AM51934876",
+          "hcp": 12.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2448558
+        },
+        {
+          "pos": 3,
+          "name": "Hans Wielaard",
+          "licencia": "AM51605011",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2448556
+        },
+        {
+          "pos": 4,
+          "name": "Pieter De Jong",
+          "licencia": "AM51244892",
+          "hcp": 19.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2448560
+        },
+        {
+          "pos": 5,
+          "name": "Udo Oidtmann",
+          "licencia": "AM51614528",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2448559
+        },
+        {
+          "pos": 6,
+          "name": "Bernard Van Der Lande",
+          "licencia": "AM51802267",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2448552
+        },
+        {
+          "pos": 7,
+          "name": "Adrian Van Vliet",
+          "licencia": "AM51883359",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2448561
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -160,10 +274,6 @@
       "roundId": 80783
     }
   ],
-  "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/cartel/1535790500_75357-holandeses-sur-16-11-26.pdf"
-  ],
   "scoreTypes": {
     "birdie": {
       "scoreTypeKey": "birdie",
@@ -183,5 +293,8 @@
       ]
     }
   },
-  "destaquesVistoEm": "2026-11-18"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/1535790500_75357-holandeses-sur-16-11-26.pdf"
+  ]
 }
