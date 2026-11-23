@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T01:33:38.323Z",
+  "generatedAt": "2026-11-23T01:58:55.393Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
   "total": 1285,
   "tournaments": [
@@ -39,7 +39,10 @@
       "ggPage": null,
       "ffgolfSlug": null,
       "ffgolfSection": null,
-      "rms9": null,
+      "rms9": {
+        "tenant": "9404",
+        "id": 6115067
+      },
       "ligues": [
         "00"
       ]
