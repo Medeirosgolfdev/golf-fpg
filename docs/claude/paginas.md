@@ -42,7 +42,8 @@
 
 | O quê | Onde vive |
 |---|---|
-| Rotas ↔ estado (`/FPG/jovens`, `/sto`, `/clubes`, `/pja`, `/rankingPJA`, `/rankingSub12`, `/classificacoes`, `/inscritos`, `/jovens/inscritosCN`, o antigo `?ct=`) | `src/pages/fpg/routes.ts` |
+| Rotas ↔ estado (`/FPG/jovens`, `/sto`, `/clubes`, `/pja`, `/inscricoesAbertas`, `/rankingPJA`, `/rankingSub12`, `/classificacoes`, `/inscritos`, `/jovens/inscritosCN`, o antigo `?ct=`) | `src/pages/fpg/routes.ts` |
+| Vista «🟢 Inscrições abertas» (`/FPG/inscricoesAbertas`, 23/11/2026): torneios com inscrições abertas em todos os clubes; dados de `public/data/inscricoes-abertas.json` (`scripts/scrape-inscricoes-abertas.js`, workflow `update-inscricoes-abertas.yml`). Na barra da /FPG: **Torneios · Inscrições abertas · Classificações** — os rankings PJA e Sub-12 saíram da barra (pedido dela, 23/11/2026), os URLs continuam a abrir | `src/pages/fpg/InscricoesAbertasView.tsx` |
 | Carregar os dados (pull-torneios, Clubes, Jovens, drive/aquapor mensais do PJA, playersDB) e as listas derivadas | `src/data/fpgPageLoader.ts` (hooks `useFpg*`) |
 | Que ficheiros existem (pull-torneios, drive-data, aquapor-data) — **nada de sondar nomes até dar 404** | `public/data/fpg-files-index.json`, gerado no `predev`/`prebuild` por `scripts/build-fpg-files-index.js` (gitignored; o Vercel gera-o em cada deploy); lido por `src/data/fpgFilesIndex.ts`; os mensais do Drive/AQUAPOR entram só por `loadDriveMonthly` (`src/data/drive/driveLoader.ts`, `cachedFetchJson` — a /drive e o Ranking PJA da /FPG partilham o pedido) |
 | Ranking Sub-12 e Classificações | `src/data/fpgRankingsLoader.ts` |

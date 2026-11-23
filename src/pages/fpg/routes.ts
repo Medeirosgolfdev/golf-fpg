@@ -7,8 +7,9 @@
  *   /FPG/sto                  → tab Santo da Serra
  *   /FPG/clubes               → tab Clubes (o antigo ?ct=ccode-tcode → /FPG/torneio/ccode-tcode)
  *   /FPG/pja                  → tab PJA
- *   /FPG/rankingPJA           → modo Ranking PJA
- *   /FPG/rankingSub12         → modo Ranking Sub-12
+ *   /FPG/inscricoesAbertas    → modo INSCRIÇÕES ABERTAS (todos os clubes; 23/11/2026)
+ *   /FPG/rankingPJA           → modo Ranking PJA (fora da barra desde 23/11/2026; o URL continua)
+ *   /FPG/rankingSub12         → modo Ranking Sub-12 (idem)
  *   /FPG/classificacoes       → modo CLASSIFICAÇÕES (calendário dos jogadores de referência)
  *   /FPG/jovens/inscritosCN   → tab Jovens com painel de inscrições aberto
  */
@@ -23,18 +24,23 @@ export const URL_TO_FILTER: Record<string, SeriesKey> = {
   circuit: "circuit",  // alias
 };
 
-// Mapa URL-segment ↔ navMode (tabs "Torneios" / "Ranking PJA" / "Ranking Sub-12").
+// Vistas da /FPG. Na barra: Torneios · Inscrições abertas · Classificações. Os rankings
+// PJA e Sub-12 saíram da barra a 23/11/2026 (pedido da Mariana); os URLs continuam a abrir.
+export type FpgNavMode = "torneios" | "inscricoes-abertas" | "ranking-pja" | "ranking-sub12" | "classificacoes";
+// Mapa URL-segment ↔ navMode.
 // ⚠ As chaves têm de ser lowercase porque `urlSeg = params.filter.toLowerCase()`.
 // Para preservar leitura natural na URL ("rankingPJA"), usamos redirect no lookup.
-export const URL_TO_NAV: Record<string, "torneios" | "ranking-pja" | "ranking-sub12" | "classificacoes"> = {
+export const URL_TO_NAV: Record<string, FpgNavMode> = {
+  inscricoesabertas: "inscricoes-abertas",
   rankingpja:     "ranking-pja",
   rankingsub12:   "ranking-sub12",
   classificacoes: "classificacoes",
 };
 // URLs geradas — mantemos o case "camelCase" para leitura, mas o comparison
 // com urlSeg é sempre lowercase.
-export const NAV_TO_URL: Record<"torneios" | "ranking-pja" | "ranking-sub12" | "classificacoes", string> = {
+export const NAV_TO_URL: Record<FpgNavMode, string> = {
   "torneios":       "",
+  "inscricoes-abertas": "inscricoesAbertas",
   "ranking-pja":    "rankingPJA",
   "ranking-sub12":  "rankingSub12",
   "classificacoes": "classificacoes",

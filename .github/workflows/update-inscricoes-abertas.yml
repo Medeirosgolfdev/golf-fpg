@@ -1,0 +1,56 @@
+name: Actualizar inscrições abertas (todos os clubes)
+
+# Torneios com inscrições abertas em todos os clubes da FPG → vista «🟢 Inscrições
+# abertas» da /FPG (23/11/2026). scripts/scrape-inscricoes-abertas.js pede a lista
+# pública de cada clube (tourn_admissions_list.asp), um pedido de cada vez, sem
+# cookies (~1,5 min). Sem alterações → exit 2 → não há commit nem deploy.
+#
+# 3×/dia, como o painel da OneDrive que alimenta o artefacto «Mapa de Fontes».
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 7,13,19 * * *'   # 07:30, 13:30 e 19:30 UTC
+
+permissions:
+  contents: write
+
+# Uma corrida de cada vez deste workflow; entre workflows diferentes resolve o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  inscricoes-abertas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Ler as inscrições abertas de todos os clubes
+        id: scrape
+        run: |
+          set +e
+          node scripts/scrape-inscricoes-abertas.js
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          # 0 = gravou → commit · 2 = nada mudou → sem commit · tudo o resto = erro
+          if [ "$EXIT_CODE" != "0" ] && [ "$EXIT_CODE" != "2" ]; then
+            echo "❌ falhou (exit $EXIT_CODE) — ver o registo acima"
+            exit 1
+          fi
+          exit 0
+
+      - name: Commit e push (se houver alterações)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: |
+          bash scripts/ci/push-generated.sh -m "data: inscrições abertas $(date +'%Y-%m-%d %H:%M')" \
+            -- public/data/inscricoes-abertas.json

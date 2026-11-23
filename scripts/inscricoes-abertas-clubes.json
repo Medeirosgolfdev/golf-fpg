@@ -1,0 +1,731 @@
+{
+ "_leia": "Clubes consultados pelo scripts/scrape-inscricoes-abertas.js: [código FPG, nome curto, nome, zona]. Mesma lista do Mapa de Fontes (docs/links-conhecidos.html, CLUBS) e do painel da OneDrive (_CLAUDE_HISTORICO/paineis/inscricoes-abertas/clubes.json). Acrescentar aqui um clube novo.",
+ "clubes": [
+  [
+   "000",
+   "FPG",
+   "Federação Portuguesa de Golfe (e Circuito Aquapor)",
+   "Nacional"
+  ],
+  [
+   "001",
+   "Oporto",
+   "Oporto Golf Clube",
+   "Norte"
+  ],
+  [
+   "002",
+   "Lisbon SC",
+   "Lisbon Sports Club",
+   "Lisboa"
+  ],
+  [
+   "003",
+   "Miramar",
+   "Club de Golf de Miramar",
+   "Norte"
+  ],
+  [
+   "004",
+   "Estoril",
+   "Clube de Golf do Estoril",
+   "Lisboa"
+  ],
+  [
+   "005",
+   "Ilha Terceira",
+   "Clube de Golf da Ilha Terceira",
+   "Açores"
+  ],
+  [
+   "006",
+   "Clube TAP",
+   "Clube TAP Portugal",
+   "Lisboa"
+  ],
+  [
+   "007",
+   "Santo da Serra",
+   "Clube de Golfe do Santo da Serra",
+   "Madeira"
+  ],
+  [
+   "008",
+   "Vidago C G",
+   "Clube de Golfe de Vidago",
+   "Norte"
+  ],
+  [
+   "009",
+   "Vilamoura, C. G",
+   "Clube de Golfe de Vilamoura",
+   "Algarve"
+  ],
+  [
+   "010",
+   "Penina, C. G.",
+   "Clube de Golfe da Penina",
+   "Algarve"
+  ],
+  [
+   "011",
+   "PINGS",
+   "PINGS - Clube de Golf",
+   "Lisboa"
+  ],
+  [
+   "012",
+   "Clube Qta. Lago",
+   "Clube de Golfe da Quinta do Lago",
+   "Algarve"
+  ],
+  [
+   "013",
+   "Qta. Marinha",
+   "Clube de Golfe da Quinta da Marinha",
+   "Lisboa"
+  ],
+  [
+   "014",
+   "Barmen",
+   "Associação Barmen de Portugal",
+   "Lisboa"
+  ],
+  [
+   "015",
+   "Assoc. Qta.Lago",
+   "Ass. Desp. e Cultural da Qta do Lago",
+   "Algarve"
+  ],
+  [
+   "016",
+   "Médico",
+   "Clube de Golfe Médico",
+   "Lisboa"
+  ],
+  [
+   "017",
+   "Tróia",
+   "Clube de Golfe de Tróia",
+   "Alentejo"
+  ],
+  [
+   "018",
+   "CGD",
+   "C.G. da Caixa Geral de Depósitos",
+   "Lisboa"
+  ],
+  [
+   "022",
+   "Estela",
+   "Estela Golf Club",
+   "Norte"
+  ],
+  [
+   "024",
+   "Santander Totta",
+   "Grupo Desportivo Santander Totta",
+   "Lisboa"
+  ],
+  [
+   "028",
+   "SKIP Golfe",
+   "Clube de Golfe SKIP",
+   "Lisboa"
+  ],
+  [
+   "029",
+   "Aroeira",
+   "Clube de Campo da Aroeira",
+   "P. de Setúbal"
+  ],
+  [
+   "030",
+   "Carvoeiro",
+   "Carvoeiro Golfe e Country Club",
+   "Algarve"
+  ],
+  [
+   "032",
+   "Penha Longa",
+   "Sports Club da Penha Longa",
+   "Lisboa"
+  ],
+  [
+   "033",
+   "São Lourenço",
+   "Clube de Golfe de S. Lourenço",
+   "Algarve"
+  ],
+  [
+   "034",
+   "Braga",
+   "Clube de Golfe de Braga",
+   "Norte"
+  ],
+  [
+   "035",
+   "Lagos",
+   "Clube de Golfe de Lagos",
+   "Algarve"
+  ],
+  [
+   "036",
+   "Golfe PT",
+   "Clube de Golfe Portugal Telecom",
+   "Lisboa"
+  ],
+  [
+   "038",
+   "Quinta do Peru",
+   "Clube de Golf da Quinta do Peru",
+   "P. de Setúbal"
+  ],
+  [
+   "042",
+   "EDP, Clube",
+   "Clube do Pessoal da EDP",
+   "Norte"
+  ],
+  [
+   "043",
+   "Ponte de Lima",
+   "Clube de Golfe de Ponte de Lima",
+   "Norte"
+  ],
+  [
+   "044",
+   "Dunas",
+   "Clube de Golfe das Dunas",
+   "Algarve"
+  ],
+  [
+   "047",
+   "Floresta Parque",
+   "Floresta Parque Golf Club",
+   "Algarve"
+  ],
+  [
+   "048",
+   "Alcoitão",
+   "G.M.D. 1º de Julho de Alcoitão",
+   "Lisboa"
+  ],
+  [
+   "050",
+   "Paredes",
+   "P.G.C. - Paredes Golfe Clube",
+   "Norte"
+  ],
+  [
+   "051",
+   "Verdegolf",
+   "VerdeGolf Country Club",
+   "Açores"
+  ],
+  [
+   "053",
+   "Pine Cliffs",
+   "Pine Cliffs Golf e Country Club",
+   "Algarve"
+  ],
+  [
+   "055",
+   "Évora",
+   "Clube de Golfe de Évora",
+   "Alentejo"
+  ],
+  [
+   "057",
+   "Quinta do Fojo",
+   "Clube de Golfe da Quinta do Fojo",
+   "Norte"
+  ],
+  [
+   "058",
+   "Amarante",
+   "Amarante Golfe Clube",
+   "Norte"
+  ],
+  [
+   "059",
+   "Palheiro",
+   "Clube Palheiro Golfe",
+   "Madeira"
+  ],
+  [
+   "061",
+   "Centro",
+   "Clube de Golfe do Centro",
+   "Centro"
+  ],
+  [
+   "063",
+   "PAR 3",
+   "PAR 3 - Ass. de Golf de Torres Vedras",
+   "O. e Vale do Tejo"
+  ],
+  [
+   "068",
+   "Belas",
+   "Clube de Golfe de Belas",
+   "Lisboa"
+  ],
+  [
+   "069",
+   "Vale do Lobo",
+   "Ass. dos C. G. de Vale do Lobo",
+   "Algarve"
+  ],
+  [
+   "072",
+   "Casino Estoril",
+   "Clube de Golfe Casino Estoril",
+   "Lisboa"
+  ],
+  [
+   "073",
+   "Palmares",
+   "Clube de Golfe Palmares",
+   "Algarve"
+  ],
+  [
+   "076",
+   "Tavira",
+   "Golfe Clube de Tavira",
+   "Algarve"
+  ],
+  [
+   "077",
+   "Banco Portugal",
+   "Grupo Desportivo do Banco de Portugal",
+   "Lisboa"
+  ],
+  [
+   "079",
+   "Quinta Lágrimas",
+   "Quinta das Lágrimas Clube de Golfe",
+   "Centro"
+  ],
+  [
+   "080",
+   "Pinheiros",
+   "Clube de Golfe dos Pinheiros",
+   "Algarve"
+  ],
+  [
+   "083",
+   "Oitavos",
+   "Oitavos Dunes Club",
+   "Lisboa"
+  ],
+  [
+   "084",
+   "Levante",
+   "Clube de Golfe do Levante",
+   "Algarve"
+  ],
+  [
+   "085",
+   "Millennium BCP",
+   "Clube Millennium BCP",
+   "Lisboa"
+  ],
+  [
+   "086",
+   "Boavista",
+   "Boavista Clube de Golfe",
+   "Algarve"
+  ],
+  [
+   "087",
+   "Paço do Lumiar",
+   "Clube de Golfe do Paço do Lumiar",
+   "Lisboa"
+  ],
+  [
+   "091",
+   "Arquitectos",
+   "Clube de Golf dos Arquitectos",
+   "Lisboa"
+  ],
+  [
+   "095",
+   "Vila Sol",
+   "Vila Sol Golfe Clube",
+   "Algarve"
+  ],
+  [
+   "097",
+   "CNOCA",
+   "C. Náutico dos Ofic. e Cad. da Armada",
+   "P. de Setúbal"
+  ],
+  [
+   "098",
+   "Seniores",
+   "Associação Nacional de Seniores de Golfe de Portugal",
+   "Lisboa"
+  ],
+  [
+   "099",
+   "Tigres Bosque",
+   "Clube Tigres do Bosque",
+   "Lisboa"
+  ],
+  [
+   "101",
+   "Atlantico",
+   "Golf Club Atlântico",
+   "Norte"
+  ],
+  [
+   "103",
+   "ACP Golfe",
+   "ACP Golfe",
+   "Lisboa"
+  ],
+  [
+   "106",
+   "JuveGolfe",
+   "Clube JuveGolfe",
+   "P. de Setúbal"
+  ],
+  [
+   "107",
+   "Citynorte",
+   "Clube de Golfe Citynorte",
+   "Norte"
+  ],
+  [
+   "111",
+   "Serra Monchique",
+   "Serra de Monchique Golf Club",
+   "Algarve"
+  ],
+  [
+   "113",
+   "Golf for Greys",
+   "Associação Golf for Greys",
+   "Algarve"
+  ],
+  [
+   "115",
+   "SNQT Bancários",
+   "C.G. do Sind. N. Quad. Téc. Bancários",
+   "Lisboa"
+  ],
+  [
+   "118",
+   "Viseu",
+   "Clube de Golfe de Viseu",
+   "Centro"
+  ],
+  [
+   "120",
+   "Clube Benfica",
+   "Clube de Golfe do Benfica",
+   "Lisboa"
+  ],
+  [
+   "123",
+   "Algarveagles",
+   "Clube de Golfe Algarveagles",
+   "Algarve"
+  ],
+  [
+   "125",
+   "Vale Pisão",
+   "Clube de Golfe Vale Pisão",
+   "Norte"
+  ],
+  [
+   "128",
+   "Morgado",
+   "Clube de Golfe do Morgado do Reguengo",
+   "Algarve"
+  ],
+  [
+   "130",
+   "Xira Golfe",
+   "Xira Golfe - C.G. Vila Franca de Xira",
+   "Lisboa"
+  ],
+  [
+   "131",
+   "Alto Portimão",
+   "Alto – Clube de Golfe de Portimão",
+   "Algarve"
+  ],
+  [
+   "132",
+   "Cantanhede",
+   "Clube de Golfe de Cantanhede",
+   "Centro"
+  ],
+  [
+   "133",
+   "Exército",
+   "Clube de Golfe do Exército",
+   "Lisboa"
+  ],
+  [
+   "135",
+   "Força Aérea",
+   "Clube de Golfe da Força Aérea",
+   "Lisboa"
+  ],
+  [
+   "141",
+   "Economistas",
+   "Clube de Golfe dos Economistas",
+   "Lisboa"
+  ],
+  [
+   "142",
+   "Engenheiros",
+   "Clube de Golfe dos Engenheiros",
+   "Lisboa"
+  ],
+  [
+   "145",
+   "Villa Batalha",
+   "Clube de Golfe - Hotel Villa Batalha",
+   "Centro"
+  ],
+  [
+   "147",
+   "Castro Marim GC",
+   "Castro Marim Golfe Club",
+   "Algarve"
+  ],
+  [
+   "152",
+   "Royal Óbidos",
+   "Clube de Golf Royal Óbidos",
+   "O. e Vale do Tejo"
+  ],
+  [
+   "155",
+   "VC Golfe",
+   "Clube VC Golfe",
+   "Alentejo"
+  ],
+  [
+   "157",
+   "Costa Alentejana",
+   "Clube de Golfe da Costa Alentejana",
+   "Alentejo"
+  ],
+  [
+   "158",
+   "Vidago Palace",
+   "Clube de Golfe do Vidago Palace",
+   "Norte"
+  ],
+  [
+   "159",
+   "Silves Internat.",
+   "Silves International Clube de Golfe",
+   "Algarve"
+  ],
+  [
+   "160",
+   "Clube Laranjas",
+   "Clube de Golfe dos Laranjas",
+   "Algarve"
+  ],
+  [
+   "162",
+   "Sporting Golfe",
+   "Assoc. Golfe Sporting Clube de Portugal",
+   "Lisboa"
+  ],
+  [
+   "163",
+   "AGC-Algarve GC",
+   "AGC - Algarve Golfe Clube",
+   "Algarve"
+  ],
+  [
+   "165",
+   "Beloura - ACGB",
+   "Clube de Golfe da Beloura - ACGB",
+   "Lisboa"
+  ],
+  [
+   "166",
+   "UCDR Guardizela",
+   "UCDR Guardizela",
+   "Norte"
+  ],
+  [
+   "169",
+   "Jamor C.G.",
+   "Jamor Clube de Golfe - JCG",
+   "Lisboa"
+  ],
+  [
+   "170",
+   "Seniores-Norte",
+   "Assoc. Seniores de Golfe do Norte de Portugal",
+   "Norte"
+  ],
+  [
+   "172",
+   "El Bicho C.G.",
+   "El Bicho Clube de Golfe",
+   "Lisboa"
+  ],
+  [
+   "173",
+   "ADCQR - C.G.",
+   "ADCQR - Clube de Golfe",
+   "Algarve"
+  ],
+  [
+   "177",
+   "Vale de Janelas",
+   "Clube de Golfe de Vale de Janelas",
+   "O. e Vale do Tejo"
+  ],
+  [
+   "179",
+   "Amendoeira",
+   "Amendoeira Clube de Golfe",
+   "Algarve"
+  ],
+  [
+   "180",
+   "Viana Castelo",
+   "CGVC - C.G. de Viana do Castelo",
+   "Norte"
+  ],
+  [
+   "181",
+   "Guardian",
+   "Guardian Sport Club",
+   "O. e Vale do Tejo"
+  ],
+  [
+   "182",
+   "Silver Coast",
+   "The Silver Coast Golf Club",
+   "O. e Vale do Tejo"
+  ],
+  [
+   "183",
+   "PXO Clube",
+   "PXO Clube de Golfe",
+   "Madeira"
+  ],
+  [
+   "184",
+   "Espiche",
+   "Clube de Golfe de Espiche",
+   "Algarve"
+  ],
+  [
+   "185",
+   "Buraco 19, C.G.",
+   "Clube de Golfe Buraco 19",
+   "Algarve"
+  ],
+  [
+   "187",
+   "SEG",
+   "SEG Clube",
+   "O. e Vale do Tejo"
+  ],
+  [
+   "188",
+   "GGC-Golfland",
+   "GGC - Golfland Golf Club",
+   "Algarve"
+  ],
+  [
+   "189",
+   "Montado",
+   "Montado Associação de Golfe",
+   "P. de Setúbal"
+  ],
+  [
+   "190",
+   "Qt V.Sotavento",
+   "Quinta Vale do Sotavento Golf Club",
+   "Algarve"
+  ],
+  [
+   "191",
+   "LPR Golf Club",
+   "Associação LPR Golf Club",
+   "O. e Vale do Tejo"
+  ],
+  [
+   "192",
+   "Comporta",
+   "Clube de Golf das Terras da Comporta",
+   "Alentejo"
+  ],
+  [
+   "193",
+   "CGCUL",
+   "CGCUL - Clube de Golfe da Cid. Univ. de Lisboa",
+   "Lisboa"
+  ],
+  [
+   "194",
+   "The One",
+   "The One Experience Club",
+   "Lisboa"
+  ],
+  [
+   "912",
+   "PGA - Portugal",
+   "PGA de Portugal",
+   "Lisboa"
+  ],
+  [
+   "945",
+   "A.N.Treinadores",
+   "Ass. Nac. de Treinadores de Golfe",
+   "Lisboa"
+  ],
+  [
+   "982",
+   "Drive Madeira",
+   "Organizador do Drive na Madeira",
+   "Madeira"
+  ],
+  [
+   "987",
+   "Drive Norte",
+   "Organizador do Drive no Norte",
+   "Norte"
+  ],
+  [
+   "988",
+   "FPG Drive",
+   "Projecto Drive — Drive Tour e Challenge",
+   "Nacional"
+  ],
+  [
+   "991",
+   "RIO",
+   "Registo Individual Online",
+   "Geral"
+  ],
+  [
+   "992",
+   "Jamor Federação",
+   "JAMOR Federação",
+   "Nacional"
+  ],
+  [
+   "998",
+   "Projecto Drive",
+   "Projecto Drive Federação",
+   "Nacional"
+  ]
+ ]
+}

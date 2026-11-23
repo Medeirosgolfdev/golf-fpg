@@ -25,6 +25,7 @@ import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
 import ExtLink from "../ui/ExternalLink";
 import { tournamentUrl, parseTournKey, fmtDateShort } from "../utils/format";
 import { PJARankingView } from "../ui/PJARankingView";
+import InscricoesAbertasView from "./fpg/InscricoesAbertasView";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
 import type { Tournament } from "../data/fpgTypes";
 import { buildDisplayList, tournamentHasManuel, isDriveOrAquapor } from "../data/fpgUtils";
@@ -47,6 +48,7 @@ export { TournamentDetail } from "./fpg/TournamentDetail";
 import { TOURN_PILLS } from "./fpg/constants";
 import { isPJACore } from "../../ranking-pja/pja-rules.mjs";
 import {
+  type FpgNavMode,
   type SeriesKey, URL_TO_FILTER, URL_TO_NAV, NAV_TO_URL, FILTER_TO_URL, INSCRITOS_SHORTCUTS,
   clubesCtRedirect,
 } from "./fpg/routes";
@@ -102,7 +104,7 @@ function Content() {
   // Pesquisa dos rankings sincronizada com o URL (`?q=pedro`). Declarado ANTES
   // dos useStates que dependem dele (Temporal Dead Zone).
   const [searchParams, setSearchParams] = useSearchParams();
-  const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12" | "classificacoes">(
+  const [navMode, setNavMode]         = useState<FpgNavMode>(
     URL_TO_NAV[urlSeg] ?? "torneios"
   );
   const [seriesFilter, setSeriesFilter] = useState<SeriesKey>(showInscricoes ? "jovens" : startSeries);
@@ -618,17 +620,16 @@ function Content() {
           {!loading && navMode !== "torneios" && (<>
             <ToolbarSep />
             <SearchInput value={searchQuery} onChange={setSearchQuery} ariaLabel="Pesquisar"
-              placeholder={navMode === "ranking-sub12" ? "jogador…" : "jogador ou clube…"} />
+              placeholder={navMode === "inscricoes-abertas" ? "torneio, clube ou zona…" : navMode === "ranking-sub12" ? "jogador…" : "jogador ou clube…"} />
           </>)}
           {!loading && (<>
             <ToolbarSep />
             {/* Vistas: interruptor segmentado (o mesmo de Campos/Jogadores/Drive). */}
             <TabRow ariaLabel="Vista" active={navMode}
               tabs={[
-                { key: "torneios" as const,       label: "Torneios" },
-                { key: "ranking-pja" as const,    label: "📊 Ranking PJA" },
-                { key: "ranking-sub12" as const,  label: "🏅 Ranking Sub-12 por SD" },
-                { key: "classificacoes" as const, label: "🏆 Classificações" },
+                { key: "torneios" as const,           label: "Torneios" },
+                { key: "inscricoes-abertas" as const, label: "🟢 Inscrições abertas" },
+                { key: "classificacoes" as const,     label: "🏆 Classificações" },
               ]}
               onChange={(key) => {
                 setNavMode(key);
@@ -722,6 +723,13 @@ function Content() {
       {navMode === "torneios" && showInscricoes && (
         <div className="fpg-pane-scroll">
           <InscricoesPanel />
+        </div>
+      )}
+
+      {/* Inscrições abertas em todos os clubes (23/11/2026) — scripts/scrape-inscricoes-abertas.js */}
+      {navMode === "inscricoes-abertas" && (
+        <div className="flex-1 u-oy-auto u-ox-hidden u-minh-0">
+          <InscricoesAbertasView query={searchQuery} />
         </div>
       )}
 
