@@ -373,6 +373,15 @@ async function main() {
       sub(`juniors-links.json: ${links.j.length} juniores`);
     }
 
+    // Provas de fora de cada federado (util/provas-fora.js): a ficha do jogador
+    // liga as voltas «999999» da FPG ao evento verdadeiro (23/11/2026).
+    {
+      const { buildProvasFora } = require("./util/provas-fora");
+      const pf = buildProvasFora(matchResult.juniors, matchResult.tournaments, generatedAt);
+      writeAtomic(path.join(DATA_DIR, "provas-fora-federados.json"), JSON.stringify(pf), "utf-8");
+      sub(`provas-fora-federados.json: ${Object.keys(pf.f).length} federados, ${Object.keys(pf.t).length} provas`);
+    }
+
     // Resumo do Scout (aba «Scout» dos circuitos e da /uskids, Ranking e ficha do
     // kids2, Próximos torneios): nível, vitórias, HCP, clube, provas em comum com
     // o Manuel — mesmas contas do kids2 —, os últimos torneios (util/ultimos.js:

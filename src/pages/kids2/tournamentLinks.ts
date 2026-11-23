@@ -53,7 +53,7 @@ function categorizeUrl(url: string, label: string): CategorizedLink {
 }
 
 /** Devolve botões por torneio. Faz dedup por (key, url) para evitar duplicados. */
-export function categorizeTournamentLinks(tournament: Tournament): CategorizedLink[] {
+export function categorizeTournamentLinks(tournament: Pick<Tournament, "links">): CategorizedLink[] {
   const seen = new Set<string>();
   const out: CategorizedLink[] = [];
   for (const l of tournament.links || []) {

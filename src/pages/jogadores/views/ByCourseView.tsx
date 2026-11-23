@@ -235,7 +235,7 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
         </td>
         <td className="col-prova" onClick={e => e.stopPropagation()}>
           <EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r, courseName)} links={r._links}
-            fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={courseName} />
+            fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={courseName} scoreId={r.scoreId} />
         </td>
         <RoundNumericCells r={r} />
       </tr>

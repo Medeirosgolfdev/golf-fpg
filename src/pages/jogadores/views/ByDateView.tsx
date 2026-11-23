@@ -58,7 +58,7 @@ export default function ByDateView({ data, search }: {
     { key: "course", label: "Campo", width: "17%", sortable: true, render: r => <CourseLink name={r.course} /> },
     { key: "event", label: "Prova", sortable: true, cellClassName: "col-prova", render: r => (
       <EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links}
-        fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} />
+        fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} scoreId={r.scoreId} />
     ) },
     { key: "holes", label: "Bur.", width: "44px", align: "right", sortable: true, render: r => <HoleBadge hc={r.holeCount} /> },
     { key: "hcp", label: "HCP", width: "46px", align: "right", sortable: true, render: r => r.hi ?? "" },

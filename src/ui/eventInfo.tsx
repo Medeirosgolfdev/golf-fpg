@@ -7,6 +7,7 @@
  * campo → ccode para abrir o torneio na federação.
  */
 import { fpgScoringUrl } from "../utils/format";
+import { isTcodeIntlFpg, useProvaFora } from "../data/provasFora";
 import { PillBadge } from "./PillBadge";
 import ExtLink from "./ExternalLink";
 
@@ -109,8 +110,11 @@ export function ccodeFromCourse(course?: string): string | null {
 }
 
 /* ─── Combined event info: name + EDS badge + pill + links ─── */
-export function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course }: {
+export function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course, scoreId }: {
   name?: string; origin?: string; pill?: string; links?: Record<string, string>;
+  /** Id da volta — com ele as voltas internacionais (tcode 999999) abrem a prova
+   *  verdadeira, pelo índice do Kids 2 (data/provasFora.ts). */
+  scoreId?: string;
   /** Fed code do jogador — fallback final para link à página WHS. */
   fed?: string;
   /** Tournament code FPG. */
@@ -132,22 +136,30 @@ export function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course
   //      organizados pela FPG num clube anfitrião (ex: Nacional Sub-12 em
   //      Aroeira), o ccode estaria errado mas isso normalmente já tem _links.
   //   4. PlayerWHS — fallback final (página do jogador, não do torneio).
+  // Volta internacional (tcode 999999, 23/11/2026): o código é fictício e a FPG
+  // dá erro — nunca link para a FPG; abre a prova no organizador (Signupanytime,
+  // GolfGenius…) quando o Kids 2 a liga a esta volta, senão fica sem link.
+  const intl = isTcodeIntlFpg(tcode);
+  const provaFora = useProvaFora(fed, scoreId, tcode);
   const classifUrl = links
-    ? Object.entries(links).find(([k]) => /^classif/i.test(k))?.[1] ?? null
+    ? Object.entries(links).find(([k, u]) => /^classif/i.test(k) && !/(tourn|tcode)=0*999999/i.test(u))?.[1] ?? null
     : null;
   const effectiveCcode = ccode || ccodeFromCourse(course);
-  const tcodeUrl = !classifUrl && tcode && effectiveCcode
+  const tcodeUrl = !classifUrl && !intl && tcode && effectiveCcode
     ? fpgScoringUrl(effectiveCcode, tcode)
     : null;
   const isFpgTorn = (origin || "").trim().toUpperCase() === "TORN";
   const fallbackFpgUrl = !classifUrl && !tcodeUrl && isFpgTorn && fed
     ? `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed}`
     : null;
-  const fedUrl = classifUrl || tcodeUrl || fallbackFpgUrl;
+  const foraUrl = !classifUrl && provaFora ? provaFora.links[0].url : null;
+  const fedUrl = classifUrl || tcodeUrl || foraUrl || fallbackFpgUrl;
   const fedTitle = classifUrl
     ? "Abrir classificação do torneio na federação"
     : tcodeUrl
     ? "Abrir torneio na federação"
+    : foraUrl
+    ? `Abrir «${provaFora!.nome}» em ${provaFora!.links[0].label}`
     : "Abrir histórico WHS do jogador na federação (link directo ao torneio não disponível)";
   const nameNode = fedUrl ? (
     <ExtLink
@@ -160,7 +172,7 @@ export function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course
   ) : (
     <span className="muted">{name || ""}</span>
   );
-  // Ícone 🔗 quando NÃO há _links curado mas temos algum fallback (tcode ou fed).
+  // Ícone 🔗 quando NÃO há _links curado mas temos algum fallback (tcode, prova de fora ou fed).
   const showFallbackIcon = !classifUrl && fedUrl;
   return (
     <span className="u-d-inline-flex u-fwr-wrap u-ai-center u-gap-6px">

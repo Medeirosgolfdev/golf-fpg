@@ -110,7 +110,7 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
                     </td>
                     <td><CourseLink name={r.course} /></td>
                     <td className="fs-11"><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links}
-                      fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} /></td>
+                      fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} scoreId={r.scoreId} /></td>
                     {/* As 7 células comuns das tabelas de voltas (Bur/HCP/Tee/Dist/Gross/Stb/SD). */}
                     <RoundNumericCells r={r} />
                     <td className="r">

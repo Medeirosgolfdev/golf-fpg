@@ -40,6 +40,10 @@ A `/jogadores/:fed` deixou de ser um monólito de ~4700 linhas: o shell
 
 ---
 
+### Link da coluna Prova nas voltas internacionais (23/11/2026)
+
+A FPG regista as voltas jogadas lá fora (e nos internacionais cá — Faldo Madeira) com o código de torneio fictício **`999999`**; um link `classif…tourn=999999` dá erro (Mariana: «tu sabes identificar que os resultados são internacionais, então tb tens de saber colocar o link correcto para o evento»). Regra: **com `999999` nunca há link para a FPG** (`isTcodeIntlFpg`, `src/data/provasFora.ts`; também se ignora um `_links.classif*` com esse código). O `EventInfo` abre a prova no **organizador** (Signupanytime, GolfGenius…, pela ordem do Kids 2 — `categorizeTournamentLinks`) através de `public/data/provas-fora-federados.json`, que o agregador escreve (`scripts/aggregator/util/provas-fora.js`): cada cartão 999999 de `output/{fed}/scorecards.json` liga-se a uma prova do Kids 2 pela data **e** (ficha do Kids 2 desse federado na prova, com a volta dentro dos dias dela) **ou** (nome da prova a bater, ±1 dia). Treinos/EDS/registos não se ligam. Sem ligação segura → sem link (nunca um link errado). A 23/11/2026: 1003 voltas de 70 federados ligadas; as outras ~2100 são sobretudo EDS, «Resultado no estrangeiro», «Away Internacional» de provas que o Kids 2 não tem.
+
 ### UI de "Só cadastro FPG" em `JogadoresPage.tsx`
 
 Componente `FederadoOnlyDetail` (hoje em `src/pages/jogadores/FederadoOnlyDetail.tsx`) renderiza jogadores que só têm
