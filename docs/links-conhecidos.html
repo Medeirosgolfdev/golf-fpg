@@ -35,7 +35,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .top{background:var(--topbar);color:var(--topbar-text);padding-inline:16px;padding-block:22px 18px}
 .top-in{max-width:1180px;margin:0 auto;display:grid;gap:10px}
 .top h1{font-size:26px;font-weight:700;letter-spacing:-.01em;margin:0;text-wrap:balance}
-.top p{margin:0;max-width:68ch;color:color-mix(in srgb,var(--topbar-text) 78%,transparent)}
+.top p{margin:0;color:color-mix(in srgb,var(--topbar-text) 78%,transparent)}
 .top .meta{font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:color-mix(in srgb,var(--topbar-text) 60%,transparent)}
 .bar{position:sticky;top:0;z-index:5;background:var(--band);border-bottom:1px solid var(--border);padding-inline:16px;padding-block:10px}
 .bar-in{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -44,8 +44,22 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .chip{font:inherit;font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text-2);cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
 .count{font-size:12.5px;color:var(--text-3);font-variant-numeric:tabular-nums;margin-left:auto}
+.pick{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:13.5px;color:var(--text-2)}
+.pick label{font-weight:600;color:var(--text)}
+.pick select,.bar .pick input{flex:0 1 auto;min-width:0;font:inherit;font-size:13.5px;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text)}
+.pick select{max-width:100%}
+.bar .pick input{width:8em}
+.bar .pick input.tc{width:7em}
+.bar .pick input.rd{width:3.2em;text-align:center}
+.pick .who{color:var(--text-3)}
+.pick a{font-weight:600;text-decoration:none}
+.pick a:hover{text-decoration:underline}
+.url .fill{color:var(--accent);font-weight:600}
+.t-unk{color:var(--text-2);background:var(--band);border:1px dashed var(--border)}
+.open{flex:none;font-size:11.5px;font-weight:700;color:var(--card);background:var(--accent);border:1px solid var(--accent);border-radius:5px;padding:2px 9px;text-decoration:none;white-space:nowrap}
+.open:hover{filter:brightness(1.1)}
 .wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:22px 60px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px}
-nav.toc{position:sticky;top:64px;align-self:start;display:grid;gap:2px;font-size:13.5px}
+nav.toc{position:sticky;top:64px;align-self:start;display:grid;gap:2px;font-size:13.5px;overflow-y:auto;overscroll-behavior:contain;padding-right:6px;padding-bottom:12px;scrollbar-width:thin;max-height:calc(100vh - var(--toc-top,64px) - 12px)}
 nav.toc a{color:var(--text-2);text-decoration:none;padding:4px 8px;border-radius:5px;display:flex;justify-content:space-between;gap:8px}
 nav.toc a:hover{background:var(--accent-light);color:var(--text)}
 nav.toc .n{color:var(--text-3);font-variant-numeric:tabular-nums}
@@ -61,7 +75,7 @@ main{display:grid;gap:30px;min-width:0}
 .acks th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);font-weight:600}
 .acks code{font-family:var(--font-mono);font-size:12.5px}
 section h2{font-size:19px;margin:0 0 4px;letter-spacing:-.01em;text-wrap:balance}
-section .sub{margin:0 0 12px;color:var(--text-3);font-size:13.5px;max-width:75ch}
+section .sub{margin:0 0 12px;color:var(--text-3);font-size:13.5px}
 .list{border-top:1px solid var(--border)}
 .item{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:14px 2px;border-bottom:1px solid var(--border-light)}
 .head{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -75,10 +89,10 @@ section .sub{margin:0 0 12px;color:var(--text-3);font-size:13.5px;max-width:75ch
 .url .ph{color:var(--ph);background:var(--ph-bg);border-radius:3px;padding:0 2px}
 .copy{flex:none;font:inherit;font-size:11.5px;font-weight:600;color:var(--text-2);background:var(--card);border:1px solid var(--border);border-radius:5px;padding:2px 8px;cursor:pointer}
 .copy.done{color:var(--ok);border-color:var(--ok)}
-.desc{margin:0;color:var(--text-2);max-width:82ch}
+.desc{margin:0;color:var(--text-2)}
 .ex{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13.5px}
 .ex span{color:var(--text-3)}
-.warn{margin:0;font-size:13.5px;color:var(--text-2);border-left:3px solid var(--login);padding-left:10px;max-width:82ch}
+.warn{margin:0;font-size:13.5px;color:var(--text-2);border-left:3px solid var(--login);padding-left:10px}
 .warn b{color:var(--text)}
 .club-tools{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:0 0 10px;font-size:13px;color:var(--text-3)}
 .club-tools select{font:inherit;font-size:13px;padding:4px 8px;border:1px solid var(--border);border-radius:5px;background:var(--card);color:var(--text)}
@@ -116,7 +130,7 @@ section .sub{margin:0 0 12px;color:var(--text-3);font-size:13.5px;max-width:75ch
 .empty{color:var(--text-3);padding:30px 0}
 @media (max-width:820px){
   .wrap{grid-template-columns:minmax(0,1fr)}
-  nav.toc{position:static;display:flex;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:4px}
+  nav.toc{position:static;display:flex;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:4px;max-height:none}
   nav.toc .grp{display:none}
   nav.toc a{white-space:nowrap;border:1px solid var(--border-light)}
   .count{margin-left:0}
@@ -126,9 +140,9 @@ section .sub{margin:0 0 12px;color:var(--text-3);font-size:13.5px;max-width:75ch
 
 <header class="top">
   <div class="top-in">
-    <div class="meta">Golf-FPG · referência interna · actualizado a 15 Set 2026</div>
+    <div class="meta">Golf-FPG · referência interna · fontes medidas desde 15 Set 2026 · escolha de clube e federado a 23 Nov 2026</div>
     <h1>Mapa de Fontes do Golf-FPG</h1>
-    <p>Todos os endereços que o site conhece, da FPG aos circuitos lá fora: o que cada um devolve, se precisa de login e um exemplo real para abrir. As partes a amarelo (<code>{tcode}</code>, <code>{fed}</code>…) são para substituir.</p>
+    <p>Todos os endereços que o site conhece, da FPG aos circuitos lá fora: o que cada um devolve, se precisa de login e um exemplo real para abrir. Escolha na barra o clube, o nº de federado, o torneio e a volta (por omissão: Santo da Serra, o Manuel e o V Aberto CGSS, volta 1). Os links saem já montados para eles: a parte preenchida fica a verde e aparece o botão <b>Abrir</b>. No campo Torneio, a lista mostra os últimos torneios conhecidos do clube. O que fica a amarelo é para substituir à mão.</p>
   </div>
 </header>
 
@@ -138,6 +152,15 @@ section .sub{margin:0 0 12px;color:var(--text-3);font-size:13.5px;max-width:75ch
     <input id="q" type="search" placeholder="Procurar por nome, domínio ou o que devolve — ex.: sócios, WHS, draw, GolfBox" autocomplete="off">
     <div class="chips" id="chips" role="group" aria-label="Filtrar por acesso"></div>
     <span class="count" id="count"></span>
+    <div class="pick" role="group" aria-label="Clube e federado dos links">
+      <label for="pclub">Clube</label><select id="pclub"></select>
+      <label for="pfed">Federado</label><input id="pfed" type="text" inputmode="numeric" maxlength="7" autocomplete="off" placeholder="nº">
+      <label for="ptc">Torneio</label><input id="ptc" class="tc" type="text" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="tcode" list="ptcs"><datalist id="ptcs"></datalist>
+      <label for="prd">Volta</label><input id="prd" class="rd" type="text" inputmode="numeric" maxlength="1" autocomplete="off">
+      <span class="who" id="pwho"></span>
+      <a id="pgo" href="#clubes">Tudo deste clube ↓</a>
+      <button type="button" class="chip" id="preset">Repor Santo da Serra · Manuel</button>
+    </div>
   </div>
 </div>
 
@@ -176,6 +199,7 @@ const ACCESS = {
   lim:   { label: "Limite",         cls: "t-lim",   help: "público, mas corta quem pede de mais" },
   eph:   { label: "Efémero",        cls: "t-eph",   help: "só existe enquanto a prova decorre" },
   stop:  { label: "Parado",         cls: "t-stop",  help: "não se usa (pedido da fonte ou dados maus)" },
+  "?":   { label: "Por estudar",    cls: "t-unk",   help: "fonte encontrada, acesso e formato ainda por estudar" },
 };
 
 const X = "XH256YF45T";
@@ -184,7 +208,7 @@ const S = [
   { n: "Inscrições (linkpage)", a: "sess", u: "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club={ccode}&tourn={tcode}&ack=XH256YF450",
     d: "Lista de inscritos com posição, data de inscrição, HCP e reservas.",
     ex: [["Nacional Sub-12 2026", "https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=000&tourn=10941&ack=XH256YF450"]],
-    w: "Público nos torneios da FPG (000); em torneios de clube (ex. 988/10306) só com cookies.", where: "scrape-fpg-admissions-draws-node.js" },
+    w: "Público nos torneios da FPG (000); em torneios de clube (ex. 988/10306) só com cookies. <b>Só mostra inscritos enquanto as inscrições estão abertas</b> — depois dá «Link address inválido» (Param Error 400).", where: "scrape-fpg-admissions-draws-node.js" },
   { n: "Inscrições (ASP clássico)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/admissions.asp?club={ccode}&tourn={tcode}&LANG_TXT=PT&ack=XH256YF450",
     d: "Os mesmos inscritos, por ordem alfabética, sem data nem reservas. É o plano B quando as cookies morrem.",
     ex: [["Nacional Sub-12 2026", "https://scoring-pt.datagolf.pt/scripts/admissions.asp?club=000&tourn=10941&LANG_TXT=PT&ack=XH256YF450"]] },
@@ -198,12 +222,15 @@ const S = [
     d: "Página de resultados. Traz nome, campo, data e PCC no HTML; a tabela vem pelo PageMethod abaixo.",
     ex: [["Drive Tour Norte – Amarante", "https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=987&tourn=10207&ack=8428ACK987"]], where: "scrape-classif-node.js · scrape-drive-node.js" },
   { n: "ClassifLST", a: "sess", m: "POST", u: "https://scoring.fpg.pt/lists/classif.aspx/ClassifLST?jtStartIndex=0&jtPageSize=100",
+    ex: [["V Aberto CGSS · a página que faz este pedido", "https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=007&tourn=11081&ack=8428ACK987"]],
     d: "Classificação completa, paginada. classifroundtype \"D\" + round = uma volta; \"A\" + round vazio = agregada.",
     w: "Não traz fed_code nem nacionalidade. Os parâmetros extra vão na query E no corpo." },
   { n: "ScoreCard de torneio", a: "sess", m: "POST", u: "https://scoring.fpg.pt/lists/classifAgregate.aspx/ScoreCard",
+    ex: [["V Aberto CGSS · clicar num jogador", "https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=007&tourn=11081&ack=8428ACK987"]],
     d: "Cartão buraco a buraco de cada jogador (um registo por volta), com par, SI, metros, CR/Slope e o campo cba (PCC).",
     w: "Não traz o SD — esse só existe no WHS de cada jogador." },
   { n: "Classificação (ASP clássico)", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/classif.asp?club={ccode}&tourn={tcode}&ack=XH256YF45T",
+    ex: [["V Aberto CGSS (007/11081)", "https://scoring-pt.datagolf.pt/scripts/classif.asp?club=007&tourn=11081&ack=XH256YF45T"]],
     d: "Hoje reencaminha para o portão (page=tournclassif&score=1&tcode=…), que abre a página Classifications.aspx." },
   { n: "Cartão de uma volta (scorecard.asp)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/scorecard.asp?id={score_id}&displayclassif=1&club=ALL&ack=XH256YF45T",
     d: "O cartão completo de qualquer volta, num só GET e sem portão: jogador, federado, torneio, data, campo, par, SI, metros e gross por buraco, CR/Slope, HCP exacto e de jogo, ajuste CBA (PCC) e estado. displayclassif=0 mostra todas as pontuações (Stableford, net…).",
@@ -217,10 +244,40 @@ const S = [
     d: "Os torneios activos de um clube, com o link para a lista de inscritos de cada um — é daqui que se tira o tcode antes do draw sair.",
     ex: [["Palheiro", "https://scoring-pt.datagolf.pt/scripts/tourn_admissions_list.asp?club=059&ack=XH256YF45T"], ["Amendoeira", "https://scoring-pt.datagolf.pt/scripts/tourn_admissions_list.asp?club=179&ack=0LDOIDN3IJ"]] },
   { n: "Inscrições (versão autenticada)", a: "login", u: "https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode={ccode}&tcode={tcode}",
+    ex: [["Torneio CGSS São Martinho (007/11087)", "https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=007&tcode=11087"]],
     d: "A página rica de inscritos. Ir directo sem passar pelo linkpage dá Param Error." },
   { n: "Live scoring", a: "eph", u: "https://scoring.fpg.pt/live-scoring/1.aspx?pa=classif&c={ccode}&t={tcode}&r=0",
+    ex: [["V Aberto CGSS · só abre durante a prova", "https://scoring.fpg.pt/live-scoring/1.aspx?pa=classif&c=007&t=11081&r=0"]],
     d: "A única fonte com o jogo a decorrer: posição, buraco em que cada um vai e cartões ao vivo.",
     w: "<b>Só existe durante a prova</b> e os dados só se lêem navegando a página num browser; pedidos directos dão 500." },
+  { n: "Classificação (página directa)",
+    a: "brw",
+    u: "https://scoring.fpg.pt/lists/Classifications.aspx?ccode={ccode}&tcode={tcode}&score=",
+    d: "A página para onde o linkpage de classificação leva: nome, campo, data, PCC e a tabela, com Stroke Play, Medal Net e outras classificações.",
+    ex: [["V Aberto CGSS (007/11081)", "https://scoring.fpg.pt/lists/Classifications.aspx?ccode=007&tcode=11081&score="]],
+    w: "Abre num browser que já tenha passado por um link da FPG (linkpage ou classif.asp); a frio, fora do browser, dá HTTP 500.",
+    where: "scrape-nacionais-2025.js" },
+  { n: "Lista de torneios (página directa)",
+    a: "brw",
+    u: "https://scoring.fpg.pt/lists/tournaments.aspx",
+    d: "A lista de torneios com data, nome, clube, campo, voltas e formato — a mesma que o tournaments.asp abre depois do portão.",
+    ex: [["Abrir", "https://scoring.fpg.pt/lists/tournaments.aspx"]],
+    w: "Mostra o clube do último portão por onde o browser passou; a frio dá HTTP 500.",
+    where: "fpg-calendario.js · santo-da-serra-tournaments.js" },
+  { n: "Inscrições (scoring.fpg.pt)",
+    a: "brw",
+    u: "https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode={ccode}&tcode={tcode}",
+    d: "Os inscritos com federado, clube, HCP e data/hora da inscrição — o gémeo da versão em scoring.datagolf.pt.",
+    ex: [["Torneio CGSS São Martinho (007/11087)", "https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=007&tcode=11087"]],
+    w: "Abre num browser com sessão da FPG; a frio dá HTTP 500.",
+    where: "browser-scrape-fpg-admissions-draws.js · fpg-calendario.js" },
+  { n: "TournamentsLST",
+    a: "sess",
+    m: "POST",
+    u: "https://scoring.datagolf.pt/pt/tournaments.aspx/TournamentsLST",
+    d: "Os dados da lista de torneios (os 84 993), paginados, dentro da sessão do portão tournlist.",
+    ex: [["Santo da Serra · a página que faz este pedido", "https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=007&ack=XH256YF45T"]],
+    where: "probe-tournlist-future.js · lib/fpg-http.js" },
  ]},
  { grp: "FPG", id: "fpg-jogador", title: "FPG — jogador e cadastro", sub: "Histórico WHS, cartões e a lista de federados.", items: [
   { n: "Ficha do federado — WHS (gate fedhcp)", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club={ccode}&pagelang=PT&page=fedhcp&fedno={fed}",
@@ -261,10 +318,38 @@ const S = [
     d: "Sistema paralelo (~3 450 activos). Lista por POST a /listspp/FederatedSearch.aspx/HandicapsLST.",
     ex: [["Federado 49085", "https://scoring.fpg.pt/listspp/PlayerWHS.aspx?no=49085"]] },
   { n: "Fotos dos federados", a: "ok", u: "https://hcp-portugal.datagolf.pt/photos/{n}/{uuid}.jpeg",
+    ex: [["Manuel (52884)", "https://hcp-portugal.datagolf.pt/photos/5/01a3c9da-bc05-4845-b00b-29047ab89f60.jpeg"]],
     d: "O caminho vem no campo photo do cadastro; fotos antigas passam a 404 quando mudam." },
   { n: "golf-portugal.pt (proxy)", a: "ok", u: "https://golf-portugal.pt/api/clubs/{qualquer}/players/{fed}/results?startIndex=0&limit={n}",
+    ex: [["Manuel · últimos 20 resultados", "https://golf-portugal.pt/api/clubs/007/players/52884/results?startIndex=0&limit=20"]],
     d: "Proxy externo com resultados, perfil (/players/{fed}), handicaps e /api/scorecards/{score_id}.",
     w: "Não traz tcode nem gross; falha de vez em quando com 500." },
+  { n: "HCPWhsFederLST (dados do WHS)",
+    a: "sess",
+    m: "POST",
+    u: "https://scoring.datagolf.pt/pt/PlayerWHS.aspx/HCPWhsFederLST?fed_code={fed}",
+    d: "O histórico WHS de um federado em JSON (voltas, SD, índice), paginado com jtStartIndex/jtPageSize. É o pedido que a ficha WHS faz por baixo.",
+    ex: [["Manuel (52884) · a página que faz este pedido", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=fedhcp&fedno=52884"]],
+    where: "criarSessaoWhs (lib/fpg-session.js) · fpg-scrape-node.js" },
+  { n: "HandicapsLST (dados dos federados)",
+    a: "sess",
+    m: "POST",
+    u: "https://scoring.datagolf.pt/pt/FederatedsList_V2.aspx/HandicapsLST",
+    d: "Os ~17 800 federados activos em JSON, 100 de cada vez, com o campo photo de cada um.",
+    ex: [["A página que faz este pedido", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=ALL&pagelang=PT&page=fedlist_v2"]],
+    where: "scrape-federados-node.js · refresh-photos.js" },
+  { n: "Resultados (my.fpg.pt)",
+    a: "login",
+    u: "https://my.fpg.pt/Home/Results.aspx",
+    d: "Os resultados do jogador da conta com que se entrou.",
+    ex: [["Abrir (pede login)", "https://my.fpg.pt/Home/Results.aspx"]],
+    where: "golf-all.js · login.js" },
+  { n: "Entrar no my.fpg.pt",
+    a: "login",
+    u: "https://area.my.fpg.pt/login/",
+    d: "A página de login da área de federado — é daqui que vêm as cookies que a tarefa GolfFPG-CookieRefresh renova todos os dias.",
+    ex: [["Abrir", "https://area.my.fpg.pt/login/"]],
+    where: "login.js · refresh-all-cookies.js" },
  ]},
  { grp: "FPG", id: "fpg-rankings", title: "FPG — rankings e calendário", sub: "Rankings Drive/Aquapor, Ordens de Mérito de clube e o calendário oficial.", items: [
   { n: "Ranking (página)", a: "sess", u: "https://scoring.fpg.pt/lists/linkpage.aspx?page=rankingresult&club={ccode}&ranking={código}&ack=8428ACK987&minpoints=1",
@@ -283,6 +368,18 @@ const S = [
   { n: "Calendário FPG (API)", a: "ok", u: "https://competicoes.fpg.pt/wp-json/tribe/events/v1/events",
     d: "Calendário oficial em JSON (WordPress + The Events Calendar).",
     ex: [["Ver JSON", "https://competicoes.fpg.pt/wp-json/tribe/events/v1/events"]], where: "fpg-calendario.js" },
+  { n: "Página de um evento (competicoes.fpg.pt)",
+    a: "ok",
+    u: "https://competicoes.fpg.pt/evento/{slug}/",
+    d: "A página humana de cada prova da FPG: datas, campo, termos, inscrições e documentos.",
+    ex: [["Nacional de Jovens Sub-10 a Sub-18 · PGA Aroeira", "https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"]],
+    where: "featuredTournaments.ts · scrape-fpg-admissions-draws.js" },
+  { n: "Documentos das provas (PDF)",
+    a: "ok",
+    u: "https://competicoes.fpg.pt/wp-content/uploads/{ano}/{mês}/{ficheiro}.pdf",
+    d: "Termos de competição, entry lists e calendários publicados em PDF. A pasta é o mês em que o PDF foi carregado, não o da prova.",
+    ex: [["Calendário Geral 2026", "https://competicoes.fpg.pt/wp-content/uploads/2026/02/Calendario-Geral-26_3-5.pdf"]],
+    where: "featuredTournaments.ts" },
  ]},
  { grp: "FPG", id: "fpg-clubes", title: "FPG — clubes", sub: "Sócios e estatísticas agregadas de cada clube, no ASP clássico.", items: [
   { n: "Lista de sócios", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/members.asp?club={ccode}&ack=XH256YF45T&order={memberno|name|nfed|club|hcp|hcpstatus}",
@@ -295,7 +392,7 @@ const S = [
     w: "Numeração própria (00018…00023 = 2024–2026, H e S seguidos), <b>não</b> é o tcode da classificação (o 00023 da classif é o Nacional de Seniores 2.ª Cat.). Sem cartões, clube nem federado. Algumas páginas vêm em CP1252 apesar de declararem UTF-8." },
   { n: "Estatísticas de clubes (painel)", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club={ccode|ALL}&ack=XH256YF45T",
     d: "30 vistas agregadas (idades, HCP, voltas, torneios…), mais stat_club_access.asp (registo de acessos ao servidor por clube). Cada vista abre sozinha em {vista}.asp. O &lt;select&gt; de clubes é o mapa oficial clube→ccode (286).",
-    ex: [["Painel (todos)", "https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club=ALL&ack=XH256YF45T"], ["Demografia júnior", "https://scoring-pt.datagolf.pt/scripts/stat_ages.asp?club=ALL&ack=XH256YF45T"], ["Torneios por federado", "https://scoring-pt.datagolf.pt/scripts/stat_tourns_players.asp?club=ALL&ack=XH256YF45T"]],
+    ex: [["Santo da Serra · stat_nfed", "https://scoring-pt.datagolf.pt/scripts/stat_nfed.asp?club=007&ack=XH256YF45T"], ["Santo da Serra · stat_scores_results", "https://scoring-pt.datagolf.pt/scripts/stat_scores_results.asp?club=007&ack=XH256YF45T&origin=1"], ["Painel (todos)", "https://scoring-pt.datagolf.pt/scripts/stat_all.asp?club=ALL&ack=XH256YF45T"], ["Demografia júnior", "https://scoring-pt.datagolf.pt/scripts/stat_ages.asp?club=ALL&ack=XH256YF45T"], ["Torneios por federado", "https://scoring-pt.datagolf.pt/scripts/stat_tourns_players.asp?club=ALL&ack=XH256YF45T"]],
     w: "O grupo TORNEIOS (stat_scores_*) exige <b>&amp;origin=1</b>. O stat_cba não é o PCC." },
   { n: "Ranking de actividade", a: "ok", u: "https://scoring-pt.datagolf.pt/scripts/numresults.asp?club={ccode|ALL}&ack=XH256YF45T&selyear1={ano}&selyear2={ano}&counttype=all&order=nresults&ordertype=DESC&pagesize={n}",
     d: "Nome, nº de voltas, federado, clube e HCP de quem mais jogou.",
@@ -329,12 +426,42 @@ const S = [
     ex: [["Abrir (Santo da Serra)", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=calchcp"]],
     w: "As contas do site vivem no whsCalc.ts — esta página serve para confirmar resultados, não para copiar fórmulas." },
   { n: "Quotas de um federado", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club={ccode}&pagelang=PT&page=fedpayments&fedno={fed}",
+    ex: [["Manuel (52884)", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=fedpayments&fedno=52884"]],
     d: "Página de quotas pagas (FedPaymentsLST). Abre sem login, mas para o Manuel veio vazia." },
   { n: "Portão datalinkpt — as 18 páginas", a: "sess", u: "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club={ccode}&pagelang=PT&page={página}",
+    ex: [["fedsearch", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=fedsearch"], ["fedlist", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=fedlist"], ["fedlist_v2", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=fedlist_v2"], ["federated · Manuel", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=federated&fedno=52884"], ["fedhcp · Manuel", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=fedhcp&fedno=52884"], ["fedpayments · Manuel", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=fedpayments&fedno=52884"], ["tournlist", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=tournlist"], ["tournclassif · V Aberto", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=tournclassif&tcode=11081"], ["admissions · São Martinho", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=admissions&tcode=11087"], ["ranklist", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=ranklist"], ["rankclassif · OM Homens", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=rankclassif&ranking=OMCGSSH26"], ["ranklistecl", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=ranklistecl"], ["rankclassifecl · OM Homens", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=rankclassifecl&ranking=OMCGSSH26"], ["singlescores", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=singlescores"], ["singlescoresall", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=singlescoresall"], ["calchcp", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=calchcp"], ["drawlist", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=drawlist"], ["drawsnext", "https://scoring-pt.datagolf.pt/scripts/datalinkpt.html?user=fpguser&club=007&pagelang=PT&page=drawsnext"]],
     d: "Estado de cada página, medido sem login a 15 Set 2026: abrem fedsearch e fedlist (listas antigas), fedlist_v2, federated, fedhcp, fedpayments, tournlist, tournclassif (classificação de um torneio: &tcode=), ranklist, rankclassif (&ranking=), ranklistecl (eclético), singlescores, singlescoresall, calchcp, drawlist e drawsnext. Não abriram: admissions (\"Torneio não disponível\" com as inscrições fechadas) e rankclassifecl (erro com uma OM que não é de eclético).",
     w: "Nas páginas novas, a página abre mas os pedidos de dados (PageMethods) ainda não estão decifrados — os parâmetros são montados em JavaScript. Os que estão decifrados e em uso: fedlist_v2, fedhcp, tournlist e os de torneio (linkpage)." },
   { n: "Backoffice de clube", a: "login", u: "https://scoring.fpg.pt/lists/1Page.aspx?page={página}",
     d: "38 páginas de gestão (perfis completos, quotas, draws). Precisa de conta de administrador de clube — nunca usado." },
+ ]},
+ { grp: "FPG", id: "pt-provas", title: "Portugal — provas juniores e organizadores", sub: "Provas juniores em Portugal que não vivem só no sistema da FPG: páginas dos organizadores, inscrições e PDFs.", items: [
+  { n: "Quinta do Lago Junior Open e Paul McGinley Junior Cup",
+    a: "ok",
+    u: "https://www.quintadolago.com/en/events/{prova}/",
+    d: "As páginas das duas provas juniores da Quinta do Lago; as inscrições fazem-se na loja do resort.",
+    ex: [["Quinta do Lago Junior Open", "https://www.quintadolago.com/en/events/quinta-do-lago-junior-open/"], ["Paul McGinley Junior Cup", "https://www.quintadolago.com/en/events/paul-mcginley-junior-cup"], ["Inscrição no Junior Open 2026", "https://shop.quintadolago.com/products/quinta-do-lago-junior-open-2026"]],
+    w: "A loja (shop.quintadolago.com) corta pedidos automáticos (HTTP 429) — abre bem num browser.",
+    where: "featuredTournaments.ts" },
+  { n: "Portugal Junior Tour",
+    a: "ok",
+    u: "https://portugaljuniortour.pt/events/{prova}",
+    d: "O circuito juvenil Portugal Junior Tour: calendário e página de cada prova.",
+    ex: [["Início", "https://portugaljuniortour.pt/"], ["International Morgado Junior Classic", "https://portugaljuniortour.pt/events/international-morgado-junior-classic"]],
+    where: "featuredTournaments.ts" },
+  { n: "Amendoeira World Kids Golf",
+    a: "ok",
+    u: "https://worldkidsgolf.amendoeiraresort.com/{página}",
+    d: "O torneio internacional de crianças da Amendoeira: escalões, programa e resultados.",
+    ex: [["Edição de 2025", "https://worldkidsgolf.amendoeiraresort.com/worldkidsgolf2025_en"]],
+    where: "docs/torneios-intl-2027" },
+  { n: "Miramar Internacional Junior Open (CGM)",
+    a: "ok",
+    u: "https://www.cgm.pt/client/files/0000000001/{ficheiro}.pdf",
+    d: "Regulamento e draws do Miramar Internacional Junior Open, publicados em PDF pelo Clube de Golf de Miramar.",
+    ex: [["Draw MJO 2026 · 2.º dia", "https://www.cgm.pt/client/files/0000000001/drawmjo2026d2_1493.pdf"]],
+    w: "As páginas do torneio no cgm.pt já não existem (404 a 23/11/2026); os PDFs continuam lá.",
+    where: "import-draw-pdf.js" },
  ]},
  { grp: "Circuitos", id: "uskids", title: "USKids (signupanytime)", sub: "API pública da conta internacional (ax=1129). Cortou-nos a 12 Set 2026 por excesso de pedidos: hoje fazemos ~150–300 por dia, um de cada vez.", items: [
   { n: "GetMeta", a: "lim", u: "https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op=GetMeta&t={tcode}",
@@ -353,6 +480,13 @@ const S = [
     ex: [["Venice Open 2026", "https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=22243"]] },
   { n: "Calendário internacional", a: "ok", u: "https://tournaments.uskidsgolf.com/tournaments/international",
     d: "Calendário humano dos torneios internacionais.", ex: [["Abrir", "https://tournaments.uskidsgolf.com/tournaments/international"]] },
+  { n: "tourcaddiepro.com (o mesmo sistema)",
+    a: "stop",
+    u: "https://tourcaddiepro.com/plugins/links/admin/LinksAJAX.aspx?op=GetMeta&t={tcode}",
+    d: "O mesmo sistema do signupanytime noutro endereço (conta ax=2739).",
+    ex: [["GetMeta 23132", "https://tourcaddiepro.com/plugins/links/admin/LinksAJAX.aspx?op=GetMeta&t=23132"]],
+    w: "Também recusa (HTTP 403 a 23/11/2026), como o signupanytime desde ~07/11.",
+    where: "docs/claude/uskids.md" },
  ]},
  { grp: "Circuitos", id: "golfgenius", title: "GolfGenius", sub: "UA, FSGA, México, Champion of Champions, Optimist, Doral, Orange Bowl, England Golf e os Championnats de France. Responde a fetch; a browsers automatizados dá 403.", items: [
   { n: "Página de resultados", a: "ok", u: "https://www.golfgenius.com/pages/{pageId}",
@@ -502,6 +636,48 @@ const S = [
     w: "O catgolf serve às vezes um certificado inválido e uma página sem torneios — o scope tem guarda.", where: "discover-fcg-scope.js" },
   { n: "Catalunha — resultados", a: "ok", u: "https://www.golfdirecto.com/micro/game/{gameId}/summary",
     d: "Resultados por jornada (game.name é a jornada; a prova está em game.tournament.name). Live em open.imaster.golf/{lang}/catgolf/torneos/livescoring/{IMID}.", where: "scrape-fcg.js" },
+  { n: "RFEG — handicap de qualquer jogador",
+    a: "ok",
+    u: "https://rfegolf.es/jugar/handicap",
+    d: "A pesquisa de handicap da RFEG: dá todos os jogadores federados em Espanha, com o índice actual.",
+    ex: [["Abrir", "https://rfegolf.es/jugar/handicap"]],
+    where: "notas do grupo DataGolf" },
+  { n: "RFEG — página de uma competição (site novo)",
+    a: "ok",
+    u: "https://rfegolf.es/competicion/{slug}",
+    d: "A página de cada Campeonato de España e prova internacional no site novo da RFEG, com inscritos e resultados (o leaderboard vem do GolfBox espanhol).",
+    ex: [["Campeonato de España Sub-16 masculino", "https://rfegolf.es/competicion/campeonato-de-espana-sub-16-masculino"], ["Internacional de Bélgica Sub-14 2026", "https://rfegolf.es/competicion/internacional-de-belgica-sub-14-2026"]],
+    where: "scrape-rfeg-competiciones.js" },
+  { n: "RFEG — federações autonómicas",
+    a: "ok",
+    u: "https://rfeg.es/rfeg/federaciones-autonomicas",
+    d: "As 19 federações regionais de Espanha, cada uma com o seu site — é a partir daqui que se chega às provas regionais.",
+    ex: [["Abrir", "https://rfeg.es/rfeg/federaciones-autonomicas"]],
+    where: "src/pages/rfeg/FederationsView.tsx" },
+  { n: "Navarra — classificações (PDF)",
+    a: "ok",
+    u: "https://fnavarragolf.com/wp-content/uploads/{ano}/{mês}/{ficheiro}.pdf",
+    d: "A Federação Navarra publica as classificações em PDF; a lista está em /campeonatos/clasificaciones/.",
+    ex: [["Lista de classificações", "https://fnavarragolf.com/campeonatos/clasificaciones/"], ["Sub-12 masculino (final)", "https://fnavarragolf.com/wp-content/uploads/2026/04/Clasificacion-final-sub-12-masculina.pdf"]],
+    where: "scrape-fed-pdfs.js" },
+  { n: "Comunidade Valenciana (FGCV)",
+    a: "ok",
+    u: "https://golfcv.com/ver-torneo/?torneoid={id}",
+    d: "Torneios da Federació de Golf de la Comunitat Valenciana, cada um na sua página ver-torneo.",
+    ex: [["Início", "https://golfcv.com"]],
+    where: "scrape-fgcv.js" },
+  { n: "País Basco (FVG)",
+    a: "ok",
+    u: "https://www.fvgolf.com/torneo/{uuid}/{slug}",
+    d: "Torneios da Federación Vasca de Golf; os dados vêm por POST a /wp-admin/admin-ajax.php e as classificações em PDF.",
+    ex: [["I Puntuable Zonal Juvenil", "https://www.fvgolf.com/torneo/d891d8ff-10a5-11f1-afa6-506b4bb1f79e/i-puntuable-zonal-juvenil"]],
+    where: "scrape-fvg.js" },
+  { n: "Galiza (FGG) — torneios",
+    a: "ok",
+    u: "https://www.fggolf.com/torneos.aspx",
+    d: "O calendário da Federación Galega de Golf; os resultados estão no golfdirecto.",
+    ex: [["Abrir", "https://www.fggolf.com/torneos.aspx"]],
+    where: "discover-fgg-scope.js" },
  ]},
  { grp: "Circuitos", id: "franca", title: "França", sub: "Portal de resultados da FFG (público) e os torneios em GolfGenius.", items: [
   { n: "Resultados FFG", a: "ok", u: "https://pages.ffgolf.org/resultats/resultats-details/{partKey}/{trnId}",
@@ -522,6 +698,18 @@ const S = [
     ex: [["Calculadora (mapa)", "https://guidegolfs.ffgolf.org/map/fr/slope"]], w: "Só os tees normais do campo (branco/amarelo/azul/vermelho); os repères das provas jovens (Benjamins, U12…) têm CR/Slope próprios que só o RMS9 tem. O repère laranja vem como 113/54,0 (não aferido). O HTML diz às vezes o nome de outro golfe — usar data.glfLib. Ainda não usado pelo site (30/10/2026)." },
   { n: "Calendário jovens", a: "ok", u: "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/{secção}/{ano}/{slug}/page-scores-tournoi",
     d: "Calendário e páginas de resultados dos Championnats de France e Internationaux.", ex: [["Abrir calendário", "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats"]], where: "scrape-ffgolf-calendar-jeunes.js" },
+  { n: "Ligue Paris Île-de-France — provas jovens",
+    a: "ok",
+    u: "https://www.lgpidf.com/fr/competition/{slug}/",
+    d: "Os Grand Prix Jeunes e qualificações da Ligue PIDF: lista de provas, página de cada uma e resultados em PDF (em /models/gallerymedia/assets/…).",
+    ex: [["Lista das provas jovens", "https://www.lgpidf.com/fr/competitions/jeunes/-/-/list/1/"], ["GPJ PIDF 2 · U12 Benjamins", "https://www.lgpidf.com/fr/competition/grand-prix-jeunes-de-la-ligue-paris-ile-de-france-2-u12-benjamins/"]],
+    where: "scrape-lgpidf-pdfs.js · download-pdfs.js" },
+  { n: "Ligue Occitanie — calendário",
+    a: "ok",
+    u: "https://www.liguegolfoccitanie.org/sportif/calendrier-des-competitions/",
+    d: "O calendário de provas da Ligue de Golf d'Occitanie, com os Grand Prix Jeunes.",
+    ex: [["Abrir", "https://www.liguegolfoccitanie.org/sportif/calendrier-des-competitions/"]],
+    where: "_probe-ligues.js (sondagem)" },
  ]},
  { grp: "Circuitos", id: "italia", title: "Itália", sub: "Federgolf (Federazione Italiana Golf): API pública do plugin federgolf-crm, sem login. Página /fig (02/11/2026).", items: [
   { n: "Prova Federgolf", a: "ok", u: "https://www.federgolf.it/attivita-agonistica/dettaglio-gara/{competition_id}/",
@@ -664,6 +852,18 @@ const S = [
   { n: "EGR", a: "ok", u: "https://www.europeangolfrankings.com/{ranking?gender=M|ranking_women|events/{id}|players/{id}}",
     d: "Rankings masculino e feminino, eventos (pesquisa por ano em /events/search) e fichas de jogador.",
     ex: [["Ranking masculino", "https://www.europeangolfrankings.com/ranking?gender=M"], ["Ranking feminino", "https://www.europeangolfrankings.com/ranking_women"]], where: "scrape-egr.js" },
+  { n: "EGR — rankings DGV (Alemanha)",
+    a: "ok",
+    u: "https://www.europeangolfrankings.com/tours/{tour}/ranking/dgv",
+    d: "As Ranglisten juvenis da DGV publicadas no European Golf Rankings (AK14, U18…).",
+    ex: [["Rapazes AK14", "https://www.europeangolfrankings.com/tours/German_jungen_ak14/ranking/dgv"], ["Rapazes U18", "https://www.europeangolfrankings.com/tours/German_jungen_u18/ranking/dgv"]],
+    where: "scrape-dgv-rangliste.js" },
+  { n: "Suécia — ranking SGF (golfdata.se)",
+    a: "ok",
+    u: "https://golfdata.se/sgfranking/players_startpage?PlayerID={id}",
+    d: "O ranking da federação sueca: pesquisa de jogadores e ficha de cada um.",
+    ex: [["Pesquisa de jogadores", "https://golfdata.se/sgfranking/Players_searchpage"]],
+    where: "scrape-golfdata-se.js" },
  ]},
  { grp: "Circuitos", id: "outros", title: "Outros circuitos", sub: "", items: [
   { n: "Global Junior Golf Live", a: "ok", u: "https://globaljuniorgolflive.com/gjgdb/2021liveScoringresponsive.php?tournamentid={id}",
@@ -675,6 +875,12 @@ const S = [
     d: "Página pronta no site mas desligada: os dados não são fiáveis." },
   { n: "Federação Mexicana (GHIN)", a: "stop", u: "https://www.fmg.org.mx/ghin",
     d: "Índices dos jovens mexicanos.", w: "Bloqueado para consultas de fora do México." },
+  { n: "BlueGolf — eventos juniores",
+    a: "ok",
+    u: "https://www.bluegolf.com/junior/events/{slug}/index.html",
+    d: "Eventos juniores alojados no BlueGolf (ex. British Junior Golf Tour) e o explorador de circuitos juniores das Ilhas Britânicas.",
+    ex: [["BRJGT · brjgt243", "https://www.bluegolf.com/junior/events/brjgt243/index.html"], ["Explorar juniores — Ilhas Britânicas", "https://www.bluegolf.com/a/#/explore/junior/isles"]],
+    where: "scrape-bluegolf.js · src/data/major/bluegolf.ts" },
  ]},
  { grp: "Serviços", id: "servicos", title: "Serviços de apoio", sub: "", items: [
   { n: "Vercel Web Analytics", a: "login", u: "https://api.vercel.com/v1/query/web-analytics/visits",
@@ -812,7 +1018,7 @@ const CLUBS = [
 const FED_COUNTS = {"101":[98,2,0],"103":[1492,91,1],"106":[51,8,0],"107":[316,104,9],"111":[138,0,0],"113":[83,0,0],"115":[23,1,0],"118":[202,9,0],"120":[127,8,0],"125":[134,8,2],"128":[139,0,0],"130":[98,5,0],"131":[91,0,0],"132":[189,28,2],"133":[88,4,1],"135":[49,1,0],"141":[55,4,0],"142":[119,4,0],"145":[18,3,0],"147":[62,0,0],"152":[131,1,0],"155":[25,3,0],"158":[80,3,1],"159":[71,0,0],"160":[99,0,0],"162":[104,6,0],"163":[12,0,0],"165":[135,9,0],"166":[58,30,1],"169":[60,3,0],"170":[63,0,0],"172":[57,0,0],"173":[15,0,0],"177":[545,21,1],"179":[332,20,4],"180":[39,2,0],"181":[101,4,0],"182":[71,5,0],"183":[64,37,5],"184":[244,12,0],"185":[15,0,0],"187":[63,3,0],"189":[82,0,0],"190":[73,5,0],"191":[25,0,0],"192":[5,1,1],"193":[91,8,0],"194":[49,3,0],"912":[100,4,2],"945":[1,0,0],"991":[472,103,2],"068":[268,46,10],"001":[430,73,21],"053":[176,2,0],"084":[203,0,0],"002":[483,68,5],"024":[43,2,0],"029":[309,31,2],"058":[82,11,0],"014":[30,0,0],"057":[465,33,1],"022":[300,24,3],"042":[33,1,0],"005":[233,71,3],"012":[585,37,0],"047":[192,4,0],"009":[587,114,23],"011":[52,0,0],"015":[38,10,1],"003":[399,64,23],"043":[315,19,1],"076":[262,3,0],"007":[274,85,23],"034":[215,37,2],"010":[95,2,0],"032":[166,6,1],"086":[357,2,0],"095":[561,71,15],"073":[193,0,0],"059":[279,62,11],"085":[154,9,0],"013":[71,13,0],"083":[263,9,2],"080":[346,7,0],"051":[202,36,0],"006":[44,0,0],"050":[97,48,0],"038":[279,40,7],"004":[427,133,17],"016":[39,1,0],"079":[130,21,0],"018":[83,5,0],"069":[338,1,0],"044":[89,0,0],"063":[19,0,0],"017":[61,14,0],"097":[34,1,0],"072":[38,2,0],"098":[119,0,0],"091":[81,2,1],"030":[242,5,1],"008":[57,6,0],"048":[20,2,0],"077":[37,2,0],"028":[30,2,0],"055":[46,1,0],"035":[8,0,0],"061":[15,0,0],"036":[24,0,0],"099":[42,0,1]};
 const SOCIOS_MEDIDOS = { "007": 451, "103": 2680 };
 // campos já identificados: clube → [código do campo, código com percurso (estatísticas por buraco), nome]
-const CLUB_COURSES = { "007": [["055", "", "(055)"]], "004": [["025", "025-1", "(025)"]] };
+const CLUB_COURSES = { "007": [["055", "055-1", "(055)"]], "004": [["025", "025-1", "(025)"]], "059": [["032", "032-1", "(032)"]], "183": [["073", "073-1", "(073)"]] };
 const M = "XH256YF45T";
 const P = "https://scoring-pt.datagolf.pt/scripts/";
 function clubLinks(cc, ack) {
@@ -889,7 +1095,7 @@ function renderClubs(terms) {
   s.querySelector("#csort").onchange = e => { clubSort = e.target.value; render(); document.getElementById("clubes").scrollIntoView(); };
   for (const c of list) {
     const [cc, curto, nome, zona, ack, alt] = c; const [nf, nj, ns] = fed(c);
-    const d = document.createElement("details"); d.className = "club";
+    const d = document.createElement("details"); d.className = "club"; d.id = "clube-" + cc; if (cc === pick.cc) d.open = true;
     const sm = document.createElement("summary");
     sm.innerHTML = `<span class="cc"></span><span class="cs"></span><span class="cf"></span><span class="cz"></span><span class="ca"></span><span class="num"></span><span class="num"></span><span class="num"></span>`;
     const f = sm.children;
@@ -913,6 +1119,98 @@ function renderClubs(terms) {
 const main = $("#main"), toc = $("#toc"), chips = $("#chips"), q = $("#q"), count = $("#count");
 let activeAccess = null;
 
+// clube e federado escolhidos — por omissão Santo da Serra (007) e o Manuel (52884)
+// torneios conhecidos de cada clube: [tcode, data, nome] — de public/data/fpg-admissions-draws.json (22/11/2026); os futuros primeiro
+const TOURNS = {"107":[["10990","08/12/2025","Torneio 10990"],["10988","22/11/2025","Torneio 10988"],["10975","06/09/2025","Torneio 10975"],["10958","10/07/2025","Torneio 10958"],["10949","28/06/2025","Torneio 10949"],["10948","21/06/2025","Torneio 10948"],["10927","26/04/2025","Torneio 10927"],["10921","29/03/2025","Torneio 10921"],["10919","01/03/2025","Torneio 10919"],["10906","18/01/2025","Torneio 10906"],["10900","14/12/2024","Torneio 10900"],["10897","23/11/2024","Torneio 10897"]],"125":[["10407","08/08/2026","4º Ranking Vale Pisão by Fearless Moment"],["10388","27/12/2025","Torneio 10388"],["10371","24/08/2025","Torneio 10371"],["10370","23/08/2025","Torneio 10370"],["10329","12/05/2024","Torneio 10329"],["10322","24/02/2024","Torneio 10322"]],"132":[["10160","10/01/2026","1ª Ordem de de Mérito - Marques de Marialva"],["10138","11/04/2025","4º Torneio Academia CGC (Montebelo)"],["10135","23/02/2025","Torneio 10135"],["10130","11/01/2025","1ª OM - Royal Óbidos"],["10107","28/01/2024","1ª OM CGC/ CGB - Royal Óbidos"]],"133":[["10165","27/01/2024","Torneio 10165"]],"152":[["10444","01/02/2025","Torneio 10444"]],"158":[["10302","15/08/2026","Taça Mendes d `Almeida"],["10279","23/08/2025","Torneio 10279"],["10250","16/08/2024","Torneio 10250"]],"177":[["11240","20/11/2026","GJG Portuguese Junior Classics 2026 - Portugal"],["11238","16/11/2026","GJG Junior TRophy 2026 - Portugal"]],"179":[["10607","29/07/2026","Amendoeira World Kids Golfe 2026 Sub 21"],["10606","29/07/2026","Amendoeira World Kids Golfe 2026 Sub 16/18"],["10605","29/07/2026","Amendoeira World Kids Golfe 2026 Sub 14"],["10604","29/07/2026","Amendoeira World Kids Golfe 2026 Sub 12"],["10603","29/07/2026","Amendoeira World Kids Golfe 2026 Sub 10"],["10517","24/07/2024","World Kids Golf 2024 Under 16/18"],["10516","24/07/2024","World Kids Golf 2024 Under 14"],["10514","24/07/2024","World Kids Golf 2024 Under 10"]],"183":[["10142","08/08/2025","Torneio 10142"],["10135","21/06/2025","Torneio de São João"],["10129","19/04/2025","Torneio da Páscoa"],["10109","03/08/2024","Torneio VI Aniversário PXO Golfe Clube"]],"192":[["10024","05/09/2026","PJA Torre 2026"],["10019","30/11/2025","Torneio 10019"]],"910":[["10141","03/10/2026","Norte Golfe"],["10137","07/04/2025","Campeonato do Norte de Clubes sub-18"],["10136","07/04/2025","Campeonato do Norte de Clubes sub-14"],["10133","18/06/2024","Camp Norte Jovens 2024 - Sub14"],["10132","18/06/2024","Camp Norte Jovens 2024 - Sub12"],["10131","18/06/2024","Camp Norte Jovens 2024 - Sub10"],["10124","26/03/2024","Campeonato do Norte de Clubes 2024 - Sub18"],["10123","26/03/2024","Campeonato do Norte de Clubes 2024 - Sub14"],["10120","04/09/2023","Camp Norte Jovens 2023 - Sub14"],["10119","04/09/2023","Camp Norte Jovens 2023 - Sub12"],["10118","04/09/2023","Camp Norte Jovens 2023 - Sub10"],["10115","11/07/2023","Camp Norte Jovens 2023 - Sub25"]],"912":[["10228","24/07/2026","VII Solverde Players Championship"],["10225","11/06/2026","Campeonato Nacional de Profissionais"],["10220","19/02/2026","Taça Joaquim Oliveira"],["10215","21/11/2025","Timestamp Golf Tour Final by PGA National"],["10210","23/07/2025","Campeonato Nacional de Profissionais"],["10208","15/05/2025","VI PGA Portugal Championship"]],"920":[["10088","08/08/2026","Torneio José Rosado"],["10078","16/08/2024","Torneio 10078"],["10077","09/08/2024","Torneio 10077"],["10062","14/08/2023","Torneio 10062"]],"935":[["10296","16/02/2026","Greatgolf Junior Open w/ Luis Figo Foundation -U12"],["10295","16/02/2026","Greatgolf Junior Open w/ Luis Figo Foundation -U14"],["10294","15/02/2026","Greatgolf Junior Open with Luis Figo Foundation"],["10260","02/03/2025","Final Drive Challenge Sul - Castro Marim - Sub 12"]],"962":[["90921","27/12/2026","Quinta do Lago Junior Open 2026 - U21"],["90916","27/12/2026","Quinta do Lago Junior Open 2026 - U16"],["90914","27/12/2026","Quinta do Lago Junior Open 2026 - U14"],["90912","27/12/2026","Quinta do Lago Junior Open 2026 - U12"],["10084","21/08/2026","Paul McGinley Junior Cup 2026 - U12"],["10083","21/08/2026","Paul McGinley Junior Cup 2026 - U14"],["10082","21/08/2026","Paul McGinley Junior Cup 2026 - U18 & U16"],["10081","29/12/2025","Quinta do Lago Junior Open 2025 - U10"],["10080","29/12/2025","Quinta do Lago Junior Open 2025 - U12"],["10079","29/12/2025","Quinta do Lago Junior Open 2025 - U14"],["10078","29/12/2025","Quinta do Lago Junior Open 2025 - U21 & U16"],["10077","22/08/2025","Paul McGinley Junior Cup 2025 - Under 10"],["10076","22/08/2025","Paul McGinley Junior Cup 2025 - Under 12"],["10075","22/08/2025","Paul McGinley Junior Cup 2025 - Under 14"],["10074","22/08/2025","Paul McGinley Junior Cup 2025 - Under 18 & 16"],["10070","28/12/2024","Quinta do Lago Junior Open 2024 - U10"]],"966":[["96602","04/12/2026","Morgado International Junior Classic 2026 - Raparigas"],["96601","04/12/2026","Morgado International Junior Classic 2026 - Rapazes"],["10060","06/03/2026","Torneio 10060"],["10059","01/03/2026","Torneio 10059"],["10055","02/02/2026","Torneio 10055"],["10051","05/01/2026","Torneio 10051"],["10046","03/02/2025","Torneio 10046"],["10043","11/01/2025","Torneio 10043"],["10042","06/01/2025","Torneio 10042"],["10039","11/03/2024","Torneio 10039"],["10038","04/03/2024","Torneio 10038"],["10037","28/02/2024","Torneio 10037"],["10035","14/02/2024","Torneio 10035"],["10029","06/01/2024","Torneio 10029"]],"982":[["10246","23/01/2027","1º Torneio Drive Challenge Madeira-Palheiro-Sub 10"],["10245","23/01/2027","1º Torneio Drive Challenge Madeira-Palheiro-Sub 12"],["10244","23/01/2027","1º Torneio Drive Challenge Madeira-Palheiro-Sub 14"],["10243","23/01/2027","1º Torneio Drive Challenge Madeira-Palheiro-Sub 18"],["10241","12/07/2026","Final Drive Challenge Madeira-Palheiro-Sub 18"],["10240","12/07/2026","Final Drive Challenge Madeira-Palheiro-Sub 16"],["10239","12/07/2026","Final Drive Challenge Madeira-Palheiro-Sub 14"],["10238","12/07/2026","Final Drive Challenge Madeira-Palheiro-Sub 12"],["10237","12/07/2026","Final Drive Challenge Madeira-Palheiro-Sub 10"],["10236","11/07/2026","7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub18"],["10235","11/07/2026","7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub16"],["10234","11/07/2026","7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub14"],["10233","11/07/2026","7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12"],["10232","11/07/2026","7 ºTorn.Drive Challenge Madeira-Stº da Serra-Sub10"],["10231","28/06/2026","6º Torn.Drive Challenge Madeira-Porto Santo-Sub 18"],["10230","28/06/2026","6º Torn.Drive Challenge Madeira-Porto Santo-Sub 16"]],"983":[["10187","14/07/2026","Final Nacional Drive Challenge Açores Sub 10"],["10186","14/07/2026","Final Nacional Drive Challenge Açores Sub 14"],["10185","14/07/2026","Final Nacional Drive Challenge Açores Sub 16"],["10184","14/07/2026","Final Nacional Drive Challenge Açores Sub 18"],["10158","13/07/2026","4º Torneio Drive Tour Terceira"],["10157","12/07/2026","3º Torneio Drive Tour Terceira"],["10183","11/07/2026","7º Torneio Drive Challenge Açores–Terceira-Sub 18"],["10182","11/07/2026","7º Torneio Drive Challenge Açores–Terceira-Sub 16"],["10181","11/07/2026","7º Torneio Drive Challenge Açores–Terceira-Sub 14"],["10180","11/07/2026","7º Torneio Drive Challenge Açores–Terceira-Sub 12"],["10179","11/07/2026","7º Torneio Drive Challenge Açores–Terceira-Sub 10"],["10178","13/06/2026","6º Torneio Drive Challenge Açores–Terceira-Sub 18"]],"984":[["10140","11/07/2026","2º Torn. Drive Challenge Açores - Batalha - Sub 18"],["10138","11/07/2026","2º Torn. Drive Challenge Açores - Batalha - Sub 14"],["10137","11/07/2026","2º Torn. Drive Challenge Açores - Batalha - Sub 12"],["10136","11/07/2026","2º Torn. Drive Challenge Açores - Batalha - Sub 10"],["10133","04/07/2026","1º Torn. Drive Challenge Açores - Batalha - Sub 14"],["10131","04/07/2026","1º Torn. Drive Challenge Açores - Batalha - Sub 10"],["10114","22/06/2025","1º Torn. Drive Challenge Açores - Batalha - Sub 18"],["10113","22/06/2025","1º Torn. Drive Challenge Açores - Batalha - Sub 14"],["10112","22/06/2025","1º Torn. Drive Challenge Açores - Batalha - Sub 12"],["10126","08/06/2025","4º Torn. Drive Challenge Açores - Batalha - Sub 18"],["10124","08/06/2025","4º Torn. Drive Challenge Açores - Batalha - Sub 12"],["10122","24/05/2025","3º Torn. Drive Challenge Açores - Batalha - Sub 18"]],"985":[["10258","23/01/2027","1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 10"],["10257","23/01/2027","1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 12"],["10256","23/01/2027","1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 14"],["10255","23/01/2027","1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 18"],["10254","07/11/2026","Torneio Drive Challenge_Preparação 2027 Sub 10"],["10253","07/11/2026","Torneio Drive Challenge_Preparação 2027 Sub 12"],["10252","07/11/2026","Torneio Drive Challenge_Preparação 2027 Sub 14"],["10251","07/11/2026","Torneio Drive Challenge_Preparação 2027 Sub 18"],["10246","07/11/2026","Final Drive Tour – Oeiras Green Valley"],["10250","25/10/2026","Torneio Drive Challenge_Preparação 2027 Sub 10"],["10249","25/10/2026","Torneio Drive Challenge_Preparação 2027 Sub 12"],["10248","25/10/2026","Torneio Drive Challenge_Preparação 2027 Sub 14"],["10247","25/10/2026","Torneio Drive Challenge_Preparação 2027"],["10240","05/09/2026","Final Drive Challenge Tejo - Stº Estêvão - Sub 18"],["10239","05/09/2026","Final Drive Challenge Tejo - Stº Estêvão - Sub 16"],["10238","05/09/2026","Final Drive Challenge Tejo - Stº Estêvão - Sub 14"]],"987":[["10266","01/12/2026","Torneio Drive Challenge_Preparação 2027 Sub 10"],["10265","01/12/2026","Torneio Drive Challenge_Preparação 2027 Sub 12"],["10264","01/12/2026","Torneio Drive Challenge_Preparação 2027 Sub 14"],["10263","01/12/2026","Torneio Drive Challenge_Preparação 2027 Sub 18"],["10258","25/10/2026","Torneio Drive Challenge_Preparação 2027 Sub 10"],["10257","25/10/2026","Torneio Drive Challenge_Preparação 2027 Sub 12"],["10256","25/10/2026","Torneio Drive Challenge_Preparação 2027 Sub 14"],["10255","25/10/2026","Torneio Drive Challenge_Preparação 2027"],["10249","04/09/2026","Final Drive Challenge Norte-Oporto-Sub 18"],["10248","04/09/2026","Final Drive Challenge Norte-Oporto-Sub 16"],["10247","04/09/2026","Final Drive Challenge Norte-Oporto-Sub 14"],["10246","04/09/2026","Final Drive Challenge Norte-Oporto-Sub 12"],["10245","04/09/2026","Final Drive Challenge Norte-Oporto-Sub 10"],["10207","30/08/2026","2º Torneio Drive Tour Norte – Amarante"],["10254","25/07/2026","8º Torneio Drive Chall Norte-Guardizela-Sub 10"],["10253","25/07/2026","8º Torneio Drive Chall Norte-Guardizela-Sub 12"]],"988":[["90800","07/11/2026","Final Drive Tour"],["10309","12/10/2026","Final Nacional Drive Challenge Sub 10"],["10307","10/10/2026","Final Nacional do Drive Challenge"],["10306","13/09/2026","Final Reg. Drive Challenge Sul-Castro Marim-Sub16"],["10288","13/09/2026","Final Reg. Drive Challenge Sul-Castro Marim-Sub18"],["10287","13/09/2026","Final Reg. Drive Challenge Sul-Castro Marim-Sub14"],["10286","13/09/2026","Final Reg. Drive Challenge Sul-Castro Marim-Sub12"],["10285","13/09/2026","Final Reg. Drive Challenge Sul-Castro Marim-Sub10"],["10305","11/07/2026","7º Torneio Drive Challenge Sul-Benamor- Sub 16"],["10291","11/07/2026","7º Torneio Drive Challenge Sul-Benamor- Sub 18"],["10290","11/07/2026","7º Torneio Drive Challenge Sul-Benamor- Sub 14"],["10289","11/07/2026","7º Torneio Drive Challenge Sul-Benamor- Sub 12"]],"992":[["10530","13/07/2026","Jamor Summer Series 2026"],["10503","17/05/2026","2º Torneio Circuito Fim de Semana 2026"],["10504","15/03/2026","3º Torneio Circuito Fim de Semana 2026"],["10462","07/12/2025","Grand Final Circuito Fim de Semana 2025"],["10461","16/11/2025","11º Torneio Circuito Fim de Semana 2025"],["10460","19/10/2025","10º Torneio Circuito Fim de Semana 2025"],["10459","21/09/2025","9º Torneio Circuito Fim de Semana 2025"],["10458","31/08/2025","8º Torneio Circuito Fim de Semana 2025"],["10457","20/07/2025","7º Torneio Circuito Fim de Semana 2025"],["10456","15/06/2025","6º Torneio Circuito Fim de Semana 2025"],["10455","18/05/2025","5º Torneio Circuito Fim de Semana 2025"],["10465","16/03/2025","3º Torneio Circuito ENG 2025"]],"000":[["90873","04/12/2026","2nd Castro Marim Portuguese Int. U14 Championship — Raparigas"],["90872","04/12/2026","2nd Castro Marim Portuguese Int. U14 Championship"],["10946","04/12/2026","2nd Castro Marim Portuguese Int. U14 Championship"],["10885","14/11/2026","6º Torneio do Circuito Aquapor S"],["10884","14/11/2026","6º Torneio do Circuito Aquapor"],["10947","07/11/2026","Final Drive Tour – Oeiras Green Valley / Academia"],["10886","17/10/2026","5º Torneio do Circuito Aquapor S"],["10883","17/10/2026","5º Torneio do Circuito Aquapor"],["10919","10/10/2026","Taça da Federação Portuguesa de Golfe – BPI S"],["10918","10/10/2026","Taça da Federação Portuguesa de Golfe – BPI H"],["10896","03/10/2026","5º Torneio do Circuito Mid-Amateur & Senior S"],["10895","03/10/2026","5º Torneio do Circuito Mid-Amateur & Senior"],["10917","27/08/2026","Campeonato Nacional de Clubes Solverde S"],["10916","27/08/2026","Campeonato Nacional de Clubes Solverde H"],["10894","25/07/2026","4º Torneio do Circuito Mid-Amateur & Senior S"]],"051":[["10549","22/11/2026","Road To Drive Challenge 2027 Sub-10"],["10548","22/11/2026","Road To Drive Challenge 2027 Sub-14"],["10547","22/11/2026","Road To Drive Challenge 2027 Sub-12"],["10546","22/11/2026","Road To Drive Challenge 2027 Sub-18"],["10545","22/11/2026","6º Torneio Circuito Rookies 2026"],["10544","21/11/2026","Torneio Sócios Honorários 2026"],["10452","31/05/2024","Campeonato Regional Jovens Sub-10"],["10451","31/05/2024","Campeonato Regional Jovens Sub-12"],["10450","31/05/2024","Campeonato Regional Jovens Sub-14"],["10449","31/05/2024","Campeonato Regional Jovens Sub-16"],["10448","31/05/2024","Campeonato Regional Jovens Sub-18"],["10388","04/04/2023","Camp. Regional de Jovens- Sub 18"]],"007":[["11090","21/11/2026","TAÇA 1937 by Clube de Golf Santo da Serra"],["11091","15/11/2026","VI ABERTO CGSS 2026"],["11087","14/11/2026","Torneio CGSS São Martinho"],["11084","31/10/2026","TAÇA PRESIDENTE CGSS 2026"],["11081","25/10/2026","V ABERTO CGSS"],["11075","10/10/2026","TROFÉU JOÃO SOUSA CGSS 2026"],["11067","03/10/2026","Torneio 50 ANOS de AUTONOMIA"],["11071","26/09/2026","TAÇA DO CLUBE CGSS 2026"],["11064","12/09/2026","XIII Torneio - Vinhos Barbeito Madeira / CGSS 2026"],["11061","05/09/2026","Torneio Quinta de São João 2026"],["11059","02/09/2026","Quarta Feira Europeia 24"],["11057","29/08/2026","8º Torneio CGSS OM NOS 2026"]],"003":[["10691","08/11/2026","Circuito Junior 18b"],["10690","08/11/2026","Circuito Junior Challenge"],["10675","03/10/2026","Taça Nena"],["10653","19/08/2026","VIII Miramar Internacional Open U25 - Sub 10"],["10652","19/08/2026","VIII Miramar Internacional Open U25"],["10655","11/07/2026","Campeão do Clube"],["10646","20/06/2026","Taça R. S. Yeatman"],["10626","18/04/2026","Torneio 10626"],["10622","01/03/2026","Circuito Junior Challenge"],["10616","21/02/2026","Torneio 10616"],["10610","10/01/2026","Torneio 10610"],["10597","09/11/2025","Torneio 10597"]],"068":[["10642","30/05/2026","Campeonato do Clube 2026"],["10638","19/04/2026","4ª Ordem de Mérito do Clube de Golfe de Belas 2026"],["10632","07/03/2026","Taça de Belas 2026"],["10612","29/11/2025","10ª Ordem de Merito do Clube de Belas/S. Martinho"],["10610","11/10/2025","9ª Ordem de Merito do Clube de Belas 2025"],["10606","19/07/2025","7ª Ordem de Mérito do Clube de Belas2025"],["10605","02/07/2025","7ª OM Midweek do Clube de Belas 2025"],["10604","29/06/2025","6ª Ordem de Merito do Clube de Belas/Sardinhada"],["10603","25/06/2025","6ª OM Midweek do Clube de Belas 2025"],["10598","12/04/2025","4ª Ordem de Merito do Clube de Belas 2025"],["10591","18/01/2025","1ª Ordem de Mérito do Clube de Belas 2025"],["10559","02/11/2024","Campeonato do Clube de 2024 Strokpay"]],"057":[["10884","20/09/2025","Torneio 10884"],["10772","26/10/2024","Torneio 10772"],["10747","21/07/2024","Torneio 10747"],["10729","15/06/2024","Torneio 10729"],["10697","03/02/2024","Torneio 10697"]],"022":[["10653","14/02/2026","8ª Taça Manuel Melo"],["10651","17/01/2026","8ª Taça Amadeu da Cunha Ferreira"],["10643","25/10/2025","Torneio 10643"],["10634","01/08/2025","8º Estela Friday Cup 2025"],["10626","04/07/2025","7º Estela Friday Cup 2025"],["10606","29/03/2025","Taça Bernadino Leite Faria 2025"],["10600","17/01/2025","Taça Amadeu da Cunha Ferreira 2025"],["10597","21/12/2024","Torneio 10597"],["10596","14/12/2024","Torneio 10596"],["10581","16/11/2024","Taça Bernardino Leite Faria 2024"],["10588","26/10/2024","XXXV Torneio de Aniversário Estela Golf Club"],["10569","02/08/2024","7º Estela Friday 2024"]],"004":[["10588","31/10/2026","Taça DUARTE ESPIRITO SANTO SILVA"],["10581","07/07/2026","CAMP. JUVENIL - T.V.P.M. (Escalão B)"],["10580","06/07/2026","CAMP. JUVENIL - T.V.P.M. (Escalão A)"],["10578","20/06/2026","CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"],["10576","23/05/2026","Torneio ABERTO DO ESTORIL"],["10569","28/03/2026","4º ESTORIL Golf Junior Open by Fausto Figueiredo"],["10556","28/03/2026","Taça FAUSTO FIGUEIREDO"],["10567","21/03/2026","3º ESTORIL Golf Junior Open by Rodrigo Bivar"],["10559","21/03/2026","Taça RODRIGO DE BIVAR"],["10565","14/03/2026","2º ESTORIL Golf Junior Open by Arqtº António Lino"],["10563","07/03/2026","ESTORIL Golf Junior Open by Manuel Leão"],["10555","07/03/2026","Taça MANUEL LEÃO"]],"087":[["10456","16/03/2024","3º Torneio Liga Paço do Lumiar"]],"001":[["10591","24/10/2026","Taça Fernando Nicolau de Almeida"],["10580","19/09/2026","Taça Skeffington e Taça Ellen Kendall (2ºD)"],["10576","12/09/2026","Taça Manuel Violas"],["10572","15/07/2026","3º Torneio do Circuito de Verão 2026"],["10569","09/07/2026","2º Torneio do Circuito de Verão 2026"],["10567","02/07/2026","Torneio 10567"],["10566","27/06/2026","Torneio 10566"],["10563","30/05/2026","Torneio 10563"],["10562","23/05/2026","Torneio 10562"],["10560","16/05/2026","Torneio 10560"],["10559","10/05/2026","Torneio 10559"],["10558","02/05/2026","Torneio 10558"]],"002":[["11372","22/11/2026","2º TORNEIO LGS - SUB 16/18"],["11297","09/05/2026","109ª Lisbon Cup"],["11185","24/05/2025","108ª Lisbon Cup"],["11114","17/11/2024","1ºTorneio LGS - 14/21"],["11032","11/05/2024","107ª Lisbon Cup"]],"005":[["10321","13/12/2025","Natal 2025"],["10320","29/11/2025","Peru 2025"],["10305","11/07/2025","Campeonato Regional de Jovens 2025 Sub-18"],["10304","11/07/2025","Campeonato Regional de Jovens 2025 Sub-16"],["10303","11/07/2025","Campeonato Regional de Jovens 2025 Sub-14"],["10302","11/07/2025","Campeonato Regional de Jovens 2025 Sub-12"],["10301","10/07/2025","Campeonato Regional de Jovens 2025 Sub-10"],["10293","19/04/2025","Melhor dos Melhores 2025"],["10266","10/06/2024","Torneio Terceira Open Construtora 2024"]],"009":[["10680","20/07/2026","Torneio 10680"],["10682","14/07/2026","Torneio 10682"],["10634","26/08/2025","Torneio 10634"],["10631","18/08/2025","Torneio 10631"],["10630","12/08/2025","Torneio 10630"],["10628","05/08/2025","Torneio 10628"],["10623","04/08/2025","Torneio 10623"],["10624","29/07/2025","Torneio 10624"],["10625","26/07/2025","Torneio 10625"],["10622","15/07/2025","Torneio 10622"],["10621","08/07/2025","Torneio 10621"],["10612","07/07/2025","Torneio 10612"]],"080":[["10971","04/08/2026","Junior Open 9 Holes"],["10970","04/08/2026","Junior Open 18 Holes"],["10677","06/08/2024","Torneio 10677"]],"079":[["10100","07/09/2025","6º Prova da Ordem de Merito QLCG"],["10086","07/08/2024","Torneio 10086"]],"059":[["10683","25/07/2026","Torneio de Golfe Calheta Viva"],["10618","04/07/2026","Junior Major - 9 buracos"],["10685","20/06/2026","Campeonato Regional de Clubes 2026"],["10643","11/06/2026","XXI Torneio Savoy Signature Vacation Club - 2 dias"],["10616","06/06/2026","3º Torneio Academia Junior - 9 buracos"],["10615","06/06/2026","3º Torneio Academia Junior - 18 buracos"],["10641","30/05/2026","Torneio Coral Nations Cup ( 4ª edição)"],["10614","21/02/2026","2º Torneio Academia Junior - 9 buracos"],["10613","21/02/2026","2º Torneio Academia Junior - 18 buracos"],["10612","06/12/2025","1º Torneio Academia Junior Natal - 9 buracos"],["10611","06/12/2025","1º Torneio Academia Junior Natal - 18 buracos"],["10542","01/11/2025","Torneio Coral Nations Cup (3ª edição)"]],"038":[["10758","12/09/2026","Taça João Salazar de Sousa - Camp. do Clube A"],["10754","26/06/2026","QUINTA DO PERU PJA Masters 2026"],["10716","11/04/2026","Taça Quinta do Peru 2026"],["10704","22/02/2026","2ª Ordem de Mérito Cat A"],["10647","21/06/2025","Taça António Dantas 2025"]],"034":[["10122","04/10/2025","VI OM Tour CGB 2025"]],"043":[["10350","29/11/2025","Torneio 10350"]],"029":[["10543","24/04/2026","PJA Aroeira Masters 2026"]],"095":[["11678","22/11/2026","33rd VILA SOL JUNIOR COMP - 9 HOLES"],["11677","22/11/2026","33rd VILA SOL JUNIOR COMP"]]};
+const DEF_PICK = { cc: "007", fed: "52884" };
+const FED_NAMES = { "52884": "Manuel" };
+const FED_HCP = { "52884": "6.4" };             // índice para a calculadora
+const SCORE_DEF = { "52884": "4385632" };
+const PHOTO_DEF = { "52884": ["5", "01a3c9da-bc05-4845-b00b-29047ab89f60"] }; // campo photo do cadastro       // um score_id real do federado (cartão de 12/09/2026)
+const RANK_DEF = { "007": "OMCGSSH26", "988": "RDTN26", "000": "RCAH26" }; // Ordem de Mérito / ranking de cada clube
+const YEAR = String(new Date().getFullYear());
+const FPG_HOST = /datagolf\.pt|fpg\.pt/;
+const DEF_TC = { "007": "11081" }; // V Aberto CGSS (25/10/2026): tem draw, classificação e o Manuel
+const defTourn = cc => { if (DEF_TC[cc]) return DEF_TC[cc]; const t = (TOURNS[cc] || []).find(x => x[1].split("/").reverse().join("-") <= new Date().toISOString().slice(0, 10)); return t ? t[0] : ""; };
+let pick = { ...DEF_PICK, tc: defTourn(DEF_PICK.cc), rd: "1" };
+try {
+  const s = JSON.parse(localStorage.getItem("mapa-fontes-pick") || "null");
+  if (s && CLUBS.some(c => c[0] === s.cc)) { pick.cc = s.cc; pick.tc = defTourn(s.cc); }
+  if (s && typeof s.fed === "string" && /^\d{0,7}$/.test(s.fed)) pick.fed = s.fed;
+  if (s && typeof s.tc === "string" && /^\d{0,6}$/.test(s.tc)) pick.tc = s.tc;
+  if (s && typeof s.rd === "string" && /^[1-9]$/.test(s.rd)) pick.rd = s.rd;
+} catch {}
+const clubOf = cc => CLUBS.find(c => c[0] === cc);
+const ackOf = cc => { const c = clubOf(cc); return (c && c[4]) || M; };
+const tournOf = (cc, tc) => (TOURNS[cc] || []).find(x => x[0] === tc);
+function subPh(ph, u, before) {
+  const k = ph.slice(1, -1);
+  if (k === "ccode" || k === "ccode|ALL") return pick.cc;
+  if (k === "ack") return ackOf(pick.cc);
+  if (k === "fed") return pick.fed || null;
+  if (FPG_HOST.test(u)) {
+    if (k === "tcode") return pick.tc || null;
+    if (k === "ano") return YEAR;
+    if (k.startsWith("memberno|")) return "name";
+    if (k === "n" && before.endsWith("pagesize=")) return "500";
+    if (k === "n" && /round(_number)?=$/.test(before)) return pick.rd || "1";
+    if (k === "código") return RANK_DEF[pick.cc] || null;
+    if (k === "score_id") return SCORE_DEF[pick.fed] || null;
+    if (k === "M|F") return "M";
+    if (k === "índice") return FED_HCP[pick.fed] || null;
+    if (k === "página" && /datalinkpt/.test(u)) return "fedhcp&fedno=" + (pick.fed || "");
+    const campo = (CLUB_COURSES[pick.cc] || [])[0];
+    if (k === "campo" && campo) return /show_strokeindex/.test(u) ? campo[1] : campo[0];
+    if (k === "percurso" && campo) return "1";
+    if (k === "tee") return "0";
+    if (k === "n" && /photos\/$/.test(before)) return (PHOTO_DEF[pick.fed] || [])[0] || null;
+    if (k === "uuid") return (PHOTO_DEF[pick.fed] || [])[1] || null;
+  }
+  if (/golf-portugal\.pt/.test(u)) {
+    if (k === "qualquer") return pick.cc;
+    if (k === "n" && before.endsWith("limit=")) return "20";
+  }
+  return null;
+}
+function resolveUrl(u) {
+  const parts = u.split(/(\{[^}]+\})/), nodes = [];
+  let out = "", open = true, filled = false;
+  parts.forEach((p, i) => {
+    if (!p) return;
+    if (/^\{.*\}$/.test(p)) {
+      const v = subPh(p, u, parts[i - 1] || "");
+      if (v != null) { out += v; filled = true; nodes.push(["fill", v, p]); }
+      else { out += p; open = false; nodes.push(["ph", p]); }
+    } else { out += p; nodes.push(["t", p]); }
+  });
+  return { out, nodes, open, filled };
+}
+const pickLabel = () => { const c = clubOf(pick.cc); const t = tournOf(pick.cc, pick.tc); return (c ? c[1] : pick.cc) + (pick.fed ? " · " + (FED_NAMES[pick.fed] ? FED_NAMES[pick.fed] + " (" + pick.fed + ")" : pick.fed) : "") + (pick.tc ? " · torneio " + pick.tc + (t ? " " + t[2] : "") : ""); };
+const pclub = $("#pclub"), pfed = $("#pfed"), ptc = $("#ptc"), prd = $("#prd");
+for (const [cc, curto, nome] of CLUBS) { const o = document.createElement("option"); o.value = cc; o.textContent = `${cc} · ${curto}`; o.title = nome; pclub.appendChild(o); }
+function syncPick() {
+  const setv = (el, v) => { if (document.activeElement !== el) el.value = v; };
+  pclub.value = pick.cc; setv(pfed, pick.fed); setv(ptc, pick.tc); setv(prd, pick.rd);
+  const c = clubOf(pick.cc), t = tournOf(pick.cc, pick.tc);
+  const dl = $("#ptcs"); dl.innerHTML = "";
+  for (const [tc, data, nome] of TOURNS[pick.cc] || []) { const o = document.createElement("option"); o.value = tc; o.label = `${data} · ${nome}`; o.textContent = `${data} · ${nome}`; dl.appendChild(o); }
+  $("#pwho").textContent = (c ? c[2] : "") + (FED_NAMES[pick.fed] ? " · " + pick.fed + " = " + FED_NAMES[pick.fed] : "") +
+    (t ? " · " + t[2] + " (" + t[1] + ")" : (pick.tc ? " · torneio " + pick.tc : " · sem torneio conhecido deste clube — escreva o tcode"));
+  $("#pgo").href = "#clube-" + pick.cc;
+  $("#preset").hidden = pick.cc === DEF_PICK.cc && pick.fed === DEF_PICK.fed && pick.tc === defTourn(DEF_PICK.cc) && pick.rd === "1";
+  try { localStorage.setItem("mapa-fontes-pick", JSON.stringify(pick)); } catch {}
+}
+const digits = (el, n) => { const v = el.value.replace(/\D/g, "").slice(0, n); if (v !== el.value) el.value = v; return v; };
+pclub.onchange = () => { pick.cc = pclub.value; pick.tc = defTourn(pick.cc); syncPick(); render(); };
+pfed.oninput = () => { pick.fed = digits(pfed, 7); syncPick(); render(); };
+ptc.oninput = () => { pick.tc = digits(ptc, 6); syncPick(); render(); };
+prd.oninput = () => { const v = digits(prd, 1); pick.rd = v && v !== "0" ? v : "1"; syncPick(); render(); };
+for (const el of [pfed, ptc, prd]) el.addEventListener("blur", syncPick);
+$("#preset").onclick = () => { pick = { ...DEF_PICK, tc: defTourn(DEF_PICK.cc), rd: "1" }; syncPick(); render(); };
+const tocTop = () => { const t = document.querySelector(".bar").offsetHeight + 8; toc.style.top = t + "px"; toc.style.setProperty("--toc-top", t + "px"); };
+addEventListener("resize", tocTop); addEventListener("load", tocTop);
+try { new ResizeObserver(tocTop).observe(document.querySelector(".bar")); } catch {}
+
 // legenda + chips
 for (const [k, v] of Object.entries(ACCESS)) {
   const row = document.createElement("div");
@@ -925,12 +1223,13 @@ for (const [k, v] of Object.entries(ACCESS)) {
   chips.appendChild(b);
 }
 
-function urlNode(u) {
+function urlNode(r) {
   const code = document.createElement("code");
-  for (const part of u.split(/(\{[^}]+\})/)) {
-    if (!part) continue;
-    if (/^\{.*\}$/.test(part)) { const s = document.createElement("span"); s.className = "ph"; s.textContent = part; code.appendChild(s); }
-    else code.appendChild(document.createTextNode(part));
+  for (const [kind, text, ph] of r.nodes) {
+    if (kind === "t") { code.appendChild(document.createTextNode(text)); continue; }
+    const s = document.createElement("span"); s.className = kind; s.textContent = text;
+    if (kind === "fill") s.title = ph + " → " + text;
+    code.appendChild(s);
   }
   return code;
 }
@@ -943,10 +1242,16 @@ function itemNode(it) {
   head.querySelector(".name").textContent = it.n;
   el.appendChild(head);
   const url = document.createElement("div"); url.className = "url";
-  url.appendChild(urlNode(it.u));
+  const r = resolveUrl(it.u);
+  url.appendChild(urlNode(r));
+  if (r.open && !it.m) {
+    const op = document.createElement("a"); op.className = "open"; op.href = r.out; op.target = "_blank"; op.rel = "noopener noreferrer";
+    op.textContent = "Abrir ↗"; if (r.filled) op.title = "Abrir para " + pickLabel();
+    url.appendChild(op);
+  }
   const cp = document.createElement("button"); cp.type = "button"; cp.className = "copy"; cp.textContent = "Copiar";
   cp.onclick = async () => {
-    try { await navigator.clipboard.writeText(it.u); cp.textContent = "Copiado"; cp.classList.add("done"); }
+    try { await navigator.clipboard.writeText(r.out); cp.textContent = "Copiado"; cp.classList.add("done"); }
     catch { cp.textContent = "Seleccione e copie"; }
     setTimeout(() => { cp.textContent = "Copiar"; cp.classList.remove("done"); }, 1600);
   };
@@ -998,5 +1303,7 @@ function render() {
   count.textContent = `${total} link${total === 1 ? "" : "s"}`;
 }
 q.addEventListener("input", render);
+syncPick();
 render();
+tocTop();
 </script>
