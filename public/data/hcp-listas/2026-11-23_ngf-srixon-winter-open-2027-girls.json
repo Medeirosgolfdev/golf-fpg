@@ -1,0 +1,115 @@
+{
+  "_doc": "Handicap dos juniores inscritos (NGF), lido do GolfBox a 23/11/2026 (PlayersHandler/GetPlayers, campo HCP ×10000: 245000 = 24,5). Uma linha por jogador (nome + clube), com as provas em que está inscrito. Sem ano de nascimento (o GolfBox não o dá). Plus em negativo. Usada pelo agregador kids2 (util/hcp-listas.js).",
+  "id": "ngf-srixon-winter-open-2027-girls-2026-11-23",
+  "label": "Srixon Winter Open 2027 — Girls (Noruega, HCP de 23/11/2026)",
+  "fonte": "GolfBox do Norges Golfforbund (customer 18) — competição 5881940",
+  "data": "2026-11-23",
+  "torneio": "Srixon Winter Open 2027 (10/03/2027) — Girls",
+  "sexo": "F",
+  "fonteCurta": "NGF",
+  "nota": "Lido a 23/11/2026: 5881940 Srixon Winter Open 2027 (6).",
+  "players": [
+    {
+      "pos": 1,
+      "lista": "entry",
+      "name": "Julie Edsbergløkken",
+      "country": "NO",
+      "hcp": -3.6,
+      "clube": "Losby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5881940,
+          "title": "Srixon Winter Open 2027",
+          "date": "2027-03-10",
+          "classe": "Girls"
+        }
+      ]
+    },
+    {
+      "pos": 2,
+      "lista": "entry",
+      "name": "Ella Ingebretsen",
+      "country": "NO",
+      "hcp": -1.4,
+      "clube": "Stavanger Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5881940,
+          "title": "Srixon Winter Open 2027",
+          "date": "2027-03-10",
+          "classe": "Girls"
+        }
+      ]
+    },
+    {
+      "pos": 3,
+      "lista": "entry",
+      "name": "Anne Witte-Skjelbred",
+      "country": "NO",
+      "hcp": -0.8,
+      "clube": "Oslo Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5881940,
+          "title": "Srixon Winter Open 2027",
+          "date": "2027-03-10",
+          "classe": "Girls"
+        }
+      ]
+    },
+    {
+      "pos": 4,
+      "lista": "entry",
+      "name": "Vilma Viktoria Nordström Finstad",
+      "country": "NO",
+      "hcp": -0.8,
+      "clube": "Haga Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5881940,
+          "title": "Srixon Winter Open 2027",
+          "date": "2027-03-10",
+          "classe": "Girls"
+        }
+      ]
+    },
+    {
+      "pos": 5,
+      "lista": "entry",
+      "name": "Eunice Holland Forseth",
+      "country": "NO",
+      "hcp": -0.1,
+      "clube": "Oslo Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5881940,
+          "title": "Srixon Winter Open 2027",
+          "date": "2027-03-10",
+          "classe": "Girls"
+        }
+      ]
+    },
+    {
+      "pos": 6,
+      "lista": "entry",
+      "name": "Julie Sagplass",
+      "country": "NO",
+      "hcp": 5.4,
+      "clube": "Losby Golfklubb",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5881940,
+          "title": "Srixon Winter Open 2027",
+          "date": "2027-03-10",
+          "classe": "Girls"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2510 @@
+{
+  "_doc": "Handicap dos juniores inscritos (DGU), lido do GolfBox a 23/11/2026 (PlayersHandler/GetPlayers, campo HCP ×10000: 245000 = 24,5). Uma linha por jogador (nome + clube), com as provas em que está inscrito. Com o ano de nascimento que o GolfBox dá. Sem sexo. Plus em negativo. Usada pelo agregador kids2 (util/hcp-listas.js).",
+  "id": "dgu-vinter-tour-2026-11-23",
+  "label": "Vinter Tour DGU 2026/27 — inscritos (Dinamarca, HCP de 23/11/2026)",
+  "fonte": "GolfBox da Dansk Golf Union (customer 15)",
+  "data": "2026-11-23",
+  "torneio": "Vinter Tour da Dansk Golf Union (D1–D5, etapas de 06/12/2026 a 07/03/2027)",
+  "soNomeExacto": true,
+  "fonteCurta": "DGU",
+  "nota": "Lido a 23/11/2026: 5535351 Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2 (20); 5535236 Vinter Tour (D2) Golf Arena Aarhus - Afd. 2 (51); 5672292 Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2 (9); 5672437 Vinter Tour (D4) Smørum - Afd. 2 (32); 5672445 Vinter Tour (D5) Harekær - Afd. 2 (9); 5535354 Vinter Tour (D1) Volstrup (SimGolf) - Afd. 3 (1); 5535245 Vinter Tour (D2) Golf Arena Aarhus - 3. Afd. (10); 5776754 Vinter Tour (D3) BirdieClub SimGolf (Esbjerg) - Afd. 3 (2); 5776762 Vinter Tour (D4) Simgolf Amager - Afd. 3 (9); 5776782 Vinter Tour (D5) Midtsjælland (SimGolf) - Afd. 3 (6); 5776868 Vinter Tour (D5) Greve - Afd. 4 (4); 5535361 Vinter Tour (D1) Sebber Kloster - Afd. 4 (1); 5535247 Vinter Tour (D2) Golf Arena Aarhus - 4. Afd. (10); 5776830 Vinter Tour (D3) Bogense GK - Afd. 4 (1); 5776857 Vinter Tour (D4) Nivå Golfklub - Afd. 4 (7).",
+  "players": [
+    {
+      "pos": 1,
+      "lista": "entry",
+      "name": "Axel Lykkeby Vognbjerg",
+      "country": null,
+      "hcp": 0.3,
+      "clube": "Greve Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672445,
+          "title": "Vinter Tour (D5) Harekær - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776782,
+          "title": "Vinter Tour (D5) Midtsjælland (SimGolf) - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776868,
+          "title": "Vinter Tour (D5) Greve - Afd. 4",
+          "date": "2027-03-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 2,
+      "lista": "entry",
+      "name": "Peter Stage",
+      "country": "DK",
+      "hcp": 1.7,
+      "clube": "Ørnehøj Golfklub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 3,
+      "lista": "entry",
+      "name": "Lukas Krogsgaard Nielsen",
+      "country": "DK",
+      "hcp": 2.1,
+      "clube": "Aabybro Golfklub",
+      "birthYear": 2010,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 4,
+      "lista": "entry",
+      "name": "Christian Jespersen",
+      "country": null,
+      "hcp": 2.3,
+      "clube": "Søllerød Golfklub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776762,
+          "title": "Vinter Tour (D4) Simgolf Amager - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776857,
+          "title": "Vinter Tour (D4) Nivå Golfklub - Afd. 4",
+          "date": "2027-03-07",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 5,
+      "lista": "entry",
+      "name": "Villads Højer Torp Andersen",
+      "country": "DK",
+      "hcp": 2.6,
+      "clube": "Hjørring Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 6,
+      "lista": "entry",
+      "name": "Magnus Wüpper Nielsen",
+      "country": null,
+      "hcp": 3.2,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 7,
+      "lista": "entry",
+      "name": "Casper Falck Brandt",
+      "country": null,
+      "hcp": 3.3,
+      "clube": "Smørum Golfklub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 8,
+      "lista": "entry",
+      "name": "Alfred Jepsen",
+      "country": null,
+      "hcp": 3.4,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 9,
+      "lista": "entry",
+      "name": "Lasse Tolbod Johansen",
+      "country": "DK",
+      "hcp": 3.5,
+      "clube": "Aars Golfklub",
+      "birthYear": 2005,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5535354,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 10,
+      "lista": "entry",
+      "name": "Josephine Schødt Steffensen",
+      "country": null,
+      "hcp": 3.6,
+      "clube": "Dragør Golfklub",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 11,
+      "lista": "entry",
+      "name": "Luiz Valentin Bruus Rasmussen",
+      "country": null,
+      "hcp": 3.6,
+      "clube": "Ikast Golf Club",
+      "birthYear": 2010,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 12,
+      "lista": "entry",
+      "name": "Oliver Haslund Oppenlænder",
+      "country": null,
+      "hcp": 3.9,
+      "clube": "Kokkedal Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 13,
+      "lista": "entry",
+      "name": "Oskar Krabbe",
+      "country": null,
+      "hcp": 4.7,
+      "clube": "Aarhus Golf Club",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 14,
+      "lista": "entry",
+      "name": "Thomas Klaustrup",
+      "country": "DK",
+      "hcp": 5.6,
+      "clube": "Brønderslev Golfklub",
+      "birthYear": 2009,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 15,
+      "lista": "entry",
+      "name": "Albert Emil Lau Heckmann",
+      "country": null,
+      "hcp": 6.3,
+      "clube": "Aarhus Golf Club",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 16,
+      "lista": "entry",
+      "name": "Matias Hansen",
+      "country": "DK",
+      "hcp": 6.7,
+      "clube": "Esbjerg Golfklub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672292,
+          "title": "Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776754,
+          "title": "Vinter Tour (D3) BirdieClub SimGolf (Esbjerg) - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 17,
+      "lista": "entry",
+      "name": "Sander Hyldgaard",
+      "country": null,
+      "hcp": 6.7,
+      "clube": "Ikast Golf Club",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 18,
+      "lista": "entry",
+      "name": "Conrad Ewers-Wachmann",
+      "country": null,
+      "hcp": 6.9,
+      "clube": "PIBE MØLLE GOLF",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 19,
+      "lista": "entry",
+      "name": "Arthur Aae Breinholt Mouritsen",
+      "country": null,
+      "hcp": 7,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 20,
+      "lista": "entry",
+      "name": "Kristoffer Buhr Nielsen",
+      "country": null,
+      "hcp": 7.5,
+      "clube": "Sorø Golfklub",
+      "birthYear": 2010,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672445,
+          "title": "Vinter Tour (D5) Harekær - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776782,
+          "title": "Vinter Tour (D5) Midtsjælland (SimGolf) - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 21,
+      "lista": "entry",
+      "name": "Markas Devulis",
+      "country": null,
+      "hcp": 7.7,
+      "clube": "Simon's Golf Club",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 22,
+      "lista": "entry",
+      "name": "Maxim Vasyagin",
+      "country": null,
+      "hcp": 8,
+      "clube": "Gyttegård Golf Klub",
+      "birthYear": 2010,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 23,
+      "lista": "entry",
+      "name": "Tobias Holbæk Jakobsen",
+      "country": null,
+      "hcp": 8.4,
+      "clube": "Smørum Golfklub",
+      "birthYear": 2010,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 24,
+      "lista": "entry",
+      "name": "Otto Dahlwad Kristensen",
+      "country": null,
+      "hcp": 9.3,
+      "clube": "Aarhus Golf Club",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 25,
+      "lista": "entry",
+      "name": "Marius Brøgger Andersen",
+      "country": null,
+      "hcp": 9.5,
+      "clube": "Lyngbygaard Golf Klub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 26,
+      "lista": "entry",
+      "name": "Lukas Anton Nielsen-Refs",
+      "country": null,
+      "hcp": 9.6,
+      "clube": "Hørsholm Golfklub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 27,
+      "lista": "entry",
+      "name": "Mie Ravn Lindgaard",
+      "country": null,
+      "hcp": 9.7,
+      "clube": "Dejbjerg Golf Klub",
+      "birthYear": 2010,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 28,
+      "lista": "entry",
+      "name": "Silas Bredahl",
+      "country": "DK",
+      "hcp": 9.9,
+      "clube": "Ørnehøj Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 29,
+      "lista": "entry",
+      "name": "Theodor Betzer",
+      "country": null,
+      "hcp": 9.9,
+      "clube": "Københavns Golf Klub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 30,
+      "lista": "entry",
+      "name": "August Deigaard",
+      "country": "DK",
+      "hcp": 10.2,
+      "clube": "Kolding Golf Club",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5776754,
+          "title": "Vinter Tour (D3) BirdieClub SimGolf (Esbjerg) - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776830,
+          "title": "Vinter Tour (D3) Bogense GK - Afd. 4",
+          "date": "2027-03-07",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 31,
+      "lista": "entry",
+      "name": "Mikkel Nygård Lønberg",
+      "country": null,
+      "hcp": 10.2,
+      "clube": "Korsør Golf Klub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672445,
+          "title": "Vinter Tour (D5) Harekær - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 32,
+      "lista": "entry",
+      "name": "Elliott Bach",
+      "country": null,
+      "hcp": 11.3,
+      "clube": "Søllerød Golfklub",
+      "birthYear": 2015,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776762,
+          "title": "Vinter Tour (D4) Simgolf Amager - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776857,
+          "title": "Vinter Tour (D4) Nivå Golfklub - Afd. 4",
+          "date": "2027-03-07",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 33,
+      "lista": "entry",
+      "name": "Mads Frederik Ringbæk",
+      "country": null,
+      "hcp": 11.3,
+      "clube": "Furesø Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 34,
+      "lista": "entry",
+      "name": "Wilhelm Boll",
+      "country": null,
+      "hcp": 11.3,
+      "clube": "Herning Golf Klub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 35,
+      "lista": "entry",
+      "name": "Marie Sirinya Møller Andersen",
+      "country": "DK",
+      "hcp": 11.7,
+      "clube": "Hjørring Golfklub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 36,
+      "lista": "entry",
+      "name": "Phillippa Andkjær Nielsen",
+      "country": null,
+      "hcp": 11.8,
+      "clube": "Brøndby Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 37,
+      "lista": "entry",
+      "name": "Philip Ewan Vogel",
+      "country": null,
+      "hcp": 11.9,
+      "clube": "Dragør Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776762,
+          "title": "Vinter Tour (D4) Simgolf Amager - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776857,
+          "title": "Vinter Tour (D4) Nivå Golfklub - Afd. 4",
+          "date": "2027-03-07",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 38,
+      "lista": "entry",
+      "name": "Rasmus Skovby Johnsen",
+      "country": null,
+      "hcp": 11.9,
+      "clube": "Herning Golf Klub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 39,
+      "lista": "entry",
+      "name": "August Rasmussen",
+      "country": null,
+      "hcp": 12.1,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 40,
+      "lista": "entry",
+      "name": "Noah Storm",
+      "country": "DK",
+      "hcp": 12.4,
+      "clube": "Sebber Kloster Golf Klub",
+      "birthYear": 2007,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 41,
+      "lista": "entry",
+      "name": "Gustav Knud Stougård",
+      "country": null,
+      "hcp": 12.5,
+      "clube": "Lyngbygaard Golf Klub",
+      "birthYear": 2006,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Ungdom"
+        }
+      ]
+    },
+    {
+      "pos": 42,
+      "lista": "entry",
+      "name": "Emil Herslund",
+      "country": "DK",
+      "hcp": 12.7,
+      "clube": "Aalborg Golf Klub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 43,
+      "lista": "entry",
+      "name": "Andrea Schødt Steffensen",
+      "country": null,
+      "hcp": 12.8,
+      "clube": "Dragør Golfklub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 44,
+      "lista": "entry",
+      "name": "Leo Støchkel Gruhn",
+      "country": null,
+      "hcp": 13,
+      "clube": "Smørum Golfklub",
+      "birthYear": 2015,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 45,
+      "lista": "entry",
+      "name": "Sebastian Skafte-Pedersen",
+      "country": null,
+      "hcp": 13.9,
+      "clube": "Københavns Golf Klub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 46,
+      "lista": "entry",
+      "name": "Gustav Mundt",
+      "country": null,
+      "hcp": 14.2,
+      "clube": "Furesø Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 47,
+      "lista": "entry",
+      "name": "Christian Borregaard",
+      "country": null,
+      "hcp": 14.3,
+      "clube": "Stensballegaard Golfklub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 48,
+      "lista": "entry",
+      "name": "Lucas Roman-Andersen",
+      "country": null,
+      "hcp": 14.6,
+      "clube": "Søllerød Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 49,
+      "lista": "entry",
+      "name": "Maria Ahle Hansen",
+      "country": null,
+      "hcp": 14.7,
+      "clube": "Dejbjerg Golf Klub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 50,
+      "lista": "entry",
+      "name": "Villads Tønder Bothe",
+      "country": null,
+      "hcp": 14.7,
+      "clube": "Stensballegaard Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 51,
+      "lista": "entry",
+      "name": "Andreas Nan Hansen",
+      "country": null,
+      "hcp": 14.9,
+      "clube": "Dejbjerg Golf Klub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 52,
+      "lista": "entry",
+      "name": "Rasmus Ejnar Bekker",
+      "country": null,
+      "hcp": 15.9,
+      "clube": "Værebro Golfklub",
+      "birthYear": 2009,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776868,
+          "title": "Vinter Tour (D5) Greve - Afd. 4",
+          "date": "2027-03-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 53,
+      "lista": "entry",
+      "name": "Felix Egeberg Engwald",
+      "country": "DK",
+      "hcp": 16.1,
+      "clube": "Dragør Golfklub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5776762,
+          "title": "Vinter Tour (D4) Simgolf Amager - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 54,
+      "lista": "entry",
+      "name": "Oliver Lynggård Mørkholt Houmøller",
+      "country": null,
+      "hcp": 17,
+      "clube": "Vallø Golfklub",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672445,
+          "title": "Vinter Tour (D5) Harekær - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776782,
+          "title": "Vinter Tour (D5) Midtsjælland (SimGolf) - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776868,
+          "title": "Vinter Tour (D5) Greve - Afd. 4",
+          "date": "2027-03-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 55,
+      "lista": "entry",
+      "name": "Jonas Hald",
+      "country": "DK",
+      "hcp": 17.7,
+      "clube": "Sebber Kloster Golf Klub",
+      "birthYear": 2009,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 56,
+      "lista": "entry",
+      "name": "Martha Borre Lange",
+      "country": null,
+      "hcp": 17.7,
+      "clube": "Furesø Golfklub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 57,
+      "lista": "entry",
+      "name": "Christian Toft Hansen",
+      "country": "DK",
+      "hcp": 17.8,
+      "clube": "Benniksgaard Golf Klub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672292,
+          "title": "Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 58,
+      "lista": "entry",
+      "name": "Bastian Jeggesen",
+      "country": null,
+      "hcp": 18.3,
+      "clube": "Lyngbygaard Golf Klub",
+      "birthYear": 2006,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Ungdom"
+        }
+      ]
+    },
+    {
+      "pos": 59,
+      "lista": "entry",
+      "name": "Theodor Sargent Larsen",
+      "country": null,
+      "hcp": 18.5,
+      "clube": "Hjortespring Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776762,
+          "title": "Vinter Tour (D4) Simgolf Amager - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776857,
+          "title": "Vinter Tour (D4) Nivå Golfklub - Afd. 4",
+          "date": "2027-03-07",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 60,
+      "lista": "entry",
+      "name": "Anthon Sønderby Jensen",
+      "country": null,
+      "hcp": 18.8,
+      "clube": "Stensballegaard Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 61,
+      "lista": "entry",
+      "name": "William Jiang Wen Møldrup",
+      "country": null,
+      "hcp": 18.8,
+      "clube": "Smørum Golfklub",
+      "birthYear": 2009,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 62,
+      "lista": "entry",
+      "name": "Gustav Bylling",
+      "country": "DK",
+      "hcp": 19.3,
+      "clube": "Haderslev Golfklub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672292,
+          "title": "Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 63,
+      "lista": "entry",
+      "name": "Mathias Matthiesen Lauridsen",
+      "country": null,
+      "hcp": 19.4,
+      "clube": "Ikast Golf Club",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 64,
+      "lista": "entry",
+      "name": "Kristoffer Annesen",
+      "country": "DK",
+      "hcp": 20.3,
+      "clube": "Sønderborg Golfklub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672292,
+          "title": "Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 65,
+      "lista": "entry",
+      "name": "Ines Gorju Christoffersen",
+      "country": null,
+      "hcp": 20.8,
+      "clube": "Brøndby Golfklub",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776762,
+          "title": "Vinter Tour (D4) Simgolf Amager - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "B- rækken"
+        }
+      ]
+    },
+    {
+      "pos": 66,
+      "lista": "entry",
+      "name": "Claudia Nan Hansen",
+      "country": null,
+      "hcp": 21.1,
+      "clube": "Dejbjerg Golf Klub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 67,
+      "lista": "entry",
+      "name": "Noah Wallenius",
+      "country": null,
+      "hcp": 21.4,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2010,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 68,
+      "lista": "entry",
+      "name": "Karl Holm",
+      "country": null,
+      "hcp": 21.8,
+      "clube": "Ry Golf",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 69,
+      "lista": "entry",
+      "name": "Karl Schmidt Kellenberger",
+      "country": null,
+      "hcp": 22,
+      "clube": "Lyngbygaard Golf Klub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 70,
+      "lista": "entry",
+      "name": "Kristoffer Olsen",
+      "country": "DK",
+      "hcp": 22.2,
+      "clube": "Brønderslev Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 71,
+      "lista": "entry",
+      "name": "August Juhl Ceccotti",
+      "country": "DK",
+      "hcp": 22.3,
+      "clube": "Dronninglund Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5535361,
+          "title": "Vinter Tour (D1) Sebber Kloster - Afd. 4",
+          "date": "2027-03-07",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 72,
+      "lista": "entry",
+      "name": "Benjamin Bohn Jespersen",
+      "country": null,
+      "hcp": 22.3,
+      "clube": "Hørsholm Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 73,
+      "lista": "entry",
+      "name": "Victor Schiolborg",
+      "country": null,
+      "hcp": 22.5,
+      "clube": "Køge Golf Klub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672445,
+          "title": "Vinter Tour (D5) Harekær - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776782,
+          "title": "Vinter Tour (D5) Midtsjælland (SimGolf) - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 74,
+      "lista": "entry",
+      "name": "Benjamin Olsen",
+      "country": "DK",
+      "hcp": 22.8,
+      "clube": "Brønderslev Golfklub",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 75,
+      "lista": "entry",
+      "name": "Oscar Wilms Jepsen",
+      "country": null,
+      "hcp": 22.9,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 76,
+      "lista": "entry",
+      "name": "Colin Andreasen",
+      "country": null,
+      "hcp": 24.2,
+      "clube": "Brøndby Golfklub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 77,
+      "lista": "entry",
+      "name": "Marius H H Kristensen",
+      "country": "DK",
+      "hcp": 24.4,
+      "clube": "Skive Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 78,
+      "lista": "entry",
+      "name": "Sander Torp",
+      "country": "DK",
+      "hcp": 24.4,
+      "clube": "Hjørring Golfklub",
+      "birthYear": 2015,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 79,
+      "lista": "entry",
+      "name": "Theodor Buk Olsen",
+      "country": null,
+      "hcp": 26.9,
+      "clube": "Horsens Golfklub",
+      "birthYear": 2010,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 80,
+      "lista": "entry",
+      "name": "Emil Siersbæk Alexandersen",
+      "country": null,
+      "hcp": 27.2,
+      "clube": "Københavns Golf Klub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "B-rækken"
+        },
+        {
+          "golfbox": 5776857,
+          "title": "Vinter Tour (D4) Nivå Golfklub - Afd. 4",
+          "date": "2027-03-07",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 81,
+      "lista": "entry",
+      "name": "Levi Simoni",
+      "country": null,
+      "hcp": 27.6,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 82,
+      "lista": "entry",
+      "name": "Jonas Terp",
+      "country": null,
+      "hcp": 28.1,
+      "clube": "Aarhus Aadal Golf Club",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 83,
+      "lista": "entry",
+      "name": "Felix Bach Bendtsen",
+      "country": null,
+      "hcp": 29,
+      "clube": "Stensballegaard Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 84,
+      "lista": "entry",
+      "name": "Albert Kruse Gyldhof",
+      "country": null,
+      "hcp": 29.2,
+      "clube": "Roskilde Golf Klub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672445,
+          "title": "Vinter Tour (D5) Harekær - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776782,
+          "title": "Vinter Tour (D5) Midtsjælland (SimGolf) - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 85,
+      "lista": "entry",
+      "name": "Balder Kjær Mizinski",
+      "country": "DK",
+      "hcp": 29.9,
+      "clube": "Aalborg Golf Klub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 86,
+      "lista": "entry",
+      "name": "Malthe de Fries Nielsen",
+      "country": null,
+      "hcp": 30.2,
+      "clube": "Brøndby Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "B-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 87,
+      "lista": "entry",
+      "name": "Felix Niebling",
+      "country": null,
+      "hcp": 31.1,
+      "clube": "Værebro Golfklub",
+      "birthYear": 2015,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "C Class"
+        },
+        {
+          "golfbox": 5776762,
+          "title": "Vinter Tour (D4) Simgolf Amager - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "B- rækken"
+        },
+        {
+          "golfbox": 5776857,
+          "title": "Vinter Tour (D4) Nivå Golfklub - Afd. 4",
+          "date": "2027-03-07",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 88,
+      "lista": "entry",
+      "name": "Gustav Hassinggaard",
+      "country": null,
+      "hcp": 31.7,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 89,
+      "lista": "entry",
+      "name": "Sofus Lyager Rose",
+      "country": null,
+      "hcp": 31.7,
+      "clube": "Ikast Golf Club",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 90,
+      "lista": "entry",
+      "name": "Benjamin Gundelund",
+      "country": "DK",
+      "hcp": 31.8,
+      "clube": "Brønderslev Golfklub",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 91,
+      "lista": "entry",
+      "name": "Selma Holm",
+      "country": null,
+      "hcp": 31.9,
+      "clube": "Ry Golf",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 92,
+      "lista": "entry",
+      "name": "Theodor Olsen",
+      "country": "DK",
+      "hcp": 32.1,
+      "clube": "Brønderslev Golfklub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 93,
+      "lista": "entry",
+      "name": "Malthe Truelsen",
+      "country": null,
+      "hcp": 33.4,
+      "clube": "Kellers Park Golf Club",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 94,
+      "lista": "entry",
+      "name": "Sebastian Gundelund",
+      "country": "DK",
+      "hcp": 33.8,
+      "clube": "Brønderslev Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 95,
+      "lista": "entry",
+      "name": "Lauge Teken Lysdahl",
+      "country": null,
+      "hcp": 34.4,
+      "clube": "Silkeborg Golfklub",
+      "birthYear": 2018,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 96,
+      "lista": "entry",
+      "name": "Emil Christian Lynge Larsen",
+      "country": null,
+      "hcp": 34.5,
+      "clube": "Stensballegaard Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 97,
+      "lista": "entry",
+      "name": "Vitus Guido Engbjerg",
+      "country": null,
+      "hcp": 34.6,
+      "clube": "Næstved Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672445,
+          "title": "Vinter Tour (D5) Harekær - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776782,
+          "title": "Vinter Tour (D5) Midtsjælland (SimGolf) - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "A-rækken"
+        },
+        {
+          "golfbox": 5776868,
+          "title": "Vinter Tour (D5) Greve - Afd. 4",
+          "date": "2027-03-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 98,
+      "lista": "entry",
+      "name": "Jacob Madsen",
+      "country": "DK",
+      "hcp": 36.2,
+      "clube": "Benniksgaard Golf Klub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672292,
+          "title": "Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 99,
+      "lista": "entry",
+      "name": "Rasmus Bøving Spangsbjerg Pedersen",
+      "country": null,
+      "hcp": 37.5,
+      "clube": "Brøndby Golfklub",
+      "birthYear": 2012,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "B-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 100,
+      "lista": "entry",
+      "name": "Anton Ølgod Assentoft",
+      "country": null,
+      "hcp": 38.3,
+      "clube": "Smørum Golfklub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "C Class"
+        },
+        {
+          "golfbox": 5776762,
+          "title": "Vinter Tour (D4) Simgolf Amager - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "B- rækken"
+        },
+        {
+          "golfbox": 5776857,
+          "title": "Vinter Tour (D4) Nivå Golfklub - Afd. 4",
+          "date": "2027-03-07",
+          "classe": "B-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 101,
+      "lista": "entry",
+      "name": "Noel Ysøe Sørensen",
+      "country": null,
+      "hcp": 38.6,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 102,
+      "lista": "entry",
+      "name": "Malthe Wüpper Nielsen",
+      "country": null,
+      "hcp": 38.8,
+      "clube": "Hedensted Golf Klub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 103,
+      "lista": "entry",
+      "name": "Phillip Tuffveson Jensen",
+      "country": null,
+      "hcp": 39,
+      "clube": "Horsens Golfklub",
+      "birthYear": 2011,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535245,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 3. Afd.",
+          "date": "2027-01-24",
+          "classe": "Individuelt"
+        },
+        {
+          "golfbox": 5535247,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - 4. Afd.",
+          "date": "2027-03-07",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 104,
+      "lista": "entry",
+      "name": "Bjørn Kjær Mizinski",
+      "country": "DK",
+      "hcp": 39.6,
+      "clube": "Aalborg Golf Klub",
+      "birthYear": 2017,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535351,
+          "title": "Vinter Tour (D1) Volstrup (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 105,
+      "lista": "entry",
+      "name": "Nikolai Bunch Motzfeldt",
+      "country": null,
+      "hcp": 39.6,
+      "clube": "Kalø Golf Club",
+      "birthYear": 2006,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Ungdom"
+        }
+      ]
+    },
+    {
+      "pos": 106,
+      "lista": "entry",
+      "name": "Nikolaj Lund Hansen",
+      "country": "DK",
+      "hcp": 39.6,
+      "clube": "Benniksgaard Golf Klub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672292,
+          "title": "Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 107,
+      "lista": "entry",
+      "name": "Willas Truelsen",
+      "country": null,
+      "hcp": 40.1,
+      "clube": "Kellers Park Golf Club",
+      "birthYear": 2015,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 108,
+      "lista": "entry",
+      "name": "Zahra Gita Deb",
+      "country": null,
+      "hcp": 40.2,
+      "clube": "Kokkedal Golfklub",
+      "birthYear": 2015,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "C Class"
+        },
+        {
+          "golfbox": 5776762,
+          "title": "Vinter Tour (D4) Simgolf Amager - Afd. 3",
+          "date": "2027-01-24",
+          "classe": "B- rækken"
+        }
+      ]
+    },
+    {
+      "pos": 109,
+      "lista": "entry",
+      "name": "Lucas Holm Kiilerich",
+      "country": null,
+      "hcp": 41,
+      "clube": "Horsens Golfklub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 110,
+      "lista": "entry",
+      "name": "Albert Krabbe",
+      "country": null,
+      "hcp": 41.5,
+      "clube": "Silkeborg Golfklub",
+      "birthYear": 2017,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 111,
+      "lista": "entry",
+      "name": "Modi Brunsgaard Tüchsen",
+      "country": "DK",
+      "hcp": 41.9,
+      "clube": "Haderslev Golfklub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672292,
+          "title": "Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 112,
+      "lista": "entry",
+      "name": "Bertil Breinsborg",
+      "country": null,
+      "hcp": 42.7,
+      "clube": "Horsens Golfklub",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 113,
+      "lista": "entry",
+      "name": "Søs Ravn Lindgaard",
+      "country": null,
+      "hcp": 43.3,
+      "clube": "Dejbjerg Golf Klub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 114,
+      "lista": "entry",
+      "name": "Thor Ravn Lindgaard",
+      "country": null,
+      "hcp": 45.1,
+      "clube": "Dejbjerg Golf Klub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 115,
+      "lista": "entry",
+      "name": "Christian Bergstedt",
+      "country": "DK",
+      "hcp": 46.5,
+      "clube": "Haderslev Golfklub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672292,
+          "title": "Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 116,
+      "lista": "entry",
+      "name": "Richard Svane",
+      "country": null,
+      "hcp": 48.4,
+      "clube": "Stensballegaard Golfklub",
+      "birthYear": 2018,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 117,
+      "lista": "entry",
+      "name": "Asger Benjamin Siebuhr",
+      "country": null,
+      "hcp": 49.2,
+      "clube": "Roskilde Golf Klub",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672445,
+          "title": "Vinter Tour (D5) Harekær - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 118,
+      "lista": "entry",
+      "name": "Victor Kjærgaard",
+      "country": null,
+      "hcp": 49.8,
+      "clube": "Roskilde Golf Klub",
+      "birthYear": 2013,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672445,
+          "title": "Vinter Tour (D5) Harekær - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 119,
+      "lista": "entry",
+      "name": "Celine Ewers-Wachmann",
+      "country": null,
+      "hcp": 50.4,
+      "clube": "PIBE MØLLE GOLF",
+      "birthYear": 2014,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672437,
+          "title": "Vinter Tour (D4) Smørum - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "D-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 120,
+      "lista": "entry",
+      "name": "Pelle Bisgaard Sellen Mathiesen",
+      "country": null,
+      "hcp": 52.2,
+      "clube": "Silkeborg Golfklub",
+      "birthYear": 2016,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 121,
+      "lista": "entry",
+      "name": "Alexander Strauss Heilmann",
+      "country": null,
+      "hcp": 54,
+      "clube": "Horsens Golfklub",
+      "birthYear": 2015,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    },
+    {
+      "pos": 122,
+      "lista": "entry",
+      "name": "Johan Quist",
+      "country": "DK",
+      "hcp": 54,
+      "clube": "Haderslev Golfklub",
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5672292,
+          "title": "Vinter Tour (D3) Fredericia (SimGolf) - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "A-rækken"
+        }
+      ]
+    },
+    {
+      "pos": 123,
+      "lista": "entry",
+      "name": "Oliver Strauss Heilmann",
+      "country": null,
+      "hcp": 54,
+      "clube": "Horsens Golfklub",
+      "birthYear": 2015,
+      "lido": "2026-11-23",
+      "provas": [
+        {
+          "golfbox": 5535236,
+          "title": "Vinter Tour (D2) Golf Arena Aarhus - Afd. 2",
+          "date": "2026-12-06",
+          "classe": "Individuelt"
+        }
+      ]
+    }
+  ]
+}
