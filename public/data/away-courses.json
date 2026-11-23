@@ -9098,32 +9098,6 @@
               "sd": 4.1
             }
           ],
-          "43732": [
-            {
-              "date": "2026-09-04",
-              "gross": 73,
-              "toPar": 2,
-              "tee": "BRANCAS",
-              "event": "Club Zaudín Golf",
-              "sd": -0.5
-            },
-            {
-              "date": "2026-09-03",
-              "gross": 74,
-              "toPar": 3,
-              "tee": "BRANCAS",
-              "event": "Club Zaudín Golf",
-              "sd": 0.5
-            },
-            {
-              "date": "2026-09-02",
-              "gross": 74,
-              "toPar": 3,
-              "tee": "BRANCAS",
-              "event": "Club Zaudín Golf",
-              "sd": 0.5
-            }
-          ],
           "51074": [
             {
               "date": "2026-09-04",
@@ -10596,24 +10570,6 @@
               "tee": "PRETAS",
               "event": "European Boys' Team Championship, Division 2",
               "sd": -1.5
-            }
-          ],
-          "43732": [
-            {
-              "date": "2026-07-11",
-              "gross": 86,
-              "toPar": 14,
-              "tee": "AMARELAS",
-              "event": "European Boys`Team Championship, Division 2",
-              "sd": 8.1
-            },
-            {
-              "date": "2026-07-10",
-              "gross": 81,
-              "toPar": 9,
-              "tee": "AMARELAS",
-              "event": "European Boys`Team Championship, Division 2",
-              "sd": 3.7
             }
           ]
         }
@@ -18122,7 +18078,35 @@
               "complete18": true
             }
           }
-        ]
+        ],
+        "_players": {
+          "52884": [
+            {
+              "date": "2025-08-13",
+              "gross": 76,
+              "toPar": 4,
+              "tee": "Vermelho",
+              "event": "European Open WAGR D3",
+              "sd": 4.2
+            },
+            {
+              "date": "2025-08-12",
+              "gross": 77,
+              "toPar": 5,
+              "tee": "Vermelho",
+              "event": "European Open WAGR D2",
+              "sd": 5.1
+            },
+            {
+              "date": "2025-08-11",
+              "gross": 85,
+              "toPar": 13,
+              "tee": "Vermelho",
+              "event": "European Open WAGR D1",
+              "sd": 12.6
+            }
+          ]
+        }
       }
     },
     {
@@ -50332,6 +50316,187 @@
               "tee": "BRANCAS",
               "event": "European Amateur Team Championship",
               "sd": 4.7
+            }
+          ]
+        }
+      }
+    },
+    {
+      "courseKey": "away-the-san-roque-club-old-course",
+      "master": {
+        "courseId": "away-the-san-roque-club-old-course",
+        "name": "The San Roque Club - Old Course",
+        "country": "Espanha",
+        "links": {
+          "fpg": null,
+          "scorecards": null
+        },
+        "tees": [
+          {
+            "teeId": "away-the-san-roque-club-old-course-0",
+            "sex": "U",
+            "teeName": "Boys 12",
+            "ratings": {
+              "holes18": {
+                "par": 72,
+                "courseRating": null,
+                "slopeRating": null
+              },
+              "holes9Front": {
+                "par": 36,
+                "courseRating": null,
+                "slopeRating": null
+              },
+              "holes9Back": {
+                "par": 36,
+                "courseRating": null,
+                "slopeRating": null
+              }
+            },
+            "holes": [
+              {
+                "hole": 1,
+                "par": 5,
+                "si": null,
+                "distance": 403
+              },
+              {
+                "hole": 2,
+                "par": 4,
+                "si": null,
+                "distance": 326
+              },
+              {
+                "hole": 3,
+                "par": 4,
+                "si": null,
+                "distance": 271
+              },
+              {
+                "hole": 4,
+                "par": 4,
+                "si": null,
+                "distance": 287
+              },
+              {
+                "hole": 5,
+                "par": 3,
+                "si": null,
+                "distance": 110
+              },
+              {
+                "hole": 6,
+                "par": 4,
+                "si": null,
+                "distance": 262
+              },
+              {
+                "hole": 7,
+                "par": 3,
+                "si": null,
+                "distance": 125
+              },
+              {
+                "hole": 8,
+                "par": 5,
+                "si": null,
+                "distance": 389
+              },
+              {
+                "hole": 9,
+                "par": 4,
+                "si": null,
+                "distance": 309
+              },
+              {
+                "hole": 10,
+                "par": 4,
+                "si": null,
+                "distance": 287
+              },
+              {
+                "hole": 11,
+                "par": 4,
+                "si": null,
+                "distance": 306
+              },
+              {
+                "hole": 12,
+                "par": 3,
+                "si": null,
+                "distance": 116
+              },
+              {
+                "hole": 13,
+                "par": 4,
+                "si": null,
+                "distance": 272
+              },
+              {
+                "hole": 14,
+                "par": 5,
+                "si": null,
+                "distance": 407
+              },
+              {
+                "hole": 15,
+                "par": 4,
+                "si": null,
+                "distance": 284
+              },
+              {
+                "hole": 16,
+                "par": 3,
+                "si": null,
+                "distance": 102
+              },
+              {
+                "hole": 17,
+                "par": 5,
+                "si": null,
+                "distance": 356
+              },
+              {
+                "hole": 18,
+                "par": 4,
+                "si": null,
+                "distance": 304
+              }
+            ],
+            "distances": {
+              "total": 4916,
+              "front9": 2482,
+              "back9": 2434,
+              "holesCount": 18,
+              "complete18": true
+            }
+          }
+        ],
+        "_players": {
+          "52884": [
+            {
+              "date": "2026-11-22",
+              "gross": 79,
+              "toPar": 7,
+              "tee": "Boys 12",
+              "event": "USKids Spanish Open 2026 D3",
+              "sd": 11.9
+            },
+            {
+              "date": "2026-11-21",
+              "gross": 83,
+              "toPar": 11,
+              "tee": "Boys 12",
+              "event": "USKids Spanish Open 2026 D2",
+              "sd": 15.6
+            },
+            {
+              "date": "2026-11-20",
+              "gross": 83,
+              "toPar": 11,
+              "tee": "Boys 12",
+              "event": "USKids Spanish Open 2026 D1",
+              "sd": 14.7
             }
           ]
         }
