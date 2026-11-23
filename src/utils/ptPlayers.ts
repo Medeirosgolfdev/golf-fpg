@@ -26,6 +26,10 @@ const PT_NAME_EXCEPTIONS: ReadonlyArray<string[]> = [
   // conseguirmos sempre a encontrar, e ela estar destacada colorida… como as regras para todos
   // os outros portugueses»).
   ["sabrina", "crisostomo"],
+  // Também portugueses e sem país na RFEG — Circuito Juvenil/Benjamín Zona W de 21/11/2026
+  // (23/11/2026, Mariana: «Sim, marca os dois»).
+  ["rafael", "crisostomo"],           // FPG 51880 (Vilamoura); RFEG AM00371960 — irmão da Sabrina
+  ["catarina", "sousa", "conceicao"], // FPG 48794 (Vilamoura); RFEG AM00414469
 ];
 
 export const ptNorm = (s: string | null | undefined): string =>
