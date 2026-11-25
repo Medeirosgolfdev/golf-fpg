@@ -18,6 +18,9 @@
  *                                lookup tiver par/metros vazios, cai nos
  *                                par+yards do uskids-results.json (yards×0.9144,
  *                                guarda _yards documentais).
+ *     --player "<nome USKids>"  (opcional) junta o cartão buraco a buraco do
+ *                                jogador em cada volta (leaderboard do
+ *                                uskids-results.json); --scores pela ordem R1, R2…
  *   --copy-from <scoreId>        copia par/metros/CR/Slope/campo/tee de uma
  *                                entrada existente do melhorias.json (ex.: D2/D3
  *                                a partir do D1; outro ano do mesmo tee físico).
@@ -94,9 +97,13 @@ function parseArgs(argv) {
 
 // ── TEES_LOOKUP (src/ui/uskidsData.ts, transpilação esbuild) ─────────
 function loadTeesLookup() {
+  // Empacotado (bundle): o uskidsData.ts importa outros módulos do src.
   const esbuild = require("esbuild");
-  const src = fs.readFileSync(path.join(ROOT, "src/ui/uskidsData.ts"), "utf8");
-  const { code } = esbuild.transformSync(src, { loader: "ts", format: "cjs" });
+  const { outputFiles } = esbuild.buildSync({
+    entryPoints: [path.join(ROOT, "src/ui/uskidsData.ts")],
+    bundle: true, format: "cjs", platform: "node", write: false, logLevel: "silent",
+  });
+  const code = outputFiles[0].text;
   const tmp = path.join(os.tmpdir(), `uskidsData-${process.pid}.cjs`);
   fs.writeFileSync(tmp, code);
   try {
@@ -107,7 +114,7 @@ function loadTeesLookup() {
 }
 
 // ── fonte: USKids (TEES_LOOKUP → fallback uskids-results.json) ───────
-function sourceFromUskids(spec) {
+function sourceFromUskids(spec, player) {
   const m = /^(\d+):(\d+)$/.exec(spec);
   if (!m) { console.error(`--uskids inválido: "${spec}" (esperado tcode:ageGroup)`); process.exit(1); }
   const [tcode, ag] = [Number(m[1]), Number(m[2])];
@@ -131,6 +138,21 @@ function sourceFromUskids(spec) {
     out.meters = r1.yards.map((y) => Math.round(y * 0.9144));
     out.yards = r1.yards;
     out.fonte = `uskids-results.json ${tcode}/${ag} (yards×0.9144)` + (out.cr != null ? ` + CR/Slope TEES_LOOKUP` : "");
+  }
+  if (player) {
+    // Cartão buraco a buraco do jogador em cada volta (leaderboard do signupanytime).
+    const res = JSON.parse(fs.readFileSync(path.join(ROOT, "public/data/uskids-results.json"), "utf8"));
+    const e = res.resultados.find((x) => Number(x.t) === tcode)?.escaloes.find((x) => Number(x.age_group) === ag);
+    if (!e?.rondas?.length) { console.error(`uskids-results.json sem voltas para ${tcode}/${ag}`); process.exit(1); }
+    const norm = (x) => String(x || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    out.rounds = [...e.rondas].sort((x, y) => x.ronda - y.ronda).map((r) => {
+      const hits = (r.leaderboard || []).filter((p) => norm(p.nome) === norm(player));
+      if (hits.length !== 1) { console.error(`--player "${player}": ${hits.length} jogadores com esse nome na R${r.ronda} de ${tcode}/${ag}`); process.exit(1); }
+      const s = hits[0].strokes;
+      if (!Array.isArray(s) || s.length !== out.par.length || s.some((v) => !(v > 0))) { console.error(`R${r.ronda}: cartão de "${player}" incompleto`); process.exit(1); }
+      return s;
+    });
+    out.fonte += ` + cartão USKids de ${player}`;
   }
   return out;
 }
@@ -267,11 +289,11 @@ function main() {
   const a = parseArgs(process.argv);
   let txt = fs.readFileSync(MELHORIAS, "utf8");
   const melhorias = JSON.parse(txt);
-  const src = a.uskids ? sourceFromUskids(a.uskids)
+  const src = a.uskids ? sourceFromUskids(a.uskids, a.player)
     : a.ffgolf ? sourceFromFfgolf(a.ffgolf, a.player)
     : sourceFromEntry(melhorias, a.fed, a.copyFrom);
   if (src.rounds && src.rounds.length !== a.scores.length) {
-    console.error(`--scores tem ${a.scores.length} voltas e o jogador tem ${src.rounds.length} cartões na FFG`); process.exit(1);
+    console.error(`--scores tem ${a.scores.length} voltas e o jogador tem ${src.rounds.length} cartões na fonte`); process.exit(1);
   }
   if (a.par) {
     if (a.par.length !== src.par.length || a.par.some((v) => !Number.isInteger(v) || v < 3 || v > 6)) {

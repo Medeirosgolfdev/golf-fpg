@@ -234,6 +234,13 @@ export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
   15573: {
     2102: { campo: "Real Club de Golf El Prat", tee: "Boys 9", par: [4,3,4,5,4,3,4,4,5], metros: [] },
   },
+  // ── Spanish Open 2026 – The San Roque Club (Old Course) ──
+  // Boys 12 = tee 5 (as Rojas da RFEG com os par 3 do 7 e do 12 mais compridos):
+  // 4916 m, par 72, CR/Slope OFICIAIS 66.4/120 e metros por buraco do PDF USKids
+  // (Golfe\Arquivo_GOLF\2026\2026-11-20_USKids_Spanish_Open_2026_Yardages_Metros.pdf).
+  23132: {
+    2105: { campo: "The San Roque Club - Old Course", tee: "Boys 12 (Tee 5)", par: [5,4,4,4,3,4,3,5,4, 4,4,3,4,5,4,3,5,4], metros: [403,326,271,287,110,262,125,389,309, 287,306,116,272,407,284,102,356,304], cr: 66.4, slope: 120 },
+  },
   // ── Marco Simone 2025 ────────────────────────────────
   18438: {
     // CR/Slope OFICIAIS do PDF «US Kids 2025 Boys 9-11 & Girls 10-14»
