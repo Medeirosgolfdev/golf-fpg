@@ -379,7 +379,7 @@ async function main() {
       const { buildProvasFora } = require("./util/provas-fora");
       const pf = buildProvasFora(matchResult.juniors, matchResult.tournaments, generatedAt);
       writeAtomic(path.join(DATA_DIR, "provas-fora-federados.json"), JSON.stringify(pf), "utf-8");
-      sub(`provas-fora-federados.json: ${Object.keys(pf.f).length} federados, ${Object.keys(pf.t).length} provas`);
+      sub(`provas-fora-federados.json: ${Object.keys(pf.v).length} federados, ${Object.keys(pf.t).length} provas`);
     }
 
     // Resumo do Scout (aba «Scout» dos circuitos e da /uskids, Ranking e ficha do

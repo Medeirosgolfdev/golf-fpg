@@ -52,7 +52,7 @@ permissions:
 jobs:
   update-golfbox-federacoes:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     concurrency:
       group: update-golfbox-federacoes
       cancel-in-progress: false

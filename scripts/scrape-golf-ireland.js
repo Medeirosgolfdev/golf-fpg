@@ -21,6 +21,8 @@
  *   node scripts/scrape-golf-ireland.js --desde 2025
  *   node scripts/scrape-golf-ireland.js --pages 10676473230400714827
  *
+ * Prova acabada e já gravada não se volta a pedir (--force refaz).
+ *
  * Exit: 0 gravou · 2 nada de novo · 1 erro.
  */
 "use strict";
@@ -127,7 +129,22 @@ function corrigir(d, egrIds) {
   console.log(`Golf Ireland: ${pages.length} página(s) GolfGenius`);
   fs.mkdirSync(OUT_DIR, { recursive: true });
   let gravados = 0, iguais = 0, erros = 0;
+  const force = process.argv.includes("--force");
   for (const p of pages) {
+    // Prova acabada (há mais de uma semana) e já gravada com jogadores: não se volta a
+    // pedir (sem --force), como na Escócia. Pedir as 25 páginas cartão a cartão passava
+    // dos 30 min do workflow e o corte deitava fora o que as outras federações traziam.
+    if (!force && !arg("--pages")) {
+      const feito = fs.readdirSync(OUT_DIR).filter((f) => f.startsWith(`irl-${p.id}_`)).some((f) => {
+        try {
+          const d = JSON.parse(fs.readFileSync(path.join(OUT_DIR, f), "utf8"));
+          const fim = String(d.endDate || d.startDate || "").slice(0, 10);
+          return /^\d{4}-\d{2}-\d{2}$/.test(fim) && Date.parse(fim) + 7 * 864e5 < Date.now()
+            && (d.divisions || []).some((dv) => (dv.players || []).length);
+        } catch { return false; }
+      });
+      if (feito) { iguais++; console.log(`   ⏭️  ${p.id} ${p.nome}: acabada e já gravada`); continue; }
+    }
     try {
       const r = await runOne({
         pageUrl: `https://www.golfgenius.com/pages/${p.id}`,
