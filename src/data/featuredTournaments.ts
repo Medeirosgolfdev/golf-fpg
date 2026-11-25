@@ -296,7 +296,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
   // Prova do clube (ccode 962), 54 buracos (18 por dia), quatro categorias:
   // U21 (2005-09), U16 (2010-11), U14 (2012-13) e U12 (2014-15). Inscrições na
   // loja do clube até 18/12 ou 85 jogadores.
-  // Os inscritos são os da Entry List em PDF do clube (12/11/2026: 47; relida a 16/11: 47, às 15:38: 55; a 18/11: 60; a 23/11: 60), curados à
+  // Os inscritos são os da Entry List em PDF do clube (12/11/2026: 47; relida a 16/11: 47, às 15:38: 55; a 18/11: 60; a 23/11: 60; a 25/11: 65), curados à
   // mão (`_manual` em fpg-admissions-draws.json) em tcodes PROVISÓRIOS — «909» +
   // escalão: 90912, 90914, 90916, 90921. A 12/11/2026 a FPG ainda não tinha a
   // prova no scoring (as edições anteriores foram 962/10067-10070 e 10078-10081,
@@ -325,7 +325,7 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
 
   // ── Morgado International Junior Classic 2026 — 4-6/12/2026, NAU Morgado ──
   // Prova do Portugal Junior Tour (Series 1 — December; WAGR; 3 voltas), não da FPG.
-  // Os inscritos são os da Entry List em PDF do PJT de 23/11/2026 (36 + 10 lugares
+  // Os inscritos são os da Entry List em PDF do PJT de 25/11/2026 (31 + 10 lugares
   // reservados sem nome), curados à mão (`_manual` em fpg-admissions-draws.json) nos
   // tcodes PROVISÓRIOS 96601 (rapazes) e 96602 (raparigas) do clube 966 (NAU Morgado).
   // Sem categorias por idade nem regra de tees (os Termos não foram lidos).
