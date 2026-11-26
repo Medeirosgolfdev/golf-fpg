@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-11-26T03:47:05.984Z",
+  "geradoEm": "2026-11-26T17:03:56.500Z",
   "fed": "52884",
   "uskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 170,
+  "totalRondas": 171,
   "totalCompanheirosUnicos": 204,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 143,
-      "rondasComDraw": 131,
+      "rondasComDraw": 132,
       "torneiosJogados": 106,
-      "torneiosComDraw": 102,
+      "torneiosComDraw": 103,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "000-10947",
@@ -687,6 +687,33 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "192-90102",
+      "torneioNome": "Race to Dunas G. Final 2026",
+      "data": "2026-11-28",
+      "ronda": 1,
+      "teeTime": "11:16",
+      "startHole": 1,
+      "campo": "Terras da Comporta Dunas Golf Course",
+      "jogadorScore": null,
+      "companheiros": [
+        {
+          "nome": "Salvador Ivo de Carvalho",
+          "fed": "43968",
+          "clube": "Paço do Lumiar",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Angelina Gao",
+          "fed": "51523",
+          "clube": "Quinta do Peru",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
     {
       "circuito": "USKids",
       "torneioId": "usk-23132",
