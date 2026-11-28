@@ -29,7 +29,14 @@ export const PJA_TCODES = new Set([
 /** tcodes conhecidos das Grandes Finais PJA. Whitelist preferencial — o nome
  *  varia: "PJA TOUR Grand Final" (2024 = 10005), "Race to Dunas G. Final"
  *  (2025 = 10019), etc. */
-export const GF_TCODES = new Set(["10005", "10019"]);
+export const GF_TCODES = new Set([
+  "10005",
+  "10019",
+  // Grande Final 2026 (Comporta Dunas, 192, 28–29/11). A FPG chama-lhe só
+  // "PJA Race to Dunas" — o update-classif grava esse nome e o fallback do
+  // nome deixava de a ver como GF (×1,5).
+  "10028",
+]);
 
 /** Multiplicadores especiais por tcode — decisões da comissão técnica PJA
  *  que se sobrepõem ao standard (1.0) e à Grande Final (1.5).

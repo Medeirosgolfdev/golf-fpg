@@ -148,9 +148,17 @@ window.__pjaBooted = true;  // sinal para o watchdog: módulo importado e a corr
       if(/Terceira|A[çc]ores/i.test(n))return "5_acores_"+d;return "6_dt_"+d;}
     if(ev==="AQUAPOR")return "7_aq_"+d;if(ev&&ev.indexOf("GG")===0)return "8_gg_"+d;return "9_pja_"+d;}
   function build(all,playersDB,members){
-    var seen=new Set(),list=[];
+    /* O mesmo torneio pode vir em dois pull-torneios (ex. Grande Final 2026:
+       a promoção grava-o no 000 só com o D1, o update-classif no 002 com o D2).
+       Fica a cópia com mais voltas JOGADAS — e, empatadas, a com mais jogadores
+       com score —, como o dedupDisplayTournaments da app principal. Antes
+       ganhava a primeira lida e o D2 nunca entrava. */
+    function jogadas(t){var n=0,c=0;(t.players||[]).forEach(function(p){var rs=p.roundScores;var l=rs?rs.length:0;if(l>n)n=l;if(l>0)c++;});return n*1000+c;}
+    var idx=new Map(),list=[];
     all.forEach(function(t){if(!isPJA(t))return;if((t.date||"").slice(0,4)!==YEAR)return;
-      var k=(t.ccode||"?")+"/"+(t.tcode==null?"?":t.tcode)+"/"+(t.date||"?");if(seen.has(k))return;seen.add(k);list.push(t);});
+      var k=(t.ccode||"?")+"/"+(t.tcode==null?"?":t.tcode)+"/"+(t.date||"?");
+      if(!idx.has(k)){idx.set(k,list.length);list.push(t);return;}
+      var i=idx.get(k);if(jogadas(t)>jogadas(list[i]))list[i]=t;});
     list.sort(function(a,b){return tournSortKey(a).localeCompare(tournSortKey(b));});
     var aqs=list.filter(function(t){return classify(t)==="AQUAPOR";}).sort(function(a,b){return (a.date||"").localeCompare(b.date||"");}).slice(0,2);
     var aqAllow=new Set(aqs.map(function(t){return t.tcode+"_"+t.date;}));

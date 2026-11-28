@@ -108,6 +108,9 @@ describe("multiplicadores e pontos", () => {
     expect(getTournMultiplier({ name: "PJA TOUR Grand Final", tcode: "99999" })).toBe(1.5);
     // "Race to Dunas" sem "Final" NÃO é GF (bug 2026-04-28)
     expect(isGFTournament({ name: "PJA Race to Dunas", tcode: "88888" })).toBe(false);
+    // Grande Final 2026: a FPG chama-lhe só "PJA Race to Dunas" — vale pelo tcode
+    expect(getTournMultiplier({ name: "PJA Race to Dunas", tcode: "10028" })).toBe(1.5);
+    expect(getTournMultiplier({ name: "PJA Race to Dunas G. Final 2026", tcode: "10028" })).toBe(1.5);
   });
 
   it("Royal Óbidos 10444 → ×1.75 (decisão da comissão técnica)", () => {

@@ -1683,14 +1683,14 @@
     {
       "ccode": "192",
       "tcode": "10028",
-      "name": "Race to Dunas G. Final 2026",
+      "name": "PJA Race to Dunas G. Final 2026",
       "date": "2026-11-28",
       "campo": "Terras da Comporta Dunas Golf Course",
-      "source": "Draw D1 oficial PJA (imagem, 2026-11-26) + Draw D2 oficial PJA (imagem, 2026-11-28; tees por jogador; nota D1: David Filip vinha com 51849, que é outro federado — corrigido para 51949)",
+      "source": "Draw D1 oficial PJA (imagem, 2026-11-26; corrigido pela Mariana a 2026-11-28: Angelina Gao faltou (doente), João Rocha passou para as 11:00 e William Gao para as 11:16 — grupo das 11:08 deixou de existir) + Draw D2 oficial PJA (imagem, 2026-11-28; tees por jogador; nota D1: David Filip vinha com 51849, que é outro federado — corrigido para 51949)",
       "drawOnly": false,
       "draws": {
         "1": {
-          "totalJogadores": 19,
+          "totalJogadores": 18,
           "groups": [
             {
               "teeTime": "11:00",
@@ -1710,25 +1710,11 @@
                   "fed": "49085",
                   "hcp": null,
                   "tee": "Amarelas"
-                }
-              ]
-            },
-            {
-              "teeTime": "11:08",
-              "startHole": 1,
-              "tee": null,
-              "players": [
+                },
                 {
                   "nome": "João Rocha",
                   "clube": null,
                   "fed": "48297",
-                  "hcp": null,
-                  "tee": "Verdes"
-                },
-                {
-                  "nome": "William Gao",
-                  "clube": null,
-                  "fed": "51524",
                   "hcp": null,
                   "tee": "Verdes"
                 }
@@ -1754,11 +1740,11 @@
                   "tee": "Verdes"
                 },
                 {
-                  "nome": "Angelina Gao",
+                  "nome": "William Gao",
                   "clube": null,
-                  "fed": "51523",
+                  "fed": "51524",
                   "hcp": null,
-                  "tee": "Laranjas"
+                  "tee": "Verdes"
                 }
               ]
             },
