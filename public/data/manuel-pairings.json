@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-11-28T03:54:56.010Z",
+  "geradoEm": "2026-11-28T18:08:26.886Z",
   "fed": "52884",
   "uskidsIds": [
     "630106",
@@ -689,21 +689,27 @@
   "rondas": [
     {
       "circuito": "FPG",
-      "torneioId": "192-90102",
+      "torneioId": "192-10028",
       "torneioNome": "Race to Dunas G. Final 2026",
       "data": "2026-11-28",
       "ronda": 1,
       "teeTime": "11:16",
       "startHole": 1,
       "campo": "Terras da Comporta Dunas Golf Course",
-      "jogadorScore": null,
+      "jogadorScore": {
+        "gross": 68,
+        "toPar": -3
+      },
       "companheiros": [
         {
           "nome": "Salvador Ivo de Carvalho",
           "fed": "43968",
           "clube": "Paço do Lumiar",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 73,
+            "toPar": 2
+          }
         },
         {
           "nome": "Angelina Gao",
